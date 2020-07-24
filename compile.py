@@ -16,7 +16,7 @@ includePath = root / "Include"
 libraryPath = root / "Libraries/NX-NXFP2-a64/Release"
 releasePath = root / "Common/Configs/Targets/NX-NXFP2-a64/Include"
 
-compilerCommand = f"{compilerPath} -x c++ -std=gnu++14 -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -Wall -O3 -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -I include -I {includePath} -I {releasePath} -c "
+compilerCommand = f"{compilerPath} -x c++ -std=gnu++14 -fno-common -fno-inline -fno-short-enums -ffunction-sections -fdata-sections -fPIC -Wall -O3 -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -I include -I {includePath} -I {releasePath} -c "
 
 source_folder = pathlib.Path('source/')
 cpp_files = list(source_folder.rglob('*.cpp'))
