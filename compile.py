@@ -5,18 +5,24 @@ def error(str):
     sys.exit(1)
 
 sdkRoot = os.getenv('SDK_ROOT')
+seadRoot = os.getenv('SEAD_ROOT')
 
 if sdkRoot == None:
     error("Error: SDK_ROOT not set.")
 
+if seadRoot == None:
+    error("Error: SEAD_ROOT not set.")
+
 root = pathlib.Path(sdkRoot)
+sead = pathlib.Path(seadRoot)
 
 compilerPath = root / "Compilers/NX/nx/aarch64/bin/clang++.exe"
 includePath = root / "Include"
 libraryPath = root / "Libraries/NX-NXFP2-a64/Release"
 releasePath = root / "Common/Configs/Targets/NX-NXFP2-a64/Include"
+seadPath = sead / "include"
 
-compilerCommand = f"{compilerPath} -x c++ -std=gnu++14 -fno-common -fno-inline -fno-short-enums -ffunction-sections -fdata-sections -fPIC -Wall -O3 -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -I include -I {includePath} -I {releasePath} -c "
+compilerCommand = f"{compilerPath} -x c++ -std=gnu++14 -fno-common -fno-inline -fno-short-enums -ffunction-sections -fdata-sections -fPIC -Wall -O3 -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -I include -I {includePath} -I {releasePath} -I {seadPath} -c "
 
 source_folder = pathlib.Path('source/')
 cpp_files = list(source_folder.rglob('*.cpp'))
