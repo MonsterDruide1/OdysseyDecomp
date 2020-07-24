@@ -7,7 +7,7 @@ namespace al
     float easeInOut(float);
 
     float sign(float);
-    bool sign(int);
+    int sign(int);
 
     float squareIn(float);
     float squareOut(float);
