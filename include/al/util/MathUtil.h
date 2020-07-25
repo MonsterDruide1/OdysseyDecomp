@@ -2,6 +2,9 @@
 
 namespace al
 {
+    float normalize(float, float, float);
+    float normalize(signed int, signed int, signed int);
+
     float easeIn(float);
     float easeOut(float);
     float easeInOut(float);
@@ -15,6 +18,5 @@ namespace al
     float powerIn(float, float);
     float powerOut(float, float);
 
-    float normalize(float, float, float);
-    float normalize(signed int, signed int, signed int);
+    float lerpValue(float, float, float);
 };

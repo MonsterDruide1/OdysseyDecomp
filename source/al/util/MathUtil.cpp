@@ -95,13 +95,28 @@ namespace al
         return (((var * -2.0f) + 3.0f) * var) * var;
     }
 
+    float sign(float result)
+    {
+        float v1;
+        v1 = result < 0.0f;
+        if (result > 0.0f)
+        {
+            result = 1.0f;
+        }
+        if (v1)
+        {
+            result = -1.0f;
+        }
+
+        return result;
+    }
+
     int sign(int var)
     {
         if (var < 0)
         {
             return -1;
         }
-
         if (var > 0)
         {
             return 1;
@@ -126,5 +141,16 @@ namespace al
     float powerOut(float x, float y) 
     {
         return powf(x, 1.0 / y);
+    }
+
+    float lerpValue(float x, float y, float time) {
+        if (time >= 0.0f)
+        {
+            if (time > 1.0f)
+                time = 1.0f;
+        } else {
+            time = 0.0f;
+        }
+        return (x * (1.0f - time)) + (time * y);
     }
 };
