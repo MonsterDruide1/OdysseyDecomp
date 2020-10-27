@@ -1,4 +1,4 @@
-# OdysseyDecoomp
+# OdysseyDecomp
 Decompilation of all Super Mario Odyssey versions, from 1.0.0 to 1.3.0.
 
 # Requirements
