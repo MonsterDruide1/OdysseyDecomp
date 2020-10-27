@@ -4,7 +4,7 @@ def error(str):
     print(str)
     sys.exit(1)
 
-versions = [ "VER_100", "VER_110", "VER_120", "VER_130" ]
+versions = [ "VER_100", "VER_101", "VER_110", "VER_120", "VER_130" ]
 
 gameVersion = versions[int(sys.argv[1])]
 
