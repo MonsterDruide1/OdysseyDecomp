@@ -1,6 +1,12 @@
 *.o
 *.vscode
 
+# ignore compiled files
+build
+
+# ignore the actual compiler
+compiler
+
 # IDA Files
 *.id0
 *.id1
