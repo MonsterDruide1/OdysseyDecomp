@@ -18,14 +18,17 @@ namespace al
         NerveStateCtrl(int);
 
         void addState(al::NerveStateBase *, const al::Nerve *, const char *);
+        bool updateCurrentState();
+        void startState(const al::Nerve *);
         void update();
 
+        State* findStateInfo(const al::Nerve *);
         bool isCurrentStateEnd() const;
+        void tryEndCurrentState();
 
         int _0;
-        int _4;
-        State** mStates; // _8
-        int mCurrentState; // _10
-        int _14;
+        int mStateCount; // _4
+        State* mStates; // _8
+        State* mCurrentState; // _10
     };
 };
