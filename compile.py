@@ -13,7 +13,7 @@ optimziation = "-O3"
 
 root = pathlib.Path("compiler")
 compilerPath = root / "nx/aarch64/bin/clang++.exe"
-compilerCommand = f"{compilerPath} -x c++ -std=gnu++14 -fno-exceptions -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -D{gameVersion} -Wall {optimziation} -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -I include -c "
+compilerCommand = f"{compilerPath} -x c++ -std=gnu++14 -fno-exceptions -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -D{gameVersion} -Wall {optimziation} -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -I include -c "
 
 source_folder = pathlib.Path('source/')
 cpp_files = list(source_folder.rglob('*.cpp'))
