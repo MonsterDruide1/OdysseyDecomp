@@ -3,6 +3,7 @@
 namespace al
 {
     // todo -- some scheduling problems with mStateCount's incrementation
+    // adds a state to the list of states in the controller
     void NerveStateCtrl::addState(al::NerveStateBase *pBase, const al::Nerve *pNerve, const char *pName)
     {
         State* state = &mStates[mStateCount];
@@ -12,6 +13,7 @@ namespace al
         mStateCount++;
     }
 
+    // run the state's update function, if there is a current state active
     bool NerveStateCtrl::updateCurrentState()
     {
         if (!mCurrentState)
@@ -23,6 +25,8 @@ namespace al
     }
 
     // UNUSED FUNCTION
+    // uses a supplied nerve pointer to compare it with the nerves contained in states
+    // returns the matching nerve, if any
     State* al::NerveStateCtrl::findStateInfo(const al::Nerve *pNerve)
     {
         if (mStateCount < 1)
@@ -45,6 +49,8 @@ namespace al
         return nullptr;
     }
 
+    // determines if the current state on the controller has ended
+    // this can occur if there is no state, or if the base is not considered dead
     bool NerveStateCtrl::isCurrentStateEnd() const
     {
         if (!mCurrentState)
@@ -55,6 +61,7 @@ namespace al
         return mCurrentState->mStateBase->mIsDead != 0;
     }
 
+    // attempt to end the currently active state by "killing" the state, then killing the state controller contained in the nerve keeper
     void NerveStateCtrl::tryEndCurrentState()
     {
         if (mCurrentState)
