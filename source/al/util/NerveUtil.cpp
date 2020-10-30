@@ -1,5 +1,6 @@
 #include "al/util/NerveUtil.h"
 #include "al/nerve/NerveKeeper.h"
+#include "al/nerve/NerveStateCtrl.h"
 
 namespace al
 {
@@ -43,7 +44,7 @@ namespace al
         return pKeeper->getNerveKeeper()->mStep;
     }
 
-    al::Nerve* getCurrentNerve(const al::IUseNerve *pKeeper)
+    const al::Nerve* getCurrentNerve(const al::IUseNerve *pKeeper)
     {
         return pKeeper->getNerveKeeper()->getCurrentNerve();
     }
@@ -121,5 +122,37 @@ namespace al
         }
 
         return ret;
+    }
+
+    void initNerveState(al::IUseNerve *pKeeper, al::NerveStateBase *pStateBase, const al::Nerve *pNerve, const char *pName)
+    {
+        pStateBase->init();
+        pKeeper->getNerveKeeper()->mStateCtrl->addState(pStateBase, pNerve, pName);
+    }
+
+    void addNerveState(const al::IUseNerve *pKeeper, al::NerveStateBase *pStateBase, const al::Nerve *pNerve, const char *pName)
+    {
+        pKeeper->getNerveKeeper()->mStateCtrl->addState(pStateBase, pNerve, pName);
+    }
+
+    void updateNerveState(al::IUseNerve *pKeeper)
+    {
+        pKeeper->getNerveKeeper()->mStateCtrl->updateCurrentState();
+    }
+
+    bool updateNerveStateAndNextNerve(al::IUseNerve *pKeeper, const al::Nerve *pNerve)
+    {
+        if (pKeeper->getNerveKeeper()->mStateCtrl->updateCurrentState())
+        {
+            pKeeper->getNerveKeeper()->setNerve(pNerve);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool isStateEnd(const al::IUseNerve *pKeeper)
+    {
+        return pKeeper->getNerveKeeper()->mStateCtrl->isCurrentStateEnd();
     }
 }

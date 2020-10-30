@@ -22,6 +22,6 @@ namespace al
     {
     public:
         virtual void execute(NerveKeeper *) = 0;
-        virtual void executeOnEnd(NerveKeeper *);
+        virtual void executeOnEnd(NerveKeeper *) const;
     };
 };

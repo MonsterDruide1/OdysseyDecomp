@@ -5,6 +5,7 @@
 namespace al
 {
     class NerveStateCtrl;
+
     class NerveKeeper
     {
     public:
@@ -12,14 +13,13 @@ namespace al
 
         void update();
 
-        void setNerve(const al::Nerve *);
-        al::Nerve* getCurrentNerve() const;
-
         void tryChangeNerve();
+        void setNerve(const al::Nerve *);
+        const al::Nerve* getCurrentNerve() const;
 
         al::IUseNerve* mParent; // _0
-        al::Nerve* _8;
-        al::Nerve* mNerve; // _10
+        const al::Nerve* _8;
+        const al::Nerve* mNerve; // _10
         int mStep; // _18
         int _1C;
         al::NerveStateCtrl* mStateCtrl; // _20
