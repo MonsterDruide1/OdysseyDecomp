@@ -18,7 +18,7 @@ namespace al
         void tryChangeNerve();
 
         al::IUseNerve* mParent; // _0
-        unsigned long* _8;
+        al::Nerve* _8;
         al::Nerve* mNerve; // _10
         int mStep; // _18
         int _1C;
