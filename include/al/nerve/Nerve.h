@@ -10,12 +10,10 @@ namespace al
 
         inline IUseNerve()
         {
-            mKeeper = nullptr;
+            
         }
 
         virtual NerveKeeper* getNerveKeeper() const = 0;
-
-        al::NerveKeeper* mKeeper; // _8
     };
 
     class Nerve

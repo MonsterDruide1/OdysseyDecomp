@@ -15,5 +15,7 @@ namespace al
 
         void initNerve(const al::Nerve *, int);
         void updateNerve();
+
+        al::NerveKeeper* mKeeper; // _8
     };
 };
