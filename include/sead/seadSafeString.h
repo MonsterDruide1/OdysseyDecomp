@@ -20,6 +20,8 @@ namespace sead
         virtual BufferedSafeStringBase<T> operator=(const BufferedSafeStringBase<T> &);
         virtual void assureTerminationImpl_() const;
 
+        bool format(const char *, ...);
+
         int mBufferSize; // _10
     };
 
