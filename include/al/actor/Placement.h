@@ -22,7 +22,7 @@ namespace al
         PlacementId();
         PlacementId(const char *, const char *, const char *);
 
-        void init(const al::PlacementInfo &);
+        bool init(const al::PlacementInfo &);
         bool isEqual(const al::PlacementId &) const;
         static bool isEqual(const al::PlacementId &, const al::PlacementId &);
         bool isValid() const;

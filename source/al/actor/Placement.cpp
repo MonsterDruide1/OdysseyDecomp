@@ -23,14 +23,14 @@ namespace al
         : _0(p_0), mUnitConfigName(pUnitConfig), mID(pID), mCommonID(nullptr)
     { }
 
-    void PlacementId::init(const al::PlacementInfo &rInfo)
+    bool PlacementId::init(const al::PlacementInfo &rInfo)
     {
         _0 = nullptr, mID = nullptr, mUnitConfigName = nullptr, mCommonID = nullptr;
 
         rInfo._0.tryGetStringByKey(&mCommonID, "CommonId");
         rInfo.mZoneIter.tryGetStringByKey(&mUnitConfigName, "UnitConfigName");
         rInfo.mZoneIter.tryGetStringByKey(&mID, "Id");
-        rInfo._0.tryGetStringByKey(&_0, "Id");
+        return rInfo._0.tryGetStringByKey(&_0, "Id");
     }
 
     bool PlacementId::isValid() const
