@@ -35,7 +35,7 @@ namespace al
         bool tryGetBinary(char const **, int *, al::ByamlData const *) const;
         bool tryGetBoolByKey(bool *, char const *) const;
         bool tryConvertBool(bool *, al::ByamlData const *) const;
-        bool tryGetInt32ByKey(int *, char const *) const;
+        bool tryGetIntByKey(int *, char const *) const;
         bool tryConvertInt32(int *, al::ByamlData const *) const;
         bool tryGetUInt32ByKey(unsigned int *, char const *) const;
         bool tryConvertUInt32(unsigned int *, al::ByamlData const *) const;
