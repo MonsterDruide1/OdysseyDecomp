@@ -24,4 +24,19 @@ namespace al
     bool tryGetByamlScale(sead::Vector3<float> *, const al::ByamlIter &);
     bool tryGetByamlV2s32(sead::Vector2<int> *, const al::ByamlIter &);
     bool tryGetByamlV3s32(sead::Vector3<int> *, const al::ByamlIter &);
+
+    void getByamlIterByKey(al::ByamlIter *, const al::ByamlIter &, const char *);
+    void getByamlIterByIndex(al::ByamlIter *, const al::ByamlIter &, int);
+    bool isTypeBoolByIndex(const al::ByamlIter &, int);
+    bool isTypeBoolByKey(const al::ByamlIter &, const char *);
+    bool isTypeIntByIndex(const al::ByamlIter &, int);
+    bool isTypeIntByKey(const al::ByamlIter &, const char *);
+    bool isTypeFloatByIndex(const al::ByamlIter &, int);
+    bool isTypeFloatByKey(const al::ByamlIter &, const char *);
+    bool isTypeStringByIndex(const al::ByamlIter &, int);
+    bool isTypeStringByKey(const al::ByamlIter &, const char *);
+    bool isTypeArrayByIndex(const al::ByamlIter &, int);
+    bool isTypeArrayByKey(const al::ByamlIter &, const char *);
+    bool isTypeHashByIndex(const al::ByamlIter &, int);
+    bool isTypeHashByKey(const al::ByamlIter &, const char *);
 };

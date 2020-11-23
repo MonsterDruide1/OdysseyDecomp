@@ -15,10 +15,10 @@ namespace sead
             y = _y;
         }
 
-        static T zero;
-        static T ex;
-        static T ey;
-        static T ones;
+        static Vector2<T> zero;
+        static Vector2<T> ex;
+        static Vector2<T> ey;
+        static Vector2<T> ones;
     };
 
     template<typename T>
@@ -29,6 +29,13 @@ namespace sead
         T y;
         T z;
 
+        inline Vector3(T _x, T _y, T _z)
+        {
+            x = _x;
+            y = _y;
+            z = _z;
+        }
+
         inline void set(T _x, T _y, T _z)
         {
             x = _x;
@@ -36,11 +43,11 @@ namespace sead
             z = _z;
         }
 
-        static T zero;
-        static T ex;
-        static T ey;
-        static T ez;
-        static T ones;
+        const static Vector3 zero;
+        const static Vector3 ex;
+        const static Vector3 ey;
+        const static Vector3 ez;
+        const static Vector3 ones;
     };
 
     template<typename T>
@@ -60,11 +67,11 @@ namespace sead
             w = _w;
         }
 
-        static T zero;
-        static T ex;
-        static T ey;
-        static T ez;
-        static T ew;
-        static T ones;
+        static Vector4<T> zero;
+        static Vector4<T> ex;
+        static Vector4<T> ey;
+        static Vector4<T> ez;
+        static Vector4<T> ew;
+        static Vector4<T> ones;
     };
 };

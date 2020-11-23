@@ -199,4 +199,52 @@ namespace al
         pOut->set(x, y, z, w);
         return (z_ret | w_ret) & 0x1;
     }
+
+    void getByamlIterByKey(al::ByamlIter *pOut, const al::ByamlIter &rIter, const char *pKey)
+    {
+        rIter.tryGetIterByKey(pOut, pKey);
+    }
+
+    void getByamlIterByIndex(al::ByamlIter *pOut, const al::ByamlIter &rIter, int index)
+    {
+        rIter.tryGetIterByIndex(pOut, index);
+    }
+
+    bool isTypeBoolByIndex(const al::ByamlIter &rIter, int index)
+    {
+        bool ret;
+        al::ByamlData data;
+
+        bool valid = rIter.getByamlDataByIndex(&data, index);
+
+        if (valid)
+        {
+            ret = (data.getType() & 0xFF) == TYPE_BOOL;
+        }
+        else
+        {
+            ret = false;
+        }
+        
+        return ret;
+    }
+
+    bool isTypeBoolByKey(const al::ByamlIter &rIter, const char *pKey)
+    {
+        bool ret;
+        al::ByamlData data;
+
+        bool valid = rIter.getByamlDataByKey(&data, pKey);
+
+        if (valid)
+        {
+            ret = (data.getType() & 0xFF) == TYPE_BOOL;
+        }
+        else
+        {
+            ret = false;
+        }
+        
+        return ret;
+    }
 }
