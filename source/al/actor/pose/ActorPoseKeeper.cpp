@@ -1,4 +1,4 @@
-#include "al/actor/pose/ActorPoseKeeperBase.h"
+#include "al/actor/pose/ActorPoseKeeper.h"
 
 namespace al
 {
@@ -80,5 +80,51 @@ namespace al
     sead::Matrix34<float>* ActorPoseKeeperBase::getMtxPtr()
     {
         return nullptr;
+    }
+
+    /* ActorPoseKeeperTRSV (Translation, Rotation, Scale, Velocity) */
+
+    const sead::Vector3<float>& ActorPoseKeeperTRSV::getRotate() const
+    {
+        return mRotation;
+    }
+
+    const sead::Vector3<float>& ActorPoseKeeperTRSV::getScale() const
+    {
+        return mScale;
+    }
+
+    const sead::Vector3<float>& ActorPoseKeeperTRSV::getVelocity() const
+    {
+        return mVelocity;
+    }
+
+    sead::Vector3<float>* ActorPoseKeeperTRSV::getRotatePtr()
+    {
+        return &mRotation;
+    }
+
+    sead::Vector3<float>* ActorPoseKeeperTRSV::getScalePtr()
+    {
+        return &mScale;
+    }
+
+    sead::Vector3<float>* ActorPoseKeeperTRSV::getVelocityPtr()
+    {
+        return &mVelocity;
+    }
+
+    void ActorPoseKeeperTRSV::updatePoseTrans(const sead::Vector3<float> &rTrans)
+    {
+        mTranslation.x = rTrans.x;
+        mTranslation.y = rTrans.y;
+        mTranslation.z = rTrans.z;
+    }
+
+    void ActorPoseKeeperTRSV::updatePoseRotate(const sead::Vector3<float> &rRotation)
+    {
+        mRotation.x = rRotation.x;
+        mRotation.y = rRotation.y;
+        mRotation.z = rRotation.z;
     }
 };
