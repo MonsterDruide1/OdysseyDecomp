@@ -2,42 +2,42 @@
 
 namespace al
 {
-    const sead::Vector3<float>* ActorPoseKeeperBase::getRotate() const
+    const sead::Vector3<float>& ActorPoseKeeperBase::getRotate() const
     {
-        return &sead::Vector3<float>::zero;
+        return sead::Vector3<float>::zero;
     }
 
-    const sead::Vector3<float>* ActorPoseKeeperBase::getScale() const
+    const sead::Vector3<float>& ActorPoseKeeperBase::getScale() const
     {
-        return &sead::Vector3<float>::ones;
+        return sead::Vector3<float>::ones;
     }
 
-    const sead::Vector3<float>* ActorPoseKeeperBase::getVelocity() const
+    const sead::Vector3<float>& ActorPoseKeeperBase::getVelocity() const
     {
-        return &sead::Vector3<float>::zero;
+        return sead::Vector3<float>::zero;
     }
 
-    const sead::Vector3<float>* ActorPoseKeeperBase::getFront() const
+    const sead::Vector3<float>& ActorPoseKeeperBase::getFront() const
     {
-        return &sead::Vector3<float>::ez;
+        return sead::Vector3<float>::ez;
     }
 
-    const sead::Vector3<float>* ActorPoseKeeperBase::getUp() const
+    const sead::Vector3<float>& ActorPoseKeeperBase::getUp() const
     {
-        return &sead::Vector3<float>::ey;
+        return sead::Vector3<float>::ey;
     }
 
-    const sead::Quat<float>* ActorPoseKeeperBase::getQuat() const
+    const sead::Quat<float>& ActorPoseKeeperBase::getQuat() const
     {
-        return &sead::Quat<float>::unit;
+        return sead::Quat<float>::unit;
     }
 
-    const sead::Vector3<float>* ActorPoseKeeperBase::getGravity() const
+    const sead::Vector3<float>& ActorPoseKeeperBase::getGravity() const
     {
-        return &sDefaultVelocity;
+        return sDefaultVelocity;
     }
 
-    const sead::Matrix34<float>* ActorPoseKeeperBase::getMtx() const
+    const sead::Matrix34<float>& ActorPoseKeeperBase::getMtx() const
     {
         return &sead::Matrix34<float>::ident;
     }
