@@ -39,7 +39,7 @@ namespace al
 
     const sead::Matrix34<float>& ActorPoseKeeperBase::getMtx() const
     {
-        return &sead::Matrix34<float>::ident;
+        return sead::Matrix34<float>::ident;
     }
 
     sead::Vector3<float>* ActorPoseKeeperBase::getRotatePtr()
