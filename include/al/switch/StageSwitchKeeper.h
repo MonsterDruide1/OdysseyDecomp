@@ -12,4 +12,10 @@ namespace al
         virtual al::StageSwitchKeeper* getStageSwitchKeeper() const = 0;
         virtual void initStageSwitchKeeper() = 0;
     };
+
+    class StageSwitchKeeper
+    {
+    public:
+        StageSwitchKeeper();
+    };
 };

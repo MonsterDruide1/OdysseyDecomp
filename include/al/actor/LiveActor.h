@@ -8,6 +8,7 @@
 #include "al/effect/EffectKeeper.h"
 #include "al/hio/IUseHioNode.h"
 #include "al/nerve/Nerve.h"
+#include "al/pose/ActorPoseKeeper.h"
 #include "al/rail/RailKeeper.h"
 #include "al/rail/RailRider.h"
 #include "al/scene/SceneObjHolder.h"
@@ -25,7 +26,8 @@ namespace al
         virtual al::NerveKeeper* getNerveKeeper() const;
 
         const char* mActorName; // _48
-        char _50[0x90-0x50];
+        al::ActorPoseKeeperBase* mPoseKeeper; // _50
+        char _58[0x90-0x58];
         al::NerveKeeper* mNerveKeeper; // _90
         al::HitSensorKeeper* mHitSensorKeeper; // _98
         al::ScreenPointKeeper* mScreenPointKeeper; // _A0

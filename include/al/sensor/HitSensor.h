@@ -1,6 +1,7 @@
 #pragma once
 
 #include "al/actor/LiveActor.h"
+#include "al/sensor/SensorHitGroup.h"
 #include "sead/seadVector.h"
 
 namespace al
@@ -9,22 +10,33 @@ namespace al
     {
     public:
 
+        bool trySensorSort();
+        void setFollowPosPtr(const sead::Vector3<float> *);
+        void setFollowMtxPtr(const sead::Matrix34<float> *);
+        void validate();
+        void invalidate();
+        void validateBySystem();
+        void invalidateBySystem();
         void update();
         void addHitSensor(al::HitSensor *);
 
         const char* mName; // _0
         int _8;
-        int _C;
-        unsigned long _10;
+        float _C;
+        float _10;
+        float _14;
         float _18;
         unsigned short mMaxSensorCount; // _1C
-        short mSensorCount; // _1E
+        unsigned short mSensorCount; // _1E
         al::HitSensor** mSensors; // _20
         unsigned long _28;
-        unsigned long _30;
-        unsigned long _38;
+        al::SensorHitGroup* mHitGroup; // _30
+        bool mIsValidBySystem; // _38
+        bool mIsValid; // _39
+        unsigned int _3A;
+        unsigned short _3E;
         al::LiveActor* mParentActor; // _40
-        unsigned long _48;
-        sead::Vector3<float>* _50;
+        const sead::Vector3<float>* mFollowPos; // _48
+        const sead::Matrix34<float>* mFollowMtx; // _50
     };
 };

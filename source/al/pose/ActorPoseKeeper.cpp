@@ -1,4 +1,4 @@
-#include "al/actor/pose/ActorPoseKeeper.h"
+#include "al/pose/ActorPoseKeeper.h"
 
 namespace al
 {
