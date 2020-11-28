@@ -7,4 +7,10 @@ namespace al
     public:
         // ??
     };
+
+    class HioNode : public IUseHioNode
+    {
+    public:
+        // ??
+    };
 };
