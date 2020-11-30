@@ -6,7 +6,7 @@
 #include "al/camera/CameraDirector.h"
 #include "al/collision/CollisionDirector.h"
 #include "al/effect/EffectKeeper.h"
-#include "al/hio/IUseHioNode.h"
+#include "al/hio/HioNode.h"
 #include "al/nerve/Nerve.h"
 #include "al/pose/ActorPoseKeeper.h"
 #include "al/rail/RailKeeper.h"

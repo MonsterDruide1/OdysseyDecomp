@@ -1,8 +1,8 @@
 #pragma once
 
-#include "sead/seadMatrix.h"
-#include "sead/seadQuat.h"
-#include "sead/seadVector.h"
+#include "math/seadMatrix.h"
+#include "math/seadQuat.h"
+#include "math/seadVector.h"
 
 namespace al
 {

@@ -32,13 +32,13 @@ namespace al
         return strstr(pString_0, pString_1);
     }
 
-    bool isEqualSubString(const sead::SafeStringBase<char> &pString_0, const sead::SafeStringBase<char> &pString_1)
+    /*bool isEqualSubString(const sead::SafeStringBase<char> &pString_0, const sead::SafeStringBase<char> &pString_1)
     {
         pString_0.assureTerminationImpl_();
         const char* str = pString_0.mStringTop;
         pString_1.assureTerminationImpl_();
         return strstr(str, pString_1.mStringTop);
-    }
+    }*/
 
     bool isStartWithString(const char *pString_0, const char *pString_1)
     {

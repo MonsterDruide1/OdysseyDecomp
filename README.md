@@ -9,3 +9,6 @@ After downloading or cloning this repository, download [this.](http://shibboleet
 
 # Contributing
 Anyone is welcome to contribute to this project, just send a pull request!
+
+# Credits
+This decompilation uses [this](https://github.com/open-ead/sead) as a reference for the sead library used. Big thanks to their research!

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <sead/seadSafeString.h>
+#include "prim/seadSafeString.h"
 
 namespace al
 {
