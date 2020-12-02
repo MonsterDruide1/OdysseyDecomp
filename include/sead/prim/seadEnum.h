@@ -17,6 +17,17 @@ public:
     static CriticalSection* getParseTextCS_();
     static CriticalSection* getInitValueArrayCS_();
 
+    static constexpr int countValues(const char* text_all, size_t text_all_len)
+    {
+        int count = 1;
+        for (size_t i = 0; i < text_all_len; ++i)
+        {
+            if (text_all[i] == ',')
+                ++count;
+        }
+        return count;
+    }
+
 private:
     static void skipToWordEnd_(char** p_ptr, char** p_next);
     static void skipToWordStart_(char** p_ptr);
@@ -122,15 +133,7 @@ private:
                                                                                                    \
         static constexpr const char* cTextAll = #__VA_ARGS__;                                      \
         static constexpr size_t cTextAllLen = sizeof(#__VA_ARGS__);                                \
-        static constexpr int cCount = [] {                                                         \
-            int count = 1;                                                                         \
-            for (size_t i = 0; i < cTextAllLen; ++i)                                               \
-            {                                                                                      \
-                if (cTextAll[i] == ',')                                                            \
-                    ++count;                                                                       \
-            }                                                                                      \
-            return count;                                                                          \
-        }();                                                                                       \
+        static constexpr int cCount = sead::EnumUtil::countValues(cTextAll, cTextAllLen);          \
                                                                                                    \
         int mIdx;                                                                                  \
     };
@@ -314,15 +317,7 @@ private:
                                                                                                    \
         static constexpr const char* cTextAll = #__VA_ARGS__;                                      \
         static constexpr size_t cTextAllLen = sizeof(#__VA_ARGS__);                                \
-        static constexpr int cCount = [] {                                                         \
-            int count = 1;                                                                         \
-            for (int i = 0; i < cTextAllLen; ++i)                                                  \
-            {                                                                                      \
-                if (cTextAll[i] == ',')                                                            \
-                    ++count;                                                                       \
-            }                                                                                      \
-            return count;                                                                          \
-        }();                                                                                       \
+        static constexpr int cCount = sead::EnumUtil::countValues(cTextAll, cTextAllLen);          \
                                                                                                    \
         int mIdx;                                                                                  \
     };

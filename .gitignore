@@ -6,6 +6,7 @@ build
 
 # ignore the actual compiler
 compiler
+include/nn
 
 # IDA Files
 *.id0
