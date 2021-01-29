@@ -1,7 +1,7 @@
 #pragma once
 
 #include "al/byaml/ByamlIter.h"
-#include "prim/seadSafeString.h"
+#include "sead/seadSafeString.h"
 
 namespace al
 {

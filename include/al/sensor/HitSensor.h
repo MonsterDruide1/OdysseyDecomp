@@ -2,7 +2,7 @@
 
 #include "al/actor/LiveActor.h"
 #include "al/sensor/SensorHitGroup.h"
-#include "math/seadVector.h"
+#include "sead/seadVector.h"
 
 namespace al
 {
