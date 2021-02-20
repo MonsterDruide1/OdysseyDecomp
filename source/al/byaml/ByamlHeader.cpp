@@ -1,5 +1,5 @@
 #include "al/byaml/ByamlHeader.h"
-#include "aarch64.h"
+#include "byteswap.h"
 
 // "YB"
 #define BYAML_LE_TAG 0x5942
@@ -8,7 +8,7 @@ namespace al
 {
     short ByamlHeader::getTag() const
     {
-        int revTag = bswap16(mTag);
+        int revTag = __bswap_16(mTag);
         int ret;
 
         if (mTag == BYAML_LE_TAG)
@@ -29,7 +29,7 @@ namespace al
         int tag = _0 & 0xFFFF;
         int ver = _0 >> 16;
         
-        short revVer = bswap16(ver);
+        short revVer = __bswap_16(ver);
         short ret;
 
         // if the tag is "YB", then it is in little endian
@@ -44,7 +44,7 @@ namespace al
     int ByamlHeader::getHashKeyTableOffset() const
     {
         short tag = mTag;
-        int offsRev = bswap32(mHashKeyOffset);
+        int offsRev = __bswap_32(mHashKeyOffset);
         int offs;
 
         if (tag == BYAML_LE_TAG)
@@ -58,7 +58,7 @@ namespace al
     int ByamlHeader::getStringTableOffset() const
     {
         short tag = mTag;
-        int offsRev = bswap32(mStringTableOffset);
+        int offsRev = __bswap_32(mStringTableOffset);
         int offs;
 
         if (tag == BYAML_LE_TAG)
@@ -72,7 +72,7 @@ namespace al
     int ByamlHeader::getDataOffset() const
     {
         short tag = mTag;
-        int offsRev = bswap32(mDataOffset);
+        int offsRev = __bswap_32(mDataOffset);
         int offs;
 
         if (tag == BYAML_LE_TAG)

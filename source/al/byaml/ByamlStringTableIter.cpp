@@ -1,5 +1,5 @@
 #include "al/byaml/ByamlStringTableIter.h"
-#include "aarch64.h"
+#include "byteswap.h"
 
 namespace al
 {
@@ -28,7 +28,7 @@ namespace al
     {
         /* todo -- scheduling issues */
         int offs = *((int*)(mData + idx) + 1);
-        int offsRev = bswap32(offs);        
+        int offsRev = __bswap_32(offs);        
         int ret;
 
         if (_8)

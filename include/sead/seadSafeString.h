@@ -11,6 +11,9 @@ namespace sead
         virtual SafeStringBase<T>& operator=(const SafeStringBase<T> &);
         virtual void assureTerminationImpl_() const;
 
+        static const T cNullChar;
+
+    protected:
         const T* mTop; // _8
     };
 
@@ -18,10 +21,45 @@ namespace sead
     class BufferedSafeStringBase : public SafeStringBase<T>
     {
     public:
+        __attribute__((always_inline))
+        BufferedSafeStringBase(T* buf, int size)
+            : SafeStringBase<T>(buf)
+        {
+            mSize = size;
+
+            if (size <= 0)
+            {
+                this->mTop = 0;
+                this->mSize = 0;
+            }
+            else
+            {
+                assureTerminationImpl_();
+            }
+        };
+
         virtual ~BufferedSafeStringBase();
 
         virtual BufferedSafeStringBase<T>& operator=(const SafeStringBase<T> &);
         virtual void assureTerminationImpl_() const;
+
+        inline int copy(const SafeStringBase<T>& src, int copyLength = -1);
+
+        T* getBuffer()
+        {
+            assureTerminationImpl_();
+            return getMutableStringTop_();
+        }
+
+        T* getMutableStringTop_() 
+        { 
+            return const_cast<T*>(this->mTop); 
+        }
+
+        inline void clear() 
+        { 
+            getMutableStringTop_()[0] = this->cNullChar; 
+        }
 
         int mSize; // _10
     };
@@ -30,6 +68,11 @@ namespace sead
     class FixedSafeStringBase : public BufferedSafeStringBase<T>
     {
     public:
+        FixedSafeStringBase(const SafeStringBase<T>& rStr) : BufferedSafeStringBase<T>(mStrBuffer, Len)
+        {
+            this->copy();
+        }
+
         T mStrBuffer[Len]; // _18
     };
 
@@ -37,6 +80,8 @@ namespace sead
     class FixedSafeString : public FixedSafeStringBase<char, Len>
     {
     public:
+        FixedSafeString(const SafeStringBase<char> &rStr) : FixedSafeStringBase<char, Len>(rStr) { }
+
         virtual ~FixedSafeString();
     };
 };

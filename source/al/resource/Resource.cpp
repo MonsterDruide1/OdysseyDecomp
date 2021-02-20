@@ -4,6 +4,7 @@
 
 namespace al
 {
+
     bool Resource::isExistFile(const sead::SafeStringBase<char> &rFileName) const
     {
         bool ret = false;

@@ -1,5 +1,5 @@
 #include "al/byaml/ByamlHashPair.h"
-#include "aarch64.h"
+#include "byteswap.h"
 
 namespace al
 {
@@ -22,7 +22,7 @@ namespace al
 
     int ByamlHashPair::getValue(bool isSwap) const
     {
-        int swap = bswap32(mData);
+        int swap = __bswap_32(mData);
         int val;
 
         if (isSwap)

@@ -1,5 +1,5 @@
 #include "al/byaml/ByamlData.h"
-#include "aarch64.h"
+#include "byteswap.h"
 
 namespace al
 {
@@ -10,7 +10,7 @@ namespace al
     {
         mType = pPair->mType;
         int pairVal = pPair->mValue;
-        int swapVal = bswap32(pairVal);
+        int swapVal = __bswap_32(pairVal);
 
         if (isRev)
             pairVal = swapVal;
@@ -20,7 +20,7 @@ namespace al
 
     void ByamlData::set(unsigned char type, unsigned int value, bool isRev)
     {
-        int val = bswap32(value);
+        int val = __bswap_32(value);
 
         if (!isRev)
             val = value;
