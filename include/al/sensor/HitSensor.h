@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/actor/LiveActor.h"
+#include "al/LiveActor/LiveActor.h"
 #include "al/sensor/SensorHitGroup.h"
 #include "sead/seadVector.h"
 
@@ -9,6 +9,7 @@ namespace al
     class HitSensor
     {
     public:
+        HitSensor(al::LiveActor *, const char *, unsigned int, float, unsigned short, const sead::Vector3<float> *, const sead::Matrix34<float> *, const sead::Vector3<float> &);
 
         bool trySensorSort();
         void setFollowPosPtr(const sead::Vector3<float> *);

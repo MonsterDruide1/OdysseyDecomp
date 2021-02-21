@@ -1,4 +1,4 @@
-#include "al/actor/LiveActor.h"
+#include "al/LiveActor/LiveActor.h"
 
 #include "al/resource/Resource.h"
 
