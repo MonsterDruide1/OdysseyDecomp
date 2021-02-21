@@ -1,4 +1,5 @@
 #include "sead/seadSafeString.h"
+#include <cstring>
 
 namespace sead
 {

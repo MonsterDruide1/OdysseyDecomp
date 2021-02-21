@@ -3,7 +3,7 @@
 #include "nn/g3d.h"
 #include "sead/seadFileDevice.h"
 #include "sead/seadResource.h"
-#include "sead/seadSafeString.h"
+#include "sead/seadSafeString.hpp"
 
 namespace al
 {
@@ -24,8 +24,9 @@ namespace al
 
         sead::ArchiveRes* mArchive; // _0
         sead::ArchiveFileDevice* mDevice; // _8
-        sead::BufferedSafeStringBase<char> mName; // _10
-        char _20[0xB8-0x20]; // _20
+        sead::FixedSafeString<0x80> mName; // _10
+        sead::Heap* mHeap; // _A8
+        unsigned long _B0;
         nn::g3d::ResFile* mResFile; // _B8
     };  
 };

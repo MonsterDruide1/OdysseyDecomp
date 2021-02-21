@@ -6,12 +6,22 @@ namespace sead
     class SafeStringBase
     {
     public:
+        SafeStringBase(const T* pStr) : mTop(pStr) { }
         virtual ~SafeStringBase();
 
         virtual SafeStringBase<T>& operator=(const SafeStringBase<T> &);
         virtual void assureTerminationImpl_() const;
 
+        inline int calcLength() const;
+
+        const T* cstr() const
+        {
+            assureTerminationImpl_();
+            return mTop;
+        }
+
         static const T cNullChar;
+        static const int cMaximumLength = 0x80000;
 
     protected:
         const T* mTop; // _8
@@ -70,7 +80,7 @@ namespace sead
     public:
         FixedSafeStringBase(const SafeStringBase<T>& rStr) : BufferedSafeStringBase<T>(mStrBuffer, Len)
         {
-            this->copy();
+            this->copy(rStr);
         }
 
         T mStrBuffer[Len]; // _18

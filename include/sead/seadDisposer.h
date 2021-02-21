@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sead/seadListImpl.h"
+
 namespace sead
 {
     class Heap;
@@ -22,5 +24,6 @@ namespace sead
         IDisposer(sead::Heap *, HeapNullOption);
 
         sead::Heap* mDisposerHeap; // _8
+        sead::ListNode mNode; // _10
     };
 };
