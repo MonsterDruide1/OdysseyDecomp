@@ -11,7 +11,9 @@ namespace al
     public:
         LiveActorGroup(const char *, int);
 
-        virtual void registerActor(al::LiveActor *);
+        virtual int registerActor(al::LiveActor *);
+
+        void removeActor(const al::LiveActor *);
 
         const char* mGroupName; // _8
         int mMaxActorCount; // _10

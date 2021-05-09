@@ -10,9 +10,28 @@ namespace al
         mActors = new LiveActor*[max];
     }
 
-    void LiveActorGroup::registerActor(al::LiveActor *pActor)
+    int LiveActorGroup::registerActor(al::LiveActor *pActor)
     {
-        mActors[mActorCount] = pActor;
-        ++mActorCount;
+        this->mActors[this->mActorCount] = pActor;
+        auto count = this->mActorCount;
+        this->mActorCount = count + 1;
+        return count;
+    }
+
+    void LiveActorGroup::removeActor(const al::LiveActor *pActor)
+    {
+        auto actorCount = mActorCount;
+
+        if (actorCount >= 1)
+        {
+            for (auto i = 0; i < actorCount; i++)
+            {
+                if (mActors[i] == pActor)
+                {
+                    mActors[mActorCount] = mActors[mActorCount - 1];
+                    mActorCount--;
+                }
+            }
+        }
     }
 };
