@@ -11,21 +11,21 @@ gameVersion = versions[int(sys.argv[1])]
 # todo -- 1.3.0 uses a different optimization method, find it
 optimziation = "-O3"
 
-root = pathlib.Path("compiler")
-compilerPath = root / "nx/aarch64/bin/clang++.exe"
+compilerPath = "../clang-4.0.1/bin/clang++"
 compilerCommand = f"{compilerPath} -x c++ -w -std=gnu++14 -fno-strict-aliasing -fno-exceptions -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -D{gameVersion} -DNNSDK {optimziation} -fomit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -g -I include -I include/sead -I compiler/nx/aarch64/include -c "
 
-source_folder = pathlib.Path('source/')
+source_folder = pathlib.Path('src/')
 cpp_files = list(source_folder.rglob('*.cpp'))
 
 for cpp_file in cpp_files:
     compilerCommand += str(cpp_file) + " "
-    
-if subprocess.call(compilerCommand) == 1:
+
+if subprocess.call(compilerCommand, shell=True) == 1:
     sys.exit(1)
 
 # this all assumes that the user doesn't have a single build folder
 if not os.path.isdir("build/VER_100"):
+    os.mkdir("build")
     os.mkdir("build/VER_100")
     os.mkdir("build/VER_110")
     os.mkdir("build/VER_120")
