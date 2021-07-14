@@ -1,4 +1,4 @@
-#include "al/util/StringUtil.h"
+#include <resource/seadResource.h>
 #include <cstring>
 
 namespace al
@@ -66,21 +66,6 @@ namespace al
         return false;
     }
 
-    bool isEndWithString(const char *pString_0, const char *pString_1)
-    {
-        int pString0_Len = strlen(pString_0);
-        int pString1_Len = strlen(pString_1);
-
-        if (pString0_Len < pString1_Len)
-        {
-            return false;
-        }
-        else
-        {
-            return isEqualString(&pString_0[pString0_Len - pString1_Len], pString_1);
-        }
-    }
-
     bool isEqualString(const char *pString_0, const char *pString_1)
     {
         char val;
@@ -103,5 +88,20 @@ namespace al
         }
 
         return false;
+    }
+
+    bool isEndWithString(const char *pString_0, const char *pString_1)
+    {
+        int pString0_Len = strlen(pString_0);
+        int pString1_Len = strlen(pString_1);
+
+        if (pString0_Len < pString1_Len)
+        {
+            return false;
+        }
+        else
+        {
+            return isEqualString(&pString_0[pString0_Len - pString1_Len], pString_1);
+        }
     }
 };

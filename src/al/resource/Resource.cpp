@@ -1,8 +1,9 @@
 #include "al/resource/Resource.h"
 #include "al/util/ArchiveUtil.h"
-#include "sead/seadFileDevice.h"
-#include "sead/seadHeap.h"
-#include "sead/seadResource.h"
+#include <filedevice/seadFileDevice.h>
+#include <heap/seadHeap.h>
+#include <heap/seadHeapMgr.h>
+#include <resource/seadResource.h>
 
 #include <agl/g3d.h>
 

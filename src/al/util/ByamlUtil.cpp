@@ -181,7 +181,7 @@ namespace al
         float z = 0;
         bool z_ret = rIter.tryGetFloatByKey(&z, "Z");
 
-        pOut->set(x, y, z);
+        *pOut = {x, y, z};
         return (y_ret | z_ret) & 0x1;
     }
 
@@ -196,7 +196,7 @@ namespace al
         float w = 0;
         bool w_ret = rIter.tryGetFloatByKey(&w, "W");
 
-        pOut->set(x, y, z, w);
+        *pOut = {x, y, z, w};
         return (z_ret | w_ret) & 0x1;
     }
 

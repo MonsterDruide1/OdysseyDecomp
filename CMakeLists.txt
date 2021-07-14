@@ -28,4 +28,9 @@ target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 add_subdirectory(src)
 include_directories(include)
 include_directories(include/aarch64)
-include_directories(include/sead)
+
+add_subdirectory(include/NintendoSDK)
+target_link_libraries(odyssey PUBLIC NintendoSDK)
+
+add_subdirectory(include/sead)
+target_link_libraries(odyssey PUBLIC sead)
