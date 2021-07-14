@@ -34,3 +34,6 @@ target_link_libraries(odyssey PUBLIC NintendoSDK)
 
 add_subdirectory(include/sead)
 target_link_libraries(odyssey PUBLIC sead)
+
+add_subdirectory(include/agl)
+target_link_libraries(odyssey PUBLIC agl)

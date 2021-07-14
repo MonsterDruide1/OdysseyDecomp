@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nn/g3d.h"
+#include <nn/g3d/ResFile.h>
 #include <filedevice/seadFileDevice.h>
 #include <filedevice/seadArchiveFileDevice.h>
 #include <resource/seadResource.h>

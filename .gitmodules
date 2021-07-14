@@ -4,3 +4,6 @@
 [submodule "include/NintendoSDK"]
 	path = include/NintendoSDK
 	url = https://github.com/open-ead/nnheaders
+[submodule "include/agl"]
+	path = include/agl
+	url = https://github.com/open-ead/agl

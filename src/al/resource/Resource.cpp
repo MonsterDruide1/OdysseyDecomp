@@ -4,8 +4,7 @@
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
 #include <resource/seadResource.h>
-
-#include <agl/g3d.h>
+#include <agl/g3d/g3dResFile.h>
 
 namespace al
 {
