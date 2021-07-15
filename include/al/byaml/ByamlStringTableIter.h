@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al
 {
     class ByamlStringTableIter
@@ -9,7 +11,7 @@ namespace al
         ByamlStringTableIter(const unsigned char *, bool);
 
         int getSize() const;
-        const unsigned char* getAddressTable() const;
+        const u32* getAddressTable() const;
         int getStringAddress(int) const;
         int getEndAddress() const;
         const char* getString(int) const;
@@ -17,7 +19,7 @@ namespace al
         int findStringIndex(const char *) const;
         bool isValidate() const;
 
-        const unsigned char* mData; // _0
-        unsigned char _8;
+        const u8* mData; // _0
+        bool mReversed;
     };
 };

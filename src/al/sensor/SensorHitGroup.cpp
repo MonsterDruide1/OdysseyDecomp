@@ -2,11 +2,10 @@
 
 namespace al
 {
-    void SensorHitGroup::add(al::HitSensor *pSensor)
+    void SensorHitGroup::add(al::HitSensor* pSensor)
     {
-        // todo -- fix incrementation issue
         mSensors[mSensorCount] = pSensor;
-        ++mSensorCount;
+        mSensorCount++;
     }
 
     al::HitSensor* SensorHitGroup::getSensor(int idx) const

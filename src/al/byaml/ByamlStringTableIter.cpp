@@ -4,43 +4,34 @@
 namespace al
 {
     ByamlStringTableIter::ByamlStringTableIter()
-        : mData(0), _8(0) { }
+        : mData(0), mReversed(0) { }
 
-    ByamlStringTableIter::ByamlStringTableIter(const unsigned char *pData, bool unk)
+    ByamlStringTableIter::ByamlStringTableIter(const u8* pData, bool pReversed)
     {
         mData = pData;
-        _8 = unk;
+        mReversed = pReversed;
     }
 
     int ByamlStringTableIter::getSize() const
     {
-        /* todo -- why does this use different register numbers? */
-        return _8 != 0 ? ((*mData >> 24) & 0xFF) | ((*mData >> 16) & 0xFF) << 8 | ((*mData >> 8) & 0xFF) << 16 : *mData >> 8;
+        u32 type_and_size = *reinterpret_cast<const u32*>(mData);
+        if(mReversed)
+            return ((type_and_size >> 24) & 0xFF) | ((type_and_size >> 16) & 0xFF) << 8 | ((type_and_size >> 8) & 0xFF) << 16;
+        return type_and_size >> 8;
     }
 
-    const unsigned char* ByamlStringTableIter::getAddressTable() const
+    const u32* ByamlStringTableIter::getAddressTable() const
     {
         // mData is an integer pointer, so getting to the table is just increasing the pointer by 1 (which is + 4)
-        return reinterpret_cast<const unsigned char *>(mData + 4);
+        return reinterpret_cast<const u32*>(mData + 4);
     }
 
     int ByamlStringTableIter::getStringAddress(int idx) const
     {
-        /* todo -- scheduling issues */
-        int offs = *((int*)(mData + idx) + 1);
-        int offsRev = __bswap_32(offs);        
-        int ret;
-
-        if (_8)
-        {
-            ret = offsRev;
-        }
-        else
-        {
-            ret = offs;
-        }
-
-        return ret;
+        if (mReversed)
+            return __bswap_32(getAddressTable()[idx]);
+            
+        return getAddressTable()[idx];
     }
 
     bool ByamlStringTableIter::isValidate() const

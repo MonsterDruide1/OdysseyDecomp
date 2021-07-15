@@ -6,11 +6,7 @@ namespace al
     {
         mIsDead = true;
     }
-
-    NerveStateBase::~NerveStateBase()
-    {
-        delete this;
-    }
+    NerveStateBase::~NerveStateBase() = default;
 
     void NerveStateBase::init()
     {

@@ -18,19 +18,12 @@ namespace al
         return count;
     }
 
-    void LiveActorGroup::removeActor(const al::LiveActor *pActor)
-    {
-        auto actorCount = mActorCount;
-
-        if (actorCount >= 1)
-        {
-            for (auto i = 0; i < actorCount; i++)
-            {
-                if (mActors[i] == pActor)
-                {
-                    mActors[mActorCount] = mActors[mActorCount - 1];
-                    mActorCount--;
-                }
+    void LiveActorGroup::removeActor(const al::LiveActor *pActor) {
+        for (int i = 0; i < mActorCount; i++) {
+            if (mActors[i] == pActor) {
+                mActors[i] = mActors[mActorCount - 1];
+                mActorCount--;
+                break;
             }
         }
     }

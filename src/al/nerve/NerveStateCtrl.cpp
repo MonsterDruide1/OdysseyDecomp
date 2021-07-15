@@ -5,8 +5,12 @@ namespace al
     // todo -- some scheduling problems with mStateCount's incrementation
     // adds a state to the list of states in the controller
     void NerveStateCtrl::addState(al::NerveStateBase *pBase, const al::Nerve *pNerve, const char *pName)
-    {   
-        mStates[mStateCount].mStateBase = pBase, mStates[mStateCount].mNerve = pNerve, mStates[mStateCount++].mName = pName;
+    {
+        auto& state = mStates[mStateCount];
+        state.mStateBase = pBase;
+        state.mNerve = pNerve;
+        state.mName = pName;
+        mStateCount++;
     }
 
     // run the state's update function, if there is a current state active

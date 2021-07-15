@@ -4,7 +4,8 @@ namespace al
 {
     void HitSensor::setFollowPosPtr(const sead::Vector3<float> *pFollowPos)
     {
-        mFollowPos = pFollowPos, mFollowMtx = nullptr;
+        mFollowPos = pFollowPos;
+        mFollowMtx = nullptr;
     }
 
     void HitSensor::setFollowMtxPtr(const sead::Matrix34<float> *pFollowMtx)

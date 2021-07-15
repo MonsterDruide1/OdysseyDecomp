@@ -21,9 +21,6 @@ namespace al
     Resource::Resource(const sead::SafeStringBase<char> &rPath, sead::ArchiveRes *pResource)
         : mArchive(nullptr), mDevice(nullptr), mName(rPath)
     {
-        mArchive = 0;
-        mDevice = 0;
-
         mHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
         _B0 = 0;
         mResFile = 0;
@@ -40,13 +37,17 @@ namespace al
 
     unsigned int Resource::getFileSize(const sead::SafeStringBase<char> &rFileName) const
     {
-        unsigned int ret;
-        mDevice->tryGetFileSize(&ret, rFileName);
+        auto device = mDevice;
+        u32 ret = 0;
+        device->tryGetFileSize(&ret, rFileName);
         return ret;
     }
 
     void Resource::cleanupResGraphicsFile()
     {
+        if(!mResFile)
+            return;
+
         mResFile->ReleaseTexture();
         mResFile->Reset();
         agl::g3d::ResFile::Cleanup(mResFile);

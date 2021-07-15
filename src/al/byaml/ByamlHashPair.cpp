@@ -22,14 +22,9 @@ namespace al
 
     int ByamlHashPair::getValue(bool isSwap) const
     {
-        int swap = __bswap_32(mData);
-        int val;
-
-        if (isSwap)
-            val = swap;
+        if(isSwap)
+            return __bswap_32(mValue);
         else
-            val = mData;
-        
-        return val;
+            return mValue;
     }
 };

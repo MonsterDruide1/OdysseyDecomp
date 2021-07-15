@@ -3,62 +3,37 @@
 namespace alByamlLocalUtil
 {
     /* doesn't match but it's close enough */
-    const char* getDataTypeString(int type)
-    {
-        const char* str;
-
-        switch (type)
-        {
+    const char* getDataTypeString(int type) {
+        switch (type) {
+            case 0x00:
+                return "None";
             case 0xA0:
-                str = "String";
-                break;
+                return "String";
             case 0xC0:
-                str = "Array";
-                break;
+                return "Array";
             case 0xC1:
-                str = "Hash";
-                break;
+                return "Hash";
             case 0xC2:
-                str = "StringTable";
-                break;
+                return "StringTable";
             case 0xD0:
-                str = "Bool";
-                break;
+                return "Bool";
             case 0xD1:
-                str = "Int";
-                break;
+                return "Int";
             case 0xD2:
-                str = "Float";
-                break;
+                return "Float";
             case 0xD3:
-                str = "UInt";
-                break;
+                return "UInt";
             case 0xD4:
-                str = "Int64";
-                break;
+                return "Int64";
             case 0xD5:
-                str = "UInt64";
-                break;
+                return "UInt64";
             case 0xD6:
-                str = "Double";
-                break;
+                return "Double";
             case 0xFF:
-                str = "NULL";
-                break;
+                return "NULL";
             default:
-                if (type)
-                {
-                    str = "Unknown";
-                }
-                else
-                {
-                    str = "None";
-                }
-                
-                break;
+                return "Unknown";
         }
-
-        return str;
     }
 };
 
@@ -167,8 +142,7 @@ namespace al
         float y = 0;
         bool y_ret = rIter.tryGetFloatByKey(&y, "YZ");
 
-        pOut->x = x;
-        pOut->y = y;
+        *pOut = {x, y};
         return (x_ret | y_ret) & 0x1;
     }
 

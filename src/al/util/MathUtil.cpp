@@ -1,43 +1,19 @@
 #include "al/util/MathUtil.h"
 #include <cmath>
+#include <math/seadMathCalcCommon.h>
 
 namespace al
 {
-    float normalize(float var, float min, float max)
-    {
-        float v4;
-        bool v5;
-        float result;
-        float v7;
+    float normalize(float var, float min, float max) {
+        if (sead::absf(max-min) < 0.001f) {
+            if (var < min)
+                return 0.0f;
+            else
+                return 1.0f;
+        }
 
-        v4 = -(max - min);
-        if ((max - min) > 0.0f)
-        {
-            v4 = max - min;
-        }
-        if (v4 >= 0.001f)
-        {
-            v7 = min;
-            if (var >= min)
-            {
-                v7 = var;
-                if (var > max)
-                {
-                    v7 = max;
-                }
-            }
-            result = (v7 - min) / (max - min);
-        }
-        else
-        {
-            v5 = var < min;
-            result = 1.0f;
-            if (v5)
-            {
-                result = 0.0f;
-            }
-        }
-        return result;
+        float clamped = sead::clamp(var, min, max);
+        return (clamped - min) / (max - min);
     }
 
 
@@ -47,34 +23,23 @@ namespace al
         float result;
 
         if (var <= min)
-        {
             return 0.0f;
-        }
 
-        if (max - min <= 0)
-        {
+        if (max - min <= 0) {
             result = 1.0f;
             
             if (var < min)
-            {
                 result = 0.0f;
-            }
         }
         else
         {
             if (var <= max)
-            {
                 v3 = var;
-            }
             else
-            {
                 v3 = max;
-            }
 
             if (var < min)
-            {
                 v3 = min;
-            }
 
             result = (static_cast<float>(v3 - min) / static_cast<float>(max - min));
         }
@@ -144,13 +109,10 @@ namespace al
     }
 
     float lerpValue(float x, float y, float time) {
-        if (time >= 0.0f)
-        {
-            if (time > 1.0f)
-                time = 1.0f;
-        } else {
+        if(time < 0.0f)
             time = 0.0f;
-        }
+        else if(time > 1.0f)
+            time = 1.0f;
         return (x * (1.0f - time)) + (time * y);
     }
 };
