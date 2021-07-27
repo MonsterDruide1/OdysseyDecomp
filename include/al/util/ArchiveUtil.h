@@ -1,7 +1,7 @@
 #pragma once
 
-#include "sead/seadSafeString.h"
-#include "sead/seadResource.h"
+#include <prim/seadSafeString.h>
+#include <resource/seadResource.h>
 
 namespace al
 {

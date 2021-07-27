@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al
 {
     class ByamlContainerHeader
@@ -8,6 +10,6 @@ namespace al
         int getType() const;
         int getCount(bool) const;
 
-        int mType; // _0
+        u32 mType; // _0
     };
 };
