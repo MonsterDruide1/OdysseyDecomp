@@ -1,6 +1,6 @@
-// Script to load BotW CSV data into Ghidra
+// Script to load CSV data into Ghidra
 //@author AlexApps99
-//@category BotW
+//@category Switch
 
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.symbol.SourceType;
