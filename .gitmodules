@@ -1,6 +1,6 @@
 [submodule "include/sead"]
 	path = include/sead
-	url = https://github.com/open-ead/sead
+	url = https://github.com/MonsterDruide1/sead
 [submodule "include/NintendoSDK"]
 	path = include/NintendoSDK
 	url = https://github.com/MonsterDruide1/nnheaders
