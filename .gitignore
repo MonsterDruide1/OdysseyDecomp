@@ -1,18 +1,26 @@
+# Python
 __pycache__/
 *.pyc
 *.egg-info/
 *.dist-info/
-*.so
-*.dll
-dist/
-build/
-bin/
 .mypy_cache/
 .benchmarks/
 
+# Binaries
+*.so
+*.dll
+*.elf
+*.nso
+dist/
+build/
+bin/
+
+# IDEs
 .idea/
 .vscode/
+.DS_Store
 
+# IDA
 *.id0
 *.id1
 *.id2
@@ -21,11 +29,15 @@ bin/
 *.nam
 *.til
 
-main.elf
+# Ghidra
+*.gpr
+*.rep/
+*.lock
 
-perf.mData
-perf.mData.old
+# Debugging
+perf.data
+perf.data.old
 .gdb_history
 
-.DS_Store
-tools/aarch64-none-elf-objdump
+# Tooling
+/toolchain/clang-*
