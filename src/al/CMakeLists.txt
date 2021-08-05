@@ -1,8 +1,0 @@
-add_subdirectory(actor)
-add_subdirectory(byaml)
-add_subdirectory(LiveActor)
-add_subdirectory(nerve)
-add_subdirectory(pose)
-add_subdirectory(resource)
-add_subdirectory(sensor)
-add_subdirectory(util)

@@ -2,7 +2,7 @@
 
 #include "al/LiveActor/LiveActor.h"
 #include "al/sensor/SensorHitGroup.h"
-#include <math/seadVector.h>
+#include "sead/seadVector.h"
 
 namespace al
 {
@@ -34,7 +34,7 @@ namespace al
         al::SensorHitGroup* mHitGroup; // _30
         bool mIsValidBySystem; // _38
         bool mIsValid; // _39
-        bool _3A[4]; // unknown type
+        unsigned int _3A;
         unsigned short _3E;
         al::LiveActor* mParentActor; // _40
         const sead::Vector3<float>* mFollowPos; // _48
