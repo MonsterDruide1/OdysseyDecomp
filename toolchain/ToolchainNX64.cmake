@@ -42,7 +42,12 @@ add_definitions(-D SWITCH)
 add_definitions(-D NNSDK)
 add_definitions(-D MATCHING_HACK_NX_CLANG)
 
+# TODO multi-version definitions here
+add_definitions(-D VER_100)
+
 add_link_options(-stdlib=libc++ -nostdlib)
 add_link_options(-fPIC -Wl,-Bsymbolic-functions -shared)
 # Use lld for performance reasons (and because we don't want a dependency on GNU tools)
 add_link_options(-fuse-ld=${ODYSSEY_CLANG_LLD}/bin/ld.lld)
+#add_link_options(-B "/home/monsterdruide1/botw/toolchain/lld-path")
+#add_link_options(-fuse-ld=lld)

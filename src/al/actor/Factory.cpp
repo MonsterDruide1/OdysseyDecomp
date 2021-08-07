@@ -12,8 +12,8 @@ namespace al
         : mFactoryName(pName), mFactoryEntries(nullptr), mNumFactoryEntries(0)
     { }
 
-    ProjectActorFactory::ProjectActorFactory() : ActorFactory("繧｢繧ｯ繧ｿ繝ｼ逕滓")
-    {
+    ProjectActorFactory::ProjectActorFactory() : ActorFactory("アクター生成") {//("繧｢繧ｯ繧ｿ繝ｼ逕滓")
+        mFactoryEntries = nullptr;
         #ifdef VER_100
         mNumFactoryEntries = 0x23A;
         #endif

@@ -51,7 +51,7 @@ namespace al
         while (*pString_0 == *pString_1) {
             char val = *pString_0; //required to match
 
-            if (!*pString_0)
+            if (!val)
                 return true;
 
             ++pString_1;
@@ -60,6 +60,7 @@ namespace al
         
         return false;
     }
+
 
     bool isEndWithString(const char *pString_0, const char *pString_1)
     {

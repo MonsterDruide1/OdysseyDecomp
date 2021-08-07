@@ -3,6 +3,7 @@
 #include "al/LiveActor/LiveActor.h"
 #include "al/sensor/SensorHitGroup.h"
 #include <math/seadVector.h>
+#include <math/seadMatrix.h>
 
 namespace al
 {

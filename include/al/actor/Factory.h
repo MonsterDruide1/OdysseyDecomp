@@ -33,5 +33,6 @@ namespace al
     {
     public:
         ProjectActorFactory();
+        const char* convertName(const char*) const override;
     };
 };
