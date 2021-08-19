@@ -28,14 +28,14 @@ target_compile_options(odyssey PRIVATE -fno-strict-aliasing)
 target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 
 add_subdirectory(src)
-include_directories(include)
-include_directories(include/aarch64)
+include_directories(lib)
+include_directories(lib/aarch64)
 
-add_subdirectory(include/NintendoSDK)
+add_subdirectory(lib/NintendoSDK)
 target_link_libraries(odyssey PUBLIC NintendoSDK)
 
-add_subdirectory(include/sead)
+add_subdirectory(lib/sead)
 target_link_libraries(odyssey PUBLIC sead)
 
-add_subdirectory(include/agl)
+add_subdirectory(lib/agl)
 target_link_libraries(odyssey PUBLIC agl)
