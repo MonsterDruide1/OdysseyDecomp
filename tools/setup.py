@@ -3,8 +3,17 @@
 import argparse
 import hashlib
 from pathlib import Path
+import subprocess
 from typing import Optional
 from common import setup_common as setup
+from enum import Enum
+
+class Version(Enum):
+    VER_100 = "1.0"
+    VER_101 = "1.0.1"
+    VER_110 = "1.1"
+    VER_120 = "1.2"
+    VER_130 = "1.3"
 
 def prepare_executable(original_nso: Optional[Path]):
     COMPRESSED_V10_HASH = "e21692d90f8fd2def2d2d22d983d62ac81df3b8b3c762d1f2dca9d9ab7b3053a"
@@ -46,6 +55,17 @@ def prepare_executable(original_nso: Optional[Path]):
     if not TARGET_ELF_PATH.is_file():
         setup.fail("internal error while preparing executable (missing ELF); please report")
 
+def create_build_dir(ver):
+    if(ver != Version.VER_100): return # TODO remove this when multiple versions should be built
+    build_dir = setup.ROOT / "build" # ("build-"+ver.value)
+    if build_dir.is_dir():
+        print(">>> build directory already exists: nothing to do")
+        return
+
+    subprocess.check_call(
+        ("cmake -GNinja -DCMAKE_CXX_FLAGS=-D"+ver.name+" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -B "+str(build_dir)).split(" "))
+    print(">>> created build directory") 
+
 def main():
     parser = argparse.ArgumentParser(
         "setup.py", description="Set up the Super Mario Odyssey decompilation project")
@@ -57,7 +77,11 @@ def main():
     prepare_executable(args.original_nso)
     setup.set_up_compiler("4.0.1")
     print("Please download and extract clang-3.9.1 manually, until it has been properly added to the setup chain.")
-    setup.create_build_dir()
+    create_build_dir(Version.VER_100)
+    create_build_dir(Version.VER_101)
+    create_build_dir(Version.VER_110)
+    create_build_dir(Version.VER_120)
+    create_build_dir(Version.VER_130)
 
 
 if __name__ == "__main__":

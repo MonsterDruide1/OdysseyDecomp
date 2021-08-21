@@ -69,7 +69,7 @@ To check whether everything built correctly, just run `tools/check` after the bu
 Anyone is welcome to contribute to this project, just send a pull request!
 
 ### TODO
-- Different game versions with custom code sections should be included/excluded using `ifdefs`, so add the `VER_` definitions to the build chain when compiling specific verisions (example of usage: src/al/actor/Factory.cpp) - available definitions: `"VER_100", "VER_101", "VER_110", "VER_120", "VER_130"`.
+- Enable comparison between different versions and check for mis-matches in all versions using `tools/check`
 - 1.3.0 uses a different optimization method, find it and implement it into the toolchain
 
 # Credits

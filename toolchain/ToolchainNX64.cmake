@@ -42,9 +42,6 @@ add_definitions(-D SWITCH)
 add_definitions(-D NNSDK)
 add_definitions(-D MATCHING_HACK_NX_CLANG)
 
-# TODO multi-version definitions here
-add_definitions(-D VER_100)
-
 add_link_options(-stdlib=libc++ -nostdlib)
 add_link_options(-fPIC -Wl,-Bsymbolic-functions -shared)
 # Use lld for performance reasons (and because we don't want a dependency on GNU tools)
