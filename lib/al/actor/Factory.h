@@ -1,5 +1,12 @@
 #pragma once
 
+#include <cstddef>
+template <class T, std::ptrdiff_t N>
+constexpr std::ptrdiff_t ssize(const T (&array)[N]) noexcept
+{
+    return N;
+}
+
 namespace al
 {
     class LiveActor;
@@ -25,14 +32,7 @@ namespace al
         ActorFactory(const char *);
 
         const char* mFactoryName; // _8
-        al::FactoryEntry** mFactoryEntries; // _10
+        al::FactoryEntry* mFactoryEntries; // _10
         int mNumFactoryEntries; // _18
-    };
-    
-    class ProjectActorFactory : public al::ActorFactory
-    {
-    public:
-        ProjectActorFactory();
-        const char* convertName(const char*) const override;
     };
 };
