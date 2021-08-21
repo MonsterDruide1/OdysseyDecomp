@@ -21,5 +21,6 @@ namespace al {
         DepthShadowMapCtrl* mDepthShadowMapCtrl = nullptr;
 
     };
+    static_assert(sizeof(ShadowKeeper) == 0x10);
 
 }

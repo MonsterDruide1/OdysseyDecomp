@@ -45,6 +45,7 @@ namespace al
     class ActorItemKeeper;
     class ActorScoreKeeper;
     class Collider;
+    class CollisionParts;
     class ModelKeeper;
     class ShadowKeeper;
     class ActorPrePassLightKeeper;
@@ -53,26 +54,45 @@ namespace al
     class ActorSceneInfo;
     class LiveActorFlag;
 
+    class ActorInitInfo;
+    class HitSensor;
+    class SensorMsg;
+    class ScreenPointer;
+    class ScreenPointTarget;
+
     class LiveActor : public al::IUseNerve, public al::IUseEffectKeeper, public al::IUseAudioKeeper, public al::IUseStageSwitch, public al::IUseSceneObjHolder, public al::IUseAreaObj, public al::IUseCamera, public al::IUseCollision, public al::IUseRail, public al::IUseHioNode
     {
     public:
-        LiveActor(const char *);
+        LiveActor(const char*); // TODO requires implementation
 
-        const char *mActorName;
+        NerveKeeper* getNerveKeeper() const override;
+        const char* getName() const override;
+        EffectKeeper* getEffectKeeper() const override;
+        AudioKeeper* getAudioKeeper() const override;
+        StageSwitchKeeper* getStageSwitchKeeper() const override;
+
+        virtual void init(const ActorInitInfo&);
+        virtual void attackSensor(HitSensor*, HitSensor*);
+        virtual bool receiveMsg(const SensorMsg*, HitSensor*, HitSensor*); // NOTE: return type unknown
+        virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*); // NOTE: return type unknown
+        virtual void control();
+        void initAfterPlacement();
+
+        const char* mActorName;
         al::ActorPoseKeeperBase *mPoseKeeper;
         al::ActorExecuteInfo *mLayoutExecuteInfo;
         al::ActorActionKeeper *mActorActionKeeper;
         al::ActorItemKeeper *mActorItemKeeper;
         al::ActorScoreKeeper *mActorScoreKeeper;
         al::Collider *mCollider;
-        void *gap_2;
+        al::CollisionParts *mCollisionParts;
         al::ModelKeeper *mModelKeeper;
         al::NerveKeeper *mNerveKeeper;
         al::HitSensorKeeper *mHitSensorKeeper;
         al::ScreenPointKeeper *mScreenPointKeeper;
         al::EffectKeeper *mEffectKeeper;
         al::AudioKeeper *mAudioKeeper;
-        void *gap_4;
+        //void *gap_4;
         al::StageSwitchKeeper *mStageSwitchKeeper;
         al::RailKeeper *mRailKeeper;
         al::ShadowKeeper *mShadowKeeper;
