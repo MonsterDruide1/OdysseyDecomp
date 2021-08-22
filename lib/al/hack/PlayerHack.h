@@ -1,0 +1,12 @@
+#pragma once
+
+namespace al {
+
+    class PlayerHackKeeper;
+
+    class IUsePlayerHack {
+    public:
+        virtual PlayerHackKeeper* getPlayerHackKeeper() const;
+    };
+
+}

@@ -1,7 +1,6 @@
 #include "al/LiveActor/LiveActor.h"
 
 #include <string.h>
-#include "al/actor/ActorPrePassLightKeeper.h"
 #include "al/LiveActor/ShadowKeeper.h"
 #include "al/LiveActor/LiveActorFlag.h"
 #include "al/util/LiveActorUtil.h"
