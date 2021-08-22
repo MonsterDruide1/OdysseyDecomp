@@ -6,7 +6,7 @@ namespace al
 {
     class StageSwitchKeeper;
     
-    class IUseStageSwitch : virtual public al::IUseName
+    class IUseStageSwitch  : virtual public al::IUseName
     {
     public:
         virtual al::StageSwitchKeeper* getStageSwitchKeeper() const = 0;

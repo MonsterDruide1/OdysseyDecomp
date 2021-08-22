@@ -65,18 +65,54 @@ namespace al
     public:
         LiveActor(const char*); // TODO requires implementation
 
-        NerveKeeper* getNerveKeeper() const override;
-        const char* getName() const override;
-        EffectKeeper* getEffectKeeper() const override;
-        AudioKeeper* getAudioKeeper() const override;
-        StageSwitchKeeper* getStageSwitchKeeper() const override;
-
+        virtual NerveKeeper* getNerveKeeper() const override;
         virtual void init(const ActorInitInfo&);
+        virtual void initAfterPlacement();
+        virtual void appear();
+        virtual void makeActorAlive();
+        virtual void kill();
+        virtual void makeActorDead();
+        virtual void movement();
+        virtual void calcAnim();
+        virtual void draw() const;
+        virtual void startClipped();
+        virtual void endClipped();
         virtual void attackSensor(HitSensor*, HitSensor*);
         virtual bool receiveMsg(const SensorMsg*, HitSensor*, HitSensor*); // NOTE: return type unknown
         virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*); // NOTE: return type unknown
+        virtual const char* getName() const override;
+        virtual void* getBaseMtx() const; // NOTE: return type unknown
+        virtual EffectKeeper* getEffectKeeper() const override;
+        virtual AudioKeeper* getAudioKeeper() const override;
+        virtual StageSwitchKeeper* getStageSwitchKeeper() const override;
+        virtual RailRider* getRailRider() const override;
+        virtual SceneObjHolder* getSceneObjHolder() const override;
+        virtual CollisionDirector* getCollisionDirector() const override;
+        virtual AreaObjDirector* getAreaObjDirector() const override;
+        virtual CameraDirector* getCameraDirector() const override;
+        virtual void initStageSwitchKeeper() override;
         virtual void control();
-        void initAfterPlacement();
+        virtual void updateCollider();
+
+        ActorSceneInfo* getSceneInfo() const;
+        void initPoseKeeper(ActorPoseKeeperBase*);
+        void initExecuteInfo(ActorExecuteInfo*);
+        void initModelKeeper(ModelKeeper*);
+        void initActionKeeper(ActorActionKeeper*);
+        void initNerveKeeper(NerveKeeper*);
+        void initHitSensor(int);
+        void initScreenPointKeeper(ScreenPointKeeper*);
+        void initEffectKeeper(EffectKeeper*);
+        void initAudioKeeper(AudioKeeper*);
+        void initRailKeeper(const ActorInitInfo&, const char*);
+        void initCollider(float, float, unsigned int);
+        void initItemKeeper(int);
+        void initScoreKeeper();
+        void initActorPrePassLightKeeper(ActorPrePassLightKeeper*);
+        void initActorOcclusionKeeper(ActorOcclusionKeeper*);
+        void initSubActorKeeper(SubActorKeeper*);
+        void initSceneInfo(ActorSceneInfo*);
+
 
         const char* mActorName;
         al::ActorPoseKeeperBase *mPoseKeeper;
@@ -92,7 +128,7 @@ namespace al
         al::ScreenPointKeeper *mScreenPointKeeper;
         al::EffectKeeper *mEffectKeeper;
         al::AudioKeeper *mAudioKeeper;
-        //void *gap_4;
+        void *gap_4;
         al::StageSwitchKeeper *mStageSwitchKeeper;
         al::RailKeeper *mRailKeeper;
         al::ShadowKeeper *mShadowKeeper;

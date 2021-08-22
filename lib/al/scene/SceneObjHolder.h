@@ -8,7 +8,5 @@ namespace al
     {
     public:
         virtual al::SceneObjHolder* getSceneObjHolder() const = 0;
-
-        const char* mSceneObjName;
     };
 };

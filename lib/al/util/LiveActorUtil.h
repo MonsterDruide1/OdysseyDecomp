@@ -5,5 +5,7 @@
 namespace al {
 
     bool isClipped(LiveActor*);
+    void tryInitFixedModelGpuBuffer(LiveActor*);
+    void offUpdateMovementEffectAudioCollisionSensor(LiveActor*);
 
 }
