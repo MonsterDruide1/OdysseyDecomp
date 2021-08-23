@@ -4,5 +4,6 @@ target_sources(odyssey PRIVATE
     MathUtil.cpp
     NerveUtil.cpp
     PlacementUtil.cpp
+    RandomUtil.cpp
     StringUtil.cpp
 )
