@@ -1,5 +1,6 @@
 add_subdirectory(actor)
 add_subdirectory(byaml)
+add_subdirectory(input)
 add_subdirectory(LiveActor)
 add_subdirectory(nerve)
 add_subdirectory(pose)

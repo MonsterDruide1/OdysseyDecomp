@@ -19,4 +19,6 @@ namespace al
     float powerOut(float, float);
 
     float lerpValue(float, float, float);
+
+    bool isNearZero(float, float);
 };
