@@ -2,10 +2,7 @@
 
 namespace al
 {
-    NerveStateBase::NerveStateBase(const char *pName) : NerveExecutor(pName)
-    {
-        mIsDead = true;
-    }
+    NerveStateBase::NerveStateBase(const char *pName) : NerveExecutor(pName) {}
     NerveStateBase::~NerveStateBase() = default;
 
     void NerveStateBase::init()
@@ -41,4 +38,6 @@ namespace al
     {
         
     }
+
+    ActorStateBase::ActorStateBase(const char* name, al::LiveActor* liveActor) : NerveStateBase(name), mLiveActor(liveActor) {}
 };
