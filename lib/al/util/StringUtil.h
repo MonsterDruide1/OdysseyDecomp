@@ -10,4 +10,5 @@ namespace al
     bool isStartWithString(const char *, const char *);
     bool isEndWithString(const char *, const char *);
     bool isEqualString(const char *, const char *);
+    bool isEqualString(const sead::SafeString&, const sead::SafeString&);
 };
