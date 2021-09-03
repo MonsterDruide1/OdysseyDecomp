@@ -8,7 +8,8 @@ namespace al {
 }
 
 class PlayerModelHolder {
-
+    
+public:
     struct Entry {
         sead::FixedSafeString<128> mName;
         al::LiveActor* mLiveActor;
