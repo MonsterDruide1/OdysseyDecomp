@@ -12,4 +12,9 @@ void ByamlWriterData::print(int) const {}
 void ByamlWriterData::printIndent(int) const {}
 ByamlWriterData::~ByamlWriterData() {}
 
+ByamlWriterBool::ByamlWriterBool(bool value) : mValue(value) {}
+u8 ByamlWriterBool::getTypeCode() const {return 0xD0;}
+void ByamlWriterBool::print(int) const {}
+void ByamlWriterBool::write(sead::WriteStream* stream) const {stream->writeU32(mValue);}
+
 }

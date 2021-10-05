@@ -20,4 +20,14 @@ public:
     void printIndent(int) const;
 };
 
+class ByamlWriterBool : public ByamlWriterData {
+public:
+    ByamlWriterBool(bool);
+    u8 getTypeCode() const override;
+    void write(sead::WriteStream*) const override;
+    void print(int) const override;
+private:
+    bool mValue;
+};
+
 }
