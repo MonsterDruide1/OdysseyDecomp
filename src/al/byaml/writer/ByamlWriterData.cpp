@@ -1,6 +1,7 @@
 #include "al/byaml/writer/ByamlWriterData.h"
 
 #include <stream/seadStream.h>
+#include "al/byaml/writer/ByamlWriterBigDataList.h"
 
 namespace al {
 
@@ -21,5 +22,17 @@ ByamlWriterFloat::ByamlWriterFloat(float value) : mValue(value) {}
 u8 ByamlWriterFloat::getTypeCode() const {return 0xD2;}
 void ByamlWriterFloat::print(int) const {}
 void ByamlWriterFloat::write(sead::WriteStream* stream) const {stream->writeF32(mValue);}
+
+
+
+ByamlWriterBigData::ByamlWriterBigData(al::ByamlWriterBigDataList* list) : mList(list) {
+    mList->addData(this);
+}
+ByamlWriterBigData::~ByamlWriterBigData() = default;
+void ByamlWriterBigData::write(sead::WriteStream* stream) const {
+    stream->writeU32(mOffset);
+}
+u32 ByamlWriterBigData::calcBigDataSize() const {return 8;}
+void ByamlWriterBigData::writeBigData(sead::WriteStream*) const {}
 
 }

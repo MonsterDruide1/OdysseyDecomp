@@ -40,4 +40,22 @@ private:
     float mValue;
 };
 
+
+
+class ByamlWriterBigDataList;
+
+class ByamlWriterBigData : public ByamlWriterData {
+public:
+    ByamlWriterBigData(al::ByamlWriterBigDataList*);
+    ~ByamlWriterBigData();
+    void write(sead::WriteStream*) const override;
+    virtual u32 calcBigDataSize() const;
+    virtual void writeBigData(sead::WriteStream*) const;
+
+    void setOffset(int offset) {mOffset=offset;}
+private:
+    al::ByamlWriterBigDataList* mList;
+    int mOffset = 0;
+};
+
 }
