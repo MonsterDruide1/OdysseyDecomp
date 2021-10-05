@@ -23,4 +23,7 @@ namespace al {
     void setMaterialProgrammable(al::LiveActor*);
     void startAction(al::LiveActor*, char const*);
 
+    float* findActorParamF32(const al::LiveActor*, const char*);
+    int* findActorParamS32(const al::LiveActor*, const char*);
+
 }
