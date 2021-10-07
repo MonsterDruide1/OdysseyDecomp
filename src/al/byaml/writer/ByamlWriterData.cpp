@@ -3,6 +3,7 @@
 #include <stream/seadStream.h>
 #include "al/byaml/writer/ByamlWriterBigDataList.h"
 #include "al/byaml/writer/ByamlWriterStringTable.h"
+#include "al/util/ByamlUtil.h"
 
 namespace al {
 
@@ -109,5 +110,71 @@ void ByamlWriterContainer::writeContainer(sead::WriteStream*) const {}
 bool ByamlWriterContainer::isHash() const {return false;}
 bool ByamlWriterContainer::isArray() const {return false;}
 void ByamlWriterContainer::deleteData() {}
+
+
+
+
+ByamlWriterArray::ByamlWriterArray(ByamlWriterStringTable* stringTable) : gap(0), mStringTable(stringTable) {}
+ByamlWriterArray::~ByamlWriterArray() {
+    while(auto* node = mList.popBack()){
+        delete node;
+    }
+}
+void ByamlWriterArray::deleteData() { //TODO heavy diff
+    for(auto it = mList.begin(); it != mList.end(); ++it) {
+        if((*it)->isContainer()) {
+            auto* node = *it;
+            reinterpret_cast<ByamlWriterContainer*>(node)->deleteData();
+        }
+    }
+}
+u32 ByamlWriterArray::calcPackSize() const {
+    return mList.size() * 4 + ((mList.size() + 7) & 0xFFFFFFFC);
+}
+void ByamlWriterArray::addData(ByamlWriterData* data) {
+    mList.pushBack(new sead::TListNode<ByamlWriterData*>(data));
+}
+
+void ByamlWriterArray::addBool(bool value) {addData(new ByamlWriterBool(value));}
+void ByamlWriterArray::addInt(int value) {addData(new ByamlWriterInt(value));}
+void ByamlWriterArray::addUInt(u32 value) {addData(new ByamlWriterUInt(value));}
+void ByamlWriterArray::addFloat(float value) {addData(new ByamlWriterFloat(value));}
+void ByamlWriterArray::addInt64(s64 value, ByamlWriterBigDataList* list) {addData(new ByamlWriterInt64(value, list));}
+void ByamlWriterArray::addUInt64(u64 value, ByamlWriterBigDataList* list) {addData(new ByamlWriterUInt64(value, list));}
+void ByamlWriterArray::addDouble(double value, ByamlWriterBigDataList* list) {addData(new ByamlWriterDouble(value, list));}
+void ByamlWriterArray::addString(const char* value) {addData(new ByamlWriterString(value, mStringTable));}
+void ByamlWriterArray::addHash(ByamlWriterHash* hash) {addData(hash);}
+void ByamlWriterArray::addArray(ByamlWriterArray* array) {addData(array);}
+void ByamlWriterArray::addNull() {addData(new ByamlWriterNull());}
+
+u8 ByamlWriterArray::getTypeCode() const {return 0xC0;}
+void ByamlWriterArray::writeContainer(sead::WriteStream* stream) const {
+    stream->writeU8(0xC0);
+    alByamlLocalUtil::writeU24(stream, mList.size());
+
+    for(auto& node : mList){
+        stream->writeU8(node->getTypeCode());
+    }
+    
+    s32 i = mList.size();
+    s32 v12 = i < 0 ? i + 3 : i;
+    s32 v14 = i - (v12 & 0xFFFFFFFC);
+    s32 v15 = 4 - v14;
+    s32 v16 = v14 == 0 ? 0 : v15;
+    for(s32 j = 0; j<v16 ; j++){
+        stream->writeU8(0);
+    }
+    for(auto& node : mList){
+        node->write(stream);
+    }
+}
+void ByamlWriterArray::write(sead::WriteStream* stream) const {
+    stream->writeU32(gap);
+}
+void ByamlWriterArray::print(int unknown) const { //TODO small diff
+    for(auto& node : mList){
+        node->print(unknown);
+    }
+}
 
 }

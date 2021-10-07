@@ -3,9 +3,14 @@
 #include "al/byaml/ByamlIter.h"
 #include <math/seadVector.h>
 
+namespace sead {
+    class WriteStream;
+}
+
 namespace alByamlLocalUtil
 {
     const char* getDataTypeString(int);
+    void writeU24(sead::WriteStream*, int);
 };
 
 namespace al

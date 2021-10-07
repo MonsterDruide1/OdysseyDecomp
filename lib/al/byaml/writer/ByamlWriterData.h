@@ -171,4 +171,41 @@ public:
     virtual void deleteData();
 };
 
+
+
+class ByamlWriterArray : public ByamlWriterContainer {
+public:
+    ByamlWriterArray(ByamlWriterStringTable*);
+    virtual ~ByamlWriterArray();
+
+    void deleteData() override;
+    u32 calcPackSize() const override;
+
+    void addData(al::ByamlWriterData*);
+    void addBool(bool) override;
+    void addInt(s32) override;
+    void addUInt(u32) override;
+    void addFloat(float) override;
+    void addInt64(s64, ByamlWriterBigDataList*) override;
+    void addUInt64(u64, ByamlWriterBigDataList*) override;
+    void addDouble(double, ByamlWriterBigDataList*) override;
+    void addString(const char*) override;
+    void addHash(ByamlWriterHash*) override;
+    void addArray(ByamlWriterArray*) override;
+    void addNull() override;
+
+    u8 getTypeCode() const override;
+    void writeContainer(sead::WriteStream*) const override;
+    void write(sead::WriteStream*) const override;
+    void print(int) const override;
+    bool isArray() const override;
+
+private:
+    int gap;
+    sead::TList<ByamlWriterData*> mList;
+    al::ByamlWriterStringTable* mStringTable;
+
+};
+static_assert(sizeof(ByamlWriterArray) == 0x30);
+
 }
