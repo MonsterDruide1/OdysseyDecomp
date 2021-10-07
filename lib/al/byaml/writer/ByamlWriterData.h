@@ -60,6 +60,14 @@ private:
     u32 mValue;
 };
 
+class ByamlWriterNull : public ByamlWriterData {
+public:
+    ByamlWriterNull();
+    u8 getTypeCode() const override;
+    void write(sead::WriteStream*) const override;
+    void print(int) const override;
+};
+
 
 
 class ByamlWriterBigDataList;

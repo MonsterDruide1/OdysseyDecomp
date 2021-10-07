@@ -33,6 +33,11 @@ u8 ByamlWriterUInt::getTypeCode() const {return 0xD3;}
 void ByamlWriterUInt::print(int) const {}
 void ByamlWriterUInt::write(sead::WriteStream* stream) const {stream->writeU32(mValue);}
 
+ByamlWriterNull::ByamlWriterNull() = default;
+u8 ByamlWriterNull::getTypeCode() const {return 0xFF;}
+void ByamlWriterNull::print(int) const {}
+void ByamlWriterNull::write(sead::WriteStream* stream) const {stream->writeU32(0);}
+
 
 
 ByamlWriterBigData::ByamlWriterBigData(al::ByamlWriterBigDataList* list) : mList(list) {
