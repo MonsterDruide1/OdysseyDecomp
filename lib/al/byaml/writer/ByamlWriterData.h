@@ -100,4 +100,15 @@ private:
     u64 mValue;
 };
 
+class ByamlWriterDouble : public ByamlWriterBigData {
+public:
+    ByamlWriterDouble(double, ByamlWriterBigDataList*);
+    ~ByamlWriterDouble();
+    u8 getTypeCode() const override;
+    void writeBigData(sead::WriteStream*) const override;
+    void print(int) const override;
+private:
+    double mValue;
+};
+
 }

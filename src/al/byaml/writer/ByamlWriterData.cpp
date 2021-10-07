@@ -57,5 +57,11 @@ u8 ByamlWriterUInt64::getTypeCode() const {return 0xD5;}
 void ByamlWriterUInt64::writeBigData(sead::WriteStream* stream) const {stream->writeU64(mValue);}
 void ByamlWriterUInt64::print(int) const {}
 
+ByamlWriterDouble::ByamlWriterDouble(double value, ByamlWriterBigDataList* list) : ByamlWriterBigData(list), mValue(value) {}
+ByamlWriterDouble::~ByamlWriterDouble() = default;
+u8 ByamlWriterDouble::getTypeCode() const {return 0xD6;}
+void ByamlWriterDouble::writeBigData(sead::WriteStream* stream) const {stream->writeU64(*reinterpret_cast<const u64*>(&mValue));}
+void ByamlWriterDouble::print(int) const {}
+
 
 }
