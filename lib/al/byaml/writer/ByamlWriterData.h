@@ -68,6 +68,18 @@ public:
     void print(int) const override;
 };
 
+class ByamlWriterStringTable;
+class ByamlWriterString : public ByamlWriterData {
+public:
+    ByamlWriterString(const char*, ByamlWriterStringTable*);
+    u8 getTypeCode() const override;
+    void write(sead::WriteStream*) const override;
+    void print(int) const override;
+private:
+    const char* mString;
+    ByamlWriterStringTable* mStringTable;
+};
+
 
 
 class ByamlWriterBigDataList;

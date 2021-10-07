@@ -2,6 +2,7 @@
 
 #include <stream/seadStream.h>
 #include "al/byaml/writer/ByamlWriterBigDataList.h"
+#include "al/byaml/writer/ByamlWriterStringTable.h"
 
 namespace al {
 
@@ -37,6 +38,13 @@ ByamlWriterNull::ByamlWriterNull() = default;
 u8 ByamlWriterNull::getTypeCode() const {return 0xFF;}
 void ByamlWriterNull::print(int) const {}
 void ByamlWriterNull::write(sead::WriteStream* stream) const {stream->writeU32(0);}
+
+ByamlWriterString::ByamlWriterString(const char* string, ByamlWriterStringTable* stringTable) : mString(nullptr), mStringTable(stringTable) {
+    mString = mStringTable->tryAdd(string);
+}
+u8 ByamlWriterString::getTypeCode() const {return 0xA0;}
+void ByamlWriterString::print(int) const {}
+void ByamlWriterString::write(sead::WriteStream* stream) const {stream->writeU32(mStringTable->calcIndex(mString));}
 
 
 
