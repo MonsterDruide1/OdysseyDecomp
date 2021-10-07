@@ -28,6 +28,11 @@ u8 ByamlWriterFloat::getTypeCode() const {return 0xD2;}
 void ByamlWriterFloat::print(int) const {}
 void ByamlWriterFloat::write(sead::WriteStream* stream) const {stream->writeF32(mValue);}
 
+ByamlWriterUInt::ByamlWriterUInt(u32 value) : mValue(value) {}
+u8 ByamlWriterUInt::getTypeCode() const {return 0xD3;}
+void ByamlWriterUInt::print(int) const {}
+void ByamlWriterUInt::write(sead::WriteStream* stream) const {stream->writeU32(mValue);}
+
 
 
 ByamlWriterBigData::ByamlWriterBigData(al::ByamlWriterBigDataList* list) : mList(list) {

@@ -50,6 +50,16 @@ private:
     float mValue;
 };
 
+class ByamlWriterUInt : public ByamlWriterData {
+public:
+    ByamlWriterUInt(u32);
+    u8 getTypeCode() const override;
+    void write(sead::WriteStream*) const override;
+    void print(int) const override;
+private:
+    u32 mValue;
+};
+
 
 
 class ByamlWriterBigDataList;
