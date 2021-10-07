@@ -45,4 +45,10 @@ void ByamlWriterBigData::write(sead::WriteStream* stream) const {
 u32 ByamlWriterBigData::calcBigDataSize() const {return 8;}
 void ByamlWriterBigData::writeBigData(sead::WriteStream*) const {}
 
+ByamlWriterInt64::ByamlWriterInt64(long value, ByamlWriterBigDataList* list) : ByamlWriterBigData(list), mValue(value) {}
+u8 ByamlWriterInt64::getTypeCode() const {return 0xD4;}
+void ByamlWriterInt64::writeBigData(sead::WriteStream* stream) const {stream->writeS64(mValue);}
+void ByamlWriterInt64::print(int) const {}
+
+
 }

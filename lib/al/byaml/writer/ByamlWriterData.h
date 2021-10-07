@@ -78,4 +78,15 @@ private:
     int mOffset = 0;
 };
 
+class ByamlWriterInt64 : public ByamlWriterBigData {
+public:
+    ByamlWriterInt64(long, ByamlWriterBigDataList*);
+    ~ByamlWriterInt64();
+    u8 getTypeCode() const override;
+    void writeBigData(sead::WriteStream*) const override;
+    void print(int) const override;
+private:
+    long mValue;
+};
+
 }
