@@ -177,7 +177,7 @@ public:
 class ByamlWriterArray : public ByamlWriterContainer {
 public:
     ByamlWriterArray(ByamlWriterStringTable*);
-    virtual ~ByamlWriterArray();
+    ~ByamlWriterArray();
 
     void deleteData() override;
     u32 calcPackSize() const override;
@@ -208,5 +208,55 @@ private:
 
 };
 static_assert(sizeof(ByamlWriterArray) == 0x30);
+
+class ByamlWriterHashPair : public sead::ListNode {
+public:
+    ByamlWriterHashPair(const char*, ByamlWriterData*);
+
+    const char* getKey() {return mKey;}
+    al::ByamlWriterData* getValue() {return mValue;}
+private:
+    void* selfReference = this;
+    void* test2 = nullptr;
+    const char* mKey;
+    al::ByamlWriterData* mValue;
+};
+static_assert(sizeof(ByamlWriterHashPair) == 0x30);
+
+class ByamlWriterHash : public ByamlWriterContainer {
+public:
+    ByamlWriterHash(ByamlWriterStringTable*,ByamlWriterStringTable*);
+    ~ByamlWriterHash();
+
+    void deleteData() override; //TODO implementation missing
+    u32 calcPackSize() const override;
+
+    void addData(const char*, al::ByamlWriterData*); //TODO implementation missing
+    void addBool(const char*,bool) override;
+    void addInt(const char*,s32) override;
+    void addUInt(const char*,u32) override;
+    void addFloat(const char*,float) override;
+    void addInt64(const char*,s64, ByamlWriterBigDataList*) override;
+    void addUInt64(const char*,u64, ByamlWriterBigDataList*) override;
+    void addDouble(const char*,double, ByamlWriterBigDataList*) override;
+    void addString(const char*,const char*) override;
+    void addHash(const char*,ByamlWriterHash*) override;
+    void addArray(const char*,ByamlWriterArray*) override;
+    void addNull(const char*) override;
+
+    u8 getTypeCode() const override;
+    void writeContainer(sead::WriteStream*) const override; //TODO implementation missing
+    void write(sead::WriteStream*) const override;
+    void print(int) const override; //TODO implementation missing
+    bool isHash() const override;
+
+private:
+    int gap = 0;
+    sead::TList<ByamlWriterHashPair> mList; //TODO not really... it's something different here.
+    al::ByamlWriterStringTable* mStringTable1;
+    al::ByamlWriterStringTable* mStringTable2;
+
+};
+static_assert(sizeof(ByamlWriterHash) == 0x38);
 
 }

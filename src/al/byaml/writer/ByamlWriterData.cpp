@@ -176,5 +176,35 @@ void ByamlWriterArray::print(int unknown) const { //TODO small diff
         node->print(unknown);
     }
 }
+bool ByamlWriterArray::isArray() const {return true;}
+
+
+ByamlWriterHashPair::ByamlWriterHashPair(const char* key, ByamlWriterData* value) : mKey(key), mValue(value) {}
+
+
+ByamlWriterHash::ByamlWriterHash(ByamlWriterStringTable* stringTable1, ByamlWriterStringTable* stringTable2) : mStringTable1(stringTable1), mStringTable2(stringTable2) {}
+ByamlWriterHash::~ByamlWriterHash() {
+    while(auto* node = mList.popBack()){
+        delete node;
+    }
+}
+u32 ByamlWriterHash::calcPackSize() const {
+    return mList.size() * 8 + 4;
+}
+void ByamlWriterHash::addBool(const char* key, bool value) {addData(key, new ByamlWriterBool(value));}
+void ByamlWriterHash::addInt(const char* key, int value) {addData(key, new ByamlWriterInt(value));}
+void ByamlWriterHash::addUInt(const char* key, u32 value) {addData(key, new ByamlWriterUInt(value));}
+void ByamlWriterHash::addFloat(const char* key, float value) {addData(key, new ByamlWriterFloat(value));}
+void ByamlWriterHash::addInt64(const char* key, long value, ByamlWriterBigDataList* list) {addData(key, new ByamlWriterInt64(value, list));}
+void ByamlWriterHash::addUInt64(const char* key, u64 value, ByamlWriterBigDataList* list) {addData(key, new ByamlWriterUInt64(value, list));}
+void ByamlWriterHash::addDouble(const char* key, double value, ByamlWriterBigDataList* list) {addData(key, new ByamlWriterDouble(value, list));}
+void ByamlWriterHash::addString(const char* key, const char* value) {addData(key, new ByamlWriterString(value, mStringTable2));}
+void ByamlWriterHash::addHash(const char* key, ByamlWriterHash* value) {addData(key, value);}
+void ByamlWriterHash::addArray(const char* key, ByamlWriterArray* value) {addData(key, value);}
+void ByamlWriterHash::addNull(const char* key) {addData(key, new ByamlWriterNull());}
+
+u8 ByamlWriterHash::getTypeCode() const {return 0xC1;}
+void ByamlWriterHash::write(sead::WriteStream* stream) const {stream->writeU32(gap);}
+bool ByamlWriterHash::isHash() const {return true;}
 
 }
