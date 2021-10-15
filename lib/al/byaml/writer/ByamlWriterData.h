@@ -170,6 +170,11 @@ public:
     virtual bool isHash() const;
     virtual bool isArray() const;
     virtual void deleteData();
+
+    int getOffset() const {return mOffset;}
+    void setOffset(int offset) {mOffset = offset;}
+private:
+    int mOffset = 0; //FIXME shouldn't be public
 };
 
 
@@ -202,7 +207,6 @@ public:
     bool isArray() const override;
 
 private:
-    int gap;
     sead::TList<ByamlWriterData*> mList;
     al::ByamlWriterStringTable* mStringTable;
 
@@ -251,7 +255,6 @@ public:
     bool isHash() const override;
 
 private:
-    int gap = 0;
     sead::TList<ByamlWriterHashPair> mList; //TODO not really... it's something different here.
     al::ByamlWriterStringTable* mStringTable1;
     al::ByamlWriterStringTable* mStringTable2;

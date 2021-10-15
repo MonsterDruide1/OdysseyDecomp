@@ -114,7 +114,7 @@ void ByamlWriterContainer::deleteData() {}
 
 
 
-ByamlWriterArray::ByamlWriterArray(ByamlWriterStringTable* stringTable) : gap(0), mStringTable(stringTable) {}
+ByamlWriterArray::ByamlWriterArray(ByamlWriterStringTable* stringTable) : mStringTable(stringTable) {}
 ByamlWriterArray::~ByamlWriterArray() {
     while(auto* node = mList.popBack()){
         delete node;
@@ -169,7 +169,7 @@ void ByamlWriterArray::writeContainer(sead::WriteStream* stream) const {
     }
 }
 void ByamlWriterArray::write(sead::WriteStream* stream) const {
-    stream->writeU32(gap);
+    stream->writeU32(getOffset());
 }
 void ByamlWriterArray::print(int unknown) const { //TODO small diff
     for(auto& node : mList){
@@ -204,7 +204,7 @@ void ByamlWriterHash::addArray(const char* key, ByamlWriterArray* value) {addDat
 void ByamlWriterHash::addNull(const char* key) {addData(key, new ByamlWriterNull());}
 
 u8 ByamlWriterHash::getTypeCode() const {return 0xC1;}
-void ByamlWriterHash::write(sead::WriteStream* stream) const {stream->writeU32(gap);}
+void ByamlWriterHash::write(sead::WriteStream* stream) const {stream->writeU32(getOffset());}
 bool ByamlWriterHash::isHash() const {return true;}
 
 }
