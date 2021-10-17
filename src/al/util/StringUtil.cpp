@@ -1,8 +1,11 @@
+#include "al/util/StringUtil.h"
+
 #include <resource/seadResource.h>
 #include <cstring>
 
 namespace al
 {
+
     bool isEqualString(const char16_t *pString_0, const char16_t *pString_1)
     {
         unsigned short val;
