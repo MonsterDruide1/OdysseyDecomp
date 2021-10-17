@@ -1,6 +1,9 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
+#include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 #include "al/LiveActor/LiveActor.h"
 
 namespace al {
@@ -22,8 +25,27 @@ namespace al {
     void onSyncAlphaMaskSubActor(LiveActor*, const LiveActor*);
     void setMaterialProgrammable(al::LiveActor*);
     void startAction(al::LiveActor*, char const*);
+    bool isActionEnd(const al::LiveActor*);
+    void calcQuat(sead::Quatf*, const al::LiveActor*);
+    sead::Vector3f* getTrans(const al::LiveActor*);
+    sead::Vector3f* getGravity(const al::LiveActor*);
+    sead::Vector3f* getFront(const al::LiveActor*);
+    void calcJointFrontDir(sead::Vector3f*, const al::LiveActor*, const char*);
 
     float* findActorParamF32(const al::LiveActor*, const char*);
     int* findActorParamS32(const al::LiveActor*, const char*);
+
+    void setNerveAtActionEnd(al::LiveActor*, const al::Nerve*);
+    void initActorWithArchiveName(al::LiveActor*, const al::ActorInitInfo&, const sead::SafeString&, const char*);
+    void initJointControllerKeeper(const al::LiveActor*, int);
+    void initJointGlobalQuatController(const al::LiveActor*, const sead::Quatf*, const char*);
+
+    bool isEffectEmitting(const IUseEffectKeeper*, const char*);
+
+}
+
+namespace rs {
+
+    sead::Vector3f* getPlayerPos(const al::LiveActor*);
 
 }
