@@ -1,12 +1,28 @@
 #pragma once
 
-namespace al
-{
-    class SceneObjHolder;
+namespace al {
+class ISceneObj;
+class ActorInitInfo;
 
-    class IUseSceneObjHolder
-    {
-    public:
-        virtual al::SceneObjHolder* getSceneObjHolder() const = 0;
-    };
+class SceneObjHolder {
+public:
+    SceneObjHolder(ISceneObj* (*)(int), int);
+    ISceneObj* create(int);
+    ISceneObj* tryGetObj(int) const;
+    ISceneObj* getObj(int) const;
+    bool isExist(int) const;
+    void setSceneObj(ISceneObj*, int);
+    void initAfterPlacementSceneObj(const ActorInitInfo&);
+
+private:
+    ISceneObj* (*mCreator)(int);
+    ISceneObj** mSceneObjArray;
+    int mArraySize;
 };
+
+class IUseSceneObjHolder {
+public:
+    virtual al::SceneObjHolder* getSceneObjHolder() const = 0;
+};
+
+}
