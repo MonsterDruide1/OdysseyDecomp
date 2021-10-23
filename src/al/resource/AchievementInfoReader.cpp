@@ -31,7 +31,7 @@ void AchievementInfoReader::init() { //TODO minor mismatches during loop
                 int level = -1;
                 iter.tryGetIntByKey(&level, "Level");
 
-                array.pushBack(new AchievementInfo(name, note, num, level));
+                array.pushBack(new AchievementInfo(name, num, level, note));
             }
         }
     }
