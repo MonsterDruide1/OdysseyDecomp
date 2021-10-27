@@ -14,6 +14,17 @@ namespace al
         virtual int registerActor(al::LiveActor *);
 
         void removeActor(const al::LiveActor *);
+        void removeActorAll();
+        bool isExistActor(const al::LiveActor *) const;
+        bool isFull() const;
+        int calcAliveActorNum() const;
+        al::LiveActor* getDeadActor() const;
+        al::LiveActor* tryFindDeadActor() const;
+        void appearAll();
+        void killAll();
+        void makeActorAliveAll();
+        void makeActorDeadAll();
+        
 
         const char* mGroupName; // _8
         int mMaxActorCount; // _10
