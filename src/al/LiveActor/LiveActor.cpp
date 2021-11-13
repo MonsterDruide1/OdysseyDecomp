@@ -1,6 +1,7 @@
 #include "al/LiveActor/LiveActor.h"
 
 #include <string.h>
+#include "al/actor/ActorPrepassLightKeeper.h"
 #include "al/LiveActor/ShadowKeeper.h"
 #include "al/LiveActor/LiveActorFlag.h"
 #include "al/util/LiveActorUtil.h"
@@ -38,11 +39,11 @@ namespace al
     void LiveActor::control() {}
     void LiveActor::draw() const {}
 
-    /*void LiveActor::initAfterPlacement(){
+    void LiveActor::initAfterPlacement(){
         tryInitFixedModelGpuBuffer(this);
         if(mActorPrePassLightKeeper)
             mActorPrePassLightKeeper->initAfterPlacement();
-    }*/
+    }
 
     void LiveActor::appear() {
         makeActorAlive();
