@@ -45,7 +45,7 @@ Additionally, you'll also need:
     * Download a prebuilt binary (version 3.9.1) from [LLVM](https://releases.llvm.org/download.html#3.9.1), matching your environment.
     * Extract it to `toolchain/clang-3.9.1`, so that the file `toolchain/clang-3.9.1/bin/clang` exists.
 
-4. Run `tools/common/setup.py [path to the NSO]`
+4. Run `tools/setup.py [path to the NSO]`
     * This will:
         * install tools/check to check for differences in decompiled code
         * convert the executable if necessary
