@@ -4,11 +4,10 @@
 
 namespace al {
 
-    class ProjectAppearSwitchFactory : public al::ActorFactory
-    {
-    public:
-        ProjectAppearSwitchFactory();
-        const char* convertName(const char*) const override;
-    };
+class ProjectAppearSwitchFactory : public al::ActorFactory {
+public:
+    ProjectAppearSwitchFactory();
+    const char* convertName(const char*) const override;
+};
 
-}
+}  // namespace al

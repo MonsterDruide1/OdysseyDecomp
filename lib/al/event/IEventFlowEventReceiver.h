@@ -1,8 +1,5 @@
 #pragma once
 
-namespace al
-{
-    class IEventFlowEventReceiver {
-
-    };
-} // namespace al
+namespace al {
+class IEventFlowEventReceiver {};
+}  // namespace al

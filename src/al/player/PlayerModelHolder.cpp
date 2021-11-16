@@ -2,17 +2,17 @@
 
 #include "al/util/StringUtil.h"
 
-PlayerModelHolder::PlayerModelHolder(unsigned int bufferSize){
+PlayerModelHolder::PlayerModelHolder(unsigned int bufferSize) {
     mBuffer.allocBuffer(bufferSize, nullptr);
 }
 
-void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name){
+void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name) {
     mBuffer.pushBack(new Entry{sead::FixedSafeString<128>(name), liveActor});
 }
 
-void PlayerModelHolder::changeModel(const char* name){
-    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it){
-        if(al::isEqualString(it->mName, sead::SafeString(name))){
+void PlayerModelHolder::changeModel(const char* name) {
+    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
+        if (al::isEqualString(it->mName, sead::SafeString(name))) {
             currentModel = &*it;
             return;
         }
@@ -20,8 +20,8 @@ void PlayerModelHolder::changeModel(const char* name){
 }
 
 al::LiveActor* PlayerModelHolder::findModelActor(const char* name) const {
-    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it){
-        if(al::isEqualString(it->mName, sead::SafeString(name))){
+    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
+        if (al::isEqualString(it->mName, sead::SafeString(name))) {
             return it->mLiveActor;
         }
     }
@@ -29,8 +29,8 @@ al::LiveActor* PlayerModelHolder::findModelActor(const char* name) const {
 }
 
 al::LiveActor* PlayerModelHolder::tryFindModelActor(const char* name) const {
-    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it){
-        if(al::isEqualString(it->mName, sead::SafeString(name))){
+    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
+        if (al::isEqualString(it->mName, sead::SafeString(name))) {
             return it->mLiveActor;
         }
     }

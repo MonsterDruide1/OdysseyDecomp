@@ -4,13 +4,12 @@
 #include <container/seadTList.h>
 
 namespace sead {
-    class WriteStream;
+class WriteStream;
 }
 
 namespace al {
 
 class ByamlWriterStringTable {
-
 public:
     ByamlWriterStringTable();
     virtual ~ByamlWriterStringTable();
@@ -25,7 +24,6 @@ public:
 
 private:
     sead::TList<const char*> mList;
-
 };
 
-}
+}  // namespace al

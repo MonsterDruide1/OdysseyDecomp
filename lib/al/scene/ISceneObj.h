@@ -11,4 +11,4 @@ public:
     virtual void initSceneObj();
 };
 
-}
+}  // namespace al

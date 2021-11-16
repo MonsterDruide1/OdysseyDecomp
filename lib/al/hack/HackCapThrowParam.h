@@ -1,11 +1,10 @@
 #pragma once
 
 namespace al {
-    class LiveActor;
+class LiveActor;
 };
 
 class HackCapThrowParam {
-
 public:
     HackCapThrowParam(al::LiveActor*);
 

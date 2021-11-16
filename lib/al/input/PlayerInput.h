@@ -5,10 +5,10 @@
 #include "al/collision/PlayerCollision.h"
 
 namespace al {
-    class LiveActor;
-    class SpinInputAnalyzer;
-    class JoyPadAccelPoseAnalyzer;
-}
+class LiveActor;
+class SpinInputAnalyzer;
+class JoyPadAccelPoseAnalyzer;
+}  // namespace al
 
 class PlayerInput {
 public:
@@ -70,21 +70,20 @@ public:
     bool isReleaseHackJump() const;
     bool isEnableDashInput() const;
 
-
     bool isThrowTypeSpiral(const sead::Vector2f&) const;
     bool isThrowTypeRolling(const sead::Vector2f&) const;
 
 private:
-    const al::LiveActor *mLiveActor;
-    const IUsePlayerCollision *mPlayerCollision;
-    const IUseDimension *mDimension;
-    void *gap[11];
-    al::SpinInputAnalyzer *mSpinInputAnalyzer;
-    al::JoyPadAccelPoseAnalyzer *mJoyPadAccelPoseAnalyzer1;
-    al::JoyPadAccelPoseAnalyzer *mJoyPadAccelPoseAnalyzer2;
+    const al::LiveActor* mLiveActor;
+    const IUsePlayerCollision* mPlayerCollision;
+    const IUseDimension* mDimension;
+    void* gap[11];
+    al::SpinInputAnalyzer* mSpinInputAnalyzer;
+    al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;
+    al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer2;
     int _88;
-    void *gap2[1];
+    void* gap2[1];
     bool mDisableInput;
-    void *fillToSize[20];
+    void* fillToSize[20];
 };
 static_assert(sizeof(PlayerInput) == 0x140);

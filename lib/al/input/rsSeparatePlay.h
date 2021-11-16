@@ -1,7 +1,7 @@
 #pragma once
 
 namespace al {
-    class IUseSceneObjHolder;
+class IUseSceneObjHolder;
 }
 
 namespace rs {

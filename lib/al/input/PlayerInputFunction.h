@@ -1,7 +1,7 @@
 #pragma once
 
 namespace al {
-    class LiveActor;
+class LiveActor;
 }
 
 class PlayerInputFunction {
@@ -20,5 +20,4 @@ public:
     static bool isTriggerTalk(const al::LiveActor*, int);
     static bool isTriggerStartWorldWarp(const al::LiveActor*, int);
     static bool isTriggerCancelWorldWarp(const al::LiveActor*, int);
-
 };

@@ -1,10 +1,7 @@
 #pragma once
 
-namespace al
-{
-    class HitSensorKeeper
-    {
-    public:
-        
-    };
+namespace al {
+class HitSensorKeeper {
+public:
 };
+};  // namespace al

@@ -1,13 +1,12 @@
 #pragma once
 
 namespace al {
-    class LiveActor;
-    class ActorInitInfo;
-    class PartsModel;
-}
+class LiveActor;
+class ActorInitInfo;
+class PartsModel;
+}  // namespace al
 class PlayerCostumeInfo;
 class PlayerModelHolder;
-
 
 class PlayerPainPartsKeeper {
 public:
@@ -21,11 +20,11 @@ public:
     void appearNeedle();
 
 private:
-    const al::LiveActor *mLiveActor;
-    const PlayerCostumeInfo *mPlayerCostumeInfo;
+    const al::LiveActor* mLiveActor;
+    const PlayerCostumeInfo* mPlayerCostumeInfo;
     float mModelAlphaMask = 1;
     bool mEnableTimer = true;
-    al::LiveActor *mPlayerFaceActor = nullptr;
-    al::PartsModel *mNeedlesActor = nullptr;
+    al::LiveActor* mPlayerFaceActor = nullptr;
+    al::PartsModel* mNeedlesActor = nullptr;
     int mTimer = 0;
 };

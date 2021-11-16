@@ -2,17 +2,15 @@
 
 #include "al/hio/HioNode.h"
 
-namespace al
-{
-    class ActorResource;
+namespace al {
+class ActorResource;
 
-    class ModelKeeper : public al::HioNode
-    {
-    public:
-        ModelKeeper();
+class ModelKeeper : public al::HioNode {
+public:
+    ModelKeeper();
 
-        virtual ~ModelKeeper();
+    virtual ~ModelKeeper();
 
-        void initResource()
-    };
+    void initResource()
 };
+};  // namespace al

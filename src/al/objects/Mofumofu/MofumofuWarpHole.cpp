@@ -1,13 +1,14 @@
 #include "al/objects/Mofumofu/MofumofuWarpHole.h"
 
-#include <math/seadVector.h>
 #include <math/seadQuat.h>
+#include <math/seadVector.h>
 #include "al/util/LiveActorUtil.h"
 #include "al/util/MathUtil.h"
 #include "al/util/NerveUtil.h"
 #include "al/util/VectorUtil.h"
 
-MofumofuWarpHole::MofumofuWarpHole(const char* name) : al::LiveActor(name) {} //TODO minor mismatch about storing `gap`
+MofumofuWarpHole::MofumofuWarpHole(const char* name)
+    : al::LiveActor(name) {}  // TODO minor mismatch about storing `gap`
 
 void MofumofuWarpHole::init(const al::ActorInitInfo& actorInitInfo) {
     al::initActorWithArchiveName(this, actorInitInfo, "MofumofuWarpHole", nullptr);
@@ -50,26 +51,26 @@ void MofumofuWarpHole::calcDashSignFront(sead::Vector3f* front) const {
     al::calcJointFrontDir(front, this, "DashSign");
 }
 void MofumofuWarpHole::exeAppear() {
-    if(al::isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(this, "Appear");
     al::setNerveAtActionEnd(this, &nrvWait);
 }
 void MofumofuWarpHole::exeWait() {
-    if(al::isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(this, "Wait");
 }
 void MofumofuWarpHole::exeDisappear() {
-    if(al::isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(this, "Disappear");
-    if(!al::isEffectEmitting(this, "Disappear"))
+    if (!al::isEffectEmitting(this, "Disappear"))
         kill();
 }
 void MofumofuWarpHole::exeClose() {
-    if(al::isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(this, "Disappear");
 
-    if(al::isActionEnd(this)) {
-        if(al::isNerve(this, &nrvCloseAndDisappear))
+    if (al::isActionEnd(this)) {
+        if (al::isNerve(this, &nrvCloseAndDisappear))
             al::setNerve(this, &nrvDisappear);
         else
             al::setNerve(this, &nrvHideWait);
@@ -77,11 +78,11 @@ void MofumofuWarpHole::exeClose() {
 }
 void MofumofuWarpHole::exeHideWait() {}
 void MofumofuWarpHole::exeHideMove() {
-    if(al::isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(this, "Move");
 }
 void MofumofuWarpHole::exeDashSign() {
-    if(al::isFirstStep(this)){
+    if (al::isFirstStep(this)) {
         al::startAction(this, "DashSign");
         al::calcQuat(&gap, this);
     }
@@ -89,15 +90,15 @@ void MofumofuWarpHole::exeDashSign() {
     sead::Vector3f* playerPos = rs::getPlayerPos(this);
     sead::Vector3f* trans = al::getTrans(this);
 
-    sead::Vector3f a3 = (*playerPos)-(*trans);
+    sead::Vector3f a3 = (*playerPos) - (*trans);
     al::verticalizeVec(&a3, *al::getGravity(this), a3);
-    if(!al::tryNormalizeOrZero(&a3))
-        a3 = *al::getFront(this); //TODO small mismatch here
-    
+    if (!al::tryNormalizeOrZero(&a3))
+        a3 = *al::getFront(this);  // TODO small mismatch here
+
     al::turnVecToVecDegree(&a3, *al::getFront(this), a3, 55);
     al::normalize(&a3);
 
-    sead::Vector3f v21{0,0,0};
+    sead::Vector3f v21{0, 0, 0};
     al::calcQuatFront(&v21, gap);
 
     float v13 = al::calcNerveEaseInRate(this, 100, 120);
@@ -113,12 +114,10 @@ void MofumofuWarpHole::exeDashSign() {
     al::setNerveAtGreaterEqualStep(this, &nrvDashSignEnd, 120);
 }
 void MofumofuWarpHole::exeDashSignEnd() {
-    if(al::isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(this, "DashSignEnd");
     al::setNerveAtActionEnd(this, &nrvWait);
 }
-
-
 
 namespace {
 
@@ -132,4 +131,4 @@ NERVE_IMPL(MofumofuWarpHole, DashSign)
 NERVE_IMPL(MofumofuWarpHole, DashSignEnd)
 NERVE_IMPL_(MofumofuWarpHole, CloseAndDisappear, Close)
 
-}
+}  // namespace

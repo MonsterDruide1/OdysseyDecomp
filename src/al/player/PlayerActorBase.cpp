@@ -1,11 +1,17 @@
 #include "al/player/PlayerActorBase.h"
 
-PlayerActorBase::PlayerActorBase(const char *name) : LiveActor(name) {}
+PlayerActorBase::PlayerActorBase(const char* name) : LiveActor(name) {}
 void PlayerActorBase::init(const al::ActorInitInfo&) {}
 void PlayerActorBase::initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&) {}
-void* PlayerActorBase::getPlayerCollision() const { return nullptr; }
-al::PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const { return nullptr; }
-bool PlayerActorBase::isEnableDemo() { return false; }
+void* PlayerActorBase::getPlayerCollision() const {
+    return nullptr;
+}
+al::PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
+    return nullptr;
+}
+bool PlayerActorBase::isEnableDemo() {
+    return false;
+}
 void PlayerActorBase::startDemo() {}
 void PlayerActorBase::endDemo() {}
 void PlayerActorBase::startDemoPuppetable() {}
@@ -22,10 +28,18 @@ void PlayerActorBase::endDemoKeepBind() {}
 void PlayerActorBase::startDemoKeepCarry() {}
 void PlayerActorBase::endDemoKeepCarry() {}
 void PlayerActorBase::getDemoActor() {}
-void* PlayerActorBase::getDemoAnimator() { return nullptr; }
-bool PlayerActorBase::isDamageStopDemo() const { return false; }
-void* PlayerActorBase::getPlayerPuppet() { return nullptr; }
-void* PlayerActorBase::getPlayerInfo() const { return nullptr; }
+void* PlayerActorBase::getDemoAnimator() {
+    return nullptr;
+}
+bool PlayerActorBase::isDamageStopDemo() const {
+    return false;
+}
+void* PlayerActorBase::getPlayerPuppet() {
+    return nullptr;
+}
+void* PlayerActorBase::getPlayerInfo() const {
+    return nullptr;
+}
 
 unsigned int PlayerActorBase::getPortNo() const {
     return mPortNo;

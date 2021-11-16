@@ -15,5 +15,4 @@ public:
     virtual void showModel();
     virtual void showSilhouette();
     virtual void showShadowMask();
-
 };

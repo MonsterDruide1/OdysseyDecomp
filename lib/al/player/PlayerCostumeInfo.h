@@ -4,7 +4,7 @@ struct PlayerHeadCostumeInfo {
 public:
     PlayerHeadCostumeInfo(const char*);
 
-    const char *_0;
+    const char* _0;
     bool mIsFullFace = false;
     bool mIsShrinkNose = false;
     bool mIsPreventHead = false;
@@ -23,7 +23,7 @@ struct PlayerBodyCostumeInfo {
 public:
     PlayerBodyCostumeInfo(const char*);
 
-    const char *_0;
+    const char* _0;
     int mWarmLevel = false;
     bool mIsIgnoreTemperature = false;
     bool mIsUseHeadSuffix = false;
@@ -41,7 +41,6 @@ public:
 };
 
 class PlayerCostumeInfo {
-
 public:
     PlayerCostumeInfo();
     void init(const PlayerBodyCostumeInfo*, const PlayerHeadCostumeInfo*);
@@ -65,4 +64,3 @@ private:
     const PlayerBodyCostumeInfo* mPlayerBodyCostumeInfo = nullptr;
     const PlayerHeadCostumeInfo* mPlayerHeadCostumeInfo = nullptr;
 };
-

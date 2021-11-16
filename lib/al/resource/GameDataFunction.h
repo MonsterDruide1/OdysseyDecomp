@@ -6,12 +6,11 @@
 #pragma once
 
 #include <al/LiveActor/LiveActor.h>
+#include "GameDataHolder.h"
 #include "GameDataHolderAccessor.h"
 #include "GameDataHolderWriter.h"
-#include "GameDataHolder.h"
 
-class GameDataFunction
-{
+class GameDataFunction {
 public:
     // gets prev save file's current world id
     static s32 getPrevWorldId(GameDataHolderAccessor);
@@ -26,7 +25,7 @@ public:
     // gets total moons collected on a specified save file (-1 for current save)
     static s32 getTotalShineNum(GameDataHolderAccessor, int);
     // gets the total amount of moons available in a kingdom
-    static s32 getWorldTotalShineNum(GameDataHolderAccessor, int); 
+    static s32 getWorldTotalShineNum(GameDataHolderAccessor, int);
     // gets the current scenario No of the specified kingdom
     static s32 getWorldScenarioNo(GameDataHolderAccessor, int);
 
@@ -61,9 +60,9 @@ public:
     // upgrades the odyssey
     static void upHomeLevel(GameDataHolderWriter);
 
-    //unlocks a kingdom based off index
+    // unlocks a kingdom based off index
     static void unlockWorld(GameDataHolderWriter, int);
-    //sets the scenario of the specified kingdom
+    // sets the scenario of the specified kingdom
     static void setMainScenarioNo(GameDataHolderWriter, int scenarioNo);
 
     // checks if odyssey is/needs a repair
@@ -74,7 +73,7 @@ public:
     static bool isCrashHome(GameDataHolderAccessor);
     static void crashHome(GameDataHolderWriter);
 
-    // checks if odyssey is activated 
+    // checks if odyssey is activated
     static bool isActivateHome(GameDataHolderAccessor);
     static void activateHome(GameDataHolderWriter);
 
@@ -82,7 +81,7 @@ public:
     static bool isLaunchHome(GameDataHolderAccessor);
     static void launchHome(GameDataHolderWriter);
 
-    static bool isHomeShipStage(GameDataHolder const *);
+    static bool isHomeShipStage(GameDataHolder const*);
 
     // used during the event that enables the odyssey to be used (enables the globe for the odyssey)
     static void talkCapNearHomeInWaterfall(al::LiveActor const*);

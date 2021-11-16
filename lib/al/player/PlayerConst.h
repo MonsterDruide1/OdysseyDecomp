@@ -624,7 +624,6 @@ public:
     virtual float getCoinDashSpeedLimit() const;
     virtual float getAdditionalSpeedLimit() const;
 
-
 private:
     float mGravity;
     float mFrictionAttack;
@@ -1241,5 +1240,4 @@ private:
     float mCoinDashSpeed;
     float mCoinDashSpeedLimit;
     float mAdditionalSpeedLimit;
-
 };

@@ -38,9 +38,9 @@ bool isPadHoldR(int);
 bool isPadHoldZL(int);
 bool isPadHoldZR(int);
 
-sead::Vector2f *getLeftStick(int);
-sead::Vector2f *getRightStick(int);
+sead::Vector2f* getLeftStick(int);
+sead::Vector2f* getRightStick(int);
 
 unsigned int getPlayerControllerPort(int);
 
-}
+}  // namespace al

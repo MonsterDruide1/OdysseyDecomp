@@ -2,9 +2,9 @@
 
 namespace al {
 
-    LiveActorFlag::LiveActorFlag() {
-        data1 = 0x1000000010001LL;
-        data2 = 0x1010000;
-    }
-
+LiveActorFlag::LiveActorFlag() {
+    data1 = 0x1000000010001LL;
+    data2 = 0x1010000;
 }
+
+}  // namespace al

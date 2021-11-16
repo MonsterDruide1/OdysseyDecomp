@@ -1,7 +1,5 @@
 #pragma once
 
 namespace al {
-    class IUseMessageSystem {
-
-    };
-}
+class IUseMessageSystem {};
+}  // namespace al

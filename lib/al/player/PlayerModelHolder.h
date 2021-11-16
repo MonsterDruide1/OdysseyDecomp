@@ -4,11 +4,10 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-    class LiveActor;
+class LiveActor;
 }
 
 class PlayerModelHolder {
-    
 public:
     struct Entry {
         sead::FixedSafeString<128> mName;
@@ -25,7 +24,6 @@ public:
 
 private:
     sead::PtrArray<Entry> mBuffer;
-    Entry *currentModel = nullptr;
+    Entry* currentModel = nullptr;
     sead::FixedSafeString<128> _10 = sead::FixedSafeString<128>("");
 };
-

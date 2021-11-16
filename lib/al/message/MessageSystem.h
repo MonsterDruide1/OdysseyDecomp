@@ -1,7 +1,5 @@
 #pragma once
 
 namespace al {
-    class MessageSystem {
-
-    };
-}
+class MessageSystem {};
+}  // namespace al

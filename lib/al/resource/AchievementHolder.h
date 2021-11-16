@@ -5,7 +5,7 @@
 #include "al/resource/GameDataHolderAccessor.h"
 
 namespace al {
-    class ActorInitInfo;
+class ActorInitInfo;
 }
 class Achievement;
 class AchievementInfoReader;
@@ -27,5 +27,4 @@ public:
 private:
     sead::PtrArray<Achievement> mArray;
     AchievementInfoReader* mAchievementInfoReader = nullptr;
-
 };

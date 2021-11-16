@@ -7,12 +7,12 @@ class PlayerInitInfo;
 
 class PlayerActorBase : public al::LiveActor, public al::IUsePlayerHack {
 public:
-    PlayerActorBase(const char *);
+    PlayerActorBase(const char*);
 
-    virtual void init(const al::ActorInitInfo &) override;
-    virtual void initPlayer(const al::ActorInitInfo &, const PlayerInitInfo &);
-    virtual void *getPlayerCollision() const; // NOTE: unknown return type
-    virtual al::PlayerHackKeeper *getPlayerHackKeeper() const override;
+    virtual void init(const al::ActorInitInfo&) override;
+    virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
+    virtual void* getPlayerCollision() const;  // NOTE: unknown return type
+    virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
     virtual bool isEnableDemo();
     virtual void startDemo();
     virtual void endDemo();
@@ -30,18 +30,18 @@ public:
     virtual void startDemoKeepCarry();
     virtual void endDemoKeepCarry();
     virtual void getDemoActor();
-    virtual void *getDemoAnimator(); // NOTE: unknown return type
-    virtual bool isDamageStopDemo() const; // NOTE: unknown return type
-    virtual void *getPlayerPuppet(); // NOTE: unknown return type
-    virtual void *getPlayerInfo() const;   // NOTE: unknown return type
+    virtual void* getDemoAnimator();        // NOTE: unknown return type
+    virtual bool isDamageStopDemo() const;  // NOTE: unknown return type
+    virtual void* getPlayerPuppet();        // NOTE: unknown return type
+    virtual void* getPlayerInfo() const;    // NOTE: unknown return type
     virtual unsigned int getPortNo() const;
-    virtual void *getViewMtx() const; // NOTE: unknown return type
+    virtual void* getViewMtx() const;  // NOTE: unknown return type
     virtual void movement() override;
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
-    virtual bool receivePushMsg(const al::SensorMsg *, al::HitSensor *, al::HitSensor *);
+    virtual bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
 
 private:
-    void *mViewMtx = nullptr; // NOTE: unknown type
+    void* mViewMtx = nullptr;  // NOTE: unknown type
     unsigned int mPortNo = 0;
 };

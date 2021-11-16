@@ -4,7 +4,6 @@
 #include <prim/seadBitFlag.h>
 
 class PlayerTrigger {
-
     enum ECollisionTrigger : u32 {};
     enum EAttackSensorTrigger : u32 {};
     enum EActionTrigger : u32 {};
@@ -57,7 +56,6 @@ private:
     sead::BitFlag32 mPreMovementTrigger = 0;
     sead::BitFlag32 mDemoEndTrigger = 0;
     sead::BitFlag32 mMaterialChangeTrigger = 0;
-    const char *mRecMaterialTrigger = nullptr;
-
+    const char* mRecMaterialTrigger = nullptr;
 };
 static_assert(sizeof(PlayerTrigger) == 0x28);

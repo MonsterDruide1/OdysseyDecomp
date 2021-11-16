@@ -4,17 +4,17 @@
 #include "al/player/IPlayerModelChanger.h"
 
 namespace al {
-    class LiveActor;
+class LiveActor;
 }
 class PlayerModelHolder;
 class PlayerPainPartsKeeper;
 class PlayerCostumeInfo;
 class IUseDimension;
 
-class PlayerModelChangerHakoniwa : IPlayerModelChanger, al::HioNode
-{
+class PlayerModelChangerHakoniwa : IPlayerModelChanger, al::HioNode {
 public:
-    PlayerModelChangerHakoniwa(const al::LiveActor*, PlayerModelHolder*, PlayerPainPartsKeeper*, PlayerCostumeInfo*, const IUseDimension*);
+    PlayerModelChangerHakoniwa(const al::LiveActor*, PlayerModelHolder*, PlayerPainPartsKeeper*,
+                               PlayerCostumeInfo*, const IUseDimension*);
     void initStartModel();
     const char* getModelName();
     void changeModel(al::LiveActor*);
@@ -41,14 +41,14 @@ public:
     bool isHiddenShadowMask() override;
 
 private:
-    const al::LiveActor *mLiveActor;
+    const al::LiveActor* mLiveActor;
     bool mIsChange;
     bool mModeIs2D;
-    al::LiveActor *mLiveActor2;
-    PlayerModelHolder *mPlayerModelHolder;
-    PlayerPainPartsKeeper *mPlayerPainPartsKeeper;
-    PlayerCostumeInfo *mPlayerCostumeInfo;
-    const IUseDimension *mIUseDimension;
+    al::LiveActor* mLiveActor2;
+    PlayerModelHolder* mPlayerModelHolder;
+    PlayerPainPartsKeeper* mPlayerPainPartsKeeper;
+    PlayerCostumeInfo* mPlayerCostumeInfo;
+    const IUseDimension* mIUseDimension;
     bool mVisibilityNeedsSync;
     bool mIsModelVisible;
     bool mIsSilhouetteVisible;

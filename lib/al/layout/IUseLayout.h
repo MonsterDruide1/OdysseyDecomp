@@ -8,7 +8,5 @@
 #include "al/actor/IUseName.h"
 
 namespace al {
-    class IUseLayout : public al::IUseName {
-
-    };
-}
+class IUseLayout : public al::IUseName {};
+}  // namespace al

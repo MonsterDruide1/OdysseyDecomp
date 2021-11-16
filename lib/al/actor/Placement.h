@@ -1,36 +1,33 @@
 #pragma once
 
-#include "al/byaml/ByamlIter.h"
 #include <resource/seadResource.h>
+#include "al/byaml/ByamlIter.h"
 
-namespace al
-{
-    class PlacementInfo
-    {
-    public:
-        PlacementInfo();
+namespace al {
+class PlacementInfo {
+public:
+    PlacementInfo();
 
-        void set(const al::ByamlIter &, const al::ByamlIter &);
+    void set(const al::ByamlIter&, const al::ByamlIter&);
 
-        al::ByamlIter _0;
-        al::ByamlIter mZoneIter; // _10
-    };
+    al::ByamlIter _0;
+    al::ByamlIter mZoneIter;  // _10
+};
 
-    class PlacementId
-    {
-    public:
-        PlacementId();
-        PlacementId(const char *, const char *, const char *);
+class PlacementId {
+public:
+    PlacementId();
+    PlacementId(const char*, const char*, const char*);
 
-        bool init(const al::PlacementInfo &);
-        bool isEqual(const al::PlacementId &) const;
-        static bool isEqual(const al::PlacementId &, const al::PlacementId &);
-        bool isValid() const;
-        bool makeString(sead::BufferedSafeStringBase<char> *) const;
+    bool init(const al::PlacementInfo&);
+    bool isEqual(const al::PlacementId&) const;
+    static bool isEqual(const al::PlacementId&, const al::PlacementId&);
+    bool isValid() const;
+    bool makeString(sead::BufferedSafeStringBase<char>*) const;
 
-        const char* _0;
-        const char* mUnitConfigName; // _8
-        const char* mID; // _10
-        const char* mCommonID; // _18
-    };
-}
+    const char* _0;
+    const char* mUnitConfigName;  // _8
+    const char* mID;              // _10
+    const char* mCommonID;        // _18
+};
+}  // namespace al

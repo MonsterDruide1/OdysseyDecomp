@@ -1,34 +1,35 @@
 #include "al/byaml/writer/ByamlWriter.h"
 
-#include <stream/seadStream.h>
 #include <heap/seadHeapMgr.h>
+#include <stream/seadStream.h>
+#include "al/byaml/ByamlIter.h"
 #include "al/byaml/writer/ByamlWriterBigDataList.h"
 #include "al/byaml/writer/ByamlWriterData.h"
 #include "al/byaml/writer/ByamlWriterStringTable.h"
-#include "al/byaml/ByamlIter.h"
 
 namespace al {
 
-ByamlWriter::ByamlWriter(sead::Heap* heap, bool _alwaysFalse) : mHeap(heap), _mAlwaysFalse(_alwaysFalse) { //FIXME mismatch on mContainerStack creation
+ByamlWriter::ByamlWriter(sead::Heap* heap, bool _alwaysFalse)
+    : mHeap(heap), _mAlwaysFalse(_alwaysFalse) {  // FIXME mismatch on mContainerStack creation
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mStringTable1 = new ByamlWriterStringTable();
     mStringTable2 = new ByamlWriterStringTable();
     mBigDataList = new ByamlWriterBigDataList();
     u32 size = (mContainerStackSize * 8) >> 64;
-    mContainerStack = new ByamlWriterContainer*[size ? -1 : size*8];
+    mContainerStack = new ByamlWriterContainer*[size ? -1 : size * 8];
 }
 
 ByamlWriter::~ByamlWriter() {
-    if(_mAlwaysFalse) {
+    if (_mAlwaysFalse) {
         delete mStringTable1;
         delete mStringTable2;
         delete mBigDataList;
         delete[] mContainerStack;
-        
-        for(auto* node : mContainerList) {
+
+        for (auto* node : mContainerList) {
             node->deleteData();
         }
-        while(auto* node = mContainerList.popBack()){
+        while (auto* node = mContainerList.popBack()) {
             node->mList = nullptr;
             delete node->mData;
             delete node;
@@ -36,76 +37,76 @@ ByamlWriter::~ByamlWriter() {
     }
 }
 
-void ByamlWriter::addBool(bool value){
+void ByamlWriter::addBool(bool value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addBool(value);
 }
-void ByamlWriter::addInt(int value){
+void ByamlWriter::addInt(int value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt(value);
 }
-void ByamlWriter::addUInt(u32 value){
+void ByamlWriter::addUInt(u32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt(value);
 }
-void ByamlWriter::addFloat(float value){
+void ByamlWriter::addFloat(float value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(value);
 }
-void ByamlWriter::addInt64(long value){
+void ByamlWriter::addInt64(long value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt64(value, mBigDataList);
 }
-void ByamlWriter::addUInt64(u64 value){
+void ByamlWriter::addUInt64(u64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt64(value, mBigDataList);
 }
-void ByamlWriter::addDouble(double value){
+void ByamlWriter::addDouble(double value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addDouble(value, mBigDataList);
 }
-void ByamlWriter::addString(const char* value){
+void ByamlWriter::addString(const char* value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addString(value);
 }
-void ByamlWriter::addNull(){
+void ByamlWriter::addNull() {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addNull();
 }
 
-void ByamlWriter::addBool(const char* key, bool value){
+void ByamlWriter::addBool(const char* key, bool value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addBool(key, value);
 }
-void ByamlWriter::addInt(const char* key, int value){
+void ByamlWriter::addInt(const char* key, int value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt(key, value);
 }
-void ByamlWriter::addUInt(const char* key, u32 value){
+void ByamlWriter::addUInt(const char* key, u32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt(key, value);
 }
-void ByamlWriter::addFloat(const char* key, float value){
+void ByamlWriter::addFloat(const char* key, float value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(key, value);
 }
-void ByamlWriter::addInt64(const char* key, long value){
+void ByamlWriter::addInt64(const char* key, long value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt64(key, value, mBigDataList);
 }
-void ByamlWriter::addUInt64(const char* key, u64 value){
+void ByamlWriter::addUInt64(const char* key, u64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt64(key, value, mBigDataList);
 }
-void ByamlWriter::addDouble(const char* key, double value){
+void ByamlWriter::addDouble(const char* key, double value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addDouble(key, value, mBigDataList);
 }
-void ByamlWriter::addString(const char* key, const char* value){
+void ByamlWriter::addString(const char* key, const char* value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addString(key, value);
 }
-void ByamlWriter::addNull(const char* key){
+void ByamlWriter::addNull(const char* key) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addNull(key);
 }
@@ -128,7 +129,7 @@ void ByamlWriter::pushContainer(ByamlWriterContainer* container) {
 void ByamlWriter::pushHash() {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     auto* hash = new ByamlWriterHash(mStringTable1, mStringTable2);
-    if(mCurrentContainerIndex >= 0)
+    if (mCurrentContainerIndex >= 0)
         mContainerStack[mCurrentContainerIndex]->addHash(hash);
 
     pushContainer(hash);
@@ -136,7 +137,7 @@ void ByamlWriter::pushHash() {
 void ByamlWriter::pushArray() {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     auto* array = new ByamlWriterArray(mStringTable2);
-    if(mCurrentContainerIndex >= 0)
+    if (mCurrentContainerIndex >= 0)
         mContainerStack[mCurrentContainerIndex]->addArray(array);
 
     pushContainer(array);
@@ -163,114 +164,112 @@ void ByamlWriter::pushIter(const char* key, const al::ByamlIter& iter) {
     pushLocalIter(iter, key);
 }
 void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) {
-    if(!iter.isValid())
+    if (!iter.isValid())
         return;
-    
+
     u32 size = iter.getSize();
-    if(iter.isTypeHash()) {
-        if(iterKey)
+    if (iter.isTypeHash()) {
+        if (iterKey)
             pushHash(iterKey);
         else
             pushHash();
-    }
-    else if(iter.isTypeArray()) {
-        if(iterKey)
+    } else if (iter.isTypeArray()) {
+        if (iterKey)
             pushArray(iterKey);
         else
             pushArray();
-    }
-    else
+    } else
         return;
 
-    for(u32 i=0;i<size;i++) { //TODO missing the size == 0 check
+    for (u32 i = 0; i < size; i++) {  // TODO missing the size == 0 check
         ByamlData data{};
         const char* key = nullptr;
-        if(iter.isTypeHash())
+        if (iter.isTypeHash())
             iter.getByamlDataAndKeyName(&data, &key, i);
         else
             iter.getByamlDataByIndex(&data, i);
 
-        if(data.getType() == 0xD0){
+        if (data.getType() == 0xD0) {
             bool value;
-            if(iter.tryConvertBool(&value, &data)){
-                if(key)
+            if (iter.tryConvertBool(&value, &data)) {
+                if (key)
                     addBool(key, value);
                 else
                     addBool(value);
             }
         }
-        if(data.getType() == 0xD1){
+        if (data.getType() == 0xD1) {
             int value;
-            if(iter.tryConvertInt32(&value, &data)){
-                if(key)
+            if (iter.tryConvertInt32(&value, &data)) {
+                if (key)
                     addInt(key, value);
                 else
                     addInt(value);
             }
         }
-        if(data.getType() == 0xD2){
+        if (data.getType() == 0xD2) {
             float value;
-            if(iter.tryConvertFloat(&value, &data)){
-                if(key)
+            if (iter.tryConvertFloat(&value, &data)) {
+                if (key)
                     addFloat(key, value);
                 else
                     addFloat(value);
             }
         }
-        if(data.getType() == 0xD3){
+        if (data.getType() == 0xD3) {
             u32 value;
-            if(iter.tryConvertUInt32(&value, &data)){
-                if(key)
+            if (iter.tryConvertUInt32(&value, &data)) {
+                if (key)
                     addUInt(key, value);
                 else
                     addUInt(value);
             }
         }
-        if(data.getType() == 0xD4){
+        if (data.getType() == 0xD4) {
             long value;
-            if(iter.tryConvertInt64(&value, &data)){
-                if(key)
+            if (iter.tryConvertInt64(&value, &data)) {
+                if (key)
                     addInt64(key, value);
                 else
                     addInt64(value);
             }
         }
-        if(data.getType() == 0xD6){
+        if (data.getType() == 0xD6) {
             double value;
-            if(iter.tryConvertDouble(&value, &data)){
-                if(key)
+            if (iter.tryConvertDouble(&value, &data)) {
+                if (key)
                     addDouble(key, value);
                 else
                     addDouble(value);
             }
         }
-        if(data.getType() == 0xD5){
+        if (data.getType() == 0xD5) {
             u64 value;
-            if(iter.tryConvertUInt64(&value, &data)){
-                if(key)
+            if (iter.tryConvertUInt64(&value, &data)) {
+                if (key)
                     addUInt64(key, value);
                 else
                     addUInt64(value);
             }
         }
-        if(data.getType() == 0xA0){
+        if (data.getType() == 0xA0) {
             const char* value;
-            if(iter.tryConvertString(&value, &data)){
-                if(key)
+            if (iter.tryConvertString(&value, &data)) {
+                if (key)
                     addString(key, value);
                 else
                     addString(value);
             }
         }
-        if(data.getType() == 0x00){
-            if(key)
+        if (data.getType() == 0x00) {
+            if (key)
                 addNull(key);
             else
                 addNull();
         }
-        if(data.getType() == 0xC0 || data.getType() == 0xC1) {
+        if (data.getType() == 0xC0 || data.getType() == 0xC1) {
             ByamlIter value;
-            if(iter.tryConvertIter(&value, &data))
+            if (iter.tryConvertIter(&value, &data))
                 pushLocalIter(value, key);
         }
     }
@@ -285,13 +284,13 @@ u32 ByamlWriter::calcHeaderSize() const {
 }
 u32 ByamlWriter::calcPackSize() const {
     u32 size = 16;
-    if(mStringTable1)
+    if (mStringTable1)
         size += mStringTable1->calcPackSize();
-    if(mStringTable2)
+    if (mStringTable2)
         size += mStringTable2->calcPackSize();
-    if(mBigDataList)
+    if (mBigDataList)
         size += mBigDataList->calcPackSize();
-    for(auto* container : mContainerList) {
+    for (auto* container : mContainerList) {
         size += container->calcPackSize();
     }
     return size;
@@ -313,21 +312,21 @@ void ByamlWriter::write(sead::WriteStream* stream) {
     mStringTable2->write(stream);
     mBigDataList->write(stream);
 
-    for(auto* container : mContainerList) { //TODO minor mismatch in this loop
+    for (auto* container : mContainerList) {  // TODO minor mismatch in this loop
         container->setOffset(offsetBigDataList);
         offsetBigDataList += container->calcPackSize();
     }
-    for(auto* container : mContainerList) {
+    for (auto* container : mContainerList) {
         container->writeContainer(stream);
     }
 }
 
 void ByamlWriter::print() const {
-    if(mStringTable1)
+    if (mStringTable1)
         mStringTable1->print();
-    if(mStringTable2)
+    if (mStringTable2)
         mStringTable2->print();
-    if(mCurrentContainerIndex >= 0){
+    if (mCurrentContainerIndex >= 0) {
         mContainerStack[0]->print(1);
     }
 }
@@ -337,4 +336,4 @@ void ByamlWriter::print() const {
     void print();
     */
 
-}
+}  // namespace al

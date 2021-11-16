@@ -27,4 +27,4 @@ public:
     static const char* sSceneObjName;
 };
 
-}
+}  // namespace al

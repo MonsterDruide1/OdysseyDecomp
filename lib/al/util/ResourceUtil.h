@@ -50,15 +50,12 @@ int getTotalCoinNum(GameDataHolderAccessor);
 int getPlayerJumpCount(GameDataHolderAccessor);
 int getPlayerThrowCapCount(GameDataHolderAccessor);
 
+}  // namespace rs
 
-
-}
-
-//FIXME this is absolutely wrong here and should be made its own class, not a namespace
-//used in resource/AchievementHolder.cpp
+// FIXME this is absolutely wrong here and should be made its own class, not a namespace
+// used in resource/AchievementHolder.cpp
 namespace GameDataFunction {
 
 int getTotalShineNum(GameDataHolderAccessor, int);
 
 }
-

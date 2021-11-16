@@ -44,4 +44,4 @@ NERVE_HEADER(MofumofuWarpHole, DashSign)
 NERVE_HEADER(MofumofuWarpHole, DashSignEnd)
 NERVE_HEADER(MofumofuWarpHole, CloseAndDisappear)
 
-}
+}  // namespace

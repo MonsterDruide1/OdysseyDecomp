@@ -4,18 +4,19 @@
 
 namespace al {
 
-SceneObjHolder::SceneObjHolder(al::ISceneObj* (*creator)(int), int size) : mCreator(creator), mArraySize(size) {
+SceneObjHolder::SceneObjHolder(al::ISceneObj* (*creator)(int), int size)
+    : mCreator(creator), mArraySize(size) {
     mSceneObjArray = new ISceneObj*[size];
 
-    for(int i=0; i<mArraySize; i++) {
+    for (int i = 0; i < mArraySize; i++) {
         mSceneObjArray[i] = nullptr;
     }
 }
 
 ISceneObj* SceneObjHolder::create(int index) {
-    if(mSceneObjArray[index]) //already exists
+    if (mSceneObjArray[index])  // already exists
         return mSceneObjArray[index];
-    
+
     mSceneObjArray[index] = mCreator(index);
     mSceneObjArray[index]->initSceneObj();
     return mSceneObjArray[index];
@@ -36,10 +37,10 @@ void SceneObjHolder::setSceneObj(al::ISceneObj* obj, int index) {
 }
 
 void SceneObjHolder::initAfterPlacementSceneObj(const al::ActorInitInfo& info) {
-    for(int i=0; i<mArraySize; i++) {
-        if(mSceneObjArray[i])
+    for (int i = 0; i < mArraySize; i++) {
+        if (mSceneObjArray[i])
             mSceneObjArray[i]->initAfterPlacementSceneObj(info);
     }
 }
 
-}
+}  // namespace al

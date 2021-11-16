@@ -1,26 +1,25 @@
 #include "al/nerve/NerveExecutor.h"
 
-namespace al
-{
-    
-    NerveExecutor::NerveExecutor(const char *pName) : IUseNerve() {
-        mKeeper = 0;
-    }
+namespace al {
 
-    NerveExecutor::~NerveExecutor() { 
-        delete mKeeper;
-    }
+NerveExecutor::NerveExecutor(const char* pName) : IUseNerve() {
+    mKeeper = 0;
+}
 
-    NerveKeeper* NerveExecutor::getNerveKeeper() const {
-        return mKeeper;
-    }
-    
-    void NerveExecutor::initNerve(const al::Nerve *pNerve, int nerveCount) {
-        mKeeper = new NerveKeeper(this, pNerve, nerveCount);
-    }
+NerveExecutor::~NerveExecutor() {
+    delete mKeeper;
+}
 
-    void NerveExecutor::updateNerve() {
-        if (mKeeper)
-            mKeeper->update();
-    }
-}; 
+NerveKeeper* NerveExecutor::getNerveKeeper() const {
+    return mKeeper;
+}
+
+void NerveExecutor::initNerve(const al::Nerve* pNerve, int nerveCount) {
+    mKeeper = new NerveKeeper(this, pNerve, nerveCount);
+}
+
+void NerveExecutor::updateNerve() {
+    if (mKeeper)
+        mKeeper->update();
+}
+};  // namespace al

@@ -4,7 +4,7 @@
 #include <container/seadTList.h>
 
 namespace sead {
-    class WriteStream;
+class WriteStream;
 }
 
 namespace al {
@@ -19,8 +19,9 @@ public:
     void addData(al::ByamlWriterBigData*);
     int setOffset(int);
     void write(sead::WriteStream*);
+
 private:
     sead::TList<ByamlWriterBigData*> mList;
 };
 
-}
+}  // namespace al

@@ -3,7 +3,7 @@
 class IUseDimension;
 
 namespace al {
-    class LiveActor;
+class LiveActor;
 }
 
 namespace rs {
@@ -13,4 +13,4 @@ bool isIn2DArea(const IUseDimension*);
 
 bool isGuardNosePainCap(const al::LiveActor*);
 
-}
+}  // namespace rs

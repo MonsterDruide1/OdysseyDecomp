@@ -3,9 +3,9 @@
 #include <container/seadTList.h>
 
 namespace sead {
-    class Heap;
-    class WriteStream;
-}
+class Heap;
+class WriteStream;
+}  // namespace sead
 
 namespace al {
 
@@ -71,4 +71,4 @@ private:
     bool _mAlwaysFalse;
 };
 
-}
+}  // namespace al

@@ -2,11 +2,11 @@
 
 namespace al {
 
-    class PlayerHackKeeper;
+class PlayerHackKeeper;
 
-    class IUsePlayerHack {
-    public:
-        virtual PlayerHackKeeper* getPlayerHackKeeper() const;
-    };
+class IUsePlayerHack {
+public:
+    virtual PlayerHackKeeper* getPlayerHackKeeper() const;
+};
 
-}
+}  // namespace al

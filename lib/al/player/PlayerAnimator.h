@@ -4,15 +4,15 @@
 #include "sead/prim/seadSafeString.h"
 
 class PlayerAnimator {
-    public:
-        void startAnim(const sead::SafeStringBase<char> &animName);
-        
-        bool isAnim(const sead::SafeStringBase<char> &animName) const;
+public:
+    void startAnim(const sead::SafeStringBase<char>& animName);
 
-        float getAnimFrame(void) const;
-        float getAnimFrameMax(void) const;
-        float getAnimFrameRate(void) const;
+    bool isAnim(const sead::SafeStringBase<char>& animName) const;
 
-        unsigned char padding_18[0x18];
-        PlayerAnimFrameCtrl *mAnimFrameCtrl;
+    float getAnimFrame(void) const;
+    float getAnimFrameMax(void) const;
+    float getAnimFrameRate(void) const;
+
+    unsigned char padding_18[0x18];
+    PlayerAnimFrameCtrl* mAnimFrameCtrl;
 };

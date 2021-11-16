@@ -1,5 +1,3 @@
 #include "al/LiveActor/DepthShadowMapCtrl.h"
 
-namespace al {
-
-}
+namespace al {}
