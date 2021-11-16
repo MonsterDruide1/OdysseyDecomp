@@ -3,7 +3,6 @@ target_sources(odyssey PRIVATE
     LiveActor.cpp
     LiveActorFlag.cpp
     LiveActorGroup.cpp
-    PlayerActorBase.cpp
     ShadowKeeper.cpp
     ShadowMaskCtrl.cpp
 )

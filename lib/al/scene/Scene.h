@@ -3,16 +3,11 @@
 #include "al/nerve/NerveExecutor.h"
 #include "al/audio/AudioKeeper.h"
 #include "al/camera/CameraDirector.h"
+#include "al/scene/SceneInitInfo.h"
 #include "al/scene/SceneObjHolder.h"
 
 namespace al
 {
-    class SceneInitInfo
-    {
-    public:
-        // todo
-    };
-
     class Scene : public al::NerveExecutor, public al::IUseAudioKeeper, public al::IUseCamera, public al::IUseSceneObjHolder
     {
     public:

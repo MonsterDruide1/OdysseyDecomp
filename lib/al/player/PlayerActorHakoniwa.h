@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/LiveActor/PlayerActorBase.h"
+#include "al/player/PlayerActorBase.h"
 #include "al/actor/Dimension.h"
 
 namespace al {

@@ -6,7 +6,7 @@ namespace al {
     class ISceneObj;
 }
 
-class GameDataHolderAccessor {
+class GameDataHolderAccessor { //maybe extends GameDataHolderWriter?
 public:
     GameDataHolderAccessor(const al::IUseSceneObjHolder*);
     GameDataHolderAccessor(const al::SceneObjHolder*);

@@ -8,6 +8,24 @@
 
 namespace al {
 
+    template<typename T>
+    al::LiveActor *createActorFunction(const char *actorName);
+
+    sead::Vector3f* getTrans(const al::LiveActor*);
+    sead::Vector3f* getTransPtr(al::LiveActor*);
+    sead::Vector3f* getGravity(const al::LiveActor*);
+    sead::Vector3f* getGravityPtr(al::LiveActor*);
+    sead::Vector3f* getUp(const al::LiveActor*);
+    sead::Vector3f* getUpPtr(al::LiveActor*);
+    sead::Vector3f* getFront(const al::LiveActor*);
+    sead::Vector3f* getFrontPtr(al::LiveActor*);
+    sead::Vector3f* getCameraUp(const al::LiveActor*, int);
+    
+    sead::Vector3f* getScale(const al::LiveActor*);
+    float getScaleX(const al::LiveActor*);
+    float getScaleY(const al::LiveActor*);
+    float getScaleZ(const al::LiveActor*);
+
     bool isClipped(const LiveActor*);
     void tryInitFixedModelGpuBuffer(const LiveActor*);
     void offUpdateMovementEffectAudioCollisionSensor(const LiveActor*);
@@ -27,9 +45,6 @@ namespace al {
     void startAction(al::LiveActor*, char const*);
     bool isActionEnd(const al::LiveActor*);
     void calcQuat(sead::Quatf*, const al::LiveActor*);
-    sead::Vector3f* getTrans(const al::LiveActor*);
-    sead::Vector3f* getGravity(const al::LiveActor*);
-    sead::Vector3f* getFront(const al::LiveActor*);
     void calcJointFrontDir(sead::Vector3f*, const al::LiveActor*, const char*);
 
     float* findActorParamF32(const al::LiveActor*, const char*);
