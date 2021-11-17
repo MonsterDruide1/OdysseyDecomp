@@ -18,6 +18,8 @@ public:
 
     bool isFlying(void) const;
 
+    bool isThrowTypeSpiral(void) const;
+
     unsigned char padding_118[0x118 - HACKSIZE];
     al::LiveActor* mActorA;  // 0x118
     unsigned char padding_08[0x08];

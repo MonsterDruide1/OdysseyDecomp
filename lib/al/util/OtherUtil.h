@@ -54,9 +54,13 @@ char const* getActionFrame(al::LiveActor const*);
 
 sead::Vector3f* getCameraPos(al::IUseCamera const*, int);
 
+sead::Vector3f* getSensorPos(al::LiveActor const*, const char*);
+
 float calcSpeed(al::LiveActor const*);
 float calcSpeedH(al::LiveActor const*);
 float calcSpeedV(al::LiveActor const*);
+
+float getSensorRadius(al::LiveActor const*, char const*);
 
 // setters
 
@@ -73,6 +77,8 @@ void setFront(al::LiveActor*, sead::Vector3f const&);
 void setQuat(al::LiveActor*, const sead::Quatf&);
 
 void setPaneTexture(al::IUseLayout*, char const*, nn::ui2d::TextureInfo const*);
+
+void setSensorFollowPosOffset(al::LiveActor*, sead::Vector3f const&);
 
 // void setPaneString(al::IUseLayout *layout, char const *paneName, char16_t const *, ushort);
 
@@ -101,6 +107,8 @@ bool getArg(int*, const al::ActorInitInfo&,
 bool isActiveDemo(const al::Scene*);
 
 bool isAreaTarget(al::LiveActor const*);
+
+bool isSensorName(al::HitSensor const*, char const*);
 
 // math
 
@@ -144,6 +152,17 @@ const unsigned char* tryGetBymlFromArcName(sead::SafeStringBase<char> const&,
                                            sead::SafeStringBase<char> const&);
 
 void initActor(al::LiveActor*, al::ActorInitInfo const&);
+
+bool isObjectName(al::ActorInitInfo const&, char const*);
+bool isObjectName(al::PlacementInfo const&, char const*);
+
+void invalidateHitSensors(al::LiveActor*);
+
+void hideModelIfShow(al::LiveActor*);
+void showModelIfHide(al::LiveActor*);
+
+void hideModel(al::LiveActor*);
+void showModel(al::LiveActor*);
 
 }  // namespace al
 
