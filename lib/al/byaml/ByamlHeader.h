@@ -13,7 +13,7 @@ public:
 private:
     union {
         int _0;
-        unsigned short mTag, mVersion; // unusable due to different loading mechanisms
+        unsigned short mTag, mVersion;  // unusable due to different loading mechanisms
     };
 
     int mHashKeyOffset;

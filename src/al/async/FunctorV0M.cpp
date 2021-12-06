@@ -14,8 +14,7 @@ FunctorV0M<T, F>* FunctorV0M<T, F>::clone() const {
     return new FunctorV0M<T, F>(*this);
 }
 
-template<class T, class F>
+template <class T, class F>
 FunctorV0M<T, F>::~FunctorV0M<T, F>() = default;
-
 
 }  // namespace al

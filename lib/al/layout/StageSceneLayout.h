@@ -19,7 +19,8 @@ class MapMini;
 
 class StageSceneLayout : al::NerveStateBase {
 public:
-    StageSceneLayout(const char*, const al::LayoutInitInfo&, const al::PlayerHolder*, const al::SubCameraRenderer*);
+    StageSceneLayout(const char*, const al::LayoutInitInfo&, const al::PlayerHolder*,
+                     const al::SubCameraRenderer*);
     ~StageSceneLayout();
 
     void startActionAll(const char*);

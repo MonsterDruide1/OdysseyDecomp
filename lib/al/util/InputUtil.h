@@ -7,9 +7,8 @@
 namespace al {
 class IUseCamera;
 
-
 bool isValidReplayController(u32);
-sead::ControllerBase* getReplayController(u32); //return type might be wrong
+sead::ControllerBase* getReplayController(u32);  // return type might be wrong
 
 bool isPadTypeJoySingle(int);
 
@@ -52,7 +51,7 @@ bool isPadTriggerLeftStick(int);
 bool isPadTriggerRightStick(int);
 bool isPadTriggerPressLeftStick(int);
 bool isPadTriggerPressRightStick(int);
-bool isPadTriggerUiCursorUp(int); //TODO implement below
+bool isPadTriggerUiCursorUp(int);  // TODO implement below
 bool isPadTriggerUiCursorDown(int);
 bool isPadTriggerUiCursorLeft(int);
 bool isPadTriggerUiCursorRight(int);
@@ -85,14 +84,14 @@ bool isPadRepeatUpRightStick(int);
 bool isPadRepeatDownRightStick(int);
 bool isPadRepeatLeftRightStick(int);
 bool isPadRepeatRightRightStick(int);
-bool isPadRepeatUiCursorUp(int); //TODO implement below
+bool isPadRepeatUiCursorUp(int);  // TODO implement below
 bool isPadRepeatUiCursorDown(int);
 bool isPadRepeatUiCursorLeft(int);
 bool isPadRepeatUiCursorRight(int);
 
 bool isPadHoldPressLeftStick(int);
 bool isPadHoldPressRightStick(int);
-bool isPadHold(int,int);
+bool isPadHold(int, int);
 bool isPadHoldA(int);
 bool isPadHoldB(int);
 bool isPadHoldX(int);
@@ -163,7 +162,7 @@ bool isPadReleaseUpRightStick(int);
 bool isPadReleaseDownRightStick(int);
 bool isPadReleaseLeftRightStick(int);
 bool isPadReleaseRightRightStick(int);
-bool isPadReleaseUiCursorUp(int); //TODO implement below
+bool isPadReleaseUiCursorUp(int);  // TODO implement below
 bool isPadReleaseUiCursorDown(int);
 bool isPadReleaseUiCursorLeft(int);
 bool isPadReleaseUiCursorRight(int);
@@ -191,6 +190,6 @@ int getMainJoyPadDoublePort();
 int getMainJoyPadSingleRightPort();
 int getMainJoyPadSingleLeftPort();
 
-bool isSameNpadId(u32, int); //TODO implement
+bool isSameNpadId(u32, int);  // TODO implement
 
 }  // namespace al

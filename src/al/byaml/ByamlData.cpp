@@ -22,8 +22,6 @@ unsigned int ByamlData::getValue() const {
     return mValue;
 }
 
-
-
 int ByamlHashPair::getKey(bool isRev) const {
     return isRev ? bswap_24(mData) : mData & 0xFFFFFF;
 }

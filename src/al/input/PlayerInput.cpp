@@ -5,10 +5,10 @@
 #include "al/input/PlayerInputFunction.h"
 #include "al/input/rsSeparatePlay.h"
 #include "al/player/PlayerFunction.h"
-#include "al/player/rsPlayerState.h"
 #include "al/util/InputUtil.h"
 #include "al/util/MathUtil.h"
 #include "al/util/VectorUtil.h"
+#include "rs/Dimension.h"
 
 PlayerInput::PlayerInput(const al::LiveActor*, const IUsePlayerCollision*, const IUseDimension*) {
 }  // FIXME remove this

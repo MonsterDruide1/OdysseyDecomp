@@ -55,7 +55,7 @@ public:
     void initViewIdHostActor(const ActorInitInfo&, const LiveActor*);
     void initNoViewId(const PlacementInfo*, const ActorInitInfo&);
 
-    const al::PlacementInfo& getPlacementInfo() const {return *mPlacementInfo;}
+    const al::PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
 
 private:
     al::LiveActorGroup* mLiveActorGroup1;

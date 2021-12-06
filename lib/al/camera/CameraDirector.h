@@ -22,7 +22,6 @@ class CameraResourceHolder;
 class CameraFlagCtrl;
 class CameraInSwitchOnAreaDirector;
 
-
 class CameraDirector : public HioNode, IUseExecutor {
 public:
     virtual ~CameraDirector();
