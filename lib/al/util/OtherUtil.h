@@ -4,6 +4,8 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
+#include "al/util/InputUtil.h"
+
 namespace sead {
 class Heap;
 }
@@ -27,6 +29,8 @@ class AreaObj;
 class IUseAudioKeeper;
 class SensorMsg;
 class IUseSceneObjHolder;
+class HitSensor;
+class PlacementInfo;
 
 // from Starlight's header files. TODO clean this up, and include them in the proper places
 
