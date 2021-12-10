@@ -40,7 +40,7 @@ void getRandomVector(sead::Vector3f* vec, float factor) {
 
 void getRandomDir(sead::Vector3f* vec) {
     getRandomVector(vec, 10.f);
-    while (sead::dot(*vec, *vec) > 0.000001f)
+    while (vec->dot(*vec) > 0.000001f)
         getRandomVector(vec, 10.f);
     vec->normalize();
 }

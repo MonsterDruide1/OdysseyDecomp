@@ -4,14 +4,14 @@
 
 namespace al {
 float normalize(float var, float min, float max) {
-    if (sead::absf(max - min) < 0.001f) {
+    if (sead::Mathf::abs(max - min) < 0.001f) {
         if (var < min)
             return 0.0f;
         else
             return 1.0f;
     }
 
-    float clamped = sead::clamp(var, min, max);
+    float clamped = sead::Mathf::clamp(var, min, max);
     return (clamped - min) / (max - min);
 }
 

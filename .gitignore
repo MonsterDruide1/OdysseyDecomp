@@ -19,6 +19,7 @@ bin/
 # IDEs
 .idea/
 .vscode/
+.cache/
 .DS_Store
 
 # IDA
