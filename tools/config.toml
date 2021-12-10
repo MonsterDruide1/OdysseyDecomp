@@ -1,5 +1,6 @@
-functions_csv = "data/odyssey_functions.csv"
+functions_csv = "data/{version}/odyssey_functions.csv"
 build_target = "odyssey"
+default_version = "1.0"
 
 [decomp_me]
 compiler_name = "clang-3.9.1"
