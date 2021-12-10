@@ -2,10 +2,11 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
-#include "al/LiveActor/LiveActor.h"
 #include "al/sensor/SensorHitGroup.h"
 
 namespace al {
+class LiveActor;
+
 class HitSensor {
 public:
     HitSensor(al::LiveActor*, const char*, unsigned int, float, unsigned short,
