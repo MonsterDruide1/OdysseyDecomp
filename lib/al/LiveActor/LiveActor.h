@@ -2,12 +2,12 @@
 
 #include "al/byaml/ByamlIter.h"
 
-#include "al/camera/CameraDirector.h"
 #include "al/collision/CollisionDirector.h"
 #include "al/effect/EffectKeeper.h"
 #include "al/hio/HioNode.h"
 #include "al/iuse/IUseAreaObj.h"
 #include "al/iuse/IUseAudioKeeper.h"
+#include "al/iuse/IUseCamera.h"
 #include "al/nerve/Nerve.h"
 #include "al/rail/RailKeeper.h"
 #include "al/rail/RailRider.h"

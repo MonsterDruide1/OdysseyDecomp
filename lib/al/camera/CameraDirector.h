@@ -1,22 +1,55 @@
 #pragma once
 
-#include "CameraPoseUpdater.h"
+#include "al/hio/HioNode.h"
+#include "al/iuse/IUseExecutor.h"
 
 namespace al {
-class CameraDirector {
+class SceneCameraInfo;
+class SceneCameraCtrl;
+class CameraPoseUpdater;
+class CameraPoserFactory;
+class CameraPoserSceneInfo;
+class CameraTicketHolder;
+class SpecialCameraHolder;
+class CameraTargetCollideInfoHolder;
+class CameraTargetHolder;
+class CameraInputHolder;
+class CameraAngleVerticalRequester;
+class CameraStartParamCtrl;
+class CameraStopJudge;
+class CameraParamTransfer;
+class CameraResourceHolder;
+class CameraFlagCtrl;
+class CameraInSwitchOnAreaDirector;
+
+
+class CameraDirector : public HioNode, IUseExecutor {
 public:
+    virtual ~CameraDirector();
     void startSnapShotMode(bool);
-    al::CameraPoseUpdater* getPoseUpdater(void);
-    float getSceneFovyDegree(void) const;
+    al::CameraPoseUpdater* getPoseUpdater(int index);
+    float getSceneFovyDegree() const;
 
-    unsigned char padding[0x30 - 0x02];
-    float sceneFovyDegree;  // 0x30
-                            // 0xBC float farClipDistance
-                            // 0xB8 float nearClipDistance
+private:
+    int mCountCameraPoseUpdaters;
+    SceneCameraInfo* mSceneCameraInfo;
+    SceneCameraCtrl* mSceneCameraCtrl;
+    CameraPoseUpdater** mPoseUpdaters;
+    CameraPoserFactory* mPoserFactory;
+    CameraPoserSceneInfo* mPoserSceneInfo;
+    CameraTicketHolder* mTicketHolder;
+    SpecialCameraHolder* mSpecialCameraHolder;
+    CameraTargetCollideInfoHolder* mTargetCollideInfoHolder;
+    CameraTargetHolder* mTargetHolder;
+    CameraInputHolder* mInputHolder;
+    CameraAngleVerticalRequester* mAngleVerticalRequester;
+    CameraStartParamCtrl* mStartParamCtrl;
+    CameraStopJudge* mStopJudge;
+    CameraParamTransfer* mParamTransfer;
+    const CameraResourceHolder* mCameraResourceHolder;
+    CameraFlagCtrl* mFlagCtrl;
+    void* customThing;
+    CameraInSwitchOnAreaDirector* mInSwitchOnAreaDirector;
+    void* anotherCustomThing;
 };
-
-class IUseCamera {
-public:
-    virtual al::CameraDirector* getCameraDirector() const = 0;
-};
-};  // namespace al
+}  // namespace al
