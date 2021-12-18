@@ -10,13 +10,14 @@ public:
     int getStringTableOffset() const;
     int getDataOffset() const;
 
+private:
     union {
         int _0;
-        unsigned short mTag, mVersion;
+        unsigned short mTag, mVersion; // unusable due to different loading mechanisms
     };
 
-    int mHashKeyOffset;      // _4
-    int mStringTableOffset;  // _8
-    int mDataOffset;         // _C
+    int mHashKeyOffset;
+    int mStringTableOffset;
+    int mDataOffset;
 };
-};  // namespace al
+}  // namespace al

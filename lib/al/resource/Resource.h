@@ -18,7 +18,7 @@ public:
 
     unsigned int getFileSize(const sead::SafeStringBase<char>&) const;
 
-    const char* getByml(const sead::SafeString&);
+    const u8* getByml(const sead::SafeString&);
 
     bool tryCreateResGraphicsFile(const sead::SafeStringBase<char>&, nn::g3d::ResFile*);
     void cleanupResGraphicsFile();

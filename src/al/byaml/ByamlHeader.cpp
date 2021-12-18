@@ -1,20 +1,11 @@
 #include "al/byaml/ByamlHeader.h"
 #include "byteswap.h"
 
-// "YB"
-#define BYAML_LE_TAG 0x5942
+#define BYAML_LE_TAG 'YB'
 
 namespace al {
 short ByamlHeader::getTag() const {
-    int revTag = __bswap_16(mTag);
-    int ret;
-
-    if (mTag == BYAML_LE_TAG)
-        ret = revTag;
-    else
-        ret = mTag;
-
-    return ret;
+    return isInvertOrder() ? bswap_16(mTag) : mTag;
 }
 
 bool ByamlHeader::isInvertOrder() const {
@@ -22,57 +13,20 @@ bool ByamlHeader::isInvertOrder() const {
 }
 
 short ByamlHeader::getVersion() const {
-    int tag = _0 & 0xFFFF;
-    int ver = _0 >> 16;
-
-    short revVer = __bswap_16(ver);
-    short ret;
-
-    // if the tag is "YB", then it is in little endian
-    if (tag == BYAML_LE_TAG)
-        ret = revVer;
-    else
-        ret = ver;
-
-    return ret;
+    if ((_0 & 0xFFFF) == BYAML_LE_TAG)  // isInvertOrder()
+        return bswap_16(_0 >> 16);
+    return _0 >> 16;
 }
 
 int ByamlHeader::getHashKeyTableOffset() const {
-    short tag = mTag;
-    int offsRev = __bswap_32(mHashKeyOffset);
-    int offs;
-
-    if (tag == BYAML_LE_TAG)
-        offs = offsRev;
-    else
-        offs = mHashKeyOffset;
-
-    return offs;
+    return isInvertOrder() ? __bswap_32(mHashKeyOffset) : mHashKeyOffset;
 }
 
 int ByamlHeader::getStringTableOffset() const {
-    short tag = mTag;
-    int offsRev = __bswap_32(mStringTableOffset);
-    int offs;
-
-    if (tag == BYAML_LE_TAG)
-        offs = offsRev;
-    else
-        offs = mStringTableOffset;
-
-    return offs;
+    return isInvertOrder() ? __bswap_32(mStringTableOffset) : mStringTableOffset;
 }
 
 int ByamlHeader::getDataOffset() const {
-    short tag = mTag;
-    int offsRev = __bswap_32(mDataOffset);
-    int offs;
-
-    if (tag == BYAML_LE_TAG)
-        offs = offsRev;
-    else
-        offs = mDataOffset;
-
-    return offs;
+    return isInvertOrder() ? __bswap_32(mDataOffset) : mDataOffset;
 }
-};  // namespace al
+}  // namespace al

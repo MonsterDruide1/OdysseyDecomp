@@ -2,19 +2,14 @@
 #include "byteswap.h"
 
 namespace al {
-ByamlStringTableIter::ByamlStringTableIter() : mData(0), mReversed(0) {}
+ByamlStringTableIter::ByamlStringTableIter() = default;
 
-ByamlStringTableIter::ByamlStringTableIter(const u8* pData, bool pReversed) {
-    mData = pData;
-    mReversed = pReversed;
-}
+ByamlStringTableIter::ByamlStringTableIter(const u8* data, bool isRev)
+    : mData(data), isRev(isRev) {}
 
 int ByamlStringTableIter::getSize() const {
     u32 type_and_size = *reinterpret_cast<const u32*>(mData);
-    if (mReversed)
-        return ((type_and_size >> 24) & 0xFF) | ((type_and_size >> 16) & 0xFF) << 8 |
-               ((type_and_size >> 8) & 0xFF) << 16;
-    return type_and_size >> 8;
+    return isRev ? bswap_32_ignore_last(type_and_size) : type_and_size >> 8;
 }
 
 const u32* ByamlStringTableIter::getAddressTable() const {
@@ -24,8 +19,8 @@ const u32* ByamlStringTableIter::getAddressTable() const {
 }
 
 int ByamlStringTableIter::getStringAddress(int idx) const {
-    if (mReversed)
-        return __bswap_32(getAddressTable()[idx]);
+    if (isRev)
+        return bswap_32(getAddressTable()[idx]);
 
     return getAddressTable()[idx];
 }
@@ -33,4 +28,4 @@ int ByamlStringTableIter::getStringAddress(int idx) const {
 bool ByamlStringTableIter::isValidate() const {
     return mData != nullptr;
 }
-};  // namespace al
+}  // namespace al

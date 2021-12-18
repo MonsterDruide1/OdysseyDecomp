@@ -7,10 +7,9 @@ int ByamlContainerHeader::getType() const {
 }
 
 int ByamlContainerHeader::getCount(bool isRev) const {
-    /* todo -- attempt to remove ASR instruction for the else block */
     if (isRev)
-        return ((mType >> 24) & 0xFF) | ((mType >> 16) & 0xFF) << 8 | ((mType >> 8) & 0xFF) << 16;
+        return bswap_32_ignore_last(mType);
 
     return (mType >> 8);
 }
-};  // namespace al
+}  // namespace al

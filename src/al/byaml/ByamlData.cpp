@@ -1,35 +1,39 @@
 #include "al/byaml/ByamlData.h"
-#include "byteswap.h"
 
 namespace al {
-ByamlData::ByamlData() : mValue(0), mType(0) {}
 
-void ByamlData::set(const ByamlHashPair* pPair, bool isRev) {
-    mType = pPair->mType;
-    int pairVal = pPair->mValue;
-    int swapVal = __bswap_32(pairVal);
+ByamlData::ByamlData() = default;
 
-    if (isRev)
-        pairVal = swapVal;
-
-    mValue = pairVal;
+void ByamlData::set(const ByamlHashPair* hash_pair, bool isRev) {
+    mType = hash_pair->getType();
+    mValue = isRev ? bswap_32(hash_pair->getValue(false)) : hash_pair->getValue(false);
 }
 
-void ByamlData::set(unsigned char type, unsigned int value, bool isRev) {
-    int val = __bswap_32(value);
-
-    if (!isRev)
-        val = value;
-
-    mType = type;
-    mValue = val;
+void ByamlData::set(u8 type, u32 value, bool isRev) {
+    mType = (ByamlDataType)type;
+    mValue = isRev ? bswap_32(value) : value;
 }
 
-unsigned char ByamlData::getType() const {
+ByamlDataType ByamlData::getType() const {
     return mType;
 }
 
 unsigned int ByamlData::getValue() const {
     return mValue;
 }
-};  // namespace al
+
+
+
+int ByamlHashPair::getKey(bool isRev) const {
+    return isRev ? bswap_24(mData) : mData & 0xFFFFFF;
+}
+
+ByamlDataType ByamlHashPair::getType() const {
+    return mType;
+}
+
+int ByamlHashPair::getValue(bool isRev) const {
+    return isRev ? bswap_32(mValue) : mValue;
+}
+
+}  // namespace al

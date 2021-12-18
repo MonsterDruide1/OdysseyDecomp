@@ -1,13 +1,15 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include "al/byaml/ByamlData.h"
 
 namespace al {
 class ByamlContainerHeader {
 public:
     int getType() const;
-    int getCount(bool) const;
+    int getCount(bool isRev) const;
 
-    u32 mType;  // _0
+private:
+    u32 mType;
 };
-};  // namespace al
+}  // namespace al

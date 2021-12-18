@@ -6,7 +6,7 @@ namespace al {
 class ByamlStringTableIter {
 public:
     ByamlStringTableIter();
-    ByamlStringTableIter(const unsigned char*, bool);
+    ByamlStringTableIter(const u8* data, bool isRev);
 
     int getSize() const;
     const u32* getAddressTable() const;
@@ -17,7 +17,8 @@ public:
     int findStringIndex(const char*) const;
     bool isValidate() const;
 
-    const u8* mData;  // _0
-    bool mReversed;
+private:
+    const u8* mData = nullptr;
+    bool isRev = false;
 };
-};  // namespace al
+}  // namespace al

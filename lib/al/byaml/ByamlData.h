@@ -1,9 +1,13 @@
 #pragma once
 
-#include "al/byaml/ByamlHashPair.h"
+#include <basis/seadTypes.h>
+#include "byteswap.h"
 
 namespace al {
-enum DataType : unsigned char {
+class ByamlHashPair;
+
+enum ByamlDataType : u8 {
+    TYPE_INVALID = 0,
     TYPE_STRING = 0xA0,
     TYPE_BINARY = 0xA1,
     TYPE_ARRAY = 0xC0,
@@ -23,12 +27,30 @@ class ByamlData {
 public:
     ByamlData();
 
-    void set(const ByamlHashPair*, bool);
-    void set(unsigned char, unsigned int, bool);
-    unsigned char getType() const;
-    unsigned int getValue() const;
+    void set(const ByamlHashPair* hash_pair, bool isRev);
+    void set(u8 type, u32 value, bool isRev);
+    ByamlDataType getType() const;
+    u32 getValue() const;
 
-    unsigned int mValue;  // _0
-    unsigned char mType;  // _4
+private:
+    u32 mValue = 0;
+    ByamlDataType mType = TYPE_INVALID;
 };
-};  // namespace al
+
+class ByamlHashPair {
+public:
+    int getKey(bool isRev) const;
+    ByamlDataType getType() const;
+    int getValue(bool isRev) const;
+
+private:
+    union {
+        const int mData;
+        struct {
+            const int mKey : 24;  // unusable due to different loading mechanisms
+            ByamlDataType mType;
+        };
+    };
+    const int mValue;
+};
+}  // namespace al
