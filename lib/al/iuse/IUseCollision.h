@@ -7,4 +7,4 @@ class IUseCollision {
 public:
     virtual al::CollisionDirector* getCollisionDirector() const = 0;
 };
-};  // namespace al
+}  // namespace al
