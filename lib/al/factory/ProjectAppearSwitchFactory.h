@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/actor/Factory.h"
+#include "al/factory/Factory.h"
 
 namespace al {
 

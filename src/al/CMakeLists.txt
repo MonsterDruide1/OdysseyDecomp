@@ -1,5 +1,6 @@
 add_subdirectory(actor)
 add_subdirectory(byaml)
+add_subdirectory(factory)
 add_subdirectory(hack)
 add_subdirectory(input)
 add_subdirectory(LiveActor)

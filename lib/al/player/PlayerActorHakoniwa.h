@@ -1,7 +1,7 @@
 #pragma once
 
-#include "al/actor/Dimension.h"
 #include "al/player/PlayerActorBase.h"
+#include "game/iuse/IUseDimension.h"
 
 namespace al {
 class FootPrintHolder;

@@ -70,7 +70,7 @@ bool tryGetPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const cha
 }
 
 al::PlacementId* createPlacementId(const al::ActorInitInfo& rInfo) {
-    const al::PlacementInfo& info = rInfo.mPlacementInfo;
+    const al::PlacementInfo& info = rInfo.getPlacementInfo();
     al::PlacementId* id = new al::PlacementId();
     id->init(info);
     return id;
@@ -83,7 +83,7 @@ al::PlacementId* createPlacementId(const al::PlacementInfo& rInfo) {
 }
 
 bool tryGetPlacementId(al::PlacementId* pOut, const al::ActorInitInfo& rInfo) {
-    return pOut->init(rInfo.mPlacementInfo);
+    return pOut->init(rInfo.getPlacementInfo());
 }
 
 bool tryGetPlacementId(al::PlacementId* pOut, const al::PlacementInfo& rInfo) {
@@ -91,7 +91,7 @@ bool tryGetPlacementId(al::PlacementId* pOut, const al::PlacementInfo& rInfo) {
 }
 
 void getPlacementId(al::PlacementId* pOut, const al::ActorInitInfo& rInfo) {
-    pOut->init(rInfo.mPlacementInfo);
+    pOut->init(rInfo.getPlacementInfo());
 }
 
 void getPlacementId(al::PlacementId* pOut, const al::PlacementInfo& rInfo) {

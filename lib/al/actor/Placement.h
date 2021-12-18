@@ -11,23 +11,24 @@ public:
     void set(const al::ByamlIter&, const al::ByamlIter&);
 
     al::ByamlIter _0;
-    al::ByamlIter mZoneIter;  // _10
+    al::ByamlIter mZoneIter;
 };
 
 class PlacementId {
 public:
+    static bool isEqual(const al::PlacementId&, const al::PlacementId&);
+
     PlacementId();
     PlacementId(const char*, const char*, const char*);
 
     bool init(const al::PlacementInfo&);
     bool isEqual(const al::PlacementId&) const;
-    static bool isEqual(const al::PlacementId&, const al::PlacementId&);
     bool isValid() const;
-    bool makeString(sead::BufferedSafeStringBase<char>*) const;
+    bool makeString(sead::BufferedSafeString*) const;
 
-    const char* _0;
-    const char* mUnitConfigName;  // _8
-    const char* mID;              // _10
-    const char* mCommonID;        // _18
+    const char* mId;
+    const char* mUnitConfigName;
+    const char* mZoneId;
+    const char* mCommonID;
 };
 }  // namespace al

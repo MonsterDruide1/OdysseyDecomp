@@ -1,40 +1,28 @@
 #include "al/actor/Placement.h"
 
 namespace al {
-PlacementInfo::PlacementInfo() : _0(), mZoneIter() {}
+PlacementInfo::PlacementInfo() = default;
 
 void PlacementInfo::set(const al::ByamlIter& r_0, const al::ByamlIter& rZoneIter) {
-    _0.mDataOffset = r_0.mDataOffset;
-    _0.mData = r_0.mData;
-
-    mZoneIter.mDataOffset = rZoneIter.mDataOffset;
-    mZoneIter.mData = rZoneIter.mData;
+    _0 = r_0;
+    mZoneIter = rZoneIter;
 }
 
-PlacementId::PlacementId()
-    : mID(nullptr), mCommonID(nullptr), _0(nullptr), mUnitConfigName(nullptr) {}
+PlacementId::PlacementId() : mId(nullptr), mUnitConfigName(nullptr), mZoneId(nullptr), mCommonID(nullptr) {}
 
 PlacementId::PlacementId(const char* p_0, const char* pUnitConfig, const char* pID)
-    : _0(p_0), mUnitConfigName(pUnitConfig), mID(pID), mCommonID(nullptr) {}
+    : mId(p_0), mUnitConfigName(pUnitConfig), mZoneId(pID), mCommonID(nullptr) {}
 
 bool PlacementId::init(const al::PlacementInfo& rInfo) {
-    _0 = nullptr, mID = nullptr, mUnitConfigName = nullptr, mCommonID = nullptr;
+    mId = nullptr, mZoneId = nullptr, mUnitConfigName = nullptr, mCommonID = nullptr;
 
     rInfo._0.tryGetStringByKey(&mCommonID, "CommonId");
     rInfo.mZoneIter.tryGetStringByKey(&mUnitConfigName, "UnitConfigName");
-    rInfo.mZoneIter.tryGetStringByKey(&mID, "Id");
-    return rInfo._0.tryGetStringByKey(&_0, "Id");
+    rInfo.mZoneIter.tryGetStringByKey(&mZoneId, "Id");
+    return rInfo._0.tryGetStringByKey(&mId, "Id");
 }
 
 bool PlacementId::isValid() const {
-    bool ret;
-
-    if (mCommonID) {
-        ret = true;
-    } else {
-        ret = _0 != nullptr;
-    }
-
-    return ret;
+    return mCommonID || mId;
 }
 };  // namespace al
