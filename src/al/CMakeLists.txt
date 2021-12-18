@@ -1,4 +1,5 @@
 add_subdirectory(actor)
+add_subdirectory(async)
 add_subdirectory(byaml)
 add_subdirectory(factory)
 add_subdirectory(hack)

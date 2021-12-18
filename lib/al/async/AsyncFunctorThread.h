@@ -1,31 +1,30 @@
 #pragma once
 
-#include "FunctorBase.h"
-#include "sead/mc/seadCoreInfo.h"
-#include "sead/prim/seadSafeString.h"
-#include "sead/thread/seadDelegateThread.h"
-#include "sead/thread/seadMessageQueue.h"
-#include "types.h"
+#include <basis/seadTypes.h>
+#include <mc/seadCoreInfo.h>
+#include <prim/seadSafeString.h>
+#include "al/async/FunctorV0M.h"
+
+namespace sead {
+class DelegateThread;
+class Thread;
+}  // namespace sead
 
 namespace al {
 class AsyncFunctorThread {
 public:
-    AsyncFunctorThread(sead::SafeStringBase<char> const& functorName,
-                       al::FunctorBase const& functor, int blockType, int stackSize,
-                       sead::CoreId id);
-    // this function is whats passed into the delegate thread as the function to call when the
-    // thread becomes unblocked
-    void threadFunction(sead::Thread*, s64);  // unused args(?)
+    AsyncFunctorThread(const sead::SafeString& functor_name, const FunctorBase& functor,
+                       int priority, int stack_size, sead::CoreId id);
+    virtual ~AsyncFunctorThread();
 
-    bool isDone() const { return this->mIsDone; };
+    void threadFunction(sead::Thread* unused_1, s64 unused_2);
     void start();
+    bool isDone() const;
 
 private:
-    unsigned char padding_08[0x8];
-    sead::DelegateThread* mDelegateThread;
-    al::FunctorBase functor;
-    bool mIsDone;
+    sead::DelegateThread* mDelegateThread = nullptr;
+    FunctorBase* mFunctor = nullptr;
+    bool mIsDone = true;
 };
+static_assert(sizeof(AsyncFunctorThread) == 0x20);
 }  // namespace al
-
-static_assert(sizeof(al::AsyncFunctorThread) == 0x20);
