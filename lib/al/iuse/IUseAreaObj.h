@@ -5,6 +5,6 @@ class AreaObjDirector;
 
 class IUseAreaObj {
 public:
-    virtual al::AreaObjDirector* getAreaObjDirector() const = 0;
+    virtual AreaObjDirector* getAreaObjDirector() const = 0;
 };
-};  // namespace al
+}  // namespace al
