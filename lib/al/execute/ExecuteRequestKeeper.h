@@ -7,36 +7,40 @@ class ExecuteRequestInfo {
 public:
     ExecuteRequestInfo();
 
+private:
     unsigned long _0;
 };
 
 class ExecuteRequestTable {
 public:
-    ExecuteRequestTable(int);
+    ExecuteRequestTable(int size);
 
-    int mRequestCount;  // _0
-    int _4;
-    unsigned long* _8;
+private:
+    int mRequestCount;
+    LiveActor** mRequestArray;
 };
 
 class ExecuteRequestKeeper {
 public:
-    ExecuteRequestKeeper(int);
+    enum Request : int {
+        Request_Movement = 0x0,
+        Request_RemoveFromMovement = 0x1,
+        Request_Draw = 0x2,
+        Request_RemoveFromDraw = 0x3
+    };
+    
+    ExecuteRequestKeeper(int size);
 
-    enum Request : int
-        {
-            Request_Movement = 0x0,
-            Request_RemoveFromMovement = 0x1,
-            Request_Draw = 0x2,
-            Request_RemoveFromDraw = 0x3
-        }
-
-        void executeRequestActorMovementAllOn();
+    void executeRequestActorMovementAllOn();
     void executeRequestActorMovementAllOff();
     void executeRequestActorDrawAllOn();
     void executeRequestActorDrawAllOff();
-    void request(al::LiveActor*, ExecuteRequestKeeper::Request);
+    void request(LiveActor* actor, ExecuteRequestKeeper::Request request_type);
+
+private:
+    ExecuteRequestTable* mMovement;
+    ExecuteRequestTable* mRemoveFromMovement;
+    ExecuteRequestTable* mDraw;
+    ExecuteRequestTable* mRemoveFromDraw;
 };
-}
-}
-;
+}  // namespace al
