@@ -1,4 +1,4 @@
-#include "al/hack/HackCapThrowParam.h"
+#include "game/hack/HackCapThrowParam.h"
 
 #include "al/util/LiveActorUtil.h"
 
