@@ -12,7 +12,7 @@ MofumofuWarpHole::MofumofuWarpHole(const char* name)
 
 void MofumofuWarpHole::init(const al::ActorInitInfo& actorInitInfo) {
     al::initActorWithArchiveName(this, actorInitInfo, "MofumofuWarpHole", nullptr);
-    al::initNerve(this, &nrvAppear, 0);
+    al::initNerve(this, &nrvMofumofuWarpHoleAppear, 0);
     al::initJointControllerKeeper(this, 1);
     al::initJointGlobalQuatController(this, &gap, "DashSign");
     makeActorDead();
@@ -20,32 +20,32 @@ void MofumofuWarpHole::init(const al::ActorInitInfo& actorInitInfo) {
 
 void MofumofuWarpHole::appear() {
     al::LiveActor::appear();
-    al::setNerve(this, &nrvAppear);
+    al::setNerve(this, &nrvMofumofuWarpHoleAppear);
 }
 
 void MofumofuWarpHole::disappear() {
-    al::setNerve(this, &nrvDisappear);
+    al::setNerve(this, &nrvMofumofuWarpHoleDisappear);
 }
 void MofumofuWarpHole::close() {
-    al::setNerve(this, &nrvClose);
+    al::setNerve(this, &nrvMofumofuWarpHoleClose);
 }
 void MofumofuWarpHole::closeAndDisappear() {
-    al::setNerve(this, &nrvCloseAndDisappear);
+    al::setNerve(this, &nrvMofumofuWarpHoleCloseAndDisappear);
 }
 void MofumofuWarpHole::open() {
-    al::setNerve(this, &nrvAppear);
+    al::setNerve(this, &nrvMofumofuWarpHoleAppear);
 }
 void MofumofuWarpHole::startHideMove() {
-    al::setNerve(this, &nrvHideMove);
+    al::setNerve(this, &nrvMofumofuWarpHoleHideMove);
 }
 void MofumofuWarpHole::startDashSign() {
-    al::setNerve(this, &nrvDashSign);
+    al::setNerve(this, &nrvMofumofuWarpHoleDashSign);
 }
 bool MofumofuWarpHole::isWait() const {
-    return al::isNerve(this, &nrvWait);
+    return al::isNerve(this, &nrvMofumofuWarpHoleWait);
 }
 bool MofumofuWarpHole::isHideWait() const {
-    return al::isNerve(this, &nrvHideWait);
+    return al::isNerve(this, &nrvMofumofuWarpHoleHideWait);
 }
 void MofumofuWarpHole::calcDashSignFront(sead::Vector3f* front) const {
     al::calcJointFrontDir(front, this, "DashSign");
@@ -53,7 +53,7 @@ void MofumofuWarpHole::calcDashSignFront(sead::Vector3f* front) const {
 void MofumofuWarpHole::exeAppear() {
     if (al::isFirstStep(this))
         al::startAction(this, "Appear");
-    al::setNerveAtActionEnd(this, &nrvWait);
+    al::setNerveAtActionEnd(this, &nrvMofumofuWarpHoleWait);
 }
 void MofumofuWarpHole::exeWait() {
     if (al::isFirstStep(this))
@@ -70,10 +70,10 @@ void MofumofuWarpHole::exeClose() {
         al::startAction(this, "Disappear");
 
     if (al::isActionEnd(this)) {
-        if (al::isNerve(this, &nrvCloseAndDisappear))
-            al::setNerve(this, &nrvDisappear);
+        if (al::isNerve(this, &nrvMofumofuWarpHoleCloseAndDisappear))
+            al::setNerve(this, &nrvMofumofuWarpHoleDisappear);
         else
-            al::setNerve(this, &nrvHideWait);
+            al::setNerve(this, &nrvMofumofuWarpHoleHideWait);
     }
 }
 void MofumofuWarpHole::exeHideWait() {}
@@ -111,12 +111,12 @@ void MofumofuWarpHole::exeDashSign() {
     sead::Vector3f* v15 = al::getGravity(this);
     sead::Vector3f v20{-v15->x, -v15->y, -v15->z};
     al::makeQuatFrontUp(&gap, v21, v20);
-    al::setNerveAtGreaterEqualStep(this, &nrvDashSignEnd, 120);
+    al::setNerveAtGreaterEqualStep(this, &nrvMofumofuWarpHoleDashSignEnd, 120);
 }
 void MofumofuWarpHole::exeDashSignEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, "DashSignEnd");
-    al::setNerveAtActionEnd(this, &nrvWait);
+    al::setNerveAtActionEnd(this, &nrvMofumofuWarpHoleWait);
 }
 
 namespace {

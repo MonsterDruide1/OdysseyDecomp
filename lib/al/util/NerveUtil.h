@@ -8,7 +8,7 @@
     public:                                                                                        \
         void execute(al::NerveKeeper*) override;                                                   \
     };                                                                                             \
-    Class##Nrv##Action nrv##Action;
+    Class##Nrv##Action nrv##Class##Action;
 
 #define NERVE_IMPL_(Class, Action, ActionFunc)                                                     \
     void Class##Nrv##Action::execute(al::NerveKeeper* keeper) {                                    \

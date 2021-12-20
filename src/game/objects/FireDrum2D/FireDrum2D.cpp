@@ -11,7 +11,7 @@ FireDrum2D::FireDrum2D(const char* name) : LiveActor(name) {}
 
 void FireDrum2D::init(const al::ActorInitInfo& info) {
     al::initActor(this, info);
-    al::initNerve(this, &nrvWait, 0);
+    al::initNerve(this, &nrvFireDrum2DWait, 0);
     mActorDimensionKeeper = rs::createDimensionKeeper(this);
     rs::updateDimensionKeeper(mActorDimensionKeeper);
 
@@ -38,13 +38,13 @@ void FireDrum2D::exeBurn() {
         al::startAction(this, "Wait");
     }
     if (al::isActionEnd(this)) {
-        al::setNerve(this, &nrvWait);
+        al::setNerve(this, &nrvFireDrum2DWait);
     }
 }
 
 void FireDrum2D::attackSensor(al::HitSensor* source, al::HitSensor* target) {
     if (rs::sendMsgTouchFireDrum2D(target, source) || rs::sendMsgEnemyAttack2D(target, source)) {
-        al::setNerve(this, &nrvBurn);
+        al::setNerve(this, &nrvFireDrum2DBurn);
     }
 }
 
