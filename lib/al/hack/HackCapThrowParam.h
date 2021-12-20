@@ -2,35 +2,35 @@
 
 namespace al {
 class LiveActor;
-};
+}
 
 class HackCapThrowParam {
 public:
-    HackCapThrowParam(al::LiveActor*);
+    HackCapThrowParam(al::LiveActor* actor);
 
 private:
-    float* hackThrowHeight;
-    float* maxVel;
-    float* continuousThrowSpeed;
-    int* breakTime;
-    float* maxDist;
-    int* endpointStopTime;
-    int* maxEndpointStopTime;
-    float* returnStrength;
-    float* maxRetSpeed;
-    float* turnAngleLimit;
-    float* waterMaxSpeed;
-    float* waterDist;
-    int* waterBreakTime;
-    float* waterMaxRetSpeed;
-    float* tornadoDist;
-    float* tornadoMaxDist;
-    int* tornadoReflectTime;
-    float* rollSpeed;
-    float* rollDistTop;
-    float* rollDistBottom;
-    int* rollBrakeTimeTop;
-    int* rollBrakeTimeBottom;
-    float* rollGroundGroundedPoseTrack;
-    float* rollGroundAerialPoseTrack;
+    float* mHackThrowHeight;
+    float* mMaxVel;
+    float* mContinuousThrowSpeed;
+    int* mBreakTime;
+    float* mMaxDist;
+    int* mEndpointStopTime;
+    int* mMaxEndpointStopTime;
+    float* mReturnStrength;
+    float* mMaxRetSpeed;
+    float* mTurnAngleLimit;
+    float* mWaterMaxSpeed;
+    float* mWaterDist;
+    int* mWaterBreakTime;
+    float* mWaterMaxRetSpeed;
+    float* mTornadoDist;
+    float* mTornadoMaxDist;
+    int* mTornadoReflectTime;
+    float* mRollSpeed;
+    float* mRollDistTop;
+    float* mRollDistBottom;
+    int* mRollBrakeTimeTop;
+    int* mRollBrakeTimeBottom;
+    float* mRollGroundGroundedPoseTrack;
+    float* mRollGroundAerialPoseTrack;
 };

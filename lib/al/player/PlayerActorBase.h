@@ -1,7 +1,7 @@
 #pragma once
 
 #include "al/LiveActor/LiveActor.h"
-#include "al/hack/PlayerHack.h"
+#include "al/iuse/IUsePlayerHack.h"
 
 class PlayerInitInfo;
 
