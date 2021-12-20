@@ -70,10 +70,10 @@ class LiveActor : public al::IUseNerve,
                   public al::IUseRail,
                   public al::IUseHioNode {
 public:
-    LiveActor(const char*);  // TODO requires implementation
+    LiveActor(const char* name);  // TODO requires implementation
 
     virtual NerveKeeper* getNerveKeeper() const override;
-    virtual void init(const ActorInitInfo&);
+    virtual void init(const ActorInitInfo& info);
     virtual void initAfterPlacement();
     virtual void appear();
     virtual void makeActorAlive();
@@ -84,8 +84,9 @@ public:
     virtual void draw() const;
     virtual void startClipped();
     virtual void endClipped();
-    virtual void attackSensor(HitSensor*, HitSensor*);
-    virtual bool receiveMsg(const SensorMsg*, HitSensor*, HitSensor*);  // NOTE: return type unknown
+    virtual void attackSensor(HitSensor* target, HitSensor* source);
+    virtual bool receiveMsg(const SensorMsg* message, HitSensor* source,
+                            HitSensor* target);  // NOTE: return type unknown
     virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*,
                                        ScreenPointTarget*);  // NOTE: return type unknown
     virtual const char* getName() const override;

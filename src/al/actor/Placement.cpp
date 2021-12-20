@@ -8,7 +8,8 @@ void PlacementInfo::set(const al::ByamlIter& r_0, const al::ByamlIter& rZoneIter
     mZoneIter = rZoneIter;
 }
 
-PlacementId::PlacementId() : mId(nullptr), mUnitConfigName(nullptr), mZoneId(nullptr), mCommonID(nullptr) {}
+PlacementId::PlacementId()
+    : mId(nullptr), mUnitConfigName(nullptr), mZoneId(nullptr), mCommonID(nullptr) {}
 
 PlacementId::PlacementId(const char* p_0, const char* pUnitConfig, const char* pID)
     : mId(p_0), mUnitConfigName(pUnitConfig), mZoneId(pID), mCommonID(nullptr) {}

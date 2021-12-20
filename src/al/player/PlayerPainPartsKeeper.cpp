@@ -3,8 +3,8 @@
 #include "al/model/PartsModel.h"
 #include "al/player/PlayerCostumeInfo.h"
 #include "al/player/PlayerModelHolder.h"
-#include "al/player/rsPlayerState.h"
 #include "al/util/LiveActorUtil.h"
+#include "rs/Player.h"
 
 PlayerPainPartsKeeper::PlayerPainPartsKeeper(const al::LiveActor* liveActor,
                                              const PlayerCostumeInfo* costumeInfo)
