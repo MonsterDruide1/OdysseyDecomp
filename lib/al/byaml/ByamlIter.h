@@ -34,9 +34,9 @@ public:
     bool tryGetBoolByKey(bool* val, const char* key) const;
     bool tryConvertBool(bool* val, const ByamlData* data) const;
     bool tryGetIntByKey(int* val, const char* key) const;
-    bool tryConvertInt32(int* val, const ByamlData* data) const;
-    bool tryGetUInt32ByKey(unsigned int* val, const char* key) const;
-    bool tryConvertUInt32(unsigned int* val, const ByamlData* data) const;
+    bool tryConvertInt(int* val, const ByamlData* data) const;
+    bool tryGetUIntByKey(unsigned int* val, const char* key) const;
+    bool tryConvertUInt(unsigned int* val, const ByamlData* data) const;
     bool tryGetFloatByKey(float* val, const char* key) const;
     bool tryConvertFloat(float* val, const ByamlData* data) const;
     bool tryGetInt64ByKey(long* val, const char* key) const;
@@ -48,8 +48,8 @@ public:
     bool tryGetStringByIndex(const char** string, int index) const;
     bool tryGetBinaryByIndex(const u8** binary, int* size, int index) const;
     bool tryGetBoolByIndex(bool* val, int index) const;
-    bool tryGetInt32ByIndex(int* val, int index) const;
-    bool tryGetUInt32ByIndex(unsigned int* val, int index) const;
+    bool tryGetIntByIndex(int* val, int index) const;
+    bool tryGetUIntByIndex(unsigned int* val, int index) const;
     bool tryGetFloatByIndex(float* val, int index) const;
     bool tryGetInt64ByIndex(long* val, int index) const;
     bool tryGetUInt64ByIndex(unsigned long* val, int index) const;
