@@ -200,7 +200,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
         }
         if (data.getType() == 0xD1) {
             int value;
-            if (iter.tryConvertInt32(&value, &data)) {
+            if (iter.tryConvertInt(&value, &data)) {
                 if (key)
                     addInt(key, value);
                 else
@@ -218,7 +218,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
         }
         if (data.getType() == 0xD3) {
             u32 value;
-            if (iter.tryConvertUInt32(&value, &data)) {
+            if (iter.tryConvertUInt(&value, &data)) {
                 if (key)
                     addUInt(key, value);
                 else
