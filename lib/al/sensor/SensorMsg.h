@@ -5,7 +5,7 @@ namespace al {
 class HitSensor;
 class SensorMsg;
 
-void sendMsgPlayerReleaseEquipment(al::HitSensor*, al::HitSensor*);
+void sendMsgPlayerReleaseEquipment(HitSensor* source, HitSensor* target);
 
 bool isMsgPlayerDisregard(al::SensorMsg const* message);
 
