@@ -11,6 +11,8 @@ public:
 
     virtual void init(const al::ActorInitInfo&) override;
     virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
+    virtual unsigned int getPortNo() const;
+    virtual void* getViewMtx() const;          // NOTE: unknown return type
     virtual void* getPlayerCollision() const;  // NOTE: unknown return type
     virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
     virtual bool isEnableDemo();
@@ -34,8 +36,6 @@ public:
     virtual bool isDamageStopDemo() const;  // NOTE: unknown return type
     virtual void* getPlayerPuppet();        // NOTE: unknown return type
     virtual void* getPlayerInfo() const;    // NOTE: unknown return type
-    virtual unsigned int getPortNo() const;
-    virtual void* getViewMtx() const;  // NOTE: unknown return type
     virtual void movement() override;
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
