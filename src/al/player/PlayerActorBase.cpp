@@ -3,7 +3,7 @@
 PlayerActorBase::PlayerActorBase(const char* name) : LiveActor(name) {}
 void PlayerActorBase::init(const al::ActorInitInfo&) {}
 void PlayerActorBase::initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&) {}
-void* PlayerActorBase::getPlayerCollision() const {
+IUsePlayerCollision* PlayerActorBase::getPlayerCollision() const {
     return nullptr;
 }
 al::PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
