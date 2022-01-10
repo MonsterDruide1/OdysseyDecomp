@@ -3,6 +3,7 @@
 #include "al/LiveActor/LiveActor.h"
 #include "al/iuse/IUsePlayerHack.h"
 
+class IUsePlayerCollision;
 class PlayerInitInfo;
 
 class PlayerActorBase : public al::LiveActor, public al::IUsePlayerHack {
@@ -13,7 +14,7 @@ public:
     virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
     virtual unsigned int getPortNo() const;
     virtual void* getViewMtx() const;          // NOTE: unknown return type
-    virtual void* getPlayerCollision() const;  // NOTE: unknown return type
+    virtual IUsePlayerCollision* getPlayerCollision() const;
     virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
     virtual bool isEnableDemo();
     virtual void startDemo();
