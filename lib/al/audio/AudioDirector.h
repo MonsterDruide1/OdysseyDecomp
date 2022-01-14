@@ -24,7 +24,7 @@ class AudioDuckingDirector;
 class AudioEffectController;
 class AudioDirectorInitInfo;
 
-class AudioDirector : IUseAreaObj, HioNode, IAudioSystemPause {
+class AudioDirector : public IUseAreaObj, public HioNode, public IAudioSystemPause {
 public:
     class PauseSystemEntry {
         const char* mName;
