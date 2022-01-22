@@ -46,10 +46,6 @@ int getSubActorNum(al::LiveActor const*);
 
 al::LiveActor* getSubActor(al::LiveActor const*, int);
 
-sead::Vector3f* getVelocity(al::LiveActor const*);
-
-sead::Quatf* getQuat(al::LiveActor const*);
-
 int getPlayerControllerPort(int);
 
 char const* getActionName(al::LiveActor const*);

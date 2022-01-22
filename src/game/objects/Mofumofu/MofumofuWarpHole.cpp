@@ -88,14 +88,14 @@ void MofumofuWarpHole::exeDashSign() {
     }
 
     sead::Vector3f* playerPos = rs::getPlayerPos(this);
-    sead::Vector3f* trans = al::getTrans(this);
+    const sead::Vector3f& trans = al::getTrans(this);
 
-    sead::Vector3f a3 = (*playerPos) - (*trans);
-    al::verticalizeVec(&a3, *al::getGravity(this), a3);
+    sead::Vector3f a3 = (*playerPos) - (trans);
+    al::verticalizeVec(&a3, al::getGravity(this), a3);
     if (!al::tryNormalizeOrZero(&a3))
-        a3 = *al::getFront(this);  // TODO small mismatch here
+        a3 = al::getFront(this);  // TODO small mismatch here
 
-    al::turnVecToVecDegree(&a3, *al::getFront(this), a3, 55);
+    al::turnVecToVecDegree(&a3, al::getFront(this), a3, 55);
     al::normalize(&a3);
 
     sead::Vector3f v21{0, 0, 0};
@@ -108,8 +108,8 @@ void MofumofuWarpHole::exeDashSign() {
     al::turnVecToVecRate(&v21, v21, a3, 0.15);
     al::normalize(&v21);
 
-    sead::Vector3f* v15 = al::getGravity(this);
-    sead::Vector3f v20{-v15->x, -v15->y, -v15->z};
+    const sead::Vector3f& v15 = al::getGravity(this);
+    sead::Vector3f v20{-v15.x, -v15.y, -v15.z};
     al::makeQuatFrontUp(&gap, v21, v20);
     al::setNerveAtGreaterEqualStep(this, &nrvMofumofuWarpHoleDashSignEnd, 120);
 }

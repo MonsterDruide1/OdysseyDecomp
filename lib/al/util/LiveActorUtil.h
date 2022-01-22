@@ -11,20 +11,31 @@ namespace al {
 template <typename T>
 al::LiveActor* createActorFunction(const char* actorName);
 
-sead::Vector3f* getTrans(const al::LiveActor*);
+const sead::Vector3f& getTrans(const al::LiveActor*);
+const sead::Vector3f& getGravity(const al::LiveActor*);
+const sead::Vector3f& getUp(const al::LiveActor*);
+const sead::Vector3f& getFront(const al::LiveActor*);
+const sead::Vector3f& getVelocity(const al::LiveActor*);
+const sead::Quatf& getQuat(const al::LiveActor*);
 sead::Vector3f* getTransPtr(al::LiveActor*);
-sead::Vector3f* getGravity(const al::LiveActor*);
 sead::Vector3f* getGravityPtr(al::LiveActor*);
-sead::Vector3f* getUp(const al::LiveActor*);
 sead::Vector3f* getUpPtr(al::LiveActor*);
-sead::Vector3f* getFront(const al::LiveActor*);
 sead::Vector3f* getFrontPtr(al::LiveActor*);
-sead::Vector3f* getCameraUp(const al::LiveActor*, int);
+sead::Vector3f* getVelocityPtr(al::LiveActor*);
+sead::Quatf* getQuatPtr(al::LiveActor*);
 
-sead::Vector3f* getScale(const al::LiveActor*);
+const sead::Vector3f& getCameraUp(const al::LiveActor*, int);
+
+const sead::Vector3f& getScale(const al::LiveActor*);
 float getScaleX(const al::LiveActor*);
 float getScaleY(const al::LiveActor*);
 float getScaleZ(const al::LiveActor*);
+
+float calcDistance(const al::LiveActor*, const sead::Vector3f&);
+float calcDistance(const al::LiveActor*, const al::LiveActor*);
+float calcSpeed(const al::LiveActor*);
+float calcSpeedH(const al::LiveActor*);
+float calcSpeedV(const al::LiveActor*);
 
 bool isClipped(const LiveActor*);
 void tryInitFixedModelGpuBuffer(const LiveActor*);

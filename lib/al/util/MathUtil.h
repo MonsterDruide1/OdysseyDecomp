@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 namespace al {
 float normalize(float, float, float);
 float normalize(signed int, signed int, signed int);
@@ -29,4 +31,7 @@ inline T clamp(T value, T min, T max) {
         return max;
     return value;
 }
+
+void verticalizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
+
 };  // namespace al
