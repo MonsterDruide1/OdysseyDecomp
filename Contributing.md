@@ -24,9 +24,29 @@ Unlike the vast majority of games that are being decompiled in 2021, *Super Mari
 * [const correctness](https://isocpp.org/wiki/faq/const-correctness) for member functions
 * iterators and range-based for loops (e.g. `for (int i : my_list_of_ints) {}`)
 
+## Editor/IDE setup
+
+OdysseyDecomp is mostly set up like a normal C++ project using standard build tools and compilers like Clang, CMake, Ninja, etc. so autocomplete and "IntelliSense" style features should work almost out-of-the-box.
+
+### VSCode
+
+Make sure you have the C++ and the CMake Tools extensions installed and enabled. And then just answer "yes" when you're asked whether you would like CMake Tools to configure IntelliSense for you.
+
+### CLion
+
+CLion interacts with CMake directly, so you need to make sure CLion's build profile is configured correctly.
+
+1. Open the Settings window and go to the Build > CMake pane.
+2. Remove all existing build profiles, and add a new build profile (call it whatever you want):
+    * Build type: RelWithDebInfo
+    * CMake options: `-DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake -GNinja`
+    * Build directory: `build`
+3. Press OK; CLion will automatically reload the CMake project.
+
 ## How to decompile
 
-0. Open the executable in the disassembler of your choice.
+0. Open the NSO executable in the disassembler of your choice.
+   * If you are using IDA, make sure you have the [NSO loader](https://github.com/reswitched/loaders) set up first!
 
 1. **Pick a function that you want to decompile.**
     * Prefer choosing a function that you understand or that is already named in your IDA/Ghidra database.
@@ -50,20 +70,11 @@ Unlike the vast majority of games that are being decompiled in 2021, *Super Mari
     * Non-inline function calls can just be stubbed if you don't feel like decompiling them at the moment. To "stub" a function, just declare the function (and the enclosing class/namespace/etc. if needed) without implementing/defining it.
 
 4. **Build**.
-5. **Get the mangled name** of your function. For example, if you are decompiling PlayerModelHolder::tryFindModelActor:
+5. **Add the function name to the list of decompiled functions.**
+    * To do so, open `data/odyssey_functions.csv`, search for the name or the address of function you have decompiled, and add the function name to the last column.
+    * Example: `0x00000071010c0d60,U,136,PlayerModelHolder::tryFindModelActor`
 
-      ```
-      $ tools/common/print_decomp_symbols.py -a | grep PlayerModelHolder::tryFindModelActor
-      UNLISTED  PlayerModelHolder::tryFindModelActor(char const*) const (_ZNK17PlayerModelHolder17tryFindModelActorEPKc)
-      ```
-
-6. **Add the mangled function name to the list of decompiled functions.**
-    * To do so, open `data/odyssey_functions.csv`, search for the name function you have decompiled, and make sure that the mangled function name in the last column matches the decompiled mangled name.
-        * Pay attention to the beginning of the mangled name: `_ZNK` indicates a `const` function (compared to `_ZN` for a non-const function), so make sure to match this!
-    * Change the status column from `U` (undecompiled) to `O` (OK).
-    * Example: `0x000000710045eb6c,O,000120,_ZNK17PlayerModelHolder17tryFindModelActorEPKc`
-
-7. **Compare the assembly** with `tools/check -mw <function name>`
+6. **Compare the assembly** with `tools/check -mw <function name>`
     * This will bring up a two-column diff. The code on the left is the original code; the code on the right is your version of the function.
     * You may ignore address differences (which often show up in adrp+ldr pairs or bl or b).
     * If you modify a source file while the diff is visible, it will be automatically rebuilt and the diff will update to match the new assembly code.
@@ -72,26 +83,28 @@ Unlike the vast majority of games that are being decompiled in 2021, *Super Mari
       * To show C++ source code interleaved with the assembly in the diff, pass `-c` or `--source`.
       * To get a three-column diff (original, decomp, diff with last decomp attempt), pass `-3` (do not use with `-c`).
 
-8. **Tweak the code to get a perfectly matching function**.
+7. **Tweak the code to get a perfectly matching function**.
     * Clang is usually quite reasonable so it is very common for functions -- even complicated code -- to match on the first try.
     * **Focus on large differences.** If you have large differences (e.g. entire sections of code being at the wrong location), focus on getting rid of them first and ignore small differences like regalloc or trivial reorderings.
     * **Regalloc:** If you only have regalloc differences left in a function that *looks* semantically equivalent, double-check whether it is truly equivalent: such differences are typically caused by using the wrong variable. It is rare for LLVM to use a different set of registers if the code is equivalent.
     * This is usually the most difficult part of matching decomp. Please ask on Discord if you need help!
     * The [cheatsheet](https://github.com/zeldaret/botw/blob/master/Cheatsheet.md) (of the BotW project) might help you recognize code patterns and contains a checklist for common matching issues.
 
-9. **Update the list of decompiled functions**.
+8. **Update the list of decompiled functions**.
     * If you have a function that matches perfectly, great!
-    * If there are still minor differences left, wrap the function in an `#ifdef NON_MATCHING`, add a comment to explain what is wrong, and change the status to `m` (minor difference) in the CSV.
+    * If there are still minor differences left, write add a comment to explain what is wrong (if you think that is necessary), and change the status (the second column) to `m` (minor difference) in the CSV.
     * For major differences (lots of entirely red/green/blue lines in the diff), use a capital `M` (major difference) in place of `m`.
 
-10. Before opening a PR, reformat the code with clang-format and run `tools/check`.
+9. Before opening a PR, reformat the code with clang-format and run `tools/check`.
     * You can use clang-format via your editor – VSCode and CLion have built-in clang-format support — or by calling `git clang-format` (for files you have `git add`ed and not yet committed).
+    * If your editor does not have built-in support for clang-format, or if you need to invoke clang-format in a terminal, you'll need to install it manually.
+        * If your Linux distro or system (e.g. macOS) does not package clang-format 12, you can download it from [the LLVM project website here](https://releases.llvm.org/download.html)
 
 ## Code style
 
-This project uses clang-format to enforce a consistent coding style. Before opening a PR, please format your code with clang-format 12 and ensure the following guidelines are followed.
+Super Mario Odyssey has 31MB of code and contributors *need* to read and modify existing parts of the codebase very often: inconsistencies lead to a loss of efficiency, and we literally cannot afford that considering our small number of contributors. To avoid wasting time on formatting issues, we use clang-format to automatically enforce a consistent coding style.
 
-This will allow your contributions to be reviewed more quickly.
+Before opening a PR, please format your code with clang-format 12 and ensure the following guidelines are followed. This will allow your contributions to be reviewed more quickly.
 
 ### General
 
@@ -99,7 +112,7 @@ This will allow your contributions to be reviewed more quickly.
 * Use 4 spaces to indent.
 * Use `nullptr`, not `NULL` or `0`.
 * Only use `auto` if the variable type is obvious, too long to type or if it doesn't matter.
-* To compare a value against zero, write `if (value == 0)`, not `if (!value)`.
+* To compare an integer against zero, write `if (value == 0)`, not `if (!value)`. (This rule doesn't apply to booleans.)
 * To compare a value against nullptr, either `if (pointer != nullptr)` or `if (pointer)` is fine.
 
 ### Header files
@@ -210,11 +223,4 @@ This project sometimes uses small hacks to force particular code to be generated
     * For more options, see [asm-differ](https://github.com/simonlindholm/asm-differ).
 * To print progress: `tools/common/progress.py`
     * Note that progress is only approximate because of inline functions, templating and compiler-generated functions.
-* To dump symbols: `tools/common/print_decomp_symbols.py`
-    * Pass `-a` to list all symbols
-    * Useful for getting the mangled name of a function. For example:
-
-        ```
-        $ tools/common/print_decomp_symbols.py -a | grep PlayerModelHolder::tryFindModelActor
-        UNLISTED  PlayerModelHolder::tryFindModelActor(char const*) const (_ZNK17PlayerModelHolder17tryFindModelActorEPKc)
-        ```
+* To list symbols: `tools/listsym` (pass --help to see available options)

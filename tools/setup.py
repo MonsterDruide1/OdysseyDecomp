@@ -8,6 +8,9 @@ from typing import Optional
 from common import setup_common as setup
 from enum import Enum
 
+TARGET_PATH = setup.get_target_path()
+TARGET_ELF_PATH = setup.get_target_elf_path()
+
 class Version(Enum):
     VER_100 = "1.0"
     VER_101 = "1.0.1"
@@ -21,8 +24,6 @@ def prepare_executable(original_nso: Optional[Path]):
 
     # The uncompressed v1.0 main NSO.
     TARGET_HASH = UNCOMPRESSED_V10_HASH
-    TARGET_PATH = setup.ROOT / "data" / "main.nso"
-    TARGET_ELF_PATH = setup.ROOT / "data" / "main.elf"
 
     if TARGET_PATH.is_file() and hashlib.sha256(TARGET_PATH.read_bytes()).hexdigest() == TARGET_HASH and TARGET_ELF_PATH.is_file():
         print(">>> NSO is already set up")

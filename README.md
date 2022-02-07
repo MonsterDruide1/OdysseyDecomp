@@ -18,11 +18,13 @@ The instructions below assume that you are using Linux (native or WSL) or macOS.
 * CMake 3.13+
     * If you are on Ubuntu 18.04, you must first [update CMake by using the official CMake APT repository](https://apt.kitware.com/).
 * ccache (to speed up builds)
+* xdelta3
+* clang (not for compiling SMO code, but for compiling Rust tools)
 
 Ubuntu users can install those dependencies by running:
 
 ```shell
-sudo apt install python3 ninja-build cmake ccache
+sudo apt install python3 ninja-build cmake ccache xdelta3 clang libssl-dev
 ```
 
 Additionally, you'll also need:
