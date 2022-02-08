@@ -6,6 +6,7 @@ target_sources(odyssey PRIVATE
     NerveUtil.cpp
     OtherUtil.cpp
     PlacementUtil.cpp
+    PlayerUtil.cpp
     RandomUtil.cpp
     StringUtil.cpp
 )

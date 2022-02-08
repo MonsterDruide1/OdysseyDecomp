@@ -34,10 +34,6 @@ class PlacementInfo;
 
 // from Starlight's header files. TODO clean this up, and include them in the proper places
 
-PlayerActorHakoniwa* getPlayerActor(al::LiveActor const*, int);
-
-PlayerActorHakoniwa* tryGetPlayerActor(al::PlayerHolder const*, int);
-
 sead::Heap* getCurrentHeap();
 
 al::Projection* getProjection(al::IUseCamera const*, int);
