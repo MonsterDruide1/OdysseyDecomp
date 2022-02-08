@@ -37,7 +37,7 @@ bool PlayerActorBase::isDamageStopDemo() const {
 void* PlayerActorBase::getPlayerPuppet() {
     return nullptr;
 }
-void* PlayerActorBase::getPlayerInfo() const {
+PlayerInfo* PlayerActorBase::getPlayerInfo() const {
     return nullptr;
 }
 
