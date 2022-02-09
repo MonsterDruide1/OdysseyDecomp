@@ -4,6 +4,7 @@
 #include "al/iuse/IUsePlayerHack.h"
 
 class IUsePlayerCollision;
+class PlayerInfo;
 class PlayerInitInfo;
 
 class PlayerActorBase : public al::LiveActor, public al::IUsePlayerHack {
@@ -13,7 +14,7 @@ public:
     virtual void init(const al::ActorInitInfo&) override;
     virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
     virtual unsigned int getPortNo() const;
-    virtual void* getViewMtx() const;          // NOTE: unknown return type
+    virtual void* getViewMtx() const;  // NOTE: unknown return type
     virtual IUsePlayerCollision* getPlayerCollision() const;
     virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
     virtual bool isEnableDemo();
@@ -33,10 +34,10 @@ public:
     virtual void startDemoKeepCarry();
     virtual void endDemoKeepCarry();
     virtual void getDemoActor();
-    virtual void* getDemoAnimator();        // NOTE: unknown return type
-    virtual bool isDamageStopDemo() const;  // NOTE: unknown return type
-    virtual void* getPlayerPuppet();        // NOTE: unknown return type
-    virtual void* getPlayerInfo() const;    // NOTE: unknown return type
+    virtual void* getDemoAnimator();            // NOTE: unknown return type
+    virtual bool isDamageStopDemo() const;      // NOTE: unknown return type
+    virtual void* getPlayerPuppet();            // NOTE: unknown return type
+    virtual PlayerInfo* getPlayerInfo() const;  // NOTE: unknown return type
     virtual void movement() override;
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
