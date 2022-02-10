@@ -1,5 +1,5 @@
 #include "al/resource/Resource.h"
-#include <agl/g3d/g3dResFile.h>
+#include <agl/g3d/aglNW4FToNN.h>
 #include <filedevice/seadFileDevice.h>
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
