@@ -8,9 +8,13 @@ class PlacementInfo {
 public:
     PlacementInfo();
 
-    void set(const al::ByamlIter&, const al::ByamlIter&);
+    void set(const al::ByamlIter& placement_iter, const al::ByamlIter& zone_iter);
 
-    al::ByamlIter _0;
+    const al::ByamlIter& getPlacementIter() const { return mPlacementIter; }
+    const al::ByamlIter& getZoneIter() const { return mZoneIter; }
+
+private:
+    al::ByamlIter mPlacementIter;
     al::ByamlIter mZoneIter;
 };
 
@@ -26,6 +30,7 @@ public:
     bool isValid() const;
     bool makeString(sead::BufferedSafeString*) const;
 
+private:
     const char* mId;
     const char* mUnitConfigName;
     const char* mZoneId;

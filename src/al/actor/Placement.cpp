@@ -1,11 +1,13 @@
 #include "al/actor/Placement.h"
 
+#include "al/byaml/ByamlIter.h"
+
 namespace al {
 PlacementInfo::PlacementInfo() = default;
 
-void PlacementInfo::set(const al::ByamlIter& r_0, const al::ByamlIter& rZoneIter) {
-    _0 = r_0;
-    mZoneIter = rZoneIter;
+void PlacementInfo::set(const al::ByamlIter& placement_iter, const al::ByamlIter& zone_iter) {
+    mPlacementIter = placement_iter;
+    mZoneIter = zone_iter;
 }
 
 PlacementId::PlacementId()
@@ -17,10 +19,10 @@ PlacementId::PlacementId(const char* p_0, const char* pUnitConfig, const char* p
 bool PlacementId::init(const al::PlacementInfo& rInfo) {
     mId = nullptr, mZoneId = nullptr, mUnitConfigName = nullptr, mCommonID = nullptr;
 
-    rInfo._0.tryGetStringByKey(&mCommonID, "CommonId");
-    rInfo.mZoneIter.tryGetStringByKey(&mUnitConfigName, "UnitConfigName");
-    rInfo.mZoneIter.tryGetStringByKey(&mZoneId, "Id");
-    return rInfo._0.tryGetStringByKey(&mId, "Id");
+    rInfo.getPlacementIter().tryGetStringByKey(&mCommonID, "CommonId");
+    rInfo.getZoneIter().tryGetStringByKey(&mUnitConfigName, "UnitConfigName");
+    rInfo.getZoneIter().tryGetStringByKey(&mZoneId, "Id");
+    return rInfo.getPlacementIter().tryGetStringByKey(&mId, "Id");
 }
 
 bool PlacementId::isValid() const {

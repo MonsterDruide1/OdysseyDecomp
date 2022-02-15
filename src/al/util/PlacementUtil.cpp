@@ -1,26 +1,28 @@
 #include "al/util/PlacementUtil.h"
 
+#include "al/byaml/ByamlIter.h"
+
 namespace al {
 int getCountPlacementInfo(const al::PlacementInfo& rInfo) {
-    return rInfo._0.getSize();
+    return rInfo.getPlacementIter().getSize();
 }
 
 void getPlacementInfoByKey(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo,
                            const char* pKey) {
     al::ByamlIter iterator;
-    bool ret = rInfo._0.tryGetIterByKey(&iterator, pKey);
+    bool ret = rInfo.getPlacementIter().tryGetIterByKey(&iterator, pKey);
 
     if (ret) {
-        pOutInfo->set(iterator, rInfo.mZoneIter);
+        pOutInfo->set(iterator, rInfo.getZoneIter());
     }
 }
 
 void getPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo, int idx) {
     al::ByamlIter iterator;
-    bool ret = rInfo._0.tryGetIterByIndex(&iterator, idx);
+    bool ret = rInfo.getPlacementIter().tryGetIterByIndex(&iterator, idx);
 
     if (ret) {
-        pOutInfo->set(iterator, rInfo.mZoneIter);
+        pOutInfo->set(iterator, rInfo.getZoneIter());
     }
 }
 
@@ -29,10 +31,10 @@ bool tryGetPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::Placement
     bool result;
 
     al::ByamlIter iterator;
-    bool ret = rInfo._0.tryGetIterByIndex(&iterator, idx);
+    bool ret = rInfo.getPlacementIter().tryGetIterByIndex(&iterator, idx);
 
     if (ret) {
-        pOutInfo->set(iterator, rInfo.mZoneIter);
+        pOutInfo->set(iterator, rInfo.getZoneIter());
         result = true;
     } else {
         result = false;
@@ -45,10 +47,10 @@ void getPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char**
                                        const al::PlacementInfo& rInfo, int idx) {
     al::ByamlIter iterator;
 
-    bool ret = rInfo._0.tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
+    bool ret = rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
 
     if (ret) {
-        pOutInfo->set(iterator, rInfo.mZoneIter);
+        pOutInfo->set(iterator, rInfo.getZoneIter());
     }
 }
 
@@ -57,10 +59,10 @@ bool tryGetPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const cha
     bool result;
 
     al::ByamlIter iterator;
-    bool ret = rInfo._0.tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
+    bool ret = rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
 
     if (ret) {
-        pOutInfo->set(iterator, rInfo.mZoneIter);
+        pOutInfo->set(iterator, rInfo.getZoneIter());
         result = true;
     } else {
         result = false;
