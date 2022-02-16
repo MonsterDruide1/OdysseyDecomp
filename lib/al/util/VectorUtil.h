@@ -6,7 +6,9 @@
 
 namespace al {
 
+bool isNearZero(float, float);
 bool isNearZero(const sead::Vector2f&, float);
+bool isNearZero(const sead::Vector3f&, float);
 void verticalizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 bool tryNormalizeOrZero(sead::Vector3f*);
 void normalize(sead::Vector3f*);
