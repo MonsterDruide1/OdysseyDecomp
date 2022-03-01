@@ -21,6 +21,7 @@ bin/
 .vscode/
 .cache/
 .DS_Store
+/cmake-build-*
 
 # IDA
 *.id0
@@ -46,4 +47,3 @@ perf.data.old
 tools/check
 tools/listsym
 tools/decompme
-/cmake-build-debug
