@@ -1,6 +1,7 @@
 #pragma once
 
 #include "al/byaml/ByamlData.h"
+#include "al/byaml/ByamlHeader.h"
 
 namespace al {
 class ByamlIter {
@@ -17,9 +18,9 @@ public:
     int getKeyIndex(const char* key) const;
     bool isInvertOrder() const;
     unsigned int getSize() const;
-    ByamlIter* getIterByIndex(int index) const;
+    ByamlIter getIterByIndex(int index) const;
     bool getByamlDataByIndex(al::ByamlData* data, int index) const;
-    ByamlIter* getIterByKey(const char* key) const;
+    ByamlIter getIterByKey(const char* key) const;
     bool getByamlDataByKey(al::ByamlData* data, const char* key) const;
     bool getByamlDataByKeyIndex(al::ByamlData* data, int index) const;
     bool getByamlDataAndKeyName(al::ByamlData* data, const char** key, int index) const;
@@ -30,7 +31,7 @@ public:
     bool tryGetStringByKey(const char** string, const char* key) const;
     bool tryConvertString(const char** string, const ByamlData* data) const;
     bool tryGetBinaryByKey(const u8** binary, int* size, const char* key) const;
-    bool tryGetBinary(const char** binary, int* size, const ByamlData* data) const;
+    bool tryConvertBinary(const u8** binary, int* size, const ByamlData* data) const;
     bool tryGetBoolByKey(bool* val, const char* key) const;
     bool tryConvertBool(bool* val, const ByamlData* data) const;
     bool tryGetIntByKey(int* val, const char* key) const;
@@ -58,7 +59,10 @@ public:
     bool isEqualData(ByamlIter const& other) const;
 
 private:
-    unsigned char* mData;
-    unsigned long mDataOffset;
+    union {
+        const u8* mData;
+        const ByamlHeader* mHeader;
+    };
+    const u8* mRootNode;
 };
 }  // namespace al

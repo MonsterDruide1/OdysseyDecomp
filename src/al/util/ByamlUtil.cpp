@@ -1,41 +1,5 @@
 #include "al/util/ByamlUtil.h"
 
-namespace alByamlLocalUtil {
-/* doesn't match but it's close enough */
-const char* getDataTypeString(int type) {
-    switch (type) {
-    case 0x00:
-        return "None";
-    case 0xA0:
-        return "String";
-    case 0xC0:
-        return "Array";
-    case 0xC1:
-        return "Hash";
-    case 0xC2:
-        return "StringTable";
-    case 0xD0:
-        return "Bool";
-    case 0xD1:
-        return "Int";
-    case 0xD2:
-        return "Float";
-    case 0xD3:
-        return "UInt";
-    case 0xD4:
-        return "Int64";
-    case 0xD5:
-        return "UInt64";
-    case 0xD6:
-        return "Double";
-    case 0xFF:
-        return "NULL";
-    default:
-        return "Unknown";
-    }
-}
-};  // namespace alByamlLocalUtil
-
 namespace al {
 bool tryGetByamlU8(unsigned char* pOut, const al::ByamlIter& rIter, const char* pKey) {
     int value = 0;
@@ -96,8 +60,8 @@ bool tryGetByamlS64(long* pOut, const al::ByamlIter& rIter, const char* pKey) {
 }
 
 bool tryGetByamlU64(unsigned long* pOut, const al::ByamlIter& rIter, const char* pKey) {
-    long value = 0;
-    bool res = rIter.tryGetInt64ByKey(&value, pKey);
+    u64 value = 0;
+    bool res = rIter.tryGetUInt64ByKey(&value, pKey);
 
     if (res) {
         *pOut = value;

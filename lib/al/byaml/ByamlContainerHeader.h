@@ -1,7 +1,6 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include "al/byaml/ByamlData.h"
 
 namespace al {
 class ByamlContainerHeader {
