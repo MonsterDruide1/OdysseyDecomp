@@ -18,7 +18,7 @@ sead::ControllerBase* getController(int port) {
 }
 
 bool isPadTrigger(int port, int button) {
-    return getController(port)->getButtonsTrigger() & button;
+    return getController(port)->isTrig(button);
 }
 
 bool isPadTriggerA(int port) {
@@ -64,16 +64,16 @@ bool isPadTriggerRight(int port) {
     return isPadTrigger(port, 1 << 19);
 }
 bool isPadTriggerLeftUp(int port) {
-    return isPadHoldLeftUp(port) && (getController(port)->getButtonsTrigger() & 0x50000);
+    return isPadHoldLeftUp(port) && (getController(port)->isTrig(0x50000));
 }
 bool isPadTriggerLeftDown(int port) {
-    return isPadHoldLeftDown(port) && (getController(port)->getButtonsTrigger() & 0x60000);
+    return isPadHoldLeftDown(port) && (getController(port)->isTrig(0x60000));
 }
 bool isPadTriggerRightUp(int port) {
-    return isPadHoldRightUp(port) && (getController(port)->getButtonsTrigger() & 0x90000);
+    return isPadHoldRightUp(port) && (getController(port)->isTrig(0x90000));
 }
 bool isPadTriggerRightDown(int port) {
-    return isPadHoldRightDown(port) && (getController(port)->getButtonsTrigger() & 0xA0000);
+    return isPadHoldRightDown(port) && (getController(port)->isTrig(0xA0000));
 }
 bool isPadTriggerHome(int port) {
     return isPadTrigger(port, 1 << 8);
@@ -137,8 +137,7 @@ bool isPadTriggerPressRightStick(int port) {
 }
 
 bool isPadRepeat(int port, int button) {
-    sead::ControllerBase* controller = getController(port);
-    return (controller->getButtonsTrigger() | controller->getButtonsRepeat()) & button;
+    return getController(port)->isTrigWithRepeat(button);
 }
 bool isPadRepeatA(int port) {
     return isPadRepeat(port, 1);
@@ -232,7 +231,7 @@ bool isPadHoldPressRightStick(int port) {
     return isPadHold2(port);
 }
 bool isPadHold(int port, int button) {
-    return getController(port)->getButtonsHold() & button;
+    return getController(port)->isHold(button);
 }
 bool isPadHoldA(int port) {
     return isPadHold(port, 1);
@@ -277,16 +276,16 @@ bool isPadHoldRight(int port) {
     return isPadHold(port, 1 << 19);
 }
 bool isPadHoldLeftUp(int port) {
-    return (getController(port)->getButtonsHold() & 0x50000) == 0x50000;
+    return getController(port)->isHoldAll(0x50000);
 }
 bool isPadHoldLeftDown(int port) {
-    return (getController(port)->getButtonsHold() & 0x60000) == 0x60000;
+    return getController(port)->isHoldAll(0x60000);
 }
 bool isPadHoldRightUp(int port) {
-    return (getController(port)->getButtonsHold() & 0x90000) == 0x90000;
+    return getController(port)->isHoldAll(0x90000);
 }
 bool isPadHoldRightDown(int port) {
-    return (getController(port)->getButtonsHold() & 0xA0000) == 0xA0000;
+    return getController(port)->isHoldAll(0xA0000);
 }
 bool isPadHoldHome(int port) {
     return isPadHold(port, 1 << 8);
@@ -344,7 +343,7 @@ bool isPadHoldRightStick(int port) {
 }
 
 bool isPadRelease(int port, int button) {
-    return getController(port)->getButtonsRelease() & button;
+    return getController(port)->isRelease(button);
 }
 bool isPadReleaseA(int port) {
     return isPadRelease(port, 1);
@@ -432,10 +431,10 @@ bool isPadReleaseRightRightStick(int port) {
 }
 
 const sead::Vector2f& getLeftStick(int port) {
-    return getController(port)->getLeftJoy();
+    return getController(port)->getLeftStick();
 }
 const sead::Vector2f& getRightStick(int port) {
-    return getController(port)->getRightJoy();
+    return getController(port)->getRightStick();
 }
 
 void getPadCrossDir(sead::Vector2f* vec, int port) {
@@ -465,9 +464,8 @@ void getPadCrossDirSideways(sead::Vector2f* vec, int port) {
 
 #ifdef NON_MATCHING
 void calcTouchScreenPos(sead::Vector2f* vec) {
-    *vec = getController(getTouchPanelPort())
-               ->getTouchScreenPos();  // uses w8 for storage instead and inserts another write at
-                                       // +4 bytes
+    *vec = getController(getTouchPanelPort())->getPointer();  // uses w8 for storage instead and
+                                                              // inserts another write at +4 bytes
 }
 #endif
 
