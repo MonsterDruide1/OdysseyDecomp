@@ -17,7 +17,7 @@ public:
     bool isExistKey(const char* key) const;
     int getKeyIndex(const char* key) const;
     bool isInvertOrder() const;
-    unsigned int getSize() const;
+    int getSize() const;
     ByamlIter getIterByIndex(int index) const;
     bool getByamlDataByIndex(al::ByamlData* data, int index) const;
     ByamlIter getIterByKey(const char* key) const;
@@ -57,6 +57,8 @@ public:
     bool tryGetDoubleByIndex(double* val, int index) const;
     bool tryConvertIter(ByamlIter* iter, const ByamlData* data) const;
     bool isEqualData(ByamlIter const& other) const;
+
+    const ByamlHeader* getHeader() const { return mHeader; }
 
 private:
     union {

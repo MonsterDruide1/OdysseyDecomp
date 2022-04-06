@@ -59,7 +59,7 @@ bool ByamlIter::isInvertOrder() const {
 }
 // NON_MATCHING: type-check wrong way around - AND 0xfe instead of OR 1, AND 0xFF (and thus
 // different cmp)
-unsigned int ByamlIter::getSize() const {
+int ByamlIter::getSize() const {
     if (!mRootNode)
         return false;
     ByamlContainerHeader* header = (ByamlContainerHeader*)mRootNode;
