@@ -10,13 +10,12 @@
 namespace al {
 
 ByamlWriter::ByamlWriter(sead::Heap* heap, bool _alwaysFalse)
-    : mHeap(heap), _mAlwaysFalse(_alwaysFalse) {  // FIXME mismatch on mContainerStack creation
+    : mHeap(heap), _mAlwaysFalse(_alwaysFalse) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mStringTable1 = new ByamlWriterStringTable();
     mStringTable2 = new ByamlWriterStringTable();
     mBigDataList = new ByamlWriterBigDataList();
-    u32 size = (mContainerStackSize * 8) >> 64;
-    mContainerStack = new ByamlWriterContainer*[size ? -1 : size * 8];
+    mContainerStack = new ByamlWriterContainer*[mContainerStackSize];
 }
 
 ByamlWriter::~ByamlWriter() {
@@ -167,7 +166,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
     if (!iter.isValid())
         return;
 
-    u32 size = iter.getSize();
+    s32 size = iter.getSize();
     if (iter.isTypeHash()) {
         if (iterKey)
             pushHash(iterKey);
@@ -181,7 +180,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
     } else
         return;
 
-    for (u32 i = 0; i < size; i++) {  // TODO missing the size == 0 check
+    for (s32 i = 0; i < size; i++) {
         ByamlData data{};
         const char* key = nullptr;
         if (iter.isTypeHash())
@@ -273,7 +272,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
                 pushLocalIter(value, key);
         }
     }
-    mCurrentContainerIndex--;
+    pop();
 }
 
 void ByamlWriter::pop() {
@@ -330,10 +329,5 @@ void ByamlWriter::print() const {
         mContainerStack[0]->print(1);
     }
 }
-
-/*
-    void write(sead::WriteStream*);
-    void print();
-    */
 
 }  // namespace al
