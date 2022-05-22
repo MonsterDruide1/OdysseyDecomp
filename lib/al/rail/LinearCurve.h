@@ -19,6 +19,8 @@ public:
     void calcStartPos(sead::Vector3f* start) const;
     void calcEndPos(sead::Vector3f* end) const;
 
+    float getLength() const { return mDistance; }
+
 private:
     sead::Vector3f mStart = sead::Vector3f::zero;
     sead::Vector3f mDiff = sead::Vector3f::zero;

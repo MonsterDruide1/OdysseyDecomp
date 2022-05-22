@@ -24,6 +24,8 @@ public:
     void calcCtrlPos2(sead::Vector3f* pos) const;
     void calcEndPos(sead::Vector3f* pos) const;
 
+    float getLength() const { return mDistance; }
+
 private:
     sead::Vector3f mStart = sead::Vector3f::zero;
     sead::Vector3f unk = sead::Vector3f::zero;
