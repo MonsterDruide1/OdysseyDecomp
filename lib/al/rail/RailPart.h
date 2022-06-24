@@ -23,10 +23,14 @@ public:
     float calcNearestLength(float*, const sead::Vector3f&, float, float) const;
     float getPartLength() const;
 
+    void setTotalDistance(float len) { mTotalDistance = len; }
+    float getTotalDistance() const { return mTotalDistance; }
+    bool isBezierCurve() const { return mBezierCurve != nullptr; }
+
 private:
     BezierCurve* mBezierCurve = nullptr;
     LinearCurve* mLinearCurve = nullptr;
-    float mPartLength = 0;
+    float mTotalDistance = 0;
 };
 
 }  // namespace al

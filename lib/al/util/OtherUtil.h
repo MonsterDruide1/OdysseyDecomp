@@ -126,6 +126,9 @@ bool tryGetAreaObjStringArg(const char**, al::AreaObj const*, const char*);
 bool tryGetArg(int*, const al::ActorInitInfo&, const char*);
 bool tryGetArg(float*, const al::ActorInitInfo&, const char*);
 bool tryGetArg(bool*, const al::ActorInitInfo&, const char*);
+bool tryGetArg(int*, const al::PlacementInfo&, const char*);
+bool tryGetArg(float*, const al::PlacementInfo&, const char*);
+bool tryGetArg(bool*, const al::PlacementInfo&, const char*);
 
 bool tryGetStringArg(const char**, al::ActorInitInfo const*, const char*);
 

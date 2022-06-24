@@ -34,4 +34,6 @@ inline T clamp(T value, T min, T max) {
 
 void verticalizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 
+float modf(float, float);
+
 };  // namespace al
