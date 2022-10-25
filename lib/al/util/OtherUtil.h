@@ -130,7 +130,7 @@ bool tryGetArg(int*, const al::PlacementInfo&, const char*);
 bool tryGetArg(float*, const al::PlacementInfo&, const char*);
 bool tryGetArg(bool*, const al::PlacementInfo&, const char*);
 
-bool tryGetStringArg(const char**, al::ActorInitInfo const*, const char*);
+bool tryGetStringArg(const char**, al::ActorInitInfo const&, const char*);
 
 bool isEqualString(const char* stringA, const char* stringB);
 
@@ -156,9 +156,6 @@ bool isObjectName(al::ActorInitInfo const&, char const*);
 bool isObjectName(al::PlacementInfo const&, char const*);
 
 void invalidateHitSensors(al::LiveActor*);
-
-void hideModelIfShow(al::LiveActor*);
-void showModelIfHide(al::LiveActor*);
 
 void hideModel(al::LiveActor*);
 void showModel(al::LiveActor*);
