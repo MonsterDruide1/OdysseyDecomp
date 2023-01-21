@@ -27,6 +27,15 @@ target_compile_options(odyssey PRIVATE -Wno-unused-parameter -Wno-unused-private
 target_compile_options(odyssey PRIVATE -fno-strict-aliasing)
 target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 
+set(NN_SDK_MAJOR 3)
+set(NN_SDK_MINOR 5)
+set(NN_SDK_PATCH 1)
+set(NN_SDK_TYPE "Release")
+
+set(NN_WARE_MAJOR 3)
+set(NN_WARE_MINOR 5)
+set(NN_WARE_PATCH 1)
+
 add_subdirectory(src)
 include_directories(lib)
 include_directories(lib/aarch64)
