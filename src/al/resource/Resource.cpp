@@ -1,6 +1,6 @@
 #include "al/resource/Resource.h"
-#include <agl/g3d/aglNW4FToNN.h>
 #include <filedevice/seadFileDevice.h>
+#include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
 #include <resource/seadResource.h>
