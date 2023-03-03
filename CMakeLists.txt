@@ -48,3 +48,6 @@ target_link_libraries(odyssey PUBLIC sead)
 
 add_subdirectory(lib/agl)
 target_link_libraries(odyssey PUBLIC agl)
+
+add_subdirectory(lib/eui)
+target_link_libraries(odyssey PUBLIC eui)

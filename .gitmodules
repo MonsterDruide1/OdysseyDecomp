@@ -13,3 +13,6 @@
 [submodule "tools/common"]
 	path = tools/common
 	url = https://github.com/open-ead/nx-decomp-tools
+[submodule "lib/eui"]
+	path = lib/eui
+	url = https://github.com/open-ead/eui
