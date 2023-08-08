@@ -1,6 +1,6 @@
-#include "al/scene/SceneObjHolder.h"
+#include "al/Library/Scene/SceneObjHolder.h"
 
-#include "al/scene/ISceneObj.h"
+#include "al/Library/Scene/ISceneObj.h"
 
 namespace al {
 

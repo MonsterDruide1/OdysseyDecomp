@@ -1,6 +1,6 @@
-#include "al/rail/LinearCurve.h"
+#include "al/Project/Rail/LinearCurve.h"
 
-#include "al/util/VectorUtil.h"
+#include "al/Library/Math/VectorUtil.h"
 
 namespace al {
 

@@ -1,10 +1,10 @@
-#include "al/byaml/ByamlHeader.h"
+#include "al/Library/Yaml/ByamlHeader.h"
 
 #include <byteswap.h>
 #include <cstring>
 #include <prim/seadEndian.h>
 #include <stream/seadStream.h>
-#include "al/byaml/ByamlData.h"
+#include "al/Library/Yaml/ByamlData.h"
 
 #define BYAML_LE_TAG 'YB'
 

@@ -1,4 +1,4 @@
-#include "al/nerve/NerveStateBase.h"
+#include "al/Library/Nerve/NerveStateBase.h"
 
 namespace al {
 NerveStateBase::NerveStateBase(const char* pName) : NerveExecutor(pName) {}

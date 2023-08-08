@@ -1,3 +1,3 @@
-#include "game/player/PlayerInfo.h"
+#include "game/Player/PlayerInfo.h"
 
 PlayerInfo::PlayerInfo() = default;

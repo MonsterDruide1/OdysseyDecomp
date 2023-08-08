@@ -1,8 +1,8 @@
-#include "al/MapObj/FixMapParts.h"
-#include "al/sensor/SensorMsg.h"
-#include "al/util/LiveActorUtil.h"
+#include "al/Library/MapObj/FixMapParts.h"
+#include "al/Library/LiveActor/ActorSensorMsgFunction.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
 #include "al/util/OtherUtil.h"
-#include "al/util/StageSwitchUtil.h"
+#include "al/Library/Stage/StageSwitchUtil.h"
 
 namespace al {
 FixMapParts::FixMapParts(const char* name) : LiveActor(name) {}

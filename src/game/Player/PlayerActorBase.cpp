@@ -1,4 +1,4 @@
-#include "al/player/PlayerActorBase.h"
+#include "game/Player/PlayerActorBase.h"
 
 PlayerActorBase::PlayerActorBase(const char* name) : LiveActor(name) {}
 void PlayerActorBase::init(const al::ActorInitInfo&) {}

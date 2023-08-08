@@ -1,10 +1,10 @@
-#include "al/LiveActor/LiveActor.h"
+#include "al/Library/LiveActor/LiveActor.h"
 
 #include <string.h>
-#include "al/LiveActor/LiveActorFlag.h"
-#include "al/LiveActor/ShadowKeeper.h"
-#include "al/actor/ActorPrepassLightKeeper.h"
-#include "al/util/LiveActorUtil.h"
+#include "al/Library/LiveActor/LiveActorFlag.h"
+#include "al/Library/Shadow/ShadowKeeper.h"
+#include "al/Project/Light/ActorPrepassLightKeeper.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
 
 namespace al {
 

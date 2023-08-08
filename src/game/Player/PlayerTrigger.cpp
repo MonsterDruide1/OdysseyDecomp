@@ -1,4 +1,4 @@
-#include "al/player/PlayerTrigger.h"
+#include "game/Player/PlayerTrigger.h"
 
 PlayerTrigger::PlayerTrigger() = default;
 

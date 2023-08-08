@@ -1,4 +1,4 @@
-#include "al/util/StringUtil.h"
+#include "al/Library/Base/String.h"
 
 #include <cstring>
 #include <resource/seadResource.h>

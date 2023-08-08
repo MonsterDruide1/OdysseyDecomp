@@ -1,7 +1,7 @@
-#include "al/util/NerveUtil.h"
+#include "al/Library/Nerve/NerveUtil.h"
 #include <algorithm>
-#include "al/nerve/NerveKeeper.h"
-#include "al/nerve/NerveStateCtrl.h"
+#include "al/Library/Nerve/NerveKeeper.h"
+#include "al/Library/Nerve/NerveStateCtrl.h"
 
 namespace al {
 void setNerve(al::IUseNerve* pKeeper, const al::Nerve* pNerve) {

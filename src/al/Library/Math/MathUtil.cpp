@@ -1,4 +1,4 @@
-#include "al/util/MathUtil.h"
+#include "al/Library/Math/MathUtil.h"
 #include <cmath>
 #include <math/seadMathCalcCommon.h>
 

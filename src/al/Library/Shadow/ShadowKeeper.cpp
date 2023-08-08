@@ -1,7 +1,7 @@
-#include "al/LiveActor/ShadowKeeper.h"
+#include "al/Library/Shadow/ShadowKeeper.h"
 
-#include "al/LiveActor/DepthShadowMapCtrl.h"
-#include "al/LiveActor/ShadowMaskCtrl.h"
+#include "al/Library/Shadow/DepthShadowMapCtrl.h"
+#include "al/Library/Shadow/ShadowMaskCtrl.h"
 
 namespace al {
 

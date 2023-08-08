@@ -85,6 +85,8 @@ Anyone is welcome to contribute to this project, just send a pull request!
 - Library/Stage: Proper place for StageInfo
 - Library/Math: Split up into multiple files
 - Library/Player: Re-organize Util
+- cleanup/remove al/util
+- game/Util/ResourceUtil remove/cleanup
 
 # Credits
 This decompilation uses [this](https://github.com/open-ead/sead) as a reference for the sead library used. Big thanks to their research!

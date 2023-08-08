@@ -1,4 +1,4 @@
-#include "al/sensor/HitSensor.h"
+#include "al/Library/HitSensor/HitSensor.h"
 
 namespace al {
 void HitSensor::setFollowPosPtr(const sead::Vector3<float>* pFollowPos) {

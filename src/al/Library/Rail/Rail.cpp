@@ -1,11 +1,11 @@
-#include "al/rail/Rail.h"
+#include "al/Library/Rail/Rail.h"
 #include <limits>
 
-#include "al/actor/Placement.h"
-#include "al/rail/RailPart.h"
-#include "al/util/MathUtil.h"
+#include "al/Library/Placement/Placement.h"
+#include "al/Library/Rail/RailPart.h"
+#include "al/Library/Math/MathUtil.h"
 #include "al/util/OtherUtil.h"
-#include "al/util/PlacementUtil.h"
+#include "al/Library/Placement/PlacementFunction.h"
 #include "math/seadMathCalcCommon.h"
 #include "math/seadVector.h"
 

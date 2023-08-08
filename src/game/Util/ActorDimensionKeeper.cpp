@@ -1,4 +1,4 @@
-#include "game/actor/ActorDimensionKeeper.h"
+#include "game/Util/ActorDimensionKeeper.h"
 
 void ActorDimensionKeeper::validate() {
     isValid = true;

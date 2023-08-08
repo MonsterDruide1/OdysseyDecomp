@@ -1,8 +1,8 @@
-#include "game/objects/FireDrum2D/FireDrum2D.h"
+#include "game/MapObj/FireDrum2D.h"
 
-#include "al/sensor/SensorMsg.h"
-#include "al/util/LiveActorUtil.h"
-#include "al/util/NerveUtil.h"
+#include "al/Library/LiveActor/ActorSensorMsgFunction.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/Nerve/NerveUtil.h"
 #include "al/util/OtherUtil.h"
 #include "rs/Dimension.h"
 #include "rs/Sensor.h"

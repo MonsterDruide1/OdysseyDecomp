@@ -1,7 +1,7 @@
-#include "al/LiveActor/ActorPoseKeeper.h"
+#include "al/Library/LiveActor/ActorPoseKeeper.h"
 
-#include "al/util/LiveActorUtil.h"
-#include "al/util/VectorUtil.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/Math/VectorUtil.h"
 
 namespace al {
 

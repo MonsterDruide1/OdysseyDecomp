@@ -1,8 +1,8 @@
-#include "al/input/PlayerInputFunction.h"
+#include "game/Player/PlayerInputFunction.h"
 
-#include "al/LiveActor/LiveActor.h"
-#include "al/input/rsSeparatePlay.h"
-#include "al/util/InputUtil.h"
+#include "al/Library/LiveActor/LiveActor.h"
+#include "rs/rsSeparatePlay.h"
+#include "al/Library/Controller/InputFunction.h"
 
 bool PlayerInputFunction::isTriggerAction(const al::LiveActor* actor, int port) {
     if (rs::isSeparatePlay(actor) && al::isPadTypeJoySingle(port)) {

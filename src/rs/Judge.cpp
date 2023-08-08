@@ -1,6 +1,6 @@
 #include "rs/Judge.h"
 
-#include "game/judge/IJudge.h"
+#include "game/Player/IJudge.h"
 
 void rs::resetJudge(IJudge* judge) {
     judge->reset();

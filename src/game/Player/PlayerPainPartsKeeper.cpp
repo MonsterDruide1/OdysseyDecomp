@@ -1,9 +1,9 @@
-#include "al/player/PlayerPainPartsKeeper.h"
+#include "game/Player/PlayerPainPartsKeeper.h"
 
-#include "al/model/PartsModel.h"
-#include "al/player/PlayerCostumeInfo.h"
-#include "al/player/PlayerModelHolder.h"
-#include "al/util/LiveActorUtil.h"
+#include "al/Library/Model/PartsModel.h"
+#include "game/Player/PlayerCostumeInfo.h"
+#include "game/Player/PlayerModelHolder.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
 #include "rs/Player.h"
 
 PlayerPainPartsKeeper::PlayerPainPartsKeeper(const al::LiveActor* liveActor,

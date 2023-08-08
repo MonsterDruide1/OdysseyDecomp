@@ -1,4 +1,4 @@
-#include "al/factory/ProjectAppearSwitchFactory.h"
+#include "game/Scene/ProjectAppearSwitchFactory.h"
 #include <array>
 
 namespace al {

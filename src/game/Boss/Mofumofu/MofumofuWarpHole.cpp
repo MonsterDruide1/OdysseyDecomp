@@ -1,11 +1,11 @@
-#include "game/objects/Mofumofu/MofumofuWarpHole.h"
+#include "game/Boss/Mofumofu/MofumofuWarpHole.h"
 
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
-#include "al/util/LiveActorUtil.h"
-#include "al/util/MathUtil.h"
-#include "al/util/NerveUtil.h"
-#include "al/util/VectorUtil.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/Math/MathUtil.h"
+#include "al/Library/Nerve/NerveUtil.h"
+#include "al/Library/Math/VectorUtil.h"
 
 MofumofuWarpHole::MofumofuWarpHole(const char* name)
     : al::LiveActor(name) {}  // TODO minor mismatch about storing `gap`

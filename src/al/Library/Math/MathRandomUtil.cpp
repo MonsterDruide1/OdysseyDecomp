@@ -1,4 +1,4 @@
-#include "al/util/RandomUtil.h"
+#include "al/Library/Math/MathRandomUtil.h"
 
 #include <random/seadGlobalRandom.h>
 

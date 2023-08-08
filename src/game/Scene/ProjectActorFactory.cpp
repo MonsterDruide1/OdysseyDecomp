@@ -1,5 +1,5 @@
-#include "al/factory/ProjectActorFactory.h"
-#include "al/factory/Factory.h"
+#include "game/Scene/ProjectActorFactory.h"
+#include "al/Library/Factory/Factory.h"
 
 namespace al {
 

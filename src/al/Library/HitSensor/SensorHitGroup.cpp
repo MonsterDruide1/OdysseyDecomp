@@ -1,4 +1,4 @@
-#include "al/sensor/SensorHitGroup.h"
+#include "al/Library/HitSensor/SensorHitGroup.h"
 
 namespace al {
 void SensorHitGroup::add(al::HitSensor* pSensor) {

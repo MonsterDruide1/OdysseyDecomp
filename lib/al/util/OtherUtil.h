@@ -4,7 +4,7 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
-#include "al/util/InputUtil.h"
+#include "al/Library/Controller/InputFunction.h"
 
 namespace sead {
 class Heap;

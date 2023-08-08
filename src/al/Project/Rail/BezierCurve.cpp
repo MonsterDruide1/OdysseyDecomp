@@ -1,4 +1,4 @@
-#include "al/rail/BezierCurve.h"
+#include "al/Project/Rail/BezierCurve.h"
 #include "math/seadVector.h"
 
 namespace al {

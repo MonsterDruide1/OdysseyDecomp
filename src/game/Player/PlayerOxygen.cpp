@@ -1,4 +1,4 @@
-#include "game/player/PlayerOxygen.h"
+#include "game/Player/PlayerOxygen.h"
 
 #include <math/seadMathCalcCommon.h>
 

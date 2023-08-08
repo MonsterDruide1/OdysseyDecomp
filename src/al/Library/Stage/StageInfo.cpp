@@ -1,6 +1,6 @@
-#include "al/stage/StageInfo.h"
+#include "al/Library/Stage/StageInfo.h"
 
-#include "al/actor/Placement.h"
+#include "al/Library/Placement/Placement.h"
 
 namespace al {
 

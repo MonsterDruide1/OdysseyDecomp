@@ -1,8 +1,9 @@
-#include "al/resource/AchievementInfoReader.h"
+#include "game/Npc/AchievementInfoReader.h"
 
-#include "al/byaml/ByamlIter.h"
-#include "al/util/ResourceUtil.h"
-#include "al/util/StringUtil.h"
+#include "al/Library/Yaml/ByamlIter.h"
+#include "al/Library/Resource/ResourceUtil.h"
+#include "al/Library/Base/String.h"
+#include "al/Library/Base/StringTmp.h"
 
 AchievementInfoReader::AchievementInfoReader() = default;
 

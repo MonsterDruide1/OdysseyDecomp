@@ -1,9 +1,9 @@
-#include "al/byaml/writer/ByamlWriterData.h"
+#include "al/Library/Yaml/writer/ByamlWriterData.h"
 
 #include <stream/seadStream.h>
-#include "al/byaml/writer/ByamlWriterBigDataList.h"
-#include "al/byaml/writer/ByamlWriterStringTable.h"
-#include "al/util/ByamlUtil.h"
+#include "al/Library/Yaml/writer/ByamlWriterBigDataList.h"
+#include "al/Library/Yaml/writer/ByamlWriterStringTable.h"
+#include "al/Library/Yaml/ByamlUtil.h"
 
 namespace al {
 

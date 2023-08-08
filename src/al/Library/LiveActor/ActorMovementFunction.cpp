@@ -1,7 +1,7 @@
 #include <math/seadVector.h>
-#include "al/LiveActor/ActorPoseKeeper.h"
-#include "al/util/LiveActorUtil.h"
-#include "al/util/MathUtil.h"
+#include "al/Library/LiveActor/ActorPoseKeeper.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/Math/MathUtil.h"
 
 namespace al {
 

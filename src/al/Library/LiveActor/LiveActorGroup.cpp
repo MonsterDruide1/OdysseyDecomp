@@ -1,5 +1,5 @@
-#include "al/LiveActor/LiveActorGroup.h"
-#include "al/util/LiveActorUtil.h"
+#include "al/Library/LiveActor/LiveActorGroup.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
 
 namespace al {
 LiveActorGroup::LiveActorGroup(const char* pName, int max) {

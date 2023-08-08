@@ -1,13 +1,13 @@
-#include "al/input/PlayerInput.h"
+#include "game/Player/PlayerInput.h"
 
-#include "al/LiveActor/LiveActor.h"
-#include "al/input/JoyPadAccelPoseAnalyzer.h"
-#include "al/input/PlayerInputFunction.h"
-#include "al/input/rsSeparatePlay.h"
-#include "al/player/PlayerFunction.h"
-#include "al/util/InputUtil.h"
-#include "al/util/MathUtil.h"
-#include "al/util/VectorUtil.h"
+#include "al/Library/LiveActor/LiveActor.h"
+#include "al/Library/Controller/JoyPadAccelPoseAnalyzer.h"
+#include "game/Player/PlayerInputFunction.h"
+#include "rs/rsSeparatePlay.h"
+#include "game/Player/PlayerFunction.h"
+#include "al/Library/Controller/InputFunction.h"
+#include "al/Library/Math/MathUtil.h"
+#include "al/Library/Math/VectorUtil.h"
 #include "rs/Dimension.h"
 
 PlayerInput::PlayerInput(const al::LiveActor*, const IUsePlayerCollision*, const IUseDimension*) {

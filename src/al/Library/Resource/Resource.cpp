@@ -1,10 +1,10 @@
-#include "al/resource/Resource.h"
+#include "al/Library/Resource/Resource.h"
 #include <filedevice/seadFileDevice.h>
 #include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
 #include <resource/seadResource.h>
-#include "al/util/ArchiveUtil.h"
+#include "al/Library/File/ArchiveUtil.h"
 
 namespace al {
 Resource::Resource(const sead::SafeStringBase<char>& rPath)

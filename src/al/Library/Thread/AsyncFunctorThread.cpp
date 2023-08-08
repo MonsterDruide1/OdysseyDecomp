@@ -1,4 +1,4 @@
-#include "al/async/AsyncFunctorThread.h"
+#include "al/Library/Thread/AsyncFunctorThread.h"
 
 #include <prim/seadDelegate.h>
 #include <thread/seadDelegateThread.h>

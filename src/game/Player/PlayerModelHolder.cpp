@@ -1,6 +1,6 @@
-#include "al/player/PlayerModelHolder.h"
+#include "game/Player/PlayerModelHolder.h"
 
-#include "al/util/StringUtil.h"
+#include "al/Library/Base/String.h"
 
 PlayerModelHolder::PlayerModelHolder(unsigned int bufferSize) {
     mBuffer.allocBuffer(bufferSize, nullptr);
