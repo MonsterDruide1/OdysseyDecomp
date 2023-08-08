@@ -76,8 +76,8 @@ def main():
 
     setup.install_viking()
     prepare_executable(args.original_nso)
+    setup.set_up_compiler("3.9.1")
     setup.set_up_compiler("4.0.1")
-    print("Please download and extract clang-3.9.1 manually, until it has been properly added to the setup chain.")
     create_build_dir(Version.VER_100)
     create_build_dir(Version.VER_101)
     create_build_dir(Version.VER_110)
