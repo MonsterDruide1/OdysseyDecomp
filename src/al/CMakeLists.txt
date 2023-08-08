@@ -1,6 +1,7 @@
 add_subdirectory(actor)
 add_subdirectory(async)
 add_subdirectory(byaml)
+add_subdirectory(collision)
 add_subdirectory(factory)
 add_subdirectory(graph)
 add_subdirectory(hack)
