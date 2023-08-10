@@ -1,9 +1,12 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
 
 namespace al {
 class LiveActor;
+class HitSensor;
 class Nerve;
 
 void startAction(LiveActor* actor, const char* actionName);
@@ -35,4 +38,16 @@ void copyAction(LiveActor* actor, const LiveActor* sourceActor);
 void startNerveAction(LiveActor* actor, const char* actionName);
 void setNerveAtActionEnd(LiveActor* actor, const Nerve* nerve);
 void resetNerveActionForInit(LiveActor* actor);
+
+void startHitReaction(const LiveActor*, const char*);
+void startHitReactionHitEffect(const LiveActor*, const char*, const HitSensor*, const HitSensor*);
+void startHitReactionHitEffect(const LiveActor*, const char*, const sead::Vector3f&);
+void startHitReactionHitEffect(const LiveActor*, const char*, const sead::Matrix34f*);
+void startHitReactionBlowHit(const LiveActor*, const HitSensor*, const HitSensor*);
+void startHitReactionBlowHit(const LiveActor*, const sead::Vector3f&);
+void startHitReactionBlowHit(const LiveActor*);
+void startHitReactionBlowHitDirect(const LiveActor*, const HitSensor*, const HitSensor*);
+void startHitReactionBlowHitDirect(const LiveActor*, const sead::Vector3f&);
+void startHitReactionBlowHitDirect(const LiveActor*);
+
 }  // namespace al

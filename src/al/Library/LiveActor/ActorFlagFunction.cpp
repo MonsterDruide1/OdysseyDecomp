@@ -11,14 +11,20 @@ bool isDead(const LiveActor* actor) {
 bool isNoCollide(const LiveActor* actor) {
     return actor->getFlags()->isCollideOff;
 }
-void onCalcAnim(LiveActor* actor) {}
-void offCalcAnim(LiveActor* actor) {}
+void onCalcAnim(al::LiveActor* actor) {
+    actor->getFlags()->isCalcAnim = true;
+}
+void offCalcAnim(al::LiveActor* actor) {
+    actor->getFlags()->isCalcAnim = false;
+}
 void validateShadow(LiveActor* actor) {}
 void invalidateShadow(LiveActor* actor) {}
 void onCollide(LiveActor* actor) {
     actor->getFlags()->isCollideOff = false;
 }
-void offCollide(LiveActor* actor) {}
+void offCollide(al::LiveActor* actor) {
+    actor->getFlags()->isCollideOff = true;
+}
 void validateMaterialCode(LiveActor* actor) {}
 void invalidateMaterialCode(LiveActor* actor) {}
 void validatePuddleMaterial(LiveActor* actor) {}

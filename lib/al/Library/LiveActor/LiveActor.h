@@ -9,8 +9,8 @@
 #include "al/Library/HostIO/HioNode.h"
 #include "al/Library/Nerve/IUseNerve.h"
 #include "al/Library/Rail/IUseRail.h"
-#include "al/Library/Scene/SceneObjHolder.h"
-#include "al/Library/Stage/StageSwitchKeeper.h"
+#include "al/Library/Scene/IUseSceneObjHolder.h"
+#include "al/Library/Stage/IUseStageSwitch.h"
 
 namespace al {
 class ActorPoseKeeperBase;
@@ -109,6 +109,20 @@ public:
     ModelKeeper* getModelKeeper() const { return mModelKeeper; }
     ActorPoseKeeperBase* getPoseKeeper() const { return mPoseKeeper; }
     ActorExecuteInfo* getExecuteInfo() const { return mExecuteInfo; }
+    ActorActionKeeper* getActorActionKeeper() const { return mActorActionKeeper; }
+    ActorItemKeeper* getActorItemKeeper() const { return mActorItemKeeper; }
+    ActorScoreKeeper* getActorScoreKeeper() const { return mActorScoreKeeper; }
+    Collider* getCollider() const { return mCollider; }
+    CollisionParts* getCollisionParts() const { return mCollisionParts; }
+    HitSensorKeeper* getHitSensorKeeper() const { return mHitSensorKeeper; }
+    ScreenPointKeeper* getScreenPointKeeper() const { return mScreenPointKeeper; }
+    HitReactionKeeper* getHitReactionKeeper() const { return mHitReactionKeeper; }
+    RailKeeper* getRailKeeper() const { return mRailKeeper; }
+    ShadowKeeper* getShadowKeeper() const { return mShadowKeeper; }
+    ActorPrePassLightKeeper* getActorPrePassLightKeeper() const { return mActorPrePassLightKeeper; }
+    ActorOcclusionKeeper* getActorOcclusionKeeper() const { return mActorOcclusionKeeper; }
+    SubActorKeeper* getSubActorKeeper() const { return mSubActorKeeper; }
+    ActorParamHolder* getActorParamHolder() const { return mActorParamHolder; }
 
     void setName(const char* newName) { mActorName = newName; }
 
@@ -152,7 +166,7 @@ struct LiveActorFlag {
     bool isPuddleMaterialValid = false;
     bool isAreaTargetOn = true;
     bool isUpdateOn = true;
-    
+
     LiveActorFlag();
 };
 static_assert(sizeof(LiveActorFlag) == 0xC);

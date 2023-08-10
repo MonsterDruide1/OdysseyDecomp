@@ -65,4 +65,12 @@ void makeMtxFrontUpPos(sead::Matrix34f* out, const sead::Vector3f& front, const 
 void makeMtxUpFrontPos(sead::Matrix34f* out, const sead::Vector3f& up, const sead::Vector3f& front,
                        const sead::Vector3f& pos);
 
+void separateVectorHV(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
+                      const sead::Vector3f&);
+
+void lerpVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, float);
+void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, float);
+void lerpVecHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
+               float, float);
+
 }  // namespace al

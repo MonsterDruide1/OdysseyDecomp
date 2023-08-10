@@ -20,12 +20,4 @@ private:
     int mArraySize;
 };
 
-class IUseSceneObjHolder {
-public:
-    virtual SceneObjHolder* getSceneObjHolder() const = 0;
-
-private:
-    static const char* sSceneObjName;
-};
-
 }  // namespace al

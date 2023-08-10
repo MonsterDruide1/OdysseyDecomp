@@ -1,8 +1,8 @@
-#include "al/Library/Yaml/writer/ByamlWriterData.h"
+#include "al/Library/Yaml/Writer/ByamlWriterData.h"
 
 #include <stream/seadStream.h>
-#include "al/Library/Yaml/writer/ByamlWriterBigDataList.h"
-#include "al/Library/Yaml/writer/ByamlWriterStringTable.h"
+#include "al/Library/Yaml/Writer/ByamlWriterBigDataList.h"
+#include "al/Library/Yaml/Writer/ByamlWriterStringTable.h"
 #include "al/Library/Yaml/ByamlUtil.h"
 
 namespace al {

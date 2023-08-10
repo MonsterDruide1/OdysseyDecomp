@@ -9,7 +9,7 @@
 #include "al/Library/Layout/IUseLayoutAction.h"
 #include "al/Library/Message/IUseMessageSystem.h"
 #include "al/Library/Nerve/IUseNerve.h"
-#include "al/Library/Scene/SceneObjHolder.h"
+#include "al/Library/Scene/IUseSceneObjHolder.h"
 
 namespace al {
 class NerveKeeper;

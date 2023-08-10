@@ -10,14 +10,24 @@
 #include "al/Library/Nerve/NerveUtil.h"
 
 namespace {
-MAKE_NERVE(Player, Wait);
-MAKE_NERVE(Player, Run);
-MAKE_NERVE(Player, Jump);
-MAKE_NERVE(Player, Fall);
-MAKE_NERVE(Player, Damage);
+NERVE_IMPL(Player, Wait);
+NERVE_IMPL(Player, Run);
+NERVE_IMPL(Player, Jump);
+NERVE_IMPL(Player, Fall);
+NERVE_IMPL(Player, Damage);
+
+struct {
+    NERVE_MAKE(Player, Wait);
+    NERVE_MAKE(Player, Run);
+    NERVE_MAKE(Player, Jump);
+    NERVE_MAKE(Player, Fall);
+    NERVE_MAKE(Player, Damage);
+} NrvPlayer;
+
 }  // namespace
 
-Player::Player(const char* actorName, const char* archiveName, s32 port) : al::LiveActor(actorName), mArchiveName(archiveName), mPort(port) {}
+Player::Player(const char* actorName, const char* archiveName, s32 port)
+    : al::LiveActor(actorName), mArchiveName(archiveName), mPort(port) {}
 void Player::init(const al::ActorInitInfo& initInfo) {
     al::initActorWithArchiveName(this, initInfo, al::LiveActor::getName(), nullptr);
     al::invalidateClipping(this);
@@ -27,7 +37,7 @@ void Player::control() {
         al::setVelocityZero(this);
         al::setTrans(this, {100.0f, 0.0f, 800.0f});
         al::resetPosition(this);
-        al::setNerve(this, &PlayerNrvFall::sInstance);
+        al::setNerve(this, &NrvPlayer.Fall);
     }
 }
 void Player::exeWait() {
@@ -37,8 +47,17 @@ void Player::exeWait() {
     al::scaleVelocity(this, 0.7f);
 
     if (al::isPadTriggerA(mPort))
-        al::setNerve(this, &PlayerNrvJump::sInstance);
+        al::setNerve(this, &NrvPlayer.Jump);
     else if (al::isNearZero(al::getLeftStick(mPort), 0.001f))
-        al::setNerve(this, &PlayerNrvRun::sInstance);
+        al::setNerve(this, &NrvPlayer.Run);
 }
-void Player::exeRun() {}
+
+// NON_MATCHING
+void Player::exeRun() {
+    if (al::isFirstStep(this)) {
+        al::startAction(this, "Run");
+        mAirTime = 0;
+    }
+    al::addVelocityToGravity(this, 2.0);
+    al::scaleVelocity(this, 0.7);
+}

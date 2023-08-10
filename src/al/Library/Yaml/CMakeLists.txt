@@ -5,4 +5,4 @@ target_sources(odyssey PRIVATE
     ByamlIter.cpp
     ByamlUtil.cpp
 )
-add_subdirectory(writer)
+add_subdirectory(Writer)

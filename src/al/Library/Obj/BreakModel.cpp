@@ -11,8 +11,12 @@
 #include "al/Library/Yaml/ByamlUtil.h"
 
 namespace {
-MAKE_NERVE_NAMESPACE(BreakModel, Wait, al);
-MAKE_NERVE_NAMESPACE(BreakModel, Break, al);
+using namespace al;
+NERVE_IMPL(BreakModel, Wait);
+NERVE_IMPL(BreakModel, Break);
+
+NERVE_MAKE(BreakModel, Wait);
+NERVE_MAKE(BreakModel, Break);
 }  // namespace
 
 namespace al {
@@ -24,7 +28,7 @@ BreakModel::BreakModel(LiveActor const* rootActor, const char* objName, const ch
 
 void BreakModel::init(const ActorInitInfo& initInfo) {
     initActorWithArchiveName(this, initInfo, mModelName, mInitSuffix);
-    initNerve(this, &BreakModelNrvWait::sInstance, 0);
+    initNerve(this, &Wait, 0);
     invalidateClipping(this);
 
     ByamlIter actorInitFile;
@@ -52,7 +56,7 @@ void BreakModel::appear(void) {
         if (!isNearZero(1.0f - mActionFrameRate, 0.001f))
             setActionFrameRate(this, mActionFrameRate);
     }
-    setNerve(this, &BreakModelNrvBreak::sInstance);
+    setNerve(this, &Break);
 
     LiveActor::makeActorAlive();
 }

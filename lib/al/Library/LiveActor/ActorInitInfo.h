@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <gfx/seadColor.h>
 #include <gfx/seadDrawContext.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
@@ -53,6 +54,8 @@ class LayoutInitInfo;
 class AudioDirector;
 class CollisionDirector;
 class GraphicsSystemInfo;
+class ShadowMaskBase;
+class HitSensor;
 
 class ActorInitInfo {
 public:
@@ -92,6 +95,8 @@ private:
 
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo);
 void initActorSuffix(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
+void initActorChangeModel(al::LiveActor* actor, const al::ActorInitInfo& initInfo);
+void initActorChangeModelSuffix(al::LiveActor* actor, const al::ActorInitInfo& initInfo, const char* suffix);
 void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& initInfo,
                               const sead::SafeString& archiveName, const char* suffix);
 void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
@@ -110,6 +115,40 @@ void createChildLinkMapPartsActor(const char* actorName, const char* archiveName
                                   const ActorInitInfo& initInfo, s32 linkIndex, bool alive);
 
 ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo);
+
+void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, ByamlIter const&, const char*);
+void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, int);
+ShadowMaskBase* createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
+ShadowMaskBase* createShadowMaskCube(LiveActor*, const char*, const char*, const char*,
+                                     const sead::Color4f&, const sead::Vector3f&, float, float,
+                                     float, const sead::Vector3f&, float);
+ShadowMaskBase* createShadowMaskCylinder(LiveActor*, const char*, const char*, const char*,
+                                         const sead::Color4f&, const sead::Vector3f&, float, float,
+                                         float, float, float);
+ShadowMaskBase* createShadowMaskCastOvalCylinder(LiveActor*, const char*, const char*, const char*,
+                                                 const sead::Color4f&, const sead::Vector3f&,
+                                                 const sead::Vector3f&, float, float, float, float);
+void initActorCollision(LiveActor*, const sead::SafeString&, HitSensor*, const sead::Matrix34f*);
+void initActorCollisionWithResource(LiveActor*, const Resource*, const sead::SafeString&,
+                                    HitSensor*, const sead::Matrix34f*, const char*);
+void initActorCollisionWithArchiveName(LiveActor*, const sead::SafeString&, const sead::SafeString&,
+                                       HitSensor*, const sead::Matrix34f*);
+void initActorCollisionWithFilePtr(LiveActor*, void*, void const*, HitSensor*,
+                                   const sead::Matrix34f*, const char*, const char*, int);
+void initStageSwitch(LiveActor*, const ActorInitInfo&);
+void initActorItemKeeper(LiveActor*, const ActorInitInfo&, ByamlIter const&);
+void initActorPrePassLightKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
+void initActorOcclusionKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
+void initSubActorKeeper(LiveActor*, const ActorInitInfo&, const char*, int);
+void initSubActorKeeperNoFile(LiveActor*, const ActorInitInfo&, int);
+void registerSubActor(LiveActor*, LiveActor*);
+void registerSubActorSyncClipping(LiveActor*, LiveActor*);
+void registerSubActorSyncClippingAndHide(LiveActor*, LiveActor*);
+void registerSubActorSyncAll(LiveActor*, LiveActor*);
+void setSubActorOffSyncClipping(LiveActor*);
+void initScreenPointKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
+void initScreenPointKeeperNoYaml(LiveActor*, int);
+void initActorMaterialCategory(LiveActor*, const ActorInitInfo&, const char*);
 
 // TODO: move these
 void initActorSceneInfo(LiveActor*, const ActorInitInfo&);
@@ -138,11 +177,11 @@ void initExecutorDrcAssistMovement(LiveActor*, const ActorInitInfo&);
 void initActorModelKeeper(LiveActor*, const ActorInitInfo&, const ActorResource*, int);
 void initActorModelKeeper(LiveActor*, const ActorInitInfo&, const char*, int, const char*);
 void initActorModelKeeperByHost(LiveActor*, const LiveActor*);
-void initActorModelForceCubeMap(LiveActor*, ActorInitInfo const&);
+void initActorModelForceCubeMap(LiveActor*, const ActorInitInfo&);
 void initActorActionKeeper(LiveActor*, const ActorInitInfo&, const char*, const char*);
 void initActorActionKeeper(LiveActor*, const ActorResource*, const char*, const char*);
 void initActorEffectKeeper(LiveActor*, const ActorInitInfo&, const char*);
-void initActorSeKeeper(LiveActor*, const ActorInitInfo&, const char*, const sead::Vector3<float>*,
+void initActorSeKeeper(LiveActor*, const ActorInitInfo&, const char*, const sead::Vector3f*,
                        const sead::Matrix34f*);
 void initActorSeKeeper(LiveActor*, const ActorInitInfo&, const char*);
 void initActorSeKeeperWithout3D(LiveActor*, const ActorInitInfo&, const char*);
@@ -155,9 +194,9 @@ void initActorParamHolder(LiveActor*, const Resource*, const char*);
 void initDepthShadowMapCtrl(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initDepthShadowMapCtrlWithoutIter(LiveActor*, int, bool);
 void addDepthShadowMapInfo(const LiveActor*, const char*, int, int, int, float, bool,
-                           const sead::Vector3<float>&, bool, const sead::Vector3<float>&,
-                           const sead::Vector3<float>&, bool, const char*, int, bool, float, float,
-                           float, bool, bool, float, int, bool);
+                           const sead::Vector3f&, bool, const sead::Vector3f&,
+                           const sead::Vector3f&, bool, const char*, int, bool, float, float, float,
+                           bool, bool, float, int, bool);
 void declareUseDepthShadowMap(const LiveActor*, int);
 void createDepthShadowMap(const LiveActor*, const char*, int, int, int);
 void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);

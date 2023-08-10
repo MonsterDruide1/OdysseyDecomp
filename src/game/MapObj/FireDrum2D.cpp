@@ -10,15 +10,19 @@
 #include "rs/Sensor.h"
 
 namespace {
-MAKE_NERVE(FireDrum2D, Wait);
-MAKE_NERVE(FireDrum2D, Burn);
+NERVE_IMPL(FireDrum2D, Wait);
+NERVE_IMPL(FireDrum2D, Burn);
+
+NERVE_MAKE(FireDrum2D, Wait);
+NERVE_MAKE(FireDrum2D, Burn);
+
 }  // namespace
 
 FireDrum2D::FireDrum2D(const char* name) : LiveActor(name) {}
 
 void FireDrum2D::init(const al::ActorInitInfo& info) {
     al::initActor(this, info);
-    al::initNerve(this, &FireDrum2DNrvWait::sInstance, 0);
+    al::initNerve(this, &Wait, 0);
     mActorDimensionKeeper = rs::createDimensionKeeper(this);
     rs::updateDimensionKeeper(mActorDimensionKeeper);
 
@@ -45,13 +49,13 @@ void FireDrum2D::exeBurn() {
         al::startAction(this, "Wait");
     }
     if (al::isActionEnd(this)) {
-        al::setNerve(this, &FireDrum2DNrvWait::sInstance);
+        al::setNerve(this, &Wait);
     }
 }
 
 void FireDrum2D::attackSensor(al::HitSensor* source, al::HitSensor* target) {
     if (rs::sendMsgTouchFireDrum2D(target, source) || rs::sendMsgEnemyAttack2D(target, source)) {
-        al::setNerve(this, &FireDrum2DNrvBurn::sInstance);
+        al::setNerve(this, &Burn);
     }
 }
 

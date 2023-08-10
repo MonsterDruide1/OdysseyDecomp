@@ -18,12 +18,6 @@ const sead::Vector3f& getVelocity(const al::LiveActor* actor);
 sead::Vector3f* getVelocityPtr(al::LiveActor* actor);
 sead::Vector3f* getGravityPtr(al::LiveActor* actor);
 
-float calcDistance(const al::LiveActor*, const sead::Vector3f&);
-float calcDistance(const al::LiveActor*, const al::LiveActor*);
-float calcSpeed(const al::LiveActor*);
-float calcSpeedH(const al::LiveActor*);
-float calcSpeedV(const al::LiveActor*);
-
 bool isClipped(const LiveActor*);
 void tryInitFixedModelGpuBuffer(const LiveActor*);
 bool isDead(const LiveActor*);
@@ -32,7 +26,6 @@ bool isHideModel(const LiveActor*);
 void hideModelIfShow(al::LiveActor*);
 void showModelIfHide(al::LiveActor*);
 void setModelAlphaMask(const LiveActor*, float);
-void resetPosition(const LiveActor*);
 const LiveActor* getSubActor(const LiveActor*, const char*);     // NOTE: unknown return type
 void onSyncClippingSubActor(LiveActor*, const LiveActor*);
 void onSyncHideSubActor(LiveActor*, const LiveActor*);

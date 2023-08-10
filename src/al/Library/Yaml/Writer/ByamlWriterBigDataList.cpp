@@ -1,6 +1,6 @@
-#include "al/Library/Yaml/writer/ByamlWriterBigDataList.h"
+#include "al/Library/Yaml/Writer/ByamlWriterBigDataList.h"
 
-#include "al/Library/Yaml/writer/ByamlWriterData.h"
+#include "al/Library/Yaml/Writer/ByamlWriterData.h"
 
 namespace al {
 

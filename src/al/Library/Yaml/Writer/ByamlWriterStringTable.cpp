@@ -1,4 +1,4 @@
-#include "al/Library/Yaml/writer/ByamlWriterStringTable.h"
+#include "al/Library/Yaml/Writer/ByamlWriterStringTable.h"
 
 #include <cstring>
 #include <stream/seadStream.h>

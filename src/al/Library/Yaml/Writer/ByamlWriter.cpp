@@ -1,11 +1,11 @@
-#include "al/Library/Yaml/writer/ByamlWriter.h"
+#include "al/Library/Yaml/Writer/ByamlWriter.h"
 
 #include <heap/seadHeapMgr.h>
 #include <stream/seadStream.h>
 #include "al/Library/Yaml/ByamlIter.h"
-#include "al/Library/Yaml/writer/ByamlWriterBigDataList.h"
-#include "al/Library/Yaml/writer/ByamlWriterData.h"
-#include "al/Library/Yaml/writer/ByamlWriterStringTable.h"
+#include "al/Library/Yaml/Writer/ByamlWriterBigDataList.h"
+#include "al/Library/Yaml/Writer/ByamlWriterData.h"
+#include "al/Library/Yaml/Writer/ByamlWriterStringTable.h"
 
 namespace al {
 

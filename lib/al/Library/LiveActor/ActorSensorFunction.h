@@ -4,9 +4,36 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+enum SensorType {
+    Eye = 0,
+    Player = 1,
+    PlayerAttack = 2,
+    PlayerFoot = 3,
+    PlayerDecoration = 4,
+    PlayerEye = 5,
+    Npc = 6,
+    Ride = 7,
+    Enemy = 8,
+    EnemyBody = 9,
+    EnemyAttack = 10,
+    MapObj = 12,
+    Bindable = 14,
+    Collision = 15,
+    PlayerFireBall = 16,
+    HoldObj = 17,
+    LookAt = 18,
+    BindableGoal = 19,
+    BindableAllPlayer = 20,
+    BindableBubbleOutScreen = 21,
+    BindableKoura = 22,
+    BindableRouteDokan = 23,
+    BindableBubblePadInput = 24
+};
+
 namespace al {
 class LiveActor;
 class HitSensor;
+class SensorMsg;
 class ActorInitInfo;
 class SensorSortCmpFuncBase;
 class ActorSensorController;
@@ -132,6 +159,7 @@ bool isSensorMapObj(const HitSensor*);
 void validateHitSensorNpcAll(LiveActor*);
 bool isSensorNpc(const HitSensor*);
 void validateHitSensorPlayerAll(LiveActor*);
+bool isSensorPlayer(const HitSensor*);
 bool isSensorPlayerAll(const HitSensor*);
 void validateHitSensorRideAll(LiveActor*);
 bool isSensorRide(const HitSensor*);
@@ -140,3 +168,9 @@ void invalidateHitSensorPlayerAll(LiveActor*);
 void invalidateHitSensorPlayerAttackAll(LiveActor*);
 bool isSensorPlayerAttack(const HitSensor*);
 }  // namespace al
+
+namespace alActorSensorFunction {
+void getSensorKeeper(const al::LiveActor*);
+void sendMsgSensorToSensor(const al::SensorMsg&, al::HitSensor*, al::HitSensor*);
+void sendMsgToActorUnusedSensor(const al::SensorMsg&, al::LiveActor*);
+}  // namespace alActorSensorFunction

@@ -18,10 +18,10 @@ class BgmKeeper;
 class AudioKeeper : public IUseHioNode {
 public:
     AudioKeeper(const AudioDirector*);
-    ~AudioKeeper();
+    virtual ~AudioKeeper();
 
     void initSeKeeper(const AudioDirector*, const char*, const sead::Vector3f*,
-                    const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
+                      const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
     void initBgmKeeper(const AudioDirector*, const char*);
     void validate();
     void invalidate();
@@ -29,6 +29,15 @@ public:
     void endClipped();
     void appear();
     void kill();
+
+    AudioEventController* getAudioEventController() const { return mAudioEventController; };
+    AudioEffectController* getAudioEffectController() const { return mAudioEffectController; };
+    AudioRequestKeeperSyncedBgm* getAudioRequestKeeperSyncedBgm() const {
+        return mAudioRequestKeeperSyncedBgm;
+    };
+    SeKeeper* getSeKeeper() const { return mSeKeeper; };
+    BgmKeeper* getBgmKeeper() const { return mBgmKeeper; };
+    AudioMic* getAudioMic() const { return mAudioMic; };
 
 private:
     AudioEventController* mAudioEventController;
@@ -38,4 +47,6 @@ private:
     BgmKeeper* mBgmKeeper;
     AudioMic* mAudioMic;
 };
+static_assert(sizeof(AudioKeeper) == 0x38);
+
 }  // namespace al
