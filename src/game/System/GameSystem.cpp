@@ -1,5 +1,7 @@
 #include "game/System/GameSystem.h"
 
+#include "al/Library/Nerve/NerveSetupUtil.h"
+
 namespace {
 
 NERVE_IMPL(GameSystem, Play);

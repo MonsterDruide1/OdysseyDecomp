@@ -3,8 +3,9 @@
 #include <prim/seadSafeString.h>
 #include "al/Library/Audio/IUseAudioKeeper.h"
 #include "al/Library/Camera/IUseCamera.h"
+#include "al/Library/LiveActor/ActorInitInfo.h"
 #include "al/Library/Nerve/NerveExecutor.h"
-#include "al/Library/Scene/SceneObjHolder.h"
+#include "al/Library/Scene/IUseSceneObjHolder.h"
 #include "al/Project/Scene/SceneInitInfo.h"
 
 namespace al {

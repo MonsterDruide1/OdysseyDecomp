@@ -1,5 +1,8 @@
 #pragma once
 
+#include <gfx/seadColor.h>
+#include <math/seadQuat.h>
+
 namespace al {
 class LiveActor;
 }
@@ -8,14 +11,17 @@ struct PlayerHackStartShaderParam {};
 
 class PlayerHackStartShaderCtrl {
 public:
-    PlayerHackStartShaderCtrl(al::LiveActor*, PlayerHackStartShaderParam*);
-    void setHost(al::LiveActor*);
+    PlayerHackStartShaderCtrl(al::LiveActor* host, PlayerHackStartShaderParam* param);
+    void setHost(al::LiveActor* host);
     void start();
     void update();
     void end();
 
 private:
     al::LiveActor* mParent;
-    // TODO: fill this class out
-    char unknown[0x30];
+    s32 mTime;
+    bool mActive;
+    sead::Color4f mColor;
+    sead::Quatf mQuat;
+    PlayerHackStartShaderParam* mParam;
 };

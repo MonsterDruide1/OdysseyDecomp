@@ -4,4 +4,6 @@ target_sources(odyssey PRIVATE
     GameDataHolderAccessor.cpp
     GameSystem.cpp
     Init.cpp
+    ProjectInterface.cpp
+    RootTask.cpp
 )

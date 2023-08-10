@@ -3,5 +3,6 @@ target_sources(odyssey PRIVATE
     AnagramAlphabetCharacter.cpp
     CapTargetParts.cpp
     FireDrum2D.cpp
+    WorldMapEarth.cpp
     WorldMapParts.cpp
 )

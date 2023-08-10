@@ -3,6 +3,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
+#include "math/seadVectorFwd.h"
 
 namespace al {
 
@@ -283,8 +284,8 @@ void setTrans(LiveActor* actor, f32, f32, f32);
 void setTransX(LiveActor* actor, f32);
 void setTransY(LiveActor* actor, f32);
 void setTransZ(LiveActor* actor, f32);
-void getRotate(const LiveActor* actor);
-void getRotatePtr(LiveActor* actor);
+const sead::Vector3f& getRotate(const LiveActor* actor);
+sead::Vector3f* getRotatePtr(LiveActor* actor);
 void setRotate(LiveActor* actor, f32, f32, f32);
 void setRotateX(LiveActor* actor, f32);
 void setRotateY(LiveActor* actor, f32);

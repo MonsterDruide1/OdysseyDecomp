@@ -6,6 +6,7 @@
 class IUsePlayerCollision;
 class PlayerInfo;
 class PlayerInitInfo;
+class PlayerHackKeeper;
 
 class PlayerActorBase : public al::LiveActor, public al::IUsePlayerHack {
 public:

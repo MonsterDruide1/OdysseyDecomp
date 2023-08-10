@@ -11,10 +11,10 @@ bool isDead(const LiveActor* actor) {
 bool isNoCollide(const LiveActor* actor) {
     return actor->getFlags()->isCollideOff;
 }
-void onCalcAnim(al::LiveActor* actor) {
+void onCalcAnim(LiveActor* actor) {
     actor->getFlags()->isCalcAnim = true;
 }
-void offCalcAnim(al::LiveActor* actor) {
+void offCalcAnim(LiveActor* actor) {
     actor->getFlags()->isCalcAnim = false;
 }
 void validateShadow(LiveActor* actor) {}
@@ -22,17 +22,37 @@ void invalidateShadow(LiveActor* actor) {}
 void onCollide(LiveActor* actor) {
     actor->getFlags()->isCollideOff = false;
 }
-void offCollide(al::LiveActor* actor) {
+void offCollide(LiveActor* actor) {
     actor->getFlags()->isCollideOff = true;
 }
-void validateMaterialCode(LiveActor* actor) {}
-void invalidateMaterialCode(LiveActor* actor) {}
-void validatePuddleMaterial(LiveActor* actor) {}
-void invalidatePuddleMaterial(LiveActor* actor) {}
-bool isAreaTarget(const LiveActor* actor) {}
-void onAreaTarget(LiveActor* actor) {}
-void offAreaTarget(LiveActor* actor) {}
-void isUpdateMovementEffectAudioCollisionSensor(const LiveActor* actor) {}
-void onUpdateMovementEffectAudioCollisionSensor(LiveActor* actor) {}
-void offUpdateMovementEffectAudioCollisionSensor(LiveActor* actor) {}
+void validateMaterialCode(LiveActor* actor) {
+    actor->getFlags()->isMaterialCodeValid = true;
 }
+void invalidateMaterialCode(LiveActor* actor) {
+    actor->getFlags()->isMaterialCodeValid = false;
+}
+void validatePuddleMaterial(LiveActor* actor) {
+    actor->getFlags()->isPuddleMaterialValid = true;
+}
+void invalidatePuddleMaterial(LiveActor* actor) {
+    actor->getFlags()->isPuddleMaterialValid = false;
+}
+bool isAreaTarget(const LiveActor* actor) {
+    return actor->getFlags()->isAreaTargetOn;
+}
+void onAreaTarget(LiveActor* actor) {
+    actor->getFlags()->isAreaTargetOn = true;
+}
+void offAreaTarget(LiveActor* actor) {
+    actor->getFlags()->isAreaTargetOn = true;
+}
+bool isUpdateMovementEffectAudioCollisionSensor(const LiveActor* actor) {
+    return actor->getFlags()->isUpdateOn;
+}
+void onUpdateMovementEffectAudioCollisionSensor(LiveActor* actor) {
+    actor->getFlags()->isUpdateOn = true;
+}
+void offUpdateMovementEffectAudioCollisionSensor(LiveActor* actor) {
+    actor->getFlags()->isUpdateOn = false;
+}
+}  // namespace al

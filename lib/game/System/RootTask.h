@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gfx/seadDrawContext.h>
+#include <hostio/seadHostIONode.h>
 
 class GameSystem;
 
@@ -8,15 +9,16 @@ class GameSystem;
 class RootTask {
 public:
     RootTask();
+    ~RootTask();
     void enter();
     void draw();
     void calc();
     void prepare();
-    
+
 private:
     // TODO: Remove once RootTask implements sead::Task
     char taskImplDetails[0x200];
     GameSystem* mGameSystem;
-    void* field_208;
-    sead::DrawContext* drawContext;
+    sead::hostio::Node* mHostIoNode;
+    sead::DrawContext* mDrawContext;
 };

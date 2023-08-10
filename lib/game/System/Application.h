@@ -20,6 +20,10 @@ public:
     void init(s32 argc, char** argv);
     void run();
     RootTask* getRootTask() const;
+    al::SystemKit* getSystemKit() const { return mSystemKit; }
+    al::GameFrameworkNx* getGameFramework() const { return mGameFramework; }
+    al::AccountHolder* getAccountHolder() const { return mAccountHolder; }
+    al::GameDrawInfo* getGameDrawInfo() const { return mDrawInfo; }
 
 private:
     al::SystemKit* mSystemKit;

@@ -1,11 +1,18 @@
 #pragma once
 
 #include "al/Library/Nerve/NerveExecutor.h"
-#include "al/Library/Nerve/NerveSetupUtil.h"
 #include "al/Library/System/GameSystemInfo.h"
 
 namespace al {
 class Sequence;
+struct GameSystemInfo;
+class AudioSystem;
+class AudioInfoListWithParts;
+class AccountHolder;
+class NetworkSystem;
+class HtmlViewer;
+class GamePadSystem;
+class ApplicationMessageReceiver;
 }
 
 class GameConfigData;
@@ -23,7 +30,18 @@ public:
 
 private:
     al::Sequence* mSequence;
-    al::GameSystemInfo mSystemInfo;
-    GameConfigData* mConfig;
-    bool field_70;
+    al::GameSystemInfo* mSystemInfo;
+    al::AudioSystem * mAudioSystem;
+    al::AudioInfoListWithParts* mAudioInfoList;
+    al::AccountHolder* mAccountHolder;
+    al::NetworkSystem* mNetworkSystem;
+    void* field_40;
+    al::HtmlViewer* mHtmlViewer;
+    ProjectNfpDirector* mNfpDirector;
+    al::GamePadSystem* mGamePadSystem;
+    al::ApplicationMessageReceiver* mApplicationMessageReceiver;
+    al::WaveVibrationHolder* mWaveVibrationHolder;
+    bool mIsSinglePlay;
+    GameConfigData *mGameConfigData;
+    bool mIsSequenceSetupIncomplete;
 };

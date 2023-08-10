@@ -33,3 +33,12 @@ bool isInClippingFrustum(const LiveActor* actor, const sead::Vector3f&, f32, f32
 bool isInClippingFrustum(const ClippingDirector* director, const sead::Vector3f&, f32, f32, s32);
 bool isInClippingFrustumAllView(const LiveActor* actor, const sead::Vector3f& pos, f32, f32);
 }  // namespace al
+
+namespace alActorFunction {
+void invalidateFarClipping(al::LiveActor*);
+void validateFarClipping(al::LiveActor*);
+f32 getFarClipDistance(const al::LiveActor*);
+bool isInvalidFarClipping(const al::LiveActor*);
+bool isDrawClipping(const al::LiveActor* actor);
+bool checkActiveViewGroupAny(const al::LiveActor* actor);
+}  // namespace alActorFunction

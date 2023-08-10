@@ -19,7 +19,7 @@ void invalidatePuddleMaterial(LiveActor* actor);
 bool isAreaTarget(const LiveActor* actor);
 void onAreaTarget(LiveActor* actor);
 void offAreaTarget(LiveActor* actor);
-void isUpdateMovementEffectAudioCollisionSensor(const LiveActor* actor);
+bool isUpdateMovementEffectAudioCollisionSensor(const LiveActor* actor);
 void onUpdateMovementEffectAudioCollisionSensor(LiveActor* actor);
 void offUpdateMovementEffectAudioCollisionSensor(LiveActor* actor);
-}
+}  // namespace al

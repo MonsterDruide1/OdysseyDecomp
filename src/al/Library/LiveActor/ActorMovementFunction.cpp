@@ -12,30 +12,30 @@
 
 namespace al {
 
-float calcDistance(const al::LiveActor* l1, const al::LiveActor* l2) {
+float calcDistance(const LiveActor* l1, const LiveActor* l2) {
     return calcDistance(l1, getTrans(l2));
 }
 
-float calcDistance(const al::LiveActor* l1, const sead::Vector3f& vec) {
-    sead::Vector3f distance = al::getTrans(l1) - vec;
+float calcDistance(const LiveActor* l1, const sead::Vector3f& vec) {
+    sead::Vector3f distance = getTrans(l1) - vec;
     return distance.length();
 }
 
-float calcSpeed(const al::LiveActor* actor) {
+float calcSpeed(const LiveActor* actor) {
     return actor->getPoseKeeper()->getVelocity().length();
 }
 
-float calcSpeedH(const al::LiveActor* actor) {
+float calcSpeedH(const LiveActor* actor) {
     sead::Vector3f verticalized;
-    al::verticalizeVec(&verticalized, al::getGravity(actor), actor->getPoseKeeper()->getVelocity());
+    verticalizeVec(&verticalized, getGravity(actor), actor->getPoseKeeper()->getVelocity());
     return verticalized.length();
 }
 
-float calcSpeedV(const al::LiveActor* actor) {
-    return -actor->getPoseKeeper()->getVelocity().dot(al::getGravity(actor));
+float calcSpeedV(const LiveActor* actor) {
+    return -actor->getPoseKeeper()->getVelocity().dot(getGravity(actor));
 }
 
-void resetPosition(al::LiveActor* actor) {
+void resetPosition(LiveActor* actor) {
     if (actor->getPoseKeeper())
         actor->calcAnim();
     if (actor->getHitSensorKeeper()) {
@@ -48,7 +48,7 @@ void resetPosition(al::LiveActor* actor) {
     if (actor->getCollider())
         actor->getCollider()->onInvalidate();
     if (actor->getCollisionParts())
-        al::resetAllCollisionMtx(actor);
+        resetAllCollisionMtx(actor);
     if (!actor->getAudioKeeper())
         return;
     if (!actor->getAudioKeeper()->getSeKeeper())
@@ -56,41 +56,41 @@ void resetPosition(al::LiveActor* actor) {
     actor->getAudioKeeper()->getSeKeeper()->resetPosition();
 }
 
-void resetPosition(al::LiveActor* actor, const sead::Vector3f& trans) {
-    al::updatePoseTrans(actor, trans);
-    al::resetPosition(actor);
+void resetPosition(LiveActor* actor, const sead::Vector3f& trans) {
+    updatePoseTrans(actor, trans);
+    resetPosition(actor);
 }
 
-void resetRotatePosition(al::LiveActor* actor, const sead::Vector3f& rot,
+void resetRotatePosition(LiveActor* actor, const sead::Vector3f& rot,
                          const sead::Vector3f& trans) {
-    al::updatePoseRotate(actor, rot);
-    al::updatePoseTrans(actor, trans);
-    al::resetPosition(actor);
+    updatePoseRotate(actor, rot);
+    updatePoseTrans(actor, trans);
+    resetPosition(actor);
 }
 
-void resetQuatPosition(al::LiveActor* actor, const sead::Quatf& quat, const sead::Vector3f& trans) {
-    al::updatePoseQuat(actor, quat);
-    al::updatePoseTrans(actor, trans);
-    al::resetPosition(actor);
+void resetQuatPosition(LiveActor* actor, const sead::Quatf& quat, const sead::Vector3f& trans) {
+    updatePoseQuat(actor, quat);
+    updatePoseTrans(actor, trans);
+    resetPosition(actor);
 }
 
-void resetMtxPosition(al::LiveActor* actor, const sead::Matrix34f& mtx) {
-    al::updatePoseMtx(actor, &mtx);
-    al::resetPosition(actor);
+void resetMtxPosition(LiveActor* actor, const sead::Matrix34f& mtx) {
+    updatePoseMtx(actor, &mtx);
+    resetPosition(actor);
 }
 
-void resetActorPosition(al::LiveActor* actor, const al::LiveActor* target) {
-    al::updatePoseMtx(actor, target->getBaseMtx());
-    al::resetPosition(actor);
+void resetActorPosition(LiveActor* actor, const LiveActor* target) {
+    updatePoseMtx(actor, target->getBaseMtx());
+    resetPosition(actor);
 }
 
 // trySetPosOnGround
 
-const sead::Vector3f& getVelocity(const al::LiveActor* actor) {
+const sead::Vector3f& getVelocity(const LiveActor* actor) {
     return actor->getPoseKeeper()->getVelocity();
 }
 
-sead::Vector3f* getVelocityPtr(al::LiveActor* actor) {
+sead::Vector3f* getVelocityPtr(LiveActor* actor) {
     return actor->getPoseKeeper()->getVelocityPtr();
 }
 

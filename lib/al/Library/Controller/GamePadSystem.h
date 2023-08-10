@@ -1,25 +1,34 @@
 #pragma once
 
+#include <container/seadBuffer.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
+class AudioSystem;
 
 class GamePadSystem {
 public:
     GamePadSystem();
     void changeSinglePlayMode();
+    void changeMultiPlayMode(s32 minControllers, s32 maxControllers);
     bool isDisconnectPlayable();
-    sead::WFixedSafeString<256> getPadName(u8); // might return a parent type instead of this specific format
-    int getPadPlayStyle(u8);  // unknown return type
     void update();
-    bool isDisconnectPlayableImpl();
-    void setDisconnectFrame(int);
-    void setInvalidateDisconnectFrame(int);
-    void setPadName(u8, const sead::SafeString&);
-    void changeMultiPlayMode(int, int);
+    void setDisconnectFrame(s32 frame);
+    void setInvalidateDisconnectFrame(s32 frame);
+    void setPadName(u8, const sead::WSafeString&);
+    sead::WSafeString getPadName(u8);
+    int getPadPlayStyle(u8);  // unknown return type
 
 private:
-    char filler[0x30];
+    bool isDisconnectPlayableImpl();
+
+    int mMinControllerCount;
+    int mMaxControllerCount;
+    int mDisconnectTimer;
+    int mDisconnectFrame;
+    int mInvalidateDisconnectFrame;
+    sead::Buffer<sead::WFixedSafeString<256>> mControllerNames;
+    AudioSystem* mAudioSystem;
 };
 static_assert(sizeof(GamePadSystem) == 0x30);
 
