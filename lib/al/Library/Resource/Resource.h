@@ -46,4 +46,53 @@ private:
     ActorInitResourceData* mData;
     nn::g3d::ResFile* mResFile;
 };
+
+class AnimInfoTable {
+    char size[0x18];
+};
+class ActionAnimCtrlInfo {
+    char size[0x60];
+};
+
+struct InitResourceDataAnim {
+    AnimInfoTable* mInfoTable;
+    AnimInfoTable* mFclAnim;
+    AnimInfoTable* mFtsAnim;
+    AnimInfoTable* mFtpAnim;
+    AnimInfoTable* mInfoTable2;
+};
+
+class InitResourceDataActionAnim {
+public:
+    InitResourceDataActionAnim(Resource*, InitResourceDataAnim const*, char const* resourceYml);
+    void sortCtrlInfo(void);
+
+    static InitResourceDataActionAnim* tryCreate(Resource*, InitResourceDataAnim const*,
+                                                 char const*);
+
+private:
+    int mLength = 0;
+    ActionAnimCtrlInfo** mInfos;  // ActionAnimCtrlInfo*[mLength];
+};
+
+struct InitResourceDataAction {
+    InitResourceDataActionAnim* dataActionAnim;
+};
+
+class ActorResource {
+public:
+    ActorResource(sead::SafeString const&, Resource*, Resource*);
+    virtual ~ActorResource();
+
+    void initResourceData(char const*, bool);
+
+private:
+    sead::FixedSafeString<0x80> unkStr;
+    Resource* mResourceModel;
+    Resource* mResourceAnim;
+    bool mHasAnimData;
+    InitResourceDataAnim* mAnimResData;
+    InitResourceDataAction* mActionResData;
+};
+
 }  // namespace al

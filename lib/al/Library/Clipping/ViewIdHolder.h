@@ -10,6 +10,7 @@ class ViewIdHolder {
 public:
     ViewIdHolder();
     void init(const PlacementInfo& placementInfo);
+    PlacementId& getViewId(int idx) const;
 
     static ViewIdHolder* tryCreate(const PlacementInfo& placementInfo);
 

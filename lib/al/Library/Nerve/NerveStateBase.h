@@ -29,4 +29,14 @@ public:
 private:
     LiveActor* mActor;
 };
-};  // namespace al
+
+template <class T>
+class HostStateBase : public NerveStateBase {
+public:
+    HostStateBase(const char* name, T* host);
+
+private:
+    T* mHost;
+};
+
+}  // namespace al

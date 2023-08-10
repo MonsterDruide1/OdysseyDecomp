@@ -27,7 +27,7 @@ void Player::control() {
         al::setVelocityZero(this);
         al::setTrans(this, {100.0f, 0.0f, 800.0f});
         al::resetPosition(this);
-        al::setNerve(this, &nrvPlayerFall);
+        al::setNerve(this, &PlayerNrvFall::sInstance);
     }
 }
 void Player::exeWait() {
@@ -37,8 +37,8 @@ void Player::exeWait() {
     al::scaleVelocity(this, 0.7f);
 
     if (al::isPadTriggerA(mPort))
-        al::setNerve(this, &nrvPlayerJump);
+        al::setNerve(this, &PlayerNrvJump::sInstance);
     else if (al::isNearZero(al::getLeftStick(mPort), 0.001f))
-        al::setNerve(this, &nrvPlayerRun);
+        al::setNerve(this, &PlayerNrvRun::sInstance);
 }
 void Player::exeRun() {}

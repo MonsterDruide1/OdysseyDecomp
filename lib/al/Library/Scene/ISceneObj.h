@@ -6,9 +6,9 @@ class ActorInitInfo;
 class ISceneObj {
 public:
     virtual ~ISceneObj();
-    virtual const char* getSceneObjName() const;
-    virtual void initAfterPlacementSceneObj(const ActorInitInfo&);
-    virtual void initSceneObj();
+    virtual const char* getSceneObjName() const = 0;
+    virtual void initAfterPlacementSceneObj(const ActorInitInfo&) = 0;
+    virtual void initSceneObj() = 0;
 };
 
 }  // namespace al

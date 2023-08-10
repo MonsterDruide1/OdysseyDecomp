@@ -67,6 +67,8 @@ public:
     void initNerve(const Nerve*, s32);
     void setMainGroupName(const char*);
     void syncAction();
+
+    LayoutExecuteInfo* getExecuteInfo() { return mExecuteInfo; }
     
 private:
     sead::FixedSafeString<0x80> mName;

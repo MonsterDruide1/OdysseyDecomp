@@ -73,7 +73,7 @@ public:
     virtual bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target);
     virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*);
     virtual const char* getName() const override;
-    virtual sead::Matrix44f* getBaseMtx() const;
+    virtual sead::Matrix34f* getBaseMtx() const;
     virtual EffectKeeper* getEffectKeeper() const override;
     virtual AudioKeeper* getAudioKeeper() const override;
     virtual StageSwitchKeeper* getStageSwitchKeeper() const override;
@@ -108,11 +108,14 @@ public:
     LiveActorFlag* getFlags() const { return mFlags; }
     ModelKeeper* getModelKeeper() const { return mModelKeeper; }
     ActorPoseKeeperBase* getPoseKeeper() const { return mPoseKeeper; }
+    ActorExecuteInfo* getExecuteInfo() const { return mExecuteInfo; }
+
+    void setName(const char* newName) { mActorName = newName; }
 
 private:
     const char* mActorName;
     ActorPoseKeeperBase* mPoseKeeper;
-    ActorExecuteInfo* mLayoutExecuteInfo;
+    ActorExecuteInfo* mExecuteInfo;
     ActorActionKeeper* mActorActionKeeper;
     ActorItemKeeper* mActorItemKeeper;
     ActorScoreKeeper* mActorScoreKeeper;

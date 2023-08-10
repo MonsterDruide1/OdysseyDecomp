@@ -3,7 +3,6 @@
 #include "al/Library/Yaml/ByamlIter.h"
 #include "al/Library/Resource/ResourceUtil.h"
 #include "al/Library/Base/String.h"
-#include "al/Library/Base/StringTmp.h"
 
 AchievementInfoReader::AchievementInfoReader() = default;
 

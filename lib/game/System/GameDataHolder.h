@@ -5,29 +5,32 @@
 
 #pragma once
 
-#include "GameDataFile.h"
-#include "GameDataHolderBase.h"
-#include "al/message/MessageSystem.h"
-#include "game/WorldList/WorldList.h"
-#include "sead/prim/seadSafeString.h"
+#include <prim/seadSafeString.h>
+#include "al/Library/Message/MessageSystem.h"
+#include "al/Library/Scene/GameDataHolderBase.h"
+#include "game/System/GameDataFile.h"
+#include "game/System/WorldList.h"
 
-class GameDataHolder  // : public GameDataHolderBase
-{
+namespace al {
+class PlacementId;
+}
+
+class GameDataHolder : public al::GameDataHolderBase {
 public:
     GameDataHolder(al::MessageSystem const*);
     GameDataHolder();
 
-    // virtual ~GameDataHolder();
+    virtual ~GameDataHolder();
 
-    // virtual char* getSceneObjName() const;
-    // virtual al::MessageSystem* getMessageSystem() const;
+    virtual char* getSceneObjName() const;
+    virtual al::MessageSystem* getMessageSystem() const;
 
     void setPlayingFileId(s32 file);
     void intitalizeData();
     void initialzeDataCommon();
     void resetTempSaveData(bool);
     void initializeDataId(s32);
-    void readByamlData(s32, char const*);
+    void readByamlData(s32, const char*);
     s32 tryFindEmptyFileId() const;
 
     bool isRequireSave() const;
@@ -38,33 +41,33 @@ public:
     bool isInvalidSaveForMoonGet() const;
     void invalidateSaveForMoonGet();
     void validateSaveForMoonGet();
-    void setLanguage(char const*);
+    void setLanguage(const char*);
     char* getLanguage() const;
 
     void resetLocationName();
-    void changeNextStageWithDemoWorldWarp(char const*);
-    bool tryChangeNextStageWithWorldWarpHole(char const*);
+    void changeNextStageWithDemoWorldWarp(const char*);
+    bool tryChangeNextStageWithWorldWarpHole(const char*);
     void returnPrevStage();
     char* getNextStageName() const;
     char* getNextStageName(s32 idx) const;
     GameDataFile* getGameDataFile(s32 idx) const;
-    // u64 getNextPlayerStartId() const;
+    u64 getNextPlayerStartId() const;
     char* getCurrentStageName() const;
     char* tryGetCurrentStageName() const;
     char* getCurrentStageName(s32 idx) const;
-    // void setCheckpointId(al::PlacementId const *);
+    void setCheckpointId(const al::PlacementId*);
     char* tryGetRestartPointIdString() const;
     void endStage();
-    void startStage(char const*, s32);
-    // void onObjNoWriteSaveData(al::PlacementId const *);
-    // void offObjNoWriteSaveData(al::PlacementId const *);
-    // bool isOnObjNoWriteSaveData(al::PlacementId const *) const;
-    // void onObjNoWriteSaveDataResetMiniGame(al::PlacementId const*);
-    // void offObjNoWriteSaveDataResetMiniGame(al::PlacementId const *);
-    // bool isOnObjNoWriteSaveDataResetMiniGame(al::PlacementId const *) const;
-    // void onObjNoWriteSaveDataInSameScenario(al::PlacementId const *);
-    // bool isOnObjNoWriteSaveDataInSameScenario(al::PlacementId const *) const;
-    void writeTempSaveDataToHash(char const*, bool);
+    void startStage(const char*, s32);
+    void onObjNoWriteSaveData(const al::PlacementId*);
+    void offObjNoWriteSaveData(const al::PlacementId*);
+    bool isOnObjNoWriteSaveData(const al::PlacementId*) const;
+    void onObjNoWriteSaveDataResetMiniGame(const al::PlacementId);
+    void offObjNoWriteSaveDataResetMiniGame(const al::PlacementId);
+    bool isOnObjNoWriteSaveDataResetMiniGame(const al::PlacementId) const;
+    void onObjNoWriteSaveDataInSameScenario(const al::PlacementId);
+    bool isOnObjNoWriteSaveDataInSameScenario(const al::PlacementId) const;
+    void writeTempSaveDataToHash(const char*, bool);
 
     void resetMiniGameData();
     s32 getPlayingFileId() const;
@@ -80,12 +83,31 @@ public:
     s32 getCoinCollectNumMax(s32) const;
 
     void readFromSaveDataBufferCommonFileOnlyLanguage();
+    void readFromSaveDataBuffer(const char* bufferName);
 
-    u64* _8;
-    undefined8 padding;
-    undefined8 _padding;
-    GameDataFile* mDataFileArr;   // 0x18
-    GameDataFile* mGameDataFile;  // 0x20
-    unsigned char padding_190[0x168];
-    WorldList* mWorldList;  // 0x190
+    void changeNextStage(const struct ChangeStageInfo*, int);
+
+    int findUseScenarioNo(const char*);
+
+private:
+    int padding;
+    GameDataFile** mDataFileArr;
+    GameDataFile* mGameDataFile;
+    u64 field_28;
+    u64 field_30;
+    u64* field_38;  // SaveDataAccessSequence*
+    u32 field_40;
+    u32 mRequireSaveFrame;
+    bool mIsInvalidSaveForMoonGet;
+    bool mChangeStageRelated;
+    u8 field_4A;
+    u8 field_4B;
+    u32 field_4C;
+    sead::BufferedSafeString mLanguage;
+    u8 gap_58[0x28];
+    sead::Heap* field_90;
+    u8 gap_98[0x20];
+    u64* field_B8;  // TempSaveData*
+    u8 gap_C0[0xD0];
+    WorldList* mWorldList;
 };

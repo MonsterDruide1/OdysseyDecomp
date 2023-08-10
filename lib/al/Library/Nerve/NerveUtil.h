@@ -13,8 +13,8 @@ void setNerve(IUseNerve* user, const Nerve* nerve);
 void setNerveAtStep(IUseNerve* user, const Nerve* nerve, s32 step);
 void setNerveAtGreaterEqualStep(IUseNerve* user, const Nerve* nerve, s32 step);
 
-int getNerveStep(const IUseNerve*);
-const Nerve* getCurrentNerve(const IUseNerve*);
+int getNerveStep(const IUseNerve* user);
+const Nerve* getCurrentNerve(const IUseNerve* user);
 
 bool isStep(const IUseNerve* user, s32 step);
 bool isFirstStep(const IUseNerve* user);

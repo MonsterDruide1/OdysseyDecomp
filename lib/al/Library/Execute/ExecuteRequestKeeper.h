@@ -28,19 +28,19 @@ public:
         Request_Draw = 0x2,
         Request_RemoveFromDraw = 0x3
     };
-    
+
     ExecuteRequestKeeper(int size);
 
     void executeRequestActorMovementAllOn();
     void executeRequestActorMovementAllOff();
     void executeRequestActorDrawAllOn();
     void executeRequestActorDrawAllOff();
-    void request(LiveActor* actor, ExecuteRequestKeeper::Request request_type);
+    void request(LiveActor* actor, Request request_type);
 
 private:
-    ExecuteRequestTable* mMovement;
-    ExecuteRequestTable* mRemoveFromMovement;
-    ExecuteRequestTable* mDraw;
-    ExecuteRequestTable* mRemoveFromDraw;
+    ExecuteRequestTable* mMovementOn;
+    ExecuteRequestTable* mMovementOff;
+    ExecuteRequestTable* mDrawOn;
+    ExecuteRequestTable* mDrawOff;
 };
 }  // namespace al

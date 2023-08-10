@@ -20,10 +20,13 @@ bool isActionOneTime(LiveActor* actor);
 bool isActionOneTime(LiveActor* actor, const char* actionName);
 
 const char* getActionName(LiveActor* actor);
-s32 getActionFrame(LiveActor* actor);
-s32 getActionFrameMax(LiveActor* actor);
-s32 getActionFrameMax(LiveActor* actor, const char* actionName);
+f32 getActionFrame(LiveActor* actor);
+f32 getActionFrameMax(LiveActor* actor);
+f32 getActionFrameMax(LiveActor* actor, const char* actionName);
 f32 getActionFrameRate(LiveActor* actor);
+
+void setActionFrame(LiveActor* actor, f32 frame);
+void setActionFrameRate(LiveActor* actor, f32 rate);
 
 void stopAction(LiveActor* actor);
 void restartAction(LiveActor* actor);

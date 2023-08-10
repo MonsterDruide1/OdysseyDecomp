@@ -67,7 +67,7 @@ void LiveActor::initPoseKeeper(ActorPoseKeeperBase* poseKeeper) {
     mPoseKeeper = poseKeeper;
 }
 void LiveActor::initExecuteInfo(ActorExecuteInfo* executeInfo) {
-    mLayoutExecuteInfo = executeInfo;
+    mExecuteInfo = executeInfo;
 }
 void LiveActor::initModelKeeper(ModelKeeper* modelKeeper) {
     mModelKeeper = modelKeeper;

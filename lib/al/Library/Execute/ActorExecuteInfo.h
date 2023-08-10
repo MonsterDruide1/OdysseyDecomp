@@ -7,12 +7,17 @@ class ModelDrawerBase;
 
 class ActorExecuteInfo {
 public:
-    ActorExecuteInfo(ExecuteRequestKeeper*);
-    void addUpdater(al::ExecutorActorExecuteBase*);
-    void addDrawer(ModelDrawerBase*);
+    ActorExecuteInfo(ExecuteRequestKeeper* keeper);
+    void addUpdater(ExecutorActorExecuteBase* updater);
+    void addDrawer(ModelDrawerBase* drawer);
 
 private:
-    char mPadding[0x90];
+    ExecuteRequestKeeper* mRequestKeeper;
+    int mUpdaterCount = 0;
+    ExecutorActorExecuteBase* mUpdaters[4] = {};
+    int mDrawerCount = 0;
+    ModelDrawerBase* mDrawers[11] = {};
 };
 static_assert(sizeof(ActorExecuteInfo) == 0x90);
+
 }  // namespace al
