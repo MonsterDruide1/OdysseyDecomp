@@ -3,7 +3,7 @@
 
 namespace al {
 
-static FactoryEntry sProjectActorFactoryEntries[] = {{"AchievementNpc", nullptr},
+static NameToCreator sProjectActorFactoryEntries[] = {{"AchievementNpc", nullptr},
                                                      {"AirBubble", nullptr},
                                                      {"AirBubbleGenerator", nullptr},
                                                      {"AirCurrent", nullptr},

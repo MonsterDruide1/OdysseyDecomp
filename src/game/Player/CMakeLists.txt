@@ -1,5 +1,6 @@
 target_sources(odyssey PRIVATE
     HackCapThrowParam.cpp
+    Player.cpp
     PlayerActorBase.cpp
     PlayerActorHakoniwa.cpp
     PlayerConst.cpp

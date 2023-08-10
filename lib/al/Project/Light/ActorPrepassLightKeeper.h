@@ -2,8 +2,6 @@
 
 #include <container/seadPtrArray.h>
 #include <gfx/seadColor.h>
-#include "al/Library/LiveActor/ActorInitInfo.h"
-#include "al/Library/Resource/Resource.h"
 
 namespace al {
 class PrePassLightBase;
@@ -14,6 +12,8 @@ class ParameterStringRef;
 class ParameterC4f;
 class ParameterArray;
 class LiveActor;
+class Resource;
+class ActorInitInfo;
 
 class ActorPrePassLightKeeper {
     class UserColor {
@@ -32,19 +32,19 @@ public:
 
     ActorPrePassLightKeeper(LiveActor*);
     void init(const Resource*, const ActorInitInfo&, const char*);
-    void initLightNum(int);
+    void initLightNum(s32);
     void initAfterPlacement();
     void appear(bool);
     void requestKill();
     void hideModel();
     void updateHideModel(bool);
     PrePassLightBase* getLightBase(const char*);
-    PrePassLightBase* getLightBase(int);
+    PrePassLightBase* getLightBase(s32);
     sead::Color4f* findUserColor(const char*);
 
 private:
     ParameterIo* mParameterIo;
-    ParameterBool* isIgnoreHideModel;
+    ParameterBool* mIsIgnoreHideModel;
     ParameterArray* mLightParameters;
     ParameterArray* mUserColorParameters;
     sead::PtrArray<PrePassLightBase*> mLights;

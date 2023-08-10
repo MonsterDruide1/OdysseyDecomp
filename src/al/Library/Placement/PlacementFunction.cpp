@@ -1,5 +1,8 @@
 #include "al/Library/Placement/PlacementFunction.h"
 
+#include "al/Library/LiveActor/ActorInitInfo.h"
+#include "al/Library/Placement/PlacementId.h"
+#include "al/Library/Placement/PlacementInfo.h"
 #include "al/Library/Yaml/ByamlIter.h"
 
 namespace al {

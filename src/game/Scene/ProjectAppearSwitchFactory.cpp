@@ -4,7 +4,7 @@
 namespace al {
 
 // FIXME fill in method references: (1.0) off_7101D89F18
-static FactoryEntry sProjectAppearSwitchFactoryEntries[] = {{"FixMapParts", nullptr},
+static NameToCreator sProjectAppearSwitchFactoryEntries[] = {{"FixMapParts", nullptr},
                                                             {"FallMapParts", nullptr},
                                                             {"CapHanger", nullptr},
                                                             {"Coin", nullptr},

@@ -1,10 +1,25 @@
 #pragma once
 
-class IUseDimension;
+#include "al/Library/LiveActor/LiveActor.h"
 
-namespace al {
-class LiveActor;
-}
+class Player : public al::LiveActor {
+public:
+    Player(const char* actorName, const char* archiveName, s32 port);
+
+    void init(const al::ActorInitInfo& initInfo) override;
+    void control() override;
+
+    void exeWait();
+    void exeRun();
+    void exeJump();
+    void exeFall();
+    void exeDamage();
+    
+private:
+    const char* mArchiveName;
+    s32 mPort;
+    s32 mAirTime;
+};
 
 namespace rs {
 

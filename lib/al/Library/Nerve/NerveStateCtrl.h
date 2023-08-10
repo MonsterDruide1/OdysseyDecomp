@@ -1,31 +1,34 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include "al/Library/Nerve/Nerve.h"
 #include "al/Library/Nerve/NerveStateBase.h"
 
 namespace al {
-struct State {
-    al::NerveStateBase* mStateBase;  // _0
-    const al::Nerve* mNerve;         // _8
-    const char* mName;               // _10
-};
 
 class NerveStateCtrl {
-public:
-    NerveStateCtrl(int);
+    struct State {
+        NerveStateBase* state;
+        const Nerve* nerve;
+        const char* name;
+    };
 
-    void addState(al::NerveStateBase*, const al::Nerve*, const char*);
+public:
+    NerveStateCtrl(s32 maxStates);
+
+    void addState(NerveStateBase* state, const Nerve* nerve, const char* name);
     bool updateCurrentState();
-    void startState(const al::Nerve*);
+    void startState(const Nerve* nerve);
     void update();
 
-    State* findStateInfo(const al::Nerve*);
+    State* findStateInfo(const Nerve* nerve);
     bool isCurrentStateEnd() const;
     void tryEndCurrentState();
 
-    int _0;
-    int mStateCount;       // _4
-    State* mStates;        // _8
-    State* mCurrentState;  // _10
+private:
+    s32 mMaxStates;
+    s32 mStateCount;
+    State* mStates;
+    State* mCurrentState;
 };
 };  // namespace al

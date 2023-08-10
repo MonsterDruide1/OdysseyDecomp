@@ -31,17 +31,3 @@ public:
 private:
     sead::Quatf gap = sead::Quatf::unit;
 };
-
-namespace {
-
-NERVE_HEADER(MofumofuWarpHole, Close)
-NERVE_HEADER(MofumofuWarpHole, Disappear)
-NERVE_HEADER(MofumofuWarpHole, Appear)
-NERVE_HEADER(MofumofuWarpHole, HideMove)
-NERVE_HEADER(MofumofuWarpHole, HideWait)
-NERVE_HEADER(MofumofuWarpHole, Wait)
-NERVE_HEADER(MofumofuWarpHole, DashSign)
-NERVE_HEADER(MofumofuWarpHole, DashSignEnd)
-NERVE_HEADER(MofumofuWarpHole, CloseAndDisappear)
-
-}  // namespace

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "al/audio/AudioKeeper.h"
-#include "al/camera/CameraDirector.h"
+#include "al/Library/Audio/AudioKeeper.h"
+#include "al/Library/Camera/CameraDirector.h"
 #include "al/Library/Nerve/NerveExecutor.h"
-#include "al/scene/SceneInitInfo.h"
 #include "al/Library/Scene/SceneObjHolder.h"
+#include "al/Project/Scene/SceneInitInfo.h"
 
 namespace al {
 class Scene : public al::NerveExecutor,
@@ -41,4 +41,4 @@ public:
     virtual void control();
     virtual void drawMain();
 };
-};  // namespace al
+}  // namespace al

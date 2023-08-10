@@ -1,20 +1,23 @@
 #pragma once
 
 #include "al/Library/HostIO/HioNode.h"
-#include "al/Library/Nerve/Nerve.h"
-#include "al/Library/Nerve/NerveKeeper.h"
+#include "al/Library/Nerve/IUseNerve.h"
 
 namespace al {
-class NerveExecutor : public IUseNerve, public al::HioNode {
+class Nerve;
+class NerveKeeper;
+
+class NerveExecutor : public IUseNerve, public HioNode {
 public:
-    NerveExecutor(const char*);
+    NerveExecutor(const char* name);
 
     virtual NerveKeeper* getNerveKeeper() const;
     virtual ~NerveExecutor();
 
-    void initNerve(const al::Nerve*, int);
+    void initNerve(const Nerve* nerve, int stateCount);
     void updateNerve();
 
-    al::NerveKeeper* mKeeper;  // _8
+private:
+    NerveKeeper* mKeeper = nullptr;
 };
 };  // namespace al

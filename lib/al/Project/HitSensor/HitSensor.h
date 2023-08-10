@@ -2,7 +2,7 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
-#include "al/Library/HitSensor/SensorHitGroup.h"
+#include "al/Project/HitSensor/SensorHitGroup.h"
 
 namespace al {
 class LiveActor;

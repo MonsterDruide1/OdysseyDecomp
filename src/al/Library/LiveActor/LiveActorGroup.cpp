@@ -2,21 +2,20 @@
 #include "al/Library/LiveActor/LiveActorUtil.h"
 
 namespace al {
-LiveActorGroup::LiveActorGroup(const char* pName, int max) {
-    mMaxActorCount = max;
+LiveActorGroup::LiveActorGroup(const char* groupName, s32 maxActors)
+    : mGroupName(groupName), mMaxActorCount(maxActors) {
     mActorCount = 0;
-    mGroupName = pName;
-    mActors = new LiveActor*[max];
+    mActors = new LiveActor*[maxActors];
 }
 
-int LiveActorGroup::registerActor(al::LiveActor* pActor) {
+int LiveActorGroup::registerActor(LiveActor* pActor) {
     this->mActors[this->mActorCount] = pActor;
     auto count = this->mActorCount;
     this->mActorCount = count + 1;
     return count;
 }
 
-void LiveActorGroup::removeActor(const al::LiveActor* pActor) {
+void LiveActorGroup::removeActor(const LiveActor* pActor) {
     for (int i = 0; i < mActorCount; i++) {
         if (mActors[i] == pActor) {
             mActors[i] = mActors[mActorCount - 1];
@@ -30,7 +29,7 @@ void LiveActorGroup::removeActorAll() {
     mActorCount = 0;
 }
 
-bool LiveActorGroup::isExistActor(const al::LiveActor* pActor) const {
+bool LiveActorGroup::isExistActor(const LiveActor* pActor) const {
     if (mActorCount < 1) {
         return false;
     }
@@ -52,7 +51,7 @@ int LiveActorGroup::calcAliveActorNum() const {
     int count = 0;
 
     for (int i = 0; i < mActorCount; i++) {
-        if (!al::isDead(mActors[i])) {
+        if (!isDead(mActors[i])) {
             count++;
         }
     }
@@ -60,9 +59,9 @@ int LiveActorGroup::calcAliveActorNum() const {
     return count;
 }
 
-al::LiveActor* LiveActorGroup::getDeadActor() const {
+LiveActor* LiveActorGroup::getDeadActor() const {
     for (int i = 0; i < mActorCount; i++) {
-        if (al::isDead(mActors[i])) {
+        if (isDead(mActors[i])) {
             return mActors[i];
         }
     }
@@ -70,9 +69,9 @@ al::LiveActor* LiveActorGroup::getDeadActor() const {
     return nullptr;
 }
 
-al::LiveActor* LiveActorGroup::tryFindDeadActor() const {
+LiveActor* LiveActorGroup::tryFindDeadActor() const {
     for (int i = 0; i < mActorCount; i++) {
-        if (al::isDead(mActors[i])) {
+        if (isDead(mActors[i])) {
             return mActors[i];
         }
     }
@@ -82,7 +81,7 @@ al::LiveActor* LiveActorGroup::tryFindDeadActor() const {
 
 void LiveActorGroup::appearAll() {
     for (int i = 0; i < mActorCount; i++) {
-        if (al::isDead(mActors[i])) {
+        if (isDead(mActors[i])) {
             mActors[i]->appear();
         }
     }
@@ -90,7 +89,7 @@ void LiveActorGroup::appearAll() {
 
 void LiveActorGroup::killAll() {
     for (int i = 0; i < mActorCount; i++) {
-        if (al::isAlive(mActors[i])) {
+        if (isAlive(mActors[i])) {
             mActors[i]->kill();
         }
     }

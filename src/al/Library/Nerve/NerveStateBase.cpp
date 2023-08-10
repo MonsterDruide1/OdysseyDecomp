@@ -1,7 +1,7 @@
 #include "al/Library/Nerve/NerveStateBase.h"
 
 namespace al {
-NerveStateBase::NerveStateBase(const char* pName) : NerveExecutor(pName) {}
+NerveStateBase::NerveStateBase(const char* stateName) : NerveExecutor(stateName) {}
 NerveStateBase::~NerveStateBase() = default;
 
 void NerveStateBase::init() {}
@@ -28,6 +28,6 @@ bool NerveStateBase::update() {
 
 void NerveStateBase::control() {}
 
-ActorStateBase::ActorStateBase(const char* name, al::LiveActor* liveActor)
-    : NerveStateBase(name), mLiveActor(liveActor) {}
+ActorStateBase::ActorStateBase(const char* name, LiveActor* actor)
+    : NerveStateBase(name), mActor(actor) {}
 };  // namespace al

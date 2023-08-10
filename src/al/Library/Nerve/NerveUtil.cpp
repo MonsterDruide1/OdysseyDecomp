@@ -1,69 +1,72 @@
 #include "al/Library/Nerve/NerveUtil.h"
 #include <algorithm>
+#include "al/Library/Nerve/IUseNerve.h"
 #include "al/Library/Nerve/NerveKeeper.h"
 #include "al/Library/Nerve/NerveStateCtrl.h"
 
 namespace al {
-void setNerve(al::IUseNerve* pKeeper, const al::Nerve* pNerve) {
-    pKeeper->getNerveKeeper()->setNerve(pNerve);
+void setNerve(IUseNerve* user, const Nerve* nerve) {
+    user->getNerveKeeper()->setNerve(nerve);
+}
+void setNerveAtStep(IUseNerve* user, const Nerve* nerve, s32 step) {
+    if (user->getNerveKeeper()->getCurrentStep() == step)
+        user->getNerveKeeper()->setNerve(nerve);
+}
+bool isStep(const IUseNerve* user, s32 step) {
+    return user->getNerveKeeper()->getCurrentStep() == step;
+}
+void setNerveAtGreaterEqualStep(IUseNerve* user, const Nerve* nerve, s32 step) {
+    if (user->getNerveKeeper()->getCurrentStep() >= step)
+        user->getNerveKeeper()->setNerve(nerve);
 }
 
-void setNerveAtStep(al::IUseNerve* pKeeper, const al::Nerve* pNerve, int step) {
-    if (pKeeper->getNerveKeeper()->mStep == step) {
-        pKeeper->getNerveKeeper()->setNerve(pNerve);
-    }
+int getNerveStep(const IUseNerve* user) {
+    return user->getNerveKeeper()->getCurrentStep();
 }
-bool isStep(const al::IUseNerve* pKeeper, int step) {
-    return pKeeper->getNerveKeeper()->mStep == step;
+const Nerve* getCurrentNerve(const IUseNerve* user) {
+    return user->getNerveKeeper()->getCurrentNerve();
 }
-
-void setNerveAtGreaterEqualStep(al::IUseNerve* pKeeper, const al::Nerve* pNerve, int step) {
-    if (pKeeper->getNerveKeeper()->mStep >= step) {
-        pKeeper->getNerveKeeper()->setNerve(pNerve);
-    }
+bool isFirstStep(const IUseNerve* user) {
+    return isStep(user, 0);
 }
-
-bool isGreaterEqualStep(const al::IUseNerve* pKeeper, int step) {
-    return pKeeper->getNerveKeeper()->mStep >= step;
+bool isGreaterStep(const IUseNerve* user, s32 step) {
+    return user->getNerveKeeper()->getCurrentStep() > step;
 }
-
-bool isNerve(const al::IUseNerve* pKeeper, const al::Nerve* pNerve) {
-    return pKeeper->getNerveKeeper()->getCurrentNerve() == pNerve;
+bool isGreaterEqualStep(const IUseNerve* user, s32 step) {
+    return user->getNerveKeeper()->getCurrentStep() >= step;
 }
-
-int getNerveStep(const al::IUseNerve* pKeeper) {
-    return pKeeper->getNerveKeeper()->mStep;
+bool isLessStep(const IUseNerve* user, s32 step) {
+    return user->getNerveKeeper()->getCurrentStep() < step;
 }
-
-const al::Nerve* getCurrentNerve(const al::IUseNerve* pKeeper) {
-    return pKeeper->getNerveKeeper()->getCurrentNerve();
+bool isLessEqualStep(const IUseNerve* user, s32 step) {
+    return user->getNerveKeeper()->getCurrentStep() <= step;
 }
-
-bool isFirstStep(const al::IUseNerve* pKeeper) {
-    return pKeeper->getNerveKeeper()->mStep == 0;
+bool isInRangeStep(const IUseNerve* user, s32 startStep, s32 endStep) {
+    NerveKeeper* nerveKeeper = user->getNerveKeeper();
+    return startStep <= nerveKeeper->getCurrentStep() && nerveKeeper->getCurrentStep() <= endStep;
 }
-
-bool isLessStep(const al::IUseNerve* pKeeper, int step) {
-    return pKeeper->getNerveKeeper()->mStep < step;
+bool isIntervalStep(const IUseNerve* user, s32 interval, s32 offset) {
+    s32 currentStep = user->getNerveKeeper()->getCurrentStep() - offset;
+    if (currentStep < 0)
+        return false;
+    return currentStep == (interval != 0 ? currentStep / interval : 0) * interval;
 }
-
-bool isLessEqualStep(const al::IUseNerve* pKeeper, int step) {
-    return pKeeper->getNerveKeeper()->mStep <= step;
+bool isIntervalOnOffStep(const IUseNerve* user, s32 interval, s32 offset) {
+    if (interval == 0)
+        return false;
+    return ((user->getNerveKeeper()->getCurrentStep() - offset) / interval) == 0;
 }
-
-bool isGreaterStep(const al::IUseNerve* pKeeper, int step) {
-    return pKeeper->getNerveKeeper()->mStep > step;
+bool isNerve(const IUseNerve* user, const Nerve* nerve) {
+    return user->getNerveKeeper()->getCurrentNerve() == nerve;
 }
-
-bool isInRangeStep(const al::IUseNerve* pKeeper, int low, int high) {
-    int step = pKeeper->getNerveKeeper()->mStep;
-    return (step <= high) & (step >= low);
+bool isNewNerve(const IUseNerve* user) {
+    return user->getNerveKeeper()->isNewNerve();
 }
 
 int calcNerveInterval(const al::IUseNerve* pKeeper, int start, int end) {
     al::NerveKeeper* keeper = pKeeper->getNerveKeeper();
 
-    int dist = keeper->mStep - end;
+    int dist = keeper->getCurrentStep() - end;
 
     if (start < 1 || dist < 1)
         return 0;
@@ -71,11 +74,11 @@ int calcNerveInterval(const al::IUseNerve* pKeeper, int start, int end) {
     return dist / start;
 }
 
-float calcNerveRate(const al::IUseNerve* pKeeper, int step) {
+float calcNerveRate(const IUseNerve* user, int step) {
     if (step < 1)
         return 1.0f;
 
-    float curStep = pKeeper->getNerveKeeper()->mStep;
+    float curStep = user->getNerveKeeper()->getCurrentStep();
     float ret = curStep / step;
 
     if (ret < 0.0f)
@@ -86,31 +89,31 @@ float calcNerveRate(const al::IUseNerve* pKeeper, int step) {
     return ret;
 }
 
-void initNerveState(al::IUseNerve* pKeeper, al::NerveStateBase* pStateBase, const al::Nerve* pNerve,
-                    const char* pName) {
-    pStateBase->init();
-    pKeeper->getNerveKeeper()->mStateCtrl->addState(pStateBase, pNerve, pName);
+void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
+                    const char* name) {
+    state->init();
+    user->getNerveKeeper()->getStateCtrl()->addState(state, nerve, name);
 }
 
-void addNerveState(const al::IUseNerve* pKeeper, al::NerveStateBase* pStateBase,
-                   const al::Nerve* pNerve, const char* pName) {
-    pKeeper->getNerveKeeper()->mStateCtrl->addState(pStateBase, pNerve, pName);
+void addNerveState(const IUseNerve* user, NerveStateBase* state,
+                   const Nerve* nerve, const char* name) {
+    user->getNerveKeeper()->getStateCtrl()->addState(state, nerve, name);
 }
 
-void updateNerveState(al::IUseNerve* pKeeper) {
-    pKeeper->getNerveKeeper()->mStateCtrl->updateCurrentState();
+bool updateNerveState(IUseNerve* user) {
+    return user->getNerveKeeper()->getStateCtrl()->updateCurrentState();
 }
 
-bool updateNerveStateAndNextNerve(al::IUseNerve* pKeeper, const al::Nerve* pNerve) {
-    if (pKeeper->getNerveKeeper()->mStateCtrl->updateCurrentState()) {
-        pKeeper->getNerveKeeper()->setNerve(pNerve);
+bool updateNerveStateAndNextNerve(IUseNerve* user, const Nerve* nerve) {
+    if (user->getNerveKeeper()->getStateCtrl()->updateCurrentState()) {
+        user->getNerveKeeper()->setNerve(nerve);
         return true;
     }
 
     return false;
 }
 
-bool isStateEnd(const al::IUseNerve* pKeeper) {
-    return pKeeper->getNerveKeeper()->mStateCtrl->isCurrentStateEnd();
+bool isStateEnd(const IUseNerve* user) {
+    return user->getNerveKeeper()->getStateCtrl()->isCurrentStateEnd();
 }
 }  // namespace al

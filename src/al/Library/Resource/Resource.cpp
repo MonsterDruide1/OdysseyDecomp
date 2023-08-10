@@ -4,37 +4,37 @@
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
 #include <resource/seadResource.h>
-#include "al/Library/File/ArchiveUtil.h"
+#include "al/Library/File/FileUtil.h"
 
 namespace al {
-Resource::Resource(const sead::SafeStringBase<char>& rPath)
-    : mArchive(nullptr), mDevice(nullptr), mName(rPath) {
+Resource::Resource(const sead::SafeString& path)
+    : mArchive(nullptr), mDevice(nullptr), mName(path) {
     mHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
-    _B0 = 0;
-    mResFile = 0;
-    mArchive = al::loadArchive(rPath);
+    mData = nullptr;
+    mResFile = nullptr;
+    mArchive = loadArchive(path);
     mDevice = new sead::ArchiveFileDevice(mArchive);
 }
 
-Resource::Resource(const sead::SafeStringBase<char>& rPath, sead::ArchiveRes* pResource)
-    : mArchive(nullptr), mDevice(nullptr), mName(rPath) {
+Resource::Resource(const sead::SafeString& path, sead::ArchiveRes* archive)
+    : mArchive(nullptr), mDevice(nullptr), mName(path) {
     mHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
-    _B0 = 0;
-    mResFile = 0;
-    mArchive = pResource;
+    mData = nullptr;
+    mResFile = nullptr;
+    mArchive = archive;
     mDevice = new sead::ArchiveFileDevice(mArchive);
 }
 
-bool Resource::isExistFile(const sead::SafeStringBase<char>& rFileName) const {
+bool Resource::isExistFile(const sead::SafeString& path) const {
     bool ret = false;
-    mDevice->tryIsExistFile(&ret, rFileName);
+    mDevice->tryIsExistFile(&ret, path);
     return ret;
 }
 
-unsigned int Resource::getFileSize(const sead::SafeStringBase<char>& rFileName) const {
+u32 Resource::getFileSize(const sead::SafeString& path) const {
     auto device = mDevice;
     u32 ret = 0;
-    device->tryGetFileSize(&ret, rFileName);
+    device->tryGetFileSize(&ret, path);
     return ret;
 }
 

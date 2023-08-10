@@ -1,14 +1,13 @@
 #include "al/Library/Nerve/NerveStateCtrl.h"
 
+#include "al/Library/Nerve/NerveKeeper.h"
+
 namespace al {
 // todo -- some scheduling problems with mStateCount's incrementation
 // adds a state to the list of states in the controller
-void NerveStateCtrl::addState(al::NerveStateBase* pBase, const al::Nerve* pNerve,
-                              const char* pName) {
-    auto& state = mStates[mStateCount];
-    state.mStateBase = pBase;
-    state.mNerve = pNerve;
-    state.mName = pName;
+void NerveStateCtrl::addState(NerveStateBase* state, const Nerve* nerve,
+                              const char* name) {
+    mStates[mStateCount] = {.state = state, .nerve = nerve, .name = name};
     mStateCount++;
 }
 
@@ -18,25 +17,17 @@ bool NerveStateCtrl::updateCurrentState() {
         return false;
     }
 
-    return mCurrentState->mStateBase->update();
+    return mCurrentState->state->update();
 }
 
 // UNUSED FUNCTION
 // uses a supplied nerve pointer to compare it with the nerves contained in states
 // returns the matching nerve, if any
-State* al::NerveStateCtrl::findStateInfo(const al::Nerve* pNerve) {
-    if (mStateCount < 1) {
-        return nullptr;
-    }
-
-    int curIdx = 0;
-
-    while (curIdx < mStateCount) {
-        if (mStates[curIdx].mNerve == pNerve) {
-            return &mStates[curIdx];
+NerveStateCtrl::State* NerveStateCtrl::findStateInfo(const Nerve* nerve) {
+    for (s32 i = 0; i < mStateCount; i++) {
+        if (mStates[i].nerve == nerve) {
+            return &mStates[i];
         }
-
-        curIdx++;
     }
 
     return nullptr;
@@ -49,21 +40,21 @@ bool NerveStateCtrl::isCurrentStateEnd() const {
         return true;
     }
 
-    return mCurrentState->mStateBase->mIsDead != 0;
+    return mCurrentState->state->isDead() != 0;
 }
 
 // attempt to end the currently active state by "killing" the state, then killing the state
 // controller contained in the nerve keeper
 void NerveStateCtrl::tryEndCurrentState() {
     if (mCurrentState) {
-        if (!mCurrentState->mStateBase->mIsDead) {
-            mCurrentState->mStateBase->kill();
+        if (!mCurrentState->state->isDead()) {
+            mCurrentState->state->kill();
         }
 
-        al::NerveKeeper* keeper = mCurrentState->mStateBase->getNerveKeeper();
+        NerveKeeper* keeper = mCurrentState->state->getNerveKeeper();
 
         if (keeper) {
-            al::NerveStateCtrl* ctrl = keeper->mStateCtrl;
+            NerveStateCtrl* ctrl = keeper->getStateCtrl();
 
             if (ctrl) {
                 ctrl->tryEndCurrentState();

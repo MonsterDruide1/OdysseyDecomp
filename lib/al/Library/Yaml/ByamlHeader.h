@@ -15,13 +15,13 @@ public:
 
 private:
     union {
-        int _0;
-        unsigned short mTag, mVersion;  // unusable due to different loading mechanisms
+        s32 _0;
+        u16 mTag, mVersion;  // unusable due to different loading mechanisms
     };
 
-    int mHashKeyOffset;
-    int mStringTableOffset;
-    int mDataOffset;
+    s32 mHashKeyOffset;
+    s32 mStringTableOffset;
+    s32 mDataOffset;
 };
 
 class ByamlStringTableIter {
@@ -29,13 +29,13 @@ public:
     ByamlStringTableIter();
     ByamlStringTableIter(const u8* data, bool isRev);
 
-    int getSize() const;
+    s32 getSize() const;
     const u32* getAddressTable() const;
-    u32 getStringAddress(int index) const;
+    u32 getStringAddress(s32 index) const;
     u32 getEndAddress() const;
-    const char* getString(int index) const;
-    int getStringSize(int index) const;
-    int findStringIndex(const char* str) const;
+    const char* getString(s32 index) const;
+    s32 getStringSize(s32 index) const;
+    s32 findStringIndex(const char* str) const;
     bool isValidate() const;
 
 private:

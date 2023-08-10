@@ -1,7 +1,5 @@
-#include "al/Library/LiveActor/LiveActorFlag.h"
+#include "al/Library/LiveActor/LiveActor.h"
 
 namespace al {
-
 LiveActorFlag::LiveActorFlag() = default;
-
-}  // namespace al
+}

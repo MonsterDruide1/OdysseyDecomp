@@ -1,43 +1,18 @@
 #pragma once
 
-#include "al/Library/Yaml/ByamlIter.h"
-
-#include "al/Library/HostIO/HioNode.h"
+#include <math/seadMatrix.h>
 #include "al/Library/Area/IUseAreaObj.h"
 #include "al/Library/Audio/IUseAudioKeeper.h"
 #include "al/Library/Camera/IUseCamera.h"
 #include "al/Library/Collision/IUseCollision.h"
 #include "al/Library/Effect/IUseEffectKeeper.h"
-#include "al/Library/Nerve/Nerve.h"
-#include "al/Library/Rail/RailKeeper.h"
-#include "al/Library/Rail/RailRider.h"
+#include "al/Library/HostIO/HioNode.h"
+#include "al/Library/Nerve/IUseNerve.h"
+#include "al/Library/Rail/IUseRail.h"
 #include "al/Library/Scene/SceneObjHolder.h"
-#include "al/Library/Screen/ScreenPointKeeper.h"
-#include "al/Library/HitSensor/HitSensorKeeper.h"
 #include "al/Library/Stage/StageSwitchKeeper.h"
 
 namespace al {
-class ActorScoreKeeper {
-public:
-    struct Entry {
-        const char* factorName;
-        const char* categoryName;
-    };
-
-    ActorScoreKeeper();
-
-    void init(const al::ByamlIter& iter);
-    void getCategoryName();  // unknown return type
-    const char* tryGetCategoryName(const char* a1);
-
-private:
-    inline void allocArray();
-    inline void putEntry(int index, const al::ByamlIter& iter);
-
-    Entry* array;
-    int size;
-};
-
 class ActorPoseKeeperBase;
 class ActorExecuteInfo;
 class ActorActionKeeper;
@@ -46,33 +21,43 @@ class ActorScoreKeeper;
 class Collider;
 class CollisionParts;
 class ModelKeeper;
+class NerveKeeper;
+class HitSensorKeeper;
+class ScreenPointKeeper;
+class EffectKeeper;
+class AudioKeeper;
+class HitReactionKeeper;
+class StageSwitchKeeper;
+class RailKeeper;
 class ShadowKeeper;
 class ActorPrePassLightKeeper;
 class ActorOcclusionKeeper;
 class SubActorKeeper;
-class ActorSceneInfo;
-class LiveActorFlag;
-
+class ActorParamHolder;
+struct ActorSceneInfo;
+struct LiveActorFlag;
 class ActorInitInfo;
 class HitSensor;
 class SensorMsg;
 class ScreenPointer;
 class ScreenPointTarget;
 
-class LiveActor : public al::IUseNerve,
-                  public al::IUseEffectKeeper,
-                  public al::IUseAudioKeeper,
-                  public al::IUseStageSwitch,
-                  public al::IUseSceneObjHolder,
-                  public al::IUseAreaObj,
-                  public al::IUseCamera,
-                  public al::IUseCollision,
-                  public al::IUseRail,
-                  public al::IUseHioNode {
-public:
-    LiveActor(const char* name);  // TODO requires implementation
+class LiveActor : public IUseNerve,
+                  public IUseEffectKeeper,
+                  public IUseAudioKeeper,
+                  public IUseStageSwitch,
+                  public IUseSceneObjHolder,
+                  public IUseAreaObj,
+                  public IUseCamera,
+                  public IUseCollision,
+                  public IUseRail,
+                  public IUseHioNode {
+    friend class alActorFunction;
 
-    virtual NerveKeeper* getNerveKeeper() const override;
+public:
+    LiveActor(const char* actorName);
+
+    NerveKeeper* getNerveKeeper() const override;
     virtual void init(const ActorInitInfo& info);
     virtual void initAfterPlacement();
     virtual void appear();
@@ -85,12 +70,10 @@ public:
     virtual void startClipped();
     virtual void endClipped();
     virtual void attackSensor(HitSensor* target, HitSensor* source);
-    virtual bool receiveMsg(const SensorMsg* message, HitSensor* source,
-                            HitSensor* target);  // NOTE: return type unknown
-    virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*,
-                                       ScreenPointTarget*);  // NOTE: return type unknown
+    virtual bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target);
+    virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*);
     virtual const char* getName() const override;
-    virtual void* getBaseMtx() const;  // NOTE: return type unknown
+    virtual sead::Matrix44f* getBaseMtx() const;
     virtual EffectKeeper* getEffectKeeper() const override;
     virtual AudioKeeper* getAudioKeeper() const override;
     virtual StageSwitchKeeper* getStageSwitchKeeper() const override;
@@ -109,42 +92,66 @@ public:
     void initModelKeeper(ModelKeeper*);
     void initActionKeeper(ActorActionKeeper*);
     void initNerveKeeper(NerveKeeper*);
-    void initHitSensor(int);
+    void initHitSensor(s32);
     void initScreenPointKeeper(ScreenPointKeeper*);
     void initEffectKeeper(EffectKeeper*);
     void initAudioKeeper(AudioKeeper*);
     void initRailKeeper(const ActorInitInfo&, const char*);
-    void initCollider(float, float, unsigned int);
-    void initItemKeeper(int);
+    void initCollider(f32, f32, u32);
+    void initItemKeeper(s32);
     void initScoreKeeper();
     void initActorPrePassLightKeeper(ActorPrePassLightKeeper*);
     void initActorOcclusionKeeper(ActorOcclusionKeeper*);
     void initSubActorKeeper(SubActorKeeper*);
     void initSceneInfo(ActorSceneInfo*);
 
+    LiveActorFlag* getFlags() const { return mFlags; }
+    ModelKeeper* getModelKeeper() const { return mModelKeeper; }
+    ActorPoseKeeperBase* getPoseKeeper() const { return mPoseKeeper; }
+
+private:
     const char* mActorName;
-    al::ActorPoseKeeperBase* mPoseKeeper;
-    al::ActorExecuteInfo* mLayoutExecuteInfo;
-    al::ActorActionKeeper* mActorActionKeeper;
-    al::ActorItemKeeper* mActorItemKeeper;
-    al::ActorScoreKeeper* mActorScoreKeeper;
-    al::Collider* mCollider;
-    al::CollisionParts* mCollisionParts;
-    al::ModelKeeper* mModelKeeper;
-    al::NerveKeeper* mNerveKeeper;
-    al::HitSensorKeeper* mHitSensorKeeper;
-    al::ScreenPointKeeper* mScreenPointKeeper;
-    al::EffectKeeper* mEffectKeeper;
-    al::AudioKeeper* mAudioKeeper;
-    void* gap_4;
-    al::StageSwitchKeeper* mStageSwitchKeeper;
-    al::RailKeeper* mRailKeeper;
-    al::ShadowKeeper* mShadowKeeper;
-    al::ActorPrePassLightKeeper* mActorPrePassLightKeeper;
-    al::ActorOcclusionKeeper* mActorOcclusionKeeper;
-    al::SubActorKeeper* mSubActorKeeper;
-    void* gap_6;
-    al::ActorSceneInfo* mSceneInfo;
-    al::LiveActorFlag* mLiveActorFlag;
+    ActorPoseKeeperBase* mPoseKeeper;
+    ActorExecuteInfo* mLayoutExecuteInfo;
+    ActorActionKeeper* mActorActionKeeper;
+    ActorItemKeeper* mActorItemKeeper;
+    ActorScoreKeeper* mActorScoreKeeper;
+    Collider* mCollider;
+    CollisionParts* mCollisionParts;
+    ModelKeeper* mModelKeeper;
+    NerveKeeper* mNerveKeeper;
+    HitSensorKeeper* mHitSensorKeeper;
+    ScreenPointKeeper* mScreenPointKeeper;
+    EffectKeeper* mEffectKeeper;
+    AudioKeeper* mAudioKeeper;
+    HitReactionKeeper* mHitReactionKeeper;
+    StageSwitchKeeper* mStageSwitchKeeper;
+    RailKeeper* mRailKeeper;
+    ShadowKeeper* mShadowKeeper;
+    ActorPrePassLightKeeper* mActorPrePassLightKeeper;
+    ActorOcclusionKeeper* mActorOcclusionKeeper;
+    SubActorKeeper* mSubActorKeeper;
+    ActorParamHolder* mActorParamHolder;
+    ActorSceneInfo* mSceneInfo;
+    LiveActorFlag* mFlags;
 };
-};  // namespace al
+
+struct LiveActorFlag {
+    bool isDead = true;
+    bool isClipped = false;
+    bool isClippingInvalid = true;
+    bool isDrawClipped = false;
+    bool isCalcAnim = false;
+    bool isModelVisible = false;
+    bool isCollideOff = true;
+    bool field_07 = false;
+    bool isMaterialCodeValid = false;
+    bool isPuddleMaterialValid = false;
+    bool isAreaTargetOn = true;
+    bool isUpdateOn = true;
+    
+    LiveActorFlag();
+};
+static_assert(sizeof(LiveActorFlag) == 0xC);
+
+}  // namespace al

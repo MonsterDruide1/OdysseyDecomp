@@ -1,12 +1,12 @@
-/**
- * @file IUseLayout.h
- * @brief Interface for classes that are layouts.
- */
-
 #pragma once
 
-#include "al/actor/IUseName.h"
+#include "al/Library/HostIO/IUseName.h"
 
 namespace al {
-class IUseLayout : public al::IUseName {};
-}  // namespace al
+class LayoutKeeper;
+
+class IUseLayout : virtual public IUseName {
+public:
+    virtual LayoutKeeper* getLayoutKeeper() const = 0;
+};
+}

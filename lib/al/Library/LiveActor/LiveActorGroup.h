@@ -1,31 +1,50 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include "al/Library/HostIO/HioNode.h"
 
 namespace al {
 class LiveActor;
 
-class LiveActorGroup : public al::HioNode {
+class LiveActorGroup : public HioNode {
 public:
-    LiveActorGroup(const char*, int);
+    LiveActorGroup(const char*, s32);
 
-    virtual int registerActor(al::LiveActor*);
+    virtual s32 registerActor(LiveActor*);
 
-    void removeActor(const al::LiveActor*);
+    void removeActor(const LiveActor*);
     void removeActorAll();
-    bool isExistActor(const al::LiveActor*) const;
+    bool isExistActor(const LiveActor*) const;
     bool isFull() const;
     int calcAliveActorNum() const;
-    al::LiveActor* getDeadActor() const;
-    al::LiveActor* tryFindDeadActor() const;
+    LiveActor* getDeadActor() const;
+    LiveActor* tryFindDeadActor() const;
     void appearAll();
     void killAll();
     void makeActorAliveAll();
     void makeActorDeadAll();
 
-    const char* mGroupName;   // _8
-    int mMaxActorCount;       // _10
-    int mActorCount;          // _14
-    al::LiveActor** mActors;  // _18
+private:
+    const char* mGroupName;
+    s32 mMaxActorCount;
+    s32 mActorCount;
+    LiveActor** mActors;
+};
+
+template <class T>
+class DeriveActorGroup : LiveActorGroup {
+public:
+    s32 registerActor(T* actor) { LiveActorGroup::registerActor(actor); }
+    void removeActor(const T* actor) { LiveActorGroup::removeActor(actor); }
+    void removeActorAll() { LiveActorGroup::removeActorAll(); }
+    bool isExistActor(const T* actor) const { return LiveActorGroup::isExistActor(actor); }
+    bool isFull() const { return LiveActorGroup::isFull(); }
+    s32 calcAliveActorNum() const { return LiveActorGroup::calcAliveActorNum(); }
+    T* getDeadActor() const { return LiveActorGroup::getDeadActor(); }
+    T* tryFindDeadActor() const { return LiveActorGroup::tryFindDeadActor(); }
+    void appearAll() { LiveActorGroup::appearAll(); }
+    void killAll() { LiveActorGroup::killAll(); }
+    void makeActorAliveAll() { LiveActorGroup::makeActorAliveAll(); }
+    void makeActorDeadAll() { LiveActorGroup::makeActorDeadAll(); }
 };
 };  // namespace al

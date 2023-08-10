@@ -2,10 +2,28 @@
 
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
+#include "al/Library/LiveActor/ActorActionFunction.h"
+#include "al/Library/LiveActor/ActorInitInfo.h"
+#include "al/Library/LiveActor/ActorPoseKeeper.h"
 #include "al/Library/LiveActor/LiveActorUtil.h"
 #include "al/Library/Math/MathUtil.h"
-#include "al/Library/Nerve/NerveUtil.h"
 #include "al/Library/Math/VectorUtil.h"
+#include "al/Library/Nerve/NerveSetupUtil.h"
+#include "al/Library/Nerve/NerveUtil.h"
+
+namespace {
+
+MAKE_NERVE(MofumofuWarpHole, Close);
+MAKE_NERVE(MofumofuWarpHole, Disappear);
+MAKE_NERVE(MofumofuWarpHole, Appear);
+MAKE_NERVE(MofumofuWarpHole, HideMove);
+MAKE_NERVE(MofumofuWarpHole, HideWait);
+MAKE_NERVE(MofumofuWarpHole, Wait);
+MAKE_NERVE(MofumofuWarpHole, DashSign);
+MAKE_NERVE(MofumofuWarpHole, DashSignEnd);
+MAKE_NERVE_FUNC(MofumofuWarpHole, CloseAndDisappear, Close);
+
+}  // namespace
 
 MofumofuWarpHole::MofumofuWarpHole(const char* name)
     : al::LiveActor(name) {}  // TODO minor mismatch about storing `gap`
@@ -101,8 +119,8 @@ void MofumofuWarpHole::exeDashSign() {
     sead::Vector3f v21{0, 0, 0};
     al::calcQuatFront(&v21, gap);
 
-    float v13 = al::calcNerveEaseInRate(this, 100, 120);
-    float v14 = al::lerpValue(0.3, 0.05, v13);
+    f32 v13 = al::calcNerveEaseInRate(this, 100, 120);
+    f32 v14 = al::lerpValue(0.3, 0.05, v13);
     al::turnVecToVecRate(&a3, v21, a3, v14);
     al::normalize(&a3);
     al::turnVecToVecRate(&v21, v21, a3, 0.15);
@@ -118,17 +136,3 @@ void MofumofuWarpHole::exeDashSignEnd() {
         al::startAction(this, "DashSignEnd");
     al::setNerveAtActionEnd(this, &nrvMofumofuWarpHoleWait);
 }
-
-namespace {
-
-NERVE_IMPL(MofumofuWarpHole, Close)
-NERVE_IMPL(MofumofuWarpHole, Disappear)
-NERVE_IMPL(MofumofuWarpHole, Appear)
-NERVE_IMPL(MofumofuWarpHole, HideMove)
-NERVE_IMPL(MofumofuWarpHole, HideWait)
-NERVE_IMPL(MofumofuWarpHole, Wait)
-NERVE_IMPL(MofumofuWarpHole, DashSign)
-NERVE_IMPL(MofumofuWarpHole, DashSignEnd)
-NERVE_IMPL_(MofumofuWarpHole, CloseAndDisappear, Close)
-
-}  // namespace

@@ -5,7 +5,7 @@
 namespace al {
 class NerveStateBase : public NerveExecutor {
 public:
-    NerveStateBase(const char*);
+    NerveStateBase(const char* stateName);
     virtual ~NerveStateBase();
 
     virtual void init();
@@ -14,16 +14,19 @@ public:
     virtual bool update();
     virtual void control();
 
+    bool isDead() const { return mIsDead; }
+
+private:
     bool mIsDead = true;
 };
 
 class LiveActor;
 
-class ActorStateBase : public al::NerveStateBase {
+class ActorStateBase : public NerveStateBase {
 public:
-    ActorStateBase(const char*, al::LiveActor*);
+    ActorStateBase(const char* stateName, LiveActor* actor);
 
 private:
-    LiveActor* mLiveActor;
+    LiveActor* mActor;
 };
 };  // namespace al

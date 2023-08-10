@@ -46,16 +46,16 @@ public:
     };
     static_assert(sizeof(Edge) == 0x20);
 
-    Graph(int vertices_size, int edges_size);
+    Graph(int verticesSize, int edgesSize);
     void appendVertex(int size);
     void appendVertex(Vertex* vertex);
     void removeVertex(const Vertex* vertex);
     void removeEdge(const Edge* edge);
-    Edge* tryFindEdge(int index_vertex1, int index_vertex2) const;
+    Edge* tryFindEdge(int indexVertex1, int indexVertex2) const;
     void appendEdge(Edge* edge);
     bool tryAppendEdge(Edge* edge);
-    void appendEdge(int index_vertex1, int index_vertex2, float weight);
-    bool tryAppendEdge(int index_vertex1, int index_vertex2, float weight);
+    void appendEdge(int indexVertex1, int indexVertex2, float weight);
+    bool tryAppendEdge(int indexVertex1, int indexVertex2, float weight);
 
 private:
     sead::PtrArray<Vertex> mVertices;

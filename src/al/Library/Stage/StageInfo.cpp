@@ -1,6 +1,6 @@
 #include "al/Library/Stage/StageInfo.h"
 
-#include "al/Library/Placement/Placement.h"
+#include "al/Library/Placement/PlacementInfo.h"
 
 namespace al {
 

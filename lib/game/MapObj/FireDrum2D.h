@@ -25,8 +25,3 @@ public:
 private:
     ActorDimensionKeeper* mActorDimensionKeeper = nullptr;
 };
-
-namespace {
-NERVE_HEADER(FireDrum2D, Wait)
-NERVE_HEADER(FireDrum2D, Burn)
-}  // namespace

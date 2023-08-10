@@ -1,27 +1,28 @@
 #include "al/Library/LiveActor/LiveActor.h"
 
 #include <string.h>
-#include "al/Library/LiveActor/LiveActorFlag.h"
+#include "al/Library/LiveActor/ActorFlagFunction.h"
+#include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/Rail/RailKeeper.h"
 #include "al/Library/Shadow/ShadowKeeper.h"
 #include "al/Project/Light/ActorPrepassLightKeeper.h"
-#include "al/Library/LiveActor/LiveActorUtil.h"
 
 namespace al {
 
 LiveActor::LiveActor(const char* actorName) : mActorName(actorName) {
     memset(&mPoseKeeper, 0, 0xB8);
-    mLiveActorFlag = new LiveActorFlag();
+    mFlags = new LiveActorFlag();
     mShadowKeeper = new ShadowKeeper();
 }
 
-al::NerveKeeper* LiveActor::getNerveKeeper() const {
+NerveKeeper* LiveActor::getNerveKeeper() const {
     return mNerveKeeper;
 }
 
 const char* LiveActor::getName() const {
     return mActorName;
 }
-al::EffectKeeper* LiveActor::getEffectKeeper() const {
+EffectKeeper* LiveActor::getEffectKeeper() const {
     return mEffectKeeper;
 }
 AudioKeeper* LiveActor::getAudioKeeper() const {
@@ -94,35 +95,4 @@ void LiveActor::initSceneInfo(ActorSceneInfo* sceneInfo) {
     mSceneInfo = sceneInfo;
 }
 
-ActorScoreKeeper::ActorScoreKeeper() = default;
-
-void ActorScoreKeeper::init(const al::ByamlIter& iter) {
-    if (iter.isTypeArray()) {
-        size = iter.getSize();
-        allocArray();
-        for (int i = 0; i < size; i++) {
-            al::ByamlIter subIter;
-            iter.tryGetIterByIndex(&subIter, i);
-            putEntry(i, subIter);
-        }
-    } else {
-        size = 1;
-        allocArray();
-        putEntry(0, iter);
-    }
-}
-
-inline void ActorScoreKeeper::allocArray() {
-    Entry* local_array = new Entry[size];
-    if (size)
-        memset(local_array, 0, sizeof(Entry) * size);
-    array = local_array;
-}
-
-inline void ActorScoreKeeper::putEntry(int index, const al::ByamlIter& iter) {
-    auto& entry = array[index];
-    iter.tryGetStringByKey(&entry.factorName, "FactorName");
-    iter.tryGetStringByKey(&entry.categoryName, "CategoryName");
-}
-
-};  // namespace al
+}  // namespace al

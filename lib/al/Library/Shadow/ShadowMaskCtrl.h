@@ -1,6 +1,7 @@
 #pragma once
 
 #include <container/seadPtrArray.h>
+#include <math/seadMatrix.h>
 
 namespace al {
 
@@ -20,9 +21,9 @@ public:
     ShadowMaskBase* findShadowMask(const char*);
     void hide();
     bool init(LiveActor*, const ActorInitInfo&, const ByamlIter&);
-    bool init(LiveActor*, int);
+    bool init(LiveActor*, s32);
     void initAfterPlacement();
-    void initShadowMaskNum(int);
+    void initShadowMaskNum(s32);
     void invalidate();
     bool isHide();
     void setupShadowMaskCastOvalCylinderParam(ShadowMaskCastOvalCylinder*);
@@ -33,8 +34,8 @@ public:
     void validate();
 
 private:
-    sead::PtrArray<ShadowMaskBase> array;
-    void* gap[6];
+    sead::PtrArray<ShadowMaskBase> mShadowMasks;
+    sead::Matrix34f mMtx;
     void* mLiveActor;
     bool mIsIgnoreShadowMaskYaml;
 };

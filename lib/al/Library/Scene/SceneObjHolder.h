@@ -22,8 +22,9 @@ private:
 
 class IUseSceneObjHolder {
 public:
-    virtual al::SceneObjHolder* getSceneObjHolder() const = 0;
+    virtual SceneObjHolder* getSceneObjHolder() const = 0;
 
+private:
     static const char* sSceneObjName;
 };
 

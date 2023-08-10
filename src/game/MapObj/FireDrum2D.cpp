@@ -1,11 +1,18 @@
 #include "game/MapObj/FireDrum2D.h"
 
+#include "al/Library/LiveActor/ActorActionFunction.h"
 #include "al/Library/LiveActor/ActorSensorMsgFunction.h"
 #include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/Nerve/NerveSetupUtil.h"
 #include "al/Library/Nerve/NerveUtil.h"
 #include "al/util/OtherUtil.h"
 #include "rs/Dimension.h"
 #include "rs/Sensor.h"
+
+namespace {
+MAKE_NERVE(FireDrum2D, Wait);
+MAKE_NERVE(FireDrum2D, Burn);
+}  // namespace
 
 FireDrum2D::FireDrum2D(const char* name) : LiveActor(name) {}
 
@@ -52,8 +59,3 @@ bool FireDrum2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
                             al::HitSensor* target) {
     return al::isMsgPlayerDisregard(message);
 }
-
-namespace {
-NERVE_IMPL(FireDrum2D, Wait)
-NERVE_IMPL(FireDrum2D, Burn)
-}  // namespace

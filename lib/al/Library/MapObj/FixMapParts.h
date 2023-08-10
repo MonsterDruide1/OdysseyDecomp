@@ -1,6 +1,7 @@
 #pragma once
 
 #include "al/Library/LiveActor/LiveActor.h"
+
 namespace al {
 class FixMapParts : public LiveActor {
 public:

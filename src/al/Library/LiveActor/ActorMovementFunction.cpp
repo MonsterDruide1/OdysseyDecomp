@@ -15,17 +15,17 @@ float calcDistance(const al::LiveActor* l1, const sead::Vector3f& vec) {
 }
 
 float calcSpeed(const al::LiveActor* actor) {
-    return actor->mPoseKeeper->getVelocity().length();
+    return actor->getPoseKeeper()->getVelocity().length();
 }
 
 float calcSpeedH(const al::LiveActor* actor) {
     sead::Vector3f verticalized;
-    al::verticalizeVec(&verticalized, al::getGravity(actor), actor->mPoseKeeper->getVelocity());
+    al::verticalizeVec(&verticalized, al::getGravity(actor), actor->getPoseKeeper()->getVelocity());
     return verticalized.length();
 }
 
 float calcSpeedV(const al::LiveActor* actor) {
-    return -actor->mPoseKeeper->getVelocity().dot(al::getGravity(actor));
+    return -actor->getPoseKeeper()->getVelocity().dot(al::getGravity(actor));
 }
 
 }  // namespace al

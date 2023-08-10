@@ -1,7 +1,9 @@
 #include "al/Library/Player/PlayerUtil.h"
 
 #include "al/Library/Player/PlayerHolder.h"
+#include "al/Library/LiveActor/ActorModelFunction.h"
 #include "al/Library/LiveActor/LiveActorUtil.h"
+#include "al/Library/LiveActor/ActorPoseKeeper.h"
 #include "al/util/OtherUtil.h"
 
 namespace al {
