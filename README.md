@@ -87,6 +87,7 @@ Anyone is welcome to contribute to this project, just send a pull request!
 - Library/Player: Re-organize Util
 - cleanup/remove al/util
 - game/Util/ResourceUtil remove/cleanup
+- Once open-ead/sead#130 is merged, clean up RootTask
 
 # Credits
 This decompilation uses [this](https://github.com/open-ead/sead) as a reference for the sead library used. Big thanks to their research!

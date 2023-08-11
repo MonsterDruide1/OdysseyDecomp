@@ -13,3 +13,7 @@ void RootTask::calc() {
     }
     mGameSystem->movement();
 }
+void RootTask::draw() {
+    if (mGameSystem)
+        mGameSystem->drawMain();
+}
