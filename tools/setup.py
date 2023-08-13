@@ -56,15 +56,18 @@ def prepare_executable(original_nso: Optional[Path]):
     if not TARGET_ELF_PATH.is_file():
         setup.fail("internal error while preparing executable (missing ELF); please report")
 
-def create_build_dir(ver):
+def get_build_dir():
+    return setup.ROOT / "build"
+
+def create_build_dir(ver, cmake_backend):
     if(ver != Version.VER_100): return # TODO remove this when multiple versions should be built
-    build_dir = setup.ROOT / "build" # ("build-"+ver.value)
+    build_dir = get_build_dir()
     if build_dir.is_dir():
         print(">>> build directory already exists: nothing to do")
         return
 
     subprocess.check_call(
-        ("cmake -GNinja -DCMAKE_CXX_FLAGS=-D"+ver.name+" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -B "+str(build_dir)).split(" "))
+        ['cmake', '-G', cmake_backend, f'-DCMAKE_CXX_FLAGS=-D{ver.name}', '-DCMAKE_BUILD_TYPE=RelWithDebInfo', '-DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake', '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache', '-B', str(build_dir)])
     print(">>> created build directory") 
 
 def main():
@@ -72,17 +75,19 @@ def main():
         "setup.py", description="Set up the Super Mario Odyssey decompilation project")
     parser.add_argument("original_nso", type=Path,
                         help="Path to the original NSO (1.0, compressed or not)", nargs="?")
+    parser.add_argument("--cmake_backend", type=str,
+                        help="CMake backend to use (Ninja, Unix Makefiles, etc.)", nargs="?", default="Ninja")
     args = parser.parse_args()
 
     setup.install_viking()
     prepare_executable(args.original_nso)
     setup.set_up_compiler("3.9.1")
     setup.set_up_compiler("4.0.1")
-    create_build_dir(Version.VER_100)
-    create_build_dir(Version.VER_101)
-    create_build_dir(Version.VER_110)
-    create_build_dir(Version.VER_120)
-    create_build_dir(Version.VER_130)
+    create_build_dir(Version.VER_100, args.cmake_backend)
+    create_build_dir(Version.VER_101, args.cmake_backend)
+    create_build_dir(Version.VER_110, args.cmake_backend)
+    create_build_dir(Version.VER_120, args.cmake_backend)
+    create_build_dir(Version.VER_130, args.cmake_backend)
 
 
 if __name__ == "__main__":
