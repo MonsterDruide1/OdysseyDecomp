@@ -4,7 +4,6 @@
 #include "al/Library/Placement/PlacementInfo.h"
 #include "al/Library/Rail/RailPart.h"
 #include "al/Library/Math/MathUtil.h"
-#include "al/util/OtherUtil.h"
 #include "al/Library/Placement/PlacementFunction.h"
 #include "math/seadMathCalcCommon.h"
 #include "math/seadVector.h"

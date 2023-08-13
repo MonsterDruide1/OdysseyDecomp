@@ -1,7 +1,5 @@
 #include "al/Library/Controller/InputFunction.h"
 
-#include "al/util/OtherUtil.h"
-
 namespace al {
 
 sead::ControllerBase* getController_(int port) {

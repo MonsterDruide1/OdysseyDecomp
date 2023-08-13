@@ -1,11 +1,11 @@
 #include "game/MapObj/FireDrum2D.h"
 
 #include "al/Library/LiveActor/ActorActionFunction.h"
+#include "al/Library/LiveActor/ActorInitInfo.h"
 #include "al/Library/LiveActor/ActorSensorMsgFunction.h"
 #include "al/Library/LiveActor/LiveActorUtil.h"
 #include "al/Library/Nerve/NerveSetupUtil.h"
 #include "al/Library/Nerve/NerveUtil.h"
-#include "al/util/OtherUtil.h"
 #include "rs/Dimension.h"
 #include "rs/Sensor.h"
 
