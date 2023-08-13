@@ -50,7 +50,6 @@ set(NN_WARE_MAJOR 3)
 set(NN_WARE_MINOR 5)
 set(NN_WARE_PATCH 1)
 
-add_subdirectory(src)
 include_directories(lib)
 include_directories(lib/aarch64)
 
