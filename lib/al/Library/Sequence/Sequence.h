@@ -35,7 +35,7 @@ public:
     void initDrawSystemInfo(const SequenceInitInfo&);
     AudioSystemInfo* getAudioSystemInfo();
 
-    GameDrawInfo* getDrawInfo() const { return mGameDrawInfo; }
+    DrawSystemInfo* getDrawInfo() const { return mDrawSystemInfo; }
 
 private:
     sead::FixedSafeString<0x40> mName;
@@ -44,7 +44,7 @@ private:
     SceneCreator* mSceneCreator;
     AudioDirector* mAudioDirector;
     AudioKeeper* mAudioKeeper;
-    GameDrawInfo* mGameDrawInfo;
+    DrawSystemInfo* mDrawSystemInfo;
     bool mIsAlive;
 };
 }  // namespace al

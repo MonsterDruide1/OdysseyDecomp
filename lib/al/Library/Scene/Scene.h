@@ -17,6 +17,7 @@ class SceneMsgCtrl;
 class SceneStopCtrl;
 class ScreenCoverCtrl;
 class GraphicsInitArg;
+struct DrawSystemInfo;
 
 class Scene : public NerveExecutor,
               public IUseAudioKeeper,
@@ -26,7 +27,7 @@ public:
     Scene(const char*);
 
     virtual ~Scene();
-    virtual void init(const SceneInitInfo&);
+    virtual void init(const SceneInitInfo& initInfo);
     virtual void appear();
     virtual void kill();
     virtual void movement();
@@ -66,7 +67,7 @@ private:
     ScreenCoverCtrl* mScreenCoverCtrl;
     AudioDirector* mAudioDirector;
     AudioKeeper* mAudioKeeper;
-    NerveKeeper* mNerveKeeper;
+    DrawSystemInfo* mDrawSystemInfo;
 };
 
 class StageScene : public Scene {

@@ -3,9 +3,6 @@
 #include <basis/seadTypes.h>
 #include <common/aglRenderBuffer.h>
 
-class ProjectNfpDirector;
-class ApplicationMessageReceiver;
-
 namespace al {
 class EffectSystem;
 class LayoutSystem;
@@ -15,8 +12,11 @@ class AudioSystem;
 class GamePadSystem;
 class HtmlViewer;
 class WaveVibrationHolder;
+class NfpDirector;
+class ApplicationMessageReceiver;
+class FontHolder;
 
-struct GameDrawInfo {
+struct DrawSystemInfo {
     agl::RenderBuffer* dockedRenderBuffer;
     agl::RenderBuffer* handheldRenderBuffer;
     bool isDocked;
@@ -24,18 +24,19 @@ struct GameDrawInfo {
 };
 
 struct GameSystemInfo {
-    u64 _0;
-    EffectSystem* mEffectSys;
-    LayoutSystem* mLayoutSys;
-    MessageSystem* mMessageSys;
-    NetworkSystem* mNetworkSys;
-    AudioSystem* mAudioSys;
-    GamePadSystem* mGamePadSys;
-    GameDrawInfo* mDrawInfo;
-    ProjectNfpDirector* mProjNfpDirector;
-    HtmlViewer* mHtmlViewer;
-    ApplicationMessageReceiver* mMessageReciever;
-    WaveVibrationHolder* mWaveVibrationHolder;
+    AudioSystem* audioSystem;
+    EffectSystem* effectSystem;
+    LayoutSystem* layoutSystem;
+    MessageSystem* messageSystem;
+    NetworkSystem* networkSystem;
+    void* field_28;
+    GamePadSystem* gamePadSystem;
+    DrawSystemInfo* drawSystemInfo;
+    FontHolder* mFontHolder;
+    NfpDirector* nfpDirector;
+    HtmlViewer* htmlViewer;
+    ApplicationMessageReceiver* applicationMessageReciever;
+    WaveVibrationHolder* waveVibrationHolder;
 };
 
 }  // namespace al

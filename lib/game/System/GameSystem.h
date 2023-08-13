@@ -16,6 +16,7 @@ class ApplicationMessageReceiver;
 }
 
 class GameConfigData;
+class ProjectNfpDirector;
 
 class GameSystem : public al::NerveExecutor {
 public:

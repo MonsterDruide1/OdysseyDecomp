@@ -7,7 +7,7 @@ class SceneFactory;
 }
 
 namespace al {
-class GameSystemInfo;
+struct GameSystemInfo;
 class GameDataHolderBase;
 class ScreenCaptureExecutor;
 class InitializeThread;
