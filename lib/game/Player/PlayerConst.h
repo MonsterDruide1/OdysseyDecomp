@@ -1,7 +1,7 @@
 #pragma once
 
-#include "al/Library/Yaml/ByamlIter.h"
-#include "al/Library/HostIO/HioNode.h"
+#include "Library/Yaml/ByamlIter.h"
+#include "Library/HostIO/HioNode.h"
 
 class PlayerConst : al::HioNode {
 public:

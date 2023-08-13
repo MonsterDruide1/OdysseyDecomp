@@ -1,4 +1,4 @@
-#include "al/Library/System/SystemKit.h"
+#include "Library/System/SystemKit.h"
 #include "game/System/Application.h"
 
 al::SystemKit* alProjectInterface::getSystemKit() {

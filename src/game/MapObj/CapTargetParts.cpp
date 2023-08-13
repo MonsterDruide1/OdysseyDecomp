@@ -1,7 +1,7 @@
 #include "game/MapObj/CapTargetParts.h"
 
-#include "al/Library/LiveActor/ActorActionFunction.h"
-#include "al/Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorModelFunction.h"
 
 CapTargetParts::CapTargetParts(al::LiveActor* actor, const al::ActorInitInfo& initInfo)
     : al::PartsModel("帽子の的パーツ") {

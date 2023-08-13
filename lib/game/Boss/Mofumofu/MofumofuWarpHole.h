@@ -2,8 +2,8 @@
 
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
-#include "al/Library/LiveActor/LiveActor.h"
-#include "al/Library/Nerve/NerveUtil.h"
+#include "Library/LiveActor/LiveActor.h"
+#include "Library/Nerve/NerveUtil.h"
 
 class MofumofuWarpHole : public al::LiveActor {
 public:

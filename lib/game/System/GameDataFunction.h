@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "game/System/GameDataHolder.h"
 #include "game/System/GameDataHolderAccessor.h"
 #include "game/System/GameDataHolderWriter.h"

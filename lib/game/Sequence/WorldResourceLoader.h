@@ -1,8 +1,8 @@
 #pragma once
 
 #include <heap/seadFrameHeap.h>
-#include "al/Library/Resource/Resource.h"
-#include "al/Library/Thread/AsyncFunctorThread.h"
+#include "Library/Resource/Resource.h"
+#include "Library/Thread/AsyncFunctorThread.h"
 #include "game/System/GameDataHolder.h"
 
 class WorldResourceLoader {

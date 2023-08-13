@@ -1,9 +1,9 @@
 #include "game/MapObj/WorldMapParts.h"
 
-#include "al/Library/LiveActor/ActorInitInfo.h"
-#include "al/Library/LiveActor/ActorModelFunction.h"
-#include "al/Library/LiveActor/ActorPoseKeeper.h"
-#include "al/Library/Math/MathUtil.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Math/MathUtil.h"
 
 void localFunc_34B9A8(WorldMapParts* mapParts) {
     al::invalidateOcclusionQuery(mapParts);

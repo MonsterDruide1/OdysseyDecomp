@@ -1,7 +1,7 @@
 #include "game/Player/PlayerCostumeInfo.h"
 
-#include "al/Library/Math/MathUtil.h"
-#include "al/Library/Base/String.h"
+#include "Library/Math/MathUtil.h"
+#include "Library/Base/String.h"
 
 PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(char const* a1) {
     _0 = a1;

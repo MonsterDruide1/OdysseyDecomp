@@ -1,7 +1,7 @@
 #pragma once
 
-#include "al/Library/LiveActor/LiveActor.h"
-#include "al/Library/Nerve/NerveSetupUtil.h"
+#include "Library/LiveActor/LiveActor.h"
+#include "Library/Nerve/NerveSetupUtil.h"
 
 class AnagramAlphabetCharacter;
 

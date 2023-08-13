@@ -6,8 +6,8 @@
 #pragma once
 
 #include <prim/seadSafeString.h>
-#include "al/Library/Message/MessageSystem.h"
-#include "al/Library/Scene/GameDataHolderBase.h"
+#include "Library/Message/MessageSystem.h"
+#include "Library/Scene/GameDataHolderBase.h"
 #include "game/System/GameDataFile.h"
 #include "game/System/WorldList.h"
 

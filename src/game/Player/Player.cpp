@@ -1,13 +1,13 @@
 #include "game/Player/Player.h"
-#include "al/Library/Controller/InputFunction.h"
-#include "al/Library/LiveActor/ActorActionFunction.h"
-#include "al/Library/LiveActor/ActorClippingFunction.h"
-#include "al/Library/LiveActor/ActorInitInfo.h"
-#include "al/Library/LiveActor/ActorMovementFunction.h"
-#include "al/Library/LiveActor/ActorPoseKeeper.h"
-#include "al/Library/Math/MathUtil.h"
-#include "al/Library/Nerve/NerveSetupUtil.h"
-#include "al/Library/Nerve/NerveUtil.h"
+#include "Library/Controller/InputFunction.h"
+#include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
+#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Math/MathUtil.h"
+#include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 namespace {
 NERVE_IMPL(Player, Wait);

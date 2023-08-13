@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/Library/Nerve/NerveStateBase.h"
+#include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
 class PlayerHolder;

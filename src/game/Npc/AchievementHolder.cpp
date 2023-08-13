@@ -2,9 +2,9 @@
 
 #include "game/Npc/Achievement.h"
 #include "game/Npc/AchievementInfoReader.h"
-#include "al/Library/Resource/ResourceUtil.h"
+#include "Library/Resource/ResourceUtil.h"
 #include "game/Util/ResourceUtil.h"
-#include "al/Library/Base/String.h"
+#include "Library/Base/String.h"
 
 AchievementHolder::AchievementHolder() = default;
 

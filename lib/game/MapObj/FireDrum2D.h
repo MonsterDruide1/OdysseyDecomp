@@ -1,7 +1,7 @@
 #pragma once
 
-#include "al/Library/LiveActor/LiveActor.h"
-#include "al/Library/Nerve/NerveUtil.h"
+#include "Library/LiveActor/LiveActor.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "game/Util/IUseDimension.h"
 
 namespace al {

@@ -2,7 +2,7 @@
 
 #include <container/seadPtrArray.h>
 
-#include "al/Library/Base/String.h"
+#include "Library/Base/String.h"
 
 class AchievementInfo {
 public:

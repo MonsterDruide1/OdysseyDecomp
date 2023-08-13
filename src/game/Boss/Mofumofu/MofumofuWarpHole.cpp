@@ -2,14 +2,14 @@
 
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
-#include "al/Library/LiveActor/ActorActionFunction.h"
-#include "al/Library/LiveActor/ActorInitInfo.h"
-#include "al/Library/LiveActor/ActorPoseKeeper.h"
-#include "al/Library/LiveActor/LiveActorUtil.h"
-#include "al/Library/Math/MathUtil.h"
-#include "al/Library/Math/VectorUtil.h"
-#include "al/Library/Nerve/NerveSetupUtil.h"
-#include "al/Library/Nerve/NerveUtil.h"
+#include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/LiveActorUtil.h"
+#include "Library/Math/MathUtil.h"
+#include "Library/Math/VectorUtil.h"
+#include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 namespace {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/Library/LiveActor/ActorFactory.h"
+#include "Library/LiveActor/ActorFactory.h"
 
 namespace al {
 

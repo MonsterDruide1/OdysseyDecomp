@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActor.h"
 
 class PlayerRecoverySafetyPoint;
 class HackCap;

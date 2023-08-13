@@ -2,10 +2,10 @@
 
 #include <container/seadPtrArray.h>
 
-#include "al/Library/Layout/LayoutActor.h"
-#include "al/Library/LiveActor/ActorInitInfo.h"
-#include "al/Library/Nerve/NerveStateBase.h"
-#include "al/Library/Scene/Scene.h"
+#include "Library/Layout/LayoutActor.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/Nerve/NerveStateBase.h"
+#include "Library/Scene/Scene.h"
 
 #include "game/MapObj/WorldMapParts.h"
 #include "game/MapObj/WorldMapRoute.h"

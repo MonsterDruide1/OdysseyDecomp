@@ -1,7 +1,7 @@
 #pragma once
 
 #include <math/seadMatrix.h>
-#include "al/Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActor.h"
 
 class WorldMapParts : public al::LiveActor {
 public:

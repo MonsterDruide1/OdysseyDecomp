@@ -1,7 +1,7 @@
 #pragma once
 
-#include "al/Library/Nerve/NerveExecutor.h"
-#include "al/Library/System/GameSystemInfo.h"
+#include "Library/Nerve/NerveExecutor.h"
+#include "Library/System/GameSystemInfo.h"
 
 namespace al {
 class Sequence;

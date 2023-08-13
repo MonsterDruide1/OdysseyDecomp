@@ -1,7 +1,7 @@
 #include "game/System/RootTask.h"
 
 #include <heap/seadHeapMgr.h>
-#include "al/Library/Memory/HeapUtil.h"
+#include "Library/Memory/HeapUtil.h"
 #include "game/System/GameSystem.h"
 
 void RootTask::enter() {}

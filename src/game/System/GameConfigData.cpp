@@ -1,7 +1,7 @@
 #include "game/System/GameConfigData.h"
 
-#include "al/Library/Yaml/ByamlUtil.h"
-#include "al/Library/Yaml/Writer/ByamlWriter.h"
+#include "Library/Yaml/ByamlUtil.h"
+#include "Library/Yaml/Writer/ByamlWriter.h"
 
 void GameConfigData::init() {
     mCameraStickSensitivityLevel = -1;

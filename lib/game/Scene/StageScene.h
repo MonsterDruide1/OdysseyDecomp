@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/scene/Scene.h"
+#include "scene/Scene.h"
 #include "game/StageScene/StageSceneLayout.h"
 
 #define INHERITSIZE sizeof(al::Scene)

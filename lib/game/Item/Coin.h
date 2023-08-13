@@ -1,7 +1,7 @@
 #pragma once
 
-#include "al/Library/LiveActor/LiveActor.h"
-#include "al/Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 
 class Coin : public al::LiveActor {
 public:

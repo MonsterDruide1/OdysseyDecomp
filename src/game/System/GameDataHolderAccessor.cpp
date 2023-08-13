@@ -1,8 +1,8 @@
 #include "game/System/GameDataHolderAccessor.h"
 
-#include "al/Library/Scene/ISceneObj.h"
-#include "al/Library/Scene/SceneObjHolder.h"
-#include "al/Library/Scene/SceneUtil.h"
+#include "Library/Scene/ISceneObj.h"
+#include "Library/Scene/SceneObjHolder.h"
+#include "Library/Scene/SceneUtil.h"
 
 GameDataHolderAccessor::GameDataHolderAccessor(const al::IUseSceneObjHolder* holder) {
     mSceneObj = al::getSceneObj(holder, 18);

@@ -1,12 +1,12 @@
 #include "game/Sequence/WorldResourceLoader.h"
 
 #include <thread/seadThread.h>
-#include "al/Library/Base/String.h"
-#include "al/Library/File/FileUtil.h"
-#include "al/Library/Memory/HeapUtil.h"
-#include "al/Library/Resource/ResourceHolder.h"
-#include "al/Library/Yaml/ByamlIter.h"
-#include "al/Library/Yaml/ByamlUtil.h"
+#include "Library/Base/String.h"
+#include "Library/File/FileUtil.h"
+#include "Library/Memory/HeapUtil.h"
+#include "Library/Resource/ResourceHolder.h"
+#include "Library/Yaml/ByamlIter.h"
+#include "Library/Yaml/ByamlUtil.h"
 
 s32 priority = sead::Thread::cDefaultPriority;
 

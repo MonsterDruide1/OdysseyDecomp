@@ -34,6 +34,7 @@ foreach (SOURCE ${SOURCES_COMBINED})
 endforeach()
 
 target_include_directories(odyssey PRIVATE src)
+target_include_directories(odyssey PRIVATE lib/al/include)
 target_compile_definitions(odyssey PRIVATE NON_MATCHING)
 target_compile_options(odyssey PRIVATE -fno-rtti -fno-exceptions)
 target_compile_options(odyssey PRIVATE -Wall -Wextra -Wdeprecated)

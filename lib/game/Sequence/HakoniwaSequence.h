@@ -2,8 +2,8 @@
 
 #include "types.h"
 
-#include "al/audio/AudioDirector.h"
-#include "al/scene/Scene.h"
+#include "audio/AudioDirector.h"
+#include "scene/Scene.h"
 #include "game/GameData/GameDataHolderAccessor.h"
 #include "game/StageScene/StageScene.h"
 #include "game/WorldList/WorldResourceLoader.h"

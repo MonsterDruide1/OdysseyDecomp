@@ -5,7 +5,7 @@
  * Vtable loc: 1D75520
  */
 
-#include "al/Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActor.h"
 
 #define HACKSIZE sizeof(al::LiveActor)
 
