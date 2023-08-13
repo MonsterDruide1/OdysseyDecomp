@@ -19,6 +19,7 @@ void setDemoInfoDemoName(const LiveActor* actor, const char* name);
 void killForceBeforeDemo(LiveActor* actor);
 void prepareSkip(LiveActor* actor, s32);
 void invalidateLODWithSubActor(LiveActor*);
+bool isActiveDemo(const Scene*);
 
 }  // namespace al
 

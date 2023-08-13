@@ -85,7 +85,6 @@ Anyone is welcome to contribute to this project, just send a pull request!
 - Library/Stage: Proper place for StageInfo
 - Library/Math: Split up into multiple files
 - Library/Player: Re-organize Util
-- cleanup/remove al/util
 - game/Util/ResourceUtil remove/cleanup
 - Once open-ead/sead#130 is merged, clean up RootTask
 
