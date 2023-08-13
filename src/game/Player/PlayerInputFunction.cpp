@@ -1,7 +1,6 @@
 #include "game/Player/PlayerInputFunction.h"
 
 #include "al/Library/LiveActor/LiveActor.h"
-#include "rs/rsSeparatePlay.h"
 #include "al/Library/Controller/InputFunction.h"
 
 bool PlayerInputFunction::isTriggerAction(const al::LiveActor* actor, int port) {

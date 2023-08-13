@@ -26,3 +26,7 @@ public:
     unsigned char padding_2F8[0x20];
     StageSceneLayout* stageSceneLayout;  // 0x2F8
 };
+
+namespace rs {
+PlayerActorHakoniwa* getPlayerActor(const al::Scene*);
+}

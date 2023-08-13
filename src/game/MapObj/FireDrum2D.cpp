@@ -6,8 +6,8 @@
 #include "al/Library/LiveActor/LiveActorUtil.h"
 #include "al/Library/Nerve/NerveSetupUtil.h"
 #include "al/Library/Nerve/NerveUtil.h"
-#include "rs/Dimension.h"
-#include "rs/Sensor.h"
+#include "game/Util/ActorDimensionKeeper.h"
+#include "game/Util/Sensor.h"
 
 namespace {
 NERVE_IMPL(FireDrum2D, Wait);

@@ -1,7 +1,7 @@
 #include "game/Player/PlayerEquipmentUser.h"
 
 #include "al/Library/LiveActor/ActorSensorMsgFunction.h"
-#include "rs/Sensor.h"
+#include "game/Util/Sensor.h"
 
 PlayerEquipmentUser::PlayerEquipmentUser(const PlayerInput* input,
                                          const PlayerModelHolder* model_holder,

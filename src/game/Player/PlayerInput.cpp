@@ -1,14 +1,13 @@
 #include "game/Player/PlayerInput.h"
 
-#include "al/Library/LiveActor/LiveActor.h"
-#include "al/Library/Controller/JoyPadAccelPoseAnalyzer.h"
-#include "game/Player/PlayerInputFunction.h"
-#include "rs/rsSeparatePlay.h"
-#include "game/Player/PlayerFunction.h"
 #include "al/Library/Controller/InputFunction.h"
+#include "al/Library/Controller/JoyPadAccelPoseAnalyzer.h"
+#include "al/Library/LiveActor/LiveActor.h"
 #include "al/Library/Math/MathUtil.h"
 #include "al/Library/Math/VectorUtil.h"
-#include "rs/Dimension.h"
+#include "game/Player/PlayerFunction.h"
+#include "game/Player/PlayerInputFunction.h"
+#include "game/Util/ActorDimensionKeeper.h"
 
 PlayerInput::PlayerInput(const al::LiveActor*, const IUsePlayerCollision*, const IUseDimension*) {
 }  // FIXME remove this

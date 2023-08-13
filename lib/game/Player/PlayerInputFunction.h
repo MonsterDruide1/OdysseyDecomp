@@ -2,6 +2,7 @@
 
 namespace al {
 class LiveActor;
+class IUseSceneObjHolder;
 }
 
 class PlayerInputFunction {
@@ -21,3 +22,9 @@ public:
     static bool isTriggerStartWorldWarp(const al::LiveActor*, int);
     static bool isTriggerCancelWorldWarp(const al::LiveActor*, int);
 };
+
+namespace rs {
+
+bool isSeparatePlay(const al::IUseSceneObjHolder*);
+
+}
