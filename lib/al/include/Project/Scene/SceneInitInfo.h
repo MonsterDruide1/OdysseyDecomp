@@ -1,7 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include "game/System/GameDataHolderAccessor.h"
+#include "System/GameDataHolderAccessor.h"
 
 namespace al {
 struct SceneInitInfo {
