@@ -1,41 +1,28 @@
 #pragma once
 
-#include <math/seadMatrix.h>
-#include <math/seadVector.h>
-#include "Library/HostIO/HioNode.h"
+#include "Library/Placement/PlacementInfo.h"
 
 namespace al {
-class AudioDirector;
-class ModelKeeper;
-class CameraDirector;
-class AudioEventController;
-class AudioEffectController;
-class AudioRequestKeeperSyncedBgm;
-class AudioMic;
-class SeKeeper;
-class BgmKeeper;
+class StageSwitchDirector;
+class SceneObjHolder;
 
-class AudioKeeper : public IUseHioNode {
+class AreaInitInfo {
 public:
-    AudioKeeper(const AudioDirector*);
-    ~AudioKeeper();
+    AreaInitInfo();
+    AreaInitInfo(const al::PlacementInfo& placementInfo,
+                 al::StageSwitchDirector* stageSwitchDirector, al::SceneObjHolder* sceneObjHolder);
+    AreaInitInfo(const al::PlacementInfo& placementInfo, const al::AreaInitInfo& initInfo);
 
-    void initSeKeeper(const AudioDirector*, const char*, const sead::Vector3f*,
-                      const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
-    void initBgmKeeper(const AudioDirector*, const char*);
-    void validate();
-    void invalidate();
-    void startClipped();
-    void endClipped();
-    void appear();
-    void kill();
+    void set(const al::PlacementInfo& placementInfo, al::StageSwitchDirector* stageSwitchDirector,
+             al::SceneObjHolder* sceneObjHolder);
+
+    const al::PlacementInfo& getPlacementInfo() const { return mPlacementInfo; }
+    al::StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+    al::SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
     
 private:
-    AudioEventController* mAudioEventController;
-    AudioEffectController* mAudioEffectController;
-    AudioRequestKeeperSyncedBgm* mAudioRequestKeeperSyncedBgm;
-    SeKeeper* mSeKeeper;
-    BgmKeeper* mBgmKeeper;
-    AudioMic* mAudioMic;
+    al::PlacementInfo mPlacementInfo;
+    al::StageSwitchDirector* mStageSwitchDirector;
+    al::SceneObjHolder* mSceneObjHolder;
 };
 }  // namespace al

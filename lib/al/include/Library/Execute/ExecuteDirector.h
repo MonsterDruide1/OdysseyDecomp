@@ -4,7 +4,7 @@ namespace al {
 class ExecuteRequestKeeper;
 class ExecuteTableHolderDraw;
 class ExecuteTableHolderUpdate;
-class ExecuteSystemInitInfo;
+struct ExecuteSystemInitInfo;
 class FunctorBase;
 class IUseExecutor;
 class LayoutActor;

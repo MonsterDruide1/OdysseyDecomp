@@ -12,10 +12,10 @@ class CollisionPartsKeeperPtrArray;
 class CollisionPartsFilterBase;
 class TriangleFilterBase;
 class Strike;
-class HitInfo;
-class ArrowHitInfo;
-class DiskHitInfo;
-class SphereHitInfo;
+struct HitInfo;
+struct ArrowHitInfo;
+struct DiskHitInfo;
+struct SphereHitInfo;
 class CollisionParts;
 class ExecuteDirector;
 

@@ -1,18 +1,19 @@
 #pragma once
 
-#include "Library/HitSensor/HitSensor.h"
-
 namespace al {
+class HitSensor;
+
 class HitSensorKeeper {
 public:
     HitSensorKeeper(int);
 
-    al::HitSensor* getSensor(char const*) const;
+    HitSensor* getSensor(const char*) const;
 
-    al::HitSensor* getSensor(int) const;
+    HitSensor* getSensor(int) const;
 
+private:
     int _0;
-    int mSensorCount;          // _04
-    al::HitSensor** mSensors;  // _8
+    int mSensorCount;
+    HitSensor** mSensors;
 };
 };  // namespace al

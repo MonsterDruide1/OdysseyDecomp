@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Library/HostIO/HioNode.h"
-#include "player/IPlayerModelChanger.h"
+#include "Player/IPlayerModelChanger.h"
 
 namespace al {
 class LiveActor;

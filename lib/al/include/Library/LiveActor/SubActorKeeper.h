@@ -94,7 +94,7 @@ private:
 };
 
 void isExistSubActorKeeper(const LiveActor*);
-void getSubActor(const LiveActor*, const char*);
+const LiveActor* getSubActor(const LiveActor*, const char*);     // NOTE: unknown return type
 void tryGetSubActor(const LiveActor*, const char*);
 void getSubActor(const LiveActor*, int);
 void getSubActorNum(const LiveActor*);
@@ -137,13 +137,13 @@ void tryInvalidateCollisionPartsSubActorAll(LiveActor*);
 }  // namespace al
 
 
-class alSubActorFunction {
-    static void trySyncAlive(al::SubActorKeeper*);
-    static void trySyncDead(al::SubActorKeeper*);
-    static void trySyncClippingStart(al::SubActorKeeper*);
-    static void trySyncClippingEnd(al::SubActorKeeper*);
-    static void trySyncShowModel(al::SubActorKeeper*);
-    static void trySyncHideModel(al::SubActorKeeper*);
-    static void trySyncModelAlphaMask(al::SubActorKeeper*, float);
-    static void findSubActor(const al::SubActorKeeper*, const char*);
-};
+namespace alSubActorFunction {
+    void trySyncAlive(al::SubActorKeeper*);
+    void trySyncDead(al::SubActorKeeper*);
+    void trySyncClippingStart(al::SubActorKeeper*);
+    void trySyncClippingEnd(al::SubActorKeeper*);
+    void trySyncShowModel(al::SubActorKeeper*);
+    void trySyncHideModel(al::SubActorKeeper*);
+    void trySyncModelAlphaMask(al::SubActorKeeper*, float);
+    void findSubActor(const al::SubActorKeeper*, const char*);
+}

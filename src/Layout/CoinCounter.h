@@ -4,6 +4,6 @@
  * VTable Loc: 1CC3170
  */
 
-#include "layout/LayoutActor.h"
+#include "Library/Layout/LayoutActor.h"
 
 class CoinCounter : public al::LayoutActor {};

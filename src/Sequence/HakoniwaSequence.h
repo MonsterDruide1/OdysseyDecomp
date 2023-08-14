@@ -1,18 +1,17 @@
 #pragma once
 
-#include "types.h"
-
-#include "audio/AudioDirector.h"
-#include "scene/Scene.h"
-#include "GameData/GameDataHolderAccessor.h"
-#include "StageScene/StageScene.h"
-#include "WorldList/WorldResourceLoader.h"
+#include <basis/seadTypes.h>
 
 class HakoniwaStateDemoWorldWarp;
+class WorldResourceLoader;
+class StageScene;
+class GameDataHolderAccessor;
 
 namespace al {
 class WipeHolder;
 class SequenceInitInfo;
+class Scene;
+class AudioDirector;
 }  // namespace al
 
 // generated with Ghidra
@@ -29,28 +28,28 @@ public:
     void drawMain(void);
     al::Scene* getCurrentScene(void);  // {return this->curScene}
 
-    undefined** field_0x0;
-    undefined padding_120[120];
+    u8** field_0x0;
+    u8 padding_120[120];
     al::Scene* curScene;
-    undefined padding_8[8];
+    u8 padding_8[8];
     al::AudioDirector* field_0x90;
-    undefined padding_24[24];
+    u8 padding_24[24];
     StageScene* stageScene;
     GameDataHolderAccessor* gameDataHolder;
-    undefined padding_024[24];
+    u8 padding_024[24];
     HakoniwaStateDemoWorldWarp* stateDemoWorldWarp;
-    undefined padding_192[192];
+    u8 padding_192[192];
     int nextScenarioNo;
-    undefined padding_12[12];
+    u8 padding_12[12];
     al::WipeHolder* field_0x1b0;
-    undefined padding_0024[24];
+    u8 padding_0024[24];
     long* field_0x1d0;
-    undefined padding_48[48];
+    u8 padding_48[48];
     WorldResourceLoader* worldResourceLoader;
-    undefined padding_0x16[16];
-    undefined* field_0x220;
-    undefined padding_0x144[144];
-    undefined* field_0x2b8;
-    undefined padding_0x160[160];
-    undefined8 field_0x360;
+    u8 padding_0x16[16];
+    u8* field_0x220;
+    u8 padding_0x144[144];
+    u8* field_0x2b8;
+    u8 padding_0x160[160];
+    u8 field_0x360;
 };

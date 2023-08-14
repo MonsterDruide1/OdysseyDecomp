@@ -1,10 +1,11 @@
 #include "Npc/AchievementHolder.h"
 
+#include "Library/Base/String.h"
+#include "Library/Resource/ResourceUtil.h"
 #include "Npc/Achievement.h"
 #include "Npc/AchievementInfoReader.h"
-#include "Library/Resource/ResourceUtil.h"
+#include "System/GameDataFunction.h"
 #include "Util/ResourceUtil.h"
-#include "Library/Base/String.h"
 
 AchievementHolder::AchievementHolder() = default;
 

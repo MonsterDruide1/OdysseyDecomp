@@ -26,7 +26,6 @@ bool isHideModel(const LiveActor*);
 void hideModelIfShow(al::LiveActor*);
 void showModelIfHide(al::LiveActor*);
 void setModelAlphaMask(const LiveActor*, float);
-const LiveActor* getSubActor(const LiveActor*, const char*);     // NOTE: unknown return type
 void onSyncClippingSubActor(LiveActor*, const LiveActor*);
 void onSyncHideSubActor(LiveActor*, const LiveActor*);
 void onSyncAlphaMaskSubActor(LiveActor*, const LiveActor*);

@@ -5,12 +5,13 @@
 namespace al {
 class ActorResource;
 
-class ModelKeeper : public al::HioNode {
+class ModelKeeper : public HioNode {
 public:
     ModelKeeper();
 
     virtual ~ModelKeeper();
 
-    void initResource()
+    void initResource();
 };
-};  // namespace al
+
+}  // namespace al

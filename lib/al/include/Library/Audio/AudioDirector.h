@@ -1,10 +1,9 @@
 #pragma once
 
 #include <container/seadPtrArray.h>
-#include "audio/IAudioSystemPause.h"
+#include "Library/Audio/IAudioSystemPause.h"
 #include "Library/HostIO/HioNode.h"
 #include "Library/Area/IUseAreaObj.h"
-#include "util/OtherUtil.h"
 
 namespace aal {
 class AudioFrameProcessMgr;
@@ -23,6 +22,7 @@ class AreaObjDirector;
 class AudioDuckingDirector;
 class AudioEffectController;
 class AudioDirectorInitInfo;
+class PlayerHolder;
 
 class AudioDirector : public IUseAreaObj, public HioNode, public IAudioSystemPause {
 public:

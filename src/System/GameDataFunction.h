@@ -5,10 +5,10 @@
 #include "System/GameDataHolderAccessor.h"
 #include "System/GameDataHolderWriter.h"
 
-class BindInfo;
-class ChangeStageInfo;
+struct BindInfo;
+struct ChangeStageInfo;
 class ScenarioStartCamera;
-class ShineInfo;
+struct ShineInfo;
 class Shine;
 class SessionEventProgress;
 class RiseMapPartsHolder;

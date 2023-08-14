@@ -1,9 +1,11 @@
 #pragma once
 
-#include "scene/Scene.h"
-#include "StageScene/StageSceneLayout.h"
+#include "Library/Scene/Scene.h"
+#include "Layout/StageSceneLayout.h"
 
 #define INHERITSIZE sizeof(al::Scene)
+
+class PlayerActorHakoniwa;
 
 class StageScene : public al::Scene {
 public:
