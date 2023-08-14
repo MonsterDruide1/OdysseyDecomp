@@ -3,8 +3,8 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/LiveActor/LiveActorUtil.h"
-#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Stage/StageSwitchUtil.h"
 
 namespace al {
 FixMapParts::FixMapParts(const char* name) : LiveActor(name) {}

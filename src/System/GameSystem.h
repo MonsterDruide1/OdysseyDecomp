@@ -13,7 +13,7 @@ class NetworkSystem;
 class HtmlViewer;
 class GamePadSystem;
 class ApplicationMessageReceiver;
-}
+}  // namespace al
 
 class GameConfigData;
 class ProjectNfpDirector;
@@ -32,7 +32,7 @@ public:
 private:
     al::Sequence* mSequence;
     al::GameSystemInfo* mSystemInfo;
-    al::AudioSystem * mAudioSystem;
+    al::AudioSystem* mAudioSystem;
     al::AudioInfoListWithParts* mAudioInfoList;
     al::AccountHolder* mAccountHolder;
     al::NetworkSystem* mNetworkSystem;
@@ -43,6 +43,6 @@ private:
     al::ApplicationMessageReceiver* mApplicationMessageReceiver;
     al::WaveVibrationHolder* mWaveVibrationHolder;
     bool mIsSinglePlay;
-    GameConfigData *mGameConfigData;
+    GameConfigData* mGameConfigData;
     bool mIsSequenceSetupIncomplete;
 };

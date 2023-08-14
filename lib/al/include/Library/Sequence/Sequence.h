@@ -15,7 +15,6 @@ class AudioDirector;
 class Scene;
 
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {
-
 public:
     Sequence(const char* name);
     virtual ~Sequence() override;

@@ -69,7 +69,7 @@ public:
     void syncAction();
 
     LayoutExecuteInfo* getExecuteInfo() { return mExecuteInfo; }
-    
+
 private:
     sead::FixedSafeString<0x80> mName;
     NerveKeeper* mNerveKeeper;

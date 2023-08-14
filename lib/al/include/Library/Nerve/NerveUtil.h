@@ -71,8 +71,10 @@ f32 calcNerveRepeatDegree(const IUseNerve* user, s32);
 f32 calcNerveJumpValue(const IUseNerve* user, s32, s32, s32, f32);
 f32 calcNerveStartEndValue(const IUseNerve* user, s32, s32, s32, f32, f32);
 
-void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve, const char* hostName);
-void addNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve, const char* hostName);
+void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
+                    const char* hostName);
+void addNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
+                   const char* hostName);
 bool updateNerveState(IUseNerve* user);
 bool updateNerveStateAndNextNerve(IUseNerve* user, const Nerve* nerve);
 bool isStateEnd(const IUseNerve* user);

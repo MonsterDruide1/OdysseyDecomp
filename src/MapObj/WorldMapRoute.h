@@ -8,9 +8,8 @@ public:
                           const sead::Matrix34<f32>*, f32);
     WorldMapRoute(char const*);
 
-    void calcPose(const sead::Vector3<f32>&, const sead::Vector3<f32>&,
-                  const sead::Vector3<f32>&, const sead::Vector3<f32>&, f32, bool, bool, bool,
-                  bool);
+    void calcPose(const sead::Vector3<f32>&, const sead::Vector3<f32>&, const sead::Vector3<f32>&,
+                  const sead::Vector3<f32>&, f32, bool, bool, bool, bool);
     void appear();
     void kill();
     void movement();

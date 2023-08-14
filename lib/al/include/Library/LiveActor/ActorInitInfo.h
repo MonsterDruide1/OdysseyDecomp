@@ -96,7 +96,8 @@ private:
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo);
 void initActorSuffix(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
 void initActorChangeModel(al::LiveActor* actor, const al::ActorInitInfo& initInfo);
-void initActorChangeModelSuffix(al::LiveActor* actor, const al::ActorInitInfo& initInfo, const char* suffix);
+void initActorChangeModelSuffix(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
+                                const char* suffix);
 void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& initInfo,
                               const sead::SafeString& archiveName, const char* suffix);
 void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
@@ -120,11 +121,11 @@ void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, ByamlIter const&, cons
 void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
 ShadowMaskBase* createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
 ShadowMaskBase* createShadowMaskCube(LiveActor*, const char*, const char*, const char*,
-                                     const sead::Color4f&, const sead::Vector3f&, f32, f32,
-                                     f32, const sead::Vector3f&, f32);
+                                     const sead::Color4f&, const sead::Vector3f&, f32, f32, f32,
+                                     const sead::Vector3f&, f32);
 ShadowMaskBase* createShadowMaskCylinder(LiveActor*, const char*, const char*, const char*,
-                                         const sead::Color4f&, const sead::Vector3f&, f32, f32,
-                                         f32, f32, f32);
+                                         const sead::Color4f&, const sead::Vector3f&, f32, f32, f32,
+                                         f32, f32);
 ShadowMaskBase* createShadowMaskCastOvalCylinder(LiveActor*, const char*, const char*, const char*,
                                                  const sead::Color4f&, const sead::Vector3f&,
                                                  const sead::Vector3f&, f32, f32, f32, f32);
@@ -195,8 +196,8 @@ void initDepthShadowMapCtrl(LiveActor*, const Resource*, const ActorInitInfo&, c
 void initDepthShadowMapCtrlWithoutIter(LiveActor*, s32, bool);
 void addDepthShadowMapInfo(const LiveActor*, const char*, s32, s32, s32, f32, bool,
                            const sead::Vector3f&, bool, const sead::Vector3f&,
-                           const sead::Vector3f&, bool, const char*, s32, bool, f32, f32, f32,
-                           bool, bool, f32, s32, bool);
+                           const sead::Vector3f&, bool, const char*, s32, bool, f32, f32, f32, bool,
+                           bool, f32, s32, bool);
 void declareUseDepthShadowMap(const LiveActor*, s32);
 void createDepthShadowMap(const LiveActor*, const char*, s32, s32, s32);
 void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);

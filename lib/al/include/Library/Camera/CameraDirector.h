@@ -1,8 +1,8 @@
 #pragma once
 
 #include <math/seadMatrix.h>
-#include "Library/HostIO/HioNode.h"
 #include "Library/Execute/IUseExecutor.h"
+#include "Library/HostIO/HioNode.h"
 
 namespace al {
 class SceneCameraInfo;
@@ -49,11 +49,16 @@ public:
     void endInit();
 
     CameraPoseUpdater* getPoseUpdater(s32 index);
-    CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32, const sead::Matrix34f&);
-    CameraTicket* createCameraFromFactory(CameraPoser*, const PlacementId*, const char*, s32, const sead::Matrix34f&, bool);
-    CameraTicket* createObjectCamera(const PlacementId*, const char*, const char*, s32, const sead::Matrix34f&);
-    CameraTicket* createObjectEntranceCamera(const PlacementId*, const char*, const sead::Matrix34f&);
-    CameraTicket* createMirrorObjectCamera(const PlacementId*, const char*, s32, const sead::Matrix34f&);
+    CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32,
+                                          const sead::Matrix34f&);
+    CameraTicket* createCameraFromFactory(CameraPoser*, const PlacementId*, const char*, s32,
+                                          const sead::Matrix34f&, bool);
+    CameraTicket* createObjectCamera(const PlacementId*, const char*, const char*, s32,
+                                     const sead::Matrix34f&);
+    CameraTicket* createObjectEntranceCamera(const PlacementId*, const char*,
+                                             const sead::Matrix34f&);
+    CameraTicket* createMirrorObjectCamera(const PlacementId*, const char*, s32,
+                                           const sead::Matrix34f&);
 
     ICameraInput* getCameraInput();
     void setCameraInput(const ICameraInput* input);

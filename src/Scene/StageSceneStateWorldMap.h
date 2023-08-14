@@ -56,9 +56,9 @@ public:
     void isOpenCollectionList();
 
     static StageSceneStateWorldMap* tryCreate(al::Scene*, const al::SceneInitInfo&,
-                                              const al::ActorInitInfo &, const al::LayoutInitInfo &,
+                                              const al::ActorInitInfo&, const al::LayoutInitInfo&,
                                               StageSceneStateCollectionList*);
-                                              
+
 private:
     al::SimpleLayoutAppearWaitEnd* mWorldSelectLyt;
     al::SimpleLayoutAppearWaitEnd* mWorldSelectMovieLyt;

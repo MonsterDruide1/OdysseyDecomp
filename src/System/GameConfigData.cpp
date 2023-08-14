@@ -98,7 +98,7 @@ void GameConfigData::setPadRumbleLevel(s32 value) {
     mPadRumbleLevel = value;
 }
 
-void GameConfigData::write(al::ByamlWriter *writer) {
+void GameConfigData::write(al::ByamlWriter* writer) {
     writer->pushHash("GameConfigData");
     writer->addInt("CameraStickSensitivityLevel", mCameraStickSensitivityLevel);
     writer->addBool("IsCameraReverseInputH", mIsCameraReverseInputH);
@@ -111,7 +111,7 @@ void GameConfigData::write(al::ByamlWriter *writer) {
     writer->pop();
 }
 
-void GameConfigData::read(al::ByamlIter const &conf) {
+void GameConfigData::read(al::ByamlIter const& conf) {
     mCameraStickSensitivityLevel = -1;
     mIsCameraReverseInputH = false;
     mIsCameraReverseInputV = false;

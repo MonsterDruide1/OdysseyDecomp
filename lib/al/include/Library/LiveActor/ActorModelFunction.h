@@ -86,12 +86,9 @@ void multMtxJointInvMtx(sead::Matrix34f*, const sead::Matrix34f&, const LiveActo
                         const char*);
 void setJointVisibility(LiveActor* actor, const char*, bool);
 void isJointVisibility(const LiveActor* actor, const char*);
-void isFaceJointXDirDegreeYZ(const LiveActor* actor, const char*, const sead::Vector3f&, f32,
-                             f32);
-void isFaceJointYDirDegreeZX(const LiveActor* actor, const char*, const sead::Vector3f&, f32,
-                             f32);
-void isFaceJointZDirDegreeXY(const LiveActor* actor, const char*, const sead::Vector3f&, f32,
-                             f32);
+void isFaceJointXDirDegreeYZ(const LiveActor* actor, const char*, const sead::Vector3f&, f32, f32);
+void isFaceJointYDirDegreeZX(const LiveActor* actor, const char*, const sead::Vector3f&, f32, f32);
+void isFaceJointZDirDegreeXY(const LiveActor* actor, const char*, const sead::Vector3f&, f32, f32);
 void calcJointAngleXDirToTargetOnYDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleXDirToTargetOnZDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleYDirToTargetOnXDir(const LiveActor* actor, const char*, const sead::Vector3f&);

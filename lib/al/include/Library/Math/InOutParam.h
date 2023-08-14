@@ -24,4 +24,4 @@ private:
     f32 mOutMin;
     f32 mOutMax;
 };
-}
+}  // namespace al

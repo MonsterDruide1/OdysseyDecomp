@@ -9,4 +9,4 @@ class IUseLayoutAction : virtual public IUseName {
 public:
     virtual LayoutActionKeeper* getLayoutActionKeeper() const = 0;
 };
-}
+}  // namespace al

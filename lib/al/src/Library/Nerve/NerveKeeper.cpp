@@ -3,7 +3,8 @@
 #include "Library/Nerve/NerveStateCtrl.h"
 
 namespace al {
-NerveKeeper::NerveKeeper(IUseNerve* parent, const Nerve* nerve, s32 maxStates) : mParent(parent), mNextNerve(nullptr) {
+NerveKeeper::NerveKeeper(IUseNerve* parent, const Nerve* nerve, s32 maxStates)
+    : mParent(parent), mNextNerve(nullptr) {
     if (maxStates > 0) {
         mStateCtrl = new NerveStateCtrl(maxStates);
     }

@@ -20,8 +20,10 @@ bool trySetPosOnGround(LiveActor* actor);
 const sead::Vector3f& getVelocity(const LiveActor* actor);
 sead::Vector3f* getVelocityPtr(LiveActor* actor);
 void separateVelocityHV(sead::Vector3f*, sead::Vector3f*, const LiveActor* actor);
-void separateVelocityDirHV(sead::Vector3f*, sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-void separateVelocityParallelVertical(sead::Vector3f*, sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
+void separateVelocityDirHV(sead::Vector3f*, sead::Vector3f*, const LiveActor* actor,
+                           const sead::Vector3f&);
+void separateVelocityParallelVertical(sead::Vector3f*, sead::Vector3f*, const LiveActor* actor,
+                                      const sead::Vector3f&);
 void setVelocity(LiveActor* actor, const sead::Vector3f& vel);
 void setVelocity(LiveActor* actor, f32 x, f32 y, f32 z);
 void setVelocityX(LiveActor* actor, f32 x);
@@ -41,9 +43,11 @@ void setVelocityToUp(LiveActor* actor, f32);
 void setVelocityToSide(LiveActor* actor, f32);
 void setVelocityToDirection(LiveActor* actor, const sead::Vector3f&, f32);
 void setVelocityToGravity(LiveActor* actor, f32);
-void setVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
+void setVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32,
+                           f32);
 void setVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void calcVelocitySeparateHV(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&, f32, f32);
+void calcVelocitySeparateHV(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&, f32,
+                            f32);
 void setVelocitySeparateUp(LiveActor* actor, const sead::Vector3f&, f32, f32);
 void setVelocityOnlyDir(LiveActor* actor, const sead::Vector3f&, f32);
 void setVelocityOnlyV(LiveActor* actor, f32);
@@ -112,16 +116,19 @@ void reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
 void reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
 void reboundVelocityFromTriangles(LiveActor* actor, f32, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32);
-void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&, f32);
+void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&,
+                              f32);
 void reboundVelocityFromSensor(LiveActor* actor, const HitSensor*, f32);
 void reboundVelocityFromSensor(LiveActor* actor, const HitSensor*, const sead::Vector3f&, f32);
 void calcDirToActor(sead::Vector3f*, const LiveActor* actor, const LiveActor* target);
 void reboundVelocityBetweenActor(LiveActor* actor, LiveActor* target, f32);
 void reboundVelocityBetweenSensor(HitSensor*, HitSensor*, f32);
-void calcVelocityKeepLengthBetweenActor(sead::Vector3f*, const LiveActor* actor, const LiveActor* target, f32, f32);
+void calcVelocityKeepLengthBetweenActor(sead::Vector3f*, const LiveActor* actor,
+                                        const LiveActor* target, f32, f32);
 void addVelocityKeepLengthBetweenActor(LiveActor* actor, LiveActor* target, f32, f32);
 void addVelocityDumpKeepLengthBetweenActor(LiveActor* actor, LiveActor* target, f32, f32, f32);
-void calcVelocityBlowAttack(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&, f32, f32);
+void calcVelocityBlowAttack(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&, f32,
+                            f32);
 void addVelocityBlowAttack(LiveActor* actor, const sead::Vector3f&, f32, f32);
 void addVelocityBlowAttack(LiveActor* actor, const HitSensor*, f32, f32);
 void setVelocityBlowAttack(LiveActor* actor, const sead::Vector3f&, f32, f32);
@@ -194,14 +201,18 @@ void turnFrontToPlayer(LiveActor* actor, f32);
 void turnFrontFromPlayer(LiveActor* actor, f32);
 void turnDirection(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
 void turnDirectionToTarget(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
-void turnDirectionToTargetDegree(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
-void turnDirectionFromTargetDegree(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
+void turnDirectionToTargetDegree(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&,
+                                 f32);
+void turnDirectionFromTargetDegree(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&,
+                                   f32);
 void turnDirectionAlongGround(const LiveActor* actor, sead::Vector3f*);
 void turnDirectionAlongGround(LiveActor* actor);
 void turnToDirectionAxis(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32);
 void turnFrontSpherical(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
-void turnFrontSphericalToTarget(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
-void turnFrontSphericalToTargetDegree(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32);
+void turnFrontSphericalToTarget(const LiveActor* actor, sead::Vector3f*, const sead::Vector3f&,
+                                f32);
+void turnFrontSphericalToTargetDegree(const LiveActor* actor, sead::Vector3f*,
+                                      const sead::Vector3f&, f32);
 void turnToDirection(LiveActor* actor, const sead::Vector3f&, f32);
 void turnLocalDirToDirection(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32);
 void turnToTarget(LiveActor* actor, const sead::Vector3f&, f32);
@@ -218,29 +229,41 @@ void calcDirToActorH(sead::Vector3f*, const LiveActor* actor, const LiveActor* t
 void calcDirToActorH(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
 void calcAngleToTargetH(const LiveActor* actor, const sead::Vector3f&);
 void calcAngleToTargetV(const LiveActor* actor, const sead::Vector3f&);
-bool isFaceToTargetDegree(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32);
+bool isFaceToTargetDegree(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&,
+                          f32);
 bool isFaceToTargetDegree(const LiveActor* actor, const sead::Vector3f&, f32);
-bool isFaceToTargetDegreeHV(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
-bool isFaceToTargetDegreeH(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32);
+bool isFaceToTargetDegreeHV(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&,
+                            f32, f32);
+bool isFaceToTargetDegreeH(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&,
+                           f32);
 bool isInSightCone(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
 bool isInSightConeTarget(const LiveActor* actor, const LiveActor* target, f32, f32);
 bool isInSightConePlayer(const LiveActor* actor, f32, f32);
-bool isInSightFan(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32, f32, f32);
+bool isInSightFan(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32, f32,
+                  f32);
 bool isInSightFanTarget(const LiveActor* actor, const LiveActor* target, f32, f32, f32);
 bool isInSightBox(const LiveActor* actor, const sead::Vector3f&, const sead::BoundBox3f&);
 void walkAndTurnToDirection(LiveActor* actor, const sead::Vector3f&, f32, f32, f32, f32, bool);
-void walkAndTurnToDirection(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32, f32, f32, f32, bool);
-void walkAndTurnPoseToDirection(LiveActor* actor, const sead::Vector3f&, const ActorParamMove&, bool);
+void walkAndTurnToDirection(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32, f32, f32,
+                            f32, bool);
+void walkAndTurnPoseToDirection(LiveActor* actor, const sead::Vector3f&, const ActorParamMove&,
+                                bool);
 void walkAndTurnToTarget(LiveActor* actor, const sead::Vector3f&, f32, f32, f32, f32, bool);
-void flyAndTurnToDirection(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32, f32, f32, f32);
+void flyAndTurnToDirection(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32, f32, f32,
+                           f32);
 void flyAndTurnToDirection(LiveActor* actor, const sead::Vector3f&, f32, f32, f32, f32);
 void flyAndTurnToTarget(LiveActor* actor, const sead::Vector3f&, f32, f32, f32, f32);
-void walkAndTurnToDirectionFittedGroundGravity(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&, f32, f32, f32, f32, bool);
-void walkAndTurnToDirectionFittedGroundGravity(LiveActor* actor, const sead::Vector3f&, f32, f32, f32, f32, bool);
-void walkAndTurnToTargetFittedGroundGravity(LiveActor* actor, const sead::Vector3f&, f32, f32, f32, f32, bool);
+void walkAndTurnToDirectionFittedGroundGravity(LiveActor* actor, sead::Vector3f*,
+                                               const sead::Vector3f&, f32, f32, f32, f32, bool);
+void walkAndTurnToDirectionFittedGroundGravity(LiveActor* actor, const sead::Vector3f&, f32, f32,
+                                               f32, f32, bool);
+void walkAndTurnToTargetFittedGroundGravity(LiveActor* actor, const sead::Vector3f&, f32, f32, f32,
+                                            f32, bool);
 bool tryKillByDeathArea(LiveActor* actor);
-void rotateAndKeepColliderPosRate(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&, f32);
-void calcSpringMovement(LiveActor* actor, const sead::Vector3f&, const f32, f32, sead::Vector3f&, f32, f32);
+void rotateAndKeepColliderPosRate(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&,
+                                  f32);
+void calcSpringMovement(LiveActor* actor, const sead::Vector3f&, const f32, f32, sead::Vector3f&,
+                        f32, f32);
 void addVelocityClockwiseToPlayer(LiveActor* actor, f32);
 void calcDirClockwiseToPlayer(sead::Vector3f*, const LiveActor* actor);
 void flyAndTurnToPlayer(LiveActor* actor, const ActorParamMove&);

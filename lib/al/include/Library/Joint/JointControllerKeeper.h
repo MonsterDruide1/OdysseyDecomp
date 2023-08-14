@@ -60,8 +60,8 @@ void initJointLookAtController(const LiveActor*, s32);
 void appendJointLookAtController(JointLookAtController*, const LiveActor*, const char*, f32,
                                  const sead::Vector2f&, const sead::Vector2f&,
                                  const sead::Vector3f&, const sead::Vector3f&);
-void appendJointLookAtControllerNoJudge(JointLookAtController*, const LiveActor*, const char*,
-                                        f32, const sead::Vector2f&, const sead::Vector2f&,
+void appendJointLookAtControllerNoJudge(JointLookAtController*, const LiveActor*, const char*, f32,
+                                        const sead::Vector2f&, const sead::Vector2f&,
                                         const sead::Vector3f&, const sead::Vector3f&);
 void appendJointLookAtControllerNoJudgeNoOverLimitYaw(JointLookAtController*, const LiveActor*,
                                                       const char*, f32, const sead::Vector2f&,

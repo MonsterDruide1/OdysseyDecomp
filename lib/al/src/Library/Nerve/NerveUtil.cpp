@@ -89,14 +89,13 @@ f32 calcNerveRate(const IUseNerve* user, s32 step) {
     return ret;
 }
 
-void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
-                    const char* name) {
+void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve, const char* name) {
     state->init();
     user->getNerveKeeper()->getStateCtrl()->addState(state, nerve, name);
 }
 
-void addNerveState(const IUseNerve* user, NerveStateBase* state,
-                   const Nerve* nerve, const char* name) {
+void addNerveState(const IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
+                   const char* name) {
     user->getNerveKeeper()->getStateCtrl()->addState(state, nerve, name);
 }
 

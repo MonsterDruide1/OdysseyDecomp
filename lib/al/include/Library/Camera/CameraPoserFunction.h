@@ -136,8 +136,7 @@ void initCameraOffsetCtrlPreset(al::CameraPoser*);
 void getOffset(const al::CameraPoser*);
 void initGyroCameraCtrl(al::CameraPoser*);
 void resetGyro(al::CameraPoser*);
-void calcCameraGyroPose(const al::CameraPoser*, sead::Vector3f*, sead::Vector3f*,
-                        sead::Vector3f*);
+void calcCameraGyroPose(const al::CameraPoser*, sead::Vector3f*, sead::Vector3f*, sead::Vector3f*);
 void getGyroFront(al::CameraPoser*);
 void getGyroAngleV(al::CameraPoser*);
 void getGyroAngleH(al::CameraPoser*);
@@ -194,30 +193,26 @@ bool isSceneCameraFirstCalc(const al::CameraPoser*);
 bool isActiveInterpole(const al::CameraPoser*);
 bool isInvalidEndEntranceCamera(const al::CameraPoser*);
 bool isPause(const al::CameraPoser*);
-void checkFirstCameraCollisionArrow(sead::Vector3f*, sead::Vector3f*,
-                                    const al::IUseCollision*, const sead::Vector3f&,
-                                    const sead::Vector3f&);
+void checkFirstCameraCollisionArrow(sead::Vector3f*, sead::Vector3f*, const al::IUseCollision*,
+                                    const sead::Vector3f&, const sead::Vector3f&);
 void checkFirstCameraCollisionArrow(alCameraPoserFunction::CameraCollisionHitResult*,
                                     const al::IUseCollision*, const sead::Vector3f&,
                                     const sead::Vector3f&);
 void checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f*, sead::Vector3f*,
-                                               const al::IUseCollision*,
-                                               const sead::Vector3f&,
+                                               const al::IUseCollision*, const sead::Vector3f&,
                                                const sead::Vector3f&);
 void checkCameraCollisionMoveSphere(sead::Vector3f*, const al::IUseCollision*,
-                                    const sead::Vector3f&, const sead::Vector3f&,
-                                    f32);
+                                    const sead::Vector3f&, const sead::Vector3f&, f32);
 void calcZoneRotateAngleH(f32, const al::CameraPoser*);
 void calcZoneRotateAngleH(f32, const sead::Matrix34f&);
 void calcZoneInvRotateAngleH(f32, const sead::Matrix34f&);
 void multVecZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
 void multVecInvZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
 void rotateVecZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
-void calcOffsetCameraKeepInFrameV(sead::Vector3f*, sead::LookAtCamera*,
-                                  const sead::Vector3f&, const al::CameraPoser*, f32,
-                                  f32);
-void makeCameraKeepInFrameV(sead::LookAtCamera*, const sead::Vector3f&,
-                            const al::CameraPoser*, f32, f32);
+void calcOffsetCameraKeepInFrameV(sead::Vector3f*, sead::LookAtCamera*, const sead::Vector3f&,
+                                  const al::CameraPoser*, f32, f32);
+void makeCameraKeepInFrameV(sead::LookAtCamera*, const sead::Vector3f&, const al::CameraPoser*, f32,
+                            f32);
 void initCameraRail(al::CameraPoser*, const al::PlacementInfo&, const char*);
 bool tryGetCameraRailArg(f32*, const al::PlacementInfo&, const char*, const char*);
 // void getCameraRailPointObjId(al::CameraPoser const*, s32);

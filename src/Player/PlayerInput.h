@@ -1,8 +1,8 @@
 #pragma once
 
 #include <math/seadVector.h>
-#include "Util/IUseDimension.h"
 #include "Player/IUsePlayerCollision.h"
+#include "Util/IUseDimension.h"
 
 namespace al {
 class LiveActor;

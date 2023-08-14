@@ -1,9 +1,9 @@
 #pragma once
 
 #include <container/seadPtrArray.h>
+#include "Library/Area/IUseAreaObj.h"
 #include "Library/Audio/IAudioSystemPause.h"
 #include "Library/HostIO/HioNode.h"
-#include "Library/Area/IUseAreaObj.h"
 
 namespace aal {
 class AudioFrameProcessMgr;

@@ -17,7 +17,7 @@ ViewIdHolder* ViewIdHolder::tryCreate(const PlacementInfo& placementInfo) {
 void ViewIdHolder::init(const PlacementInfo& placementInfo) {
     mNumPlacements = calcLinkChildNum(placementInfo, "ViewGroup");
     mPlacementIds = new PlacementId[mNumPlacements];
-    if(mNumPlacements >= 1) {
+    if (mNumPlacements >= 1) {
         for (s32 i = 0; i < mNumPlacements; ++i) {
             PlacementInfo info;
             getLinksInfoByIndex(&info, placementInfo, "ViewGroup", i);
@@ -28,4 +28,4 @@ void ViewIdHolder::init(const PlacementInfo& placementInfo) {
 PlacementId& ViewIdHolder::getViewId(s32 idx) const {
     return mPlacementIds[idx];
 }
-}
+}  // namespace al

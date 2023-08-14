@@ -9,9 +9,8 @@ class LiveActor;
 
 class HitSensor {
 public:
-    HitSensor(al::LiveActor*, const char*, u32, f32, unsigned short,
-              const sead::Vector3<f32>*, const sead::Matrix34<f32>*,
-              const sead::Vector3<f32>&);
+    HitSensor(al::LiveActor*, const char*, u32, f32, unsigned short, const sead::Vector3<f32>*,
+              const sead::Matrix34<f32>*, const sead::Vector3<f32>&);
 
     bool trySensorSort();
     void setFollowPosPtr(const sead::Vector3<f32>*);
@@ -38,7 +37,7 @@ public:
     bool mIsValid;                  // _39
     bool _3A[4];                    // unknown type
     unsigned short _3E;
-    al::LiveActor* mParentActor;              // _40
+    al::LiveActor* mParentActor;            // _40
     const sead::Vector3<f32>* mFollowPos;   // _48
     const sead::Matrix34<f32>* mFollowMtx;  // _50
 };

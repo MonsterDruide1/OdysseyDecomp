@@ -16,7 +16,7 @@ class QuestInfo;
 class WorldTravelingNpc;
 
 namespace nn::g3d {
-    class ResFile;
+class ResFile;
 }
 
 namespace al {
@@ -298,8 +298,9 @@ public:
     static void getCoinCollectGotNum(GameDataHolderAccessor, s32);
     static void getCoinCollectNumMax(GameDataHolderAccessor);
     static void getCoinCollectNumMax(GameDataHolderAccessor, s32);
-    static void tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(
-        sead::Vector3<f32>*, const char**, GameDataHolderAccessor);
+    static void
+    tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(sead::Vector3<f32>*, const char**,
+                                                                  GameDataHolderAccessor);
     static void addCoin(GameDataHolderWriter, s32);
     static void subCoin(GameDataHolderWriter, s32);
     static void getCoinNum(GameDataHolderAccessor);

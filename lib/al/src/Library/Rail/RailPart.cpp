@@ -1,9 +1,9 @@
 #include "Library/Rail/RailPart.h"
 
-#include "Project/Rail/BezierCurve.h"
-#include "Project/Rail/LinearCurve.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
+#include "Project/Rail/BezierCurve.h"
+#include "Project/Rail/LinearCurve.h"
 #include "math/seadVector.h"
 
 namespace al {
@@ -30,7 +30,7 @@ void RailPart::calcVelocity(sead::Vector3f* vel, f32 param) const {
 }
 void RailPart::calcDir(sead::Vector3f* dir, f32 param) const {
     calcVelocity(dir, param);
-    if(!isNearZero(*dir, 0.001)) {
+    if (!isNearZero(*dir, 0.001)) {
         normalize(dir);
         return;
     }
@@ -40,11 +40,11 @@ void RailPart::calcDir(sead::Vector3f* dir, f32 param) const {
     sead::Vector3f endPos;
     calcEndPos(&endPos);
 
-    dir->x = endPos.x-startPos.x;
-    dir->y = endPos.y-startPos.y;
-    dir->z = endPos.z-startPos.z;
-    if(isNearZero(*dir, 0.001)) {
-        *dir = {0,0,1};
+    dir->x = endPos.x - startPos.x;
+    dir->y = endPos.y - startPos.y;
+    dir->z = endPos.z - startPos.z;
+    if (isNearZero(*dir, 0.001)) {
+        *dir = {0, 0, 1};
     } else {
         normalize(dir);
     }
@@ -72,7 +72,7 @@ void RailPart::calcNearestPos(sead::Vector3f* nearest, const sead::Vector3f& pos
                           mLinearCurve->calcNearestPos(nearest, pos);
 }
 f32 RailPart::calcNearestLength(f32* param, const sead::Vector3f& pos, f32 max,
-                                  f32 interval) const {
+                                f32 interval) const {
     return mBezierCurve ? mBezierCurve->calcNearestLength(param, pos, max, interval) :
                           mLinearCurve->calcNearestLength(param, pos, max);
 }

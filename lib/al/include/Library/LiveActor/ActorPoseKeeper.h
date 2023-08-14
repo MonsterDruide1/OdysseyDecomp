@@ -245,7 +245,6 @@ private:
     sead::Matrix34f mMtx;
 };
 
-
 class LiveActor;
 
 void initActorPoseT(LiveActor* actor, const sead::Vector3f&);

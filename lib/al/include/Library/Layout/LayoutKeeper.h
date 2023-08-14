@@ -1,7 +1,7 @@
 #pragma once
 
 namespace nn::ui2d {
-    class Layout;
+class Layout;
 }
 
 namespace al {
@@ -13,4 +13,4 @@ public:
 
     void initScreen(nn::ui2d::Layout* layout, LayoutResource* resource);
 };
-}
+}  // namespace al

@@ -1,9 +1,9 @@
+#include "Library/LiveActor/ActorMovementFunction.h"
 #include <math/seadVector.h>
 #include "Library/Audio/AudioKeeper.h"
 #include "Library/Collision/Collider.h"
 #include "Library/HitSensor/SensorFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Math/MathUtil.h"
@@ -61,8 +61,7 @@ void resetPosition(LiveActor* actor, const sead::Vector3f& trans) {
     resetPosition(actor);
 }
 
-void resetRotatePosition(LiveActor* actor, const sead::Vector3f& rot,
-                         const sead::Vector3f& trans) {
+void resetRotatePosition(LiveActor* actor, const sead::Vector3f& rot, const sead::Vector3f& trans) {
     updatePoseRotate(actor, rot);
     updatePoseTrans(actor, trans);
     resetPosition(actor);

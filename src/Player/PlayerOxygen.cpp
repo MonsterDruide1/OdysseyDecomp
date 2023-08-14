@@ -4,7 +4,8 @@
 
 PlayerOxygen::PlayerOxygen() = default;
 
-void PlayerOxygen::setup(s32 no_reduce_frame, s32 reduce_frame, s32 recovery_frame, s32 damage_interval) {
+void PlayerOxygen::setup(s32 no_reduce_frame, s32 reduce_frame, s32 recovery_frame,
+                         s32 damage_interval) {
     mOxygenNoReduceFrame = no_reduce_frame;
     mOxygenReduceFrame = reduce_frame;
     mOxygenRecoveryFrame = recovery_frame;
@@ -18,8 +19,8 @@ void PlayerOxygen::reset() {
 }
 
 void PlayerOxygen::reduce() {
-    if(mFramesReducing++ >= mOxygenNoReduceFrame) {
-        if(mOxygenLevel <= 0)
+    if (mFramesReducing++ >= mOxygenNoReduceFrame) {
+        if (mOxygenLevel <= 0)
             mFramesWithoutOxygen++;
         mOxygenLevel = sead::Mathf::max(mOxygenLevel - (1.0f / mOxygenReduceFrame), 0.0f);
     }
@@ -35,7 +36,7 @@ void PlayerOxygen::recovery() {
 #endif
 
 bool PlayerOxygen::isTriggerDamage() const {
-    if(mFramesWithoutOxygen) {
+    if (mFramesWithoutOxygen) {
         return (mFramesWithoutOxygen % mOxygenDamageInterval) == 0;
     }
     return false;

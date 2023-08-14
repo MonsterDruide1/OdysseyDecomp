@@ -20,7 +20,7 @@ public:
     SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
     const MessageSystem* getMessageSystem() const { return mMessageSystem; }
     const GamePadSystem* getGamePadSystem() const { return mGamePadSystem; }
-    
+
 private:
     eui::FontMgr* mFontMgr = nullptr;
     CameraDirector* mCameraDirector = nullptr;

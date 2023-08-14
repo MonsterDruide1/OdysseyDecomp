@@ -3,7 +3,7 @@
 namespace al {
 class HitSensor;
 class SensorMsg;
-}
+}  // namespace al
 
 namespace rs {
 

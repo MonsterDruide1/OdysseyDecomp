@@ -123,7 +123,7 @@ f32 BezierCurve::calcNearestParam(const sead::Vector3f& pos, f32 interval) const
 }
 
 f32 BezierCurve::calcNearestLength(f32* param, const sead::Vector3f& pos, f32 max,
-                                     f32 interval) const {
+                                   f32 interval) const {
     f32 bestParam = -1.0;
     f32 currentParam = 0.0;
     f32 bestDist = 3.4028e38;

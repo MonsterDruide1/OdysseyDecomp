@@ -11,7 +11,7 @@ public:
     LayoutExecuteInfo();
     void addUpdater(ExecutorListLayoutUpdate*);
     void addDrawer(ExecutorListLayoutDrawBase*);
-    
+
 private:
     s32 mUpdaterCount = 0;
     ExecutorListLayoutUpdate* mUpdaters[2] = {};

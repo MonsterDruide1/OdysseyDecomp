@@ -40,4 +40,4 @@ private:
     ExecuteTableHolderDraw** mDrawTables = nullptr;
     ExecuteRequestKeeper* mRequestKeeper = nullptr;
 };
-}
+}  // namespace al

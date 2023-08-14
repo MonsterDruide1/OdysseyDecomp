@@ -11,17 +11,39 @@ public:                                                                         
     CLASS(const CLASS& c) : m_value(c.m_value) {}                                                  \
     CLASS(s32 i) : m_value(i) {}                                                                   \
     CLASS(Enum e) : m_value(e) {}                                                                  \
-    operator s32() const { return m_value; }                                                       \
-    bool operator==(const CLASS& c) const { return m_value == c.m_value; }                         \
-    bool operator==(const Enum& e) const { return m_value == e; }                                  \
-    bool operator!=(const CLASS& c) const { return m_value != c.m_value; }                         \
-    bool operator!=(const Enum& e) const { return m_value != e; }                                  \
-    CLASS operator|(const CLASS& c) const { return CLASS(m_value | c.m_value); }                   \
-    CLASS operator|(const Enum& e) const { return CLASS(m_value | e); }                            \
-    CLASS operator&(const CLASS& c) const { return CLASS(m_value & c.m_value); }                   \
-    CLASS operator&(const Enum& e) const { return CLASS(m_value & e); }                            \
-    CLASS operator^(const CLASS& c) const { return CLASS(m_value ^ c.m_value); }                   \
-    CLASS operator^(const Enum& e) const { return CLASS(m_value ^ e); }                            \
+    operator s32() const {                                                                         \
+        return m_value;                                                                            \
+    }                                                                                              \
+    bool operator==(const CLASS& c) const {                                                        \
+        return m_value == c.m_value;                                                               \
+    }                                                                                              \
+    bool operator==(const Enum& e) const {                                                         \
+        return m_value == e;                                                                       \
+    }                                                                                              \
+    bool operator!=(const CLASS& c) const {                                                        \
+        return m_value != c.m_value;                                                               \
+    }                                                                                              \
+    bool operator!=(const Enum& e) const {                                                         \
+        return m_value != e;                                                                       \
+    }                                                                                              \
+    CLASS operator|(const CLASS& c) const {                                                        \
+        return CLASS(m_value | c.m_value);                                                         \
+    }                                                                                              \
+    CLASS operator|(const Enum& e) const {                                                         \
+        return CLASS(m_value | e);                                                                 \
+    }                                                                                              \
+    CLASS operator&(const CLASS& c) const {                                                        \
+        return CLASS(m_value & c.m_value);                                                         \
+    }                                                                                              \
+    CLASS operator&(const Enum& e) const {                                                         \
+        return CLASS(m_value & e);                                                                 \
+    }                                                                                              \
+    CLASS operator^(const CLASS& c) const {                                                        \
+        return CLASS(m_value ^ c.m_value);                                                         \
+    }                                                                                              \
+    CLASS operator^(const Enum& e) const {                                                         \
+        return CLASS(m_value ^ e);                                                                 \
+    }                                                                                              \
     CLASS& operator|=(const CLASS& c) {                                                            \
         m_value |= c.m_value;                                                                      \
         return *this;                                                                              \
@@ -94,7 +116,7 @@ private:
 };
 
 void isExistSubActorKeeper(const LiveActor*);
-const LiveActor* getSubActor(const LiveActor*, const char*);     // NOTE: unknown return type
+const LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
 void tryGetSubActor(const LiveActor*, const char*);
 void getSubActor(const LiveActor*, s32);
 void getSubActorNum(const LiveActor*);
@@ -136,14 +158,13 @@ void tryInvalidateCollisionPartsSubActorAll(LiveActor*);
 
 }  // namespace al
 
-
 namespace alSubActorFunction {
-    void trySyncAlive(al::SubActorKeeper*);
-    void trySyncDead(al::SubActorKeeper*);
-    void trySyncClippingStart(al::SubActorKeeper*);
-    void trySyncClippingEnd(al::SubActorKeeper*);
-    void trySyncShowModel(al::SubActorKeeper*);
-    void trySyncHideModel(al::SubActorKeeper*);
-    void trySyncModelAlphaMask(al::SubActorKeeper*, f32);
-    void findSubActor(const al::SubActorKeeper*, const char*);
-}
+void trySyncAlive(al::SubActorKeeper*);
+void trySyncDead(al::SubActorKeeper*);
+void trySyncClippingStart(al::SubActorKeeper*);
+void trySyncClippingEnd(al::SubActorKeeper*);
+void trySyncShowModel(al::SubActorKeeper*);
+void trySyncHideModel(al::SubActorKeeper*);
+void trySyncModelAlphaMask(al::SubActorKeeper*, f32);
+void findSubActor(const al::SubActorKeeper*, const char*);
+}  // namespace alSubActorFunction

@@ -40,7 +40,9 @@ public:
     void getSphereHitInfoArrayForCollider(SphereHitInfo** infoArray, u32* count);
     void getDiskHitInfoArrayForCollider(DiskHitInfo** infoArray, u32* count);
     void execute();
-    void searchCollisionPartsWithSphere(const sead::Vector3f&, f32, sead::IDelegate1<CollisionParts*>&, const CollisionPartsFilterBase*);
+    void searchCollisionPartsWithSphere(const sead::Vector3f&, f32,
+                                        sead::IDelegate1<CollisionParts*>&,
+                                        const CollisionPartsFilterBase*);
     void validateCollisionPartsPtrArray(sead::PtrArray<CollisionParts>*);
     void invalidateCollisionPartsPtrArray();
     sead::PtrArray<CollisionParts>* getCollisionPartsPtrArray();

@@ -91,8 +91,8 @@ void addHackActorAccelStick(al::LiveActor*, const IUsePlayerHack*, sead::Vector3
                             const sead::Vector3f&);
 void calcHackMovePower(const IUsePlayerHack*);
 void checkHackerMoveDir(const IUsePlayerHack*, const sead::Vector3f&, const sead::Vector3f&, f32);
-void calcHackerTrampleJumpParam(f32*, f32*, s32*, al::LiveActor*, const IUsePlayerHack*, f32,
-                                f32, f32, f32, f32, s32, f32, f32, f32, f32, f32);
+void calcHackerTrampleJumpParam(f32*, f32*, s32*, al::LiveActor*, const IUsePlayerHack*, f32, f32,
+                                f32, f32, f32, s32, f32, f32, f32, f32, f32);
 bool isOnHackMoveStick(const IUsePlayerHack*);
 bool isHoldHackJump(const IUsePlayerHack*);
 bool isOnHackMoveStickDeepDown(const IUsePlayerHack*);

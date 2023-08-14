@@ -21,8 +21,8 @@ bool isExistModelOrAnimResourceYaml(const LiveActor*, const char*, const char*);
 u8* getModelResourceYaml(const LiveActor*, const char*, const char*);
 u8* getAnimResourceYaml(const LiveActor*, const char*, const char*);
 u8* getModelOrAnimResourceYaml(const LiveActor*, const char*, const char*);
-u8* getMapPartsResourceYaml(const ActorInitInfo &, const char*);
-u8* tryGetMapPartsResourceYaml(const ActorInitInfo &, const char*);
+u8* getMapPartsResourceYaml(const ActorInitInfo&, const char*);
+u8* tryGetMapPartsResourceYaml(const ActorInitInfo&, const char*);
 void tryMakeInitFileName(sead::BufferedSafeString*, const Resource*, const char*, const char*,
                          const char*);
 void tryGetSuffixIter(ByamlIter*, const Resource*, const char*, const char*);
@@ -33,11 +33,11 @@ void tryGetActorInitFileIterAndName(ByamlIter*, sead::BufferedSafeString*, const
 bool tryGetActorInitFileIter(ByamlIter*, const Resource*, const char*, const char*);
 bool tryGetActorInitFileIterAndName(ByamlIter*, sead::BufferedSafeString*, const LiveActor*,
                                     const char*, const char*);
-bool tryGetActorInitFileIter(ByamlIter*,const LiveActor*, const char*, const char*);
-bool tryGetActorInitFileName(sead::BufferedSafeString*,const Resource*, const char*, const char*);
-bool tryGetActorInitFileName(sead::BufferedSafeString*,const ActorResource*, const char*,
+bool tryGetActorInitFileIter(ByamlIter*, const LiveActor*, const char*, const char*);
+bool tryGetActorInitFileName(sead::BufferedSafeString*, const Resource*, const char*, const char*);
+bool tryGetActorInitFileName(sead::BufferedSafeString*, const ActorResource*, const char*,
                              const char*);
-bool tryGetActorInitFileName(sead::BufferedSafeString*,const LiveActor*, const char*, const char*);
+bool tryGetActorInitFileName(sead::BufferedSafeString*, const LiveActor*, const char*, const char*);
 bool tryGetActorInitFileSuffixName(sead::BufferedSafeString*, const Resource*, const char*,
                                    const char*);
 bool tryGetActorInitFileSuffixName(sead::BufferedSafeString*, const LiveActor*, const char*,

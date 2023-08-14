@@ -32,7 +32,6 @@ ActorStateBase::ActorStateBase(const char* name, LiveActor* actor)
     : NerveStateBase(name), mActor(actor) {}
 
 template <class T>
-HostStateBase<T>::HostStateBase(const char* name, T *host)
-    : NerveStateBase(name), mHost(host) {};
+HostStateBase<T>::HostStateBase(const char* name, T* host) : NerveStateBase(name), mHost(host){};
 
 }  // namespace al

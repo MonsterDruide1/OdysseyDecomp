@@ -14,7 +14,7 @@ public:
     void exeJump();
     void exeFall();
     void exeDamage();
-    
+
 private:
     const char* mArchiveName;
     s32 mPort;

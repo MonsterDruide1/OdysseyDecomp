@@ -5,14 +5,16 @@ class IUseStageSwitch;
 class StageSwitchDirector;
 class PlacementInfo;
 
-void initStageSwitch(al::IUseStageSwitch* user, al::StageSwitchDirector* stageSwitchDirector, const al::PlacementInfo& placementInfo);
+void initStageSwitch(al::IUseStageSwitch* user, al::StageSwitchDirector* stageSwitchDirector,
+                     const al::PlacementInfo& placementInfo);
 bool isValidStageSwitch(const al::IUseStageSwitch* user, const char* linkName);
 bool isOnStageSwitch(const al::IUseStageSwitch* user, const char* linkName);
 void onStageSwitch(al::IUseStageSwitch* user, const char* linkName);
 void offStageSwitch(al::IUseStageSwitch* user, const char* linkName);
 bool isOnStageSwitch(al::IUseStageSwitch* user, const char* linkName);
 bool isOffStageSwitch(al::IUseStageSwitch* user, const char* linkName);
-bool isSameStageSwitch(const al::IUseStageSwitch* user, const al::IUseStageSwitch* otherUser, const char* linkName);
+bool isSameStageSwitch(const al::IUseStageSwitch* user, const al::IUseStageSwitch* otherUser,
+                       const char* linkName);
 bool isValidSwitchAppear(const al::IUseStageSwitch* user);
 bool isOnSwitchAppear(const al::IUseStageSwitch* user);
 bool isValidSwitchKill(const al::IUseStageSwitch* user);

@@ -5,7 +5,7 @@
 namespace al {
 class LiveActor;
 class IUseSceneObjHolder;
-}
+}  // namespace al
 
 class PlayerInputFunction {
 public:

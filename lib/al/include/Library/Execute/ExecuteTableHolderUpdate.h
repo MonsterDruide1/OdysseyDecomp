@@ -35,7 +35,7 @@ public:
     void executeList(const char*) const;
 
     const char* getName() { return mName; }
-    
+
 private:
     const char* mName;
     sead::PtrArray<ExecutorListBase> mActiveExecutors;

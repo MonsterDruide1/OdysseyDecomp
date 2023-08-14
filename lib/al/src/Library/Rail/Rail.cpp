@@ -1,10 +1,10 @@
 #include "Library/Rail/Rail.h"
 #include <limits>
 
-#include "Library/Placement/PlacementInfo.h"
-#include "Library/Rail/RailPart.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
+#include "Library/Rail/RailPart.h"
 #include "math/seadMathCalcCommon.h"
 #include "math/seadVector.h"
 
@@ -202,7 +202,7 @@ f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* 
 
     s32 curr_index = 0LL;
     s32 bestIndex = 0;
-    for (long i=0; i < mRailPartCount; i++) {
+    for (long i = 0; i < mRailPartCount; i++) {
         RailPart* part = &mRailPart[curr_index];
         f32 param;
         f32 length = part->calcNearestLength(&param, pos, part->getPartLength(), interval);
@@ -219,7 +219,8 @@ f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* 
     return bestParam;
 }
 // FIXME diff issue due to bug in tools/check
-f32 Rail::calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos, f32 interval) const {
+f32 Rail::calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos,
+                             f32 interval) const {
     f32 coord = calcNearestRailPosCoord(pos, interval);
     const RailPart* part = nullptr;
     f32 partDistance = 0;
@@ -235,21 +236,23 @@ bool Rail::isNearRailPoint(f32 distance, f32 epsilon) const {
     return (partDistance < epsilon) || ((part->getPartLength() - partDistance) < epsilon);
 }
 s32 Rail::calcRailPointNum(f32 distance1, f32 distance2) const {
-    if((distance2-distance1) < 0.01f) return 0;
+    if ((distance2 - distance1) < 0.01f)
+        return 0;
     const RailPart* part1 = nullptr;
     const RailPart* part2 = nullptr;
     f32 partDistance1, partDistance2;
     s32 sec1 = getIncludedSection(&part1, &partDistance1, distance1);
     s32 sec2 = getIncludedSection(&part2, &partDistance2, distance2);
 
-    return ((sec2 - sec1) + (partDistance1 < 0.01f)) + ((part2->getPartLength() - partDistance2) < 0.01f);
+    return ((sec2 - sec1) + (partDistance1 < 0.01f)) +
+           ((part2->getPartLength() - partDistance2) < 0.01f);
 }
-//FIXME regalloc in length calculation
+// FIXME regalloc in length calculation
 f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance) const {
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);
     f32 partLength = part->getPartLength();
-    if(partDistance && length) {
+    if (partDistance && length) {
         *length = partLength - *partDistance;
     }
     return partLength;
@@ -258,8 +261,9 @@ s32 Rail::getIncludedSectionIndex(f32 distance) const {
     return getIncludedSection(nullptr, nullptr, distance);
 }
 bool Rail::isIncludeBezierRailPart() const {
-    for(s32 i=0; i<mRailPartCount; i++) {
-        if(isBezierRailPart(i)) return true;
+    for (s32 i = 0; i < mRailPartCount; i++) {
+        if (isBezierRailPart(i))
+            return true;
     }
     return false;
 }

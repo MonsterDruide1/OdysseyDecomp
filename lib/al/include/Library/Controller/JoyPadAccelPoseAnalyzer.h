@@ -11,7 +11,7 @@ public:
         void calcHistory(sead::Vector3f const&, sead::Vector3f const&, f32);
 
         unsigned char padding_0[0x60];  // 0x0 - 0x60
-        f32 hist0;                    // 0x60
+        f32 hist0;                      // 0x60
         unsigned char padding_1[0x70 - 0x64];
         f32 hist1;  // 0x70
         unsigned char padding_2[0x1c];
