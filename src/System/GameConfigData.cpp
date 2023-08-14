@@ -38,11 +38,11 @@ void GameConfigData::offCameraReverseInputV() {
     mIsCameraReverseInputV = false;
 }
 
-int GameConfigData::getCameraStickSensitivityLevel() const {
+s32 GameConfigData::getCameraStickSensitivityLevel() const {
     return mCameraStickSensitivityLevel;
 }
 
-void GameConfigData::setCameraStickSensitivityLevel(int value) {
+void GameConfigData::setCameraStickSensitivityLevel(s32 value) {
     mCameraStickSensitivityLevel = value;
 }
 
@@ -58,11 +58,11 @@ void GameConfigData::invalidateCameraGyro() {
     mIsValidCameraGyro = false;
 }
 
-int GameConfigData::getCameraGyroSensitivityLevel() const {
+s32 GameConfigData::getCameraGyroSensitivityLevel() const {
     return mCameraGyroSensitivityLevel;
 }
 
-void GameConfigData::setCameraGyroSensitivityLevel(int value) {
+void GameConfigData::setCameraGyroSensitivityLevel(s32 value) {
     mCameraGyroSensitivityLevel = value;
 }
 
@@ -90,11 +90,11 @@ void GameConfigData::invalidatePadRumble() {
     mIsValidPadRumble = false;
 }
 
-int GameConfigData::getPadRumbleLevel() const {
+s32 GameConfigData::getPadRumbleLevel() const {
     return mPadRumbleLevel;
 }
 
-void GameConfigData::setPadRumbleLevel(int value) {
+void GameConfigData::setPadRumbleLevel(s32 value) {
     mPadRumbleLevel = value;
 }
 

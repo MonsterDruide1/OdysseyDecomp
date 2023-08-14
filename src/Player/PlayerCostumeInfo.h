@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 struct PlayerHeadCostumeInfo {
 public:
     PlayerHeadCostumeInfo(const char*);
@@ -24,7 +26,7 @@ public:
     PlayerBodyCostumeInfo(const char*);
 
     const char* _0;
-    int mWarmLevel = false;
+    s32 mWarmLevel = false;
     bool mIsIgnoreTemperature = false;
     bool mIsUseHeadSuffix = false;
     bool mIsBigEar = false;
@@ -58,7 +60,7 @@ public:
     bool isFollowJoeStrap() const;
     bool isPreventHeadPain() const;
     bool isInvisibleHead() const;
-    int calcWarmLevel(int) const;
+    s32 calcWarmLevel(s32) const;
 
 private:
     const PlayerBodyCostumeInfo* mPlayerBodyCostumeInfo = nullptr;

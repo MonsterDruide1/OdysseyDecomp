@@ -23,7 +23,7 @@ public:
     void syncShowHide(al::LiveActor*);
     void startDamageStopDemo();
     void syncHostDamageStopDemo(bool);
-    int calcCostumeWarmLevel(int);
+    s32 calcCostumeWarmLevel(s32);
     void syncModelBoneVisibility();
 
     void resetPosition() override;
@@ -54,7 +54,7 @@ private:
     bool mIsSilhouetteVisible;
     bool mIsShadowMaskVisible;
     bool mIsBlinkingFromDamage;
-    int mDamageTimer;
+    s32 mDamageTimer;
     bool mMusicStarted;
     bool mIsNeedHairControl;
     bool mIsNeedSyncBodyHair;

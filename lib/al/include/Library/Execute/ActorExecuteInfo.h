@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class ExecuteRequestKeeper;
 class ExecutorActorExecuteBase;
@@ -13,9 +15,9 @@ public:
 
 private:
     ExecuteRequestKeeper* mRequestKeeper;
-    int mUpdaterCount = 0;
+    s32 mUpdaterCount = 0;
     ExecutorActorExecuteBase* mUpdaters[4] = {};
-    int mDrawerCount = 0;
+    s32 mDrawerCount = 0;
     ModelDrawerBase* mDrawers[11] = {};
 };
 static_assert(sizeof(ActorExecuteInfo) == 0x90);

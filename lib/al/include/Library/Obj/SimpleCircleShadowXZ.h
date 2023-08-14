@@ -15,7 +15,7 @@ public:
     void setOffsetWithInterpole(const sead::Vector3f&);
     void setScaleWithInterpole(const sead::Vector3f&);
     void setRotateWithInterpole(const sead::Vector3f&);
-    void setInterpoleFrame(int);
+    void setInterpoleFrame(s32);
 
 private:
     LiveActor* mRootActor;

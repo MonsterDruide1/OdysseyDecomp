@@ -17,16 +17,16 @@ public:
     void setInvalidateDisconnectFrame(s32 frame);
     void setPadName(u8, const sead::WSafeString&);
     sead::WSafeString getPadName(u8);
-    int getPadPlayStyle(u8);  // unknown return type
+    s32 getPadPlayStyle(u8);  // unknown return type
 
 private:
     bool isDisconnectPlayableImpl();
 
-    int mMinControllerCount;
-    int mMaxControllerCount;
-    int mDisconnectTimer;
-    int mDisconnectFrame;
-    int mInvalidateDisconnectFrame;
+    s32 mMinControllerCount;
+    s32 mMaxControllerCount;
+    s32 mDisconnectTimer;
+    s32 mDisconnectFrame;
+    s32 mInvalidateDisconnectFrame;
     sead::Buffer<sead::WFixedSafeString<256>> mControllerNames;
     AudioSystem* mAudioSystem;
 };

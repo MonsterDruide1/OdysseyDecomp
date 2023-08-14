@@ -13,7 +13,7 @@ void SensorHitGroup::add(al::HitSensor* pSensor) {
     mSensorCount++;
 }
 
-al::HitSensor* SensorHitGroup::getSensor(int idx) const {
+al::HitSensor* SensorHitGroup::getSensor(s32 idx) const {
     return mSensors[idx];
 }
 

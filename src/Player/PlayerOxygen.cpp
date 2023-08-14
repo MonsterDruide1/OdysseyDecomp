@@ -4,7 +4,7 @@
 
 PlayerOxygen::PlayerOxygen() = default;
 
-void PlayerOxygen::setup(int no_reduce_frame, int reduce_frame, int recovery_frame, int damage_interval) {
+void PlayerOxygen::setup(s32 no_reduce_frame, s32 reduce_frame, s32 recovery_frame, s32 damage_interval) {
     mOxygenNoReduceFrame = no_reduce_frame;
     mOxygenReduceFrame = reduce_frame;
     mOxygenRecoveryFrame = recovery_frame;

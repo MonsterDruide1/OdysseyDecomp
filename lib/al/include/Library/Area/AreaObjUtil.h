@@ -9,8 +9,8 @@ bool isInDeathArea(const LiveActor*);
 
 AreaObj* tryFindAreaObj(const LiveActor*, const char*);
 
-bool tryGetAreaObjArg(int*, const AreaObj*, const char*);
-bool tryGetAreaObjArg(float*, const AreaObj*, const char*);
+bool tryGetAreaObjArg(s32*, const AreaObj*, const char*);
+bool tryGetAreaObjArg(f32*, const AreaObj*, const char*);
 bool tryGetAreaObjArg(bool*, const AreaObj*, const char*);
 bool tryGetAreaObjStringArg(const char**, const AreaObj*, const char*);
 

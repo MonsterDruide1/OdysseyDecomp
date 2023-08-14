@@ -36,7 +36,7 @@ bool GameDataFile::HintInfo::isDisableByWorldWarpHole(bool condition) const {
     return false;
 }
 
-bool GameDataFile::HintInfo::isEnableUnlock(int curWorldId, bool isGameClear, int scenarioNo,
+bool GameDataFile::HintInfo::isEnableUnlock(s32 curWorldId, bool isGameClear, s32 scenarioNo,
                                             bool isInWorld) const {
     if (testFunc(curWorldId, isGameClear, scenarioNo, isInWorld)) {
         if (unkBool1)
@@ -56,7 +56,7 @@ bool GameDataFile::HintInfo::isEnableUnlock(int curWorldId, bool isGameClear, in
     return false;
 }
 
-bool GameDataFile::HintInfo::isHintStatusUnlock(int curWorldId, int scenarioNo,
+bool GameDataFile::HintInfo::isHintStatusUnlock(s32 curWorldId, s32 scenarioNo,
                                                 bool isInWorld) const {
     if (mWorldIndex != curWorldId || unkBool1 || mHintStatus != HintStatus::NONE ||
         (isInWorld ? !mIsMoonRock : mIsMoonRock))
@@ -73,7 +73,7 @@ bool GameDataFile::HintInfo::isHintStatusUnlockByAmiibo(void) const {
     return mHintStatus == HintStatus::AMIIBO;
 }
 
-bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(int curWorldId, int scenarioNo,
+bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(s32 curWorldId, s32 scenarioNo,
                                                           bool isInWorld) const {
     if (isDisableByWorldWarpHole(isInWorld)) {
         return false;
@@ -87,7 +87,7 @@ bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(int curWorldId, int sc
     return true;
 }
 
-bool GameDataFile::HintInfo::testFunc(int curWorldId, bool isGameClear, int scenarioNo,
+bool GameDataFile::HintInfo::testFunc(s32 curWorldId, bool isGameClear, s32 scenarioNo,
                                       bool isInWorld) const {
     if (isDisableByWorldWarpHole(isInWorld)) {
         return false;

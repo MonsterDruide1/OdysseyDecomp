@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class ByamlIter;
 
@@ -18,9 +20,9 @@ public:
 
 private:
     inline void allocArray();
-    inline void putEntry(int index, const ByamlIter& iter);
+    inline void putEntry(s32 index, const ByamlIter& iter);
 
     Entry* array;
-    int size;
+    s32 size;
 };
 };  // namespace al

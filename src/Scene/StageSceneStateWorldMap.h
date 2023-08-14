@@ -87,7 +87,7 @@ private:
     s32 mWorldIndexBoss;
     void* field_100;
     s32 mWorldNum;
-    int field_108;
+    s32 field_108;
     s32* field_110;
     void* field_118;
     void* field_11C;

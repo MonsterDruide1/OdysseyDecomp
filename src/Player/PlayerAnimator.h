@@ -9,9 +9,9 @@ public:
 
     bool isAnim(const sead::SafeStringBase<char>& animName) const;
 
-    float getAnimFrame(void) const;
-    float getAnimFrameMax(void) const;
-    float getAnimFrameRate(void) const;
+    f32 getAnimFrame(void) const;
+    f32 getAnimFrameMax(void) const;
+    f32 getAnimFrameRate(void) const;
 
     unsigned char padding_18[0x18];
     PlayerAnimFrameCtrl* mAnimFrameCtrl;

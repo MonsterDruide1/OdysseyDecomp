@@ -6,9 +6,9 @@ namespace al {
 class IUseCamera;
 class Projection;
 
-Projection getProjection(const IUseCamera*, int);
+Projection getProjection(const IUseCamera*, s32);
 
-sead::Vector3f* getCameraPos(const IUseCamera*, int);
-void calcCameraUpDir(sead::Vector3f*, const IUseCamera*, int);
+sead::Vector3f* getCameraPos(const IUseCamera*, s32);
+void calcCameraUpDir(sead::Vector3f*, const IUseCamera*, s32);
 
 }  // namespace al

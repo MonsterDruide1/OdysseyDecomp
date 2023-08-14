@@ -21,9 +21,9 @@ class IUseGridMesh : public IUseHioNode {
     virtual agl::IndexStream* getIndexStream() const = 0;
     virtual const char* getName() const = 0;
     virtual void activateVertexAttribute(agl::DrawContext* drawContext, s32) const = 0;
-    virtual void drawTreeMesh(agl::DrawContext*, const MeshQuadtree&, const QuadNode&, float,
-                              int) = 0;
-    virtual void drawArrayMesh(agl::DrawContext* drawContext, const QuadNode& node, int, int, int,
-                               int, int) = 0;
+    virtual void drawTreeMesh(agl::DrawContext*, const MeshQuadtree&, const QuadNode&, f32,
+                              s32) = 0;
+    virtual void drawArrayMesh(agl::DrawContext* drawContext, const QuadNode& node, s32, s32, s32,
+                               s32, s32) = 0;
 };
 }  // namespace al

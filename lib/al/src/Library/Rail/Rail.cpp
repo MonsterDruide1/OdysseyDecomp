@@ -22,7 +22,7 @@ void Rail::init(const PlacementInfo& info) {
         return;
 
     mRailPoints = new PlacementInfo*[mRailPointsCount];
-    for (int i = 0; i < mRailPointsCount; i++) {
+    for (s32 i = 0; i < mRailPointsCount; i++) {
         mRailPoints[i] = new PlacementInfo();
         tryGetPlacementInfoByIndex(mRailPoints[i], railPointsInfo, i);
     }
@@ -41,8 +41,8 @@ void Rail::init(const PlacementInfo& info) {
     mRailPartCount = (isClosed ? 1 : 0) + mRailPointsCount - 1;
     mRailPart = new RailPart[mRailPartCount];
 
-    float totalLength = 0;
-    for (int i = 0; i < mRailPartCount; i++) {
+    f32 totalLength = 0;
+    for (s32 i = 0; i < mRailPartCount; i++) {
         PlacementInfo startInfo, endInfo;
         tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, i);
         tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, (i + 1) % mRailPartCount);
@@ -61,19 +61,19 @@ void Rail::init(const PlacementInfo& info) {
         mRailPart[i].setTotalDistance(totalLength);
     }
 }
-void Rail::calcPos(sead::Vector3f* pos, float distance) const {
+void Rail::calcPos(sead::Vector3f* pos, f32 distance) const {
     const RailPart* part = nullptr;
-    float partDistance = 0;
+    f32 partDistance = 0;
     getIncludedSection(&part, &partDistance, distance);
     part->calcPos(pos, part->calcCurveParam(partDistance));
 }
 // FIXME: minor reorderings
-int Rail::getIncludedSection(const RailPart** part, float* partDistance, float distance) const {
-    float distanceOnRail = normalizeLength(distance);
-    float startDistanceOnRail = 0.0;
-    int maxRailPart = -1;
+s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 distance) const {
+    f32 distanceOnRail = normalizeLength(distance);
+    f32 startDistanceOnRail = 0.0;
+    s32 maxRailPart = -1;
     long longI = -0x100000000;
-    for (int i = 0; i < mRailPartCount; i++) {
+    for (s32 i = 0; i < mRailPartCount; i++) {
         if (distanceOnRail <= mRailPart[i].getTotalDistance()) {
             if (i <= 0) {
                 startDistanceOnRail = distanceOnRail;
@@ -93,32 +93,32 @@ int Rail::getIncludedSection(const RailPart** part, float* partDistance, float d
 
     return maxRailPart;
 }
-void Rail::calcDirection(sead::Vector3f* direction, float distance) const {
+void Rail::calcDirection(sead::Vector3f* direction, f32 distance) const {
     const RailPart* part = nullptr;
-    float partDistance = 0;
+    f32 partDistance = 0;
     getIncludedSection(&part, &partDistance, distance);
     part->calcDir(direction, part->calcCurveParam(partDistance));
 }
-void Rail::calcPosDir(sead::Vector3f* position, sead::Vector3f* direction, float distance) const {
+void Rail::calcPosDir(sead::Vector3f* position, sead::Vector3f* direction, f32 distance) const {
     const RailPart* part = nullptr;
-    float partDistance = 0;
+    f32 partDistance = 0;
     getIncludedSection(&part, &partDistance, distance);
-    float curveParam = part->calcCurveParam(partDistance);
+    f32 curveParam = part->calcCurveParam(partDistance);
     part->calcPos(position, curveParam);
     part->calcDir(direction, curveParam);
 }
-float Rail::getTotalLength() const {
+f32 Rail::getTotalLength() const {
     return mRailPart[mRailPartCount - 1].getTotalDistance();
 }
-float Rail::getPartLength(int index) const {
+f32 Rail::getPartLength(s32 index) const {
     return mRailPart[index].getPartLength();
 }
-float Rail::getLengthToPoint(int index) const {
+f32 Rail::getLengthToPoint(s32 index) const {
     if (index == 0)
         return 0;
     return mRailPart[index - 1].getTotalDistance();
 }
-void Rail::calcRailPointPos(sead::Vector3f* pos, int index) const {
+void Rail::calcRailPointPos(sead::Vector3f* pos, s32 index) const {
     if (isClosed || index != mRailPointsCount - 1)
         return mRailPart[index].calcStartPos(pos);
 
@@ -133,7 +133,7 @@ void Rail::calcNearestRailPointPosFast(sead::Vector3f* rail_pos, u32* index,
     *rail_pos = tmp;
     *index = 0;
 
-    float best_distance = (tmp - pos).squaredLength();
+    f32 best_distance = (tmp - pos).squaredLength();
     u32 curr_index = 0;
     for (u32 i = 1; i < rail_points_count; i++) {
         mRailPart[curr_index].calcEndPos(&tmp);
@@ -145,13 +145,13 @@ void Rail::calcNearestRailPointPosFast(sead::Vector3f* rail_pos, u32* index,
         curr_index += (i & 1);  // only increases every second iteration
     }
 }
-void Rail::calcNearestRailPointNo(int* index, const sead::Vector3f& pos) const {
+void Rail::calcNearestRailPointNo(s32* index, const sead::Vector3f& pos) const {
     sead::Vector3f tmp = sead::Vector3f::zero;
     calcRailPointPos(&tmp, 0);
-    float best_distance = (pos - tmp).squaredLength();
+    f32 best_distance = (pos - tmp).squaredLength();
     *index = 0;
 
-    int curr_index = 1;
+    s32 curr_index = 1;
     for (long i = 1; i < mRailPointsCount; i++) {
         calcRailPointPos(&tmp, curr_index);
         if ((pos - tmp).squaredLength() < best_distance) {
@@ -168,9 +168,9 @@ void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3
 
     sead::Vector3f tmp = sead::Vector3f::zero;
     calcRailPointPos(&tmp, 0);
-    float best_distance = (pos - tmp).squaredLength();
+    f32 best_distance = (pos - tmp).squaredLength();
 
-    int curr_index = 1;
+    s32 curr_index = 1;
     for (long i = 1; i < mRailPointsCount; i++) {
         calcRailPointPos(&tmp, curr_index);
         if ((pos - tmp).squaredLength() < best_distance) {
@@ -180,9 +180,9 @@ void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3
         curr_index++;
     }
 }
-float Rail::normalizeLength(float distance) const {
+f32 Rail::normalizeLength(f32 distance) const {
     if (isClosed) {
-        float distanceOnRail = modf(distance, getTotalLength());
+        f32 distanceOnRail = modf(distance, getTotalLength());
         if (distanceOnRail < 0.0)
             distanceOnRail += getTotalLength();
         return distanceOnRail;
@@ -191,21 +191,21 @@ float Rail::normalizeLength(float distance) const {
     return sead::Mathf::clamp(distance, 0.0, getTotalLength());
 }
 // FIXME diff issue due to bug in tools/check
-float Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, float interval) const {
-    float tmp;
+f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval) const {
+    f32 tmp;
     return calcNearestRailPosCoord(pos, interval, &tmp);
 }
 // FIXME diff issue due to bug in tools/check
-float Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, float interval, float* distance) const {
+f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* distance) const {
     *distance = sead::Mathf::maxNumber();
-    float bestParam = sead::Mathf::maxNumber();
+    f32 bestParam = sead::Mathf::maxNumber();
 
-    int curr_index = 0LL;
-    int bestIndex = 0;
+    s32 curr_index = 0LL;
+    s32 bestIndex = 0;
     for (long i=0; i < mRailPartCount; i++) {
         RailPart* part = &mRailPart[curr_index];
-        float param;
-        float length = part->calcNearestLength(&param, pos, part->getPartLength(), interval);
+        f32 param;
+        f32 length = part->calcNearestLength(&param, pos, part->getPartLength(), interval);
         if (length < *distance) {
             *distance = length;
             bestParam = param;
@@ -219,51 +219,51 @@ float Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, float interval, f
     return bestParam;
 }
 // FIXME diff issue due to bug in tools/check
-float Rail::calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos, float interval) const {
-    float coord = calcNearestRailPosCoord(pos, interval);
+f32 Rail::calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos, f32 interval) const {
+    f32 coord = calcNearestRailPosCoord(pos, interval);
     const RailPart* part = nullptr;
-    float partDistance = 0;
+    f32 partDistance = 0;
     getIncludedSection(&part, &partDistance, coord);
     part->calcPos(rail_pos, part->calcCurveParam(partDistance));
     return coord;
 }
-bool Rail::isNearRailPoint(float distance, float epsilon) const {
+bool Rail::isNearRailPoint(f32 distance, f32 epsilon) const {
     const RailPart* part = nullptr;
-    float partDistance;
+    f32 partDistance;
     getIncludedSection(&part, &partDistance, distance);
 
     return (partDistance < epsilon) || ((part->getPartLength() - partDistance) < epsilon);
 }
-int Rail::calcRailPointNum(float distance1, float distance2) const {
+s32 Rail::calcRailPointNum(f32 distance1, f32 distance2) const {
     if((distance2-distance1) < 0.01f) return 0;
     const RailPart* part1 = nullptr;
     const RailPart* part2 = nullptr;
-    float partDistance1, partDistance2;
-    int sec1 = getIncludedSection(&part1, &partDistance1, distance1);
-    int sec2 = getIncludedSection(&part2, &partDistance2, distance2);
+    f32 partDistance1, partDistance2;
+    s32 sec1 = getIncludedSection(&part1, &partDistance1, distance1);
+    s32 sec2 = getIncludedSection(&part2, &partDistance2, distance2);
 
     return ((sec2 - sec1) + (partDistance1 < 0.01f)) + ((part2->getPartLength() - partDistance2) < 0.01f);
 }
 //FIXME regalloc in length calculation
-float Rail::getIncludedSectionLength(float* partDistance, float* length, float distance) const {
+f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance) const {
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);
-    float partLength = part->getPartLength();
+    f32 partLength = part->getPartLength();
     if(partDistance && length) {
         *length = partLength - *partDistance;
     }
     return partLength;
 }
-int Rail::getIncludedSectionIndex(float distance) const {
+s32 Rail::getIncludedSectionIndex(f32 distance) const {
     return getIncludedSection(nullptr, nullptr, distance);
 }
 bool Rail::isIncludeBezierRailPart() const {
-    for(int i=0; i<mRailPartCount; i++) {
+    for(s32 i=0; i<mRailPartCount; i++) {
         if(isBezierRailPart(i)) return true;
     }
     return false;
 }
-bool Rail::isBezierRailPart(int index) const {
+bool Rail::isBezierRailPart(s32 index) const {
     return mRailPart[index].isBezierCurve();
 }
 

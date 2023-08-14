@@ -6,5 +6,5 @@ class LiveActor;
 
 class PlayerFunction {
 public:
-    static unsigned int getPlayerInputPort(const al::LiveActor*);
+    static u32 getPlayerInputPort(const al::LiveActor*);
 };

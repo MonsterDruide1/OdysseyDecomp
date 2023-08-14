@@ -8,7 +8,7 @@ LiveActorGroup::LiveActorGroup(const char* groupName, s32 maxActors)
     mActors = new LiveActor*[maxActors];
 }
 
-int LiveActorGroup::registerActor(LiveActor* pActor) {
+s32 LiveActorGroup::registerActor(LiveActor* pActor) {
     this->mActors[this->mActorCount] = pActor;
     auto count = this->mActorCount;
     this->mActorCount = count + 1;
@@ -16,7 +16,7 @@ int LiveActorGroup::registerActor(LiveActor* pActor) {
 }
 
 void LiveActorGroup::removeActor(const LiveActor* pActor) {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (mActors[i] == pActor) {
             mActors[i] = mActors[mActorCount - 1];
             mActorCount--;
@@ -34,7 +34,7 @@ bool LiveActorGroup::isExistActor(const LiveActor* pActor) const {
         return false;
     }
 
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (mActors[i] == pActor) {
             return true;
         }
@@ -47,10 +47,10 @@ bool LiveActorGroup::isFull() const {
     return mActorCount >= mMaxActorCount;
 }
 
-int LiveActorGroup::calcAliveActorNum() const {
-    int count = 0;
+s32 LiveActorGroup::calcAliveActorNum() const {
+    s32 count = 0;
 
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (!isDead(mActors[i])) {
             count++;
         }
@@ -60,7 +60,7 @@ int LiveActorGroup::calcAliveActorNum() const {
 }
 
 LiveActor* LiveActorGroup::getDeadActor() const {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (isDead(mActors[i])) {
             return mActors[i];
         }
@@ -70,7 +70,7 @@ LiveActor* LiveActorGroup::getDeadActor() const {
 }
 
 LiveActor* LiveActorGroup::tryFindDeadActor() const {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (isDead(mActors[i])) {
             return mActors[i];
         }
@@ -80,7 +80,7 @@ LiveActor* LiveActorGroup::tryFindDeadActor() const {
 }
 
 void LiveActorGroup::appearAll() {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (isDead(mActors[i])) {
             mActors[i]->appear();
         }
@@ -88,7 +88,7 @@ void LiveActorGroup::appearAll() {
 }
 
 void LiveActorGroup::killAll() {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         if (isAlive(mActors[i])) {
             mActors[i]->kill();
         }
@@ -96,13 +96,13 @@ void LiveActorGroup::killAll() {
 }
 
 void LiveActorGroup::makeActorAliveAll() {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         mActors[i]->makeActorAlive();
     }
 }
 
 void LiveActorGroup::makeActorDeadAll() {
-    for (int i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++) {
         mActors[i]->makeActorDead();
     }
 }

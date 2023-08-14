@@ -9,13 +9,13 @@ class LiveActor;
 
 class HitSensor {
 public:
-    HitSensor(al::LiveActor*, const char*, unsigned int, float, unsigned short,
-              const sead::Vector3<float>*, const sead::Matrix34<float>*,
-              const sead::Vector3<float>&);
+    HitSensor(al::LiveActor*, const char*, u32, f32, unsigned short,
+              const sead::Vector3<f32>*, const sead::Matrix34<f32>*,
+              const sead::Vector3<f32>&);
 
     bool trySensorSort();
-    void setFollowPosPtr(const sead::Vector3<float>*);
-    void setFollowMtxPtr(const sead::Matrix34<float>*);
+    void setFollowPosPtr(const sead::Vector3<f32>*);
+    void setFollowMtxPtr(const sead::Matrix34<f32>*);
     void validate();
     void invalidate();
     void validateBySystem();
@@ -24,11 +24,11 @@ public:
     void addHitSensor(al::HitSensor*);
 
     const char* mName;  // _0
-    int _8;
-    float _C;
-    float _10;
-    float _14;
-    float _18;
+    s32 _8;
+    f32 _C;
+    f32 _10;
+    f32 _14;
+    f32 _18;
     unsigned short mMaxSensorCount;  // _1C
     unsigned short mSensorCount;     // _1E
     al::HitSensor** mSensors;        // _20
@@ -39,7 +39,7 @@ public:
     bool _3A[4];                    // unknown type
     unsigned short _3E;
     al::LiveActor* mParentActor;              // _40
-    const sead::Vector3<float>* mFollowPos;   // _48
-    const sead::Matrix34<float>* mFollowMtx;  // _50
+    const sead::Vector3<f32>* mFollowPos;   // _48
+    const sead::Matrix34<f32>* mFollowMtx;  // _50
 };
 };  // namespace al

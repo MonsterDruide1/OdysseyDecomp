@@ -59,8 +59,8 @@ bool isEqualString(const char* pString_0, const char* pString_1) {
 }
 
 bool isEndWithString(const char* pString_0, const char* pString_1) {
-    int pString0_Len = strlen(pString_0);
-    int pString1_Len = strlen(pString_1);
+    s32 pString0_Len = strlen(pString_0);
+    s32 pString1_Len = strlen(pString_1);
 
     if (pString0_Len < pString1_Len)
         return false;

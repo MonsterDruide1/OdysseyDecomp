@@ -9,9 +9,9 @@
 public:                                                                                            \
     CLASS() : m_value(-1) {}                                                                       \
     CLASS(const CLASS& c) : m_value(c.m_value) {}                                                  \
-    CLASS(int i) : m_value(i) {}                                                                   \
+    CLASS(s32 i) : m_value(i) {}                                                                   \
     CLASS(Enum e) : m_value(e) {}                                                                  \
-    operator int() const { return m_value; }                                                       \
+    operator s32() const { return m_value; }                                                       \
     bool operator==(const CLASS& c) const { return m_value == c.m_value; }                         \
     bool operator==(const Enum& e) const { return m_value == e; }                                  \
     bool operator!=(const CLASS& c) const { return m_value != c.m_value; }                         \
@@ -48,7 +48,7 @@ public:                                                                         
     }                                                                                              \
                                                                                                    \
 private:                                                                                           \
-    int m_value;
+    s32 m_value;
 
 namespace al {
 class LiveActor;
@@ -81,22 +81,22 @@ class SubActorKeeper {
 public:
     SubActorKeeper(LiveActor*);
     void registerSubActor(LiveActor*, u32);
-    void init(const ActorInitInfo&, const char*, int);
+    void init(const ActorInitInfo&, const char*, s32);
 
     static SubActorKeeper* create(LiveActor*);
-    static SubActorKeeper* tryCreate(LiveActor*, const char*, int);
+    static SubActorKeeper* tryCreate(LiveActor*, const char*, s32);
 
 private:
     LiveActor* mRootActor;
-    int mMaxActorCount = 0;
-    int mCurActorCount = 0;
+    s32 mMaxActorCount = 0;
+    s32 mCurActorCount = 0;
     SubActorInfo** mBuffer = nullptr;
 };
 
 void isExistSubActorKeeper(const LiveActor*);
 const LiveActor* getSubActor(const LiveActor*, const char*);     // NOTE: unknown return type
 void tryGetSubActor(const LiveActor*, const char*);
-void getSubActor(const LiveActor*, int);
+void getSubActor(const LiveActor*, s32);
 void getSubActorNum(const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const char*);
@@ -144,6 +144,6 @@ namespace alSubActorFunction {
     void trySyncClippingEnd(al::SubActorKeeper*);
     void trySyncShowModel(al::SubActorKeeper*);
     void trySyncHideModel(al::SubActorKeeper*);
-    void trySyncModelAlphaMask(al::SubActorKeeper*, float);
+    void trySyncModelAlphaMask(al::SubActorKeeper*, f32);
     void findSubActor(const al::SubActorKeeper*, const char*);
 }

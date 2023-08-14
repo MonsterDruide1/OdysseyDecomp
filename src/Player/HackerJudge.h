@@ -22,14 +22,14 @@ public:
 
 class HackerJudgeNormalFall : public HackerJudge {
 public:
-    HackerJudgeNormalFall(const al::LiveActor* parent, int unk);
+    HackerJudgeNormalFall(const al::LiveActor* parent, s32 unk);
     void reset() override;
     void update() override;
     bool judge() const override;
 
 private:
-    int field_10;
-    int field_14;
+    s32 field_10;
+    s32 field_14;
     al::LiveActor* mParent;
 };
 
@@ -50,7 +50,7 @@ public:
 
 private:
     al::LiveActor* mParent;
-    int field_18;
+    s32 field_18;
     al::LiveActor* field_20;
-    float field_28;
+    f32 field_28;
 };

@@ -6,13 +6,13 @@ namespace al {
 class LiveActor;
 class PlayerHolder;
 
-int getPlayerNumMax(const PlayerHolder* holder);
-int getAlivePlayerNum(const PlayerHolder* holder);
-LiveActor* getPlayerActor(const PlayerHolder* holder, int index);
-const sead::Vector3f& getPlayerPos(const PlayerHolder* holder, int index);
-LiveActor* tryGetPlayerActor(const PlayerHolder* holder, int index);
-bool isPlayerDead(const PlayerHolder* holder, int index);
-bool isPlayerAreaTarget(const PlayerHolder* holder, int index);
+s32 getPlayerNumMax(const PlayerHolder* holder);
+s32 getAlivePlayerNum(const PlayerHolder* holder);
+LiveActor* getPlayerActor(const PlayerHolder* holder, s32 index);
+const sead::Vector3f& getPlayerPos(const PlayerHolder* holder, s32 index);
+LiveActor* tryGetPlayerActor(const PlayerHolder* holder, s32 index);
+bool isPlayerDead(const PlayerHolder* holder, s32 index);
+bool isPlayerAreaTarget(const PlayerHolder* holder, s32 index);
 LiveActor* tryFindAlivePlayerActorFirst(const PlayerHolder* holder);
 LiveActor* findAlivePlayerActorFirst(const PlayerHolder* holder);
 }  // namespace al

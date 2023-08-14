@@ -24,9 +24,9 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
     mCurActorCount++;
 }
 // NON-MATCHING
-void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, int maxSubActors) {
+void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
-    int creatorCount;
+    s32 creatorCount;
     u8* modelResourceYaml;
 
     if (isExistModelResource(mRootActor) &&
@@ -40,7 +40,7 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, int
         ByamlIter modelResourceIter(modelResourceYaml);
         ByamlIter initInfoIter;
         if (modelResourceIter.tryGetIterByKey(&initInfoIter, "InitInfo")) {
-            int addActorNum = 0;
+            s32 addActorNum = 0;
             if (initInfoIter.tryGetIntByKey(&addActorNum, "AddActorNum"))
                 maxSubActors += addActorNum;
         }
@@ -54,12 +54,12 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, int
         creatorCount = 0;
     }
 
-    int actorCount = maxSubActors + creatorCount;
+    s32 actorCount = maxSubActors + creatorCount;
     mMaxActorCount = actorCount;
     mBuffer = new SubActorInfo*[maxSubActors + creatorCount];
 
     if (actorCount >= 1 && mMaxActorCount >= 2)
-        for (int i = 1; i < mMaxActorCount; ++i)
+        for (s32 i = 1; i < mMaxActorCount; ++i)
             mBuffer[i] = nullptr;
 
     if (modelResourceYaml && creatorCount > 0) {
@@ -69,7 +69,7 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, int
 
         // TODO: finish the logic for this, it seems like theres some heavy optimizations going on,
         // making it tough to figure out original logic
-        for (int i = 0; i < creatorCount; ++i) {
+        for (s32 i = 0; i < creatorCount; ++i) {
             ByamlIter subActorIter;
             creatorIter.tryGetIterByIndex(&subActorIter, i);
 
@@ -238,7 +238,7 @@ SubActorKeeper* SubActorKeeper::create(LiveActor* rootActor) {
     return new SubActorKeeper(rootActor);
 }
 SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* rootActor, const char* suffix,
-                                          int maxSubActors) {
+                                          s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
 
     if (!isExistModelResource(rootActor) ||

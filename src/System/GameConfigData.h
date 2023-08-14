@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include "System/ByamlSave.h"
 
 namespace al {
@@ -19,33 +20,33 @@ public:
     bool isCameraReverseInputV() const;
     void onCameraReverseInputV();
     void offCameraReverseInputV();
-    int getCameraStickSensitivityLevel() const;
-    void setCameraStickSensitivityLevel(int);
+    s32 getCameraStickSensitivityLevel() const;
+    void setCameraStickSensitivityLevel(s32);
     bool isValidCameraGyro() const;
     void validateCameraGyro();
     void invalidateCameraGyro();
-    int getCameraGyroSensitivityLevel() const;
-    void setCameraGyroSensitivityLevel(int);
+    s32 getCameraGyroSensitivityLevel() const;
+    void setCameraGyroSensitivityLevel(s32);
     bool isUseOpenListAdditionalButton() const;
     void onUseOpenListAdditionalButton();
     void offUseOpenListAdditionalButton();
     bool isValidPadRumble() const;
     void validatePadRumble();
     void invalidatePadRumble();
-    int getPadRumbleLevel() const;
-    void setPadRumbleLevel(int);
+    s32 getPadRumbleLevel() const;
+    void setPadRumbleLevel(s32);
     void write(al::ByamlWriter*) override;
     void read(const al::ByamlIter&) override;
 
 private:
-    int mCameraStickSensitivityLevel = -1;
+    s32 mCameraStickSensitivityLevel = -1;
     bool mIsCameraReverseInputH = false;
     bool mIsCameraReverseInputV = false;
     bool mIsValidCameraGyro = true;
-    int mCameraGyroSensitivityLevel = -1;
+    s32 mCameraGyroSensitivityLevel = -1;
     bool mIsUseOpenListAdditionalButton = false;
     bool mIsValidPadRumble = true;
-    int mPadRumbleLevel = 0;
+    s32 mPadRumbleLevel = 0;
 };
 
 namespace rs {

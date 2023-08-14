@@ -45,13 +45,13 @@ private:
 
 class ByamlHashPair {
 public:
-    int getKey(bool isRev) const;
+    s32 getKey(bool isRev) const;
     ByamlDataType getType() const;
-    int getValue(bool isRev) const;
+    s32 getValue(bool isRev) const;
 
 private:
-    const int mData = 0;
-    const int mValue = 0;
+    const s32 mData = 0;
+    const s32 mValue = 0;
 };
 
 class ByamlHashIter {
@@ -59,11 +59,11 @@ public:
     ByamlHashIter(const u8* data, bool isRev);
     ByamlHashIter();
 
-    const ByamlHashPair* findPair(int key) const;
-    bool getDataByIndex(ByamlData* data, int index) const;
-    bool getDataByKey(ByamlData* data, int key) const;
+    const ByamlHashPair* findPair(s32 key) const;
+    bool getDataByIndex(ByamlData* data, s32 index) const;
+    bool getDataByKey(ByamlData* data, s32 key) const;
     const u8* getOffsetData(u32 off) const;
-    const ByamlHashPair* getPairByIndex(int index) const;
+    const ByamlHashPair* getPairByIndex(s32 index) const;
     const ByamlHashPair* getPairTable() const;
     u32 getSize() const;
 
@@ -77,7 +77,7 @@ public:
     ByamlArrayIter(const u8* data, bool isRev);
     ByamlArrayIter();
 
-    bool getDataByIndex(ByamlData* data, int index) const;
+    bool getDataByIndex(ByamlData* data, s32 index) const;
     const u32* getDataTable() const;
     const u8* getOffsetData(u32 off) const;
     u32 getSize() const;

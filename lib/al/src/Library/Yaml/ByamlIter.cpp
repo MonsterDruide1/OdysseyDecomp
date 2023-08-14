@@ -40,14 +40,14 @@ bool ByamlIter::isExistKey(const char* key) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
 
-    int index = getKeyIndex(key);
+    s32 index = getKeyIndex(key);
     if (index < 0)
         return false;
 
     ByamlHashIter iter = {mRootNode, isInvertOrder()};
     return iter.findPair(index);
 }
-int ByamlIter::getKeyIndex(const char* key) const {
+s32 ByamlIter::getKeyIndex(const char* key) const {
     ByamlStringTableIter hash = alByamlLocalUtil::getHashKeyTable(mData);
     if (!hash.isValidate())
         return -1;
@@ -59,7 +59,7 @@ bool ByamlIter::isInvertOrder() const {
 }
 // NON_MATCHING: type-check wrong way around - AND 0xfe instead of OR 1, AND 0xFF (and thus
 // different cmp)
-int ByamlIter::getSize() const {
+s32 ByamlIter::getSize() const {
     if (!mRootNode)
         return false;
     ByamlContainerHeader* header = (ByamlContainerHeader*)mRootNode;
@@ -69,7 +69,7 @@ int ByamlIter::getSize() const {
         return 0;
     return header->getCount(isInvertOrder());
 }
-ByamlIter ByamlIter::getIterByIndex(int index) const {
+ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index))
         return nullptr;
@@ -80,7 +80,7 @@ ByamlIter ByamlIter::getIterByIndex(int index) const {
     }
     return {mData, &mData[data.getValue()]};
 }
-bool ByamlIter::getByamlDataByIndex(al::ByamlData* data, int index) const {
+bool ByamlIter::getByamlDataByIndex(al::ByamlData* data, s32 index) const {
     if (!mRootNode)
         return false;
     if (*mRootNode == ByamlDataType::TYPE_ARRAY) {
@@ -113,12 +113,12 @@ bool ByamlIter::getByamlDataByKey(al::ByamlData* data, const char* key) const {
 
     bool isRev = isInvertOrder();
     ByamlHashIter iter = {mRootNode, isRev};
-    int lowerBound = 0;
-    int upperBound = iter.getSize();
+    s32 lowerBound = 0;
+    s32 upperBound = iter.getSize();
     while (lowerBound < upperBound) {
-        int avg = (lowerBound + upperBound) / 2;
+        s32 avg = (lowerBound + upperBound) / 2;
         const ByamlHashPair* pair = iter.getPairByIndex(avg);
-        int result = strcmp(key, hash_table.getString(pair->getKey(isRev)));
+        s32 result = strcmp(key, hash_table.getString(pair->getKey(isRev)));
         if (result == 0) {
             data->set(pair, isRev);
             return true;
@@ -131,14 +131,14 @@ bool ByamlIter::getByamlDataByKey(al::ByamlData* data, const char* key) const {
     }
     return false;
 }
-bool ByamlIter::getByamlDataByKeyIndex(al::ByamlData* data, int index) const {
+bool ByamlIter::getByamlDataByKeyIndex(al::ByamlData* data, s32 index) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
 
     ByamlHashIter iter = {mRootNode, isInvertOrder()};
     return iter.getDataByKey(data, index);
 }
-bool ByamlIter::getByamlDataAndKeyName(al::ByamlData* data, const char** key, int index) const {
+bool ByamlIter::getByamlDataAndKeyName(al::ByamlData* data, const char** key, s32 index) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
 
@@ -156,14 +156,14 @@ bool ByamlIter::getByamlDataAndKeyName(al::ByamlData* data, const char** key, in
     *key = hash_table.getString(pair->getKey(isInvertOrder()));
     return true;
 }
-bool ByamlIter::getKeyName(const char** key, int index) const {
+bool ByamlIter::getKeyName(const char** key, s32 index) const {
     return getByamlDataAndKeyName(nullptr, key, index);
 }
-bool ByamlIter::tryGetIterByIndex(ByamlIter* iter, int index) const {
+bool ByamlIter::tryGetIterByIndex(ByamlIter* iter, s32 index) const {
     *iter = getIterByIndex(index);
     return iter->isValid();
 }
-bool ByamlIter::tryGetIterAndKeyNameByIndex(ByamlIter* iter, const char** key, int index) const {
+bool ByamlIter::tryGetIterAndKeyNameByIndex(ByamlIter* iter, const char** key, s32 index) const {
     ByamlData data;
     if (!getByamlDataAndKeyName(&data, key, index)) {
         *key = nullptr;
@@ -196,7 +196,7 @@ bool ByamlIter::tryConvertIter(ByamlIter* iter, const ByamlData* data) const {
     return false;
 }
 
-bool ByamlIter::tryGetStringByIndex(const char** value, int index) const {
+bool ByamlIter::tryGetStringByIndex(const char** value, s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index)) {
         return false;
@@ -227,7 +227,7 @@ bool ByamlIter::tryConvertString(const char** value, const ByamlData* data) cons
 
     return true;
 }
-bool ByamlIter::tryGetBinaryByIndex(const u8** value, int* size, int index) const {
+bool ByamlIter::tryGetBinaryByIndex(const u8** value, s32* size, s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index)) {
         return false;
@@ -235,7 +235,7 @@ bool ByamlIter::tryGetBinaryByIndex(const u8** value, int* size, int index) cons
 
     return tryConvertBinary(value, size, &data);
 }
-bool ByamlIter::tryGetBinaryByKey(const u8** value, int* size, const char* key) const {
+bool ByamlIter::tryGetBinaryByKey(const u8** value, s32* size, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key)) {
         return false;
@@ -243,7 +243,7 @@ bool ByamlIter::tryGetBinaryByKey(const u8** value, int* size, const char* key) 
 
     return tryConvertBinary(value, size, &data);
 }
-bool ByamlIter::tryConvertBinary(const u8** value, int* size, const ByamlData* data) const {
+bool ByamlIter::tryConvertBinary(const u8** value, s32* size, const ByamlData* data) const {
     if (data->getType() != ByamlDataType::TYPE_STRING) {
         return false;
     }
@@ -346,7 +346,7 @@ bool ByamlIter::tryConvertFloat(f32* value, const ByamlData* data) const {
         return false;
     }
 
-    *value = data->getValue<float>();
+    *value = data->getValue<f32>();
     return true;
 }
 

@@ -8,8 +8,8 @@
 struct CameraParam {
     bool gotMin;
     bool gotMax;
-    float mMinFovyDegree;
-    float mMaxFovyDegree;
+    f32 mMinFovyDegree;
+    f32 mMaxFovyDegree;
 };
 
 namespace al {
@@ -24,27 +24,27 @@ class SnapShotCameraCtrl : public NerveExecutor, public IUseAudioKeeper {
     sead::Vector3f mLookAtOffset;
     sead::Vector3f vVar1;
     bool mIsValidZoomFovy;
-    float mFovyDegree;
-    float fVar2;
-    float fVar3;
-    float mMaxZoomOutFovyDegree;
+    f32 mFovyDegree;
+    f32 fVar2;
+    f32 fVar3;
+    f32 mMaxZoomOutFovyDegree;
     bool mIsValidRoll;
-    float mRollDegree;
-    float mRollTarget;
-    unsigned int uVar2;
+    f32 mRollDegree;
+    f32 mRollTarget;
+    u32 uVar2;
     bool bVar1;
 
 public:
     SnapShotCameraCtrl(SnapShotCameraSceneInfo const*);
-    void start(float);
+    void start(f32);
     void load(ByamlIter const&);
-    void startReset(int);
+    void startReset(s32);
     void update(const sead::LookAtCamera&, const IUseCollision*, const ICameraInput*);
     void makeLookAtCameraPost(sead::LookAtCamera*) const;
     void makeLookAtCameraLast(sead::LookAtCamera*) const;
     void exeWait();
     void exeReset();
 
-    float getFovyDegree() const { return mFovyDegree; };
+    f32 getFovyDegree() const { return mFovyDegree; };
 };
 }  // namespace al

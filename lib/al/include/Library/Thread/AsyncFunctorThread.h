@@ -14,7 +14,7 @@ namespace al {
 class AsyncFunctorThread {
 public:
     AsyncFunctorThread(const sead::SafeString& functor_name, const FunctorBase& functor,
-                       int priority, int stack_size, sead::CoreId id);
+                       s32 priority, s32 stack_size, sead::CoreId id);
     virtual ~AsyncFunctorThread();
 
     void threadFunction(sead::Thread* unused_1, s64 unused_2);

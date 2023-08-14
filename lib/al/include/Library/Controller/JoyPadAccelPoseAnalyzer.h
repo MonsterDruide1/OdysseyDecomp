@@ -8,12 +8,12 @@ class JoyPadAccelPoseAnalyzer {
 public:
     class HistoryInfo {
     public:
-        void calcHistory(sead::Vector3f const&, sead::Vector3f const&, float);
+        void calcHistory(sead::Vector3f const&, sead::Vector3f const&, f32);
 
         unsigned char padding_0[0x60];  // 0x0 - 0x60
-        float hist0;                    // 0x60
+        f32 hist0;                    // 0x60
         unsigned char padding_1[0x70 - 0x64];
-        float hist1;  // 0x70
+        f32 hist1;  // 0x70
         unsigned char padding_2[0x1c];
     };
 
@@ -34,12 +34,12 @@ public:
     bool isSwingDoubleHandReverseOutsideDir() const;
     bool isSwingLeftHand() const;
     bool isSwingRightHand() const;
-    void setSwingBorder(float, float);
+    void setSwingBorder(f32, f32);
     void update();
     JoyPadAccelPoseAnalyzer getSwingDirDoubleHandSameDir() const;
 
-    int mControllerPort;               // 0x0 port of the controller
-    int mAccelDeviceNum;               // 0x4 number of accelerometers
+    s32 mControllerPort;               // 0x0 port of the controller
+    s32 mAccelDeviceNum;               // 0x4 number of accelerometers
     bool gap00;                        // 0x8 unknown
     bool mSwingLeft;                   // 0x9 shaking the left joycon
     bool mSwingRight;                  // 0xa shaking the right joycon

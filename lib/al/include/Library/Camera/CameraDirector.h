@@ -39,10 +39,10 @@ public:
     void initAreaCameraSwitcherMultiForPrototype(AreaObjDirector*);
     void initAreaCameraSwitcherSingle();
     void initResourceHolder(const CameraResourceHolder* resourceHolder);
-    void initSceneFovyDegree(float fov);
-    void initSettingCloudSea(float);
+    void initSceneFovyDegree(f32 fov);
+    void initSettingCloudSea(f32);
     void initSnapShotCameraAudioKeeper(IUseAudioKeeper* audioKeeper);
-    void initAndCreatePauseCameraCtrl(float);
+    void initAndCreatePauseCameraCtrl(f32);
 
     void execute() override;
     void update();
@@ -71,7 +71,7 @@ public:
     void endSnapShotMode();
 
 private:
-    int mCountCameraPoseUpdaters;
+    s32 mCountCameraPoseUpdaters;
     SceneCameraInfo* mSceneCameraInfo;
     SceneCameraCtrl* mSceneCameraCtrl;
     CameraPoseUpdater** mPoseUpdaters;

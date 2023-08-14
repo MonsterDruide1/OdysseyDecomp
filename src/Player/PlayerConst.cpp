@@ -1850,1848 +1850,1848 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetFloatByKey(&mAdditionalSpeedLimit, "AdditionalSpeedLimit");
 }
 
-float PlayerConst::getGravity() const {
+f32 PlayerConst::getGravity() const {
     return mGravity;
 }
-float PlayerConst::getFrictionAttack() const {
+f32 PlayerConst::getFrictionAttack() const {
     return mFrictionAttack;
 }
-float PlayerConst::getPushPower() const {
+f32 PlayerConst::getPushPower() const {
     return mPushPower;
 }
-float PlayerConst::getWaitPoseDegreeMax() const {
+f32 PlayerConst::getWaitPoseDegreeMax() const {
     return mWaitPoseDegreeMax;
 }
-float PlayerConst::getHillPoseDegreeMax() const {
+f32 PlayerConst::getHillPoseDegreeMax() const {
     return mHillPoseDegreeMax;
 }
-float PlayerConst::getTiltPoseDegreeMax() const {
+f32 PlayerConst::getTiltPoseDegreeMax() const {
     return mTiltPoseDegreeMax;
 }
-float PlayerConst::getSlerpQuatRate() const {
+f32 PlayerConst::getSlerpQuatRate() const {
     return mSlerpQuatRate;
 }
-float PlayerConst::getSlerpQuatRateWait() const {
+f32 PlayerConst::getSlerpQuatRateWait() const {
     return mSlerpQuatRateWait;
 }
-float PlayerConst::getSlerpQuatGrav() const {
+f32 PlayerConst::getSlerpQuatGrav() const {
     return mSlerpQuatGrav;
 }
-int PlayerConst::getPreInputFrameCapThrow() const {
+s32 PlayerConst::getPreInputFrameCapThrow() const {
     return mPreInputFrameCapThrow;
 }
-int PlayerConst::getEnableActionFrameCapCatch() const {
+s32 PlayerConst::getEnableActionFrameCapCatch() const {
     return mEnableActionFrameCapCatch;
 }
-float PlayerConst::getJumpPowerCapCatch() const {
+f32 PlayerConst::getJumpPowerCapCatch() const {
     return mJumpPowerCapCatch;
 }
-float PlayerConst::getJumpGravityCapCatch() const {
+f32 PlayerConst::getJumpGravityCapCatch() const {
     return mJumpGravityCapCatch;
 }
-int PlayerConst::getRunTimeContinuousThrow() const {
+s32 PlayerConst::getRunTimeContinuousThrow() const {
     return mRunTimeContinuousThrow;
 }
-float PlayerConst::getRunSpeedMaxContinuousThrow() const {
+f32 PlayerConst::getRunSpeedMaxContinuousThrow() const {
     return mRunSpeedMaxContinuousThrow;
 }
-int PlayerConst::getRunAccelFrameContinuousThrow() const {
+s32 PlayerConst::getRunAccelFrameContinuousThrow() const {
     return mRunAccelFrameContinuousThrow;
 }
-float PlayerConst::getSeparateCheckHeight() const {
+f32 PlayerConst::getSeparateCheckHeight() const {
     return mSeparateCheckHeight;
 }
-float PlayerConst::getSeparateOffsetLerpRate() const {
+f32 PlayerConst::getSeparateOffsetLerpRate() const {
     return mSeparateOffsetLerpRate;
 }
-float PlayerConst::getSeparateEnableThrowHeight() const {
+f32 PlayerConst::getSeparateEnableThrowHeight() const {
     return mSeparateEnableThrowHeight;
 }
-float PlayerConst::getTall() const {
+f32 PlayerConst::getTall() const {
     return mTall;
 }
-float PlayerConst::getCollisionRadius() const {
+f32 PlayerConst::getCollisionRadius() const {
     return mCollisionRadius;
 }
-float PlayerConst::getCollisionRadiusSquat() const {
+f32 PlayerConst::getCollisionRadiusSquat() const {
     return mCollisionRadiusSquat;
 }
-float PlayerConst::getCollisionRadiusStand() const {
+f32 PlayerConst::getCollisionRadiusStand() const {
     return mCollisionRadiusStand;
 }
-float PlayerConst::getCollisionSmallStepHeight() const {
+f32 PlayerConst::getCollisionSmallStepHeight() const {
     return mCollisionSmallStepHeight;
 }
-float PlayerConst::getCollisionResetLimit() const {
+f32 PlayerConst::getCollisionResetLimit() const {
     return mCollisionResetLimit;
 }
-float PlayerConst::getReflectCeilingPower() const {
+f32 PlayerConst::getReflectCeilingPower() const {
     return mReflectCeilingPower;
 }
-float PlayerConst::getReflectTossPower() const {
+f32 PlayerConst::getReflectTossPower() const {
     return mReflectTossPower;
 }
-float PlayerConst::getReflectUpperPunchScaleH() const {
+f32 PlayerConst::getReflectUpperPunchScaleH() const {
     return mReflectUpperPunchScaleH;
 }
-float PlayerConst::getCollisionHitDownAngleH() const {
+f32 PlayerConst::getCollisionHitDownAngleH() const {
     return mCollisionHitDownAngleH;
 }
-float PlayerConst::getCollisionHitDownEscapeAngleV() const {
+f32 PlayerConst::getCollisionHitDownEscapeAngleV() const {
     return mCollisionHitDownEscapeAngleV;
 }
-float PlayerConst::getShadowDropHeightScale() const {
+f32 PlayerConst::getShadowDropHeightScale() const {
     return mShadowDropHeightScale;
 }
-float PlayerConst::getShadowDropNormalAdd() const {
+f32 PlayerConst::getShadowDropNormalAdd() const {
     return mShadowDropNormalAdd;
 }
-float PlayerConst::getShadowDropLengthMin() const {
+f32 PlayerConst::getShadowDropLengthMin() const {
     return mShadowDropLengthMin;
 }
-float PlayerConst::getShadowDropLengthMax() const {
+f32 PlayerConst::getShadowDropLengthMax() const {
     return mShadowDropLengthMax;
 }
-float PlayerConst::getShadowDropLengthExtend() const {
+f32 PlayerConst::getShadowDropLengthExtend() const {
     return mShadowDropLengthExtend;
 }
-float PlayerConst::getGravityDamage() const {
+f32 PlayerConst::getGravityDamage() const {
     return mGravityDamage;
 }
-float PlayerConst::getHopPowerDamage() const {
+f32 PlayerConst::getHopPowerDamage() const {
     return mHopPowerDamage;
 }
-float PlayerConst::getPushPowerDamage() const {
+f32 PlayerConst::getPushPowerDamage() const {
     return mPushPowerDamage;
 }
-int PlayerConst::getDamageCancelFrame() const {
+s32 PlayerConst::getDamageCancelFrame() const {
     return mDamageCancelFrame;
 }
-int PlayerConst::getDamageInvalidCount() const {
+s32 PlayerConst::getDamageInvalidCount() const {
     return mDamageInvalidCount;
 }
-int PlayerConst::getDamageInvalidCountRecovery() const {
+s32 PlayerConst::getDamageInvalidCountRecovery() const {
     return mDamageInvalidCountRecovery;
 }
-int PlayerConst::getDamageInvalidCountAbyss() const {
+s32 PlayerConst::getDamageInvalidCountAbyss() const {
     return mDamageInvalidCountAbyss;
 }
-float PlayerConst::getNormalMinSpeed2D() const {
+f32 PlayerConst::getNormalMinSpeed2D() const {
     return mNormalMinSpeed2D;
 }
-float PlayerConst::getNormalMaxSpeed2D() const {
+f32 PlayerConst::getNormalMaxSpeed2D() const {
     return mNormalMaxSpeed2D;
 }
-float PlayerConst::getDashMaxSpeed2D() const {
+f32 PlayerConst::getDashMaxSpeed2D() const {
     return mDashMaxSpeed2D;
 }
-int PlayerConst::getNormalAccelFrame2D() const {
+s32 PlayerConst::getNormalAccelFrame2D() const {
     return mNormalAccelFrame2D;
 }
-int PlayerConst::getDashAccelFrame2D() const {
+s32 PlayerConst::getDashAccelFrame2D() const {
     return mDashAccelFrame2D;
 }
-int PlayerConst::getNormalDashAnimFrame2D() const {
+s32 PlayerConst::getNormalDashAnimFrame2D() const {
     return mNormalDashAnimFrame2D;
 }
-int PlayerConst::getNormalBrakeFrame2D() const {
+s32 PlayerConst::getNormalBrakeFrame2D() const {
     return mNormalBrakeFrame2D;
 }
-int PlayerConst::getStickOnBrakeFrame2D() const {
+s32 PlayerConst::getStickOnBrakeFrame2D() const {
     return mStickOnBrakeFrame2D;
 }
-int PlayerConst::getBrakeTurnStartFrame2D() const {
+s32 PlayerConst::getBrakeTurnStartFrame2D() const {
     return mBrakeTurnStartFrame2D;
 }
-float PlayerConst::getTurnEndSpeedRate2D() const {
+f32 PlayerConst::getTurnEndSpeedRate2D() const {
     return mTurnEndSpeedRate2D;
 }
-float PlayerConst::getJumpPowerMin2DArea() const {
+f32 PlayerConst::getJumpPowerMin2DArea() const {
     return mJumpPowerMin2DArea;
 }
-float PlayerConst::getJumpPowerMax2DArea() const {
+f32 PlayerConst::getJumpPowerMax2DArea() const {
     return mJumpPowerMax2DArea;
 }
-float PlayerConst::getJumpPowerMinBorder2D() const {
+f32 PlayerConst::getJumpPowerMinBorder2D() const {
     return mJumpPowerMinBorder2D;
 }
-float PlayerConst::getJumpPowerMaxBorder2D() const {
+f32 PlayerConst::getJumpPowerMaxBorder2D() const {
     return mJumpPowerMaxBorder2D;
 }
-float PlayerConst::getGravityMove() const {
+f32 PlayerConst::getGravityMove() const {
     return mGravityMove;
 }
-float PlayerConst::getNormalMaxSpeed() const {
+f32 PlayerConst::getNormalMaxSpeed() const {
     return mNormalMaxSpeed;
 }
-float PlayerConst::getNormalMinSpeed() const {
+f32 PlayerConst::getNormalMinSpeed() const {
     return mNormalMinSpeed;
 }
-int PlayerConst::getNormalAccelFrame() const {
+s32 PlayerConst::getNormalAccelFrame() const {
     return mNormalAccelFrame;
 }
-float PlayerConst::getRunAccelAverageScale() const {
+f32 PlayerConst::getRunAccelAverageScale() const {
     return mRunAccelAverageScale;
 }
-int PlayerConst::getNormalBrakeFrame() const {
+s32 PlayerConst::getNormalBrakeFrame() const {
     return mNormalBrakeFrame;
 }
-float PlayerConst::getDashJudgeSpeed() const {
+f32 PlayerConst::getDashJudgeSpeed() const {
     return mDashJudgeSpeed;
 }
-int PlayerConst::getStickOnBrakeFrame() const {
+s32 PlayerConst::getStickOnBrakeFrame() const {
     return mStickOnBrakeFrame;
 }
-int PlayerConst::getNormalDashAnimFrame() const {
+s32 PlayerConst::getNormalDashAnimFrame() const {
     return mNormalDashAnimFrame;
 }
-float PlayerConst::getRunAfterTurnSpeedMax() const {
+f32 PlayerConst::getRunAfterTurnSpeedMax() const {
     return mRunAfterTurnSpeedMax;
 }
-float PlayerConst::getRunAfterTurnScale() const {
+f32 PlayerConst::getRunAfterTurnScale() const {
     return mRunAfterTurnScale;
 }
-int PlayerConst::getRunAfterTurnFrame() const {
+s32 PlayerConst::getRunAfterTurnFrame() const {
     return mRunAfterTurnFrame;
 }
-int PlayerConst::getBrakeTurnStartFrame() const {
+s32 PlayerConst::getBrakeTurnStartFrame() const {
     return mBrakeTurnStartFrame;
 }
-float PlayerConst::getBrakeOnSpeedRate() const {
+f32 PlayerConst::getBrakeOnSpeedRate() const {
     return mBrakeOnSpeedRate;
 }
-int PlayerConst::getBrakeOnCounterBorder() const {
+s32 PlayerConst::getBrakeOnCounterBorder() const {
     return mBrakeOnCounterBorder;
 }
-int PlayerConst::getWallPushFrame() const {
+s32 PlayerConst::getWallPushFrame() const {
     return mWallPushFrame;
 }
-int PlayerConst::getRunDeepDownFrame() const {
+s32 PlayerConst::getRunDeepDownFrame() const {
     return mRunDeepDownFrame;
 }
-int PlayerConst::getRunDeepDownMargine() const {
+s32 PlayerConst::getRunDeepDownMargine() const {
     return mRunDeepDownMargine;
 }
-int PlayerConst::getQuickTurnJumpFrame() const {
+s32 PlayerConst::getQuickTurnJumpFrame() const {
     return mQuickTurnJumpFrame;
 }
-int PlayerConst::getRoundAccelFrame() const {
+s32 PlayerConst::getRoundAccelFrame() const {
     return mRoundAccelFrame;
 }
-int PlayerConst::getRoundBrakeFrame() const {
+s32 PlayerConst::getRoundBrakeFrame() const {
     return mRoundBrakeFrame;
 }
-float PlayerConst::getRoundFastDegree() const {
+f32 PlayerConst::getRoundFastDegree() const {
     return mRoundFastDegree;
 }
-int PlayerConst::getRoundAccelFrameFast() const {
+s32 PlayerConst::getRoundAccelFrameFast() const {
     return mRoundAccelFrameFast;
 }
-float PlayerConst::getRoundMinDegree() const {
+f32 PlayerConst::getRoundMinDegree() const {
     return mRoundMinDegree;
 }
-int PlayerConst::getRoundBrakeFrameForce() const {
+s32 PlayerConst::getRoundBrakeFrameForce() const {
     return mRoundBrakeFrameForce;
 }
-float PlayerConst::getRoundFastDegreeForce() const {
+f32 PlayerConst::getRoundFastDegreeForce() const {
     return mRoundFastDegreeForce;
 }
-float PlayerConst::getRoundLimitDegreeForce() const {
+f32 PlayerConst::getRoundLimitDegreeForce() const {
     return mRoundLimitDegreeForce;
 }
-float PlayerConst::getRoundLimitDegreeForceFast() const {
+f32 PlayerConst::getRoundLimitDegreeForceFast() const {
     return mRoundLimitDegreeForceFast;
 }
-int PlayerConst::getRoundAccelFrameForceFast() const {
+s32 PlayerConst::getRoundAccelFrameForceFast() const {
     return mRoundAccelFrameForceFast;
 }
-float PlayerConst::getRoundLimitDegreeMin() const {
+f32 PlayerConst::getRoundLimitDegreeMin() const {
     return mRoundLimitDegreeMin;
 }
-float PlayerConst::getRoundLimitDegree() const {
+f32 PlayerConst::getRoundLimitDegree() const {
     return mRoundLimitDegree;
 }
-int PlayerConst::getIceAccelFrame() const {
+s32 PlayerConst::getIceAccelFrame() const {
     return mIceAccelFrame;
 }
-int PlayerConst::getIceBrakeFrame() const {
+s32 PlayerConst::getIceBrakeFrame() const {
     return mIceBrakeFrame;
 }
-int PlayerConst::getIceBrakeFrameHigh() const {
+s32 PlayerConst::getIceBrakeFrameHigh() const {
     return mIceBrakeFrameHigh;
 }
-int PlayerConst::getIceBrakeFrameWall() const {
+s32 PlayerConst::getIceBrakeFrameWall() const {
     return mIceBrakeFrameWall;
 }
-int PlayerConst::getIceRoundAccelFrame() const {
+s32 PlayerConst::getIceRoundAccelFrame() const {
     return mIceRoundAccelFrame;
 }
-int PlayerConst::getIceRoundAccelFrameFast() const {
+s32 PlayerConst::getIceRoundAccelFrameFast() const {
     return mIceRoundAccelFrameFast;
 }
-int PlayerConst::getIceRoundBrakeFrame() const {
+s32 PlayerConst::getIceRoundBrakeFrame() const {
     return mIceRoundBrakeFrame;
 }
-float PlayerConst::getIceRoundFastDegree() const {
+f32 PlayerConst::getIceRoundFastDegree() const {
     return mIceRoundFastDegree;
 }
-float PlayerConst::getIceRoundMinDegree() const {
+f32 PlayerConst::getIceRoundMinDegree() const {
     return mIceRoundMinDegree;
 }
-float PlayerConst::getIceRoundLimitDegree() const {
+f32 PlayerConst::getIceRoundLimitDegree() const {
     return mIceRoundLimitDegree;
 }
-float PlayerConst::getHillAddSpeed() const {
+f32 PlayerConst::getHillAddSpeed() const {
     return mHillAddSpeed;
 }
-float PlayerConst::getHillSubSpeed() const {
+f32 PlayerConst::getHillSubSpeed() const {
     return mHillSubSpeed;
 }
-int PlayerConst::getHillAccelAddFrame() const {
+s32 PlayerConst::getHillAccelAddFrame() const {
     return mHillAccelAddFrame;
 }
-int PlayerConst::getHillAccelSubFrame() const {
+s32 PlayerConst::getHillAccelSubFrame() const {
     return mHillAccelSubFrame;
 }
-float PlayerConst::getHillAccelSubAngleMin() const {
+f32 PlayerConst::getHillAccelSubAngleMin() const {
     return mHillAccelSubAngleMin;
 }
-float PlayerConst::getHillAccelSubAngleMax() const {
+f32 PlayerConst::getHillAccelSubAngleMax() const {
     return mHillAccelSubAngleMax;
 }
-float PlayerConst::getStandAngleMin() const {
+f32 PlayerConst::getStandAngleMin() const {
     return mStandAngleMin;
 }
-float PlayerConst::getStandAngleMax() const {
+f32 PlayerConst::getStandAngleMax() const {
     return mStandAngleMax;
 }
-float PlayerConst::getHillAngleSpeedMin() const {
+f32 PlayerConst::getHillAngleSpeedMin() const {
     return mHillAngleSpeedMin;
 }
-float PlayerConst::getHillAngleSpeedMax() const {
+f32 PlayerConst::getHillAngleSpeedMax() const {
     return mHillAngleSpeedMax;
 }
-int PlayerConst::getSpinCapThrowFrame() const {
+s32 PlayerConst::getSpinCapThrowFrame() const {
     return mSpinCapThrowFrame;
 }
-int PlayerConst::getSpinCapThrowFrameAir() const {
+s32 PlayerConst::getSpinCapThrowFrameAir() const {
     return mSpinCapThrowFrameAir;
 }
-int PlayerConst::getSpinCapThrowFrameSwim() const {
+s32 PlayerConst::getSpinCapThrowFrameSwim() const {
     return mSpinCapThrowFrameSwim;
 }
-int PlayerConst::getSpinCapThrowFrameSwing() const {
+s32 PlayerConst::getSpinCapThrowFrameSwing() const {
     return mSpinCapThrowFrameSwing;
 }
-int PlayerConst::getSpinCapThrowFrameContinuous() const {
+s32 PlayerConst::getSpinCapThrowFrameContinuous() const {
     return mSpinCapThrowFrameContinuous;
 }
-int PlayerConst::getSpinAttackFrame() const {
+s32 PlayerConst::getSpinAttackFrame() const {
     return mSpinAttackFrame;
 }
-int PlayerConst::getSpinBrakeFrame() const {
+s32 PlayerConst::getSpinBrakeFrame() const {
     return mSpinBrakeFrame;
 }
-float PlayerConst::getSpinAirJumpPower() const {
+f32 PlayerConst::getSpinAirJumpPower() const {
     return mSpinAirJumpPower;
 }
-float PlayerConst::getSpinAirSpeedMax() const {
+f32 PlayerConst::getSpinAirSpeedMax() const {
     return mSpinAirSpeedMax;
 }
-float PlayerConst::getGravitySpinAir() const {
+f32 PlayerConst::getGravitySpinAir() const {
     return mGravitySpinAir;
 }
-float PlayerConst::getSlerpQuatRateSpinAir() const {
+f32 PlayerConst::getSlerpQuatRateSpinAir() const {
     return mSlerpQuatRateSpinAir;
 }
-float PlayerConst::getSpinBrakeRate() const {
+f32 PlayerConst::getSpinBrakeRate() const {
     return mSpinBrakeRate;
 }
-float PlayerConst::getSpinBrakeSideAccel() const {
+f32 PlayerConst::getSpinBrakeSideAccel() const {
     return mSpinBrakeSideAccel;
 }
-float PlayerConst::getSpinBrakeSideBrakeRate() const {
+f32 PlayerConst::getSpinBrakeSideBrakeRate() const {
     return mSpinBrakeSideBrakeRate;
 }
-float PlayerConst::getSpinBrakeSideMaxSpeedRate() const {
+f32 PlayerConst::getSpinBrakeSideMaxSpeedRate() const {
     return mSpinBrakeSideMaxSpeedRate;
 }
-float PlayerConst::getSpinRoundLimitDegree() const {
+f32 PlayerConst::getSpinRoundLimitDegree() const {
     return mSpinRoundLimitDegree;
 }
-float PlayerConst::getDamageFireJumpPower1st() const {
+f32 PlayerConst::getDamageFireJumpPower1st() const {
     return mDamageFireJumpPower1st;
 }
-float PlayerConst::getDamageFireJumpPower2nd() const {
+f32 PlayerConst::getDamageFireJumpPower2nd() const {
     return mDamageFireJumpPower2nd;
 }
-float PlayerConst::getDamageFireJumpMoveSpeed() const {
+f32 PlayerConst::getDamageFireJumpMoveSpeed() const {
     return mDamageFireJumpMoveSpeed;
 }
-float PlayerConst::getDamageFireCeilHitSpeed() const {
+f32 PlayerConst::getDamageFireCeilHitSpeed() const {
     return mDamageFireCeilHitSpeed;
 }
-float PlayerConst::getDamageFireGravity() const {
+f32 PlayerConst::getDamageFireGravity() const {
     return mDamageFireGravity;
 }
-int PlayerConst::getDamageFireNoGravityFrame() const {
+s32 PlayerConst::getDamageFireNoGravityFrame() const {
     return mDamageFireNoGravityFrame;
 }
-int PlayerConst::getDamageFireRunTime() const {
+s32 PlayerConst::getDamageFireRunTime() const {
     return mDamageFireRunTime;
 }
-float PlayerConst::getDamageFireRunSpeed() const {
+f32 PlayerConst::getDamageFireRunSpeed() const {
     return mDamageFireRunSpeed;
 }
-float PlayerConst::getDamageFireRunBrakeFrame() const {
+f32 PlayerConst::getDamageFireRunBrakeFrame() const {
     return mDamageFireRunBrakeFrame;
 }
-int PlayerConst::getSandSinkDeadTime() const {
+s32 PlayerConst::getSandSinkDeadTime() const {
     return mSandSinkDeadTime;
 }
-int PlayerConst::getSandSinkBrakeHeightH() const {
+s32 PlayerConst::getSandSinkBrakeHeightH() const {
     return mSandSinkBrakeHeightH;
 }
-int PlayerConst::getSandSinkBrakeHeightV() const {
+s32 PlayerConst::getSandSinkBrakeHeightV() const {
     return mSandSinkBrakeHeightV;
 }
-float PlayerConst::getSandSinkHeight() const {
+f32 PlayerConst::getSandSinkHeight() const {
     return mSandSinkHeight;
 }
-float PlayerConst::getSandSinkCapThrow() const {
+f32 PlayerConst::getSandSinkCapThrow() const {
     return mSandSinkCapThrow;
 }
-float PlayerConst::getSandSinkBrakeMinH() const {
+f32 PlayerConst::getSandSinkBrakeMinH() const {
     return mSandSinkBrakeMinH;
 }
-float PlayerConst::getSandSinkBrakeMaxH() const {
+f32 PlayerConst::getSandSinkBrakeMaxH() const {
     return mSandSinkBrakeMaxH;
 }
-float PlayerConst::getSandSinkBrakeMinV() const {
+f32 PlayerConst::getSandSinkBrakeMinV() const {
     return mSandSinkBrakeMinV;
 }
-float PlayerConst::getSandSinkBrakeMaxV() const {
+f32 PlayerConst::getSandSinkBrakeMaxV() const {
     return mSandSinkBrakeMaxV;
 }
-float PlayerConst::getSlopeSlideAngleStart() const {
+f32 PlayerConst::getSlopeSlideAngleStart() const {
     return mSlopeSlideAngleStart;
 }
-float PlayerConst::getSlopeSlideAngleEnd() const {
+f32 PlayerConst::getSlopeSlideAngleEnd() const {
     return mSlopeSlideAngleEnd;
 }
-float PlayerConst::getSlopeSlideAccel() const {
+f32 PlayerConst::getSlopeSlideAccel() const {
     return mSlopeSlideAccel;
 }
-float PlayerConst::getSlopeSlideBrake() const {
+f32 PlayerConst::getSlopeSlideBrake() const {
     return mSlopeSlideBrake;
 }
-float PlayerConst::getSlopeSlideMaxSpeed() const {
+f32 PlayerConst::getSlopeSlideMaxSpeed() const {
     return mSlopeSlideMaxSpeed;
 }
-float PlayerConst::getSlopeSlideSpeedEnd() const {
+f32 PlayerConst::getSlopeSlideSpeedEnd() const {
     return mSlopeSlideSpeedEnd;
 }
-float PlayerConst::getSlopeSlideSideAccel() const {
+f32 PlayerConst::getSlopeSlideSideAccel() const {
     return mSlopeSlideSideAccel;
 }
-float PlayerConst::getSlopeSlideSideBrake() const {
+f32 PlayerConst::getSlopeSlideSideBrake() const {
     return mSlopeSlideSideBrake;
 }
-float PlayerConst::getSlopeSlideSideMaxSpeed() const {
+f32 PlayerConst::getSlopeSlideSideMaxSpeed() const {
     return mSlopeSlideSideMaxSpeed;
 }
-float PlayerConst::getSlopeTurnDegree() const {
+f32 PlayerConst::getSlopeTurnDegree() const {
     return mSlopeTurnDegree;
 }
-int PlayerConst::getSlideInvalidFrame() const {
+s32 PlayerConst::getSlideInvalidFrame() const {
     return mSlideInvalidFrame;
 }
-int PlayerConst::getSlopeForceFrame() const {
+s32 PlayerConst::getSlopeForceFrame() const {
     return mSlopeForceFrame;
 }
-float PlayerConst::getSlopeSlideForceSideAccel() const {
+f32 PlayerConst::getSlopeSlideForceSideAccel() const {
     return mSlopeSlideForceSideAccel;
 }
-float PlayerConst::getSlopeSlideForceSideBrake() const {
+f32 PlayerConst::getSlopeSlideForceSideBrake() const {
     return mSlopeSlideForceSideBrake;
 }
-float PlayerConst::getSlopeSlideForceSideMaxSpeed() const {
+f32 PlayerConst::getSlopeSlideForceSideMaxSpeed() const {
     return mSlopeSlideForceSideMaxSpeed;
 }
-float PlayerConst::getSlopeSlideForceTurnDegree() const {
+f32 PlayerConst::getSlopeSlideForceTurnDegree() const {
     return mSlopeSlideForceTurnDegree;
 }
-float PlayerConst::getSlopeRollingSpeedStart() const {
+f32 PlayerConst::getSlopeRollingSpeedStart() const {
     return mSlopeRollingSpeedStart;
 }
-float PlayerConst::getSlopeRollingSpeedBoost() const {
+f32 PlayerConst::getSlopeRollingSpeedBoost() const {
     return mSlopeRollingSpeedBoost;
 }
-float PlayerConst::getSlopeRollingMaxSpeed() const {
+f32 PlayerConst::getSlopeRollingMaxSpeed() const {
     return mSlopeRollingMaxSpeed;
 }
-int PlayerConst::getSlopeRollingFrameMinBoost() const {
+s32 PlayerConst::getSlopeRollingFrameMinBoost() const {
     return mSlopeRollingFrameMinBoost;
 }
-int PlayerConst::getSlopeRollingFrameMin() const {
+s32 PlayerConst::getSlopeRollingFrameMin() const {
     return mSlopeRollingFrameMin;
 }
-float PlayerConst::getSlopeRollingStartJumpPower() const {
+f32 PlayerConst::getSlopeRollingStartJumpPower() const {
     return mSlopeRollingStartJumpPower;
 }
-float PlayerConst::getSlopeRollingStartSlideSpeed() const {
+f32 PlayerConst::getSlopeRollingStartSlideSpeed() const {
     return mSlopeRollingStartSlideSpeed;
 }
-float PlayerConst::getSlopeRollingAccel() const {
+f32 PlayerConst::getSlopeRollingAccel() const {
     return mSlopeRollingAccel;
 }
-float PlayerConst::getSlopeRollingBrake() const {
+f32 PlayerConst::getSlopeRollingBrake() const {
     return mSlopeRollingBrake;
 }
-float PlayerConst::getSlopeRollingAgainst() const {
+f32 PlayerConst::getSlopeRollingAgainst() const {
     return mSlopeRollingAgainst;
 }
-float PlayerConst::getSlopeRollingAnglePowerMax() const {
+f32 PlayerConst::getSlopeRollingAnglePowerMax() const {
     return mSlopeRollingAnglePowerMax;
 }
-float PlayerConst::getSlopeRollingSpeedEnd() const {
+f32 PlayerConst::getSlopeRollingSpeedEnd() const {
     return mSlopeRollingSpeedEnd;
 }
-float PlayerConst::getSlopeRollingSideAccel() const {
+f32 PlayerConst::getSlopeRollingSideAccel() const {
     return mSlopeRollingSideAccel;
 }
-float PlayerConst::getSlopeRollingSideBrake() const {
+f32 PlayerConst::getSlopeRollingSideBrake() const {
     return mSlopeRollingSideBrake;
 }
-float PlayerConst::getSlopeRollingSideMaxSpeed() const {
+f32 PlayerConst::getSlopeRollingSideMaxSpeed() const {
     return mSlopeRollingSideMaxSpeed;
 }
-int PlayerConst::getSlopeRollingUnRollFrame() const {
+s32 PlayerConst::getSlopeRollingUnRollFrame() const {
     return mSlopeRollingUnRollFrame;
 }
-float PlayerConst::getSlopeRollingEndBrake() const {
+f32 PlayerConst::getSlopeRollingEndBrake() const {
     return mSlopeRollingEndBrake;
 }
-float PlayerConst::getSlopeRollingEndBrakeEndSpeed() const {
+f32 PlayerConst::getSlopeRollingEndBrakeEndSpeed() const {
     return mSlopeRollingEndBrakeEndSpeed;
 }
-float PlayerConst::getSlopeRollingReStartAccel() const {
+f32 PlayerConst::getSlopeRollingReStartAccel() const {
     return mSlopeRollingReStartAccel;
 }
-float PlayerConst::getSlopeRollingReStartMaxAdd() const {
+f32 PlayerConst::getSlopeRollingReStartMaxAdd() const {
     return mSlopeRollingReStartMaxAdd;
 }
-int PlayerConst::getSlopeRollingReStartInterval() const {
+s32 PlayerConst::getSlopeRollingReStartInterval() const {
     return mSlopeRollingReStartinterval;
 }
-int PlayerConst::getSlopeRollingReStartSwing() const {
+s32 PlayerConst::getSlopeRollingReStartSwing() const {
     return mSlopeRollingReStartSwing;
 }
-int PlayerConst::getSlopeRollingReStartCharge() const {
+s32 PlayerConst::getSlopeRollingReStartCharge() const {
     return mSlopeRollingReStartCharge;
 }
-int PlayerConst::getSlopeRollingReStartForce() const {
+s32 PlayerConst::getSlopeRollingReStartForce() const {
     return mSlopeRollingReStartForce;
 }
-float PlayerConst::getSlopeRollingAccelOnSkate() const {
+f32 PlayerConst::getSlopeRollingAccelOnSkate() const {
     return mSlopeRollingAccelOnSkate;
 }
-float PlayerConst::getSlopeRollingSideAccelOnSkate() const {
+f32 PlayerConst::getSlopeRollingSideAccelOnSkate() const {
     return mSlopeRollingSideAccelOnSkate;
 }
-float PlayerConst::getSlopeRollingBrakeOnSkate() const {
+f32 PlayerConst::getSlopeRollingBrakeOnSkate() const {
     return mSlopeRollingBrakeOnSkate;
 }
-int PlayerConst::getExtendFrame() const {
+s32 PlayerConst::getExtendFrame() const {
     return mExtendFrame;
 }
-float PlayerConst::getJumpInertiaRate() const {
+f32 PlayerConst::getJumpInertiaRate() const {
     return mJumpInertiaRate;
 }
-float PlayerConst::getJumpPowerMin() const {
+f32 PlayerConst::getJumpPowerMin() const {
     return mJumpPowerMin;
 }
-float PlayerConst::getJumpPowerMax() const {
+f32 PlayerConst::getJumpPowerMax() const {
     return mJumpPowerMax;
 }
-float PlayerConst::getJumpGravity() const {
+f32 PlayerConst::getJumpGravity() const {
     return mJumpGravity;
 }
-float PlayerConst::getJumpBaseSpeedMax() const {
+f32 PlayerConst::getJumpBaseSpeedMax() const {
     return mJumpBaseSpeedMax;
 }
-float PlayerConst::getJumpMoveSpeedMin() const {
+f32 PlayerConst::getJumpMoveSpeedMin() const {
     return mJumpMoveSpeedMin;
 }
-float PlayerConst::getJumpMoveSpeedMax() const {
+f32 PlayerConst::getJumpMoveSpeedMax() const {
     return mJumpMoveSpeedMax;
 }
-float PlayerConst::getJumpAccelFront() const {
+f32 PlayerConst::getJumpAccelFront() const {
     return mJumpAccelFront;
 }
-float PlayerConst::getJumpAccelBack() const {
+f32 PlayerConst::getJumpAccelBack() const {
     return mJumpAccelBack;
 }
-float PlayerConst::getJumpAccelTurn() const {
+f32 PlayerConst::getJumpAccelTurn() const {
     return mJumpAccelTurn;
 }
-float PlayerConst::getJumpTurnAngleStart() const {
+f32 PlayerConst::getJumpTurnAngleStart() const {
     return mJumpTurnAngleStart;
 }
-float PlayerConst::getJumpTurnAngleLimit() const {
+f32 PlayerConst::getJumpTurnAngleLimit() const {
     return mJumpTurnAngleLimit;
 }
-float PlayerConst::getJumpTurnAngleFast() const {
+f32 PlayerConst::getJumpTurnAngleFast() const {
     return mJumpTurnAngleFast;
 }
-float PlayerConst::getJumpTurnAngleFastLimit() const {
+f32 PlayerConst::getJumpTurnAngleFastLimit() const {
     return mJumpTurnAngleFastLimit;
 }
-int PlayerConst::getJumpTurnAccelFrame() const {
+s32 PlayerConst::getJumpTurnAccelFrame() const {
     return mJumpTurnAccelFrame;
 }
-int PlayerConst::getJumpTurnAccelFrameFast() const {
+s32 PlayerConst::getJumpTurnAccelFrameFast() const {
     return mJumpTurnAccelFrameFast;
 }
-int PlayerConst::getJumpTurnBrakeFrame() const {
+s32 PlayerConst::getJumpTurnBrakeFrame() const {
     return mJumpTurnBrakeFrame;
 }
-float PlayerConst::getTrampleGravity() const {
+f32 PlayerConst::getTrampleGravity() const {
     return mTrampleGravity;
 }
-float PlayerConst::getTrampleJumpPower() const {
+f32 PlayerConst::getTrampleJumpPower() const {
     return mTrampleJumpPower;
 }
-float PlayerConst::getTrampleHighGravity() const {
+f32 PlayerConst::getTrampleHighGravity() const {
     return mTrampleHighGravity;
 }
-float PlayerConst::getTrampleHighJumpPower() const {
+f32 PlayerConst::getTrampleHighJumpPower() const {
     return mTrampleHighJumpPower;
 }
-float PlayerConst::getTrampleGravity2D() const {
+f32 PlayerConst::getTrampleGravity2D() const {
     return mTrampleGravity2D;
 }
-float PlayerConst::getTrampleJumpPower2D() const {
+f32 PlayerConst::getTrampleJumpPower2D() const {
     return mTrampleJumpPower2D;
 }
-float PlayerConst::getTrampleHighGravity2D() const {
+f32 PlayerConst::getTrampleHighGravity2D() const {
     return mTrampleHighGravity2D;
 }
-float PlayerConst::getTrampleHighJumpPower2D() const {
+f32 PlayerConst::getTrampleHighJumpPower2D() const {
     return mTrampleHighJumpPower2D;
 }
-float PlayerConst::getTrampleHipDropGravity() const {
+f32 PlayerConst::getTrampleHipDropGravity() const {
     return mTrampleHipDropGravity;
 }
-float PlayerConst::getTrampleHipDropJumpPower() const {
+f32 PlayerConst::getTrampleHipDropJumpPower() const {
     return mTrampleHipDropJumpPower;
 }
-float PlayerConst::getTrampleRisingBrakeVelH() const {
+f32 PlayerConst::getTrampleRisingBrakeVelH() const {
     return mTrampleRisingBrakeVelH;
 }
-float PlayerConst::getTrampleJumpCodePower() const {
+f32 PlayerConst::getTrampleJumpCodePower() const {
     return mTrampleJumpCodePower;
 }
-float PlayerConst::getTrampleJumpCodePowerSmall() const {
+f32 PlayerConst::getTrampleJumpCodePowerSmall() const {
     return mTrampleJumpCodePowerSmall;
 }
-float PlayerConst::getCapLeapFrogJumpGravity() const {
+f32 PlayerConst::getCapLeapFrogJumpGravity() const {
     return mCapLeapFrogJumpGravity;
 }
-float PlayerConst::getCapLeapFrogJumpPower() const {
+f32 PlayerConst::getCapLeapFrogJumpPower() const {
     return mCapLeapFrogJumpPower;
 }
-float PlayerConst::getCapLeapFrogJumpPowerAir() const {
+f32 PlayerConst::getCapLeapFrogJumpPowerAir() const {
     return mCapLeapFrogJumpPowerAir;
 }
-float PlayerConst::getObjLeapFrogJumpPower() const {
+f32 PlayerConst::getObjLeapFrogJumpPower() const {
     return mObjLeapFrogJumpPower;
 }
-float PlayerConst::getObjLeapFrogJumpPowerHigh() const {
+f32 PlayerConst::getObjLeapFrogJumpPowerHigh() const {
     return mObjLeapFrogJumpPowerHigh;
 }
-float PlayerConst::getCapHeadSpringJumpGravity() const {
+f32 PlayerConst::getCapHeadSpringJumpGravity() const {
     return mCapHeadSpringJumpGravity;
 }
-float PlayerConst::getCapHeadSpringJumpPower() const {
+f32 PlayerConst::getCapHeadSpringJumpPower() const {
     return mCapHeadSpringJumpPower;
 }
-float PlayerConst::getCapHeadSpringJumpGravityHigh() const {
+f32 PlayerConst::getCapHeadSpringJumpGravityHigh() const {
     return mCapHeadSpringJumpGravityHigh;
 }
-float PlayerConst::getCapHeadSpringJumpPowerHigh() const {
+f32 PlayerConst::getCapHeadSpringJumpPowerHigh() const {
     return mCapHeadSpringJumpPowerHigh;
 }
-float PlayerConst::getCapHeadSpringSpeedMax() const {
+f32 PlayerConst::getCapHeadSpringSpeedMax() const {
     return mCapHeadSpringSpeedMax;
 }
-int PlayerConst::getContinuousJumpPreInputFrame() const {
+s32 PlayerConst::getContinuousJumpPreInputFrame() const {
     return mContinuousJumpPreInputFrame;
 }
-int PlayerConst::getContinuousJumpCount() const {
+s32 PlayerConst::getContinuousJumpCount() const {
     return mContinuousJumpCount;
 }
-int PlayerConst::getContinuousJumpTimer() const {
+s32 PlayerConst::getContinuousJumpTimer() const {
     return mContinuousJumpTimer;
 }
-float PlayerConst::getContinuousJumpPowerMin() const {
+f32 PlayerConst::getContinuousJumpPowerMin() const {
     return mContinuousJumpPowerMin;
 }
-float PlayerConst::getJumpPowerMax2nd() const {
+f32 PlayerConst::getJumpPowerMax2nd() const {
     return mJumpPowerMax2nd;
 }
-float PlayerConst::getJumpGravity2nd() const {
+f32 PlayerConst::getJumpGravity2nd() const {
     return mJumpGravity2nd;
 }
-float PlayerConst::getJumpPowerMax3rd() const {
+f32 PlayerConst::getJumpPowerMax3rd() const {
     return mJumpPowerMax3rd;
 }
-float PlayerConst::getJumpGravity3rd() const {
+f32 PlayerConst::getJumpGravity3rd() const {
     return mJumpGravity3rd;
 }
-float PlayerConst::getSpinFlowerJumpGravity() const {
+f32 PlayerConst::getSpinFlowerJumpGravity() const {
     return mSpinFlowerJumpGravity;
 }
-float PlayerConst::getSpinFlowerJumpFallSpeedMax() const {
+f32 PlayerConst::getSpinFlowerJumpFallSpeedMax() const {
     return mSpinFlowerJumpFallSpeedMax;
 }
-float PlayerConst::getSpinFlowerJumpMovePower() const {
+f32 PlayerConst::getSpinFlowerJumpMovePower() const {
     return mSpinFlowerJumpMovePower;
 }
-float PlayerConst::getSpinFlowerJumpVelMax() const {
+f32 PlayerConst::getSpinFlowerJumpVelMax() const {
     return mSpinFlowerJumpVelMax;
 }
-int PlayerConst::getSpinFlowerJumpStayFrame() const {
+s32 PlayerConst::getSpinFlowerJumpStayFrame() const {
     return mSpinFlowerJumpStayFrame;
 }
-float PlayerConst::getSpinFlowerJumpStaySpeedMax() const {
+f32 PlayerConst::getSpinFlowerJumpStaySpeedMax() const {
     return mSpinFlowerJumpStaySpeedMax;
 }
-float PlayerConst::getSpinFlowerJumpNoInputBrake() const {
+f32 PlayerConst::getSpinFlowerJumpNoInputBrake() const {
     return mSpinFlowerJumpNoInputBrake;
 }
-float PlayerConst::getSpinFlowerJumpDownFallInitSpeed() const {
+f32 PlayerConst::getSpinFlowerJumpDownFallInitSpeed() const {
     return mSpinFlowerJumpDownFallInitSpeed;
 }
-float PlayerConst::getSpinFlowerJumpDownFallPower() const {
+f32 PlayerConst::getSpinFlowerJumpDownFallPower() const {
     return mSpinFlowerJumpDownFallPower;
 }
-float PlayerConst::getSpinFlowerJumpDownFallSpeedMax() const {
+f32 PlayerConst::getSpinFlowerJumpDownFallSpeedMax() const {
     return mSpinFlowerJumpDownFallSpeedMax;
 }
-float PlayerConst::getJumpGravityForceRun() const {
+f32 PlayerConst::getJumpGravityForceRun() const {
     return mJumpGravityForceRun;
 }
-float PlayerConst::getJumpPowerForceRun() const {
+f32 PlayerConst::getJumpPowerForceRun() const {
     return mJumpPowerForceRun;
 }
-float PlayerConst::getCapCatchPopPower() const {
+f32 PlayerConst::getCapCatchPopPower() const {
     return mCapCatchPopPower;
 }
-float PlayerConst::getCapCatchPopGravity() const {
+f32 PlayerConst::getCapCatchPopGravity() const {
     return mCapCatchPopGravity;
 }
-float PlayerConst::getSquatJumpGravity() const {
+f32 PlayerConst::getSquatJumpGravity() const {
     return mSquatJumpGravity;
 }
-float PlayerConst::getSquatJumpPower() const {
+f32 PlayerConst::getSquatJumpPower() const {
     return mSquatJumpPower;
 }
-float PlayerConst::getSquatJumpBackPower() const {
+f32 PlayerConst::getSquatJumpBackPower() const {
     return mSquatJumpBackPower;
 }
-float PlayerConst::getSquatJumpMovePowerFront() const {
+f32 PlayerConst::getSquatJumpMovePowerFront() const {
     return mSquatJumpMovePowerFront;
 }
-float PlayerConst::getSquatJumpMovePowerSide() const {
+f32 PlayerConst::getSquatJumpMovePowerSide() const {
     return mSquatJumpMovePowerSide;
 }
-float PlayerConst::getSquatJumpMoveSpeedMax() const {
+f32 PlayerConst::getSquatJumpMoveSpeedMax() const {
     return mSquatJumpMoveSpeedMax;
 }
-float PlayerConst::getTurnJumpGravity() const {
+f32 PlayerConst::getTurnJumpGravity() const {
     return mTurnJumpGravity;
 }
-float PlayerConst::getTurnJumpPower() const {
+f32 PlayerConst::getTurnJumpPower() const {
     return mTurnJumpPower;
 }
-float PlayerConst::getTurnJumpVelH() const {
+f32 PlayerConst::getTurnJumpVelH() const {
     return mTurnJumpVelH;
 }
-float PlayerConst::getTurnJumpBrake() const {
+f32 PlayerConst::getTurnJumpBrake() const {
     return mTurnJumpBrake;
 }
-float PlayerConst::getTurnJumpAccel() const {
+f32 PlayerConst::getTurnJumpAccel() const {
     return mTurnJumpAccel;
 }
-float PlayerConst::getTurnJumpSideAccel() const {
+f32 PlayerConst::getTurnJumpSideAccel() const {
     return mTurnJumpSideAccel;
 }
-float PlayerConst::getLongJumpAccel() const {
+f32 PlayerConst::getLongJumpAccel() const {
     return mLongJumpAccel;
 }
-float PlayerConst::getLongJumpBrake() const {
+f32 PlayerConst::getLongJumpBrake() const {
     return mLongJumpBrake;
 }
-float PlayerConst::getLongJumpSideAccel() const {
+f32 PlayerConst::getLongJumpSideAccel() const {
     return mLongJumpSideAccel;
 }
-float PlayerConst::getLongJumpGravity() const {
+f32 PlayerConst::getLongJumpGravity() const {
     return mLongJumpGravity;
 }
-float PlayerConst::getLongJumpJumpPow() const {
+f32 PlayerConst::getLongJumpJumpPow() const {
     return mLongJumpJumpPow;
 }
-float PlayerConst::getLongJumpMovePow() const {
+f32 PlayerConst::getLongJumpMovePow() const {
     return mLongJumpMovePow;
 }
-float PlayerConst::getLongJumpInitSpeed() const {
+f32 PlayerConst::getLongJumpInitSpeed() const {
     return mLongJumpInitSpeed;
 }
-float PlayerConst::getLongJumpSpeed() const {
+f32 PlayerConst::getLongJumpSpeed() const {
     return mLongJumpSpeed;
 }
-float PlayerConst::getLongJumpSpeedMin() const {
+f32 PlayerConst::getLongJumpSpeedMin() const {
     return mLongJumpSpeedMin;
 }
-int PlayerConst::getContinuousLongJumpCount() const {
+s32 PlayerConst::getContinuousLongJumpCount() const {
     return mContinuousLongJumpCount;
 }
-int PlayerConst::getContinuousLongJumpTimer() const {
+s32 PlayerConst::getContinuousLongJumpTimer() const {
     return mContinuousLongJumpTimer;
 }
-float PlayerConst::getGravityAir() const {
+f32 PlayerConst::getGravityAir() const {
     return mGravityAir;
 }
-float PlayerConst::getFrictionAir() const {
+f32 PlayerConst::getFrictionAir() const {
     return mFrictionAir;
 }
-float PlayerConst::getFallSpeedMax() const {
+f32 PlayerConst::getFallSpeedMax() const {
     return mFallSpeedMax;
 }
-float PlayerConst::getLongFallDistance() const {
+f32 PlayerConst::getLongFallDistance() const {
     return mLongFallDistance;
 }
-float PlayerConst::getFallWallScaleVelocity() const {
+f32 PlayerConst::getFallWallScaleVelocity() const {
     return mFallWallScaleVelocity;
 }
-int PlayerConst::getDownFallFrameMin() const {
+s32 PlayerConst::getDownFallFrameMin() const {
     return mDownFallFrameMin;
 }
-float PlayerConst::getGravityWallSlide() const {
+f32 PlayerConst::getGravityWallSlide() const {
     return mGravityWallSlide;
 }
-float PlayerConst::getWallHeightLowLimit() const {
+f32 PlayerConst::getWallHeightLowLimit() const {
     return mWallHeightLowLimit;
 }
-float PlayerConst::getWallKeepDegree() const {
+f32 PlayerConst::getWallKeepDegree() const {
     return mWallKeepDegree;
 }
-int PlayerConst::getWallKeepFrame() const {
+s32 PlayerConst::getWallKeepFrame() const {
     return mWallKeepFrame;
 }
-float PlayerConst::getWallJumpGravity() const {
+f32 PlayerConst::getWallJumpGravity() const {
     return mWallJumpGravity;
 }
-float PlayerConst::getWallJumpHSpeed() const {
+f32 PlayerConst::getWallJumpHSpeed() const {
     return mWallJumpHSpeed;
 }
-float PlayerConst::getWallJumpPower() const {
+f32 PlayerConst::getWallJumpPower() const {
     return mWallJumpPower;
 }
-int PlayerConst::getWallJumpInvalidateInputFrame() const {
+s32 PlayerConst::getWallJumpInvalidateInputFrame() const {
     return mWallJumpInvalidateInputFrame;
 }
-int PlayerConst::getWallInhibitAfterPunch() const {
+s32 PlayerConst::getWallInhibitAfterPunch() const {
     return mWallInhibitAfterPunch;
 }
-float PlayerConst::getWallFollowAngleH() const {
+f32 PlayerConst::getWallFollowAngleH() const {
     return mWallFollowAngleH;
 }
-float PlayerConst::getWallFollowAngleV() const {
+f32 PlayerConst::getWallFollowAngleV() const {
     return mWallFollowAngleV;
 }
-float PlayerConst::getWallCatchDegree() const {
+f32 PlayerConst::getWallCatchDegree() const {
     return mWallCatchDegree;
 }
-float PlayerConst::getWallCatchHeightEdgeTop() const {
+f32 PlayerConst::getWallCatchHeightEdgeTop() const {
     return mWallCatchHeightEdgeTop;
 }
-float PlayerConst::getWallCatchHeightBottom() const {
+f32 PlayerConst::getWallCatchHeightBottom() const {
     return mWallCatchHeightBottom;
 }
-float PlayerConst::getWallCatchKeepDegree() const {
+f32 PlayerConst::getWallCatchKeepDegree() const {
     return mWallCatchKeepDegree;
 }
-float PlayerConst::getWallCatchMoveDegree() const {
+f32 PlayerConst::getWallCatchMoveDegree() const {
     return mWallCatchMoveDegree;
 }
-float PlayerConst::getWallCatchMoveSpeed() const {
+f32 PlayerConst::getWallCatchMoveSpeed() const {
     return mWallCatchMoveSpeed;
 }
-float PlayerConst::getWallCatchMoveHeightRange() const {
+f32 PlayerConst::getWallCatchMoveHeightRange() const {
     return mWallCatchMoveHeightRange;
 }
-int PlayerConst::getWallCatchMoveInterpolate() const {
+s32 PlayerConst::getWallCatchMoveInterpolate() const {
     return mWallCatchMoveinterpolate;
 }
-int PlayerConst::getWallCatchMoveFrame() const {
+s32 PlayerConst::getWallCatchMoveFrame() const {
     return mWallCatchMoveFrame;
 }
-int PlayerConst::getWallCatchMoveFrameFast() const {
+s32 PlayerConst::getWallCatchMoveFrameFast() const {
     return mWallCatchMoveFrameFast;
 }
-int PlayerConst::getWallCatchMoveFrameSwing() const {
+s32 PlayerConst::getWallCatchMoveFrameSwing() const {
     return mWallCatchMoveFrameSwing;
 }
-float PlayerConst::getWallCatchInputRepeatAngle() const {
+f32 PlayerConst::getWallCatchInputRepeatAngle() const {
     return mWallCatchInputRepeatAngle;
 }
-float PlayerConst::getWallClimbDegree() const {
+f32 PlayerConst::getWallClimbDegree() const {
     return mWallClimbDegree;
 }
-int PlayerConst::getWallClimbJumpStartFrame() const {
+s32 PlayerConst::getWallClimbJumpStartFrame() const {
     return mWallClimbJumpStartFrame;
 }
-int PlayerConst::getWallClimbJumpEndFrame() const {
+s32 PlayerConst::getWallClimbJumpEndFrame() const {
     return mWallClimbJumpEndFrame;
 }
-int PlayerConst::getWallClimbStartFrame() const {
+s32 PlayerConst::getWallClimbStartFrame() const {
     return mWallClimbStartFrame;
 }
-float PlayerConst::getWallClimbGravity() const {
+f32 PlayerConst::getWallClimbGravity() const {
     return mWallClimbGravity;
 }
-float PlayerConst::getWallFallJumpSpeed() const {
+f32 PlayerConst::getWallFallJumpSpeed() const {
     return mWallFallJumpSpeed;
 }
-float PlayerConst::getWallClimbJumpSpeedV() const {
+f32 PlayerConst::getWallClimbJumpSpeedV() const {
     return mWallClimbJumpSpeedV;
 }
-float PlayerConst::getWallClimbJumpSpeedH() const {
+f32 PlayerConst::getWallClimbJumpSpeedH() const {
     return mWallClimbJumpSpeedH;
 }
-float PlayerConst::getWallClimbJumpGravity() const {
+f32 PlayerConst::getWallClimbJumpGravity() const {
     return mWallClimbJumpGravity;
 }
-int PlayerConst::getWallClimbJumpInvalidFrame() const {
+s32 PlayerConst::getWallClimbJumpInvalidFrame() const {
     return mWallClimbJumpInvalidFrame;
 }
-float PlayerConst::getWallCatchHipLocalOffset() const {
+f32 PlayerConst::getWallCatchHipLocalOffset() const {
     return mWallCatchHipLocalOffset;
 }
-float PlayerConst::getWallCatchHipStability() const {
+f32 PlayerConst::getWallCatchHipStability() const {
     return mWallCatchHipStability;
 }
-float PlayerConst::getWallCatchHipFriction() const {
+f32 PlayerConst::getWallCatchHipFriction() const {
     return mWallCatchHipFriction;
 }
-float PlayerConst::getWallCatchHipLimitDegree() const {
+f32 PlayerConst::getWallCatchHipLimitDegree() const {
     return mWallCatchHipLimitDegree;
 }
-float PlayerConst::getWallCatchStainAreaOffset() const {
+f32 PlayerConst::getWallCatchStainAreaOffset() const {
     return mWallCatchStainAreaOffset;
 }
-float PlayerConst::getGrabCeilRange() const {
+f32 PlayerConst::getGrabCeilRange() const {
     return mGrabCeilRange;
 }
-float PlayerConst::getGrabCeilBodyRadius() const {
+f32 PlayerConst::getGrabCeilBodyRadius() const {
     return mGrabCeilBodyRadius;
 }
-float PlayerConst::getGrabCeilLeaveSpeedMin() const {
+f32 PlayerConst::getGrabCeilLeaveSpeedMin() const {
     return mGrabCeilLeaveSpeedMin;
 }
-float PlayerConst::getGrabCeilLeavePopPower() const {
+f32 PlayerConst::getGrabCeilLeavePopPower() const {
     return mGrabCeilLeavePopPower;
 }
-float PlayerConst::getGrabCeilLeavePopGravity() const {
+f32 PlayerConst::getGrabCeilLeavePopGravity() const {
     return mGrabCeilLeavePopGravity;
 }
-float PlayerConst::getGrabCeilSwingStartOffset() const {
+f32 PlayerConst::getGrabCeilSwingStartOffset() const {
     return mGrabCeilSwingStartOffset;
 }
-float PlayerConst::getGrabCeilReverseInputBorder() const {
+f32 PlayerConst::getGrabCeilReverseInputBorder() const {
     return mGrabCeilReverseInputBorder;
 }
-float PlayerConst::getGrabCeilInputPowerBorder() const {
+f32 PlayerConst::getGrabCeilInputPowerBorder() const {
     return mGrabCeilInputPowerBorder;
 }
-float PlayerConst::getGrabCeilSwingWaitEnergy() const {
+f32 PlayerConst::getGrabCeilSwingWaitEnergy() const {
     return mGrabCeilSwingWaitEnergy;
 }
-float PlayerConst::getGrabCeilEnableJumpEnergy() const {
+f32 PlayerConst::getGrabCeilEnableJumpEnergy() const {
     return mGrabCeilEnableJumpEnergy;
 }
-float PlayerConst::getGrabCeilEnableJumpEnergyMax() const {
+f32 PlayerConst::getGrabCeilEnableJumpEnergyMax() const {
     return mGrabCeilEnableJumpEnergyMax;
 }
-float PlayerConst::getGrabCeilJumpForceAngle() const {
+f32 PlayerConst::getGrabCeilJumpForceAngle() const {
     return mGrabCeilJumpForceAngle;
 }
-float PlayerConst::getGrabCeilJumpPower() const {
+f32 PlayerConst::getGrabCeilJumpPower() const {
     return mGrabCeilJumpPower;
 }
-float PlayerConst::getGrabCeilJumpMoveMin() const {
+f32 PlayerConst::getGrabCeilJumpMoveMin() const {
     return mGrabCeilJumpMoveMin;
 }
-float PlayerConst::getGrabCeilJumpMoveMax() const {
+f32 PlayerConst::getGrabCeilJumpMoveMax() const {
     return mGrabCeilJumpMoveMax;
 }
-float PlayerConst::getGrabCeilJumpGravity() const {
+f32 PlayerConst::getGrabCeilJumpGravity() const {
     return mGrabCeilJumpGravity;
 }
-int PlayerConst::getGrabCeilJumpInvalidFrame() const {
+s32 PlayerConst::getGrabCeilJumpInvalidFrame() const {
     return mGrabCeilJumpInvalidFrame;
 }
-int PlayerConst::getGrabCeilEnableNextFrame() const {
+s32 PlayerConst::getGrabCeilEnableNextFrame() const {
     return mGrabCeilEnableNextFrame;
 }
-int PlayerConst::getGrabCeilEnableFallSnapFrame() const {
+s32 PlayerConst::getGrabCeilEnableFallSnapFrame() const {
     return mGrabCeilEnableFallSnapFrame;
 }
-int PlayerConst::getPoleClimbPreInputSwing() const {
+s32 PlayerConst::getPoleClimbPreInputSwing() const {
     return mPoleClimbPreInputSwing;
 }
-float PlayerConst::getPoleClimbInputRepeatAngle() const {
+f32 PlayerConst::getPoleClimbInputRepeatAngle() const {
     return mPoleClimbInputRepeatAngle;
 }
-float PlayerConst::getPoleClimbInputDegreeMove() const {
+f32 PlayerConst::getPoleClimbInputDegreeMove() const {
     return mPoleClimbInputDegreeMove;
 }
-float PlayerConst::getPoleClimbCatchRange() const {
+f32 PlayerConst::getPoleClimbCatchRange() const {
     return mPoleClimbCatchRange;
 }
-float PlayerConst::getPoleClimbCatchRangeMin() const {
+f32 PlayerConst::getPoleClimbCatchRangeMin() const {
     return mPoleClimbCatchRangeMin;
 }
-float PlayerConst::getPoleClimbCatchRangeMax() const {
+f32 PlayerConst::getPoleClimbCatchRangeMax() const {
     return mPoleClimbCatchRangeMax;
 }
-float PlayerConst::getPoleClimbJointAngleMin() const {
+f32 PlayerConst::getPoleClimbJointAngleMin() const {
     return mPoleClimbJointAngleMin;
 }
-float PlayerConst::getPoleClimbJointAngleMax() const {
+f32 PlayerConst::getPoleClimbJointAngleMax() const {
     return mPoleClimbJointAngleMax;
 }
-float PlayerConst::getPoleClimbJointRangeMin() const {
+f32 PlayerConst::getPoleClimbJointRangeMin() const {
     return mPoleClimbJointRangeMin;
 }
-float PlayerConst::getPoleClimbJointRangeMax() const {
+f32 PlayerConst::getPoleClimbJointRangeMax() const {
     return mPoleClimbJointRangeMax;
 }
-float PlayerConst::getPoleClimbMoveWallDegree() const {
+f32 PlayerConst::getPoleClimbMoveWallDegree() const {
     return mPoleClimbMoveWallDegree;
 }
-float PlayerConst::getPoleClimbUpMargine() const {
+f32 PlayerConst::getPoleClimbUpMargine() const {
     return mPoleClimbUpMargine;
 }
-float PlayerConst::getPoleClimbUpSpeed() const {
+f32 PlayerConst::getPoleClimbUpSpeed() const {
     return mPoleClimbUpSpeed;
 }
-int PlayerConst::getPoleClimbUpFrame() const {
+s32 PlayerConst::getPoleClimbUpFrame() const {
     return mPoleClimbUpFrame;
 }
-int PlayerConst::getPoleClimbUpFrameFast() const {
+s32 PlayerConst::getPoleClimbUpFrameFast() const {
     return mPoleClimbUpFrameFast;
 }
-int PlayerConst::getPoleClimbUpFrameSwing() const {
+s32 PlayerConst::getPoleClimbUpFrameSwing() const {
     return mPoleClimbUpFrameSwing;
 }
-float PlayerConst::getPoleClimbDownSpeed() const {
+f32 PlayerConst::getPoleClimbDownSpeed() const {
     return mPoleClimbDownSpeed;
 }
-float PlayerConst::getPoleClimbDownSpeedFast() const {
+f32 PlayerConst::getPoleClimbDownSpeedFast() const {
     return mPoleClimbDownSpeedFast;
 }
-float PlayerConst::getPoleClimbDownSpeedSwing() const {
+f32 PlayerConst::getPoleClimbDownSpeedSwing() const {
     return mPoleClimbDownSpeedSwing;
 }
-int PlayerConst::getPoleClimbDownFrame() const {
+s32 PlayerConst::getPoleClimbDownFrame() const {
     return mPoleClimbDownFrame;
 }
-int PlayerConst::getPoleClimbDownKeepTime() const {
+s32 PlayerConst::getPoleClimbDownKeepTime() const {
     return mPoleClimbDownKeepTime;
 }
-float PlayerConst::getPoleClimbTurnDist() const {
+f32 PlayerConst::getPoleClimbTurnDist() const {
     return mPoleClimbTurnDist;
 }
-int PlayerConst::getPoleClimbTurnFrame() const {
+s32 PlayerConst::getPoleClimbTurnFrame() const {
     return mPoleClimbTurnFrame;
 }
-int PlayerConst::getPoleClimbTurnStopFrame() const {
+s32 PlayerConst::getPoleClimbTurnStopFrame() const {
     return mPoleClimbTurnStopFrame;
 }
-int PlayerConst::getPoleTopStartFrame() const {
+s32 PlayerConst::getPoleTopStartFrame() const {
     return mPoleTopStartFrame;
 }
-int PlayerConst::getPoleTopEndFrame() const {
+s32 PlayerConst::getPoleTopEndFrame() const {
     return mPoleTopEndFrame;
 }
-float PlayerConst::getPoleTopTurnSpeed() const {
+f32 PlayerConst::getPoleTopTurnSpeed() const {
     return mPoleTopTurnSpeed;
 }
-float PlayerConst::getPoleTopEndUnderOffsetY() const {
+f32 PlayerConst::getPoleTopEndUnderOffsetY() const {
     return mPoleTopEndUnderOffsetY;
 }
-int PlayerConst::getGroundSpinFrame() const {
+s32 PlayerConst::getGroundSpinFrame() const {
     return mGroundSpinFrame;
 }
-float PlayerConst::getGroundSpinMoveSpeedMax() const {
+f32 PlayerConst::getGroundSpinMoveSpeedMax() const {
     return mGroundSpinMoveSpeedMax;
 }
-float PlayerConst::getGroundSpinAccelRate() const {
+f32 PlayerConst::getGroundSpinAccelRate() const {
     return mGroundSpinAccelRate;
 }
-float PlayerConst::getGroundSpinBrakeRate() const {
+f32 PlayerConst::getGroundSpinBrakeRate() const {
     return mGroundSpinBrakeRate;
 }
-float PlayerConst::getSpinJumpGravity() const {
+f32 PlayerConst::getSpinJumpGravity() const {
     return mSpinJumpGravity;
 }
-float PlayerConst::getSpinJumpPower() const {
+f32 PlayerConst::getSpinJumpPower() const {
     return mSpinJumpPower;
 }
-float PlayerConst::getSpinJumpMoveSpeedMax() const {
+f32 PlayerConst::getSpinJumpMoveSpeedMax() const {
     return mSpinJumpMoveSpeedMax;
 }
-float PlayerConst::getSpinJumpDownFallInitSpeed() const {
+f32 PlayerConst::getSpinJumpDownFallInitSpeed() const {
     return mSpinJumpDownFallInitSpeed;
 }
-float PlayerConst::getSpinJumpDownFallPower() const {
+f32 PlayerConst::getSpinJumpDownFallPower() const {
     return mSpinJumpDownFallPower;
 }
-float PlayerConst::getSpinJumpDownFallSpeedMax() const {
+f32 PlayerConst::getSpinJumpDownFallSpeedMax() const {
     return mSpinJumpDownFallSpeedMax;
 }
-float PlayerConst::getSquatBrakeEndSpeed() const {
+f32 PlayerConst::getSquatBrakeEndSpeed() const {
     return mSquatBrakeEndSpeed;
 }
-float PlayerConst::getSquatAccelRate() const {
+f32 PlayerConst::getSquatAccelRate() const {
     return mSquatAccelRate;
 }
-float PlayerConst::getSquatBrakeRate() const {
+f32 PlayerConst::getSquatBrakeRate() const {
     return mSquatBrakeRate;
 }
-float PlayerConst::getSquatBrakeRateOnSkate() const {
+f32 PlayerConst::getSquatBrakeRateOnSkate() const {
     return mSquatBrakeRateOnSkate;
 }
-float PlayerConst::getSquatBrakeSideAccel() const {
+f32 PlayerConst::getSquatBrakeSideAccel() const {
     return mSquatBrakeSideAccel;
 }
-float PlayerConst::getSquatBrakeSideRate() const {
+f32 PlayerConst::getSquatBrakeSideRate() const {
     return mSquatBrakeSideRate;
 }
-float PlayerConst::getSquatBrakeSideAccelOnSkate() const {
+f32 PlayerConst::getSquatBrakeSideAccelOnSkate() const {
     return mSquatBrakeSideAccelOnSkate;
 }
-float PlayerConst::getSquatBrakeSideRateOnSkate() const {
+f32 PlayerConst::getSquatBrakeSideRateOnSkate() const {
     return mSquatBrakeSideRateOnSkate;
 }
-float PlayerConst::getSquatBrakeSideMaxSpeedRate() const {
+f32 PlayerConst::getSquatBrakeSideMaxSpeedRate() const {
     return mSquatBrakeSideMaxSpeedRate;
 }
-float PlayerConst::getSquatWalkSpeed() const {
+f32 PlayerConst::getSquatWalkSpeed() const {
     return mSquatWalkSpeed;
 }
-float PlayerConst::getSquatWalkTurnSpeed() const {
+f32 PlayerConst::getSquatWalkTurnSpeed() const {
     return mSquatWalkTurnSpeed;
 }
-int PlayerConst::getSquatWalkTurnFrame() const {
+s32 PlayerConst::getSquatWalkTurnFrame() const {
     return mSquatWalkTurnFrame;
 }
-float PlayerConst::getSquatJumpCeilSlideSpeed2D() const {
+f32 PlayerConst::getSquatJumpCeilSlideSpeed2D() const {
     return mSquatJumpCeilSlideSpeed2D;
 }
-float PlayerConst::getHipDropSpeed() const {
+f32 PlayerConst::getHipDropSpeed() const {
     return mHipDropSpeed;
 }
-float PlayerConst::getHipDropGravity() const {
+f32 PlayerConst::getHipDropGravity() const {
     return mHipDropGravity;
 }
-float PlayerConst::getHipDropSpeedMax() const {
+f32 PlayerConst::getHipDropSpeedMax() const {
     return mHipDropSpeedMax;
 }
-int PlayerConst::getHipDropLandCancelFrame() const {
+s32 PlayerConst::getHipDropLandCancelFrame() const {
     return mHipDropLandCancelFrame;
 }
-float PlayerConst::getHipDropHeight() const {
+f32 PlayerConst::getHipDropHeight() const {
     return mHipDropHeight;
 }
-int PlayerConst::getHipDropMsgInterval() const {
+s32 PlayerConst::getHipDropMsgInterval() const {
     return mHipDropMsginterval;
 }
-float PlayerConst::getJumpHipDropPower() const {
+f32 PlayerConst::getJumpHipDropPower() const {
     return mJumpHipDropPower;
 }
-int PlayerConst::getJumpHipDropPermitBeginFrame() const {
+s32 PlayerConst::getJumpHipDropPermitBeginFrame() const {
     return mJumpHipDropPermitBeginFrame;
 }
-int PlayerConst::getJumpHipDropPermitEndFrame() const {
+s32 PlayerConst::getJumpHipDropPermitEndFrame() const {
     return mJumpHipDropPermitEndFrame;
 }
-float PlayerConst::getHeadSlidingSpeed() const {
+f32 PlayerConst::getHeadSlidingSpeed() const {
     return mHeadSlidingSpeed;
 }
-float PlayerConst::getHeadSlidingSpeedMin() const {
+f32 PlayerConst::getHeadSlidingSpeedMin() const {
     return mHeadSlidingSpeedMin;
 }
-float PlayerConst::getHeadSlidingBrake() const {
+f32 PlayerConst::getHeadSlidingBrake() const {
     return mHeadSlidingBrake;
 }
-float PlayerConst::getHeadSlidingSideAccel() const {
+f32 PlayerConst::getHeadSlidingSideAccel() const {
     return mHeadSlidingSideAccel;
 }
-float PlayerConst::getHeadSlidingJump() const {
+f32 PlayerConst::getHeadSlidingJump() const {
     return mHeadSlidingJump;
 }
-float PlayerConst::getHeadSlidingGravityAir() const {
+f32 PlayerConst::getHeadSlidingGravityAir() const {
     return mHeadSlidingGravityAir;
 }
-float PlayerConst::getSwimCenterOffset() const {
+f32 PlayerConst::getSwimCenterOffset() const {
     return mSwimCenterOffset;
 }
-float PlayerConst::getSwimWallCatchOffset() const {
+f32 PlayerConst::getSwimWallCatchOffset() const {
     return mSwimWallCatchOffset;
 }
-float PlayerConst::getSwimRisePower() const {
+f32 PlayerConst::getSwimRisePower() const {
     return mSwimRisePower;
 }
-float PlayerConst::getSwimRiseSpeedMax() const {
+f32 PlayerConst::getSwimRiseSpeedMax() const {
     return mSwimRiseSpeedMax;
 }
-int PlayerConst::getSwimRiseFrame() const {
+s32 PlayerConst::getSwimRiseFrame() const {
     return mSwimRiseFrame;
 }
-float PlayerConst::getSwimGravity() const {
+f32 PlayerConst::getSwimGravity() const {
     return mSwimGravity;
 }
-float PlayerConst::getSwimGravityWalk() const {
+f32 PlayerConst::getSwimGravityWalk() const {
     return mSwimGravityWalk;
 }
-float PlayerConst::getSwimFallSpeedMax() const {
+f32 PlayerConst::getSwimFallSpeedMax() const {
     return mSwimFallSpeedMax;
 }
-float PlayerConst::getSwimFloorAccelH() const {
+f32 PlayerConst::getSwimFloorAccelH() const {
     return mSwimFloorAccelH;
 }
-float PlayerConst::getSwimFloorSpeedMaxH() const {
+f32 PlayerConst::getSwimFloorSpeedMaxH() const {
     return mSwimFloorSpeedMaxH;
 }
-float PlayerConst::getSwimHighAccelH() const {
+f32 PlayerConst::getSwimHighAccelH() const {
     return mSwimHighAccelH;
 }
-float PlayerConst::getSwimHighSpeedMaxH() const {
+f32 PlayerConst::getSwimHighSpeedMaxH() const {
     return mSwimHighSpeedMaxH;
 }
-float PlayerConst::getSwimLowAccelH() const {
+f32 PlayerConst::getSwimLowAccelH() const {
     return mSwimLowAccelH;
 }
-float PlayerConst::getSwimLowSpeedMaxH() const {
+f32 PlayerConst::getSwimLowSpeedMaxH() const {
     return mSwimLowSpeedMaxH;
 }
-float PlayerConst::getSwimBrakeRateH() const {
+f32 PlayerConst::getSwimBrakeRateH() const {
     return mSwimBrakeRateH;
 }
-float PlayerConst::getSwimWallHitSpeedMinH() const {
+f32 PlayerConst::getSwimWallHitSpeedMinH() const {
     return mSwimWallHitSpeedMinH;
 }
-int PlayerConst::getSwimHighAccelPermitFrame() const {
+s32 PlayerConst::getSwimHighAccelPermitFrame() const {
     return mSwimHighAccelPermitFrame;
 }
-float PlayerConst::getSwimFlowFieldBlend() const {
+f32 PlayerConst::getSwimFlowFieldBlend() const {
     return mSwimFlowFieldBlend;
 }
-float PlayerConst::getSwimWalkAnimMinRate() const {
+f32 PlayerConst::getSwimWalkAnimMinRate() const {
     return mSwimWalkAnimMinRate;
 }
-float PlayerConst::getSwimWalkAnimMaxRate() const {
+f32 PlayerConst::getSwimWalkAnimMaxRate() const {
     return mSwimWalkAnimMaxRate;
 }
-float PlayerConst::getSwimWalkMaxSpeed() const {
+f32 PlayerConst::getSwimWalkMaxSpeed() const {
     return mSwimWalkMaxSpeed;
 }
-float PlayerConst::getSwimSpinCapUpPower() const {
+f32 PlayerConst::getSwimSpinCapUpPower() const {
     return mSwimSpinCapUpPower;
 }
-float PlayerConst::getSwimSpinCapUpSpeedMax() const {
+f32 PlayerConst::getSwimSpinCapUpSpeedMax() const {
     return mSwimSpinCapUpSpeedMax;
 }
-float PlayerConst::getSwimRotStartAngle() const {
+f32 PlayerConst::getSwimRotStartAngle() const {
     return mSwimRotStartAngle;
 }
-float PlayerConst::getSwimRotFastAngle() const {
+f32 PlayerConst::getSwimRotFastAngle() const {
     return mSwimRotFastAngle;
 }
-int PlayerConst::getSwimRotAccelFrame() const {
+s32 PlayerConst::getSwimRotAccelFrame() const {
     return mSwimRotAccelFrame;
 }
-int PlayerConst::getSwimRotAccelFrameFast() const {
+s32 PlayerConst::getSwimRotAccelFrameFast() const {
     return mSwimRotAccelFrameFast;
 }
-int PlayerConst::getSwimRotBrakeFrame() const {
+s32 PlayerConst::getSwimRotBrakeFrame() const {
     return mSwimRotBrakeFrame;
 }
-float PlayerConst::getSwimRotSpeedChangeStart() const {
+f32 PlayerConst::getSwimRotSpeedChangeStart() const {
     return mSwimRotSpeedChangeStart;
 }
-float PlayerConst::getSwimRotSpeedForward() const {
+f32 PlayerConst::getSwimRotSpeedForward() const {
     return mSwimRotSpeedForward;
 }
-float PlayerConst::getSwimRotSpeedMax() const {
+f32 PlayerConst::getSwimRotSpeedMax() const {
     return mSwimRotSpeedMax;
 }
-float PlayerConst::getSwimSurfaceAccelH() const {
+f32 PlayerConst::getSwimSurfaceAccelH() const {
     return mSwimSurfaceAccelH;
 }
-float PlayerConst::getSwimSurfaceSpeedMaxH() const {
+f32 PlayerConst::getSwimSurfaceSpeedMaxH() const {
     return mSwimSurfaceSpeedMaxH;
 }
-int PlayerConst::getSwimSurfaceSpinCapFrame() const {
+s32 PlayerConst::getSwimSurfaceSpinCapFrame() const {
     return mSwimSurfaceSpinCapFrame;
 }
-float PlayerConst::getSwimSurfaceSpinCapSpeedMaxH() const {
+f32 PlayerConst::getSwimSurfaceSpinCapSpeedMaxH() const {
     return mSwimSurfaceSpinCapSpeedMaxH;
 }
-float PlayerConst::getSwimSurfaceStartDist() const {
+f32 PlayerConst::getSwimSurfaceStartDist() const {
     return mSwimSurfaceStartDist;
 }
-float PlayerConst::getSwimSurfaceEndDist() const {
+f32 PlayerConst::getSwimSurfaceEndDist() const {
     return mSwimSurfaceEndDist;
 }
-float PlayerConst::getSwimSurfaceGravity() const {
+f32 PlayerConst::getSwimSurfaceGravity() const {
     return mSwimSurfaceGravity;
 }
-float PlayerConst::getSwimSurfaceBaseHeight() const {
+f32 PlayerConst::getSwimSurfaceBaseHeight() const {
     return mSwimSurfaceBaseHeight;
 }
-float PlayerConst::getSwimSurfaceSpring() const {
+f32 PlayerConst::getSwimSurfaceSpring() const {
     return mSwimSurfaceSpring;
 }
-float PlayerConst::getSwimSurfaceDamper() const {
+f32 PlayerConst::getSwimSurfaceDamper() const {
     return mSwimSurfaceDamper;
 }
-int PlayerConst::getSwimSurfaceDamperStart() const {
+s32 PlayerConst::getSwimSurfaceDamperStart() const {
     return mSwimSurfaceDamperStart;
 }
-int PlayerConst::getSwimSurfaceDamperFrame() const {
+s32 PlayerConst::getSwimSurfaceDamperFrame() const {
     return mSwimSurfaceDamperFrame;
 }
-float PlayerConst::getSwimSurfaceEnableJumpHeight() const {
+f32 PlayerConst::getSwimSurfaceEnableJumpHeight() const {
     return mSwimSurfaceEnableJumpHeight;
 }
-int PlayerConst::getSwimSurfacePreInputJumpFrame() const {
+s32 PlayerConst::getSwimSurfacePreInputJumpFrame() const {
     return mSwimSurfacePreInputJumpFrame;
 }
-float PlayerConst::getSwimSurfaceMoveSpring() const {
+f32 PlayerConst::getSwimSurfaceMoveSpring() const {
     return mSwimSurfaceMoveSpring;
 }
-float PlayerConst::getSwimSurfaceMoveDamper() const {
+f32 PlayerConst::getSwimSurfaceMoveDamper() const {
     return mSwimSurfaceMoveDamper;
 }
-float PlayerConst::getSwimSurfaceMoveBaseHeight() const {
+f32 PlayerConst::getSwimSurfaceMoveBaseHeight() const {
     return mSwimSurfaceMoveBaseHeight;
 }
-float PlayerConst::getSwimRunSurfaceBaseHeight() const {
+f32 PlayerConst::getSwimRunSurfaceBaseHeight() const {
     return mSwimRunSurfaceBaseHeight;
 }
-float PlayerConst::getSwimRunSurfaceApproachRate() const {
+f32 PlayerConst::getSwimRunSurfaceApproachRate() const {
     return mSwimRunSurfaceApproachRate;
 }
-float PlayerConst::getSwimRunSurfaceApproachLimit() const {
+f32 PlayerConst::getSwimRunSurfaceApproachLimit() const {
     return mSwimRunSurfaceApproachLimit;
 }
-float PlayerConst::getSwimRunSurfaceBrakeBorder() const {
+f32 PlayerConst::getSwimRunSurfaceBrakeBorder() const {
     return mSwimRunSurfaceBrakeBorder;
 }
-float PlayerConst::getSwimRunSurfaceBrakeH() const {
+f32 PlayerConst::getSwimRunSurfaceBrakeH() const {
     return mSwimRunSurfaceBrakeH;
 }
-float PlayerConst::getSwimRunSurfaceApproachBorderMax() const {
+f32 PlayerConst::getSwimRunSurfaceApproachBorderMax() const {
     return mSwimRunSurfaceApproachBorderMax;
 }
-float PlayerConst::getSwimRunSurfaceApproachBorderMin() const {
+f32 PlayerConst::getSwimRunSurfaceApproachBorderMin() const {
     return mSwimRunSurfaceApproachBorderMin;
 }
-float PlayerConst::getSwimRunSurfaceApproachRateMin() const {
+f32 PlayerConst::getSwimRunSurfaceApproachRateMin() const {
     return mSwimRunSurfaceApproachRateMin;
 }
-float PlayerConst::getSwimFallInSpeed() const {
+f32 PlayerConst::getSwimFallInSpeed() const {
     return mSwimFallInSpeed;
 }
-float PlayerConst::getSwimFallInBrakeH() const {
+f32 PlayerConst::getSwimFallInBrakeH() const {
     return mSwimFallInBrakeH;
 }
-float PlayerConst::getSwimFallInBrakeV() const {
+f32 PlayerConst::getSwimFallInBrakeV() const {
     return mSwimFallInBrakeV;
 }
-float PlayerConst::getSwimHeadInBrakeH() const {
+f32 PlayerConst::getSwimHeadInBrakeH() const {
     return mSwimHeadInBrakeH;
 }
-float PlayerConst::getSwimHeadInBrakeV() const {
+f32 PlayerConst::getSwimHeadInBrakeV() const {
     return mSwimHeadInBrakeV;
 }
-float PlayerConst::getSwimHeadInRisePower() const {
+f32 PlayerConst::getSwimHeadInRisePower() const {
     return mSwimHeadInRisePower;
 }
-float PlayerConst::getSwimHeadInRiseSpeedMax() const {
+f32 PlayerConst::getSwimHeadInRiseSpeedMax() const {
     return mSwimHeadInRiseSpeedMax;
 }
-float PlayerConst::getSwimHeadInSurfaceHeight() const {
+f32 PlayerConst::getSwimHeadInSurfaceHeight() const {
     return mSwimHeadInSurfaceHeight;
 }
-int PlayerConst::getSwimFallInForceSurfaceFrame() const {
+s32 PlayerConst::getSwimFallInForceSurfaceFrame() const {
     return mSwimFallInForceSurfaceFrame;
 }
-int PlayerConst::getSwimFallInvalidJumpFrame() const {
+s32 PlayerConst::getSwimFallInvalidJumpFrame() const {
     return mSwimFallInvalidJumpFrame;
 }
-float PlayerConst::getSwimDiveStartSpeed() const {
+f32 PlayerConst::getSwimDiveStartSpeed() const {
     return mSwimDiveStartSpeed;
 }
-float PlayerConst::getSwimDiveBrake() const {
+f32 PlayerConst::getSwimDiveBrake() const {
     return mSwimDiveBrake;
 }
-float PlayerConst::getSwimDiveEndSpeed() const {
+f32 PlayerConst::getSwimDiveEndSpeed() const {
     return mSwimDiveEndSpeed;
 }
-int PlayerConst::getSwimDiveLandCount() const {
+s32 PlayerConst::getSwimDiveLandCount() const {
     return mSwimDiveLandCount;
 }
-int PlayerConst::getSwimDiveLandCancelFrame() const {
+s32 PlayerConst::getSwimDiveLandCancelFrame() const {
     return mSwimDiveLandCancelFrame;
 }
-int PlayerConst::getSwimDiveNoBrakeFrame() const {
+s32 PlayerConst::getSwimDiveNoBrakeFrame() const {
     return mSwimDiveNoBrakeFrame;
 }
-int PlayerConst::getSwimDiveButtonValidFrame() const {
+s32 PlayerConst::getSwimDiveButtonValidFrame() const {
     return mSwimDiveButtonValidFrame;
 }
-int PlayerConst::getSwimDiveEndFrame() const {
+s32 PlayerConst::getSwimDiveEndFrame() const {
     return mSwimDiveEndFrame;
 }
-float PlayerConst::getSwimDiveInBrakeH() const {
+f32 PlayerConst::getSwimDiveInBrakeH() const {
     return mSwimDiveInBrakeH;
 }
-float PlayerConst::getSwimDiveInBrakeV() const {
+f32 PlayerConst::getSwimDiveInBrakeV() const {
     return mSwimDiveInBrakeV;
 }
-float PlayerConst::getSwimDiveInRisePower() const {
+f32 PlayerConst::getSwimDiveInRisePower() const {
     return mSwimDiveInRisePower;
 }
-float PlayerConst::getSwimDiveInRiseSpeedMax() const {
+f32 PlayerConst::getSwimDiveInRiseSpeedMax() const {
     return mSwimDiveInRiseSpeedMax;
 }
-float PlayerConst::getSwimDiveInSurfaceHeight() const {
+f32 PlayerConst::getSwimDiveInSurfaceHeight() const {
     return mSwimDiveInSurfaceHeight;
 }
-int PlayerConst::getSwimDiveInKeepFrame() const {
+s32 PlayerConst::getSwimDiveInKeepFrame() const {
     return mSwimDiveInKeepFrame;
 }
-int PlayerConst::getSwimHeadSlidingFrame() const {
+s32 PlayerConst::getSwimHeadSlidingFrame() const {
     return mSwimHeadSlidingFrame;
 }
-int PlayerConst::getSwimHeadSlidingBrakeFrame() const {
+s32 PlayerConst::getSwimHeadSlidingBrakeFrame() const {
     return mSwimHeadSlidingBrakeFrame;
 }
-float PlayerConst::getSwimHeadSlidingSpeed() const {
+f32 PlayerConst::getSwimHeadSlidingSpeed() const {
     return mSwimHeadSlidingSpeed;
 }
-float PlayerConst::getSwimHeadSlidingSpeedEnd() const {
+f32 PlayerConst::getSwimHeadSlidingSpeedEnd() const {
     return mSwimHeadSlidingSpeedEnd;
 }
-float PlayerConst::getSwimHeadSlidingBrake() const {
+f32 PlayerConst::getSwimHeadSlidingBrake() const {
     return mSwimHeadSlidingBrake;
 }
-float PlayerConst::getSwimHeadSlidingSideAccel() const {
+f32 PlayerConst::getSwimHeadSlidingSideAccel() const {
     return mSwimHeadSlidingSideAccel;
 }
-float PlayerConst::getSwimHeadSlidingJump() const {
+f32 PlayerConst::getSwimHeadSlidingJump() const {
     return mSwimHeadSlidingJump;
 }
-float PlayerConst::getSwimHeadSlidingGravity() const {
+f32 PlayerConst::getSwimHeadSlidingGravity() const {
     return mSwimHeadSlidingGravity;
 }
-int PlayerConst::getSwimHeadSlidingEndBrakeFrame() const {
+s32 PlayerConst::getSwimHeadSlidingEndBrakeFrame() const {
     return mSwimHeadSlidingEndBrakeFrame;
 }
-int PlayerConst::getSwimHeadSlidingEndSpeedMin() const {
+s32 PlayerConst::getSwimHeadSlidingEndSpeedMin() const {
     return mSwimHeadSlidingEndSpeedMin;
 }
-float PlayerConst::getSwimJumpHipDropSpeed() const {
+f32 PlayerConst::getSwimJumpHipDropSpeed() const {
     return mSwimJumpHipDropSpeed;
 }
-float PlayerConst::getSwimJumpHipDropBrakeV() const {
+f32 PlayerConst::getSwimJumpHipDropBrakeV() const {
     return mSwimJumpHipDropBrakeV;
 }
-float PlayerConst::getSwimJumpHipDropBrakeVCeiling() const {
+f32 PlayerConst::getSwimJumpHipDropBrakeVCeiling() const {
     return mSwimJumpHipDropBrakeVCeiling;
 }
-float PlayerConst::getSwimJumpHipDropGravity() const {
+f32 PlayerConst::getSwimJumpHipDropGravity() const {
     return mSwimJumpHipDropGravity;
 }
-float PlayerConst::getSwimJumpHipDropCancelSpeed() const {
+f32 PlayerConst::getSwimJumpHipDropCancelSpeed() const {
     return mSwimJumpHipDropCancelSpeed;
 }
-float PlayerConst::getSwimJumpHipDropAccelH() const {
+f32 PlayerConst::getSwimJumpHipDropAccelH() const {
     return mSwimJumpHipDropAccelH;
 }
-float PlayerConst::getSwimJumpHipDropMoveSpeedH() const {
+f32 PlayerConst::getSwimJumpHipDropMoveSpeedH() const {
     return mSwimJumpHipDropMoveSpeedH;
 }
-float PlayerConst::getSwimJumpHipDropPopSpeed() const {
+f32 PlayerConst::getSwimJumpHipDropPopSpeed() const {
     return mSwimJumpHipDropPopSpeed;
 }
-float PlayerConst::getSwimJumpHipDropPopJumpAdd() const {
+f32 PlayerConst::getSwimJumpHipDropPopJumpAdd() const {
     return mSwimJumpHipDropPopJumpAdd;
 }
-float PlayerConst::getSwimTramplePower() const {
+f32 PlayerConst::getSwimTramplePower() const {
     return mSwimTramplePower;
 }
-float PlayerConst::getDiveTramplePower() const {
+f32 PlayerConst::getDiveTramplePower() const {
     return mDiveTramplePower;
 }
-int PlayerConst::getDiveTrampleCancelFrame() const {
+s32 PlayerConst::getDiveTrampleCancelFrame() const {
     return mDiveTrampleCancelFrame;
 }
-float PlayerConst::getDamageSwimPushPower() const {
+f32 PlayerConst::getDamageSwimPushPower() const {
     return mDamageSwimPushPower;
 }
-float PlayerConst::getDamageSwimGravity() const {
+f32 PlayerConst::getDamageSwimGravity() const {
     return mDamageSwimGravity;
 }
-int PlayerConst::getDamageSwimCancelFrame() const {
+s32 PlayerConst::getDamageSwimCancelFrame() const {
     return mDamageSwimCancelFrame;
 }
-float PlayerConst::getDamageSwimSurfaceGravity() const {
+f32 PlayerConst::getDamageSwimSurfaceGravity() const {
     return mDamageSwimSurfaceGravity;
 }
-float PlayerConst::getDamageSwimSurfaceHopPower() const {
+f32 PlayerConst::getDamageSwimSurfaceHopPower() const {
     return mDamageSwimSurfaceHopPower;
 }
-float PlayerConst::getDamageSwimSurfacePushPower() const {
+f32 PlayerConst::getDamageSwimSurfacePushPower() const {
     return mDamageSwimSurfacePushPower;
 }
-float PlayerConst::getDamageSwimSurfaceLandSpeed() const {
+f32 PlayerConst::getDamageSwimSurfaceLandSpeed() const {
     return mDamageSwimSurfaceLandSpeed;
 }
-float PlayerConst::getDamageSwimSurfaceLandBrake() const {
+f32 PlayerConst::getDamageSwimSurfaceLandBrake() const {
     return mDamageSwimSurfaceLandBrake;
 }
-float PlayerConst::getDamageSwimSurfaceLandEndSpeed() const {
+f32 PlayerConst::getDamageSwimSurfaceLandEndSpeed() const {
     return mDamageSwimSurfaceLandEndSpeed;
 }
-int PlayerConst::getDamageSwimSurfaceCancelFrame() const {
+s32 PlayerConst::getDamageSwimSurfaceCancelFrame() const {
     return mDamageSwimSurfaceCancelFrame;
 }
-float PlayerConst::getDamageSwimBrakeRateGround() const {
+f32 PlayerConst::getDamageSwimBrakeRateGround() const {
     return mDamageSwimBrakeRateGround;
 }
-int PlayerConst::getOxygenReduceFrame() const {
+s32 PlayerConst::getOxygenReduceFrame() const {
     return mOxygenReduceFrame;
 }
-int PlayerConst::getOxygenNoReduceFrame() const {
+s32 PlayerConst::getOxygenNoReduceFrame() const {
     return mOxygenNoReduceFrame;
 }
-int PlayerConst::getOxygenRecoveryFrame() const {
+s32 PlayerConst::getOxygenRecoveryFrame() const {
     return mOxygenRecoveryFrame;
 }
-int PlayerConst::getOxygenDamageInterval() const {
+s32 PlayerConst::getOxygenDamageInterval() const {
     return mOxygenDamageinterval;
 }
-int PlayerConst::getIceWaterDamageInterval() const {
+s32 PlayerConst::getIceWaterDamageInterval() const {
     return mIceWaterDamageinterval;
 }
-int PlayerConst::getIceWaterRecoveryFrame() const {
+s32 PlayerConst::getIceWaterRecoveryFrame() const {
     return mIceWaterRecoveryFrame;
 }
-float PlayerConst::getMoveAnimSpeedMax() const {
+f32 PlayerConst::getMoveAnimSpeedMax() const {
     return mMoveAnimSpeedMax;
 }
-float PlayerConst::getAnimFrameRateSpeedMin() const {
+f32 PlayerConst::getAnimFrameRateSpeedMin() const {
     return mAnimFrameRateSpeedMin;
 }
-float PlayerConst::getRunBorderSpeed() const {
+f32 PlayerConst::getRunBorderSpeed() const {
     return mRunBorderSpeed;
 }
-float PlayerConst::getRunBlendRange() const {
+f32 PlayerConst::getRunBlendRange() const {
     return mRunBlendRange;
 }
-float PlayerConst::getDashBorderSpeed() const {
+f32 PlayerConst::getDashBorderSpeed() const {
     return mDashBorderSpeed;
 }
-float PlayerConst::getDashBlendRange() const {
+f32 PlayerConst::getDashBlendRange() const {
     return mDashBlendRange;
 }
-float PlayerConst::getDashFastBorderSpeed() const {
+f32 PlayerConst::getDashFastBorderSpeed() const {
     return mDashFastBorderSpeed;
 }
-float PlayerConst::getDashFastBlendRange() const {
+f32 PlayerConst::getDashFastBlendRange() const {
     return mDashFastBlendRange;
 }
-float PlayerConst::getAnimFrameRateSpeedMax() const {
+f32 PlayerConst::getAnimFrameRateSpeedMax() const {
     return mAnimFrameRateSpeedMax;
 }
-float PlayerConst::getAnimFrameRateRunStart() const {
+f32 PlayerConst::getAnimFrameRateRunStart() const {
     return mAnimFrameRateRunStart;
 }
-float PlayerConst::getAnimFrameRateMinRun() const {
+f32 PlayerConst::getAnimFrameRateMinRun() const {
     return mAnimFrameRateMinRun;
 }
-float PlayerConst::getAnimFrameRateMaxRun() const {
+f32 PlayerConst::getAnimFrameRateMaxRun() const {
     return mAnimFrameRateMaxRun;
 }
-float PlayerConst::getAnimFrameRateMaxDash() const {
+f32 PlayerConst::getAnimFrameRateMaxDash() const {
     return mAnimFrameRateMaxDash;
 }
-float PlayerConst::getAnimFrameRateMaxDashFast() const {
+f32 PlayerConst::getAnimFrameRateMaxDashFast() const {
     return mAnimFrameRateMaxDashFast;
 }
-float PlayerConst::getRunStartPlayFrameScale() const {
+f32 PlayerConst::getRunStartPlayFrameScale() const {
     return mRunStartPlayFrameScale;
 }
-int PlayerConst::getRunStartBlendFrame() const {
+s32 PlayerConst::getRunStartBlendFrame() const {
     return mRunStartBlendFrame;
 }
-float PlayerConst::getDamageFireRunAnimRate() const {
+f32 PlayerConst::getDamageFireRunAnimRate() const {
     return mDamageFireRunAnimRate;
 }
-float PlayerConst::getRunSkateAnimSpeedOffset() const {
+f32 PlayerConst::getRunSkateAnimSpeedOffset() const {
     return mRunSkateAnimSpeedOffset;
 }
-float PlayerConst::getAnimFrameRateRange2D() const {
+f32 PlayerConst::getAnimFrameRateRange2D() const {
     return mAnimFrameRateRange2D;
 }
-float PlayerConst::getAnimFrameRateMinRun2D() const {
+f32 PlayerConst::getAnimFrameRateMinRun2D() const {
     return mAnimFrameRateMinRun2D;
 }
-float PlayerConst::getAnimFrameRateMaxRun2D() const {
+f32 PlayerConst::getAnimFrameRateMaxRun2D() const {
     return mAnimFrameRateMaxRun2D;
 }
-int PlayerConst::getIKBlendFrameRun() const {
+s32 PlayerConst::getIKBlendFrameRun() const {
     return mIKBlendFrameRun;
 }
-float PlayerConst::getIKBlendRateRunMin() const {
+f32 PlayerConst::getIKBlendRateRunMin() const {
     return mIKBlendRateRunMin;
 }
-float PlayerConst::getIKBlendRateRunMax() const {
+f32 PlayerConst::getIKBlendRateRunMax() const {
     return mIKBlendRateRunMax;
 }
-float PlayerConst::getRollingAnimBorderSpeedMin() const {
+f32 PlayerConst::getRollingAnimBorderSpeedMin() const {
     return mRollingAnimBorderSpeedMin;
 }
-float PlayerConst::getRollingAnimBorderSpeedMax() const {
+f32 PlayerConst::getRollingAnimBorderSpeedMax() const {
     return mRollingAnimBorderSpeedMax;
 }
-float PlayerConst::getRollingAnimFrameRateMin() const {
+f32 PlayerConst::getRollingAnimFrameRateMin() const {
     return mRollingAnimFrameRateMin;
 }
-float PlayerConst::getRollingAnimFrameRateMax() const {
+f32 PlayerConst::getRollingAnimFrameRateMax() const {
     return mRollingAnimFrameRateMax;
 }
-int PlayerConst::getSwimPaddleAnimInterval() const {
+s32 PlayerConst::getSwimPaddleAnimInterval() const {
     return mSwimPaddleAniminterval;
 }
-int PlayerConst::getSwimPaddleAnimRateIntervalMax() const {
+s32 PlayerConst::getSwimPaddleAnimRateIntervalMax() const {
     return mSwimPaddleAnimRateintervalMax;
 }
-int PlayerConst::getSwimPaddleAnimRateIntervalMin() const {
+s32 PlayerConst::getSwimPaddleAnimRateIntervalMin() const {
     return mSwimPaddleAnimRateintervalMin;
 }
-float PlayerConst::getSwimPaddleAnimMaxRate() const {
+f32 PlayerConst::getSwimPaddleAnimMaxRate() const {
     return mSwimPaddleAnimMaxRate;
 }
-float PlayerConst::getSwimBentForwardMax() const {
+f32 PlayerConst::getSwimBentForwardMax() const {
     return mSwimBentForwardMax;
 }
-float PlayerConst::getSwimBentForwardBlendRate() const {
+f32 PlayerConst::getSwimBentForwardBlendRate() const {
     return mSwimBentForwardBlendRate;
 }
-float PlayerConst::getSwimBentSideMax() const {
+f32 PlayerConst::getSwimBentSideMax() const {
     return mSwimBentSideMax;
 }
-float PlayerConst::getSwimBentSpineMax() const {
+f32 PlayerConst::getSwimBentSpineMax() const {
     return mSwimBentSpineMax;
 }
-float PlayerConst::getSwimBentSideBlendRate() const {
+f32 PlayerConst::getSwimBentSideBlendRate() const {
     return mSwimBentSideBlendRate;
 }
-float PlayerConst::getSwimBentFrontMax() const {
+f32 PlayerConst::getSwimBentFrontMax() const {
     return mSwimBentFrontMax;
 }
-float PlayerConst::getSwimBentFrontBlendRate() const {
+f32 PlayerConst::getSwimBentFrontBlendRate() const {
     return mSwimBentFrontBlendRate;
 }
-float PlayerConst::getSwimWalkAnimSpeedMax() const {
+f32 PlayerConst::getSwimWalkAnimSpeedMax() const {
     return mSwimWalkAnimSpeedMax;
 }
-float PlayerConst::getSwimWalkAnimSpeedMin() const {
+f32 PlayerConst::getSwimWalkAnimSpeedMin() const {
     return mSwimWalkAnimSpeedMin;
 }
-float PlayerConst::getSwimWalkAnimFrameRateMax() const {
+f32 PlayerConst::getSwimWalkAnimFrameRateMax() const {
     return mSwimWalkAnimFrameRateMax;
 }
-float PlayerConst::getSwimWalkAnimFrameRateMin() const {
+f32 PlayerConst::getSwimWalkAnimFrameRateMin() const {
     return mSwimWalkAnimFrameRateMin;
 }
-float PlayerConst::getSandSinkBorderMin() const {
+f32 PlayerConst::getSandSinkBorderMin() const {
     return mSandSinkBorderMin;
 }
-float PlayerConst::getSandSinkBorderMax() const {
+f32 PlayerConst::getSandSinkBorderMax() const {
     return mSandSinkBorderMax;
 }
-float PlayerConst::getSandSinkBorderRateMin() const {
+f32 PlayerConst::getSandSinkBorderRateMin() const {
     return mSandSinkBorderRateMin;
 }
-float PlayerConst::getSandSinkBorderRateMax() const {
+f32 PlayerConst::getSandSinkBorderRateMax() const {
     return mSandSinkBorderRateMax;
 }
-float PlayerConst::getSandSinkFrameRateMin() const {
+f32 PlayerConst::getSandSinkFrameRateMin() const {
     return mSandSinkFrameRateMin;
 }
-float PlayerConst::getSandSinkFrameRateMax() const {
+f32 PlayerConst::getSandSinkFrameRateMax() const {
     return mSandSinkFrameRateMax;
 }
-int PlayerConst::getLookAtEyeKeepFrame() const {
+s32 PlayerConst::getLookAtEyeKeepFrame() const {
     return mLookAtEyeKeepFrame;
 }
-int PlayerConst::getLookAtEyeKeepFrameInSight() const {
+s32 PlayerConst::getLookAtEyeKeepFrameInSight() const {
     return mLookAtEyeKeepFrameInSight;
 }
-int PlayerConst::getLookAtEyeKeepFrameWait() const {
+s32 PlayerConst::getLookAtEyeKeepFrameWait() const {
     return mLookAtEyeKeepFrameWait;
 }
-float PlayerConst::getLookAtEyeDistance() const {
+f32 PlayerConst::getLookAtEyeDistance() const {
     return mLookAtEyeDistance;
 }
-float PlayerConst::getLookAtEyeAngleMinH() const {
+f32 PlayerConst::getLookAtEyeAngleMinH() const {
     return mLookAtEyeAngleMinH;
 }
-float PlayerConst::getLookAtEyeAngleMinInSightH() const {
+f32 PlayerConst::getLookAtEyeAngleMinInSightH() const {
     return mLookAtEyeAngleMinInSightH;
 }
-float PlayerConst::getLookAtEyeAngleMaxH() const {
+f32 PlayerConst::getLookAtEyeAngleMaxH() const {
     return mLookAtEyeAngleMaxH;
 }
-float PlayerConst::getLookAtEyeAngleMinV() const {
+f32 PlayerConst::getLookAtEyeAngleMinV() const {
     return mLookAtEyeAngleMinV;
 }
-float PlayerConst::getLookAtEyeAngleMinInSightV() const {
+f32 PlayerConst::getLookAtEyeAngleMinInSightV() const {
     return mLookAtEyeAngleMinInSightV;
 }
-float PlayerConst::getLookAtEyeAngleMaxV() const {
+f32 PlayerConst::getLookAtEyeAngleMaxV() const {
     return mLookAtEyeAngleMaxV;
 }
-float PlayerConst::getTiltEyeBorderStart() const {
+f32 PlayerConst::getTiltEyeBorderStart() const {
     return mTiltEyeBorderStart;
 }
-float PlayerConst::getTiltEyeBorderEnd() const {
+f32 PlayerConst::getTiltEyeBorderEnd() const {
     return mTiltEyeBorderEnd;
 }
-float PlayerConst::getTiltEyeAngleScale() const {
+f32 PlayerConst::getTiltEyeAngleScale() const {
     return mTiltEyeAngleScale;
 }
-float PlayerConst::getCenterTiltRateMax() const {
+f32 PlayerConst::getCenterTiltRateMax() const {
     return mCenterTiltRateMax;
 }
-float PlayerConst::getNoseChildLocalOffset() const {
+f32 PlayerConst::getNoseChildLocalOffset() const {
     return mNoseChildLocalOffset;
 }
-float PlayerConst::getNoseStability() const {
+f32 PlayerConst::getNoseStability() const {
     return mNoseStability;
 }
-float PlayerConst::getNoseFriction() const {
+f32 PlayerConst::getNoseFriction() const {
     return mNoseFriction;
 }
-float PlayerConst::getNoseLimitDegree() const {
+f32 PlayerConst::getNoseLimitDegree() const {
     return mNoseLimitDegree;
 }
-float PlayerConst::getMustacheChildLocalOffset() const {
+f32 PlayerConst::getMustacheChildLocalOffset() const {
     return mMustacheChildLocalOffset;
 }
-float PlayerConst::getMustacheStability() const {
+f32 PlayerConst::getMustacheStability() const {
     return mMustacheStability;
 }
-float PlayerConst::getMustacheFriction() const {
+f32 PlayerConst::getMustacheFriction() const {
     return mMustacheFriction;
 }
-float PlayerConst::getMustacheLimitDegree() const {
+f32 PlayerConst::getMustacheLimitDegree() const {
     return mMustacheLimitDegree;
 }
-int PlayerConst::getCapInterpolateFrame() const {
+s32 PlayerConst::getCapInterpolateFrame() const {
     return mCapinterpolateFrame;
 }
-float PlayerConst::getCapChildLocalOffset() const {
+f32 PlayerConst::getCapChildLocalOffset() const {
     return mCapChildLocalOffset;
 }
-float PlayerConst::getCapStability() const {
+f32 PlayerConst::getCapStability() const {
     return mCapStability;
 }
-float PlayerConst::getCapFriction() const {
+f32 PlayerConst::getCapFriction() const {
     return mCapFriction;
 }
-float PlayerConst::getCapLimitDegree() const {
+f32 PlayerConst::getCapLimitDegree() const {
     return mCapLimitDegree;
 }
-float PlayerConst::getCapTransStability() const {
+f32 PlayerConst::getCapTransStability() const {
     return mCapTransStability;
 }
-float PlayerConst::getCapTransFriction() const {
+f32 PlayerConst::getCapTransFriction() const {
     return mCapTransFriction;
 }
-float PlayerConst::getCapTransLimit() const {
+f32 PlayerConst::getCapTransLimit() const {
     return mCapTransLimit;
 }
-int PlayerConst::getCapManHeroEyesWaitAppearFrame() const {
+s32 PlayerConst::getCapManHeroEyesWaitAppearFrame() const {
     return mCapManHeroEyesWaitAppearFrame;
 }
-int PlayerConst::getDeadWipeStartDamage() const {
+s32 PlayerConst::getDeadWipeStartDamage() const {
     return mDeadWipeStartDamage;
 }
-int PlayerConst::getDeadWipeWaitDamage() const {
+s32 PlayerConst::getDeadWipeWaitDamage() const {
     return mDeadWipeWaitDamage;
 }
-int PlayerConst::getDeadWipeStartAbyss() const {
+s32 PlayerConst::getDeadWipeStartAbyss() const {
     return mDeadWipeStartAbyss;
 }
-int PlayerConst::getDeadWipeWaitAbyss() const {
+s32 PlayerConst::getDeadWipeWaitAbyss() const {
     return mDeadWipeWaitAbyss;
 }
-int PlayerConst::getDeadWipeStartAbyssWithCapMsg() const {
+s32 PlayerConst::getDeadWipeStartAbyssWithCapMsg() const {
     return mDeadWipeStartAbyssWithCapMsg;
 }
-int PlayerConst::getDeadWipeWaitAbyssWithCapMsg() const {
+s32 PlayerConst::getDeadWipeWaitAbyssWithCapMsg() const {
     return mDeadWipeWaitAbyssWithCapMsg;
 }
-int PlayerConst::getDeadWipeStartPress() const {
+s32 PlayerConst::getDeadWipeStartPress() const {
     return mDeadWipeStartPress;
 }
-int PlayerConst::getDeadWipeWaitPress() const {
+s32 PlayerConst::getDeadWipeWaitPress() const {
     return mDeadWipeWaitPress;
 }
-int PlayerConst::getDeadWipeStartSandSink() const {
+s32 PlayerConst::getDeadWipeStartSandSink() const {
     return mDeadWipeStartSandSink;
 }
-int PlayerConst::getDeadWipeWaitSandSink() const {
+s32 PlayerConst::getDeadWipeWaitSandSink() const {
     return mDeadWipeWaitSandSink;
 }
-int PlayerConst::getDeadWipeStartNoOxygen() const {
+s32 PlayerConst::getDeadWipeStartNoOxygen() const {
     return mDeadWipeStartNoOxygen;
 }
-int PlayerConst::getDeadWipeWaitNoOxygen() const {
+s32 PlayerConst::getDeadWipeWaitNoOxygen() const {
     return mDeadWipeWaitNoOxygen;
 }
-int PlayerConst::getDeadWipeStartIceWater() const {
+s32 PlayerConst::getDeadWipeStartIceWater() const {
     return mDeadWipeStartIceWater;
 }
-int PlayerConst::getDeadWipeWaitIceWater() const {
+s32 PlayerConst::getDeadWipeWaitIceWater() const {
     return mDeadWipeWaitIceWater;
 }
-float PlayerConst::getCoinDashSpeed() const {
+f32 PlayerConst::getCoinDashSpeed() const {
     return mCoinDashSpeed;
 }
-float PlayerConst::getCoinDashSpeedLimit() const {
+f32 PlayerConst::getCoinDashSpeedLimit() const {
     return mCoinDashSpeedLimit;
 }
-float PlayerConst::getAdditionalSpeedLimit() const {
+f32 PlayerConst::getAdditionalSpeedLimit() const {
     return mAdditionalSpeedLimit;
 }

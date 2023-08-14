@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class LiveActor;
 class ActorInitInfo;
@@ -22,9 +24,9 @@ public:
 private:
     const al::LiveActor* mLiveActor;
     const PlayerCostumeInfo* mPlayerCostumeInfo;
-    float mModelAlphaMask = 1;
+    f32 mModelAlphaMask = 1;
     bool mEnableTimer = true;
     al::LiveActor* mPlayerFaceActor = nullptr;
     al::PartsModel* mNeedlesActor = nullptr;
-    int mTimer = 0;
+    s32 mTimer = 0;
 };

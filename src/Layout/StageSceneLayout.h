@@ -38,8 +38,8 @@ public:
     bool isActive() const;
     bool isEndLifeDemo() const;
     void tryStartLifeDemo();
-    void startCoinCountAnim(int);
-    void startCoinCollectCountAnim(int);
+    void startCoinCountAnim(s32);
+    void startCoinCollectCountAnim(s32);
     void appearCoinCounterForDemo();
     bool isEndCoinCountAnim() const;
     bool isEndShineChipCompleteAnim() const;

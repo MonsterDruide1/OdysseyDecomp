@@ -20,7 +20,7 @@ void setNerveAtGreaterEqualStep(IUseNerve* user, const Nerve* nerve, s32 step) {
         user->getNerveKeeper()->setNerve(nerve);
 }
 
-int getNerveStep(const IUseNerve* user) {
+s32 getNerveStep(const IUseNerve* user) {
     return user->getNerveKeeper()->getCurrentStep();
 }
 const Nerve* getCurrentNerve(const IUseNerve* user) {
@@ -63,10 +63,10 @@ bool isNewNerve(const IUseNerve* user) {
     return user->getNerveKeeper()->isNewNerve();
 }
 
-int calcNerveInterval(const al::IUseNerve* pKeeper, int start, int end) {
+s32 calcNerveInterval(const al::IUseNerve* pKeeper, s32 start, s32 end) {
     al::NerveKeeper* keeper = pKeeper->getNerveKeeper();
 
-    int dist = keeper->getCurrentStep() - end;
+    s32 dist = keeper->getCurrentStep() - end;
 
     if (start < 1 || dist < 1)
         return 0;
@@ -74,12 +74,12 @@ int calcNerveInterval(const al::IUseNerve* pKeeper, int start, int end) {
     return dist / start;
 }
 
-float calcNerveRate(const IUseNerve* user, int step) {
+f32 calcNerveRate(const IUseNerve* user, s32 step) {
     if (step < 1)
         return 1.0f;
 
-    float curStep = user->getNerveKeeper()->getCurrentStep();
-    float ret = curStep / step;
+    f32 curStep = user->getNerveKeeper()->getCurrentStep();
+    f32 ret = curStep / step;
 
     if (ret < 0.0f)
         ret = 0.0f;

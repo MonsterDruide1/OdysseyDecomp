@@ -21,30 +21,30 @@ private:
     bool mIsCaptured;
 
 public:
-    ScreenCaptureExecutor(int);
+    ScreenCaptureExecutor(s32);
     ~ScreenCaptureExecutor();
 
-    void createScreenCapture(int, int, int);
-    void draw(agl::DrawContext*, const agl::RenderBuffer*, int) const;
-    void tryCapture(agl::DrawContext*, const agl::RenderBuffer*, int);
-    void tryCaptureAndDraw(agl::DrawContext*, const agl::RenderBuffer*, int);
+    void createScreenCapture(s32, s32, s32);
+    void draw(agl::DrawContext*, const agl::RenderBuffer*, s32) const;
+    void tryCapture(agl::DrawContext*, const agl::RenderBuffer*, s32);
+    void tryCaptureAndDraw(agl::DrawContext*, const agl::RenderBuffer*, s32);
 
-    void requestCapture(bool, int);
-    void onDraw(int screenCaptureIndex);
-    void offDraw(int screenCaptureIndex);
+    void requestCapture(bool, s32);
+    void onDraw(s32 screenCaptureIndex);
+    void offDraw(s32 screenCaptureIndex);
     void offDraw();
 
-    bool isDraw(int) const;
+    bool isDraw(s32) const;
 };
 
 class ScreenCoverCtrl {
 private:
-    int mFrameTimer;
+    s32 mFrameTimer;
     bool mIsActive;
 
 public:
     ScreenCoverCtrl();
-    void requestCaptureScreenCover(int totalFrames);
+    void requestCaptureScreenCover(s32 totalFrames);
     void update();
 };
 
@@ -82,15 +82,15 @@ void calcWorldPosFromLayoutPos(sead::Vector3f* output, const SceneCameraInfo*, c
 void calcWorldPosFromLayoutPos(sead::Vector3f* output, const SceneCameraInfo*, const sead::Vector2f,
                                const sead::Vector3f, s32);
 void calcWorldPosFromLayoutPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
-                                  float);
+                                  f32);
 void calcWorldPosFromLayoutPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
                                   const sead::Vector3f);
 
 void calcScreenPosFromWorldPos(sead::Vector2f* output, const IUseCamera*, const sead::Vector3f&);
 void calcScreenPosFromWorldPosSub(sead::Vector2f* output, const IUseCamera*, const sead::Vector3f&);
 void calcScreenPosFromLayoutPos(sead::Vector2f* output, const sead::Vector2f&);
-float calcScreenRadiusFromWorldRadius(const sead::Vector3f&, const IUseCamera*, f32);
-float calcScreenRadiusFromWorldRadiusSub(const sead::Vector3f&, const IUseCamera*, f32);
+f32 calcScreenRadiusFromWorldRadius(const sead::Vector3f&, const IUseCamera*, f32);
+f32 calcScreenRadiusFromWorldRadiusSub(const sead::Vector3f&, const IUseCamera*, f32);
 
 void calcLayoutPosFromScreenPos(sead::Vector2f* output, const sead::Vector2f&);
 void calcLayoutPosFromWorldPos(sead::Vector2f* output, const IUseCamera*, const sead::Vector3f&);
@@ -106,7 +106,7 @@ void calcLayoutPosFromWorldPosWithClampOutRange(sead::Vector3f* output, const Sc
                                                 const sead::Vector3f&, f32, s32);
 void calcLayoutPosFromWorldPosWithClampByScreen(sead::Vector3f* output, const IUseCamera*,
                                                 const sead::Vector3f&);
-float calcLayoutRadiusFromWorldRadius(const sead::Vector3f&, const IUseCamera*, f32);
+f32 calcLayoutRadiusFromWorldRadius(const sead::Vector3f&, const IUseCamera*, f32);
 
 bool calcCameraPosToWorldPosDirFromScreenPos(sead::Vector3f* output, const IUseCamera*,
                                              const sead::Vector2f&, f32);

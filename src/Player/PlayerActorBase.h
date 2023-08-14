@@ -14,7 +14,7 @@ public:
 
     virtual void init(const al::ActorInitInfo&) override;
     virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
-    virtual unsigned int getPortNo() const;
+    virtual u32 getPortNo() const;
     virtual void* getViewMtx() const;  // NOTE: unknown return type
     virtual IUsePlayerCollision* getPlayerCollision() const;
     virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
@@ -46,5 +46,5 @@ public:
 
 private:
     void* mViewMtx = nullptr;  // NOTE: unknown type
-    unsigned int mPortNo = 0;
+    u32 mPortNo = 0;
 };

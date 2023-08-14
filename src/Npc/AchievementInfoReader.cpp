@@ -27,9 +27,9 @@ void AchievementInfoReader::init() {  // TODO minor mismatches during loop
                 iter.tryGetStringByKey(&name, "Name");
                 const char* note = nullptr;
                 iter.tryGetStringByKey(&note, "Note");
-                int num = 1;
+                s32 num = 1;
                 iter.tryGetIntByKey(&num, "Num");
-                int level = -1;
+                s32 level = -1;
                 iter.tryGetIntByKey(&level, "Level");
 
                 array.pushBack(new AchievementInfo(name, num, level, note));
@@ -38,8 +38,8 @@ void AchievementInfoReader::init() {  // TODO minor mismatches during loop
     }
 }
 
-int AchievementInfoReader::tryFindIndexByName(const char* name) const {
-    for (int i = 0; i < array.size(); i++) {
+s32 AchievementInfoReader::tryFindIndexByName(const char* name) const {
+    for (s32 i = 0; i < array.size(); i++) {
         if (al::isEqualString(name, array[i]->mName))
             return i;
     }

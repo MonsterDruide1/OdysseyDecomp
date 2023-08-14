@@ -44,7 +44,7 @@ public:
     bool isTriggerSpinCap() const;
     bool isTriggerToggleStayCap() const;
     bool isTriggerSpinAttackSeparate() const;
-    int getSeparatePlay1P();
+    s32 getSeparatePlay1P();
     bool isTriggerCapReturn() const;
     bool isTriggerCapAttackSeparate() const;
     bool isTriggerSwingActionCap() const;
@@ -81,7 +81,7 @@ private:
     al::SpinInputAnalyzer* mSpinInputAnalyzer;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer2;
-    int _88;
+    s32 _88;
     void* gap2[1];
     bool mDisableInput;
     void* fillToSize[20];

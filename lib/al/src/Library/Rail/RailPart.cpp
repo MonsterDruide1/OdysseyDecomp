@@ -21,14 +21,14 @@ void RailPart::init(const sead::Vector3f& start, const sead::Vector3f& startHand
         mBezierCurve->set(start, startHandle, endHandle, end);
     }
 }
-void RailPart::calcPos(sead::Vector3f* pos, float param) const {
+void RailPart::calcPos(sead::Vector3f* pos, f32 param) const {
     return mBezierCurve ? mBezierCurve->calcPos(pos, param) : mLinearCurve->calcPos(pos, param);
 }
-void RailPart::calcVelocity(sead::Vector3f* vel, float param) const {
+void RailPart::calcVelocity(sead::Vector3f* vel, f32 param) const {
     return mBezierCurve ? mBezierCurve->calcVelocity(vel, param) :
                           mLinearCurve->calcVelocity(vel, param);
 }
-void RailPart::calcDir(sead::Vector3f* dir, float param) const {
+void RailPart::calcDir(sead::Vector3f* dir, f32 param) const {
     calcVelocity(dir, param);
     if(!isNearZero(*dir, 0.001)) {
         normalize(dir);
@@ -55,28 +55,28 @@ void RailPart::calcStartPos(sead::Vector3f* pos) const {
 void RailPart::calcEndPos(sead::Vector3f* pos) const {
     return mBezierCurve ? mBezierCurve->calcEndPos(pos) : mLinearCurve->calcEndPos(pos);
 }
-float RailPart::calcLength(float startParam, float endParam, int stepCount) const {
+f32 RailPart::calcLength(f32 startParam, f32 endParam, s32 stepCount) const {
     return mBezierCurve ? mBezierCurve->calcLength(startParam, endParam, stepCount) :
                           mLinearCurve->calcLength(startParam, endParam);
 }
-float RailPart::calcCurveParam(float param) const {
+f32 RailPart::calcCurveParam(f32 param) const {
     return mBezierCurve ? mBezierCurve->calcCurveParam(param) : mLinearCurve->calcCurveParam(param);
 }
-float RailPart::calcNearestParam(const sead::Vector3f& pos, float interval) const {
+f32 RailPart::calcNearestParam(const sead::Vector3f& pos, f32 interval) const {
     return mBezierCurve ? mBezierCurve->calcNearestParam(pos, interval) :
                           mLinearCurve->calcNearestParam(pos);
 }
 void RailPart::calcNearestPos(sead::Vector3f* nearest, const sead::Vector3f& pos,
-                              float interval) const {
+                              f32 interval) const {
     return mBezierCurve ? mBezierCurve->calcNearestPos(nearest, pos, interval) :
                           mLinearCurve->calcNearestPos(nearest, pos);
 }
-float RailPart::calcNearestLength(float* param, const sead::Vector3f& pos, float max,
-                                  float interval) const {
+f32 RailPart::calcNearestLength(f32* param, const sead::Vector3f& pos, f32 max,
+                                  f32 interval) const {
     return mBezierCurve ? mBezierCurve->calcNearestLength(param, pos, max, interval) :
                           mLinearCurve->calcNearestLength(param, pos, max);
 }
-float RailPart::getPartLength() const {
+f32 RailPart::getPartLength() const {
     return mBezierCurve ? mBezierCurve->getLength() : mLinearCurve->getLength();
 }
 

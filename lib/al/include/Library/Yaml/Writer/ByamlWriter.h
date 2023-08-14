@@ -24,18 +24,18 @@ public:
     virtual ~ByamlWriter();
 
     void addBool(bool);
-    void addInt(int);
+    void addInt(s32);
     void addUInt(u32);
-    void addFloat(float);
+    void addFloat(f32);
     void addInt64(long);
     void addUInt64(u64);
     void addDouble(double);
     void addString(const char*);
     void addNull();
     void addBool(const char*, bool);
-    void addInt(const char*, int);
+    void addInt(const char*, s32);
     void addUInt(const char*, u32);
-    void addFloat(const char*, float);
+    void addFloat(const char*, f32);
     void addInt64(const char*, long);
     void addUInt64(const char*, u64);
     void addDouble(const char*, double);
@@ -66,8 +66,8 @@ private:
     sead::TList<ByamlWriterContainer*> mContainerList;
     ByamlWriterBigDataList* mBigDataList = nullptr;
     ByamlWriterContainer** mContainerStack = nullptr;
-    int mContainerStackSize = 64;
-    int mCurrentContainerIndex = -1;
+    s32 mContainerStackSize = 64;
+    s32 mCurrentContainerIndex = -1;
     bool _mAlwaysFalse;
 };
 

@@ -20,7 +20,7 @@ class ExecuteTableHolderUpdate {
 public:
     ExecuteTableHolderUpdate();
     virtual ~ExecuteTableHolderUpdate();
-    void init(const char*, const ExecuteSystemInitInfo&, const ExecuteOrder*, int);
+    void init(const char*, const ExecuteSystemInitInfo&, const ExecuteOrder*, s32);
     void registerExecutorListActor(ExecutorListActorExecuteBase*);
     void registerExecutorListLayout(ExecutorListLayoutUpdate*);
     void registerExecutorListUser(ExecutorListIUseExecutorUpdate*);

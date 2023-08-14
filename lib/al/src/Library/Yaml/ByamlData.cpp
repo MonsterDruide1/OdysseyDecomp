@@ -22,7 +22,7 @@ u32 ByamlData::getValue() const {
     return mValue;
 }
 
-int ByamlHashPair::getKey(bool isRev) const {
+s32 ByamlHashPair::getKey(bool isRev) const {
     return isRev ? bswap_24(mData) : mData & 0xFFFFFF;
 }
 
@@ -30,7 +30,7 @@ ByamlDataType ByamlHashPair::getType() const {
     return (ByamlDataType)(mData >> 24);
 }
 
-int ByamlHashPair::getValue(bool isRev) const {
+s32 ByamlHashPair::getValue(bool isRev) const {
     return isRev ? bswap_32(mValue) : mValue;
 }
 
@@ -38,17 +38,17 @@ ByamlHashIter::ByamlHashIter(const u8* data, bool isRev_) : mData(data), isRev(i
 ByamlHashIter::ByamlHashIter() : mData(nullptr), isRev(false) {}
 
 // NON_MATCHING: mismatch during bound calculation
-const ByamlHashPair* ByamlHashIter::findPair(int key) const {
+const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
     const ByamlHashPair* pairTable = getPairTable();
     if (!mData)
         return nullptr;
 
-    int lowerBound = 0;
-    int upperBound = getSize();
+    s32 lowerBound = 0;
+    s32 upperBound = getSize();
     while (lowerBound < upperBound) {
-        int avg = (lowerBound + upperBound) / 2;
+        s32 avg = (lowerBound + upperBound) / 2;
         const ByamlHashPair* pair = &pairTable[avg];
-        int result = key - pair->getKey(isRev);
+        s32 result = key - pair->getKey(isRev);
         if (result == 0) {
             return pair;
         }
@@ -60,28 +60,28 @@ const ByamlHashPair* ByamlHashIter::findPair(int key) const {
     }
     return nullptr;
 }
-bool ByamlHashIter::getDataByIndex(ByamlData* data, int index) const {
+bool ByamlHashIter::getDataByIndex(ByamlData* data, s32 index) const {
     if (!mData)
         return false;
-    if (((int)getSize()) < 1)
+    if (((s32)getSize()) < 1)
         return false;
 
     data->set(&getPairTable()[index], isRev);
     return true;
 }
 // NON_MATCHING: missing cbz on matching result
-bool ByamlHashIter::getDataByKey(ByamlData* data, int key) const {
+bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
     if (!mData)
         return false;
-    if (((int)getSize()) < 1)
+    if (((s32)getSize()) < 1)
         return false;
 
-    int lowerBound = 0;
-    int upperBound = getSize();
+    s32 lowerBound = 0;
+    s32 upperBound = getSize();
     while (lowerBound < upperBound) {
-        int avg = (lowerBound + upperBound) / 2;
+        s32 avg = (lowerBound + upperBound) / 2;
         const ByamlHashPair* pair = &getPairTable()[avg];
-        int result = key - pair->getKey(isRev);
+        s32 result = key - pair->getKey(isRev);
         if (result == 0) {
             data->set(pair, isRev);
             return true;
@@ -97,10 +97,10 @@ bool ByamlHashIter::getDataByKey(ByamlData* data, int key) const {
 const u8* ByamlHashIter::getOffsetData(u32 off) const {
     return &mData[off];
 }
-const ByamlHashPair* ByamlHashIter::getPairByIndex(int index) const {
+const ByamlHashPair* ByamlHashIter::getPairByIndex(s32 index) const {
     if (index < 0)
         return nullptr;
-    if (((int)getSize()) <= index)
+    if (((s32)getSize()) <= index)
         return nullptr;
 
     return &getPairTable()[index];
@@ -120,10 +120,10 @@ u32 ByamlHashIter::getSize() const {
 ByamlArrayIter::ByamlArrayIter(const u8* data, bool isRev_) : mData(data), isRev(isRev_) {}
 ByamlArrayIter::ByamlArrayIter() : mData(nullptr), isRev(false) {}
 
-bool ByamlArrayIter::getDataByIndex(ByamlData* data, int index) const {
+bool ByamlArrayIter::getDataByIndex(ByamlData* data, s32 index) const {
     if (index < 0)
         return false;
-    if (((int)getSize()) <= index)
+    if (((s32)getSize()) <= index)
         return false;
 
     data->set(getTypeTable()[index], getDataTable()[index], isRev);

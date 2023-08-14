@@ -2,12 +2,12 @@
 
 namespace al {
 
-sead::ControllerBase* getController_(int port) {
+sead::ControllerBase* getController_(s32 port) {
     return al::isValidReplayController(port) ? getReplayController(port) :
                                                sead::ControllerMgr::instance()->getController(port);
 }
 
-sead::ControllerBase* getController(int port) {
+sead::ControllerBase* getController(s32 port) {
     if (port == -1) {
         port = getMainControllerPort();
     }
@@ -15,427 +15,427 @@ sead::ControllerBase* getController(int port) {
     return getController_(port);
 }
 
-bool isPadTrigger(int port, int button) {
+bool isPadTrigger(s32 port, s32 button) {
     return getController(port)->isTrig(button);
 }
 
-bool isPadTriggerA(int port) {
+bool isPadTriggerA(s32 port) {
     return isPadTrigger(port, 1);
 }
-bool isPadTriggerB(int port) {
+bool isPadTriggerB(s32 port) {
     return isPadTrigger(port, 1 << 1);
 }
-bool isPadTriggerX(int port) {
+bool isPadTriggerX(s32 port) {
     return isPadTrigger(port, 1 << 3);
 }
-bool isPadTriggerY(int port) {
+bool isPadTriggerY(s32 port) {
     return isPadTrigger(port, 1 << 4);
 }
-bool isPadTriggerZL(int port) {
+bool isPadTriggerZL(s32 port) {
     return isPadTrigger(port, 1 << 2);
 }
-bool isPadTriggerZR(int port) {
+bool isPadTriggerZR(s32 port) {
     return isPadTrigger(port, 1 << 5);
 }
-bool isPadTriggerL(int port) {
+bool isPadTriggerL(s32 port) {
     return isPadTrigger(port, 1 << 13);
 }
-bool isPadTriggerR(int port) {
+bool isPadTriggerR(s32 port) {
     return isPadTrigger(port, 1 << 14);
 }
-bool isPadTrigger1(int port) {
+bool isPadTrigger1(s32 port) {
     return isPadTrigger(port, 1 << 7);
 }
-bool isPadTrigger2(int port) {
+bool isPadTrigger2(s32 port) {
     return isPadTrigger(port, 1 << 6);
 }
-bool isPadTriggerUp(int port) {
+bool isPadTriggerUp(s32 port) {
     return isPadTrigger(port, 1 << 16);
 }
-bool isPadTriggerDown(int port) {
+bool isPadTriggerDown(s32 port) {
     return isPadTrigger(port, 1 << 17);
 }
-bool isPadTriggerLeft(int port) {
+bool isPadTriggerLeft(s32 port) {
     return isPadTrigger(port, 1 << 18);
 }
-bool isPadTriggerRight(int port) {
+bool isPadTriggerRight(s32 port) {
     return isPadTrigger(port, 1 << 19);
 }
-bool isPadTriggerLeftUp(int port) {
+bool isPadTriggerLeftUp(s32 port) {
     return isPadHoldLeftUp(port) && (getController(port)->isTrig(0x50000));
 }
-bool isPadTriggerLeftDown(int port) {
+bool isPadTriggerLeftDown(s32 port) {
     return isPadHoldLeftDown(port) && (getController(port)->isTrig(0x60000));
 }
-bool isPadTriggerRightUp(int port) {
+bool isPadTriggerRightUp(s32 port) {
     return isPadHoldRightUp(port) && (getController(port)->isTrig(0x90000));
 }
-bool isPadTriggerRightDown(int port) {
+bool isPadTriggerRightDown(s32 port) {
     return isPadHoldRightDown(port) && (getController(port)->isTrig(0xA0000));
 }
-bool isPadTriggerHome(int port) {
+bool isPadTriggerHome(s32 port) {
     return isPadTrigger(port, 1 << 8);
 }
-bool isPadTriggerStart(int port) {
+bool isPadTriggerStart(s32 port) {
     return isPadTrigger(port, 1 << 11);
 }
-bool isPadTriggerSelect(int port) {
+bool isPadTriggerSelect(s32 port) {
     return isPadTrigger(port, 1 << 12);
 }
-bool isPadTriggerPlus(int port) {
+bool isPadTriggerPlus(s32 port) {
     return isPadTrigger(port, 1 << 10);
 }
-bool isPadTriggerMinus(int port) {
+bool isPadTriggerMinus(s32 port) {
     return isPadTrigger(port, 1 << 9);
 }
 bool isPadTriggerTouch() {
     return isPadTrigger(getTouchPanelPort(), 1 << 15);
 }
-bool isPadTriggerUpLeftStick(int port) {
+bool isPadTriggerUpLeftStick(s32 port) {
     return isPadTrigger(port, 1 << 20);
 }
-bool isPadTriggerDownLeftStick(int port) {
+bool isPadTriggerDownLeftStick(s32 port) {
     return isPadTrigger(port, 1 << 21);
 }
-bool isPadTriggerLeftLeftStick(int port) {
+bool isPadTriggerLeftLeftStick(s32 port) {
     return isPadTrigger(port, 1 << 22);
 }
-bool isPadTriggerRightLeftStick(int port) {
+bool isPadTriggerRightLeftStick(s32 port) {
     return isPadTrigger(port, 1 << 23);
 }
-bool isPadTriggerUpRightStick(int port) {
+bool isPadTriggerUpRightStick(s32 port) {
     return isPadTrigger(port, 1 << 24);
 }
-bool isPadTriggerDownRightStick(int port) {
+bool isPadTriggerDownRightStick(s32 port) {
     return isPadTrigger(port, 1 << 25);
 }
-bool isPadTriggerLeftRightStick(int port) {
+bool isPadTriggerLeftRightStick(s32 port) {
     return isPadTrigger(port, 1 << 26);
 }
-bool isPadTriggerRightRightStick(int port) {
+bool isPadTriggerRightRightStick(s32 port) {
     return isPadTrigger(port, 1 << 27);
 }
-bool isPadTriggerAnyABXY(int port) {
+bool isPadTriggerAnyABXY(s32 port) {
     return isPadTriggerA(port) || isPadTriggerB(port) || isPadTriggerX(port) || isPadTriggerY(port);
 }
-bool isPadTriggerAny(int port) {
+bool isPadTriggerAny(s32 port) {
     return isPadTrigger(port, 0xFFF7FFF);
 }
-bool isPadTriggerLeftStick(int port) {
+bool isPadTriggerLeftStick(s32 port) {
     return isPadTrigger(port, 0xF00000);
 }
-bool isPadTriggerRightStick(int port) {
+bool isPadTriggerRightStick(s32 port) {
     return isPadTrigger(port, 0xF000000);
 }
-bool isPadTriggerPressLeftStick(int port) {
+bool isPadTriggerPressLeftStick(s32 port) {
     return isPadTrigger1(port);
 }
-bool isPadTriggerPressRightStick(int port) {
+bool isPadTriggerPressRightStick(s32 port) {
     return isPadTrigger2(port);
 }
 
-bool isPadRepeat(int port, int button) {
+bool isPadRepeat(s32 port, s32 button) {
     return getController(port)->isTrigWithRepeat(button);
 }
-bool isPadRepeatA(int port) {
+bool isPadRepeatA(s32 port) {
     return isPadRepeat(port, 1);
 }
-bool isPadRepeatB(int port) {
+bool isPadRepeatB(s32 port) {
     return isPadRepeat(port, 1 << 1);
 }
-bool isPadRepeatX(int port) {
+bool isPadRepeatX(s32 port) {
     return isPadRepeat(port, 1 << 3);
 }
-bool isPadRepeatY(int port) {
+bool isPadRepeatY(s32 port) {
     return isPadRepeat(port, 1 << 4);
 }
-bool isPadRepeatZL(int port) {
+bool isPadRepeatZL(s32 port) {
     return isPadRepeat(port, 1 << 2);
 }
-bool isPadRepeatZR(int port) {
+bool isPadRepeatZR(s32 port) {
     return isPadRepeat(port, 1 << 5);
 }
-bool isPadRepeatL(int port) {
+bool isPadRepeatL(s32 port) {
     return isPadRepeat(port, 1 << 13);
 }
-bool isPadRepeatR(int port) {
+bool isPadRepeatR(s32 port) {
     return isPadRepeat(port, 1 << 14);
 }
-bool isPadRepeat1(int port) {
+bool isPadRepeat1(s32 port) {
     return isPadRepeat(port, 1 << 7);
 }
-bool isPadRepeat2(int port) {
+bool isPadRepeat2(s32 port) {
     return isPadRepeat(port, 1 << 6);
 }
-bool isPadRepeatUp(int port) {
+bool isPadRepeatUp(s32 port) {
     return isPadRepeat(port, 1 << 16);
 }
-bool isPadRepeatDown(int port) {
+bool isPadRepeatDown(s32 port) {
     return isPadRepeat(port, 1 << 17);
 }
-bool isPadRepeatLeft(int port) {
+bool isPadRepeatLeft(s32 port) {
     return isPadRepeat(port, 1 << 18);
 }
-bool isPadRepeatRight(int port) {
+bool isPadRepeatRight(s32 port) {
     return isPadRepeat(port, 1 << 19);
 }
-bool isPadRepeatHome(int port) {
+bool isPadRepeatHome(s32 port) {
     return isPadRepeat(port, 1 << 8);
 }
-bool isPadRepeatStart(int port) {
+bool isPadRepeatStart(s32 port) {
     return isPadRepeat(port, 1 << 11);
 }
-bool isPadRepeatSelect(int port) {
+bool isPadRepeatSelect(s32 port) {
     return isPadRepeat(port, 1 << 12);
 }
-bool isPadRepeatPlus(int port) {
+bool isPadRepeatPlus(s32 port) {
     return isPadRepeat(port, 1 << 10);
 }
-bool isPadRepeatMinus(int port) {
+bool isPadRepeatMinus(s32 port) {
     return isPadRepeat(port, 1 << 9);
 }
 bool isPadRepeatTouch() {
     return isPadRepeat(getTouchPanelPort(), 1 << 15);
 }
-bool isPadRepeatUpLeftStick(int port) {
+bool isPadRepeatUpLeftStick(s32 port) {
     return isPadRepeat(port, 1 << 20);
 }
-bool isPadRepeatDownLeftStick(int port) {
+bool isPadRepeatDownLeftStick(s32 port) {
     return isPadRepeat(port, 1 << 21);
 }
-bool isPadRepeatLeftLeftStick(int port) {
+bool isPadRepeatLeftLeftStick(s32 port) {
     return isPadRepeat(port, 1 << 22);
 }
-bool isPadRepeatRightLeftStick(int port) {
+bool isPadRepeatRightLeftStick(s32 port) {
     return isPadRepeat(port, 1 << 23);
 }
-bool isPadRepeatUpRightStick(int port) {
+bool isPadRepeatUpRightStick(s32 port) {
     return isPadRepeat(port, 1 << 24);
 }
-bool isPadRepeatDownRightStick(int port) {
+bool isPadRepeatDownRightStick(s32 port) {
     return isPadRepeat(port, 1 << 25);
 }
-bool isPadRepeatLeftRightStick(int port) {
+bool isPadRepeatLeftRightStick(s32 port) {
     return isPadRepeat(port, 1 << 26);
 }
-bool isPadRepeatRightRightStick(int port) {
+bool isPadRepeatRightRightStick(s32 port) {
     return isPadRepeat(port, 1 << 27);
 }
 
-bool isPadHoldPressLeftStick(int port) {
+bool isPadHoldPressLeftStick(s32 port) {
     return isPadHold1(port);
 }
-bool isPadHoldPressRightStick(int port) {
+bool isPadHoldPressRightStick(s32 port) {
     return isPadHold2(port);
 }
-bool isPadHold(int port, int button) {
+bool isPadHold(s32 port, s32 button) {
     return getController(port)->isHold(button);
 }
-bool isPadHoldA(int port) {
+bool isPadHoldA(s32 port) {
     return isPadHold(port, 1);
 }
-bool isPadHoldB(int port) {
+bool isPadHoldB(s32 port) {
     return isPadHold(port, 1 << 1);
 }
-bool isPadHoldX(int port) {
+bool isPadHoldX(s32 port) {
     return isPadHold(port, 1 << 3);
 }
-bool isPadHoldY(int port) {
+bool isPadHoldY(s32 port) {
     return isPadHold(port, 1 << 4);
 }
-bool isPadHoldZL(int port) {
+bool isPadHoldZL(s32 port) {
     return isPadHold(port, 1 << 2);
 }
-bool isPadHoldZR(int port) {
+bool isPadHoldZR(s32 port) {
     return isPadHold(port, 1 << 5);
 }
-bool isPadHoldL(int port) {
+bool isPadHoldL(s32 port) {
     return isPadHold(port, 1 << 13);
 }
-bool isPadHoldR(int port) {
+bool isPadHoldR(s32 port) {
     return isPadHold(port, 1 << 14);
 }
-bool isPadHold1(int port) {
+bool isPadHold1(s32 port) {
     return isPadHold(port, 1 << 7);
 }
-bool isPadHold2(int port) {
+bool isPadHold2(s32 port) {
     return isPadHold(port, 1 << 6);
 }
-bool isPadHoldUp(int port) {
+bool isPadHoldUp(s32 port) {
     return isPadHold(port, 1 << 16);
 }
-bool isPadHoldDown(int port) {
+bool isPadHoldDown(s32 port) {
     return isPadHold(port, 1 << 17);
 }
-bool isPadHoldLeft(int port) {
+bool isPadHoldLeft(s32 port) {
     return isPadHold(port, 1 << 18);
 }
-bool isPadHoldRight(int port) {
+bool isPadHoldRight(s32 port) {
     return isPadHold(port, 1 << 19);
 }
-bool isPadHoldLeftUp(int port) {
+bool isPadHoldLeftUp(s32 port) {
     return getController(port)->isHoldAll(0x50000);
 }
-bool isPadHoldLeftDown(int port) {
+bool isPadHoldLeftDown(s32 port) {
     return getController(port)->isHoldAll(0x60000);
 }
-bool isPadHoldRightUp(int port) {
+bool isPadHoldRightUp(s32 port) {
     return getController(port)->isHoldAll(0x90000);
 }
-bool isPadHoldRightDown(int port) {
+bool isPadHoldRightDown(s32 port) {
     return getController(port)->isHoldAll(0xA0000);
 }
-bool isPadHoldHome(int port) {
+bool isPadHoldHome(s32 port) {
     return isPadHold(port, 1 << 8);
 }
-bool isPadHoldStart(int port) {
+bool isPadHoldStart(s32 port) {
     return isPadHold(port, 1 << 11);
 }
-bool isPadHoldSelect(int port) {
+bool isPadHoldSelect(s32 port) {
     return isPadHold(port, 1 << 12);
 }
-bool isPadHoldPlus(int port) {
+bool isPadHoldPlus(s32 port) {
     return isPadHold(port, 1 << 10);
 }
-bool isPadHoldMinus(int port) {
+bool isPadHoldMinus(s32 port) {
     return isPadHold(port, 1 << 9);
 }
-bool isPadHoldAny(int port) {
+bool isPadHoldAny(s32 port) {
     return isPadHold(port, 0xFFF7FFF);
 }
-bool isPadHoldAnyWithoutStick(int port) {
+bool isPadHoldAnyWithoutStick(s32 port) {
     return isPadHold(port, 0xF7FFF);
 }
 bool isPadHoldTouch() {
     return isPadHold(getTouchPanelPort(), 1 << 15);
 }
-bool isPadHoldUpLeftStick(int port) {
+bool isPadHoldUpLeftStick(s32 port) {
     return isPadHold(port, 1 << 20);
 }
-bool isPadHoldDownLeftStick(int port) {
+bool isPadHoldDownLeftStick(s32 port) {
     return isPadHold(port, 1 << 21);
 }
-bool isPadHoldLeftLeftStick(int port) {
+bool isPadHoldLeftLeftStick(s32 port) {
     return isPadHold(port, 1 << 22);
 }
-bool isPadHoldRightLeftStick(int port) {
+bool isPadHoldRightLeftStick(s32 port) {
     return isPadHold(port, 1 << 23);
 }
-bool isPadHoldUpRightStick(int port) {
+bool isPadHoldUpRightStick(s32 port) {
     return isPadHold(port, 1 << 24);
 }
-bool isPadHoldDownRightStick(int port) {
+bool isPadHoldDownRightStick(s32 port) {
     return isPadHold(port, 1 << 25);
 }
-bool isPadHoldLeftRightStick(int port) {
+bool isPadHoldLeftRightStick(s32 port) {
     return isPadHold(port, 1 << 26);
 }
-bool isPadHoldRightRightStick(int port) {
+bool isPadHoldRightRightStick(s32 port) {
     return isPadHold(port, 1 << 27);
 }
-bool isPadHoldLeftStick(int port) {
+bool isPadHoldLeftStick(s32 port) {
     return isPadHold(port, 0xF00000);
 }
-bool isPadHoldRightStick(int port) {
+bool isPadHoldRightStick(s32 port) {
     return isPadHold(port, 0xF000000);
 }
 
-bool isPadRelease(int port, int button) {
+bool isPadRelease(s32 port, s32 button) {
     return getController(port)->isRelease(button);
 }
-bool isPadReleaseA(int port) {
+bool isPadReleaseA(s32 port) {
     return isPadRelease(port, 1);
 }
-bool isPadReleaseB(int port) {
+bool isPadReleaseB(s32 port) {
     return isPadRelease(port, 1 << 1);
 }
-bool isPadReleaseX(int port) {
+bool isPadReleaseX(s32 port) {
     return isPadRelease(port, 1 << 3);
 }
-bool isPadReleaseY(int port) {
+bool isPadReleaseY(s32 port) {
     return isPadRelease(port, 1 << 4);
 }
-bool isPadReleaseZL(int port) {
+bool isPadReleaseZL(s32 port) {
     return isPadRelease(port, 1 << 2);
 }
-bool isPadReleaseZR(int port) {
+bool isPadReleaseZR(s32 port) {
     return isPadRelease(port, 1 << 5);
 }
-bool isPadReleaseL(int port) {
+bool isPadReleaseL(s32 port) {
     return isPadRelease(port, 1 << 13);
 }
-bool isPadReleaseR(int port) {
+bool isPadReleaseR(s32 port) {
     return isPadRelease(port, 1 << 14);
 }
-bool isPadRelease1(int port) {
+bool isPadRelease1(s32 port) {
     return isPadRelease(port, 1 << 7);
 }
-bool isPadRelease2(int port) {
+bool isPadRelease2(s32 port) {
     return isPadRelease(port, 1 << 6);
 }
-bool isPadReleaseUp(int port) {
+bool isPadReleaseUp(s32 port) {
     return isPadRelease(port, 1 << 16);
 }
-bool isPadReleaseDown(int port) {
+bool isPadReleaseDown(s32 port) {
     return isPadRelease(port, 1 << 17);
 }
-bool isPadReleaseLeft(int port) {
+bool isPadReleaseLeft(s32 port) {
     return isPadRelease(port, 1 << 18);
 }
-bool isPadReleaseRight(int port) {
+bool isPadReleaseRight(s32 port) {
     return isPadRelease(port, 1 << 19);
 }
-bool isPadReleaseHome(int port) {
+bool isPadReleaseHome(s32 port) {
     return isPadRelease(port, 1 << 8);
 }
-bool isPadReleaseStart(int port) {
+bool isPadReleaseStart(s32 port) {
     return isPadRelease(port, 1 << 11);
 }
-bool isPadReleaseSelect(int port) {
+bool isPadReleaseSelect(s32 port) {
     return isPadRelease(port, 1 << 12);
 }
-bool isPadReleasePlus(int port) {
+bool isPadReleasePlus(s32 port) {
     return isPadRelease(port, 1 << 10);
 }
-bool isPadReleaseMinus(int port) {
+bool isPadReleaseMinus(s32 port) {
     return isPadRelease(port, 1 << 9);
 }
 bool isPadReleaseTouch() {
     return isPadRelease(getTouchPanelPort(), 1 << 15);
 }
-bool isPadReleaseUpLeftStick(int port) {
+bool isPadReleaseUpLeftStick(s32 port) {
     return isPadRelease(port, 1 << 20);
 }
-bool isPadReleaseDownLeftStick(int port) {
+bool isPadReleaseDownLeftStick(s32 port) {
     return isPadRelease(port, 1 << 21);
 }
-bool isPadReleaseLeftLeftStick(int port) {
+bool isPadReleaseLeftLeftStick(s32 port) {
     return isPadRelease(port, 1 << 22);
 }
-bool isPadReleaseRightLeftStick(int port) {
+bool isPadReleaseRightLeftStick(s32 port) {
     return isPadRelease(port, 1 << 23);
 }
-bool isPadReleaseUpRightStick(int port) {
+bool isPadReleaseUpRightStick(s32 port) {
     return isPadRelease(port, 1 << 24);
 }
-bool isPadReleaseDownRightStick(int port) {
+bool isPadReleaseDownRightStick(s32 port) {
     return isPadRelease(port, 1 << 25);
 }
-bool isPadReleaseLeftRightStick(int port) {
+bool isPadReleaseLeftRightStick(s32 port) {
     return isPadRelease(port, 1 << 26);
 }
-bool isPadReleaseRightRightStick(int port) {
+bool isPadReleaseRightRightStick(s32 port) {
     return isPadRelease(port, 1 << 27);
 }
 
-const sead::Vector2f& getLeftStick(int port) {
+const sead::Vector2f& getLeftStick(s32 port) {
     return getController(port)->getLeftStick();
 }
-const sead::Vector2f& getRightStick(int port) {
+const sead::Vector2f& getRightStick(s32 port) {
     return getController(port)->getRightStick();
 }
 
-void getPadCrossDir(sead::Vector2f* vec, int port) {
+void getPadCrossDir(sead::Vector2f* vec, s32 port) {
     vec->x = 0;
     vec->y = 0;
     if (isPadHoldUp(port))
@@ -447,7 +447,7 @@ void getPadCrossDir(sead::Vector2f* vec, int port) {
     if (isPadHoldRight(port))
         vec->x = 1;
 }
-void getPadCrossDirSideways(sead::Vector2f* vec, int port) {
+void getPadCrossDirSideways(sead::Vector2f* vec, s32 port) {
     vec->x = 0;
     vec->y = 0;
     if (isPadHoldUp(port))
@@ -485,32 +485,32 @@ bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size
     return true;
 }
 
-void setPadRepeat(int a1, int a2, int a3, int port) {
+void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
     getController(port)->setPadRepeat(a1, a2, a3);
 }
 
-int getPlayerControllerPort(int playerNo) {
+s32 getPlayerControllerPort(s32 playerNo) {
     auto* manager = sead::ControllerMgr::instance();
     sead::Controller* controller =
         manager->getControllerByOrder(sead::ControllerDefine::ControllerId::_15, playerNo);
     return manager->findControllerPort(controller);
 }
-int getTouchPanelPort() {
+s32 getTouchPanelPort() {
     auto* manager = sead::ControllerMgr::instance();
     sead::Controller* controller =
         manager->getControllerByOrder(sead::ControllerDefine::ControllerId::_16, 0);
     return manager->findControllerPort(controller);
 }
-int getMainControllerPort() {
+s32 getMainControllerPort() {
     return getPlayerControllerPort(0);
 }
-int getMainJoyPadDoublePort() {
+s32 getMainJoyPadDoublePort() {
     return getMainControllerPort();
 }
-int getMainJoyPadSingleRightPort() {
+s32 getMainJoyPadSingleRightPort() {
     return 1;
 }
-int getMainJoyPadSingleLeftPort() {
+s32 getMainJoyPadSingleLeftPort() {
     return 2;
 }
 

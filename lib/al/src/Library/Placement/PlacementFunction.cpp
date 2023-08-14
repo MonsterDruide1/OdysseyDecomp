@@ -6,7 +6,7 @@
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {
-int getCountPlacementInfo(const al::PlacementInfo& rInfo) {
+s32 getCountPlacementInfo(const al::PlacementInfo& rInfo) {
     return rInfo.getPlacementIter().getSize();
 }
 
@@ -20,7 +20,7 @@ void getPlacementInfoByKey(al::PlacementInfo* pOutInfo, const al::PlacementInfo&
     }
 }
 
-void getPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo, int idx) {
+void getPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo, s32 idx) {
     al::ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterByIndex(&iterator, idx);
 
@@ -30,7 +30,7 @@ void getPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInf
 }
 
 bool tryGetPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo,
-                                int idx) {
+                                s32 idx) {
     bool result;
 
     al::ByamlIter iterator;
@@ -47,7 +47,7 @@ bool tryGetPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::Placement
 }
 
 void getPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char** pOutKeyName,
-                                       const al::PlacementInfo& rInfo, int idx) {
+                                       const al::PlacementInfo& rInfo, s32 idx) {
     al::ByamlIter iterator;
 
     bool ret = rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
@@ -58,7 +58,7 @@ void getPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char**
 }
 
 bool tryGetPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char** pOutKeyName,
-                                          const al::PlacementInfo& rInfo, int idx) {
+                                          const al::PlacementInfo& rInfo, s32 idx) {
     bool result;
 
     al::ByamlIter iterator;

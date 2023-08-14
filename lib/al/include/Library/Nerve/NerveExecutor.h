@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include "Library/HostIO/HioNode.h"
 #include "Library/Nerve/IUseNerve.h"
 
@@ -14,7 +15,7 @@ public:
     virtual NerveKeeper* getNerveKeeper() const;
     virtual ~NerveExecutor();
 
-    void initNerve(const Nerve* nerve, int stateCount);
+    void initNerve(const Nerve* nerve, s32 stateCount);
     void updateNerve();
 
 private:

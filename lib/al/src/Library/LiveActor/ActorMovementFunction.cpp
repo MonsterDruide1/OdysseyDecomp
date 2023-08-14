@@ -12,26 +12,26 @@
 
 namespace al {
 
-float calcDistance(const LiveActor* l1, const LiveActor* l2) {
+f32 calcDistance(const LiveActor* l1, const LiveActor* l2) {
     return calcDistance(l1, getTrans(l2));
 }
 
-float calcDistance(const LiveActor* l1, const sead::Vector3f& vec) {
+f32 calcDistance(const LiveActor* l1, const sead::Vector3f& vec) {
     sead::Vector3f distance = getTrans(l1) - vec;
     return distance.length();
 }
 
-float calcSpeed(const LiveActor* actor) {
+f32 calcSpeed(const LiveActor* actor) {
     return actor->getPoseKeeper()->getVelocity().length();
 }
 
-float calcSpeedH(const LiveActor* actor) {
+f32 calcSpeedH(const LiveActor* actor) {
     sead::Vector3f verticalized;
     verticalizeVec(&verticalized, getGravity(actor), actor->getPoseKeeper()->getVelocity());
     return verticalized.length();
 }
 
-float calcSpeedV(const LiveActor* actor) {
+f32 calcSpeedV(const LiveActor* actor) {
     return -actor->getPoseKeeper()->getVelocity().dot(getGravity(actor));
 }
 

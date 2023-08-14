@@ -30,7 +30,7 @@ public:
     virtual void setSceneCreator(SceneCreator* sceneCreator) override;
 
     AudioKeeper* getAudioKeeper() const override;
-    void initAudio(const GameSystemInfo&, const char*, int, int, int, const char*);
+    void initAudio(const GameSystemInfo&, const char*, s32, s32, s32, const char*);
     void initAudioKeeper(const char*);
     void initDrawSystemInfo(const SequenceInitInfo&);
     AudioSystemInfo* getAudioSystemInfo();

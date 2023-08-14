@@ -14,7 +14,7 @@ void CameraPoser::endSnapShotModeCore() {
     endSnapShotMode();
 }
 
-float CameraPoser::getFovyDegree() const {
+f32 CameraPoser::getFovyDegree() const {
     if (alCameraPoserFunction::isSnapShotMode(this) && mSnapshotCtrl)
         return mSnapshotCtrl->getFovyDegree();
     return mFovyDegree;

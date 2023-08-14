@@ -51,7 +51,7 @@ public:
     void* getAudioMaximizer() const;  // unknown return type
     bool isPpausedSystem(const char* name) const;
 
-    void pauseSystem(bool, const char*, bool, float, bool, bool, bool) override;
+    void pauseSystem(bool, const char*, bool, f32, bool, bool, bool) override;
     AreaObjDirector* getAreaObjDirector() const override;
 
 private:

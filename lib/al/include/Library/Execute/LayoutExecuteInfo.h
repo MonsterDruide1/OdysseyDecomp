@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class ExecutorListLayoutUpdate;
 class ExecutorListLayoutDrawBase;
@@ -11,9 +13,9 @@ public:
     void addDrawer(ExecutorListLayoutDrawBase*);
     
 private:
-    int mUpdaterCount = 0;
+    s32 mUpdaterCount = 0;
     ExecutorListLayoutUpdate* mUpdaters[2] = {};
-    int mDrawerCount = 0;
+    s32 mDrawerCount = 0;
     ExecutorListLayoutDrawBase* mDrawers[4] = {};
 };
 

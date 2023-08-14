@@ -44,9 +44,9 @@ public:
     void initializeAsync(const SceneInitInfo&);
     void initDrawSystemInfo(const SceneInitInfo&);
     void initSceneObjHolder(SceneObjHolder*);
-    void initAndLoadStageResource(const char*, int);
-    void initLiveActorKit(const SceneInitInfo&, int, int, int);
-    void initLiveActorKitWithGraphics(const GraphicsInitArg&, const SceneInitInfo&, int, int, int);
+    void initAndLoadStageResource(const char*, s32);
+    void initLiveActorKit(const SceneInitInfo&, s32, s32, s32);
+    void initLiveActorKitWithGraphics(const GraphicsInitArg&, const SceneInitInfo&, s32, s32, s32);
     void initLayoutKit(const SceneInitInfo&);
     void initSceneStopCtrl();
     void initSceneMsgCtrl();
@@ -54,7 +54,7 @@ public:
     void endInit(const ActorInitInfo&);
 
 private:
-    void initLiveActorKitImpl(const SceneInitInfo&, int, int, int);
+    void initLiveActorKitImpl(const SceneInitInfo&, s32, s32, s32);
 
     bool mIsAlive;
     sead::FixedSafeString<0x40> mName;

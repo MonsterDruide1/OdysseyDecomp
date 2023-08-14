@@ -30,16 +30,16 @@ void endHackFromTargetPos(IUsePlayerHack**, const sead::Vector3f&, const sead::Q
                           const sead::Vector3f&);
 void endHackWithDamage(IUsePlayerHack**);
 void endHackWithDamageAndVelocity(IUsePlayerHack**, const sead::Vector3f&);
-void endHackEscapeScale(IUsePlayerHack**, float);
-void endHackDirEscapeScale(IUsePlayerHack**, const sead::Vector3f&, float);
-void endHackDirEscapeScalePose(IUsePlayerHack**, const sead::Quatf&, const sead::Vector3f&, float);
+void endHackEscapeScale(IUsePlayerHack**, f32);
+void endHackDirEscapeScale(IUsePlayerHack**, const sead::Vector3f&, f32);
+void endHackDirEscapeScalePose(IUsePlayerHack**, const sead::Quatf&, const sead::Vector3f&, f32);
 void endHackAirVelocity(IUsePlayerHack**, const sead::Vector3f&, const sead::Quatf&,
-                        const sead::Vector3f&, int);
+                        const sead::Vector3f&, s32);
 void endHackElectricWireToDestination(IUsePlayerHack**, const sead::Vector3f&,
                                       const sead::Vector3f&);
 void endHackFastenerToDestination(IUsePlayerHack**, const sead::Vector3f&, const sead::Vector3f&);
 void endHackBazookaElectricToDestination(IUsePlayerHack**, const sead::Vector3f&,
-                                         const sead::Vector3f&, const sead::Quatf&, int, float);
+                                         const sead::Vector3f&, const sead::Quatf&, s32, f32);
 void endHackThrowed(IUsePlayerHack**, const sead::Vector3f&);
 void requestDamage(IUsePlayerHack*);
 void syncDamageVisibility(al::LiveActor*, const IUsePlayerHack*);
@@ -54,8 +54,8 @@ void endHackStartDemo(IUsePlayerHack*, al::LiveActor*);
 bool tryEndHackStartDemo(IUsePlayerHack*, al::LiveActor*);
 bool isActiveHackStartDemo(const IUsePlayerHack*);
 bool isHackStartDemoEnterMario(const IUsePlayerHack*);
-bool isHackerStopMove(const al::LiveActor*, const IUsePlayerHack*, float);
-bool isHackerStopMoveGround(const al::LiveActor*, const IUsePlayerHack*, float,
+bool isHackerStopMove(const al::LiveActor*, const IUsePlayerHack*, f32);
+bool isHackerStopMoveGround(const al::LiveActor*, const IUsePlayerHack*, f32,
                             const IUsePlayerCollision*);
 void sendMsgHackerNoReaction(const IUsePlayerHack*, al::HitSensor*, al::HitSensor*);
 void sendMsgHackerNoReactionWithoutShine(const IUsePlayerHack*, al::HitSensor*, al::HitSensor*);
@@ -68,12 +68,12 @@ void showHackCap(IUsePlayerHack*);
 void hideShadowHackCap(IUsePlayerHack*);
 bool isHackCapSeparateFlying(IUsePlayerHack*);
 void calcGroundHeightHackerDepthShadowMapLength(al::LiveActor*, const IUsePlayerHack*,
-                                                const sead::Vector3f&, float, float);
+                                                const sead::Vector3f&, f32, f32);
 void cutGroundHeightHackerDepthShadowMapLength(al::LiveActor*, const IUsePlayerHack*, const char*,
-                                               const sead::Vector3f&, float, float);
-void checkExistHeightSpaceAboveGround(float*, const IUsePlayerHack*, float);
+                                               const sead::Vector3f&, f32, f32);
+void checkExistHeightSpaceAboveGround(f32*, const IUsePlayerHack*, f32);
 void requestRecoverySafetyPoint(IUsePlayerHack*, const sead::Vector3f&, const sead::Vector3f&);
-bool trySnapTransToSnapMoveArea(al::LiveActor*, bool, const sead::Vector3f&, float);
+bool trySnapTransToSnapMoveArea(al::LiveActor*, bool, const sead::Vector3f&, f32);
 void updateHackActorVisibilityBySeparatePlay(al::LiveActor*, IUsePlayerHack*, const char*,
                                              const char*);
 void startReset(al::LiveActor*);
@@ -87,16 +87,16 @@ void calcHackerWallInputVec(sead::Vector3f*, sead::Vector3f*, const sead::Vector
 void getHackMoveStickRaw(const IUsePlayerHack*);
 void calcHackerWallInputDir(sead::Vector3f*, sead::Vector3f*, const IUsePlayerHack*,
                             const sead::Vector3f&);
-void addHackActorAccelStick(al::LiveActor*, const IUsePlayerHack*, sead::Vector3f*, float,
+void addHackActorAccelStick(al::LiveActor*, const IUsePlayerHack*, sead::Vector3f*, f32,
                             const sead::Vector3f&);
 void calcHackMovePower(const IUsePlayerHack*);
-void checkHackerMoveDir(const IUsePlayerHack*, const sead::Vector3f&, const sead::Vector3f&, float);
-void calcHackerTrampleJumpParam(float*, float*, int*, al::LiveActor*, const IUsePlayerHack*, float,
-                                float, float, float, float, int, float, float, float, float, float);
+void checkHackerMoveDir(const IUsePlayerHack*, const sead::Vector3f&, const sead::Vector3f&, f32);
+void calcHackerTrampleJumpParam(f32*, f32*, s32*, al::LiveActor*, const IUsePlayerHack*, f32,
+                                f32, f32, f32, f32, s32, f32, f32, f32, f32, f32);
 bool isOnHackMoveStick(const IUsePlayerHack*);
 bool isHoldHackJump(const IUsePlayerHack*);
 bool isOnHackMoveStickDeepDown(const IUsePlayerHack*);
-bool isOnHackMoveStickGreater(const IUsePlayerHack*, float);
+bool isOnHackMoveStickGreater(const IUsePlayerHack*, f32);
 bool isTriggerHackAction(const IUsePlayerHack*);
 bool isTriggerHackPreInputAction(const IUsePlayerHack*);
 bool isHoldHackAction(const IUsePlayerHack*);
@@ -142,7 +142,7 @@ void getHackGemyRightStickRaw();
 bool isTriggerGemyResetCamera(const IUsePlayerHack*);
 bool isTriggerGemyChangeCamera(const IUsePlayerHack*);
 bool isTriggerSubjectiveCamera(const IUsePlayerHack*);
-bool isTriggerFlutter(const IUsePlayerHack*, float);
+bool isTriggerFlutter(const IUsePlayerHack*, f32);
 bool isTriggerFukankunZoomOn(const IUsePlayerHack*);
 bool isTriggerFukankunZoomOff(const IUsePlayerHack*);
 bool isHoldFukankunZoom(const IUsePlayerHack*);

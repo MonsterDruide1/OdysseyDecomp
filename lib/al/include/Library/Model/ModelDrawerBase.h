@@ -27,7 +27,7 @@ public:
                      const ModelKeeper*);
     void addModelToTable(ModelCtrl*);
     void getDrawBufferIndex();
-    void createModelDrawDisplayList(int);
+    void createModelDrawDisplayList(s32);
     bool isDraw() const;
 
 private:

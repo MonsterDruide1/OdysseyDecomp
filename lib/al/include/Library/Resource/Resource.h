@@ -71,7 +71,7 @@ public:
                                                  char const*);
 
 private:
-    int mLength = 0;
+    s32 mLength = 0;
     ActionAnimCtrlInfo** mInfos;  // ActionAnimCtrlInfo*[mLength];
 };
 

@@ -16,7 +16,7 @@ public:
     void removeActorAll();
     bool isExistActor(const LiveActor*) const;
     bool isFull() const;
-    int calcAliveActorNum() const;
+    s32 calcAliveActorNum() const;
     LiveActor* getDeadActor() const;
     LiveActor* tryFindDeadActor() const;
     void appearAll();

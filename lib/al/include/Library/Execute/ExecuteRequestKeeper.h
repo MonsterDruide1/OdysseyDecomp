@@ -13,23 +13,23 @@ private:
 
 class ExecuteRequestTable {
 public:
-    ExecuteRequestTable(int size);
+    ExecuteRequestTable(s32 size);
 
 private:
-    int mRequestCount;
+    s32 mRequestCount;
     LiveActor** mRequestArray;
 };
 
 class ExecuteRequestKeeper {
 public:
-    enum Request : int {
+    enum Request : s32 {
         Request_Movement = 0x0,
         Request_RemoveFromMovement = 0x1,
         Request_Draw = 0x2,
         Request_RemoveFromDraw = 0x3
     };
 
-    ExecuteRequestKeeper(int size);
+    ExecuteRequestKeeper(s32 size);
 
     void executeRequestActorMovementAllOn();
     void executeRequestActorMovementAllOff();

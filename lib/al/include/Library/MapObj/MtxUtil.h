@@ -12,14 +12,14 @@ namespace al {
 template <typename T>
 class Matrix43;
 
-typedef Matrix43<float> Matrix43f;
+typedef Matrix43<f32> Matrix43f;
 
 class MtxPtrHolder {
 private:
 public:
     MtxPtrHolder();
-    void init(int);
-    void setMtxPtrAndName(int, const char*, const sead::Matrix34f*);
+    void init(s32);
+    void setMtxPtrAndName(s32, const char*, const sead::Matrix34f*);
     void setMtxPtr(const char*, const sead::Matrix34f*);
     void findIndex(const char*) const;
     void findMtxPtr(const char*) const;
@@ -27,12 +27,12 @@ public:
     void tryFindIndex(const char*) const;
 };
 
-void makeBayerMatrix(int*, int);
-void f32ToF16(float);
+void makeBayerMatrix(s32*, s32);
+void f32ToF16(f32);
 void f16ToF32(unsigned short);
 
 void makeMtxRotateTrans(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxFromTwoAxis(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&, int, int);
+void makeMtxFromTwoAxis(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&, s32, s32);
 void makeMtxFrontUp(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
 void makeMtxFrontSide(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
 void makeMtxUpFront(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
@@ -73,22 +73,22 @@ void makeMtxProjFromQuatPoseFront(sead::Matrix44f*, const sead::Quatf&, const se
 void makeMtxProjFromQuatPoseSide(sead::Matrix44f*, const sead::Quatf&, const sead::Vector2f&,
                                  const sead::Vector3f&);
 void makeMtxProjFromUp(sead::Matrix44f*, const sead::Vector2f&, const sead::Vector3f&);
-void rotateMtxXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, float);
-void rotateMtxYDirDegree(sead::Matrix34f*, const sead::Matrix34f&, float);
-void rotateMtxZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, float);
+void rotateMtxXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, f32);
+void rotateMtxYDirDegree(sead::Matrix34f*, const sead::Matrix34f&, f32);
+void rotateMtxZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, f32);
 void rotateMtxCenterPosXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
-                                  float);
+                                  f32);
 void rotateMtxCenterPosAxisDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
-                                  const sead::Vector3f&, float);
+                                  const sead::Vector3f&, f32);
 void rotateMtxCenterPosYDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
-                                  float);
+                                  f32);
 void rotateMtxCenterPosZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
-                                  float);
+                                  f32);
 void rotateMtxCenterPosQuat(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
                             const sead::Quatf&);
-void turnMtxXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&, float);
-void turnMtxYDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&, float);
-void turnMtxZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&, float);
+void turnMtxXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&, f32);
+void turnMtxYDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&, f32);
+void turnMtxZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&, f32);
 void calcCameraPosFromViewMtx(sead::Vector3f*, const sead::Matrix34f&);
 void calcMtxMul(sead::Vector3f*, const sead::Matrix34f&, const sead::Vector3f&);
 void calcMtxMul(sead::Vector3f*, const al::Matrix43f&, const sead::Vector3f&);
@@ -100,19 +100,19 @@ void calcMtxLocalTrans(sead::Vector3f*, const sead::Matrix34f&, const sead::Vect
 void calcTransLocalOffsetByMtx(sead::Vector3f*, const sead::Matrix34f&, const sead::Vector3f&);
 void preScaleMtx(sead::Matrix34f*, const sead::Vector3f&);
 void addTransMtxLocalOffset(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&);
-void blendMtx(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, float);
-void blendMtxRotate(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, float);
-void blendMtxTrans(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, float);
-void calcMtxLocalDirAngleOnPlaneToTarget(const sead::Matrix34f*, const sead::Vector3f&, int, int);
-void calcMtxLocalDirAngleOnPlaneToDir(const sead::Matrix34f*, const sead::Vector3f&, int, int);
+void blendMtx(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, f32);
+void blendMtxRotate(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, f32);
+void blendMtxTrans(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, f32);
+void calcMtxLocalDirAngleOnPlaneToTarget(const sead::Matrix34f*, const sead::Vector3f&, s32, s32);
+void calcMtxLocalDirAngleOnPlaneToDir(const sead::Matrix34f*, const sead::Vector3f&, s32, s32);
 void calcRotAxisOrZero(sead::Vector3f*, const sead::Matrix34f&);
 void calcMxtInvertOrtho(sead::Matrix34f*, const sead::Matrix34f&);
-void calcNearFarByInvProjection(float*, float*, const sead::Matrix44f&);
-void calcMovedInertiaTensor(sead::Matrix33f*, const sead::Matrix33f&, const sead::Vector3f&, float);
+void calcNearFarByInvProjection(f32*, f32*, const sead::Matrix44f&);
+void calcMovedInertiaTensor(sead::Matrix33f*, const sead::Matrix33f&, const sead::Vector3f&, f32);
 void calcInertiaTensorByMovedTensorAndCenter(sead::Matrix33f*, const sead::Matrix33f&,
-                                             const sead::Vector3f&, float);
-void calcInertiaTensorSphere(sead::Matrix33f*, float, float);
-void calcInertiaTensorBox(sead::Matrix33f*, const sead::Vector3f&, float);
+                                             const sead::Vector3f&, f32);
+void calcInertiaTensorSphere(sead::Matrix33f*, f32, f32);
+void calcInertiaTensorBox(sead::Matrix33f*, const sead::Vector3f&, f32);
 void makeMtx34f(sead::Matrix34f*, const nn::util::neon::MatrixColumnMajor4x3fType&);
 void makeMtx44f(sead::Matrix44f*, const nn::util::neon::MatrixColumnMajor4x4fType&);
 }  // namespace al

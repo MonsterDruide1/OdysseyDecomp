@@ -30,14 +30,14 @@ public:
     void onCalcAndDraw();
     void offCalcAndDraw();
     void forceSetStopCalcAndDraw(bool);
-    void setEmitRatio(const char*, float);
+    void setEmitRatio(const char*, f32);
     void setEmitterAllScale(const char*, const sead::Vector3f&);
     void setEmitterVolumeScale(const char*, const sead::Vector3f&);
-    void setParticleScale(const char*, float);
+    void setParticleScale(const char*, f32);
     void setParticleScale(const char*, const sead::Vector3f&);
-    void setParticleAlpha(const char*, float);
+    void setParticleAlpha(const char*, f32);
     void setParticleColor(const char*, const sead::Color4f&);
-    void setParticleLifeScale(const char*, float);
+    void setParticleLifeScale(const char*, f32);
     void findMtxPtr(const char*);
     void tryFindEffect(const char*);
 

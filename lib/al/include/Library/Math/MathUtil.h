@@ -4,25 +4,25 @@
 #include <math/seadVector.h>
 
 namespace al {
-float normalize(float, float, float);
-float normalize(signed int, signed int, signed int);
+f32 normalize(f32, f32, f32);
+f32 normalize(s32, s32, s32);
 
-float easeIn(float);
-float easeOut(float);
-float easeInOut(float);
+f32 easeIn(f32);
+f32 easeOut(f32);
+f32 easeInOut(f32);
 
-float sign(float);
-int sign(int);
+f32 sign(f32);
+s32 sign(s32);
 
-float squareIn(float);
-float squareOut(float);
+f32 squareIn(f32);
+f32 squareOut(f32);
 
-float powerIn(float, float);
-float powerOut(float, float);
+f32 powerIn(f32, f32);
+f32 powerOut(f32, f32);
 
-float lerpValue(float, float, float);
+f32 lerpValue(f32, f32, f32);
 
-bool isNearZero(float, float);
+bool isNearZero(f32, f32);
 
 template <typename T>
 inline T clamp(T value, T min, T max) {
@@ -68,9 +68,9 @@ void makeMtxUpFrontPos(sead::Matrix34f* out, const sead::Vector3f& up, const sea
 void separateVectorHV(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
                       const sead::Vector3f&);
 
-void lerpVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, float);
-void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, float);
+void lerpVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
+void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 void lerpVecHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
-               float, float);
+               f32, f32);
 
 }  // namespace al

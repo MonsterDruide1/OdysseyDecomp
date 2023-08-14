@@ -4,35 +4,35 @@
 
 namespace al {
 
-float getRandom() {
-    unsigned int random = (sead::GlobalRandom::instance()->getU32() >> 9) | 0x3F800000;
-    return (*reinterpret_cast<float*>(&random)) - 1;
+f32 getRandom() {
+    u32 random = (sead::GlobalRandom::instance()->getU32() >> 9) | 0x3F800000;
+    return (*reinterpret_cast<f32*>(&random)) - 1;
 }
-float getRandom(float factor) {
+f32 getRandom(f32 factor) {
     return getRandom(0.f, factor);
 }
-float getRandom(float min, float max) {
+f32 getRandom(f32 min, f32 max) {
     return (getRandom() * (max - min)) + min;
 }
 
-int getRandom(int factor) {
+s32 getRandom(s32 factor) {
     return getRandom(0, factor);
 }
-int getRandom(int min, int max) {
-    return (int)getRandom((float)min, (float)max);
+s32 getRandom(s32 min, s32 max) {
+    return (s32)getRandom((f32)min, (f32)max);
 }
 
-float getRandomDegree() {
+f32 getRandomDegree() {
     return getRandom(360.f);
 }
-float getRandomRadian() {
+f32 getRandomRadian() {
     return getRandom(6.2832f);
 }
 
-void getRandomVector(sead::Vector3f* vec, float factor) {
-    float x = (getRandom() * (factor + factor)) - factor;
-    float y = (getRandom() * (factor + factor)) - factor;
-    float z = (getRandom() * (factor + factor)) - factor;
+void getRandomVector(sead::Vector3f* vec, f32 factor) {
+    f32 x = (getRandom() * (factor + factor)) - factor;
+    f32 y = (getRandom() * (factor + factor)) - factor;
+    f32 z = (getRandom() * (factor + factor)) - factor;
     vec->x = x;
     vec->y = y;
     vec->z = z;

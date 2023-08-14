@@ -10,17 +10,17 @@ struct StagePosInfo {};
 struct StageDBEntry {
     sead::FixedSafeString<0x80> stageName;
     sead::FixedSafeString<0x40> stageCategory;
-    int useScenario;
+    s32 useScenario;
 };
 
 struct WorldListEntry {
     const char* mainStageName;
     const char* worldDevelopName;
-    int questInfoCount;
-    int clearMainScenario;
-    int endingScenario;
-    int moonRockScenario;
-    int* mainQuestIndexes;
+    s32 questInfoCount;
+    s32 clearMainScenario;
+    s32 endingScenario;
+    s32 moonRockScenario;
+    s32* mainQuestIndexes;
     sead::PtrArray<StageDBEntry> stageNames;
 };
 
@@ -29,23 +29,23 @@ public:
     WorldList();
 
     void getWorldNum();
-    void getMainQuestMin(int, int);
-    const char* getMainStageName(int) const;
-    int tryFindWorldIndexByMainStageName(const char* stageName) const;
-    int tryFindWorldIndexByStageName(const char* stageName) const;
-    int tryFindWorldIndexByDevelopName(const char* stageName) const;
-    void isEqualClearMainScenarioNo(int, int);
-    void getAfterEndingScenarioNo(int);
-    void isEqualAfterEndingScenarioNo(int, int);
-    int getMoonRockScenarioNo(int worldId) const;
-    bool isEqualMoonRockScenarioNo(int, int) const;
-    const char* getWorldDevelopName(int) const;
-    void getWorldScenarioNum(int);
-    int findUseScenarioNo(const char* stageName) const;
+    void getMainQuestMin(s32, s32);
+    const char* getMainStageName(s32) const;
+    s32 tryFindWorldIndexByMainStageName(const char* stageName) const;
+    s32 tryFindWorldIndexByStageName(const char* stageName) const;
+    s32 tryFindWorldIndexByDevelopName(const char* stageName) const;
+    void isEqualClearMainScenarioNo(s32, s32);
+    void getAfterEndingScenarioNo(s32);
+    void isEqualAfterEndingScenarioNo(s32, s32);
+    s32 getMoonRockScenarioNo(s32 worldId) const;
+    bool isEqualMoonRockScenarioNo(s32, s32) const;
+    const char* getWorldDevelopName(s32) const;
+    void getWorldScenarioNum(s32);
+    s32 findUseScenarioNo(const char* stageName) const;
     void checkNeedTreasureMessageStage(const char*);
     bool checkIsMainStage(const char* stageName) const;
-    void tryFindTransOnMainStageByStageName(sead::Vector3f*, const char*, int);
-    void tryFindHintTransByScenarioNo(sead::Vector3f*, int, int);
+    void tryFindTransOnMainStageByStageName(sead::Vector3f*, const char*, s32);
+    void tryFindHintTransByScenarioNo(sead::Vector3f*, s32, s32);
     
 private:
     sead::PtrArray<WorldListEntry> mWorldList;

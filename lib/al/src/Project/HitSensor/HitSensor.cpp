@@ -1,12 +1,12 @@
 #include "Project/HitSensor/HitSensor.h"
 
 namespace al {
-void HitSensor::setFollowPosPtr(const sead::Vector3<float>* pFollowPos) {
+void HitSensor::setFollowPosPtr(const sead::Vector3<f32>* pFollowPos) {
     mFollowPos = pFollowPos;
     mFollowMtx = nullptr;
 }
 
-void HitSensor::setFollowMtxPtr(const sead::Matrix34<float>* pFollowMtx) {
+void HitSensor::setFollowMtxPtr(const sead::Matrix34<f32>* pFollowMtx) {
     mFollowPos = nullptr, mFollowMtx = pFollowMtx;
 }
 

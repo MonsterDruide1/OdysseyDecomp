@@ -14,7 +14,7 @@ NerveKeeper* NerveExecutor::getNerveKeeper() const {
     return mKeeper;
 }
 
-void NerveExecutor::initNerve(const Nerve* nerve, int stateCount) {
+void NerveExecutor::initNerve(const Nerve* nerve, s32 stateCount) {
     mKeeper = new NerveKeeper(this, nerve, stateCount);
 }
 

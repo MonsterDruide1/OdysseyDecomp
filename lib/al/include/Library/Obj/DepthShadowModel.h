@@ -12,7 +12,7 @@ public:
 
 private:
     void* field_108;
-    int field_110;
+    s32 field_110;
     bool field_114;
 };
 static_assert(sizeof(DepthShadowModel) == 0x118, "DepthShadowModel Size");

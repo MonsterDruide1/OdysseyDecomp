@@ -4,16 +4,16 @@
 
 namespace al {
 
-SceneObjHolder::SceneObjHolder(al::ISceneObj* (*creator)(int), int size)
+SceneObjHolder::SceneObjHolder(al::ISceneObj* (*creator)(s32), s32 size)
     : mCreator(creator), mArraySize(size) {
     mSceneObjArray = new ISceneObj*[size];
 
-    for (int i = 0; i < mArraySize; i++) {
+    for (s32 i = 0; i < mArraySize; i++) {
         mSceneObjArray[i] = nullptr;
     }
 }
 
-ISceneObj* SceneObjHolder::create(int index) {
+ISceneObj* SceneObjHolder::create(s32 index) {
     if (mSceneObjArray[index])  // already exists
         return mSceneObjArray[index];
 
@@ -22,22 +22,22 @@ ISceneObj* SceneObjHolder::create(int index) {
     return mSceneObjArray[index];
 }
 
-ISceneObj* SceneObjHolder::tryGetObj(int index) const {
+ISceneObj* SceneObjHolder::tryGetObj(s32 index) const {
     return mSceneObjArray[index];
 }
-ISceneObj* SceneObjHolder::getObj(int index) const {
+ISceneObj* SceneObjHolder::getObj(s32 index) const {
     return mSceneObjArray[index];
 }
-bool SceneObjHolder::isExist(int index) const {
+bool SceneObjHolder::isExist(s32 index) const {
     return mSceneObjArray[index] != nullptr;
 }
 
-void SceneObjHolder::setSceneObj(al::ISceneObj* obj, int index) {
+void SceneObjHolder::setSceneObj(al::ISceneObj* obj, s32 index) {
     mSceneObjArray[index] = obj;
 }
 
 void SceneObjHolder::initAfterPlacementSceneObj(const al::ActorInitInfo& info) {
-    for (int i = 0; i < mArraySize; i++) {
+    for (s32 i = 0; i < mArraySize; i++) {
         if (mSceneObjArray[i])
             mSceneObjArray[i]->initAfterPlacementSceneObj(info);
     }

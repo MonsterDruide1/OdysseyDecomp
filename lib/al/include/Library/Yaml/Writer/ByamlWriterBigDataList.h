@@ -17,7 +17,7 @@ public:
     virtual ~ByamlWriterBigDataList();
     u32 calcPackSize() const;
     void addData(al::ByamlWriterBigData*);
-    int setOffset(int);
+    s32 setOffset(s32);
     void write(sead::WriteStream*);
 
 private:

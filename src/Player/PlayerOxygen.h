@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 class PlayerOxygen {
 public:
     PlayerOxygen();
@@ -8,14 +10,14 @@ public:
     void recovery();
     void reduce();
     void reset();
-    void setup(int no_reduce_frame, int reduce_frame, int recovery_frame, int damage_interval);
+    void setup(s32 no_reduce_frame, s32 reduce_frame, s32 recovery_frame, s32 damage_interval);
 
 private:
-    float mOxygenLevel = 1.0;
-    int mFramesReducing = 0;
-    int mFramesWithoutOxygen = 0;
-    int mOxygenNoReduceFrame = 0;
-    int mOxygenReduceFrame = 0;
-    int mOxygenRecoveryFrame = 0;
-    int mOxygenDamageInterval = 0;
+    f32 mOxygenLevel = 1.0;
+    s32 mFramesReducing = 0;
+    s32 mFramesWithoutOxygen = 0;
+    s32 mOxygenNoReduceFrame = 0;
+    s32 mOxygenReduceFrame = 0;
+    s32 mOxygenRecoveryFrame = 0;
+    s32 mOxygenDamageInterval = 0;
 };

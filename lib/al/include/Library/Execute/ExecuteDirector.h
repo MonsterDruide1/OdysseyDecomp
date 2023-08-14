@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class ExecuteRequestKeeper;
 class ExecuteTableHolderDraw;
@@ -12,7 +14,7 @@ class LiveActor;
 
 class ExecuteDirector {
 public:
-    ExecuteDirector(int count);
+    ExecuteDirector(s32 count);
     virtual ~ExecuteDirector();
     void init(const ExecuteSystemInitInfo&);
     void registerActorUpdate(LiveActor*, const char*);
@@ -31,10 +33,10 @@ public:
     bool isActiveDraw(const char*) const;
 
 private:
-    int mRequestCount = 0;
-    int mUpdateTableCount = 0;
+    s32 mRequestCount = 0;
+    s32 mUpdateTableCount = 0;
     ExecuteTableHolderUpdate** mUpdateTables = nullptr;
-    int mDrawTableCount = 0;
+    s32 mDrawTableCount = 0;
     ExecuteTableHolderDraw** mDrawTables = nullptr;
     ExecuteRequestKeeper* mRequestKeeper = nullptr;
 };

@@ -39,7 +39,7 @@ public:
     u8 padding_024[24];
     HakoniwaStateDemoWorldWarp* stateDemoWorldWarp;
     u8 padding_192[192];
-    int nextScenarioNo;
+    s32 nextScenarioNo;
     u8 padding_12[12];
     al::WipeHolder* field_0x1b0;
     u8 padding_0024[24];

@@ -2,7 +2,7 @@
 
 #include "Library/Base/String.h"
 
-PlayerModelHolder::PlayerModelHolder(unsigned int bufferSize) {
+PlayerModelHolder::PlayerModelHolder(u32 bufferSize) {
     mBuffer.allocBuffer(bufferSize, nullptr);
 }
 

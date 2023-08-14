@@ -10,7 +10,7 @@ class SeadAudioPlayer;
 class ActorResourceHolder;
 class ActorResource;
 
-void addResourceCategory(const sead::SafeString&, int, sead::Heap*);
+void addResourceCategory(const sead::SafeString&, s32, sead::Heap*);
 bool isEmptyCategoryResource(const sead::SafeString&);
 void createCategoryResourceAll(const sead::SafeString&);
 void removeResourceCategory(const sead::SafeString&);
@@ -30,7 +30,7 @@ void isExistResourceYaml(const Resource*, const char*, const char*);
 void isExistResourceYaml(const ActorResource*, const char*, const char*);
 void findResourceYaml(const Resource*, const char*, const char*);
 void findResourceYaml(const ActorResource*, const char*, const char*);
-void tryFindStageParameterFileDesign(const sead::SafeString&, const sead::SafeString&, int);
+void tryFindStageParameterFileDesign(const sead::SafeString&, const sead::SafeString&, s32);
 void loadCategoryArchiveAll(const sead::SafeString&);
 void setCurrentCategoryName(const char*);
 void resetCurrentCategoryName();

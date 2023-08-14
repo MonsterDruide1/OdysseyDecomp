@@ -4,7 +4,7 @@ namespace al {
 struct ExecuteOrder {
     const char* mListName;
     const char* mExecuteGroup;
-    int mListMaxSize;
+    s32 mListMaxSize;
     const char* mGroupType;
 };
 }  // namespace al

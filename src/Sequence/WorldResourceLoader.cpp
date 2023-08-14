@@ -151,7 +151,7 @@ void WorldResourceLoader::tryDestroyWorldResourceOnlyCap(void) {
     al::resetCurrentCategoryName();
 }
 
-float WorldResourceLoader::calcLoadPercent(void) const {
+f32 WorldResourceLoader::calcLoadPercent(void) const {
     if (mCurLoadCount >= mMaxLoadCount)
         return 101.0f;
     else
@@ -174,7 +174,7 @@ al::Resource* WorldResourceLoader::tryLoadResource(const char* resPath, const ch
     }
 }
 
-void WorldResourceLoader::loadWorldResource(int loadWorldId, int scenario, bool isScenarioResources,
+void WorldResourceLoader::loadWorldResource(s32 loadWorldId, s32 scenario, bool isScenarioResources,
                                             const char* resourceCategory) {
     nn::os::GetSystemTick();
     nn::os::GetSystemTick();
@@ -194,12 +194,12 @@ void WorldResourceLoader::loadWorldResource(int loadWorldId, int scenario, bool 
         al::getByamlIterByKey(&resourceListIter, loadWorldIter, "WorldResource");
     }
 
-    int resSize = resourceListIter.getSize();
+    s32 resSize = resourceListIter.getSize();
     mMaxLoadCount = resSize;
 
     if (resSize > 0) {
         if (resourceCategory) {
-            for (int i = 0; i < resSize; i++) {
+            for (s32 i = 0; i < resSize; i++) {
                 al::ByamlIter resEntry;
                 resourceListIter.tryGetIterByIndex(&resEntry, i);
 
@@ -220,7 +220,7 @@ void WorldResourceLoader::loadWorldResource(int loadWorldId, int scenario, bool 
                 mCurLoadCount = i;
             }
         } else {
-            for (int i = 0; i < resSize; i++) {
+            for (s32 i = 0; i < resSize; i++) {
                 al::ByamlIter resEntry;
                 resourceListIter.tryGetIterByIndex(&resEntry, i);
 
@@ -242,7 +242,7 @@ void WorldResourceLoader::loadWorldResource(int loadWorldId, int scenario, bool 
     mCurLoadCount = mMaxLoadCount;
 }
 
-float WorldResourceLoader::calcWorldResourceHeapSize(void) const {
+f32 WorldResourceLoader::calcWorldResourceHeapSize(void) const {
     return ((mWorldResourceHeap->getSize() - mWorldResourceHeap->getFreeSize()) * 0.00097656f) *
            0.00097656f;
 }

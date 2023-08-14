@@ -283,7 +283,7 @@ bool PlayerInput::isTriggerSpinAttackSeparate() const {
     return PlayerInputFunction::isTriggerAction(mLiveActor, al::getPlayerControllerPort(0));
 }
 
-int PlayerInput::getSeparatePlay1P() {
+s32 PlayerInput::getSeparatePlay1P() {
     return al::getPlayerControllerPort(0);
 }
 
@@ -472,15 +472,15 @@ bool PlayerInput::isEnableDashInput() const {
 bool PlayerInput::isThrowTypeSpiral(const sead::Vector2f& a1) const {
     if (al::isNearZero(a1, 0.001))
         return false;
-    float absX = (a1.x > 0 ? a1.x : -a1.x);
-    float absY = (a1.y > 0 ? a1.y : -a1.y);
+    f32 absX = (a1.x > 0 ? a1.x : -a1.x);
+    f32 absY = (a1.y > 0 ? a1.y : -a1.y);
     return absX > absY;
 }
 
 bool PlayerInput::isThrowTypeRolling(const sead::Vector2f& a1) const {
     if (al::isNearZero(a1, 0.001))
         return !al::isNearZero(a1.y, 0.001);
-    float absX = (a1.x > 0 ? a1.x : -a1.x);
-    float absY = (a1.y > 0 ? a1.y : -a1.y);
+    f32 absX = (a1.x > 0 ? a1.x : -a1.x);
+    f32 absY = (a1.y > 0 ? a1.y : -a1.y);
     return !(absX > absY) && !al::isNearZero(a1.y, 0.001);
 }

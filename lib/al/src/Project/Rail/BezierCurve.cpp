@@ -24,14 +24,14 @@ void BezierCurve::set(const sead::Vector3f& start, const sead::Vector3f& startHa
     mDistance = calcLength(0.0, 1.0, 10);
 }
 
-float BezierCurve::calcLength(float startParam, float endParam, int stepCount) const {
-    float avgVelocity = (calcDeltaLength(startParam) + calcDeltaLength(endParam)) / 2;
-    float halfStepSize = (endParam - startParam) * (1.0f / (stepCount * 2.0f));
+f32 BezierCurve::calcLength(f32 startParam, f32 endParam, s32 stepCount) const {
+    f32 avgVelocity = (calcDeltaLength(startParam) + calcDeltaLength(endParam)) / 2;
+    f32 halfStepSize = (endParam - startParam) * (1.0f / (stepCount * 2.0f));
 
-    float sumVelHalfStep = 0.0f;
-    float sumVelFullStep = 0.0f;
-    for (int i = 1; i <= stepCount; i++) {
-        float doubleI = i * 2.0f;
+    f32 sumVelHalfStep = 0.0f;
+    f32 sumVelFullStep = 0.0f;
+    for (s32 i = 1; i <= stepCount; i++) {
+        f32 doubleI = i * 2.0f;
 
         sumVelHalfStep += calcDeltaLength((halfStepSize * (doubleI - 1)) + startParam);
 
@@ -45,9 +45,9 @@ float BezierCurve::calcLength(float startParam, float endParam, int stepCount) c
            1024.f;
 }
 
-void BezierCurve::calcPos(sead::Vector3f* pos, float param) const {
-    float square = param * param;
-    float cube = square * param;
+void BezierCurve::calcPos(sead::Vector3f* pos, f32 param) const {
+    f32 square = param * param;
+    f32 cube = square * param;
 
     pos->x = (unk.x * param) + mStart.x;
     pos->y = (unk.y * param) + mStart.y;
@@ -62,9 +62,9 @@ void BezierCurve::calcPos(sead::Vector3f* pos, float param) const {
     pos->z = (unk3.z * cube) + pos->z;
 }
 
-void BezierCurve::calcVelocity(sead::Vector3f* vel, float param) const {
-    float fac1 = param + param;
-    float fac2 = 3 * param * param;
+void BezierCurve::calcVelocity(sead::Vector3f* vel, f32 param) const {
+    f32 fac1 = param + param;
+    f32 fac2 = 3 * param * param;
 
     vel->x = (unk2.x * fac1) + unk.x;
     vel->y = (unk2.y * fac1) + unk.y;
@@ -75,22 +75,22 @@ void BezierCurve::calcVelocity(sead::Vector3f* vel, float param) const {
     vel->z = (unk3.z * fac2) + vel->z;
 }
 
-float BezierCurve::calcDeltaLength(float param) const {
+f32 BezierCurve::calcDeltaLength(f32 param) const {
     sead::Vector3f tmp;
     calcVelocity(&tmp, param);
     return tmp.length();
 }
 
 // NON_MATCHING: flipped parts of if in last statement and unoptimized 1.0f - load
-float BezierCurve::calcCurveParam(float distance) const {
-    float percent = distance / mDistance;
-    float partLength = calcLength(0, percent, 10);
+f32 BezierCurve::calcCurveParam(f32 distance) const {
+    f32 percent = distance / mDistance;
+    f32 partLength = calcLength(0, percent, 10);
     if (sead::Mathf::abs(distance - partLength) <= 0.01f)
         return percent;
 
-    for (int i = 0; i <= 4; i++) {
-        float len = std::max(calcDeltaLength(percent), 0.001f);
-        float newPercent = percent + ((distance - partLength) / len);
+    for (s32 i = 0; i <= 4; i++) {
+        f32 len = std::max(calcDeltaLength(percent), 0.001f);
+        f32 newPercent = percent + ((distance - partLength) / len);
 
         percent = sead::Mathf::clamp(newPercent, 0.0f, 1.0f);
         partLength = calcLength(0.0f, percent, 10);
@@ -104,14 +104,14 @@ float BezierCurve::calcCurveParam(float distance) const {
     return percent;
 }
 
-float BezierCurve::calcNearestParam(const sead::Vector3f& pos, float interval) const {
-    float currentParam = 0.0;
-    float bestParam = -1.0;
-    float bestDist = 3.4028e38;
+f32 BezierCurve::calcNearestParam(const sead::Vector3f& pos, f32 interval) const {
+    f32 currentParam = 0.0;
+    f32 bestParam = -1.0;
+    f32 bestDist = 3.4028e38;
     do {
         sead::Vector3f nearest;
         calcPos(&nearest, currentParam);
-        float currentDist = (nearest - pos).squaredLength();
+        f32 currentDist = (nearest - pos).squaredLength();
 
         if (currentDist < bestDist) {
             bestParam = currentParam;
@@ -122,15 +122,15 @@ float BezierCurve::calcNearestParam(const sead::Vector3f& pos, float interval) c
     return bestParam;
 }
 
-float BezierCurve::calcNearestLength(float* param, const sead::Vector3f& pos, float max,
-                                     float interval) const {
-    float bestParam = -1.0;
-    float currentParam = 0.0;
-    float bestDist = 3.4028e38;
+f32 BezierCurve::calcNearestLength(f32* param, const sead::Vector3f& pos, f32 max,
+                                     f32 interval) const {
+    f32 bestParam = -1.0;
+    f32 currentParam = 0.0;
+    f32 bestDist = 3.4028e38;
     while (currentParam < max) {
         sead::Vector3f nearest;
         calcPos(&nearest, calcCurveParam(currentParam));
-        float currentDist = (nearest - pos).squaredLength();
+        f32 currentDist = (nearest - pos).squaredLength();
 
         if (currentDist < bestDist) {
             bestParam = currentParam;
@@ -144,7 +144,7 @@ float BezierCurve::calcNearestLength(float* param, const sead::Vector3f& pos, fl
 
 // NON_MATCHING: Difference in loading for calcNearestParam
 void BezierCurve::calcNearestPos(sead::Vector3f* nearest, const sead::Vector3f& pos,
-                                 float interval) const {
+                                 f32 interval) const {
     calcPos(nearest, calcNearestParam(pos, interval));
 }
 

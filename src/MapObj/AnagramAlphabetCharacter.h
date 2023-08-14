@@ -41,5 +41,5 @@ private:
     HackerJudgeNormalFall* mHackerJudgeNormalFall;
     HackerJudgeStartRun* mHackerJudgeStartRun;
     PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl;
-    int mSwingTimer;
+    s32 mSwingTimer;
 };

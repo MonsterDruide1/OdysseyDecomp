@@ -117,37 +117,37 @@ void createChildLinkMapPartsActor(const char* actorName, const char* archiveName
 ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo);
 
 void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, ByamlIter const&, const char*);
-void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, int);
+void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
 ShadowMaskBase* createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
 ShadowMaskBase* createShadowMaskCube(LiveActor*, const char*, const char*, const char*,
-                                     const sead::Color4f&, const sead::Vector3f&, float, float,
-                                     float, const sead::Vector3f&, float);
+                                     const sead::Color4f&, const sead::Vector3f&, f32, f32,
+                                     f32, const sead::Vector3f&, f32);
 ShadowMaskBase* createShadowMaskCylinder(LiveActor*, const char*, const char*, const char*,
-                                         const sead::Color4f&, const sead::Vector3f&, float, float,
-                                         float, float, float);
+                                         const sead::Color4f&, const sead::Vector3f&, f32, f32,
+                                         f32, f32, f32);
 ShadowMaskBase* createShadowMaskCastOvalCylinder(LiveActor*, const char*, const char*, const char*,
                                                  const sead::Color4f&, const sead::Vector3f&,
-                                                 const sead::Vector3f&, float, float, float, float);
+                                                 const sead::Vector3f&, f32, f32, f32, f32);
 void initActorCollision(LiveActor*, const sead::SafeString&, HitSensor*, const sead::Matrix34f*);
 void initActorCollisionWithResource(LiveActor*, const Resource*, const sead::SafeString&,
                                     HitSensor*, const sead::Matrix34f*, const char*);
 void initActorCollisionWithArchiveName(LiveActor*, const sead::SafeString&, const sead::SafeString&,
                                        HitSensor*, const sead::Matrix34f*);
 void initActorCollisionWithFilePtr(LiveActor*, void*, void const*, HitSensor*,
-                                   const sead::Matrix34f*, const char*, const char*, int);
+                                   const sead::Matrix34f*, const char*, const char*, s32);
 void initStageSwitch(LiveActor*, const ActorInitInfo&);
 void initActorItemKeeper(LiveActor*, const ActorInitInfo&, ByamlIter const&);
 void initActorPrePassLightKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initActorOcclusionKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
-void initSubActorKeeper(LiveActor*, const ActorInitInfo&, const char*, int);
-void initSubActorKeeperNoFile(LiveActor*, const ActorInitInfo&, int);
+void initSubActorKeeper(LiveActor*, const ActorInitInfo&, const char*, s32);
+void initSubActorKeeperNoFile(LiveActor*, const ActorInitInfo&, s32);
 void registerSubActor(LiveActor*, LiveActor*);
 void registerSubActorSyncClipping(LiveActor*, LiveActor*);
 void registerSubActorSyncClippingAndHide(LiveActor*, LiveActor*);
 void registerSubActorSyncAll(LiveActor*, LiveActor*);
 void setSubActorOffSyncClipping(LiveActor*);
 void initScreenPointKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
-void initScreenPointKeeperNoYaml(LiveActor*, int);
+void initScreenPointKeeperNoYaml(LiveActor*, s32);
 void initActorMaterialCategory(LiveActor*, const ActorInitInfo&, const char*);
 
 // TODO: move these
@@ -174,8 +174,8 @@ void initExecutorWatchObj(LiveActor*, const ActorInitInfo&);
 void initExecutorDebugMovement(LiveActor*, const ActorInitInfo&);
 void initExecutorModelUpdate(LiveActor*, const ActorInitInfo&);
 void initExecutorDrcAssistMovement(LiveActor*, const ActorInitInfo&);
-void initActorModelKeeper(LiveActor*, const ActorInitInfo&, const ActorResource*, int);
-void initActorModelKeeper(LiveActor*, const ActorInitInfo&, const char*, int, const char*);
+void initActorModelKeeper(LiveActor*, const ActorInitInfo&, const ActorResource*, s32);
+void initActorModelKeeper(LiveActor*, const ActorInitInfo&, const char*, s32, const char*);
 void initActorModelKeeperByHost(LiveActor*, const LiveActor*);
 void initActorModelForceCubeMap(LiveActor*, const ActorInitInfo&);
 void initActorActionKeeper(LiveActor*, const ActorInitInfo&, const char*, const char*);
@@ -192,22 +192,22 @@ void initHitReactionKeeper(LiveActor*, const Resource*, const char*);
 void initActorParamHolder(LiveActor*, const char*);
 void initActorParamHolder(LiveActor*, const Resource*, const char*);
 void initDepthShadowMapCtrl(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
-void initDepthShadowMapCtrlWithoutIter(LiveActor*, int, bool);
-void addDepthShadowMapInfo(const LiveActor*, const char*, int, int, int, float, bool,
+void initDepthShadowMapCtrlWithoutIter(LiveActor*, s32, bool);
+void addDepthShadowMapInfo(const LiveActor*, const char*, s32, s32, s32, f32, bool,
                            const sead::Vector3f&, bool, const sead::Vector3f&,
-                           const sead::Vector3f&, bool, const char*, int, bool, float, float, float,
-                           bool, bool, float, int, bool);
-void declareUseDepthShadowMap(const LiveActor*, int);
-void createDepthShadowMap(const LiveActor*, const char*, int, int, int);
+                           const sead::Vector3f&, bool, const char*, s32, bool, f32, f32, f32,
+                           bool, bool, f32, s32, bool);
+void declareUseDepthShadowMap(const LiveActor*, s32);
+void createDepthShadowMap(const LiveActor*, const char*, s32, s32, s32);
 void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);
-void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, int);
+void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
 
 void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const PlacementInfo&);
 void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorNoPlacementInfoNoViewId(LiveActor*, const ActorInitInfo&);
 void createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
-void createLinksActorFromFactory(const ActorInitInfo&, const char*, int);
+void createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
 void createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
 void tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
 void tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);

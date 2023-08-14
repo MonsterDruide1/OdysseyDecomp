@@ -85,12 +85,12 @@ public:
     void readFromSaveDataBufferCommonFileOnlyLanguage();
     void readFromSaveDataBuffer(const char* bufferName);
 
-    void changeNextStage(const struct ChangeStageInfo*, int);
+    void changeNextStage(const struct ChangeStageInfo*, s32);
 
-    int findUseScenarioNo(const char*);
+    s32 findUseScenarioNo(const char*);
 
 private:
-    int padding;
+    s32 padding;
     GameDataFile** mDataFileArr;
     GameDataFile* mGameDataFile;
     u64 field_28;

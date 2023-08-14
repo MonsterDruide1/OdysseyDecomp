@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class LiveActor;
 class IUseSceneObjHolder;
@@ -7,20 +9,20 @@ class IUseSceneObjHolder;
 
 class PlayerInputFunction {
 public:
-    static bool isTriggerAction(const al::LiveActor*, int);
-    static bool isHoldAction(const al::LiveActor*, int);
-    static bool isReleaseAction(const al::LiveActor*, int);
+    static bool isTriggerAction(const al::LiveActor*, s32);
+    static bool isHoldAction(const al::LiveActor*, s32);
+    static bool isReleaseAction(const al::LiveActor*, s32);
 
-    static bool isTriggerJump(const al::LiveActor*, int);
-    static bool isHoldJump(const al::LiveActor*, int);
-    static bool isReleaseJump(const al::LiveActor*, int);
+    static bool isTriggerJump(const al::LiveActor*, s32);
+    static bool isHoldJump(const al::LiveActor*, s32);
+    static bool isReleaseJump(const al::LiveActor*, s32);
 
-    static bool isTriggerSubAction(const al::LiveActor*, int);
-    static bool isHoldSubAction(const al::LiveActor*, int);
+    static bool isTriggerSubAction(const al::LiveActor*, s32);
+    static bool isHoldSubAction(const al::LiveActor*, s32);
 
-    static bool isTriggerTalk(const al::LiveActor*, int);
-    static bool isTriggerStartWorldWarp(const al::LiveActor*, int);
-    static bool isTriggerCancelWorldWarp(const al::LiveActor*, int);
+    static bool isTriggerTalk(const al::LiveActor*, s32);
+    static bool isTriggerStartWorldWarp(const al::LiveActor*, s32);
+    static bool isTriggerCancelWorldWarp(const al::LiveActor*, s32);
 };
 
 namespace rs {

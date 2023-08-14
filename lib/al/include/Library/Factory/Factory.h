@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 struct NameToCreator {
     const char* mName;
@@ -15,12 +17,12 @@ public:
     inline Factory(const char* factoryName)
         : mFactoryName(factoryName), mFactoryEntries(nullptr), mNumFactoryEntries(0) {}
 
-    template <int N>
+    template <s32 N>
     inline Factory(const char* factoryName, NameToCreator (&entries)[N])
         : mFactoryName(factoryName) {
         initFactory(entries);
     }
-    template <int N>
+    template <s32 N>
     inline void initFactory(NameToCreator (&entries)[N]) {
         mFactoryEntries = entries;
         mNumFactoryEntries = N;
@@ -31,7 +33,7 @@ public:
 private:
     const char* mFactoryName;
     NameToCreator* mFactoryEntries;
-    int mNumFactoryEntries;
+    s32 mNumFactoryEntries;
 };
 
 }  // namespace al

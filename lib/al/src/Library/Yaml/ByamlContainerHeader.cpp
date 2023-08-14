@@ -3,11 +3,11 @@
 #include <byteswap.h>
 
 namespace al {
-int ByamlContainerHeader::getType() const {
+s32 ByamlContainerHeader::getType() const {
     return mType;
 }
 
-int ByamlContainerHeader::getCount(bool isRev) const {
+s32 ByamlContainerHeader::getCount(bool isRev) const {
     if (isRev)
         return bswap_32_ignore_last(mType);
 

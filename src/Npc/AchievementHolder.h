@@ -15,13 +15,13 @@ public:
     AchievementHolder();
     void init(const al::ActorInitInfo&);
     void init();
-    bool isGetMoon(int, GameDataHolderAccessor) const;
-    bool isAchieve(int, GameDataHolderAccessor) const;
-    int getAchievementProgressCurrent(int, GameDataHolderAccessor) const;
-    int getAchievementProgressMax(int, GameDataHolderAccessor) const;
-    int getAchievementProgressCurrentRow(int, GameDataHolderAccessor) const;
-    int calcAchieveTotalNum(GameDataHolderAccessor) const;
-    int calcMoonGetTotalNum(GameDataHolderAccessor) const;
+    bool isGetMoon(s32, GameDataHolderAccessor) const;
+    bool isAchieve(s32, GameDataHolderAccessor) const;
+    s32 getAchievementProgressCurrent(s32, GameDataHolderAccessor) const;
+    s32 getAchievementProgressMax(s32, GameDataHolderAccessor) const;
+    s32 getAchievementProgressCurrentRow(s32, GameDataHolderAccessor) const;
+    s32 calcAchieveTotalNum(GameDataHolderAccessor) const;
+    s32 calcMoonGetTotalNum(GameDataHolderAccessor) const;
     Achievement* tryGetNewAchievement(GameDataHolderAccessor) const;
 
 private:

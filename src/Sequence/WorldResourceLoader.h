@@ -18,11 +18,11 @@ public:
     bool requestLoadWorldResource(s32);
     void createResourcePlayer();
     void tryDestroyWorldResourceOnlyCap();
-    float calcLoadPercent() const;
+    f32 calcLoadPercent() const;
     s32 getLoadWorldId() const;
     al::Resource* tryLoadResource(const char*, const char*, const char*);
     void loadWorldResource(s32, s32, bool, const char*);
-    float calcWorldResourceHeapSize() const;
+    f32 calcWorldResourceHeapSize() const;
 
 private:
     al::AsyncFunctorThread* mWorldResourceLoader = nullptr;  // WorldResourceLoader::loadResource

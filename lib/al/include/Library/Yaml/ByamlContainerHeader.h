@@ -5,8 +5,8 @@
 namespace al {
 class ByamlContainerHeader {
 public:
-    int getType() const;
-    int getCount(bool isRev) const;
+    s32 getType() const;
+    s32 getCount(bool isRev) const;
 
 private:
     u32 mType;

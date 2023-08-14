@@ -16,13 +16,13 @@ public:
         void clear(void);
 
         bool isDisableByWorldWarpHole(bool) const;
-        bool isEnableUnlock(int, bool, int, bool) const;
-        bool isHintStatusUnlock(int, int, bool) const;
+        bool isEnableUnlock(s32, bool, s32, bool) const;
+        bool isHintStatusUnlock(s32, s32, bool) const;
         bool isHintStatusUnlockByNpc(void) const;
         bool isHintStatusUnlockByAmiibo(void) const;
-        bool isEnableNameUnlockByScenario(int, int, bool) const;
+        bool isEnableNameUnlockByScenario(s32, s32, bool) const;
 
-        bool testFunc(int, bool, int, bool) const;
+        bool testFunc(s32, bool, s32, bool) const;
 
     private:
         sead::FixedSafeString<0x80> mStageName;
@@ -62,5 +62,5 @@ private:
     unsigned char padding_6A8[0x6A8];
     GameProgressData* mGameProgressData;
     char padding_9F0[0x340];
-    int curWorldId;
+    s32 curWorldId;
 };

@@ -41,7 +41,7 @@ PlayerInfo* PlayerActorBase::getPlayerInfo() const {
     return nullptr;
 }
 
-unsigned int PlayerActorBase::getPortNo() const {
+u32 PlayerActorBase::getPortNo() const {
     return mPortNo;
 }
 void* PlayerActorBase::getViewMtx() const {

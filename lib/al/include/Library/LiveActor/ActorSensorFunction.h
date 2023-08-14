@@ -40,7 +40,7 @@ class ActorSensorController;
 
 void addHitSensorPlayer(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
                         const sead::Vector3f&);
-void addHitSensor(LiveActor*, const ActorInitInfo&, const char*, unsigned int, f32, unsigned short,
+void addHitSensor(LiveActor*, const ActorInitInfo&, const char*, u32, f32, unsigned short,
                   const sead::Vector3f&);
 void addHitSensorPlayerAttack(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
                               const sead::Vector3f&);

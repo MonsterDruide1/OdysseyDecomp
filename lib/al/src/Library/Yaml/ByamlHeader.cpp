@@ -40,7 +40,7 @@ ByamlStringTableIter::ByamlStringTableIter() = default;
 ByamlStringTableIter::ByamlStringTableIter(const u8* data, bool isRev)
     : mData(data), isRev(isRev) {}
 
-int ByamlStringTableIter::getSize() const {
+s32 ByamlStringTableIter::getSize() const {
     u32 type_and_size = *reinterpret_cast<const u32*>(mData);
     return isRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
 }
@@ -51,7 +51,7 @@ const u32* ByamlStringTableIter::getAddressTable() const {
     return reinterpret_cast<const u32*>(mData + 4);
 }
 
-u32 ByamlStringTableIter::getStringAddress(int idx) const {
+u32 ByamlStringTableIter::getStringAddress(s32 idx) const {
     if (isRev)
         return bswap_32(getAddressTable()[idx]);
 
@@ -63,18 +63,18 @@ u32 ByamlStringTableIter::getEndAddress() const {
     u32 val = getAddressTable()[getSize()];
     return isRev ? bswap_32(val) : val;
 }
-const char* ByamlStringTableIter::getString(int index) const {
+const char* ByamlStringTableIter::getString(s32 index) const {
     return reinterpret_cast<const char*>(&mData[getStringAddress(index)]);
 }
-int ByamlStringTableIter::getStringSize(int index) const {
+s32 ByamlStringTableIter::getStringSize(s32 index) const {
     return getStringAddress(index + 1) - getStringAddress(index) - 1;
 }
-int ByamlStringTableIter::findStringIndex(const char* str) const {
-    int lowerBound = 0;
-    int upperBound = getSize();
+s32 ByamlStringTableIter::findStringIndex(const char* str) const {
+    s32 lowerBound = 0;
+    s32 upperBound = getSize();
     while (lowerBound < upperBound) {
-        int avg = (lowerBound + upperBound) / 2;
-        int result = strcmp(str, getString(avg));
+        s32 avg = (lowerBound + upperBound) / 2;
+        s32 result = strcmp(str, getString(avg));
         if (result == 0)
             return avg;
 
@@ -94,7 +94,7 @@ bool ByamlStringTableIter::isValidate() const {
 
 namespace alByamlLocalUtil {
 
-const char* getDataTypeString(int type) {
+const char* getDataTypeString(s32 type) {
     switch (type) {
     case al::ByamlDataType::TYPE_INVALID:
         return "None";
@@ -129,14 +129,14 @@ const char* getDataTypeString(int type) {
 }
 al::ByamlStringTableIter getHashKeyTable(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
-    int off = header->getHashKeyTableOffset();
+    s32 off = header->getHashKeyTableOffset();
     if (off == 0)
         return {};
     return {&data[off], header->isInvertOrder()};
 }
 al::ByamlStringTableIter getStringTable(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
-    int off = header->getStringTableOffset();
+    s32 off = header->getStringTableOffset();
     if (off == 0)
         return {};
     return {&data[off], header->isInvertOrder()};
@@ -147,7 +147,7 @@ u64 getData64Bit(const u8* data, u32 off, bool isRev) {
     return isRev ? bswap_32_64(val) : val;
 }
 
-void writeU24(sead::WriteStream* stream, int val) {
+void writeU24(sead::WriteStream* stream, s32 val) {
     if (sead::Endian::getHostEndian() == sead::Endian::cBig) {
         stream->writeU8(val >> 16);
         stream->writeU8(val >> 8);
@@ -168,7 +168,7 @@ bool verifiByaml(const u8* data) {
     bool isRev = *((const u16*)data) == BYAML_LE_TAG;
     const u32* biggerData = (const u32*)data;
 
-    int afterHashOffset = 0;
+    s32 afterHashOffset = 0;
     u32 hashOffset = isRev ? bswap_32(biggerData[1]) : biggerData[1];
     if (hashOffset) {
         const u8* hashData = &data[hashOffset];
@@ -176,12 +176,12 @@ bool verifiByaml(const u8* data) {
             return false;
         u32 type_and_size = *reinterpret_cast<const u32*>(hashData);
         s32 hash_size = isRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
-        int unswappedAfterOffset = *(int*)&hashData[(hash_size * 4) + 4];
+        s32 unswappedAfterOffset = *(s32*)&hashData[(hash_size * 4) + 4];
         u32 swappedAfterOffset = bswap_32(unswappedAfterOffset);
         afterHashOffset = isRev ? swappedAfterOffset : unswappedAfterOffset;
     }
 
-    int afterStringOffset = 0;
+    s32 afterStringOffset = 0;
     u32 stringOffset = isRev ? bswap_32(biggerData[2]) : biggerData[2];
     if (stringOffset) {
         const u8* stringData = &data[stringOffset];
@@ -189,7 +189,7 @@ bool verifiByaml(const u8* data) {
             return false;
         u32 type_and_size = *reinterpret_cast<const u32*>(stringData);
         s32 string_size = isRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
-        int unswappedAfterOffset = *(int*)&stringData[4 * string_size + 4];
+        s32 unswappedAfterOffset = *(s32*)&stringData[4 * string_size + 4];
         u32 swappedAfterOffset = bswap_32(unswappedAfterOffset);
         afterStringOffset = isRev ? swappedAfterOffset : unswappedAfterOffset;
     }
@@ -235,8 +235,8 @@ bool verifiByamlStringTable(const u8* data, bool isRev) {
     }
 
     // check for correct length of address table
-    int calcFirstStringPos = 4 * size + 8;
-    int dataFirstStringPos = isRev ? bswap_32(address_table[0]) : address_table[0];
+    s32 calcFirstStringPos = 4 * size + 8;
+    s32 dataFirstStringPos = isRev ? bswap_32(address_table[0]) : address_table[0];
     if (dataFirstStringPos != calcFirstStringPos)
         return false;
 

@@ -73,12 +73,12 @@ public:
     bool isEndInterpoleByStep() const;
     bool isFirstCalc() const;
 
-    void initNerve(const Nerve*, int);
+    void initNerve(const Nerve*, s32);
     void initArrowCollider(CameraArrowCollider*);
     void initAudioKeeper(const char*);
     void initRail(const PlacementInfo&);
     void initLocalInterpole();
-    void initLookAtInterpole(float);
+    void initLookAtInterpole(f32);
     void initOrthoProjectionParam();
     void tryInitAreaLimitter(const PlacementInfo&);
 
@@ -88,7 +88,7 @@ public:
     void makeLookAtCameraCollide(sead::LookAtCamera*) const;
 
     void getInterpoleStep();
-    void setInterpoleStep(int);
+    void setInterpoleStep(s32);
     void resetInterpoleStep();
     void setInterpoleEaseOut();
     void getEndInterpoleStep();
@@ -100,7 +100,7 @@ public:
     void startSnapShotModeCore();
     void endSnapShotModeCore();
 
-    float getFovyDegree() const;
+    f32 getFovyDegree() const;
 
     sead::Vector3f getPosition() const { return mPosition; };
     sead::Vector3f getTargetTrans() const { return mTargetTrans; };
@@ -108,12 +108,12 @@ public:
 
 private:
     const char* mPoserName;
-    float field_38;
+    f32 field_38;
     sead::Vector3f mPosition;
     sead::Vector3f mTargetTrans = sead::Vector3f::ex;
     sead::Vector3f mCameraUp = sead::Vector3f::ey;
-    float mFovyDegree = 35.0f;
-    float field_64;
+    f32 mFovyDegree = 35.0f;
+    f32 field_64;
     sead::Matrix34f mViewMtx = sead::Matrix34f::ident;
     bool field_98 = false;
     CameraViewInfo* mViewInfo;
@@ -124,8 +124,8 @@ private:
     CameraAngleSwingInfo* mAngleSwingInfo;
     CameraArrowCollider* mArrowCollider;
     CameraOffsetCtrlPreset* mOffsetCtrlPreset;
-    float* mLocalInterpole;   // size = 0x20
-    float* mLookAtInterpole;  // size = 0x10
+    f32* mLocalInterpole;   // size = 0x20
+    f32* mLookAtInterpole;  // size = 0x10
     CameraParamMoveLimit* mParamMoveLimit;
     void* field_f8;
     GyroCameraCtrl* mGyroCtrl;
@@ -133,8 +133,8 @@ private:
     AudioKeeper* mAudioKeeper;
     NerveKeeper* mNerveKeeper;
     RailKeeper* mRailKeeper;
-    int* field_128;  // (size = 0xC) interpolesteptype?
-    int* field_130;  // (size - 0x8)
+    s32* field_128;  // (size = 0xC) interpolesteptype?
+    s32* field_130;  // (size - 0x8)
     sead::Vector3f* mOrthoProjectionParam;
 };
 }  // namespace al

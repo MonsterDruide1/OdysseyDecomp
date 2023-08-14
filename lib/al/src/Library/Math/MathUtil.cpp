@@ -3,7 +3,7 @@
 #include <math/seadMathCalcCommon.h>
 
 namespace al {
-float normalize(float var, float min, float max) {
+f32 normalize(f32 var, f32 min, f32 max) {
     if (sead::Mathf::abs(max - min) < 0.001f) {
         if (var < min)
             return 0.0f;
@@ -11,13 +11,13 @@ float normalize(float var, float min, float max) {
             return 1.0f;
     }
 
-    float clamped = sead::Mathf::clamp(var, min, max);
+    f32 clamped = sead::Mathf::clamp(var, min, max);
     return (clamped - min) / (max - min);
 }
 
-float normalize(signed int var, signed int min, signed int max) {
-    signed int v3;
-    float result;
+f32 normalize(s32 var, s32 min, s32 max) {
+    s32 v3;
+    f32 result;
 
     if (var <= min)
         return 0.0f;
@@ -36,24 +36,24 @@ float normalize(signed int var, signed int min, signed int max) {
         if (var < min)
             v3 = min;
 
-        result = (static_cast<float>(v3 - min) / static_cast<float>(max - min));
+        result = (static_cast<f32>(v3 - min) / static_cast<f32>(max - min));
     }
 
     return result;
 }
 
-float easeIn(float var) {
+f32 easeIn(f32 var) {
     return (((var * -0.5f) + 1.5f) * var) * var;
 }
-float easeOut(float var) {
+f32 easeOut(f32 var) {
     return (((var * -0.5f) * var) + 1.5f) * var;
 }
-float easeInOut(float var) {
+f32 easeInOut(f32 var) {
     return (((var * -2.0f) + 3.0f) * var) * var;
 }
 
-float sign(float result) {
-    float v1;
+f32 sign(f32 result) {
+    f32 v1;
     v1 = result < 0.0f;
     if (result > 0.0f) {
         result = 1.0f;
@@ -65,7 +65,7 @@ float sign(float result) {
     return result;
 }
 
-int sign(int var) {
+s32 sign(s32 var) {
     if (var < 0) {
         return -1;
     }
@@ -76,21 +76,21 @@ int sign(int var) {
     return 0;
 }
 
-float squareIn(float var) {
+f32 squareIn(f32 var) {
     return var * var;
 }
-float squareOut(float var) {
+f32 squareOut(f32 var) {
     return (2.0f - var) * var;
 }
 
-float powerIn(float x, float y) {
+f32 powerIn(f32 x, f32 y) {
     return powf(x, y);
 }
-float powerOut(float x, float y) {
+f32 powerOut(f32 x, f32 y) {
     return powf(x, 1.0 / y);
 }
 
-float lerpValue(float x, float y, float time) {
+f32 lerpValue(f32 x, f32 y, f32 time) {
     if (time < 0.0f)
         time = 0.0f;
     else if (time > 1.0f)

@@ -95,7 +95,7 @@ bool PlayerCostumeInfo::isInvisibleHead() const {
     return mPlayerHeadCostumeInfo->mIsInvisibleHead;
 }
 
-int PlayerCostumeInfo::calcWarmLevel(int baseLevel) const {
+s32 PlayerCostumeInfo::calcWarmLevel(s32 baseLevel) const {
     if (mPlayerBodyCostumeInfo->mIsIgnoreTemperature)
         return false;
     return al::clamp(mPlayerBodyCostumeInfo->mWarmLevel + baseLevel, -3, 3);

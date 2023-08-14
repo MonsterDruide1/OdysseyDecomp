@@ -68,12 +68,12 @@ bool isIncludePrepassCullingShape(LiveActor* actor);
 void isExistJoint(const LiveActor* actor, const char*);
 void getJointIndex(const LiveActor* actor, const char*);
 sead::Matrix34f* getJointMtxPtr(const LiveActor* actor, const char*);  // return type might be const
-void getJointMtxPtrByIndex(const LiveActor* actor, int);
+void getJointMtxPtrByIndex(const LiveActor* actor, s32);
 void getJointLocalTrans(sead::Vector3f*, const LiveActor* actor, const char*);
 void calcJointPos(sead::Vector3f*, const LiveActor* actor, const char*);
 void calcJointOffsetPos(sead::Vector3f*, const LiveActor* actor, const char*,
                         const sead::Vector3f&);
-void calcJointPosByIndex(sead::Vector3f*, const LiveActor* actor, int);
+void calcJointPosByIndex(sead::Vector3f*, const LiveActor* actor, s32);
 void calcJointSideDir(sead::Vector3f*, const LiveActor* actor, const char*);
 void calcJointUpDir(sead::Vector3f*, const LiveActor* actor, const char*);
 void calcJointFrontDir(sead::Vector3f*, const LiveActor* actor, const char*);
@@ -86,74 +86,74 @@ void multMtxJointInvMtx(sead::Matrix34f*, const sead::Matrix34f&, const LiveActo
                         const char*);
 void setJointVisibility(LiveActor* actor, const char*, bool);
 void isJointVisibility(const LiveActor* actor, const char*);
-void isFaceJointXDirDegreeYZ(const LiveActor* actor, const char*, const sead::Vector3f&, float,
-                             float);
-void isFaceJointYDirDegreeZX(const LiveActor* actor, const char*, const sead::Vector3f&, float,
-                             float);
-void isFaceJointZDirDegreeXY(const LiveActor* actor, const char*, const sead::Vector3f&, float,
-                             float);
+void isFaceJointXDirDegreeYZ(const LiveActor* actor, const char*, const sead::Vector3f&, f32,
+                             f32);
+void isFaceJointYDirDegreeZX(const LiveActor* actor, const char*, const sead::Vector3f&, f32,
+                             f32);
+void isFaceJointZDirDegreeXY(const LiveActor* actor, const char*, const sead::Vector3f&, f32,
+                             f32);
 void calcJointAngleXDirToTargetOnYDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleXDirToTargetOnZDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleYDirToTargetOnXDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleYDirToTargetOnZDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleZDirToTargetOnXDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleZDirToTargetOnYDir(const LiveActor* actor, const char*, const sead::Vector3f&);
-void getMaterialName(const LiveActor* actor, int);
+void getMaterialName(const LiveActor* actor, s32);
 void getMaterialCount(const LiveActor* actor);
 void isExistMaterial(const LiveActor* actor, const char*);
-void getMaterialObj(const LiveActor* actor, int);
+void getMaterialObj(const LiveActor* actor, s32);
 void getMaterialObj(const LiveActor* actor, const char*);
 void getMaterialIndex(const LiveActor* actor, const char*);
 void isExistMaterialTexture(const LiveActor* actor, const char*, const char*);
-void getMaterialCategory(const LiveActor* actor, int);
-void tryGetMaterialCategory(const LiveActor* actor, int);
+void getMaterialCategory(const LiveActor* actor, s32);
+void tryGetMaterialCategory(const LiveActor* actor, s32);
 void isOnlyMaterialCategoryObject(const LiveActor* actor);
 void showMaterial(LiveActor* actor, const char*);
 void hideMaterial(LiveActor* actor, const char*);
-void showMaterial(LiveActor* actor, int);
-void hideMaterial(LiveActor* actor, int);
+void showMaterial(LiveActor* actor, s32);
+void hideMaterial(LiveActor* actor, s32);
 void showMaterialAll(LiveActor* actor);
-void tryShowMaterial(LiveActor* actor, int);
-void tryHideMaterial(LiveActor* actor, int);
+void tryShowMaterial(LiveActor* actor, s32);
+void tryHideMaterial(LiveActor* actor, s32);
 void tryShowMaterialAll(LiveActor* actor);
-void setModelMaterialParameterF32(const LiveActor* actor, int, const char*, float);
-void setModelMaterialParameterF32(const LiveActor* actor, const char*, const char*, float);
-void setModelMaterialParameterV2F(const LiveActor* actor, int, const char*, const sead::Vector2f&);
+void setModelMaterialParameterF32(const LiveActor* actor, s32, const char*, f32);
+void setModelMaterialParameterF32(const LiveActor* actor, const char*, const char*, f32);
+void setModelMaterialParameterV2F(const LiveActor* actor, s32, const char*, const sead::Vector2f&);
 void setModelMaterialParameterV2F(const LiveActor* actor, const char*, const char*,
                                   const sead::Vector2f&);
-void setModelMaterialParameterV3F(const LiveActor* actor, int, const char*, const sead::Vector3f&);
+void setModelMaterialParameterV3F(const LiveActor* actor, s32, const char*, const sead::Vector3f&);
 void setModelMaterialParameterV3F(const LiveActor* actor, const char*, const char*,
                                   const sead::Vector3f&);
-void setModelMaterialParameterV4F(const LiveActor* actor, int, const char*, const sead::Vector4f&);
+void setModelMaterialParameterV4F(const LiveActor* actor, s32, const char*, const sead::Vector4f&);
 void setModelMaterialParameterV4F(const LiveActor* actor, const char*, const char*,
                                   const sead::Vector4f&);
-void setModelMaterialParameterRgb(const LiveActor* actor, int, const char*, const sead::Vector3f&);
+void setModelMaterialParameterRgb(const LiveActor* actor, s32, const char*, const sead::Vector3f&);
 void setModelMaterialParameterRgb(const LiveActor* actor, const char*, const char*,
                                   const sead::Vector3f&);
-void setModelMaterialParameterRgb(const LiveActor* actor, int, const char*, const sead::Color4f&);
+void setModelMaterialParameterRgb(const LiveActor* actor, s32, const char*, const sead::Color4f&);
 void setModelMaterialParameterRgb(const LiveActor* actor, const char*, const char*,
                                   const sead::Color4f&);
-void setModelMaterialParameterRgba(const LiveActor* actor, int, const char*, const sead::Color4f&);
+void setModelMaterialParameterRgba(const LiveActor* actor, s32, const char*, const sead::Color4f&);
 void setModelMaterialParameterRgba(const LiveActor* actor, const char*, const char*,
                                    const sead::Color4f&);
-void setModelMaterialParameterAlpha(const LiveActor* actor, int, const char*, float);
-void setModelMaterialParameterAlpha(const LiveActor* actor, const char*, const char*, float);
-void setModelMaterialParameterTextureTrans(const LiveActor* actor, const char*, int,
+void setModelMaterialParameterAlpha(const LiveActor* actor, s32, const char*, f32);
+void setModelMaterialParameterAlpha(const LiveActor* actor, const char*, const char*, f32);
+void setModelMaterialParameterTextureTrans(const LiveActor* actor, const char*, s32,
                                            const sead::Vector2f&);
-void getModelMaterialParameterDisplacementScale(const LiveActor* actor, const char*, int);
-void setModelMaterialParameterDisplacementScale(const LiveActor* actor, const char*, int, float);
+void getModelMaterialParameterDisplacementScale(const LiveActor* actor, const char*, s32);
+void setModelMaterialParameterDisplacementScale(const LiveActor* actor, const char*, s32, f32);
 void getModelUniformBlock(const LiveActor* actor, const char*);
 void findModelUniformBlock(const LiveActor* actor, const char*);
 void swapModelUniformBlock(agl::UniformBlock*);
 void flushModelUniformBlock(agl::UniformBlock*);
 void getModelDrawCategoryFromShaderAssign(bool*, bool*, bool*, bool*, const LiveActor* actor);
-void trySetOcclusionQueryBox(LiveActor* actor, float);
+void trySetOcclusionQueryBox(LiveActor* actor, f32);
 void trySetOcclusionQueryBox(LiveActor* actor, const sead::BoundBox3f&);
 void trySetOcclusionQueryCenter(LiveActor* actor, const sead::Vector3f*);
 void getModelName(const LiveActor* actor);
 void isModelName(const LiveActor* actor, const char*);
 void calcModelBoundingSphereRadius(const LiveActor* actor);
-void getBoundingSphereCenterAndRadius(sead::Vector3f*, float*, const LiveActor* actor);
+void getBoundingSphereCenterAndRadius(sead::Vector3f*, f32*, const LiveActor* actor);
 void calcModelBoundingBox(sead::BoundBox3f*, const LiveActor* actor);
 void calcModelBoundingBoxMtx(sead::Matrix34f*, const LiveActor* actor);
 void submitViewModel(const LiveActor* actor, const sead::Matrix34f&);
@@ -164,14 +164,14 @@ void replaceMaterialResTexture(LiveActor*, const char*, const char*, const nn::g
 void replaceMaterialLayoutTexture(LiveActor* actor, const LayoutTextureRenderObj*, const char*,
                                   const char*);
 void recreateModelDisplayList(const LiveActor* actor);
-void calcPolygonNum(const LiveActor* actor, int);
+void calcPolygonNum(const LiveActor* actor, s32);
 void calcPolygonNumCurrentLod(const LiveActor* actor);
 void calcPolygonNumCurrentLodWithoutVisAnim(const LiveActor* actor);
 void getLodLevel(const LiveActor* actor);
 void getMaterialLodLevel(const LiveActor* actor);
 void getLodLevelNoClamp(const LiveActor* actor);
 void getLodModelCount(const LiveActor* actor);
-void forceLodLevel(LiveActor* actor, int);
+void forceLodLevel(LiveActor* actor, s32);
 void unforceLodLevel(LiveActor* actor);
 void isExistLodModel(const LiveActor* actor);
 void isEnableMaterialLod(const LiveActor* actor);
@@ -185,9 +185,9 @@ void restartDitherAnimAutoCtrl(LiveActor* actor);
 void validateDitherAnim(LiveActor* actor);
 void invalidateDitherAnim(LiveActor* actor);
 void validateFarDitherIfInvalidateClipping(LiveActor* actor);
-void setDitherAnimSphereRadius(LiveActor* actor, float);
+void setDitherAnimSphereRadius(LiveActor* actor, f32);
 void setDitherAnimBoundingBox(LiveActor* actor, const sead::Vector3f&);
-void setDitherAnimMaxAlpha(LiveActor* actor, float);
+void setDitherAnimMaxAlpha(LiveActor* actor, f32);
 void setDitherAnimClippingJudgeLocalOffset(LiveActor* actor, const sead::Vector3f&);
 void setDitherAnimClippingJudgeParam(LiveActor* actor, const char*);
 void resetDitherAnimClippingJudgeParam(LiveActor* actor);
@@ -196,10 +196,10 @@ void getDitherAnimNearClipStartDistance(const LiveActor* actor);
 void getDitherAnimNearClipEndDistance(const LiveActor* actor);
 void calcDitherAnimJudgeDistance(const LiveActor* actor);
 void createUniqueShader(LiveActor* actor);
-void isJudgedToClipFrustum(const ClippingDirector*, const sead::Vector3f&, float, float);
-void isJudgedToClipFrustum(const LiveActor* actor, const sead::Vector3f&, float, float);
-void isJudgedToClipFrustum(const LiveActor* actor, float, float);
-void isJudgedToClipFrustumWithoutFar(const ClippingDirector*, const sead::Vector3f&, float, float);
-void isJudgedToClipFrustumWithoutFar(const LiveActor* actor, const sead::Vector3f&, float, float);
-void isJudgedToClipFrustumWithoutFar(const LiveActor* actor, float, float);
+void isJudgedToClipFrustum(const ClippingDirector*, const sead::Vector3f&, f32, f32);
+void isJudgedToClipFrustum(const LiveActor* actor, const sead::Vector3f&, f32, f32);
+void isJudgedToClipFrustum(const LiveActor* actor, f32, f32);
+void isJudgedToClipFrustumWithoutFar(const ClippingDirector*, const sead::Vector3f&, f32, f32);
+void isJudgedToClipFrustumWithoutFar(const LiveActor* actor, const sead::Vector3f&, f32, f32);
+void isJudgedToClipFrustumWithoutFar(const LiveActor* actor, f32, f32);
 }  // namespace al

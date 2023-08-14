@@ -46,11 +46,11 @@ private:
 
 namespace alByamlLocalUtil {
 
-const char* getDataTypeString(int type);
+const char* getDataTypeString(s32 type);
 al::ByamlStringTableIter getHashKeyTable(const u8* data);
 al::ByamlStringTableIter getStringTable(const u8* data);
 u64 getData64Bit(const u8* data, u32 off, bool isRev);
-void writeU24(sead::WriteStream* stream, int val);
+void writeU24(sead::WriteStream* stream, s32 val);
 bool verifiByaml(const u8* data);
 bool verifiByamlHeader(const u8* data);
 bool verifiByamlStringTable(const u8* data, bool isRev);

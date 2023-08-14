@@ -40,7 +40,7 @@ void ByamlWriter::addBool(bool value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addBool(value);
 }
-void ByamlWriter::addInt(int value) {
+void ByamlWriter::addInt(s32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt(value);
 }
@@ -48,7 +48,7 @@ void ByamlWriter::addUInt(u32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt(value);
 }
-void ByamlWriter::addFloat(float value) {
+void ByamlWriter::addFloat(f32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(value);
 }
@@ -77,7 +77,7 @@ void ByamlWriter::addBool(const char* key, bool value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addBool(key, value);
 }
-void ByamlWriter::addInt(const char* key, int value) {
+void ByamlWriter::addInt(const char* key, s32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt(key, value);
 }
@@ -85,7 +85,7 @@ void ByamlWriter::addUInt(const char* key, u32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt(key, value);
 }
-void ByamlWriter::addFloat(const char* key, float value) {
+void ByamlWriter::addFloat(const char* key, f32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(key, value);
 }
@@ -198,7 +198,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
             }
         }
         if (data.getType() == 0xD1) {
-            int value;
+            s32 value;
             if (iter.tryConvertInt(&value, &data)) {
                 if (key)
                     addInt(key, value);
@@ -207,7 +207,7 @@ void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) 
             }
         }
         if (data.getType() == 0xD2) {
-            float value;
+            f32 value;
             if (iter.tryConvertFloat(&value, &data)) {
                 if (key)
                     addFloat(key, value);

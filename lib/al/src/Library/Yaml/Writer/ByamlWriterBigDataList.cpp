@@ -20,7 +20,7 @@ u32 ByamlWriterBigDataList::calcPackSize() const {
     }
     return size;
 }
-int ByamlWriterBigDataList::setOffset(int offset) {
+s32 ByamlWriterBigDataList::setOffset(s32 offset) {
     for (auto& node : mList) {
         node->setOffset(offset);
         offset += node->calcBigDataSize();

@@ -4,8 +4,8 @@ namespace al {
 class LiveActor;
 class ActorInitInfo;
 
-void initSubActorKeeper(LiveActor*, const ActorInitInfo&, char const*, int);
-void initSubActorKeeperNoFile(LiveActor*, const ActorInitInfo&, int);
+void initSubActorKeeper(LiveActor*, const ActorInitInfo&, char const*, s32);
+void initSubActorKeeperNoFile(LiveActor*, const ActorInitInfo&, s32);
 void registerSubActor(LiveActor*, LiveActor*);
 void registerSubActorSyncClipping(LiveActor*, LiveActor*);
 void registerSubActorSyncClippingAndHide(LiveActor*, LiveActor*);

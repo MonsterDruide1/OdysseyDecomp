@@ -17,8 +17,8 @@ public:
     virtual u8 getTypeCode() const;
     virtual bool isContainer() const;
     virtual void write(sead::WriteStream*) const;
-    virtual void print(int) const;
-    void printIndent(int) const;
+    virtual void print(s32) const;
+    void printIndent(s32) const;
 };
 
 class ByamlWriterBool : public ByamlWriterData {
@@ -26,7 +26,7 @@ public:
     ByamlWriterBool(bool);
     u8 getTypeCode() const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
     bool mValue;
@@ -34,24 +34,24 @@ private:
 
 class ByamlWriterInt : public ByamlWriterData {
 public:
-    ByamlWriterInt(int);
+    ByamlWriterInt(s32);
     u8 getTypeCode() const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
-    int mValue;
+    s32 mValue;
 };
 
 class ByamlWriterFloat : public ByamlWriterData {
 public:
-    ByamlWriterFloat(float);
+    ByamlWriterFloat(f32);
     u8 getTypeCode() const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
-    float mValue;
+    f32 mValue;
 };
 
 class ByamlWriterUInt : public ByamlWriterData {
@@ -59,7 +59,7 @@ public:
     ByamlWriterUInt(u32);
     u8 getTypeCode() const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
     u32 mValue;
@@ -70,7 +70,7 @@ public:
     ByamlWriterNull();
     u8 getTypeCode() const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 };
 
 class ByamlWriterStringTable;
@@ -79,7 +79,7 @@ public:
     ByamlWriterString(const char*, ByamlWriterStringTable*);
     u8 getTypeCode() const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
     const char* mString;
@@ -96,11 +96,11 @@ public:
     virtual u32 calcBigDataSize() const;
     virtual void writeBigData(sead::WriteStream*) const;
 
-    void setOffset(int offset) { mOffset = offset; }
+    void setOffset(s32 offset) { mOffset = offset; }
 
 private:
     al::ByamlWriterBigDataList* mList;
-    int mOffset = 0;
+    s32 mOffset = 0;
 };
 
 class ByamlWriterInt64 : public ByamlWriterBigData {
@@ -109,7 +109,7 @@ public:
     ~ByamlWriterInt64();
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
     long mValue;
@@ -121,7 +121,7 @@ public:
     ~ByamlWriterUInt64();
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
     u64 mValue;
@@ -133,7 +133,7 @@ public:
     ~ByamlWriterDouble();
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
 
 private:
     double mValue;
@@ -150,7 +150,7 @@ public:
     virtual void addBool(const char*, bool);
     virtual void addInt(const char*, s32);
     virtual void addUInt(const char*, u32);
-    virtual void addFloat(const char*, float);
+    virtual void addFloat(const char*, f32);
     virtual void addInt64(const char*, s64, ByamlWriterBigDataList*);
     virtual void addUInt64(const char*, u64, ByamlWriterBigDataList*);
     virtual void addDouble(const char*, double, ByamlWriterBigDataList*);
@@ -162,7 +162,7 @@ public:
     virtual void addBool(bool);
     virtual void addInt(s32);
     virtual void addUInt(u32);
-    virtual void addFloat(float);
+    virtual void addFloat(f32);
     virtual void addInt64(s64, ByamlWriterBigDataList*);
     virtual void addUInt64(u64, ByamlWriterBigDataList*);
     virtual void addDouble(double, ByamlWriterBigDataList*);
@@ -176,11 +176,11 @@ public:
     virtual bool isArray() const;
     virtual void deleteData();
 
-    int getOffset() const { return mOffset; }
-    void setOffset(int offset) { mOffset = offset; }
+    s32 getOffset() const { return mOffset; }
+    void setOffset(s32 offset) { mOffset = offset; }
 
 private:
-    int mOffset = 0;  // FIXME shouldn't be public
+    s32 mOffset = 0;  // FIXME shouldn't be public
 };
 
 class ByamlWriterArray : public ByamlWriterContainer {
@@ -195,7 +195,7 @@ public:
     void addBool(bool) override;
     void addInt(s32) override;
     void addUInt(u32) override;
-    void addFloat(float) override;
+    void addFloat(f32) override;
     void addInt64(s64, ByamlWriterBigDataList*) override;
     void addUInt64(u64, ByamlWriterBigDataList*) override;
     void addDouble(double, ByamlWriterBigDataList*) override;
@@ -207,7 +207,7 @@ public:
     u8 getTypeCode() const override;
     void writeContainer(sead::WriteStream*) const override;
     void write(sead::WriteStream*) const override;
-    void print(int) const override;
+    void print(s32) const override;
     bool isArray() const override;
 
 private:
@@ -243,7 +243,7 @@ public:
     void addBool(const char*, bool) override;
     void addInt(const char*, s32) override;
     void addUInt(const char*, u32) override;
-    void addFloat(const char*, float) override;
+    void addFloat(const char*, f32) override;
     void addInt64(const char*, s64, ByamlWriterBigDataList*) override;
     void addUInt64(const char*, u64, ByamlWriterBigDataList*) override;
     void addDouble(const char*, double, ByamlWriterBigDataList*) override;
@@ -255,7 +255,7 @@ public:
     u8 getTypeCode() const override;
     void writeContainer(sead::WriteStream*) const override;  // TODO implementation missing
     void write(sead::WriteStream*) const override;
-    void print(int) const override;  // TODO implementation missing
+    void print(s32) const override;  // TODO implementation missing
     bool isHash() const override;
 
 private:

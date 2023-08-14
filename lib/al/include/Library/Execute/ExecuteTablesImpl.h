@@ -382,8 +382,8 @@ constexpr bool strings_equal(const char* a, const char* b) {
     return *a == *b && (*a == '\0' || strings_equal(a + 1, b + 1));
 }
 
-static constexpr int getUpdateTableIndex(const char* listName) {
-    for (int i = 0; i < sizeof(updateTableArr) / sizeof(updateTableArr[0]); i++) {
+static constexpr s32 getUpdateTableIndex(const char* listName) {
+    for (s32 i = 0; i < sizeof(updateTableArr) / sizeof(updateTableArr[0]); i++) {
         if (strings_equal(updateTableArr[i].mListName, listName)) {
             return i;
         }
@@ -395,14 +395,14 @@ static constexpr al::ExecuteTable
 createUpdateTable(const char* tableName, const char* startListName, const char* endListName) {
     al::ExecuteTable drawTable;
     drawTable.mName = tableName;
-    int startIndex = getUpdateTableIndex(startListName);
+    s32 startIndex = getUpdateTableIndex(startListName);
     drawTable.mExecuteOrders = &updateTableArr[startIndex];
     drawTable.mExecuteOrderCount = (getUpdateTableIndex(endListName) - startIndex) + 1;
     return drawTable;
 }
 
-static constexpr int getDrawTableIndex(const char* listName, const char* groupName) {
-    for (int i = 0; i < sizeof(drawTableArr) / sizeof(drawTableArr[0]); i++) {
+static constexpr s32 getDrawTableIndex(const char* listName, const char* groupName) {
+    for (s32 i = 0; i < sizeof(drawTableArr) / sizeof(drawTableArr[0]); i++) {
         if (strings_equal(drawTableArr[i].mListName, listName) &&
             strings_equal(drawTableArr[i].mExecuteGroup, groupName)) {
             return i;
@@ -417,7 +417,7 @@ static constexpr al::ExecuteTable createDrawTable(const char* tableName, const c
                                                   const char* groupEndName) {
     al::ExecuteTable drawTable;
     drawTable.mName = tableName;
-    int startIndex = getDrawTableIndex(startListName, groupStartName);
+    s32 startIndex = getDrawTableIndex(startListName, groupStartName);
     drawTable.mExecuteOrders = &drawTableArr[startIndex];
     drawTable.mExecuteOrderCount = (getDrawTableIndex(endListName, groupEndName) - startIndex) + 1;
     return drawTable;
@@ -522,7 +522,7 @@ constexpr al::ExecuteTable DrawTable[] = {
     createDrawTable("２Ｄ（ミス）", "２Ｄミス", "LayoutDraw", "２Ｄミス", "LayoutDraw"),
 };
 
-constexpr int DrawTableSize = sizeof(DrawTable) / sizeof(DrawTable[0]);
+constexpr s32 DrawTableSize = sizeof(DrawTable) / sizeof(DrawTable[0]);
 
 constexpr al::ExecuteTable UpdateTable[] = {
     createUpdateTable("更新", "ステージ同期カウンタ", "エフェクト（後処理）"),
@@ -532,4 +532,4 @@ constexpr al::ExecuteTable UpdateTable[] = {
                       "スナップショット[ActorMovement]"),
 };
 
-constexpr int UpdateTableSize = sizeof(UpdateTable) / sizeof(UpdateTable[0]);
+constexpr s32 UpdateTableSize = sizeof(UpdateTable) / sizeof(UpdateTable[0]);
