@@ -1,24 +1,22 @@
 #pragma once
 
+#include <framework/seadTask.h>
 #include <gfx/seadDrawContext.h>
 #include <hostio/seadHostIONode.h>
 
 class GameSystem;
 
-// TODO: Implement sead::Task, currently missing from sead headers
-class RootTask {
+class RootTask : public sead::Task {
 public:
-    RootTask();
-    ~RootTask();
-    void enter();
-    void draw();
-    void calc();
-    void prepare();
+    RootTask(const sead::TaskConstructArg& constructArg);
+    ~RootTask() override;
+    void enter() override;
+    void draw() override;
+    void calc() override;
+    void prepare() override;
 
 private:
-    // TODO: Remove once RootTask implements sead::Task
-    char taskImplDetails[0x200];
-    GameSystem* mGameSystem;
-    sead::hostio::Node* mHostIoNode;
-    sead::DrawContext* mDrawContext;
+    GameSystem* mGameSystem = nullptr;
+    sead::hostio::Node* mHostIoNode = nullptr;
+    sead::DrawContext* mDrawContext = nullptr;
 };

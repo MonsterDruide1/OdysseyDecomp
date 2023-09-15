@@ -4,6 +4,10 @@
 #include "Library/Memory/HeapUtil.h"
 #include "System/GameSystem.h"
 
+RootTask::RootTask(const sead::TaskConstructArg& constructArg)
+    : sead::Task(constructArg, "RootTask") {}
+RootTask::~RootTask() = default;
+
 void RootTask::enter() {}
 void RootTask::calc() {
     if (!mGameSystem) {
