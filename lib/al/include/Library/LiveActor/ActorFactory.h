@@ -5,7 +5,9 @@
 namespace al {
 class LiveActor;
 
-class ActorFactory : public Factory<CreatorFunction<LiveActor>> {
+using ActorCreatorFunction = LiveActor* (*)(const char* actorName);
+
+class ActorFactory : public Factory<ActorCreatorFunction> {
 public:
     ActorFactory(const char* factoryName);
 };

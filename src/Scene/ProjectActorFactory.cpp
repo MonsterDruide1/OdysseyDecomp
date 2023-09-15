@@ -3,7 +3,7 @@
 
 namespace al {
 
-static NameToCreator sProjectActorFactoryEntries[] = {
+static NameToCreator<ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
     {"AirBubble", nullptr},
     {"AirBubbleGenerator", nullptr},

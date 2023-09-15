@@ -4,15 +4,9 @@
 #include <math/seadVector.h>
 
 namespace al {
-f32 normalize(f32, f32, f32);
-f32 normalize(s32, s32, s32);
-
 f32 easeIn(f32);
 f32 easeOut(f32);
 f32 easeInOut(f32);
-
-f32 sign(f32);
-s32 sign(s32);
 
 f32 squareIn(f32);
 f32 squareOut(f32);
@@ -21,8 +15,6 @@ f32 powerIn(f32, f32);
 f32 powerOut(f32, f32);
 
 f32 lerpValue(f32, f32, f32);
-
-bool isNearZero(f32, f32);
 
 template <typename T>
 inline T clamp(T value, T min, T max) {
@@ -39,19 +31,8 @@ void parallelizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f
 f32 modf(f32 a, f32 b);
 
 bool normalize(f32 value);
-bool normalize(sead::Matrix33f* value);
-bool normalize(sead::Matrix34f* value);
 
-bool isNear(f32 value, f32 target, f32 tolerance);
-bool isNear(const sead::Vector2f& value, const sead::Vector2f& target, f32 tolerance);
-bool isNear(const sead::Vector3f& value, const sead::Vector3f& target, f32 tolerance);
 bool isNear(const sead::Matrix34f& value, const sead::Matrix34f& target, f32 tolerance);
-bool isNearZero(f32 value, f32 tolerance);
-bool isNearZero(const sead::Vector2f& value, f32 tolerance);
-bool isNearZero(const sead::Vector3f& value, f32 tolerance);
-bool isNearZero(const sead::Matrix34f& value, f32 tolerance);
-bool isNearZeroOrGreater(f32 value, f32 tolerance);
-bool isNearZeroOrLess(f32 value, f32 tolerance);
 
 void calcQuatSide(sead::Vector3f* out, const sead::Quatf& quat);
 void calcQuatUp(sead::Vector3f* out, const sead::Quatf& quat);

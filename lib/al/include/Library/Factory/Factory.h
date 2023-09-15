@@ -3,13 +3,11 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+template <typename T>
 struct NameToCreator {
     const char* mName;
-    void* mCreationFunction;
+    T mCreationFunction;
 };
-
-template <typename T>
-using CreatorFunction = T* (*)(const char*);
 
 template <typename T>
 class Factory {
@@ -18,12 +16,12 @@ public:
         : mFactoryName(factoryName), mFactoryEntries(nullptr), mNumFactoryEntries(0) {}
 
     template <s32 N>
-    inline Factory(const char* factoryName, NameToCreator (&entries)[N])
+    inline Factory(const char* factoryName, NameToCreator<T> (&entries)[N])
         : mFactoryName(factoryName) {
         initFactory(entries);
     }
     template <s32 N>
-    inline void initFactory(NameToCreator (&entries)[N]) {
+    inline void initFactory(NameToCreator<T> (&entries)[N]) {
         mFactoryEntries = entries;
         mNumFactoryEntries = N;
     }
@@ -32,7 +30,7 @@ public:
 
 private:
     const char* mFactoryName;
-    NameToCreator* mFactoryEntries;
+    NameToCreator<T>* mFactoryEntries;
     s32 mNumFactoryEntries;
 };
 

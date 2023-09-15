@@ -9,7 +9,9 @@
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/SubActorFunction.h"
 #include "Library/LiveActor/SubActorKeeper.h"
-#include "Library/MapObj/MtxUtil.h"
+#include "Library/Math/MathAngleUtil.h"
+#include "Library/Math/MathLengthUtil.h"
+#include "Library/Matrix/MatrixUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 
