@@ -1,4 +1,4 @@
-# OdysseyDecomp
+# OdysseyDecomp ![Decompiled Status](https://img.shields.io/badge/dynamic/json?url=https://monsterdruide.one/OdysseyDecomp/progress.json&query=$.matching&suffix=%&label=decompiled&color=blue)
 Decompilation of all Super Mario Odyssey versions, from 1.0.0 to 1.3.0.
 
 # Building

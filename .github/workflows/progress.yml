@@ -1,0 +1,52 @@
+name: progress
+on:
+  push:
+    branches:
+      - master
+      - progress-workflow # FIXME remove this
+
+jobs:
+  publish_progress:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out project
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Set up dependencies
+      run: sudo apt install -y ninja-build cmake ccache clang curl libncurses5
+    - name: Set up python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    - name: Set up python package dependencies
+      run: pip install toml colorama cxxfilt
+    - name: Set up cache for clang
+      uses: actions/cache@v3
+      with:
+        key: clang391-401
+        path: |
+          toolchain/clang-3.9.1
+          toolchain/clang-4.0.1
+    - name: Run simplified setup
+      run: tools/setup.py --project
+    - name: Build project
+      run: tools/build.py
+    - name: Upload progress state
+      run: |
+        full_ansi="$(tools/common/progress.py)"
+        full=`echo $full_ansi | sed -e 's/\x1b\[[0-9;]*m//g'`
+        echo $full
+        MATCHING=`echo $full | sed -n "s/^.*matching\s(\([0-9]\+\.[0-9]\+\)%.*$/\1/p"`
+        MINOR=`echo $full | sed -n "s/^.*non-matching (minor issues)\s(\([0-9]\+\.[0-9]\+\)%.*$/\1/p"`
+        MAJOR=`echo $full | sed -n "s/^.*non-matching (major issues)\s(\([0-9]\+\.[0-9]\+\)%.*$/\1/p"`
+        var=`curl "https://monsterdruide.one/OdysseyDecomp/save_progress.php?matching=$MATCHING&minor=$MINOR&major=$MAJOR&pw=$PROGRESS_PASS"`
+        if [[ "$var" == "OK" ]]; then
+          exit 0
+        else
+          echo $var;
+          exit 1
+        fi
+      env:
+        PROGRESS_PASS: ${{ secrets.PROGRESS_PASS }}
