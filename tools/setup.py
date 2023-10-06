@@ -77,10 +77,13 @@ def main():
                         help="Path to the original NSO (1.0, compressed or not)", nargs="?")
     parser.add_argument("--cmake_backend", type=str,
                         help="CMake backend to use (Ninja, Unix Makefiles, etc.)", nargs="?", default="Ninja")
+    parser.add_argument("--project-only", action="store_true",
+                        help="Disable viking and original NSO setup")
     args = parser.parse_args()
-
-    setup.install_viking()
-    prepare_executable(args.original_nso)
+    
+    if not args.project_only:
+        setup.install_viking()
+        prepare_executable(args.original_nso)
     setup.set_up_compiler("3.9.1")
     setup.set_up_compiler("4.0.1")
     create_build_dir(Version.VER_100, args.cmake_backend)
