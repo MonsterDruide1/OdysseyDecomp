@@ -1,0 +1,57 @@
+name: Compile and verify functions
+on: [push, pull_request]
+
+jobs:
+  compile_verify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out project
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Check for W-state functions
+      run: |
+        if grep -q ",W," "data/odyssey_functions.csv"; then
+          echo "Function list should not contain WIP-functions!"
+          echo "Found the following lines:"
+          grep ",W," "data/odyssey_functions.csv"
+          exit 1
+        fi
+    - name: Set up dependencies
+      run: |
+        sudo apt install -y python3-pip ninja-build cmake ccache xdelta3 clang libssl-dev python-is-python3 curl libncurses5
+    - name: Set up python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    - name: Set up python package dependencies
+      run: pip install capstone colorama cxxfilt pyelftools ansiwrap watchdog python-Levenshtein toml
+    - name: Set up rust toolchain
+      uses: actions-rust-lang/setup-rust-toolchain@v1.5.0
+      with:
+        cache: false
+    - name: Set up rust caching
+      uses: Swatinem/rust-cache@v2
+      with:
+        workspaces: "tools/common/viking"
+        cache-directories: |
+          toolchain/clang-3.9.1
+          toolchain/clang-4.0.1
+    - name: Download main.nso from secret
+      env:
+        EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
+      run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
+    - name: Run setup
+      run: tools/setup.py smo-main.nso
+    - name: Build project
+      run: tools/build.py
+    - name: Verify function states
+      run: |
+        var="$(tools/check 2>&1)"
+        if [[ "$var" == "OK" ]]; then
+          exit 0
+        else
+          echo $var;
+          exit 1
+        fi
