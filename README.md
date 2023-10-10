@@ -24,7 +24,7 @@ The instructions below assume that you are using Linux (native or WSL) or macOS.
 Ubuntu users can install those dependencies by running:
 
 ```shell
-sudo apt install python3 ninja-build cmake ccache xdelta3 clang libssl-dev
+sudo apt install python3 ninja-build cmake ccache xdelta3 clang libssl-dev libncurses5
 ```
 
 Additionally, you'll also need:
