@@ -11,19 +11,18 @@ bool AreaShapeCube::isInVolume(const sead::Vector3f& trans) const {
     return isInLocalVolume(localPos);
 }
 
-// bool AreaShapeCube::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {}
-// bool AreaShapeCube::calcNearestEdgePoint(sead::Vector3f* edgePoint, const sead::Vector3f& trans) const {}
-// bool AreaShapeCube::checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&) const {}
-// bool AreaShapeCube::calcLocalBoundingBox(sead::BoundBox3f* boundingBox) const {}
-
 bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
-    float bottom = mOriginType == OriginType::Base ? 0.0f : (mOriginType == OriginType::Top ? -1000.0f : 500.0f);
-    float top = mOriginType == OriginType::Base ? 1000.0f : (mOriginType == OriginType::Top ? 0.0f : 500.0f);
+    float bottom = mOriginType == OriginType::Base ?
+                       0.0f :
+                       (mOriginType == OriginType::Top ? -1000.0f : 500.0f);
+    float top = mOriginType == OriginType::Base ? 1000.0f :
+                                                  (mOriginType == OriginType::Top ? 0.0f : 500.0f);
 
     sead::Vector3f min = {-500.0f, bottom, -500.0f};
     sead::Vector3f max = {500.0f, top, 500.0f};
 
-    if ((trans.y < min.y || max.y < trans.y) || (trans.x < min.x || max.x < trans.x) || (trans.z < min.z || max.z < trans.z))
+    if ((trans.y < min.y || max.y < trans.y) || (trans.x < min.x || max.x < trans.x) ||
+        (trans.z < min.z || max.z < trans.z))
         return false;
 
     return true;

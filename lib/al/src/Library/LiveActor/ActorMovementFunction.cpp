@@ -122,5 +122,4 @@ void addVelocityZ(al::LiveActor* actor, f32 z) {
     currentVelocity->z += z;
 }
 
-
 }  // namespace al
