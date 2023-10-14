@@ -31,6 +31,9 @@ def CHECK(cond, line, message, path):
 # Common
 
 
+def common_newline_eof(c, path):
+    CHECK(lambda a:a=="", c.split("\n")[-1], "Files should end with a newline!", path)
+
 # Header files
 
 
@@ -42,10 +45,10 @@ def CHECK(cond, line, message, path):
 # -----
 
 def check_source(c, path):
-    return
+    common_newline_eof(c, path)
 
 def check_header(c, path):
-    return
+    common_newline_eof(c, path)
 
 def check_file(file_str):
     file = open(file_str, mode="r")
