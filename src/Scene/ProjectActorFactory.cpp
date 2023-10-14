@@ -1,9 +1,7 @@
 #include "Scene/ProjectActorFactory.h"
 #include "Library/Factory/Factory.h"
 
-namespace al {
-
-static NameToCreator<ActorCreatorFunction> sProjectActorFactoryEntries[] = {
+static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
     {"AirBubble", nullptr},
     {"AirBubbleGenerator", nullptr},
@@ -581,5 +579,3 @@ static NameToCreator<ActorCreatorFunction> sProjectActorFactoryEntries[] = {
 ProjectActorFactory::ProjectActorFactory() : ActorFactory("アクター生成") {  //("繧｢繧ｯ繧ｿ繝ｼ逕滓")
     initFactory(sProjectActorFactoryEntries);
 }
-
-}  // namespace al

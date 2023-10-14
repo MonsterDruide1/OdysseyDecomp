@@ -95,29 +95,29 @@ sead::Vector3f* getVelocityPtr(LiveActor* actor) {
 
 // separateVelocityHV
 
-void addVelocity(al::LiveActor* actor, const sead::Vector3f& vel) {
+void addVelocity(LiveActor* actor, const sead::Vector3f& vel) {
     sead::Vector3f* currentVelocity = actor->getPoseKeeper()->getVelocityPtr();
     *currentVelocity += vel;
 }
 
-void addVelocity(al::LiveActor* actor, f32 x, f32 y, f32 z) {
+void addVelocity(LiveActor* actor, f32 x, f32 y, f32 z) {
     sead::Vector3f* currentVelocity = actor->getPoseKeeper()->getVelocityPtr();
     currentVelocity->x += x;
     currentVelocity->y += y;
     currentVelocity->z += z;
 }
 
-void addVelocityX(al::LiveActor* actor, f32 x) {
+void addVelocityX(LiveActor* actor, f32 x) {
     sead::Vector3f* currentVelocity = actor->getPoseKeeper()->getVelocityPtr();
     currentVelocity->x += x;
 }
 
-void addVelocityY(al::LiveActor* actor, f32 y) {
+void addVelocityY(LiveActor* actor, f32 y) {
     sead::Vector3f* currentVelocity = actor->getPoseKeeper()->getVelocityPtr();
     currentVelocity->y += y;
 }
 
-void addVelocityZ(al::LiveActor* actor, f32 z) {
+void addVelocityZ(LiveActor* actor, f32 z) {
     sead::Vector3f* currentVelocity = actor->getPoseKeeper()->getVelocityPtr();
     currentVelocity->z += z;
 }

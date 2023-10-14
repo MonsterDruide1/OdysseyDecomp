@@ -1,10 +1,7 @@
 #include "Scene/ProjectAppearSwitchFactory.h"
-#include <array>
-
-namespace al {
 
 // FIXME fill in method references: (1.0) off_7101D89F18
-static NameToCreator<ActorCreatorFunction> sProjectAppearSwitchFactoryEntries[] = {
+static al::NameToCreator<al::ActorCreatorFunction> sProjectAppearSwitchFactoryEntries[] = {
     {"FixMapParts", nullptr},
     {"FallMapParts", nullptr},
     {"CapHanger", nullptr},
@@ -28,5 +25,3 @@ static NameToCreator<ActorCreatorFunction> sProjectAppearSwitchFactoryEntries[] 
 ProjectAppearSwitchFactory::ProjectAppearSwitchFactory() : ActorFactory("アクター生成") {
     initFactory(sProjectAppearSwitchFactoryEntries);
 }
-
-}  // namespace al

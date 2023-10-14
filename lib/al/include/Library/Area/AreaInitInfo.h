@@ -9,20 +9,20 @@ class SceneObjHolder;
 class AreaInitInfo {
 public:
     AreaInitInfo();
-    AreaInitInfo(const al::PlacementInfo& placementInfo,
-                 al::StageSwitchDirector* stageSwitchDirector, al::SceneObjHolder* sceneObjHolder);
-    AreaInitInfo(const al::PlacementInfo& placementInfo, const al::AreaInitInfo& initInfo);
+    AreaInitInfo(const PlacementInfo& placementInfo, StageSwitchDirector* stageSwitchDirector,
+                 SceneObjHolder* sceneObjHolder);
+    AreaInitInfo(const PlacementInfo& placementInfo, const AreaInitInfo& initInfo);
 
-    void set(const al::PlacementInfo& placementInfo, al::StageSwitchDirector* stageSwitchDirector,
-             al::SceneObjHolder* sceneObjHolder);
+    void set(const PlacementInfo& placementInfo, StageSwitchDirector* stageSwitchDirector,
+             SceneObjHolder* sceneObjHolder);
 
-    const al::PlacementInfo& getPlacementInfo() const { return mPlacementInfo; }
-    al::StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
-    al::SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
+    const PlacementInfo& getPlacementInfo() const { return mPlacementInfo; }
+    StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+    SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
 
 private:
-    al::PlacementInfo mPlacementInfo;
-    al::StageSwitchDirector* mStageSwitchDirector;
-    al::SceneObjHolder* mSceneObjHolder;
+    PlacementInfo mPlacementInfo;
+    StageSwitchDirector* mStageSwitchDirector;
+    SceneObjHolder* mSceneObjHolder;
 };
 }  // namespace al

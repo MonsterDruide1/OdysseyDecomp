@@ -195,9 +195,8 @@ bool isInvalidEndEntranceCamera(const al::CameraPoser*);
 bool isPause(const al::CameraPoser*);
 void checkFirstCameraCollisionArrow(sead::Vector3f*, sead::Vector3f*, const al::IUseCollision*,
                                     const sead::Vector3f&, const sead::Vector3f&);
-void checkFirstCameraCollisionArrow(alCameraPoserFunction::CameraCollisionHitResult*,
-                                    const al::IUseCollision*, const sead::Vector3f&,
-                                    const sead::Vector3f&);
+void checkFirstCameraCollisionArrow(CameraCollisionHitResult*, const al::IUseCollision*,
+                                    const sead::Vector3f&, const sead::Vector3f&);
 void checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f*, sead::Vector3f*,
                                                const al::IUseCollision*, const sead::Vector3f&,
                                                const sead::Vector3f&);

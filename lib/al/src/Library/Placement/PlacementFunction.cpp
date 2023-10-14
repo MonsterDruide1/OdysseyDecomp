@@ -6,13 +6,12 @@
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {
-s32 getCountPlacementInfo(const al::PlacementInfo& rInfo) {
+s32 getCountPlacementInfo(const PlacementInfo& rInfo) {
     return rInfo.getPlacementIter().getSize();
 }
 
-void getPlacementInfoByKey(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo,
-                           const char* pKey) {
-    al::ByamlIter iterator;
+void getPlacementInfoByKey(PlacementInfo* pOutInfo, const PlacementInfo& rInfo, const char* pKey) {
+    ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterByKey(&iterator, pKey);
 
     if (ret) {
@@ -20,8 +19,8 @@ void getPlacementInfoByKey(al::PlacementInfo* pOutInfo, const al::PlacementInfo&
     }
 }
 
-void getPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo, s32 idx) {
-    al::ByamlIter iterator;
+void getPlacementInfoByIndex(PlacementInfo* pOutInfo, const PlacementInfo& rInfo, s32 idx) {
+    ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterByIndex(&iterator, idx);
 
     if (ret) {
@@ -29,11 +28,10 @@ void getPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInf
     }
 }
 
-bool tryGetPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::PlacementInfo& rInfo,
-                                s32 idx) {
+bool tryGetPlacementInfoByIndex(PlacementInfo* pOutInfo, const PlacementInfo& rInfo, s32 idx) {
     bool result;
 
-    al::ByamlIter iterator;
+    ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterByIndex(&iterator, idx);
 
     if (ret) {
@@ -46,9 +44,9 @@ bool tryGetPlacementInfoByIndex(al::PlacementInfo* pOutInfo, const al::Placement
     return result;
 }
 
-void getPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char** pOutKeyName,
-                                       const al::PlacementInfo& rInfo, s32 idx) {
-    al::ByamlIter iterator;
+void getPlacementInfoAndKeyNameByIndex(PlacementInfo* pOutInfo, const char** pOutKeyName,
+                                       const PlacementInfo& rInfo, s32 idx) {
+    ByamlIter iterator;
 
     bool ret = rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
 
@@ -57,11 +55,11 @@ void getPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char**
     }
 }
 
-bool tryGetPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const char** pOutKeyName,
-                                          const al::PlacementInfo& rInfo, s32 idx) {
+bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* pOutInfo, const char** pOutKeyName,
+                                          const PlacementInfo& rInfo, s32 idx) {
     bool result;
 
-    al::ByamlIter iterator;
+    ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
 
     if (ret) {
@@ -74,45 +72,45 @@ bool tryGetPlacementInfoAndKeyNameByIndex(al::PlacementInfo* pOutInfo, const cha
     return result;
 }
 
-al::PlacementId* createPlacementId(const al::ActorInitInfo& rInfo) {
-    const al::PlacementInfo& info = rInfo.getPlacementInfo();
-    al::PlacementId* id = new al::PlacementId();
+PlacementId* createPlacementId(const ActorInitInfo& rInfo) {
+    const PlacementInfo& info = rInfo.getPlacementInfo();
+    PlacementId* id = new PlacementId();
     id->init(info);
     return id;
 }
 
-al::PlacementId* createPlacementId(const al::PlacementInfo& rInfo) {
-    al::PlacementId* id = new al::PlacementId();
+PlacementId* createPlacementId(const PlacementInfo& rInfo) {
+    PlacementId* id = new PlacementId();
     id->init(rInfo);
     return id;
 }
 
-bool tryGetPlacementId(al::PlacementId* pOut, const al::ActorInitInfo& rInfo) {
+bool tryGetPlacementId(PlacementId* pOut, const ActorInitInfo& rInfo) {
     return pOut->init(rInfo.getPlacementInfo());
 }
 
-bool tryGetPlacementId(al::PlacementId* pOut, const al::PlacementInfo& rInfo) {
+bool tryGetPlacementId(PlacementId* pOut, const PlacementInfo& rInfo) {
     return pOut->init(rInfo);
 }
 
-void getPlacementId(al::PlacementId* pOut, const al::ActorInitInfo& rInfo) {
+void getPlacementId(PlacementId* pOut, const ActorInitInfo& rInfo) {
     pOut->init(rInfo.getPlacementInfo());
 }
 
-void getPlacementId(al::PlacementId* pOut, const al::PlacementInfo& rInfo) {
+void getPlacementId(PlacementId* pOut, const PlacementInfo& rInfo) {
     pOut->init(rInfo);
 }
 
-bool isEqualPlacementId(const al::PlacementId& rLhs, const al::PlacementId& rRhs) {
+bool isEqualPlacementId(const PlacementId& rLhs, const PlacementId& rRhs) {
     return rLhs.isEqual(rRhs);
 }
 
-bool isEqualPlacementId(const al::PlacementInfo& rLhs, const al::PlacementInfo& rRhs) {
+bool isEqualPlacementId(const PlacementInfo& rLhs, const PlacementInfo& rRhs) {
     bool res;
-    al::PlacementId id_lhs;
+    PlacementId id_lhs;
 
     if (id_lhs.init(rLhs)) {
-        al::PlacementId id_rhs;
+        PlacementId id_rhs;
 
         if (id_rhs.init(rRhs)) {
             res = id_lhs.isEqual(id_rhs);

@@ -363,7 +363,7 @@ void ActorPoseKeeperTRSV::updatePoseMtx(const sead::Matrix34f* mtx) {
     rotationAndTranslationFromMatrix(mTrans, mRotate, mtx);
 }
 void ActorPoseKeeperTRSV::calcBaseMtx(sead::Matrix34f* mtx) const {
-    al::makeMtxRotateTrans(mtx, getRotate(), mTrans);
+    makeMtxRotateTrans(mtx, getRotate(), mTrans);
 }
 
 ActorPoseKeeperTRMSV::ActorPoseKeeperTRMSV() {

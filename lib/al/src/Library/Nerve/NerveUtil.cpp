@@ -63,8 +63,8 @@ bool isNewNerve(const IUseNerve* user) {
     return user->getNerveKeeper()->isNewNerve();
 }
 
-s32 calcNerveInterval(const al::IUseNerve* pKeeper, s32 start, s32 end) {
-    al::NerveKeeper* keeper = pKeeper->getNerveKeeper();
+s32 calcNerveInterval(const IUseNerve* pKeeper, s32 start, s32 end) {
+    NerveKeeper* keeper = pKeeper->getNerveKeeper();
 
     s32 dist = keeper->getCurrentStep() - end;
 

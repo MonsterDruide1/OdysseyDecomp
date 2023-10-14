@@ -42,7 +42,7 @@ void HitSensor::invalidate() {
 // HitSensor::invalidateBySystem
 // HitSensor::update (requires some more LiveActor research)
 
-void HitSensor::addHitSensor(al::HitSensor* pSensor) {
+void HitSensor::addHitSensor(HitSensor* pSensor) {
     // todo -- registers are different
     if (mSensorCount < mMaxSensorCount) {
         mSensors[mSensorCount] = pSensor;

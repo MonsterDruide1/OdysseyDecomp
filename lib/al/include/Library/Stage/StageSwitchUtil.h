@@ -5,24 +5,24 @@ class IUseStageSwitch;
 class StageSwitchDirector;
 class PlacementInfo;
 
-void initStageSwitch(al::IUseStageSwitch* user, al::StageSwitchDirector* stageSwitchDirector,
-                     const al::PlacementInfo& placementInfo);
-bool isValidStageSwitch(const al::IUseStageSwitch* user, const char* linkName);
-bool isOnStageSwitch(const al::IUseStageSwitch* user, const char* linkName);
-void onStageSwitch(al::IUseStageSwitch* user, const char* linkName);
-void offStageSwitch(al::IUseStageSwitch* user, const char* linkName);
-bool isOnStageSwitch(al::IUseStageSwitch* user, const char* linkName);
-bool isOffStageSwitch(al::IUseStageSwitch* user, const char* linkName);
-bool isSameStageSwitch(const al::IUseStageSwitch* user, const al::IUseStageSwitch* otherUser,
+void initStageSwitch(IUseStageSwitch* user, StageSwitchDirector* stageSwitchDirector,
+                     const PlacementInfo& placementInfo);
+bool isValidStageSwitch(const IUseStageSwitch* user, const char* linkName);
+bool isOnStageSwitch(const IUseStageSwitch* user, const char* linkName);
+void onStageSwitch(IUseStageSwitch* user, const char* linkName);
+void offStageSwitch(IUseStageSwitch* user, const char* linkName);
+bool isOnStageSwitch(IUseStageSwitch* user, const char* linkName);
+bool isOffStageSwitch(IUseStageSwitch* user, const char* linkName);
+bool isSameStageSwitch(const IUseStageSwitch* user, const IUseStageSwitch* otherUser,
                        const char* linkName);
-bool isValidSwitchAppear(const al::IUseStageSwitch* user);
-bool isOnSwitchAppear(const al::IUseStageSwitch* user);
-bool isValidSwitchKill(const al::IUseStageSwitch* user);
-bool isValidSwitchDeadOn(const al::IUseStageSwitch* user);
-void onSwitchDeadOn(al::IUseStageSwitch* user);
-void offSwitchDeadOn(al::IUseStageSwitch* user);
-bool isOnSwitchDeadOn(al::IUseStageSwitch* user);
-bool isOffSwitchDeadOn(al::IUseStageSwitch* user);
-bool isValidSwitchStart(const al::IUseStageSwitch* user);
-bool isOnSwitchStart(const al::IUseStageSwitch* user);
+bool isValidSwitchAppear(const IUseStageSwitch* user);
+bool isOnSwitchAppear(const IUseStageSwitch* user);
+bool isValidSwitchKill(const IUseStageSwitch* user);
+bool isValidSwitchDeadOn(const IUseStageSwitch* user);
+void onSwitchDeadOn(IUseStageSwitch* user);
+void offSwitchDeadOn(IUseStageSwitch* user);
+bool isOnSwitchDeadOn(IUseStageSwitch* user);
+bool isOffSwitchDeadOn(IUseStageSwitch* user);
+bool isValidSwitchStart(const IUseStageSwitch* user);
+bool isOnSwitchStart(const IUseStageSwitch* user);
 }  // namespace al

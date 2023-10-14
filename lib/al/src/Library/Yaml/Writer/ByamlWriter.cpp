@@ -156,13 +156,13 @@ void ByamlWriter::pushArray(const char* key) {
     pushContainer(array);
 }
 
-void ByamlWriter::pushIter(const al::ByamlIter& iter) {
+void ByamlWriter::pushIter(const ByamlIter& iter) {
     pushLocalIter(iter, nullptr);
 }
-void ByamlWriter::pushIter(const char* key, const al::ByamlIter& iter) {
+void ByamlWriter::pushIter(const char* key, const ByamlIter& iter) {
     pushLocalIter(iter, key);
 }
-void ByamlWriter::pushLocalIter(const al::ByamlIter& iter, const char* iterKey) {
+void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
     if (!iter.isValid())
         return;
 

@@ -78,7 +78,7 @@ void ByamlWriterString::write(sead::WriteStream* stream) const {
     stream->writeU32(mStringTable->calcIndex(mString));
 }
 
-ByamlWriterBigData::ByamlWriterBigData(al::ByamlWriterBigDataList* list) : mList(list) {
+ByamlWriterBigData::ByamlWriterBigData(ByamlWriterBigDataList* list) : mList(list) {
     mList->addData(this);
 }
 ByamlWriterBigData::~ByamlWriterBigData() = default;

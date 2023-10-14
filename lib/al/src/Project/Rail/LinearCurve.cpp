@@ -26,14 +26,14 @@ f32 LinearCurve::calcLength(f32 param_start, f32 param_end) const {
     return mDistance * sead::Mathf::abs(param_end - param_start);
 }
 f32 LinearCurve::calcCurveParam(f32 param) const {
-    if (al::isNearZero(mDistance, 0.001))
+    if (isNearZero(mDistance, 0.001))
         return 0;
 
     return sead::Mathf::clamp(param, 0, mDistance) / mDistance;
 }
 
 f32 LinearCurve::calcNearestParam(const sead::Vector3f& pos) const {
-    if (al::isNearZero(mDistance, 0.001))
+    if (isNearZero(mDistance, 0.001))
         return 0;
 
     f32 dot = (pos - mStart).dot(mDiff);

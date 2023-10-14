@@ -8,7 +8,7 @@
 namespace al {
 
 AsyncFunctorThread::AsyncFunctorThread(const sead::SafeString& functor_name,
-                                       const al::FunctorBase& functor, s32 priority, s32 stack_size,
+                                       const FunctorBase& functor, s32 priority, s32 stack_size,
                                        sead::CoreId id) {
     s32 size = stack_size < 0 ? 4096 : stack_size;
     mDelegateThread = new sead::DelegateThread(

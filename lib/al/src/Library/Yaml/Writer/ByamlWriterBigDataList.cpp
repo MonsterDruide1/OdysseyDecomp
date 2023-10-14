@@ -10,7 +10,7 @@ ByamlWriterBigDataList::~ByamlWriterBigDataList() {
         delete node;
     }
 }
-void ByamlWriterBigDataList::addData(al::ByamlWriterBigData* data) {
+void ByamlWriterBigDataList::addData(ByamlWriterBigData* data) {
     mList.pushBack(new sead::TListNode<ByamlWriterBigData*>(data));
 }
 u32 ByamlWriterBigDataList::calcPackSize() const {

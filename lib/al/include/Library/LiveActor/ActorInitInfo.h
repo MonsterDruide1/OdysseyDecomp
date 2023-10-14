@@ -95,8 +95,8 @@ private:
 
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo);
 void initActorSuffix(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
-void initActorChangeModel(al::LiveActor* actor, const al::ActorInitInfo& initInfo);
-void initActorChangeModelSuffix(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
+void initActorChangeModel(LiveActor* actor, const ActorInitInfo& initInfo);
+void initActorChangeModelSuffix(LiveActor* actor, const ActorInitInfo& initInfo,
                                 const char* suffix);
 void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& initInfo,
                               const sead::SafeString& archiveName, const char* suffix);

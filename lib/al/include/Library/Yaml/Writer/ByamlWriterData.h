@@ -90,7 +90,7 @@ class ByamlWriterBigDataList;
 
 class ByamlWriterBigData : public ByamlWriterData {
 public:
-    ByamlWriterBigData(al::ByamlWriterBigDataList*);
+    ByamlWriterBigData(ByamlWriterBigDataList*);
     ~ByamlWriterBigData();
     void write(sead::WriteStream*) const override;
     virtual u32 calcBigDataSize() const;
@@ -99,7 +99,7 @@ public:
     void setOffset(s32 offset) { mOffset = offset; }
 
 private:
-    al::ByamlWriterBigDataList* mList;
+    ByamlWriterBigDataList* mList;
     s32 mOffset = 0;
 };
 
@@ -191,7 +191,7 @@ public:
     void deleteData() override;
     u32 calcPackSize() const override;
 
-    void addData(al::ByamlWriterData*);
+    void addData(ByamlWriterData*);
     void addBool(bool) override;
     void addInt(s32) override;
     void addUInt(u32) override;
@@ -212,7 +212,7 @@ public:
 
 private:
     sead::TList<ByamlWriterData*> mList;
-    al::ByamlWriterStringTable* mStringTable;
+    ByamlWriterStringTable* mStringTable;
 };
 static_assert(sizeof(ByamlWriterArray) == 0x30);
 
@@ -221,13 +221,13 @@ public:
     ByamlWriterHashPair(const char*, ByamlWriterData*);
 
     const char* getKey() { return mKey; }
-    al::ByamlWriterData* getValue() { return mValue; }
+    ByamlWriterData* getValue() { return mValue; }
 
 private:
     void* selfReference = this;
     void* test2 = nullptr;
     const char* mKey;
-    al::ByamlWriterData* mValue;
+    ByamlWriterData* mValue;
 };
 static_assert(sizeof(ByamlWriterHashPair) == 0x30);
 
@@ -239,7 +239,7 @@ public:
     void deleteData() override;  // TODO implementation missing
     u32 calcPackSize() const override;
 
-    void addData(const char*, al::ByamlWriterData*);  // TODO implementation missing
+    void addData(const char*, ByamlWriterData*);  // TODO implementation missing
     void addBool(const char*, bool) override;
     void addInt(const char*, s32) override;
     void addUInt(const char*, u32) override;
@@ -260,8 +260,8 @@ public:
 
 private:
     sead::TList<ByamlWriterHashPair> mList;  // TODO not really... it's something different here.
-    al::ByamlWriterStringTable* mStringTable1;
-    al::ByamlWriterStringTable* mStringTable2;
+    ByamlWriterStringTable* mStringTable1;
+    ByamlWriterStringTable* mStringTable2;
 };
 static_assert(sizeof(ByamlWriterHash) == 0x38);
 

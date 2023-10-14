@@ -7,7 +7,7 @@ namespace al {
 
 ShadowKeeper::ShadowKeeper() = default;
 
-void ShadowKeeper::initAfterPlacement(al::GraphicsSystemInfo* info) {
+void ShadowKeeper::initAfterPlacement(GraphicsSystemInfo* info) {
     if (mShadowMaskCtrl)
         mShadowMaskCtrl->initAfterPlacement();
     if (mDepthShadowMapCtrl)

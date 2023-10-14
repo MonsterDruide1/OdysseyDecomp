@@ -30,6 +30,50 @@ def CHECK(cond, line, message, path):
 
 # Common
 
+def common_no_namespace_qualifiers(c, path):
+    nest_level = []
+    for line in c.splitlines():
+        line = line[0:line.find("//")] if "//" in line else line
+        if line.startswith("using namespace"):
+            match = re.search("^using namespace ([^;\s]+);$", line)
+            if CHECK(lambda a:match, line, "Unexpected \"using namespace\" line: should follow format \"using namespace xy;\"", path): return
+            continue
+        if CHECK(lambda a:a.rfind("namespace") in [-1, 0], line, "\"namespace\" must only be listed at the start of a line!", path): return
+
+        if line.startswith("namespace"):
+            match = re.search("^namespace ([^{\s]*) ?{$", line)
+            if CHECK(lambda a:match, line, "Unexpected namespace line: should follow format \"namespace xy {\"", path): return
+            nest_level.append(match.group(1))
+            # can be "" for "namespace {" and "nn::g3d" for double/triple/... namespaces
+            continue
+
+        allowed_namespaces = []
+        for l in nest_level:
+            if l != "":
+                if "::" not in l:
+                    allowed_namespaces.append(l)
+                else:
+                    allowed_namespaces += l.split("::")
+
+        parts = re.split("([{}])", line)
+        for x in parts:
+            if x == "{":
+                nest_level.append("")
+                continue
+            if x == "}":
+                del nest_level[-1]
+                continue
+
+            matches = re.findall("[\(,\s]([^\(,\s]+::)+[^\(,\s]+", x)
+            for match in matches:
+                match = match[0:-2]
+                # examples: "sead", "al", "nn::g3d"
+                if CHECK(lambda a:match not in allowed_namespaces, line, match+" should be omitted here!", path): return
+
+    if len(nest_level) != 0:
+        print("ERROR: nest_level not empty at end of the file!")
+        print("nest_level", nest_level)
+        exit(1)
 
 def common_newline_eof(c, path):
     CHECK(lambda a:a=="", c.split("\n")[-1], "Files should end with a newline!", path)
@@ -56,10 +100,12 @@ def source_include_header(c, path):
 
 def check_source(c, path):
     common_newline_eof(c, path)
+    common_no_namespace_qualifiers(c, path)
     source_include_header(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
+    common_no_namespace_qualifiers(c, path)
     header_pragma_once(c, path)
 
 def check_file(file_str):
