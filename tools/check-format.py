@@ -83,6 +83,37 @@ def common_newline_eof(c, path):
 def header_pragma_once(c, path):
     CHECK(lambda a:a=="#pragma once", c.splitlines()[0], "Headers must start with \"#pragma once\"!", path)
 
+def header_sorted_visibility(c, path):
+    visibilities_ordered = ["public:", "protected:", "private:"]
+    nest_level = [-1]  # outermost for macro definitions
+    for line in c.splitlines():
+        line = line[0:line.find("//")] if "//" in line else line
+        if line.endswith("\\"): line = line[0:-1].rstrip()
+        if "{" in line and "}" in line:
+            if CHECK(lambda a:a.count("{")==a.count("}") or (a.lstrip().startswith("{") and a.endswith("}};")), line, "Unbalanced \"{\" and \"}\" in the same line! (exception: end of brace-initialized array)", path): return
+            if line.lstrip().startswith("{") and line.endswith("}};"):
+                del nest_level[-1]
+            continue
+        
+        if CHECK(lambda a:[b for b in visibilities_ordered if b in a and a!=b]==[], line.strip(), "visibility modificator must be its own line!", path): return
+        if CHECK(lambda a:a.count("{")+a.count("}")<=1, line, "Only one \"{\" and \"}\" is allowed per line!", path): return
+
+        if line in visibilities_ordered:
+            i = visibilities_ordered.index(line)
+            if CHECK(lambda a:i>nest_level[-1], line, "Wrong order of visibilities: Must be public, protected, private!", path): return
+            nest_level[-1] = i
+            continue
+        elif "{" in line:
+            nest_level.append(-1)
+        elif "}" in line:
+            del nest_level[-1]
+
+    if len(nest_level) != 1:
+        print("ERROR: nest_level not empty at end of the file!")
+        print("nest_level", nest_level)
+        exit(1)
+ 
+
 
 # Source files
 
@@ -107,6 +138,7 @@ def check_header(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     header_pragma_once(c, path)
+    header_sorted_visibility(c, path)
 
 def check_file(file_str):
     file = open(file_str, mode="r")
