@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Library/Execute/ExecuteOrder.h"
 #include "Library/Execute/ExecuteTable.h"
 

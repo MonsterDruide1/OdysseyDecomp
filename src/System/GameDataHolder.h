@@ -1,8 +1,3 @@
-/**
- * @file GameDataHolder.h
- * @brief Holds scenario / game data.
- */
-
 #pragma once
 
 #include <prim/seadSafeString.h>

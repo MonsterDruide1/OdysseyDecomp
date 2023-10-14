@@ -36,6 +36,9 @@ def common_newline_eof(c, path):
 
 # Header files
 
+def header_pragma_once(c, path):
+    CHECK(lambda a:a=="#pragma once", c.splitlines()[0], "Headers must start with \"#pragma once\"!", path)
+
 
 # Source files
 
@@ -49,6 +52,7 @@ def check_source(c, path):
 
 def check_header(c, path):
     common_newline_eof(c, path)
+    header_pragma_once(c, path)
 
 def check_file(file_str):
     file = open(file_str, mode="r")
