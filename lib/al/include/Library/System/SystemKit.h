@@ -31,7 +31,3 @@ private:
     SaveDataDirector* mSaveDataDirector;
 };
 }  // namespace al
-
-class alProjectInterface {
-    static al::SystemKit* getSystemKit();
-};

@@ -42,6 +42,13 @@ def header_pragma_once(c, path):
 
 # Source files
 
+def source_include_header(c, path):
+    # hardcoded exception: Init.cpp contains C functions and no header to relate to
+    if(path.endswith("src/System/Init.cpp")): return
+
+    rel_path = path.split("src/")[-1] if "src/" in path else path.split("include/")[-1]
+    header_line = "#include \""+rel_path[0:-3]+"h\""
+    CHECK(lambda a:a==header_line, c.splitlines()[0], "Source files must start with including respective header in double quotes (here: "+header_line+")!", path)
 
 # -----
 # UTILS
@@ -49,6 +56,7 @@ def header_pragma_once(c, path):
 
 def check_source(c, path):
     common_newline_eof(c, path)
+    source_include_header(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)

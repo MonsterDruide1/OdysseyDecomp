@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/LiveActorFlag.h"
 #include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Rail/RailKeeper.h"
 #include "Library/Shadow/ShadowKeeper.h"
