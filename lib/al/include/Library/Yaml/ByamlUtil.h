@@ -3,6 +3,7 @@
 #include <gfx/seadColor.h>
 #include <math/seadBoundBox.h>
 #include <math/seadVector.h>
+
 #include "Library/Yaml/ByamlData.h"
 #include "Library/Yaml/ByamlIter.h"
 

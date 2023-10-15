@@ -1,6 +1,5 @@
 #include "Library/Base/String.h"
 
-#include <cstring>
 #include <resource/seadResource.h>
 
 namespace al {

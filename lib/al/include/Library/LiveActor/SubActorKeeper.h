@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+
 #include "Library/LiveActor/ActorInitInfo.h"
 
 // TODO: bring this up to sanae

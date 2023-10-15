@@ -1,7 +1,8 @@
 #pragma once
 
 #include <prim/seadSafeString.h>
-#include "PlayerAnimFrameCtrl.h"
+
+#include "Player/PlayerAnimFrameCtrl.h"
 
 class PlayerAnimator {
 public:

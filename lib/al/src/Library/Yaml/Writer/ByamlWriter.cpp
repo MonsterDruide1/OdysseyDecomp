@@ -2,6 +2,7 @@
 
 #include <heap/seadHeapMgr.h>
 #include <stream/seadStream.h>
+
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/Writer/ByamlWriterBigDataList.h"
 #include "Library/Yaml/Writer/ByamlWriterData.h"

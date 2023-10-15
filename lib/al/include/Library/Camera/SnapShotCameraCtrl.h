@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gfx/seadCamera.h>
+
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/Nerve/NerveExecutor.h"
 #include "Library/Yaml/ByamlIter.h"

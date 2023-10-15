@@ -1,5 +1,5 @@
 #include "Library/Nerve/NerveUtil.h"
-#include <algorithm>
+
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Nerve/NerveKeeper.h"
 #include "Library/Nerve/NerveStateCtrl.h"

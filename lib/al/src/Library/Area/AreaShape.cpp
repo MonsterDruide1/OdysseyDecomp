@@ -1,6 +1,7 @@
 #include "Library/Area/AreaShape.h"
 
 #include <math/seadVector.h>
+
 #include "Library/Area/AreaShapeCube.h"
 #include "Library/Area/AreaShapeCylinder.h"
 #include "Library/Area/AreaShapeInfinite.h"

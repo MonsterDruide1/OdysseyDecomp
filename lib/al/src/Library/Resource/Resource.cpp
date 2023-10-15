@@ -1,9 +1,11 @@
 #include "Library/Resource/Resource.h"
+
 #include <filedevice/seadFileDevice.h>
 #include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
 #include <resource/seadResource.h>
+
 #include "Library/File/FileUtil.h"
 
 namespace al {

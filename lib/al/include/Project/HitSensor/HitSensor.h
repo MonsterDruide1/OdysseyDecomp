@@ -2,6 +2,7 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+
 #include "Project/HitSensor/SensorHitGroup.h"
 
 namespace al {

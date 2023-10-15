@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+
 #include "Library/Area/IUseAreaObj.h"
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/Camera/IUseCamera.h"

@@ -1,4 +1,5 @@
 #include "Util/ActorDimensionKeeper.h"
+
 #include "Util/IUseDimension.h"
 
 void ActorDimensionKeeper::validate() {

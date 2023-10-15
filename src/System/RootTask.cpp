@@ -1,7 +1,9 @@
 #include "System/RootTask.h"
 
 #include <heap/seadHeapMgr.h>
+
 #include "Library/Memory/HeapUtil.h"
+
 #include "System/GameSystem.h"
 
 RootTask::RootTask(const sead::TaskConstructArg& constructArg)

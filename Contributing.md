@@ -123,7 +123,7 @@ Before opening a PR, please format your code with clang-format 12 and ensure the
 ### Includes
 
 * Use `#include "..."` when including `al` and `rs` (SMO) header files.
-    * Include paths should be relative to lib/.
+    * Include paths should be relative to `lib/al` or `src`.
         * OK: `#include "Library/LiveActor/LiveActor.h"`
         * Not OK: `#include "LiveActor.h"`
 
@@ -131,6 +131,12 @@ Before opening a PR, please format your code with clang-format 12 and ensure the
     * Standard C++ library headers (e.g. `<optional>`, `<type_traits>`, `<limits>`, ...)
     * sead (e.g. `<prim/seadSafeString.h>`)
     * Other Nintendo libraries like agl, eui, ...
+
+* Format `#include`s in three blocks, separating them by one empty line.
+    * First up, all includes with angle brackets (`<>`)
+    * Then, all includes from `al`, starting with `Library` and `Project` (`""`)
+    * Finally, all game headers with no common prefix (`""`)
+    * For ordering within the blocks, run `clang-format`
 
 ### Naming
 

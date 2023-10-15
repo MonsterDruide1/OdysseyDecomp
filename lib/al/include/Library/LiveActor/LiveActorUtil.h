@@ -4,6 +4,7 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
+
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Nerve/Nerve.h"
 

@@ -1,9 +1,4 @@
 #pragma once
-/**
- * @file HackCap.h
- * @brief Main Class for HackCap (Cappy)
- * Vtable loc: 1D75520
- */
 
 #include "Library/LiveActor/LiveActor.h"
 

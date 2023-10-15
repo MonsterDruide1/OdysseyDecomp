@@ -3,7 +3,6 @@
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
-#include "math/seadVectorFwd.h"
 
 namespace al {
 

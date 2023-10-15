@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 #include <mc/seadCoreInfo.h>
 #include <prim/seadSafeString.h>
+
 #include "Library/Thread/FunctorV0M.h"
 
 namespace sead {

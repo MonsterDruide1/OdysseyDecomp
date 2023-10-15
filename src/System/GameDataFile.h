@@ -3,6 +3,7 @@
 #include <math/seadVector.h>
 #include <prim/seadBitFlag.h>
 #include <prim/seadSafeString.h>
+
 #include "System/GameProgressData.h"
 
 class GameProgressData;

@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <common/aglDrawContext.h>
+
 #include "Library/HostIO/HioNode.h"
 
 namespace agl {

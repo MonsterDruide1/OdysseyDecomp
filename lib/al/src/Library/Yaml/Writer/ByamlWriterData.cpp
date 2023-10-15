@@ -1,6 +1,7 @@
 #include "Library/Yaml/Writer/ByamlWriterData.h"
 
 #include <stream/seadStream.h>
+
 #include "Library/Yaml/ByamlUtil.h"
 #include "Library/Yaml/Writer/ByamlWriterBigDataList.h"
 #include "Library/Yaml/Writer/ByamlWriterStringTable.h"

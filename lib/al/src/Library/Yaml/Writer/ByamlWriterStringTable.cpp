@@ -1,7 +1,7 @@
 #include "Library/Yaml/Writer/ByamlWriterStringTable.h"
 
-#include <cstring>
 #include <stream/seadStream.h>
+
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace al {

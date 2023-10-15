@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+
 #include "Library/Nerve/Nerve.h"
 #include "Library/Nerve/NerveStateBase.h"
 

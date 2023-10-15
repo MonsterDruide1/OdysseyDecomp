@@ -1,12 +1,9 @@
 #include "Library/Rail/Rail.h"
-#include <limits>
 
 #include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Rail/RailPart.h"
-#include "math/seadMathCalcCommon.h"
-#include "math/seadVector.h"
 
 namespace al {
 
