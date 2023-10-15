@@ -25,4 +25,4 @@ private:
     Entry* array;
     s32 size;
 };
-};  // namespace al
+}  // namespace al

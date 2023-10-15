@@ -48,4 +48,4 @@ public:
     void makeActorAliveAll() { LiveActorGroup::makeActorAliveAll(); }
     void makeActorDeadAll() { LiveActorGroup::makeActorDeadAll(); }
 };
-};  // namespace al
+}  // namespace al

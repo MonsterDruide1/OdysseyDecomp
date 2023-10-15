@@ -42,4 +42,4 @@ public:
     const sead::Vector3<f32>* mFollowPos;   // _48
     const sead::Matrix34<f32>* mFollowMtx;  // _50
 };
-};  // namespace al
+}  // namespace al

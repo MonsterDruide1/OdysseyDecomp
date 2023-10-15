@@ -7,4 +7,4 @@ class HtmlViewer {
 public:
     void call(const char*, sead::BufferedSafeStringBase<char>*) const;
 };
-};  // namespace al
+}  // namespace al

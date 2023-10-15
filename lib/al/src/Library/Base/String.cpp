@@ -66,4 +66,4 @@ bool isEndWithString(const char* pString_0, const char* pString_1) {
 
     return isEqualString(&pString_0[pString0_Len - pString1_Len], pString_1);
 }
-};  // namespace al
+}  // namespace al

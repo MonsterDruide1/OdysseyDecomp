@@ -32,4 +32,4 @@ private:
     State* mStates;
     State* mCurrentState;
 };
-};  // namespace al
+}  // namespace al

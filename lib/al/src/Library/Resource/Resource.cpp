@@ -49,4 +49,4 @@ void Resource::cleanupResGraphicsFile() {
     agl::g3d::ResFile::Cleanup(mResFile);
     mResFile = nullptr;
 }
-};  // namespace al
+}  // namespace al

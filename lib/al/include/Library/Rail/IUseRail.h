@@ -7,4 +7,4 @@ class IUseRail {
 public:
     virtual RailRider* getRailRider() const = 0;
 };
-};  // namespace al
+}  // namespace al

@@ -93,4 +93,4 @@ struct PrintParams {
 void printByamlIter(const u8*);
 void printByamlIter(const ByamlIter&);
 void printByamlIter_(const ByamlIter&, PrintParams*);
-};  // namespace al
+}  // namespace al

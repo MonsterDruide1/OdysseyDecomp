@@ -50,7 +50,7 @@ def common_no_namespace_qualifiers(c, path):
 
         allowed_namespaces = []
         for l in nest_level:
-            if l != "":
+            if l != "" and l != None:
                 if "::" not in l:
                     allowed_namespaces.append(l)
                 else:
@@ -59,9 +59,11 @@ def common_no_namespace_qualifiers(c, path):
         parts = re.split("([{}])", line)
         for x in parts:
             if x == "{":
-                nest_level.append("")
+                nest_level.append(None)
                 continue
             if x == "}":
+                if nest_level[-1] != None:  # is closing namespace
+                    if CHECK(lambda a:a=="}", line.rstrip(), "Closing namespace expects only \"}\" in line!", path): return
                 del nest_level[-1]
                 continue
 

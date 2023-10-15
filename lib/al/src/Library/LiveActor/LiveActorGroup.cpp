@@ -107,4 +107,4 @@ void LiveActorGroup::makeActorDeadAll() {
         mActors[i]->makeActorDead();
     }
 }
-};  // namespace al
+}  // namespace al

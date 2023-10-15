@@ -16,4 +16,4 @@ private:
     s32 mSensorCount;
     HitSensor** mSensors;
 };
-};  // namespace al
+}  // namespace al

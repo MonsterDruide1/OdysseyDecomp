@@ -49,4 +49,4 @@ void HitSensor::addHitSensor(HitSensor* pSensor) {
         ++mSensorCount;
     }
 }
-};  // namespace al
+}  // namespace al

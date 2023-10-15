@@ -97,4 +97,4 @@ f32 lerpValue(f32 x, f32 y, f32 time) {
         time = 1.0f;
     return (x * (1.0f - time)) + (time * y);
 }
-};  // namespace al
+}  // namespace al
