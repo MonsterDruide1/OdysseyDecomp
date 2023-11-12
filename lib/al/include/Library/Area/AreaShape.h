@@ -20,7 +20,7 @@ public:
                                      const sead::Vector3f&) const = 0;
     virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const = 0;
 
-    sead::Vector3f getScale() const { return mScale; }
+    const sead::Vector3f& getScale() const { return mScale; }
 
     void setBaseMtxPtr(const sead::Matrix34f* baseMtxPtr);
     void setScale(const sead::Vector3f& scale);
