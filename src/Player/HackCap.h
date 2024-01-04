@@ -16,7 +16,7 @@ public:
     bool isThrowTypeSpiral(void) const;
 
     unsigned char padding_118[0x118 - HACKSIZE];
-    al::LiveActor* mActorA;  // 0x118
+    al::LiveActor* mActorA;
     unsigned char padding_08[0x08];
-    al::LiveActor* mPlayerActor;  // 0x128
+    al::LiveActor* mPlayerActor;
 };

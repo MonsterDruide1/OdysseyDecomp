@@ -163,6 +163,7 @@ def common_include_order(c, path, is_header):
 def common_newline_eof(c, path):
     CHECK(lambda a:a=="", c.split("\n")[-1], "Files should end with a newline!", path)
 
+
 # Header files
 
 def header_sorted_visibility(c, path):
@@ -195,7 +196,9 @@ def header_sorted_visibility(c, path):
         print("nest_level", nest_level)
         exit(1)
  
-
+def header_no_offset_comments(c, path):
+    for line in c.splitlines():
+        CHECK(lambda a:"// 0x" not in a, line, "Offset comments are not allowed in headers!", path)
 
 # Source files
 
@@ -213,6 +216,7 @@ def check_header(c, path):
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, True)
     header_sorted_visibility(c, path)
+    header_no_offset_comments(c, path)
 
 def check_file(file_str):
     file = open(file_str, mode="r")
