@@ -4,8 +4,6 @@
 
 #include "Layout/StageSceneLayout.h"
 
-#define INHERITSIZE sizeof(al::Scene)
-
 class PlayerActorHakoniwa;
 
 class StageScene : public al::Scene {
@@ -24,7 +22,7 @@ public:
 
     // somewhere here at 0xE0: stageName
 
-    unsigned char padding_2D0[0x2D0 - INHERITSIZE];
+    unsigned char padding_to_2D0[0x1F8];
     GameDataHolderAccessor* mHolder;
     unsigned char padding_2F8[0x20];
     StageSceneLayout* stageSceneLayout;
