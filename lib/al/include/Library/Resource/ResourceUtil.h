@@ -1,6 +1,7 @@
 #pragma once
 
 #include <prim/seadSafeString.h>
+
 #include "Library/Resource/Resource.h"
 
 namespace al {

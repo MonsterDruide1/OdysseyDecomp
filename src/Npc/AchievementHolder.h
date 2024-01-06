@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
+
 #include "System/GameDataHolderAccessor.h"
 
 namespace al {

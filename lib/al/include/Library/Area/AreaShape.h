@@ -3,6 +3,7 @@
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+
 #include "Library/Factory/Factory.h"
 #include "Library/HostIO/HioNode.h"
 

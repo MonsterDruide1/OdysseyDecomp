@@ -1,6 +1,7 @@
 #pragma once
 
 #include <container/seadPtrArray.h>
+
 #include "Library/Area/IUseAreaObj.h"
 #include "Library/Audio/IAudioSystemPause.h"
 #include "Library/HostIO/HioNode.h"
@@ -33,11 +34,11 @@ public:
     };
 
     AudioDirector();
-    void init(const al::AudioDirectorInitInfo& info);
-    void init3D(const al::AudioDirectorInitInfo& info);
+    void init(const AudioDirectorInitInfo& info);
+    void init3D(const AudioDirectorInitInfo& info);
     void initAfterInitPlacement();
-    void initMic(al::AudioMic* mic);
-    void setDependentModule(al::AudioDirector* director);
+    void initMic(AudioMic* mic);
+    void setDependentModule(AudioDirector* director);
     void updatePre();
     void updatePost();
     void startFinalizeUnsafeModuleInParallelThread();
@@ -45,7 +46,7 @@ public:
     bool isFinalizedUnsafeModuleInParallelThread();
     void finalize();
     bool isSystemPauseNow() const;
-    void setPlayerHolder(const al::PlayerHolder* player_holder);
+    void setPlayerHolder(const PlayerHolder* player_holder);
     void addAudiioFrameProccess(aal::IAudioFrameProcess* process);
     void removeAudiioFrameProccess(aal::IAudioFrameProcess* process);
     void* getAudioMaximizer() const;  // unknown return type

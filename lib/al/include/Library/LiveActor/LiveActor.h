@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+
 #include "Library/Area/IUseAreaObj.h"
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/Camera/IUseCamera.h"
@@ -152,23 +153,4 @@ private:
     ActorSceneInfo* mSceneInfo;
     LiveActorFlag* mFlags;
 };
-
-struct LiveActorFlag {
-    bool isDead = true;
-    bool isClipped = false;
-    bool isClippingInvalid = true;
-    bool isDrawClipped = false;
-    bool isCalcAnim = false;
-    bool isModelVisible = false;
-    bool isCollideOff = true;
-    bool field_07 = false;
-    bool isMaterialCodeValid = false;
-    bool isPuddleMaterialValid = false;
-    bool isAreaTargetOn = true;
-    bool isUpdateOn = true;
-
-    LiveActorFlag();
-};
-static_assert(sizeof(LiveActorFlag) == 0xC);
-
 }  // namespace al

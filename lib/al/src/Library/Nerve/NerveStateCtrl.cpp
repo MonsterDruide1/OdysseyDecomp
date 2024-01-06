@@ -63,4 +63,4 @@ void NerveStateCtrl::tryEndCurrentState() {
         mCurrentState = nullptr;
     }
 }
-};  // namespace al
+}  // namespace al

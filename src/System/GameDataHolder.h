@@ -1,13 +1,10 @@
-/**
- * @file GameDataHolder.h
- * @brief Holds scenario / game data.
- */
-
 #pragma once
 
 #include <prim/seadSafeString.h>
+
 #include "Library/Message/MessageSystem.h"
 #include "Library/Scene/GameDataHolderBase.h"
+
 #include "System/GameDataFile.h"
 #include "System/WorldList.h"
 

@@ -3,6 +3,7 @@
 #include <gfx/seadColor.h>
 #include <math/seadBoundBox.h>
 #include <math/seadVector.h>
+
 #include "Library/Yaml/ByamlData.h"
 #include "Library/Yaml/ByamlIter.h"
 
@@ -92,4 +93,4 @@ struct PrintParams {
 void printByamlIter(const u8*);
 void printByamlIter(const ByamlIter&);
 void printByamlIter_(const ByamlIter&, PrintParams*);
-};  // namespace al
+}  // namespace al

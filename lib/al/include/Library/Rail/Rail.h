@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadVector.h>
+
 #include "Library/Rail/RailPart.h"
 
 namespace al {

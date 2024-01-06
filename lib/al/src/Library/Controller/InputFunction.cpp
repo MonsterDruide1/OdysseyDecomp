@@ -3,8 +3,8 @@
 namespace al {
 
 sead::ControllerBase* getController_(s32 port) {
-    return al::isValidReplayController(port) ? getReplayController(port) :
-                                               sead::ControllerMgr::instance()->getController(port);
+    return isValidReplayController(port) ? getReplayController(port) :
+                                           sead::ControllerMgr::instance()->getController(port);
 }
 
 sead::ControllerBase* getController(s32 port) {

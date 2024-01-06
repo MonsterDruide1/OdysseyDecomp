@@ -2,6 +2,7 @@
 
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"

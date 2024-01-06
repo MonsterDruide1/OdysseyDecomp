@@ -5,4 +5,4 @@ class IUseName {
 public:
     virtual const char* getName() const = 0;
 };
-};  // namespace al
+}  // namespace al

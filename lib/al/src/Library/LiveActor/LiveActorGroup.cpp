@@ -1,4 +1,5 @@
 #include "Library/LiveActor/LiveActorGroup.h"
+
 #include "Library/LiveActor/LiveActorUtil.h"
 
 namespace al {
@@ -106,4 +107,4 @@ void LiveActorGroup::makeActorDeadAll() {
         mActors[i]->makeActorDead();
     }
 }
-};  // namespace al
+}  // namespace al

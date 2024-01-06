@@ -5,7 +5,6 @@
 #include "Library/Math/VectorUtil.h"
 #include "Project/Rail/BezierCurve.h"
 #include "Project/Rail/LinearCurve.h"
-#include "math/seadVector.h"
 
 namespace al {
 

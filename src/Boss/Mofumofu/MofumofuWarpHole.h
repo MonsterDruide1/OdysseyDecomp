@@ -2,6 +2,7 @@
 
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Nerve/NerveUtil.h"
 

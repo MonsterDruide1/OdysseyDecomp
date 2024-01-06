@@ -80,7 +80,7 @@ ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     }
     return {mData, &mData[data.getValue()]};
 }
-bool ByamlIter::getByamlDataByIndex(al::ByamlData* data, s32 index) const {
+bool ByamlIter::getByamlDataByIndex(ByamlData* data, s32 index) const {
     if (!mRootNode)
         return false;
     if (*mRootNode == ByamlDataType::TYPE_ARRAY) {
@@ -104,7 +104,7 @@ ByamlIter ByamlIter::getIterByKey(const char* key) const {
     }
     return {mData, &mData[data.getValue()]};
 }
-bool ByamlIter::getByamlDataByKey(al::ByamlData* data, const char* key) const {
+bool ByamlIter::getByamlDataByKey(ByamlData* data, const char* key) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
     ByamlStringTableIter hash_table = alByamlLocalUtil::getHashKeyTable(mData);
@@ -131,14 +131,14 @@ bool ByamlIter::getByamlDataByKey(al::ByamlData* data, const char* key) const {
     }
     return false;
 }
-bool ByamlIter::getByamlDataByKeyIndex(al::ByamlData* data, s32 index) const {
+bool ByamlIter::getByamlDataByKeyIndex(ByamlData* data, s32 index) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
 
     ByamlHashIter iter = {mRootNode, isInvertOrder()};
     return iter.getDataByKey(data, index);
 }
-bool ByamlIter::getByamlDataAndKeyName(al::ByamlData* data, const char** key, s32 index) const {
+bool ByamlIter::getByamlDataAndKeyName(ByamlData* data, const char** key, s32 index) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
 

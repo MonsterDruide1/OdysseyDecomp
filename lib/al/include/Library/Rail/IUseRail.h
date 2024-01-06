@@ -5,6 +5,6 @@ class RailRider;
 
 class IUseRail {
 public:
-    virtual al::RailRider* getRailRider() const = 0;
+    virtual RailRider* getRailRider() const = 0;
 };
-};  // namespace al
+}  // namespace al

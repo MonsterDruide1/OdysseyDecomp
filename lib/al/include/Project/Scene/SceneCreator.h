@@ -15,14 +15,6 @@ class AudioDirector;
 class Scene;
 
 class SceneCreator {
-private:
-    GameSystemInfo* mGameSystemInfo;
-    GameDataHolderBase* mGameDataHolder;
-    ScreenCaptureExecutor* mScreenCaptureExecutor;
-    alSceneFunction::SceneFactory* mSceneFactory;
-    InitializeThread* mInitializeThread;
-    AudioDirector* mAudioDirector;
-
 public:
     SceneCreator(const GameSystemInfo*, GameDataHolderBase*, ScreenCaptureExecutor*,
                  alSceneFunction::SceneFactory*, AudioDirector*);
@@ -31,6 +23,14 @@ public:
     void setSceneAndInit(Scene*, const char*, s32, const char*);
     bool tryEndInitThread();
     bool isExistInitThread();
+
+private:
+    GameSystemInfo* mGameSystemInfo;
+    GameDataHolderBase* mGameDataHolder;
+    ScreenCaptureExecutor* mScreenCaptureExecutor;
+    alSceneFunction::SceneFactory* mSceneFactory;
+    InitializeThread* mInitializeThread;
+    AudioDirector* mAudioDirector;
 };
 
 }  // namespace al

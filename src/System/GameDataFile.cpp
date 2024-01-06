@@ -1,6 +1,7 @@
 #include "System/GameDataFile.h"
 
 #include "Library/Base/String.h"
+
 #include "System/GameDataFunction.h"
 
 void GameDataFile::HintInfo::clear() {

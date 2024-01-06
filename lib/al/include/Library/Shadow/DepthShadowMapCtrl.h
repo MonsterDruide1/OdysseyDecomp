@@ -15,7 +15,7 @@ class ModelDrawerMask;
 
 class DepthShadowMapCtrl {
 public:
-    DepthShadowMapCtrl(const al::Resource* resource);
+    DepthShadowMapCtrl(const Resource* resource);
     ~DepthShadowMapCtrl();
 
     void actorModelDrawDepth();
@@ -27,16 +27,16 @@ public:
     DepthShadowMapInfo* getDepthShadowMapInfo(s32 index);
     u32 getDepthShadowMapNum();
     void hide();
-    void init(al::LiveActor* actor, const al::ByamlIter& iter);
-    void initAfterPlacement(al::GraphicsSystemInfo* graphicsSystemInfo);
-    void initWithoutIter(al::LiveActor* actor, s32);
+    void init(LiveActor* actor, const ByamlIter& iter);
+    void initAfterPlacement(GraphicsSystemInfo* graphicsSystemInfo);
+    void initWithoutIter(LiveActor* actor, s32);
     void show();
     DepthShadowMapInfo* tryFindDepthShadowMapInfo(const char*);
     void update();
-    void updateShapeVisible(const al::LiveActor* actor);
+    void updateShapeVisible(const LiveActor* actor);
 
 private:
-    al::LiveActor* mLiveActor;
+    LiveActor* mLiveActor;
     sead::Vector3f lightDir;
     bool mIsAppendSubActor;
     sead::PtrArray<DepthShadowMapInfo> mDepthShadowMaps;

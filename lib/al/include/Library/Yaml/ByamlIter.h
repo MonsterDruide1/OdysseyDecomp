@@ -19,11 +19,11 @@ public:
     bool isInvertOrder() const;
     s32 getSize() const;
     ByamlIter getIterByIndex(s32 index) const;
-    bool getByamlDataByIndex(al::ByamlData* data, s32 index) const;
+    bool getByamlDataByIndex(ByamlData* data, s32 index) const;
     ByamlIter getIterByKey(const char* key) const;
-    bool getByamlDataByKey(al::ByamlData* data, const char* key) const;
-    bool getByamlDataByKeyIndex(al::ByamlData* data, s32 index) const;
-    bool getByamlDataAndKeyName(al::ByamlData* data, const char** key, s32 index) const;
+    bool getByamlDataByKey(ByamlData* data, const char* key) const;
+    bool getByamlDataByKeyIndex(ByamlData* data, s32 index) const;
+    bool getByamlDataAndKeyName(ByamlData* data, const char** key, s32 index) const;
     bool getKeyName(const char** key, s32 index) const;
     bool tryGetIterByIndex(ByamlIter* iter, s32 index) const;
     bool tryGetIterAndKeyNameByIndex(ByamlIter* iter, const char** key, s32 index) const;

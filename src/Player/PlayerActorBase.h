@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
+
 #include "Player/IUsePlayerHack.h"
 
 class IUsePlayerCollision;

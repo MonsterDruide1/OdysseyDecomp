@@ -1,6 +1,7 @@
 #pragma once
 
 #include <resource/seadResource.h>
+
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {

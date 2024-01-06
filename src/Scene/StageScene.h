@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Layout/StageSceneLayout.h"
 #include "Library/Scene/Scene.h"
 
-#define INHERITSIZE sizeof(al::Scene)
+#include "Layout/StageSceneLayout.h"
 
 class PlayerActorHakoniwa;
 
@@ -21,12 +20,12 @@ public:
 
     bool isEnableSave(void) const;
 
-    // 0xE0 stageName
+    // somewhere here at 0xE0: stageName
 
-    unsigned char padding_2D0[0x2D0 - INHERITSIZE];
-    GameDataHolderAccessor* mHolder;  // 0x2D0
+    unsigned char padding_to_2D0[0x1F8];
+    GameDataHolderAccessor* mHolder;
     unsigned char padding_2F8[0x20];
-    StageSceneLayout* stageSceneLayout;  // 0x2F8
+    StageSceneLayout* stageSceneLayout;
 };
 
 namespace rs {

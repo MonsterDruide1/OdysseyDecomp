@@ -1,6 +1,7 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActorFlag.h"
 
 namespace al {
 bool isClipped(const LiveActor* actor) {

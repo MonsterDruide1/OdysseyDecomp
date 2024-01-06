@@ -1,6 +1,7 @@
+#pragma once
+
 #include "Library/Execute/ExecuteOrder.h"
 #include "Library/Execute/ExecuteTable.h"
-
 #include "Library/Execute/ExecuteTableHolderDraw.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
 

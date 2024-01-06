@@ -97,7 +97,7 @@ private:
     al::NerveAction* mHead = nullptr;
     al::NerveAction* mTail = nullptr;
 
-    static alNerveFunction::NerveActionCollector* sCurrentCollector;
+    static NerveActionCollector* sCurrentCollector;
 };
 
 }  // namespace alNerveFunction

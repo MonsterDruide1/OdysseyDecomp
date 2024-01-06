@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
@@ -47,4 +48,4 @@ public:
     void makeActorAliveAll() { LiveActorGroup::makeActorAliveAll(); }
     void makeActorDeadAll() { LiveActorGroup::makeActorDeadAll(); }
 };
-};  // namespace al
+}  // namespace al

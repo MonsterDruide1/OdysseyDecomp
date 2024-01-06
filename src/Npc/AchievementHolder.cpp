@@ -2,6 +2,7 @@
 
 #include "Library/Base/String.h"
 #include "Library/Resource/ResourceUtil.h"
+
 #include "Npc/Achievement.h"
 #include "Npc/AchievementInfoReader.h"
 #include "System/GameDataFunction.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameDataHolder.h"
+#include "System/GameDataHolder.h"
 
 class GameDataHolderWriter : public GameDataHolder {
     // ima be real i dont think theres anything in this class

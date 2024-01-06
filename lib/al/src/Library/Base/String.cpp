@@ -1,6 +1,5 @@
 #include "Library/Base/String.h"
 
-#include <cstring>
 #include <resource/seadResource.h>
 
 namespace al {
@@ -67,4 +66,4 @@ bool isEndWithString(const char* pString_0, const char* pString_1) {
 
     return isEqualString(&pString_0[pString0_Len - pString1_Len], pString_1);
 }
-};  // namespace al
+}  // namespace al

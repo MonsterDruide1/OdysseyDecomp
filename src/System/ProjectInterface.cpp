@@ -1,4 +1,5 @@
-#include "Library/System/SystemKit.h"
+#include "System/ProjectInterface.h"
+
 #include "System/Application.h"
 
 al::SystemKit* alProjectInterface::getSystemKit() {

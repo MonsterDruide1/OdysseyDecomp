@@ -1,5 +1,7 @@
 #include "Library/Yaml/ByamlData.h"
 
+#include <byteswap.h>
+
 namespace al {
 
 ByamlData::ByamlData() = default;

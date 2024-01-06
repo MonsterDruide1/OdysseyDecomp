@@ -1,7 +1,6 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include "byteswap.h"
 
 namespace al {
 class ByamlHashPair;

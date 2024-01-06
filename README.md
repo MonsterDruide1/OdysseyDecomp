@@ -79,7 +79,6 @@ Anyone is welcome to contribute to this project, just send a pull request!
 - Find proper place for Factories (+Placement of ActorFactory?)
 - Graph in Rails misordered
 - LiveActorGroup vs. Kit are in the wrong order
-- Merge LiveActor/-flag
 - Split files/functions in Library/Resource
 - Library/Stage: Proper place for StageInfo
 - Library/Math: Split up into multiple files
