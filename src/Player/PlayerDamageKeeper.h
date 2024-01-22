@@ -2,8 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-class PlayerDamageKeeper
-{
+class PlayerDamageKeeper {
 public:
     void activatePreventDamage();
     void dead();
