@@ -1,5 +1,11 @@
 name: Compile and verify functions
-on: [push, pull_request]
+on:
+  push:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   compile_verify:
@@ -8,6 +14,12 @@ jobs:
     - name: Check out project
       uses: actions/checkout@v3
       with:
+        submodules: recursive
+    - name: Check out branch if in PR
+      if: ${{ github.event_name == 'pull_request_target' }}
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
     - name: Check for W-state functions
       run: |
