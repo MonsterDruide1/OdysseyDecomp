@@ -168,11 +168,11 @@ ByamlWriterArray::~ByamlWriterArray() {
         delete node;
     }
 }
-void ByamlWriterArray::deleteData() {  // TODO heavy diff
-    for (auto it = mList.begin(); it != mList.end(); ++it) {
-        if ((*it)->isContainer()) {
-            auto* node = *it;
-            reinterpret_cast<ByamlWriterContainer*>(node)->deleteData();
+void ByamlWriterArray::deleteData() {
+    for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
+        if (!it->mData->isContainer()) {
+            delete it->mData;
+            it->mData = nullptr;
         }
     }
 }
@@ -243,9 +243,9 @@ void ByamlWriterArray::writeContainer(sead::WriteStream* stream) const {
 void ByamlWriterArray::write(sead::WriteStream* stream) const {
     stream->writeU32(getOffset());
 }
-void ByamlWriterArray::print(s32 unknown) const {  // TODO small diff
-    for (auto& node : mList) {
-        node->print(unknown);
+void ByamlWriterArray::print(s32 unknown) const {
+    for (auto node : mList) {
+        node->print(unknown + 1);
     }
 }
 bool ByamlWriterArray::isArray() const {

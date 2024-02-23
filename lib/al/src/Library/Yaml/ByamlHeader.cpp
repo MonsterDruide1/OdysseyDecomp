@@ -202,10 +202,10 @@ bool verifiByaml(const u8* data) {
            (afterStringOffset <= rootOffset || !stringOffset || !rootOffset);
 }
 
-// NON_MATCHING: subtract-one works differently
+// NON_MATCHING: missing & 0xFFFF
 bool verifiByamlHeader(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
-    return header->getTag() == 'BY' && header->getVersion() - 1 < 3;
+    return header->getTag() == 'BY' && (u32)(header->getVersion() - 1) < 3;
 }
 
 bool verifiByamlStringTable(const u8* data, bool isRev) {

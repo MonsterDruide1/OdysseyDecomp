@@ -8,7 +8,7 @@ ByamlData::ByamlData() = default;
 
 void ByamlData::set(const ByamlHashPair* hash_pair, bool isRev) {
     mType = hash_pair->getType();
-    mValue = isRev ? bswap_32(hash_pair->getValue(false)) : hash_pair->getValue(false);
+    mValue = hash_pair->getValue(isRev);
 }
 
 void ByamlData::set(u8 type, u32 value, bool isRev) {
@@ -39,7 +39,6 @@ s32 ByamlHashPair::getValue(bool isRev) const {
 ByamlHashIter::ByamlHashIter(const u8* data, bool isRev_) : mData(data), isRev(isRev_) {}
 ByamlHashIter::ByamlHashIter() : mData(nullptr), isRev(false) {}
 
-// NON_MATCHING: mismatch during bound calculation
 const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
     const ByamlHashPair* pairTable = getPairTable();
     if (!mData)
@@ -47,6 +46,7 @@ const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
 
     s32 lowerBound = 0;
     s32 upperBound = getSize();
+    asm("");  // solves isRev leaking over between getSize() and getKey()
     while (lowerBound < upperBound) {
         s32 avg = (lowerBound + upperBound) / 2;
         const ByamlHashPair* pair = &pairTable[avg];
@@ -71,30 +71,42 @@ bool ByamlHashIter::getDataByIndex(ByamlData* data, s32 index) const {
     data->set(&getPairTable()[index], isRev);
     return true;
 }
-// NON_MATCHING: missing cbz on matching result
+// NON_MATCHING: minor additional instructions, probably not inlined
 bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
     if (!mData)
         return false;
     if (((s32)getSize()) < 1)
         return false;
 
+    // probably inlined from findPair()
+    const ByamlHashPair* pairTable = getPairTable();
+    if (!mData)
+        return false;
     s32 lowerBound = 0;
     s32 upperBound = getSize();
-    while (lowerBound < upperBound) {
+    const ByamlHashPair* pair;
+
+    if (lowerBound >= upperBound)
+        return false;
+    while (true) {
         s32 avg = (lowerBound + upperBound) / 2;
-        const ByamlHashPair* pair = &getPairTable()[avg];
+        pair = &pairTable[avg];
         s32 result = key - pair->getKey(isRev);
         if (result == 0) {
-            data->set(pair, isRev);
-            return true;
+            break;
         }
 
         if (result > 0)
             lowerBound = avg + 1;
         else
             upperBound = avg;
+        if (lowerBound >= upperBound)
+            return false;
     }
-    return false;
+    if (pair == nullptr)
+        return false;
+    data->set(pair, isRev);
+    return true;
 }
 const u8* ByamlHashIter::getOffsetData(u32 off) const {
     return &mData[off];

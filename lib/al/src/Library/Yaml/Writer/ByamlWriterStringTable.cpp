@@ -14,7 +14,7 @@ ByamlWriterStringTable::~ByamlWriterStringTable() {
         delete node;
     }
 }
-inline char* add(const char* string, sead::TList<const char*> list) {
+inline char* add(const char* string, sead::TList<const char*>& list) {
     s32 length = ((strlen(string) << 32) + 0x100000000LL) >> 32;
     char* array = new char[length];
     strncpy(array, string, length);
@@ -22,17 +22,28 @@ inline char* add(const char* string, sead::TList<const char*> list) {
     list.pushBack(node);
     return array;
 }
-const char* ByamlWriterStringTable::tryAdd(
-    const char* string) {  // TODO major mismatches, probably due to the inlined functions way of
-                           // adding things to `list`.
-    for (auto& node : mList) {
-        s32 result = strcmp(string, node);
-        if (result == 0)
-            return node;
-        if (result < 0)
-            return add(string, mList);
+const char* ByamlWriterStringTable::tryAdd(const char* string) {
+    for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
+        int result = strcmp(string, it->mData);
+        if (result == 0) {
+            return it->mData;
+        }
+        if (result < 0) {
+            s32 length = (s64)((strlen(string) << 32) + 0x100000000LL) >> 32;
+            char* array = new char[length];
+            char* result = strncpy(array, string, length);
+            auto* node = new sead::TListNode<const char*>(result);
+            node->mList = &mList;
+            mList.insertBefore(&*it, node);
+            return result;
+        }
     }
-    return add(string, mList);
+    s32 length = (s64)((strlen(string) << 32) + 0x100000000LL) >> 32;
+    char* array = new char[length];
+    char* result = strncpy(array, string, length);
+    auto* node = new sead::TListNode<const char*>(result);
+    mList.pushBack(node);
+    return result;
 }
 u32 ByamlWriterStringTable::calcHeaderSize() const {
     return (4 * mList.size()) + 8;
@@ -61,27 +72,34 @@ u32 ByamlWriterStringTable::calcIndex(const char* data) const {
     }
     return -1;
 }
-void ByamlWriterStringTable::write(
-    sead::WriteStream* stream) const {  // TODO minor mismatch during first `for`-loop
+void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
     if (isEmpty())
         return;
     stream->writeU8(0xC2);
     alByamlLocalUtil::writeU24(stream, mList.size());
 
     s32 i = 4 * (mList.size() + 2);
-    for (auto& node : mList) {
+
+    int v7 = 0;
+    auto end = mList.end();
+    for (auto it = mList.begin();; i += v7 + 1, ++it) {
         stream->writeU32(i);
-        i += strlen(node) + 1;
+        if (it == end)
+            break;
+        v7 = strlen(*it);
     }
-    for (auto& node : mList) {
+
+    for (auto node : mList) {
         stream->writeMemBlock(node, strlen(node));
         stream->writeU8(0);
     }
 
+    // calculate padding
     s32 v12 = i < 0 ? i + 3 : i;
     s32 v14 = i - (v12 & 0xFFFFFFFC);
     s32 v15 = 4 - v14;
     s32 v16 = v14 == 0 ? 0 : v15;
+
     for (s32 j = 0; j < v16; j++) {
         stream->writeU8(0);
     }
