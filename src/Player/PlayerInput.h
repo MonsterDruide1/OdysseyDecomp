@@ -15,6 +15,11 @@ class PlayerInput {
 public:
     PlayerInput(const al::LiveActor*, const IUsePlayerCollision*, const IUseDimension*);
 
+    bool isMove() const;
+    bool isMoveDeepDown() const;
+    bool isMoveDeepDownNoSnap() const;
+    bool isNoInput() const;
+
     bool isEnableCarry() const;
     bool isTriggerCarryStart() const;
     bool isTriggerCarryRelease() const;
@@ -62,8 +67,6 @@ public:
     bool isHoldCapAction() const;
     bool isHoldPoleClimbFast() const;
     bool isHoldWallCatchMoveFast() const;
-    bool isMove() const;
-    bool isMoveDeepDown() const;
     bool isHoldHackAction() const;
     bool isHoldHackJump() const;
     bool isSpinInput() const;

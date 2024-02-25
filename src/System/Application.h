@@ -6,7 +6,7 @@ namespace al {
 class SystemKit;
 class GameFrameworkNx;
 class AccountHolder;
-struct DrawSystemInfo;
+class GameDrawInfo;
 }  // namespace al
 
 class RootTask;
@@ -24,9 +24,9 @@ public:
 
     al::GameFrameworkNx* getGameFramework() const { return mGameFramework; }
 
-    al::AccountHolder* getAccountHolder() const { return mAccountHolder; }
+    al::GameDrawInfo* getGameDrawInfo() const { return mGameDrawInfo; }
 
-    al::DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
+    al::AccountHolder* getAccountHolder() const { return mAccountHolder; }
 
 protected:
     friend class ApplicationFunction;
@@ -34,11 +34,6 @@ protected:
 private:
     al::SystemKit* mSystemKit;
     al::GameFrameworkNx* mGameFramework;
+    al::GameDrawInfo* mGameDrawInfo;
     al::AccountHolder* mAccountHolder;
-    al::DrawSystemInfo* mDrawSystemInfo;
 };
-
-namespace agl {
-class RenderBuffer;
-class DrawContext;
-}  // namespace agl
