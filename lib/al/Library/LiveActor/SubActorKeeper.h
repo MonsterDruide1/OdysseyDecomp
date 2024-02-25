@@ -117,11 +117,11 @@ private:
     SubActorInfo** mBuffer = nullptr;
 };
 
-void isExistSubActorKeeper(const LiveActor*);
-LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
+bool isExistSubActorKeeper(const LiveActor*);
+LiveActor* getSubActor(const LiveActor* actor, const char* subActorName);
 LiveActor* tryGetSubActor(const LiveActor* actor, const char* subActorName);
-void getSubActor(const LiveActor*, s32);
-void getSubActorNum(const LiveActor*);
+LiveActor* getSubActor(const LiveActor*, s32);
+s32 getSubActorNum(const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const char*);
 void offSyncClippingSubActorAll(LiveActor*);

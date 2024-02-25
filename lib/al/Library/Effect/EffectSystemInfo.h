@@ -6,6 +6,16 @@
 
 namespace al {
 class IUseEffectKeeper;
+class PtclSystem;
+
+struct EffectSystemInfo {
+    s32 _0;
+    PtclSystem* mPtclSystem;
+    void* _10;
+    s32 _18;
+};
+
+static_assert(sizeof(EffectSystemInfo) == 0x20);
 
 void emitEffectCurrentPos(IUseEffectKeeper*, const char*);
 void emitEffect(IUseEffectKeeper*, const char*, const sead::Vector3<f32>*);
