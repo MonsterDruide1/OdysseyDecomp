@@ -5,12 +5,13 @@
 #include "Library/Message/MessageSystem.h"
 #include "Library/Scene/GameDataHolderBase.h"
 
-#include "System/GameDataFile.h"
 #include "System/WorldList.h"
 
 namespace al {
 class PlacementId;
 }
+
+class GameDataFile;
 
 class GameDataHolder : public al::GameDataHolderBase {
 public:
@@ -19,7 +20,7 @@ public:
 
     virtual ~GameDataHolder();
 
-    virtual char* getSceneObjName() const;
+    virtual const char* getSceneObjName() const;
     virtual al::MessageSystem* getMessageSystem() const;
 
     void setPlayingFileId(s32 file);
@@ -68,6 +69,7 @@ public:
 
     void resetMiniGameData();
     s32 getPlayingFileId() const;
+    void requestSetPlayingFileId(s32);
 
     s32 findUnlockShineNum(bool*, s32) const;
     s32 calcBeforePhaseWorldNumMax(s32) const;

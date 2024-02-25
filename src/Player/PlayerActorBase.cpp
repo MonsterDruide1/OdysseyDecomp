@@ -6,7 +6,7 @@ void PlayerActorBase::initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&
 IUsePlayerCollision* PlayerActorBase::getPlayerCollision() const {
     return nullptr;
 }
-al::PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
+PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
     return nullptr;
 }
 bool PlayerActorBase::isEnableDemo() {
@@ -27,14 +27,16 @@ void PlayerActorBase::noticeDemoKeepBindExecute() {}
 void PlayerActorBase::endDemoKeepBind() {}
 void PlayerActorBase::startDemoKeepCarry() {}
 void PlayerActorBase::endDemoKeepCarry() {}
-void PlayerActorBase::getDemoActor() {}
-void* PlayerActorBase::getDemoAnimator() {
+al::DemoActor* PlayerActorBase::getDemoActor() {
+    return reinterpret_cast<al::DemoActor*>(this);
+}
+PlayerAnimator* PlayerActorBase::getDemoAnimator() {
     return nullptr;
 }
 bool PlayerActorBase::isDamageStopDemo() const {
     return false;
 }
-void* PlayerActorBase::getPlayerPuppet() {
+PlayerPuppet* PlayerActorBase::getPlayerPuppet() {
     return nullptr;
 }
 PlayerInfo* PlayerActorBase::getPlayerInfo() const {

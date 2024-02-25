@@ -14,7 +14,7 @@ struct LiveActorFlag {
     bool isMaterialCodeValid = false;
     bool isPuddleMaterialValid = false;
     bool isAreaTargetOn = true;
-    bool isUpdateOn = true;
+    bool isUpdateMovementEffectAudioCollisionSensor = true;
 
     LiveActorFlag();
 };
