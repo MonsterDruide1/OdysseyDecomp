@@ -1,0 +1,55 @@
+# heavily inspired by https://www.paigeniedringhaus.com/blog/copy-files-from-one-repo-to-another-automatically-with-git-hub-actions
+
+name: Copy headers to separate repo
+
+on:
+  push:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  copy_headers:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out OdysseyDecomp project
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Check out branch if in PR
+      if: ${{ github.event_name == 'pull_request_target' }}
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        submodules: recursive
+    - name: Check out OdysseyHeaders project
+      uses: actions/checkout@v3
+      with:
+        repository: MonsterDruide1/OdysseyHeaders
+        path: ./OdysseyHeaders
+        token: ${{ secrets.HEADERS_TOKEN }}
+    - name: Create proper branch name (for PRs, in Headers repo)
+      run: |
+        if [[ $GITHUB_EVENT_NAME == 'pull_request_target' ]]
+        then
+          echo "HEADER_BRANCH=pr-`expr match "$GITHUB_REF_NAME" '.*\(^[0-9]*\)/'`" >> "$GITHUB_ENV"
+        else
+          echo "HEADER_BRANCH=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
+        fi
+    - name: Move to correct branch of OdysseyHeaders and reset history
+      run: |
+        cd OdysseyHeaders
+        git checkout $HEADER_BRANCH 2>/dev/null || git checkout -b $HEADER_BRANCH
+        git reset --hard origin/master
+    - name: Copy files
+      run: bash ./.github/scripts/copy-headers.sh
+      env:
+        DESTINATION_PATH: ./OdysseyHeaders
+    - name: Push to OdysseyHeaders repo
+      run: bash ./.github/scripts/push-headers.sh
+      env:
+        COMMIT_AUTHOR_NAME: ${{ github.event.commits[0].author.name }}
+        COMMIT_AUTHOR_MAIL: ${{ github.event.commits[0].author.email }}
+        COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
