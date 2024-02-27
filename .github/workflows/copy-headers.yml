@@ -47,7 +47,7 @@ jobs:
           else
             echo "AUTHOR_MAIL=$PR_AUTHOR_LOGIN@noreply.github.com" >> "$GITHUB_ENV"
           fi
-          echo "MESSAGE=$PR_TITLE"
+          echo "MESSAGE=$PR_TITLE" >> "$GITHUB_ENV"
         else
           echo "HEADER_BRANCH=$DELETED_BRANCH" >> "$GITHUB_ENV"
           echo "AUTHOR_NAME=$COMMIT_AUTHOR_NAME" >> "$GITHUB_ENV"
