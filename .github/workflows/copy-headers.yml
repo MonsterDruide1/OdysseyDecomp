@@ -35,12 +35,35 @@ jobs:
         if [[ $GITHUB_EVENT_NAME == 'pull_request_target' ]]
         then
           echo "HEADER_BRANCH=pr-$PR_NUM" >> "$GITHUB_ENV"
+          if [[ $PR_AUTHOR_NAME != '' ]]
+          then
+            echo "AUTHOR_NAME=$PR_AUTHOR_NAME" >> "$GITHUB_ENV"
+          else
+            echo "AUTHOR_NAME=$PR_AUTHOR_LOGIN" >> "$GITHUB_ENV"
+          fi
+          if [[ $PR_AUTHOR_MAIL != '' ]]
+          then
+            echo "AUTHOR_MAIL=$PR_AUTHOR_MAIL"
+          else
+            echo "AUTHOR_MAIL=$PR_AUTHOR_LOGIN@noreply.github.com" >> "$GITHUB_ENV"
+          fi
+          echo "MESSAGE=$PR_TITLE"
         else
           echo "HEADER_BRANCH=$DELETED_BRANCH" >> "$GITHUB_ENV"
+          echo "AUTHOR_NAME=$COMMIT_AUTHOR_NAME" >> "$GITHUB_ENV"
+          echo "AUTHOR_MAIL=$COMMIT_AUTHOR_MAIL" >> "$GITHUB_ENV"
+          echo "MESSAGE=$COMMIT_MESSAGE" >> "$GITHUB_ENV"
         fi
       env:
         DELETED_BRANCH: ${{ github.event.ref }}
-        PR_NUM: ${{ github.event.number }}
+        PR_NUM: ${{ github.event.pull_request.number }}
+        COMMIT_AUTHOR_NAME: ${{ github.event.commits[0].author.name }}
+        COMMIT_AUTHOR_MAIL: ${{ github.event.commits[0].author.email }}
+        COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
+        PR_AUTHOR_NAME: ${{ github.event.pull_request.user.name }}
+        PR_AUTHOR_LOGIN: ${{ github.event.pull_request.user.login }}
+        PR_AUTHOR_MAIL: ${{ github.event.pull_request.user.email }}
+        PR_TITLE: ${{ github.event.pull_request.title }}
     - name: Move to correct branch of OdysseyHeaders and reset history
       run: |
         cd OdysseyHeaders
@@ -52,7 +75,3 @@ jobs:
         DESTINATION_PATH: ./OdysseyHeaders
     - name: Push to OdysseyHeaders repo
       run: bash ./.github/scripts/push-headers.sh
-      env:
-        COMMIT_AUTHOR_NAME: ${{ github.event.commits[0].author.name }}
-        COMMIT_AUTHOR_MAIL: ${{ github.event.commits[0].author.email }}
-        COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
