@@ -24,10 +24,13 @@ jobs:
       run: |
         if [[ $GITHUB_EVENT_NAME == 'pull_request_target' ]]
         then
+          echo "REF: $GITHUB_REF_NAME, attempted match: `expr match "$GITHUB_REF_NAME" '.*\(^[0-9]*\)/'`"
           echo "HEADER_BRANCH=pr-`expr match "$GITHUB_REF_NAME" '.*\(^[0-9]*\)/'`" >> "$GITHUB_ENV"
         else
-          echo "HEADER_BRANCH=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
+          echo "HEADER_BRANCH=$DELETED_BRANCH" >> "$GITHUB_ENV"
         fi
+      env:
+        DELETED_BRANCH: ${{ github.event.ref }}
     - name: Delete branch from OdysseyHeaders
       run: |
         cd OdysseyHeaders
