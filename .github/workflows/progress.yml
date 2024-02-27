@@ -13,7 +13,7 @@ jobs:
       with:
         submodules: recursive
     - name: Set up dependencies
-      run: sudo apt install -y ninja-build cmake ccache clang curl libncurses5
+      run: sudo apt update && sudo apt install -y ninja-build cmake ccache clang curl libncurses5
     - name: Set up python
       uses: actions/setup-python@v4
       with:
