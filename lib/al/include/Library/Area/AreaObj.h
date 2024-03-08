@@ -1,9 +1,9 @@
 #pragma once
 
 #include <math/seadMatrix.h>
-#include "al/include/Library/HostIO/HioNode.h"
-#include "al/include/Library/Scene/IUseSceneObjHolder.h"
-#include "al/include/Library/Stage/IUseStageSwitch.h"
+#include "Library/HostIO/HioNode.h"
+#include "Library/Scene/IUseSceneObjHolder.h"
+#include "Library/Stage/IUseStageSwitch.h"
 
 namespace al {
 class AreaInitInfo;
@@ -14,16 +14,6 @@ class SceneObjHolder;
 class StageSwitchKeeper;
 
 class AreaObj : public IUseStageSwitch, public IUseSceneObjHolder, public HioNode {
-private:
-    const char* mName;
-    AreaShape* mAreaShape = nullptr;
-    StageSwitchKeeper* mStageSwitchKeeper = nullptr;
-    SceneObjHolder* mSceneObjHolder = nullptr;
-    sead::Matrix34f mMatrixTR = sead::Matrix34f::ident;
-    PlacementInfo* mPlacementInfo = nullptr;
-    s32 mPriority = -1;
-    bool isValid = true;
-
 public:
     AreaObj(const char* name);
     const char* getName() const override;
@@ -37,6 +27,16 @@ public:
     void invalidate();
 
     s32 getPriority() { return mPriority; };
+
+private:
+    const char* mName;
+    AreaShape* mAreaShape = nullptr;
+    StageSwitchKeeper* mStageSwitchKeeper = nullptr;
+    SceneObjHolder* mSceneObjHolder = nullptr;
+    sead::Matrix34f mMatrixTR = sead::Matrix34f::ident;
+    PlacementInfo* mPlacementInfo = nullptr;
+    s32 mPriority = -1;
+    bool isValid = true;
 };
 
 }  // namespace al

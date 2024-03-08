@@ -1,6 +1,6 @@
-#include "al/include/Library/Area/AreaObjGroup.h"
+#include "Library/Area/AreaObjGroup.h"
 
-#include "al/include/Library/Area/AreaObj.h"
+#include "Library/Area/AreaObj.h"
 
 namespace al {
 AreaObjGroup::AreaObjGroup(const char* groupName, const int capacity)

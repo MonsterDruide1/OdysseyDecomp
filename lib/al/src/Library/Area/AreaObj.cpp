@@ -1,14 +1,14 @@
-#include "al/include/Library/Area/AreaObj.h"
+#include "Library/Area/AreaObj.h"
 
-#include "al/include/Library/Area/AreaInitInfo.h"
-#include "al/include/Library/Area/AreaObjGroup.h"
-#include "al/include/Library/Area/AreaShape.h"
-#include "al/include/Library/Placement/PlacementFunction.h"
-#include "al/include/Library/Placement/PlacementInfo.h"
-#include "al/include/Library/Stage/ListenStageSwitch.h"
-#include "al/include/Library/Stage/StageSwitchKeeper.h"
-#include "al/include/Library/Stage/StageSwitchUtil.h"
-#include "al/include/Library/Thread/FunctorV0M.h"
+#include "Library/Area/AreaInitInfo.h"
+#include "Library/Area/AreaObjGroup.h"
+#include "Library/Area/AreaShape.h"
+#include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
+#include "Library/Stage/ListenStageSwitch.h"
+#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
+#include "Library/Thread/FunctorV0M.h"
 
 namespace al {
 

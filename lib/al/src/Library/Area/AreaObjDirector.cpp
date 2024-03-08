@@ -1,18 +1,18 @@
-#include "al/include/Library/Area/AreaObjDirector.h"
+#include "Library/Area/AreaObjDirector.h"
 
-#include "al/include/Library/Area/AreaInitInfo.h"
-#include "al/include/Library/Area/AreaObj.h"
-#include "al/include/Library/Area/AreaObjFactory.h"
-#include "al/include/Library/Area/AreaObjGroup.h"
-#include "al/include/Library/Area/AreaObjMtxConnecter.h"
-#include "al/include/Library/Placement/PlacementFunction.h"
-#include "al/include/Library/Placement/PlacementInfo.h"
+#include "Library/Area/AreaInitInfo.h"
+#include "Library/Area/AreaObj.h"
+#include "Library/Area/AreaObjFactory.h"
+#include "Library/Area/AreaObjGroup.h"
+#include "Library/Area/AreaObjMtxConnecter.h"
+#include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
 
 namespace al {
 
 AreaObjDirector::AreaObjDirector() {}
 
-void AreaObjDirector::init(const al::AreaObjFactory* factory) {
+void AreaObjDirector::init(const AreaObjFactory* factory) {
     mFactory = factory;
     mMtxConnecterHolder = new AreaObjMtxConnecterHolder(0x100);
     s32 nFactoryEntries = mFactory->getNumFactoryEntries();
@@ -32,13 +32,13 @@ void AreaObjDirector::update() {
     mMtxConnecterHolder->update();
 }
 
-void AreaObjDirector::placement(const al::AreaInitInfo& initInfo) {
+void AreaObjDirector::placement(const AreaInitInfo& initInfo) {
     createAreaObjGroup(initInfo);
     createAreaObjGroupBuffer();
     placementAreaObj(initInfo);
 }
 
-void AreaObjDirector::placement(const al::AreaInitInfo* initInfoArray, s32 initInfoCount) {
+void AreaObjDirector::placement(const AreaInitInfo* initInfoArray, s32 initInfoCount) {
     for (s32 i = 0; i < initInfoCount; i++) {
         createAreaObjGroup(initInfoArray[i]);
     }
@@ -50,15 +50,15 @@ void AreaObjDirector::placement(const al::AreaInitInfo* initInfoArray, s32 initI
     }
 }
 
-void AreaObjDirector::createAreaObjGroup(const al::AreaInitInfo& initInfo) {
-    al::PlacementInfo placementInfo(initInfo);
+void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& initInfo) {
+    PlacementInfo placementInfo(initInfo);
 
-    s32 pInfoCount = al::getCountPlacementInfo(placementInfo);
+    s32 pInfoCount = getCountPlacementInfo(placementInfo);
     for (s32 i = 0; i < pInfoCount; i++) {
-        al::PlacementInfo placementInfo2;
-        al::tryGetPlacementInfoByIndex(&placementInfo2, placementInfo, i);
+        PlacementInfo placementInfo2;
+        tryGetPlacementInfoByIndex(&placementInfo2, placementInfo, i);
         const char* pInfoName = nullptr;
-        al::tryGetObjectName(&pInfoName, placementInfo2);
+        tryGetObjectName(&pInfoName, placementInfo2);
 
         AreaObjCreatorFunction creatorFunc = nullptr;
         s32 factoryIx = mFactory->getEntryIndex(pInfoName, &creatorFunc);
@@ -104,7 +104,7 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
     mAreaGroupCount = areaGroupCount;
 }
 
-void AreaObjDirector::placementAreaObj(const al::AreaInitInfo& initInfo) {
+void AreaObjDirector::placementAreaObj(const AreaInitInfo& initInfo) {
     PlacementInfo pInfo(initInfo);
     s32 pInfoCount = getCountPlacementInfo(pInfo);
     for (s32 j = 0; j < pInfoCount; j++) {

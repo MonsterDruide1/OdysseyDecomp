@@ -7,14 +7,14 @@
 #include "AreaObj/NpcForceMaterialCodeArea.h"
 #include "AreaObj/RouteGuideArea.h"
 #include "AreaObj/StainArea.h"
-#include "al/include/Library/Area/AreaInitInfo.h"
-#include "al/include/Library/Area/AreaObj.h"
-#include "al/include/Library/Area/TrafficArea.h"
-#include "al/include/Library/LiveActor/ActorInitInfo.h"
-#include "al/include/Library/Play/Area/CameraStartParamArea.h"
-#include "al/include/Library/Play/Area/SeBarrierArea.h"
-#include "al/include/Library/Play/Area/SePlayArea.h"
-#include "al/include/Library/Play/Area/ViewCtrlArea.h"
+#include "Library/Area/AreaInitInfo.h"
+#include "Library/Area/AreaObj.h"
+#include "Library/Area/TrafficArea.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/Play/Area/CameraStartParamArea.h"
+#include "Library/Play/Area/SeBarrierArea.h"
+#include "Library/Play/Area/SePlayArea.h"
+#include "Library/Play/Area/ViewCtrlArea.h"
 
 namespace al {
 

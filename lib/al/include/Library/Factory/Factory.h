@@ -1,7 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include "al/include/Library/Base/String.h"
+#include "Library/Base/String.h"
 
 namespace al {
 template <typename T>

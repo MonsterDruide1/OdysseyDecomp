@@ -1,7 +1,7 @@
 #pragma once
 
-#include <sead/include/math/seadBoundBox.h>
 #include "al/include/Library/Area/AreaObj.h"
+#include "sead/include/math/seadBoundBox.h"
 
 namespace al {
 class ClippingJudge;
@@ -14,10 +14,6 @@ class BirdGatheringSpotArea : public al::AreaObj {
         sead::BoundBox3f mBoundBox = sead::BoundBox3f(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     };
 
-private:
-    s32 mBirdNumMax = 0;
-    AreaClippingInfo mClippingInfo;
-
 public:
     BirdGatheringSpotArea(const char* name);
 
@@ -28,4 +24,8 @@ public:
     bool isClipped() const;
     bool isGreaterPriorityNotClipped(const BirdGatheringSpotArea* other) const;
     void updateClipping(const al::ClippingJudge*, const sead::Vector3f&);
+
+private:
+    s32 mBirdNumMax = 0;
+    AreaClippingInfo mClippingInfo;
 };

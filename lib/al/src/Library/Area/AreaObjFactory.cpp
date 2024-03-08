@@ -1,4 +1,4 @@
-#include "al/include/Library/Area/AreaObjFactory.h"
+#include "Library/Area/AreaObjFactory.h"
 #include "Library/Base/String.h"
 
 namespace al {

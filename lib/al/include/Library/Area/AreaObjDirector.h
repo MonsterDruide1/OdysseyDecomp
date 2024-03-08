@@ -2,7 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
-#include "al/include/Library/Area/AreaObjGroup.h"
+#include "Library/Area/AreaObjGroup.h"
 
 namespace al {
 class AreaObjFactory;

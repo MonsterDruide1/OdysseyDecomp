@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/include/Library/Factory/Factory.h"
+#include "Library/Factory/Factory.h"
 
 namespace al {
 
@@ -14,10 +14,6 @@ struct AreaGroupInfo {
 };
 
 class AreaObjFactory : public Factory<AreaObjCreatorFunction> {
-private:
-    AreaGroupInfo* mAreaGroupInfo = nullptr;
-    s32 mNumBuffers = 0;
-
 public:
     AreaObjFactory(const char* factoryName);
     s32 tryFindAddBufferSize(const char* bufferName) const;
@@ -30,6 +26,10 @@ public:
         mNumBuffers = N;
         mAreaGroupInfo = areaInfo;
     }
+
+private:
+    AreaGroupInfo* mAreaGroupInfo = nullptr;
+    s32 mNumBuffers = 0;
 };
 
 }  // namespace al
