@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Library/Area/AreaObj.h"
-
 #include <math/seadVectorFwd.h>
+
+#include "Library/Area/AreaObj.h"
 
 class RouteGuideArea : public al::AreaObj {
 public:
