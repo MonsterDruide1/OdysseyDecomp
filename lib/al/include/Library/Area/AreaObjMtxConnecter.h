@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+
 #include "Library/Placement/PlacementInfo.h"
 
 namespace al {

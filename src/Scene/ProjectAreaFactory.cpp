@@ -7,6 +7,7 @@
 #include "AreaObj/NpcForceMaterialCodeArea.h"
 #include "AreaObj/RouteGuideArea.h"
 #include "AreaObj/StainArea.h"
+
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/TrafficArea.h"

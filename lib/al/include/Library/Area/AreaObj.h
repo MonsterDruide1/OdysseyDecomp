@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+
 #include "Library/HostIO/HioNode.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
 #include "Library/Stage/IUseStageSwitch.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "al/include/Library/Area/AreaObj.h"
+#include "Library/Area/AreaObj.h"
 
 class NpcForceMaterialCodeArea : public al::AreaObj {
 public:

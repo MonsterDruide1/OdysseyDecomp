@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
+
 #include "Library/Area/AreaObjGroup.h"
 
 namespace al {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+
 #include "Library/Base/String.h"
 
 namespace al {
