@@ -76,6 +76,8 @@ public:
     void initNoViewId(const PlacementInfo*, const ActorInitInfo&);
 
     const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+    StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; };
+    SceneObjHolder* getActorSceneObjHolder() const { return mActorSceneInfo.mSceneObjHolder; };
 
 private:
     LiveActorGroup* mKitDrawingGroup;
