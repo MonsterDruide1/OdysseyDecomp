@@ -1,7 +1,8 @@
 #pragma once
 
+#include <sead/include/math/seadBoundBox.h>
+
 #include "Library/Area/AreaObj.h"
-#include "sead/include/math/seadBoundBox.h"
 
 namespace al {
 class ClippingJudge;

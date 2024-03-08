@@ -1,7 +1,8 @@
 #pragma once
 
+#include <math/seadVectorFwd.h>
+
 #include "Library/Area/AreaObj.h"
-#include "math/seadVectorFwd.h"
 
 class MoveArea2D : public al::AreaObj {
 public:
