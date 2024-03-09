@@ -37,11 +37,11 @@ void AreaObj::init(const AreaInitInfo& initInfo) {
 
     AreaShapeFactory areaShapeFactory("エリアシェイプファクトリー");
     AreaShape* (*creatorFunc)() = nullptr;
-    areaShapeFactory.getEntryIndex(modelName, &creatorFunc);
+    areaShapeFactory.getEntryIndex(&creatorFunc, modelName);
     mAreaShape = creatorFunc();
 
     mAreaShape->setBaseMtxPtr(&mMatrixTR);
-    sead::Vector3f scale({1.0, 1.0, 1.0});
+    sead::Vector3f scale = {1.0, 1.0, 1.0};
     tryGetScale(&scale, *mPlacementInfo);
     mAreaShape->setScale(scale);
 

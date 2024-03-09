@@ -14,6 +14,6 @@ private:
     bool mCarFull = false;
     bool mNpcFull = false;
     bool mNpcUnavailable = false;
-    char mUnkChar = '\0';
+    bool mCarUnavailable = false;
 };
 }  // namespace al

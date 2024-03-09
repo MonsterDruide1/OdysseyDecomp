@@ -16,8 +16,7 @@ void AreaObjDirector::init(const AreaObjFactory* factory) {
     mFactory = factory;
     mMtxConnecterHolder = new AreaObjMtxConnecterHolder(0x100);
     s32 nFactoryEntries = mFactory->getNumFactoryEntries();
-    s32 areaGroupsSize = nFactoryEntries;
-    mAreaGroups = new AreaObjGroup*[areaGroupsSize];
+    mAreaGroups = new AreaObjGroup*[nFactoryEntries];
 
     for (s32 i = 0; i < nFactoryEntries; i++) {
         mAreaGroups[i] = nullptr;
@@ -61,7 +60,7 @@ void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& initInfo) {
         tryGetObjectName(&pInfoName, placementInfo2);
 
         AreaObjCreatorFunction creatorFunc = nullptr;
-        s32 factoryIx = mFactory->getEntryIndex(pInfoName, &creatorFunc);
+        s32 factoryIx = mFactory->getEntryIndex(&creatorFunc, pInfoName);
 
         if (creatorFunc == nullptr)
             continue;
@@ -76,11 +75,11 @@ void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& initInfo) {
 
 void AreaObjDirector::createAreaObjGroupBuffer() {
     for (s32 i = 0; i < mFactory->getAreaGroupCount(); i++) {
-        AreaGroupInfo* addBuffer = mFactory->getAreaGroupInfo() + i;
+        AreaGroupInfo& addBuffer = mFactory->getAreaGroupInfo()[i];
         AreaObjCreatorFunction creatorFunc = nullptr;
-        s32 entryIndex = mFactory->getEntryIndex(addBuffer->name, &creatorFunc);
+        s32 entryIndex = mFactory->getEntryIndex(&creatorFunc, addBuffer.name);
         if (mAreaGroups[entryIndex] == nullptr)
-            mAreaGroups[entryIndex] = new AreaObjGroup(addBuffer->name, addBuffer->size);
+            mAreaGroups[entryIndex] = new AreaObjGroup(addBuffer.name, addBuffer.size);
     }
 
     s32 areaGroupCount = 0;
@@ -114,7 +113,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& initInfo) {
         tryGetObjectName(&pInfoName, pInfo2);
 
         AreaObjCreatorFunction creatorFunc = nullptr;
-        mFactory->getEntryIndex(pInfoName, &creatorFunc);
+        mFactory->getEntryIndex(&creatorFunc, pInfoName);
         if (creatorFunc == nullptr)
             continue;
 
@@ -124,7 +123,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& initInfo) {
         AreaInitInfo initInfo2(pInfo2, initInfo);
         areaObj->init(initInfo2);
 
-        AreaObjGroup* areaGroup = _getAreaObjGroup(pInfoName);
+        AreaObjGroup* areaGroup = getAreaObjGroup(pInfoName);
 
         areaGroup->registerAreaObj(areaObj);
         mMtxConnecterHolder->tryAddArea(areaObj, pInfo2);
@@ -132,7 +131,6 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& initInfo) {
 }
 
 AreaObjGroup* AreaObjDirector::getAreaObjGroup(const char* name) const {
-    // return _getAreaObjGroup(name); // doesn't match
     s32 lower = 0;
     s32 upper = mAreaGroupCount;
     while (lower < upper) {
@@ -149,11 +147,11 @@ AreaObjGroup* AreaObjDirector::getAreaObjGroup(const char* name) const {
 }
 
 bool AreaObjDirector::isExistAreaGroup(const char* name) const {
-    return _getAreaObjGroup(name) != nullptr;
+    return getAreaObjGroup(name) != nullptr;
 }
 
 AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* name, const sead::Vector3f& position) {
-    AreaObjGroup* areaGroup = _getAreaObjGroup(name);
+    AreaObjGroup* areaGroup = getAreaObjGroup(name);
     if (areaGroup == nullptr)
         return nullptr;
     return areaGroup->getInVolumeAreaObj(position);

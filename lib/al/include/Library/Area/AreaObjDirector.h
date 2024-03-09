@@ -33,21 +33,5 @@ private:
     AreaObjMtxConnecterHolder* mMtxConnecterHolder = nullptr;
     AreaObjGroup** mAreaGroups = nullptr;
     u32 mAreaGroupCount = 0;
-
-    AreaObjGroup* _getAreaObjGroup(const char* name) const {
-        s32 lower = 0;
-        s32 upper = mAreaGroupCount;
-        while (lower < upper) {
-            s32 i = (lower + upper) / 2;
-            s32 equalString = strcmp(name, mAreaGroups[i]->getName());
-            if (equalString == 0) {
-                return mAreaGroups[i];
-            } else if (equalString > 0) {
-                lower = i + 1;
-            } else
-                upper = i;
-        }
-        return nullptr;
-    }
 };
 }  // namespace al

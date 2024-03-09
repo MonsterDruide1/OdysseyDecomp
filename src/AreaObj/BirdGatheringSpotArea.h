@@ -20,7 +20,7 @@ public:
 
     void init(const al::AreaInitInfo& initInfo) override;
 
-    void calcRandomGroundTrans(sead::Vector3f trans) const;
+    void calcRandomGroundTrans(sead::Vector3f* trans) const;
     s32 getSightDistance() const;
     bool isClipped() const;
     bool isGreaterPriorityNotClipped(const BirdGatheringSpotArea* other) const;

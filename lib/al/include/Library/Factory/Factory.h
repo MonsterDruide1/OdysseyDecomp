@@ -32,7 +32,7 @@ public:
 
     s32 getNumFactoryEntries() const { return mNumFactoryEntries; }
 
-    s32 getEntryIndex(const char* entryName, T* creationPtr) const {
+    s32 getEntryIndex(T* creationPtr, const char* entryName) const {
         const char* name = convertName(entryName);
         s32 nFactoryEntries = mNumFactoryEntries;
         const NameToCreator<T>* entries = mFactoryEntries;

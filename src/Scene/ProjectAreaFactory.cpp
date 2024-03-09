@@ -1,13 +1,5 @@
 #include "Scene/ProjectAreaFactory.h"
 
-#include "AreaObj/BirdGatheringSpotArea.h"
-#include "AreaObj/ExtForceArea.h"
-#include "AreaObj/ForceRecoveryKidsArea.h"
-#include "AreaObj/MoveArea2D.h"
-#include "AreaObj/NpcForceMaterialCodeArea.h"
-#include "AreaObj/RouteGuideArea.h"
-#include "AreaObj/StainArea.h"
-
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/TrafficArea.h"
@@ -16,6 +8,14 @@
 #include "Library/Play/Area/SeBarrierArea.h"
 #include "Library/Play/Area/SePlayArea.h"
 #include "Library/Play/Area/ViewCtrlArea.h"
+
+#include "AreaObj/BirdGatheringSpotArea.h"
+#include "AreaObj/ExtForceArea.h"
+#include "AreaObj/ForceRecoveryKidsArea.h"
+#include "AreaObj/MoveArea2D.h"
+#include "AreaObj/NpcForceMaterialCodeArea.h"
+#include "AreaObj/RouteGuideArea.h"
+#include "AreaObj/StainArea.h"
 
 namespace al {
 

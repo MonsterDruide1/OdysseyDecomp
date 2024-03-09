@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Library/Area/AreaObj.h"
-#include "Library/Placement/PlacementId.h"
 
 namespace al {
+class PlacementId;
+
 class ViewCtrlArea : public AreaObj {
 public:
     ViewCtrlArea(const char* name);

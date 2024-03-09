@@ -38,7 +38,7 @@ public:
     void update();
 
 private:
-    MtxConnector** mMtxConnectors;
+    AreaObjMtxConnecter** mMtxConnectors;
     s32 mNumConnectors = 0;
     s32 mCapacity;
 };

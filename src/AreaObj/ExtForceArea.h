@@ -8,7 +8,8 @@ public:
 
     void init(const al::AreaInitInfo& areaInitInfo) override;
 
-    void calcExtForce(sead::Vector3f, sead::Vector3f, sead::Vector3f, sead::Vector3f);
+    void calcExtForce(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
+                      const sead::Vector3f&) const;
 
 private:
     sead::Vector2f mUnknown;

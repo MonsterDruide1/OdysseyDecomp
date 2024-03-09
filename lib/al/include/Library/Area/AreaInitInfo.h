@@ -3,13 +3,12 @@
 #include "Library/Placement/PlacementInfo.h"
 
 namespace al {
-class PlacementInfo;
 class StageSwitchDirector;
 class SceneObjHolder;
 
 class AreaInitInfo : public PlacementInfo {
 public:
-    AreaInitInfo(){};
+    AreaInitInfo();
     AreaInitInfo(const PlacementInfo& placementInfo, StageSwitchDirector* stageSwitchDirector,
                  SceneObjHolder* sceneObjHolder);
     AreaInitInfo(const PlacementInfo& placementInfo, const AreaInitInfo& initInfo);

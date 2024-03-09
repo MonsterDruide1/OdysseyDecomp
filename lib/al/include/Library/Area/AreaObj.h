@@ -22,7 +22,7 @@ public:
     void initStageSwitchKeeper() override;
     virtual void init(const AreaInitInfo& initInfo);
     virtual bool isInVolume(const sead::Vector3f& position) const;
-    virtual bool isInVolumeOffset(const sead::Vector3f&, f32 offset) const;
+    virtual bool isInVolumeOffset(const sead::Vector3f& position, f32 offset) const;
     SceneObjHolder* getSceneObjHolder() const override;
     void validate();
     void invalidate();
