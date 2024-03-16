@@ -1,56 +1,54 @@
 #pragma once
 
-#include "types.h"
-
-#include "al/audio/AudioDirector.h"
-#include "al/scene/Scene.h"
-#include "game/GameData/GameDataHolderAccessor.h"
-#include "game/StageScene/StageScene.h"
-#include "game/WorldList/WorldResourceLoader.h"
+#include <basis/seadTypes.h>
 
 class HakoniwaStateDemoWorldWarp;
 
 namespace al {
 class WipeHolder;
 class SequenceInitInfo;
+class AudioDirector;
+class Scene;
 }  // namespace al
+class StageScene;
+class GameDataHolderAccessor;
+class WorldResourceLoader;
 
-// generated with Ghidra
 class HakoniwaSequence {
 public:
     HakoniwaSequence(const char*);
-    bool isDisposable(void);
-    void updatePadSystem(void);
+    bool isDisposable();
+    void updatePadSystem();
     void destroySceneHeap(bool);
-    void init(al::SequenceInitInfo const&);
-    void initSystem(void);
-    void update(void);
-    bool isEnableSave(void);
-    void drawMain(void);
-    al::Scene* getCurrentScene(void);  // {return this->curScene}
+    void init(const al::SequenceInitInfo&);
+    void initSystem();
+    void update();
+    bool isEnableSave();
+    void drawMain();
+    al::Scene* getCurrentScene();  // {return this->curScene}
 
-    undefined** field_0x0;
-    undefined padding_120[120];
+    char** field_0x0;
+    char padding_120[120];
     al::Scene* curScene;
-    undefined padding_8[8];
+    char padding_8[8];
     al::AudioDirector* field_0x90;
-    undefined padding_24[24];
+    char padding_24[24];
     StageScene* stageScene;
     GameDataHolderAccessor* gameDataHolder;
-    undefined padding_024[24];
+    char padding_024[24];
     HakoniwaStateDemoWorldWarp* stateDemoWorldWarp;
-    undefined padding_192[192];
+    char padding_192[192];
     int nextScenarioNo;
-    undefined padding_12[12];
+    char padding_12[12];
     al::WipeHolder* field_0x1b0;
-    undefined padding_0024[24];
+    char padding_0024[24];
     long* field_0x1d0;
-    undefined padding_48[48];
+    char padding_48[48];
     WorldResourceLoader* worldResourceLoader;
-    undefined padding_0x16[16];
-    undefined* field_0x220;
-    undefined padding_0x144[144];
-    undefined* field_0x2b8;
-    undefined padding_0x160[160];
-    undefined8 field_0x360;
+    char padding_0x16[16];
+    char* field_0x220;
+    char padding_0x144[144];
+    char* field_0x2b8;
+    char padding_0x160[160];
+    u32 field_0x360;
 };

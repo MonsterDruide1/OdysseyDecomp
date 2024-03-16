@@ -2,8 +2,5 @@
 
 namespace al {
 
-IUseSceneCreator::~IUseSceneCreator() {
-    ;
-}
 
 }  // namespace al

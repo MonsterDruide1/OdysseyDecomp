@@ -69,6 +69,11 @@ void initJointGlobalQuatController(const al::LiveActor*, const sead::Quatf*, con
 
 bool isEffectEmitting(const IUseEffectKeeper*, const char*);
 
+void calcFrontDir(sead::Vector3f*, const al::LiveActor*);
+void calcUpDir(sead::Vector3f*, const al::LiveActor*);
+
+void alongVectorNormalH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
+
 }  // namespace al
 
 namespace rs {

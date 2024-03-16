@@ -1,44 +1,71 @@
 #pragma once
 
-#include "al/audio/AudioKeeper.h"
-#include "al/camera/CameraDirector.h"
+#include <prim/seadSafeString.h>
+#include "al/iuse/IUseAudioKeeper.h"
+#include "al/iuse/IUseCamera.h"
 #include "al/nerve/NerveExecutor.h"
-#include "al/scene/SceneInitInfo.h"
 #include "al/scene/SceneObjHolder.h"
 
 namespace al {
-class Scene : public al::NerveExecutor,
-              public al::IUseAudioKeeper,
-              public al::IUseCamera,
-              public al::IUseSceneObjHolder {
-public:
-    Scene(const char*);
+class SceneInitInfo;
+class StageResourceKeeper;
+class LiveActorKit;
+class LayoutKit;
+class SceneStopCtrl;
+class SceneMsgCtrl;
+class ScreenCoverCtrl;
+class AudioDirector;
+class GraphicsInitArg;
 
-    virtual ~Scene();
-    virtual void init(const al::SceneInitInfo&);
+class Scene : public NerveExecutor,
+              public IUseAudioKeeper,
+              public IUseCamera,
+              public IUseSceneObjHolder {
+public:
+    Scene(const char* name);
+    ~Scene() override;
+
+    virtual void init(const SceneInitInfo& info);
     virtual void appear();
     virtual void kill();
     virtual void movement();
     virtual void control();
-    virtual void drawMain();
-    virtual void drawSub();
-    virtual al::AudioKeeper* getAudioKeeper();
-    virtual al::SceneObjHolder* getSceneObjHolder();
-    virtual al::CameraDirector* getCameraDirector();
+    virtual void drawMain() const;
+    virtual void drawSub() const;
 
-    unsigned char _28[0xD8 - 0x28];
+    AudioKeeper* getAudioKeeper() const override;
+    SceneObjHolder* getSceneObjHolder() const override;
+    CameraDirector* getCameraDirector() const override;
+    NerveKeeper* getNerveKeeper() const override;
+
+    void initializeAsync(const SceneInitInfo& info);
+    void initSceneObjHolder(SceneObjHolder* holder);
+    void initAndLoadStageResource(const char*, int);
+    void initLiveActorKit(const SceneInitInfo& info, int, int, int);
+    void initLiveActorKitImpl(const SceneInitInfo& info, int, int, int);
+    void initDrawSystemInfo(const SceneInitInfo& info);
+    void initLiveActorKitWithGraphics(const GraphicsInitArg&, const SceneInitInfo& info, int,
+                                      int, int);
+    void initLayoutKit(const SceneInitInfo& info);
+    void initSceneStopCtrl();
+    void initSceneMsgCtrl();
+    void initScreenCoverCtrl();
+    void endInit(const ActorInitInfo& info);
+
+    bool getIsAlive() const { return isAlive; }
+
+private:
+    bool isAlive;
+    sead::FixedSafeString<64> mName;
+    StageResourceKeeper* mStageResourceKeeper;
+    LiveActorKit* mLiveActorKit;
+    LayoutKit* mLayoutKit;
+    SceneObjHolder* mSceneObjHolder;
+    SceneStopCtrl* mSceneStopCtrl;
+    SceneMsgCtrl* mSceneMsgCtrl;
+    ScreenCoverCtrl* mScreenCoverCtrl;
+    AudioDirector* mAudioDirector;
+    AudioKeeper* mAudioKeeper;
+    void* scene_filler[1];
 };
-
-class StageScene : public al::Scene {
-public:
-    StageScene();
-
-    virtual ~StageScene();
-    virtual void init(const al::SceneInitInfo&);
-    virtual void appear();
-    virtual void kill();
-
-    virtual void control();
-    virtual void drawMain();
-};
-};  // namespace al
+}  // namespace al
