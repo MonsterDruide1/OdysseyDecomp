@@ -6,6 +6,6 @@ class Resource;
 class BgmDataBase {
 public:
     BgmDataBase(const Resource*, const Resource*);
-    static al::BgmDataBase* create(const char*, const char*);
+    static BgmDataBase* create(const char*, const char*);
 };
 }

@@ -6,5 +6,4 @@ class BgmDirector {
 public:
     BgmDirector();
 };
-
 }

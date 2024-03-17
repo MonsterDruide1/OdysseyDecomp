@@ -8,9 +8,9 @@ class SeDataBase;
 
 class AudioSystemInfo{
 public:
-    AudioSystemInfo();
+    AudioSystemInfo() = default;
 
-    void* mUnknown0;
+    void* mVoid;
     AudioEffectDataBase* mAudioEffectDataBase;
     AudioSoundArchiveInfo** mAudioSoundArchiveInfo;
     SeDataBase* mSeDataBase;

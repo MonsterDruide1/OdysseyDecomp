@@ -10,13 +10,11 @@ public:
     ModelCtrl();
     ~ModelCtrl();
 
-    void initialize(nn::g3d::ResModel*, int, int, sead::Head*, al::ShaderHolder);
-    
+    void initialize(nn::g3d::ResModel*, int, int, sead::Head*, ShaderHolder);
+    void initResource(Resource*, Resource*);
     void show();
     void hide();
-    void initResource(al::Resource*, al::Resource*);
     
     sead::Matrix34f* mMatrix;
 };
-
 }
