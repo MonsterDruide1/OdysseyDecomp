@@ -2,8 +2,9 @@
 
 #include <math/seadMathCalcCommon.h>
 
-namespace al {
+#include "Library/Yaml/ByamlUtil.h"
 
+namespace al {
 BgmChangeableParams::BgmChangeableParams() {};
 
 void BgmChangeableParams::calcPitch(float value){

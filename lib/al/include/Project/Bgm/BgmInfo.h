@@ -29,14 +29,18 @@ private:
 
 struct BgmUserInfo;
 class ByamlIter;
-class SafeStringBase;
+class SafeString;
+class AudioInfoListWithParts;
 
 struct BgmUserInfo {
-    BgmUserInfo() = default;
+    BgmUserInfo() {};
 
-    BgmUserInfo* createInfo(const ByamlIter&, const sead::SafeStringBase<char> &);
+    BgmUserInfo* createInfo(const ByamlIter&, const sead::SafeString&);
     static int compareInfo(const BgmUserInfo*, const BgmUserInfo*);
     static int compareInfoByKey(const BgmUserInfo*, const char*);
-    BgmUserInfo* mName;
+
+    BgmUserInfo* mName = nullptr;
+    AudioInfoListWithParts* mBgmActionInfoList = nullptr;
+    AudioInfoListWithParts* mBgmSourceInfoList = nullptr;
 };
 }

@@ -127,8 +127,8 @@ public:
 
     void setName(const char* newName) { mActorName = newName; }
 
-private:
     const char* mActorName;
+private:
     ActorPoseKeeperBase* mPoseKeeper;
     ActorExecuteInfo* mExecuteInfo;
     ActorActionKeeper* mActorActionKeeper;
