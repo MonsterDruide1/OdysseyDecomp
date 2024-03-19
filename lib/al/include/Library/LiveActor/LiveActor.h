@@ -128,6 +128,7 @@ public:
     void setName(const char* newName) { mActorName = newName; }
 
     const char* mActorName;
+    
 private:
     ActorPoseKeeperBase* mPoseKeeper;
     ActorExecuteInfo* mExecuteInfo;

@@ -7,7 +7,7 @@ class LiveActor;
 class ActorResource;
 
 struct ActionAnimCtrlInfo {
-    ActionAnimCtrlInfo(int sklAnimSize); // int = mSklAnimSize
+    ActionAnimCtrlInfo(int sklAnimSize);  // int = mSklAnimSize
 
     sead::SafeString mActionName = nullptr;
     unsigned long mSklAnimSize;
@@ -33,7 +33,6 @@ struct ActionAnimCtrlInfo {
     bool isActionAnimVis = false;
     short mUnusedVis = 0;
     int mAnimPartIndex = -1;
-
 };
 
 struct ActionAnimDataInfo {
@@ -56,4 +55,4 @@ private:
     int mAnimPartIndex = -1;
 };
 
-}
+}  // namespace al

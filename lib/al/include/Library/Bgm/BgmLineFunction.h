@@ -8,4 +8,4 @@ public:
     BgmDataBase(const Resource*, const Resource*);
     static BgmDataBase* create(const char*, const char*);
 };
-}
+}  // namespace al

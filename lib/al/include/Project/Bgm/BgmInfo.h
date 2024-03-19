@@ -43,4 +43,4 @@ struct BgmUserInfo {
     AudioInfoListWithParts* mBgmActionInfoList = nullptr;
     AudioInfoListWithParts* mBgmSourceInfoList = nullptr;
 };
-}
+}  // namespace al

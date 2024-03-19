@@ -6,7 +6,7 @@ class AudioSoundArchiveInfo;
 class BgmDataBase;
 class SeDataBase;
 
-class AudioSystemInfo{
+class AudioSystemInfo {
 public:
     AudioSystemInfo() = default;
 
@@ -15,6 +15,5 @@ public:
     AudioSoundArchiveInfo** mAudioSoundArchiveInfo;
     SeDataBase* mSeDataBase;
     BgmDataBase* mBgmDataBase;
-
 };
-}
+}  // namespace al

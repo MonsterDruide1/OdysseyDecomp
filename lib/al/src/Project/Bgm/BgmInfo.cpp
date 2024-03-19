@@ -7,10 +7,10 @@
 namespace al {
 BgmChangeableParams::BgmChangeableParams() {};
 
-void BgmChangeableParams::calcPitch(float value){
+void BgmChangeableParams::calcPitch(float value) {
     exp2f(value / 12);
 }
-void BgmChangeableParams::operator=(const BgmChangeableParams& value){
+void BgmChangeableParams::operator=(const BgmChangeableParams& value) {
     mVolume = value.mVolume;
     mPitch = value.mPitch;
     mLpfFreq = value.mLpfFreq;
@@ -26,10 +26,10 @@ void BgmChangeableParams::operator=(const BgmChangeableParams& value){
 }
 BgmUserInfo::BgmUserInfo() {};
 
-int BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2){
+int BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2) {
     return strcmp((char*)info_1->mName, (char*)info_2->mName);
 }
-int BgmUserInfo::compareInfoByKey(const BgmUserInfo* info,const char* string){
+int BgmUserInfo::compareInfoByKey(const BgmUserInfo* info,const char* string) {
     return strcmp((char*)info->mName, string);
 }
-}
+}  // namespace al

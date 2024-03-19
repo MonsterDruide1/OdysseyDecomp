@@ -6,4 +6,4 @@ class BgmDirector {
 public:
     BgmDirector();
 };
-}
+}  // namespace al
