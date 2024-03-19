@@ -85,8 +85,8 @@ public:
     void initResourceData(char const*, bool);
 
     sead::FixedSafeString<0x80> mName;
-    Resource* mAnimRes;
-    Resource* mActionRes;
+    Resource* mResourceModel;
+    Resource* mResourceAnim;
     bool mHasAnimData;
     InitResourceDataAnim* mAnimResData;
     InitResourceDataAction* mActionResData;

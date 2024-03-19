@@ -33,17 +33,17 @@ namespace al {
             char const*, char const*
         );
 
-        LiveActor *mParentActor; // 0x0
-        const char *mActorName; // 0x8
-        s8 mByteUnkn = 0; // 0x10
-        ActionAnimCtrl *mAnimCtrl; // 0x18
-        NerveActionCtrl *mNrvActionCtrl; // 0x20
-        ActionFlagCtrl *mFlagCtrl; // 0x28
-        ActionEffectCtrl *mEffectCtrl; // 0x30
-        ActionSeCtrl *mSeCtrl; // 0x38
-        ActionBgmCtrl *mBgmCtrl; // 0x40
-        ActionPadAndCameraCtrl *mPadAndCamCtrl; // 0x48
-        ActionScreenEffectCtrl *mScreenEffectCtrl; // 0x50
+        LiveActor *mParentActor;
+        const char *mActorName;
+        s8 mByteUnkn = 0;
+        ActionAnimCtrl *mAnimCtrl;
+        NerveActionCtrl *mNrvActionCtrl;
+        ActionFlagCtrl *mFlagCtrl;
+        ActionEffectCtrl *mEffectCtrl;
+        ActionSeCtrl *mSeCtrl;
+        ActionBgmCtrl *mBgmCtrl;
+        ActionPadAndCameraCtrl *mPadAndCamCtrl;
+        ActionScreenEffectCtrl *mScreenEffectCtrl;
     };
 
     static_assert(sizeof(ActorActionKeeper) == 0x58, "");
