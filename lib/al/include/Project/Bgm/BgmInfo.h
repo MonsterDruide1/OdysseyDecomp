@@ -39,7 +39,7 @@ struct BgmUserInfo {
     static int compareInfo(const BgmUserInfo*, const BgmUserInfo*);
     static int compareInfoByKey(const BgmUserInfo*, const char*);
 
-    BgmUserInfo* mName = nullptr;
+    sead::SafeString* mName = nullptr;
     AudioInfoListWithParts* mBgmActionInfoList = nullptr;
     AudioInfoListWithParts* mBgmSourceInfoList = nullptr;
 };

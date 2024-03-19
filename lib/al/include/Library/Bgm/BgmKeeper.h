@@ -1,5 +1,7 @@
 #pragma once
 
+#include <prim/seadSafeString.h>
+
 namespace al {
 class AudioSystemInfo;
 class BgmDirector;
@@ -10,7 +12,7 @@ public:
     BgmKeeper(const AudioSystemInfo*, BgmDirector*, const char*);
     
     static BgmKeeper* create(const AudioSystemInfo*, BgmDirector*, const char*);
-    BgmUserInfo* getUserName() const;
+    sead::SafeString* getUserName() const;
     void update();
 
 private:

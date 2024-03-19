@@ -26,9 +26,9 @@ void BgmChangeableParams::operator=(const BgmChangeableParams& value){
 }
 
 int BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2){
-    return strcmp((char*)info_1->mName,(char*)info_2->mName);
+    return strcmp((char*)info_1->mName, (char*)info_2->mName);
 }
 int BgmUserInfo::compareInfoByKey(const BgmUserInfo* info,const char* string){
-    return strcmp((char*)info->mName,string);
+    return strcmp((char*)info->mName, string);
 }
 }

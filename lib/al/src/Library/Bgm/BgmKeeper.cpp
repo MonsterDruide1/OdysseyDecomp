@@ -32,7 +32,7 @@ BgmKeeper* BgmKeeper::create(const AudioSystemInfo* audio_info, BgmDirector* dir
 
 void BgmKeeper::update(){}
 
-BgmUserInfo* BgmKeeper::getUserName() const{
+sead::SafeString* BgmKeeper::getUserName() const{
   if (mBgmUserInfo != nullptr) {
     return mBgmUserInfo->mName;
   }
