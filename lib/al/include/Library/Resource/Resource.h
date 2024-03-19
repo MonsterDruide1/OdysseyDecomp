@@ -90,7 +90,7 @@ public:
     bool mHasAnimData;
     InitResourceDataAnim* mAnimResData;
     InitResourceDataAction* mActionResData;
-    
+
 private:
 };
 

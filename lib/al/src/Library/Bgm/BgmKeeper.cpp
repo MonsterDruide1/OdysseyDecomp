@@ -19,13 +19,13 @@ BgmKeeper::BgmKeeper(const AudioSystemInfo* audio_info, BgmDirector* director, c
 }
 
 BgmKeeper* BgmKeeper::create(const AudioSystemInfo* audio_info, BgmDirector* director,
-                             const char* string) { 
+                             const char* string) {
     BgmKeeper* new_bgmkeeper;
 
     if (audio_info->mSeDataBase == nullptr) {
-      new_bgmkeeper = nullptr;
+        new_bgmkeeper = nullptr;
     } else {
-      new_bgmkeeper = new BgmKeeper(audio_info, director, string);
+        new_bgmkeeper = new BgmKeeper(audio_info, director, string);
     }
 
     return new_bgmkeeper;
@@ -35,7 +35,7 @@ void BgmKeeper::update() {}
 
 sead::SafeString* BgmKeeper::getUserName() const {
     if (mBgmUserInfo != nullptr) {
-      return mBgmUserInfo->mName;
+        return mBgmUserInfo->mName;
     }
     return nullptr;
 }
