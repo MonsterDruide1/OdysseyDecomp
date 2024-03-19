@@ -43,10 +43,9 @@ struct ActionAnimDataInfo {
 };
 
 class ActionAnimCtrl {
-    ActionAnimCtrl(const LiveActor* actor);
+    ActionAnimCtrl(LiveActor*);
 
     static ActionAnimCtrl* tryCreate(LiveActor*, const ActorResource*, const char*, const char*);
-
 
 private:
     const LiveActor* mParentActor;
@@ -54,7 +53,7 @@ private:
     int mUnkn = 0;
     ActionAnimCtrlInfo* mActionAnimCtrlInfo = nullptr;
     sead::SafeString* mPlayingActionName = nullptr;
-    int mAnimPartIndex;
+    int mAnimPartIndex = -1;
 };
 
 }

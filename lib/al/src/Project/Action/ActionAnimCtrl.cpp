@@ -7,6 +7,7 @@
 #include "Library/Resource/ResourceHolder.h"
 
 namespace al {
-ActionAnimCtrl::ActionAnimCtrl(const LiveActor* actor) : mParentActor(actor), mAnimPartIndex(-1) {}
+
+ActionAnimCtrl::ActionAnimCtrl(LiveActor* actor) : mParentActor(actor) {}
 
 }
