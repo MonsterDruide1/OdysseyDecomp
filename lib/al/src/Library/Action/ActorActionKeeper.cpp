@@ -9,6 +9,6 @@ ActorActionKeeper::ActorActionKeeper(LiveActor* parentActor, char const* actorNa
                                      ActionScreenEffectCtrl* screenEffectCtrl)
     : mParentActor(parentActor), mActorName(actorName), mAnimCtrl(animCtrl),
       mNrvActionCtrl(nrvActionCtrl), mFlagCtrl(flagCtrl), mEffectCtrl(effectCtrl), mSeCtrl(seCtrl),
-      mBgmCtrl(bgmCtrl), mPadAndCamCtrl(padAndCamCtrl), mScreenEffectCtrl(screenEffectCtrl){};
+      mBgmCtrl(bgmCtrl), mPadAndCamCtrl(padAndCamCtrl), mScreenEffectCtrl(screenEffectCtrl) {}
 
 }  // namespace al

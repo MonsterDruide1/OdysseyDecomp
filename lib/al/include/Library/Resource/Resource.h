@@ -84,14 +84,13 @@ public:
 
     void initResourceData(char const*, bool);
 
+private:
     sead::FixedSafeString<0x80> mName;
     Resource* mResourceModel;
     Resource* mResourceAnim;
     bool mHasAnimData;
     InitResourceDataAnim* mAnimResData;
     InitResourceDataAction* mActionResData;
-
-private:
 };
 
 }  // namespace al

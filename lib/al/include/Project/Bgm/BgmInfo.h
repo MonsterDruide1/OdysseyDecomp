@@ -33,13 +33,14 @@ class SafeString;
 class AudioInfoListWithParts;
 
 struct BgmUserInfo {
+    static BgmUserInfo* createInfo(const ByamlIter&, const sead::SafeString&);
+
     BgmUserInfo();
 
-    BgmUserInfo* createInfo(const ByamlIter&, const sead::SafeString&);
     static int compareInfo(const BgmUserInfo*, const BgmUserInfo*);
     static int compareInfoByKey(const BgmUserInfo*, const char*);
 
-    sead::SafeString* mName = nullptr;
+    const char* mName = nullptr;
     AudioInfoListWithParts* mBgmActionInfoList = nullptr;
     AudioInfoListWithParts* mBgmSourceInfoList = nullptr;
 };

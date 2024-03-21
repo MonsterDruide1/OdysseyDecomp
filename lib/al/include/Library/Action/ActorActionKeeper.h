@@ -16,6 +16,8 @@ class ActorResource;
 
 class ActorActionKeeper {
 public:
+    static ActorActionKeeper* tryCreate(LiveActor*, ActorResource const*, char const*, char const*);
+
     ActorActionKeeper(LiveActor*, char const*, ActionAnimCtrl*, NerveActionCtrl*, ActionFlagCtrl*,
                       ActionEffectCtrl*, ActionSeCtrl*, ActionBgmCtrl*, ActionPadAndCameraCtrl*,
                       ActionScreenEffectCtrl*);
@@ -26,11 +28,10 @@ public:
     void updatePost();
     void updatePrev();
 
-    static ActorActionKeeper* tryCreate(LiveActor*, ActorResource const*, char const*, char const*);
-
+private:
     LiveActor* mParentActor;
     const char* mActorName;
-    s8 mByteUnkn = 0;
+    bool isActionRunning;
     ActionAnimCtrl* mAnimCtrl;
     NerveActionCtrl* mNrvActionCtrl;
     ActionFlagCtrl* mFlagCtrl;
@@ -41,5 +42,5 @@ public:
     ActionScreenEffectCtrl* mScreenEffectCtrl;
 };
 
-static_assert(sizeof(ActorActionKeeper) == 0x58, "");
+static_assert(sizeof(ActorActionKeeper) == 0x58);
 }  // namespace al

@@ -9,14 +9,15 @@ struct BgmUserInfo;
 
 class BgmKeeper {
 public:
+    static BgmKeeper* create(const AudioSystemInfo*, BgmDirector*, const char*);
+
     BgmKeeper(const AudioSystemInfo*, BgmDirector*, const char*);
 
-    static BgmKeeper* create(const AudioSystemInfo*, BgmDirector*, const char*);
-    sead::SafeString* getUserName() const;
+    const char* getUserName() const;
     void update();
 
 private:
     BgmDirector* mBgmDirector;
-    BgmUserInfo* mBgmUserInfo;
+    BgmUserInfo* mBgmUserInfo = nullptr;
 };
 }  // namespace al

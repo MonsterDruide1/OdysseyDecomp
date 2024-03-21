@@ -8,8 +8,12 @@ class SeDataBase;
 
 class AudioSystemInfo {
 public:
-    AudioSystemInfo() = default;
+    AudioSystemInfo();
 
+    SeDataBase* getSeDataBase() const { return mSeDataBase; }
+    BgmDataBase* getBgmDataBase() const { return mBgmDataBase; }
+
+private:
     void* mVoid;
     AudioEffectDataBase* mAudioEffectDataBase;
     AudioSoundArchiveInfo** mAudioSoundArchiveInfo;

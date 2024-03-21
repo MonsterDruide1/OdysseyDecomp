@@ -2,10 +2,8 @@
 
 #include <math/seadMathCalcCommon.h>
 
-#include "Library/Yaml/ByamlUtil.h"
-
 namespace al {
-BgmChangeableParams::BgmChangeableParams(){};
+BgmChangeableParams::BgmChangeableParams() {}
 
 void BgmChangeableParams::calcPitch(float value) {
     exp2f(value / 12);

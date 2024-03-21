@@ -13,7 +13,5 @@ public:
     void initResource(Resource*, Resource*);
     void show();
     void hide();
-
-    sead::Matrix34f* mMatrix;
 };
 }  // namespace al
