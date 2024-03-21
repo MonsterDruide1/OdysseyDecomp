@@ -31,7 +31,7 @@ public:
 private:
     LiveActor* mParentActor;
     const char* mActorName;
-    bool isActionRunning;
+    bool isActionRunning = false;
     ActionAnimCtrl* mAnimCtrl;
     NerveActionCtrl* mNrvActionCtrl;
     ActionFlagCtrl* mFlagCtrl;
