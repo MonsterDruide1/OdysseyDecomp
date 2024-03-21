@@ -13,7 +13,10 @@ struct ActionFlagCtrlInfo {
 
 class ActionFlagCtrl {
 public:
+    static LiveActor** tryCreate(LiveActor*, const char*);
+
     ActionFlagCtrl(LiveActor*, const char*);
+
     void initPost();
     void start(const char*);
     void startCtrlFlag();
@@ -23,8 +26,6 @@ public:
     char* findFlatInfo(const char*);
     bool isFlagValidOn(int, bool);
     bool isFlagValidOff(int, bool);
-
-    static LiveActor** tryCreate(LiveActor*, const char*);
 
 private:
     LiveActor* mParentActor;
