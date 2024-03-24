@@ -6,39 +6,18 @@ namespace al {
 class LiveActor;
 class ActorResource;
 
+struct ActionAnimDataInfo {
+    const char* mName = nullptr;
+    float _8 = -1.0;
+    bool mIsKeep = false;
+    bool mIsAction = false;
+    short _e = 0;
+};
+
 struct ActionAnimCtrlInfo {
     ActionAnimCtrlInfo(int sklAnimSize);
 
-    sead::SafeString mActionName = nullptr;
-    unsigned long mSklAnimSize;
-    void* _10 = nullptr;
-    sead::SafeString* mNameMcl = nullptr;
-    float mFloatMcl = -1.0;
-    bool isKeepAnimMcl = false;
-    bool isActionAnimMcl = false;
-    short _26 = 0;
-    sead::SafeString* mNameMtp = nullptr;
-    float mFloatMtp = -1.0;
-    bool isKeepAnimMtp = false;
-    bool isActionAnimMtp = false;
-    short _35 = 0;
-    sead::SafeString* mNameMts = nullptr;
-    float mFloatMts = -1.0;
-    bool isKeepAnimMts = false;
-    bool isActionAnimMts = false;
-    short _46 = 0;
-    sead::SafeString* mNameVis = nullptr;
-    float mFloatVis = -1.0;
-    bool isKeepAnimVis = false;
-    bool isActionAnimVis = false;
-    short _56 = 0;
-    int mAnimPartIndex = -1;
-};
-
-struct ActionAnimDataInfo {
-    sead::SafeString* mAnimName = nullptr;
-    float _8 = -1.0;
-    short _c = 0;
+    const char* mActionName;
 };
 
 class ActionAnimCtrl {
@@ -49,24 +28,22 @@ public:
 
     void init(const ActorResource*, const sead::BufferedSafeString*, const char*);
     bool start(const char*);
-    void sortCtrlIno();
-
-    sead::SafeString* findAnimInfo(const char*) const;
-    sead::SafeString* getPlayingActionName();
+    const char* findAnimInfo(const char*) const;
     int getActionFrameMax(const char*) const;
-
     bool trySetFrame(float);
     bool isExistAction(const char*);
     bool isActionOneTime(const char*);
     bool isActionEnd();
+    const char* getPlayingActionName();
+    void sortCtrlInfo();
 
 private:
-    const LiveActor* mParentActor;
-    sead::SafeString* mPlayingAnimName = nullptr;
-    int mUnkn = 0;
-    ActionAnimCtrlInfo* mActionAnimCtrlInfo = nullptr;
-    sead::SafeString* mPlayingActionName = nullptr;
-    int mAnimPartIndex = -1;
+    LiveActor* mParentActor;
+    const char* mPlayingAnimName = nullptr;
+    int mInfoStackSize = 0;
+    ActionAnimCtrlInfo* mInfoStack = nullptr;
+    const char* mPlayingActionName = nullptr;
+    int mPartIndex = -1;
 };
 
 }  // namespace al

@@ -4,8 +4,10 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class LiveActor;
+class ActionAnimCtrlInfo;
+class ActionAnimDataInfo;
 class HitSensorKeeper;
+class LiveActor;
 
 struct ActionFlagCtrlInfo {
     const char** mName;
@@ -23,13 +25,13 @@ public:
     void startCtrlSensor();
     void update(float, float, float, bool);
     void updateCtrlSensor(float, float, float, bool);
-    char* findFlatInfo(const char*);
     bool isFlagValidOn(int, bool);
     bool isFlagValidOff(int, bool);
+    char* findFlagInfo(const char*);
 
 private:
     LiveActor* mParentActor;
-    sead::SafeString* mActionName;
+    const char* mActionName;
     HitSensorKeeper* mHitSensor;
     int mInfoMax;
     ActionFlagCtrlInfo* mInfoArr;

@@ -18,15 +18,9 @@ BgmKeeper::BgmKeeper(const AudioSystemInfo* audioInfo, BgmDirector* director, co
 
 BgmKeeper* BgmKeeper::create(const AudioSystemInfo* audioInfo, BgmDirector* director,
                              const char* string) {
-    BgmKeeper* newBgmKeeper;
-
-    if (audioInfo->getSeDataBase() == nullptr) {
-        newBgmKeeper = nullptr;
-    } else {
-        newBgmKeeper = new BgmKeeper(audioInfo, director, string);
-    }
-
-    return newBgmKeeper;
+    if (!audioInfo->getSeDataBase())
+        return nullptr;
+    return new BgmKeeper(audioInfo, director, string);
 }
 
 void BgmKeeper::update() {}

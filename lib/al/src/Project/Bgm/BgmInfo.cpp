@@ -22,12 +22,12 @@ void BgmChangeableParams::operator=(const BgmChangeableParams& value) {
     mTrackVolume4 = value.mTrackVolume4;
     mTrackVolume5 = value.mTrackVolume5;
 }
-BgmUserInfo::BgmUserInfo(){};
+BgmUserInfo::BgmUserInfo() {}
 
 int BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2) {
-    return strcmp((char*)info_1->mName, (char*)info_2->mName);
+    return strcmp(info_1->mName, info_2->mName);
 }
 int BgmUserInfo::compareInfoByKey(const BgmUserInfo* info, const char* string) {
-    return strcmp((char*)info->mName, string);
+    return strcmp(info->mName, string);
 }
 }  // namespace al
