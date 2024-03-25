@@ -57,17 +57,14 @@ s32 ByamlIter::getKeyIndex(const char* key) const {
 bool ByamlIter::isInvertOrder() const {
     return mHeader->isInvertOrder();
 }
-// NON_MATCHING: type-check wrong way around - AND 0xfe instead of OR 1, AND 0xFF (and thus
-// different cmp)
 s32 ByamlIter::getSize() const {
     if (!mRootNode)
         return false;
     ByamlContainerHeader* header = (ByamlContainerHeader*)mRootNode;
     u32 type = *mRootNode;
-    // if(((u8)(type | 1))!=(u8)TYPE_HASH) return 0;
-    if (type != ByamlDataType::TYPE_ARRAY && type != ByamlDataType::TYPE_HASH)
-        return 0;
-    return header->getCount(isInvertOrder());
+    if (type == ByamlDataType::TYPE_ARRAY || type == ByamlDataType::TYPE_HASH)
+        return header->getCount(isInvertOrder());
+    return 0;
 }
 ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     ByamlData data;

@@ -295,6 +295,7 @@ u32 ByamlWriter::calcPackSize() const {
     }
     return size;
 }
+// NON_MATCHING: offsetBigDataList increased "too early"
 void ByamlWriter::write(sead::WriteStream* stream) {
     stream->writeU16(0x4259);
     stream->writeU16(3);
@@ -312,7 +313,7 @@ void ByamlWriter::write(sead::WriteStream* stream) {
     mStringTable2->write(stream);
     mBigDataList->write(stream);
 
-    for (auto* container : mContainerList) {  // TODO minor mismatch in this loop
+    for (auto* container : mContainerList) {
         container->setOffset(offsetBigDataList);
         offsetBigDataList += container->calcPackSize();
     }
