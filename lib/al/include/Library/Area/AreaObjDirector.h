@@ -3,6 +3,8 @@
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
+#include "Library/Area/AreaObjGroup.h"
+
 namespace al {
 class AreaObjFactory;
 class AreaObjMtxConnecterHolder;
@@ -17,19 +19,19 @@ public:
     void endInit();
     void update();
     void placement(const AreaInitInfo& initInfo);
-    void placement(const AreaInitInfo& initInfo, s32);
+    void placement(const AreaInitInfo* initInfo, s32 initInfoCount);
     void createAreaObjGroup(const AreaInitInfo& initInfo);
-    void createAreaObjGroupBuffer(const AreaInitInfo& initInfo);
+    void createAreaObjGroupBuffer();
     void placementAreaObj(const AreaInitInfo& initInfo);
-    AreaObjGroup* getAreaObjGroup(const char* name);
-    bool isExistAreaGroup(const char* name);
+    AreaObjGroup* getAreaObjGroup(const char* name) const;
+    bool isExistAreaGroup(const char* name) const;
     AreaObj* getInVolumeAreaObj(const char* name, const sead::Vector3f& position);
-    AreaObjMtxConnecterHolder* getMtxConnecterHolder();
+    AreaObjMtxConnecterHolder* getMtxConnecterHolder() const;
 
 private:
-    AreaObjFactory* mFactory;
-    AreaObjMtxConnecterHolder* mMtxConnecterHolder;
-    AreaObjGroup** mAreaGroups;
-    u32 mAreaGroupCount;
+    const AreaObjFactory* mFactory = nullptr;
+    AreaObjMtxConnecterHolder* mMtxConnecterHolder = nullptr;
+    AreaObjGroup** mAreaGroups = nullptr;
+    u32 mAreaGroupCount = 0;
 };
 }  // namespace al

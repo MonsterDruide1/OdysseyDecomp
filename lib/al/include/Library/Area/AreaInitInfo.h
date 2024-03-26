@@ -6,7 +6,7 @@ namespace al {
 class StageSwitchDirector;
 class SceneObjHolder;
 
-class AreaInitInfo {
+class AreaInitInfo : public PlacementInfo {
 public:
     AreaInitInfo();
     AreaInitInfo(const PlacementInfo& placementInfo, StageSwitchDirector* stageSwitchDirector,
@@ -16,12 +16,10 @@ public:
     void set(const PlacementInfo& placementInfo, StageSwitchDirector* stageSwitchDirector,
              SceneObjHolder* sceneObjHolder);
 
-    const PlacementInfo& getPlacementInfo() const { return mPlacementInfo; }
     StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
     SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
 
 private:
-    PlacementInfo mPlacementInfo;
     StageSwitchDirector* mStageSwitchDirector;
     SceneObjHolder* mSceneObjHolder;
 };
