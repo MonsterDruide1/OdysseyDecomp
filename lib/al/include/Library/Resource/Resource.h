@@ -7,6 +7,7 @@
 #include <resource/seadResource.h>
 
 namespace al {
+struct ActionAnimCtrlInfo;
 class ActorInitResourceData;
 
 class Resource {
@@ -50,9 +51,6 @@ private:
 class AnimInfoTable {
     char size[0x18];
 };
-class ActionAnimCtrlInfo {
-    char size[0x60];
-};
 
 struct InitResourceDataAnim {
     AnimInfoTable* mInfoTable;
@@ -87,7 +85,7 @@ public:
     void initResourceData(char const*, bool);
 
 private:
-    sead::FixedSafeString<0x80> unkStr;
+    sead::FixedSafeString<0x80> mName;
     Resource* mResourceModel;
     Resource* mResourceAnim;
     bool mHasAnimData;
