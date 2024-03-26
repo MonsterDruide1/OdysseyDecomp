@@ -1,6 +1,6 @@
 #include "Project/Bgm/BgmInfo.h"
 
-#include <math/seadMathCalcCommon.h>
+#include <math.h>
 
 namespace al {
 BgmChangeableParams::BgmChangeableParams() {}
