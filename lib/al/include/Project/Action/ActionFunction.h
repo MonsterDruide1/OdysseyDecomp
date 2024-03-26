@@ -2,7 +2,10 @@
 
 #include <prim/seadSafeString.h>
 
-#include "Project/Action/ActionAnimCtrl.h"
+namespace al {
+class ActionAnimCtrlInfo;
+class ActionAnimDataInfo;
+}  // namespace al
 
 namespace alActionFunction {
 const char* getAnimName(const al::ActionAnimCtrlInfo* infoCtrl,

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <math/seadMatrix.h>
-
 namespace al {
 class Resource;
 

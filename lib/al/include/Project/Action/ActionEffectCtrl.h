@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+
 #include "Library/Effect/IUseEffectKeeper.h"
 
 namespace al {
@@ -12,17 +13,17 @@ struct ActionEffectCtrlInfo {
 
 class ActionEffectCtrl : public IUseEffectKeeper {
 public:
-    static ActionEffectCtrl* tryCreate(al::IUseEffectKeeper);
+    static ActionEffectCtrl* tryCreate(IUseEffectKeeper);
 
-    ActionEffectCtrl(al::IUseEffectKeeper*);
+    ActionEffectCtrl(IUseEffectKeeper*);
 
     void startAction(const char*);
     void update(float, float, float, bool);
-    bool isKeepSameEffectNext(const al::ActionEffectCtrlInfo*, const char*);
+    bool isKeepSameEffectNext(const ActionEffectCtrlInfo*, const char*);
 
 private:
     EffectKeeper* mEffectKeeper;
     s32 mEffectCount;
-    ActionEffectCtrlInfo mEffectStack;
+    ActionEffectCtrlInfo* mEffectStack;
 };
 }  // namespace al

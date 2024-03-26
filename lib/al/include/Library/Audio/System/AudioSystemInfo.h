@@ -14,9 +14,9 @@ public:
     BgmDataBase* getBgmDataBase() const { return mBgmDataBase; }
 
 private:
-    void* mVoid;
+    void* _0;
     AudioEffectDataBase* mAudioEffectDataBase;
-    AudioSoundArchiveInfo** mAudioSoundArchiveInfo;
+    AudioSoundArchiveInfo* mAudioSoundArchiveInfo;
     SeDataBase* mSeDataBase;
     BgmDataBase* mBgmDataBase;
 };

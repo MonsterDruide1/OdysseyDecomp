@@ -10,7 +10,7 @@ class HitSensorKeeper;
 class LiveActor;
 
 struct ActionFlagCtrlInfo {
-    const char** mName;
+    const char* mName;
 };
 
 class ActionFlagCtrl {
@@ -27,13 +27,13 @@ public:
     void updateCtrlSensor(float, float, float, bool);
     bool isFlagValidOn(int, bool);
     bool isFlagValidOff(int, bool);
-    char* findFlagInfo(const char*);
+    const char* findFlagInfo(const char*);
 
 private:
     LiveActor* mParentActor;
-    const char* mActionName;
+    const char* mName;
     HitSensorKeeper* mHitSensor;
-    int mInfoMax;
-    ActionFlagCtrlInfo* mInfoArr;
+    int mStackSize;
+    ActionFlagCtrlInfo* mFlagStack;
 };
 }  // namespace al

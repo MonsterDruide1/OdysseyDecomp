@@ -3,16 +3,16 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-class LiveActor;
 class ActionAnimCtrl;
-class NerveActionCtrl;
-class ActionFlagCtrl;
-class ActionEffectCtrl;
-class ActionSeCtrl;
 class ActionBgmCtrl;
+class ActionEffectCtrl;
+class ActionFlagCtrl;
 class ActionPadAndCameraCtrl;
+class ActionSeCtrl;
 class ActionScreenEffectCtrl;
 class ActorResource;
+class LiveActor;
+class NerveActionCtrl;
 
 class ActorActionKeeper {
 public:
