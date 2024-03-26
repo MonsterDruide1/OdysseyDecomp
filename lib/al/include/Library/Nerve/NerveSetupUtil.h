@@ -37,3 +37,5 @@ al::setNerve(this, &NrvExampleUseCase.Wait);
 #define NERVE_IMPL(Class, Action) NERVE_IMPL_(Class, Action, Action)
 
 #define NERVE_MAKE(Class, Action) Class##Nrv##Action Action;
+
+#define NERVE_FUNC(Action) void exe##Action()
