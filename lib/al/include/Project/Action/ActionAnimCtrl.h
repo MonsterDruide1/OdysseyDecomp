@@ -1,6 +1,6 @@
 #pragma once
 
-#include <prim/seadSafeString.h>
+#include <basis/seadTypes.h>
 
 namespace al {
 class LiveActor;
@@ -18,6 +18,9 @@ struct ActionAnimCtrlInfo {
     ActionAnimCtrlInfo(int sklAnimSize);
 
     const char* mActionName;
+    s32 mStackSize = 0;
+    ActionAnimDataInfo* mAnimDataStack;
+    s32 mAnimPartIndex;
 };
 
 class ActionAnimCtrl {
@@ -26,7 +29,7 @@ public:
 
     ActionAnimCtrl(LiveActor*);
 
-    void init(const ActorResource*, const sead::BufferedSafeString*, const char*);
+    void init(const ActorResource*, const char*, const char*);
     bool start(const char*);
     const char* findAnimInfo(const char*) const;
     int getActionFrameMax(const char*) const;
@@ -40,8 +43,8 @@ public:
 private:
     LiveActor* mParentActor;
     const char* mPlayingAnimName = nullptr;
-    int mInfoStackSize = 0;
-    ActionAnimCtrlInfo* mInfoStack = nullptr;
+    int mStackSize = 0;
+    ActionAnimCtrlInfo* mAnimInfoStack = nullptr;
     const char* mPlayingActionName = nullptr;
     int mPartIndex = -1;
 };

@@ -3,8 +3,8 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class ActionAnimCtrlInfo;
-class ActionAnimDataInfo;
+struct ActionAnimCtrlInfo;
+struct ActionAnimDataInfo;
 }  // namespace al
 
 namespace alActionFunction {

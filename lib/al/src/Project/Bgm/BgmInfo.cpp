@@ -1,6 +1,6 @@
 #include "Project/Bgm/BgmInfo.h"
 
-#include <math.h>
+#include <cmath>
 
 namespace al {
 BgmChangeableParams::BgmChangeableParams() {}
