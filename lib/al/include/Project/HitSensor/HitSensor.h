@@ -25,7 +25,7 @@ public:
 
     const char* mName;  // _0
     s32 _8;
-    f32 _C;
+    f32 _c;
     f32 _10;
     f32 _14;
     f32 _18;

@@ -8,13 +8,13 @@
 namespace al {
 
 class NerveStateCtrl {
+public:
     struct State {
         NerveStateBase* state;
         const Nerve* nerve;
         const char* name;
     };
 
-public:
     NerveStateCtrl(s32 maxStates);
 
     void addState(NerveStateBase* state, const Nerve* nerve, const char* name);
