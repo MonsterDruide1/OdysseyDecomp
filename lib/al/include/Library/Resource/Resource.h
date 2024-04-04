@@ -84,10 +84,14 @@ public:
 
     void initResourceData(char const*, bool);
 
+    bool getHasAnimData() const { return mHasAnimData; }
+    Resource* getModelRes() const { return mModelRes; }
+    Resource* getAnimRes() const { return mAnimRes; }
+
 private:
     sead::FixedSafeString<0x80> mName;
-    Resource* mResourceModel;
-    Resource* mResourceAnim;
+    Resource* mModelRes;
+    Resource* mAnimRes;
     bool mHasAnimData;
     InitResourceDataAnim* mAnimResData;
     InitResourceDataAction* mActionResData;

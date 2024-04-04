@@ -15,7 +15,7 @@ struct ActionAnimDataInfo {
 };
 
 struct ActionAnimCtrlInfo {
-    ActionAnimCtrlInfo(int sklAnimSize);
+    ActionAnimCtrlInfo(s32 sklAnimSize);
 
     const char* mActionName;
     s32 mStackSize = 0;
@@ -31,22 +31,22 @@ public:
 
     void init(const ActorResource*, const char*, const char*);
     bool start(const char*);
-    const char* findAnimInfo(const char*) const;
-    int getActionFrameMax(const char*) const;
     bool trySetFrame(float);
     bool isExistAction(const char*);
     bool isActionOneTime(const char*);
     bool isActionEnd();
-    const char* getPlayingActionName();
     void sortCtrlInfo();
+    const char* findAnimInfo(const char*) const;
+    const char* getPlayingActionName();
+    s32 getActionFrameMax(const char*) const;
 
 private:
     LiveActor* mParentActor;
     const char* mPlayingAnimName = nullptr;
-    int mStackSize = 0;
-    ActionAnimCtrlInfo* mAnimInfoStack = nullptr;
+    s32 mInfoSize = 0;
+    ActionAnimCtrlInfo* mInfoTable = nullptr;
     const char* mPlayingActionName = nullptr;
-    int mPartIndex = -1;
+    s32 mPartIndex = -1;
 };
 
 }  // namespace al

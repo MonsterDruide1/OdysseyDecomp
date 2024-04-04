@@ -16,29 +16,29 @@ class NerveActionCtrl;
 
 class ActorActionKeeper {
 public:
-    static ActorActionKeeper* tryCreate(LiveActor*, ActorResource const*, char const*, char const*);
+    static ActorActionKeeper* tryCreate(LiveActor*, const ActorResource*, const char*, const char*);
 
-    ActorActionKeeper(LiveActor*, char const*, ActionAnimCtrl*, NerveActionCtrl*, ActionFlagCtrl*,
+    ActorActionKeeper(LiveActor*, const char*, ActionAnimCtrl*, NerveActionCtrl*, ActionFlagCtrl*,
                       ActionEffectCtrl*, ActionSeCtrl*, ActionBgmCtrl*, ActionPadAndCameraCtrl*,
                       ActionScreenEffectCtrl*);
 
     void init();
-    void startAction(char const* actionName);
-    void tryStartActionNoAnim(char const* actionName);
+    void startAction(const char* actionName);
+    void tryStartActionNoAnim(const char* actionName);
     void updatePost();
     void updatePrev();
 
 private:
     LiveActor* mParentActor;
     const char* mActorName;
-    bool isActionRunning = false;
+    bool mIsActionRunning = false;
     ActionAnimCtrl* mAnimCtrl;
-    NerveActionCtrl* mNrvActionCtrl;
+    NerveActionCtrl* mNerveActionCtrl;
     ActionFlagCtrl* mFlagCtrl;
     ActionEffectCtrl* mEffectCtrl;
     ActionSeCtrl* mSeCtrl;
     ActionBgmCtrl* mBgmCtrl;
-    ActionPadAndCameraCtrl* mPadAndCamCtrl;
+    ActionPadAndCameraCtrl* mPadAndCameraCtrl;
     ActionScreenEffectCtrl* mScreenEffectCtrl;
 };
 
