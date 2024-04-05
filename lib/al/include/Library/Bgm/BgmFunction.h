@@ -2,10 +2,10 @@
 
 namespace al {
 class AudioDirector;
+class BgmDataBase;
 struct BgmUserInfo;
 }  // namespace al
 
-class alBgmFunction {
-public:
-    static al::BgmUserInfo* tryFindBgmUserInfo(const al::BgmDataBase*, const char*);
-};
+namespace alBgmFunction {
+al::BgmUserInfo* tryFindBgmUserInfo(const al::BgmDataBase*, const char*);
+}
