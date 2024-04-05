@@ -4,18 +4,20 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class ActionAnimCtrlInfo;
-class ActionAnimDataInfo;
+struct ActionAnimCtrlInfo;
+struct ActionAnimDataInfo;
 class HitSensorKeeper;
 class LiveActor;
 
 struct ActionFlagCtrlInfo {
     const char* mName;
+    void* _8;
+    void* _10;
 };
 
 class ActionFlagCtrl {
 public:
-    static LiveActor** tryCreate(LiveActor*, const char*);
+    static ActionFlagCtrl* tryCreate(LiveActor*, const char*);
 
     ActionFlagCtrl(LiveActor*, const char*);
 
@@ -31,9 +33,9 @@ public:
 
 private:
     LiveActor* mParentActor;
-    const char* mName;
-    HitSensorKeeper* mHitSensor;
-    int mStackSize;
-    ActionFlagCtrlInfo* mFlagStack;
+    const char* mName = nullptr;
+    HitSensorKeeper* mHitSensor = nullptr;
+    s32 mInfoSize = 0;
+    ActionFlagCtrlInfo* mInfoTable = nullptr;
 };
 }  // namespace al

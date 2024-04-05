@@ -45,4 +45,12 @@ private:
     sead::PtrArray<ExecutorListIUseExecutorUpdate> mExecutorsUser;
     sead::PtrArray<ExecutorListFunctor> mExecutorsFunctor;
 };
+
+struct alActorSystemFunction {
+    static void addToExecutorMovemenet(LiveActor*);
+    static void addToExecutorDraw(LiveActor*);
+    static void removeFromExecutorMovement(LiveActor*);
+    static void removeFromExecutorDraw(LiveActor*);
+    static void updateExecutorDraw(LiveActor*);
+};
 }  // namespace al

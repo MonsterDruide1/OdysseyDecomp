@@ -13,7 +13,7 @@ struct ActionEffectCtrlInfo {
 
 class ActionEffectCtrl : public IUseEffectKeeper {
 public:
-    static ActionEffectCtrl* tryCreate(IUseEffectKeeper);
+    static ActionEffectCtrl* tryCreate(IUseEffectKeeper*);
 
     ActionEffectCtrl(IUseEffectKeeper*);
 
@@ -22,8 +22,8 @@ public:
     bool isKeepSameEffectNext(const ActionEffectCtrlInfo*, const char*);
 
 private:
-    EffectKeeper* mEffectKeeper;
-    s32 mEffectCount;
-    ActionEffectCtrlInfo* mEffectStack;
+    EffectKeeper* mEffectKeeper = nullptr;
+    s32 mInfoSize = 0;
+    ActionEffectCtrlInfo* mInfoTable = nullptr;
 };
 }  // namespace al
