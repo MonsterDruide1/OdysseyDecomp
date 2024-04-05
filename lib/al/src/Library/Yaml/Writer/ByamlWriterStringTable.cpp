@@ -1,5 +1,6 @@
 #include "Library/Yaml/Writer/ByamlWriterStringTable.h"
 
+#include <basis/seadTypes.h>
 #include <stream/seadStream.h>
 
 #include "Library/Yaml/ByamlUtil.h"
@@ -24,7 +25,7 @@ inline char* add(const char* string, sead::TList<const char*>& list) {
 }
 const char* ByamlWriterStringTable::tryAdd(const char* string) {
     for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
-        int result = strcmp(string, it->mData);
+        s32 result = strcmp(string, it->mData);
         if (result == 0) {
             return it->mData;
         }
@@ -80,7 +81,7 @@ void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
 
     s32 i = 4 * (mList.size() + 2);
 
-    int v7 = 0;
+    s32 v7 = 0;
     auto end = mList.end();
     for (auto it = mList.begin();; i += v7 + 1, ++it) {
         stream->writeU32(i);

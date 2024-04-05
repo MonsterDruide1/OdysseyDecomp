@@ -37,8 +37,8 @@ struct BgmUserInfo {
 
     BgmUserInfo();
 
-    static int compareInfo(const BgmUserInfo*, const BgmUserInfo*);
-    static int compareInfoByKey(const BgmUserInfo*, const char*);
+    static s32 compareInfo(const BgmUserInfo*, const BgmUserInfo*);
+    static s32 compareInfoByKey(const BgmUserInfo*, const char*);
 
     const char* mName = nullptr;
     AudioInfoListWithParts* mBgmActionInfoList = nullptr;
