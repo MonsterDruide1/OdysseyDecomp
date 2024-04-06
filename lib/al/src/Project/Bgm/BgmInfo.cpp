@@ -24,10 +24,10 @@ void BgmChangeableParams::operator=(const BgmChangeableParams& value) {
 }
 BgmUserInfo::BgmUserInfo() {}
 
-int BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2) {
+s32 BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2) {
     return strcmp(info_1->mName, info_2->mName);
 }
-int BgmUserInfo::compareInfoByKey(const BgmUserInfo* info, const char* string) {
+s32 BgmUserInfo::compareInfoByKey(const BgmUserInfo* info, const char* string) {
     return strcmp(info->mName, string);
 }
 }  // namespace al
