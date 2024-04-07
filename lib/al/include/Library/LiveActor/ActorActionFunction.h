@@ -5,8 +5,9 @@
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
+class ActorActionKeeper;
 class HitSensor;
+class LiveActor;
 class Nerve;
 
 void startAction(LiveActor* actor, const char* actionName);
