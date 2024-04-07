@@ -1,7 +1,8 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 
 #include "Library/LiveActor/LiveActorUtil.h"
-#include "Library/Math/VectorUtil.h"
+#include "Library/Math/MathQuatUtil.h"
+#include "Library/Math/MathUtil.h"
 
 namespace al {
 

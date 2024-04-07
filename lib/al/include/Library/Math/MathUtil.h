@@ -16,6 +16,8 @@ f32 powerOut(f32, f32);
 
 f32 lerpValue(f32, f32, f32);
 
+f32 calcRate01(f32, f32, f32);
+
 template <typename T>
 inline T clamp(T value, T min, T max) {
     if (value < min)
