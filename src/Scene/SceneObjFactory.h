@@ -1,0 +1,92 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+
+namespace al {
+class SceneObjHolder;
+}
+
+enum SceneObjID : s32 {
+    SceneObjID_AmiiboNpcDirector,
+    SceneObjID_BgmAnimeSyncDirector,
+    SceneObjID_BirdPlayerGlideCtrl,
+    SceneObjID_CapManHeroDemoDirector,
+    SceneObjID_CapMessageDirector,
+    SceneObjID_CapMessageMoonNotifier,
+    SceneObjID_CheckpointFlagWatcher,
+    SceneObjID_CoinCollectHolder,
+    SceneObjID_CoinCollectWatcher,
+    SceneObjID_CollectBgmPlayer,
+    SceneObjID_alDataStoreDirector,
+    SceneObjID_EchoEmitterHolder,
+    SceneObjID_ElectricWireCameraTicketHolder,
+    SceneObjID_EventDemoCtrl,
+    SceneObjID__e,
+    SceneObjID_alFootPrintServer,
+    SceneObjID_alFriendsProfileDownloader,
+    SceneObjID_FukankunZoomObjHolder,
+    SceneObjID_GameDataHolder,
+    SceneObjID__13,
+    SceneObjID_GiantWanderBoss,
+    SceneObjID_GrowPlantDirector,
+    SceneObjID_GuidePosInfoHolder,
+    SceneObjID_HintPhotoLayoutHolder,
+    SceneObjID_HosuiTrailKeeper,
+    SceneObjID_HosuiWaterBallHolder,
+    SceneObjID_HtmlViewerRequester,
+    SceneObjID_InformationWindowDirector,
+    SceneObjID__1c,
+    SceneObjID_KidsModeLayoutAccessor,
+    SceneObjID_KoopaStopHackCtrl,
+    SceneObjID_KoopaShipDemoRequester,
+    SceneObjID_alLayoutTextureRenderer,
+    SceneObjID_LifeUpItemGenerateWatcher,
+    SceneObjID_LoginLotteryDirector,
+    SceneObjID_MapLayout,
+    SceneObjID_MoviePlayer,
+    SceneObjID__25,
+    SceneObjID_NpcEventCtrlInfo,
+    SceneObjID_PaintObjHolder,
+    SceneObjID__28,
+    SceneObjID_PeachOnKoopaAnimRequester,
+    SceneObjID_PlayerStartInfoHolder,
+    SceneObjID_PlayerHackStartTexKeeper,
+    SceneObjID_QuestInfoHolder,
+    SceneObjID_ProjectRaceCheckPointHolder,
+    SceneObjID_RaceManRace,
+    SceneObjID_RaceWatcher,
+    SceneObjID_RadiConRaceWatcher,
+    SceneObjID_RandomItemSelector,
+    SceneObjID_alRankingDirector,
+    SceneObjID_RankingNameHolder,
+    SceneObjID_ReactionObjectActionIndexHolder,
+    SceneObjID_RhyhtmInfoWatcher,
+    SceneObjID_RocketFlowerEquipWatcher,
+    SceneObjID_RouteGuideDirector,
+    SceneObjID_SceneEventNotifier,
+    SceneObjID_SessionMusicianManager,
+    SceneObjID_ShineChipWatcherHolder,
+    SceneObjID_SphinxQuizRouteKillExecutor,
+    SceneObjID_alStageSyncCounter,
+    SceneObjID__3d,  // seems like it was meant to be al::registSupportFreezeSyncGroup (based on
+                     // ClockMapParts::init + 0x6c),
+    SceneObjID_TalkNpcParamHolder,
+    SceneObjID_TalkNpcSceneEventSwitcher,
+    SceneObjID_TestStageTimeDirector,
+    SceneObjID_TimeBalloonDirector,
+    SceneObjID__42,
+    SceneObjID_alTrafficAreaDirector,
+    SceneObjID_TrafficRailWatcher,
+    SceneObjID_TRexScrollBreakMapPartsBreakJudge,
+    SceneObjID_TsukkunTraceHolder,
+    SceneObjID_WipeHolderRequester,
+    SceneObjID_YoshiFruitWatcher,
+    SceneObjID_HelpAmiiboDirector,
+
+    SceneObjID_Max,
+};
+
+class SceneObjFactory {
+public:
+    static al::SceneObjHolder* createSceneObjHolder();
+};
