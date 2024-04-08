@@ -49,6 +49,7 @@ private:
 };
 
 class AnimInfoTable {
+public:
     char size[0x18];
 };
 

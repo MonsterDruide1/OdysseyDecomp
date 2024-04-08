@@ -14,6 +14,7 @@ class Nerve;
 class NerveKeeper;
 
 class NerveActionCtrl {
+public:
     NerveActionCtrl(alNerveFunction::NerveActionCollector*);
 
     NerveKeeper* findNerve(const char*) const;

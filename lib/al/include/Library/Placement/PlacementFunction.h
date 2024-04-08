@@ -239,6 +239,7 @@ bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 }  // namespace al
 
 class alPlacementFunction {
+public:
     s32 getCameraId(const al::ActorInitInfo& initInfo);
     void getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
                         const char* linkName);

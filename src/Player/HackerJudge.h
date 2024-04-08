@@ -10,8 +10,6 @@ class LiveActor;
 }
 
 class HackerJudge : public al::HioNode, public IJudge {
-    IUsePlayerHack** mHacker;
-
 public:
     HackerJudge(IUsePlayerHack** parent) { mHacker = parent; };
     void reset() override;
@@ -19,6 +17,9 @@ public:
     bool judge() const override;
 
     IUsePlayerHack** getHacker() const { return mHacker; };
+
+private:
+    IUsePlayerHack** mHacker;
 };
 
 class HackerJudgeNormalFall : public HackerJudge {

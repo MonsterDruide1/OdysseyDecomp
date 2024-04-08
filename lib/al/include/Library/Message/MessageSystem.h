@@ -12,9 +12,9 @@ class MessageProjectEx;
 class MessageHolder;
 
 class MessageSystem {
+public:
     using MessageTreeMap = sead::StrTreeMap<256, MessageHolder*>;
 
-public:
     MessageSystem();
     void initMessageForChangeLanguage();
     bool tryInitMessageHolder(MessageTreeMap*, const char*, const char*, const char*);

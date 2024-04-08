@@ -77,8 +77,6 @@ public:
 };
 
 class SubActorKeeper {
-    friend class alSubActorFunction;
-
 public:
     SubActorKeeper(LiveActor*);
     void registerSubActor(LiveActor*, u32);
@@ -86,6 +84,9 @@ public:
 
     static SubActorKeeper* create(LiveActor*);
     static SubActorKeeper* tryCreate(LiveActor*, const char*, s32);
+
+protected:
+    friend class alSubActorFunction;
 
 private:
     LiveActor* mRootActor;

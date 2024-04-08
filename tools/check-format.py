@@ -168,17 +168,24 @@ def common_newline_eof(c, path):
 
 def header_sorted_visibility(c, path):
     visibilities_ordered = ["public:", "protected:", "private:"]
-    nest_level = [-1]  # outermost for macro definitions
+    nest_level = [-2]  # -2 = outside of class ; -1 = inside class ; 0 = public ; 1 = protected ; 2 = private
+    should_start_class = False
     for line in c.splitlines():
         line = line[0:line.find("//")] if "//" in line else line
-        if line.endswith("\\"): line = line[0:-1].rstrip()
+        if line.endswith("\\"): line = line[0:-1]
+        line = line.strip()
+        if line not in visibilities_ordered:
+            header_check_line(line, path, nest_level[-1])
         if "{" in line and "}" in line:
-            if CHECK(lambda a:a.count("{")==a.count("}") or (a.lstrip().startswith("{") and a.endswith("}};")), line, "Unbalanced \"{\" and \"}\" in the same line! (exception: end of brace-initialized array)", path): return
-            if line.lstrip().startswith("{") and line.endswith("}};"):
+            if CHECK(lambda a:a.count("{")==a.count("}") or (a.startswith("{") and a.endswith("}};")), line, "Unbalanced \"{\" and \"}\" in the same line! (exception: end of brace-initialized array)", path): return
+            if line.startswith("{") and line.endswith("}};"):
                 del nest_level[-1]
             continue
         
-        if CHECK(lambda a:[b for b in visibilities_ordered if b in a and a!=b]==[], line.strip(), "visibility modificator must be its own line!", path): return
+        if line.startswith("class ") and not line.endswith(";"):
+            should_start_class = True
+        
+        if CHECK(lambda a:[b for b in visibilities_ordered if b in a and a!=b]==[], line, "visibility modifier must be its own line!", path): return
         if CHECK(lambda a:a.count("{")+a.count("}")<=1, line, "Only one \"{\" and \"}\" is allowed per line!", path): return
 
         if line in visibilities_ordered:
@@ -187,7 +194,8 @@ def header_sorted_visibility(c, path):
             nest_level[-1] = i
             continue
         elif "{" in line:
-            nest_level.append(-1)
+            nest_level.append(-2 if not should_start_class else -1)
+            should_start_class = False
         elif "}" in line:
             del nest_level[-1]
 
@@ -196,6 +204,13 @@ def header_sorted_visibility(c, path):
         print("nest_level", nest_level)
         exit(1)
  
+def header_check_line(line, path, visibility):
+    if visibility == -2:  # outside of class/struct/...
+        pass
+    elif visibility == -1:  # inside class, but not in a visibility block
+        allowed = line in ["", "};"] or line.startswith("SEAD_SINGLETON_DISPOSER") or line.startswith("SEAD_RTTI_BASE") or line.startswith("SEAD_RTTI_OVERRIDE")
+        CHECK(lambda a:allowed, line, "Inside class, but not in a visibility block, only empty lines and closing brace allowed!", path)
+
 def header_no_offset_comments(c, path):
     for line in c.splitlines():
         CHECK(lambda a:"// 0x" not in a, line, "Offset comments are not allowed in headers!", path)

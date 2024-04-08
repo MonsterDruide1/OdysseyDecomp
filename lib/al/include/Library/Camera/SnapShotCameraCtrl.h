@@ -19,6 +19,20 @@ class ICameraInput;
 class IUseCollision;
 
 class SnapShotCameraCtrl : public NerveExecutor, public IUseAudioKeeper {
+public:
+    SnapShotCameraCtrl(SnapShotCameraSceneInfo const*);
+    void start(f32);
+    void load(ByamlIter const&);
+    void startReset(s32);
+    void update(const sead::LookAtCamera&, const IUseCollision*, const ICameraInput*);
+    void makeLookAtCameraPost(sead::LookAtCamera*) const;
+    void makeLookAtCameraLast(sead::LookAtCamera*) const;
+    void exeWait();
+    void exeReset();
+
+    f32 getFovyDegree() const { return mFovyDegree; };
+
+private:
     SnapShotCameraSceneInfo* mCameraSceneInfo;
     CameraParam* mParam;
     bool mIsValidLookAtOffset;
@@ -34,18 +48,5 @@ class SnapShotCameraCtrl : public NerveExecutor, public IUseAudioKeeper {
     f32 mRollTarget;
     u32 uVar2;
     bool bVar1;
-
-public:
-    SnapShotCameraCtrl(SnapShotCameraSceneInfo const*);
-    void start(f32);
-    void load(ByamlIter const&);
-    void startReset(s32);
-    void update(const sead::LookAtCamera&, const IUseCollision*, const ICameraInput*);
-    void makeLookAtCameraPost(sead::LookAtCamera*) const;
-    void makeLookAtCameraLast(sead::LookAtCamera*) const;
-    void exeWait();
-    void exeReset();
-
-    f32 getFovyDegree() const { return mFovyDegree; };
 };
 }  // namespace al
