@@ -14,6 +14,7 @@ class QuadNode;
 class MeshQuadtree;
 
 class IUseGridMesh : public IUseHioNode {
+public:
     virtual void finalize() = 0;
     virtual s32 getGridMeshType() const = 0;
     virtual s32 getGridNum() const = 0;

@@ -16,6 +16,7 @@ class Resource;
 class ActorInitInfo;
 
 class ActorPrePassLightKeeper {
+public:
     class UserColor {
     public:
         UserColor();
@@ -27,7 +28,6 @@ class ActorPrePassLightKeeper {
     };
     static_assert(sizeof(UserColor) == 0x18);
 
-public:
     static bool isExistFile(const Resource*, const char*);
 
     ActorPrePassLightKeeper(LiveActor*);

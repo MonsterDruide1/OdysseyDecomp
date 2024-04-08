@@ -12,7 +12,6 @@ struct DrawSystemInfo;
 class RootTask;
 
 class Application {
-    friend class ApplicationFunction;
     SEAD_SINGLETON_DISPOSER(Application);
 
 public:
@@ -24,6 +23,9 @@ public:
     al::GameFrameworkNx* getGameFramework() const { return mGameFramework; }
     al::AccountHolder* getAccountHolder() const { return mAccountHolder; }
     al::DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
+
+protected:
+    friend class ApplicationFunction;
 
 private:
     al::SystemKit* mSystemKit;

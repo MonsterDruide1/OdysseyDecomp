@@ -128,7 +128,8 @@ class PlayerJudgeWallHitDownForceRun;
 class PlayerJudgeWallHitDownRolling;
 class PlayerJudgeWallKeep;
 
-class PlayerActorHakoniwa : PlayerActorBase, IUseDimension {
+class PlayerActorHakoniwa : public PlayerActorBase, public IUseDimension {
+public:
     PlayerInfo* mPlayerInfo;
     PlayerConst* mPlayerConst;
     PlayerInput* mPlayerInput;

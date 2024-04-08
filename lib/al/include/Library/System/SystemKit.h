@@ -9,8 +9,6 @@ class ResourceSystem;
 class SaveDataDirector;
 
 class SystemKit {
-    friend class alProjectInterface;
-
 public:
     SystemKit();
 
@@ -23,6 +21,9 @@ public:
     FileLoader* getFileLoader() { return mFileLoader; }
     ResourceSystem* getResourceSystem() { return mResourceSystem; }
     SaveDataDirector* getSaveDataDirector() { return mSaveDataDirector; }
+
+protected:
+    friend class alProjectInterface;
 
 private:
     MemorySystem* mMemorySystem;
