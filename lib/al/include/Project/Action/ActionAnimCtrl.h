@@ -7,20 +7,23 @@ class LiveActor;
 class ActorResource;
 
 struct ActionAnimDataInfo {
-    const char* mName = nullptr;
+    const char* mActionName = nullptr;
     float _8 = -1.0;
-    bool mIsKeep = false;
-    bool mIsAction = false;
-    short _e = 0;
+    bool mIsKeepAnim = false;
+    bool mIsActionAnim = false;
 };
 
 struct ActionAnimCtrlInfo {
-    ActionAnimCtrlInfo(int sklAnimSize);
+    ActionAnimCtrlInfo(s32 sklAnimSize);
 
     const char* mActionName;
-    s32 mStackSize = 0;
-    ActionAnimDataInfo* mAnimDataStack;
-    s32 mAnimPartIndex;
+    int mSklDataCount;
+    ActionAnimDataInfo** mSklDatas;
+    ActionAnimDataInfo mMclData;
+    ActionAnimDataInfo mMtpData;
+    ActionAnimDataInfo mMtsData;
+    ActionAnimDataInfo mVisData;
+    int mPartNum;
 };
 
 class ActionAnimCtrl {
@@ -31,22 +34,22 @@ public:
 
     void init(const ActorResource*, const char*, const char*);
     bool start(const char*);
-    const char* findAnimInfo(const char*) const;
-    int getActionFrameMax(const char*) const;
     bool trySetFrame(float);
     bool isExistAction(const char*);
     bool isActionOneTime(const char*);
     bool isActionEnd();
-    const char* getPlayingActionName();
     void sortCtrlInfo();
+    const char* findAnimInfo(const char*) const;
+    const char* getPlayingActionName();
+    s32 getActionFrameMax(const char*) const;
 
 private:
     LiveActor* mParentActor;
     const char* mPlayingAnimName = nullptr;
-    int mStackSize = 0;
-    ActionAnimCtrlInfo* mAnimInfoStack = nullptr;
+    s32 mInfoCount = 0;
+    ActionAnimCtrlInfo* mInfos = nullptr;
     const char* mPlayingActionName = nullptr;
-    int mPartIndex = -1;
+    s32 mPartIndex = -1;
 };
 
 }  // namespace al
