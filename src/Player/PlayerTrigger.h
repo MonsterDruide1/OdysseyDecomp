@@ -4,6 +4,7 @@
 #include <prim/seadBitFlag.h>
 
 class PlayerTrigger {
+public:
     enum ECollisionTrigger : u32 {};
     enum EAttackSensorTrigger : u32 {};
     enum EActionTrigger : u32 {};
@@ -12,7 +13,6 @@ class PlayerTrigger {
     enum EDemoEndTrigger : u32 {};
     enum EMaterialChangeTrigger : u32 {};
 
-public:
     PlayerTrigger();
     void set(ECollisionTrigger);
     void set(EAttackSensorTrigger);

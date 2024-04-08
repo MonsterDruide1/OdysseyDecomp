@@ -334,6 +334,7 @@ void calcTransLocalOffset(sead::Vector3f*, const LiveActor* actor, const sead::V
 }  // namespace al
 
 class alActorPoseFunction {
+public:
     void calcBaseMtx(sead::Matrix34f* mtx, const al::LiveActor* actor);
     void updatePoseTRMSV(al::LiveActor* actor);
 };

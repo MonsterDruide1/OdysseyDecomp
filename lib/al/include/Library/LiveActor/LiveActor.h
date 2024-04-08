@@ -53,8 +53,6 @@ class LiveActor : public IUseNerve,
                   public IUseCollision,
                   public IUseRail,
                   public IUseHioNode {
-    friend class alActorFunction;
-
 public:
     LiveActor(const char* actorName);
 
@@ -126,6 +124,9 @@ public:
     ActorParamHolder* getActorParamHolder() const { return mActorParamHolder; }
 
     void setName(const char* newName) { mActorName = newName; }
+
+protected:
+    friend class alActorFunction;
 
 private:
     const char* mActorName;
