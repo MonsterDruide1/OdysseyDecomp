@@ -8,7 +8,7 @@ namespace al {
 class AccountHolder : public HioNode {
 public:
     AccountHolder();
-    ~AccountHolder();
+    virtual ~AccountHolder();
 
     bool isValid() const;
 
@@ -18,5 +18,5 @@ private:
     bool mIsValid = false;
 };
 
-static_assert(sizeof(al::AccountHolder) == 0x28);
+static_assert(sizeof(AccountHolder) == 0x28);
 }  // namespace al
