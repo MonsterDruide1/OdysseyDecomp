@@ -3,7 +3,7 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-void createStringIfInStack(const char*);
+const char* createStringIfInStack(const char*);
 void createConcatString(const char*, const char*);
 void createFileNameBySuffix(sead::BufferedSafeStringBase<char>*, const char*, const char*);
 void outputValueWithComma(char*, u32, unsigned long, bool, bool);

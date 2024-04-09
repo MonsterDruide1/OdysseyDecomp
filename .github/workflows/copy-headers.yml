@@ -52,11 +52,7 @@ jobs:
           echo "HEADER_BRANCH=$DELETED_BRANCH" >> "$GITHUB_ENV"
           echo "AUTHOR_NAME=$COMMIT_AUTHOR_NAME" >> "$GITHUB_ENV"
           echo "AUTHOR_MAIL=$COMMIT_AUTHOR_MAIL" >> "$GITHUB_ENV"
-          {
-            echo 'MESSAGE<<EOF'
-            echo $COMMIT_MESSAGE
-            echo EOF
-          } >> "$GITHUB_ENV"
+          echo "MESSAGE=$COMMIT_MESSAGE" >> "$GITHUB_ENV"
         fi
       env:
         DELETED_BRANCH: ${{ github.event.ref }}
