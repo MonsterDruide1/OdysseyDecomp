@@ -22,6 +22,11 @@ file(GLOB_RECURSE SOURCES_GAME ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_
 file(GLOB_RECURSE SOURCES_AL ${PROJECT_SOURCE_DIR}/lib/al/*.cpp ${PROJECT_SOURCE_DIR}/lib/al/*.c ${PROJECT_SOURCE_DIR}/lib/al/*.h ${PROJECT_SOURCE_DIR}/lib/al/*.hpp)
 
 add_executable(odyssey ${SOURCES_GAME} ${SOURCES_AL})
+add_library(odyssey_lib STATIC ${SOURCES_GAME} ${SOURCES_AL})
+install(TARGETS odyssey_lib
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
 
 # Writing sources to a file so build.py script knows the sources
 set(SOURCES_OUTPUT_FILE "${CMAKE_BINARY_DIR}/.build_sources")
@@ -41,6 +46,11 @@ target_compile_options(odyssey PRIVATE -Wall -Wextra -Wdeprecated)
 target_compile_options(odyssey PRIVATE -Wno-unused-parameter -Wno-unused-private-field)
 target_compile_options(odyssey PRIVATE -fno-strict-aliasing)
 target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
+
+
+target_include_directories(odyssey_lib PUBLIC src)
+target_include_directories(odyssey_lib PUBLIC lib/al/include)
+target_compile_definitions(odyssey_lib PRIVATE NON_MATCHING)
 
 set(NN_SDK_MAJOR 3)
 set(NN_SDK_MINOR 5)
@@ -65,3 +75,8 @@ target_link_libraries(odyssey PUBLIC agl)
 
 add_subdirectory(lib/eui)
 target_link_libraries(odyssey PUBLIC eui)
+
+target_link_libraries(odyssey_lib PUBLIC NintendoSDK)
+target_link_libraries(odyssey_lib PUBLIC sead)
+target_link_libraries(odyssey_lib PUBLIC agl)
+target_link_libraries(odyssey_lib PUBLIC eui)
