@@ -7,6 +7,8 @@ class DrawContext;
 
 namespace al {
 struct ExecuteSystemInitInfo {
+    ExecuteSystemInitInfo();
+
     agl::DrawContext* mDrawCtx;
 };
 }  // namespace al
