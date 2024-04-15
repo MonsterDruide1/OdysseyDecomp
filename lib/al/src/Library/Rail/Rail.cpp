@@ -69,7 +69,7 @@ s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 dista
     f32 distanceOnRail = normalizeLength(distance);
     f32 startDistanceOnRail = 0.0;
     s32 maxRailPart = -1;
-    long longI = -0x100000000;
+    s64 longI = -0x100000000;
     for (s32 i = 0; i < mRailPartCount; i++) {
         if (distanceOnRail <= mRailPart[i].getTotalDistance()) {
             if (i <= 0) {
@@ -149,7 +149,7 @@ void Rail::calcNearestRailPointNo(s32* index, const sead::Vector3f& pos) const {
     *index = 0;
 
     s32 curr_index = 1;
-    for (long i = 1; i < mRailPointsCount; i++) {
+    for (s64 i = 1; i < mRailPointsCount; i++) {
         calcRailPointPos(&tmp, curr_index);
         if ((pos - tmp).squaredLength() < best_distance) {
             best_distance = (pos - tmp).squaredLength();
@@ -168,7 +168,7 @@ void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3
     f32 best_distance = (pos - tmp).squaredLength();
 
     s32 curr_index = 1;
-    for (long i = 1; i < mRailPointsCount; i++) {
+    for (s64 i = 1; i < mRailPointsCount; i++) {
         calcRailPointPos(&tmp, curr_index);
         if ((pos - tmp).squaredLength() < best_distance) {
             best_distance = (pos - tmp).squaredLength();
@@ -199,7 +199,7 @@ f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* 
 
     s32 curr_index = 0LL;
     s32 bestIndex = 0;
-    for (long i = 0; i < mRailPartCount; i++) {
+    for (s64 i = 0; i < mRailPartCount; i++) {
         RailPart* part = &mRailPart[curr_index];
         f32 param;
         f32 length = part->calcNearestLength(&param, pos, part->getPartLength(), interval);

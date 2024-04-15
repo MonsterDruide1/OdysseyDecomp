@@ -163,6 +163,23 @@ def common_include_order(c, path, is_header):
 def common_newline_eof(c, path):
     CHECK(lambda a:a=="", c.split("\n")[-1], "Files should end with a newline!", path)
 
+def common_sead_types(c, path):
+    FORBIDDEN_TYPES = ["int", "float", "short", "long", "double"]
+    for line in c.splitlines():
+        for t in FORBIDDEN_TYPES:
+            index = 0
+            while index < len(line):
+                index = line.find(t, index)
+                if index == -1:
+                    break
+                if index > 0 and line[index-1].isalnum():
+                    index += 1
+                    continue
+                if index+len(t) < len(line) and line[index+len(t)].isalnum():
+                    index += 1
+                    continue
+                FAIL("Forbidden type used: "+t+". Use equivalent of <basis/seadTypes.h> instead (f32, s32, u32, ...)", line, path)
+                return
 
 # Header files
 
@@ -225,11 +242,13 @@ def check_source(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, False)
+    common_sead_types(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, True)
+    common_sead_types(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
 

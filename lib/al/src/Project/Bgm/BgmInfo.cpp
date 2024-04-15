@@ -5,7 +5,7 @@
 namespace al {
 BgmChangeableParams::BgmChangeableParams() {}
 
-void BgmChangeableParams::calcPitch(float value) {
+void BgmChangeableParams::calcPitch(f32 value) {
     exp2f(value / 12);
 }
 void BgmChangeableParams::operator=(const BgmChangeableParams& value) {

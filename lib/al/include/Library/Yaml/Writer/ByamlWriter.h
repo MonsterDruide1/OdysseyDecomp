@@ -27,18 +27,18 @@ public:
     void addInt(s32);
     void addUInt(u32);
     void addFloat(f32);
-    void addInt64(long);
+    void addInt64(s64);
     void addUInt64(u64);
-    void addDouble(double);
+    void addDouble(f64);
     void addString(const char*);
     void addNull();
     void addBool(const char*, bool);
     void addInt(const char*, s32);
     void addUInt(const char*, u32);
     void addFloat(const char*, f32);
-    void addInt64(const char*, long);
+    void addInt64(const char*, s64);
     void addUInt64(const char*, u64);
-    void addDouble(const char*, double);
+    void addDouble(const char*, f64);
     void addString(const char*, char const*);
     void addNull(const char*);
 

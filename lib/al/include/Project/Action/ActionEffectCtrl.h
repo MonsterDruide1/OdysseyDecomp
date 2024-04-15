@@ -18,7 +18,7 @@ public:
     ActionEffectCtrl(IUseEffectKeeper*);
 
     void startAction(const char*);
-    void update(float, float, float, bool);
+    void update(f32, f32, f32, bool);
     bool isKeepSameEffectNext(const ActionEffectCtrlInfo*, const char*);
 
 private:

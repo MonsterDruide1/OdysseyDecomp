@@ -91,7 +91,7 @@ u32 ByamlWriterBigData::calcBigDataSize() const {
 }
 void ByamlWriterBigData::writeBigData(sead::WriteStream*) const {}
 
-ByamlWriterInt64::ByamlWriterInt64(long value, ByamlWriterBigDataList* list)
+ByamlWriterInt64::ByamlWriterInt64(s64 value, ByamlWriterBigDataList* list)
     : ByamlWriterBigData(list), mValue(value) {}
 ByamlWriterInt64::~ByamlWriterInt64() = default;
 u8 ByamlWriterInt64::getTypeCode() const {
@@ -113,7 +113,7 @@ void ByamlWriterUInt64::writeBigData(sead::WriteStream* stream) const {
 }
 void ByamlWriterUInt64::print(s32) const {}
 
-ByamlWriterDouble::ByamlWriterDouble(double value, ByamlWriterBigDataList* list)
+ByamlWriterDouble::ByamlWriterDouble(f64 value, ByamlWriterBigDataList* list)
     : ByamlWriterBigData(list), mValue(value) {}
 ByamlWriterDouble::~ByamlWriterDouble() = default;
 u8 ByamlWriterDouble::getTypeCode() const {
@@ -134,7 +134,7 @@ void ByamlWriterContainer::addUInt(const char*, u32) {}
 void ByamlWriterContainer::addFloat(const char*, f32) {}
 void ByamlWriterContainer::addInt64(const char*, s64, ByamlWriterBigDataList*) {}
 void ByamlWriterContainer::addUInt64(const char*, u64, ByamlWriterBigDataList*) {}
-void ByamlWriterContainer::addDouble(const char*, double, ByamlWriterBigDataList*) {}
+void ByamlWriterContainer::addDouble(const char*, f64, ByamlWriterBigDataList*) {}
 void ByamlWriterContainer::addString(const char*, const char*) {}
 void ByamlWriterContainer::addHash(const char*, ByamlWriterHash*) {}
 void ByamlWriterContainer::addArray(const char*, ByamlWriterArray*) {}
@@ -146,7 +146,7 @@ void ByamlWriterContainer::addUInt(u32) {}
 void ByamlWriterContainer::addFloat(f32) {}
 void ByamlWriterContainer::addInt64(s64, ByamlWriterBigDataList*) {}
 void ByamlWriterContainer::addUInt64(u64, ByamlWriterBigDataList*) {}
-void ByamlWriterContainer::addDouble(double, ByamlWriterBigDataList*) {}
+void ByamlWriterContainer::addDouble(f64, ByamlWriterBigDataList*) {}
 void ByamlWriterContainer::addString(const char*) {}
 void ByamlWriterContainer::addHash(ByamlWriterHash*) {}
 void ByamlWriterContainer::addArray(ByamlWriterArray*) {}
@@ -201,7 +201,7 @@ void ByamlWriterArray::addInt64(s64 value, ByamlWriterBigDataList* list) {
 void ByamlWriterArray::addUInt64(u64 value, ByamlWriterBigDataList* list) {
     addData(new ByamlWriterUInt64(value, list));
 }
-void ByamlWriterArray::addDouble(double value, ByamlWriterBigDataList* list) {
+void ByamlWriterArray::addDouble(f64 value, ByamlWriterBigDataList* list) {
     addData(new ByamlWriterDouble(value, list));
 }
 void ByamlWriterArray::addString(const char* value) {
@@ -278,13 +278,13 @@ void ByamlWriterHash::addUInt(const char* key, u32 value) {
 void ByamlWriterHash::addFloat(const char* key, f32 value) {
     addData(key, new ByamlWriterFloat(value));
 }
-void ByamlWriterHash::addInt64(const char* key, long value, ByamlWriterBigDataList* list) {
+void ByamlWriterHash::addInt64(const char* key, s64 value, ByamlWriterBigDataList* list) {
     addData(key, new ByamlWriterInt64(value, list));
 }
 void ByamlWriterHash::addUInt64(const char* key, u64 value, ByamlWriterBigDataList* list) {
     addData(key, new ByamlWriterUInt64(value, list));
 }
-void ByamlWriterHash::addDouble(const char* key, double value, ByamlWriterBigDataList* list) {
+void ByamlWriterHash::addDouble(const char* key, f64 value, ByamlWriterBigDataList* list) {
     addData(key, new ByamlWriterDouble(value, list));
 }
 void ByamlWriterHash::addString(const char* key, const char* value) {

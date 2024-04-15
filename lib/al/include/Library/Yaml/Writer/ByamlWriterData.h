@@ -105,14 +105,14 @@ private:
 
 class ByamlWriterInt64 : public ByamlWriterBigData {
 public:
-    ByamlWriterInt64(long, ByamlWriterBigDataList*);
+    ByamlWriterInt64(s64, ByamlWriterBigDataList*);
     ~ByamlWriterInt64();
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
     void print(s32) const override;
 
 private:
-    long mValue;
+    s64 mValue;
 };
 
 class ByamlWriterUInt64 : public ByamlWriterBigData {
@@ -129,14 +129,14 @@ private:
 
 class ByamlWriterDouble : public ByamlWriterBigData {
 public:
-    ByamlWriterDouble(double, ByamlWriterBigDataList*);
+    ByamlWriterDouble(f64, ByamlWriterBigDataList*);
     ~ByamlWriterDouble();
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
     void print(s32) const override;
 
 private:
-    double mValue;
+    f64 mValue;
 };
 
 class ByamlWriterHash;
@@ -153,7 +153,7 @@ public:
     virtual void addFloat(const char*, f32);
     virtual void addInt64(const char*, s64, ByamlWriterBigDataList*);
     virtual void addUInt64(const char*, u64, ByamlWriterBigDataList*);
-    virtual void addDouble(const char*, double, ByamlWriterBigDataList*);
+    virtual void addDouble(const char*, f64, ByamlWriterBigDataList*);
     virtual void addString(const char*, const char*);
     virtual void addHash(const char*, ByamlWriterHash*);
     virtual void addArray(const char*, ByamlWriterArray*);
@@ -165,7 +165,7 @@ public:
     virtual void addFloat(f32);
     virtual void addInt64(s64, ByamlWriterBigDataList*);
     virtual void addUInt64(u64, ByamlWriterBigDataList*);
-    virtual void addDouble(double, ByamlWriterBigDataList*);
+    virtual void addDouble(f64, ByamlWriterBigDataList*);
     virtual void addString(const char*);
     virtual void addHash(ByamlWriterHash*);
     virtual void addArray(ByamlWriterArray*);
@@ -198,7 +198,7 @@ public:
     void addFloat(f32) override;
     void addInt64(s64, ByamlWriterBigDataList*) override;
     void addUInt64(u64, ByamlWriterBigDataList*) override;
-    void addDouble(double, ByamlWriterBigDataList*) override;
+    void addDouble(f64, ByamlWriterBigDataList*) override;
     void addString(const char*) override;
     void addHash(ByamlWriterHash*) override;
     void addArray(ByamlWriterArray*) override;
@@ -246,7 +246,7 @@ public:
     void addFloat(const char*, f32) override;
     void addInt64(const char*, s64, ByamlWriterBigDataList*) override;
     void addUInt64(const char*, u64, ByamlWriterBigDataList*) override;
-    void addDouble(const char*, double, ByamlWriterBigDataList*) override;
+    void addDouble(const char*, f64, ByamlWriterBigDataList*) override;
     void addString(const char*, const char*) override;
     void addHash(const char*, ByamlWriterHash*) override;
     void addArray(const char*, ByamlWriterArray*) override;

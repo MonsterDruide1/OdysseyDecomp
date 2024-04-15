@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class AudioKeeper;
 class SeKeeper;
@@ -15,8 +17,8 @@ public:
     void resetAction(bool);
     void restartAction(bool);
     void startAction(const char*);
-    void checkAndPlayStart(float, float, float, bool);
-    void update(float, float, float, bool);
+    void checkAndPlayStart(f32, f32, f32, bool);
+    void update(f32, f32, f32, bool);
     void resetState();
 };
 }  // namespace al

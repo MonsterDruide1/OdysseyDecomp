@@ -19,7 +19,7 @@ bool AreaShapeOval::calcNearestEdgePoint(sead::Vector3f* edgePoint,
                                          const sead::Vector3f& trans) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
     calcLocalPos(&localPos, trans);
-    float length = localPos.length();
+    f32 length = localPos.length();
 
     if (length > 0.0f)
         localPos *= 500.0f / length;

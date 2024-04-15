@@ -45,7 +45,7 @@ bool PlayerCostumeInfo::isNeedBodyHair() const {
 
 bool PlayerCostumeInfo::isNeedSyncBodyHair() const {
 #ifdef MATCHING_HACK_NX_CLANG
-    long v1 = *(long*)&mPlayerBodyCostumeInfo->mIsUseBodyHair;
+    s64 v1 = *(s64*)&mPlayerBodyCostumeInfo->mIsUseBodyHair;
     if (!((char)v1))
         return false;
     if ((v1 & 0xFF00000000LL) && mPlayerHeadCostumeInfo->mIsMario64)

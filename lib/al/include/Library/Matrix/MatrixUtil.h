@@ -94,8 +94,8 @@ void blendMtx(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, 
 void blendMtxRotate(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, f32);
 void blendMtxTrans(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, f32);
 
-float calcMtxLocalDirAngleOnPlaneToTarget(const sead::Matrix34f*, const sead::Vector3f&, s32, s32);
-float calcMtxLocalDirAngleOnPlaneToDir(const sead::Matrix34f*, const sead::Vector3f&, s32, s32);
+f32 calcMtxLocalDirAngleOnPlaneToTarget(const sead::Matrix34f*, const sead::Vector3f&, s32, s32);
+f32 calcMtxLocalDirAngleOnPlaneToDir(const sead::Matrix34f*, const sead::Vector3f&, s32, s32);
 bool calcRotAxisOrZero(sead::Vector3f*, const sead::Matrix34f&);
 void calcMxtInvertOrtho(sead::Matrix34f*, const sead::Matrix34f&);
 void calcNearFarByInvProjection(f32*, f32*, const sead::Matrix44f&);

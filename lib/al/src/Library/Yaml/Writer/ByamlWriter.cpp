@@ -53,7 +53,7 @@ void ByamlWriter::addFloat(f32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(value);
 }
-void ByamlWriter::addInt64(long value) {
+void ByamlWriter::addInt64(s64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt64(value, mBigDataList);
 }
@@ -61,7 +61,7 @@ void ByamlWriter::addUInt64(u64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt64(value, mBigDataList);
 }
-void ByamlWriter::addDouble(double value) {
+void ByamlWriter::addDouble(f64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addDouble(value, mBigDataList);
 }
@@ -90,7 +90,7 @@ void ByamlWriter::addFloat(const char* key, f32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(key, value);
 }
-void ByamlWriter::addInt64(const char* key, long value) {
+void ByamlWriter::addInt64(const char* key, s64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt64(key, value, mBigDataList);
 }
@@ -98,7 +98,7 @@ void ByamlWriter::addUInt64(const char* key, u64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt64(key, value, mBigDataList);
 }
-void ByamlWriter::addDouble(const char* key, double value) {
+void ByamlWriter::addDouble(const char* key, f64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addDouble(key, value, mBigDataList);
 }
@@ -226,7 +226,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
             }
         }
         if (data.getType() == 0xD4) {
-            long value;
+            s64 value;
             if (iter.tryConvertInt64(&value, &data)) {
                 if (key)
                     addInt64(key, value);
@@ -235,7 +235,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
             }
         }
         if (data.getType() == 0xD6) {
-            double value;
+            f64 value;
             if (iter.tryConvertDouble(&value, &data)) {
                 if (key)
                     addDouble(key, value);

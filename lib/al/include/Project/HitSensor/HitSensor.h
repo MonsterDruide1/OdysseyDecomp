@@ -10,7 +10,7 @@ class LiveActor;
 
 class HitSensor {
 public:
-    HitSensor(LiveActor*, const char*, u32, f32, unsigned short, const sead::Vector3<f32>*,
+    HitSensor(LiveActor*, const char*, u32, f32, u16, const sead::Vector3<f32>*,
               const sead::Matrix34<f32>*, const sead::Vector3<f32>&);
 
     bool trySensorSort();
@@ -29,15 +29,15 @@ public:
     f32 _10;
     f32 _14;
     f32 _18;
-    unsigned short mMaxSensorCount;  // _1C
-    unsigned short mSensorCount;     // _1E
-    HitSensor** mSensors;            // _20
-    unsigned long _28;
+    u16 mMaxSensorCount;   // _1C
+    u16 mSensorCount;      // _1E
+    HitSensor** mSensors;  // _20
+    u64 _28;
     SensorHitGroup* mHitGroup;  // _30
     bool mIsValidBySystem;      // _38
     bool mIsValid;              // _39
     bool _3A[4];                // unknown type
-    unsigned short _3E;
+    u16 _3E;
     LiveActor* mParentActor;                // _40
     const sead::Vector3<f32>* mFollowPos;   // _48
     const sead::Matrix34<f32>* mFollowMtx;  // _50

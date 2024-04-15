@@ -10,21 +10,21 @@ public:
 
     void operator=(const BgmChangeableParams&);
 
-    void calcPitch(float);
+    void calcPitch(f32);
 
 private:
-    float mVolume = 1.0;
-    float mPitch = 0;
-    float mLpfFreq = 0;
-    float mBiquadFilter = 0;
-    float mVar = 0;
-    float mAuxBusSend = 0;
-    float mTrackVolume0 = 1.0;
-    float mTrackVolume1 = 0;
-    float mTrackVolume2 = 0;
-    float mTrackVolume3 = 0;
-    float mTrackVolume4 = 0;
-    float mTrackVolume5 = 0;
+    f32 mVolume = 1.0;
+    f32 mPitch = 0;
+    f32 mLpfFreq = 0;
+    f32 mBiquadFilter = 0;
+    f32 mVar = 0;
+    f32 mAuxBusSend = 0;
+    f32 mTrackVolume0 = 1.0;
+    f32 mTrackVolume1 = 0;
+    f32 mTrackVolume2 = 0;
+    f32 mTrackVolume3 = 0;
+    f32 mTrackVolume4 = 0;
+    f32 mTrackVolume5 = 0;
 };
 
 struct BgmUserInfo;
