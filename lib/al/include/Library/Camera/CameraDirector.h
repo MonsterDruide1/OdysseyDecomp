@@ -26,6 +26,7 @@ class CameraInSwitchOnAreaDirector;
 class CameraTicket;
 class ICameraInput;
 class PlacementId;
+class PlayerHolder;
 class CameraPoser;
 class AreaObjDirector;
 class IUseAudioKeeper;
@@ -34,6 +35,7 @@ class NameToCameraParamTransferFunc;
 
 class CameraDirector : public HioNode, IUseExecutor {
 public:
+    CameraDirector(s32 maxCameras);
     virtual ~CameraDirector();
 
     void init(CameraPoserSceneInfo*, const CameraPoserFactory*);
@@ -47,7 +49,7 @@ public:
 
     void execute() override;
     void update();
-    void endInit();
+    void endInit(const PlayerHolder*);
 
     CameraPoseUpdater* getPoseUpdater(s32 index);
     CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32,
@@ -75,6 +77,8 @@ public:
     void endInvalidStopJudgeByDemo();
     void startSnapShotMode(bool);
     void endSnapShotMode();
+
+    SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
 
 private:
     s32 mCountCameraPoseUpdaters;

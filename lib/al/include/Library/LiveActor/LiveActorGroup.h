@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 
 #include "Library/HostIO/HioNode.h"
+#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 class LiveActor;
@@ -24,6 +25,9 @@ public:
     void killAll();
     void makeActorAliveAll();
     void makeActorDeadAll();
+
+    s32 getActorCount() const { return mActorCount; }
+    LiveActor* getActor(s32 idx) const { return mActors[idx]; }
 
 private:
     const char* mGroupName;
