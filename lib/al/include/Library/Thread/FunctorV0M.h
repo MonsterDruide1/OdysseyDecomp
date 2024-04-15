@@ -7,7 +7,7 @@ public:
     inline FunctorBase(const FunctorBase& copy) = default;
     virtual void operator()() const = 0;
     virtual FunctorBase* clone() const = 0;
-    virtual ~FunctorBase();
+    virtual ~FunctorBase() {}
 };
 
 template <class T, class F>
@@ -18,10 +18,8 @@ public:
         : mObjPointer(objPointer), mFunctor(functPointer){};
     inline FunctorV0M(const FunctorV0M<T, F>& copy) = default;
 
-    void operator()() const override;
-    FunctorV0M<T, F>* clone() const override;
-
-    ~FunctorV0M() override;
+    void operator()() const override { (mObjPointer->*mFunctor)(); }
+    FunctorV0M<T, F>* clone() const override { return new FunctorV0M<T, F>(*this); }
 
 private:
     T mObjPointer = nullptr;
