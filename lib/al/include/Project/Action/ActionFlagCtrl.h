@@ -26,10 +26,10 @@ public:
     void start(const char*);
     void startCtrlFlag();
     void startCtrlSensor();
-    void update(float, float, float, bool);
-    void updateCtrlSensor(float, float, float, bool);
-    bool isFlagValidOn(int, bool);
-    bool isFlagValidOff(int, bool);
+    void update(f32, f32, f32, bool);
+    void updateCtrlSensor(f32, f32, f32, bool);
+    bool isFlagValidOn(s32, bool);
+    bool isFlagValidOff(s32, bool);
 
 private:
     LiveActor* mParentActor;

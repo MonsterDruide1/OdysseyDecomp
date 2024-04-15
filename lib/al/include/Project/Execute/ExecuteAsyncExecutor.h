@@ -15,7 +15,7 @@ public:
 
     virtual void execute() = 0;
 
-    void executeAsync(sead::Thread*, long);
+    void executeAsync(sead::Thread*, s64);
     void executeAsync();
     void waitAsync();
 

@@ -12,11 +12,11 @@ bool AreaShapeCube::isInVolume(const sead::Vector3f& trans) const {
 }
 
 bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
-    float bottom = mOriginType == OriginType::Base ?
-                       0.0f :
-                       (mOriginType == OriginType::Top ? -1000.0f : 500.0f);
-    float top = mOriginType == OriginType::Base ? 1000.0f :
-                                                  (mOriginType == OriginType::Top ? 0.0f : 500.0f);
+    f32 bottom = mOriginType == OriginType::Base ?
+                     0.0f :
+                     (mOriginType == OriginType::Top ? -1000.0f : 500.0f);
+    f32 top = mOriginType == OriginType::Base ? 1000.0f :
+                                                (mOriginType == OriginType::Top ? 0.0f : 500.0f);
 
     sead::Vector3f min = {-500.0f, bottom, -500.0f};
     sead::Vector3f max = {500.0f, top, 500.0f};

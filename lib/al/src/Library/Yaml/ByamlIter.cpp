@@ -376,7 +376,7 @@ bool ByamlIter::tryConvertBool(bool* value, const ByamlData* data) const {
     return true;
 }
 
-bool ByamlIter::tryGetInt64ByIndex(long* value, s32 index) const {
+bool ByamlIter::tryGetInt64ByIndex(s64* value, s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index)) {
         return false;
@@ -387,7 +387,7 @@ bool ByamlIter::tryGetInt64ByIndex(long* value, s32 index) const {
     return tryConvertInt64(value, &data);
 }
 
-bool ByamlIter::tryGetInt64ByKey(long* value, const char* key) const {
+bool ByamlIter::tryGetInt64ByKey(s64* value, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key)) {
         return false;
@@ -398,7 +398,7 @@ bool ByamlIter::tryGetInt64ByKey(long* value, const char* key) const {
     return tryConvertInt64(value, &data);
 }
 
-bool ByamlIter::tryConvertInt64(long* value, const ByamlData* data) const {
+bool ByamlIter::tryConvertInt64(s64* value, const ByamlData* data) const {
     u32 val = data->getValue();
     if (data->getType() == ByamlDataType::TYPE_INT) {
         *value = *reinterpret_cast<s32*>(&val);
@@ -464,7 +464,7 @@ bool ByamlIter::tryConvertUInt64(u64* value, const ByamlData* data) const {
     return false;
 }
 
-bool ByamlIter::tryGetDoubleByIndex(double* value, s32 index) const {
+bool ByamlIter::tryGetDoubleByIndex(f64* value, s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index)) {
         return false;
@@ -475,7 +475,7 @@ bool ByamlIter::tryGetDoubleByIndex(double* value, s32 index) const {
     return tryConvertDouble(value, &data);
 }
 
-bool ByamlIter::tryGetDoubleByKey(double* value, const char* key) const {
+bool ByamlIter::tryGetDoubleByKey(f64* value, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key)) {
         return false;
@@ -486,7 +486,7 @@ bool ByamlIter::tryGetDoubleByKey(double* value, const char* key) const {
     return tryConvertDouble(value, &data);
 }
 
-bool ByamlIter::tryConvertDouble(double* value, const ByamlData* data) const {
+bool ByamlIter::tryConvertDouble(f64* value, const ByamlData* data) const {
     u32 val = data->getValue();
     if (data->getType() == ByamlDataType::TYPE_FLOAT) {
         *value = *reinterpret_cast<f32*>(&val);
@@ -494,7 +494,7 @@ bool ByamlIter::tryConvertDouble(double* value, const ByamlData* data) const {
     }
     if (data->getType() == ByamlDataType::TYPE_DOUBLE) {
         u64 bigVal = alByamlLocalUtil::getData64Bit(mData, val, mHeader->isInvertOrder());
-        *value = *reinterpret_cast<double*>(&bigVal);
+        *value = *reinterpret_cast<f64*>(&bigVal);
         return true;
     }
 

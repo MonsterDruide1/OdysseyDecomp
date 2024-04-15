@@ -30,7 +30,7 @@ public:
 
     void setAnimFrame(f32);
     void setAnimFrameMax(const char*);
-    void setAnimFrameRate(float);
+    void setAnimFrameRate(f32);
 
     bool isAnimExist(const char*);
     bool isAnimEnd();

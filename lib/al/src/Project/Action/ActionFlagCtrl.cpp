@@ -31,14 +31,14 @@ void ActionFlagCtrl::start(const char* name) {
     startCtrlSensor();
 }
 ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
-    for (int i = 0; i < mInfoCount; i++) {
+    for (s32 i = 0; i < mInfoCount; i++) {
         ActionFlagCtrlInfo* flagInfo = mInfos[i];
         if (isEqualString(flagInfo->mName, name))
             return flagInfo;
     }
     return nullptr;
 }
-void ActionFlagCtrl::update(float frame, float frameRate, float frameMax, bool isStop) {
+void ActionFlagCtrl::update(f32 frame, f32 frameRate, f32 frameMax, bool isStop) {
     if (!mLastFlag || !mBool)
         return;
     if (!mHitSensorKeeper)

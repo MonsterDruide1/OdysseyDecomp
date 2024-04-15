@@ -15,7 +15,7 @@ public:
 
     void init(const ActorResource*, const char*, const char*);
     bool start(const char*);
-    bool trySetFrame(float);
+    bool trySetFrame(f32);
     bool isExistAction(const char*);
     bool isActionOneTime(const char*);
     bool isActionEnd();

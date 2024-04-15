@@ -43,7 +43,7 @@ public:
     u8 padding_12[12];
     al::WipeHolder* field_0x1b0;
     u8 padding_0024[24];
-    long* field_0x1d0;
+    s64* field_0x1d0;
     u8 padding_48[48];
     WorldResourceLoader* worldResourceLoader;
     u8 padding_0x16[16];

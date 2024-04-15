@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/HostIO/HioNode.h"
 
@@ -13,7 +15,7 @@ public:
 
     ActionBgmCtrl(AudioKeeper*, BgmUserInfo*);
     void startAction(const char*);
-    void update(float, float, float, bool);
+    void update(f32, f32, f32, bool);
 
     AudioKeeper* getAudioKeeper() const override;
 };

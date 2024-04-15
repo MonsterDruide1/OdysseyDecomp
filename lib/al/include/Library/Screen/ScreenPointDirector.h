@@ -17,9 +17,9 @@ public:
     bool hitCheckSegment(ScreenPointer*, sead::ObjArray<ScreenPointTargetHitInfo>*, s32,
                          const sead::Vector3f&, const sead::Vector3f&);
     bool hitCheckScreenCircle(ScreenPointer*, sead::ObjArray<ScreenPointTargetHitInfo>*, s32,
-                              const sead::Vector2f&, float, float);
+                              const sead::Vector2f&, f32, f32);
     bool hitCheckLayoutCircle(ScreenPointer*, sead::ObjArray<ScreenPointTargetHitInfo>*, s32,
-                              const sead::Vector2f&, float, float,
+                              const sead::Vector2f&, f32, f32,
                               s32 (*)(const ScreenPointTargetHitInfo*,
                                       const ScreenPointTargetHitInfo*));
 

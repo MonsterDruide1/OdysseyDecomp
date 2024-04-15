@@ -38,39 +38,39 @@ class ActorInitInfo;
 class SensorSortCmpFuncBase;
 class ActorSensorController;
 
-void addHitSensorPlayer(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorPlayer(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                         const sead::Vector3f&);
-void addHitSensor(LiveActor*, const ActorInitInfo&, const char*, u32, f32, unsigned short,
+void addHitSensor(LiveActor*, const ActorInitInfo&, const char*, u32, f32, u16,
                   const sead::Vector3f&);
-void addHitSensorPlayerAttack(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorPlayerAttack(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                               const sead::Vector3f&);
-void addHitSensorPlayerEye(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorPlayerEye(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                            const sead::Vector3f&);
-void addHitSensorEnemy(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorEnemy(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                        const sead::Vector3f&);
-void addHitSensorEnemyBody(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorEnemyBody(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                            const sead::Vector3f&);
-void addHitSensorEnemyAttack(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorEnemyAttack(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                              const sead::Vector3f&);
-void addHitSensorMapObj(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorMapObj(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                         const sead::Vector3f&);
-void addHitSensorBindable(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorBindable(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                           const sead::Vector3f&);
-void addHitSensorBindableGoal(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorBindableGoal(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                               const sead::Vector3f&);
-void addHitSensorBindableAllPlayer(LiveActor*, const ActorInitInfo&, const char*, f32,
-                                   unsigned short, const sead::Vector3f&);
-void addHitSensorBindableBubbleOutScreen(LiveActor*, const ActorInitInfo&, const char*, f32,
-                                         unsigned short, const sead::Vector3f&);
-void addHitSensorBindableKoura(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorBindableAllPlayer(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
+                                   const sead::Vector3f&);
+void addHitSensorBindableBubbleOutScreen(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
+                                         const sead::Vector3f&);
+void addHitSensorBindableKoura(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                                const sead::Vector3f&);
-void addHitSensorBindableRouteDokan(LiveActor*, const ActorInitInfo&, const char*, f32,
-                                    unsigned short, const sead::Vector3f&);
-void addHitSensorBindableBubblePadInput(LiveActor*, const ActorInitInfo&, const char*, f32,
-                                        unsigned short, const sead::Vector3f&);
-void addHitSensorCollisionParts(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorBindableRouteDokan(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
+                                    const sead::Vector3f&);
+void addHitSensorBindableBubblePadInput(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
+                                        const sead::Vector3f&);
+void addHitSensorCollisionParts(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                                 const sead::Vector3f&);
-void addHitSensorEye(LiveActor*, const ActorInitInfo&, const char*, f32, unsigned short,
+void addHitSensorEye(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                      const sead::Vector3f&);
 void setHitSensorSort(LiveActor*, const char*, const SensorSortCmpFuncBase*);
 void setHitSensorPosPtr(LiveActor*, const char*, const sead::Vector3f*);
