@@ -37,7 +37,7 @@ private:
 };
 
 template <class T>
-class DeriveActorGroup : LiveActorGroup {
+class DeriveActorGroup : public LiveActorGroup {
 public:
     s32 registerActor(T* actor) { LiveActorGroup::registerActor(actor); }
     void removeActor(const T* actor) { LiveActorGroup::removeActor(actor); }

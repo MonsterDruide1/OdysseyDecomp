@@ -33,7 +33,7 @@ class IUseAudioKeeper;
 class CameraRailHolder;
 class NameToCameraParamTransferFunc;
 
-class CameraDirector : public HioNode, IUseExecutor {
+class CameraDirector : public HioNode, public IUseExecutor {
 public:
     CameraDirector(s32 maxCameras);
     virtual ~CameraDirector();
