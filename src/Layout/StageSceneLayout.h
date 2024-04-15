@@ -17,7 +17,7 @@ class PlayGuideCamera;
 class PlayGuideBgm;
 class MapMini;
 
-class StageSceneLayout : al::NerveStateBase {
+class StageSceneLayout : public al::NerveStateBase {
 public:
     StageSceneLayout(const char*, const al::LayoutInitInfo&, const al::PlayerHolder*,
                      const al::SubCameraRenderer*);

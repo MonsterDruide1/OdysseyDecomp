@@ -3,7 +3,7 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Yaml/ByamlIter.h"
 
-class PlayerConst : al::HioNode {
+class PlayerConst : public al::HioNode {
 public:
     PlayerConst();
     PlayerConst(const al::ByamlIter&);

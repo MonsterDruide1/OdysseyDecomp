@@ -192,11 +192,12 @@ def header_sorted_visibility(c, path):
         if line.endswith("\\"): line = line[0:-1]
         line = line.strip()
         if line not in visibilities_ordered:
-            header_check_line(line, path, nest_level[-1])
+            header_check_line(line, path, nest_level[-1], should_start_class)
         if "{" in line and "}" in line:
             if CHECK(lambda a:a.count("{")==a.count("}") or (a.startswith("{") and a.endswith("}};")), line, "Unbalanced \"{\" and \"}\" in the same line! (exception: end of brace-initialized array)", path): return
             if line.startswith("{") and line.endswith("}};"):
                 del nest_level[-1]
+            should_start_class = False
             continue
         
         if line.startswith("class ") and not line.endswith(";"):
@@ -221,9 +222,22 @@ def header_sorted_visibility(c, path):
         print("nest_level", nest_level)
         exit(1)
  
-def header_check_line(line, path, visibility):
+def header_check_line(line, path, visibility, should_start_class):
     if visibility == -2:  # outside of class/struct/...
-        pass
+        if (line.startswith("class") and (not line.endswith(";") or "{" in line)) or should_start_class:
+            if ": " in line and not ": public" in line and not ": virtual public" in line:
+                FAIL("All superclasses must be public!", line, path)
+            if should_start_class and not ": " in line and not line.startswith("public") and not line.startswith("virtual public"):
+                FAIL("All superclasses must be public!", line, path)
+            
+            if line.startswith("class") and "{" in line and ": " in line:
+                index = 0
+                while index < len(line):
+                    index = line.find(",", index+1)
+                    if index == -1: break
+                    if index < line.find(": "): continue
+                    if index != line.find(", public", index) and index != line.find(", virtual public", index):
+                        FAIL("All superclasses must be public!", line, path)
     elif visibility == -1:  # inside class, but not in a visibility block
         allowed = line in ["", "};"] or line.startswith("SEAD_SINGLETON_DISPOSER") or line.startswith("SEAD_RTTI_BASE") or line.startswith("SEAD_RTTI_OVERRIDE")
         CHECK(lambda a:allowed, line, "Inside class, but not in a visibility block, only empty lines and closing brace allowed!", path)

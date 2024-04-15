@@ -12,7 +12,7 @@ class PlayerPainPartsKeeper;
 class PlayerCostumeInfo;
 class IUseDimension;
 
-class PlayerModelChangerHakoniwa : IPlayerModelChanger, al::HioNode {
+class PlayerModelChangerHakoniwa : public IPlayerModelChanger, public al::HioNode {
 public:
     PlayerModelChangerHakoniwa(const al::LiveActor*, PlayerModelHolder*, PlayerPainPartsKeeper*,
                                PlayerCostumeInfo*, const IUseDimension*);
