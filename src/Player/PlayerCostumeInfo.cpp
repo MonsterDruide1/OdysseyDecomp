@@ -4,99 +4,97 @@
 #include "Library/Math/MathUtil.h"
 
 PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(char const* a1) {
-    _0 = a1;
+    mCostumeName = a1;
 }
 PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(char const* a1) {
-    _0 = a1;
+    mCostumeName = a1;
 }
 
 PlayerCostumeInfo::PlayerCostumeInfo() = default;
 
 void PlayerCostumeInfo::init(const PlayerBodyCostumeInfo* body, const PlayerHeadCostumeInfo* head) {
-    mPlayerBodyCostumeInfo = body;
-    mPlayerHeadCostumeInfo = head;
+    mBodyInfo = body;
+    mHeadInfo = head;
 }
 
 bool PlayerCostumeInfo::isEnableBigEar() const {
-    return mPlayerBodyCostumeInfo->mIsBigEar && mPlayerHeadCostumeInfo->mIsEnableBigEar;
+    return mBodyInfo->mIsBigEar && mHeadInfo->mIsEnableBigEar;
 }
 
 bool PlayerCostumeInfo::isEnableHairNoCap() const {
-    return mPlayerHeadCostumeInfo->mIsEnableHairNoCap &&
-           (mPlayerBodyCostumeInfo->mIsUseBodyHair && mPlayerBodyCostumeInfo->mIsExistHairNoCap);
+    return mHeadInfo->mIsEnableHairNoCap &&
+           (mBodyInfo->mIsUseBodyHair && mBodyInfo->mIsExistHairNoCap);
 }
 
 bool PlayerCostumeInfo::isEnableCostume2D() const {
-    if (mPlayerBodyCostumeInfo->mIsNoPairHead)
-        return al::isEqualString(mPlayerHeadCostumeInfo->_0, "Mario");
-    return al::isEqualString(mPlayerBodyCostumeInfo->_0, mPlayerHeadCostumeInfo->_0);
+    if (mBodyInfo->mIsNoPairHead)
+        return al::isEqualString(mHeadInfo->mCostumeName, "Mario");
+    return al::isEqualString(mBodyInfo->mCostumeName, mHeadInfo->mCostumeName);
 }
 
 bool PlayerCostumeInfo::isNeedShrinkNose() const {
-    return mPlayerHeadCostumeInfo->mIsShrinkNose;
+    return mHeadInfo->mIsShrinkNose;
 }
 
 bool PlayerCostumeInfo::isNeedBodyHair() const {
-    if (!mPlayerBodyCostumeInfo->mIsUseBodyHair ||
-        (mPlayerBodyCostumeInfo->mIsMario64 && mPlayerHeadCostumeInfo->mIsMario64))
+    if (!mBodyInfo->mIsUseBodyHair || (mBodyInfo->mIsMario64 && mHeadInfo->mIsMario64))
         return false;
     return true;
 }
 
 bool PlayerCostumeInfo::isNeedSyncBodyHair() const {
 #ifdef MATCHING_HACK_NX_CLANG
-    long v1 = *(long*)&mPlayerBodyCostumeInfo->mIsUseBodyHair;
+    long v1 = *(long*)&mBodyInfo->mIsUseBodyHair;
     if (!((char)v1))
         return false;
-    if ((v1 & 0xFF00000000LL) && mPlayerHeadCostumeInfo->mIsMario64)
+    if ((v1 & 0xFF00000000LL) && mHeadInfo->mIsMario64)
         return false;
-    return !mPlayerBodyCostumeInfo->mIsMario64;
+    return !mBodyInfo->mIsMario64;
 #else
-    if (!mPlayerBodyCostumeInfo->mIsUseBodyHair)
+    if (!mBodyInfo->mIsUseBodyHair)
         return false;
-    if (mPlayerBodyCostumeInfo->mIsMario64 && mPlayerHeadCostumeInfo->mIsMario64)
+    if (mBodyInfo->mIsMario64 && mHeadInfo->mIsMario64)
         return false;
-    return !mPlayerBodyCostumeInfo->mIsMario64;
+    return !mBodyInfo->mIsMario64;
 #endif
 }
 
 bool PlayerCostumeInfo::isNeedFullFaceAnim() const {
-    return mPlayerHeadCostumeInfo->mIsFullFace;
+    return mHeadInfo->mIsFullFace;
 }
 
 bool PlayerCostumeInfo::isHidePainNose() const {
-    return mPlayerBodyCostumeInfo->mIsHidePainNose || mPlayerHeadCostumeInfo->mIsInvisibleHead;
+    return mBodyInfo->mIsHidePainNose || mHeadInfo->mIsInvisibleHead;
 }
 
 bool PlayerCostumeInfo::isEnableEarring() const {
-    if (mPlayerBodyCostumeInfo->mIsUseEarringPeach)
-        return !mPlayerHeadCostumeInfo->mIsHideEarringPeach;
-    return !mPlayerBodyCostumeInfo->mIsUseEarringLink ||
-           !mPlayerHeadCostumeInfo->mIsHideEarringLink;
+    if (mBodyInfo->mIsUseEarringPeach)
+        return !mHeadInfo->mIsHideEarringPeach;
+    return !mBodyInfo->mIsUseEarringLink || !mHeadInfo->mIsHideEarringLink;
 }
 
 bool PlayerCostumeInfo::isSyncFaceBeard() const {
-    return mPlayerBodyCostumeInfo->mIsUseBeard && mPlayerHeadCostumeInfo->mIsHideBeard;
+    return mBodyInfo->mIsUseBeard && mHeadInfo->mIsHideBeard;
 }
 
 bool PlayerCostumeInfo::isSyncStrap() const {
-    return mPlayerHeadCostumeInfo->mIsUseStrap && !mPlayerBodyCostumeInfo->mIsUseBeard;
+    return mHeadInfo->mIsUseStrap && !mBodyInfo->mIsUseBeard;
 }
 
 bool PlayerCostumeInfo::isFollowJoeStrap() const {
-    return mPlayerHeadCostumeInfo->mIsUseStrap && !mPlayerBodyCostumeInfo->mIsMario64;
+    return mHeadInfo->mIsUseStrap && !mBodyInfo->mIsMario64;
 }
 
 bool PlayerCostumeInfo::isPreventHeadPain() const {
-    return mPlayerHeadCostumeInfo->mIsPreventHead;
+    return mHeadInfo->mIsPreventHead;
 }
 
 bool PlayerCostumeInfo::isInvisibleHead() const {
-    return mPlayerHeadCostumeInfo->mIsInvisibleHead;
+    return mHeadInfo->mIsInvisibleHead;
 }
 
 s32 PlayerCostumeInfo::calcWarmLevel(s32 baseLevel) const {
-    if (mPlayerBodyCostumeInfo->mIsIgnoreTemperature)
+    if (mBodyInfo->mIsIgnoreTemperature)
         return false;
-    return al::clamp(mPlayerBodyCostumeInfo->mWarmLevel + baseLevel, -3, 3);
+    return al::clamp(mBodyInfo->mWarmLevel + baseLevel, -3, 3);
 }

@@ -27,9 +27,9 @@ public:
 
 private:
     sead::Vector3f mStart = sead::Vector3f::zero;
-    sead::Vector3f unk = sead::Vector3f::zero;
-    sead::Vector3f unk2 = sead::Vector3f::zero;
-    sead::Vector3f unk3 = sead::Vector3f::zero;
+    sead::Vector3f mControlPoint1 = sead::Vector3f::zero;
+    sead::Vector3f mControlPoint2 = sead::Vector3f::zero;
+    sead::Vector3f mControlPoint3 = sead::Vector3f::zero;  // maybe end point?
     f32 mDistance = 0;
 };
 
