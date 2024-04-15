@@ -3,6 +3,7 @@
 #include <container/seadPtrArray.h>
 
 namespace al {
+class ExecuteDirector;
 struct ExecuteOrder;
 struct ExecuteSystemInitInfo;
 class ExecutorListActorExecuteBase;
@@ -45,6 +46,8 @@ private:
     sead::PtrArray<ExecutorListIUseExecutorUpdate> mExecutorsUser;
     sead::PtrArray<ExecutorListFunctor> mExecutorsFunctor;
 };
+
+void registerExecutorUser(IUseExecutor*, ExecuteDirector*, const char*);
 }  // namespace al
 
 namespace alActorSystemFunction {
