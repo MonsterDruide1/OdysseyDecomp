@@ -3,7 +3,7 @@
 namespace al {
 AccountHolder::AccountHolder() {
     nn::account::Initialize();
-    mUserHandle = new nn::account::UserHandle();
+    mUserHandle = new nn::account::UserHandle;
 
     if (nn::account::OpenPreselectedUser(mUserHandle).IsSuccess() &&
         nn::account::GetUserId(&mUid, *mUserHandle).IsSuccess()) {
