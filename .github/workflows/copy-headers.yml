@@ -49,7 +49,7 @@ jobs:
           fi
           echo "MESSAGE=$PR_TITLE" >> "$GITHUB_ENV"
         else
-          echo "HEADER_BRANCH=$DELETED_BRANCH" >> "$GITHUB_ENV"
+          echo "HEADER_BRANCH=${DELETED_BRANCH#refs/heads/}" >> "$GITHUB_ENV"
           echo "AUTHOR_NAME=$COMMIT_AUTHOR_NAME" >> "$GITHUB_ENV"
           echo "AUTHOR_MAIL=$COMMIT_AUTHOR_MAIL" >> "$GITHUB_ENV"
           {
