@@ -5,15 +5,14 @@ class HitSensor;
 
 class HitSensorKeeper {
 public:
-    HitSensorKeeper(s32);
+    HitSensorKeeper(u32);
 
     HitSensor* getSensor(const char*) const;
-
-    HitSensor* getSensor(s32) const;
+    HitSensor* getSensor(u32) const;
+    u32 getSensorNum();
 
 private:
-    s32 _0;
-    s32 mSensorCount;
+    u32 mSensorCount;
     HitSensor** mSensors;
 };
 }  // namespace al

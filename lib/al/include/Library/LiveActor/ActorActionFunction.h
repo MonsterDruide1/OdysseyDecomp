@@ -1,12 +1,12 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
+class ActorActionKeeper;
 class HitSensor;
+class LiveActor;
 class Nerve;
 
 void startAction(LiveActor* actor, const char* actionName);
@@ -15,18 +15,18 @@ bool tryStartAction(LiveActor* actor, const char* actionName);
 bool tryStartActionIfNotPlaying(LiveActor* actor, const char* actionName);
 bool tryStartActionIfActionEnd(LiveActor* actor, const char* actionName);
 
-bool isActionPlaying(LiveActor* actor, const char* actionName);
-bool isActionEnd(LiveActor* actor);
-bool isExistAction(LiveActor* actor);
-bool isExistAction(LiveActor* actor, const char* actionName);
-bool isActionOneTime(LiveActor* actor);
-bool isActionOneTime(LiveActor* actor, const char* actionName);
+bool isActionPlaying(const LiveActor* actor, const char* actionName);
+bool isActionEnd(const LiveActor* actor);
+bool isExistAction(const LiveActor* actor);
+bool isExistAction(const LiveActor* actor, const char* actionName);
+bool isActionOneTime(const LiveActor* actor);
+bool isActionOneTime(const LiveActor* actor, const char* actionName);
 
-const char* getActionName(LiveActor* actor);
-f32 getActionFrame(LiveActor* actor);
-f32 getActionFrameMax(LiveActor* actor);
-f32 getActionFrameMax(LiveActor* actor, const char* actionName);
-f32 getActionFrameRate(LiveActor* actor);
+const char* getActionName(const LiveActor* actor);
+f32 getActionFrame(const LiveActor* actor);
+f32 getActionFrameMax(const LiveActor* actor);
+f32 getActionFrameMax(const LiveActor* actor, const char* actionName);
+f32 getActionFrameRate(const LiveActor* actor);
 
 void setActionFrame(LiveActor* actor, f32 frame);
 void setActionFrameRate(LiveActor* actor, f32 rate);
