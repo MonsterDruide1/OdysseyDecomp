@@ -7,6 +7,8 @@
 #include <resource/seadResource.h>
 
 namespace al {
+class InitResourceDataAction;
+class InitResourceDataAnim;
 struct ActionAnimCtrlInfo;
 class ActorInitResourceData;
 
@@ -39,6 +41,9 @@ public:
     void getOtherFile(const sead::SafeString& name) const;
     const char* getArchiveName() const;
 
+    ActorInitResourceData* getResData() const { return mData; }
+    nn::g3d::ResFile* getResFile() const { return mResFile; }
+
 private:
     sead::ArchiveRes* mArchive;
     sead::ArchiveFileDevice* mDevice;
@@ -48,36 +53,6 @@ private:
     nn::g3d::ResFile* mResFile;
 };
 
-class AnimInfoTable {
-public:
-    char size[0x18];
-};
-
-struct InitResourceDataAnim {
-    AnimInfoTable* mInfoTable;
-    AnimInfoTable* mFclAnim;
-    AnimInfoTable* mFtsAnim;
-    AnimInfoTable* mFtpAnim;
-    AnimInfoTable* mInfoTable2;
-};
-
-class InitResourceDataActionAnim {
-public:
-    InitResourceDataActionAnim(Resource*, InitResourceDataAnim const*, char const* resourceYml);
-    void sortCtrlInfo(void);
-
-    static InitResourceDataActionAnim* tryCreate(Resource*, InitResourceDataAnim const*,
-                                                 char const*);
-
-private:
-    s32 mLength = 0;
-    ActionAnimCtrlInfo** mInfos;  // ActionAnimCtrlInfo*[mLength];
-};
-
-struct InitResourceDataAction {
-    InitResourceDataActionAnim* dataActionAnim;
-};
-
 class ActorResource {
 public:
     ActorResource(sead::SafeString const&, Resource*, Resource*);
@@ -85,10 +60,14 @@ public:
 
     void initResourceData(char const*, bool);
 
+    bool hasAnimData() const { return mHasAnimData; }
+    Resource* getModelRes() const { return mModelRes; }
+    Resource* getAnimRes() const { return mAnimRes; }
+
 private:
     sead::FixedSafeString<0x80> mName;
-    Resource* mResourceModel;
-    Resource* mResourceAnim;
+    Resource* mModelRes;
+    Resource* mAnimRes;
     bool mHasAnimData;
     InitResourceDataAnim* mAnimResData;
     InitResourceDataAction* mActionResData;

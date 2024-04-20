@@ -4,21 +4,24 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class ActionAnimCtrlInfo;
-class ActionAnimDataInfo;
+struct ActionAnimCtrlInfo;
+struct ActionAnimDataInfo;
 class HitSensorKeeper;
 class LiveActor;
 
 struct ActionFlagCtrlInfo {
     const char* mName;
+    void* _8;
+    void* _10;
 };
 
 class ActionFlagCtrl {
 public:
-    static LiveActor** tryCreate(LiveActor*, const char*);
+    static ActionFlagCtrl* tryCreate(LiveActor*, const char*);
 
     ActionFlagCtrl(LiveActor*, const char*);
 
+    ActionFlagCtrlInfo* findFlagInfo(const char*) const;
     void initPost();
     void start(const char*);
     void startCtrlFlag();
@@ -27,13 +30,14 @@ public:
     void updateCtrlSensor(float, float, float, bool);
     bool isFlagValidOn(int, bool);
     bool isFlagValidOff(int, bool);
-    const char* findFlagInfo(const char*);
 
 private:
     LiveActor* mParentActor;
     const char* mName;
-    HitSensorKeeper* mHitSensor;
-    int mStackSize;
-    ActionFlagCtrlInfo* mFlagStack;
+    HitSensorKeeper* mHitSensorKeeper = nullptr;
+    s32 mInfoCount = 0;
+    ActionFlagCtrlInfo** mInfos = nullptr;
+    ActionFlagCtrlInfo* mLastFlag = nullptr;
+    bool mBool = false;
 };
 }  // namespace al
