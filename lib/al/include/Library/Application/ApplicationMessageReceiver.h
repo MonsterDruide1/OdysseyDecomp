@@ -2,6 +2,14 @@
 
 #include <nn/oe.h>
 
+namespace nn::oe {
+enum NotificationMessage {
+    NotificationMessage_Ukn = 0xf,
+    NotificationMessage_OperationModeChanged = 0x1e,
+    NotificationMessage_PerformanceModeChanged = 0x1f
+};  // should go into oe.h
+}  // namespace nn::oe
+
 namespace al {
 class ApplicationMessageReceiver {
 public:
@@ -11,7 +19,7 @@ public:
     nn::oe::PerformanceMode getPerformaceMode() const;
 
     void init();
-    void procMessage(u32 message);  // enum ?
+    void procMessage(nn::oe::NotificationMessage message);
     void update();
 
 private:
