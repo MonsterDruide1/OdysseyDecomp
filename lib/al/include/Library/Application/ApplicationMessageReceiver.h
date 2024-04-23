@@ -4,7 +4,7 @@
 
 namespace nn::oe {
 enum NotificationMessage {
-    NotificationMessage_Ukn = 0xf,
+    NotificationMessage_FocusStateChanged = 0xf,  // not sure
     NotificationMessage_OperationModeChanged = 0x1e,
     NotificationMessage_PerformanceModeChanged = 0x1f
 };  // should go into oe.h
@@ -19,7 +19,7 @@ public:
     nn::oe::PerformanceMode getPerformaceMode() const;
 
     void init();
-    void procMessage(nn::oe::NotificationMessage message);
+    void procMessage(u32 message);
     void update();
 
 private:
