@@ -1,0 +1,68 @@
+#include "Library/Application/ApplicationMessageReceiver.h"
+
+namespace al {
+ApplicationMessageReceiver::ApplicationMessageReceiver() {
+    ukn[0] = false;
+    ukn[1] = false;
+    mOperationMode = nn::oe::OperationMode_Handheld;
+    mPerformanceMode = nn::oe::PerformanceMode_Normal;
+}
+
+nn::oe::OperationMode ApplicationMessageReceiver::getOperationMode() const {
+    nn::oe::OperationMode operationMode = nn::oe::GetOperationMode();
+
+    if (operationMode != nn::oe::OperationMode_Handheld) {
+        return (nn::oe::OperationMode)(operationMode == nn::oe::OperationMode_Docked);
+    }
+
+    return operationMode;
+}
+
+nn::oe::PerformanceMode ApplicationMessageReceiver::getPerformaceMode() const {
+    nn::oe::PerformanceMode performanceMode = nn::oe::GetPerformanceMode();
+
+    if (performanceMode != nn::oe::PerformanceMode_Normal) {
+        return (nn::oe::PerformanceMode)(performanceMode == nn::oe::PerformanceMode_Boost);
+    }
+
+    return performanceMode;
+}
+
+void ApplicationMessageReceiver::init() {
+    nn::oe::Initialize();
+
+    mOperationMode = getOperationMode();
+    mPerformanceMode = getPerformaceMode();
+
+    nn::oe::SetResumeNotificationEnabled(true);
+    nn::oe::SetOperationModeChangedNotificationEnabled(true);
+    nn::oe::SetPerformanceModeChangedNotificationEnabled(true);
+    nn::oe::SetFocusHandlingMode(3);  // enum?
+}
+
+void ApplicationMessageReceiver::procMessage(u32 message) {
+    switch (message) {
+    case 0xf:
+        nn::oe::GetCurrentFocusState();
+        break;
+    case 0x1e:
+        ukn[0] = true;
+        mOperationMode = getOperationMode();
+        break;
+    case 0x1f:
+        ukn[1] = true;
+        mPerformanceMode = getPerformaceMode();
+        break;
+    }
+}
+
+void ApplicationMessageReceiver::update() {
+    ukn[0] = false;
+    ukn[1] = false;
+    u32 message;
+
+    if (nn::oe::TryPopNotificationMessage(&message)) {
+        procMessage(message);
+    }
+}
+}  // namespace al
