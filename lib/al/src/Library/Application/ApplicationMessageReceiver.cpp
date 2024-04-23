@@ -40,16 +40,16 @@ void ApplicationMessageReceiver::init() {
     nn::oe::SetFocusHandlingMode(3);  // enum?
 }
 
-void ApplicationMessageReceiver::procMessage(u32 message) {
+void ApplicationMessageReceiver::procMessage(nn::oe::NotificationMessage message) {
     switch (message) {
-    case 0xf:
+    case nn::oe::NotificationMessage_Ukn:
         nn::oe::GetCurrentFocusState();
         break;
-    case 0x1e:
+    case nn::oe::NotificationMessage_OperationModeChanged:
         ukn[0] = true;
         mOperationMode = getOperationMode();
         break;
-    case 0x1f:
+    case nn::oe::NotificationMessage_PerformanceModeChanged:
         ukn[1] = true;
         mPerformanceMode = getPerformaceMode();
         break;
@@ -59,9 +59,9 @@ void ApplicationMessageReceiver::procMessage(u32 message) {
 void ApplicationMessageReceiver::update() {
     ukn[0] = false;
     ukn[1] = false;
-    u32 message;
+    nn::oe::NotificationMessage message;
 
-    if (nn::oe::TryPopNotificationMessage(&message)) {
+    if (nn::oe::TryPopNotificationMessage((u32*)&message)) {
         procMessage(message);
     }
 }
