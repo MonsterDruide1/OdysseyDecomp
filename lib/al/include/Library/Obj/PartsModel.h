@@ -37,7 +37,7 @@ private:
     sead::Vector3f mLocalScale = sead::Vector3f(1.0f, 1.0f, 1.0f);
     bool mIsUseFollowMtxScale = false;
     bool mIsUseLocalScale = false;
-    bool mUpdate = true;
+    bool mIsUpdate = true;
 };
 
 }  // namespace al

@@ -30,7 +30,7 @@ void PlayerPainPartsKeeper::updateNeedle() {
         else
             al::showModelIfHide(mNeedlesActor);
 
-        if (mEnableTimer)
+        if (mIsEnableTimer)
             mTimer++;
         if (mTimer < 3600)
             return;

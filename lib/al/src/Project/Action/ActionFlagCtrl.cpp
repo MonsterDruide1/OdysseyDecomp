@@ -23,7 +23,7 @@ ActionFlagCtrl* ActionFlagCtrl::tryCreate(LiveActor* actor, const char* name) {
 }
 void ActionFlagCtrl::start(const char* name) {
     mLastFlag = findFlagInfo(name);
-    mBool = false;
+    mIsBool = false;
     if (!mLastFlag)
         return;
 
@@ -39,7 +39,7 @@ ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
     return nullptr;
 }
 void ActionFlagCtrl::update(f32 frame, f32 frameRate, f32 frameMax, bool isStop) {
-    if (!mLastFlag || !mBool)
+    if (!mLastFlag || !mIsBool)
         return;
     if (!mHitSensorKeeper)
         return;

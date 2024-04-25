@@ -116,7 +116,7 @@ void PartsModel::updatePose() {
     sead::Matrix34f poseMtx;
     sead::Matrix34f jointMtx;
 
-    if (!mUpdate)
+    if (!mIsUpdate)
         return;
     if (mIsUseLocalPos) {
         jointMtx = *mJointMtx;

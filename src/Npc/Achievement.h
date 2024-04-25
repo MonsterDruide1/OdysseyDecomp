@@ -10,6 +10,6 @@ public:
     bool isGet(GameDataHolderAccessor) const;
 
 private:
-    bool mGet = false;
+    bool mIsGet = false;
     const AchievementInfo* mInfo;
 };

@@ -20,7 +20,7 @@ public:
 private:
     al::LiveActor* mParent;
     s32 mTime;
-    bool mActive;
+    bool mIsActive;
     sead::Color4f mColor;
     sead::Quatf mQuat;
     PlayerHackStartShaderParam* mParam;

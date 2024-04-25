@@ -25,7 +25,7 @@ private:
     const al::LiveActor* mLiveActor;
     const PlayerCostumeInfo* mPlayerCostumeInfo;
     f32 mModelAlphaMask = 1;
-    bool mEnableTimer = true;
+    bool mIsEnableTimer = true;
     al::LiveActor* mPlayerFaceActor = nullptr;
     al::PartsModel* mNeedlesActor = nullptr;
     s32 mTimer = 0;

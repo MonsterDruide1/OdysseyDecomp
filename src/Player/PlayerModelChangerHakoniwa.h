@@ -44,19 +44,19 @@ public:
 private:
     const al::LiveActor* mLiveActor;
     bool mIsChange;
-    bool mModeIs2D;
+    bool mIsMode2D;
     al::LiveActor* mLiveActor2;
     PlayerModelHolder* mPlayerModelHolder;
     PlayerPainPartsKeeper* mPlayerPainPartsKeeper;
     PlayerCostumeInfo* mPlayerCostumeInfo;
     const IUseDimension* mIUseDimension;
-    bool mVisibilityNeedsSync;
+    bool mIsVisibilityNeedsSync;
     bool mIsModelVisible;
     bool mIsSilhouetteVisible;
     bool mIsShadowMaskVisible;
     bool mIsBlinkingFromDamage;
     s32 mDamageTimer;
-    bool mMusicStarted;
+    bool mIsMusicStarted;
     bool mIsNeedHairControl;
     bool mIsNeedSyncBodyHair;
     bool mIsSyncFaceBeard;

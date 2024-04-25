@@ -17,7 +17,7 @@ void FixMapParts::init(const ActorInitInfo& info) {
     registActorToDemoInfo(this, info);
 
     if (getModelKeeper() != nullptr && !isExistAction(this) && !isViewDependentModel(this)) {
-        mStatic = true;
+        mIsStatic = true;
     }
 }
 void FixMapParts::appear() {
@@ -27,11 +27,11 @@ void FixMapParts::appear() {
         tryStartAction(this, "Appear");
 }
 void FixMapParts::movement() {
-    if (!mStatic)
+    if (!mIsStatic)
         LiveActor::movement();
 }
 void FixMapParts::calcAnim() {
-    if (!mStatic)
+    if (!mIsStatic)
         LiveActor::calcAnim();
     else
         calcViewModel(this);
