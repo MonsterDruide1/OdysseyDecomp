@@ -38,6 +38,6 @@ private:
     s32 mInfoCount = 0;
     ActionFlagCtrlInfo** mInfos = nullptr;
     ActionFlagCtrlInfo* mLastFlag = nullptr;
-    bool mBool = false;
+    bool mIsBool = false;
 };
 }  // namespace al

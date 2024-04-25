@@ -96,7 +96,7 @@ private:
     u32 field_40;
     u32 mRequireSaveFrame;
     bool mIsInvalidSaveForMoonGet;
-    bool mChangeStageRelated;
+    bool unk_changeStageRelated;
     u8 field_4A;
     u8 field_4B;
     u32 field_4C;

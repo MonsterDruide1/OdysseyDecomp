@@ -272,6 +272,12 @@ def header_check_line(line, path, visibility, should_start_class):
             allowed_name = (var_name.startswith("m") and var_name[1].isupper()) or any([var_name.startswith(p) for p in PREFIXES])
             CHECK(lambda a:allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
+        if var_type == "bool":
+            BOOL_PREFIXES = ["mIs", "mHas"]
+            allowed_name = any([var_name.startswith(p) and (var_name[len(p)].isupper() or var_name[len(p)].isdigit()) for p in BOOL_PREFIXES]) or any([var_name.startswith(p) for p in PREFIXES])
+            if path.endswith("ByamlWriterData.h") and var_name == "mValue": return
+            CHECK(lambda a:allowed_name, line, "Boolean member variables must start with `mIs` or `mHas`!", path)
+
 def header_no_offset_comments(c, path):
     for line in c.splitlines():
         CHECK(lambda a:"// 0x" not in a, line, "Offset comments are not allowed in headers!", path)

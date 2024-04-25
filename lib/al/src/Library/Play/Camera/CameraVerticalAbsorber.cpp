@@ -53,7 +53,7 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
 
     mPrevTargetTrans = pos;
 
-    if (mUnusedBool || mIsInvalidated ||
+    if (unk_unusedBool || mIsInvalidated ||
         alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
     if (alCameraPoserFunction::isTargetClimbPole(mCameraPoser))
@@ -85,7 +85,7 @@ void CameraVerticalAbsorber::load(const ByamlIter& data) {
 
     if (!it.tryGetIterByKey(&it2, "AdvanceAbsorbUp"))
         return;
-    mAdvanceAbsorbUp = true;
+    mIsAdvanceAbsorbUp = true;
     mAdvanceAbsorbScreenPosUp = getByamlKeyFloat(it2, "AdvanceAbsorbScreenPosUp");
 }
 
@@ -102,7 +102,7 @@ void CameraVerticalAbsorber::update() {
     mLookAtCamera.getUp() = mCameraPoser->getCameraUp();
     if (mLookAtCamera.getUp().length() > 0.f)
         mLookAtCamera.getUp().normalize();
-    if (!mUnusedBool && !mIsInvalidated) {
+    if (!unk_unusedBool && !mIsInvalidated) {
         mLookAtCamera.getAt() -= mTargetInterp;
         if (!mIsNoCameraPosAbsorb) {
             mLookAtCamera.getPos() -= mTargetInterp;

@@ -42,7 +42,7 @@ private:
     f32 mLerp1;
     f32 mAbsorbScreenPosUp;
     f32 mAbsorbScreenPosDown;
-    bool mAdvanceAbsorbUp;
+    bool mIsAdvanceAbsorbUp;
     f32 mAdvanceAbsorbScreenPosUp;
     bool mIsExistCollisionUnderTarget;
     sead::Vector3f mUnderTargetCollisionPos;
@@ -56,7 +56,7 @@ private:
     sead::Vector3f mPrevTargetFront;
     bool mIsNoCameraPosAbsorb;
     bool mIsInvalidated;
-    bool mUnusedBool;
+    bool unk_unusedBool;
     bool mIsStopUpdate;
     bool mIsKeepInFrame;
 };

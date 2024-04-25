@@ -13,6 +13,6 @@ public:
     bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) override;
 
 private:
-    bool mStatic = false;
+    bool mIsStatic = false;
 };
 }  // namespace al
