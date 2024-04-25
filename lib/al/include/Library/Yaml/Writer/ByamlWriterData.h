@@ -224,8 +224,8 @@ public:
     ByamlWriterData* getValue() { return mValue; }
 
 private:
-    void* selfReference = this;
-    void* test2 = nullptr;
+    void* mSelfReference = this;
+    void* unk = nullptr;
     const char* mKey;
     ByamlWriterData* mValue;
 };

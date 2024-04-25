@@ -209,6 +209,8 @@ def header_sorted_visibility(c, path):
         if line in visibilities_ordered:
             i = visibilities_ordered.index(line)
             if CHECK(lambda a:i>nest_level[-1], line, "Wrong order of visibilities: Must be public, protected, private!", path): return
+            if nest_level[-1] == -2:  # outside of class, only seen in SubActorKeeper.h in a macro definition - ignore then
+                continue
             nest_level[-1] = i
             continue
         elif "{" in line:
@@ -245,6 +247,30 @@ def header_check_line(line, path, visibility, should_start_class):
         if "(" in line:  # function
             function_name = line.split("(")[-2].split(" ")[-1]
             CHECK(lambda a:not function_name.endswith("_"), line, "Functions ending with an underscore are either protected or private!", path)
+    elif visibility == 2:  # private
+        if line == "};" or line == "" or line == "union {" or line.startswith("struct"): return
+        if "(" in line and ")" in line: return
+        newline = line
+        if "=" in line:
+            newline = line.split("=")[0].strip()
+        elif line.endswith(";"):
+            newline = line.split(";")[0].strip()
+        else:
+            FAIL("Unknown private line!", line, path)
+        
+        if newline.endswith("]"):
+            newline = newline.split("[")[0].strip()
+        
+        var_name = newline.split(" ")[-1]
+        var_type = " ".join(newline.split(" ")[0:-1])
+
+        PREFIXES = ["padding", "field", "unk", "gap", "_", "filler"]
+
+        if var_type.startswith("static"):
+            CHECK(lambda a:var_name.startswith("s") and var_name[1].isupper(), line, "Static member variables must be prefixed with `s`!", path)
+        else:
+            allowed_name = (var_name.startswith("m") and var_name[1].isupper()) or any([var_name.startswith(p) for p in PREFIXES])
+            CHECK(lambda a:allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
 def header_no_offset_comments(c, path):
     for line in c.splitlines():

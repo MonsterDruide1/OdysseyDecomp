@@ -85,6 +85,6 @@ private:
     s32 _88;
     void* gap2[1];
     bool mDisableInput;
-    void* fillToSize[20];
+    void* gap3[20];
 };
 static_assert(sizeof(PlayerInput) == 0x140);

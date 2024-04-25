@@ -10,8 +10,8 @@ namespace al {
 Rail::Rail() = default;
 // NON_MATCHING: mismatch during `mRailPart`-array creation
 void Rail::init(const PlacementInfo& info) {
-    isClosed = false;
-    tryGetArg(&isClosed, info, "IsClosed");
+    mIsClosed = false;
+    tryGetArg(&mIsClosed, info, "IsClosed");
     PlacementInfo railPointsInfo;
     tryGetPlacementInfoByKey(&railPointsInfo, info, "RailPoints");
     mRailPointsCount = getCountPlacementInfo(railPointsInfo);
@@ -35,7 +35,7 @@ void Rail::init(const PlacementInfo& info) {
         return;
     }
 
-    mRailPartCount = (isClosed ? 1 : 0) + mRailPointsCount - 1;
+    mRailPartCount = (mIsClosed ? 1 : 0) + mRailPointsCount - 1;
     mRailPart = new RailPart[mRailPartCount];
 
     f32 totalLength = 0;
@@ -116,7 +116,7 @@ f32 Rail::getLengthToPoint(s32 index) const {
     return mRailPart[index - 1].getTotalDistance();
 }
 void Rail::calcRailPointPos(sead::Vector3f* pos, s32 index) const {
-    if (isClosed || index != mRailPointsCount - 1)
+    if (mIsClosed || index != mRailPointsCount - 1)
         return mRailPart[index].calcStartPos(pos);
 
     return mRailPart[index - 1].calcEndPos(pos);
@@ -178,7 +178,7 @@ void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3
     }
 }
 f32 Rail::normalizeLength(f32 distance) const {
-    if (isClosed) {
+    if (mIsClosed) {
         f32 distanceOnRail = modf(distance, getTotalLength());
         if (distanceOnRail < 0.0)
             distanceOnRail += getTotalLength();

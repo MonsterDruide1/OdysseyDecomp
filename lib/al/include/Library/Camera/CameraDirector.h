@@ -98,8 +98,8 @@ private:
     CameraParamTransfer* mParamTransfer;
     const CameraResourceHolder* mCameraResourceHolder;
     CameraFlagCtrl* mFlagCtrl;
-    void* customThing;
+    void* unk;
     CameraInSwitchOnAreaDirector* mInSwitchOnAreaDirector;
-    void* anotherCustomThing;
+    void* unk2;
 };
 }  // namespace al

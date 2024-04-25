@@ -38,11 +38,11 @@ u32 ByamlHeader::getDataOffset() const {
 ByamlStringTableIter::ByamlStringTableIter() = default;
 
 ByamlStringTableIter::ByamlStringTableIter(const u8* data, bool isRev)
-    : mData(data), isRev(isRev) {}
+    : mData(data), mIsRev(isRev) {}
 
 s32 ByamlStringTableIter::getSize() const {
     u32 type_and_size = *reinterpret_cast<const u32*>(mData);
-    return isRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
+    return mIsRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
 }
 
 const u32* ByamlStringTableIter::getAddressTable() const {
@@ -52,7 +52,7 @@ const u32* ByamlStringTableIter::getAddressTable() const {
 }
 
 u32 ByamlStringTableIter::getStringAddress(s32 idx) const {
-    if (isRev)
+    if (mIsRev)
         return bswap_32(getAddressTable()[idx]);
 
     return getAddressTable()[idx];
@@ -61,7 +61,7 @@ u32 ByamlStringTableIter::getStringAddress(s32 idx) const {
 // NON_MATCHING: regalloc
 u32 ByamlStringTableIter::getEndAddress() const {
     u32 val = getAddressTable()[getSize()];
-    return isRev ? bswap_32(val) : val;
+    return mIsRev ? bswap_32(val) : val;
 }
 const char* ByamlStringTableIter::getString(s32 index) const {
     return reinterpret_cast<const char*>(&mData[getStringAddress(index)]);

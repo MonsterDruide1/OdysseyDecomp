@@ -17,20 +17,20 @@ public:
     void forceEndChange2DKeep();
     bool update();
 
-    bool getIs2D() const { return is2D; }
-    bool getIsIn2DArea() const { return isIn2DArea; }
-    bool getIsCurrently2D() const { return isCurrently2D; }
-    bool getIsCanChange2D() const { return isCanChange2D; }
-    bool getIsCanChange3D() const { return isCanChange3D; }
+    bool getIs2D() const { return mIs2D; }
+    bool getIsIn2DArea() const { return mIsIn2DArea; }
+    bool getIsCurrently2D() const { return mIsCurrently2D; }
+    bool getIsCanChange2D() const { return mIsCanChange2D; }
+    bool getIsCanChange3D() const { return mIsCanChange3D; }
 
 private:
     const al::LiveActor* mLiveActor;
-    bool isValid = true;
-    bool is2D = false;
-    bool isIn2DArea = false;
-    bool isCurrently2D = false;
-    bool isCanChange2D = false;
-    bool isCanChange3D = false;
+    bool mIsValid = true;
+    bool mIs2D = false;
+    bool mIsIn2DArea = false;
+    bool mIsCurrently2D = false;
+    bool mIsCanChange2D = false;
+    bool mIsCanChange3D = false;
     In2DAreaMoveControl* mIn2DAreaMoveControl = nullptr;
 };
 static_assert(sizeof(ActorDimensionKeeper) == 0x18);

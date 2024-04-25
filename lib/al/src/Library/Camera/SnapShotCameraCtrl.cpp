@@ -10,9 +10,9 @@ void SnapShotCameraCtrl::load(ByamlIter const& iter) {
     if (!tryGetByamlIterByKey(&param, iter, "SnapShotParam"))
         return;
     if (tryGetByamlF32(&mParam->mMinFovyDegree, param, "MinFovyDegree"))
-        mParam->gotMin = true;
+        mParam->mHasMin = true;
     if (tryGetByamlF32(&mParam->mMinFovyDegree, param, "MinFovyDegree"))
-        mParam->gotMax = true;
+        mParam->mHasMax = true;
 }
 
 }  // namespace al

@@ -18,5 +18,5 @@ public:
 
 private:
     char padding[0x68];
-    al::LiveActor* currentHackActor;
+    al::LiveActor* mCurrentHackActor;
 };

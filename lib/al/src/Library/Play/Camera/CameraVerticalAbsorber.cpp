@@ -38,7 +38,7 @@ void CameraVerticalAbsorber::exeFollowAbsolute() {
 }
 
 void CameraVerticalAbsorber::invalidate() {
-    isInvalidated = true;
+    mIsInvalidated = true;
     if (!isNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute))
         setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
 }
@@ -53,7 +53,7 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
 
     mPrevTargetTrans = pos;
 
-    if (unusedBool || isInvalidated ||
+    if (mUnusedBool || mIsInvalidated ||
         alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
     if (alCameraPoserFunction::isTargetClimbPole(mCameraPoser))
@@ -91,7 +91,7 @@ void CameraVerticalAbsorber::load(const ByamlIter& data) {
 
 // NON_MATCHING
 void CameraVerticalAbsorber::update() {
-    if (isStopUpdate)
+    if (mIsStopUpdate)
         return;
     sead::Vector3f gravity{};
     alCameraPoserFunction::calcTargetGravity(&gravity, mCameraPoser);
@@ -102,9 +102,9 @@ void CameraVerticalAbsorber::update() {
     mLookAtCamera.getUp() = mCameraPoser->getCameraUp();
     if (mLookAtCamera.getUp().length() > 0.f)
         mLookAtCamera.getUp().normalize();
-    if (!unusedBool && !isInvalidated) {
+    if (!mUnusedBool && !mIsInvalidated) {
         mLookAtCamera.getAt() -= mTargetInterp;
-        if (!isNoCameraPosAbsorb) {
+        if (!mIsNoCameraPosAbsorb) {
             mLookAtCamera.getPos() -= mTargetInterp;
         }
     }
@@ -124,7 +124,7 @@ void CameraVerticalAbsorber::update() {
     }
     updateNerve();
     sead::Vector3f prevTargetTrans = sead::Vector3f::zero;
-    if (!isKeepInFrame) {
+    if (!mIsKeepInFrame) {
         prevTargetTrans = mTargetInterp;
     } else {
         sead::Vector3f offsetTrans = sead::Vector3f::zero;

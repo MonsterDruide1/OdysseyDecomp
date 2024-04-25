@@ -22,7 +22,7 @@ private:
     inline void allocArray();
     inline void putEntry(s32 index, const ByamlIter& iter);
 
-    Entry* array;
-    s32 size;
+    Entry* mArray;
+    s32 mSize;
 };
 }  // namespace al
