@@ -241,6 +241,10 @@ def header_check_line(line, path, visibility, should_start_class):
     elif visibility == -1:  # inside class, but not in a visibility block
         allowed = line in ["", "};"] or line.startswith("SEAD_SINGLETON_DISPOSER") or line.startswith("SEAD_RTTI_BASE") or line.startswith("SEAD_RTTI_OVERRIDE")
         CHECK(lambda a:allowed, line, "Inside class, but not in a visibility block, only empty lines and closing brace allowed!", path)
+    elif visibility == 0:  # public
+        if "(" in line:  # function
+            function_name = line.split("(")[-2].split(" ")[-1]
+            CHECK(lambda a:not function_name.endswith("_"), line, "Functions ending with an underscore are either protected or private!", path)
 
 def header_no_offset_comments(c, path):
     for line in c.splitlines():
