@@ -1,31 +1,32 @@
 #include "Library/Application/ApplicationMessageReceiver.h"
 
 namespace al {
-ApplicationMessageReceiver::ApplicationMessageReceiver() {
-    ukn[0] = false;
-    ukn[1] = false;
-    mOperationMode = nn::oe::OperationMode_Handheld;
-    mPerformanceMode = nn::oe::PerformanceMode_Normal;
-}
+ApplicationMessageReceiver::ApplicationMessageReceiver() {}
 
 nn::oe::OperationMode ApplicationMessageReceiver::getOperationMode() const {
     nn::oe::OperationMode operationMode = nn::oe::GetOperationMode();
 
-    if (operationMode != nn::oe::OperationMode_Handheld) {
-        return (nn::oe::OperationMode)(operationMode == nn::oe::OperationMode_Docked);
+    switch (operationMode) {
+    case nn::oe::OperationMode_Handheld:
+        return nn::oe::OperationMode_Handheld;
+    case nn::oe::OperationMode_Docked:
+        return nn::oe::OperationMode_Docked;
+    default:
+        return nn::oe::OperationMode_Handheld;
     }
-
-    return operationMode;
 }
 
 nn::oe::PerformanceMode ApplicationMessageReceiver::getPerformaceMode() const {
     nn::oe::PerformanceMode performanceMode = nn::oe::GetPerformanceMode();
 
-    if (performanceMode != nn::oe::PerformanceMode_Normal) {
-        return (nn::oe::PerformanceMode)(performanceMode == nn::oe::PerformanceMode_Boost);
+    switch (performanceMode) {
+    case nn::oe::PerformanceMode_Normal:
+        return nn::oe::PerformanceMode_Normal;
+    case nn::oe::PerformanceMode_Boost:
+        return nn::oe::PerformanceMode_Boost;
+    default:
+        return nn::oe::PerformanceMode_Normal;
     }
-
-    return performanceMode;
 }
 
 void ApplicationMessageReceiver::init() {
@@ -37,28 +38,28 @@ void ApplicationMessageReceiver::init() {
     nn::oe::SetResumeNotificationEnabled(true);
     nn::oe::SetOperationModeChangedNotificationEnabled(true);
     nn::oe::SetPerformanceModeChangedNotificationEnabled(true);
-    nn::oe::SetFocusHandlingMode(3);  // enum?
+    nn::oe::SetFocusHandlingMode(nn::oe::FocusHandlingMode_AlwaysSuspend);
 }
 
 void ApplicationMessageReceiver::procMessage(u32 message) {
     switch (message) {
-    case nn::oe::NotificationMessage_FocusStateChanged:
+    case nn::am::AppletMessage_FocusStateChanged:
         nn::oe::GetCurrentFocusState();
         break;
-    case nn::oe::NotificationMessage_OperationModeChanged:
-        ukn[0] = true;
+    case nn::am::AppletMessage_OperationModeChanged:
+        mIsUpdatedOperationMode = true;
         mOperationMode = getOperationMode();
         break;
-    case nn::oe::NotificationMessage_PerformanceModeChanged:
-        ukn[1] = true;
+    case nn::am::AppletMessage_PerformanceModeChanged:
+        mIsUpdatedPerformanceMode = true;
         mPerformanceMode = getPerformaceMode();
         break;
     }
 }
 
 void ApplicationMessageReceiver::update() {
-    ukn[0] = false;
-    ukn[1] = false;
+    mIsUpdatedOperationMode = false;
+    mIsUpdatedPerformanceMode = false;
     u32 message;
 
     if (nn::oe::TryPopNotificationMessage(&message)) {
