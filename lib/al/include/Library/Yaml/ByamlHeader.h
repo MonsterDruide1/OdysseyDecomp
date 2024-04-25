@@ -40,7 +40,7 @@ public:
 
 private:
     const u8* mData = nullptr;
-    bool isRev = false;
+    bool mIsRev = false;
 };
 }  // namespace al
 

@@ -44,7 +44,7 @@ private:
     f32 mAbsorbScreenPosDown;
     bool mAdvanceAbsorbUp;
     f32 mAdvanceAbsorbScreenPosUp;
-    bool isExistCollisionUnderTarget;
+    bool mIsExistCollisionUnderTarget;
     sead::Vector3f mUnderTargetCollisionPos;
     sead::Vector3f mUnderTargetCollisionNormal;
     f32 mLerp2;
@@ -54,11 +54,11 @@ private:
     sead::Vector3f mPrevTargetTrans;
     sead::Vector3f mTargetFront;
     sead::Vector3f mPrevTargetFront;
-    bool isNoCameraPosAbsorb;
-    bool isInvalidated;
-    bool unusedBool;
-    bool isStopUpdate;
-    bool isKeepInFrame;
+    bool mIsNoCameraPosAbsorb;
+    bool mIsInvalidated;
+    bool mUnusedBool;
+    bool mIsStopUpdate;
+    bool mIsKeepInFrame;
 };
 static_assert(sizeof(CameraVerticalAbsorber) == 0x1B0);
 

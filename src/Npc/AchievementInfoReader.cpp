@@ -18,7 +18,7 @@ void AchievementInfoReader::init() {  // TODO minor mismatches during loop
     al::ByamlIter achievementInfoArray;
     if (achievementInfo.tryGetIterByKey(&achievementInfoArray, "AchievementInfoArray")) {
         auto size = achievementInfoArray.getSize();
-        array.allocBuffer(size, nullptr);
+        mAchievements.allocBuffer(size, nullptr);
 
         for (u32 i = 0; i < size; i++) {
             al::ByamlIter iter;
@@ -32,15 +32,15 @@ void AchievementInfoReader::init() {  // TODO minor mismatches during loop
                 s32 level = -1;
                 iter.tryGetIntByKey(&level, "Level");
 
-                array.pushBack(new AchievementInfo(name, num, level, note));
+                mAchievements.pushBack(new AchievementInfo(name, num, level, note));
             }
         }
     }
 }
 
 s32 AchievementInfoReader::tryFindIndexByName(const char* name) const {
-    for (s32 i = 0; i < array.size(); i++) {
-        if (al::isEqualString(name, array[i]->mName))
+    for (s32 i = 0; i < mAchievements.size(); i++) {
+        if (al::isEqualString(name, mAchievements[i]->mName))
             return i;
     }
     return -1;

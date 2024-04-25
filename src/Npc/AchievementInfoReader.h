@@ -21,10 +21,10 @@ public:
     void init();
     s32 tryFindIndexByName(const char*) const;
 
-    AchievementInfo* get(s32 index) { return array[index]; }
-    s32 size() { return array.size(); }
-    s32 capacity() { return array.capacity(); }
+    AchievementInfo* get(s32 index) { return mAchievements[index]; }
+    s32 size() { return mAchievements.size(); }
+    s32 capacity() { return mAchievements.capacity(); }
 
 private:
-    sead::PtrArray<AchievementInfo> array;
+    sead::PtrArray<AchievementInfo> mAchievements;
 };

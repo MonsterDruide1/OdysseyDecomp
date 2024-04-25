@@ -36,8 +36,8 @@ s32 ByamlHashPair::getValue(bool isRev) const {
     return isRev ? bswap_32(mValue) : mValue;
 }
 
-ByamlHashIter::ByamlHashIter(const u8* data, bool isRev_) : mData(data), isRev(isRev_) {}
-ByamlHashIter::ByamlHashIter() : mData(nullptr), isRev(false) {}
+ByamlHashIter::ByamlHashIter(const u8* data, bool isRev_) : mData(data), mIsRev(isRev_) {}
+ByamlHashIter::ByamlHashIter() : mData(nullptr), mIsRev(false) {}
 
 const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
     const ByamlHashPair* pairTable = getPairTable();
@@ -50,7 +50,7 @@ const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
     while (lowerBound < upperBound) {
         s32 avg = (lowerBound + upperBound) / 2;
         const ByamlHashPair* pair = &pairTable[avg];
-        s32 result = key - pair->getKey(isRev);
+        s32 result = key - pair->getKey(mIsRev);
         if (result == 0) {
             return pair;
         }
@@ -68,7 +68,7 @@ bool ByamlHashIter::getDataByIndex(ByamlData* data, s32 index) const {
     if (((s32)getSize()) < 1)
         return false;
 
-    data->set(&getPairTable()[index], isRev);
+    data->set(&getPairTable()[index], mIsRev);
     return true;
 }
 // NON_MATCHING: minor additional instructions, probably not inlined
@@ -91,7 +91,7 @@ bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
     while (true) {
         s32 avg = (lowerBound + upperBound) / 2;
         pair = &pairTable[avg];
-        s32 result = key - pair->getKey(isRev);
+        s32 result = key - pair->getKey(mIsRev);
         if (result == 0) {
             break;
         }
@@ -105,7 +105,7 @@ bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
     }
     if (pair == nullptr)
         return false;
-    data->set(pair, isRev);
+    data->set(pair, mIsRev);
     return true;
 }
 const u8* ByamlHashIter::getOffsetData(u32 off) const {
@@ -128,11 +128,11 @@ u32 ByamlHashIter::getSize() const {
     if (!mData)
         return 0;
     u32 val = *reinterpret_cast<const u32*>(mData);
-    return isRev ? bswap_24(val >> 8) : val >> 8;
+    return mIsRev ? bswap_24(val >> 8) : val >> 8;
 }
 
-ByamlArrayIter::ByamlArrayIter(const u8* data, bool isRev_) : mData(data), isRev(isRev_) {}
-ByamlArrayIter::ByamlArrayIter() : mData(nullptr), isRev(false) {}
+ByamlArrayIter::ByamlArrayIter(const u8* data, bool isRev_) : mData(data), mIsRev(isRev_) {}
+ByamlArrayIter::ByamlArrayIter() : mData(nullptr), mIsRev(false) {}
 
 bool ByamlArrayIter::getDataByIndex(ByamlData* data, s32 index) const {
     if (index < 0)
@@ -140,7 +140,7 @@ bool ByamlArrayIter::getDataByIndex(ByamlData* data, s32 index) const {
     if (((s32)getSize()) <= index)
         return false;
 
-    data->set(getTypeTable()[index], getDataTable()[index], isRev);
+    data->set(getTypeTable()[index], getDataTable()[index], mIsRev);
     return true;
 }
 // NON_MATCHING: regalloc
@@ -152,7 +152,7 @@ const u8* ByamlArrayIter::getOffsetData(u32 off) const {
 }
 u32 ByamlArrayIter::getSize() const {
     u32 val = *reinterpret_cast<const u32*>(mData);
-    return isRev ? bswap_24(val >> 8) : val >> 8;
+    return mIsRev ? bswap_24(val >> 8) : val >> 8;
 }
 const u8* ByamlArrayIter::getTypeTable() const {
     return mData + 4;

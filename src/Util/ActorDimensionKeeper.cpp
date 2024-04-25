@@ -3,17 +3,17 @@
 #include "Util/IUseDimension.h"
 
 void ActorDimensionKeeper::validate() {
-    isValid = true;
+    mIsValid = true;
 }
 
 void ActorDimensionKeeper::invalidate() {
-    isValid = false;
+    mIsValid = false;
 
-    if (is2D) {
-        is2D = false;
-        isIn2DArea = false;
-        isCurrently2D = false;
-        isCanChange3D = true;
+    if (mIs2D) {
+        mIs2D = false;
+        mIsIn2DArea = false;
+        mIsCurrently2D = false;
+        mIsCanChange3D = true;
     }
 }
 

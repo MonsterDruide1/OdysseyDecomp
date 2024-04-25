@@ -37,7 +37,7 @@ public:
 
 private:
     LiveActor* mLiveActor;
-    sead::Vector3f lightDir;
+    sead::Vector3f mLightDir;
     bool mIsAppendSubActor;
     sead::PtrArray<DepthShadowMapInfo> mDepthShadowMaps;
     sead::PtrArray<ModelDrawerDepthShadowMap> mModelDrawerDepthShadowMaps;

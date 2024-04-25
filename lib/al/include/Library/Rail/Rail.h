@@ -39,7 +39,7 @@ private:
     RailPart* mRailPart = nullptr;
     s32 mRailPartCount = 0;
     s32 mRailPointsCount = 0;
-    bool isClosed = false;
+    bool mIsClosed = false;
 };
 
 }  // namespace al

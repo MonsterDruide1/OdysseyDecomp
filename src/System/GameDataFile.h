@@ -63,5 +63,5 @@ private:
     unsigned char padding_6A8[0x6A8];
     GameProgressData* mGameProgressData;
     char padding_9F0[0x340];
-    s32 curWorldId;
+    s32 mCurWorldId;
 };

@@ -7,29 +7,29 @@ ActorScoreKeeper::ActorScoreKeeper() = default;
 
 void ActorScoreKeeper::init(const ByamlIter& iter) {
     if (iter.isTypeArray()) {
-        size = iter.getSize();
+        mSize = iter.getSize();
         allocArray();
-        for (s32 i = 0; i < size; i++) {
+        for (s32 i = 0; i < mSize; i++) {
             ByamlIter subIter;
             iter.tryGetIterByIndex(&subIter, i);
             putEntry(i, subIter);
         }
     } else {
-        size = 1;
+        mSize = 1;
         allocArray();
         putEntry(0, iter);
     }
 }
 
 inline void ActorScoreKeeper::allocArray() {
-    Entry* local_array = new Entry[size];
-    if (size)
-        memset(local_array, 0, sizeof(Entry) * size);
-    array = local_array;
+    Entry* local_array = new Entry[mSize];
+    if (mSize)
+        memset(local_array, 0, sizeof(Entry) * mSize);
+    mArray = local_array;
 }
 
 inline void ActorScoreKeeper::putEntry(s32 index, const ByamlIter& iter) {
-    auto& entry = array[index];
+    auto& entry = mArray[index];
     iter.tryGetStringByKey(&entry.factorName, "FactorName");
     iter.tryGetStringByKey(&entry.categoryName, "CategoryName");
 }

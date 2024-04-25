@@ -7,8 +7,8 @@
 #include "Library/Yaml/ByamlIter.h"
 
 struct CameraParam {
-    bool gotMin;
-    bool gotMax;
+    bool mHasMin;
+    bool mHasMax;
     f32 mMinFovyDegree;
     f32 mMaxFovyDegree;
 };
@@ -37,16 +37,16 @@ private:
     CameraParam* mParam;
     bool mIsValidLookAtOffset;
     sead::Vector3f mLookAtOffset;
-    sead::Vector3f vVar1;
+    sead::Vector3f unk1;
     bool mIsValidZoomFovy;
     f32 mFovyDegree;
-    f32 fVar2;
-    f32 fVar3;
+    f32 unk2;
+    f32 unk3;
     f32 mMaxZoomOutFovyDegree;
     bool mIsValidRoll;
     f32 mRollDegree;
     f32 mRollTarget;
-    u32 uVar2;
-    bool bVar1;
+    u32 unk4;
+    bool unk5;
 };
 }  // namespace al

@@ -68,7 +68,7 @@ public:
 
 private:
     const u8* mData;
-    bool isRev;
+    bool mIsRev;
 };
 
 class ByamlArrayIter {
@@ -84,6 +84,6 @@ public:
 
 private:
     const u8* mData;
-    bool isRev;
+    bool mIsRev;
 };
 }  // namespace al

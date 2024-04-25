@@ -13,7 +13,7 @@ void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name
 void PlayerModelHolder::changeModel(const char* name) {
     for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
         if (al::isEqualString(it->mName, sead::SafeString(name))) {
-            currentModel = &*it;
+            mCurrentModel = &*it;
             return;
         }
     }
@@ -25,7 +25,7 @@ al::LiveActor* PlayerModelHolder::findModelActor(const char* name) const {
             return it->mLiveActor;
         }
     }
-    return currentModel->mLiveActor;
+    return mCurrentModel->mLiveActor;
 }
 
 al::LiveActor* PlayerModelHolder::tryFindModelActor(const char* name) const {
@@ -38,9 +38,9 @@ al::LiveActor* PlayerModelHolder::tryFindModelActor(const char* name) const {
 }
 
 bool PlayerModelHolder::isCurrentModelLabel(const char* name) const {
-    return al::isEqualString(currentModel->mName.cstr(), name);
+    return al::isEqualString(mCurrentModel->mName.cstr(), name);
 }
 
 bool PlayerModelHolder::isCurrentModelLabelSubString(const char* name) const {
-    return al::isEqualSubString(currentModel->mName.cstr(), name);
+    return al::isEqualSubString(mCurrentModel->mName.cstr(), name);
 }
