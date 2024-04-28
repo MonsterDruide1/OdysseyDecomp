@@ -40,7 +40,7 @@ add_compile_options(-fstandalone-debug)
 
 add_definitions(-D SWITCH)
 add_definitions(-D NNSDK)
-add_definitions(-D MATCHING_HACK_NX_CLANG)
+#add_definitions(-D MATCHING_HACK_NX_CLANG)
 
 add_link_options(-stdlib=libc++ -nostdlib)
 add_link_options(-fPIC -Wl,-Bsymbolic-functions -shared)

@@ -5,6 +5,8 @@
 
 namespace al {
 
+sead::Vector3f ActorPoseKeeperBase::sDefaultVelocity;
+
 static void rotationAndTranslationFromMatrix(sead::Vector3f& trans, sead::Vector3f& rot,
                                              const sead::Matrix34f* mtx) {
     sead::Vector3f tmp;

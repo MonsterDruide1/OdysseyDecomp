@@ -148,6 +148,7 @@ u64 getData64Bit(const u8* data, u32 off, bool isRev) {
 }
 
 void writeU24(sead::WriteStream* stream, s32 val) {
+    /*
     if (sead::Endian::getHostEndian() == sead::Endian::cBig) {
         stream->writeU8(val >> 16);
         stream->writeU8(val >> 8);
@@ -157,6 +158,7 @@ void writeU24(sead::WriteStream* stream, s32 val) {
         stream->writeU8(val >> 8);
         stream->writeU8(val >> 16);
     }
+    */
 }
 
 // NON_MATCHING: inlined verifiHeader, splitted loads for unswappedAfterOffset and diff in final
