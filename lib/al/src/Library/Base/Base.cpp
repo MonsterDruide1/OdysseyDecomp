@@ -1,8 +1,8 @@
+#include "Library/Base/Base.h"
+
 #include <cctype>
 #include <cstdio>
 #include <cstring>
-
-#include "Library/Base/Base.h"
 
 namespace al {
 s32 calcHashCode(char const* hash) {
