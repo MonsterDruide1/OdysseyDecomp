@@ -33,8 +33,6 @@ s32 calcHashCodeFmt(char const* format, std::va_list argv) {
 s32 calcHashCodeFmt(char const* format, ...) {
     std::va_list argv;
 
-    // I'm not sure if this is the right macro to use here
-    // I've never used this before
     va_start(argv, format);
     s32 result = calcHashCodeFmt(format, argv);
     va_end(argv);
