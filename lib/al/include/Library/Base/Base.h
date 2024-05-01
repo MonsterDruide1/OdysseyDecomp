@@ -1,10 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <cctype>
 #include <cstdarg>
-#include <cstdio>
-#include <cstring>
 
 namespace al {
 s32 calcHashCode(char const* hash);
