@@ -29,6 +29,7 @@ void normalize(sead::Matrix33f*);
 void normalize(sead::Matrix34f*);
 bool tryNormalizeOrZero(sead::Vector2f*);
 bool tryNormalizeOrZero(sead::Vector2f*, const sead::Vector2f&);
+bool tryNormalizeOrZero(sead::Vector3f*);
 bool tryNormalizeOrDirZ(sead::Vector3f*);
 bool tryNormalizeOrDirZ(sead::Vector3f*, const sead::Vector3f&);
 void normalizeComplement(sead::Matrix34f*);
