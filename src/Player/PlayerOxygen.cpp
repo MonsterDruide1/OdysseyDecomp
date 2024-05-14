@@ -22,7 +22,7 @@ void PlayerOxygen::reduce() {
     if (mFramesReducing++ >= mOxygenNoReduceFrame) {
         if (mOxygenLevel <= 0)
             mFramesWithoutOxygen++;
-        mOxygenLevel = sead::Mathf::max(mOxygenLevel - (1.0f / mOxygenReduceFrame), 0.0f);
+        mOxygenLevel = sead::Mathf::clampMin(mOxygenLevel - (1.0f / mOxygenReduceFrame), 0.0f);
     }
 }
 
