@@ -34,7 +34,6 @@ const char* ByamlWriterStringTable::tryAdd(const char* string) {
             char* array = new char[length];
             char* result = strncpy(array, string, length);
             auto* node = new sead::TListNode<const char*>(result);
-            node->mList = &mList;
             mList.insertBefore(&*it, node);
             return result;
         }
