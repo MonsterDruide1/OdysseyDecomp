@@ -1,5 +1,7 @@
 #include "Library/Application/ApplicationMessageReceiver.h"
 
+#include <nn/am.h>
+
 namespace al {
 ApplicationMessageReceiver::ApplicationMessageReceiver() {}
 
