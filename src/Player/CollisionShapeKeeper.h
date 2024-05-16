@@ -42,7 +42,7 @@ public:
     const CollidedShapeResult* getCollidedShapeResult(s32) const;
     const CollidedShapeResult* getCollidedShapeSupportResult(s32) const;
 
-private:
+public:
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
     f32 mBoundingRadius = 0.0f;
     sead::PtrArray<CollisionShapeInfoBase> mCollisionShape;
