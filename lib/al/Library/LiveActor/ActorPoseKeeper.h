@@ -10,7 +10,8 @@ class ActorPoseKeeperBase {
 public:
     ActorPoseKeeperBase();
 
-    const sead::Vector3f& getTrans() { return mTrans; }
+    const sead::Vector3f& getTrans() const { return mTrans; }
+    sead::Vector3f* getTransPtr() { return &mTrans; }
     virtual const sead::Vector3f& getRotate() const;
     virtual const sead::Vector3f& getScale() const;
     virtual const sead::Vector3f& getVelocity() const;
