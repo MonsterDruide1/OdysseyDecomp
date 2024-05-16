@@ -46,6 +46,16 @@ static_assert(sizeof(CollisionShapeInfoArrow) == 0xb8);
 class CollisionShapeInfoSphere : public CollisionShapeInfoBase {
 public:
     CollisionShapeInfoSphere(char const*, float, sead::Vector3<float> const&);
+    
+    const sead::Vector3f& getBoundingCenter() const override;
+    const sead::Vector3f& getBoundingCenterWorld() const override;
+    f32 getBoundingRadius() const override;
+    f32 getBoundingRadiusWorld() const override;
+    f32 getCheckStepRange() const override;
+    f32 getCheckStepRangeWorld() const override;
+    void updateShapeOffset(const sead::Vector3f&) override;
+    void calcWorldShapeInfo(const sead::Matrix34f&, f32) override;
+    void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
     void setSupportGround(const sead::Vector3f& up, f32 unk1) {
         isSupportGround = true;
@@ -59,16 +69,14 @@ private:
     sead::Vector3f mBoundingCenter;
     sead::Vector3f mBoundingCenterWorld;
     float mBoundingRadiusWorld;
-    sead::Vector3f mRelativeShapeInfo;
-    bool isSupportGround;
-    bool pad[3];
-    float unk1;
+    sead::Vector3f mRelativeShapeInfo = {0.0f, 0.0f, 0.0f};
+    bool isSupportGround = false;
+    float unk1 = 0.0f;
     float unk2;
-    sead::Vector3f mUp;
+    sead::Vector3f mUp = sead::Vector3f::ey;
     sead::Vector3f mWorldShapeInfo;
-    bool isIgnoreGround;
-    bool unkFlag;
-    bool pad2[6];
+    bool isIgnoreGround = false;
+    bool unkFlag = false;
 };
 static_assert(sizeof(CollisionShapeInfoSphere) == 0x70);
 
