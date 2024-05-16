@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Library/Collision/KCollisionFunc.h"
+#include "Library/Collision/KTriangle.h"
 
 class CollisionShapeInfoBase;
 class CollisionShapeInfoArrow;
