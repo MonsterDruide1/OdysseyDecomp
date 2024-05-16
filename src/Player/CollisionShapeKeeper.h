@@ -34,13 +34,13 @@ public:
     bool isShapeArrow(s32) const;
     bool isShapeSphere(s32) const;
     bool isShapeDisk(s32) const;
-    const CollisionShapeInfoBase& getShapeInfoBase(s32) const;
-    const CollisionShapeInfoArrow& getShapeInfoArrow(s32) const;
-    const CollisionShapeInfoSphere& getShapeInfoSphere(s32) const;
-    const CollisionShapeInfoDisk& getShapeInfoDisk(s32) const;
+    const CollisionShapeInfoBase* getShapeInfoBase(s32) const;
+    const CollisionShapeInfoArrow* getShapeInfoArrow(s32) const;
+    const CollisionShapeInfoSphere* getShapeInfoSphere(s32) const;
+    const CollisionShapeInfoDisk* getShapeInfoDisk(s32) const;
     u32 findShapeInfoIndex(const char*) const;
-    const CollidedShapeResult& getCollidedShapeResult(s32) const;
-    const CollidedShapeResult& getCollidedShapeSupportResult(s32) const;
+    const CollidedShapeResult* getCollidedShapeResult(s32) const;
+    const CollidedShapeResult* getCollidedShapeSupportResult(s32) const;
 
 private:
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
