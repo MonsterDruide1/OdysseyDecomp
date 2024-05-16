@@ -60,4 +60,24 @@ private:
     sead::Vector3f mVerts[3];
 };
 
+class HitInfo {
+public:
+    HitInfo();
+    
+private:
+    al::Triangle mTriangle;
+    f32 unk = 0.0f;
+    sead::Vector3f mCollisionHitPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f unk3 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mCollisionMovingReaction = {0.0f, 0.0f, 0.0f};
+    u8 mCollisionLocation = 0;
+};
+static_assert(sizeof(HitInfo) == 0xA0);
+
+class ArrowHitInfo : public HitInfo {};
+
+class DiskHitInfo : public HitInfo {};
+
+class SphereHitInfo : public HitInfo {};
+
 }  // namespace al

@@ -7,13 +7,15 @@
 
 namespace al {
 
-// NON_MATCHING: For some reason, not found by tools/check
-Triangle::Triangle()
-    : mCollisionParts(nullptr), mKCPrismData(nullptr), mKCPrismHeader(nullptr),
-      mFaceNormal(0.0f, 0.0f, 0.0f), mEdgeNormals{{0.0f, 0.0f, 0.0f},
-                                                  {0.0f, 0.0f, 0.0f},
-                                                  {0.0f, 0.0f, 0.0f}},
-      mVerts{{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}} {}
+Triangle::Triangle() : mCollisionParts(nullptr), mKCPrismData(nullptr), mKCPrismHeader(nullptr) {
+    mFaceNormal = sead::Vector3f::zero;
+    mEdgeNormals[0] = sead::Vector3f::zero;
+    mEdgeNormals[1] = sead::Vector3f::zero;
+    mEdgeNormals[2] = sead::Vector3f::zero;
+    mVerts[0] = sead::Vector3f::zero;
+    mVerts[1] = sead::Vector3f::zero;
+    mVerts[2] = sead::Vector3f::zero;
+}
 
 Triangle::Triangle(const CollisionParts& parts, const KCPrismData* data,
                    const KCPrismHeader* header) {
@@ -208,6 +210,8 @@ const sead::Matrix34f& Triangle::getBaseInvMtx() const {
 const sead::Matrix34f& Triangle::getPrevBaseMtx() const {
     return mCollisionParts->getPrevBaseMtx();
 }
+
+HitInfo::HitInfo() = default;
 
 }  // namespace al
 
