@@ -44,4 +44,5 @@ private:
 };
 static_assert(sizeof(StageSwitchDirector) == 0x20);
 
+bool tryOnSwitchDeadOn(IUseStageSwitch* stageSwitch);
 }  // namespace al
