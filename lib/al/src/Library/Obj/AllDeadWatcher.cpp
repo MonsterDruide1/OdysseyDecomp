@@ -41,7 +41,7 @@ void AllDeadWatcher::exeWatch() {
     setNerve(this, &NrvAllDeadWatcher.Watch);
 }
 
-void AllDeadWatcher::init(const al::ActorInitInfo& info) {
+void AllDeadWatcher::init(const ActorInitInfo& info) {
     initActorSceneInfo(this, info);
     initStageSwitch(this, info);
     initExecutorWatchObj(this, info);
@@ -50,7 +50,7 @@ void AllDeadWatcher::init(const al::ActorInitInfo& info) {
     mTargetCount = calcLinkChildNum(info, "WatchTargetEnemy");
     mTargets = new LiveActor*[mTargetCount];
 
-    for (int i = 0; i < mTargetCount; i++) {
+    for (s32 i = 0; i < mTargetCount; i++) {
         mTargets[i] = createLinksActorFromFactory(info, "WatchTargetEnemy", i);
     }
 
@@ -61,7 +61,7 @@ void AllDeadWatcher::init(const al::ActorInitInfo& info) {
         return;
     }
 
-    for (int i = 0; i < mTargetCount; i++) {
+    for (s32 i = 0; i < mTargetCount; i++) {
         mTargets[i]->makeActorDead();
     }
 }

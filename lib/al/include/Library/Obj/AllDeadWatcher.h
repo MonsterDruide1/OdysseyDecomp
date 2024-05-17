@@ -9,7 +9,7 @@ public:
     AllDeadWatcher(const char* name);
 
     void appear() override;
-    void init(const al::ActorInitInfo& info) override;
+    void init(const ActorInitInfo& info) override;
     void kill() override;
 
     void exeWait();

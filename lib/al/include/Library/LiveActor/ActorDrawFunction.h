@@ -4,7 +4,7 @@
 
 namespace al {
 // bool isAlive(LiveActor const* actor);
-void initActorSceneInfo(al::LiveActor* actor, al::ActorInitInfo const& info);
-void initStageSwitch(al::LiveActor* actor, al::ActorInitInfo const& info);
-void initExecutorWatchObj(al::LiveActor* actor, al::ActorInitInfo const& info);
+void initActorSceneInfo(LiveActor* actor, ActorInitInfo const& info);
+void initStageSwitch(LiveActor* actor, ActorInitInfo const& info);
+void initExecutorWatchObj(LiveActor* actor, ActorInitInfo const& info);
 }  // namespace al

@@ -4,6 +4,6 @@
 
 namespace al {
 LiveActor* createLinksActorFromFactory(const ActorInitInfo& info, const char* linkName,
-                                       int linkNum);
+                                       s32 linkNum);
 bool trySyncStageSwitchAppear(LiveActor* actor);
 }  // namespace al
