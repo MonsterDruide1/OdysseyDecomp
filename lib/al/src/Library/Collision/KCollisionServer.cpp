@@ -138,23 +138,48 @@ bool KCollisionServer::isNanPrism(const KCPrismData* data, const KCPrismHeader* 
 // NON_MATCHING: various, major stuff
 void KCollisionServer::calcPosLocal(sead::Vector3f* pos, const KCPrismData* data, s32 vIndex, const KCPrismHeader* header) const {
     if(vIndex == 0) {
-        *pos = getVertexData(data->mPosIndex, header);
+        sead::Vector3f vertex = getVertexData(data->mPosIndex, header);
+        *pos = vertex;
+        return;
     } else if(vIndex == 1) {
+      /*/
         sead::Vector3f normalB = getEdgeNormal2(data, header);
         sead::Vector3f normalFace = getFaceNormal(data, header);
         const sead::Vector3f& normalC = getEdgeNormal3(data, header);
+      /*/
+        const sead::Vector3f* normals = reinterpret_cast<const sead::Vector3f*>(uintptr_t(header) + header->mNormalsOffset);
+        sead::Vector3f normalB = normals[data->mEdgeNormalIndex[1]];
+        sead::Vector3f normalFace = normals[data->mFaceNormalIndex];
+        const sead::Vector3f& normalC = normals[data->mEdgeNormalIndex[2]];
+      /**/
+        const sead::Vector3f& vertex = getVertexData(data->mPosIndex, header);
         sead::Vector3f cross;
-        cross.setCross(normalB, normalFace);
-        f32 factor = data->mLength / fmaxf(normalC.dot(cross), 0.00000011921f);
-        *pos = getVertexData(data->mPosIndex, header) + cross * factor;
+        calXvec(&normalB, &normalFace, &cross);
+        f32 factor = data->mLength / fmaxf(cross.dot(normalC), 0.00000011921f);
+
+        pos->x = vertex.x + cross.x * factor;
+        pos->y = vertex.y + cross.y * factor;
+        pos->z = vertex.z + cross.z * factor;
     } else if(vIndex == 2) {
+      /*/
         sead::Vector3f normalA = getEdgeNormal1(data, header);
         sead::Vector3f normalFace = getFaceNormal(data, header);
         const sead::Vector3f& normalC = getEdgeNormal3(data, header);
+      /*/
+        const sead::Vector3f* normals = reinterpret_cast<const sead::Vector3f*>(uintptr_t(header) + header->mNormalsOffset);
+        sead::Vector3f normalA = normals[data->mEdgeNormalIndex[0]];
+        sead::Vector3f normalFace = normals[data->mFaceNormalIndex];
+        const sead::Vector3f& normalC = normals[data->mEdgeNormalIndex[2]];
+      /**/
+
+        const sead::Vector3f& vertex = getVertexData(data->mPosIndex, header);
         sead::Vector3f cross;
-        cross.setCross(normalA, normalFace);
-        f32 factor = data->mLength / fmaxf(normalC.dot(cross), 0.00000011921f);
-        *pos = getVertexData(data->mPosIndex, header) + cross * factor;
+        calXvec(&normalA, &normalFace, &cross);
+        f32 factor = data->mLength / fmaxf(cross.dot(normalC), 0.00000011921f);
+        
+        pos->x = vertex.x + cross.x * factor;
+        pos->y = vertex.y + cross.y * factor;
+        pos->z = vertex.z + cross.z * factor;
     } else {
         *pos = {0.0f, 0.0f, 0.0f};
     }
