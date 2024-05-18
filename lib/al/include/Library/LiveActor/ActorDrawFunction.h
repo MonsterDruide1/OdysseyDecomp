@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
-
 namespace al {
-// bool isAlive(LiveActor const* actor);
-void initActorSceneInfo(LiveActor* actor, ActorInitInfo const& info);
-void initStageSwitch(LiveActor* actor, ActorInitInfo const& info);
-void initExecutorWatchObj(LiveActor* actor, ActorInitInfo const& info);
+class LiveActor;
+
+bool isAlive(const LiveActor* actor);
+void initActorSceneInfo(LiveActor* actor, const ActorInitInfo& info);
+void initStageSwitch(LiveActor* actor, const ActorInitInfo& info);
+void initExecutorWatchObj(LiveActor* actor, const ActorInitInfo& info);
 }  // namespace al
