@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -10,9 +11,14 @@ class LiveActor;
 
 class CollisionParts {
 public:
+    CollisionParts(void*, const void*);
+
     const LiveActor* getConnectedHost() const;
     void calcForceMovePower(sead::Vector3f*, const sead::Vector3f&) const;
     void calcForceRotatePower(sead::Quatf*) const;
+    void initParts(const sead::Matrix34f&);
+    void resetAllMtx(const sead::Matrix34f&);
+    f32 makeEqualScale(sead::Matrix34f*);
 
     const sead::Matrix34f& getBaseMtx() const { return mBaseMtx; }
     const sead::Matrix34f& getBaseInvMtx() const { return mBaseInvMtx; }
@@ -22,34 +28,35 @@ public:
     bool isMoving() const { return mIsMoving; }
     const HitSensor* getConnectedSensor() const { return mConnectedSensor; }
 
-private:
-    unsigned char gap1[24];
-    void* mPartsList;
-    sead::Matrix34f* mJointMtx;
+public:
+    void* unk[2] = {nullptr, nullptr};
+    CollisionParts* selfReference = this;
+    void* mPartsList = nullptr;
+    sead::Matrix34f* mJointMtx = nullptr;
     sead::Matrix34f mSyncMtx;
     sead::Matrix34f mBaseMtx;
     sead::Matrix34f mBaseInvMtx;
     sead::Matrix34f mPrevBaseMtx;
     sead::Matrix34f mPrevBaseInvMtx;
-    sead::Vector3f mMtxScaleVec;
-    f32 mMtxScale;
-    f32 mInvMtxScale;
-    s32 mPriority;
-    KCollisionServer* mKCollisionServer;
-    al::HitSensor* mConnectedSensor;
-    const char* mSpecialPurpose;
-    const char* mOptionalPurpose;
-    sead::Vector3f mMtxScaleVecAgain;
-    int someCounter;
-    float mBoundingSphereRange;
-    float mBaseMtxScale;
-    bool isValidatedByUser;
-    bool isValidatedBySystem;
-    bool bVar3;
-    bool bVar4;
-    bool bVar5;
-    bool mIsMoving;
-    bool bVar6;
+    sead::Vector3f mMtxScaleVec = {1.0f, 1.0f, 1.0f};
+    f32 mMtxScale = 1.0f;
+    f32 mInvMtxScale = 1.0f;
+    s32 mPriority = -1;
+    KCollisionServer* mKCollisionServer = nullptr;
+    al::HitSensor* mConnectedSensor = nullptr;
+    const char* mSpecialPurpose = nullptr;
+    const char* mOptionalPurpose = nullptr;
+    sead::Vector3f mMtxScaleVecAgain = {1.0f, 1.0f, 1.0f};
+    int someCounter = 0;
+    float mBoundingSphereRange = -1.0f;
+    float mBaseMtxScale = 1.0f;
+    bool isValidatedByUser = true;
+    bool isValidatedBySystem = true;
+    bool bVar3 = true;
+    bool bVar4 = false;
+    bool bVar5 = true;
+    bool mIsMoving = false;
+    char something = 0;
     bool pad2;
 };
 static_assert(sizeof(CollisionParts) == 0x170);

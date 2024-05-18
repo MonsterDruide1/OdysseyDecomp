@@ -9,6 +9,8 @@
 #include <math.h>
 #include "Library/Math/MathUtil.h"
 
+#include <cstdio>
+
 namespace al {
 
 void SphereInterpolator::startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd,
@@ -278,7 +280,7 @@ void KCollisionServer::calcPosLocal(sead::Vector3f* pos, const KCPrismData* data
         const sead::Vector3f& vertex = getVertexData(data->mPosIndex, header);
         sead::Vector3f cross;
         calXvec(&normalB, &normalFace, &cross);
-        f32 factor = data->mLength / fmaxf(cross.dot(normalC), 0.00000011921f);
+        f32 factor = data->mLength / cross.dot(normalC);//fmaxf(cross.dot(normalC), 0.00000011921f);
 
         pos->x = vertex.x + cross.x * factor;
         pos->y = vertex.y + cross.y * factor;
@@ -298,7 +300,7 @@ void KCollisionServer::calcPosLocal(sead::Vector3f* pos, const KCPrismData* data
         const sead::Vector3f& vertex = getVertexData(data->mPosIndex, header);
         sead::Vector3f cross;
         calXvec(&normalA, &normalFace, &cross);
-        f32 factor = data->mLength / fmaxf(cross.dot(normalC), 0.00000011921f);
+        f32 factor = data->mLength / cross.dot(normalC);//fmaxf(cross.dot(normalC), 0.00000011921f);
         
         pos->x = vertex.x + cross.x * factor;
         pos->y = vertex.y + cross.y * factor;

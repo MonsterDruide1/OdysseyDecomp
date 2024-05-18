@@ -160,7 +160,7 @@ public:
     static s32 calcChildBlockOffset(const sead::Vector3u&, s32);
     static u32 getBlockData(const u32*, u32);
 
-private:
+public:
     sead::PtrArray<KCPrismHeader> mModelsData;
     void* mData = nullptr;
     ByamlIter* mIter = nullptr;
@@ -207,7 +207,7 @@ public:
     f32 calcRadiusBaseScale(f32 unk) const;
     void getMoveVector(sead::Vector3f* moveVec);
 
-private:
+public:
     sead::Vector3f mPos;
     sead::Vector3f mMove;
     f32 mSizeStart;
