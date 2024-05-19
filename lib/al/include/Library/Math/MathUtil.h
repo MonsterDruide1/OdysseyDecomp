@@ -2,6 +2,7 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include "math/seadBoundBox.h"
 
 namespace al {
 f32 easeIn(f32);
@@ -53,5 +54,7 @@ void lerpVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32)
 void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 void lerpVecHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
                f32, f32);
+
+void calcArrowAabb(sead::BoundBox3f*, const sead::Vector3f&, const sead::Vector3f&);
 
 }  // namespace al

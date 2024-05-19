@@ -4,6 +4,7 @@
 #include <math/seadVector.h>
 
 #include "Library/HostIO/HioNode.h"
+#include "math/seadBoundBox.h"
 
 enum class CollisionShapeId : u32 {
     Arrow = 0,
@@ -35,11 +36,35 @@ private:
 
 class CollisionShapeInfoArrow : public CollisionShapeInfoBase {
 public:
-    CollisionShapeInfoArrow(char const*, sead::Vector3<float> const&, sead::Vector3<float> const&,
-                            float, int);
+    CollisionShapeInfoArrow(const char*, const sead::Vector3f&, const sead::Vector3f&,
+                            f32, s32);
+    
+    const sead::Vector3f& getBoundingCenter() const override;
+    const sead::Vector3f& getBoundingCenterWorld() const override;
+    f32 getBoundingRadius() const override;
+    f32 getBoundingRadiusWorld() const override;
+    f32 getCheckStepRange() const override;
+    f32 getCheckStepRangeWorld() const override;
+    void updateShapeOffset(const sead::Vector3f&) override;
+    void calcWorldShapeInfo(const sead::Matrix34f&, f32) override;
+    void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
 private:
-    void* size[0x14];
+    s32 a6;
+    sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
+    f32 mBoundingRadius;
+    sead::Vector3f mBoundingCenterWorld = {0.0f, 0.0f, 0.0f};
+    f32 mBoundingRadiusWorld;
+    sead::Vector3f a3;
+    sead::Vector3f a4;
+    f32 a5;
+    sead::Vector3f vec1 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vec2 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vec3 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vec4 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vec5 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vec6 = {0.0f, 0.0f, 0.0f};
+    sead::BoundBox3f mAabb;
 };
 static_assert(sizeof(CollisionShapeInfoArrow) == 0xb8);
 
