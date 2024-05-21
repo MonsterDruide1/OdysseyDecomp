@@ -7,6 +7,7 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include <prim/seadDelegate.h>
+#include "Library/Yaml/ByamlIter.h"
 
 
 namespace al {
@@ -159,6 +160,13 @@ public:
 
     static s32 calcChildBlockOffset(const sead::Vector3u&, s32);
     static u32 getBlockData(const u32*, u32);
+
+
+    ~KCollisionServer() {
+        if(mIter)
+            delete mIter;
+        mModelsData.freeBuffer();
+    }
 
 public:
     sead::PtrArray<KCPrismHeader> mModelsData;

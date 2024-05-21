@@ -3,6 +3,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
+#include "Library/Collision/KCollisionServer.h"
 
 namespace al {
 class HitSensor;
@@ -27,6 +28,11 @@ public:
     int getSomeCounter() const { return someCounter; }
     bool isMoving() const { return mIsMoving; }
     const HitSensor* getConnectedSensor() const { return mConnectedSensor; }
+
+
+    ~CollisionParts() {
+        delete mKCollisionServer;
+    }
 
 public:
     void* unk[2] = {nullptr, nullptr};

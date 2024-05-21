@@ -49,7 +49,7 @@ public:
     void calcWorldShapeInfo(const sead::Matrix34f&, f32) override;
     void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
-private:
+public:
     s32 a6;
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
     f32 mBoundingRadius;
@@ -89,7 +89,7 @@ public:
     }
     void setIgnoreGround() { isIgnoreGround = true; }
 
-private:
+public:
     float mBoundingRadius;
     sead::Vector3f mBoundingCenter;
     sead::Vector3f mBoundingCenterWorld;

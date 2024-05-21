@@ -442,11 +442,127 @@ bool KCollisionServer::isInsideMinMaxInAreaOffsetSpace(const sead::Vector3u& pos
 }
 
 bool KCollisionServer::KCHitArrow(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f& start,
-                const sead::Vector3f& end, f32* val, u8* type) {}
+                const sead::Vector3f& end, f32* val, u8* type) {
+  printf("KCHitArrow(%p, %p, (%.02f, %.02f, %.02f), (%.02f, %.02f, %.02f), %p, %p)\n", data, header, start.x, start.y, start.z, end.x, end.y, end.z, val, type);
+  float x; // s1
+  float v10; // s2
+  float z; // s3
+  const sead::Vector3f *v12; // x9
+  float v13; // s1
+  float y; // s7
+  float v15; // s4
+  float v16; // s16
+  float v17; // s0
+  float v18; // s5
+  float v19; // s6
+  float v20; // s7
+  float v21; // s0
+  const sead::Vector3f *v22; // x10
+  float v23; // s1
+  float v24; // s3
+  float v25; // s2
+  float v26; // s5
+  const sead::Vector3f *v27; // x11
+  bool v28; // w9
+  bool v29; // w10
+  float v30; // s5
+  const sead::Vector3f *v31; // x12
+  float v32; // s1
+  bool result; // x0
+  u8 v34; // w8
+
+  const sead::Vector3f* position = &getVertexData(data->mPosIndex, header);
+  x = position->x;
+  v10 = start.y - position->y;
+  z = position->z;
+  v12 = &getFaceNormal(data, header);
+  v13 = start.x - x;
+  y = v12->y;
+  v15 = start.z - z;
+  v16 = v12->z;
+  v17 = (float)((float)(v13 * v12->x) + (float)(v10 * y)) + (float)(v15 * v16);
+  if ( v17 <= 0.0 )
+    goto LABEL_6;
+
+  v18 = end.y;
+  v19 = end.z;
+  v20 = (float)((float)(v12->x * end.x) + (float)(y * v18)) + (float)(v16 * v19);
+  if ( (float)(v17 + v20) > 0.0 )
+    goto LABEL_6;
+
+  v21 = v17 / (float)-v20;
+  v22 = &getEdgeNormal1(data, header);
+  v23 = v13 + (float)(end.x * v21);
+  v24 = v10 + (float)(v18 * v21);
+  v25 = v15 + (float)(v19 * v21);
+  v26 = (float)((float)(v23 * v22->x) + (float)(v24 * v22->y)) + (float)(v25 * v22->z);
+  if ( v26 > 0.01
+    || (v27 = &getEdgeNormal2(data, header),
+        v28 = v26 >= 0.0,
+        v29 = v26 <= 0.01,
+        v30 = (float)((float)(v23 * v27->x) + (float)(v24 * v27->y)) + (float)(v25 * v27->z),
+        v30 > 0.01)
+    || (v31 = &getEdgeNormal3(data, header),
+        v32 = (float)((float)(v23 * v31->x) + (float)(v24 * v31->y)) + (float)(v25 * v31->z),
+        (float)(data->mLength + 0.01) < v32) )
+  {
+LABEL_6:
+    result = 0LL;
+    *type = 0;
+    return result;
+  }
+
+  *val = v21;
+  if ( !v28 || !v29 )
+  {
+    if ( v30 >= 0.0 && v30 <= 0.01 )
+    {
+      if ( v32 >= 0.0 && v32 <= 0.01 )
+        v34 = 6;
+      else
+        v34 = 3;
+
+      goto LABEL_21;
+    }
+
+    if ( v32 >= 0.0 && v32 <= 0.01 )
+    {
+      v34 = 4;
+      goto LABEL_21;
+    }
+
+LABEL_18:
+    result = 1LL;
+    *type = 1;
+    return result;
+  }
+
+  if ( v30 < 0.0 || v30 > 0.01 )
+  {
+    if ( v32 >= 0.0 && v32 <= 0.01 )
+      v34 = 7;
+    else
+      v34 = 2;
+
+    goto LABEL_21;
+  }
+
+  if ( v32 >= 0.0 && v32 <= 0.01 )
+    goto LABEL_18;
+
+  v34 = 5;
+
+LABEL_21:
+  result = 1LL;
+  *val = v34;
+  return result;
+}
+
 s32 KCollisionServer::checkSphereForPlayer(const sead::Vector3f*, f32, f32, u32,
                             sead::FixedRingBuffer<KCHitInfo, 512>*) {}
 bool KCollisionServer::KCHitSphereForPlayer(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f* position, f32 a5,
                             f32 a6, f32* a7, u8* a8) {
+  printf("KCHitSphereForPlayer(%p, %p, (%.02f, %.02f, %0.2f), %f, %f)\n", data, header, position->x, position->y, position->z, a5, a6);
   float mThickness; // s4
   float fxe1; // s0
   float fxe2; // s2
@@ -1017,6 +1133,7 @@ void SpherePoseInterpolator::startInterp(const sead::Vector3f& posStart,
                                          const sead::Vector3f& posEnd, f32 sizeStart, f32 sizeEnd,
                                          const sead::Quatf& quatStart, const sead::Quatf& quatEnd,
                                          f32 steps) {
+    printf("SpherePoseInterpolator::startInterp(start=(%f, %f, %f), end=(%f, %f, %f), ..., steps=%f)\n", posStart.x, posStart.y, posStart.z, posEnd.x, posEnd.y, posEnd.z, steps);
     mCurrentStep = 0.0f;
     mPrevStep = 0.0f;
     mPos = posStart;

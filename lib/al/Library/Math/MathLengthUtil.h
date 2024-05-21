@@ -52,4 +52,7 @@ f32 cubeRoot(f32);
 
 void clampV3f(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 void clampV2f(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&);
+
+void separateVectorParallelVertical(sead::Vector3f*,sead::Vector3f*,const sead::Vector3f &,const sead::Vector3f &);
+
 }  // namespace al

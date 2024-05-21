@@ -6,6 +6,7 @@
 
 namespace al {
 class Triangle;
+class KCollisionServer;
 }
 
 bool operator==(const al::Triangle&, const al::Triangle&);
@@ -51,7 +52,7 @@ public:
     friend bool ::operator==(const Triangle&, const Triangle&);
     friend bool ::operator!=(const Triangle&, const Triangle&);
 
-private:
+public:
     const CollisionParts* mCollisionParts;
     const KCPrismData* mKCPrismData;
     const KCPrismHeader* mKCPrismHeader;
@@ -63,8 +64,10 @@ private:
 class HitInfo {
 public:
     HitInfo();
+
+    bool isCollisionAtFace() const;
     
-private:
+public:
     al::Triangle mTriangle;
     f32 unk = 0.0f;
     sead::Vector3f mCollisionHitPos = {0.0f, 0.0f, 0.0f};
@@ -81,3 +84,9 @@ class DiskHitInfo : public HitInfo {};
 class SphereHitInfo : public HitInfo {};
 
 }  // namespace al
+
+namespace alKCollisionFunc {
+
+void calcSphereHitPos(sead::Vector3<float> *,al::KCollisionServer const*,sead::Vector3<float> const&,al::KCPrismData const&,al::KCPrismHeader const*,u8);
+
+}

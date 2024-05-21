@@ -65,7 +65,7 @@ void CollisionShapeInfoSphere::calcRelativeShapeInfo(const sead::Matrix34f& mtx)
 
 
 CollisionShapeInfoArrow::CollisionShapeInfoArrow(const char* name, const sead::Vector3f& a3, const sead::Vector3f& a4, f32 a5, s32 a6)
-    : CollisionShapeInfoBase(CollisionShapeId::Sphere, name), a3(a3), a4(a4), a5(a5), a6(a6) {
+    : CollisionShapeInfoBase(CollisionShapeId::Arrow, name), a3(a3), a4(a4), a5(a5), a6(a6) {
     // inlined call to updateShapeOffset?
     /*mBoundingCenter = (a3 + sead::Vector3f{0.0f, 0.0f, 0.0f}) + (a4 * 0.5f);
     mBoundingRadius = a4.length() * 0.5f;*/

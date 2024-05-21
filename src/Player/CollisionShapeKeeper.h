@@ -3,6 +3,8 @@
 #include <container/seadPtrArray.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include "Player/CollidedShapeResult.h"
+#include "Player/CollisionShapeInfo.h"
 
 class CollisionShapeInfoBase;
 class CollisionShapeInfoArrow;
@@ -41,6 +43,19 @@ public:
     u32 findShapeInfoIndex(const char*) const;
     const CollidedShapeResult* getCollidedShapeResult(s32) const;
     const CollidedShapeResult* getCollidedShapeSupportResult(s32) const;
+
+
+    ~CollisionShapeKeeper() {
+        for(int i=0; i<mCollisionShape.size(); i++)
+            delete mCollisionShape[i];
+        mCollisionShape.freeBuffer();
+        for(int i=0; i<mCollideShapeResult.size(); i++)
+            delete mCollideShapeResult[i];
+        mCollideShapeResult.freeBuffer();
+        for(int i=0; i<mCollideSupportResult.size(); i++)
+            delete mCollideSupportResult[i];
+        mCollideSupportResult.freeBuffer();
+    }
 
 public:
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
