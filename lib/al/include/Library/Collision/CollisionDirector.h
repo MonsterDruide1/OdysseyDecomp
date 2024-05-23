@@ -1,10 +1,12 @@
 #pragma once
 
-#include <container/seadPtrArray.h>
+#include <container/seadObjArray.h>
 #include <math/seadVector.h>
 #include <prim/seadDelegate.h>
 
+#include "Library/Collision/CollisionResultBuffer.h"
 #include "Library/Execute/IUseExecutor.h"
+#include "Library/HostIO/HioNode.h"
 
 namespace al {
 class ICollisionPartsKeeper;
@@ -14,15 +16,15 @@ class CollisionPartsFilterBase;
 class TriangleFilterBase;
 class Strike;
 struct HitInfo;
-struct ArrowHitInfo;
-struct DiskHitInfo;
-struct SphereHitInfo;
 class CollisionParts;
 class ExecuteDirector;
 
-class CollisionDirector : public IUseExecutor {
+class CollisionDirector : public HioNode, public IUseExecutor {
 public:
     CollisionDirector(ExecuteDirector* executeDirector);
+    
+    void execute() override;
+
     void setPartsKeeper(ICollisionPartsKeeper* partsKeeper);
     void endInit();
     void setPartsFilter(const CollisionPartsFilterBase*);
@@ -32,32 +34,33 @@ public:
     bool checkStrikeArrow(const sead::Vector3f&, const sead::Vector3f&);
     bool checkStrikeSphereForPlayer(const sead::Vector3f&, f32);
     bool checkStrikeDisk(const sead::Vector3f&, f32, f32, const sead::Vector3f&);
-    sead::PtrArray<ArrowHitInfo>* getStrikeArrowInfo(u32 index);
-    u32 getStrikeArrowInfoNum();
-    sead::PtrArray<DiskHitInfo>* getStrikeSphereInfo(u32 index);
-    u32 getStrikeSphereInfoNum();
-    sead::PtrArray<SphereHitInfo>* getStrikeDiskInfo(u32 index);
-    u32 getStrikeDiskInfoNum();
+    ArrowHitInfo* getStrikeArrowInfo(u32 index);
+    u32 getStrikeArrowInfoNum() const;
+    SphereHitInfo* getStrikeSphereInfo(u32 index);
+    u32 getStrikeSphereInfoNum() const;
+    DiskHitInfo* getStrikeDiskInfo(u32 index);
+    u32 getStrikeDiskInfoNum() const;
     void getSphereHitInfoArrayForCollider(SphereHitInfo** infoArray, u32* count);
     void getDiskHitInfoArrayForCollider(DiskHitInfo** infoArray, u32* count);
-    void execute();
     void searchCollisionPartsWithSphere(const sead::Vector3f&, f32,
                                         sead::IDelegate1<CollisionParts*>&,
-                                        const CollisionPartsFilterBase*);
+                                        const CollisionPartsFilterBase*) const;
     void validateCollisionPartsPtrArray(sead::PtrArray<CollisionParts>*);
     void invalidateCollisionPartsPtrArray();
-    sead::PtrArray<CollisionParts>* getCollisionPartsPtrArray();
+    sead::PtrArray<CollisionParts>* getCollisionPartsPtrArray() const;
 
 private:
-    ICollisionPartsKeeper* mActivePartsKeeper;
-    CollisionPartsKeeperOctree* mRootOctree;
+    ICollisionPartsKeeper* mActivePartsKeeper = nullptr;
+    ICollisionPartsKeeper* mPartsKeeper = nullptr;
     CollisionPartsKeeperPtrArray* mCollisionPartsKeeperPtrArray;
-    CollisionPartsFilterBase* mCollisionPartsFilterBase;
-    TriangleFilterBase* mTriangleFilterBase;
-    sead::PtrArray<ArrowHitInfo>* mStrikeArrowHitInfos;
-    sead::PtrArray<DiskHitInfo>* mStrikeDiskHitInfos;
-    sead::PtrArray<SphereHitInfo>* mStrikeSphereHitInfos;
-    SphereHitInfo* mSphereHitArray;
-    DiskHitInfo* mDiskHitArray;
+    const CollisionPartsFilterBase* mCollisionPartsFilterBase = nullptr;
+    const TriangleFilterBase* mTriangleFilterBase = nullptr;
+    ArrowHitResultBuffer* mStrikeArrowHitInfos = nullptr;
+    SphereHitResultBuffer* mStrikeSphereHitInfos = nullptr;
+    DiskHitResultBuffer* mStrikeDiskHitInfos = nullptr;
+    SphereHitInfo* mSphereHitArray = nullptr;
+    DiskHitInfo* mDiskHitArray = nullptr;
 };
+static_assert(sizeof(CollisionDirector) == 0x58);
+
 }  // namespace al
