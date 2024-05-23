@@ -3,16 +3,20 @@
 #include <math/seadVector.h>
 #include <prim/seadDelegate.h>
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+#include <prim/seadDelegate.h>
+
+#include "Library/Collision/CollisionResultBuffer.h"
+#include "container/seadPtrArray.h"
+
 namespace al {
 class CollisionParts;
 class HitInfo;
 class CollisionCheckInfoBase;
 class SphereCheckInfo;
-class SphereHitResultBuffer;
-class ArrowHitResultBuffer;
 class ArrowCheckInfo;
 class DiskCheckInfo;
-class DiskHitResultBuffer;
 
 class ICollisionPartsKeeper {
 public:
@@ -30,4 +34,28 @@ public:
     virtual void searchWithSphere(const SphereCheckInfo*, sead::IDelegate1<CollisionParts*>&) const = 0;
 };
 
-}  // namespace al
+class ArrowCheckInfo;
+class DiskCheckInfo;
+
+class CollisionPartsKeeperPtrArray : public ICollisionPartsKeeper {
+public:
+    CollisionPartsKeeperPtrArray();
+
+    void setPtrArray(sead::PtrArray<CollisionParts>* ptrArray) { mPtrArray = ptrArray; }
+    sead::PtrArray<CollisionParts>* getPtrArray() const { return mPtrArray; }
+
+private:
+    sead::PtrArray<CollisionParts>* mPtrArray;
+};
+static_assert(sizeof(CollisionPartsKeeperPtrArray) == 0x10);
+
+class CollisionPartsKeeperOctree : public ICollisionPartsKeeper {
+public:
+    CollisionPartsKeeperOctree(s32, s32, f32);
+
+private:
+    void* size[0xFF/8];
+};
+static_assert(sizeof(CollisionPartsKeeperOctree) == 0x100);
+
+}
