@@ -2,6 +2,8 @@
 #include "math/seadMatrix.h"
 #include "Library/Math/MathUtil.h"
 
+#include <cstdio>
+
 CollisionShapeInfoBase::CollisionShapeInfoBase(CollisionShapeId id, const char* name)
     : mId(id), mName(name) {}
 
@@ -65,7 +67,8 @@ void CollisionShapeInfoSphere::calcRelativeShapeInfo(const sead::Matrix34f& mtx)
 
 
 CollisionShapeInfoArrow::CollisionShapeInfoArrow(const char* name, const sead::Vector3f& a3, const sead::Vector3f& a4, f32 a5, s32 a6)
-    : CollisionShapeInfoBase(CollisionShapeId::Arrow, name), a3(a3), a4(a4), a5(a5), a6(a6) {
+    : CollisionShapeInfoBase(CollisionShapeId::Arrow, name), a3(a3), a4(a4), a5(a5), mArrowIndex(a6) {
+    printf("CollisionShapeInfoArrow::CollisionShapeInfoArrow(%s, (%f, %f, %f), (%f, %f, %f), %f, %d)\n", name, a3.x, a3.y, a3.z, a4.x, a4.y, a4.z, a5, a6);
     // inlined call to updateShapeOffset?
     /*mBoundingCenter = (a3 + sead::Vector3f{0.0f, 0.0f, 0.0f}) + (a4 * 0.5f);
     mBoundingRadius = a4.length() * 0.5f;*/
@@ -98,7 +101,7 @@ void CollisionShapeInfoArrow::updateShapeOffset(const sead::Vector3f& offset) {
     mBoundingRadius = a4.length() * 0.5f;
 }
 void CollisionShapeInfoArrow::calcWorldShapeInfo(const sead::Matrix34f& mtx, f32 scale) {
-    vec2.setRotated(mtx, (a3 + vec1) * scale);
+    vec2.setMul(mtx, (a3 + vec1) * scale);
     vec4.setRotated(mtx, a4 * scale);
     mBoundingCenterWorld.setMul(mtx, mBoundingCenter * scale);
     vec3 = vec2 + vec4;
@@ -106,6 +109,11 @@ void CollisionShapeInfoArrow::calcWorldShapeInfo(const sead::Matrix34f& mtx, f32
     al::calcArrowAabb(&mAabb, vec2, vec3);
 }
 void CollisionShapeInfoArrow::calcRelativeShapeInfo(const sead::Matrix34f& mtx) {
+    printf("CollisionShapeInfoArrow::calcRelativeShapeInfo((%.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f))\n", mtx.m[0][0], mtx.m[0][1], mtx.m[0][2], mtx.m[0][3], mtx.m[1][0], mtx.m[1][1], mtx.m[1][2], mtx.m[1][3], mtx.m[2][0], mtx.m[2][1], mtx.m[2][2], mtx.m[2][3]);
+    printf("vec2: (%.02f, %.02f, %.02f)\n", vec2.x, vec2.y, vec2.z);
     vec5.setMul(mtx, vec2);
-    vec6.setMul(mtx, vec4);
+    printf("vec5: (%.02f, %.02f, %.02f)\n", vec5.x, vec5.y, vec5.z);
+    vec6.setRotated(mtx, vec4);
+    printf("vec4: (%.02f, %.02f, %.02f)\n", vec4.x, vec4.y, vec4.z);
+    printf("vec6: (%.02f, %.02f, %.02f)\n", vec6.x, vec6.y, vec6.z);
 }

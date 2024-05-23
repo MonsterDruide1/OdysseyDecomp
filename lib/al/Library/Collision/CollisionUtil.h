@@ -32,5 +32,8 @@ namespace alCollisionUtil {
 
 bool isFarAway(const al::CollisionParts&, const sead::Vector3f&, f32);
 bool checkStrikeArrow(al::IUseCollision const*,sead::Vector3<float> const&,sead::Vector3<float> const&,al::CollisionPartsFilterBase const*,al::TriangleFilterBase const*);
+bool isCollisionMoving(const al::HitInfo*);
+const sead::Vector3f& getCollisionHitPos(const al::HitInfo*);
+const sead::Vector3f& getCollisionHitNormal(const al::HitInfo*);
 
 }

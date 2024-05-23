@@ -1,10 +1,13 @@
 #include "Player/CollidedShapeResult.h"
 #include "Util/CollisionShapeFunction.h"
 
+#include <cstdio>
+
 // NON_MATCHING: Should be call to `memset` for all HitInfo members first, then constructor call
 CollidedShapeResult::CollidedShapeResult(const CollisionShapeInfoBase* shapeInfoBase) : mShapeInfoBase(shapeInfoBase) {}
 
 void CollidedShapeResult::setArrowHitInfo(const al::ArrowHitInfo& hitInfo) {
+    printf("CollidedShapeResult::setArrowHitInfo with unk=%.02f\n", hitInfo.unk);
     mArrowHitInfo = hitInfo;
 }
 void CollidedShapeResult::setSphereHitInfo(const al::SphereHitInfo& hitInfo) {

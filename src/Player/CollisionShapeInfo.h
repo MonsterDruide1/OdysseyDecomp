@@ -50,7 +50,7 @@ public:
     void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
 public:
-    s32 a6;
+    s32 mArrowIndex;
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
     f32 mBoundingRadius;
     sead::Vector3f mBoundingCenterWorld = {0.0f, 0.0f, 0.0f};

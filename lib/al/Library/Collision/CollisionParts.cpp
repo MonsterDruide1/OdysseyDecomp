@@ -5,6 +5,8 @@
 #include "math/seadMatrix.h"
 #include "math/seadVectorFwd.h"
 
+#include <cstdio>
+
 namespace al {
 
 CollisionParts::CollisionParts(void* kclData, const void* bymlData) {
@@ -38,8 +40,9 @@ void CollisionParts::resetAllMtx(const sead::Matrix34f& mtx_param) {
     sead::Matrix34f mtx = mtx_param;
     makeEqualScale(&mtx);
 
-    mBaseMtx = mPrevBaseMtx;
-    mSyncMtx = mPrevBaseMtx;
+    mPrevBaseMtx = mtx;
+    mBaseMtx = mtx;
+    mSyncMtx = mtx;
     mPrevBaseInvMtx.setInverse(mPrevBaseMtx);
     mBaseInvMtx = mPrevBaseInvMtx;
     

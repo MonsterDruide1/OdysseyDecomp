@@ -58,7 +58,7 @@ void lerpVecHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, co
 
 f32 calcRate01(f32, f32, f32);
 
-f32 slerpQuat(sead::Quatf*, const sead::Quatf&, const sead::Quatf&, f32);
+void slerpQuat(sead::Quatf*, const sead::Quatf&, const sead::Quatf&, f32);
 
 bool checkHitSegmentSphere(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, f32,
                            sead::Vector3f*, sead::Vector3f*);
@@ -70,5 +70,6 @@ f32 convergeDegree(f32, f32, f32);
 f32 convergeRadian(f32, f32, f32);
 void convergeVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
 void convergeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+bool separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 
 }  // namespace al

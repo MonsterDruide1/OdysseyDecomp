@@ -4,6 +4,7 @@
 #include "Library/Collision/KTriangle.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Math/SegmentUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Yaml/ByamlIter.h"
@@ -244,7 +245,7 @@ bool isNearZeroOrGreater(f32 value, f32 tolerance) {
 }
 
 bool checkHitSegmentSphere(sead::Vector3f const& a1,sead::Vector3f const& a2,sead::Vector3f const& a3,float a4,sead::Vector3f* a5,sead::Vector3f* a6) {
-      float z; // s21
+  float z; // s21
   float x; // s0
   float y; // s2
   float v10; // s3
@@ -302,8 +303,9 @@ bool checkHitSegmentSphere(sead::Vector3f const& a1,sead::Vector3f const& a2,sea
   if ( v21 < 0.0 )
   {
     if ( (float)((float)((float)((float)(a2.x - x) * (float)(a2.x - x)) + (float)((float)(v11 - y) * (float)(v11 - y)))
-               + (float)((float)(z - v10) * (float)(z - v10))) >= v22 )
+               + (float)((float)(z - v10) * (float)(z - v10))) >= v22 ) {
       return 0LL;
+    }
 
     v23 = (float)((float)(v17 * v17) + (float)(v12 * v12)) + (float)(v19 * v19);
     if ( v23 >= 0.000001 )
@@ -346,8 +348,9 @@ bool checkHitSegmentSphere(sead::Vector3f const& a1,sead::Vector3f const& a2,sea
   if ( v27 < v21 )
   {
     if ( (float)((float)((float)((float)(v13 - x) * (float)(v13 - x)) + (float)((float)(v14 - y) * (float)(v14 - y)))
-               + (float)((float)(v18 - v10) * (float)(v18 - v10))) >= v22 )
+               + (float)((float)(v18 - v10) * (float)(v18 - v10))) >= v22 ){
       return 0LL;
+    }
 
     v28 = x - v13;
     v29 = y - v14;
@@ -396,8 +399,9 @@ bool checkHitSegmentSphere(sead::Vector3f const& a1,sead::Vector3f const& a2,sea
   if ( v33 < 0.001 )
   {
     v34 = (float)((float)(v17 * v17) + (float)(v12 * v12)) + (float)(v19 * v19);
-    if ( v34 > v22 )
+    if ( v34 > v22 ){
       return 0LL;
+    }
 
     if ( v34 >= 0.000001 )
     {
@@ -512,6 +516,97 @@ bool alCollisionUtil::isFarAway(al::CollisionParts const& a1, const sead::Vector
         v7 = -v7;
 
     return v3 < v7 || (float)((float)((float)(v4 * v4) + (float)(v6 * v6)) + (float)(v7 * v7)) > (float)(v3 * v3);
+}
+
+bool alCollisionUtil::isCollisionMoving(const al::HitInfo* info) {
+  return false;
+  //return info->mTriangle.isHostMoved();
+}
+const sead::Vector3f& alCollisionUtil::getCollisionHitPos(const al::HitInfo* info) {
+  return info->mCollisionHitPos;
+}
+const sead::Vector3f& alCollisionUtil::getCollisionHitNormal(const al::HitInfo* info) {
+  return info->mTriangle.getNormal(0);
+}
+
+bool al::isNearDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, float a3)
+{
+  float x; // s1
+  float y; // s2
+  float v5; // s3
+  float v6; // s4
+  float z; // s5
+  float v8; // s6
+  float v10; // s7
+  float v11; // s5
+  float v12; // s1
+
+  x = a1.x;
+  y = a1.y;
+  v5 = a2.x;
+  v6 = a2.y;
+  z = a1.z;
+  v8 = a2.z;
+  if ( (float)((float)((float)(a1.x * a2.x) + (float)(y * v6)) + (float)(z * v8)) < 0.0 )
+    return 0LL;
+
+  v10 = (float)(y * v8) - (float)(v6 * z);
+  if ( v10 <= 0.0 )
+    v10 = -v10;
+
+  if ( v10 > a3 )
+    return 0LL;
+
+  v11 = (float)(v5 * z) - (float)(x * v8);
+  if ( v11 <= 0.0 )
+    v11 = -v11;
+
+  if ( v11 > a3 )
+    return 0LL;
+
+  v12 = (float)(x * v6) - (float)(v5 * y);
+  if ( v12 <= 0.0 )
+    v12 = -v12;
+
+  return v12 <= a3;
+}
+
+bool al::separateScalarAndDirection(f32* a1, sead::Vector3f* a2, const sead::Vector3f& a3) {
+  float x; // s1
+  bool result; // w0
+  float y; // w8
+  float v6; // s0
+  float v7; // s0
+  float v8; // s2
+
+  *a1 = sqrtf((float)((float)(a3.x * a3.x) + (float)(a3.y * a3.y)) + (float)(a3.z * a3.z));
+  x = a3.x;
+  if ( (float)((float)((float)(x * x) + (float)(a3.y * a3.y)) + (float)(a3.z * a3.z)) >= 0.000001 )
+  {
+    a2->x = x;
+    y = a3.y;
+    a2->y = y;
+    v6 = sqrtf((float)((float)(x * x) + (float)(y * y)) + (float)(a3.z * a3.z));
+    a2->z = a3.z;
+    result = 0;
+    if ( v6 > 0.0 )
+    {
+      v7 = 1.0 / v6;
+      v8 = v7 * a2->y;
+      a2->x = v7 * a2->x;
+      a2->y = v8;
+      a2->z = v7 * a2->z;
+    }
+  }
+  else
+  {
+    a2->x = 0.0;
+    a2->y = 0.0;
+    result = 1;
+    a2->z = 0.0;
+  }
+
+  return result;
 }
 
 
