@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadVector.h>
+#include "Library/Collision/KTriangle.h"
 #include "math/seadBoundBox.h"
 
 namespace al {
@@ -9,16 +10,6 @@ class TriangleFilterBase;
 class CollisionParts;
 class IUseCollision;
 class HitInfo;
-
-struct CollisionCheckInfoBase {
-    const sead::Vector3f* mPos;
-    const CollisionPartsFilterBase* mCollisionPartsFilter;
-    const TriangleFilterBase* mTriFilterBase;
-};
-
-struct SphereCheckInfo : public al::CollisionCheckInfoBase {
-    f32 mRadius;
-};
 
 bool isNearCollideSphereAabb(const sead::Vector3f&, f32, const sead::BoundBox3f&);
 
@@ -35,5 +26,11 @@ bool checkStrikeArrow(al::IUseCollision const*,sead::Vector3<float> const&,sead:
 bool isCollisionMoving(const al::HitInfo*);
 const sead::Vector3f& getCollisionHitPos(const al::HitInfo*);
 const sead::Vector3f& getCollisionHitNormal(const al::HitInfo*);
+const sead::Vector3f& getCollisionMovingReaction(const al::HitInfo*);
+bool getHitPosAndNormalOnArrow(al::IUseCollision const*,sead::Vector3<float> *,sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,al::CollisionPartsFilterBase const*,al::TriangleFilterBase const*);
+
+bool getFirstPolyOnArrow(al::IUseCollision const*,al::ArrowHitInfo const**,sead::Vector3<float> const&,sead::Vector3<float> const&,al::CollisionPartsFilterBase const*,al::TriangleFilterBase const*);
+bool getFirstPolyOnArrow(al::IUseCollision const*,sead::Vector3<float> *,al::Triangle *,sead::Vector3<float> const&,sead::Vector3<float> const&,char const*);
+bool getFirstPolyOnArrow(al::IUseCollision const*,sead::Vector3<float> *,al::Triangle *,sead::Vector3<float> const&,sead::Vector3<float> const&,al::CollisionPartsFilterBase const*,al::TriangleFilterBase const*);
 
 }

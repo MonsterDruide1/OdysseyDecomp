@@ -49,7 +49,7 @@ public:
     void invalidateCollisionPartsPtrArray();
     sead::PtrArray<CollisionParts>* getCollisionPartsPtrArray() const;
 
-private:
+public:
     ICollisionPartsKeeper* mActivePartsKeeper = nullptr;
     ICollisionPartsKeeper* mPartsKeeper = nullptr;
     CollisionPartsKeeperPtrArray* mCollisionPartsKeeperPtrArray;

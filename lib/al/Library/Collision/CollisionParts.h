@@ -4,11 +4,13 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include "Library/Collision/KCollisionServer.h"
+#include "Library/Collision/CollisionResultBuffer.h"
 
 namespace al {
 class HitSensor;
 class KCollisionServer;
 class LiveActor;
+class TriangleFilterBase;
 
 class CollisionParts {
 public:
@@ -20,6 +22,8 @@ public:
     void initParts(const sead::Matrix34f&);
     void resetAllMtx(const sead::Matrix34f&);
     f32 makeEqualScale(sead::Matrix34f*);
+
+    s32 checkStrikeArrow(al::ArrowHitResultBuffer *,sead::Vector3f const&,sead::Vector3f const&,al::TriangleFilterBase const*);
 
     const sead::Matrix34f& getBaseMtx() const { return mBaseMtx; }
     const sead::Matrix34f& getBaseInvMtx() const { return mBaseInvMtx; }

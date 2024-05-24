@@ -81,7 +81,12 @@ struct KCPrismData {
     u16 mCollisionType;
     u32 mTriIndex;
 };
-struct KCHitInfo;
+struct KCHitInfo {
+    const al::KCPrismHeader *mHeader;
+    const al::KCPrismData *mData;
+    f32 something;
+    u8 mCollisionLocation;
+};
 
 class KCollisionServer {
 public:
@@ -109,13 +114,13 @@ public:
                              const sead::Vector3f&, const KCPrismHeader*) const;
     bool KCHitSphere(const KCPrismData*, const KCPrismHeader*, const sead::Vector3f*, f32, f32,
                      f32*, u8*);
-    s32 checkArrow(const sead::Vector3f&, const sead::Vector3f&,
+    const KCPrismData* checkArrow(const sead::Vector3f&, const sead::Vector3f&,
                    sead::FixedRingBuffer<KCHitInfo, 512>*, u32*, u32) const;
     void objectSpaceToAreaOffsetSpaceV3f(sead::Vector3f*, const sead::Vector3f&,
                                          const KCPrismHeader*) const;
     bool isInsideMinMaxInAreaOffsetSpace(const sead::Vector3u&, const KCPrismHeader*) const;
     bool KCHitArrow(const KCPrismData*, const KCPrismHeader*, const sead::Vector3f&,
-                    const sead::Vector3f&, f32*, u8*);
+                    const sead::Vector3f&, f32*, u8*) const;
     s32 checkSphereForPlayer(const sead::Vector3f*, f32, f32, u32,
                              sead::FixedRingBuffer<KCHitInfo, 512>*);
     bool KCHitSphereForPlayer(const KCPrismData*, const KCPrismHeader*, const sead::Vector3f*, f32,

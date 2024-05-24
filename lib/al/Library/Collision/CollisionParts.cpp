@@ -1,11 +1,17 @@
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/KCollisionServer.h"
+#include "Library/Collision/KTriangle.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
+#include "container/seadRingBuffer.h"
 #include "math/seadMatrix.h"
 #include "math/seadVectorFwd.h"
 
 #include <cstdio>
+
+#define DEREF_NULL *(volatile int*)0;
+#define WARN_UNIMPL printf("Function not implemented: %s (%s:%d)\n", __func__, __FILE__, __LINE__)
+#define CRASH {WARN_UNIMPL;DEREF_NULL}
 
 namespace al {
 
@@ -72,6 +78,39 @@ f32 CollisionParts::makeEqualScale(sead::Matrix34f* mtx) {
     }
 
     mtx->scaleBases(vec.x, vec.y, vec.z);
+}
+
+sead::FixedRingBuffer<KCHitInfo, 512> buffer;
+
+s32 CollisionParts::checkStrikeArrow(al::ArrowHitResultBuffer * results,sead::Vector3f const& unk1,sead::Vector3f const& unk2,al::TriangleFilterBase const* filter) {
+    f32 v48 = unk2.length();
+    sead::Vector3f v62;
+    v62.setMul(mBaseInvMtx, unk1);
+    sead::Vector3f v61;
+    v61.setMul(mBaseInvMtx, (unk1 + unk2));
+    v61 -= v62;
+
+    u32 v60 = 0;
+    mKCollisionServer->checkArrow(v62, v61, &buffer, &v60, results->capacity() - results->size());
+    for(int i=0; i<buffer.size(); i++) {
+        al::ArrowHitInfo info = {};
+        results->pushBack(info);
+
+        al::KCHitInfo hit = buffer[i];
+        info.mTriangle.fillData(*this, hit.mData, hit.mHeader);
+        if(filter) CRASH
+        //if(filter && !filter->filter(info.mTriangle)) {
+        //    results->popBack();
+        //    continue;
+        //}   
+
+        info.unk = v48 * hit.something;
+        info.mCollisionHitPos.setMul(mBaseMtx, (hit.something * v61) + v62);
+        v60++;
+        info.mCollisionLocation = hit.mCollisionLocation;
+    }
+
+    return v60;
 }
 
 }

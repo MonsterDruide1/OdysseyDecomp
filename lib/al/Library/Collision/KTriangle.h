@@ -81,7 +81,11 @@ class ArrowHitInfo : public HitInfo {};
 
 class DiskHitInfo : public HitInfo {};
 
-class SphereHitInfo : public HitInfo {};
+class SphereHitInfo : public HitInfo {
+public:
+    void calcFixVector(sead::Vector3f*, sead::Vector3f*) const;
+    void calcFixVectorNormal(sead::Vector3f*, sead::Vector3f*) const;
+};
 
 }  // namespace al
 

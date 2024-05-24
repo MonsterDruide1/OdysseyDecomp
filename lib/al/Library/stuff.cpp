@@ -1,7 +1,11 @@
 #include "Library/Base/String.h"
+#include "Library/Collision/CollisionDirector.h"
 #include "Library/Collision/CollisionParts.h"
+#include "Library/Collision/CollisionPartsKeeper.h"
 #include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/IUseCollision.h"
 #include "Library/Collision/KTriangle.h"
+#include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
@@ -15,6 +19,8 @@
 #include "math/seadVectorFwd.h"
 
 #include <cstdio>
+
+#include "../../../../src/stubs/missing.h"
 
 namespace al {
 
@@ -242,6 +248,16 @@ bool isNearZeroOrGreater(f32 value, f32 tolerance) {
     if(value >= 0.0f) return true;
     return sead::Mathf::abs(value) < tolerance;
 
+}
+
+void registerExecutorUser(IUseExecutor *, ExecuteDirector *, const char *) {
+    WARN_UNIMPL;
+}
+CollisionPartsKeeperPtrArray::CollisionPartsKeeperPtrArray() {
+    WARN_UNIMPL;
+}
+CollisionPartsKeeperOctree::CollisionPartsKeeperOctree(s32, s32, f32) {
+    WARN_UNIMPL;
 }
 
 bool checkHitSegmentSphere(sead::Vector3f const& a1,sead::Vector3f const& a2,sead::Vector3f const& a3,float a4,sead::Vector3f* a5,sead::Vector3f* a6) {
@@ -571,6 +587,60 @@ bool al::isNearDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, flo
   return v12 <= a3;
 }
 
+void al::SphereHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const {
+  float unk; // s1
+  float v7; // s0
+  float x; // s1
+  float y; // s2
+  float v10; // s6
+  float z; // s3
+  float v12; // s1
+  float v13; // s0
+  float v14; // s3
+  float v15; // s6
+  float v16; // s4
+  float v17; // s5
+  float v18; // s7
+  float v19; // s0
+  sead::Vector3f v20; // [xsp+0h] [xbp-30h] BYREF
+
+  if ( this->mCollisionLocation == 1 )
+  {
+    unk = this->unk;
+    a1->x = unk * this->mTriangle.mFaceNormal.x;
+    a1->y = unk * this->mTriangle.mFaceNormal.y;
+    a1->z = unk * this->mTriangle.mFaceNormal.z;
+    if ( a2 )
+      *a2 = this->mTriangle.mFaceNormal;
+  }
+  else
+  {
+    v20.x = this->unk3.x - this->mCollisionHitPos.x;
+    v20.y = this->unk3.y - this->mCollisionHitPos.y;
+    v20.z = this->unk3.z - this->mCollisionHitPos.z;
+    al::tryNormalizeOrZero(&v20);
+    v7 = this->unk;
+    x = this->mTriangle.mFaceNormal.x;
+    y = this->mTriangle.mFaceNormal.y;
+    v10 = v7 * x;
+    z = this->mTriangle.mFaceNormal.z;
+    v12 = (float)((float)(x * v20.x) + (float)(y * v20.y)) + (float)(z * v20.z);
+    v13 = (float)((float)(v10 * v20.x) + (float)((float)(v7 * y) * v20.y)) + (float)((float)(v7 * z) * v20.z);
+    v14 = v20.x * v12;
+    v15 = v20.y * v12;
+    v16 = v20.x * v13;
+    v17 = v20.y * v13;
+    v18 = v13 * v20.z;
+    v19 = v12 * v20.z;
+    a1->x = v16;
+    a1->y = v17;
+    a1->z = v18;
+    a2->x = v14;
+    a2->y = v15;
+    a2->z = v19;
+  }
+}
+
 bool al::separateScalarAndDirection(f32* a1, sead::Vector3f* a2, const sead::Vector3f& a3) {
   float x; // s1
   bool result; // w0
@@ -609,6 +679,123 @@ bool al::separateScalarAndDirection(f32* a1, sead::Vector3f* a2, const sead::Vec
   return result;
 }
 
+void al::SphereHitInfo::calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const {
+  const sead::Vector3f *p_mFaceNormal; // x0
+  float x; // t1
+  float y; // s1
+
+  x = this->mTriangle.mFaceNormal.x;
+  p_mFaceNormal = &this->mTriangle.mFaceNormal;
+  y = p_mFaceNormal[7].y;
+  a1->x = y * x;
+  a1->y = y * p_mFaceNormal->y;
+  a1->z = y * p_mFaceNormal->z;
+  if ( a2 )
+    *a2 = *p_mFaceNormal;
+}
+
+bool al::isReverseDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, f32 a3) {
+  CRASH
+}
+
+const sead::Vector3f& alCollisionUtil::getCollisionMovingReaction(const al::HitInfo* info) {
+  return info->mCollisionMovingReaction;
+}
+
+bool alCollisionUtil::getHitPosAndNormalOnArrow(const al::IUseCollision* a1, sead::Vector3f* a2, sead::Vector3<float> * a3, const sead::Vector3<float> & a4, const sead::Vector3<float> & a5, const al::CollisionPartsFilterBase *a6, const al::TriangleFilterBase *a7) {
+  const al::ArrowHitInfo *v14; // x8
+  al::Triangle mTriangle = {}; // [xsp+0h] [xbp-B0h] BYREF
+  const al::ArrowHitInfo *v19; // [xsp+78h] [xbp-38h] BYREF
+
+  v19 = 0LL;
+  if ( (alCollisionUtil::getFirstPolyOnArrow(a1, &v19, a4, a5, a6, a7) & 1) == 0 )
+    return 0;
+
+  v14 = v19;
+  if ( a2 )
+    *a2 = v19->mCollisionHitPos;
+
+  mTriangle = v14->mTriangle;
+  *a3 = mTriangle.getNormal(0);
+  return true;
+}
+
+bool alCollisionUtil::getFirstPolyOnArrow(al::IUseCollision const* a1, al::ArrowHitInfo const** a2, sead::Vector3<float> const& a3, sead::Vector3<float> const& a4, al::CollisionPartsFilterBase const*a5, al::TriangleFilterBase const*a6) {
+  al::CollisionDirector *v12; // x25
+  int v13; // w22
+  float v14; // s8
+  int v15; // w24
+  int v16; // w21
+  al::CollisionDirector *v17; // x0
+  float *StrikeArrowInfo; // x25
+  float v19; // s8
+  al::CollisionDirector *v20; // x0
+  float *v21; // x0
+  float v22; // s0
+  bool v23; // nf
+  al::CollisionDirector *v24; // x0
+
+  v12 = (al::CollisionDirector *)a1->getCollisionDirector();
+  v12->setPartsFilter(a5);
+  v12->setTriFilter(a6);
+  v13 = v12->checkStrikeArrow(a3, a4);
+  if ( !v13 )
+    return 0LL;
+
+  if ( a6 )
+  {
+    CRASH
+    /*v14 = 1000000.0;
+    v15 = 0;
+    v16 = -1;
+    do
+    {
+      v17 = (al::CollisionDirector *)a1->getCollisionDirector();
+      StrikeArrowInfo = (float *)v17->getStrikeArrowInfo(v15);
+      if ( ((**(__int64 (__fastcall ***)(const al::TriangleFilterBase *, void *))a6)(a6, StrikeArrowInfo) & 1) == 0
+        && StrikeArrowInfo[28] < v14 )
+      {
+        v14 = StrikeArrowInfo[28];
+        v16 = v15;
+      }
+
+      ++v15;
+    }
+    while ( v13 != v15 );*/
+  }
+  else
+  {
+    v19 = 1000000.0;
+    v16 = -1;
+    int i=0;
+    do
+    {
+      v20 = (al::CollisionDirector *)a1->getCollisionDirector();
+      v21 = (float *)v20->getStrikeArrowInfo(i);
+      v22 = v21[28];
+      v23 = v22 < v19;
+      if ( v22 < v19 )
+        v19 = v21[28];
+
+      if ( v23 )
+        v16 = i;
+
+      i++;
+    }
+    while ( v13 != i );
+  }
+
+  if ( v16 == -1 )
+    return 0LL;
+
+  if ( a2 )
+  {
+    v24 = (al::CollisionDirector *)a1->getCollisionDirector();
+    *a2 = (const al::ArrowHitInfo *)v24->getStrikeArrowInfo(v16);
+  }
+
+  return 1LL;
+}
 
 void alKCollisionFunc::calcSphereHitPos(sead::Vector3<float> * a1, const al::KCollisionServer * a2, const sead::Vector3<float> & a3, const al::KCPrismData & a4, const al::KCPrismHeader * a5, u8 a6) {
   float v14; // s0
