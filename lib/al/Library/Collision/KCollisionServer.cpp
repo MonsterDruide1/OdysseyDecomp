@@ -851,7 +851,6 @@ bool KCollisionServer::isInsideMinMaxInAreaOffsetSpace(const sead::Vector3u& pos
 
 bool KCollisionServer::KCHitArrow(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f& start,
                 const sead::Vector3f& end, f32* val, u8* type) const {
-  printf("KCHitArrow(%p, %p, (%.02f, %.02f, %.02f), (%.02f, %.02f, %.02f), %p, %p)\n", data, header, start.x, start.y, start.z, end.x, end.y, end.z, val, type);
   float x; // s1
   float v10; // s2
   float z; // s3
@@ -970,7 +969,6 @@ s32 KCollisionServer::checkSphereForPlayer(const sead::Vector3f*, f32, f32, u32,
                             sead::FixedRingBuffer<KCHitInfo, 512>*) {}
 bool KCollisionServer::KCHitSphereForPlayer(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f* position, f32 a5,
                             f32 a6, f32* a7, u8* a8) {
-  printf("KCHitSphereForPlayer(%p, %p, (%.02f, %.02f, %0.2f), %f, %f)\n", data, header, position->x, position->y, position->z, a5, a6);
   float mThickness; // s4
   float fxe1; // s0
   float fxe2; // s2
@@ -1147,7 +1145,6 @@ void KCollisionServer::searchPrism(sead::Vector3f* pos, f32 radius,
 // NON_MATCHING: surprisingly little mismatches, but still some major ones
 void KCollisionServer::searchPrismMinMax(const sead::Vector3f& a2, const sead::Vector3f& a3,
                         sead::IDelegate2<const KCPrismData*, const KCPrismHeader*>& a4) {
-    printf("KCollisionServer::searchPrismMinMax((%.02f, %.02f, %.02f), (%.02f, %.02f, %.02f), ...)\n", a2.x, a2.y, a2.z, a3.x, a3.y, a3.z);
     u64 v6;
 
     const u8 *v7 = 0LL;

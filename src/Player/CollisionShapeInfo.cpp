@@ -109,11 +109,6 @@ void CollisionShapeInfoArrow::calcWorldShapeInfo(const sead::Matrix34f& mtx, f32
     al::calcArrowAabb(&mAabb, vec2, vec3);
 }
 void CollisionShapeInfoArrow::calcRelativeShapeInfo(const sead::Matrix34f& mtx) {
-    printf("CollisionShapeInfoArrow::calcRelativeShapeInfo((%.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f, %.02f))\n", mtx.m[0][0], mtx.m[0][1], mtx.m[0][2], mtx.m[0][3], mtx.m[1][0], mtx.m[1][1], mtx.m[1][2], mtx.m[1][3], mtx.m[2][0], mtx.m[2][1], mtx.m[2][2], mtx.m[2][3]);
-    printf("vec2: (%.02f, %.02f, %.02f)\n", vec2.x, vec2.y, vec2.z);
     vec5.setMul(mtx, vec2);
-    printf("vec5: (%.02f, %.02f, %.02f)\n", vec5.x, vec5.y, vec5.z);
     vec6.setRotated(mtx, vec4);
-    printf("vec4: (%.02f, %.02f, %.02f)\n", vec4.x, vec4.y, vec4.z);
-    printf("vec6: (%.02f, %.02f, %.02f)\n", vec6.x, vec6.y, vec6.z);
 }
