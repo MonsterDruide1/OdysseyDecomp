@@ -712,7 +712,7 @@ LABEL_41:
                     &hitInfo.mCollisionLocation);
             if ( v10 )
             {
-              buffer->pushBack(hitInfo);
+              buffer->pushBack({v13, v58, hitInfo.something, hitInfo.mCollisionLocation});
 
               v66 = v86;
               if ( hitInfo.something < v55 )
