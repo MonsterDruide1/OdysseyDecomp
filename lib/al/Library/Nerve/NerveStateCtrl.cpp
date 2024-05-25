@@ -3,6 +3,25 @@
 #include "Library/Nerve/NerveKeeper.h"
 
 namespace al {
+
+NerveStateCtrl::NerveStateCtrl(s32 size) : mMaxStates(size) {
+    mStates = new State[size];
+}
+
+void NerveStateCtrl::startState(const Nerve* nerve) {
+    State* state = findStateInfo(nerve);
+
+    if (state) {
+        mCurrentState = state;
+        mCurrentState->state->appear();
+        if(mCurrentState->state->getNerveKeeper()) {
+            mCurrentState->state->getNerveKeeper()->tryChangeNerve();
+        }
+    } else {
+        mCurrentState = nullptr;
+    }
+}
+
 // todo -- some scheduling problems with mStateCount's incrementation
 // adds a state to the list of states in the controller
 void NerveStateCtrl::addState(NerveStateBase* state, const Nerve* nerve, const char* name) {

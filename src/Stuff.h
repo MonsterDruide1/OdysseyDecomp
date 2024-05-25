@@ -2,6 +2,7 @@
 
 #include "Library/Collision/IUseCollision.h"
 #include "Library/Collision/KTriangle.h"
+#include "Player/IUsePlayerCollision.h"
 
 namespace rs {
 

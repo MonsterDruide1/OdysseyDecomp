@@ -6,11 +6,14 @@
 #include "Library/Collision/IUseCollision.h"
 #include "Library/Collision/KTriangle.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/SegmentUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
+#include "Library/Nerve/NerveKeeper.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 #include "math/seadBoundBox.h"
@@ -658,6 +661,11 @@ bool al::isReverseDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, 
   if(sead::Mathf::abs((a1.x * a2.y) - (a1.y * a2.x)) > a3)
     return false;
   return true;
+}
+
+void al::initNerve(LiveActor *actor, const Nerve *nerve, s32 maxNumNerves) {
+  al::NerveKeeper* keeper = new al::NerveKeeper(actor, nerve, maxNumNerves);
+  actor->initNerveKeeper(keeper);
 }
 
 const sead::Vector3f& alCollisionUtil::getCollisionMovingReaction(const al::HitInfo* info) {
