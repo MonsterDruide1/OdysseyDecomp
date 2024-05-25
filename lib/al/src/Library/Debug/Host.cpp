@@ -4,30 +4,47 @@
 #include <nn/os.h>
 
 namespace al {
-s32 getComputerName(sead::BufferedSafeStringBase<char>* computerName) {
+void getComputerName(sead::BufferedSafeString* computerName) {
+    tryGetComputerName(computerName);
+}
+
+bool tryGetComputerName(sead::BufferedSafeString* computerName) {
     computerName->format("");
     computerName->format("");
 
-    return sead::EnvUtil::getEnvironmentVariable(computerName, "COMPUTERNAME");
+    return sead::EnvUtil::getEnvironmentVariable(computerName, "COMPUTERNAME") > 0;
 }
 
-bool tryGetComputerName(sead::BufferedSafeStringBase<char>* computerName) {
-    return getComputerName(computerName) > 0;
-}
-
-s32 getUserName(sead::BufferedSafeStringBase<char>* userName) {
+void getUserName(sead::BufferedSafeString* userName) {
     userName->format("");
     userName->format("");
 
-    return sead::EnvUtil::getEnvironmentVariable(userName, "USERNAME");
+    sead::EnvUtil::getEnvironmentVariable(userName, "USERNAME");
 }
 
-void makeUniqueTemporaryFilename(sead::BufferedSafeStringBase<char>* out, const char* fileName) {
-    sead::FixedSafeString<0x80> computerName;
+void makeUniqueTemporaryFilename(sead::BufferedSafeString* out, const char* fileName) {
+    sead::FixedSafeString<128> computerName;
     getComputerName(&computerName);
 
     nn::os::Tick time = nn::os::GetSystemTick();
     out->format("%s_%012lld%s", computerName.cstr(), time, fileName);
+}
+
+void expandEnvironmentString(sead::BufferedSafeString* out, const sead::SafeString& envStr) {
+    out->clear();
+
+    FUN_710086f65c(out, envStr);
+}
+
+// void FUN_710086f65c(sead::BufferedSafeString* out, const sead::SafeString& envStr) {}
+
+sead::FixedSafeString<128> makeTmpExpandEnvironmentString(const sead::SafeString& envStr) {
+    sead::FixedSafeString<128> tmp;
+    tmp.clear();
+
+    FUN_710086f65c(&tmp, envStr);
+
+    return tmp;
 }
 
 StringTmp<128> makeTmpFileFullPath(const char* fileName) {
@@ -35,7 +52,7 @@ StringTmp<128> makeTmpFileFullPath(const char* fileName) {
                           fileName != nullptr ? fileName : "");
 }
 
-char* getALCommon() {
-    return (char*)"${AL_TOOL_ROOT}/ALCommon";
+const char* getALCommon() {
+    return "${AL_TOOL_ROOT}/ALCommon";
 }
 }  // namespace al
