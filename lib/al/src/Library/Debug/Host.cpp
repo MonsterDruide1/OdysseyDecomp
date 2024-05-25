@@ -40,9 +40,8 @@ void expandEnvironmentString(sead::BufferedSafeString* out, const sead::SafeStri
 
 sead::FixedSafeString<128> makeTmpExpandEnvironmentString(const sead::SafeString& envStr) {
     sead::FixedSafeString<128> tmp;
-    tmp.clear();
 
-    FUN_710086f65c(&tmp, envStr);
+    expandEnvironmentString(&tmp, envStr);
 
     return tmp;
 }
