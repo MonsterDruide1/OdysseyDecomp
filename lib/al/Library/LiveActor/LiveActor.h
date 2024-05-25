@@ -125,10 +125,12 @@ public:
 
     void setName(const char* newName) { mActorName = newName; }
 
+    ~LiveActor();
+
 protected:
     friend class alActorFunction;
 
-private:
+public:
     const char* mActorName;
     ActorPoseKeeperBase* mPoseKeeper;
     ActorExecuteInfo* mExecuteInfo;

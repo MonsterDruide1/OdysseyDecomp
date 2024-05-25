@@ -7,7 +7,13 @@
 #include "Library/Shadow/ShadowKeeper.h"
 #include "Project/Light/ActorPrepassLightKeeper.h"
 
+#include <cstdio>
+
 namespace al {
+
+#define DEREF_NULL *(volatile int*)0;
+#define WARN_UNIMPL printf("Function not implemented: %s (%s:%d)\n", __func__, __FILE__, __LINE__)
+#define CRASH {WARN_UNIMPL;DEREF_NULL}
 
 LiveActor::LiveActor(const char* actorName) : mActorName(actorName) {
     memset(&mPoseKeeper, 0, 0xB8);
@@ -94,5 +100,27 @@ void LiveActor::initSubActorKeeper(SubActorKeeper* subActorKeeper) {
 void LiveActor::initSceneInfo(ActorSceneInfo* sceneInfo) {
     mSceneInfo = sceneInfo;
 }
+
+
+LiveActor::~LiveActor() {
+    delete mFlags;
+    delete mShadowKeeper;
+}
+
+void LiveActor::makeActorAlive() { CRASH }
+void LiveActor::makeActorDead() { CRASH }
+void LiveActor::movement() { CRASH }
+void LiveActor::calcAnim() { CRASH }
+void LiveActor::startClipped() { CRASH }
+void LiveActor::endClipped() { CRASH }
+sead::Matrix34f* LiveActor::getBaseMtx() const { CRASH }
+SceneObjHolder* LiveActor::getSceneObjHolder() const { CRASH }
+CollisionDirector* LiveActor::getCollisionDirector() const { CRASH }
+AreaObjDirector* LiveActor::getAreaObjDirector() const { CRASH }
+CameraDirector* LiveActor::getCameraDirector() const { CRASH }
+void LiveActor::initStageSwitchKeeper() { CRASH }
+void LiveActor::updateCollider() { CRASH }
+
+
 
 }  // namespace al

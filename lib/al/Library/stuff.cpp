@@ -588,56 +588,18 @@ bool al::isNearDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, flo
 }
 
 void al::SphereHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const {
-  float unk; // s1
-  float v7; // s0
-  float x; // s1
-  float y; // s2
-  float v10; // s6
-  float z; // s3
-  float v12; // s1
-  float v13; // s0
-  float v14; // s3
-  float v15; // s6
-  float v16; // s4
-  float v17; // s5
-  float v18; // s7
-  float v19; // s0
-  sead::Vector3f v20; // [xsp+0h] [xbp-30h] BYREF
-
-  if ( this->mCollisionLocation == 1 )
+  if ( mCollisionLocation == 1 )
   {
-    unk = this->unk;
-    a1->x = unk * this->mTriangle.mFaceNormal.x;
-    a1->y = unk * this->mTriangle.mFaceNormal.y;
-    a1->z = unk * this->mTriangle.mFaceNormal.z;
+    *a1 = unk * mTriangle.mFaceNormal;
     if ( a2 )
-      *a2 = this->mTriangle.mFaceNormal;
+      *a2 = mTriangle.mFaceNormal;
   }
   else
   {
-    v20.x = this->unk3.x - this->mCollisionHitPos.x;
-    v20.y = this->unk3.y - this->mCollisionHitPos.y;
-    v20.z = this->unk3.z - this->mCollisionHitPos.z;
+    sead::Vector3f v20 = unk3 - mCollisionHitPos;
     al::tryNormalizeOrZero(&v20);
-    v7 = this->unk;
-    x = this->mTriangle.mFaceNormal.x;
-    y = this->mTriangle.mFaceNormal.y;
-    v10 = v7 * x;
-    z = this->mTriangle.mFaceNormal.z;
-    v12 = (float)((float)(x * v20.x) + (float)(y * v20.y)) + (float)(z * v20.z);
-    v13 = (float)((float)(v10 * v20.x) + (float)((float)(v7 * y) * v20.y)) + (float)((float)(v7 * z) * v20.z);
-    v14 = v20.x * v12;
-    v15 = v20.y * v12;
-    v16 = v20.x * v13;
-    v17 = v20.y * v13;
-    v18 = v13 * v20.z;
-    v19 = v12 * v20.z;
-    a1->x = v16;
-    a1->y = v17;
-    a1->z = v18;
-    a2->x = v14;
-    a2->y = v15;
-    a2->z = v19;
+    *a1 = v20 * (unk * mTriangle.mFaceNormal).dot(v20);
+    *a2 = v20 * mTriangle.mFaceNormal.dot(v20);
   }
 }
 
@@ -680,22 +642,22 @@ bool al::separateScalarAndDirection(f32* a1, sead::Vector3f* a2, const sead::Vec
 }
 
 void al::SphereHitInfo::calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const {
-  const sead::Vector3f *p_mFaceNormal; // x0
-  float x; // t1
-  float y; // s1
-
-  x = this->mTriangle.mFaceNormal.x;
-  p_mFaceNormal = &this->mTriangle.mFaceNormal;
-  y = p_mFaceNormal[7].y;
-  a1->x = y * x;
-  a1->y = y * p_mFaceNormal->y;
-  a1->z = y * p_mFaceNormal->z;
+  *a1 = unk * mTriangle.mFaceNormal;
   if ( a2 )
-    *a2 = *p_mFaceNormal;
+    *a2 = mTriangle.mFaceNormal;
 }
 
 bool al::isReverseDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, f32 a3) {
-  CRASH
+  if(a1.dot(a2) >= 0.0f)
+    return false;
+
+  if(sead::Mathf::abs((a1.y * a2.z) - (a1.z * a2.y)) > a3)
+    return false;
+  if(sead::Mathf::abs((a1.z * a2.x) - (a1.x * a2.z)) > a3)
+    return false;
+  if(sead::Mathf::abs((a1.x * a2.y) - (a1.y * a2.x)) > a3)
+    return false;
+  return true;
 }
 
 const sead::Vector3f& alCollisionUtil::getCollisionMovingReaction(const al::HitInfo* info) {
