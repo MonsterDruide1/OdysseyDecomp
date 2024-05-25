@@ -162,4 +162,20 @@ sead::PtrArray<CollisionParts>* CollisionDirector::getCollisionPartsPtrArray() c
     return mCollisionPartsKeeperPtrArray->getPtrArray();
 }
 
+
+
+CollisionDirector::~CollisionDirector() {
+    mStrikeArrowHitInfos->freeBuffer();
+    delete mStrikeArrowHitInfos;
+
+    mStrikeSphereHitInfos->freeBuffer();
+    delete mStrikeSphereHitInfos;
+
+    mStrikeDiskHitInfos->freeBuffer();
+    delete mStrikeDiskHitInfos;
+
+    delete[] mSphereHitArray;
+    delete[] mDiskHitArray;
+}
+
 }
