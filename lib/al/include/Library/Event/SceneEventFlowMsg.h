@@ -11,7 +11,7 @@ public:
     void requestCommand(const char* cmd);
 
 private:
-    sead::FixedSafeString<64> mCmd;
+    sead::FixedSafeString<64> mCmd = {""};
 };
 
 static_assert(sizeof(SceneEventFlowMsg) == 0x58);

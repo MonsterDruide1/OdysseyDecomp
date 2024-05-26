@@ -3,7 +3,7 @@
 #include "Library/Base/String.h"
 
 namespace al {
-SceneEventFlowMsg::SceneEventFlowMsg() : mCmd("") {}
+SceneEventFlowMsg::SceneEventFlowMsg() {}
 
 bool SceneEventFlowMsg::isReceiveCommand(const char* cmd) const {
     if (mCmd.isEmpty()) {
