@@ -16,6 +16,7 @@ public:
         // used in PlayerJudgeForceLand
         EActionTrigger_val11 = 11,
         EActionTrigger_val14 = 14,
+        EActionTrigger_val24 = 24,
         EActionTrigger_val32 = 32,
         EActionTrigger_QuickTurn = 34,
     };

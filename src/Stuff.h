@@ -4,6 +4,7 @@
 #include "Library/Collision/KTriangle.h"
 #include "MapObj/AnagramAlphabetCharacter.h"
 #include "Player/IUsePlayerCollision.h"
+#include "Player/PlayerConst.h"
 
 namespace rs {
 
@@ -20,6 +21,9 @@ bool isCollidedGround(const IUsePlayerCollision*);
 bool isCollidedWall(const IUsePlayerCollision*);
 bool isCollidedNoScaleVelocityWall(const IUsePlayerCollision*);
 
+bool isOnGround(al::LiveActor const*,IUsePlayerCollision const*);
+bool isOnGroundRunAngle(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*);
+
 void calcMovePowerGround(sead::Vector3f*, const IUsePlayerCollision*, const sead::Vector3f&);
 void calcMovePowerWall(sead::Vector3f*, const IUsePlayerCollision*, const sead::Vector3f&);
 
@@ -29,6 +33,9 @@ void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
 
 const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision*);
+
+bool isLandGroundRunAngle(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*);
+bool isJustLand(const IUsePlayerCollision*);
 
 void scaleVelocityInertiaWallHit(al::LiveActor*, const IUsePlayerCollision*, float, float, float);
 
@@ -44,5 +51,7 @@ void slerpGroundStandFront(al::LiveActor*, const IUsePlayerCollision*, const sea
 void slerpGroundStand(al::LiveActor*, const IUsePlayerCollision*, float, float);
 void slerpGravity(al::LiveActor*, float);
 void slerpGravityVelH(al::LiveActor*, float);
+
+void cutVerticalVelocityGroundNormal(al::LiveActor*, const IUsePlayerCollision*);
 
 }  // namespace rs

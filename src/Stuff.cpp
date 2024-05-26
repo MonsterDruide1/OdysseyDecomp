@@ -55,6 +55,87 @@ bool isPlayer2D(const al::LiveActor* actor) {
     return false;
 }
 
+
+bool sub_7100569734(const al::LiveActor *actor, const IUsePlayerCollision *a2, const PlayerConst *a3, bool a4)
+{
+  const sead::Vector3f *Gravity; // x22
+  const sead::Vector3f *Velocity; // x0
+  float v10; // q0
+  float v11; // s8
+  float v12; // q0
+  float v13; // s0
+  float v14; // s8
+  float v15; // s9
+  float v16; // s0
+  float v17; // s8
+  const sead::Vector3f *v18; // x20
+  const sead::Vector3f *v19; // x19
+  float v20; // s0
+  sead::Vector3f v22; // [xsp+0h] [xbp-40h] BYREF
+
+  v22.x = 0.0;
+  v22.y = 0.0;
+  v22.z = 0.0;
+  if ( a4 )
+    Gravity = &al::getGravity(actor);
+  else
+    Gravity = &a2->getPlayerCollider()->unk10;
+
+  Velocity = &al::getVelocity(actor);
+  al::verticalizeVec(&v22, *Gravity, *Velocity);
+  v10 = a3->getHillAngleSpeedMin();
+  v11 = *(float *)&v10;
+  v12 = a3->getHillAngleSpeedMax();
+  v13 = al::calcRate01(
+          sqrtf((float)((float)(v22.x * v22.x) + (float)(v22.y * v22.y)) + (float)(v22.z * v22.z)),
+          v11,
+          *(float *)&v12);
+  v14 = al::easeIn(v13);
+  v15 = a3->getStandAngleMin();
+  v16 = a3->getStandAngleMax();
+  v17 = al::lerpValue(v15, v16, v14);
+  v18 = &a2->getPlayerCollider()->unk10;
+  v19 = &al::getGravity(actor);
+  v20 = cosf(v17 * 0.017453);
+  return al::isFloorPolygonCos(*v18, *v19, v20);
+}
+
+bool isLandGroundRunAngle(al::LiveActor const* actor,IUsePlayerCollision const* collision,PlayerConst const* pConst) {
+  if(collision->getPlayerCollider()->val1 < 0.0f) return false;
+
+  sead::Vector3f velocity = al::getVelocity(actor);
+  al::tryNormalizeOrZero(&velocity);
+  f32 dot = collision->getPlayerCollider()->unk10.dot(velocity);
+  if(dot <= 0.0f || al::isNearZero(dot, 0.001f)) {
+    return sub_7100569734(actor, collision, pConst, true);
+  }
+  return false;
+}
+
+bool isJustLand(const IUsePlayerCollision* collision) {
+  return collision->getPlayerCollider()->val1 >= 0.0f && collision->getPlayerCollider()->mTimeInAir == 1;
+}
+
+bool isOnGround(al::LiveActor const*,IUsePlayerCollision const*) {CRASH}
+bool isOnGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
+  if(collision->getPlayerCollider()->val1 < 0.0f) return false;
+
+  sead::Vector3f velocity = al::getVelocity(actor);
+  al::tryNormalizeOrZero(&velocity);
+  f32 dot = collision->getPlayerCollider()->unk10.dot(velocity);
+  if(dot <= 0.0f || al::isNearZero(dot, 0.001f)) {
+    bool check = collision->getPlayerCollider()->val1 >= 0.0f && collision->getPlayerCollider()->mTimeInAir == 1;
+    return sub_7100569734(actor, collision, pConst, check);
+  }
+  return false;
+}
+void cutVerticalVelocityGroundNormal(al::LiveActor* actor, const IUsePlayerCollision* collision) {
+  if(!rs::isCollidedGround(collision)) return;
+
+  sead::Vector3f* velocity = al::getVelocityPtr(actor);
+  al::parallelizeVec(velocity, rs::getCollidedGroundNormal(collision), *velocity);
+}
+
 void calcJumpInertia(sead::Vector3f* out, al::LiveActor* actor, const IUsePlayerCollision* collision, const sead::Vector3f& vec, f32 val) {
   float v13; // s2
   float v14; // s0

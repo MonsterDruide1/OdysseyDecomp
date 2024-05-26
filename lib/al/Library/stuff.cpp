@@ -1083,6 +1083,32 @@ void separateVelocityHV(sead::Vector3f* h, sead::Vector3f* v, al::LiveActor* act
   separateVectorHV(h, v, actor->getPoseKeeper()->getVelocity(), al::getGravity(actor));
 }
 
+bool isFloorPolygonCos(const sead::Vector3f &a1, const sead::Vector3f& a2, float a3)
+{
+  float v7; // s0
+  bool v8; // nf
+  bool v9; // w8
+
+  if ( al::isNearZero(a1, 0.001) )
+    return 0LL;
+
+  v7 = a1.dot(a2);
+  if ( (float)-v7 < a3 )
+    return 0LL;
+
+  v8 = v7 < 0.0;
+  if ( v7 <= 0.0 )
+    v7 = -v7;
+
+  v9 = v8;
+  return v9 && (v7 >= 0.34202);
+}
+
+void parallelizeVec(sead::Vector3f* a1, const sead::Vector3f& a2, const sead::Vector3f& a3) {
+  f32 dot = a2.dot(a3);
+  *a1 = a2 * dot;
+}
+
 bool turnVecToVecDegree(sead::Vector3f* a1, const sead::Vector3f& a2, const sead::Vector3f& a3, f32 a4) {
   float v7; // s10
   float v8; // s11
