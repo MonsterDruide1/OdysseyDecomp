@@ -67,7 +67,7 @@ void setColliderRadiusScale(ActorCollisionController*, f32);
 void setColliderOffsetY(ActorCollisionController*, f32);
 void resetActorCollisionController(ActorCollisionController*, s32);
 void updateActorCollisionController(ActorCollisionController*);
-void getCollidedFloorMaterialCodeName(const LiveActor*);
+const char* getCollidedFloorMaterialCodeName(const LiveActor*);
 void getCollidedFloorMaterialCodeName(const Collider*);
 void getCollidedWallMaterialCodeName(const LiveActor*);
 void getCollidedCeilingMaterialCodeName(const LiveActor*);

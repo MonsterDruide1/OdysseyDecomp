@@ -1,9 +1,20 @@
 #include "Library/LiveActor/LiveActor.h"
 
+#include "Library/Action/ActorActionKeeper.h"
+#include "Library/Effect/EffectKeeper.h"
+#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorFlag.h"
 #include "Library/LiveActor/LiveActorUtil.h"
+#include "Library/HitSensor/HitSensorKeeper.h"
+#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Model/ModelKeeper.h"
+#include "Library/Nerve/NerveKeeper.h"
 #include "Library/Rail/RailKeeper.h"
+#include "Library/Screen/ScreenPointKeeper.h"
 #include "Library/Shadow/ShadowKeeper.h"
 #include "Project/Light/ActorPrepassLightKeeper.h"
 
@@ -109,7 +120,68 @@ LiveActor::~LiveActor() {
 
 void LiveActor::makeActorAlive() { CRASH }
 void LiveActor::makeActorDead() { CRASH }
-void LiveActor::movement() { CRASH }
+void LiveActor::movement() {
+    if(mFlags->isDead || (mFlags->isClipped && !mFlags->isDrawClipped))
+        return;
+
+    if(mActorActionKeeper)
+        mActorActionKeeper->updatePrev();
+
+    if(mModelKeeper)
+        mModelKeeper->update();
+
+    if(mFlags->isMaterialCodeValid && isCollidedGround(this)) {
+        setMaterialCode(this, getCollidedFloorMaterialCodeName(this));
+        if(mFlags->isPuddleMaterialValid)
+            updateMaterialCodePuddle(this);
+    }
+
+    if(mHitSensorKeeper) {
+        mHitSensorKeeper->attackSensor();
+        if(mFlags->isDead)
+            return;
+    }
+
+    if(mNerveKeeper) {
+        mNerveKeeper->update();
+        if(mFlags->isDead)
+            return;
+    }
+    
+    control();
+    if(mFlags->isDead)
+        return;
+
+    updateCollider();
+
+    if(isUpdateMovementEffectAudioCollisionSensor(this)) {
+        if(mEffectKeeper)
+            mEffectKeeper->update();
+        if(mCollisionParts) {
+            if(!mModelKeeper || !mModelKeeper->flag2) {
+                sead::Matrix34f mtx;
+                mPoseKeeper->calcBaseMtx(&mtx);
+                preScaleMtx(&mtx, mPoseKeeper->getScale());
+                syncCollisionMtx(this, &mtx);
+            }
+        }
+        if(mHitSensorKeeper)
+            mHitSensorKeeper->update();
+    }
+
+    if(mActorActionKeeper)
+        mActorActionKeeper->updatePost();
+
+    if(mShadowKeeper)
+        mShadowKeeper->update();
+
+    if(mScreenPointKeeper)
+        mScreenPointKeeper->update();
+
+    if(mModelKeeper)
+        mModelKeeper->updateLast();
+
+}
 void LiveActor::calcAnim() { CRASH }
 void LiveActor::startClipped() { CRASH }
 void LiveActor::endClipped() { CRASH }

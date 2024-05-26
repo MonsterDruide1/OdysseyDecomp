@@ -24,6 +24,9 @@ public:
     void invalidateBySystem();
     HitSensor* getSensor(const char*) const;
 
+    void update();
+    void attackSensor();
+
 private:
     s32 mSensorCount;
     HitSensor** mSensors;

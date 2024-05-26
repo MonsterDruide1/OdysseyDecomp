@@ -5,6 +5,7 @@ class LiveActor;
 
 class ScreenPointKeeper {
 public:
+    void update();
 };
 }  // namespace al
 

@@ -6,7 +6,7 @@
 
 namespace al {
 
-void turnVecToVecDegree(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+bool turnVecToVecDegree(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 void turnVecToVecRate(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 void verticalizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 
