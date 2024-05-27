@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadMatrix.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Player/IUsePlayerHack.h"
@@ -16,7 +18,7 @@ public:
     virtual void init(const al::ActorInitInfo&) override;
     virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
     virtual u32 getPortNo() const;
-    virtual void* getViewMtx() const;  // NOTE: unknown return type
+    virtual sead::Matrix34f* getViewMtx() const;
     virtual IUsePlayerCollision* getPlayerCollision() const;
     virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
     virtual bool isEnableDemo();
@@ -46,6 +48,6 @@ public:
     virtual bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
 
 private:
-    void* mViewMtx = nullptr;  // NOTE: unknown type
+    sead::Matrix34f* mViewMtx = nullptr;
     u32 mPortNo = 0;
 };

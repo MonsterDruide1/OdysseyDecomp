@@ -44,6 +44,6 @@ PlayerInfo* PlayerActorBase::getPlayerInfo() const {
 u32 PlayerActorBase::getPortNo() const {
     return mPortNo;
 }
-void* PlayerActorBase::getViewMtx() const {
+sead::Matrix34f* PlayerActorBase::getViewMtx() const {
     return mViewMtx;
 }
