@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
+#include "PlayerUtil.h"
 
 class HackCap : public al::LiveActor {
 public:
+    HackCap(al::LiveActor const*,char const*,PlayerInput const*,PlayerAreaChecker const*,PlayerWallActionHistory const*,PlayerCapActionHistory const*,PlayerEyeSensorHitHolder const*,PlayerSeparateCapFlag const*,IUsePlayerCollision const*,IUsePlayerHeightCheck const*,PlayerWetControl const*,PlayerJointControlKeeper const*,HackCapJudgePreInputSeparateThrow *,HackCapJudgePreInputSeparateJump *);
     void calcReturnTargetPos(sead::Vector3f*);
 
     void hide(bool);

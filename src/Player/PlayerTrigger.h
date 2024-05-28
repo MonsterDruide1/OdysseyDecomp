@@ -13,6 +13,9 @@ public:
         EAttackSensorTrigger_val0 = 0,
     };
     enum EActionTrigger : u32 {
+        EActionTrigger_val8 = 8,
+        EActionTrigger_val9 = 9,
+        EActionTrigger_val10 = 10,
         // used in PlayerJudgeForceLand
         EActionTrigger_val11 = 11,
         EActionTrigger_val14 = 14,

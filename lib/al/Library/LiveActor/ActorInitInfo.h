@@ -78,6 +78,7 @@ public:
     const LayoutInitInfo& getLayoutInitInfo() const { return *mLayoutInitInfo; }
     const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
     const ActorSceneInfo& getActorSceneInfo() const { return mActorSceneInfo; }
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
 
 private:
     LiveActorGroup* mKitDrawingGroup;

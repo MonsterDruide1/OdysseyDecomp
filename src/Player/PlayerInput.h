@@ -47,7 +47,7 @@ public:
     bool isTriggerSpinCap() const;
     bool isTriggerToggleStayCap() const;
     bool isTriggerSpinAttackSeparate() const;
-    s32 getSeparatePlay1P();
+    static s32 getSeparatePlay1P();
     bool isTriggerCapReturn() const;
     bool isTriggerCapAttackSeparate() const;
     bool isTriggerSwingActionCap() const;
@@ -86,7 +86,7 @@ public:
     void snapWallAlongInput(sead::Vector3<float> *,sead::Vector3<float> const&);
     void snapAreaInput(sead::Vector3<float> *,sead::Vector3<float> const&);
 
-private:
+public:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
     const IUseDimension* mDimension;
