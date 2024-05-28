@@ -6,7 +6,7 @@ void PlayerActorBase::initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&
 IUsePlayerCollision* PlayerActorBase::getPlayerCollision() const {
     return nullptr;
 }
-al::PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
+PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
     return nullptr;
 }
 bool PlayerActorBase::isEnableDemo() {
@@ -44,6 +44,6 @@ PlayerInfo* PlayerActorBase::getPlayerInfo() const {
 u32 PlayerActorBase::getPortNo() const {
     return mPortNo;
 }
-void* PlayerActorBase::getViewMtx() const {
+const sead::Matrix34f* PlayerActorBase::getViewMtx() const {
     return mViewMtx;
 }

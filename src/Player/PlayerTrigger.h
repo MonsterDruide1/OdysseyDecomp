@@ -7,7 +7,11 @@ class PlayerTrigger {
 public:
     enum ECollisionTrigger : u32 {};
     enum EAttackSensorTrigger : u32 {};
-    enum EActionTrigger : u32 {};
+    enum EActionTrigger : u32 {
+        EActionTrigger_val8 = 8,
+        EActionTrigger_val9 = 9,
+        EActionTrigger_val10 = 10,
+    };
     enum EReceiveSensorTrigger : u32 {};
     enum EPreMovementTrigger : u32 {};
     enum EDemoEndTrigger : u32 {};

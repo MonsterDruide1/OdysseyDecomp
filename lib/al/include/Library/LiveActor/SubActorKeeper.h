@@ -96,8 +96,8 @@ private:
 };
 
 void isExistSubActorKeeper(const LiveActor*);
-const LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
-void tryGetSubActor(const LiveActor*, const char*);
+LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
+LiveActor* tryGetSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
 void getSubActor(const LiveActor*, s32);
 void getSubActorNum(const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const LiveActor*);

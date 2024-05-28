@@ -76,6 +76,7 @@ public:
     void initNoViewId(const PlacementInfo*, const ActorInitInfo&);
 
     const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
 
 private:
     LiveActorGroup* mKitDrawingGroup;
