@@ -6,6 +6,7 @@
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorFlag.h"
 #include "Library/LiveActor/LiveActorUtil.h"
@@ -118,8 +119,8 @@ LiveActor::~LiveActor() {
     delete mShadowKeeper;
 }
 
-void LiveActor::makeActorAlive() { CRASH }
-void LiveActor::makeActorDead() { CRASH }
+void LiveActor::makeActorAlive() { WARN_UNIMPL; }
+void LiveActor::makeActorDead() { WARN_UNIMPL; if(mPoseKeeper) al::setVelocityZero(this); }
 void LiveActor::movement() {
     if(mFlags->isDead || (mFlags->isClipped && !mFlags->isDrawClipped))
         return;
@@ -187,7 +188,9 @@ void LiveActor::startClipped() { CRASH }
 void LiveActor::endClipped() { CRASH }
 sead::Matrix34f* LiveActor::getBaseMtx() const { CRASH }
 SceneObjHolder* LiveActor::getSceneObjHolder() const { CRASH }
-CollisionDirector* LiveActor::getCollisionDirector() const { CRASH }
+CollisionDirector* LiveActor::getCollisionDirector() const {
+    return mSceneInfo->mCollisionDirector;
+}
 AreaObjDirector* LiveActor::getAreaObjDirector() const { CRASH }
 CameraDirector* LiveActor::getCameraDirector() const { CRASH }
 void LiveActor::initStageSwitchKeeper() { CRASH }

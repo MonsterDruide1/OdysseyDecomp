@@ -9,7 +9,7 @@ bool isPadTypeJoySingle(int) {CRASH}
 bool isValidReplayController(u32) {CRASH}
 sead::ControllerBase* getReplayController(u32) {CRASH}
 
-bool JoyPadAccelPoseAnalyzer::isSwingAnyHand() const {CRASH}
+bool JoyPadAccelPoseAnalyzer::isSwingAnyHand() const {WARN_UNIMPL;return false;}
 bool JoyPadAccelPoseAnalyzer::isSwingDoubleHandSameDir() const {CRASH}
 void JoyPadAccelPoseAnalyzer::setSwingBorder(f32 val1, f32 val2) {
     mSwingBorder = {val1, val2};

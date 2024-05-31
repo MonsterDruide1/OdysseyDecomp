@@ -1,4 +1,5 @@
 #include "Player/PlayerActorBase.h"
+#include "Library/LiveActor/LiveActor.h"
 
 PlayerActorBase::PlayerActorBase(const char* name) : LiveActor(name) {}
 void PlayerActorBase::init(const al::ActorInitInfo&) {}
@@ -46,4 +47,10 @@ u32 PlayerActorBase::getPortNo() const {
 }
 const sead::Matrix34f* PlayerActorBase::getViewMtx() const {
     return mViewMtx;
+}
+
+void PlayerActorBase::movement() {
+    al::LiveActor::movement();
+    if(!checkDeathArea())
+        sendCollisionMsg();
 }

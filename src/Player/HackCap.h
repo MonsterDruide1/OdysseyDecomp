@@ -14,6 +14,9 @@ public:
     bool isFlying() const;
 
     bool isThrowTypeSpiral() const;
+    bool isEnableSpinAttack();
+    bool isRequestableReturn();
+    bool requestReturn(bool*);
 
     unsigned char padding_to_118[0x10];
     al::LiveActor* mActorA;

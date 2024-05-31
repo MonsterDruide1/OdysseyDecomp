@@ -15,7 +15,9 @@
 bool PlayerInputFunction::isTriggerCancelWorldWarp(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isTriggerStartWorldWarp(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isTriggerTalk(al::LiveActor const*, int) {CRASH}
-bool PlayerInputFunction::isTriggerJump(al::LiveActor const*, int) {CRASH}
+bool PlayerInputFunction::isTriggerJump(al::LiveActor const*, int port) {
+    return al::isPadTriggerA(port) || al::isPadTriggerB(port);
+}
 bool PlayerInputFunction::isTriggerSubAction(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isHoldSubAction(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isHoldAction(al::LiveActor const*, int) {CRASH}
@@ -28,6 +30,10 @@ void PlayerInput::calcMoveInput(sead::Vector3f* out, const sead::Vector3f & in) 
         *out = sead::Vector3f::zero;
     }
     calcMoveInputImpl(out, in, false, false, false);
+}
+
+bool PlayerInput::isMove() const {
+    return !mIsDisableInput && mIsMove;
 }
 
 

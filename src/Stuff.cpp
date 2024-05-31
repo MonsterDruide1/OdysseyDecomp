@@ -113,6 +113,8 @@ bool isLandGroundRunAngle(al::LiveActor const* actor,IUsePlayerCollision const* 
 }
 
 bool isJustLand(const IUsePlayerCollision* collision) {
+  printf("Collision: %p\n", collision);
+  printf("PlayerCollider: %p\n", collision->getPlayerCollider());
   return collision->getPlayerCollider()->val1 >= 0.0f && collision->getPlayerCollider()->mTimeInAir == 1;
 }
 
@@ -236,6 +238,10 @@ void calcGroundNormalOrUpDir(sead::Vector3f* result, const al::LiveActor* actor,
 
 const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision* collision) {
     return collision->getPlayerCollider()->unk10;
+}
+
+const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision* collision) {
+    return collision->getPlayerCollider()->unk9;
 }
 
 void calcMovePowerGround(sead::Vector3f* result, const IUsePlayerCollision* collision, const sead::Vector3f& vec) {

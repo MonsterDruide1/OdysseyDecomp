@@ -47,7 +47,7 @@ public:
     virtual void sendCollisionMsg();
     virtual bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32);
 
-private:
+public:
     const sead::Matrix34f* mViewMtx = nullptr;
     u32 mPortNo = 0;
 };

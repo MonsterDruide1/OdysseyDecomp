@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CUSTOM/PlayerColliderHakoniwa.h"
 #include "Player/PlayerActorBase.h"
 #include "Util/IUseDimension.h"
 
@@ -218,7 +219,7 @@ public:
     void exeDead();
     bool tryActionCapSpinAttackImpl(bool);
 
-private:
+public:
     PlayerInfo* mPlayerInfo = nullptr;
     PlayerConst* mPlayerConst = nullptr;
     PlayerInput* mPlayerInput = nullptr;
@@ -342,5 +343,5 @@ private:
     PlayerJudgeWallHitDownForceRun* mPlayerJudgeWallHitDownForceRun = nullptr;
     PlayerJudgeWallHitDownRolling* mPlayerJudgeWallHitDownRolling = nullptr;
     PlayerJudgeWallKeep* mPlayerJudgeWallKeep = nullptr;
-    bool gap_2 = false;
+    bool mIsInWater = false;
 };

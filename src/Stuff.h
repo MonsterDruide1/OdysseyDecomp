@@ -31,6 +31,7 @@ void calcGroundNormalOrUpDir(sead::Vector3f*, const al::LiveActor*, const IUsePl
 void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
 
+const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision*);
 

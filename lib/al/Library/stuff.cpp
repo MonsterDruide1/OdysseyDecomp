@@ -540,6 +540,10 @@ void setVelocity(LiveActor *actor, const sead::Vector3f &vel) {
     *actor->mPoseKeeper->getVelocityPtr() = vel;
 }
 
+void setVelocityZero(LiveActor *actor) {
+    *actor->mPoseKeeper->getVelocityPtr() = {0.0f, 0.0f, 0.0f};
+}
+
 void calcFrontDir(sead::Vector3f * front, const LiveActor *actor) {
     sead::Matrix34f mtx;
     actor->mPoseKeeper->calcBaseMtx(&mtx);

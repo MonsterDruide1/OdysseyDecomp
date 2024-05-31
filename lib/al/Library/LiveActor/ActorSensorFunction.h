@@ -3,6 +3,7 @@
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include "Library/HitSensor/HitSensorKeeper.h"
 
 namespace al {
 
@@ -171,7 +172,7 @@ bool isSensorPlayerAttack(const HitSensor*);
 }  // namespace al
 
 namespace alActorSensorFunction {
-void getSensorKeeper(const al::LiveActor*);
+al::HitSensorKeeper* getSensorKeeper(const al::LiveActor*);
 void sendMsgSensorToSensor(const al::SensorMsg&, al::HitSensor*, al::HitSensor*);
 void sendMsgToActorUnusedSensor(const al::SensorMsg&, al::LiveActor*);
 }  // namespace alActorSensorFunction

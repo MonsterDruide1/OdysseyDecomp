@@ -1,14 +1,18 @@
 #include "Player/PlayerActorHakoniwa.h"
+#include "Library/Area/AreaObjDirector.h"
 #include "Library/Audio/AudioKeeper.h"
 #include "Library/Base/String.h"
+#include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveStateCtrl.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Player/ComboCounter.h"
@@ -17,16 +21,22 @@
 #include "Player/HackCap.h"
 #include "Player/IUsePlayerCollision.h"
 #include "Player/PlayerActorBase.h"
+#include "Player/PlayerCollider.h"
 #include "Player/PlayerFunction.h"
 #include "Player/PlayerInput.h"
 #include "Player/PlayerInputFunction.h"
 #include "Player/PlayerPainPartsKeeper.h"
+#include "Player/PlayerStateFallHakoniwa.h"
+#include "Player/PlayerStateJump.h"
+#include "Player/PlayerJudgePreInputJump.h"
 #include "Player/PlayerTrigger.h"
 #include "PlayerUtil.h"
+#include "Stuff.h"
 #include "System/GameDataFunction.h"
 #include "Util/ActorDimensionKeeper.h"
 #include "Util/StageSceneFunction.h"
 #include "playerUtil.h"
+#include "CUSTOM/PlayerColliderHakoniwa.h"
 
 namespace {
 
@@ -100,12 +110,104 @@ NERVE_MAKE(PlayerActorHakoniwa, Fall);
 PlayerActorHakoniwa::PlayerActorHakoniwa(const char* name)
     : PlayerActorBase(name), mComboCounter(new al::ComboCounter()) {}
 
-// void initAfterPlacement() override;
-// void movement() override;
-// void attackSensor(al::HitSensor*, al::HitSensor*) override;
-// bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
-// void control() override;
-// void updateCollider() override;
+void PlayerActorHakoniwa::initAfterPlacement() {
+    mActorDimensionKeeper->update();
+    if(!rs::isIn2DArea(this))
+        mActorDimensionKeeper->invalidate();
+
+    mPlayerJointControlKeeper->resetPartsDynamics();
+    mPlayerModelChangerHakoniwa->initStartModel();
+    
+    al::addVelocityToGravity(this, 0.01f);
+    updateCollider();
+    al::setVelocityZero(this);
+
+    if(mPlayerHackKeeper->executeForceHackStageStart(mBodyHitSensor, this)) {
+        CRASH
+        /*mPlayerStateHack->prepareStageStartHack();
+        mPlayerModelChangerHakoniwa->syncHost(1);
+        al::setNerve(this, &Hack);
+        return;*/
+    }
+
+    if(!al::isNerve(this, &Fall)) {
+        return;
+    }
+
+    if(rs::isCollidedGround(mPlayerColliderHakoniwa)) {
+        mPlayerTrigger->set(PlayerTrigger::ECollisionTrigger_val8);
+        mPlayerStateWait->initSceneStartAnim();
+        mPlayerModelChangerHakoniwa->resetPosition();
+        al::setNerve(this, &Wait);
+        return;
+    }
+
+    // more code, no idea what the first virtual call resolves to
+    CRASH
+}
+void PlayerActorHakoniwa::movement() {
+    printf("Currently in %s\n", mNerveKeeper->getStateCtrl()->findStateInfo(mNerveKeeper->getCurrentNerve())->name);
+    mPlayerInput->mIsDisableInput = false;
+    rs::updateJudge(mPlayerJudgePreInputJump);
+    WARN_UNIMPL;
+    PlayerActorBase::movement();
+}
+void PlayerActorHakoniwa::attackSensor(al::HitSensor*, al::HitSensor*) { CRASH }
+bool PlayerActorHakoniwa::receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) { CRASH }
+void PlayerActorHakoniwa::control() {
+    al::AreaObjGroup* hackerCheckKeepOnAreaGroup = al::tryFindAreaObjGroup(this, "HackerCheckKeepOnArea");
+    if(hackerCheckKeepOnAreaGroup) {
+        CRASH
+    }
+
+    al::AreaObj* hackerCheckArea = al::tryFindAreaObj(this, "HackerCheckArea", al::getTrans(this));
+    if(hackerCheckArea) {
+        CRASH
+    }
+
+    if(al::isNerve(this, &Hack)) {
+        CRASH
+    } else {
+        mPlayerDamageKeeper->update(mPlayerModelChangerHakoniwa, rs::isJudge(mPlayerJudgeRecoveryLifeFast), !al::isNerve(this, &Demo));
+        if(!rs::isJudge(mPlayerInfo->mPlayerJudgeSafetyPointRecovery)) {
+            mActorDimensionKeeper->update();
+            WARN_UNIMPL;
+            // possibly jumping out of 2d area
+            al::setGravity(this, {0.0f, -1.0f, 0.0f});
+        }
+
+        updateCarry();
+        bool isOnGround = rs::isOnGroundRunAngle(this, mPlayerColliderHakoniwa, mPlayerConst);
+        // animation control
+
+        // nerve changer for switching after 2d->3d dropout
+    }
+
+    WARN_UNIMPL;
+    bool isInWater = false;//rs::isPlayerInWater(this) || mPlayerStateSwim->isReduceOxygen() || mPlayerStateDamageSwim->isReduceOxygen();
+    // BGM changer for going into/out of water
+    mIsInWater = isInWater;
+}
+void PlayerActorHakoniwa::updateCollider() {
+    // !!!!!!!!!!!!!!!
+    // FIXME!!!!!!!!!!
+    // !!!!!!!!!!!!!!!
+    WARN_UNIMPL;
+
+    mPoseKeeper->updatePoseTrans(mPoseKeeper->getTrans());
+
+    sead::Vector3f collisionResult = mPlayerColliderHakoniwa->updateCollider(mPoseKeeper->getVelocity());
+
+    const sead::Vector3f& a2 = mPoseKeeper->getVelocity();
+    const sead::Vector3f& result = collisionResult;
+    const PlayerCollider* a1 = mPlayerColliderHakoniwa->mPlayerCollider;
+    printf("mPlayerCollider: %p\n", a1);
+    printf("Collide: (%.02f, %.02f, %.02f)+(%.02f, %.02f, %.02f) => (%.02f, %.02f, %.02f) ; isRecovery=%s\n", a1->mTrans.x, a1->mTrans.y, a1->mTrans.z, a2.x, a2.y, a2.z, result.x, result.y, result.z, "false");
+    
+    printf("mPoseKeeper: %p\n", mPoseKeeper);
+    *mPoseKeeper->getTransPtr() += collisionResult;
+    mPoseKeeper->updatePoseTrans(mPoseKeeper->getTrans());
+}
 
 void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
                                      const PlayerInitInfo& playerInfo) {
@@ -213,7 +315,8 @@ void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
     mPlayerExternalVelocity =
         new PlayerExternalVelocity(this, mPlayerColliderHakoniwa, al::getTransPtr(this));
 
-    al::LiveActor* currentActor = mPlayerModelHolder->currentModel->mLiveActor;
+    al::LiveActor* currentActor = nullptr;
+    //al::LiveActor* currentActor = mPlayerModelHolder->currentModel->mLiveActor;
     al::FootPrintHolder* footPrintHolder =
         new al::FootPrintHolder(currentActor ? currentActor : nullptr, "FootPrint", mBodyHitSensor,
                                 (al::FootPrintServer*)al::getSceneObj(currentActor, 15));
@@ -263,7 +366,8 @@ void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
         new PlayerEquipmentUser(mPlayerInput, mPlayerModelHolder, mPlayerModelChangerHakoniwa);
     mPlayerSeCtrl =
         new PlayerSeCtrl(this, mPlayerAnimator, mHackCap, mPlayerModelChangerHakoniwa,
-                         mPlayerModelHolder->currentModel->mLiveActor, mPlayerExternalVelocity);
+        //                 mPlayerModelHolder->currentModel->mLiveActor, mPlayerExternalVelocity);
+                         nullptr, mPlayerExternalVelocity);
 
     mPlayerHackKeeper = new PlayerHackKeeper(this, mHackCap, mPlayerRecoverySafetyPoint,
                                              mPlayerInput, getViewMtx(), mPlayerDamageKeeper,
@@ -470,7 +574,7 @@ void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
                                              mPlayerColliderHakoniwa, mPlayerAnimator,
                                              mPlayerModelHolder->findModelActor("Normal2D"));
 
-    al::initNerveState(this, mPlayerStateWait, &Wait, "待機");
+    /*
     al::initNerveState(this, mPlayerStateWait, &Wait, "待機");
     al::initNerveState(this, mPlayerStateSquat, &Squat, "しゃがみ");
     al::initNerveState(this, mPlayerStateRunHakoniwa2D3D, &Run, "走り");
@@ -500,6 +604,36 @@ void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
     al::initNerveState(this, mPlayerStateBind, &Bind, "バインド");
     al::initNerveState(this, mPlayerStateCameraSubjective, &Camera, "主観カメラ");
     al::initNerveState(this, mPlayerStateAbyss, &Abyss, "奈落死");
+    */
+    al::initNerveState(this, mPlayerStateWait, &Wait, "Wait");
+    al::initNerveState(this, mPlayerStateSquat, &Squat, "Squat");
+    al::initNerveState(this, mPlayerStateRunHakoniwa2D3D, &Run, "RunHakoniwa2D3D");
+    al::initNerveState(this, mPlayerStateSlope, &Slope, "Slope");
+    al::initNerveState(this, mPlayerStateRolling, &Rolling, "Rolling");
+    al::initNerveState(this, mPlayerStateSpinCap, &SpinCap, "SpinCap");
+    al::initNerveState(this, mPlayerStateJump, &Jump, "Jump");
+    al::initNerveState(this, mPlayerStateCapCatchPop, &CapCatchPop, "CapCatchPop");
+    al::initNerveState(this, mPlayerStateWallAir, &WallAir, "WallAir");
+    al::initNerveState(this, mPlayerStateWallCatch, &WallCatch, "WallCatch");
+    al::initNerveState(this, mPlayerStateGrabCeil, &GrabCeil, "GrabCeil");
+    al::initNerveState(this, mPlayerStatePoleClimb, &PoleClimb, "PoleClimb");
+    al::initNerveState(this, mPlayerStateHipDrop, &HipDrop, "HipDrop");
+    al::initNerveState(this, mPlayerStateHeadSliding, &HeadSliding, "HeadSliding");
+    al::initNerveState(this, mPlayerStateLongJump, &LongJump, "LongJump");
+    al::initNerveState(this, mPlayerStateFallHakoniwa, &Fall, "FallHakoniwa");
+    al::initNerveState(this, mPlayerStateSandSink, &SandSink, "SandSink");
+    al::initNerveState(this, mActorStateSandGeyser, &SandGeyser, "砂の間欠泉");
+    al::initNerveState(this, mPlayerStateRise, &Rise, "Rise");
+    al::initNerveState(this, mPlayerStateSwim, &Swim, "Swim");
+    al::initNerveState(this, mPlayerStateDamageLife, &Damage, "DamageLife");
+    al::initNerveState(this, mPlayerStateDamageSwim, &DamageSwim, "DamageSwim");
+    al::initNerveState(this, mPlayerStateDamageFire, &DamageFire, "DamageFire");
+    al::initNerveState(this, mPlayerStatePress, &Press, "Press");
+    al::initNerveState(this, mPlayerStateHack, &Hack, "Hack");
+    al::initNerveState(this, mPlayerStateEndHack, &EndHack, "EndHack");
+    al::initNerveState(this, mPlayerStateBind, &Bind, "Bind");
+    al::initNerveState(this, mPlayerStateCameraSubjective, &Camera, "CameraSubjective");
+    al::initNerveState(this, mPlayerStateAbyss, &Abyss, "Abyss");
 
     mPlayerEquipmentUser->setPlayerStateRolling(mPlayerStateRolling);
 
@@ -600,45 +734,46 @@ IUsePlayerCollision* PlayerActorHakoniwa::getPlayerCollision() const {
 PlayerHackKeeper* PlayerActorHakoniwa::getPlayerHackKeeper() const {
     return mPlayerHackKeeper;
 }
-// bool isEnableDemo() override;
-// void startDemo() override;
-// void endDemo() override;
-// void startDemoPuppetable() override;
-// void endDemoPuppetable() override;
-// void startDemoShineGet() override;
-// void endDemoShineGet() override;
-// void startDemoMainShineGet() override;
-// void endDemoMainShineGet() override;
-// void startDemoHack() override;
-// void endDemoHack() override;
-// void startDemoKeepBind() override;
-// void noticeDemoKeepBindExecute() override;
-// void endDemoKeepBind() override;
-// void startDemoKeepCarry() override;
-// void endDemoKeepCarry() override;
-// void getDemoActor() override;
-// void* getDemoAnimator() override;
-// bool isDamageStopDemo() const override;
-// void* getPlayerPuppet() override;
+bool PlayerActorHakoniwa::isEnableDemo() { CRASH }
+void PlayerActorHakoniwa::startDemo() { CRASH }
+void PlayerActorHakoniwa::endDemo() { CRASH }
+void PlayerActorHakoniwa::startDemoPuppetable() { CRASH }
+void PlayerActorHakoniwa::endDemoPuppetable() { CRASH }
+void PlayerActorHakoniwa::startDemoShineGet() { CRASH }
+void PlayerActorHakoniwa::endDemoShineGet() { CRASH }
+void PlayerActorHakoniwa::startDemoMainShineGet() { CRASH }
+void PlayerActorHakoniwa::endDemoMainShineGet() { CRASH }
+void PlayerActorHakoniwa::startDemoHack() { CRASH }
+void PlayerActorHakoniwa::endDemoHack() { CRASH }
+void PlayerActorHakoniwa::startDemoKeepBind() { CRASH }
+void PlayerActorHakoniwa::noticeDemoKeepBindExecute() { CRASH }
+void PlayerActorHakoniwa::endDemoKeepBind() { CRASH }
+void PlayerActorHakoniwa::startDemoKeepCarry() { CRASH }
+void PlayerActorHakoniwa::endDemoKeepCarry() { CRASH }
+void PlayerActorHakoniwa::getDemoActor() { CRASH }
+void* PlayerActorHakoniwa::getDemoAnimator() { CRASH }
+bool PlayerActorHakoniwa::isDamageStopDemo() const { CRASH }
+void* PlayerActorHakoniwa::getPlayerPuppet() { CRASH }
 
 PlayerInfo* PlayerActorHakoniwa::getPlayerInfo() const {
     return mPlayerInfo;
 }
 
-// bool checkDeathArea() override;
-// void sendCollisionMsg() override;
-// bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32) override;
+bool PlayerActorHakoniwa::checkDeathArea() { WARN_UNIMPL; return false; }
+void PlayerActorHakoniwa::sendCollisionMsg() { WARN_UNIMPL;mPlayerTrigger->clearCollisionTrigger();mPlayerJumpMessageRequest->clear(); }
+bool PlayerActorHakoniwa::receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32) { CRASH }
 
 ActorDimensionKeeper* PlayerActorHakoniwa::getActorDimensionKeeper() const {
     return mActorDimensionKeeper;
 }
 
-// void updateModelShadowDropLength();
-// void executeAfterCapTarget();
-// void syncSensorAndCollision();
-// void checkDamageFromCollision();
-// void executePreMovementNerveChange();
-// void updateCarry();
+void PlayerActorHakoniwa::updateModelShadowDropLength() { CRASH }
+void PlayerActorHakoniwa::executeAfterCapTarget() { CRASH }
+// TODO missing to enable changing collision on duck/dive/...
+void PlayerActorHakoniwa::syncSensorAndCollision() { WARN_UNIMPL; }
+void PlayerActorHakoniwa::checkDamageFromCollision() { CRASH }
+void PlayerActorHakoniwa::executePreMovementNerveChange() { CRASH }
+void PlayerActorHakoniwa::updateCarry() { WARN_UNIMPL; }
 
 void sub_71004229D0(al::LiveActor* player, PlayerTrigger* trigger,
                     const IUsePlayerCollision* collision) {
@@ -719,18 +854,171 @@ void PlayerActorHakoniwa::setNerveOnGround() {
     }
 }
 
-// void startPlayerPuppet();
-// void cancelHackPlayerPuppetDemo();
-// void endPlayerPuppet();
-// void exeWait();
-// bool tryActionCapReturn();
-// bool tryActionCapSpinAttack();
-// void exeSquat();
-// bool tryActionSeparateCapThrow();
-// void exeRun();
-// void exeSlope();
-// void exeRolling();
-// void exeSpinCap();
+void PlayerActorHakoniwa::startPlayerPuppet() { CRASH }
+void PlayerActorHakoniwa::cancelHackPlayerPuppetDemo() { CRASH }
+void PlayerActorHakoniwa::endPlayerPuppet() { CRASH }
+void PlayerActorHakoniwa::exeWait() {
+    if(al::isFirstStep(this)) {
+        mPlayerCapActionHistory->clearLandLimitStandAngle();
+        rs::resetJudge(mPlayerJudgeSpeedCheckFall);
+        rs::resetJudge(mPlayerJudgeStartRun);
+    }
+
+    mPlayerExternalVelocity->requestApplyLastGroundInertia();
+    tryActionCapReturn();
+    al::updateNerveState(this);
+    if(al::isFirstStep(this) && mPlayerStateWait->isLandStain()) {
+        CRASH
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeWallCatchInputDir)) {
+        mPlayerStateWallCatch->setup(mPlayerJudgeWallCatchInputDir->_58,
+                                    mPlayerJudgeWallCatchInputDir->_60[0], -mPlayerJudgeWallCatchInputDir->_60[1],
+                                    mPlayerJudgeWallCatchInputDir->_60[2]);
+        al::setNerve(this, &WallCatch);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeSpeedCheckFall)) {
+        mPlayerExternalVelocity->cancelAndFeedbackLastGroundInertia(this, mPlayerConst->getJumpInertiaRate(), 0);
+        mPlayerJudgeWallCatchInputDir->validateFallJudge();
+        al::setNerve(this, &Fall);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeForceSlopeSlide)) {
+        if(mPlayerCarryKeeper->isCarry())
+            mPlayerCarryKeeper->startCancelAndRelease();
+        al::setNerve(this, &Slope);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeForceRolling)) {
+        sub_71004229D0(this, mPlayerTrigger, mPlayerColliderHakoniwa);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeSandSink)) {
+        al::setNerve(this, &SandSink);
+        return;
+    }
+
+    if(!rs::updateJudgeAndResult(mPlayerJudgeEnableStandUp)) {
+        if(mPlayerCarryKeeper->isCarry())
+            mPlayerCarryKeeper->startCancelAndRelease();
+        al::setNerve(this, &Squat);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgePoleClimb)) {
+        getPlayerCollision();
+        mPlayerStatePoleClimb->setup(
+            mPlayerJudgePoleClimb->mCollisionParts, mPlayerJudgePoleClimb->_58,
+            mPlayerJudgePoleClimb->_64, mPlayerJudgePoleClimb->_70,
+            mPlayerJudgePoleClimb->mPoleCodeAngleOffsetCeiling, mPlayerJudgePoleClimb->_7C,
+            mPlayerJudgePoleClimb->mMaterialCodeCeiling);
+        al::setNerve(this, &PoleClimb);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
+        getPlayerCollision();
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+                                    mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
+        al::setNerve(this, &GrabCeil);
+        return;
+    }
+
+    bool isEnableCancelAction = mPlayerStateWait->isEnableCancelAction();
+    if(isEnableCancelAction) {
+        if(rs::updateJudgeAndResult(mPlayerJudgeCameraSubjective)) {
+            al::setNerve(this, &Camera);
+            return;
+        }
+        if(tryActionCapSpinAttackImpl(true)) {
+            al::setNerve(this, &SpinCap);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeStartRun)) {
+            al::setNerve(this, &Run);
+            return;
+        }
+    }
+
+    if(mPlayerStateWait->isEnableCancelHipDropJump()) {
+        if(rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
+            mPlayerJumpMessageRequest->_0 = 17;
+            al::setNerve(this, &Jump);
+            return;
+        }
+        if(mPlayerJudgeStartRolling->judgeCancelHipDrop()) {
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val17);
+            al::setNerve(this, &Rolling);
+            return;
+        }
+    }
+
+    if(isEnableCancelAction) {
+        if(rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
+            mPlayerExternalVelocity->cancelAndFeedbackLastGroundInertia(this, mPlayerConst->getJumpInertiaRate(), false);
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val21);
+            al::setNerve(this, &Jump);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeStartSquat)) {
+            al::setNerve(this, &Squat);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeInWater1)) {
+            if(mPlayerActionDiveInWater->isDiveInWaterAnim())
+                mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val9);
+            al::setNerve(this, &Swim);
+            return;
+        }
+    }
+
+    if(mPlayerColliderHakoniwa->isEnableStandUp() && rs::isPlayer2D(mHackCap) && mHackCap->isEnableSpinAttack() && rs::isJudge(mHackCapJudgePreInputHoveringJump)) {
+        rs::resetJudge(mHackCapJudgePreInputHoveringJump);
+        *(((u8*)mHackCapJudgePreInputHoveringJump)+44) = 1;
+        mPlayerJumpMessageRequest->_0 = 18;
+        al::setNerve(this, &Jump);
+        return;
+    }
+
+    if(mPlayerStateWait->tryConnectWait())
+        rs::resetCollision(mPlayerColliderHakoniwa);
+}
+bool PlayerActorHakoniwa::tryActionCapReturn() {
+    GameDataHolderAccessor accessor = {this};
+    if(!GameDataFunction::isEnableCap(accessor) || rs::is2D(this) || !mPlayerInput->isTriggerCapReturn() || !mHackCap->isRequestableReturn())
+        return false;
+
+    if(mPlayerCarryKeeper->isCarry()) {
+        if(mPlayerSeparateCapFlag->someCheck()) {
+            return false;
+        }
+    }
+
+    bool someFlag = false;
+    if(!mHackCap->requestReturn(&someFlag)) {
+        if(someFlag)
+            al::startHitReaction(this, "帽子が戻せない");
+        return false;
+    }
+
+    if(mPlayerSeparateCapFlag->someCheck())
+        rs::resetJudge(mPlayerJudgePreInputCapThrow);
+    else
+        rs::resetJudge(mHackCapJudgePreInputSeparateThrow);
+    return true;
+}
+bool PlayerActorHakoniwa::tryActionCapSpinAttack() { CRASH }
+void PlayerActorHakoniwa::exeSquat() { CRASH }
+bool PlayerActorHakoniwa::tryActionSeparateCapThrow() { CRASH }
+void PlayerActorHakoniwa::exeRun() { CRASH }
+void PlayerActorHakoniwa::exeSlope() { CRASH }
+void PlayerActorHakoniwa::exeRolling() { CRASH }
+void PlayerActorHakoniwa::exeSpinCap() { CRASH }
 
 bool PlayerActorHakoniwa::tryChangeNerveFromAir() {
     if(rs::updateJudgeAndResult(mPlayerJudgeForceSlopeSlide)) {
@@ -803,31 +1091,123 @@ bool PlayerActorHakoniwa::tryChangeNerveFromAir() {
     return false;
 }
 
-// bool tryActionCapSpinAttackMiss();
-// void exeJump();
-// void exeCapCatchPop();
-// void exeWallAir();
-// void exeWallCatch();
-// void exeGrabCeil();
-// void exePoleClimb();
-// void exeHipDrop();
-// void exeHeadSliding();
-// void exeLongJump();
-// void exeFall();
-// void exeSandSink();
-// void exeSandGeyser();
-// void exeRise();
-// void exeSwim();
-// void exeDamage();
-// void exeDamageSwim();
-// void exeDamageFire();
-// void exePress();
-// void exeHack();
-// void exeEndHack();
-// void exeBind();
-// bool tryActionCapSpinAttackBindEnd();
-// void exeDemo();
-// void exeCamera();
-// void exeAbyss();
-// void exeDead();
-// bool tryActionCapSpinAttackImpl(bool);
+bool PlayerActorHakoniwa::tryActionCapSpinAttackMiss() { CRASH }
+void PlayerActorHakoniwa::exeJump() {
+    if(al::isFirstStep(this)) {
+        rs::resetJudge(mPlayerJudgeOutInWater);
+        rs::resetJudge(mPlayerJudgePreInputJump);
+    }
+    tryActionCapReturn();
+    bool isFormSquat2D = mPlayerStateJump->isFormSquat2D();
+    if(al::updateNerveState(this)) {
+        mPlayerStateJump->tryCountUpContinuousJump(mPlayerContinuousJump);
+        if(mPlayerStateJump->isEndJumpDownFallLand())
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val11);
+        
+        setNerveOnGround();
+        if(isFormSquat2D && rs::updateJudgeAndResult(mPlayerJudgeStartSquat)) {
+            if(al::isNerve(this, &Run)) {
+                al::setNerve(this, &Squat);
+                return;
+            }
+            if(al::isNerve(this, &Jump)) {
+                mPlayerJumpMessageRequest->_0 = 15;
+                mPlayerJumpMessageRequest->someFlag2 = rs::updateJudgeAndResult(mPlayerJudgeEnableStandUp);
+            }
+        }
+    } else {
+        if(mPlayerStateJump->isHovering())
+            CRASH // set some unknown attribute of another judge
+        if(mPlayerStateJump->isJumpBack() || mPlayerStateJump->isJumpSpinFlower())
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val30);
+        if(rs::updateJudgeAndResult(mPlayerJudgeInvalidateInputFall)) {
+            CRASH
+        }
+        if(tryActionCapSpinAttackImpl(true)) {
+            CRASH
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeForceSlopeSlide)) {
+            if(mPlayerCarryKeeper->isCarry())
+                mPlayerCarryKeeper->startCancelAndRelease();
+            al::setNerve(this, &Slope);
+            return;
+        
+        }
+        if(mPlayerStateJump->isEnableHipDropStart() && rs::updateJudgeAndResult(mPlayerJudgeStartHipDrop)) {
+            al::setNerve(this, &HipDrop);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgePoleClimb)) {
+            mPlayerStatePoleClimb->setup(
+                mPlayerJudgePoleClimb->mCollisionParts, mPlayerJudgePoleClimb->_58,
+                mPlayerJudgePoleClimb->_64, mPlayerJudgePoleClimb->_70,
+                mPlayerJudgePoleClimb->mPoleCodeAngleOffsetCeiling, mPlayerJudgePoleClimb->_7C,
+                mPlayerJudgePoleClimb->mMaterialCodeCeiling);
+            al::setNerve(this, &PoleClimb);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
+            mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+                                        mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
+            al::setNerve(this, &GrabCeil);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeWallCatch)) {
+            mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->_60,
+                                        -mPlayerJudgeWallCatch->_6C, mPlayerJudgeWallCatch->_78);
+            al::setNerve(this, &WallCatch);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeWallKeep)) {
+            al::setNerve(this, &WallAir);
+            return;
+        }
+        if(mPlayerStateJump->isJumpCapCatch() && rs::updateJudgeAndResult(mPlayerJudgeCapCatchPop)) {
+            al::setNerve(this, &CapCatchPop);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeStartWaterSurfaceRun)) {
+            al::setNerve(this, &Run);
+            return;
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeOutInWater)) {
+            CRASH
+        }
+        if(rs::updateJudgeAndResult(mPlayerJudgeWallHitDownForceRun)) {
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val10);
+            if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->_0 >= 1)
+                mPlayerEquipmentUser->cancelEquip();
+            al::setNerve(this, &Damage);
+            return;
+        }
+        if(mPlayerStateJump->isEnableCancelCarryThrow() && mPlayerCarryKeeper->isThrowRelease()) {
+            CRASH
+        }
+    }
+}
+void PlayerActorHakoniwa::exeCapCatchPop() { CRASH }
+void PlayerActorHakoniwa::exeWallAir() { CRASH }
+void PlayerActorHakoniwa::exeWallCatch() { CRASH }
+void PlayerActorHakoniwa::exeGrabCeil() { CRASH }
+void PlayerActorHakoniwa::exePoleClimb() { CRASH }
+void PlayerActorHakoniwa::exeHipDrop() { CRASH }
+void PlayerActorHakoniwa::exeHeadSliding() { CRASH }
+void PlayerActorHakoniwa::exeLongJump() { CRASH }
+void PlayerActorHakoniwa::exeFall() { CRASH }
+void PlayerActorHakoniwa::exeSandSink() { CRASH }
+void PlayerActorHakoniwa::exeSandGeyser() { CRASH }
+void PlayerActorHakoniwa::exeRise() { CRASH }
+void PlayerActorHakoniwa::exeSwim() { CRASH }
+void PlayerActorHakoniwa::exeDamage() { CRASH }
+void PlayerActorHakoniwa::exeDamageSwim() { CRASH }
+void PlayerActorHakoniwa::exeDamageFire() { CRASH }
+void PlayerActorHakoniwa::exePress() { CRASH }
+void PlayerActorHakoniwa::exeHack() { CRASH }
+void PlayerActorHakoniwa::exeEndHack() { CRASH }
+void PlayerActorHakoniwa::exeBind() { CRASH }
+bool PlayerActorHakoniwa::tryActionCapSpinAttackBindEnd() { CRASH }
+void PlayerActorHakoniwa::exeDemo() { CRASH }
+void PlayerActorHakoniwa::exeCamera() { CRASH }
+void PlayerActorHakoniwa::exeAbyss() { CRASH }
+void PlayerActorHakoniwa::exeDead() { CRASH }
+bool PlayerActorHakoniwa::tryActionCapSpinAttackImpl(bool) { WARN_UNIMPL;return false; }

@@ -7,6 +7,7 @@ class PlayerTrigger {
 public:
     enum ECollisionTrigger : u32 {
         ECollisionTrigger_val7 = 7,
+        ECollisionTrigger_val8 = 8,
     };
     enum EAttackSensorTrigger : u32 {
         // used in PlayerCounterAfterCapCatch
@@ -16,10 +17,12 @@ public:
         EActionTrigger_val8 = 8,
         EActionTrigger_val9 = 9,
         EActionTrigger_val10 = 10,
-        // used in PlayerJudgeForceLand
         EActionTrigger_val11 = 11,
         EActionTrigger_val14 = 14,
+        EActionTrigger_val17 = 17,
+        EActionTrigger_val21 = 21,
         EActionTrigger_val24 = 24,
+        EActionTrigger_val30 = 30,
         EActionTrigger_val32 = 32,
         EActionTrigger_QuickTurn = 34,
     };
