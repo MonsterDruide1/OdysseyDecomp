@@ -21,5 +21,7 @@ bool isOnGroundForceRollingCode(const al::LiveActor*, const IUsePlayerCollision*
 bool isPlayerOnGround(const al::LiveActor*);
 bool isOnGround(const al::LiveActor*, const IUsePlayerCollision*);
 bool isJustLand(const IUsePlayerCollision*);
+void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
+                                  const IUsePlayerCollision*);
 
 }  // namespace rs

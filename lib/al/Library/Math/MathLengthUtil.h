@@ -38,6 +38,8 @@ f32 normalize(f32, f32, f32);
 f32 normalize(s32, s32, s32);
 bool limitLength(sead::Vector2f*, const sead::Vector2f&, f32);
 bool limitLength(sead::Vector3f*, const sead::Vector3f&, f32);
+bool limitLength(sead::Vector2f*, f32);
+bool limitLength(sead::Vector3f*, f32);
 
 u32 getMaxAbsElementIndex(const sead::Vector3f&);
 void setLength(sead::Vector3f*, f32);
