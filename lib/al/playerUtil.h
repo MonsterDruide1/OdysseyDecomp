@@ -4,6 +4,7 @@
 
 #include "Library/Area/AreaObjDirector.h"
 #include "Library/Area/IUseAreaObj.h"
+#include "Library/Camera/IUseCamera.h"
 #include "Library/Execute/ExecuteDirector.h"
 #include "Project/HitSensor/HitSensor.h"
 
@@ -15,6 +16,7 @@ void registerExecutorFunctor(char const*,al::ExecuteDirector *,al::FunctorBase c
 sead::Vector3f* getTransPtr(al::LiveActor*);
 AreaObjGroup* tryFindAreaObjGroup(al::IUseAreaObj const*,char const*);
 AreaObj* tryFindAreaObj(al::IUseAreaObj const*,char const*,sead::Vector3<float> const&);
+bool isPlayingEntranceCamera(al::IUseCamera const*,int);
 
 class WaterSurfaceFinder {
 public:

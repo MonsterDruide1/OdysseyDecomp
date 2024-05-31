@@ -10,6 +10,7 @@ public:
 
     void hide(bool);
     void forcePutOn();
+    bool isNoPutOnHide();
 
     bool isFlying() const;
 
@@ -17,6 +18,7 @@ public:
     bool isEnableSpinAttack();
     bool isRequestableReturn();
     bool requestReturn(bool*);
+    void updateSeparateMode(const PlayerSeparateCapFlag*);
 
     unsigned char padding_to_118[0x10];
     al::LiveActor* mActorA;

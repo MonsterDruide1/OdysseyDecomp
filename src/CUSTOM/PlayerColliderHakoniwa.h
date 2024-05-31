@@ -37,6 +37,8 @@ public:
 
     sead::Vector3f updateCollider(const sead::Vector3f&);
     void init();
+
+    void calcSeparateCapLocalOffset(sead::Vector3f*);
     
     virtual ::PlayerCollider* getPlayerCollider() const { return (::PlayerCollider*)mPlayerCollider; }
 

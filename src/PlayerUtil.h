@@ -20,6 +20,10 @@ namespace al {
 class CameraTicket;
 }
 
+namespace PlayerEquipmentFunction {
+bool tryGetEquipmentForceDashInfo(int *,float *,PlayerEquipmentUser const*);
+}
+
 namespace rs {
 
 void initPlayerActorInfo(PlayerActorBase *,PlayerInitInfo const&);
@@ -36,6 +40,8 @@ bool calcSlideDir(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vecto
 void calcGroundNormalOrGravityDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
 void startHitReactionLandJumpIfLanding(al::LiveActor const*,IUsePlayerCollision const*,bool);
 void noticePlayerJumpStart(PlayerTrigger *,al::LiveActor const*);
+bool isPlayerDamageStopDemo(al::LiveActor const*);
+bool isKidsMode(const al::LiveActor*);
 
 }
 
@@ -88,6 +94,7 @@ public:
     PlayerModelChangerHakoniwa(al::LiveActor const*,PlayerModelHolder *,PlayerPainPartsKeeper *,PlayerCostumeInfo *,IUseDimension const*);
     void initStartModel();
     void resetPosition();
+    void syncHost(bool);
 private:
     void* size[0x58/8];
 };
@@ -97,6 +104,8 @@ class PlayerAnimator {
 public:
     PlayerAnimator(PlayerModelHolder const*,al::ActorDitherAnimator *);
     bool isAnim(const sead::SafeString&) const;
+    void updateAnimFrame();
+    f32 getModelAlpha();
 public:
     const PlayerModelHolder *mPlayerModelHolder;
     void *_8;
@@ -112,7 +121,11 @@ public:
     al::ActorDitherAnimator *mActorDitherAnimator;
     void *to_1a8[3];
     bool mIsNeedFullFaceAnim;
-    bool pad[7];
+    bool unk1;
+    bool unk2;
+    u16 pad1[1];
+    bool pad;
+    bool unk3;
 };
 
 class PlayerEffect {
@@ -126,6 +139,7 @@ class PlayerContinuousJump {
 public:
     PlayerContinuousJump(PlayerConst const*);
     void clear();
+    void update(bool);
 public:
     const PlayerConst *mConst;
     int mCount;
@@ -136,6 +150,7 @@ public:
 class PlayerContinuousLongJump {
 public:
     PlayerContinuousLongJump(PlayerConst const*);
+    void update();
 private:
     void* size[0x10/8];
 };
@@ -145,8 +160,12 @@ public:
     PlayerDamageKeeper(al::LiveActor *,PlayerEffect *);
 
     void update(IPlayerModelChanger *,bool,bool);
-private:
-    void* size[0x30/8];
+public:
+    al::LiveActor *mPlayerActor;
+    PlayerEffect *mPlayerEffect;
+    bool _10;
+    int _14;
+    void *gap[3];
 };
 
 class PlayerDemoActionFlag {
@@ -161,6 +180,7 @@ class PlayerCapActionHistory {
 public:
     PlayerCapActionHistory(al::LiveActor const*,PlayerConst const*,PlayerTrigger const*,IUsePlayerCollision const*);
     void clearLandLimitStandAngle();
+    void update();
 public:
     const al::LiveActor *mActor;
     const PlayerConst *mConst;
@@ -192,6 +212,7 @@ private:
 class PlayerWallActionHistory {
 public:
     PlayerWallActionHistory();
+    void update(const IUsePlayerCollision*);
 private:
     void* size[0x38/8];
 };
@@ -199,6 +220,7 @@ private:
 class PlayerCounterAfterUpperPunch {
 public:
     PlayerCounterAfterUpperPunch();
+    void update(PlayerTrigger const*);
 private:
     int size[1];
 };
@@ -206,6 +228,7 @@ private:
 class PlayerCounterForceRun {
 public:
     PlayerCounterForceRun();
+    void update();
 public:
     s32 _0;
     float _4;
@@ -214,6 +237,7 @@ public:
 class PlayerCounterQuickTurnJump {
 public:
     PlayerCounterQuickTurnJump(PlayerConst const*,PlayerTrigger const*);
+    void update();
 private:
     void* size[0x18/8];
 };
@@ -254,6 +278,7 @@ class PlayerEyeSensorHitHolder {
 public:
     PlayerEyeSensorHitHolder(int);
     void createTargetMarkerBuffer(int);
+    void clear();
 private:
     void* size[0x48/8];
 };
@@ -261,6 +286,7 @@ private:
 class PlayerPushReceiver {
 public:
     PlayerPushReceiver(al::LiveActor* const);
+    void clear();
 private:
     void* size[0x38/8];
 };
@@ -268,6 +294,7 @@ private:
 class PlayerHitPush {
 public:
     PlayerHitPush(al::LiveActor* const, PlayerConst* const);
+    void clearHitFlag();
 private:
     void* size[0x20/8];
 };
@@ -277,6 +304,7 @@ public:
     PlayerExternalVelocity(al::LiveActor const*,IUsePlayerCollision const*,sead::Vector3f const*);
     void requestApplyLastGroundInertia();
     void cancelAndFeedbackLastGroundInertia(al::LiveActor *,float,bool);
+    void update();
 private:
     void* size[0x98/8];
 };
@@ -295,13 +323,13 @@ public:
     PlayerSeparateCapFlag();
 
     bool someCheck() {
-        return (*((int*)this) & 0xFF0000) != 0 || _0 == 0;
+        return (*((int*)this) & 0xFF0000) != 0 || *((u16*)this) == 0;
     }
 public:
-    short _0;
+    bool _0;
+    bool _1;
     bool _2;
-    int _4;
-    void *_8;
+    sead::Vector3f _4;
 };
 
 class HackCapJudgePreInputSeparateThrow : public IJudge {
@@ -314,9 +342,13 @@ public:
 private:
     void* size[0x20/8];
 };
-class HackCapJudgePreInputSeparateJump {
+class HackCapJudgePreInputSeparateJump : public IJudge {
 public:
     HackCapJudgePreInputSeparateJump(PlayerInput const*,PlayerSeparateCapFlag const*);
+    
+    void reset() override { WARN_UNIMPL; }
+    void update() override { WARN_UNIMPL; }
+    bool judge() const override { WARN_UNIMPL;return false; }
 private:
     void* size[0x20/8];
 };
@@ -324,6 +356,7 @@ private:
 class PlayerRippleGenerator {
 public:
     PlayerRippleGenerator(al::LiveActor const*,al::LiveActor const*,PlayerModelHolder const*);
+    void reset();
 private:
     void* size[0x58/8];
 };
@@ -331,6 +364,7 @@ private:
 class PlayerRecoverySafetyPoint {
 public:
     PlayerRecoverySafetyPoint(al::LiveActor const*,HackCap const*,al::ActorInitInfo const&,IUseDimension const*,al::CollisionPartsFilterBase *,al::HitSensor *);
+    void updateRecoveryBubble();
 private:
     void* size[0xB8/8];
 };
@@ -365,6 +399,7 @@ private:
 class PlayerSeCtrl {
 public:
     PlayerSeCtrl(al::LiveActor const*,PlayerAnimator const*,HackCap const*,PlayerModelChangerHakoniwa const*,al::LiveActor const*,PlayerExternalVelocity const*);
+    void update();
 private:
     void* size[0x198/8];
 };
@@ -375,8 +410,14 @@ public:
     PlayerHackKeeper(al::LiveActor *,HackCap *,PlayerRecoverySafetyPoint *,PlayerInput const*,sead::Matrix34<float> const*,PlayerDamageKeeper const*,IPlayerModelChanger const*,IUsePlayerHeightCheck const*);
     void createHackModel(al::ActorInitInfo const&);
     bool executeForceHackStageStart(al::HitSensor *,IUsePlayerHack *);
-private:
-    void* size[0xD0/8];
+public:
+    void *size1[11];
+    int _58;
+    bool _5C;
+    bool _5D;
+    bool _5E;
+    bool pad[1];
+    void *size2[14];
 };
 
 class PlayerFormSensorCollisionArranger {
@@ -685,6 +726,7 @@ public:
     bool judge() const override { WARN_UNIMPL;return false; }
 
     void validateFallJudge();
+    void updateWallCatchEnviroment();
 public:
     const al::LiveActor *mPlayer;
     const PlayerConst *mConst;
@@ -876,6 +918,7 @@ public:
     bool isEnableCancelAction();
     bool isEnableCancelHipDropJump();
     bool tryConnectWait();
+    bool tryClearIgnoreSwitchOnAreaAnim();
 private:
     void* size[0xE8/8];
 };
@@ -888,11 +931,13 @@ private:
     void* size[0x78/8];
 };
 
-class ActorStateSandGeyser : public al::NerveStateBase {
+class ActorStateSandGeyser : public al::ActorStateBase {
 public:
     ActorStateSandGeyser(al::LiveActor *);
-private:
-    void* size[0x38/8];
+public:
+    al::HitSensor *mGeyserSensor;
+    void *size[1];
+    bool _30;
 };
 
 class PlayerJointParamCapThrow;
@@ -929,6 +974,7 @@ private:
 class PlayerStateRolling : public al::NerveStateBase {
 public:
     PlayerStateRolling(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerTrigger *,PlayerAnimator *,PlayerEffect *,PlayerJudgeStartRolling *,IJudge *,PlayerJudgePreInputJump *,PlayerJudgePreInputCapThrow *,IJudge *,PlayerContinuousLongJump *,PlayerSeCtrl *);
+    bool isRollingJump();
 private:
     void* size[0xB8/8];
 };
@@ -1050,6 +1096,7 @@ private:
 class PlayerStateHack : public al::NerveStateBase {
 public:
     PlayerStateHack(al::LiveActor *,PlayerHackKeeper *,IPlayerModelChanger *,PlayerAnimator *,HackCap *);
+    bool isEnableModelSyncShowHide();
 private:
     void* size[0xD0/8];
 };
@@ -1090,6 +1137,8 @@ private:
 class PlayerCounterIceWater {
 public:
     PlayerCounterIceWater(al::LiveActor *,al::ActorInitInfo const&,PlayerConst const*,IUsePlayerCollision const*,IJudge *);
+    void clearIceWaterCount();
+    void updateCount(bool, bool);
 private:
     void* size[0x48/8];
 };

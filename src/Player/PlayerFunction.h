@@ -22,6 +22,7 @@ public:
     static bool isInvisibleCap(PlayerCostumeInfo const*);
     static PlayerConst* createMarioConst(char const*);
     static al::ActorDitherAnimator* createPlayerDitherAnimator(al::LiveActor *,float);
+    static bool isPlayerDeadStatus(al::LiveActor const*);
 
 
 };

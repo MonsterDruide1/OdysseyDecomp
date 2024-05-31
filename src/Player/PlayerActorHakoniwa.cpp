@@ -10,6 +10,7 @@
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveStateCtrl.h"
@@ -147,10 +148,150 @@ void PlayerActorHakoniwa::initAfterPlacement() {
 }
 void PlayerActorHakoniwa::movement() {
     printf("Currently in %s\n", mNerveKeeper->getStateCtrl()->findStateInfo(mNerveKeeper->getCurrentNerve())->name);
-    mPlayerInput->mIsDisableInput = false;
+    /*mPlayerInput->mIsDisableInput = false;
     rs::updateJudge(mPlayerJudgePreInputJump);
     WARN_UNIMPL;
+    PlayerActorBase::movement();*/
+    if(mHackCap->isNoPutOnHide()) {
+        CRASH
+    }
+
+    mPlayerInput->update();
+    rs::updateJudge(mPlayerJudgePreInputJump);
+    rs::updateJudge(mPlayerJudgePreInputCapThrow);
+    rs::updateJudge(mPlayerJudgePreInputHackAction);
+    rs::updateJudge(mHackCapJudgePreInputSeparateThrow);
+    rs::updateJudge(mHackCapJudgePreInputSeparateJump);
+    rs::updateJudge(mHackCapJudgePreInputHoveringJump);
+
+    if(rs::isPlayerDamageStopDemo(this)) {
+        CRASH  // very end of the function
+        return;
+    }
+
+    mPlayerExternalVelocity->update();
+    int a1;
+    float a2;
+    if(PlayerEquipmentFunction::tryGetEquipmentForceDashInfo(&a1, &a2, mPlayerEquipmentUser)) {
+        CRASH
+    }
+
+    checkDamageFromCollision();
+    mPlayerTrigger->clearPreMovementTrigger();
+    executePreMovementNerveChange();
+
+    if(!al::isNerve(this, &Hack) || mPlayerHackKeeper->_5D)
+        mPlayerAnimator->updateAnimFrame();
+
+    mPlayerTrigger->clearReceiveSensorTrigger();
+
+    if(!al::isNerve(this, &SandGeyser))
+        mActorStateSandGeyser->mGeyserSensor = nullptr;
+
+    mPlayerTrigger->clearActionTrigger();
+    mPlayerTrigger->clearAttackSensorTrigger();
+    mPlayerEyeSensorHitHolder->clear();
+    mPlayerHitPush->clearHitFlag();
+
     PlayerActorBase::movement();
+
+    mPlayerModelChangerHakoniwa->syncHost(!al::isNerve(this, &Hack) || mPlayerStateHack->isEnableModelSyncShowHide());
+
+    // TODO animation model alpha updates
+    mPlayerPainPartsKeeper->mModelAlphaMask = mPlayerAnimator->getModelAlpha();
+
+    if(!al::isNerve(this, &Demo)) {
+        // TODO wet/stain effects
+    }
+
+    mPlayerTrigger->clearMaterialChangeTrigger();
+
+    // TODO ground material, set mPlayerTrigger->mMaterialChangeTrigger
+
+    /*if(al::isNerve(this, &Bind)) {
+        CRASH
+    } else if(al::isNerve(this, &Demo)) {
+        CRASH
+    } else if(al::isPlayingEntranceCamera(this, 0) || mPlayerAnimator->unk2) {
+        CRASH
+    } else if(al::isNerve(this, &Wait)) {
+
+    }*/
+
+    // TODO more stuff about setting the JointCtrl with LookAt
+
+    // TODO more stuff about controlling the eyes of Mario and Cappy, and footprints
+
+    mPlayerRecoverySafetyPoint->updateRecoveryBubble();
+    
+    // TODO more things about storing the position for bubbles
+
+    mPlayerPushReceiver->clear();
+    mPlayerCapActionHistory->update();
+    mPlayerCounterAfterUpperPunch->update(mPlayerTrigger);
+    mPlayerCounterForceRun->update();
+
+    if(al::isNerve(this, &Demo) || al::isNerve(this, &Hack)) {
+        mPlayerCounterIceWater->clearIceWaterCount();
+    } else {
+        mPlayerCounterIceWater->updateCount(al::isNerve(this, &Swim) || al::isNerve(this, &DamageSwim), mPlayerDamageKeeper->_10);
+    }
+
+    mPlayerCounterQuickTurnJump->update();
+
+    if(al::isNerve(this, &Demo) || rs::isPlayer2D(this)) {
+        mPlayerRippleGenerator->reset();
+    } else {
+        // TODO generate ripples
+    }
+
+    mPlayerWallActionHistory->update(mPlayerColliderHakoniwa);
+
+    if(!al::isNerve(this, &Demo))
+        mPlayerPainPartsKeeper->update();
+
+    rs::updateJudge(mPlayerJudgeDeadWipeStart);
+
+    bool runOrWait = al::isNerve(this, &Run) || al::isNerve(this, &Wait);
+    if(!al::isNerve(this, &Jump))
+        mPlayerContinuousJump->update(runOrWait);
+    if(!al::isNerve(this, &LongJump) && !mPlayerStateRolling->isRollingJump())
+        mPlayerContinuousLongJump->update();
+
+    mPlayerStateWait->tryClearIgnoreSwitchOnAreaAnim();
+
+    if(PlayerFunction::isPlayerDeadStatus(this) || rs::isKidsMode(this) || al::isNerve(this, &Hack) || al::isNerve(this, &Demo) || al::isNerve(this, &Camera) || al::isPlayingEntranceCamera(this, 0)) {
+        // TODO something about gauge/air
+    } else {
+        // TOOD other thing about gauge/air/oxygen
+    }
+
+    // TODO layout stuff: position gauge next to player head
+
+    mPlayerJudgeWallCatchInputDir->updateWallCatchEnviroment();
+
+    // TODO camera stuff for 2d sections
+
+    // TODO invisibility effect with and without Hack
+
+    mPlayerSeCtrl->update();
+    {
+        // sub_7100420438:
+        // TODO more stuff about 2D-2P sections
+        mPlayerSeparateCapFlag->_0 = 0;
+        mPlayerSeparateCapFlag->_1 = 0;
+        mHackCap->updateSeparateMode(mPlayerSeparateCapFlag);
+        sead::Vector3f sepCapLocalOffset = {0.0f, 0.0f, 0.0f};
+        if(mPlayerSeparateCapFlag->someCheck())
+            mPlayerColliderHakoniwa->calcSeparateCapLocalOffset(&sepCapLocalOffset);
+        sead::Vector3f sepOffset = {0.0f, 0.0f, 0.0f};
+        al::lerpVec(&sepOffset, mPlayerSeparateCapFlag->_4, sepCapLocalOffset, mPlayerConst->getSeparateOffsetLerpRate());
+        mPlayerSeparateCapFlag->_4 = sepOffset;
+        // TODO call to sub_710042983C, dealing with 2d-animation stuff
+    }
+
+    // TODO more stuff about moving CapMan's eyes (skipped for specific ROMs)
+
 }
 void PlayerActorHakoniwa::attackSensor(al::HitSensor*, al::HitSensor*) { CRASH }
 bool PlayerActorHakoniwa::receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) { CRASH }
