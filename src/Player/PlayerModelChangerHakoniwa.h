@@ -34,12 +34,12 @@ public:
     void showModel() override;
     void showSilhouette() override;
     void showShadowMask() override;
-    bool isFireFlower() override;
-    bool isMini() override;
-    bool isChange() override;
-    bool is2DModel() override;
-    bool isHiddenModel() override;
-    bool isHiddenShadowMask() override;
+    bool isFireFlower() const override;
+    bool isMini() const override;
+    bool isChange() const override;
+    bool is2DModel() const override;
+    bool isHiddenModel() const override;
+    bool isHiddenShadowMask() const override;
 
 private:
     const al::LiveActor* mLiveActor;
