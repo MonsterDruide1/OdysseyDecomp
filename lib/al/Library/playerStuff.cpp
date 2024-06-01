@@ -20,6 +20,11 @@ void setGravity(const al::LiveActor* actor, const sead::Vector3f& gravity) {
     *actor->getPoseKeeper()->getGravityPtr() = gravity;
 }
 
+
+void lerpVec(sead::Vector3<float>* out, sead::Vector3<float> const& a, sead::Vector3<float> const& b, float val) {
+    *out = a + (b - a) * val;
+}
+
 }
 
 al::HitSensorKeeper* alActorSensorFunction::getSensorKeeper(al::LiveActor const* actor) {
