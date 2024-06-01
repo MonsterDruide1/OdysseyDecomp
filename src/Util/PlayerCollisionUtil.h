@@ -7,11 +7,13 @@ class LiveActor;
 class CollisionParts;
 }  // namespace al
 class IUsePlayerCollision;
+class PlayerConst;
 class IUsePlayerHeightCheck;
 class PlayerConst;
 
 namespace rs {
 
+bool isCollidedGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 f32 getGroundHeight(const IUsePlayerHeightCheck*);
 
 const sead::Vector3f& getCollidedWallPos(const IUsePlayerCollision*);
