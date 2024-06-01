@@ -72,4 +72,6 @@ void convergeVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, 
 void convergeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 bool separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 
+s32 converge(s32, s32, s32);
+
 }  // namespace al
