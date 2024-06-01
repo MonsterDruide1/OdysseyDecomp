@@ -7,7 +7,7 @@ HelpAmiiboExecutor::HelpAmiiboExecutor(HelpAmiiboDirector* director, al::LiveAct
 void HelpAmiiboExecutor::initAfterPlacement(const al::ActorInitInfo&) {}
 
 bool HelpAmiiboExecutor::tryTouch(const al::NfpInfo& nfpInfo) {
-    if (mIsActivated || isTriggerTouch(nfpInfo) == false)
+    if (mIsActivated || !isTriggerTouch(nfpInfo))
         return false;
 
     mIsTouched = true;
@@ -21,7 +21,7 @@ void HelpAmiiboExecutor::tryExecute() {
 
     mIsTouched = false;
     if (execute())
-        return deactivate();
+        deactivate();
 }
 
 void HelpAmiiboExecutor::activate() {

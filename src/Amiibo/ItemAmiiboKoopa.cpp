@@ -38,16 +38,18 @@ void ItemAmiiboKoopa::appear() {
 
 void ItemAmiiboKoopa::exeExpand() {
     al::setSensorRadius(this, al::getNerveStep(this) / 30.0f * 1000.0f);
-    al::setTrans(this, *rs::getPlayerPos(this));
+    al::setTrans(this, rs::getPlayerPos(this));
     if (al::isGreaterEqualStep(this, 30))
         al::setNerve(this, &NrvItemAmiiboKoopa.Wait);
 }
 
 void ItemAmiiboKoopa::exeWait() {
-    if (al::isGreaterEqualStep(this, 300))
-        return kill();
+    if (al::isGreaterEqualStep(this, 300)) {
+        kill();
+        return;
+    }
 
-    al::setTrans(this, *rs::getPlayerPos(this));
+    al::setTrans(this, rs::getPlayerPos(this));
 }
 
 void ItemAmiiboKoopa::attackSensor(al::HitSensor* target, al::HitSensor* source) {
