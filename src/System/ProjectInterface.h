@@ -1,8 +1,6 @@
 #pragma once
 
-namespace al {
-class SystemKit;
-}
+#include "Library/System/SystemKit.h"
 
 class alProjectInterface {
 public:
