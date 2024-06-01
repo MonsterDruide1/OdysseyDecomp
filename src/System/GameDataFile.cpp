@@ -1,6 +1,6 @@
 #include "System/GameDataFile.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 
 #include "System/GameDataFunction.h"
 

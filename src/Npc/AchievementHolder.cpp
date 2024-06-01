@@ -1,6 +1,6 @@
 #include "Npc/AchievementHolder.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/Resource/ResourceUtil.h"
 
 #include "Npc/Achievement.h"

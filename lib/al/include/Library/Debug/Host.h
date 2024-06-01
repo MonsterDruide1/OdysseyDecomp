@@ -2,7 +2,7 @@
 
 #include <prim/seadSafeString.h>
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 
 namespace al {
 bool tryGetComputerName(sead::BufferedSafeString* computerName);
