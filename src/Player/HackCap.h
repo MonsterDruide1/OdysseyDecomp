@@ -20,6 +20,8 @@ public:
     bool requestReturn(bool*);
     void updateSeparateMode(const PlayerSeparateCapFlag*);
 
+    bool sendMsgStartHack(al::HitSensor *);
+
     unsigned char padding_to_118[0x10];
     al::LiveActor* mActorA;
     unsigned char padding_08[0x08];

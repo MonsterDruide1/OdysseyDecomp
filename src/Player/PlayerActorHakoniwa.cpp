@@ -912,8 +912,70 @@ void PlayerActorHakoniwa::updateModelShadowDropLength() { CRASH }
 void PlayerActorHakoniwa::executeAfterCapTarget() { CRASH }
 // TODO missing to enable changing collision on duck/dive/...
 void PlayerActorHakoniwa::syncSensorAndCollision() { WARN_UNIMPL; }
-void PlayerActorHakoniwa::checkDamageFromCollision() { CRASH }
-void PlayerActorHakoniwa::executePreMovementNerveChange() { CRASH }
+void PlayerActorHakoniwa::checkDamageFromCollision() { WARN_UNIMPL; }
+void PlayerActorHakoniwa::executePreMovementNerveChange() {
+    if(PlayerFunction::isPlayerDeadStatus(this) || al::isNerve(this, &Demo)) {
+        mPlayerBindKeeper->clearBindableSensor();
+    } else if(al::isNerve(this, &Hack)) {
+        CRASH
+    } else if(al::isNerve(this, &Abyss)) {
+        mPlayerBindKeeper->clearBindableSensor();
+    } else if(mPlayerBindKeeper->sendStartMsg()) {
+        CRASH
+    }
+
+    if(!PlayerFunction::isPlayerDeadStatus(this) && !al::isNerve(this, &Bind) && !al::isNerve(this, &Demo) && !al::isNerve(this, &Hack) && !al::isNerve(this, &Abyss) && rs::isPressedCollision(mPlayerColliderHakoniwa)) {
+        CRASH
+        al::setNerve(this, &Press);
+        return;
+    }
+
+    if(al::isNerve(this, &SandSink) && mPlayerSandSinkAffect->isSinkDeathHeight() && !PlayerFunction::isPlayerDeadStatus(this)) {
+        CRASH
+    }
+
+    if(rs::isActiveDemo(this) || al::isNerve(this, &Abyss) || al::isNerve(this, &Demo) || PlayerFunction::isPlayerDeadStatus(this) || mPlayerBindKeeper->_8) {
+        CRASH
+    } else if(mHackCap->sendMsgStartHack(mBodyHitSensor)) {
+        al::setNerve(this, &Hack);
+        return;
+    }
+
+    if(al::isNerve(this, &Hack) && mPlayerHackKeeper->_70) {
+        CRASH
+    }
+
+    if(mActorStateSandGeyser->mGeyserSensor && !al::isNerve(this, &SandGeyser)) {
+        al::setNerve(this, &SandGeyser);
+    }
+
+    if(mPlayerBindKeeper->_8) {
+        CRASH
+    }
+
+    if(mPlayerHackKeeper->_70) {
+        CRASH
+    }
+
+    if(mPlayerTrigger->isOnAnyDamage()) {
+        CRASH
+    }
+
+    if(mPlayerHitPush->mIsPush) {
+        CRASH
+    }
+
+    if(!PlayerFunction::isPlayerDeadStatus(this) && !al::isNerve(this, &Rise) && !al::isNerve(this, &Demo) && !al::isNerve(this, &Hack) && !al::isNerve(this, &Abyss) && !mPlayerBindKeeper->_8 && rs::updateJudgeAndResult(mPlayerJudgeStartRise)) {
+        al::setNerve(this, &Rise);
+        return;
+    }
+
+    if(!PlayerFunction::isPlayerDeadStatus(this) && !mPlayerBindKeeper->_8 && !al::isNerve(this, &Demo) && !al::isNerve(this, &Hack) && !al::isNerve(this, &Abyss) && !al::isNerve(this, &Camera) && !al::isNerve(this, &Swim) && rs::isTouchJumpCode(this, getPlayerCollision())) {
+        CRASH
+    }
+
+    // TODO starting recovery if neccessary
+}
 void PlayerActorHakoniwa::updateCarry() { WARN_UNIMPL; }
 
 void sub_71004229D0(al::LiveActor* player, PlayerTrigger* trigger,

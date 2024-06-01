@@ -42,6 +42,9 @@ void startHitReactionLandJumpIfLanding(al::LiveActor const*,IUsePlayerCollision 
 void noticePlayerJumpStart(PlayerTrigger *,al::LiveActor const*);
 bool isPlayerDamageStopDemo(al::LiveActor const*);
 bool isKidsMode(const al::LiveActor*);
+bool isTouchJumpCode(al::LiveActor const*,IUsePlayerCollision const*);
+bool isActiveDemo(al::LiveActor const*);
+bool isPressedCollision(IUsePlayerCollision const*);
 
 }
 
@@ -270,6 +273,7 @@ public:
 class PlayerSandSinkAffect {
 public:
     PlayerSandSinkAffect(al::LiveActor const*,PlayerConst const*,PlayerInput const*,IUsePlayerCollision *,PlayerEffect *);
+    bool isSinkDeathHeight();
 private:
     void* size[0x38/8];
 };
@@ -295,8 +299,12 @@ class PlayerHitPush {
 public:
     PlayerHitPush(al::LiveActor* const, PlayerConst* const);
     void clearHitFlag();
-private:
-    void* size[0x20/8];
+public:
+    al::LiveActor *mPlayer;
+    const PlayerConst *mConst;
+    bool mIsPush;
+    bool _11;
+    sead::Vector3f mPush;
 };
 
 class PlayerExternalVelocity {
@@ -377,12 +385,21 @@ private:
     void* size[0xD0/8];
 };
 
+class PlayerBindableSensorList;
 class PlayerBindKeeper {
 public:
     PlayerBindKeeper(al::HitSensor *,IUsePlayerPuppet *);
-private:
-    void* size[0xD0/8];
+    void clearBindableSensor();
+    bool sendStartMsg();
+public:
+    al::HitSensor *mBodyHitSensor = nullptr;
+    al::HitSensor *_8 = nullptr;
+    PlayerBindableSensorList *mBindableSensorList = nullptr;
+    IUsePlayerPuppet *mPuppet;
+    int _20 = 0;
+    bool _24 = false;
 };
+static_assert(sizeof(PlayerBindKeeper) == 0x28);
 
 class PlayerJointParamHandLegAngle;
 class IUsePlayerCeilingCheck;
@@ -411,13 +428,25 @@ public:
     void createHackModel(al::ActorInitInfo const&);
     bool executeForceHackStageStart(al::HitSensor *,IUsePlayerHack *);
 public:
-    void *size1[11];
+    al::LiveActor *mPlayer;
+    HackCap *mCap;
+    PlayerRecoverySafetyPoint *mSafetyPoint;
+    void *size3[2];
+    const PlayerInput *mInput;
+    const sead::Matrix34f *_20;
+    const PlayerDamageKeeper *mDamageKeeper;
+    const IPlayerModelChanger *mModelChanger;
+    const IUsePlayerHeightCheck *mHeightCheck;
+    al::HitSensor *_50;
     int _58;
     bool _5C;
     bool _5D;
     bool _5E;
     bool pad[1];
-    void *size2[14];
+    void *size4[1];
+    al::LiveActor *_68;
+    al::HitSensor *_70 = nullptr;
+    void *size2[11];
 };
 
 class PlayerFormSensorCollisionArranger {
@@ -935,7 +964,7 @@ class ActorStateSandGeyser : public al::ActorStateBase {
 public:
     ActorStateSandGeyser(al::LiveActor *);
 public:
-    al::HitSensor *mGeyserSensor;
+    al::HitSensor *mGeyserSensor = nullptr;
     void *size[1];
     bool _30;
 };
