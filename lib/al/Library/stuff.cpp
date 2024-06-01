@@ -745,6 +745,14 @@ void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f *a2, const sead
   a1->z = v19;
 }
 
+s32 converge(s32 val, s32 goal, s32 step) {
+  if(val >= goal) {
+    return sead::Mathi::clampMin(val - step, goal);
+  } else {
+    return sead::Mathi::clampMax(val + step, goal);
+  }
+}
+
 f32 converge(f32 val, f32 goal, f32 step) {
   if(val >= goal) {
     return sead::Mathf::clampMin(val - step, goal);

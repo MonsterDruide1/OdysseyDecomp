@@ -302,9 +302,9 @@ public:
 public:
     al::LiveActor *mPlayer;
     const PlayerConst *mConst;
-    bool mIsPush;
-    bool _11;
-    sead::Vector3f mPush;
+    bool mIsPush = false;
+    bool _11 = false;
+    sead::Vector3f mPush = {0.0f, 0.0f, 0.0f};
 };
 
 class PlayerExternalVelocity {
