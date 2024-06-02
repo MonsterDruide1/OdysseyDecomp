@@ -124,7 +124,7 @@ void MofumofuWarpHole::exeDashSign() {
     sead::Vector3f a3 = (*playerPos) - (trans);
     al::verticalizeVec(&a3, al::getGravity(this), a3);
     if (!al::tryNormalizeOrZero(&a3))
-        a3 = al::getFront(this);  // TODO small mismatch here
+        a3.set(al::getFront(this));
 
     al::turnVecToVecDegree(&a3, al::getFront(this), a3, 55);
     al::normalize(&a3);

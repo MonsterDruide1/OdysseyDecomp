@@ -32,6 +32,8 @@ public:
     void exeSet();
     void exeComplete();
 
+    CapTargetParts* getCapTargetParts() { return mCapTargetParts; };
+
 private:
     CapTargetInfo* mCapTargetInfo;
     sead::Matrix34f* unkMtx;
