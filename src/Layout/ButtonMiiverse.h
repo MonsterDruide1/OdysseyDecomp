@@ -9,6 +9,7 @@ class LayoutInitInfo;
 class ButtonMiiverse : public al::LayoutActor {
 public:
     ButtonMiiverse();
+
     void init(const al::LayoutInitInfo& info);
     bool isOn() const;
     void setOff();

@@ -9,8 +9,10 @@ class LayoutInitInfo;
 class BootLayout : public al::LayoutActor {
 public:
     BootLayout(const al::LayoutInitInfo& info);
+
     void appear() override;
     void kill() override;
+
     void startWipe();
     void endWipe();
     void end();
