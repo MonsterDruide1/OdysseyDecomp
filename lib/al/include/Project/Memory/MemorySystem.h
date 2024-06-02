@@ -15,8 +15,8 @@ public:
     void createSequenceHeap();
     void freeAllSequenceHeap();
     bool printSequenceHeap();
-    sead::ExpHeap* createSceneHeap(const char* stageName, bool backwards);
-    sead::ExpHeap* createSceneResourceHeap(const char* stageName, bool backwards);
+    bool createSceneHeap(const char* stageName, bool backwards);
+    void createSceneResourceHeap(const char* stageName, bool backwards);
     void destroySceneHeap();
     void destroySceneResourceHeap();
     void createCourseSelectHeap();

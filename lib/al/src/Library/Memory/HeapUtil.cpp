@@ -83,8 +83,8 @@ void createSceneHeap(const char* stageName, bool backwards) {
     }
 
     SystemKit* systemKit = alProjectInterface::getSystemKit();
-    sead::ExpHeap* sceneHeap = systemKit->getMemorySystem()->createSceneHeap(stageName, backwards);
-    if (((u64)sceneHeap & 1) != false) {  // ???
+    bool isSceneHeapCreated = systemKit->getMemorySystem()->createSceneHeap(stageName, backwards);
+    if (isSceneHeapCreated) {
         addResourceCategory(
             "シーン", 0x200,
             alProjectInterface::getSystemKit()->getMemorySystem()->getSceneResourceHeap());
