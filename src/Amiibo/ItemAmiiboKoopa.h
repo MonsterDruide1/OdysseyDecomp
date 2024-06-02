@@ -7,7 +7,9 @@ public:
     ItemAmiiboKoopa(const char* actorName);
     void init(const al::ActorInitInfo& info);
     void appear();
+
     void exeExpand();
     void exeWait();
+
     void attackSensor(al::HitSensor* target, al::HitSensor* source);
 };
