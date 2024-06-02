@@ -118,31 +118,26 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
         if (!isHack(this)) {
             return false;
         }
-    }
-    if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message) ||
-        rs::isMsgHackMarioInWater(message) || rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-        CapTargetParts* capTargetParts = getCapTargetParts();
-        rs::endHack(&mHackerParent);
-        al::validateClipping(this);
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-        capTargetParts->startNormal();
-        return true;
-    }
-
-    if (rs::isMsgHackerDamageAndCancel(message)) {
-        if (!isHack(this)) {
-            return false;
+    } else {
+        if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message) ||
+            rs::isMsgHackMarioInWater(message) || rs::isMsgHackMarioCheckpointFlagWarp(message)) {
+            rs::endHack(&mHackerParent);
+            al::validateClipping(this);
         }
-
-        sead::Vector3f test2;
-        al::calcDirBetweenSensorsH(&test2, source, target);
-        CapTargetParts* capTargetParts = getCapTargetParts();
-        rs::endHackDir(&mHackerParent, test2);
-        al::validateClipping(this);
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-        capTargetParts->startNormal();
-        return true;
+        if (rs::isMsgHackerDamageAndCancel(message)) {
+            if (!isHack(this)) {
+                return false;
+            }
+            sead::Vector3f test2;
+            al::calcDirBetweenSensorsH(&test2, source, target);
+            rs::endHackDir(&mHackerParent, test2);
+            al::validateClipping(this);
+        }
     }
+    CapTargetParts* capTargetParts = getCapTargetParts();
+    al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+    capTargetParts->startNormal();
+    return true;
 
     if (rs::isMsgStartHack(message)) {
         if (!al::isNerve(this, &NrvAnagramAlphabetCharacter.WaitHack)) {
