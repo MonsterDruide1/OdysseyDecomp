@@ -1,17 +1,20 @@
 #include "Scene/ProjectActorFactory.h"
 
 #include "Library/Factory/Factory.h"
+#include "Library/LiveActor/LiveActorUtil.h"
+
+#include "Scene/ProjectActors.h"
 
 static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
     {"AirBubble", nullptr},
     {"AirBubbleGenerator", nullptr},
     {"AirCurrent", nullptr},
-    {"AllDeadWatcher", nullptr},
+    {"AllDeadWatcher", al::createActorFunction<al::AllDeadWatcher>},
     {"AllDeadWatcherWithShine", nullptr},
     {"AmiiboHelpNpc", nullptr},
     {"AmiiboNpc", nullptr},
-    {"AnagramAlphabet", nullptr},
+    {"AnagramAlphabet", al::createActorFunction<AnagramAlphabet>},
 #ifdef VER_120
     {"TimeBalloonNpc", nullptr},
 #endif
@@ -183,7 +186,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"FireBrosPossessed", nullptr},
     {"FireSwitch", nullptr},
     {"FireHydrant", nullptr},
-    {"FireDrum2D", nullptr},
+    {"FireDrum2D", al::createActorFunction<FireDrum2D>},
     {"FishingFish", nullptr},
     {"FixMapParts2D", nullptr},
     {"FixMapPartsAppearKillAsync", nullptr},
@@ -526,7 +529,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"WeightSwitch", nullptr},
     {"WheelWaveSurfParts", nullptr},
     {"WindBlowPuzzle", nullptr},
-    {"WorldMapEarth", nullptr},
+    {"WorldMapEarth", al::createActorFunction<WorldMapEarth>},
     {"WorldTravelingNpc", nullptr},
     {"WorldTravelingPeach", nullptr},
     {"WorldWarpHole", nullptr},
@@ -539,7 +542,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"ClockMapParts", nullptr},
     {"ConveyerMapParts", nullptr},
     {"FallMapParts", nullptr},
-    {"FixMapParts", nullptr},
+    {"FixMapParts", al::createActorFunction<al::FixMapParts>},
     {"FloaterMapParts", nullptr},
     {"FlowMapParts", nullptr},
     {"GateMapParts", nullptr},
