@@ -9,10 +9,7 @@ f32 PlayerCounterGetCoin::getCoinBoostRate() const {
 }
 
 void PlayerCounterGetCoin::countUp() {
-    s32 newTime = mTimer + 90;
-    if (newTime > 720)
-        newTime = 720;
-    mTimer = newTime;
+    mTimer = sead::Mathi::clampMax(mTimer + 90, 720);
     mDuration = 90;
 }
 
