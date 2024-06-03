@@ -52,7 +52,7 @@ void Player::exeWait() {
 
     if (al::isPadTriggerA(mPort))
         al::setNerve(this, &NrvPlayer.Jump);
-    if (!al::isNearZero(al::getLeftStick(mPort), 0.001f))
+    else if (!al::isNearZero(al::getLeftStick(mPort), 0.001f))
         al::setNerve(this, &NrvPlayer.Run);
 }
 
