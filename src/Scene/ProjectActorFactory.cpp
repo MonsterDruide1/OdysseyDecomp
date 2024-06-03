@@ -2,8 +2,12 @@
 
 #include "Library/Factory/Factory.h"
 #include "Library/LiveActor/LiveActorUtil.h"
+#include "Library/MapObj/FixMapParts.h"
+#include "Library/Obj/AllDeadWatcher.h"
 
-#include "Scene/ProjectActors.h"
+#include "MapObj/AnagramAlphabet.h"
+#include "MapObj/FireDrum2D.h"
+#include "MapObj/WorldMapEarth.h"
 
 static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
