@@ -166,7 +166,7 @@ bool Player::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
             al::verticalizeVec(&offset, al::getGravity(this), offset);
             al::tryNormalizeOrZero(&offset);
 
-            if (!al::isNearZero(offset, 0.001f)) {  // unused code block
+            if (!al::isNearZero(offset, 0.001f)) {
                 sead::Vector3f* front = al::getFrontPtr(this);
                 front->set(offset);
             }
