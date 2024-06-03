@@ -1,6 +1,6 @@
 #include "Library/Event/SceneEventFlowMsg.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 
 namespace al {
 SceneEventFlowMsg::SceneEventFlowMsg() {}
