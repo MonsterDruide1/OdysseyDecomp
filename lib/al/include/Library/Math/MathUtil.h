@@ -61,4 +61,6 @@ f32 slerpQuat(sead::Quatf*, const sead::Quatf&, const sead::Quatf&, f32);
 bool checkHitSegmentSphere(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, f32,
                            sead::Vector3f*, sead::Vector3f*);
 
+s32 converge(s32, s32, s32);
+
 }  // namespace al
