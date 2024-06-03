@@ -4,6 +4,8 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+namespace al {
+
 enum SensorType {
     Eye = 0,
     Player = 1,
@@ -30,7 +32,6 @@ enum SensorType {
     BindableBubblePadInput = 24
 };
 
-namespace al {
 class LiveActor;
 class HitSensor;
 class SensorMsg;
