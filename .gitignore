@@ -22,6 +22,8 @@ bin/
 .cache/
 .DS_Store
 /cmake-build-*
+compile_commands.json
+.clangd
 
 # IDA
 *.id0
