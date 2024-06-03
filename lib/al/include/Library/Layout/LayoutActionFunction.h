@@ -4,6 +4,7 @@
 
 namespace al {
 class IUseLayoutAction;
+class LayoutActor;
 class Nerve;
 
 void startAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
@@ -32,5 +33,5 @@ bool isActionEnd(const IUseLayoutAction* layout, const char* paneName);
 bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
 bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
-void setNerveAtActionEnd(const IUseLayoutAction* layout, const Nerve* nerve);
+void setNerveAtActionEnd(LayoutActor*, const Nerve* nerve);
 }  // namespace al
