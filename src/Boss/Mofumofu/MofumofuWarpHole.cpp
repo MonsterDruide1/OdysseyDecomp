@@ -118,10 +118,10 @@ void MofumofuWarpHole::exeDashSign() {
         al::calcQuat(&gap, this);
     }
 
-    sead::Vector3f* playerPos = rs::getPlayerPos(this);
+    const sead::Vector3f& playerPos = rs::getPlayerPos(this);
     const sead::Vector3f& trans = al::getTrans(this);
 
-    sead::Vector3f a3 = (*playerPos) - (trans);
+    sead::Vector3f a3 = (playerPos) - (trans);
     al::verticalizeVec(&a3, al::getGravity(this), a3);
     if (!al::tryNormalizeOrZero(&a3))
         a3 = al::getFront(this);  // TODO small mismatch here

@@ -56,6 +56,6 @@ void registActorToDemoInfo(LiveActor* actor, const ActorInitInfo& info);
 
 namespace rs {
 
-sead::Vector3f* getPlayerPos(const al::LiveActor*);
+const sead::Vector3f& getPlayerPos(const al::LiveActor*);
 
 }
