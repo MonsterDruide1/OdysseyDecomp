@@ -35,6 +35,7 @@ void SenobiLeaf::updatePose() {
     al::updatePoseTrans(this, al::getTrans(this) - newFrontDir * 15.0f);
 }
 
+// NON_MATCHING: regswap when adding
 void SenobiLeaf::registerToHost(al::LiveActor* host, bool flip) {
     mHostActor = host;
     this->getName();  // unused
