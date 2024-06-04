@@ -81,12 +81,12 @@ void Player::exeRun() {
             return;
         }
     }
-    if (!al::isVelocitySlow(this, 1.0f)) {
-        al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
+    if (al::isVelocitySlow(this, 1.0f)) {
+        al::setNerve(this, &NrvPlayer.Wait);
         return;
     }
 
-    al::setNerve(this, &NrvPlayer.Wait);
+    al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
 }
 
 void Player::exeJump() {
@@ -160,7 +160,7 @@ void Player::attackSensor(al::HitSensor* target, al::HitSensor* source) {
 
 bool Player::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
                         al::HitSensor* target) {
-    if (al::isMsgPlayerTrample(message) || (al::isMsgEnemyAttack(message))) {
+    if (al::isMsgPlayerTrample(message) || al::isMsgEnemyAttack(message)) {
         if (!al::isNerve(this, &Damage)) {
             sead::Vector3f offset = al::getTrans(this) - al::getSensorPos(source);
             al::verticalizeVec(&offset, al::getGravity(this), offset);
