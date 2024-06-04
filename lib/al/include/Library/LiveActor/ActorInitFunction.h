@@ -208,11 +208,11 @@ void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const PlacementInfo&);
 void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorNoPlacementInfoNoViewId(LiveActor*, const ActorInitInfo&);
-void createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
-void createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
-void createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-void tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-void tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
+al::LiveActor* createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
+al::LiveActor* createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
+al::LiveActor* createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
+al::LiveActor* tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
+al::LiveActor* tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
 void createAndRegisterLinksActorFromFactory(LiveActorGroup*, const ActorInitInfo&, const char*);
 void makeMapPartsModelName(sead::BufferedSafeString*, sead::BufferedSafeString*,
                            const PlacementInfo&);

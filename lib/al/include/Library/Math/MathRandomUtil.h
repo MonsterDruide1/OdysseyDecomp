@@ -24,6 +24,8 @@ void getRandomInSphereMinMaxRadius(sead::Vector3f*, f32, f32);
 void initRandomSeed(u32);
 void initRandomSeedByTick();
 void initRandomSeedByString(const char*);
+bool isHalfProbability();
+bool isPercentProbability(f32);
 void getRandomContext(u32*, u32*, u32*, u32*);
 void setRandomContext(u32, u32, u32, u32);
 void makeRandomDirXZ(sead::Vector3f*);

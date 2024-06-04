@@ -6,7 +6,6 @@ namespace al {
 class NerveStateBase : public NerveExecutor {
 public:
     NerveStateBase(const char* stateName);
-    virtual ~NerveStateBase();
 
     virtual void init();
     virtual void appear();
