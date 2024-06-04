@@ -1,6 +1,6 @@
 #include "Enemy/EnemyCap.h"
 #include <prim/seadSafeString.h>
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
