@@ -62,5 +62,10 @@ bool checkHitSegmentSphere(const sead::Vector3f&, const sead::Vector3f&, const s
                            sead::Vector3f*, sead::Vector3f*);
 
 s32 converge(s32, s32, s32);
+f32 converge(f32, f32, f32);
+f32 convergeDegree(f32, f32, f32);
+f32 convergeRadian(f32, f32, f32);
+void convergeVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
+void convergeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 
 }  // namespace al
