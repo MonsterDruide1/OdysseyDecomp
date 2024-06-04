@@ -22,14 +22,19 @@ public:
         EActionTrigger_val17 = 17,
         EActionTrigger_val21 = 21,
         EActionTrigger_val24 = 24,
+        EActionTrigger_val27 = 27,
+        EActionTrigger_val28 = 28,
         EActionTrigger_val30 = 30,
         EActionTrigger_val32 = 32,
+        EActionTrigger_val33 = 33,
         EActionTrigger_QuickTurn = 34,
     };
     enum EReceiveSensorTrigger : u32 {};
     enum EPreMovementTrigger : u32 {};
     enum EDemoEndTrigger : u32 {};
-    enum EMaterialChangeTrigger : u32 {};
+    enum EMaterialChangeTrigger : u32 {
+        EMaterialChangeTrigger_val0 = 0,
+    };
 
     PlayerTrigger();
     void set(ECollisionTrigger);

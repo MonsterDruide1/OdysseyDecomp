@@ -45,6 +45,7 @@ bool isKidsMode(const al::LiveActor*);
 bool isTouchJumpCode(al::LiveActor const*,IUsePlayerCollision const*);
 bool isActiveDemo(al::LiveActor const*);
 bool isPressedCollision(IUsePlayerCollision const*);
+void resetCollisionPose(IUsePlayerCollision const*,sead::Quat<float> const&);
 
 }
 
@@ -249,25 +250,22 @@ class PlayerJumpMessageRequest {
 public:
     PlayerJumpMessageRequest();
     void clear() {
-        _0 = 0;
-        gap4 = 0.0f;
-        gap = 0;
-        vec = {0.0f, 0.0f, 0.0f};
-        size[0] = nullptr;
-        gap2 = 0;
-        someFlag = false;
-        someFlag2 = false;
+        mJumpType = 0;
+        mJumpPower = 0.0f;
+        mExtendFrame = 0;
+        mTurnJumpAngle = {0.0f, 0.0f, 0.0f};
+        mActorTrans = {0.0f, 0.0f, 0.0f};
+        mIsSpinClockwise = false;
+        mIsEnableStandUp = false;
     }
 public:
-    int _0;
-    float gap4;
-    int gap;
-    sead::Vector3f vec;
-    void *size[1];
-    int gap2;
-    bool someFlag;
-    bool someFlag2;
-    bool pad[2];
+    int mJumpType;
+    float mJumpPower;
+    int mExtendFrame;
+    sead::Vector3f mTurnJumpAngle;
+    sead::Vector3f mActorTrans;
+    bool mIsSpinClockwise;
+    bool mIsEnableStandUp;
 };
 
 class PlayerSandSinkAffect {
@@ -989,6 +987,17 @@ class PlayerStateRunHakoniwa2D3D : public al::NerveStateBase {
 public:
     PlayerStateRunHakoniwa2D3D(al::LiveActor *,PlayerConst const*,IUseDimension const*,PlayerInput const*,IUsePlayerCollision const*,al::WaterSurfaceFinder const*,PlayerCounterForceRun const*,PlayerCounterQuickTurnJump const*,PlayerTrigger *,PlayerAnimator *,PlayerEffect *,PlayerJointParamCenterDynamics *,bool);
     
+    bool isEnableLookAt(void);
+    bool isGroundSpin(void);
+    bool isSpinClockwise(void);
+    bool isRunDashFast(void);
+    bool isRunWaterSurface(void);
+    bool isBrake2D(void);
+    bool tryTurnJump(IJudge *,sead::Vector3<float> *);
+    void getTurnTiltRate(void);  // wrong return type
+    void getCenterTiltRate(void);  // wrong return type
+    void getInverseKinematicsRate(void);  // wrong return type
+    void getCapDynamicsRate(void);  // wrong return type
 private:
     void* size[0x78/8];
 };

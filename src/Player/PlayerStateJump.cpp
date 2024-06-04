@@ -85,14 +85,14 @@ void PlayerStateJump::appear() {
         al::setVelocity(mActor, newVel);
     }
 
-    if(mJumpMessageRequest->_0 == 15 && !mJumpMessageRequest->someFlag2) {
+    if(mJumpMessageRequest->mJumpType == 15 && !mJumpMessageRequest->mIsEnableStandUp) {
         CRASH
     }
 
     // BUG: seems to have swapped normal and 2d speed?
     rs::scaleVelocityInertiaWallHit(mActor, mCollision, 0.25f, 1.0f, mModelChanger->is2DModel() ? mConst->getNormalMaxSpeed() : mConst->getNormalMaxSpeed2D());
 
-    bool v37 = ((unsigned int)(this->mJumpMessageRequest->_0 - 1) < 0x10) & (0x9001u >> (this->mJumpMessageRequest->_0 - 1));
+    bool v37 = ((unsigned int)(this->mJumpMessageRequest->mJumpType - 1) < 0x10) & (0x9001u >> (this->mJumpMessageRequest->mJumpType - 1));
     mContinuousJumpCount = 0;
     if(!v37 && !mModelChanger->isMini()) {
         if(mContinuousJump->mCount < 2) {
@@ -133,56 +133,56 @@ void PlayerStateJump::appear() {
     _BC = {0.0f, 0.0f, 0.0f};
     mJumpAnimName = nullptr;
     mMoveSpeedMax = sead::Mathf::min(mConst->getJumpMoveSpeedMax(), mActionAirMoveControl->mJumpSpeedMax);
-    switch(mJumpMessageRequest->_0) {
+    switch(mJumpMessageRequest->mJumpType) {
         case 0xC:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
         case 0xD:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
         case 0xE:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
         case 0x10:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
         case 0x12:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
         default:
             bool isMove = mInput->isMove();
             f32 dot = al::getVelocity(mActor).dot(al::getGravity(mActor));
-            switch(mJumpMessageRequest->_0) {
+            switch(mJumpMessageRequest->mJumpType) {
                 case 1:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 2:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 4:
                 case 0xB:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 5:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 6:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 7:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 8:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 9:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 0xA:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 case 0x11:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->_0);
+                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 default:
                     rs::noticePlayerJumpStart(mTrigger, mActor);
@@ -246,9 +246,9 @@ void PlayerStateJump::appear() {
                     if(_B7)
                         mJointControlKeeper->calcGroundPoseUp(&_BC);
 
-                    if(mJumpMessageRequest->_0 == 15)
+                    if(mJumpMessageRequest->mJumpType == 15)
                         mJumpAnimName = "JumpSquat";
-                    else if(mJumpMessageRequest->_0 == 3 && !mContinuousJumpCount)
+                    else if(mJumpMessageRequest->mJumpType == 3 && !mContinuousJumpCount)
                         _C8 = "JumpDashFast";
 
                     al::setNerve(this, &Jump);
