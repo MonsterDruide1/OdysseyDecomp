@@ -1,6 +1,6 @@
 #include "Library/Placement/PlacementFunction.h"
 
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/Placement/PlacementId.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Yaml/ByamlIter.h"
