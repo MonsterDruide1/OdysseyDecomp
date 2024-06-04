@@ -13,6 +13,8 @@ The instructions below assume that you are using Linux (native or WSL) or macOS.
 
 ## 1. Set up dependencies
 
+You can either set up all dependencies on your standard installation, or use a Visual Studio Code Dev Container. If you choose to do the latter, you can skip this section, just clone and open the folder in VS-Code, press F1 and select `Dev Containers: Rebuild and Reopen in Container`. You can copy the NSO executable into the container using `docker cp /path/to/main.nso [container-id]:/workspaces/main.nso`, where `[container-id]` is the ID listed in `docker container ls`.
+
 * Python 3.6 or newer with [pip](https://pip.pypa.io/en/stable/installation/)
 * Ninja
 * CMake 3.13+
@@ -25,6 +27,12 @@ Ubuntu users can install those dependencies by running:
 
 ```shell
 sudo apt install python3 ninja-build cmake ccache xdelta3 clang libssl-dev libncurses5
+```
+
+If you are running Ubuntu 23.10 or later, the `libncurses5` package won't be available anymore. You can install it from the archive using:
+
+```shell
+wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb && sudo dpkg -i libtinfo5_6.4-2_amd64.deb && rm -f libtinfo5_6.4-2_amd64.deb
 ```
 
 Additionally, you'll also need:
