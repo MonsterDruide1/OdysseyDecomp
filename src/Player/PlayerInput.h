@@ -88,6 +88,10 @@ public:
     void snapAreaInput(sead::Vector3<float> *,sead::Vector3<float> const&);
 
     void update();
+    void updateWallAlong();
+    void updateSnapMoveArea();
+    void updateInput3D();
+    void updateInput2D();
 
 public:
     const al::LiveActor* mLiveActor;
@@ -104,7 +108,8 @@ public:
     sead::Vector2f usedInUpdateForAngles = {0.0f, 0.0f};
     float usedInUpdateForSomething = 0.0f;
     float* arrayOfSizeF0 = nullptr;
-    u64 constant60maybe = 0;
+    u32 constant60maybe = 0;
+    u32 constant60maybe2 = 0;
     u32 somethingAboutArray = 0;
     al::SpinInputAnalyzer* mSpinInputAnalyzer;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;

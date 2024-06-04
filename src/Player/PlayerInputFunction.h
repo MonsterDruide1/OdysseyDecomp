@@ -26,6 +26,8 @@ public:
     static bool isTriggerCancelWorldWarp(const al::LiveActor*, s32);
 
     static sead::Vector2f getMoveInputStick(al::LiveActor const*,int,int);
+
+    static bool isTriggerCameraReset(al::LiveActor const*,int);
 };
 
 namespace rs {

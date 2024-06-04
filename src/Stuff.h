@@ -55,4 +55,6 @@ void slerpGravityVelH(al::LiveActor*, float);
 
 void cutVerticalVelocityGroundNormal(al::LiveActor*, const IUsePlayerCollision*);
 
+bool tryFindSnapMoveAreaDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
+
 }  // namespace rs

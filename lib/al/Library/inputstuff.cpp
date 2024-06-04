@@ -16,6 +16,6 @@ void JoyPadAccelPoseAnalyzer::setSwingBorder(f32 val1, f32 val2) {
 }
 
 SpinInputAnalyzer::SpinInputAnalyzer() {}
-void SpinInputAnalyzer::update(const sead::Vector2f &) {CRASH /*ALSO FIX ABOVE IF REQUIRED*/}
+void SpinInputAnalyzer::update(const sead::Vector2f &) {WARN_UNIMPL; /*ALSO FIX ABOVE IF REQUIRED*/}
 
 }  // namespace al

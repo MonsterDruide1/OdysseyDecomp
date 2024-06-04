@@ -4,7 +4,10 @@
 
 namespace al {
 
-class PadRumbleKeeper;
+class PadRumbleKeeper {
+public:
+    int mPort;
+};
 class LiveActor;
 
 class PlayerHolder {
