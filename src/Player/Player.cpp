@@ -3,7 +3,7 @@
 #include "Library/Controller/InputFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
