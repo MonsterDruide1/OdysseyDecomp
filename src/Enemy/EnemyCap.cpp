@@ -1,8 +1,8 @@
 #include "Enemy/EnemyCap.h"
 
+#include <math/seadMatrix.h>
 #include <prim/seadSafeString.h>
 
-#include <math/seadMatrix.h>
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
