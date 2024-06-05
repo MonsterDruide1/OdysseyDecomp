@@ -148,10 +148,6 @@ void PlayerActorHakoniwa::initAfterPlacement() {
 }
 void PlayerActorHakoniwa::movement() {
     printf("Currently in %s\n", mNerveKeeper->getStateCtrl()->findStateInfo(mNerveKeeper->getCurrentNerve())->name);
-    /*mPlayerInput->mIsDisableInput = false;
-    rs::updateJudge(mPlayerJudgePreInputJump);
-    WARN_UNIMPL;
-    PlayerActorBase::movement();*/
     if(mHackCap->isNoPutOnHide()) {
         CRASH
     }
@@ -330,24 +326,74 @@ void PlayerActorHakoniwa::control() {
     mIsInWater = isInWater;
 }
 void PlayerActorHakoniwa::updateCollider() {
-    // !!!!!!!!!!!!!!!
-    // FIXME!!!!!!!!!!
-    // !!!!!!!!!!!!!!!
-    WARN_UNIMPL;
+    al::updatePoseTrans(this, al::getTrans(this));
+    syncSensorAndCollision();
+    if(al::isNerve(this, &Demo) || al::isNerve(this, &Dead)) {
+        CRASH
+    }
+    if(al::isNerve(this, &Hack)) {
+        CRASH
+    }
+    if(PlayerFunction::isPlayerDeadStatus(this) && !al::isNerve(this, &Abyss)) {
+        CRASH
+    }
 
-    mPoseKeeper->updatePoseTrans(mPoseKeeper->getTrans());
+    sead::Vector3f velocity = {0.0f, 0.0f, 0.0f};
+    if(PlayerFunction::isPlayerDeadStatus(this) || al::isNerve(this, &Hack) || al::isNerve(this, &Demo) || al::isNerve(this, &Camera) || al::isNerve(this, &PoleClimb)) {
+        velocity = al::getVelocity(this);
+    } else {
+        sead::Vector3f a3 = {0.0f, 0.0f, 0.0f};
+        if(al::isNerve(this, &WallAir)) {
+            mPlayerStateWallAir->calcSnapMoveCutDir(&a3);
+            rs::calcSnapVelocitySnapMoveAreaWithCutDir(&velocity, this, mPlayerColliderHakoniwa, al::getVelocity(this), 5.0f, a3);
+        } else {
+            rs::calcSnapVelocitySnapMoveArea(&velocity, this, mPlayerColliderHakoniwa, al::getVelocity(this), 5.0f);
+        }
+    }
 
-    sead::Vector3f collisionResult = mPlayerColliderHakoniwa->updateCollider(mPoseKeeper->getVelocity());
+    mPlayerPushReceiver->calcPushedVelocityWithCollide(&velocity, velocity+mPlayerExternalVelocity->someVec2, mPlayerColliderHakoniwa, mPlayerConst->getCollisionRadius());
+    mWorldEndBorderKeeper->update(al::getTrans(this), velocity, al::isNerve(this, &Swim)||!rs::isCollidedGround(mPlayerColliderHakoniwa));
+    velocity += mWorldEndBorderKeeper->_54;
 
-    const sead::Vector3f& a2 = mPoseKeeper->getVelocity();
-    const sead::Vector3f& result = collisionResult;
-    const PlayerCollider* a1 = mPlayerColliderHakoniwa->mPlayerCollider;
-    printf("mPlayerCollider: %p\n", a1);
-    printf("Collide: (%.02f, %.02f, %.02f)+(%.02f, %.02f, %.02f) => (%.02f, %.02f, %.02f) ; isRecovery=%s\n", a1->mTrans.x, a1->mTrans.y, a1->mTrans.z, a2.x, a2.y, a2.z, result.x, result.y, result.z, "false");
-    
-    printf("mPoseKeeper: %p\n", mPoseKeeper);
-    *mPoseKeeper->getTransPtr() += collisionResult;
-    mPoseKeeper->updatePoseTrans(mPoseKeeper->getTrans());
+    // if Damage, SpinCap, GrabCeil or DamageFire and snapping
+    if(false) {
+        CRASH
+    }
+
+    if(al::isNoCollide(this) || mPlayerPuppet->isNoCollide()) {
+        rs::resetCollision(mPlayerColliderHakoniwa);
+        *al::getTransPtr(this) += velocity;
+    } else {
+        //*al::getTransPtr(this) += mPlayerColliderHakoniwa->updateCollider(velocity);
+        sead::Vector3f result = mPlayerColliderHakoniwa->updateCollider(velocity);
+        const sead::Vector3f& a2 = velocity;
+        const PlayerCollider* a1 = mPlayerColliderHakoniwa->mPlayerCollider;
+        printf("Collide: (%.02f, %.02f, %.02f)+(%.02f, %.02f, %.02f) => (%.02f, %.02f, %.02f) ; isRecovery=%s\n", a1->mTrans.x, a1->mTrans.y, a1->mTrans.z, a2.x, a2.y, a2.z, result.x, result.y, result.z, "false");
+        *al::getTransPtr(this) += result;
+    }
+
+    sead::Vector3f gravity = al::getGravity(this);
+    al::updatePoseTrans(this, al::getTrans(this));
+
+    mWaterSurfaceFinder->update(al::getTrans(this), -al::getGravity(this), 200.0f);
+    mPlayerEffect->updateWaterSurfaceMtx(mWaterSurfaceFinder);
+    mPlayerColliderHakoniwa->updateHeightCheck(al::getTrans(this), -al::getGravity(this), true);
+    mPlayerColliderHakoniwa->updateCeilingCheck(
+        al::isNerve(this, &WallCatch) && mPlayerStateWallCatch->isWallCatchForm() ? mPlayerStateWallCatch->getCeilingCheckPos() : al::getTrans(this),
+        -gravity, 0.0f, mPlayerCarryKeeper->isCarryUp() ? 150.0f : 0.0f
+    );
+
+    // TODO updating WaterSurfaceShadow
+
+    mPlayerColliderHakoniwa->updateFallDistanceCheck(al::getTrans(this), velocity, gravity, mPlayerConst->getFallSpeedMax());
+
+    if(rs::isCollidedGround(mPlayerColliderHakoniwa)) {
+        mComboCounter->reset();
+    }
+
+    if(mPlayerCarryKeeper->updateCollideLockUp(mPlayerColliderHakoniwa, mPlayerPushReceiver)) {
+        mPlayerCarryKeeper->startCancelAndRelease();
+    }
 }
 
 void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,

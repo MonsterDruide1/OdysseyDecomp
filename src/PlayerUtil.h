@@ -46,6 +46,8 @@ bool isTouchJumpCode(al::LiveActor const*,IUsePlayerCollision const*);
 bool isActiveDemo(al::LiveActor const*);
 bool isPressedCollision(IUsePlayerCollision const*);
 void resetCollisionPose(IUsePlayerCollision const*,sead::Quat<float> const&);
+void calcSnapVelocitySnapMoveArea(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*,sead::Vector3<float> const&,float);
+void calcSnapVelocitySnapMoveAreaWithCutDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*,sead::Vector3<float> const&,float,sead::Vector3<float> const&);
 
 }
 
@@ -135,6 +137,7 @@ public:
 class PlayerEffect {
 public:
     PlayerEffect(al::LiveActor *,PlayerModelHolder const*,sead::Matrix34<float> const*);
+    void updateWaterSurfaceMtx(al::WaterSurfaceFinder const*);
 private:
     void* size[0xC0/8];
 };
@@ -206,11 +209,24 @@ private:
     void* size[0x10/8];
 };
 
-class WorldEndBorderKeeper {
+namespace al {
+    class AreaObj;
+}
+class WorldEndBorderKeeper : public al::NerveExecutor {
 public:
     WorldEndBorderKeeper(al::LiveActor const*);
-private:
-    void* size[0x60/8];
+    void update(sead::Vector3<float> const&,sead::Vector3<float> const&,bool);
+public:
+    const al::LiveActor *mPlayer;
+    sead::Vector3f _18;
+    sead::Vector3f _24;
+    bool mIsSwimOrInAir;
+    bool pad[7];
+    al::AreaObj *mWorldEndBorderArea;
+    sead::Vector3f _40;
+    float _4c;
+    float _50;
+    sead::Vector3f _54 = {0.0f, 0.0f, 0.0f};
 };
 
 class PlayerWallActionHistory {
@@ -289,6 +305,7 @@ class PlayerPushReceiver {
 public:
     PlayerPushReceiver(al::LiveActor* const);
     void clear();
+    void calcPushedVelocityWithCollide(sead::Vector3<float> *,sead::Vector3<float> const&,IUsePlayerCollision const*,float);
 private:
     void* size[0x38/8];
 };
@@ -305,14 +322,30 @@ public:
     sead::Vector3f mPush = {0.0f, 0.0f, 0.0f};
 };
 
+class ExternalForceKeeper;
 class PlayerExternalVelocity {
 public:
     PlayerExternalVelocity(al::LiveActor const*,IUsePlayerCollision const*,sead::Vector3f const*);
     void requestApplyLastGroundInertia();
     void cancelAndFeedbackLastGroundInertia(al::LiveActor *,float,bool);
     void update();
-private:
-    void* size[0x98/8];
+public:
+    ExternalForceKeeper *mExternalForceKeeper;
+    sead::Vector3f someForce1;
+    sead::Vector3f someForce2;
+    sead::Vector3f someVec2;
+    int pad;
+    const al::LiveActor *mActor;
+    const IUsePlayerCollision *mCollision;
+    const sead::Vector3f *someVec;
+    bool someFlag;
+    bool gap2[3];
+    sead::Vector3f someForce3;
+    float someMultipliersDependingOnGroundOrAir[6];
+    sead::Vector3f mSnapForce;
+    int mApplyLastGroundInertia;
+    sead::Vector3f someForceRegardingGround;
+    sead::Vector3f someForceRegardingGround2;
 };
 
 class PlayerWetControl {
@@ -379,6 +412,7 @@ class IUsePlayerPuppet {};
 class PlayerPuppet : public IUsePlayerPuppet {
 public:
     PlayerPuppet(al::LiveActor *,HackCap *,PlayerAnimator *,IUsePlayerCollision *,ActorDimensionKeeper *,IPlayerModelChanger *,WorldEndBorderKeeper *,PlayerCounterForceRun *,PlayerDamageKeeper *,PlayerEffect *,PlayerInput const*,PlayerConst const*);
+    bool isNoCollide();
 private:
     void* size[0xD0/8];
 };
@@ -407,6 +441,8 @@ public:
     void startCancelAndRelease();
     bool isCarry();
     bool isThrowRelease();
+    bool isCarryUp();
+    bool updateCollideLockUp(IUsePlayerCollision const*,PlayerPushReceiver const*);
 private:
     void* size[0xD0/8];
 };
@@ -1027,6 +1063,7 @@ private:
 class PlayerStateWallAir : public al::NerveStateBase {
 public:
     PlayerStateWallAir(al::LiveActor *,PlayerConst const*,PlayerInput const*,PlayerTrigger const*,IUsePlayerCollision *,IJudge *,PlayerJudgePreInputJump *,PlayerAnimator *,PlayerWallActionHistory *,PlayerActionDiveInWater *);
+    void calcSnapMoveCutDir(sead::Vector3<float> *);
 private:
     void* size[0x58/8];
 };
@@ -1036,6 +1073,8 @@ class PlayerStateWallCatch : public al::NerveStateBase {
 public:
     PlayerStateWallCatch(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision *,IUsePlayerCeilingCheck const*,PlayerModelHolder const*,PlayerAreaChecker const*,PlayerAnimator *,PlayerTrigger *,PlayerJudgePreInputJump *,PlayerJointParamGrab *);
     void setup(al::CollisionParts const*,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&);
+    bool isWallCatchForm();
+    const sead::Vector3f& getCeilingCheckPos();
 
 private:
     void* size[0xB8/8];

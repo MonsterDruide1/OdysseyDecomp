@@ -21,6 +21,8 @@ bool isPlayingEntranceCamera(al::IUseCamera const*,int);
 class WaterSurfaceFinder {
 public:
     WaterSurfaceFinder(al::LiveActor const*);
+    void update(sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+    
 private:
     void* size[0x38/8];
 };

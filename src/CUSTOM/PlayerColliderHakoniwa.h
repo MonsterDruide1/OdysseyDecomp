@@ -42,6 +42,10 @@ public:
     
     virtual ::PlayerCollider* getPlayerCollider() const { return (::PlayerCollider*)mPlayerCollider; }
 
+    void updateHeightCheck(sead::Vector3<float> const&,sead::Vector3<float> const&,bool) { WARN_UNIMPL; }
+    void updateCeilingCheck(sead::Vector3<float> const&,sead::Vector3<float> const&,float,float) { WARN_UNIMPL; }
+    void updateFallDistanceCheck(sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+
 public:
     al::LiveActor* mPlayer;
     const PlayerConst* mPlayerConst;

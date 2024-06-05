@@ -12,6 +12,10 @@ public:
         mCombo++;
     }
 
+    void reset() {
+        mCombo = 0;
+    }
+
 private:
     s32 mCombo;
 };
