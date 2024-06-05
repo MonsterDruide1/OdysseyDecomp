@@ -21,20 +21,20 @@ struct EnemyStateHackStartParam {
 };
 
 class EnemyStateHackStart : public al::ActorStateBase {
-private:
-    IUsePlayerHack* mHackActor = nullptr;
-    PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl = nullptr;
-    const EnemyStateHackStartParam* mParam;
-
 public:
     EnemyStateHackStart(al::LiveActor*, const EnemyStateHackStartParam*,
                         PlayerHackStartShaderParam*);
     IUsePlayerHack* tryStart(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     void kill();
     bool isHackStart() const;
-    float calcHackStartNerveRate() const;
+    f32 calcHackStartNerveRate() const;
     void exeDiveIn();
     void exeHackStart();
+
+private:
+    IUsePlayerHack* mHackActor = nullptr;
+    PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl = nullptr;
+    const EnemyStateHackStartParam* mParam;
 };
 
 namespace EnemyStateHackFunction {

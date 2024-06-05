@@ -1,4 +1,5 @@
 #include "Enemy/EnemyStateHackStart.h"
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
@@ -7,6 +8,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Shadow/DepthShadowDrawer.h"
+
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
 #include "Util/Sensor.h"
@@ -96,7 +98,8 @@ void EnemyStateHackStart::exeHackStart() {
         if (mParam->mMtpAnimName) {
             al::startMtpAnim(mActor, mParam->mMtpAnimName);
         }
-        al::LiveActor* actor = mActor;
+        al::LiveActor* actor = mActor;  // TODO: get this matching with inlined call to
+                                        // EnemyStateHackFunction::startHackSwitchShadow
         if (al::isExistDepthShadowMapCtrl(actor)) {
             al::invalidateShadow(actor);
             al::offDepthShadowModel(actor);
@@ -128,18 +131,15 @@ void startHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam*
         al::offDepthShadowModel(actor);
         al::validateDepthShadowMap(actor);
     }
-    if (!param)
-        return;
-    if (!param->mUpdateSubActorShadowMap)
-        return;
-
-    s32 subActorNum = al::getSubActorNum(actor);
-    for (s32 i = 0; i < subActorNum; i++) {
-        al::LiveActor* subActor = al::getSubActor(actor, i);
-        if (al::isExistDepthShadowMapCtrl(subActor)) {
-            al::invalidateShadow(subActor);
-            al::offDepthShadowModel(subActor);
-            al::validateDepthShadowMap(subActor);
+    if (param && param->mUpdateSubActorShadowMap) {
+        s32 subActorNum = al::getSubActorNum(actor);
+        for (s32 i = 0; i < subActorNum; i++) {
+            al::LiveActor* subActor = al::getSubActor(actor, i);
+            if (al::isExistDepthShadowMapCtrl(subActor)) {
+                al::invalidateShadow(subActor);
+                al::offDepthShadowModel(subActor);
+                al::validateDepthShadowMap(subActor);
+            }
         }
     }
 }
@@ -150,18 +150,15 @@ void endHackSwitchShadow(al::LiveActor* actor, EnemyStateHackStartParam const* p
         al::onDepthShadowModel(actor);
         al::invalidateDepthShadowMap(actor);
     }
-    if (!param)
-        return;
-    if (!param->mUpdateSubActorShadowMap)
-        return;
-
-    s32 subActorNum = al::getSubActorNum(actor);
-    for (s32 i = 0; i < subActorNum; i++) {
-        al::LiveActor* subActor = al::getSubActor(actor, i);
-        if (al::isExistDepthShadowMapCtrl(subActor)) {
-            al::validateShadow(subActor);
-            al::onDepthShadowModel(subActor);
-            al::invalidateDepthShadowMap(subActor);
+    if (param && param->mUpdateSubActorShadowMap) {
+        s32 subActorNum = al::getSubActorNum(actor);
+        for (s32 i = 0; i < subActorNum; i++) {
+            al::LiveActor* subActor = al::getSubActor(actor, i);
+            if (al::isExistDepthShadowMapCtrl(subActor)) {
+                al::validateShadow(subActor);
+                al::onDepthShadowModel(subActor);
+                al::invalidateDepthShadowMap(subActor);
+            }
         }
     }
 }

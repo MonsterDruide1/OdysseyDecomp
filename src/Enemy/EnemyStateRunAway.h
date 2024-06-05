@@ -13,14 +13,6 @@ struct ParamEnemyStateRunAway {
 };
 
 class EnemyStateRunAway : public al::ActorStateBase {
-private:
-    al::LiveActor* mScaredOfActor;
-    ParamEnemyStateRunAway* mParam;
-    sead::Vector3f mFrontDir;
-    const char* mAnimName;
-    bool mIsCollidedWallVelocity;
-    bool mNeedToFaceToDirection;
-
 public:
     EnemyStateRunAway(al::LiveActor*, const ParamEnemyStateRunAway*, const char*);
     void appear();
@@ -28,4 +20,12 @@ public:
     void exeRun();
     void exePanicRun();
     void exePanicRunCollided();
+
+private:
+    al::LiveActor* mScaredOfActor = nullptr;
+    const ParamEnemyStateRunAway* mParam = nullptr;
+    sead::Vector3f mFrontDir = {0.0f, 0.0f, 0.0f};
+    const char* mAnimName = nullptr;
+    bool mIsCollidedWallVelocity = false;
+    bool mIsNeedToFaceToDirection = false;
 };

@@ -8,19 +8,6 @@ struct EnemyStateBlowDownParam;
 }  // namespace al
 
 class EnemyCap : public al::LiveActor {
-private:
-    al::LiveActor* mCap = nullptr;
-    sead::Matrix34f* mCapBaseMtx = nullptr;
-    bool mNotAtOrigin = true;
-    sead::Vector3f mLocalTrans = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mLocalRotate = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mLocalScale = {1.0f, 1.0f, 1.0f};
-    bool mCapVisible = false;
-    bool mUseFollowMtxScale = false;
-    bool field_142 = false;
-    bool mUseLocalScale = true;
-    al::EnemyStateBlowDown* mStateBlowDown = nullptr;
-
 public:
     static EnemyCap* createEnemyCap(const char*);
 
@@ -39,6 +26,19 @@ public:
 
     al::LiveActor* getCap() { return mCap; };
     al::EnemyStateBlowDown* getStateBlowDown() { return mStateBlowDown; };
+
+private:
+    al::LiveActor* mCap = nullptr;
+    sead::Matrix34f* mCapBaseMtx = nullptr;
+    bool mIsNotAtOrigin = true;
+    sead::Vector3f mLocalTrans = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mLocalRotate = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mLocalScale = {1.0f, 1.0f, 1.0f};
+    bool mIsCapVisible = false;
+    bool mIsUseFollowMtxScale = false;
+    bool field_142 = false;
+    bool mIsUseLocalScale = true;
+    al::EnemyStateBlowDown* mStateBlowDown = nullptr;
 };
 
 namespace rs {

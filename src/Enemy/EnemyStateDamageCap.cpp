@@ -1,9 +1,11 @@
 #include "Enemy/EnemyStateDamageCap.h"
-#include "Enemy/EnemyCap.h"
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+
+#include "Enemy/EnemyCap.h"
 #include "Util/Sensor.h"
 
 namespace {

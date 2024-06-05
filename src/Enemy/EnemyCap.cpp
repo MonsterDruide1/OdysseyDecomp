@@ -1,5 +1,8 @@
 #include "Enemy/EnemyCap.h"
+
 #include <prim/seadSafeString.h>
+
+#include <math/seadMatrix.h>
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -7,9 +10,11 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
+#include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
+#include "Library/Matrix/MatrixUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
 #include "Library/Movement/EnemyStateBlowDownParam.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -35,22 +40,22 @@ EnemyCap* EnemyCap::createEnemyCap(const char* name) {
 
 EnemyCap::EnemyCap(const char* name) : al::LiveActor(name) {}
 
-static al::EnemyStateBlowDownParam fallbackStateBlowDownParam{};
+const al::EnemyStateBlowDownParam sEnemyCapBlowDownParam =
+    al::EnemyStateBlowDownParam(nullptr, 45.0f, 54.0f, 2.6f, 0.94f, 60, 1);
 
-// NON_MATCHING: Unsure how the al::StringTmp here works
-void EnemyCap::initPartsFixFile(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
+void EnemyCap::initPartsFixFile(al::LiveActor* cap, const al::ActorInitInfo& info,
                                 const char* archiveName, const char* suffix) {
-    mCap = actor;
+    mCap = cap;
     mCapBaseMtx = mCap->getBaseMtx();
-    al::initChildActorWithArchiveNameNoPlacementInfo(this, initInfo, archiveName, 0);
+    al::initChildActorWithArchiveNameNoPlacementInfo(this, info, archiveName, 0);
     al::initNerve(this, &NrvEnemyCap.Wait, 1);
-    mStateBlowDown = new al::EnemyStateBlowDown(this, &fallbackStateBlowDownParam, "吹き飛び状態");
+    mStateBlowDown = new al::EnemyStateBlowDown(this, &sEnemyCapBlowDownParam, "吹き飛び状態");
     al::initNerveState(this, mStateBlowDown, &NrvEnemyCap.BlowDown, "吹き飛び");
 
-    al::StringTmp<128> test;
-    al::createFileNameBySuffix(&test, "InitPartsFixInfo", suffix);
-    if (al::isExistModelResourceYaml(mCap, test.cstr(), 0)) {
-        al::ByamlIter resourceYaml(al::getModelResourceYaml(mCap, test.cstr(), 0));
+    al::StringTmp<128> fileName;
+    al::createFileNameBySuffix(&fileName, "InitPartsFixInfo", suffix);
+    if (al::isExistModelResourceYaml(mCap, fileName.cstr(), 0)) {
+        al::ByamlIter resourceYaml(al::getModelResourceYaml(mCap, fileName.cstr(), 0));
         const char* jointName = nullptr;
         resourceYaml.tryGetStringByKey(&jointName, "JointName");
         if (jointName)
@@ -59,9 +64,9 @@ void EnemyCap::initPartsFixFile(al::LiveActor* actor, const al::ActorInitInfo& i
         al::tryGetByamlV3f(&mLocalRotate, resourceYaml, "LocalRotate");
         al::tryGetByamlV3f(&mLocalScale, resourceYaml, "LocalScale");
         if (!al::isNearZero(mLocalTrans, 0.001f) || !al::isNearZero(mLocalRotate, 0.001f))
-            mNotAtOrigin = true;
-        mUseFollowMtxScale = al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseFollowMtxScale");
-        mUseLocalScale = al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseLocalScale");
+            mIsNotAtOrigin = true;
+        mIsUseFollowMtxScale = al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseFollowMtxScale");
+        mIsUseLocalScale = al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseLocalScale");
     }
     makeActorAlive();
 }
@@ -72,8 +77,31 @@ void EnemyCap::makeActorAlive() {
     al::setVelocityZero(this);
     updatePose();
     al::LiveActor::makeActorAlive();
-    mCapVisible = false;
+    mIsCapVisible = false;
     al::setNerve(this, &NrvEnemyCap.Wait);
+}
+
+// NON_MATCHING: Unfinished
+void EnemyCap::updatePose() {
+    if (!this->mIsNotAtOrigin)
+        return al::updatePoseMtx(this, this->mCapBaseMtx);
+
+    sead::Matrix34f rotationMatrix;
+    sead::Vector3f rotate(sead::Mathf::deg2rad(mLocalRotate.x),
+                          sead::Mathf::deg2rad(mLocalRotate.y),
+                          sead::Mathf::deg2rad(mLocalRotate.z));
+    sead::Matrix34CalcCommon<f32>::makeR(rotationMatrix, rotate);
+
+    sead::Matrix34f translationMatrix;
+    sead::Vector3f translation(this->mLocalTrans.x, this->mLocalTrans.y, this->mLocalTrans.z);
+    sead::Matrix34CalcCommon<f32>::makeRT(translationMatrix, rotate, translation);
+
+    sead::Matrix34f poseMatrix;
+    sead::Matrix34CalcCommon<f32>::multiply(poseMatrix, rotationMatrix, translationMatrix);
+
+    if (mIsUseFollowMtxScale) {
+        al::calcMtxScale(&this->mLocalScale, poseMatrix);
+    }
 }
 
 void EnemyCap::calcAnim() {
@@ -90,7 +118,7 @@ void EnemyCap::exeWait() {
 }
 
 bool EnemyCap::syncHostVisible() {
-    return al::updateSyncHostVisible(&mCapVisible, this, mCap, field_142);
+    return al::updateSyncHostVisible(&mIsCapVisible, this, mCap, field_142);
 }
 
 void EnemyCap::exeBlowDown() {
@@ -135,12 +163,12 @@ namespace rs {
 EnemyCap* tryCreateEnemyCap(al::LiveActor* actor, const al::ActorInitInfo& info) {
     const char* str = 0;
     al::tryGetStringArg(&str, info, "CapName");
-    return rs::tryCreateEnemyCapSuffix(actor, info, str, str);
+    return tryCreateEnemyCapSuffix(actor, info, str, str);
 }
 
 EnemyCap* tryCreateEnemyCap(al::LiveActor* actor, const al::ActorInitInfo& info,
                             const char* archiveName) {
-    return rs::tryCreateEnemyCapSuffix(actor, info, archiveName, archiveName);
+    return tryCreateEnemyCapSuffix(actor, info, archiveName, archiveName);
 }
 
 EnemyCap* tryCreateEnemyCapSuffix(al::LiveActor* actor, const al::ActorInitInfo& info,
