@@ -12,9 +12,6 @@ class SensorMsg;
 class EnemyCap;
 
 class EnemyStateDamageCap : public al::ActorStateBase {
-private:
-    EnemyCap* mEnemyCap = nullptr;
-
 public:
     EnemyStateDamageCap(al::LiveActor* actor);
     void kill();
@@ -29,4 +26,7 @@ public:
     void exeDamageCap();
 
     const EnemyCap* getEnemyCap() { return mEnemyCap; };
+
+private:
+    EnemyCap* mEnemyCap = nullptr;
 };

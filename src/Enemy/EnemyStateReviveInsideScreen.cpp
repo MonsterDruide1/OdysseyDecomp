@@ -1,4 +1,5 @@
 #include "Enemy/EnemyStateReviveInsideScreen.h"
+
 #include "Library/Action/ActorActionKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -48,7 +49,7 @@ void EnemyStateReviveInsideScreen::appear() {
 
     al::setVelocityZero(mActor);
     mActor->getActorActionKeeper()->tryStartActionNoAnim("ReviveInsideScreen");
-    if (mShouldHide)
+    if (mIsHidden)
         al::setNerve(this, &NrvEnemyStateReviveInsideScreen.Hide);
     else
         al::setNerve(this, &NrvEnemyStateReviveInsideScreen.Delay);

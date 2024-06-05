@@ -1,5 +1,5 @@
 #include "Enemy/EnemyStateReset.h"
-#include "Enemy/EnemyCap.h"
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -11,6 +11,8 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Player/PlayerHolder.h"
 #include "Library/Player/PlayerUtil.h"
+
+#include "Enemy/EnemyCap.h"
 #include "Util/Hack.h"
 
 namespace {
@@ -46,7 +48,7 @@ void EnemyStateReset::appear() {
     al::stopAction(actor);
     rs::startReset(actor);
 
-    if (!mInvalidateSensors)
+    if (!mIsInvalidateSensors)
         al::invalidateHitSensors(actor);
 
     al::setNerve(this, &NrvEnemyStateReset.Wait);
@@ -63,7 +65,7 @@ void EnemyStateReset::kill() {
     al::showModelIfHide(actor);
     rs::endReset(actor);
     al::restartAction(actor);
-    if (!mInvalidateSensors)
+    if (!mIsInvalidateSensors)
         al::validateHitSensors(actor);
     if (rs::tryAppearEnemyCap(mEnemyCap))
         al::tryStartVisAnimIfExist(mActor, "CapOn");  // mActor is used here instead of the declared

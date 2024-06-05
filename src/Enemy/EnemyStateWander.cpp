@@ -1,4 +1,5 @@
 #include "Enemy/EnemyStateWander.h"
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -75,7 +76,7 @@ void EnemyStateWander::exeWalk() {
     sead::Vector3f frontDir = sead::Vector3f::zero;
     al::calcFrontDir(&frontDir, mActor);
 
-    float walkSpeed = mWalkSpeed > 0.0f ? mWalkSpeed : 1.0f;
+    f32 walkSpeed = mWalkSpeed > 0.0f ? mWalkSpeed : 1.0f;
 
     auto* actor = mActor;
 
