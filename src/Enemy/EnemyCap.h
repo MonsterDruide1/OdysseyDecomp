@@ -12,10 +12,13 @@ public:
     static EnemyCap* createEnemyCap(const char*);
 
     EnemyCap(const char*);
+
     void initPartsFixFile(al::LiveActor*, const al::ActorInitInfo&, const char*, const char*);
+
     void makeActorAlive();
     void updatePose();
     void calcAnim();
+
     void exeWait();
     bool syncHostVisible();
     void exeBlowDown();

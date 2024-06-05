@@ -24,10 +24,12 @@ class EnemyStateHackStart : public al::ActorStateBase {
 public:
     EnemyStateHackStart(al::LiveActor*, const EnemyStateHackStartParam*,
                         PlayerHackStartShaderParam*);
+
     IUsePlayerHack* tryStart(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     void kill();
     bool isHackStart() const;
     f32 calcHackStartNerveRate() const;
+
     void exeDiveIn();
     void exeHackStart();
 

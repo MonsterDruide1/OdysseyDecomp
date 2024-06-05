@@ -67,7 +67,6 @@ void EnemyStateWander::exeWalk() {
         return;
     }
 
-    // TODO: Match this with a single function call
     if (mIsHalfProbability)
         al::rotateQuatYDirDegree(mActor, 1.0f);
     else

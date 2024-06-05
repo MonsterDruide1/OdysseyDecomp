@@ -15,8 +15,10 @@ struct ParamEnemyStateRunAway {
 class EnemyStateRunAway : public al::ActorStateBase {
 public:
     EnemyStateRunAway(al::LiveActor*, const ParamEnemyStateRunAway*, const char*);
+
     void appear();
     void calcRunDirBase(sead::Vector3f*);
+
     void exeRun();
     void exePanicRun();
     void exePanicRunCollided();

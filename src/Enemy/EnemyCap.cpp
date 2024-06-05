@@ -128,13 +128,13 @@ void EnemyCap::exeBlowDown() {
         al::offSyncAlphaMaskSubActor(mCap, this);
     }
     al::rotateQuatXDirDegree(this, -15.0f);
-    if (!al::updateNerveState(this))
-        return;
-    al::offCollide(this);
-    al::startHitReaction(this, "消滅");
-    al::onSyncClippingSubActor(mCap, this);
-    al::onSyncAlphaMaskSubActor(mCap, this);
-    kill();
+    if (al::updateNerveState(this)) {
+        al::offCollide(this);
+        al::startHitReaction(this, "消滅");
+        al::onSyncClippingSubActor(mCap, this);
+        al::onSyncAlphaMaskSubActor(mCap, this);
+        kill();
+    }
 }
 
 void EnemyCap::startBlowDown(const al::HitSensor* source) {

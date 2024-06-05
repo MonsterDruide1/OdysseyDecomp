@@ -13,8 +13,10 @@ class EnemyCap;
 class EnemyStateReset : public al::ActorStateBase {
 public:
     EnemyStateReset(al::LiveActor*, const al::ActorInitInfo&, EnemyCap*);
+
     void appear();
     void kill();
+
     void exeWait();
 
 private:
