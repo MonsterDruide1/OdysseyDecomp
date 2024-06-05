@@ -14,7 +14,7 @@ class EnemyCap;
 class EnemyStateDamageCap : public al::ActorStateBase {
 public:
     EnemyStateDamageCap(al::LiveActor* actor);
-    void kill();
+    void kill() override;
 
     void createEnemyCap(const al::ActorInitInfo&, const char*);
     bool tryReceiveMsgCapBlow(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);

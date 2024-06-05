@@ -9,10 +9,10 @@ class EnemyStateReviveInsideScreen : public al::ActorStateBase {
 public:
     EnemyStateReviveInsideScreen(al::LiveActor*);
 
-    void appear();
-    void kill();
-    void startRevive();
+    void appear() override;
+    void kill() override;
 
+    void startRevive();
     bool isDisappear() const;
 
     void exeHide();

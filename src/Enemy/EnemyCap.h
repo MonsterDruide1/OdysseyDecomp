@@ -15,9 +15,9 @@ public:
 
     void initPartsFixFile(al::LiveActor*, const al::ActorInitInfo&, const char*, const char*);
 
-    void makeActorAlive();
+    void makeActorAlive() override;
     void updatePose();
-    void calcAnim();
+    void calcAnim() override;
 
     void exeWait();
     bool syncHostVisible();

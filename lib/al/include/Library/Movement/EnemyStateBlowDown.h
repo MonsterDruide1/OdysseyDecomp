@@ -17,9 +17,10 @@ public:
     void start(const sead::Vector3f&);
     void start(const HitSensor*, const HitSensor*);
     void start(const LiveActor*);
-    void appear();
-    void kill();
-    void control();
+
+    void appear() override;
+    void kill() override;
+    void control() override;
 
     void setParam(const EnemyStateBlowDownParam* param) { mParam = param; };
 

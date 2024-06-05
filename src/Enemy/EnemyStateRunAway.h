@@ -16,7 +16,8 @@ class EnemyStateRunAway : public al::ActorStateBase {
 public:
     EnemyStateRunAway(al::LiveActor*, const ParamEnemyStateRunAway*, const char*);
 
-    void appear();
+    void appear() override;
+
     void calcRunDirBase(sead::Vector3f*);
 
     void exeRun();

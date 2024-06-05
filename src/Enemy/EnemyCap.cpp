@@ -83,24 +83,24 @@ void EnemyCap::makeActorAlive() {
 
 // NON_MATCHING: Unfinished
 void EnemyCap::updatePose() {
-    if (!this->mIsNotAtOrigin)
-        return al::updatePoseMtx(this, this->mCapBaseMtx);
+    if (!mIsNotAtOrigin)
+        return al::updatePoseMtx(this, mCapBaseMtx);
 
     sead::Matrix34f rotationMatrix;
     sead::Vector3f rotate(sead::Mathf::deg2rad(mLocalRotate.x),
                           sead::Mathf::deg2rad(mLocalRotate.y),
                           sead::Mathf::deg2rad(mLocalRotate.z));
-    sead::Matrix34CalcCommon<f32>::makeR(rotationMatrix, rotate);
+    rotationMatrix.makeR(rotate);
 
     sead::Matrix34f translationMatrix;
-    sead::Vector3f translation(this->mLocalTrans.x, this->mLocalTrans.y, this->mLocalTrans.z);
-    sead::Matrix34CalcCommon<f32>::makeRT(translationMatrix, rotate, translation);
+    sead::Vector3f translation(mLocalTrans.x, mLocalTrans.y, mLocalTrans.z);
+    translationMatrix.makeRT(rotate, translation);
 
     sead::Matrix34f poseMatrix;
-    sead::Matrix34CalcCommon<f32>::multiply(poseMatrix, rotationMatrix, translationMatrix);
+    poseMatrix.setMul(rotationMatrix, translationMatrix);
 
     if (mIsUseFollowMtxScale) {
-        al::calcMtxScale(&this->mLocalScale, poseMatrix);
+        al::calcMtxScale(&mLocalScale, poseMatrix);
     }
 }
 
@@ -161,9 +161,9 @@ void EnemyCap::setBlowDownParam(const al::EnemyStateBlowDownParam* param) {
 
 namespace rs {
 EnemyCap* tryCreateEnemyCap(al::LiveActor* actor, const al::ActorInitInfo& info) {
-    const char* str = 0;
+    const char* str = nullptr;
     al::tryGetStringArg(&str, info, "CapName");
-    return tryCreateEnemyCapSuffix(actor, info, str, str);
+    return tryCreateEnemyCap(actor, info, str);
 }
 
 EnemyCap* tryCreateEnemyCap(al::LiveActor* actor, const al::ActorInitInfo& info,
@@ -175,7 +175,7 @@ EnemyCap* tryCreateEnemyCapSuffix(al::LiveActor* actor, const al::ActorInitInfo&
                                   const char* archiveName, const char* suffix) {
     if (!archiveName)
         return nullptr;
-    auto cap = new EnemyCap("帽子");
+    EnemyCap* cap = new EnemyCap("帽子");
     if (!al::isExistSubActorKeeper(actor))
         al::initSubActorKeeperNoFile(actor, info, 1);
     cap->initPartsFixFile(actor, info, archiveName, suffix);

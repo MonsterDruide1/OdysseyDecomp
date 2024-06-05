@@ -58,7 +58,7 @@ namespace alPlayerFunction {
 void registerPlayer(al::LiveActor*, al::PadRumbleKeeper*);
 bool isFullPlayerHolder(al::LiveActor*);
 void findPlayerHolderIndex(const al::LiveActor*);
-void findPlayerHolderIndex(al::HitSensor const*);
+void findPlayerHolderIndex(const al::HitSensor*);
 bool isPlayerActor(const al::LiveActor*);
-bool isPlayerActor(al::HitSensor const*);
+bool isPlayerActor(const al::HitSensor*);
 }  // namespace alPlayerFunction

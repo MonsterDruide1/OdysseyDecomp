@@ -5,7 +5,8 @@
 class EnemyStateWander : public al::ActorStateBase {
 public:
     EnemyStateWander(al::LiveActor* actor, const char* stateName);
-    void appear();
+
+    void appear() override;
 
     void exeWait();
     void exeWalk();

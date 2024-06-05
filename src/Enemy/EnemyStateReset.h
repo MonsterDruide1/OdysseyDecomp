@@ -14,8 +14,8 @@ class EnemyStateReset : public al::ActorStateBase {
 public:
     EnemyStateReset(al::LiveActor*, const al::ActorInitInfo&, EnemyCap*);
 
-    void appear();
-    void kill();
+    void appear() override;
+    void kill() override;
 
     void exeWait();
 

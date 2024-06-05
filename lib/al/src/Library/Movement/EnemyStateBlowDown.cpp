@@ -10,7 +10,7 @@
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Movement/EnemyStateBlowDownParam.h"
 
-const al::EnemyStateBlowDownParam cEnemyStateBlowDownParam =
+const al::EnemyStateBlowDownParam sEnemyStateBlowDownParam =
     al::EnemyStateBlowDownParam("BlowDown", 10.3f, 28.2f, 1.1f, 0.995f, 120, true);
 
 namespace al {
@@ -18,7 +18,7 @@ EnemyStateBlowDown::EnemyStateBlowDown(LiveActor* actor, const EnemyStateBlowDow
                                        const char* name)
     : ActorStateBase(name, actor), mParam(param) {
     if (!mParam)
-        mParam = &cEnemyStateBlowDownParam;
+        mParam = &sEnemyStateBlowDownParam;
 }
 
 void EnemyStateBlowDown::start(const HitSensor* sensor) {
@@ -38,9 +38,9 @@ void EnemyStateBlowDown::start(const sead::Vector3f& dir) {
     }
 
     auto* actor = mActor;
-    sead::Vector3f direction = dir * mParam->mGravityStrength;
+    sead::Vector3f direction = dir * mParam->mVelocityStrength;
     sead::Vector3f gravity = getGravity(actor);
-    sead::Vector3f velocity = gravity * mParam->mVelocityStrength;
+    sead::Vector3f velocity = gravity * mParam->mGravityStrength;
     setVelocity(actor, direction - velocity);
 }
 

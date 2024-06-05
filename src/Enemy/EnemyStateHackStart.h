@@ -26,7 +26,7 @@ public:
                         PlayerHackStartShaderParam*);
 
     IUsePlayerHack* tryStart(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
-    void kill();
+    void kill() override;
     bool isHackStart() const;
     f32 calcHackStartNerveRate() const;
 
