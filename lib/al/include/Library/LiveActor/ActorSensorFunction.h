@@ -4,33 +4,34 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+namespace al {
+
 enum SensorType {
-    Eye = 0,
-    Player = 1,
-    PlayerAttack = 2,
-    PlayerFoot = 3,
-    PlayerDecoration = 4,
-    PlayerEye = 5,
-    Npc = 6,
-    Ride = 7,
-    Enemy = 8,
-    EnemyBody = 9,
-    EnemyAttack = 10,
-    MapObj = 12,
-    Bindable = 14,
-    Collision = 15,
-    PlayerFireBall = 16,
-    HoldObj = 17,
-    LookAt = 18,
-    BindableGoal = 19,
-    BindableAllPlayer = 20,
-    BindableBubbleOutScreen = 21,
-    BindableKoura = 22,
-    BindableRouteDokan = 23,
-    BindableBubblePadInput = 24
+    SensorType_Eye = 0,
+    SensorType_Player = 1,
+    SensorType_PlayerAttack = 2,
+    SensorType_PlayerFoot = 3,
+    SensorType_PlayerDecoration = 4,
+    SensorType_PlayerEye = 5,
+    SensorType_Npc = 6,
+    SensorType_Ride = 7,
+    SensorType_Enemy = 8,
+    SensorType_EnemyBody = 9,
+    SensorType_EnemyAttack = 10,
+    SensorType_MapObj = 12,
+    SensorType_Bindable = 14,
+    SensorType_Collision = 15,
+    SensorType_PlayerFireBall = 16,
+    SensorType_HoldObj = 17,
+    SensorType_LookAt = 18,
+    SensorType_BindableGoal = 19,
+    SensorType_BindableAllPlayer = 20,
+    SensorType_BindableBubbleOutScreen = 21,
+    SensorType_BindableKoura = 22,
+    SensorType_BindableRouteDokan = 23,
+    SensorType_BindableBubblePadInput = 24
 };
 
-namespace al {
 class LiveActor;
 class HitSensor;
 class SensorMsg;
