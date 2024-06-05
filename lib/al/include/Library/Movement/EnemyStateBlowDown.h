@@ -24,8 +24,8 @@ public:
     void setParam(const EnemyStateBlowDownParam* param) { mParam = param; };
 
 private:
-    const EnemyStateBlowDownParam* mParam;
-    s32 mBlowDownTimer;
-    bool mIsInvalidClipping;
+    const EnemyStateBlowDownParam* mParam = nullptr;
+    s32 mBlowDownTimer = 0;
+    bool mIsInvalidClipping = false;
 };
 }  // namespace al
