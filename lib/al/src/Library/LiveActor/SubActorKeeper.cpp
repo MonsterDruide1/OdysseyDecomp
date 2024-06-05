@@ -1,6 +1,7 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 
 #include "Library/Base/StringUtil.h"
+#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
