@@ -4,7 +4,7 @@
 #include <nn/g3d/ResSkeleton.h>
 
 #include "Library/Anim/SklAnimRetargettingInfo.h"
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Project/Anim/AnimPlayerVisual.h"

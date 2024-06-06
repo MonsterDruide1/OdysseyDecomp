@@ -1,6 +1,6 @@
 #include "Library/Obj/PartsModel.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
