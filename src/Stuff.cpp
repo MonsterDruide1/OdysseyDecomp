@@ -215,8 +215,6 @@ void calcJumpInertiaWall(sead::Vector3f* a1, al::LiveActor* a2, const IUsePlayer
 }
 
 bool isCollidedGround(const IUsePlayerCollision* collision) {
-    printf("%p\n", collision);
-    printf("%p\n", collision->getPlayerCollider());
     return collision->getPlayerCollider()->val1 >= 0.0f;
 }
 

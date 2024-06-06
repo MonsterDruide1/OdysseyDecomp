@@ -65,7 +65,7 @@ public:
     };
 
 
-    PlayerModelHolder(s32);
+    PlayerModelHolder(u32);
     void registerModel(al::LiveActor*, const char*);
     void changeModel(const char*);
     al::LiveActor* findModelActor(char const*);

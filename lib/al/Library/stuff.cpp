@@ -745,6 +745,10 @@ void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f *a2, const sead
   a1->z = v19;
 }
 
+bool isEqualString(sead::SafeStringBase<char> const& a1, sead::SafeStringBase<char> const& a2) {
+  return al::isEqualString(a1.cstr(), a2.cstr());
+}
+
 s32 converge(s32 val, s32 goal, s32 step) {
   if(val >= goal) {
     return sead::Mathi::clampMin(val - step, goal);

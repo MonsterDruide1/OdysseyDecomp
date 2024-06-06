@@ -383,7 +383,7 @@ void PlayerActorHakoniwa::updateCollider() {
         -gravity, 0.0f, mPlayerCarryKeeper->isCarryUp() ? 150.0f : 0.0f
     );
 
-    // TODO updating WaterSurfaceShadow
+    // updating WaterSurfaceShadow
 
     mPlayerColliderHakoniwa->updateFallDistanceCheck(al::getTrans(this), velocity, gravity, mPlayerConst->getFallSpeedMax());
 
