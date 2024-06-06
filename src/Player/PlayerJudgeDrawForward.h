@@ -3,8 +3,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Player/IJudge.h"
-
-class PlayerJudgeDeadWipeStart;
+#include "Player/PlayerJudgeDeadWipeStart.h"
 
 class PlayerJudgeDrawForward : public IJudge {
 public:

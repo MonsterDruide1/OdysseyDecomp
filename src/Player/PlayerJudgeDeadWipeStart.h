@@ -19,5 +19,6 @@ public:
 private:
     const al::LiveActor* mPlayerActor;
     const PlayerConst* mPlayerConst;
-    u64 mFlags;
+    s32 mUnk;
+    s32 mUnk2;
 };
