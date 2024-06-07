@@ -2,12 +2,11 @@
 
 #include <heap/seadHeap.h>
 
-#include "Project/Memory/MemorySystem.h"
-
 namespace al {
 class FileLoader;
 class ResourceSystem;
 class SaveDataDirector;
+class MemorySystem;
 
 class SystemKit {
 public:

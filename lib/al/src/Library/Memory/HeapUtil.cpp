@@ -4,6 +4,8 @@
 
 #include "Library/File/FileUtil.h"
 #include "Library/Resource/ResourceHolder.h"
+#include "Library/System/SystemKit.h"
+#include "Project/Memory/MemorySystem.h"
 
 #include "System/ProjectInterface.h"
 
