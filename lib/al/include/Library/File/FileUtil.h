@@ -17,7 +17,7 @@ u32 calcBufferSizeAlignment(const sead::SafeString& fileName);
 u8* loadFile(const sead::SafeString& fileName);
 void tryLoadFileToBuffer(const sead::SafeString& fileName, u8*, u32, s32);
 sead::ArchiveRes* loadArchive(const sead::SafeString& fileName);
-void loadArchiveWithExt(const sead::SafeString& fileName, char const* ext);
+void loadArchiveWithExt(const sead::SafeString& fileName, const char* ext);
 void tryRequestLoadArchive(const sead::SafeString& fileName, sead::Heap* heap);
 void loadSoundItem(u32, u32, IAudioResourceLoader* resLoader);
 void tryRequestLoadSoundItem(u32);

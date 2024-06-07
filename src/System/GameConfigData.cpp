@@ -111,7 +111,7 @@ void GameConfigData::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void GameConfigData::read(al::ByamlIter const& conf) {
+void GameConfigData::read(const al::ByamlIter& conf) {
     mCameraStickSensitivityLevel = -1;
     mIsCameraReverseInputH = false;
     mIsCameraReverseInputV = false;
