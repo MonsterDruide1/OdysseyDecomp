@@ -459,9 +459,9 @@ class PlayerJudgeInWater : public IJudge {
 public:
     PlayerJudgeInWater(al::LiveActor const*,PlayerConst const*,IUsePlayerCollision const*,PlayerAreaChecker const*,al::WaterSurfaceFinder const*,IUsePlayerHeightCheck const*,PlayerCounterForceRun const*,bool,bool,bool);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x48/8];
 };
@@ -757,9 +757,9 @@ class PlayerJudgeOutInWater : public IJudge {
 public:
     PlayerJudgeOutInWater(al::LiveActor const*,IJudge const*,IJudge const*);
     
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x28/8];
 };
@@ -768,9 +768,9 @@ class PlayerJudgeStartWaterSurfaceRun : public IJudge {
 public:
     PlayerJudgeStartWaterSurfaceRun(al::LiveActor const*,al::WaterSurfaceFinder const*,PlayerCounterForceRun const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x20/8];
 };

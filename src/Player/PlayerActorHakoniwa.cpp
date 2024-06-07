@@ -311,7 +311,6 @@ void PlayerActorHakoniwa::control() {
         mPlayerDamageKeeper->update(mPlayerModelChangerHakoniwa, rs::isJudge(mPlayerJudgeRecoveryLifeFast), !al::isNerve(this, &Demo));
         if(!rs::isJudge(mPlayerInfo->mPlayerJudgeSafetyPointRecovery)) {
             mActorDimensionKeeper->update();
-            WARN_UNIMPL;
             // possibly jumping out of 2d area
             al::setGravity(this, {0.0f, -1.0f, 0.0f});
         }
@@ -323,7 +322,6 @@ void PlayerActorHakoniwa::control() {
         // nerve changer for switching after 2d->3d dropout
     }
 
-    WARN_UNIMPL;
     bool isInWater = false;//rs::isPlayerInWater(this) || mPlayerStateSwim->isReduceOxygen() || mPlayerStateDamageSwim->isReduceOxygen();
     // BGM changer for going into/out of water
     mIsInWater = isInWater;
@@ -961,7 +959,7 @@ void PlayerActorHakoniwa::updateModelShadowDropLength() { CRASH }
 void PlayerActorHakoniwa::executeAfterCapTarget() { CRASH }
 // TODO missing to enable changing collision on duck/dive/...
 void PlayerActorHakoniwa::syncSensorAndCollision() { WARN_UNIMPL; }
-void PlayerActorHakoniwa::checkDamageFromCollision() { WARN_UNIMPL; }
+//void PlayerActorHakoniwa::checkDamageFromCollision() { WARN_UNIMPL; }
 void PlayerActorHakoniwa::executePreMovementNerveChange() {
     if(PlayerFunction::isPlayerDeadStatus(this) || al::isNerve(this, &Demo)) {
         mPlayerBindKeeper->clearBindableSensor();
@@ -1025,7 +1023,7 @@ void PlayerActorHakoniwa::executePreMovementNerveChange() {
 
     // TODO starting recovery if neccessary
 }
-void PlayerActorHakoniwa::updateCarry() { WARN_UNIMPL; }
+//void PlayerActorHakoniwa::updateCarry() { WARN_UNIMPL; }
 
 void sub_71004229D0(al::LiveActor* player, PlayerTrigger* trigger,
                     const IUsePlayerCollision* collision) {

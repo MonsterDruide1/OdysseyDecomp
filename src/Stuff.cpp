@@ -60,6 +60,9 @@ bool isJustLand(const IUsePlayerCollision* collision) {
 bool isOnGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
   return isOnGround(actor, collision) && sub_7100569734(actor, collision, pConst, isJustLand(collision));
 }
+bool isCollidedGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
+  return isCollidedGround(collision) && sub_7100569734(actor, collision, pConst, isJustLand(collision));
+}
 
 void cutVerticalVelocityGroundNormal(al::LiveActor* actor, const IUsePlayerCollision* collision) {
   if(!rs::isCollidedGround(collision)) return;
@@ -94,6 +97,10 @@ const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision* collision)
 
 bool isCollidedWall(const IUsePlayerCollision* collision) {
     return collision->getPlayerCollider()->val2 >= 0.0f;
+}
+
+void resetCollision(IUsePlayerCollision*collision) {
+    return collision->getPlayerCollider()->onInvalidate();
 }
 
 void calcJumpInertia(sead::Vector3f* out, al::LiveActor* actor, const IUsePlayerCollision* collision, const sead::Vector3f& vec, f32 val) {
