@@ -18,7 +18,9 @@ bool PlayerInputFunction::isTriggerTalk(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isTriggerJump(al::LiveActor const*, int port) {
     return al::isPadTriggerA(port) || al::isPadTriggerB(port);
 }
-bool PlayerInputFunction::isTriggerSubAction(al::LiveActor const*, int) {CRASH}
+bool PlayerInputFunction::isTriggerSubAction(al::LiveActor const*, int port) {
+    return al::isPadTriggerZL(port) || al::isPadTriggerZR(port);
+}
 bool PlayerInputFunction::isHoldSubAction(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isHoldAction(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isHoldJump(al::LiveActor const*, int) {CRASH}

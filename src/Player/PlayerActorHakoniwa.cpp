@@ -1738,7 +1738,7 @@ void PlayerActorHakoniwa::exeFall() {
         al::setNerve(this, &SandSink);
         return;
     }
-    if(rs::updateJudgeAndResult(mPlayerJudgeEnableStandUp)) {
+    if(!rs::updateJudgeAndResult(mPlayerJudgeEnableStandUp)) {
         if(mPlayerCarryKeeper->isCarry())
             mPlayerCarryKeeper->startCancelAndRelease();
         al::setNerve(this, &Squat);

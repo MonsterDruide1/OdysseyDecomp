@@ -118,7 +118,14 @@ bool isJustLand(const IUsePlayerCollision* collision) {
   return collision->getPlayerCollider()->val1 >= 0.0f && collision->getPlayerCollider()->mTimeInAir == 1;
 }
 
-bool isOnGround(al::LiveActor const*,IUsePlayerCollision const*) {CRASH}
+bool isOnGround(al::LiveActor const*actor,IUsePlayerCollision const*collision) {
+  if(collision->getPlayerCollider()->val1 < 0.0f) return false;
+
+  sead::Vector3f velocity = al::getVelocity(actor);
+  al::tryNormalizeOrZero(&velocity);
+  f32 dot = collision->getPlayerCollider()->unk10.dot(velocity);
+  return dot <= 0.0f || al::isNearZero(dot, 0.001f);
+}
 bool isOnGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
   if(collision->getPlayerCollider()->val1 < 0.0f) return false;
 

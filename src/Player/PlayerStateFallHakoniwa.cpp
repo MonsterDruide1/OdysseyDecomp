@@ -67,7 +67,8 @@ void PlayerStateFallHakoniwa::updateFallTargetArea() {
     CRASH
 }
 bool PlayerStateFallHakoniwa::isValidWallCatch() {
-    CRASH
+    WARN_UNIMPL;
+    return false;
 }
 void PlayerStateFallHakoniwa::exeFall() {
     updateFallTargetArea();
