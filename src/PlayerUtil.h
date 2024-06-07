@@ -1102,6 +1102,14 @@ private:
 class PlayerStateHipDrop : public al::NerveStateBase {
 public:
     PlayerStateHipDrop(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerAnimator *,PlayerTrigger *);
+
+    bool isEnableHeadSliding() const;
+    bool isEnableHipDropAttack() const;
+    bool isEnableLandCancel() const;
+    bool isEnableMove() const;
+    bool isEnableInWater() const;
+    bool isEnableIK() const;
+    bool isLandTrigger() const;
 private:
     void* size[0x60/8];
 };
