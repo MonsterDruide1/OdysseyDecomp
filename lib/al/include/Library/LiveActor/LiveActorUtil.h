@@ -11,7 +11,9 @@
 namespace al {
 
 template <typename T>
-LiveActor* createActorFunction(const char* actorName);
+LiveActor* createActorFunction(const char* actorName) {
+    return new T(actorName);
+}
 
 const sead::Vector3f& getCameraUp(const LiveActor*, s32);
 
@@ -56,6 +58,6 @@ void registActorToDemoInfo(LiveActor* actor, const ActorInitInfo& info);
 
 namespace rs {
 
-sead::Vector3f* getPlayerPos(const al::LiveActor*);
+const sead::Vector3f& getPlayerPos(const al::LiveActor*);
 
 }

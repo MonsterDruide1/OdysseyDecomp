@@ -2,7 +2,7 @@
 
 #include <thread/seadThread.h>
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
 #include "Library/Resource/ResourceHolder.h"

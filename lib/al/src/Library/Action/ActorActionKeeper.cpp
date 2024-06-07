@@ -1,7 +1,7 @@
 #include "Library/Action/ActorActionKeeper.h"
 
-#include "Library/Base/Base.h"
-#include "Library/Base/String.h"
+#include "Library/Base/HashCodeUtil.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
