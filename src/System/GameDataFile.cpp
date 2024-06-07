@@ -66,11 +66,11 @@ bool GameDataFile::HintInfo::isHintStatusUnlock(s32 curWorldId, s32 scenarioNo,
     return !GameDataFunction::isCityWorldCeremonyAll(curWorldId, scenarioNo) || unkBool3;
 }
 
-bool GameDataFile::HintInfo::isHintStatusUnlockByNpc(void) const {
+bool GameDataFile::HintInfo::isHintStatusUnlockByNpc() const {
     return mHintStatus == HintStatus::NPC && !mIsMoonRock;
 }
 
-bool GameDataFile::HintInfo::isHintStatusUnlockByAmiibo(void) const {
+bool GameDataFile::HintInfo::isHintStatusUnlockByAmiibo() const {
     return mHintStatus == HintStatus::AMIIBO;
 }
 

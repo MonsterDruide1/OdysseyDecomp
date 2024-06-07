@@ -21,31 +21,31 @@ void LayoutActor::initLayoutPartsActorKeeper(s32 capacity) {
 void LayoutActor::initLayoutKeeper(LayoutKeeper* layoutKeeper) {
     mLayoutKeeper = layoutKeeper;
 }
-NerveKeeper* LayoutActor::getNerveKeeper(void) const {
+NerveKeeper* LayoutActor::getNerveKeeper() const {
     return mNerveKeeper;
 }
-const char* LayoutActor::getName(void) const {
+const char* LayoutActor::getName() const {
     return mName.cstr();
 }
-EffectKeeper* LayoutActor::getEffectKeeper(void) const {
+EffectKeeper* LayoutActor::getEffectKeeper() const {
     return mEffectKeeper;
 }
-AudioKeeper* LayoutActor::getAudioKeeper(void) const {
+AudioKeeper* LayoutActor::getAudioKeeper() const {
     return mAudioKeeper;
 }
-LayoutActionKeeper* LayoutActor::getLayoutActionKeeper(void) const {
+LayoutActionKeeper* LayoutActor::getLayoutActionKeeper() const {
     return mLayoutActionKeeper;
 }
-LayoutKeeper* LayoutActor::getLayoutKeeper(void) const {
+LayoutKeeper* LayoutActor::getLayoutKeeper() const {
     return mLayoutKeeper;
 }
-CameraDirector* LayoutActor::getCameraDirector(void) const {
+CameraDirector* LayoutActor::getCameraDirector() const {
     return mLayoutSceneInfo->getCameraDirector();
 }
-SceneObjHolder* LayoutActor::getSceneObjHolder(void) const {
+SceneObjHolder* LayoutActor::getSceneObjHolder() const {
     return mLayoutSceneInfo->getSceneObjHolder();
 }
-const MessageSystem* LayoutActor::getMessageSystem(void) const {
+const MessageSystem* LayoutActor::getMessageSystem() const {
     return mLayoutSceneInfo->getMessageSystem();
 }
 }  // namespace al
