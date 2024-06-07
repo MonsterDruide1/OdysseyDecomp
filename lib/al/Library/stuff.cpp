@@ -618,7 +618,7 @@ void addVelocityToGravity(LiveActor *actor, f32 velocity) {
 void separateVelocityHV(sead::Vector3f *, sead::Vector3f *, const LiveActor *actor) {
   CRASH
 }
-void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f *a2, const sead::Vector3f *a3, const sead::Vector3f *a4){
+void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f& a2, const sead::Vector3f& a3, const sead::Vector3f& a4){
     float a2z; // s9
   float a3z; // s10
   float a4z; // s1
@@ -666,18 +666,18 @@ void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f *a2, const sead
   float v49; // s7
   float v50; // s16
 
-  a2z = a2->z;
-  a3z = a3->z;
-  a4y = a4->y;
-  a4z = a4->z;
-  a3x = a3->x;
-  a3y = a3->y;
-  a4x = a4->x;
-  a2x = a2->x;
-  a2y = a2->y;
+  a2z = a2.z;
+  a3z = a3.z;
+  a4y = a4.y;
+  a4z = a4.z;
+  a3x = a3.x;
+  a3y = a3.y;
+  a4x = a4.x;
+  a2x = a2.x;
+  a2y = a2.y;
   x1x = (float)(a3y * a4z) - (float)(a3z * a4y);
-  x1y = (float)(a3z * a4->x) - (float)(a3->x * a4z);
-  x1z = (float)(a3->x * a4y) - (float)(a3y * a4->x);
+  x1y = (float)(a3z * a4.x) - (float)(a3.x * a4z);
+  x1z = (float)(a3.x * a4y) - (float)(a3y * a4.x);
   v17 = (float)(x1z * x1z) + (float)((float)(x1x * x1x) + (float)(x1y * x1y));
   if ( v17 >= 0.000001 )
   {
@@ -702,14 +702,14 @@ void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f *a2, const sead
     x3x = a2x - x2x;
     x3y = a2y - x2y;
     x3z = a2z - x2z;
-    a3y_ = a3->y;
-    a4z_ = a4->z;
-    a4y_ = a4->y;
-    a3z_ = a3->z;
-    v35 = (float)((float)(a3->x * a4->x) + (float)(a3y_ * a4y_)) + (float)(a3z_ * a4z_);
+    a3y_ = a3.y;
+    a4z_ = a4.z;
+    a4y_ = a4.y;
+    a3z_ = a3.z;
+    v35 = (float)((float)(a3.x * a4.x) + (float)(a3y_ * a4y_)) + (float)(a3z_ * a4z_);
     v36 = a4y_ * a3z_;
-    v37 = (float)(a4->x * a3z_) - (float)(a3->x * a4z_);
-    v38 = (float)(a3->x * a4y_) - (float)(a4->x * a3y_);
+    v37 = (float)(a4.x * a3z_) - (float)(a3.x * a4z_);
+    v38 = (float)(a3.x * a4y_) - (float)(a4.x * a3y_);
     v39 = atan2f(
             sqrtf(
               (float)(v38 * v38)
@@ -736,8 +736,8 @@ void alongVectorNormalH(sead::Vector3f *a1, const sead::Vector3f *a2, const sead
   {
     v18 = (float)((float)(a4x * a2x) + (float)(a4y * a2y)) + (float)(a4z * a2z);
     a1->x = a2x - (float)(a4x * v18);
-    a1->y = a2->y - (float)(a4->y * v18);
-    v19 = a2->z - (float)(a4->z * v18);
+    a1->y = a2.y - (float)(a4.y * v18);
+    v19 = a2.z - (float)(a4.z * v18);
   }
 
   a1->z = v19;

@@ -27,7 +27,7 @@ public:
 
     void appear() override;
     void updateFallTargetArea();
-    void isValidWallCatch();
+    bool isValidWallCatch();
     void exeFall();
 
 public:

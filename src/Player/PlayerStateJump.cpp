@@ -81,7 +81,7 @@ void PlayerStateJump::appear() {
 
     if(rs::isJustLand(mCollision)) {
         sead::Vector3f alongVec;
-        al::alongVectorNormalH(&alongVec, &al::getVelocity(mActor), &al::getGravity(mActor), &rs::getCollidedGroundNormal(mCollision));
+        al::alongVectorNormalH(&alongVec, al::getVelocity(mActor), al::getGravity(mActor), rs::getCollidedGroundNormal(mCollision));
         sead::Vector3f newVel = alongVec - (mConst->getGravity() * rs::getCollidedGroundNormal(mCollision));
         al::setVelocity(mActor, newVel);
     }

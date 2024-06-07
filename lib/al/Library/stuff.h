@@ -8,8 +8,8 @@
 namespace al {
 
 void separateVelocityHV(sead::Vector3f*, sead::Vector3f*, al::LiveActor*);
-void alongVectorNormalH(sead::Vector3f* a1, const sead::Vector3f* a2, const sead::Vector3f* a3,
-                        const sead::Vector3f* a4);
+void alongVectorNormalH(sead::Vector3f* a1, const sead::Vector3f& a2, const sead::Vector3f& a3,
+                        const sead::Vector3f& a4);
 
 bool isNearZero(const sead::Vector2f&, f32);
 

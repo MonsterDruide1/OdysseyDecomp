@@ -139,7 +139,7 @@ void PlayerActionTurnControl::update(const sead::Vector3f& a2, const sead::Vecto
   up.y = 0.0;
   up.z = 0.0;
   al::calcUpDir(&up, this->mActor);
-  al::alongVectorNormalH(&front, &front, &up, &a3);
+  al::alongVectorNormalH(&front, front, up, a3);
   al::tryNormalizeOrZero(&front);
   this->_50 = front;
   p_c = &this->_c;
@@ -148,7 +148,7 @@ void PlayerActionTurnControl::update(const sead::Vector3f& a2, const sead::Vecto
   a1.z = 0.0;
   if ( !al::isNearZero(this->_c, 0.001) || !al::isNearZero(this->_24, 0.001) )
   {
-    al::alongVectorNormalH(&a1, &this->_c, &this->_24, &a3);
+    al::alongVectorNormalH(&a1, this->_c, this->_24, a3);
     al::tryNormalizeOrZero(&a1);
   }
 

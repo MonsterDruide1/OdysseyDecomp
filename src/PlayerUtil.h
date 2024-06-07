@@ -649,7 +649,8 @@ public:
     bool mIsJudge;
     const al::CollisionParts *_58;
     sead::Vector3f _60[3];
-    void *gap;
+    int _84;
+    int pad[2];
     al::CollisionPartsConnector *mCollisionPartsConnector;
     sead::Vector3f _98;
     int _A4;

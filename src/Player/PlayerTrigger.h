@@ -14,6 +14,8 @@ public:
         EAttackSensorTrigger_val0 = 0,
     };
     enum EActionTrigger : u32 {
+        EActionTrigger_val1 = 1,
+        EActionTrigger_val2 = 2,
         EActionTrigger_val8 = 8,
         EActionTrigger_val9 = 9,
         EActionTrigger_val10 = 10,

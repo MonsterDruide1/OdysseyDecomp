@@ -289,7 +289,7 @@ void slerpUpFront(al::LiveActor* actor, const sead::Vector3f& up, const sead::Ve
   al::calcQuatUp(&a3, v20);
   al::calcQuatFront(&v17, v20);
   a1 = front;
-  al::alongVectorNormalH(&a1, &front, &a3, &a4);
+  al::alongVectorNormalH(&a1, front, a3, a4);
   if ( al::tryNormalizeOrZero(&a1) )
   {
     al::makeQuatUpFront(&v14, a4, a1);

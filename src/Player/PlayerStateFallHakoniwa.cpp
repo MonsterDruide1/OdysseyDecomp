@@ -66,7 +66,7 @@ void PlayerStateFallHakoniwa::updateFallTargetArea() {
     }
     CRASH
 }
-void PlayerStateFallHakoniwa::isValidWallCatch() {
+bool PlayerStateFallHakoniwa::isValidWallCatch() {
     CRASH
 }
 void PlayerStateFallHakoniwa::exeFall() {

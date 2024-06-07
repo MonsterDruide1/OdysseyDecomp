@@ -148,7 +148,7 @@ LABEL_15:
   if ( !al::tryNormalizeOrZero(&v34) )
     v34 = *x2_0;
 
-  al::alongVectorNormalH(x1_0, x1_0, &a3, &v34);
+  al::alongVectorNormalH(x1_0, *x1_0, a3, v34);
   al::normalize(x1_0);
   y = x1_0->y;
   z = x1_0->z;
