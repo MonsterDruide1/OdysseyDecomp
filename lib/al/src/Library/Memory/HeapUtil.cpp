@@ -55,8 +55,7 @@ void removeNamedHeap(const char* heapName) {
 void createSequenceHeap() {
     alProjectInterface::getSystemKit()->getMemorySystem()->createSequenceHeap();
 
-    addResourceCategory("シーケンス", 0x18,
-                        alProjectInterface::getSystemKit()->getMemorySystem()->getSequenceHeap());
+    addResourceCategory("シーケンス", 0x18, getSequenceHeap());
     setCurrentCategoryName("シーケンス");
     clearFileLoaderEntry();
 }
@@ -65,8 +64,7 @@ void freeAllSequenceHeap() {
     removeResourceCategory("シーケンス");
     alProjectInterface::getSystemKit()->getMemorySystem()->freeAllSequenceHeap();
 
-    addResourceCategory("シーケンス", 0x18,
-                        alProjectInterface::getSystemKit()->getMemorySystem()->getSequenceHeap());
+    addResourceCategory("シーケンス", 0x18, getSequenceHeap());
     setCurrentCategoryName("シーケンス");
     clearFileLoaderEntry();
 }
@@ -83,12 +81,8 @@ void createSceneHeap(const char* stageName, bool backwards) {
     SystemKit* systemKit = alProjectInterface::getSystemKit();
     bool isSceneHeapCreated = systemKit->getMemorySystem()->createSceneHeap(stageName, backwards);
     if (isSceneHeapCreated) {
-        addResourceCategory(
-            "シーン", 0x200,
-            alProjectInterface::getSystemKit()->getMemorySystem()->getSceneResourceHeap());
-        addResourceCategory(
-            "シーン", 0x200,
-            alProjectInterface::getSystemKit()->getMemorySystem()->getSceneResourceHeap());
+        addResourceCategory("シーン", 0x200, getSceneResourceHeap());
+        addResourceCategory("シーン", 0x200, getSceneResourceHeap());
         setCurrentCategoryName("シーン");
         clearFileLoaderEntry();
     }
@@ -102,12 +96,8 @@ void createSceneResourceHeap(const char* stageName) {
     alProjectInterface::getSystemKit()->getMemorySystem()->createSceneResourceHeap(stageName,
                                                                                    false);
 
-    addResourceCategory(
-        "シーン", 0x200,
-        alProjectInterface::getSystemKit()->getMemorySystem()->getSceneResourceHeap());
-    addResourceCategory(
-        "シーン", 0x200,
-        alProjectInterface::getSystemKit()->getMemorySystem()->getSceneResourceHeap());
+    addResourceCategory("シーン", 0x200, getSceneResourceHeap());
+    addResourceCategory("シーン", 0x200, getSceneResourceHeap());
     setCurrentCategoryName("シーン");
     clearFileLoaderEntry();
 }
@@ -136,9 +126,7 @@ void createCourseSelectHeap() {
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createCourseSelectHeap();
 
-    addResourceCategory(
-        "コースセレクト", 0x40,
-        alProjectInterface::getSystemKit()->getMemorySystem()->getCourseSelectResourceHeap());
+    addResourceCategory("コースセレクト", 0x40, getCourseSelectResourceHeap());
     setCurrentCategoryName("コースセレクト");
     clearFileLoaderEntry();
 }
@@ -156,9 +144,7 @@ void createWorldResourceHeap(bool useCategory) {
     alProjectInterface::getSystemKit()->getMemorySystem()->createWorldResourceHeap();
 
     if (useCategory) {
-        addResourceCategory(
-            "ワールド常駐", 0x400,
-            alProjectInterface::getSystemKit()->getMemorySystem()->getWorldResourceHeap());
+        addResourceCategory("ワールド常駐", 0x400, getWorldResourceHeap());
         setCurrentCategoryName("ワールド常駐");
     }
     clearFileLoaderEntry();
