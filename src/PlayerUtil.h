@@ -57,23 +57,7 @@ public:
 
 };
 
-class PlayerModelHolder {
-public:
-    struct Entry {
-        sead::FixedSafeString<128> mName;
-        al::LiveActor *mLiveActor;
-    };
-
-
-    PlayerModelHolder(u32);
-    void registerModel(al::LiveActor*, const char*);
-    void changeModel(const char*);
-    al::LiveActor* findModelActor(char const*);
-public:
-    sead::PtrArray<Entry> mBuffer;
-    Entry* currentModel;
-    sead::FixedSafeString<128> _10;
-};
+#include "Player/PlayerModelHolder.h"
 
 class PlayerJointControlKeeper {
 public:
@@ -90,49 +74,10 @@ public:
 class PlayerCeilingCheck;
 class CollisionShapeKeeper;
 
-class IPlayerModelChanger {
-public:
-    virtual bool is2DModel() const {WARN_UNIMPL;return false;}
-    virtual bool isMini() const {WARN_UNIMPL;return false;}
-};
-class PlayerModelChangerHakoniwa : public IPlayerModelChanger {
-public:
-    PlayerModelChangerHakoniwa(al::LiveActor const*,PlayerModelHolder *,PlayerPainPartsKeeper *,PlayerCostumeInfo *,IUseDimension const*);
-    void initStartModel();
-    void resetPosition();
-    void syncHost(bool);
-private:
-    void* size[0x58/8];
-};
+#include "Player/IPlayerModelChanger.h"
+#include "Player/PlayerModelHolder.h"
 
-class PlayerAnimFrameCtrl;
-class PlayerAnimator {
-public:
-    PlayerAnimator(PlayerModelHolder const*,al::ActorDitherAnimator *);
-    bool isAnim(const sead::SafeString&) const;
-    void updateAnimFrame();
-    f32 getModelAlpha();
-public:
-    const PlayerModelHolder *mPlayerModelHolder;
-    void *_8;
-    void *_10;
-    PlayerAnimFrameCtrl *mPlayerAnimFrameCtrl;
-    sead::FixedSafeString<64> _18;
-    int gap;
-    sead::FixedSafeString<64> _78;
-    int gap2;
-    sead::FixedSafeString<64> _D0;
-    int gap3;
-    sead::FixedSafeString<64> _128;
-    al::ActorDitherAnimator *mActorDitherAnimator;
-    void *to_1a8[3];
-    bool mIsNeedFullFaceAnim;
-    bool unk1;
-    bool unk2;
-    u16 pad1[1];
-    bool pad;
-    bool unk3;
-};
+#include "Player/PlayerAnimator.h"
 
 class PlayerEffect {
 public:
@@ -142,25 +87,8 @@ private:
     void* size[0xC0/8];
 };
 
-class PlayerContinuousJump {
-public:
-    PlayerContinuousJump(PlayerConst const*);
-    void clear();
-    void update(bool);
-public:
-    const PlayerConst *mConst;
-    int mCount;
-    int mTimer;
-    sead::Vector3f vec;
-};
-
-class PlayerContinuousLongJump {
-public:
-    PlayerContinuousLongJump(PlayerConst const*);
-    void update();
-private:
-    void* size[0x10/8];
-};
+#include "Player/PlayerContinuousJump.h"
+#include "Player/PlayerContinuousLongJump.h"
 
 class PlayerDamageKeeper {
 public:
@@ -245,44 +173,10 @@ private:
     int size[1];
 };
 
-class PlayerCounterForceRun {
-public:
-    PlayerCounterForceRun();
-    void update();
-public:
-    s32 _0;
-    float _4;
-};
+#include "Player/PlayerCounterForceRun.h"
+#include "Player/PlayerCounterQuickTurnJump.h"
 
-class PlayerCounterQuickTurnJump {
-public:
-    PlayerCounterQuickTurnJump(PlayerConst const*,PlayerTrigger const*);
-    void update();
-private:
-    void* size[0x18/8];
-};
-
-class PlayerJumpMessageRequest {
-public:
-    PlayerJumpMessageRequest();
-    void clear() {
-        mJumpType = 0;
-        mJumpPower = 0.0f;
-        mExtendFrame = 0;
-        mTurnJumpAngle = {0.0f, 0.0f, 0.0f};
-        mActorTrans = {0.0f, 0.0f, 0.0f};
-        mIsSpinClockwise = false;
-        mIsEnableStandUp = false;
-    }
-public:
-    int mJumpType;
-    float mJumpPower;
-    int mExtendFrame;
-    sead::Vector3f mTurnJumpAngle;
-    sead::Vector3f mActorTrans;
-    bool mIsSpinClockwise;
-    bool mIsEnableStandUp;
-};
+#include "Player/PlayerJumpMessageRequest.h"
 
 class PlayerSandSinkAffect {
 public:
@@ -400,13 +294,7 @@ private:
     void* size[0x58/8];
 };
 
-class PlayerRecoverySafetyPoint {
-public:
-    PlayerRecoverySafetyPoint(al::LiveActor const*,HackCap const*,al::ActorInitInfo const&,IUseDimension const*,al::CollisionPartsFilterBase *,al::HitSensor *);
-    void updateRecoveryBubble();
-private:
-    void* size[0xB8/8];
-};
+#include "Player/PlayerRecoverySafetyPoint.h"
 
 class IUsePlayerPuppet {};
 class PlayerPuppet : public IUsePlayerPuppet {
@@ -455,33 +343,7 @@ private:
     void* size[0x198/8];
 };
 
-class IUsePlayerHeightCheck;
-class PlayerHackKeeper {
-public:
-    PlayerHackKeeper(al::LiveActor *,HackCap *,PlayerRecoverySafetyPoint *,PlayerInput const*,sead::Matrix34<float> const*,PlayerDamageKeeper const*,IPlayerModelChanger const*,IUsePlayerHeightCheck const*);
-    void createHackModel(al::ActorInitInfo const&);
-    bool executeForceHackStageStart(al::HitSensor *,IUsePlayerHack *);
-public:
-    al::LiveActor *mPlayer;
-    HackCap *mCap;
-    PlayerRecoverySafetyPoint *mSafetyPoint;
-    void *size3[2];
-    const PlayerInput *mInput;
-    const sead::Matrix34f *_20;
-    const PlayerDamageKeeper *mDamageKeeper;
-    const IPlayerModelChanger *mModelChanger;
-    const IUsePlayerHeightCheck *mHeightCheck;
-    al::HitSensor *_50;
-    int _58;
-    bool _5C;
-    bool _5D;
-    bool _5E;
-    bool pad[1];
-    void *size4[1];
-    al::LiveActor *_68;
-    al::HitSensor *_70 = nullptr;
-    void *size2[11];
-};
+#include "Player/PlayerHackKeeper.h"
 
 class PlayerFormSensorCollisionArranger {
 public:
@@ -604,16 +466,9 @@ private:
     void* size[0x48/8];
 };
 
-class PlayerJudgeInvalidateInputFall : public IJudge {
-public:
-    PlayerJudgeInvalidateInputFall(al::LiveActor const*,PlayerAreaChecker const*,IUsePlayerCollision const*);
-    
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x28/8];
-};
+#include "Player/PlayerJudgeInvalidateInputFall.h"
+
+#include "Player/PlayerModelChangerHakoniwa.h"
 
 class IUsePlayerFallDistanceCheck;
 class PlayerJudgeLongFall : public IJudge {
@@ -709,16 +564,7 @@ private:
     void* size[0x38/8];
 };
 
-class PlayerJudgeStartHipDrop : public IJudge {
-public:
-    PlayerJudgeStartHipDrop(PlayerConst const*,PlayerInput const*,IUsePlayerHeightCheck const*,IPlayerModelChanger const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x28/8];
-};
+#include "Player/PlayerJudgeStartHipDrop.h"
 
 class PlayerJudgeStartRise : public IJudge {
 public:
@@ -928,16 +774,7 @@ private:
     void* size[0x20/8];
 };
 
-class PlayerJudgeSpeedCheckFall : public IJudge {
-public:
-    PlayerJudgeSpeedCheckFall(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*,IJudge const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x30/8];
-};
+#include "Player/PlayerJudgeSpeedCheckFall.h"
 
 class PlayerJudgeStartRun : public IJudge {
 public:
@@ -1207,17 +1044,7 @@ private:
     void* size[0x40/8];
 };
 
-class PlayerOxygen {
-public:
-    PlayerOxygen();
-    void setup(int,int,int,int);
-    void reset();
-    void reduce();
-    void recovery();
-    bool isTriggerDamage();
-private:
-    int* size[0x1C/4];
-};
+#include "Player/PlayerOxygen.h"
 
 class PlayerCounterIceWater {
 public:
@@ -1416,47 +1243,4 @@ public:
     void* size[0x130/8];
 };
 
-struct PlayerInfo {
-  PlayerModelChangerHakoniwa *mPlayerModelChangerHakoniwa;
-  PlayerOxygen *mPlayerOxygen;
-  PlayerAnimator *mPlayerAnimator;
-  PlayerBindKeeper *mPlayerBindKeeper;
-  PlayerDamageKeeper *mPlayerDamageKeeper;
-  PlayerDemoActionFlag *mPlayerDemoActionFlag;
-  PlayerEquipmentUser *mPlayerEquipmentUser;
-  HackCap *mHackCap;
-  WorldEndBorderKeeper *mWorldEndBorderKeeper;
-  PlayerCarryKeeper *mPlayerCarryKeeper;
-  PlayerJointControlKeeper *mPlayerJointControlKeeper;
-  PlayerCounterIceWater *mPlayerCounterIceWater;
-  PlayerStainControl *mPlayerStainControl;
-  al::FootPrintHolder *mFootPrintHolder;
-  al::HitSensor *mBodyHitSensor;
-  PlayerFormSensorCollisionArranger *mPlayerFormSensorCollisionArranger;
-  PlayerInput *mPlayerInput;
-  IUsePlayerCeilingCheck *mCeilingCheck;
-  PlayerModelHolder *mPlayerModelHolder;
-  PlayerHackKeeper *mPlayerHackKeeper;
-  PlayerCapManHeroEyesControl *mPlayerCapManHeroEyesControl;
-  PlayerRecoverySafetyPoint *mPlayerRecoverySafetyPoint;
-  PlayerCostumeInfo *mCostumeInfo;
-  PlayerJudgeCameraInWater *mPlayerJudgeCameraInWater;
-  PlayerJudgeTalkGround *mPlayerJudgeTalkGround;
-  PlayerJudgeTalkSwim *mPlayerJudgeTalkSwim;
-  PlayerJudgeDead *mPlayerJudgeDead;
-  PlayerJudgeDeadWipeStart *mPlayerJudgeDeadWipeStart;
-  PlayerJudgeDrawForward *mPlayerJudgeDrawForward;
-  PlayerJudgeSameNerve *mPlayerJudgeSameNervePoleClimb;
-  PlayerJudgeSameNerve *mPlayerJudgeSameNerveGrabCeil;
-  PlayerJudgeSameNerve *mPlayerJudgeSameNerveWallCatch;
-  PlayerJudgeActiveCameraSubjective *mPlayerJudgeActiveCameraSubjective;
-  PlayerJudgeSameNerve *mPlayerJudgeSameNerveSwim;
-  PlayerJudgeFailureCameraSubjective *mPlayerJudgeFailureCameraSubjective;
-  PlayerJudgeSafetyPointRecovery *mPlayerJudgeSafetyPointRecovery;
-  PlayerJudgeStatusPoleClimb *mPlayerJudgeStatusPoleClimb;
-  PlayerJudgePlaySwitchOnAreaWaitAnim *mPlayerJudgePlaySwitchOnAreaWaitAnim;
-  PlayerJudgeSleep *mPlayerJudgeSleep;
-  PlayerJudgeEnableGuideArrow *mPlayerJudgeEnableGuideArrow;
-  PlayerJudgeEnablePeachAmiibo *mPlayerJudgeEnablePeachAmiibo;
-  bool mIsMoon;
-};
+#include "Player/PlayerInfo.h"

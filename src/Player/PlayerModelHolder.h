@@ -22,7 +22,7 @@ public:
     bool isCurrentModelLabel(const char*) const;
     bool isCurrentModelLabelSubString(const char*) const;
 
-private:
+public:
     sead::PtrArray<Entry> mBuffer;
     Entry* mCurrentModel = nullptr;
     sead::FixedSafeString<128> _10 = sead::FixedSafeString<128>("");

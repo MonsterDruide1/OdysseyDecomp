@@ -212,7 +212,7 @@ void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const Pl
 void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorNoPlacementInfoNoViewId(LiveActor*, const ActorInitInfo&);
 void createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
-void createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
+al::LiveActor* createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
 void createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
 void tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
 void tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);

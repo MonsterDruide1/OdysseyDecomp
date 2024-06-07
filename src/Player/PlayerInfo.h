@@ -6,7 +6,7 @@ class HitSensor;
 }  // namespace al
 
 class HackCap;
-class IUseCeilingCheck;
+class IUsePlayerCeilingCheck;
 class PlayerAnimator;
 class PlayerBindKeeper;
 class PlayerCapManHeroEyesControl;
@@ -49,7 +49,7 @@ class PlayerInfo {
 public:
     PlayerInfo();
 
-private:
+public:
     PlayerModelChangerHakoniwa* mPlayerModelChangerHakoniwa = nullptr;
     PlayerOxygen* mPlayerOxygen = nullptr;
     PlayerAnimator* mPlayerAnimator = nullptr;
@@ -67,7 +67,7 @@ private:
     al::HitSensor* mBodyHitSensor = nullptr;
     PlayerFormSensorCollisionArranger* mPlayerFormSensorCollisionArranger = nullptr;
     PlayerInput* mPlayerInput = nullptr;
-    IUseCeilingCheck* mIUseCeilingCheck = nullptr;
+    IUsePlayerCeilingCheck* mCeilingCheck = nullptr;
     PlayerModelHolder* mPlayerModelHolder = nullptr;
     PlayerHackKeeper* mPlayerHackKeeper = nullptr;
     PlayerCapManHeroEyesControl* mPlayerCapManHeroEyesControl = nullptr;

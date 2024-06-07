@@ -23,9 +23,11 @@
 #include "Player/IUsePlayerCollision.h"
 #include "Player/PlayerActorBase.h"
 #include "Player/PlayerCollider.h"
+#include "CUSTOM/PlayerColliderHakoniwa.h"
 #include "Player/PlayerFunction.h"
 #include "Player/PlayerInput.h"
 #include "Player/PlayerInputFunction.h"
+#include "Player/PlayerJumpMessageRequest.h"
 #include "Player/PlayerPainPartsKeeper.h"
 #include "Player/PlayerStateFallHakoniwa.h"
 #include "Player/PlayerStateJump.h"
@@ -865,7 +867,7 @@ void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
     mPlayerInfo->mFootPrintHolder = mFootPrintHolder;
     mPlayerInfo->mBodyHitSensor = mBodyHitSensor;
     mPlayerInfo->mPlayerRecoverySafetyPoint = mPlayerRecoverySafetyPoint;
-    mPlayerInfo->mCostumeInfo = costumeInfo;
+    mPlayerInfo->mPlayerCostumeInfo = costumeInfo;
     mPlayerInfo->mPlayerJudgeCameraInWater =
         new PlayerJudgeCameraInWater(this, mPlayerJudgeInWater1, mWaterSurfaceFinder);
     mPlayerInfo->mPlayerJudgeActiveCameraSubjective =
@@ -879,10 +881,10 @@ void PlayerActorHakoniwa::initPlayer(const al::ActorInitInfo& actorInfo,
     mPlayerInfo->mPlayerJudgeDeadWipeStart = mPlayerJudgeDeadWipeStart;
     mPlayerInfo->mPlayerJudgeDrawForward =
         new PlayerJudgeDrawForward(this, mPlayerJudgeDeadWipeStart);
-    mPlayerInfo->mPlayerJudgeSameNervePoleClimb = new PlayerJudgeSameNerve(this, &PoleClimb);
-    mPlayerInfo->mPlayerJudgeSameNerveGrabCeil = new PlayerJudgeSameNerve(this, &GrabCeil);
-    mPlayerInfo->mPlayerJudgeSameNerveWallCatch = new PlayerJudgeSameNerve(this, &WallCatch);
-    mPlayerInfo->mPlayerJudgeSameNerveSwim = new PlayerJudgeSameNerve(this, &Swim);
+    mPlayerInfo->mPlayerJudgeNrvPoleClimb = new PlayerJudgeSameNerve(this, &PoleClimb);
+    mPlayerInfo->mPlayerJudgeNrvGrabCeil = new PlayerJudgeSameNerve(this, &GrabCeil);
+    mPlayerInfo->mPlayerJudgeNrvWallCatch = new PlayerJudgeSameNerve(this, &WallCatch);
+    mPlayerInfo->mPlayerJudgeNrvSwim = new PlayerJudgeSameNerve(this, &Swim);
     mPlayerInfo->mPlayerJudgeFailureCameraSubjective = new PlayerJudgeFailureCameraSubjective(
         mPlayerInput, new PlayerJudgeSameNerve(this, &Camera));
     mPlayerInfo->mPlayerJudgeSafetyPointRecovery = new PlayerJudgeSafetyPointRecovery(
@@ -1045,7 +1047,7 @@ void PlayerActorHakoniwa::setNerveOnGround() {
     } else if (rs::updateJudgeAndResult(mPlayerJudgeInWater1)) {
         al::setNerve(this, &Swim);
         return;
-    } else if (mPlayerCounterForceRun->_0 < 1 &&
+    } else if (mPlayerCounterForceRun->getCounter() < 1 &&
                !rs::isOnGroundRunAngle(this, mPlayerColliderHakoniwa, mPlayerConst)) {
         al::setNerve(this, &Fall);
         return;
@@ -1196,7 +1198,7 @@ void PlayerActorHakoniwa::exeWait() {
 
     if(mPlayerStateWait->isEnableCancelHipDropJump()) {
         if(rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
-            mPlayerJumpMessageRequest->mJumpType = 17;
+            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_11;
             al::setNerve(this, &Jump);
             return;
         }
@@ -1229,7 +1231,7 @@ void PlayerActorHakoniwa::exeWait() {
     if(mPlayerColliderHakoniwa->isEnableStandUp() && rs::isPlayer2D(mHackCap) && mHackCap->isEnableSpinAttack() && rs::isJudge(mHackCapJudgePreInputHoveringJump)) {
         rs::resetJudge(mHackCapJudgePreInputHoveringJump);
         *(((u8*)mHackCapJudgePreInputHoveringJump)+44) = 1;
-        mPlayerJumpMessageRequest->mJumpType = 18;
+        mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_12;
         al::setNerve(this, &Jump);
         return;
     }
@@ -1356,7 +1358,7 @@ void PlayerActorHakoniwa::exeRun() {
     if(mPlayerStateRunHakoniwa2D3D->tryTurnJump(mPlayerJudgePreInputJump, &v43)) {
         rs::resetJudge(mPlayerJudgePreInputJump);
         mPlayerExternalVelocity->cancelAndFeedbackLastGroundInertia(this, mPlayerConst->getJumpInertiaRate(), true);
-        mPlayerJumpMessageRequest->mJumpType = 16;
+        mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_10;
         mPlayerJumpMessageRequest->mTurnJumpAngle = v43;
         al::setNerve(this, &Jump);
         return;
@@ -1365,10 +1367,10 @@ void PlayerActorHakoniwa::exeRun() {
     if(rs::updateJudgeAndResult(mPlayerJudgePreInputJump)) {
         mPlayerExternalVelocity->cancelAndFeedbackLastGroundInertia(this, mPlayerConst->getJumpInertiaRate(), true);
         if(mPlayerStateRunHakoniwa2D3D->isGroundSpin()) {
-            mPlayerJumpMessageRequest->mJumpType = 12;
+            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_0C;
             mPlayerJumpMessageRequest->mIsSpinClockwise = mPlayerStateRunHakoniwa2D3D->isSpinClockwise();
         } else if(mPlayerStateRunHakoniwa2D3D->isRunDashFast()) {
-            mPlayerJumpMessageRequest->mJumpType = 3;
+            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_03;
         } else {
             mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val21);
         }
@@ -1410,7 +1412,7 @@ void PlayerActorHakoniwa::exeRun() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeWallHitDownForceRun)) {
         mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val10);
-        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->_0 >= 1)
+        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->getCounter() >= 1)
             mPlayerEquipmentUser->cancelEquip();
         al::setNerve(this, &Damage);
         return;
@@ -1464,7 +1466,7 @@ bool PlayerActorHakoniwa::tryChangeNerveFromAir() {
     }
     if(al::isNerve(this, &LongJump) && rs::updateJudgeAndResult(mPlayerJudgeWallHitDown)) {
         mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val10);
-        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->_0 >= 1)
+        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->getCounter() >= 1)
             mPlayerEquipmentUser->cancelEquip();
         al::setNerve(this, &Damage);
         return true;
@@ -1516,7 +1518,7 @@ void PlayerActorHakoniwa::exeJump() {
                 return;
             }
             if(al::isNerve(this, &Jump)) {
-                mPlayerJumpMessageRequest->mJumpType = 15;
+                mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_0F;
                 mPlayerJumpMessageRequest->mIsEnableStandUp = rs::updateJudgeAndResult(mPlayerJudgeEnableStandUp);
             }
         }
@@ -1580,7 +1582,7 @@ void PlayerActorHakoniwa::exeJump() {
         }
         if(rs::updateJudgeAndResult(mPlayerJudgeWallHitDownForceRun)) {
             mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val10);
-            if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->_0 >= 1)
+            if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->getCounter() >= 1)
                 mPlayerEquipmentUser->cancelEquip();
             al::setNerve(this, &Damage);
             return;
@@ -1604,7 +1606,7 @@ void PlayerActorHakoniwa::exeHipDrop() {
         mPlayerCapActionHistory->clearLandLimitStandAngle();
 
     if(mPlayerStateHipDrop->isLandTrigger()) {
-        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->_0 >= 1)
+        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->getCounter() >= 1)
             mPlayerEquipmentUser->cancelEquip();
         if(rs::isCollidedGround(mPlayerColliderHakoniwa)) {
             // TODO stain and wetness
@@ -1649,7 +1651,7 @@ void PlayerActorHakoniwa::exeHipDrop() {
 
     if(mPlayerStateHipDrop->isEnableLandCancel()) {
         if(rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
-            mPlayerJumpMessageRequest->mJumpType = 17;
+            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_11;
             al::setNerve(this, &Jump);
             return;
         }
@@ -1688,9 +1690,9 @@ void PlayerActorHakoniwa::exeHipDrop() {
     }
 
     if(mPlayerStateHipDrop->isEnableInWater() && rs::updateJudgeAndResult(mPlayerJudgeInWater3)) {
-        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->_0 >= 1)
+        if(mPlayerEquipmentUser->getEquipmentSensor() && mPlayerCounterForceRun->getCounter() >= 1)
             mPlayerEquipmentUser->cancelEquip();
-        mPlayerCounterForceRun->_0 = 0;
+        mPlayerCounterForceRun->clearCounter();
         mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val19);
         al::setNerve(this, &Swim);
         return;

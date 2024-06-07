@@ -11,7 +11,7 @@ public:
     void clear();
     void countUp(const sead::Vector3f& jumpDir);
 
-private:
+public:
     const PlayerConst* mConst;
     u32 mCount = 0;
     u32 mTimer = 0;

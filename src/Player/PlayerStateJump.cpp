@@ -10,6 +10,7 @@
 #include "Player/PlayerActionVelocityControl.h"
 #include "Player/PlayerConst.h"
 #include "Player/PlayerInput.h"
+#include "Player/PlayerJumpMessageRequest.h"
 #include "Player/PlayerTrigger.h"
 #include "PlayerUtil.h"
 
@@ -85,14 +86,14 @@ void PlayerStateJump::appear() {
         al::setVelocity(mActor, newVel);
     }
 
-    if(mJumpMessageRequest->mJumpType == 15 && !mJumpMessageRequest->mIsEnableStandUp) {
+    if(mJumpMessageRequest->mJumpType == PlayerJumpType::val_0F && !mJumpMessageRequest->mIsEnableStandUp) {
         CRASH
     }
 
     // BUG: seems to have swapped normal and 2d speed?
     rs::scaleVelocityInertiaWallHit(mActor, mCollision, 0.25f, 1.0f, mModelChanger->is2DModel() ? mConst->getNormalMaxSpeed() : mConst->getNormalMaxSpeed2D());
 
-    bool v37 = ((unsigned int)(this->mJumpMessageRequest->mJumpType - 1) < 0x10) & (0x9001u >> (this->mJumpMessageRequest->mJumpType - 1));
+    bool v37 = ((unsigned int)((u32)this->mJumpMessageRequest->mJumpType - 1) < 0x10) & (0x9001u >> ((u32)this->mJumpMessageRequest->mJumpType - 1));
     mContinuousJumpCount = 0;
     if(!v37 && !mModelChanger->isMini()) {
         if(mContinuousJump->mCount < 2) {
@@ -108,7 +109,7 @@ void PlayerStateJump::appear() {
 
             if(mIsMoon) normalMaxSpeed *= 0.5f;
             if(frontSpeed > normalMaxSpeed) {
-                f32 dot = offsetFront.dot(mContinuousJump->vec);
+                f32 dot = offsetFront.dot(mContinuousJump->mLastJumpDir);
                 if((mIsMoon && dot >= 0.70711f) || (!mIsMoon && dot >= 6.123e-17f)) {
                     mContinuousJumpCount = mContinuousJump->mCount;
                     _B4 = true;
@@ -134,54 +135,54 @@ void PlayerStateJump::appear() {
     mJumpAnimName = nullptr;
     mMoveSpeedMax = sead::Mathf::min(mConst->getJumpMoveSpeedMax(), mActionAirMoveControl->mJumpSpeedMax);
     switch(mJumpMessageRequest->mJumpType) {
-        case 0xC:
+        case PlayerJumpType::val_0C:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
-        case 0xD:
+        case PlayerJumpType::val_0D:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
-        case 0xE:
+        case PlayerJumpType::val_0E:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
-        case 0x10:
+        case PlayerJumpType::val_10:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
-        case 0x12:
+        case PlayerJumpType::val_12:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
         default:
             bool isMove = mInput->isMove();
             f32 dot = al::getVelocity(mActor).dot(al::getGravity(mActor));
             switch(mJumpMessageRequest->mJumpType) {
-                case 1:
+                case PlayerJumpType::val_01:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 2:
+                case PlayerJumpType::val_02:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 4:
-                case 0xB:
+                case PlayerJumpType::val_04:
+                case PlayerJumpType::val_0B:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 5:
+                case PlayerJumpType::val_05:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 6:
+                case PlayerJumpType::val_06:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 7:
+                case PlayerJumpType::val_07:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 8:
+                case PlayerJumpType::val_08:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 9:
+                case PlayerJumpType::val_09:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 0xA:
+                case PlayerJumpType::val_0A:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case 0x11:
+                case PlayerJumpType::val_11:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
                 default:
@@ -197,7 +198,7 @@ void PlayerStateJump::appear() {
                     f32 jumpPowerMin;
                     if(mModelChanger->is2DModel() && rs::isIn2DArea(mDimension)) {
                         jumpPowerMin = mConst->getJumpPowerMin2DArea();
-                    } else if(mCounterForceRun->_0 < 1) {
+                    } else if(mCounterForceRun->getCounter() < 1) {
                         if(mContinuousJumpCount == 2 || mContinuousJumpCount == 1)
                             jumpPowerMin = mConst->getContinuousJumpPowerMin();
                         else if(mContinuousJumpCount > 0)
@@ -211,7 +212,7 @@ void PlayerStateJump::appear() {
                     f32 jumpPowerMax;
                     if(mModelChanger->is2DModel() && rs::isIn2DArea(mDimension)) {
                         jumpPowerMax = mConst->getJumpPowerMax2DArea();
-                    } else if(mCounterForceRun->_0 < 1) {
+                    } else if(mCounterForceRun->getCounter() < 1) {
                         if(mContinuousJumpCount == 2)
                             jumpPowerMax = mConst->getJumpPowerMax3rd();
                         if(mContinuousJumpCount == 1)
@@ -227,7 +228,7 @@ void PlayerStateJump::appear() {
                     mJumpPower = PlayerActionFunction::calcJumpSpeed(jumpPowerMax, frontVelocityLength, minSpeed, maxSpeed, jumpPowerMin);
 
                     f32 jumpGravity;
-                    if(mCounterForceRun->_0 < 1) {
+                    if(mCounterForceRun->getCounter() < 1) {
                         if(mContinuousJumpCount == 2)
                             jumpGravity = mConst->getJumpGravity3rd();
                         else if(mContinuousJumpCount == 1)
@@ -246,9 +247,9 @@ void PlayerStateJump::appear() {
                     if(_B7)
                         mJointControlKeeper->calcGroundPoseUp(&_BC);
 
-                    if(mJumpMessageRequest->mJumpType == 15)
+                    if(mJumpMessageRequest->mJumpType == PlayerJumpType::val_0F)
                         mJumpAnimName = "JumpSquat";
-                    else if(mJumpMessageRequest->mJumpType == 3 && !mContinuousJumpCount)
+                    else if(mJumpMessageRequest->mJumpType == PlayerJumpType::val_03 && !mContinuousJumpCount)
                         _C8 = "JumpDashFast";
 
                     al::setNerve(this, &Jump);
