@@ -216,6 +216,17 @@ def common_this_prefix(c, path):
         if 'this->' in line:
             FAIL("this-> is not allowed!", line, path)
 
+def common_sead_math_template(c, path):
+    for line in c.splitlines():
+        if "<f32>" in line or "<s32>" in line or "<u32>" in line or "<f64>" in line or "<s64>" in line or "<u64>" in line:
+            if "sead" not in line and "Matrix43" not in line:
+                continue
+            if "using" in line or "typedef" in line:
+                continue
+            if "sead::Buffer" in line:  # probably needs more exceptions at some point
+                continue
+            FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
+
 # Header files
 
 def header_sorted_visibility(c, path):
@@ -331,6 +342,7 @@ def check_source(c, path):
     common_void_params(c, path)
     common_const_type(c, path)
     common_this_prefix(c, path)
+    common_sead_math_template(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -339,6 +351,7 @@ def check_header(c, path):
     common_sead_types(c, path)
     common_void_params(c, path)
     common_const_type(c, path)
+    common_sead_math_template(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
     common_this_prefix(c, path)
