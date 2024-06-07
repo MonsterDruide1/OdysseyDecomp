@@ -181,6 +181,13 @@ def common_sead_types(c, path):
                 FAIL("Forbidden type used: "+t+". Use equivalent of <basis/seadTypes.h> instead (f32, s32, u32, ...)", line, path)
                 return
 
+def common_sead_math_template(c, path):
+    for line in c.splitlines():
+        if "<f32>" in line or "<s32>" in line or "<u32>" in line or "<f64>" in line or "<s64>" in line or "<u64>" in line:
+            if not "sead" in line:
+                continue
+            FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
+
 # Header files
 
 def header_sorted_visibility(c, path):
@@ -293,12 +300,14 @@ def check_source(c, path):
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, False)
     common_sead_types(c, path)
+    common_sead_math_template(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, True)
     common_sead_types(c, path)
+    common_sead_math_template(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
 
