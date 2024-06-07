@@ -1,9 +1,14 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
+#include <basis/seadTypes.h>
 
 #include "Player/IJudge.h"
-#include "Player/PlayerJudgeDeadWipeStart.h"
+
+namespace al {
+class LiveActor;
+}
+
+class PlayerJudgeDeadWipeStart;
 
 class PlayerJudgeDrawForward : public IJudge {
 public:

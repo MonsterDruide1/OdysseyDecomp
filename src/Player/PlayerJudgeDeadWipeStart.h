@@ -1,9 +1,18 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
+#include <basis/seadTypes.h>
 
 #include "Player/IJudge.h"
-#include "Player/PlayerConst.h"
+
+namespace al {
+class LiveActor;
+}
+
+class PlayerConst;
+
+// note: This is just to make the code easier to read. The names are based on PlayerConst function
+// names
+enum DeathType : u32 { Damage, Abyss, AbyssWithCapMsg, Press, SandSink, NoOxygen, IceWater };
 
 class PlayerJudgeDeadWipeStart : public IJudge {
 public:
@@ -14,11 +23,11 @@ public:
 
     bool isDeadTypeDrawForward() const;
     bool isDeadEnableCoinAppear() const;
-    void getWipeInfo(const char** outString, s32* wipeInfoOut) const;
+    void getWipeInfo(const char** name, s32* wait) const;
 
 private:
     const al::LiveActor* mPlayerActor;
     const PlayerConst* mPlayerConst;
-    u32 mDeadType;
-    s32 mCounter;
+    DeathType mDeathType = Damage;
+    s32 mCounter = -1;
 };
