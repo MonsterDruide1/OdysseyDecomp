@@ -100,7 +100,7 @@ public:
     int sizeOfArrayBelowIs3_2;
     int pad4_2;
     float *anotherThreeFloats;
-    sead::Vector3f unk9;
-    sead::Vector3f unk10;
+    sead::Vector3f mCollidedGroundPos;
+    sead::Vector3f mCollidedGroundNormal;
     float unk11;
 };
