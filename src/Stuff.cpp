@@ -27,11 +27,6 @@ bool calcExistCollisionBorder(const al::IUseCollision* a1, const sead::Vector3f&
   return alCollisionUtil::getHitPosAndNormalOnArrow(a1, &v13, &v12, v11, v10, nullptr, nullptr) && al::isReverseDirection(v12, a3, 0.01f);
 }
 
-bool isPlayer2D(const al::LiveActor* actor) {
-    return false;
-}
-
-
 bool sub_7100569734(const al::LiveActor *actor, const IUsePlayerCollision *a2, const PlayerConst *a3, bool a4)
 {
   sead::Vector3f vec = {0.0f, 0.0f, 0.0f};
@@ -44,24 +39,6 @@ bool sub_7100569734(const al::LiveActor *actor, const IUsePlayerCollision *a2, c
   return al::isFloorPolygonCos(a2->getPlayerCollider()->mCollidedGroundNormal, al::getGravity(actor), cosf(sead::Mathf::deg2rad(lerp)));
 }
 
-bool isLandGroundRunAngle(al::LiveActor const* actor,IUsePlayerCollision const* collision,PlayerConst const* pConst) {
-  if(collision->getPlayerCollider()->val1 < 0.0f) return false;
-
-  sead::Vector3f velocity = al::getVelocity(actor);
-  al::tryNormalizeOrZero(&velocity);
-  f32 dot = collision->getPlayerCollider()->mCollidedGroundNormal.dot(velocity);
-  if(dot <= 0.0f || al::isNearZero(dot, 0.001f)) {
-    return sub_7100569734(actor, collision, pConst, true);
-  }
-  return false;
-}
-
-bool isJustLand(const IUsePlayerCollision* collision) {
-  printf("Collision: %p\n", collision);
-  printf("PlayerCollider: %p\n", collision->getPlayerCollider());
-  return collision->getPlayerCollider()->val1 >= 0.0f && collision->getPlayerCollider()->mTimeInAir == 1;
-}
-
 bool isOnGround(al::LiveActor const*actor,IUsePlayerCollision const*collision) {
   if(collision->getPlayerCollider()->val1 < 0.0f) return false;
 
@@ -70,23 +47,53 @@ bool isOnGround(al::LiveActor const*actor,IUsePlayerCollision const*collision) {
   f32 dot = collision->getPlayerCollider()->mCollidedGroundNormal.dot(velocity);
   return dot <= 0.0f || al::isNearZero(dot, 0.001f);
 }
-bool isOnGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
-  if(collision->getPlayerCollider()->val1 < 0.0f) return false;
 
-  sead::Vector3f velocity = al::getVelocity(actor);
-  al::tryNormalizeOrZero(&velocity);
-  f32 dot = collision->getPlayerCollider()->mCollidedGroundNormal.dot(velocity);
-  if(dot <= 0.0f || al::isNearZero(dot, 0.001f)) {
-    bool check = collision->getPlayerCollider()->val1 >= 0.0f && collision->getPlayerCollider()->mTimeInAir == 1;
-    return sub_7100569734(actor, collision, pConst, check);
-  }
-  return false;
+bool isLandGroundRunAngle(al::LiveActor const* actor,IUsePlayerCollision const* collision,PlayerConst const* pConst) {
+  return isOnGround(actor, collision) && sub_7100569734(actor, collision, pConst, true);
 }
+bool isCollidedGround(const IUsePlayerCollision* collision) {
+    return collision->getPlayerCollider()->val1 >= 0.0f;
+}
+bool isJustLand(const IUsePlayerCollision* collision) {
+  return isCollidedGround(collision) && collision->getPlayerCollider()->mTimeInAir == 1;
+}
+bool isOnGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
+  return isOnGround(actor, collision) && sub_7100569734(actor, collision, pConst, isJustLand(collision));
+}
+
 void cutVerticalVelocityGroundNormal(al::LiveActor* actor, const IUsePlayerCollision* collision) {
   if(!rs::isCollidedGround(collision)) return;
 
   sead::Vector3f* velocity = al::getVelocityPtr(actor);
   al::parallelizeVec(velocity, rs::getCollidedGroundNormal(collision), *velocity);
+}
+
+void calcGroundNormalOrGravityDir(sead::Vector3f* result, const al::LiveActor* actor, const IUsePlayerCollision* collision) {
+    if(isCollidedGround(collision)) {
+        *result = rs::getCollidedGroundNormal(collision);
+    } else {
+        *result = al::getGravity(actor);
+    }
+}
+
+void calcGroundNormalOrUpDir(sead::Vector3f* result, const al::LiveActor* actor, const IUsePlayerCollision* collision) {
+    if(isCollidedGround(collision)) {
+        *result = rs::getCollidedGroundNormal(collision);
+    } else {
+        al::calcUpDir(result, actor);
+    }
+}
+
+const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision* collision) {
+    return collision->getPlayerCollider()->mCollidedGroundNormal;
+}
+
+const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision* collision) {
+    return collision->getPlayerCollider()->mCollidedGroundPos;
+}
+
+bool isCollidedWall(const IUsePlayerCollision* collision) {
+    return collision->getPlayerCollider()->val2 >= 0.0f;
 }
 
 void calcJumpInertia(sead::Vector3f* out, al::LiveActor* actor, const IUsePlayerCollision* collision, const sead::Vector3f& vec, f32 val) {
@@ -165,43 +172,11 @@ void calcJumpInertiaWall(sead::Vector3f* a1, al::LiveActor* a2, const IUsePlayer
   a1->z = v12;
 }
 
-bool isCollidedGround(const IUsePlayerCollision* collision) {
-    return collision->getPlayerCollider()->val1 >= 0.0f;
-}
-
-void calcGroundNormalOrGravityDir(sead::Vector3f* result, const al::LiveActor* actor, const IUsePlayerCollision* collision) {
-    if(isCollidedGround(collision)) {
-        *result = rs::getCollidedGroundNormal(collision);
-    } else {
-        *result = al::getGravity(actor);
-    }
-}
-
-void calcGroundNormalOrUpDir(sead::Vector3f* result, const al::LiveActor* actor, const IUsePlayerCollision* collision) {
-    if(isCollidedGround(collision)) {
-        *result = rs::getCollidedGroundNormal(collision);
-    } else {
-        al::calcUpDir(result, actor);
-    }
-}
-
-const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision* collision) {
-    return collision->getPlayerCollider()->mCollidedGroundNormal;
-}
-
-const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision* collision) {
-    return collision->getPlayerCollider()->mCollidedGroundPos;
-}
-
 void calcMovePowerGround(sead::Vector3f* result, const IUsePlayerCollision* collision, const sead::Vector3f& vec) {
     *result = {0.0f, 0.0f, 0.0f};
 }
 void calcMovePowerWall(sead::Vector3f* result, const IUsePlayerCollision* collision, const sead::Vector3f& vec) {
     *result = {0.0f, 0.0f, 0.0f};
-}
-
-bool isCollidedWall(const IUsePlayerCollision* collision) {
-    return collision->getPlayerCollider()->val2 >= 0.0f;
 }
 
 void slerpUpFront(al::LiveActor* actor, const sead::Vector3f& up, const sead::Vector3f& front, float val1, float val2) {
