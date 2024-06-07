@@ -14,11 +14,11 @@ public:
 
     bool isDeadTypeDrawForward() const;
     bool isDeadEnableCoinAppear() const;
-    void* getWipeInfo(const char**, u32*) const;
+    void getWipeInfo(const char** outString, s32* wipeInfoOut) const;
 
 private:
     const al::LiveActor* mPlayerActor;
     const PlayerConst* mPlayerConst;
-    s32 mUnk;
-    s32 mUnk2;
+    u32 mDeadType;
+    s32 mCounter;
 };

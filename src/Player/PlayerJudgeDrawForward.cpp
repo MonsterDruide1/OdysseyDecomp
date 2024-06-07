@@ -8,10 +8,10 @@ PlayerJudgeDrawForward::PlayerJudgeDrawForward(
     : mPlayerActor(playerActor), mPlayerJudgeDeadWipeStart(playerJudgeDeadWipeStart) {}
 
 bool PlayerJudgeDrawForward::judge() const {
-    if(!GameDataFunction::isPlayerLifeZero(mPlayerActor))
+    if (!GameDataFunction::isPlayerLifeZero(mPlayerActor))
         return false;
     return mPlayerJudgeDeadWipeStart->isDeadTypeDrawForward();
 }
 
-void PlayerJudgeDrawForward::reset(){}
-void PlayerJudgeDrawForward::update(){}
+void PlayerJudgeDrawForward::reset() {}
+void PlayerJudgeDrawForward::update() {}
