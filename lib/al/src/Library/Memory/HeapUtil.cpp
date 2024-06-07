@@ -1,6 +1,7 @@
 #include "Library/Memory/HeapUtil.h"
 
 #include <heap/seadHeapMgr.h>
+
 #include "Library/File/FileUtil.h"
 #include "Library/Resource/ResourceHolder.h"
 #include "System/ProjectInterface.h"
