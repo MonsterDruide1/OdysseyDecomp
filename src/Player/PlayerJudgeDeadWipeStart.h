@@ -12,7 +12,7 @@ class PlayerConst;
 
 // note: This is just to make the code easier to read. The names are based on PlayerConst function
 // names
-enum DeathType : u32 { Damage, Abyss, AbyssWithCapMsg, Press, SandSink, NoOxygen, IceWater };
+enum class DeathType : u32 { Damage, Abyss, AbyssWithCapMsg, Press, SandSink, NoOxygen, IceWater };
 
 class PlayerJudgeDeadWipeStart : public IJudge {
 public:
@@ -28,6 +28,6 @@ public:
 private:
     const al::LiveActor* mPlayerActor;
     const PlayerConst* mPlayerConst;
-    DeathType mDeathType = Damage;
+    DeathType mDeathType = DeathType::Damage;
     s32 mCounter = -1;
 };

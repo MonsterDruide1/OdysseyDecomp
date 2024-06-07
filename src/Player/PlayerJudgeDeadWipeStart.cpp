@@ -8,7 +8,7 @@ PlayerJudgeDeadWipeStart::PlayerJudgeDeadWipeStart(const al::LiveActor* playerAc
     : mPlayerActor(playerActor), mPlayerConst(playerConst) {}
 
 void PlayerJudgeDeadWipeStart::reset() {
-    mDeathType = Damage;
+    mDeathType = DeathType::Damage;
     mCounter = -1;
 }
 
@@ -19,19 +19,19 @@ void PlayerJudgeDeadWipeStart::update() {
 
 bool PlayerJudgeDeadWipeStart::judge() const {
     switch (mDeathType) {
-    case Damage:
+    case DeathType::Damage:
         return mCounter >= mPlayerConst->getDeadWipeStartDamage();
-    case Abyss:
+    case DeathType::Abyss:
         return mCounter >= mPlayerConst->getDeadWipeStartAbyss();
-    case AbyssWithCapMsg:
+    case DeathType::AbyssWithCapMsg:
         return mCounter >= mPlayerConst->getDeadWipeStartAbyssWithCapMsg();
-    case Press:
+    case DeathType::Press:
         return mCounter >= mPlayerConst->getDeadWipeStartPress();
-    case SandSink:
+    case DeathType::SandSink:
         return mCounter >= mPlayerConst->getDeadWipeStartSandSink();
-    case NoOxygen:
+    case DeathType::NoOxygen:
         return mCounter >= mPlayerConst->getDeadWipeStartNoOxygen();
-    case IceWater:
+    case DeathType::IceWater:
         return mCounter >= mPlayerConst->getDeadWipeStartIceWater();
     default:
         return false;
@@ -39,37 +39,39 @@ bool PlayerJudgeDeadWipeStart::judge() const {
 }
 
 bool PlayerJudgeDeadWipeStart::isDeadTypeDrawForward() const {
-    return mDeathType == Damage || mDeathType == Press || mDeathType == SandSink ||
-           mDeathType == NoOxygen || mDeathType == IceWater;
+    return mDeathType == DeathType::Damage || mDeathType == DeathType::Press ||
+           mDeathType == DeathType::SandSink || mDeathType == DeathType::NoOxygen ||
+           mDeathType == DeathType::IceWater;
 }
 
+// Determines if a ring of coins should appear for certain death types
 bool PlayerJudgeDeadWipeStart::isDeadEnableCoinAppear() const {
-    return mDeathType != Press;
+    return mDeathType != DeathType::Press;
 }
 
 void PlayerJudgeDeadWipeStart::getWipeInfo(const char** name, s32* wait) const {
     *name = "WipeMiss";
 
     switch (mDeathType) {
-    case Damage:
+    case DeathType::Damage:
         *wait = mPlayerConst->getDeadWipeWaitDamage();
         break;
-    case Abyss:
+    case DeathType::Abyss:
         *wait = mPlayerConst->getDeadWipeWaitAbyss();
         break;
-    case AbyssWithCapMsg:
+    case DeathType::AbyssWithCapMsg:
         *wait = mPlayerConst->getDeadWipeWaitAbyssWithCapMsg();
         break;
-    case Press:
+    case DeathType::Press:
         *wait = mPlayerConst->getDeadWipeWaitPress();
         break;
-    case SandSink:
+    case DeathType::SandSink:
         *wait = mPlayerConst->getDeadWipeWaitSandSink();
         break;
-    case NoOxygen:
+    case DeathType::NoOxygen:
         *wait = mPlayerConst->getDeadWipeWaitNoOxygen();
         break;
-    case IceWater:
+    case DeathType::IceWater:
         *wait = mPlayerConst->getDeadWipeWaitIceWater();
         break;
     }
