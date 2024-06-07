@@ -29,8 +29,6 @@
 
 #include <cstdio>
 
-#include "../../../../src/stubs/missing.h"
-
 namespace al {
 
 void makeMtxRotateTrans(sead::Matrix34f* out, const sead::Vector3f& rotate, const sead::Vector3f& trans) {
