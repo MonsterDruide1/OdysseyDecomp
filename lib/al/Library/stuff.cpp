@@ -1,4 +1,4 @@
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/Collision/CollisionDirector.h"
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/CollisionPartsKeeper.h"

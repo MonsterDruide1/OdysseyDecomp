@@ -1,6 +1,6 @@
 #include "Util/CollisionShapeFunction.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 
 #include "Player/CollisionShapeInfo.h"
 

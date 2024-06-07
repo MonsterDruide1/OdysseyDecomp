@@ -25,13 +25,14 @@ public:
     virtual void connectToCollisionPartsList(CollisionParts*) = 0;
     virtual void disconnectToCollisionPartsList(CollisionParts*) = 0;
     virtual void resetToCollisionPartsList(CollisionParts*) = 0;
-    virtual bool checkStrikePoint(HitInfo*, const CollisionCheckInfoBase*) const = 0;
-    virtual bool checkStrikeSphere(SphereHitResultBuffer*, const SphereCheckInfo*, bool,
-                                   const sead::Vector3f*) const = 0;
-    virtual bool checkStrikeArrow(ArrowHitResultBuffer*, const ArrowCheckInfo*) const = 0;
-    virtual bool checkStrikeSphereForPlayer(SphereHitResultBuffer*, const SphereCheckInfo*) const = 0;
-    virtual bool checkStrikeDisk(DiskHitResultBuffer*, const DiskCheckInfo*) const = 0;
-    virtual void searchWithSphere(const SphereCheckInfo*, sead::IDelegate1<CollisionParts*>&) const = 0;
+    virtual bool checkStrikePoint(HitInfo*, const CollisionCheckInfoBase&) const = 0;
+    virtual bool checkStrikeSphere(SphereHitResultBuffer*, const SphereCheckInfo&, bool,
+                                   const sead::Vector3f&) const = 0;
+    virtual bool checkStrikeArrow(ArrowHitResultBuffer*, const ArrowCheckInfo&) const = 0;
+    virtual bool checkStrikeSphereForPlayer(SphereHitResultBuffer*, const SphereCheckInfo&) const = 0;
+    virtual bool checkStrikeDisk(DiskHitResultBuffer*, const DiskCheckInfo&) const = 0;
+    virtual void searchWithSphere(const SphereCheckInfo&, sead::IDelegate1<CollisionParts*>&) const = 0;
+    virtual void movement() = 0;
 };
 
 class ArrowCheckInfo;
@@ -41,18 +42,18 @@ class CollisionPartsKeeperPtrArray : public ICollisionPartsKeeper {
 public:
     CollisionPartsKeeperPtrArray();
 
-    virtual void endInit() {}
-    virtual void addCollisionParts(al::CollisionParts*) {}
-    virtual void connectToCollisionPartsList(al::CollisionParts*) {}
-    virtual void disconnectToCollisionPartsList(al::CollisionParts*) {}
-    virtual void resetToCollisionPartsList(al::CollisionParts*) {}
-    virtual bool checkStrikePoint(HitInfo*, const CollisionCheckInfoBase&) const {}
-    virtual bool checkStrikeSphere(SphereHitResultBuffer*, const SphereCheckInfo&, bool, const sead::Vector3f&) const {}
-    virtual bool checkStrikeArrow(ArrowHitResultBuffer*, const ArrowCheckInfo&) const {}
-    virtual bool checkStrikeSphereForPlayer(SphereHitResultBuffer*, const SphereCheckInfo&) const {}
-    virtual bool checkStrikeDisk(DiskHitResultBuffer*, const DiskCheckInfo&) const {}
-    virtual void searchWithSphere(const SphereCheckInfo&, sead::IDelegate1<CollisionParts*>&) const {}
-    virtual void movement() {}
+    void endInit() override {}
+    void addCollisionParts(al::CollisionParts*) override {}
+    void connectToCollisionPartsList(al::CollisionParts*) override {}
+    void disconnectToCollisionPartsList(al::CollisionParts*) override {}
+    void resetToCollisionPartsList(al::CollisionParts*) override {}
+    bool checkStrikePoint(HitInfo*, const CollisionCheckInfoBase&) const override {}
+    bool checkStrikeSphere(SphereHitResultBuffer*, const SphereCheckInfo&, bool, const sead::Vector3f&) const override {}
+    bool checkStrikeArrow(ArrowHitResultBuffer*, const ArrowCheckInfo&) const override {}
+    bool checkStrikeSphereForPlayer(SphereHitResultBuffer*, const SphereCheckInfo&) const override {}
+    bool checkStrikeDisk(DiskHitResultBuffer*, const DiskCheckInfo&) const override {}
+    void searchWithSphere(const SphereCheckInfo&, sead::IDelegate1<CollisionParts*>&) const override {}
+    void movement() override {}
 
     void setPtrArray(sead::PtrArray<CollisionParts>* ptrArray) { mPtrArray = ptrArray; }
     sead::PtrArray<CollisionParts>* getPtrArray() const { return mPtrArray; }
@@ -66,18 +67,18 @@ class CollisionPartsKeeperOctree : public ICollisionPartsKeeper {
 public:
     CollisionPartsKeeperOctree(s32, s32, f32);
 
-    virtual void endInit() {}
-    virtual void addCollisionParts(al::CollisionParts*) {}
-    virtual void connectToCollisionPartsList(al::CollisionParts*) {}
-    virtual void disconnectToCollisionPartsList(al::CollisionParts*) {}
-    virtual void resetToCollisionPartsList(al::CollisionParts*) {}
-    virtual bool checkStrikePoint(HitInfo*, const CollisionCheckInfoBase&) const {}
-    virtual bool checkStrikeSphere(SphereHitResultBuffer*, const SphereCheckInfo&, bool, const sead::Vector3f&) const {}
-    virtual bool checkStrikeArrow(ArrowHitResultBuffer*, const ArrowCheckInfo&) const {}
-    virtual bool checkStrikeSphereForPlayer(SphereHitResultBuffer*, const SphereCheckInfo&) const {}
-    virtual bool checkStrikeDisk(DiskHitResultBuffer*, const DiskCheckInfo&) const {}
-    virtual void searchWithSphere(const SphereCheckInfo&, sead::IDelegate1<CollisionParts*>&) const {}
-    virtual void movement() {}
+    void endInit() override {}
+    void addCollisionParts(al::CollisionParts*) override {}
+    void connectToCollisionPartsList(al::CollisionParts*) override {}
+    void disconnectToCollisionPartsList(al::CollisionParts*) override {}
+    void resetToCollisionPartsList(al::CollisionParts*) override {}
+    bool checkStrikePoint(HitInfo*, const CollisionCheckInfoBase&) const override {}
+    bool checkStrikeSphere(SphereHitResultBuffer*, const SphereCheckInfo&, bool, const sead::Vector3f&) const override {}
+    bool checkStrikeArrow(ArrowHitResultBuffer*, const ArrowCheckInfo&) const override {}
+    bool checkStrikeSphereForPlayer(SphereHitResultBuffer*, const SphereCheckInfo&) const override {}
+    bool checkStrikeDisk(DiskHitResultBuffer*, const DiskCheckInfo&) const override {}
+    void searchWithSphere(const SphereCheckInfo&, sead::IDelegate1<CollisionParts*>&) const override {}
+    void movement() override {}
 
 private:
     void* size[0xFF/8];

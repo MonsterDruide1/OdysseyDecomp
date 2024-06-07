@@ -1,5 +1,5 @@
 #include "Player/PlayerStateJump.h"
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathAngleUtil.h"

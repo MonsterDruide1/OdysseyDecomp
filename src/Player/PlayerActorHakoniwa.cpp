@@ -1,7 +1,7 @@
 #include "Player/PlayerActorHakoniwa.h"
 #include "Library/Area/AreaObjDirector.h"
 #include "Library/Audio/AudioKeeper.h"
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
