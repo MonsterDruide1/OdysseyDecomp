@@ -11,7 +11,7 @@ class MemorySystem {
 public:
     MemorySystem(sead::Heap* heap);
 
-    void allocFailedCallbackFunc(sead::HeapMgr::AllocFailedCallbackArg const*);
+    void allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallbackArg*);
     void createSequenceHeap();
     void freeAllSequenceHeap();
     bool printSequenceHeap();
@@ -54,10 +54,7 @@ private:
     sead::StrTreeMap<32, sead::Heap*> mHeapList;
     AudioResourceDirector* mAudioResourceDirector;
     bool mIsExistFileResource;
-    sead::Delegate1<MemorySystem, sead::HeapMgr::AllocFailedCallbackArg const*>* _70;
-    MemorySystem* _78;
-    void* mAllocFailedCallBackFunc;
-    void* _88;
+    sead::Delegate1<MemorySystem, const sead::HeapMgr::AllocFailedCallbackArg*> mDelegate;
 };
 
 static_assert(sizeof(MemorySystem) == 0x90);
