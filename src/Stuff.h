@@ -57,4 +57,6 @@ void cutVerticalVelocityGroundNormal(al::LiveActor*, const IUsePlayerCollision*)
 
 bool tryFindSnapMoveAreaDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
 
+void addPlayerJumpCount(const al::LiveActor*);
+
 }  // namespace rs

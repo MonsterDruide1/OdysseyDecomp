@@ -1,7 +1,11 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Player/PlayerActorBase.h"
+#include "Player/PlayerCollider.h"
 #include "PlayerUtil.h"
+#include "Util/PlayerCollisionUtil.h"
 #include "playerUtil.h"
+
+#include "CUSTOM/PlayerColliderHakoniwa.h"
 
 
 void rs::initPlayerActorInfo(PlayerActorBase* player, PlayerInitInfo const& info) {
@@ -12,4 +16,12 @@ void rs::initPlayerActorInfo(PlayerActorBase* player, PlayerInitInfo const& info
     mtx.makeQT(info._34, info._20);
     al::updatePoseMtx(player, &mtx);
 
+}
+
+void rs::resetCollisionPose(const IUsePlayerCollision *collider, const sead::Quat<float> &quat) {
+    collider->getPlayerCollider()->resetPose(quat);
+}
+
+f32 rs::getGroundHeight(const IUsePlayerHeightCheck* heightCheck) {
+    return heightCheck->getGroundHeight();
 }

@@ -10,6 +10,7 @@
 #include "Library/stuff.h"
 #include "Player/PlayerCollider.h"
 #include "Player/PlayerFunction.h"
+#include "Player/PlayerTrigger.h"
 #include "math/seadMatrix.h"
 #include "math/seadVectorFwd.h"
 
@@ -343,6 +344,16 @@ bool isCollidedNoScaleVelocityWall(const IUsePlayerCollision* collision) {
 }
 const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision* collision) {
   return collision->getPlayerCollider()->info2->mTriangle.getFaceNormal();
+}
+
+void noticePlayerJumpStart(PlayerTrigger*trig, al::LiveActor const*actor) {
+  rs::addPlayerJumpCount(actor);
+  trig->set(PlayerTrigger::EActionTrigger::EActionTrigger_val22);
+}
+
+bool calcSlideDir(sead::Vector3<float>* dir, sead::Vector3<float> const& a, sead::Vector3<float> const& b) {
+  al::verticalizeVec(dir, b, a);
+  return al::tryNormalizeOrZero(dir);
 }
 
 }  // namespace rs

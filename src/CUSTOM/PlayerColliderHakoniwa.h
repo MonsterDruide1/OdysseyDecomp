@@ -18,10 +18,17 @@ class CollisionShapeKeeper;
 
 class IUsePlayerCeilingCheck {
 public:
-    virtual bool isEnableStandUp() {WARN_UNIMPL;return true;}
+    virtual bool isEnableStandUp() const {WARN_UNIMPL;return true;}
+    virtual bool isEnableHoldUp() const {WARN_UNIMPL;return true;}
+    virtual bool isPressedCeil() const {WARN_UNIMPL;return false;}
+    virtual f32 getSafetyCeilSpace() const {CRASH}
+    virtual f32 getCeilCheckHeight() const {CRASH}
 };
 class IUsePlayerHeightCheck {
-    virtual void something() {CRASH}
+public:
+    virtual bool isAboveGround() const {WARN_UNIMPL;return true;}
+    virtual f32 getGroundHeight() const {CRASH}
+    virtual f32 getShadowDropHeight() const {WARN_UNIMPL;return getGroundHeight();}
 };
 class IUsePlayerFallDistanceCheck {
     virtual void something() {CRASH}
