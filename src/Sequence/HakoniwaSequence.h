@@ -21,7 +21,7 @@ public:
     bool isDisposable(void);
     void updatePadSystem(void);
     void destroySceneHeap(bool);
-    void init(al::SequenceInitInfo const&);
+    void init(const al::SequenceInitInfo&);
     void initSystem(void);
     void update(void);
     bool isEnableSave(void);

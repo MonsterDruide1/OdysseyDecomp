@@ -16,7 +16,7 @@ ExecuteDirector::ExecuteDirector(s32 count) {
 
 ExecuteDirector::~ExecuteDirector() {}
 
-void ExecuteDirector::init(ExecuteSystemInitInfo const& initInfo) {
+void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
     mUpdateTableCount = UpdateTableSize;
     mUpdateTables = new ExecuteTableHolderUpdate*[UpdateTableSize];
 

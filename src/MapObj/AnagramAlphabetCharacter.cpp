@@ -48,7 +48,7 @@ struct {
 
 }  // namespace
 
-void AnagramAlphabetCharacter::init(al::ActorInitInfo const& info) {
+void AnagramAlphabetCharacter::init(const al::ActorInitInfo& info) {
     al::initActorChangeModel(this, info);
     al::initNerve(this, &NrvAnagramAlphabetCharacter.Wait, 0);
     al::initSubActorKeeperNoFile(this, info, 1);
@@ -78,7 +78,7 @@ void AnagramAlphabetCharacter::attackSensor(al::HitSensor* target, al::HitSensor
         al::sendMsgPush(source, target);
 }
 
-bool AnagramAlphabetCharacter::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*) {
+bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) {
     return 0;
 }
 

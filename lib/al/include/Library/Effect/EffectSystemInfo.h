@@ -17,7 +17,7 @@ void tryKillEmitterAndParticleAll(IUseEffectKeeper*);
 void onCalcAndDrawEffect(IUseEffectKeeper*);
 void offCalcAndDrawEffect(IUseEffectKeeper*);
 void forceSetStopCalcAndDraw(IUseEffectKeeper*, bool);
-bool isEffectEmitting(IUseEffectKeeper const*, const char*);
+bool isEffectEmitting(const IUseEffectKeeper*, const char*);
 void setEffectEmitRatio(IUseEffectKeeper*, const char*, f32);
 void setEffectAllScale(IUseEffectKeeper*, const char*, const sead::Vector3<f32>&);
 void setEffectEmitterVolumeScale(IUseEffectKeeper*, const char*, const sead::Vector3<f32>&);

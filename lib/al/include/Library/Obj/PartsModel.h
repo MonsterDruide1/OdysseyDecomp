@@ -13,12 +13,12 @@ public:
     void endClipped() override;
     void calcAnim() override;
     void attackSensor(HitSensor*, HitSensor*) override;
-    bool receiveMsg(SensorMsg const*, HitSensor*, HitSensor*) override;
+    bool receiveMsg(const SensorMsg*, HitSensor*, HitSensor*) override;
 
     void initPartsDirect(LiveActor*, const ActorInitInfo&, const char*, const sead::Matrix34f*,
                          const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, bool);
     void initPartsSuffix(LiveActor*, const ActorInitInfo&, const char*, const char*,
-                         sead::Matrix34f const*, bool);
+                         const sead::Matrix34f*, bool);
     void initPartsMtx(LiveActor*, const ActorInitInfo&, const char*, const sead::Matrix34f*, bool);
     void initPartsFixFile(LiveActor*, const ActorInitInfo&, const char*, const char*, const char*);
     void initPartsFixFileNoRegister(LiveActor*, const ActorInitInfo&, const char*, const char*,

@@ -3,10 +3,10 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/Math/MathUtil.h"
 
-PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(char const* a1) {
+PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(const char* a1) {
     _0 = a1;
 }
-PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(char const* a1) {
+PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(const char* a1) {
     _0 = a1;
 }
 

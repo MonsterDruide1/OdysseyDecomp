@@ -6,7 +6,7 @@ class WorldMapRoute : public WorldMapParts {
 public:
     WorldMapRoute* create(const char*, const char*, const al::ActorInitInfo&,
                           const sead::Matrix34<f32>*, f32);
-    WorldMapRoute(char const*);
+    WorldMapRoute(const char*);
 
     void calcPose(const sead::Vector3<f32>&, const sead::Vector3<f32>&, const sead::Vector3<f32>&,
                   const sead::Vector3<f32>&, f32, bool, bool, bool, bool);

@@ -161,7 +161,7 @@ bool tryGetRailPointPos(sead::Vector3f* railPoint, const PlacementInfo& placemen
 void getRailPointHandlePrev(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 void tryGetRailPointHandlePrev(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 void getRailPointHandleNext(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
-void tryGetRailPointHandleNext(sead::Vector3f* railPoint, PlacementInfo const& placementInfo);
+void tryGetRailPointHandleNext(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 
 bool isExistGraphRider(const ActorInitInfo& initInfo);
 
