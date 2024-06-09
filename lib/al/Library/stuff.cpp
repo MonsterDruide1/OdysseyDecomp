@@ -11,6 +11,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
@@ -19,6 +20,11 @@
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Nerve/NerveKeeper.h"
 #include "Library/Nerve/NerveUtil.h"
+#include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
+#include "Library/Scene/ISceneObj.h"
+#include "Library/Scene/SceneObjHolder.h"
+#include "Library/Scene/SceneUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 #include "Library/stuff.h"
@@ -1571,4 +1577,73 @@ LABEL_12:
         return;
     }
   }
+}
+
+void al::normalize(sead::Vector2<float>* out, sead::Vector2<float> const& in) {
+  *out = in;
+  out->normalize();
+}
+
+f32 al::calcAngleDegree(sead::Vector2<float> const& a, sead::Vector2<float> const& b) {
+  if(a.squaredLength() >= 0.000001f && b.squaredLength() >= 0.000001f) {
+    return sead::Mathf::rad2deg(sead::Mathf::atan2((a.x * b.y - a.y * b.x), (a.x * b.x + a.y * b.y)));
+  }
+}
+
+void al::normalize(sead::Matrix34<float>* mtx) {
+  sead::Vector3f x,y,z;
+  mtx->getBase(x, 0);
+  mtx->getBase(y, 1);
+  mtx->getBase(z, 2);
+  x.normalize();
+  y.normalize();
+  z.normalize();
+  mtx->setBase(0, x);
+  mtx->setBase(1, y);
+  mtx->setBase(2, z);
+}
+
+s32 al::calcLinkChildNum(al::PlacementInfo const& info, char const* str) {
+  al::PlacementInfo info1, info2;
+  al::ByamlIter iter;
+  if(!info.getPlacementIter().tryGetIterByKey(&iter, "Links"))
+    return 0;
+
+  info1.set(iter, info.getZoneIter());
+  al::ByamlIter iter2;
+  if(!info1.getPlacementIter().tryGetIterByKey(&iter2, str))
+    return 0;
+  info2.set(iter2, info1.getZoneIter());
+  return info2.getPlacementIter().getSize();
+}
+
+al::LiveActor* al::getSubActor(al::LiveActor const* actor, char const* name) {
+  // CUSTOM ADDITION:
+  if(!actor) {
+    printf("getSubActor: actor is nullptr\n");
+    return nullptr;
+  }
+
+  al::SubActorKeeper* keeper = actor->getSubActorKeeper();
+  if(!keeper || keeper->mCurActorCount < 1) return nullptr;
+  for(s32 i=0 ; i<keeper->mCurActorCount ; i++) {
+    if(al::isEqualString(keeper->mBuffer[i]->mSubActor->getName(), name))
+      return keeper->mBuffer[i]->mSubActor;
+  }
+  return nullptr;
+}
+al::LiveActor* al::tryGetSubActor(al::LiveActor const* actor, char const* name) {
+  // CUSTOM ADDITION:
+  if(!actor) {
+    printf("getSubActor: actor is nullptr\n");
+    return nullptr;
+  }
+  
+  al::SubActorKeeper* keeper = actor->getSubActorKeeper();
+  if(!keeper || keeper->mCurActorCount < 1) return nullptr;
+  for(s32 i=0 ; i<keeper->mCurActorCount ; i++) {
+    if(al::isEqualString(keeper->mBuffer[i]->mSubActor->getName(), name))
+      return keeper->mBuffer[i]->mSubActor;
+  }
+  return nullptr;
 }

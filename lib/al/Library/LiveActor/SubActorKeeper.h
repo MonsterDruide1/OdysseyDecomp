@@ -110,7 +110,7 @@ public:
 protected:
     friend class alSubActorFunction;
 
-private:
+public:
     LiveActor* mRootActor;
     s32 mMaxActorCount = 0;
     s32 mCurActorCount = 0;
