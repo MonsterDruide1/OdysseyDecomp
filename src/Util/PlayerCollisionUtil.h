@@ -41,6 +41,7 @@ void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
 bool isCollisionCodeSandSink(const IUsePlayerCollision*);
 bool isCollidedWall(const IUsePlayerCollision*);
 bool isActionCodeNoWallGrab(const IUsePlayerCollision*);
+bool isAutoRunOnGroundSkateCode(const al::LiveActor*, const IUsePlayerCollision*, float);
 
 bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
