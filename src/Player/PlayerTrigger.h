@@ -6,7 +6,10 @@
 class PlayerTrigger {
 public:
     enum ECollisionTrigger : u32 {};
-    enum EAttackSensorTrigger : u32 {};
+    enum EAttackSensorTrigger : u32 {
+        // used in PlayerCounterAfterCapCatch
+        EAttackSensorTrigger_val0 = 0,
+    };
     enum EActionTrigger : u32 {
         EActionTrigger_QuickTurn = 34,
     };

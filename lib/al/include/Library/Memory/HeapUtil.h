@@ -6,7 +6,7 @@ namespace al {
 class AudioResourceDirector;
 
 sead::Heap* getStationedHeap();
-sead::Heap* getCurrentHeap();
+sead::Heap* getSequenceHeap();
 sead::Heap* getSceneResourceHeap();
 sead::Heap* getSceneHeap();
 sead::Heap* getCourseSelectResourceHeap();
@@ -18,10 +18,10 @@ void addNamedHeap(sead::Heap* heap, const char* heapName);
 void removeNamedHeap(const char* heapName);
 void createSequenceHeap();
 void freeAllSequenceHeap();
-void printAllSequenceHeap();
+bool printAllSequenceHeap();
 void createSceneHeap(const char* stageName, bool backwards);
 void createSceneResourceHeap(const char* stageName);
-void isCreatedSceneResourceHeap();
+bool isCreatedSceneResourceHeap();
 void destroySceneHeap(bool removeCategory);
 void createCourseSelectHeap();
 void destroyCourseSelectHeap();
@@ -30,5 +30,4 @@ void destroyWorldResourceHeap(bool removeCategory);
 void loadPlayerResource(const char* categoryName);
 void freePlayerResource(const char* categoryName);
 void setAudioResourceDirectorToMemorySystem(AudioResourceDirector* audioResourceDirector);
-
 }  // namespace al
