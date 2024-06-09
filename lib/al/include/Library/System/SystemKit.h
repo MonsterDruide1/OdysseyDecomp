@@ -4,9 +4,9 @@
 
 namespace al {
 class FileLoader;
-class MemorySystem;
 class ResourceSystem;
 class SaveDataDirector;
+class MemorySystem;
 
 class SystemKit {
 public:
@@ -31,4 +31,6 @@ private:
     ResourceSystem* mResourceSystem;
     SaveDataDirector* mSaveDataDirector;
 };
+
+static_assert(sizeof(SystemKit) == 0x20);
 }  // namespace al
