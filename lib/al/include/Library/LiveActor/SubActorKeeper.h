@@ -12,17 +12,39 @@ public:                                                                         
     CLASS(const CLASS& c) : m_value(c.m_value) {}                                                  \
     CLASS(s32 i) : m_value(i) {}                                                                   \
     CLASS(Enum e) : m_value(e) {}                                                                  \
-    operator s32() const { return m_value; }                                                       \
-    bool operator==(const CLASS& c) const { return m_value == c.m_value; }                         \
-    bool operator==(const Enum& e) const { return m_value == e; }                                  \
-    bool operator!=(const CLASS& c) const { return m_value != c.m_value; }                         \
-    bool operator!=(const Enum& e) const { return m_value != e; }                                  \
-    CLASS operator|(const CLASS& c) const { return CLASS(m_value | c.m_value); }                   \
-    CLASS operator|(const Enum& e) const { return CLASS(m_value | e); }                            \
-    CLASS operator&(const CLASS& c) const { return CLASS(m_value & c.m_value); }                   \
-    CLASS operator&(const Enum& e) const { return CLASS(m_value & e); }                            \
-    CLASS operator^(const CLASS& c) const { return CLASS(m_value ^ c.m_value); }                   \
-    CLASS operator^(const Enum& e) const { return CLASS(m_value ^ e); }                            \
+    operator s32() const {                                                                         \
+        return m_value;                                                                            \
+    }                                                                                              \
+    bool operator==(const CLASS& c) const {                                                        \
+        return m_value == c.m_value;                                                               \
+    }                                                                                              \
+    bool operator==(const Enum& e) const {                                                         \
+        return m_value == e;                                                                       \
+    }                                                                                              \
+    bool operator!=(const CLASS& c) const {                                                        \
+        return m_value != c.m_value;                                                               \
+    }                                                                                              \
+    bool operator!=(const Enum& e) const {                                                         \
+        return m_value != e;                                                                       \
+    }                                                                                              \
+    CLASS operator|(const CLASS& c) const {                                                        \
+        return CLASS(m_value | c.m_value);                                                         \
+    }                                                                                              \
+    CLASS operator|(const Enum& e) const {                                                         \
+        return CLASS(m_value | e);                                                                 \
+    }                                                                                              \
+    CLASS operator&(const CLASS& c) const {                                                        \
+        return CLASS(m_value & c.m_value);                                                         \
+    }                                                                                              \
+    CLASS operator&(const Enum& e) const {                                                         \
+        return CLASS(m_value & e);                                                                 \
+    }                                                                                              \
+    CLASS operator^(const CLASS& c) const {                                                        \
+        return CLASS(m_value ^ c.m_value);                                                         \
+    }                                                                                              \
+    CLASS operator^(const Enum& e) const {                                                         \
+        return CLASS(m_value ^ e);                                                                 \
+    }                                                                                              \
     CLASS& operator|=(const CLASS& c) {                                                            \
         m_value |= c.m_value;                                                                      \
         return *this;                                                                              \

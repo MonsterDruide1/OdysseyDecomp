@@ -14,13 +14,13 @@ public:
     public:
         enum class HintStatus { NONE, NPC, AMIIBO };
 
-        void clear(void);
+        void clear();
 
         bool isDisableByWorldWarpHole(bool) const;
         bool isEnableUnlock(s32, bool, s32, bool) const;
         bool isHintStatusUnlock(s32, s32, bool) const;
-        bool isHintStatusUnlockByNpc(void) const;
-        bool isHintStatusUnlockByAmiibo(void) const;
+        bool isHintStatusUnlockByNpc() const;
+        bool isHintStatusUnlockByAmiibo() const;
         bool isEnableNameUnlockByScenario(s32, s32, bool) const;
 
         bool testFunc(s32, bool, s32, bool) const;

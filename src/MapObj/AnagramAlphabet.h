@@ -1,9 +1,16 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Nerve/NerveSetupUtil.h"
+
+namespace al {
+class DeriveActorGroup;
+class FixMapParts;
+class CameraTicket;
+}  // namespace al
 
 class AnagramAlphabetCharacter;
+class Shine;
+class SaveObjInfo;
 
 class AnagramAlphabet : public al::LiveActor {
 public:
@@ -16,4 +23,12 @@ public:
     void exeWait();
     void exeComplete();
     void appearShine();
+
+private:
+    al::DeriveActorGroup* mAnagramAlphabetLetters;
+    void* field_110;
+    al::FixMapParts* mAnagramAlphabetBase;
+    al::CameraTicket* mObjectCamera;
+    Shine* mShineActor;
+    SaveObjInfo* mSaveObjInfo;
 };

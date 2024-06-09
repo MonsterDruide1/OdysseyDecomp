@@ -27,7 +27,7 @@ public:
     void tryRequestPlaySe(const char*, f32, const char*, const SePlayParamList*, const MeInfo*,
                           bool, const char*, const sead::Vector3f*);
     void requestPlaySeIdLocal(SeRequestParam*, const char*);
-    void requestPlayLoopSeSequence(const char*, MeInfo const*, s32);
+    void requestPlayLoopSeSequence(const char*, const MeInfo*, s32);
     void stopSe(const char*, s32, bool, const char*);
     void tryFindPlayInfo(const char*) const;
     void setLifeTimeForHoldCall(const char*, u32, const char*);
@@ -49,8 +49,8 @@ public:
     void setIsMaterialPuddle(bool);
     void tryUpdateMaterial(const char*);
     void setSeSourceVolume(f32);
-    void setSyncParamPtr(f32 const*, const char*);
-    void setSyncParamPtrInt(s32 const*, const char*);
+    void setSyncParamPtr(const f32*, const char*);
+    void setSyncParamPtrInt(const s32*, const char*);
     void setEmitterPoseMtxPtr(const sead::Matrix34f*, const char*);
     void setEmitterPosePosPtr(const sead::Vector3f*, const char*);
     void loadSe(IAudioResourceLoader*);

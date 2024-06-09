@@ -1,6 +1,6 @@
 #include "Library/Execute/ExecuteDirector.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/Execute/ActorExecuteInfo.h"
 #include "Library/Execute/ExecuteRequestKeeper.h"
 #include "Library/Execute/ExecuteTablesImpl.h"
@@ -16,7 +16,7 @@ ExecuteDirector::ExecuteDirector(s32 count) {
 
 ExecuteDirector::~ExecuteDirector() {}
 
-void ExecuteDirector::init(ExecuteSystemInitInfo const& initInfo) {
+void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
     mUpdateTableCount = UpdateTableSize;
     mUpdateTables = new ExecuteTableHolderUpdate*[UpdateTableSize];
 

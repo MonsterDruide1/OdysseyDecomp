@@ -2,5 +2,5 @@
 
 class PlayerAnimFrameCtrl {
 public:
-    const char* getActionName(void) const;
+    const char* getActionName() const;
 };

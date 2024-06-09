@@ -14,7 +14,7 @@ class PlacementId;
 
 class GameDataHolder : public al::GameDataHolderBase {
 public:
-    GameDataHolder(al::MessageSystem const*);
+    GameDataHolder(const al::MessageSystem*);
     GameDataHolder();
 
     virtual ~GameDataHolder();

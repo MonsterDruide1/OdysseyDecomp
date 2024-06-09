@@ -21,7 +21,7 @@ NERVE_MAKE(BreakModel, Break);
 }  // namespace
 
 namespace al {
-BreakModel::BreakModel(LiveActor const* rootActor, const char* objName, const char* modelName,
+BreakModel::BreakModel(const LiveActor* rootActor, const char* objName, const char* modelName,
                        const char* fileSuffixName, const sead::Matrix34f* rootMtx,
                        const char* breakActionName)
     : LiveActor(objName), mInitSuffix(fileSuffixName), mParent(rootActor), mRootMtx(rootMtx),
@@ -46,7 +46,7 @@ void BreakModel::init(const ActorInitInfo& initInfo) {
     makeActorDead();
 }
 
-void BreakModel::appear(void) {
+void BreakModel::appear() {
     if (mRootMtx)
         updatePoseMtx(this, mRootMtx);
     else

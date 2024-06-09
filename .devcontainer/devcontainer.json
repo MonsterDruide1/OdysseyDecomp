@@ -1,0 +1,15 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "xaver.clang-format",
+                "llvm-vs-code-extensions.vscode-clangd"
+            ]
+        }
+    },
+    // mark root git repo and all submodules as safe
+    "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && git submodule --quiet foreach --recursive pwd | xargs -I% git config --global --add safe.directory %"
+}

@@ -2,7 +2,7 @@
 
 #include <thread/seadThread.h>
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
 #include "Library/Resource/ResourceHolder.h"
@@ -32,14 +32,14 @@ WorldResourceLoader::~WorldResourceLoader() {
     tryDestroyWorldResource();
 }
 
-void WorldResourceLoader::loadResource(void) {}
+void WorldResourceLoader::loadResource() {}
 
-void WorldResourceLoader::cancelLoadWorldResource(void) {
+void WorldResourceLoader::cancelLoadWorldResource() {
     mIsCancelled = true;
     mCurLoadCount = 0;
 }
 
-void WorldResourceLoader::tryDestroyWorldResource(void) {
+void WorldResourceLoader::tryDestroyWorldResource() {
     if (mWorldResourceHeap) {
         bool isUseSpecialHeap;
 
@@ -116,7 +116,7 @@ bool WorldResourceLoader::requestLoadWorldHomeStageResource(s32 loadWorldId, s32
     return true;
 }
 
-bool WorldResourceLoader::isEndLoadWorldResource(void) const {
+bool WorldResourceLoader::isEndLoadWorldResource() const {
     return mWorldResourceLoader->isDone();
 }
 
@@ -135,9 +135,9 @@ bool WorldResourceLoader::requestLoadWorldResource(s32 loadWorldId) {
     return true;
 }
 // unused func
-void WorldResourceLoader::createResourcePlayer(void) {}
+void WorldResourceLoader::createResourcePlayer() {}
 
-void WorldResourceLoader::tryDestroyWorldResourceOnlyCap(void) {
+void WorldResourceLoader::tryDestroyWorldResourceOnlyCap() {
     if (mWorldResourceHeap) {
         if (mCapWorldHeap) {
             al::removeResourceCategory("ワールド常駐");
@@ -152,14 +152,14 @@ void WorldResourceLoader::tryDestroyWorldResourceOnlyCap(void) {
     al::resetCurrentCategoryName();
 }
 
-f32 WorldResourceLoader::calcLoadPercent(void) const {
+f32 WorldResourceLoader::calcLoadPercent() const {
     if (mCurLoadCount >= mMaxLoadCount)
         return 101.0f;
     else
         return (mCurLoadCount * 100.0f) / mMaxLoadCount;
 }
 
-s32 WorldResourceLoader::getLoadWorldId(void) const {
+s32 WorldResourceLoader::getLoadWorldId() const {
     return mLoadWorldId;
 }
 
@@ -243,7 +243,7 @@ void WorldResourceLoader::loadWorldResource(s32 loadWorldId, s32 scenario, bool 
     mCurLoadCount = mMaxLoadCount;
 }
 
-f32 WorldResourceLoader::calcWorldResourceHeapSize(void) const {
+f32 WorldResourceLoader::calcWorldResourceHeapSize() const {
     return ((mWorldResourceHeap->getSize() - mWorldResourceHeap->getFreeSize()) * 0.00097656f) *
            0.00097656f;
 }

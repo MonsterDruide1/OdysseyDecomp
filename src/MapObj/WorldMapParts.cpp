@@ -13,9 +13,9 @@ void localFunc_34B9A8(WorldMapParts* mapParts) {
     //    }
 }
 
-WorldMapParts::WorldMapParts(char const* name) : al::LiveActor(name) {}
+WorldMapParts::WorldMapParts(const char* name) : al::LiveActor(name) {}
 
-void WorldMapParts::setWorldMtx(sead::Matrix34f const& srcMtx) {
+void WorldMapParts::setWorldMtx(const sead::Matrix34f& srcMtx) {
     sead::Matrix34f copyMtx;
     sead::Matrix34f inverse;
 

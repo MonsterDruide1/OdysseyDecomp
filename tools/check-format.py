@@ -181,6 +181,29 @@ def common_sead_types(c, path):
                 FAIL("Forbidden type used: "+t+". Use equivalent of <basis/seadTypes.h> instead (f32, s32, u32, ...)", line, path)
                 return
 
+def common_void_params(c, path):
+    for line in c.splitlines():
+        if "(void)" in line:
+            FAIL("Function parameters should be empty instead of \"(void)\"!", line, path)
+            return
+
+def common_const_type(c, path):
+    for line in c.splitlines():
+        line = line.split("//")[0]
+        index = 0
+        while index < len(line):
+            index = line.find("const", index)
+            if index == -1:
+                break
+            if index > 0 and line[index-1].isalnum():  # const is just part of a longer string
+                index += 1
+                continue
+            if index >= 0 and line[index+len("const")] in ['*', '&']:
+                FAIL("Const must be placed before the type: const T* or const T&", line, path)
+                index += 1
+                continue
+            index += 1
+
 # Header files
 
 def header_sorted_visibility(c, path):
@@ -293,12 +316,16 @@ def check_source(c, path):
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, False)
     common_sead_types(c, path)
+    common_void_params(c, path)
+    common_const_type(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, True)
     common_sead_types(c, path)
+    common_void_params(c, path)
+    common_const_type(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
 

@@ -1,6 +1,6 @@
 #include "Player/PlayerModelHolder.h"
 
-#include "Library/Base/String.h"
+#include "Library/Base/StringUtil.h"
 
 PlayerModelHolder::PlayerModelHolder(u32 bufferSize) {
     mBuffer.allocBuffer(bufferSize, nullptr);

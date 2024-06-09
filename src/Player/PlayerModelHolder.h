@@ -15,12 +15,12 @@ public:
     };
 
     PlayerModelHolder(u32);
-    void registerModel(al::LiveActor*, char const*);
-    void changeModel(char const*);
-    al::LiveActor* findModelActor(char const*) const;
-    al::LiveActor* tryFindModelActor(char const*) const;
-    bool isCurrentModelLabel(char const*) const;
-    bool isCurrentModelLabelSubString(char const*) const;
+    void registerModel(al::LiveActor*, const char*);
+    void changeModel(const char*);
+    al::LiveActor* findModelActor(const char*) const;
+    al::LiveActor* tryFindModelActor(const char*) const;
+    bool isCurrentModelLabel(const char*) const;
+    bool isCurrentModelLabelSubString(const char*) const;
 
 private:
     sead::PtrArray<Entry> mBuffer;
