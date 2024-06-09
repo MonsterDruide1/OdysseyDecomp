@@ -15,10 +15,10 @@
 
 // TODO: Put these in the correct headers
 namespace rs {
-bool isPlayerOnGround(al::LiveActor const*);
-bool isOnGround(al::LiveActor const*, IUsePlayerCollision const*);
-bool isJustLand(IUsePlayerCollision const*);
-const sead::Vector3f& getCollidedGroundNormal(IUsePlayerCollision const*);
+bool isPlayerOnGround(const al::LiveActor*);
+bool isOnGround(const al::LiveActor*, const IUsePlayerCollision*);
+bool isJustLand(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision*);
 }  // namespace rs
 
 PlayerJudgeTalkGround::PlayerJudgeTalkGround(
