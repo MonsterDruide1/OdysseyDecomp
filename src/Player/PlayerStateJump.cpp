@@ -226,7 +226,7 @@ void PlayerStateJump::appear() {
                         jumpPowerMax = mConst->getJumpPowerForceRun();
                     }
 
-                    mJumpPower = PlayerActionFunction::calcJumpSpeed(jumpPowerMax, frontVelocityLength, minSpeed, maxSpeed, jumpPowerMin);
+                    mJumpPower = PlayerActionFunction::calcJumpSpeed(frontVelocityLength, minSpeed, maxSpeed, jumpPowerMin, jumpPowerMax);
 
                     f32 jumpGravity;
                     if(mCounterForceRun->getCounter() < 1) {
@@ -346,6 +346,7 @@ void PlayerStateJump::exeJump() {
     }
 
     bool v43 = mCounterForceRun->getCounter() < 1 ? rs::isOnGround(mActor, mCollision) : rs::isOnGroundAndGravity(mActor, mCollision);
+    printf("v43: %s\n", v43 ? "true" : "false");
 
     if(rs::isCollidedCeiling(mCollision) && !al::isFirstStep(this)) {
         rs::reflectCeiling(mActor, 0.0f);
