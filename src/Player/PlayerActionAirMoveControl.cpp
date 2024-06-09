@@ -272,7 +272,7 @@ void PlayerActionAirMoveControl::update() {
             if (mIUsePlayerHack)
                 isHoldHackJump = rs::isHoldHackJump(this->mIUsePlayerHack);
             else
-                isHoldHackJump = mPlayerInput->isHoldJump();
+                isHoldHackJump = this->mPlayerInput->isHoldJump();
         }
 
         this->unk_flag2 = isHoldHackJump & 1;

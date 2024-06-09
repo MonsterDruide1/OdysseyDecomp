@@ -92,12 +92,12 @@ private:
     bool _B7 = false;
     bool _B8 = false;
     bool _B9 = false;
-    bool _BA = false;
+    bool mIsHoldCapSeparateJump = false;
     sead::Vector3f _BC = {0.0f, 0.0f, 0.0f};
     const char *_C8 = nullptr;
     const char *mJumpAnimName = nullptr;
     const PlayerInput *mInput;
-    sead::Vector3f _E0 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mTurnJumpAngle = {0.0f, 0.0f, 0.0f};
     int _EC = 0;
     bool _F0 = false;
     sead::Vector3f vec = {0.0f, 0.0f, 0.0f};

@@ -93,6 +93,8 @@ public:
     void updateInput3D();
     void updateInput2D();
 
+    bool isHoldCapSeparateJump() const;
+
 public:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;

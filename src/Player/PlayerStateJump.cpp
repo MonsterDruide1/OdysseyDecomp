@@ -3,6 +3,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
+#include "Library/Math/MathLengthUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/stuff.h"
 #include "Player/PlayerActionAirMoveControl.h"
@@ -126,7 +127,7 @@ void PlayerStateJump::appear() {
     _F0 = 0;
     vec = {0.0f, 0.0f, 0.0f};
     _B9 = false;
-    _BA = false;
+    mIsHoldCapSeparateJump = false;
     _B5 = false;
     _B6 = false;
     _B7 = false;
@@ -314,9 +315,94 @@ bool PlayerStateJump::isFormSquat2D() const {
     }
     return false;
 }
-void PlayerStateJump::exeJump() { WARN_UNIMPL; }
+void PlayerStateJump::exeJump() {
+    // BUG: swapped 2D/non-2D speed?
+    rs::scaleVelocityInertiaWallHit(mActor, mCollision, 0.25f, 1.0f, mModelChanger->is2DModel() ? mConst->getNormalMaxSpeed() : mConst->getNormalMaxSpeed2D());
+    
+    if(al::isFirstStep(this)) {
+        // anim stuff
+        const char* animName = calcJumpAnimName();
+        // more anim stuff
+
+        if(al::isEqualString(animName, "JumpCapCatch"))
+            mHackCap->startCatch("JumpCapCatch", 0, sead::Vector3f::zero);
+
+        if(_B7 && !mModelChanger->is2DModel()) {
+            sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+            al::calcUpDir(&up, mActor);
+            if(_BC.dot(up) <= sead::Mathf::cos(sead::Mathf::deg2rad(mConst->getCollisionResetLimit())))
+                mTrigger->set(PlayerTrigger::EActionTrigger_val3);
+            rs::slerpUp(mActor, _BC, 1.0f, 180.0f);
+        }
+
+        mActionAirMoveControl->setup(mMoveSpeedMax, 
+            mModelChanger->is2DModel() ? mConst->getNormalMaxSpeed2D() : mConst->getNormalMaxSpeed(),
+            mExtendFrame, mJumpPower, mJumpGravity, 0, mConst->getJumpInertiaRate());
+    }
+
+    if(mTrigger->isOnUpperPunchHit()) {
+        // jumping into question-mark block
+        CRASH
+    }
+
+    bool v43 = mCounterForceRun->getCounter() < 1 ? rs::isOnGround(mActor, mCollision) : rs::isOnGroundAndGravity(mActor, mCollision);
+
+    if(rs::isCollidedCeiling(mCollision) && !al::isFirstStep(this)) {
+        rs::reflectCeiling(mActor, 0.0f);
+        mActionAirMoveControl->setExtendFrame(0);
+        _B4 = false;
+    }
+
+    if(mModelChanger->is2DModel() && rs::isIn2DArea(mDimension)) {
+        CRASH
+    }
+
+    mActionDiveInWater->tryChangeDiveInWaterAnim();
+    mActionAirMoveControl->update();
+
+    if(v43) {
+        sead::Vector3f h = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f v = {0.0f, 0.0f, 0.0f};
+        al::separateVelocityHV(&h, &v, mActor);
+        al::limitLength(&h, h, sead::Mathf::min(h.length(), mActionAirMoveControl->somethingHere));
+        al::setVelocity(mActor, h + v);
+        kill();
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mJudgeHackCapHoldHoveringJump)) {
+        if(!mIsDead && mModelChanger->is2DModel()) {
+            CRASH
+        }
+
+        if(mIsHoldCapSeparateJump) {
+            al::setNerve(this, &Hovering2D);
+        } else {
+            al::setNerve(this, &HoveringJump2D);
+        }
+        return;
+    }
+
+    if(mIsHoldCapSeparateJump) {
+        mIsHoldCapSeparateJump = mInput->isHoldCapSeparateJump();
+    }
+}
 // bool PlayerStateJump::trySubAnimJumpReaction();
-// const char* PlayerStateJump::calcJumpAnimName() const;
+const char* PlayerStateJump::calcJumpAnimName() const {
+    if(mModelChanger->is2DModel())
+        return mJumpAnimName ? mJumpAnimName : "Jump";
+    if(_C8) return _C8;
+
+    if(mContinuousJumpCount == 2)
+        return "Jump3";
+    if(mContinuousJumpCount == 1)
+        return "Jump2";
+    if(mContinuousJumpCount > 0)
+        return "Jump";
+
+    // extras based on animator and direction
+    return "Jump";
+}
 void PlayerStateJump::exeJumpSpinFlower()  { WARN_UNIMPL; }
 void PlayerStateJump::exeJumpSpinFlowerDownFall()  { WARN_UNIMPL; }
 // void PlayerStateJump::updateNerveDownFall(const char*, f32, f32, f32, const al::Nerve*);

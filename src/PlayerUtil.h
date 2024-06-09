@@ -48,6 +48,9 @@ bool isPressedCollision(IUsePlayerCollision const*);
 void resetCollisionPose(IUsePlayerCollision const*,sead::Quat<float> const&);
 void calcSnapVelocitySnapMoveArea(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*,sead::Vector3<float> const&,float);
 void calcSnapVelocitySnapMoveAreaWithCutDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*,sead::Vector3<float> const&,float,sead::Vector3<float> const&);
+bool isCollidedCeiling(IUsePlayerCollision const*);
+void reflectCeiling(al::LiveActor *,float);
+bool isOnGroundAndGravity(al::LiveActor const*,IUsePlayerCollision const*);
 
 }
 
@@ -738,6 +741,7 @@ public:
     PlayerActionDiveInWater(PlayerAnimator *,IPlayerModelChanger const*,PlayerCarryKeeper const*,PlayerJudgeDiveInWater const*);
 
     bool isDiveInWaterAnim();
+    void tryChangeDiveInWaterAnim();
 private:
     void* size[0x20/8];
 };
