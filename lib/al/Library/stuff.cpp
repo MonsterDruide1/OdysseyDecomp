@@ -1080,15 +1080,16 @@ void makeMtxUpFront(sead::Matrix34f* mtx, const sead::Vector3f& up, const sead::
   sead::Vector3f upn = up;
   al::normalize(&upn);
 
-  sead::Vector3f v23;
-  v23.setCross(upn, front);
+  sead::Vector3f cross_up_front;
+  cross_up_front.setCross(up, front);
+  al::normalize(&cross_up_front);
 
-  sead::Vector3f c;
-  c.setCross(c, upn);
+  sead::Vector3f cross_cross;
+  cross_cross.setCross(cross_up_front, upn);
 
-  mtx->setBase(0, v23);
+  mtx->setBase(0, cross_up_front);
   mtx->setBase(1, upn);
-  mtx->setBase(2, c);
+  mtx->setBase(2, cross_cross);
 }
 void makeMtxFrontUp(sead::Matrix34f* mtx, const sead::Vector3f& front, const sead::Vector3f& up) {
   makeMtxUpFront(mtx, up, front);
