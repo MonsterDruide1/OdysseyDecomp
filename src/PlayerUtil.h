@@ -1230,11 +1230,10 @@ public:
 
 class PlayerInitInfo {
 public:
-    void *gap[1];
-    sead::Matrix34f *mViewMtx;
+    al::GamePadSystem *mGamePadSystem;
+    const sead::Matrix34f *mViewMtx;
     int mPortNo;
-    int pad[1];
-    void *sizes[2];
+    const char *strings[2];
     sead::Vector3f _20;
     sead::Quatf _34;
     int gap3;
