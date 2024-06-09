@@ -16,7 +16,7 @@ void initJointControllerKeeper(const LiveActor*, s32);
 void isExistJointControllerKeeper(const LiveActor*);
 void registerJointController(const LiveActor*, JointControllerBase*);
 void registerJointController(const LiveActor*, JointControllerBase*, const char*);
-void initJointLocalRotator(const LiveActor*, sead::Vector3<f32>*, const char*);
+void initJointLocalRotator(const LiveActor*, sead::Vector3f*, const char*);
 void initJointLocalXRotator(const LiveActor*, f32 const*, const char*);
 void initJointLocalYRotator(const LiveActor*, f32 const*, const char*);
 void initJointLocalZRotator(const LiveActor*, f32 const*, const char*);
@@ -42,10 +42,10 @@ void initJointLocalScaleControllerZ(const LiveActor*, f32 const*, const char*);
 void initJointLocalScaleController(const LiveActor*, const sead::Vector3f*, const char*);
 void initJointLocalMtxController(const LiveActor*, const sead::Matrix34f*, const char*);
 void initJointGlobalMtxController(const LiveActor*, const sead::Matrix34f*, const char*);
-void initJointGlobalQuatController(const LiveActor*, sead::Quat<f32> const*, const char*);
-void initJointGlobalQuatTransController(const LiveActor*, sead::Quat<f32> const*,
-                                        const sead::Vector3f*, const char*);
-void initJointPostQuatController(const LiveActor*, sead::Quat<f32> const*, const char*);
+void initJointGlobalQuatController(const LiveActor*, sead::Quatf const*, const char*);
+void initJointGlobalQuatTransController(const LiveActor*, sead::Quatf const*, const sead::Vector3f*,
+                                        const char*);
+void initJointPostQuatController(const LiveActor*, sead::Quatf const*, const char*);
 void initJointLocalDirController(const LiveActor*, JointDirectionInfo const*, const char*);
 void initJointAimController(const LiveActor*, JointAimInfo const*, const char*);
 void initJointTranslateShaker(const LiveActor*, s32);

@@ -10,12 +10,12 @@ class LiveActor;
 
 class HitSensor {
 public:
-    HitSensor(LiveActor*, const char*, u32, f32, u16, const sead::Vector3<f32>*,
-              const sead::Matrix34<f32>*, const sead::Vector3<f32>&);
+    HitSensor(LiveActor*, const char*, u32, f32, u16, const sead::Vector3f*, const sead::Matrix34f*,
+              const sead::Vector3f&);
 
     bool trySensorSort();
-    void setFollowPosPtr(const sead::Vector3<f32>*);
-    void setFollowMtxPtr(const sead::Matrix34<f32>*);
+    void setFollowPosPtr(const sead::Vector3f*);
+    void setFollowMtxPtr(const sead::Matrix34f*);
     void validate();
     void invalidate();
     void validateBySystem();
@@ -38,8 +38,8 @@ public:
     bool mIsValid;              // _39
     bool _3A[4];                // unknown type
     u16 _3E;
-    LiveActor* mParentActor;                // _40
-    const sead::Vector3<f32>* mFollowPos;   // _48
-    const sead::Matrix34<f32>* mFollowMtx;  // _50
+    LiveActor* mParentActor;            // _40
+    const sead::Vector3f* mFollowPos;   // _48
+    const sead::Matrix34f* mFollowMtx;  // _50
 };
 }  // namespace al

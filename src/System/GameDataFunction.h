@@ -129,7 +129,7 @@ public:
     static void changeNextStageWithEndTimeBalloon(GameDataHolderWriter);
     static void changeNextStageWithCloset(GameDataHolderWriter);
     static void findAreaAndChangeNextStage(GameDataHolderWriter, al::LiveActor const*,
-                                           sead::Vector3<f32> const*);
+                                           sead::Vector3f const*);
     static void returnPrevStage(GameDataHolderWriter);
     static bool isTimeBalloonSequence(GameDataHolderAccessor);
     static void getCurrentStageName(GameDataHolderAccessor, s32);
@@ -194,7 +194,7 @@ public:
                                             sead::BufferedSafeStringBase<char>*,
                                             al::IUseSceneObjHolder const*);
     static void getMainScenarioNumMax(GameDataHolderAccessor);
-    static void tryGetNextMainScenarioPos(sead::Vector3<f32>*, GameDataHolderAccessor);
+    static void tryGetNextMainScenarioPos(sead::Vector3f*, GameDataHolderAccessor);
     static bool isPlayScenarioCamera(GameDataHolderAccessor, QuestInfo const*);
     static bool isPlayAlreadyScenarioStartCamera(GameDataHolderAccessor, s32);
     static bool isEnterStageFirst(GameDataHolderAccessor);
@@ -300,7 +300,7 @@ public:
     static void getCoinCollectNumMax(GameDataHolderAccessor);
     static void getCoinCollectNumMax(GameDataHolderAccessor, s32);
     static void
-    tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(sead::Vector3<f32>*, const char**,
+    tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(sead::Vector3f*, const char**,
                                                                   GameDataHolderAccessor);
     static void addCoin(GameDataHolderWriter, s32);
     static void subCoin(GameDataHolderWriter, s32);
@@ -323,7 +323,7 @@ public:
     static bool isWarpCheckpoint(GameDataHolderAccessor);
     static void getCheckpointWarpObjId(GameDataHolderAccessor);
     static void registerCheckpointTrans(GameDataHolderWriter, al::PlacementId const*,
-                                        sead::Vector3<f32> const&);
+                                        sead::Vector3f const&);
     static bool isEnableUnlockHint(GameDataHolderAccessor);
     static void unlockHint(GameDataHolderWriter);
     static void unlockHintAmiibo(GameDataHolderWriter);
@@ -339,8 +339,8 @@ public:
     static void calcHintMoonRockTrans(GameDataHolderAccessor, s32);
     static void initializeHintList(GameDataHolderWriter);
     static void calcHintTransMostEasy(GameDataHolderAccessor);
-    static void calcHintTransMostNear(sead::Vector3<f32>*, GameDataHolderAccessor,
-                                      sead::Vector3<f32> const&);
+    static void calcHintTransMostNear(sead::Vector3f*, GameDataHolderAccessor,
+                                      sead::Vector3f const&);
     static void checkHintSeaOfTree(GameDataHolderAccessor, s32);
     static void checkHintSeaOfTreeMoonRock(GameDataHolderAccessor, s32);
     static void findUnlockShineNum(bool*, GameDataHolderAccessor);
@@ -438,7 +438,7 @@ public:
     static void checkUnlockHintByAmiiboForShineList(al::LayoutActor const*, s32, s32);
     static void checkShineSeaOfTreeForShineList(al::LayoutActor const*, s32, s32);
     static void getWorldTotalShineNumMax(GameDataHolderAccessor, s32);
-    static void findShineTrans(sead::Vector3<f32>*, GameDataHolderAccessor, s32, s32);
+    static void findShineTrans(sead::Vector3f*, GameDataHolderAccessor, s32, s32);
     static void getHomeTrans(GameDataHolderAccessor);
     static bool isExistHome(GameDataHolderAccessor);
     static void getMiniGameNum(GameDataHolderAccessor);
@@ -466,7 +466,7 @@ public:
     static bool isExistPoetter(GameDataHolderAccessor);
     static void getPoetterTrans(GameDataHolderAccessor);
     static void getMoonRockTrans(GameDataHolderAccessor);
-    static void setHomeTrans(al::LiveActor const*, sead::Vector3<f32> const&);
+    static void setHomeTrans(al::LiveActor const*, sead::Vector3f const&);
     static void setRaceStartNpcTrans(al::LiveActor const*);
     static void setRaceStartTrans(al::LiveActor const*);
     static void setRaceGoalTrans(al::LiveActor const*);
@@ -477,10 +477,10 @@ public:
     static void setShopNpcTrans(al::LiveActor const*, const char*, s32);
     static void setShopNpcTrans(GameDataHolderAccessor, al::PlacementInfo const&);
     static void setMiniGameInfo(GameDataHolderAccessor, al::PlacementInfo const&);
-    static void setTimeBalloonTrans(GameDataHolderAccessor, sead::Vector3<f32> const&);
-    static void setPoetterTrans(GameDataHolderAccessor, sead::Vector3<f32> const&);
-    static void setStageMapPlayerPos(GameDataHolderWriter, sead::Vector3<f32> const&);
-    static void setMoonRockTrans(GameDataHolderWriter, sead::Vector3<f32> const&);
+    static void setTimeBalloonTrans(GameDataHolderAccessor, sead::Vector3f const&);
+    static void setPoetterTrans(GameDataHolderAccessor, sead::Vector3f const&);
+    static void setStageMapPlayerPos(GameDataHolderWriter, sead::Vector3f const&);
+    static void setMoonRockTrans(GameDataHolderWriter, sead::Vector3f const&);
     static bool isBossAttackedHome(GameDataHolderAccessor);
     static void bossAttackHome(GameDataHolderWriter);
     static bool isRepairHomeByCrashedBoss(GameDataHolderAccessor);
@@ -537,9 +537,8 @@ public:
     static void getCollectBgmByIndex(GameDataHolderAccessor, s32);
     static void trySetCollectedBgm(GameDataHolderWriter, const char*, const char*);
     static void getCollectedBgmNum(GameDataHolderWriter);
-    static void registerShineInfo(GameDataHolderAccessor, ShineInfo const*,
-                                  sead::Vector3<f32> const&);
-    static void setHintTrans(GameDataHolderAccessor, s32, sead::Vector3<f32> const&);
+    static void registerShineInfo(GameDataHolderAccessor, ShineInfo const*, sead::Vector3f const&);
+    static void setHintTrans(GameDataHolderAccessor, s32, sead::Vector3f const&);
     static void resetHintTrans(GameDataHolderAccessor, s32);
     static bool isKoopaLv3(GameDataHolderAccessor);
 };
