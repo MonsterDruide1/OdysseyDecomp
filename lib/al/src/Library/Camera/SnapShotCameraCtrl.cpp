@@ -5,7 +5,7 @@
 namespace al {
 
 // NON_MATCHING
-void SnapShotCameraCtrl::load(ByamlIter const& iter) {
+void SnapShotCameraCtrl::load(const ByamlIter& iter) {
     ByamlIter param;
     if (!tryGetByamlIterByKey(&param, iter, "SnapShotParam"))
         return;

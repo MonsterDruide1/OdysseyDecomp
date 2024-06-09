@@ -56,7 +56,7 @@ public:
     bool tryGetUInt64ByIndex(u64* val, s32 index) const;
     bool tryGetDoubleByIndex(f64* val, s32 index) const;
     bool tryConvertIter(ByamlIter* iter, const ByamlData* data) const;
-    bool isEqualData(ByamlIter const& other) const;
+    bool isEqualData(const ByamlIter& other) const;
 
     const ByamlHeader* getHeader() const { return mHeader; }
 

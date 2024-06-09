@@ -20,9 +20,9 @@ class IUseCollision;
 
 class SnapShotCameraCtrl : public NerveExecutor, public IUseAudioKeeper {
 public:
-    SnapShotCameraCtrl(SnapShotCameraSceneInfo const*);
+    SnapShotCameraCtrl(const SnapShotCameraSceneInfo*);
     void start(f32);
-    void load(ByamlIter const&);
+    void load(const ByamlIter&);
     void startReset(s32);
     void update(const sead::LookAtCamera&, const IUseCollision*, const ICameraInput*);
     void makeLookAtCameraPost(sead::LookAtCamera*) const;

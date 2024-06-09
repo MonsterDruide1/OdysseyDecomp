@@ -17,7 +17,7 @@
 #include "Project/Action/ActionSeCtrl.h"
 
 namespace al {
-ActorActionKeeper::ActorActionKeeper(LiveActor* parentActor, char const* actorName,
+ActorActionKeeper::ActorActionKeeper(LiveActor* parentActor, const char* actorName,
                                      ActionAnimCtrl* animCtrl, NerveActionCtrl* nrvActionCtrl,
                                      ActionFlagCtrl* flagCtrl, ActionEffectCtrl* effectCtrl,
                                      ActionSeCtrl* seCtrl, ActionBgmCtrl* bgmCtrl,
@@ -73,7 +73,7 @@ void ActorActionKeeper::init() {
         mFlagCtrl->initPost();
     }
 }
-bool ActorActionKeeper::startAction(char const* name) {
+bool ActorActionKeeper::startAction(const char* name) {
     mIsActionRunning = true;
     if (!mNerveActionCtrl)
         tryStartActionNoAnim(name);
