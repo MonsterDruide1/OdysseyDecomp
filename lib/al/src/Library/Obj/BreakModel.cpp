@@ -46,7 +46,7 @@ void BreakModel::init(const ActorInitInfo& initInfo) {
     makeActorDead();
 }
 
-void BreakModel::appear(void) {
+void BreakModel::appear() {
     if (mRootMtx)
         updatePoseMtx(this, mRootMtx);
     else

@@ -18,15 +18,15 @@ class AudioDirector;
 class HakoniwaSequence {
 public:
     HakoniwaSequence(const char*);
-    bool isDisposable(void);
-    void updatePadSystem(void);
+    bool isDisposable();
+    void updatePadSystem();
     void destroySceneHeap(bool);
     void init(const al::SequenceInitInfo&);
-    void initSystem(void);
-    void update(void);
-    bool isEnableSave(void);
-    void drawMain(void);
-    al::Scene* getCurrentScene(void);  // {return this->curScene}
+    void initSystem();
+    void update();
+    bool isEnableSave();
+    void drawMain();
+    al::Scene* getCurrentScene();  // {return this->curScene}
 
     u8** field_0x0;
     u8 padding_120[120];
