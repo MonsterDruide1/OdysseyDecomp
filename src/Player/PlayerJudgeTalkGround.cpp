@@ -1,6 +1,6 @@
 #include "Player/PlayerJudgeTalkGround.h"
 
-#include <math/seadVectorFwd.h>
+#include <math/seadVector.h>
 
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
@@ -12,23 +12,16 @@
 #include "Player/PlayerHackKeeper.h"
 #include "Player/PlayerInput.h"
 #include "Player/PlayerStateWait.h"
-
-// TODO: Put these in the correct headers
-namespace rs {
-bool isPlayerOnGround(const al::LiveActor*);
-bool isOnGround(const al::LiveActor*, const IUsePlayerCollision*);
-bool isJustLand(const IUsePlayerCollision*);
-const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision*);
-}  // namespace rs
+#include "Util/PlayerCollisionUtil.h"
 
 PlayerJudgeTalkGround::PlayerJudgeTalkGround(
     const al::LiveActor* playerActor, const IPlayerModelChanger* playerModelChanger,
     const PlayerHackKeeper* playerHackKeeper, const PlayerCarryKeeper* playerCarryKeeper,
-    const IUsePlayerCollision* playerCollision, const PlayerInput* playerInput,
+    const IUsePlayerCollision* playerCollider, const PlayerInput* playerInput,
     const PlayerConst* playerConst, const PlayerStateWait* playerStateWait)
     : mPlayerActor(playerActor), mPlayerModelChanger(playerModelChanger),
       mPlayerHackKeeper(playerHackKeeper), mPlayerCarryKeeper(playerCarryKeeper),
-      mPlayerCollision(playerCollision), mPlayerInput(playerInput), mPlayerConst(playerConst),
+      mCollider(playerCollider), mPlayerInput(playerInput), mPlayerConst(playerConst),
       mPlayerStateWait(playerStateWait) {}
 
 void PlayerJudgeTalkGround::reset() {}
@@ -43,14 +36,13 @@ bool PlayerJudgeTalkGround::judge() const {
             f32 speedH = al::calcSpeedH(currentHackActor);
             return !(maxSpeed < speedH);
         }
-    } else if (!mPlayerModelChanger->is2DModel() &&
-               rs::isOnGround(mPlayerActor, mPlayerCollision) &&
-               !rs::isJustLand(mPlayerCollision)) {
+    } else if (!mPlayerModelChanger->is2DModel() && rs::isOnGround(mPlayerActor, mCollider) &&
+               !rs::isJustLand(mCollider)) {
         if ((mPlayerStateWait->isDead() || mPlayerStateWait->isEnableCancelAction()) &&
             !mPlayerInput->isMove() && !mPlayerCarryKeeper->isThrowHold()) {
-            const sead::Vector3f& gravity = rs::isJustLand(mPlayerCollision) ?
+            const sead::Vector3f& gravity = rs::isJustLand(mCollider) ?
                                                 al::getGravity(mPlayerActor) :
-                                                rs::getCollidedGroundNormal(mPlayerCollision);
+                                                rs::getCollidedGroundNormal(mCollider);
             sead::Vector3f velocity = al::getVelocity(mPlayerActor);
             al::verticalizeVec(&velocity, gravity, velocity);
             return !(mPlayerConst->getNormalMaxSpeed() * 0.65f < velocity.length());
@@ -58,3 +50,31 @@ bool PlayerJudgeTalkGround::judge() const {
     }
     return false;
 }
+
+/*
+bool PlayerJudgeTalkGround::judge() const {
+    auto* currentHackActor = mPlayerHackKeeper->getCurrentHackActor();
+    if (!mPlayerHackKeeper->getUnkHitSensor()) {
+        if (!mPlayerModelChanger->is2DModel() &&
+               rs::isOnGround(mPlayerActor, mCollider) &&
+               !rs::isJustLand(mCollider)) {
+        if ((mPlayerStateWait->isDead() || mPlayerStateWait->isEnableCancelAction()) &&
+            !mPlayerInput->isMove() && !mPlayerCarryKeeper->isThrowHold()) {
+            const sead::Vector3f& gravity = rs::isJustLand(mCollider) ?
+                                                al::getGravity(mPlayerActor) :
+                                                rs::getCollidedGroundNormal(mCollider);
+            sead::Vector3f velocity = al::getVelocity(mPlayerActor);
+            al::verticalizeVec(&velocity, gravity, velocity);
+            return !(mPlayerConst->getNormalMaxSpeed() * 0.65f < velocity.length());
+        }
+
+        }
+    }
+    if (rs::isPlayerOnGround(currentHackActor) && !mPlayerInput->isMove()) {
+            f32 maxSpeed = mPlayerConst->getNormalMaxSpeed() * 0.65f;
+            f32 speedH = al::calcSpeedH(currentHackActor);
+            return !(maxSpeed < speedH);
+        }
+    return false;
+}
+*/

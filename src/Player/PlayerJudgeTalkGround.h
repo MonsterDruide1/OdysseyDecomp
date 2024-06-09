@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Library/HostIO/HioNode.h"
 #include "Player/IJudge.h"
 
 namespace al {
@@ -14,15 +15,14 @@ class PlayerInput;
 class PlayerConst;
 class PlayerStateWait;
 
-class PlayerJudgeTalkGround : public IJudge {
+class PlayerJudgeTalkGround : public IJudge, public al::HioNode {
 public:
     PlayerJudgeTalkGround(const al::LiveActor* playerActor,
                           const IPlayerModelChanger* playerModelChanger,
                           const PlayerHackKeeper* playerHackKeeper,
                           const PlayerCarryKeeper* playerCarryKeeper,
-                          const IUsePlayerCollision* mPlayerCollision,
-                          const PlayerInput* playerInput, const PlayerConst* playerConst,
-                          const PlayerStateWait* playerStateWait);
+                          const IUsePlayerCollision* playerCollider, const PlayerInput* playerInput,
+                          const PlayerConst* playerConst, const PlayerStateWait* playerStateWait);
 
     void reset() override;
     void update() override;
@@ -33,7 +33,7 @@ private:
     const IPlayerModelChanger* mPlayerModelChanger;
     const PlayerHackKeeper* mPlayerHackKeeper;
     const PlayerCarryKeeper* mPlayerCarryKeeper;
-    const IUsePlayerCollision* mPlayerCollision;
+    const IUsePlayerCollision* mCollider;
     const PlayerInput* mPlayerInput;
     const PlayerConst* mPlayerConst;
     const PlayerStateWait* mPlayerStateWait;

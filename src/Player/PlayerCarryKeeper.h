@@ -2,7 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-class PlayerCarryKeeper{
+class PlayerCarryKeeper {
 public:
     bool isThrowHold() const;
 

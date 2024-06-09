@@ -1,13 +1,17 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
-#include "Project/HitSensor/HitSensor.h"
+#include <math/seadMatrix.h>
+
+namespace al {
+class LiveActor;
+class HitSensor;
+}  // namespace al
 
 class PlayerRecoverySafetyPoint;
 class HackCap;
 class PlayerInput;
 class PlayerDamageKeeper;
-class IPlayerModelChanger;
+class IPlayerMoelChanger;
 class IUsePlayerHeightCheck;
 
 class PlayerHackKeeper {
@@ -17,8 +21,8 @@ public:
                      PlayerDamageKeeper* damageKeeper, const IPlayerModelChanger* modelChanger,
                      const IUsePlayerHeightCheck* heightCheck);
 
-    inline al::LiveActor* getCurrentHackActor() const { return mCurrentHackActor; }
-    inline al::HitSensor* getUnkHitSensor() const { return mUnkHitSensor; }
+    al::LiveActor* getCurrentHackActor() const { return mCurrentHackActor; }
+    al::HitSensor* getUnkHitSensor() const { return mUnkHitSensor; }
 
 private:
     char padding[0x68];
