@@ -31,50 +31,22 @@ void PlayerJudgeTalkGround::update() {}
 bool PlayerJudgeTalkGround::judge() const {
     auto* currentHackActor = mPlayerHackKeeper->getCurrentHackActor();
     if (mPlayerHackKeeper->getUnkHitSensor()) {
-        if (rs::isPlayerOnGround(currentHackActor) && !mPlayerInput->isMove()) {
-            f32 maxSpeed = mPlayerConst->getNormalMaxSpeed() * 0.65f;
-            f32 speedH = al::calcSpeedH(currentHackActor);
-            return !(maxSpeed < speedH);
-        }
-    } else if (!mPlayerModelChanger->is2DModel() && rs::isOnGround(mPlayerActor, mCollider) &&
-               !rs::isJustLand(mCollider)) {
-        if ((mPlayerStateWait->isDead() || mPlayerStateWait->isEnableCancelAction()) &&
-            !mPlayerInput->isMove() && !mPlayerCarryKeeper->isThrowHold()) {
-            const sead::Vector3f& gravity = rs::isJustLand(mCollider) ?
-                                                al::getGravity(mPlayerActor) :
-                                                rs::getCollidedGroundNormal(mCollider);
-            sead::Vector3f velocity = al::getVelocity(mPlayerActor);
-            al::verticalizeVec(&velocity, gravity, velocity);
-            return !(mPlayerConst->getNormalMaxSpeed() * 0.65f < velocity.length());
-        }
-    }
-    return false;
-}
+        if (!rs::isPlayerOnGround(currentHackActor) || mPlayerInput->isMove())
+            return false;
 
-/*
-bool PlayerJudgeTalkGround::judge() const {
-    auto* currentHackActor = mPlayerHackKeeper->getCurrentHackActor();
-    if (!mPlayerHackKeeper->getUnkHitSensor()) {
-        if (!mPlayerModelChanger->is2DModel() &&
-               rs::isOnGround(mPlayerActor, mCollider) &&
-               !rs::isJustLand(mCollider)) {
-        if ((mPlayerStateWait->isDead() || mPlayerStateWait->isEnableCancelAction()) &&
-            !mPlayerInput->isMove() && !mPlayerCarryKeeper->isThrowHold()) {
-            const sead::Vector3f& gravity = rs::isJustLand(mCollider) ?
-                                                al::getGravity(mPlayerActor) :
-                                                rs::getCollidedGroundNormal(mCollider);
-            sead::Vector3f velocity = al::getVelocity(mPlayerActor);
-            al::verticalizeVec(&velocity, gravity, velocity);
-            return !(mPlayerConst->getNormalMaxSpeed() * 0.65f < velocity.length());
-        }
-
-        }
+        return !(mPlayerConst->getNormalMaxSpeed() * 0.65f < al::calcSpeedH(currentHackActor));
     }
-    if (rs::isPlayerOnGround(currentHackActor) && !mPlayerInput->isMove()) {
-            f32 maxSpeed = mPlayerConst->getNormalMaxSpeed() * 0.65f;
-            f32 speedH = al::calcSpeedH(currentHackActor);
-            return !(maxSpeed < speedH);
-        }
-    return false;
+
+    if (mPlayerModelChanger->is2DModel() || !rs::isOnGround(mPlayerActor, mCollider) ||
+        rs::isJustLand(mCollider) ||
+        (!mPlayerStateWait->isDead() && !mPlayerStateWait->isEnableCancelAction()) ||
+        mPlayerInput->isMove() || mPlayerCarryKeeper->isThrowHold())
+        return false;
+
+    const sead::Vector3f& gravity = rs::isJustLand(mCollider) ?
+                                        al::getGravity(mPlayerActor) :
+                                        rs::getCollidedGroundNormal(mCollider);
+    sead::Vector3f velocity = al::getVelocity(mPlayerActor);
+    al::verticalizeVec(&velocity, gravity, velocity);
+    return !(mPlayerConst->getNormalMaxSpeed() * 0.65f < velocity.length());
 }
-*/
