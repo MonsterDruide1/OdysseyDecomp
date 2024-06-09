@@ -15,5 +15,6 @@ f32 getGroundHeight(const IUsePlayerHeightCheck*);
 const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision*);
 bool isCollidedGround(const IUsePlayerCollision*);
 bool isCollidedGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
+bool isOnGroundForceSlideCode(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 
 }  // namespace rs
