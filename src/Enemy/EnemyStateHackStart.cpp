@@ -27,14 +27,14 @@ EnemyStateHackStartParam::EnemyStateHackStartParam(const char* actionName, const
     : mActionName(actionName), mVisAnimName(visAnimName), mMtpAnimName(mtpAnimName),
       mHasSubActors(hasSubActors), mUpdateSubActorShadowMap(updateSubActorShadowMap) {}
 
-static EnemyStateHackStartParam fallbackParam("HackStart", 0, 0, 0, 0);
+static EnemyStateHackStartParam sEnemyStateHackStartParam("HackStart", 0, 0, 0, 0);
 
 EnemyStateHackStart::EnemyStateHackStart(al::LiveActor* rootActor,
                                          const EnemyStateHackStartParam* param,
                                          PlayerHackStartShaderParam* shaderParam)
     : al::ActorStateBase("憑依開始", rootActor), mParam(param) {
     if (!param)
-        mParam = &fallbackParam;
+        mParam = &sEnemyStateHackStartParam;
     initNerve(&DiveIn, 0);
     mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(rootActor, shaderParam);
 }
@@ -63,11 +63,11 @@ bool EnemyStateHackStart::isHackStart() const {
 }
 
 f32 EnemyStateHackStart::calcHackStartNerveRate() const {
-    if (isHackStart()) {
-        s32 frameMax = al::getActionFrameMax(mActor, mParam->mActionName);
-        return al::calcNerveRate(this, frameMax);
-    }
-    return 0.0f;
+    if (!isHackStart())
+        return 0.0f;
+
+    s32 frameMax = al::getActionFrameMax(mActor, mParam->mActionName);
+    return al::calcNerveRate(this, frameMax);
 }
 
 void EnemyStateHackStart::exeDiveIn() {

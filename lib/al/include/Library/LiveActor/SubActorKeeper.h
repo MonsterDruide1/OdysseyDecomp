@@ -120,7 +120,7 @@ private:
 bool isExistSubActorKeeper(const LiveActor*);
 const LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
 void tryGetSubActor(const LiveActor*, const char*);
-al::LiveActor* getSubActor(const LiveActor*, s32);
+LiveActor* getSubActor(const LiveActor*, s32);
 s32 getSubActorNum(const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const char*);

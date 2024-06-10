@@ -19,7 +19,7 @@ public:
 
 private:
     const char* mStateName;
-    s32 mRandNum = 0;
+    s32 mMaxWaitTime = 0;
     f32 mWalkSpeed = -1.0f;
-    bool mIsHalfProbability = false;
+    bool mIsSwapRotation = false;
 };

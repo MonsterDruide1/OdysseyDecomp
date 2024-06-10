@@ -12,12 +12,13 @@ class PlayerHackStartShaderCtrl;
 struct PlayerHackStartShaderParam;
 
 struct EnemyStateHackStartParam {
+    EnemyStateHackStartParam(const char*, const char*, const char*, bool, bool);
+
     const char* mActionName;
     const char* mVisAnimName;
     const char* mMtpAnimName;
     bool mHasSubActors;
     bool mUpdateSubActorShadowMap;
-    EnemyStateHackStartParam(const char*, const char*, const char*, bool, bool);
 };
 
 class EnemyStateHackStart : public al::ActorStateBase {

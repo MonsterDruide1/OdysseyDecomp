@@ -34,9 +34,9 @@ void EnemyStateWander::appear() {
 void EnemyStateWander::exeWait() {
     if (al::isFirstStep(this)) {
         al::startAction(mActor, "Wait");
-        mRandNum = al::getRandom(60);
+        mMaxWaitTime = al::getRandom(60);
     }
-    if (al::isGreaterEqualStep(this, mRandNum + 120)) {
+    if (al::isGreaterEqualStep(this, mMaxWaitTime + 120)) {
         al::setNerve(this, &NrvEnemyStateWander.Walk);
         return;
     }
@@ -55,10 +55,10 @@ void EnemyStateWander::exeWait() {
 void EnemyStateWander::exeWalk() {
     if (al::isFirstStep(this)) {
         al::startAction(mActor, mStateName);
-        mRandNum = al::getRandom(50);
-        mIsHalfProbability = al::isHalfProbability();
+        mMaxWaitTime = al::getRandom(50);
+        mIsSwapRotation = al::isHalfProbability();
     }
-    if (al::isGreaterEqualStep(this, mRandNum + 100)) {
+    if (al::isGreaterEqualStep(this, mMaxWaitTime + 100)) {
         al::setNerve(this, &NrvEnemyStateWander.Wait);
         return;
     }
@@ -67,7 +67,7 @@ void EnemyStateWander::exeWalk() {
         return;
     }
 
-    if (mIsHalfProbability)
+    if (mIsSwapRotation)
         al::rotateQuatYDirDegree(mActor, 1.0f);
     else
         al::rotateQuatYDirDegree(mActor, -1.0f);

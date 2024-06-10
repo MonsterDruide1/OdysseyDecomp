@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
+#include <math/seadVector.h>
+
 #include "Library/Nerve/NerveStateBase.h"
 
 struct ParamEnemyStateRunAway {
