@@ -10,7 +10,7 @@ else()
     set(ODYSSEY_CLANG_LLD "${CMAKE_CURRENT_LIST_DIR}/clang-4.0.1")
 endif()
 
-set(NX64_OPT_FLAGS "-O3 -g")
+set(NX64_OPT_FLAGS "-O0 -g")
 set(NX64_TRIPLE aarch64-linux-elf)
 
 set(CMAKE_SYSTEM_NAME Generic)
