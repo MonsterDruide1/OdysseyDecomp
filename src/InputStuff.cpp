@@ -29,7 +29,7 @@ bool PlayerInputFunction::isHoldJump(al::LiveActor const*, int port) {
 bool PlayerInputFunction::isReleaseAction(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isReleaseJump(al::LiveActor const*, int) {CRASH}
 
-void PlayerInput::calcMoveInput(sead::Vector3f* out, const sead::Vector3f & in) {
+void PlayerInput::calcMoveInput(sead::Vector3f* out, const sead::Vector3f & in) const {
     if(mIsDisableInput) {
         *out = sead::Vector3f::zero;
     }
@@ -167,7 +167,7 @@ LABEL_15:
   al::normalize(a1);
 }
 
-void PlayerInput::calcMoveInputImpl(sead::Vector3f* out, const sead::Vector3f& in, bool flag1, bool flag2, bool flag3) {
+void PlayerInput::calcMoveInputImpl(sead::Vector3f* out, const sead::Vector3f& in, bool flag1, bool flag2, bool flag3) const {
   int PlayerInputPort; // w23
   const al::IUseSceneObjHolder *v13; // x0
   int PlayerControllerPort; // w0
@@ -305,16 +305,24 @@ void PlayerInput::calcMoveInputImpl(sead::Vector3f* out, const sead::Vector3f& i
     PlayerInput::snapAreaInput(out, in);
 }
 
-void PlayerInput::calcHoldMoveInput3D(sead::Vector3f *, const sead::Vector3f &, const sead::Matrix34f *){
+void PlayerInput::calcHoldMoveInput3D(sead::Vector3f *, const sead::Vector3f &, const sead::Matrix34f *) const {
   CRASH
 }
-void PlayerInput::snapWallAlongInput(sead::Vector3f * a2, const sead::Vector3f & a3) {
+void PlayerInput::snapWallAlongInput(sead::Vector3f * a2, const sead::Vector3f & a3) const {
   if(readInWalls > 0.0f && !al::isNearZero(a3, 0.001f))
     CRASH
 }
-void PlayerInput::snapAreaInput(sead::Vector3<float> *, const sead::Vector3<float> &) {
+void PlayerInput::snapAreaInput(sead::Vector3<float> *, const sead::Vector3<float> &) const {
   if(hasSomeSnapMoveDirArea)
     CRASH
+}
+
+bool PlayerInput::isMoveDeepDown() const {
+  if(mIsDisableInput || mIsMove) return false;
+
+  // more utility stuff
+
+  return PlayerInputFunction::getMoveInputStick(mLiveActor, 0, 0).squaredLength() > 0.64f;
 }
 
 

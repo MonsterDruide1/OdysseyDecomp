@@ -10,7 +10,9 @@
 #include "Library/stuff.h"
 #include "Player/PlayerCollider.h"
 #include "Player/PlayerFunction.h"
+#include "Player/PlayerInput.h"
 #include "Player/PlayerTrigger.h"
+#include "PlayerUtil.h"
 #include "math/seadMatrix.h"
 #include "math/seadVectorFwd.h"
 
@@ -178,6 +180,95 @@ void calcJumpInertiaWall(sead::Vector3f* a1, al::LiveActor* a2, const IUsePlayer
   a1->x = v11;
   a1->y = v10;
   a1->z = v12;
+}
+
+bool findWallEnablePush(const al::LiveActor *actor, const IUsePlayerCollision *collider, float a3, float a4) {
+  float v8; // s10
+  float v9; // s9
+  bool result; // x0
+  const sead::Vector3f *CollidedWallNormal; // x0
+  float y; // s12
+  float x; // s13
+  float z; // s14
+  float v15; // s15
+  const sead::Vector3f *Trans; // x0
+  float v17; // s0
+  float v18; // s1
+  float v19; // s10
+  float v20; // s8
+  float v21; // s11
+  float v22; // s12
+  float v23; // s13
+  float v24; // s14
+  al::IUseCollision *v25; // x19
+  int v26; // w8
+  sead::Vector3f v27; // [xsp+0h] [xbp-90h] BYREF
+  sead::Vector3f v28; // [xsp+10h] [xbp-80h] BYREF
+  sead::Vector3f a1; // [xsp+20h] [xbp-70h] BYREF
+  sead::Vector3f v30; // [xsp+30h] [xbp-60h] BYREF
+
+  if ( !rs::isCollidedWall(collider) )
+    return 0LL;
+
+  v8 = (float)(a3 + a3) / 3.0;
+  v9 = a4 * 0.5;
+  v30.x = 0.0;
+  v30.y = 0.0;
+  v30.z = 0.0;
+  if ( collider && rs::isCollidedGround(collider) )
+    v30 = rs::getCollidedGroundNormal(collider);
+  else
+    al::calcUpDir(&v30, actor);
+
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  al::calcSideDir(&a1, actor);
+  al::getGravity(actor);
+  CollidedWallNormal = &rs::getCollidedWallNormal(collider);
+  x = CollidedWallNormal->x;
+  y = CollidedWallNormal->y;
+  z = CollidedWallNormal->z;
+  v15 = a4 + 10.0;
+  Trans = &al::getTrans(actor);
+  v17 = v8 * v30.x;
+  v18 = v8 * v30.y;
+  v19 = (float)(v8 * v30.z) + Trans->z;
+  v20 = v17 + Trans->x;
+  v21 = v18 + Trans->y;
+  v22 = -(float)(v15 * y);
+  v23 = -(float)(v15 * x);
+  v27.x = v23;
+  v27.y = v22;
+  v24 = -(float)(v15 * z);
+
+  v28.x = v20 + (float)(v9 * a1.x);
+  v28.y = v21 + (float)(v9 * a1.y);
+  v28.z = v19 + (float)(v9 * a1.z);
+  v27.z = v24;
+  v26 = alCollisionUtil::checkStrikeArrow(actor, v28, v27, 0LL, 0LL);
+  result = 0LL;
+  if ( v26 )
+  {
+    v27.x = v23;
+    v27.y = v22;
+    v27.z = v24;
+    v28.x = v20 - (float)(v9 * a1.x);
+    v28.y = v21 - (float)(v9 * a1.y);
+    v28.z = v19 - (float)(v9 * a1.z);
+    return (unsigned int)alCollisionUtil::checkStrikeArrow(v25, v28, v27, 0LL, 0LL) != 0;
+  }
+
+  return result;
+}
+
+bool isCollidedWallFace(const IUsePlayerCollision* collision) {
+  if(collision->getPlayerCollider()->val2 < 0.0f) return false;
+  return collision->getPlayerCollider()->info2->isCollisionAtFace();
+}
+
+void calcHackerMoveVec(sead::Vector3<float>* vec, IUsePlayerHack const* hack, sead::Vector3<float> const& vec2) {
+  hack->getPlayerHackKeeper()->mInput->calcMoveInput(vec, vec2);
 }
 
 void calcMovePowerGround(sead::Vector3f* result, const IUsePlayerCollision* collision, const sead::Vector3f& vec) {

@@ -76,16 +76,19 @@ public:
     bool isReleaseHackJump() const;
     bool isEnableDashInput() const;
     bool isMove() const;
+    bool isHoldSquat() const;
+    bool isMoveDeepDown() const;
+    bool isSpinClockwise() const;
 
     bool isThrowTypeSpiral(const sead::Vector2f&) const;
     bool isThrowTypeRolling(const sead::Vector2f&) const;
 
-    void calcMoveInput(sead::Vector3f*, const sead::Vector3f&);
-    void calcMoveInputImpl(sead::Vector3f*, const sead::Vector3f&, bool, bool, bool);
-    void calcHoldMoveInput3D(sead::Vector3f *,sead::Vector3f const&,sead::Matrix34f const*);
+    void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;
+    void calcMoveInputImpl(sead::Vector3f*, const sead::Vector3f&, bool, bool, bool) const;
+    void calcHoldMoveInput3D(sead::Vector3f *,sead::Vector3f const&,sead::Matrix34f const*) const;
 
-    void snapWallAlongInput(sead::Vector3<float> *,sead::Vector3<float> const&);
-    void snapAreaInput(sead::Vector3<float> *,sead::Vector3<float> const&);
+    void snapWallAlongInput(sead::Vector3<float> *,sead::Vector3<float> const&) const;
+    void snapAreaInput(sead::Vector3<float> *,sead::Vector3<float> const&) const;
 
     void update();
     void updateWallAlong();

@@ -2,6 +2,7 @@
 #include "Player/PlayerActorBase.h"
 #include "Player/PlayerCollider.h"
 #include "PlayerUtil.h"
+#include "Stuff.h"
 #include "Util/PlayerCollisionUtil.h"
 #include "playerUtil.h"
 
@@ -24,4 +25,12 @@ void rs::resetCollisionPose(const IUsePlayerCollision *collider, const sead::Qua
 
 f32 rs::getGroundHeight(const IUsePlayerHeightCheck* heightCheck) {
     return heightCheck->getGroundHeight();
+}
+
+void rs::calcGroundNormalExceptJustLandOrGravityDir(sead::Vector3<float>* vec, al::LiveActor const* actor, IUsePlayerCollision const* collider) {
+    if(!rs::isJustLand(collider) && rs::isCollidedGround(collider)) {
+        *vec = rs::getCollidedGroundNormal(collider);
+    } else {
+        *vec = -al::getGravity(actor);
+    }
 }

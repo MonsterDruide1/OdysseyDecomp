@@ -769,6 +769,19 @@ f32 converge(f32 val, f32 goal, f32 step) {
   }
 }
 
+void calcSideDir(sead::Vector3<float>* side, al::LiveActor const*actor) {
+  sead::Matrix34f mtx;
+  actor->mPoseKeeper->calcBaseMtx(&mtx);
+  mtx.getBase(*side, 0);
+}
+
+bool isNearZeroOrLess(f32 value, f32 tolerance) {
+  return value <= 0.0f || value <= tolerance;
+}
+bool isNormalize(sead::Vector3<float> const& vec,float tolerance){
+  return sead::Mathf::abs(1.0f - vec.length()) <= tolerance;
+}
+
 bool sub_7100926C0C(
         sead::Vector3f *a1,
         float *a2,
@@ -1125,6 +1138,86 @@ bool isFloorPolygonCos(const sead::Vector3f &a1, const sead::Vector3f& a2, float
   return v9 && (v7 >= 0.34202);
 }
 
+bool isFloorPolygon(const sead::Vector3f & a1, const sead::Vector3f &a2) {
+  float v5;
+  bool v6; 
+  bool v7; 
+
+  if ( al::isNearZero(a1, 0.001) )
+    return 0LL;
+
+  v5 = a1.dot(a2);
+  v6 = v5 < 0.0;
+  if ( v5 <= 0.0 )
+    v5 = -v5;
+
+  v7 = v6;
+  return v7 && (v5 >= 0.34202);
+}
+
+void turnVecToVecRate(sead::Vector3<float>* a1, sead::Vector3<float> const&a2, sead::Vector3<float> const&a3, float a4) {
+  float v7; // s9
+  float v8; // s8
+  float v9; // s0
+  float v10; // s2
+  float v11; // s1
+  float v12; // s0
+  float z; // s3
+  float y; // s6
+  float v15; // s4
+  float v16; // s7
+  float v17; // s16
+  float v18; // s3
+  float v19; // s5
+  float v20; // s6
+  float v21; // s0
+  float v22; // s0
+  float v23; // s0
+  float v24; // s2
+  float v25; // [xsp+Ch] [xbp-34h] BYREF
+  sead::Vector3f v26; // [xsp+10h] [xbp-30h] BYREF
+
+  v25 = 0.0;
+  if ( (sub_7100926C0C(&v26, &v25, &a2, &a3) & 1) != 0 )
+  {
+    v7 = (float)(v25 * a4) * 0.5;
+    v8 = sead::Mathf::cos(v7);
+    v9 = sead::Mathf::sin(v7);
+    v10 = v9 * v26.y;
+    v11 = v9 * v26.x;
+    v12 = v9 * v26.z;
+  }
+  else
+  {
+    v11 = 0.0;
+    v8 = 1.0;
+    v10 = 0.0;
+    v12 = 0.0;
+  }
+
+  y = a2.y;
+  z = a2.z;
+  v15 = (float)((float)(v10 * z) - (float)(v12 * y)) + (float)(v8 * a2.x);
+  v16 = (float)(v8 * y) + (float)((float)(v12 * a2.x) - (float)(v11 * z));
+  v17 = (float)(v8 * z) + (float)((float)(v11 * y) - (float)(v10 * a2.x));
+  v18 = (float)((float)-(float)(v11 * a2.x) - (float)(v10 * y)) - (float)(v12 * z);
+  v19 = (float)((float)(v10 * v17) + (float)((float)(v8 * v15) - (float)(v12 * v16))) - (float)(v11 * v18);
+  v20 = (float)((float)((float)(v12 * v15) + (float)(v8 * v16)) - (float)(v11 * v17)) - (float)(v10 * v18);
+  v21 = (float)((float)(v8 * v17) + (float)((float)(v11 * v16) - (float)(v10 * v15))) - (float)(v12 * v18);
+  a1->z = v21;
+  v22 = sqrtf((float)((float)(v19 * v19) + (float)(v20 * v20)) + (float)(v21 * v21));
+  a1->x = v19;
+  a1->y = v20;
+  if ( v22 > 0.0 )
+  {
+    v23 = 1.0 / v22;
+    v24 = v23 * a1->y;
+    a1->x = v23 * a1->x;
+    a1->y = v24;
+    a1->z = v23 * a1->z;
+  }
+}
+
 void parallelizeVec(sead::Vector3f* a1, const sead::Vector3f& a2, const sead::Vector3f& a3) {
   f32 dot = a2.dot(a3);
   *a1 = a2 * dot;
@@ -1395,6 +1488,13 @@ bool alCollisionUtil::getHitPosAndNormalOnArrow(const al::IUseCollision* a1, sea
   mTriangle = v14->mTriangle;
   *a3 = mTriangle.getNormal(0);
   return true;
+}
+
+bool alCollisionUtil::checkStrikeArrow(const al::IUseCollision *collider, const sead::Vector3<float> &a2, const sead::Vector3<float> &a3, const al::CollisionPartsFilterBase *collFilter, const al::TriangleFilterBase *triFilter) {
+  al::CollisionDirector* director = collider->getCollisionDirector();
+  director->setPartsFilter(collFilter);
+  director->setTriFilter(triFilter);
+  return director->checkStrikeArrow(a2, a3);
 }
 
 bool alCollisionUtil::getFirstPolyOnArrow(al::IUseCollision const* a1, al::ArrowHitInfo const** a2, sead::Vector3<float> const& a3, sead::Vector3<float> const& a4, al::CollisionPartsFilterBase const*a5, al::TriangleFilterBase const*a6) {

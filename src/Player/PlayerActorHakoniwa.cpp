@@ -31,6 +31,7 @@
 #include "Player/PlayerJumpMessageRequest.h"
 #include "Player/PlayerPainPartsKeeper.h"
 #include "Player/PlayerStateFallHakoniwa.h"
+#include "Player/PlayerStateRunHakoniwa2D3D.h"
 #include "Player/PlayerStateJump.h"
 #include "Player/PlayerJudgePreInputJump.h"
 #include "Player/PlayerTrigger.h"

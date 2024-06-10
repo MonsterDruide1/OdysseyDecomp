@@ -51,6 +51,10 @@ void calcSnapVelocitySnapMoveAreaWithCutDir(sead::Vector3<float> *,al::LiveActor
 bool isCollidedCeiling(IUsePlayerCollision const*);
 void reflectCeiling(al::LiveActor *,float);
 bool isOnGroundAndGravity(al::LiveActor const*,IUsePlayerCollision const*);
+void calcGroundNormalExceptJustLandOrGravityDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
+bool isOnGroundSkateCode(al::LiveActor const*,IUsePlayerCollision const*);
+bool findWallEnablePush(al::LiveActor const*,IUsePlayerCollision const*,float,float);
+bool isCollidedWallFace(IUsePlayerCollision const*);
 
 }
 
@@ -88,6 +92,13 @@ public:
     void updateWaterSurfaceMtx(al::WaterSurfaceFinder const*);
 private:
     void* size[0xC0/8];
+};
+
+class PlayerAnimControlRun {
+public:
+    PlayerAnimControlRun(PlayerAnimator *,PlayerConst const*,IJudge const*,PlayerEffect *,bool);
+private:
+    void* size[0x40/8];
 };
 
 #include "Player/PlayerContinuousJump.h"
@@ -681,6 +692,17 @@ private:
     void* size[0x30/8];
 };
 
+class PlayerJudgeWallPush : public IJudge {
+public:
+    PlayerJudgeWallPush(al::LiveActor const*,IUsePlayerCollision const*,PlayerInput const*);
+
+    void reset() override { WARN_UNIMPL; }
+    void update() override { WARN_UNIMPL; }
+    bool judge() const override { WARN_UNIMPL;return false; }
+private:
+    void* size[0x20/8];
+};
+
 class PlayerJudgeWallHitDownRolling : public IJudge {
 public:
     PlayerJudgeWallHitDownRolling(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*,PlayerTrigger const*);
@@ -768,6 +790,28 @@ private:
     void* size[0x28/8];
 };
 
+class PlayerJudgeStartGroundSpin : public IJudge {
+public:
+    PlayerJudgeStartGroundSpin(al::LiveActor const*,IUsePlayerCollision const*,PlayerInput const*);
+
+    void reset() override { WARN_UNIMPL; }
+    void update() override { WARN_UNIMPL; }
+    bool judge() const override { WARN_UNIMPL;return false; }
+private:
+    void* size[0x18/8];
+};
+
+class PlayerJudgeWaterSurfaceRun : public IJudge {
+public:
+    PlayerJudgeWaterSurfaceRun(al::LiveActor const*,PlayerConst const*,al::WaterSurfaceFinder const*,PlayerCounterForceRun const*);
+
+    void reset() override { WARN_UNIMPL; }
+    void update() override { WARN_UNIMPL; }
+    bool judge() const override { WARN_UNIMPL;return false; }
+private:
+    void* size[0x28/8];
+};
+
 class PlayerJudgeStartWaterSurfaceRun : public IJudge {
 public:
     PlayerJudgeStartWaterSurfaceRun(al::LiveActor const*,al::WaterSurfaceFinder const*,PlayerCounterForceRun const*);
@@ -780,17 +824,8 @@ private:
 };
 
 #include "Player/PlayerJudgeSpeedCheckFall.h"
+#include "Player/PlayerJudgeStartRun.h"
 
-class PlayerJudgeStartRun : public IJudge {
-public:
-    PlayerJudgeStartRun(al::LiveActor const*,PlayerConst const*,IUsePlayerCollision const*,PlayerInput const*,PlayerCounterForceRun const*,IJudge const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x30/8];
-};
 class PlayerJudgeCapCatch : public IJudge {
 public:
     PlayerJudgeCapCatch(al::LiveActor const*,PlayerCounterAfterCapCatch const*);
@@ -861,30 +896,18 @@ private:
     void* size[0x78/8];
 };
 
-class PlayerStateRunHakoniwa2D3D : public al::NerveStateBase {
-public:
-    PlayerStateRunHakoniwa2D3D(al::LiveActor *,PlayerConst const*,IUseDimension const*,PlayerInput const*,IUsePlayerCollision const*,al::WaterSurfaceFinder const*,PlayerCounterForceRun const*,PlayerCounterQuickTurnJump const*,PlayerTrigger *,PlayerAnimator *,PlayerEffect *,PlayerJointParamCenterDynamics *,bool);
-    
-    bool isEnableLookAt(void);
-    bool isGroundSpin(void);
-    bool isSpinClockwise(void);
-    bool isRunDashFast(void);
-    bool isRunWaterSurface(void);
-    bool isBrake2D(void);
-    bool tryTurnJump(IJudge *,sead::Vector3<float> *);
-    void getTurnTiltRate(void);  // wrong return type
-    void getCenterTiltRate(void);  // wrong return type
-    void getInverseKinematicsRate(void);  // wrong return type
-    void getCapDynamicsRate(void);  // wrong return type
-private:
-    void* size[0x78/8];
-};
-
 class PlayerStateSlope : public al::NerveStateBase {
 public:
     PlayerStateSlope(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerAnimator *);
 private:
     void* size[0x50/8];
+};
+
+class PlayerStateRun2D : public al::NerveStateBase {
+public:
+    PlayerStateRun2D(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerAnimator *);
+private:
+    void* size[0x48/8];
 };
 
 class PlayerStateRolling : public al::NerveStateBase {
