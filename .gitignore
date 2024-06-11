@@ -49,3 +49,6 @@ perf.data.old
 tools/check
 tools/listsym
 tools/decompme
+
+# Cache
+data/odyssey_mappings.tsv
