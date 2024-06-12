@@ -104,9 +104,8 @@ void CameraVerticalAbsorber::update() {
         mLookAtCamera.getUp().normalize();
     if (!unk_unusedBool && !mIsInvalidated) {
         mLookAtCamera.getAt() -= mTargetInterp;
-        if (!mIsNoCameraPosAbsorb) {
+        if (!mIsNoCameraPosAbsorb)
             mLookAtCamera.getPos() -= mTargetInterp;
-        }
     }
     mLookAtCamera.doUpdateMatrix(&mLookAtCamera.getMatrix());
     mProjection.set(alCameraPoserFunction::getNear(mCameraPoser),
@@ -115,13 +114,11 @@ void CameraVerticalAbsorber::update() {
                     alCameraPoserFunction::getAspect(mCameraPoser));
     alCameraPoserFunction::calcTargetFront(&mTargetFront, mCameraPoser);
     if (!isNerve(this, &NrvCameraVerticalAbsorber.FollowGround) &&
-        alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
+        alCameraPoserFunction::isTargetCollideGround(mCameraPoser))
         setNerve(this, &NrvCameraVerticalAbsorber.FollowGround);
-    }
     if (!isNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute) &&
-        alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser)) {
+        alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser))
         setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
-    }
     updateNerve();
     sead::Vector3f prevTargetTrans = sead::Vector3f::zero;
     if (!mIsKeepInFrame) {

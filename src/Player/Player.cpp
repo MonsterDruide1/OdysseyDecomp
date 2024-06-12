@@ -153,9 +153,8 @@ void Player::attackSensor(al::HitSensor* target, al::HitSensor* source) {
         (al::isSensorEnemy(source) || al::isSensorPlayer(source)) &&
         (al::getVelocity(this).dot(al::getGravity(this)) > 0.0f) &&
         ((actorTrans - trans).dot(al::getGravity(this)) > 0.0f) &&
-        al::sendMsgPlayerAttackTrample(source, target, nullptr)) {
+        al::sendMsgPlayerAttackTrample(source, target, nullptr))
         al::setVelocityJump(this, 23.0f);
-    }
 }
 
 bool Player::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,

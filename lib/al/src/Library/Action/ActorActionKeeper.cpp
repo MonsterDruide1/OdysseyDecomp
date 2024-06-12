@@ -69,9 +69,8 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* actor, const ActorRes
 }
 
 void ActorActionKeeper::init() {
-    if (mFlagCtrl) {
+    if (mFlagCtrl)
         mFlagCtrl->initPost();
-    }
 }
 bool ActorActionKeeper::startAction(const char* name) {
     mIsActionRunning = true;

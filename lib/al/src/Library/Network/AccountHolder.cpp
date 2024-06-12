@@ -6,9 +6,8 @@ AccountHolder::AccountHolder() {
     mUserHandle = new nn::account::UserHandle;
 
     if (nn::account::OpenPreselectedUser(mUserHandle).IsSuccess() &&
-        nn::account::GetUserId(&mUid, *mUserHandle).IsSuccess()) {
+        nn::account::GetUserId(&mUid, *mUserHandle).IsSuccess())
         mIsValid = true;
-    }
 }
 
 AccountHolder::~AccountHolder() {

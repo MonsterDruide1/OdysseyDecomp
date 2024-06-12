@@ -56,17 +56,15 @@ void getByamlIterByIndex(ByamlIter*, const ByamlIter&, s32);
 template <ByamlDataType T>
 bool isTypeByIndex(const ByamlIter& rIter, s32 index) {
     ByamlData data;
-    if (rIter.getByamlDataByIndex(&data, index)) {
+    if (rIter.getByamlDataByIndex(&data, index))
         return data.getType() == T;
-    }
     return false;
 }
 template <ByamlDataType T>
 bool isTypeByKey(const ByamlIter& rIter, const char* key) {
     ByamlData data;
-    if (rIter.getByamlDataByKey(&data, key)) {
+    if (rIter.getByamlDataByKey(&data, key))
         return data.getType() == T;
-    }
     return false;
 }
 bool isTypeBoolByIndex(const ByamlIter&, s32);

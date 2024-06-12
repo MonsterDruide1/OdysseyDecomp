@@ -16,11 +16,9 @@ public:
         s32 getIndex() const { return mIndex; }
         void addEdge(Edge* edge) { mEdges.pushBack(edge); }
         void tryAddEdge(Edge* edge) {
-            for (s32 i = 0; i < mEdges.size(); i++) {
-                if (mEdges[i] == edge) {
+            for (s32 i = 0; i < mEdges.size(); i++)
+                if (mEdges[i] == edge)
                     return;
-                }
-            }
             addEdge(edge);
         }
 

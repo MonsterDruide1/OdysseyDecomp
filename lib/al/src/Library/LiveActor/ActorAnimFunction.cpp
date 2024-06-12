@@ -158,10 +158,9 @@ void setSklAnimBlendFrameAll(LiveActor* actor, f32 frame, bool isSync) {
             }
         }
     } else {
-        for (s32 j = 1; j < sklAnim->getSklAnimBlendNum(); j++) {
+        for (s32 j = 1; j < sklAnim->getSklAnimBlendNum(); j++)
             if (getSkl(actor)->isSklAnimPlaying(j))
                 getSkl(actor)->setSklAnimFrame(j, frame);
-        }
     }
 }
 void setSklAnimBlendFrameRateAll(LiveActor* actor, f32 frameRate, bool isSync) {
@@ -177,10 +176,9 @@ void setSklAnimBlendFrameRateAll(LiveActor* actor, f32 frameRate, bool isSync) {
             }
         }
     } else {
-        for (s32 j = 1; j < sklAnim->getSklAnimBlendNum(); j++) {
+        for (s32 j = 1; j < sklAnim->getSklAnimBlendNum(); j++)
             if (getSkl(actor)->isSklAnimPlaying(j))
                 getSkl(actor)->setSklAnimFrameRate(j, frameRate);
-        }
     }
 }
 void startMtpAnim(LiveActor* actor, const char* animName) {

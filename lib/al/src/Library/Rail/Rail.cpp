@@ -72,11 +72,10 @@ s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 dista
     s64 longI = -0x100000000;
     for (s32 i = 0; i < mRailPartCount; i++) {
         if (distanceOnRail <= mRailPart[i].getTotalDistance()) {
-            if (i <= 0) {
+            if (i <= 0)
                 startDistanceOnRail = distanceOnRail;
-            } else {
+            else
                 startDistanceOnRail = distanceOnRail - mRailPart[longI >> 32].getTotalDistance();
-            }
             maxRailPart = i;
             break;
         }
@@ -249,19 +248,17 @@ f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance)
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);
     f32 partLength = part->getPartLength();
-    if (partDistance && length) {
+    if (partDistance && length)
         *length = partLength - *partDistance;
-    }
     return partLength;
 }
 s32 Rail::getIncludedSectionIndex(f32 distance) const {
     return getIncludedSection(nullptr, nullptr, distance);
 }
 bool Rail::isIncludeBezierRailPart() const {
-    for (s32 i = 0; i < mRailPartCount; i++) {
+    for (s32 i = 0; i < mRailPartCount; i++)
         if (isBezierRailPart(i))
             return true;
-    }
     return false;
 }
 bool Rail::isBezierRailPart(s32 index) const {

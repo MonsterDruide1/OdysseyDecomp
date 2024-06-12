@@ -38,9 +38,8 @@ bool tryGetByamlS32(s32* pOut, const ByamlIter& rIter, const char* pKey) {
 bool tryGetByamlU32(u32* pOut, const ByamlIter& rIter, const char* pKey) {
     s32 value = 0;
     bool res = rIter.tryGetIntByKey(&value, pKey);
-    if (res) {
+    if (res)
         *pOut = value;
-    }
     return res;
 }
 
@@ -51,9 +50,8 @@ bool tryGetByamlS64(s64* pOut, const ByamlIter& rIter, const char* pKey) {
 bool tryGetByamlU64(u64* pOut, const ByamlIter& rIter, const char* pKey) {
     u64 value = 0;
     bool res = rIter.tryGetUInt64ByKey(&value, pKey);
-    if (res) {
+    if (res)
         *pOut = value;
-    }
     return res;
 }
 

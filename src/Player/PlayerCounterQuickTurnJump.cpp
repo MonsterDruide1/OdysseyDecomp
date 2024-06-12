@@ -10,11 +10,10 @@ PlayerCounterQuickTurnJump::PlayerCounterQuickTurnJump(const PlayerConst* pConst
     : mConst(pConst), mTrigger(trigger) {}
 
 void PlayerCounterQuickTurnJump::update() {
-    if (mTrigger->isOn(PlayerTrigger::EActionTrigger_QuickTurn)) {
+    if (mTrigger->isOn(PlayerTrigger::EActionTrigger_QuickTurn))
         mCounter = mConst->getQuickTurnJumpFrame();
-    } else {
+    else
         mCounter = al::converge(mCounter, 0, 1);
-    }
 }
 
 bool PlayerCounterQuickTurnJump::isEnableTurnJump() const {

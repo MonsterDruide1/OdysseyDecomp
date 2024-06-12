@@ -40,24 +40,20 @@ ActorDimensionKeeper* FireDrum2D::getActorDimensionKeeper() const {
 }
 
 void FireDrum2D::exeWait() {
-    if (al::isFirstStep(this)) {
+    if (al::isFirstStep(this))
         al::startAction(this, "Burn");
-    }
 }
 
 void FireDrum2D::exeBurn() {
-    if (al::isFirstStep(this)) {
+    if (al::isFirstStep(this))
         al::startAction(this, "Wait");
-    }
-    if (al::isActionEnd(this)) {
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
-    }
 }
 
 void FireDrum2D::attackSensor(al::HitSensor* source, al::HitSensor* target) {
-    if (rs::sendMsgTouchFireDrum2D(target, source) || rs::sendMsgEnemyAttack2D(target, source)) {
+    if (rs::sendMsgTouchFireDrum2D(target, source) || rs::sendMsgEnemyAttack2D(target, source))
         al::setNerve(this, &Burn);
-    }
 }
 
 bool FireDrum2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,

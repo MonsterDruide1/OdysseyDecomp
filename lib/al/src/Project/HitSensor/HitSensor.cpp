@@ -15,9 +15,8 @@ void HitSensor::validate() {
         mIsValid = true;
 
         if (mMaxSensorCount) {
-            if (mIsValidBySystem) {
+            if (mIsValidBySystem)
                 mHitGroup->add(this);
-            }
         }
     }
 
@@ -29,9 +28,8 @@ void HitSensor::invalidate() {
         mIsValid = false;
 
         if (mMaxSensorCount) {
-            if (mIsValidBySystem) {
+            if (mIsValidBySystem)
                 mHitGroup->remove(this);
-            }
         }
     }
 

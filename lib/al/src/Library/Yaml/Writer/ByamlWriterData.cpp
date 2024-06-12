@@ -164,9 +164,8 @@ void ByamlWriterContainer::deleteData() {}
 ByamlWriterArray::ByamlWriterArray(ByamlWriterStringTable* stringTable)
     : mStringTable(stringTable) {}
 ByamlWriterArray::~ByamlWriterArray() {
-    while (auto* node = mList.popBack()) {
+    while (auto* node = mList.popBack())
         delete node;
-    }
 }
 void ByamlWriterArray::deleteData() {
     for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
@@ -224,29 +223,25 @@ void ByamlWriterArray::writeContainer(sead::WriteStream* stream) const {
     stream->writeU8(0xC0);
     alByamlLocalUtil::writeU24(stream, mList.size());
 
-    for (auto& node : mList) {
+    for (auto& node : mList)
         stream->writeU8(node->getTypeCode());
-    }
 
     s32 i = mList.size();
     s32 v12 = i < 0 ? i + 3 : i;
     s32 v14 = i - (v12 & 0xFFFFFFFC);
     s32 v15 = 4 - v14;
     s32 v16 = v14 == 0 ? 0 : v15;
-    for (s32 j = 0; j < v16; j++) {
+    for (s32 j = 0; j < v16; j++)
         stream->writeU8(0);
-    }
-    for (auto& node : mList) {
+    for (auto& node : mList)
         node->write(stream);
-    }
 }
 void ByamlWriterArray::write(sead::WriteStream* stream) const {
     stream->writeU32(getOffset());
 }
 void ByamlWriterArray::print(s32 unknown) const {
-    for (auto node : mList) {
+    for (auto node : mList)
         node->print(unknown + 1);
-    }
 }
 bool ByamlWriterArray::isArray() const {
     return true;
@@ -259,9 +254,8 @@ ByamlWriterHash::ByamlWriterHash(ByamlWriterStringTable* stringTable1,
                                  ByamlWriterStringTable* stringTable2)
     : mStringTable1(stringTable1), mStringTable2(stringTable2) {}
 ByamlWriterHash::~ByamlWriterHash() {
-    while (auto* node = mList.popBack()) {
+    while (auto* node = mList.popBack())
         delete node;
-    }
 }
 u32 ByamlWriterHash::calcPackSize() const {
     return mList.size() * 8 + 4;

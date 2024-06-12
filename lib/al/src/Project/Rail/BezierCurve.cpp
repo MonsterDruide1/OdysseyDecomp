@@ -34,9 +34,8 @@ f32 BezierCurve::calcLength(f32 startParam, f32 endParam, s32 stepCount) const {
 
         sumVelHalfStep += calcDeltaLength((halfStepSize * (doubleI - 1)) + startParam);
 
-        if (i != stepCount) {
+        if (i != stepCount)
             sumVelFullStep += calcDeltaLength((halfStepSize * (doubleI)) + startParam);
-        }
     }
 
     return std::floor((halfStepSize * 0.33333f) *
@@ -97,9 +96,8 @@ f32 BezierCurve::calcCurveParam(f32 distance) const {
             return percent;
     }
 
-    if (percent > 1.0f || partLength < 0.0f) {
+    if (percent > 1.0f || partLength < 0.0f)
         return sead::Mathf::clamp(percent, 0.0f, 1.0f);
-    }
     return percent;
 }
 

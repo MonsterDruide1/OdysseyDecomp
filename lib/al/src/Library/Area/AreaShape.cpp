@@ -84,11 +84,10 @@ bool AreaShape::calcWorldDir(sead::Vector3f* worldDir, const sead::Vector3f& tra
 }
 
 void AreaShape::calcTrans(sead::Vector3f* trans) const {
-    if (mBaseMtxPtr) {
+    if (mBaseMtxPtr)
         mBaseMtxPtr->getTranslation(*trans);
-    } else {
+    else
         trans->e = sead::Vector3f::zero.e;
-    }
 }
 
 template <typename T>

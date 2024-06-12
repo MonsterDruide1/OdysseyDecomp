@@ -31,15 +31,12 @@ void LiveActorGroup::removeActorAll() {
 }
 
 bool LiveActorGroup::isExistActor(const LiveActor* pActor) const {
-    if (mActorCount < 1) {
+    if (mActorCount < 1)
         return false;
-    }
 
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (mActors[i] == pActor) {
+    for (s32 i = 0; i < mActorCount; i++)
+        if (mActors[i] == pActor)
             return true;
-        }
-    }
 
     return false;
 }
@@ -51,60 +48,48 @@ bool LiveActorGroup::isFull() const {
 s32 LiveActorGroup::calcAliveActorNum() const {
     s32 count = 0;
 
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (!isDead(mActors[i])) {
+    for (s32 i = 0; i < mActorCount; i++)
+        if (!isDead(mActors[i]))
             count++;
-        }
-    }
 
     return count;
 }
 
 LiveActor* LiveActorGroup::getDeadActor() const {
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (isDead(mActors[i])) {
+    for (s32 i = 0; i < mActorCount; i++)
+        if (isDead(mActors[i]))
             return mActors[i];
-        }
-    }
 
     return nullptr;
 }
 
 LiveActor* LiveActorGroup::tryFindDeadActor() const {
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (isDead(mActors[i])) {
+    for (s32 i = 0; i < mActorCount; i++)
+        if (isDead(mActors[i]))
             return mActors[i];
-        }
-    }
 
     return nullptr;
 }
 
 void LiveActorGroup::appearAll() {
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (isDead(mActors[i])) {
+    for (s32 i = 0; i < mActorCount; i++)
+        if (isDead(mActors[i]))
             mActors[i]->appear();
-        }
-    }
 }
 
 void LiveActorGroup::killAll() {
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (isAlive(mActors[i])) {
+    for (s32 i = 0; i < mActorCount; i++)
+        if (isAlive(mActors[i]))
             mActors[i]->kill();
-        }
-    }
 }
 
 void LiveActorGroup::makeActorAliveAll() {
-    for (s32 i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++)
         mActors[i]->makeActorAlive();
-    }
 }
 
 void LiveActorGroup::makeActorDeadAll() {
-    for (s32 i = 0; i < mActorCount; i++) {
+    for (s32 i = 0; i < mActorCount; i++)
         mActors[i]->makeActorDead();
-    }
 }
 }  // namespace al

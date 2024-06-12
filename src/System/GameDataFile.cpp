@@ -31,9 +31,8 @@ void GameDataFile::HintInfo::clear() {
 }
 
 bool GameDataFile::HintInfo::isDisableByWorldWarpHole(bool condition) const {
-    if (!condition && al::isEqualString(mOptionalID.cstr(), "WorldWarpHoleShine")) {
+    if (!condition && al::isEqualString(mOptionalID.cstr(), "WorldWarpHoleShine"))
         return true;
-    }
     return false;
 }
 
@@ -43,15 +42,13 @@ bool GameDataFile::HintInfo::isEnableUnlock(s32 curWorldId, bool isGameClear, s3
         if (unkBool1)
             return false;
 
-        if (mHintStatus == HintStatus::NONE) {
+        if (mHintStatus == HintStatus::NONE)
             return true;
-        }
 
-        if (isGameClear && mIsMoonRock) {
+        if (isGameClear && mIsMoonRock)
             return false;
-        } else if (!isGameClear && mIsMoonRock) {
+        else if (!isGameClear && mIsMoonRock)
             return true;
-        }
     }
 
     return false;
@@ -76,28 +73,22 @@ bool GameDataFile::HintInfo::isHintStatusUnlockByAmiibo() const {
 
 bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(s32 curWorldId, s32 scenarioNo,
                                                           bool isInWorld) const {
-    if (isDisableByWorldWarpHole(isInWorld)) {
+    if (isDisableByWorldWarpHole(isInWorld))
         return false;
-    }
-    if (mWorldIndex != curWorldId || unkBool2) {
+    if (mWorldIndex != curWorldId || unkBool2)
         return false;
-    }
-    if (mProgressBitflag.countOnBit()) {
+    if (mProgressBitflag.countOnBit())
         return mProgressBitflag.isOnBit(scenarioNo - 1);
-    }
     return true;
 }
 
 bool GameDataFile::HintInfo::testFunc(s32 curWorldId, bool isGameClear, s32 scenarioNo,
                                       bool isInWorld) const {
-    if (isDisableByWorldWarpHole(isInWorld)) {
+    if (isDisableByWorldWarpHole(isInWorld))
         return false;
-    }
-    if (mWorldIndex != curWorldId || unkBool2 || isGameClear) {
+    if (mWorldIndex != curWorldId || unkBool2 || isGameClear)
         return false;
-    }
-    if (mProgressBitflag.countOnBit()) {
+    if (mProgressBitflag.countOnBit())
         return mProgressBitflag.isOnBit(scenarioNo - 1);
-    }
     return true;
 }

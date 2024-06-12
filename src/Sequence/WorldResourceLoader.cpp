@@ -25,9 +25,8 @@ WorldResourceLoader::~WorldResourceLoader() {
     mIsCancelled = true;
     mCurLoadCount = 0;
 
-    if (mWorldResourceLoader) {
+    if (mWorldResourceLoader)
         delete mWorldResourceLoader;
-    }
 
     tryDestroyWorldResource();
 }
@@ -166,9 +165,8 @@ s32 WorldResourceLoader::getLoadWorldId() const {
 al::Resource* WorldResourceLoader::tryLoadResource(const char* resPath, const char* category,
                                                    const char* str3) {
     if (category) {
-        if (str3) {
+        if (str3)
             return al::findOrCreateResourceCategory(resPath, str3, category);
-        }
         return al::findOrCreateResource(resPath, category);
     } else {
         return al::findOrCreateResource(resPath, nullptr);
@@ -209,11 +207,10 @@ void WorldResourceLoader::loadWorldResource(s32 loadWorldId, s32 scenario, bool 
                 resEntry.tryGetStringByKey(&resName, "Name");
                 resEntry.tryGetStringByKey(&resExt, "Ext");
 
-                if (resExt) {
+                if (resExt)
                     al::findOrCreateResourceCategory(resName, resourceCategory, resExt);
-                } else {
+                else
                     al::findOrCreateResource(resName, nullptr);
-                }
 
                 if (mIsCancelled)
                     return;

@@ -39,20 +39,16 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
 }
 
 void ExecuteDirector::registerActorUpdate(LiveActor* actor, const char* tableName) {
-    if (!actor->getExecuteInfo()) {
+    if (!actor->getExecuteInfo())
         actor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
-    }
-    if (mUpdateTableCount >= 1) {
-        for (s32 i = 0; i < mUpdateTableCount; ++i) {
+    if (mUpdateTableCount >= 1)
+        for (s32 i = 0; i < mUpdateTableCount; ++i)
             mUpdateTables[i]->tryRegisterActor(actor, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::registerActorDraw(LiveActor* actor, const char* tableName) {
-    if (!actor->getExecuteInfo()) {
+    if (!actor->getExecuteInfo())
         actor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
-    }
     if (mDrawTableCount >= 1) {
         for (s32 i = 0; i < mDrawTableCount; ++i) {
             mDrawTables[i]->tryRegisterActor(actor, tableName);
@@ -62,83 +58,60 @@ void ExecuteDirector::registerActorDraw(LiveActor* actor, const char* tableName)
 }
 
 void ExecuteDirector::registerActorModelDraw(LiveActor* actor, const char* tableName) {
-    if (!actor->getExecuteInfo()) {
+    if (!actor->getExecuteInfo())
         actor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
-    }
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
+    if (mDrawTableCount >= 1)
+        for (s32 i = 0; i < mDrawTableCount; ++i)
             mDrawTables[i]->tryRegisterActorModel(actor, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::registerLayoutUpdate(LayoutActor* lyt, const char* tableName) {
-    if (!lyt->getExecuteInfo()) {
+    if (!lyt->getExecuteInfo())
         lyt->initExecuteInfo(new LayoutExecuteInfo());
-    }
-    if (mUpdateTableCount >= 1) {
-        for (s32 i = 0; i < mUpdateTableCount; ++i) {
+    if (mUpdateTableCount >= 1)
+        for (s32 i = 0; i < mUpdateTableCount; ++i)
             mUpdateTables[i]->tryRegisterLayout(lyt, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::registerLayoutDraw(LayoutActor* lyt, const char* tableName) {
-    if (!lyt->getExecuteInfo()) {
+    if (!lyt->getExecuteInfo())
         lyt->initExecuteInfo(new LayoutExecuteInfo());
-    }
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
+    if (mDrawTableCount >= 1)
+        for (s32 i = 0; i < mDrawTableCount; ++i)
             mDrawTables[i]->tryRegisterLayout(lyt, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::registerUser(IUseExecutor* user, const char* tableName) {
-    if (mUpdateTableCount >= 1) {
-        for (s32 i = 0; i < mUpdateTableCount; ++i) {
+    if (mUpdateTableCount >= 1)
+        for (s32 i = 0; i < mUpdateTableCount; ++i)
             mUpdateTables[i]->tryRegisterUser(user, tableName);
-        }
-    }
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
+    if (mDrawTableCount >= 1)
+        for (s32 i = 0; i < mDrawTableCount; ++i)
             mDrawTables[i]->tryRegisterUser(user, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::registerFunctor(const FunctorBase& functor, const char* tableName) {
-    if (mUpdateTableCount >= 1) {
-        for (s32 i = 0; i < mUpdateTableCount; ++i) {
+    if (mUpdateTableCount >= 1)
+        for (s32 i = 0; i < mUpdateTableCount; ++i)
             mUpdateTables[i]->tryRegisterFunctor(functor, tableName);
-        }
-    }
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
+    if (mDrawTableCount >= 1)
+        for (s32 i = 0; i < mDrawTableCount; ++i)
             mDrawTables[i]->tryRegisterFunctor(functor, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::registerFunctorDraw(const FunctorBase& functor, const char* tableName) {
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
+    if (mDrawTableCount >= 1)
+        for (s32 i = 0; i < mDrawTableCount; ++i)
             mDrawTables[i]->tryRegisterFunctor(functor, tableName);
-        }
-    }
 }
 
 void ExecuteDirector::createExecutorListTable() {
-    if (mUpdateTableCount >= 1) {
-        for (s32 i = 0; i < mUpdateTableCount; ++i) {
+    if (mUpdateTableCount >= 1)
+        for (s32 i = 0; i < mUpdateTableCount; ++i)
             mUpdateTables[i]->createExecutorListTable();
-        }
-    }
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
+    if (mDrawTableCount >= 1)
+        for (s32 i = 0; i < mDrawTableCount; ++i)
             mDrawTables[i]->createExecutorListTable();
-        }
-    }
 }
 
 void ExecuteDirector::execute(const char* tableName) const {
@@ -188,11 +161,9 @@ void ExecuteDirector::executeList(const char* tableName, const char* listName) c
     mRequestKeeper->executeRequestActorDrawAllOn();
     if (tableName) {
         if (mUpdateTableCount >= 1) {
-            for (s32 i = 0; i < mUpdateTableCount; ++i) {
-                if (isEqualString(tableName, mUpdateTables[i]->getName())) {
+            for (s32 i = 0; i < mUpdateTableCount; ++i)
+                if (isEqualString(tableName, mUpdateTables[i]->getName()))
                     mUpdateTables[i]->executeList(listName);
-                }
-            }
         }
     } else {
         mUpdateTables[0]->executeList(listName);
@@ -230,11 +201,9 @@ void ExecuteDirector::drawList(const char* tableName, const char* listName) cons
 bool ExecuteDirector::isActiveDraw(const char* tableName) const {
     if (tableName) {
         if (mDrawTableCount >= 1) {
-            for (s32 i = 0; i < mDrawTableCount; ++i) {
-                if (isEqualString(tableName, mDrawTables[i]->getName())) {
+            for (s32 i = 0; i < mDrawTableCount; ++i)
+                if (isEqualString(tableName, mDrawTables[i]->getName()))
                     return mDrawTables[i]->isActive();
-                }
-            }
         }
     } else {
         return mDrawTables[0]->isActive();

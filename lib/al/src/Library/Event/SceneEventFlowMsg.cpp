@@ -6,9 +6,8 @@ namespace al {
 SceneEventFlowMsg::SceneEventFlowMsg() {}
 
 bool SceneEventFlowMsg::isReceiveCommand(const char* cmd) const {
-    if (mCmd.isEmpty()) {
+    if (mCmd.isEmpty())
         return false;
-    }
 
     return isEqualString(cmd, mCmd.cstr());
 }

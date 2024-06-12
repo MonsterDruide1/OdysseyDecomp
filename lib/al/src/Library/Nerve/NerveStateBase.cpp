@@ -17,9 +17,8 @@ void NerveStateBase::kill() {
 bool NerveStateBase::update() {
     updateNerve();
 
-    if (mIsDead) {
+    if (mIsDead)
         return true;
-    }
 
     control();
 

@@ -54,30 +54,25 @@ LiveActorKit::~LiveActorKit() {
         delete mModelGroup;
         mModelGroup = nullptr;
     }
-    if (mGraphicsSystemInfo) {
+    if (mGraphicsSystemInfo)
         delete mGraphicsSystemInfo;
-    }
-    if (mModelDrawBufferUpdater) {
+    if (mModelDrawBufferUpdater)
         delete mModelDrawBufferUpdater;
-    }
 
     if (mExecutorCore1)
         delete mExecutorCore1;
     if (mExecutorCore2)
         delete mExecutorCore2;
 
-    if (mDynamicDrawActorGroup) {
-        for (s32 i = 0; i < mDynamicDrawActorGroup->getActorCount(); i++) {
+    if (mDynamicDrawActorGroup)
+        for (s32 i = 0; i < mDynamicDrawActorGroup->getActorCount(); i++)
             ((DynamicDrawActor*)mDynamicDrawActorGroup->getActor(i))->finalize();
-        }
-    }
 
     if (mEffectSystem) {
         mEffectSystem->endScene();
         mEffectSystem->setCameraDirector(nullptr);
-        if (mEffectSystem) {
+        if (mEffectSystem)
             mEffectSystem->setGraphicsSystemInfo(nullptr);
-        }
     }
 }
 

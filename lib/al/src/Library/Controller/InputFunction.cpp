@@ -8,9 +8,8 @@ sead::ControllerBase* getController_(s32 port) {
 }
 
 sead::ControllerBase* getController(s32 port) {
-    if (port == -1) {
+    if (port == -1)
         port = getMainControllerPort();
-    }
 
     return getController_(port);
 }

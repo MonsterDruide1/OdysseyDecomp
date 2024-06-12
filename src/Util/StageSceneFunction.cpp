@@ -20,9 +20,8 @@ bool rs::updateJudgeAndResult(IJudge* judge) {
 }
 
 bool rs::judgeAndResetReturnTrue(IJudge* judge) {
-    if (!judge->judge()) {
+    if (!judge->judge())
         return false;
-    }
 
     judge->reset();
 

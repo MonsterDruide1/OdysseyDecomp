@@ -44,9 +44,8 @@ void resetPosition(LiveActor* actor) {
         alSensorFunction::clearHitSensors(actor);
         alSensorFunction::updateHitSensorsAll(actor);
     }
-    if (actor->getScreenPointKeeper()) {
+    if (actor->getScreenPointKeeper())
         alScreenPointFunction::updateScreenPointAll(actor);
-    }
     if (actor->getCollider())
         actor->getCollider()->onInvalidate();
     if (actor->getCollisionParts())

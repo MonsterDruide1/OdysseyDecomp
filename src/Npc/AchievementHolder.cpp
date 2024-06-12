@@ -15,18 +15,16 @@ void AchievementHolder::init(const al::ActorInitInfo&) {
     mAchievementInfoReader->init();
     mArray.allocBuffer(mAchievementInfoReader->size(), nullptr);
 
-    for (s32 i = 0; i < mArray.capacity(); i++) {
+    for (s32 i = 0; i < mArray.capacity(); i++)
         mArray.pushBack(new Achievement(mAchievementInfoReader->get(i)));
-    }
 }
 void AchievementHolder::init() {
     mAchievementInfoReader = new AchievementInfoReader();
     mAchievementInfoReader->init();
     mArray.allocBuffer(mAchievementInfoReader->size(), nullptr);
 
-    for (s32 i = 0; i < mArray.capacity(); i++) {
+    for (s32 i = 0; i < mArray.capacity(); i++)
         mArray.pushBack(new Achievement(mAchievementInfoReader->get(i)));
-    }
 }
 
 bool AchievementHolder::isGetMoon(s32 index, GameDataHolderAccessor accessor) const {
@@ -53,9 +51,8 @@ s32 AchievementHolder::getAchievementProgressCurrent(s32 index,
         return progressCurrentRow < 0 ? 0 : max;
     }
     if (!al::isEqualSubString(*name, "Other_Coin_") && !al::isEqualString(*name, "Other_Jump") &&
-        !al::isEqualString(*name, "Other_CapThrow")) {
+        !al::isEqualString(*name, "Other_CapThrow"))
         return progressCurrentRow;
-    }
 
     s32 max = 999999999;
 
@@ -171,10 +168,9 @@ s32 AchievementHolder::getAchievementProgressCurrentRow(s32 index,
 s32 AchievementHolder::calcAchieveTotalNum(GameDataHolderAccessor accessor) const {
     s32 count = 0;
 
-    for (s32 i = 0; i < mArray.capacity(); i++) {
+    for (s32 i = 0; i < mArray.capacity(); i++)
         if (getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->get(i)->mNum)
             count++;
-    }
 
     return count;
 }
@@ -182,10 +178,9 @@ s32 AchievementHolder::calcAchieveTotalNum(GameDataHolderAccessor accessor) cons
 s32 AchievementHolder::calcMoonGetTotalNum(GameDataHolderAccessor accessor) const {
     s32 count = 0;
 
-    for (s32 i = 0; i < mArray.capacity(); i++) {
+    for (s32 i = 0; i < mArray.capacity(); i++)
         if (mArray[i]->isGet(accessor))
             count++;
-    }
 
     return count;
 }
@@ -193,10 +188,9 @@ s32 AchievementHolder::calcMoonGetTotalNum(GameDataHolderAccessor accessor) cons
 Achievement*
 AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {  // TODO mismatch
     s32 i = 0;
-    for (; i < mArray.capacity(); i++) {
+    for (; i < mArray.capacity(); i++)
         if (!mArray[i]->isGet(accessor) &&
             getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->get(i)->mNum)
             break;
-    }
     return mArray[i];
 }

@@ -12,9 +12,8 @@ void PlayerContinuousJump::update(bool shouldCountDown) {
 
     if (mCount > 0) {
         mTimer++;
-        if (mTimer >= mConst->getContinuousJumpTimer()) {
+        if (mTimer >= mConst->getContinuousJumpTimer())
             clear();
-        }
     }
 }
 
