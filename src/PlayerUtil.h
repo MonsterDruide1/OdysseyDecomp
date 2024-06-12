@@ -179,14 +179,7 @@ private:
     void* size[0x38/8];
 };
 
-class PlayerCounterAfterUpperPunch {
-public:
-    PlayerCounterAfterUpperPunch();
-    void update(PlayerTrigger const*);
-private:
-    int size[1];
-};
-
+#include "Player/PlayerCounterAfterUpperPunch.h"
 #include "Player/PlayerCounterForceRun.h"
 #include "Player/PlayerCounterQuickTurnJump.h"
 
@@ -337,17 +330,7 @@ static_assert(sizeof(PlayerBindKeeper) == 0x28);
 
 class PlayerJointParamHandLegAngle;
 class IUsePlayerCeilingCheck;
-class PlayerCarryKeeper {
-public:
-    PlayerCarryKeeper(al::LiveActor const*,al::HitSensor *,PlayerAnimator *,IPlayerModelChanger const*,IUsePlayerCeilingCheck const*,PlayerJointParamHandLegAngle *);
-    void startCancelAndRelease();
-    bool isCarry();
-    bool isThrowRelease();
-    bool isCarryUp();
-    bool updateCollideLockUp(IUsePlayerCollision const*,PlayerPushReceiver const*);
-private:
-    void* size[0xD0/8];
-};
+#include "Player/PlayerCarryKeeper.h"
 
 class PlayerSeCtrl {
 public:
@@ -426,27 +409,8 @@ private:
     void* size[0x18/8];
 };
 
-class PlayerJudgeForceSlopeSlide : public IJudge {
-public:
-    PlayerJudgeForceSlopeSlide(al::LiveActor const*,PlayerConst const*,IUsePlayerCollision const*);
-    
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x28/8];
-};
-
-class PlayerJudgeForceRolling : public IJudge {
-public:
-    PlayerJudgeForceRolling(al::LiveActor const*,IUsePlayerCollision const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x18/8];
-};
+#include "Player/PlayerJudgeForceSlopeSlide.h"
+#include "Player/PlayerJudgeForceRolling.h"
 
 class PlayerJudgeGrabCeil : public al::HioNode, public IJudge {
 public:
@@ -850,18 +814,7 @@ private:
 
 class PlayerJointParamGroundPose;
 class PlayerJointParamCenterDynamics;
-class PlayerStateWait : public al::NerveStateBase {
-public:
-    PlayerStateWait(al::LiveActor *,PlayerConst const*,IUsePlayerCollision const*,PlayerModelChangerHakoniwa const*,PlayerJointControlKeeper const*,al::WaterSurfaceFinder const*,IUsePlayerHeightCheck const*,IJudge const*,PlayerAnimator *,PlayerTrigger *,PlayerCapManHeroEyesControl *,PlayerJointParamCenterDynamics *,PlayerJointParamGroundPose *);
-    void initSceneStartAnim();
-    bool isLandStain();
-    bool isEnableCancelAction();
-    bool isEnableCancelHipDropJump();
-    bool tryConnectWait();
-    bool tryClearIgnoreSwitchOnAreaAnim();
-private:
-    void* size[0xE8/8];
-};
+#include "Player/PlayerStateWait.h"
 class PlayerStateSandSink : public al::NerveStateBase {
 public:
     PlayerStateSandSink(al::LiveActor *,PlayerConst const*,PlayerInput const*,PlayerTrigger const*,IUsePlayerCollision *,PlayerAnimator *,IJudge *,PlayerJudgePreInputJump *);
@@ -1122,15 +1075,7 @@ private:
     void* size[0x8/8];
 };
 
-class PlayerJudgeTalkGround : public IJudge {
-public:
-    PlayerJudgeTalkGround(al::LiveActor const*,IPlayerModelChanger const*,PlayerHackKeeper const*,PlayerCarryKeeper const*,IUsePlayerCollision const*,PlayerInput const*,PlayerConst const*,PlayerStateWait const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x40/8];
-};
+#include "Player/PlayerJudgeTalkGround.h"
 
 class PlayerJudgeTalkSwim : public IJudge {
 public:

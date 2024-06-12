@@ -27,7 +27,7 @@ public:
     bool executeForceHackStageStart(al::HitSensor *,IUsePlayerHack *);
 
     al::LiveActor* getCurrentHackActor() const { return mCurrentHackActor; }
-    al::HitSensor* getUnkHitSensor() const { return mUnkHitSensor; }
+    al::HitSensor* getUnkHitSensor() const { return _70; }
 public:
     al::LiveActor *mPlayer;
     HackCap *mCap;
@@ -45,7 +45,7 @@ public:
     bool _5E;
     bool pad[1];
     void *size4[1];
-    al::LiveActor *mCurrentHackActor;
-    al::HitSensor* mUnkHitSensor;
+    al::LiveActor *mCurrentHackActor = nullptr;
+    al::HitSensor* _70 = nullptr;
     void *size2[11];
 };
