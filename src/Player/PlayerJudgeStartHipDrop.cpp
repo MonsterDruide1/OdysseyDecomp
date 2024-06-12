@@ -13,9 +13,8 @@ PlayerJudgeStartHipDrop::PlayerJudgeStartHipDrop(const PlayerConst* playerConst,
       mModelChanger(playerModelChanger) {}
 
 bool PlayerJudgeStartHipDrop::judge() const {
-    if (mModelChanger->is2DModel() || !mInput->isTriggerHipDrop()) {
+    if (mModelChanger->is2DModel() || !mInput->isTriggerHipDrop())
         return false;
-    }
 
     return !(rs::getGroundHeight(mHeightCheck) < mConst->getHipDropHeight());
 }

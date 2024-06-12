@@ -26,9 +26,8 @@ ByamlWriter::~ByamlWriter() {
         delete mBigDataList;
         delete[] mContainerStack;
 
-        for (auto* node : mContainerList) {
+        for (auto* node : mContainerList)
             node->deleteData();
-        }
         while (auto* node = mContainerList.popBack()) {
             node->mList = nullptr;
             delete node->mData;
@@ -168,17 +167,17 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
         return;
 
     s32 size = iter.getSize();
-    if (iter.isTypeHash()) {
+    if (iter.isTypeHash())
         if (iterKey)
             pushHash(iterKey);
         else
             pushHash();
-    } else if (iter.isTypeArray()) {
+    else if (iter.isTypeArray())
         if (iterKey)
             pushArray(iterKey);
         else
             pushArray();
-    } else
+    else
         return;
 
     for (s32 i = 0; i < size; i++) {
@@ -290,9 +289,8 @@ u32 ByamlWriter::calcPackSize() const {
         size += mStringTable2->calcPackSize();
     if (mBigDataList)
         size += mBigDataList->calcPackSize();
-    for (auto* container : mContainerList) {
+    for (auto* container : mContainerList)
         size += container->calcPackSize();
-    }
     return size;
 }
 // NON_MATCHING: offsetBigDataList increased "too early"
@@ -317,9 +315,8 @@ void ByamlWriter::write(sead::WriteStream* stream) {
         container->setOffset(offsetBigDataList);
         offsetBigDataList += container->calcPackSize();
     }
-    for (auto* container : mContainerList) {
+    for (auto* container : mContainerList)
         container->writeContainer(stream);
-    }
 }
 
 void ByamlWriter::print() const {
@@ -327,9 +324,8 @@ void ByamlWriter::print() const {
         mStringTable1->print();
     if (mStringTable2)
         mStringTable2->print();
-    if (mCurrentContainerIndex >= 0) {
+    if (mCurrentContainerIndex >= 0)
         mContainerStack[0]->print(1);
-    }
 }
 
 }  // namespace al

@@ -16,9 +16,8 @@ void FixMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppearAndKill(this);
     registActorToDemoInfo(this, info);
 
-    if (getModelKeeper() != nullptr && !isExistAction(this) && !isViewDependentModel(this)) {
+    if (getModelKeeper() != nullptr && !isExistAction(this) && !isViewDependentModel(this))
         mIsStatic = true;
-    }
 }
 void FixMapParts::appear() {
     LiveActor::appear();

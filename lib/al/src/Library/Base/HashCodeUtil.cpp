@@ -6,23 +6,20 @@
 
 namespace al {
 s32 calcHashCode(const char* str) {
-    if (str[0] == '\0') {
+    if (str[0] == '\0')
         return 0;
-    }
 
     s32 hashCode = 0;
-    for (s32 i = 0; str[i] != '\0'; i++) {
+    for (s32 i = 0; str[i] != '\0'; i++)
         hashCode = (hashCode * 0x1f) + str[i];
-    }
 
     return hashCode;
 }
 
 s32 calcHashCodeLower(const char* str) {
     s32 hashCode = 0;
-    for (s32 i = 0; str[i] != '\0'; i++) {
+    for (s32 i = 0; str[i] != '\0'; i++)
         hashCode = (hashCode * 0x1f) + tolower(str[i]);
-    }
 
     return hashCode;
 }

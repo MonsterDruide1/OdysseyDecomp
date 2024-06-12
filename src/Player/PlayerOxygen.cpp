@@ -36,8 +36,7 @@ void PlayerOxygen::recovery() {
 #endif
 
 bool PlayerOxygen::isTriggerDamage() const {
-    if (mFramesWithoutOxygen) {
+    if (mFramesWithoutOxygen)
         return (mFramesWithoutOxygen % mOxygenDamageInterval) == 0;
-    }
     return false;
 }

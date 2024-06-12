@@ -145,9 +145,8 @@ void createWorldResourceHeap(bool useCategory) {
 }
 
 void destroyWorldResourceHeap(bool removeCategory) {
-    if (removeCategory) {
+    if (removeCategory)
         removeResourceCategory("ワールド常駐");
-    }
 
     clearFileLoaderEntry();
     alProjectInterface::getSystemKit()->getMemorySystem()->destroyWorldResourceHeap();

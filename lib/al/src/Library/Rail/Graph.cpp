@@ -22,9 +22,8 @@ void Graph::appendVertex(Vertex* vertex) {
 void Graph::removeVertex(const Vertex* vertex) {  // FIXME mismatching
     for (s32 i = 0; i < mVertices.size(); i++) {
         if (mVertices[i] == vertex) {
-            for (s32 i = 0; i < vertex->getEdges().size(); i++) {
+            for (s32 i = 0; i < vertex->getEdges().size(); i++)
                 removeEdge(vertex->getEdges()[i]);
-            }
             mVertices.erase(i);
             return;
         }
@@ -44,9 +43,8 @@ Graph::Edge* Graph::tryFindEdge(s32 index_vertex1, s32 index_vertex2) const {
     for (s32 i = 0; i < mEdges.size(); i++) {
         auto* edge = mEdges[i];
         if (edge->getVertex1()->getIndex() == index_vertex1 &&
-            edge->getVertex2()->getIndex() == index_vertex2) {
+            edge->getVertex2()->getIndex() == index_vertex2)
             return edge;
-        }
     }
     return nullptr;
 }

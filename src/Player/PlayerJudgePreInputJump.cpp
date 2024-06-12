@@ -17,9 +17,8 @@ void PlayerJudgePreInputJump::reset() {
 void PlayerJudgePreInputJump::update() {
     mRemainJumpFrame = sead::Mathi::clampMin(mRemainJumpFrame - 1, 0);
 
-    if (mInput->isTriggerJump()) {
+    if (mInput->isTriggerJump())
         mRemainJumpFrame = mConst->getContinuousJumpPreInputFrame();
-    }
 }
 
 bool PlayerJudgePreInputJump::judge() const {

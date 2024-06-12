@@ -26,11 +26,10 @@ LiveActor* PlayerHolder::getPlayer(s32 index) const {
 }
 
 LiveActor* PlayerHolder::tryGetPlayer(s32 index) const {
-    if (mBufferSize <= index) {
+    if (mBufferSize <= index)
         return nullptr;
-    } else if (mPlayerNum <= index) {
+    else if (mPlayerNum <= index)
         return nullptr;
-    }
 
     return mPlayers[index].mActor;
 }

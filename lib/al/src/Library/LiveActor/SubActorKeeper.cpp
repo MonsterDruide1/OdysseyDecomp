@@ -31,9 +31,8 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
     u8* modelResourceYaml;
 
     if (isExistModelResource(mRootActor) &&
-        !tryGetActorInitFileName(&actorInitFileName, mRootActor, "InitSubActor", suffix)) {
+        !tryGetActorInitFileName(&actorInitFileName, mRootActor, "InitSubActor", suffix))
         createFileNameBySuffix(&actorInitFileName, "InitSubActor", suffix);
-    }
 
     if (isExistModelResource(mRootActor) &&
         isExistModelResourceYaml(mRootActor, actorInitFileName.cstr(), nullptr)) {

@@ -20,20 +20,16 @@ void PlayerModelHolder::changeModel(const char* name) {
 }
 
 al::LiveActor* PlayerModelHolder::findModelActor(const char* name) const {
-    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
-        if (al::isEqualString(it->mName, sead::SafeString(name))) {
+    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it)
+        if (al::isEqualString(it->mName, sead::SafeString(name)))
             return it->mLiveActor;
-        }
-    }
     return mCurrentModel->mLiveActor;
 }
 
 al::LiveActor* PlayerModelHolder::tryFindModelActor(const char* name) const {
-    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
-        if (al::isEqualString(it->mName, sead::SafeString(name))) {
+    for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it)
+        if (al::isEqualString(it->mName, sead::SafeString(name)))
             return it->mLiveActor;
-        }
-    }
     return nullptr;
 }
 

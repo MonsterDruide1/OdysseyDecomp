@@ -18,9 +18,8 @@ s32 getAlivePlayerNum(const PlayerHolder* holder) {
 
     for (s32 i = 0; i < player_num; i++) {
         LiveActor* player = holder->tryGetPlayer(i);
-        if (isAlive(player)) {
+        if (isAlive(player))
             alive_players++;
-        }
     }
 
     return alive_players;
@@ -54,9 +53,8 @@ LiveActor* tryFindAlivePlayerActorFirst(const PlayerHolder* holder) {
 
     for (u32 i = 0; i < player_num; i++) {
         LiveActor* player = holder->tryGetPlayer(i);
-        if (!isDead(player)) {
+        if (!isDead(player))
             return player;
-        }
     }
 
     return nullptr;
@@ -67,9 +65,8 @@ LiveActor* findAlivePlayerActorFirst(const PlayerHolder* holder) {
 
     for (u32 i = 0; i < player_num; i++) {
         LiveActor* player = holder->tryGetPlayer(i);
-        if (!isDead(player)) {
+        if (!isDead(player))
             return player;
-        }
     }
 
     return nullptr;

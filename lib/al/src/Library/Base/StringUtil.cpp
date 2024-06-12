@@ -9,16 +9,14 @@ bool isEqualString(const char16_t* pString_0, const char16_t* pString_1) {
 
     while (1) {
         val = *pString_0;
-        if (val != *pString_1) {
+        if (val != *pString_1)
             break;
-        }
 
         ++pString_1;
         ++pString_0;
 
-        if (!val) {
+        if (!val)
             return true;
-        }
     }
 
     return false;

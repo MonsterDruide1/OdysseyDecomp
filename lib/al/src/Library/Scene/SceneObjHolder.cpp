@@ -8,9 +8,8 @@ SceneObjHolder::SceneObjHolder(ISceneObj* (*creator)(s32), s32 size)
     : mCreator(creator), mArraySize(size) {
     mSceneObjArray = new ISceneObj*[size];
 
-    for (s32 i = 0; i < mArraySize; i++) {
+    for (s32 i = 0; i < mArraySize; i++)
         mSceneObjArray[i] = nullptr;
-    }
 }
 
 ISceneObj* SceneObjHolder::create(s32 index) {
@@ -37,10 +36,9 @@ void SceneObjHolder::setSceneObj(ISceneObj* obj, s32 index) {
 }
 
 void SceneObjHolder::initAfterPlacementSceneObj(const ActorInitInfo& info) {
-    for (s32 i = 0; i < mArraySize; i++) {
+    for (s32 i = 0; i < mArraySize; i++)
         if (mSceneObjArray[i])
             mSceneObjArray[i]->initAfterPlacementSceneObj(info);
-    }
 }
 
 }  // namespace al

@@ -43,11 +43,10 @@ void RailPart::calcDir(sead::Vector3f* dir, f32 param) const {
     dir->x = endPos.x - startPos.x;
     dir->y = endPos.y - startPos.y;
     dir->z = endPos.z - startPos.z;
-    if (isNearZero(*dir, 0.001)) {
+    if (isNearZero(*dir, 0.001))
         *dir = {0, 0, 1};
-    } else {
+    else
         normalize(dir);
-    }
 }
 void RailPart::calcStartPos(sead::Vector3f* pos) const {
     return mBezierCurve ? mBezierCurve->calcStartPos(pos) : mLinearCurve->calcStartPos(pos);

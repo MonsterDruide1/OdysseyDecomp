@@ -26,9 +26,8 @@ inline char* add(const char* string, sead::TList<const char*>& list) {
 const char* ByamlWriterStringTable::tryAdd(const char* string) {
     for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
         s32 result = strcmp(string, it->mData);
-        if (result == 0) {
+        if (result == 0)
             return it->mData;
-        }
         if (result < 0) {
             s32 length = (s64)((strlen(string) << 32) + 0x100000000LL) >> 32;
             char* array = new char[length];
@@ -50,9 +49,8 @@ u32 ByamlWriterStringTable::calcHeaderSize() const {
 }
 u32 ByamlWriterStringTable::calcContentSize() const {
     u32 size = 0;
-    for (auto& node : mList) {
+    for (auto& node : mList)
         size += strlen(node) + 1;
-    }
     return (size + 3) & 0xFFFFFFFC;
 }
 u32 ByamlWriterStringTable::calcPackSize() const {
@@ -100,14 +98,12 @@ void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
     s32 v15 = 4 - v14;
     s32 v16 = v14 == 0 ? 0 : v15;
 
-    for (s32 j = 0; j < v16; j++) {
+    for (s32 j = 0; j < v16; j++)
         stream->writeU8(0);
-    }
 }
 void ByamlWriterStringTable::print() const {
-    for (auto& node : mList) {
+    for (auto& node : mList)
         ;
-    }
 }
 
 }  // namespace al

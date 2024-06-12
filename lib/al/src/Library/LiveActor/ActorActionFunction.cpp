@@ -24,12 +24,10 @@ bool tryStartAction(LiveActor* actor, const char* actionName) {
         bool mtsStarted = tryStartMtsAnimIfExist(actor, actionName);
         bool visStarted = tryStartVisAnimIfExistForAction(actor, actionName);
 
-        if (!sklStarted && !mtpStarted && !mclStarted && !mtsStarted && !visStarted) {
+        if (!sklStarted && !mtpStarted && !mclStarted && !mtsStarted && !visStarted)
             return false;
-        }
-        if (!actor->getActorActionKeeper()) {
+        if (!actor->getActorActionKeeper())
             return true;
-        }
     }
     actor->getActorActionKeeper()->startAction(actionName);
     return true;

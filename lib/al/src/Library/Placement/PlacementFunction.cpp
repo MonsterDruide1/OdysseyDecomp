@@ -14,18 +14,16 @@ void getPlacementInfoByKey(PlacementInfo* pOutInfo, const PlacementInfo& rInfo, 
     ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterByKey(&iterator, pKey);
 
-    if (ret) {
+    if (ret)
         pOutInfo->set(iterator, rInfo.getZoneIter());
-    }
 }
 
 void getPlacementInfoByIndex(PlacementInfo* pOutInfo, const PlacementInfo& rInfo, s32 idx) {
     ByamlIter iterator;
     bool ret = rInfo.getPlacementIter().tryGetIterByIndex(&iterator, idx);
 
-    if (ret) {
+    if (ret)
         pOutInfo->set(iterator, rInfo.getZoneIter());
-    }
 }
 
 bool tryGetPlacementInfoByIndex(PlacementInfo* pOutInfo, const PlacementInfo& rInfo, s32 idx) {
@@ -50,9 +48,8 @@ void getPlacementInfoAndKeyNameByIndex(PlacementInfo* pOutInfo, const char** pOu
 
     bool ret = rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iterator, pOutKeyName, idx);
 
-    if (ret) {
+    if (ret)
         pOutInfo->set(iterator, rInfo.getZoneIter());
-    }
 }
 
 bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* pOutInfo, const char** pOutKeyName,
@@ -112,11 +109,10 @@ bool isEqualPlacementId(const PlacementInfo& rLhs, const PlacementInfo& rRhs) {
     if (id_lhs.init(rLhs)) {
         PlacementId id_rhs;
 
-        if (id_rhs.init(rRhs)) {
+        if (id_rhs.init(rRhs))
             res = id_lhs.isEqual(id_rhs);
-        } else {
+        else
             res = false;
-        }
 
     } else {
         res = false;

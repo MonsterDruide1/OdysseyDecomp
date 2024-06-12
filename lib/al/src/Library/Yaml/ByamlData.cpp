@@ -51,9 +51,8 @@ const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
         s32 avg = (lowerBound + upperBound) / 2;
         const ByamlHashPair* pair = &pairTable[avg];
         s32 result = key - pair->getKey(mIsRev);
-        if (result == 0) {
+        if (result == 0)
             return pair;
-        }
 
         if (result > 0)
             lowerBound = avg + 1;
@@ -92,9 +91,8 @@ bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
         s32 avg = (lowerBound + upperBound) / 2;
         pair = &pairTable[avg];
         s32 result = key - pair->getKey(mIsRev);
-        if (result == 0) {
+        if (result == 0)
             break;
-        }
 
         if (result > 0)
             lowerBound = avg + 1;
