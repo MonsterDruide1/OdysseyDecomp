@@ -77,19 +77,19 @@ bool PlayerStateRunHakoniwa2D3D::isEnableLookAt() const {
     CRASH
 }
 bool PlayerStateRunHakoniwa2D3D::isGroundSpin() const {
-    CRASH
+    return al::isNerve(this, &GroundSpin3D);
 }
 bool PlayerStateRunHakoniwa2D3D::isSpinClockwise() const {
     CRASH
 }
-bool PlayerStateRunHakoniwa2D3D::isRunDashFast() const {
-    CRASH
-}
+/*bool PlayerStateRunHakoniwa2D3D::isRunDashFast() const {
+    // requires some AnimControlRun
+}*/
 bool PlayerStateRunHakoniwa2D3D::isRunWaterSurface() const {
-    CRASH
+    return al::isNerve(this, &Run3D) && rs::isJudge(mJudgeWaterSurfaceRun);
 }
 bool PlayerStateRunHakoniwa2D3D::isBrake2D() const {
-    CRASH
+    return al::isNerve(this, &Run2D) && mStateRun2D->isBrake();
 }
 bool PlayerStateRunHakoniwa2D3D::tryTurnJump(IJudge* preInputJumpJudge, sead::Vector3<float>* vec) {
     return al::isNerve(this, &Run3D) && rs::isJudge(preInputJumpJudge) && mStateRunHakoniwa->tryTurnJump(vec);

@@ -906,6 +906,7 @@ private:
 class PlayerStateRun2D : public al::NerveStateBase {
 public:
     PlayerStateRun2D(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerAnimator *);
+    bool isBrake() {return false;}
 private:
     void* size[0x48/8];
 };

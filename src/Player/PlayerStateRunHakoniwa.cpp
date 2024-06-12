@@ -1,6 +1,7 @@
 #include "Player/PlayerStateRunHakoniwa.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -106,8 +107,31 @@ bool PlayerStateRunHakoniwa::isEnableLookAt() const {
 bool PlayerStateRunHakoniwa::isRunDashFast() const {
     CRASH;
 }
-bool PlayerStateRunHakoniwa::tryTurnJump(sead::Vector3f*) {
-    CRASH;
+bool PlayerStateRunHakoniwa::tryTurnJump(sead::Vector3f* a2) {
+  if(al::isNerve(this, &Brake) || (al::isNerve(this, &Turn) && al::getNerveStep(this) <= 0)) {
+    if(!_70) return false;
+    al::calcFrontDir(a2, mActor);
+    *a2 = -*a2;
+    return true;
+  }
+  if(al::isNerve(this, &Pivot)) {
+    if(mCounterQuickTurnJump->isEnableTurnJump()) {
+      sead::Vector3f vec = mActionPivotTurnControl->_38;
+      if(al::tryNormalizeOrZero(&vec)) {
+        if(vec.dot(_80) >= 0.0f) {
+          return false;
+        }
+        *a2 = vec;
+        return true;
+      }
+    }
+    return false;
+  }
+  if(!al::isNerve(this, &Turn))
+    return false;
+
+  al::calcFrontDir(a2, mActor);
+  return true;
 }
 f32 PlayerStateRunHakoniwa::getCenterTiltRateMax() const {
     CRASH;
