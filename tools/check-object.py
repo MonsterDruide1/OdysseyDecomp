@@ -15,6 +15,8 @@ SHEET_GID = 4087080
 TSV_PATH = 'data/odyssey_mappings.tsv'
 CSV_PATH = 'data/odyssey_functions.csv'
 
+args = None
+
 def download_sheets_data(sheet_id, sheet_gid):
     url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=tsv&gid={sheet_gid}"
     print(f"Downloading function map from {url}")
@@ -104,46 +106,40 @@ def create_buffer(functions):
 
         object_size_bytes += size
 
-        color = curses.COLOR_WHITE
+        color = 4  # Default to white
         if quality == 'O':
-            color = curses.COLOR_GREEN
+            color = 2  # Green
         elif quality == 'U':
-            color = curses.COLOR_RED
-        elif quality == 'M':
-            color = curses.COLOR_YELLOW
-        elif quality == 'm':
-            color = curses.COLOR_YELLOW
+            color = 1  # Red
+        elif quality == 'M' or quality == 'm':
+            color = 3  # Yellow
 
         formatted_string = f"{quality} {function}\n"
         buffer.append((formatted_string, color))
 
     return buffer, completed_functions, total_functions, completed_size_bytes, object_size_bytes
 
-def run_tools_check(functions, current_row):
-    if current_row < len(functions):
-        start_address = functions[current_row][1]
-        command = f"tools/check {find_mangled_name_in_odyssey_functions(start_address)}"
-        try:
-            subprocess.run(command, shell=True, check=True, cwd=os.getcwd())
-        except subprocess.CalledProcessError as e:
-            print(f"\nError running tools/check: {e}")
-    else:
-        print("Invalid row index")
+
+def run_tools_check(name):
+    command = f"tools/check {name}"
+    subprocess.run(command, shell=True, check=False, cwd=os.getcwd())
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Fetch functions from a Google Sheets document')
     parser.add_argument('folder_object', nargs='?', default='', type=str, help='Folder/Object to search for')
     parser.add_argument('-r', '--refresh', action='store_true', help='Redownload the TSV file')
     parser.add_argument('-f', '--folder_view', action='store_true', help='View folders instead of functions')
+    parser.add_argument('-m', '--mismatch_view', action='store_true', help='View mismatched functions')
     return parser.parse_args()
 
 def setup_curses():
     curses.start_color()
     curses.use_default_colors()
-    curses.init_pair(curses.COLOR_RED, curses.COLOR_RED, curses.COLOR_BLACK)
-    curses.init_pair(curses.COLOR_GREEN, curses.COLOR_GREEN, curses.COLOR_BLACK)
-    curses.init_pair(curses.COLOR_YELLOW, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-    curses.init_pair(curses.COLOR_WHITE, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    curses.init_pair(1, curses.COLOR_RED, -1)    # -1 indicates the default background color
+    curses.init_pair(2, curses.COLOR_GREEN, -1)
+    curses.init_pair(3, curses.COLOR_YELLOW, -1)
+    curses.init_pair(4, curses.COLOR_WHITE, -1)
+    curses.curs_set(0)
 
 def load_tsv_data(args):
     if args.refresh or not os.path.exists(TSV_PATH):
@@ -160,7 +156,7 @@ def load_tsv_data(args):
 
 def main(stdscr):
     args = parse_arguments()
-    stdscr.clear()
+    stdscr.erase()
     setup_curses()
 
     window = curses.newwin(curses.LINES-1, curses.COLS-1, 0, 0)
@@ -170,85 +166,19 @@ def main(stdscr):
     tsv_data = load_tsv_data(args)
     folders = preprocess_tsv(TSV_PATH, CSV_PATH)
 
-    if args.folder_view:
+    if args.mismatch_view:
+        mismatch_view(stdscr, window, folders)
+    elif args.folder_view:
         if args.folder_object:
-            selected_folder, selected_object = folder_view(stdscr, window, folders, [args.folder_object])
+            folder_object = folder_view(stdscr, window, folders, [args.folder_object])
         else:
             all_folders = [folder for folder in folders]
-            selected_folder, selected_object = folder_view(stdscr, window, folders, all_folders)
-        if selected_folder is not None and selected_object is not None:
-            function_view(stdscr, window, folders, f"{selected_folder[0]}/{selected_object}")
+            folder_object = folder_view(stdscr, window, folders, all_folders)
+        if folder_object is not None:
+            function_view(stdscr, window, folders, folder_object)
     else:
         function_view(stdscr, window, folders, args.folder_object)
 
-
-
-def function_view(stdscr, window, folders, folder_object):
-    if not folder_object.endswith('.o'):
-        folder_object += '.o'
-
-    folder_object_parts = folder_object.split('/')
-    if len(folder_object_parts) > 1:
-        folder = '/'.join(folder_object_parts[:-1])
-        object_name = folder_object_parts[-1]
-    else:
-        folder = ''
-        object_name = folder_object_parts[0]
-
-    if not folder:
-        folder = next((f for f, objs in folders.items() if object_name in objs), '')
-
-    if not folder or object_name not in folders[folder]:
-        raise Exception(f"Object {object_name} not found in any folder.")
-
-    functions = folders[folder][object_name]
-    if not functions:
-        raise Exception(f"No functions found for {object_name} in folder {folder}.")
-    
-    unorganized_functions = folders["Unorganized"]["Unorganized"]
-    for function_name, address, size, quality in unorganized_functions:
-        if f"{object_name[:-2]}::" in function_name:
-            functions.append((function_name, address, size, quality))
-
-    buffer, completed_functions, total_functions, completed_size_bytes, object_size_bytes = create_buffer(functions)
-    current_row = 0
-
-    while True:
-        window.clear()
-
-        for i in range(current_row, len(buffer)):
-            string, color = buffer[i]
-            max_display_rows, max_display_cols = window.getmaxyx()
-            max_display_rows -= 1
-            max_display_cols -= 1
-
-            if i - current_row >= max_display_rows:
-                break
-            
-            if i - current_row == stdscr.getyx()[0]:
-                window.addstr(i - current_row, 0, string, curses.color_pair(color) | curses.A_REVERSE)
-            else:
-                window.addstr(i - current_row, 0, string, curses.color_pair(color))
-        
-        max_display_rows, _ = window.getmaxyx()
-        window.addstr(max_display_rows - 1, 0, f"{object_name} | Matched {completed_functions}/{total_functions} ({round(completed_functions / total_functions * 100, 3)}%) | {round(completed_size_bytes / 1024, 3)} KB / {round(object_size_bytes / 1024, 3)} KB")
-        
-        window.refresh()
-        window.move(0, 0)
-
-        key = window.getch()
-        if key == curses.KEY_DOWN:
-            current_row = min(current_row + 1, len(functions) - 1)
-        elif key == curses.KEY_UP:
-            current_row = max(current_row - 1, 0)
-        elif key == ord('\n'):
-            curses.endwin()
-            run_tools_check(functions, current_row)
-            return folder, object_name
-        elif key == ord('q'):
-            return None, None
-
-    curses.endwin()
 
 def create_folder_buffer(folders, folder):
     if folder not in folders:
@@ -294,15 +224,128 @@ def create_folder_buffer(folders, folder):
         percentage_string = f"{progress_percentage:.3f}%".rjust(9)
 
         if progress_percentage == 100:
-            color = curses.COLOR_GREEN
+            color = 2  # Green
         elif progress_percentage > 0:
-            color = curses.COLOR_YELLOW
+            color = 3  # Yellow
         else:
-            color = curses.COLOR_RED
+            color = 1  # Red
 
-        buffer.append((f"{progress_string} | {percentage_string} | {obj.ljust(30)}", color))
-    return buffer, total_completed_size, total_size
+        buffer.append((f"{progress_string} | {percentage_string} | {folder}/{obj.ljust(30)}", color))
+    return buffer, total_completed_size, total_size, total_completed_functions, total_functions
 
+def scroll_down(current_row, first_visible_row, max_display_rows, buffer):
+    if current_row < len(buffer) - 1:
+        current_row += 1
+        if current_row >= first_visible_row + max_display_rows:
+            first_visible_row += 1
+    return current_row, first_visible_row
+
+def scroll_up(current_row, first_visible_row):
+    if current_row > 0:
+        current_row -= 1
+        if current_row < first_visible_row:
+            first_visible_row -= 1
+    return current_row, first_visible_row
+
+def search_items(buffer, search_string):
+    filtered_buffer = []
+    for item in buffer:
+        if search_string.lower() in item[0].lower():
+            filtered_buffer.append(item)
+    return filtered_buffer
+
+def handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string):
+    if key == curses.KEY_DOWN:
+        current_row, first_visible_row = scroll_down(current_row, first_visible_row, max_display_rows, buffer)
+    elif key == curses.KEY_UP:
+        current_row, first_visible_row = scroll_up(current_row, first_visible_row)
+    elif key == ord('q'):
+        return None
+    elif key == curses.KEY_BACKSPACE:
+        search_string = search_string[:-1]
+    elif key >= 32 and key <= 126:
+        search_string += chr(key)
+
+    filtered_buffer = search_items(buffer, search_string)
+    current_row = min(current_row, len(filtered_buffer) - 1)
+    first_visible_row = max(0, min(first_visible_row, len(filtered_buffer) - max_display_rows))
+
+    return current_row, first_visible_row, filtered_buffer, search_string
+
+def set_cursor_position(window, max_display_rows, search_string):
+    if search_string:
+        window.move(max_display_rows + 1, len(search_string))
+        curses.curs_set(2)
+    else:
+        curses.curs_set(0)
+
+def display_items(window, max_display_rows, first_visible_row, filtered_buffer, current_row):
+    for i in range(first_visible_row, min(first_visible_row + max_display_rows, len(filtered_buffer))):
+        string, color = filtered_buffer[i]
+        if i == current_row:
+            window.addstr(i - first_visible_row, 0, string, curses.color_pair(color) | curses.A_REVERSE)
+        else:
+            window.addstr(i - first_visible_row, 0, string, curses.color_pair(color))
+
+def function_view(stdscr, window, folders, folder_object):
+    if not folder_object.endswith('.o'):
+        folder_object += '.o'
+
+    folder_object_parts = folder_object.split('/')
+    if len(folder_object_parts) > 1:
+        folder = '/'.join(folder_object_parts[:-1])
+        object_name = folder_object_parts[-1]
+    else:
+        folder = ''
+        object_name = folder_object_parts[0]
+
+    if not folder:
+        folder = next((f for f, objs in folders.items() if object_name in objs), '')
+
+    if not folder or object_name not in folders[folder]:
+        raise Exception(f"Object {object_name} not found in any folder.")
+
+    functions = folders[folder][object_name]
+    if not functions:
+        raise Exception(f"No functions found for {object_name} in folder {folder}.")
+
+    unorganized_functions = folders["Unorganized"]["Unorganized"]
+    for function_name, address, size, quality in unorganized_functions:
+        if f"{object_name[:-2]}::" in function_name:
+            functions.append((function_name, address, size, quality))
+
+    buffer, completed_functions, total_functions, completed_size_bytes, object_size_bytes = create_buffer(functions)
+    current_row = 0
+    first_visible_row = 0
+    search_string = ""
+    filtered_buffer = buffer[:]  # Initially, display all functions
+
+    while True:
+        window.erase()
+
+        max_display_rows, _ = window.getmaxyx()
+        max_display_rows -= 1
+
+        if search_string:
+            max_display_rows -= 1
+            window.addstr(max_display_rows + 1, 0, search_string)
+
+
+        display_items(window, max_display_rows, first_visible_row, filtered_buffer, current_row)
+
+        window.addstr(max_display_rows, 0, f"{object_name} | Matched {completed_functions}/{total_functions} ({round(completed_functions / total_functions * 100, 3)}%) | {round(completed_size_bytes / 1024, 3)} KB / {round(object_size_bytes / 1024, 3)} KB")
+
+        window.refresh()
+        set_cursor_position(window, max_display_rows, search_string)
+
+        key = window.getch()
+
+        if key == ord('\n'):
+            curses.endwin()
+            run_tools_check(find_mangled_name_in_odyssey_functions(functions[current_row][1]))
+            return None, None
+
+        current_row, first_visible_row, filtered_buffer, search_string = handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string)
 
 
 
@@ -312,54 +355,120 @@ def folder_view(stdscr, window, folders, folder_list):
     total_size = 0
     
     for folder in folder_list:
-        buffer, folder_completed_size, folder_total_size = create_folder_buffer(folders, folder)
+        buffer, folder_completed_size, folder_total_size, folder_total_completed_functions, folder_total_functions = create_folder_buffer(folders, folder)
         all_buffers.extend(buffer)
         total_completed_size += folder_completed_size
         total_size += folder_total_size
 
     current_row = 0
+    first_visible_row = 0
+    search_string = ""
+    filtered_buffers = all_buffers[:]  # Initially, display all buffers
 
     while True:
-        window.clear()
+        window.erase()
 
-        for i in range(current_row, len(all_buffers)):
-            string, color = all_buffers[i]
-            max_display_rows, max_display_cols = window.getmaxyx()
-            max_display_rows -= 1
-            max_display_cols -= 1
-
-            if i - current_row >= max_display_rows:
-                break
-            
-            if i - current_row == stdscr.getyx()[0]:
-                window.addstr(i - current_row, 0, string, curses.color_pair(color) | curses.A_REVERSE)
-            else:
-                window.addstr(i - current_row, 0, string, curses.color_pair(color))
-        
         max_display_rows, _ = window.getmaxyx()
-        window.addstr(max_display_rows - 1, 0, f"Selected Folders | {len(all_buffers)} items | {total_completed_size / 1024:.3f} KB / {total_size / 1024:.3f} KB")
+        max_display_rows -= 1
+
+        if search_string:
+            max_display_rows -= 1
+            window.addstr(max_display_rows + 1, 0, search_string)
+
+        for i in range(first_visible_row, min(first_visible_row + max_display_rows, len(filtered_buffers))):
+            string, color = filtered_buffers[i]
+            if i == current_row:
+                window.addstr(i - first_visible_row, 0, string, curses.color_pair(color) | curses.A_REVERSE)
+            else:
+                window.addstr(i - first_visible_row, 0, string, curses.color_pair(color))
         
+        folder_name = ""
+        if len(folder_list) == 1:
+            folder_name = f"{folder_list[0]} | "
+        window.addstr(max_display_rows, 0, f"{folder_name}{len(filtered_buffers)} items | {folder_total_completed_functions}/{folder_total_functions} functions ({folder_total_completed_functions / folder_total_functions:.3f}%) | {total_completed_size / 1024:.3f} KB / {total_size / 1024:.3f} KB")
+
         window.refresh()
-        window.move(0, 0)
+        set_cursor_position(window, max_display_rows, search_string)
 
         key = window.getch()
-        if key == curses.KEY_DOWN:
-            current_row = min(current_row + 1, len(all_buffers) - 1)
-        elif key == curses.KEY_UP:
-            current_row = max(current_row - 1, 0)
-        elif key == ord('\n'):  # Enter key pressed
-            selected_item = all_buffers[current_row]
-            selected_object = selected_item[0].split('|')[2].strip()
+
+        if key == ord('\n'):
+            path = filtered_buffers[current_row][0].split('|')[-1].strip()
+            return path
+
+        result = handle_key_press(key, current_row, first_visible_row, max_display_rows, all_buffers, search_string)
+        if result is None:  # Exit condition
             curses.endwin()
-            return folder_list, selected_object
+            return None, None
+        else:
+            current_row, first_visible_row, filtered_buffers, search_string = result
+
+def create_mismatch_buffer(folders):
+    buffer = []
+
+    longest_object_length = max(len(obj) for objects in folders.values() for obj in objects.keys())
+
+    for folder, objects in folders.items():
+        for obj, functions in objects.items():
+            for function_name, start_address, size, quality in functions:
+                if quality in ['M', 'm']:
+                    object_name = f'{folder}/{obj}'
+
+                    if quality == 'm':
+                        color = 2  # Green
+                    else:
+                        color = 3  # Yellow
+
+                    buffer.append((
+                        f"{object_name.ljust(longest_object_length)} | {quality} {hex(start_address).ljust(8)} {function_name.ljust(30)}",
+                        color
+                    ))
+    return buffer
+
+def mismatch_view(stdscr, window, folders):
+    buffer = create_mismatch_buffer(folders)
+    current_row = 0
+    first_visible_row = 0
+    search_string = ""
+    filtered_buffer = buffer[:]  # Initially, display all items
+
+    while True:
+        window.erase()
+
+        max_display_rows, _ = window.getmaxyx()
+        max_display_rows -= 1
+
+        if search_string:
+            max_display_rows -= 1
+            window.addstr(max_display_rows + 1, 0, search_string)
+
+        for i in range(first_visible_row, min(first_visible_row + max_display_rows, len(filtered_buffer))):
+            string, color = filtered_buffer[i]
+            if i == current_row:
+                window.addstr(i - first_visible_row, 0, string, curses.color_pair(color) | curses.A_REVERSE)
+            else:
+                window.addstr(i - first_visible_row, 0, string, curses.color_pair(color))
+
+        window.addstr(max_display_rows, 0, f"Mismatched Functions | {len(filtered_buffer)} items")
+
+        window.refresh()
+        set_cursor_position(window, max_display_rows, search_string)
+
+        key = window.getch()
+        if key == ord('\n'):
+            function_address = int(filtered_buffer[current_row][0].split('|')[-1].split(' ')[2], 16)
+
+            curses.endwin()
+            run_tools_check(find_mangled_name_in_odyssey_functions(function_address))
+            return None, None
         elif key == ord('q'):
             curses.endwin()
-            return None, None  # Return None for both folder and object if user quits
-
-    curses.endwin()
-
+            return None, None
+        else:
+            result = handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string)
+            if result is not None:
+                current_row, first_visible_row, filtered_buffer, search_string = result
 
 if __name__ == "__main__":
+    args = parse_arguments()
     curses.wrapper(main)
-
-print("\n")
