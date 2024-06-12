@@ -10,6 +10,7 @@ permissions:
 jobs:
   compile_verify:
     runs-on: ubuntu-latest
+    environment: PRs-allow-ExeFS
     steps:
     - name: Check out project
       uses: actions/checkout@v3
