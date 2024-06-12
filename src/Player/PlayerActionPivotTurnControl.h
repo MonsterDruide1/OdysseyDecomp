@@ -12,7 +12,7 @@ public:
     void update();
     void calcMoveDirection(sead::Vector3<float> *,sead::Vector3<float> const&);
 
-private:
+public:
     al::LiveActor *mPlayer;
     const PlayerConst *mConst;
     const PlayerInput *mInput;
@@ -21,6 +21,7 @@ private:
     sead::Vector3f _28 = {0.0f, 0.0f, 0.0f};
     float mGravity;
     sead::Vector3f _38 = {0.0f, 0.0f, 0.0f};
-    short _44 = 0;
+    bool _44 = false;
+    bool _45 = false;
     int _48 = 0;
 };

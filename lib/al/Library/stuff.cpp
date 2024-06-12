@@ -217,6 +217,18 @@ bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec) {
     return true;
 }
 
+void makeQuatAxisRotation(sead::Quat<float>* q, const sead::Vector3<float> &a2, const sead::Vector3<float> &a3, const sead::Vector3<float> &a4, float a5) {
+    sead::Vector3f vec1 = a2 - (a4 * a4.dot(a2));
+    sead::Vector3f vec2 = a3 - (a4 * a4.dot(a3));
+    sead::Vector3f vec3;
+    vec3.setCross(vec1, vec2);
+    f32 tan = sead::Mathf::atan2(vec3.length(), vec1.dot(vec2));
+    if(a4.dot(vec3) < 0.0f)
+      tan = -tan;
+    f32 angle = sead::Mathf::rad2deg(tan) * a5;
+    sead::QuatCalcCommon<float>::setAxisAngle(*q, a4, angle);
+}
+
 void separateVectorParallelVertical(sead::Vector3f* p1, sead::Vector3f* p2, const sead::Vector3f& x1, const sead::Vector3f& x2) {
     *p1 = x1 * x2.dot(x1);
     *p2 = x2 - *p1;

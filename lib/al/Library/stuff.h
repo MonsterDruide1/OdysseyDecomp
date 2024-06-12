@@ -14,6 +14,7 @@ void alongVectorNormalH(sead::Vector3f* a1, const sead::Vector3f& a2, const sead
 bool isNearZero(const sead::Vector2f&, f32);
 
 bool makeQuatRotationLimit(sead::Quatf*, sead::Vector3f const&, sead::Vector3f const&, float);
+void makeQuatAxisRotation(sead::Quat<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
 
 s32 converge(s32, s32, s32);
 f32 converge(f32, f32, f32);

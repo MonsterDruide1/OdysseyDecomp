@@ -317,6 +317,15 @@ void PlayerInput::snapAreaInput(sead::Vector3<float> *, const sead::Vector3<floa
     CRASH
 }
 
+void PlayerInput::calcMoveDirection(sead::Vector3f * dir, const sead::Vector3f & a3) const {
+  if(mIsDisableInput || !mIsMove)
+    *dir = {0.0f, 0.0f, 0.0f};
+  else {
+    calcMoveInputImpl(dir, a3, false, false, false);
+    al::tryNormalizeOrZero(dir);
+  }
+}
+
 bool PlayerInput::isMoveDeepDown() const {
   if(mIsDisableInput || mIsMove) return false;
 

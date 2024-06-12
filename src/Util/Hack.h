@@ -79,7 +79,7 @@ void updateHackActorVisibilityBySeparatePlay(al::LiveActor*, IUsePlayerHack*, co
 void startReset(al::LiveActor*);
 void endReset(al::LiveActor*);
 void calcHackerMoveVec(sead::Vector3f*, const IUsePlayerHack*, const sead::Vector3f&);
-void calcHackerMoveDir(sead::Vector3f*, const IUsePlayerHack*, const sead::Vector3f&);
+bool calcHackerMoveDir(sead::Vector3f*, const IUsePlayerHack*, const sead::Vector3f&);
 void calcHackerWallInputVec(sead::Vector3f*, sead::Vector3f*, const IUsePlayerHack*,
                             const sead::Vector3f&);
 void calcHackerWallInputVec(sead::Vector3f*, sead::Vector3f*, const sead::Vector2f&,

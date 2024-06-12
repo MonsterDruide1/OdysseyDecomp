@@ -78,7 +78,7 @@ void PlayerStateRunHakoniwa::appear() {
     _C8 = mTrigger->isOn(PlayerTrigger::EActionTrigger_val16);
     _70 = 0;
     al::setNerve(this, &Run);
-    mIsDead = true;
+    mIsDead = false;
 }
 void PlayerStateRunHakoniwa::kill() {
     mIsDead = true;
@@ -88,7 +88,17 @@ void PlayerStateRunHakoniwa::kill() {
     _C8 = false;
 }
 void PlayerStateRunHakoniwa::control() {
-    CRASH;
+    // collided wall vibration
+    if(_BC >= 1) {
+      if(al::isNerve(this, &Run)) {
+        _BC = al::converge(_BC, 0, 1);
+        // joint controlling
+      }
+    }
+
+    if(_C8 && true) {
+      _C8 = false;
+    }
 }
 bool PlayerStateRunHakoniwa::isEnableLookAt() const {
     CRASH;
@@ -106,7 +116,20 @@ f32 PlayerStateRunHakoniwa::getCapDynamicsRate() const {
     CRASH;
 }
 void PlayerStateRunHakoniwa::exePivot() {
-    CRASH;
+    if(al::isFirstStep(this)) {
+      // animator
+      mActionPivotTurnControl->reset();
+      mTurnTiltRate = 0.0f;
+    }
+    mActionPivotTurnControl->update();
+    _A4 = 0;
+    val1 = 0.0f;
+    if(mActionPivotTurnControl->_45) {
+      if(mActionPivotTurnControl->_44)
+        al::setNerve(this, &Run);
+      else
+        kill();
+    }
 }
 void PlayerStateRunHakoniwa::exeRun() {
   int mCounter; // w9
