@@ -16,7 +16,7 @@ mkdir $DESTINATION_PATH/NintendoSDK $DESTINATION_PATH/agl $DESTINATION_PATH/al $
 cp -r ./lib/NintendoSDK/include/* $DESTINATION_PATH/NintendoSDK
 cp -r ./lib/aarch64 $DESTINATION_PATH/
 cp -r ./lib/agl/include/* $DESTINATION_PATH/agl
-cp -r ./lib/al/include/* $DESTINATION_PATH/al
+rsync -a --prune-empty-dirs --include '*/' --include '*.h' --exclude '*' lib/al/ $DESTINATION_PATH/al
 cp -r ./lib/eui/include/* $DESTINATION_PATH/eui
 cp -r ./lib/sead/include/* $DESTINATION_PATH/sead
 
