@@ -39,6 +39,7 @@ public:
     bool isHoldAction() const;
     bool isHoldJump() const;
     bool isHoldHipDrop() const;
+    bool isHoldSquat() const;
     bool isTriggerStartTalk() const;
     bool isTriggerStartWorldWarp() const;
     bool isTriggerCancelWorldWarp() const;
