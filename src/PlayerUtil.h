@@ -493,9 +493,9 @@ class PlayerJudgePreInputCapThrow : public IJudge {
 public:
     PlayerJudgePreInputCapThrow(PlayerConst const*,PlayerInput const*,PlayerCarryKeeper const*,HackCap const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x60/8];
 };
@@ -504,9 +504,9 @@ class PlayerJudgePreInputHackAction : public IJudge {
 public:
     PlayerJudgePreInputHackAction(PlayerConst const*,PlayerInput const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x20/8];
 };
@@ -550,9 +550,9 @@ class PlayerJudgeStartRise : public IJudge {
 public:
     PlayerJudgeStartRise(al::LiveActor const*,PlayerAreaChecker const*,IPlayerModelChanger const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x20/8];
 };
@@ -1050,9 +1050,9 @@ class PlayerJudgeRecoveryLifeFast : public IJudge {
 public:
     PlayerJudgeRecoveryLifeFast(al::LiveActor const*,PlayerDamageKeeper const*,PlayerBindKeeper const*,IUsePlayerCollision const*,PlayerInput const*,PlayerHackKeeper const*,PlayerStateWait const*,PlayerStateSwim const*,IJudge const*);
     
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x48/8];
 };
@@ -1132,9 +1132,9 @@ private:
 class PlayerJudgeSafetyPointRecovery : public IJudge {
 public:
     PlayerJudgeSafetyPointRecovery(IJudge *,PlayerStateAbyss const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x10/8];
 };
