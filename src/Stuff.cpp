@@ -1,5 +1,6 @@
 #include "Stuff.h"
 
+#include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/CollisionUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
@@ -773,6 +774,77 @@ void calcCollidedNormalSum(sead::Vector3<float> *a1,IUsePlayerCollision const*a2
   a1->x = x * 0.33333;
   a1->y = v10 * 0.33333;
   a1->z = v11 * 0.33333;
+}
+
+al::HitSensor* tryGetCollidedGroundSensor(IUsePlayerCollision const* collider) {
+  if(collider->getPlayerCollider()->val1 < 0.0f)
+    return nullptr;
+  return collider->getPlayerCollider()->info1->mTriangle.mCollisionParts->mConnectedSensor;
+}
+
+bool calcGroundHeight(float *a1,sead::Vector3<float> *a2,al::IUseCollision const*a3,sead::Vector3<float> const&a4,sead::Vector3<float> const&a5,float a6,float a7) {
+  float v8; // s8
+  float v10; // s1
+  float y; // s3
+  float z; // s4
+  float v16; // s6
+  float v17; // s5
+  float v18; // s7
+  int v19; // w24
+  char v20; // w28
+  int v21; // w25
+  al::ArrowHitInfo *StrikeArrowInfo; // x27
+  const sead::Vector3f *FaceNormal; // x26
+  float v26; // s0
+  bool result; // w0
+  sead::Vector3f v28; // [xsp+0h] [xbp-80h] BYREF
+  sead::Vector3f v29; // [xsp+10h] [xbp-70h] BYREF
+
+  v8 = a7;
+  *a2 = a5;
+  v10 = (float)(a6 + a7) + 5.0;
+  y = a5.y;
+  z = a5.z;
+  v16 = (float)(y * a6) + a4.y;
+  v17 = (float)(a5.x * a6) + a4.x;
+  v18 = a4.z;
+  v28.x = -(float)(v10 * a5.x);
+  v28.y = -(float)(v10 * y);
+  v29.x = v17;
+  v29.y = v16;
+  v29.z = (float)(z * a6) + v18;
+  v28.z = -(float)(v10 * z);
+  v19 = alCollisionUtil::checkStrikeArrow(a3, v29, v28, 0LL, 0LL);
+  if ( v19 < 1 )
+    return 0;
+
+  v20 = 0;
+  v21 = 0;
+  do
+  {
+    StrikeArrowInfo = (al::ArrowHitInfo *)alCollisionUtil::getStrikeArrowInfo(a3, v21);
+    FaceNormal = &StrikeArrowInfo->mTriangle.getFaceNormal();
+    if ( FaceNormal->dot(a5) >= 0.5 )
+    {
+      v26 = (StrikeArrowInfo->mCollisionHitPos - a4).length();
+      if ( v26 < v8 )
+      {
+        *a2 = *FaceNormal;
+        v8 = v26;
+        v20 = 1;
+      }
+    }
+
+    ++v21;
+  }
+  while ( v19 != v21 );
+
+  if ( (v20 & 1) == 0 )
+    return 0;
+
+  result = 1;
+  *a1 = fmaxf(v8, 0.0);
+  return result;
 }
 
 }  // namespace rs

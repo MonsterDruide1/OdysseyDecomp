@@ -5,6 +5,7 @@
 
 #include "Library/HostIO/HioNode.h"
 #include "math/seadBoundBox.h"
+#include "math/seadVectorFwd.h"
 
 enum class CollisionShapeId : u32 {
     Arrow = 0,
@@ -118,15 +119,27 @@ public:
     void setIgnoreGround() { isIgnoreGround = true; }
 
 private:
-    void* size[13];
-    bool isSupportGround;
+    float mBoundingRadius = 0.0f;
+    float mBoundingRadiusWorld = 0.0f;
+    float mCheckStepRange = 0.0f;
+    float mCheckStepRangeWorld = 0.0f;
+    float _28 = 0.0f;
+    float _2C = 0.0f;
+    sead::Vector3f mBoundingCenter;
+    sead::Vector3f _3C = sead::Vector3f::ey;
+    float _48 = 0.0f;
+    float _4C = 0.0f;
+    sead::Vector3f mBoundingCenterWorld = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _5C = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _68 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _74 = {0.0f, 0.0f, 0.0f};
+    bool isSupportGround = false;
     bool pad[3];
-    float unk1;
-    int gap3;
-    sead::Vector3f mUp;
-    void* size2[1];
-    int gap;
-    bool isIgnoreGround;
+    float unk1 = 0.0f;
+    float _88 = 0.0f;
+    sead::Vector3f mUp = sead::Vector3f::ey;
+    sead::Vector3f _98 = sead::Vector3f::ey;
+    bool isIgnoreGround = false;
     bool flags[3];
 };
 static_assert(sizeof(CollisionShapeInfoDisk) == 0xA8);

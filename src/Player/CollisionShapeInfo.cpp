@@ -1,6 +1,6 @@
 #include "Player/CollisionShapeInfo.h"
-#include "math/seadMatrix.h"
 #include "Library/Math/MathUtil.h"
+#include "math/seadMatrix.h"
 
 #include <cstdio>
 
@@ -31,7 +31,8 @@ void CollisionShapeInfoBase::calcRelativeShapeInfo(const sead::Matrix34f& matrix
 
 CollisionShapeInfoSphere::CollisionShapeInfoSphere(char const* name, float boundingRadius,
                                                    const sead::Vector3f& boundingCenter)
-    : CollisionShapeInfoBase(CollisionShapeId::Sphere, name), mBoundingRadius(boundingRadius), mBoundingCenter(boundingCenter) {
+    : CollisionShapeInfoBase(CollisionShapeId::Sphere, name), mBoundingRadius(boundingRadius),
+      mBoundingCenter(boundingCenter) {
     calcWorldShapeInfo(sead::Matrix34f::ident, 1.0f);
 }
 const sead::Vector3f& CollisionShapeInfoSphere::getBoundingCenter() const {
@@ -65,10 +66,10 @@ void CollisionShapeInfoSphere::calcRelativeShapeInfo(const sead::Matrix34f& mtx)
     mRelativeShapeInfo.setMul(mtx, mBoundingCenterWorld);
 }
 
-
-CollisionShapeInfoArrow::CollisionShapeInfoArrow(const char* name, const sead::Vector3f& a3, const sead::Vector3f& a4, f32 a5, s32 a6)
-    : CollisionShapeInfoBase(CollisionShapeId::Arrow, name), a3(a3), a4(a4), a5(a5), mArrowIndex(a6) {
-    printf("CollisionShapeInfoArrow::CollisionShapeInfoArrow(%s, (%f, %f, %f), (%f, %f, %f), %f, %d)\n", name, a3.x, a3.y, a3.z, a4.x, a4.y, a4.z, a5, a6);
+CollisionShapeInfoArrow::CollisionShapeInfoArrow(const char* name, const sead::Vector3f& a3,
+                                                 const sead::Vector3f& a4, f32 a5, s32 a6)
+    : CollisionShapeInfoBase(CollisionShapeId::Arrow, name), a3(a3), a4(a4), a5(a5),
+      mArrowIndex(a6) {
     // inlined call to updateShapeOffset?
     /*mBoundingCenter = (a3 + sead::Vector3f{0.0f, 0.0f, 0.0f}) + (a4 * 0.5f);
     mBoundingRadius = a4.length() * 0.5f;*/
@@ -111,4 +112,16 @@ void CollisionShapeInfoArrow::calcWorldShapeInfo(const sead::Matrix34f& mtx, f32
 void CollisionShapeInfoArrow::calcRelativeShapeInfo(const sead::Matrix34f& mtx) {
     vec5.setMul(mtx, vec2);
     vec6.setRotated(mtx, vec4);
+}
+
+CollisionShapeInfoDisk::CollisionShapeInfoDisk(char const* name, float a1,
+                                               sead::Vector3<float> const& a3,
+                                               sead::Vector3<float> const& a4, float a5)
+    : CollisionShapeInfoBase(CollisionShapeId::Disk, name) {
+    _28 = a1;
+    _3C = a4;
+    _48 = a5;
+    mBoundingRadius = sead::Mathf::sqrt(a1 * a1 + a5 * a5);
+    mCheckStepRange = sead::Mathf::min(_28, 2 * _48);
+    calcWorldShapeInfo(sead::Matrix34f::ident, 1.0f);
 }

@@ -24,7 +24,7 @@
 #include "Player/IUsePlayerCollision.h"
 #include "Player/PlayerActorBase.h"
 #include "Player/PlayerCollider.h"
-#include "CUSTOM/PlayerColliderHakoniwa.h"
+#include "Player/PlayerColliderHakoniwa.h"
 #include "Player/PlayerFunction.h"
 #include "Player/PlayerInput.h"
 #include "Player/PlayerInputFunction.h"
@@ -41,7 +41,6 @@
 #include "Util/ActorDimensionKeeper.h"
 #include "Util/StageSceneFunction.h"
 #include "playerUtil.h"
-#include "CUSTOM/PlayerColliderHakoniwa.h"
 
 namespace {
 
@@ -959,7 +958,7 @@ ActorDimensionKeeper* PlayerActorHakoniwa::getActorDimensionKeeper() const {
 void PlayerActorHakoniwa::updateModelShadowDropLength() { CRASH }
 void PlayerActorHakoniwa::executeAfterCapTarget() { CRASH }
 // TODO missing to enable changing collision on duck/dive/...
-void PlayerActorHakoniwa::syncSensorAndCollision() { WARN_UNIMPL; }
+void PlayerActorHakoniwa::syncSensorAndCollision() { WARN_UNIMPL;mPlayerColliderHakoniwa->changeCollisionNormal(); }
 //void PlayerActorHakoniwa::checkDamageFromCollision() { WARN_UNIMPL; }
 void PlayerActorHakoniwa::executePreMovementNerveChange() {
     if(PlayerFunction::isPlayerDeadStatus(this) || al::isNerve(this, &Demo)) {

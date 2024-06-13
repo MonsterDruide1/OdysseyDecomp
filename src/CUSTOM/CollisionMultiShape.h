@@ -39,4 +39,6 @@ private:
 class CollisionMultiShape : public game::CollisionMultiShape {
 public:
     CollisionMultiShape(const al::IUseCollision* part, int s) : game::CollisionMultiShape(part, s) {}
+
+    void validateCorrectMovePartsCheck() {WARN_UNIMPL;}
 };

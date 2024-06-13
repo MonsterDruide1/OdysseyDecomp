@@ -6,7 +6,7 @@
 #include "Util/PlayerCollisionUtil.h"
 #include "playerUtil.h"
 
-#include "CUSTOM/PlayerColliderHakoniwa.h"
+#include "Player/PlayerColliderHakoniwa.h"
 
 
 void rs::initPlayerActorInfo(PlayerActorBase* player, PlayerInitInfo const& info) {

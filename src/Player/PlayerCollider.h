@@ -16,7 +16,7 @@ class CollisionPartsFilterBase;
 class CollisionShapeKeeper;
 class CollisionMultiShape;
 
-class PlayerCollider : public al::HioNode, al::IUseCollision
+class PlayerCollider : public al::HioNode, public al::IUseCollision
 {
 public:
     PlayerCollider(al::CollisionDirector *,sead::Matrix34f const*,sead::Vector3f const*,sead::Vector3f const*,bool);
@@ -49,6 +49,8 @@ public:
     void validateCorrectMovePartsCheck() const;
 
     al::CollisionDirector* getCollisionDirector() const override;
+
+    void setIsValidGroundSupport(bool isValidGroundSupport) { mIsValidGroundSupport = isValidGroundSupport; }
     
 
     

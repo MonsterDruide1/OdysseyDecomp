@@ -186,7 +186,13 @@ void LiveActor::movement() {
 void LiveActor::calcAnim() { CRASH }
 void LiveActor::startClipped() { CRASH }
 void LiveActor::endClipped() { CRASH }
-sead::Matrix34f* LiveActor::getBaseMtx() const { CRASH }
+sead::Matrix34f* LiveActor::getBaseMtx() const {
+    if(mModelKeeper)
+        return mModelKeeper->getBaseMtx();
+    if(mPoseKeeper)
+        return mPoseKeeper->getMtxPtr();
+    return nullptr;
+}
 SceneObjHolder* LiveActor::getSceneObjHolder() const { CRASH }
 CollisionDirector* LiveActor::getCollisionDirector() const {
     return mSceneInfo->mCollisionDirector;

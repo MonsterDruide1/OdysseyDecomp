@@ -4,6 +4,7 @@
 #include "Library/Collision/KTriangle.h"
 #include "MapObj/AnagramAlphabetCharacter.h"
 #include "Player/IUsePlayerCollision.h"
+#include "Player/PlayerCollider.h"
 #include "Player/PlayerConst.h"
 #include "Player/PlayerTrigger.h"
 
@@ -64,5 +65,10 @@ void waitGround(al::LiveActor *,IUsePlayerCollision const*,float,float,float,flo
 void landGroundPoseAndSnap(al::LiveActor *,PlayerTrigger *,float *,IUsePlayerCollision const*,PlayerConst const*);
 bool reboundVelocityFromCollision(al::LiveActor *,IUsePlayerCollision const*,float,float,float);
 void calcCollidedNormalSum(sead::Vector3<float> *,IUsePlayerCollision const*);
+
+al::CollisionPartsFilterBase* createCollisionPartsFilter2DOnly();
+
+al::HitSensor* tryGetCollidedGroundSensor(IUsePlayerCollision const*);
+bool calcGroundHeight(float *,sead::Vector3<float> *,al::IUseCollision const*,sead::Vector3<float> const&,sead::Vector3<float> const&,float,float);
 
 }  // namespace rs

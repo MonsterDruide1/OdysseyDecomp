@@ -90,6 +90,7 @@ s32 CollisionParts::checkStrikeArrow(al::ArrowHitResultBuffer * results,sead::Ve
     v61.setMul(mBaseInvMtx, (unk1 + unk2));
     v61 -= v62;
 
+    buffer.clear();
     u32 v60 = 0;
     mKCollisionServer->checkArrow(v62, v61, &buffer, &v60, results->capacity() - results->size());
     for(int i=0; i<buffer.size(); i++) {

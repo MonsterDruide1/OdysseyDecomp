@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CUSTOM/PlayerColliderHakoniwa.h"
+#include "Player/PlayerColliderHakoniwa.h"
 #include "Player/PlayerActorBase.h"
 #include "Util/IUseDimension.h"
 

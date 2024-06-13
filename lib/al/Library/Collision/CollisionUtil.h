@@ -33,4 +33,6 @@ bool getFirstPolyOnArrow(al::IUseCollision const*,al::ArrowHitInfo const**,sead:
 bool getFirstPolyOnArrow(al::IUseCollision const*,sead::Vector3<float> *,al::Triangle *,sead::Vector3<float> const&,sead::Vector3<float> const&,char const*);
 bool getFirstPolyOnArrow(al::IUseCollision const*,sead::Vector3<float> *,al::Triangle *,sead::Vector3<float> const&,sead::Vector3<float> const&,al::CollisionPartsFilterBase const*,al::TriangleFilterBase const*);
 
+al::ArrowHitInfo* getStrikeArrowInfo(al::IUseCollision const*,u32);
+
 }

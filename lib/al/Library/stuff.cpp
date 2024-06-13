@@ -11,6 +11,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
@@ -1359,6 +1360,9 @@ const sead::Vector3f& alCollisionUtil::getCollisionHitPos(const al::HitInfo* inf
 const sead::Vector3f& alCollisionUtil::getCollisionHitNormal(const al::HitInfo* info) {
   return info->mTriangle.getNormal(0);
 }
+al::ArrowHitInfo* alCollisionUtil::getStrikeArrowInfo(al::IUseCollision const* collider, unsigned int index) {
+  return collider->getCollisionDirector()->getStrikeArrowInfo(index);
+}
 
 bool al::isNearDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, float a3)
 {
@@ -2190,4 +2194,8 @@ bool al::addVectorLimit(sead::Vector3<float> *a1,sead::Vector3<float> const& a2,
   a1->y = (float)(v10 * v16) + v13;
   a1->z = (float)(v11 * v16) + v14;
   return 1;
+}
+
+sead::Vector3f* al::getGravityPtr(LiveActor *actor) {
+  return actor->mPoseKeeper->getGravityPtr();
 }

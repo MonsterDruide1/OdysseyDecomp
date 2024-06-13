@@ -25,6 +25,7 @@ public:
 
     void update();
     void updateLast();
+    sead::Matrix34f* getBaseMtx();
 
     ModelCtrl* getModelCtrl() const { return mModelCtrl; }
     AnimPlayerSkl* getAnimSkl() const { return mAnimSkl; }
