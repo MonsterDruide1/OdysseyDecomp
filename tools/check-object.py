@@ -17,8 +17,8 @@ CSV_PATH = 'data/odyssey_functions.csv'
 
 args = None
 
-def download_sheets_data(sheet_id, sheet_gid):
-    url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=tsv&gid={sheet_gid}"
+def download_sheets_data():
+    url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=tsv&gid={SHEET_GID}"
     print(f"Downloading function map from {url}")
     response = requests.get(url)
     if response.status_code == 200:
@@ -26,7 +26,7 @@ def download_sheets_data(sheet_id, sheet_gid):
     else:
         raise Exception(f"Failed to download Google Sheet: {response.status_code}")
 
-def preprocess_tsv(spreadsheet_functions_path, odyssey_functions_path):
+def read_odyssey_data(odyssey_functions_path):
     odyssey_data = {}
     with open(odyssey_functions_path, 'r') as odyssey_file:
         odyssey_csv = csv.DictReader(odyssey_file)
@@ -36,51 +36,63 @@ def preprocess_tsv(spreadsheet_functions_path, odyssey_functions_path):
             size = int(row['Size'], 16)
             mangled_name = row['Name']
             odyssey_data[address] = (address, quality, size, mangled_name)
+    return odyssey_data
+
+def extract_class_name(function_name):
+    first_paren_index = function_name.find('(')
+    if first_paren_index != -1:
+        truncated_name = function_name[:first_paren_index]
+    else:
+        truncated_name = function_name
+
+    split_by_colons = truncated_name.split('::')
+    
+    if len(split_by_colons) > 2:
+        return '::'.join(split_by_colons[:2]) + '::'
+    elif len(split_by_colons) > 1:
+        return '::'.join(split_by_colons[:1]) + '::'
+    else:
+        return ''
+
+def preprocess_tsv(spreadsheet_functions_path, odyssey_functions_path):
+    odyssey_data = read_odyssey_data(odyssey_functions_path)
     
     processed_data = {}
-    old_folder = None
-    old_object = None
+    unorganized_data = []
     current_folder = None
     current_object = None
+
     with open(spreadsheet_functions_path, 'r') as spreadsheet_file:
         tsv = csv.DictReader(spreadsheet_file, delimiter='\t')
         for row in tsv:
             folder = row['Folder']
             obj = row['Object']
             address = int(row['Start Address'], 16)
+            
             if folder:
                 current_folder = folder
                 current_object = None
             if obj:
                 current_object = obj
-            
+
             function_name = row['Demangled Name']
             if function_name == "None":
                 function_name = row['Mangled Name']
-            
-            unorganized = False
+
+            odyssey_address, odyssey_quality, odyssey_size, _ = odyssey_data[address]
+
             if row['Not in Obj'] == "TRUE":
-                unorganized = True
-                old_folder = current_folder
-                old_object = current_object
-                current_folder = "Unorganized"
-                current_object = "Unorganized"
-            
-            odyssey_address, odyssey_quality, odyssey_size, odyssey_mangled_name = odyssey_data[address]
-            
-            if current_folder and current_object:
+                unorganized_data.append((function_name, address, odyssey_size, odyssey_quality))
+            else:
                 if current_folder not in processed_data:
                     processed_data[current_folder] = {}
                 if current_object not in processed_data[current_folder]:
                     processed_data[current_folder][current_object] = []
-                
+
                 processed_data[current_folder][current_object].append((function_name, address, odyssey_size, odyssey_quality))
-            
-            if unorganized:
-                current_folder = old_folder
-                current_object = old_object
     
-    return processed_data
+    return processed_data, unorganized_data
+
 
 def find_mangled_name_in_odyssey_functions(start_address):
     with open(CSV_PATH, 'r', encoding='utf-8') as file:
@@ -106,7 +118,7 @@ def create_buffer(functions):
 
         object_size_bytes += size
 
-        color = 4  # Default to white
+        color = 4  # White
         if quality == 'O':
             color = 2  # Green
         elif quality == 'U':
@@ -126,11 +138,17 @@ def run_tools_check(name):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Fetch functions from a Google Sheets document')
-    parser.add_argument('folder_object', nargs='?', default='', type=str, help='Folder/Object to search for')
+    parser.add_argument('folder_object', nargs='?', default=None, type=str, help='Folder/Object to search for')
     parser.add_argument('-r', '--refresh', action='store_true', help='Redownload the TSV file')
     parser.add_argument('-f', '--folder_view', action='store_true', help='View folders instead of functions')
     parser.add_argument('-m', '--mismatch_view', action='store_true', help='View mismatched functions')
-    return parser.parse_args()
+
+    args = parser.parse_args()
+
+    if args.folder_object is None and not args.folder_view and not args.mismatch_view:
+        parser.error("The following arguments are required: folder_object")
+
+    return args
 
 def setup_curses():
     curses.start_color()
@@ -143,7 +161,7 @@ def setup_curses():
 
 def load_tsv_data(args):
     if args.refresh or not os.path.exists(TSV_PATH):
-        tsv_data = download_sheets_data(SHEET_ID, SHEET_GID)
+        tsv_data = download_sheets_data()
         with open(TSV_PATH, 'w', encoding='utf-8') as file:
             file.write(tsv_data)
     else:
@@ -157,6 +175,7 @@ def load_tsv_data(args):
 def main(stdscr):
     args = parse_arguments()
     stdscr.erase()
+    stdscr.keypad(True)
     setup_curses()
 
     window = curses.newwin(curses.LINES-1, curses.COLS-1, 0, 0)
@@ -164,7 +183,7 @@ def main(stdscr):
     window.timeout(100)
 
     tsv_data = load_tsv_data(args)
-    folders = preprocess_tsv(TSV_PATH, CSV_PATH)
+    folders, unorganized_functions = preprocess_tsv(TSV_PATH, CSV_PATH)
 
     if args.mismatch_view:
         mismatch_view(stdscr, window, folders)
@@ -175,9 +194,9 @@ def main(stdscr):
             all_folders = [folder for folder in folders]
             folder_object = folder_view(stdscr, window, folders, all_folders)
         if folder_object is not None:
-            function_view(stdscr, window, folders, folder_object)
+            function_view(stdscr, window, folders, folder_object, unorganized_functions)
     else:
-        function_view(stdscr, window, folders, args.folder_object)
+        function_view(stdscr, window, folders, args.folder_object, unorganized_functions)
 
 
 def create_folder_buffer(folders, folder):
@@ -189,17 +208,6 @@ def create_folder_buffer(folders, folder):
         objects = {}
     else:
         objects = folders[folder]
-
-    for subfolder in folders:
-        if subfolder.startswith(f"{folder}/"):
-            subfolder_name = subfolder[len(folder) + 1:]
-            for obj in folders[subfolder]:
-                prefixed_obj = f"{subfolder_name}/{obj}"
-                objects[prefixed_obj] = folders[subfolder][obj]
-
-    if objects:
-        first_key = next(iter(objects))
-        objects[first_key] = objects.pop(first_key)
 
     total_size = 0
     total_completed_size = 0
@@ -219,7 +227,10 @@ def create_folder_buffer(folders, folder):
             total_size += size
             total_functions += 1
             object_functions += 1
-        progress_percentage = completed_functions / object_functions * 100
+        if object_functions == 0:
+            progress_percentage = 0
+        else:
+            progress_percentage = completed_functions / object_functions * 100
         progress_string = f"{completed_functions}/{object_functions}".ljust(7)
         percentage_string = f"{progress_percentage:.3f}%".rjust(9)
 
@@ -259,11 +270,9 @@ def handle_key_press(key, current_row, first_visible_row, max_display_rows, buff
         current_row, first_visible_row = scroll_down(current_row, first_visible_row, max_display_rows, buffer)
     elif key == curses.KEY_UP:
         current_row, first_visible_row = scroll_up(current_row, first_visible_row)
-    elif key == ord('q'):
-        return None
     elif key == curses.KEY_BACKSPACE:
         search_string = search_string[:-1]
-    elif key >= 32 and key <= 126:
+    elif key >= 32 and key <= 126 and not key == ord("/"):
         search_string += chr(key)
 
     filtered_buffer = search_items(buffer, search_string)
@@ -287,7 +296,24 @@ def display_items(window, max_display_rows, first_visible_row, filtered_buffer, 
         else:
             window.addstr(i - first_visible_row, 0, string, curses.color_pair(color))
 
-def function_view(stdscr, window, folders, folder_object):
+def create_header_file(folder, object_name, functions):
+    folder_name = folder.split('/')[-1]
+    if folder_name.startswith('Library') or folder_name.startswith('Project'):
+        path = os.path.join('lib/al/include', folder_name, f'{object_name}.h')
+    else:
+        path = os.path.join('src', folder_name, f'{object_name}.h')
+    if not os.path.exists(path):
+        with open(path, 'w') as header_file:
+            header_file.write("#pragma once\n\n")
+
+            header_file.write("/*\n")
+            for function_name, _, _, _ in functions:
+                header_file.write("{}\n".format(function_name))
+            header_file.write("*/\n")
+    else:
+        print("Header file already exists!")
+
+def function_view(stdscr, window, folders, folder_object, unorganized_functions):
     if not folder_object.endswith('.o'):
         folder_object += '.o'
 
@@ -309,7 +335,7 @@ def function_view(stdscr, window, folders, folder_object):
     if not functions:
         raise Exception(f"No functions found for {object_name} in folder {folder}.")
 
-    unorganized_functions = folders["Unorganized"]["Unorganized"]
+    #raise Exception(f"{unorganized_functions}")
     for function_name, address, size, quality in unorganized_functions:
         if f"{object_name[:-2]}::" in function_name:
             functions.append((function_name, address, size, quality))
@@ -319,6 +345,8 @@ def function_view(stdscr, window, folders, folder_object):
     first_visible_row = 0
     search_string = ""
     filtered_buffer = buffer[:]  # Initially, display all functions
+
+    is_slash_held = False
 
     while True:
         window.erase()
@@ -330,20 +358,34 @@ def function_view(stdscr, window, folders, folder_object):
             max_display_rows -= 1
             window.addstr(max_display_rows + 1, 0, search_string)
 
-
         display_items(window, max_display_rows, first_visible_row, filtered_buffer, current_row)
 
-        window.addstr(max_display_rows, 0, f"{object_name} | Matched {completed_functions}/{total_functions} ({round(completed_functions / total_functions * 100, 3)}%) | {round(completed_size_bytes / 1024, 3)} KB / {round(object_size_bytes / 1024, 3)} KB")
-
-        window.refresh()
-        set_cursor_position(window, max_display_rows, search_string)
-
+        if not is_slash_held:
+            window.addstr(max_display_rows, 0, f"{object_name} | Matched {completed_functions}/{total_functions} ({round(completed_functions / total_functions * 100, 3)}%) | {round(completed_size_bytes / 1024, 3)} KB / {round(object_size_bytes / 1024, 3)} KB")
+        else:
+            window.addstr(max_display_rows, 0, "Press / + Enter to create header file...")
+        
         key = window.getch()
 
-        if key == ord('\n'):
+        if is_slash_held and key == ord('\n'):
             curses.endwin()
-            run_tools_check(find_mangled_name_in_odyssey_functions(functions[current_row][1]))
-            return None, None
+            create_header_file(folder, object_name[:-2], functions)
+            return
+
+        if key == ord("/"):
+            is_slash_held = True
+            window.nodelay(True)
+        else:
+            is_slash_held = False
+            if key == ord('\n') or key == curses.KEY_RIGHT:
+                curses.endwin()
+                run_tools_check(find_mangled_name_in_odyssey_functions(functions[current_row][1]))
+                return
+        
+        window.nodelay(False)
+        
+        window.refresh()
+        set_cursor_position(window, max_display_rows, search_string)
 
         current_row, first_visible_row, filtered_buffer, search_string = handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string)
 
@@ -353,7 +395,7 @@ def folder_view(stdscr, window, folders, folder_list):
     all_buffers = []
     total_completed_size = 0
     total_size = 0
-    
+
     for folder in folder_list:
         buffer, folder_completed_size, folder_total_size, folder_total_completed_functions, folder_total_functions = create_folder_buffer(folders, folder)
         all_buffers.extend(buffer)
@@ -392,14 +434,14 @@ def folder_view(stdscr, window, folders, folder_list):
 
         key = window.getch()
 
-        if key == ord('\n'):
+        if key == ord('\n') or key == curses.KEY_RIGHT:
             path = filtered_buffers[current_row][0].split('|')[-1].strip()
             return path
 
         result = handle_key_press(key, current_row, first_visible_row, max_display_rows, all_buffers, search_string)
         if result is None:  # Exit condition
             curses.endwin()
-            return None, None
+            return
         else:
             current_row, first_visible_row, filtered_buffers, search_string = result
 
@@ -455,15 +497,12 @@ def mismatch_view(stdscr, window, folders):
         set_cursor_position(window, max_display_rows, search_string)
 
         key = window.getch()
-        if key == ord('\n'):
+        if key == ord('\n') or key == curses.KEY_RIGHT:
             function_address = int(filtered_buffer[current_row][0].split('|')[-1].split(' ')[2], 16)
 
             curses.endwin()
             run_tools_check(find_mangled_name_in_odyssey_functions(function_address))
-            return None, None
-        elif key == ord('q'):
-            curses.endwin()
-            return None, None
+            return
         else:
             result = handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string)
             if result is not None:
@@ -472,3 +511,5 @@ def mismatch_view(stdscr, window, folders):
 if __name__ == "__main__":
     args = parse_arguments()
     curses.wrapper(main)
+
+print("\n")
