@@ -93,7 +93,7 @@ def get_includes():
     agl_files = get_files(project_root/'lib'/'agl'/'include')
     aarch_files = get_files(project_root/'lib'/'aarch64')
     eui_files = get_files(project_root/'lib'/'eui'/'include')
-    al_files = get_files(project_root/'lib'/'al'/'include')
+    al_files = [a for a in get_files(project_root/'lib'/'al') if a.endswith(".h")]
     game_files = [a for a in get_files(project_root/'src') if a.endswith(".h")]
 
     angled_includes = cpp_files + aarch_files + nintendo_sdk_files + sead_files + agl_files + eui_files
@@ -111,7 +111,14 @@ def common_include_order(c, path, is_header):
         del lines[0]
     elif not path.endswith("src/System/Init.cpp"):
         # hardcoded exception: Init.cpp contains C functions and no header to relate to
-        rel_path = path.split("src/")[-1] if "src/" in path else path.split("include/")[-1]
+        if "src/" in path:
+            rel_path = path.split("src/")[-1]
+        elif "al/" in path:
+            rel_path = path.split("al/")[-1]
+        elif "include/" in path:
+            rel_path = path.split("include/")[-1]
+        else:
+            rel_path = path
         header_line = "#include \""+rel_path[0:-3]+"h\""
         if CHECK(lambda a:a==header_line, lines[0], "Source files must start with including respective header in double quotes (here: "+header_line+")!", path): return
         del lines[0]
