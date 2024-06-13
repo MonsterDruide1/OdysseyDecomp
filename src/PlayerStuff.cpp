@@ -34,3 +34,12 @@ void rs::calcGroundNormalExceptJustLandOrGravityDir(sead::Vector3<float>* vec, a
         *vec = -al::getGravity(actor);
     }
 }
+
+const al::CollisionParts* rs::getCollidedGroundCollisionParts(IUsePlayerCollision const* collider) {
+    return collider->getPlayerCollider()->info1->mTriangle.mCollisionParts;
+}
+
+
+const sead::Vector3f& rs::getCollidedCeilingNormal(IUsePlayerCollision const* collider) {
+    return collider->getPlayerCollider()->info3->mTriangle.getFaceNormal();
+}

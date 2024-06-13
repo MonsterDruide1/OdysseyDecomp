@@ -1760,3 +1760,434 @@ al::LiveActor* al::tryGetSubActor(al::LiveActor const* actor, char const* name) 
   }
   return nullptr;
 }
+
+bool al::checkHitLinePlane(
+        sead::Vector3f *a1,
+        const sead::Vector3f& a2,
+        const sead::Vector3f& a3,
+        const sead::Vector3f& a4,
+        const sead::Vector3f& a5)
+{
+  float y; // s2
+  float x; // s3
+  float z; // s0
+  float v8; // s1
+  float v9; // s4
+  float v11; // s5
+  float v12; // s7
+  float v13; // s4
+  float v14; // s6
+  float v15; // s0
+  float v16; // s1
+  float v17; // s2
+  float v18; // s0
+
+  x = a5.x;
+  y = a5.y;
+  z = a5.z;
+  v8 = (float)((float)(a3.x * a5.x) + (float)(a3.y * y)) + (float)(a3.z * z);
+  v9 = -v8;
+  if ( v8 > 0.0 )
+    v9 = (float)((float)(a3.x * a5.x) + (float)(a3.y * y)) + (float)(a3.z * z);
+
+  if ( v9 < 0.001 )
+    return 0LL;
+
+  if ( a1 )
+  {
+    v11 = a4.y - a2.y;
+    v12 = a2.z;
+    v13 = a4.x - a2.x;
+    v14 = a4.z;
+    a1->z = v12;
+    v15 = (float)((float)((float)(x * v13) + (float)(y * v11)) + (float)(z * (float)(v14 - v12))) / v8;
+    *a1 = a2;
+    v16 = a1->x + (float)(a3.x * v15);
+    v17 = (float)(a3.y * v15) + a1->y;
+    v18 = (float)(a3.z * v15) + a1->z;
+    a1->x = v16;
+    a1->y = v17;
+    a1->z = v18;
+  }
+
+  return 1LL;
+}
+
+void al::followRotateFrontAxisUp(al::LiveActor * actor,al::CollisionParts const* collParts) {
+  float v4; // s3
+  float v5; // s4
+  float v6; // s0
+  float v7; // s1
+  float v8; // s2
+  sead::Quatf v10; // [xsp+0h] [xbp-60h] BYREF
+  sead::Vector3f v11; // [xsp+10h] [xbp-50h] BYREF
+  sead::Vector3f a1; // [xsp+20h] [xbp-40h] BYREF
+  sead::Vector3f v13; // [xsp+30h] [xbp-30h] BYREF
+  sead::Vector3f v14; // [xsp+40h] [xbp-20h] BYREF
+
+  v14.x = 0.0;
+  v14.y = 0.0;
+  v14.z = 0.0;
+  al::calcFrontDir(&v14, actor);
+  v13 = v14;
+  v4 = (float)((float)(v14.x * collParts->mPrevBaseInvMtx.m[0][0]) + (float)(v14.y * collParts->mPrevBaseInvMtx.m[0][1]))
+     + (float)(v14.z * collParts->mPrevBaseInvMtx.m[0][2]);
+  v5 = (float)((float)(v14.x * collParts->mPrevBaseInvMtx.m[1][0]) + (float)(v14.y * collParts->mPrevBaseInvMtx.m[1][1]))
+     + (float)(v14.z * collParts->mPrevBaseInvMtx.m[1][2]);
+  v6 = (float)((float)(v14.x * collParts->mPrevBaseInvMtx.m[2][0]) + (float)(v14.y * collParts->mPrevBaseInvMtx.m[2][1]))
+     + (float)(v14.z * collParts->mPrevBaseInvMtx.m[2][2]);
+  v13.x = (float)((float)(v4 * collParts->mBaseMtx.m[0][0]) + (float)(v5 * collParts->mBaseMtx.m[0][1]))
+        + (float)(v6 * collParts->mBaseMtx.m[0][2]);
+  v13.y = (float)((float)(v4 * collParts->mBaseMtx.m[1][0]) + (float)(v5 * collParts->mBaseMtx.m[1][1]))
+        + (float)(v6 * collParts->mBaseMtx.m[1][2]);
+  v7 = (float)(v4 * collParts->mBaseMtx.m[2][0]) + (float)(v5 * collParts->mBaseMtx.m[2][1]);
+  v8 = collParts->mBaseMtx.m[2][2];
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  v13.z = v7 + (float)(v6 * v8);
+  al::calcUpDir(&a1, actor);
+  v11.x = 0.0;
+  v11.y = 0.0;
+  v11.z = 0.0;
+  al::turnVecToVecCosOnPlane(&v11, v14, v13, a1, -1.0);
+  v10.x = 0.0;
+  v10.y = 0.0;
+  v10.z = 0.0;
+  v10.w = 1.0;
+  al::makeQuatUpFront(&v10, a1, v11);
+  al::updatePoseQuat(actor, v10);
+}
+
+bool al::turnVecToVecCosOnPlane(sead::Vector3<float> *a1,sead::Vector3<float> const&a2,sead::Vector3<float> const&a3,sead::Vector3<float> const&a4,float a5) {
+  float z; // s6
+  float y; // s1
+  float v8; // s3
+  float v9; // s5
+  float v10; // s4
+  float v11; // s11
+  float v12; // s12
+  float v13; // s10
+  float v14; // s0
+  float v15; // s1
+  float v16; // s1
+  float v17; // s6
+  float v18; // s3
+  float v19; // s5
+  float v20; // s4
+  float v21; // s14
+  float v22; // s15
+  float v23; // s13
+  float v24; // s1
+  float v25; // s0
+  float v26; // s0
+  sead::Vector3f v29; // [xsp+0h] [xbp-80h] BYREF
+  sead::Vector3f a3a; // [xsp+10h] [xbp-70h] BYREF
+
+  z = a3.z;
+  y = a4.y;
+  v8 = a3.y;
+  v9 = a4.z;
+  v10 = (float)((float)(a4.x * a3.x) + (float)(y * v8)) + (float)(v9 * z);
+  v11 = a3.x - (float)(a4.x * v10);
+  v12 = v8 - (float)(y * v10);
+  v13 = z - (float)(v9 * v10);
+  v14 = (float)(v13 * v13) + (float)((float)(v11 * v11) + (float)(v12 * v12));
+  a3a.x = v11;
+  a3a.y = v12;
+  a3a.z = v13;
+  if ( v14 >= 0.000001 )
+  {
+    v15 = sqrtf(v14);
+    if ( v15 > 0.0 )
+    {
+      v11 = (float)(1.0 / v15) * v11;
+      v12 = (float)(1.0 / v15) * v12;
+      v13 = (float)(1.0 / v15) * v13;
+      a3a.x = v11;
+      a3a.y = v12;
+      a3a.z = v13;
+    }
+  }
+  else
+  {
+    v13 = 0.0;
+    a3a = {0.0f, 0.0f, 0.0f};
+    v12 = 0.0;
+    v11 = 0.0;
+  }
+
+  v16 = a4.y;
+  v17 = a2.z;
+  v18 = a2.y;
+  v19 = a4.z;
+  v20 = (float)((float)(a4.x * a2.x) + (float)(v16 * v18)) + (float)(v19 * v17);
+  v21 = a2.x - (float)(a4.x * v20);
+  v22 = v18 - (float)(v16 * v20);
+  v23 = v17 - (float)(v19 * v20);
+  v24 = (float)(v23 * v23) + (float)((float)(v21 * v21) + (float)(v22 * v22));
+  v29.x = v21;
+  v29.y = v22;
+  v29.z = v23;
+  if ( v24 >= 0.000001 )
+  {
+    v25 = sqrtf(v24);
+    if ( v25 > 0.0 )
+    {
+      v26 = 1.0 / v25;
+      v21 = v26 * v21;
+      v22 = v26 * v22;
+      v23 = v26 * v23;
+      v29.x = v21;
+      v29.y = v22;
+      v29.z = v23;
+    }
+  }
+  else
+  {
+    v23 = 0.0;
+    v29 = {0.0f, 0.0f, 0.0f};
+    v22 = 0.0;
+    v21 = 0.0;
+  }
+
+  if ( (float)((float)((float)(v21 * v21) + (float)(v22 * v22)) + (float)(v23 * v23)) < 0.000001 )
+  {
+    v29.x = -v11;
+    v29.y = -v12;
+    v29.z = -v13;
+  }
+
+  if ( (float)((float)((float)(v11 * v11) + (float)(v12 * v12)) + (float)(v13 * v13)) >= 0.000001 )
+  {
+    if ( a5 <= -1.0 )
+    {
+      *a1 = a3a;
+      return 1;
+    }
+    else
+    {
+      return al::turnVecToVecCos(a1, v29, a3a, a5, a4, 0.02);
+    }
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+bool al::turnVecToVecCos(sead::Vector3<float> *a1,sead::Vector3<float> const&a2,sead::Vector3<float> const&a3,float a4,sead::Vector3<float> const&a5,float a6) {
+  float x; // s0
+  float y; // s1
+  float z; // s2
+  float v12; // s3
+  float v13; // s4
+  float v14; // s5
+  float v15; // s0
+  float v16; // s0
+  float v17; // s2
+  float v18; // s3
+  float v19; // s0
+  bool result; // w0
+  float v21; // s10
+  float v22; // s0
+  float v23; // s2
+  float v24; // s4
+  float v25; // s3
+  float v26; // s6
+  float v27; // s5
+  float v28; // s15
+  float v29; // s14
+  float v30; // s13
+  float v31; // s1
+  float v32; // s1
+  float v33; // s6
+  float v34; // s12
+  float v35; // s10
+  float v36; // s9
+  float v37; // s0
+  float v38; // s0
+  float v39; // s0
+  float v40; // s1
+  float v41; // s2
+  float v42; // s0
+  float v43; // s0
+  float v44; // s0
+  float v45; // s0
+  float v46; // s1
+  float v47; // s0
+  float v48; // s2
+  float v49; // s1
+  float v50; // s0
+  float v51; // s0
+  float v52; // s2
+
+  x = a2.x;
+  y = a2.y;
+  z = a2.z;
+  if ( (float)((float)((float)(x * x) + (float)(y * y)) + (float)(z * z)) < 0.000001 )
+    return 0;
+
+  v12 = a3.x;
+  v13 = a3.y;
+  v14 = a3.z;
+  if ( (float)((float)((float)(v12 * v12) + (float)(v13 * v13)) + (float)(v14 * v14)) < 0.000001 )
+    return 0;
+
+  if ( (float)((float)((float)(x * v12) + (float)(y * v13)) + (float)(z * v14)) <= a4 )
+  {
+    v21 = sqrtf(1.0 - (float)(a4 * a4));
+    v22 = a2.x;
+    v23 = a2.y;
+    v24 = a3.y;
+    v25 = a2.z;
+    v26 = a3.z;
+    v27 = (float)((float)(a2.x * a3.x) + (float)(v23 * v24)) + (float)(v25 * v26);
+    v28 = a3.x - (float)(a2.x * v27);
+    v29 = v24 - (float)(v23 * v27);
+    v30 = v26 - (float)(v25 * v27);
+    v31 = (float)(v30 * v30) + (float)((float)(v28 * v28) + (float)(v29 * v29));
+    if ( v31 >= 0.000001 )
+    {
+      v43 = sqrtf(v31);
+      if ( v43 > 0.0 )
+      {
+        v44 = 1.0 / v43;
+        v28 = v28 * v44;
+        v29 = v29 * v44;
+        v30 = v30 * v44;
+      }
+
+      v45 = a2.x * a4;
+      a1->x = v45;
+      v46 = a2.y * a4;
+      v47 = (float)(v21 * v28) + v45;
+      a1->y = v46;
+      v48 = a2.z * a4;
+      v49 = (float)(v21 * v29) + v46;
+      a1->x = v47;
+      a1->y = v49;
+      v42 = (float)(v47 * v47) + (float)(v49 * v49);
+      v41 = (float)(v21 * v30) + v48;
+    }
+    else
+    {
+      v33 = a5.y;
+      v32 = a5.z;
+      v34 = (float)(v23 * v32) - (float)(v25 * v33);
+      v35 = (float)(v25 * a5.x) - (float)(v22 * v32);
+      v36 = (float)(v22 * v33) - (float)(v23 * a5.x);
+      v37 = sqrtf((float)(v36 * v36) + (float)((float)(v34 * v34) + (float)(v35 * v35)));
+      if ( v37 > 0.0 )
+      {
+        v38 = 1.0 / v37;
+        v34 = v34 * v38;
+        v35 = v38 * v35;
+        v36 = v38 * v36;
+      }
+
+      v39 = (float)(v34 * a6) + a2.x;
+      a1->x = v39;
+      v40 = (float)(v35 * a6) + a2.y;
+      a1->y = v40;
+      v41 = (float)(v36 * a6) + a2.z;
+      v42 = (float)(v39 * v39) + (float)(v40 * v40);
+    }
+
+    v50 = sqrtf((float)(v41 * v41) + v42);
+    a1->z = v41;
+    if ( v50 > 0.0 )
+    {
+      v51 = 1.0 / v50;
+      v52 = v51 * a1->y;
+      a1->x = v51 * a1->x;
+      a1->y = v52;
+      result = 0;
+      a1->z = v51 * a1->z;
+      return result;
+    }
+
+    return 0;
+  }
+
+  *a1 = a3;
+  v15 = sqrtf((float)((float)(a1->x * a1->x) + (float)(a1->y * a1->y)) + (float)(a1->z * a1->z));
+  if ( v15 > 0.0 )
+  {
+    v16 = 1.0 / v15;
+    v17 = v16 * a1->x;
+    v18 = v16 * a1->y;
+    v19 = v16 * a1->z;
+    a1->x = v17;
+    a1->y = v18;
+    a1->z = v19;
+  }
+
+  return 1;
+}
+
+void al::tryAddVelocityLimit(al::LiveActor *a1,sead::Vector3<float> const&a2,float a3) {
+  sead::Vector3f newVel = a1->mPoseKeeper->getVelocity();
+  al::addVectorLimit(&newVel, a2, a3);
+  *a1->mPoseKeeper->getVelocityPtr() = newVel;
+}
+
+bool al::addVectorLimit(sead::Vector3<float> *a1,sead::Vector3<float> const& a2,float a3) {
+  float v5; // s9
+  float x; // s10
+  float y; // s12
+  float z; // s13
+  float v9; // s0
+  float v10; // w9
+  float v11; // w8
+  float v12; // s1
+  float v13; // s3
+  float v14; // s4
+  float v15; // s5
+  float v16; // s5
+
+  v5 = sqrtf((float)((float)(a2.x * a2.x) + (float)(a2.y * a2.y)) + (float)(a2.z * a2.z));
+  x = a2.x;
+  y = a2.y;
+  z = a2.z;
+  v9 = (float)((float)(x * x) + (float)(y * y)) + (float)(z * z);
+  if ( v9 >= 0.000001 )
+  {
+    v12 = sqrtf(v9);
+    if ( v12 <= 0.0 )
+    {
+      v11 = a2.z;
+      v10 = a2.y;
+    }
+    else
+    {
+      x = x * (float)(1.0 / v12);
+      v10 = y * (float)(1.0 / v12);
+      v11 = z * (float)(1.0 / v12);
+    }
+  }
+  else
+  {
+    v10 = 0.0;
+    v11 = 0.0;
+    x = 0.0;
+  }
+
+  if ( (float)((float)((float)(x * x) + (float)(v10 * v10)) + (float)(v11 * v11)) < 0.000001 )
+    return 0LL;
+
+  v13 = a1->y;
+  v14 = a1->z;
+  v15 = (float)((float)(x * a1->x) + (float)(v10 * v13)) + (float)(v11 * v14);
+  if ( v15 >= a3 )
+    return 0LL;
+
+  v16 = a3 - v15;
+  if ( v16 >= v5 )
+    v16 = v5;
+
+  a1->x = a1->x + (float)(x * v16);
+  a1->y = (float)(v10 * v16) + v13;
+  a1->z = (float)(v11 * v16) + v14;
+  return 1;
+}

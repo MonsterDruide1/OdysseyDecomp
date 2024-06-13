@@ -447,4 +447,332 @@ bool calcSlideDir(sead::Vector3<float>* dir, sead::Vector3<float> const& a, sead
   return al::tryNormalizeOrZero(dir);
 }
 
+void landGroundPoseAndSnap(
+        al::LiveActor *x0_0,
+        PlayerTrigger *a2,
+        float *a3,
+        const IUsePlayerCollision *a4,
+        const PlayerConst *a5)
+{
+  const sead::Vector3f *Gravity; // x0
+  float z; // s2
+  float v12; // s1
+  float v13; // s0
+  float v14; // s8
+  float v15; // s0
+  const sead::Vector3f *Trans; // x22
+  const sead::Vector3f *CollidedGroundPos; // x0
+  float v18; // s8
+  float v19; // s0
+  sead::Vector3f v20; // [xsp+0h] [xbp-80h] BYREF
+  sead::Vector3f v21; // [xsp+10h] [xbp-70h] BYREF
+  sead::Vector3f v22; // [xsp+20h] [xbp-60h] BYREF
+  sead::Vector3f v23; // [xsp+30h] [xbp-50h] BYREF
+  sead::Vector3f a1; // [xsp+40h] [xbp-40h] BYREF
+
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  al::calcUpDir(&a1, x0_0);
+  v23.x = 0.0;
+  v23.y = 0.0;
+  v23.z = 0.0;
+  if ( rs::isCollidedGround(a4) )
+  {
+    v23 = rs::getCollidedGroundNormal(a4);
+  }
+  else
+  {
+    Gravity = &al::getGravity(x0_0);
+    z = Gravity->z;
+    v12 = -Gravity->y;
+    v23.x = -Gravity->x;
+    v23.y = v12;
+    v23.z = -z;
+  }
+
+  v13 = a5->getWaitPoseDegreeMax();
+  rs::slerpUp(x0_0, v23, 1.0, v13);
+  v22.x = 0.0;
+  v22.y = 0.0;
+  v22.z = 0.0;
+  al::calcUpDir(&v22, x0_0);
+  v14 = (float)((float)(a1.x * v22.x) + (float)(a1.y * v22.y)) + (float)(a1.z * v22.z);
+  v15 = a5->getCollisionResetLimit();
+  if ( v14 <= sead::Mathf::cos(v15 * 0.017453) )
+    a2->set(PlayerTrigger::EActionTrigger_val3);
+
+  *a3 = 0.0;
+  if ( rs::isCollidedGround(a4) )
+  {
+    Trans = &al::getTrans(x0_0);
+    CollidedGroundPos = &rs::getCollidedGroundPos(a4);
+    v20.x = -v23.x;
+    v20.y = -v23.y;
+    v21.x = 0.0;
+    v21.y = 0.0;
+    v21.z = 0.0;
+    v20.z = -v23.z;
+    if ( (al::checkHitLinePlane(&v21, *Trans, v20, *CollidedGroundPos, v23) & 1) != 0 )
+    {
+      v18 = (float)((float)((float)(Trans->x - v21.x) * v23.x) + (float)((float)(Trans->y - v21.y) * v23.y))
+          + (float)((float)(Trans->z - v21.z) * v23.z);
+      v19 = a5->getFallSpeedMax();
+      if ( v18 >= 0.0 )
+      {
+        if ( v18 > v19 )
+          v18 = v19;
+      }
+      else
+      {
+        v18 = 0.0;
+      }
+
+      *a3 = v18;
+    }
+  }
+}
+
+void waitGround(al::LiveActor *x0_0, const IUsePlayerCollision *x1_0, float a3, float a4, float a5, float a6)
+{  
+  const al::CollisionParts *CollidedGroundCollisionParts; // x0
+  float x; // s12
+  float y; // s13
+  float z; // s14
+  const sead::Vector3f *Gravity; // x0
+  const sead::Vector3f *CollidedGroundNormal; // x21
+  const sead::Vector3f *CollidedCeilingNormal; // x0
+  sead::Vector3f *VelocityPtr; // x0
+  const sead::Vector3f *v20; // x0
+  sead::Quatf v23; // [xsp+0h] [xbp-A0h] BYREF
+  sead::Quatf a2; // [xsp+10h] [xbp-90h] BYREF
+  sead::Vector3f a1; // [xsp+20h] [xbp-80h] BYREF
+  sead::Vector3f v26; // [xsp+30h] [xbp-70h] BYREF
+  sead::Vector3f v27; // [xsp+40h] [xbp-60h] BYREF
+
+  if ( rs::isCollidedGround(x1_0) )
+  {
+    CollidedGroundCollisionParts = (const al::CollisionParts *)rs::getCollidedGroundCollisionParts(x1_0);
+    al::followRotateFrontAxisUp(x0_0, CollidedGroundCollisionParts);
+  }
+
+  v27.x = 0.0;
+  v27.y = 0.0;
+  v27.z = 0.0;
+  if ( rs::isCollidedGround(x1_0) )
+  {
+    v27 = rs::getCollidedGroundNormal(x1_0);
+    y = v27.y;
+    x = v27.x;
+    z = v27.z;
+  }
+  else
+  {
+    Gravity = &al::getGravity(x0_0);
+    y = -Gravity->y;
+    x = -Gravity->x;
+    z = -Gravity->z;
+    v27.x = x;
+    v27.y = y;
+    v27.z = z;
+  }
+
+  rs::reboundVelocityFromCollision(x0_0, x1_0, 0.0, 0.0, 0.0);
+  if ( rs::isCollidedGround(x1_0) && rs::isCollidedCeiling(x1_0) )
+  {
+    CollidedGroundNormal = &rs::getCollidedGroundNormal(x1_0);
+    CollidedCeilingNormal = &rs::getCollidedCeilingNormal(x1_0);
+    if ( al::isReverseDirection(*CollidedGroundNormal, *CollidedCeilingNormal, 0.01) )
+    {
+      VelocityPtr = al::getVelocityPtr(x0_0);
+      al::verticalizeVec(VelocityPtr, *CollidedGroundNormal, *VelocityPtr);
+    }
+  }
+
+  al::tryAddVelocityLimit(x0_0, (-v27 * a3), a4);
+  v26 = v27;
+  v20 = &al::getGravity(x0_0);
+  al::turnVecToVecDegree(&v26, -*v20, v27, a6);
+  a1 = {0.0f, 0.0f, 0.0f};
+  al::calcFrontDir(&a1, x0_0);
+  if ( al::isParallelDirection(v26, a1, 0.01) )
+    al::calcUpDir(&a1, x0_0);
+
+  a2.x = 0.0;
+  a2.y = 0.0;
+  a2.z = 0.0;
+  a2.w = 1.0;
+  al::makeQuatUpFront(&a2, v26, a1);
+  v23.x = 0.0;
+  v23.y = 0.0;
+  v23.z = 0.0;
+  v23.w = 1.0;
+  al::calcQuat(&v23, x0_0);
+  al::slerpQuat(&v23, v23, a2, a5);
+  al::updatePoseQuat(x0_0, v23);
+}
+
+bool sub_7100568E3C(al::LiveActor *a1, const sead::Vector3f& a2, float a3, float a4, float a5)
+{
+  float v11; // s11
+  sead::Vector3f *v12; // x0
+  float v13; // s1
+  float v14; // s2
+  sead::Vector3f *v15; // x0
+  float v16; // s1
+  sead::Vector3f *v17; // x0
+  float v18; // s5
+  float v19; // s1
+  float z; // s3
+  bool result; // w0
+  sead::Vector3f *VelocityPtr; // x8
+  float v23; // s2
+  float v24; // s1
+
+  v11 = a2.dot(al::getVelocity(a1));
+  if ( v11 >= (float)-a4 )
+  {
+    if ( v11 >= 0.0 )
+    {
+      return 0;
+    }
+    else
+    {
+      VelocityPtr = al::getVelocityPtr(a1);
+      result = 0;
+      v23 = v11 * a2.z;
+      v24 = VelocityPtr->y - (float)(v11 * a2.y);
+      VelocityPtr->x = VelocityPtr->x - (float)(v11 * a2.x);
+      VelocityPtr->y = v24;
+      VelocityPtr->z = VelocityPtr->z - v23;
+    }
+  }
+  else
+  {
+    v12 = al::getVelocityPtr(a1);
+    v13 = v12->y - (float)(v11 * a2.y);
+    v14 = v11 * a2.z;
+    v12->x = v12->x - (float)(v11 * a2.x);
+    v12->y = v13;
+    v12->z = v12->z - v14;
+    v15 = al::getVelocityPtr(a1);
+    v16 = v15->y * a5;
+    v15->x = v15->x * a5;
+    v15->y = v16;
+    v15->z = v15->z * a5;
+    v17 = al::getVelocityPtr(a1);
+    v18 = (float)(v11 * a2.z) * a3;
+    v19 = v17->y - (float)((float)(v11 * a2.y) * a3);
+    z = v17->z;
+    v17->x = v17->x - (float)((float)(v11 * a2.x) * a3);
+    v17->y = v19;
+    v17->z = z - v18;
+    return 1;
+  }
+
+  return result;
+}
+
+bool reboundVelocityFromCollision(al::LiveActor * a1,IUsePlayerCollision const*a2,float a3,float a4,float a5) {
+  int v10; // w21
+  sead::Vector3f v17; // [xsp+0h] [xbp-40h] BYREF
+
+  if ( *(float *)(a2->getPlayerCollider() + 112) >= 0.0
+    || *(float *)(a2->getPlayerCollider() + 128) >= 0.0
+    || *(float *)(a2->getPlayerCollider() + 144) >= 0.0 )
+  {
+    v17 = {0.0f, 0.0f, 0.0f};
+    rs::calcCollidedNormalSum(&v17, a2);
+    if ( al::isNearZero(v17, 0.001) )
+    {
+      if ( *(float *)(a2->getPlayerCollider() + 112) >= 0.0 )
+      {
+        v10 = sub_7100568E3C(a1, a2->getPlayerCollider()->mCollidedGroundNormal, a3, a4, a5);
+      }
+      else
+      {
+        v10 = 0;
+      }
+
+      if ( *(float *)(a2->getPlayerCollider() + 128) >= 0.0 )
+      {
+        v10 |= sub_7100568E3C(a1, a2->getPlayerCollider()->info2->mTriangle.getFaceNormal(), a3, a4, a5);
+      }
+
+      if ( *(float *)(a2->getPlayerCollider() + 144) >= 0.0 )
+      {
+        v10 |= sub_7100568E3C(a1, a2->getPlayerCollider()->info3->mTriangle.getFaceNormal(), a3, a4, a5);
+      }
+    }
+    else
+    {
+      al::normalize(&v17);
+      v10 = sub_7100568E3C(a1, v17, a3, a4, a5);
+    }
+  }
+  else
+  {
+    v10 = 0;
+  }
+
+  return v10 & 1;
+}
+
+void calcCollidedNormalSum(sead::Vector3<float> *a1,IUsePlayerCollision const*a2) {
+  float *v4; // x0
+  float y; // s2
+  const sead::Vector3f *FaceNormal; // x0
+  float v8; // s2
+  float x; // s0
+  float v10; // s1
+  float v11; // s2
+  const sead::Vector3f *v13; // x0
+  float v14; // s2
+  float z; // s2
+
+  a1->x = 0.0;
+  a1->y = 0.0;
+  a1->z = 0.0;
+  if ( *(float *)(a2->getPlayerCollider() + 112) >= 0.0 )
+  {
+    v4 = (float *)a2->getPlayerCollider();
+    y = a1->y;
+    a1->x = a1->x + v4[105];
+    a1->y = y + v4[106];
+    a1->z = a1->z + v4[107];
+  }
+
+  if ( *(float *)(a2->getPlayerCollider() + 128) >= 0.0 )
+  {
+    FaceNormal = &a2->getPlayerCollider()->info2->mTriangle.getFaceNormal();
+    v8 = a1->y;
+    a1->x = a1->x + FaceNormal->x;
+    a1->y = v8 + FaceNormal->y;
+    a1->z = a1->z + FaceNormal->z;
+  }
+
+  if ( *(float *)(a2->getPlayerCollider() + 144) >= 0.0 )
+  {
+    v13 = &a2->getPlayerCollider()->info3->mTriangle.getFaceNormal();
+    v14 = a1->y;
+    x = a1->x + v13->x;
+    a1->x = x;
+    v10 = v14 + v13->y;
+    z = a1->z;
+    a1->y = v10;
+    v11 = z + v13->z;
+    a1->z = v11;
+  }
+  else
+  {
+    x = a1->x;
+    v10 = a1->y;
+    v11 = a1->z;
+  }
+
+  a1->x = x * 0.33333;
+  a1->y = v10 * 0.33333;
+  a1->z = v11 * 0.33333;
+}
+
 }  // namespace rs

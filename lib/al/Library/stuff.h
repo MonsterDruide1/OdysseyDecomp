@@ -6,6 +6,7 @@
 #include "math/seadQuat.h"
 
 namespace al {
+class MtxConnector;
 
 void separateVelocityHV(sead::Vector3f*, sead::Vector3f*, al::LiveActor*);
 void alongVectorNormalH(sead::Vector3f* a1, const sead::Vector3f& a2, const sead::Vector3f& a3,
@@ -29,5 +30,14 @@ bool isFloorPolygon(const sead::Vector3f&, const sead::Vector3f&);
 bool isInAreaObj(al::IUseAreaObj const*,char const*);
 al::PadRumbleKeeper* getPlayerPadRumbleKeeper(al::LiveActor const*,int);
 
+al::MtxConnector* createCollisionPartsConnector(al::LiveActor const*,sead::Quat<float> const&);
+void disconnectMtxConnector(al::MtxConnector*);
+
+bool checkHitLinePlane(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&);
+
+void followRotateFrontAxisUp(al::LiveActor *,al::CollisionParts const*);
+bool turnVecToVecCosOnPlane(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+bool turnVecToVecCos(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,float,sead::Vector3<float> const&,float);
+bool addVectorLimit(sead::Vector3<float> *,sead::Vector3<float> const&,float);
 
 }  // namespace al

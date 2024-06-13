@@ -38,7 +38,9 @@ public:
     };
     enum EReceiveSensorTrigger : u32 {};
     enum EPreMovementTrigger : u32 {};
-    enum EDemoEndTrigger : u32 {};
+    enum EDemoEndTrigger : u32 {
+        EDemoEndTrigger_val0 = 0,
+    };
     enum EMaterialChangeTrigger : u32 {
         EMaterialChangeTrigger_val0 = 0,
     };

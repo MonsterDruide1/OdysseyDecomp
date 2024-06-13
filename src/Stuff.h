@@ -5,6 +5,7 @@
 #include "MapObj/AnagramAlphabetCharacter.h"
 #include "Player/IUsePlayerCollision.h"
 #include "Player/PlayerConst.h"
+#include "Player/PlayerTrigger.h"
 
 namespace rs {
 
@@ -58,5 +59,10 @@ void cutVerticalVelocityGroundNormal(al::LiveActor*, const IUsePlayerCollision*)
 bool tryFindSnapMoveAreaDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
 
 void addPlayerJumpCount(const al::LiveActor*);
+
+void waitGround(al::LiveActor *,IUsePlayerCollision const*,float,float,float,float);
+void landGroundPoseAndSnap(al::LiveActor *,PlayerTrigger *,float *,IUsePlayerCollision const*,PlayerConst const*);
+bool reboundVelocityFromCollision(al::LiveActor *,IUsePlayerCollision const*,float,float,float);
+void calcCollidedNormalSum(sead::Vector3<float> *,IUsePlayerCollision const*);
 
 }  // namespace rs

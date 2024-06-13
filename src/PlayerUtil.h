@@ -55,6 +55,8 @@ void calcGroundNormalExceptJustLandOrGravityDir(sead::Vector3<float> *,al::LiveA
 bool isOnGroundSkateCode(al::LiveActor const*,IUsePlayerCollision const*);
 bool findWallEnablePush(al::LiveActor const*,IUsePlayerCollision const*,float,float);
 bool isCollidedWallFace(IUsePlayerCollision const*);
+const al::CollisionParts* getCollidedGroundCollisionParts(IUsePlayerCollision const*);
+const sead::Vector3f& getCollidedCeilingNormal(IUsePlayerCollision const*);
 
 }
 
