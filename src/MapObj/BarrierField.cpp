@@ -10,7 +10,7 @@
 
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"
-#include "Util/StageSceneFunction.h"
+#include "Util/DemoUtil.h"
 
 namespace alNerveFunction {
 class NerveActionCollector;

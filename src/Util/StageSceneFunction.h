@@ -22,5 +22,4 @@ void isFirstDemoOpenMoonRock(const al::LiveActor*);
 void isEnableShowDemoMoonRockMapWorld(const al::LiveActor*);
 void showDemoAfterOpenMoonRockFirst(const al::LiveActor*);
 void showDemoMoonRockMapWorld(const al::LiveActor*);
-void setBossBarrierField(BarrierField*);
 }  // namespace rs
