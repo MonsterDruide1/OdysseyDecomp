@@ -297,11 +297,15 @@ def display_items(window, max_display_rows, first_visible_row, filtered_buffer, 
             window.addstr(i - first_visible_row, 0, string, curses.color_pair(color))
 
 def create_header_file(folder, object_name, functions):
-    folder_name = folder.split('/')[-1]
-    if folder_name.startswith('Library') or folder_name.startswith('Project'):
-        path = os.path.join('lib/al/include', folder_name, f'{object_name}.h')
+    if folder.startswith('Library') or folder.startswith('Project'):
+        path = os.path.join('lib/al/include', folder, f'{object_name}.h')
     else:
-        path = os.path.join('src', folder_name, f'{object_name}.h')
+        path = os.path.join('src', folder, f'{object_name}.h')
+
+    directory = os.path.dirname(path)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
     if not os.path.exists(path):
         with open(path, 'w') as header_file:
             header_file.write("#pragma once\n\n")
@@ -310,6 +314,7 @@ def create_header_file(folder, object_name, functions):
             for function_name, _, _, _ in functions:
                 header_file.write("{}\n".format(function_name))
             header_file.write("*/\n")
+        print(f"Created {os.path.abspath(path)}")
     else:
         print("Header file already exists!")
 
@@ -395,12 +400,16 @@ def folder_view(stdscr, window, folders, folder_list):
     all_buffers = []
     total_completed_size = 0
     total_size = 0
+    total_completed_functions = 0
+    total_functions = 0
 
     for folder in folder_list:
         buffer, folder_completed_size, folder_total_size, folder_total_completed_functions, folder_total_functions = create_folder_buffer(folders, folder)
         all_buffers.extend(buffer)
         total_completed_size += folder_completed_size
         total_size += folder_total_size
+        total_completed_functions += folder_total_completed_functions
+        total_functions += folder_total_functions
 
     current_row = 0
     first_visible_row = 0
@@ -427,7 +436,7 @@ def folder_view(stdscr, window, folders, folder_list):
         folder_name = ""
         if len(folder_list) == 1:
             folder_name = f"{folder_list[0]} | "
-        window.addstr(max_display_rows, 0, f"{folder_name}{len(filtered_buffers)} items | {folder_total_completed_functions}/{folder_total_functions} functions ({folder_total_completed_functions / folder_total_functions:.3f}%) | {total_completed_size / 1024:.3f} KB / {total_size / 1024:.3f} KB")
+        window.addstr(max_display_rows, 0, f"{folder_name}{len(filtered_buffers)} items | {total_completed_functions}/{total_functions} functions ({total_completed_functions / total_functions * 100:.3f}%) | {total_completed_size / 1024:.3f} KB / {total_size / 1024:.3f} KB")
 
         window.refresh()
         set_cursor_position(window, max_display_rows, search_string)
