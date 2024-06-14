@@ -71,4 +71,8 @@ al::CollisionPartsFilterBase* createCollisionPartsFilter2DOnly();
 al::HitSensor* tryGetCollidedGroundSensor(IUsePlayerCollision const*);
 bool calcGroundHeight(float *,sead::Vector3<float> *,al::IUseCollision const*,sead::Vector3<float> const&,sead::Vector3<float> const&,float,float);
 
+bool convergeOnGroundCount(int *,al::LiveActor const*,IUsePlayerCollision const*,int,int);
+
+void startHitReactionHipDropLand(al::LiveActor *,bool);
+
 }  // namespace rs

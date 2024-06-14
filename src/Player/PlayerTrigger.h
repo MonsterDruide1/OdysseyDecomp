@@ -6,6 +6,7 @@
 class PlayerTrigger {
 public:
     enum ECollisionTrigger : u32 {
+        ECollisionTrigger_val1 = 1,
         ECollisionTrigger_val7 = 7,
         ECollisionTrigger_val8 = 8,
     };

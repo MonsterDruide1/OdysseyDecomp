@@ -41,4 +41,8 @@ bool turnVecToVecCosOnPlane(sead::Vector3<float> *,sead::Vector3<float> const&,s
 bool turnVecToVecCos(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,float,sead::Vector3<float> const&,float);
 bool addVectorLimit(sead::Vector3<float> *,sead::Vector3<float> const&,float);
 
+bool turnQuatYDirRadian(sead::Quat<float> *,sead::Quat<float> const&,sead::Vector3<float> const&,float);
+bool turnQuat(sead::Quat<float> *,sead::Quat<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+void turnRandomVector(sead::Vector3<float> *,sead::Vector3<float> const&,float);
+
 }  // namespace al

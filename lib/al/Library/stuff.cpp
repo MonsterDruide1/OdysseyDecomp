@@ -33,6 +33,8 @@
 #include "math/seadBoundBox.h"
 #include "math/seadMatrix.h"
 #include "math/seadQuatCalcCommon.h"
+#include "random/seadGlobalRandom.h"
+#include "random/seadRandom.h"
 
 #include <cstdio>
 
@@ -2198,4 +2200,263 @@ bool al::addVectorLimit(sead::Vector3<float> *a1,sead::Vector3<float> const& a2,
 
 sead::Vector3f* al::getGravityPtr(LiveActor *actor) {
   return actor->mPoseKeeper->getGravityPtr();
+}
+
+void al::addVelocityToGravityLimit(al::LiveActor* actor, float a3, float a4) {
+  al::addVectorLimit(actor->getPoseKeeper()->getVelocityPtr(), al::getGravity(actor) * a3, a4);
+}
+
+bool al::turnQuatYDirRadian(sead::Quat<float> * a1,sead::Quat<float> const&a2,sead::Vector3<float> const&a3,float a4){
+  float y; // s2
+  float z; // s4
+  float w; // s5
+  float v7; // s3
+  float v8; // s6
+  sead::Vector3f v10; // [xsp+0h] [xbp-10h] BYREF
+
+  y = a2.y;
+  z = a2.z;
+  w = a2.w;
+  v7 = (float)((float)(a2.x * y) + (float)(a2.x * y)) - (float)((float)(w * z) + (float)(w * z));
+  v8 = a2.x * a2.x;
+  v10.z = (float)((float)(a2.x * w) + (float)(a2.x * w)) + (float)((float)(y * z) + (float)(y * z));
+  v10.x = v7;
+  v10.y = (float)(1.0 - (float)(v8 + v8)) - (float)((float)(z * z) + (float)(z * z));
+  return al::turnQuat(a1, a2, v10, a3, a4);
+}
+
+bool al::turnQuat(sead::Quat<float> * a1,sead::Quat<float> const&a2,sead::Vector3<float> const&a3,sead::Vector3<float> const&a4,float a5){
+  float x; // s0
+  float y; // s1
+  float z; // s6
+  float v10; // s2
+  float v11; // s3
+  float v12; // s5
+  float v14; // s4
+  float v15; // s7
+  float v16; // s5
+  float v17; // s0
+  float v18; // s10
+  float v19; // s12
+  float v20; // s11
+  float v21; // s0
+  float v22; // s1
+  float v23; // s13
+  float v24; // s15
+  float v25; // s14
+  float v26; // s1
+  float v27; // s0
+  float v28; // s0
+  float v29; // s1
+  float v30; // s0
+  float v31; // s8
+  float v32; // s1
+  float v33; // s2
+  float v34; // s9
+  float v35; // s0
+  float v36; // s7
+  float v37; // s3
+  float w; // s4
+  float v39; // s5
+  float v40; // s16
+  float v41; // s17
+  float v42; // s0
+  float v43; // s0
+  float v44; // s0
+  float v45; // s3
+  float v46; // s1
+  float v47; // s4
+  float v48; // s0
+  sead::Vector3f v50; // [xsp+0h] [xbp-80h] BYREF
+  sead::Vector3f v51; // [xsp+10h] [xbp-70h] BYREF
+  float v52; // [xsp+1Ch] [xbp-64h] BYREF
+  sead::Vector3f v53; // [xsp+20h] [xbp-60h] BYREF
+
+  v50 = a4;
+  x = a3.x;
+  y = a3.y;
+  z = a4.z;
+  v10 = a4.x;
+  v11 = a4.y;
+  v12 = a3.z;
+  if ( a3.dot(a4) >= 0.0 )
+    goto LABEL_12;
+
+  v14 = (float)(y * z) - (float)(v11 * v12);
+  v15 = -v14;
+  if ( v14 > 0.0 )
+    v15 = (float)(y * z) - (float)(v11 * v12);
+
+  if ( v15 > 0.01 )
+    goto LABEL_12;
+
+  v16 = (float)(v10 * v12) - (float)(x * z);
+  if ( v16 <= 0.0 )
+    v16 = -v16;
+
+  if ( v16 > 0.01 )
+    goto LABEL_12;
+
+  v17 = (float)(x * v11) - (float)(v10 * y);
+  if ( v17 <= 0.0 )
+    v17 = -v17;
+
+  if ( v17 > 0.01 )
+LABEL_12:
+    v51 = a3;
+  else
+    al::turnRandomVector(&v51, a3, 0.001);
+
+  v19 = v51.y;
+  v18 = v51.x;
+  v20 = v51.z;
+  v21 = (float)((float)(v51.x * v51.x) + (float)(v51.y * v51.y)) + (float)(v20 * v20);
+  if ( v21 >= 0.000001 )
+  {
+    v22 = sqrtf(v21);
+    if ( v22 > 0.0 )
+    {
+      v18 = (float)(1.0 / v22) * v51.x;
+      v19 = (float)(1.0 / v22) * v51.y;
+      v20 = (float)(1.0 / v22) * v51.z;
+      v51.x = v18;
+      v51.y = v19;
+      v51.z = v20;
+    }
+  }
+  else
+  {
+    v20 = 0.0;
+    v51.x = 0.0;
+    v51.y = 0.0;
+    v51.z = 0.0;
+    v19 = 0.0;
+    v18 = 0.0;
+  }
+
+  v24 = v50.y;
+  v23 = v50.x;
+  v25 = v50.z;
+  v26 = (float)((float)(v50.x * v50.x) + (float)(v50.y * v50.y)) + (float)(v25 * v25);
+  if ( v26 >= 0.000001 )
+  {
+    v27 = sqrtf(v26);
+    if ( v27 > 0.0 )
+    {
+      v28 = 1.0 / v27;
+      v23 = v28 * v50.x;
+      v24 = v28 * v50.y;
+      v25 = v28 * v50.z;
+      v50.x = v28 * v50.x;
+      v50.y = v28 * v50.y;
+      v50.z = v28 * v50.z;
+    }
+  }
+  else
+  {
+    v25 = 0.0;
+    v50.x = 0.0;
+    v50.y = 0.0;
+    v50.z = 0.0;
+    v24 = 0.0;
+    v23 = 0.0;
+  }
+
+  v52 = 0.0;
+  if ( (sub_7100926C0C(&v53, &v52, &v51, &v50) & 1) != 0 )
+  {
+    v29 = a5 / v52;
+    if ( (float)(a5 / v52) >= 0.0 )
+    {
+      if ( v29 > 1.0 )
+        v29 = 1.0;
+    }
+    else
+    {
+      v29 = 0.0;
+    }
+
+    v34 = (float)(v52 * v29) * 0.5;
+    v31 = sead::Mathf::cos(v34);
+    v35 = sead::Mathf::sin(v34);
+    v33 = v35 * v53.x;
+    v32 = v35 * v53.y;
+    v30 = v35 * v53.z;
+  }
+  else
+  {
+    v30 = 0.0;
+    v31 = 1.0;
+    v32 = 0.0;
+    v33 = 0.0;
+  }
+
+  v36 = a2.y;
+  v37 = a2.z;
+  w = a2.w;
+  v39 = (float)((float)((float)(v31 * w) - (float)(v33 * a2.x)) - (float)(v32 * v36)) - (float)(v30 * v37);
+  v40 = (float)((float)((float)(v33 * w) + (float)(v31 * a2.x)) + (float)(v32 * v37)) - (float)(v30 * v36);
+  v41 = (float)(v30 * a2.x) + (float)((float)(v32 * w) + (float)((float)(v31 * v36) - (float)(v33 * v37)));
+  v42 = (float)(v30 * w) + (float)((float)((float)(v33 * v36) + (float)(v31 * v37)) - (float)(v32 * a2.x));
+  a1->z = v42;
+  v43 = sqrtf((float)(v42 * v42) + (float)((float)((float)(v39 * v39) + (float)(v40 * v40)) + (float)(v41 * v41)));
+  a1->w = v39;
+  a1->x = v40;
+  a1->y = v41;
+  if ( v43 > 0.0 )
+  {
+    v44 = 1.0 / v43;
+    v45 = v44 * a1->w;
+    v46 = v44 * a1->x;
+    v47 = v44 * a1->y;
+    v48 = v44 * a1->z;
+    a1->x = v46;
+    a1->y = v47;
+    a1->z = v48;
+    a1->w = v45;
+  }
+
+  return (float)((float)((float)(v18 * v23) + (float)(v19 * v24)) + (float)(v20 * v25)) > 0.995;
+}
+
+void al::turnRandomVector(sead::Vector3<float> *a1,sead::Vector3<float> const&a2,float a3) {
+  float v6; // s8
+  float v7; // s12
+  float v8; // s13
+  float v9;
+  float z; // s3
+  float v11; // s2
+  float v12; // s1
+  float v13; // s0
+  float v14; // s0
+  float v15; // s1
+  float v16; // s2
+
+  v6 = sqrtf((float)((float)(a2.x * a2.x) + (float)(a2.y * a2.y)) + (float)(a2.z * a2.z));
+  v7 = sead::GlobalRandom::instance()->getF32Range(-a3, a3);
+  v8 = sead::GlobalRandom::instance()->getF32Range(-a3, a3);
+  v9 = sead::GlobalRandom::instance()->getF32Range(-a3, a3);
+  z = a2.z;
+  v11 = a2.y + v8;
+  v12 = a2.x + v7;
+  a1->x = v12;
+  a1->y = v11;
+  v13 = z + v9;
+  a1->z = v13;
+  v14 = (float)((float)(v12 * v12) + (float)(v11 * v11)) + (float)(v13 * v13);
+  if ( v14 >= 0.000001 )
+  {
+    v15 = sqrtf(v14);
+    if ( v15 > 0.0 )
+    {
+      v16 = (float)(v6 / v15) * a1->y;
+      a1->x = (float)(v6 / v15) * a1->x;
+      a1->y = v16;
+      a1->z = (float)(v6 / v15) * a1->z;
+    }
+  }
+  else
+  {
+    *a1 = a2;
+  }
 }

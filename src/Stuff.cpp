@@ -847,4 +847,18 @@ bool calcGroundHeight(float *a1,sead::Vector3<float> *a2,al::IUseCollision const
   return result;
 }
 
+bool convergeOnGroundCount(
+        int *a1,
+        const al::LiveActor *a2,
+        const IUsePlayerCollision *a3,
+        int a4,
+        int a5)
+{
+  if ( !rs::isOnGround(a2, a3) )
+    return false;
+
+  *a1 = al::converge(*a1, a4, a5);
+  return true;
+}
+
 }  // namespace rs
