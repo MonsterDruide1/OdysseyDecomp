@@ -1264,7 +1264,7 @@ bool PlayerActorHakoniwa::tryActionCapReturn() {
 }
 bool PlayerActorHakoniwa::tryActionCapSpinAttack() { CRASH }
 void PlayerActorHakoniwa::exeSquat() { CRASH }
-bool PlayerActorHakoniwa::tryActionSeparateCapThrow() { CRASH }
+//bool PlayerActorHakoniwa::tryActionSeparateCapThrow() {}
 void PlayerActorHakoniwa::exeRun() {
     if(al::isFirstStep(this)) {
         mPlayerCapActionHistory->clearLandLimitStandAngle();

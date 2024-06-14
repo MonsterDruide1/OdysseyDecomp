@@ -1,3 +1,5 @@
+#include "CUSTOM/PlayerAnimator.h"
+/*
 #pragma once
 
 #include <prim/seadSafeString.h>
@@ -40,3 +42,4 @@ public:
     bool pad;
     bool unk3;
 };
+*/
