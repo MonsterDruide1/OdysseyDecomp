@@ -48,6 +48,8 @@ al::initNerveAction(this, "Hide", &NrvExampleUseCase.mCollector, 0);
         void execute(al::NerveKeeper* keeper) const override {                                     \
             (keeper->getParent<Class>())->exe##ActionFunc();                                       \
         }                                                                                          \
+                                                                                                   \
+        const char* getActionName() const { return #Action; }                                      \
     };
 
 #define NERVE_IMPL(Class, Action) NERVE_IMPL_(Class, Action, Action)
