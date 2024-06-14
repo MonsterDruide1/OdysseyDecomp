@@ -27,30 +27,17 @@ struct {
     NERVE_MAKE(BarrierField, AppearBreedaMoonWorld);
     NERVE_MAKE(BarrierField, Hide);
     NERVE_MAKE(BarrierField, Disappear);
+    void* padding[4];
+
+    alNerveFunction::NerveActionCollector mCollector;
 } NrvBarrierField;
 
 }  // namespace
 
-static alNerveFunction::NerveActionCollector sBarrierFieldNerveCollector;
-
 BarrierField::BarrierField(const char* name) : al::LiveActor(name) {}
 
-/*
 void BarrierField::init(const al::ActorInitInfo& initInfo) {
-    al::initNerveAction(this, "Hide", &sBarrierFieldNerveCollector, 0);
-    al::initMapPartsActor(this, initInfo, nullptr);
-    al::tryGetArg(&mIsDisappearByShineGet, initInfo, "IsDisappearByShineGet");
-    mIsOnTheMoon = al::isObjectName(initInfo, "WaterfallWorldHomeBarrier") &&
-GameDataFunction::isWorldMoon(GameDataHolderAccessor(this));
-    al::trySyncStageSwitchAppearAndKill(this);
-}
-*/
-
-// NON_MATCHING
-
-void BarrierField::init(const al::ActorInitInfo& initInfo) {
-    al::initNerveAction(this, NrvBarrierField.Hide.getActionName(), &sBarrierFieldNerveCollector,
-                        0);
+    al::initNerveAction(this, "Hide", &NrvBarrierField.mCollector, 0);
     al::initMapPartsActor(this, initInfo, nullptr);
     al::tryGetArg(&mIsDisappearByShineGet, initInfo, "IsDisappearByShineGet");
     if (al::isObjectName(initInfo, "WaterfallWorldHomeBarrier")) {
