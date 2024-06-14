@@ -9,7 +9,6 @@ void appearPlayerDeadCoin(al::LiveActor*);
 }
 
 class IJudge;
-class BarrierField;
 
 namespace rs {
 void resetJudge(IJudge*);

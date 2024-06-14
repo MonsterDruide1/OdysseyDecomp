@@ -22,5 +22,5 @@ public:
 
 private:
     bool mIsDisappearByShineGet = false;
-    bool mIsOnTheMoon = false;
+    bool mIsMoon = false;
 };
