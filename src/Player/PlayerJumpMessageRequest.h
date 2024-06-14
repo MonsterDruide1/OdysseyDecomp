@@ -20,7 +20,7 @@ enum class PlayerJumpType : u32 {
     val_0E = 14,
     val_0F = 15,
     val_10 = 16,
-    val_11 = 17,
+    HipDropJump = 17,
     val_12 = 18,
     // more unknown
 };

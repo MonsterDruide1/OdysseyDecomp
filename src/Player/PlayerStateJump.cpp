@@ -183,9 +183,15 @@ void PlayerStateJump::appear() {
                 case PlayerJumpType::val_0A:
                     printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
                     CRASH
-                case PlayerJumpType::val_11:
-                    printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
-                    CRASH
+                case PlayerJumpType::HipDropJump:
+                    rs::noticePlayerJumpStart(mTrigger, mActor);
+                    mJumpPower = mConst->getJumpHipDropPower();
+                    mJumpGravity = mConst->getJumpGravity();
+                    mExtendFrame = 0;
+                    _C8 = "JumpHipDrop";
+                    _B8 = true;
+                    al::setNerve(this, &Jump);
+                    return;
                 default:
                     rs::noticePlayerJumpStart(mTrigger, mActor);
                     if(rs::isJudge(mJudgeCapCatch)) {

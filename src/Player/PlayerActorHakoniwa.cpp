@@ -1197,7 +1197,7 @@ void PlayerActorHakoniwa::exeWait() {
 
     if(mPlayerStateWait->isEnableCancelHipDropJump()) {
         if(rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
-            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_11;
+            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::HipDropJump;
             al::setNerve(this, &Jump);
             return;
         }
@@ -1650,7 +1650,7 @@ void PlayerActorHakoniwa::exeHipDrop() {
 
     if(mPlayerStateHipDrop->isEnableLandCancel()) {
         if(rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
-            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_11;
+            mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::HipDropJump;
             al::setNerve(this, &Jump);
             return;
         }
