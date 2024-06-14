@@ -3,15 +3,11 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-    class LiveActor;
-    class ActorInitInfo;
-}
+class LiveActor;
+class ActorInitInfo;
+}  // namespace al
 
-namespace alNerveFunction {
-    class NerveActionCollector;
-}
-
-class BarrierField : public al::LiveActor{
+class BarrierField : public al::LiveActor {
 public:
     BarrierField(const char*);
     void init(const al::ActorInitInfo&) override;

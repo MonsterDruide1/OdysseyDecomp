@@ -9,6 +9,7 @@ void appearPlayerDeadCoin(al::LiveActor*);
 }
 
 class IJudge;
+class BarrierField;
 
 namespace rs {
 void resetJudge(IJudge*);
@@ -21,4 +22,5 @@ void isFirstDemoOpenMoonRock(const al::LiveActor*);
 void isEnableShowDemoMoonRockMapWorld(const al::LiveActor*);
 void showDemoAfterOpenMoonRockFirst(const al::LiveActor*);
 void showDemoMoonRockMapWorld(const al::LiveActor*);
+void setBossBarrierField(BarrierField*);
 }  // namespace rs
