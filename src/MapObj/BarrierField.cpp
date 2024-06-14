@@ -41,9 +41,8 @@ void BarrierField::init(const al::ActorInitInfo& initInfo) {
     al::initMapPartsActor(this, initInfo, nullptr);
     al::tryGetArg(&mIsDisappearByShineGet, initInfo, "IsDisappearByShineGet");
     if (al::isObjectName(initInfo, "WaterfallWorldHomeBarrier")) {
-        GameDataHolderAccessor dataAccessor(this);
-        if (GameDataFunction::isWorldMoon(dataAccessor))
-            mIsOnTheMoon = true;
+        if (GameDataFunction::isWorldMoon(this))
+            mIsMoon = true;
     }
     al::trySyncStageSwitchAppearAndKill(this);
 }
@@ -51,7 +50,7 @@ void BarrierField::init(const al::ActorInitInfo& initInfo) {
 void BarrierField::appear() {
     LiveActor::appear();
 
-    if (mIsOnTheMoon)
+    if (mIsMoon)
         al::startNerveAction(this, "AppearBreedaMoonWorld");
     else
         al::startNerveAction(this, "Appear");
