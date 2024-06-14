@@ -33,7 +33,7 @@ al::setNerve(this, &NrvExampleUseCase.Wait);
             (keeper->getParent<Class>())->exe##ActionFunc();                                       \
         }                                                                                          \
                                                                                                    \
-        virtual const char* getActionName() const { return #Action; }                                      \
+        virtual const char* getActionName() const { return #Action; }                              \
     };
 
 #define NERVE_IMPL(Class, Action) NERVE_IMPL_(Class, Action, Action)
