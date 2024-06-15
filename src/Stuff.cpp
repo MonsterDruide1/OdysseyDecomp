@@ -9,6 +9,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/stuff.h"
+#include "Player/PlayerActionVelocityControl.h"
 #include "Player/PlayerCollider.h"
 #include "Player/PlayerFunction.h"
 #include "Player/PlayerInput.h"
@@ -859,6 +860,38 @@ bool convergeOnGroundCount(
 
   *a1 = al::converge(*a1, a4, a5);
   return true;
+}
+
+
+void moveInertiaSlide(sead::Vector3<float> *a1,al::LiveActor *a2,IUsePlayerCollision const*a3,sead::Vector3<float> const&a4,float a5,float a6,float a7,float a8,float a9,float a10,float a11) {
+  PlayerActionVelocityControl velocityControl = PlayerActionVelocityControl(a2, a3);
+
+  bool isOnGround = rs::isOnGround(a2, a3);
+  sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+  if(isOnGround) {
+    up = rs::getCollidedGroundNormal(a3);
+    velocityControl.calcOnGround(up);
+    velocityControl.calcFrontBrake(a5);
+  }
+  else {
+    up = -al::getGravity(a2);
+  }
+
+  velocityControl.calcSideVelocityLimit(a4, a6, a7, velocityControl.mVelocityFront.length() * a8);
+
+  sead::Vector3f down = -up;
+
+  if(isOnGround) {
+    velocityControl.calcSnap(down, a9);
+    velocityControl.apply();
+  }
+  else {
+    velocityControl.calcSnap(down, a10);
+    velocityControl.apply();
+    al::limitVelocityDir(a2, al::getGravity(a2), a11);
+  }
+
+  al::verticalizeVec(a1, up, al::getVelocity(a2));
 }
 
 }  // namespace rs

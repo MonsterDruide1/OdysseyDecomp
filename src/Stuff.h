@@ -75,4 +75,6 @@ bool convergeOnGroundCount(int *,al::LiveActor const*,IUsePlayerCollision const*
 
 void startHitReactionHipDropLand(al::LiveActor *,bool);
 
+void moveInertiaSlide(sead::Vector3<float> *,al::LiveActor *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float,float,float,float,float,float);
+
 }  // namespace rs

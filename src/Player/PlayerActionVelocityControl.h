@@ -20,7 +20,7 @@ public:
     void calcOnGround(const sead::Vector3f& groundNormal);
     void apply();
 
-private:
+public:
     al::LiveActor* mActor;
     sead::Vector3f mSide = sead::Vector3f::zero;
     sead::Vector3f mUp = sead::Vector3f::zero;

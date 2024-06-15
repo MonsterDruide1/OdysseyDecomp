@@ -2460,3 +2460,13 @@ void al::turnRandomVector(sead::Vector3<float> *a1,sead::Vector3<float> const&a2
     *a1 = a2;
   }
 }
+
+void al::setTrans(al::LiveActor* a1, sead::Vector3<float> const& a2) {
+  *a1->mPoseKeeper->getTransPtr() = a2;
+}
+
+void al::setVelocityZeroH(al::LiveActor*a1) {
+  sead::Vector3f gravity = al::getGravity(a1);
+  sead::Vector3f* velocityPtr = a1->mPoseKeeper->getVelocityPtr();
+  al::parallelizeVec(velocityPtr, gravity, *velocityPtr);
+}

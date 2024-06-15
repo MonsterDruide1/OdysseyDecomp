@@ -826,13 +826,7 @@ private:
     void* size[0xB0/8];
 };
 
-class PlayerStateSquat : public al::NerveStateBase {
-public:
-    PlayerStateSquat(al::LiveActor *,PlayerConst const*,PlayerAnimator *,PlayerInput const*,IUsePlayerCollision const*,IPlayerModelChanger const*,PlayerTrigger const*,IJudge *,IJudge *,IJudge *);
-    bool isEnableLongJump() const {WARN_UNIMPL;return true;}
-private:
-    void* size[0x78/8];
-};
+#include "Player/PlayerStateSquat.h"
 
 class PlayerStateSlope : public al::NerveStateBase {
 public:
