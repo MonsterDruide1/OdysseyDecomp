@@ -14,15 +14,8 @@ NERVE_IMPL(CameraVerticalAbsorber, Absorb);
 NERVE_IMPL(CameraVerticalAbsorber, Follow);
 NERVE_IMPL(CameraVerticalAbsorber, FollowClimbPole);
 
-struct {
-    NERVE_MAKE(CameraVerticalAbsorber, FollowGround);
-    NERVE_MAKE(CameraVerticalAbsorber, FollowAbsolute);
-    NERVE_MAKE(CameraVerticalAbsorber, FollowClimbPoleNoInterp);
-    NERVE_MAKE(CameraVerticalAbsorber, FollowSlow);
-    NERVE_MAKE(CameraVerticalAbsorber, Absorb);
-    NERVE_MAKE(CameraVerticalAbsorber, Follow);
-    NERVE_MAKE(CameraVerticalAbsorber, FollowClimbPole);
-} NrvCameraVerticalAbsorber;
+NERVES_MAKE_STRUCT(CameraVerticalAbsorber, FollowGround, FollowAbsolute, FollowClimbPoleNoInterp,
+                   FollowSlow, Absorb, Follow, FollowClimbPole);
 }  // namespace
 
 namespace al {

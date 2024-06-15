@@ -28,9 +28,6 @@ namespace {
 NERVE_IMPL(AllDeadWatcher, Watch);
 NERVE_IMPL(AllDeadWatcher, Wait);
 
-struct {
-    NERVE_MAKE(AllDeadWatcher, Watch);
-    NERVE_MAKE(AllDeadWatcher, Wait);
-} NrvAllDeadWatcher;
+NERVES_MAKE_STRUCT(AllDeadWatcher, Watch, Wait);
 }  // namespace
 }  // namespace al

@@ -26,15 +26,8 @@ NERVE_IMPL(MofumofuWarpHole, DashSign);
 NERVE_IMPL(MofumofuWarpHole, DashSignEnd);
 NERVE_IMPL_(MofumofuWarpHole, CloseAndDisappear, Close);
 
-NERVE_MAKE(MofumofuWarpHole, Close);
-NERVE_MAKE(MofumofuWarpHole, Disappear);
-NERVE_MAKE(MofumofuWarpHole, Appear);
-NERVE_MAKE(MofumofuWarpHole, HideMove);
-NERVE_MAKE(MofumofuWarpHole, HideWait);
-NERVE_MAKE(MofumofuWarpHole, Wait);
-NERVE_MAKE(MofumofuWarpHole, DashSign);
-NERVE_MAKE(MofumofuWarpHole, DashSignEnd);
-NERVE_MAKE(MofumofuWarpHole, CloseAndDisappear);
+NERVES_MAKE_NOSTRUCT(MofumofuWarpHole, Close, Disappear, Appear, HideMove, HideWait, Wait, DashSign,
+                     DashSignEnd, CloseAndDisappear);
 
 }  // namespace
 

@@ -33,19 +33,8 @@ NERVE_IMPL(AnagramAlphabetCharacter, HackFall);
 NERVE_IMPL(AnagramAlphabetCharacter, HackGoal);
 NERVE_IMPL(AnagramAlphabetCharacter, Set);
 
-struct {
-    NERVE_MAKE(AnagramAlphabetCharacter, Wait);
-    NERVE_MAKE(AnagramAlphabetCharacter, WaitHack);
-    NERVE_MAKE(AnagramAlphabetCharacter, HackEnd);
-    NERVE_MAKE(AnagramAlphabetCharacter, HackStart);
-    NERVE_MAKE(AnagramAlphabetCharacter, Complete);
-    NERVE_MAKE(AnagramAlphabetCharacter, HackWait);
-    NERVE_MAKE(AnagramAlphabetCharacter, HackMove);
-    NERVE_MAKE(AnagramAlphabetCharacter, HackFall);
-    NERVE_MAKE(AnagramAlphabetCharacter, HackGoal);
-    NERVE_MAKE(AnagramAlphabetCharacter, Set);
-} NrvAnagramAlphabetCharacter;
-
+NERVES_MAKE_STRUCT(AnagramAlphabetCharacter, Wait, WaitHack, HackEnd, HackStart, Complete, HackWait,
+                   HackMove, HackFall, HackGoal, Set);
 }  // namespace
 
 void AnagramAlphabetCharacter::init(const al::ActorInitInfo& info) {
