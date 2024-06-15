@@ -21,7 +21,9 @@ bool PlayerInputFunction::isTriggerJump(al::LiveActor const*, int port) {
 bool PlayerInputFunction::isTriggerSubAction(al::LiveActor const*, int port) {
     return al::isPadTriggerZL(port) || al::isPadTriggerZR(port);
 }
-bool PlayerInputFunction::isHoldSubAction(al::LiveActor const*, int) {CRASH}
+bool PlayerInputFunction::isHoldSubAction(al::LiveActor const*, int port) {
+    return al::isPadHoldZL(port) || al::isPadHoldZR(port);
+}
 bool PlayerInputFunction::isHoldAction(al::LiveActor const*, int) {CRASH}
 bool PlayerInputFunction::isHoldJump(al::LiveActor const*, int port) {
     return al::isPadHoldA(port) || al::isPadHoldB(port);

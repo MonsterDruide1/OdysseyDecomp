@@ -400,17 +400,8 @@ private:
     void* size[0x48/8];
 };
 
-class PlayerJudgeEnableStandUp : public IJudge {
-public:
-    PlayerJudgeEnableStandUp(IUsePlayerCollision const*,IUsePlayerCeilingCheck const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return true; }
-private:
-    void* size[0x18/8];
-};
-
+#include "Player/PlayerJudgeEnableStandUp.h"
 #include "Player/PlayerJudgeForceSlopeSlide.h"
 #include "Player/PlayerJudgeForceRolling.h"
 
@@ -570,16 +561,7 @@ private:
     void* size[0x38/8];
 };
 
-class PlayerJudgeStartSquat : public IJudge {
-public:
-    PlayerJudgeStartSquat(PlayerInput const*,PlayerCounterForceRun const*,PlayerCarryKeeper const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x20/8];
-};
+#include "Player/PlayerJudgeStartSquat.h"
 
 class PlayerJudgeWallCatch : public al::HioNode, public IJudge {
 public:
