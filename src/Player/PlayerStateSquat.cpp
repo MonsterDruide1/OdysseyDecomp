@@ -5,7 +5,9 @@
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Player/PlayerActionTurnControl.h"
+#include "Player/PlayerActionVelocityControl.h"
 #include "PlayerUtil.h"
 #include "Player/PlayerTrigger.h"
 #include "Player/PlayerInput.h"
@@ -45,6 +47,7 @@ PlayerStateSquat::PlayerStateSquat(al::LiveActor* player, PlayerConst const* pCo
 PlayerStateSquat::~PlayerStateSquat() = default;
 
 void PlayerStateSquat::appear() {
+    mIsDead = false;
     someFlag = mAnimator->isAnim("RollingEnd") || mTrigger->isOn(PlayerTrigger::EActionTrigger_val12);
     if(mAnimator->unk2)
         mAnimator->endSubAnim();
@@ -171,7 +174,55 @@ void PlayerStateSquat::exeWait() {
     }
 }
 
-void PlayerStateSquat::exeWalk() {}
+void PlayerStateSquat::exeWalk() {
+    if(al::isFirstStep(this)) {
+        mAnimator->startAnim("SquatWalk");
+        mActionTurnControl->reset();
+    }
+
+    sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+    rs::calcGroundNormalOrUpDir(&up, mActor, mCollision);
+    if(rs::isCollidedGround(mCollision)) {
+        PlayerActionVelocityControl velocityControl = PlayerActionVelocityControl(mActor, mCollision);
+        velocityControl.calcOnGround(up);
+        velocityControl.apply();
+    }
+
+    if(!rs::updateJudgeAndResult(mJudgeStartSquat) && rs::updateJudgeAndResult(mJudgeEnableStandUp)) {
+        if(mModelChanger->is2DModel())
+            kill();
+        else
+            al::setNerve(this, &StandUp);
+    }
+
+    if(mInput->isMove()) {
+        sead::Vector3f v22 = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f a1 = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f a2 = {0.0f, 0.0f, 0.0f};
+        mInput->calcMoveInput(&a2, up);
+        mActionTurnControl->update(a2, up);
+        
+        v22 = mActionTurnControl->_5c;
+        if(!mActionTurnControl->_69 || !al::tryNormalizeOrZero(&a1, a2)) {
+            a1 = v22;
+        }
+
+        sead::Vector3f v19 = al::getVelocity(mActor);
+        sead::Vector3f v18 = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f v17 = {0.0f, 0.0f, 0.0f};
+        al::separateVectorParallelVertical(&v17, &v18, up, v19);
+        if(!al::isNearZero(a2, 0.001f)) {
+            v18 = mConst->getSquatWalkSpeed() * a1;
+        }
+
+        v17 = up * -mConst->getGravityMove();
+        al::setVelocity(mActor, v17 + v18);
+        rs::slerpUpFront(mActor, up, v22, mConst->getSlerpQuatRate(), mConst->getHillPoseDegreeMax());
+    } else {
+        al::setVelocity(mActor, up * -mConst->getGravityMove());
+        al::setNerve(this, &Wait);
+    }
+}
 void PlayerStateSquat::exeStandUp() {
     if(al::isFirstStep(this)) {
         mAnimator->startAnim("SquatEnd");
