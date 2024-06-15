@@ -894,4 +894,97 @@ void moveInertiaSlide(sead::Vector3<float> *a1,al::LiveActor *a2,IUsePlayerColli
   al::verticalizeVec(a1, up, al::getVelocity(a2));
 }
 
+void moveParallelJump(al::LiveActor *actor,sead::Vector3<float> const&a2,float a3,float a4,float a5,float a6,float a7,float a8,float a9) {
+  const sead::Vector3f *Gravity; // x20
+  const sead::Vector3f *Velocity; // x0
+  float z; // s5
+  float y; // s4
+  float v22; // s3
+  float v23; // s0
+  float v24; // s2
+  float v25; // s6
+  float v26; // s3
+  float v27; // s7
+  float v28; // s3
+  float v29; // s1
+  float v30; // s0
+  const sead::Vector3f *v31; // x0
+  float v32; // s2
+  float v33; // s1
+  float v34; // s2
+  float v35; // s1
+  sead::Vector3f v36; // [xsp+0h] [xbp-90h] BYREF
+  sead::Vector3f v37; // [xsp+10h] [xbp-80h] BYREF
+  sead::Vector3f v38; // [xsp+20h] [xbp-70h] BYREF
+  sead::Vector3f a1; // [xsp+30h] [xbp-60h] BYREF
+
+  Gravity = &al::getGravity(actor);
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  Velocity = &al::getVelocity(actor);
+  al::verticalizeVec(&a1, *Gravity, *Velocity);
+  v38.x = 0.0;
+  v38.y = 0.0;
+  v38.z = 0.0;
+  if ( al::tryNormalizeOrZero(&v38, a1) )
+  {
+    v37.x = 0.0;
+    v37.y = 0.0;
+    v37.z = 0.0;
+    z = Gravity->z;
+    y = Gravity->y;
+    v22 = v38.y * Gravity->x;
+    v23 = (float)(v38.z * Gravity->x) - (float)(v38.x * z);
+    v37.x = (float)(v38.y * z) - (float)(v38.z * y);
+    v37.y = v23;
+    v37.z = (float)(v38.x * y) - v22;
+    al::normalize(&v37);
+    v24 = a2.y;
+    v25 = a2.z;
+    v26 = (float)((float)(v38.x * a2.x) + (float)(v38.y * v24)) + (float)(v38.z * v25);
+    if ( v26 >= 0.0 )
+      v27 = a3;
+    else
+      v27 = a4;
+
+    v28 = v26 * v27;
+    v29 = (float)((float)((float)(a2.x * v37.x) + (float)(v24 * v37.y)) + (float)(v25 * v37.z)) * a5;
+    a1.x = a1.x + (float)((float)(v38.x * v28) + (float)(v37.x * v29));
+    a1.y = a1.y + (float)((float)(v38.y * v28) + (float)(v37.y * v29));
+    v30 = a1.z + (float)((float)(v38.z * v28) + (float)(v37.z * v29));
+  }
+  else
+  {
+    al::verticalizeVec(&v38, *Gravity, a2);
+    a1.x = (float)(v38.x * a3) + a1.x;
+    a1.y = (float)(v38.y * a3) + a1.y;
+    v30 = (float)(v38.z * a3) + a1.z;
+  }
+
+  a1.z = v30;
+  al::limitLength(&a1, a1, a6);
+  v37.x = 0.0;
+  v37.y = 0.0;
+  v37.z = 0.0;
+  v31 = &al::getVelocity(actor);
+  al::parallelizeVec(&v37, *Gravity, *v31);
+  v32 = Gravity->z;
+  v33 = Gravity->y * a7;
+  v36.x = Gravity->x * a7;
+  v36.y = v33;
+  v36.z = v32 * a7;
+  al::addVectorLimit(&v37, v36, a8);
+  v36.x = a1.x + v37.x;
+  v36.y = a1.y + v37.y;
+  v36.z = a1.z + v37.z;
+  al::setVelocity(actor, v36);
+  v34 = Gravity->z;
+  v35 = -Gravity->y;
+  v36.x = -Gravity->x;
+  v36.y = v35;
+  v36.z = -v34;
+  rs::slerpUp(actor, v36, a9, 180.0);
+}
+
 }  // namespace rs
