@@ -236,7 +236,7 @@ bool PlayerInput::isHoldJump() const {
     if (mIsDisableInput)
         return false;
     auto* dimension = mDimension;
-    if (dimension && rs::is2D(dimension) && rs::isIn2DArea(dimension) && someIntConverged15 > 0) {
+    if (dimension && rs::is2D(dimension) && rs::isIn2DArea(dimension) && someIntConverged15 > 0)
         return true;
     return PlayerInputFunction::isHoldJump(mLiveActor,
                                            PlayerFunction::getPlayerInputPort(mLiveActor));

@@ -51,7 +51,7 @@ target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 
 
 target_include_directories(odyssey_lib PUBLIC src)
-target_include_directories(odyssey_lib PUBLIC lib/al/include)
+target_include_directories(odyssey_lib PUBLIC lib/al)
 target_compile_definitions(odyssey_lib PRIVATE NON_MATCHING)
 
 set(NN_SDK_MAJOR 3)
