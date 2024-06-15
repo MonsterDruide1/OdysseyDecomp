@@ -2569,3 +2569,13 @@ void al::calcDirSlide(sead::Vector3<float> *a1,sead::Vector3<float> const&a2,sea
     a1->z = 0.0;
   }
 }
+
+void al::addVelocityToDirection(al::LiveActor* actor, sead::Vector3<float> const& dir, float speed) {
+  sead::Vector3f normDir;
+  al::tryNormalizeOrZero(&normDir, dir);
+  *actor->mPoseKeeper->getVelocityPtr() += normDir * speed;
+}
+
+bool al::turnVecToVecCosOnPlane(sead::Vector3<float>* a1, sead::Vector3<float> const&a2, sead::Vector3<float> const&a3, float a4) {
+  return al::turnVecToVecCosOnPlane(a1, *a1, a2, a3, a4);
+}

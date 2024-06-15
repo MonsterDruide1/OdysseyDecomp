@@ -50,3 +50,10 @@ void limitVectorOppositeDir(sead::Vector3<float> *,sead::Vector3<float> const&,s
 void calcDirSlide(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&);
 
 }  // namespace al
+
+namespace alPadRumbleFunction {
+
+void startPadRumbleLoopNo3D(al::LiveActor const*,char const*,sead::Vector3<float> const*,int);
+void stopPadRumbleLoop(al::LiveActor const*,char const*,sead::Vector3<float> const*,int);
+
+}

@@ -1513,7 +1513,48 @@ void PlayerActorHakoniwa::exeRun() {
         CRASH
     }
 }
-void PlayerActorHakoniwa::exeSlope() { CRASH }
+void PlayerActorHakoniwa::exeSlope() {
+    tryActionSeparateCapThrow();
+    tryActionCapReturn();
+    if(al::updateNerveState(this)) {
+        setNerveOnGround();
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeForceRolling)) {
+        sub_71004229D0(this, mPlayerTrigger, mPlayerColliderHakoniwa);
+        return;
+    }
+
+    if(mPlayerStateSlope->isEnableCancelSandSink() && rs::updateJudgeAndResult(mPlayerJudgeSandSink)) {
+        al::setNerve(this, &SandSink);
+        return;
+    }
+    if(rs::updateJudgeAndResult(mPlayerJudgeStartRolling)) {
+        al::setNerve(this, &Rolling);
+        return;
+    }
+
+    if(rs::isCollidedGround(getPlayerCollision()) && rs::judgeAndResetReturnTrue(mPlayerJudgePreInputJump)) {
+        al::setNerve(this, &Jump);
+        return;
+    }
+    if(rs::updateJudgeAndResult(mPlayerJudgeInWater1)) {
+        mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val29);
+        if(mPlayerActionDiveInWater->isDiveInWaterAnim())
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val9);
+        al::setNerve(this, &Swim);
+        return;
+    }
+    if(rs::updateJudgeAndResult(mPlayerJudgeInvalidateInputFall)) {
+        mPlayerInput->convergedInUpdateToDisableInput = 1;
+        mPlayerInput->mIsDisableInput = true;
+        mPlayerInput->usedInUpdate = false;
+        al::setNerve(this, &Fall);
+        return;
+    }
+}
+
 void PlayerActorHakoniwa::exeRolling() { CRASH }
 void PlayerActorHakoniwa::exeSpinCap() { CRASH }
 

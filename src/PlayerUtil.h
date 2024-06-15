@@ -827,13 +827,7 @@ private:
 };
 
 #include "Player/PlayerStateSquat.h"
-
-class PlayerStateSlope : public al::NerveStateBase {
-public:
-    PlayerStateSlope(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerAnimator *);
-private:
-    void* size[0x50/8];
-};
+#include "Player/PlayerStateSlope.h"
 
 class PlayerStateRun2D : public al::NerveStateBase {
 public:
