@@ -77,5 +77,6 @@ void startHitReactionHipDropLand(al::LiveActor *,bool);
 
 void moveInertiaSlide(sead::Vector3<float> *,al::LiveActor *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float,float,float,float,float,float);
 void moveParallelJump(al::LiveActor *,sead::Vector3<float> const&,float,float,float,float,float,float,float);
+bool isOnGroundSlopeSlideEnd(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*);
 
 }  // namespace rs

@@ -987,4 +987,37 @@ void moveParallelJump(al::LiveActor *actor,sead::Vector3<float> const&a2,float a
   rs::slerpUp(actor, v36, a9, 180.0);
 }
 
+bool isOnGroundSlopeSlideEnd(al::LiveActor const* a1,IUsePlayerCollision const*a2,PlayerConst const*a3) {
+  PlayerCollider *v6; // x0
+  float v7; // s0
+  const sead::Vector3f *v8; // x21
+  const sead::Vector3f *Gravity; // x20
+  float v10; // s0
+  float v11; // s0
+  char isFloorPolygonCos; // w0
+  sead::Vector3f v14; // [xsp+0h] [xbp-30h] BYREF
+
+  if ( *(float *)(a2->getPlayerCollider() + 112) >= 0.0
+    && ((v14 = al::getVelocity(a1),
+         al::tryNormalizeOrZero(&v14),
+         v6 = (PlayerCollider *)a2->getPlayerCollider(),
+         v7 = (float)((float)(v14.x * v6->mCollidedGroundNormal.x) + (float)(v14.y * v6->mCollidedGroundNormal.y))
+            + (float)(v14.z * v6->mCollidedGroundNormal.z),
+         v7 <= 0.0)
+     || al::isNearZero(v7, 0.001)) )
+  {
+    v8 = &a2->getPlayerCollider()->mCollidedGroundNormal;
+    Gravity = &al::getGravity(a1);
+    v10 = a3->getSlopeSlideAngleEnd();
+    v11 = sead::Mathf::cos(v10 * 0.017453);
+    isFloorPolygonCos = al::isFloorPolygonCos(*v8, *Gravity, v11);
+  }
+  else
+  {
+    isFloorPolygonCos = 0;
+  }
+
+  return isFloorPolygonCos & 1;
+}
+
 }  // namespace rs

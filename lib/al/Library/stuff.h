@@ -38,11 +38,15 @@ bool checkHitLinePlane(sead::Vector3<float> *,sead::Vector3<float> const&,sead::
 
 void followRotateFrontAxisUp(al::LiveActor *,al::CollisionParts const*);
 bool turnVecToVecCosOnPlane(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+bool turnVecToVecCosOnPlane(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
 bool turnVecToVecCos(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,float,sead::Vector3<float> const&,float);
 bool addVectorLimit(sead::Vector3<float> *,sead::Vector3<float> const&,float);
 
 bool turnQuatYDirRadian(sead::Quat<float> *,sead::Quat<float> const&,sead::Vector3<float> const&,float);
 bool turnQuat(sead::Quat<float> *,sead::Quat<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
 void turnRandomVector(sead::Vector3<float> *,sead::Vector3<float> const&,float);
+
+void limitVectorOppositeDir(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+void calcDirSlide(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&);
 
 }  // namespace al

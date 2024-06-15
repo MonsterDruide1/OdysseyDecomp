@@ -2470,3 +2470,102 @@ void al::setVelocityZeroH(al::LiveActor*a1) {
   sead::Vector3f* velocityPtr = a1->mPoseKeeper->getVelocityPtr();
   al::parallelizeVec(velocityPtr, gravity, *velocityPtr);
 }
+
+void al::limitVectorOppositeDir(sead::Vector3<float> * out,sead::Vector3<float> const& a2,sead::Vector3<float> const& a3,float a4) {
+  float v4; // s0
+  float v5; // s3
+
+  v4 = -a4;
+  v5 = a3.dot(a2);
+  if ( v5 >= v4 )
+  {
+    v4 = a3.dot(a2);
+    if ( v5 > 0.0 )
+      v4 = 0.0;
+  }
+
+  *out = a3 - (a2 * v4);
+}
+
+void al::calcDirSlide(sead::Vector3<float> *a1,sead::Vector3<float> const&a2,sead::Vector3<float> const&a3) {
+  float v3; // s1
+  float v4; // s0
+  float v5; // s2
+  float v6; // s1
+  float v7; // s1
+  float result; // s0
+  float v9; // s0
+  float v10; // s2
+  float x; // s0
+  float y; // s1
+  float z; // s2
+  float v14; // s4
+  float v15; // s6
+  float v16; // s5
+  float v17; // s2
+  float v18; // s0
+  float v19; // s16
+  float v20; // s0
+  float v21; // s1
+  float v22; // s2
+  float v23; // s0
+  float v24; // s2
+
+  v3 = (float)((float)(a3.x * a2.x) + (float)(a3.y * a2.y)) + (float)(a3.z * a2.z);
+  v4 = a2.x - (float)(a3.x * v3);
+  a1->x = v4;
+  v5 = a2.y - (float)(a3.y * v3);
+  a1->y = v5;
+  v6 = a2.z - (float)(a3.z * v3);
+  a1->z = v6;
+  v7 = (float)(v6 * v6) + (float)((float)(v4 * v4) + (float)(v5 * v5));
+  result = 0.000001;
+  if ( v7 >= 0.000001 )
+  {
+    v9 = sqrtf(v7);
+    if ( v9 <= 0.0 )
+    {
+      y = a1->y;
+      z = a1->z;
+      x = a1->x;
+    }
+    else
+    {
+      v10 = 1.0 / v9;
+      x = (float)(1.0 / v9) * a1->x;
+      y = v10 * a1->y;
+      z = v10 * a1->z;
+      a1->x = x;
+      a1->y = y;
+      a1->z = z;
+    }
+
+    v14 = a3.y;
+    v15 = a3.z;
+    v16 = (float)(v14 * z) - (float)(v15 * y);
+    v17 = (float)(v15 * x) - (float)(z * a3.x);
+    v18 = (float)(y * a3.x) - (float)(v14 * x);
+    v19 = v14 * v18;
+    v20 = (float)(a3.x * v18) - (float)(v15 * v16);
+    v21 = (float)(v15 * v17) - v19;
+    v22 = (float)(v14 * v16) - (float)(a3.x * v17);
+    a1->x = v21;
+    a1->y = v20;
+    result = sqrtf((float)(v22 * v22) + (float)((float)(v21 * v21) + (float)(v20 * v20)));
+    a1->z = v22;
+    if ( result > 0.0 )
+    {
+      v23 = 1.0 / result;
+      v24 = v23 * a1->y;
+      a1->x = v23 * a1->x;
+      a1->y = v24;
+      a1->z = v23 * a1->z;
+    }
+  }
+  else
+  {
+    a1->x = 0.0;
+    a1->y = 0.0;
+    a1->z = 0.0;
+  }
+}
