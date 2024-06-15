@@ -12,11 +12,7 @@ NERVE_IMPL(BootLayout, StartWipe);
 NERVE_IMPL(BootLayout, EndWipe);
 NERVE_IMPL(BootLayout, End);
 
-NERVE_MAKE(BootLayout, Appear);
-NERVE_MAKE(BootLayout, Wait);
-NERVE_MAKE(BootLayout, StartWipe);
-NERVE_MAKE(BootLayout, EndWipe);
-NERVE_MAKE(BootLayout, End);
+NERVES_MAKE_NOSTRUCT(BootLayout, Appear, Wait, StartWipe, EndWipe, End);
 }  // namespace
 
 BootLayout::BootLayout(const al::LayoutInitInfo& info) : al::LayoutActor("[起動]BootLoading") {
