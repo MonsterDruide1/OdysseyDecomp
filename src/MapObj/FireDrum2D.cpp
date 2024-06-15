@@ -14,9 +14,7 @@ namespace {
 NERVE_IMPL(FireDrum2D, Wait);
 NERVE_IMPL(FireDrum2D, Burn);
 
-NERVE_MAKE(FireDrum2D, Wait);
-NERVE_MAKE(FireDrum2D, Burn);
-
+NERVES_MAKE_NOSTRUCT(FireDrum2D, Wait, Burn);
 }  // namespace
 
 FireDrum2D::FireDrum2D(const char* name) : LiveActor(name) {}

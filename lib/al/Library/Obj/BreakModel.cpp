@@ -16,8 +16,7 @@ using namespace al;
 NERVE_IMPL(BreakModel, Wait);
 NERVE_IMPL(BreakModel, Break);
 
-NERVE_MAKE(BreakModel, Wait);
-NERVE_MAKE(BreakModel, Break);
+NERVES_MAKE_NOSTRUCT(BreakModel, Wait, Break);
 }  // namespace
 
 namespace al {
