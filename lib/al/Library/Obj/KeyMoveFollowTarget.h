@@ -9,9 +9,9 @@ class KeyMoveFollowTarget : public LiveActor {
 public:
     KeyMoveFollowTarget(const char* name);
 
-    void initKeyMoveFollowTarget(const al::ActorInitInfo& info, const char* archiveName,
+    void initKeyMoveFollowTarget(const ActorInitInfo& info, const char* archiveName,
                                  const char* suffix);
-    void init(const al::ActorInitInfo& info) override;
+    void init(const ActorInitInfo& info) override;
     void exeWait();
     void exeMove();
     void exeStop();
