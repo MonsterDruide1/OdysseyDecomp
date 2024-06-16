@@ -15,11 +15,7 @@ namespace {
 NERVE_IMPL(ItemAmiiboKoopa, Wait);
 NERVE_IMPL(ItemAmiiboKoopa, Expand);
 
-struct {
-    NERVE_MAKE(ItemAmiiboKoopa, Wait);
-    NERVE_MAKE(ItemAmiiboKoopa, Expand);
-} NrvItemAmiiboKoopa;
-
+NERVES_MAKE_STRUCT(ItemAmiiboKoopa, Wait, Expand);
 }  // namespace
 
 ItemAmiiboKoopa::ItemAmiiboKoopa(const char* actorName) : al::LiveActor(actorName) {}
