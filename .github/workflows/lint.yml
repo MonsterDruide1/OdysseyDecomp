@@ -5,11 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: DoozyX/clang-format-lint-action@v0.12
+    - uses: DoozyX/clang-format-lint-action@v0.17
       with:
         source: 'src lib'
         exclude: 'lib/NintendoSDK lib/aarch64 lib/agl lib/eui lib/sead'
-        clangFormatVersion: 12
+        clangFormatVersion: 14
   custom-lint:
     runs-on: ubuntu-latest
     steps:
