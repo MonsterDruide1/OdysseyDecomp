@@ -258,7 +258,7 @@ def run_tools_check(name):
 
 def create_header_file(folder, object_name, functions):
     if folder.startswith('Library') or folder.startswith('Project'):
-        path = os.path.join('lib/al/include', folder, f'{object_name}.h')
+        path = os.path.join('lib/al', folder, f'{object_name}.h')
     else:
         path = os.path.join('src', folder, f'{object_name}.h')
 
