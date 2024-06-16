@@ -31,6 +31,8 @@ void parallelizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f
 f32 modf(f32 a, f32 b);
 
 bool normalize(f32 value);
+void normalize(sead::Matrix33f*);
+void normalize(sead::Matrix34f*);
 
 bool isNear(const sead::Matrix34f& value, const sead::Matrix34f& target, f32 tolerance);
 
