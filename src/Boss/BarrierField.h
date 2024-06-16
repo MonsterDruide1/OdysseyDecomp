@@ -3,7 +3,6 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class LiveActor;
 class ActorInitInfo;
 }  // namespace al
 

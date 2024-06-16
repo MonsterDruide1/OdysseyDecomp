@@ -1,4 +1,4 @@
-#include "MapObj/BarrierField.h"
+#include "Boss/BarrierField.h"
 
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -11,10 +11,6 @@
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"
 #include "Util/DemoUtil.h"
-
-namespace alNerveFunction {
-class NerveActionCollector;
-}
 
 namespace {
 NERVE_ACTION_IMPL(BarrierField, Appear);
@@ -32,10 +28,9 @@ void BarrierField::init(const al::ActorInitInfo& initInfo) {
     al::initNerveAction(this, "Hide", &NrvBarrierField.mCollector, 0);
     al::initMapPartsActor(this, initInfo, nullptr);
     al::tryGetArg(&mIsDisappearByShineGet, initInfo, "IsDisappearByShineGet");
-    if (al::isObjectName(initInfo, "WaterfallWorldHomeBarrier")) {
-        if (GameDataFunction::isWorldMoon(this))
-            mIsMoon = true;
-    }
+    if (al::isObjectName(initInfo, "WaterfallWorldHomeBarrier") &&
+        GameDataFunction::isWorldMoon(this))
+        mIsMoon = true;
     al::trySyncStageSwitchAppearAndKill(this);
 }
 
