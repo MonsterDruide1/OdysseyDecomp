@@ -119,7 +119,7 @@ void createChildLinkMapPartsActor(const char* actorName, const char* archiveName
 
 ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo);
 
-void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);
+void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, ByamlIter const&, const char*);
 void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
 ShadowMaskBase* createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
 ShadowMaskBase* createShadowMaskCube(LiveActor*, const char*, const char*, const char*,
@@ -136,10 +136,10 @@ void initActorCollisionWithResource(LiveActor*, const Resource*, const sead::Saf
                                     HitSensor*, const sead::Matrix34f*, const char*);
 void initActorCollisionWithArchiveName(LiveActor*, const sead::SafeString&, const sead::SafeString&,
                                        HitSensor*, const sead::Matrix34f*);
-void initActorCollisionWithFilePtr(LiveActor*, void*, const void*, HitSensor*,
+void initActorCollisionWithFilePtr(LiveActor*, void*, void const*, HitSensor*,
                                    const sead::Matrix34f*, const char*, const char*, s32);
 void initStageSwitch(LiveActor*, const ActorInitInfo&);
-void initActorItemKeeper(LiveActor*, const ActorInitInfo&, const ByamlIter&);
+void initActorItemKeeper(LiveActor*, const ActorInitInfo&, ByamlIter const&);
 void initActorPrePassLightKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initActorOcclusionKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initSubActorKeeper(LiveActor*, const ActorInitInfo&, const char*, s32);
@@ -209,11 +209,11 @@ void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const PlacementInfo&);
 void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorNoPlacementInfoNoViewId(LiveActor*, const ActorInitInfo&);
-void createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
-void createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
-void createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-void tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-void tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
+al::LiveActor* createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
+al::LiveActor* createLinksActorFromFactory(const ActorInitInfo&, const char*, s32);
+al::LiveActor* createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
+al::LiveActor* tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
+al::LiveActor* tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
 void createAndRegisterLinksActorFromFactory(LiveActorGroup*, const ActorInitInfo&, const char*);
 void makeMapPartsModelName(sead::BufferedSafeString*, sead::BufferedSafeString*,
                            const PlacementInfo&);

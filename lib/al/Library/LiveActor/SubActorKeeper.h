@@ -2,7 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 
 // TODO: bring this up to sanae
 // temp solution to figure out a solution to bitflag enums (stole this right from nvn headers)

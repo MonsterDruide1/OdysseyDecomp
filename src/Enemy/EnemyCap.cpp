@@ -7,7 +7,7 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
@@ -99,15 +99,13 @@ void EnemyCap::updatePose() {
     sead::Matrix34f poseMatrix;
     poseMatrix.setMul(rotationMatrix, translationMatrix);
 
-    if (mIsUseFollowMtxScale) {
+    if (mIsUseFollowMtxScale)
         al::calcMtxScale(&mLocalScale, poseMatrix);
-    }
 }
 
 void EnemyCap::calcAnim() {
-    if (al::isNerve(this, &NrvEnemyCap.Wait)) {
+    if (al::isNerve(this, &NrvEnemyCap.Wait))
         updatePose();
-    }
     al::LiveActor::calcAnim();
 }
 

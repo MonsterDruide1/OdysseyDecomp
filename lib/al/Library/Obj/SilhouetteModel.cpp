@@ -1,7 +1,7 @@
 #include "Library/Obj/SilhouetteModel.h"
 
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 
 namespace al {
 SilhouetteModel::SilhouetteModel(LiveActor* parent, const ActorInitInfo& initInfo,

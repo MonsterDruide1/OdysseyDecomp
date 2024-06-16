@@ -4,7 +4,7 @@
 
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/Camera/IUseCamera.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/Nerve/NerveExecutor.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
 #include "Project/Scene/SceneInitInfo.h"

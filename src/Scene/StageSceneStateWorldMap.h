@@ -3,7 +3,7 @@
 #include <container/seadPtrArray.h>
 
 #include "Library/Layout/LayoutActor.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/Nerve/NerveStateBase.h"
 #include "Library/Scene/Scene.h"
 

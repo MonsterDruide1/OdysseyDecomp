@@ -1,4 +1,4 @@
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 
 #include "Library/Clipping/ViewIdHolder.h"
 

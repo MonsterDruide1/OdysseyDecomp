@@ -1,6 +1,6 @@
 #include "MapObj/WorldMapParts.h"
 
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathLengthUtil.h"
