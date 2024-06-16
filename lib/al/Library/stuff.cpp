@@ -2594,3 +2594,23 @@ void al::faceToDirectionSupportUp(al::LiveActor *x0_0,sead::Vector3<float> const
     al::updatePoseQuat(x0_0, v4);
   }
 }
+
+bool al::limitLength(sead::Vector3<float>* a1, sead::Vector3<float> const& a2, float a3) {
+  float v4; // s0
+  float v5; // s0
+
+  v4 = sqrtf((float)((float)(a2.x * a2.x) + (float)(a2.y * a2.y)) + (float)(a2.z * a2.z));
+  if ( v4 <= a3 )
+  {
+    *a1 = a2;
+    return 0LL;
+  }
+  else
+  {
+    v5 = a3 / v4;
+    a1->x = v5 * a2.x;
+    a1->y = v5 * a2.y;
+    a1->z = v5 * a2.z;
+    return 1LL;
+  }
+}

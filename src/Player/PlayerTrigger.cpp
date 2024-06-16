@@ -78,3 +78,7 @@ bool PlayerTrigger::tryGetRecMaterialCode(const char** dest) const {
     *dest = mRecMaterialTrigger;
     return true;
 }
+
+bool PlayerTrigger::isOnUpperPunchHit() const {
+    return mCollisionTrigger.isOnBit(ECollisionTrigger_val1) || mAttackSensorTrigger.isOnBit(EAttackSensorTrigger_val4);
+}

@@ -1217,4 +1217,93 @@ void controlDirectionalVelocity(
     x0_0->z = v34;
   }
 }
+
+void reflectCeiling(al::LiveActor* a2, float a3) {
+  const sead::Vector3f *Gravity; // x20
+  const sead::Vector3f *Velocity; // x0
+  float v6; // s9
+  sead::Vector3f *VelocityPtr; // x0
+  float z; // s3
+  float v9; // s2
+  sead::Vector3f v10; // [xsp+0h] [xbp-30h] BYREF
+
+  Gravity = &al::getGravity(a2);
+  Velocity = &al::getVelocity(a2);
+  v6 = fmaxf(
+         (float)((float)(Velocity->x * Gravity->x) + (float)(Velocity->y * Gravity->y))
+       + (float)(Velocity->z * Gravity->z),
+         0.0);
+  VelocityPtr = al::getVelocityPtr(a2);
+  al::verticalizeVec(VelocityPtr, *Gravity, *VelocityPtr);
+  z = Gravity->z;
+  v9 = Gravity->y * (float)(v6 + a3);
+  v10.x = Gravity->x * (float)(v6 + a3);
+  v10.y = v9;
+  v10.z = (float)(v6 + a3) * z;
+  al::addVelocity(a2, v10);
+}
+
+bool isCollidedCeiling(IUsePlayerCollision const* collider) {
+  return collider->getPlayerCollider()->val3 >= 0.0f;
+}
+
+bool isOnGroundAndGravity(al::LiveActor const*a1, IUsePlayerCollision const*a2) {
+  float *v4; // x0
+  float v5; // s0
+  const sead::Vector3f *Gravity; // x20
+  const sead::Vector3f *Velocity; // x0
+  sead::Vector3f v9; // [xsp+0h] [xbp-20h] BYREF
+
+  if ( *(float *)(a2->getPlayerCollider() + 112) < 0.0 )
+    return 0LL;
+
+  if ( *(float *)(a2->getPlayerCollider() + 112) < 0.0 )
+    return 0LL;
+
+  v9 = al::getVelocity(a1);
+  al::tryNormalizeOrZero(&v9);
+  v4 = (float *)a2->getPlayerCollider();
+  v5 = (float)((float)(v9.x * v4[105]) + (float)(v9.y * v4[106])) + (float)(v9.z * v4[107]);
+  if ( v5 > 0.0 && !al::isNearZero(v5, 0.001) )
+    return 0LL;
+
+  Gravity = &al::getGravity(a1);
+  Velocity = &al::getVelocity(a1);
+  return (float)((float)((float)(Gravity->x * Velocity->x) + (float)(Gravity->y * Velocity->y))
+               + (float)(Gravity->z * Velocity->z)) > 0.0;
+}
+
+void slerpUp(al::LiveActor*a1, sead::Vector3<float> const&a2, float a3, float a4) {
+  float z; // s1
+  float y; // s4
+  float v10; // s6
+  float v11; // s7
+  float v12; // s1
+  sead::Vector3f v13; // [xsp+0h] [xbp-40h] BYREF
+  sead::Vector3f v14; // [xsp+10h] [xbp-30h] BYREF
+
+  v14.x = 0.0;
+  v14.y = 0.0;
+  v14.z = 0.0;
+  al::calcFrontDir(&v14, a1);
+  if ( al::isParallelDirection(a2, v14, 0.01) )
+  {
+    v13.x = 0.0;
+    v13.y = 0.0;
+    v13.z = 0.0;
+    al::calcSideDir(&v13, a1);
+    y = a2.y;
+    z = a2.z;
+    v10 = v13.y * z;
+    v11 = v13.y * a2.x;
+    v12 = (float)(v13.z * a2.x) - (float)(z * v13.x);
+    v14.x = v10 - (float)(v13.z * y);
+    v14.y = v12;
+    v14.z = (float)(y * v13.x) - v11;
+    al::normalize(&v14);
+  }
+
+  rs::slerpUpFront(a1, a2, v14, a3, a4);
+}
+
 }  // namespace rs
