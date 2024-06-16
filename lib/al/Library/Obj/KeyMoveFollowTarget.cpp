@@ -1,11 +1,23 @@
 #include "Library/Obj/KeyMoveFollowTarget.h"
 
+#include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+
+namespace {
+using namespace al;
+
+NERVE_ACTION_IMPL(KeyMoveFollowTarget, Wait)
+NERVE_ACTION_IMPL(KeyMoveFollowTarget, Move)
+NERVE_ACTION_IMPL(KeyMoveFollowTarget, Stop)
+
+NERVE_ACTIONS_MAKE_STRUCT(KeyMoveFollowTarget, Wait, Move, Stop)
+}  // namespace
 
 namespace al {
 
@@ -22,21 +34,23 @@ void KeyMoveFollowTarget::initKeyMoveFollowTarget(const al::ActorInitInfo& info,
 }
 
 void KeyMoveFollowTarget::exeWait() {
-    s32 timer;
-    if (isFirstStep(this) && (timer = calcKeyMoveWaitTime(mKeyPoseKeeper), timer > -1))
-        mMoveWaitTime = timer;
-
-    if (!isGreaterEqualStep(this, mMoveWaitTime))
-        return;
-
-    const char* action = "Move";
-    if (isRestart(mKeyPoseKeeper)) {
-        restartKeyPose(mKeyPoseKeeper, getTransPtr(this), getQuatPtr(this));
-        resetPosition(this);
-        action = "Wait";
+    if (isFirstStep(this)) {
+        s32 timer = calcKeyMoveWaitTime(mKeyPoseKeeper);
+        if (timer > -1)
+            mMoveWaitTime = timer;
     }
 
-    startNerveAction(this, action);
+    if (isGreaterEqualStep(this, mMoveWaitTime)) {
+        if (isRestart(mKeyPoseKeeper)) {
+            restartKeyPose(mKeyPoseKeeper, getTransPtr(this), getQuatPtr(this));
+            resetPosition(this);
+            startNerveAction(this, "Wait");
+
+            return;
+        }
+
+        startNerveAction(this, "Move");
+    }
 }
 
 void KeyMoveFollowTarget::exeMove() {
@@ -47,25 +61,23 @@ void KeyMoveFollowTarget::exeMove() {
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
     calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
 
-    if (!isGreaterEqualStep(this, mTimer))
-        return;
+    if (isGreaterEqualStep(this, mTimer)) {
+        nextKeyPose(mKeyPoseKeeper);
 
-    nextKeyPose(mKeyPoseKeeper);
+        if (!isStop(mKeyPoseKeeper)) {
+            startHitReaction(this, "移動終了");
+            startAction(this, "Wait");
 
-    const char* action = "Stop";
-    if (!isStop(mKeyPoseKeeper)) {
-        startHitReaction(this, "移動終了");
-        action = "Wait";
+            return;
+        }
+
+        startAction(this, "Stop");
     }
-
-    startAction(this, action);
 }
 
 void KeyMoveFollowTarget::exeStop() {
-    if (!isFirstStep(this) || !isInvalidClipping(this))
-        return;
-
-    validateClipping(this);
+    if (isFirstStep(this) && isInvalidClipping(this))
+        validateClipping(this);
 }
 
 void KeyMoveFollowTarget::init(const al::ActorInitInfo& info) {}

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Library/LiveActor/ActorInitInfo.h"
-
 namespace al {
+class ActorInitInfo;
+class PlacementInfo;
 class KeyPose;
 
-enum MoveType {
-    MoveType_Loop,
-    MoveType_Turn,
-    MoveType_Stop,
-    MoveType_Restart,
+enum class MoveType : u32 {
+    Loop,
+    Turn,
+    Stop,
+    Restart,
 };
 
 class KeyPoseKeeper {
@@ -34,8 +34,8 @@ public:
 private:
     KeyPose** mKeyPoses = nullptr;
     s32 mKeyPoseCount = 0;
-    s32 mKeyPoseIdx = 0;
-    MoveType mMoveType = MoveType_Loop;
+    s32 mKeyPoseCurrentIdx = 0;
+    MoveType mMoveType = MoveType::Loop;
     bool mIsForward = true;
     bool uknBool1 = false;
     bool uknBool2 = false;
