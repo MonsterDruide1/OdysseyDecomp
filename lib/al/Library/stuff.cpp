@@ -2579,3 +2579,18 @@ void al::addVelocityToDirection(al::LiveActor* actor, sead::Vector3<float> const
 bool al::turnVecToVecCosOnPlane(sead::Vector3<float>* a1, sead::Vector3<float> const&a2, sead::Vector3<float> const&a3, float a4) {
   return al::turnVecToVecCosOnPlane(a1, *a1, a2, a3, a4);
 }
+
+void al::faceToDirectionSupportUp(al::LiveActor *x0_0,sead::Vector3<float> const&a2) {
+  sead::Quatf v4; // [xsp+0h] [xbp-30h] BYREF
+  sead::Vector3f a1; // [xsp+10h] [xbp-20h] BYREF
+
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  al::calcUpDir(&a1, x0_0);
+  if ( !al::isParallelDirection(a2, a1, 0.01f) )
+  {
+    al::makeQuatFrontUp(&v4, a2, a1);
+    al::updatePoseQuat(x0_0, v4);
+  }
+}

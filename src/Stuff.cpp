@@ -1064,4 +1064,157 @@ f32 moveBrakeRun(float * a1,sead::Vector3<float> *a2,al::LiveActor *x2_0,PlayerA
   return v22;
 }
 
+void moveDivingJump(
+        al::LiveActor *x0_0,
+        const sead::Vector3f& a2,
+        float a3,
+        float a4,
+        float a5,
+        float a6,
+        float a7,
+        float a8,
+        float a9,
+        float a10)
+{
+  const sead::Vector3f *Gravity; // x20
+  const sead::Vector3f *Velocity; // x0
+  const sead::Vector3f *v22; // x0
+  float z; // s2
+  float v24; // s1
+  float v25; // s2
+  float v26; // s1
+  sead::Vector3f v27; // [xsp+0h] [xbp-A0h] BYREF
+  sead::Vector3f v28; // [xsp+10h] [xbp-90h] BYREF
+  sead::Vector3f v29; // [xsp+20h] [xbp-80h] BYREF
+  sead::Vector3f a1; // [xsp+30h] [xbp-70h] BYREF
+
+  Gravity = &al::getGravity(x0_0);
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  Velocity = &al::getVelocity(x0_0);
+  al::verticalizeVec(&a1, *Gravity, *Velocity);
+  rs::controlDirectionalVelocity(&a1, x0_0, a2, a3, a4, a5, a6, a7);
+  v29.x = 0.0;
+  v29.y = 0.0;
+  v29.z = 0.0;
+  v22 = &al::getVelocity(x0_0);
+  al::parallelizeVec(&v29, *Gravity, *v22);
+  z = Gravity->z;
+  v24 = Gravity->y * a8;
+  v28.x = Gravity->x * a8;
+  v28.y = v24;
+  v28.z = z * a8;
+  al::addVectorLimit(&v29, v28, a9);
+  v28.x = a1.x + v29.x;
+  v28.y = a1.y + v29.y;
+  v28.z = a1.z + v29.z;
+  al::setVelocity(x0_0, v28);
+  if ( a10 > 0.0 )
+  {
+    v28.x = 0.0;
+    v28.y = 0.0;
+    v28.z = 0.0;
+    if ( !al::tryNormalizeOrZero(&v28, a1) )
+      al::calcFrontDir(&v28, x0_0);
+
+    v25 = Gravity->z;
+    v26 = -Gravity->y;
+    v27.x = -Gravity->x;
+    v27.y = v26;
+    v27.z = -v25;
+    rs::slerpUpFront(x0_0, v27, v28, a10, 180.0);
+  }
+}
+
+void controlDirectionalVelocity(
+        sead::Vector3f *x0_0,
+        const al::LiveActor *a2,
+        const sead::Vector3f& a3,
+        float a4,
+        float a5,
+        float a6,
+        float a7,
+        float a8)
+{
+  float x; // s0
+  float y; // s1
+  float z; // s2
+  float v19; // s3
+  float v20; // s4
+  float v21; // s6
+  float v22; // s4
+  float v23; // s7
+  float v24; // s16
+  float v25; // s3
+  float v26; // s4
+  float v27; // s5
+  float v28; // s6
+  float v29; // s1
+  float v30; // s0
+  float v31; // s2
+  float v32; // s1
+  float v33; // s2
+  float v34; // s0
+  sead::Vector3f v35; // [xsp+0h] [xbp-80h] BYREF
+  sead::Vector3f v36; // [xsp+10h] [xbp-70h] BYREF
+  sead::Vector3f a1; // [xsp+20h] [xbp-60h] BYREF
+  sead::Vector3f v38; // [xsp+30h] [xbp-50h] BYREF
+
+  v38.x = 0.0;
+  v38.y = 0.0;
+  v38.z = 0.0;
+  a1.x = 0.0;
+  a1.y = 0.0;
+  a1.z = 0.0;
+  al::calcFrontDir(&v38, a2);
+  al::calcUpDir(&a1, a2);
+  v36.x = (float)(a1.y * v38.z) - (float)(a1.z * v38.y);
+  v36.y = (float)(a1.z * v38.x) - (float)(v38.z * a1.x);
+  v36.z = (float)(v38.y * a1.x) - (float)(a1.y * v38.x);
+  al::tryNormalizeOrZero(&v36);
+  x = v38.x;
+  y = v38.y;
+  z = v38.z;
+  v19 = (float)((float)(v38.x * a3.x) + (float)(v38.y * a3.y)) + (float)(v38.z * a3.z);
+  if ( v19 >= 0.0 )
+    v20 = a4;
+  else
+    v20 = a5;
+
+  v21 = v19 * v20;
+  v22 = x0_0->y;
+  v23 = x0_0->z;
+  v24 = (float)((float)(v38.x * x0_0->x) + (float)(v38.y * v22)) + (float)(v38.z * v23);
+  v25 = x0_0->x - (float)(v38.x * v24);
+  v26 = v22 - (float)(v38.y * v24);
+  v27 = v23 - (float)(v38.z * v24);
+  v28 = v24 + v21;
+  x0_0->x = v25;
+  x0_0->y = v26;
+  x0_0->z = v27;
+  if ( v28 >= a7 )
+  {
+    a7 = v28;
+    if ( v28 > a6 )
+      a7 = a6;
+  }
+
+  x0_0->x = (float)(a7 * x) + v25;
+  x0_0->y = (float)(a7 * y) + v26;
+  x0_0->z = (float)(a7 * z) + v27;
+  v35 = a3;
+  if ( al::tryNormalizeOrZero(&v35) )
+  {
+    v29 = (float)((float)((float)(v36.x * v35.x) + (float)(v36.y * v35.y)) + (float)(v36.z * v35.z)) * a8;
+    v30 = x0_0->x + (float)(v36.x * v29);
+    v31 = v36.y * v29;
+    v32 = v36.z * v29;
+    v33 = x0_0->y + v31;
+    x0_0->x = v30;
+    v34 = v32 + x0_0->z;
+    x0_0->y = v33;
+    x0_0->z = v34;
+  }
+}
 }  // namespace rs

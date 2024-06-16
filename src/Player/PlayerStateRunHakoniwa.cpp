@@ -275,7 +275,7 @@ void PlayerStateRunHakoniwa::exeBrake() {
     }
 
     f32 v20 = 0.0f;
-    rs::moveBrakeRun(&v20, &_74, mActor, mActionGroundMoveControl, mConst->getNormalBrakeFrame(), mConst->getNormalMaxSpeed(), mConst->getGravityMove(), mConst->getSlerpQuatRate(), mConst->getHillPoseDegreeMax());
+    rs::moveBrakeRun(&v20, &_74, mActor, mActionGroundMoveControl, mConst->getNormalMaxSpeed(), mConst->getNormalBrakeFrame(), mConst->getGravityMove(), mConst->getSlerpQuatRate(), mConst->getHillPoseDegreeMax());
 
     if(al::isFirstStep(this)) {
       _8C = sead::Mathf::clamp(v20, mConst->getNormalMaxSpeed(), mConst->getRunAfterTurnSpeedMax());
@@ -305,7 +305,21 @@ void PlayerStateRunHakoniwa::exeBrake() {
     }
 }
 void PlayerStateRunHakoniwa::exeTurn() {
-    CRASH;
+    if(al::isFirstStep(this)) {
+      mAnimator->startAnim("Turn");
+      al::faceToDirectionSupportUp(mActor, -_74);
+      mTurnTiltRate = 0.0f;
+      _A4 = 0;
+      val1 = 0.0f;
+    }
+
+    rs::moveBrakeRun(nullptr, &_74, mActor, mActionGroundMoveControl, mConst->getNormalMaxSpeed(), mConst->getNormalBrakeFrame(), mConst->getGravityMove(), mConst->getSlerpQuatRate(), mConst->getHillPoseDegreeMax());
+    if(mAnimator->isAnimEnd()) {
+      sead::Vector3f front = {0.0f, 0.0f, 0.0f};
+      al::calcFrontDir(&front, mActor);
+      al::setVelocity(mActor, ((_8C * front) * mConst->getRunAfterTurnScale()) - (mActionGroundMoveControl->mGravityDir * mConst->getGravityMove()));
+      al::setNerve(this, &RunAfterTurn);
+    }
 }
 void PlayerStateRunHakoniwa::exeWallPush() {
     CRASH;

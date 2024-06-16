@@ -79,6 +79,9 @@ void startHitReactionHipDropLand(al::LiveActor *,bool);
 void moveInertiaSlide(sead::Vector3<float> *,al::LiveActor *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float,float,float,float,float,float);
 void moveParallelJump(al::LiveActor *,sead::Vector3<float> const&,float,float,float,float,float,float,float);
 f32 moveBrakeRun(float *,sead::Vector3<float> *,al::LiveActor *,PlayerActionGroundMoveControl *,float,int,float,float,float);
+void moveDivingJump(al::LiveActor *,sead::Vector3<float> const&,float,float,float,float,float,float,float,float);
 bool isOnGroundSlopeSlideEnd(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*);
+
+void controlDirectionalVelocity(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3<float> const&,float,float,float,float,float);
 
 }  // namespace rs

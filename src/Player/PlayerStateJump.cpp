@@ -150,9 +150,14 @@ void PlayerStateJump::appear() {
             _B8 = true;
             al::setNerve(this, &JumpBack);
             return;
-        case PlayerJumpType::val_10:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
-            CRASH
+        case PlayerJumpType::TurnJump:
+            rs::noticePlayerJumpStart(mTrigger, mActor);
+            mJumpPower = mConst->getTurnJumpPower();
+            mJumpGravity = mConst->getTurnJumpGravity();
+            mTurnJumpAngle = mJumpMessageRequest->mTurnJumpAngle;
+            _B8 = true;
+            al::setNerve(this, &JumpTurn);
+            return;
         case PlayerJumpType::val_12:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
@@ -420,7 +425,49 @@ void PlayerStateJump::exeJumpSpinFlowerDownFall()  { WARN_UNIMPL; }
 // void PlayerStateJump::updateNerveDownFall(const char*, f32, f32, f32, const al::Nerve*);
 void PlayerStateJump::exeJumpSpinGround()  { WARN_UNIMPL; }
 void PlayerStateJump::exeJumpSpinGroundDownFall()  { WARN_UNIMPL; }
-void PlayerStateJump::exeJumpTurn()  { WARN_UNIMPL; }
+void PlayerStateJump::exeJumpTurn()  {
+    if(al::isFirstStep(this)) {
+        if(mAnimator->unk2) {
+            if(_B8)
+                mAnimator->endSubAnim();
+            else
+                al::startHitReaction(mActor, "アクションジャンプ");
+        }
+
+        sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+        al::calcUpDir(&up, mActor);
+        sead::Quatf quat = sead::Quatf::unit;
+        al::makeQuatUpFront(&quat, mTurnJumpAngle, up);
+        al::updatePoseQuat(mActor, quat);
+
+        sead::Vector3f a1 = {0.0f, 0.0f, 0.0f};
+        al::verticalizeVec(&a1, al::getGravity(mActor), mTurnJumpAngle);
+        if(!al::tryNormalizeOrZero(&a1))
+            a1 = up;
+        al::setVelocity(mActor, mConst->getTurnJumpVelH() * a1);
+        al::addVelocityToGravity(mActor, -mJumpPower);
+        mAnimator->startAnim("JumpTurn");
+    }
+
+    if(mTrigger->isOnUpperPunchHit()) {
+        CRASH
+    }
+
+    if(rs::isCollidedCeiling(mCollision)) {
+        rs::reflectCeiling(mActor, 0.0f);
+        _B4 = false;
+    }
+
+    mActionDiveInWater->tryChangeDiveInWaterAnim();
+
+    sead::Vector3f moveInput = {0.0f, 0.0f, 0.0f};
+    mInput->calcMoveInput(&moveInput, -al::getGravity(mActor));
+    rs::moveDivingJump(mActor, moveInput, mConst->getTurnJumpAccel(), mConst->getTurnJumpBrake(), mConst->getTurnJumpVelH(), 0.0f, mConst->getTurnJumpSideAccel(), mJumpGravity, mConst->getFallSpeedMax(), 0.0f);
+    rs::slerpUp(mActor, -al::getGravity(mActor), mConst->getSlerpQuatGrav(), 180.0f);
+
+    if(rs::isOnGround(mActor, mCollision))
+        kill();
+}
 void PlayerStateJump::exeJumpBack()  {
     if(al::isFirstStep(this)) {
         if(mAnimator->unk2) {

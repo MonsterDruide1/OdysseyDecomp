@@ -1448,7 +1448,7 @@ void PlayerActorHakoniwa::exeRun() {
     if(mPlayerStateRunHakoniwa2D3D->tryTurnJump(mPlayerJudgePreInputJump, &v43)) {
         rs::resetJudge(mPlayerJudgePreInputJump);
         mPlayerExternalVelocity->cancelAndFeedbackLastGroundInertia(this, mPlayerConst->getJumpInertiaRate(), true);
-        mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::val_10;
+        mPlayerJumpMessageRequest->mJumpType = PlayerJumpType::TurnJump;
         mPlayerJumpMessageRequest->mTurnJumpAngle = v43;
         al::setNerve(this, &Jump);
         return;

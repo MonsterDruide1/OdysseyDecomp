@@ -329,7 +329,7 @@ void PlayerInput::calcMoveDirection(sead::Vector3f * dir, const sead::Vector3f &
 }
 
 bool PlayerInput::isMoveDeepDown() const {
-  if(mIsDisableInput || mIsMove) return false;
+  if(mIsDisableInput || !mIsMove) return false;
 
   // more utility stuff
 
