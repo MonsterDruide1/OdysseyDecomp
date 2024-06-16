@@ -17,20 +17,12 @@ class NerveActionCollector;
 }
 
 namespace {
-NERVE_IMPL(BarrierField, Appear);
-NERVE_IMPL(BarrierField, AppearBreedaMoonWorld);
-NERVE_IMPL(BarrierField, Hide);
-NERVE_IMPL(BarrierField, Disappear);
+NERVE_ACTION_IMPL(BarrierField, Appear);
+NERVE_ACTION_IMPL(BarrierField, AppearBreedaMoonWorld);
+NERVE_ACTION_IMPL(BarrierField, Hide);
+NERVE_ACTION_IMPL(BarrierField, Disappear);
 
-struct {
-    NERVE_MAKE(BarrierField, Appear);
-    NERVE_MAKE(BarrierField, AppearBreedaMoonWorld);
-    NERVE_MAKE(BarrierField, Hide);
-    NERVE_MAKE(BarrierField, Disappear);
-    void* padding[4];
-
-    alNerveFunction::NerveActionCollector mCollector;
-} NrvBarrierField;
+NERVE_ACTIONS_MAKE_STRUCT(BarrierField, Appear, AppearBreedaMoonWorld, Hide, Disappear);
 
 }  // namespace
 
