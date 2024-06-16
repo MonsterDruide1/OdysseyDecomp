@@ -34,6 +34,12 @@ bool isInAngleOnPlaneDegreeHV(const sead::Vector3f&, const sead::Vector3f&, cons
 
 void normalize(sead::Vector2f*, const sead::Vector2f&);
 void normalize(sead::Vector3f*, const sead::Vector3f&);
+void normalize(sead::Vector2f*);
+void normalize(sead::Vector3f*);
 bool tryNormalizeOrZero(sead::Vector3f*, const sead::Vector3f&);
 bool tryNormalizeOrZero(sead::Vector3f*);
+
+void alongVectorNormalH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
+                        const sead::Vector3f&);
+
 }  // namespace al
