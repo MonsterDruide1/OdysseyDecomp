@@ -18,7 +18,7 @@ void KeyMoveFollowTarget::initKeyMoveFollowTarget(const al::ActorInitInfo& info,
 
     mKeyPoseKeeper = createKeyPoseKeeper(info);
 
-    this->makeActorAlive();
+    makeActorAlive();
 }
 
 void KeyMoveFollowTarget::exeWait() {
