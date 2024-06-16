@@ -82,13 +82,13 @@ void PlayerActionGroundMoveControl::calcInitBrakeOnCounter() {
         this->_60 = this->mBrakeOnCounterCorner;
     }
 }
-void PlayerActionGroundMoveControl::update() {
+f32 PlayerActionGroundMoveControl::update() {
     if (rs::isOnGroundSkateCode(mActor, mCollision))
-        updateSkateMove();
+        return updateSkateMove();
     else
-        updateNormalMove();
+        return updateNormalMove();
 }
-void PlayerActionGroundMoveControl::updateSkateMove() {
+f32 PlayerActionGroundMoveControl::updateSkateMove() {
     CRASH
 }
 
@@ -109,7 +109,7 @@ void sub_7100418AEC(sead::Vector3f* x0_0, const sead::Vector3f& a2, const IUsePl
     }
 }
 
-void PlayerActionGroundMoveControl::updateNormalMove() {
+f32 PlayerActionGroundMoveControl::updateNormalMove() {
     float v3;
     float v5;
     float v7;
@@ -336,7 +336,7 @@ void PlayerActionGroundMoveControl::updateNormalMove() {
         al::setVelocity(mActor, a2);
         this->_64 = 1;
         _90 = _50;
-        return;
+        return A0;
     }
 
     if (this->someFlags[0] && v43 && !v36 && (v50 < 0.0 || A0 <= this->mMinSpeed)) {
@@ -344,7 +344,7 @@ void PlayerActionGroundMoveControl::updateNormalMove() {
         al::setVelocity(this->mActor, (A0 * a3) - (this->mGravity * this->mGravityDir));
         this->_BC = 1;
         _90 = _50;
-        return;
+        return A0;
     }
 
     v66 = al::isNearZero(A0, 0.001);
@@ -398,6 +398,8 @@ LABEL_110:
 
     updatePoseUpFront(a2, v124, A0);
     this->_90 = v124;
+
+    return A0;
 }
 void PlayerActionGroundMoveControl::updateNormalAndSnap(sead::Vector3f* a2) {
     sead::Vector3f* p_mGravityDir;

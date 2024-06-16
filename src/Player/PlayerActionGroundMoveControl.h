@@ -18,9 +18,9 @@ public:
     void appear();
     void reset(sead::Vector3f const&);
     void calcInitBrakeOnCounter();
-    void update();
-    void updateSkateMove();
-    void updateNormalMove();
+    f32 update();
+    f32 updateSkateMove();
+    f32 updateNormalMove();
     void updateNormalAndSnap(sead::Vector3f *);
     f32 calcTurnTiltRate() const;
     void calcMoveInput(sead::Vector3f *,sead::Vector3f const&);

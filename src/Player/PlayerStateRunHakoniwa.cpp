@@ -156,201 +156,81 @@ void PlayerStateRunHakoniwa::exePivot() {
     }
 }
 void PlayerStateRunHakoniwa::exeRun() {
-  int mCounter; // w9
-  float _8C; // s8
-  const PlayerConst *mConst; // x21
-  int v7; // w0
-  bool isLessEqualStep; // w0
-  const PlayerConst *v9; // x8
-  long double v12; // q0
-  float v13; // s9
-  int v14; // w22
-  int v15; // w23
-  int v16; // w24
-  long double v17; // q0
-  float v18; // s10
-  long double v19; // q0
-  float v20; // s11
-  int v21; // w0
-  float v22; // s8
-  float v23; // s8
-  const PlayerConst *v27; // x20
-  int v28; // w21
-  float v29; // s0
-  int v30; // w1
-  int v31; // w0
-  float v32; // s11
-  long double v33; // q0
-  float v34; // s9
-  float v35; // s0
-  float v36; // s10
-  float v37; // s9
-  long double v38; // q0
-  float v39; // s1
-  float v40; // s0
-  float v41; // s10
-  float v42; // s2
-  float v43; // s0
-  PlayerActionGroundMoveControl *v44; // x0
-  float v45; // s0
-  const PlayerConst *v46; // x0
-  int v47; // w20
-  int v48; // w21
-  int _90; // w0
-  int v50; // w1
-  int v51; // w0
-  PlayerAnimator *v52; // x1
-  long double v53; // q0
-  PlayerActionGroundMoveControl *v54; // x8
-  float v55; // s9
-  PlayerAnimator *v56; // x1
-  sead::Vector3f *VelocityPtr; // x0
-  int v59; // w20
-  int v60; // w0
-  float v63; // s8
-  float v64; // s0
-
-  if ( al::isFirstStep((al::LiveActor *)this) )
+  if ( al::isFirstStep(this) )
   {
     mActionGroundMoveControl->reset(mActionGroundMoveControl->mGravityDir);
     this->_A0 = 0;
     this->_90 = 0;
   }
 
-  mCounterForceRun = this->mCounterForceRun;
-  mCounter = mCounterForceRun->getCounter();
-  mActionGroundMoveControl = this->mActionGroundMoveControl;
-  _8C = this->_8C;
-  mConst = this->mConst;
-  mActionGroundMoveControl->_9C = mCounter > 0;
+  mActionGroundMoveControl->_9C = mCounterForceRun->getCounter() > 0;
   mActionGroundMoveControl->_A0 = mCounterForceRun->getSpeed();
   if ( al::isNerve(this, &RunAfterTurn) )
   {
-    v7 = mConst->getRunAfterTurnFrame();
-    isLessEqualStep = al::isLessEqualStep(this, v7);
-    v9 = mConst;
-    if ( !isLessEqualStep )
-    {
-      _8C = v9->getNormalMaxSpeed();
-    }
-
-    v13 = mConst->getNormalMinSpeed();
-    v14 = isLessEqualStep ? mConst->getRunAfterTurnFrame() : mConst->getNormalAccelFrame();
-    v15 = mConst->getStickOnBrakeFrame();
-    v16 = mConst->getNormalBrakeFrame();
-    v17 = mConst->getGravityMove();
-    v18 = *(float *)&v17;
-    v19 = mConst->getNormalMaxSpeed();
-    v20 = *(float *)&v19 * mConst->getBrakeOnSpeedRate();
-    v21 = mConst->getBrakeOnCounterBorder();
-    mActionGroundMoveControl->setup(_8C, v13, v14, v15, v16, v18, v20, v21);
+    bool isLessEqualStep = al::isLessEqualStep(this, mConst->getRunAfterTurnFrame());
+    mActionGroundMoveControl->setup(
+      isLessEqualStep ? _8C : mConst->getNormalMaxSpeed(),
+      mConst->getNormalMinSpeed(),
+      isLessEqualStep ? mConst->getRunAfterTurnFrame() : mConst->getNormalAccelFrame(),
+      mConst->getStickOnBrakeFrame(),
+      mConst->getNormalBrakeFrame(),
+      mConst->getGravityMove(),
+      mConst->getNormalMaxSpeed() * mConst->getBrakeOnSpeedRate(),
+      mConst->getBrakeOnCounterBorder()
+    );
   }
 
-  mActionGroundMoveControl->update();
+  f32 v22 = mActionGroundMoveControl->update();
   if ( rs::isOnGroundSkateCode(this->mActor, this->mCollision) )
-  {
-    v23 = this->mConst->getDashJudgeSpeed();
-    v22 = v23 + this->mConst->getRunSkateAnimSpeedOffset();
-  }
+    v22 = this->mConst->getDashJudgeSpeed() + this->mConst->getRunSkateAnimSpeedOffset();
 
-  if ( al::isFirstStep((al::LiveActor *)this) )
+  if ( al::isFirstStep(this) )
   {
     //this->mAnimControlRun->reset(v22, al::isNerve(this, &RunAfterTurn));
   }
 
   //PlayerAnimControlRun::update((__int64)this->mAnimControlRun, &this->mActionGroundMoveControl->_84.x, v24, v22);
-  v27 = this->mConst;
-  v28 = v27->getIKBlendFrameRun();
-  v29 = v27->getNormalMaxSpeed();
-  if ( al::isNearZeroOrGreater(v22 - v29, 0.001) )
-    v30 = v28;
-  else
-    v30 = 0;
+  f32 ikBlendFrameRun = this->mConst->getIKBlendFrameRun();
+  s32 v30 = al::isNearZeroOrGreater(v22 - this->mConst->getNormalMinSpeed(), 0.001f) ? ikBlendFrameRun : 0;
 
-  v31 = al::converge(this->_A4, v30, 1);
-  v32 = 1.0;
-  this->_A4 = v31;
-  if ( v28 >= 1 )
-  {
-    v32 = (float)v31 / (float)v28;
-    if ( v32 >= 0.0 )
-    {
-      if ( v32 > 1.0 )
-        v32 = 1.0;
-    }
-    else
-    {
-      v32 = 0.0;
-    }
-  }
+  this->_A4 = al::converge(this->_A4, v30, 1);
+  f32 v32 = 1.0;
+  if ( ikBlendFrameRun >= 1 )
+    v32 = sead::Mathf::clamp((float)this->_A4 / (float)ikBlendFrameRun, 0.0f, 1.0f);
 
-  v33 = v27->getNormalMinSpeed();
-  v34 = *(float *)&v33;
-  v35 = v27->getNormalMaxSpeed();
-  v36 = al::calcRate01(v22, v34, v35);
-  v37 = v27->getIKBlendRateRunMin();
-  v38 = v27->getIKBlendRateRunMax();
-  v39 = *(float *)&v38;
-  v40 = 1.0 - v36;
-  v41 = 0.0;
-  v42 = 0.0;
-  if ( v40 >= 0.0 )
-  {
-    v42 = v40;
-    if ( v40 > 1.0 )
-      v42 = 1.0;
-  }
+  f32 v40 = 1.0f - al::calcRate01(v22, this->mConst->getNormalMinSpeed(), this->mConst->getNormalMaxSpeed());
+  f32 v43 = al::lerpValue(this->mConst->getIKBlendRateRunMin(), this->mConst->getIKBlendRateRunMax(), sead::Mathf::clamp(v40, 0.0f, 1.0f));
+  f32 v41 = sead::Mathf::clamp(1.0f - v32, 0.0f, 1.0f);
 
-  v43 = al::lerpValue(v37, v39, v42);
-  if ( (float)(1.0 - v32) >= 0.0 )
-  {
-    v41 = 1.0 - v32;
-    if ( (float)(1.0 - v32) > 1.0 )
-      v41 = 1.0;
-  }
-
-  v44 = this->mActionGroundMoveControl;
   this->val1 = v43 * v41;
-  v45 = v44->calcTurnTiltRate();
-  v46 = this->mConst;
-  this->mTurnTiltRate = v45;
-  v47 = v46->getRunDeepDownFrame();
-  v48 = this->mConst->getRunDeepDownMargine();
-  if ( mInput->isMoveDeepDown() )
-  {
-    _90 = this->_90;
-    v50 = v48 + v47;
-  }
-  else
-  {
-    _90 = this->_90;
-    v50 = 0;
-  }
+  this->mTurnTiltRate = this->mActionGroundMoveControl->calcTurnTiltRate();
+  s32 runDeepDownFrame = this->mConst->getRunDeepDownFrame();
+  s32 runDeepDownMargine = this->mConst->getRunDeepDownMargine();
+  s32 v50 = mInput->isMoveDeepDown() ? runDeepDownMargine + runDeepDownFrame : 0;
 
-  v51 = al::converge(_90, v50, 1);
-  v54 = this->mActionGroundMoveControl;
-  this->_90 = v51;
-  if ( v54->_64 )
+  this->_90 = al::converge(this->_90, v50, 1);
+  if ( this->mActionGroundMoveControl->_64 )
   {
-    v55 = this->mConst->getRunBorderSpeed();
-    if ( v22 > (float)(v55 - this->mConst->getRunBlendRange()) )
+    if ( v22 > this->mConst->getRunBorderSpeed() - this->mConst->getRunBlendRange() )
     {
       //rs::tryCancelHeadSlidingLandSubAnim((rs *)this->mAnimator, v56);
       al::setNerve(this, &Brake);
+      return;
     }
 
-    VelocityPtr = al::getVelocityPtr(this->mActor);
-    al::parallelizeVec(VelocityPtr, this->mActionGroundMoveControl->mGravityDir, *VelocityPtr);
-    if ( this->_90 < v47 )
-      goto LABEL_42;
+    sead::Vector3f* velocityPtr = al::getVelocityPtr(this->mActor);
+    al::parallelizeVec(velocityPtr, this->mActionGroundMoveControl->mGravityDir, *velocityPtr);
+    if ( this->_90 >= runDeepDownFrame )
+      mTrigger->set(PlayerTrigger::EActionTrigger_QuickTurn);
 
-    goto LABEL_41;
+    kill();
+    return;
   }
 
-  if ( v54->_BC )
+  if ( this->mActionGroundMoveControl->_BC )
   {
     //rs::tryCancelHeadSlidingLandSubAnim((rs *)this->mAnimator, v52);
-    if ( this->_90 >= v47 )
+    if ( this->_90 >= runDeepDownFrame )
       mTrigger->set(PlayerTrigger::EActionTrigger_QuickTurn);
 
     al::calcFrontDir(&this->_80, this->mActor);
@@ -358,38 +238,24 @@ void PlayerStateRunHakoniwa::exeRun() {
     return;
   }
 
-  if ( v54->_80 )
+  if ( this->mActionGroundMoveControl->_80 )
   {
-    if ( v51 < v47 )
-    {
-LABEL_42:
-      kill();
-      return;
-    }
+    if ( this->_90 < runDeepDownFrame )
+      mTrigger->set(PlayerTrigger::EActionTrigger_QuickTurn);
 
-LABEL_41:
-    mTrigger->set(PlayerTrigger::EActionTrigger_QuickTurn);
-    goto LABEL_42;
+    kill();
+    return;
   }
 
-  v59 = this->mConst->getWallPushFrame();
-  if ( (rs::updateJudgeAndResult((IJudge *)this->mJudgeWallPush) & 1) != 0 )
-  {
-    v60 = al::converge(this->_A0, v59, 1);
-    this->_A0 = v60;
-  }
+  s32 wallPushFrame = this->mConst->getWallPushFrame();
+  if ( rs::updateJudgeAndResult(this->mJudgeWallPush) )
+    this->_A0 = al::converge(this->_A0, wallPushFrame, 1);
   else
-  {
-    v60 = 0;
     this->_A0 = 0;
-  }
 
-  if ( v60 == v59 )
+  if ( this->_A0 == wallPushFrame )
   {
-    mCollision = (IUsePlayerCollision *)this->mCollision;
-    v63 = this->mConst->getTall();
-    v64 = this->mConst->getCollisionRadius();
-    if ( rs::findWallEnablePush(mActor, mCollision, v63, v64) )
+    if ( rs::findWallEnablePush(mActor, mCollision, this->mConst->getTall(), this->mConst->getCollisionRadius()) )
     {
       al::setNerve(this, &Push);
       return;
@@ -399,7 +265,44 @@ LABEL_41:
   }
 }
 void PlayerStateRunHakoniwa::exeBrake() {
-    CRASH;
+    if(al::isFirstStep(this)) {
+      mAnimator->startAnim("Brake");
+      mTurnTiltRate = 0.0f;
+      _8C = 0.0f;
+      al::calcFrontDir(&_74, mActor);
+      _A4 = 0;
+      val1 = 0.0f;
+    }
+
+    f32 v20 = 0.0f;
+    rs::moveBrakeRun(&v20, &_74, mActor, mActionGroundMoveControl, mConst->getNormalBrakeFrame(), mConst->getNormalMaxSpeed(), mConst->getGravityMove(), mConst->getSlerpQuatRate(), mConst->getHillPoseDegreeMax());
+
+    if(al::isFirstStep(this)) {
+      _8C = sead::Mathf::clamp(v20, mConst->getNormalMaxSpeed(), mConst->getRunAfterTurnSpeedMax());
+    }
+
+    sead::Vector3f moveDirection = {0.0f, 0.0f, 0.0f};
+    mInput->calcMoveDirection(&moveDirection, mActionGroundMoveControl->mGravityDir);
+
+    bool isMoveDeepDown = mInput->isMoveDeepDown();
+    f32 dot = _74.dot(moveDirection);
+    _70 = isMoveDeepDown && dot <= 0.0f;
+
+    if(isMoveDeepDown) {
+      if(dot > 0.0f) {
+        al::setNerve(this, &Run);
+        return;
+      }
+      if(al::isGreaterEqualStep(this, mConst->getBrakeTurnStartFrame())) {
+        al::setNerve(this, &Turn);
+        return;
+      }
+    }
+
+    if(!al::isLessStep(this, mConst->getNormalBrakeFrame())) {
+      kill();
+      return;
+    }
 }
 void PlayerStateRunHakoniwa::exeTurn() {
     CRASH;

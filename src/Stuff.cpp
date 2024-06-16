@@ -9,6 +9,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/stuff.h"
+#include "Player/PlayerActionFunction.h"
 #include "Player/PlayerActionVelocityControl.h"
 #include "Player/PlayerCollider.h"
 #include "Player/PlayerFunction.h"
@@ -1018,6 +1019,49 @@ bool isOnGroundSlopeSlideEnd(al::LiveActor const* a1,IUsePlayerCollision const*a
   }
 
   return isFloorPolygonCos & 1;
+}
+
+f32 moveBrakeRun(float * a1,sead::Vector3<float> *a2,al::LiveActor *x2_0,PlayerActionGroundMoveControl *x3_0,float a6,int a5,float a7,float a8,float a9) {
+  float x; // w8
+  float y; // x8^4
+  const sead::Vector3f *p_mGravityDir; // x23
+  float v20; // s0
+  float v21; // s0
+  float v22; // s11
+  float v23; // s4
+  float v24; // s5
+  sead::Vector3f v26; // [xsp+0h] [xbp-90h] BYREF
+  sead::Vector3f a4; // [xsp+10h] [xbp-80h] BYREF
+  sead::Vector3f v28; // [xsp+20h] [xbp-70h] BYREF
+  sead::Vector3f a3; // [xsp+30h] [xbp-60h] BYREF
+
+  p_mGravityDir = &x3_0->mGravityDir;
+  x = x3_0->mGravityDir.x;
+  y = x3_0->mGravityDir.y;
+  a3.z = x3_0->mGravityDir.z;
+  a3.x = x;
+  a3.y = y;
+  v28.x = 0.0;
+  v28.y = 0.0;
+  v28.z = 0.0;
+  x3_0->updateNormalAndSnap(&v28);
+  v20 = sqrtf((float)((float)(v28.x * v28.x) + (float)(v28.y * v28.y)) + (float)(v28.z * v28.z));
+  if ( a1 )
+    *a1 = v20;
+
+  v21 = PlayerActionFunction::brake(v20, a5, a6);
+  a4 = *p_mGravityDir;
+  v22 = fmaxf(v21, 0.0);
+  al::alongVectorNormalH(a2, *a2, a3, a4);
+  al::normalize(a2);
+  rs::slerpUp(x2_0, a4, a8, a9);
+  v23 = v22 * a2->y;
+  v24 = v22 * a2->z;
+  v26.x = (float)(v22 * a2->x) - (float)(a4.x * a7);
+  v26.y = v23 - (float)(a4.y * a7);
+  v26.z = v24 - (float)(a4.z * a7);
+  al::setVelocity(x2_0, v26);
+  return v22;
 }
 
 }  // namespace rs
