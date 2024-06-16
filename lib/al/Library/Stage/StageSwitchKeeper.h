@@ -13,6 +13,7 @@ class StageSwitchAccesser;
 class StageSwitchDirector;
 class StageSwitchListener;
 class PlacementInfo;
+class IUseStageSwitch;
 
 class StageSwitchKeeper {
 public:
@@ -44,5 +45,7 @@ private:
 };
 static_assert(sizeof(StageSwitchDirector) == 0x20);
 
+bool tryOnStageSwitch(IUseStageSwitch*, const char*);
+bool tryOffStageSwitch(IUseStageSwitch*, const char*);
 bool tryOnSwitchDeadOn(IUseStageSwitch* stageSwitch);
 }  // namespace al
