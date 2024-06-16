@@ -482,7 +482,7 @@ def mismatch_view(stdscr, window, folders):
 # Setup
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Fetch functions from a Google Sheets document')
+    parser = argparse.ArgumentParser(description='Check individual object files in the decomp')
     parser.add_argument('folder_object', nargs='?', default=None, type=str, help='Folder/Object to search for')
     parser.add_argument('-r', '--refresh', action='store_true', help='Redownload the TSV file')
     parser.add_argument('-f', '--folder_view', action='store_true', help='View folders instead of functions')
