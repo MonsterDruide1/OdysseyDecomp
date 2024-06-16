@@ -23,7 +23,7 @@ namespace al {
 
 KeyMoveFollowTarget::KeyMoveFollowTarget(const char* name) : LiveActor(name) {}
 
-void KeyMoveFollowTarget::initKeyMoveFollowTarget(const al::ActorInitInfo& info,
+void KeyMoveFollowTarget::initKeyMoveFollowTarget(const ActorInitInfo& info,
                                                   const char* archiveName, const char* suffix) {
     initNerveAction(this, "Wait", &NrvKeyMoveFollowTarget.mCollector, 0);
     initActorWithArchiveName(this, info, archiveName, suffix);
@@ -80,5 +80,5 @@ void KeyMoveFollowTarget::exeStop() {
         validateClipping(this);
 }
 
-void KeyMoveFollowTarget::init(const al::ActorInitInfo& info) {}
+void KeyMoveFollowTarget::init(const ActorInitInfo& info) {}
 }  // namespace al
