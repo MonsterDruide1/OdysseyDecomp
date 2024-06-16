@@ -1,6 +1,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Library/Action/ActorActionKeeper.h"
+#include "Library/Collision/Collider.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
@@ -200,7 +201,23 @@ CollisionDirector* LiveActor::getCollisionDirector() const {
 AreaObjDirector* LiveActor::getAreaObjDirector() const { CRASH }
 CameraDirector* LiveActor::getCameraDirector() const { CRASH }
 void LiveActor::initStageSwitchKeeper() { CRASH }
-void LiveActor::updateCollider() { CRASH }
+void LiveActor::updateCollider() {
+    if(!mPoseKeeper) return;
+
+    sead::Vector3f velocity = al::getVelocity(this);
+
+    if(mCollider) {
+        sead::Vector3f* transPtr = al::getTransPtr(this);
+        if(mFlags->isCollideOff) {
+            *transPtr += velocity;
+            mCollider->onInvalidate();
+        } else {
+            *transPtr += mCollider->collide(velocity);
+        }
+    } else {
+        *al::getTransPtr(this) += velocity;
+    }
+}
 
 
 

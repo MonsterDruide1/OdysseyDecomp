@@ -379,15 +379,7 @@ private:
     void* size[0x38/8];
 };
 
-class PlayerJudgeDeadWipeStart : public IJudge {
-public:
-    PlayerJudgeDeadWipeStart(al::LiveActor const*,PlayerConst const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x20/8];
-};
+#include "Player/PlayerJudgeDeadWipeStart.h"
 
 class PlayerJudgeDirectRolling : public IJudge {
 public:

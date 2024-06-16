@@ -30,6 +30,7 @@
 #include "Library/Yaml/ByamlUtil.h"
 #include "Library/stuff.h"
 #include "basis/seadTypes.h"
+#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "math/seadBoundBox.h"
 #include "math/seadMatrix.h"
 #include "math/seadQuatCalcCommon.h"
@@ -2613,4 +2614,23 @@ bool al::limitLength(sead::Vector3<float>* a1, sead::Vector3<float> const& a2, f
     a1->z = v5 * a2.z;
     return 1LL;
   }
+}
+
+void al::syncCollisionMtx(al::LiveActor* a1, sead::Matrix34<float> const* a2) {
+  if(!a1->mCollisionParts->isValidatedBySystem || !a1->mCollisionParts->isValidatedByUser) return;
+
+  if(a1->mCollisionParts->mJointMtx)
+    a1->mCollisionParts->syncMtx();
+  else if(a2)
+    a1->mCollisionParts->syncMtx(*a2);
+  else {
+    sead::Matrix34f mtx;
+    al::makeMtxSRT(&mtx, a1);
+    a1->mCollisionParts->syncMtx(mtx);
+  }
+}
+
+void al::makeMtxSRT(sead::Matrix34<float>* mtx, al::LiveActor const* actor) {
+  actor->mPoseKeeper->calcBaseMtx(mtx);
+  al::preScaleMtx(mtx, actor->mPoseKeeper->getScale());
 }

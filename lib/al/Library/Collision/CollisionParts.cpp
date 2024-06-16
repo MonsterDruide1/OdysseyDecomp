@@ -114,4 +114,14 @@ s32 CollisionParts::checkStrikeArrow(al::ArrowHitResultBuffer * results,sead::Ve
     return v60;
 }
 
+void CollisionParts::syncMtx() {
+    mSyncMtx = *mJointMtx;
+    makeEqualScale(&mSyncMtx);
+}
+
+void CollisionParts::syncMtx(const sead::Matrix34f& mtx) {
+    mSyncMtx = mtx;
+    makeEqualScale(&mSyncMtx);
+}
+
 }

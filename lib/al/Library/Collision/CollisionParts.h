@@ -22,6 +22,8 @@ public:
     void initParts(const sead::Matrix34f&);
     void resetAllMtx(const sead::Matrix34f&);
     f32 makeEqualScale(sead::Matrix34f*);
+    void syncMtx();
+    void syncMtx(const sead::Matrix34f&);
 
     s32 checkStrikeArrow(al::ArrowHitResultBuffer *,sead::Vector3f const&,sead::Vector3f const&,al::TriangleFilterBase const*);
 
