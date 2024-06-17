@@ -22,16 +22,20 @@ void PartsModel::endClipped() {
     LiveActor::endClipped();
     updatePose();
 }
+
 void PartsModel::calcAnim() {
     updatePose();
     LiveActor::calcAnim();
 }
+
 void PartsModel::attackSensor(HitSensor* target, HitSensor* source) {
     mParentModel->attackSensor(target, source);
 }
+
 bool PartsModel::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
     return mParentModel->receiveMsg(message, source, target);
 }
+
 void PartsModel::initPartsDirect(LiveActor* parent, const ActorInitInfo& initInfo,
                                  const char* arcName, const sead::Matrix34f* jointMtx,
                                  const sead::Vector3f& localTrans,
@@ -49,6 +53,7 @@ void PartsModel::initPartsDirect(LiveActor* parent, const ActorInitInfo& initInf
     mLocalRotate = localRotate;
     mLocalScale = localScale;
 }
+
 void PartsModel::initPartsSuffix(LiveActor* parent, const ActorInitInfo& initInfo,
                                  const char* arcName, const char* suffix,
                                  const sead::Matrix34f* jointMtx, bool useFollowMtxScale) {
@@ -60,6 +65,7 @@ void PartsModel::initPartsSuffix(LiveActor* parent, const ActorInitInfo& initInf
     registerSubActor(parent, this);
     makeActorAlive();
 }
+
 void PartsModel::initPartsMtx(LiveActor* parent, const ActorInitInfo& initInfo, const char* arcName,
                               const sead::Matrix34f* jointMtx, bool useFollowMtxScale) {
     mParentModel = parent;
@@ -70,11 +76,13 @@ void PartsModel::initPartsMtx(LiveActor* parent, const ActorInitInfo& initInfo, 
     registerSubActor(parent, this);
     makeActorAlive();
 }
+
 void PartsModel::initPartsFixFile(LiveActor* parent, const ActorInitInfo& initInfo,
                                   const char* arcName, const char* arcSuffix, const char* suffix) {
     initPartsFixFileNoRegister(parent, initInfo, arcName, arcSuffix, suffix);
     registerSubActor(parent, this);
 }
+
 void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitInfo& initInfo,
                                             const char* arcName, const char* arcSuffix,
                                             const char* suffix) {
@@ -111,6 +119,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
 
     makeActorAlive();
 }
+
 // NON-MATCHING: needs to have proper matrix math implemented still
 void PartsModel::updatePose() {
     sead::Matrix34f poseMtx;
@@ -138,10 +147,12 @@ void PartsModel::updatePose() {
     if (mIsUseFollowMtxScale || mIsUseLocalScale) {
     }
 }
+
 void PartsModel::offSyncAppearAndHide() {
     offSyncAppearSubActor(mParentModel, this);
     offSyncHideSubActor(mParentModel, this);
 }
+
 void PartsModel::onSyncAppearAndHide() {
     onSyncHideSubActor(mParentModel, this);
 

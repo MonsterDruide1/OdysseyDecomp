@@ -15,6 +15,7 @@ private:
     AreaObjGroup* mWaterAreaGroup;
     FluidSurfaceHolder* mFluidSurfaceHolder;
 };
+
 static_assert(sizeof(NatureDirector) == 0x10);
 
 }  // namespace al

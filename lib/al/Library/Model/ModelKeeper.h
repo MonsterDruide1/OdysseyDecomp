@@ -24,12 +24,19 @@ public:
     void createMatAnimForProgram(s32);
 
     ModelCtrl* getModelCtrl() const { return mModelCtrl; }
+
     AnimPlayerSkl* getAnimSkl() const { return mAnimSkl; }
+
     AnimPlayerMat* getAnimMtp() const { return mAnimMtp; }
+
     AnimPlayerMat* getAnimMts() const { return mAnimMts; }
+
     AnimPlayerMat* getAnimMcl() const { return mAnimMcl; }
+
     AnimPlayerMat* getAnimMat() const { return mAnimMat; }
+
     AnimPlayerVis* getAnimVis() const { return mAnimVis; }
+
     AnimPlayerVis* getAnimVisForAction() const { return mAnimVisForAction; }
 
 private:

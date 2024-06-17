@@ -13,4 +13,5 @@ private:
     // yes, this is an u32, bounded by a signed s32
     u32 mCounter = sead::Mathi::maxNumber();
 };
+
 static_assert(sizeof(PlayerCounterAfterUpperPunch) == 0x4);

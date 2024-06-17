@@ -44,6 +44,7 @@ public:
         this->formatV(format, args);
         va_end(args);
     }
+
     ~StringTmp() = default;
 };
 }  // namespace al

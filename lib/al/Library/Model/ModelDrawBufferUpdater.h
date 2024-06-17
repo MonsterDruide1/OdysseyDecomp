@@ -12,6 +12,7 @@ public:
 private:
     void* filler[3];
 };
+
 static_assert(sizeof(ModelDrawBufferUpdater) == 0x18);
 
 }  // namespace al

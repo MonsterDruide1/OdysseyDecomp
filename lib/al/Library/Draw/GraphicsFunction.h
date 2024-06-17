@@ -4,6 +4,7 @@
 namespace nn::g3d {
 class MaterialObj;
 }
+
 // TODO: Someone should add this to sead!
 namespace sead {
 class GraphicsContext;

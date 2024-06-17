@@ -6,6 +6,7 @@
 PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(const char* a1) {
     _0 = a1;
 }
+
 PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(const char* a1) {
     _0 = a1;
 }

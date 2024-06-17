@@ -10,6 +10,7 @@ public:
     void update();
 
     s32 getCounter() const { return mCounter; }
+
     f32 getSpeed() const { return mSpeed; }
 
 private:

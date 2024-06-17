@@ -14,17 +14,21 @@ void LinearCurve::set(const sead::Vector3f& start, const sead::Vector3f& end) {
     mDiff.z = end.z - start.z;
     mDistance = sead::Mathf::sqrt(mDiff.x * mDiff.x + mDiff.y * mDiff.y + mDiff.z * mDiff.z);
 }
+
 void LinearCurve::calcPos(sead::Vector3f* pos, f32 param) const {
     pos->x = (mDiff.x * param) + mStart.x;
     pos->y = (mDiff.y * param) + mStart.y;
     pos->z = (mDiff.z * param) + mStart.z;
 }
+
 void LinearCurve::calcVelocity(sead::Vector3f* vel, f32 param) const {
     *vel = mDiff;
 }
+
 f32 LinearCurve::calcLength(f32 param_start, f32 param_end) const {
     return mDistance * sead::Mathf::abs(param_end - param_start);
 }
+
 f32 LinearCurve::calcCurveParam(f32 param) const {
     if (isNearZero(mDistance, 0.001))
         return 0;

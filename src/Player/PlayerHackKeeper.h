@@ -22,6 +22,7 @@ public:
                      const IUsePlayerHeightCheck* heightCheck);
 
     al::LiveActor* getCurrentHackActor() const { return mCurrentHackActor; }
+
     al::HitSensor* getUnkHitSensor() const { return mUnkHitSensor; }
 
 private:

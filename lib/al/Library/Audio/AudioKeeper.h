@@ -32,12 +32,17 @@ public:
     void kill();
 
     AudioEventController* getAudioEventController() const { return mAudioEventController; };
+
     AudioEffectController* getAudioEffectController() const { return mAudioEffectController; };
+
     AudioRequestKeeperSyncedBgm* getAudioRequestKeeperSyncedBgm() const {
         return mAudioRequestKeeperSyncedBgm;
     };
+
     SeKeeper* getSeKeeper() const { return mSeKeeper; };
+
     BgmKeeper* getBgmKeeper() const { return mBgmKeeper; };
+
     AudioMic* getAudioMic() const { return mAudioMic; };
 
 private:
@@ -48,6 +53,7 @@ private:
     BgmKeeper* mBgmKeeper;
     AudioMic* mAudioMic;
 };
+
 static_assert(sizeof(AudioKeeper) == 0x38);
 
 }  // namespace al

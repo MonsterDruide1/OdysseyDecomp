@@ -2,6 +2,7 @@
 
 namespace al {
 AnimPlayerBase::AnimPlayerBase() {}
+
 void AnimPlayerBase::updateLast() {
     _10 = false;
 }

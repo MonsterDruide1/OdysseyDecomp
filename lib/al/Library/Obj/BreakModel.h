@@ -24,6 +24,7 @@ private:
     bool mIsValid = false;
     s32 mStep = 0;
 };
+
 static_assert(sizeof(BreakModel) == 0x140, "al::BreakModel Size");
 
 }  // namespace al

@@ -42,7 +42,9 @@ public:
 
     virtual void appear();
     virtual void kill();
+
     virtual void control() {}
+
     virtual void calcAnim(bool recursive);
     virtual void movement();
 

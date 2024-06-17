@@ -21,6 +21,7 @@ ActionFlagCtrl* ActionFlagCtrl::tryCreate(LiveActor* actor, const char* name) {
 
     return new ActionFlagCtrl(actor, name);
 }
+
 void ActionFlagCtrl::start(const char* name) {
     mLastFlag = findFlagInfo(name);
     mIsBool = false;
@@ -30,6 +31,7 @@ void ActionFlagCtrl::start(const char* name) {
     startCtrlFlag();
     startCtrlSensor();
 }
+
 ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionFlagCtrlInfo* flagInfo = mInfos[i];
@@ -38,6 +40,7 @@ ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
     }
     return nullptr;
 }
+
 void ActionFlagCtrl::update(f32 frame, f32 frameRate, f32 frameMax, bool isStop) {
     if (!mLastFlag || !mIsBool)
         return;

@@ -20,6 +20,7 @@ namespace alNerveFunction {
 NerveActionCollector::NerveActionCollector() {
     sCurrentCollector = this;
 }
+
 void NerveActionCollector::addNerve(al::NerveAction* action) {
     if (!mHead)
         mHead = action;

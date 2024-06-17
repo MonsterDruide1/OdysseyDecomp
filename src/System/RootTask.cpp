@@ -8,9 +8,11 @@
 
 RootTask::RootTask(const sead::TaskConstructArg& constructArg)
     : sead::Task(constructArg, "RootTask") {}
+
 RootTask::~RootTask() = default;
 
 void RootTask::enter() {}
+
 void RootTask::calc() {
     if (!mGameSystem) {
         sead::ScopedCurrentHeapSetter heapSetter(al::getStationedHeap());
@@ -19,6 +21,7 @@ void RootTask::calc() {
     }
     mGameSystem->movement();
 }
+
 void RootTask::draw() {
     if (mGameSystem)
         mGameSystem->drawMain();

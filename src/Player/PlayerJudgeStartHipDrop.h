@@ -23,4 +23,5 @@ private:
     const IUsePlayerHeightCheck* mHeightCheck;
     const IPlayerModelChanger* mModelChanger;
 };
+
 static_assert(sizeof(PlayerJudgeStartHipDrop) == 0x28);

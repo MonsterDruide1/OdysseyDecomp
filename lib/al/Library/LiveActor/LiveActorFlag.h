@@ -18,6 +18,7 @@ struct LiveActorFlag {
 
     LiveActorFlag();
 };
+
 static_assert(sizeof(LiveActorFlag) == 0xC);
 
 }  // namespace al

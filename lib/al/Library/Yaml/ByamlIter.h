@@ -65,6 +65,7 @@ private:
         const u8* mData;
         const ByamlHeader* mHeader;
     };
+
     const u8* mRootNode;
 };
 }  // namespace al
