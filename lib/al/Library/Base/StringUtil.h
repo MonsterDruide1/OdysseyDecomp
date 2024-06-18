@@ -41,7 +41,7 @@ public:
     StringTmp(const char* format, ...) : sead::FixedSafeString<L>() {
         std::va_list args;
         va_start(args, format);
-        this->formatV(format, args);
+        sead::FixedSafeString<L>::formatV(format, args);
         va_end(args);
     }
     ~StringTmp() = default;

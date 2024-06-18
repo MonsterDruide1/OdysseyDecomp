@@ -26,7 +26,7 @@ public:
     void update();
     bool isEnableSave();
     void drawMain();
-    al::Scene* getCurrentScene();  // {return this->curScene}
+    al::Scene* getCurrentScene();  // {return curScene}
 
     u8** field_0x0;
     u8 padding_120[120];
