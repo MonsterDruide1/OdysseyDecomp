@@ -704,6 +704,7 @@ public:
 
     bool isDiveInWaterAnim();
     void tryChangeDiveInWaterAnim();
+    bool judgeEnableDiveInWater() const { return true; }
 private:
     void* size[0x20/8];
 };
@@ -898,13 +899,7 @@ private:
     void* size[0x60/8];
 };
 
-class PlayerStateHeadSliding : public al::NerveStateBase {
-public:
-    PlayerStateHeadSliding(al::LiveActor *,PlayerConst const*,IUsePlayerCollision const*,PlayerInput const*,PlayerActionDiveInWater const*,PlayerAnimator *);
-    bool isEnableDiveInWater() const {return true;}
-private:
-    void* size[0x50/8];
-};
+#include "Player/PlayerStateHeadSliding.h"
 
 class PlayerStateLongJump : public al::NerveStateBase {
 public:
