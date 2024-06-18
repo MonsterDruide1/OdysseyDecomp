@@ -163,11 +163,57 @@ void PlayerColliderHakoniwa::changeCollisionNormal() {
     mPlayerCeilingCheck->setupCeilingCheckNormal();
     mPlayerCeilingCheck->setCollisionPartsFilter(nullptr);
 }
-//void PlayerColliderHakoniwa::changeCollisionMini();
-//void PlayerColliderHakoniwa::changeCollisionSwim();
-//void PlayerColliderHakoniwa::changeCollisionWallGrab(const sead::Vector3f&);
-//void PlayerColliderHakoniwa::changeCollisionGrabCeil(const sead::Vector3f&);
-//void PlayerColliderHakoniwa::changeCollisionPoleClimb(const sead::Vector3f&);
+
+void PlayerColliderHakoniwa::changeCollisionMini() {
+    mPlayerCollider->setCollisionShapeKeeper(mShapeKeeperMini);
+    mPlayerCollider->setCollisionPartsFilter(nullptr);
+    mPlayerCollider->mIsDuringRecovery = false;
+    mPlayerCollider->offCutCollideAffectDir();
+    mPlayerCollider->setWallBorderCheckTypeNoFace();
+    mPlayerCeilingCheck->setupCeilingCheckNormal();
+    mPlayerCeilingCheck->setCollisionPartsFilter(nullptr);
+}
+
+void PlayerColliderHakoniwa::changeCollisionSwim() {
+    mPlayerCollider->setCollisionShapeKeeper(mShapeKeeperSwim);
+    mPlayerCollider->setCollisionPartsFilter(nullptr);
+    mPlayerCollider->mIsDuringRecovery = false;
+    mPlayerCollider->offCutCollideAffectDir();
+    mPlayerCollider->setWallBorderCheckTypeNoFace();
+    mPlayerCeilingCheck->setupCeilingCheckNormal();
+    mPlayerCeilingCheck->setCollisionPartsFilter(nullptr);
+}
+
+void PlayerColliderHakoniwa::changeCollisionWallGrab(const sead::Vector3f& cutCollide) {
+    mPlayerCollider->setCollisionShapeKeeper(mShapeKeeperWallGrab);
+    mPlayerCollider->setCollisionPartsFilter(nullptr);
+    mPlayerCollider->mIsDuringRecovery = false;
+    mPlayerCollider->onCutCollideAffectDir(cutCollide);
+    mPlayerCollider->setWallBorderCheckTypeAll();
+    mPlayerCeilingCheck->setupCeilingCheckGrab();
+    mPlayerCeilingCheck->setCollisionPartsFilter(nullptr);
+}
+
+void PlayerColliderHakoniwa::changeCollisionGrabCeil(const sead::Vector3f& cutCollide) {
+    mPlayerCollider->setCollisionShapeKeeper(mShapeKeeperGrabCeil);
+    mPlayerCollider->setCollisionPartsFilter(nullptr);
+    mPlayerCollider->mIsDuringRecovery = true;
+    mPlayerCollider->onCutCollideAffectDir(cutCollide);
+    mPlayerCollider->setWallBorderCheckTypeAll();
+    mPlayerCeilingCheck->setupCeilingCheckGrab();
+    mPlayerCeilingCheck->setCollisionPartsFilter(nullptr);
+}
+
+void PlayerColliderHakoniwa::changeCollisionPoleClimb(const sead::Vector3f& cutCollide) {
+    mPlayerCollider->setCollisionShapeKeeper(mShapeKeeperPoleClimb);
+    mPlayerCollider->setCollisionPartsFilter(nullptr);
+    mPlayerCollider->mIsDuringRecovery = false;
+    mPlayerCollider->onCutCollideAffectDir(cutCollide);
+    mPlayerCollider->setWallBorderCheckTypeAll();
+    mPlayerCeilingCheck->setupCeilingCheckNormal();
+    mPlayerCeilingCheck->setCollisionPartsFilter(nullptr);
+}
+
 //void PlayerColliderHakoniwa::changeCollision2DNormal();
 //void PlayerColliderHakoniwa::changeCollision2DMini();
 //void PlayerColliderHakoniwa::changeCollisionHack(const al::CollisionPartsFilterBase*);
@@ -201,58 +247,31 @@ void PlayerColliderHakoniwa::invalidateGroundSupport() {
 const char* legNames[3] = {"LegFront", "LegLeft", "LegRight"};
 
 void helperFunc(CollisionShapeKeeper* keeper, const sead::Vector3f& pos) {
-  float v2; // s14
-  float v3; // s15
-  float v4; // s8
-  float v8; // s10
-  float v9; // s0
+  float cos; // s10
+  float sin; // s0
   const char *v10; // x1
-  float v11; // s2
-  float v12; // s0
-  float v13; // s5
-  float v14; // s3
-  float v15; // s6
+  float v1345y; // s5
+  float v1345x; // s3
+  float v1345z; // s6
   float v16; // s4
-  float v17; // s7
-  float v18; // s20
-  float v19; // s3
-  float y; // s16
-  float v21; // s1
-  float v22; // s2
   sead::Vector3f a4; // [xsp+10h] [xbp-90h] BYREF
   sead::Vector3f a3; // [xsp+20h] [xbp-80h] BYREF
-  float v26; // [xsp+78h] [xbp-28h]
-  float v27; // [xsp+7Ch] [xbp-24h]
 
-  v2 = 0.0 * 30.0;
-  v3 = 0.0 * 30.0;
-  v4 = 1.0 * 30.0;
-  v27 = 0.0 * -40.0;
-  v26 = 1.0 * -40.0;
+  sead::Vector3f v234 = sead::Vector3f::ez * 30.0f;
   for(int v7=0; v7!=3; v7++)
   {
-    v8 = sead::Mathf::cos(sead::Mathf::deg2rad(v7 * 120.0) * 0.5);
-    v9 = sead::Mathf::sin(sead::Mathf::deg2rad(v7 * 120.0) * 0.5);
+    cos = sead::Mathf::cos(sead::Mathf::deg2rad(v7 * 120.0f) * 0.5f);
+    sin = sead::Mathf::sin(sead::Mathf::deg2rad(v7 * 120.0f) * 0.5f);
     v10 = legNames[v7];
-    v11 = v9 * 1.0;
-    v12 = v9 * 0.0;
-    v13 = (float)(v3 * v8) + (float)((float)(v2 * v12) - (float)(v4 * v12));
-    v14 = (float)(v2 * v8) + (float)((float)(v4 * v11) - (float)(v3 * v12));
-    v15 = (float)(v4 * v8) + (float)((float)(v3 * v12) - (float)(v2 * v11));
-    v16 = (float)((float)-(float)(v2 * v12) - (float)(v3 * v11)) - (float)(v4 * v12);
-    v17 = v8 * v14;
-    v18 = v12 * v14;
-    v19 = (float)(v12 * v13) - (float)(v11 * v14);
-    y = pos.y;
-    v21 = (float)((float)(v18 + (float)(v8 * v13)) - (float)(v12 * v15)) - (float)(v11 * v16);
-    v22 = (float)((float)((float)((float)(v11 * v15) + (float)(v17 - (float)(v12 * v13))) - (float)(v12 * v16)) + pos.x)
-        - v27;
-    a3.z = (float)((float)((float)((float)(v8 * v15) + v19) - (float)(v12 * v16)) + pos.z) - (float)(0.0 * -40.0);
-    a4.x = (float)(0.0 * -40.0) - (float)(0.0 * 20.0);
-    a4.y = (float)(1.0 * -40.0) - (float)(1.0 * 20.0);
-    a3.x = v22;
-    a3.y = (float)(v21 + y) - v26;
-    a4.z = a4.x;
+    sead::Vector3f v1112 = sin * sead::Vector3f::ey;
+    v1345x = (v234.x * cos) + ((v1112.y * v234.z) - (v1112.z * v234.y));
+    v1345y = (v234.y * cos) + ((v1112.z * v234.x) - (v1112.x * v234.z));
+    v1345z = (v234.z * cos) + ((v1112.x * v234.y) - (v1112.y * v234.x));
+    v16 = -v234.dot(v1112);
+    a3.x = ((((v1112.y * v1345z) - (v1112.z * v1345y) + (cos * v1345x)) - (v1112.x * v16)) + pos.x) - (sead::Vector3f::ey * -40.0f).x;
+    a3.y = ((((v1112.z * v1345x) - (v1112.x * v1345z) + (cos * v1345y)) - (v1112.y * v16)) + pos.y) - (sead::Vector3f::ey * -40.0f).y;
+    a3.z = ((((v1112.x * v1345y) - (v1112.y * v1345x) + (cos * v1345z)) - (v1112.z * v16)) + pos.z) - (sead::Vector3f::ey * -40.0f).z;
+    a4 = (sead::Vector3f::ey * -40.0f) - (sead::Vector3f::ey * 20.0f);
     keeper->createShapeArrow(v10, a3, a4, 20.0, v7);
   }
 }
