@@ -24,7 +24,7 @@ public:
     float mCeilCheckHeight;
     bool mIsCeilingCheckNormal;
     bool mIsCeilingCheckGrab;
-    bool mIsEnableStandUp;
+    bool mIsEnableStandUp = true;
     bool mIsEnableHoldUp;
     bool mIsPressedCeil;
 };
