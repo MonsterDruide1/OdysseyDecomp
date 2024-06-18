@@ -901,6 +901,7 @@ private:
 class PlayerStateHeadSliding : public al::NerveStateBase {
 public:
     PlayerStateHeadSliding(al::LiveActor *,PlayerConst const*,IUsePlayerCollision const*,PlayerInput const*,PlayerActionDiveInWater const*,PlayerAnimator *);
+    bool isEnableDiveInWater() const {return true;}
 private:
     void* size[0x50/8];
 };

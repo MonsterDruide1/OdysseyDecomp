@@ -25,6 +25,7 @@ public:
         EActionTrigger_val11 = 11,
         EActionTrigger_val12 = 12,
         EActionTrigger_val14 = 14,
+        EActionTrigger_val15 = 15,
         EActionTrigger_val16 = 16,
         EActionTrigger_val17 = 17,
         EActionTrigger_val18 = 18,
