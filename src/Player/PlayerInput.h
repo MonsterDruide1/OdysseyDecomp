@@ -65,6 +65,7 @@ public:
     bool isMove() const;
     bool isHoldHackAction() const;
     bool isHoldHackJump() const;
+    bool isSpinInput() const;
 
     bool isTriggerChange2D() const;
     bool isTriggerChange3D() const;
