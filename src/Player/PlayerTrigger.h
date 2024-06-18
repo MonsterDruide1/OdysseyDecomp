@@ -11,6 +11,8 @@ public:
         EAttackSensorTrigger_val0 = 0,
     };
     enum EActionTrigger : u32 {
+        // used in PlayerJudgeForceLand
+        EActionTrigger_val11 = 11,
         EActionTrigger_QuickTurn = 34,
     };
     enum EReceiveSensorTrigger : u32 {};
