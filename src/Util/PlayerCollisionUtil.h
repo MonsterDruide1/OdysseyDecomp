@@ -23,5 +23,6 @@ bool isOnGround(const al::LiveActor*, const IUsePlayerCollision*);
 bool isJustLand(const IUsePlayerCollision*);
 void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
+bool isCollisionCodeSandSink(const IUsePlayerCollision*);
 
 }  // namespace rs
