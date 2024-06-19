@@ -544,19 +544,7 @@ private:
     void* size[0x20/8];
 };
 
-class PlayerJudgeStartRolling : public IJudge {
-public:
-    PlayerJudgeStartRolling(al::LiveActor const*,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,IPlayerModelChanger const*,PlayerCarryKeeper const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-
-    bool judgeCancelHipDrop();
-private:
-    void* size[0x38/8];
-};
-
+#include "Player/PlayerJudgeStartRolling.h"
 #include "Player/PlayerJudgeStartSquat.h"
 
 class PlayerJudgeWallCatch : public al::HioNode, public IJudge {
