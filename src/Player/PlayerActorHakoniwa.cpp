@@ -1919,7 +1919,18 @@ void PlayerActorHakoniwa::exeHeadSliding() {
         return;
     }
 }
-void PlayerActorHakoniwa::exeLongJump() { CRASH }
+void PlayerActorHakoniwa::exeLongJump() {
+    tryActionCapReturn();
+    if(al::updateNerveState(this)) {
+        if(rs::updateJudgeAndResult(mPlayerJudgeDirectRolling)) {
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val8);
+            al::setNerve(this, &Rolling);
+            return;
+        }
+        setNerveOnGround();
+    }
+    tryChangeNerveFromAir();
+}
 void PlayerActorHakoniwa::exeFall() {
     al::updateNerveState(this);
     tryActionCapReturn();
