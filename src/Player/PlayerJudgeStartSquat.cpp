@@ -10,7 +10,7 @@ PlayerJudgeStartSquat::PlayerJudgeStartSquat(const PlayerInput* input,
     : mInput(input), mCounterForceRun(counterForceRun), mCarryKeeper(carryKeeper) {}
 
 bool PlayerJudgeStartSquat::judge() const {
-    return !mCarryKeeper->isCarry() && mInput->isHoldSquat() && mCounterForceRun->getCounter() < 1;
+    return !mCarryKeeper->isCarry() && mInput->isHoldSquat() && !mCounterForceRun->isForceRun();
 }
 
 void PlayerJudgeStartSquat::reset() {}
