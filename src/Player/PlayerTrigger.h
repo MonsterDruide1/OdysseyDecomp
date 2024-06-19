@@ -39,6 +39,7 @@ public:
         EActionTrigger_val27 = 27,
         EActionTrigger_val28 = 28,
         EActionTrigger_val29 = 29,
+        // used in PlayerJudgeWallCatch, PlayerJudgeWallKeep
         EActionTrigger_val30 = 30,
         EActionTrigger_val32 = 32,
         EActionTrigger_val33 = 33,

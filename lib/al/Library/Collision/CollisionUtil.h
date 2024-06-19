@@ -10,6 +10,7 @@ class TriangleFilterBase;
 class CollisionParts;
 class IUseCollision;
 class HitInfo;
+class ArrowHitInfo;
 
 bool isNearCollideSphereAabb(const sead::Vector3f&, f32, const sead::BoundBox3f&);
 
@@ -37,5 +38,9 @@ bool getFirstPolyOnArrow(al::IUseCollision const*,sead::Vector3<float> *,al::Tri
 bool getFirstPolyOnArrow(al::IUseCollision const*,sead::Vector3<float> *,al::Triangle *,sead::Vector3<float> const&,sead::Vector3<float> const&,al::CollisionPartsFilterBase const*,al::TriangleFilterBase const*);
 
 al::ArrowHitInfo* getStrikeArrowInfo(al::IUseCollision const*,u32);
+
+bool getLastPolyOnArrow(const al::IUseCollision*, const al::ArrowHitInfo**, const sead::Vector3f&,
+                        const sead::Vector3f&, const al::CollisionPartsFilterBase*,
+                        const al::TriangleFilterBase*);
 
 }

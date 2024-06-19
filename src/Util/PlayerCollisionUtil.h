@@ -14,6 +14,22 @@ class PlayerConst;
 
 namespace rs {
 
+f32 getGroundHeight(const IUsePlayerHeightCheck*);
+bool isAboveGround(const IUsePlayerHeightCheck*);
+
+const sead::Vector3f& getCollidedWallPos(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision*);
+const al::CollisionParts* getCollidedWallCollisionParts(const IUsePlayerCollision*);
+
+const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision*);
+const al::CollisionParts* getCollidedGroundCollisionParts(const IUsePlayerCollision*);
+
+const sead::Vector3f& getCollidedCeilingPos(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedCeilingNormal(const IUsePlayerCollision*);
+const al::CollisionParts* getCollidedCeilingCollisionParts(const IUsePlayerCollision*);
+
+bool isCollidedGround(const IUsePlayerCollision*);
 bool isCollidedGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 f32 getGroundHeight(const IUsePlayerHeightCheck*);
 
@@ -40,10 +56,16 @@ void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
 bool isCollisionCodeSandSink(const IUsePlayerCollision*);
 bool isCollidedWall(const IUsePlayerCollision*);
+bool isCollidedWallFace(const IUsePlayerCollision*);
 bool isActionCodeNoWallGrab(const IUsePlayerCollision*);
+bool isActionCodeNoWallKeepWall(const IUsePlayerCollision*);
+
+bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
+bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
+bool isCollisionCodeGrabCeilCeiling(const IUsePlayerCollision*);
+bool isCollisionCodeGrabCeilGrround(const IUsePlayerCollision*);
+
 bool isAutoRunOnGroundSkateCode(const al::LiveActor*, const IUsePlayerCollision*, float);
-void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
-                                  const IUsePlayerCollision*);
                                   
 bool isActionCodeNoWallGrab(const al::HitInfo*);
 bool isActionCodeNoWallPopUp(const al::HitInfo*);

@@ -14,6 +14,7 @@ public:
     bool isThrowHold() const;
     bool isThrow() const;
     bool isCarry() const;
+    bool isCarryWallKeep() const;
 
 private:
     u8 padding[0x70];

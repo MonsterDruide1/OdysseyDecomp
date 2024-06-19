@@ -576,16 +576,7 @@ private:
     void* size[0x28/8];
 };
 
-class PlayerJudgeWallKeep : public IJudge {
-public:
-    PlayerJudgeWallKeep(al::LiveActor const*,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,IPlayerModelChanger const*,IUsePlayerHeightCheck const*,PlayerCounterAfterUpperPunch const*,PlayerWallActionHistory const*,PlayerCarryKeeper const*,PlayerTrigger const*,PlayerCounterForceRun const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x68/8];
-};
+#include "Player/PlayerJudgeWallKeep.h"
 
 class PlayerJudgeCameraSubjective : public IJudge {
 public:
