@@ -11,6 +11,8 @@ public:
         EAttackSensorTrigger_val0 = 0,
     };
     enum EActionTrigger : u32 {
+        // used in PlayerJudgeWallCatch
+        EActionTrigger_val30 = 30,
         EActionTrigger_QuickTurn = 34,
     };
     enum EReceiveSensorTrigger : u32 {};
