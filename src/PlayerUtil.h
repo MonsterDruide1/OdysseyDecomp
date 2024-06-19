@@ -57,6 +57,10 @@ bool findWallEnablePush(al::LiveActor const*,IUsePlayerCollision const*,float,fl
 bool isCollidedWallFace(IUsePlayerCollision const*);
 const al::CollisionParts* getCollidedGroundCollisionParts(IUsePlayerCollision const*);
 const sead::Vector3f& getCollidedCeilingNormal(IUsePlayerCollision const*);
+void reflectCeilingUpperPunch(al::LiveActor *,IUsePlayerCollision const*,PlayerInput const*,PlayerConst const*,PlayerTrigger const*,bool);
+void setupLongJumpVelocity(al::LiveActor *,IUsePlayerCollision const*,float,float,float,float,float);
+bool isModeE3Rom();
+void calcFrontVelocityAndDirH(sead::Vector3<float> *,sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
 
 }
 
@@ -900,13 +904,7 @@ private:
 };
 
 #include "Player/PlayerStateHeadSliding.h"
-
-class PlayerStateLongJump : public al::NerveStateBase {
-public:
-    PlayerStateLongJump(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerTrigger *,PlayerAnimator *,PlayerContinuousLongJump *,PlayerActionDiveInWater *);
-private:
-    void* size[0x58/8];
-};
+#include "Player/PlayerStateLongJump.h"
 
 class PlayerStateRise : public al::NerveStateBase {
 public:

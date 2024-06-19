@@ -1306,4 +1306,118 @@ void slerpUp(al::LiveActor*a1, sead::Vector3<float> const&a2, float a3, float a4
   rs::slerpUpFront(a1, a2, v14, a3, a4);
 }
 
+void setupLongJumpVelocity(al::LiveActor *self,
+        const IUsePlayerCollision *a2,
+        float a3,
+        float a4,
+        float a5,
+        float a6,
+        float a7)
+{
+  float v14; // s0
+  const sead::Vector3f *Gravity; // x0
+  float x; // s0
+  float y; // s1
+  float z; // s2
+  const sead::Vector3f *Velocity; // x0
+  float v20; // s0
+  float v21; // s0
+  float v22; // s0
+  sead::Vector3f v23; // [xsp+0h] [xbp-B0h] BYREF
+  sead::Vector3f v24; // [xsp+10h] [xbp-A0h] BYREF
+  sead::Vector3f v25; // [xsp+20h] [xbp-90h] BYREF
+  sead::Vector3f vec; // [xsp+30h] [xbp-80h] BYREF
+  sead::Vector3f out; // [xsp+40h] [xbp-70h] BYREF
+  sead::Vector3f v28; // [xsp+50h] [xbp-60h] BYREF
+  sead::Vector3f v29; // [xsp+60h] [xbp-50h] BYREF
+
+  v29.x = 0.0;
+  v29.y = 0.0;
+  v29.z = 0.0;
+  v28.x = 0.0;
+  v28.y = 0.0;
+  v28.z = 0.0;
+  rs::calcFrontVelocityAndDirH(&v29, &v28, self, a2);
+  v14 = v29.length();
+  out.x = 0.0;
+  out.y = 0.0;
+  out.z = 0.0;
+  vec.z = v14 * v28.z;
+  vec.x = v14 * v28.x;
+  vec.y = v14 * v28.y;
+  rs::calcJumpInertia(&out, self, a2, vec, a3);
+  Gravity = &al::getGravity(self);
+  x = Gravity->x;
+  y = Gravity->y;
+  z = Gravity->z;
+  v25.x = 0.0;
+  v25.y = 0.0;
+  v25.z = 0.0;
+  vec.x = -x;
+  vec.y = -y;
+  vec.z = -z;
+  Velocity = &al::getVelocity(self);
+  al::parallelizeVec(&v25, vec, *Velocity);
+  if ( (float)((float)((float)(v25.x * vec.x) + (float)(v25.y * vec.y)) + (float)(v25.z * vec.z)) < 0.0 )
+  {
+    v25.x = 0.0;
+    v25.y = 0.0;
+    v25.z = 0.0;
+  }
+
+  v20 = sqrtf((float)((float)(v29.x * v29.x) + (float)(v29.y * v29.y)) + (float)(v29.z * v29.z)) + a4;
+  if ( v20 >= a5 )
+  {
+    a5 = v20;
+    if ( v20 > a6 )
+      a5 = a6;
+  }
+
+  v21 = sqrtf((float)((float)(v29.x * v29.x) + (float)(v29.y * v29.y)) + (float)(v29.z * v29.z));
+  if ( v21 > 0.0 )
+  {
+    v22 = a5 / v21;
+    v29.x = v22 * v29.x;
+    v29.y = v22 * v29.y;
+    v29.z = v22 * v29.z;
+  }
+
+  v24.x = (float)(v29.x + v25.x) + (float)(vec.x * a7);
+  v24.y = (float)(v29.y + v25.y) + (float)(vec.y * a7);
+  v24.z = (float)(v29.z + v25.z) + (float)(vec.z * a7);
+  al::limitLength(&v24, v24, sqrtf((float)(a6 * a6) + (float)(a7 * a7)));
+  v23.x = v24.x + out.x;
+  v23.y = v24.y + out.y;
+  v23.z = v24.z + out.z;
+  al::setVelocity(self, v23);
+}
+
+void calcFrontVelocityAndDirH(
+        sead::Vector3f *a1,
+        sead::Vector3f *a2,
+        const al::LiveActor *self,
+        const IUsePlayerCollision *a4)
+{
+  const sead::Vector3f *Velocity; // x23
+  const sead::Vector3f *Gravity; // x21
+  sead::Vector3f v10; // [xsp+0h] [xbp-40h] BYREF
+
+  Velocity = &al::getVelocity(self);
+  Gravity = &al::getGravity(self);
+  if ( a4 && rs::isCollidedGround(a4) )
+    v10 = rs::getCollidedGroundNormal(a4);
+  else
+    al::calcUpDir(&v10, self);
+
+  al::verticalizeVec(a1, v10, *Velocity);
+  al::verticalizeVec(a1, *Gravity, *a1);
+  if ( a2 && !al::tryNormalizeOrZero(a2, *a1) )
+  {
+    al::calcFrontDir(a2, self);
+    al::verticalizeVec(a2, *Gravity, *a2);
+    if ( !al::tryNormalizeOrZero(a2) )
+      *a2 = v10;
+  }
+}
+
 }  // namespace rs
