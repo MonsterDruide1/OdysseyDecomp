@@ -449,9 +449,9 @@ class PlayerJudgePoleClimb : public al::HioNode, public IJudge {
 public:
     PlayerJudgePoleClimb(al::LiveActor const*,PlayerConst const*,IUsePlayerCollision const*,IPlayerModelChanger const*,PlayerCarryKeeper const*,PlayerExternalVelocity const*,PlayerInput const*,PlayerTrigger const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 public:
     const al::LiveActor *mPlayer;
     const PlayerConst *mConst;
@@ -461,14 +461,14 @@ public:
     const PlayerExternalVelocity *mExternalVelocity;
     const PlayerInput *mInput;
     const PlayerTrigger *mTrigger;
-    bool mIsJudge;
-    const al::CollisionParts *mCollisionParts;
-    sead::Vector3f _58;
-    sead::Vector3f _64;
-    sead::Vector3f _70;
-    float _7C;
-    float mPoleCodeAngleOffsetCeiling;
-    const char *mMaterialCodeCeiling;
+    bool mIsJudge = 0;
+    const al::CollisionParts *mCollisionParts = 0;
+    sead::Vector3f _58 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _64 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _70 = {0.0f, 0.0f, 0.0f};
+    float _7C = 0;
+    float mPoleCodeAngleOffsetCeiling = 0;
+    const char *mMaterialCodeCeiling = 0;
 };
 static_assert(sizeof(PlayerJudgePoleClimb) == 0x90);
 

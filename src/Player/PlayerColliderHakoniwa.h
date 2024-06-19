@@ -86,7 +86,7 @@ public:
     f32 mGroundHeight = 0.0f;
     f32 mShadowDropHeight = 0.0f;
     sead::Vector3f mGroundNormal = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mFallMaxSpeedStart = {0.0f, 0.0f, 0.0f};  // FIXME: name
+    sead::Vector3f mFallMaxSpeedStart = {0.0f, 0.0f, 0.0f};
     f32 mFallDistance = 0.0f;
     u32 mTimeSinceLastTouchGround = 0;
     al::HitSensor* mCollidedGroundSensor = nullptr;
