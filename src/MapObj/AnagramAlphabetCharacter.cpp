@@ -127,7 +127,7 @@ void AnagramAlphabetCharacter::exeHackWait() {
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackGoal);
 
     else {
-        if (!rs::updateJudgeAndResult((IJudge*)this->mHackerJudgeStartRun))
+        if (!rs::updateJudgeAndResult((IJudge*)mHackerJudgeStartRun))
             return;
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackMove);
     }
@@ -182,7 +182,7 @@ void AnagramAlphabetCharacter::exeHackGoal() {
     if (al::isGreaterEqualStep(this, 0LL))
         return;
     al::updatePoseMtx(this, unkMtx);
-    rs::endHackDir(&this->mHackerParent, rot);
+    rs::endHackDir(&mHackerParent, rot);
     al::validateClipping(this);
     al::setNerve(this, &NrvAnagramAlphabetCharacter.Wait);
     mCapTargetParts->startNormal();

@@ -13,7 +13,7 @@ void LayoutActor::appear() {
     if (mLayoutPartsActorKeeper)
         mLayoutPartsActorKeeper->appear();
     updateLayoutPaneRecursive(this);
-    this->calcAnim(false);
+    calcAnim(false);
 }
 void LayoutActor::initLayoutPartsActorKeeper(s32 capacity) {
     mLayoutPartsActorKeeper = new LayoutPartsActorKeeper(capacity);

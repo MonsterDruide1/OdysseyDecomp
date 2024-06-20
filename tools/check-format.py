@@ -211,6 +211,11 @@ def common_const_type(c, path):
                 continue
             index += 1
 
+def common_this_prefix(c, path):
+    for line in c.splitlines():
+        if 'this->' in line:
+            FAIL("this-> is not allowed!", line, path)
+
 # Header files
 
 def header_sorted_visibility(c, path):
@@ -325,6 +330,7 @@ def check_source(c, path):
     common_sead_types(c, path)
     common_void_params(c, path)
     common_const_type(c, path)
+    common_this_prefix(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -335,6 +341,7 @@ def check_header(c, path):
     common_const_type(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
+    common_this_prefix(c, path)
 
 def check_file(file_str):
     file = open(file_str, mode="r")
