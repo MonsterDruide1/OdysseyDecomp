@@ -37,13 +37,13 @@ al::SimpleLayoutTextHolder::SimpleLayoutTextHolder(s32 amount, const LayoutInitI
                                                    const char* name, const char* paneName,
                                                    const char* archiveName)
     : mCurrentIndex(0), mAmount(amount) {
-    field_10 = new SimpleLayoutText*[amount];
-    field_18 = new SimpleLayoutTextHolderEntry*[amount];
+    mLayouts = new SimpleLayoutText*[amount];
+    mEntries = new SimpleLayoutTextHolderEntry*[amount];
 
     for (s32 i = 0; i < mAmount; i++) {
         SimpleLayoutText* text = new SimpleLayoutText(info, name, paneName, archiveName);
-        field_10[i] = text;
-        field_18[i] = new SimpleLayoutTextHolderEntry(field_10[i]);
+        mLayouts[i] = text;
+        mEntries[i] = new SimpleLayoutTextHolderEntry(mLayouts[i]);
     }
 }
 
@@ -53,14 +53,14 @@ void al::SimpleLayoutTextHolder::reset() {
 
 al::SimpleLayoutTextHolderEntry* al::SimpleLayoutTextHolder::start(const sead::Vector2f& pos,
                                                                    const char* str) {
-    SimpleLayoutTextHolderEntry* entry = field_18[mCurrentIndex++];
+    SimpleLayoutTextHolderEntry* entry = mEntries[mCurrentIndex++];
     entry->text->start(pos, str, 1);
     return entry;
 }
 
 al::SimpleLayoutTextHolderEntry* al::SimpleLayoutTextHolder::start(const sead::Vector2f& pos,
                                                                    const char16_t* str) {
-    SimpleLayoutTextHolderEntry* entry = field_18[mCurrentIndex++];
+    SimpleLayoutTextHolderEntry* entry = mEntries[mCurrentIndex++];
     entry->text->start(pos, str, 1);
     return entry;
 }

@@ -35,7 +35,7 @@ public:
 private:
     s32 mCurrentIndex;
     s32 mAmount;
-    SimpleLayoutText** field_10;
-    SimpleLayoutTextHolderEntry** field_18;
+    SimpleLayoutText** mLayouts;
+    SimpleLayoutTextHolderEntry** mEntries;
 };
 }  // namespace al
