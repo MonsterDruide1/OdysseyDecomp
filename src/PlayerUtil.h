@@ -258,6 +258,7 @@ public:
 class PlayerWetControl {
 public:
     PlayerWetControl(al::LiveActor const*,al::LiveActor*,PlayerAreaChecker const*);
+    void recordPuddleRolling();
 public:
     void *gap[1];
     PlayerEffect *mEffect;
@@ -826,6 +827,8 @@ class PlayerStateRolling : public al::NerveStateBase {
 public:
     PlayerStateRolling(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerTrigger *,PlayerAnimator *,PlayerEffect *,PlayerJudgeStartRolling *,IJudge *,PlayerJudgePreInputJump *,PlayerJudgePreInputCapThrow *,IJudge *,PlayerContinuousLongJump *,PlayerSeCtrl *);
     bool isRollingJump();
+    bool isEndSquat();
+    bool isEndStandUp();
 private:
     void* size[0xB8/8];
 };

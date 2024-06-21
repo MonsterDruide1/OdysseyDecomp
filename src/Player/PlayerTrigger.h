@@ -33,6 +33,7 @@ public:
         EActionTrigger_val21 = 21,
         EActionTrigger_val22 = 22,
         EActionTrigger_val24 = 24,
+        EActionTrigger_val25 = 25,
         EActionTrigger_val27 = 27,
         EActionTrigger_val28 = 28,
         EActionTrigger_val29 = 29,
