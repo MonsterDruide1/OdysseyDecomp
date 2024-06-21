@@ -5,11 +5,10 @@
 namespace al {
 class LayoutInitInfo;
 
-class SimpleLayoutAppearWaitEnd : public al::LayoutActor {
+class SimpleLayoutAppearWaitEnd : public LayoutActor {
 public:
-    SimpleLayoutAppearWaitEnd(const char*, const char*, const al::LayoutInitInfo&, const char*,
-                              bool);
-    SimpleLayoutAppearWaitEnd(al::LayoutActor*, const char*, const char*, const al::LayoutInitInfo&,
+    SimpleLayoutAppearWaitEnd(const char*, const char*, const LayoutInitInfo&, const char*, bool);
+    SimpleLayoutAppearWaitEnd(LayoutActor*, const char*, const char*, const LayoutInitInfo&,
                               const char*);
 
     void appear() override;
@@ -23,6 +22,6 @@ public:
     bool isAppearOrWait() const;
 
 private:
-    s32 field_12C = -1;
+    s32 mLifetime = -1;
 };
 }  // namespace al

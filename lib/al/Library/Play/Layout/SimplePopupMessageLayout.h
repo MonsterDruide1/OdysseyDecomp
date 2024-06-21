@@ -1,18 +1,26 @@
 #pragma once
 
-/*
-al::SimplePopupMessageLayout::SimplePopupMessageLayout(const char*,const char*,al::LayoutInitInfo
-const&,const char*,bool) al::SimplePopupMessageLayout::SimplePopupMessageLayout(const char*,const
-char*,al::LayoutInitInfo const&,const char*,bool) al::SimplePopupMessageLayout::appear(void)
-al::SimplePopupMessageLayout::end(void)
-al::SimplePopupMessageLayout::startWait(void)
-al::SimplePopupMessageLayout::exeAppear(void)
-al::SimplePopupMessageLayout::refreshPos(void)
-al::SimplePopupMessageLayout::exeWait(void)
-al::SimplePopupMessageLayout::exeEnd(void)
-al::SimplePopupMessageLayout::isWait(void)
-al::SimplePopupMessageLayout::isAppearOrWait(void)
-sub_710099A3E0
-sub_710099A44C
-sub_710099A4E0
-*/
+#include <math/seadVector.h>
+
+#include "Library/Layout/LayoutActor.h"
+
+namespace al {
+class LayoutInitInfo;
+class SimplePopupMessageLayout : public LayoutActor {
+public:
+    SimplePopupMessageLayout(const char*, const char*, const LayoutInitInfo&, const char*, bool);
+    void appear();
+    void end();
+    void startWait();
+    void exeAppear();
+    void refreshPos();
+    void exeWait();
+    void exeEnd();
+    bool isWait() const;
+    bool isAppearOrWait() const;
+
+private:
+    s32 mLifetime = -1;
+    sead::Vector3f field_130;
+};
+}  // namespace al

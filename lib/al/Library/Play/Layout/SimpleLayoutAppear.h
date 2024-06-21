@@ -5,9 +5,9 @@
 namespace al {
 class LayoutInitInfo;
 
-class SimpleLayoutAppear : public al::LayoutActor {
+class SimpleLayoutAppear : public LayoutActor {
 public:
-    SimpleLayoutAppear(const char*, const char*, const al::LayoutInitInfo&, const char*);
+    SimpleLayoutAppear(const char*, const char*, const LayoutInitInfo&, const char*);
 
     void appear() override;
 };

@@ -1,4 +1,5 @@
 #include "Library/Play/Layout/SimpleLayoutAppearWait.h"
+
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutInitInfo.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -13,37 +14,39 @@ NERVES_MAKE_NOSTRUCT(SimpleLayoutAppearWait, Appear, Wait);
 
 }  // namespace
 
-al::SimpleLayoutAppearWait::SimpleLayoutAppearWait(const char* a3, const char* a4,
-                                                   const al::LayoutInitInfo& info, const char* a6)
-    : al::LayoutActor(a3) {
-    al::initLayoutActor(this, info, a4, a6);
+al::SimpleLayoutAppearWait::SimpleLayoutAppearWait(const char* name, const char* layoutName,
+                                                   const LayoutInitInfo& info,
+                                                   const char* archiveName)
+    : LayoutActor(name) {
+    initLayoutActor(this, info, layoutName, archiveName);
     initNerve(&Appear, 0);
 }
 
-al::SimpleLayoutAppearWait::SimpleLayoutAppearWait(al::LayoutActor* a2, const char* a3,
-                                                   const char* a4, const al::LayoutInitInfo& info,
-                                                   const char* a6)
-    : al::LayoutActor(a3) {
-    al::initLayoutPartsActor(this, a2, info, a4, a6);
+al::SimpleLayoutAppearWait::SimpleLayoutAppearWait(LayoutActor* parentActor, const char* name,
+                                                   const char* layoutName,
+                                                   const LayoutInitInfo& info,
+                                                   const char* archiveName)
+    : LayoutActor(name) {
+    initLayoutPartsActor(this, parentActor, info, layoutName, archiveName);
     initNerve(&Appear, 0);
 }
 
 void al::SimpleLayoutAppearWait::appear() {
-    al::startAction(this, "Appear", nullptr);
-    al::LayoutActor::appear();
-    al::setNerve(this, &Appear);
+    startAction(this, "Appear", nullptr);
+    LayoutActor::appear();
+    setNerve(this, &Appear);
 }
 
 bool al::SimpleLayoutAppearWait::isWait() const {
-    return al::isNerve(this, &Wait);
+    return isNerve(this, &Wait);
 }
 
 void al::SimpleLayoutAppearWait::exeAppear() {
-    if (al::isActionEnd(this, 0))
-        al::setNerve(this, &Wait);
+    if (isActionEnd(this, 0))
+        setNerve(this, &Wait);
 }
 
 void al::SimpleLayoutAppearWait::exeWait() {
-    if (al::isFirstStep(this))
-        al::startAction(this, "Wait", 0);
+    if (isFirstStep(this))
+        startAction(this, "Wait", 0);
 }
