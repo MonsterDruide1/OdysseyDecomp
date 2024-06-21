@@ -55,7 +55,7 @@ void SimplePopupMessageLayout::exeAppear() {
 
 void SimplePopupMessageLayout::refreshPos() {
     sead::Vector2f layoutPos = sead::Vector2f::zero;
-    calcLayoutPosFromWorldPos(&layoutPos, this, field_130);
+    calcLayoutPosFromWorldPos(&layoutPos, this, mWorldPos);
     setLocalTrans(this, layoutPos);
 }
 

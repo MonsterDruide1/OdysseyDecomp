@@ -21,6 +21,6 @@ public:
 
 private:
     s32 mLifetime = -1;
-    sead::Vector3f field_130;
+    sead::Vector3f mWorldPos;
 };
 }  // namespace al
