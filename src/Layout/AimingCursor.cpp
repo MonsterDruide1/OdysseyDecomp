@@ -30,6 +30,7 @@ void AimingCursor::end() {
     al::setNerve(this, &End);
 }
 
+// NON_MATCHING: regswap when adding
 void AimingCursor::setTrans(const sead::Vector2f& pos) {
     al::setLocalTrans(this, (al::getLocalTrans(this) + pos) * 0.5f);
 }
