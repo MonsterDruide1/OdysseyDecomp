@@ -2139,4 +2139,49 @@ void PlayerActorHakoniwa::exeDemo() { CRASH }
 void PlayerActorHakoniwa::exeCamera() { CRASH }
 void PlayerActorHakoniwa::exeAbyss() { CRASH }
 void PlayerActorHakoniwa::exeDead() { CRASH }
-bool PlayerActorHakoniwa::tryActionCapSpinAttackImpl(bool) { WARN_UNIMPL;return false; }
+bool PlayerActorHakoniwa::tryActionCapSpinAttackImpl(bool a2) {
+    if(PlayerEquipmentFunction::isEquipmentNoCapThrow(mPlayerEquipmentUser) || rs::is2D(this))
+        return false;
+    
+    if(!GameDataFunction::isEnableCap(this)) {
+        if(!mPlayerCarryKeeper->isCarry()) {
+            if(GameDataFunction::isMeetCap(this) && rs::isJudge(mPlayerJudgePreInputCapThrow)) {
+                rs::resetJudge(mPlayerJudgePreInputCapThrow);
+                al::startHitReaction(this, "帽子がつかえない");
+            }
+        }
+        return false;
+    }
+
+    bool v6 = false;
+    bool v5 = !mPlayerSeparateCapFlag->someCheck();
+    if(v5) {
+        if(!tryActionSeparateCapThrow() && mPlayerInput->isTriggerSpinAttackSeparate()) {
+            mPlayerCapActionHistory->recordLimitHeight();
+            v6 = true;
+        } else {
+            return false;
+        }
+    }
+
+    if((!a2 && !mPlayerSpinCapAttack->isEnablePlaySpinCapMiss(mPlayerAnimator)) || mPlayerCarryKeeper->isCarry() || !mPlayerSandSinkAffect->isEnableCapThrow() || (mPlayerSeparateCapFlag->someCheck() && rs::isJudge(mPlayerJudgePreInputCapThrow)))
+        return false;
+
+    if(v6)
+        mPlayerJudgePreInputCapThrow->recordJudgeAndReset();
+
+    if(!mHackCap->isRequestableReturn() && mHackCap->isEnableSpinAttack()) {
+        if(!v5) {
+            if(a2) {
+                mHackCap->prepareCooperateThrow();
+                mPlayerJudgePreInputCapThrow->recordCooperateAndReset();
+            }
+        } else {
+            mPlayerJudgePreInputCapThrow->recordJudgeAndReset();
+        }
+        mPlayerCapActionHistory->recordLimitHeight();
+        return true;
+    }
+
+    return v6;
+}

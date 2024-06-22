@@ -23,6 +23,7 @@ public:
     bool sendMsgStartHack(al::HitSensor *);
 
     void startCatch(char const*,bool,sead::Vector3<float> const&);
+    void prepareCooperateThrow();
 
     unsigned char padding_to_118[0x10];
     al::LiveActor* mActorA;

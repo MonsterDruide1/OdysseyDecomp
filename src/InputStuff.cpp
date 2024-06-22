@@ -177,9 +177,9 @@ void PlayerInput::calcMoveInputImpl(sead::Vector3f* out, const sead::Vector3f& i
   float x; // s8
   float y; // s9
   sead::Vector2f MoveInputStick; // kr00_8
-  sead::Matrix34f *PlayerViewMtx; // x0
+  const sead::Matrix34f *PlayerViewMtx; // x0
   const IUseDimension *mDimension; // x25
-  sead::Matrix34f *v21; // x23
+  const sead::Matrix34f *v21; // x23
   float v22; // s2
   float v23; // s0
   const sead::Vector3f *Gravity; // x0

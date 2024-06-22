@@ -16,7 +16,7 @@ class PlayerFunction {
 public:
     static u32 getPlayerInputPort(const al::LiveActor*);
     static bool isPlayerDeadStatus(const al::LiveActor*);
-    static sead::Matrix34f* getPlayerViewMtx(al::LiveActor const*);
+    static const sead::Matrix34f* getPlayerViewMtx(al::LiveActor const*);
     static PlayerCostumeInfo* initMarioModelActor(al::LiveActor *,al::ActorInitInfo const&,char const*,char const*,al::AudioKeeper *,bool);
     static void initMarioModelActor2D(al::LiveActor *,al::ActorInitInfo const&,char const*,bool);
     static bool isInvisibleCap(PlayerCostumeInfo const*);

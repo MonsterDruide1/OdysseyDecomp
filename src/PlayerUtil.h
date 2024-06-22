@@ -22,6 +22,7 @@ class CameraTicket;
 
 namespace PlayerEquipmentFunction {
 bool tryGetEquipmentForceDashInfo(int *,float *,PlayerEquipmentUser const*);
+bool isEquipmentNoCapThrow(PlayerEquipmentUser const*);
 }
 
 namespace rs {
@@ -141,6 +142,7 @@ class PlayerCapActionHistory {
 public:
     PlayerCapActionHistory(al::LiveActor const*,PlayerConst const*,PlayerTrigger const*,IUsePlayerCollision const*);
     void clearLandLimitStandAngle();
+    void recordLimitHeight() {CRASH}
     void update();
 public:
     const al::LiveActor *mActor;
@@ -201,6 +203,7 @@ class PlayerSandSinkAffect {
 public:
     PlayerSandSinkAffect(al::LiveActor const*,PlayerConst const*,PlayerInput const*,IUsePlayerCollision *,PlayerEffect *);
     bool isSinkDeathHeight();
+    bool isEnableCapThrow() { return true; }
 private:
     void* size[0x38/8];
 };
@@ -491,6 +494,8 @@ static_assert(sizeof(PlayerJudgePoleClimb) == 0x90);
 class PlayerJudgePreInputCapThrow : public IJudge {
 public:
     PlayerJudgePreInputCapThrow(PlayerConst const*,PlayerInput const*,PlayerCarryKeeper const*,HackCap const*);
+    void recordJudgeAndReset() {WARN_UNIMPL;}
+    void recordCooperateAndReset() {WARN_UNIMPL;}
 
     void reset() override;
     void update() override;
@@ -683,6 +688,7 @@ private:
 class PlayerSpinCapAttack : public IJudge {
 public:
     PlayerSpinCapAttack(HackCap *,PlayerConst const*,PlayerTrigger const*,PlayerInput const*,PlayerCounterAfterCapCatch const*,PlayerJudgePreInputCapThrow const*);
+    bool isEnablePlaySpinCapMiss(PlayerAnimator*) { return true; }
 
     void reset() override { WARN_UNIMPL; }
     void update() override { WARN_UNIMPL; }

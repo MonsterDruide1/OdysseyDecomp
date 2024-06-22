@@ -67,8 +67,12 @@ void PlayerStateFallHakoniwa::updateFallTargetArea() {
     CRASH
 }
 bool PlayerStateFallHakoniwa::isValidWallCatch() {
-    WARN_UNIMPL;
-    return false;
+    if(mIsDead) return true;
+    if(!gap2 || al::isGreaterStep(this, gap2)) return true;
+
+    sead::Vector3f front = {0.0f, 0.0f, 0.0f};
+    al::calcFrontDir(&front, mActor);
+    return front.dot(unk) < 0.70711f;
 }
 void PlayerStateFallHakoniwa::exeFall() {
     updateFallTargetArea();
