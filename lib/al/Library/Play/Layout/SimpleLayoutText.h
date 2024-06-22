@@ -31,6 +31,6 @@ private:
     const char* mPaneName;
 };
 
-SimpleLayoutText* createSimpleLayoutText(const al::ActorInitInfo& info, const char* name,
+SimpleLayoutText* createSimpleLayoutText(const ActorInitInfo& info, const char* name,
                                          const char* paneName, const char* archiveName);
 }  // namespace al
