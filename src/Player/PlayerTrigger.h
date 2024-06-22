@@ -13,6 +13,8 @@ public:
     enum EActionTrigger : u32 {
         // used in PlayerJudgeForceLand
         EActionTrigger_val11 = 11,
+        // used in PlayerJudgeWallCatch
+        EActionTrigger_val30 = 30,
         EActionTrigger_QuickTurn = 34,
     };
     enum EReceiveSensorTrigger : u32 {};

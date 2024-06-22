@@ -4,7 +4,8 @@
 
 namespace al {
 class LiveActor;
-}
+class CollisionParts;
+}  // namespace al
 class IUsePlayerCollision;
 class IUsePlayerHeightCheck;
 class PlayerConst;
@@ -24,5 +25,10 @@ bool isJustLand(const IUsePlayerCollision*);
 void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
 bool isCollisionCodeSandSink(const IUsePlayerCollision*);
+bool isCollidedWall(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedWallPos(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision*);
+const al::CollisionParts* getCollidedWallCollisionParts(const IUsePlayerCollision*);
+bool isActionCodeNoWallGrab(const IUsePlayerCollision*);
 
 }  // namespace rs
