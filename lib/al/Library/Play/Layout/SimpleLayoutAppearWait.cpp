@@ -14,39 +14,41 @@ NERVES_MAKE_NOSTRUCT(SimpleLayoutAppearWait, Appear, Wait);
 
 }  // namespace
 
-al::SimpleLayoutAppearWait::SimpleLayoutAppearWait(const char* name, const char* layoutName,
-                                                   const LayoutInitInfo& info,
-                                                   const char* archiveName)
+namespace al {
+
+SimpleLayoutAppearWait::SimpleLayoutAppearWait(const char* name, const char* layoutName,
+                                               const LayoutInitInfo& info, const char* archiveName)
     : LayoutActor(name) {
     initLayoutActor(this, info, layoutName, archiveName);
     initNerve(&Appear, 0);
 }
 
-al::SimpleLayoutAppearWait::SimpleLayoutAppearWait(LayoutActor* parentActor, const char* name,
-                                                   const char* layoutName,
-                                                   const LayoutInitInfo& info,
-                                                   const char* archiveName)
+SimpleLayoutAppearWait::SimpleLayoutAppearWait(LayoutActor* parentActor, const char* name,
+                                               const char* layoutName, const LayoutInitInfo& info,
+                                               const char* archiveName)
     : LayoutActor(name) {
     initLayoutPartsActor(this, parentActor, info, layoutName, archiveName);
     initNerve(&Appear, 0);
 }
 
-void al::SimpleLayoutAppearWait::appear() {
+void SimpleLayoutAppearWait::appear() {
     startAction(this, "Appear", nullptr);
     LayoutActor::appear();
     setNerve(this, &Appear);
 }
 
-bool al::SimpleLayoutAppearWait::isWait() const {
+bool SimpleLayoutAppearWait::isWait() const {
     return isNerve(this, &Wait);
 }
 
-void al::SimpleLayoutAppearWait::exeAppear() {
+void SimpleLayoutAppearWait::exeAppear() {
     if (isActionEnd(this, 0))
         setNerve(this, &Wait);
 }
 
-void al::SimpleLayoutAppearWait::exeWait() {
+void SimpleLayoutAppearWait::exeWait() {
     if (isFirstStep(this))
         startAction(this, "Wait", 0);
 }
+
+}  // namespace al

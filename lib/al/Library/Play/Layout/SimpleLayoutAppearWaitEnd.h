@@ -7,9 +7,10 @@ class LayoutInitInfo;
 
 class SimpleLayoutAppearWaitEnd : public LayoutActor {
 public:
-    SimpleLayoutAppearWaitEnd(const char*, const char*, const LayoutInitInfo&, const char*, bool);
-    SimpleLayoutAppearWaitEnd(LayoutActor*, const char*, const char*, const LayoutInitInfo&,
-                              const char*);
+    SimpleLayoutAppearWaitEnd(const char* name, const char* layoutName, const LayoutInitInfo& info,
+                              const char* archiveName, bool localize);
+    SimpleLayoutAppearWaitEnd(LayoutActor* parentActor, const char* name, const char* layoutName,
+                              const LayoutInitInfo& info, const char* archiveName);
 
     void appear() override;
     void end();

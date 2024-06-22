@@ -3,8 +3,6 @@
 #include <prim/seadSafeString.h>
 
 #include "Library/HostIO/HioNode.h"
-#include "Library/Message/IUseMessageSystem.h"
-#include "Library/Message/MessageSystem.h"
 
 namespace al {
 
@@ -110,7 +108,7 @@ const char16* getSystemMessageString(const IUseMessageSystem*, const char*, s32)
 s32 getSystemMessageLabelNum(const IUseMessageSystem*, const char*);
 s32 getLayoutMessageLabelNum(const IUseMessageSystem*, const char*);
 const char* getMessageTagParamName(const IUseMessageSystem*, const MessageTag&, s32);
-const char* getMessageTagParamNum(const IUseMessageSystem*, const MessageTag&);
+s32 getMessageTagParamNum(const IUseMessageSystem*, const MessageTag&);
 void getMessageTagParamString(sead::WBufferedSafeString*, const IUseMessageSystem*,
                               const MessageTag&, s32);
 void getSystemMessageLabelString(sead::BufferedSafeString*, const IUseMessageSystem*, const char*,
@@ -119,16 +117,16 @@ void getLayoutMessageLabelString(sead::BufferedSafeString*, const IUseMessageSys
                                  s32);
 void getMessageLine(char16*, u32, const char16*, u32);
 s32 countMessageLine(const char16*);
-void copyMessageExpandTag(char16*, s32, const IUseMessageSystem*, const char16*);
-void copyMessageWithoutTag(char16*, s32, const char16*);
-void copyMessageWithoutRubyTag(char16*, s32, const IUseMessageSystem*, const char16*);
+bool copyMessageExpandTag(char16*, s32, const IUseMessageSystem*, const char16*);
+bool copyMessageWithoutTag(char16*, s32, const char16*);
+bool copyMessageWithoutRubyTag(char16*, s32, const IUseMessageSystem*, const char16*);
 void copyMessageWithoutTagExpandRuby(char16*, s32, const IUseMessageSystem*, const char16*);
-void copyMessageWithTag(char16*, s32, const char16*);
-void copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem*, char16*, s32, const char16*, s32);
+bool copyMessageWithTag(char16*, s32, const char16*);
+bool copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem*, char16*, s32, const char16*, s32);
 const char16* getMessageWithPage(const IUseMessageSystem*, const char16*, s32);
 void copyMessageOnlyRuby(char16*, s32, const IUseMessageSystem*, const char16*);
 s32 countMessagePage(const IUseMessageSystem*, const char16*, s32);
 const char16* getNextMessagePage(const IUseMessageSystem*, const char16*);
-s32 getPictureFont(const LayoutSystem*);
+s32 getPictureFont(const LayoutSystem*);  // TODO: unknown return type
 
 }  // namespace al

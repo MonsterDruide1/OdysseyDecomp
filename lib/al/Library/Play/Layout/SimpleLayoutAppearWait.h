@@ -7,9 +7,10 @@ class LayoutInitInfo;
 
 class SimpleLayoutAppearWait : public LayoutActor {
 public:
-    SimpleLayoutAppearWait(const char*, const char*, const LayoutInitInfo&, const char*);
-    SimpleLayoutAppearWait(LayoutActor*, const char*, const char*, const LayoutInitInfo&,
-                           const char*);
+    SimpleLayoutAppearWait(const char* name, const char* layoutName, const LayoutInitInfo& info,
+                           const char* archiveName);
+    SimpleLayoutAppearWait(LayoutActor* parentActor, const char* name, const char* layoutName,
+                           const LayoutInitInfo& info, const char* archiveName);
 
     void appear() override;
 

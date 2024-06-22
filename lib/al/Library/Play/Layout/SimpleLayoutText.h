@@ -11,16 +11,17 @@ class LayoutInitInfo;
 
 class SimpleLayoutText : public LayoutActor {
 public:
-    SimpleLayoutText(const LayoutInitInfo&, const char*, const char*, const char*);
+    SimpleLayoutText(const LayoutInitInfo& info, const char* name, const char* paneName,
+                     const char* archiveName);
 
-    void start(const sead::Vector2f&, const char*, s32);
-    void setPos(const sead::Vector2f&);
-    void setText(const char*);
-    void start(const sead::Vector2f&, const char16*, s32);
-    void setText(const char16*);
-    void start(const sead::Vector2f&, const char*, const char*, s32);
-    void setScale(f32);
-    void setColor(const sead::Color4u8&);
+    void start(const sead::Vector2f& pos, const char* str, s32 lifetime);
+    void setPos(const sead::Vector2f& pos);
+    void setText(const char* text);
+    void start(const sead::Vector2f& pos, const char16* str, s32 lifetime);
+    void setText(const char16* str);
+    void start(const sead::Vector2f& pos, const char* category, const char* key, s32 lifetime);
+    void setScale(f32 scale);
+    void setColor(const sead::Color4u8& color);
     void setPositionCenterH();
 
     void exeWait();
@@ -30,6 +31,6 @@ private:
     const char* mPaneName;
 };
 
-SimpleLayoutText* createSimpleLayoutText(const ActorInitInfo&, const char*, const char*,
-                                         const char*);
+SimpleLayoutText* createSimpleLayoutText(const al::ActorInitInfo& info, const char* name,
+                                         const char* paneName, const char* archiveName);
 }  // namespace al

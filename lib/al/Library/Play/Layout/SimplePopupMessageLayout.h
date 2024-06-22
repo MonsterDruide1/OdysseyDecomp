@@ -8,8 +8,9 @@ namespace al {
 class LayoutInitInfo;
 class SimplePopupMessageLayout : public LayoutActor {
 public:
-    SimplePopupMessageLayout(const char*, const char*, const LayoutInitInfo&, const char*, bool);
-    void appear();
+    SimplePopupMessageLayout(const char* name, const char* layoutName, const LayoutInitInfo& info,
+                             const char* archiveName, bool localize);
+    void appear() override;
     void end();
     void startWait();
     void exeAppear();

@@ -7,7 +7,8 @@ class LayoutInitInfo;
 
 class SimpleLayoutAppear : public LayoutActor {
 public:
-    SimpleLayoutAppear(const char*, const char*, const LayoutInitInfo&, const char*);
+    SimpleLayoutAppear(const char* name, const char* layoutName, const LayoutInitInfo& info,
+                       const char* archiveName);
 
     void appear() override;
 };

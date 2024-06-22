@@ -18,6 +18,8 @@ NERVE_HOST_TYPE_IMPL(SimplePopupMessageLayout, Wait);
 NERVES_MAKE_STRUCT(HostType, Appear, Wait);
 }  // namespace
 
+namespace al {
+
 SimplePopupMessageLayout::SimplePopupMessageLayout(const char* name, const char* layoutName,
                                                    const LayoutInitInfo& info,
                                                    const char* archiveName, bool localize)
@@ -82,5 +84,7 @@ bool SimplePopupMessageLayout::isWait() const {
 }
 
 bool SimplePopupMessageLayout::isAppearOrWait() const {
-    return isNerve(this, &NrvHostType.Wait) || isNerve(this, &NrvHostType.Appear);
+    return isWait() || isNerve(this, &NrvHostType.Appear);
 }
+
+}  // namespace al
