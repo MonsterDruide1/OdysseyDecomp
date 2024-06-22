@@ -2,7 +2,7 @@
 
 #include "Library/Layout/LayoutActor.h"
 
-class MapData;
+struct MapData;
 
 class MapTerrainLayout : public al::LayoutActor {
 public:

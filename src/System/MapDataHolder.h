@@ -32,8 +32,8 @@ public:
     MapDataHolder(const GameDataHolder*);
     MapData* loadMapData(al::Resource*, const char*, s32);
     MapData* tryLoadMapData(al::Resource*, const char*, s32);
-    const sead::Matrix34f& findViewMtx(s32);
-    const MapData& findMapData(s32);
+    const sead::Matrix34f& findViewMtx(s32) const;
+    const MapData& findMapData(s32) const;
 
 private:
     sead::PtrArray<MapData> mMapDatas;
