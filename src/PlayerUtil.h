@@ -279,7 +279,7 @@ class PlayerSeparateCapFlag {
 public:
     PlayerSeparateCapFlag();
 
-    bool someCheck() {
+    bool someCheck() const {
         return (*((int*)this) & 0xFF0000) != 0 || *((u16*)this) == 0;
     }
 public:
@@ -299,16 +299,8 @@ public:
 private:
     void* size[0x20/8];
 };
-class HackCapJudgePreInputSeparateJump : public IJudge {
-public:
-    HackCapJudgePreInputSeparateJump(PlayerInput const*,PlayerSeparateCapFlag const*);
-    
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x20/8];
-};
+
+#include "Player/HackCapJudgePreInputSeparateJump.h"
 
 class PlayerRippleGenerator {
 public:
