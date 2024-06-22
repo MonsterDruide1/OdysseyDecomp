@@ -536,6 +536,13 @@ public:
         return al::isEqualString(name.cstr(), currentAnim);
     }
 
+    void setAnimFrame(f32 frame) {
+        currentFrame = frame;
+    }
+    f32 getAnimFrame() {
+        return currentFrame;
+    }
+
 private:
     f32 currentFrame = 0.0f;
     f32 maxFrame = 0.0f;

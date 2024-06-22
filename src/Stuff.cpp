@@ -1420,4 +1420,16 @@ void calcFrontVelocityAndDirH(
   }
 }
 
+bool isCollidedGroundOverAngle(const al::LiveActor * actor, const IUsePlayerCollision * collider, float angle) {
+  if(collider->getPlayerCollider()->val1 < 0.0f) return false;
+  sead::Vector3f normal = rs::getCollidedGroundNormal(collider);
+  return !al::isFloorPolygonCos(normal, al::getGravity(actor), sead::Mathf::cos(sead::Mathf::deg2rad(angle)));
+}
+
+bool isCollidedGroundLessAngle(const al::LiveActor * actor, const IUsePlayerCollision * collider, float angle) {
+  if(collider->getPlayerCollider()->val1 < 0.0f) return false;
+  sead::Vector3f normal = rs::getCollidedGroundNormal(collider);
+  return al::isFloorPolygonCos(normal, al::getGravity(actor), sead::Mathf::cos(sead::Mathf::deg2rad(angle)));
+}
+
 }  // namespace rs

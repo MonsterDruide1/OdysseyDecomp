@@ -39,6 +39,7 @@ void cutVerticalVelocityGroundNormal(al::LiveActor *,IUsePlayerCollision const*)
 bool calcSlideDir(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&);
 void calcGroundNormalOrGravityDir(sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
 void startHitReactionLandJumpIfLanding(al::LiveActor const*,IUsePlayerCollision const*,bool);
+void startHitReactionLandIfLanding(al::LiveActor const*,IUsePlayerCollision const*,bool);
 void noticePlayerJumpStart(PlayerTrigger *,al::LiveActor const*);
 bool isPlayerDamageStopDemo(al::LiveActor const*);
 bool isKidsMode(const al::LiveActor*);
@@ -60,7 +61,10 @@ const sead::Vector3f& getCollidedCeilingNormal(IUsePlayerCollision const*);
 void reflectCeilingUpperPunch(al::LiveActor *,IUsePlayerCollision const*,PlayerInput const*,PlayerConst const*,PlayerTrigger const*,bool);
 void setupLongJumpVelocity(al::LiveActor *,IUsePlayerCollision const*,float,float,float,float,float);
 bool isModeE3Rom();
+bool isModeE3MovieRom();
 void calcFrontVelocityAndDirH(sead::Vector3<float> *,sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
+bool isCollidedGroundOverAngle(const al::LiveActor*,IUsePlayerCollision const*,float);
+bool isCollidedGroundLessAngle(const al::LiveActor*,IUsePlayerCollision const*,float);
 
 }
 
@@ -96,6 +100,8 @@ class PlayerEffect {
 public:
     PlayerEffect(al::LiveActor *,PlayerModelHolder const*,sead::Matrix34<float> const*);
     void updateWaterSurfaceMtx(al::WaterSurfaceFinder const*);
+    void tryEmitRollingEffect();
+    void tryDeleteRollingEffect();
 private:
     void* size[0xC0/8];
 };
@@ -343,8 +349,13 @@ class PlayerSeCtrl {
 public:
     PlayerSeCtrl(al::LiveActor const*,PlayerAnimator const*,HackCap const*,PlayerModelChangerHakoniwa const*,al::LiveActor const*,PlayerExternalVelocity const*);
     void update();
-private:
-    void* size[0x198/8];
+public:
+    void *size1[5];
+    sead::FixedSafeString<256> _28;
+    void *size2[6];
+    float _170;
+    float _174;
+    void *size3[4];
 };
 
 #include "Player/PlayerHackKeeper.h"
@@ -823,15 +834,7 @@ private:
     void* size[0x48/8];
 };
 
-class PlayerStateRolling : public al::NerveStateBase {
-public:
-    PlayerStateRolling(al::LiveActor *,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,PlayerTrigger *,PlayerAnimator *,PlayerEffect *,PlayerJudgeStartRolling *,IJudge *,PlayerJudgePreInputJump *,PlayerJudgePreInputCapThrow *,IJudge *,PlayerContinuousLongJump *,PlayerSeCtrl *);
-    bool isRollingJump();
-    bool isEndSquat();
-    bool isEndStandUp();
-private:
-    void* size[0xB8/8];
-};
+#include "Player/PlayerStateRolling.h"
 
 class PlayerStateCapCatchPop : public al::NerveStateBase {
 public:
