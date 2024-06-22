@@ -1,23 +1,25 @@
 #pragma once
 
-#include "Library/Camera/CameraPoser.h"
-#include "Library/Placement/PlacementInfo.h"
-#include "Library/Rail/Rail.h"
-#include "Library/Rail/RailRider.h"
+#include <math/seadVector.h>
 
 namespace al {
+class CameraPoser;
+class PlacementInfo;
+class Rail;
+class RailRider;
+
 class CameraLimitRailKeeper {
 public:
     CameraLimitRailKeeper();
 
     void init(const PlacementInfo& info, s32 viewCount);
     void updateRider(const CameraPoser* poser);
-    RailRider* getRider(const CameraPoser* poser);
-    void calcCameraDirH(sead::Vector3f* out, const CameraPoser* poser);
-    bool isNearInsideRailPoint(const CameraPoser* poser, f32 approx);
-    const sead::Vector3f& getRailPos(const CameraPoser* poser);
-    f32 calcDistanceFromNearestRailPos(const sead::Vector3f& pos);
-    void calcNearestRailPos(sead::Vector3f* out, const sead::Vector3f& pos);
+    RailRider* getRider(const CameraPoser* poser) const;
+    void calcCameraDirH(sead::Vector3f* out, const CameraPoser* poser) const;
+    bool isNearInsideRailPoint(const CameraPoser* poser, f32 approx) const;
+    const sead::Vector3f& getRailPos(const CameraPoser* poser) const;
+    f32 calcDistanceFromNearestRailPos(const sead::Vector3f& pos) const;
+    void calcNearestRailPos(sead::Vector3f* out, const sead::Vector3f& pos) const;
 
 private:
     Rail* mRail = nullptr;

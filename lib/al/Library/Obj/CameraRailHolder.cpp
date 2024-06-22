@@ -1,6 +1,7 @@
 #include "Library/Obj/CameraRailHolder.h"
 
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraLimitRailKeeper.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Library/Camera/CameraLimitRailKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class CameraLimitRailKeeper;
+
 class CameraRailHolder : public LiveActor {
 public:
     CameraRailHolder(const char* name);

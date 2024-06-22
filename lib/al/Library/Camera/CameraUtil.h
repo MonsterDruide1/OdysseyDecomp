@@ -6,7 +6,6 @@ namespace al {
 // TODO: Add functions.
 class IUseCamera;
 class Projection;
-class LiveActor;
 
 Projection getProjection(const IUseCamera*, s32);
 
