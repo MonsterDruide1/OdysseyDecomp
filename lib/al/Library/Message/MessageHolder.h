@@ -121,12 +121,12 @@ bool copyMessageExpandTag(char16*, s32, const IUseMessageSystem*, const char16*)
 bool copyMessageWithoutTag(char16*, s32, const char16*);
 bool copyMessageWithoutRubyTag(char16*, s32, const IUseMessageSystem*, const char16*);
 void copyMessageWithoutTagExpandRuby(char16*, s32, const IUseMessageSystem*, const char16*);
-bool copyMessageWithTag(char16*, s32, const char16*);
-bool copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem*, char16*, s32, const char16*, s32);
+s32 copyMessageWithTag(char16*, s32, const char16*);
+s32 copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem*, char16*, s32, const char16*, s32);
 const char16* getMessageWithPage(const IUseMessageSystem*, const char16*, s32);
 void copyMessageOnlyRuby(char16*, s32, const IUseMessageSystem*, const char16*);
 s32 countMessagePage(const IUseMessageSystem*, const char16*, s32);
 const char16* getNextMessagePage(const IUseMessageSystem*, const char16*);
-s32 getPictureFont(const LayoutSystem*);  // TODO: unknown return type
+void* getPictureFont(const LayoutSystem*);  // TODO: unknown return type
 
 }  // namespace al
