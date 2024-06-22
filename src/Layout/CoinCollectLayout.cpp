@@ -56,15 +56,19 @@ void CoinCollectLayout::updatePos() {
 void CoinCollectLayout::exeWait() {
     if (al::isFirstStep(this))
         al::startAction(this, "Wait", nullptr);
-    if (al::isGreaterEqualStep(this, 120))
-        return al::setNerve(this, &End);
+    if (al::isGreaterEqualStep(this, 120)) {
+        al::setNerve(this, &End);
+        return;
+    }
     updatePos();
 }
 
 void CoinCollectLayout::exeEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, "End", nullptr);
-    if (al::isActionEnd(this, nullptr))
-        return kill();
+    if (al::isActionEnd(this, nullptr)) {
+        kill();
+        return;
+    }
     updatePos();
 }

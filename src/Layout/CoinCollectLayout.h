@@ -9,9 +9,9 @@ class LiveActor;
 
 class CoinCollectLayout : public al::LayoutActor {
 public:
-    CoinCollectLayout(const al::LayoutInitInfo&);
+    CoinCollectLayout(const al::LayoutInitInfo& info);
 
-    void appearCounter(s32, s32, const al::LiveActor*);
+    void appearCounter(s32 maxCoins, s32 currentCoins, const al::LiveActor* coinActor);
     void exeStart();
     void updatePos();
     void exeWait();
