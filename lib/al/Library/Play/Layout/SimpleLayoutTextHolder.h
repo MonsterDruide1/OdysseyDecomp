@@ -34,8 +34,8 @@ public:
     SimpleLayoutTextHolderEntry* start(const sead::Vector2f& pos, const char16_t* str);
 
 private:
-    s32 mCurrentIndex;
-    s32 mAmount;
+    s32 mCurrentIndex = 0;
+    s32 mNumEntries = 0;
     SimpleLayoutText** mLayouts;
     SimpleLayoutTextHolderEntry** mEntries;
 };

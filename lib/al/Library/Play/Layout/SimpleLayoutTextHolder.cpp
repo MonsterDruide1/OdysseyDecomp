@@ -4,9 +4,8 @@
 
 namespace al {
 
-SimpleLayoutTextWrapper::SimpleLayoutTextWrapper(SimpleLayoutText* simpleLayoutText) {
-    mSimpleLayoutText = simpleLayoutText;
-}
+SimpleLayoutTextWrapper::SimpleLayoutTextWrapper(SimpleLayoutText* simpleLayoutText)
+    : mSimpleLayoutText(simpleLayoutText) {}
 
 SimpleLayoutTextWrapper* SimpleLayoutTextWrapper::start(const sead::Vector2f& pos, const char* str,
                                                         s32 lifetime) {
@@ -38,13 +37,12 @@ SimpleLayoutTextWrapper* SimpleLayoutTextWrapper::setPos(const sead::Vector2f& p
 SimpleLayoutTextHolder::SimpleLayoutTextHolder(s32 amount, const LayoutInitInfo& info,
                                                const char* name, const char* paneName,
                                                const char* archiveName)
-    : mCurrentIndex(0), mAmount(amount) {
+    : mNumEntries(amount) {
     mLayouts = new SimpleLayoutText*[amount];
     mEntries = new SimpleLayoutTextHolderEntry*[amount];
 
-    for (s32 i = 0; i < mAmount; i++) {
-        SimpleLayoutText* text = new SimpleLayoutText(info, name, paneName, archiveName);
-        mLayouts[i] = text;
+    for (s32 i = 0; i < mNumEntries; i++) {
+        mLayouts[i] = new SimpleLayoutText(info, name, paneName, archiveName);
         mEntries[i] = new SimpleLayoutTextHolderEntry(mLayouts[i]);
     }
 }

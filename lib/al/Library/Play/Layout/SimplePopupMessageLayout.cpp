@@ -12,7 +12,7 @@ namespace {
 using namespace al;
 NERVE_HOST_TYPE_IMPL(SimplePopupMessageLayout, Appear);
 NERVE_HOST_TYPE_IMPL(SimplePopupMessageLayout, End);
-NERVES_MAKE_NOSTRUCT(HostType, End);
+NERVE_MAKE(HostType, End);
 NERVE_HOST_TYPE_IMPL(SimplePopupMessageLayout, Wait);
 
 NERVES_MAKE_STRUCT(HostType, Appear, Wait);
