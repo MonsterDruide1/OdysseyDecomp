@@ -12,6 +12,7 @@ public:
     bool isCarryUp();
     bool updateCollideLockUp(IUsePlayerCollision const*,PlayerPushReceiver const*);
     bool isThrowHold() const;
+    bool isThrow() const;
     bool isCarry() const;
 
 private:

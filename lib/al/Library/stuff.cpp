@@ -122,6 +122,10 @@ void slerpQuat(sead::Quatf* out, const sead::Quatf& a, const sead::Quatf& b, flo
     sead::QuatCalcCommon<f32>::slerpTo(*out, a, b, val);
 }
 
+s32 getPadAccelerationDeviceNum(s32) {
+  return 2;
+}
+
 f32 calcCylinderRadiusDot(const sead::Vector3f& a1, const sead::Vector3f& a2, f32 a3) {
     float v6; // s0
     float v7; // s1

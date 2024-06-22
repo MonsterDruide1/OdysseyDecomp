@@ -16,7 +16,8 @@ public:
 
     bool isThrowTypeSpiral() const;
     bool isEnableSpinAttack();
-    bool isRequestableReturn();
+    bool isRequestableReturn() const;
+    bool isEnablePreInput() const;
     bool requestReturn(bool*);
     void updateSeparateMode(const PlayerSeparateCapFlag*);
 

@@ -491,18 +491,7 @@ public:
 };
 static_assert(sizeof(PlayerJudgePoleClimb) == 0x90);
 
-class PlayerJudgePreInputCapThrow : public IJudge {
-public:
-    PlayerJudgePreInputCapThrow(PlayerConst const*,PlayerInput const*,PlayerCarryKeeper const*,HackCap const*);
-    void recordJudgeAndReset() {WARN_UNIMPL;}
-    void recordCooperateAndReset() {WARN_UNIMPL;}
-
-    void reset() override;
-    void update() override;
-    bool judge() const override;
-private:
-    void* size[0x60/8];
-};
+#include "Player/PlayerJudgePreInputCapThrow.h"
 
 class PlayerJudgePreInputHackAction : public IJudge {
 public:

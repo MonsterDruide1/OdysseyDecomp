@@ -95,6 +95,10 @@ public:
     void updateInput3D();
     void updateInput2D();
 
+    const sead::Vector2f& getCapThrowDir() const;
+    bool isTriggerSwingRightHand() const;
+    bool isEnableConsiderCapThrowDoubleSwing() const;
+
     bool isHoldCapSeparateJump() const;
 
 public:

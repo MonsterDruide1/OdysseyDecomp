@@ -1,5 +1,6 @@
 #include <basis/seadTypes.h>
 #include "Library/Controller/InputFunction.h"
+#include "Library/Controller/JoyPadAccelPoseAnalyzer.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathAngleUtil.h"
@@ -226,6 +227,28 @@ bool PlayerInput::isMoveDeepDown() const {
   // more utility stuff
 
   return PlayerInputFunction::getMoveInputStick(mLiveActor, 0, 0).squaredLength() > 0.64f;
+}
+
+const sead::Vector2f& PlayerInput::getCapThrowDir() const {
+  if(mIsDisableInput) return sead::Vector2f::zero;
+  PlayerFunction::getPlayerInputPort(mLiveActor);
+
+  if(mJoyPadAccelPoseAnalyzer1->isSwingDoubleHandSameDir())
+    return mJoyPadAccelPoseAnalyzer1->getSwingDirDoubleHandSameDir();
+  if(mJoyPadAccelPoseAnalyzer1->isSwingLeftHand())
+    return mJoyPadAccelPoseAnalyzer1->getSwingDirLeftHand();
+  if(mJoyPadAccelPoseAnalyzer1->isSwingRightHand())
+    return mJoyPadAccelPoseAnalyzer1->getSwingDirRightHand();
+
+  return sead::Vector2f::zero;
+}
+
+bool PlayerInput::isEnableConsiderCapThrowDoubleSwing() const {
+  return al::getPadAccelerationDeviceNum(PlayerFunction::getPlayerInputPort(mLiveActor)) == 1;
+}
+
+bool PlayerInput::isTriggerSwingRightHand() const {
+  return !mIsDisableInput && mJoyPadAccelPoseAnalyzer1->isSwingRightHand();
 }
 
 
