@@ -31,7 +31,7 @@ void AimingCursor::end() {
 }
 
 void AimingCursor::setTrans(const sead::Vector2f& pos) {
-    const sead::Vector2f& t = al::getLocalTrans(this);
+    sead::Vector2f t = al::getLocalTrans(this);
     al::setLocalTrans(this, (t + pos) * 0.5f);
 }
 
