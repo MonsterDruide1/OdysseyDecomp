@@ -32,7 +32,8 @@ void AimingCursor::end() {
 
 // NON_MATCHING: regswap when adding
 void AimingCursor::setTrans(const sead::Vector2f& pos) {
-    al::setLocalTrans(this, (al::getLocalTrans(this) + pos) * 0.5f);
+    const sead::Vector2f& t = al::getLocalTrans(this);
+    al::setLocalTrans(this, (t + pos) * 0.5f);
 }
 
 void AimingCursor::setScale(f32 scale) {
@@ -40,17 +41,17 @@ void AimingCursor::setScale(f32 scale) {
 }
 
 bool AimingCursor::tryLookOn() {
-    if (mIsLockOn)
+    if (mIsLookOn)
         return false;
-    mIsLockOn = true;
+    mIsLookOn = true;
     al::startAction(this, "On", "State");
     return true;
 }
 
 bool AimingCursor::tryLookOff() {
-    if (!mIsLockOn)
+    if (!mIsLookOn)
         return false;
-    mIsLockOn = false;
+    mIsLookOn = false;
     al::startAction(this, "Off", "State");
     return true;
 }
