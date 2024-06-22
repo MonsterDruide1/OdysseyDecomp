@@ -251,6 +251,15 @@ bool PlayerInput::isTriggerSwingRightHand() const {
   return !mIsDisableInput && mJoyPadAccelPoseAnalyzer1->isSwingRightHand();
 }
 
+void PlayerInput::calcCapSeparateMoveInput(sead::Vector3<float>*a1, sead::Vector3<float> const&a2) {
+  if(mIsDisableInput) {
+    *a1 = sead::Vector3<float>::zero;
+    return;
+  }
+
+  calcMoveInputImpl(a1, a2, true, false, true);
+}
+
 
 namespace rs {
 

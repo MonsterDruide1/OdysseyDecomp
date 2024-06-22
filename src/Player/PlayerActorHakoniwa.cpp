@@ -10,6 +10,7 @@
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -1357,7 +1358,44 @@ void PlayerActorHakoniwa::exeSquat() {
         CRASH
     }
 }
-//bool PlayerActorHakoniwa::tryActionSeparateCapThrow() {}
+
+bool PlayerActorHakoniwa::tryActionSeparateCapThrow() {
+    if(mPlayerSeparateCapFlag->someCheck() || PlayerEquipmentFunction::isEquipmentNoCapThrow(mPlayerEquipmentUser))
+        return false;
+
+    if(!GameDataFunction::isEnableCap(this) || rs::is2D(this) || mHackCap->isRequestableReturn() || !mHackCap->isEnableThrowSeparate() || !mPlayerSandSinkAffect->isEnableCapThrow())
+        return false;
+
+    if(!al::isNerve(this, &GrabCeil) && mPlayerColliderHakoniwa->getSafetyCeilSpace() < mPlayerConst->getSeparateEnableThrowHeight())
+        return false;
+
+    if(rs::judgeAndResetReturnTrue(mHackCapJudgePreInputSeparateJump)) {
+        sead::Vector3f a2 = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f a3 = {0.0f, 0.0f, 0.0f};
+        rs::calcGroundNormalOrGravityDir(&a2, this, mPlayerColliderHakoniwa);
+        mPlayerInput->calcCapSeparateMoveInput(&a2, a3);
+        if(!al::tryNormalizeOrZero(&a2) && !rs::calcAlongDirFront(&a2, this, a3))
+            al::calcFrontDir(&a2, this);
+        mHackCap->startThrowSeparatePlayJump(a2, a3, 1.0f);
+        mPlayerJudgePreInputCapThrow->recordSeparateJudge();
+        return true;
+    }
+
+    if(rs::judgeAndResetReturnTrue(mHackCapJudgePreInputSeparateThrow)) {
+        sead::Vector3f a2 = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f a3 = {0.0f, 0.0f, 0.0f};
+        rs::calcGroundNormalOrGravityDir(&a2, this, mPlayerColliderHakoniwa);
+        mPlayerInput->calcCapSeparateMoveInput(&a2, a3);
+        if(!al::tryNormalizeOrZero(&a2) && !rs::calcAlongDirFront(&a2, this, a3))
+            al::calcFrontDir(&a2, this);
+        mHackCap->startThrowSeparatePlay(a2, a3, 1.0f, sead::Mathf::max(al::calcSpeedExceptDir(this, a3), mHackCap->calcSeparateHideSpeedH(a3)) > mPlayerConst->getDashFastBorderSpeed());
+        mPlayerJudgePreInputCapThrow->recordSeparateJudge();
+        return true;
+    }
+
+    return false;
+}
+
 void PlayerActorHakoniwa::exeRun() {
     if(al::isFirstStep(this)) {
         mPlayerCapActionHistory->clearLandLimitStandAngle();

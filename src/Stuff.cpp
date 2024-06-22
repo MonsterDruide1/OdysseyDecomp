@@ -1432,4 +1432,12 @@ bool isCollidedGroundLessAngle(const al::LiveActor * actor, const IUsePlayerColl
   return al::isFloorPolygonCos(normal, al::getGravity(actor), sead::Mathf::cos(sead::Mathf::deg2rad(angle)));
 }
 
+bool calcAlongDirFront(sead::Vector3<float> *a1,al::LiveActor const*a2,sead::Vector3<float> const&a3) {
+  al::calcFrontDir(a1, a2);
+  sead::Vector3f v7 = {0.0f, 0.0f, 0.0f};
+  al::calcUpDir(&v7, a2);
+  al::alongVectorNormalH(a1, *a1, v7, a3);
+  return al::tryNormalizeOrZero(a1);
+}
+
 }  // namespace rs

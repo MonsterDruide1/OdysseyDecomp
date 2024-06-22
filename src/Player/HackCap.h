@@ -18,6 +18,7 @@ public:
     bool isEnableSpinAttack();
     bool isRequestableReturn() const;
     bool isEnablePreInput() const;
+    bool isEnableThrowSeparate() const;
     bool requestReturn(bool*);
     void updateSeparateMode(const PlayerSeparateCapFlag*);
 
@@ -25,6 +26,11 @@ public:
 
     void startCatch(char const*,bool,sead::Vector3<float> const&);
     void prepareCooperateThrow();
+
+    void startThrowSeparatePlay(sead::Vector3<float> const&,sead::Vector3<float> const&,float,bool);
+    void startThrowSeparatePlayJump(sead::Vector3<float> const&,sead::Vector3<float> const&,float);
+
+    f32 calcSeparateHideSpeedH(sead::Vector3<float> const&);
 
     unsigned char padding_to_118[0x10];
     al::LiveActor* mActorA;

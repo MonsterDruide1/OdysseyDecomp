@@ -101,6 +101,8 @@ public:
 
     bool isHoldCapSeparateJump() const;
 
+    void calcCapSeparateMoveInput(sead::Vector3<float> *,sead::Vector3<float> const&);
+
 public:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;

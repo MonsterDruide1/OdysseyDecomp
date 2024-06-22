@@ -66,6 +66,7 @@ bool isModeE3MovieRom();
 void calcFrontVelocityAndDirH(sead::Vector3<float> *,sead::Vector3<float> *,al::LiveActor const*,IUsePlayerCollision const*);
 bool isCollidedGroundOverAngle(const al::LiveActor*,IUsePlayerCollision const*,float);
 bool isCollidedGroundLessAngle(const al::LiveActor*,IUsePlayerCollision const*,float);
+bool calcAlongDirFront(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3<float> const&);
 
 }
 

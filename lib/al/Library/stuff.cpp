@@ -126,6 +126,12 @@ s32 getPadAccelerationDeviceNum(s32) {
   return 2;
 }
 
+f32 calcSpeedExceptDir(const al::LiveActor *a1, const sead::Vector3f& a2) {
+  sead::Vector3f v5 = {0.0f, 0.0f, 0.0f};
+  al::verticalizeVec(&v5, a2, a1->mPoseKeeper->getVelocity());
+  return v5.length();
+}
+
 f32 calcCylinderRadiusDot(const sead::Vector3f& a1, const sead::Vector3f& a2, f32 a3) {
     float v6; // s0
     float v7; // s1
