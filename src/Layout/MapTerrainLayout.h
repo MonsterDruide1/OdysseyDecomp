@@ -2,13 +2,13 @@
 
 #include "Library/Layout/LayoutActor.h"
 
-#include "System/MapDataHolder.h"
+class MapData;
 
 class MapTerrainLayout : public al::LayoutActor {
 public:
-    MapTerrainLayout(const char*);
+    MapTerrainLayout(const char* name);
 
-    bool tryChangePrintWorld(s32);
+    bool tryChangePrintWorld(s32 worldId);
     f32 getPaneSize() const;
 
 private:

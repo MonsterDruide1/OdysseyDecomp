@@ -20,9 +20,9 @@ struct MapData {
     sead::Matrix34f mViewMatrix;
     sead::Matrix44f mProjMatrix;
     nn::ui2d::TextureInfo* mTexture2dMap;
-    void* field_B8;
+    void* field_B8;  // TODO unknown type
     s32 mPartsNum;
-    void** mParts;
+    void** mParts;  // TODO unknown type
     s32 mWorldScenarioNum;
     sead::PtrArray<MapData> mScenarioMapData;
 };
@@ -30,10 +30,10 @@ struct MapData {
 class MapDataHolder {
 public:
     MapDataHolder(const GameDataHolder*);
-    void loadMapData(al::Resource*, const char*, s32);
-    bool tryLoadMapData(al::Resource*, const char*, s32);
-    void findViewMtx(s32);
-    void findMapData(s32);
+    MapData* loadMapData(al::Resource*, const char*, s32);
+    MapData* tryLoadMapData(al::Resource*, const char*, s32);
+    const sead::Matrix34f& findViewMtx(s32);
+    const MapData& findMapData(s32);
 
 private:
     sead::PtrArray<MapData> mMapDatas;
