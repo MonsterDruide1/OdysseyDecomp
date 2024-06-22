@@ -14,6 +14,7 @@ class PlayerConst;
 class PlayerModelHolder;
 class PlayerInput;
 class PlayerTrigger;
+class PlayerWallActionHistory;
 
 namespace rs {
 
@@ -81,4 +82,8 @@ void moveInertiaSlide(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision
                       const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
 void moveInertiaSlideOnSkate(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
                              const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
+
+bool judgeEnableWallKeepHistory(const al::LiveActor* player, const PlayerWallActionHistory* history,
+    const sead::Vector3f& calcPos, const sead::Vector3f& wallNormal, f32 unk, bool unk2);
+
 }  // namespace rs
