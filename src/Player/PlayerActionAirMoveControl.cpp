@@ -190,8 +190,8 @@ void PlayerActionAirMoveControl::setup(float a2, float maxSpeed, int extendFrame
 void PlayerActionAirMoveControl::setupTurn(float, float, float, float, int, int, int) {
     CRASH
 }
-void PlayerActionAirMoveControl::setExtendFrame(int) {
-    CRASH
+void PlayerActionAirMoveControl::setExtendFrame(int frame) {
+    mExtendFrame = frame;
 }
 void PlayerActionAirMoveControl::setupCollideWallScaleVelocity(float x, float y, float z) {
     isSetCollideWallScaleVelocity = true;

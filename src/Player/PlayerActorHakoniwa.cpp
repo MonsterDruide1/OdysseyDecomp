@@ -1262,7 +1262,9 @@ bool PlayerActorHakoniwa::tryActionCapReturn() {
         rs::resetJudge(mHackCapJudgePreInputSeparateThrow);
     return true;
 }
-bool PlayerActorHakoniwa::tryActionCapSpinAttack() { CRASH }
+bool PlayerActorHakoniwa::tryActionCapSpinAttack() {
+    return tryActionCapSpinAttackImpl(true);
+}
 void PlayerActorHakoniwa::exeSquat() {
     if(al::isFirstStep(this)) {
         mPlayerCapActionHistory->clearLandLimitStandAngle();
