@@ -75,7 +75,7 @@ void SearchAmiiboDataTable::read(const al::ByamlIter& iter) {
 }
 
 s32 SearchAmiiboDataTable::getDataNumMax() const {
-    return mEntries->e.size();
+    return 3;
 }
 
 bool SearchAmiiboDataTable::isInvalidId(s32 index) const {

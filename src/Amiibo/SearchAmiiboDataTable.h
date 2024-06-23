@@ -1,6 +1,5 @@
 #pragma once
 
-#include <array>
 #include <basis/seadTypes.h>
 
 #include "Library/HostIO/HioNode.h"
@@ -25,7 +24,7 @@ struct SearchAmiiboDataTableEntries {
         for (auto& entry : e)
             entry.init();
     };
-    std::array<SearchAmiiboData, 3> e;
+    SearchAmiiboData e[3];
 };
 
 class SearchAmiiboDataTable : public al::HioNode {
