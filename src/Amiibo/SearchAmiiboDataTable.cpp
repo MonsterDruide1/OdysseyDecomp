@@ -25,7 +25,7 @@ bool SearchAmiiboData::isInvalidId() const {
 }
 
 SearchAmiiboDataTable::SearchAmiiboDataTable() {
-    // TODO: currently a workaround because the game calls operator new[]
+    // TODO: this is a workaround because the game calls operator new[]
     mEntries = new SearchAmiiboDataTableEntries[1];
 }
 
@@ -58,7 +58,7 @@ void SearchAmiiboDataTable::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void SearchAmiiboDataTable::read(al::ByamlIter const& iter) {
+void SearchAmiiboDataTable::read(const al::ByamlIter& iter) {
     init();
 
     al::ByamlIter dataIter;
@@ -68,9 +68,9 @@ void SearchAmiiboDataTable::read(al::ByamlIter const& iter) {
         al::ByamlIter indexIter;
         dataIter.tryGetIterByIndex(&indexIter, i);
 
-        indexIter.tryGetIntByKey(&this->mEntries->e[i].mId, "Id");
-        indexIter.tryGetIntByKey(&this->mEntries->e[i].mNumberingId, "NumberingId");
-        indexIter.tryGetUInt64ByKey(&this->mEntries->e[i].mSearchStartTime, "SearchStartTime");
+        indexIter.tryGetIntByKey(&mEntries->e[i].mId, "Id");
+        indexIter.tryGetIntByKey(&mEntries->e[i].mNumberingId, "NumberingId");
+        indexIter.tryGetUInt64ByKey(&mEntries->e[i].mSearchStartTime, "SearchStartTime");
     }
 }
 
@@ -79,38 +79,38 @@ s32 SearchAmiiboDataTable::getDataNumMax() const {
 }
 
 bool SearchAmiiboDataTable::isInvalidId(s32 index) const {
-    return this->mEntries->e[index].mId == -1;
+    return mEntries->e[index].mId == -1;
 }
 
 const SearchAmiiboData& SearchAmiiboDataTable::getData(s32 index) const {
-    return this->mEntries->e[index];
+    return mEntries->e[index];
 }
 
 s32 SearchAmiiboDataTable::getId(s32 index) const {
-    return this->mEntries->e[index].mId;
+    return mEntries->e[index].mId;
 }
 
 s32 SearchAmiiboDataTable::getNumberingId(s32 index) const {
-    return this->mEntries->e[index].mNumberingId;
+    return mEntries->e[index].mNumberingId;
 }
 
 void SearchAmiiboDataTable::setId(s32 id, s32 numberingId, s32 index) {
-    this->mEntries->e[index].mId = id;
-    this->mEntries->e[index].mNumberingId = numberingId;
+    mEntries->e[index].mId = id;
+    mEntries->e[index].mNumberingId = numberingId;
 }
 
 u64 SearchAmiiboDataTable::getSearchStartTime(s32 index) const {
-    return this->mEntries->e[index].mSearchStartTime;
+    return mEntries->e[index].mSearchStartTime;
 }
 
 void SearchAmiiboDataTable::setSearchStartTime(u64 searchStartTime, s32 index) {
-    this->mEntries->e[index].mSearchStartTime = searchStartTime;
+    mEntries->e[index].mSearchStartTime = searchStartTime;
 }
 
 void SearchAmiiboDataTable::copy(s32 index, s32 other) {
-    this->mEntries->e[index] = this->mEntries->e[other];
+    mEntries->e[index] = mEntries->e[other];
 }
 
 void SearchAmiiboDataTable::initByIndex(s32 index) {
-    this->mEntries->e[index].init();
+    mEntries->e[index].init();
 }

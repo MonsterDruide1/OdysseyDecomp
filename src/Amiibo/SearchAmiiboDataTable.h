@@ -28,13 +28,13 @@ struct SearchAmiiboDataTableEntries {
     std::array<SearchAmiiboData, 3> e;
 };
 
-class SearchAmiiboDataTable : al::HioNode {
+class SearchAmiiboDataTable : public al::HioNode {
 public:
     SearchAmiiboDataTable();
 
     void init();
     virtual void write(al::ByamlWriter* writer);
-    virtual void read(al::ByamlIter const& iter);
+    virtual void read(const al::ByamlIter& iter);
     s32 getDataNumMax() const;
     bool isInvalidId(s32 index) const;
     const SearchAmiiboData& getData(s32 index) const;
