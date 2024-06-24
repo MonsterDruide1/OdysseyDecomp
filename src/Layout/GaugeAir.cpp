@@ -51,7 +51,7 @@ void GaugeAir::updateStateAnim() {
 }
 
 void GaugeAir::endMax() {
-    if (!isAlive() || !al::isNerve(this, &NrvGaugeAir.Wait))
+    if (!isWait())
         return;
     al::startFreezeAction(this, "Decrease", 0.0f, "Gauge");
     updateStateAnim();
