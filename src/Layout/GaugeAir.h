@@ -16,7 +16,6 @@ public:
     void endMax();
     void fastEnd();
     void setRate(f32 rate);
-
     void exeAppear();
     void exeWait();
     void exeEnd();
