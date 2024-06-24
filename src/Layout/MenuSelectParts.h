@@ -50,7 +50,7 @@ private:
     al::LayoutActor* mLayoutActor;
     s32 mMenuItemAmount;
     s32 mCursorItemIndex;
-    sead::PtrArray<al::LayoutActor*> mLayoutArray;
+    sead::PtrArray<al::LayoutActor> mLayoutArray;
     al::LayoutActor* mCursorActor;
     s32 field_38;
     al::LiveActor* mMarioActor;
