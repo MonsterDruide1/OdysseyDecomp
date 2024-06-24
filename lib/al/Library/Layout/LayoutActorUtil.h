@@ -31,7 +31,7 @@ bool appearLayoutIfDead(LayoutActor*);
 bool isActive(const LayoutActor*);
 bool isDead(const LayoutActor*);
 void calcTrans(sead::Vector3f*, const IUseLayout*);
-const sead::Vector3f& getLocalTrans(const IUseLayout*);
+sead::Vector3f getLocalTrans(const IUseLayout*);
 sead::Vector3f* getLocalTransPtr(const IUseLayout*);
 void calcScale(sead::Vector3f*, const IUseLayout*);
 const sead::Vector3f& getLocalScale(const IUseLayout*);
