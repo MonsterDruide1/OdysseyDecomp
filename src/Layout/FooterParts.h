@@ -8,12 +8,12 @@ class LayoutInitInfo;
 
 class FooterParts : public al::LayoutActor {
 public:
-    FooterParts(al::LayoutActor*, const al::LayoutInitInfo&, const char16*, const char*,
-                const char*);
+    FooterParts(al::LayoutActor* parentLayout, const al::LayoutInitInfo& info,
+                const char16* footerText, const char* textPane, const char* partPane);
 
-    void changeText(const char16*);
-    void changeTextFade(const char16*);
-    bool tryChangeTextFade(const char16*);
+    void changeText(const char16* text);
+    void changeTextFade(const char16* text);
+    bool tryChangeTextFade(const char16* text);
 
     void exeWait();
     void exeFadeOut();
