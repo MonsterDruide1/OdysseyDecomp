@@ -8,7 +8,7 @@ class LayoutInitInfo;
 
 class FilterScope : public al::LayoutActor {
 public:
-    FilterScope(const char*, const al::LayoutInitInfo&, const char*);
+    FilterScope(const char* name, const al::LayoutInitInfo& info, const char* suffix);
     void startAppear();
     void end();
     void exeAppear();
