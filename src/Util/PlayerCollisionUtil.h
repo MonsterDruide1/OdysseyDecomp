@@ -19,6 +19,7 @@ bool isCollidedGround(const IUsePlayerCollision*);
 bool isCollidedGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 bool isOnGroundForceSlideCode(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 bool isOnGroundForceRollingCode(const al::LiveActor*, const IUsePlayerCollision*);
+bool isOnGroundLessAngle(const al::LiveActor*, const IUsePlayerCollision*, f32);
 bool isPlayerOnGround(const al::LiveActor*);
 bool isOnGround(const al::LiveActor*, const IUsePlayerCollision*);
 bool isJustLand(const IUsePlayerCollision*);
