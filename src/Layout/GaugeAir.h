@@ -24,6 +24,5 @@ public:
 
 private:
     bool mIsActive = false;
-    bool mIsNotFull;
     f32 mRate = 1.0f;
 };
