@@ -16,13 +16,14 @@ public:
     void endMax();
     void fastEnd();
     void setRate(f32 rate);
+
     void exeAppear();
     void exeWait();
     void exeEnd();
     void exeFastEnd();
 
 private:
-    bool mIsWait;
+    bool mIsActive = false;
     bool mIsNotFull;
-    float mRate;
+    f32 mRate = 1.0f;
 };
