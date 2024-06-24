@@ -15,7 +15,7 @@ NERVES_MAKE_NOSTRUCT(FooterParts, Wait, FadeOut, FadeIn);
 }  // namespace
 
 FooterParts::FooterParts(al::LayoutActor* parentLayout, const al::LayoutInitInfo& info,
-                         const char16_t* footerText, const char* textPane, const char* partPane)
+                         const char16* footerText, const char* textPane, const char* partPane)
     : al::LayoutActor("フッターパーツ"), mTextPane(textPane), mText(footerText) {
     al::initLayoutPartsActor(this, parentLayout, info, partPane, nullptr);
 
@@ -23,17 +23,17 @@ FooterParts::FooterParts(al::LayoutActor* parentLayout, const al::LayoutInitInfo
     initNerve(&Wait, 0);
 }
 
-void FooterParts::changeText(const char16_t* text) {
+void FooterParts::changeText(const char16* text) {
     mText = text;
     al::setPaneString(this, mTextPane, text, 0);
 }
 
-void FooterParts::changeTextFade(const char16_t* text) {
+void FooterParts::changeTextFade(const char16* text) {
     mText = text;
     al::setNerve(this, &FadeIn);
 }
 
-bool FooterParts::tryChangeTextFade(const char16_t* text) {
+bool FooterParts::tryChangeTextFade(const char16* text) {
     if (mText == text)
         return false;
     changeTextFade(text);
