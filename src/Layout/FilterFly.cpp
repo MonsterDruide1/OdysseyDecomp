@@ -51,8 +51,8 @@ void FilterFly::exeMove() {
     }
 
     if (al::tryNormalizeOrZero(&direction)) {
-        mTargetPos2 += direction * 0.9f;
-        currentPos += mTargetPos2;
+        mNewPos += direction * 0.9f;
+        currentPos += mNewPos;
         al::setPaneLocalTrans(this, "RootPane", currentPos);
 
         f32 angleY = al::calcAngleDegree(direction, sead::Vector2f::ey);
@@ -61,7 +61,7 @@ void FilterFly::exeMove() {
             this, "RootPane",
             {0, 0, al::calcAngleDegree(direction, sead::Vector2f::ex) < 90.0f ? -angleY : angleY});
     }
-    mTargetPos2 *= 0.98f;
+    mNewPos *= 0.98f;
 }
 
 void FilterFly::move(const sead::Vector2f& target) {

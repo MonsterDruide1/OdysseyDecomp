@@ -19,5 +19,5 @@ public:
 
 private:
     sead::Vector2f mTargetPos = sead::Vector2f::zero;
-    sead::Vector2f mTargetPos2 = sead::Vector2f::zero;
+    sead::Vector2f mNewPos = sead::Vector2f::zero;
 };
