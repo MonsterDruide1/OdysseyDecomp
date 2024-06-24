@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/Base/StringUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Player/PlayerFunction.h"
 #include "Player/PlayerModelHolder.h"
 
@@ -8,7 +9,7 @@ namespace game {
 
 class PlayerAnimator {
 public:
-    PlayerAnimator(PlayerModelHolder const*,al::ActorDitherAnimator *){}
+    PlayerAnimator(PlayerModelHolder const* holder,al::ActorDitherAnimator *) : modelHolder(holder) {}
     void startAnim(const sead::SafeString& sName) {
         const char* name = sName.cstr();
         if(al::isEqualString(name, "AreaWait64")) maxFrame = 390;
@@ -542,11 +543,15 @@ public:
     f32 getAnimFrame() {
         return currentFrame;
     }
+    f32 getAnimFrameMax() {
+        return maxFrame;
+    }
 
 private:
     f32 currentFrame = 0.0f;
     f32 maxFrame = 0.0f;
     const char* currentAnim = nullptr;
+    const PlayerModelHolder* modelHolder;
 
 
 // stuff required for matching original signatures/calls

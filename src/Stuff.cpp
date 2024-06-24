@@ -1440,4 +1440,50 @@ bool calcAlongDirFront(sead::Vector3<float> *a1,al::LiveActor const*a2,sead::Vec
   return al::tryNormalizeOrZero(a1);
 }
 
+
+void moveInertiaTurn(sead::Vector3<float> *x0_0,sead::Quat<float> *x1_0,al::LiveActor *actor,IUsePlayerCollision const*a4,sead::Vector3<float> const&a5,float a6,float a7,float a8,float a9,float a10) {
+  PlayerActionVelocityControl velocityControl = PlayerActionVelocityControl(actor, a4);
+
+  sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+  if(rs::isOnGround(actor, a4)) {
+    up = rs::getCollidedGroundNormal(a4);
+    velocityControl.calcOnGround(up);
+    velocityControl.calcFrontBrake(a6);
+    velocityControl.calcSnap(-up, a8);
+    velocityControl.apply();
+  }
+  else {
+    sead::Vector3f gravity = al::getGravity(actor);
+    up = -gravity;
+    velocityControl.calcSnap(gravity, a9);
+    velocityControl.apply();
+    al::limitVelocityDir(actor, al::getGravity(actor), a10);
+  }
+
+  sead::Vector3f v42 = {0.0f, 0.0f, 0.0f};
+  sead::Vector3f v41 = {0.0f, 0.0f, 0.0f};
+  al::separateVectorParallelVertical(&v41, &v42, up, al::getVelocity(actor));
+  f32 v26 = v42.length();
+  sead::Vector3f a2 = {0.0f, 0.0f, 0.0f};
+  if(al::tryNormalizeOrZero(&a2, v42)) {
+    sead::Vector3f a3;
+    al::verticalizeVec(&a3, up, a5);
+    if(al::tryNormalizeOrZero(&a3) && !PlayerActionFunction::isOppositeDir(a3, a2)) {
+      sead::Quatf a1 = sead::Quatf::unit;
+      al::makeQuatRotationLimit(&a1, a2, a3, sead::Mathf::deg2rad(a7));
+      f32 v30 = (float)((float)(a1.y * a2.z) - (float)(a1.z * a2.y)) + (float)(a1.w * a2.x);
+      f32 v31 = (float)(a2.y * a1.w) + (float)((float)(a1.z * a2.x) - (float)(a2.z * a1.x));
+      f32 v32 = (float)(a2.z * a1.w) + (float)((float)(a2.y * a1.x) - (float)(a1.y * a2.x));
+      f32 v33 = (float)((float)-(float)(a2.x * a1.x) - (float)(a1.y * a2.y)) - (float)(a2.z * a1.z);
+      a2.x = (float)((float)(a1.y * v32) + (float)((float)(a1.w * v30) - (float)(a1.z * v31))) - (float)(a1.x * v33);
+      a2.y = (float)((float)((float)(v30 * a1.z) + (float)(v31 * a1.w)) - (float)(v32 * a1.x)) - (float)(v33 * a1.y);
+      a2.z = (float)((float)((float)(v31 * a1.x) - (float)(v30 * a1.y)) + (float)(v32 * a1.w)) - (float)(v33 * a1.z);
+      *x1_0 = a1;
+    }
+  }
+
+  al::setVelocity(actor, (v26 * a2) + v41);
+  *x0_0 = (v26 * a2);
+}
+
 }  // namespace rs

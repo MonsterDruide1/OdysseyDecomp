@@ -260,6 +260,15 @@ void PlayerInput::calcCapSeparateMoveInput(sead::Vector3<float>*a1, sead::Vector
   calcMoveInputImpl(a1, a2, true, false, true);
 }
 
+void PlayerInput::calcCapThrowInput(sead::Vector3<float> *a2,sead::Vector3<float> const&a3) const {
+  if(mIsDisableInput) {
+    *a2 = sead::Vector3<float>::zero;
+    return;
+  }
+
+  calcMoveInputImpl(a2, a3, false, false, false);
+}
+
 
 namespace rs {
 

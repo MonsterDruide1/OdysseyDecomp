@@ -67,6 +67,8 @@ void calcFrontVelocityAndDirH(sead::Vector3<float> *,sead::Vector3<float> *,al::
 bool isCollidedGroundOverAngle(const al::LiveActor*,IUsePlayerCollision const*,float);
 bool isCollidedGroundLessAngle(const al::LiveActor*,IUsePlayerCollision const*,float);
 bool calcAlongDirFront(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3<float> const&);
+void addPlayerThrowCapCount(const al::LiveActor*);
+void moveInertiaTurn(sead::Vector3<float> *,sead::Quat<float> *,al::LiveActor *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float,float,float,float);
 
 }
 
@@ -143,7 +145,7 @@ class PlayerCapActionHistory {
 public:
     PlayerCapActionHistory(al::LiveActor const*,PlayerConst const*,PlayerTrigger const*,IUsePlayerCollision const*);
     void clearLandLimitStandAngle();
-    void recordLimitHeight() {CRASH}
+    void recordLimitHeight() {WARN_UNIMPL;}
     void update();
 public:
     const al::LiveActor *mActor;
@@ -671,6 +673,19 @@ class PlayerSpinCapAttack : public IJudge {
 public:
     PlayerSpinCapAttack(HackCap *,PlayerConst const*,PlayerTrigger const*,PlayerInput const*,PlayerCounterAfterCapCatch const*,PlayerJudgePreInputCapThrow const*);
     bool isEnablePlaySpinCapMiss(PlayerAnimator*) { return true; }
+    void tryStartCapSpinAirMiss(PlayerAnimator*) { WARN_UNIMPL; }
+    void clearAttackInfo() { WARN_UNIMPL; }
+    void setupAttackInfo() { WARN_UNIMPL; }
+    bool isSeparateSingleSpin() const { WARN_UNIMPL; return false; }
+    bool tryCancelCapState(PlayerAnimator*) { WARN_UNIMPL; return false; }
+    bool isCapSpinAttack() const { WARN_UNIMPL; return false; }
+
+    void startCapSpinAttack(PlayerAnimator *,PlayerInput const*) { WARN_UNIMPL; }
+    void startCapSpinAttackAir(PlayerAnimator *,PlayerInput const*) { WARN_UNIMPL; }
+    void startSpinSeparate(PlayerAnimator *) { WARN_UNIMPL; }
+    void startCapThrow(sead::Vector3<float> const&,sead::Vector3<float> const&,float,bool,sead::Vector3<float> const&) { WARN_UNIMPL; }
+    f32 getThrowFrameGround() const { WARN_UNIMPL; return 0.0f; }
+    f32 getThrowFrameAir() const { WARN_UNIMPL; return 0.0f; }
 
     void reset() override { WARN_UNIMPL; }
     void update() override { WARN_UNIMPL; }
@@ -803,14 +818,7 @@ public:
 };
 
 class PlayerJointParamCapThrow;
-class PlayerStateSpinCap : public al::NerveStateBase {
-public:
-    PlayerStateSpinCap(al::LiveActor *,PlayerConst const*,PlayerInput const*,PlayerCounterForceRun const*,al::WaterSurfaceFinder const*,IUsePlayerCollision const*,PlayerTrigger *,PlayerSpinCapAttack *,PlayerAnimator *,PlayerJointParamCapThrow *);
-
-private:
-    void* size[0xB0/8];
-};
-
+#include "Player/PlayerStateSpinCap.h"
 #include "Player/PlayerStateSquat.h"
 #include "Player/PlayerStateSlope.h"
 
@@ -899,6 +907,7 @@ class PlayerJointParamSwim;
 class PlayerStateSwim : public al::NerveStateBase {
 public:
     PlayerStateSwim(al::LiveActor *,PlayerConst const*,IUsePlayerCollision const*,PlayerInput const*,PlayerTrigger const*,PlayerCarryKeeper const*,PlayerModelHolder const*,PlayerExternalVelocity const*,PlayerAnimator *,PlayerSpinCapAttack *,al::WaterSurfaceFinder const*,PlayerEffect *,PlayerJointParamSwim *);
+    void tryReactionWaterIn() { CRASH; }
 private:
     void* size[0x118/8];
 };

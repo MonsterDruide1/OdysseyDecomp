@@ -215,6 +215,44 @@ void calcMtxScale(sead::Vector3f* scale, const sead::Matrix34f& mtx) {
     scale->z = z.length();
 }
 
+void calcMtxLocalTrans(sead::Vector3f *out, const sead::Matrix34f &mtx, const sead::Vector3f &in) {
+    sead::Vector3f trans;
+    mtx.getTranslation(trans);
+    out->setRotated(mtx, in - trans);
+}
+
+void calcTransLocalOffsetByMtx(sead::Vector3f *out, const sead::Matrix34f &a2, const sead::Vector3f &a3) {
+    float z; // s16
+    float y; // s7
+    float v5; // s5
+    float v6; // s3
+    float v7; // s0
+    float v8; // s7
+    float v9; // s2
+    float v10; // s1
+
+    z = a3.z;
+    y = a3.y;
+    v5 = a2.m[2][1] * y;
+    v6 = a2.m[1][1] * y;
+    v7 = (float)(a2.m[0][0] * a3.x) + (float)(a2.m[0][1] * y);
+    v8 = a2.m[2][3];
+    v9 = (float)((float)((float)(a2.m[2][0] * a3.x) + v5) + (float)(a2.m[2][2] * z)) + 0.0;
+    v10 = a2.m[1][3] + (float)((float)((float)((float)(a2.m[1][0] * a3.x) + v6) + (float)(a2.m[1][2] * z)) + 0.0);
+    out->x = a2.m[0][3] + (float)((float)(v7 + (float)(a2.m[0][2] * z)) + 0.0);
+    out->y = v10;
+    out->z = v8 + v9;
+}
+
+void makeMtxRT(sead::Matrix34f* mtx, const al::LiveActor* actor) {
+    actor->mPoseKeeper->calcBaseMtx(mtx);
+}
+
+void makeMtxR(sead::Matrix34f* mtx, const al::LiveActor* actor) {
+    makeMtxRT(mtx, actor);
+    mtx->setTranslation(sead::Vector3f::zero);
+}
+
 void verticalizeVec(sead::Vector3f *out, const sead::Vector3f &vertical, const sead::Vector3f &vec) {
     *out = vec - (vertical * vec.dot(vertical));
 }
