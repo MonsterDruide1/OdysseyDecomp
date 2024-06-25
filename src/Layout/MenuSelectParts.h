@@ -48,13 +48,15 @@ public:
 
 private:
     al::LayoutActor* mLayoutActor;
-    s32 mMenuItemAmount;
-    s32 mCursorItemIndex;
-    sead::PtrArray<al::LayoutActor> mLayoutArray;
-    al::LayoutActor* mCursorActor;
-    s32 field_38;
-    al::LiveActor* mMarioActor;
-    al::LiveActor* mCapActor;
-    al::KeyRepeatCtrl* mKeyRepeatCtrl;
+    s32 mMenuItemAmount = 0;
+    s32 mCursorItemIndex = 0;
+    s32 mMax;
+    s32 mCount;
+    al::LayoutActor** mLayoutArray = nullptr;
+    al::LayoutActor* mCursorActor = nullptr;
+    s32 field_38 = false;
+    al::LiveActor* mMarioActor = nullptr;
+    al::LiveActor* mCapActor = nullptr;
+    al::KeyRepeatCtrl* mKeyRepeatCtrl = nullptr;
     bool field_58;
 };
