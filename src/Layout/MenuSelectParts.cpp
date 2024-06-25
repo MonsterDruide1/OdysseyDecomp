@@ -1,12 +1,16 @@
 #include "Layout/MenuSelectParts.h"
 
+#include "Library/Base/StringUtil.h"
+#include "Library/Controller/KeyRepeatCtrl.h"
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutActor.h"
 #include "Library/Layout/LayoutActorUtil.h"
+#include "Library/Layout/LayoutInitInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+#include "Library/Se/SeFunction.h"
 #include "Sequence/GameSequenceInfo.h"
 #include "System/GameDataHolderAccessor.h"
 
@@ -33,7 +37,28 @@ const int* getArray(bool a1, s32 selection) {
 MenuSelectParts::MenuSelectParts(const char* name, al::LayoutActor* layoutActor,
                                  al::LiveActor* marioActor, const al::LayoutInitInfo& info,
                                  s32 menuItemCount)
-    : al::NerveExecutor(name), mLayoutActor(layoutActor) {}
+    : al::NerveExecutor(name), mLayoutActor(layoutActor), mMax(menuItemCount), field_58(false) {
+    mMarioActor = marioActor;
+    al::LiveActor* subActor = al::getSubActor(marioActor, "頭");
+    mCapActor = al::getSubActor(subActor, "メニュー用キャップ目");
+    mKeyRepeatCtrl = new al::KeyRepeatCtrl();
+    mKeyRepeatCtrl->init(30, 5);
+    mLayoutArray = new al::LayoutActor*[mMax];
+    if (mMax > 0) {
+        for (s32 i = 0; i < mMax; i++) {
+            mLayoutArray[i] = new al::LayoutActor("選択肢パーツ");
+            al::StringTmp<32> name("%s%02d", "ParList", i);
+            al::initLayoutPartsActor(mLayoutArray[i], layoutActor, info, name.cstr(), nullptr);
+            al::startAction(mLayoutArray[i], "Active", "State");
+            mCount++;
+        }
+    }
+    mCursorActor = new al::LayoutActor("カーソルパーツ");
+    al::initLayoutPartsActor(mCursorActor, layoutActor, info, "ParCursor", nullptr);
+
+    al::startAction(mCursorActor, "Hide", nullptr);
+    initNerve(&Hide, 0);
+}
 
 void MenuSelectParts::update() {
     updateNerve();
@@ -44,6 +69,40 @@ void MenuSelectParts::appear(s32 menuItemAmount) {
     mMenuItemAmount = menuItemAmount;
     mCursorItemIndex = 0;
     field_38 = false;
+
+    if (menuItemAmount >= 1) {
+        for (s32 i = 0; i < menuItemAmount; i++) {
+            al::LayoutActor* actor = mLayoutArray[calcPartsIndex(i)];
+            al::startFreezeActionEnd(actor, (i == mCursorItemIndex) ? "Select" : "Wait", nullptr);
+            al::startAction(actor, "Active", "State");
+        }
+    }
+
+    if (mLayoutActor) {
+        GameDataHolderAccessor accessor(mLayoutActor);
+        if (!(rs::isSceneStatusInvalidSave(accessor) & 1)) {
+            al::setNerve(this, &Appear);
+            return;
+        }
+    }
+
+    al::LayoutActor* actor = mLayoutArray[calcPartsIndex(3)];
+    if (actor)
+        al::startAction(actor, "Deactive", "State");
+
+    al::LayoutActor* actor2 = mLayoutArray[calcPartsIndex(4)];
+    if (actor2)
+        al::startAction(actor, "Deactive", "State");
+
+    al::LayoutActor* actor3 = mLayoutArray[calcPartsIndex(3)];
+    if (actor3)
+        al::setSeKeeperPlayNamePrefix(actor, "Deactive");
+
+    al::LayoutActor* actor4 = mLayoutArray[calcPartsIndex(4)];
+    if (actor4)
+        al::setSeKeeperPlayNamePrefix(actor, "Deactive");
+
+    al::setNerve(this, &Appear);
 }
 
 void MenuSelectParts::startActionPartsIllustSelectIndex() {}
