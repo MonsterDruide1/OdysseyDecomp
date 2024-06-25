@@ -232,34 +232,34 @@ void MenuSelectParts::exeSelect() {
     }
     mKeyRepeatCtrl->update(rs::isHoldUiUp(mLayoutActor), rs::isHoldUiDown(mLayoutActor));
     if (mKeyRepeatCtrl->isUp() || mKeyRepeatCtrl->isDown()) {
-        al::startAction(mLayoutArray[calcPartsIndex(this->mCursorItemIndex)], "Wait", nullptr);
-        mCursorItemIndex = al::modi(
-            (this->mCursorItemIndex + (mKeyRepeatCtrl->isUp() ? -1 : 1) + this->mMenuItemAmount),
-            this->mMenuItemAmount);
+        s32 direction = mKeyRepeatCtrl->isUp() ? -1 : 1;
+        al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Wait", nullptr);
+        mCursorItemIndex =
+            al::modi(mCursorItemIndex + direction + mMenuItemAmount, mMenuItemAmount);
 
+        f32 v19 = ((1.0f - (f32)mCursorItemIndex / (mMenuItemAmount - 1)) * 0.375f) + 1.0f;
         al::PadRumbleParam param = {0.0f, 3000.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0, 0, 0};
-        f32 v19 = ((1.0 - (f32)mCursorItemIndex / (mMenuItemAmount - 1)) * 0.375) + 1.0;
-        alPadRumbleFunction::makePadRumbleParamNearFarVolumePitch(&param, 0.0, 500.0, v19 * 0.05,
+        alPadRumbleFunction::makePadRumbleParamNearFarVolumePitch(&param, 0.0f, 500.0f, v19 * 0.05f,
                                                                   v19);
         param.field_1C = 1;
         alPadRumbleFunction::startPadRumbleNo3DWithParam(
-            alPadRumbleFunction::getPadRumbleDirector(this->mLayoutActor), "240Hz", param, -1);
-        al::startAction(mLayoutArray[calcPartsIndex(this->mCursorItemIndex)], "Select", nullptr);
+            alPadRumbleFunction::getPadRumbleDirector(mLayoutActor), "240Hz", param, -1);
+        al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
         startActionMarioSelectIndex();
     }
     if (rs::isTriggerUiCancel(mLayoutActor) || rs::isTriggerUiPause(mLayoutActor)) {
-        if (this->field_58)
+        if (field_58)
             return;
-        al::startAction(mLayoutArray[dword_71018AF570[this->mCursorItemIndex]], "Wait", nullptr);
-        startActionMario(this->mMarioActor, "PauseMenuContinue");
+        al::startAction(mLayoutArray[dword_71018AF570[mCursorItemIndex]], "Wait", nullptr);
+        startActionMario(mMarioActor, "PauseMenuContinue");
         if (mCursorItemIndex != field_38)
-            mCursorItemIndex = this->field_38;
-        al::startAction(mLayoutArray[calcPartsIndex(this->mCursorItemIndex)], "Select", nullptr);
-        helper(this->mCursorActor, this->mLayoutArray[calcPartsIndex(this->mCursorItemIndex)]);
+            mCursorItemIndex = field_38;
+        al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
+        helper(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
         al::startHitReaction(mLayoutActor, "キャンセル", nullptr);
         al::setNerve(this, &NrvMenuSelectParts.DecideParts);
     } else {
-        helper(this->mCursorActor, this->mLayoutArray[calcPartsIndex(this->mCursorItemIndex)]);
+        helper(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
         if (rs::isTriggerUiDecide(mLayoutActor)) {
             al::startHitReaction(mLayoutActor, "決定", nullptr);
             al::setNerve(this, &NrvMenuSelectParts.DecideParts);
