@@ -1,13 +1,13 @@
 #pragma once
 
-#include "math/seadVector.h"
+#include <math/seadVector.h>
+
 namespace al {
 class LiveActor;
 class LayoutActor;
 class PadRumbleDirector;
 
-class PadRumbleParam {
-public:
+struct PadRumbleParam {
     PadRumbleParam(f32 _0, f32 _4, f32 _8, f32 _c, f32 _10, f32 _14, s32 _18, bool _1C, bool _1D) {
         field_0 = _0;
         field_4 = _4;
@@ -31,6 +31,7 @@ public:
     bool field_1C;
     bool field_1D;
 };
+
 }  // namespace al
 
 namespace alPadRumbleFunction {
@@ -83,4 +84,4 @@ void makePadRumbleParamNearFarVolume(al::PadRumbleParam*, f32, f32, f32);
 void makePadRumbleParamNearFarVolumeLR(al::PadRumbleParam*, f32, f32, f32, f32);
 void makePadRumbleParamNearFarVolumePitch(al::PadRumbleParam*, f32, f32, f32, f32);
 void makePadRumbleParamNearFarVolumePitchLR(al::PadRumbleParam*, f32, f32, f32, f32, f32, f32);
-};  // namespace alPadRumbleFunction
+}  // namespace alPadRumbleFunction

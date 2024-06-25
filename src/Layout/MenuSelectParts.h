@@ -13,13 +13,14 @@ class KeyRepeatCtrl;
 
 class MenuSelectParts : public al::NerveExecutor {
 public:
-    MenuSelectParts(const char*, al::LayoutActor*, al::LiveActor*, const al::LayoutInitInfo&, s32);
+    MenuSelectParts(const char* name, al::LayoutActor* layoutActor, al::LiveActor* marioActor,
+                    const al::LayoutInitInfo& info, s32 menuItemCount);
 
     void update();
-    void appear(s32);
+    void appear(s32 menuItemAmount);
     void startActionPartsIllustSelectIndex();
     void appearWait();
-    void setSelectMessage(s32, const char16*);
+    void setSelectMessage(s32 index, const char16* message);
 
     bool isDecideContinue() const;
     bool isDecideEnd() const;
@@ -34,13 +35,13 @@ public:
     bool isSelectHelp() const;
     bool isDecideNewGame() const;
     bool isSelectNewGame() const;
-    s32 calcPartsIndex(s32) const;
+    s32 calcPartsIndex(s32 selection) const;
 
     void exeHide();
     void exeAppear();
     void startActionMarioSelectIndex();
     void exeSelect();
-    void startActionMario(al::LiveActor*, const char*);
+    void startActionMario(al::LiveActor* marioActor, const char* actionName);
     void exeDecideParts();
     bool isInvalidSelect() const;
     void exeDecideInterval();
@@ -54,9 +55,9 @@ private:
     s32 mCount;
     al::LayoutActor** mLayoutArray = nullptr;
     al::LayoutActor* mCursorActor = nullptr;
-    s32 field_38 = false;
+    s32 field_38 = 0;
     al::LiveActor* mMarioActor = nullptr;
     al::LiveActor* mCapActor = nullptr;
     al::KeyRepeatCtrl* mKeyRepeatCtrl = nullptr;
-    bool mIsMainMenu;
+    bool mIsMainMenu = false;
 };

@@ -9,6 +9,7 @@ class GameDataHolderAccessor;
 class GameDataHolder;
 
 class GameSequenceInfo {
+public:
     GameSequenceInfo();
     void init();
     void resetSceneStatus();

@@ -14,6 +14,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Se/SeFunction.h"
+
 #include "Sequence/GameSequenceInfo.h"
 #include "System/GameDataHolderAccessor.h"
 #include "Util/StageInputFunction.h"
@@ -31,10 +32,10 @@ NERVES_MAKE_NOSTRUCT(MenuSelectParts, Hide, Appear, DecideEnd);
 NERVES_MAKE_STRUCT(MenuSelectParts, Select, DecideParts, SelectSecond, DecideInterval);
 }  // namespace
 
-const int mainMenuParts[5] = {0, 1, 2, 3, 5};
-const int pauseMenuParts[8] = {0, 1, 3, 4, 5, 0, 0, 0};
+const s32 mainMenuParts[5] = {0, 1, 2, 3, 5};
+const s32 pauseMenuParts[8] = {0, 1, 3, 4, 5, 0, 0, 0};
 
-const int* getArray(bool isPauseMenu, s32 selection) {
+const s32* getPartsArray(bool isPauseMenu, s32 selection) {
     return isPauseMenu ? pauseMenuParts : mainMenuParts;
 }
 
@@ -48,18 +49,22 @@ MenuSelectParts::MenuSelectParts(const char* name, al::LayoutActor* layoutActor,
                                  al::LiveActor* marioActor, const al::LayoutInitInfo& info,
                                  s32 menuItemCount)
     : al::NerveExecutor(name), mLayoutActor(layoutActor), mMax(menuItemCount),
-      mMarioActor(marioActor), mIsMainMenu(false) {
-    al::LiveActor* subActor = al::getSubActor(marioActor, "頭");
-    mCapActor = al::getSubActor(subActor, "メニュー用キャップ目");
+      mMarioActor(marioActor) {
+    mCapActor = al::getSubActor(al::getSubActor(marioActor, "頭"), "メニュー用キャップ目");
+
     mKeyRepeatCtrl = new al::KeyRepeatCtrl();
     mKeyRepeatCtrl->init(30, 5);
+
     mLayoutArray = new al::LayoutActor*[mMax];
     for (s32 i = 0; i < mMax; i++) {
         mLayoutArray[i] = new al::LayoutActor("選択肢パーツ");
+
         al::StringTmp<32> name("%s%02d", "ParList", i);
+
         al::initLayoutPartsActor(mLayoutArray[i], layoutActor, info, name.cstr(), nullptr);
         al::startAction(mLayoutArray[i], "Active", "State");
     }
+
     mCursorActor = new al::LayoutActor("カーソルパーツ");
     al::initLayoutPartsActor(mCursorActor, layoutActor, info, "ParCursor", nullptr);
 
@@ -74,9 +79,9 @@ void MenuSelectParts::update() {
 void MenuSelectParts::appear(s32 menuItemAmount) {
     mIsMainMenu = false;
     mCursorItemIndex = 0;
-    field_38 = false;
-
+    field_38 = 0;
     mMenuItemAmount = menuItemAmount;
+
     for (s32 i = 0; i < mMenuItemAmount; i++) {
         if (i == mCursorItemIndex)
             al::startFreezeActionEnd(mLayoutArray[calcPartsIndex(i)], "Select", nullptr);
@@ -103,8 +108,8 @@ void MenuSelectParts::appearWait() {
     al::setNerve(this, &NrvMenuSelectParts.Select);
 }
 
-void MenuSelectParts::setSelectMessage(s32 selection, const char16* message) {
-    al::setPaneString(mLayoutArray[calcPartsIndex(selection)], "TxtContent", message, 0);
+void MenuSelectParts::setSelectMessage(s32 index, const char16* message) {
+    al::setPaneString(mLayoutArray[calcPartsIndex(index)], "TxtContent", message, 0);
 }
 
 bool MenuSelectParts::isDecideContinue() const {
@@ -172,8 +177,8 @@ bool MenuSelectParts::isSelectNewGame() const {
 }
 
 s32 MenuSelectParts::calcPartsIndex(s32 selection) const {
-    bool a = !mIsMainMenu;
-    return getArray(a, selection)[selection];
+    bool isPauseMenu = !mIsMainMenu;
+    return getPartsArray(isPauseMenu, selection)[selection];
 }
 
 void MenuSelectParts::exeHide() {}
@@ -224,23 +229,29 @@ void MenuSelectParts::exeSelect() {
             al::startAction(mCursorActor, "Wait", nullptr);
         mKeyRepeatCtrl->reset();
     }
+
     mKeyRepeatCtrl->update(rs::isHoldUiUp(mLayoutActor), rs::isHoldUiDown(mLayoutActor));
+
     if (mKeyRepeatCtrl->isUp() || mKeyRepeatCtrl->isDown()) {
         s32 direction = mKeyRepeatCtrl->isUp() ? -1 : 1;
+
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Wait", nullptr);
         mCursorItemIndex =
             al::modi(mCursorItemIndex + direction + mMenuItemAmount, mMenuItemAmount);
 
-        f32 v19 = ((1.0f - (f32)mCursorItemIndex / (mMenuItemAmount - 1)) * 0.375f) + 1.0f;
+        f32 pitch = ((1.0f - (f32)mCursorItemIndex / (mMenuItemAmount - 1)) * 0.375f) + 1.0f;
         al::PadRumbleParam param = {0.0f, 3000.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0, 0, 0};
-        alPadRumbleFunction::makePadRumbleParamNearFarVolumePitch(&param, 0.0f, 500.0f, v19 * 0.05f,
-                                                                  v19);
+        alPadRumbleFunction::makePadRumbleParamNearFarVolumePitch(&param, 0.0f, 500.0f,
+                                                                  pitch * 0.05f, pitch);
+
         param.field_1C = 1;
         alPadRumbleFunction::startPadRumbleNo3DWithParam(
             alPadRumbleFunction::getPadRumbleDirector(mLayoutActor), "240Hz", param, -1);
+
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
         startActionMarioSelectIndex();
     }
+
     if (rs::isTriggerUiCancel(mLayoutActor) || rs::isTriggerUiPause(mLayoutActor)) {
         if (mIsMainMenu)
             return;
@@ -292,9 +303,7 @@ void MenuSelectParts::exeDecideParts() {
 }
 
 bool MenuSelectParts::isInvalidSelect() const {
-    GameDataHolderAccessor accessor(mLayoutActor);
-
-    if (rs::isSceneStatusInvalidSave(accessor)) {
+    if (rs::isSceneStatusInvalidSave(mLayoutActor)) {
         if (calcPartsIndex(mCursorItemIndex) == 4 || calcPartsIndex(mCursorItemIndex) == 5)
             return true;
     }

@@ -35,5 +35,5 @@ bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const
 
 void setNerveAtActionEnd(LayoutActor*, const Nerve* nerve);
 
-void startHitReaction(const al::LayoutActor*, const char*, const char*);
+void startHitReaction(const LayoutActor*, const char*, const char*);
 }  // namespace al

@@ -18,6 +18,6 @@ private:
     s32 mMaxWait;
     s32 mUpCounter;
     s32 mDownCounter;
-    bool mCounter;
+    bool mIsEnableCounter;
 };
 }  // namespace al

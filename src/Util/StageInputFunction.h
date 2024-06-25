@@ -18,7 +18,7 @@ bool isSeparatePlay(const al::IUseSceneObjHolder*);
 void changeSeparatePlayMode(al::Scene*, bool);
 void setSeparatePlayMode(al::Scene*, bool);
 bool isTriggerUiDecide(const al::IUseSceneObjHolder*);
-bool isTriggerUiDecide(GameDataHolder const*);
+bool isTriggerUiDecide(const GameDataHolder*);
 bool isTriggerUiCancel(const al::IUseSceneObjHolder*);
 bool isTriggerUiSelect(const al::IUseSceneObjHolder*);
 bool isTriggerUiPause(const al::IUseSceneObjHolder*);
