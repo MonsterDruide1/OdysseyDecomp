@@ -35,7 +35,7 @@ const int dword_71018AF55C[5] = {0, 1, 2, 3, 5};
 const int dword_71018AF570[8] = {0, 1, 3, 4, 5, 0, 0, 0};
 
 const int* getArray(bool a1, s32 selection) {
-    return a1 ? dword_71018AF55C : dword_71018AF570;
+    return a1 ? dword_71018AF570 : dword_71018AF55C;
 }
 
 void helper(al::LayoutActor* cursorActor, al::LayoutActor* actor) {
@@ -85,17 +85,13 @@ void MenuSelectParts::appear(s32 menuItemAmount) {
         al::startAction(mLayoutArray[calcPartsIndex(i)], "Active", "State");
     }
 
-    GameDataHolderAccessor accessor(mLayoutActor);
-    if (!(rs::isSceneStatusInvalidSave(accessor) & 1)) {
-        al::setNerve(this, &Appear);
-        return;
+    if (rs::isSceneStatusInvalidSave(mLayoutActor)) {
+        al::startAction(mLayoutArray[calcPartsIndex(3)], "Deactive", "State");
+        al::startAction(mLayoutArray[calcPartsIndex(4)], "Deactive", "State");
+
+        al::setSeKeeperPlayNamePrefix(mLayoutArray[calcPartsIndex(3)], "Deactive");
+        al::setSeKeeperPlayNamePrefix(mLayoutArray[calcPartsIndex(4)], "Deactive");
     }
-
-    al::startAction(mLayoutArray[calcPartsIndex(3)], "Deactive", "State");
-    al::startAction(mLayoutArray[calcPartsIndex(4)], "Deactive", "State");
-
-    al::setSeKeeperPlayNamePrefix(mLayoutArray[calcPartsIndex(3)], "Deactive");
-    al::setSeKeeperPlayNamePrefix(mLayoutArray[calcPartsIndex(4)], "Deactive");
 
     al::setNerve(this, &Appear);
 }
@@ -103,14 +99,12 @@ void MenuSelectParts::appear(s32 menuItemAmount) {
 void MenuSelectParts::startActionPartsIllustSelectIndex() {}
 
 void MenuSelectParts::appearWait() {
-    al::LayoutActor* actor = mLayoutArray[calcPartsIndex(mCursorItemIndex)];
-    al::startFreezeActionEnd(actor, "Select", nullptr);
+    al::startFreezeActionEnd(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
     al::setNerve(this, &NrvMenuSelectParts.Select);
 }
 
 void MenuSelectParts::setSelectMessage(s32 selection, const char16* message) {
-    al::LayoutActor* actor = mLayoutArray[calcPartsIndex(mCursorItemIndex)];
-    al::setPaneString(actor, "TxtContent", message, 0);
+    al::setPaneString(mLayoutArray[calcPartsIndex(selection)], "TxtContent", message, 0);
 }
 
 bool MenuSelectParts::isDecideContinue() const {
