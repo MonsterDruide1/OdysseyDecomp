@@ -80,6 +80,7 @@ public:
 
     bool isThrowTypeSpiral(const sead::Vector2f&) const;
     bool isThrowTypeRolling(const sead::Vector2f&) const;
+    bool isThrowTypeLeftRight(const sead::Vector2f&) const;
 
     void calcMoveDirection(sead::Vector3f*, const sead::Vector3f&) const;
     void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;

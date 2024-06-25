@@ -532,7 +532,7 @@ public:
     void updateAnimFrame() {
         currentFrame += 1;
     }
-    bool isAnim(const sead::SafeString& name) {
+    bool isAnim(const sead::SafeString& name) const {
         if(currentAnim == nullptr) return false;
         return al::isEqualString(name.cstr(), currentAnim);
     }
@@ -540,7 +540,7 @@ public:
     void setAnimFrame(f32 frame) {
         currentFrame = frame;
     }
-    f32 getAnimFrame() {
+    f32 getAnimFrame() const {
         return currentFrame;
     }
     f32 getAnimFrameMax() {
@@ -558,6 +558,13 @@ private:
 public:
     f32 getModelAlpha() { return 1.0f; }
     void endSubAnim() {}
+    bool isUpperBodyAnimAttached() { return false; }
+    void clearUpperBodyAnim() {}
+    void startAnimSpinAttack(const sead::SafeString& a1) { startAnim(a1); }
+    void startSubAnim(const sead::SafeString& a1) {}
+    void startSubAnimOnlyAir(const sead::SafeString& a1) {}
+    bool isSubAnim(const sead::SafeString& a1) const { return false; }
+    f32 getSubAnimFrame() const { return 0.0f; }
 
     bool unk2;
     bool mIsNeedFullFaceAnim = false;

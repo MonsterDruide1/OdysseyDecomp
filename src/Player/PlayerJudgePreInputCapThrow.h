@@ -20,7 +20,7 @@ public:
     void update() override;
     bool judge() const override;
 
-private:
+public:
     const PlayerConst* mConst;
     const PlayerInput* mInput;
     const PlayerCarryKeeper* mCarryKeeper;

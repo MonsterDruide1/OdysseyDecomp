@@ -669,30 +669,7 @@ private:
     void* size[0x28/8];
 };
 
-class PlayerSpinCapAttack : public IJudge {
-public:
-    PlayerSpinCapAttack(HackCap *,PlayerConst const*,PlayerTrigger const*,PlayerInput const*,PlayerCounterAfterCapCatch const*,PlayerJudgePreInputCapThrow const*);
-    bool isEnablePlaySpinCapMiss(PlayerAnimator*) { return true; }
-    void tryStartCapSpinAirMiss(PlayerAnimator*) { WARN_UNIMPL; }
-    void clearAttackInfo() { WARN_UNIMPL; }
-    void setupAttackInfo() { WARN_UNIMPL; }
-    bool isSeparateSingleSpin() const { WARN_UNIMPL; return false; }
-    bool tryCancelCapState(PlayerAnimator*) { WARN_UNIMPL; return false; }
-    bool isCapSpinAttack() const { WARN_UNIMPL; return false; }
-
-    void startCapSpinAttack(PlayerAnimator *,PlayerInput const*) { WARN_UNIMPL; }
-    void startCapSpinAttackAir(PlayerAnimator *,PlayerInput const*) { WARN_UNIMPL; }
-    void startSpinSeparate(PlayerAnimator *) { WARN_UNIMPL; }
-    void startCapThrow(sead::Vector3<float> const&,sead::Vector3<float> const&,float,bool,sead::Vector3<float> const&) { WARN_UNIMPL; }
-    f32 getThrowFrameGround() const { WARN_UNIMPL; return 0.0f; }
-    f32 getThrowFrameAir() const { WARN_UNIMPL; return 0.0f; }
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x110/8];
-};
+#include "Player/PlayerSpinCapAttack.h"
 
 class PlayerJudgeDiveInWater : public IJudge {
 public:
