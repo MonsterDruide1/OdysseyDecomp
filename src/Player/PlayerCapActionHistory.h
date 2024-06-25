@@ -23,7 +23,7 @@ public:
     void recordLimitHeight();
     bool isOverLimitHeight() const;
 
-private:
+public:
     const al::LiveActor* mPlayer;
     const PlayerConst* mConst;
     const PlayerTrigger* mTrigger;

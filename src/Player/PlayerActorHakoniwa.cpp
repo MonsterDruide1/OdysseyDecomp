@@ -1844,8 +1844,8 @@ bool PlayerActorHakoniwa::tryChangeNerveFromAir() {
         return true;
     }
     if(rs::updateJudgeAndResult(mPlayerJudgeWallCatch)) {
-        mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->_60,
-                                    -mPlayerJudgeWallCatch->_6C, mPlayerJudgeWallCatch->_78);
+        mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->mPosition,
+                                    -mPlayerJudgeWallCatch->mCollidedWallNormal, mPlayerJudgeWallCatch->mNormalAtPos);
         al::setNerve(this, &WallCatch);
         return true;
     }
@@ -1936,8 +1936,8 @@ void PlayerActorHakoniwa::exeJump() {
             return;
         }
         if(rs::updateJudgeAndResult(mPlayerJudgeWallCatch)) {
-            mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->_60,
-                                        -mPlayerJudgeWallCatch->_6C, mPlayerJudgeWallCatch->_78);
+            mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->mPosition,
+                                        -mPlayerJudgeWallCatch->mCollidedWallNormal, mPlayerJudgeWallCatch->mNormalAtPos);
             al::setNerve(this, &WallCatch);
             return;
         }
@@ -2254,8 +2254,8 @@ void PlayerActorHakoniwa::exeFall() {
         }
     }
     if(mPlayerStateFallHakoniwa->isValidWallCatch() && rs::updateJudgeAndResult(mPlayerJudgeWallCatch)) {
-        mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->_60,
-                                    -mPlayerJudgeWallCatch->_6C, mPlayerJudgeWallCatch->_78);
+        mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->mPosition,
+                                    -mPlayerJudgeWallCatch->mCollidedWallNormal, mPlayerJudgeWallCatch->mNormalAtPos);
         al::setNerve(this, &WallCatch);
         return;
     }

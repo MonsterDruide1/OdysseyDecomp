@@ -69,6 +69,9 @@ bool isOnGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*coll
 bool isCollidedGroundRunAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,PlayerConst const*pConst) {
   return isCollidedGround(collision) && sub_7100569734(actor, collision, pConst, isJustLand(collision));
 }
+bool isOnGroundLessAngle(al::LiveActor const*actor,IUsePlayerCollision const*collision,float val) {
+  return isOnGround(actor, collision) && al::isFloorPolygonCos(collision->getPlayerCollider()->mCollidedGroundNormal, al::getGravity(actor), sead::Mathf::cos(sead::Mathf::deg2rad(val)));
+}
 
 void cutVerticalVelocityGroundNormal(al::LiveActor* actor, const IUsePlayerCollision* collision) {
   if(!rs::isCollidedGround(collision)) return;
@@ -99,6 +102,10 @@ const sead::Vector3f& getCollidedGroundNormal(const IUsePlayerCollision* collisi
 
 const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision* collision) {
     return collision->getPlayerCollider()->mCollidedGroundPos;
+}
+
+const sead::Vector3f& getCollidedWallPos(const IUsePlayerCollision* collision) {
+    return collision->getPlayerCollider()->info2->mCollisionHitPos;
 }
 
 bool isCollidedWall(const IUsePlayerCollision* collision) {
@@ -1484,6 +1491,19 @@ void moveInertiaTurn(sead::Vector3<float> *x0_0,sead::Quat<float> *x1_0,al::Live
 
   al::setVelocity(actor, (v26 * a2) + v41);
   *x0_0 = (v26 * a2);
+}
+
+bool isActionCodeNoWallGrab(IUsePlayerCollision const* a1) {
+  if(a1->getPlayerCollider()->val1 < 0.0f) return false;
+  return al::isWallCode(a1->getPlayerCollider()->info2, "NoAction") ||
+    al::isWallCode(a1->getPlayerCollider()->info2, "NoWallGrab") ||
+    al::isWallCode(a1->getPlayerCollider()->info2, "ReflectStickNoWallGrab") ||
+    al::isWallCode(a1->getPlayerCollider()->info2, "OnlyWallHitDown") ||
+    al::isFloorCode(a1->getPlayerCollider()->info2, "GrabCeil") ||
+    al::isFloorCode(a1->getPlayerCollider()->info2, "Pole") ||
+    al::isFloorCode(a1->getPlayerCollider()->info2, "Needle") ||
+    al::isFloorCode(a1->getPlayerCollider()->info2, "DamageFire");
+
 }
 
 }  // namespace rs

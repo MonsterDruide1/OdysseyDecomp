@@ -75,7 +75,6 @@ public:
     bool isReleaseHackAction() const;
     bool isReleaseHackJump() const;
     bool isEnableDashInput() const;
-    bool isMoveDeepDown() const;
     bool isSpinClockwise() const;
 
     bool isThrowTypeSpiral(const sead::Vector2f&) const;

@@ -200,6 +200,17 @@ bool tryNormalizeOrZero(sead::Vector3f* vec) {
     return true;
 }
 
+bool tryNormalizeOrZero(sead::Vector2f* vec) {
+    f32 squaredLength = vec->squaredLength();
+    if (squaredLength < 0.000001f) {
+        *vec = sead::Vector2f::zero;
+        return false;
+    }
+
+    vec->normalize();
+    return true;
+}
+
 void preScaleMtx(sead::Matrix34f * mtx, const sead::Vector3f & vec) {
     mtx->scaleBases(vec.x, vec.y, vec.z);
 }
@@ -308,6 +319,10 @@ const char* getCollisionCodeName(const al::Triangle& tri, const char* name) {
 
 bool isFloorCode(const al::HitInfo* a1, const char* a2) {
     return al::isEqualString(a2, getCollisionCodeName(a1->mTriangle, "FloorCode"));
+}
+
+bool isWallCode(const al::HitInfo* a1, const char* a2) {
+    return al::isEqualString(a2, getCollisionCodeName(a1->mTriangle, "WallCode"));
 }
 
 void calcArrowAabb(sead::BoundBox3<float>* box, sead::Vector3<float> const& val1, sead::Vector3<float> const& val2) {

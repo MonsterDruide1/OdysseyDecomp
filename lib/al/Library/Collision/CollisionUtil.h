@@ -16,6 +16,7 @@ bool isNearCollideSphereAabb(const sead::Vector3f&, f32, const sead::BoundBox3f&
 bool checkHitSegmentSphere(sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&,float,sead::Vector3<float>*,sead::Vector3<float>*);
 
 bool isFloorCode(const al::HitInfo*, const char*);
+bool isWallCode(const al::HitInfo*, const char*);
 
 }  // namespace al
 

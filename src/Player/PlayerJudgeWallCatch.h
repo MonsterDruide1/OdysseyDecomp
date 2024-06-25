@@ -33,7 +33,7 @@ public:
     void update() override;
     bool judge() const override;
 
-private:
+public:
     const al::LiveActor* mPlayer;
     const PlayerConst* mConst;
     const IUsePlayerCollision* mCollision;

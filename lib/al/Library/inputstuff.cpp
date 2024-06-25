@@ -9,7 +9,4 @@ bool isPadTypeJoySingle(int) {CRASH}
 bool isValidReplayController(u32) {CRASH}
 sead::ControllerBase* getReplayController(u32) {CRASH}
 
-SpinInputAnalyzer::SpinInputAnalyzer() {}
-void SpinInputAnalyzer::update(const sead::Vector2f &) {WARN_UNIMPL; /*ALSO FIX ABOVE IF REQUIRED*/}
-
 }  // namespace al

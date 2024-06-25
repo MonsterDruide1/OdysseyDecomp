@@ -10,7 +10,7 @@ public:
     SpinInputAnalyzer();
     void update(const sead::Vector2f& controllerInput);
 
-private:
+public:
     sead::Buffer<f32> mChangeHistory;
     sead::Buffer<sead::Vector2f> mInputHistory;
     s32 mNumUsableEntries = 0;

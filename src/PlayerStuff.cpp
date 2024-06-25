@@ -39,6 +39,10 @@ const al::CollisionParts* rs::getCollidedGroundCollisionParts(IUsePlayerCollisio
     return collider->getPlayerCollider()->info1->mTriangle.mCollisionParts;
 }
 
+const al::CollisionParts* rs::getCollidedWallCollisionParts(IUsePlayerCollision const* collider) {
+    return collider->getPlayerCollider()->info2->mTriangle.mCollisionParts;
+}
+
 
 const sead::Vector3f& rs::getCollidedCeilingNormal(IUsePlayerCollision const* collider) {
     return collider->getPlayerCollider()->info3->mTriangle.getFaceNormal();
