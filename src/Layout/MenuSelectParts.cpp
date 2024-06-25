@@ -31,14 +31,14 @@ NERVES_MAKE_NOSTRUCT(MenuSelectParts, Hide, Appear, DecideEnd);
 NERVES_MAKE_STRUCT(MenuSelectParts, Select, DecideParts, SelectSecond, DecideInterval);
 }  // namespace
 
-const int dword_71018AF55C[5] = {0, 1, 2, 3, 5};
-const int dword_71018AF570[8] = {0, 1, 3, 4, 5, 0, 0, 0};
+const int mainMenuParts[5] = {0, 1, 2, 3, 5};
+const int pauseMenuParts[8] = {0, 1, 3, 4, 5, 0, 0, 0};
 
-const int* getArray(bool a1, s32 selection) {
-    return a1 ? dword_71018AF570 : dword_71018AF55C;
+const int* getArray(bool isPauseMenu, s32 selection) {
+    return isPauseMenu ? pauseMenuParts : mainMenuParts;
 }
 
-void helper(al::LayoutActor* cursorActor, al::LayoutActor* actor) {
+void setCursorPaneTrans(al::LayoutActor* cursorActor, al::LayoutActor* actor) {
     sead::Vector2f cursorTrans = {0.0f, 0.0f};
     al::calcPaneTrans(&cursorTrans, actor, "Cursor");
     al::setLocalTrans(cursorActor, cursorTrans);
@@ -48,7 +48,7 @@ MenuSelectParts::MenuSelectParts(const char* name, al::LayoutActor* layoutActor,
                                  al::LiveActor* marioActor, const al::LayoutInitInfo& info,
                                  s32 menuItemCount)
     : al::NerveExecutor(name), mLayoutActor(layoutActor), mMax(menuItemCount),
-      mMarioActor(marioActor), field_58(false) {
+      mMarioActor(marioActor), mIsMainMenu(false) {
     al::LiveActor* subActor = al::getSubActor(marioActor, "頭");
     mCapActor = al::getSubActor(subActor, "メニュー用キャップ目");
     mKeyRepeatCtrl = new al::KeyRepeatCtrl();
@@ -72,7 +72,7 @@ void MenuSelectParts::update() {
 }
 
 void MenuSelectParts::appear(s32 menuItemAmount) {
-    field_58 = false;
+    mIsMainMenu = false;
     mCursorItemIndex = 0;
     field_38 = false;
 
@@ -172,7 +172,7 @@ bool MenuSelectParts::isSelectNewGame() const {
 }
 
 s32 MenuSelectParts::calcPartsIndex(s32 selection) const {
-    bool a = !field_58;
+    bool a = !mIsMainMenu;
     return getArray(a, selection)[selection];
 }
 
@@ -180,7 +180,7 @@ void MenuSelectParts::exeHide() {}
 
 void MenuSelectParts::exeAppear() {
     if (al::isFirstStep(this)) {
-        helper(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
+        setCursorPaneTrans(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
         al::startAction(mCursorActor, "Appear", nullptr);
         startActionMarioSelectIndex();
         for (s32 i = 0; i < mMenuItemAmount; i++) {
@@ -189,7 +189,7 @@ void MenuSelectParts::exeAppear() {
             al::startAction(mLayoutArray[calcPartsIndex(i)], "Wait", nullptr);
         }
     }
-    helper(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
+    setCursorPaneTrans(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
 
     if (al::isActionEnd(mCursorActor, nullptr))
         al::setNerve(this, &NrvMenuSelectParts.Select);
@@ -242,18 +242,18 @@ void MenuSelectParts::exeSelect() {
         startActionMarioSelectIndex();
     }
     if (rs::isTriggerUiCancel(mLayoutActor) || rs::isTriggerUiPause(mLayoutActor)) {
-        if (field_58)
+        if (mIsMainMenu)
             return;
-        al::startAction(mLayoutArray[dword_71018AF570[mCursorItemIndex]], "Wait", nullptr);
+        al::startAction(mLayoutArray[pauseMenuParts[mCursorItemIndex]], "Wait", nullptr);
         startActionMario(mMarioActor, "PauseMenuContinue");
         if (mCursorItemIndex != field_38)
             mCursorItemIndex = field_38;
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
-        helper(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
+        setCursorPaneTrans(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
         al::startHitReaction(mLayoutActor, "キャンセル", nullptr);
         al::setNerve(this, &NrvMenuSelectParts.DecideParts);
     } else {
-        helper(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
+        setCursorPaneTrans(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
         if (rs::isTriggerUiDecide(mLayoutActor)) {
             al::startHitReaction(mLayoutActor, "決定", nullptr);
             al::setNerve(this, &NrvMenuSelectParts.DecideParts);

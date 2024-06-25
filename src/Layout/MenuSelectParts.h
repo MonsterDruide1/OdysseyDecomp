@@ -58,5 +58,5 @@ private:
     al::LiveActor* mMarioActor = nullptr;
     al::LiveActor* mCapActor = nullptr;
     al::KeyRepeatCtrl* mKeyRepeatCtrl = nullptr;
-    bool field_58;
+    bool mIsMainMenu;
 };
