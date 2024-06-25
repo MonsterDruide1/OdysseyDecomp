@@ -118,7 +118,7 @@ private:
 };
 
 void isExistSubActorKeeper(const LiveActor*);
-LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
+LiveActor* getSubActor(const LiveActor*, const char*);
 void tryGetSubActor(const LiveActor*, const char*);
 void getSubActor(const LiveActor*, s32);
 void getSubActorNum(const LiveActor*);
