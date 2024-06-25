@@ -123,7 +123,12 @@ void PlayerStateRunHakoniwa2D3D::exeRun3D() {
     }
 }
 void PlayerStateRunHakoniwa2D3D::exeGroundSpin3D() {
-    CRASH
+    if(al::updateNerveState(this)) {
+        if(mInput->isMove())
+            al::setNerve(this, &Run3D);
+        else
+            kill();
+    }
 }
 void PlayerStateRunHakoniwa2D3D::exeRun2D() {
     CRASH
