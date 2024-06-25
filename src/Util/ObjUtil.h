@@ -13,4 +13,12 @@ bool findWallCatchPos(const al::CollisionParts**, sead::Vector3f*, sead::Vector3
                       const al::LiveActor*, const sead::Vector3f&, const sead::Vector3f&,
                       const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
 
-}
+bool findGrabCeilPosNoWallHit(const al::CollisionParts**, sead::Vector3f*, sead::Vector3f*,
+                              sead::Vector3f*, const al::LiveActor*, const sead::Vector3f&,
+                              const sead::Vector3f&, f32, f32, f32);
+
+bool findGrabCeilPosWallHit(const al::CollisionParts**, sead::Vector3f*, sead::Vector3f*,
+                            sead::Vector3f*, const al::LiveActor*, const sead::Vector3f&,
+                            const sead::Vector3f&, f32, f32, f32);
+
+}  // namespace rs
