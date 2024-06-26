@@ -1,7 +1,7 @@
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Library/LiveActor/ActorDrawFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
