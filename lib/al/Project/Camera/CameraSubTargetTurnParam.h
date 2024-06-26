@@ -18,7 +18,7 @@ private:
     f32 mTurnBrakeStartDistance = -1.0f;
     f32 mTurnStopStartDistance = -1.0f;
     f32 mTurnStopEndDistance = -1.0f;
-    s32 mUkn = 30;  // TODO: Find what is this and add a proper name.
+    s32 _18 = 30;
     bool mIsTurnV = false;
     bool mIsResetAfterTurnV = false;
     f32 mMinTurnDegreeV = 0.0f;
