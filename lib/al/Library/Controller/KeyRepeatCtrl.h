@@ -7,9 +7,9 @@ class KeyRepeatCtrl {
 public:
     KeyRepeatCtrl();
 
-    void init(s32, s32);
+    void init(s32 initialMaxWait, s32 maxWait);
     void reset();
-    void update(bool, bool);
+    void update(bool up, bool down);
     bool isDown() const;
     bool isUp() const;
 
