@@ -727,15 +727,7 @@ private:
     void* size[0x48/8];
 };
 
-class PlayerStateWallAir : public al::NerveStateBase {
-public:
-    PlayerStateWallAir(al::LiveActor *,PlayerConst const*,PlayerInput const*,PlayerTrigger const*,IUsePlayerCollision *,IJudge *,PlayerJudgePreInputJump *,PlayerAnimator *,PlayerWallActionHistory *,PlayerActionDiveInWater *);
-    void calcSnapMoveCutDir(sead::Vector3<float> *);
-    bool isAir() {CRASH}
-    void startSlideSpinAttack() {CRASH}
-private:
-    void* size[0x58/8];
-};
+#include "Player/PlayerStateWallAir.h"
 
 class PlayerJointParamGrab;
 class PlayerStateWallCatch : public al::NerveStateBase {

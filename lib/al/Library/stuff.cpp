@@ -1257,6 +1257,10 @@ void separateVelocityHV(sead::Vector3f* h, sead::Vector3f* v, al::LiveActor* act
   separateVectorHV(h, v, actor->getPoseKeeper()->getVelocity(), al::getGravity(actor));
 }
 
+void separateVelocityDirHV(sead::Vector3f* a1, sead::Vector3f* a2, const LiveActor* actor, const sead::Vector3f& a3) {
+  return al::separateVectorHV(a1, a2, a3, actor->mPoseKeeper->getVelocity());
+}
+
 bool isFloorPolygonCos(const sead::Vector3f &a1, const sead::Vector3f& a2, float a3)
 {
   float v7; // s0
@@ -2794,4 +2798,122 @@ void al::makeMtxSRT(sead::Matrix34<float>* mtx, al::LiveActor const* actor) {
 
 const al::CollisionParts* alCollisionUtil::getCollisionHitParts(const al::HitInfo* a1) {
   return a1->mTriangle.mCollisionParts;
+}
+
+bool al::tryCalcAngleOnPlaneDegree(
+        float *a1,
+        const sead::Vector3f& a2,
+        const sead::Vector3f& a3,
+        const sead::Vector3f& a4)
+{
+  float x; // s0
+  float y; // s1
+  float z; // s2
+  bool result; // w0
+  float v10; // s3
+  float v11; // s4
+  float v12; // s5
+  float v13; // s6
+  float v14; // s7
+  float v15; // s16
+  float v16; // s17
+  float v17; // s18
+  float v18; // s17
+  float v19; // s17
+  float v20; // s18
+  float v21; // s17
+  float v22; // s18
+  float v23; // s18
+  float v24; // s16
+  float v25; // s0
+  float v26; // s1
+  float v27; // s2
+  float v28; // s16
+  float v29; // s3
+  float v30; // s4
+  float v31; // s5
+  float v32; // s10
+  float v33; // s9
+  float v34; // s11
+  float v35; // s0
+
+  x = a2.x;
+  y = a2.y;
+  z = a2.z;
+  if ( (float)((float)((float)(x * x) + (float)(y * y)) + (float)(z * z)) < 0.000001 )
+    return 0;
+
+  v10 = a3.x;
+  v11 = a3.y;
+  v12 = a3.z;
+  if ( (float)((float)((float)(v10 * v10) + (float)(v11 * v11)) + (float)(v12 * v12)) < 0.000001 )
+    return 0;
+
+  v14 = a4.y;
+  v13 = a4.z;
+  v15 = (float)(y * v13) - (float)(z * v14);
+  v16 = -v15;
+  if ( v15 > 0.0 )
+    v16 = (float)(y * v13) - (float)(z * v14);
+
+  if ( v16 <= 0.01 )
+  {
+    v17 = (float)(z * a4.x) - (float)(x * v13);
+    if ( v17 <= 0.0 )
+      v17 = -v17;
+
+    if ( v17 <= 0.01 )
+    {
+      v18 = (float)(x * v14) - (float)(y * a4.x);
+      if ( v18 <= 0.0 )
+        v18 = -v18;
+
+      if ( v18 <= 0.01 )
+        return 0;
+    }
+  }
+
+  v19 = (float)(v11 * v13) - (float)(v12 * v14);
+  v20 = -v19;
+  if ( v19 > 0.0 )
+    v20 = (float)(v11 * v13) - (float)(v12 * v14);
+
+  v21 = a4.x;
+  if ( v20 <= 0.01 )
+  {
+    v22 = (float)(v12 * v21) - (float)(v13 * v10);
+    if ( v22 <= 0.0 )
+      v22 = -v22;
+
+    if ( v22 <= 0.01 )
+    {
+      v23 = (float)(v14 * v10) - (float)(v11 * v21);
+      if ( v23 <= 0.0 )
+        v23 = -v23;
+
+      if ( v23 <= 0.01 )
+        return 0;
+    }
+  }
+
+  v24 = (float)((float)(v21 * x) + (float)(v14 * y)) + (float)(v13 * z);
+  v25 = x - (float)(v21 * v24);
+  v26 = y - (float)(v14 * v24);
+  v27 = z - (float)(v13 * v24);
+  v28 = (float)((float)(v21 * v10) + (float)(v14 * v11)) + (float)(v13 * v12);
+  v29 = v10 - (float)(v21 * v28);
+  v30 = v11 - (float)(v14 * v28);
+  v31 = v12 - (float)(v13 * v28);
+  v32 = (float)(v27 * v29) - (float)(v25 * v31);
+  v33 = (float)(v26 * v31) - (float)(v27 * v30);
+  v34 = (float)(v25 * v30) - (float)(v26 * v29);
+  v35 = sead::Mathf::atan2(
+          sqrtf((float)(v34 * v34) + (float)((float)(v33 * v33) + (float)(v32 * v32))),
+          (float)(v27 * v31) + (float)((float)(v25 * v29) + (float)(v26 * v30)));
+  if ( (float)((float)(a4.z * v34) + (float)((float)(a4.x * v33) + (float)(a4.y * v32))) < 0.0 )
+    v35 = -v35;
+
+  result = 1;
+  *a1 = v35 * 57.296;
+  return result;
 }

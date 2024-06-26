@@ -1,9 +1,12 @@
 #pragma once
 
-#include "CUSTOM/PlayerAnimator.h"
 #include "Library/Nerve/NerveStateBase.h"
-#include "PlayerUtil.h"
-#include "Stuff.h"
+#include "math/seadVector.h"
+
+class PlayerConst;
+class PlayerInput;
+class IUsePlayerCollision;
+class PlayerAnimator;
 
 class PlayerStateNormalWallSlide : public al::ActorStateBase {
 public:
@@ -15,7 +18,7 @@ public:
     bool followNormal();
     void exeSlide();
 
-private:
+public:
     const PlayerConst* mConst;
     const PlayerInput* mInput;
     IUsePlayerCollision* mCollision;

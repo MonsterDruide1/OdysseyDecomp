@@ -1,9 +1,15 @@
 #pragma once
 
-#include "CUSTOM/PlayerAnimator.h"
 #include "Library/Nerve/NerveStateBase.h"
-#include "PlayerUtil.h"
-#include "Stuff.h"
+#include "math/seadVector.h"
+
+class PlayerConst;
+class PlayerInput;
+class IUsePlayerCollision;
+class PlayerTrigger;
+class PlayerAnimator;
+class PlayerActionDiveInWater;
+class PlayerActionAirMoveControl;
 
 class PlayerStateNormalWallJump : public al::ActorStateBase {
 public:
@@ -15,7 +21,7 @@ public:
     void appear() override;
     void exeJump();
 
-private:
+public:
     const PlayerConst* mConst;
     const PlayerInput* mInput;
     const IUsePlayerCollision* mCollider;

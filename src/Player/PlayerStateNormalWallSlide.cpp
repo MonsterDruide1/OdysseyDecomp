@@ -1,5 +1,6 @@
 
 #include "Player/PlayerStateNormalWallSlide.h"
+#include "CUSTOM/PlayerAnimator.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
