@@ -605,6 +605,58 @@ LABEL_49:
   return 1LL;
 }
 
+float calcAngleOnPlaneDegree(
+        const sead::Vector3f& a1,
+        const sead::Vector3f& a2,
+        const sead::Vector3f& a3)
+{
+  float y; // s1
+  float v5; // s3
+  float z; // s5
+  float v7; // s6
+  float v8; // s4
+  float v9; // s16
+  float v10; // s3
+  float v11; // s4
+  float v12; // s2
+  float v13; // s7
+  float v14; // s17
+  float v15; // s16
+  float v16; // s0
+  float v17; // s1
+  float v18; // s5
+  float v19; // s10
+  float v20; // s9
+  float v21; // s11
+  float v22; // s0
+
+  y = a3.y;
+  v5 = a1.y;
+  z = a3.z;
+  v7 = a1.z;
+  v8 = (float)((float)(a3.x * a1.x) + (float)(y * v5)) + (float)(z * v7);
+  v9 = a3.x * v8;
+  v10 = v5 - (float)(y * v8);
+  v11 = v7 - (float)(z * v8);
+  v12 = a1.x - v9;
+  v13 = a2.y;
+  v14 = a2.z;
+  v15 = (float)((float)(a3.x * a2.x) + (float)(y * v13)) + (float)(z * v14);
+  v16 = a2.x - (float)(a3.x * v15);
+  v17 = v13 - (float)(y * v15);
+  v18 = v14 - (float)(z * v15);
+  v19 = (float)(v11 * v16) - (float)(v12 * v18);
+  v20 = (float)(v10 * v18) - (float)(v11 * v17);
+  v21 = (float)(v12 * v17) - (float)(v10 * v16);
+  v22 = sead::Mathf::atan2(
+          sqrtf((float)(v21 * v21) + (float)((float)(v20 * v20) + (float)(v19 * v19))),
+          (float)(v11 * v18) + (float)((float)(v12 * v16) + (float)(v10 * v17)));
+  if ( (float)((float)(a3.z * v21) + (float)((float)(a3.x * v20) + (float)(a3.y * v19))) < 0.0 )
+    v22 = -v22;
+
+  return v22 * 57.296;
+}
+
 void updatePoseMtx(LiveActor *actor, const sead::Matrix34f * mtx) {
     actor->mPoseKeeper->updatePoseMtx(mtx);
 }
@@ -1425,10 +1477,6 @@ bool alCollisionUtil::isFarAway(al::CollisionParts const& a1, const sead::Vector
     return v3 < v7 || (float)((float)((float)(v4 * v4) + (float)(v6 * v6)) + (float)(v7 * v7)) > (float)(v3 * v3);
 }
 
-bool alCollisionUtil::isCollisionMoving(const al::HitInfo* info) {
-  return false;
-  //return info->mTriangle.isHostMoved();
-}
 const sead::Vector3f& alCollisionUtil::getCollisionHitPos(const al::HitInfo* info) {
   return info->mCollisionHitPos;
 }
@@ -1437,6 +1485,45 @@ const sead::Vector3f& alCollisionUtil::getCollisionHitNormal(const al::HitInfo* 
 }
 al::ArrowHitInfo* alCollisionUtil::getStrikeArrowInfo(al::IUseCollision const* collider, unsigned int index) {
   return collider->getCollisionDirector()->getStrikeArrowInfo(index);
+}
+
+bool alCollisionUtil::getLastPolyOnArrow(const al::IUseCollision * collider, const al::ArrowHitInfo ** info, const sead::Vector3f & a3, const sead::Vector3f & a4, const al::CollisionPartsFilterBase * collFilter, const al::TriangleFilterBase * triFilter) {
+  al::CollisionDirector* director = collider->getCollisionDirector();
+  director->setPartsFilter(collFilter);
+  director->setTriFilter(triFilter);
+  s32 hitNum = director->checkStrikeArrow(a3, a4);
+  if(!hitNum)
+    return false;
+
+  int v16 = -1;
+  if(triFilter) {
+    f32 v14 = 0.0;
+
+    for(s32 i = 0; i < hitNum; i++) {
+      al::ArrowHitInfo* hitInfo = director->getStrikeArrowInfo(i);
+      if(!triFilter->isInvalidTriangle(hitInfo->mTriangle) && v14 < hitInfo->unk) {
+        v14 = hitInfo->unk;
+        v16 = i;
+      }
+    }
+  } else {
+    f32 v14 = 0.0;
+
+    for(s32 i = 0; i < hitNum; i++) {
+      al::ArrowHitInfo* hitInfo = director->getStrikeArrowInfo(i);
+      if(v14 < hitInfo->unk) {
+        v14 = hitInfo->unk;
+        v16 = i;
+      }
+    }
+  }
+
+  if(v16 == -1)
+    return false;
+
+  if(info)
+    *info = director->getStrikeArrowInfo(v16);
+  return true;
 }
 
 bool al::isNearDirection(const sead::Vector3f& a1, const sead::Vector3f& a2, float a3)

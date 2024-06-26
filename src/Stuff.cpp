@@ -1525,6 +1525,13 @@ bool isActionCodeNoWallPopUp(al::HitInfo const* a1) {
     al::isFloorCode(a1->mTriangle, "DamageFire") ||
     al::isFloorCode(a1->mTriangle, "Poison");
 }
+bool isActionCodeNoWallKeepWall(IUsePlayerCollision const* a1) {
+  if(a1->getPlayerCollider()->val1 < 0.0f) return false;
+  return al::isWallCode(a1->getPlayerCollider()->info2, "NoAction") ||
+    al::isWallCode(a1->getPlayerCollider()->info2, "OnlyWallHitDown") ||
+    al::isFloorCode(a1->getPlayerCollider()->info2, "GrabCeil") ||
+    al::isFloorCode(a1->getPlayerCollider()->info2, "Pole");
+}
 
 bool calcExistCollisionBorderWallCatch(al::IUseCollision const* a1,sead::Vector3<float> const& x1_0,sead::Vector3<float> const& x2_0,sead::Vector3<float> const& x3_0) {
   float y; // s1
@@ -1856,6 +1863,10 @@ bool findWallCatchPos(al::CollisionParts const** parts, sead::Vector3<float>* a2
     return sub_710055F974(parts, a2, a3, a4, a5, a6, a7, 1, a8, a9, a10, a11, a12, a13, a14, 1, 0);
   }
   return false;
+}
+
+bool isAboveGround(const IUsePlayerHeightCheck* a1) {
+  return a1->isAboveGround();
 }
 
 

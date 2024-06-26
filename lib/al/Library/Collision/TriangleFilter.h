@@ -31,4 +31,15 @@ public:
     const sead::Vector3f* _8;
 };
 
+class TriangleFilterWallOnly : public al::TriangleFilterBase {
+public:
+    TriangleFilterWallOnly(const sead::Vector3f& down) : mDown(down) {}
+    bool isInvalidTriangle(const al::Triangle& triangle) const override {
+        return !al::isWallPolygon(triangle.getFaceNormal(), mDown);
+    }
+
+private:
+    const sead::Vector3f& mDown;
+};
+
 }
