@@ -1,7 +1,5 @@
 #pragma once
 
-#include <container/seadPtrArray.h>
-
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
@@ -13,6 +11,15 @@ class KeyRepeatCtrl;
 
 class MenuSelectParts : public al::NerveExecutor {
 public:
+    enum Selection : s32 {
+        Continue = 0,
+        SeparatePlay = 1,
+        NewGame = 2,
+        Help = 3,
+        Save = 4,
+        Setting = 5
+    };
+
     MenuSelectParts(const char* name, al::LayoutActor* layoutActor, al::LiveActor* marioActor,
                     const al::LayoutInitInfo& info, s32 menuItemCount);
 
@@ -52,10 +59,9 @@ private:
     s32 mMenuItemAmount = 0;
     s32 mCursorItemIndex = 0;
     s32 mMax;
-    s32 mCount;
     al::LayoutActor** mLayoutArray = nullptr;
     al::LayoutActor* mCursorActor = nullptr;
-    s32 field_38 = 0;
+    s32 mDefaultIndex = 0;
     al::LiveActor* mMarioActor = nullptr;
     al::LiveActor* mCapActor = nullptr;
     al::KeyRepeatCtrl* mKeyRepeatCtrl = nullptr;

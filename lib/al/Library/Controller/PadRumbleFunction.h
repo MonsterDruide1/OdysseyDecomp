@@ -8,27 +8,24 @@ class LayoutActor;
 class PadRumbleDirector;
 
 struct PadRumbleParam {
-    PadRumbleParam(f32 _0, f32 _4, f32 _8, f32 _c, f32 _10, f32 _14, s32 _18, bool _1C, bool _1D) {
-        field_0 = _0;
-        field_4 = _4;
-        field_8 = _8;
-        field_c = _c;
-        field_10 = _10;
-        field_14 = _14;
-        field_18 = _18;
-        field_1C = _1C;
-        field_1D = _1D;
-    }
+    PadRumbleParam(f32 rumbleNear = 0.0f, f32 rumbleFar = 3000.0f, f32 rumbleVolume = 1.0f,
+                   f32 rumblePitchVol = 1.0f, f32 rumblePitchLeft = 1.0f,
+                   f32 rumblePitchRight = 1.0f, s32 _18 = 0, bool isUseController = false,
+                   bool _1D = false)
+        : mRumbleNear(rumbleNear), mRumbleFar(rumbleFar), mRumbleVolume(rumbleVolume),
+          mRumblePitchVol(rumblePitchVol), mRumblePitchLeft(rumblePitchLeft),
+          mRumblePitchRight(rumblePitchRight), field_18(_18), mIsUseController(isUseController),
+          field_1D(_1D) {}
     void setVolumeByBalance(f32);
 
-    f32 field_0;
-    f32 field_4;
-    f32 field_8;
-    f32 field_c;
-    f32 field_10;
-    f32 field_14;
+    f32 mRumbleNear;
+    f32 mRumbleFar;
+    f32 mRumbleVolume;
+    f32 mRumblePitchVol;
+    f32 mRumblePitchLeft;
+    f32 mRumblePitchRight;
     s32 field_18;
-    bool field_1C;
+    bool mIsUseController;
     bool field_1D;
 };
 
@@ -67,8 +64,8 @@ void startPadRumbleLoopNo3DWithParam(const al::LiveActor*, const char*, const se
                                      const al::PadRumbleParam&, s32);
 void stopPadRumbleLoop(al::PadRumbleDirector*, const char*, const sead::Vector3f*, s32);
 void stopPadRumbleLoop(const al::LiveActor*, const char*, const sead::Vector3f*, s32);
-void checkIsAlivePadRumbleLoop(al::PadRumbleDirector*, const char*, const sead::Vector3f*, s32);
-void checkIsAlivePadRumbleLoop(const al::LiveActor*, const char*, const sead::Vector3f*, s32);
+bool checkIsAlivePadRumbleLoop(al::PadRumbleDirector*, const char*, const sead::Vector3f*, s32);
+bool checkIsAlivePadRumbleLoop(const al::LiveActor*, const char*, const sead::Vector3f*, s32);
 void startPadRumbleLoopControlable(const al::LiveActor*, const char*, const sead::Vector3f*, s32);
 void changePadRumbleLoopVolmue(const al::LiveActor*, const char*, const sead::Vector3f*, f32, f32,
                                s32);

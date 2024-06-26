@@ -32,8 +32,15 @@ NERVES_MAKE_NOSTRUCT(MenuSelectParts, Hide, Appear, DecideEnd);
 NERVES_MAKE_STRUCT(MenuSelectParts, Select, DecideParts, SelectSecond, DecideInterval);
 }  // namespace
 
-const s32 mainMenuParts[5] = {0, 1, 2, 3, 5};
-const s32 pauseMenuParts[8] = {0, 1, 3, 4, 5, 0, 0, 0};
+const s32 mainMenuParts[5] = {MenuSelectParts::Selection::Continue,
+                              MenuSelectParts::Selection::SeparatePlay,
+                              MenuSelectParts::Selection::NewGame, MenuSelectParts::Selection::Help,
+                              MenuSelectParts::Selection::Setting};
+
+const s32 pauseMenuParts[5] = {MenuSelectParts::Selection::Continue,
+                               MenuSelectParts::Selection::SeparatePlay,
+                               MenuSelectParts::Selection::Help, MenuSelectParts::Selection::Save,
+                               MenuSelectParts::Selection::Setting};
 
 const s32* getPartsArray(bool isPauseMenu, s32 selection) {
     return isPauseMenu ? pauseMenuParts : mainMenuParts;
@@ -79,7 +86,7 @@ void MenuSelectParts::update() {
 void MenuSelectParts::appear(s32 menuItemAmount) {
     mIsMainMenu = false;
     mCursorItemIndex = 0;
-    field_38 = 0;
+    mDefaultIndex = 0;
     mMenuItemAmount = menuItemAmount;
 
     for (s32 i = 0; i < mMenuItemAmount; i++) {
@@ -123,7 +130,7 @@ bool MenuSelectParts::isDecideEnd() const {
 }
 
 bool MenuSelectParts::isSelectContinue() const {
-    return calcPartsIndex(mCursorItemIndex) == 0;
+    return calcPartsIndex(mCursorItemIndex) == Selection::Continue;
 }
 
 bool MenuSelectParts::isDecideSetting() const {
@@ -133,7 +140,7 @@ bool MenuSelectParts::isDecideSetting() const {
 }
 
 bool MenuSelectParts::isSelectSetting() const {
-    return calcPartsIndex(mCursorItemIndex) == 5;
+    return calcPartsIndex(mCursorItemIndex) == Selection::Setting;
 }
 
 bool MenuSelectParts::isDecideSave() const {
@@ -143,7 +150,7 @@ bool MenuSelectParts::isDecideSave() const {
 }
 
 bool MenuSelectParts::isSelectSave() const {
-    return calcPartsIndex(mCursorItemIndex) == 4;
+    return calcPartsIndex(mCursorItemIndex) == Selection::Save;
 }
 
 bool MenuSelectParts::isDecideSeparatePlay() const {
@@ -153,7 +160,7 @@ bool MenuSelectParts::isDecideSeparatePlay() const {
 }
 
 bool MenuSelectParts::isSelectSeparatePlay() const {
-    return calcPartsIndex(mCursorItemIndex) == 1;
+    return calcPartsIndex(mCursorItemIndex) == Selection::SeparatePlay;
 }
 
 bool MenuSelectParts::isDecideHelp() const {
@@ -163,7 +170,7 @@ bool MenuSelectParts::isDecideHelp() const {
 }
 
 bool MenuSelectParts::isSelectHelp() const {
-    return calcPartsIndex(mCursorItemIndex) == 3;
+    return calcPartsIndex(mCursorItemIndex) == Selection::Help;
 }
 
 bool MenuSelectParts::isDecideNewGame() const {
@@ -173,7 +180,7 @@ bool MenuSelectParts::isDecideNewGame() const {
 }
 
 bool MenuSelectParts::isSelectNewGame() const {
-    return calcPartsIndex(mCursorItemIndex) == 2;
+    return calcPartsIndex(mCursorItemIndex) == Selection::NewGame;
 }
 
 s32 MenuSelectParts::calcPartsIndex(s32 selection) const {
@@ -202,22 +209,22 @@ void MenuSelectParts::exeAppear() {
 
 void MenuSelectParts::startActionMarioSelectIndex() {
     switch (calcPartsIndex(mCursorItemIndex)) {
-    case 0:
+    case Selection::Continue:
         startActionMario(mMarioActor, "PauseMenuContinue");
         break;
-    case 1:
+    case Selection::SeparatePlay:
         startActionMario(mMarioActor, "PauseMenu2Player");
         break;
-    case 2:
+    case Selection::NewGame:
         startActionMario(mMarioActor, "PauseMenuNewGame");
         break;
-    case 3:
+    case Selection::Help:
         startActionMario(mMarioActor, "PauseMenuHelp");
         break;
-    case 4:
+    case Selection::Save:
         startActionMario(mMarioActor, "PauseMenuSave");
         break;
-    case 5:
+    case Selection::Setting:
         startActionMario(mMarioActor, "PauseMenuData");
         break;
     }
@@ -240,11 +247,11 @@ void MenuSelectParts::exeSelect() {
             al::modi(mCursorItemIndex + direction + mMenuItemAmount, mMenuItemAmount);
 
         f32 pitch = ((1.0f - (f32)mCursorItemIndex / (mMenuItemAmount - 1)) * 0.375f) + 1.0f;
-        al::PadRumbleParam param = {0.0f, 3000.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0, 0, 0};
+        al::PadRumbleParam param;
         alPadRumbleFunction::makePadRumbleParamNearFarVolumePitch(&param, 0.0f, 500.0f,
                                                                   pitch * 0.05f, pitch);
 
-        param.field_1C = 1;
+        param.mIsUseController = 1;
         alPadRumbleFunction::startPadRumbleNo3DWithParam(
             alPadRumbleFunction::getPadRumbleDirector(mLayoutActor), "240Hz", param, -1);
 
@@ -257,8 +264,8 @@ void MenuSelectParts::exeSelect() {
             return;
         al::startAction(mLayoutArray[pauseMenuParts[mCursorItemIndex]], "Wait", nullptr);
         startActionMario(mMarioActor, "PauseMenuContinue");
-        if (mCursorItemIndex != field_38)
-            mCursorItemIndex = field_38;
+        if (mCursorItemIndex != mDefaultIndex)
+            mCursorItemIndex = mDefaultIndex;
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
         setCursorPaneTrans(mCursorActor, mLayoutArray[calcPartsIndex(mCursorItemIndex)]);
         al::startHitReaction(mLayoutActor, "キャンセル", nullptr);
@@ -286,7 +293,7 @@ void MenuSelectParts::exeDecideParts() {
     if (al::isFirstStep(this)) {
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Decide", nullptr);
 
-        if (calcPartsIndex(mCursorItemIndex) == 0)
+        if (calcPartsIndex(mCursorItemIndex) == Selection::Continue)
             startActionMario(mMarioActor, "PauseMenuContinueEnd");
         if (isInvalidSelect()) {
             al::setNerve(this, &NrvMenuSelectParts.SelectSecond);
@@ -303,11 +310,10 @@ void MenuSelectParts::exeDecideParts() {
 }
 
 bool MenuSelectParts::isInvalidSelect() const {
-    if (rs::isSceneStatusInvalidSave(mLayoutActor)) {
-        if (calcPartsIndex(mCursorItemIndex) == 4 || calcPartsIndex(mCursorItemIndex) == 5)
-            return true;
-    }
-
+    if (rs::isSceneStatusInvalidSave(mLayoutActor) &&
+        (calcPartsIndex(mCursorItemIndex) == Selection::Save ||
+         calcPartsIndex(mCursorItemIndex) == Selection::Setting))
+        return true;
     return false;
 }
 

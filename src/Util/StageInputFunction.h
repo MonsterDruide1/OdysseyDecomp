@@ -73,6 +73,6 @@ bool tryUpdateGamePadPlayStyleInfo(GamePadPlayStyleInfo*, const al::LayoutActor*
 
 namespace ControllerAppletFunction {
 bool tryReconnectGamePad(al::GamePadSystem*);
-void connectControllerSinglePlay(al::GamePadSystem*);
-void connectControllerSeparatePlay(al::GamePadSystem*);
+bool connectControllerSinglePlay(al::GamePadSystem*);
+bool connectControllerSeparatePlay(al::GamePadSystem*);
 }  // namespace ControllerAppletFunction
