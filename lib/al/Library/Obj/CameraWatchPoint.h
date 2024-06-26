@@ -8,6 +8,7 @@ class CameraSubTargetBase;
 class CameraWatchPoint : public LiveActor {
 public:
     CameraWatchPoint(const char* name);
+
     void init(const ActorInitInfo& info) override;
     void makeActorAlive() override;
     void kill() override;

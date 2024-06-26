@@ -7,7 +7,7 @@ class ActorInitInfo;
 
 class CameraSubTargetTurnParam {
 public:
-    CameraSubTargetTurnParam(){};
+    CameraSubTargetTurnParam() {}
 
     void init(const ActorInitInfo& info);
 
