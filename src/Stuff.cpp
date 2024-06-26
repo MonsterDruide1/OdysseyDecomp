@@ -1874,5 +1874,26 @@ bool isAboveGround(const IUsePlayerHeightCheck* a1) {
   return a1->isAboveGround();
 }
 
+void resetCollisionExpandCheck(IUsePlayerCollision * collision) {
+  PlayerCollider* collider = collision->getPlayerCollider();
+  f32 boundingRadius = 0.0f;
+  collider->calcBoundingRadius(&boundingRadius);
+
+  if(al::isNearZero(boundingRadius, 0.001f)) {
+    collision->getPlayerCollider()->onInvalidate();
+    return;
+  }
+  f32 collisionShapeScale = collider->mCollisionShapeScale;
+  if(al::isNearZero(collisionShapeScale, 0.001f)) {
+    collision->getPlayerCollider()->onInvalidate();
+    return;
+  }
+
+  f32 v5 = sead::Mathf::clampMax(boundingRadius / collisionShapeScale, 20.0f) / (boundingRadius / collisionShapeScale);
+  collider->setCollisionShapeScale(sead::Mathf::clamp(v5, 0.0f, 1.0f));
+  collision->getPlayerCollider()->onInvalidate();
+  collider->setCollisionShapeScale(collisionShapeScale);
+}
+
 
 }  // namespace rs

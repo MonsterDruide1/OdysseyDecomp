@@ -88,4 +88,6 @@ bool calcExistCollisionBorderWallCatch(al::IUseCollision const*,sead::Vector3<fl
 
 void sendMsgPlayerStartWallJump(al::HitSensor*,al::HitSensor*);
 
+void resetCollisionExpandCheck(IUsePlayerCollision *);
+
 }  // namespace rs

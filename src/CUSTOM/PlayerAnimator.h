@@ -568,6 +568,7 @@ public:
 
     bool unk2;
     bool mIsNeedFullFaceAnim = false;
+    bool mIsSubAnimOnlyAir = false;
 };
 
 }
