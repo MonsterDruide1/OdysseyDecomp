@@ -104,6 +104,8 @@ public:
     void calcCapSeparateMoveInput(sead::Vector3<float> *,sead::Vector3<float> const&);
     void calcCapThrowInput(sead::Vector3<float> *,sead::Vector3<float> const&) const;
 
+    void resetAlongWall();
+
 public:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;

@@ -791,6 +791,11 @@ al::HitSensor* tryGetCollidedGroundSensor(IUsePlayerCollision const* collider) {
     return nullptr;
   return collider->getPlayerCollider()->info1->mTriangle.mCollisionParts->mConnectedSensor;
 }
+al::HitSensor* tryGetCollidedWallSensor(IUsePlayerCollision const* collider) {
+  if(collider->getPlayerCollider()->val2 < 0.0f)
+    return nullptr;
+  return collider->getPlayerCollider()->info2->mTriangle.mCollisionParts->mConnectedSensor;
+}
 
 bool calcGroundHeight(float *a1,sead::Vector3<float> *a2,al::IUseCollision const*a3,sead::Vector3<float> const&a4,sead::Vector3<float> const&a5,float a6,float a7) {
   float v8; // s8

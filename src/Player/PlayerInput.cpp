@@ -726,3 +726,8 @@ LABEL_52:
         this->somethingAboutP1 = 0;
     }
 }
+
+void PlayerInput::resetAlongWall() {
+    convergeInUpdateWallAlong = 0;
+    readInWalls = 0.0f;
+}

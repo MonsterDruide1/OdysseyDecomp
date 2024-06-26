@@ -8,6 +8,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
@@ -1969,7 +1970,78 @@ void PlayerActorHakoniwa::exeJump() {
     }
 }
 void PlayerActorHakoniwa::exeCapCatchPop() { CRASH }
-void PlayerActorHakoniwa::exeWallAir() { CRASH }
+void PlayerActorHakoniwa::exeWallAir() {
+    if(al::isFirstStep(this))
+        mPlayerCapActionHistory->clearWallAirLimit();
+
+    tryActionCapReturn();
+    if(al::updateNerveState(this)) {
+        setNerveOnGround();
+        return;
+    }
+
+    if(mPlayerStateWallAir->isAir()) {
+        if(tryChangeNerveFromAir())
+            return;
+    } else {
+        if(tryActionCapSpinAttackImpl(true)) {
+            mPlayerInput->resetAlongWall();
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val0);
+            mPlayerStateWallAir->startSlideSpinAttack();
+            al::setNerve(this, &SpinCap);
+            return;
+        }
+        if(mPlayerStateWallAir) {
+            al::HitSensor* wallSensor = rs::tryGetCollidedWallSensor(mPlayerColliderHakoniwa);
+            if(wallSensor)
+                rs::sendMsgPlayerStartWallJump(wallSensor, mBodyHitSensor);
+        }
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeStartWaterSurfaceRun)) {
+        al::setNerve(this, &Run);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeInWater1)) {
+        if(mPlayerActionDiveInWater->isDiveInWaterAnim())
+            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val9);
+        al::setNerve(this, &Swim);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgePoleClimb)) {
+        mPlayerStatePoleClimb->setup(
+            mPlayerJudgePoleClimb->mCollisionParts, mPlayerJudgePoleClimb->_58,
+            mPlayerJudgePoleClimb->_64, mPlayerJudgePoleClimb->_70,
+            mPlayerJudgePoleClimb->mPoleCodeAngleOffsetCeiling, mPlayerJudgePoleClimb->_7C,
+            mPlayerJudgePoleClimb->mMaterialCodeCeiling);
+        al::setNerve(this, &PoleClimb);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+                                    mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
+        al::setNerve(this, &GrabCeil);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeWallCatch)) {
+        mPlayerStateWallCatch->setup(mPlayerJudgeWallCatch->mCollidedWallPart, mPlayerJudgeWallCatch->mPosition,
+                                    -mPlayerJudgeWallCatch->mCollidedWallNormal, mPlayerJudgeWallCatch->mNormalAtPos);
+        al::setNerve(this, &WallCatch);
+        return;
+    }
+
+    if(rs::updateJudgeAndResult(mPlayerJudgeInvalidateInputFall)) {
+        mPlayerInput->convergedInUpdateToDisableInput = 1;
+        mPlayerInput->mIsDisableInput = true;
+        mPlayerInput->usedInUpdate = false;
+        al::setNerve(this, &Fall);
+        return;
+    }
+}
 void PlayerActorHakoniwa::exeWallCatch() { CRASH }
 void PlayerActorHakoniwa::exeGrabCeil() { CRASH }
 void PlayerActorHakoniwa::exePoleClimb() { CRASH }

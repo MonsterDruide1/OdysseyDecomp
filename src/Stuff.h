@@ -69,6 +69,7 @@ void calcCollidedNormalSum(sead::Vector3<float> *,IUsePlayerCollision const*);
 
 al::CollisionPartsFilterBase* createCollisionPartsFilter2DOnly();
 
+al::HitSensor* tryGetCollidedWallSensor(IUsePlayerCollision const*);
 al::HitSensor* tryGetCollidedGroundSensor(IUsePlayerCollision const*);
 bool calcGroundHeight(float *,sead::Vector3<float> *,al::IUseCollision const*,sead::Vector3<float> const&,sead::Vector3<float> const&,float,float);
 
@@ -84,5 +85,7 @@ bool isOnGroundSlopeSlideEnd(al::LiveActor const*,IUsePlayerCollision const*,Pla
 
 void controlDirectionalVelocity(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3<float> const&,float,float,float,float,float);
 bool calcExistCollisionBorderWallCatch(al::IUseCollision const*,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&);
+
+void sendMsgPlayerStartWallJump(al::HitSensor*,al::HitSensor*);
 
 }  // namespace rs
