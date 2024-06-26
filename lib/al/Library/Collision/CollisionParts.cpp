@@ -1,6 +1,7 @@
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/KCollisionServer.h"
 #include "Library/Collision/KTriangle.h"
+#include "Library/Collision/TriangleFilter.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "container/seadRingBuffer.h"
@@ -99,11 +100,10 @@ s32 CollisionParts::checkStrikeArrow(al::ArrowHitResultBuffer * results,sead::Ve
 
         al::KCHitInfo hit = buffer[i];
         info.mTriangle.fillData(*this, hit.mData, hit.mHeader);
-        if(filter) CRASH
-        //if(filter && !filter->filter(info.mTriangle)) {
-        //    results->popBack();
-        //    continue;
-        //}   
+        if(filter && !filter->isInvalidTriangle(info.mTriangle)) {
+            results->popBack();
+            continue;
+        }   
 
         info.unk = v48 * hit.something;
         info.mCollisionHitPos.setMul(mBaseMtx, (hit.something * v61) + v62);

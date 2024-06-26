@@ -83,5 +83,6 @@ void moveDivingJump(al::LiveActor *,sead::Vector3<float> const&,float,float,floa
 bool isOnGroundSlopeSlideEnd(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*);
 
 void controlDirectionalVelocity(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3<float> const&,float,float,float,float,float);
+bool calcExistCollisionBorderWallCatch(al::IUseCollision const*,sead::Vector3<float> const&,sead::Vector3<float> const&,sead::Vector3<float> const&);
 
 }  // namespace rs

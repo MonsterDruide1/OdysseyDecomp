@@ -51,6 +51,8 @@ void turnRandomVector(sead::Vector3<float> *,sead::Vector3<float> const&,float);
 void limitVectorOppositeDir(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&,float);
 void calcDirSlide(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&);
 
+bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
+
 }  // namespace al
 
 namespace alPadRumbleFunction {

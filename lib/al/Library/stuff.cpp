@@ -5,6 +5,7 @@
 #include "Library/Collision/CollisionUtil.h"
 #include "Library/Collision/IUseCollision.h"
 #include "Library/Collision/KTriangle.h"
+#include "Library/Collision/TriangleFilter.h"
 #include "Library/Controller/JoyPadAccelPoseAnalyzer.h"
 #include "Library/Controller/SpinInputAnalyzer.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
@@ -320,6 +321,9 @@ const char* getCollisionCodeName(const al::Triangle& tri, const char* name) {
 bool isFloorCode(const al::HitInfo* a1, const char* a2) {
     return al::isEqualString(a2, getCollisionCodeName(a1->mTriangle, "FloorCode"));
 }
+bool isFloorCode(const al::Triangle& a1, const char* a2) {
+    return al::isEqualString(a2, getCollisionCodeName(a1, "FloorCode"));
+}
 
 bool isWallCode(const al::HitInfo* a1, const char* a2) {
     return al::isEqualString(a2, getCollisionCodeName(a1->mTriangle, "WallCode"));
@@ -340,6 +344,11 @@ bool isNearZeroOrGreater(f32 value, f32 tolerance) {
     if(value >= 0.0f) return true;
     return sead::Mathf::abs(value) < tolerance;
 
+}
+
+bool isWallPolygon(const sead::Vector3f& a1, const sead::Vector3f& a2) {
+  if(al::isNearZero(a1, 0.001f)) return false;
+  return sead::Mathf::abs(a1.dot(a2)) < 0.34202f;
 }
 
 void registerExecutorUser(IUseExecutor *, ExecuteDirector *, const char *) {
@@ -1586,7 +1595,7 @@ bool alCollisionUtil::getFirstPolyOnArrow(al::IUseCollision const* a1, al::Arrow
   int v15; // w24
   int v16; // w21
   al::CollisionDirector *v17; // x0
-  float *StrikeArrowInfo; // x25
+  al::ArrowHitInfo *StrikeArrowInfo; // x25
   float v19; // s8
   al::CollisionDirector *v20; // x0
   float *v21; // x0
@@ -1603,24 +1612,22 @@ bool alCollisionUtil::getFirstPolyOnArrow(al::IUseCollision const* a1, al::Arrow
 
   if ( a6 )
   {
-    CRASH
-    /*v14 = 1000000.0;
+    v14 = 1000000.0;
     v15 = 0;
     v16 = -1;
     do
     {
       v17 = (al::CollisionDirector *)a1->getCollisionDirector();
-      StrikeArrowInfo = (float *)v17->getStrikeArrowInfo(v15);
-      if ( ((**(__int64 (__fastcall ***)(const al::TriangleFilterBase *, void *))a6)(a6, StrikeArrowInfo) & 1) == 0
-        && StrikeArrowInfo[28] < v14 )
+      StrikeArrowInfo = v17->getStrikeArrowInfo(v15);
+      if ( a6->isInvalidTriangle(StrikeArrowInfo->mTriangle) == 0 && StrikeArrowInfo->unk < v14 )
       {
-        v14 = StrikeArrowInfo[28];
+        v14 = StrikeArrowInfo->unk;
         v16 = v15;
       }
 
       ++v15;
     }
-    while ( v13 != v15 );*/
+    while ( v13 != v15 );
   }
   else
   {
@@ -2696,4 +2703,8 @@ void al::syncCollisionMtx(al::LiveActor* a1, sead::Matrix34<float> const* a2) {
 void al::makeMtxSRT(sead::Matrix34<float>* mtx, al::LiveActor const* actor) {
   actor->mPoseKeeper->calcBaseMtx(mtx);
   al::preScaleMtx(mtx, actor->mPoseKeeper->getScale());
+}
+
+const al::CollisionParts* alCollisionUtil::getCollisionHitParts(const al::HitInfo* a1) {
+  return a1->mTriangle.mCollisionParts;
 }

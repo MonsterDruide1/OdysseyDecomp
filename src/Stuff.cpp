@@ -2,6 +2,7 @@
 
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/TriangleFilter.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
@@ -1503,7 +1504,359 @@ bool isActionCodeNoWallGrab(IUsePlayerCollision const* a1) {
     al::isFloorCode(a1->getPlayerCollider()->info2, "Pole") ||
     al::isFloorCode(a1->getPlayerCollider()->info2, "Needle") ||
     al::isFloorCode(a1->getPlayerCollider()->info2, "DamageFire");
-
 }
+bool isActionCodeNoWallGrab(al::HitInfo const* a1) {
+  return al::isWallCode(a1, "NoAction") ||
+    al::isWallCode(a1, "NoWallGrab") ||
+    al::isWallCode(a1, "ReflectStickNoWallGrab") ||
+    al::isWallCode(a1, "OnlyWallHitDown") ||
+    al::isFloorCode(a1, "GrabCeil") ||
+    al::isFloorCode(a1->mTriangle, "Pole") ||
+    al::isFloorCode(a1->mTriangle, "Needle") ||
+    al::isFloorCode(a1->mTriangle, "DamageFire");
+}
+bool isActionCodeNoWallPopUp(al::HitInfo const* a1) {
+  return al::isWallCode(a1, "NoAction") ||
+    al::isWallCode(a1, "NoWallGrab") ||
+    al::isWallCode(a1, "ReflectStickNoWallGrab") ||
+    al::isWallCode(a1, "OnlyWallHitDown") ||
+    al::isFloorCode(a1, "GrabCeil") ||
+    al::isFloorCode(a1->mTriangle, "Needle") ||
+    al::isFloorCode(a1->mTriangle, "DamageFire") ||
+    al::isFloorCode(a1->mTriangle, "Poison");
+}
+
+bool calcExistCollisionBorderWallCatch(al::IUseCollision const* a1,sead::Vector3<float> const& x1_0,sead::Vector3<float> const& x2_0,sead::Vector3<float> const& x3_0) {
+  float y; // s1
+  float z; // s2
+  float v9; // s4
+  float v10; // s3
+  float v11; // s5
+  float v14; // s1
+  float v15; // s2
+  float v16; // s2
+  float v17; // s1
+  sead::Vector3f v18; // [xsp+0h] [xbp-60h] BYREF
+  sead::Vector3f a4; // [xsp+10h] [xbp-50h] BYREF
+  sead::Vector3f a3; // [xsp+20h] [xbp-40h] BYREF
+  sead::Vector3f a2; // [xsp+30h] [xbp-30h] BYREF
+
+  a2.x = 0.0;
+  a2.y = 0.0;
+  a2.z = 0.0;
+  a3.x = 0.0;
+  a3.y = 0.0;
+  a3.z = 0.0;
+  y = x2_0.y;
+  z = x2_0.z;
+  v9 = x1_0.y - y;
+  v10 = x1_0.x - x2_0.x;
+  v11 = x1_0.z - z;
+  v18.x = x2_0.x + x2_0.x;
+  v18.y = y + y;
+  a4.x = v10;
+  a4.y = v9;
+  a4.z = v11;
+  v18.z = z + z;
+  if ( alCollisionUtil::getHitPosAndNormalOnArrow(a1, &a2, &a3, a4, v18, 0LL, 0LL)
+    && al::isReverseDirection(a3, x2_0, 0.01) )
+  {
+    return 1LL;
+  }
+
+  v14 = x1_0.y - (float)(x2_0.y * 5.0);
+  v15 = x1_0.z - (float)(x2_0.z * 5.0);
+  a4.x = x1_0.x - (float)(x2_0.x * 5.0);
+  a4.y = v14;
+  a4.z = v15;
+  v16 = x3_0.z;
+  v17 = x3_0.y * 65.0;
+  v18.x = x3_0.x * 65.0;
+  v18.y = v17;
+  v18.z = v16 * 65.0;
+  return alCollisionUtil::getHitPosAndNormalOnArrow(a1, &a2, &a3, a4, v18, 0LL, 0LL)
+      && (float)((float)((float)(a3.x * x3_0.x) + (float)(a3.y * x3_0.y)) + (float)(a3.z * x3_0.z)) < -0.70711;
+}
+
+bool sub_710055F974(
+        const al::CollisionParts **x0_0,
+        sead::Vector3f *a2,
+        sead::Vector3f *x2_0,
+        const al::LiveActor *a4,
+        const sead::Vector3f& a5,
+        const sead::Vector3f& a6,
+        const sead::Vector3f& a7,
+        bool a8,
+        float a9,
+        float a10,
+        float a11,
+        float a12,
+        float a13,
+        float a14,
+        float a15,
+        bool a16,
+        bool a17)
+{
+  const sead::Vector3f *Gravity; // x0
+  float v32; // s8
+  const sead::Vector3f *v33; // x22
+  float v34; // s0
+  float v35; // s14
+  float v36; // s1
+  float v37; // s2
+  float v38; // s0
+  float v39; // s4
+  float v40; // s3
+  float v41; // s5
+  const al::IUseCollision *v42; // x24
+  float v43; // s13
+  float v44; // s8
+  float v45; // s9
+  float x; // s0
+  float y; // s1
+  float v48; // s3
+  float v49; // s4
+  float z; // s2
+  float v51; // s5
+  float v52; // s6
+  float v53; // s17
+  float v54; // s5
+  float v55; // s3
+  float v56; // s4
+  float v57; // s8
+  float v58; // s0
+  const sead::Vector3f *Trans; // x0
+  float v60; // s1
+  float v61; // s4
+  float v62; // s6
+  float v63; // s7
+  float v64; // s1
+  float v65; // s10
+  float v66; // s9
+  float v67; // s14
+  float v68; // s15
+  float v69; // s13
+  int v70; // w0
+  int v71; // w25
+  int v72; // w0
+  float v73; // s1
+  float v74; // s2
+  float v75; // s3
+  float v76; // s2
+  float v77; // s0
+  float v78; // s11
+  float v79; // s9
+  float v80; // s10
+  float v83; // [xsp+8h] [xbp-138h]
+  sead::Vector3f v85; // [xsp+10h] [xbp-130h] BYREF
+  const al::ArrowHitInfo *v86; // [xsp+20h] [xbp-120h] BYREF
+  sead::Vector3f a1; // [xsp+28h] [xbp-118h] BYREF
+  sead::Vector3f v88; // [xsp+38h] [xbp-108h] BYREF
+  sead::Vector3f v89; // [xsp+48h] [xbp-F8h] OVERLAPPED BYREF
+  sead::Vector3f v91; // [xsp+58h] [xbp-E8h] BYREF
+  sead::Vector3f v92; // [xsp+68h] [xbp-D8h] BYREF
+  sead::Vector3f a3; // [xsp+78h] [xbp-C8h] BYREF
+  al::HitInfo *v95; // [xsp+98h] [xbp-A8h] BYREF
+  sead::Vector3f v96; // [xsp+A0h] [xbp-A0h] BYREF
+
+  Gravity = &al::getGravity(a4);
+  v32 = -a5.dot(a7);
+  v33 = Gravity;
+  if ( v32 < sead::Mathf::cos(a9 * 0.017453) || !al::isWallPolygon(a7, *v33) )
+    return 0LL;
+
+  v83 = a13;
+  v34 = fmaxf(a11, 3.0);
+  v35 = v34 + fmaxf(a12, 3.0);
+  v36 = a6.x - (float)(v34 * v33->x);
+  v37 = a6.y - (float)(v34 * v33->y);
+  v38 = a6.z - (float)(v34 * v33->z);
+  v39 = a7.y * 5.0;
+  v40 = a7.x * 5.0;
+  v41 = a7.z * 5.0;
+  v95 = 0LL;
+  v42 = a4;
+  al::TriangleFilterGroundOnly v94 = {};
+  v94._8 = v33;
+  v96.x = v36 - v40;
+  v96.y = v37 - v39;
+  v96.z = v38 - v41;
+  a3 = *v33;
+  v43 = v35 * a3.y;
+  v44 = v35 * a3.x;
+  v45 = v35 * a3.z;
+  v89.z = v35 * a3.z;
+  v89.x = v35 * a3.x;
+  v89.y = v35 * a3.y;
+  if ( (alCollisionUtil::getFirstPolyOnArrow(v42, (const al::ArrowHitInfo **)&v95, v96, v89, 0LL, &v94) & 1) == 0 )
+  {
+    x = a6.x;
+    y = a6.y;
+    v48 = a7.x;
+    v49 = a7.y;
+    z = a6.z;
+    v51 = a7.z;
+    v89.x = v44;
+    v89.y = v43;
+    v89.z = v45;
+    v96.x = (float)(x - v44) - (float)(v48 * 2.5);
+    v96.y = (float)(y - v43) - (float)(v49 * 2.5);
+    v96.z = (float)(z - v45) - (float)(v51 * 2.5);
+    if ( (alCollisionUtil::getFirstPolyOnArrow(v42, (const al::ArrowHitInfo **)&v95, v96, v89, 0LL, &v94) & 1) == 0 )
+    {
+      if ( al::isNearZeroOrGreater(a7.dot(*v33), 0.001f) )
+      {
+        return 0LL;
+      }
+
+      al::verticalizeVec(&a3, a7, a3);
+      if ( !al::tryNormalizeOrZero(&a3) )
+      {
+        a3 = *v33;
+        return 0LL;
+      }
+
+      v52 = a7.x * 5.0;
+      v53 = a7.z * 5.0;
+      v54 = a6.z - (float)(v35 * a3.z);
+      v55 = a6.x - (float)(v35 * a3.x);
+      v56 = (float)(a6.y - (float)(v35 * a3.y)) - (float)(a7.y * 5.0);
+      v89.z = v35 * a3.z;
+      v96.x = v55 - v52;
+      v96.y = v56;
+      v96.z = v54 - v53;
+      v89.x = v35 * a3.x;
+      v89.y = v35 * a3.y;
+      if ( (alCollisionUtil::getFirstPolyOnArrow(v42, (const al::ArrowHitInfo **)&v95, v96, v89, 0LL, &v94) & 1) == 0 )
+        return 0LL;
+    }
+  }
+
+  if ( a17 )
+  {
+    if ( !rs::isActionCodeNoWallPopUp(v95) )
+      goto LABEL_15;
+
+    return 0LL;
+  }
+
+  if ( rs::isActionCodeNoWallGrab(v95) )
+    return 0LL;
+
+LABEL_15:
+  *x0_0 = alCollisionUtil::getCollisionHitParts(v95);
+  v92 = alCollisionUtil::getCollisionHitNormal(v95);
+  *a2 = alCollisionUtil::getCollisionHitPos(v95);
+  if ( rs::calcExistCollisionBorderWallCatch(v42, *a2, v92, a7) )
+    return 0LL;
+
+  v57 = (float)((float)-(float)(v33->y * v92.y) - (float)(v33->x * v92.x)) - (float)(v33->z * v92.z);
+  v58 = sead::Mathf::cos(a10 * 0.017453);
+  if ( !al::isNearZeroOrGreater(v57 - v58, 0.001) )
+    return 0LL;
+
+  if ( a16 )
+  {
+    Trans = &al::getTrans(a4);
+    if ( (float)((float)((float)-(float)((float)(a2->y - Trans->y) * v33->y)
+                       - (float)((float)(a2->x - Trans->x) * v33->x))
+               - (float)((float)(a2->z - Trans->z) * v33->z)) > a11 )
+      return 0LL;
+  }
+
+  v61 = a7.y;
+  v60 = a7.z;
+  v62 = v92.y * v60;
+  v63 = v92.y * a7.x;
+  v64 = (float)(v92.z * a7.x) - (float)(v60 * v92.x);
+  v91.x = v62 - (float)(v92.z * v61);
+  v91.y = v64;
+  v91.z = (float)(v61 * v92.x) - v63;
+  if ( !al::tryNormalizeOrZero(&v91) )
+    return 0LL;
+
+  al::TriangleFilterIgnoreGround v90 = {};
+  v90._8 = v33;
+  v65 = (float)(a14 + 25.0) + -7.0;
+  v66 = a8 ? a15 + 10.0 : 15.0;
+  v67 = (float)(v92.y * 5.0) + a2->y;
+  v68 = (float)(v92.z * 5.0) + a2->z;
+  v69 = (float)(v92.x * 5.0) + a2->x;
+  a1.x = v65 * v91.x;
+  a1.y = v65 * v91.y;
+  v88.x = v69 - (float)(v91.x * 25.0);
+  v88.y = v67 - (float)(v91.y * 25.0);
+  v88.z = v68 - (float)(v91.z * 25.0);
+  a1.z = v65 * v91.z;
+  v70 = alCollisionUtil::checkStrikeArrow(v42, v88, a1, 0LL, &v90);
+  a1.x = -(float)(v65 * v91.x);
+  a1.y = -(float)(v65 * v91.y);
+  v71 = v70;
+  v88.x = v69 + (float)(v91.x * 25.0);
+  v88.y = v67 + (float)(v91.y * 25.0);
+  v88.z = v68 + (float)(v91.z * 25.0);
+  a1.z = -(float)(v65 * v91.z);
+  v72 = alCollisionUtil::checkStrikeArrow(v42, v88, a1, 0LL, &v90);
+  v73 = a7.y;
+  v74 = a7.z;
+  v75 = v69 + (float)(a7.x * 10.0);
+  a1.x = -(float)(v66 * a7.x);
+  a1.y = -(float)(v66 * v73);
+  v88.x = v75;
+  v88.y = v67 + (float)(v73 * 10.0);
+  v88.z = v68 + (float)(v74 * 10.0);
+  a1.z = -(float)(v66 * v74);
+  if ( v72 | v71 | (unsigned int)alCollisionUtil::checkStrikeArrow(v42, v88, a1, 0LL, &v90) )
+    return 0LL;
+
+  v86 = 0LL;
+  v76 = (float)(a7.y * 20.0) + a2->y;
+  v77 = (float)(a7.z * 20.0) + a2->z;
+  v88.x = (float)(a7.x * 20.0) + a2->x;
+  v88.y = v76;
+  v88.z = v77;
+  v78 = v33->z;
+  v79 = v33->x;
+  v80 = v33->y;
+  a1 = v92;
+  al::verticalizeVec(&a1, *v33, a1);
+  if ( al::tryNormalizeOrZero(&a1) )
+  {
+    if ( al::isNearZeroOrGreater(a1.dot(a7), 0.001) )
+    {
+      v79 = v33->x;
+      v80 = v33->y;
+      v78 = v33->z;
+    }
+    else
+    {
+      v79 = -v92.x;
+      v80 = -v92.y;
+      v78 = -v92.z;
+    }
+  }
+
+  v85.x = v79 * v83;
+  v85.y = v80 * v83;
+  v85.z = v78 * v83;
+  if ( (alCollisionUtil::getFirstPolyOnArrow(v42, &v86, v88, v85, 0LL, 0LL) & 1) != 0 )
+    return 0LL;
+
+  if ( al::isInAreaObj(a4, "WallCatchNoEntryArea", *a2) )
+    return 0LL;
+
+  *x2_0 = v92;
+  return 1LL;
+}
+
+bool findWallCatchPos(al::CollisionParts const** parts, sead::Vector3<float>* a2, sead::Vector3<float>*a3, al::LiveActor const* a4, sead::Vector3<float> const& a5, sead::Vector3<float> const& a6, sead::Vector3<float> const& a7, float a8, float a9, float a10, float a11, float a12, float a13, float a14) {
+  const sead::Vector3f& gravity = al::getGravity(a4);
+  sead::Vector3f velocity = al::getVelocity(a4);
+  if(al::tryNormalizeOrZero(&velocity, velocity) && velocity.dot(gravity) > 0.0f) {
+    return sub_710055F974(parts, a2, a3, a4, a5, a6, a7, 1, a8, a9, a10, a11, a12, a13, a14, 1, 0);
+  }
+  return false;
+}
+
 
 }  // namespace rs

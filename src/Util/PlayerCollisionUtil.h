@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadVector.h>
+#include "Library/Collision/KTriangle.h"
 
 namespace al {
 class LiveActor;
@@ -43,6 +44,9 @@ bool isActionCodeNoWallGrab(const IUsePlayerCollision*);
 bool isAutoRunOnGroundSkateCode(const al::LiveActor*, const IUsePlayerCollision*, float);
 void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
+                                  
+bool isActionCodeNoWallGrab(const al::HitInfo*);
+bool isActionCodeNoWallPopUp(const al::HitInfo*);
 
 bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
