@@ -95,7 +95,7 @@ void PlayerStateNormalWallSlide::appear() {
 
     sead::Vector3f offset =
         mNormalStart *
-        sead::Mathf::clampMin((al::getTrans(mActor) - collidedWallPos).dot(mNormalStart), 0.0f);
+        sead::Mathf::clampMin((al::getTrans(mActor) - collidedWallPos).dot(mNormalStart) - mConst->getCollisionRadius(), 0.0f);
     al::setTrans(mActor, al::getTrans(mActor) - offset);
     _5C = 0;
     _60 = 0;
@@ -169,9 +169,10 @@ bool PlayerStateNormalWallSlide::followNormal() {
 
         sead::Vector3f a4 = {0.0f, 0.0f, 0.0f};
         al::turnVecToVecCosOnPlane(&a4, -mNormalStart, v36, v37, -1.0f);
+        a4 = -a4;
 
         sead::Vector3f a1 = {0.0f, 0.0f, 0.0f};
-        al::alongVectorNormalH(&a1, al::getVelocity(mActor), mNormalEnd, -a4);
+        al::alongVectorNormalH(&a1, al::getVelocity(mActor), mNormalEnd, a4);
         al::setVelocity(mActor, a1);
         mNormalEnd = a4;
     } else {

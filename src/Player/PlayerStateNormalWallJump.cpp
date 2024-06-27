@@ -19,7 +19,8 @@ PlayerStateNormalWallJump::PlayerStateNormalWallJump(
     al::LiveActor* player, PlayerConst const* pConst, PlayerInput const* input,
     IUsePlayerCollision const* collider, PlayerTrigger const* trigger, PlayerAnimator* animator,
     PlayerActionDiveInWater* actionDiveInWater)
-    : al::ActorStateBase("壁ジャンプ", player) {
+    : al::ActorStateBase("壁ジャンプ", player), mConst(pConst), mInput(input), mCollider(collider),
+      mTrigger(trigger), mAnimator(animator), mActionDiveInWater(actionDiveInWater) {
     mAirMoveControl = new PlayerActionAirMoveControl(player, pConst, input, collider, false);
     initNerve(&Jump, 0);
 }

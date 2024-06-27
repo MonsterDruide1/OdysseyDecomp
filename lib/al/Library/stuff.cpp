@@ -1248,13 +1248,13 @@ void makeMtxFrontUp(sead::Matrix34f* mtx, const sead::Vector3f& front, const sea
   makeMtxUpFront(mtx, up, front);
 }
 
-void separateVectorHV(sead::Vector3f* h, sead::Vector3f* v, const sead::Vector3f& vec, const sead::Vector3f& vertical) {
+void separateVectorHV(sead::Vector3f* h, sead::Vector3f* v, const sead::Vector3f& vertical, const sead::Vector3f& vec) {
   f32 dot = vec.dot(vertical);
   *v = vertical * dot;
   *h = vec - *v;
 }
 void separateVelocityHV(sead::Vector3f* h, sead::Vector3f* v, al::LiveActor* actor) {
-  separateVectorHV(h, v, actor->getPoseKeeper()->getVelocity(), al::getGravity(actor));
+  separateVectorHV(h, v, al::getGravity(actor), actor->getPoseKeeper()->getVelocity());
 }
 
 void separateVelocityDirHV(sead::Vector3f* a1, sead::Vector3f* a2, const LiveActor* actor, const sead::Vector3f& a3) {
