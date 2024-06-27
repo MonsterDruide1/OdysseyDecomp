@@ -5,6 +5,7 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/stuff.h"
 #include "Player/PlayerActionAirMoveControl.h"
@@ -437,7 +438,7 @@ void PlayerStateJump::exeJumpTurn()  {
         sead::Vector3f up = {0.0f, 0.0f, 0.0f};
         al::calcUpDir(&up, mActor);
         sead::Quatf quat = sead::Quatf::unit;
-        al::makeQuatUpFront(&quat, mTurnJumpAngle, up);
+        al::makeQuatFrontUp(&quat, mTurnJumpAngle, up);
         al::updatePoseQuat(mActor, quat);
 
         sead::Vector3f a1 = {0.0f, 0.0f, 0.0f};

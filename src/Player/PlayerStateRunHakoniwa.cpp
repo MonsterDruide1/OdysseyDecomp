@@ -127,11 +127,12 @@ bool PlayerStateRunHakoniwa::tryTurnJump(sead::Vector3f* a2) {
     }
     return false;
   }
-  if(!al::isNerve(this, &Turn))
-    return false;
 
-  al::calcFrontDir(a2, mActor);
-  return true;
+  if(al::isNerve(this, &Turn)) {
+    al::calcFrontDir(a2, mActor);
+    return true;
+  }
+  return false;
 }
 f32 PlayerStateRunHakoniwa::getCenterTiltRateMax() const {
     CRASH;
