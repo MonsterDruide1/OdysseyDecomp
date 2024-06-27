@@ -1048,11 +1048,8 @@ void PlayerActorHakoniwa::setNerveOnGround() {
     } else if (rs::updateJudgeAndResult(mPlayerJudgeInWater1)) {
         al::setNerve(this, &Swim);
         return;
-    } else if (mPlayerCounterForceRun->getCounter() < 1 &&
-               !rs::isOnGroundRunAngle(this, mPlayerColliderHakoniwa, mPlayerConst)) {
-        al::setNerve(this, &Fall);
-        return;
-    } else if (!rs::isOnGround(this, mPlayerColliderHakoniwa)) {
+    } else if ((mPlayerCounterForceRun->getCounter() < 1 &&
+               !rs::isOnGroundRunAngle(this, mPlayerColliderHakoniwa, mPlayerConst)) || !rs::isOnGround(this, mPlayerColliderHakoniwa)) {
         al::setNerve(this, &Fall);
         return;
     } else if (rs::updateJudgeAndResult(mPlayerJudgeForceSlopeSlide)) {
@@ -1101,7 +1098,8 @@ void PlayerActorHakoniwa::setNerveOnGround() {
     } else {
         if (mPlayerCarryKeeper->isCarry())
             mPlayerCarryKeeper->startCancelAndRelease();
-        al::setNerve(this, &Slope);
+        rs::cutVerticalVelocityGroundNormal(this, getPlayerCollision());
+        al::setNerve(this, &Squat);
         return;
     }
 }
