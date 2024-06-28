@@ -1,6 +1,9 @@
 #include "Player/PlayerJudgeInvalidateInputFall.h"
 
 #include <basis/seadTypes.h>
+#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "PlayerUtil.h"
+#include "Stuff.h"
 
 PlayerJudgeInvalidateInputFall::PlayerJudgeInvalidateInputFall(const al::LiveActor* actor,
                                                                const PlayerAreaChecker* areaChecker,
@@ -8,11 +11,12 @@ PlayerJudgeInvalidateInputFall::PlayerJudgeInvalidateInputFall(const al::LiveAct
                                                                                                       mAreaChecker(areaChecker),
                                                                                                       mCollision(collision) {}
 void PlayerJudgeInvalidateInputFall::reset() {
-    CRASH
+    mInvalidateInputFallArea = nullptr;
 }
 void PlayerJudgeInvalidateInputFall::update() {
-    WARN_UNIMPL;
-    return;
+    reset();
+    if(rs::isCollidedGround(mCollision)) return;
+    mInvalidateInputFallArea = mAreaChecker->tryFindInvalidateInputFall(al::getTrans(mActor));
 }
 bool PlayerJudgeInvalidateInputFall::judge() const {
     return mInvalidateInputFallArea != nullptr;

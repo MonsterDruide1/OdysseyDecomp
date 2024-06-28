@@ -23,6 +23,8 @@ void makeQuatAxisRotation(sead::Quat<float> *,sead::Vector3<float> const&,sead::
 s32 converge(s32, s32, s32);
 f32 converge(f32, f32, f32);
 
+bool isInRange(f32, f32, f32);
+
 void calcDirVerticalAny(sead::Vector3f*, const sead::Vector3f&);
 
 void makeQuatUpFront(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&);

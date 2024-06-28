@@ -2925,3 +2925,10 @@ bool al::tryCalcAngleOnPlaneDegree(
 al::LiveActor* al::getPlayerActor(al::LiveActor const* a1,int a2) {
   return a1->getSceneInfo()->mPlayerHolder->tryGetPlayer(a2);
 }
+
+bool al::isInRange(f32 a2, f32 a3, f32 a4) {
+  if ( a4 >= a3 )
+    return (a2 >= a3) & (a4 >= a2);
+  else
+    return (a3 >= a2) & (a2 >= a4);
+}

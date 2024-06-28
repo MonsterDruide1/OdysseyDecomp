@@ -1538,6 +1538,14 @@ bool isActionCodeNoWallKeepWall(IUsePlayerCollision const* a1) {
     al::isFloorCode(a1->getPlayerCollider()->info2, "GrabCeil") ||
     al::isFloorCode(a1->getPlayerCollider()->info2, "Pole");
 }
+bool isActionCodeNoActionWall(IUsePlayerCollision const* a1) {
+  if(a1->getPlayerCollider()->val2 < 0.0f) return false;
+  return al::isWallCode(a1->getPlayerCollider()->info2, "NoAction");
+}
+bool isActionCodeNoActionCeiling(IUsePlayerCollision const* a1) {
+  if(a1->getPlayerCollider()->val3 < 0.0f) return false;
+  return al::isWallCode(a1->getPlayerCollider()->info3, "NoAction");
+}
 
 bool calcExistCollisionBorderWallCatch(al::IUseCollision const* a1,sead::Vector3<float> const& x1_0,sead::Vector3<float> const& x2_0,sead::Vector3<float> const& x3_0) {
   float y; // s1
@@ -1860,6 +1868,16 @@ LABEL_15:
 
   *x2_0 = v92;
   return 1LL;
+}
+
+bool calcAlongSkyFront(sead::Vector3<float> * a1,al::LiveActor const* a2){
+  sead::Vector3f v8 = -al::getGravity(a2);
+  sead::Vector3f front;
+  al::calcFrontDir(&front, a2);
+  sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+  al::calcUpDir(&up, a2);
+  al::alongVectorNormalH(a1, front, up, v8);
+  return al::tryNormalizeOrZero(a1);
 }
 
 bool findWallCatchPos(al::CollisionParts const** parts, sead::Vector3<float>* a2, sead::Vector3<float>*a3, al::LiveActor const* a4, sead::Vector3<float> const& a5, sead::Vector3<float> const& a6, sead::Vector3<float> const& a7, float a8, float a9, float a10, float a11, float a12, float a13, float a14) {

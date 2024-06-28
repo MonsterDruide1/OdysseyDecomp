@@ -18,6 +18,7 @@
 
 namespace al {
 class CameraTicket;
+class AreaObj;
 }
 
 namespace PlayerEquipmentFunction {
@@ -69,6 +70,7 @@ bool isCollidedGroundLessAngle(const al::LiveActor*,IUsePlayerCollision const*,f
 bool calcAlongDirFront(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3<float> const&);
 void addPlayerThrowCapCount(const al::LiveActor*);
 void moveInertiaTurn(sead::Vector3<float> *,sead::Quat<float> *,al::LiveActor *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float,float,float,float);
+bool calcAlongSkyFront(sead::Vector3<float> *,al::LiveActor const*);
 
 }
 
@@ -147,6 +149,7 @@ class PlayerCounterAfterCapCatch;
 class PlayerAreaChecker {
 public:
     PlayerAreaChecker(al::LiveActor const*,PlayerModelHolder const*);
+    al::AreaObj* tryFindInvalidateInputFall(const sead::Vector3f&) const;
 private:
     void* size[0x10/8];
 };
@@ -368,9 +371,9 @@ class PlayerJudgeGrabCeil : public al::HioNode, public IJudge {
 public:
     PlayerJudgeGrabCeil(al::LiveActor const*,PlayerConst const*,IUsePlayerCollision const*,IPlayerModelChanger const*,PlayerCarryKeeper const*,PlayerExternalVelocity const*);
     
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 public:
     const al::LiveActor *mPlayer;
     const PlayerConst *mConst;
@@ -533,27 +536,8 @@ public:
     int _A4;
 };
 
-class PlayerJudgeWallHitDown : public IJudge {
-public:
-    PlayerJudgeWallHitDown(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*,PlayerTrigger const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x28/8];
-};
-
-class PlayerJudgeWallHitDownForceRun : public IJudge {
-public:
-    PlayerJudgeWallHitDownForceRun(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*,PlayerCounterForceRun const*,PlayerTrigger const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x30/8];
-};
+#include "Player/PlayerJudgeWallHitDown.h"
+#include "Player/PlayerJudgeWallHitDownForceRun.h"
 
 class PlayerJudgeWallPush : public IJudge {
 public:
@@ -566,17 +550,7 @@ private:
     void* size[0x20/8];
 };
 
-class PlayerJudgeWallHitDownRolling : public IJudge {
-public:
-    PlayerJudgeWallHitDownRolling(al::LiveActor const*,IUsePlayerCollision const*,PlayerConst const*,PlayerTrigger const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x28/8];
-};
-
+#include "Player/PlayerJudgeWallHitDownRolling.h"
 #include "Player/PlayerJudgeWallKeep.h"
 
 class PlayerJudgeCameraSubjective : public IJudge {
