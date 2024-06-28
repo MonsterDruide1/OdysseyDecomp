@@ -82,9 +82,9 @@ bool PlayerStateRunHakoniwa2D3D::isGroundSpin() const {
 bool PlayerStateRunHakoniwa2D3D::isSpinClockwise() const {
     return mStateGroundSpin->mIsSpinClockwise;
 }
-/*bool PlayerStateRunHakoniwa2D3D::isRunDashFast() const {
-    // requires some AnimControlRun
-}*/
+bool PlayerStateRunHakoniwa2D3D::isRunDashFast() const {
+    return al::isNerve(this, &Run3D) && mStateRunHakoniwa->isRunDashFast();
+}
 bool PlayerStateRunHakoniwa2D3D::isRunWaterSurface() const {
     return al::isNerve(this, &Run3D) && rs::isJudge(mJudgeWaterSurfaceRun);
 }

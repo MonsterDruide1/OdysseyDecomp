@@ -113,6 +113,7 @@ private:
 class PlayerAnimControlRun {
 public:
     PlayerAnimControlRun(PlayerAnimator *,PlayerConst const*,IJudge const*,PlayerEffect *,bool);
+    bool isAnimDashFast() const;
 private:
     void* size[0x40/8];
 };
@@ -466,9 +467,9 @@ class PlayerJudgeSandSink : public IJudge {
 public:
     PlayerJudgeSandSink(IUsePlayerCollision const*,PlayerSandSinkAffect const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x18/8];
 };
@@ -582,9 +583,9 @@ class PlayerJudgeCameraSubjective : public IJudge {
 public:
     PlayerJudgeCameraSubjective(al::LiveActor const*,IUsePlayerCollision const*,PlayerInput const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x28/8];
 };
@@ -595,9 +596,9 @@ class PlayerJudgeDiveInWater : public IJudge {
 public:
     PlayerJudgeDiveInWater(al::LiveActor const*,PlayerConst const*,IUsePlayerHeightCheck const*,IUsePlayerFallDistanceCheck const*);
     
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x28/8];
 };
@@ -613,16 +614,7 @@ private:
     void* size[0x20/8];
 };
 
-class PlayerJudgeForceLand : public IJudge {
-public:
-    PlayerJudgeForceLand(IJudge const*,PlayerTrigger const*);
-
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x18/8];
-};
+#include "Player/PlayerJudgeForceLand.h"
 
 class PlayerJudgeOutInWater : public IJudge {
 public:
@@ -641,9 +633,9 @@ class PlayerJudgeWaterSurfaceRun : public IJudge {
 public:
     PlayerJudgeWaterSurfaceRun(al::LiveActor const*,PlayerConst const*,al::WaterSurfaceFinder const*,PlayerCounterForceRun const*);
 
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x28/8];
 };
@@ -876,9 +868,9 @@ private:
 class PlayerJudgeCameraInWater : public IJudge {
 public:
     PlayerJudgeCameraInWater(al::LiveActor const*,IJudge const*,al::WaterSurfaceFinder const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x18/8];
 };
@@ -886,9 +878,9 @@ private:
 class PlayerJudgeActiveCameraSubjective : public IJudge {
 public:
     PlayerJudgeActiveCameraSubjective(PlayerStateCameraSubjective const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x8/8];
 };
@@ -898,9 +890,9 @@ private:
 class PlayerJudgeTalkSwim : public IJudge {
 public:
     PlayerJudgeTalkSwim(PlayerHackKeeper const*,PlayerCarryKeeper const*,PlayerStateSwim const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x18/8];
 };
@@ -908,9 +900,9 @@ private:
 class PlayerJudgeDead : public IJudge {
 public:
     PlayerJudgeDead(al::LiveActor const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x8/8];
 };
@@ -921,9 +913,9 @@ private:
 class PlayerJudgeFailureCameraSubjective : public IJudge {
 public:
     PlayerJudgeFailureCameraSubjective(PlayerInput const*,IJudge const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x10/8];
 };
@@ -941,9 +933,9 @@ private:
 class PlayerJudgeStatusPoleClimb : public IJudge {
 public:
     PlayerJudgeStatusPoleClimb(IJudge const*,PlayerStatePoleClimb const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x10/8];
 };
@@ -971,9 +963,9 @@ private:
 class PlayerJudgeEnableGuideArrow : public IJudge {
 public:
     PlayerJudgeEnableGuideArrow(PlayerPuppet const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x8/8];
 };
@@ -981,9 +973,9 @@ private:
 class PlayerJudgeEnablePeachAmiibo : public IJudge {
 public:
     PlayerJudgeEnablePeachAmiibo(PlayerStateDamageFire const*);
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
+    void reset() override;
+    void update() override;
+    bool judge() const override;
 private:
     void* size[0x8/8];
 };

@@ -727,6 +727,10 @@ LABEL_52:
     }
 }
 
+bool PlayerInput::isSpinClockwise() const {
+    return mSpinInputAnalyzer->mSpinDirection < 0;
+}
+
 void PlayerInput::resetAlongWall() {
     convergeInUpdateWallAlong = 0;
     readInWalls = 0.0f;

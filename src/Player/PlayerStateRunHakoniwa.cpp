@@ -105,7 +105,7 @@ bool PlayerStateRunHakoniwa::isEnableLookAt() const {
     CRASH;
 }
 bool PlayerStateRunHakoniwa::isRunDashFast() const {
-    CRASH;
+    return al::isNerve(this, &Run) && mAnimControlRun->isAnimDashFast();
 }
 bool PlayerStateRunHakoniwa::tryTurnJump(sead::Vector3f* a2) {
   if(al::isNerve(this, &Brake) || (al::isNerve(this, &Turn) && al::getNerveStep(this) <= 0)) {
