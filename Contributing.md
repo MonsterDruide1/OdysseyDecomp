@@ -58,7 +58,7 @@ CLion interacts with CMake directly, so you need to make sure CLion's build prof
     * Understanding the function is very important.
     * Rename variables, add structures, do everything you can to make the output as clean as possible.
     * C++ code tends to make heavy use of inline functions. For example, inlined string comparisons or copies are very common and tend to obscure what the function does. Focus on the outline of the function.
-    * The [cheatsheet](https://github.com/zeldaret/botw/blob/master/Cheatsheet.md) (of the BotW project) might help you recognize inline functions.
+    * The [cheatsheet](https://botw.link/cheatsheet) (of the BotW project) might help you recognize inline functions.
 
 3. **Implement the function in C++.**
     * Stay close to the original code, but not too close: your code should mostly look like normal, clean C++ code. If it does not, chances are that you won't get a good match at all.
