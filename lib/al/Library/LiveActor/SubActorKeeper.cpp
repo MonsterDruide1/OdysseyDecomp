@@ -8,6 +8,7 @@
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/DepthShadowModel.h"
 #include "Library/Obj/ModelDrawParts.h"
+#include "Library/Obj/PartsFunction.h"
 #include "Library/Obj/PartsModel.h"
 #include "Library/Obj/SilhouetteModel.h"
 #include "Library/Obj/SimpleCircleShadowXZ.h"
@@ -148,64 +149,58 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
                 } else if (isEqualString(actorClassName, "SilhouetteModel")) {
                     actorInfo->mSubActor =
                         new SilhouetteModel(mRootActor, initInfo, actorCategoryName);
+                } else if (isEqualString(actorClassName, "DepthShadowModel")) {
+                    actorInfo->mSubActor = new DepthShadowModel(
+                        mRootActor, initInfo, actorCategoryName ? actorCategoryName : actorSuffix,
+                        isCalcDepthShadowLength);
+
+                    continue;
+                } else if (isEqualString(actorClassName, "InvincibleModel")) {
+                    actorInfo->mSubActor =
+                        new ModelDrawParts("無敵モデル", mRootActor, initInfo, actorCategoryName);
                 } else {
-                    if (isEqualString(actorClassName, "DepthShadowModel")) {
-                        actorInfo->mSubActor = new DepthShadowModel(
-                            mRootActor, initInfo,
-                            actorCategoryName ? actorCategoryName : actorSuffix,
-                            isCalcDepthShadowLength);
+                    if (!isEqualString(actorClassName, "SimpleCircleShadowXZ")) {
+                        if (isEqualString(actorClassName, "CollisionObj")) {
+                            const char* collSuffixName =
+                                tryGetByamlKeyStringOrNULL(subActorIter, "CollisionSuffixName");
+                            const char* collName =
+                                tryGetByamlKeyStringOrNULL(subActorIter, "CollisionName");
+                            const char* sensorName =
+                                tryGetByamlKeyStringOrNULL(subActorIter, "SensorName");
+                            const char* fileSuffixName =
+                                tryGetByamlKeyStringOrNULL(subActorIter, "InitFileSuffixName");
+                            const char* jointName =
+                                tryGetByamlKeyStringOrNULL(subActorIter, "JointName");
 
-                        continue;
-                    } else if (isEqualString(actorClassName, "InvincibleModel")) {
-                        actorInfo->mSubActor = new ModelDrawParts("無敵モデル", mRootActor,
-                                                                  initInfo, actorCategoryName);
-                    } else {
-                        if (!isEqualString(actorClassName, "SimpleCircleShadowXZ")) {
-                            if (isEqualString(actorClassName, "CollisionObj")) {
-                                const char* collSuffixName =
-                                    tryGetByamlKeyStringOrNULL(subActorIter, "CollisionSuffixName");
-                                const char* collName =
-                                    tryGetByamlKeyStringOrNULL(subActorIter, "CollisionName");
-                                const char* sensorName =
-                                    tryGetByamlKeyStringOrNULL(subActorIter, "SensorName");
-                                const char* fileSuffixName =
-                                    tryGetByamlKeyStringOrNULL(subActorIter, "InitFileSuffixName");
-                                const char* jointName =
-                                    tryGetByamlKeyStringOrNULL(subActorIter, "JointName");
+                            if (!collName)
+                                collName = collSuffixName;
 
-                                if (!collName)
-                                    collName = collSuffixName;
+                            const char* newSensorName = sensorName ? sensorName : collSuffixName;
 
-                                const char* newSensorName =
-                                    sensorName ? sensorName : collSuffixName;
+                            if (fileSuffixName)
+                                collSuffixName = fileSuffixName;
 
-                                if (fileSuffixName)
-                                    collSuffixName = fileSuffixName;
+                            auto* sensor = getHitSensor(mRootActor, newSensorName);
 
-                                auto* sensor = getHitSensor(mRootActor, newSensorName);
-
-                                actorInfo->mSubActor =
-                                    createCollisionObj(mRootActor, initInfo, collName, sensor,
-                                                       jointName, collSuffixName);
-                                if (actorObjectName)
-                                    actorInfo->mSubActor->setName(actorObjectName);
-
-                                continue;
-                            }
-
-                            actorInfo->mSubActor = new LiveActor(actorObjectName);
-                            initActorWithArchiveName(actorInfo->mSubActor, initInfo, actorModelName,
-                                                     actorSuffix);
+                            actorInfo->mSubActor = createCollisionObj(
+                                mRootActor, initInfo, collName, sensor, jointName, collSuffixName);
+                            if (actorObjectName)
+                                actorInfo->mSubActor->setName(actorObjectName);
 
                             continue;
                         }
 
-                        SimpleCircleShadowXZ* dropShadow =
-                            new SimpleCircleShadowXZ(actorObjectName);
-                        dropShadow->initSimpleCircleShadow(mRootActor, initInfo, actorModelName,
-                                                           actorSuffix);
-                        actorInfo->mSubActor = dropShadow;
+                        actorInfo->mSubActor = new LiveActor(actorObjectName);
+                        initActorWithArchiveName(actorInfo->mSubActor, initInfo, actorModelName,
+                                                 actorSuffix);
+
+                        continue;
                     }
+
+                    SimpleCircleShadowXZ* dropShadow = new SimpleCircleShadowXZ(actorObjectName);
+                    dropShadow->initSimpleCircleShadow(mRootActor, initInfo, actorModelName,
+                                                       actorSuffix);
+                    actorInfo->mSubActor = dropShadow;
                 }
             } else {
                 actorInfo->mSubActor = new LiveActor(actorObjectName);
