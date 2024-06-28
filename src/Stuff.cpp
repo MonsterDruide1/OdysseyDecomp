@@ -9,6 +9,7 @@
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
+#include "Library/Player/PlayerUtil.h"
 #include "Library/stuff.h"
 #include "Player/PlayerActionFunction.h"
 #include "Player/PlayerActionVelocityControl.h"
@@ -1895,5 +1896,81 @@ void resetCollisionExpandCheck(IUsePlayerCollision * collision) {
   collider->setCollisionShapeScale(collisionShapeScale);
 }
 
+bool tryGetPlayerInputWallAlongWallNormal(sead::Vector3f *a1, const al::LiveActor *actor)
+{
+  PlayerActorBase *PlayerActor; // x0
+  PlayerHackKeeper *v5; // x0
+  PlayerActorBase *v6; // x0
+  PlayerHackKeeper *v7; // x20
+  bool result; // w0
+  const IUsePlayerCollision *PlayerCollision; // x0
+  const IUsePlayerCollision *v10; // x0
+  PlayerActorBase *v11; // x0
+  const IUsePlayerCollision *v12; // x20
+  const sead::Vector3f *CollidedWallNormal; // x0
+  al::LiveActor *_68; // x20
+  const al::LiveActor *v16; // x1
+  const al::LiveActor *v17; // x1
+
+  PlayerActor = (PlayerActorBase*)al::getPlayerActor(actor, 0);
+  v5 = PlayerActor->getPlayerHackKeeper();
+  if ( v5 && v5->getCurrentHackName() )
+  {
+    CRASH
+    /*v6 = al::getPlayerActor(actor, 0);
+    v7 = (PlayerHackKeeper *)((__int64 (__fastcall *)(PlayerActorBase *))v6->al::LiveActor::al::IUseNerve::__vftable[1].makeActorAlive)(v6);
+    result = 0;
+    if ( !v7 )
+      return result;
+
+    if ( v7->_70 )
+    {
+      if ( (PlayerHackKeeper::isHackUsePlayerCollision(v7) & 1) != 0 )
+      {
+        PlayerCollision = (const IUsePlayerCollision *)PlayerHackKeeper::getPlayerCollision(v7);
+        if ( rs::isCollidedWallFace(PlayerCollision) )
+        {
+          v10 = (const IUsePlayerCollision *)PlayerHackKeeper::getPlayerCollision(v7);
+
+LABEL_11:
+          CollidedWallNormal = rs::getCollidedWallNormal(v10);
+
+LABEL_12:
+          a1->z = CollidedWallNormal->z;
+          v14 = *(_QWORD *)&CollidedWallNormal->x;
+          result = 1;
+          *(_QWORD *)&a1->x = v14;
+          return result;
+        }
+      }
+      else
+      {
+        _68 = v7->_68;
+        if ( al::isExistActorCollider(_68) && (al::isCollidedWallFace(_68, v16) & 1) != 0 )
+        {
+          CollidedWallNormal = al::getCollidedWallNormal(_68, v17);
+          goto LABEL_12;
+        }
+      }
+    }*/
+  }
+  else
+  {
+    v11 = (PlayerActorBase*)al::getPlayerActor(actor, 0);
+    v12 = PlayerActor->getPlayerCollision();
+    result = 0;
+    if ( !v12 )
+      return result;
+
+    if ( rs::isCollidedWallFace(v12) )
+    {
+      v10 = v12;
+      *a1 = rs::getCollidedWallNormal(v10);
+      return true;
+    }
+  }
+
+  return 0;
+}
 
 }  // namespace rs

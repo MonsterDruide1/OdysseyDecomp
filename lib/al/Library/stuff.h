@@ -3,6 +3,7 @@
 #include <math/seadVector.h>
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Player/PlayerHolder.h"
+#include "Player/PlayerActorBase.h"
 #include "math/seadQuat.h"
 
 namespace al {
@@ -52,6 +53,10 @@ void limitVectorOppositeDir(sead::Vector3<float> *,sead::Vector3<float> const&,s
 void calcDirSlide(sead::Vector3<float> *,sead::Vector3<float> const&,sead::Vector3<float> const&);
 
 bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
+
+bool isActiveCameraInterpole(al::IUseCamera const*,int);
+
+al::LiveActor* getPlayerActor(al::LiveActor const*,int);
 
 }  // namespace al
 

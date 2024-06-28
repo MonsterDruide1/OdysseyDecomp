@@ -25,6 +25,7 @@ public:
                      
     void createHackModel(al::ActorInitInfo const&);
     bool executeForceHackStageStart(al::HitSensor *,IUsePlayerHack *);
+    const char* getCurrentHackName() const;
 
     al::LiveActor* getCurrentHackActor() const { return mCurrentHackActor; }
     al::HitSensor* getUnkHitSensor() const { return _70; }

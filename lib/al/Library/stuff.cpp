@@ -2921,3 +2921,7 @@ bool al::tryCalcAngleOnPlaneDegree(
   *a1 = v35 * 57.296;
   return result;
 }
+
+al::LiveActor* al::getPlayerActor(al::LiveActor const* a1,int a2) {
+  return a1->getSceneInfo()->mPlayerHolder->tryGetPlayer(a2);
+}

@@ -106,6 +106,8 @@ public:
 
     void resetAlongWall();
 
+    bool isSameStickMove(const sead::Vector2f& a2, float a3) const;
+
 public:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
@@ -113,8 +115,7 @@ public:
     bool mIsMove = 0;
     int convergeInUpdateWallAlong = 0;
     float readInWalls = 0.0f;
-    sead::Vector2f anotherVector2ForWalls = {0.0f, 0.0f};
-    float somethingHere = 0.0f;
+    sead::Vector3f anotherVectorForWalls = {0.0f, 0.0f, 0.0f};
     sead::Vector2f anotherVector2ForWalls2 = {0.0f, 0.0f};
     bool hasSomeSnapMoveDirArea = false;
     sead::Vector3f someSnapMoveAreaDirVector = {0.0f, 0.0f, 0.0f};
@@ -143,7 +144,8 @@ public:
     bool someFlags[2] = {false, false};
     sead::Vector2f someVector2 = {0.0f, 0.0f};
     sead::Vector2f some2Vector = {0.0f, 0.0f};
-    u64 placeholder4[3] = {0, 0, 0};
+    sead::Vector3f _E0;
+    sead::Vector3f _EC;
     sead::Vector3f someVector = {0.0f, 0.0f, 0.0f};
     sead::Vector3f someVector4 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f someVector5 = {0.0f, 0.0f, 0.0f};

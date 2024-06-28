@@ -90,4 +90,8 @@ void sendMsgPlayerStartWallJump(al::HitSensor*,al::HitSensor*);
 
 void resetCollisionExpandCheck(IUsePlayerCollision *);
 
+void calcLockDirection(sead::Vector3f *,const IUseDimension *);
+
+bool tryGetPlayerInputWallAlongWallNormal(sead::Vector3<float> *,al::LiveActor const*);
+
 }  // namespace rs
