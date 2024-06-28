@@ -519,6 +519,12 @@ public:
         else if(al::isEqualString(name, "WorldWarpBindStart")) maxFrame = 40;
         else if(al::isEqualString(name, "WorldWarpIn")) maxFrame = 70;
         else if(al::isEqualString(name, "WorldWarpOut")) maxFrame = 24;
+
+        // special ones from ActionAnimCtrl
+        else if(al::isEqualString(name, "StartSpinJumpL")) maxFrame = 8;
+        else if(al::isEqualString(name, "StartSpinJumpR")) maxFrame = 8;
+        else if(al::isEqualString(name, "RestartSpinJumpL")) maxFrame = 8;
+        else if(al::isEqualString(name, "RestartSpinJumpR")) maxFrame = 8;
         else {
             printf("unknown animation: %s\n", name);
             CRASH

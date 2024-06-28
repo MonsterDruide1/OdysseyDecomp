@@ -139,8 +139,15 @@ void PlayerStateJump::appear() {
     mMoveSpeedMax = sead::Mathf::min(mConst->getJumpMoveSpeedMax(), mActionAirMoveControl->mJumpSpeedMax);
     switch(mJumpMessageRequest->mJumpType) {
         case PlayerJumpType::val_0C:
-            printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
-            CRASH
+            rs::noticePlayerJumpStart(mTrigger, mActor);
+            mJumpPower = mConst->getSpinJumpPower();
+            mMoveSpeedMax = mConst->getSpinJumpMoveSpeedMax();
+            mJumpGravity = mConst->getSpinJumpGravity();
+            mExtendFrame = 0;
+            _C8 = mJumpMessageRequest->mIsSpinClockwise ? "SpinJumpR" : "SpinJumpL";
+            _B8 = true;
+            al::setNerve(this, &JumpSpinGround);
+            return;
         case PlayerJumpType::val_0D:
             printf("PlayerStateJump::appear: unknown jump type %x\n", mJumpMessageRequest->mJumpType);
             CRASH
@@ -423,9 +430,103 @@ const char* PlayerStateJump::calcJumpAnimName() const {
 }
 void PlayerStateJump::exeJumpSpinFlower()  { WARN_UNIMPL; }
 void PlayerStateJump::exeJumpSpinFlowerDownFall()  { WARN_UNIMPL; }
-// void PlayerStateJump::updateNerveDownFall(const char*, f32, f32, f32, const al::Nerve*);
-void PlayerStateJump::exeJumpSpinGround()  { WARN_UNIMPL; }
-void PlayerStateJump::exeJumpSpinGroundDownFall()  { WARN_UNIMPL; }
+
+void PlayerStateJump::updateNerveDownFall(const char* animationName, f32 initSpeed, f32 fallPower, f32 fallMaxSpeed, const al::Nerve* standardNerve) {
+    if(al::isFirstStep(this)) {
+        mAnimator->startAnim(animationName);
+        al::setVelocityToGravity(mActor, initSpeed);
+        _B6 = true;
+    }
+
+    al::addVelocityToGravityLimit(mActor, fallPower, fallMaxSpeed);
+
+    if(al::isGreaterEqualStep(this, mConst->getDownFallFrameMin()) && !mInput->isHoldHipDrop()) {
+        if(rs::isOnGround(mActor, mCollision)) {
+            kill();
+            return;
+        } else {
+            al::setNerve(this, standardNerve);
+            return;
+        }
+    }
+
+    if(mTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1)) {
+        _EC = mConst->getHipDropMsgInterval();
+        _F0 = 0;
+        if(rs::isCollidedGround(mCollision)) {
+            _F0 = 1;
+            vec = rs::getCollidedGroundPos(mCollision);
+        }
+    }
+
+    if(_EC > 0) {
+        if(rs::convergeOnGroundCount(&_EC, mActor, mCollision, 0, 1))
+            return;
+    }
+
+    if(rs::isOnGround(mActor, mCollision)) {
+        if(mInput->isHoldHipDrop() && mInput->isMoveDeepDown()) {
+            sead::Vector3f moveDir = {0.0f, 0.0f, 0.0f};
+            mInput->calcMoveInput(&moveDir, -al::getGravity(mActor));
+            rs::slerpUpFront(mActor, rs::getCollidedGroundNormal(mCollision), moveDir, mConst->getSlerpQuatRate(), mConst->getHillPoseDegreeMax());
+        } else {
+            kill();
+            return;
+        }
+    }
+}
+
+void PlayerStateJump::exeJumpSpinGround()  {
+    // XXX wrong way around?
+    f32 maxSpeed = mModelChanger->is2DModel() ? mConst->getNormalMaxSpeed() : mConst->getNormalMaxSpeed2D();
+    rs::scaleVelocityInertiaWallHit(mActor, mCollision, 0.25f, 1.0f, maxSpeed);
+
+    if(al::isFirstStep(this)) {
+        if(mAnimator->unk2) {
+            if(_B8)
+                mAnimator->endSubAnim();
+            else
+                al::startHitReaction(mActor, "アクションジャンプ");
+        }
+
+        al::StringTmp<64> anim = _B6 ? al::StringTmp<64>{"Restart%s", _C8} : al::StringTmp<64>{"Start%s", _C8};
+        mAnimator->startAnim(anim);
+
+        mActionAirMoveControl->setup(mMoveSpeedMax, mConst->getNormalMaxSpeed(), 0, mJumpPower, mJumpGravity, 0, mConst->getJumpInertiaRate());
+        if(_B6) {
+            al::setVelocityToGravity(mActor, mConst->getFallSpeedMax());
+        }
+    }
+
+    if(mTrigger->isOnUpperPunchHit()) {
+        rs::reflectCeilingUpperPunch(mActor, mCollision, mInput, mConst, mTrigger, false);
+        _B4 = 0;
+    }
+
+    if(rs::isCollidedCeiling(mCollision)) {
+        rs::reflectCeiling(mActor, 0.0f);
+        _B4 = false;
+    }
+
+    mActionAirMoveControl->update();
+    if(mInput->isTriggerHipDrop()) {
+        al::setNerve(this, &JumpSpinFlowerDownFall);
+        return;
+    }
+
+    if(rs::isOnGround(mActor, mCollision)) {
+        sead::Vector3f v25 = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f v24 = {0.0f, 0.0f, 0.0f};
+        al::separateVelocityHV(&v25, &v24, mActor);
+        al::limitLength(&v25, v25, sead::Mathf::min(v25.length(), mActionAirMoveControl->somethingHere));
+        al::setVelocity(mActor, v25 + v24);
+        kill();
+        return;
+    }
+}
+void PlayerStateJump::exeJumpSpinGroundDownFall()  {
+    updateNerveDownFall(al::isEqualString(_C8, "SpinJumpR") ? "SpinJumpDownFallR" : "SpinJumpDownFallL", mConst->getSpinJumpDownFallInitSpeed(), mConst->getSpinJumpDownFallPower(), mConst->getSpinJumpDownFallSpeedMax(), &JumpSpinGround);
+}
 void PlayerStateJump::exeJumpTurn()  {
     if(al::isFirstStep(this)) {
         if(mAnimator->unk2) {

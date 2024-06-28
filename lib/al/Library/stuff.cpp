@@ -1261,6 +1261,10 @@ void separateVelocityDirHV(sead::Vector3f* a1, sead::Vector3f* a2, const LiveAct
   return al::separateVectorHV(a1, a2, a3, actor->mPoseKeeper->getVelocity());
 }
 
+void setVelocityToGravity(al::LiveActor *actor, float factor) {
+  *actor->mPoseKeeper->getVelocityPtr() = al::getGravity(actor) * factor;
+}
+
 bool isFloorPolygonCos(const sead::Vector3f &a1, const sead::Vector3f& a2, float a3)
 {
   float v7; // s0

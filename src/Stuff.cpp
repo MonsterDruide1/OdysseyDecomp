@@ -1531,7 +1531,7 @@ bool isActionCodeNoWallPopUp(al::HitInfo const* a1) {
     al::isFloorCode(a1->mTriangle, "Poison");
 }
 bool isActionCodeNoWallKeepWall(IUsePlayerCollision const* a1) {
-  if(a1->getPlayerCollider()->val1 < 0.0f) return false;
+  if(a1->getPlayerCollider()->val2 < 0.0f) return false;
   return al::isWallCode(a1->getPlayerCollider()->info2, "NoAction") ||
     al::isWallCode(a1->getPlayerCollider()->info2, "OnlyWallHitDown") ||
     al::isFloorCode(a1->getPlayerCollider()->info2, "GrabCeil") ||

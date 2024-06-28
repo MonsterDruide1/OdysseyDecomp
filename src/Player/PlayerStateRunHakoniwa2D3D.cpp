@@ -80,7 +80,7 @@ bool PlayerStateRunHakoniwa2D3D::isGroundSpin() const {
     return al::isNerve(this, &GroundSpin3D);
 }
 bool PlayerStateRunHakoniwa2D3D::isSpinClockwise() const {
-    CRASH
+    return mStateGroundSpin->mIsSpinClockwise;
 }
 /*bool PlayerStateRunHakoniwa2D3D::isRunDashFast() const {
     // requires some AnimControlRun

@@ -17,7 +17,7 @@ public:
     void appear() override;
     void exeGroundSpin();
 
-private:
+public:
     const IUsePlayerCollision* mCollision;
     const PlayerInput* mPlayerInput;
     const PlayerConst* mPlayerConst;
