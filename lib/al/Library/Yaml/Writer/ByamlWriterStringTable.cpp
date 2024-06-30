@@ -8,6 +8,7 @@
 namespace al {
 
 ByamlWriterStringTable::ByamlWriterStringTable() = default;
+
 ByamlWriterStringTable::~ByamlWriterStringTable() {
     while (auto* node = mList.popBack()) {
         node->mList = nullptr;
@@ -15,6 +16,7 @@ ByamlWriterStringTable::~ByamlWriterStringTable() {
         delete node;
     }
 }
+
 inline char* add(const char* string, sead::TList<const char*>& list) {
     s32 length = ((strlen(string) << 32) + 0x100000000LL) >> 32;
     char* array = new char[length];
@@ -23,6 +25,7 @@ inline char* add(const char* string, sead::TList<const char*>& list) {
     list.pushBack(node);
     return array;
 }
+
 const char* ByamlWriterStringTable::tryAdd(const char* string) {
     for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
         s32 result = strcmp(string, it->mData);
@@ -44,23 +47,28 @@ const char* ByamlWriterStringTable::tryAdd(const char* string) {
     mList.pushBack(node);
     return result;
 }
+
 u32 ByamlWriterStringTable::calcHeaderSize() const {
     return (4 * mList.size()) + 8;
 }
+
 u32 ByamlWriterStringTable::calcContentSize() const {
     u32 size = 0;
     for (auto& node : mList)
         size += strlen(node) + 1;
     return (size + 3) & 0xFFFFFFFC;
 }
+
 u32 ByamlWriterStringTable::calcPackSize() const {
     if (isEmpty())
         return 0;
     return calcHeaderSize() + calcContentSize();
 }
+
 bool ByamlWriterStringTable::isEmpty() const {
     return mList.size() == 0;
 }
+
 u32 ByamlWriterStringTable::calcIndex(const char* data) const {
     s32 i = 0;
     for (auto& node : mList) {
@@ -70,6 +78,7 @@ u32 ByamlWriterStringTable::calcIndex(const char* data) const {
     }
     return -1;
 }
+
 void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
     if (isEmpty())
         return;
@@ -101,6 +110,7 @@ void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
     for (s32 j = 0; j < v16; j++)
         stream->writeU8(0);
 }
+
 void ByamlWriterStringTable::print() const {
     for (auto& node : mList)
         ;

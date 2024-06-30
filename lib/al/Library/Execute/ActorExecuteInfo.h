@@ -20,6 +20,7 @@ private:
     s32 mDrawerCount = 0;
     ModelDrawerBase* mDrawers[11] = {};
 };
+
 static_assert(sizeof(ActorExecuteInfo) == 0x90);
 
 }  // namespace al

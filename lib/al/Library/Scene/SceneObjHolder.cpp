@@ -24,9 +24,11 @@ ISceneObj* SceneObjHolder::create(s32 index) {
 ISceneObj* SceneObjHolder::tryGetObj(s32 index) const {
     return mSceneObjArray[index];
 }
+
 ISceneObj* SceneObjHolder::getObj(s32 index) const {
     return mSceneObjArray[index];
 }
+
 bool SceneObjHolder::isExist(s32 index) const {
     return mSceneObjArray[index] != nullptr;
 }

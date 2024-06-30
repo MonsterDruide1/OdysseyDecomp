@@ -5,6 +5,7 @@
 #include "Player/IJudge.h"
 
 class IUsePlayerHack;
+
 namespace al {
 class LiveActor;
 }
@@ -12,6 +13,7 @@ class LiveActor;
 class HackerJudge : public al::HioNode, public IJudge {
 public:
     HackerJudge(IUsePlayerHack** parent) { mHacker = parent; };
+
     void reset() override;
     void update() override;
     bool judge() const override;

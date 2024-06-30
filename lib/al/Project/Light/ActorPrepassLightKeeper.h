@@ -26,6 +26,7 @@ public:
         ParameterStringRef* mName;
         ParameterC4f* mColor;
     };
+
     static_assert(sizeof(UserColor) == 0x18);
 
     static bool isExistFile(const Resource*, const char*);
@@ -52,5 +53,6 @@ private:
     LiveActor* mLiveActor;
     bool mIsIgnorePrePassLightYaml;
 };
+
 static_assert(sizeof(ActorPrePassLightKeeper) == 0x50);
 }  // namespace al

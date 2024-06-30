@@ -15,6 +15,7 @@ void startAction(LiveActor* actor, const char* actionName) {
         tryStartVisAnimIfExistForAction(actor, actionName);
     }
 }
+
 bool tryStartAction(LiveActor* actor, const char* actionName) {
     if (!actor->getActorActionKeeper() || !actor->getActorActionKeeper()->getAnimCtrl() ||
         !actor->getActorActionKeeper()->getAnimCtrl()->isExistAction(actionName)) {

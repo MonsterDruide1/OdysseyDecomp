@@ -28,18 +28,21 @@ public:
     ExecuteAsyncExecutorUpdate(const ExecuteDirector* director, const char* name,
                                sead::CoreId coreId)
         : ExecuteAsyncExecutor(director, name, coreId) {}
+
     ~ExecuteAsyncExecutorUpdate() override;
     void execute() override;
 
 private:
     // missing
 };
+
 static_assert(sizeof(ExecuteAsyncExecutorUpdate) == 0x28);
 
 class ExecuteAsyncExecutorDraw : public ExecuteAsyncExecutor {
 public:
     ExecuteAsyncExecutorDraw(const ExecuteDirector* director, const char* name, sead::CoreId coreId)
         : ExecuteAsyncExecutor(director, name, coreId) {}
+
     ~ExecuteAsyncExecutorDraw() override;
     void execute() override;
 

@@ -11,4 +11,5 @@ bool PlayerJudgeForceRolling::judge() const {
 }
 
 void PlayerJudgeForceRolling::reset() {}
+
 void PlayerJudgeForceRolling::update() {}

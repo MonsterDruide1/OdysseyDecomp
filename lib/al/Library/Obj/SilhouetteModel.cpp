@@ -15,5 +15,6 @@ SilhouetteModel::SilhouetteModel(LiveActor* parent, const ActorInitInfo& initInf
     initExecutorDraw(this, initInfo, category);
     makeActorAlive();
 }
+
 void SilhouetteModel::movement() {}
 }  // namespace al

@@ -17,7 +17,9 @@ public:
              SceneObjHolder* sceneObjHolder);
 
     const PlacementInfo& getPlacementInfo() const { return mPlacementInfo; }
+
     StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+
     SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
 
 private:

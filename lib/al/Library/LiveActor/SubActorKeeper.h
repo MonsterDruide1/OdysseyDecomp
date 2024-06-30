@@ -85,6 +85,7 @@ struct SubActorSync {
         cAlphaMask = 1 << 3,                             // 8
         cAll = cAppear | cClipping | cHide | cAlphaMask  // 15
     };
+
     AL_BITS(SubActorSync);
 };
 

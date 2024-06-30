@@ -11,6 +11,7 @@ public:
 
     bool isForceRun() const { return mCounter > 0; }
     s32 getCounter() const { return mCounter; }
+
     f32 getSpeed() const { return mSpeed; }
 
 private:

@@ -15,6 +15,7 @@ template <typename T>
 struct Matrix43 {
     T m[3][4];
 };
+
 using Matrix43f = Matrix43<f32>;
 
 void makeMtxRotateTrans(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);

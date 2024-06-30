@@ -18,8 +18,11 @@ public:
     void createSaveDataSystem();
 
     MemorySystem* getMemorySystem() { return mMemorySystem; }
+
     FileLoader* getFileLoader() { return mFileLoader; }
+
     ResourceSystem* getResourceSystem() { return mResourceSystem; }
+
     SaveDataDirector* getSaveDataDirector() { return mSaveDataDirector; }
 
 protected:

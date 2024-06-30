@@ -7,6 +7,7 @@ namespace al {
 bool isClipped(const LiveActor* actor) {
     return actor->getFlags()->isClipped;
 }
+
 bool isInvalidClipping(const LiveActor* actor) {
     return actor->getFlags()->isClippingInvalid;
 }
