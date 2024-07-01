@@ -29,6 +29,7 @@ void verticalizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f
 void parallelizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 
 f32 modf(f32 a, f32 b);
+s32 modi(s32 a, s32 b);
 
 bool normalize(f32 value);
 
