@@ -558,7 +558,7 @@ public:
         return maxFrame;
     }
 
-private:
+public:
     f32 currentFrame = 0.0f;
     f32 maxFrame = 0.0f;
     const char* currentAnim = nullptr;
