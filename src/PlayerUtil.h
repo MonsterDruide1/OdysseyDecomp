@@ -351,43 +351,11 @@ private:
 };
 
 #include "Player/PlayerJudgeDeadWipeStart.h"
-
-class PlayerJudgeDirectRolling : public IJudge {
-public:
-    PlayerJudgeDirectRolling(al::LiveActor const*,PlayerConst const*,PlayerInput const*,IUsePlayerCollision const*,IPlayerModelChanger const*,PlayerCarryKeeper const*,PlayerCounterForceRun const*);
-    
-    void reset() override { WARN_UNIMPL; }
-    void update() override { WARN_UNIMPL; }
-    bool judge() const override { WARN_UNIMPL;return false; }
-private:
-    void* size[0x48/8];
-};
-
-
+#include "Player/PlayerJudgeDirectRolling.h"
 #include "Player/PlayerJudgeEnableStandUp.h"
 #include "Player/PlayerJudgeForceSlopeSlide.h"
 #include "Player/PlayerJudgeForceRolling.h"
-
-class PlayerJudgeGrabCeil : public al::HioNode, public IJudge {
-public:
-    PlayerJudgeGrabCeil(al::LiveActor const*,PlayerConst const*,IUsePlayerCollision const*,IPlayerModelChanger const*,PlayerCarryKeeper const*,PlayerExternalVelocity const*);
-    
-    void reset() override;
-    void update() override;
-    bool judge() const override;
-public:
-    const al::LiveActor *mPlayer;
-    const PlayerConst *mConst;
-    const IUsePlayerCollision *mCollision;
-    const IPlayerModelChanger *mModelChanger;
-    const PlayerCarryKeeper *mCarryKeeper;
-    const PlayerExternalVelocity *mExternalVelocity;
-    bool mIsJudge;
-    const al::CollisionParts *_40;
-    sead::Vector3f _48;
-    sead::Vector3f _54;
-    sead::Vector3f _60;
-};
+#include "Player/PlayerJudgeGrabCeil.h"
 
 class PlayerJudgeInWater : public IJudge {
 public:

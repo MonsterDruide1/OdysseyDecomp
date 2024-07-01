@@ -1073,7 +1073,7 @@ void PlayerActorHakoniwa::setNerveOnGround() {
         al::setNerve(this, &PoleClimb);
         return;
     } else if (rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -1174,7 +1174,7 @@ void PlayerActorHakoniwa::exeWait() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -1315,7 +1315,7 @@ void PlayerActorHakoniwa::exeSquat() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -1464,7 +1464,7 @@ void PlayerActorHakoniwa::exeRun() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -1645,7 +1645,7 @@ void PlayerActorHakoniwa::exeRolling() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -1768,7 +1768,7 @@ void PlayerActorHakoniwa::exeSpinCap() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -1831,7 +1831,7 @@ bool PlayerActorHakoniwa::tryChangeNerveFromAir() {
         return true;
     }
     if((!al::isNerve(this, &GrabCeil) || mPlayerStateGrabCeil->isEnableNextGrabCeil()) && rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return true;
@@ -1930,7 +1930,7 @@ void PlayerActorHakoniwa::exeJump() {
             return;
         }
         if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
-            mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+            mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                         mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
             al::setNerve(this, &GrabCeil);
             return;
@@ -2020,7 +2020,7 @@ void PlayerActorHakoniwa::exeWallAir() {
     }
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -2086,7 +2086,7 @@ void PlayerActorHakoniwa::exeHipDrop() {
     }
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -2216,7 +2216,7 @@ void PlayerActorHakoniwa::exeHeadSliding() {
 
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -2313,7 +2313,7 @@ void PlayerActorHakoniwa::exeFall() {
     }
     if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
         getPlayerCollision();
-        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+        mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                     mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
         al::setNerve(this, &GrabCeil);
         return;
@@ -2442,7 +2442,7 @@ void PlayerActorHakoniwa::exeDamage() {
 
         if(rs::updateJudgeAndResult(mPlayerJudgeGrabCeil)) {
             getPlayerCollision();
-            mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->_40, mPlayerJudgeGrabCeil->_48,
+            mPlayerStateGrabCeil->setup(mPlayerJudgeGrabCeil->mCollidedParts, mPlayerJudgeGrabCeil->_48,
                                         mPlayerJudgeGrabCeil->_54, mPlayerJudgeGrabCeil->_60);
             al::setNerve(this, &GrabCeil);
             return;
