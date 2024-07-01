@@ -1,5 +1,6 @@
 #include "Stuff.h"
 
+#include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/CollisionUtil.h"
 #include "Library/Collision/TriangleFilter.h"
@@ -19,6 +20,7 @@
 #include "Player/PlayerTrigger.h"
 #include "PlayerUtil.h"
 #include "math/seadMatrix.h"
+#include "math/seadQuat.h"
 #include "math/seadVectorFwd.h"
 
 namespace rs {
@@ -344,7 +346,24 @@ void slerpUpFront(al::LiveActor* actor, const sead::Vector3f& up, const sead::Ve
   al::updatePoseQuat(actor, v13);
 }
 void slerpSkyPoseAir(al::LiveActor *, const sead::Vector3f &, const sead::Vector3f &, float) {CRASH}
-void slerpGravity(al::LiveActor *, float) {CRASH}
+void slerpGravity(al::LiveActor* actor, float a3) {
+  const sead::Vector3f& gravity = al::getGravity(actor);
+  sead::Vector3f front;
+  al::calcFrontDir(&front, actor);
+  if(al::isParallelDirection(front, gravity, 0.01f)) {
+    al::calcUpDir(&front, actor);
+    if(front.dot(gravity) < 0.0f) {
+      front = -front;
+    }
+  }
+
+  sead::Quatf quat = sead::Quatf::unit;
+  al::makeQuatUpFront(&quat, -gravity, front);
+  sead::Quatf quat2 = sead::Quatf::unit;
+  al::calcQuat(&quat2, actor);
+  al::slerpQuat(&quat2, quat2, quat, a3);
+  al::updatePoseQuat(actor, quat2);
+}
 void slerpSkyPoseAirSnapSide(al::LiveActor *, const sead::Vector3f &, const sead::Vector3f &, float, float) {CRASH}
 void scaleVelocityInertiaWallHit(al::LiveActor *actor, const IUsePlayerCollision *collision, float s0_0, float a4, float a5) {
   const sead::Vector3f *Gravity; // x0
@@ -1989,6 +2008,38 @@ LABEL_12:
   }
 
   return 0;
+}
+
+void brakeLandVelocityGroundNormal(al::LiveActor* actor,sead::Vector3<float> * out,IUsePlayerCollision const* collider,sead::Vector3<float> const& in,float a5,float a6) {
+
+  sead::Vector3f a3 = in;
+  if ( rs::isJustLand(collider) )
+    a3 = -al::getGravity(actor);
+
+  if ( rs::isCollidedGround(collider) )
+    *out = rs::getCollidedGroundNormal(collider);
+  else
+    *out = -al::getGravity(actor);
+
+  sead::Vector3f a1 = {0.0f, 0.0f, 0.0f};
+  al::alongVectorNormalH(&a1, al::getVelocity(actor), a3, *out);
+
+  a1 *= a5;
+  al::setVelocity(actor, a1 - (*out * a6));
+}
+
+void faceToCamera(al::LiveActor* actor) {
+  sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+  al::calcUpDir(&up, actor);
+
+  sead::Vector3f a3 = *al::getCameraPos(actor, 0) - al::getTrans(actor);
+  al::verticalizeVec(&a3, up, a3);
+  al::tryNormalizeOrZero(&a3);
+  if(al::isNearZero(a3, 0.001f)) return;
+
+  sead::Quatf quat = sead::Quatf::unit;
+  al::makeQuatUpFront(&quat, up, a3);
+  al::updatePoseQuat(actor, quat);
 }
 
 }  // namespace rs

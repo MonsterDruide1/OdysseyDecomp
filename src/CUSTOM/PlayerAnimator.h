@@ -525,12 +525,17 @@ public:
         else if(al::isEqualString(name, "StartSpinJumpR")) maxFrame = 8;
         else if(al::isEqualString(name, "RestartSpinJumpL")) maxFrame = 8;
         else if(al::isEqualString(name, "RestartSpinJumpR")) maxFrame = 8;
+        else if(al::isEqualString(name, "DamageDown")) maxFrame = 92;
         else {
             printf("unknown animation: %s\n", name);
             CRASH
         }
         currentFrame = 0;
         currentAnim = name;
+    }
+    void startAnimDead() {
+        // should be randomized, doesn't matter here
+        startAnim("Dead01");
     }
     bool isAnimEnd() {
         return currentFrame >= maxFrame;

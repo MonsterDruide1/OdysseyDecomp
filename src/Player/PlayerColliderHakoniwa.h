@@ -4,6 +4,7 @@
 
 #include "Library/HostIO/HioNode.h"
 #include "Player/IUsePlayerCollision.h"
+#include "Player/IUsePlayerCeilingCheck.h"
 
 namespace al {
 class LiveActor;
@@ -14,14 +15,6 @@ class PlayerConst;
 class PlayerCeilingCheck;
 class CollisionShapeKeeper;
 
-class IUsePlayerCeilingCheck {
-public:
-    virtual bool isEnableStandUp() const = 0;
-    virtual bool isEnableHoldUp() const = 0;
-    virtual bool isPressedCeil() const = 0;
-    virtual f32 getSafetyCeilSpace() const = 0;
-    virtual f32 getCeilCheckHeight() const = 0;
-};
 class IUsePlayerHeightCheck {
 public:
     virtual bool isAboveGround() const = 0;

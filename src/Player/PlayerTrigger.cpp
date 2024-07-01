@@ -90,3 +90,7 @@ bool PlayerTrigger::isOnHipDropCancelThrow() const {
 bool PlayerTrigger::isOnSpinMoveCapThrow() const {
     return mActionTrigger.isOnBit(EActionTrigger_val26) || mActionTrigger.isOnBit(EActionTrigger_val27);
 }
+
+bool PlayerTrigger::isOnNoDamageDown() const {
+    return mActionTrigger.isOnBit(EActionTrigger_val11) || mPreMovementTrigger.isOnBit(EPreMovementTrigger_val5);
+}

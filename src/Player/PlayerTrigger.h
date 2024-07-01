@@ -20,6 +20,8 @@ public:
         EActionTrigger_val1 = 1,
         EActionTrigger_val2 = 2,
         EActionTrigger_val3 = 3,
+        EActionTrigger_val5 = 5,
+        EActionTrigger_val6 = 6,
         EActionTrigger_val8 = 8,
         EActionTrigger_val9 = 9,
         EActionTrigger_val10 = 10,
@@ -46,7 +48,9 @@ public:
         EActionTrigger_QuickTurn = 34,
     };
     enum EReceiveSensorTrigger : u32 {};
-    enum EPreMovementTrigger : u32 {};
+    enum EPreMovementTrigger : u32 {
+        EPreMovementTrigger_val5 = 5,
+    };
     enum EDemoEndTrigger : u32 {
         EDemoEndTrigger_val0 = 0,
     };

@@ -71,6 +71,7 @@ bool calcAlongDirFront(sead::Vector3<float> *,al::LiveActor const*,sead::Vector3
 void addPlayerThrowCapCount(const al::LiveActor*);
 void moveInertiaTurn(sead::Vector3<float> *,sead::Quat<float> *,al::LiveActor *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float,float,float,float);
 bool calcAlongSkyFront(sead::Vector3<float> *,al::LiveActor const*);
+void brakeLandVelocityGroundNormal(al::LiveActor *,sead::Vector3<float> *,IUsePlayerCollision const*,sead::Vector3<float> const&,float,float);
 
 }
 
@@ -746,12 +747,7 @@ private:
     void* size[0x118/8];
 };
 
-class PlayerStateDamageLife : public al::NerveStateBase {
-public:
-    PlayerStateDamageLife(al::LiveActor *,PlayerConst const*,IUsePlayerCollision const*,PlayerInput const*,IUsePlayerCeilingCheck const*,PlayerAnimator *,PlayerTrigger *);
-private:
-    void* size[0x68/8];
-};
+#include "Player/PlayerStateDamageLife.h"
 
 class PlayerStateDamageSwim : public al::NerveStateBase {
 public:

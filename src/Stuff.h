@@ -15,6 +15,7 @@ bool isCollisionCodePress(al::HitInfo*);
 bool calcExistCollisionBorder(const al::IUseCollision*, const sead::Vector3f&,
                               const sead::Vector3f&);
 bool isPlayer2D(const al::LiveActor*);
+bool isPlayer3D(const al::LiveActor*);
 
 void calcJumpInertia(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
                      const sead::Vector3f&, f32);
@@ -93,5 +94,6 @@ void resetCollisionExpandCheck(IUsePlayerCollision *);
 void calcLockDirection(sead::Vector3f *,const IUseDimension *);
 
 bool tryGetPlayerInputWallAlongWallNormal(sead::Vector3<float> *,al::LiveActor const*);
+void faceToCamera(al::LiveActor *);
 
 }  // namespace rs
