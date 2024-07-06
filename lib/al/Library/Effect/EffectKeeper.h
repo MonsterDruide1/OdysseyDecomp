@@ -10,6 +10,8 @@ class EffectUserInfo;
 class MtxPtrHolder;
 class EffectSystemInfo;
 class EffectPrefixType;
+class EffectSystemInfo;
+class EffectResourceInfo;
 
 class EffectKeeper {
 public:
@@ -53,3 +55,12 @@ private:
     MtxPtrHolder* mMtxPtrHolder;
 };
 }  // namespace al
+
+class alEffectFunction {
+public:
+    static bool tryFindEffectUser(const al::EffectSystemInfo*, const char*);
+    static void initResourceInfo(const al::EffectSystemInfo*, al::EffectResourceInfo*);
+    static bool tryFindEffectResouceInfo(const al::EffectSystemInfo*, const char*);
+    static void emitEffectIfExist(al::IUseEffectKeeper* effectKeeperHolder, const char* effectName,
+                                  const sead::Vector3f* pos);
+};
