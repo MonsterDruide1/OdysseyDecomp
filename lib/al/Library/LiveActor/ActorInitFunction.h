@@ -16,4 +16,9 @@ void initActorCollisionWithResource(LiveActor* actor, const Resource* res,
                                     const sead::SafeString& collisionFileName, HitSensor* hitSensor,
                                     const sead::Matrix34f* joinMtx, const char* suffix);
 void initExecutorCollisionMapObjDecorationMovement(LiveActor* actor, const ActorInitInfo& info);
+void initActorModelKeeperByHost(LiveActor* actor, const LiveActor* parent);
+void initExecutorDraw(LiveActor* actor, const ActorInitInfo& info, const char* executorDrawName);
+void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& info,
+                                                    const sead::SafeString& archiveName,
+                                                    const char* suffix);
 }  // namespace al
