@@ -65,17 +65,16 @@ void EffectObjFollowCameraLimit::startDisappear() {
     setNerve(this, &Disappear);
 }
 
-// TODO: Non Matching
 void EffectObjFollowCameraLimit::control() {
     sead::Vector3f front;
     sead::Vector3f pos;
     calcCameraFront(&front, this, 0);
     pos.set(*getCameraPos(this, 0));
 
-    pos.y = sead::Mathf::clampMax(pos.y, mLimitBottom);
+    pos.y = sead::Mathf::max(pos.y, mLimitBottom);
 
     if (!isNearZero(mLimitTop + 1, 0.001f))
-        pos.y = sead::Mathf::clampMin(pos.y, mLimitTop);
+        pos.y = sead::Mathf::min(pos.y, mLimitTop);
 
     if (!isParallelDirection(sead::Vector3f::ey, front, 0.01f))
         makeMtxUpFrontPos(&mBaseMtx, sead::Vector3f::ey, front, pos);
