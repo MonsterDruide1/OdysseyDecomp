@@ -6,6 +6,7 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Obj/EffectObjFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
@@ -14,6 +15,9 @@
 
 namespace {
 using namespace al;
+
+NERVE_IMPL(EffectObjFollowCamera, Wait)
+NERVE_IMPL(EffectObjFollowCamera, Disappear)
 
 NERVES_MAKE_NOSTRUCT(EffectObjFollowCamera, Wait, Disappear)
 }  // namespace

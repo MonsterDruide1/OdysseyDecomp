@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Nerve/NerveSetupUtil.h"
 
 namespace al {
 class EffectObjFollowCameraLimit : public LiveActor {
@@ -24,9 +23,4 @@ private:
 };
 
 static_assert(sizeof(EffectObjFollowCameraLimit) == 0x140);
-
-namespace {
-NERVE_IMPL(EffectObjFollowCameraLimit, Wait)
-NERVE_IMPL(EffectObjFollowCameraLimit, Disappear)
-}  // namespace
 }  // namespace al

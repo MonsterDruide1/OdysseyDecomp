@@ -12,7 +12,7 @@ class LiveActor;
 
 Projection getProjection(const IUseCamera* cameraHolder, s32 cameraNum);
 
-sead::Vector3f* getCameraPos(const IUseCamera* cameraHolder, s32 cameraNum);
+const sead::Vector3f& getCameraPos(const IUseCamera* cameraHolder, s32 cameraNum);
 void calcCameraUpDir(sead::Vector3f* out, const IUseCamera* cameraHolder, s32 cameraNum);
 s32 getViewNumMax(const IUseCamera* cameraHolder);
 CameraSubTargetBase* createActorCameraSubTarget(const LiveActor* actor, const sead::Vector3f*);

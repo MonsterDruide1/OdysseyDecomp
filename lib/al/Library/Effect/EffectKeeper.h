@@ -56,11 +56,10 @@ private:
 };
 }  // namespace al
 
-class alEffectFunction {
-public:
-    static bool tryFindEffectUser(const al::EffectSystemInfo*, const char*);
-    static void initResourceInfo(const al::EffectSystemInfo*, al::EffectResourceInfo*);
-    static bool tryFindEffectResouceInfo(const al::EffectSystemInfo*, const char*);
-    static void emitEffectIfExist(al::IUseEffectKeeper* effectKeeperHolder, const char* effectName,
-                                  const sead::Vector3f* pos);
-};
+namespace alEffectFunction {
+bool tryFindEffectUser(const al::EffectSystemInfo*, const char*);
+void initResourceInfo(const al::EffectSystemInfo*, al::EffectResourceInfo*);
+bool tryFindEffectResouceInfo(const al::EffectSystemInfo*, const char*);
+void emitEffectIfExist(al::IUseEffectKeeper* effectKeeperHolder, const char* effectName,
+                       const sead::Vector3f* pos);
+}  // namespace alEffectFunction

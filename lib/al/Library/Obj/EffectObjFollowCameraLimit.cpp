@@ -8,6 +8,7 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
+#include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Obj/EffectObjFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
@@ -16,6 +17,9 @@
 
 namespace {
 using namespace al;
+
+NERVE_IMPL(EffectObjFollowCameraLimit, Wait)
+NERVE_IMPL(EffectObjFollowCameraLimit, Disappear)
 
 NERVES_MAKE_NOSTRUCT(EffectObjFollowCameraLimit, Wait, Disappear)
 }  // namespace
@@ -70,7 +74,7 @@ void EffectObjFollowCameraLimit::control() {
     sead::Vector3f pos;
 
     calcCameraFront(&front, this, 0);
-    pos.set(*getCameraPos(this, 0));
+    pos.set(getCameraPos(this, 0));
 
     pos.y = sead::Mathf::max(pos.y, mLimitBottom);
 

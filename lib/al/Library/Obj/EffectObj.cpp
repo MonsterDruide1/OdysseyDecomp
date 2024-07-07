@@ -57,19 +57,16 @@ void EffectObj::initAfterPlacement() {
 }
 
 void EffectObj::control() {
-    if (!isExistRail(this)) {
-        if (mMtxConnector != nullptr)
-            connectPoseQT(this, mMtxConnector);
-    } else {
+    if (isExistRail(this)) {
         switch (mMoveType) {
-        default:
-            moveSyncRail(this, mRailMoveSpeed);
-            break;
         case MoveType::Turn:
             moveSyncRailTurn(this, mRailMoveSpeed);
             break;
         case MoveType::Loop:
             moveSyncRailLoop(this, mRailMoveSpeed);
+            break;
+        default:
+            moveSyncRail(this, mRailMoveSpeed);
             break;
         }
 
@@ -83,7 +80,8 @@ void EffectObj::control() {
             makeMtxFrontUpPos(&poseMtx, railDir, railUp, railTrans);
             updatePoseMtx(this, &poseMtx);
         }
-    }
+    } else if (mMtxConnector != nullptr)
+        connectPoseQT(this, mMtxConnector);
 
     makeMtxRT(&mBaseMtx, this);
     tryEmitStart();
