@@ -22,7 +22,7 @@ private:
     MtxConnector* mMtxConnector = nullptr;
     MoveType mMoveType = MoveType::Loop;
     f32 mRailMoveSpeed = 0;
-    sead::Vector3f mRailPos{0, 0, 0};
+    sead::Vector3f mRailPos = {0, 0, 0};
     bool mIsSyncRailPose = false;
     bool mIsStarted = false;
     bool mIsEffectObjScale = false;

@@ -68,6 +68,7 @@ void EffectObjFollowCameraLimit::startDisappear() {
 void EffectObjFollowCameraLimit::control() {
     sead::Vector3f front;
     sead::Vector3f pos;
+
     calcCameraFront(&front, this, 0);
     pos.set(*getCameraPos(this, 0));
 
