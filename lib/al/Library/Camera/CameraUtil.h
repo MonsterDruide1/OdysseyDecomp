@@ -20,6 +20,6 @@ void initCameraSubTargetTurnParam(CameraSubTargetBase* cameraSubTarget,
                                   const CameraSubTargetTurnParam* params);
 void setCameraPlacementSubTarget(IUseCamera* cameraHolder, CameraSubTargetBase* cameraSubTarget);
 void resetCameraPlacementSubTarget(IUseCamera* cameraHolder, CameraSubTargetBase* cameraSubTarget);
-const sead::Matrix34f& getViewMtx(const IUseCamera* cameraHolder, int id);
-void calcCameraFront(sead::Vector3f* out, const IUseCamera* cameraHolder, int id);
+const sead::Matrix34f& getViewMtx(const IUseCamera* cameraHolder, s32 cameraNum);
+void calcCameraFront(sead::Vector3f* out, const IUseCamera* cameraHolder, s32 cameraNum);
 }  // namespace al

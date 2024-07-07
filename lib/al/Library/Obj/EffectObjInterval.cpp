@@ -14,7 +14,6 @@
 namespace al {
 EffectObjInterval::EffectObjInterval(const char* name) : LiveActor(name) {}
 
-// TODO: Non Matching
 void EffectObjInterval::init(const ActorInitInfo& info) {
     using EffectObjIntervalFunctor = FunctorV0M<EffectObjInterval*, void (EffectObjInterval::*)()>;
 
@@ -29,7 +28,7 @@ void EffectObjInterval::init(const ActorInitInfo& info) {
     mMtxConnector = tryCreateMtxConnector(this, info);
 
     tryGetArg(&mEmitInterval, info, "EmitInterval");
-    mTimer = tryGetArg(&mFirstEmitFrame, info, "FirstEmitFrame") ? mEmitInterval : 0;
+    mTimer = tryGetArg(&mFirstEmitFrame, info, "FirstEmitFrame") ? mFirstEmitFrame : 0;
 }
 
 void EffectObjInterval::initAfterPlacement() {
