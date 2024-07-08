@@ -10,24 +10,16 @@
 
 namespace al::EffectObjFunction {
 void initActorEffectObj(LiveActor* actor, const ActorInitInfo& info) {
-    const char* model = nullptr;
-    const char* tmp;
+    const char* modelName = nullptr;
 
-    if (!alPlacementFunction::tryGetModelName(&model, info))
-        getObjectName(&model, info);
+    if (!alPlacementFunction::tryGetModelName(&modelName, info))
+        getObjectName(&modelName, info);
 
-    tmp = model;
-
-    if (isExistArchive(StringTmp<128>("ObjectData/%s", model)))
-        initActorWithArchiveName(actor, info, tmp, nullptr);
-    else
-        initActorEffectObjNoArchive(actor, info);
-
-    initActorEffectKeeper(actor, info, tmp);
+    initActorEffectObj(actor, info, modelName);
 }
 
 void initActorEffectObj(LiveActor* actor, const ActorInitInfo& info, const char* archiveName) {
-    if (isExistArchive(StringTmp<128>("ObjectData/%s")))
+    if (isExistArchive(StringTmp<128>("ObjectData/%s", archiveName)))
         initActorWithArchiveName(actor, info, archiveName, nullptr);
     else
         initActorEffectObjNoArchive(actor, info);
@@ -50,8 +42,8 @@ void initActorEffectObjNoArchive(LiveActor* actor, const ActorInitInfo& info) {
 }
 
 void initActorEffectObjNoArchive(LiveActor* actor, const ActorInitInfo& info,
-                                 const char* archiveName) {
+                                 const char* effectKeeperName) {
     initActorEffectObjNoArchive(actor, info);
-    initActorEffectKeeper(actor, info, archiveName);
+    initActorEffectKeeper(actor, info, effectKeeperName);
 }
 }  // namespace al::EffectObjFunction
