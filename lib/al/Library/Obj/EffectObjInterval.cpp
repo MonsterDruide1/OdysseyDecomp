@@ -28,7 +28,10 @@ void EffectObjInterval::init(const ActorInitInfo& info) {
     mMtxConnector = tryCreateMtxConnector(this, info);
 
     tryGetArg(&mEmitInterval, info, "EmitInterval");
-    mTimer = tryGetArg(&mFirstEmitFrame, info, "FirstEmitFrame") ? mFirstEmitFrame : 0;
+    if (tryGetArg(&mFirstEmitFrame, info, "FirstEmitFrame"))
+        mTimer = mFirstEmitFrame;
+    else
+        mTimer = 0;
 }
 
 void EffectObjInterval::initAfterPlacement() {
