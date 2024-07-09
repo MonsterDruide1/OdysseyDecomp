@@ -1,10 +1,12 @@
 #pragma once
 
+#include <math/seadMatrix.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
 class LiveActor;
 class Resource;
+class HitSensor;
 
 LiveActor* createLinksActorFromFactory(const ActorInitInfo& info, const char* linkName,
                                        s32 linkNum);
@@ -21,4 +23,10 @@ void initExecutorDraw(LiveActor* actor, const ActorInitInfo& info, const char* e
 void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& info,
                                                     const sead::SafeString& archiveName,
                                                     const char* suffix);
+bool tryListenStageSwitchKill(LiveActor* actor);
+void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& info,
+                              const sead::SafeString& archiveName, const char* suffix);
+void initActorEffectKeeper(LiveActor* actor, const ActorInitInfo& info, const char* name);
+void initActorPoseTQSV(LiveActor* actor);
+void initExecutorUpdate(LiveActor* actor, const ActorInitInfo& info, const char* name);
 }  // namespace al

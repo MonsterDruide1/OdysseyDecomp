@@ -240,17 +240,17 @@ bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 
 class alPlacementFunction {
 public:
-    s32 getCameraId(const al::ActorInitInfo& initInfo);
-    void getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
-                        const char* linkName);
-    bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
-    bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);
-    void getClippingGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo);
-    void createClippingViewId(const al::PlacementInfo& placementInfo);
-    void getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placementInfo);
-    void getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo);
-    void getModelName(const char** modelName, const al::ActorInitInfo& initInfo);
-    void getModelName(const char** modelName, const al::PlacementInfo& placementInfo);
-    bool tryGetModelName(const char** modelName, const al::PlacementInfo& placementInfo);
-    bool tryGetModelName(const char** modelName, const al::ActorInitInfo& initInfo);
+    static s32 getCameraId(const al::ActorInitInfo& initInfo);
+    static void getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
+                               const char* linkName);
+    static bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
+    static bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);
+    static void getClippingGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo);
+    static void createClippingViewId(const al::PlacementInfo& placementInfo);
+    static void getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placementInfo);
+    static void getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo);
+    static void getModelName(const char** modelName, const al::ActorInitInfo& initInfo);
+    static void getModelName(const char** modelName, const al::PlacementInfo& placementInfo);
+    static bool tryGetModelName(const char** modelName, const al::PlacementInfo& placementInfo);
+    static bool tryGetModelName(const char** modelName, const al::ActorInitInfo& initInfo);
 };

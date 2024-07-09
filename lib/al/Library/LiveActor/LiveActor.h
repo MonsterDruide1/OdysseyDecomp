@@ -72,7 +72,7 @@ public:
     virtual bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target);
     virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*);
     virtual const char* getName() const override;
-    virtual sead::Matrix34f* getBaseMtx() const;
+    virtual const sead::Matrix34f* getBaseMtx() const;
     virtual EffectKeeper* getEffectKeeper() const override;
     virtual AudioKeeper* getAudioKeeper() const override;
     virtual StageSwitchKeeper* getStageSwitchKeeper() const override;

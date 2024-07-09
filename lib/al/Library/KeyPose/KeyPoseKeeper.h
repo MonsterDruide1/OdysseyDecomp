@@ -1,16 +1,11 @@
 #pragma once
 
+#include "Library/Movement/MoveType.h"
+
 namespace al {
 class ActorInitInfo;
 class PlacementInfo;
 class KeyPose;
-
-enum class MoveType : u32 {
-    Loop,
-    Turn,
-    Stop,
-    Restart,
-};
 
 class KeyPoseKeeper {
 public:
