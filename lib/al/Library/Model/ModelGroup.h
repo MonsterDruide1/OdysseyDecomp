@@ -17,6 +17,7 @@ public:
 private:
     void* filler[2];
 };
+
 static_assert(sizeof(ModelGroup) == 0x18);
 
 }  // namespace al

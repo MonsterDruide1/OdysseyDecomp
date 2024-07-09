@@ -6,6 +6,7 @@
 
 namespace al {
 ByamlIter::ByamlIter() : mData(nullptr), mRootNode(nullptr) {}
+
 ByamlIter::ByamlIter(const u8* data) : mData(data), mRootNode(nullptr) {
     if (!data)
         return;
@@ -21,20 +22,25 @@ ByamlIter::ByamlIter(const u8* data) : mData(data), mRootNode(nullptr) {
 
     mRootNode = &mData[header->getDataOffset()];
 }
+
 ByamlIter::ByamlIter(const u8* data, const u8* root_node) : mData(data), mRootNode(root_node) {}
 
 bool ByamlIter::isValid() const {
     return mData != nullptr;
 }
+
 bool ByamlIter::isTypeHash() const {
     return mRootNode ? mRootNode[0] == ByamlDataType::TYPE_HASH : false;
 }
+
 bool ByamlIter::isTypeArray() const {
     return mRootNode ? mRootNode[0] == ByamlDataType::TYPE_ARRAY : false;
 }
+
 bool ByamlIter::isTypeContainer() const {
     return isTypeHash() || isTypeArray();
 }
+
 // NON_MATCHING: stack allocated differently
 bool ByamlIter::isExistKey(const char* key) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
@@ -47,6 +53,7 @@ bool ByamlIter::isExistKey(const char* key) const {
     ByamlHashIter iter = {mRootNode, isInvertOrder()};
     return iter.findPair(index);
 }
+
 s32 ByamlIter::getKeyIndex(const char* key) const {
     ByamlStringTableIter hash = alByamlLocalUtil::getHashKeyTable(mData);
     if (!hash.isValidate())
@@ -54,9 +61,11 @@ s32 ByamlIter::getKeyIndex(const char* key) const {
 
     return hash.findStringIndex(key);
 }
+
 bool ByamlIter::isInvertOrder() const {
     return mHeader->isInvertOrder();
 }
+
 s32 ByamlIter::getSize() const {
     if (!mRootNode)
         return false;
@@ -66,6 +75,7 @@ s32 ByamlIter::getSize() const {
         return header->getCount(isInvertOrder());
     return 0;
 }
+
 ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index))
@@ -77,6 +87,7 @@ ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     }
     return {mData, &mData[data.getValue()]};
 }
+
 bool ByamlIter::getByamlDataByIndex(ByamlData* data, s32 index) const {
     if (!mRootNode)
         return false;
@@ -90,6 +101,7 @@ bool ByamlIter::getByamlDataByIndex(ByamlData* data, s32 index) const {
     }
     return false;
 }
+
 ByamlIter ByamlIter::getIterByKey(const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key))
@@ -101,6 +113,7 @@ ByamlIter ByamlIter::getIterByKey(const char* key) const {
     }
     return {mData, &mData[data.getValue()]};
 }
+
 bool ByamlIter::getByamlDataByKey(ByamlData* data, const char* key) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
@@ -128,6 +141,7 @@ bool ByamlIter::getByamlDataByKey(ByamlData* data, const char* key) const {
     }
     return false;
 }
+
 bool ByamlIter::getByamlDataByKeyIndex(ByamlData* data, s32 index) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
@@ -135,6 +149,7 @@ bool ByamlIter::getByamlDataByKeyIndex(ByamlData* data, s32 index) const {
     ByamlHashIter iter = {mRootNode, isInvertOrder()};
     return iter.getDataByKey(data, index);
 }
+
 bool ByamlIter::getByamlDataAndKeyName(ByamlData* data, const char** key, s32 index) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
@@ -153,13 +168,16 @@ bool ByamlIter::getByamlDataAndKeyName(ByamlData* data, const char** key, s32 in
     *key = hash_table.getString(pair->getKey(isInvertOrder()));
     return true;
 }
+
 bool ByamlIter::getKeyName(const char** key, s32 index) const {
     return getByamlDataAndKeyName(nullptr, key, index);
 }
+
 bool ByamlIter::tryGetIterByIndex(ByamlIter* iter, s32 index) const {
     *iter = getIterByIndex(index);
     return iter->isValid();
 }
+
 bool ByamlIter::tryGetIterAndKeyNameByIndex(ByamlIter* iter, const char** key, s32 index) const {
     ByamlData data;
     if (!getByamlDataAndKeyName(&data, key, index)) {
@@ -174,10 +192,12 @@ bool ByamlIter::tryGetIterAndKeyNameByIndex(ByamlIter* iter, const char** key, s
         *iter = {mData, nullptr};
     return true;
 }
+
 bool ByamlIter::tryGetIterByKey(ByamlIter* iter, const char* key) const {
     *iter = getIterByKey(key);
     return iter->isValid();
 }
+
 bool ByamlIter::tryConvertIter(ByamlIter* iter, const ByamlData* data) const {
     if (data->getType() == ByamlDataType::TYPE_ARRAY ||
         data->getType() == ByamlDataType::TYPE_HASH) {
@@ -198,6 +218,7 @@ bool ByamlIter::tryGetStringByIndex(const char** value, s32 index) const {
 
     return tryConvertString(value, &data);
 }
+
 bool ByamlIter::tryGetStringByKey(const char** value, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key))
@@ -219,6 +240,7 @@ bool ByamlIter::tryConvertString(const char** value, const ByamlData* data) cons
 
     return true;
 }
+
 bool ByamlIter::tryGetBinaryByIndex(const u8** value, s32* size, s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index))
@@ -226,6 +248,7 @@ bool ByamlIter::tryGetBinaryByIndex(const u8** value, s32* size, s32 index) cons
 
     return tryConvertBinary(value, size, &data);
 }
+
 bool ByamlIter::tryGetBinaryByKey(const u8** value, s32* size, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key))
@@ -233,6 +256,7 @@ bool ByamlIter::tryGetBinaryByKey(const u8** value, s32* size, const char* key) 
 
     return tryConvertBinary(value, size, &data);
 }
+
 bool ByamlIter::tryConvertBinary(const u8** value, s32* size, const ByamlData* data) const {
     if (data->getType() != ByamlDataType::TYPE_STRING)
         return false;
@@ -314,6 +338,7 @@ bool ByamlIter::tryGetFloatByIndex(f32* value, s32 index) const {
 
     return tryConvertFloat(value, &data);
 }
+
 bool ByamlIter::tryGetFloatByKey(f32* value, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key))
@@ -323,6 +348,7 @@ bool ByamlIter::tryGetFloatByKey(f32* value, const char* key) const {
         return false;
     return tryConvertFloat(value, &data);
 }
+
 bool ByamlIter::tryConvertFloat(f32* value, const ByamlData* data) const {
     if (data->getType() != ByamlDataType::TYPE_FLOAT)
         return false;

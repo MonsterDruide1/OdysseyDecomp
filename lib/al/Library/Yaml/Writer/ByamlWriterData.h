@@ -74,6 +74,7 @@ public:
 };
 
 class ByamlWriterStringTable;
+
 class ByamlWriterString : public ByamlWriterData {
 public:
     ByamlWriterString(const char*, ByamlWriterStringTable*);
@@ -177,6 +178,7 @@ public:
     virtual void deleteData();
 
     s32 getOffset() const { return mOffset; }
+
     void setOffset(s32 offset) { mOffset = offset; }
 
 private:
@@ -214,6 +216,7 @@ private:
     sead::TList<ByamlWriterData*> mList;
     ByamlWriterStringTable* mStringTable;
 };
+
 static_assert(sizeof(ByamlWriterArray) == 0x30);
 
 class ByamlWriterHashPair : public sead::ListNode {
@@ -221,6 +224,7 @@ public:
     ByamlWriterHashPair(const char*, ByamlWriterData*);
 
     const char* getKey() { return mKey; }
+
     ByamlWriterData* getValue() { return mValue; }
 
 private:
@@ -229,6 +233,7 @@ private:
     const char* mKey;
     ByamlWriterData* mValue;
 };
+
 static_assert(sizeof(ByamlWriterHashPair) == 0x30);
 
 class ByamlWriterHash : public ByamlWriterContainer {
@@ -263,6 +268,7 @@ private:
     ByamlWriterStringTable* mStringTable1;
     ByamlWriterStringTable* mStringTable2;
 };
+
 static_assert(sizeof(ByamlWriterHash) == 0x38);
 
 }  // namespace al

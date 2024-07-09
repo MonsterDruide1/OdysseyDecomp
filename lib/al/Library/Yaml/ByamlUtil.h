@@ -60,6 +60,7 @@ bool isTypeByIndex(const ByamlIter& rIter, s32 index) {
         return data.getType() == T;
     return false;
 }
+
 template <ByamlDataType T>
 bool isTypeByKey(const ByamlIter& rIter, const char* key) {
     ByamlData data;
@@ -67,6 +68,7 @@ bool isTypeByKey(const ByamlIter& rIter, const char* key) {
         return data.getType() == T;
     return false;
 }
+
 bool isTypeBoolByIndex(const ByamlIter&, s32);
 bool isTypeBoolByKey(const ByamlIter&, const char*);
 bool isTypeIntByIndex(const ByamlIter&, s32);

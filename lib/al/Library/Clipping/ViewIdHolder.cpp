@@ -6,6 +6,7 @@
 
 namespace al {
 ViewIdHolder::ViewIdHolder() {}
+
 ViewIdHolder* ViewIdHolder::tryCreate(const PlacementInfo& placementInfo) {
     if (calcLinkChildNum(placementInfo, "ViewGroup") < 1) {
         return nullptr;
@@ -15,6 +16,7 @@ ViewIdHolder* ViewIdHolder::tryCreate(const PlacementInfo& placementInfo) {
         return holder;
     }
 }
+
 void ViewIdHolder::init(const PlacementInfo& placementInfo) {
     mNumPlacements = calcLinkChildNum(placementInfo, "ViewGroup");
     mPlacementIds = new PlacementId[mNumPlacements];
@@ -26,6 +28,7 @@ void ViewIdHolder::init(const PlacementInfo& placementInfo) {
         }
     }
 }
+
 PlacementId& ViewIdHolder::getViewId(s32 idx) const {
     return mPlacementIds[idx];
 }

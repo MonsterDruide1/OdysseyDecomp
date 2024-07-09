@@ -11,6 +11,7 @@ public:
     AudioSystemInfo();
 
     SeDataBase* getSeDataBase() const { return mSeDataBase; }
+
     BgmDataBase* getBgmDataBase() const { return mBgmDataBase; }
 
 private:

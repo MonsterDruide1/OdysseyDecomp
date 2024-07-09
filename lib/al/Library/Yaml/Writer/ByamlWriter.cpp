@@ -40,34 +40,42 @@ void ByamlWriter::addBool(bool value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addBool(value);
 }
+
 void ByamlWriter::addInt(s32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt(value);
 }
+
 void ByamlWriter::addUInt(u32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt(value);
 }
+
 void ByamlWriter::addFloat(f32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(value);
 }
+
 void ByamlWriter::addInt64(s64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt64(value, mBigDataList);
 }
+
 void ByamlWriter::addUInt64(u64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt64(value, mBigDataList);
 }
+
 void ByamlWriter::addDouble(f64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addDouble(value, mBigDataList);
 }
+
 void ByamlWriter::addString(const char* value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addString(value);
 }
+
 void ByamlWriter::addNull() {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addNull();
@@ -77,34 +85,42 @@ void ByamlWriter::addBool(const char* key, bool value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addBool(key, value);
 }
+
 void ByamlWriter::addInt(const char* key, s32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt(key, value);
 }
+
 void ByamlWriter::addUInt(const char* key, u32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt(key, value);
 }
+
 void ByamlWriter::addFloat(const char* key, f32 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addFloat(key, value);
 }
+
 void ByamlWriter::addInt64(const char* key, s64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addInt64(key, value, mBigDataList);
 }
+
 void ByamlWriter::addUInt64(const char* key, u64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addUInt64(key, value, mBigDataList);
 }
+
 void ByamlWriter::addDouble(const char* key, f64 value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addDouble(key, value, mBigDataList);
 }
+
 void ByamlWriter::addString(const char* key, const char* value) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addString(key, value);
 }
+
 void ByamlWriter::addNull(const char* key) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mContainerStack[mCurrentContainerIndex]->addNull(key);
@@ -113,9 +129,11 @@ void ByamlWriter::addNull(const char* key) {
 ByamlWriterContainer* ByamlWriter::getCurrentContainer() {
     return mContainerStack[mCurrentContainerIndex];
 }
+
 ByamlWriterArray* ByamlWriter::getArrayCurrentContainer() {
     return static_cast<ByamlWriterArray*>(getCurrentContainer());
 }
+
 ByamlWriterHash* ByamlWriter::getHashCurrentContainer() {
     return static_cast<ByamlWriterHash*>(getCurrentContainer());
 }
@@ -125,6 +143,7 @@ void ByamlWriter::pushContainer(ByamlWriterContainer* container) {
     mContainerStack[mCurrentContainerIndex] = container;
     mContainerList.pushBack(new sead::TListNode<ByamlWriterContainer*>(container));
 }
+
 void ByamlWriter::pushHash() {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     auto* hash = new ByamlWriterHash(mStringTable1, mStringTable2);
@@ -133,6 +152,7 @@ void ByamlWriter::pushHash() {
 
     pushContainer(hash);
 }
+
 void ByamlWriter::pushArray() {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     auto* array = new ByamlWriterArray(mStringTable2);
@@ -141,6 +161,7 @@ void ByamlWriter::pushArray() {
 
     pushContainer(array);
 }
+
 void ByamlWriter::pushHash(const char* key) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     auto* hash = new ByamlWriterHash(mStringTable1, mStringTable2);
@@ -148,6 +169,7 @@ void ByamlWriter::pushHash(const char* key) {
 
     pushContainer(hash);
 }
+
 void ByamlWriter::pushArray(const char* key) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     auto* array = new ByamlWriterArray(mStringTable2);
@@ -159,9 +181,11 @@ void ByamlWriter::pushArray(const char* key) {
 void ByamlWriter::pushIter(const ByamlIter& iter) {
     pushLocalIter(iter, nullptr);
 }
+
 void ByamlWriter::pushIter(const char* key, const ByamlIter& iter) {
     pushLocalIter(iter, key);
 }
+
 void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
     if (!iter.isValid())
         return;
@@ -278,9 +302,11 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
 void ByamlWriter::pop() {
     mCurrentContainerIndex--;
 }
+
 u32 ByamlWriter::calcHeaderSize() const {
     return 16;
 }
+
 u32 ByamlWriter::calcPackSize() const {
     u32 size = 16;
     if (mStringTable1)
@@ -293,6 +319,7 @@ u32 ByamlWriter::calcPackSize() const {
         size += container->calcPackSize();
     return size;
 }
+
 // NON_MATCHING: offsetBigDataList increased "too early"
 void ByamlWriter::write(sead::WriteStream* stream) {
     stream->writeU16(0x4259);

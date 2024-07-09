@@ -21,4 +21,5 @@ private:
     const PlayerCounterForceRun* mCounterForceRun;
     const PlayerCarryKeeper* mCarryKeeper;
 };
+
 static_assert(sizeof(PlayerJudgeStartSquat) == 0x20);

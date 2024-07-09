@@ -52,4 +52,5 @@ private:
     sead::StrTreeMap<128, StagePosInfo*> mStagePosList;
     sead::PtrArrayImpl field_30;
 };
+
 static_assert(sizeof(WorldList) == 0x40, "WorldList Size");

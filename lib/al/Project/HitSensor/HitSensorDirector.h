@@ -22,6 +22,7 @@ public:
 private:
     void* filler[8];
 };
+
 static_assert(sizeof(HitSensorDirector) == 0x48);
 
 }  // namespace al

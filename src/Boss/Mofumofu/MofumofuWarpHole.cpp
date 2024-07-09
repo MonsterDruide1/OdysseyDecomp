@@ -50,45 +50,57 @@ void MofumofuWarpHole::appear() {
 void MofumofuWarpHole::disappear() {
     al::setNerve(this, &Disappear);
 }
+
 void MofumofuWarpHole::close() {
     al::setNerve(this, &Close);
 }
+
 void MofumofuWarpHole::closeAndDisappear() {
     al::setNerve(this, &CloseAndDisappear);
 }
+
 void MofumofuWarpHole::open() {
     al::setNerve(this, &Appear);
 }
+
 void MofumofuWarpHole::startHideMove() {
     al::setNerve(this, &HideMove);
 }
+
 void MofumofuWarpHole::startDashSign() {
     al::setNerve(this, &DashSign);
 }
+
 bool MofumofuWarpHole::isWait() const {
     return al::isNerve(this, &Wait);
 }
+
 bool MofumofuWarpHole::isHideWait() const {
     return al::isNerve(this, &HideWait);
 }
+
 void MofumofuWarpHole::calcDashSignFront(sead::Vector3f* front) const {
     al::calcJointFrontDir(front, this, "DashSign");
 }
+
 void MofumofuWarpHole::exeAppear() {
     if (al::isFirstStep(this))
         al::startAction(this, "Appear");
     al::setNerveAtActionEnd(this, &Wait);
 }
+
 void MofumofuWarpHole::exeWait() {
     if (al::isFirstStep(this))
         al::startAction(this, "Wait");
 }
+
 void MofumofuWarpHole::exeDisappear() {
     if (al::isFirstStep(this))
         al::startAction(this, "Disappear");
     if (!al::isEffectEmitting(this, "Disappear"))
         kill();
 }
+
 void MofumofuWarpHole::exeClose() {
     if (al::isFirstStep(this))
         al::startAction(this, "Disappear");
@@ -100,11 +112,14 @@ void MofumofuWarpHole::exeClose() {
             al::setNerve(this, &HideWait);
     }
 }
+
 void MofumofuWarpHole::exeHideWait() {}
+
 void MofumofuWarpHole::exeHideMove() {
     if (al::isFirstStep(this))
         al::startAction(this, "Move");
 }
+
 void MofumofuWarpHole::exeDashSign() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "DashSign");
@@ -137,6 +152,7 @@ void MofumofuWarpHole::exeDashSign() {
     al::makeQuatFrontUp(&gap, v21, v20);
     al::setNerveAtGreaterEqualStep(this, &DashSignEnd, 120);
 }
+
 void MofumofuWarpHole::exeDashSignEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, "DashSignEnd");

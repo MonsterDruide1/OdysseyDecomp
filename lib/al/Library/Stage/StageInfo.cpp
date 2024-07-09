@@ -10,9 +10,11 @@ StageInfo::StageInfo(Resource* resource, const ByamlIter& placement_iter,
     mPlacementInfo = new PlacementInfo();
     mPlacementInfo->set(placement_iter, zone_iter);
 }
+
 const ByamlIter& StageInfo::getPlacementIter() const {
     return mPlacementInfo->getPlacementIter();
 }
+
 const ByamlIter& StageInfo::getZoneIter() const {
     return mPlacementInfo->getZoneIter();
 }

@@ -30,7 +30,9 @@ bool PlayerJudgeStartRolling::isTriggerRestartSwing() const {
 }
 
 void PlayerJudgeStartRolling::reset() {}
+
 void PlayerJudgeStartRolling::update() {}
+
 bool PlayerJudgeStartRolling::judge() const {
     return isEnableTriggerRolling() &&
            mInput->isTriggerRolling(rs::isOnGroundForceRollingCode(mPlayer, mCollider));

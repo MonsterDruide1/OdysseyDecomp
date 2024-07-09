@@ -42,6 +42,7 @@ public:
     const char* getArchiveName() const;
 
     ActorInitResourceData* getResData() const { return mData; }
+
     nn::g3d::ResFile* getResFile() const { return mResFile; }
 
 private:
@@ -61,7 +62,9 @@ public:
     void initResourceData(const char*, bool);
 
     bool hasAnimData() const { return mHasAnimData; }
+
     Resource* getModelRes() const { return mModelRes; }
+
     Resource* getAnimRes() const { return mAnimRes; }
 
 private:

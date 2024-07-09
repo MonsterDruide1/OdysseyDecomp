@@ -20,6 +20,7 @@ public:
         : mFactoryName(factoryName) {
         initFactory(entries);
     }
+
     template <s32 N>
     inline void initFactory(NameToCreator<T> (&entries)[N]) {
         mFactoryEntries = entries;

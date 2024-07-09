@@ -32,6 +32,7 @@ public:
 private:
     void* filler[312];
 };
+
 static_assert(sizeof(GraphicsSystemInfo) == 0x9c0);
 
 }  // namespace al

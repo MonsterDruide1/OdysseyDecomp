@@ -18,4 +18,5 @@ private:
     const al::IUseNerve* mNerveUser;
     const al::Nerve* mNerve;
 };
+
 static_assert(sizeof(PlayerJudgeSameNerve) == 0x18);

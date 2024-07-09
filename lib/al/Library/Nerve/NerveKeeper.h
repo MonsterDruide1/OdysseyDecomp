@@ -19,8 +19,11 @@ public:
     const Nerve* getCurrentNerve() const;
 
     s32 getCurrentStep() const { return mStep; }
+
     bool isNewNerve() const { return mNextNerve != nullptr; }
+
     NerveStateCtrl* getStateCtrl() const { return mStateCtrl; }
+
     NerveActionCtrl* getActionCtrl() const { return mActionCtrl; }
 
     template <typename T>

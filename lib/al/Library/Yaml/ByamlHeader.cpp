@@ -63,12 +63,15 @@ u32 ByamlStringTableIter::getEndAddress() const {
     u32 val = getAddressTable()[getSize()];
     return mIsRev ? bswap_32(val) : val;
 }
+
 const char* ByamlStringTableIter::getString(s32 index) const {
     return reinterpret_cast<const char*>(&mData[getStringAddress(index)]);
 }
+
 s32 ByamlStringTableIter::getStringSize(s32 index) const {
     return getStringAddress(index + 1) - getStringAddress(index) - 1;
 }
+
 s32 ByamlStringTableIter::findStringIndex(const char* str) const {
     s32 lowerBound = 0;
     s32 upperBound = getSize();
@@ -127,6 +130,7 @@ const char* getDataTypeString(s32 type) {
         return "Unknown";
     };
 }
+
 al::ByamlStringTableIter getHashKeyTable(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
     s32 off = header->getHashKeyTableOffset();
@@ -134,6 +138,7 @@ al::ByamlStringTableIter getHashKeyTable(const u8* data) {
         return {};
     return {&data[off], header->isInvertOrder()};
 }
+
 al::ByamlStringTableIter getStringTable(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
     s32 off = header->getStringTableOffset();

@@ -23,7 +23,9 @@ public:
     virtual void kill();
     virtual void drawMain() const;
     virtual void drawSub() const;
+
     virtual bool isDisposable() { return false; }
+
     virtual Scene* getCurrentScene() const;
     virtual SceneCreator* getSceneCreator() const override;
     virtual void setSceneCreator(SceneCreator* sceneCreator) override;

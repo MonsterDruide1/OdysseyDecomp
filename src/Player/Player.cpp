@@ -27,6 +27,7 @@ NERVE_IMPL(Player, Damage);
 
 // weird intermediate way that has no macro pre-defined
 NERVE_MAKE(Player, Damage);
+
 struct {
     NERVE_MAKE(Player, Fall);
     NERVE_MAKE(Player, Jump);

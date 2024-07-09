@@ -26,6 +26,7 @@ public:
 private:
     ScreenPointCheckGroup* mCheckGroup;
 };
+
 static_assert(sizeof(ScreenPointDirector) == 0x8);
 
 }  // namespace al

@@ -21,4 +21,5 @@ private:
     sead::Vector3f mLeaveWallPosition = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mLeaveWallNormal = {0.0f, 0.0f, 0.0f};
 };
+
 static_assert(sizeof(PlayerWallActionHistory) == 0x38);

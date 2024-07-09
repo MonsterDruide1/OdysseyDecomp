@@ -22,7 +22,9 @@ public:
     s32 tryFindIndexByName(const char*) const;
 
     AchievementInfo* get(s32 index) { return mAchievements[index]; }
+
     s32 size() { return mAchievements.size(); }
+
     s32 capacity() { return mAchievements.capacity(); }
 
 private:

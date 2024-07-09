@@ -16,6 +16,7 @@ public:
 private:
     void* filler[2];
 };
+
 static_assert(sizeof(GravityHolder) == 0x10);
 
 }  // namespace al

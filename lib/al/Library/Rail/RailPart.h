@@ -24,7 +24,9 @@ public:
     f32 getPartLength() const;
 
     void setTotalDistance(f32 len) { mTotalDistance = len; }
+
     f32 getTotalDistance() const { return mTotalDistance; }
+
     bool isBezierCurve() const { return mBezierCurve != nullptr; }
 
 private:

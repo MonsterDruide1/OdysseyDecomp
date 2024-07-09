@@ -49,4 +49,5 @@ private:
     sead::Vector3f mCollidedWallNormal = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mNormalAtPos = {0.0f, 0.0f, 0.0f};
 };
+
 static_assert(sizeof(PlayerJudgeWallCatch) == 0x88);

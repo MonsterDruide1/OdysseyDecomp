@@ -18,6 +18,7 @@ void AchievementHolder::init(const al::ActorInitInfo&) {
     for (s32 i = 0; i < mArray.capacity(); i++)
         mArray.pushBack(new Achievement(mAchievementInfoReader->get(i)));
 }
+
 void AchievementHolder::init() {
     mAchievementInfoReader = new AchievementInfoReader();
     mAchievementInfoReader->init();

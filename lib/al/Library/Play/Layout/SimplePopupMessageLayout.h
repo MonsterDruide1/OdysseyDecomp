@@ -6,6 +6,7 @@
 
 namespace al {
 class LayoutInitInfo;
+
 class SimplePopupMessageLayout : public LayoutActor {
 public:
     SimplePopupMessageLayout(const char* name, const char* layoutName, const LayoutInitInfo& info,
