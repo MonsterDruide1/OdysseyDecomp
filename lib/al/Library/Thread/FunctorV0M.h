@@ -7,6 +7,7 @@ public:
     inline FunctorBase(const FunctorBase& copy) = default;
     virtual void operator()() const = 0;
     virtual FunctorBase* clone() const = 0;
+
     virtual ~FunctorBase() {}
 };
 
@@ -19,6 +20,7 @@ public:
     inline FunctorV0M(const FunctorV0M<T, F>& copy) = default;
 
     void operator()() const override { (mObjPointer->*mFunctor)(); }
+
     FunctorV0M<T, F>* clone() const override { return new FunctorV0M<T, F>(*this); }
 
 private:

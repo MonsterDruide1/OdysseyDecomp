@@ -15,4 +15,5 @@ private:
     const IJudge* mJudgeLongFall;
     const PlayerTrigger* mTrigger;
 };
+
 static_assert(sizeof(PlayerJudgeForceLand) == 0x18);

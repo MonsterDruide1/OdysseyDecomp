@@ -14,11 +14,17 @@ class GamePadSystem;
 class LayoutSceneInfo {
 public:
     LayoutSceneInfo();
+
     eui::FontMgr* getFontMgr() const { return mFontMgr; }
+
     CameraDirector* getCameraDirector() const { return mCameraDirector; }
+
     PadRumbleDirector* getPadRumbleDirector() const { return mPadRumbleDirector; }
+
     SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
+
     const MessageSystem* getMessageSystem() const { return mMessageSystem; }
+
     const GamePadSystem* getGamePadSystem() const { return mGamePadSystem; }
 
 private:

@@ -61,7 +61,9 @@ void BarrierField::disappearByShineGet() {
 }
 
 void BarrierField::exeAppear() {}
+
 void BarrierField::exeAppearBreedaMoonWorld() {}
+
 void BarrierField::exeHide() {}
 
 void BarrierField::exeDisappear() {

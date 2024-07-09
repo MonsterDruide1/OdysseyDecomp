@@ -33,4 +33,5 @@ private:
     const IPlayerModelChanger* mModelChanger;
     const PlayerCarryKeeper* mCarryKeeper;
 };
+
 static_assert(sizeof(PlayerJudgeStartRolling) == 0x38);

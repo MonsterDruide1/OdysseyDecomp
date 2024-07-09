@@ -30,14 +30,23 @@ public:
     void removeNamedHeap(const char* heapName);
 
     sead::ExpHeap* getStationedHeap() { return mStationedHeap; }
+
     sead::ExpHeap* getSequenceHeap() { return mSequenceHeap; }
+
     sead::ExpHeap* getSceneResourceHeap() { return mSceneResourceHeap; }
+
     sead::ExpHeap* getSceneHeap() { return mSceneHeap; }
+
     sead::ExpHeap* getPlayerResourceHeap() { return mPlayerResourceHeap; }
+
     sead::ExpHeap* getCourseSelectResourceHeap() { return mCourseSelectResourceHeap; }
+
     sead::ExpHeap* getCourseSelectHeap() { return mCourseSelectHeap; }
+
     sead::ExpHeap* getWorldResourceHeap() { return mWorldResourceHeap; }
+
     AudioResourceDirector* getAudioResourceDirector() { return mAudioResourceDirector; }
+
     void setAudioResourceDirector(AudioResourceDirector* audioResourceDirector) {
         mAudioResourceDirector = audioResourceDirector;
     }

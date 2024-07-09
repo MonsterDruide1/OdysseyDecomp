@@ -44,6 +44,7 @@ public:
 private:
     void* filler[3];
 };
+
 static_assert(sizeof(StageSwitchDirector) == 0x20);
 
 bool tryOnStageSwitch(IUseStageSwitch*, const char*);

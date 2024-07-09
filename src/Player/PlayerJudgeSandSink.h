@@ -20,4 +20,5 @@ private:
     const IUsePlayerCollision* mCollider;
     const PlayerSandSinkAffect* mSandSinkAffect;
 };
+
 static_assert(sizeof(PlayerJudgeSandSink) == 0x18);

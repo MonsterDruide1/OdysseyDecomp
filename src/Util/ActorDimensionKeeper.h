@@ -18,9 +18,13 @@ public:
     bool update();
 
     bool getIs2D() const { return mIs2D; }
+
     bool getIsIn2DArea() const { return mIsIn2DArea; }
+
     bool getIsCurrently2D() const { return mIsCurrently2D; }
+
     bool getIsCanChange2D() const { return mIsCanChange2D; }
+
     bool getIsCanChange3D() const { return mIsCanChange3D; }
 
 private:
@@ -33,6 +37,7 @@ private:
     bool mIsCanChange3D = false;
     In2DAreaMoveControl* mIn2DAreaMoveControl = nullptr;
 };
+
 static_assert(sizeof(ActorDimensionKeeper) == 0x18);
 
 namespace rs {

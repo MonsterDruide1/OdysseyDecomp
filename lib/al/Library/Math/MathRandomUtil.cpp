@@ -8,9 +8,11 @@ f32 getRandom() {
     u32 random = (sead::GlobalRandom::instance()->getU32() >> 9) | 0x3F800000;
     return (*reinterpret_cast<f32*>(&random)) - 1;
 }
+
 f32 getRandom(f32 factor) {
     return getRandom(0.f, factor);
 }
+
 f32 getRandom(f32 min, f32 max) {
     return (getRandom() * (max - min)) + min;
 }
@@ -18,6 +20,7 @@ f32 getRandom(f32 min, f32 max) {
 s32 getRandom(s32 factor) {
     return getRandom(0, factor);
 }
+
 s32 getRandom(s32 min, s32 max) {
     return (s32)getRandom((f32)min, (f32)max);
 }
@@ -25,6 +28,7 @@ s32 getRandom(s32 min, s32 max) {
 f32 getRandomDegree() {
     return getRandom(360.f);
 }
+
 f32 getRandomRadian() {
     return getRandom(6.2832f);
 }

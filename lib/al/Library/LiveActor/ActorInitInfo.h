@@ -76,7 +76,9 @@ public:
     void initNoViewId(const PlacementInfo*, const ActorInitInfo&);
 
     const LayoutInitInfo& getLayoutInitInfo() const { return *mLayoutInitInfo; }
+
     const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+
     const ActorSceneInfo& getActorSceneInfo() const { return mActorSceneInfo; }
 
 private:

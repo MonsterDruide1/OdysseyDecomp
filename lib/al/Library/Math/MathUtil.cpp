@@ -45,9 +45,11 @@ f32 normalize(s32 var, s32 min, s32 max) {
 f32 easeIn(f32 var) {
     return (((var * -0.5f) + 1.5f) * var) * var;
 }
+
 f32 easeOut(f32 var) {
     return (((var * -0.5f) * var) + 1.5f) * var;
 }
+
 f32 easeInOut(f32 var) {
     return (((var * -2.0f) + 3.0f) * var) * var;
 }
@@ -75,6 +77,7 @@ s32 sign(s32 var) {
 f32 squareIn(f32 var) {
     return var * var;
 }
+
 f32 squareOut(f32 var) {
     return (2.0f - var) * var;
 }
@@ -82,6 +85,7 @@ f32 squareOut(f32 var) {
 f32 powerIn(f32 x, f32 y) {
     return powf(x, y);
 }
+
 f32 powerOut(f32 x, f32 y) {
     return powf(x, 1.0 / y);
 }

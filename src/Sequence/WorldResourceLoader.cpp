@@ -21,6 +21,7 @@ WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) {
     mWorldResourceLoader = new al::AsyncFunctorThread("WorldResourceLoader", functor, priority,
                                                       0x100000, sead::CoreId::cMain);
 }
+
 WorldResourceLoader::~WorldResourceLoader() {
     mIsCancelled = true;
     mCurLoadCount = 0;
@@ -133,6 +134,7 @@ bool WorldResourceLoader::requestLoadWorldResource(s32 loadWorldId) {
     requestLoadWorldResourceCommon(loadWorldId);
     return true;
 }
+
 // unused func
 void WorldResourceLoader::createResourcePlayer() {}
 

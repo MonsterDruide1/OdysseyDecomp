@@ -103,7 +103,9 @@ public:
     f32 getFovyDegree() const;
 
     sead::Vector3f getPosition() const { return mPosition; };
+
     sead::Vector3f getTargetTrans() const { return mTargetTrans; };
+
     sead::Vector3f getCameraUp() const { return mCameraUp; };
 
 private:

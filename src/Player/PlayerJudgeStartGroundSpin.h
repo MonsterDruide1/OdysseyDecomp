@@ -21,4 +21,5 @@ private:
     const IUsePlayerCollision* mCollider;
     const PlayerInput* mInput;
 };
+
 static_assert(sizeof(PlayerJudgeStartGroundSpin) == 0x20);

@@ -72,6 +72,7 @@ void ActorActionKeeper::init() {
     if (mFlagCtrl)
         mFlagCtrl->initPost();
 }
+
 bool ActorActionKeeper::startAction(const char* name) {
     mIsActionRunning = true;
     if (!mNerveActionCtrl)
@@ -79,6 +80,7 @@ bool ActorActionKeeper::startAction(const char* name) {
 
     return mAnimCtrl && mAnimCtrl->start(name);
 }
+
 void ActorActionKeeper::tryStartActionNoAnim(const char* string) {
     if (mFlagCtrl)
         mFlagCtrl->start(string);
@@ -93,5 +95,6 @@ void ActorActionKeeper::tryStartActionNoAnim(const char* string) {
     if (mScreenEffectCtrl)
         mScreenEffectCtrl->startAction(string);
 }
+
 void ActorActionKeeper::updatePrev() {}
 }  // namespace al

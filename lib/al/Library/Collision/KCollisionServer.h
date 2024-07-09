@@ -8,6 +8,7 @@ namespace al {
 class SphereInterpolator {
 public:
     SphereInterpolator() {}
+
     void startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd, f32 sizeStart,
                      f32 sizeEnd, f32 steps);
     void nextStep();
@@ -30,6 +31,7 @@ private:
 class SpherePoseInterpolator {
 public:
     SpherePoseInterpolator() {}
+
     void startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd, f32 sizeStart,
                      f32 sizeEnd, const sead::Quatf& quatStart, const sead::Quatf& quatEnd,
                      f32 steps);

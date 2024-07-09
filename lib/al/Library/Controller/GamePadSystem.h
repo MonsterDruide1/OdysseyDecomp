@@ -30,6 +30,7 @@ private:
     sead::Buffer<sead::WFixedSafeString<256>> mControllerNames;
     AudioSystem* mAudioSystem;
 };
+
 static_assert(sizeof(GamePadSystem) == 0x30);
 
 }  // namespace al

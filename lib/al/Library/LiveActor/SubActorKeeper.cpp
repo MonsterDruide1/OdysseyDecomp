@@ -25,6 +25,7 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
     mBuffer[mCurActorCount] = new SubActorInfo(subActor, static_cast<SubActorSync>(syncType));
     mCurActorCount++;
 }
+
 // NON-MATCHING
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
@@ -232,6 +233,7 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
 SubActorKeeper* SubActorKeeper::create(LiveActor* rootActor) {
     return new SubActorKeeper(rootActor);
 }
+
 SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* rootActor, const char* suffix,
                                           s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;

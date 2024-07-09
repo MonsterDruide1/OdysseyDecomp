@@ -15,4 +15,5 @@ bool PlayerJudgeDrawForward::judge() const {
 }
 
 void PlayerJudgeDrawForward::reset() {}
+
 void PlayerJudgeDrawForward::update() {}

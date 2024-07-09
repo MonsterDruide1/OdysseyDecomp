@@ -19,33 +19,43 @@ struct SklAnimRetargettingInfo;
 inline AnimPlayerSkl* getSkl(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimSkl();
 }
+
 inline AnimPlayerMat* getMtp(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimMtp();
 }
+
 inline AnimPlayerMat* getMcl(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimMcl();
 }
+
 inline AnimPlayerMat* getMts(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimMts();
 }
+
 inline AnimPlayerMat* getMat(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimMat();
 }
+
 inline AnimPlayerVis* getVis(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimVis();
 }
+
 inline AnimPlayerVis* getVisForAction(const LiveActor* actor) {
     return actor->getModelKeeper()->getAnimVisForAction();
 }
+
 inline void updateModelDraw(const LiveActor* actor) {
     actor->getModelKeeper()->getModelCtrl()->recreateDisplayList();
 }
+
 inline void updateActorSystem(LiveActor* actor) {
     alActorSystemFunction::updateExecutorDraw(actor);
 }
+
 inline void setSklBlendWeight(const LiveActor* actor, u32 index, f32 weight) {
     getSkl(actor)->setSklAnimBlendWeight(index, weight);
 }
+
 inline void createMat(const LiveActor* actor, s32 programType) {
     actor->getModelKeeper()->createMatAnimForProgram(programType);
 }

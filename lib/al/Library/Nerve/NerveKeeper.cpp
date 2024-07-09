@@ -9,9 +9,11 @@ NerveKeeper::NerveKeeper(IUseNerve* parent, const Nerve* nerve, s32 maxStates)
     if (maxStates > 0)
         mStateCtrl = new NerveStateCtrl(maxStates);
 }
+
 void NerveKeeper::initNerveAction(NerveActionCtrl* actionCtrl) {
     mActionCtrl = actionCtrl;
 }
+
 void NerveKeeper::setNerve(const Nerve* nextNerve) {
     if (mStep >= 0 && mCurrentNerve != nullptr)
         mCurrentNerve->executeOnEnd(this);
@@ -31,12 +33,14 @@ void NerveKeeper::tryChangeNerve() {
         mStep = 0;
     }
 }
+
 void NerveKeeper::update() {
     tryChangeNerve();
     mCurrentNerve->execute(this);
     mStep++;
     tryChangeNerve();
 }
+
 const Nerve* NerveKeeper::getCurrentNerve() const {
     return mNextNerve ? mNextNerve : mCurrentNerve;
 }

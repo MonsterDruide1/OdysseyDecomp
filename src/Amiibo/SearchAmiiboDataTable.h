@@ -24,6 +24,7 @@ struct SearchAmiiboDataTableEntries {
         for (auto& entry : e)
             entry.init();
     };
+
     SearchAmiiboData e[3];
 };
 
