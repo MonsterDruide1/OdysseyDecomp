@@ -104,14 +104,14 @@ void FallMapParts::exeWait() {
     }
 }
 
-// TODO: Non Matching
 void FallMapParts::exeFallSign() {
     if (isFirstStep(this))
         mIsStartAction = tryStartAction(this, "FallSign");
 
     if (!mIsStartAction) {
-        setTrans(this,
-                 (sinf(calcNerveValue(this, 20, 0.0f, 9.424778f)) * 3) * sead::Vector3f::ey + mPos);
+        f32 velocity = sead::Mathf::sin(calcNerveValue(this, 20, 0.0f, 9.424778f)) * 3;
+        setTrans(this, velocity * sead::Vector3f::ey + mPos);
+
         if (!mIsStartAction) {
             if (isGreaterEqualStep(this, 20))
                 startNerveAction(this, "Fall");
