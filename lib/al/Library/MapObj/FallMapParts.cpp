@@ -91,10 +91,8 @@ void FallMapParts::exeAppear() {
         }
     }
 
-    if (isExistAction(this) && !isActionEnd(this))
-        return;
-
-    startAction(this, "Wait");
+    if (!isExistAction(this) || isActionEnd(this))
+        startAction(this, "Wait");
 }
 
 void FallMapParts::exeWait() {
@@ -109,18 +107,11 @@ void FallMapParts::exeFallSign() {
         mIsStartAction = tryStartAction(this, "FallSign");
 
     if (!mIsStartAction) {
-        f32 velocity = sead::Mathf::sin(calcNerveValue(this, 20, 0.0f, 9.424778f)) * 3;
-        setTrans(this, velocity * sead::Vector3f::ey + mPos);
-
-        if (!mIsStartAction) {
-            if (isGreaterEqualStep(this, 20))
-                startNerveAction(this, "Fall");
-
-            return;
-        }
+        f32 offset = sead::Mathf::sin(calcNerveValue(this, 20, 0.0f, sead::Mathf::pi() * 3)) * 3;
+        setTrans(this, offset * sead::Vector3f::ey + mPos);
     }
 
-    if (isActionEnd(this))
+    if (isEndFallSign())
         startNerveAction(this, "Fall");
 }
 
