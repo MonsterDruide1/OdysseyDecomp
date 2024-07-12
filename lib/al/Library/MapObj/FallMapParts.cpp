@@ -8,6 +8,7 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
@@ -26,7 +27,7 @@ NERVE_ACTIONS_MAKE_STRUCT(FallMapParts, Appear, Wait, FallSign, Fall, End)
 namespace al {
 FallMapParts::FallMapParts(const char* name) : LiveActor(name) {}
 
-void FallMapParts::init(const al::ActorInitInfo& info) {
+void FallMapParts::init(const ActorInitInfo& info) {
     initNerveAction(this, "Wait", &NrvFallMapParts.mCollector, 0);
     initMapPartsActor(this, info, nullptr);
     registerAreaHostMtx(this, info);
@@ -39,7 +40,36 @@ void FallMapParts::init(const al::ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-// bool FallMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {}
+bool FallMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+    if (isMsgFloorTouch(message) && isNerve(this, NrvFallMapParts.Wait.data())) {
+        startNerveAction(this, "FallSign");
+        invalidateClipping(this);
+
+        return true;
+    }
+
+    if (isMsgShowModel(message)) {
+        if (!isNerve(this, NrvFallMapParts.End.data()))
+            showModelIfHide(this);
+
+        return true;
+    }
+
+    if (isMsgHideModel(message)) {
+        if (!isNerve(this, NrvFallMapParts.End.data()))
+            hideModelIfShow(this);
+
+        return true;
+    }
+
+    if (isMsgRestart(message)) {
+        appearAndSetStart();
+
+        return true;
+    }
+
+    return false;
+}
 
 void FallMapParts::appearAndSetStart() {
     setTrans(this, mPos);
@@ -92,5 +122,44 @@ void FallMapParts::exeFallSign() {
 
     if (isActionEnd(this))
         startNerveAction(this, "Fall");
+}
+
+bool FallMapParts::isEndFallSign() const {
+    return mIsStartAction ? isActionEnd(this) : isGreaterEqualStep(this, 20);
+}
+
+void FallMapParts::exeFall() {
+    if (isFirstStep(this)) {
+        tryStartAction(this, "Fall");
+        setTrans(this, mPos);
+    }
+
+    addVelocityToGravity(this, 0.3f);
+    scaleVelocity(this, 0.9f);
+
+    if (isGreaterStep(this, mFallTime))
+        startNerveAction(this, "End");
+}
+
+void FallMapParts::exeEnd() {
+    if (isFirstStep(this)) {
+        tryStartAction(this, "End");
+        hideModelIfShow(this);
+        invalidateCollisionParts(this);
+        setVelocityZero(this);
+
+        if (mIsInvalidAutoRestart) {
+            kill();
+
+            return;
+        }
+    }
+
+    if (isGreaterStep(this, 120)) {
+        setTrans(this, mPos);
+        resetPosition(this);
+        showModelIfHide(this);
+        startNerveAction(this, "Appear");
+    }
 }
 }  // namespace al

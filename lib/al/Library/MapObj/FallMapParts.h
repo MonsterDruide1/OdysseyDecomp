@@ -13,7 +13,7 @@ public:
     void exeAppear();
     void exeWait();
     void exeFallSign();
-    bool isEndFallSign();
+    bool isEndFallSign() const;
     void exeFall();
     void exeEnd();
 
