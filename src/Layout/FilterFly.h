@@ -10,11 +10,11 @@ class LayoutInitInfo;
 
 class FilterFly : public al::LayoutActor {
 public:
-    FilterFly(const char*, const al::LayoutInitInfo&, const char*);
+    FilterFly(const char* name, const al::LayoutInitInfo& info, const char* suffix);
     void exeWait();
     void exeWaitEnd();
     void exeMove();
-    void move(const sead::Vector2f&);
+    void move(const sead::Vector2f& target);
     bool isWaitEnd() const;
 
 private:
