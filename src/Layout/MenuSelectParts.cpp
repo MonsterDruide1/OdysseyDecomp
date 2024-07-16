@@ -32,18 +32,18 @@ NERVES_MAKE_NOSTRUCT(MenuSelectParts, Hide, Appear, DecideEnd);
 NERVES_MAKE_STRUCT(MenuSelectParts, Select, DecideParts, SelectSecond, DecideInterval);
 }  // namespace
 
-const s32 mainMenuParts[5] = {MenuSelectParts::Selection::Continue,
-                              MenuSelectParts::Selection::SeparatePlay,
-                              MenuSelectParts::Selection::NewGame, MenuSelectParts::Selection::Help,
-                              MenuSelectParts::Selection::Setting};
+const MenuSelectParts::Selection sMainMenuParts[5] = {
+    MenuSelectParts::Selection::Continue, MenuSelectParts::Selection::SeparatePlay,
+    MenuSelectParts::Selection::NewGame, MenuSelectParts::Selection::Help,
+    MenuSelectParts::Selection::Setting};
 
-const s32 pauseMenuParts[5] = {MenuSelectParts::Selection::Continue,
-                               MenuSelectParts::Selection::SeparatePlay,
-                               MenuSelectParts::Selection::Help, MenuSelectParts::Selection::Save,
-                               MenuSelectParts::Selection::Setting};
+const MenuSelectParts::Selection sPauseMenuParts[5] = {
+    MenuSelectParts::Selection::Continue, MenuSelectParts::Selection::SeparatePlay,
+    MenuSelectParts::Selection::Help, MenuSelectParts::Selection::Save,
+    MenuSelectParts::Selection::Setting};
 
-const s32* getPartsArray(bool isPauseMenu, s32 selection) {
-    return isPauseMenu ? pauseMenuParts : mainMenuParts;
+const MenuSelectParts::Selection* getPartsArray(bool isPauseMenu) {
+    return isPauseMenu ? sPauseMenuParts : sMainMenuParts;
 }
 
 void setCursorPaneTrans(al::LayoutActor* cursorActor, al::LayoutActor* actor) {
@@ -185,7 +185,7 @@ bool MenuSelectParts::isSelectNewGame() const {
 
 s32 MenuSelectParts::calcPartsIndex(s32 selection) const {
     bool isPauseMenu = !mIsMainMenu;
-    return getPartsArray(isPauseMenu, selection)[selection];
+    return getPartsArray(isPauseMenu)[selection];
 }
 
 void MenuSelectParts::exeHide() {}
@@ -262,7 +262,7 @@ void MenuSelectParts::exeSelect() {
     if (rs::isTriggerUiCancel(mLayoutActor) || rs::isTriggerUiPause(mLayoutActor)) {
         if (mIsMainMenu)
             return;
-        al::startAction(mLayoutArray[pauseMenuParts[mCursorItemIndex]], "Wait", nullptr);
+        al::startAction(mLayoutArray[sPauseMenuParts[mCursorItemIndex]], "Wait", nullptr);
         startActionMario(mMarioActor, "PauseMenuContinue");
         if (mCursorItemIndex != mDefaultIndex)
             mCursorItemIndex = mDefaultIndex;
