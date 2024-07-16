@@ -18,13 +18,13 @@ NERVE_MAKE(FilterFly, WaitEnd);
 NERVE_MAKE(FilterFly, Move);
 }  // namespace
 
-const sead::Vector2f localTrans = {600.0f, -300.0f};
+const sead::Vector2f sStartingPosition = {600.0f, -300.0f};
 
 FilterFly::FilterFly(const char* name, const al::LayoutInitInfo& info, const char* suffix)
     : al::LayoutActor(name) {
     al::initLayoutActor(this, info, "FilterFly", suffix);
     initNerve(&Wait, 0);
-    al::setPaneLocalTrans(this, "RootPane", localTrans);
+    al::setPaneLocalTrans(this, "RootPane", sStartingPosition);
     kill();
 }
 
@@ -51,8 +51,8 @@ void FilterFly::exeMove() {
     }
 
     if (al::tryNormalizeOrZero(&direction)) {
-        mTargetPos2 += direction * 0.9f;
-        currentPos += mTargetPos2;
+        mVelocity += direction * 0.9f;
+        currentPos += mVelocity;
         al::setPaneLocalTrans(this, "RootPane", currentPos);
 
         f32 angleY = al::calcAngleDegree(direction, sead::Vector2f::ey);
@@ -61,7 +61,7 @@ void FilterFly::exeMove() {
             this, "RootPane",
             {0, 0, al::calcAngleDegree(direction, sead::Vector2f::ex) < 90.0f ? -angleY : angleY});
     }
-    mTargetPos2 *= 0.98f;
+    mVelocity *= 0.98f;
 }
 
 void FilterFly::move(const sead::Vector2f& target) {
