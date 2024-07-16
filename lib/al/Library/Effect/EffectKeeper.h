@@ -43,6 +43,8 @@ public:
     void findMtxPtr(const char*);
     void tryFindEffect(const char*);
 
+    bool get_21() const { return field_21; }
+
 private:
     const char* mName;
     u32 mEffectCount;

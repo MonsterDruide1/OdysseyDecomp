@@ -55,4 +55,6 @@ bool listenStageSwitchOnOff(IUseStageSwitch* stageSwitchHolder, const char* even
 bool listenStageSwitchOnOffAppear(IUseStageSwitch* stageSwitchHolder, const FunctorBase& actionOnOn,
                                   const FunctorBase& actionOnOff);
 bool listenStageSwitchOnKill(IUseStageSwitch* stageSwitchHolder, const FunctorBase& actionOnOn);
+bool listenStageSwitchOnOffKill(IUseStageSwitch* stageSwitchHolder, const FunctorBase& actionOnOn,
+                                const FunctorBase& actionOnOff);
 }  // namespace al
