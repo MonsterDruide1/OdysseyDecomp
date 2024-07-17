@@ -5,10 +5,19 @@
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Item/ItemUtil.h"
+#include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
+#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/Math/MathRandomUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Thread/FunctorV0M.h"
 #include "Library/Yaml/ByamlIter.h"
@@ -97,9 +106,60 @@ void BreakMapPartsBase::calcAnim() {
 }
 
 void BreakMapPartsBase::exeWait() {
-    if (mMtxConnector == nullptr)
-        return;
+    if (mMtxConnector != nullptr)
+        connectPoseQT(this, mMtxConnector);
+}
 
-    connectPoseQT(this, mMtxConnector);
+void BreakMapPartsBase::exeBreak() {
+    if (isFirstStep(this)) {
+        LiveActor* subActor = tryGetSubActor(this, "壊れモデル");
+        if (subActor != nullptr)
+            subActor->appear();
+
+        subActor = tryGetSubActor(this, "残留モデル");
+        if (subActor != nullptr) {
+            subActor->appear();
+
+            if (isTraceModelRandomRotate(subActor))
+                addRotateAndRepeatY(subActor, getRandomDegree());
+        }
+
+        if (mIsExistHitReactionBreak)
+            startHitReaction(this, "破壊");
+
+        if (mAudioKeeper != nullptr)
+            startSe(mAudioKeeper, "Riddle");
+
+        if (!isExistAction(this, "Break")) {
+            kill();
+        } else {
+            startAction(this, "Break");
+            hideModelIfShow(this);
+        }
+
+        return;
+    }
+
+    kill();
+}
+
+void BreakMapPartsBase::startBreakByProgram() {
+    invalidateClipping(this);
+    invalidateCollisionParts(this);
+
+    setNerve(this, &NrvBreakMapPartsBase.Break);
+}
+
+bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+    if (!isNerve(this, &NrvBreakMapPartsBase.Wait) || !mJudgeFunction(message, source, target))
+        return false;
+
+    startBreakByProgram();
+
+    return true;
+}
+
+JudgeFunc BreakMapPartsBase::getJudgeFunction(const char* name) const {
+    return nullptr;
 }
 }  // namespace al
