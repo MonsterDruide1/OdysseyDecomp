@@ -16,6 +16,7 @@ struct PadRumbleParam {
           mRumblePitchVol(rumblePitchVol), mRumblePitchLeft(rumblePitchLeft),
           mRumblePitchRight(rumblePitchRight), field_18(_18), mIsUseController(isUseController),
           field_1D(_1D) {}
+
     void setVolumeByBalance(f32);
 
     f32 mRumbleNear;
