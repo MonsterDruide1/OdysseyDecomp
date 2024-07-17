@@ -2,8 +2,6 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/LiveActor/ActorInitInfo.h"
-
 // TODO: bring this up to sanae
 // temp solution to figure out a solution to bitflag enums (stole this right from nvn headers)
 #define AL_BITS(CLASS)                                                                             \
@@ -75,6 +73,7 @@ private:                                                                        
 
 namespace al {
 class LiveActor;
+class ActorInitInfo;
 
 struct SubActorSync {
     enum Enum {
@@ -119,8 +118,8 @@ private:
 };
 
 void isExistSubActorKeeper(const LiveActor*);
-LiveActor* getSubActor(const LiveActor*, const char*);
-void tryGetSubActor(const LiveActor*, const char*);
+LiveActor* getSubActor(const LiveActor*, const char*);  // NOTE: unknown return type
+LiveActor* tryGetSubActor(const LiveActor* actor, const char* subActorName);
 void getSubActor(const LiveActor*, s32);
 void getSubActorNum(const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const LiveActor*);
