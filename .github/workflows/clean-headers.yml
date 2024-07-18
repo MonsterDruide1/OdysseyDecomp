@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   copy_headers:
+    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
     runs-on: ubuntu-latest
     steps:
     - name: Check out OdysseyHeaders project
