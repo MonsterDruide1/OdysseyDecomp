@@ -6,7 +6,7 @@ namespace al {
 class PlayerHolder;
 class CameraDirector;
 class WaveVibrationHolder;
-class PadRumbleParam;
+struct PadRumbleParam;
 
 class PadRumbleDirector {
 public:

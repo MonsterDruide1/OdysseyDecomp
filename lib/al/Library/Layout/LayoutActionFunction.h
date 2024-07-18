@@ -34,4 +34,6 @@ bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
 bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
 void setNerveAtActionEnd(LayoutActor*, const Nerve* nerve);
+
+void startHitReaction(const LayoutActor*, const char*, const char*);
 }  // namespace al
