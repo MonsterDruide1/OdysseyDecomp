@@ -33,12 +33,17 @@ NERVES_MAKE_STRUCT(BreakMapPartsBase, Wait, Break)
 }  // namespace
 
 namespace al {
-BreakMapPartsBase::BreakMapPartsBase(const char* name) : LiveActor(name) {}
-
-// TODO: Mismatch
-void BreakMapPartsBase::init(const ActorInitInfo& info) {
+// TODO: Find a better place for this.
+void initStageSwitchListener(LiveActor* actor) {
     using LiveActorFunctor = FunctorV0M<LiveActor*, void (LiveActor::*)()>;
 
+    listenStageSwitchOnOffKill(actor, LiveActorFunctor(actor, &LiveActor::makeActorDead),
+                               LiveActorFunctor(actor, &LiveActor::makeActorAlive));
+}
+
+BreakMapPartsBase::BreakMapPartsBase(const char* name) : LiveActor(name) {}
+
+void BreakMapPartsBase::init(const ActorInitInfo& info) {
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "SuffixName");
 
@@ -60,9 +65,7 @@ void BreakMapPartsBase::init(const ActorInitInfo& info) {
     mJudgeFunction = getJudgeFunction(breakType);
     mMtxConnector = tryCreateMtxConnector(this, info);
 
-    listenStageSwitchOnOffKill(this != nullptr ? this : nullptr,  // ???
-                               LiveActorFunctor(this, &LiveActor::makeActorDead),
-                               LiveActorFunctor(this, &LiveActor::makeActorAlive));
+    initStageSwitchListener(this);
 
     makeActorAlive();
 
