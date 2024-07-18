@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   compile_verify:
+    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
     runs-on: ubuntu-latest
     steps:
     - name: Check out project
