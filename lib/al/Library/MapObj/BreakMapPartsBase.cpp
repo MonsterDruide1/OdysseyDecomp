@@ -19,7 +19,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
-#include "Library/Thread/FunctorV0M.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
@@ -33,14 +33,6 @@ NERVES_MAKE_STRUCT(BreakMapPartsBase, Wait, Break)
 }  // namespace
 
 namespace al {
-// TODO: Find a better place for this.
-void initStageSwitchListener(LiveActor* actor) {
-    using LiveActorFunctor = FunctorV0M<LiveActor*, void (LiveActor::*)()>;
-
-    listenStageSwitchOnOffKill(actor, LiveActorFunctor(actor, &LiveActor::makeActorDead),
-                               LiveActorFunctor(actor, &LiveActor::makeActorAlive));
-}
-
 BreakMapPartsBase::BreakMapPartsBase(const char* name) : LiveActor(name) {}
 
 void BreakMapPartsBase::init(const ActorInitInfo& info) {
