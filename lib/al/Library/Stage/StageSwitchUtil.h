@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Thread/FunctorV0M.h"
+
 namespace al {
 class IUseStageSwitch;
 class StageSwitchDirector;
@@ -25,4 +28,11 @@ bool isOnSwitchDeadOn(IUseStageSwitch* user);
 bool isOffSwitchDeadOn(IUseStageSwitch* user);
 bool isValidSwitchStart(const IUseStageSwitch* user);
 bool isOnSwitchStart(const IUseStageSwitch* user);
+
+inline void initStageSwitchListener(LiveActor* actor) {
+    using LiveActorFunctor = FunctorV0M<LiveActor*, void (LiveActor::*)()>;
+
+    listenStageSwitchOnOffKill(actor, LiveActorFunctor(actor, &LiveActor::makeActorDead),
+                               LiveActorFunctor(actor, &LiveActor::makeActorAlive));
+}
 }  // namespace al
