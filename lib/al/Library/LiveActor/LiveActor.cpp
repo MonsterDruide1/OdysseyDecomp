@@ -10,7 +10,6 @@
 namespace al {
 
 LiveActor::LiveActor(const char* actorName) : mActorName(actorName) {
-    memset(&mPoseKeeper, 0, 0xB8);
     mFlags = new LiveActorFlag();
     mShadowKeeper = new ShadowKeeper();
 }
@@ -35,16 +34,17 @@ StageSwitchKeeper* LiveActor::getStageSwitchKeeper() const {
     return mStageSwitchKeeper;
 }
 
-void LiveActor::init(const ActorInitInfo&) {}
+void LiveActor::init(const ActorInitInfo& info) {}
 
-void LiveActor::attackSensor(HitSensor*, HitSensor*) {}
+void LiveActor::attackSensor(HitSensor* target, HitSensor* source) {}
 
-bool LiveActor::receiveMsg(const SensorMsg*, HitSensor*, HitSensor*) {
-    return 0;
+bool LiveActor::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+    return false;
 }
 
-bool LiveActor::receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*) {
-    return 0;
+bool LiveActor::receiveMsgScreenPoint(const SensorMsg* message, ScreenPointer* source,
+                                      ScreenPointTarget* target) {
+    return false;
 }
 
 void LiveActor::control() {}

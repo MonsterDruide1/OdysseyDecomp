@@ -70,7 +70,8 @@ public:
     virtual void endClipped();
     virtual void attackSensor(HitSensor* target, HitSensor* source);
     virtual bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target);
-    virtual bool receiveMsgScreenPoint(const SensorMsg*, ScreenPointer*, ScreenPointTarget*);
+    virtual bool receiveMsgScreenPoint(const SensorMsg* message, ScreenPointer* source,
+                                       ScreenPointTarget* target);
     virtual const char* getName() const override;
     virtual const sead::Matrix34f* getBaseMtx() const;
     virtual EffectKeeper* getEffectKeeper() const override;
@@ -86,23 +87,23 @@ public:
     virtual void updateCollider();
 
     ActorSceneInfo* getSceneInfo() const;
-    void initPoseKeeper(ActorPoseKeeperBase*);
-    void initExecuteInfo(ActorExecuteInfo*);
-    void initModelKeeper(ModelKeeper*);
-    void initActionKeeper(ActorActionKeeper*);
-    void initNerveKeeper(NerveKeeper*);
-    void initHitSensor(s32);
-    void initScreenPointKeeper(ScreenPointKeeper*);
-    void initEffectKeeper(EffectKeeper*);
-    void initAudioKeeper(AudioKeeper*);
-    void initRailKeeper(const ActorInitInfo&, const char*);
-    void initCollider(f32, f32, u32);
-    void initItemKeeper(s32);
+    void initPoseKeeper(ActorPoseKeeperBase* poseKeeper);
+    void initExecuteInfo(ActorExecuteInfo* executeInfo);
+    void initModelKeeper(ModelKeeper* modelKeeper);
+    void initActionKeeper(ActorActionKeeper* actionKeeper);
+    void initNerveKeeper(NerveKeeper* nerveKeeper);
+    void initHitSensor(s32 amount);
+    void initScreenPointKeeper(ScreenPointKeeper* screenPointKeeper);
+    void initEffectKeeper(EffectKeeper* effectKeeper);
+    void initAudioKeeper(AudioKeeper* audioKeeper);
+    void initRailKeeper(const ActorInitInfo& info, const char* linkName);
+    void initCollider(f32 radius, f32 y, u32 planeNum);
+    void initItemKeeper(s32 itemAmount);
     void initScoreKeeper();
-    void initActorPrePassLightKeeper(ActorPrePassLightKeeper*);
-    void initActorOcclusionKeeper(ActorOcclusionKeeper*);
-    void initSubActorKeeper(SubActorKeeper*);
-    void initSceneInfo(ActorSceneInfo*);
+    void initActorPrePassLightKeeper(ActorPrePassLightKeeper* lightKeeper);
+    void initActorOcclusionKeeper(ActorOcclusionKeeper* occlusionKeeper);
+    void initSubActorKeeper(SubActorKeeper* subActorKeeper);
+    void initSceneInfo(ActorSceneInfo* sceneInfo);
 
     LiveActorFlag* getFlags() const { return mFlags; }
 
@@ -146,29 +147,29 @@ protected:
     friend class alActorFunction;
 
 private:
-    const char* mActorName;
-    ActorPoseKeeperBase* mPoseKeeper;
-    ActorExecuteInfo* mExecuteInfo;
-    ActorActionKeeper* mActorActionKeeper;
-    ActorItemKeeper* mActorItemKeeper;
-    ActorScoreKeeper* mActorScoreKeeper;
-    Collider* mCollider;
-    CollisionParts* mCollisionParts;
-    ModelKeeper* mModelKeeper;
-    NerveKeeper* mNerveKeeper;
-    HitSensorKeeper* mHitSensorKeeper;
-    ScreenPointKeeper* mScreenPointKeeper;
-    EffectKeeper* mEffectKeeper;
-    AudioKeeper* mAudioKeeper;
-    HitReactionKeeper* mHitReactionKeeper;
-    StageSwitchKeeper* mStageSwitchKeeper;
-    RailKeeper* mRailKeeper;
-    ShadowKeeper* mShadowKeeper;
-    ActorPrePassLightKeeper* mActorPrePassLightKeeper;
-    ActorOcclusionKeeper* mActorOcclusionKeeper;
-    SubActorKeeper* mSubActorKeeper;
-    ActorParamHolder* mActorParamHolder;
-    ActorSceneInfo* mSceneInfo;
-    LiveActorFlag* mFlags;
+    const char* mActorName = nullptr;
+    ActorPoseKeeperBase* mPoseKeeper = nullptr;
+    ActorExecuteInfo* mExecuteInfo = nullptr;
+    ActorActionKeeper* mActorActionKeeper = nullptr;
+    ActorItemKeeper* mActorItemKeeper = nullptr;
+    ActorScoreKeeper* mActorScoreKeeper = nullptr;
+    Collider* mCollider = nullptr;
+    CollisionParts* mCollisionParts = nullptr;
+    ModelKeeper* mModelKeeper = nullptr;
+    NerveKeeper* mNerveKeeper = nullptr;
+    HitSensorKeeper* mHitSensorKeeper = nullptr;
+    ScreenPointKeeper* mScreenPointKeeper = nullptr;
+    EffectKeeper* mEffectKeeper = nullptr;
+    AudioKeeper* mAudioKeeper = nullptr;
+    HitReactionKeeper* mHitReactionKeeper = nullptr;
+    StageSwitchKeeper* mStageSwitchKeeper = nullptr;
+    RailKeeper* mRailKeeper = nullptr;
+    ShadowKeeper* mShadowKeeper = nullptr;
+    ActorPrePassLightKeeper* mActorPrePassLightKeeper = nullptr;
+    ActorOcclusionKeeper* mActorOcclusionKeeper = nullptr;
+    SubActorKeeper* mSubActorKeeper = nullptr;
+    ActorParamHolder* mActorParamHolder = nullptr;
+    ActorSceneInfo* mSceneInfo = nullptr;
+    LiveActorFlag* mFlags = nullptr;
 };
 }  // namespace al
