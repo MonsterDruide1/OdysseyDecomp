@@ -25,7 +25,7 @@ public:
 private:
     JudgeFunc mJudgeFunction = nullptr;
     MtxConnector* mMtxConnector = nullptr;
-    sead::Vector3f mItemOffset = {0, 0, 0};
+    sead::Vector3f mItemOffset = {0.0f, 0.0f, 0.0f};
     bool mIsExistHitReactionBreak = false;
     IUseAudioKeeper* mAudioKeeper = nullptr;
 };
