@@ -146,12 +146,13 @@ void BreakMapPartsBase::startBreakByProgram() {
 }
 
 bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    if (!isNerve(this, &NrvBreakMapPartsBase.Wait) || !mJudgeFunction(message, source, target))
-        return false;
+    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mJudgeFunction(message, source, target)) {
+        startBreakByProgram();
 
-    startBreakByProgram();
+        return true;
+    }
 
-    return true;
+    return false;
 }
 
 JudgeFunc BreakMapPartsBase::getJudgeFunction(const char* name) const {
