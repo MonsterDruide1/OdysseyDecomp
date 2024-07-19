@@ -2,6 +2,7 @@
 
 #include "Library/Factory/Factory.h"
 #include "Library/LiveActor/LiveActorUtil.h"
+#include "Library/MapObj/FallMapParts.h"
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
@@ -545,7 +546,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CapRotateMapParts", nullptr},
     {"ClockMapParts", nullptr},
     {"ConveyerMapParts", nullptr},
-    {"FallMapParts", nullptr},
+    {"FallMapParts", al::createActorFunction<al::FallMapParts>},
     {"FixMapParts", al::createActorFunction<al::FixMapParts>},
     {"FloaterMapParts", nullptr},
     {"FlowMapParts", nullptr},
