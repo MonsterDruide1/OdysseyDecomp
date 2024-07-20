@@ -19,7 +19,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
-#include "Library/Stage/StageSwitchUtil.h"
+#include "Library/Thread/FunctorV0M.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
@@ -33,6 +33,14 @@ NERVES_MAKE_STRUCT(BreakMapPartsBase, Wait, Break)
 }  // namespace
 
 namespace al {
+static void syncStageSwitchMakeActorDead(LiveActor* actor) {
+    using LiveActorFunctor = FunctorV0M<LiveActor*, void (LiveActor::*)()>;
+
+    listenStageSwitchOnOffKill(actor, LiveActorFunctor(actor, &LiveActor::makeActorDead),
+                               LiveActorFunctor(actor, &LiveActor::makeActorAlive));
+    actor->makeActorAlive();
+}
+
 BreakMapPartsBase::BreakMapPartsBase(const char* name) : LiveActor(name) {}
 
 void BreakMapPartsBase::init(const ActorInitInfo& info) {
@@ -57,9 +65,7 @@ void BreakMapPartsBase::init(const ActorInitInfo& info) {
     mJudgeFunction = getJudgeFunction(breakType);
     mMtxConnector = tryCreateMtxConnector(this, info);
 
-    initStageSwitchListener(this);
-
-    makeActorAlive();
+    syncStageSwitchMakeActorDead(this);
 
     if (isExistItemKeeper(this))
         setAppearItemOffset(this, mItemOffset);
@@ -155,7 +161,7 @@ bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* source, 
     return false;
 }
 
-JudgeFunc BreakMapPartsBase::getJudgeFunction(const char* name) const {
+JudgeFuncPtr BreakMapPartsBase::getJudgeFunction(const char* name) const {
     return nullptr;
 }
 }  // namespace al
