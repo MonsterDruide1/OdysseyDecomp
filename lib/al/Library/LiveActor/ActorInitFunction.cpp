@@ -10,7 +10,7 @@ bool trySyncStageSwitchKill(LiveActor* actor) {
 
     bool result = listenStageSwitchOnOffKill(actor, LiveActorFunctor(actor, &LiveActor::kill),
                                              LiveActorFunctor(actor, &LiveActor::appear));
-    actor->appear();
+    actor->makeActorAlive();
 
     return result;
 }
