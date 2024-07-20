@@ -11,6 +11,7 @@ namespace al {
 class LiveActor;
 class Resource;
 class HitSensor;
+class ActorInitInfo;
 
 LiveActor* createLinksActorFromFactory(const ActorInitInfo& info, const char* linkName,
                                        s32 linkNum);
@@ -36,4 +37,5 @@ void initExecutorUpdate(LiveActor* actor, const ActorInitInfo& info, const char*
 void initNerveAction(LiveActor* actor, const char* actionName,
                      alNerveFunction::NerveActionCollector* collector, s32 step);
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& info, const char* name);
+bool trySyncStageSwitchKill(LiveActor* actor);
 }  // namespace al
