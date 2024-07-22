@@ -16,4 +16,5 @@ CollisionObj* createCollisionObjMtx(const LiveActor* parent, const ActorInitInfo
                                     Resource* res, const char* collisionFileName,
                                     HitSensor* hitSensor, const sead::Matrix34f* joinMtx,
                                     const char* suffix);
+bool isTraceModelRandomRotate(const LiveActor* actor);
 }  // namespace al
