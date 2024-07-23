@@ -1,7 +1,9 @@
 #include "Library/MapObj/ChildStep.h"
 
+#include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/SubActorFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
@@ -35,5 +37,32 @@ void ChildStep::exeWait() {
 
 s32 calcChildStepCount(const ActorInitInfo& info) {
     return calcLinkChildNum(info, "ChildStep");
+}
+
+void tryInitSubActorKeeperChildStep(LiveActor* actor, const ActorInitInfo& info) {
+    s32 childStepCount = calcChildStepCount(info);
+
+    if (childStepCount <= 0)
+        return;
+
+    initSubActorKeeperNoFile(actor, info, childStepCount);
+}
+
+void createChildStep(const ActorInitInfo& info, LiveActor* parent, bool isSyncClipping) {
+    s32 childStepCount = calcChildStepCount(info);
+
+    if (childStepCount <= 0)
+        return;
+
+    for (s32 i = 0; i < childStepCount; i++) {
+        ChildStep* childStep = new ChildStep("子供足場", parent);
+
+        initLinksActor(childStep, info, "ChildStep", i);
+
+        if (isSyncClipping) {
+            invalidateClipping(childStep);
+            registerSubActorSyncClipping(parent, childStep);
+        }
+    }
 }
 }  // namespace al

@@ -18,5 +18,5 @@ private:
 
 s32 calcChildStepCount(const ActorInitInfo& info);
 void tryInitSubActorKeeperChildStep(LiveActor* actor, const ActorInitInfo& info);
-void createChildStep(const ActorInitInfo& info, LiveActor* parent, bool isLinkActor);
+void createChildStep(const ActorInitInfo& info, LiveActor* parent, bool isSyncClipping);
 }  // namespace al
