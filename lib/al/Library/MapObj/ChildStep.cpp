@@ -51,9 +51,6 @@ void tryInitSubActorKeeperChildStep(LiveActor* actor, const ActorInitInfo& info)
 void createChildStep(const ActorInitInfo& info, LiveActor* parent, bool isSyncClipping) {
     s32 childStepCount = calcChildStepCount(info);
 
-    if (childStepCount <= 0)
-        return;
-
     for (s32 i = 0; i < childStepCount; i++) {
         ChildStep* childStep = new ChildStep("子供足場", parent);
 

@@ -12,7 +12,7 @@ public:
     void exeWait();
 
 private:
-    LiveActor* mParent = nullptr;
+    LiveActor* mParent;
     sead::Vector3f mPos = sead::Vector3f::zero;
 };
 
