@@ -36,7 +36,7 @@ bool isEqualString(const sead::SafeString&, const sead::SafeString&);
 bool isEqualStringCase(const sead::SafeString&, const sead::SafeString&);
 
 template <s32 L>
-class StringTmp : public sead::FixedSafeString<L> {  // equal to WFormatFixedSafeString
+class StringTmp : public sead::FixedSafeString<L> {
 public:
     StringTmp(const char* format, ...) : sead::FixedSafeString<L>() {
         std::va_list args;
@@ -45,6 +45,23 @@ public:
         va_end(args);
     }
 
+    StringTmp() : sead::FixedSafeString<L>() {}
+
     ~StringTmp() = default;
+};
+
+template <s32 L>
+class WStringTmp : public sead::WFixedSafeString<L> {
+public:
+    WStringTmp(const char16* format, ...) : sead::WFixedSafeString<L>() {
+        std::va_list args;
+        va_start(args, format);
+        sead::WFixedSafeString<L>::formatV(format, args);
+        va_end(args);
+    }
+
+    WStringTmp() : sead::WFixedSafeString<L>() {}
+
+    ~WStringTmp() = default;
 };
 }  // namespace al
