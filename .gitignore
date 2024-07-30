@@ -19,6 +19,7 @@ bin/
 # IDEs
 .idea/
 .vscode/
+.vs
 .cache/
 .DS_Store
 /cmake-build-*
