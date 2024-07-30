@@ -1,8 +1,13 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 namespace al {
 class AreaObj;
 class LiveActor;
+
+bool isInAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
+AreaObj* tryFindAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
 
 bool isInAreaObj(const LiveActor*, const char*);
 bool isInDeathArea(const LiveActor*);
