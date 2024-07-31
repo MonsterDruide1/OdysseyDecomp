@@ -23,8 +23,8 @@ public:
     void exeEnd();
 
 private:
-    al::SceneCameraInfo* mSceneCamInfo;
-    const al::PlayerHolder* mPlayerHolder;
-    sead::Vector3f m140;
-    f32 m14C;
+    al::SceneCameraInfo* mSceneCamInfo = nullptr;
+    const al::PlayerHolder* mPlayerHolder = nullptr;
+    sead::Vector3f field_140 = { 0.0f, 0.0f, 0.0f };
+    f32 field_14C = 0.0f;
 };
