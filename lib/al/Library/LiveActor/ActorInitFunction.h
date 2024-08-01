@@ -39,4 +39,5 @@ void initNerveAction(LiveActor* actor, const char* actionName,
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& info, const char* name);
 bool trySyncStageSwitchKill(LiveActor* actor);
 void initLinksActor(LiveActor* actor, const ActorInitInfo& info, const char* linkName, s32 linkNum);
+void initMaterialCode(LiveActor* actor, const ActorInitInfo& info);
 }  // namespace al
