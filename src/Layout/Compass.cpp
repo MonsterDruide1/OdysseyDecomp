@@ -1,12 +1,16 @@
 #include "Layout/Compass.h"
+#include "Layout/MapLayout.h"
 #include "System/GameDataHolderAccessor.h"
 #include "System/GameDataFunction.h"
 
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraUtil.h"
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutInitInfo.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Math/MathAngleUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Player/PlayerUtil.h"
 
@@ -28,7 +32,8 @@ Compass::Compass(const char* name, const al::LayoutInitInfo& info, const al::Pla
     kill();
 }
 
-/*void Compass::appear() {
+// NON_MATCHING: https://decomp.me/scratch/pPVat
+void Compass::appear() {
     GameDataHolderAccessor accessor(this);
 
     if (GameDataFunction::isMainStage(accessor)) {
@@ -39,7 +44,7 @@ Compass::Compass(const char* name, const al::LayoutInitInfo& info, const al::Pla
         al::LiveActor* player = al::tryGetPlayerActor(mPlayerHolder, 0);
 
         if (player != nullptr) {
-            al::AreaObj* area = al::tryFindAreaObj(player, "CompassArea", al::getTrans(player);
+            al::AreaObj* area = al::tryFindAreaObj(player, "CompassArea", al::getTrans(player));
 
             if (area != nullptr) {
                 bool isMadness;
@@ -56,7 +61,12 @@ Compass::Compass(const char* name, const al::LayoutInitInfo& info, const al::Pla
             sead::Vector3f northDir { 0.0f, 0.0f, 0.0f };
 
             if (rs::tryCalcMapNorthDir(&northDir, this)) {
-                // ...
+                f32 angle = al::calcAngleOnPlaneDegree(northDir, camDir, -sead::Vector3f::ey);
+                angle = al::modf(angle + 360.0f, 360.0f);
+
+                f32 maxFrame = al::getActionFrameMax(this, "Direction", "State");
+                f32 frame = al::normalize(angle + 0.0f, 0.0f, maxFrame);
+                al::startFreezeAction(this, "Direction", frame, "State");
             }
         }
     }
@@ -69,7 +79,7 @@ Compass::Compass(const char* name, const al::LayoutInitInfo& info, const al::Pla
             field_14C = 0.0f;
         }
     }
-}*/
+}
 
 void Compass::end() {
     if (!al::isNerve(this, &End)) {
