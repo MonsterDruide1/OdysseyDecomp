@@ -11,7 +11,7 @@ class CameraSubTargetTurnParam;
 class LiveActor;
 class SceneCameraInfo;
 
-bool tryCalcCameraLookDirH(sead::Vector3f*, const al::SceneCameraInfo*,
+bool tryCalcCameraLookDirH(sead::Vector3f*, const SceneCameraInfo*,
                            const sead::Vector3f&, s32);
 
 Projection getProjection(const IUseCamera* cameraHolder, s32 cameraNum);

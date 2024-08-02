@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadVector.h>
+
 #include "Library/Layout/LayoutActor.h"
 
 namespace al {

@@ -1,7 +1,4 @@
 #include "Layout/Compass.h"
-#include "Layout/MapLayout.h"
-#include "System/GameDataHolderAccessor.h"
-#include "System/GameDataFunction.h"
 
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Camera/CameraDirector.h"
@@ -13,6 +10,10 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Player/PlayerUtil.h"
+
+#include "Layout/MapLayout.h"
+#include "System/GameDataHolderAccessor.h"
+#include "System/GameDataFunction.h"
 
 namespace {
 NERVE_IMPL(Compass, Appear);
