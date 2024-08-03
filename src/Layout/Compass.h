@@ -14,7 +14,7 @@ class Compass : public al::LayoutActor {
 public:
     Compass(const char* name, const al::LayoutInitInfo& info, const al::PlayerHolder* playerHolder);
 
-    virtual void appear() override;
+    void appear() override;
 
     void end();
 

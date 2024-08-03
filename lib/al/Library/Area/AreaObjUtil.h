@@ -6,8 +6,8 @@ namespace al {
 class AreaObj;
 class IUseAreaObj;
 
-bool isInAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
 AreaObj* tryFindAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
+bool isInAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
 
 bool tryGetAreaObjArg(s32*, const AreaObj*, const char*);
 bool tryGetAreaObjArg(f32*, const AreaObj*, const char*);

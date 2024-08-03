@@ -35,9 +35,7 @@ Compass::Compass(const char* name, const al::LayoutInitInfo& info, const al::Pla
 
 // NON_MATCHING: https://decomp.me/scratch/pPVat
 void Compass::appear() {
-    GameDataHolderAccessor accessor(this);
-
-    if (GameDataFunction::isMainStage(accessor)) {
+    if (GameDataFunction::isMainStage(this)) {
         al::LayoutActor::appear();
         al::setNerve(this, &Appear);
         field_14C = 0.0f;
@@ -48,37 +46,38 @@ void Compass::appear() {
             al::AreaObj* area = al::tryFindAreaObj(player, "CompassArea", al::getTrans(player));
 
             if (area != nullptr) {
-                bool isMadness;
-
-                if (al::tryGetAreaObjArg(&isMadness, area, "IsMadness") && isMadness) {
+                bool isMadness = false;
+                if (al::tryGetAreaObjArg(&isMadness, area, "IsMadness") && isMadness)
                     return;
-                }
             }
         }
 
         sead::Vector3f camDir { 0.0f, 0.0f, 0.0f };
 
-        if (al::tryCalcCameraLookDirH(&camDir, mSceneCamInfo, sead::Vector3f::ey, 0)) {
-            sead::Vector3f northDir { 0.0f, 0.0f, 0.0f };
+        if (!al::tryCalcCameraLookDirH(&camDir, mSceneCamInfo, sead::Vector3f::ey, 0))
+            return;
 
-            if (rs::tryCalcMapNorthDir(&northDir, this)) {
-                f32 angle = al::calcAngleOnPlaneDegree(northDir, camDir, -sead::Vector3f::ey);
-                angle = al::modf(angle + 360.0f, 360.0f);
+        sead::Vector3f northDir { 0.0f, 0.0f, 0.0f };
 
-                f32 maxFrame = al::getActionFrameMax(this, "Direction", "State");
-                f32 frame = al::normalize(angle + 0.0f, 0.0f, maxFrame);
-                al::startFreezeAction(this, "Direction", frame, "State");
-            }
-        }
+        if (!rs::tryCalcMapNorthDir(&northDir, this))
+            return;
+
+        f32 angle = al::calcAngleOnPlaneDegree(northDir, camDir, -sead::Vector3f::ey);
+        angle = al::modf(angle + 360.0f, 360.0f) + 0.0f;
+
+        f32 maxFrame = al::getActionFrameMax(this, "Direction", "State");
+        f32 frame = al::normalize(angle, 0.0f, maxFrame);
+        al::startFreezeAction(this, "Direction", frame, "State");
     }
     else {
         al::LiveActor* player = al::tryGetPlayerActor(mPlayerHolder, 0);
 
-        if (player != nullptr && al::isInAreaObj(player, "CompassArea", al::getTrans(player))) {
-            al::LayoutActor::appear();
-            al::setNerve(this, &Appear);
-            field_14C = 0.0f;
-        }
+        if (player == nullptr || !al::isInAreaObj(player, "CompassArea", al::getTrans(player)))
+            return;
+
+        al::LayoutActor::appear();
+        al::setNerve(this, &Appear);
+        field_14C = 0.0f;
     }
 }
 
