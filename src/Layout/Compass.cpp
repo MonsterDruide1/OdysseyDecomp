@@ -23,6 +23,13 @@ NERVE_IMPL(Compass, Wait);
 NERVES_MAKE_NOSTRUCT(Compass, Appear, End, Wait);
 }
 
+namespace {
+bool isAreaMadness(al::AreaObj* area) {
+    bool isMadness = false;
+    return al::tryGetAreaObjArg(&isMadness, area, "IsMadness") && isMadness;
+}
+}
+
 Compass::Compass(const char* name, const al::LayoutInitInfo& info, const al::PlayerHolder* playerHolder) :
     al::LayoutActor(name),
     mPlayerHolder(playerHolder) {
@@ -45,10 +52,8 @@ void Compass::appear() {
         if (player != nullptr) {
             al::AreaObj* area = al::tryFindAreaObj(player, "CompassArea", al::getTrans(player));
 
-            if (area != nullptr) {
-                bool isMadness = false;
-                if (al::tryGetAreaObjArg(&isMadness, area, "IsMadness") && isMadness)
-                    return;
+            if (area != nullptr && isAreaMadness(area)) {
+                return;
             }
         }
 
