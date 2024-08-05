@@ -20,10 +20,9 @@ void appearMapMoonRockDemo(const al::IUseSceneObjHolder*, s32);
 void endMap(const al::IUseSceneObjHolder*);
 bool isEndMap(const al::IUseSceneObjHolder*);
 bool isEnableCheckpointWarp(const al::IUseSceneObjHolder*);
-}
+}  // namespace rs
 
 namespace StageMapFunction {
 f32 getStageMapScaleMin();
 f32 getStageMapScaleMax();
-}
-
+}  // namespace StageMapFunction
