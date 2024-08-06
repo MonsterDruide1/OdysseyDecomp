@@ -40,7 +40,6 @@ Compass::Compass(const char* name, const al::LayoutInitInfo& info,
     kill();
 }
 
-// NON_MATCHING: https://decomp.me/scratch/pPVat
 void Compass::appear() {
     if (GameDataFunction::isMainStage(this)) {
         al::LayoutActor::appear();
