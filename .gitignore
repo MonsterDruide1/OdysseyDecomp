@@ -38,6 +38,7 @@ compile_commands.json
 *.gpr
 *.rep/
 *.lock
+!flake.lock
 
 # Debugging
 perf.data
@@ -49,3 +50,7 @@ perf.data.old
 tools/check
 tools/listsym
 tools/decompme
+
+# direnv
+.direnv/
+.envrc.private
