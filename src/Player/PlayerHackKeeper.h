@@ -11,7 +11,7 @@ class PlayerRecoverySafetyPoint;
 class HackCap;
 class PlayerInput;
 class PlayerDamageKeeper;
-class IPlayerMoelChanger;
+class IPlayerModelChanger;
 class IUsePlayerHeightCheck;
 
 class PlayerHackKeeper {

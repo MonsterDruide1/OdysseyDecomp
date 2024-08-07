@@ -2,9 +2,12 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Audio/IUseAudioKeeper.h"
+
 namespace al {
 class AudioDirector;
 class LayoutInitInfo;
+class ActorInitInfo;
 
 class SimpleAudioUser : public IUseAudioKeeper {
 public:
