@@ -55,7 +55,10 @@ def main():
         if paths != real_source_paths:
             touch_cmake_lists()
 
-    subprocess.run(cmake_args)
+    try:
+        subprocess.run(cmake_args, check=True)
+    except subprocess.CalledProcessError:
+        exit(1)  # silently exit with failure if build failed
 
 if __name__ == "__main__":
     main()
