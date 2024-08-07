@@ -12,6 +12,7 @@ class EffectSystemInfo;
 class EffectPrefixType;
 class EffectSystemInfo;
 class EffectResourceInfo;
+class IUseEffectKeeper;
 
 class EffectKeeper {
 public:

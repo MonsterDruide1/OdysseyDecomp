@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "System/GameDataHolderAccessor.h"
 
 namespace rs {
