@@ -1,13 +1,13 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 namespace al {
 class AreaObj;
-class LiveActor;
+class IUseAreaObj;
 
-bool isInAreaObj(const LiveActor*, const char*);
-bool isInDeathArea(const LiveActor*);
-
-AreaObj* tryFindAreaObj(const LiveActor*, const char*);
+AreaObj* tryFindAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
+bool isInAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
 
 bool tryGetAreaObjArg(s32*, const AreaObj*, const char*);
 bool tryGetAreaObjArg(f32*, const AreaObj*, const char*);

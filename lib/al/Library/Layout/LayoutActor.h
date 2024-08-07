@@ -8,6 +8,7 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Layout/IUseLayout.h"
 #include "Library/Layout/IUseLayoutAction.h"
+#include "Library/Layout/LayoutSceneInfo.h"
 #include "Library/Message/IUseMessageSystem.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
@@ -43,20 +44,36 @@ public:
     virtual void appear();
     virtual void kill();
 
-    virtual void control() {}
-
-    virtual void calcAnim(bool recursive);
     virtual void movement();
+    virtual void calcAnim(bool recursive);
 
-    virtual NerveKeeper* getNerveKeeper() const override;
-    virtual const char* getName() const override;
-    virtual EffectKeeper* getEffectKeeper() const override;
-    virtual AudioKeeper* getAudioKeeper() const override;
-    virtual LayoutActionKeeper* getLayoutActionKeeper() const override;
-    virtual LayoutKeeper* getLayoutKeeper() const override;
-    virtual CameraDirector* getCameraDirector() const override;
-    virtual SceneObjHolder* getSceneObjHolder() const override;
-    virtual const MessageSystem* getMessageSystem() const override;
+    virtual NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+
+    virtual const char* getName() const override { return mName.cstr(); }
+
+    virtual EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
+
+    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
+    virtual LayoutActionKeeper* getLayoutActionKeeper() const override {
+        return mLayoutActionKeeper;
+    }
+
+    virtual LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
+
+    virtual CameraDirector* getCameraDirector() const override {
+        return mLayoutSceneInfo->getCameraDirector();
+    }
+
+    virtual SceneObjHolder* getSceneObjHolder() const override {
+        return mLayoutSceneInfo->getSceneObjHolder();
+    }
+
+    virtual const MessageSystem* getMessageSystem() const override {
+        return mLayoutSceneInfo->getMessageSystem();
+    }
+
+    virtual void control() {}
 
     void initLayoutKeeper(LayoutKeeper*);
     void initActionKeeper();

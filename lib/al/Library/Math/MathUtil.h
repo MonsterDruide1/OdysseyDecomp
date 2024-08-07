@@ -32,6 +32,7 @@ f32 modf(f32 a, f32 b);
 s32 modi(s32 a, s32 b);
 
 bool normalize(f32 value);
+f32 normalize(f32 value, f32, f32);
 
 bool isNear(const sead::Matrix34f& value, const sead::Matrix34f& target, f32 tolerance);
 
