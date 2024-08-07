@@ -3,7 +3,9 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+template <class T>
 class DeriveActorGroup;
+
 class FixMapParts;
 class CameraTicket;
 }  // namespace al
@@ -25,7 +27,7 @@ public:
     void appearShine();
 
 private:
-    al::DeriveActorGroup* mAnagramAlphabetLetters;
+    al::DeriveActorGroup<AnagramAlphabetCharacter>* mAnagramAlphabetLetters;
     void* field_110;
     al::FixMapParts* mAnagramAlphabetBase;
     al::CameraTicket* mObjectCamera;

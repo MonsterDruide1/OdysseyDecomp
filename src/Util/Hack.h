@@ -11,6 +11,7 @@ class CapTargetInfo;
 namespace al {
 class LiveActor;
 class HitSensor;
+class SensorMsg;
 }  // namespace al
 
 namespace rs {
