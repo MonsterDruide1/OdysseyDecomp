@@ -20,6 +20,7 @@ struct KCPrismHeader {
     sead::Vector3u mWidthShift;
     f32 mHitboxRadiusCap;
 };
+
 struct KCPrismData {
     f32 mLength;
     u16 mPosIndex;
@@ -28,6 +29,7 @@ struct KCPrismData {
     u16 mCollisionType;
     u32 mTriIndex;
 };
+
 struct KCHitInfo {
     const KCPrismHeader* mHeader;
     const KCPrismData* mData;
