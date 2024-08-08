@@ -271,7 +271,23 @@ void AnagramAlphabetCharacter::exeHackGoal() {
     sead::Vector3f pos;
     unkMtx->getBase(rot, 2);
     unkMtx->getBase(pos, 3);
+    unkMtx->getBase(rot, 2);
+    unkMtx->getBase(pos, 3);
 
+    al::turnToDirection(this, rot, 20.0f);
+    al::lerpVec(al::getTransPtr(this), al::getTrans(this), pos, 0.5f);
+
+    if (al::isGreaterEqualStep(this, 0)) {
+        al::updatePoseMtx(this, unkMtx);
+        CapTargetParts* capTargetParts = getCapTargetParts();
+        rs::endHackDir(&mHackerParent, rot);
+        al::validateClipping(this);
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+        capTargetParts->startNormal();
+        mParent->testEndHack();
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.Set);
+        al::startHitReaction(this, "ゴールデモ終了");
+    }
     al::turnToDirection(this, rot, 20.0f);
     al::lerpVec(al::getTransPtr(this), al::getTrans(this), pos, 0.5f);
 
