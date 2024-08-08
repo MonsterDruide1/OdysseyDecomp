@@ -5,6 +5,7 @@
 #include <prim/seadDelegate.h>
 
 #include "Library/Execute/IUseExecutor.h"
+#include "Library/HostIO/HioNode.h"
 
 namespace al {
 class ICollisionPartsKeeper;
@@ -20,7 +21,7 @@ struct SphereHitInfo;
 class CollisionParts;
 class ExecuteDirector;
 
-class CollisionDirector : public IUseExecutor {
+class CollisionDirector : public HioNode, public IUseExecutor {
 public:
     CollisionDirector(ExecuteDirector* executeDirector);
     void setPartsKeeper(ICollisionPartsKeeper* partsKeeper);
@@ -55,8 +56,8 @@ private:
     CollisionPartsFilterBase* mCollisionPartsFilterBase;
     TriangleFilterBase* mTriangleFilterBase;
     sead::PtrArray<ArrowHitInfo>* mStrikeArrowHitInfos;
-    sead::PtrArray<DiskHitInfo>* mStrikeDiskHitInfos;
     sead::PtrArray<SphereHitInfo>* mStrikeSphereHitInfos;
+    sead::PtrArray<DiskHitInfo>* mStrikeDiskHitInfos;
     SphereHitInfo* mSphereHitArray;
     DiskHitInfo* mDiskHitArray;
 };

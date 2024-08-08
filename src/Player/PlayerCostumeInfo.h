@@ -6,7 +6,7 @@ struct PlayerHeadCostumeInfo {
 public:
     PlayerHeadCostumeInfo(const char*);
 
-    const char* _0;
+    const char* mCostumeName;
     bool mIsFullFace = false;
     bool mIsShrinkNose = false;
     bool mIsPreventHead = false;
@@ -25,8 +25,8 @@ struct PlayerBodyCostumeInfo {
 public:
     PlayerBodyCostumeInfo(const char*);
 
-    const char* _0;
-    s32 mWarmLevel = false;
+    const char* mCostumeName;
+    s32 mWarmLevel = 0;
     bool mIsIgnoreTemperature = false;
     bool mIsUseHeadSuffix = false;
     bool mIsBigEar = false;
@@ -63,6 +63,6 @@ public:
     s32 calcWarmLevel(s32) const;
 
 private:
-    const PlayerBodyCostumeInfo* mPlayerBodyCostumeInfo = nullptr;
-    const PlayerHeadCostumeInfo* mPlayerHeadCostumeInfo = nullptr;
+    const PlayerBodyCostumeInfo* mBodyInfo = nullptr;
+    const PlayerHeadCostumeInfo* mHeadInfo = nullptr;
 };

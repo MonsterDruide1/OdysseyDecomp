@@ -4,21 +4,29 @@
 
 #include "Player/IUsePlayerHack.h"
 
+namespace al {
+class DemoActor;
+}
+
 class IUsePlayerCollision;
+class PlayerAnimator;
 class PlayerInfo;
 class PlayerInitInfo;
 class PlayerHackKeeper;
+class PlayerPuppet;
 
-class PlayerActorBase : public al::LiveActor, public al::IUsePlayerHack {
+class PlayerActorBase : public al::LiveActor, public IUsePlayerHack {
 public:
     PlayerActorBase(const char*);
 
-    virtual void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo&) override;
+    void movement() override;
+    PlayerHackKeeper* getPlayerHackKeeper() const override;
+
     virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
     virtual u32 getPortNo() const;
     virtual void* getViewMtx() const;  // NOTE: unknown return type
     virtual IUsePlayerCollision* getPlayerCollision() const;
-    virtual al::PlayerHackKeeper* getPlayerHackKeeper() const override;
     virtual bool isEnableDemo();
     virtual void startDemo();
     virtual void endDemo();
@@ -35,17 +43,16 @@ public:
     virtual void endDemoKeepBind();
     virtual void startDemoKeepCarry();
     virtual void endDemoKeepCarry();
-    virtual void getDemoActor();
-    virtual void* getDemoAnimator();            // NOTE: unknown return type
-    virtual bool isDamageStopDemo() const;      // NOTE: unknown return type
-    virtual void* getPlayerPuppet();            // NOTE: unknown return type
-    virtual PlayerInfo* getPlayerInfo() const;  // NOTE: unknown return type
-    virtual void movement() override;
+    virtual al::DemoActor* getDemoActor();
+    virtual PlayerAnimator* getDemoAnimator();
+    virtual bool isDamageStopDemo() const;
+    virtual PlayerPuppet* getPlayerPuppet();
+    virtual PlayerInfo* getPlayerInfo() const;
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
-    virtual bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
+    virtual bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32);
 
 private:
-    void* mViewMtx = nullptr;  // NOTE: unknown type
+    sead::Matrix34f* mViewMtx = nullptr;
     u32 mPortNo = 0;
 };
