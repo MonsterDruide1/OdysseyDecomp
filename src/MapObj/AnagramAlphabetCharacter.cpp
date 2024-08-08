@@ -84,7 +84,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
         return al::isSensorName(target, "Body");
 
     if (rs::isMsgTargetMarkerPosition(message) && al::isSensorName(target, "PossessedHitMark")) {
-        sead::Vector3f sensorPos = al::getSensorPos(this, "PossessedHitMark");
+        const sead::Vector3f& sensorPos = al::getSensorPos(this, "PossessedHitMark");
         sead::Vector3f test = (sead::Vector3f::ey * 60.0f) + sensorPos;
         rs::setMsgTargetMarkerPosition(message, test);
         return true;
@@ -103,70 +103,78 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     if (rs::isMsgCancelHack(message)) {
         if (!isHack(this))
             return false;
-    }
-}
-
-else {
-    if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message) ||
-        rs::isMsgHackMarioInWater(message) || rs::isMsgHackMarioCheckpointFlagWarp(message)) {
+        CapTargetParts* capTargetParts = getCapTargetParts();
         rs::endHack(&mHackerParent);
         al::validateClipping(this);
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+        capTargetParts->startNormal();
+        return true;
     }
+    if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message) ||
+        rs::isMsgHackMarioInWater(message) || rs::isMsgHackMarioCheckpointFlagWarp(message)) {
+        CapTargetParts* capTargetParts = getCapTargetParts();
+        rs::endHack(&mHackerParent);
+        al::validateClipping(this);
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+        capTargetParts->startNormal();
+        return true;
+    }
+
     if (rs::isMsgHackerDamageAndCancel(message)) {
         if (!isHack(this))
             return false;
+
         sead::Vector3f test2;
         al::calcDirBetweenSensorsH(&test2, source, target);
+        CapTargetParts* capTargetParts = getCapTargetParts();
         rs::endHackDir(&mHackerParent, test2);
         al::validateClipping(this);
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+        capTargetParts->startNormal();
+        return true;
     }
-}
-CapTargetParts* capTargetParts = getCapTargetParts();
-al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-capTargetParts->startNormal();
-return true;
 
-if (rs::isMsgStartHack(message)) {
-    if (!al::isNerve(this, &NrvAnagramAlphabetCharacter.WaitHack))
+    if (rs::isMsgStartHack(message)) {
+        if (!al::isNerve(this, &NrvAnagramAlphabetCharacter.WaitHack))
+            return false;
+
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackStart);
+        al::invalidateClipping(this);
+        mHackerParent = rs::startHack(target, source, nullptr);
+        rs::startHackStartDemo(mHackerParent, this);
+        return true;
+    }
+
+    if (rs::isMsgCapStartLockOn(message)) {
+        if (al::isNerve(this, &NrvAnagramAlphabetCharacter.Complete))
+            return false;
+
+        if (al::isSensorName(target, "PossessedHitMark")) {
+            if (!al::isNerve(this, &NrvAnagramAlphabetCharacter.Wait))
+                return true;
+
+            al::setNerve(this, &NrvAnagramAlphabetCharacter.WaitHack);
+            return true;
+        }
+
         return false;
+    }
 
-    al::setNerve(this, &NrvAnagramAlphabetCharacter.HackStart);
-    al::invalidateClipping(this);
-    mHackerParent = rs::startHack(target, source, nullptr);
-    rs::startHackStartDemo(mHackerParent, this);
-    return true;
-}
+    if (rs::isMsgEnableMapCheckPointWarpCollidedGround(message, this))
+        return true;
 
-if (rs::isMsgCapStartLockOn(message)) {
-    if (al::isNerve(this, &NrvAnagramAlphabetCharacter.Complete))
-        return false;
-
-    if (al::isSensorName(target, "PossessedHitMark")) {
-        if (!al::isNerve(this, &NrvAnagramAlphabetCharacter.Wait))
+    if (al::isNerve(this, &NrvAnagramAlphabetCharacter.HackWait) ||
+        al::isNerve(this, &NrvAnagramAlphabetCharacter.HackMove) ||
+        (al::isNerve(this, &NrvAnagramAlphabetCharacter.HackFall) &&
+         al::tryReceiveMsgPushAndAddVelocityH(this, message, source, target, 10.0f))) {
+        if (!al::isCollidedWall(this))
             return true;
 
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.WaitHack);
+        al::limitVelocityDirSign(this, -al::getCollidedWallNormal(this), 0.0);
         return true;
     }
 
     return false;
-}
-
-if (rs::isMsgEnableMapCheckPointWarpCollidedGround(message, this))
-    return true;
-
-if (al::isNerve(this, &NrvAnagramAlphabetCharacter.HackWait) ||
-    al::isNerve(this, &NrvAnagramAlphabetCharacter.HackMove) ||
-    (al::isNerve(this, &NrvAnagramAlphabetCharacter.HackFall) &&
-     al::tryReceiveMsgPushAndAddVelocityH(this, message, source, target, 10.0f))) {
-    if (!al::isCollidedWall(this))
-        return true;
-
-    al::limitVelocityDirSign(this, -al::getCollidedWallNormal(this), 0.0);
-    return true;
-}
-
-return false;
 }
 
 void AnagramAlphabetCharacter::setComplete() {
