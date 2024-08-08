@@ -26,7 +26,8 @@ namespace {
 NERVE_IMPL(AnagramAlphabetCharacter, Wait);
 NERVE_IMPL(AnagramAlphabetCharacter, WaitHack);
 NERVE_IMPL(AnagramAlphabetCharacter, HackEnd);
-NERVE_IMPL_(AnagramAlphabetCharacter, HackStart, WaitHackStart);
+NERVE_IMPL(AnagramAlphabetCharacter, HackStart);
+NERVE_IMPL(AnagramAlphabetCharacter, WaitHackStart);
 NERVE_IMPL(AnagramAlphabetCharacter, Complete);
 NERVE_IMPL(AnagramAlphabetCharacter, HackWait);
 NERVE_IMPL(AnagramAlphabetCharacter, HackMove);
@@ -34,23 +35,30 @@ NERVE_IMPL(AnagramAlphabetCharacter, HackFall);
 NERVE_IMPL(AnagramAlphabetCharacter, HackGoal);
 NERVE_IMPL(AnagramAlphabetCharacter, Set);
 
-NERVES_MAKE_STRUCT(AnagramAlphabetCharacter, Wait, WaitHack, HackEnd, HackStart, Complete, HackWait,
-                   HackMove, HackFall, HackGoal, Set);
+NERVE_MAKE(AnagramAlphabetCharacter, HackStart);
+NERVES_MAKE_STRUCT(AnagramAlphabetCharacter, Wait, WaitHack, HackEnd, WaitHackStart, Complete,
+                   HackWait, HackMove, HackFall, HackGoal, Set);
 }  // namespace
+
+AnagramAlphabetCharacter::AnagramAlphabetCharacter(const char* name) : al::LiveActor(name) {}
 
 void AnagramAlphabetCharacter::init(const al::ActorInitInfo& info) {
     al::initActorChangeModel(this, info);
     al::initNerve(this, &NrvAnagramAlphabetCharacter.Wait, 0);
     al::initSubActorKeeperNoFile(this, info, 1);
+
     mCapTargetInfo = rs::createCapTargetInfo(this, 0);
     mCapTargetParts = new CapTargetParts(this, info);
     al::invalidateClipping(mCapTargetParts);
     al::registerSubActorSyncClipping(this, mCapTargetParts);
     al::onSyncAlphaMaskSubActor(this, mCapTargetParts);
+
     al::createAndSetColliderSpecialPurpose(this, "Alphabet");
+
     mHackerJudgeNormalFall = new HackerJudgeNormalFall(this, 5);
     mHackerJudgeStartRun = new HackerJudgeStartRun(this, &mHackerParent);
     mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(this, 0);
+
     al::startAction(this, "Wait");
     al::offCollide(this);
     makeActorAlive();
@@ -85,8 +93,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
 
     if (rs::isMsgTargetMarkerPosition(message) && al::isSensorName(target, "PossessedHitMark")) {
         const sead::Vector3f& sensorPos = al::getSensorPos(this, "PossessedHitMark");
-        sead::Vector3f test = (sead::Vector3f::ey * 60.0f) + sensorPos;
-        rs::setMsgTargetMarkerPosition(message, test);
+        rs::setMsgTargetMarkerPosition(message, sead::Vector3f::ey * 60.0f + sensorPos);
         return true;
     }
 
@@ -103,20 +110,23 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     if (rs::isMsgCancelHack(message)) {
         if (!isHack(this))
             return false;
-        CapTargetParts* capTargetParts = getCapTargetParts();
+
+        CapTargetParts* capTargetParts = mCapTargetParts;
         rs::endHack(&mHackerParent);
         al::validateClipping(this);
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
         capTargetParts->startNormal();
+
         return true;
     }
     if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message) ||
         rs::isMsgHackMarioInWater(message) || rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-        CapTargetParts* capTargetParts = getCapTargetParts();
+        CapTargetParts* capTargetParts = mCapTargetParts;
         rs::endHack(&mHackerParent);
         al::validateClipping(this);
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
         capTargetParts->startNormal();
+
         return true;
     }
 
@@ -124,13 +134,15 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
         if (!isHack(this))
             return false;
 
-        sead::Vector3f test2;
-        al::calcDirBetweenSensorsH(&test2, source, target);
-        CapTargetParts* capTargetParts = getCapTargetParts();
-        rs::endHackDir(&mHackerParent, test2);
+        sead::Vector3f dir;
+        al::calcDirBetweenSensorsH(&dir, source, target);
+
+        CapTargetParts* capTargetParts = mCapTargetParts;
+        rs::endHackDir(&mHackerParent, dir);
         al::validateClipping(this);
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
         capTargetParts->startNormal();
+
         return true;
     }
 
@@ -138,7 +150,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
         if (!al::isNerve(this, &NrvAnagramAlphabetCharacter.WaitHack))
             return false;
 
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackStart);
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.WaitHackStart);
         al::invalidateClipping(this);
         mHackerParent = rs::startHack(target, source, nullptr);
         rs::startHackStartDemo(mHackerParent, this);
@@ -163,14 +175,14 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     if (rs::isMsgEnableMapCheckPointWarpCollidedGround(message, this))
         return true;
 
-    if (al::isNerve(this, &NrvAnagramAlphabetCharacter.HackWait) ||
-        al::isNerve(this, &NrvAnagramAlphabetCharacter.HackMove) ||
-        (al::isNerve(this, &NrvAnagramAlphabetCharacter.HackFall) &&
-         al::tryReceiveMsgPushAndAddVelocityH(this, message, source, target, 10.0f))) {
+    if ((al::isNerve(this, &NrvAnagramAlphabetCharacter.HackWait) ||
+         al::isNerve(this, &NrvAnagramAlphabetCharacter.HackMove) ||
+         al::isNerve(this, &NrvAnagramAlphabetCharacter.HackFall)) &&
+        al::tryReceiveMsgPushAndAddVelocityH(this, message, source, target, 10.0f)) {
         if (!al::isCollidedWall(this))
             return true;
 
-        al::limitVelocityDirSign(this, -al::getCollidedWallNormal(this), 0.0);
+        al::limitVelocityDirSign(this, -al::getCollidedWallNormal(this), 0.0f);
         return true;
     }
 
@@ -199,7 +211,10 @@ void AnagramAlphabetCharacter::exeWaitHack() {
         mCapTargetParts->startSwoon();
 }
 
-// AnagramAlphabetCharacter::exeWaitHackStart()
+void AnagramAlphabetCharacter::exeWaitHackStart() {
+    if (rs::isHackStartDemoEnterMario(mHackerParent))
+        al::setNerve(this, &HackStart);
+}
 
 void AnagramAlphabetCharacter::exeHackStart() {
     if (al::isFirstStep(this)) {
@@ -222,9 +237,9 @@ void AnagramAlphabetCharacter::exeHackWait() {
         al::startAction(this, "Wait");
         rs::resetJudge((IJudge*)mHackerJudgeNormalFall);
     }
-    al::addVelocityToGravity(this, 1.5);
-    al::reboundVelocityFromCollision(this, 0.0, 0.0, 0.0);
-    al::scaleVelocity(this, 0.7);
+    al::addVelocityToGravity(this, 1.5f);
+    al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 0.0f);
+    al::scaleVelocity(this, 0.7f);
 
     if (rs::updateJudgeAndResult((IJudge*)mHackerJudgeNormalFall))
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackFall);
@@ -239,26 +254,62 @@ void AnagramAlphabetCharacter::exeHackWait() {
     }
 }
 
-void AnagramAlphabetCharacter::exeHackMove() {}
+void AnagramAlphabetCharacter::exeHackMove() {
+    if (al::isFirstStep(this)) {
+        rs::resetJudge(mHackerJudgeNormalFall);
+        mSwingTimer = 0;
+    }
+
+    if (rs::isTriggerHackSwing(this->mHackerParent) & 1)
+        mSwingTimer = 60;
+    else if (mSwingTimer >= 1)
+        mSwingTimer--;
+
+    al::addVelocityToGravity(this, 1.5f);
+    al::scaleVelocity(this, 0.7f);
+
+    sead::Vector3f dir = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    f32 runningAccel = rs::isHoldHackAction(this->mHackerParent) ? 4.0f : 2.0f;
+
+    f32 accel = mSwingTimer > 0 ? runningAccel + 2.0f : runningAccel;
+
+    if (accel != 2.0f) {
+        if (!al::isActionPlaying(this, "Dash"))
+            al::startAction(this, "Dash");
+    } else {
+        if (!al::isActionPlaying(this, "Walk"))
+            al::startAction(this, "Walk");
+    }
+
+    rs::addHackActorAccelStick(this, this->mHackerParent, &dir, accel, sead::Vector3<float>::ey);
+    al::turnToDirection(this, dir, 5.0f);
+    al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
+
+    if (rs::updateJudgeAndResult(this->mHackerJudgeNormalFall))
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackFall);
+    else if (mParent->testBase(this))
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackGoal);
+    else if (rs::isHackerStopMove(this, this->mHackerParent, 1.5f))
+        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackWait);
+}
 
 void AnagramAlphabetCharacter::exeHackFall() {
     al::isFirstStep(this);
-    al::addVelocityToGravity(this, 1.5);
-    al::scaleVelocity(this, 0.99);
+    al::addVelocityToGravity(this, 1.5f);
+    al::scaleVelocity(this, 0.99f);
     if (!al::isOnGround(this, 0))
         return;
     al::startHitReaction(this, "着地");
-    al::reboundVelocityFromCollision(this, 0.0, 0.0, 1.0);
-    // TODO: Remove this cast
-    if (rs::updateJudgeAndResult((IJudge*)mHackerJudgeStartRun))
+    al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
+    if (rs::updateJudgeAndResult((IJudge*)mHackerJudgeStartRun))  // TODO: Remove this cast
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackMove);
     else
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackWait);
 }
 
 void AnagramAlphabetCharacter::exeHackEnd() {
-    al::addVelocityToGravity(this, 1.5);
-    al::scaleVelocity(this, 0.99);
+    al::addVelocityToGravity(this, 1.5f);
+    al::scaleVelocity(this, 0.99f);
     if (!al::isOnGround(this, 0))
         return;
     al::offCollide(this);
@@ -267,7 +318,7 @@ void AnagramAlphabetCharacter::exeHackEnd() {
     al::setNerve(this, &NrvAnagramAlphabetCharacter.Wait);
 }
 
-// NON_MATCHING
+// NON_MATCHING: Mismatch when storing rot and pos from matrix
 void AnagramAlphabetCharacter::exeHackGoal() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Wait");
@@ -275,37 +326,22 @@ void AnagramAlphabetCharacter::exeHackGoal() {
         al::setVelocityZero(this);
         al::startHitReaction(this, "ゴールデモ開始");
     }
-    sead::Vector3f rot;
-    sead::Vector3f pos;
-    unkMtx->getBase(rot, 2);
-    unkMtx->getBase(pos, 3);
-    unkMtx->getBase(rot, 2);
-    unkMtx->getBase(pos, 3);
+
+    sead::Vector3f rot = {mPoseMatrix->m[0][2], mPoseMatrix->m[1][2], mPoseMatrix->m[2][2]};
+    sead::Vector3f pos = {mPoseMatrix->m[0][3], mPoseMatrix->m[1][3], mPoseMatrix->m[2][3]};
 
     al::turnToDirection(this, rot, 20.0f);
     al::lerpVec(al::getTransPtr(this), al::getTrans(this), pos, 0.5f);
 
     if (al::isGreaterEqualStep(this, 0)) {
-        al::updatePoseMtx(this, unkMtx);
-        CapTargetParts* capTargetParts = getCapTargetParts();
-        rs::endHackDir(&mHackerParent, rot);
-        al::validateClipping(this);
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-        capTargetParts->startNormal();
-        mParent->testEndHack();
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.Set);
-        al::startHitReaction(this, "ゴールデモ終了");
-    }
-    al::turnToDirection(this, rot, 20.0f);
-    al::lerpVec(al::getTransPtr(this), al::getTrans(this), pos, 0.5f);
+        al::updatePoseMtx(this, mPoseMatrix);
 
-    if (al::isGreaterEqualStep(this, 0)) {
-        al::updatePoseMtx(this, unkMtx);
-        CapTargetParts* capTargetParts = getCapTargetParts();
+        CapTargetParts* capTargetParts = mCapTargetParts;
         rs::endHackDir(&mHackerParent, rot);
         al::validateClipping(this);
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
         capTargetParts->startNormal();
+
         mParent->testEndHack();
         al::setNerve(this, &NrvAnagramAlphabetCharacter.Set);
         al::startHitReaction(this, "ゴールデモ終了");
