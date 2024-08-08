@@ -3,17 +3,31 @@ Decompilation of all Super Mario Odyssey versions, from 1.0.0 to 1.3.0.
 
 # Building
 
-Reminder: **this will not produce a playable game.** This project will not allow you to play the game if you don't already own it on a Switch.
+> [!IMPORTANT]
+> Reminder: **this will not produce a playable game.** This project will not allow you to play the game if you don't already own it on a Switch.
 
 ## For Windows users
 
-While Linux is not a hard requirement, it is strongly advised to [set up WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to simplify the setup process. Ubuntu 20.04 is usually a good choice.
+While Linux is not a hard requirement, it is strongly advised to [set up WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to simplify the setup process. Ubuntu 22.04 is usually a good choice.
 
 The instructions below assume that you are using Linux (native or WSL) or macOS.
 
 ## 1. Set up dependencies
 
-You can either set up all dependencies on your standard installation, or use a Visual Studio Code Dev Container. If you choose to do the latter, you can skip this section, just clone and open the folder in VS-Code, press F1 and select `Dev Containers: Rebuild and Reopen in Container`. You can copy the NSO executable into the container using `docker cp /path/to/main.nso [container-id]:/workspaces/main.nso`, where `[container-id]` is the ID listed in `docker container ls`.
+Depending on your system and preferences, the required programs and libraries can be setup differently.
+
+Across all platforms, using the included Visual Studio Code Dev Container should work fine. In this case, just clone and open the folder in VS-Code, press F1 and select `Dev Containers: Rebuild and Reopen in Container`. You can copy the NSO executable into the container using `docker cp /path/to/main.nso [container-id]:/workspaces/main.nso`, where `[container-id]` is the ID listed in `docker container ls`.
+
+> [!WARNING]
+> As Dev Containers add another layer of complexity to your system, compiling the project and working with the differ will be slower. If possible, prefer to install the dependencies on your system and use this project natively instead of through the container.
+
+When working with NixOS or any other system with the Nix package manager, `flake.nix` should be properly set up to use on your system. Make sure that `direnv` is installed in your system or shell. Then create a file called `.envrc.private` with the following content:
+```bash
+export USE_NIX=true
+```
+Finally, run `direnv allow` to setup all dependencies. The remainder of this section can be skipped.
+
+All other systems have to manually install the required packages and programs. We will need:
 
 * Python 3.6 or newer with [pip](https://pip.pypa.io/en/stable/installation/)
 * Ninja
