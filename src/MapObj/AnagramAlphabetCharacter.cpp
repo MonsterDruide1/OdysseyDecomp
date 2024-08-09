@@ -318,7 +318,6 @@ void AnagramAlphabetCharacter::exeHackEnd() {
     al::setNerve(this, &NrvAnagramAlphabetCharacter.Wait);
 }
 
-// NON_MATCHING: Mismatch when storing rot and pos from matrix
 void AnagramAlphabetCharacter::exeHackGoal() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Wait");
@@ -328,7 +327,9 @@ void AnagramAlphabetCharacter::exeHackGoal() {
     }
 
     sead::Vector3f rot = {mPoseMatrix->m[0][2], mPoseMatrix->m[1][2], mPoseMatrix->m[2][2]};
-    sead::Vector3f pos = {mPoseMatrix->m[0][3], mPoseMatrix->m[1][3], mPoseMatrix->m[2][3]};
+
+    sead::Vector3f pos;
+    mPoseMatrix->getTranslation(pos);
 
     al::turnToDirection(this, rot, 20.0f);
     al::lerpVec(al::getTransPtr(this), al::getTrans(this), pos, 0.5f);
