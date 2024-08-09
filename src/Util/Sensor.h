@@ -1,6 +1,7 @@
 #pragma once
 
-#include "math/seadVectorFwd.h"
+#include <math/seadVector.h>
+
 namespace al {
 class HitSensor;
 class SensorMsg;

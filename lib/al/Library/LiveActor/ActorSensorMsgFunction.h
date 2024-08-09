@@ -443,6 +443,6 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSens
 bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                              const HitSensor*);
 
-bool tryReceiveMsgPushAndAddVelocityH(al::LiveActor*, const al::SensorMsg*, const al::HitSensor*,
-                                      const al::HitSensor*, float);
+bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
+                                      const HitSensor*, f32);
 }  // namespace al
