@@ -12,11 +12,11 @@ class PlayerHackStartShaderCtrl;
 
 class AnagramAlphabetCharacter : public al::LiveActor {
 public:
-    AnagramAlphabetCharacter(const char*);
+    AnagramAlphabetCharacter(const char* name);
 
-    void init(const al::ActorInitInfo&);
-    void attackSensor(al::HitSensor*, al::HitSensor*);
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
+    void init(const al::ActorInitInfo& info);
+    void attackSensor(al::HitSensor* source, al::HitSensor* target);
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* target, al::HitSensor* source);
     void setComplete();
     void killCapTarget();
 
@@ -33,13 +33,13 @@ public:
     void exeComplete();
 
 private:
-    CapTargetInfo* mCapTargetInfo;
-    sead::Matrix34f* unkMtx;
-    AnagramAlphabet* mParent;
-    IUsePlayerHack* mHackerParent;
-    CapTargetParts* mCapTargetParts;
-    HackerJudgeNormalFall* mHackerJudgeNormalFall;
-    HackerJudgeStartRun* mHackerJudgeStartRun;
-    PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl;
-    s32 mSwingTimer;
+    CapTargetInfo* mCapTargetInfo = nullptr;
+    sead::Matrix34f* mPoseMatrix = nullptr;
+    AnagramAlphabet* mParent = nullptr;
+    IUsePlayerHack* mHackerParent = nullptr;
+    CapTargetParts* mCapTargetParts = nullptr;
+    HackerJudgeNormalFall* mHackerJudgeNormalFall = nullptr;
+    HackerJudgeStartRun* mHackerJudgeStartRun = nullptr;
+    PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl = nullptr;
+    s32 mSwingTimer = 0;
 };
