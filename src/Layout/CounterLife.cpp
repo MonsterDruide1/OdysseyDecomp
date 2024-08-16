@@ -31,7 +31,7 @@ CounterLife::CounterLife(const char* name, const char* resName, const al::Layout
     if (mIsCounterUp)
         return;
 
-    if (GameDataFunction::getPlayerHitPoint(GameDataHolderAccessor(this)) == 1)
+    if (GameDataFunction::getPlayerHitPoint(this) == 1)
         al::startAction(this, "Loop", "Loop");
     else
         al::startFreezeAction(this, "Loop", 0.0f, "Loop");
@@ -67,8 +67,7 @@ void CounterLife::startGaugeWithFrame(f32 goalFrame, f32 frames) {
 }
 
 void CounterLife::setEmpty() {
-    f32 gaugeMax = al::getActionFrameMax(this, "Gauge", "Gauge");
-    setCount(gaugeMax);
+    setCount(al::getActionFrameMax(this, "Gauge", "Gauge"));
 }
 
 void CounterLife::setGaugeAnim() {
@@ -117,7 +116,7 @@ void CounterLife::exeWait() {
         al::startAction(this, "Wait", "Main");
 
         if (!mIsCounterUp) {
-            if (GameDataFunction::getPlayerHitPoint(GameDataHolderAccessor(this)) == 1)
+            if (GameDataFunction::getPlayerHitPoint(this) == 1)
                 al::startAction(this, "Loop", "Loop");
             else
                 al::startFreezeAction(this, "Loop", 0.0f, "Loop");
