@@ -136,7 +136,7 @@ void CounterLife::exeGauge() {
     if (al::isNear(mGoalFrame, mCurFrame, 0.001f)) {
         mCurFrame = mGoalFrame;
 
-        al::startFreezeAction(this, "Gauge", mGoalFrame, "Gauge");
+        setGaugeAnim();
         al::setNerve(this, &GaugeWait);
     } else {
         if (mGoalFrame > mCurFrame)
