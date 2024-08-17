@@ -169,9 +169,9 @@ public:
     static bool isEnableShowExplainCheckpointFlag(GameDataHolderAccessor);
     static void showExplainCheckpointFlag(GameDataHolderAccessor);
     static void getLifeMaxUpItem(const al::LiveActor*);
-    static void getPlayerHitPoint(GameDataHolderAccessor);
-    static void getPlayerHitPointMaxCurrent(GameDataHolderAccessor);
-    static void getPlayerHitPointMaxNormal(GameDataHolderAccessor);
+    static s32 getPlayerHitPoint(GameDataHolderAccessor);
+    static s32 getPlayerHitPointMaxCurrent(GameDataHolderAccessor);
+    static s32 getPlayerHitPointMaxNormal(GameDataHolderAccessor);
     static bool isPlayerHitPointMax(GameDataHolderAccessor);
     static bool isPlayerHitPointMaxWithItem(GameDataHolderAccessor);
     static void recoveryPlayer(const al::LiveActor*);
