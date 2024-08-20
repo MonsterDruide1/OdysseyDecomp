@@ -184,8 +184,8 @@ s32 GameProgressData::getHomeLevel() const {
 void GameProgressData::upHomeLevel() {
     s32 nextHomeLevels[18] = {0, 0, 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 9, 9, 9, 9, 9};
     s32 nextHomeLevel = nextHomeLevels[mUnlockWorldNum];
-    nextHomeLevel = std::min(mHomeLevel + 1, nextHomeLevel);
-    mHomeLevel = std::min(nextHomeLevel, 9);
+    nextHomeLevel = sead::Mathi::min(nextHomeLevel, mHomeLevel + 1);
+    mHomeLevel = sead::Mathi::clampMax(nextHomeLevel, 9);
 }
 
 s32 GameProgressData::getUnlockWorldNum() const {
@@ -291,7 +291,7 @@ void GameProgressData::unlockNextWorld(s32 idx) {
 
         s32 nextHomeLevels[17] = {0, 0, 1, 2, 2, 4, 4, 4, 5, 5, 7, 8, 8, 9, 9, 9, 9};
 
-        mHomeLevel = mHomeLevel <= nextHomeLevels[idx] ? nextHomeLevels[idx] : mHomeLevel;
+        mHomeLevel = sead::Mathi::max(mHomeLevel, nextHomeLevels[idx]);
 
         if (mHomeLevel == 9)
             mHomeStatus = 7;
