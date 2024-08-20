@@ -28,29 +28,28 @@ class WorldList {
 public:
     WorldList();
 
-    void getWorldNum();
-    void getMainQuestMin(s32, s32);
+    s32 getWorldNum() const;
+    s32 getMainQuestMin(s32, s32) const;
     const char* getMainStageName(s32) const;
-    s32 tryFindWorldIndexByMainStageName(const char* stageName) const;
-    s32 tryFindWorldIndexByStageName(const char* stageName) const;
-    s32 tryFindWorldIndexByDevelopName(const char* stageName) const;
-    void isEqualClearMainScenarioNo(s32, s32);
-    void getAfterEndingScenarioNo(s32);
-    void isEqualAfterEndingScenarioNo(s32, s32);
-    s32 getMoonRockScenarioNo(s32 worldId) const;
+    s32 tryFindWorldIndexByMainStageName(const char*) const;
+    s32 tryFindWorldIndexByStageName(const char*) const;
+    s32 tryFindWorldIndexByDevelopName(const char*) const;
+    bool isEqualClearMainScenarioNo(s32, s32) const;
+    s32 getAfterEndingScenarioNo(s32) const;
+    bool isEqualAfterEndingScenarioNo(s32, s32) const;
+    s32 getMoonRockScenarioNo(s32) const;
     bool isEqualMoonRockScenarioNo(s32, s32) const;
     const char* getWorldDevelopName(s32) const;
-    void getWorldScenarioNum(s32);
-    s32 findUseScenarioNo(const char* stageName) const;
-    void checkNeedTreasureMessageStage(const char*);
-    bool checkIsMainStage(const char* stageName) const;
-    void tryFindTransOnMainStageByStageName(sead::Vector3f*, const char*, s32);
-    void tryFindHintTransByScenarioNo(sead::Vector3f*, s32, s32);
-
+    s32 getWorldScenarioNum(s32) const;
+    s32 findUseScenarioNo(const char*) const;
+    bool checkNeedTreasureMessageStage(const char*) const;
+    bool checkIsMainStage(const char*) const;
+    bool tryFindTransOnMainStageByStageName(sead::Vector3f*, const char*, s32) const;
+    bool tryFindHintTransByScenarioNo(sead::Vector3f*, s32, s32) const;
+    
 private:
     sead::PtrArray<WorldListEntry> mWorldList;
     sead::StrTreeMap<128, StagePosInfo*> mStagePosList;
     sead::PtrArrayImpl field_30;
 };
-
 static_assert(sizeof(WorldList) == 0x40, "WorldList Size");
