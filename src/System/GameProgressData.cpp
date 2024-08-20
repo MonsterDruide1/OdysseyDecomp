@@ -43,7 +43,8 @@ void GameProgressData::updateList() {
         if (calcWorldIdByOrderUnlock(i) != -1) {
             j++;
             mIsUnlockWorld[i] = true;
-            if (j == mUnlockWorldNum) break;
+            if (j == mUnlockWorldNum)
+                break;
         }
     }
 
@@ -83,7 +84,8 @@ void GameProgressData::updateList() {
 
     for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
         s32 worldId = calcWorldIdByOrderUnlock(i);
-        if (worldId == -1) continue;
+        if (worldId == -1)
+            continue;
 
         if (!isUnlockPeach) {
             if (worldId == idxCloud && mUnlockWorldNum == idxCloud + 1)
@@ -96,13 +98,12 @@ void GameProgressData::updateList() {
             if (i == idxPeach)
                 mWorldIdForWorldMap[0] = idxPeach;
             else {
-               if (worldId < idxPeach)
+                if (worldId < idxPeach)
                     worldId++;
                 mWorldIdForWorldMap[worldId] = i;
             }
         }
     }
-
 
     for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
         s32 worldId = calcWorldIdByOrderUnlock(i);
@@ -113,14 +114,13 @@ void GameProgressData::updateList() {
     }
 
     if (isUnlockPeach) {
-        for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
+        for (s32 i = 0; i < mWorldList->getWorldNum(); i++)
             if (i == idxPeach)
                 mWorldIdForShineList[0] = idxPeach;
             else if (i < idxPeach)
-                mWorldIdForShineList[i+1] = mWorldIdForWorldWarpHole[i];
+                mWorldIdForShineList[i + 1] = mWorldIdForWorldWarpHole[i];
             else
                 mWorldIdForShineList[i] = mWorldIdForWorldWarpHole[i];
-        }
     }
 }
 
@@ -209,7 +209,7 @@ s32 GameProgressData::getHomeLevel() const {
 }
 
 void GameProgressData::upHomeLevel() {
-    s32 nextHomeLevels[18] = { 0, 0, 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 9, 9, 9, 9, 9 };
+    s32 nextHomeLevels[18] = {0, 0, 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 9, 9, 9, 9, 9};
     s32 nextHomeLevel = nextHomeLevels[mUnlockWorldNum];
     nextHomeLevel = std::min(mHomeLevel + 1, nextHomeLevel);
     mHomeLevel = std::min(nextHomeLevel, 9);
@@ -237,15 +237,19 @@ s32 GameProgressData::calcNextLockedWorldNumForWorldMap() const {
 s32 GameProgressData::calcNextLockedWorldIdForWorldMap(s32 idx) const {
     switch (mUnlockWorldNum) {
     case 3:
-        return idx == 0 ? GameDataFunction::getWorldIndexForest() : GameDataFunction::getWorldIndexLake();
+        return idx == 0 ? GameDataFunction::getWorldIndexForest() :
+                          GameDataFunction::getWorldIndexLake();
     case 4:
-        return isUnlockFirstForest() ? GameDataFunction::getWorldIndexLake() : GameDataFunction::getWorldIndexForest();
+        return isUnlockFirstForest() ? GameDataFunction::getWorldIndexLake() :
+                                       GameDataFunction::getWorldIndexForest();
     case 5:
         return GameDataFunction::getWorldIndexCity();
     case 8:
-        return idx != 0 ? GameDataFunction::getWorldIndexSnow() : GameDataFunction::getWorldIndexSea();
+        return idx != 0 ? GameDataFunction::getWorldIndexSnow() :
+                          GameDataFunction::getWorldIndexSea();
     case 9:
-        return isUnlockFirstSea() ? GameDataFunction::getWorldIndexSea() : GameDataFunction::getWorldIndexSnow();
+        return isUnlockFirstSea() ? GameDataFunction::getWorldIndexSea() :
+                                    GameDataFunction::getWorldIndexSnow();
     case 11:
         return GameDataFunction::getWorldIndexSky();
     default:
@@ -256,7 +260,6 @@ s32 GameProgressData::calcNextLockedWorldIdForWorldMap(s32 idx) const {
 bool GameProgressData::isUnlockFirstForest() const {
     return (u32)mUnlockWorldStatusFirstBranch < 2;
 }
-
 
 bool GameProgressData::isUnlockFirstSea() const {
     if (!(mUnlockWorldStatusSecondBranch != 0 && mUnlockWorldStatusSecondBranch != 3))
@@ -279,9 +282,8 @@ s32 GameProgressData::calcWorldNumForShineList() const {
         return mWorldList->getWorldNum();
 
     s32 worldNum = 0;
-    for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
+    for (s32 i = 0; i < mWorldList->getWorldNum(); i++)
         worldNum += !mIsFirstTimeWorld[i];
-    }
 
     return worldNum;
 }
@@ -293,7 +295,8 @@ bool GameProgressData::isAlreadyGoWorld(s32 idx) const {
 void GameProgressData::unlockNextWorld(s32 idx) {
     while (true) {
         updateList();
-        if (mIsUnlockWorld[idx]) return;
+        if (mIsUnlockWorld[idx])
+            return;
 
         s32 idxForest = mWorldList->tryFindWorldIndexByDevelopName("Forest");
         s32 idxLake = mWorldList->tryFindWorldIndexByDevelopName("Lake");
@@ -313,7 +316,7 @@ void GameProgressData::unlockNextWorld(s32 idx) {
 
         updateList();
 
-        s32 nextHomeLevels[17] = { 0, 0, 1, 2, 2, 4, 4, 4, 5, 5, 7, 8, 8, 9, 9, 9, 9 };
+        s32 nextHomeLevels[17] = {0, 0, 1, 2, 2, 4, 4, 4, 5, 5, 7, 8, 8, 9, 9, 9, 9};
 
         mHomeLevel = mHomeLevel <= nextHomeLevels[idx] ? nextHomeLevels[idx] : mHomeLevel;
 
@@ -374,7 +377,7 @@ void GameProgressData::talkCapNearHomeInWaterfall() {
         mWaterfallWorldProgress = 2;
 }
 
-void GameProgressData::write(al::ByamlWriter* writer) {    
+void GameProgressData::write(al::ByamlWriter* writer) {
     writer->pushHash("GameProgressData");
     writer->addInt("HomeStatus", mHomeStatus);
     writer->addInt("HomeLevel", mHomeLevel);
