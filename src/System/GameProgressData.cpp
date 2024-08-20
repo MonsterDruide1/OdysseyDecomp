@@ -55,33 +55,6 @@ void GameProgressData::updateList() {
 
     bool isUnlockPeach = mIsUnlockWorld[idxPeach];
 
-    // if (!isUnlockPeach) {
-    //     for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
-    //         s32 worldId = calcWorldIdByOrderUnlock(i);
-    //         if (worldId != -1) {
-    //             if (worldId == idxCloud && mUnlockWorldNum == idxCloud + 1)
-    //                 mWorldIdForWorldMap[idxCloud] = idxCity;
-    //             else if (worldId == idxAttack && mUnlockWorldNum == idxAttack + 1)
-    //                 mWorldIdForWorldMap[idxAttack] = idxSky;
-    //             else
-    //                 mWorldIdForWorldMap[i] = worldId;
-    //         }
-    //     }
-    // } else {
-    //     for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
-    //         s32 worldId = calcWorldIdByOrderUnlock(i);
-    //         if (worldId != -1) {
-    //             if (i == idxPeach)
-    //                 mWorldIdForWorldMap[0] = idxPeach;
-    //             else {
-    //                if (worldId < idxPeach)
-    //                     worldId++;
-    //                 mWorldIdForWorldMap[worldId] = i;
-    //             }
-    //         }
-    //     }
-    // }
-
     for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
         s32 worldId = calcWorldIdByOrderUnlock(i);
         if (worldId == -1)
