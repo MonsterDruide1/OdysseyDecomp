@@ -46,10 +46,11 @@ public:
     bool checkIsMainStage(const char*) const;
     bool tryFindTransOnMainStageByStageName(sead::Vector3f*, const char*, s32) const;
     bool tryFindHintTransByScenarioNo(sead::Vector3f*, s32, s32) const;
-    
+
 private:
     sead::PtrArray<WorldListEntry> mWorldList;
     sead::StrTreeMap<128, StagePosInfo*> mStagePosList;
     sead::PtrArrayImpl field_30;
 };
+
 static_assert(sizeof(WorldList) == 0x40, "WorldList Size");

@@ -37,15 +37,17 @@ void GameProgressData::init() {
 void GameProgressData::updateList() {
     initList();
 
+    s32 worldNum = mWorldList->getWorldNum();
     s32 idxPeach = mWorldList->tryFindWorldIndexByDevelopName("Peach");
 
-    for (s32 i = 0, j = 0; i < mWorldList->getWorldNum(); i++) {
-        if (calcWorldIdByOrderUnlock(i) != -1) {
-            j++;
-            mIsUnlockWorld[i] = true;
-            if (j == mUnlockWorldNum)
-                break;
-        }
+    for (s32 j = 0, i = 0; i < worldNum; i++) {
+        s32 worldId = calcWorldIdByOrderUnlock(i);
+        if (worldId == -1)
+            continue;
+
+        mIsUnlockWorld[worldId] = true;
+        if (++j == mUnlockWorldNum)
+            break;
     }
 
     s32 idxCloud = mWorldList->tryFindWorldIndexByDevelopName("Cloud");
@@ -55,19 +57,12 @@ void GameProgressData::updateList() {
 
     bool isUnlockPeach = mIsUnlockWorld[idxPeach];
 
-    for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
+    for (s32 i = 0; i < worldNum; i++) {
         s32 worldId = calcWorldIdByOrderUnlock(i);
         if (worldId == -1)
             continue;
 
-        if (!isUnlockPeach) {
-            if (worldId == idxCloud && mUnlockWorldNum == idxCloud + 1)
-                mWorldIdForWorldMap[idxCloud] = idxCity;
-            else if (worldId == idxAttack && mUnlockWorldNum == idxAttack + 1)
-                mWorldIdForWorldMap[idxAttack] = idxSky;
-            else
-                mWorldIdForWorldMap[i] = worldId;
-        } else {
+        if (isUnlockPeach) {
             if (i == idxPeach)
                 mWorldIdForWorldMap[0] = idxPeach;
             else {
@@ -75,10 +70,17 @@ void GameProgressData::updateList() {
                     worldId++;
                 mWorldIdForWorldMap[worldId] = i;
             }
+        } else {
+            if (worldId == idxCloud && mUnlockWorldNum == idxCloud + 1)
+                mWorldIdForWorldMap[worldId] = idxCity;
+            else if (worldId == idxAttack && mUnlockWorldNum == idxAttack + 1)
+                mWorldIdForWorldMap[worldId] = idxSky;
+            else
+                mWorldIdForWorldMap[i] = worldId;
         }
     }
 
-    for (s32 i = 0; i < mWorldList->getWorldNum(); i++) {
+    for (s32 i = 0; i < worldNum; i++) {
         s32 worldId = calcWorldIdByOrderUnlock(i);
         if (worldId != -1) {
             mWorldIdForWorldWarpHole[i] = worldId;
@@ -87,7 +89,7 @@ void GameProgressData::updateList() {
     }
 
     if (isUnlockPeach) {
-        for (s32 i = 0; i < mWorldList->getWorldNum(); i++)
+        for (s32 i = 0; i < worldNum; i++)
             if (i == idxPeach)
                 mWorldIdForShineList[0] = idxPeach;
             else if (i < idxPeach)
