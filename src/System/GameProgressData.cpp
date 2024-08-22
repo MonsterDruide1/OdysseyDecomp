@@ -99,20 +99,20 @@ void GameProgressData::updateList() {
     }
 }
 
-void GameProgressData::checkAndChangeCorrectStatus(s32 param1, s32 param2) {
-    if (param1 == GameDataFunction::getWorldIndexWaterfall() && param2 > 1)
+void GameProgressData::checkAndChangeCorrectStatus(s32 worldId, s32 nextScenarioNo) {
+    if (worldId == GameDataFunction::getWorldIndexWaterfall() && nextScenarioNo > 1)
         mWaterfallWorldProgress = 2;
 
-    if (param1 > GameDataFunction::getWorldIndexWaterfall())
+    if (worldId > GameDataFunction::getWorldIndexWaterfall())
         mWaterfallWorldProgress = 2;
 
-    if (param1 == GameDataFunction::getWorldIndexHat() && param2 > 1)
+    if (worldId == GameDataFunction::getWorldIndexHat() && nextScenarioNo > 1)
         mWaterfallWorldProgress = 2;
 
-    if (param1 != GameDataFunction::getWorldIndexCloud() && isFindKoopa())
+    if (worldId != GameDataFunction::getWorldIndexCloud() && isFindKoopa())
         mHomeStatus = 2;
 
-    if (param1 != GameDataFunction::getWorldIndexBoss() && isBossAttackedHome())
+    if (worldId != GameDataFunction::getWorldIndexBoss() && isBossAttackedHome())
         mHomeStatus = 5;
 }
 
