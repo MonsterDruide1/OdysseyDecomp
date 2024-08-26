@@ -8,6 +8,35 @@ class WorldList;
 
 class GameProgressData : public ByamlSave {
 public:
+    enum class FirstBranch : u32 {
+        None = 0,
+        Forest = 1,
+        Lake = 2,
+    };
+
+    enum class SecondBranch : u32 {
+        None = 0,
+        Sea = 3,
+        Snow = 4,
+    };
+
+    enum class HomeStatus : s32 {
+        None = 0,
+        ActivatedHome = 1,
+        LaunchedHome = 2,
+        FoundKoopa = 3,
+        CrashedHome = 4,
+        RepairedHome = 5,
+        BossAttackedHome = 6,
+        RepairedHomeByCrashedBoss = 7,
+    };
+
+    enum class WaterfallWorldProgress : s32 {
+        None = 0,
+        GotFirstMoon = 1,
+        TalkedCapNearHome = 2,
+    };
+
     void write(al::ByamlWriter* writer) override;
     void read(const al::ByamlIter& iter) override;
 
@@ -61,11 +90,11 @@ private:
     s32* mWorldIdForShineList = nullptr;
     bool* mIsUnlockWorld = nullptr;
     s32 mUnlockWorldNum = 1;
-    s32 mUnlockWorldStatusFirstBranch = 0;
-    s32 mUnlockWorldStatusSecondBranch = 0;
-    s32 mHomeStatus = 0;
+    FirstBranch mUnlockWorldStatusFirstBranch = FirstBranch::None;
+    SecondBranch mUnlockWorldStatusSecondBranch = SecondBranch::None;
+    HomeStatus mHomeStatus = HomeStatus::None;
     s32 mHomeLevel = 0;
     const WorldList* mWorldList = nullptr;
     bool* mIsFirstTimeWorld = nullptr;
-    s32 mWaterfallWorldProgress = 0;
+    WaterfallWorldProgress mWaterfallWorldProgress = WaterfallWorldProgress::None;
 };

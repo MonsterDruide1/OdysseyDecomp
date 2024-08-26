@@ -19,12 +19,12 @@ GameProgressData::GameProgressData(const WorldList* worldList) : mWorldList(worl
 }
 
 void GameProgressData::init() {
-    mHomeStatus = 0;
+    mHomeStatus = HomeStatus::None;
     mHomeLevel = 0;
-    mUnlockWorldStatusFirstBranch = 0;
-    mUnlockWorldStatusSecondBranch = 0;
+    mUnlockWorldStatusFirstBranch = FirstBranch::None;
+    mUnlockWorldStatusSecondBranch = SecondBranch::None;
     mUnlockWorldNum = 1;
-    mWaterfallWorldProgress = 0;
+    mWaterfallWorldProgress = WaterfallWorldProgress::None;
 
     for (s32 i = 0; i < mWorldList->getWorldNum(); i++)
         mIsFirstTimeWorld[i] = true;
@@ -101,82 +101,82 @@ void GameProgressData::updateList() {
 
 void GameProgressData::checkAndChangeCorrectStatus(s32 worldId, s32 nextScenarioNo) {
     if (worldId == GameDataFunction::getWorldIndexWaterfall() && nextScenarioNo > 1)
-        mWaterfallWorldProgress = 2;
+        mWaterfallWorldProgress = WaterfallWorldProgress::TalkedCapNearHome;
 
     if (worldId > GameDataFunction::getWorldIndexWaterfall())
-        mWaterfallWorldProgress = 2;
+        mWaterfallWorldProgress = WaterfallWorldProgress::TalkedCapNearHome;
 
     if (worldId == GameDataFunction::getWorldIndexHat() && nextScenarioNo > 1)
-        mWaterfallWorldProgress = 2;
+        mWaterfallWorldProgress = WaterfallWorldProgress::TalkedCapNearHome;
 
     if (worldId != GameDataFunction::getWorldIndexCloud() && isFindKoopa())
-        mHomeStatus = 2;
+        mHomeStatus = HomeStatus::LaunchedHome;
 
     if (worldId != GameDataFunction::getWorldIndexBoss() && isBossAttackedHome())
-        mHomeStatus = 5;
+        mHomeStatus = HomeStatus::RepairedHome;
 }
 
 bool GameProgressData::isFindKoopa() const {
-    return mHomeStatus == 3;
+    return mHomeStatus == HomeStatus::FoundKoopa;
 }
 
 bool GameProgressData::isBossAttackedHome() const {
-    return mHomeStatus == 6;
+    return mHomeStatus == HomeStatus::BossAttackedHome;
 }
 
 bool GameProgressData::isActivateHome() const {
-    return mHomeStatus > 0;
+    return mHomeStatus > HomeStatus::None;
 }
 
 void GameProgressData::activateHome() {
-    if (mHomeStatus < 1)
-        mHomeStatus = 1;
+    if (mHomeStatus < HomeStatus::ActivatedHome)
+        mHomeStatus = HomeStatus::ActivatedHome;
 }
 
 bool GameProgressData::isLaunchHome() const {
-    return mHomeStatus > 1;
+    return mHomeStatus > HomeStatus::ActivatedHome;
 }
 
 void GameProgressData::launchHome() {
-    if (mHomeStatus < 2)
-        mHomeStatus = 2;
+    if (mHomeStatus < HomeStatus::LaunchedHome)
+        mHomeStatus = HomeStatus::LaunchedHome;
 }
 
 void GameProgressData::findKoopa() {
-    if (mHomeStatus < 3)
-        mHomeStatus = 3;
+    if (mHomeStatus < HomeStatus::FoundKoopa)
+        mHomeStatus = HomeStatus::FoundKoopa;
 }
 
 bool GameProgressData::isCrashHome() const {
-    return mHomeStatus == 4;
+    return mHomeStatus == HomeStatus::CrashedHome;
 }
 
 void GameProgressData::crashHome() {
-    if (mHomeStatus < 4)
-        mHomeStatus = 4;
+    if (mHomeStatus < HomeStatus::CrashedHome)
+        mHomeStatus = HomeStatus::CrashedHome;
 }
 
 bool GameProgressData::isRepairHome() const {
-    return mHomeStatus > 4;
+    return mHomeStatus > HomeStatus::CrashedHome;
 }
 
 void GameProgressData::repairHome() {
-    if (mHomeStatus < 5)
-        mHomeStatus = 5;
+    if (mHomeStatus < HomeStatus::RepairedHome)
+        mHomeStatus = HomeStatus::RepairedHome;
 }
 
 void GameProgressData::bossAttackHome() {
-    if (mHomeStatus < 6)
-        mHomeStatus = 6;
+    if (mHomeStatus < HomeStatus::BossAttackedHome)
+        mHomeStatus = HomeStatus::BossAttackedHome;
 }
 
 bool GameProgressData::isRepairHomeByCrashedBoss() const {
-    return mHomeStatus > 6;
+    return mHomeStatus > HomeStatus::BossAttackedHome;
 }
 
 void GameProgressData::repairHomeByCrashedBoss() {
-    if (mHomeStatus < 7)
-        mHomeStatus = 7;
+    if (mHomeStatus < HomeStatus::RepairedHomeByCrashedBoss)
+        mHomeStatus = HomeStatus::RepairedHomeByCrashedBoss;
 }
 
 s32 GameProgressData::getHomeLevel() const {
@@ -233,11 +233,12 @@ s32 GameProgressData::calcNextLockedWorldIdForWorldMap(s32 idx) const {
 }
 
 bool GameProgressData::isUnlockFirstForest() const {
-    return (u32)mUnlockWorldStatusFirstBranch < 2;
+    return mUnlockWorldStatusFirstBranch < FirstBranch::Lake;
 }
 
 bool GameProgressData::isUnlockFirstSea() const {
-    if (!(mUnlockWorldStatusSecondBranch != 0 && mUnlockWorldStatusSecondBranch != 3))
+    if (!(mUnlockWorldStatusSecondBranch != SecondBranch::None &&
+          mUnlockWorldStatusSecondBranch != SecondBranch::Sea))
         return true;
 
     return false;
@@ -296,7 +297,7 @@ void GameProgressData::unlockNextWorld(s32 idx) {
         mHomeLevel = sead::Mathi::max(mHomeLevel, nextHomeLevels[idx]);
 
         if (mHomeLevel == 9)
-            mHomeStatus = 7;
+            mHomeStatus = HomeStatus::RepairedHomeByCrashedBoss;
 
         if (mIsUnlockWorld[idx])
             return;
@@ -304,29 +305,29 @@ void GameProgressData::unlockNextWorld(s32 idx) {
 }
 
 void GameProgressData::unlockForest() {
-    if (mUnlockWorldStatusFirstBranch == 0)
-        mUnlockWorldStatusFirstBranch = 1;
+    if (mUnlockWorldStatusFirstBranch == FirstBranch::None)
+        mUnlockWorldStatusFirstBranch = FirstBranch::Forest;
 
     mUnlockWorldNum++;
 }
 
 void GameProgressData::unlockLake() {
-    if (mUnlockWorldStatusFirstBranch == 0)
-        mUnlockWorldStatusFirstBranch = 2;
+    if (mUnlockWorldStatusFirstBranch == FirstBranch::None)
+        mUnlockWorldStatusFirstBranch = FirstBranch::Lake;
 
     mUnlockWorldNum++;
 }
 
 void GameProgressData::unlockSnow() {
-    if (mUnlockWorldStatusSecondBranch == 0)
-        mUnlockWorldStatusSecondBranch = 4;
+    if (mUnlockWorldStatusSecondBranch == SecondBranch::None)
+        mUnlockWorldStatusSecondBranch = SecondBranch::Snow;
 
     mUnlockWorldNum++;
 }
 
 void GameProgressData::unlockSea() {
-    if (mUnlockWorldStatusSecondBranch == 0)
-        mUnlockWorldStatusSecondBranch = 3;
+    if (mUnlockWorldStatusSecondBranch == SecondBranch::None)
+        mUnlockWorldStatusSecondBranch = SecondBranch::Sea;
 
     mUnlockWorldNum++;
 }
@@ -344,22 +345,22 @@ void GameProgressData::setAlreadyGoWorld(s32 idx) {
 }
 
 bool GameProgressData::isTalkedCapNearHomeInWaterfall() const {
-    return mWaterfallWorldProgress > 1;
+    return mWaterfallWorldProgress > WaterfallWorldProgress::GotFirstMoon;
 }
 
 void GameProgressData::talkCapNearHomeInWaterfall() {
-    if (mWaterfallWorldProgress < 2)
-        mWaterfallWorldProgress = 2;
+    if (mWaterfallWorldProgress < WaterfallWorldProgress::TalkedCapNearHome)
+        mWaterfallWorldProgress = WaterfallWorldProgress::TalkedCapNearHome;
 }
 
 void GameProgressData::write(al::ByamlWriter* writer) {
     writer->pushHash("GameProgressData");
-    writer->addInt("HomeStatus", mHomeStatus);
+    writer->addInt("HomeStatus", (s32)mHomeStatus);
     writer->addInt("HomeLevel", mHomeLevel);
     writer->addInt("UnlockWorldNum", mUnlockWorldNum);
-    writer->addInt("UnlockWorldStatusFirstBranch", mUnlockWorldStatusFirstBranch);
-    writer->addInt("UnlockWorldStatusSecondBranch", mUnlockWorldStatusSecondBranch);
-    writer->addInt("WaterfallWorldProgress", mWaterfallWorldProgress);
+    writer->addInt("UnlockWorldStatusFirstBranch", (s32)mUnlockWorldStatusFirstBranch);
+    writer->addInt("UnlockWorldStatusSecondBranch", (s32)mUnlockWorldStatusSecondBranch);
+    writer->addInt("WaterfallWorldProgress", (s32)mWaterfallWorldProgress);
 
     writer->pushArray("IsFirstTimeWorld");
     for (s32 i = 0; i < mWorldList->getWorldNum(); i++)
@@ -374,12 +375,12 @@ void GameProgressData::read(const al::ByamlIter& iter) {
 
     al::ByamlIter hash;
     iter.tryGetIterByKey(&hash, "GameProgressData");
-    hash.tryGetIntByKey(&mHomeStatus, "HomeStatus");
+    hash.tryGetIntByKey((s32*)&mHomeStatus, "HomeStatus");
     hash.tryGetIntByKey(&mHomeLevel, "HomeLevel");
     hash.tryGetIntByKey(&mUnlockWorldNum, "UnlockWorldNum");
-    hash.tryGetIntByKey(&mUnlockWorldStatusFirstBranch, "UnlockWorldStatusFirstBranch");
-    hash.tryGetIntByKey(&mUnlockWorldStatusSecondBranch, "UnlockWorldStatusSecondBranch");
-    hash.tryGetIntByKey(&mWaterfallWorldProgress, "WaterfallWorldProgress");
+    hash.tryGetIntByKey((s32*)&mUnlockWorldStatusFirstBranch, "UnlockWorldStatusFirstBranch");
+    hash.tryGetIntByKey((s32*)&mUnlockWorldStatusSecondBranch, "UnlockWorldStatusSecondBranch");
+    hash.tryGetIntByKey((s32*)&mWaterfallWorldProgress, "WaterfallWorldProgress");
 
     al::ByamlIter array;
     hash.tryGetIterByKey(&array, "IsFirstTimeWorld");
@@ -405,19 +406,21 @@ s32 GameProgressData::calcWorldIdByOrderUnlock(s32 idx) const {
     s32 idxSea = mWorldList->tryFindWorldIndexByDevelopName("Sea");
 
     if (idx == idxForest)
-        return (u32)mUnlockWorldStatusFirstBranch < 2 ? idx : idxLake;
+        return mUnlockWorldStatusFirstBranch < FirstBranch::Lake ? idx : idxLake;
 
     if (idx == idxLake)
-        return (u32)mUnlockWorldStatusFirstBranch < 2 ? idx : idxForest;
+        return mUnlockWorldStatusFirstBranch < FirstBranch::Lake ? idx : idxForest;
 
     if (idx == idxSnow) {
-        if (mUnlockWorldStatusSecondBranch != 3 && mUnlockWorldStatusSecondBranch != 0)
+        if (mUnlockWorldStatusSecondBranch != SecondBranch::None &&
+            mUnlockWorldStatusSecondBranch != SecondBranch::Sea)
             return idxSea;
         else
             return idx;
     }
     if (idx == idxSea) {
-        if (mUnlockWorldStatusSecondBranch != 3 && mUnlockWorldStatusSecondBranch != 0)
+        if (mUnlockWorldStatusSecondBranch != SecondBranch::None &&
+            mUnlockWorldStatusSecondBranch != SecondBranch::Sea)
             return idxSnow;
         else
             return idx;
