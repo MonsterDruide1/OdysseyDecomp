@@ -7,6 +7,7 @@
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/CitySignal.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/WorldMapEarth.h"
 
@@ -117,7 +118,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CityWorldSign", nullptr},
     {"CityWorldUndergroundMachine", nullptr},
     {"CitySign", nullptr},
-    {"CitySignal", nullptr},
+    {"CitySignal", al::createActorFunction<CitySignal>},
     {"CityWorldTable", nullptr},
     {"Closet", nullptr},
     {"CloudStep", nullptr},
