@@ -185,6 +185,8 @@ bool ExecuteDirector::isActiveDraw(const char* tableName) const {
     for (s32 i = 0; i < mDrawTableCount; ++i)
         if (isEqualString(tableName, mDrawTables[i]->getName()))
             return mDrawTables[i]->isActive();
+
+    return false;
 }
 
 }  // namespace al
