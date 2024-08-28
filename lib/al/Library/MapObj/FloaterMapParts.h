@@ -20,15 +20,15 @@ public:
 
 private:
     KeyPoseKeeper* mKeyPoseKeeper = nullptr;
-    f32 _110 = 0.0f;
+    f32 mCoord = 0.0f;
     f32 mMaxCoord = 0.0f;
     f32 mSinkSpeed = 5.0f;
     f32 mBackSpeed = 5.0f;
     MoveType mMoveType = MoveType::Loop;
-    s32 _124 = 0;
+    s32 mSinkTime = 0;
     s32 mSinkKeepTime = 10;
     s32 mMaxAccelCount = 10;
-    s32 _130 = 0;
+    s32 mAccelCount = 0;
     sead::Matrix34f mMtxTR = sead::Matrix34f::ident;
 };
 }  // namespace al

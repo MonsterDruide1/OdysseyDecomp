@@ -82,7 +82,7 @@ bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, Hi
 }
 
 void FloaterMapParts::appearAndSetStart() {
-    _110 = 0.0f;
+    mCoord = 0.0f;
     mMoveType = MoveType::Loop;
 
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, 0.0f);
@@ -95,7 +95,7 @@ void FloaterMapParts::appearAndSetStart() {
 }
 
 void FloaterMapParts::control() {
-    f32 rate = isNearZero(mMaxCoord, 0.001f) ? 0.0f : _110 / mMaxCoord;
+    f32 rate = isNearZero(mMaxCoord, 0.001f) ? 0.0f : mCoord / mMaxCoord;
 
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
     calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
@@ -116,49 +116,49 @@ void FloaterMapParts::exeWait() {
 
 void FloaterMapParts::exeSink() {
     if (isFirstStep(this))
-        _130 = 0;
+        mAccelCount = 0;
 
     if (mMoveType == MoveType::Loop) {
-        s32 copy130 = _130;
-        _124++;
-        if (copy130 > 0)
-            _130--;
+        s32 prevAccelCount = mAccelCount;
+        mSinkTime++;
+        if (prevAccelCount > 0)
+            mAccelCount--;
     } else {
-        _110 += (mMaxAccelCount < 1 ? 1.0f : (f32)_130 / (f32)mMaxAccelCount) * mSinkSpeed;
+        mCoord += (mMaxAccelCount < 1 ? 1.0f : (f32)mAccelCount / (f32)mMaxAccelCount) * mSinkSpeed;
 
-        if (_130 < mMaxAccelCount)
-            _130++;
+        if (mAccelCount < mMaxAccelCount)
+            mAccelCount++;
 
-        if (_110 > mMaxCoord)
-            _110 = mMaxCoord;
+        if (mCoord > mMaxCoord)
+            mCoord = mMaxCoord;
 
-        _124 = 0;
+        mSinkTime = 0;
     }
 
-    if (_124 >= mSinkKeepTime)
+    if (mSinkTime >= mSinkKeepTime)
         startNerveAction(this, "Back");
 }
 
-// TODO: Mismatch
 void FloaterMapParts::exeBack() {
     if (isFirstStep(this))
-        _130 = 0;
+        mAccelCount = 0;
 
-    _110 -= (mMaxAccelCount < 1 ? 1.0f : (f32)_130 / (f32)mMaxAccelCount) * mBackSpeed;
+    mCoord -= (mMaxAccelCount < 1 ? 1.0f : (f32)mAccelCount / (f32)mMaxAccelCount) * mBackSpeed;
 
-    if (_130 < mMaxAccelCount)
-        _130++;
+    if (mAccelCount < mMaxAccelCount)
+        mAccelCount++;
 
-    if (_110 < 0.0f)
-        _110 = 0.0f;
-
-    if (mMoveType < MoveType::Turn) {
-        if (_110 < 0.0f)
-            startNerveAction(this, "Wait");
-
-        return;
+    bool isCoordLesserThan0;
+    if (mCoord < 0.0f) {
+        isCoordLesserThan0 = true;
+        mCoord = 0.0f;
+    } else {
+        isCoordLesserThan0 = false;
     }
 
-    startNerveAction(this, "Sink");
+    if (mMoveType >= MoveType::Turn)
+        startNerveAction(this, "Sink");
+    else if (isCoordLesserThan0)
+        startNerveAction(this, "Wait");
 }
 }  // namespace al
