@@ -156,41 +156,35 @@ void ExecuteDirector::executeList(const char* tableName, const char* listName) c
 }
 
 void ExecuteDirector::draw(const char* tableName) const {
-    if (tableName) {
-        if (mDrawTableCount >= 1) {
-            for (s32 i = 0; i < mDrawTableCount; ++i) {
-                if (isEqualString(tableName, mDrawTables[i]->getName())) {
-                    mDrawTables[i]->execute();
-                    return;
-                }
-            }
-        }
-    } else {
+    if (!tableName) {
         mDrawTables[0]->execute();
+        return;
+    }
+
+    for (s32 i = 0; i < mDrawTableCount; ++i) {
+        if (isEqualString(tableName, mDrawTables[i]->getName())) {
+            mDrawTables[i]->execute();
+            return;
+        }
     }
 }
 
 void ExecuteDirector::drawList(const char* tableName, const char* listName) const {
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
-            if (isEqualString(tableName, mDrawTables[i]->getName())) {
-                mDrawTables[i]->executeList(listName);
-                return;
-            }
+    for (s32 i = 0; i < mDrawTableCount; ++i) {
+        if (isEqualString(tableName, mDrawTables[i]->getName())) {
+            mDrawTables[i]->executeList(listName);
+            return;
         }
     }
 }
 
 bool ExecuteDirector::isActiveDraw(const char* tableName) const {
-    if (tableName) {
-        if (mDrawTableCount >= 1) {
-            for (s32 i = 0; i < mDrawTableCount; ++i)
-                if (isEqualString(tableName, mDrawTables[i]->getName()))
-                    return mDrawTables[i]->isActive();
-        }
-    } else {
+    if (!tableName)
         return mDrawTables[0]->isActive();
-    }
+
+    for (s32 i = 0; i < mDrawTableCount; ++i)
+        if (isEqualString(tableName, mDrawTables[i]->getName()))
+            return mDrawTables[i]->isActive();
 }
 
 }  // namespace al
