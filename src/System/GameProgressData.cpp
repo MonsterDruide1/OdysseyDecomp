@@ -220,8 +220,8 @@ s32 GameProgressData::calcNextLockedWorldIdForWorldMap(s32 idx) const {
     case 5:
         return GameDataFunction::getWorldIndexCity();
     case 8:
-        return idx == 0 ? GameDataFunction::getWorldIndexSea() :
-                          GameDataFunction::getWorldIndexSnow();
+        return idx != 0 ? GameDataFunction::getWorldIndexSnow() :
+                          GameDataFunction::getWorldIndexSea();
     case 9:
         return isUnlockFirstSea() ? GameDataFunction::getWorldIndexSea() :
                                     GameDataFunction::getWorldIndexSnow();
@@ -237,8 +237,11 @@ bool GameProgressData::isUnlockFirstForest() const {
 }
 
 bool GameProgressData::isUnlockFirstSea() const {
-    return mUnlockWorldStatusSecondBranch != SecondBranch::None ||
-           mUnlockWorldStatusSecondBranch != SecondBranch::Sea;
+    if (mUnlockWorldStatusSecondBranch == SecondBranch::None ||
+        mUnlockWorldStatusSecondBranch == SecondBranch::Sea)
+        return true;
+
+    return false;
 }
 
 s32 GameProgressData::getWorldIdForWorldWarpHole(s32 idx) const {
