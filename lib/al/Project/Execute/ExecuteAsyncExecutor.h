@@ -23,6 +23,8 @@ private:
     void* filler[4];
 };
 
+static_assert(sizeof(ExecuteAsyncExecutor) == 0x28);
+
 class ExecuteAsyncExecutorUpdate : public ExecuteAsyncExecutor {
 public:
     ExecuteAsyncExecutorUpdate(const ExecuteDirector* director, const char* name,
@@ -49,5 +51,7 @@ public:
 private:
     // missing
 };
+
+static_assert(sizeof(ExecuteAsyncExecutorUpdate) == 0x28);
 
 }  // namespace al

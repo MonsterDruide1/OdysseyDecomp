@@ -19,4 +19,6 @@ private:
     ExecutorListLayoutDrawBase* mDrawers[4] = {};
 };
 
+static_assert(sizeof(LayoutExecuteInfo) == 0x40);
+
 }  // namespace al

@@ -47,6 +47,8 @@ private:
     sead::PtrArray<ExecutorListFunctor> mExecutorsFunctor;
 };
 
+static_assert(sizeof(ExecuteTableHolderUpdate) == 0x70);
+
 void registerExecutorUser(IUseExecutor*, ExecuteDirector*, const char*);
 }  // namespace al
 

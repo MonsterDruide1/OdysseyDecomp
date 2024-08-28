@@ -11,6 +11,8 @@ private:
     u64 _0;
 };
 
+static_assert(sizeof(ExecuteRequestInfo) == 0x8);
+
 class ExecuteRequestTable {
 public:
     ExecuteRequestTable(s32 maxSize);
@@ -20,6 +22,8 @@ private:
     s32 mMaxSize;
     LiveActor** mRequests;
 };
+
+static_assert(sizeof(ExecuteRequestTable) == 0x10);
 
 class ExecuteRequestKeeper {
 public:
@@ -44,4 +48,7 @@ private:
     ExecuteRequestTable* mDrawOn;
     ExecuteRequestTable* mDrawOff;
 };
+
+static_assert(sizeof(ExecuteRequestKeeper) == 0x20);
+
 }  // namespace al

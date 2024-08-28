@@ -49,4 +49,7 @@ private:
     sead::PtrArray<ExecutorListIUseExecutorDraw> mExecutorsUser;
     sead::PtrArray<ExecutorListFunctor> mExecutorsFunctor;
 };
+
+static_assert(sizeof(ExecuteTableHolderDraw) == 0x80);
+
 }  // namespace al

@@ -7,4 +7,7 @@ struct ExecuteOrder {
     s32 mListMaxSize;
     const char* mGroupType;
 };
+
+static_assert(sizeof(ExecuteOrder) == 0x20);
+
 }  // namespace al

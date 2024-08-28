@@ -11,4 +11,7 @@ struct ExecuteSystemInitInfo {
 
     agl::DrawContext* mDrawCtx;
 };
+
+static_assert(sizeof(ExecuteSystemInitInfo) == 0x8);
+
 }  // namespace al

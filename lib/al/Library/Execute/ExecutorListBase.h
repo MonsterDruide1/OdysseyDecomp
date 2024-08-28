@@ -14,4 +14,6 @@ private:
     const char* mName;
 };
 
+static_assert(sizeof(ExecutorListBase) == 0x10);
+
 }  // namespace al
