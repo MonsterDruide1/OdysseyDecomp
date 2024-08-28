@@ -2,6 +2,7 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include "basis/seadTypes.h"
 
 namespace al {
 f32 easeIn(f32);
@@ -69,5 +70,9 @@ f32 convergeDegree(f32, f32, f32);
 f32 convergeRadian(f32, f32, f32);
 void convergeVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
 void convergeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+
+void separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
+
+void calcParabolicFunctionParam(f32*, f32*, f32, f32 verticalDistance);
 
 }  // namespace al
