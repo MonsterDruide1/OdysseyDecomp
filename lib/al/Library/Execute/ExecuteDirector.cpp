@@ -62,20 +62,20 @@ void ExecuteDirector::registerActorModelDraw(LiveActor* actor, const char* listN
         mDrawTables[i]->tryRegisterActorModel(actor, listName);
 }
 
-void ExecuteDirector::registerLayoutUpdate(LayoutActor* lyt, const char* listName) {
-    if (!lyt->getExecuteInfo())
-        lyt->initExecuteInfo(new LayoutExecuteInfo());
+void ExecuteDirector::registerLayoutUpdate(LayoutActor* layout, const char* listName) {
+    if (!layout->getExecuteInfo())
+        layout->initExecuteInfo(new LayoutExecuteInfo());
 
     for (s32 i = 0; i < mUpdateTableMaxSize; i++)
-        mUpdateTables[i]->tryRegisterLayout(lyt, listName);
+        mUpdateTables[i]->tryRegisterLayout(layout, listName);
 }
 
-void ExecuteDirector::registerLayoutDraw(LayoutActor* lyt, const char* listName) {
-    if (!lyt->getExecuteInfo())
-        lyt->initExecuteInfo(new LayoutExecuteInfo());
+void ExecuteDirector::registerLayoutDraw(LayoutActor* layout, const char* listName) {
+    if (!layout->getExecuteInfo())
+        layout->initExecuteInfo(new LayoutExecuteInfo());
 
     for (s32 i = 0; i < mDrawTableCount; i++)
-        mDrawTables[i]->tryRegisterLayout(lyt, listName);
+        mDrawTables[i]->tryRegisterLayout(layout, listName);
 }
 
 void ExecuteDirector::registerUser(IUseExecutor* user, const char* listName) {

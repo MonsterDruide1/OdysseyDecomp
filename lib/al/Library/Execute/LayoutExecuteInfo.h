@@ -9,8 +9,8 @@ class ExecutorListLayoutDrawBase;
 class LayoutExecuteInfo {
 public:
     LayoutExecuteInfo();
-    void addUpdater(ExecutorListLayoutUpdate*);
-    void addDrawer(ExecutorListLayoutDrawBase*);
+    void addUpdater(ExecutorListLayoutUpdate* updater);
+    void addDrawer(ExecutorListLayoutDrawBase* drawer);
 
 private:
     s32 mUpdaterCount = 0;

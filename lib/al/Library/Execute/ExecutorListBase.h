@@ -4,7 +4,7 @@ namespace al {
 
 class ExecutorListBase {
 public:
-    ExecutorListBase(const char*);
+    ExecutorListBase(const char* name);
 
     virtual ~ExecutorListBase();
     virtual void executeList() const;

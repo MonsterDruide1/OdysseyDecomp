@@ -1,6 +1,5 @@
 #pragma once
 
-// TODO: add DrawContext Header to agl
 namespace agl {
 class DrawContext;
 }
