@@ -1,11 +1,15 @@
 #pragma once
 
+#include <math/seadQuat.h>
+#include <math/seadVector.h>
+
 #include "Library/Movement/MoveType.h"
 
 namespace al {
 class ActorInitInfo;
 class PlacementInfo;
 class KeyPose;
+class LiveActor;
 
 class KeyPoseKeeper {
 public:

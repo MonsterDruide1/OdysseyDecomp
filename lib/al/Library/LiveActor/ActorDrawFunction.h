@@ -1,6 +1,7 @@
 #pragma once
 
 namespace al {
+class ActorInitInfo;
 class LiveActor;
 
 bool isAlive(const LiveActor* actor);
