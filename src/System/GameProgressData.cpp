@@ -233,7 +233,11 @@ s32 GameProgressData::calcNextLockedWorldIdForWorldMap(s32 idx) const {
 }
 
 bool GameProgressData::isUnlockFirstForest() const {
-    return mUnlockWorldStatusFirstBranch < FirstBranch::Lake;
+    if (mUnlockWorldStatusFirstBranch == FirstBranch::None ||
+        mUnlockWorldStatusFirstBranch == FirstBranch::Forest)
+        return true;
+
+    return false;
 }
 
 bool GameProgressData::isUnlockFirstSea() const {
