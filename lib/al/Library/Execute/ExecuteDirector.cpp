@@ -10,17 +10,15 @@
 
 namespace al {
 
-ExecuteDirector::ExecuteDirector(s32 count) {
-    mRequestCount = count;
-}
+ExecuteDirector::ExecuteDirector(s32 count) : mUpdateTableCount(count) {};
 
-ExecuteDirector::~ExecuteDirector() {}
+ExecuteDirector::~ExecuteDirector() = default;
 
 void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
-    mUpdateTableCount = UpdateTableSize;
+    mUpdateTableMaxSize = UpdateTableSize;
     mUpdateTables = new ExecuteTableHolderUpdate*[UpdateTableSize];
 
-    for (s32 i = 0; i < mUpdateTableCount; ++i) {
+    for (s32 i = 0; i < mUpdateTableMaxSize; ++i) {
         mUpdateTables[i] = new ExecuteTableHolderUpdate();
         mUpdateTables[i]->init(UpdateTable[i].mName, initInfo, UpdateTable[i].mExecuteOrders,
                                UpdateTable[i].mExecuteOrderCount);
@@ -35,83 +33,78 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
                              DrawTable[i].mExecuteOrderCount);
     }
 
-    mRequestKeeper = new ExecuteRequestKeeper(mRequestCount);
+    mRequestKeeper = new ExecuteRequestKeeper(mUpdateTableCount);
 }
 
-void ExecuteDirector::registerActorUpdate(LiveActor* actor, const char* tableName) {
+void ExecuteDirector::registerActorUpdate(LiveActor* actor, const char* listName) {
     if (!actor->getExecuteInfo())
         actor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
-    if (mUpdateTableCount >= 1)
-        for (s32 i = 0; i < mUpdateTableCount; ++i)
-            mUpdateTables[i]->tryRegisterActor(actor, tableName);
+
+    for (s32 i = 0; i < mUpdateTableMaxSize; i++)
+        mUpdateTables[i]->tryRegisterActor(actor, listName);
 }
 
-void ExecuteDirector::registerActorDraw(LiveActor* actor, const char* tableName) {
+void ExecuteDirector::registerActorDraw(LiveActor* actor, const char* listName) {
     if (!actor->getExecuteInfo())
         actor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
-    if (mDrawTableCount >= 1) {
-        for (s32 i = 0; i < mDrawTableCount; ++i) {
-            mDrawTables[i]->tryRegisterActor(actor, tableName);
-            mDrawTables[i]->tryRegisterActorModel(actor, tableName);
-        }
+
+    for (s32 i = 0; i < mDrawTableCount; i++) {
+        mDrawTables[i]->tryRegisterActor(actor, listName);
+        mDrawTables[i]->tryRegisterActorModel(actor, listName);
     }
 }
 
-void ExecuteDirector::registerActorModelDraw(LiveActor* actor, const char* tableName) {
+void ExecuteDirector::registerActorModelDraw(LiveActor* actor, const char* listName) {
     if (!actor->getExecuteInfo())
         actor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
-    if (mDrawTableCount >= 1)
-        for (s32 i = 0; i < mDrawTableCount; ++i)
-            mDrawTables[i]->tryRegisterActorModel(actor, tableName);
+
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        mDrawTables[i]->tryRegisterActorModel(actor, listName);
 }
 
-void ExecuteDirector::registerLayoutUpdate(LayoutActor* lyt, const char* tableName) {
+void ExecuteDirector::registerLayoutUpdate(LayoutActor* lyt, const char* listName) {
     if (!lyt->getExecuteInfo())
         lyt->initExecuteInfo(new LayoutExecuteInfo());
-    if (mUpdateTableCount >= 1)
-        for (s32 i = 0; i < mUpdateTableCount; ++i)
-            mUpdateTables[i]->tryRegisterLayout(lyt, tableName);
+
+    for (s32 i = 0; i < mUpdateTableMaxSize; i++)
+        mUpdateTables[i]->tryRegisterLayout(lyt, listName);
 }
 
-void ExecuteDirector::registerLayoutDraw(LayoutActor* lyt, const char* tableName) {
+void ExecuteDirector::registerLayoutDraw(LayoutActor* lyt, const char* listName) {
     if (!lyt->getExecuteInfo())
         lyt->initExecuteInfo(new LayoutExecuteInfo());
-    if (mDrawTableCount >= 1)
-        for (s32 i = 0; i < mDrawTableCount; ++i)
-            mDrawTables[i]->tryRegisterLayout(lyt, tableName);
+
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        mDrawTables[i]->tryRegisterLayout(lyt, listName);
 }
 
-void ExecuteDirector::registerUser(IUseExecutor* user, const char* tableName) {
-    if (mUpdateTableCount >= 1)
-        for (s32 i = 0; i < mUpdateTableCount; ++i)
-            mUpdateTables[i]->tryRegisterUser(user, tableName);
-    if (mDrawTableCount >= 1)
-        for (s32 i = 0; i < mDrawTableCount; ++i)
-            mDrawTables[i]->tryRegisterUser(user, tableName);
+void ExecuteDirector::registerUser(IUseExecutor* user, const char* listName) {
+    for (s32 i = 0; i < mUpdateTableMaxSize; i++)
+        mUpdateTables[i]->tryRegisterUser(user, listName);
+
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        mDrawTables[i]->tryRegisterUser(user, listName);
 }
 
-void ExecuteDirector::registerFunctor(const FunctorBase& functor, const char* tableName) {
-    if (mUpdateTableCount >= 1)
-        for (s32 i = 0; i < mUpdateTableCount; ++i)
-            mUpdateTables[i]->tryRegisterFunctor(functor, tableName);
-    if (mDrawTableCount >= 1)
-        for (s32 i = 0; i < mDrawTableCount; ++i)
-            mDrawTables[i]->tryRegisterFunctor(functor, tableName);
+void ExecuteDirector::registerFunctor(const FunctorBase& functor, const char* listName) {
+    for (s32 i = 0; i < mUpdateTableMaxSize; i++)
+        mUpdateTables[i]->tryRegisterFunctor(functor, listName);
+
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        mDrawTables[i]->tryRegisterFunctor(functor, listName);
 }
 
-void ExecuteDirector::registerFunctorDraw(const FunctorBase& functor, const char* tableName) {
-    if (mDrawTableCount >= 1)
-        for (s32 i = 0; i < mDrawTableCount; ++i)
-            mDrawTables[i]->tryRegisterFunctor(functor, tableName);
+void ExecuteDirector::registerFunctorDraw(const FunctorBase& functor, const char* listName) {
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        mDrawTables[i]->tryRegisterFunctor(functor, listName);
 }
 
 void ExecuteDirector::createExecutorListTable() {
-    if (mUpdateTableCount >= 1)
-        for (s32 i = 0; i < mUpdateTableCount; ++i)
+    for (s32 i = 0; i < mUpdateTableMaxSize; i++)
             mUpdateTables[i]->createExecutorListTable();
-    if (mDrawTableCount >= 1)
-        for (s32 i = 0; i < mDrawTableCount; ++i)
-            mDrawTables[i]->createExecutorListTable();
+
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        mDrawTables[i]->createExecutorListTable();
 }
 
 void ExecuteDirector::execute(const char* tableName) const {
@@ -123,36 +116,28 @@ void ExecuteDirector::execute(const char* tableName) const {
 
         mRequestKeeper->executeRequestActorMovementAllOff();
         mRequestKeeper->executeRequestActorDrawAllOff();
-    } else {
-        bool isActorEnabled;
 
-        if (isEqualString(tableName, mUpdateTables[0]->getName())) {
-            mRequestKeeper->executeRequestActorMovementAllOn();
-            mRequestKeeper->executeRequestActorDrawAllOn();
-            isActorEnabled = true;
-        } else {
-            isActorEnabled = false;
+        return;
+    }
+
+    bool isActorEnabled = false;
+
+    if (isEqualString(tableName, mUpdateTables[0]->getName())) {
+        mRequestKeeper->executeRequestActorMovementAllOn();
+        mRequestKeeper->executeRequestActorDrawAllOn();
+        isActorEnabled = true;
+    }
+
+    for (s32 i = 0; i < mUpdateTableMaxSize; i++) {
+        if (isEqualString(tableName, mUpdateTables[i]->getName())) {
+            mUpdateTables[i]->execute();
+            break;
         }
+    }
 
-        if (mUpdateTableCount >= 1) {
-            for (s32 i = 0; i < mUpdateTableCount; ++i) {
-                if (isEqualString(tableName, mUpdateTables[i]->getName())) {
-                    mUpdateTables[i]->execute();
-
-                    if (isActorEnabled) {
-                        mRequestKeeper->executeRequestActorMovementAllOff();
-                        mRequestKeeper->executeRequestActorDrawAllOff();
-                    }
-
-                    return;
-                }
-            }
-        }
-
-        if (isActorEnabled) {
-            mRequestKeeper->executeRequestActorMovementAllOff();
-            mRequestKeeper->executeRequestActorDrawAllOff();
-        }
+    if (isActorEnabled) {
+        mRequestKeeper->executeRequestActorMovementAllOff();
+        mRequestKeeper->executeRequestActorDrawAllOff();
     }
 }
 
@@ -160,11 +145,9 @@ void ExecuteDirector::executeList(const char* tableName, const char* listName) c
     mRequestKeeper->executeRequestActorMovementAllOn();
     mRequestKeeper->executeRequestActorDrawAllOn();
     if (tableName) {
-        if (mUpdateTableCount >= 1) {
-            for (s32 i = 0; i < mUpdateTableCount; ++i)
-                if (isEqualString(tableName, mUpdateTables[i]->getName()))
-                    mUpdateTables[i]->executeList(listName);
-        }
+        for (s32 i = 0; i < mUpdateTableMaxSize; ++i)
+            if (isEqualString(tableName, mUpdateTables[i]->getName()))
+                mUpdateTables[i]->executeList(listName);
     } else {
         mUpdateTables[0]->executeList(listName);
     }

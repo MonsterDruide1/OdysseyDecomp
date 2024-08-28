@@ -13,11 +13,12 @@ private:
 
 class ExecuteRequestTable {
 public:
-    ExecuteRequestTable(s32 size);
+    ExecuteRequestTable(s32 maxSize);
 
 private:
-    s32 mRequestCount;
-    LiveActor** mRequestArray;
+    s32 mCount;
+    s32 mMaxSize;
+    LiveActor** mRequests;
 };
 
 class ExecuteRequestKeeper {
@@ -29,13 +30,13 @@ public:
         Request_RemoveFromDraw = 0x3
     };
 
-    ExecuteRequestKeeper(s32 size);
+    ExecuteRequestKeeper(s32 maxSize);
 
     void executeRequestActorMovementAllOn();
     void executeRequestActorMovementAllOff();
     void executeRequestActorDrawAllOn();
     void executeRequestActorDrawAllOff();
-    void request(LiveActor* actor, Request request_type);
+    void request(LiveActor* actor, Request requestType);
 
 private:
     ExecuteRequestTable* mMovementOn;
