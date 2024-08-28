@@ -8,7 +8,7 @@
 namespace sead {
 class Event;
 class DelegateThread;
-}
+}  // namespace sead
 
 namespace al {
 class ExecuteDirector;

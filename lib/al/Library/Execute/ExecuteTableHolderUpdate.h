@@ -21,7 +21,8 @@ class ExecuteTableHolderUpdate {
 public:
     ExecuteTableHolderUpdate();
     virtual ~ExecuteTableHolderUpdate();
-    void init(const char* name, const ExecuteSystemInitInfo& initInfo, const ExecuteOrder* orders, s32 orderCount);
+    void init(const char* name, const ExecuteSystemInitInfo& initInfo, const ExecuteOrder* orders,
+              s32 orderCount);
     void registerExecutorListActor(ExecutorListActorExecuteBase* listActor);
     void registerExecutorListLayout(ExecutorListLayoutUpdate* listLayout);
     void registerExecutorListUser(ExecutorListIUseExecutorUpdate* listUser);

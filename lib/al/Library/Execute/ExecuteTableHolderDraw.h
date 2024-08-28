@@ -20,7 +20,8 @@ class ExecuteTableHolderDraw {
 public:
     ExecuteTableHolderDraw();
     virtual ~ExecuteTableHolderDraw();
-    void init(const char* name, const ExecuteSystemInitInfo& initInfo, const ExecuteOrder* orders, s32 orderCount);
+    void init(const char* name, const ExecuteSystemInitInfo& initInfo, const ExecuteOrder* orders,
+              s32 orderCount);
     void registerExecutorListActorModel(ExecutorListActorModelDrawBase* listActorModel);
     void registerExecutorListActor(ExecutorListActorDraw* listActor);
     void registerExecutorListLayout(ExecutorListLayoutDrawBase* listLayout);
