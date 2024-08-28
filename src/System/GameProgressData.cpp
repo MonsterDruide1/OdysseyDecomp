@@ -238,7 +238,7 @@ bool GameProgressData::isUnlockFirstForest() const {
 
 bool GameProgressData::isUnlockFirstSea() const {
     return mUnlockWorldStatusSecondBranch != SecondBranch::None ||
-          mUnlockWorldStatusSecondBranch != SecondBranch::Sea;
+           mUnlockWorldStatusSecondBranch != SecondBranch::Sea;
 }
 
 s32 GameProgressData::getWorldIdForWorldWarpHole(s32 idx) const {
