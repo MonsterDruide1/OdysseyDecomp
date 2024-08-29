@@ -118,12 +118,7 @@ void FloaterMapParts::exeSink() {
     if (isFirstStep(this))
         mAccelCount = 0;
 
-    if (mMoveType == MoveType::Loop) {
-        s32 prevAccelCount = mAccelCount;
-        mSinkTime++;
-        if (prevAccelCount > 0)
-            mAccelCount--;
-    } else {
+    if (mMoveType != MoveType::Loop) {
         mCoord += (mMaxAccelCount < 1 ? 1.0f : (f32)mAccelCount / (f32)mMaxAccelCount) * mSinkSpeed;
 
         if (mAccelCount < mMaxAccelCount)
@@ -133,6 +128,11 @@ void FloaterMapParts::exeSink() {
             mCoord = mMaxCoord;
 
         mSinkTime = 0;
+    } else {
+        s32 prevAccelCount = mAccelCount;
+        mSinkTime++;
+        if (prevAccelCount > 0)
+            mAccelCount--;
     }
 
     if (mSinkTime >= mSinkKeepTime)
