@@ -33,11 +33,10 @@ public:
     bool isActiveDraw(const char* tableName) const;
 
 private:
+    s32 mRequestCount = 0;
     s32 mUpdateTableCount = 0;
-    s32 mUpdateTableMaxSize = 0;
     ExecuteTableHolderUpdate** mUpdateTables = nullptr;
     s32 mDrawTableCount = 0;
-    s32 mDrawTableMaxSize = 0;
     ExecuteTableHolderDraw** mDrawTables = nullptr;
     ExecuteRequestKeeper* mRequestKeeper = nullptr;
 };
