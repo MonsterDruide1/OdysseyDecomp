@@ -108,6 +108,8 @@ public:
 
     sead::Vector3f getCameraUp() const { return mCameraUp; };
 
+    const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
+
 private:
     const char* mPoserName;
     f32 field_38;
