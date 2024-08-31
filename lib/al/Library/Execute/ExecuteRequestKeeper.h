@@ -11,14 +11,19 @@ private:
     u64 _0;
 };
 
+static_assert(sizeof(ExecuteRequestInfo) == 0x8);
+
 class ExecuteRequestTable {
 public:
-    ExecuteRequestTable(s32 size);
+    ExecuteRequestTable(s32 maxSize);
 
 private:
-    s32 mRequestCount;
-    LiveActor** mRequestArray;
+    s32 mCount;
+    s32 mMaxSize;
+    LiveActor** mRequests;
 };
+
+static_assert(sizeof(ExecuteRequestTable) == 0x10);
 
 class ExecuteRequestKeeper {
 public:
@@ -29,13 +34,13 @@ public:
         Request_RemoveFromDraw = 0x3
     };
 
-    ExecuteRequestKeeper(s32 size);
+    ExecuteRequestKeeper(s32 maxSize);
 
     void executeRequestActorMovementAllOn();
     void executeRequestActorMovementAllOff();
     void executeRequestActorDrawAllOn();
     void executeRequestActorDrawAllOff();
-    void request(LiveActor* actor, Request request_type);
+    void request(LiveActor* actor, Request requestType);
 
 private:
     ExecuteRequestTable* mMovementOn;
@@ -43,4 +48,7 @@ private:
     ExecuteRequestTable* mDrawOn;
     ExecuteRequestTable* mDrawOff;
 };
+
+static_assert(sizeof(ExecuteRequestKeeper) == 0x20);
+
 }  // namespace al

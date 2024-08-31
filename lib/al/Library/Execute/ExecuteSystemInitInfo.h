@@ -1,6 +1,5 @@
 #pragma once
 
-// TODO: add DrawContext Header to agl
 namespace agl {
 class DrawContext;
 }
@@ -11,4 +10,7 @@ struct ExecuteSystemInitInfo {
 
     agl::DrawContext* mDrawCtx;
 };
+
+static_assert(sizeof(ExecuteSystemInitInfo) == 0x8);
+
 }  // namespace al

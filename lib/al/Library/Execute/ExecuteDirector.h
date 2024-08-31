@@ -16,21 +16,21 @@ class ExecuteDirector {
 public:
     ExecuteDirector(s32 count);
     virtual ~ExecuteDirector();
-    void init(const ExecuteSystemInitInfo&);
-    void registerActorUpdate(LiveActor*, const char*);
-    void registerActorDraw(LiveActor*, const char*);
-    void registerActorModelDraw(LiveActor*, const char*);
-    void registerLayoutUpdate(LayoutActor*, const char*);
-    void registerLayoutDraw(LayoutActor*, const char*);
-    void registerUser(IUseExecutor*, const char*);
-    void registerFunctor(const FunctorBase&, const char*);
-    void registerFunctorDraw(const FunctorBase&, const char*);
+    void init(const ExecuteSystemInitInfo& initInfo);
+    void registerActorUpdate(LiveActor* actor, const char* listName);
+    void registerActorDraw(LiveActor* actor, const char* listName);
+    void registerActorModelDraw(LiveActor* actor, const char* listName);
+    void registerLayoutUpdate(LayoutActor* layout, const char* listName);
+    void registerLayoutDraw(LayoutActor* layout, const char* listName);
+    void registerUser(IUseExecutor* user, const char* listName);
+    void registerFunctor(const FunctorBase& functor, const char* listName);
+    void registerFunctorDraw(const FunctorBase& functor, const char* listName);
     void createExecutorListTable();
-    void execute(const char*) const;
-    void executeList(const char*, const char*) const;
-    void draw(const char*) const;
-    void drawList(const char*, const char*) const;
-    bool isActiveDraw(const char*) const;
+    void execute(const char* tableName) const;
+    void executeList(const char* tableName, const char* listName) const;
+    void draw(const char* tableName) const;
+    void drawList(const char* tableName, const char* listName) const;
+    bool isActiveDraw(const char* tableName) const;
 
 private:
     s32 mRequestCount = 0;
@@ -40,4 +40,7 @@ private:
     ExecuteTableHolderDraw** mDrawTables = nullptr;
     ExecuteRequestKeeper* mRequestKeeper = nullptr;
 };
+
+static_assert(sizeof(ExecuteDirector) == 0x30);
+
 }  // namespace al

@@ -21,19 +21,20 @@ class ExecuteTableHolderUpdate {
 public:
     ExecuteTableHolderUpdate();
     virtual ~ExecuteTableHolderUpdate();
-    void init(const char*, const ExecuteSystemInitInfo&, const ExecuteOrder*, s32);
-    void registerExecutorListActor(ExecutorListActorExecuteBase*);
-    void registerExecutorListLayout(ExecutorListLayoutUpdate*);
-    void registerExecutorListUser(ExecutorListIUseExecutorUpdate*);
-    void registerExecutorListFunctor(ExecutorListFunctor*);
-    void registerExecutorListAll(ExecutorListBase*);
-    void tryRegisterActor(LiveActor*, const char*);
-    void tryRegisterLayout(LayoutActor*, const char*);
-    void tryRegisterUser(IUseExecutor*, const char*);
-    void tryRegisterFunctor(const FunctorBase&, const char*);
+    void init(const char* name, const ExecuteSystemInitInfo& initInfo, const ExecuteOrder* orders,
+              s32 orderCount);
+    void registerExecutorListActor(ExecutorListActorExecuteBase* listActor);
+    void registerExecutorListLayout(ExecutorListLayoutUpdate* listLayout);
+    void registerExecutorListUser(ExecutorListIUseExecutorUpdate* listUser);
+    void registerExecutorListFunctor(ExecutorListFunctor* listFunctor);
+    void registerExecutorListAll(ExecutorListBase* list);
+    void tryRegisterActor(LiveActor* actor, const char* listName);
+    void tryRegisterLayout(LayoutActor* layout, const char* listName);
+    void tryRegisterUser(IUseExecutor* user, const char* listName);
+    void tryRegisterFunctor(const FunctorBase& functor, const char* listName);
     void createExecutorListTable();
     void execute() const;
-    void executeList(const char*) const;
+    void executeList(const char* listName) const;
 
     const char* getName() { return mName; }
 
@@ -47,13 +48,15 @@ private:
     sead::PtrArray<ExecutorListFunctor> mExecutorsFunctor;
 };
 
-void registerExecutorUser(IUseExecutor*, ExecuteDirector*, const char*);
+static_assert(sizeof(ExecuteTableHolderUpdate) == 0x70);
+
+void registerExecutorUser(IUseExecutor* user, ExecuteDirector* director, const char* listName);
 }  // namespace al
 
 namespace alActorSystemFunction {
-void addToExecutorMovement(al::LiveActor*);
-void addToExecutorDraw(al::LiveActor*);
-void removeFromExecutorMovement(al::LiveActor*);
-void removeFromExecutorDraw(al::LiveActor*);
-void updateExecutorDraw(al::LiveActor*);
+void addToExecutorMovement(al::LiveActor* actor);
+void addToExecutorDraw(al::LiveActor* actor);
+void removeFromExecutorMovement(al::LiveActor* actor);
+void removeFromExecutorDraw(al::LiveActor* actor);
+void updateExecutorDraw(al::LiveActor* actor);
 }  // namespace alActorSystemFunction

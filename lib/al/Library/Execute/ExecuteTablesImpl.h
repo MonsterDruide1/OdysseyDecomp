@@ -384,7 +384,7 @@ constexpr bool strings_equal(const char* a, const char* b) {
 }
 
 static constexpr s32 getUpdateTableIndex(const char* listName) {
-    for (s32 i = 0; i < sizeof(updateTableArr) / sizeof(updateTableArr[0]); i++)
+    for (u64 i = 0; i < sizeof(updateTableArr) / sizeof(updateTableArr[0]); i++)
         if (strings_equal(updateTableArr[i].mListName, listName))
             return i;
     return 0;
@@ -401,7 +401,7 @@ createUpdateTable(const char* tableName, const char* startListName, const char* 
 }
 
 static constexpr s32 getDrawTableIndex(const char* listName, const char* groupName) {
-    for (s32 i = 0; i < sizeof(drawTableArr) / sizeof(drawTableArr[0]); i++)
+    for (u64 i = 0; i < sizeof(drawTableArr) / sizeof(drawTableArr[0]); i++)
         if (strings_equal(drawTableArr[i].mListName, listName) &&
             strings_equal(drawTableArr[i].mExecuteGroup, groupName))
             return i;

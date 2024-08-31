@@ -5,12 +5,17 @@
 
 #include "Library/HostIO/HioNode.h"
 
+namespace sead {
+class Event;
+class DelegateThread;
+}  // namespace sead
+
 namespace al {
 class ExecuteDirector;
 
 class ExecuteAsyncExecutor : public HioNode {
 public:
-    ExecuteAsyncExecutor(const ExecuteDirector*, const char*, sead::CoreId);
+    ExecuteAsyncExecutor(const ExecuteDirector* director, const char* name, sead::CoreId coreId);
     virtual ~ExecuteAsyncExecutor();
 
     virtual void execute() = 0;
@@ -20,8 +25,13 @@ public:
     void waitAsync();
 
 private:
-    void* filler[4];
+    ExecuteDirector* mDirector = nullptr;
+    const char* mName = nullptr;
+    sead::Event* mEvent = nullptr;
+    sead::DelegateThread* mDelegateThread = nullptr;
 };
+
+static_assert(sizeof(ExecuteAsyncExecutor) == 0x28);
 
 class ExecuteAsyncExecutorUpdate : public ExecuteAsyncExecutor {
 public:
@@ -31,9 +41,6 @@ public:
 
     ~ExecuteAsyncExecutorUpdate() override;
     void execute() override;
-
-private:
-    // missing
 };
 
 static_assert(sizeof(ExecuteAsyncExecutorUpdate) == 0x28);
@@ -45,9 +52,8 @@ public:
 
     ~ExecuteAsyncExecutorDraw() override;
     void execute() override;
-
-private:
-    // missing
 };
+
+static_assert(sizeof(ExecuteAsyncExecutorUpdate) == 0x28);
 
 }  // namespace al

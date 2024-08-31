@@ -1,9 +1,7 @@
 #include "Library/Execute/ActorExecuteInfo.h"
 
 namespace al {
-ActorExecuteInfo::ActorExecuteInfo(ExecuteRequestKeeper* keeper) {
-    mRequestKeeper = keeper;
-}
+ActorExecuteInfo::ActorExecuteInfo(ExecuteRequestKeeper* keeper) : mRequestKeeper(keeper) {}
 
 void ActorExecuteInfo::addUpdater(ExecutorActorExecuteBase* updater) {
     mUpdaters[mUpdaterCount] = updater;
