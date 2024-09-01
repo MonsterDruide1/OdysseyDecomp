@@ -55,7 +55,7 @@ void FloaterMapParts::init(const ActorInitInfo& info) {
 
 bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
     if (isMsgFloorTouch(message)) {
-        mMoveType = MoveType::Stop;
+        mMoveType = FloaterMoveType::Sink;
 
         return true;
     }
@@ -83,7 +83,7 @@ bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, Hi
 
 void FloaterMapParts::appearAndSetStart() {
     mCoord = 0.0f;
-    mMoveType = MoveType::Loop;
+    mMoveType = FloaterMoveType::Wait;
 
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, 0.0f);
     calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, 0.0f);
@@ -100,15 +100,15 @@ void FloaterMapParts::control() {
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
     calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
 
-    if (mMoveType > MoveType::Loop)
-        mMoveType = static_cast<MoveType>(static_cast<s32>(mMoveType) - 1);
+    if (mMoveType > FloaterMoveType::Wait)
+        mMoveType = static_cast<FloaterMoveType>(static_cast<s32>(mMoveType) - 1);
 }
 
 void FloaterMapParts::exeWait() {
     if (isFirstStep(this))
         validateClipping(this);
 
-    if (mMoveType > MoveType::Loop) {
+    if (mMoveType > FloaterMoveType::Wait) {
         invalidateClipping(this);
         startNerveAction(this, "Sink");
     }
@@ -118,7 +118,7 @@ void FloaterMapParts::exeSink() {
     if (isFirstStep(this))
         mAccelCount = 0;
 
-    if (mMoveType != MoveType::Loop) {
+    if (mMoveType != FloaterMoveType::Wait) {
         mCoord += (mMaxAccelCount < 1 ? 1.0f : (f32)mAccelCount / (f32)mMaxAccelCount) * mSinkSpeed;
 
         if (mAccelCount < mMaxAccelCount)
@@ -156,7 +156,7 @@ void FloaterMapParts::exeBack() {
         isCoordLesserThan0 = false;
     }
 
-    if (mMoveType >= MoveType::Turn)
+    if (mMoveType >= FloaterMoveType::Back)
         startNerveAction(this, "Sink");
     else if (isCoordLesserThan0)
         startNerveAction(this, "Wait");

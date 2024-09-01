@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Movement/MoveType.h"
 
 namespace al {
 class KeyPoseKeeper;
+
+enum class FloaterMoveType : s32 { Wait, Back, Sink };
 
 class FloaterMapParts : public LiveActor {
 public:
@@ -24,7 +25,7 @@ private:
     f32 mMaxCoord = 0.0f;
     f32 mSinkSpeed = 5.0f;
     f32 mBackSpeed = 5.0f;
-    MoveType mMoveType = MoveType::Loop;
+    FloaterMoveType mMoveType = FloaterMoveType::Wait;
     s32 mSinkTime = 0;
     s32 mSinkKeepTime = 10;
     s32 mMaxAccelCount = 10;
