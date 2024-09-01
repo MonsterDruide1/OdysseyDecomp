@@ -45,13 +45,13 @@ bool isGotShine(const Shine*);
 bool isAliveShine(const Shine*);
 bool isMainShine(const Shine*);
 void updateHintTrans(const Shine*, const sead::Vector3f&);
-void appearShineAndJoinBossDemo(Shine*, const char*, sead::Quat<f32> const&, const sead::Vector3f&);
+void appearShineAndJoinBossDemo(Shine*, const char*, const sead::Quat<f32>&, const sead::Vector3f&);
 void endShineBossDemo(Shine*);
 void endShineBossDemoAndStartFall(Shine*, f32);
-void setAppearItemFactorByMsg(const al::LiveActor*, al::SensorMsg const*, const al::HitSensor*);
-void setAppearItemFactorAndOffsetByMsg(const al::LiveActor*, al::SensorMsg const*,
+void setAppearItemFactorByMsg(const al::LiveActor*, const al::SensorMsg*, const al::HitSensor*);
+void setAppearItemFactorAndOffsetByMsg(const al::LiveActor*, const al::SensorMsg*,
                                        const al::HitSensor*);
-void setAppearItemFactorAndOffsetForCombo(const al::LiveActor*, al::SensorMsg const*,
+void setAppearItemFactorAndOffsetForCombo(const al::LiveActor*, const al::SensorMsg*,
                                           const al::HitSensor*, bool);
 void appearItemFromObj(al::LiveActor*, const sead::Vector3f&, const sead::Quatf&, f32);
 void appearItemFromObj(al::LiveActor*, al::HitSensor*, f32);

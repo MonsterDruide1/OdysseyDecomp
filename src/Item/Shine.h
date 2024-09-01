@@ -52,12 +52,12 @@ public:
     void tryAppearOrDemoAppear();
 
     void appearPopup(const sead::Vector3f&);
-    void appearPopupDelay(int);
+    void appearPopupDelay(s32);
     void appearPopupSlot(const sead::Vector3f&);
     void appearWarp(const sead::Vector3f&, const sead::Vector3f&);
     void appearStatic();
     void appearPopupWithoutDemo();
-    void appearPopupGrandByBoss(int);
+    void appearPopupGrandByBoss(s32);
     void appearPopupWithoutWarp();
     void appearAndJoinBossDemo(const char*, const sead::Quatf&, const sead::Vector3f&);
     void endBossDemo();
