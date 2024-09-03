@@ -9,7 +9,8 @@ class CameraTicketId;
 class CameraTicket {
 public:
     enum Priority {
-        // Priority_EntranceAll = 2,
+        Priority_Default = 0,
+        Priority_Entrance = 2,
         Priority_BossField = 3,
         Priority_Capture = 4,
         Priority_Object = 5,
@@ -24,6 +25,12 @@ public:
 
     CameraTicket(CameraPoser* poser, const CameraTicketId* ticketId, s32 priority);
     void setPriority(s32 priority);
+
+    CameraPoser* getPoser() const { return mPoser; }
+
+    const CameraTicketId* getTicketId() const { return mTicketId; }
+
+    s32 getPriority() const { return mPriority; }
 
 private:
     CameraPoser* mPoser;
