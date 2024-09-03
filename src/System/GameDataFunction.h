@@ -149,7 +149,7 @@ public:
     static bool isFirstTimeNextWorld(GameDataHolderAccessor);
     static void checkIsNewWorldInAlreadyGoWorld(GameDataHolderAccessor);
     static void getCurrentWorldIdNoDevelop(GameDataHolderAccessor);
-    static void getScenarioNo(const al::LiveActor*);
+    static s32 getScenarioNo(const al::LiveActor*);
     static void getScenarioNo(const al::LayoutActor*);
     static void getScenarioNoPlacement(GameDataHolderAccessor);
     static bool isEqualScenario(const RiseMapPartsHolder*, s32);
