@@ -25,6 +25,8 @@ public:
     CameraTicket(CameraPoser* poser, const CameraTicketId* ticketId, s32 priority);
     void setPriority(s32 priority);
 
+    const CameraTicketId* getTicketId() const { return mTicketId; }
+
 private:
     CameraPoser* mPoser;
     const CameraTicketId* mTicketId;
