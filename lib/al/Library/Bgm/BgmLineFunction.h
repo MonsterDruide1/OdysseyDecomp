@@ -2,6 +2,7 @@
 
 namespace al {
 class Resource;
+class IUseAudioKeeper;
 
 class BgmDataBase {
 public:
@@ -9,4 +10,6 @@ public:
 
     BgmDataBase(const Resource*, const Resource*);
 };
+
+void startBgmSituation(const IUseAudioKeeper*, const char*, bool, bool);
 }  // namespace al

@@ -9,6 +9,7 @@
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/WorldMapEarth.h"
@@ -114,7 +115,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Chair", nullptr},
     {"CheckpointFlag", nullptr},
     {"ChorobonHolder", nullptr},
-    {"ChurchDoor", nullptr},
+    {"ChurchDoor", al::createActorFunction<ChurchDoor>},
     {"CityBuilding", nullptr},
     {"CityStreetlight", nullptr},
     {"CityWorldSign", nullptr},
