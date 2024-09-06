@@ -1,0 +1,37 @@
+#pragma once
+
+#include "Library/LiveActor/LiveActor.h"
+
+namespace al {
+class SimpleAudioUser;
+
+class GateMapParts : public LiveActor {
+public:
+    GateMapParts(const char* name);
+
+    void init(const ActorInitInfo& info) override;
+    void start();
+    void appearAndSetStart();
+    void exeWait();
+    void exeOpen();
+    void updatePose(f32 rate);
+    void exeBound();
+    void exeEnd();
+
+private:
+    sead::Quatf mQuat = sead::Quatf::unit;
+    sead::Vector3f mTrans = sead::Vector3f::zero;
+    sead::Quatf mMoveNextQuat = sead::Quatf::unit;
+    sead::Vector3f mMoveNextTrans = sead::Vector3f::zero;
+    s32 _140 = 10;
+    s32 mOpenTime = 120;
+    f32 mBoundRate = .1f;
+    s32 _14c = 120;
+    s32 _150 = 0;
+    f32 _154 = .1f;
+    s32 mHitReactionCount = 0;
+    SimpleAudioUser* mAudioUser = nullptr;
+};
+
+static_assert(sizeof(GateMapParts) == 0x168);
+}  // namespace al
