@@ -72,4 +72,8 @@ f32 convergeRadian(f32, f32, f32);
 void convergeVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
 void convergeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 
+void separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
+
+void calcParabolicFunctionParam(f32*, f32*, f32, f32 verticalDistance);
+
 }  // namespace al
