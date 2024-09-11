@@ -7,6 +7,7 @@ class LiveActor;
 
 bool isInAreaObj(const LiveActor*, const char*);
 bool isInDeathArea(const LiveActor*);
+bool isInWaterArea(const LiveActor*);
 
 AreaObj* tryFindAreaObj(const LiveActor*, const char*);
 

@@ -36,13 +36,13 @@ def common_no_namespace_qualifiers(c, path):
     for line in c.splitlines():
         line = line[0:line.find("//")] if "//" in line else line
         if line.startswith("using namespace"):
-            match = re.search("^using namespace ([^;\s]+);$", line)
+            match = re.search(r"^using namespace ([^;\s]+);$", line)
             if CHECK(lambda a:match, line, "Unexpected \"using namespace\" line: should follow format \"using namespace xy;\"", path): return
             continue
         if CHECK(lambda a:a.rfind("namespace") in [-1, 0], line, "\"namespace\" must only be listed at the start of a line!", path): return
 
         if line.startswith("namespace"):
-            match = re.search("^namespace ([^{\s]*) ?{$", line)
+            match = re.search(r"^namespace ([^{\s]*) ?{$", line)
             if CHECK(lambda a:match, line, "Unexpected namespace line: should follow format \"namespace xy {\"", path): return
             nest_level.append(match.group(1))
             # can be "" for "namespace {" and "nn::g3d" for double/triple/... namespaces
@@ -67,7 +67,7 @@ def common_no_namespace_qualifiers(c, path):
                 del nest_level[-1]
                 continue
 
-            matches = re.findall("[\(,\s]([^\(,\s]+::)+[^\(,\s]+", x)
+            matches = re.findall(r"[\(,\s]([^\(,\s]+::)+[^\(,\s]+", x)
             for match in matches:
                 match = match[0:-2]
                 # examples: "sead", "al", "nn::g3d"

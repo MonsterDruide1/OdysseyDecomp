@@ -97,4 +97,16 @@ f32 lerpValue(f32 x, f32 y, f32 time) {
         time = 1.0f;
     return (x * (1.0f - time)) + (time * y);
 }
+
+void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
+                                f32 verticalDistance) {
+    // can be 0, 1, or -1
+    f32 signOfA3 = maxHeight < 0.0f ? -1.0f : maxHeight > 0.0f ? 1.0f : maxHeight;
+
+    f32 maxHeightAdjusted =
+        sead::Mathf::sqrt(sead::Mathf::clampMin((maxHeight - verticalDistance) * maxHeight, 0.0));
+    *initialVelY = 2 * ((signOfA3 * maxHeightAdjusted) + maxHeight);
+    *gravity = verticalDistance - *initialVelY;
+}
+
 }  // namespace al
