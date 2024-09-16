@@ -1,8 +1,11 @@
 #include "Library/MapObj/GateMapParts.h"
 
 #include "Library/Audio/System/SimpleAudioUser.h"
+#include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
@@ -49,5 +52,41 @@ void GateMapParts::init(const ActorInitInfo& info) {
         mAudioUser = new SimpleAudioUser("SuccessSeObj", info);
 
     makeActorAlive();
+}
+
+void GateMapParts::start() {
+    if (!isNerve(this, NrvGateMapParts.Wait.data()))
+        return;
+
+    appearAndSetStart();
+}
+
+void GateMapParts::appearAndSetStart() {
+    invalidateClipping(this);
+    startNerveAction(this, "Open");
+}
+
+void GateMapParts::exeWait() {
+    if (isFirstStep(this))
+        validateClipping(this);
+}
+
+// TODO: Depends on GateMapParts::updatePose
+
+// void GateMapParts::exeOpen() {}
+
+// TODO: Non Matching
+void GateMapParts::updatePose(f32 rate) {
+    rate = sead::Mathf::min3(1.0f, rate, 0.0f);
+    //    f32 tmp1 = rate;
+    //    if (rate > 1.0f)
+    //        tmp1 = 1.0f;
+    //
+    //    f32 tmp2 = 0.0f;
+    //    if (rate >= 0.0f)
+    //        tmp2 = tmp1;
+
+    lerpVec(getTransPtr(this), mTrans, mMoveNextTrans, rate);
+    slerpQuat(getQuatPtr(this), mQuat, mMoveNextQuat, rate);
 }
 }  // namespace al
