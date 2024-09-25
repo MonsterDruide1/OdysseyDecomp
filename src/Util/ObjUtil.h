@@ -6,6 +6,7 @@ namespace al {
 class CollisionParts;
 class LiveActor;
 }  // namespace al
+class PlayerModelHolder;
 
 namespace rs {
 
@@ -20,5 +21,7 @@ bool findGrabCeilPosNoWallHit(const al::CollisionParts**, sead::Vector3f*, sead:
 bool findGrabCeilPosWallHit(const al::CollisionParts**, sead::Vector3f*, sead::Vector3f*,
                             sead::Vector3f*, const al::LiveActor*, const sead::Vector3f&,
                             const sead::Vector3f&, f32, f32, f32);
+
+void calcOffsetAllRoot(sead::Vector3f* offset, const PlayerModelHolder* model);
 
 }  // namespace rs
