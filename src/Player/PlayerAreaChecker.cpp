@@ -7,6 +7,8 @@
 
 #include "System/GameDataUtil.h"
 #include "Util/AreaUtil.h"
+#include "System/GameDataHolderAccessor.h"
+#include "Util/Area.h"
 #include "Util/ObjUtil.h"
 
 PlayerAreaChecker::PlayerAreaChecker(const al::LiveActor* player,
