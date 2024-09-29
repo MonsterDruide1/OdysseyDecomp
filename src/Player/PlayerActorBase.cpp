@@ -10,7 +10,7 @@ IUsePlayerCollision* PlayerActorBase::getPlayerCollision() const {
     return nullptr;
 }
 
-al::PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
+PlayerHackKeeper* PlayerActorBase::getPlayerHackKeeper() const {
     return nullptr;
 }
 
@@ -48,9 +48,11 @@ void PlayerActorBase::startDemoKeepCarry() {}
 
 void PlayerActorBase::endDemoKeepCarry() {}
 
-void PlayerActorBase::getDemoActor() {}
+al::DemoActor* PlayerActorBase::getDemoActor() {
+    return reinterpret_cast<al::DemoActor*>(this);
+}
 
-void* PlayerActorBase::getDemoAnimator() {
+PlayerAnimator* PlayerActorBase::getDemoAnimator() {
     return nullptr;
 }
 
@@ -58,7 +60,7 @@ bool PlayerActorBase::isDamageStopDemo() const {
     return false;
 }
 
-void* PlayerActorBase::getPlayerPuppet() {
+PlayerPuppet* PlayerActorBase::getPlayerPuppet() {
     return nullptr;
 }
 

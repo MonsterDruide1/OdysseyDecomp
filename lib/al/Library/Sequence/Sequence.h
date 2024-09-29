@@ -40,8 +40,8 @@ public:
 
 private:
     sead::FixedSafeString<0x40> mName;
-    Scene* mNextScene;
     Scene* mCurrentScene;
+    Scene* mNextScene;
     SceneCreator* mSceneCreator;
     AudioDirector* mAudioDirector;
     AudioKeeper* mAudioKeeper;
