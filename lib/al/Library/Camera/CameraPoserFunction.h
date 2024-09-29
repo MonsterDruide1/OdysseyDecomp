@@ -17,7 +17,7 @@ namespace alCameraPoserFunction {
 class CameraCollisionHitResult;
 
 void getViewIndex(const al::CameraPoser*);
-void getLookAtCamera(const al::CameraPoser*);
+sead::LookAtCamera* getLookAtCamera(const al::CameraPoser*);
 void getProjectionSead(const al::CameraPoser*);
 void getProjection(const al::CameraPoser*);
 void getProjectionMtx(const al::CameraPoser*);

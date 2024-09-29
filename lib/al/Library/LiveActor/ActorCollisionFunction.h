@@ -7,7 +7,7 @@ class TriangleFilterBase;
 class CollisionPartsFilterBase;
 class ActorCollisionController;
 
-void getActorCollider(const LiveActor*);
+Collider* getActorCollider(const LiveActor*);
 bool isExistActorCollider(const LiveActor*);
 void getActorCollisionPartsSensor(const LiveActor*);
 bool isExistCollisionParts(const LiveActor*);
@@ -29,7 +29,7 @@ bool isOnGroundNoVelocity(const LiveActor*, u32);
 bool isOnGroundDegree(const LiveActor*, f32, u32);
 bool isOnGroundFaceDegree(const LiveActor*, f32);
 bool isOnGroundNoVelocityDegree(const LiveActor*, f32, u32);
-void getOnGroundNormal(const LiveActor*, u32);
+const sead::Vector3f& getOnGroundNormal(const LiveActor*, u32);
 void setColliderRadius(LiveActor*, f32);
 void setColliderOffsetY(LiveActor*, f32);
 void getColliderRadius(const LiveActor*);

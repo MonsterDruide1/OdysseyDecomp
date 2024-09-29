@@ -96,10 +96,10 @@ f32 getOriginalSensorRadius(const ActorSensorController*);
 sead::Vector3f& getOriginalSensorFollowPosOffset(const ActorSensorController*);
 void resetActorSensorController(ActorSensorController*);
 void calcPosBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*, f32);
-void calcDistance(const HitSensor*, const HitSensor*);
+f32 calcDistance(const HitSensor*, const HitSensor*);
 sead::Vector3f& getSensorPos(const HitSensor*);
-void calcDistanceV(const sead::Vector3f&, const HitSensor*, const HitSensor*);
-void calcDistanceH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
+f32 calcDistanceV(const sead::Vector3f&, const HitSensor*, const HitSensor*);
+f32 calcDistanceH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 void calcDirBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
 void calcDirBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
 void calcDirBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
