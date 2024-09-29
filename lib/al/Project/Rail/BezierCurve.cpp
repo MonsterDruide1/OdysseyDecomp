@@ -16,9 +16,9 @@ void BezierCurve::set(const sead::Vector3f& start, const sead::Vector3f& startHa
     sead::Vector3f diffDiffDiff = diffDiff2 - diffDiff1;
 
     mStart = start;
-    unk = diff1 * 3;
-    unk2 = diffDiff1 * 3;
-    unk3 = diffDiffDiff;
+    mControlPoint1 = diff1 * 3;
+    mControlPoint2 = diffDiff1 * 3;
+    mControlPoint3 = diffDiffDiff;
 
     mDistance = calcLength(0.0, 1.0, 10);
 }
@@ -47,30 +47,30 @@ void BezierCurve::calcPos(sead::Vector3f* pos, f32 param) const {
     f32 square = param * param;
     f32 cube = square * param;
 
-    pos->x = (unk.x * param) + mStart.x;
-    pos->y = (unk.y * param) + mStart.y;
-    pos->z = (unk.z * param) + mStart.z;
+    pos->x = (mControlPoint1.x * param) + mStart.x;
+    pos->y = (mControlPoint1.y * param) + mStart.y;
+    pos->z = (mControlPoint1.z * param) + mStart.z;
 
-    pos->x = (unk2.x * square) + pos->x;
-    pos->y = (unk2.y * square) + pos->y;
-    pos->z = (unk2.z * square) + pos->z;
+    pos->x = (mControlPoint2.x * square) + pos->x;
+    pos->y = (mControlPoint2.y * square) + pos->y;
+    pos->z = (mControlPoint2.z * square) + pos->z;
 
-    pos->x = (unk3.x * cube) + pos->x;
-    pos->y = (unk3.y * cube) + pos->y;
-    pos->z = (unk3.z * cube) + pos->z;
+    pos->x = (mControlPoint3.x * cube) + pos->x;
+    pos->y = (mControlPoint3.y * cube) + pos->y;
+    pos->z = (mControlPoint3.z * cube) + pos->z;
 }
 
 void BezierCurve::calcVelocity(sead::Vector3f* vel, f32 param) const {
     f32 fac1 = param + param;
     f32 fac2 = 3 * param * param;
 
-    vel->x = (unk2.x * fac1) + unk.x;
-    vel->y = (unk2.y * fac1) + unk.y;
-    vel->z = (unk2.z * fac1) + unk.z;
+    vel->x = (mControlPoint2.x * fac1) + mControlPoint1.x;
+    vel->y = (mControlPoint2.y * fac1) + mControlPoint1.y;
+    vel->z = (mControlPoint2.z * fac1) + mControlPoint1.z;
 
-    vel->x = (unk3.x * fac2) + vel->x;
-    vel->y = (unk3.y * fac2) + vel->y;
-    vel->z = (unk3.z * fac2) + vel->z;
+    vel->x = (mControlPoint3.x * fac2) + vel->x;
+    vel->y = (mControlPoint3.y * fac2) + vel->y;
+    vel->z = (mControlPoint3.z * fac2) + vel->z;
 }
 
 f32 BezierCurve::calcDeltaLength(f32 param) const {
@@ -150,9 +150,9 @@ void BezierCurve::calcStartPos(sead::Vector3f* pos) const {
 }
 
 void BezierCurve::calcCtrlPos1(sead::Vector3f* pos) const {
-    pos->x = unk.x * 0.333333f;
-    pos->y = unk.y * 0.333333f;
-    pos->z = unk.z * 0.333333f;
+    pos->x = mControlPoint1.x * 0.333333f;
+    pos->y = mControlPoint1.y * 0.333333f;
+    pos->z = mControlPoint1.z * 0.333333f;
 
     pos->x = pos->x + mStart.x;
     pos->y = pos->y + mStart.y;
@@ -160,13 +160,13 @@ void BezierCurve::calcCtrlPos1(sead::Vector3f* pos) const {
 }
 
 void BezierCurve::calcCtrlPos2(sead::Vector3f* pos) const {
-    pos->x = unk2.x * 0.333333f;
-    pos->y = unk2.y * 0.333333f;
-    pos->z = unk2.z * 0.333333f;
+    pos->x = mControlPoint2.x * 0.333333f;
+    pos->y = mControlPoint2.y * 0.333333f;
+    pos->z = mControlPoint2.z * 0.333333f;
 
-    pos->x = (unk.x * 0.6666667f) + pos->x;
-    pos->y = (unk.y * 0.6666667f) + pos->y;
-    pos->z = (unk.z * 0.6666667f) + pos->z;
+    pos->x = (mControlPoint1.x * 0.6666667f) + pos->x;
+    pos->y = (mControlPoint1.y * 0.6666667f) + pos->y;
+    pos->z = (mControlPoint1.z * 0.6666667f) + pos->z;
 
     pos->x = pos->x + mStart.x;
     pos->y = pos->y + mStart.y;
@@ -174,17 +174,17 @@ void BezierCurve::calcCtrlPos2(sead::Vector3f* pos) const {
 }
 
 void BezierCurve::calcEndPos(sead::Vector3f* pos) const {
-    pos->x = mStart.x + unk.x;
-    pos->y = mStart.y + unk.y;
-    pos->z = mStart.z + unk.z;
+    pos->x = mStart.x + mControlPoint1.x;
+    pos->y = mStart.y + mControlPoint1.y;
+    pos->z = mStart.z + mControlPoint1.z;
 
-    pos->x = pos->x + unk2.x;
-    pos->y = pos->y + unk2.y;
-    pos->z = pos->z + unk2.z;
+    pos->x = pos->x + mControlPoint2.x;
+    pos->y = pos->y + mControlPoint2.y;
+    pos->z = pos->z + mControlPoint2.z;
 
-    pos->x = pos->x + unk3.x;
-    pos->y = pos->y + unk3.y;
-    pos->z = pos->z + unk3.z;
+    pos->x = pos->x + mControlPoint3.x;
+    pos->y = pos->y + mControlPoint3.y;
+    pos->z = pos->z + mControlPoint3.z;
 }
 
 }  // namespace al

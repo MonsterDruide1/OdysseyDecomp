@@ -65,14 +65,14 @@ void offAreaTarget(LiveActor* actor) {
 }
 
 bool isUpdateMovementEffectAudioCollisionSensor(const LiveActor* actor) {
-    return actor->getFlags()->isUpdateOn;
+    return actor->getFlags()->isUpdateMovementEffectAudioCollisionSensor;
 }
 
 void onUpdateMovementEffectAudioCollisionSensor(LiveActor* actor) {
-    actor->getFlags()->isUpdateOn = true;
+    actor->getFlags()->isUpdateMovementEffectAudioCollisionSensor = true;
 }
 
 void offUpdateMovementEffectAudioCollisionSensor(LiveActor* actor) {
-    actor->getFlags()->isUpdateOn = false;
+    actor->getFlags()->isUpdateMovementEffectAudioCollisionSensor = false;
 }
 }  // namespace al

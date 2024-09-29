@@ -1,7 +1,8 @@
 #pragma once
 
-#include "System/GameDataHolder.h"
+class GameDataHolder;
 
-class GameDataHolderWriter : public GameDataHolder {
-    // ima be real i dont think theres anything in this class
+class GameDataHolderWriter {
+public:
+    GameDataHolder* mData;
 };
