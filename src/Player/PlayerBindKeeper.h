@@ -6,9 +6,9 @@ class HitSensor;
 
 class PlayerBindKeeper {
 public:
-    al::HitSensor* getSecondHitSensor() const { return mSecondHitSensor; }
+    al::HitSensor* getBindSensor() const { return mBindSensor; }
 
 private:
     char padding[8];
-    al::HitSensor* mSecondHitSensor;
+    al::HitSensor* mBindSensor;
 };

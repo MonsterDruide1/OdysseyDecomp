@@ -25,7 +25,7 @@ bool PlayerJudgeLongFall::judge() const {
 
     if (mModelChanger->is2DModel())
         return false;
-    if (mBindKeeper->getSecondHitSensor() != nullptr)
+    if (mBindKeeper->getBindSensor() != nullptr)
         return false;
     if (mHackKeeper->getUnkHitSensor() != nullptr)
         return false;
