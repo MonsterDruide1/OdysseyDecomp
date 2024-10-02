@@ -30,7 +30,7 @@ private:
     s32 _150 = 0;
     f32 _154 = .1f;
     s32 mHitReactionCount = 0;
-    SimpleAudioUser* mAudioUser = nullptr;
+    IUseAudioKeeper* mSuccessSeObj = nullptr;
 };
 
 static_assert(sizeof(GateMapParts) == 0x168);

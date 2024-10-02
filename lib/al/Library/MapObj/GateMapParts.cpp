@@ -1,6 +1,7 @@
 #include "Library/MapObj/GateMapParts.h"
 
 #include "Library/Audio/System/SimpleAudioUser.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
@@ -8,6 +9,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Thread/FunctorV0M.h"
 
@@ -49,7 +51,7 @@ void GateMapParts::init(const ActorInitInfo& info) {
     tryGetArg(&isPlaySuccessSe, info, "IsPlaySuccessSe");
 
     if (isPlaySuccessSe)
-        mAudioUser = new SimpleAudioUser("SuccessSeObj", info);
+        mSuccessSeObj = new SimpleAudioUser("SuccessSeObj", info);
 
     makeActorAlive();
 }
@@ -71,22 +73,73 @@ void GateMapParts::exeWait() {
         validateClipping(this);
 }
 
-// TODO: Depends on GateMapParts::updatePose
+void GateMapParts::exeOpen() {
+    updatePose(calcNerveSquareInRate(this, mOpenTime - 1));
 
-// void GateMapParts::exeOpen() {}
+    if (isGreaterEqualStep(this, mOpenTime - 1)) {
+        _154 = mBoundRate;
+        _14c = (s32)(mBoundRate * (f32)mOpenTime + mBoundRate * (f32)mOpenTime);
+        _150 = 0;
 
-// TODO: Non Matching
+        if (_140 > _150 && _14c > 1) {
+            startAction(this, "Bound");
+
+            return;
+        }
+
+        if (mSuccessSeObj != nullptr)
+            startSe(mSuccessSeObj, "Riddle");
+
+        startAction(this, "End");
+
+        if (mHitReactionCount < 2)
+            startHitReaction(this, "バウンド1回目");
+    }
+}
+
 void GateMapParts::updatePose(f32 rate) {
-    rate = sead::Mathf::min3(1.0f, rate, 0.0f);
-    //    f32 tmp1 = rate;
-    //    if (rate > 1.0f)
-    //        tmp1 = 1.0f;
-    //
-    //    f32 tmp2 = 0.0f;
-    //    if (rate >= 0.0f)
-    //        tmp2 = tmp1;
+    rate = sead::Mathf::clamp(rate, 0.0f, 1.0f);
 
     lerpVec(getTransPtr(this), mTrans, mMoveNextTrans, rate);
     slerpQuat(getQuatPtr(this), mQuat, mMoveNextQuat, rate);
+}
+
+// TODO: Non Matching
+void GateMapParts::exeBound() {
+    if (isFirstStep(this)) {
+        if (_150++ < mHitReactionCount)
+            startHitReaction(this, StringTmp<32>("バウンド%d回目", _150).cstr());
+
+        tryStartSeWithParam(this, "BoundStart", (f32)(_140 - _150), "");
+    }
+
+    f32 fVar7 = calcNerveRate(this, _14c - 1);
+    fVar7 = _154 * (fVar7 * 2 - 1.0f);
+    fVar7 = 1.0f - sead::Mathf::pow(_154, 2) + sead::Mathf::pow(fVar7, 2);
+
+    updatePose(fVar7);
+
+    if (isGreaterEqualStep(this, _14c - 1)) {
+        _154 *= mBoundRate;
+        _14c = (s32)(mBoundRate * (f32)_14c);
+
+        if (_140 > _150 && _14c > 1) {
+            startAction(this, "Bound");
+
+            return;
+        }
+
+        if (mSuccessSeObj != nullptr)
+            startSe(mSuccessSeObj, "Riddle");
+
+        startAction(this, "End");
+    }
+}
+
+void GateMapParts::exeEnd() {
+    if (isFirstStep(this)) {
+        validateClipping(this);
+        updatePose(1.0f);
+    }
 }
 }  // namespace al
