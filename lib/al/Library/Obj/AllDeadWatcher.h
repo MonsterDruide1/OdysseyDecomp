@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Nerve/NerveSetupUtil.h"
 
 namespace al {
 class AllDeadWatcher : public LiveActor {
@@ -23,11 +22,4 @@ private:
 };
 
 static_assert(sizeof(AllDeadWatcher) == 0x120);
-
-namespace {
-NERVE_IMPL(AllDeadWatcher, Watch);
-NERVE_IMPL(AllDeadWatcher, Wait);
-
-NERVES_MAKE_STRUCT(AllDeadWatcher, Watch, Wait);
-}  // namespace
 }  // namespace al

@@ -3,9 +3,19 @@
 #include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/LiveActorUtil.h"
+#include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
+
+namespace {
+using namespace al;
+
+NERVE_IMPL(AllDeadWatcher, Watch)
+NERVE_IMPL(AllDeadWatcher, Wait)
+
+NERVES_MAKE_STRUCT(AllDeadWatcher, Watch, Wait)
+}  // namespace
 
 namespace al {
 AllDeadWatcher::AllDeadWatcher(const char* name) : LiveActor(name) {}
