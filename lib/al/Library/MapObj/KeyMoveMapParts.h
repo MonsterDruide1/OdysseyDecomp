@@ -7,6 +7,10 @@ class KeyPoseKeeper;
 class SwitchKeepOnAreaGroup;
 class SwitchOnAreaGroup;
 class RippleCtrl;
+class FunctorBase;
+
+// TODO: Remove this
+bool listenStageSwitchOnStart(IUseStageSwitch* stageSwitchHolder, const FunctorBase& actionOnOn);
 
 class KeyMoveMapParts : public LiveActor {
 public:
