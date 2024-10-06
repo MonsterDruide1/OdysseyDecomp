@@ -15,6 +15,7 @@ class AudioDirector;
 
 class AmiiboNpcLayout;
 class ProjectNfpDirector;
+class MessageTagDataHolder;
 
 class AmiiboNpcDirector : public al::ISceneObj, public al::IUseHioNode, public al::IUseAudioKeeper {
 public:
@@ -69,7 +70,7 @@ void registerSearchAmiibo(const al::IUseSceneObjHolder*, const al::NfpInfo&);
 bool isSearchAmiibo(const al::IUseSceneObjHolder*, const al::NfpInfo&);
 void deleteSearchEndAmiibo(const al::IUseSceneObjHolder*);
 void setTalkStartTime(const al::IUseSceneObjHolder*);
-const char* getMessageTagDataHolder(const al::IUseSceneObjHolder*);
+MessageTagDataHolder* getMessageTagDataHolder(const al::IUseSceneObjHolder*);
 void setTouchAmiiboName(const al::IUseSceneObjHolder*, s32, s32);
 void trySetAmiiboCostumeName(const al::IUseSceneObjHolder*, s32);
 void tryCreateHelpAmiiboDirector(const al::IUseSceneObjHolder*);

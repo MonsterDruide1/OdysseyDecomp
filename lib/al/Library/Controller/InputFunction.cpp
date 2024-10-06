@@ -1,5 +1,7 @@
 #include "Library/Controller/InputFunction.h"
 
+#include <controller/seadControllerMgr.h>
+
 namespace al {
 
 sead::ControllerBase* getController_(s32 port) {
