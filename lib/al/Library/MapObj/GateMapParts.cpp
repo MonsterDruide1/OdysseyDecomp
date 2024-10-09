@@ -94,9 +94,9 @@ void GateMapParts::exeOpen() {
     if (isGreaterEqualStep(this, mOpenTime - 1)) {
         _154 = mBoundRate;
         _14c = (s32)(mBoundRate * (f32)mOpenTime + mBoundRate * (f32)mOpenTime);
-        _150 = 0;
+        mHitReactionCurrent = 0;
 
-        if (_140 > _150 && _14c > 1) {
+        if (_140 > mHitReactionCurrent && _14c > 1) {
             startAction(this, "Bound");
 
             return;
@@ -119,25 +119,25 @@ void GateMapParts::updatePose(f32 rate) {
     slerpQuat(getQuatPtr(this), mQuat, mMoveNextQuat, rate);
 }
 
-// TODO: Non Matching
 void GateMapParts::exeBound() {
     if (isFirstStep(this)) {
-        if (_150++ < mHitReactionCount)
-            startHitReaction(this, StringTmp<32>("バウンド%d回目", _150).cstr());
+        if (mHitReactionCurrent++ < mHitReactionCount)
+            startHitReaction(this, StringTmp<32>("バウンド%d回目", mHitReactionCurrent).cstr());
 
-        tryStartSeWithParam(this, "BoundStart", (f32)(_140 - _150), "");
+        tryStartSeWithParam(this, "BoundStart", (f32)(_140 - mHitReactionCurrent), "");
     }
 
-    f32 fVar7 = calcNerveRate(this, _14c - 1);
-    fVar7 = sead::Mathf::pow(_154 * (fVar7 * 2 - 1.0f), 2);
+    f32 rate = calcNerveRate(this, _14c - 1);
+    rate = sead::Mathf::pow(_154 * (rate * 2 - 1.0f), 2);
+    rate += (1.0f - sead::Mathf::pow(_154, 2));
 
-    updatePose((1.0f - sead::Mathf::pow(_154, 2)) + fVar7);
+    updatePose(rate);
 
     if (isGreaterEqualStep(this, _14c - 1)) {
         _154 *= mBoundRate;
         _14c = (s32)(mBoundRate * (f32)_14c);
 
-        if (_140 > _150 && _14c > 1) {
+        if (_140 > mHitReactionCurrent && _14c > 1) {
             startAction(this, "Bound");
 
             return;

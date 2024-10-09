@@ -27,7 +27,7 @@ private:
     s32 mOpenTime = 120;
     f32 mBoundRate = .1f;
     s32 _14c = 120;
-    s32 _150 = 0;
+    s32 mHitReactionCurrent = 0;
     f32 _154 = .1f;
     s32 mHitReactionCount = 0;
     IUseAudioKeeper* mSuccessSeObj = nullptr;
