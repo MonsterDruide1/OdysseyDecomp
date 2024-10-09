@@ -25,9 +25,23 @@ NERVE_ACTIONS_MAKE_STRUCT(GateMapParts, Wait, Open, Bound, End)
 }  // namespace
 
 namespace al {
+void setQuat(sead::Quatf* out, const sead::Quatf& other) {
+    out->x = other.x;
+    out->y = other.y;
+    out->z = other.z;
+    out->w = other.w;
+}
+
+// can be something like
+
+// template <typename T>
+// inline void Quat<T>::set(const Quat<T>& other)
+// {
+//     QuatCalcCommon<T>::set(*this, other);
+// }
+
 GateMapParts::GateMapParts(const char* name) : LiveActor(name) {}
 
-// TODO: Non Matching
 void GateMapParts::init(const ActorInitInfo& info) {
     using GateMapPartsFunctor = FunctorV0M<GateMapParts*, void (GateMapParts::*)()>;
 
@@ -36,7 +50,8 @@ void GateMapParts::init(const ActorInitInfo& info) {
     tryGetQuatPtr(this);
 
     mTrans = getTrans(this);
-    mQuat = getQuat(this);
+    // mQuat = getQuat(this);
+    setQuat(&mQuat, getQuat(this));
 
     tryGetLinksTrans(&mMoveNextTrans, info, "MoveNext");
     tryGetLinksQuat(&mMoveNextQuat, info, "MoveNext");
@@ -115,9 +130,8 @@ void GateMapParts::exeBound() {
 
     f32 fVar7 = calcNerveRate(this, _14c - 1);
     fVar7 = _154 * (fVar7 * 2 - 1.0f);
-    fVar7 = 1.0f - sead::Mathf::pow(_154, 2) + sead::Mathf::pow(fVar7, 2);
 
-    updatePose(fVar7);
+    updatePose((1.0f - sead::Mathf::pow(_154, 2)) + sead::Mathf::pow(fVar7, 2));
 
     if (isGreaterEqualStep(this, _14c - 1)) {
         _154 *= mBoundRate;
