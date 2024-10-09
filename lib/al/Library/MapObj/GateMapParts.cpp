@@ -129,9 +129,9 @@ void GateMapParts::exeBound() {
     }
 
     f32 fVar7 = calcNerveRate(this, _14c - 1);
-    fVar7 = _154 * (fVar7 * 2 - 1.0f);
+    fVar7 = sead::Mathf::pow(_154 * (fVar7 * 2 - 1.0f), 2);
 
-    updatePose((1.0f - sead::Mathf::pow(_154, 2)) + sead::Mathf::pow(fVar7, 2));
+    updatePose((1.0f - sead::Mathf::pow(_154, 2)) + fVar7);
 
     if (isGreaterEqualStep(this, _14c - 1)) {
         _154 *= mBoundRate;
