@@ -58,9 +58,9 @@ void KeyMoveMapParts::init(const ActorInitInfo& info) {
 
     bool isListenStart =
         listenStageSwitchOnStart(this, KeyMoveMapPartsFunctor(this, &KeyMoveMapParts::start));
-    s32 keyPoseCount = getKeyPoseCount(mKeyPoseKeeper);
+
     u8 tmp;
-    if (keyPoseCount < 2 || (tmp = mIsFloorTouchStart, (tmp & 0xff) != 0) ||
+    if (getKeyPoseCount(mKeyPoseKeeper) < 2 || (tmp = mIsFloorTouchStart, (tmp & 0xff) != 0) ||
         (isListenStart | (0xff < tmp)))
         startNerveAction(this, "StandBy");
 
