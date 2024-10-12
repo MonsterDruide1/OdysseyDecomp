@@ -8,4 +8,6 @@ void Sequence::kill() {
     mIsAlive = false;
 }
 
+bool Sequence::isDisposable() const{ return true; }
+
 }  // namespace al

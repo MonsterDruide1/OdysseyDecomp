@@ -7,7 +7,7 @@
 #include "System/GameDataHolderWriter.h"
 
 struct BindInfo;
-struct ChangeStageInfo;
+class ChangeStageInfo;
 class ScenarioStartCamera;
 struct ShineInfo;
 class Shine;

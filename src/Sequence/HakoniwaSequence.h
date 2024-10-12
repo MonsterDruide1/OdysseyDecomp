@@ -2,54 +2,113 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Sequence/Sequence.h"
+#include "System/GameDataHolderAccessor.h"
+
+class HakoniwaStateDemoOpening;
+class HakoniwaStateDemoEnding;
 class HakoniwaStateDemoWorldWarp;
+class HakoniwaStateSimpleDemo;
+class HakoniwaStateBootLoadData;
+class HakoniwaStateDeleteScene;
 class WorldResourceLoader;
 class StageScene;
 class GameDataHolderAccessor;
+class BootLayout;
+class TimeBalloonSequenceInfo;
+class CollectBgmPlayer;
+class LoadLayoutCtrl;
 
 namespace al {
 class WipeHolder;
-class SequenceInitInfo;
 class Scene;
 class AudioDirector;
+class LayoutKit;
+class SimpleLayoutAppearWaitEnd;
+class AsyncFunctorThread;
+class SeadAudioPlayer;
+class AudioBusSendFader;
+class SimpleAudioUser;
+
 }  // namespace al
 
-// generated with Ghidra
-class HakoniwaSequence {
+class HakoniwaSequence : public al::Sequence {
 public:
-    HakoniwaSequence(const char*);
-    bool isDisposable();
-    void updatePadSystem();
-    void destroySceneHeap(bool);
-    void init(const al::SequenceInitInfo&);
-    void initSystem();
-    void update();
-    bool isEnableSave();
-    void drawMain();
-    al::Scene* getCurrentScene();  // {return curScene}
+    HakoniwaSequence(const char* name);
 
-    u8** field_0x0;
-    u8 padding_120[120];
-    al::Scene* curScene;
-    u8 padding_8[8];
-    al::AudioDirector* field_0x90;
-    u8 padding_24[24];
-    StageScene* stageScene;
-    GameDataHolderAccessor* gameDataHolder;
-    u8 padding_024[24];
-    HakoniwaStateDemoWorldWarp* stateDemoWorldWarp;
-    u8 padding_192[192];
-    s32 nextScenarioNo;
-    u8 padding_12[12];
-    al::WipeHolder* field_0x1b0;
-    u8 padding_0024[24];
-    s64* field_0x1d0;
-    u8 padding_48[48];
-    WorldResourceLoader* worldResourceLoader;
-    u8 padding_0x16[16];
-    u8* field_0x220;
-    u8 padding_0x144[144];
-    u8* field_0x2b8;
-    u8 padding_0x160[160];
-    u8 field_0x360;
+    void init(const al::SequenceInitInfo& info) override;
+    void update() override;
+    void drawMain() const override;
+
+    void updatePadSystem();
+    void destroySceneHeap(bool destroyResource);
+    void initSystem();
+    void isEnableSave() const;
+
+    void exeBootLoadData();
+    void exeDemoOpening();
+    void exeLoadWorldResource();
+    void exeLoadWorldResourceWithBoot();
+    void exeLoadStage();
+    void exePlayStage();
+    void exeDemoWorldWarp();
+    void exeDemoEnding();
+    void exeDestroy();
+    void exeMiss();
+    void exeMissCoinSub();
+    void exeMissEnd();
+    void exeDemoLava();
+    void exeFadeToNewGame();
+    void exeChangeLanguage();
+    void exeWaitWriteData();
+    void exeWaitLoadData();
+    void exeWaitWriteDataModeChange();
+    void exeWaitLoadDataModeChange();
+
+    bool isDisposable() const override;
+    al::Scene* getCurrentScene() const override;
+
+public:
+    al::Scene* mCurrentScene;
+    GameDataHolderAccessor mGameDataHolderAccessor;
+    al::GamePadSystem* mGamePadSystem;
+    HakoniwaStateDemoOpening* mStateDemoOpening;
+    HakoniwaStateDemoEnding* mStateDemoEnding;
+    HakoniwaStateDemoWorldWarp* mStateDemoWorldWarp;
+    HakoniwaStateSimpleDemo* mStateSimpleDemo;
+    HakoniwaStateBootLoadData* mStateBootLoadData;
+    HakoniwaStateDeleteScene* mStateDeleteScene;
+    al::LayoutKit* mLayoutKit;
+    bool _100;
+    sead::FixedSafeString<128> mStageName;
+    s32 mScenarioNum;
+    s32 _1A4;
+    void* mScreenCaptureExecutor;
+    al::WipeHolder* mWipeHolder;
+    bool mIsMissEnd;
+    al::SimpleLayoutAppearWaitEnd* mCounterMiss;
+    s32 mCurrentCoins;
+    s32 mFinalCoins;
+    BootLayout* mBootLayout;
+    al::EffectSystem* mEffectSystem;
+    al::AsyncFunctorThread* mInitThread;
+    bool mIsInitialized;
+    al::SeadAudioPlayer* mSeAudioPlayer;
+    al::SeadAudioPlayer* mBgmAudioPlayer;
+    al::AudioBusSendFader* mAudioBusSendFader;
+    WorldResourceLoader* mResourceLoader;
+    sead::Heap* mPlayerResourceHeap;
+    sead::FixedSafeString<128> mCapName;
+    sead::FixedSafeString<128> mCostumeName;
+    al::SimpleAudioUser* mPlayerAudioUser;
+    bool mIsHackEnd;
+    TimeBalloonSequenceInfo* mBalloonSeqInfo;
+    CollectBgmPlayer* mCollectBgmPlayer;
+    sead::FixedSafeString<128> mLanguage;
+    s32 mFileId;
+    LoadLayoutCtrl* mLoadLayoutCtrl;
+    bool mIsKidsMode;
 };
+
+static_assert(sizeof(HakoniwaSequence) == 0x418, "HakoniwaSequnce size");
+

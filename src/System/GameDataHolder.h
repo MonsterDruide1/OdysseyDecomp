@@ -12,6 +12,7 @@ class PlacementId;
 }
 
 class GameDataFile;
+class ChangeStageInfo;
 
 class GameDataHolder : public al::GameDataHolderBase {
 public:
@@ -84,7 +85,7 @@ public:
     void readFromSaveDataBufferCommonFileOnlyLanguage();
     void readFromSaveDataBuffer(const char* bufferName);
 
-    void changeNextStage(const struct ChangeStageInfo*, s32);
+    void changeNextStage(const ChangeStageInfo*, s32);
 
     s32 findUseScenarioNo(const char*);
 

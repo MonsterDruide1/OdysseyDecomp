@@ -151,11 +151,11 @@ bool isEqualPlacementId(PlacementId* placementId, const PlacementInfo& placement
 
 bool isExistRail(const ActorInitInfo& initInfo, const char* linkName);
 
-bool tryGetRailIter(PlacementInfo& railPlacementInfo, const PlacementInfo& placementInfo,
+bool tryGetRailIter(PlacementInfo* railPlacementInfo, const PlacementInfo& placementInfo,
                     const char* linkName);
-bool tryGetLinksInfo(PlacementInfo& railPlacementInfo, const PlacementInfo& placementInfo,
+bool tryGetLinksInfo(PlacementInfo* railPlacementInfo, const PlacementInfo& placementInfo,
                      const char* linkName);
-bool tryGetMoveParameterRailIter(PlacementInfo& railPlacementInfo,
+bool tryGetMoveParameterRailIter(PlacementInfo* railPlacementInfo,
                                  const PlacementInfo& placementInfo);
 bool tryGetRailPointPos(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 void getRailPointHandlePrev(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
