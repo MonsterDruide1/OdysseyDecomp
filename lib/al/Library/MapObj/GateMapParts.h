@@ -23,14 +23,14 @@ private:
     sead::Vector3f mTrans = sead::Vector3f::zero;
     sead::Quatf mMoveNextQuat = sead::Quatf::unit;
     sead::Vector3f mMoveNextTrans = sead::Vector3f::zero;
-    s32 _140 = 10;
+    s32 mMaxHitReactions = 10;
     s32 mOpenTime = 120;
-    f32 mBoundRate = .1f;
-    s32 _14c = 120;
+    f32 mBoundRate = 0.1f;
+    s32 mStepRemaining = 120;
     s32 mHitReactionCurrent = 0;
-    f32 _154 = .1f;
+    f32 mBoundRateFactor = 0.1f;
     s32 mHitReactionCount = 0;
-    IUseAudioKeeper* mSuccessSeObj = nullptr;
+    SimpleAudioUser* mSuccessSeObj = nullptr;
 };
 
 static_assert(sizeof(GateMapParts) == 0x168);

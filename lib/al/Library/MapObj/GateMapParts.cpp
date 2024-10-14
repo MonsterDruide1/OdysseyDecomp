@@ -25,21 +25,6 @@ NERVE_ACTIONS_MAKE_STRUCT(GateMapParts, Wait, Open, Bound, End)
 }  // namespace
 
 namespace al {
-void setQuat(sead::Quatf* out, const sead::Quatf& other) {
-    out->x = other.x;
-    out->y = other.y;
-    out->z = other.z;
-    out->w = other.w;
-}
-
-// can be something like
-
-// template <typename T>
-// inline void Quat<T>::set(const Quat<T>& other)
-// {
-//     QuatCalcCommon<T>::set(*this, other);
-// }
-
 GateMapParts::GateMapParts(const char* name) : LiveActor(name) {}
 
 void GateMapParts::init(const ActorInitInfo& info) {
@@ -50,8 +35,7 @@ void GateMapParts::init(const ActorInitInfo& info) {
     tryGetQuatPtr(this);
 
     mTrans = getTrans(this);
-    // mQuat = getQuat(this);
-    setQuat(&mQuat, getQuat(this));
+    mQuat = getQuat(this);
 
     tryGetLinksTrans(&mMoveNextTrans, info, "MoveNext");
     tryGetLinksQuat(&mMoveNextQuat, info, "MoveNext");
@@ -92,11 +76,11 @@ void GateMapParts::exeOpen() {
     updatePose(calcNerveSquareInRate(this, mOpenTime - 1));
 
     if (isGreaterEqualStep(this, mOpenTime - 1)) {
-        _154 = mBoundRate;
-        _14c = (s32)(mBoundRate * (f32)mOpenTime + mBoundRate * (f32)mOpenTime);
+        mBoundRateFactor = mBoundRate;
+        mStepRemaining = (s32)(mBoundRate * (f32)mOpenTime * 2);
         mHitReactionCurrent = 0;
 
-        if (_140 > mHitReactionCurrent && _14c > 1) {
+        if (mMaxHitReactions > mHitReactionCurrent && mStepRemaining > 1) {
             startAction(this, "Bound");
 
             return;
@@ -124,20 +108,20 @@ void GateMapParts::exeBound() {
         if (mHitReactionCurrent++ < mHitReactionCount)
             startHitReaction(this, StringTmp<32>("バウンド%d回目", mHitReactionCurrent).cstr());
 
-        tryStartSeWithParam(this, "BoundStart", (f32)(_140 - mHitReactionCurrent), "");
+        tryStartSeWithParam(this, "BoundStart", (f32)(mMaxHitReactions - mHitReactionCurrent), "");
     }
 
-    f32 rate = calcNerveRate(this, _14c - 1);
-    rate = sead::Mathf::pow(_154 * (rate * 2 - 1.0f), 2);
-    rate += (1.0f - sead::Mathf::pow(_154, 2));
+    f32 rate = calcNerveRate(this, mStepRemaining - 1);
+    rate = sead::Mathf::pow(mBoundRateFactor * (rate * 2 - 1.0f), 2);
+    rate += (1.0f - sead::Mathf::pow(mBoundRateFactor, 2));
 
     updatePose(rate);
 
-    if (isGreaterEqualStep(this, _14c - 1)) {
-        _154 *= mBoundRate;
-        _14c = (s32)(mBoundRate * (f32)_14c);
+    if (isGreaterEqualStep(this, mStepRemaining - 1)) {
+        mBoundRateFactor *= mBoundRate;
+        mStepRemaining = (s32)(mBoundRate * (f32)mStepRemaining);
 
-        if (_140 > mHitReactionCurrent && _14c > 1) {
+        if (mMaxHitReactions > mHitReactionCurrent && mStepRemaining > 1) {
             startAction(this, "Bound");
 
             return;
