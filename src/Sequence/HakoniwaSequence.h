@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 
 #include "Library/Sequence/Sequence.h"
+
 #include "System/GameDataHolderAccessor.h"
 
 class HakoniwaStateDemoOpening;
@@ -68,7 +69,7 @@ public:
     bool isDisposable() const override;
     al::Scene* getCurrentScene() const override;
 
-public:
+private:
     al::Scene* mCurrentScene;
     GameDataHolderAccessor mGameDataHolderAccessor;
     al::GamePadSystem* mGamePadSystem;
@@ -111,4 +112,3 @@ public:
 };
 
 static_assert(sizeof(HakoniwaSequence) == 0x418, "HakoniwaSequnce size");
-
