@@ -26,9 +26,9 @@ private:
     s32 mMaxHitReactions = 10;
     s32 mOpenTime = 120;
     f32 mBoundRate = 0.1f;
-    s32 mStepRemaining = 120;
+    s32 mCurrentBoundSteps = 120;
     s32 mHitReactionCurrent = 0;
-    f32 mBoundRateFactor = 0.1f;
+    f32 mCurrentBoundRate = 0.1f;
     s32 mHitReactionCount = 0;
     SimpleAudioUser* mSuccessSeObj = nullptr;
 };

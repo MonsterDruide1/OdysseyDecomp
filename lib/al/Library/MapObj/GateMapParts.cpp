@@ -76,11 +76,11 @@ void GateMapParts::exeOpen() {
     updatePose(calcNerveSquareInRate(this, mOpenTime - 1));
 
     if (isGreaterEqualStep(this, mOpenTime - 1)) {
-        mBoundRateFactor = mBoundRate;
-        mStepRemaining = (s32)(mBoundRate * (f32)mOpenTime * 2);
+        mCurrentBoundRate = mBoundRate;
+        mCurrentBoundSteps = (s32)(mBoundRate * (f32)mOpenTime * 2);
         mHitReactionCurrent = 0;
 
-        if (mMaxHitReactions > mHitReactionCurrent && mStepRemaining > 1) {
+        if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
             startAction(this, "Bound");
 
             return;
@@ -111,17 +111,17 @@ void GateMapParts::exeBound() {
         tryStartSeWithParam(this, "BoundStart", (f32)(mMaxHitReactions - mHitReactionCurrent), "");
     }
 
-    f32 rate = calcNerveRate(this, mStepRemaining - 1);
-    rate = sead::Mathf::pow(mBoundRateFactor * (rate * 2 - 1.0f), 2);
-    rate += (1.0f - sead::Mathf::pow(mBoundRateFactor, 2));
+    f32 rate = calcNerveRate(this, mCurrentBoundSteps - 1);
+    rate = sead::Mathf::pow(mCurrentBoundRate * (rate * 2 - 1.0f), 2);
+    rate += (1.0f - sead::Mathf::pow(mCurrentBoundRate, 2));
 
     updatePose(rate);
 
-    if (isGreaterEqualStep(this, mStepRemaining - 1)) {
-        mBoundRateFactor *= mBoundRate;
-        mStepRemaining = (s32)(mBoundRate * (f32)mStepRemaining);
+    if (isGreaterEqualStep(this, mCurrentBoundSteps - 1)) {
+        mCurrentBoundRate *= mBoundRate;
+        mCurrentBoundSteps = (s32)(mBoundRate * (f32)mCurrentBoundSteps);
 
-        if (mMaxHitReactions > mHitReactionCurrent && mStepRemaining > 1) {
+        if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
             startAction(this, "Bound");
 
             return;
