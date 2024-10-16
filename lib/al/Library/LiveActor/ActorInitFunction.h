@@ -35,7 +35,7 @@ void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& info,
 void initActorEffectKeeper(LiveActor* actor, const ActorInitInfo& info, const char* name);
 void initActorPoseTQSV(LiveActor* actor);
 void initExecutorUpdate(LiveActor* actor, const ActorInitInfo& info, const char* name);
-void initNerve(LiveActor* actor, const Nerve* actionName, s32 stateCount);
+void initNerve(LiveActor* actor, const Nerve* nerve, s32 stateCount);
 void initNerveAction(LiveActor* actor, const char* actionName,
                      alNerveFunction::NerveActionCollector* collector, s32 stateCount);
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& info, const char* name);
