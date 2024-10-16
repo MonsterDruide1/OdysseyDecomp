@@ -20,4 +20,4 @@ public:
 private:
     void* unknown[0x7];
 };
-} // namespace al
+}  // namespace al
