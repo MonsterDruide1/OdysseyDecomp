@@ -36,9 +36,9 @@ public:
     void storeCurrentHitInfo(SphereHitInfo*, u32);
     void updateRecentOnGroundInfo();
 
-    virtual CollisionDirector* getCollisionDirector() const override;
+    CollisionDirector* getCollisionDirector() const override;
 
+private:
     void* unknown[0x50];
 };
-
 }  // namespace al

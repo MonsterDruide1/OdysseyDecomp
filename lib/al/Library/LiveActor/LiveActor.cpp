@@ -103,9 +103,9 @@ void LiveActor::initHitSensor(s32 amount) {
     mHitSensorKeeper = new HitSensorKeeper(amount);
 }
 
-void LiveActor::initCollider(f32 radius, f32 y, u32 planeNum) {
+void LiveActor::initCollider(f32 radius, f32 offsetY, u32 allocatedHitInfo) {
     mCollider = new Collider(getCollisionDirector(), getBaseMtx(), &getTrans(this),
-                             &getGravity(this), radius, y, planeNum);
+                             &getGravity(this), radius, offsetY, allocatedHitInfo);
     mFlags->isCollideOff = false;
 }
 
