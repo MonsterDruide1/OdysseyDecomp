@@ -35,6 +35,10 @@ public:
     void storeContactPlane(SphereHitInfo*);
     void storeCurrentHitInfo(SphereHitInfo*, u32);
     void updateRecentOnGroundInfo();
-};
 
+    CollisionDirector* getCollisionDirector() const override;
+
+private:
+    void* unknown[0x50];
+};
 }  // namespace al

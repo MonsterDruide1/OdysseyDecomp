@@ -97,7 +97,7 @@ public:
     void initEffectKeeper(EffectKeeper* effectKeeper);
     void initAudioKeeper(AudioKeeper* audioKeeper);
     void initRailKeeper(const ActorInitInfo& info, const char* linkName);
-    void initCollider(f32 radius, f32 y, u32 planeNum);
+    void initCollider(f32 radius, f32 offsetY, u32 allocatedHitInfo);
     void initItemKeeper(s32 itemAmount);
     void initScoreKeeper();
     void initActorPrePassLightKeeper(ActorPrePassLightKeeper* lightKeeper);
