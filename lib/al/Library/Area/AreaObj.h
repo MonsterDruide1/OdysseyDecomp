@@ -18,13 +18,14 @@ public:
     AreaObj(const char* name);
 
     virtual const char* getName() const override;
-    virtual StageSwitchKeeper* getStageSwitchKeeper() const override;
-    virtual void initStageSwitchKeeper() override;
-    virtual void init(const AreaInitInfo& info);
-    virtual bool isInVolume(const sead::Vector3f& pos) const;
-    virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
-    virtual SceneObjHolder* getSceneObjHolder() const override;
+    StageSwitchKeeper* getStageSwitchKeeper() const override;
+    void initStageSwitchKeeper() override;
+    void init(const AreaInitInfo& info);
+    bool isInVolume(const sead::Vector3f& pos) const;
+    bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
+    SceneObjHolder* getSceneObjHolder() const override;
 
+private:
     const char* mName;
     AreaShape* mAreaShape;
     StageSwitchKeeper* mStageSwitchKeeper;

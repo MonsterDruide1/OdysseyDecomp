@@ -13,8 +13,8 @@ public:
     s32 findWipe(const char* name) const;
     void startCloseByInfo(const char* infoName);
     s32 findInfo(const char* infoName) const;
-    bool tryStartClose(const char* name, s32 unk);
-    bool tryStartCloseByInfo(const char* infoName);
+    void tryStartClose(const char* name, s32 unk);
+    void tryStartCloseByInfo(const char* infoName);
     void startCloseEnd(const char* infoName);
     void startOpen(s32 index);
     bool isExistInfo(const char* infoName) const;
