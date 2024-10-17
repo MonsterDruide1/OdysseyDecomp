@@ -39,7 +39,7 @@ public:
     sead::Resource* loadArchive(const sead::SafeString& path, sead::FileDevice* device);
     sead::Resource* loadArchiveLocal(const sead::SafeString& path, const char* suffix,
                                      sead::FileDevice* device);
-    sead::Resource loadArchiveWithExt(const sead::SafeString& path, const char* suffix,
+    sead::Resource* loadArchiveWithExt(const sead::SafeString& path, const char* suffix,
                                       sead::FileDevice* device);
     bool tryRequestLoadArchive(const sead::SafeString& path, sead::Heap* heap,
                                sead::FileDevice* device);
