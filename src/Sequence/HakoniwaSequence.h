@@ -44,7 +44,7 @@ public:
     void updatePadSystem();
     void destroySceneHeap(bool destroyResource);
     void initSystem();
-    void isEnableSave() const;
+    bool isEnableSave() const;
 
     void exeBootLoadData();
     void exeDemoOpening();
@@ -82,7 +82,7 @@ private:
     al::LayoutKit* mLayoutKit;
     bool _100;
     sead::FixedSafeString<128> mStageName;
-    s32 mScenarioNum;
+    s32 mNextScenarioNum;
     s32 _1A4;
     void* mScreenCaptureExecutor;
     al::WipeHolder* mWipeHolder;

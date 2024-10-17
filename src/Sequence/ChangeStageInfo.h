@@ -2,9 +2,9 @@
 
 #include <prim/seadSafeString.h>
 
-#include "Library/Placement/PlacementInfo.h"
-
-#include "System/GameDataHolder.h"
+namespace al {
+class PlacementInfo;
+}
 
 class GameDataHolder;
 
@@ -26,7 +26,7 @@ public:
     ChangeStageInfo(const GameDataHolder*, const char* entranceName, const char* stageName, bool,
                     s32 scenario, SubScenarioType subScenarioType);
     void copy(const ChangeStageInfo& other);
-    void findScenarioNoByList(const GameDataHolder*);  // Doesn't return anything
+    void findScenarioNoByList(const GameDataHolder*);
     void init();
     void init(const al::PlacementInfo& info, const GameDataHolder* holder);
     bool isSubScenarioTypeLifeRecover() const;
