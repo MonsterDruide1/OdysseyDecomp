@@ -14,7 +14,7 @@ public:
 
 private:
     al::LiveActor* mHostActor = nullptr;
-    float field_110 = 0.0f;
-    float mYDegree = 0.0f;
+    f32 _110 = 0.0f;
+    f32 mYDegree = 0.0f;
     sead::Vector3f mPose = sead::Vector3f::ey;
 };

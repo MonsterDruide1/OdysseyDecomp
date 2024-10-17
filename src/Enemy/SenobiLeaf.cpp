@@ -1,4 +1,5 @@
 #include "Enemy/SenobiLeaf.h"
+
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
@@ -12,7 +13,7 @@ SenobiLeaf::SenobiLeaf(const char* actorName) : al::LiveActor(actorName) {}
 void SenobiLeaf::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "SenobiLeaf", 0);
     al::initJointControllerKeeper(this, 1);
-    al::initJointLocalZRotator(this, &field_110, "Leaf1");
+    al::initJointLocalZRotator(this, &_110, "Leaf1");
     makeActorDead();
 }
 
@@ -38,7 +39,7 @@ void SenobiLeaf::updatePose() {
 // NON_MATCHING: regswap when adding
 void SenobiLeaf::registerToHost(al::LiveActor* host, bool flip) {
     mHostActor = host;
-    this->getName();  // unused
+    getName();  // unused
     al::invalidateClipping(this);
     al::registerSubActorSyncClipping(host, this);
     al::onSyncHideSubActor(host, this);
