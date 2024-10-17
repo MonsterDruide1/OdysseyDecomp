@@ -38,6 +38,8 @@ public:
 
     T* getHost() { return mHost; }
 
+    T* getHost() const { return mHost; }
+
 private:
     T* mHost;
 };
