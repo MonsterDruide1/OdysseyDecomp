@@ -17,7 +17,7 @@ class AreaObj : public IUseStageSwitch, public IUseSceneObjHolder, public HioNod
 public:
     AreaObj(const char* name);
 
-    virtual const char* getName() const override;
+    const char* getName() const override;
     StageSwitchKeeper* getStageSwitchKeeper() const override;
     void initStageSwitchKeeper() override;
     void init(const AreaInitInfo& info);
