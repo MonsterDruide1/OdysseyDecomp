@@ -259,7 +259,7 @@ void AnagramAlphabetCharacter::exeHackMove() {
         mSwingTimer = 0;
     }
 
-    if (rs::isTriggerHackSwing(mHackerParent) & 1)
+    if (rs::isTriggerHackSwing(mHackerParent))
         mSwingTimer = 60;
     else if (mSwingTimer >= 1)
         mSwingTimer--;
@@ -295,7 +295,8 @@ void AnagramAlphabetCharacter::exeHackMove() {
 }
 
 void AnagramAlphabetCharacter::exeHackFall() {
-    al::isFirstStep(this);  // unused call
+    if (al::isFirstStep(this)) {
+    }  // unused call
 
     al::addVelocityToGravity(this, 1.5f);
     al::scaleVelocity(this, 0.99f);
@@ -330,19 +331,19 @@ void AnagramAlphabetCharacter::exeHackGoal() {
         al::startHitReaction(this, "ゴールデモ開始");
     }
 
-    sead::Vector3f rot = {mPoseMatrix->m[0][2], mPoseMatrix->m[1][2], mPoseMatrix->m[2][2]};
+    sead::Vector3f front = {mPoseMatrix->m[0][2], mPoseMatrix->m[1][2], mPoseMatrix->m[2][2]};
 
     sead::Vector3f pos;
     mPoseMatrix->getTranslation(pos);
 
-    al::turnToDirection(this, rot, 20.0f);
+    al::turnToDirection(this, front, 20.0f);
     al::lerpVec(al::getTransPtr(this), al::getTrans(this), pos, 0.5f);
 
     if (al::isGreaterEqualStep(this, 0)) {
         al::updatePoseMtx(this, mPoseMatrix);
 
         CapTargetParts* capTargetParts = mCapTargetParts;
-        rs::endHackDir(&mHackerParent, rot);
+        rs::endHackDir(&mHackerParent, front);
         al::validateClipping(this);
         al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
         capTargetParts->startNormal();
