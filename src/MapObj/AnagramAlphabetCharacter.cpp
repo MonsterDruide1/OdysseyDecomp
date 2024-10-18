@@ -354,7 +354,7 @@ void AnagramAlphabetCharacter::endHack() {
     capTargetParts->startNormal();
 }
 
-void AnagramAlphabetCharacter::endHackDir(const sead::Vector3f& dir){
+void AnagramAlphabetCharacter::endHackDir(const sead::Vector3f& dir) {
     CapTargetParts* capTargetParts = mCapTargetParts;
     rs::endHackDir(&mHackerParent, dir);
     al::validateClipping(this);
