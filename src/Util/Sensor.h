@@ -32,4 +32,8 @@ bool isMsgHackMarioDemo(const al::SensorMsg*);
 bool isMsgHackMarioInWater(const al::SensorMsg*);
 bool isMsgHackMarioCheckpointFlagWarp(const al::SensorMsg*);
 
+bool isMsgCapAttack(const al::SensorMsg*);
+bool isMsgStartHack(const al::SensorMsg*);
+void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*);
+
 }  // namespace rs
