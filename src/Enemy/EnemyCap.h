@@ -28,6 +28,7 @@ public:
     void setBlowDownParam(const al::EnemyStateBlowDownParam*);
 
     al::LiveActor* getCap() { return mCap; };
+
     al::EnemyStateBlowDown* getStateBlowDown() { return mStateBlowDown; };
 
 private:

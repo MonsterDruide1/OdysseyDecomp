@@ -68,7 +68,7 @@ void setShadowMaskDropLength(LiveActor*, f32, const char*);
 void setShadowMaskDropLengthScaleWithDrawCategory(LiveActor*, f32, ShadowMaskDrawCategory);
 void setShadowMaskDropLengthWithDrawCategory(LiveActor*, f32, ShadowMaskDrawCategory);
 void setShadowMaskDropLengthEvenWithTarget(ShadowMaskBase*, const char*, const sead::Vector3f&);
-void setShadowMaskDropLengthEvenWithTarget(ShadowMaskBase*, ShadowMaskBase const*,
+void setShadowMaskDropLengthEvenWithTarget(ShadowMaskBase*, const ShadowMaskBase*,
                                            const sead::Vector3f&);
 void setShadowMaskDropLengthEvenWithDrawCategory(LiveActor*, ShadowMaskDrawCategory,
                                                  const LiveActor*, const char*);

@@ -33,9 +33,8 @@ void EnemyStateBlowDown::start(const HitSensor* sensor) {
 }
 
 void EnemyStateBlowDown::start(const sead::Vector3f& dir) {
-    if (mParam->mFaceAwayFromActor) {
+    if (mParam->mFaceAwayFromActor)
         faceToDirection(mActor, -dir);
-    }
 
     auto* actor = mActor;
     sead::Vector3f direction = dir * mParam->mVelocityStrength;
