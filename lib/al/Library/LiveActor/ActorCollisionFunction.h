@@ -45,7 +45,7 @@ bool isCollidedGround(const LiveActor*);
 void calcJumpInertiaWall(sead::Vector3f*, LiveActor*, f32);
 bool isCollidedWall(const LiveActor*);
 void scaleVelocityInertiaWallHit(LiveActor*, f32, f32, f32);
-void getCollidedWallNormal(const LiveActor*);
+const sead::Vector3f& getCollidedWallNormal(const LiveActor*);
 void calcCollidedNormalSum(const LiveActor*, sead::Vector3f*);
 void calcGroundNormalOrUpDir(sead::Vector3f*, const LiveActor*);
 void getCollidedGroundNormal(const LiveActor*);

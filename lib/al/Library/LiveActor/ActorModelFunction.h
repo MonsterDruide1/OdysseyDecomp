@@ -45,7 +45,7 @@ bool isSilhouetteModelHidden(const LiveActor* actor);
 void showSilhouetteModelIfHide(LiveActor* actor);
 void hideSilhouetteModelIfShow(LiveActor* actor);
 void setModelAlphaMask(LiveActor* actor, f32);
-void getModelAlphaMask(const LiveActor* actor);
+f32 getModelAlphaMask(const LiveActor* actor);
 bool isModelAlphaMask(const LiveActor* actor);
 void updateModelAlphaMaskCameraDistance(LiveActor* actor, f32, f32, f32, f32);
 bool isExistZPrePass(const LiveActor* actor);
@@ -69,7 +69,7 @@ bool isIncludePrepassCullingShape(LiveActor* actor);
 void isExistJoint(const LiveActor* actor, const char*);
 void getJointIndex(const LiveActor* actor, const char*);
 sead::Matrix34f* getJointMtxPtr(const LiveActor* actor, const char*);  // return type might be const
-void getJointMtxPtrByIndex(const LiveActor* actor, s32);
+sead::Matrix34f* getJointMtxPtrByIndex(const LiveActor* actor, s32);
 void getJointLocalTrans(sead::Vector3f*, const LiveActor* actor, const char*);
 void calcJointPos(sead::Vector3f*, const LiveActor* actor, const char*);
 void calcJointOffsetPos(sead::Vector3f*, const LiveActor* actor, const char*,

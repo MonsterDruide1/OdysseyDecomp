@@ -46,7 +46,8 @@ void validateSeKeeper(IUseAudioKeeper*);
 void invalidateSeKeeper(IUseAudioKeeper*);
 void setSeEmitterPoseMtxPtr(const IUseAudioKeeper*, const sead::Matrix34f*, const char*);
 void setSeEmitterPosePosPtr(const IUseAudioKeeper*, const sead::Vector3f*, const char*);
-void tryUpdateSeMaterialCode(IUseAudioKeeper*, const char*);
+bool tryUpdateSeMaterialCode(IUseAudioKeeper*, const char*);
+
 void updateSeMaterialWater(IUseAudioKeeper*, bool);
 void updateSeMaterialWet(IUseAudioKeeper*, bool);
 void updateSeMaterialBeyondWall(IUseAudioKeeper*, bool);
