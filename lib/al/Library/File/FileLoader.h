@@ -40,7 +40,7 @@ public:
     sead::Resource* loadArchiveLocal(const sead::SafeString& path, const char* suffix,
                                      sead::FileDevice* device);
     sead::Resource* loadArchiveWithExt(const sead::SafeString& path, const char* suffix,
-                                      sead::FileDevice* device);
+                                       sead::FileDevice* device);
     bool tryRequestLoadArchive(const sead::SafeString& path, sead::Heap* heap,
                                sead::FileDevice* device);
     FileEntryBase* requestLoadArchive(const sead::SafeString& path, sead::Heap* heap,
