@@ -29,7 +29,7 @@ public:
     void requestDecideAmiiboLayout();
     void requestEndAmiiboLayout();
     bool isEndAmiiboLayout();
-    void registerSearchAmiibo(s32, s32, ulong);
+    void registerSearchAmiibo(s32, s32, u64);
     void deleteSearchEndAmiibo();
     bool isSearchAmiibo(s32);
     u32 getSearchAmiiboNum() const;
