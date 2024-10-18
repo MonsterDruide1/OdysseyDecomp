@@ -75,11 +75,11 @@ void AnagramAlphabetCharacter::attackSensor(al::HitSensor* target, al::HitSensor
         al::sendMsgPush(source, target);
 }
 
-bool isHack(AnagramAlphabetCharacter* actor) {
-    return al::isNerve(actor, &NrvAnagramAlphabetCharacter.HackWait) ||
-           al::isNerve(actor, &NrvAnagramAlphabetCharacter.HackMove) ||
-           al::isNerve(actor, &NrvAnagramAlphabetCharacter.HackFall) ||
-           al::isNerve(actor, &NrvAnagramAlphabetCharacter.HackGoal);
+bool AnagramAlphabetCharacter::isHack() {
+    return al::isNerve(this, &NrvAnagramAlphabetCharacter.HackWait) ||
+           al::isNerve(this, &NrvAnagramAlphabetCharacter.HackMove) ||
+           al::isNerve(this, &NrvAnagramAlphabetCharacter.HackFall) ||
+           al::isNerve(this, &NrvAnagramAlphabetCharacter.HackGoal);
 }
 
 bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
@@ -109,7 +109,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     }
 
     if (rs::isMsgCancelHack(message)) {
-        if (isHack(this)) {
+        if (isHack()) {
             endHack();
             return true;
         }
@@ -122,17 +122,10 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     }
 
     if (rs::isMsgHackerDamageAndCancel(message)) {
-        if (isHack(this)) {
+        if (isHack()) {
             sead::Vector3f dir;
             al::calcDirBetweenSensorsH(&dir, source, target);
-
-            // Mismatches with inline func
-            CapTargetParts* capTargetParts = mCapTargetParts;
-            rs::endHackDir(&mHackerParent, dir);
-            al::validateClipping(this);
-            al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-            capTargetParts->startNormal();
-
+            endHackDir(dir);
             return true;
         }
         return false;
@@ -333,12 +326,7 @@ void AnagramAlphabetCharacter::exeHackGoal() {
     if (al::isGreaterEqualStep(this, 0)) {
         al::updatePoseMtx(this, mPoseMatrix);
 
-        // Mismatches with inline func
-        CapTargetParts* capTargetParts = mCapTargetParts;
-        rs::endHackDir(&mHackerParent, front);
-        al::validateClipping(this);
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-        capTargetParts->startNormal();
+        endHackDir(front);
 
         mParent->testEndHack();
         al::setNerve(this, &NrvAnagramAlphabetCharacter.Set);
@@ -361,6 +349,14 @@ void AnagramAlphabetCharacter::exeComplete() {}
 void AnagramAlphabetCharacter::endHack() {
     CapTargetParts* capTargetParts = mCapTargetParts;
     rs::endHack(&mHackerParent);
+    al::validateClipping(this);
+    al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+    capTargetParts->startNormal();
+}
+
+void AnagramAlphabetCharacter::endHackDir(const sead::Vector3f& dir){
+    CapTargetParts* capTargetParts = mCapTargetParts;
+    rs::endHackDir(&mHackerParent, dir);
     al::validateClipping(this);
     al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
     capTargetParts->startNormal();

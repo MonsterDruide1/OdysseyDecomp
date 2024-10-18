@@ -32,7 +32,9 @@ public:
     void exeSet();
     void exeComplete();
 
+    inline bool isHack();
     inline void endHack();
+    inline void endHackDir(const sead::Vector3f& dir);
 
 private:
     CapTargetInfo* mCapTargetInfo = nullptr;
