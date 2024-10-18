@@ -19,8 +19,8 @@ RailMoveMovement::RailMoveMovement(LiveActor* host, const ActorInitInfo& info)
     tryGetArg(&mSpeed, info, "Speed");
     tryGetArg((s32*)&mMoveType, info, "MoveType");
 
-    if ((u32)mMoveType > (u32)MoveType::Stop)
-        mMoveType = MoveType::Loop;
+    if (mMoveType > RailMoveMovementMoveType::Ahead)
+        mMoveType = RailMoveMovementMoveType::Loop;
 
     initNerve(&NrvRailMoveMovement.Move, 0);
 }
@@ -30,13 +30,13 @@ void RailMoveMovement::exeMove() {
         return;
 
     switch (mMoveType) {
-    case MoveType::Loop:
+    case RailMoveMovementMoveType::Loop:
         moveSyncRailLoop(getHost(), mSpeed);
         break;
-    case MoveType::Turn:
+    case RailMoveMovementMoveType::Turn:
         moveSyncRailTurn(getHost(), mSpeed);
         break;
-    case MoveType::Stop:
+    case RailMoveMovementMoveType::Ahead:
         moveSyncRail(getHost(), mSpeed);
         break;
     default:
