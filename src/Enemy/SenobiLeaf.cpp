@@ -1,5 +1,7 @@
 #include "Enemy/SenobiLeaf.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
@@ -13,7 +15,7 @@ SenobiLeaf::SenobiLeaf(const char* actorName) : al::LiveActor(actorName) {}
 void SenobiLeaf::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "SenobiLeaf", 0);
     al::initJointControllerKeeper(this, 1);
-    al::initJointLocalZRotator(this, &_110, "Leaf1");
+    al::initJointLocalZRotator(this, &mLocalZRotator, "Leaf1");
     makeActorDead();
 }
 
@@ -27,8 +29,8 @@ void SenobiLeaf::updatePose() {
     al::calcJointFrontDir(&frontDir, mHostActor, "AllRoot");
 
     sead::Quatf targetQuat = sead::Quatf::unit;
-    al::makeQuatFrontUp(&targetQuat, mPose, frontDir);
-    al::rotateQuatRadian(&targetQuat, targetQuat, mPose, mYDegree * 0.017453f);
+    al::makeQuatFrontUp(&targetQuat, mUp, frontDir);
+    al::rotateQuatRadian(&targetQuat, targetQuat, mUp, sead::Mathf::deg2rad(mYDegree));
     al::updatePoseQuat(this, targetQuat);
 
     sead::Vector3f newFrontDir;
@@ -43,6 +45,5 @@ void SenobiLeaf::registerToHost(al::LiveActor* host, bool flip) {
     al::invalidateClipping(this);
     al::registerSubActorSyncClipping(host, this);
     al::onSyncHideSubActor(host, this);
-    f32 test = al::getRandom(-60.0f, 60.0f) + (flip ? -90.0f : 90.0f);
-    mYDegree = test;
+    mYDegree = al::getRandom(-60.0f, 60.0f) + (flip ? -90.0f : 90.0f);
 }

@@ -14,7 +14,7 @@ public:
 
 private:
     al::LiveActor* mHostActor = nullptr;
-    f32 _110 = 0.0f;
+    f32 mLocalZRotator = 0.0f;
     f32 mYDegree = 0.0f;
-    sead::Vector3f mPose = sead::Vector3f::ey;
+    sead::Vector3f mUp = sead::Vector3f::ey;
 };
