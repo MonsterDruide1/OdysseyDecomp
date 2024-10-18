@@ -44,7 +44,6 @@ public:
         sead::FixedSafeString<L>::formatV(format, args);
         va_end(args);
     }
-
     StringTmp() : sead::FixedSafeString<L>() {}
 
     ~StringTmp() = default;

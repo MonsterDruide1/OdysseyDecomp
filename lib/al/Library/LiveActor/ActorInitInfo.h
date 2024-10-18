@@ -13,6 +13,7 @@
 #include "Library/Placement/PlacementInfo.h"
 
 namespace al {
+class ByamlIter;
 class LiveActor;
 class LiveActorGroup;
 class PlacementInfo;
@@ -122,7 +123,7 @@ void createChildLinkMapPartsActor(const char* actorName, const char* archiveName
 
 ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo);
 
-void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);
+void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, ByamlIter const&, const char*);
 void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
 ShadowMaskBase* createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
 ShadowMaskBase* createShadowMaskCube(LiveActor*, const char*, const char*, const char*,
@@ -139,10 +140,10 @@ void initActorCollisionWithResource(LiveActor*, const Resource*, const sead::Saf
                                     HitSensor*, const sead::Matrix34f*, const char*);
 void initActorCollisionWithArchiveName(LiveActor*, const sead::SafeString&, const sead::SafeString&,
                                        HitSensor*, const sead::Matrix34f*);
-void initActorCollisionWithFilePtr(LiveActor*, void*, const void*, HitSensor*,
+void initActorCollisionWithFilePtr(LiveActor*, void*, void const*, HitSensor*,
                                    const sead::Matrix34f*, const char*, const char*, s32);
 void initStageSwitch(LiveActor*, const ActorInitInfo&);
-void initActorItemKeeper(LiveActor*, const ActorInitInfo&, const ByamlIter&);
+void initActorItemKeeper(LiveActor*, const ActorInitInfo&, ByamlIter const&);
 void initActorPrePassLightKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initActorOcclusionKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initSubActorKeeper(LiveActor*, const ActorInitInfo&, const char*, s32);
