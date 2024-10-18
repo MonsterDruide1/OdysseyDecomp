@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Movement/MoveType.h"
 #include "Library/Nerve/NerveStateBase.h"
+
+enum class RailMoveMovementMoveType : u32 { Loop, Turn, Ahead };
 
 namespace al {
 class RailMoveMovement : public HostStateBase<LiveActor> {
@@ -13,7 +14,7 @@ public:
 
 private:
     f32 mSpeed = 10.0f;
-    MoveType mMoveType = MoveType::Loop;
+    RailMoveMovementMoveType mMoveType = RailMoveMovementMoveType::Loop;
 };
 
 static_assert(sizeof(RailMoveMovement) == 0x28);
