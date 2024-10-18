@@ -15,7 +15,7 @@ NERVES_MAKE_STRUCT(RailMoveMovement, Move)
 namespace al {
 // NON_MATCHING
 RailMoveMovement::RailMoveMovement(LiveActor* host, const ActorInitInfo& info)
-    : HostStateBase<LiveActor>("レール移動挙動", host) {
+    : HostStateBase("レール移動挙動", host) {
     tryGetArg(&mSpeed, info, "Speed");
     tryGetArg((s32*)&mMoveType, info, "MoveType");
 
