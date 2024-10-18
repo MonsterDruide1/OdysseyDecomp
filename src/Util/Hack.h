@@ -21,7 +21,7 @@ CapTargetInfo* createCapTargetInfoWithPlayerCollider(al::LiveActor*, IUsePlayerC
 CapTargetInfo* createCapTargetInfoHackMapParts(al::LiveActor*);
 CapTargetInfo* createCapTargetInfoLockOnOnlyNoArchive(al::LiveActor*, const sead::Matrix34f*);
 void requestLockOnCapHitReaction(const al::LiveActor*, const CapTargetInfo*, const char*);
-void startHack(al::HitSensor*, al::HitSensor*, al::LiveActor*);
+IUsePlayerHack* startHack(al::HitSensor*, al::HitSensor*, al::LiveActor*);
 void endHack(IUsePlayerHack**);
 void endHackDir(IUsePlayerHack**, const sead::Vector3f&);
 void endHackTargetQuat(IUsePlayerHack**, const sead::Quatf&, const sead::Vector3f&);
