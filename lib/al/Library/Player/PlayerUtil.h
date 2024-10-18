@@ -26,7 +26,7 @@ LiveActor* tryFindAlivePlayerActorFirst(const LiveActor*);
 LiveActor* tryFindAlivePlayerActorFirst(const PlayerHolder*);
 LiveActor* findAlivePlayerActorFirst(const LiveActor*);
 LiveActor* findAlivePlayerActorFirst(const PlayerHolder*);
-al::PadRumbleKeeper* getPlayerPadRumbleKeeper(const LiveActor*, s32);
+PadRumbleKeeper* getPlayerPadRumbleKeeper(const LiveActor*, s32);
 s32 getPlayerPort(const PlayerHolder*, s32);
 s32 getPlayerPort(const LiveActor*, s32);
 LiveActor* findAlivePlayerActorFromPort(const PlayerHolder*, s32);
@@ -42,13 +42,13 @@ void tryFindNearestPlayerDisatanceFromTarget(f32*, const LiveActor*, const sead:
 bool isNearPlayer(const LiveActor*, f32);
 bool isNearPlayerH(const LiveActor*, f32);
 bool isNearPlayerHCondition(const LiveActor*, f32, bool (*)(const LiveActor*));
-void getFarPlayerPosMaxX(const LiveActor*);
-void getFarPlayerPosMinX(const LiveActor*);
-void calcPlayerListOrderByDistance(const LiveActor*, const LiveActor**, u32);
-void calcAlivePlayerActor(const LiveActor*, const LiveActor**, u32);
-void tryFindNearestPlayerActorCondition(const LiveActor*, bool (*)(const LiveActor*));
-void tryFindNearestPlayerPosCondition(sead::Vector3f*, const LiveActor*,
-                                      bool (*)(const LiveActor*));
+const sead::Vector3f& getFarPlayerPosMaxX(const LiveActor*);
+const sead::Vector3f& getFarPlayerPosMinX(const LiveActor*);
+u32 calcPlayerListOrderByDistance(const LiveActor*, const LiveActor**, u32);
+u32 calcAlivePlayerActor(const LiveActor*, const LiveActor**, u32);
+LiveActor* tryFindNearestPlayerActorCondition(const LiveActor*, bool (*)(const LiveActor*));
+LiveActor* tryFindNearestPlayerPosCondition(sead::Vector3f*, const LiveActor*,
+                                            bool (*)(const LiveActor*));
 bool isResetablePlayerPos(const LiveActor*, const sead::Vector3f&, f32, f32);
 bool isResetablePlayerPos(const LiveActor*, f32);
 void faceToPlayer(LiveActor*);
@@ -57,8 +57,8 @@ void faceToPlayer(LiveActor*);
 namespace alPlayerFunction {
 void registerPlayer(al::LiveActor*, al::PadRumbleKeeper*);
 bool isFullPlayerHolder(al::LiveActor*);
-void findPlayerHolderIndex(const al::LiveActor*);
-void findPlayerHolderIndex(const al::HitSensor*);
+s32 findPlayerHolderIndex(const al::LiveActor*);
+s32 findPlayerHolderIndex(const al::HitSensor*);
 bool isPlayerActor(const al::LiveActor*);
 bool isPlayerActor(const al::HitSensor*);
 }  // namespace alPlayerFunction

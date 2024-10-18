@@ -95,11 +95,10 @@ void EnemyStateRunAway::exePanicRun() {
     if (al::isCollidedWallVelocity(mActor)) {
         sead::Vector3f collidedWallNormal = al::getCollidedWallNormal(mActor);
         al::verticalizeVec(&collidedWallNormal, al::getGravity(mActor), collidedWallNormal);
-        if (!al::tryNormalizeOrZero(&collidedWallNormal)) {
+        if (!al::tryNormalizeOrZero(&collidedWallNormal))
             mFrontDir.set(-mFrontDir);
-        } else {
+        else
             mFrontDir.set(collidedWallNormal);
-        }
         al::setNerve(this, &PanicRunCollided);
     } else {
         al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,

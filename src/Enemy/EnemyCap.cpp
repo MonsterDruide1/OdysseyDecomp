@@ -48,11 +48,12 @@ void EnemyCap::initPartsFixFile(al::LiveActor* cap, const al::ActorInitInfo& inf
     mCap = cap;
     /*
     Non const workaround that causes a mismatch
-    sead::Matrix34f baseMtx = *mCap->getBaseMtx(); 
+    sead::Matrix34f baseMtx = *mCap->getBaseMtx();
     mCapBaseMtx = &baseMtx;
     */
-    //Casting to get rid of the pointer's const'ness. I'll change mCapBaseMtx to be a const* if this is what we decide to do
-    mCapBaseMtx = (sead::Matrix34f*) mCap->getBaseMtx();
+    // Casting to get rid of the pointer's const'ness. I'll change mCapBaseMtx to be a const* if
+    // this is what we decide to do
+    mCapBaseMtx = (sead::Matrix34f*)mCap->getBaseMtx();
     al::initChildActorWithArchiveNameNoPlacementInfo(this, info, archiveName, 0);
     al::initNerve(this, &NrvEnemyCap.Wait, 1);
     mStateBlowDown = new al::EnemyStateBlowDown(this, &sEnemyCapBlowDownParam, "吹き飛び状態");
