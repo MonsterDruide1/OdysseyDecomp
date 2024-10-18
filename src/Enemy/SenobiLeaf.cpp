@@ -29,7 +29,7 @@ void SenobiLeaf::updatePose() {
     al::calcJointFrontDir(&frontDir, mHostActor, "AllRoot");
 
     sead::Quatf targetQuat = sead::Quatf::unit;
-    al::makeQuatFrontUp(&targetQuat, mUp, frontDir);
+    al::makeQuatUpFront(&targetQuat, mUp, frontDir);
     al::rotateQuatRadian(&targetQuat, targetQuat, mUp, sead::Mathf::deg2rad(mYDegree));
     al::updatePoseQuat(this, targetQuat);
 

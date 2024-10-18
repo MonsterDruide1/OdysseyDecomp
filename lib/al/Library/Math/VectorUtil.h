@@ -14,6 +14,7 @@ void rotateQuatRadian(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f
 void calcQuatFront(sead::Vector3f*, const sead::Quatf&);
 void calcQuatUp(sead::Vector3f*, const sead::Quatf&);
 void makeQuatFrontUp(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&);
+void makeQuatUpFront(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&);
 
 void makeMtxFrontUpPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
                        const sead::Vector3f&);
