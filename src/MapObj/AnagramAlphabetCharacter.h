@@ -32,6 +32,8 @@ public:
     void exeSet();
     void exeComplete();
 
+    inline void endHack();
+
 private:
     CapTargetInfo* mCapTargetInfo = nullptr;
     sead::Matrix34f* mPoseMatrix = nullptr;

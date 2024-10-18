@@ -110,24 +110,14 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
 
     if (rs::isMsgCancelHack(message)) {
         if (isHack(this)) {
-            CapTargetParts* capTargetParts = mCapTargetParts;
-            rs::endHack(&mHackerParent);
-            al::validateClipping(this);
-            al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-            capTargetParts->startNormal();
-
+            endHack();
             return true;
         }
         return false;
     }
     if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message) ||
         rs::isMsgHackMarioInWater(message) || rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-        CapTargetParts* capTargetParts = mCapTargetParts;
-        rs::endHack(&mHackerParent);
-        al::validateClipping(this);
-        al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
-        capTargetParts->startNormal();
-
+        endHack();
         return true;
     }
 
@@ -136,6 +126,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
             sead::Vector3f dir;
             al::calcDirBetweenSensorsH(&dir, source, target);
 
+            // Mismatches with inline func
             CapTargetParts* capTargetParts = mCapTargetParts;
             rs::endHackDir(&mHackerParent, dir);
             al::validateClipping(this);
@@ -342,6 +333,7 @@ void AnagramAlphabetCharacter::exeHackGoal() {
     if (al::isGreaterEqualStep(this, 0)) {
         al::updatePoseMtx(this, mPoseMatrix);
 
+        // Mismatches with inline func
         CapTargetParts* capTargetParts = mCapTargetParts;
         rs::endHackDir(&mHackerParent, front);
         al::validateClipping(this);
@@ -365,3 +357,11 @@ void AnagramAlphabetCharacter::exeSet() {
 }
 
 void AnagramAlphabetCharacter::exeComplete() {}
+
+void AnagramAlphabetCharacter::endHack() {
+    CapTargetParts* capTargetParts = mCapTargetParts;
+    rs::endHack(&mHackerParent);
+    al::validateClipping(this);
+    al::setNerve(this, &NrvAnagramAlphabetCharacter.HackEnd);
+    capTargetParts->startNormal();
+}
