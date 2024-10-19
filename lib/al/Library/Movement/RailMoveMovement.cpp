@@ -1,5 +1,6 @@
 #include "Library/Movement/RailMoveMovement.h"
 
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Rail/RailUtil.h"
@@ -18,8 +19,8 @@ RailMoveMovement::RailMoveMovement(LiveActor* host, const ActorInitInfo& info)
     tryGetArg(&mSpeed, info, "Speed");
     tryGetArg((s32*)&mMoveType, info, "MoveType");
 
-    if (mMoveType > RailMoveMovementMoveType::Ahead)
-        mMoveType = RailMoveMovementMoveType::Loop;
+    if (mMoveType > MoveType::Ahead)
+        mMoveType = MoveType::Loop;
 
     initNerve(&NrvRailMoveMovement.Move, 0);
 }
@@ -29,13 +30,13 @@ void RailMoveMovement::exeMove() {
         return;
 
     switch (mMoveType) {
-    case RailMoveMovementMoveType::Loop:
+    case MoveType::Loop:
         moveSyncRailLoop(getHost(), mSpeed);
         break;
-    case RailMoveMovementMoveType::Turn:
+    case MoveType::Turn:
         moveSyncRailTurn(getHost(), mSpeed);
         break;
-    case RailMoveMovementMoveType::Ahead:
+    case MoveType::Ahead:
         moveSyncRail(getHost(), mSpeed);
         break;
     default:

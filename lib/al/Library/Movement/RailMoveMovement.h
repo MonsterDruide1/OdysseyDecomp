@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
 #include "Library/Nerve/NerveStateBase.h"
 
-enum class RailMoveMovementMoveType : u32 { Loop, Turn, Ahead };
-
 namespace al {
+class ActorInitInfo;
+
 class RailMoveMovement : public HostStateBase<LiveActor> {
 public:
     RailMoveMovement(LiveActor* host, const ActorInitInfo& info);
@@ -13,8 +12,10 @@ public:
     void exeMove();
 
 private:
+    enum class MoveType : u32 { Loop, Turn, Ahead };
+
     f32 mSpeed = 10.0f;
-    RailMoveMovementMoveType mMoveType = RailMoveMovementMoveType::Loop;
+    MoveType mMoveType = MoveType::Loop;
 };
 
 static_assert(sizeof(RailMoveMovement) == 0x28);
