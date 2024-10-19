@@ -91,7 +91,7 @@ private:
     StageSceneStateStartSeparatePlay* mStateStartSeparatePlay = nullptr;
     StageSceneStateEndSeparatePlay* mStateEndSeparatePlay = nullptr;
     StageSceneStateOption* mStateOption = nullptr;
-    al::LiveActor* mMarioHigh = nullptr;
+    al::LiveActor* mMarioActor = nullptr;
     char field_0x80[40];
     GameDataHolderAccessor mGameDataHolderAccessor;
     al::PauseCameraCtrl* mPauseCameraCtrl = nullptr;

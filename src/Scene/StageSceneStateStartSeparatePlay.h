@@ -32,7 +32,7 @@ public:
     void exeFadeIn();
     void exeWaitDraw();
 
-    bool getField42() const { return field_42; }
+    bool isCancel() const { return mIsCancel; }
 
 private:
     al::GamePadSystem* mGamePadSystem = nullptr;
@@ -40,5 +40,5 @@ private:
     al::WipeSimple* mWipeSimple = nullptr;
     FooterParts* mFooterParts = nullptr;
     u16 field_40 = 0;
-    bool field_42 = false;
+    bool mIsCancel = false;
 };

@@ -20,7 +20,7 @@ public:
     void exeCloseEnd();
     void exeOpen();
 
-    virtual void appear();
+    void appear() override;
 
 private:
     s32 mTime = -1;

@@ -6,8 +6,6 @@ namespace al {
 class NerveStateBase : public NerveExecutor {
 public:
     NerveStateBase(const char* stateName);
-    // Temporarily removed to avoid mismatch in the StageSceneStateEndSeparatePlay dtor
-    // virtual ~NerveStateBase();
 
     virtual void init();
     virtual void appear();

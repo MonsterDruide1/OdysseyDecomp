@@ -42,7 +42,7 @@ StageSceneStateStartSeparatePlay::StageSceneStateStartSeparatePlay(
 
 void StageSceneStateStartSeparatePlay::appear() {
     field_40 = 0;
-    field_42 = false;
+    mIsCancel = false;
     setDead(false);
     if (rs::isModeE3LiveRom()) {
         startTreeHouse();
@@ -56,17 +56,16 @@ void StageSceneStateStartSeparatePlay::startTreeHouse() {
 }
 
 bool StageSceneStateStartSeparatePlay::isNeedRequestGraphicsPreset() const {
-    return (field_42 && al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.FadeIn)) ||
+    return (mIsCancel && al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.FadeIn)) ||
            (al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.Appear) ||
             al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.Back));
 }
 
 bool StageSceneStateStartSeparatePlay::isDrawViewRenderer() const {
-    if (isDead() || field_42)
+    if (isDead() || mIsCancel)
         return false;
-    if (al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.WaitDraw))
-        return true;
-    return al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.FadeIn);
+    return al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.WaitDraw) ||
+           al::isNerve(this, &NrvStageSceneStateStartSeparatePlay.FadeIn);
 }
 
 void StageSceneStateStartSeparatePlay::exeAppear() {
@@ -80,7 +79,7 @@ void StageSceneStateStartSeparatePlay::exeAppear() {
 
 void StageSceneStateStartSeparatePlay::exeWait() {
     if (rs::isTriggerUiCancel(getScene())) {
-        field_42 = true;
+        mIsCancel = true;
         al::setNerve(this, &NrvStageSceneStateStartSeparatePlay.Back);
         return;
     }
@@ -120,7 +119,7 @@ void StageSceneStateStartSeparatePlay::exeApplet() {
     }
     mFooterParts->changeTextFade(
         al::getSystemMessageString(mFooterParts, "Footer", "MenuMessage_Footer"));
-    field_42 = true;
+    mIsCancel = true;
     al::setNerve(this, &NrvStageSceneStateStartSeparatePlay.FadeIn);
 }
 
@@ -134,7 +133,7 @@ void StageSceneStateStartSeparatePlay::exeFadeIn() {
 }
 
 void StageSceneStateStartSeparatePlay::exeWaitDraw() {
-    if (al::isFirstStep(this) && !field_42)
+    if (al::isFirstStep(this) && !mIsCancel)
         getHost()->killPauseMenu();
     if (al::isGreaterEqualStep(this, 2))
         al::setNerve(this, &NrvStageSceneStateStartSeparatePlay.FadeIn);

@@ -29,12 +29,12 @@ StageSceneStateEndSeparatePlay::StageSceneStateEndSeparatePlay(const char* name,
 
 void StageSceneStateEndSeparatePlay::appear() {
     setDead(false);
-    field_30 = false;
+    mIsCancel = false;
     al::setNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeOut);
 }
 
 bool StageSceneStateEndSeparatePlay::isNeedRequestGraphicsPreset() const {
-    return (field_30 && al::isNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeIn)) ||
+    return (mIsCancel && al::isNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeIn)) ||
            al::isNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeOut);
 }
 
@@ -49,7 +49,7 @@ void StageSceneStateEndSeparatePlay::exeApplet() {
     if (ControllerAppletFunction::connectControllerSinglePlay(mGamePadSystem))
         rs::changeSeparatePlayMode(getScene(), false);
     else
-        field_30 = true;
+        mIsCancel = true;
     al::setNerve(this, &NrvStageSceneStateEndSeparatePlay.WaitDraw);
 }
 
@@ -65,14 +65,14 @@ void StageSceneStateEndSeparatePlay::exeFadeIn() {
 }
 
 void StageSceneStateEndSeparatePlay::exeWaitDraw() {
-    if (al::isFirstStep(this) && !field_30)
+    if (al::isFirstStep(this) && !mIsCancel)
         getHost()->killPauseMenu();
     if (al::isGreaterEqualStep(this, 2))
         al::setNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeIn);
 }
 
 bool StageSceneStateEndSeparatePlay::isDrawViewRenderer() const {
-    if (isDead() || field_30)
+    if (isDead() || mIsCancel)
         return false;
     return al::isNerve(this, &NrvStageSceneStateEndSeparatePlay.WaitDraw) ||
            al::isNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeIn);
