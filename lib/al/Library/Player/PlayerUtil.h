@@ -36,9 +36,9 @@ LiveActor* tryFindAlivePlayerActorFromPort(const LiveActor*, s32);
 s32 findNearestPlayerId(const LiveActor*, f32);
 LiveActor* findNearestPlayerActor(const LiveActor*);
 LiveActor* tryFindNearestPlayerActor(const LiveActor*);
-void findNearestPlayerPos(const LiveActor*);
-void tryFindNearestPlayerPos(sead::Vector3f*, const LiveActor*);
-void tryFindNearestPlayerDisatanceFromTarget(f32*, const LiveActor*, const sead::Vector3f&);
+const sead::Vector3f& findNearestPlayerPos(const LiveActor*);
+bool tryFindNearestPlayerPos(sead::Vector3f*, const LiveActor*);
+bool tryFindNearestPlayerDisatanceFromTarget(f32*, const LiveActor*, const sead::Vector3f&);
 bool isNearPlayer(const LiveActor*, f32);
 bool isNearPlayerH(const LiveActor*, f32);
 bool isNearPlayerHCondition(const LiveActor*, f32, bool (*)(const LiveActor*));
@@ -47,8 +47,8 @@ const sead::Vector3f& getFarPlayerPosMinX(const LiveActor*);
 u32 calcPlayerListOrderByDistance(const LiveActor*, const LiveActor**, u32);
 u32 calcAlivePlayerActor(const LiveActor*, const LiveActor**, u32);
 LiveActor* tryFindNearestPlayerActorCondition(const LiveActor*, bool (*)(const LiveActor*));
-LiveActor* tryFindNearestPlayerPosCondition(sead::Vector3f*, const LiveActor*,
-                                            bool (*)(const LiveActor*));
+bool tryFindNearestPlayerPosCondition(sead::Vector3f*, const LiveActor*,
+                                      bool (*)(const LiveActor*));
 bool isResetablePlayerPos(const LiveActor*, const sead::Vector3f&, f32, f32);
 bool isResetablePlayerPos(const LiveActor*, f32);
 void faceToPlayer(LiveActor*);
