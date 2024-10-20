@@ -238,8 +238,8 @@ bool isMatAnimPlaying(const LiveActor*);
 bool tryStartVisAnimIfExist(LiveActor*, const char*);
 bool tryStartVisAnimIfNotPlaying(LiveActor*, const char*);
 
-void startVisAnim(const LiveActor*, const char*);
-void startVisAnimAndSetFrameAndStop(const LiveActor*, const char*, f32);
+void startVisAnim(LiveActor*, const char*);
+void startVisAnimAndSetFrameAndStop(LiveActor*, const char*, f32);
 
 void clearVisAnim(LiveActor*);
 
