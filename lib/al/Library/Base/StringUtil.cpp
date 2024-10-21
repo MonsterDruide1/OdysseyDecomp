@@ -1,67 +1,161 @@
 #include "Library/Base/StringUtil.h"
 
+#include <prim/seadStringUtil.h>
 #include <resource/seadResource.h>
 
 namespace al {
+const char* createStringIfInStack(const char* str) {
+    if (!isInStack(str))
+        return str;
 
-bool isEqualString(const char16_t* pString_0, const char16_t* pString_1) {
-    u16 val;
+    s32 len = strlen(str) + 1;
+    char* buffer = new char[len];
+    snprintf(buffer, len, "%s", str);
 
-    while (1) {
-        val = *pString_0;
-        if (val != *pString_1)
-            break;
+    return buffer;
+}
 
-        ++pString_1;
-        ++pString_0;
+const char* createConcatString(const char* start, const char* end) {
+    s32 len = strlen(start) + strlen(end) + 1;
+    char* buffer = new char[len];
+    snprintf(buffer, len, "%s%s", start, end);
+
+    return buffer;
+}
+
+// void createFileNameBySuffix(sead::BufferedSafeString*, const char*, const char*)
+// void outputValueWithComma(char*, u32, u64, bool, bool)
+
+void extractString(char* out, const char* str, u32 len, u32 unused) {
+    strncpy(out, str, len);
+    out[len] = '\0';
+}
+
+// void searchSubString(const char*, const char*);
+// void searchSubString(const char*, const char*, s32);
+// void getSubStringUnmatched(const char**, const char*, const MatchStr&,
+//                            void (*)(const char*, const char*, void*), void*);
+// void getSubStringUnmatched(const char*, const MatchStr&);
+// void extractBaseNameW(sead::WBufferedSafeString*, const sead::WSafeString&);
+
+void removeExtensionString(char* out, u32 len, const char* str) {
+    snprintf(out, len, "%s", str);
+    char* dot = strchr(out, L'.');
+    char* dirSeparator = strchr(out, L'/');
+
+    if (dot == nullptr || dot < dirSeparator || ++dirSeparator == dot)
+        return;
+
+    *dot = '\0';
+}
+
+void removeStringFromEnd(char* out, u32 len, const char* end, const char* str) {
+    snprintf(out, len, "%s", str);
+
+    s32 lenStr = strlen(out);
+    s32 lenEnd = strlen(end);
+
+    if (lenEnd > lenStr)
+        return;
+
+    out[lenStr - lenEnd] = '\0';
+}
+
+// void translateCharacters(char*, const char*, const char*);
+// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
+// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
+// void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*,
+//                                  const char*);
+
+bool isEqualString(const char16* str1, const char16* str2) {
+    while (*str1 == *str2) {
+        char16 val = *str1;
 
         if (!val)
             return true;
+
+        str2++;
+        str1++;
     }
 
     return false;
 }
 
-bool isEqualSubString(const char* pString_0, const char* pString_1) {
-    return strstr(pString_0, pString_1);
+bool isEqualSubString(const char* str, const char* subStr) {
+    return strstr(str, subStr) != nullptr;
 }
 
-bool isStartWithString(const char* pString_0, const char* pString_1) {
-    if (!*pString_1)
+bool isEqualSubString(const sead::SafeString& str, const sead::SafeString& subStr) {
+    return isEqualSubString(str.cstr(), subStr.cstr());
+}
+
+bool isStartWithString(const char* str, const char* start) {
+    if (*start == '\0')
         return true;
 
-    while (*pString_0 && *pString_0 == *pString_1) {
-        ++pString_0;
-        ++pString_1;
+    while (*str != '\0' && *str == *start) {
+        str++;
+        start++;
 
-        if (!*pString_1)
+        if (*start == '\0')
             return true;
     }
 
     return false;
 }
 
-bool isEqualString(const char* pString_0, const char* pString_1) {
-    while (*pString_0 == *pString_1) {
-        char val = *pString_0;  // required to match
+bool isEndWithString(const char* str, const char* end) {
+    s32 lenStr = strlen(str);
+    s32 lenEnd = strlen(end);
+
+    if (lenEnd > lenStr)
+        return false;
+
+    return isEqualString(&str[lenStr - lenEnd], end);
+}
+
+// bool isMatchString(const char*, const MatchStr&);
+
+s32 compareStringIgnoreCase(const char* str1, const char* str2) {
+    return strcasecmp(str1, str2);
+}
+
+// void makeUrlEncodeString(char*, u32, const char*);
+// void makeUrlDecodeString(char*, u32, const char*);
+
+void copyString(char* out, const char* str, u32 len) {
+    strncpy(out, str, len);
+}
+
+void copyStringW(char16* out, const char16* str, u32 len) {
+    sead::StringUtil::wcs16cpy(out, len, str);
+}
+
+// bool isInStack(const void*);
+
+bool isEqualString(const char* str1, const char* str2) {
+    while (*str1 == *str2) {
+        char val = *str1;
 
         if (!val)
             return true;
 
-        ++pString_1;
-        ++pString_0;
+        str2++;
+        str1++;
     }
 
     return false;
 }
 
-bool isEndWithString(const char* pString_0, const char* pString_1) {
-    s32 pString0_Len = strlen(pString_0);
-    s32 pString1_Len = strlen(pString_1);
+bool isEqualString(const sead::SafeString& str1, const sead::SafeString& str2) {
+    return isEqualString(str1.cstr(), str2.cstr());
+}
 
-    if (pString0_Len < pString1_Len)
-        return false;
+bool isEqualStringCase(const char* str1, const char* str2) {
+    return compareStringIgnoreCase(str1, str2) == 0;
+}
 
-    return isEqualString(&pString_0[pString0_Len - pString1_Len], pString_1);
+bool isEqualStringCase(const sead::SafeString& str1, const sead::SafeString& str2) {
+    return isEqualStringCase(str1.cstr(), str2.cstr());
 }
 }  // namespace al
