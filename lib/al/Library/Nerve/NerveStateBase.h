@@ -13,6 +13,8 @@ public:
     virtual bool update();
     virtual void control();
 
+    void setDead(bool isDead) { mIsDead = isDead; }
+
     bool isDead() const { return mIsDead; }
 
     void setDead(bool isDead) { mIsDead = isDead; }
@@ -27,7 +29,7 @@ class ActorStateBase : public NerveStateBase {
 public:
     ActorStateBase(const char* stateName, LiveActor* actor);
 
-private:
+protected:
     LiveActor* mActor;
 };
 
