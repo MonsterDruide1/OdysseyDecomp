@@ -6,6 +6,7 @@
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
 #include "Library/MapObj/GateMapParts.h"
+#include "Library/MapObj/SurfMapParts.h"
 #include "Library/MapObj/OneMeshFixMapParts.h"
 #include "Library/MapObj/RollingCubeMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
@@ -574,7 +575,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"SeesawMapParts", nullptr},
     {"SlideMapParts", nullptr},
     {"SubActorLodMapParts", nullptr},
-    {"SurfMapParts", nullptr},
+    {"SurfMapParts", al::createActorFunction<al::SurfMapParts>},
     {"SwingMapParts", nullptr},
     {"SwitchDitherMapParts", nullptr},
     {"SwitchKeepOnWatcher", nullptr},
