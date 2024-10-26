@@ -48,8 +48,8 @@ public:
     const sead::Matrix34f& getBaseInvMtx() const;
     const sead::Matrix34f& getPrevBaseMtx() const;
 
-    friend bool ::operator==(const Triangle& tri1, const Triangle& tri2);
-    friend bool ::operator!=(const Triangle& tri1, const Triangle& tri2);
+    friend bool ::operator==(const Triangle & tri1, const Triangle & tri2);
+    friend bool ::operator!=(const Triangle & tri1, const Triangle & tri2);
 
 private:
     const CollisionParts* mCollisionParts;

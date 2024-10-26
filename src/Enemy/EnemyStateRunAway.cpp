@@ -83,7 +83,7 @@ void EnemyStateRunAway::exeRun() {
 void EnemyStateRunAway::exePanicRun() {
     if (al::isFirstStep(this))
         al::tryStartActionIfNotPlaying(mActor, mAnimName);
-    if (!(al::getNerveStep(this) % 180)) {
+    if ((al::getNerveStep(this) % 180) == 0) {
         calcRunDirBase(&mFrontDir);
         if (mIsNeedToFaceToDirection) {
             al::faceToDirection(mActor, mFrontDir);

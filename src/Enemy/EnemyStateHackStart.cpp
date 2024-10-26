@@ -94,8 +94,7 @@ void EnemyStateHackStart::exeHackStart() {
             al::startVisAnim(mActor, mParam->mVisAnimName);
         if (mParam->mMtpAnimName)
             al::startMtpAnim(mActor, mParam->mMtpAnimName);
-        al::LiveActor* actor = mActor;  // TODO: get this matching with inlined call to
-                                        // EnemyStateHackFunction::startHackSwitchShadow
+        al::LiveActor* actor = mActor;
         if (al::isExistDepthShadowMapCtrl(actor)) {
             al::invalidateShadow(actor);
             al::offDepthShadowModel(actor);
