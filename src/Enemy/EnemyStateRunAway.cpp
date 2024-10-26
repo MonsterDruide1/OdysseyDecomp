@@ -69,7 +69,7 @@ void EnemyStateRunAway::exeRun() {
             if (!al::tryNormalizeOrZero(&testDir)) {
                 sead::Vector3f upDir;
                 al::calcUpDir(&upDir, mActor);
-                sead::Vector3CalcCommon<f32>::cross(mFrontDir, upDir, collidedWallNormal);
+                mFrontDir.setCross(upDir, collidedWallNormal);
             } else {
                 mFrontDir.set(testDir);
             }

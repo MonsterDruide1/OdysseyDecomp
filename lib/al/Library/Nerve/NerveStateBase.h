@@ -17,8 +17,6 @@ public:
 
     bool isDead() const { return mIsDead; }
 
-    void setDead(bool isDead) { mIsDead = isDead; }
-
 private:
     bool mIsDead = true;
 };
