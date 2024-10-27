@@ -14,6 +14,7 @@
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathAngleUtil.h"
+#include "Library/Math/MathLengthUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
 #include "Library/Movement/EnemyStateBlowDownParam.h"
@@ -81,10 +82,33 @@ void EnemyCap::makeActorAlive() {
     al::setNerve(this, &NrvEnemyCap.Wait);
 }
 
-// NON_MATCHING: Unfinished
+inline sead::Matrix34f helper(sead::Vector3f v) {
+    std::sin(0.0f);
+    std::sin(0.0f);
+    std::sin(0.0f);
+    std::cos(0.0f);
+    std::cos(0.0f);
+    std::cos(0.0f);
+
+    sead::Matrix34f result = sead::Matrix34f::ident;
+    result.setTranslation(v);
+
+    return result;
+}
+
+// NON_MATCHING: Pain to match
 void EnemyCap::updatePose() {
-    if (!mIsNotAtOrigin)
-        return al::updatePoseMtx(this, mCapBaseMtx);
+    if (!mIsNotAtOrigin) {
+        sead::Matrix34f baseMtx = *mCapBaseMtx;
+        if (mIsUseFollowMtxScale) {
+            sead::Vector3f mtxScale;
+            al::calcMtxScale(&mtxScale, baseMtx);
+            al::setScale(this, 1.0f * mtxScale);
+        }
+        al::normalize(&baseMtx);
+        al::updatePoseMtx(this, &baseMtx);
+        return;
+    }
 
     sead::Matrix34f rotationMatrix;
     sead::Vector3f rotate(sead::Mathf::deg2rad(mLocalRotate.x),
@@ -92,15 +116,40 @@ void EnemyCap::updatePose() {
                           sead::Mathf::deg2rad(mLocalRotate.z));
     rotationMatrix.makeR(rotate);
 
-    sead::Matrix34f translationMatrix;
-    sead::Vector3f translation(mLocalTrans.x, mLocalTrans.y, mLocalTrans.z);
-    translationMatrix.makeRT(rotate, translation);
-
     sead::Matrix34f poseMatrix;
-    poseMatrix.setMul(rotationMatrix, translationMatrix);
+    poseMatrix.setMul(rotationMatrix, helper(mLocalTrans));
 
-    if (mIsUseFollowMtxScale)
-        al::calcMtxScale(&mLocalScale, poseMatrix);
+    sead::Matrix34f baseMtx = *mCapBaseMtx;
+
+    if (mIsUseFollowMtxScale) {
+        sead::Matrix34f rotBaseMtx;
+        rotBaseMtx.setMul(rotationMatrix, baseMtx);
+
+        sead::Vector3f mtxScale = {0.0f, 0.0f, 0.0f};
+        al::calcMtxScale(&mtxScale, rotBaseMtx);
+
+        sead::Vector3f vec;
+        vec.x = mtxScale.x * rotBaseMtx.m[0][3];
+        vec.y = mtxScale.y * rotBaseMtx.m[1][3];
+        vec.z = mtxScale.z * rotBaseMtx.m[2][3];
+
+        if (mIsUseLocalScale) {
+            mLocalScale = {mLocalScale.x * mtxScale.x, mLocalScale.y * mtxScale.y,
+                           mLocalScale.z * mtxScale.z};
+        }
+
+        rotBaseMtx.m[0][3] = vec.x;
+        rotBaseMtx.m[1][3] = vec.y;
+        rotBaseMtx.m[2][3] = vec.z;
+
+        al::setScale(this, mLocalScale);
+    } else if (mIsUseLocalScale) {
+        al::setScale(this, mLocalScale);
+    }
+
+    al::normalize(&baseMtx);
+    baseMtx.setMul(poseMatrix, baseMtx);
+    al::updatePoseMtx(this, &baseMtx);
 }
 
 void EnemyCap::calcAnim() {
