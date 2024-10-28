@@ -6,6 +6,7 @@
 #include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
 
 namespace al {
 CameraRailHolder::CameraRailHolder(const char* name) : LiveActor(name) {}
