@@ -8,12 +8,30 @@ import re
 from functools import cache
 
 from common import setup_common as setup
+from common.util import utils
 
 # ------
 # CHECKS
 # ------
 
 issueFound = False
+runAllChecks = False
+offsetCommentCheckFail = False
+functionData = None
+
+def is_function_mismatch(namepacesAndName):
+    combinedNames = ""
+    for name in namepacesAndName.split("::"):
+        combinedNames += str(len(name)) + name
+    #if "PlayerInputFunction" in combinedNames and "a" in combinedNames:
+        #print(combinedNames)
+    for info in functionData:
+        #if "PlayerInputFunction" in info.name and "isTriggerAction" in info.name:
+            #print(info.name, info.status)
+        if combinedNames in info.name:
+            #print(combinedNames)
+            return info.status == utils.FunctionStatus.NonMatching or info.status == utils.FunctionStatus.Equivalent
+    return False
 
 def FAIL(message, line, path):
     print("Offending file:", path)
@@ -81,7 +99,8 @@ def common_no_namespace_qualifiers(c, path):
     if len(nest_level) != 0:
         print("ERROR: nest_level not empty at end of the file!")
         print("nest_level", nest_level)
-        exit(1)
+        if not runAllChecks:
+            exit(1)
 
 @cache
 def get_includes():
@@ -341,8 +360,10 @@ def header_sorted_visibility(c, path):
     if len(nest_level) != 1:
         print("ERROR: nest_level not empty at end of the file!")
         print("nest_level", nest_level)
-        exit(1)
 
+        if not runAllChecks:
+            exit(1)
+ 
 def header_check_line(line, path, visibility, should_start_class):
     if visibility == -2:  # outside of class/struct/...
         if (line.startswith("class") and (not line.endswith(";") or "{" in line)) or should_start_class:
@@ -410,9 +431,51 @@ def header_check_line(line, path, visibility, should_start_class):
 
 def header_no_offset_comments(c, path):
     for line in c.splitlines():
-        CHECK(lambda a: "// 0x" not in a, line, "Offset comments are not allowed in headers!", path)
+        if "// 0x" in line or "// _" in line:
+            FAIL("Offset comments are not allowed in headers!", line, path)
+            global offsetCommentCheckFail
+            offsetCommentCheckFail = True
 
-# Source files
+def common_const_reference(c, path):
+    for line in c.splitlines():
+        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line and "rotationAndTranslationFromMatrix" not in line:
+            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line):
+                FAIL("References must be const!", line, path)
+
+def source_no_raw_auto(c, path):
+    for line in c.splitlines():
+        if "auto" in line and not "auto*" in line and not "auto&" in line:
+            FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
+
+def header_lowercase_member_offset_vars(c, path):
+    for line in c.splitlines():
+        if " _" in line and line.endswith(";") and "__VA_ARGS__" not in line:
+            underscoreOffset = 0
+            if offsetCommentCheckFail:
+                if runAllChecks:
+                    input("The offset comment check has failed which might cause a crash if the lowercase offset check is ran! (Press enter to continue regardless)")
+                else:
+                    exit(-1)
+            while line[line.find("_") + underscoreOffset] != ";" and line[line.find("_") + underscoreOffset] != " ":
+                if line[line.find("_") + underscoreOffset].isalpha() and line[line.find("_") + underscoreOffset].isupper():
+                    FAIL("Characters in the names of offset variables need to be lowercase!", line, path)
+                underscoreOffset += 1
+
+def source_non_matching_comment(c, path):
+    lines = c.splitlines()
+    for i, line in enumerate(lines):
+        if "(" in line and (") {" in line or ") const {" in line) and "::" in line and "if (" not in line and "inline " not in line:
+            startIndex = line.find(" ", 2, len(line) - 2) + 1
+            if startIndex == -1 or startIndex > line.find("("):
+                startIndex = 0
+            #else:
+                #print("Found space at: ", str(startIndex))
+                #print(line)
+            functionNameAndNamespaces = line[startIndex:line.find("(")]
+            if is_function_mismatch(functionNameAndNamespaces):
+                print("Found mismatching function!")
+                if "NON_MATCHING" not in lines[i - 1] and "NON_MATCHING" not in lines[i - 2]:
+                    FAIL("Functions that mismatch must have a NON_MATCHING comment above them!", line, path)
 
 def source_no_nerve_make(c, path):
     for line in c.splitlines():
@@ -435,6 +498,9 @@ def check_source(c, path):
     common_string_finder(c, path)
     common_sead_math_template(c, path)
     source_no_nerve_make(c, path)
+    #common_const_reference(c, path)
+    #source_no_raw_auto(c, path)
+    source_non_matching_comment(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -447,6 +513,8 @@ def check_header(c, path):
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
     common_this_prefix(c, path)
+    # common_const_reference(c, path)
+    #header_lowercase_member_offset_vars(c, path)
 
 def check_file(file_str):
     st = os.stat(file_str)
@@ -488,19 +556,30 @@ def main():
         'check-format.py', description="Verify additional formatting options next to clang-format and clang-tidy")
     parser.add_argument('--verbose', action='store_true',
                         help="Give verbose output")
+    parser.add_argument('--no-clang-format', action='store_true',
+                        help="Don't automatically run clang format before checking each file")
+    parser.add_argument('-a', '--all', action='store_true',
+                        help="Run all checks even if one of them fails")
     args = parser.parse_args()
 
-    for dir in [project_root / 'lib' / 'al', project_root / 'src']:
+    global runAllChecks
+    runAllChecks = args.all
+
+    global functionData
+    functionData = utils.get_functions()
+
+    for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
+                if not args.no_clang_format:
+                    subprocess.check_call(['clang-format', '-i', file_str])
                 check_file(file_str)
 
     if issueFound:
         exit(1)
-    else:
-        print("No issues found!")
+    print("No issues found!")
 
 if __name__ == "__main__":
     main()
