@@ -15,6 +15,14 @@ void calcCurrentKeyQT(sead::Quatf* outQuat, sead::Vector3f* outTrans,
 bool nextRollingCubeKey(RollingCubePoseKeeper* rollingCubePoseKeeper);
 bool isMovementCurrentKeyRotate(const RollingCubePoseKeeper* rollingCubePoseKeeper);
 
+class RollingCubePoseKeeper {
+public:
+    void setStart();
+
+private:
+    unsigned char padding[0x30];
+};
+
 class RollingCubeMapParts : public LiveActor {
 public:
     RollingCubeMapParts(const char* name);

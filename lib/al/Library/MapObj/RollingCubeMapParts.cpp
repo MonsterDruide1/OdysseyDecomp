@@ -2,6 +2,7 @@
 
 #include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Math/MathAngleUtil.h"
@@ -54,9 +55,46 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* source
 
 // void RollingCubeMapParts::control() {}
 
-// void RollingCubeMapParts::appearAndSetStart() {}
+void RollingCubeMapParts::appearAndSetStart() {
+    mRollingCubePoseKeeper->setStart();
+    setQuat(this, _150);
+    setTrans(this, _160);
+    resetPosition(this);
+    setNerveNextMovement(isNextFallKey());
 
-// void RollingCubeMapParts::setNerveNextMovement(bool isNextFallKey) {}
+    appear();
+}
+
+void RollingCubeMapParts::setNerveNextMovement(bool isNextFallKey) {
+    if (isMovementCurrentKeyRotate(mRollingCubePoseKeeper)) {
+        startNerveAction(this, "Rotate");
+
+        return;
+    }
+
+    if (isNextFallKey) {
+        startNerveAction(this, "Fall");
+
+        return;
+    }
+
+    u32 tmp = calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this));
+    s32 axis = ((s32)tmp >> 31 ^ (s32)tmp) -
+               ((s32)tmp >> 31);  // TODO: Find Why the compiler doesn't want to generate this.
+    switch (axis) {
+    default:
+        return;
+    case 1:
+        startNerveAction(this, "SlideX");
+        return;
+    case 2:
+        startNerveAction(this, "SlideY");
+        return;
+    case 3:
+        startNerveAction(this, "SlideZ");
+        return;
+    }
+}
 
 bool RollingCubeMapParts::isNextFallKey() const {
     bool isNextFall = false;
@@ -73,7 +111,32 @@ void RollingCubeMapParts::exeStart() {
         setNerveNextMovement(isNextFallKey());
 }
 
-// void RollingCubeMapParts::exeRotate() {}
+// This function is exeSlide with updateSlide inlined
+// I didn't find a better match
+void RollingCubeMapParts::exeRotate() {
+    if (isFirstStep(this)) {
+        fittingToCurrentKeyBoundingBox(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper);
+        _16c = getQuat(this);
+        _17c = getTrans(this);
+        mMovementTime = getMovementTime() - 1;
+    }
+
+    calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, _16c, _17c,
+                     calcNerveSquareInRate(this, mMovementTime));
+
+    if (isGreaterEqualStep(this, mMovementTime)) {
+        if (nextRollingCubeKey(mRollingCubePoseKeeper)) {
+            if (!isNextFallKey())
+                setNerveNextLand();
+            else if (isMovementCurrentKeyRotate(mRollingCubePoseKeeper))
+                startNerveAction(this, "Rotate");
+            else
+                startNerveAction(this, "Fall");
+        } else {
+            startNerveAction(this, "Stop");
+        }
+    }
+}
 
 s32 RollingCubeMapParts::getMovementTime() const {
     s32 movementTime = 40;
@@ -104,17 +167,16 @@ void RollingCubeMapParts::setNerveNextLand() {
 
 void RollingCubeMapParts::exeSlide() {
     if (updateSlide()) {
-        if (!nextRollingCubeKey(mRollingCubePoseKeeper)) {
+        if (nextRollingCubeKey(mRollingCubePoseKeeper)) {
+            if (!isNextFallKey())
+                setNerveNextLand();
+            else if (isMovementCurrentKeyRotate(mRollingCubePoseKeeper))
+                startNerveAction(this, "Rotate");
+            else
+                startNerveAction(this, "Fall");
+        } else {
             startNerveAction(this, "Stop");
-
-            return;
         }
-        if (!isNextFallKey())
-            setNerveNextLand();
-        else if (isMovementCurrentKeyRotate(mRollingCubePoseKeeper))
-            startNerveAction(this, "Rotate");
-        else
-            startNerveAction(this, "Fall");
     }
 }
 
@@ -134,17 +196,16 @@ bool RollingCubeMapParts::updateSlide() {
 
 void RollingCubeMapParts::exeFall() {
     if (updateSlide()) {
-        if (!nextRollingCubeKey(mRollingCubePoseKeeper)) {
+        if (nextRollingCubeKey(mRollingCubePoseKeeper)) {
+            if (!isNextFallKey())
+                setNerveNextFallLand();
+            else if (isMovementCurrentKeyRotate(mRollingCubePoseKeeper))
+                startNerveAction(this, "Rotate");
+            else
+                startNerveAction(this, "Fall");
+        } else {
             startNerveAction(this, "Stop");
-
-            return;
         }
-        if (!isNextFallKey())
-            setNerveNextFallLand();
-        else if (isMovementCurrentKeyRotate(mRollingCubePoseKeeper))
-            startNerveAction(this, "Rotate");
-        else
-            startNerveAction(this, "Fall");
     }
 }
 
@@ -185,7 +246,20 @@ void RollingCubeMapParts::exeFallLand() {
         setNerveNextMovement(false);
 }
 
-// void RollingCubeMapParts::exeStop() {}
+void RollingCubeMapParts::exeStop() {
+    if (_198) {
+        if (isFirstStep(this))
+            startHitReaction(this, "消滅");
+
+        if (isStep(this, 1)) {
+            setQuat(this, _150);
+            setTrans(this, _160);
+            resetPosition(this);
+
+            makeActorDead();
+        }
+    }
+}
 
 bool RollingCubeMapParts::isStop() const {
     return isNerve(this, NrvRollingCubeMapParts.Stop.data());
