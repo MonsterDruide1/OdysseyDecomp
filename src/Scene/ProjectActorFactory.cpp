@@ -6,6 +6,7 @@
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
 #include "Library/MapObj/GateMapParts.h"
+#include "Library/MapObj/OneMeshFixMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "MapObj/AnagramAlphabet.h"
@@ -336,7 +337,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"OceanWave", nullptr},
     {"CloudOcean", nullptr},
     {"DemoCloudOcean", nullptr},
-    {"OneMeshFixMapParts", nullptr},
+    {"OneMeshFixMapParts", al::createActorFunction<al::OneMeshFixMapParts>},
     {"OpeningStageStartDemo", nullptr},
     {"PackunFire", nullptr},
     {"PadRumblePoint", nullptr},
