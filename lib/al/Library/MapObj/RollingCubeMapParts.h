@@ -5,6 +5,7 @@
 namespace al {
 class RollingCubePoseKeeper;
 class PartsModel;
+class PlacementInfo;
 
 // TODO: Move this in correct header
 void fittingToCurrentKeyBoundingBox(sead::Quatf* quat, sead::Vector3f* trans,
@@ -14,6 +15,7 @@ void calcCurrentKeyQT(sead::Quatf* outQuat, sead::Vector3f* outTrans,
                       const sead::Vector3f&, f32 rate);
 bool nextRollingCubeKey(RollingCubePoseKeeper* rollingCubePoseKeeper);
 bool isMovementCurrentKeyRotate(const RollingCubePoseKeeper* rollingCubePoseKeeper);
+const PlacementInfo& getCurrentKeyPlacementInfo(const RollingCubePoseKeeper* rollingCubePoseKeeper);
 
 class RollingCubePoseKeeper {
 public:

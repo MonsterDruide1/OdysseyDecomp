@@ -1,6 +1,5 @@
 #include "Library/MapObj/RollingCubeMapParts.h"
 
-#include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
@@ -78,28 +77,28 @@ void RollingCubeMapParts::setNerveNextMovement(bool isNextFallKey) {
         return;
     }
 
-    u32 tmp = calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this));
-    s32 axis = ((s32)tmp >> 31 ^ (s32)tmp) -
-               ((s32)tmp >> 31);  // TODO: Find Why the compiler doesn't want to generate this.
+    s32 axis = sead::Mathi::abs(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
     switch (axis) {
     default:
         return;
     case 1:
         startNerveAction(this, "SlideX");
+
         return;
     case 2:
         startNerveAction(this, "SlideY");
+
         return;
     case 3:
         startNerveAction(this, "SlideZ");
+
         return;
     }
 }
 
 bool RollingCubeMapParts::isNextFallKey() const {
     bool isNextFall = false;
-    tryGetArg(&isNextFall, getCurrentKeyPlacementInfo((KeyPoseKeeper*)mRollingCubePoseKeeper),
-              "isNextFall");
+    tryGetArg(&isNextFall, getCurrentKeyPlacementInfo(mRollingCubePoseKeeper), "isNextFall");
 
     return isNextFall;
 }
@@ -111,8 +110,6 @@ void RollingCubeMapParts::exeStart() {
         setNerveNextMovement(isNextFallKey());
 }
 
-// This function is exeSlide with updateSlide inlined
-// I didn't find a better match
 void RollingCubeMapParts::exeRotate() {
     if (isFirstStep(this)) {
         fittingToCurrentKeyBoundingBox(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper);
@@ -140,27 +137,27 @@ void RollingCubeMapParts::exeRotate() {
 
 s32 RollingCubeMapParts::getMovementTime() const {
     s32 movementTime = 40;
-    tryGetArg(&movementTime, getCurrentKeyPlacementInfo((KeyPoseKeeper*)mRollingCubePoseKeeper),
-              "MovementTime");
+    tryGetArg(&movementTime, getCurrentKeyPlacementInfo(mRollingCubePoseKeeper), "MovementTime");
 
     return movementTime;
 }
 
 void RollingCubeMapParts::setNerveNextLand() {
-    u32 tmp = calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this));
-    s32 axis = ((s32)tmp >> 31 ^ (s32)tmp) -
-               ((s32)tmp >> 31);  // TODO: Find Why the compiler doesn't want to generate this.
+    s32 axis = sead::Mathi::abs(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
     switch (axis) {
     default:
         return;
     case 1:
         startNerveAction(this, "LandX");
+
         return;
     case 2:
         startNerveAction(this, "LandY");
+
         return;
     case 3:
         startNerveAction(this, "LandZ");
+
         return;
     }
 }
@@ -210,20 +207,21 @@ void RollingCubeMapParts::exeFall() {
 }
 
 void RollingCubeMapParts::setNerveNextFallLand() {
-    u32 tmp = calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this));
-    s32 axis = ((s32)tmp >> 31 ^ (s32)tmp) -
-               ((s32)tmp >> 31);  // TODO: Find Why the compiler doesn't want to generate this.
+    s32 axis = sead::Mathi::abs(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
     switch (axis) {
     default:
         return;
     case 1:
         startNerveAction(this, "FallLandX");
+
         return;
     case 2:
         startNerveAction(this, "FallLandY");
+
         return;
     case 3:
         startNerveAction(this, "FallLandZ");
+
         return;
     }
 }
@@ -235,8 +233,7 @@ void RollingCubeMapParts::exeLand() {
 
 s32 RollingCubeMapParts::getLandTime() const {
     s32 landTime = 40;
-    tryGetArg(&landTime, getCurrentKeyPlacementInfo((KeyPoseKeeper*)mRollingCubePoseKeeper),
-              "LandTime");
+    tryGetArg(&landTime, getCurrentKeyPlacementInfo(mRollingCubePoseKeeper), "LandTime");
 
     return landTime;
 }
