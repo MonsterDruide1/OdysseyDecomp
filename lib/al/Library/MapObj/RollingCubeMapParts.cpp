@@ -1,12 +1,19 @@
 #include "Library/MapObj/RollingCubeMapParts.h"
 
+#include "Library/Base/StringUtil.h"
+#include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Math/MathAngleUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Obj/PartsModel.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Yaml/ByamlIter.h"
+#include "Library/Yaml/ByamlUtil.h"
 
 namespace {
 using namespace al;
@@ -33,7 +40,45 @@ NERVE_ACTIONS_MAKE_STRUCT(RollingCubeMapParts, Wait, Start, Rotate, Fall, SlideX
 namespace al {
 RollingCubeMapParts::RollingCubeMapParts(const char* name) : LiveActor(name) {}
 
-// void RollingCubeMapParts::init(const ActorInitInfo& info) {}
+void RollingCubeMapParts::init(const ActorInitInfo& info) {
+    initNerveAction(this, "Wait", &NrvRollingCubeMapParts.mCollector, 0);
+    initMapPartsActor(this, info, nullptr);
+    tryGetQuatPtr(this);
+
+    _150 = getQuat(this);
+    _160 = getTrans(this);
+
+    bool isUseMoveLimit = false;
+    tryGetArg(&isUseMoveLimit, info, "IsUseMoveLimit");
+    if (isUseMoveLimit) {
+        _110 = new sead::Matrix34f();
+        _110->makeQT(_150, _160);
+
+        mPartsModel = new PartsModel("");
+        StringTmp<256> ukn1 = "";
+        StringTmp<256> ukn2 = "";
+        makeMapPartsModelName(&ukn2, &ukn1, info);
+        mPartsModel->initPartsSuffix(this, info, ukn2.cstr(), "MoveLimit", _110, false);
+    }
+
+    if (isExistModelResourceYaml(this, "BoxInfo", nullptr)) {
+        sead::BoundBox3f boundBox;
+        ByamlIter modelByml = ByamlIter(getModelResourceYaml(this, "BoxInfo", nullptr));
+        bool isSuccess = tryGetByamlBox3f(&boundBox, modelByml);
+        if (isSuccess)
+            mRollingCubePoseKeeper = createRollingCubePoseKeeper(boundBox, info);
+        else
+            mRollingCubePoseKeeper = createRollingCubePoseKeeper(this, info);
+    } else
+        mRollingCubePoseKeeper = createRollingCubePoseKeeper(this, info);
+
+    bool isFloorTouchStart = true;
+    tryGetArg(&isFloorTouchStart, info, "IsFloorTouchStart");
+    if (!isFloorTouchStart)
+        startNerveAction(this, "Start");
+
+    trySetEffectNamedMtxPtr(this, "Land", &_120);
+}
 
 void RollingCubeMapParts::kill() {
     startHitReaction(this, "消滅");
@@ -52,7 +97,12 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* source
     return false;
 }
 
-// void RollingCubeMapParts::control() {}
+void RollingCubeMapParts::control() {
+    if (_110 != nullptr)
+        _110->makeQT(_150, getTrans(this));
+
+    calcMtxLandEffect(&_120, mRollingCubePoseKeeper, getQuat(this), getTrans(this));
+}
 
 void RollingCubeMapParts::appearAndSetStart() {
     mRollingCubePoseKeeper->setStart();
