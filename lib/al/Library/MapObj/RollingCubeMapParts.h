@@ -21,6 +21,7 @@ bool isMovementCurrentKeyRotate(const RollingCubePoseKeeper* rollingCubePoseKeep
 const PlacementInfo& getCurrentKeyPlacementInfo(const RollingCubePoseKeeper* rollingCubePoseKeeper);
 void calcMtxLandEffect(sead::Matrix34f*, const RollingCubePoseKeeper*, const sead::Quatf&,
                        const sead::Vector3f&);
+void calcRollingCubeClippingInfo(sead::Vector3f*, f32*, const RollingCubePoseKeeper*, f32);
 RollingCubePoseKeeper* createRollingCubePoseKeeper(const LiveActor* actor,
                                                    const ActorInitInfo& info);
 RollingCubePoseKeeper* createRollingCubePoseKeeper(const sead::BoundBox3f& boundBox,

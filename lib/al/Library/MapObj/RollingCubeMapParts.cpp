@@ -3,6 +3,7 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
@@ -55,21 +56,17 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
         _110->makeQT(_150, _160);
 
         mPartsModel = new PartsModel("");
-        StringTmp<256> ukn1 = "";
-        StringTmp<256> ukn2 = "";
-        makeMapPartsModelName(&ukn2, &ukn1, info);
-        mPartsModel->initPartsSuffix(this, info, ukn2.cstr(), "MoveLimit", _110, false);
+        sead::FixedSafeString<256> model;
+        sead::FixedSafeString<256> ukn;
+        makeMapPartsModelName(&model, &ukn, info);
+        mPartsModel->initPartsSuffix(this, info, model.cstr(), "MoveLimit", _110, false);
     }
 
-    if (isExistModelResourceYaml(this, "BoxInfo", nullptr)) {
-        sead::BoundBox3f boundBox;
-        ByamlIter modelByml = ByamlIter(getModelResourceYaml(this, "BoxInfo", nullptr));
-        bool isSuccess = tryGetByamlBox3f(&boundBox, modelByml);
-        if (isSuccess)
-            mRollingCubePoseKeeper = createRollingCubePoseKeeper(boundBox, info);
-        else
-            mRollingCubePoseKeeper = createRollingCubePoseKeeper(this, info);
-    } else
+    sead::BoundBox3f boundBox;
+    if (isExistModelResourceYaml(this, "BoxInfo", nullptr) &&
+        tryGetByamlBox3f(&boundBox, ByamlIter(getModelResourceYaml(this, "BoxInfo", nullptr))))
+        mRollingCubePoseKeeper = createRollingCubePoseKeeper(boundBox, info);
+    else
         mRollingCubePoseKeeper = createRollingCubePoseKeeper(this, info);
 
     bool isFloorTouchStart = true;
@@ -78,6 +75,14 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
         startNerveAction(this, "Start");
 
     trySetEffectNamedMtxPtr(this, "Land", &_120);
+    initMaterialCode(this, info);
+
+    f32 ukn = 0.0f;
+    calcRollingCubeClippingInfo(&_188, &ukn, mRollingCubePoseKeeper, 0.0f);
+    setClippingInfo(this, ukn, &_188);
+
+    tryListenStageSwitchKill(this);
+    makeActorAlive();
 }
 
 void RollingCubeMapParts::kill() {
