@@ -14,6 +14,8 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
+#include "Util/PlayerUtil.h"
+
 namespace {
 
 NERVE_IMPL(MofumofuWarpHole, Close);
