@@ -9,6 +9,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
+#include "Util/PlayerUtil.h"
 #include "Util/Sensor.h"
 
 namespace {
