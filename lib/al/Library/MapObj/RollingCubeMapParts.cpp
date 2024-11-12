@@ -1,6 +1,5 @@
 #include "Library/MapObj/RollingCubeMapParts.h"
 
-#include "Library/Base/StringUtil.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -15,6 +14,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
+#include "Project/Joint/RollingCubePoseKeeper.h"
 
 namespace {
 using namespace al;
@@ -46,20 +46,20 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
 
-    _150 = getQuat(this);
-    _160 = getTrans(this);
+    mInitialPoseQuat = getQuat(this);
+    mInitialPoseTrans = getTrans(this);
 
     bool isUseMoveLimit = false;
     tryGetArg(&isUseMoveLimit, info, "IsUseMoveLimit");
     if (isUseMoveLimit) {
-        _110 = new sead::Matrix34f();
-        _110->makeQT(_150, _160);
+        mMoveMtx = new sead::Matrix34f();
+        mMoveMtx->makeQT(mInitialPoseQuat, mInitialPoseTrans);
 
         mPartsModel = new PartsModel("");
         sead::FixedSafeString<256> model;
-        sead::FixedSafeString<256> ukn;
-        makeMapPartsModelName(&model, &ukn, info);
-        mPartsModel->initPartsSuffix(this, info, model.cstr(), "MoveLimit", _110, false);
+        sead::FixedSafeString<256> archive;
+        makeMapPartsModelName(&model, &archive, info);
+        mPartsModel->initPartsSuffix(this, info, model.cstr(), "MoveLimit", mMoveMtx, false);
     }
 
     sead::BoundBox3f boundBox;
@@ -74,12 +74,12 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
     if (!isFloorTouchStart)
         startNerveAction(this, "Start");
 
-    trySetEffectNamedMtxPtr(this, "Land", &_120);
+    trySetEffectNamedMtxPtr(this, "Land", &mEffectMtx);
     initMaterialCode(this, info);
 
-    f32 ukn = 0.0f;
-    calcRollingCubeClippingInfo(&_188, &ukn, mRollingCubePoseKeeper, 0.0f);
-    setClippingInfo(this, ukn, &_188);
+    f32 clippingRadius = 0.0f;
+    calcRollingCubeClippingInfo(&mClippingTrans, &clippingRadius, mRollingCubePoseKeeper, 0.0f);
+    setClippingInfo(this, clippingRadius, &mClippingTrans);
 
     tryListenStageSwitchKill(this);
     makeActorAlive();
@@ -103,16 +103,16 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* source
 }
 
 void RollingCubeMapParts::control() {
-    if (_110 != nullptr)
-        _110->makeQT(_150, getTrans(this));
+    if (mMoveMtx != nullptr)
+        mMoveMtx->makeQT(mInitialPoseQuat, getTrans(this));
 
-    calcMtxLandEffect(&_120, mRollingCubePoseKeeper, getQuat(this), getTrans(this));
+    calcMtxLandEffect(&mEffectMtx, mRollingCubePoseKeeper, getQuat(this), getTrans(this));
 }
 
 void RollingCubeMapParts::appearAndSetStart() {
     mRollingCubePoseKeeper->setStart();
-    setQuat(this, _150);
-    setTrans(this, _160);
+    setQuat(this, mInitialPoseQuat);
+    setTrans(this, mInitialPoseTrans);
     resetPosition(this);
     setNerveNextMovement(isNextFallKey());
 
@@ -168,13 +168,13 @@ void RollingCubeMapParts::exeStart() {
 void RollingCubeMapParts::exeRotate() {
     if (isFirstStep(this)) {
         fittingToCurrentKeyBoundingBox(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper);
-        _16c = getQuat(this);
-        _17c = getTrans(this);
+        mCurrentPoseQuat = getQuat(this);
+        mCurrentPoseTrans = getTrans(this);
         mMovementTime = getMovementTime() - 1;
     }
 
-    calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, _16c, _17c,
-                     calcNerveSquareInRate(this, mMovementTime));
+    calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, mCurrentPoseQuat,
+                     mCurrentPoseTrans, calcNerveSquareInRate(this, mMovementTime));
 
     if (isGreaterEqualStep(this, mMovementTime)) {
         if (nextRollingCubeKey(mRollingCubePoseKeeper)) {
@@ -235,13 +235,13 @@ void RollingCubeMapParts::exeSlide() {
 bool RollingCubeMapParts::updateSlide() {
     if (isFirstStep(this)) {
         fittingToCurrentKeyBoundingBox(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper);
-        _16c = getQuat(this);
-        _17c = getTrans(this);
+        mCurrentPoseQuat = getQuat(this);
+        mCurrentPoseTrans = getTrans(this);
         mMovementTime = getMovementTime() - 1;
     }
 
-    calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, _16c, _17c,
-                     calcNerveSquareInRate(this, mMovementTime));
+    calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, mCurrentPoseQuat,
+                     mCurrentPoseTrans, calcNerveSquareInRate(this, mMovementTime));
 
     return isGreaterEqualStep(this, mMovementTime);
 }
@@ -299,13 +299,13 @@ void RollingCubeMapParts::exeFallLand() {
 }
 
 void RollingCubeMapParts::exeStop() {
-    if (_198) {
+    if (mIsStoppable) {
         if (isFirstStep(this))
             startHitReaction(this, "消滅");
 
         if (isStep(this, 1)) {
-            setQuat(this, _150);
-            setTrans(this, _160);
+            setQuat(this, mInitialPoseQuat);
+            setTrans(this, mInitialPoseTrans);
             resetPosition(this);
 
             makeActorDead();
