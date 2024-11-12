@@ -34,9 +34,9 @@ public:
 
 private:
     RollingCubePoseKeeper* mRollingCubePoseKeeper = nullptr;
-    sead::Matrix34f* mMoveMtx = nullptr;
-    PartsModel* mPartsModel = nullptr;
-    sead::Matrix34f mEffectMtx = sead::Matrix34f::ident;
+    sead::Matrix34f* mMoveLimitMtx = nullptr;
+    PartsModel* mMoveLimitPartsModel = nullptr;
+    sead::Matrix34f mLandEffectMtx = sead::Matrix34f::ident;
     sead::Quatf mInitialPoseQuat = sead::Quatf::unit;
     sead::Vector3f mInitialPoseTrans = sead::Vector3f::zero;
     sead::Quatf mCurrentPoseQuat = sead::Quatf::unit;

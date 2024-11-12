@@ -52,14 +52,15 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
     bool isUseMoveLimit = false;
     tryGetArg(&isUseMoveLimit, info, "IsUseMoveLimit");
     if (isUseMoveLimit) {
-        mMoveMtx = new sead::Matrix34f();
-        mMoveMtx->makeQT(mInitialPoseQuat, mInitialPoseTrans);
+        mMoveLimitMtx = new sead::Matrix34f();
+        mMoveLimitMtx->makeQT(mInitialPoseQuat, mInitialPoseTrans);
 
-        mPartsModel = new PartsModel("");
+        mMoveLimitPartsModel = new PartsModel("");
         sead::FixedSafeString<256> model;
         sead::FixedSafeString<256> archive;
         makeMapPartsModelName(&model, &archive, info);
-        mPartsModel->initPartsSuffix(this, info, model.cstr(), "MoveLimit", mMoveMtx, false);
+        mMoveLimitPartsModel->initPartsSuffix(this, info, model.cstr(), "MoveLimit", mMoveLimitMtx,
+                                              false);
     }
 
     sead::BoundBox3f boundBox;
@@ -74,7 +75,7 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
     if (!isFloorTouchStart)
         startNerveAction(this, "Start");
 
-    trySetEffectNamedMtxPtr(this, "Land", &mEffectMtx);
+    trySetEffectNamedMtxPtr(this, "Land", &mLandEffectMtx);
     initMaterialCode(this, info);
 
     f32 clippingRadius = 0.0f;
@@ -103,10 +104,10 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* source
 }
 
 void RollingCubeMapParts::control() {
-    if (mMoveMtx != nullptr)
-        mMoveMtx->makeQT(mInitialPoseQuat, getTrans(this));
+    if (mMoveLimitMtx != nullptr)
+        mMoveLimitMtx->makeQT(mInitialPoseQuat, getTrans(this));
 
-    calcMtxLandEffect(&mEffectMtx, mRollingCubePoseKeeper, getQuat(this), getTrans(this));
+    calcMtxLandEffect(&mLandEffectMtx, mRollingCubePoseKeeper, getQuat(this), getTrans(this));
 }
 
 void RollingCubeMapParts::appearAndSetStart() {

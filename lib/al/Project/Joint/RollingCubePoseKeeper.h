@@ -30,7 +30,7 @@ private:
     RollingCubePose** mRollingCubePoses;
     s32 mRollingCubePoseCount;
     s32 mCurrentKey;
-    sead::BoundBox3f mBoundBox;
+    sead::BoundBox3f mCubeSize;
     u32 mMoveType;
 };
 
