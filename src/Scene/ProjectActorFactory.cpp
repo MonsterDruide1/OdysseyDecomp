@@ -7,6 +7,7 @@
 #include "Library/MapObj/FloaterMapParts.h"
 #include "Library/MapObj/GateMapParts.h"
 #include "Library/MapObj/OneMeshFixMapParts.h"
+#include "Library/MapObj/RollingCubeMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "MapObj/AnagramAlphabet.h"
@@ -567,7 +568,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"ReactionMapParts", nullptr},
     {"RiseMapPartsHolder", nullptr},
     {"RocketFlower", nullptr},
-    {"RollingCubeMapParts", nullptr},
+    {"RollingCubeMapParts", al::createActorFunction<al::RollingCubeMapParts>},
     {"RippleFixMapParts", nullptr},
     {"RotateMapParts", nullptr},
     {"SeesawMapParts", nullptr},

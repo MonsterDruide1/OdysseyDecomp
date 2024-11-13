@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -42,4 +43,7 @@ bool tryNormalizeOrZero(sead::Vector3f*);
 void alongVectorNormalH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                         const sead::Vector3f&);
 
+s32 calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
+                         const sead::Vector3f&, const sead::Vector3f&);
+s32 calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Quatf&);
 }  // namespace al
