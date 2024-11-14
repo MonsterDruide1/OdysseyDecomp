@@ -26,4 +26,6 @@ void makeMtxUpFrontPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vect
                        const sead::Vector3f&);
 void makeMtxRotateTrans(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
 
+void turnQuatYDirRate(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
+
 }  // namespace al
