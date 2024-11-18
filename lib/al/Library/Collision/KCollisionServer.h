@@ -204,7 +204,7 @@ public:
 
 private:
     LiveActor* mActor;
-    bool _10 = true;
+    bool mIsCompareEqual = true;
 };
 
 }  // namespace al

@@ -41,14 +41,14 @@ void SurfMapParts::init(const ActorInitInfo& info) {
 }
 
 void SurfMapParts::exeWait() {
-    sead::Vector3f ukn;
+    sead::Vector3f hitPos;
     Triangle triangle;
     sead::Vector3f trans = getTrans(this);
 
     if (alCollisionUtil::getFirstPolyOnArrow(
-            this, &ukn, &triangle, getTrans(this) + mOffset * sead::Vector3f::ey * 0.5f,
-            -mOffset * sead::Vector3f::ey, mCollisionPartsFilterActor, nullptr)) {
-        setTrans(this, trans * 0.9f + ukn * 0.1f);
+            this, &hitPos, &triangle, getTrans(this) + mCheckOffset * sead::Vector3f::ey * 0.5f,
+            -mCheckOffset * sead::Vector3f::ey, mCollisionPartsFilterActor, nullptr)) {
+        setTrans(this, trans * 0.9f + hitPos * 0.1f);
         if (mIsEnableSlope) {
             sead::Quatf quat;
             sead::Vector3f normal = triangle.getNormal(0);
