@@ -15,8 +15,8 @@ public:
     AnagramAlphabetCharacter(const char* name);
 
     void init(const al::ActorInitInfo& info);
-    void attackSensor(al::HitSensor* source, al::HitSensor* target);
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* target, al::HitSensor* source);
+    void attackSensor(al::HitSensor* self, al::HitSensor* other);
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     void setComplete();
     void killCapTarget();
 

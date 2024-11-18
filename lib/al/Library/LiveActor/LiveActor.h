@@ -68,8 +68,8 @@ public:
     virtual void draw() const;
     virtual void startClipped();
     virtual void endClipped();
-    virtual void attackSensor(HitSensor* target, HitSensor* source);
-    virtual bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target);
+    virtual void attackSensor(HitSensor* self, HitSensor* other);
+    virtual bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self);
     virtual bool receiveMsgScreenPoint(const SensorMsg* message, ScreenPointer* source,
                                        ScreenPointTarget* target);
     virtual const char* getName() const override;

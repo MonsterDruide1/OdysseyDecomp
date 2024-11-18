@@ -53,7 +53,7 @@ void FloaterMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgFloorTouch(message)) {
         mMoveType = FloaterMoveType::Sink;
 

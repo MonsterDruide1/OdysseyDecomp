@@ -11,5 +11,5 @@ public:
     void exeExpand();
     void exeWait();
 
-    void attackSensor(al::HitSensor* target, al::HitSensor* source);
+    void attackSensor(al::HitSensor* self, al::HitSensor* other);
 };

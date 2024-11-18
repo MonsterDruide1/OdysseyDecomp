@@ -92,8 +92,7 @@ void RollingCubeMapParts::kill() {
     LiveActor::kill();
 }
 
-bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* source,
-                                     HitSensor* target) {
+bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgPlayerFloorTouch(message) && isNerve(this, NrvRollingCubeMapParts.Wait.data())) {
         startNerveAction(this, "Start");
 

@@ -60,9 +60,9 @@ StageSwitchKeeper* LiveActor::getStageSwitchKeeper() const {
 
 void LiveActor::init(const ActorInitInfo& info) {}
 
-void LiveActor::attackSensor(HitSensor* target, HitSensor* source) {}
+void LiveActor::attackSensor(HitSensor* self, HitSensor* other) {}
 
-bool LiveActor::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool LiveActor::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     return false;
 }
 

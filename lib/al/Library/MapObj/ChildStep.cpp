@@ -27,8 +27,8 @@ void ChildStep::init(const ActorInitInfo& info) {
     makeActorAlive();
 }
 
-bool ChildStep::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    return mParent->receiveMsg(message, source, target);
+bool ChildStep::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    return mParent->receiveMsg(message, other, self);
 }
 
 void ChildStep::exeWait() {

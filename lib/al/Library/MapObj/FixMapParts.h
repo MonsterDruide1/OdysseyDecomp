@@ -10,7 +10,7 @@ public:
     void appear() override;
     void movement() override;
     void calcAnim() override;
-    bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) override;
+    bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
 
 private:
     bool mIsStatic = false;
