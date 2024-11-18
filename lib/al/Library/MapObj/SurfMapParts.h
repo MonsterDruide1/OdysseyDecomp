@@ -14,7 +14,7 @@ public:
 
 private:
     CollisionPartsFilterActor* mCollisionPartsFilterActor = nullptr;
-    f32 _110 = 1000.0f;
+    f32 mOffset = 1000.0f;
     sead::Quatf mQuat = sead::Quatf::unit;
     sead::Vector3f mTrans = sead::Vector3f::zero;
     sead::Vector3f mUpDir = sead::Vector3f::ey;

@@ -40,26 +40,24 @@ void SurfMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-// TODO: Implement SurfMapParts::exeWait
 void SurfMapParts::exeWait() {
-    sead::Vector3f local_50;
+    sead::Vector3f ukn;
     Triangle triangle;
+    sead::Vector3f trans = getTrans(this);
 
     if (alCollisionUtil::getFirstPolyOnArrow(
-            this, &local_50, &triangle, sead::Vector3f::ey * _110 * 0.5f + getTrans(this),
-            sead::Vector3f::ey * -_110, mCollisionPartsFilterActor, nullptr)) {
-        local_50 = getTrans(this) * 0.9f + local_50 * 0.1f;
-        setTrans(this, local_50);
+            this, &ukn, &triangle, getTrans(this) + mOffset * sead::Vector3f::ey * 0.5f,
+            -mOffset * sead::Vector3f::ey, mCollisionPartsFilterActor, nullptr)) {
+        setTrans(this, trans * 0.9f + ukn * 0.1f);
         if (mIsEnableSlope) {
             sead::Quatf quat;
-            turnQuatYDirRate(&quat, getQuat(this), triangle.getNormal(0), 0.1f);
+            sead::Vector3f normal = triangle.getNormal(0);
+            turnQuatYDirRate(&quat, getQuat(this), normal, 0.1f);
             calcQuatUp(&mUpDir, quat);
         }
     }
 
-    if (mIsEnableSlope) {
-        turnQuatYDirRate(getQuatPtr(this), mQuat, triangle.getNormal(0), 0.1f);
-        calcQuatUp(&mUpDir, mQuat);
-    }
+    if (mIsEnableSlope)
+        turnQuatYDirRate(getQuatPtr(this), mQuat, mUpDir, 1.0f);
 }
 }  // namespace al
