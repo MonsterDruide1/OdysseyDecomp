@@ -34,9 +34,9 @@ protected:
 template <class T>
 class HostStateBase : public NerveStateBase {
 public:
-    HostStateBase(const char* name, T* host) : NerveStateBase(name), mHost(host){};
+    HostStateBase(const char* name, T* host) : NerveStateBase(name), mHost(host) {}
 
-    T* getHost() { return mHost; }
+    T* getHost() const { return mHost; }
 
 private:
     T* mHost;
