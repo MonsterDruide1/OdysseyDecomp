@@ -1,6 +1,5 @@
 #include "Library/MapObj/KeyMoveMapParts.h"
 
-#include "ChildStep.h"
 #include "Library/Demo/DemoFunction.h"
 #include "Library/Fluid/RippleCtrl.h"
 #include "Library/KeyPose/KeyPoseKeeper.h"
@@ -9,6 +8,7 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/MapObj/ChildStep.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
@@ -59,9 +59,8 @@ void KeyMoveMapParts::init(const ActorInitInfo& info) {
     bool isListenStart =
         listenStageSwitchOnStart(this, KeyMoveMapPartsFunctor(this, &KeyMoveMapParts::start));
 
-    u8 tmp;
-    if (getKeyPoseCount(mKeyPoseKeeper) < 2 || (tmp = mIsFloorTouchStart, (tmp & 0xff) != 0) ||
-        (isListenStart | (0xff < tmp)))
+    if (getKeyPoseCount(mKeyPoseKeeper) < 2 || mIsFloorTouchStart || mIsHipDropStart ||
+        isListenStart)
         startNerveAction(this, "StandBy");
 
     mSwitchKeepOnAreaGroup = tryCreateSwitchKeepOnAreaGroup(this, info);
