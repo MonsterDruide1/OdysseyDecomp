@@ -7,11 +7,15 @@
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 namespace {
@@ -84,5 +88,102 @@ void KeyMoveMapParts::init(const ActorInitInfo& info) {
         return;
 
     mRippleCtrl->init(info);
+}
+
+void KeyMoveMapParts::start() {
+    if (!isNerve(this, NrvKeyMoveMapParts.StandBy.data()) || getKeyPoseCount(mKeyPoseKeeper) <= 1)
+        return;
+
+    if (isExistAction(this, "Start"))
+        startAction(this, "Start");
+
+    if (mDelayTime >= 1) {
+        startAction(this, "Delay");
+
+        return;
+    }
+
+    startAction(this, "Wait");
+}
+
+void KeyMoveMapParts::stop() {
+    if (isNerve(this, NrvKeyMoveMapParts.StopSign.data()) ||
+        isNerve(this, NrvKeyMoveMapParts.Stop.data()))
+        return;
+
+    if (isExistAction(this, "StopSign"))
+        startNerveAction(this, "StopSign");
+    else
+        startNerveAction(this, "Stop");
+
+    if (mSeMoveName != nullptr) {
+        tryStopSe(this, mSeMoveName, -1, nullptr);
+        mSeMoveName = nullptr;
+    }
+
+    tryStartSe(this, "MoveEnd");
+}
+
+void KeyMoveMapParts::appearAndSetStart() {
+    resetKeyPose(mKeyPoseKeeper);
+    setQuat(this, getCurrentKeyQuat(mKeyPoseKeeper));
+    setTrans(this, getCurrentKeyTrans(mKeyPoseKeeper));
+    resetPosition(this);
+
+    if (mDelayTime >= 1)
+        startAction(this, "Delay");
+    else
+        startAction(this, "Wait");
+
+    if (getKeyPoseCount(mKeyPoseKeeper) < 2 || mIsFloorTouchStart || mIsHipDropStart ||
+        isValidStageSwitch(this, "SwitchStart"))
+        startNerveAction(this, "StandBy");
+
+    makeActorAlive();
+}
+
+bool KeyMoveMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+    if (mIsFloorTouchStart && isMsgFloorTouch(message)) {
+        start();
+
+        return true;
+    }
+
+    if (mIsHipDropStart && isMsgPlayerHipDropAll(message)) {
+        start();
+
+        return false;
+    }
+
+    if (isMsgShowModel(message)) {
+        showModelIfHide(this);
+
+        return true;
+    }
+
+    if (isMsgHideModel(message)) {
+        hideModelIfShow(this);
+
+        return true;
+    }
+
+    if (isMsgRestart(message)) {
+        appearAndSetStart();
+
+        return true;
+    }
+
+    return false;
+}
+
+void KeyMoveMapParts::control() {
+    if (mSwitchKeepOnAreaGroup != nullptr)
+        mSwitchKeepOnAreaGroup->update(getTrans(this));
+
+    if (mSwitchOnAreaGroup != nullptr)
+        mSwitchOnAreaGroup->update(getTrans(this));
+
+    if (mRippleCtrl != nullptr)
+        mRippleCtrl->update();
 }
 }  // namespace al
