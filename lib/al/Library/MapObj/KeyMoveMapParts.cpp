@@ -5,6 +5,7 @@
 #include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -185,5 +186,131 @@ void KeyMoveMapParts::control() {
 
     if (mRippleCtrl != nullptr)
         mRippleCtrl->update();
+}
+
+void KeyMoveMapParts::appearAndSetEnd() {
+    resetKeyPose(mKeyPoseKeeper);
+    while (!isLastKey(mKeyPoseKeeper))
+        nextKeyPose(mKeyPoseKeeper);
+
+    setQuat(this, getCurrentKeyQuat(mKeyPoseKeeper));
+    setTrans(this, getCurrentKeyTrans(mKeyPoseKeeper));
+    resetPosition(this);
+
+    startNerveAction(this, "Stop");
+
+    if (getKeyPoseCount(mKeyPoseKeeper) < 2 || mIsFloorTouchStart || mIsHipDropStart ||
+        isValidStageSwitch(this, "SwitchStart"))
+        startNerveAction(this, "StandBy");
+
+    makeActorAlive();
+}
+
+void KeyMoveMapParts::exeStandBy() {}
+
+void KeyMoveMapParts::exeDelay() {
+    if (isGreaterEqualStep(this, mDelayTime - 1))
+        startNerveAction(this, "Wait");
+}
+
+void KeyMoveMapParts::exeWait() {
+    if (isFirstStep(this)) {
+        s32 moveWaitTime = calcKeyMoveWaitTime(mKeyPoseKeeper);
+        if (moveWaitTime > -1)
+            mKeyMoveWaitTime = moveWaitTime;
+    }
+
+    if (isGreaterEqualStep(this, mKeyMoveWaitTime))
+        setWaitEndNerve();
+}
+
+void KeyMoveMapParts::setWaitEndNerve() {
+    if (isRestart(mKeyPoseKeeper)) {
+        restartKeyPose(mKeyPoseKeeper, getTransPtr(this), getQuatPtr(this));
+        resetPosition(this);
+        startNerveAction(this, "Wait");
+
+        return;
+    }
+
+    if (isMoveSignKey(mKeyPoseKeeper) && isExistAction(this, "MoveKeySign")) {
+        startNerveAction(this, "MoveSign");
+
+        return;
+    }
+
+    startNerveAction(this, "Move");
+}
+
+void KeyMoveMapParts::exeMoveSign() {
+    if (isFirstStep(this))
+        startAction(this, "MoveKeySign");
+
+    if (isActionEnd(this))
+        startNerveAction(this, "Move");
+}
+
+void KeyMoveMapParts::exeMove() {
+    if (isFirstStep(this)) {
+        if (isExistAction(this, "MoveLoop"))
+            tryStartActionIfNotPlaying(this, "MoveLoop");
+
+        mKeyMoveMoveTime = calcKeyMoveMoveTime(mKeyPoseKeeper);
+
+        // const char* tmp1 = "PgMove1";
+        // if (mKeyPoseKeeper->getKeyPoseCurrentIdx() != 1)
+        //     tmp1 = nullptr;
+        // const char* tmp2 = "PgMove0";
+        // if (mKeyPoseKeeper->getKeyPoseCurrentIdx() != 0)
+        //     tmp2 = tmp1;
+        //
+        // mSeMoveName = tmp2;
+
+        mSeMoveName = getSeNameByIndex(mKeyPoseKeeper->getKeyPoseCurrentIdx());
+        if (mSeMoveName != nullptr)
+            tryStartSe(this, mSeMoveName);
+    }
+
+    f32 rate = calcNerveRate(this, mKeyMoveMoveTime);
+    calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
+    calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
+
+    if (isGreaterEqualStep(this, mKeyMoveMoveTime)) {
+        nextKeyPose(mKeyPoseKeeper);
+        if (isStop(mKeyPoseKeeper))
+            stop();
+        else if (calcKeyMoveWaitTime(mKeyPoseKeeper) == 0)
+            setWaitEndNerve();
+        else {
+            startNerveAction(this, "Wait");
+            if (mSeMoveName != nullptr) {
+                tryStopSe(this, mSeMoveName, -1, nullptr);
+                mSeMoveName = nullptr;
+            }
+
+            tryStartSe(this, "MoveEnd");
+        }
+    }
+}
+
+void KeyMoveMapParts::exeStopSign() {
+    if (isFirstStep(this))
+        startAction(this, "StopSign");
+
+    if (isActionEnd(this))
+        startNerveAction(this, "Stop");
+}
+
+void KeyMoveMapParts::exeStop() {
+    if (isFirstStep(this)) {
+        if (isExistAction(this, "Stop"))
+            tryStartAction(this, "Stop");
+
+        if (isInvalidClipping(this))
+            validateClipping(this);
+
+        if (mIsStopKill)
+            kill();
+    }
 }
 }  // namespace al

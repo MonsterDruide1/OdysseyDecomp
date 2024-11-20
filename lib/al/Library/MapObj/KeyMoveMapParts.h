@@ -4,13 +4,19 @@
 
 namespace al {
 class KeyPoseKeeper;
-class SwitchKeepOnAreaGroup;
-class SwitchOnAreaGroup;
+
+// TODO: clean this
+class SwitchKeepOnAreaGroup {
+public:
+    void update(const sead::Vector3f&);
+};
+
+class SwitchOnAreaGroup {
+public:
+    void update(const sead::Vector3f&);
+};
 class RippleCtrl;
 class FunctorBase;
-
-// TODO: Remove this
-bool listenStageSwitchOnStart(IUseStageSwitch* stageSwitchHolder, const FunctorBase& actionOnOn);
 
 class KeyMoveMapParts : public LiveActor {
 public:
@@ -27,13 +33,24 @@ public:
     virtual void exeStandBy();
     void exeDelay();
     virtual void exeWait();
-    void exeWaitEndNerve();
+    void setWaitEndNerve();
     void exeMoveSign();
     virtual void exeMove();
     void exeStopSign();
     void exeStop();
 
 private:
+    static const char* getSeNameByIndex(s32 index) {
+        switch (index) {
+        case 0:
+            return "PgMove0";
+        case 1:
+            return "PgMove1";
+        default:
+            return nullptr;
+        }
+    }
+
     KeyPoseKeeper* mKeyPoseKeeper = nullptr;
     SwitchKeepOnAreaGroup* mSwitchKeepOnAreaGroup = nullptr;
     SwitchOnAreaGroup* mSwitchOnAreaGroup = nullptr;
@@ -45,7 +62,7 @@ private:
     bool mIsFloorTouchStart = false;
     bool mIsHipDropStart = false;
     bool mIsStopKill = false;
-    char* mSeMoveName = nullptr;
+    const char* mSeMoveName = nullptr;
 };
 
 static_assert(sizeof(KeyMoveMapParts) == 0x150);
