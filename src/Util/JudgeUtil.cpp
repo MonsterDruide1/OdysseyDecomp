@@ -1,4 +1,4 @@
-#include "Util/StageSceneFunction.h"
+#include "Util/JudgeUtil.h"
 
 #include "Player/IJudge.h"
 

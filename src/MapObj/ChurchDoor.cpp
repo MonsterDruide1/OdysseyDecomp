@@ -11,8 +11,9 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "System/GameDataFunction.h"
+#include "System/GameDataUtil.h"
 #include "Util/Sensor.h"
-#include "Util/StageSensorMsgFunction.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(ChurchDoor, DemoEnterChurch);

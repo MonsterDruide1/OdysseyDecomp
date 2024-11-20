@@ -1,7 +1,7 @@
 #include "Npc/Achievement.h"
 
 #include "Npc/AchievementInfoReader.h"
-#include "Util/ResourceUtil.h"
+#include "Util/AchievementUtil.h"
 
 Achievement::Achievement(const AchievementInfo* info) : mInfo(info) {}
 

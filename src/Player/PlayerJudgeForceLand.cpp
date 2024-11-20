@@ -1,7 +1,7 @@
 #include "Player/PlayerJudgeForceLand.h"
 
 #include "Player/PlayerTrigger.h"
-#include "Util/StageSceneFunction.h"
+#include "Util/JudgeUtil.h"
 
 PlayerJudgeForceLand::PlayerJudgeForceLand(const IJudge* judgeLongFall,
                                            const PlayerTrigger* trigger)
