@@ -4,17 +4,8 @@
 
 namespace al {
 class KeyPoseKeeper;
-
-// TODO: clean this
-class SwitchKeepOnAreaGroup {
-public:
-    void update(const sead::Vector3f&);
-};
-
-class SwitchOnAreaGroup {
-public:
-    void update(const sead::Vector3f&);
-};
+class SwitchKeepOnAreaGroup;
+class SwitchOnAreaGroup;
 class RippleCtrl;
 class FunctorBase;
 
