@@ -8,6 +8,7 @@
 #include "Library/MapObj/GateMapParts.h"
 #include "Library/MapObj/OneMeshFixMapParts.h"
 #include "Library/MapObj/RollingCubeMapParts.h"
+#include "Library/MapObj/SurfMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "MapObj/AnagramAlphabet.h"
@@ -574,7 +575,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"SeesawMapParts", nullptr},
     {"SlideMapParts", nullptr},
     {"SubActorLodMapParts", nullptr},
-    {"SurfMapParts", nullptr},
+    {"SurfMapParts", al::createActorFunction<al::SurfMapParts>},
     {"SwingMapParts", nullptr},
     {"SwitchDitherMapParts", nullptr},
     {"SwitchKeepOnWatcher", nullptr},
