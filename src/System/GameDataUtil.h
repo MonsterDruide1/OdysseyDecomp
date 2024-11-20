@@ -184,7 +184,7 @@ bool isInNormalCoinShopFirst(const al::LiveActor* actor);
 void offInNormalCoinShopFirst(const al::LiveActor* actor);
 bool checkExistNewShopItem(const al::LiveActor* actor, s32, s32, bool);
 CapMessageBossData* getCapMessageBossData(const al::LiveActor* actor);
-void getYoshiFruit(SaveObjInfo* saveObjInfo);  // TODO: unchecked return type
+void getYoshiFruit(SaveObjInfo* saveObjInfo);
 bool isGetYoshiFruit(const SaveObjInfo* saveObjInfo);
 bool isTalkKakku(const al::LiveActor* actor);
 void talkKakku(const al::LiveActor* actor);
