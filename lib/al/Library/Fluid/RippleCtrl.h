@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadQuat.h>
+
 #include "Library/Fluid/IUseFluidSurface.h"
 
 namespace al {
