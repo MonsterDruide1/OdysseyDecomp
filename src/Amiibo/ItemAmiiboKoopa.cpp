@@ -49,6 +49,6 @@ void ItemAmiiboKoopa::exeWait() {
     al::setTrans(this, rs::getPlayerPos(this));
 }
 
-void ItemAmiiboKoopa::attackSensor(al::HitSensor* target, al::HitSensor* source) {
-    rs::sendMsgItemAmiiboKoopa(source, target);
+void ItemAmiiboKoopa::attackSensor(al::HitSensor* self, al::HitSensor* other) {
+    rs::sendMsgItemAmiiboKoopa(other, self);
 }

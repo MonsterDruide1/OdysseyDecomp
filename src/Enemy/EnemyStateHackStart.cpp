@@ -39,12 +39,12 @@ EnemyStateHackStart::EnemyStateHackStart(al::LiveActor* rootActor,
     mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(rootActor, shaderParam);
 }
 
-IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* sensor, al::HitSensor* source,
-                                              al::HitSensor* target) {
-    if (!rs::isMsgStartHack(sensor))
+IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* msg, al::HitSensor* other,
+                                              al::HitSensor* self) {
+    if (!rs::isMsgStartHack(msg))
         return nullptr;
     al::setVelocityZero(mActor);
-    mHackActor = rs::startHack(target, source, 0);
+    mHackActor = rs::startHack(self, other, 0);
     rs::startHackStartDemo(mHackActor, mActor);
     al::setNerve(this, &DiveIn);
     return mHackActor;

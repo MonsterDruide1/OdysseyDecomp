@@ -40,7 +40,7 @@ void FallMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-bool FallMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool FallMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgFloorTouch(message) && isNerve(this, NrvFallMapParts.Wait.data())) {
         startNerveAction(this, "FallSign");
         invalidateClipping(this);

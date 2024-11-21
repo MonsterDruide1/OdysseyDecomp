@@ -151,8 +151,8 @@ void BreakMapPartsBase::startBreakByProgram() {
     setNerve(this, &NrvBreakMapPartsBase.Break);
 }
 
-bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mJudgeFunction(message, source, target)) {
+bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mJudgeFunction(message, other, self)) {
         startBreakByProgram();
 
         return true;

@@ -145,25 +145,24 @@ void Player::control() {
 }
 
 // NON_MATCHING: issue with getting actorTrans
-void Player::attackSensor(al::HitSensor* target, al::HitSensor* source) {
-    const sead::Vector3f& actorTransRef = al::getActorTrans(source);
+void Player::attackSensor(al::HitSensor* self, al::HitSensor* other) {
+    const sead::Vector3f& actorTransRef = al::getActorTrans(other);
     const sead::Vector3f& transRef = al::getTrans(this);
     sead::Vector3f actorTrans = actorTransRef;
     sead::Vector3f trans = transRef;
 
     if ((al::isNerve(this, &NrvPlayer.Jump) || al::isNerve(this, &NrvPlayer.Fall)) &&
-        (al::isSensorEnemy(source) || al::isSensorPlayer(source)) &&
+        (al::isSensorEnemy(other) || al::isSensorPlayer(other)) &&
         (al::getVelocity(this).dot(al::getGravity(this)) > 0.0f) &&
         ((actorTrans - trans).dot(al::getGravity(this)) > 0.0f) &&
-        al::sendMsgPlayerAttackTrample(source, target, nullptr))
+        al::sendMsgPlayerAttackTrample(other, self, nullptr))
         al::setVelocityJump(this, 23.0f);
 }
 
-bool Player::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                        al::HitSensor* target) {
+bool Player::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
     if (al::isMsgPlayerTrample(message) || al::isMsgEnemyAttack(message)) {
         if (!al::isNerve(this, &Damage)) {
-            sead::Vector3f offset = al::getTrans(this) - al::getSensorPos(source);
+            sead::Vector3f offset = al::getTrans(this) - al::getSensorPos(other);
             al::verticalizeVec(&offset, al::getGravity(this), offset);
             al::tryNormalizeOrZero(&offset);
 

@@ -46,9 +46,9 @@ void CitySignal::calcAnim() {
         al::calcViewModel(this);
 }
 
-bool CitySignal::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                            al::HitSensor* target) {
-    if (al::isMsgExplosion(message) && al::isSensorMapObj(target) &&
+bool CitySignal::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self) {
+    if (al::isMsgExplosion(message) && al::isSensorMapObj(self) &&
         (al::isNerve(this, &NrvCitySignal.WaitRed) || al::isNerve(this, &NrvCitySignal.WaitBlue))) {
         al::setNerve(this, &NrvCitySignal.WaitOff);
         return true;

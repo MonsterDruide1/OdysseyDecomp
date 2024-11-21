@@ -64,15 +64,15 @@ void AnagramAlphabetCharacter::init(const al::ActorInitInfo& info) {
     makeActorAlive();
 }
 
-void AnagramAlphabetCharacter::attackSensor(al::HitSensor* target, al::HitSensor* source) {
+void AnagramAlphabetCharacter::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (mHackerParent)
-        return rs::sendMsgHackerNoReaction(mHackerParent, source, target);
-    if (!al::isSensorNpc(target))
+        return rs::sendMsgHackerNoReaction(mHackerParent, other, self);
+    if (!al::isSensorNpc(self))
         return;
-    if (al::isSensorPlayer(source) && al::isSensorName(source, "Pushed"))
-        al::sendMsgPush(source, target);
-    else if (al::isSensorNpc(source))
-        al::sendMsgPush(source, target);
+    if (al::isSensorPlayer(other) && al::isSensorName(other, "Pushed"))
+        al::sendMsgPush(other, self);
+    else if (al::isSensorNpc(other))
+        al::sendMsgPush(other, self);
 }
 
 bool AnagramAlphabetCharacter::isHack() {
@@ -82,16 +82,16 @@ bool AnagramAlphabetCharacter::isHack() {
            al::isNerve(this, &NrvAnagramAlphabetCharacter.HackGoal);
 }
 
-bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                                          al::HitSensor* target) {
+bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                                          al::HitSensor* self) {
     if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(message, mCapTargetInfo))
         return true;
 
     if (rs::isMsgPlayerDisregardHomingAttack(message) ||
         rs::isMsgPlayerDisregardTargetMarker(message))
-        return al::isSensorName(target, "Body");
+        return al::isSensorName(self, "Body");
 
-    if (rs::isMsgTargetMarkerPosition(message) && al::isSensorName(target, "PossessedHitMark")) {
+    if (rs::isMsgTargetMarkerPosition(message) && al::isSensorName(self, "PossessedHitMark")) {
         const sead::Vector3f& sensorPos = al::getSensorPos(this, "PossessedHitMark");
         rs::setMsgTargetMarkerPosition(message, sead::Vector3f::ey * 60.0f + sensorPos);
         return true;
@@ -124,7 +124,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     if (rs::isMsgHackerDamageAndCancel(message)) {
         if (isHack()) {
             sead::Vector3f dir;
-            al::calcDirBetweenSensorsH(&dir, source, target);
+            al::calcDirBetweenSensorsH(&dir, other, self);
             endHackDir(dir);
             return true;
         }
@@ -135,7 +135,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
         if (al::isNerve(this, &NrvAnagramAlphabetCharacter.WaitHack)) {
             al::setNerve(this, &NrvAnagramAlphabetCharacter.WaitHackStart);
             al::invalidateClipping(this);
-            mHackerParent = rs::startHack(target, source, nullptr);
+            mHackerParent = rs::startHack(self, other, nullptr);
             rs::startHackStartDemo(mHackerParent, this);
             return true;
         } else
@@ -146,7 +146,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
         if (al::isNerve(this, &NrvAnagramAlphabetCharacter.Complete))
             return false;
 
-        if (al::isSensorName(target, "PossessedHitMark")) {
+        if (al::isSensorName(self, "PossessedHitMark")) {
             if (al::isNerve(this, &NrvAnagramAlphabetCharacter.Wait))
                 al::setNerve(this, &NrvAnagramAlphabetCharacter.WaitHack);
 
@@ -162,7 +162,7 @@ bool AnagramAlphabetCharacter::receiveMsg(const al::SensorMsg* message, al::HitS
     if ((al::isNerve(this, &NrvAnagramAlphabetCharacter.HackWait) ||
          al::isNerve(this, &NrvAnagramAlphabetCharacter.HackMove) ||
          al::isNerve(this, &NrvAnagramAlphabetCharacter.HackFall)) &&
-        al::tryReceiveMsgPushAndAddVelocityH(this, message, source, target, 10.0f)) {
+        al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 10.0f)) {
         if (al::isCollidedWall(this))
             al::limitVelocityDirSign(this, -al::getCollidedWallNormal(this), 0.0f);
 

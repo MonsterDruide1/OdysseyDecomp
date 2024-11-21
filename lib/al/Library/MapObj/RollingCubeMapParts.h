@@ -12,7 +12,7 @@ public:
 
     void init(const ActorInitInfo& info) override;
     void kill() override;
-    bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) override;
+    bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
     void control() override;
     void appearAndSetStart();
     void setNerveNextMovement(bool isNextFallKey);

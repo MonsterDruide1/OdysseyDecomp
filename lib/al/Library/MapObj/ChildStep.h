@@ -8,7 +8,7 @@ public:
     ChildStep(const char* name, LiveActor* parent);
 
     void init(const ActorInitInfo& info) override;
-    bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) override;
+    bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
     void exeWait();
 
 private:

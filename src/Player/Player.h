@@ -15,9 +15,9 @@ public:
     void exeDamage();
 
     void control() override;
-    void attackSensor(al::HitSensor* target, al::HitSensor* source) override;
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                    al::HitSensor* target) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
 private:
     const char* mArchiveName = nullptr;
