@@ -4,14 +4,16 @@
 
 #include "Library/Base/StringUtil.h"
 
-#include "Layout/ShopLayoutInfo.h"
-
 namespace al {
 struct NfpCharacterId;
 class NfpInfo;
 class IUseMessageSystem;
 class IUseSceneObjHolder;
 }  // namespace al
+
+namespace ShopItem {
+class ItemInfo;
+}
 
 class SearchAmiiboDataTable;
 

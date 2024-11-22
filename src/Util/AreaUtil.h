@@ -19,9 +19,8 @@ bool isInChangeStage(const al::LiveActor* actor, const sead::Vector3f* trans);
 bool isInWarpArea(const al::LiveActor* actor);
 bool isInLowGravityArea(const al::LiveActor* actor);
 bool isInItemVanishArea(const al::LiveActor* actor);
-al::AreaObj* tryFindStageMapAreaAndGetPlayerPoint(sead::Vector3f* playerPoint,
-                                                  const al::IUseAreaObj* user,
-                                                  const sead::Vector3f& trans);
+bool tryFindStageMapAreaAndGetPlayerPoint(sead::Vector3f* playerPoint, const al::IUseAreaObj* user,
+                                          const sead::Vector3f& trans);
 bool calcFindWaterAreaSurfaceNoWaveByArrow(const al::LiveActor* actor, sead::Vector3f*,
                                            sead::Vector3f*, const sead::Vector3f&,
                                            const sead::Vector3f&);
