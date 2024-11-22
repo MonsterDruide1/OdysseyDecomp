@@ -145,7 +145,7 @@ void KeyMoveMapParts::appearAndSetStart() {
     makeActorAlive();
 }
 
-bool KeyMoveMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool KeyMoveMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (mIsFloorTouchStart && isMsgFloorTouch(message)) {
         start();
 
