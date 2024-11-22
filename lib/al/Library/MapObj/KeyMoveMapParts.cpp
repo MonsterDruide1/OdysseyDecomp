@@ -53,7 +53,7 @@ void KeyMoveMapParts::init(const ActorInitInfo& info) {
 
     registerAreaHostMtx(this, info);
 
-    setKeyMoveClippingInfo(this, &_128, mKeyPoseKeeper);
+    setKeyMoveClippingInfo(this, &mClippingOffset, mKeyPoseKeeper);
 
     tryGetArg(&mIsFloorTouchStart, info, "IsFloorTouchStart");
     tryGetArg(&mIsHipDropStart, info, "IsHipDropStart");

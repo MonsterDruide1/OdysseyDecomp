@@ -46,7 +46,7 @@ private:
     SwitchKeepOnAreaGroup* mSwitchKeepOnAreaGroup = nullptr;
     SwitchOnAreaGroup* mSwitchOnAreaGroup = nullptr;
     RippleCtrl* mRippleCtrl = nullptr;
-    sead::Vector3f _128 = sead::Vector3f::zero;
+    sead::Vector3f mClippingOffset = sead::Vector3f::zero;
     s32 mKeyMoveWaitTime = 30;
     s32 mKeyMoveMoveTime = 0;
     s32 mDelayTime = 0;
