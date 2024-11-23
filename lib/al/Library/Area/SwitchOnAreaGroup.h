@@ -17,8 +17,7 @@ public:
 
 private:
     AreaObjGroup* mAreaObjGroup;
-    PlayerHolder* mPlayerHolder;
 };
 
-static_assert(sizeof(SwitchOnAreaGroup) == 0x18);
+static_assert(sizeof(SwitchOnAreaGroup) == 0x10);
 }  // namespace al

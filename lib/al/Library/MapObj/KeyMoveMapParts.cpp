@@ -87,10 +87,8 @@ void KeyMoveMapParts::init(const ActorInitInfo& info) {
         return;
 
     mRippleCtrl = RippleCtrl::tryCreate(this);
-    if (mRippleCtrl == nullptr)
-        return;
-
-    mRippleCtrl->init(info);
+    if (mRippleCtrl != nullptr)
+        mRippleCtrl->init(info);
 }
 
 void KeyMoveMapParts::start() {
@@ -100,13 +98,10 @@ void KeyMoveMapParts::start() {
     if (isExistAction(this, "Start"))
         startAction(this, "Start");
 
-    if (mDelayTime >= 1) {
-        startAction(this, "Delay");
-
-        return;
-    }
-
-    startAction(this, "Wait");
+    if (mDelayTime >= 1)
+        startNerveAction(this, "Delay");
+    else
+        startNerveAction(this, "Wait");
 }
 
 void KeyMoveMapParts::stop() {
@@ -134,9 +129,9 @@ void KeyMoveMapParts::appearAndSetStart() {
     resetPosition(this);
 
     if (mDelayTime >= 1)
-        startAction(this, "Delay");
+        startNerveAction(this, "Delay");
     else
-        startAction(this, "Wait");
+        startNerveAction(this, "Wait");
 
     if (getKeyPoseCount(mKeyPoseKeeper) < 2 || mIsFloorTouchStart || mIsHipDropStart ||
         isValidStageSwitch(this, "SwitchStart"))
@@ -258,15 +253,6 @@ void KeyMoveMapParts::exeMove() {
             tryStartActionIfNotPlaying(this, "MoveLoop");
 
         mKeyMoveMoveTime = calcKeyMoveMoveTime(mKeyPoseKeeper);
-
-        // const char* tmp1 = "PgMove1";
-        // if (mKeyPoseKeeper->getKeyPoseCurrentIdx() != 1)
-        //     tmp1 = nullptr;
-        // const char* tmp2 = "PgMove0";
-        // if (mKeyPoseKeeper->getKeyPoseCurrentIdx() != 0)
-        //     tmp2 = tmp1;
-        //
-        // mSeMoveName = tmp2;
 
         mSeMoveName = getSeNameByIndex(mKeyPoseKeeper->getKeyPoseCurrentIdx());
         if (mSeMoveName != nullptr)

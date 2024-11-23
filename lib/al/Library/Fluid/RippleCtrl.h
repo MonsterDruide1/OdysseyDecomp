@@ -24,7 +24,7 @@ public:
     bool calcIsInArea(const sead::Vector3f&) const override;
     bool isCollide(s32, s32) const;
     void calcPos(sead::Vector3f*, const sead::Vector3f&) const override;
-    void* getCollidePos(s32, s32) const;  // const sead::Vector3f& ?
+    const sead::Vector3f& getCollidePos(s32, s32) const;
     void calcNormal(sead::Vector3f*, const sead::Vector3f&) const override;
     bool tryAddRipple(const sead::Vector3f&, f32, f32) override;
     bool tryAddRippleWithRange(const sead::Vector3f&, f32, f32, f32, f32) override;
