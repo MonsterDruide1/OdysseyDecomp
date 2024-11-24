@@ -6,6 +6,7 @@
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
 #include "Library/MapObj/GateMapParts.h"
+#include "Library/MapObj/KeyMoveMapParts.h"
 #include "Library/MapObj/OneMeshFixMapParts.h"
 #include "Library/MapObj/RollingCubeMapParts.h"
 #include "Library/MapObj/SurfMapParts.h"
@@ -558,7 +559,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"FloaterMapParts", al::createActorFunction<al::FloaterMapParts>},
     {"FlowMapParts", nullptr},
     {"GateMapParts", al::createActorFunction<al::GateMapParts>},
-    {"KeyMoveMapParts", nullptr},
+    {"KeyMoveMapParts", al::createActorFunction<al::KeyMoveMapParts>},
     {"KeyMoveMapPartsGenerator", nullptr},
     {"PossessedMapParts", nullptr},
     {"Pukupuku", nullptr},
