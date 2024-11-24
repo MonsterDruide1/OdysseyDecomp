@@ -30,12 +30,12 @@ void calc2DAreaFreeDir(sead::Vector3f* freeDir, const al::AreaObj* area,
                        const sead::Vector3f& trans);
 bool calc2DAreaGravity(sead::Vector3f* gravity, const al::AreaObj* area,
                        const sead::Vector3f& trans);
-void calc2DAreaSnapPower(sead::Vector3f*, f32* snapPower, const al::AreaObj* area,
+bool calc2DAreaSnapPower(sead::Vector3f*, f32* snapPower, const al::AreaObj* area,
                          const sead::Vector3f& trans);
 bool calc2DAreaDistanceGravity(sead::Vector3f*, const al::AreaObj* area,
                                const sead::Vector3f& trans);
 f32 get2DAreaSurfaceDistance(const al::AreaObj* area);
-void calc2DAreaSnapPowerSurfaceDistance(sead::Vector3f*, f32* snapPower, const al::AreaObj* area,
+bool calc2DAreaSnapPowerSurfaceDistance(sead::Vector3f*, f32* snapPower, const al::AreaObj* area,
                                         const sead::Vector3f& trans, f32 surfaceDistance);
 bool calcExtForceAreaVelocity(sead::Vector3f*, const al::IUseAreaObj* user,
                               const sead::Vector3f& trans, const sead::Vector3f&,

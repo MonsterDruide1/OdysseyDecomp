@@ -23,12 +23,14 @@ void invalidateFollowLimitCameraAutoResetLowAngleV(al::CameraTicket* ticket);
 void updateCameraPosFromDistanceAndAngleHV(sead::Vector3f* newPos, const sead::Vector3f& cameraPos,
                                            f32 distance, f32 angleY, f32 angleH);
 bool isPreCameraFollowOrParallel(const al::CameraStartInfo& cameraStartInfo);
-void initGetMoonCamera(const al::IUseCamera* user, const al::LiveActor* moon,
-                       const al::ActorInitInfo& actorInitInfo, const char* name, sead::Vector3f*,
-                       sead::Vector3f*, sead::Vector3f*, sead::LookAtCamera* lookAtCamera);
-void initWarpCheckpointCamera(const al::IUseCamera* user, const al::LiveActor* checkpoint,
-                              const al::ActorInitInfo& actorInitInfo, const char* name,
-                              sead::Vector3f*, sead::Vector3f*, sead::Vector3f*);
+al::CameraTicket* initGetMoonCamera(const al::IUseCamera* user, const al::LiveActor* moon,
+                                    const al::ActorInitInfo& actorInitInfo, const char* name,
+                                    sead::Vector3f*, sead::Vector3f*, sead::Vector3f*,
+                                    sead::LookAtCamera* lookAtCamera);
+al::CameraTicket* initWarpCheckpointCamera(const al::IUseCamera* user,
+                                           const al::LiveActor* checkpoint,
+                                           const al::ActorInitInfo& actorInitInfo, const char* name,
+                                           sead::Vector3f*, sead::Vector3f*, sead::Vector3f*);
 bool requestSetCameraAngleV(const al::LiveActor* actor, f32 requestAngleV, s32 poseUpdaterIdx);
 bool requestResetCameraPosition(const al::LiveActor* actor, s32 poseUpdaterIdx);
 bool requestResetCameraAngleV(const al::LiveActor* actor, s32 poseUpdaterIdx);
