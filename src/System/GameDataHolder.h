@@ -14,6 +14,20 @@ class PlacementId;
 class GameDataFile;
 class ChangeStageInfo;
 
+struct ItemAmiiboInfo {
+    s32 mCharacterId;
+    s32 mNumberingId;
+};
+
+struct ItemListInfo {
+    s32 mIndex;
+    char mName[0x80];
+    s32 mType;
+    u32 mAmiiboCount;
+    ItemAmiiboInfo* mAmiiboInfo;
+    bool mIsAOC;
+};
+
 class GameDataHolder : public al::GameDataHolderBase {
 public:
     GameDataHolder(const al::MessageSystem*);
@@ -89,6 +103,14 @@ public:
 
     s32 findUseScenarioNo(const char*);
 
+    const sead::PtrArray<ItemListInfo>& getClothList() { return mItemCloth; }
+
+    const sead::PtrArray<ItemListInfo>& getCapList() { return mItemCap; }
+
+    const sead::PtrArray<ItemListInfo>& getGiftList() { return mItemGift; }
+
+    const sead::PtrArray<ItemListInfo>& getStickerList() { return mItemSticker; }
+
 private:
     s32 padding;
     GameDataFile** mDataFileArr;
@@ -108,6 +130,14 @@ private:
     sead::Heap* field_90;
     u8 gap_98[0x20];
     u64* field_B8;  // TempSaveData*
-    u8 gap_C0[0xD0];
+    u8 gap_C0[0x110 - 0xc0];
+    sead::PtrArray<ItemListInfo> mItemCloth;
+    sead::PtrArray<ItemListInfo> mItemCap;
+    sead::PtrArray<ItemListInfo> mItemGift;
+    sead::PtrArray<ItemListInfo> mItemSticker;
+    u8 gap_150[0x190 - 0x150];
     WorldList* mWorldList;
+    u8 gap_198[0x268 - 0x198];
 };
+
+static_assert(sizeof(GameDataHolder) == 0x268);

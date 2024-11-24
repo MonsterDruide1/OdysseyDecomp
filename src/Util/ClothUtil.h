@@ -16,19 +16,7 @@ class ItemType;
 class ShopItemInfo;
 }  // namespace ShopItem
 
-struct ItemAmiiboInfo {
-    s32 mCharacterId;
-    s32 mNumberingId;
-};
-
-struct ItemListInfo {
-    s32 mIndex;
-    char mName[0x80];
-    s32 mType;
-    u32 mAmiiboCount;
-    ItemAmiiboInfo* mAmiiboInfo;
-    bool mIsAOC;
-};
+struct ItemListInfo;
 
 namespace rs {
 void buyItemInShopItemList(const al::IUseSceneObjHolder* user, s32 itemIdx);
