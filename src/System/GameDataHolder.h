@@ -103,13 +103,13 @@ public:
 
     s32 findUseScenarioNo(const char*);
 
-    const sead::PtrArray<ItemListInfo>& getClothList() { return mItemCloth; }
+    const sead::PtrArray<ItemListInfo>& getClothList() const { return mItemCloth; }
 
-    const sead::PtrArray<ItemListInfo>& getCapList() { return mItemCap; }
+    const sead::PtrArray<ItemListInfo>& getCapList() const { return mItemCap; }
 
-    const sead::PtrArray<ItemListInfo>& getGiftList() { return mItemGift; }
+    const sead::PtrArray<ItemListInfo>& getGiftList() const { return mItemGift; }
 
-    const sead::PtrArray<ItemListInfo>& getStickerList() { return mItemSticker; }
+    const sead::PtrArray<ItemListInfo>& getStickerList() const { return mItemSticker; }
 
 private:
     s32 padding;
