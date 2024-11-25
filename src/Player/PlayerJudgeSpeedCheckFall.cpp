@@ -2,8 +2,8 @@
 
 #include <math/seadMathCalcCommon.h>
 
+#include "Util/JudgeUtil.h"
 #include "Util/PlayerCollisionUtil.h"
-#include "Util/StageSceneFunction.h"
 
 PlayerJudgeSpeedCheckFall::PlayerJudgeSpeedCheckFall(const al::LiveActor* player,
                                                      const IUsePlayerCollision* collision,
