@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/LiveActor/LiveActorGroup.h"
 
 namespace al {
 class KeyMoveMapParts;
+
+template <class T>
+class DeriveActorGroup;
 
 class KeyMoveMapPartsGenerator : public LiveActor {
 public:
