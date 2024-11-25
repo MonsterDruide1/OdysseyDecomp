@@ -43,8 +43,8 @@ public:
     DeriveActorGroup(const char* groupName, s32 groupCount)
         : LiveActorGroup(groupName, groupCount) {}
 
-    T* getActor(s32 idx) const { return (T*)LiveActorGroup::getActor(idx); }
+    T* getDeriveActor(s32 idx) const { return (T*)LiveActorGroup::getActor(idx); }
 
-    T* tryFindDeadActor() const { return (T*)LiveActorGroup::tryFindDeadActor(); }
+    T* tryFindDeadDeriveActor() const { return (T*)LiveActorGroup::tryFindDeadActor(); }
 };
 }  // namespace al

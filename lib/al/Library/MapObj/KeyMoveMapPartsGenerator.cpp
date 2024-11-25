@@ -53,7 +53,7 @@ void KeyMoveMapPartsGenerator::init(const ActorInitInfo& info) {
         mKeyMoveMapPartsGroup->registerActor(keyMoveMapParts);
     }
 
-    KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->getActor(0);
+    KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->getDeriveActor(0);
     f32 clippingRadius = 0.0f;
     calcKeyMoveClippingInfo(&mClippingTrans, &clippingRadius, keyMoveMapParts->getKeyPoseKeeper(),
                             500.0f);
@@ -78,7 +78,7 @@ void KeyMoveMapPartsGenerator::exeDelay() {
 
 void KeyMoveMapPartsGenerator::exeGenerate() {
     if (isIntervalStep(this, mGenerateInterval, 0)) {
-        KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->tryFindDeadActor();
+        KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->tryFindDeadDeriveActor();
         if (keyMoveMapParts != nullptr)
             keyMoveMapParts->appearAndSetStart();
     }
