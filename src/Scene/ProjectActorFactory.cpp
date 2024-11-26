@@ -2,6 +2,7 @@
 
 #include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
+#include "Library/MapObj/BackHideParts.h"
 #include "Library/MapObj/FallMapParts.h"
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
@@ -549,7 +550,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Fastener", nullptr},
     {"FastenerObj", nullptr},
     {"AtmosScatterRequester", nullptr},
-    {"BackHideParts", nullptr},
+    {"BackHideParts", al::createActorFunction<al::BackHideParts>},
     {"BreakMapParts", nullptr},
     {"CapRotateMapParts", nullptr},
     {"ClockMapParts", nullptr},
