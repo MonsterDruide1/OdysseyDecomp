@@ -18,16 +18,15 @@ void BackHideDitherAnimator::update() {
     sead::Vector3f cameraFront;
     calcCameraFront(&cameraFront, mActor, 0);
 
-    sead::Vector3f cameraOffset = getCameraPos(mActor, 0) - getTrans(mActor);
+    f32 cameraDist = (getCameraPos(mActor, 0) - getTrans(mActor)).length();
 
     sead::Vector3f actorFront;
     calcFrontDir(&actorFront, mActor);
 
-    f32 actorAlpha = sead::Mathf::clamp(
-        lerpValue(normalize(calcAngleDegree(cameraFront, actorFront), 60.0f, 90.0f), 1.0f,
-                  normalize(cameraOffset.length(), 10000.0f, 12000.0f)),
-        0.0f, 1.0f);
+    f32 angleDegree = normalize(calcAngleDegree(cameraFront, actorFront), 60.0f, 90.0f);
+    cameraDist = normalize(cameraDist, 10000.0f, 12000.0f);
 
+    f32 actorAlpha = sead::Mathf::clamp(lerpValue(angleDegree, 1.0f, cameraDist), 0.0f, 1.0f);
     setModelAlphaMask(mActor, actorAlpha);
 
     if (isNearZero(actorAlpha, 0.001)) {
@@ -41,6 +40,7 @@ void BackHideDitherAnimator::update() {
 
 BackHideParts::BackHideParts(const char* name) : LiveActor(name) {}
 
+// TODO: NON_MATCHING https://decomp.me/scratch/j5tRy
 void BackHideParts::init(const ActorInitInfo& info) {
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "Suffix");

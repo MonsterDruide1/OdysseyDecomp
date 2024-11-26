@@ -8,7 +8,6 @@ class BackHideDitherAnimator : public DitherAnimator {
 public:
     BackHideDitherAnimator(LiveActor* actor);
 
-    // TODO: update function
     void update() override;
 
 private:
