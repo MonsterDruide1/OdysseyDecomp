@@ -40,7 +40,7 @@ void BackHideDitherAnimator::update() {
 
 BackHideParts::BackHideParts(const char* name) : LiveActor(name) {}
 
-// TODO: NON_MATCHING https://decomp.me/scratch/j5tRy
+// NON_MATCHING: regswap (https://decomp.me/scratch/j5tRy)
 void BackHideParts::init(const ActorInitInfo& info) {
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "Suffix");
