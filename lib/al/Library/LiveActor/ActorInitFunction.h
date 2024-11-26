@@ -15,6 +15,9 @@ class ActorInitInfo;
 class PlacementInfo;
 class Nerve;
 
+void initActorSceneInfo(LiveActor* actor, const ActorInitInfo& info);
+void initStageSwitch(LiveActor* actor, const ActorInitInfo& info);
+void initExecutorWatchObj(LiveActor* actor, const ActorInitInfo& info);
 bool trySyncStageSwitchAppear(LiveActor* actor);
 void initActorPoseTRSV(LiveActor* actor);
 void initActorSRT(LiveActor* actor, const ActorInitInfo& info);
@@ -22,6 +25,7 @@ bool trySyncStageSwitchAppearAndKill(LiveActor* actor);
 void initActorCollisionWithResource(LiveActor* actor, const Resource* res,
                                     const sead::SafeString& collisionFileName, HitSensor* hitSensor,
                                     const sead::Matrix34f* joinMtx, const char* suffix);
+void initExecutorMapObjMovement(LiveActor* actor, const ActorInitInfo& info);
 void initExecutorCollisionMapObjDecorationMovement(LiveActor* actor, const ActorInitInfo& info);
 void initActorModelKeeperByHost(LiveActor* actor, const LiveActor* parent);
 void initExecutorDraw(LiveActor* actor, const ActorInitInfo& info, const char* executorDrawName);

@@ -30,6 +30,10 @@ public:
     void exeStopSign();
     void exeStop();
 
+    KeyPoseKeeper* getKeyPoseKeeper() const { return mKeyPoseKeeper; }
+
+    void setIsStopKill(bool isStopKill) { mIsStopKill = isStopKill; }
+
 private:
     static const char* getSeNameByIndex(s32 index) {
         switch (index) {
