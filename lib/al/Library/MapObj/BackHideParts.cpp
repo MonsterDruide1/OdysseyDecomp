@@ -18,15 +18,15 @@ void BackHideDitherAnimator::update() {
     sead::Vector3f cameraFront;
     calcCameraFront(&cameraFront, mActor, 0);
 
-    f32 cameraDist = (getCameraPos(mActor, 0) - getTrans(mActor)).length();
+    f32 cameraOffset = (getCameraPos(mActor, 0) - getTrans(mActor)).length();
 
     sead::Vector3f actorFront;
     calcFrontDir(&actorFront, mActor);
 
     f32 angleDegree = normalize(calcAngleDegree(cameraFront, actorFront), 60.0f, 90.0f);
-    cameraDist = normalize(cameraDist, 10000.0f, 12000.0f);
+    cameraOffset = normalize(cameraOffset, 10000.0f, 12000.0f);
 
-    f32 actorAlpha = sead::Mathf::clamp(lerpValue(angleDegree, 1.0f, cameraDist), 0.0f, 1.0f);
+    f32 actorAlpha = sead::Mathf::clamp(lerpValue(angleDegree, 1.0f, cameraOffset), 0.0f, 1.0f);
     setModelAlphaMask(mActor, actorAlpha);
 
     if (isNearZero(actorAlpha, 0.001)) {
