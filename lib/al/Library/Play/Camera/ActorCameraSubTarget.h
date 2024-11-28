@@ -1,7 +1,8 @@
 #pragma once
 
 #include <math/seadVector.h>
-#include <Library/Camera/CameraSubTargetBase.h>
+
+#include "Library/Camera/CameraSubTargetBase.h"
 
 namespace al {
 class LiveActor;
