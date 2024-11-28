@@ -43,7 +43,7 @@ inline void test(sead::Quatf* o, const sead::Quatf& v) {
 
 ClockMapParts::ClockMapParts(const char* name) : LiveActor(name) {}
 
-void ClockMapParts::init(const al::ActorInitInfo& info) {
+void ClockMapParts::init(const ActorInitInfo& info) {
     using ClockMapPartsFunctor = FunctorV0M<ClockMapParts*, void (ClockMapParts::*)()>;
 
     tryInitSubActorKeeperChildStep(this, info);
@@ -267,10 +267,9 @@ void ClockMapParts::exeRotateSign() {
     startNerveAction(this, "Rotate");
 }
 
-// NON_MATCHING: regswap
 void ClockMapParts::exeRotate() {
-    f32 tmp = modf((f32)mClockAngleDegree * ((f32)_120 + ((f32)(_140 - mRotateSignTime) /
-                                                          (f32)(_138 + ~mRotateSignTime))) +
+    f32 tmp = modf((((f32)(_140 - mRotateSignTime) / (f32)(_138 + ~mRotateSignTime)) + (f32)_120) *
+                           (f32)mClockAngleDegree +
                        360.0f,
                    360.0f);
     rotateQuatLocalDirDegree(this, mQuat, mRotateAxis, tmp + 0.0f);
