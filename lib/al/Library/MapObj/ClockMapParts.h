@@ -31,16 +31,16 @@ private:
     sead::Quatf mQuat = sead::Quatf::unit;
     s32 mRotateAxis = 0;
     s32 mClockAngleDegree = 0;
-    s32 _120 = 0;
-    s32 _124 = 1;
+    s32 mCurrentStep = 0;
+    s32 mTurnStepCount = 1;
     s32 mDelayTime = 0;
     s32 mRotateTime = 30;
     s32 mWaitTime = 30;
     s32 mRotateSignTime = 0;
-    s32 _138 = 30;
-    s32 _13c;
-    s32 _140 = 0;
-    s32 _144;
+    s32 mRotateTimer = 30;
+    s32 mActiveTimer;
+    s32 mTimer = 0;
+    s32 mAssistStopTimer;
     RippleCtrl* mRippleCtrl = nullptr;
 };
 
