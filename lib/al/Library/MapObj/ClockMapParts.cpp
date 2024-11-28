@@ -58,12 +58,12 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     tryGetArg(&mClockAngleDegree, info, "ClockAngleDegree");
 
     if (mClockAngleDegree == 0) {
-        _124 = 1;
+        mTurnStepCount = 1;
     } else {
         s32 lcm = sead::Mathi::lcm(sead::Mathi::abs(mClockAngleDegree), 360);
         s32 clockAngleDegree = sead::Mathi::abs(mClockAngleDegree);
 
-        _124 = lcm / clockAngleDegree;
+        mTurnStepCount = lcm / clockAngleDegree;
     }
 
     tryGetArg(&mRotateAxis, info, "RotateAxis");
@@ -75,20 +75,20 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     initMaterialCode(this, info);
 
     if (isExistAction(this, "MiddleSign")) {
-        mRotateSignTime = getActionFrameMax(this, "MiddleSign");
+        mRotateSignTime = (s32)getActionFrameMax(this, "MiddleSign");
     } else {
         mRotateSignTime = 36;
         tryGetArg(&mRotateSignTime, info, "RotateSignTime");
     }
 
-    _138 = mRotateSignTime + mRotateTime + 1;
-    _13c = _138 + mWaitTime + 1;
+    mRotateTimer = mRotateSignTime + mRotateTime + 1;
+    mActiveTimer = mRotateTimer + mWaitTime + 1;
 
     if (mDelayTime >= 1) {
-        _140 = 0;
+        mTimer = 0;
         startNerveAction(this, "Delay");
     } else {
-        _140 = mRotateSignTime;
+        mTimer = mRotateSignTime;
     }
 
     if (listenStageSwitchOnStart(this, ClockMapPartsFunctor(this, &ClockMapParts::start)))
@@ -134,7 +134,7 @@ bool ClockMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSe
         return false;
 
     if (isMsgTouchAssist(message)) {
-        _144 = 45;
+        mAssistStopTimer = 45;
         if (isNerve(this, NrvClockMapParts.AssistStop.data()))
             return true;
 
@@ -192,9 +192,9 @@ bool ClockMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSe
 }
 
 void ClockMapParts::appearAndSetStart() {
-    _120 = 0;
-    _140 = 0;
-    _144 = 0;
+    mCurrentStep = 0;
+    mTimer = 0;
+    mAssistStopTimer = 0;
 
     setQuat(this, mQuat);
 
@@ -212,13 +212,13 @@ void ClockMapParts::setRestartNerve() {
     if (isExistAction(this))
         restartAction(this);
 
-    if (_140 >= _138) {
+    if (mTimer >= mRotateTimer) {
         startNerveAction(this, "AssistStopEndWait");
 
         return;
     }
 
-    if (_140 >= mRotateSignTime) {
+    if (mTimer >= mRotateSignTime) {
         startNerveAction(this, "Rotate");
 
         return;
@@ -255,46 +255,47 @@ void ClockMapParts::exeRotateSign() {
     if (isFirstStep(this))
         tryStartAction(this, "MiddleSign");
 
-    f32 tmp = modf((f32)(_120 * mClockAngleDegree) + 360.0f, 360.0f) + 0.0f;
+    f32 tmp = modf((f32)(mCurrentStep * mClockAngleDegree) + 360.0f, 360.0f) + 0.0f;
 
     rotateQuatLocalDirDegree(this, mQuat, mRotateAxis,
-                             tmp + sead::Mathf::sin((f32)_140 * sead::Mathf::pi2() / 18.0f));
+                             tmp + sead::Mathf::sin((f32)mTimer * sead::Mathf::pi2() / 18.0f));
 
-    _140++;
-    if (_140 < mRotateSignTime)
+    mTimer++;
+    if (mTimer < mRotateSignTime)
         return;
 
     startNerveAction(this, "Rotate");
 }
 
 void ClockMapParts::exeRotate() {
-    f32 tmp = modf((((f32)(_140 - mRotateSignTime) / (f32)(_138 + ~mRotateSignTime)) + (f32)_120) *
-                           (f32)mClockAngleDegree +
-                       360.0f,
-                   360.0f);
-    rotateQuatLocalDirDegree(this, mQuat, mRotateAxis, tmp + 0.0f);
+    f32 angle = modf((((f32)(mTimer - mRotateSignTime) / (f32)(mRotateTimer + ~mRotateSignTime)) +
+                      (f32)mCurrentStep) *
+                             (f32)mClockAngleDegree +
+                         360.0f,
+                     360.0f);
+    rotateQuatLocalDirDegree(this, mQuat, mRotateAxis, angle + 0.0f);
 
-    _140++;
-    if (_140 < _138)
+    mTimer++;
+    if (mTimer < mRotateTimer)
         return;
 
-    _120 = modi(_120 + _124 + 1, _124);
+    mCurrentStep = modi(mCurrentStep + mTurnStepCount + 1, mTurnStepCount);
     startNerveAction(this, "Wait");
     tryStartSe(this, "RotateEnd");
 }
 
 void ClockMapParts::exeWait() {
-    _140++;
-    if (_13c <= _140) {
-        _140 -= _13c;
+    mTimer++;
+    if (mActiveTimer <= mTimer) {
+        mTimer -= mActiveTimer;
         setRotateStartNerve();
     }
 }
 
 void ClockMapParts::exeAssistStop() {
-    _144--;
-    if (_144 <= 0) {
-        _144 = 0;
+    mAssistStopTimer--;
+    if (mAssistStopTimer <= 0) {
+        mAssistStopTimer = 0;
         setRestartNerve();
     }
 }
