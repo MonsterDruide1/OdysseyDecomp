@@ -19,4 +19,4 @@ private:
 };
 
 static_assert(sizeof(CameraSubTargetBase) == 0x18);
-}
+}  // namespace al

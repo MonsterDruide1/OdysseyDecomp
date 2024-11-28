@@ -24,4 +24,4 @@ private:
 };
 
 static_assert(sizeof(ActorCameraSubTarget) == 0x28);
-}
+}  // namespace al
