@@ -35,12 +35,6 @@ NERVE_ACTIONS_MAKE_STRUCT(ClockMapParts, StandBy, Delay, RotateSign, Rotate, Wai
 }  // namespace
 
 namespace al {
-// ???
-inline void test(sead::Quatf* o, const sead::Quatf& v) {
-    *(f64*)&o->z = *(f64*)&v.z;
-    *(f64*)&o->x = *(f64*)&v.x;
-}
-
 ClockMapParts::ClockMapParts(const char* name) : LiveActor(name) {}
 
 void ClockMapParts::init(const ActorInitInfo& info) {
@@ -53,7 +47,7 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     registerAreaHostMtx(this, info);
     registSupportFreezeSyncGroup(this, info);
 
-    test(&mQuat, getQuat(this));
+    *(sead::BaseQuat<f32>*)&mQuat = getQuat(this);
 
     tryGetArg(&mClockAngleDegree, info, "ClockAngleDegree");
 
