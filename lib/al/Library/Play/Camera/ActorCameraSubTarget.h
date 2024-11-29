@@ -20,7 +20,7 @@ public:
 
 private:
     const LiveActor* mActor;
-    const sead::Vector3f* _20;
+    const sead::Vector3f* mOffset;
 };
 
 static_assert(sizeof(ActorCameraSubTarget) == 0x28);

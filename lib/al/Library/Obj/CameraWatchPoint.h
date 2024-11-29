@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Play/Camera/ActorCameraSubTarget.h"
 
 namespace al {
+class ActorCameraSubTarget;
+
 class CameraWatchPoint : public LiveActor {
 public:
     CameraWatchPoint(const char* name);
