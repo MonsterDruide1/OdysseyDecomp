@@ -4,6 +4,7 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/Play/Camera/ActorCameraSubTarget.h"
 #include "Project/Camera/CameraSubTargetTurnParam.h"
 
 namespace al {
