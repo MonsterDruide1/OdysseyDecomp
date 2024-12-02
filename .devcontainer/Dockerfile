@@ -19,6 +19,6 @@ RUN pip install --break-system-packages ansiwrap capstone colorama cxxfilt pyelf
 RUN apt install -y clangd clang-format clang-tidy
 
 # install (outdated) libtinfo5, required for old clang version
-RUN curl -o libtinfo5_6.4-2_amd64.deb http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb && dpkg -i libtinfo5_6.4-2_amd64.deb && rm -f libtinfo5_6.4-2_amd64.deb
+RUN curl -o libtinfo5_6.3-2_amd64.deb http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
 
 ENTRYPOINT ["bash"]
