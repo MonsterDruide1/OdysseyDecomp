@@ -43,21 +43,21 @@ void ConveyerStep::setHost(LiveActor* host) {
     mHost = host;
 }
 
-void ConveyerStep::setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32 param_2) {
+void ConveyerStep::setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32 coord) {
     mConveyerKeyKeeper = conveyerKeyKeeper;
-    _12c = param_2;
+    mCoord = coord;
 }
 
-void ConveyerStep::setTransByCoord(f32 param_1, bool param_2) {
-    setTransByCoord(param_1, param_2, false);
+void ConveyerStep::setTransByCoord(f32 coord, bool isMoving) {
+    setTransByCoord(coord, isMoving, false);
 }
 
-void ConveyerStep::setTransByCoord(f32 param_1, bool param_2, bool param_3)
-    __attribute__((noinline)) {
-    f32 mod = modf(_12c + param_1, _12c) + 0.0f;
+__attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isMoving,
+                                                             bool forceReset) {
+    f32 relativeCoord = modf(mCoord + coord, mCoord) + 0.0f;
     s32 index = -1;
 
-    mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, mod);
+    mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, relativeCoord);
 
     const char* keyHitReactionName = nullptr;
     const char* actionName = nullptr;
@@ -79,30 +79,31 @@ void ConveyerStep::setTransByCoord(f32 param_1, bool param_2, bool param_3)
     mKeyHitReactionName = keyHitReactionName;
     mActionName = actionName;
 
-    if ((param_2 && mod < _128) || (!param_2 && mod > _128) || param_3)
+    if ((isMoving && relativeCoord < mRelativeCoord) ||
+        (!isMoving && relativeCoord > mRelativeCoord) || forceReset)
         resetPosition(this);
 
-    if (mod > mConveyerKeyKeeper->get_34()) {
-        if (_130) {
-            _130 = false;
+    if (relativeCoord > mConveyerKeyKeeper->get_34()) {
+        if (mIsExist) {
+            mIsExist = false;
             if (getModelKeeper() != nullptr && !isHideModel(this))
                 hideModel(this);
             if (isExistCollisionParts(this))
                 invalidateCollisionParts(this);
         }
-    } else if (!_130) {
-        _130 = true;
+    } else if (!mIsExist) {
+        mIsExist = true;
         if (getModelKeeper() != nullptr && isHideModel(this))
             showModel(this);
         if (isExistCollisionParts(this))
             validateCollisionParts(this);
     }
 
-    _128 = mod;
+    mRelativeCoord = relativeCoord;
 }
 
-void ConveyerStep::setTransAndResetByCoord(f32 param_1) {
-    setTransByCoord(param_1, true, true);
+void ConveyerStep::setTransAndResetByCoord(f32 coord) {
+    setTransByCoord(coord, true, true);
 }
 
 void ConveyerStep::exeWait() {}

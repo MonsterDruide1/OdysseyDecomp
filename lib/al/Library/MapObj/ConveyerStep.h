@@ -13,10 +13,10 @@ public:
     bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
 
     void setHost(LiveActor* host);
-    void setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32);
-    void setTransByCoord(f32, bool);
-    void setTransByCoord(f32, bool, bool) __attribute__((noinline));
-    void setTransAndResetByCoord(f32);
+    void setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32 coord);
+    void setTransByCoord(f32 coord, bool isMoving);
+    __attribute__((noinline)) void setTransByCoord(f32 coord, bool isMoving, bool forceReset);
+    void setTransAndResetByCoord(f32 coord);
 
     void exeWait();
 
@@ -25,8 +25,8 @@ private:
     const ConveyerKeyKeeper* mConveyerKeyKeeper = nullptr;
     const char* mKeyHitReactionName = nullptr;
     const char* mActionName = nullptr;
-    f32 _128 = 0.0f;
-    f32 _12c = 0.0f;
-    bool _130 = true;
+    f32 mRelativeCoord = 0.0f;
+    f32 mCoord = 0.0f;
+    bool mIsExist = true;
 };
 }  // namespace al
