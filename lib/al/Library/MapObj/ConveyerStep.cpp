@@ -3,12 +3,15 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Project/LiveActor/ConveyerKeyKeeper.h"
 
 namespace {
 using namespace al;
@@ -49,26 +52,6 @@ void ConveyerStep::setTransByCoord(f32 param_1, bool param_2) {
     setTransByCoord(param_1, param_2, false);
 }
 
-inline void test(ConveyerStep* conveyerStep, f32 mod) __attribute__((always_inline)) {
-    if (mod <= conveyerStep->getConveyerKeyKeeper()->get_34()) {
-        if (!conveyerStep->get_130()) {
-            conveyerStep->set_130(true);
-            if (conveyerStep->getModelKeeper() != nullptr && isHideModel(conveyerStep))
-                showModel(conveyerStep);
-            if (isExistCollisionParts(conveyerStep))
-                validateCollisionParts(conveyerStep);
-        }
-    } else if (conveyerStep->get_130()) {
-        conveyerStep->set_130(false);
-        if (conveyerStep->getModelKeeper() != nullptr && !isHideModel(conveyerStep))
-            hideModel(conveyerStep);
-        if (isExistCollisionParts(conveyerStep))
-            invalidateCollisionParts(conveyerStep);
-    }
-
-    conveyerStep->set_128(mod);
-}
-
 void ConveyerStep::setTransByCoord(f32 param_1, bool param_2, bool param_3)
     __attribute__((noinline)) {
     f32 mod = modf(_12c + param_1, _12c) + 0.0f;
@@ -80,26 +63,42 @@ void ConveyerStep::setTransByCoord(f32 param_1, bool param_2, bool param_3)
     const char* actionName = nullptr;
 
     if (index > -1) {
-        const ConveyerKey conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
+        const ConveyerKey* conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
 
-        if (tryGetStringArg(&keyHitReactionName, *conveyerKey.mPlacementInfo,
+        if (tryGetStringArg(&keyHitReactionName, conveyerKey->mPlacementInfo,
                             "KeyHitReactionName") &&
             (mKeyHitReactionName == nullptr ||
              !isEqualString(mKeyHitReactionName, keyHitReactionName)))
             startHitReaction(this, keyHitReactionName);
 
-        if (tryGetStringArg(&actionName, *conveyerKey.mPlacementInfo, "ActionName") &&
+        if (tryGetStringArg(&actionName, conveyerKey->mPlacementInfo, "ActionName") &&
             (mActionName == nullptr || !isEqualString(mActionName, actionName)))
-            startHitReaction(this, actionName);
+            startAction(this, actionName);
     }
 
     mKeyHitReactionName = keyHitReactionName;
     mActionName = actionName;
 
-    if (param_3 || (!param_2 && _128 >= mod) || (param_2 && _128 <= mod))
+    if ((param_2 && mod < _128) || (!param_2 && mod > _128) || param_3)
         resetPosition(this);
 
-    test(this, mod);
+    if (mod > mConveyerKeyKeeper->get_34()) {
+        if (_130) {
+            _130 = false;
+            if (getModelKeeper() != nullptr && !isHideModel(this))
+                hideModel(this);
+            if (isExistCollisionParts(this))
+                invalidateCollisionParts(this);
+        }
+    } else if (!_130) {
+        _130 = true;
+        if (getModelKeeper() != nullptr && isHideModel(this))
+            showModel(this);
+        if (isExistCollisionParts(this))
+            validateCollisionParts(this);
+    }
+
+    _128 = mod;
 }
 
 void ConveyerStep::setTransAndResetByCoord(f32 param_1) {
