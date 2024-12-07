@@ -47,7 +47,7 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     registerAreaHostMtx(this, info);
     registSupportFreezeSyncGroup(this, info);
 
-    *(sead::BaseQuat<f32>*)&mQuat = getQuat(this);
+    mQuat.set(getQuat(this));
 
     tryGetArg(&mClockAngleDegree, info, "ClockAngleDegree");
 
