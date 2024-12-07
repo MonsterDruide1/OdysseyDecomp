@@ -3,6 +3,7 @@
 #include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
+#include "Library/MapObj/ClockMapParts.h"
 #include "Library/MapObj/FallMapParts.h"
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
@@ -554,7 +555,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"BackHideParts", al::createActorFunction<al::BackHideParts>},
     {"BreakMapParts", nullptr},
     {"CapRotateMapParts", nullptr},
-    {"ClockMapParts", nullptr},
+    {"ClockMapParts", al::createActorFunction<al::ClockMapParts>},
     {"ConveyerMapParts", nullptr},
     {"FallMapParts", al::createActorFunction<al::FallMapParts>},
     {"FixMapParts", al::createActorFunction<al::FixMapParts>},
