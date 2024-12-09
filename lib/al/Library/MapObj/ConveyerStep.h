@@ -14,8 +14,8 @@ public:
 
     void setHost(LiveActor* host);
     void setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32 coord);
-    void setTransByCoord(f32 coord, bool isMoving);
-    __attribute__((noinline)) void setTransByCoord(f32 coord, bool isMoving, bool forceReset);
+    void setTransByCoord(f32 coord, bool isBackwards);
+    __attribute__((noinline)) void setTransByCoord(f32 coord, bool isBackwards, bool isForceReset);
     void setTransAndResetByCoord(f32 coord);
 
     void exeWait();
@@ -25,8 +25,8 @@ private:
     const ConveyerKeyKeeper* mConveyerKeyKeeper = nullptr;
     const char* mKeyHitReactionName = nullptr;
     const char* mActionName = nullptr;
-    f32 mRelativeCoord = 0.0f;
-    f32 mCoord = 0.0f;
+    f32 mCurrentCoord = 0.0f;
+    f32 mInitialCoord = 0.0f;
     bool mIsExist = true;
 };
 }  // namespace al

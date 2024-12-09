@@ -45,19 +45,19 @@ void ConveyerStep::setHost(LiveActor* host) {
 
 void ConveyerStep::setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32 coord) {
     mConveyerKeyKeeper = conveyerKeyKeeper;
-    mCoord = coord;
+    mInitialCoord = coord;
 }
 
-void ConveyerStep::setTransByCoord(f32 coord, bool isMoving) {
-    setTransByCoord(coord, isMoving, false);
+void ConveyerStep::setTransByCoord(f32 coord, bool isBackwards) {
+    setTransByCoord(coord, isBackwards, false);
 }
 
-__attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isMoving,
-                                                             bool forceReset) {
-    f32 relativeCoord = modf(mCoord + coord, mCoord) + 0.0f;
+__attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isBackwards,
+                                                             bool isForceReset) {
+    f32 newCoord = modf(mInitialCoord + coord, mInitialCoord) + 0.0f;
     s32 index = -1;
 
-    mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, relativeCoord);
+    mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, newCoord);
 
     const char* keyHitReactionName = nullptr;
     const char* actionName = nullptr;
@@ -79,11 +79,11 @@ __attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isM
     mKeyHitReactionName = keyHitReactionName;
     mActionName = actionName;
 
-    if ((isMoving && relativeCoord < mRelativeCoord) ||
-        (!isMoving && relativeCoord > mRelativeCoord) || forceReset)
+    if ((isBackwards && newCoord < mCurrentCoord) || (!isBackwards && newCoord > mCurrentCoord) ||
+        isForceReset)
         resetPosition(this);
 
-    if (relativeCoord > mConveyerKeyKeeper->get_34()) {
+    if (newCoord > mConveyerKeyKeeper->get_34()) {
         if (mIsExist) {
             mIsExist = false;
             if (getModelKeeper() != nullptr && !isHideModel(this))
@@ -99,7 +99,7 @@ __attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isM
             validateCollisionParts(this);
     }
 
-    mRelativeCoord = relativeCoord;
+    mCurrentCoord = newCoord;
 }
 
 void ConveyerStep::setTransAndResetByCoord(f32 coord) {

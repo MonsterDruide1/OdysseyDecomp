@@ -7,6 +7,7 @@ namespace al {
 class ActorInitInfo;
 class PlacementInfo;
 
+// TODO: I'm not sure about this
 struct ConveyerKey {
     void* _0[5];
     PlacementInfo& mPlacementInfo;
@@ -17,9 +18,9 @@ public:
     ConveyerKeyKeeper();
 
     void init(const ActorInitInfo& info);
-    void calcPosAndQuat(sead::Vector3f*, sead::Quatf*, s32*, f32) const;
-    void calcPosAndQuatByKeyIndex(sead::Vector3f*, sead::Quatf*, s32 index) const;
-    void calcClippingSphere(sead::Vector3f*, f32*, f32) const;
+    void calcPosAndQuat(sead::Vector3f* pos, sead::Quatf* quat, s32* index, f32 coord) const;
+    void calcPosAndQuatByKeyIndex(sead::Vector3f* pos, sead::Quatf* quat, s32 index) const;
+    void calcClippingSphere(sead::Vector3f* clippingTrans, f32* clippingRadius, f32 offset) const;
     const ConveyerKey* getConveyerKey(s32 index) const;  // return type depends on the type of _0
 
     f32 get_34() const { return _34; }
