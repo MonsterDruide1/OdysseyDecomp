@@ -10,6 +10,7 @@
 #include "Library/MapObj/KeyMoveMapParts.h"
 #include "Library/MapObj/KeyMoveMapPartsGenerator.h"
 #include "Library/MapObj/OneMeshFixMapParts.h"
+#include "Library/MapObj/RailMoveMapParts.h"
 #include "Library/MapObj/RollingCubeMapParts.h"
 #include "Library/MapObj/SurfMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
@@ -567,7 +568,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Pukupuku", nullptr},
     {"PulseSwitch", nullptr},
     {"RailCollision", nullptr},
-    {"RailMoveMapParts", nullptr},
+    {"RailMoveMapParts", al::createActorFunction<al::RailMoveMapParts>},
     {"RiseMapParts", nullptr},
     {"ReactionMapParts", nullptr},
     {"RiseMapPartsHolder", nullptr},
