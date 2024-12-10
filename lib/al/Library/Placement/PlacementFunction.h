@@ -118,6 +118,7 @@ void getStringArg(const ActorInitInfo& initInfo, const char* key);
 void getStringArg(const PlacementInfo& placementInfo, const char* key);
 void getStringArg(const AreaInitInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key);
+bool tryGetStringArg(const char** arg, const PlacementInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const AreaInitInfo& initInfo, const char* key);
 bool tryGetArgV2f(sead::Vector2f* arg, const ActorInitInfo& initInfo, const char* key);
 bool tryGetArgV2f(sead::Vector2f* arg, const PlacementInfo& initInfo, const char* key);
