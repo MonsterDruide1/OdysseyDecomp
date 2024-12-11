@@ -21,9 +21,8 @@
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
+namespace al {
 namespace {
-using namespace al;
-
 NERVE_ACTION_IMPL(KeyMoveMapParts, StandBy)
 NERVE_ACTION_IMPL(KeyMoveMapParts, Delay)
 NERVE_ACTION_IMPL(KeyMoveMapParts, Wait)
@@ -35,7 +34,6 @@ NERVE_ACTION_IMPL(KeyMoveMapParts, Stop)
 NERVE_ACTIONS_MAKE_STRUCT(KeyMoveMapParts, StandBy, Delay, Wait, MoveSign, Move, StopSign, Stop)
 }  // namespace
 
-namespace al {
 KeyMoveMapParts::KeyMoveMapParts(const char* name) : LiveActor(name) {}
 
 void KeyMoveMapParts::init(const ActorInitInfo& info) {
