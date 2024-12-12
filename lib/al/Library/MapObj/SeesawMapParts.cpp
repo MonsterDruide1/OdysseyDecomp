@@ -7,8 +7,8 @@
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/MapObj/ChildStep.h"
-#include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
+#include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
@@ -45,7 +45,10 @@ void SeesawMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-// NON_MATCHING: L58 => `fcsel   s0, s11, s1, hi` instead of `fcsel   s0, s11, s1, ge`
+inline bool isGreaterThanOrEqualToZero(f32 val) {  // sead::Mathf::assertGreaterThanOrEqualToZero_ ?
+    return val >= 0.0f;
+}
+
 bool SeesawMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgFloorTouch(message)) {
         sead::Vector3f pos;
@@ -55,7 +58,7 @@ bool SeesawMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
             pos.set(getActorTrans(self));
 
         f32 fVar3 = !isMsgEnemyFloorTouch(message) ? 1.0f : 0.9f;
-        if ((pos - getTrans(this)).dot(mFront) <= 0.0f)
+        if (!isGreaterThanOrEqualToZero((pos - getTrans(this)).dot(mFront)))
             fVar3 = -fVar3;
 
         _144 += fVar3;
