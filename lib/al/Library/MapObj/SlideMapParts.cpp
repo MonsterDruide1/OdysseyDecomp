@@ -11,6 +11,7 @@
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Thread/FunctorV0M.h"
 
@@ -29,7 +30,7 @@ namespace al {
 SlideMapParts::SlideMapParts(const char* name) : LiveActor(name) {}
 
 // looks like makeQT but with x y w instead of y z x
-inline void makeSomething(sead::BaseMtx34<f32>* o, const sead::Quatf& q, const sead::Vector3f& t) {
+inline void makeSomething(sead::Matrix34f* o, const sead::Quatf& q, const sead::Vector3f& t) {
     // Assuming the quaternion "q" is normalized
 
     const f32 xx = 2 * q.x * q.x;
@@ -134,5 +135,45 @@ void SlideMapParts::exeDelay() {
 void SlideMapParts::exeWait() {
     if (isGreaterStep(this, mWaitTime))
         startNerveAction(this, "Move");
+}
+
+void SlideMapParts::exeMove() {
+    if (isFirstStep(this)) {
+        if (_15c)
+            tryStartSe(this, "MoveStart1");
+        else
+            tryStartSe(this, "MoveStart2");
+    }
+
+    f32 rate = calcNerveRate(this, calcMoveTime());
+    if (!_15c)
+        rate = 1.0f - rate;
+
+    setTransOffsetLocalDir(this, getQuat(this), mTrans, mMoveDistance * rate, mMoveAxis);
+
+    if (isGreaterEqualStep(this, calcMoveTime())) {
+        if (_15c)
+            tryStartSe(this, "MoveEnd1");
+        else
+            tryStartSe(this, "MoveEnd2");
+
+        _15c = !_15c;
+        tryStartSe(this, "MoveEnd");
+        startNerveAction(this, "Wait");
+    }
+}
+
+s32 SlideMapParts::calcMoveTime() const {
+    if (mMoveTime >= 0)
+        return mMoveTime;
+
+    if (mMoveSpeed < 1.0f)
+        return 0;
+
+    f32 moveTime = mMoveDistance / mMoveSpeed;
+    if (!(moveTime > 0.0f))
+        moveTime = -moveTime;
+
+    return (s32)moveTime;
 }
 }  // namespace al
