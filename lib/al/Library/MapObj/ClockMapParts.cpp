@@ -110,13 +110,7 @@ void ClockMapParts::start() {
         return;
     }
 
-    if (mRotateSignTime >= 1) {
-        startNerveAction(this, "RotateSign");
-
-        return;
-    }
-
-    startNerveAction(this, "Rotate");
+    setRotateStartNerve();
 }
 
 void ClockMapParts::standBy() {
