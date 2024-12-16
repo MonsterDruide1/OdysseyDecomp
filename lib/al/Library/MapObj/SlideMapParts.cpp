@@ -29,37 +29,6 @@ NERVE_ACTIONS_MAKE_STRUCT(SlideMapParts, StandBy, Delay, Wait, Move)
 namespace al {
 SlideMapParts::SlideMapParts(const char* name) : LiveActor(name) {}
 
-// looks like makeQT but with x y w instead of y z x
-inline void makeSomething(sead::Matrix34f* o, const sead::Quatf& q, const sead::Vector3f& t) {
-    // Assuming the quaternion "q" is normalized
-
-    const f32 xx = 2 * q.x * q.x;
-    const f32 yy = 2 * q.y * q.y;
-    const f32 ww = 2 * q.w * q.w;
-    const f32 wx = 2 * q.w * q.x;
-    const f32 wy = 2 * q.w * q.y;
-    const f32 xy = 2 * q.x * q.y;
-    const f32 zx = 2 * q.z * q.x;
-    const f32 zy = 2 * q.z * q.y;
-    const f32 zw = 2 * q.z * q.w;
-
-    o->m[0][0] = 1 - xx - yy;
-    o->m[0][1] = wx - zy;
-    o->m[0][2] = wy + zx;
-
-    o->m[1][0] = wx + zy;
-    o->m[1][1] = 1 - ww - yy;
-    o->m[1][2] = xy - zw;
-
-    o->m[2][0] = wy - zx;
-    o->m[2][1] = xy + zw;
-    o->m[2][2] = 1 - ww - xx;
-
-    o->m[0][3] = t.x;
-    o->m[1][3] = t.y;
-    o->m[2][3] = t.z;
-}
-
 // NON_MATCHING
 void SlideMapParts::init(const ActorInitInfo& info) {
     using SlideMapPartsFunctor = FunctorV0M<SlideMapParts*, void (SlideMapParts::*)()>;
@@ -83,9 +52,41 @@ void SlideMapParts::init(const ActorInitInfo& info) {
 
     initMaterialCode(this, info);
 
-    sead::Vector3f tmp;
-    calcQuatLocalAxis(&tmp, getQuat(this), mMoveAxis);
-    makeSomething(&mSurfaceEffectMtx, getQuat(this), tmp * surfaceHeight + mTrans);
+    sead::Vector3f t;
+    calcQuatLocalAxis(&t, getQuat(this), mMoveAxis);
+
+    f32 offsetX = surfaceHeight * t.x + mTrans.x;
+    f32 offsetY = surfaceHeight * t.y;
+    f32 offsetZ = surfaceHeight * t.z;
+
+    sead::Quatf q = getQuat(this);
+
+    const f32 xx = 2 * q.x * q.x;
+    const f32 yy = 2 * q.y * q.y;
+    const f32 ww = 2 * q.w * q.w;
+    const f32 wx = 2 * q.w * q.x;
+    const f32 wy = 2 * q.w * q.y;
+    const f32 xy = 2 * q.x * q.y;
+    const f32 zx = 2 * q.z * q.x;
+    const f32 zy = 2 * q.z * q.y;
+    const f32 zw = 2 * q.z * q.w;
+
+    mSurfaceEffectMtx.m[0][0] = 1 - xx - yy;
+    mSurfaceEffectMtx.m[0][1] = wx - zy;
+    mSurfaceEffectMtx.m[0][3] = offsetX;
+    mSurfaceEffectMtx.m[0][2] = wy + zx;
+
+    mSurfaceEffectMtx.m[1][0] = wx + zy;
+    mSurfaceEffectMtx.m[1][2] = xy - zw;
+
+    mSurfaceEffectMtx.m[2][0] = wy - zx;
+    mSurfaceEffectMtx.m[2][1] = xy + zw;
+
+    mSurfaceEffectMtx.m[2][3] = offsetZ + mTrans.z;
+    mSurfaceEffectMtx.m[1][3] = offsetY + mTrans.y;
+
+    mSurfaceEffectMtx.m[1][1] = 1 - ww - yy;
+    mSurfaceEffectMtx.m[2][2] = 1 - ww - xx;
 
     trySetEffectNamedMtxPtr(this, "Surface", &mSurfaceEffectMtx);
 
