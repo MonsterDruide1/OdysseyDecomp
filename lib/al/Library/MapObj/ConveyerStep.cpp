@@ -45,16 +45,15 @@ void ConveyerStep::setHost(LiveActor* host) {
 
 void ConveyerStep::setConveyerKeyKeeper(const ConveyerKeyKeeper* conveyerKeyKeeper, f32 coord) {
     mConveyerKeyKeeper = conveyerKeyKeeper;
-    mInitialCoord = coord;
+    mMaxCoord = coord;
 }
 
-void ConveyerStep::setTransByCoord(f32 coord, bool isBackwards) {
-    setTransByCoord(coord, isBackwards, false);
+void ConveyerStep::setTransByCoord(f32 coord, bool isForwards) {
+    setTransByCoord(coord, isForwards, false);
 }
 
-__attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isBackwards,
-                                                             bool isForceReset) {
-    f32 newCoord = modf(mInitialCoord + coord, mInitialCoord) + 0.0f;
+void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset) {
+    f32 newCoord = modf(mMaxCoord + coord, mMaxCoord) + 0.0f;
     s32 index = -1;
 
     mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, newCoord);
@@ -79,7 +78,7 @@ __attribute__((noinline)) void ConveyerStep::setTransByCoord(f32 coord, bool isB
     mKeyHitReactionName = keyHitReactionName;
     mActionName = actionName;
 
-    if ((isBackwards && newCoord < mCurrentCoord) || (!isBackwards && newCoord > mCurrentCoord) ||
+    if ((isForwards && newCoord < mCurrentCoord) || (!isForwards && newCoord > mCurrentCoord) ||
         isForceReset)
         resetPosition(this);
 
