@@ -97,4 +97,22 @@ void SeesawMapParts::appearAndSetStart() {
 
     makeActorAlive();
 }
+
+void SeesawMapParts::exeWait() {
+    if (_144 > 0.0f) {
+        if (_148 >= 60)
+            _148 = 60;
+        else
+            _148++;
+        _144 = 0.0f;
+    } else if (_144 < 0.0f) {
+        if (_148 <= -60)
+            _148 = -60;
+        else
+            _148--;
+        _144 = 0.0f;
+    } else {
+        *(s32*)&_144 = _148 - 1;
+    }
+}
 }  // namespace al
