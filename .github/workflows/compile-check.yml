@@ -10,7 +10,7 @@ permissions:
 jobs:
   compile_verify:
     if: github.repository == 'MonsterDruide1/OdysseyDecomp'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Check out project
       uses: actions/checkout@v4
@@ -32,7 +32,8 @@ jobs:
         fi
     - name: Set up dependencies
       run: |
-        sudo apt update && sudo apt install -y python3-pip ninja-build cmake ccache xdelta3 clang libssl-dev python-is-python3 curl libncurses5
+        sudo apt update && sudo apt install -y python3-pip ninja-build cmake ccache xdelta3 clang libssl-dev python-is-python3 curl
+        wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
     - name: Set up python
       uses: actions/setup-python@v5
       with:
