@@ -111,8 +111,18 @@ void SeesawMapParts::exeWait() {
         else
             _148--;
         _144 = 0.0f;
-    } else {
-        *(s32*)&_144 = _148 - 1;
+    } else if (_148 > 0) {
+        _148--;
+        _144 = 0.0f;
+        if (_148 < 1) {
+            if (_148 <= -1)
+                _134 -= mRotateAccelOn;
+            else if (_130 >= 0.0f)
+                _134 -= mRotateAccelOff;
+            else
+                _134 += mRotateAccelOff;
+        }
+        _134 *= 0.95f;
     }
 }
 }  // namespace al
