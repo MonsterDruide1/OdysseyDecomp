@@ -3,6 +3,8 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
+#include "Library/Math/Axis.h"
+
 namespace al {
 void verticalizeVec(sead::Vector3f* out, const sead::Vector3f& vertical, const sead::Vector3f& vec);
 
@@ -43,7 +45,7 @@ bool tryNormalizeOrZero(sead::Vector3f*);
 void alongVectorNormalH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                         const sead::Vector3f&);
 
-s32 calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                         const sead::Vector3f&, const sead::Vector3f&);
-s32 calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Quatf&);
+Axis calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
+                          const sead::Vector3f&, const sead::Vector3f&);
+Axis calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Quatf&);
 }  // namespace al

@@ -132,19 +132,20 @@ void RollingCubeMapParts::setNerveNextMovement(bool isNextFallKey) {
         return;
     }
 
-    s32 axis = sead::Mathi::abs(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
+    Axis axis = (Axis)sead::Mathi::abs(
+        (s32)calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
     switch (axis) {
     default:
         return;
-    case 1:
+    case Axis::X:
         startNerveAction(this, "SlideX");
 
         return;
-    case 2:
+    case Axis::Y:
         startNerveAction(this, "SlideY");
 
         return;
-    case 3:
+    case Axis::Z:
         startNerveAction(this, "SlideZ");
 
         return;
@@ -198,19 +199,20 @@ s32 RollingCubeMapParts::getMovementTime() const {
 }
 
 void RollingCubeMapParts::setNerveNextLand() {
-    s32 axis = sead::Mathi::abs(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
+    Axis axis = (Axis)sead::Mathi::abs(
+        (s32)calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
     switch (axis) {
     default:
         return;
-    case 1:
+    case Axis::X:
         startNerveAction(this, "LandX");
 
         return;
-    case 2:
+    case Axis::Y:
         startNerveAction(this, "LandY");
 
         return;
-    case 3:
+    case Axis::Z:
         startNerveAction(this, "LandZ");
 
         return;
@@ -262,19 +264,20 @@ void RollingCubeMapParts::exeFall() {
 }
 
 void RollingCubeMapParts::setNerveNextFallLand() {
-    s32 axis = sead::Mathi::abs(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
+    Axis axis = (Axis)sead::Mathi::abs(
+        (s32)calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this)));
     switch (axis) {
     default:
         return;
-    case 1:
+    case Axis::X:
         startNerveAction(this, "FallLandX");
 
         return;
-    case 2:
+    case Axis::Y:
         startNerveAction(this, "FallLandY");
 
         return;
-    case 3:
+    case Axis::Z:
         startNerveAction(this, "FallLandZ");
 
         return;
