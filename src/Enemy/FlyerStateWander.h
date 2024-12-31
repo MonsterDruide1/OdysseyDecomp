@@ -15,7 +15,7 @@ public:
     void exeWander();
     void exeWait();
 
-public:
+private:
     s32 _20 = 0;
     sead::Vector3f _24 = {0.0f, 0.0f, 0.0f};
     const FlyerStateWanderParam* mFlyerStateWanderParam;
