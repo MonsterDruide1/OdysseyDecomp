@@ -15,6 +15,7 @@ f32 powerIn(f32, f32);
 f32 powerOut(f32, f32);
 
 f32 lerpValue(f32, f32, f32);
+f32 lerpValue(f32, f32, f32, f32, f32);
 
 template <typename T>
 inline T clamp(T value, T min, T max) {
