@@ -79,4 +79,9 @@ void separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 
 void calcParabolicFunctionParam(f32*, f32*, f32, f32 verticalDistance);
 
+f32 hermiteRate(f32, f32, f32);
+void calcDirVerticalAny(sead::Vector3f*, const sead::Vector3f&);
+
+void makeQuatRotationRate(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&, f32);
+
 }  // namespace al

@@ -21,6 +21,7 @@ bool isParallelDirection(const sead::Vector2f&, const sead::Vector2f&, f32);
 bool isParallelDirection(const sead::Vector3f&, const sead::Vector3f&, f32);
 bool isReverseDirection(const sead::Vector3f&, const sead::Vector3f&, f32);
 bool isNearDirection(const sead::Vector2f&, const sead::Vector2f&, f32);
+bool isNearDirection(const sead::Vector3f&, const sead::Vector3f&, f32);
 bool isInRange(s32, s32, s32);
 bool isInRange(f32, f32, f32);
 
