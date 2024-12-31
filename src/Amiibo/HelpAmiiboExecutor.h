@@ -8,7 +8,7 @@ namespace al {
 class NfpInfo;
 class LiveActor;
 class ActorInitInfo;
-}  // namespace al
+} // namespace al
 
 class HelpAmiiboDirector;
 
@@ -17,15 +17,20 @@ public:
     HelpAmiiboExecutor(HelpAmiiboDirector*, al::LiveActor*, const char*);
 
     virtual void initAfterPlacement(const al::ActorInitInfo&);
-    virtual bool isTriggerTouch(const al::NfpInfo&) = 0;
+    virtual bool isTriggerTouch(const al::NfpInfo&) const = 0;
     virtual bool isEnableUse() = 0;
     virtual bool execute() = 0;
     virtual void activate();
     virtual void deactivate();
-    virtual s32 getType() = 0;
+    virtual s32 getType() const = 0;
 
     bool tryTouch(const al::NfpInfo&);
     void tryExecute();
+
+protected:
+    al::LiveActor* getActor() const {
+        return mHelpAmiiboActor;
+    }
 
 private:
     HelpAmiiboDirector* mHelpAmiiboDirector = nullptr;
