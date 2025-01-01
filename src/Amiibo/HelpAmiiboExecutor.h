@@ -17,7 +17,8 @@ enum class HelpAmiiboType : s32 {
     FallCoin = 1,
     LifeMaxUpItem = 1,
     CoinCollect = 2,
-    InvisibleAttack = 2,
+    InvincibleAttack = 2,
+    NavigateCoinCollect = 2,
     Yoshi = 3,
     CountUpCoin = 4,
 };
