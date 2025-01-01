@@ -11,7 +11,7 @@ class ActorInitInfo;
 class HelpAmiiboDirector;
 class Yoshi;
 
-class HelpAmiiboYoshi : private HelpAmiiboExecutor {
+class HelpAmiiboYoshi : public HelpAmiiboExecutor {
 public:
     HelpAmiiboYoshi(HelpAmiiboDirector* director, al::LiveActor* amiiboActor);
 
@@ -19,7 +19,7 @@ public:
     bool isTriggerTouch(const al::NfpInfo& nfpInfo) const override;
     bool execute() override;
     void activate() override;
-    s32 getType() const override;
+    HelpAmiiboType getType() const override;
 
 private:
     Yoshi* mYoshi = nullptr;

@@ -12,6 +12,16 @@ class ActorInitInfo;
 
 class HelpAmiiboDirector;
 
+enum class HelpAmiiboType : s32 {
+    PlayerInvincible = 0,
+    FallCoin = 1,
+    LifeMaxUpItem = 1,
+    CoinCollect = 2,
+    InvisibleAttack = 2,
+    Yoshi = 3,
+    CountUpCoin = 4,
+};
+
 class HelpAmiiboExecutor : public al::IUseHioNode {
 public:
     HelpAmiiboExecutor(HelpAmiiboDirector*, al::LiveActor*, const char*);
@@ -22,12 +32,11 @@ public:
     virtual bool execute() = 0;
     virtual void activate();
     virtual void deactivate();
-    virtual s32 getType() const = 0;
+    virtual HelpAmiiboType getType() const = 0;
 
     bool tryTouch(const al::NfpInfo&);
     void tryExecute();
 
-protected:
     al::LiveActor* getActor() const {
         return mHelpAmiiboActor;
     }

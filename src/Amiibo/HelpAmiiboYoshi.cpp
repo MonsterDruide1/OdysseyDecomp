@@ -36,6 +36,6 @@ void HelpAmiiboYoshi::activate() {
     mYoshi->appearEgg();
 }
 
-s32 HelpAmiiboYoshi::getType() const {
-    return 3;
+HelpAmiiboType HelpAmiiboYoshi::getType() const {
+    return HelpAmiiboType::Yoshi;
 }
