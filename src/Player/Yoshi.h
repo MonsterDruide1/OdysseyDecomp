@@ -8,7 +8,7 @@ namespace al {
 class HitSensor;
 class SensorMsg;
 class WaterSurfaceFinder;
-} // namespace al
+}  // namespace al
 
 class CapTargetInfo;
 class PlayerAnimator;
