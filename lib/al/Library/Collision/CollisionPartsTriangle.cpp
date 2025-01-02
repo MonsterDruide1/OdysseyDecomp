@@ -2,8 +2,7 @@
 
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/KCollisionServer.h"
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 
 namespace al {
 
