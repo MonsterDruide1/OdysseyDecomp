@@ -1,6 +1,5 @@
 #include "Library/Math/ParabolicPath.h"
 
-#include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathUtil.h"
 
 namespace al {

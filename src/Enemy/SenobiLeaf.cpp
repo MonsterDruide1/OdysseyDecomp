@@ -7,8 +7,7 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorUtil.h"
-#include "Library/Math/MathRandomUtil.h"
-#include "Library/Math/VectorUtil.h"
+#include "Library/Math/MathUtil.h"
 
 SenobiLeaf::SenobiLeaf(const char* actorName) : al::LiveActor(actorName) {}
 

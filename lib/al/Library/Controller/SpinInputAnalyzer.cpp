@@ -1,6 +1,6 @@
 #include "Library/Controller/SpinInputAnalyzer.h"
 
-#include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 
 namespace al {
 

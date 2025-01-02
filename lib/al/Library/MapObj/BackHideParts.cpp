@@ -4,8 +4,6 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Model/ModelKeeper.h"
 #include "Library/Placement/PlacementFunction.h"
