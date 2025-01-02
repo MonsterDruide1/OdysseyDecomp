@@ -8,7 +8,7 @@ namespace al {
 class NfpInfo;
 class LiveActor;
 class ActorInitInfo;
-} // namespace al
+}  // namespace al
 
 class HelpAmiiboDirector;
 
@@ -38,9 +38,7 @@ public:
     bool tryTouch(const al::NfpInfo&);
     void tryExecute();
 
-    al::LiveActor* getActor() const {
-        return mHelpAmiiboActor;
-    }
+    al::LiveActor* getActor() const { return mHelpAmiiboActor; }
 
 private:
     HelpAmiiboDirector* mHelpAmiiboDirector = nullptr;

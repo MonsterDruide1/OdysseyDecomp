@@ -6,7 +6,7 @@ namespace al {
 class NfpInfo;
 class LiveActor;
 class ActorInitInfo;
-} // namespace al
+}  // namespace al
 
 class HelpAmiiboDirector;
 class Yoshi;
