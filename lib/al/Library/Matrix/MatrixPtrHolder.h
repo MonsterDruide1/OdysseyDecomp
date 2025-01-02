@@ -3,9 +3,6 @@
 #include <math/seadMatrix.h>
 
 namespace al {
-void makeBayerMatrix(s32*, s32);
-u32 f32ToF16(f32);
-f32 f16ToF32(u16);
 
 class MtxPtrHolder {
 public:
