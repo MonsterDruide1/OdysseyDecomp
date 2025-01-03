@@ -16,8 +16,8 @@ public:
     void exeWait();
 
 private:
-    s32 _20 = 0;
-    sead::Vector3f _24 = {0.0f, 0.0f, 0.0f};
+    s32 mNerveTime = 0;
+    sead::Vector3f mStartTrans = {0.0f, 0.0f, 0.0f};
     const FlyerStateWanderParam* mFlyerStateWanderParam;
 };
 
