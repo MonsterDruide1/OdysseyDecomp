@@ -3,12 +3,8 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-// TODO: Move this in correct header.
-struct ActorParamMove {
-public:
-    f32 ukn[4];
-};
-}  // namespace al
+struct ActorParamMove;
+}
 
 class FlyerStateWanderParam {
 public:
@@ -17,9 +13,9 @@ public:
 
     s32 get_0() const { return _0; }
 
-    s32 get_4() const { return _4; }
+    s32 getWanderTime() const { return mWanderTime; }
 
-    s32 get_8() const { return _8; }
+    s32 getWaitTime() const { return mWaitTime; }
 
     const char* getActionName() const { return mActionName.cstr(); }
 
@@ -27,8 +23,8 @@ public:
 
 private:
     s32 _0;
-    s32 _4;
-    s32 _8;
+    s32 mWanderTime;
+    s32 mWaitTime;
     sead::FixedSafeString<32> mActionName;
     al::ActorParamMove* mActorParamMove;
 };
