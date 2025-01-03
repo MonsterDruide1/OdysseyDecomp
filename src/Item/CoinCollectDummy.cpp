@@ -14,10 +14,7 @@
 namespace {
 NERVE_IMPL(CoinCollectDummy, Hint);
 
-struct {
-    NERVE_MAKE(CoinCollectDummy, Hint);
-} NrvCoinCollectDummy;
-
+NERVES_MAKE_STRUCT(CoinCollectDummy, Hint);
 }  // namespace
 
 CoinCollectDummy::CoinCollectDummy(const char* name) : al::LiveActor(name) {}

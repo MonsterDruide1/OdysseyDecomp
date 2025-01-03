@@ -8,8 +8,7 @@ class LiveActor;
 
 class CoinCollectHintState : public al::ActorStateBase {
 public:
-    CoinCollectHintState(al::LiveActor*);
-    ~CoinCollectHintState();
+    CoinCollectHintState(al::LiveActor* actor);
 
     void init() override;
     void appear() override;
