@@ -1,6 +1,6 @@
 #pragma once
-#include "Library/Layout/LayoutInitInfo.h"
 
+#include "Library/Layout/LayoutInitInfo.h"
 
 class DecideIconLayout {
     public:

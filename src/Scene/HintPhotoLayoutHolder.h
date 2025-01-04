@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Library/Layout/LayoutActor.h"
 #include "Library/Layout/LayoutInitInfo.h"
 #include "Library/Scene/ISceneObj.h"
@@ -14,5 +15,5 @@ class HintPhotoLayoutHolder : public al::ISceneObj {
     DecideIconLayout* getDecideIcon() const;
     private:
     al::LayoutActor* mLayoutActor;
-    DecideIconLayout* decideIconLayout;
+    DecideIconLayout* mDecideIconLayout;
 };
