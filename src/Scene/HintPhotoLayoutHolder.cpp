@@ -1,30 +1,46 @@
 #include "HintPhotoLayoutHolder.h"
-
+#include "Library/Layout/LayoutActor.h"
+#include "Layout/DecideIconLayout.h"
 #include "heap/seadHeapMgr.h"
 
+HintPhotoLayoutHolder::HintPhotoLayoutHolder() {
+    this->layoutActor = nullptr;
+    this->decideIconLayout = nullptr;
+}
+
 bool HintPhotoLayoutHolder::isInit() const {
-    return *(long*)(this + 8) != 0;
-
+    return this->layoutActor != (al::LayoutActor*)nullptr;
 }
 
-long HintPhotoLayoutHolder::getPhotoLayout() const {
-    return *(long*)(this + 8);
+const al::LayoutActor* HintPhotoLayoutHolder::getPhotoLayout() const {
+    return this->layoutActor;
 }
 
-long HintPhotoLayoutHolder::getDecideIcon() const {
-    return *(long*)(this + 0x10);
-
+DecideIconLayout* HintPhotoLayoutHolder::getDecideIcon() const {
+    return this->decideIconLayout;
 }
-HintPhotoLayoutHolder::~HintPhotoLayoutHolder() {
-    long *Var;
 
-    if (sead::HeapMgr::sInstancePtr == static_cast<sead::HeapMgr*>(nullptr)) {
-        free (this);
-        return;
+void HintPhotoLayoutHolder::init(const al::LayoutInitInfo& info) {
+    if (this->layoutActor == nullptr) {
+        auto* layoutActor = new al::LayoutActor("ヒント写真");
+        this->layoutActor = layoutActor;
+        al::initLayoutActor(layoutActor, info, "HintPhoto",nullptr);
+        auto* mDecideIconLayout = new DecideIconLayout("決定アイコン", &info);
+        this->decideIconLayout = mDecideIconLayout;
     }
-
-    //if (this != )
-
 }
 
 
+
+
+
+
+/*
+mDecideIconLayout = (DecideIconLayout*)operator new(0x150);
+DecideIconLayout::DecideIconLayout("決定アイコン", &info);
+*/
+
+/*
+layoutActor = (al::LayoutActor*)operator new(0x130);
+al::LayoutActor::LayoutActor("ヒント写真");
+*/
