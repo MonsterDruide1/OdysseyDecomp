@@ -4,29 +4,29 @@
 #include "heap/seadHeapMgr.h"
 
 HintPhotoLayoutHolder::HintPhotoLayoutHolder() {
-    this->layoutActor = nullptr;
+    this->mLayoutActor = nullptr;
     this->decideIconLayout = nullptr;
 }
 
 bool HintPhotoLayoutHolder::isInit() const {
-    return this->layoutActor != (al::LayoutActor*)nullptr;
+    return this->mLayoutActor != nullptr;
 }
 
 const al::LayoutActor* HintPhotoLayoutHolder::getPhotoLayout() const {
-    return this->layoutActor;
+    return this->mLayoutActor;
 }
 
 DecideIconLayout* HintPhotoLayoutHolder::getDecideIcon() const {
-    return this->decideIconLayout;
+    return decideIconLayout;
 }
 
 void HintPhotoLayoutHolder::init(const al::LayoutInitInfo& info) {
-    if (this->layoutActor == nullptr) {
+    if (this->mLayoutActor == nullptr) {
         auto* layoutActor = new al::LayoutActor("ヒント写真");
-        this->layoutActor = layoutActor;
+        this->mLayoutActor = layoutActor;
         al::initLayoutActor(layoutActor, info, "HintPhoto",nullptr);
-        auto* mDecideIconLayout = new DecideIconLayout("決定アイコン", &info);
-        this->decideIconLayout = mDecideIconLayout;
+        auto* decideIconLayout = new DecideIconLayout("決定アイコン", &info);
+        this->decideIconLayout = decideIconLayout;
     }
 }
 
