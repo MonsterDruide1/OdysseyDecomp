@@ -24,11 +24,7 @@ namespace {
 NERVE_IMPL(CoinCollectEmpty2D, Wait);
 NERVE_IMPL(CoinCollectEmpty2D, Got);
 
-struct {
-    NERVE_MAKE(CoinCollectEmpty2D, Wait);
-    NERVE_MAKE(CoinCollectEmpty2D, Got);
-} NrvCoinCollectEmpty2D;
-
+NERVES_MAKE_STRUCT(CoinCollectEmpty2D, Wait, Got);
 }  // namespace
 
 CoinCollectEmpty2D::CoinCollectEmpty2D(const char* name, const char* archiveName)
@@ -70,7 +66,9 @@ bool CoinCollectEmpty2D::receiveMsg(const al::SensorMsg* message, al::HitSensor*
         al::setNerve(this, &NrvCoinCollectEmpty2D.Got);
         return true;
     }
-    return al::isMsgPlayerDisregard(message);
+    if (al::isMsgPlayerDisregard(message))
+        return true;
+    return false;
 }
 
 void CoinCollectEmpty2D::endClipped() {
@@ -83,10 +81,8 @@ ActorDimensionKeeper* CoinCollectEmpty2D::getActorDimensionKeeper() const {
 }
 
 void CoinCollectEmpty2D::exeWait() {
-    if (mMtxConnector == nullptr)
-        return;
-
-    al::connectPoseQT(this, mMtxConnector);
+    if (mMtxConnector != nullptr)
+        al::connectPoseQT(this, mMtxConnector);
 }
 
 void CoinCollectEmpty2D::exeGot() {
