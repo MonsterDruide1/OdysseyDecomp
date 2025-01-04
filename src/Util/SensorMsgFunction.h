@@ -9,6 +9,7 @@ class SensorMsg;
 
 namespace rs {
 
+bool isMsgItemGet2D(const al::SensorMsg* msg);
 bool isMsgPlayerDisregardTargetMarker(const al::SensorMsg* msg);
 
 void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*,
