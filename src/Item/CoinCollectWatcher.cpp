@@ -31,13 +31,12 @@ void CoinCollectWatcher::registerCoin(bool isCountUpCoin) {
 
 void CoinCollectWatcher::countup(const al::LiveActor* actor) {
     mCoinUpCount++;
-    GameDataHolderAccessor gameData(actor);
-    s32 coinNumber = GameDataFunction::getCoinCollectGotNum(gameData);
-    GameDataHolderAccessor gameData2(actor);
-    s32 counNumberMax = GameDataFunction::getCoinCollectNumMax(gameData2);
+    const s32 coinNumber = GameDataFunction::getCoinCollectGotNum(GameDataHolderAccessor(actor));
+    const s32 countNumberMax =
+        GameDataFunction::getCoinCollectNumMax(GameDataHolderAccessor(actor));
 
-    mCoinCollectLayout->appearCounter(counNumberMax, coinNumber + 1, al::getPlayerActor(actor, 0));
-    if (counNumberMax == coinNumber + 1)
+    mCoinCollectLayout->appearCounter(countNumberMax, coinNumber + 1, al::getPlayerActor(actor, 0));
+    if (countNumberMax == coinNumber + 1)
         al::startSe(mCoinCollectLayout, "CountMax");
 }
 
