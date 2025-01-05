@@ -15,7 +15,7 @@ class CoinCollectLayout;
 class CoinCollectWatcher : public al::ISceneObj {
 public:
     CoinCollectWatcher();
-    virtual ~CoinCollectWatcher();
+    ~CoinCollectWatcher() override;
 
     const char* getSceneObjName() const override;
     void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
