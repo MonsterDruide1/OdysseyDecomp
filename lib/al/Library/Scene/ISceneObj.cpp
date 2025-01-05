@@ -2,8 +2,6 @@
 
 namespace al {
 
-ISceneObj::~ISceneObj() {}
-
 const char* ISceneObj::getSceneObjName() const {
     return "";
 }
