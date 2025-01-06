@@ -5,14 +5,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Use response files when linking objects because of the large number of source files
 set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_OBJECTS ON)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  add_compile_options(-fdiagnostics-color=always)
+    add_compile_options(-fdiagnostics-color=always)
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  add_compile_options(-fcolor-diagnostics)
-  # Required to silence "unused argument" warnings for -stdlib=libc++ when using distcc
-  add_compile_options(-Wno-unused-command-line-argument)
-  # Required to fix source paths in debug info when using distcc
-  add_compile_options(-fdebug-prefix-map=/tmp=${CMAKE_CURRENT_BINARY_DIR})
-endif()
+    add_compile_options(-fcolor-diagnostics)
+    # Required to silence "unused argument" warnings for -stdlib=libc++ when using distcc
+    add_compile_options(-Wno-unused-command-line-argument)
+    # Required to fix source paths in debug info when using distcc
+    add_compile_options(-fdebug-prefix-map=/tmp=${CMAKE_CURRENT_BINARY_DIR})
+endif ()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,8 +30,8 @@ file(WRITE ${SOURCES_OUTPUT_FILE} "")
 get_target_property(SOURCES_COMBINED odyssey SOURCES)
 
 foreach (SOURCE ${SOURCES_COMBINED})
-  file(APPEND ${SOURCES_OUTPUT_FILE} "${SOURCE}\n")
-endforeach()
+    file(APPEND ${SOURCES_OUTPUT_FILE} "${SOURCE}\n")
+endforeach ()
 
 target_include_directories(odyssey PRIVATE src)
 target_include_directories(odyssey PRIVATE lib/al)
@@ -42,14 +42,9 @@ target_compile_options(odyssey PRIVATE -Wno-unused-parameter -Wno-unused-private
 target_compile_options(odyssey PRIVATE -fno-strict-aliasing)
 target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 
-set(NN_SDK_MAJOR 3)
-set(NN_SDK_MINOR 5)
-set(NN_SDK_PATCH 1)
+set(NN_WARE "3.5.1")
+set(NN_SDK "3.5.1")
 set(NN_SDK_TYPE "Release")
-
-set(NN_WARE_MAJOR 3)
-set(NN_WARE_MINOR 5)
-set(NN_WARE_PATCH 1)
 
 include_directories(lib)
 include_directories(lib/aarch64)
