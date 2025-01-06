@@ -16,10 +16,6 @@ NERVE_IMPL(FlyerStateWander, Wait)
 NERVES_MAKE_NOSTRUCT(FlyerStateWander, Wander, Wait)
 }  // namespace
 
-inline s32 calcNerveTime(s32 a, s32 b) {
-    return a + al::getRandom(3) * b;
-}
-
 FlyerStateWander::FlyerStateWander(al::LiveActor* actor, const FlyerStateWanderParam* param)
     : al::ActorStateBase("飛行型うろつき状態", actor), mFlyerStateWanderParam(param) {
     initNerve(&Wander, 0);
@@ -34,11 +30,11 @@ void FlyerStateWander::exeWander() {
     if (al::isFirstStep(this)) {
         mStartTrans.set(al::getTrans(mActor));
         al::startAction(mActor, mFlyerStateWanderParam->getActionName());
-        mNerveTime =
-            calcNerveTime(mFlyerStateWanderParam->getWanderTime(), mFlyerStateWanderParam->get_0());
+        mNerveTime = mFlyerStateWanderParam->getWanderTime() +
+                     mFlyerStateWanderParam->get_0() * al::getRandom(3);
     }
 
-    al::ActorParamMove* actorParamMove = mFlyerStateWanderParam->getActorParamMove();
+    const al::ActorParamMove* actorParamMove = mFlyerStateWanderParam->getActorParamMove();
     al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->_0, actorParamMove->_4,
                            actorParamMove->_8, actorParamMove->_c);
 
@@ -48,8 +44,8 @@ void FlyerStateWander::exeWander() {
 
 void FlyerStateWander::exeWait() {
     if (al::isFirstStep(this)) {
-        mNerveTime =
-            calcNerveTime(mFlyerStateWanderParam->getWaitTime(), mFlyerStateWanderParam->get_0());
+        mNerveTime = mFlyerStateWanderParam->getWaitTime() +
+                     mFlyerStateWanderParam->get_0() * al::getRandom(3);
     }
 
     al::setVelocityZero(mActor);

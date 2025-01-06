@@ -8,7 +8,7 @@ struct ActorParamMove;
 
 class FlyerStateWanderParam {
 public:
-    FlyerStateWanderParam(s32, s32, s32, const char* actionName,
+    FlyerStateWanderParam(s32, s32 wanderTime, s32 waitTime, const char* actionName,
                           const al::ActorParamMove* actorParamMove);
 
     s32 get_0() const { return _0; }
@@ -19,14 +19,14 @@ public:
 
     const char* getActionName() const { return mActionName.cstr(); }
 
-    al::ActorParamMove* getActorParamMove() const { return mActorParamMove; }
+    const al::ActorParamMove* getActorParamMove() const { return mActorParamMove; }
 
 private:
     s32 _0;
     s32 mWanderTime;
     s32 mWaitTime;
     sead::FixedSafeString<32> mActionName;
-    al::ActorParamMove* mActorParamMove;
+    const al::ActorParamMove* mActorParamMove;
 };
 
 static_assert(sizeof(FlyerStateWanderParam) == 0x50);
