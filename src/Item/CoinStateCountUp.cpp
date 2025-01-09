@@ -27,7 +27,7 @@ void CoinStateCountUp::appear() {
 }
 
 void CoinStateCountUp::exeCountUp() {
-    al::LiveActor* actor = getActor();
+    al::LiveActor* actor = mActor;
     if (al::isFirstStep(this)) {
         mTransY = al::getTrans(actor).y;
         al::setVelocity(actor, sead::Vector3f::ey * 65.0f);
