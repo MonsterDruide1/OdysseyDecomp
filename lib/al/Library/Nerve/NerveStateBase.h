@@ -27,8 +27,6 @@ class ActorStateBase : public NerveStateBase {
 public:
     ActorStateBase(const char* stateName, LiveActor* actor);
 
-    LiveActor* getActor() const { return mActor; }
-
 protected:
     LiveActor* mActor;
 };

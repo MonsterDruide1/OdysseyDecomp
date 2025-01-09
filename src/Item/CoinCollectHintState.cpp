@@ -25,24 +25,24 @@ void CoinCollectHintState::init() {
 void CoinCollectHintState::appear() {
     al::setNerve(this, &NrvCoinCollectHintState.Wait);
     setDead(false);
-    al::emitEffect(getActor(), "Emission", nullptr);
+    al::emitEffect(mActor, "Emission", nullptr);
 }
 
 void CoinCollectHintState::kill() {
-    al::deleteEffect(getActor(), "Emission");
+    al::deleteEffect(mActor, "Emission");
     setDead(true);
 }
 
 void CoinCollectHintState::deleteHintEffect() {
-    al::tryKillEmitterAndParticleAll(getActor());
+    al::tryKillEmitterAndParticleAll(mActor);
 }
 
 void CoinCollectHintState::appearHintEffect() {
-    al::emitEffect(getActor(), "Emission", nullptr);
+    al::emitEffect(mActor, "Emission", nullptr);
 }
 
 void CoinCollectHintState::exeWait() {
-    al::LiveActor* actor = getActor();
+    al::LiveActor* actor = mActor;
     const sead::Vector3f objectPos = al::getCameraPos(actor, 0) - al::getTrans(actor);
     const f32 length = objectPos.length();
     if (length > 3500.0f) {
