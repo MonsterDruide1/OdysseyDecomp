@@ -6,7 +6,7 @@ import re
 from common import setup_common as setup
 
 MIN_TEXT_SIZE = 0x2
-MAX_TEXT_SIZE = 0x100
+MAX_TEXT_SIZE = 0x400
 CHUNK_SIZE = 0x200 # Read file chunk size
 
 NSO_OFFSET = 0x7100000000
@@ -28,6 +28,7 @@ def parse_string(buffer, offset, csv_file):
         text = text.replace("\n", "\\n")
         text = text.replace("\r", "\\r")
         text = text.replace("\t", "\\t")
+        text = text.replace("\"", "\\\"")
 
         # Write to csv file
         csv_file.write(hex(nso_addr))
