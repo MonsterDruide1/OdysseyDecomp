@@ -12,20 +12,20 @@ class SensorMsg;
 
 class Doshi;
 
-class DoshiStateWanderBossBattle : public al::NerveStateBase {
+class DoshiStateWanderBossBattle : public al::HostStateBase<Doshi> {
 public:
     DoshiStateWanderBossBattle(Doshi* doshi);
 
     void appear() override;
 
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
+    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self);
     void setting(const sead::Vector3f& position, const sead::Vector3f& front);
 
     void exeWait();
     void exeReaction();
 
 private:
-    Doshi* mDoshi = nullptr;
     sead::Vector3f mPosition = sead::Vector3f::zero;
     sead::Vector3f mFront = sead::Vector3f::ez;
 };
