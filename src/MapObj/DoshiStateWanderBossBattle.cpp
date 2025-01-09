@@ -17,7 +17,7 @@ NERVES_MAKE_STRUCT(DoshiStateWanderBossBattle, Wait, Reaction);
 }  // namespace
 
 DoshiStateWanderBossBattle::DoshiStateWanderBossBattle(Doshi* doshi)
-    : NerveStateBase("着替えデモステート"), mDoshi(doshi) {
+    : al::HostStateBase<Doshi>("着替えデモステート", doshi) {
     initNerve(&NrvDoshiStateWanderBossBattle.Wait, 0);
 }
 
@@ -39,10 +39,10 @@ void DoshiStateWanderBossBattle::setting(const sead::Vector3f& position,
 
 void DoshiStateWanderBossBattle::exeWait() {
     if (al::isFirstStep(this)) {
-        al::resetPosition(mDoshi, mPosition);
-        al::setFront(mDoshi, mFront);
-        al::tryStartActionIfNotPlaying(mDoshi, "Wait");
-        al::validateClipping(mDoshi);
+        al::resetPosition(getHost(), mPosition);
+        al::setFront(getHost(), mFront);
+        al::tryStartActionIfNotPlaying(getHost(), "Wait");
+        al::validateClipping(getHost());
     }
 }
 
