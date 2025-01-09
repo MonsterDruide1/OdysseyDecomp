@@ -10,8 +10,6 @@
 
 CoinCollectWatcher::CoinCollectWatcher() : al::ISceneObj() {}
 
-CoinCollectWatcher::~CoinCollectWatcher() = default;
-
 const char* CoinCollectWatcher::getSceneObjName() const {
     return "コインコレクト監視者";
 }
