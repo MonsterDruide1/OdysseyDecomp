@@ -10,7 +10,7 @@
 void processSubActors(al::LiveActor* actor) {
     al::invalidateOcclusionQuery(actor);
     if (al::isExistSubActorKeeper(actor))
-        for (int i = 0; i < al::getSubActorNum(actor); i++)
+        for (s32 i = 0; i < al::getSubActorNum(actor); i++)
             processSubActors(al::getSubActor(actor, i));
 }
 
