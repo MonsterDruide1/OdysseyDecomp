@@ -42,8 +42,8 @@ target_compile_options(odyssey PRIVATE -Wno-unused-parameter -Wno-unused-private
 target_compile_options(odyssey PRIVATE -fno-strict-aliasing)
 target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 
-set(NN_WARE "3.5.1")
-set(NN_SDK "3.5.1")
+set(NN_WARE 3.5.1)
+set(NN_SDK 3.5.1)
 set(NN_SDK_TYPE "Release")
 
 include_directories(lib)
