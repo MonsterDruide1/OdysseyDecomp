@@ -10,5 +10,6 @@ namespace rs {
 
 const sead::Vector3f& getPlayerPos(const al::LiveActor*);
 bool isPlayerHack(const al::LiveActor*);
+bool isPlayerHackTRex(const al::LiveActor*);
 
 }  // namespace rs
