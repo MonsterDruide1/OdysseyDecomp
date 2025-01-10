@@ -25,7 +25,7 @@ void CoinCollectHintState::init() {
 void CoinCollectHintState::appear() {
     al::setNerve(this, &NrvCoinCollectHintState.Wait);
     setDead(false);
-    al::emitEffect(mActor, "Emission", nullptr);
+    appearHintEffect();
 }
 
 void CoinCollectHintState::kill() {
@@ -43,13 +43,10 @@ void CoinCollectHintState::appearHintEffect() {
 
 void CoinCollectHintState::exeWait() {
     al::LiveActor* actor = mActor;
-    const sead::Vector3f objectPos = al::getCameraPos(actor, 0) - al::getTrans(actor);
-    const f32 length = objectPos.length();
-    if (length > 3500.0f) {
-        sead::Vector3f effectScale;
-        effectScale.x = length / 3500.0f;
-        effectScale.y = effectScale.x;
-        effectScale.z = effectScale.x;
-        al::setEffectAllScale(actor, "Emission", effectScale);
+    const sead::Vector3f cameraDiff = al::getCameraPos(actor, 0) - al::getTrans(actor);
+    const f32 distanceToCamera = cameraDiff.length();
+    if (distanceToCamera > 3500.0f) {
+        const f32 scale = distanceToCamera / 3500.0f;
+        al::setEffectAllScale(actor, "Emission", sead::Vector3f{scale, scale, scale});
     }
 }
