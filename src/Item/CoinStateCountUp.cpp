@@ -13,17 +13,17 @@ namespace {
 NERVE_IMPL(CoinStateCountUp, CountUp);
 NERVE_IMPL(CoinStateCountUp, Got);
 
-NERVES_MAKE_STRUCT(CoinStateCountUp, CountUp, Got);
+NERVES_MAKE_NOSTRUCT(CoinStateCountUp, CountUp, Got);
 }  // namespace
 
 CoinStateCountUp::CoinStateCountUp(al::LiveActor* actor)
     : ActorStateBase("カウントアップ状態", actor) {
-    initNerve(&NrvCoinStateCountUp.CountUp, 0);
+    initNerve(&CountUp, 0);
 }
 
 void CoinStateCountUp::appear() {
     setDead(false);
-    al::setNerve(this, &NrvCoinStateCountUp.CountUp);
+    al::setNerve(this, &CountUp);
 }
 
 void CoinStateCountUp::exeCountUp() {
@@ -39,7 +39,7 @@ void CoinStateCountUp::exeCountUp() {
 
     if (mTransY > al::getTrans(actor).y - 300.0f && al::getVelocity(actor).y < 0.0f) {
         al::startHitReaction(actor, "釣り取得");
-        al::setNerve(this, &NrvCoinStateCountUp.CountUp);
+        al::setNerve(this, &Got);
     }
 }
 
