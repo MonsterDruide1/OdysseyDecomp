@@ -18,8 +18,8 @@ bool isMsgItemGet2D(const al::SensorMsg* msg);
 bool isMsgItemGetAll(const al::SensorMsg* msg);
 bool isMsgPlayerDisregardTargetMarker(const al::SensorMsg* msg);
 
-void tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg* msg);
-void tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg* msg);
+bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg* msg);
+bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg* msg);
 
 void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*,
                                   const sead::Vector3f&);

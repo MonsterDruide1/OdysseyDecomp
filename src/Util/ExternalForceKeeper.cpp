@@ -10,13 +10,13 @@ bool ExternalForceKeeper::receiveMsg(const al::SensorMsg* message, al::HitSensor
         sead::Vector3f force = sead::Vector3f::zero;
         rs::tryGetByugoBlowForce(&force, message);
 
-        mMinForce.x = mMinForce.x < force.x ? mMinForce.x : force.x;
-        mMinForce.y = mMinForce.y < force.y ? mMinForce.y : force.y;
-        mMinForce.z = mMinForce.z < force.z ? mMinForce.z : force.z;
+        mMinForce.x = sead::Mathf::min(mMinForce.x, force.x);
+        mMinForce.y = sead::Mathf::min(mMinForce.y, force.y);
+        mMinForce.z = sead::Mathf::min(mMinForce.z, force.z);
 
-        mMaxForce.x = mMaxForce.x > force.x ? mMaxForce.x : force.x;
-        mMaxForce.y = mMaxForce.y > force.y ? mMaxForce.y : force.y;
-        mMaxForce.z = mMaxForce.z > force.z ? mMaxForce.z : force.z;
+        mMaxForce.x = sead::Mathf::max(mMaxForce.x, force.x);
+        mMaxForce.y = sead::Mathf::max(mMaxForce.y, force.y);
+        mMaxForce.z = sead::Mathf::max(mMaxForce.z, force.z);
 
         return true;
     }
@@ -25,13 +25,13 @@ bool ExternalForceKeeper::receiveMsg(const al::SensorMsg* message, al::HitSensor
         sead::Vector3f force = sead::Vector3f::zero;
         rs::tryGetAirExplosionForce(&force, message);
 
-        mMinForce.x = mMinForce.x < force.x ? mMinForce.x : force.x;
-        mMinForce.y = mMinForce.y < force.y ? mMinForce.y : force.y;
-        mMinForce.z = mMinForce.z < force.z ? mMinForce.z : force.z;
+        mMinForce.x = sead::Mathf::min(mMinForce.x, force.x);
+        mMinForce.y = sead::Mathf::min(mMinForce.y, force.y);
+        mMinForce.z = sead::Mathf::min(mMinForce.z, force.z);
 
-        mMaxForce.x = mMaxForce.x > force.x ? mMaxForce.x : force.x;
-        mMaxForce.y = mMaxForce.y > force.y ? mMaxForce.y : force.y;
-        mMaxForce.z = mMaxForce.z > force.z ? mMaxForce.z : force.z;
+        mMaxForce.x = sead::Mathf::max(mMaxForce.x, force.x);
+        mMaxForce.y = sead::Mathf::max(mMaxForce.y, force.y);
+        mMaxForce.z = sead::Mathf::max(mMaxForce.z, force.z);
 
         return true;
     }
