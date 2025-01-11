@@ -31,6 +31,7 @@ bool isMsgHackMarioDead(const al::SensorMsg*);
 bool isMsgHackMarioDemo(const al::SensorMsg*);
 bool isMsgHackMarioInWater(const al::SensorMsg*);
 bool isMsgHackMarioCheckpointFlagWarp(const al::SensorMsg*);
+bool isMsgItemGetAll(const al::SensorMsg*);
 
 bool isMsgCapAttack(const al::SensorMsg*);
 bool isMsgStartHack(const al::SensorMsg*);
