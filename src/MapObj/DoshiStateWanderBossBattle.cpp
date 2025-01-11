@@ -46,6 +46,4 @@ void DoshiStateWanderBossBattle::exeWait() {
     }
 }
 
-void DoshiStateWanderBossBattle::exeReaction() {
-    return;
-}
+void DoshiStateWanderBossBattle::exeReaction() {}

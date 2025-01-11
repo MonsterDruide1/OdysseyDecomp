@@ -8,6 +8,7 @@
 namespace al {
 class ActorInitInfo;
 class BgmPlayObj;
+class CameraTicket;
 class EventFlowExecutor;
 class HitSensor;
 class JointLookAtController;
@@ -18,6 +19,7 @@ class Nerve;
 
 class DoshiStateWanderBossBattle;
 class ShoppingWatcher;
+class TalkNpcCap;
 
 class Doshi : public al::LiveActor {
 public:
@@ -32,7 +34,7 @@ public:
     void onBattleStart();
     void doReaction(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     void requestUpdateAction(f32, f32);
-    void isInWater() const;
+    bool isInWater() const;
     void requestStartCamera();
     void requestEndCamera();
 
@@ -46,14 +48,17 @@ private:
     al::BgmPlayObj* mBgmPlayObj = nullptr;
     al::JointLookAtController* mJointLookAtController = nullptr;
     al::EventFlowExecutor* mEventFlowExecutor = nullptr;
-    al::Nerve* mNerve = nullptr;
+    al::Nerve* mActiveNerve = nullptr;
     DoshiStateWanderBossBattle* mWanderBossBattle = nullptr;
-    sead::Vector3f mOffset = sead::Vector3f::zero;
-    sead::Vector3f mClipping = sead::Vector3f(4500.0f, 2500.0f, 0.0f);
-    al::LiveActor* mShoppingNpc = nullptr;
-    f32 mActionA = -1;
-    f32 mActionB = -1;
-    al::JointRippleGenerator* mJointRippleGeneratorA = nullptr;
-    al::JointRippleGenerator* mJointRippleGeneratorB = nullptr;
-    al::JointRippleGenerator* mJointRippleGeneratorC = nullptr;
+    sead::Vector3f mTrans = sead::Vector3f::zero;
+    f32 mClippingRadius = 4500.0f;
+    f32 mLocalOffsetY = 2500.0f;
+    s32 mRemainingCoins = 5;
+    al::CameraTicket* mCamera = nullptr;
+    TalkNpcCap* mTalkNpcCap = nullptr;
+    f32 mActionWaitFrame = -1;
+    f32 mActionMoveFrame = -1;
+    al::JointRippleGenerator* mJointRippleGeneratorNeck = nullptr;
+    al::JointRippleGenerator* mJointRippleGeneratorSpine = nullptr;
+    al::JointRippleGenerator* mJointRippleGeneratorTail = nullptr;
 };
