@@ -43,10 +43,10 @@ void CoinCollectHintState::appearHintEffect() {
 
 void CoinCollectHintState::exeWait() {
     al::LiveActor* actor = mActor;
-    const sead::Vector3f cameraDiff = al::getCameraPos(actor, 0) - al::getTrans(actor);
-    const f32 distanceToCamera = cameraDiff.length();
+    sead::Vector3f cameraDiff = al::getCameraPos(actor, 0) - al::getTrans(actor);
+    f32 distanceToCamera = cameraDiff.length();
     if (distanceToCamera > 3500.0f) {
-        const f32 scale = distanceToCamera / 3500.0f;
+        f32 scale = distanceToCamera / 3500.0f;
         al::setEffectAllScale(actor, "Emission", sead::Vector3f{scale, scale, scale});
     }
 }
