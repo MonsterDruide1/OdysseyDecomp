@@ -2,11 +2,10 @@
 
 #include <math/seadVector.h>
 
-#include "Library/Collision/KCollisionServer.h"
-
 namespace al {
 class LiveActor;
 class CollisionParts;
+class CollisionPartsFilterBase;
 }  // namespace al
 class IUsePlayerCollision;
 class IUsePlayerHeightCheck;

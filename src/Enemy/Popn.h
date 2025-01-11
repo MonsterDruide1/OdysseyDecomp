@@ -9,13 +9,14 @@ class EnemyStateBlowDown;
 class Popn : public al::LiveActor {
 public:
     Popn(const char* actorName);
-    virtual void init(const al::ActorInitInfo& info) override;
-    virtual void attackSensor(al::HitSensor* target, al::HitSensor* source) override;
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                            al::HitSensor* target) override;
-    virtual void control() override;
+    void init(const al::ActorInitInfo& info) override;
+    void attackSensor(al::HitSensor* target, al::HitSensor* source) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
+                    al::HitSensor* target) override;
+    void control() override;
 
-    void appearByGenerater(const sead::Vector3f& pos, s32 a2, bool a3, bool a4);
+    void appearByGenerater(const sead::Vector3f& pos, s32 color, bool isAppear,
+                           bool isGenerateItem);
     void exeAppear();
     void exeWait();
     void exeWaitRove();
