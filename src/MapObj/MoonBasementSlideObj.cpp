@@ -52,11 +52,7 @@ bool MoonBasementSlideObj::receiveMsg(const al::SensorMsg* message, al::HitSenso
     al::parallelizeVec(&alignedSideDir, sideDir, dir);
     al::parallelizeVec(&alignedFrontDir, frontDir, dir);
 
-    sead::Vector3f* temp = &alignedSideDir;
-    if (alignedSideDir.length() < alignedFrontDir.length())
-        temp = &alignedFrontDir;
-
-    dir.set(*temp);
+    dir.set(alignedSideDir.length() < alignedFrontDir.length() ? alignedFrontDir : alignedSideDir);
 
     al::tryNormalizeOrZero(&dir);
 
