@@ -10,7 +10,7 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "Util/PlayerUtil.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(ItemAmiiboKoopa, Wait);

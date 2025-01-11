@@ -8,7 +8,7 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "Util/ActorDimensionKeeper.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(FireDrum2D, Wait);

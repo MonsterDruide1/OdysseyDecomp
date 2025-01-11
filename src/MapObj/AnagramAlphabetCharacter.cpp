@@ -20,7 +20,7 @@
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
 #include "Util/JudgeUtil.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(AnagramAlphabetCharacter, Wait);

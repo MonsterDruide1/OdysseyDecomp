@@ -48,7 +48,7 @@ void scaleVelocityInertiaWallHit(LiveActor*, f32, f32, f32);
 const sead::Vector3f& getCollidedWallNormal(const LiveActor*);
 void calcCollidedNormalSum(const LiveActor*, sead::Vector3f*);
 void calcGroundNormalOrUpDir(sead::Vector3f*, const LiveActor*);
-void getCollidedGroundNormal(const LiveActor*);
+const sead::Vector3f& getCollidedGroundNormal(const LiveActor*);
 void calcGroundNormalOrGravityDir(sead::Vector3f*, const LiveActor*);
 void setColliderFilterTriangle(LiveActor*, const TriangleFilterBase*);
 void setColliderFilterCollisionParts(LiveActor*, const CollisionPartsFilterBase*);

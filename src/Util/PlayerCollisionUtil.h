@@ -2,6 +2,8 @@
 
 #include <math/seadVector.h>
 
+#include "Library/Collision/KCollisionServer.h"
+
 namespace al {
 class LiveActor;
 class CollisionParts;
@@ -46,5 +48,7 @@ bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilCeiling(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilGrround(const IUsePlayerCollision*);
+
+void setColliderFilterCollisionParts(IUsePlayerCollision*, const al::CollisionPartsFilterBase*);
 
 }  // namespace rs
