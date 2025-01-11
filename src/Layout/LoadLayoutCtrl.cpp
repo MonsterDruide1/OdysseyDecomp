@@ -11,7 +11,7 @@ NERVE_IMPL(LoadLayoutCtrl, EndLoad);
 NERVE_IMPL(LoadLayoutCtrl, WaitCount);
 NERVE_IMPL(LoadLayoutCtrl, WaitLoad);
 
-NERVE_MAKE(LoadLayoutCtrl, WaitLoad);
+NERVES_MAKE_NOSTRUCT(LoadLayoutCtrl, WaitLoad);
 NERVES_MAKE_STRUCT(LoadLayoutCtrl, EndLoad, WaitCount);
 }  // namespace
 
