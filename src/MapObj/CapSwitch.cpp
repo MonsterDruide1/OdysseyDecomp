@@ -29,7 +29,7 @@ NERVE_IMPL(CapSwitch, ReturnOff);
 NERVE_IMPL(CapSwitch, OffWaitCapHold);
 NERVE_IMPL(CapSwitch, HitReaction);
 
-NERVE_MAKE(CapSwitch, HitReaction);
+NERVES_MAKE_NOSTRUCT(CapSwitch, HitReaction);
 NERVES_MAKE_STRUCT(CapSwitch, OffWaitInvalid, OffWait, OnWait, ReturnOff, OffWaitCapHold);
 }  // namespace
 
@@ -72,7 +72,7 @@ void CapSwitch::listenStart() {
 }
 
 void CapSwitch::listenReset() {
-    if (al::isNerve(this, &NrvCapSwitch.OnWait))
+    if (isOn())
         al::setNerve(this, &NrvCapSwitch.ReturnOff);
 }
 
@@ -124,15 +124,15 @@ void CapSwitch::exeOffWaitCapHold() {
         mPlayerPos = rs::getPlayerPos(this);
     }
 
-    sead::Vector3f jointPos = sead::Vector3f::zero;
-    al::calcJointPos(&jointPos, this, "HatTarget");
+    sead::Vector3f hitTargetPos = sead::Vector3f::zero;
+    al::calcJointPos(&hitTargetPos, this, "HatTarget");
 
     sead::Vector3f frontDir = sead::Vector3f::ez;
     al::calcFrontDir(&frontDir, this);
 
-    f32 angle = al::isNearZero((jointPos - mPlayerPos).normalize(), 0.001f) ?
+    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize(), 0.001f) ?
                     0.0f :
-                    al::calcAngleDegree(frontDir, jointPos - mPlayerPos);
+                    al::calcAngleDegree(frontDir, hitTargetPos - mPlayerPos);
 
     sead::Vector3f dir =
         sead::Vector3f(0, al::isLeftTarget(this, mPlayerPos) ? -angle : angle, 270.0f);

@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
+namespace al {
+class ActorInitInfo;
+class LiveActor;
+}  // namespace al
 
 class AppearSwitchSave {
 public:
