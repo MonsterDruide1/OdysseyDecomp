@@ -6,6 +6,7 @@
 #include "Library/Se/SeFunction.h"
 
 #include "Layout/CoinCollectLayout.h"
+#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 
 CoinCollectWatcher::CoinCollectWatcher() : al::ISceneObj() {}
@@ -15,7 +16,7 @@ const char* CoinCollectWatcher::getSceneObjName() const {
 }
 
 void CoinCollectWatcher::initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) {
-    mCoinCollectLayout = new CoinCollectLayout(*al::getLayoutInitInfo(initInfo));
+    mCoinCollectLayout = new CoinCollectLayout(al::getLayoutInitInfo(initInfo));
 }
 
 void CoinCollectWatcher::registerCoin(bool isCountUpCoin) {
@@ -29,9 +30,8 @@ void CoinCollectWatcher::registerCoin(bool isCountUpCoin) {
 
 void CoinCollectWatcher::countup(const al::LiveActor* actor) {
     mCoinUpCount++;
-    const s32 coinNumber = GameDataFunction::getCoinCollectGotNum(GameDataHolderAccessor(actor));
-    const s32 countNumberMax =
-        GameDataFunction::getCoinCollectNumMax(GameDataHolderAccessor(actor));
+    s32 coinNumber = GameDataFunction::getCoinCollectGotNum(actor);
+    s32 countNumberMax = GameDataFunction::getCoinCollectNumMax(actor);
 
     mCoinCollectLayout->appearCounter(countNumberMax, coinNumber + 1, al::getPlayerActor(actor, 0));
     if (countNumberMax == coinNumber + 1)
@@ -40,6 +40,6 @@ void CoinCollectWatcher::countup(const al::LiveActor* actor) {
 
 namespace rs {
 CoinCollectWatcher* createCoinCollectWatcher(const al::IUseSceneObjHolder* objHolder) {
-    return (CoinCollectWatcher*)al::createSceneObj(objHolder, 8);
+    return (CoinCollectWatcher*)al::createSceneObj(objHolder, SceneObjID_CoinCollectWatcher);
 }
 }  // namespace rs
