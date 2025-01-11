@@ -13,7 +13,7 @@
 
 namespace {
 NERVE_IMPL(MofumofuScrap, Wait)
-NERVE_MAKE(MofumofuScrap, Wait);
+NERVE_MAKE(MofumofuScrap, Wait)
 NERVE_IMPL(MofumofuScrap, ReactionCap)
 NERVE_IMPL(MofumofuScrap, Reaction)
 
