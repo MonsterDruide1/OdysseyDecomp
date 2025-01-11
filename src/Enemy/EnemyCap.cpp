@@ -28,11 +28,7 @@ namespace {
 NERVE_IMPL(EnemyCap, Wait);
 NERVE_IMPL(EnemyCap, BlowDown);
 
-struct {
-    NERVE_MAKE(EnemyCap, Wait);
-    NERVE_MAKE(EnemyCap, BlowDown);
-} NrvEnemyCap;
-
+NERVES_MAKE_STRUCT(EnemyCap, Wait, BlowDown);
 }  // namespace
 
 EnemyCap* EnemyCap::createEnemyCap(const char* name) {

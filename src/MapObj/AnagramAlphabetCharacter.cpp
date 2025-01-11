@@ -35,7 +35,7 @@ NERVE_IMPL(AnagramAlphabetCharacter, HackFall);
 NERVE_IMPL(AnagramAlphabetCharacter, HackGoal);
 NERVE_IMPL(AnagramAlphabetCharacter, Set);
 
-NERVE_MAKE(AnagramAlphabetCharacter, HackStart);
+NERVES_MAKE_NOSTRUCT(AnagramAlphabetCharacter, HackStart);
 NERVES_MAKE_STRUCT(AnagramAlphabetCharacter, Wait, WaitHack, HackEnd, WaitHackStart, Complete,
                    HackWait, HackMove, HackFall, HackGoal, Set);
 }  // namespace
