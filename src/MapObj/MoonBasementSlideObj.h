@@ -14,5 +14,5 @@ public:
     void exeSlide();
 
 private:
-    s32 field_108 = 0;
+    s32 mPunchHits = 0;
 };

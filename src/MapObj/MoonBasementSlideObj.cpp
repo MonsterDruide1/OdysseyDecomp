@@ -31,36 +31,36 @@ void MoonBasementSlideObj::init(const al::ActorInitInfo& info) {
 
 bool MoonBasementSlideObj::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                       al::HitSensor* self) {
-    if (!rs::isMsgKoopaHackPunchCollide(message))
-        return false;
+    if (rs::isMsgKoopaHackPunchCollide(message)) {
+        mPunchHits++;
 
-    field_108++;
+        sead::Vector3f sideDir = sead::Vector3f(0, 0, 0);
+        sead::Vector3f frontDir = sead::Vector3f(0, 0, 0);
 
-    sead::Vector3f sideDir = sead::Vector3f(0, 0, 0);
-    sead::Vector3f frontDir = sead::Vector3f(0, 0, 0);
+        al::calcSideDir(&sideDir, this);
+        al::calcFrontDir(&frontDir, this);
 
-    al::calcSideDir(&sideDir, this);
-    al::calcFrontDir(&frontDir, this);
+        sead::Vector3f dir = sead::Vector3f(0, 0, 0);
 
-    sead::Vector3f dir = sead::Vector3f(0, 0, 0);
+        al::calcDirBetweenSensorsH(&dir, other, self);
 
-    al::calcDirBetweenSensorsH(&dir, other, self);
+        sead::Vector3f sideComponent = sead::Vector3f(0, 0, 0);
+        sead::Vector3f frontComponent = sead::Vector3f(0, 0, 0);
 
-    sead::Vector3f alignedSideDir = sead::Vector3f(0, 0, 0);
-    sead::Vector3f alignedFrontDir = sead::Vector3f(0, 0, 0);
+        al::parallelizeVec(&sideComponent, sideDir, dir);
+        al::parallelizeVec(&frontComponent, frontDir, dir);
 
-    al::parallelizeVec(&alignedSideDir, sideDir, dir);
-    al::parallelizeVec(&alignedFrontDir, frontDir, dir);
+        dir.set(sideComponent.length() < frontComponent.length() ? frontComponent : sideComponent);
 
-    dir.set(alignedSideDir.length() < alignedFrontDir.length() ? alignedFrontDir : alignedSideDir);
+        al::tryNormalizeOrZero(&dir);
 
-    al::tryNormalizeOrZero(&dir);
+        al::addVelocity(this, dir * 45.0f);
+        al::startHitReaction(this, "命中");
+        al::setNerve(this, &Slide);
 
-    al::addVelocity(this, dir * 45.0f);
-    al::startHitReaction(this, "命中");
-    al::setNerve(this, &Slide);
-
-    return true;
+        return true;
+    }
+    return false;
 }
 
 void MoonBasementSlideObj::exeWait() {
