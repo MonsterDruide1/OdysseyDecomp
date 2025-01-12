@@ -7,11 +7,11 @@
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
 
-void processSubActors(al::LiveActor* actor) {
+void recursivelyInvalidateOcclusionQuery(al::LiveActor* actor) {
     al::invalidateOcclusionQuery(actor);
     if (al::isExistSubActorKeeper(actor))
         for (s32 i = 0; i < al::getSubActorNum(actor); i++)
-            processSubActors(al::getSubActor(actor, i));
+            recursivelyInvalidateOcclusionQuery(al::getSubActor(actor, i));
 }
 
 WorldMapParts::WorldMapParts(const char* name) : al::LiveActor(name) {}
@@ -51,7 +51,7 @@ void WorldMapParts::initParts(WorldMapParts* mapParts, const char* arcName,
     mapParts->updatePose();
 
     if (al::isExistModel(mapParts))
-        processSubActors(mapParts);
+        recursivelyInvalidateOcclusionQuery(mapParts);
 
     mapParts->makeActorDead();
 }
