@@ -19,6 +19,8 @@ public:
 
     const char* getId() const { return mId; }
 
+    const char* getUnitConfigName() const { return mUnitConfigName; }
+
 private:
     const char* mId;
     const char* mUnitConfigName;
