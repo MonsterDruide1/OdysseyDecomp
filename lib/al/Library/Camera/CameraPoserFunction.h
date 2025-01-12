@@ -25,7 +25,7 @@ f32 getNear(const al::CameraPoser*);
 f32 getFar(const al::CameraPoser*);
 f32 getAspect(const al::CameraPoser*);
 void getPreCameraPos(const al::CameraPoser*);
-sead::Vector3f& getPreLookAtPos(const al::CameraPoser*);
+const sead::Vector3f& getPreLookAtPos(const al::CameraPoser*);
 void getPreUpDir(const al::CameraPoser*);
 void getPreFovyDegree(const al::CameraPoser*);
 void getPreFovyRadian(const al::CameraPoser*);

@@ -118,7 +118,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
     makeActorAlive();
 }
 
-// NON-MATCHING: needs to have proper matrix math implemented still
+// NON_MATCHING: needs to have proper matrix math implemented still
 void PartsModel::updatePose() {
     sead::Matrix34f poseMtx;
     sead::Matrix34f jointMtx;

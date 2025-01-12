@@ -35,8 +35,8 @@ void EnemyStateRunAway::calcRunDirBase(sead::Vector3f* direction) {
     if (!mScaredOfActor) {
         *direction = sead::Vector3f::ez;
     } else {
-        auto& s = al::getTrans(mScaredOfActor);
-        auto& t = al::getTrans(mActor);
+        const auto& s = al::getTrans(mScaredOfActor);
+        const auto& t = al::getTrans(mActor);
         sead::Vector3f normalized;
         normalized.x = s.x - t.x;
         normalized.z = s.z - t.z;
