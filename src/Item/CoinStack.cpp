@@ -36,14 +36,13 @@ void CoinStack::init(const al::ActorInitInfo& initInfo) {
 
 bool CoinStack::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                            al::HitSensor* self) {
-    bool isItemGetAll = rs::isMsgItemGetAll(message);
+    if (rs::isMsgItemGetAll(message)) {
+        al::invalidateClipping(this);
+        al::setNerve(this, &Collected);
+        return true;
+    }
 
-    if (!isItemGetAll)
-        return isItemGetAll;
-
-    al::invalidateClipping(this);
-    al::setNerve(this, &Collected);
-    return isItemGetAll;
+    return false;
 }
 
 CoinStack* CoinStack::getBelow() {
@@ -106,17 +105,17 @@ void CoinStack::signalFall(u32 delay, f32 radius) {
         mStackAbove->signalFall(delay + 1, radius);
 
     if (!al::isNerve(this, &NrvCoinStack.Float) && !al::isNerve(this, &NrvCoinStack.Fall)) {
-        mStepCount = delay * 5;
+        mFloatDuration = delay * 5;
         al::setNerve(this, &NrvCoinStack.Float);
     }
 }
 
 void CoinStack::postInit(CoinStackGroup* coinStackGroup, const sead::Vector3f& transY,
-                         CoinStack* stack, const sead::Vector3f& clippingPos, f32 clippingRadius,
+                         CoinStack* below, const sead::Vector3f& clippingPos, f32 clippingRadius,
                          const f32* fallDistance) {
     mExternalFallDistance = fallDistance;
     mCoinStackGroup = coinStackGroup;
-    mStackBelow = stack;
+    mStackBelow = below;
     mClippingPos = clippingPos;
     mClippingRadius = clippingRadius;
     al::setClippingInfo(this, clippingRadius, &mClippingPos);
@@ -133,7 +132,7 @@ void CoinStack::exeWait() {
 }
 
 void CoinStack::exeFloat() {
-    if (al::isLessStep(this, mStepCount))
+    if (al::isLessStep(this, mFloatDuration))
         return;
 
     al::setNerve(this, &NrvCoinStack.Fall);
@@ -166,19 +165,20 @@ void CoinStack::exeLand() {
             mCoinStackGroup->validateClipping();
 
         al::setClippingInfo(this, mClippingRadius, &mClippingPos);
-        al::Nerve* nerve = &NrvCoinStack.Wait;
+
+        al::Nerve* nerve;
         if (mTransY > mLandHeight)
             nerve = &NrvCoinStack.Fall;
+        else
+            nerve = &NrvCoinStack.Wait;
 
         al::setNerve(this, nerve);
-        return;
     }
 }
 
 void CoinStack::exeCollected() {
     al::startHitReaction(this, "取得");
-    GameDataHolderAccessor gameData(this);
-    GameDataFunction::addCoin(gameData, 5);
+    GameDataFunction::addCoin(this, 5);
     mClippingRadius = mCoinStackGroup->setStackAsCollected(this);
 
     if (mStackBelow != nullptr)
