@@ -29,13 +29,13 @@ public:
     void makeStackAppear();
     void makeStackDisappear();
     f32 setStackAsCollected(CoinStack* stack);
-    void updateClippingInfo(u32);
+    f32 updateClippingInfo(u32 stackAmount);
     void validateClipping();
 
 private:
-    sead::Vector3f _108;
-    s32 _114;
-    CoinStack* _118;
-    al::PlacementId* _120;
-    bool _128;
+    sead::Vector3f mClippingPos = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    s32 mStackAmount = 0;
+    CoinStack* mCoinStack = nullptr;
+    al::PlacementId* mPlacementId = nullptr;
+    bool mIsMustSave = true;
 };

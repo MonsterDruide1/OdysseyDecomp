@@ -46,7 +46,7 @@ private:
     const f32* mExternalFallDistance = nullptr;
     f32 mTransY = 0.0f;
     f32 mLandHeight = 0.0f;
-    s32 mStepCount = 0;
+    s32 mFloatDuration = 0;
     f32 mFallSpeed = 0.0f;
     CoinStackGroup* mCoinStackGroup = nullptr;
     sead::Vector3f mClippingPos;
