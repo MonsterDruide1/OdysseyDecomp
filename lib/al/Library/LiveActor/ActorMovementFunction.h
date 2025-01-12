@@ -8,7 +8,7 @@
 namespace al {
 class LiveActor;
 class HitSensor;
-class ActorParamMove;
+struct ActorParamMove;
 
 void resetPosition(LiveActor* actor);
 void resetPosition(LiveActor* actor, const sead::Vector3f& trans);
