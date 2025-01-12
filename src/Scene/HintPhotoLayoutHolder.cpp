@@ -1,13 +1,11 @@
 #include "Scene/HintPhotoLayoutHolder.h"
 
 #include "Library/Layout/LayoutActor.h"
+#include "Library/Layout/LayoutInitInfo.h"
 
 #include "Layout/DecideIconLayout.h"
 
-HintPhotoLayoutHolder::HintPhotoLayoutHolder() {
-    mLayoutActor = nullptr;
-    mDecideIconLayout = nullptr;
-}
+HintPhotoLayoutHolder::HintPhotoLayoutHolder() = default;
 
 bool HintPhotoLayoutHolder::isInit() const {
     return mLayoutActor != nullptr;
@@ -21,6 +19,11 @@ DecideIconLayout* HintPhotoLayoutHolder::getDecideIcon() const {
     return mDecideIconLayout;
 }
 
+const char* HintPhotoLayoutHolder::getSceneObjName() const {
+    return "ヒント写真レイアウト保持";
+}
+
+
 void HintPhotoLayoutHolder::init(const al::LayoutInitInfo& info) {
     if (mLayoutActor == nullptr) {
         mLayoutActor = new al::LayoutActor("ヒント写真");
@@ -28,3 +31,4 @@ void HintPhotoLayoutHolder::init(const al::LayoutInitInfo& info) {
         mDecideIconLayout = new DecideIconLayout("決定アイコン", &info);
     }
 }
+

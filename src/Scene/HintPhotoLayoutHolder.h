@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Library/Layout/LayoutActor.h"
-#include "Library/Layout/LayoutInitInfo.h"
 #include "Library/Scene/ISceneObj.h"
+
+#include "Layout/DecideIconLayout.h"
 
 class DecideIconLayout;
 
@@ -13,7 +13,8 @@ public:
     bool isInit() const;
     const al::LayoutActor* getPhotoLayout() const;
     DecideIconLayout* getDecideIcon() const;
+    const char* getSceneObjName() const;
 private:
-    al::LayoutActor* mLayoutActor;
-    DecideIconLayout* mDecideIconLayout;
+    al::LayoutActor* mLayoutActor = nullptr;
+    DecideIconLayout* mDecideIconLayout = nullptr;
 };
