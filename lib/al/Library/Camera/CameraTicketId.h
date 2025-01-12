@@ -15,6 +15,8 @@ public:
     const char* tryGetObjId() const;
     const char* getObjId() const;
 
+    const PlacementId* getPlacementId() const { return mPlacementId; }
+
     const char* getSuffix() const { return mSuffix; }
 
 private:
