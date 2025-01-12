@@ -187,8 +187,8 @@ s32 AchievementHolder::calcMoonGetTotalNum(GameDataHolderAccessor accessor) cons
     return count;
 }
 
-Achievement*
-AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {  // TODO mismatch
+// NON_MATCHING
+Achievement* AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {
     s32 i = 0;
     for (; i < mArray.capacity(); i++)
         if (!mArray[i]->isGet(accessor) &&

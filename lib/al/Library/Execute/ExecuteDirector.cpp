@@ -10,7 +10,7 @@
 
 namespace al {
 
-ExecuteDirector::ExecuteDirector(s32 count) : mUpdateTableCount(count){};
+ExecuteDirector::ExecuteDirector(s32 count) : mUpdateTableCount(count) {};
 
 ExecuteDirector::~ExecuteDirector() = default;
 
@@ -106,6 +106,8 @@ void ExecuteDirector::createExecutorListTable() {
     for (s32 i = 0; i < mDrawTableCount; i++)
         mDrawTables[i]->createExecutorListTable();
 }
+
+// NON_MATCHING
 
 void ExecuteDirector::execute(const char* tableName) const {
     if (!tableName) {

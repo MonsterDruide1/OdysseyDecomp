@@ -34,7 +34,7 @@ bool Resource::isExistFile(const sead::SafeString& path) const {
 }
 
 u32 Resource::getFileSize(const sead::SafeString& path) const {
-    auto device = mDevice;
+    auto* device = mDevice;
     u32 ret = 0;
     device->tryGetFileSize(&ret, path);
     return ret;

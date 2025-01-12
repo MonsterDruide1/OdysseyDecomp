@@ -11,16 +11,22 @@
 
 s32 priority = sead::Thread::cDefaultPriority;
 
-// for some reason tools/check doesn't show this?
+// NON_MATCHING
+
 WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) {
     mDataHolder = dataHolder;
 
-    auto functor = al::FunctorV0M<WorldResourceLoader*, void (WorldResourceLoader::*)()>(
-        this, &WorldResourceLoader::loadResource);
+    using WorldResourceLoaderFunctor =
+        al::FunctorV0M<WorldResourceLoader*, void (WorldResourceLoader::*)()>;
+
+    WorldResourceLoaderFunctor functor =
+        WorldResourceLoaderFunctor(this, &WorldResourceLoader::loadResource);
 
     mWorldResourceLoader = new al::AsyncFunctorThread("WorldResourceLoader", functor, priority,
                                                       0x100000, sead::CoreId::cMain);
 }
+
+// NON_MATCHING
 
 WorldResourceLoader::~WorldResourceLoader() {
     mIsCancelled = true;
@@ -31,8 +37,6 @@ WorldResourceLoader::~WorldResourceLoader() {
 
     tryDestroyWorldResource();
 }
-
-void WorldResourceLoader::loadResource() {}
 
 void WorldResourceLoader::cancelLoadWorldResource() {
     mIsCancelled = true;
