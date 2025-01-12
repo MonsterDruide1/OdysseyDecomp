@@ -22,6 +22,6 @@ jobs:
         python-version: '3.9'
         cache: 'pip'
     - name: Set up python package dependencies
-      run: pip install capstone colorama cxxfilt pyelftools ansiwrap watchdog python-Levenshtein toml
+      run: pip install capstone colorama cxxfilt pyelftools watchdog python-Levenshtein toml
     - name: Run custom code styling checks
       run: tools/check-format.py
