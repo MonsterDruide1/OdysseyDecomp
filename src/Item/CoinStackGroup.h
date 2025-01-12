@@ -25,15 +25,15 @@ public:
     void makeActorDead() override;
     void makeActorAlive() override;
 
-    void generateCoinStackGroup(const al::ActorInitInfo&, s32);
+    void generateCoinStackGroup(const al::ActorInitInfo& initInfo, s32 stackSize);
     void makeStackAppear();
     void makeStackDisappear();
     f32 setStackAsCollected(CoinStack* stack);
-    f32 updateClippingInfo(u32 stackAmount);
+    f32 updateClippingInfo(u32 stackSize);
     void validateClipping();
 
 private:
-    sead::Vector3f mClippingPos = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    sead::Vector3f mClippingPos = {0.0f, 0.0f, 0.0f};
     s32 mStackAmount = 0;
     CoinStack* mCoinStack = nullptr;
     al::PlacementId* mPlacementId = nullptr;
