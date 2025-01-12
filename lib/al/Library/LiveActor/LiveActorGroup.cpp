@@ -11,7 +11,7 @@ LiveActorGroup::LiveActorGroup(const char* groupName, s32 maxActors)
 
 s32 LiveActorGroup::registerActor(LiveActor* pActor) {
     mActors[mActorCount] = pActor;
-    auto count = mActorCount;
+    s32 count = mActorCount;
     mActorCount = count + 1;
     return count;
 }

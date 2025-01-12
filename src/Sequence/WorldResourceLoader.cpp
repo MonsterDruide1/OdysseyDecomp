@@ -21,6 +21,7 @@ WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) : mDataHold
         priority, 0x100000, sead::CoreId::cMain);
 }
 
+// NON_MATCHING
 WorldResourceLoader::~WorldResourceLoader() {
     mIsCancelled = true;
     mCurLoadCount = 0;

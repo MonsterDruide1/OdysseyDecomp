@@ -42,7 +42,7 @@ void getRandomVector(sead::Vector3f* vec, f32 factor) {
     vec->z = z;
 }
 
-//NON_MATCHING
+// NON_MATCHING
 
 void getRandomDir(sead::Vector3f* vec) {
     getRandomVector(vec, 10.f);

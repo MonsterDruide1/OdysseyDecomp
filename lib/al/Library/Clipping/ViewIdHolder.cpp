@@ -27,7 +27,7 @@ void ViewIdHolder::init(const PlacementInfo& placementInfo) {
     }
 }
 
-PlacementId& ViewIdHolder::getViewId(s32 idx) const {
+const PlacementId& ViewIdHolder::getViewId(s32 idx) const {
     return mPlacementIds[idx];
 }
 }  // namespace al
