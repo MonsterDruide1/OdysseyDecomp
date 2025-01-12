@@ -24,8 +24,7 @@ void ShineTowerKey::init(const al::ActorInitInfo& info) {
 bool ShineTowerKey::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                al::HitSensor* self) {
     if (rs::isMsgItemGetAll(message)) {
-        GameDataHolderAccessor accessor(this);
-        GameDataFunction::addKey(accessor, 1);
+        GameDataFunction::addKey(this, 1);
         al::startHitReaction(this, "取得");
         kill();
         return true;
