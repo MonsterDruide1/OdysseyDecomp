@@ -211,6 +211,8 @@ public:
 
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 
+    CameraPoserFlag* getPoserFlag() const { return mPoserFlag; }
+
     // set
     void setPosition(const sead::Vector3f& vec) { mPosition.set(vec); };
 
@@ -221,6 +223,8 @@ public:
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
 
     void setFovyDegree(f32 fovy) { mFovyDegree = fovy; }
+
+    void setField98(bool flag) { _98 = flag; }
 
 protected:
     const char* mPoserName;

@@ -498,4 +498,9 @@ void makeBayerMatrix(s32*, s32);
 u16 f32ToF16(f32);
 f32 f16ToF32(u16);
 
+f32 hermiteRate(f32, f32, f32);
+void calcDirVerticalAny(sead::Vector3f*, const sead::Vector3f&);
+
+void makeQuatRotationRate(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&, f32);
+
 }  // namespace al
