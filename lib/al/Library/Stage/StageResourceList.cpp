@@ -5,7 +5,7 @@
 
 namespace al {
 
-StageSyncCounter::StageSyncCounter() : IUseExecutor(), ISceneObj() {}
+StageSyncCounter::StageSyncCounter() {}
 
 void StageSyncCounter::execute() {
     mCounter++;
