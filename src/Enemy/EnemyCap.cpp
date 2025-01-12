@@ -1,7 +1,6 @@
 #include "Enemy/EnemyCap.h"
 
 #include <math/seadMatrix.h>
-#include <prim/seadSafeString.h>
 
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -17,7 +16,6 @@
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
-#include "Library/Movement/EnemyStateBlowDownParam.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/PartsFunction.h"
