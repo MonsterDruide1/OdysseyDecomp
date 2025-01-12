@@ -574,14 +574,14 @@ project_root = setup.ROOT
 def main():
     parser = argparse.ArgumentParser(
         'check-format.py', description="Verify additional formatting options next to clang-format and clang-tidy")
-    parser.add_argument('--verbose', action='store_true',
-                        help="Give verbose output")
     parser.add_argument('-f', '--run-clang-format', action='store_true',
                         help="Automatically run clang format before checking each file")
     parser.add_argument('-a', '--all', action='store_true',
                         help="Run all checks even if one of them fails")
-    parser.add_argument('--check-mismatch', action='store_true',
+    parser.add_argument('-m', '--check-mismatch', action='store_true',
                         help="Check for NON_MATCHING comment above mismatching functions (disabled by default because takes time to run)")
+    parser.add_argument('--no-warn', action='store_true',
+                        help="Disable format warning, only meant for automation")
     args = parser.parse_args()
 
     global runAllChecks
@@ -593,7 +593,7 @@ def main():
     global functionData
     functionData = list(utils.get_functions())
 
-    if not args.run_clang_format:
+    if not args.run_clang_format and not args.no_warn:
         print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-f')")
         print()
 
