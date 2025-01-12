@@ -4,7 +4,7 @@
 
 namespace al {
 
-bool isEqualString(const char16_t* pString_0, const char16_t* pString_1) {
+bool isEqualString(const char16* pString_0, const char16* pString_1) {
     u16 val;
 
     while (1) {
