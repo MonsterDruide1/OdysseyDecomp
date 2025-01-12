@@ -37,8 +37,8 @@ void PlayerPowerGlove::updatePose() {
     // These are created but not used
     sead::Matrix34f t;
     sead::Matrix34f tt;
-    sead::Matrix34CalcCommon<float>::makeR(t, sead::Vector3f(sead::Mathf::piHalf(), 0, 0));
-    sead::Matrix34CalcCommon<float>::makeR(tt, sead::Vector3f(0, 0, 0));
+    t.makeR(sead::Vector3f(sead::Mathf::piHalf(), 0, 0));
+    tt.makeR(sead::Vector3f(0, 0, 0));
 
     sead::Matrix34f newPoseMtx = *mPlayerBaseMtx;
     al::normalize(&newPoseMtx);
