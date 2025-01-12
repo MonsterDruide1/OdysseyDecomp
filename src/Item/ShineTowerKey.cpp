@@ -10,7 +10,7 @@
 
 namespace {
 NERVE_IMPL(ShineTowerKey, Wait)
-NERVE_MAKE(ShineTowerKey, Wait)
+NERVES_MAKE_NOSTRUCT(ShineTowerKey, Wait)
 }  // namespace
 
 ShineTowerKey::ShineTowerKey(const char* name) : al::LiveActor(name) {}
