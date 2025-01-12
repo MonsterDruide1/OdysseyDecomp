@@ -90,10 +90,8 @@ void CoinCollectEmpty2D::exeGot() {
         al::startAction(this, "Got");
 
     if (al::isActionEnd(this)) {
-        GameDataHolderAccessor gameData(this);
-        GameDataFunction::addCoin(gameData, 1);
-        GameDataHolderAccessor gameData2(this);
-        GameDataFunction::addCoin(gameData2, 1);
+        GameDataFunction::addCoin(this, 1);
+        GameDataFunction::addCoin(this, 1);
         kill();
     }
 }
