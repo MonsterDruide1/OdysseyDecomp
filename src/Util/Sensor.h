@@ -27,6 +27,7 @@ bool isMsgCapCancelLockOn(const al::SensorMsg*);
 bool isMsgStartHack(const al::SensorMsg*);
 bool isMsgCapStartLockOn(const al::SensorMsg*);
 bool isMsgCancelHack(const al::SensorMsg*);
+bool isMsgCapIgnoreCancelLockOn(const al::SensorMsg*);
 bool isMsgHackMarioDead(const al::SensorMsg*);
 bool isMsgHackMarioDemo(const al::SensorMsg*);
 bool isMsgHackMarioInWater(const al::SensorMsg*);
