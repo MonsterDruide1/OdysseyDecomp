@@ -6,7 +6,9 @@
 
 AchievementInfoReader::AchievementInfoReader() = default;
 
-void AchievementInfoReader::init() {  // TODO minor mismatches during loop
+// NON_MATCHING: minor mismatches during loop
+
+void AchievementInfoReader::init() {
     al::Resource* achievementInfoResource =
         al::findOrCreateResource("SystemData/AchievementInfo", nullptr);
     const char* byamlFileName = al::StringTmp<256>{"%s.byml", "AchievementInfo"}.cstr();
@@ -17,7 +19,7 @@ void AchievementInfoReader::init() {  // TODO minor mismatches during loop
     al::ByamlIter achievementInfo = achievementInfoResource->getByml("AchievementInfo");
     al::ByamlIter achievementInfoArray;
     if (achievementInfo.tryGetIterByKey(&achievementInfoArray, "AchievementInfoArray")) {
-        auto size = achievementInfoArray.getSize();
+        s32 size = achievementInfoArray.getSize();
         mAchievements.allocBuffer(size, nullptr);
 
         for (u32 i = 0; i < size; i++) {

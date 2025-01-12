@@ -6,6 +6,8 @@ PlayerModelHolder::PlayerModelHolder(u32 bufferSize) {
     mBuffer.allocBuffer(bufferSize, nullptr);
 }
 
+// NON_MATCHING
+
 void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name) {
     mBuffer.pushBack(new Entry{sead::FixedSafeString<128>(name), liveActor});
 }

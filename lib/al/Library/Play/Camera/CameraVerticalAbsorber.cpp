@@ -129,6 +129,4 @@ void CameraVerticalAbsorber::update() {
     mPrevTargetFront = mTargetFront;
 }
 
-void CameraVerticalAbsorber::exeFollowGround() {}
-
 }  // namespace al

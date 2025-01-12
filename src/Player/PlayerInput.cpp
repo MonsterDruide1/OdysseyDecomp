@@ -12,9 +12,6 @@
 #include "Player/PlayerInputFunction.h"
 #include "Util/ActorDimensionKeeper.h"
 
-PlayerInput::PlayerInput(const al::LiveActor*, const IUsePlayerCollision*, const IUseDimension*) {
-}  // FIXME remove this
-
 bool PlayerInput::isEnableCarry() const {
     if (mIsDisableInput)
         return false;
@@ -170,7 +167,7 @@ bool PlayerInput::isTriggerHackSwing() const {
 bool PlayerInput::isTriggerHackEnd() const {
     if (mIsDisableInput)
         return false;
-    auto inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
+    u32 inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
     return PlayerInputFunction::isTriggerSubAction(mLiveActor, inputPort);
 }
 
@@ -179,7 +176,7 @@ bool PlayerInput::isTriggerHackSeparateJump() const {
         return false;
     if (!rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     return PlayerInputFunction::isTriggerJump(mLiveActor, inputPort);
 }
 
@@ -188,7 +185,7 @@ bool PlayerInput::isTriggerSeparateCapJangoHelp() const {
         return false;
     if (!rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     return PlayerInputFunction::isTriggerAction(mLiveActor, inputPort) ||
            PlayerInputFunction::isTriggerJump(mLiveActor, inputPort) ||
            PlayerInputFunction::isTriggerSubAction(mLiveActor, inputPort);
@@ -199,7 +196,7 @@ bool PlayerInput::isHoldHackSeparateJump() const {
         return false;
     if (!rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     return PlayerInputFunction::isHoldJump(mLiveActor, inputPort);
 }
 
@@ -258,7 +255,7 @@ bool PlayerInput::isTriggerCancelWorldWarp() const {
 bool PlayerInput::isTriggerSpinCap() const {
     if (mIsDisableInput)
         return false;
-    auto inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
+    u32 inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
     if (PlayerInputFunction::isTriggerAction(mLiveActor, inputPort))
         return true;
     if (mIsDisableInput)
@@ -271,7 +268,7 @@ bool PlayerInput::isTriggerToggleStayCap() const {
         return false;
     if (!rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     return PlayerInputFunction::isTriggerAction(mLiveActor, inputPort);
 }
 
@@ -295,7 +292,7 @@ bool PlayerInput::isTriggerCapReturn() const {
     if (!rs::isSeparatePlay(mLiveActor)) {
         if (mIsDisableInput)
             return false;
-        auto inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
+        u32 inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
         if (PlayerInputFunction::isTriggerAction(mLiveActor, inputPort))
             return true;
         if (mIsDisableInput)
@@ -304,7 +301,7 @@ bool PlayerInput::isTriggerCapReturn() const {
     }
     if (mIsDisableInput || !rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     if (PlayerInputFunction::isTriggerAction(mLiveActor, inputPort))
         return true;
     if (mIsDisableInput || !rs::isSeparatePlay(mLiveActor))
@@ -315,7 +312,7 @@ bool PlayerInput::isTriggerCapReturn() const {
 bool PlayerInput::isTriggerCapAttackSeparate() const {
     if (mIsDisableInput || !rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     if (PlayerInputFunction::isTriggerAction(mLiveActor, inputPort))
         return true;
     if (mIsDisableInput || !rs::isSeparatePlay(mLiveActor))
@@ -346,7 +343,7 @@ bool PlayerInput::isTriggerCapSeparateJump() const {
         return false;
     if (!rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     return PlayerInputFunction::isTriggerJump(mLiveActor, inputPort);
 }
 
@@ -355,7 +352,7 @@ bool PlayerInput::isTriggerCapSeparateHipDrop() const {
         return false;
     if (!rs::isSeparatePlay(mLiveActor))
         return false;
-    auto inputPort = al::getPlayerControllerPort(1);
+    s32 inputPort = al::getPlayerControllerPort(1);
     return PlayerInputFunction::isTriggerSubAction(mLiveActor, inputPort);
 }
 
@@ -432,14 +429,14 @@ bool PlayerInput::isHoldHackJump() const {
 bool PlayerInput::isTriggerChange2D() const {
     if (mIsDisableInput)
         return false;
-    auto inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
+    u32 inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
     return al::isPadTriggerZL(inputPort) || al::isPadTriggerZR(inputPort);
 }
 
 bool PlayerInput::isTriggerChange3D() const {
     if (mIsDisableInput)
         return false;
-    auto inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
+    u32 inputPort = PlayerFunction::getPlayerInputPort(mLiveActor);
     return al::isPadTriggerZL(inputPort) || al::isPadTriggerZR(inputPort);
 }
 
