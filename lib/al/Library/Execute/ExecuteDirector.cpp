@@ -10,7 +10,7 @@
 
 namespace al {
 
-ExecuteDirector::ExecuteDirector(s32 count) : mUpdateTableCount(count){};
+ExecuteDirector::ExecuteDirector(s32 count) : mUpdateTableCount(count) {};
 
 ExecuteDirector::~ExecuteDirector() = default;
 
