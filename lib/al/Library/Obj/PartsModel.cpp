@@ -26,12 +26,12 @@ void PartsModel::calcAnim() {
     LiveActor::calcAnim();
 }
 
-void PartsModel::attackSensor(HitSensor* target, HitSensor* source) {
-    mParentModel->attackSensor(target, source);
+void PartsModel::attackSensor(HitSensor* self, HitSensor* other) {
+    mParentModel->attackSensor(self, other);
 }
 
-bool PartsModel::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    return mParentModel->receiveMsg(message, source, target);
+bool PartsModel::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    return mParentModel->receiveMsg(message, other, self);
 }
 
 void PartsModel::initPartsDirect(LiveActor* parent, const ActorInitInfo& initInfo,

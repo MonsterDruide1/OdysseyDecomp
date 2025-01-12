@@ -18,7 +18,7 @@ from common.util import utils
 issueFound = False
 runAllChecks = False
 offsetCommentCheckFail = False
-noMismatchCheck = False
+doMismatchCheck = False
 functionData = None
 
 def is_function_mismatch(namepacesAndName):
@@ -276,6 +276,12 @@ def common_this_prefix(c, path):
         if 'this->' in line:
             FAIL("this-> is not allowed!", line, path)
 
+def common_consistent_float_literals(c, path):
+    for line in c.splitlines():
+        index = line.find(".f")
+        if index != -1 and not line[index + 2].isalpha():
+            FAIL(" '.f' is not allowed, use '.0f' instead!", line, path)
+
 def common_sead_math_template(c, path):
     for line in c.splitlines():
         if "<f32>" in line or "<s32>" in line or "<u32>" in line or "<f64>" in line or "<s64>" in line or "<u64>" in line:
@@ -316,6 +322,19 @@ def common_string_finder(c, path):
                     break
             if not found:
                 FAIL("String not found in binary: \""+match+"\"", line, path)
+
+def common_const_reference(c, path):
+    for line in c.splitlines():
+        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line and "rotationAndTranslationFromMatrix" not in line:
+            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line):
+                FAIL("References must be const!", line, path)
+
+def common_self_other(c, path, is_header):
+    lines = c.splitlines()
+    for i, line in enumerate(lines):
+        if ("attackSensor(" in line or "receiveMsg(" in line) and (is_header or "::" in line) and (("self" not in line and "self" not in lines[i + 1]) or "other" not in line) and "Library/HitSensor/HitSensorKeeper.h" not in path:
+            FAIL("'attackSensor' and 'receiveMsg' should have 'self' and 'other' params!", line, path)
+            return
 
 # Header files
 
@@ -440,17 +459,6 @@ def header_no_offset_comments(c, path):
             global offsetCommentCheckFail
             offsetCommentCheckFail = True
 
-def common_const_reference(c, path):
-    for line in c.splitlines():
-        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line and "rotationAndTranslationFromMatrix" not in line:
-            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line):
-                FAIL("References must be const!", line, path)
-
-def source_no_raw_auto(c, path):
-    for line in c.splitlines():
-        if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line:
-            FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
-
 def header_lowercase_member_offset_vars(c, path):
     for line in c.splitlines():
         if " _" in line and line.endswith(";") and "__VA_ARGS__" not in line:
@@ -464,6 +472,13 @@ def header_lowercase_member_offset_vars(c, path):
                 if line[line.find("_") + underscoreOffset].isalpha() and line[line.find("_") + underscoreOffset].isupper():
                     FAIL("Characters in the names of offset variables need to be lowercase!", line, path)
                 underscoreOffset += 1
+
+# Source files
+
+def source_no_raw_auto(c, path):
+    for line in c.splitlines():
+        if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line:
+            FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
 
 def source_non_matching_comment(c, path):
     lines = c.splitlines()
@@ -500,8 +515,10 @@ def check_source(c, path):
     source_no_nerve_make(c, path)
     common_const_reference(c, path)
     source_no_raw_auto(c, path)
-    if not noMismatchCheck:
+    if doMismatchCheck:
         source_non_matching_comment(c, path)
+    common_self_other(c, path, False)
+    common_consistent_float_literals(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -516,6 +533,8 @@ def check_header(c, path):
     common_this_prefix(c, path)
     common_const_reference(c, path)
     header_lowercase_member_offset_vars(c, path)
+    common_self_other(c, path, True)
+    common_consistent_float_literals(c, path)
 
 def check_file(file_str):
     st = os.stat(file_str)
@@ -561,21 +580,21 @@ def main():
                         help="Automatically run clang format before checking each file")
     parser.add_argument('-a', '--all', action='store_true',
                         help="Run all checks even if one of them fails")
-    parser.add_argument('--no-mismatch', action='store_true',
-                        help="Don't run NON_MATCHING comment check. Usuful when you want the script to run fast")
+    parser.add_argument('--check-mismatch', action='store_true',
+                        help="Check for NON_MATCHING comment above mismatching functions (disabled by default because takes time to run)")
     args = parser.parse_args()
 
     global runAllChecks
     runAllChecks = args.all
 
-    global noMismatchCheck
-    noMismatchCheck = args.no_mismatch
+    global doMismatchCheck
+    doMismatchCheck = args.check_mismatch
 
     global functionData
     functionData = list(utils.get_functions())
 
     if not args.run_clang_format:
-        print("Warning: Source files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-f')")
+        print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-f')")
         print()
 
     for dir in [project_root/'lib'/'al', project_root/'src']:
