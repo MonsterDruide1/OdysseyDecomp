@@ -47,6 +47,16 @@ bool isMsgBlowDown(const al::SensorMsg*);
 bool isMsgNpcScareByEnemy(const al::SensorMsg*);
 bool isMsgKillByShineGet(const al::SensorMsg*);
 bool isMsgKillByHomeDemo(const al::SensorMsg*);
+bool isMsgAirExplosion(const al::SensorMsg*);
+bool isMsgByugoBlow(const al::SensorMsg*);
+bool isMsgFishingItemGet(const al::SensorMsg*);
+bool isMsgFishingLineTouch(const al::SensorMsg*);
+bool isMsgItemGet2D(const al::SensorMsg*);
+bool isMsgItemGetAll(const al::SensorMsg*);
+bool isMsgCapIgnoreCancelLockOn(const al::SensorMsg*);
+
+bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg*);
+bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg*);
 
 void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*);
 void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*,

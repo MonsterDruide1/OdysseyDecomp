@@ -22,7 +22,6 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
-#include "Library/Movement/EnemyStateBlowDownParam.h"
 #include "Library/Nature/NatureUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -155,7 +154,6 @@ void Popn::control() {
     }
 }
 
-// NON_MATCHING: tools/check doesn't recognize startMtpAnim and startMclAnim
 void Popn::appearByGenerater(const sead::Vector3f& pos, s32 color, bool isAppear,
                              bool isGenerateItem) {
     mIsGenerateItem = isGenerateItem;
