@@ -15,8 +15,8 @@ public:
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
 
 private:
-    al::LiveActor* mOther = nullptr;
-    al::HitSensor* mBodySensor = nullptr;
-    const sead::Matrix34f* mMtx = nullptr;
-    bool field_120 = false;
+    al::LiveActor* mPlayer = nullptr;
+    al::HitSensor* mPlayerBodySensor = nullptr;
+    const sead::Matrix34f* mPlayerBaseMtx = nullptr;
+    bool mIsInvisible = false;
 };
