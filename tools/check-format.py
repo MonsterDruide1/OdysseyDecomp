@@ -255,6 +255,8 @@ def common_sead_math_template(c, path):
                 continue
             if "sead::Buffer" in line:  # probably needs more exceptions at some point
                 continue
+            if "Vector3CalcCommon" in line:
+                continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
 # Header files
