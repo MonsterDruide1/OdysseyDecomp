@@ -24,8 +24,9 @@ public:
     void makeActorDead() override;
     void control() override;
     void updateModelActorPose();
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void showCurrentModel();
     void appearPopup();
     void addDemoActorWithModel();
