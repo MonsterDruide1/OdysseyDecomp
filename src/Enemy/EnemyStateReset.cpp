@@ -18,10 +18,7 @@
 namespace {
 NERVE_IMPL(EnemyStateReset, Wait);
 
-struct {
-    NERVE_MAKE(EnemyStateReset, Wait);
-} NrvEnemyStateReset;
-
+NERVES_MAKE_STRUCT(EnemyStateReset, Wait);
 }  // namespace
 
 EnemyStateReset::EnemyStateReset(al::LiveActor* actor, const al::ActorInitInfo& info, EnemyCap* cap)

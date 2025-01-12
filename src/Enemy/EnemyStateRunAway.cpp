@@ -17,9 +17,7 @@ NERVE_IMPL(EnemyStateRunAway, Run);
 NERVE_IMPL(EnemyStateRunAway, PanicRun);
 NERVE_IMPL(EnemyStateRunAway, PanicRunCollided);
 
-NERVE_MAKE(EnemyStateRunAway, Run);
-NERVE_MAKE(EnemyStateRunAway, PanicRun);
-NERVE_MAKE(EnemyStateRunAway, PanicRunCollided);
+NERVES_MAKE_NOSTRUCT(EnemyStateRunAway, Run, PanicRun, PanicRunCollided);
 }  // namespace
 
 EnemyStateRunAway::EnemyStateRunAway(al::LiveActor* actor, const ParamEnemyStateRunAway* param,

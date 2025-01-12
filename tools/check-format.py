@@ -377,6 +377,12 @@ def header_no_offset_comments(c, path):
 
 # Source files
 
+def source_no_nerve_make(c, path):
+    for line in c.splitlines():
+        if "NERVE_MAKE(" in line:
+            FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
+            return
+
 # -----
 # UTILS
 # -----
@@ -390,6 +396,7 @@ def check_source(c, path):
     common_const_type(c, path)
     common_this_prefix(c, path)
     common_sead_math_template(c, path)
+    source_no_nerve_make(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)

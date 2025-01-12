@@ -10,9 +10,9 @@ namespace {
 using namespace al;
 NERVE_HOST_TYPE_IMPL(SimpleLayoutAppearWaitEnd, Appear);
 NERVE_HOST_TYPE_IMPL(SimpleLayoutAppearWaitEnd, End);
-NERVE_MAKE(HostType, End);
 NERVE_HOST_TYPE_IMPL(SimpleLayoutAppearWaitEnd, Wait);
 
+NERVES_MAKE_NOSTRUCT(HostType, End);
 NERVES_MAKE_STRUCT(HostType, Appear, Wait);
 }  // namespace
 

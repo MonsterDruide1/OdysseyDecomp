@@ -10,9 +10,7 @@ NERVE_IMPL(FilterScope, Appear);
 NERVE_IMPL(FilterScope, Wait);
 NERVE_IMPL(FilterScope, End);
 
-NERVE_MAKE(FilterScope, Appear);
-NERVE_MAKE(FilterScope, Wait);
-NERVE_MAKE(FilterScope, End);
+NERVES_MAKE_NOSTRUCT(FilterScope, Appear, Wait, End);
 }  // namespace
 
 FilterScope::FilterScope(const char* name, const al::LayoutInitInfo& info, const char* suffix)

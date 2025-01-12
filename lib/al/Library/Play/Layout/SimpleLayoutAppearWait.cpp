@@ -11,7 +11,6 @@ NERVE_IMPL(SimpleLayoutAppearWait, Appear);
 NERVE_IMPL(SimpleLayoutAppearWait, Wait);
 
 NERVES_MAKE_NOSTRUCT(SimpleLayoutAppearWait, Appear, Wait);
-
 }  // namespace
 
 namespace al {
