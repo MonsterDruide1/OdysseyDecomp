@@ -229,7 +229,7 @@ def common_newline_eof(c, path):
     CHECK(lambda a: a == "", c.split("\n")[-1], "Files should end with a newline!", path)
 
 def common_sead_types(c, path):
-    FORBIDDEN_TYPES = ["int", "float", "short", "long", "double"]
+    FORBIDDEN_TYPES = ["int", "float", "short", "long", "double", "char16_t"]
     for line in c.splitlines():
         for t in FORBIDDEN_TYPES:
             index = 0
