@@ -7,14 +7,18 @@
 #include "Library/Math/MathRandomUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 
-#include "Enemy/FlyerStateWanderParam.h"
-
 namespace {
 NERVE_IMPL(FlyerStateWander, Wander)
 NERVE_IMPL(FlyerStateWander, Wait)
 
 NERVES_MAKE_NOSTRUCT(FlyerStateWander, Wander, Wait)
 }  // namespace
+
+FlyerStateWanderParam::FlyerStateWanderParam(s32 ukn, s32 wanderTime, s32 waitTime,
+                                             const char* actionName,
+                                             const al::ActorParamMove* actorParamMove)
+    : _0(ukn), mWanderTime(wanderTime), mWaitTime(waitTime), mActionName(actionName),
+      mActorParamMove(actorParamMove) {}
 
 FlyerStateWander::FlyerStateWander(al::LiveActor* actor, const FlyerStateWanderParam* param)
     : al::ActorStateBase("飛行型うろつき状態", actor), mFlyerStateWanderParam(param) {
