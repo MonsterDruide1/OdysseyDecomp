@@ -10,5 +10,6 @@ namespace rs {
 
 const sead::Vector3f& getPlayerPos(const al::LiveActor*);
 bool isPlayerHack(const al::LiveActor*);
+bool tryGetFlyingCapPos(sead::Vector3f*, const al::LiveActor*);
 
 }  // namespace rs
