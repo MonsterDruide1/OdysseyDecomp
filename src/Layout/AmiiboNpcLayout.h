@@ -13,8 +13,8 @@ public:
 
     void startTouch();
     void endTouch();
-    void appear();
-    void control();
+    void appear() override;
+    void control() override;
     void decide();
     void end();
     bool isIconEndActionEnd() const;

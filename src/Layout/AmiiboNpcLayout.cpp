@@ -60,9 +60,8 @@ void AmiiboNpcLayout::end() {
 }
 
 bool AmiiboNpcLayout::isIconEndActionEnd() const {
-    if (!al::isActionPlaying(mAmiiboIcon, "End", nullptr))
-        return false;
-    return al::isActionEnd(mAmiiboIcon, nullptr);
+    return al::isActionPlaying(mAmiiboIcon, "End", nullptr) &&
+           al::isActionEnd(mAmiiboIcon, nullptr);
 }
 
 void AmiiboNpcLayout::exeAppear() {
