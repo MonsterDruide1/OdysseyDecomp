@@ -34,11 +34,11 @@ bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& tra
     else
         localPos->e = trans.e;
 
-    auto localX = localPos->x;
+    f32 localX = localPos->x;
     localPos->x = localX / mScale.x;
-    auto localY = localPos->y;
+    f32 localY = localPos->y;
     localPos->y = localY / mScale.y;
-    auto localZ = localPos->z;
+    f32 localZ = localPos->z;
     localPos->z = localZ / mScale.z;
 
     return true;

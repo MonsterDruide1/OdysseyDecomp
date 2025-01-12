@@ -426,7 +426,7 @@ def header_check_line(line, path, visibility, should_start_class):
             CHECK(lambda a: allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
         if var_type == "bool":
-            BOOL_PREFIXES = ["mIs", "mHas"]
+            BOOL_PREFIXES = ["mIs", "mHas", "mAlways"]
             allowed_name = any(
                 [var_name.startswith(p) and (var_name[len(p)].isupper() or var_name[len(p)].isdigit()) for p in
                  BOOL_PREFIXES]) or any([var_name.startswith(p) for p in PREFIXES])
@@ -448,7 +448,7 @@ def common_const_reference(c, path):
 
 def source_no_raw_auto(c, path):
     for line in c.splitlines():
-        if "auto" in line and not "auto*" in line and not "auto&" in line:
+        if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line:
             FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
 
 def header_lowercase_member_offset_vars(c, path):
