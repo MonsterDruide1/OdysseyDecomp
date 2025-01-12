@@ -76,65 +76,65 @@ s32 AchievementHolder::getAchievementProgressCurrentRow(s32 index,
     if (al::isEqualString(*name, "Scenario_Ending"))
         return 1;
     if (al::isEqualString(*name, "Scenario_WorldAll"))
-        return rs::calcClearWorldNum(accessor.mData);
+        return rs::calcClearWorldNum(accessor);
     if (al::isEqualString(*name, "Shine_Gather_1") || al::isEqualString(*name, "Shine_Gather_2") ||
         al::isEqualString(*name, "Shine_Gather_3"))
         return GameDataFunction::getTotalShineNum(accessor, -1);
     if (al::isEqualString(*name, "Shine_CollectCoinShop"))
-        return rs::calcBuyItemNumForCoinCollectByWorld(accessor.mData);
+        return rs::calcBuyItemNumForCoinCollectByWorld(accessor);
     if (al::isEqualString(*name, "Shine_Shine2D_1") || al::isEqualString(*name, "Shine_Shine2D_2"))
-        return rs::calcGetShineNumDot(accessor.mData);
+        return rs::calcGetShineNumDot(accessor);
     if (al::isEqualString(*name, "Shine_TreasureBox_1") ||
         al::isEqualString(*name, "Shine_TreasureBox_2"))
-        return rs::calcGetShineNumTreasureBox(accessor.mData);
+        return rs::calcGetShineNumTreasureBox(accessor);
     if (al::isEqualString(*name, "Shine_MusicNote_1") ||
         al::isEqualString(*name, "Shine_MusicNote_2"))
-        return rs::calcGetShineNumNoteObj(accessor.mData);
+        return rs::calcGetShineNumNoteObj(accessor);
     if (al::isEqualString(*name, "Shine_TimerAthretic_1") ||
         al::isEqualString(*name, "Shine_TimerAthretic_2"))
-        return rs::calcGetShineNumTimerAthletic(accessor.mData);
+        return rs::calcGetShineNumTimerAthletic(accessor);
     if (al::isEqualString(*name, "Shine_CaptainKinopio_1") ||
         al::isEqualString(*name, "Shine_CaptainKinopio_2"))
-        return rs::calcGetShineNumKinopioBrigade(accessor.mData);
+        return rs::calcGetShineNumKinopioBrigade(accessor);
     if (al::isEqualString(*name, "Shine_TravelingPeach_1") ||
         al::isEqualString(*name, "Shine_TravelingPeach_2"))
-        return rs::calcGetShineNumWorldTravelingPeach(accessor.mData);
+        return rs::calcGetShineNumWorldTravelingPeach(accessor);
     if (al::isEqualString(*name, "Shine_CollectAnimalAll"))
-        return rs::calcGetShineNumCollectAnimal(accessor.mData);
+        return rs::calcGetShineNumCollectAnimal(accessor);
     if (al::isEqualString(*name, "Shine_KuriboGirl"))
-        return rs::calcGetShineNumKuriboGirl(accessor.mData);
+        return rs::calcGetShineNumKuriboGirl(accessor);
     if (al::isEqualString(*name, "Shine_Jugem"))
-        return rs::calcGetShineNumJugemFish(accessor.mData);
+        return rs::calcGetShineNumJugemFish(accessor);
     if (al::isEqualString(*name, "Shine_Seed_1") || al::isEqualString(*name, "Shine_Seed_2"))
-        return rs::calcGetShineNumGrowPlant(accessor.mData);
+        return rs::calcGetShineNumGrowPlant(accessor);
     if (al::isEqualString(*name, "Shine_Rabbit_1") || al::isEqualString(*name, "Shine_Rabbit_2"))
-        return rs::calcGetShineNumRabbit(accessor.mData);
+        return rs::calcGetShineNumRabbit(accessor);
     if (al::isEqualString(*name, "Shine_DigPoint_1") ||
         al::isEqualString(*name, "Shine_DigPoint_2"))
-        return rs::calcGetShineNumDigPoint(accessor.mData);
+        return rs::calcGetShineNumDigPoint(accessor);
     if (al::isEqualString(*name, "Shine_CapHanger_1") ||
         al::isEqualString(*name, "Shine_CapHanger_2"))
-        return rs::calcGetShineNumCapHanger(accessor.mData);
+        return rs::calcGetShineNumCapHanger(accessor);
     if (al::isEqualString(*name, "Shine_Bird"))
-        return rs::calcGetShineNumBird(accessor.mData);
+        return rs::calcGetShineNumBird(accessor);
     if (al::isEqualString(*name, "Shine_CostumeRoom_1") ||
         al::isEqualString(*name, "Shine_CostumeRoom_2") ||
         al::isEqualString(*name, "Shine_CostumeRoom_3"))
-        return rs::calcGetShineNumCostumeRoom(accessor.mData);
+        return rs::calcGetShineNumCostumeRoom(accessor);
     if (al::isEqualString(*name, "Shine_CapThrottle"))
-        return rs::calcGetShineNumSlot(accessor.mData);
+        return rs::calcGetShineNumSlot(accessor);
     if (al::isEqualString(*name, "Shine_HideAndSeekCapMan"))
-        return rs::calcGetShineNumHideAndSeekCapMan(accessor.mData);
+        return rs::calcGetShineNumHideAndSeekCapMan(accessor);
     if (al::isEqualString(*name, "Shine_CollectBgm"))
         return rs::calcGetShineNumCollectedBgm(accessor);
     if (al::isEqualString(*name, "Shine_HintPhoto_1") ||
         al::isEqualString(*name, "Shine_HintPhoto_2"))
-        return rs::calcGetShineNumHintPhoto(accessor.mData);
+        return rs::calcGetShineNumHintPhoto(accessor);
     if (al::isEqualString(*name, "MiniGame_RaceMan_1") ||
         al::isEqualString(*name, "MiniGame_RaceMan_2"))
-        return rs::calcGetShineNumRace(accessor.mData);
+        return rs::calcGetShineNumRace(accessor);
     if (al::isEqualString(*name, "MiniGame_FigureWalker"))
-        return rs::calcGetShineNumFigureWalking(accessor.mData);
+        return rs::calcGetShineNumFigureWalking(accessor);
     if (al::isEqualString(*name, "MiniGame_SphinxQuiz"))
         return rs::calcSphinxQuizCompleteNum(accessor);
     if (al::isEqualString(*name, "Souvenir_Count_1") ||
@@ -152,17 +152,17 @@ s32 AchievementHolder::getAchievementProgressCurrentRow(s32 index,
     if (al::isEqualString(*name, "Other_MoonStoneAll"))
         return rs::calcUnlockMoonRockNum(accessor);
     if (al::isEqualString(*name, "Other_WorldWarpHoleAll"))
-        return rs::calcWorldWarpHoleThroughNum(accessor.mData);
+        return rs::calcWorldWarpHoleThroughNum(accessor);
     if (al::isEqualString(*name, "Other_CheckPoint_1") ||
         al::isEqualString(*name, "Other_CheckPoint_2"))
-        return rs::calcGetCheckpointNum(accessor.mData);
+        return rs::calcGetCheckpointNum(accessor);
     if (al::isEqualString(*name, "Other_Coin_1") || al::isEqualString(*name, "Other_Coin_2") ||
         al::isEqualString(*name, "Other_Coin_3"))
-        return rs::getTotalCoinNum(accessor.mData);
+        return rs::getTotalCoinNum(accessor);
     if (al::isEqualString(*name, "Other_Jump"))
-        return rs::getPlayerJumpCount(accessor.mData);
+        return rs::getPlayerJumpCount(accessor);
     if (al::isEqualString(*name, "Other_CapThrow"))
-        return rs::getPlayerThrowCapCount(accessor.mData);
+        return rs::getPlayerThrowCapCount(accessor);
 
     return 0;
 }

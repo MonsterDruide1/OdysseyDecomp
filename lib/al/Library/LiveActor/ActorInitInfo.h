@@ -246,7 +246,7 @@ bool tryAddDisplayOffset(LiveActor* actor, const ActorInitInfo& initInfo);
 bool tryAddDisplayScale(LiveActor* actor, const ActorInitInfo& initInfo);
 
 PlacementInfo* getPlacementInfo(const ActorInitInfo& initInfo);
-const LayoutInitInfo* getLayoutInitInfo(const ActorInitInfo& initInfo);
+const LayoutInitInfo& getLayoutInitInfo(const ActorInitInfo& initInfo);
 AudioDirector* getAudioDirector(const ActorInitInfo& initInfo);
 CollisionDirector* getCollisionDirectorFromInfo(const ActorInitInfo& initInfo);
 const SceneCameraInfo* getSceneCameraInfoFromInfo(const ActorInitInfo& initInfo);

@@ -134,7 +134,7 @@ f32 getMtpAnimFrameRate(const LiveActor*);
 f32 getMtpAnimFrameMax(const LiveActor*);
 f32 getMtpAnimFrameMax(const LiveActor*, const char*);
 
-bool isMtpAnimExist(LiveActor*, const char*);
+bool isMtpAnimExist(const LiveActor*, const char*);
 bool isMtpAnimPlaying(const LiveActor*, const char*);
 bool isMtpAnimExist(const LiveActor*);
 bool isMtpAnimEnd(const LiveActor*);
@@ -147,8 +147,8 @@ bool isMtpAnimPlaying(const LiveActor*);
 bool tryStartMclAnimIfExist(LiveActor*, const char*);
 bool tryStartMclAnimIfNotPlaying(LiveActor*, const char*);
 
-void startMclAnim(const LiveActor*, const char*);
-void startMclAnimAndSetFrameAndStop(const LiveActor*, const char*, f32);
+void startMclAnim(LiveActor*, const char*);
+void startMclAnimAndSetFrameAndStop(LiveActor*, const char*, f32);
 
 void clearMclAnim(LiveActor*);
 
@@ -164,7 +164,7 @@ f32 getMclAnimFrameRate(const LiveActor*);
 f32 getMclAnimFrameMax(const LiveActor*);
 f32 getMclAnimFrameMax(const LiveActor*, const char*);
 
-bool isMclAnimExist(LiveActor*, const char*);
+bool isMclAnimExist(const LiveActor*, const char*);
 bool isMclAnimPlaying(const LiveActor*, const char*);
 bool isMclAnimExist(const LiveActor*);
 bool isMclAnimEnd(const LiveActor*);
@@ -177,8 +177,8 @@ bool isMclAnimPlaying(const LiveActor*);
 bool tryStartMtsAnimIfExist(LiveActor*, const char*);
 bool tryStartMtsAnimIfNotPlaying(LiveActor*, const char*);
 
-void startMtsAnim(const LiveActor*, const char*);
-void startMtsAnimAndSetFrameAndStop(const LiveActor*, const char*, f32);
+void startMtsAnim(LiveActor*, const char*);
+void startMtsAnimAndSetFrameAndStop(LiveActor*, const char*, f32);
 
 void clearMtsAnim(LiveActor*);
 
@@ -193,7 +193,7 @@ f32 getMtsAnimFrameRate(const LiveActor*);
 f32 getMtsAnimFrameMax(const LiveActor*);
 f32 getMtsAnimFrameMax(const LiveActor*, const char*);
 
-bool isMtsAnimExist(LiveActor*, const char*);
+bool isMtsAnimExist(const LiveActor*, const char*);
 bool isMtsAnimPlaying(const LiveActor*, const char*);
 bool isMtsAnimExist(const LiveActor*);
 bool isMtsAnimEnd(const LiveActor*);
@@ -254,7 +254,7 @@ f32 getVisAnimFrameRate(const LiveActor*);
 f32 getVisAnimFrameMax(const LiveActor*);
 f32 getVisAnimFrameMax(const LiveActor*, const char*);
 
-bool isVisAnimExist(LiveActor*, const char*);
+bool isVisAnimExist(const LiveActor*, const char*);
 bool isVisAnimPlaying(const LiveActor*, const char*);
 bool isVisAnimExist(const LiveActor*);
 bool isVisAnimEnd(const LiveActor*);
@@ -267,8 +267,8 @@ bool isVisAnimPlaying(const LiveActor*);
 bool tryStartVisAnimIfExistForAction(LiveActor*, const char*);
 bool tryStartVisAnimIfNotPlayingForAction(LiveActor*, const char*);
 
-void startVisAnimForAction(const LiveActor*, const char*);
-void startVisAnimAndSetFrameAndStopForAction(const LiveActor*, const char*, f32);
+void startVisAnimForAction(LiveActor*, const char*);
+void startVisAnimAndSetFrameAndStopForAction(LiveActor*, const char*, f32);
 
 void clearVisAnimForAction(LiveActor*);
 
@@ -283,7 +283,7 @@ f32 getVisAnimFrameRateForAction(const LiveActor*);
 f32 getVisAnimFrameMaxForAction(const LiveActor*);
 f32 getVisAnimFrameMaxForAction(const LiveActor*, const char*);
 
-bool isVisAnimExistForAction(LiveActor*, const char*);
+bool isVisAnimExistForAction(const LiveActor*, const char*);
 bool isVisAnimPlayingForAction(const LiveActor*, const char*);
 bool isVisAnimExistForAction(const LiveActor*);
 bool isVisAnimEndForAction(const LiveActor*);
@@ -313,7 +313,7 @@ void clearPartialSklAnimWithInterpolate(LiveActor*, s32, s32);
 void addPartialSklAnimPartsList(LiveActor*, const char*, const char*, s32);
 void addPartialSklAnimPartsListRecursive(LiveActor*, const char*, s32);
 void setPartialSklAnimFrame(LiveActor*, s32, f32);
-void setPartialSklAnimFrameRate(const LiveActor*, s32, f32);
+void setPartialSklAnimFrameRate(LiveActor*, s32, f32);
 void setBaseMtxAndCalcAnim(LiveActor*, const sead::Matrix34f&, const sead::Vector3f&);
 
 const char* getPlayingPartialSklAnimName(const LiveActor*, s32);
