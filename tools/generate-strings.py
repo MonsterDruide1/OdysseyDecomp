@@ -1,4 +1,4 @@
-#!/ usr / bin / env python3
+#!/usr/bin/env python3
 
 import os
 import re
@@ -6,10 +6,10 @@ import re
 from common import setup_common as setup
 
 MIN_TEXT_SIZE = 0x2
-MAX_TEXT_SIZE = 0x400
+MAX_TEXT_SIZE = 0x600
 CHUNK_SIZE = 0x200 # Read file chunk size
 
-NSO_OFFSET = 0x7100000000
+NSO_OFFSET = 0x70FFFFFF00
 START_OFFSET = 0x710181c3d8 # String table start main 1.0.0
 END_OFFSET = 0x710187fb74 # String table end
 
@@ -17,14 +17,17 @@ def parse_string(buffer, offset, csv_file):
     if len (buffer) < MIN_TEXT_SIZE:
         return
     if len(buffer) > MAX_TEXT_SIZE:
+        print("Warning: String is bigger than buffer size")
+        print(buffer)
         return
 
-    nso_addr = NSO_OFFSET + offset - 0x100
+    nso_addr = NSO_OFFSET + offset
 
     try :
         text = buffer.decode('utf-8')
 
         # Make escape sequences visible
+        text = text.replace("\\", "\\\\")
         text = text.replace("\n", "\\n")
         text = text.replace("\r", "\\r")
         text = text.replace("\t", "\\t")
@@ -36,14 +39,14 @@ def parse_string(buffer, offset, csv_file):
         csv_file.write(text)
         csv_file.write("\"\n")
     except:
-        #Decode to utf - 8 can fail on non - string data
+        #Decode to utf-8 can fail on non-string data
         print("Unable to parse string")
         print(buffer)
 
 def parse_nso(csv_file, nso_file):
-    offset = START_OFFSET - NSO_OFFSET + 0x100
-    end = END_OFFSET - NSO_OFFSET + 0x100
-    nso_file.seek(offset);
+    offset = START_OFFSET - NSO_OFFSET
+    end = END_OFFSET - NSO_OFFSET
+    nso_file.seek(offset)
     buffer = bytes()
     
     while nso_file.tell() < end:
@@ -68,21 +71,16 @@ def parse_nso(csv_file, nso_file):
         buffer = buffer[last_zero + 1 : len(buffer)]
 
 def create_string_table(string_path, nso_path):
-    csv_file = open(string_path, "w")
-    nso_file = open(nso_path, "rb")
-    
-    parse_nso(csv_file, nso_file)
-    
-    nso_file.close()
-    csv_file.close()
+    with open(string_path, "w") as csv_file, open(nso_path, "rb") as nso_file:
+        parse_nso(csv_file, nso_file)
 
 project_root = setup.ROOT
 
 def main():
     if not os.path.isfile(project_root / 'data' / "main.nso"):
-        print("main.nso not found")
+        print("main.nso not found!")
         return
-    create_string_table(project_root / 'data'/ "data_strings.csv", project_root / 'data'/ "main.nso");
+    create_string_table(project_root / 'data'/ "data_strings.csv", project_root / 'data'/ "main.nso")
 
 if __name__ == "__main__" :
     main()

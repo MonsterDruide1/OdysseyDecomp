@@ -258,9 +258,8 @@ def common_sead_math_template(c, path):
                 continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
-def common_string_finder(c, path, string_table):
-    if not string_table:
-        return
+def common_string_finder(c, path):
+    string_table = get_string_table()
 
     for line in c.splitlines():
         if "#include" in line:
@@ -407,7 +406,7 @@ def header_no_offset_comments(c, path):
 # UTILS
 # -----
 
-def check_source(c, path, string_table):
+def check_source(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, False)
@@ -415,7 +414,7 @@ def check_source(c, path, string_table):
     common_void_params(c, path)
     common_const_type(c, path)
     common_this_prefix(c, path)
-    common_string_finder(c, path, string_table)
+    common_string_finder(c, path)
     common_sead_math_template(c, path)
 
 def check_header(c, path):
@@ -430,7 +429,7 @@ def check_header(c, path):
     header_no_offset_comments(c, path)
     common_this_prefix(c, path)
 
-def check_file(file_str, string_table):
+def check_file(file_str):
     file = open(file_str, mode="r")
     content = file.read()
     file.close()
@@ -438,23 +437,26 @@ def check_file(file_str, string_table):
     if file_str.endswith('.h'):
         check_header(content, file_str)
     elif file_str.endswith('.cpp'):
-        check_source(content, file_str,string_table)
+        check_source(content, file_str)
     else:
         FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
 
 def read_csv_file(path):
     if not os.path.isfile(path):
-        return []
-
-    file = open(path, mode="r")
-    reader = csv.reader(file)
+        raise FileNotFoundError('CSV File not found')
 
     rows = []
-    for row in reader:
-        rows.append(row)
 
-    file.close()
+    with open(path, "r") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            rows.append(row)
+
     return rows;
+
+@cache
+def get_string_table():
+    return read_csv_file(project_root / 'data' / "data_strings.csv");
 
 project_root = setup.ROOT
 
@@ -465,14 +467,12 @@ def main():
                         help="Give verbose output")
     args = parser.parse_args()
 
-    string_table = read_csv_file(project_root / 'data' / "data_strings.csv");
-
     for dir in [project_root / 'lib' / 'al', project_root / 'src']:
         for root, _, files in os.walk(dir):
             for file in files:
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
-                check_file(file_str, string_table)
+                check_file(file_str)
 
     if issueFound:
         exit(1)

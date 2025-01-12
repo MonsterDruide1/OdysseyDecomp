@@ -178,7 +178,7 @@ PlayerConst::PlayerConst() {
     mSlopeRollingEndBrakeEndSpeed = 10.0;
     mSlopeRollingReStartAccel = 6.0;
     mSlopeRollingReStartMaxAdd = 3.0;
-    mSlopeRollingReStartinterval = 15;
+    mSlopeRollingReStartInterval = 15;
     mSlopeRollingReStartSwing = 0;
     mSlopeRollingReStartCharge = 40;
     mSlopeRollingReStartForce = 60;
@@ -295,7 +295,7 @@ PlayerConst::PlayerConst() {
     mWallCatchMoveDegree = 40.0;
     mWallCatchMoveSpeed = 70.0;
     mWallCatchMoveHeightRange = 70.0;
-    mWallCatchMoveinterpolate = 10;
+    mWallCatchMoveInterpolate = 10;
     mWallCatchMoveFrame = 10;
     mWallCatchMoveFrameFast = 8;
     mWallCatchMoveFrameSwing = 6;
@@ -390,7 +390,7 @@ PlayerConst::PlayerConst() {
     mHipDropSpeedMax = 45.0;
     mHipDropLandCancelFrame = 24;
     mHipDropHeight = 40.0;
-    mHipDropMsginterval = 8;
+    mHipDropMsgInterval = 8;
     mJumpHipDropPower = 40.0;
     mJumpHipDropPermitBeginFrame = 5;
     mJumpHipDropPermitEndFrame = 30;
@@ -516,8 +516,8 @@ PlayerConst::PlayerConst() {
     mOxygenReduceFrame = 1380;
     mOxygenNoReduceFrame = 60;
     mOxygenRecoveryFrame = 30;
-    mOxygenDamageinterval = 300;
-    mIceWaterDamageinterval = 300;
+    mOxygenDamageInterval = 300;
+    mIceWaterDamageInterval = 300;
     mIceWaterRecoveryFrame = 70;
     mMoveAnimSpeedMax = 25.0;
     mAnimFrameRateSpeedMin = 6.0;
@@ -547,9 +547,9 @@ PlayerConst::PlayerConst() {
     mRollingAnimBorderSpeedMax = 35.0;
     mRollingAnimFrameRateMin = 0.2;
     mRollingAnimFrameRateMax = 1.0;
-    mSwimPaddleAniminterval = 32;
-    mSwimPaddleAnimRateintervalMax = 22;
-    mSwimPaddleAnimRateintervalMin = 5;
+    mSwimPaddleAnimInterval = 32;
+    mSwimPaddleAnimRateIntervalMax = 22;
+    mSwimPaddleAnimRateIntervalMin = 5;
     mSwimPaddleAnimMaxRate = 3.0;
     mSwimBentForwardMax = 30.0;
     mSwimBentForwardBlendRate = 0.05;
@@ -590,7 +590,7 @@ PlayerConst::PlayerConst() {
     mMustacheStability = 0.3;
     mMustacheFriction = 0.8;
     mMustacheLimitDegree = 10.0;
-    mCapinterpolateFrame = 15;
+    mCapInterpolateFrame = 15;
     mCapChildLocalOffset = 100.0;
     mCapStability = 0.75;
     mCapFriction = 0.2;
@@ -973,8 +973,8 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetFloatByKey(&mSlopeRollingReStartAccel, "SlopeRollingReStartAccel");
     mSlopeRollingReStartMaxAdd = 3.0;
     byaml.tryGetFloatByKey(&mSlopeRollingReStartMaxAdd, "SlopeRollingReStartMaxAdd");
-    mSlopeRollingReStartinterval = 15;
-    byaml.tryGetIntByKey(&mSlopeRollingReStartinterval, "SlopeRollingReStartInterval");
+    mSlopeRollingReStartInterval = 15;
+    byaml.tryGetIntByKey(&mSlopeRollingReStartInterval, "SlopeRollingReStartInterval");
     mSlopeRollingReStartSwing = 0;
     byaml.tryGetIntByKey(&mSlopeRollingReStartSwing, "SlopeRollingReStartSwing");
     mSlopeRollingReStartCharge = 40;
@@ -1207,8 +1207,8 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetFloatByKey(&mWallCatchMoveSpeed, "WallCatchMoveSpeed");
     mWallCatchMoveHeightRange = 70.0;
     byaml.tryGetFloatByKey(&mWallCatchMoveHeightRange, "WallCatchMoveHeightRange");
-    mWallCatchMoveinterpolate = 10;
-    byaml.tryGetIntByKey(&mWallCatchMoveinterpolate, "WallCatchMoveInterpolate");
+    mWallCatchMoveInterpolate = 10;
+    byaml.tryGetIntByKey(&mWallCatchMoveInterpolate, "WallCatchMoveInterpolate");
     mWallCatchMoveFrame = 10;
     byaml.tryGetIntByKey(&mWallCatchMoveFrame, "WallCatchMoveFrame");
     mWallCatchMoveFrameFast = 8;
@@ -1397,8 +1397,8 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetIntByKey(&mHipDropLandCancelFrame, "HipDropLandCancelFrame");
     mHipDropHeight = 40.0;
     byaml.tryGetFloatByKey(&mHipDropHeight, "HipDropHeight");
-    mHipDropMsginterval = 8;
-    byaml.tryGetIntByKey(&mHipDropMsginterval, "HipDropMsgInterval");
+    mHipDropMsgInterval = 8;
+    byaml.tryGetIntByKey(&mHipDropMsgInterval, "HipDropMsgInterval");
     mJumpHipDropPower = 40.0;
     byaml.tryGetFloatByKey(&mJumpHipDropPower, "JumpHipDropPower");
     mJumpHipDropPermitBeginFrame = 5;
@@ -1649,10 +1649,10 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetIntByKey(&mOxygenNoReduceFrame, "OxygenNoReduceFrame");
     mOxygenRecoveryFrame = 30;
     byaml.tryGetIntByKey(&mOxygenRecoveryFrame, "OxygenRecoveryFrame");
-    mOxygenDamageinterval = 300;
-    byaml.tryGetIntByKey(&mOxygenDamageinterval, "OxygenDamageInterval");
-    mIceWaterDamageinterval = 300;
-    byaml.tryGetIntByKey(&mIceWaterDamageinterval, "IceWaterDamageInterval");
+    mOxygenDamageInterval = 300;
+    byaml.tryGetIntByKey(&mOxygenDamageInterval, "OxygenDamageInterval");
+    mIceWaterDamageInterval = 300;
+    byaml.tryGetIntByKey(&mIceWaterDamageInterval, "IceWaterDamageInterval");
     mIceWaterRecoveryFrame = 70;
     byaml.tryGetIntByKey(&mIceWaterRecoveryFrame, "IceWaterRecoveryFrame");
     mMoveAnimSpeedMax = 25.0;
@@ -1711,12 +1711,12 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetFloatByKey(&mRollingAnimFrameRateMin, "RollingAnimFrameRateMin");
     mRollingAnimFrameRateMax = 1.0;
     byaml.tryGetFloatByKey(&mRollingAnimFrameRateMax, "RollingAnimFrameRateMax");
-    mSwimPaddleAniminterval = 32;
-    byaml.tryGetIntByKey(&mSwimPaddleAniminterval, "SwimPaddleAnimInterval");
-    mSwimPaddleAnimRateintervalMax = 22;
-    byaml.tryGetIntByKey(&mSwimPaddleAnimRateintervalMax, "SwimPaddleAnimRateIntervalMax");
-    mSwimPaddleAnimRateintervalMin = 5;
-    byaml.tryGetIntByKey(&mSwimPaddleAnimRateintervalMin, "SwimPaddleAnimRateIntervalMin");
+    mSwimPaddleAnimInterval = 32;
+    byaml.tryGetIntByKey(&mSwimPaddleAnimInterval, "SwimPaddleAnimInterval");
+    mSwimPaddleAnimRateIntervalMax = 22;
+    byaml.tryGetIntByKey(&mSwimPaddleAnimRateIntervalMax, "SwimPaddleAnimRateIntervalMax");
+    mSwimPaddleAnimRateIntervalMin = 5;
+    byaml.tryGetIntByKey(&mSwimPaddleAnimRateIntervalMin, "SwimPaddleAnimRateIntervalMin");
     mSwimPaddleAnimMaxRate = 3.0;
     byaml.tryGetFloatByKey(&mSwimPaddleAnimMaxRate, "SwimPaddleAnimMaxRate");
     mSwimBentForwardMax = 30.0;
@@ -1797,8 +1797,8 @@ PlayerConst::PlayerConst(const al::ByamlIter& byaml) {
     byaml.tryGetFloatByKey(&mMustacheFriction, "MustacheFriction");
     mMustacheLimitDegree = 10.0;
     byaml.tryGetFloatByKey(&mMustacheLimitDegree, "MustacheLimitDegree");
-    mCapinterpolateFrame = 15;
-    byaml.tryGetIntByKey(&mCapinterpolateFrame, "CapInterpolateFrame");
+    mCapInterpolateFrame = 15;
+    byaml.tryGetIntByKey(&mCapInterpolateFrame, "CapInterpolateFrame");
     mCapChildLocalOffset = 100.0;
     byaml.tryGetFloatByKey(&mCapChildLocalOffset, "CapChildLocalOffset");
     mCapStability = 0.75;
@@ -2560,7 +2560,7 @@ f32 PlayerConst::getSlopeRollingReStartMaxAdd() const {
 }
 
 s32 PlayerConst::getSlopeRollingReStartInterval() const {
-    return mSlopeRollingReStartinterval;
+    return mSlopeRollingReStartInterval;
 }
 
 s32 PlayerConst::getSlopeRollingReStartSwing() const {
@@ -3028,7 +3028,7 @@ f32 PlayerConst::getWallCatchMoveHeightRange() const {
 }
 
 s32 PlayerConst::getWallCatchMoveInterpolate() const {
-    return mWallCatchMoveinterpolate;
+    return mWallCatchMoveInterpolate;
 }
 
 s32 PlayerConst::getWallCatchMoveFrame() const {
@@ -3408,7 +3408,7 @@ f32 PlayerConst::getHipDropHeight() const {
 }
 
 s32 PlayerConst::getHipDropMsgInterval() const {
-    return mHipDropMsginterval;
+    return mHipDropMsgInterval;
 }
 
 f32 PlayerConst::getJumpHipDropPower() const {
@@ -3912,11 +3912,11 @@ s32 PlayerConst::getOxygenRecoveryFrame() const {
 }
 
 s32 PlayerConst::getOxygenDamageInterval() const {
-    return mOxygenDamageinterval;
+    return mOxygenDamageInterval;
 }
 
 s32 PlayerConst::getIceWaterDamageInterval() const {
-    return mIceWaterDamageinterval;
+    return mIceWaterDamageInterval;
 }
 
 s32 PlayerConst::getIceWaterRecoveryFrame() const {
@@ -4036,15 +4036,15 @@ f32 PlayerConst::getRollingAnimFrameRateMax() const {
 }
 
 s32 PlayerConst::getSwimPaddleAnimInterval() const {
-    return mSwimPaddleAniminterval;
+    return mSwimPaddleAnimInterval;
 }
 
 s32 PlayerConst::getSwimPaddleAnimRateIntervalMax() const {
-    return mSwimPaddleAnimRateintervalMax;
+    return mSwimPaddleAnimRateIntervalMax;
 }
 
 s32 PlayerConst::getSwimPaddleAnimRateIntervalMin() const {
-    return mSwimPaddleAnimRateintervalMin;
+    return mSwimPaddleAnimRateIntervalMin;
 }
 
 f32 PlayerConst::getSwimPaddleAnimMaxRate() const {
@@ -4208,7 +4208,7 @@ f32 PlayerConst::getMustacheLimitDegree() const {
 }
 
 s32 PlayerConst::getCapInterpolateFrame() const {
-    return mCapinterpolateFrame;
+    return mCapInterpolateFrame;
 }
 
 f32 PlayerConst::getCapChildLocalOffset() const {
