@@ -11,7 +11,7 @@ class SimpleLayoutTextWrapper {
 public:
     SimpleLayoutTextWrapper(SimpleLayoutText* simpleLayoutText);
     SimpleLayoutTextWrapper* start(const sead::Vector2f& pos, const char* str, s32 lifetime);
-    SimpleLayoutTextWrapper* start(const sead::Vector2f& pos, const char16_t* str, s32 lifetime);
+    SimpleLayoutTextWrapper* start(const sead::Vector2f& pos, const char16* str, s32 lifetime);
     SimpleLayoutTextWrapper* setScale(f32 scale);
     SimpleLayoutTextWrapper* setColor(const sead::Color4u8& color);
     SimpleLayoutTextWrapper* setPos(const sead::Vector2f& pos);
@@ -32,7 +32,7 @@ public:
                            const char* paneName, const char* archiveName);
     void reset();
     SimpleLayoutTextHolderEntry* start(const sead::Vector2f& pos, const char* str);
-    SimpleLayoutTextHolderEntry* start(const sead::Vector2f& pos, const char16_t* str);
+    SimpleLayoutTextHolderEntry* start(const sead::Vector2f& pos, const char16* str);
 
 private:
     s32 mCurrentIndex = 0;
