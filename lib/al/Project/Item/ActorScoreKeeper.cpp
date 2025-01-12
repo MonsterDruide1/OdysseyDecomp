@@ -30,8 +30,8 @@ inline void ActorScoreKeeper::allocArray() {
 }
 
 inline void ActorScoreKeeper::putEntry(s32 index, const ByamlIter& iter) {
-    auto& entry = mArray[index];
-    iter.tryGetStringByKey(&entry.factorName, "FactorName");
-    iter.tryGetStringByKey(&entry.categoryName, "CategoryName");
+    auto* entry = &mArray[index];
+    iter.tryGetStringByKey(&entry->factorName, "FactorName");
+    iter.tryGetStringByKey(&entry->categoryName, "CategoryName");
 }
 }  // namespace al
