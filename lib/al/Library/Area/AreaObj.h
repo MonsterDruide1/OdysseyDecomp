@@ -20,9 +20,9 @@ public:
     const char* getName() const override;
     StageSwitchKeeper* getStageSwitchKeeper() const override;
     void initStageSwitchKeeper() override;
-    void init(const AreaInitInfo& info);
-    bool isInVolume(const sead::Vector3f& pos) const;
-    bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
+    virtual void init(const AreaInitInfo& info);
+    virtual bool isInVolume(const sead::Vector3f& pos) const;
+    virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
     SceneObjHolder* getSceneObjHolder() const override;
 
 private:
