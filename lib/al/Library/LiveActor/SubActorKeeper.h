@@ -91,7 +91,6 @@ struct SubActorSync {
 class SubActorInfo {
 public:
     SubActorInfo();
-
     SubActorInfo(LiveActor* actor, SubActorSync syncType) : mSubActor(actor), mSyncType(syncType) {}
 
     LiveActor* mSubActor = nullptr;

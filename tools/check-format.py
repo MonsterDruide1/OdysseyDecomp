@@ -5,6 +5,7 @@ import csv
 import os
 import stat
 import re
+import subprocess
 from functools import cache
 
 from common import setup_common as setup
@@ -17,19 +18,22 @@ from common.util import utils
 issueFound = False
 runAllChecks = False
 offsetCommentCheckFail = False
+noMismatchCheck = False
 functionData = None
 
 def is_function_mismatch(namepacesAndName):
     combinedNames = ""
-    for name in namepacesAndName.split("::"):
+    namesArray = namepacesAndName.split("::")
+    for name in namesArray:
         combinedNames += str(len(name)) + name
-    #if "PlayerInputFunction" in combinedNames and "a" in combinedNames:
-        #print(combinedNames)
     for info in functionData:
-        #if "PlayerInputFunction" in info.name and "isTriggerAction" in info.name:
-            #print(info.name, info.status)
-        if combinedNames in info.name:
-            #print(combinedNames)
+        foundCtorOrDtor = False
+        if len(namesArray) > 1 and namesArray[len(namesArray) - 1] == namesArray[len(namesArray) - 2]:
+            foundCtorOrDtor = namesArray[len(namesArray) - 2] + "C1" in info.name 
+        elif len(namesArray) > 1 and namesArray[len(namesArray) - 1][0] == '~':
+            foundCtorOrDtor = namesArray[len(namesArray) - 2] + "D0" in info.name
+
+        if combinedNames in info.name or foundCtorOrDtor:
             return info.status == utils.FunctionStatus.NonMatching or info.status == utils.FunctionStatus.Equivalent
     return False
 
@@ -468,12 +472,8 @@ def source_non_matching_comment(c, path):
             startIndex = line.find(" ", 2, len(line) - 2) + 1
             if startIndex == -1 or startIndex > line.find("("):
                 startIndex = 0
-            #else:
-                #print("Found space at: ", str(startIndex))
-                #print(line)
             functionNameAndNamespaces = line[startIndex:line.find("(")]
             if is_function_mismatch(functionNameAndNamespaces):
-                print("Found mismatching function!")
                 if "NON_MATCHING" not in lines[i - 1] and "NON_MATCHING" not in lines[i - 2]:
                     FAIL("Functions that mismatch must have a NON_MATCHING comment above them!", line, path)
 
@@ -498,9 +498,10 @@ def check_source(c, path):
     common_string_finder(c, path)
     common_sead_math_template(c, path)
     source_no_nerve_make(c, path)
-    #common_const_reference(c, path)
-    #source_no_raw_auto(c, path)
-    source_non_matching_comment(c, path)
+    common_const_reference(c, path)
+    source_no_raw_auto(c, path)
+    if not noMismatchCheck:
+        source_non_matching_comment(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -513,8 +514,8 @@ def check_header(c, path):
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
     common_this_prefix(c, path)
-    # common_const_reference(c, path)
-    #header_lowercase_member_offset_vars(c, path)
+    common_const_reference(c, path)
+    header_lowercase_member_offset_vars(c, path)
 
 def check_file(file_str):
     st = os.stat(file_str)
@@ -556,24 +557,33 @@ def main():
         'check-format.py', description="Verify additional formatting options next to clang-format and clang-tidy")
     parser.add_argument('--verbose', action='store_true',
                         help="Give verbose output")
-    parser.add_argument('--no-clang-format', action='store_true',
-                        help="Don't automatically run clang format before checking each file")
+    parser.add_argument('-f', '--run-clang-format', action='store_true',
+                        help="Automatically run clang format before checking each file")
     parser.add_argument('-a', '--all', action='store_true',
                         help="Run all checks even if one of them fails")
+    parser.add_argument('--no-mismatch', action='store_true',
+                        help="Don't run NON_MATCHING comment check. Usuful when you want the script to run fast")
     args = parser.parse_args()
 
     global runAllChecks
     runAllChecks = args.all
 
+    global noMismatchCheck
+    noMismatchCheck = args.no_mismatch
+
     global functionData
-    functionData = utils.get_functions()
+    functionData = list(utils.get_functions())
+
+    if not args.run_clang_format:
+        print("Warning: Source files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-f')")
+        print()
 
     for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
-                if not args.no_clang_format:
+                if args.run_clang_format:
                     subprocess.check_call(['clang-format', '-i', file_str])
                 check_file(file_str)
 
