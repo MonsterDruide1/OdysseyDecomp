@@ -1,8 +1,6 @@
 #include "Library/Rail/RailPart.h"
 
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
-#include "Library/Math/VectorUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Project/Rail/BezierCurve.h"
 #include "Project/Rail/LinearCurve.h"
 

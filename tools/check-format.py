@@ -147,18 +147,23 @@ def common_include_order(c, path, is_header):
         del lines[0]
 
     include_lines = []
+    non_empty_include_lines = []
     end_of_includes = False
     for line in lines:
         if line.startswith("#include"):
             if CHECK(lambda a: not end_of_includes, line, "Includes have to be listed at the very top of the file!",
                      path): return
             include_lines.append(line)
+            non_empty_include_lines.append(line)
         elif line == "" and not end_of_includes:
             include_lines.append(line)
         else:
             end_of_includes = True
 
     angled_includes, al_includes, game_includes = get_includes()
+
+    if len(non_empty_include_lines) != len(set(non_empty_include_lines)):
+        FAIL("Found duplicate includes!", -1, path)
 
     order = -1  # -1=none (after initial newline) ; 0=angled (sead, agl, nn, eui) ; 1=al ; 2=game ; -2,-3,-4=newline after respective section (angled, al, game)
     for line in include_lines:
