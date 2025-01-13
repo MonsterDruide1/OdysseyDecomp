@@ -3,14 +3,15 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/MathUtil.h"
 
-void localFunc_34B9A8(WorldMapParts* mapParts) {
-    al::invalidateOcclusionQuery(mapParts);
-    //    if(al::isExistSubActorKeeper(mapParts) && al::getSubActorNum(mapParts) >= 1) {
-    //
-    //    }
+void recursivelyInvalidateOcclusionQuery(al::LiveActor* actor) {
+    al::invalidateOcclusionQuery(actor);
+    if (al::isExistSubActorKeeper(actor))
+        for (s32 i = 0; i < al::getSubActorNum(actor); i++)
+            recursivelyInvalidateOcclusionQuery(al::getSubActor(actor, i));
 }
 
 WorldMapParts::WorldMapParts(const char* name) : al::LiveActor(name) {}
@@ -50,7 +51,7 @@ void WorldMapParts::initParts(WorldMapParts* mapParts, const char* arcName,
     mapParts->updatePose();
 
     if (al::isExistModel(mapParts))
-        localFunc_34B9A8(mapParts);
+        recursivelyInvalidateOcclusionQuery(mapParts);
 
     mapParts->makeActorDead();
 }
