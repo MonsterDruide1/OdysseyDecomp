@@ -32,9 +32,9 @@ void extractString(char* out, const char* str, u32 len, u32 unused) {
 
 // void searchSubString(const char*, const char*);
 // void searchSubString(const char*, const char*, s32);
-// void getSubStringUnmatched(const char**, const char*, const MatchStr&,
-//                            void (*)(const char*, const char*, void*), void*);
-// void getSubStringUnmatched(const char*, const MatchStr&);
+// const char* getSubStringUnmatched(const char**, const char*, const MatchStr&,
+//                                   void (*)(const char*, const char*, void*), void*);
+// const char* getSubStringUnmatched(const char*, const MatchStr&);
 // void extractBaseNameW(sead::WBufferedSafeString*, const sead::WSafeString&);
 
 void removeExtensionString(char* out, u32 len, const char* str) {
