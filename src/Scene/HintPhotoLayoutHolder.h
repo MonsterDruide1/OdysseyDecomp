@@ -14,6 +14,7 @@ public:
     const al::LayoutActor* getPhotoLayout() const;
     DecideIconLayout* getDecideIcon() const;
     const char* getSceneObjName() const;
+
 private:
     al::LayoutActor* mLayoutActor = nullptr;
     DecideIconLayout* mDecideIconLayout = nullptr;
