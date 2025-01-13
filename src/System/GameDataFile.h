@@ -5,6 +5,7 @@
 #include <prim/seadSafeString.h>
 
 class GameProgressData;
+class GameDataHolder;
 
 class GameDataFile {
 public:
@@ -58,8 +59,13 @@ public:
     void wearCap(const char*);
 
 private:
-    unsigned char padding_6A8[0x6A8];
+    unsigned char f1[0x6A8];
     GameProgressData* mGameProgressData;
-    char padding_9F0[0x340];
+    char f2[0x1a0];
+    GameDataHolder *mGameDataHolder;
+    char f3[0x198];
     s32 mCurWorldId;
+    char padding_170[0x170];
 };
+
+static_assert(sizeof(GameDataFile) == 0xb68);
