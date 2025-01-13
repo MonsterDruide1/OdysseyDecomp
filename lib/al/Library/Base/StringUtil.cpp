@@ -39,8 +39,8 @@ void extractString(char* out, const char* str, u32 len, u32 unused) {
 
 void removeExtensionString(char* out, u32 len, const char* str) {
     snprintf(out, len, "%s", str);
-    char* dot = strchr(out, L'.');
-    char* dirSeparator = strchr(out, L'/');
+    char* dot = strchr(out, '.');
+    char* dirSeparator = strchr(out, '/');
 
     if (dot == nullptr || dot < dirSeparator || ++dirSeparator == dot)
         return;
@@ -103,7 +103,7 @@ bool isStartWithString(const char* str, const char* start) {
     return false;
 }
 
-// NON_MATCHING: inlined return
+// NON_MATCHING: inlined return https://decomp.me/scratch/XEtRH
 bool isEndWithString(const char* str, const char* end) {
     s32 lenStr = strlen(str);
     s32 lenEnd = strlen(end);
