@@ -23,6 +23,8 @@ public:
 
     AchievementInfo* get(s32 index) { return mAchievements[index]; }
 
+    AchievementInfo* unsafeAt(s32 index) { return mAchievements.unsafeAt(index); }
+
     s32 size() { return mAchievements.size(); }
 
     s32 capacity() { return mAchievements.capacity(); }
