@@ -2,17 +2,16 @@
 
 #include "Library/Layout/LayoutInitInfo.h"
 
-class DecideIconLayout {
+class DecideIconLayout : public al::NerveExecutor {
 public:
-    DecideIconLayout(char* param_1, const al::LayoutInitInfo* param_2); // Haven't Worked out the params yet
+    DecideIconLayout(const char* ,
+                     const al::LayoutInitInfo*);
     void appear();
     void exeAppear();
     void exeWait();
     void exeDecide();
-    void isDecide();
-    void isWait();
-    void isEnd();
+    bool isDecide();
+    bool isWait();
+    bool isEnd();
     char filler[0x150];
-
 };
-
