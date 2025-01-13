@@ -1,7 +1,6 @@
 #include "Library/Base/StringUtil.h"
 
 #include <prim/seadStringUtil.h>
-#include <resource/seadResource.h>
 
 namespace al {
 const char* createStringIfInStack(const char* str) {
