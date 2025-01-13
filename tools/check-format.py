@@ -269,7 +269,7 @@ def common_string_finder(c, path):
         if "//" in line:
             continue
 
-        matches = re.findall(r'"(.+?)"', line)
+        matches = re.findall(r'"(.*?)"', line)
 
         for match in matches:
             if len(match) < 2:
