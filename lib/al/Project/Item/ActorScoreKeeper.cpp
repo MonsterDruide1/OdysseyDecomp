@@ -22,7 +22,7 @@ void ActorScoreKeeper::init(const ByamlIter& iter) {
 }
 
 inline void ActorScoreKeeper::allocArray() {
-    Entry* local_array = new Entry[mSize];
+    Entry* local_array = new Entry[mSize]();
     if (mSize)
         memset(local_array, 0, sizeof(Entry) * mSize);
     mArray = local_array;

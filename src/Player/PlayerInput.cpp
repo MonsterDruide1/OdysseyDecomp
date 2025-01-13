@@ -12,9 +12,6 @@
 #include "Player/PlayerInputFunction.h"
 #include "Util/ActorDimensionKeeper.h"
 
-PlayerInput::PlayerInput(const al::LiveActor*, const IUsePlayerCollision*, const IUseDimension*) {
-}  // FIXME remove this
-
 bool PlayerInput::isEnableCarry() const {
     if (mIsDisableInput)
         return false;

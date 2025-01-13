@@ -2,6 +2,8 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 class ExecuteRequestKeeper;
 class ExecuteTableHolderDraw;
@@ -12,7 +14,7 @@ class IUseExecutor;
 class LayoutActor;
 class LiveActor;
 
-class ExecuteDirector {
+class ExecuteDirector : public HioNode {
 public:
     ExecuteDirector(s32 count);
     virtual ~ExecuteDirector();
@@ -33,7 +35,7 @@ public:
     bool isActiveDraw(const char* tableName) const;
 
 private:
-    s32 mRequestCount = 0;
+    s32 mRequestCount;
     s32 mUpdateTableCount = 0;
     ExecuteTableHolderUpdate** mUpdateTables = nullptr;
     s32 mDrawTableCount = 0;

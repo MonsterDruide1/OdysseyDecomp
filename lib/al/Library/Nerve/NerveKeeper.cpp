@@ -5,7 +5,7 @@
 
 namespace al {
 NerveKeeper::NerveKeeper(IUseNerve* parent, const Nerve* nerve, s32 maxStates)
-    : mParent(parent), mNextNerve(nullptr) {
+    : mParent(parent), mNextNerve(nerve) {
     if (maxStates > 0)
         mStateCtrl = new NerveStateCtrl(maxStates);
 }
