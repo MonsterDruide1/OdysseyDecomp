@@ -83,20 +83,20 @@ public:
     const ActorSceneInfo& getActorSceneInfo() const { return mActorSceneInfo; }
 
 private:
-    LiveActorGroup* mKitDrawingGroup;
-    const PlacementInfo* mPlacementInfo;
-    const LayoutInitInfo* mLayoutInitInfo;
-    ActorSceneInfo mActorSceneInfo;
-    LiveActorGroup* mAllActorsGroup;
-    const ActorFactory* mActorFactory;
-    ActorResourceHolder* mActorResourceHolder;
-    AudioDirector* mAudioDirector;
-    EffectSystemInfo* mEffectSystemInfo;
-    ExecuteDirector* mExecuteDirector;
-    HitSensorDirector* mHitSensorDirector;
-    ScreenPointDirector* mScreenPointDirector;
-    StageSwitchDirector* mStageSwitchDirector;
-    ViewIdHolder* mViewIdHolder;
+    LiveActorGroup* mKitDrawingGroup = nullptr;
+    const PlacementInfo* mPlacementInfo = nullptr;
+    const LayoutInitInfo* mLayoutInitInfo = nullptr;
+    ActorSceneInfo mActorSceneInfo = {};
+    LiveActorGroup* mAllActorsGroup = nullptr;
+    const ActorFactory* mActorFactory = nullptr;
+    ActorResourceHolder* mActorResourceHolder = nullptr;
+    AudioDirector* mAudioDirector = nullptr;
+    EffectSystemInfo* mEffectSystemInfo = nullptr;
+    ExecuteDirector* mExecuteDirector = nullptr;
+    HitSensorDirector* mHitSensorDirector = nullptr;
+    ScreenPointDirector* mScreenPointDirector = nullptr;
+    StageSwitchDirector* mStageSwitchDirector = nullptr;
+    ViewIdHolder* mViewIdHolder = nullptr;
 };
 
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo);

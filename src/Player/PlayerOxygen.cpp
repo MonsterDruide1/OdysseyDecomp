@@ -26,14 +26,12 @@ void PlayerOxygen::reduce() {
     }
 }
 
-#ifdef NON_MATCHING
 void PlayerOxygen::recovery() {
-    // different regalloc
-    mOxygenLevel = sead::Mathf::min(1.0f, mOxygenLevel + (1.0f / mOxygenRecoveryFrame));
+    mOxygenLevel += (1.0f / mOxygenRecoveryFrame);
+    mOxygenLevel = sead::Mathf::min(1.0f, mOxygenLevel);
     mFramesReducing = 0;
     mFramesWithoutOxygen = 0;
 }
-#endif
 
 bool PlayerOxygen::isTriggerDamage() const {
     if (mFramesWithoutOxygen)

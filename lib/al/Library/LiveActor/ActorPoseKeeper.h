@@ -238,7 +238,7 @@ public:
 
 private:
     sead::Vector3f mRotate = {0.0, 0.0, 0.0};
-    sead::Vector3f mGravity = {0.0, -1.0, 0.0};
+    sead::Vector3f mGravity = -sead::Vector3f::ey;
     sead::Vector3f mScale = {1.0, 1.0, 1.0};
     sead::Vector3f mVelocity = {0.0, 0.0, 0.0};
     sead::Matrix34f mMtx;

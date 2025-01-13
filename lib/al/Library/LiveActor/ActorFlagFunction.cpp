@@ -1,7 +1,10 @@
 #include "Library/LiveActor/ActorFlagFunction.h"
 
+#include "Library/Collision/Collider.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/LiveActorFlag.h"
+#include "Library/Shadow/ShadowKeeper.h"
+#include "Library/Shadow/ShadowMaskCtrl.h"
 
 namespace al {
 bool isAlive(const LiveActor* actor) {
@@ -17,19 +20,30 @@ bool isNoCollide(const LiveActor* actor) {
 }
 
 void onCalcAnim(LiveActor* actor) {
-    actor->getFlags()->isCalcAnim = true;
+    actor->getFlags()->isDisableCalcAnim = false;
 }
 
 void offCalcAnim(LiveActor* actor) {
-    actor->getFlags()->isCalcAnim = false;
+    actor->getFlags()->isDisableCalcAnim = true;
 }
 
-void validateShadow(LiveActor* actor) {}
+void validateShadow(LiveActor* actor) {
+    ShadowMaskCtrl* shadowMaskCtrl = actor->getShadowKeeper()->getShadowMaskCtrl();
+    if (shadowMaskCtrl)
+        shadowMaskCtrl->validate();
+}
 
-void invalidateShadow(LiveActor* actor) {}
+void invalidateShadow(LiveActor* actor) {
+    ShadowMaskCtrl* shadowMaskCtrl = actor->getShadowKeeper()->getShadowMaskCtrl();
+    if (shadowMaskCtrl)
+        shadowMaskCtrl->invalidate();
+}
 
 void onCollide(LiveActor* actor) {
     actor->getFlags()->isCollideOff = false;
+    Collider* collider = actor->getCollider();
+    if (collider)
+        collider->onInvalidate();
 }
 
 void offCollide(LiveActor* actor) {
@@ -61,7 +75,7 @@ void onAreaTarget(LiveActor* actor) {
 }
 
 void offAreaTarget(LiveActor* actor) {
-    actor->getFlags()->isAreaTargetOn = true;
+    actor->getFlags()->isAreaTargetOn = false;
 }
 
 bool isUpdateMovementEffectAudioCollisionSensor(const LiveActor* actor) {

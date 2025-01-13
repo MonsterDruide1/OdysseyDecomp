@@ -54,6 +54,7 @@ bool PlayerPainPartsKeeper::isInvalidNoseDynamics() const {
     return mNeedlesActor && al::isAlive(mNeedlesActor);
 }
 
+static sead::Vector3f initialPosition = {0, 0, 0};
 static sead::Vector3f initialRotation = {0, 270, 180};
 
 void PlayerPainPartsKeeper::createNoseNeedle(const PlayerModelHolder* playerModelHolder,
@@ -63,8 +64,8 @@ void PlayerPainPartsKeeper::createNoseNeedle(const PlayerModelHolder* playerMode
     mPlayerFaceActor = playerFaceActor;
     mNeedlesActor = new al::PartsModel("鼻のトゲ");
     mNeedlesActor->initPartsDirect(playerFaceActor, actorInitInfo, "CactusMiniNeedle",
-                                   al::getJointMtxPtr(faceSubActor, "Nose"), sead::Vector3f::zero,
-                                   initialRotation, {1, 1, 1}, false);
+                                   al::getJointMtxPtr(faceSubActor, "Nose"), initialPosition,
+                                   initialRotation, {1.0f, 1.0f, 1.0f}, false);
     al::onSyncClippingSubActor(playerFaceActor, mNeedlesActor);
     al::onSyncHideSubActor(playerFaceActor, mNeedlesActor);
     al::onSyncAlphaMaskSubActor(playerFaceActor, mNeedlesActor);
@@ -78,10 +79,8 @@ void PlayerPainPartsKeeper::appearNeedle() {
         return;
 
     mNeedlesActor->makeActorAlive();
-    const char* actionName;
     if (mPlayerCostumeInfo->isHidePainNose())
-        actionName = "NoseOff";
+        al::startAction(mNeedlesActor, "NoseOff");
     else
-        actionName = "NoseOn";
-    al::startAction(mNeedlesActor, actionName);
+        al::startAction(mNeedlesActor, "NoseOn");
 }
