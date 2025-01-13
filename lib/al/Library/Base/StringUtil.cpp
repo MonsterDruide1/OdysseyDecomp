@@ -103,6 +103,7 @@ bool isStartWithString(const char* str, const char* start) {
     return false;
 }
 
+// NON_MATCHING: inlined return
 bool isEndWithString(const char* str, const char* end) {
     s32 lenStr = strlen(str);
     s32 lenEnd = strlen(end);
