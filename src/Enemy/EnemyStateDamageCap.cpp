@@ -6,7 +6,7 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "Enemy/EnemyCap.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(EnemyStateDamageCap, Wait);

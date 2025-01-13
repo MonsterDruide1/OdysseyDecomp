@@ -7,20 +7,58 @@ class HitSensor;
 class SensorMsg;
 }  // namespace al
 
+class CapTargetInfo;
+
 namespace rs {
 
-bool isMsgAirExplosion(const al::SensorMsg* msg);
-bool isMsgByugoBlow(const al::SensorMsg* msg);
-bool isMsgCapAttack(const al::SensorMsg* msg);
-bool isMsgFishingItemGet(const al::SensorMsg* msg);
-bool isMsgFishingLineTouch(const al::SensorMsg* msg);
-bool isMsgItemGet2D(const al::SensorMsg* msg);
-bool isMsgItemGetAll(const al::SensorMsg* msg);
-bool isMsgPlayerDisregardTargetMarker(const al::SensorMsg* msg);
+bool sendMsgEnemyAttack2D(al::HitSensor* source, al::HitSensor* target);
+bool sendMsgNoticePlayerDamage(al::HitSensor* source, al::HitSensor* target);
+bool sendMsgTouchFireDrum2D(al::HitSensor* source, al::HitSensor* target);
+bool sendMsgItemAmiiboKoopa(al::HitSensor* source, al::HitSensor* target);
+bool sendMsgPushToPlayer(al::HitSensor* source, al::HitSensor* target);
 
-bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg* msg);
-bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg* msg);
+bool isMsgCapTouchWall(const al::SensorMsg*);
+bool isMsgCapHipDrop(const al::SensorMsg*);
+bool tryReceiveMsgInitCapTargetAndSetCapTargetInfo(const al::SensorMsg*, const CapTargetInfo*);
+bool isMsgPlayerDisregardHomingAttack(const al::SensorMsg*);
+bool isMsgPlayerDisregardTargetMarker(const al::SensorMsg*);
+bool isMsgTargetMarkerPosition(const al::SensorMsg*);
+void setMsgTargetMarkerPosition(const al::SensorMsg*, const sead::Vector3f&);
+bool isMsgCapKeepLockOn(const al::SensorMsg*);
+bool isMsgCapCancelLockOn(const al::SensorMsg*);
+bool isMsgStartHack(const al::SensorMsg*);
+bool isMsgCapStartLockOn(const al::SensorMsg*);
+bool isMsgCancelHack(const al::SensorMsg*);
+bool isMsgHackMarioDead(const al::SensorMsg*);
+bool isMsgHackMarioDemo(const al::SensorMsg*);
+bool isMsgHackMarioInWater(const al::SensorMsg*);
+bool isMsgHackMarioCheckpointFlagWarp(const al::SensorMsg*);
+bool isMsgPlayerDisregard(const al::SensorMsg*);
+bool isMsgCapAttackCollide(const al::SensorMsg*);
+bool isMsgFrogHackTrample(const al::SensorMsg*);
+bool isMsgCapAttack(const al::SensorMsg*);
+bool isMsgPressDown(const al::SensorMsg*);
+bool isMsgAttackDirect(const al::SensorMsg*);
+bool isMsgTankBullet(const al::SensorMsg*);
+bool isMsgTankExplosion(const al::SensorMsg*);
+bool isMsgSeedAttackHold(const al::SensorMsg*);
+bool isMsgWanwanEnemyAttack(const al::SensorMsg*);
+bool isMsgBlowDown(const al::SensorMsg*);
+bool isMsgNpcScareByEnemy(const al::SensorMsg*);
+bool isMsgKillByShineGet(const al::SensorMsg*);
+bool isMsgKillByHomeDemo(const al::SensorMsg*);
+bool isMsgAirExplosion(const al::SensorMsg*);
+bool isMsgByugoBlow(const al::SensorMsg*);
+bool isMsgFishingItemGet(const al::SensorMsg*);
+bool isMsgFishingLineTouch(const al::SensorMsg*);
+bool isMsgItemGet2D(const al::SensorMsg*);
+bool isMsgItemGetAll(const al::SensorMsg*);
+bool isMsgCapIgnoreCancelLockOn(const al::SensorMsg*);
 
+bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg*);
+bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg*);
+
+void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*);
 void requestHitReactionToAttacker(const al::SensorMsg*, const al::HitSensor*,
                                   const sead::Vector3f&);
 
