@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/Math/Axis.h"
 
 namespace al {
 class SlideMapParts : public LiveActor {
@@ -21,7 +22,7 @@ public:
 private:
     sead::Matrix34f mSurfaceEffectMtx = sead::Matrix34f::ident;
     sead::Vector3f mTrans = sead::Vector3f::zero;
-    s32 /*Axis*/ mMoveAxis = 0 /*Axis::None*/;
+    Axis mMoveAxis = Axis::None;
     f32 mMoveDistance = 100.0f;
     f32 mMoveSpeed = 10.0f;
     s32 mWaitTime = 60;

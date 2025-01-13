@@ -38,7 +38,7 @@ void SlideMapParts::init(const ActorInitInfo& info) {
     registerAreaHostMtx(this, info);
 
     mTrans = getTrans(this);
-    tryGetArg(&mMoveAxis, info, "MoveAxis");
+    tryGetArg((s32*)&mMoveAxis, info, "MoveAxis");
     tryGetArg(&mMoveDistance, info, "MoveDistance");
     tryGetArg(&mMoveSpeed, info, "MoveSpeed");
     tryGetArg(&mWaitTime, info, "WaitTime");
@@ -53,7 +53,7 @@ void SlideMapParts::init(const ActorInitInfo& info) {
     initMaterialCode(this, info);
 
     sead::Vector3f t;
-    calcQuatLocalAxis(&t, getQuat(this), mMoveAxis);
+    calcQuatLocalAxis(&t, getQuat(this), (s32)mMoveAxis);
 
     f32 offsetX = surfaceHeight * t.x + mTrans.x;
     f32 offsetY = surfaceHeight * t.y;
@@ -150,7 +150,7 @@ void SlideMapParts::exeMove() {
     if (!_15c)
         rate = 1.0f - rate;
 
-    setTransOffsetLocalDir(this, getQuat(this), mTrans, mMoveDistance * rate, mMoveAxis);
+    setTransOffsetLocalDir(this, getQuat(this), mTrans, mMoveDistance * rate, (s32)mMoveAxis);
 
     if (isGreaterEqualStep(this, calcMoveTime())) {
         if (_15c)
@@ -171,10 +171,6 @@ s32 SlideMapParts::calcMoveTime() const {
     if (mMoveSpeed < 1.0f)
         return 0;
 
-    f32 moveTime = mMoveDistance / mMoveSpeed;
-    if (!(moveTime > 0.0f))
-        moveTime = -moveTime;
-
-    return (s32)moveTime;
+    return (s32)sead::Mathf::abs(mMoveDistance / mMoveSpeed);
 }
 }  // namespace al
