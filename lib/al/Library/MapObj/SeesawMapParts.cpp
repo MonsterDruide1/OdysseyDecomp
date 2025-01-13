@@ -98,31 +98,32 @@ void SeesawMapParts::appearAndSetStart() {
     makeActorAlive();
 }
 
-void SeesawMapParts::exeWait() {
-    if (_144 > 0.0f) {
-        if (_148 >= 60)
-            _148 = 60;
-        else
-            _148++;
-        _144 = 0.0f;
-    } else if (_144 < 0.0f) {
-        if (_148 <= -60)
-            _148 = -60;
-        else
-            _148--;
-        _144 = 0.0f;
-    } else if (_148 > 0) {
-        _148--;
-        _144 = 0.0f;
-        if (_148 < 1) {
-            if (_148 <= -1)
-                _134 -= mRotateAccelOn;
-            else if (_130 >= 0.0f)
-                _134 -= mRotateAccelOff;
-            else
-                _134 += mRotateAccelOff;
-        }
-        _134 *= 0.95f;
-    }
-}
+// TODO: I giveup on this one
+// void SeesawMapParts::exeWait() {
+//     if (_144 > 0.0f) {
+//         if (_148 >= 60)
+//             _148 = 60;
+//         else
+//             _148++;
+//         _144 = 0.0f;
+//     } else if (_144 < 0.0f) {
+//         if (_148 <= -60)
+//             _148 = -60;
+//         else
+//             _148--;
+//         _144 = 0.0f;
+//     } else if (_148 > 0) {
+//         _148--;
+//         _144 = 0.0f;
+//         if (_148 < 1) {
+//             if (_148 <= -1)
+//                 _134 -= mRotateAccelOn;
+//             else if (_130 >= 0.0f)
+//                 _134 -= mRotateAccelOff;
+//             else
+//                 _134 += mRotateAccelOff;
+//         }
+//         _134 *= 0.95f;
+//     }
+// }
 }  // namespace al
