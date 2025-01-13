@@ -17,8 +17,7 @@ namespace {
 NERVE_IMPL(EnemyStateHackStart, DiveIn);
 NERVE_IMPL(EnemyStateHackStart, HackStart);
 
-NERVE_MAKE(EnemyStateHackStart, DiveIn);
-NERVE_MAKE(EnemyStateHackStart, HackStart);
+NERVES_MAKE_NOSTRUCT(EnemyStateHackStart, DiveIn, HackStart);
 }  // namespace
 
 EnemyStateHackStartParam::EnemyStateHackStartParam(const char* actionName, const char* visAnimName,
