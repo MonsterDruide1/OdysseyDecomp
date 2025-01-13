@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/Layout/LayoutInitInfo.h"
+#include "Library/Nerve/NerveExecutor.h"
 
 class DecideIconLayout : public al::NerveExecutor {
 public:
