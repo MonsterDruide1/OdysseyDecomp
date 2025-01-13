@@ -266,6 +266,8 @@ def common_string_finder(c, path):
             continue
         if "extern \"C\"" in line:
             continue
+        if "__asm__" in line:
+            continue
         if "//" in line:
             continue
 
