@@ -9,7 +9,7 @@
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
 
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(MofumofuScrap, Wait)
