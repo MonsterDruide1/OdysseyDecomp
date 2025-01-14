@@ -7,7 +7,7 @@
 // causing the functions in the vtable to be exported
 #define SENSOR_MSG(Type)                                                                           \
     class SensorMsg##Type : public al::SensorMsg {                                                 \
-        SEAD_RTTI_OVERRIDE(SensorMsg##Type, SensorMsg)                                             \
+        SEAD_RTTI_OVERRIDE(al::SensorMsg##Type, SensorMsg)                                         \
     };                                                                                             \
     bool isMsg##Type(const al::SensorMsg* msg) {                                                   \
         return SensorMsg##Type::checkDerivedRuntimeTypeInfoStatic(msg->getRuntimeTypeInfo());      \
