@@ -9,7 +9,7 @@
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 static const char* sWeaponTypes[] = {"Sword", "PowerGrove"};
 
