@@ -13,5 +13,5 @@ public:
     bool isDecide();
     bool isWait();
     bool isEnd();
-    char filler[0x150];
+    char filler[0x140];
 };
