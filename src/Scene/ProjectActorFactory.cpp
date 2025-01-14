@@ -17,6 +17,7 @@
 #include "Library/MapObj/SurfMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
+#include "Boss/Mofumofu/MofumofuScrap.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
@@ -328,7 +329,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"MoonWorldCaptureParadeLift", nullptr},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
-    {"MofumofuScrap", nullptr},
+    {"MofumofuScrap", al::createActorFunction<MofumofuScrap>},
     {"Motorcycle", nullptr},
     {"MotorcycleParkingLot", nullptr},
     {"MoveHomeNpc", nullptr},
