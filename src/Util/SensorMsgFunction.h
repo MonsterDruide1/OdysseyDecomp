@@ -19,6 +19,10 @@ bool sendMsgPushToPlayer(al::HitSensor* source, al::HitSensor* target);
 
 bool isMsgCapTouchWall(const al::SensorMsg*);
 bool isMsgCapHipDrop(const al::SensorMsg*);
+bool isMsgPlayerAndCapHipDropAll(const al::SensorMsg*);
+bool isMsgNpcCapReactionAll(const al::SensorMsg*);
+bool isMsgCapTouchWall(const al::SensorMsg*);
+bool isMsgPlayerRollingWallHitDown(const al::SensorMsg*);
 bool tryReceiveMsgInitCapTargetAndSetCapTargetInfo(const al::SensorMsg*, const CapTargetInfo*);
 bool isMsgPlayerDisregardHomingAttack(const al::SensorMsg*);
 bool isMsgPlayerDisregardTargetMarker(const al::SensorMsg*);
@@ -54,6 +58,8 @@ bool isMsgFishingLineTouch(const al::SensorMsg*);
 bool isMsgItemGet2D(const al::SensorMsg*);
 bool isMsgItemGetAll(const al::SensorMsg*);
 bool isMsgCapIgnoreCancelLockOn(const al::SensorMsg*);
+bool isMsgKoopaHackPunchCollide(const al::SensorMsg*);
+bool isMsgItemGetAll(const al::SensorMsg*);
 
 bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg*);
 bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg*);

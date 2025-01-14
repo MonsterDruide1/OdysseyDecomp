@@ -802,7 +802,7 @@ private:
     f32 mSlopeRollingEndBrakeEndSpeed;
     f32 mSlopeRollingReStartAccel;
     f32 mSlopeRollingReStartMaxAdd;
-    s32 mSlopeRollingReStartinterval;
+    s32 mSlopeRollingReStartInterval;
     s32 mSlopeRollingReStartSwing;
     s32 mSlopeRollingReStartCharge;
     s32 mSlopeRollingReStartForce;
@@ -919,7 +919,7 @@ private:
     f32 mWallCatchMoveDegree;
     f32 mWallCatchMoveSpeed;
     f32 mWallCatchMoveHeightRange;
-    s32 mWallCatchMoveinterpolate;
+    s32 mWallCatchMoveInterpolate;
     s32 mWallCatchMoveFrame;
     s32 mWallCatchMoveFrameFast;
     s32 mWallCatchMoveFrameSwing;
@@ -1014,7 +1014,7 @@ private:
     f32 mHipDropSpeedMax;
     s32 mHipDropLandCancelFrame;
     f32 mHipDropHeight;
-    s32 mHipDropMsginterval;
+    s32 mHipDropMsgInterval;
     f32 mJumpHipDropPower;
     s32 mJumpHipDropPermitBeginFrame;
     s32 mJumpHipDropPermitEndFrame;
@@ -1140,8 +1140,8 @@ private:
     s32 mOxygenReduceFrame;
     s32 mOxygenNoReduceFrame;
     s32 mOxygenRecoveryFrame;
-    s32 mOxygenDamageinterval;
-    s32 mIceWaterDamageinterval;
+    s32 mOxygenDamageInterval;
+    s32 mIceWaterDamageInterval;
     s32 mIceWaterRecoveryFrame;
     f32 mMoveAnimSpeedMax;
     f32 mAnimFrameRateSpeedMin;
@@ -1171,9 +1171,9 @@ private:
     f32 mRollingAnimBorderSpeedMax;
     f32 mRollingAnimFrameRateMin;
     f32 mRollingAnimFrameRateMax;
-    s32 mSwimPaddleAniminterval;
-    s32 mSwimPaddleAnimRateintervalMax;
-    s32 mSwimPaddleAnimRateintervalMin;
+    s32 mSwimPaddleAnimInterval;
+    s32 mSwimPaddleAnimRateIntervalMax;
+    s32 mSwimPaddleAnimRateIntervalMin;
     f32 mSwimPaddleAnimMaxRate;
     f32 mSwimBentForwardMax;
     f32 mSwimBentForwardBlendRate;
@@ -1214,7 +1214,7 @@ private:
     f32 mMustacheStability;
     f32 mMustacheFriction;
     f32 mMustacheLimitDegree;
-    s32 mCapinterpolateFrame;
+    s32 mCapInterpolateFrame;
     f32 mCapChildLocalOffset;
     f32 mCapStability;
     f32 mCapFriction;
