@@ -6,10 +6,10 @@
 // TODO: This defines the class but the sead decomp doesn't have anything inside the RTTI functions,
 // causing the functions in the vtable to be exported
 #define SENSOR_MSG(Type)                                                                           \
-    class SensorMsg##Type : public al::SensorMsg {                                                 \
-        SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
+    class SensorMsg##Type : public SensorMsg {                                                     \
+        SEAD_RTTI_OVERRIDE(SensorMsg##Type, SensorMsg)                                             \
     };                                                                                             \
-    bool isMsg##Type(const al::SensorMsg* msg) {                                                   \
+    bool isMsg##Type(const SensorMsg* msg) {                                                       \
         return SensorMsg##Type::checkDerivedRuntimeTypeInfoStatic(msg->getRuntimeTypeInfo());      \
     }
 
@@ -443,7 +443,9 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSens
 bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                              const HitSensor*);
 
-bool sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
+void sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
+bool tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSensor*,
+                                     const HitSensor*, f32);
 bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
                                       const HitSensor*, f32);
 }  // namespace al
