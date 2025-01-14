@@ -253,7 +253,7 @@ void MenuSelectParts::exeSelect() {
 
         param.mIsUseController = 1;
         alPadRumbleFunction::startPadRumbleNo3DWithParam(
-            alPadRumbleFunction::getPadRumbleDirector(mLayoutActor), "240Hz", param, -1);
+            alPadRumbleFunction::getPadRumbleDirector(mLayoutActor), "240Hz単発", param, -1);
 
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Select", nullptr);
         startActionMarioSelectIndex();

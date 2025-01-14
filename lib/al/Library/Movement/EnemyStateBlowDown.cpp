@@ -8,10 +8,8 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/Math/MathAngleUtil.h"
-#include "Library/Movement/EnemyStateBlowDownParam.h"
 
-const al::EnemyStateBlowDownParam sEnemyStateBlowDownParam =
-    al::EnemyStateBlowDownParam("BlowDown", 10.3f, 28.2f, 1.1f, 0.995f, 120, true);
+const al::EnemyStateBlowDownParam sEnemyStateBlowDownParam = al::EnemyStateBlowDownParam();
 
 namespace al {
 EnemyStateBlowDown::EnemyStateBlowDown(LiveActor* actor, const EnemyStateBlowDownParam* param,
@@ -96,4 +94,18 @@ void EnemyStateBlowDown::control() {
     scaleVelocity(mActor, mParam->mVelocityScale);
     mBlowDownTimer++;
 }
+
+EnemyStateBlowDownParam::EnemyStateBlowDownParam() {}
+
+EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName)
+    : mActionName(actionName) {}
+
+EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName, f32 velocityStrength,
+                                                 f32 gravityStrength, f32 velocityMultiplier,
+                                                 f32 velocityScale, s32 blowDownLength,
+                                                 bool faceAwayFromActor)
+    : mActionName(actionName), mVelocityStrength(velocityStrength),
+      mGravityStrength(gravityStrength), mVelocityMultiplier(velocityMultiplier),
+      mVelocityScale(velocityScale), mBlowDownLength(blowDownLength),
+      mFaceAwayFromActor(faceAwayFromActor) {}
 }  // namespace al
