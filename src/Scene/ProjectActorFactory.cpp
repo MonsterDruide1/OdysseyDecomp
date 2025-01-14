@@ -17,11 +17,13 @@
 #include "Library/MapObj/SurfMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
+#include "Boss/Mofumofu/MofumofuScrap.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/FireDrum2D.h"
+#include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/WorldMapEarth.h"
 
 static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
@@ -321,13 +323,13 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"MoonBasementMeteorAreaObj", nullptr},
     {"MoonBasementPillar", nullptr},
     {"MoonBasementRock", nullptr},
-    {"MoonBasementSlideObj", nullptr},
+    {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
     {"MoonWorldBell", nullptr},
     {"MoonWorldCaptureParadeLift", nullptr},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
-    {"MofumofuScrap", nullptr},
+    {"MofumofuScrap", al::createActorFunction<MofumofuScrap>},
     {"Motorcycle", nullptr},
     {"MotorcycleParkingLot", nullptr},
     {"MoveHomeNpc", nullptr},
