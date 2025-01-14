@@ -95,7 +95,7 @@ void FukuwaraiFaceParts::init(const al::ActorInitInfo& info) {
     makeActorDead();
 }
 
-int calculateFukuwaraiPartPriority(const char* name) {
+s32 calculateFukuwaraiPartPriority(const char* name) {
     if (al::isEqualString(name, "FukuwaraiKuriboMouthAngry"))
         return 0;
     if (al::isEqualString(name, "FukuwaraiMarioMouth"))
@@ -127,7 +127,7 @@ int calculateFukuwaraiPartPriority(const char* name) {
     return -1;
 }
 
-int FukuwaraiFaceParts::getPriority() const {
+s32 FukuwaraiFaceParts::getPriority() const {
     return calculateFukuwaraiPartPriority(al::getModelName(this));
 }
 

@@ -12,9 +12,9 @@ class PlayerHackStartShaderCtrl;
 
 struct FukuwaraiPart {
     const char* name;
-    float a;
-    float b;
-    float c;
+    f32 a;
+    f32 b;
+    f32 c;
 };
 
 class FukuwaraiFaceParts : public al::LiveActor {
@@ -22,9 +22,9 @@ public:
     FukuwaraiFaceParts(const char* name, al::AreaObjGroup* group);
 
     void init(const al::ActorInitInfo& info) override;
-    int getPriority() const;
+    s32 getPriority() const;
     void control() override;
-    bool receiveMsg(al::SensorMsg const* message, al::HitSensor* other,
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
 
     f32 calcScore(bool isMario) const;
