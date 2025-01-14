@@ -12,7 +12,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(MoonBasementSlideObj, Wait)
