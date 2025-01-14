@@ -10,21 +10,31 @@ class CapTargetInfo;
 class IUsePlayerHack;
 class PlayerHackStartShaderCtrl;
 
+struct FukuwaraiPart {
+    const char* name;
+    float a;
+    float b;
+    float c;
+};
+
 class FukuwaraiFaceParts : public al::LiveActor {
 public:
     FukuwaraiFaceParts(const char* name, al::AreaObjGroup* group);
+
     void init(const al::ActorInitInfo& info) override;
-    void getPriority() const;
+    int getPriority() const;
     void control() override;
     bool receiveMsg(al::SensorMsg const* message, al::HitSensor* other,
                     al::HitSensor* self) override;
-    void calcScore(bool unk) const;
-    void isPlaced() const;
-    void calcScoreAngleRate() const;
-    void calcScoreDistRate() const;
+
+    f32 calcScore(bool isMario) const;
+    bool isPlaced() const;
+    f32 calcScoreAngleRate() const;
+    f32 calcScoreDistRate() const;
     void show();
     void reset();
     void vanish();
+
     void exePlace();
     void exeReset();
     void exeAppear();
@@ -34,15 +44,15 @@ public:
     void exeHide();
     void exeCaptureStart();
     void exeCaptureHackStart();
-    void isKuriboMarioParts() const;
+    bool isKuriboMarioParts() const;
 
 private:
-    IUsePlayerHack* mIUsePlayerHack;
-    CapTargetInfo* mCapTargetInfo;
-    f32 field_118;
-    sead::Vector3f mTargetPos;
-    al::AreaObjGroup* mAreaObjGroup;
-    sead::Vector3f mTrans;
-    sead::Vector3f mRotate;
-    PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl;
+    IUsePlayerHack* mIUsePlayerHack = nullptr;
+    CapTargetInfo* mCapTargetInfo = nullptr;
+    f32 field_118 = 0.0f;
+    sead::Vector3f mTargetPos = sead::Vector3f::zero;
+    al::AreaObjGroup* mAreaObjGroup = nullptr;
+    sead::Vector3f mTrans = sead::Vector3f::zero;
+    sead::Vector3f mRotate = sead::Vector3f::zero;
+    PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl = nullptr;
 };
