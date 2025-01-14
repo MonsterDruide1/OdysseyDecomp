@@ -15,12 +15,9 @@ namespace {
 NERVE_IMPL(EnemyStateReviveInsideScreen, Hide);
 NERVE_IMPL(EnemyStateReviveInsideScreen, Delay);
 NERVE_IMPL(EnemyStateReviveInsideScreen, AppearSign);
-NERVE_MAKE(EnemyStateReviveInsideScreen, AppearSign);
 
-struct {
-    NERVE_MAKE(EnemyStateReviveInsideScreen, Hide);
-    NERVE_MAKE(EnemyStateReviveInsideScreen, Delay);
-} NrvEnemyStateReviveInsideScreen;
+NERVES_MAKE_NOSTRUCT(EnemyStateReviveInsideScreen, AppearSign);
+NERVES_MAKE_STRUCT(EnemyStateReviveInsideScreen, Hide, Delay);
 }  // namespace
 
 EnemyStateReviveInsideScreen::EnemyStateReviveInsideScreen(al::LiveActor* actor)

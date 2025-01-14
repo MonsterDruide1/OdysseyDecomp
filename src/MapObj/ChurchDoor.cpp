@@ -12,7 +12,6 @@
 
 #include "System/GameDataFunction.h"
 #include "System/GameDataUtil.h"
-#include "Util/Sensor.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {

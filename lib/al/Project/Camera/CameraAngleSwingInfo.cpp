@@ -14,7 +14,7 @@ CameraAngleSwingInfo::CameraAngleSwingInfo() {
 }
 
 void CameraAngleSwingInfo::load(const ByamlIter& iter) {
-    tryGetByamlBool(&mIsInvalidSwing, iter, "IsInvalidString");
+    tryGetByamlBool(&mIsInvalidSwing, iter, "IsInvalidSwing");
     if (mIsInvalidSwing)
         return;
 
