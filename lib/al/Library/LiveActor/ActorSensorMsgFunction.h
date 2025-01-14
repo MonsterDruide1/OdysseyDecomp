@@ -6,10 +6,10 @@
 // TODO: This defines the class but the sead decomp doesn't have anything inside the RTTI functions,
 // causing the functions in the vtable to be exported
 #define SENSOR_MSG(Type)                                                                           \
-    class SensorMsg##Type : public SensorMsg {                                                     \
+    class SensorMsg##Type : public al::SensorMsg {                                                 \
         SEAD_RTTI_OVERRIDE(SensorMsg##Type, SensorMsg)                                             \
     };                                                                                             \
-    bool isMsg##Type(const SensorMsg* msg) {                                                       \
+    bool isMsg##Type(const al::SensorMsg* msg) {                                                   \
         return SensorMsg##Type::checkDerivedRuntimeTypeInfoStatic(msg->getRuntimeTypeInfo());      \
     }
 
