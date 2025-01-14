@@ -19,6 +19,10 @@ bool sendMsgPushToPlayer(al::HitSensor* source, al::HitSensor* target);
 
 bool isMsgCapTouchWall(const al::SensorMsg*);
 bool isMsgCapHipDrop(const al::SensorMsg*);
+bool isMsgPlayerAndCapHipDropAll(const al::SensorMsg*);
+bool isMsgNpcCapReactionAll(const al::SensorMsg*);
+bool isMsgCapTouchWall(const al::SensorMsg*);
+bool isMsgPlayerRollingWallHitDown(const al::SensorMsg*);
 bool tryReceiveMsgInitCapTargetAndSetCapTargetInfo(const al::SensorMsg*, const CapTargetInfo*);
 bool isMsgPlayerDisregardHomingAttack(const al::SensorMsg*);
 bool isMsgPlayerDisregardTargetMarker(const al::SensorMsg*);
