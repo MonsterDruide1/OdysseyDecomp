@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import csv
 import os
 import re
 from functools import cache
@@ -257,6 +258,32 @@ def common_sead_math_template(c, path):
                 continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
+def common_string_finder(c, path):
+    string_table = get_string_table()
+
+    for line in c.splitlines():
+        if "#include" in line:
+            continue
+        if "extern \"C\"" in line:
+            continue
+        if "__asm__" in line:
+            continue
+        if "//" in line:
+            continue
+
+        matches = re.findall(r'"(.*?)"', line)
+
+        for match in matches:
+            if len(match) < 2:
+                continue
+            found = False
+            for x in string_table:
+                if match == x[1]:
+                    found = True
+                    break
+            if not found:
+                FAIL("String not found in binary: \""+match+"\"", line, path)
+
 # Header files
 
 def header_sorted_visibility(c, path):
@@ -377,6 +404,12 @@ def header_no_offset_comments(c, path):
 
 # Source files
 
+def source_no_nerve_make(c, path):
+    for line in c.splitlines():
+        if "NERVE_MAKE(" in line:
+            FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
+            return
+
 # -----
 # UTILS
 # -----
@@ -389,7 +422,9 @@ def check_source(c, path):
     common_void_params(c, path)
     common_const_type(c, path)
     common_this_prefix(c, path)
+    common_string_finder(c, path)
     common_sead_math_template(c, path)
+    source_no_nerve_make(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -414,6 +449,23 @@ def check_file(file_str):
         check_source(content, file_str)
     else:
         FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
+
+def read_csv_file(path):
+    if not os.path.isfile(path):
+        raise FileNotFoundError('CSV File not found')
+
+    rows = []
+
+    with open(path, "r") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            rows.append(row)
+
+    return rows;
+
+@cache
+def get_string_table():
+    return read_csv_file(project_root / 'data' / "data_strings.csv");
 
 project_root = setup.ROOT
 

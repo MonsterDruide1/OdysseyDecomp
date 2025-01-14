@@ -13,9 +13,7 @@ NERVE_IMPL(FilterFly, Wait);
 NERVE_IMPL(FilterFly, WaitEnd);
 NERVE_IMPL(FilterFly, Move);
 
-NERVE_MAKE(FilterFly, Wait);
-NERVE_MAKE(FilterFly, WaitEnd);
-NERVE_MAKE(FilterFly, Move);
+NERVES_MAKE_NOSTRUCT(FilterFly, Wait, WaitEnd, Move);
 }  // namespace
 
 const sead::Vector2f sStartingPosition = {600.0f, -300.0f};
