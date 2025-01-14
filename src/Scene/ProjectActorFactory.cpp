@@ -23,6 +23,7 @@
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/FireDrum2D.h"
+#include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/WorldMapEarth.h"
 
 static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
@@ -322,7 +323,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"MoonBasementMeteorAreaObj", nullptr},
     {"MoonBasementPillar", nullptr},
     {"MoonBasementRock", nullptr},
-    {"MoonBasementSlideObj", nullptr},
+    {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
     {"MoonWorldBell", nullptr},
     {"MoonWorldCaptureParadeLift", nullptr},
