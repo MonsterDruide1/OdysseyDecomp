@@ -1,8 +1,10 @@
 #pragma once
 
-class GameDataHolder;
+#include "System/GameDataHolderAccessor.h"
 
-class GameDataHolderWriter {
+class GameDataHolderWriter : public GameDataHolderAccessor {
 public:
-    GameDataHolder* mData;
+    GameDataHolderWriter(const al::IUseSceneObjHolder* holder) : GameDataHolderAccessor(holder) {}
+
+    GameDataHolderWriter(const al::SceneObjHolder* holder) : GameDataHolderAccessor(holder) {}
 };

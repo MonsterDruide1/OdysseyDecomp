@@ -2,7 +2,7 @@
 
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 PlayerEquipmentUser::PlayerEquipmentUser(const PlayerInput* input,
                                          const PlayerModelHolder* model_holder,

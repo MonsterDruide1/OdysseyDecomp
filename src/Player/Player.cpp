@@ -25,15 +25,8 @@ NERVE_IMPL(Player, Jump);
 NERVE_IMPL(Player, Fall);
 NERVE_IMPL(Player, Damage);
 
-// weird intermediate way that has no macro pre-defined
-NERVE_MAKE(Player, Damage);
-
-struct {
-    NERVE_MAKE(Player, Fall);
-    NERVE_MAKE(Player, Jump);
-    NERVE_MAKE(Player, Run);
-    NERVE_MAKE(Player, Wait);
-} NrvPlayer;
+NERVES_MAKE_NOSTRUCT(Player, Damage);
+NERVES_MAKE_STRUCT(Player, Fall, Jump, Run, Wait);
 }  // namespace
 
 Player::Player(const char* actorName, const char* archiveName, s32 port)

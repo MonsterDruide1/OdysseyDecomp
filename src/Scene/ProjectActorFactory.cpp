@@ -19,6 +19,7 @@
 
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/FireDrum2D.h"
@@ -112,8 +113,8 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CapRackTimer", nullptr},
     {"CapRailMover", nullptr},
     {"CapSlotBase", nullptr},
-    {"CapSwitch", nullptr},
-    {"CapSwitchSave", nullptr},
+    {"CapSwitch", al::createActorFunction<CapSwitch>},
+    {"CapSwitchSave", al::createActorFunction<CapSwitch>},
     {"CapSwitchTimer", nullptr},
     {"CapThrower", nullptr},
     {"CapTrampoline", nullptr},

@@ -6,17 +6,13 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "Enemy/EnemyCap.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(EnemyStateDamageCap, Wait);
 NERVE_IMPL(EnemyStateDamageCap, DamageCap);
 
-struct {
-    NERVE_MAKE(EnemyStateDamageCap, Wait);
-    NERVE_MAKE(EnemyStateDamageCap, DamageCap);
-} NrvEnemyStateDamageCap;
-
+NERVES_MAKE_STRUCT(EnemyStateDamageCap, Wait, DamageCap);
 }  // namespace
 
 EnemyStateDamageCap::EnemyStateDamageCap(al::LiveActor* actor)

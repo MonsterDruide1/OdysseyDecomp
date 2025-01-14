@@ -294,18 +294,18 @@ public:
     static void addCoinCollect(GameDataHolderWriter, const al::PlacementId*);
     static void useCoinCollect(GameDataHolderWriter, s32);
     static bool isGotCoinCollect(GameDataHolderAccessor, const al::ActorInitInfo&);
-    static void getCoinCollectNum(GameDataHolderAccessor);
-    static void getCoinCollectGotNum(GameDataHolderAccessor);
-    static void getCoinCollectGotNum(GameDataHolderAccessor, s32);
-    static void getCoinCollectNumMax(GameDataHolderAccessor);
-    static void getCoinCollectNumMax(GameDataHolderAccessor, s32);
+    static s32 getCoinCollectNum(GameDataHolderAccessor);
+    static s32 getCoinCollectGotNum(GameDataHolderAccessor);
+    static s32 getCoinCollectGotNum(GameDataHolderAccessor, s32);
+    static s32 getCoinCollectNumMax(GameDataHolderAccessor);
+    static s32 getCoinCollectNumMax(GameDataHolderAccessor, s32);
     static void
     tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(sead::Vector3f*, const char**,
                                                                   GameDataHolderAccessor);
     static void addCoin(GameDataHolderWriter, s32);
     static void subCoin(GameDataHolderWriter, s32);
-    static void getCoinNum(GameDataHolderAccessor);
-    static void getTotalCoinNum(GameDataHolderAccessor);
+    static s32 getCoinNum(GameDataHolderAccessor);
+    static s32 getTotalCoinNum(GameDataHolderAccessor);
     static bool isAppearCourseName(GameDataHolderAccessor);
     static void setStageHakoniwa(GameDataHolderWriter);
     static bool isEnableCheckpointWarp(GameDataHolderAccessor);
