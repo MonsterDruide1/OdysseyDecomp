@@ -6,7 +6,7 @@
 
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(ShineTowerKey, Wait)
