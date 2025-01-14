@@ -99,15 +99,16 @@ void SlideMapParts::init(const ActorInitInfo& info) {
 }
 
 void SlideMapParts::start() {
-    if (isNerve(this, NrvSlideMapParts.StandBy.data())) {
-        if (mDelayTime >= 1) {
-            startNerveAction(this, "Delay");
+    if (!isNerve(this, NrvSlideMapParts.StandBy.data()))
+        return;
 
-            return;
-        }
+    if (mDelayTime >= 1) {
+        startNerveAction(this, "Delay");
 
-        startNerveAction(this, "Move");
+        return;
     }
+
+    startNerveAction(this, "Move");
 }
 
 bool SlideMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
