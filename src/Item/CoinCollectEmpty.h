@@ -35,11 +35,11 @@ public:
     void exeCountUp();
 
 private:
-    CoinStateCountUp* mCoinStateCountUp = nullptr;
+    CoinStateCountUp* mStateCountUp = nullptr;
     ExternalForceKeeper* mExternalForceKeeper = nullptr;
-    CoinRotateCalculator* mCoinRotateCalculator = nullptr;
+    CoinRotateCalculator* mRotateCalculator = nullptr;
     al::MtxConnector* mMtxConnector = nullptr;
     const char* mArchiveName = nullptr;
-    sead::Matrix34f mMatrix = sead::Matrix34f::ident;
+    sead::Matrix34f mWaterSurfaceMatrix = sead::Matrix34f::ident;
     bool mIsNotInWater = false;
 };

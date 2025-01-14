@@ -12,7 +12,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorUtil.h"
-#include "Library/Nature/NatureDirector.h"
+#include "Library/Nature/NatureUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -38,9 +38,9 @@ void CoinCollectEmpty::init(const al::ActorInitInfo& initInfo) {
     al::initActorSceneInfo(this, initInfo);
     al::initActorWithArchiveName(this, initInfo, mArchiveName, nullptr);
     al::initNerve(this, &NrvCoinCollectEmpty.Wait, 1);
-    mCoinStateCountUp = new CoinStateCountUp(this);
-    al::initNerveState(this, mCoinStateCountUp, &NrvCoinCollectEmpty.Got, "カウントアップ状態");
-    mCoinRotateCalculator = new CoinRotateCalculator(this);
+    mStateCountUp = new CoinStateCountUp(this);
+    al::initNerveState(this, mStateCountUp, &NrvCoinCollectEmpty.Got, "カウントアップ状態");
+    mRotateCalculator = new CoinRotateCalculator(this);
     al::tryAddDisplayOffset(this, initInfo);
     mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
     mExternalForceKeeper = new ExternalForceKeeper();
@@ -51,7 +51,7 @@ void CoinCollectEmpty::init(const al::ActorInitInfo& initInfo) {
         al::stopDitherAnimAutoCtrl(this);
 
     al::setModelAlphaMask(this, 0.499f);
-    al::setEffectNamedMtxPtr(this, "WaterSurface", &mMatrix);
+    al::setEffectNamedMtxPtr(this, "WaterSurface", &mWaterSurfaceMatrix);
     makeActorAlive();
 }
 
@@ -76,7 +76,7 @@ bool CoinCollectEmpty::receiveMsg(const al::SensorMsg* message, al::HitSensor* o
     }
 
     if (rs::isMsgFishingLineTouch(message)) {
-        mCoinRotateCalculator->addFishingLineTouch();
+        mRotateCalculator->addFishingLineTouch();
         return true;
     }
 
@@ -84,7 +84,7 @@ bool CoinCollectEmpty::receiveMsg(const al::SensorMsg* message, al::HitSensor* o
 }
 
 void CoinCollectEmpty::endClipped() {
-    mCoinRotateCalculator->reset();
+    mRotateCalculator->reset();
     al::LiveActor::endClipped();
 }
 
@@ -97,7 +97,7 @@ void CoinCollectEmpty::control() {
     sead::Vector3f force = sead::Vector3f::zero;
     mExternalForceKeeper->calcForce(&force);
     mExternalForceKeeper->reset();
-    mCoinRotateCalculator->update(force, true);
+    mRotateCalculator->update(force, true);
 }
 
 void CoinCollectEmpty::rotate() {
@@ -105,15 +105,11 @@ void CoinCollectEmpty::rotate() {
         al::connectPoseQT(this, mMtxConnector);
 
     al::setQuat(this, sead::Quatf::unit);
-    al::rotateQuatYDirDegree(this, mCoinRotateCalculator->getRotate());
+    al::rotateQuatYDirDegree(this, mRotateCalculator->getRotate());
 }
 
 void CoinCollectEmpty::exeWait() {
-    if (mMtxConnector != nullptr)
-        al::connectPoseQT(this, mMtxConnector);
-
-    al::setQuat(this, sead::Quatf::unit);
-    al::rotateQuatYDirDegree(this, mCoinRotateCalculator->getRotate());
+    rotate();
 }
 
 void CoinCollectEmpty::exeGot() {
@@ -138,7 +134,7 @@ void CoinCollectEmpty::exeCountUp() {
         sead::Vector3f waterSurface = sead::Vector3f::zero;
         al::calcFindWaterSurface(&waterSurface, nullptr, this, al::getTrans(this),
                                  sead::Vector3f::ey, 200.0f);
-        mMatrix.setBase(3, waterSurface);
+        mWaterSurfaceMatrix.setBase(3, waterSurface);
         al::startHitReaction(this, "水しぶき");
         mIsNotInWater = true;
     }
