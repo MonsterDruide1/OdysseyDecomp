@@ -5,8 +5,7 @@
 
 class DecideIconLayout : public al::NerveExecutor {
 public:
-    DecideIconLayout(const char* ,
-                     const al::LayoutInitInfo*);
+    DecideIconLayout(const char*, const al::LayoutInitInfo*);
     void appear();
     void exeAppear();
     void exeWait();
