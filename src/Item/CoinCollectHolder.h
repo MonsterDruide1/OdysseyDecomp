@@ -23,12 +23,12 @@ public:
     void registerCoinCollect2D(CoinCollect2D*);
     void registerHintObj(CoinCollectHintObj*);
 
-    bool tryFindAliveCoinCollect(const sead::Vector3f&, bool) const;
-    bool tryFindAliveCoinCollect(const sead::Vector3f&, f32, f32, bool) const;
-    bool tryFindDeadButHintEnableCoinCollect() const;
-    bool tryFindAliveCoinCollect2D(const sead::Vector3f&, bool) const;
-    bool tryFindAliveCoinCollect2D(const sead::Vector3f&, f32, f32, bool) const;
-    bool tryFindExStageHintObjTrans(sead::Vector3f*, const char*);
+    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f&, bool) const;
+    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f&, f32, f32, bool) const;
+    CoinCollect* tryFindDeadButHintEnableCoinCollect() const;
+    CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f&, bool) const;
+    CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f&, f32, f32, bool) const;
+    CoinCollectHintObj* tryFindExStageHintObjTrans(sead::Vector3f*, const char*);
 };
 
 namespace rs {
