@@ -81,14 +81,14 @@ void FukuwaraiFaceParts::init(const al::ActorInitInfo& info) {
             y += 360.0f;
             rotation.y += 360.0f;
         }
-        field_118 = y;
+        mTargetAngle = y;
     }
 
     if (al::getRotate(this).y < 0.0f)
         al::setRotateY(this, al::getRotate(this).y + 360.0f);
 
     mTrans.set(al::getTrans(this));
-    mRotate.set(al::getRotate(this));
+    mRotation.set(al::getRotate(this));
 
     mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(this, nullptr);
 
@@ -244,10 +244,10 @@ f32 FukuwaraiFaceParts::calcScoreAngleRate() const {
     f32 angle = al::getRotate(this).y;
 
     f32 difference;
-    if (angle > field_118)
-        difference = angle - field_118;
+    if (angle > mTargetAngle)
+        difference = angle - mTargetAngle;
     else
-        difference = field_118 - angle;
+        difference = mTargetAngle - angle;
 
     f32 score = difference > 180.0f ? 360.0f - difference : difference;
 
@@ -280,7 +280,7 @@ void FukuwaraiFaceParts::reset() {
     appear();
     al::validateHitSensors(this);
     al::showModelIfHide(this);
-    al::resetRotatePosition(this, mRotate, mTrans);
+    al::resetRotatePosition(this, mRotation, mTrans);
     al::setNerve(this, &Appear);
 }
 
@@ -361,11 +361,11 @@ void FukuwaraiFaceParts::exeCaptureMove() {
         return;
     }
 
-    sead::Vector3f unk = {0, 0, 0};
+    sead::Vector3f dir = {0, 0, 0};
     f32 accel = 7.0f;
     if (al::isNerve(this, &NrvFukuwaraiFaceParts.CaptureMoveFast))
         accel = 12.0f;
-    rs::addHackActorAccelStick(this, mIUsePlayerHack, &unk, accel, sead::Vector3f::ey);
+    rs::addHackActorAccelStick(this, mIUsePlayerHack, &dir, accel, sead::Vector3f::ey);
 
     al::scaleVelocity(this, 0.5f);
     al::setTransY(this, mTrans.y + 10.0f);

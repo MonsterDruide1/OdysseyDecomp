@@ -49,10 +49,10 @@ public:
 private:
     IUsePlayerHack* mIUsePlayerHack = nullptr;
     CapTargetInfo* mCapTargetInfo = nullptr;
-    f32 field_118 = 0.0f;
+    f32 mTargetAngle = 0.0f;
     sead::Vector3f mTargetPos = sead::Vector3f::zero;
     al::AreaObjGroup* mAreaObjGroup = nullptr;
     sead::Vector3f mTrans = sead::Vector3f::zero;
-    sead::Vector3f mRotate = sead::Vector3f::zero;
+    sead::Vector3f mRotation = sead::Vector3f::zero;
     PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl = nullptr;
 };
