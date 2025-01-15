@@ -22,5 +22,5 @@ public:
 
 private:
     bool field_129 = false;
-    const al::LiveActor* mActor = nullptr;
+    const al::LiveActor* mPlayer = nullptr;
 };

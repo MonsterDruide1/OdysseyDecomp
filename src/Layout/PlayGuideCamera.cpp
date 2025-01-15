@@ -22,7 +22,7 @@ NERVES_MAKE_STRUCT(PlayGuideCamera, Hide, Appear, End);
 
 PlayGuideCamera::PlayGuideCamera(const char* name, const al::LayoutInitInfo& info,
                                  const al::LiveActor* actor)
-    : al::LayoutActor(name), mActor(actor) {
+    : al::LayoutActor(name), mPlayer(actor) {
     al::initLayoutActor(this, info, "PlayGuideCamera", nullptr);
     initNerve(&NrvPlayGuideCamera.Hide, 0);
     appear();
@@ -35,7 +35,7 @@ void PlayGuideCamera::hide() {
 }
 
 void PlayGuideCamera::start() {
-    if (!rs::isActiveDemo(mActor))
+    if (!rs::isActiveDemo(mPlayer))
         al::setNerve(this, &NrvPlayGuideCamera.Appear);
 }
 
@@ -48,8 +48,8 @@ void PlayGuideCamera::exeHide() {
 }
 
 bool PlayGuideCamera::tryAppear() {
-    if (!rs::isActiveDemo(mActor) && al::isExistCameraInputAtDisableTiming(this, 0) &&
-        !rs::isPlayerHackGroupUseCameraStick(mActor)) {
+    if (!rs::isActiveDemo(mPlayer) && al::isExistCameraInputAtDisableTiming(this, 0) &&
+        !rs::isPlayerHackGroupUseCameraStick(mPlayer)) {
         al::setNerve(this, &NrvPlayGuideCamera.Appear);
         return true;
     }
