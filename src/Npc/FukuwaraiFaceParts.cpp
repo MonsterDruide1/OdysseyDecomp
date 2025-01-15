@@ -58,7 +58,7 @@ FukuwaraiPart MarioMustachePart = {"FukuwaraiMarioMustache", 3.0f, 9.0f, 3.0f};
 FukuwaraiPart MarioNosePart = {"FukuwaraiMarioNose", 2.0f, 6.0f, 2.0f};
 
 FukuwaraiFaceParts::FukuwaraiFaceParts(const char* name, al::AreaObjGroup* group)
-    : al::LiveActor(name), mAreaObjGroup(group) {}
+    : al::LiveActor(name), mFukuwaraiArea(group) {}
 
 void FukuwaraiFaceParts::init(const al::ActorInitInfo& info) {
     const char* suffix = nullptr;
@@ -76,12 +76,9 @@ void FukuwaraiFaceParts::init(const al::ActorInitInfo& info) {
     if (al::isExistLinkChild(info, "TargetPos", 0)) {
         sead::Vector3f rotation = sead::Vector3f::zero;
         al::getLinkTR(&mTargetPos, &rotation, info, "TargetPos");
-        f32 y = rotation.y;
-        if (rotation.y < 0.0f) {
-            y += 360.0f;
+        if (rotation.y < 0.0f)
             rotation.y += 360.0f;
-        }
-        mTargetAngle = y;
+        mTargetAngle = rotation.y;
     }
 
     if (al::getRotate(this).y < 0.0f)
@@ -176,7 +173,7 @@ bool FukuwaraiFaceParts::receiveMsg(const al::SensorMsg* message, al::HitSensor*
                             rs::isMsgHackMarioDead(message))) {
         rs::endHack(&mIUsePlayerHack);
         al::validateClipping(this);
-        if (al::isInAreaObj(mAreaObjGroup, al::getTrans(this))) {
+        if (al::isInAreaObj(mFukuwaraiArea, al::getTrans(this))) {
             sead::Vector3f trans = al::getTrans(this);
             trans.y = mTrans.y + calculateFukuwaraiPartPriority(al::getModelName(this)) * 0.25f;
             al::offCollide(this);
@@ -252,7 +249,7 @@ f32 FukuwaraiFaceParts::calcScoreAngleRate() const {
     f32 score = difference > 180.0f ? 360.0f - difference : difference;
 
     if (al::isEqualString("FukuwaraiMarioNose", al::getModelName(this))) {
-        f32 clampedScore = (score > 90.0f) ? 180.0f - score : score;
+        f32 clampedScore = score > 90.0f ? 180.0f - score : score;
 
         return 1.0f - clampedScore / 90.0f;
     }
@@ -267,7 +264,7 @@ f32 FukuwaraiFaceParts::calcScoreDistRate() const {
     f32 score = out.length() / 500.0f;
     score = sead::Mathf::clamp(score, 0.0f, 1.0f);
 
-    return (1.0f - score) * (1.0f - score);
+    return sead::Mathf::square(1.0f - score);
 }
 
 void FukuwaraiFaceParts::show() {
