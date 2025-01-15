@@ -27,11 +27,11 @@ CoinCounter::CoinCounter(const char* name, const al::LayoutInitInfo& initInfo, b
     : al::LayoutActor(name), mIsCoin(isCoin) {
     if (mIsCoin) {
         al::initLayoutActor(this, initInfo, "CounterCoin", nullptr);
-        mPanelType = 4;
+        mNumDigits = 4;
         mPanelName = "Coin";
     } else {
         al::initLayoutActor(this, initInfo, "CounterCollectCoin", nullptr);
-        mPanelType = 3;
+        mNumDigits = 3;
         mPanelName = "CollectCoin";
         al::setPaneString(this, "TxtIcon", rs::getWorldCoinCollectPictureFont(this), 0);
         al::setPaneString(this, "TxtIconSh", rs::getWorldCoinCollectPictureFont(this), 0);
@@ -39,7 +39,7 @@ CoinCounter::CoinCounter(const char* name, const al::LayoutInitInfo& initInfo, b
 
     initNerve(&NrvCoinCounter.Appear, 0);
     kill();
-    updatePanel(mCoinNum, mPanelType);
+    updatePanel(mCoinNum, mNumDigits);
 }
 
 void CoinCounter::kill() {
@@ -47,17 +47,17 @@ void CoinCounter::kill() {
     al::LayoutActor::kill();
 }
 
-void CoinCounter::updatePanel(u32 animationCount, s32 panelType) {
-    if (panelType == 4) {
+void CoinCounter::updatePanel(u32 coinCount, s32 numDigits) {
+    if (numDigits == 4) {
         al::IUseLayout* layout = static_cast<al::LayoutActor*>(this);
-        al::setPaneStringFormat(layout, "TxtCounter", "%04d", animationCount);
-        al::setPaneStringFormat(layout, "TxtCounterSh", "%04d", animationCount);
+        al::setPaneStringFormat(layout, "TxtCounter", "%04d", coinCount);
+        al::setPaneStringFormat(layout, "TxtCounterSh", "%04d", coinCount);
         al::requestCaptureRecursive(this);
     }
-    if (panelType == 3) {
+    if (numDigits == 3) {
         al::IUseLayout* layout = static_cast<al::LayoutActor*>(this);
-        al::setPaneStringFormat(layout, "TxtCounter", "%03d", animationCount);
-        al::setPaneStringFormat(layout, "TxtCounterSh", "%03d", animationCount);
+        al::setPaneStringFormat(layout, "TxtCounter", "%03d", coinCount);
+        al::setPaneStringFormat(layout, "TxtCounterSh", "%03d", coinCount);
         al::requestCaptureRecursive(this);
     }
 }
@@ -81,7 +81,7 @@ void CoinCounter::updateCountImmidiate() {
 
     mTotalCoins = newTotalCoins;
     mCoinNum = newCoinNum;
-    updatePanel(mCoinNum, mPanelType);
+    updatePanel(mCoinNum, mNumDigits);
 }
 
 void CoinCounter::tryEnd() {
@@ -124,16 +124,16 @@ bool CoinCounter::tryUpdateCount() {
 
 s32 CoinCounter::getCountFromData() const {
     if (mIsCoin)
-        return GameDataFunction::getCoinNum(GameDataHolderAccessor(this));
+        return GameDataFunction::getCoinNum(this);
 
-    return GameDataFunction::getCoinCollectNum(GameDataHolderAccessor(this));
+    return GameDataFunction::getCoinCollectNum(this);
 }
 
 s32 CoinCounter::getCountTotalFromData() const {
     if (mIsCoin)
-        return GameDataFunction::getTotalCoinNum(GameDataHolderAccessor(this));
+        return GameDataFunction::getTotalCoinNum(this);
 
-    return GameDataFunction::getCoinCollectGotNum(GameDataHolderAccessor(this));
+    return GameDataFunction::getCoinCollectGotNum(this);
 }
 
 void CoinCounter::exeAppear() {
@@ -158,17 +158,19 @@ void CoinCounter::exeEnd() {
 void CoinCounter::exeAdd() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Add", mPanelName);
-        updatePanel(mCoinNum, mPanelType);
+        updatePanel(mCoinNum, mNumDigits);
     }
-    exeAppear();
+    if (al::isActionEnd(this, nullptr))
+        al::setNerve(this, &Wait);
 }
 
 void CoinCounter::exeSub() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Add", mPanelName);
-        updatePanel(mCoinNum, mPanelType);
+        updatePanel(mCoinNum, mNumDigits);
     }
-    exeAppear();
+    if (al::isActionEnd(this, nullptr))
+        al::setNerve(this, &Wait);
 }
 
 void CoinCounter::exeCountAnimAdd() {
@@ -176,13 +178,13 @@ void CoinCounter::exeCountAnimAdd() {
         mAnimationCount = mPrevCoinCount;
 
     if (al::isGreaterEqualStep(this, 60)) {
-        updatePanel(mCoinNum, mPanelType);
+        updatePanel(mCoinNum, mNumDigits);
         al::setNerve(this, &Wait);
         return;
     }
 
     s32 animationCount = al::calcNerveValue(this, 60, mPrevCoinCount, mCoinNum);
-    updatePanel(animationCount, mPanelType);
+    updatePanel(animationCount, mNumDigits);
 
     if (mAnimationCount != animationCount) {
         al::startSe(this, mIsCoin ? "CoinCount" : "CoinCollectCount");
@@ -197,13 +199,13 @@ void CoinCounter::exeCountAnimSub() {
         mAnimationCount = mPrevCoinCount;
 
     if (al::isGreaterEqualStep(this, 60)) {
-        updatePanel(mCoinNum, mPanelType);
+        updatePanel(mCoinNum, mNumDigits);
         al::setNerve(this, &Wait);
         return;
     }
 
     s32 animationCount = al::calcNerveValue(this, 60, mPrevCoinCount, mCoinNum);
-    updatePanel(animationCount, mPanelType);
+    updatePanel(animationCount, mNumDigits);
 
     if (mAnimationCount != animationCount) {
         al::startSe(this, mIsCoin ? "CoinCount" : "CoinCollectCount");
