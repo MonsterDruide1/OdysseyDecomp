@@ -15,7 +15,7 @@ public:
 
     void kill() override;
 
-    void updatePanel(u32 animationCount, s32 panelType);
+    void updatePanel(u32 coinCount, s32 numDigits);
     bool isWait() const;
     void tryStart();
     void updateCountImmidiate();
@@ -37,7 +37,7 @@ private:
     s32 mPrevCoinCount = 0;
     s32 mCoinNum = 0;
     s32 mTotalCoins = 0;
-    s32 mPanelType = -1;
+    s32 mNumDigits = -1;
     bool mIsCoin = false;
     const char* mPanelName = nullptr;
     s32 mAnimationCount = 0;
