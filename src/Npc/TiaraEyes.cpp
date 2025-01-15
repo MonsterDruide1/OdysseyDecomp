@@ -23,7 +23,7 @@ NERVES_MAKE_NOSTRUCT(TiaraEyes, Appear, WaitPanicL, WaitPanicR, MovePanicL, Move
                      ReactionCap, Wait, Disappear, Hide);
 }  // namespace
 
-TiaraEyes::TiaraEyes(char const* name) : al::PartsModel(name) {}
+TiaraEyes::TiaraEyes(const char* name) : al::PartsModel(name) {}
 
 void TiaraEyes::init(const al::ActorInitInfo& info) {
     al::initNerve(this, &Appear, 0);
@@ -35,7 +35,7 @@ void TiaraEyes::appear() {
     al::setNerve(this, &Appear);
 }
 
-void TiaraEyes::startWaitPanicL(float frame) {
+void TiaraEyes::startWaitPanicL(f32 frame) {
     if (al::isDead(this))
         appear();
 
@@ -44,7 +44,7 @@ void TiaraEyes::startWaitPanicL(float frame) {
     al::setNerve(this, &WaitPanicL);
 }
 
-void TiaraEyes::startWaitPanicR(float frame) {
+void TiaraEyes::startWaitPanicR(f32 frame) {
     if (al::isDead(this))
         appear();
 
@@ -53,7 +53,7 @@ void TiaraEyes::startWaitPanicR(float frame) {
     al::setNerve(this, &WaitPanicR);
 }
 
-void TiaraEyes::startMovePanicL(float frame) {
+void TiaraEyes::startMovePanicL(f32 frame) {
     if (al::isDead(this))
         appear();
 
@@ -62,7 +62,7 @@ void TiaraEyes::startMovePanicL(float frame) {
     al::setNerve(this, &MovePanicL);
 }
 
-void TiaraEyes::startMovePanicR(float frame) {
+void TiaraEyes::startMovePanicR(f32 frame) {
     if (al::isDead(this))
         appear();
 

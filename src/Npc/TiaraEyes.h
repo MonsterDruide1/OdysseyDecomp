@@ -4,14 +4,14 @@
 
 class TiaraEyes : public al::PartsModel {
 public:
-    TiaraEyes(char const* name);
+    TiaraEyes(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
     void appear() override;
-    void startWaitPanicL(float frame);
-    void startWaitPanicR(float frame);
-    void startMovePanicL(float frame);
-    void startMovePanicR(float frame);
+    void startWaitPanicL(f32 frame);
+    void startWaitPanicR(f32 frame);
+    void startMovePanicL(f32 frame);
+    void startMovePanicR(f32 frame);
     void startReaction();
     void startReactionCap();
     void exeAppear();
