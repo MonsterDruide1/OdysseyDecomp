@@ -46,6 +46,7 @@ bool isMsgAttackDirect(const al::SensorMsg*);
 bool isMsgTankBullet(const al::SensorMsg*);
 bool isMsgTankExplosion(const al::SensorMsg*);
 bool isMsgSeedAttackHold(const al::SensorMsg*);
+bool isMsgSeedTouch(const al::SensorMsg*);
 bool isMsgWanwanEnemyAttack(const al::SensorMsg*);
 bool isMsgBlowDown(const al::SensorMsg*);
 bool isMsgNpcScareByEnemy(const al::SensorMsg*);

@@ -1,0 +1,24 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+
+#include "Library/LiveActor/LiveActor.h"
+
+namespace al {
+class ActorInitInfo;
+class HitSensor;
+class SensorMsg;
+}  // namespace al
+
+class VolleyballNet : public al::LiveActor {
+public:
+    VolleyballNet(const char* name);
+    void init(const al::ActorInitInfo& initInfo) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
+    void exeWait();
+    void exeReaction();
+
+private:
+    s32 _108 = 0;
+};
