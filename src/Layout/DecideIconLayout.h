@@ -1,7 +1,12 @@
 #pragma once
 
-#include "Library/Layout/LayoutInitInfo.h"
+
 #include "Library/Nerve/NerveExecutor.h"
+
+namespace al {
+class LayoutInitInfo;
+}
+
 
 class DecideIconLayout : public al::NerveExecutor {
 public:
@@ -10,8 +15,8 @@ public:
     void exeAppear();
     void exeWait();
     void exeDecide();
-    bool isDecide();
-    bool isWait();
-    bool isEnd();
+    bool isDecide() const;
+    bool isWait() const;
+    bool isEnd() const;
     char filler[0x140];
 };

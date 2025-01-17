@@ -2,8 +2,10 @@
 
 #include "Library/Scene/ISceneObj.h"
 
-#include "Layout/DecideIconLayout.h"
-
+namespace al {
+class LayoutActor;
+class LayoutInitInfo;
+}
 class DecideIconLayout;
 
 class HintPhotoLayoutHolder : public al::ISceneObj {
