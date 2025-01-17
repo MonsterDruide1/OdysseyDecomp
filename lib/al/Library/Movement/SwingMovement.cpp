@@ -36,6 +36,7 @@ inline s32 test(s32 a) {
     return (a < 0 ? a + 3 : a) >> 2;
 }
 
+// NON_MATCHING: regswap + wrong register https://decomp.me/scratch/qM0wp
 bool SwingMovement::updateRotate() {
     f32 fVar7 = 360.0f * (f32)_10 / (f32)mSwingCycle;
     f32 fVar6 = sead::Mathf::abs(mSwingAngle);
