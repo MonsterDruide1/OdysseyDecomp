@@ -278,9 +278,8 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
     al::initNerve(this, &Wait, 0);
     makeActorAlive();
     if (al::listenStageSwitchOnAppear(
-            this, ElectricWireRailKeeperFunctor(this, &ElectricWireRailKeeper::appearBySwitch))) {
+            this, ElectricWireRailKeeperFunctor(this, &ElectricWireRailKeeper::appearBySwitch)))
         kill();
-    }
     al::listenStageSwitchOnKill(
         this, ElectricWireRailKeeperFunctor(this, &ElectricWireRailKeeper::killBySwitch));
 }
