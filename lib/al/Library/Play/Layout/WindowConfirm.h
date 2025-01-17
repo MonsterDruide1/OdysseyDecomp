@@ -24,8 +24,8 @@ public:
     };
 
     struct Selection {
-        SelectionType selectionType;
-        SelectionType prevSelectionType;
+        SelectionType selectionType = SelectionType::None;
+        SelectionType prevSelectionType = SelectionType::None;
     };
 
     WindowConfirm(const LayoutInitInfo&, const char*, const char*);
@@ -58,9 +58,9 @@ public:
 private:
     Direction mDirection;
     Selection mSelection;
-    s32 mCancelIdx;
-    bool mIsDecided;
-    s32 mCooldown;
+    s32 mCancelIdx = -1;
+    bool mIsDecided = false;
+    s32 mCooldown = -1;
     sead::PtrArray<LayoutActor> mParListArray;
     LayoutActor* mCursorActor;
     LayoutActor* mButtonActor;
