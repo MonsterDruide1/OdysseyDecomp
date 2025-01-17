@@ -5,7 +5,7 @@
 namespace al {
 class LayoutActor;
 class LayoutInitInfo;
-}
+}  // namespace al
 class DecideIconLayout;
 
 class HintPhotoLayoutHolder : public al::ISceneObj {

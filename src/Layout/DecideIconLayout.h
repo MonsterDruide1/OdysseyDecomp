@@ -1,12 +1,10 @@
 #pragma once
 
-
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
 class LayoutInitInfo;
 }
-
 
 class DecideIconLayout : public al::NerveExecutor {
 public:
