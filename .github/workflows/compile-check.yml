@@ -66,6 +66,6 @@ jobs:
         if [[ "$var" == "OK" ]]; then
           exit 0
         else
-          echo $var;
+          echo $var >> $GITHUB_OUTPUT;
           exit 1
         fi
