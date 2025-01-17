@@ -228,13 +228,10 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
     if (wire->mIsElectricWireRadio)
         mIsShowLine = false;
     al::tryGetArg(&mIsThrowaway, info, "IsThrowaway");
-    if (al::tryGetLinksTrans(&mPlayerPosOnVerticalMove, info,
-                             "PlayerHeadPosOnVerticalMove")) {
+    if (al::tryGetLinksTrans(&mPlayerPosOnVerticalMove, info, "PlayerHeadPosOnVerticalMove"))
         mPosType = PosType::HEAD;
-    } else if (al::tryGetLinksTrans(&mPlayerPosOnVerticalMove, info,
-                                    "PlayerBottomPosOnVerticalMove")) {
+    else if (al::tryGetLinksTrans(&mPlayerPosOnVerticalMove, info, "PlayerBottomPosOnVerticalMove"))
         mPosType = PosType::BOTTOM;
-    }
     if (!al::isExistRail(info, "Rail"))
         return makeActorDead();
     initRailKeeper(info, "Rail");
@@ -261,7 +258,7 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
         al::tryGetArg(&isNeedCamera, *railPointInfo, "IsNeedCamera");
         al::CameraTicket* ticket = nullptr;
         if (isNeedCamera) {
-            auto *id = new sead::FixedSafeString<0x20>();
+            auto* id = new sead::FixedSafeString<0x20>();
             id->format("%d", i);
             ticket = al::initObjectCamera(mElectricWire, info, id->cstr(), nullptr);
         }
@@ -270,7 +267,7 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
         al::tryGetArg(&isNeedCamera, *railPointInfo, "IsNeedStartCameraHackEnd");
         al::CameraTicket* ticketHack = nullptr;
         if (isNeedCamera) {
-            auto *id = new sead::FixedSafeString<0x20>();
+            auto* id = new sead::FixedSafeString<0x20>();
             id->format("%d(Entrance)", i);
             ticketHack = al::initEntranceCamera(mElectricWire, info.getPlacementInfo(), id->cstr());
         }
