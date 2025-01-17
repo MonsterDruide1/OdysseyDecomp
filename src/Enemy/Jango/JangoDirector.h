@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+
 #include "Library/Scene/ISceneObj.h"
 
 class Jango;
@@ -11,11 +12,12 @@ public:
     const char* getSceneObjName() const override;
     bool isEnableCap() const;
     void placeCap();
-    void registerJango(Jango *jango);
+    void registerJango(Jango* jango);
     void removeCap();
     ~JangoDirector() override;
+
 private:
-    Jango **mJangos;
+    Jango** mJangos;
     s32 mJangoCount;
     bool mIsEnableCap;
 };

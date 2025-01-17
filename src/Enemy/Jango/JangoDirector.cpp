@@ -1,8 +1,4 @@
-//
-// Created by cookieso on 10/8/24.
-//
-
-#include "JangoDirector.h"
+#include "Enemy/Jango/JangoDirector.h"
 
 JangoDirector::JangoDirector() : mJangos(new Jango*[10]), mJangoCount(0), mIsEnableCap(false) {}
 
@@ -15,16 +11,16 @@ bool JangoDirector::isEnableCap() const {
 }
 
 void JangoDirector::placeCap() {
-    this->mIsEnableCap = true;
+    mIsEnableCap = true;
 }
 
 void JangoDirector::registerJango(Jango* jango) {
-    this->mJangos[mJangoCount] = jango;
+    mJangos[mJangoCount] = jango;
     ++mJangoCount;
 }
 
 void JangoDirector::removeCap() {
-    this->mIsEnableCap = false;
+    mIsEnableCap = false;
 }
 
 JangoDirector::~JangoDirector() {}

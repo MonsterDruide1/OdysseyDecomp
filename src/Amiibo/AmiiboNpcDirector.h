@@ -43,11 +43,11 @@ public:
     al::AudioKeeper* getAudioKeeper() const override;
 
 private:
-    char f1[8];
+    char filler1[8];
     ProjectNfpDirector* mNfpDirector;
-    char f2[8];
+    char filler2[8];
     al::AudioKeeper* mAudioKeeper;
-    MessageTagDataHolder *mTagDataHolder;
+    MessageTagDataHolder* mTagDataHolder;
     char filler[0x1A0];
 };
 

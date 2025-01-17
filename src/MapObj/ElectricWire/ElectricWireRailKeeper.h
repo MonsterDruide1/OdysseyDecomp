@@ -1,6 +1,8 @@
 #pragma once
+
+#include <container/seadPtrArray.h>
+
 #include "Library/LiveActor/LiveActor.h"
-#include "container/seadPtrArray.h"
 
 class ElectricWire;
 
@@ -9,51 +11,56 @@ class CameraTicket;
 class CameraTicketId;
 class CameraPoser;
 class PlacementInfo;
-}
+}  // namespace al
 
 class ElectricWireRailKeeper : public al::LiveActor {
 public:
-    ElectricWireRailKeeper(const char *name);
-    ElectricWireRailKeeper(const char *name, al::LiveActor *wire);
+    ElectricWireRailKeeper(const char* name);
+    ElectricWireRailKeeper(const char* name, al::LiveActor* wire);
 
     void appear() override;
     void appearBySwitch();
     void endCameraIfActive();
     void exeStandby();
     void exeWait();
-    al::CameraPoser* findRailPointCameraTicket(int priority) const;
-    const al::CameraTicketId* findRailPointStartCameraHackEndTicket(int priority) const;
-    al::PlacementInfo &getRailPointInfo(int index) const;
+    al::CameraTicket* findRailPointCameraTicket(s32 pointIdx) const;
+    const al::CameraTicket* findRailPointStartCameraHackEndTicket(s32 pointIdx) const;
+    al::PlacementInfo* getRailPointInfo(s32 index) const;
     void init(const al::ActorInitInfo& info) override;
     bool isNerveStandby() const;
-    bool isRailPointEnableTargetEndCollision(int index) const;
-    bool isRailPointFaceToCameraDir(int index) const;
-    bool isRailPointIgnore(int index) const;
-    bool isRailPointIsDisplayPointModelForce(int index) const;
-    bool isRailPointIsExpandRailSelectableAngle(int index) const;
-    bool isRailPointIsNeedCamera(int index) const;
-    bool isRailPointIsNeedStartCameraHackEnd(int index) const;
-    bool isRailPointPlacementPole(int index) const;
-    bool isRailPointSpringFix(int index) const;
+    bool isRailPointEnableTargetEndCollision(s32 index) const;
+    bool isRailPointFaceToCameraDir(s32 index) const;
+    bool isRailPointIgnore(s32 index) const;
+    bool isRailPointIsDisplayPointModelForce(s32 index) const;
+    bool isRailPointIsExpandRailSelectableAngle(s32 index) const;
+    bool isRailPointIsNeedCamera(s32 index) const;
+    bool isRailPointIsNeedStartCameraHackEnd(s32 index) const;
+    bool isRailPointPlacementPole(s32 index) const;
+    bool isRailPointSpringFix(s32 index) const;
     void kill() override;
     void killBySwitch();
-    bool tryGetPlayerBottomPosOnVerticalMove(sead::Vector3f *playerBottomPos) const;
-    bool tryGetPlayerHeadPosOnVerticalMove(sead::Vector3f *playerHeadPos) const;
-    bool tryGetRailPointDestinationTrans(sead::Vector3f * out, int index) const;
-    bool tryGetRailPointFastenerMoveLimitAreaFlag(int * out, int index) const;
-    bool tryGetRailPointOutDir(sead::Vector3f * out, int index) const;
+    bool tryGetPlayerBottomPosOnVerticalMove(sead::Vector3f* playerBottomPos) const;
+    bool tryGetPlayerHeadPosOnVerticalMove(sead::Vector3f* playerHeadPos) const;
+    bool tryGetRailPointDestinationTrans(sead::Vector3f* out, s32 index) const;
+    bool tryGetRailPointFastenerMoveLimitAreaFlag(s32* out, s32 index) const;
+    bool tryGetRailPointOutDir(sead::Vector3f* out, s32 index) const;
 
-    enum class PosType : u32 {
-        NONE, HEAD, BOTTOM
-    };
+    enum class PosType : u32 { NONE, HEAD, BOTTOM };
+
 private:
-    ElectricWire *mElectricWire = nullptr;
-    float mUnused = 75;
+    struct TicketHolder {
+        al::CameraTicket* ticket;
+        al::CameraTicket* ticketHackEnd;
+        s32 pointIdx;
+    };
+
+    ElectricWire* mElectricWire = nullptr;
+    f32 mUnused = 75;
     bool mIsShowLine = true;
     bool mIsThrowaway = false;
     PosType mPosType = PosType::NONE;
     sead::Vector3f mPlayerPosOnVerticalMove{};
-    sead::PtrArray<al::CameraTicket> mCameraTickets{};
+    sead::PtrArray<TicketHolder> mCameraTickets{};
 };
 
 static_assert(sizeof(ElectricWireRailKeeper) == 0x138);

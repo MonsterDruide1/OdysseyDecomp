@@ -59,13 +59,13 @@ public:
     void wearCap(const char*);
 
 private:
-    unsigned char f1[0x6A8];
+    unsigned char filler0[0x6A8];
     GameProgressData* mGameProgressData;
-    char f2[0x1a0];
-    GameDataHolder *mGameDataHolder;
-    char f3[0x198];
+    char filler1[0x1a0];
+    GameDataHolder* mGameDataHolder;
+    char filler2[0x198];
     s32 mCurWorldId;
-    char padding_170[0x170];
+    char filler3[0x170];
 };
 
 static_assert(sizeof(GameDataFile) == 0xb68);
