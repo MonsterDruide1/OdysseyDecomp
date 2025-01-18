@@ -1,7 +1,5 @@
 #pragma once
 
-#include <math/seadVector.h>
-
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Util/IUseDimension.h"

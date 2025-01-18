@@ -18,7 +18,7 @@ public:
                     al::HitSensor* self) override;
 
     void tryCreateMtxConnector();
-    void isGot() const;
+    bool isGot() const;
     void appearCirclePlacement();
     void appearPopUp();
     void appearPopUpWithoutHitReaction();
