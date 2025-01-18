@@ -1,16 +1,17 @@
-//
-// Created by larbe on 1/18/25.
-//
+#pragma once
 
-#ifndef CAMERAINPUTHOLDER_H
-#define CAMERAINPUTHOLDER_H
+#include "Library/Camera/SimpleCameraInput.h"
 
 namespace al {
-
 class CameraInputHolder {
+public:
+    CameraInputHolder(s32 size);
+    void initAfterPlacement();
+    SimpleCameraInput* getInput(s32 size) const;
 
-};
-
-} // al
-
-#endif //CAMERAINPUTHOLDER_H
+private:
+    SimpleCameraInput* mSimpleCameraInput;
+    SimpleCameraInput** mCameraInputArray;
+    s32 mArraySize;
+};  // class CameraInputHolder
+}  // namespace al
