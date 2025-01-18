@@ -2,7 +2,6 @@
 
 #include <common/aglDrawContext.h>
 #include <common/aglRenderBuffer.h>
-#include <gfx/seadFrameBuffer.h>
 #include <gfx/seadViewport.h>
 
 #include "Library/Layout/LayoutUtil.h"
