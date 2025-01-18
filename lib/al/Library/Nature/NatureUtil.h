@@ -20,4 +20,6 @@ bool calcFindWaterSurfaceDisplacement(sead::Vector3f*, sead::Vector3f*, const Li
 bool calcFindWaterSurfaceOverGround(sead::Vector3f*, sead::Vector3f*, const LiveActor*,
                                     const sead::Vector3f&, const sead::Vector3f&, f32);
 
+bool calcFindFireSurface(sead::Vector3f*, sead::Vector3f*, const LiveActor*, const sead::Vector3f&,
+                         const sead::Vector3f&, f32);
 }  // namespace al
