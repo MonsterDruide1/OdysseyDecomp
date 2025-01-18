@@ -59,7 +59,7 @@ private:
     bool mIsShowLine = true;
     bool mIsThrowaway = false;
     PosType mPosType = PosType::NONE;
-    sead::Vector3f mPlayerPosOnVerticalMove{};
+    sead::Vector3f mPlayerPosOnVerticalMove{sead::Vector3f::zero};
     sead::PtrArray<TicketHolder> mCameraTickets{};
 };
 
