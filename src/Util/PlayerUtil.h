@@ -4,10 +4,14 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+#include "Library/Base/StringUtil.h"
+
 namespace al {
+class GamePadSystem;
 class HitSensor;
 class IUseMessageSystem;
 class LiveActor;
+struct SklAnimRetargettingInfo;
 }  // namespace al
 
 class CapTargetInfo;
@@ -20,8 +24,9 @@ void initPlayerActorInfo(PlayerActorBase*, const PlayerInitInfo&);
 const char* getInitPlayerModelName(const PlayerInitInfo&);
 bool isNeedCreateNoseNeedle(const PlayerInitInfo&);
 bool isClosetScenePlayer(const PlayerInitInfo&);
+al::GamePadSystem getGamePadSystem(const PlayerInitInfo&);
 const char* getInitCapTypeName(const PlayerInitInfo&);
-void createPlayerSklRetargettingInfo(al::LiveActor*, const sead::Vector3f&);
+al::SklAnimRetargettingInfo* createPlayerSklRetargettingInfo(al::LiveActor*, const sead::Vector3f&);
 const sead::Vector3f& getPlayerPos(const al::LiveActor*);
 const sead::Vector3f& getPlayerHeadPos(const al::LiveActor*);
 const sead::Vector3f& getPlayerBodyPos(const al::LiveActor*);
@@ -32,9 +37,9 @@ void calcPlayerGroundPoseUp(sead::Vector3f*, const al::LiveActor*);
 bool isNearPlayerH(const al::LiveActor*, f32);
 void calcPlayerFollowLayoutWorldPos(sead::Vector3f*, const al::LiveActor*);
 bool isPlayerHack(const al::LiveActor*);
-void tryCalcPlayerCeilingSpace(f32*, const al::LiveActor*, f32, f32);
-void tryCalcKidsGuideCeilingSpace(f32*, const al::LiveActor*, f32, f32);
-f32 getPlayerVelocity(const al::LiveActor*);
+bool tryCalcPlayerCeilingSpace(f32*, const al::LiveActor*, f32, f32);
+bool tryCalcKidsGuideCeilingSpace(f32*, const al::LiveActor*, f32, f32);
+const sead::Vector3f& getPlayerVelocity(const al::LiveActor*);
 bool tryCalcPlayerModelHeadJointPos(sead::Vector3f*, const al::LiveActor*);
 bool tryCalcPlayerModelHeadJointUp(sead::Vector3f*, const al::LiveActor*);
 bool tryCalcPlayerModelHeadJointFront(sead::Vector3f*, const al::LiveActor*);
@@ -128,8 +133,9 @@ void syncPlayerModelAlpha(al::LiveActor*);
 f32 getPlayerShadowDropLength(const al::LiveActor*);
 bool isExistLabelInPlayerHackSystemMstxt(const al::LiveActor*, const al::IUseMessageSystem*,
                                          const char*, const char*);
-const char* getPlayerHackSystemMessageString(const al::LiveActor*, const al::IUseMessageSystem*,
-                                             const char*, const char*);
+const char16* getPlayerHackSystemMessageString(const al::LiveActor*, const al::IUseMessageSystem*,
+                                               const char*, const char*);
+void getPlayerHackTutorialMoviePath(al::StringTmp<64>*, const al::LiveActor*, const char*);
 void calcPlayerAmiiboPeachAppearBasePos(sead::Vector3f*, const al::LiveActor*);
 bool isPlayerInputHoldBalloonSet(const al::LiveActor*);
 bool isPlayerInputHoldSquat(const al::LiveActor*);
@@ -146,7 +152,7 @@ void calcPlayerHoldMtx(sead::Matrix34f*, const al::HitSensor*);
 void setPlayerHoldJointAngle(const al::HitSensor*, const sead::Vector3f&);
 void updatePosePlayerHold(al::LiveActor*, const al::HitSensor*);
 void updatePosePlayerHoldAddOffset(al::LiveActor*, const al::HitSensor*, const sead::Vector3f&);
-void calcPlayerGuideOffsetY(const al::LiveActor*);
+f32 calcPlayerGuideOffsetY(const al::LiveActor*);
 bool isEnablePlayerHeadGuide(const al::LiveActor*);
 void calcPlayerGuidePos(sead::Vector3f*, const al::LiveActor*);
 void calcPlayerGuidePos(sead::Vector3f*, const al::LiveActor*, f32);

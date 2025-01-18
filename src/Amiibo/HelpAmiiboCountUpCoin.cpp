@@ -82,7 +82,7 @@ void HelpAmiiboCountUpCoin::activate() {
 
     mNumberOfCoins = al::getRandom(4);
     if (mNumberOfCoins != 0) {
-        mSelectedIndex = 0;
+        mCoinsSpawned = 0;
         al::setNerve(this, &NrvHelpAmiiboCountUpCoin.Delay);
         return;
     }
@@ -138,39 +138,25 @@ void HelpAmiiboCountUpCoin::exeAppearCoin() {
         return;
 
     if (rs::isPlayer2D(getActor())) {
-        Coin2D* coin2D = nullptr;
-        if (mSelectedIndex <= mCoin2DBuffer.size())
-            coin2D = mCoin2DBuffer[mSelectedIndex];
-
-        sead::Quatf pose = sead::Quatf::unit;
-        sead::Vector3f position = sead::Vector3f::zero;
-        HelpAmiiboFunction::calcCoinAppearQT(&pose, &position, coin2D);
-        al::updatePoseQuat(coin2D, pose);
-        al::resetPosition(coin2D, position);
+        Coin2D* coin2D = mCoin2DBuffer[mCoinsSpawned];
+        updateItemQT(coin2D);
         coin2D->appearCountUp();
 
     } else {
-        Coin* coin = nullptr;
-        if (mSelectedIndex <= mCoinBuffer.size())
-            coin = mCoinBuffer[mSelectedIndex];
-
-        sead::Quatf pose = sead::Quatf::unit;
-        sead::Vector3f position = sead::Vector3f::zero;
-        HelpAmiiboFunction::calcCoinAppearQT(&pose, &position, coin);
-        al::updatePoseQuat(coin, pose);
-        al::resetPosition(coin, position);
+        Coin* coin = mCoinBuffer[mCoinsSpawned];
+        updateItemQT(coin);
         coin->appearCountUp();
     }
 
-    s32 maximumIndex = (mNumberOfCoins == 1) ? 0 :
-                       (mNumberOfCoins == 2) ? 1 :
-                       (mNumberOfCoins == 3) ? 2 :
-                                               -1;
+    s32 mLastCoinIndex = (mNumberOfCoins == 1) ? 0 :
+                         (mNumberOfCoins == 2) ? 1 :
+                         (mNumberOfCoins == 3) ? 2 :
+                                                 -1;
 
-    if (mSelectedIndex == maximumIndex) {
+    if (mCoinsSpawned == mLastCoinIndex) {
         al::setNerve(this, &NrvHelpAmiiboCountUpCoin.End);
         return;
     }
 
-    mSelectedIndex++;
+    mCoinsSpawned++;
 }

@@ -45,5 +45,5 @@ private:
     sead::PtrArray<Coin> mCoinBuffer;
     sead::PtrArray<Coin2D> mCoin2DBuffer;
     s32 mNumberOfCoins = 4;
-    u32 mSelectedIndex = 0;
+    u32 mCoinsSpawned = 0;
 };
