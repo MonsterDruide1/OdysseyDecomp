@@ -4,8 +4,8 @@
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
 class ActorInitInfo;
+class LiveActor;
 }  // namespace al
 
 class WaterSurfaceShadow;
@@ -20,5 +20,6 @@ WaterSurfaceShadow* tryCreateWaterSurfaceCoinShadow(const al::ActorInitInfo&);
 void tryUpdateWaterSurfaceCoinShadow(WaterSurfaceShadow*, al::LiveActor*, f32);
 void initHackShadow(al::LiveActor*);
 void setupHackShadow(al::LiveActor*);
+void endHackShadow(al::LiveActor*);
 
 }  // namespace rs

@@ -16,6 +16,10 @@ public:
     f32 getRotate() const;
     f32 getRotateSpeed() const;
 
+    void increaseObjCountOffset() { mObjCountOffset++; }
+
+    void setRotateOffset(f32 offset) { mRotateOffset = offset; }
+
 private:
     al::LiveActor* mActor = nullptr;
     f32 mRotate = 0.0f;
