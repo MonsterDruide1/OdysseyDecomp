@@ -22,196 +22,10 @@ NERVE_IMPL(ElectricWireRailKeeper, Wait)
 NERVES_MAKE_NOSTRUCT(ElectricWireRailKeeper, Standby, Wait)
 }  // namespace
 
-void ElectricWireRailKeeper::appear() {
-    LiveActor::appear();
-    mElectricWire->tryUpdateDisplayModel();
-    al::setNerve(this, &Wait);
-}
-
-void ElectricWireRailKeeper::appearBySwitch() {
-    if (al::isAlive(this))
-        return;
-
-    appear();
-    al::invalidateClipping(this);
-    al::setNerve(this, &Standby);
-}
-
-void ElectricWireRailKeeper::exeStandby() {
-    if (al::isGreaterStep(this, 10)) {
-        al::validateClipping(this);
-        al::setNerve(this, &Wait);
-    }
-}
-
-void ElectricWireRailKeeper::exeWait() {}
-
-bool ElectricWireRailKeeper::isNerveStandby() const {
-    return al::isNerve(this, &Standby);
-}
-
-al::PlacementInfo* ElectricWireRailKeeper::getRailPointInfo(s32 index) const {
-    return al::getRailPointInfo(this, index);
-}
-
-bool ElectricWireRailKeeper::isRailPointEnableTargetEndCollision(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret = true;
-    al::tryGetArg(&ret, *info, "IsEnableTargetEndCollision");
-    return ret;
-}
-
-bool ElectricWireRailKeeper::isRailPointFaceToCameraDir(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret;
-    if (al::tryGetArg(&ret, *info, "IsFaceToCamera"))
-        return ret;
-    return false;
-}
-
-bool ElectricWireRailKeeper::isRailPointIgnore(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret;
-    if (al::tryGetArg(&ret, *info, "IsIgnore"))
-        return ret;
-    return false;
-}
-
-bool ElectricWireRailKeeper::isRailPointIsDisplayPointModelForce(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret = false;
-    al::tryGetArg(&ret, *info, "IsDisplayPointModelForce");
-    return ret;
-}
-
-bool ElectricWireRailKeeper::isRailPointIsExpandRailSelectableAngle(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret = false;
-    al::tryGetArg(&ret, *info, "IsExpandRailSelectableAngle");
-    return ret;
-}
-
-bool ElectricWireRailKeeper::isRailPointIsNeedCamera(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret = false;
-    al::tryGetArg(&ret, *info, "IsNeedCamera");
-    return ret;
-}
-
-bool ElectricWireRailKeeper::isRailPointIsNeedStartCameraHackEnd(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret = false;
-    al::tryGetArg(&ret, *info, "IsNeedStartCameraHackEnd");
-    return ret;
-}
-
-bool ElectricWireRailKeeper::isRailPointPlacementPole(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret;
-    if (al::tryGetArg(&ret, *info, "IsPlacementPole"))
-        return ret;
-    return false;
-}
-
-bool ElectricWireRailKeeper::isRailPointSpringFix(s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    bool ret;
-    if (al::tryGetArg(&ret, *info, "IsSpringFix"))
-        return ret;
-    return false;
-}
-
-void ElectricWireRailKeeper::kill() {
-    LiveActor::kill();
-    mElectricWire->tryUpdateDisplayModel();
-}
-
-void ElectricWireRailKeeper::killBySwitch() {
-    if (al::isDead(this))
-        return;
-    kill();
-}
-
-bool ElectricWireRailKeeper::tryGetPlayerBottomPosOnVerticalMove(
-    sead::Vector3f* playerBottomPos) const {
-    if (mPosType == PosType::BOTTOM) {
-        playerBottomPos->set(mPlayerPosOnVerticalMove);
-        return true;
-    }
-    return false;
-}
-
-bool ElectricWireRailKeeper::tryGetPlayerHeadPosOnVerticalMove(
-    sead::Vector3f* playerHeadPos) const {
-    if (mPosType == PosType::HEAD) {
-        playerHeadPos->set(mPlayerPosOnVerticalMove);
-        return true;
-    }
-    return false;
-}
-
-bool ElectricWireRailKeeper::tryGetRailPointDestinationTrans(sead::Vector3f* out, s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    return al::tryGetLinksTrans(out, *info, "DestinationPoint");
-}
-
-bool ElectricWireRailKeeper::tryGetRailPointFastenerMoveLimitAreaFlag(s32* out, s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    return al::tryGetArg(out, *info, "FastenerMoveLimitAreaFlag");
-}
-
-bool ElectricWireRailKeeper::tryGetRailPointOutDir(sead::Vector3f* out, s32 index) const {
-    al::PlacementInfo* info = getRailPointInfo(index);
-    al::PlacementInfo linksInfo{};
-    if (al::tryGetLinksInfo(&linksInfo, *info, "DestinationPoint")) {
-        sead::Vector3f linksTrans;
-        if (!al::tryGetLinksTrans(&linksTrans, *info, "DestinationPoint"))
-            return false;
-        sead::Vector3f railPointPos{};
-        al::calcRailPointPos(&railPointPos, this, index);
-        out->set(linksTrans);
-        *out -= railPointPos;
-        return al::tryNormalizeOrZero(out);
-    } else {
-        bool isOutToRailPointDir = false;
-        al::tryGetArg(&isOutToRailPointDir, *info, "IsOutToRailPointDir");
-        if (isOutToRailPointDir)
-            return al::tryGetUp(out, *info);
-    }
-    return false;
-}
-
-void ElectricWireRailKeeper::endCameraIfActive() {
-    for (s32 i = 0; i < mCameraTickets.size(); ++i) {
-        TicketHolder* holder = mCameraTickets[i];
-        if (al::isActiveCamera(holder->ticket))
-            al::endCamera(mElectricWire, holder->ticket, -1, false);
-    }
-}
-
-al::CameraTicket* ElectricWireRailKeeper::findRailPointCameraTicket(s32 pointIdx) const {
-    for (s32 i = 0; i < mCameraTickets.size(); ++i) {
-        TicketHolder* holder = mCameraTickets[i];
-        if (holder->pointIdx == pointIdx)
-            return holder->ticket;
-    }
-    return nullptr;
-}
-
-const al::CameraTicket*
-ElectricWireRailKeeper::findRailPointStartCameraHackEndTicket(s32 pointIdx) const {
-    for (s32 i = 0; i < mCameraTickets.size(); ++i) {
-        TicketHolder* ticket = mCameraTickets[i];
-        if (ticket->pointIdx == pointIdx)
-            return ticket->ticketHackEnd;
-    }
-    return nullptr;
-}
+ElectricWireRailKeeper::ElectricWireRailKeeper(const char* name) : LiveActor(name) {}
 
 ElectricWireRailKeeper::ElectricWireRailKeeper(const char* name, al::LiveActor* wire)
     : LiveActor(name), mElectricWire(reinterpret_cast<ElectricWire*>(wire)) {}
-
-ElectricWireRailKeeper::ElectricWireRailKeeper(const char* name) : LiveActor(name) {}
 
 void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
     using ElectricWireRailKeeperFunctor =
@@ -269,4 +83,190 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
         kill();
     al::listenStageSwitchOnKill(
         this, ElectricWireRailKeeperFunctor(this, &ElectricWireRailKeeper::killBySwitch));
+}
+
+void ElectricWireRailKeeper::appear() {
+    LiveActor::appear();
+    mElectricWire->tryUpdateDisplayModel();
+    al::setNerve(this, &Wait);
+}
+
+void ElectricWireRailKeeper::kill() {
+    LiveActor::kill();
+    mElectricWire->tryUpdateDisplayModel();
+}
+
+bool ElectricWireRailKeeper::isRailPointFaceToCameraDir(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret;
+    if (al::tryGetArg(&ret, *info, "IsFaceToCamera"))
+        return ret;
+    return false;
+}
+
+bool ElectricWireRailKeeper::isRailPointPlacementPole(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret;
+    if (al::tryGetArg(&ret, *info, "IsPlacementPole"))
+        return ret;
+    return false;
+}
+
+bool ElectricWireRailKeeper::isRailPointEnableTargetEndCollision(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret = true;
+    al::tryGetArg(&ret, *info, "IsEnableTargetEndCollision");
+    return ret;
+}
+
+bool ElectricWireRailKeeper::isRailPointIgnore(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret;
+    if (al::tryGetArg(&ret, *info, "IsIgnore"))
+        return ret;
+    return false;
+}
+
+bool ElectricWireRailKeeper::isRailPointSpringFix(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret;
+    if (al::tryGetArg(&ret, *info, "IsSpringFix"))
+        return ret;
+    return false;
+}
+
+bool ElectricWireRailKeeper::isRailPointIsNeedCamera(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret = false;
+    al::tryGetArg(&ret, *info, "IsNeedCamera");
+    return ret;
+}
+
+bool ElectricWireRailKeeper::isRailPointIsNeedStartCameraHackEnd(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret = false;
+    al::tryGetArg(&ret, *info, "IsNeedStartCameraHackEnd");
+    return ret;
+}
+
+bool ElectricWireRailKeeper::isRailPointIsExpandRailSelectableAngle(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret = false;
+    al::tryGetArg(&ret, *info, "IsExpandRailSelectableAngle");
+    return ret;
+}
+
+bool ElectricWireRailKeeper::isRailPointIsDisplayPointModelForce(s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    bool ret = false;
+    al::tryGetArg(&ret, *info, "IsDisplayPointModelForce");
+    return ret;
+}
+
+bool ElectricWireRailKeeper::tryGetRailPointOutDir(sead::Vector3f* out, s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    al::PlacementInfo linksInfo{};
+    if (al::tryGetLinksInfo(&linksInfo, *info, "DestinationPoint")) {
+        sead::Vector3f linksTrans;
+        if (!al::tryGetLinksTrans(&linksTrans, *info, "DestinationPoint"))
+            return false;
+        sead::Vector3f railPointPos{};
+        al::calcRailPointPos(&railPointPos, this, index);
+        out->set(linksTrans);
+        *out -= railPointPos;
+        return al::tryNormalizeOrZero(out);
+    } else {
+        bool isOutToRailPointDir = false;
+        al::tryGetArg(&isOutToRailPointDir, *info, "IsOutToRailPointDir");
+        if (isOutToRailPointDir)
+            return al::tryGetUp(out, *info);
+    }
+    return false;
+}
+
+bool ElectricWireRailKeeper::tryGetRailPointDestinationTrans(sead::Vector3f* out, s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    return al::tryGetLinksTrans(out, *info, "DestinationPoint");
+}
+
+bool ElectricWireRailKeeper::tryGetRailPointFastenerMoveLimitAreaFlag(s32* out, s32 index) const {
+    al::PlacementInfo* info = getRailPointInfo(index);
+    return al::tryGetArg(out, *info, "FastenerMoveLimitAreaFlag");
+}
+
+al::CameraTicket* ElectricWireRailKeeper::findRailPointCameraTicket(s32 pointIdx) const {
+    for (s32 i = 0; i < mCameraTickets.size(); ++i) {
+        TicketHolder* holder = mCameraTickets[i];
+        if (holder->pointIdx == pointIdx)
+            return holder->ticket;
+    }
+    return nullptr;
+}
+
+const al::CameraTicket*
+ElectricWireRailKeeper::findRailPointStartCameraHackEndTicket(s32 pointIdx) const {
+    for (s32 i = 0; i < mCameraTickets.size(); ++i) {
+        TicketHolder* ticket = mCameraTickets[i];
+        if (ticket->pointIdx == pointIdx)
+            return ticket->ticketHackEnd;
+    }
+    return nullptr;
+}
+
+bool ElectricWireRailKeeper::tryGetPlayerHeadPosOnVerticalMove(
+    sead::Vector3f* playerHeadPos) const {
+    if (mPosType == PosType::HEAD) {
+        playerHeadPos->set(mPlayerPosOnVerticalMove);
+        return true;
+    }
+    return false;
+}
+
+bool ElectricWireRailKeeper::tryGetPlayerBottomPosOnVerticalMove(
+    sead::Vector3f* playerBottomPos) const {
+    if (mPosType == PosType::BOTTOM) {
+        playerBottomPos->set(mPlayerPosOnVerticalMove);
+        return true;
+    }
+    return false;
+}
+
+void ElectricWireRailKeeper::endCameraIfActive() {
+    for (s32 i = 0; i < mCameraTickets.size(); ++i) {
+        TicketHolder* holder = mCameraTickets[i];
+        if (al::isActiveCamera(holder->ticket))
+            al::endCamera(mElectricWire, holder->ticket, -1, false);
+    }
+}
+
+al::PlacementInfo* ElectricWireRailKeeper::getRailPointInfo(s32 index) const {
+    return al::getRailPointInfo(this, index);
+}
+
+void ElectricWireRailKeeper::appearBySwitch() {
+    if (al::isAlive(this))
+        return;
+
+    appear();
+    al::invalidateClipping(this);
+    al::setNerve(this, &Standby);
+}
+
+void ElectricWireRailKeeper::killBySwitch() {
+    if (al::isDead(this))
+        return;
+    kill();
+}
+
+void ElectricWireRailKeeper::exeStandby() {
+    if (al::isGreaterStep(this, 10)) {
+        al::validateClipping(this);
+        al::setNerve(this, &Wait);
+    }
+}
+
+void ElectricWireRailKeeper::exeWait() {}
+
+bool ElectricWireRailKeeper::isNerveStandby() const {
+    return al::isNerve(this, &Standby);
 }
