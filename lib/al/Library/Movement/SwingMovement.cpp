@@ -32,31 +32,22 @@ SwingMovement::SwingMovement(const ActorInitInfo& info) : NerveExecutor("スイ�
     initNerve(&Move, 0);
 }
 
-inline s32 test(s32 a) {
-    return (a < 0 ? a + 3 : a) >> 2;
-}
-
-// NON_MATCHING: regswap + wrong register https://decomp.me/scratch/qM0wp
 bool SwingMovement::updateRotate() {
-    f32 fVar7 = 360.0f * (f32)_10 / (f32)mSwingCycle;
-    f32 fVar6 = sead::Mathf::abs(mSwingAngle);
+    f32 degree = (f32)_10 * 360.0f / (f32)mSwingCycle;
 
-    if (fVar6 < 180.0f) {
-        _28 = sead::Mathf::sin(sead::Mathf::deg2rad(fVar7)) * mSwingAngle + mOffsetRotate;
-        s32 iVar2 = _10 - _10 / mSwingCycle * mSwingCycle;
+    f32 swingAngle = sead::Mathf::abs(mSwingAngle);
+    if (swingAngle < 180.0f) {
+        _28 = sead::Mathf::sin(sead::Mathf::deg2rad(degree)) * mSwingAngle + mOffsetRotate;
 
-        return iVar2 == test(mSwingCycle) || iVar2 == test(mSwingCycle * 3);
+        return _10 % mSwingCycle == mSwingCycle / 4 || _10 % mSwingCycle == 3 * mSwingCycle / 4;
     }
 
-    f32 fVar5 = sign(mSwingAngle);
-    if (fVar6 < 360.0f) {
-        _28 = fVar5 *
-                  sead::Mathf::sin(
-                      sead::Mathf::deg2rad(modf(fVar7 + 90.0f + 180.0f, 180.0f) - 90.0f)) *
-                  180.0f +
-              mOffsetRotate;
+    f32 swingAngleSign = sign(mSwingAngle);
+    if (swingAngle < 360.0f) {
+        f32 rad = sead::Mathf::deg2rad(modf(degree + 90.0f + 180.0f, 180.0f) - 90.0f);
+        _28 = swingAngleSign * sead::Mathf::sin(rad) * 180.0f + mOffsetRotate;
     } else {
-        _28 = fVar5 * (modf(fVar7 * 2 + 360.0f, 360.0f) + 0.0f) + mOffsetRotate;
+        _28 = swingAngleSign * (modf(degree * 2 + 360.0f, 360.0f) + 0.0f) + mOffsetRotate;
     }
 
     return false;
