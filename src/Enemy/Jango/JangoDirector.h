@@ -9,10 +9,12 @@ class Jango;
 class JangoDirector : public al::ISceneObj {
 public:
     JangoDirector();
+
     const char* getSceneObjName() const override;
+
+    void registerJango(Jango* jango);
     bool isEnableCap() const;
     void placeCap();
-    void registerJango(Jango* jango);
     void removeCap();
 
 private:

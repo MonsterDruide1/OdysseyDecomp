@@ -163,20 +163,20 @@ bool ElectricWireRailKeeper::tryGetRailPointFastenerMoveLimitAreaFlag(s32* out, 
 bool ElectricWireRailKeeper::tryGetRailPointOutDir(sead::Vector3f* out, s32 index) const {
     al::PlacementInfo* info = getRailPointInfo(index);
     al::PlacementInfo linksInfo{};
-    if (!al::tryGetLinksInfo(&linksInfo, *info, "DestinationPoint")) {
+    if (al::tryGetLinksInfo(&linksInfo, *info, "DestinationPoint")) {
+        sead::Vector3f linksTrans;
+        if (!al::tryGetLinksTrans(&linksTrans, *info, "DestinationPoint"))
+            return false;
+        sead::Vector3f railPointPos{};
+        al::calcRailPointPos(&railPointPos, this, index);
+        out->set(linksTrans);
+        *out -= railPointPos;
+        return al::tryNormalizeOrZero(out);
+    } else {
         bool isOutToRailPointDir = false;
         al::tryGetArg(&isOutToRailPointDir, *info, "IsOutToRailPointDir");
         if (isOutToRailPointDir)
             return al::tryGetUp(out, *info);
-    } else {
-        sead::Vector3f linksTrans;
-        if (al::tryGetLinksTrans(&linksTrans, *info, "DestinationPoint")) {
-            sead::Vector3f railPointPos{};
-            al::calcRailPointPos(&railPointPos, this, index);
-            out->set(linksTrans);
-            *out -= railPointPos;
-            return al::tryNormalizeOrZero(out);
-        }
     }
     return false;
 }
@@ -232,41 +232,27 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
         mPosType = PosType::HEAD;
     else if (al::tryGetLinksTrans(&mPlayerPosOnVerticalMove, info, "PlayerBottomPosOnVerticalMove"))
         mPosType = PosType::BOTTOM;
-    if (!al::isExistRail(info, "Rail"))
-        return makeActorDead();
+    if (!al::isExistRail(info, "Rail")) {
+        makeActorDead();
+        return;
+    }
     initRailKeeper(info, "Rail");
     s32 pointNum = al::getRailPointNum(this);
     s32 needCameraPointNum = 0;
-    for (s32 i = 0; i < pointNum; ++i) {
-        al::PlacementInfo* railPointInfo = al::getRailPointInfo(this, i);
-        bool isNeedCamera = false;
-        al::tryGetArg(&isNeedCamera, *railPointInfo, "IsNeedCamera");
-        if (!isNeedCamera) {
-            railPointInfo = al::getRailPointInfo(this, i);
-            isNeedCamera = false;
-            al::tryGetArg(&isNeedCamera, *railPointInfo, "IsNeedStartCameraHackEnd");
-            if (!isNeedCamera)
-                continue;
-        }
-        ++needCameraPointNum;
-    }
+    for (s32 i = 0; i < pointNum; ++i)
+        if (isRailPointIsNeedCamera(i) || isRailPointIsNeedStartCameraHackEnd(i))
+            ++needCameraPointNum;
     if (needCameraPointNum > 0)
         mCameraTickets.allocBuffer(needCameraPointNum, nullptr);
     for (s32 i = 0; i < pointNum; ++i) {
-        al::PlacementInfo* railPointInfo = al::getRailPointInfo(this, i);
-        bool isNeedCamera = false;
-        al::tryGetArg(&isNeedCamera, *railPointInfo, "IsNeedCamera");
         al::CameraTicket* ticket = nullptr;
-        if (isNeedCamera) {
+        if (isRailPointIsNeedCamera(i)) {
             auto* id = new sead::FixedSafeString<0x20>();
             id->format("%d", i);
             ticket = al::initObjectCamera(mElectricWire, info, id->cstr(), nullptr);
         }
-        railPointInfo = al::getRailPointInfo(this, i);
-        isNeedCamera = false;
-        al::tryGetArg(&isNeedCamera, *railPointInfo, "IsNeedStartCameraHackEnd");
         al::CameraTicket* ticketHack = nullptr;
-        if (isNeedCamera) {
+        if (isRailPointIsNeedStartCameraHackEnd(i)) {
             auto* id = new sead::FixedSafeString<0x20>();
             id->format("%d(Entrance)", i);
             ticketHack = al::initEntranceCamera(mElectricWire, info.getPlacementInfo(), id->cstr());
