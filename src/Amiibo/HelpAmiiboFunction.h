@@ -8,7 +8,7 @@ class LiveActor;
 }  // namespace al
 
 namespace HelpAmiiboFunction {
-static void calcLifeUpItemAppearOffset(sead::Vector3f*, const al::LiveActor*);
-static void calcCoinAppearQT(sead::Quatf*, sead::Vector3f*, const al::LiveActor*);
-static bool calcIsHitArrowItemAppearPos(const al::LiveActor*);
+void calcLifeUpItemAppearOffset(sead::Vector3f*, const al::LiveActor*);
+void calcCoinAppearQT(sead::Quatf*, sead::Vector3f*, const al::LiveActor*);
+bool calcIsHitArrowItemAppearPos(const al::LiveActor*);
 }  // namespace HelpAmiiboFunction

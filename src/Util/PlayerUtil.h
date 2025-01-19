@@ -24,7 +24,7 @@ void initPlayerActorInfo(PlayerActorBase*, const PlayerInitInfo&);
 const char* getInitPlayerModelName(const PlayerInitInfo&);
 bool isNeedCreateNoseNeedle(const PlayerInitInfo&);
 bool isClosetScenePlayer(const PlayerInitInfo&);
-al::GamePadSystem getGamePadSystem(const PlayerInitInfo&);
+al::GamePadSystem* getGamePadSystem(const PlayerInitInfo&);
 const char* getInitCapTypeName(const PlayerInitInfo&);
 al::SklAnimRetargettingInfo* createPlayerSklRetargettingInfo(al::LiveActor*, const sead::Vector3f&);
 const sead::Vector3f& getPlayerPos(const al::LiveActor*);
