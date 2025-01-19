@@ -1,17 +1,19 @@
 #pragma once
 
-#include "Library/Camera/SimpleCameraInput.h"
+#include <basis/seadTypes.h>
 
 namespace al {
+class SimpleCameraInput;
+
 class CameraInputHolder {
 public:
-    CameraInputHolder(s32 size);
+    explicit CameraInputHolder(s32 size);
     void initAfterPlacement();
     SimpleCameraInput* getInput(s32 size) const;
 
 private:
-    SimpleCameraInput* mSimpleCameraInput;
-    SimpleCameraInput** mCameraInputArray;
+    SimpleCameraInput* mSimpleCameraInput = nullptr;
+    SimpleCameraInput** mSimpleCameraInputArray;
     s32 mArraySize;
 };  // class CameraInputHolder
 }  // namespace al

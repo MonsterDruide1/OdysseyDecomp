@@ -5,22 +5,11 @@
 #include "Library/Camera/SimpleCameraInput.h"
 
 al::CameraInputHolder::CameraInputHolder(const s32 size) {
-    SimpleCameraInput** inputs{};
-
-    mSimpleCameraInput = nullptr;
     mArraySize = size;
-
-    inputs = new SimpleCameraInput*[mArraySize];
-
-    mCameraInputArray = inputs;
-
-    if (mArraySize > 0) {
-        s64 index = 0;
-        do {
-            mCameraInputArray[index] = nullptr;
-            index++;
-        } while (index < mArraySize);
-    }
+    mSimpleCameraInputArray = new SimpleCameraInput*[mArraySize];
+    if (mArraySize > 0)
+        for (s64 index = 0; index < mArraySize; index++)
+            mSimpleCameraInputArray[index] = nullptr;
 }
 
 void al::CameraInputHolder::initAfterPlacement() {
@@ -32,7 +21,7 @@ void al::CameraInputHolder::initAfterPlacement() {
 }
 
 al::SimpleCameraInput* al::CameraInputHolder::getInput(const s32 size) const {
-    al::SimpleCameraInput* simpleCameraInput = mCameraInputArray[size];
+    al::SimpleCameraInput* simpleCameraInput = mSimpleCameraInputArray[size];
 
     if (simpleCameraInput == nullptr)
         return mSimpleCameraInput;
