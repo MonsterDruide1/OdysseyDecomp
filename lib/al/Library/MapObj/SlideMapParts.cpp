@@ -29,7 +29,7 @@ NERVE_ACTIONS_MAKE_STRUCT(SlideMapParts, StandBy, Delay, Wait, Move)
 namespace al {
 SlideMapParts::SlideMapParts(const char* name) : LiveActor(name) {}
 
-// NON_MATCHING
+// NON_MATCHING Uses makeQT but with different axis? https://decomp.me/scratch/Ce6nu
 void SlideMapParts::init(const ActorInitInfo& info) {
     using SlideMapPartsFunctor = FunctorV0M<SlideMapParts*, void (SlideMapParts::*)()>;
 
