@@ -225,7 +225,7 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
 
     ElectricWire* wire = mElectricWire;
     al::tryGetArg(&mIsShowLine, info, "IsShowLine");
-    if (wire->mIsElectricWireRadio)
+    if (wire->isElectricWireRadio())
         mIsShowLine = false;
     al::tryGetArg(&mIsThrowaway, info, "IsThrowaway");
     if (al::tryGetLinksTrans(&mPlayerPosOnVerticalMove, info, "PlayerHeadPosOnVerticalMove"))
@@ -246,6 +246,7 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
         mCameraTickets.allocBuffer(needCameraPointNum, nullptr);
     for (s32 i = 0; i < pointNum; ++i) {
         al::CameraTicket* ticket = nullptr;
+        // Yes, memory leak in new FixedSafeString
         if (isRailPointIsNeedCamera(i)) {
             auto* id = new sead::FixedSafeString<0x20>();
             id->format("%d", i);
