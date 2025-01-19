@@ -29,7 +29,6 @@ class ActorCameraSubTarget;
 class ActorBackAroundCameraSubTarget;
 class TransCameraSubTarget;
 class CameraDistanceCurve;
-class CameraTicketId;
 
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user);
 s32 getViewNumMax(const IUseCamera* user);
@@ -93,6 +92,8 @@ void endCameraWithNextCameraPose(const IUseCamera* user, CameraTicket* ticket,
                                  const CameraPoseInfo* poseInfo, s32);
 void endCameraSub(const IUseCamera* user, CameraTicket* ticket, s32);
 bool isActiveCamera(const CameraTicket* ticket);
+CameraTicket* initObjectCamera(const IUseCamera* user, const PlacementInfo& placementInfo,
+                               const char*, const char*);
 CameraTicket* initObjectCamera(const IUseCamera* user, const ActorInitInfo& actorInitInfo,
                                const char*, const char*);
 CameraTicket* initObjectCameraNoPlacementInfo(const IUseCamera* user, const char*, const char*);
@@ -202,7 +203,7 @@ CameraTicket* initAnimCamera(const LiveActor* actor, const ActorInitInfo& actorI
 void validateAnimCameraAngleSwing(CameraTicket* ticket);
 void invalidateAnimCameraAngleSwing(CameraTicket* ticket);
 void setAnimCameraBaseMtxPtr(CameraTicket* ticket, const sead::Matrix34f* baseMtxPtr);
-CameraTicket* initEntranceCamera(const IUseCamera* user, const PlacementInfo& actorInitInfo,
+CameraTicket* initEntranceCamera(const IUseCamera* user, const PlacementInfo& placementInfo,
                                  const char*);
 CameraTicket* initEntranceCamera(const IUseCamera* user, const ActorInitInfo& actorInitInfo,
                                  const char*);

@@ -1,6 +1,6 @@
 #include "Enemy/Jango/JangoDirector.h"
 
-JangoDirector::JangoDirector() : mJangos(new Jango*[10]), mJangoCount(0), mIsEnableCap(false) {}
+JangoDirector::JangoDirector() {}
 
 const char* JangoDirector::getSceneObjName() const {
     return "ジャンゴ保持者";
@@ -22,5 +22,3 @@ void JangoDirector::registerJango(Jango* jango) {
 void JangoDirector::removeCap() {
     mIsEnableCap = false;
 }
-
-JangoDirector::~JangoDirector() {}

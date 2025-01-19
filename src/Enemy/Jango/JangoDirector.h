@@ -14,10 +14,9 @@ public:
     void placeCap();
     void registerJango(Jango* jango);
     void removeCap();
-    ~JangoDirector() override;
 
 private:
-    Jango** mJangos;
-    s32 mJangoCount;
-    bool mIsEnableCap;
+    Jango** mJangos = new Jango*[10];
+    s32 mJangoCount = 0;
+    bool mIsEnableCap = false;
 };
