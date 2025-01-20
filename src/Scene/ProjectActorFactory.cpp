@@ -14,6 +14,7 @@
 #include "Library/MapObj/RailMoveMapParts.h"
 #include "Library/MapObj/RollingCubeMapParts.h"
 #include "Library/MapObj/RotateMapParts.h"
+#include "Library/MapObj/SubActorLodMapParts.h"
 #include "Library/MapObj/SurfMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
@@ -583,7 +584,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"RotateMapParts", al::createActorFunction<al::RotateMapParts>},
     {"SeesawMapParts", nullptr},
     {"SlideMapParts", nullptr},
-    {"SubActorLodMapParts", nullptr},
+    {"SubActorLodMapParts", al::createActorFunction<al::SubActorLodMapParts>},
     {"SurfMapParts", al::createActorFunction<al::SurfMapParts>},
     {"SwingMapParts", nullptr},
     {"SwitchDitherMapParts", nullptr},
