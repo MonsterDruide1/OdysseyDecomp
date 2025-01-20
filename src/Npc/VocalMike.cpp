@@ -12,8 +12,8 @@ void VocalMike::init(const al::ActorInitInfo& info) {
     makeActorAlive();
 }
 
-bool VocalMike::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                           al::HitSensor* target) {
+bool VocalMike::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                           al::HitSensor* self) {
     if (al::isMsgPlayerDisregard(message) || rs::isMsgPlayerDisregardHomingAttack(message))
         return true;
     return rs::isMsgPlayerDisregardTargetMarker(message);
