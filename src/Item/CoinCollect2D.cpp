@@ -13,7 +13,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Scene/SceneUtil.h"
+#include "Library/Scene/SceneObjUtil.h"
 
 #include "Item/CoinCollectEmpty2D.h"
 #include "Item/CoinCollectHintState.h"
