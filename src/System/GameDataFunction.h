@@ -526,4 +526,4 @@ void registerShineInfo(GameDataHolderAccessor accessor, const ShineInfo* shineIn
 void setHintTrans(GameDataHolderAccessor accessor, s32 shineIdx, const sead::Vector3f& trans);
 void resetHintTrans(GameDataHolderAccessor accessor, s32 shineIdx);
 bool isKoopaLv3(GameDataHolderAccessor accessor);
-};  // namespace GameDataFunction
+}  // namespace GameDataFunction
