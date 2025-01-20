@@ -62,13 +62,13 @@ private:
 
 namespace CoinFunction {
 
-const sead::Vector3f* getAppearAboveVelocity();
-void appearCoinBlowVeryLittle(Coin* coin, const sead::Vector3f& normalVelocity);
-void appearCoinBlowLittle(Coin* coin, const sead::Vector3f& normalVelocity);
-void appearCoinBlowMiddle(Coin* coin, const sead::Vector3f& normalVelocity);
-void appearCoinBlowLarge(Coin* coin, const sead::Vector3f& normalVelocity);
-void appearCoinBlowLargeEnemy(Coin* coin, const sead::Vector3f& normalVelocity);
-void appearCoinBlowBoss(Coin* coin, const sead::Vector3f& normalVelocity);
-void appearCoinBlowGk(Coin* coin, const sead::Vector3f& normalVelocity);
+const sead::Vector3f& getAppearAboveVelocity();
+void appearCoinBlowVeryLittle(Coin* coin, const sead::Vector3f& direction);
+void appearCoinBlowLittle(Coin* coin, const sead::Vector3f& direction);
+void appearCoinBlowMiddle(Coin* coin, const sead::Vector3f& direction);
+void appearCoinBlowLarge(Coin* coin, const sead::Vector3f& direction);
+void appearCoinBlowLargeEnemy(Coin* coin, const sead::Vector3f& direction);
+void appearCoinBlowBoss(Coin* coin, const sead::Vector3f& direction);
+void appearCoinBlowGk(Coin* coin, const sead::Vector3f& direction);
 
 }  // namespace CoinFunction
