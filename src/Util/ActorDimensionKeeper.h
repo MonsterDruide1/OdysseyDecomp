@@ -47,7 +47,7 @@ ActorDimensionKeeper* createDimensionKeeper(const al::LiveActor* actor);
 void updateDimensionKeeper(ActorDimensionKeeper* keeper);
 
 const char* getSpecialPurposeName2DOnly();
-al::CollisionPartsFilterOnlySpecialPurpose* createAndSetFilter2DOnly(al::LiveActor* actor);
+void createAndSetFilter2DOnly(al::LiveActor* actor);
 al::CollisionPartsFilterOnlySpecialPurpose* createCollisionPartsFilter2DOnly();
 
 bool is2D(const IUseDimension* dimension);

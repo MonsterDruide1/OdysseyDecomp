@@ -29,7 +29,7 @@ void TransparentWall::init(const al::ActorInitInfo& info) {
     al::trySyncStageSwitchAppearAndKill(this);
 }
 
-bool TransparentWall::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                                 al::HitSensor* target) {
+bool TransparentWall::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                                 al::HitSensor* self) {
     return al::isMsgScreenPointInvalidCollisionParts(message);
 }
