@@ -42,11 +42,10 @@ void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
     rs::createCoinCollectWatcher(this);
     rs::createCoinCollectHolder(this);
     CoinCollectHolder* holder =
-        (CoinCollectHolder*)al::getSceneObj(this, SceneObjID_CoinCollectHolder);
+        al::getSceneObj<CoinCollectHolder>(this, SceneObjID_CoinCollectHolder);
     holder->registerCoinCollect2D(this);
-    GameDataHolderAccessor gameData(this);
 
-    if (!GameDataFunction::isGotCoinCollect(gameData, initInfo)) {
+    if (!GameDataFunction::isGotCoinCollect(this, initInfo)) {
         al::initActorWithArchiveName(this, initInfo, rs::getStageCoinCollect2DArchiveName(this),
                                      nullptr);
         makeActorAlive();
@@ -70,7 +69,7 @@ void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
         makeActorDead();
         const char* archiveName = rs::getStageCoinCollect2DEmptyArchiveName(this);
         CoinCollectWatcher* watcher =
-            (CoinCollectWatcher*)al::getSceneObj(this, SceneObjID_CoinCollectWatcher);
+            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
         watcher->registerCoin(true);
 
         CoinCollectEmpty2D* coinCollectEmpty2d =
@@ -149,7 +148,7 @@ void CoinCollect2D::exeGot() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Got");
         CoinCollectWatcher* watcher =
-            (CoinCollectWatcher*)al::getSceneObj(this, SceneObjID_CoinCollectWatcher);
+            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
         watcher->countup(this);
 
         GameDataFunction::addCoinCollect(this, mPlacementId);
