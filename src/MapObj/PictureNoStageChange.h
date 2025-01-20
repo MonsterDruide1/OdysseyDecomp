@@ -4,14 +4,14 @@
 
 class PictureNoStageChange : public al::LiveActor {
 public:
-    PictureNoStageChange(const char* name, const char* textureName);
+    PictureNoStageChange(const char* name, const char* archiveName);
 
     virtual void init(const al::ActorInitInfo& info) override;
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                            al::HitSensor* target) override;
+    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self) override;
 
     void exeWait();
 
 private:
-    const char* mTextureName;
+    const char* mArchiveName;
 };
