@@ -380,7 +380,7 @@ def header_check_line(line, path, visibility, should_start_class):
         if var_type.startswith("enum"):
             return  # Allow enum inside class
 
-        PREFIXES = ["padding", "field", "unk", "gap", "_", "filler", "pad"]
+        PREFIXES = ["pad", "field", "unk", "gap", "_", "filler"]
 
         if var_type.startswith("static"):
             CHECK(lambda a: var_name.startswith("s") and var_name[1].isupper(), line,
