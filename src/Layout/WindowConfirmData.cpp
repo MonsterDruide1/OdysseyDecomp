@@ -82,12 +82,12 @@ void WindowConfirmData::updateConfirmDataDate() {
 
 void WindowConfirmData::appear() {
     al::setNerve(this, &Appear);
-    mPaneIndex = PaneType_Confirm;
+    mSelectionIndex = PaneType_Confirm;
 }
 
 void WindowConfirmData::appearWithChoicingCancel() {
     al::setNerve(this, &Appear);
-    mPaneIndex = PaneType_Cancel;
+    mSelectionIndex = PaneType_Cancel;
 }
 
 void WindowConfirmData::end() {
@@ -109,21 +109,21 @@ bool WindowConfirmData::isEndSelect() {
     if (!al::isActionEnd(mParCursor, nullptr))
         return false;
 
-    if (!al::isActionPlaying(mParOptions[mPaneIndex], "Decide", nullptr))
+    if (!al::isActionPlaying(mParOptions[mSelectionIndex], "Decide", nullptr))
         return false;
 
-    if (!al::isActionEnd(mParOptions[mPaneIndex], nullptr))
+    if (!al::isActionEnd(mParOptions[mSelectionIndex], nullptr))
         return false;
 
     return true;
 }
 
 bool WindowConfirmData::isDecided() {
-    return isEndSelect() && mPaneIndex == PaneType_Confirm;
+    return isEndSelect() && mSelectionIndex == PaneType_Confirm;
 }
 
 bool WindowConfirmData::isCanceled() {
-    return !isEndSelect() || mPaneIndex == PaneType_Cancel;
+    return !isEndSelect() || mSelectionIndex == PaneType_Cancel;
 }
 
 bool WindowConfirmData::isDisable() {
@@ -134,7 +134,7 @@ void WindowConfirmData::exeAppear() {
     if (al::isFirstStep(this)) {
         mWindowConfirmLayout->appear();
         al::startAction(mParCursor, "Hide", nullptr);
-        changeSelectingIdx(mPaneIndex);
+        changeSelectingIdx(mSelectionIndex);
     }
     if (mWindowConfirmLayout->isWait())
         al::setNerve(this, &Wait);
@@ -145,7 +145,7 @@ void WindowConfirmData::changeSelectingIdx(s32 index) {
                     nullptr);
     al::startAction(mParOptions[PaneType_Cancel], index == PaneType_Cancel ? "Wait" : "Select",
                     nullptr);
-    mPaneIndex = (PaneType)index;
+    mSelectionIndex = (PaneType)index;
 }
 
 void WindowConfirmData::exeWait() {
@@ -160,16 +160,16 @@ void WindowConfirmData::exeWait() {
     updateCursorPos();
 
     if (rs::isRepeatUiDown(mWindowConfirmLayout)) {
-        if (!mSelectionCooldown)
-            changeSelectingIdx(al::modi(mPaneIndex + 3, 2));
-        mSelectionCooldown = al::modi((mSelectionCooldown + 11), 10);
+        if (mSelectionCooldown == 0)
+            changeSelectingIdx(al::modi((mSelectionIndex + 1) + 2, 2));
+        mSelectionCooldown = al::modi((mSelectionCooldown + 1) + 10, 10);
         return;
     }
 
     if (rs::isRepeatUiUp(mWindowConfirmLayout)) {
-        if (!mSelectionCooldown)
-            changeSelectingIdx(al::modi(mPaneIndex + 1, 2));
-        mSelectionCooldown = al::modi((mSelectionCooldown + 11), 10);
+        if (mSelectionCooldown == 0)
+            changeSelectingIdx(al::modi((mSelectionIndex - 1) + 2, 2));
+        mSelectionCooldown = al::modi((mSelectionCooldown + 1) + 10, 10);
         return;
     }
 
@@ -182,10 +182,10 @@ void WindowConfirmData::exeWait() {
     if (rs::isTriggerUiCancel(mWindowConfirmLayout)) {
         al::startHitReaction(mWindowConfirmLayout, "キャンセル", nullptr);
 
-        if (mPaneIndex != PaneType_Cancel) {
+        if (mSelectionIndex != PaneType_Cancel) {
             al::startAction(mParOptions[PaneType_Confirm], "Wait", nullptr);
             al::startAction(mParOptions[PaneType_Cancel], "Select", nullptr);
-            mPaneIndex = PaneType_Cancel;
+            mSelectionIndex = PaneType_Cancel;
             updateCursorPos();
         }
 
@@ -198,14 +198,14 @@ void WindowConfirmData::exeWait() {
 
 void WindowConfirmData::updateCursorPos() {
     sead::Vector2f paneTrans = sead::Vector2f::zero;
-    al::calcPaneTrans(&paneTrans, mParOptions[mPaneIndex], "Cursor");
+    al::calcPaneTrans(&paneTrans, mParOptions[mSelectionIndex], "Cursor");
     al::setLocalTrans(mParCursor, paneTrans);
 }
 
 void WindowConfirmData::exeSelect() {
     if (al::isFirstStep(this)) {
         al::startAction(mParCursor, "End", nullptr);
-        al::startAction(mParOptions[mPaneIndex], "Decide", nullptr);
+        al::startAction(mParOptions[mSelectionIndex], "Decide", nullptr);
     }
 }
 

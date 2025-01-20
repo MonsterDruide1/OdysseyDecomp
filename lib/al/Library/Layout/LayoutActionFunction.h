@@ -11,8 +11,8 @@ class MessageTagDataHolder;
 class Nerve;
 class ReplaceTagProcessorBase;
 
-void startAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
-void startActionAtRandomFrame(IUseLayoutAction* layout, const char* actionName,
+bool startAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
+bool startActionAtRandomFrame(IUseLayoutAction* layout, const char* actionName,
                               const char* paneName);
 void startFreezeAction(IUseLayoutAction* layout, const char* actionName, f32 frame,
                        const char* paneName);
@@ -25,6 +25,11 @@ void startFreezeGaugeAction(IUseLayoutAction* layout, f32 value, f32 minFrame, f
 
 bool tryStartAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
+bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
+bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
+bool isActionEnd(const IUseLayoutAction* layout, const char* paneName);
+bool isActionOneTime(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
+
 f32 getActionFrame(const IUseLayoutAction* layout, const char* paneName);
 void setActionFrame(IUseLayoutAction* layout, f32 frame, const char* paneName);
 f32 getActionFrameRate(const IUseLayoutAction* layout, const char* paneName);
@@ -32,13 +37,8 @@ void setActionFrameRate(IUseLayoutAction* layout, f32 frameRate, const char* pan
 
 const char* getActionName(const IUseLayoutAction* layout, const char* paneName);
 
-bool isActionOneTime(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 bool isActionPlaying(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 bool isAnyActionPlaying(const IUseLayoutAction* layout, const char* paneName);
-bool isActionEnd(const IUseLayoutAction* layout, const char* paneName);
-
-bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
-bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
 void setNerveAtActionEnd(LayoutActor*, const Nerve* nerve);
 
@@ -57,11 +57,11 @@ void changeNextPage(LayoutActor*, const MessageTagDataHolder*, const ReplaceTagP
 bool tryChangeNextPage(LayoutActor*, const MessageTagDataHolder*, const ReplaceTagProcessorBase*);
 bool isExistNextPage(const LayoutActor*);
 bool isEndTextPaneAnim(const LayoutActor*, bool);
-void getCurrentMessagePaneAnim(const LayoutActor*);
-void calcCurrentMessageTextNum(const LayoutActor*);
-void calcShowTextTime(s32);
-void tryStartTextAnim(LayoutActor*, const char16*);
-void tryStartTextTagVoice(LayoutActor*, const char16*, const IUseAudioKeeper*, const char*,
+const char16* getCurrentMessagePaneAnim(const LayoutActor*);
+s32 calcCurrentMessageTextNum(const LayoutActor*);
+s32 calcShowTextTime(s32);
+bool tryStartTextAnim(LayoutActor*, const char16*);
+bool tryStartTextTagVoice(LayoutActor*, const char16*, const IUseAudioKeeper*, const char*,
                           sead::FixedSafeString<64>*);
 void startHitReaction(const LayoutActor*, const char*, const char*);
 }  // namespace al

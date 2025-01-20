@@ -42,8 +42,8 @@ public:
 private:
     al::SimpleLayoutAppearWaitEnd* mWindowConfirmLayout = nullptr;
     al::LayoutActor* mParCursor = nullptr;
-    al::LayoutActor* mParOptions[2] = {0};
+    al::LayoutActor* mParOptions[2] = {nullptr, nullptr};
     al::LayoutActor* mParData = nullptr;
-    PaneType mPaneIndex = PaneType::PaneType_Confirm;
+    PaneType mSelectionIndex = PaneType::PaneType_Confirm;
     s32 mSelectionCooldown = 0;
 };

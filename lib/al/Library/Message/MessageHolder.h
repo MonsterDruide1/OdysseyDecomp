@@ -14,13 +14,13 @@ class MessageTag;
 class MessageTagDataHolder;
 
 struct ReplaceTimeInfo {
-    s32 mYear;
-    s32 mMonth;
-    s32 mDay;
-    s32 mWeek;
-    s32 mHour;
-    s32 mMinute;
-    s32 mSecond;
+    u32 mYear;
+    u32 mMonth;
+    u32 mDay;
+    u32 mHour;
+    u32 mMinute;
+    u32 mSecond;
+    u32 mCentiSecond;
 };
 
 class MessageHolder : public HioNode {
