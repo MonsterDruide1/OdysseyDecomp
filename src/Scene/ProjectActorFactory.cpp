@@ -18,6 +18,8 @@
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Item/CoinCollect2D.h"
+#include "Item/CoinCollectHintObj.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
@@ -148,8 +150,8 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CoinChameleon", nullptr},
     {"CoinCirclePlacement", nullptr},
     {"CoinCollect", nullptr},
-    {"CoinCollectHintObj", nullptr},
-    {"CoinCollect2D", nullptr},
+    {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
+    {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
     {"CoinLead", nullptr},
     {"CoinRail", nullptr},
     {"CoinRing", nullptr},
