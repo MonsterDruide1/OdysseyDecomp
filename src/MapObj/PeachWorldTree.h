@@ -6,6 +6,6 @@ class PeachWorldTree : public al::LiveActor {
 public:
     PeachWorldTree(const char* name);
 
-    virtual void init(const al::ActorInitInfo& info) override;
-    virtual void control() override;
+    void init(const al::ActorInitInfo& info) override;
+    void control() override;
 };
