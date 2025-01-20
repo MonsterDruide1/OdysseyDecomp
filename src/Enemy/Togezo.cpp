@@ -83,8 +83,10 @@ bool Togezo::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
         return true;
     }
 
-    if (rs::isMsgNpcScareByEnemy(message) ||
-        al::tryReceiveMsgPushAndAddVelocity(this, message, other, self, 1.0))
+    if (rs::isMsgNpcScareByEnemy(message))
+        return true;
+
+    if (al::tryReceiveMsgPushAndAddVelocity(this, message, other, self, 1.0))
         return true;
 
     if (rs::isMsgCapReflect(message) && !al::isNerve(this, &NrvTogezo.BlowDown) &&
@@ -147,31 +149,31 @@ void Togezo::control() {
         al::startHitReaction(this, "死亡");
         al::tryAddRippleMiddle(this);
         kill();
-    } else {
-        if (mCapHitCooldown > 0)
-            mCapHitCooldown--;
 
-        sead::Vector3f calculatedForce = sead::Vector3f::zero;
-        mForceKeeper->calcForce(&calculatedForce);
+        return;
+    }
 
-        mFuturePos = calculatedForce * 0.64f + mFuturePos;
-        mFuturePos *= 0.955f;
+    if (mCapHitCooldown > 0)
+        mCapHitCooldown--;
 
-        mForceKeeper->reset();
+    sead::Vector3f calculatedForce = sead::Vector3f::zero;
+    mForceKeeper->calcForce(&calculatedForce);
 
-        if (!al::isNearZero(calculatedForce, 0.001f)) {
-            mWanderCooldown = 180;
-            al::invalidateClipping(this);
-        }
+    mFuturePos += calculatedForce * 0.64f;
+    mFuturePos *= 0.955f;
 
-        if (mWanderCooldown > 0) {
-            mWanderCooldown--;
+    mForceKeeper->reset();
 
-            if (mWanderCooldown == 0) {
-                if (al::isNerve(this, &NrvTogezo.Wander))
-                    al::validateClipping(this);
-            }
-        }
+    if (!al::isNearZero(calculatedForce, 0.001f)) {
+        mWanderCooldown = 180;
+        al::invalidateClipping(this);
+    }
+
+    if (mWanderCooldown > 0) {
+        mWanderCooldown--;
+
+        if (mWanderCooldown == 0 && al::isNerve(this, &NrvTogezo.Wander))
+            al::validateClipping(this);
     }
 }
 
@@ -181,16 +183,14 @@ void Togezo::updateCollider() {
     if (al::isNoCollide(this)) {
         *al::getTransPtr(this) += velocity;
         al::getActorCollider(this)->onInvalidate();
+    } else if (al::isFallOrDamageCodeNextMove(this, (velocity + mFuturePos) * 1.5f, 50.0f,
+                                              200.0f)) {
+        sead::Vector3f* transPtr = al::getTransPtr(this);
+        sead::Vector3f result = al::getActorCollider(this)->collide((velocity + mFuturePos) * 1.5f);
+        *transPtr += result;
     } else {
-        if (al::isFallOrDamageCodeNextMove(this, (velocity + mFuturePos) * 1.5f, 50.0f, 200.0f)) {
-            sead::Vector3f* transPtr = al::getTransPtr(this);
-            sead::Vector3f result =
-                al::getActorCollider(this)->collide((velocity + mFuturePos) * 1.5f);
-            *transPtr += result;
-        } else {
-            sead::Vector3f result = al::getActorCollider(this)->collide(velocity + mFuturePos);
-            *al::getTransPtr(this) += result;
-        }
+        sead::Vector3f result = al::getActorCollider(this)->collide(velocity + mFuturePos);
+        *al::getTransPtr(this) += result;
     }
 }
 
@@ -220,9 +220,7 @@ void Togezo::exeWander() {
         mAirTime = 0;
         mGroundNormal = al::getOnGroundNormal(this, 0);
     } else {
-        mAirTime++;
-
-        if (mAirTime > 4)
+        if (mAirTime++ >= 4)
             al::setNerve(this, &NrvTogezo.Fall);
     }
 }
@@ -252,20 +250,19 @@ void Togezo::exeTurn() {
 
     if (al::isOnGround(this, 0)) {
         mAirTime = 0;
-        return;
+    } else {
+        al::addVelocityToGravity(this, 1.0f);
+        al::scaleVelocity(this, 0.98f);
+
+        if (mAirTime++ >= 4)
+            al::setNerve(this, &NrvTogezo.Fall);
     }
-
-    al::addVelocityToGravity(this, 1.0f);
-    al::scaleVelocity(this, 0.98f);
-
-    if (mAirTime++ >= 4)
-        al::setNerve(this, &NrvTogezo.Fall);
 }
 
 void applyTogezoGroundVelocity(Togezo* self) {
     if (al::isOnGround(self, 0)) {
         const sead::Vector3f& normal = al::getOnGroundNormal(self, 0);
-        const sead::Vector3f& velocity = al::getVelocity(self);  // unused
+        al::getVelocity(self);  // unused
 
         if (al::isFallOrDamageCodeNextMove(self, al::getVelocity(self), 50.0f, 200.0f)) {
             f32 y = al::getVelocity(self).y;
@@ -274,7 +271,6 @@ void applyTogezoGroundVelocity(Togezo* self) {
         } else {
             al::addVelocity(self, -normal);
             al::scaleVelocity(self, 0.95f);
-            return;
         }
     } else {
         al::addVelocityY(self, -2.0f);
@@ -329,11 +325,9 @@ void Togezo::exeChase() {
             al::setNerve(this, &NrvTogezo.Wander);
             return;
         }
-    } else {
-        if (mAirTime++ >= 4) {
-            al::setNerve(this, &NrvTogezo.Fall);
-            return;
-        }
+    } else if (mAirTime++ >= 4) {
+        al::setNerve(this, &NrvTogezo.Fall);
+        return;
     }
 
     applyTogezoGroundVelocity(this);
@@ -355,16 +349,13 @@ void Togezo::exeFall() {
 }
 
 void Togezo::exeLand() {
-    s32* airTimePtr;
-
     if (al::isFirstStep(this)) {
         al::setVelocityZero(this);
         al::startAction(this, "Land");
-        airTimePtr = &mAirTime;
         mAirTime = 0;
-    } else {
-        airTimePtr = &mAirTime;
     }
+
+    s32* airTimePtr = &mAirTime;
 
     applyTogezoGroundVelocity(this);
 
@@ -425,15 +416,11 @@ void Togezo::exeCapHit() {
                                 sead::Vector3f(velocity * 5.0f + sead::Vector3f(0.0f, y, 0.0f)));
         }
 
+    } else if (mAirTime++ >= 5) {
+        al::setNerve(this, &NrvTogezo.Fall);
     } else {
-        mAirTime++;
-
-        if (mAirTime > 5) {
-            al::setNerve(this, &NrvTogezo.Fall);
-        } else {
-            al::addVelocityToGravity(this, 1.0f);
-            al::scaleVelocity(this, 0.98f);
-        }
+        al::addVelocityToGravity(this, 1.0f);
+        al::scaleVelocity(this, 0.98f);
     }
 }
 

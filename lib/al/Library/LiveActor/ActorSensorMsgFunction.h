@@ -7,7 +7,7 @@
 // causing the functions in the vtable to be exported
 #define SENSOR_MSG(Type)                                                                           \
     class SensorMsg##Type : public al::SensorMsg {                                                 \
-        SEAD_RTTI_OVERRIDE(al::SensorMsg##Type, SensorMsg)                                         \
+        SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
     };                                                                                             \
     bool isMsg##Type(const al::SensorMsg* msg) {                                                   \
         return SensorMsg##Type::checkDerivedRuntimeTypeInfoStatic(msg->getRuntimeTypeInfo());      \
@@ -443,7 +443,7 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSens
 bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                              const HitSensor*);
 
-void sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
+bool sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
 bool tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSensor*,
                                      const HitSensor*, f32);
 bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
