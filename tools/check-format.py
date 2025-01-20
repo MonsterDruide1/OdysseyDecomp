@@ -188,7 +188,7 @@ def common_include_order(c, path, is_header):
                          "Wrong order for includes: Found \"game\"-include outside of expected block!", path): return
                 order = 2
             else:
-                FAIL("This file is not allowed to be included with <>!", line, path)
+                FAIL("This file is not allowed to be included with \"file\"!", line, path)
                 return
         else:
             FAIL("Unknown include format", line, path)
