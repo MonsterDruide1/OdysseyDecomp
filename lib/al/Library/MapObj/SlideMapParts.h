@@ -28,7 +28,7 @@ private:
     s32 mWaitTime = 60;
     s32 mMoveTime = -1;
     s32 mDelayTime = 0;
-    bool _15c = true;
+    bool mIsMoveForwards = true;
 };
 
 static_assert(sizeof(SlideMapParts) == 0x160);

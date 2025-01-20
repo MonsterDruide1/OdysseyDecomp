@@ -29,7 +29,6 @@ NERVE_ACTIONS_MAKE_STRUCT(SlideMapParts, StandBy, Delay, Wait, Move)
 namespace al {
 SlideMapParts::SlideMapParts(const char* name) : LiveActor(name) {}
 
-// NON_MATCHING Uses makeQT but with different axis? https://decomp.me/scratch/Ce6nu
 void SlideMapParts::init(const ActorInitInfo& info) {
     using SlideMapPartsFunctor = FunctorV0M<SlideMapParts*, void (SlideMapParts::*)()>;
 
@@ -55,38 +54,12 @@ void SlideMapParts::init(const ActorInitInfo& info) {
     sead::Vector3f t;
     calcQuatLocalAxis(&t, getQuat(this), (s32)mMoveAxis);
 
-    f32 offsetX = surfaceHeight * t.x + mTrans.x;
-    f32 offsetY = surfaceHeight * t.y;
-    f32 offsetZ = surfaceHeight * t.z;
+    sead::Vector3f ts;
+    ts.x = surfaceHeight * t.x + mTrans.x;
+    ts.y = surfaceHeight * t.y + mTrans.y;
+    ts.z = surfaceHeight * t.z + mTrans.z;
 
-    sead::Quatf q = getQuat(this);
-
-    const f32 xx = 2 * q.x * q.x;
-    const f32 yy = 2 * q.y * q.y;
-    const f32 ww = 2 * q.w * q.w;
-    const f32 wx = 2 * q.w * q.x;
-    const f32 wy = 2 * q.w * q.y;
-    const f32 xy = 2 * q.x * q.y;
-    const f32 zx = 2 * q.z * q.x;
-    const f32 zy = 2 * q.z * q.y;
-    const f32 zw = 2 * q.z * q.w;
-
-    mSurfaceEffectMtx.m[0][0] = 1 - xx - yy;
-    mSurfaceEffectMtx.m[0][1] = wx - zy;
-    mSurfaceEffectMtx.m[0][3] = offsetX;
-    mSurfaceEffectMtx.m[0][2] = wy + zx;
-
-    mSurfaceEffectMtx.m[1][0] = wx + zy;
-    mSurfaceEffectMtx.m[1][2] = xy - zw;
-
-    mSurfaceEffectMtx.m[2][0] = wy - zx;
-    mSurfaceEffectMtx.m[2][1] = xy + zw;
-
-    mSurfaceEffectMtx.m[2][3] = offsetZ + mTrans.z;
-    mSurfaceEffectMtx.m[1][3] = offsetY + mTrans.y;
-
-    mSurfaceEffectMtx.m[1][1] = 1 - ww - yy;
-    mSurfaceEffectMtx.m[2][2] = 1 - ww - xx;
+    mSurfaceEffectMtx.makeQT(getQuat(this), ts);
 
     trySetEffectNamedMtxPtr(this, "Surface", &mSurfaceEffectMtx);
 
@@ -141,25 +114,25 @@ void SlideMapParts::exeWait() {
 
 void SlideMapParts::exeMove() {
     if (isFirstStep(this)) {
-        if (_15c)
+        if (mIsMoveForwards)
             tryStartSe(this, "MoveStart1");
         else
             tryStartSe(this, "MoveStart2");
     }
 
     f32 rate = calcNerveRate(this, calcMoveTime());
-    if (!_15c)
+    if (!mIsMoveForwards)
         rate = 1.0f - rate;
 
     setTransOffsetLocalDir(this, getQuat(this), mTrans, mMoveDistance * rate, (s32)mMoveAxis);
 
     if (isGreaterEqualStep(this, calcMoveTime())) {
-        if (_15c)
+        if (mIsMoveForwards)
             tryStartSe(this, "MoveEnd1");
         else
             tryStartSe(this, "MoveEnd2");
 
-        _15c = !_15c;
+        mIsMoveForwards = !mIsMoveForwards;
         tryStartSe(this, "MoveEnd");
         startNerveAction(this, "Wait");
     }
