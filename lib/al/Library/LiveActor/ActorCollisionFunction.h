@@ -3,9 +3,10 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class TriangleFilterBase;
-class CollisionPartsFilterBase;
 class ActorCollisionController;
+class CollisionPartsFilterBase;
+class HitSensor;
+class TriangleFilterBase;
 
 Collider* getActorCollider(const LiveActor*);
 bool isExistActorCollider(const LiveActor*);
@@ -82,10 +83,10 @@ bool isCollidedWallFace(const LiveActor*);
 bool isCollidedVelocity(const LiveActor*);
 bool isCollidedWallVelocity(const LiveActor*);
 bool isCollidedCeilingVelocity(const LiveActor*);
-void getCollidedCeilingNormal(const LiveActor*);
-void getCollidedGroundPos(const LiveActor*);
-void getCollidedWallPos(const LiveActor*);
-void getCollidedCeilingPos(const LiveActor*);
+const sead::Vector3f& getCollidedCeilingNormal(const LiveActor*);
+const sead::Vector3f& getCollidedGroundPos(const LiveActor*);
+const sead::Vector3f& getCollidedWallPos(const LiveActor*);
+const sead::Vector3f& getCollidedCeilingPos(const LiveActor*);
 void calcSpeedCollideWall(const LiveActor*);
 void calcSpeedCollideGround(const LiveActor*);
 void calcSpeedCollideCeiling(const LiveActor*);
@@ -96,12 +97,12 @@ bool tryGetCollidedWallCollisionParts(const LiveActor*);
 void getCollidedCeilingCollisionParts(const LiveActor*);
 bool tryGetCollidedCeilingCollisionParts(const LiveActor*);
 void getCollidedGroundSensor(const LiveActor*);
-bool tryGetCollidedGroundSensor(const LiveActor*);
-void getCollidedWallSensor(const LiveActor*);
-bool tryGetCollidedWallSensor(const LiveActor*);
-void getCollidedCeilingSensor(const LiveActor*);
-bool tryGetCollidedCeilingSensor(const LiveActor*);
-bool tryGetCollidedSensor(const LiveActor*);
+HitSensor* tryGetCollidedGroundSensor(const LiveActor*);
+HitSensor* getCollidedWallSensor(const LiveActor*);
+HitSensor* tryGetCollidedWallSensor(const LiveActor*);
+HitSensor* getCollidedCeilingSensor(const LiveActor*);
+HitSensor* tryGetCollidedCeilingSensor(const LiveActor*);
+HitSensor* tryGetCollidedSensor(const LiveActor*);
 bool tryGetCollidedPos(sead::Vector3f*, const LiveActor*);
 void setForceCollisionScaleOne(const LiveActor*);
 void followRotateFrontAxisUpGround(LiveActor*);

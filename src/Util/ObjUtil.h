@@ -4,11 +4,15 @@
 
 namespace al {
 class CollisionParts;
+class HitSensor;
 class LiveActor;
 }  // namespace al
+
 class PlayerModelHolder;
 
 namespace rs {
+
+bool trySendMsgPlayerReflectOrTrample(const al::LiveActor*, al::HitSensor*, al::HitSensor*);
 
 bool findWallCatchPos(const al::CollisionParts**, sead::Vector3f*, sead::Vector3f*,
                       const al::LiveActor*, const sead::Vector3f&, const sead::Vector3f&,

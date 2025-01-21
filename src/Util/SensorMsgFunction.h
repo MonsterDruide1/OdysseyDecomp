@@ -16,6 +16,8 @@ bool sendMsgNoticePlayerDamage(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgTouchFireDrum2D(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgItemAmiiboKoopa(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgPushToPlayer(al::HitSensor* source, al::HitSensor* target);
+bool sendMsgHackUpperPunch(al::HitSensor*, al::HitSensor*);
+bool sendMsgHackObjUpperPunch(al::HitSensor*, al::HitSensor*);
 
 bool isMsgCapTouchWall(const al::SensorMsg*);
 bool isMsgCapHipDrop(const al::SensorMsg*);
