@@ -15,8 +15,10 @@ template <class T, class F>
 class FunctorV0M : public FunctorBase {
 public:
     inline FunctorV0M() = default;
+
     inline FunctorV0M(T objPointer, F functPointer)
-        : mObjPointer(objPointer), mFunctPointer(functPointer) {};
+        : mObjPointer(objPointer), mFunctPointer(functPointer) {}
+
     inline FunctorV0M(const FunctorV0M<T, F>& copy) = default;
 
     void operator()() const override { (mObjPointer->*mFunctPointer)(); }
