@@ -17,13 +17,13 @@ private:
     sead::Quatf mQuat = sead::Quatf::unit;
     sead::Vector3f mSide = sead::Vector3f::ey;
     sead::Vector3f mFront = sead::Vector3f::ez;
-    f32 _130 = 0.0f;
-    f32 _134 = 0.0f;
+    f32 mRotateDegree = 0.0f;
+    f32 mRotateSpeed = 0.0f;
     f32 mRotateAccelOn = 0.025f;
     f32 mRotateAccelOff = 0.0125f;
     f32 mMaxDegree = 45.0f;
-    f32 _144 = 0.0f;
-    s32 _148 = 0;
+    f32 mWeight = 0.0f;
+    s32 mCurrentStep = 0;
 };
 
 static_assert(sizeof(SeesawMapParts) == 0x150);

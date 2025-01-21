@@ -11,6 +11,7 @@
 #include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Se/SeFunction.h"
 
 namespace {
 using namespace al;
@@ -57,11 +58,11 @@ bool SeesawMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
         else
             pos.set(getActorTrans(self));
 
-        f32 fVar3 = !isMsgEnemyFloorTouch(message) ? 1.0f : 0.9f;
+        f32 weight = !isMsgEnemyFloorTouch(message) ? 1.0f : 0.9f;
         if (!isGreaterThanOrEqualToZero((pos - getTrans(this)).dot(mFront)))
-            fVar3 = -fVar3;
+            weight = -weight;
 
-        _144 += fVar3;
+        mWeight += weight;
 
         return true;
     }
@@ -88,42 +89,54 @@ bool SeesawMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
 }
 
 void SeesawMapParts::appearAndSetStart() {
-    _130 = 0.0f;
-    _134 = 0.0f;
-    _144 = 0.0f;
-    _148 = 0.0f;
+    mRotateDegree = 0.0f;
+    mRotateSpeed = 0.0f;
+    mWeight = 0.0f;
+    mCurrentStep = 0;
 
     setQuat(this, mQuat);
 
     makeActorAlive();
 }
 
-// TODO: I giveup on this one
-// void SeesawMapParts::exeWait() {
-//     if (_144 > 0.0f) {
-//         if (_148 >= 60)
-//             _148 = 60;
-//         else
-//             _148++;
-//         _144 = 0.0f;
-//     } else if (_144 < 0.0f) {
-//         if (_148 <= -60)
-//             _148 = -60;
-//         else
-//             _148--;
-//         _144 = 0.0f;
-//     } else if (_148 > 0) {
-//         _148--;
-//         _144 = 0.0f;
-//         if (_148 < 1) {
-//             if (_148 <= -1)
-//                 _134 -= mRotateAccelOn;
-//             else if (_130 >= 0.0f)
-//                 _134 -= mRotateAccelOff;
-//             else
-//                 _134 += mRotateAccelOff;
-//         }
-//         _134 *= 0.95f;
-//     }
-// }
+void SeesawMapParts::exeWait() {
+    if (mWeight > 0.0f)
+        mCurrentStep = mCurrentStep > 59 ? 60 : mCurrentStep + 1;
+    else if (mWeight < 0.0f)
+        mCurrentStep = mCurrentStep < -59 ? -60 : mCurrentStep - 1;
+    else if (mCurrentStep > 0)
+        mCurrentStep--;
+    else if (mCurrentStep < 0)
+        mCurrentStep++;
+
+    mWeight = 0.0f;
+
+    if (mCurrentStep > 0)
+        mRotateSpeed += mRotateAccelOn;
+    else if (mCurrentStep < 0)
+        mRotateSpeed -= mRotateAccelOn;
+    else if (mRotateDegree >= 0.0f)
+        mRotateSpeed -= mRotateAccelOff;
+    else
+        mRotateSpeed += mRotateAccelOff;
+
+    mRotateSpeed *= 0.95f;
+    mRotateDegree += mRotateSpeed;
+    f32 rotateSpeed = sead::Mathf::abs(mRotateSpeed);
+
+    if (sead::Mathf::abs(mRotateDegree) > mMaxDegree) {
+        if (isSameSign(mRotateSpeed, mRotateDegree))
+            mRotateSpeed *= -0.5f;
+
+        mRotateDegree = sead::Mathf::clamp(mRotateDegree, -mMaxDegree, mMaxDegree);
+
+        if (rotateSpeed > 0.2f)
+            tryStartSeWithParam(this, "Stop", rotateSpeed, "");
+    }
+
+    if (rotateSpeed > 0.1f)
+        tryHoldSeWithParam(this, "Rotate", rotateSpeed, "");
+
+    rotateQuatRadian(getQuatPtr(this), mQuat, mSide, sead::Mathf::deg2rad(mRotateDegree));
+}
 }  // namespace al
