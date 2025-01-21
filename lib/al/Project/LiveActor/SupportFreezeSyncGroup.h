@@ -2,6 +2,8 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Placement/PlacementId.h"
+
 namespace al {
 class ActorInitInfo;
 class LiveActor;
@@ -13,17 +15,13 @@ public:
     SupportFreezeSyncGroup();
 
     void init(const ActorInitInfo& info);
-    /**
-     * @warning This function doesn't check if mActorCount is greater than mMaxActorCount.
-     *          Possible buffer overflow.
-     */
     void regist(LiveActor* actor);
     void setHostSensor(HitSensor* hostSensor);
     bool isEqualGroupId(const ActorInitInfo& info) const;
     void movement();
 
 private:
-    PlacementId* mGroupId;
+    PlacementId* mSupportFreezeSyncGroupId = new PlacementId{};
     HitSensor* mHostSensor = nullptr;
     LiveActor** mActors = nullptr;
     s32 mActorCount = 0;

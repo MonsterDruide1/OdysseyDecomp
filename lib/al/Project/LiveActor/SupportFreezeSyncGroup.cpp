@@ -4,13 +4,12 @@
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Placement/PlacementId.h"
 
 namespace al {
-SupportFreezeSyncGroup::SupportFreezeSyncGroup() : mGroupId(new PlacementId()) {}
+SupportFreezeSyncGroup::SupportFreezeSyncGroup() {}
 
 void SupportFreezeSyncGroup::init(const ActorInitInfo& info) {
-    alPlacementFunction::getLinkGroupId(mGroupId, info, "SupportFreezeSyncGroup");
+    alPlacementFunction::getLinkGroupId(mSupportFreezeSyncGroupId, info, "SupportFreezeSyncGroup");
 
     mActors = new LiveActor*[mMaxActorCount];
     for (s32 i = 0; i < mMaxActorCount; i++)
@@ -18,8 +17,7 @@ void SupportFreezeSyncGroup::init(const ActorInitInfo& info) {
 }
 
 void SupportFreezeSyncGroup::regist(LiveActor* actor) {
-    u64 uVar1 = *(u64*)&mActorCount;
-    if (mActorCount >= (s32)(uVar1 >> 32))  // check for integer overflow
+    if (mActorCount >= mMaxActorCount)
         return;
 
     mActors[mActorCount] = actor;
@@ -31,24 +29,24 @@ void SupportFreezeSyncGroup::setHostSensor(HitSensor* hostSensor) {
 }
 
 bool SupportFreezeSyncGroup::isEqualGroupId(const ActorInitInfo& info) const {
-    if (!mGroupId->isValid())
+    if (!mSupportFreezeSyncGroupId->isValid())
         return false;
 
     PlacementId groupId;
     if (!alPlacementFunction::getLinkGroupId(&groupId, info, "SupportFreezeSyncGroup"))
         return false;
 
-    return mGroupId->isEqual(groupId);
+    return mSupportFreezeSyncGroupId->isEqual(groupId);
 }
 
 void SupportFreezeSyncGroup::movement() {
-    bool bVar3 = false;
+    bool isAnyNerveSupportFreeze = false;
     for (s32 i = 0; i < mActorCount; i++)
-        bVar3 |= sendMsgIsNerveSupportFreeze(mActors[i]->getHitSensorKeeper()->getSensor(0),
-                                             mHostSensor);
+        isAnyNerveSupportFreeze |= sendMsgIsNerveSupportFreeze(
+            mActors[i]->getHitSensorKeeper()->getSensor(0), mHostSensor);
 
     for (s32 i = 0; i < mActorCount; i++)
-        if (bVar3)
+        if (isAnyNerveSupportFreeze)
             sendMsgOffSyncSupportFreeze(mActors[i]->getHitSensorKeeper()->getSensor(0),
                                         mHostSensor);
         else
