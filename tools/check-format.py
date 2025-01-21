@@ -376,7 +376,7 @@ def header_check_line(line, path, visibility, should_start_class):
         if newline.endswith("]"):
             newline = newline.split("[")[0].strip()
 
-        var_name = newline.split(" ")[-1]
+        var_name = newline.split(" : ")[0].split(" ")[-1]
         var_type = " ".join(newline.split(" ")[0:-1])
 
         if var_type.startswith("enum"):
