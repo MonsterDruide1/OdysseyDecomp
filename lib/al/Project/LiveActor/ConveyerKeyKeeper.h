@@ -23,6 +23,8 @@ public:
     void calcClippingSphere(sead::Vector3f* clippingTrans, f32* clippingRadius, f32 offset) const;
     const ConveyerKey* getConveyerKey(s32 index) const;  // return type depends on the type of _0
 
+    s32 getConveyerKeyCount() const { return mConveyerKeyCount; }
+
     f32 get_34() const { return _34; }
 
 private:
