@@ -19,13 +19,13 @@ public:
     bool isStop() const;
 
 private:
-    s32 _10 = 0;
+    s32 mFrameInCycle = 0;
     s32 mDelayRate = 0;
     f32 mSwingAngle = 45.0f;
     s32 mSwingCycle = 240;
     s32 mStopTime = 6;
     f32 mOffsetRotate = 0.0f;
-    f32 _28 = 0.0f;
+    f32 mCurrentAngle = 0.0f;
 };
 
 static_assert(sizeof(SwingMovement) == 0x30);

@@ -26,28 +26,30 @@ SwingMovement::SwingMovement(const ActorInitInfo& info) : NerveExecutor("スイ�
     tryGetArg(&mStopTime, info, "StopTime");
     tryGetArg(&mOffsetRotate, info, "OffsetRotate");
 
-    _10 = (s32)(((f32)mDelayRate - 25.0f) / 100.0f * (f32)mSwingCycle);
+    mFrameInCycle = (s32)(((f32)mDelayRate - 25.0f) / 100.0f * (f32)mSwingCycle);
     updateRotate();
 
     initNerve(&Move, 0);
 }
 
 bool SwingMovement::updateRotate() {
-    f32 degree = (f32)_10 * 360.0f / (f32)mSwingCycle;
+    f32 degree = (f32)mFrameInCycle * 360.0f / (f32)mSwingCycle;
 
     f32 swingAngle = sead::Mathf::abs(mSwingAngle);
     if (swingAngle < 180.0f) {
-        _28 = sead::Mathf::sin(sead::Mathf::deg2rad(degree)) * mSwingAngle + mOffsetRotate;
+        mCurrentAngle =
+            sead::Mathf::sin(sead::Mathf::deg2rad(degree)) * mSwingAngle + mOffsetRotate;
 
-        return _10 % mSwingCycle == mSwingCycle / 4 || _10 % mSwingCycle == 3 * mSwingCycle / 4;
+        return mFrameInCycle % mSwingCycle == mSwingCycle / 4 ||
+               mFrameInCycle % mSwingCycle == 3 * mSwingCycle / 4;
     }
 
     f32 swingAngleSign = sign(mSwingAngle);
     if (swingAngle < 360.0f) {
         f32 rad = sead::Mathf::deg2rad(modf(degree + 90.0f + 180.0f, 180.0f) - 90.0f);
-        _28 = swingAngleSign * sead::Mathf::sin(rad) * 180.0f + mOffsetRotate;
+        mCurrentAngle = swingAngleSign * sead::Mathf::sin(rad) * 180.0f + mOffsetRotate;
     } else {
-        _28 = swingAngleSign * (modf(degree * 2 + 360.0f, 360.0f) + 0.0f) + mOffsetRotate;
+        mCurrentAngle = swingAngleSign * (modf(degree * 2 + 360.0f, 360.0f) + 0.0f) + mOffsetRotate;
     }
 
     return false;
@@ -57,7 +59,7 @@ void SwingMovement::exeMove() {
     if (updateRotate())
         setNerve(this, &Stop);
 
-    _10 = modi(_10 + mSwingCycle + 1, mSwingCycle);
+    mFrameInCycle = modi((mFrameInCycle + 1) + mSwingCycle, mSwingCycle);
 }
 
 void SwingMovement::exeStop() {
@@ -66,7 +68,7 @@ void SwingMovement::exeStop() {
 }
 
 bool SwingMovement::isLeft() const {
-    f32 angle = (f32)_10 * 360.0f / (f32)mSwingCycle;
+    f32 angle = (f32)mFrameInCycle * 360.0f / (f32)mSwingCycle;
 
     return 90.0f <= angle && angle < 270.0f;
 }
