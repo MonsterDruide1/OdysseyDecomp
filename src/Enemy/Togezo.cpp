@@ -185,9 +185,8 @@ void Togezo::updateCollider() {
         al::getActorCollider(this)->onInvalidate();
     } else if (al::isFallOrDamageCodeNextMove(this, (velocity + mFuturePos) * 1.5f, 50.0f,
                                               200.0f)) {
-        sead::Vector3f* transPtr = al::getTransPtr(this);
-        sead::Vector3f result = al::getActorCollider(this)->collide((velocity + mFuturePos) * 1.5f);
-        *transPtr += result;
+        *al::getTransPtr(this) +=
+            al::getActorCollider(this)->collide((velocity + mFuturePos) * 1.5f);
     } else {
         sead::Vector3f result = al::getActorCollider(this)->collide(velocity + mFuturePos);
         *al::getTransPtr(this) += result;
