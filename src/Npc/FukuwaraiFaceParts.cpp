@@ -229,7 +229,8 @@ f32 FukuwaraiFaceParts::calcScore(bool isMario) const {
             return -5.0f;
     }
 
-    return bodyPart.a + bodyPart.c * calcScoreAngleRate() + (bodyPart.b * calcScoreDistRate());
+    return bodyPart.mBasePoints + bodyPart.mDistancePoints * calcScoreDistRate() +
+           bodyPart.mAnglePoints * calcScoreAngleRate();
 }
 
 bool FukuwaraiFaceParts::isPlaced() const {
