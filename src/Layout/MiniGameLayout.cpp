@@ -38,7 +38,7 @@ void MiniGameLayout::startJumprope() {
     al::setPaneString(this, "TxtTitle",
                       al::getSystemMessageString(this, "MiniGame", "TitleJumprope"), 0);
     al::startAction(this, "Jumprope", "State");
-    al::startAction(this, "NewRecordWait", "NewRecord");
+    startNewRecordWait();
     al::setNerve(this, &Appear);
     appear();
 }
@@ -47,7 +47,7 @@ void MiniGameLayout::startRace() {
     al::setPaneString(this, "TxtTitle",
                       al::getSystemMessageString(this, "MiniGame", "TitleRaceManRace"), 0);
     al::startAction(this, "Runrace", "State");
-    al::startAction(this, "NewRecordWait", "NewRecord");
+    startNewRecordWait();
     al::setNerve(this, &Appear);
     appear();
 }
@@ -56,7 +56,7 @@ void MiniGameLayout::startVolleyball() {
     al::setPaneString(this, "TxtTitle",
                       al::getSystemMessageString(this, "MiniGame", "TitleVolleyball"), 0);
     al::startAction(this, "Volleyball", "State");
-    al::startAction(this, "NewRecordWait", "NewRecord");
+    startNewRecordWait();
     al::setNerve(this, &Appear);
     appear();
 }

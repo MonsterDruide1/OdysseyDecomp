@@ -8,8 +8,6 @@
 
 KidsModeLayoutAccessor::KidsModeLayoutAccessor() {}
 
-// NON_MATCHING: KidsModeLayoutAccessor destructor
-
 const char* KidsModeLayoutAccessor::getSceneObjName() const {
     return "キッズモードレイアウトアクセサ";
 }
@@ -17,18 +15,18 @@ const char* KidsModeLayoutAccessor::getSceneObjName() const {
 namespace rs {
 void setKidsModeLayoutDisable(const al::IUseSceneObjHolder* user) {
     al::getSceneObj<KidsModeLayoutAccessor>(user, SceneObjID_KidsModeLayoutAccessor)
-        ->mIsKidsModeLayoutDisable = true;
+        ->setKidsModeLayoutDisable();
 }
 
 void setKidsModeLayoutEnable(const al::IUseSceneObjHolder* user) {
     al::getSceneObj<KidsModeLayoutAccessor>(user, SceneObjID_KidsModeLayoutAccessor)
-        ->mIsKidsModeLayoutDisable = false;
+        ->setKidsModeLayoutEnable();
 }
 
 bool isKidsModeLayoutDisable(const al::IUseSceneObjHolder* user) {
     return !rs::isKidsMode(user) ||
            al::getSceneObj<KidsModeLayoutAccessor>(user, SceneObjID_KidsModeLayoutAccessor)
-               ->mIsKidsModeLayoutDisable;
+               ->isKidsModeLayoutDisable();
 }
 
 }  // namespace rs

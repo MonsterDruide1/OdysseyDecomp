@@ -12,8 +12,8 @@ class MiniGameLayout : public al::LayoutActor {
 public:
     MiniGameLayout(const char* name, const al::LayoutInitInfo& info);
 
-    virtual void appear() override;
-    virtual void kill() override;
+    void appear() override;
+    void kill() override;
 
     void startJumprope();
     void startRace();

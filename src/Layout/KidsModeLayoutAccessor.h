@@ -10,8 +10,15 @@ class IUseSceneObjHolder;
 class KidsModeLayoutAccessor : public al::HioNode, public al::ISceneObj {
 public:
     KidsModeLayoutAccessor();
-    virtual const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override;
 
+    void setKidsModeLayoutDisable() { mIsKidsModeLayoutDisable = true; }
+
+    void setKidsModeLayoutEnable() { mIsKidsModeLayoutDisable = false; }
+
+    bool isKidsModeLayoutDisable() const { return mIsKidsModeLayoutDisable; }
+
+private:
     bool mIsKidsModeLayoutDisable = false;
 };
 
