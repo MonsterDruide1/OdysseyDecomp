@@ -13,12 +13,13 @@ public:
     ConveyerMapParts(const char* name);
 
     void init(const ActorInitInfo& info) override;
-    void start();
-    void stop();
     bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
     void control() override;
     void startClipped() override;
     void endClipped() override;
+
+    void start();
+    void stop();
 
     void exeStandBy();
     void exeMove();
@@ -26,11 +27,11 @@ public:
 private:
     DeriveActorGroup<ConveyerStep>* mConveyerSteps = nullptr;
     ConveyerKeyKeeper* mConveyerKeyKeeper = nullptr;
-    sead::Vector3f _118 = sead::Vector3f::zero;
-    f32 _124 = 0.0f;
+    sead::Vector3f mClippingTrans = sead::Vector3f::zero;
+    f32 mOffsetCoord = 0.0f;
     f32 mMoveSpeed = 5.0f;
     f32 mPartsInterval = 200.0f;
-    f32 _130 = 0.0f;
+    f32 mMaxCoord = 0.0f;
     s32 _134 = 0;
     s32 _138 = 0;
     s32 _13c = 30;
