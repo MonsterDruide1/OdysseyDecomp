@@ -20,15 +20,15 @@ RaceAudienceNpc::RaceAudienceNpc(const char* name) : al::LiveActor(name) {}
 
 void RaceAudienceNpc::init(const al::ActorInitInfo& info) {
     al::initActor(this, info);
-    al::getArg(&mAudienceActionType, info, "AudienceActionType");
+    al::getArg((s32*)&mAudienceActionType, info, "AudienceActionType");
     switch (mAudienceActionType) {
-    case 0:
+    case ActionType::Wait:
         al::initNerve(this, &NrvRaceAudienceNpc.Wait, 0);
         break;
-    case 1:
+    case ActionType::Dance:
         al::initNerve(this, &NrvRaceAudienceNpc.Dance, 0);
         break;
-    case 2:
+    case ActionType::Jump:
         al::initNerve(this, &NrvRaceAudienceNpc.Jump, 0);
         break;
     }
@@ -46,7 +46,7 @@ void RaceAudienceNpc::exeDance() {
         mDanceTimer = al::getRandom(600) + 600;
     }
     if (al::isGreaterEqualStep(this, mDanceTimer)) {
-        if (mAudienceActionType == 2)
+        if (mAudienceActionType == ActionType::Jump)
             al::setNerve(this, &NrvRaceAudienceNpc.Jump);
         else
             al::setNerve(this, &NrvRaceAudienceNpc.DanceRandom);

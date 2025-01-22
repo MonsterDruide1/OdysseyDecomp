@@ -4,6 +4,8 @@
 
 class RaceAudienceNpc : public al::LiveActor {
 public:
+    enum class ActionType { Wait, Dance, Jump };
+
     RaceAudienceNpc(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
@@ -14,6 +16,6 @@ public:
     void exeJump();
 
 private:
-    s32 mAudienceActionType = 0;
+    ActionType mAudienceActionType = ActionType::Wait;
     s32 mDanceTimer = 0;
 };
