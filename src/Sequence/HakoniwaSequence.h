@@ -30,6 +30,7 @@ class AsyncFunctorThread;
 class SeadAudioPlayer;
 class AudioBusSendFader;
 class SimpleAudioUser;
+class ScreenCaptureExecutor;
 
 }  // namespace al
 
@@ -84,7 +85,7 @@ private:
     sead::FixedSafeString<128> mStageName;
     s32 mNextScenarioNum;
     s32 _1A4;
-    void* mScreenCaptureExecutor;
+    al::ScreenCaptureExecutor* mScreenCaptureExecutor;
     al::WipeHolder* mWipeHolder;
     bool mIsMissEnd;
     al::SimpleLayoutAppearWaitEnd* mCounterMiss;

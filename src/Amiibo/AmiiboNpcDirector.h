@@ -43,7 +43,12 @@ public:
     al::AudioKeeper* getAudioKeeper() const override;
 
 private:
-    char filler[0x1C8];
+    char filler1[8];
+    ProjectNfpDirector* mNfpDirector;
+    char filler2[8];
+    al::AudioKeeper* mAudioKeeper;
+    MessageTagDataHolder* mTagDataHolder;
+    char filler[0x1A0];
 };
 
 static_assert(sizeof(AmiiboNpcDirector) == 0x1D8, "AmiiboNpcDirector");

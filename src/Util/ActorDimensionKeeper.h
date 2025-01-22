@@ -3,8 +3,9 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+class CollisionPartsFilterOnlySpecialPurpose;
 class LiveActor;
-}
+}  // namespace al
 class In2DAreaMoveControl;
 class IUseDimension;
 
@@ -44,6 +45,10 @@ namespace rs {
 
 ActorDimensionKeeper* createDimensionKeeper(const al::LiveActor* actor);
 void updateDimensionKeeper(ActorDimensionKeeper* keeper);
+
+const char* getSpecialPurposeName2DOnly();
+void createAndSetFilter2DOnly(al::LiveActor* actor);
+al::CollisionPartsFilterOnlySpecialPurpose* createCollisionPartsFilter2DOnly();
 
 bool is2D(const IUseDimension* dimension);
 bool isIn2DArea(const IUseDimension* dimension);
