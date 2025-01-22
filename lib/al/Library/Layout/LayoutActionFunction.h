@@ -25,9 +25,9 @@ void startFreezeGaugeAction(IUseLayoutAction* layout, f32 value, f32 minFrame, f
 
 bool tryStartAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
-bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
 bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 bool isActionEnd(const IUseLayoutAction* layout, const char* paneName);
+bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
 bool isActionOneTime(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
 f32 getActionFrame(const IUseLayoutAction* layout, const char* paneName);
