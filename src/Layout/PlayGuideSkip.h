@@ -10,7 +10,7 @@ class PlayGuideSkip : public al::LayoutActor {
 public:
     PlayGuideSkip(const char* name, const al::LayoutInitInfo& info);
 
-    void kill();
+    void kill() override;
     bool tryAppear();
     void appearCore();
     void end();

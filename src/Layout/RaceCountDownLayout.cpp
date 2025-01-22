@@ -68,7 +68,7 @@ void RaceCountDownLayout::exeCountDown() {
         mCountLayout->appear();
     }
 
-    if (al::isFirstStep(this) || al::getNerveStep(this) % 60)
+    if (al::isFirstStep(this) || al::getNerveStep(this) % 60 != 0)
         return;
 
     mCount--;
@@ -76,7 +76,7 @@ void RaceCountDownLayout::exeCountDown() {
     al::startAction(mCountLayout, "Count", nullptr);
     toggleNumberLayouts(mCountLayout, mCount);
 
-    if (mCount) {
+    if (mCount != 0) {
         al::startSe(this, "Count1");
     } else {
         al::startSe(this, "Count2");

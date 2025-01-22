@@ -21,8 +21,8 @@ NERVES_MAKE_STRUCT(PlayGuideCamera, Hide, Appear, End);
 }  // namespace
 
 PlayGuideCamera::PlayGuideCamera(const char* name, const al::LayoutInitInfo& info,
-                                 const al::LiveActor* actor)
-    : al::LayoutActor(name), mPlayer(actor) {
+                                 const al::LiveActor* player)
+    : al::LayoutActor(name), mPlayer(player) {
     al::initLayoutActor(this, info, "PlayGuideCamera", nullptr);
     initNerve(&NrvPlayGuideCamera.Hide, 0);
     appear();
@@ -40,11 +40,11 @@ void PlayGuideCamera::start() {
 }
 
 void PlayGuideCamera::exeHide() {
-    if (!field_129 && tryAppear())
+    if (!mIsShown && tryAppear())
         return;
 
     if (!al::isExistCameraInputAtDisableTiming(this, 0))
-        field_129 = false;
+        mIsShown = false;
 }
 
 bool PlayGuideCamera::tryAppear() {
@@ -60,12 +60,12 @@ void PlayGuideCamera::exeAppear() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Appear", nullptr);
         al::showPaneRoot(this);
-        field_129 = true;
+        mIsShown = true;
     }
     if (al::isActionEnd(this, nullptr))
         al::setNerve(this, &Wait);
     else if (!al::isExistCameraInputAtDisableTiming(this, 0))
-        field_129 = false;
+        mIsShown = false;
 }
 
 void PlayGuideCamera::exeWait() {
@@ -78,10 +78,10 @@ void PlayGuideCamera::exeWait() {
     }
 
     if (al::isExistCameraInputAtDisableTiming(this, 0)) {
-        if (field_129)
+        if (mIsShown)
             return;
     } else
-        field_129 = false;
+        mIsShown = false;
 
     tryAppear();
 }
@@ -96,10 +96,10 @@ void PlayGuideCamera::exeEnd() {
     }
 
     if (al::isExistCameraInputAtDisableTiming(this, 0)) {
-        if (field_129)
+        if (mIsShown)
             return;
     } else
-        field_129 = false;
+        mIsShown = false;
 
     tryAppear();
 }

@@ -9,7 +9,7 @@ class LiveActor;
 
 class PlayGuideCamera : public al::LayoutActor {
 public:
-    PlayGuideCamera(const char* name, const al::LayoutInitInfo& info, const al::LiveActor* actor);
+    PlayGuideCamera(const char* name, const al::LayoutInitInfo& info, const al::LiveActor* player);
 
     void hide();
     void start();
@@ -21,6 +21,6 @@ public:
     void exeEnd();
 
 private:
-    bool field_129 = false;
+    bool mIsShown = false;
     const al::LiveActor* mPlayer = nullptr;
 };
