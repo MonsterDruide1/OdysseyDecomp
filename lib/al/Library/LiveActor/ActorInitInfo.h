@@ -82,6 +82,8 @@ public:
 
     const ActorSceneInfo& getActorSceneInfo() const { return mActorSceneInfo; }
 
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
+
 private:
     LiveActorGroup* mKitDrawingGroup;
     const PlacementInfo* mPlacementInfo;
@@ -156,6 +158,7 @@ void setSubActorOffSyncClipping(LiveActor*);
 void initScreenPointKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initScreenPointKeeperNoYaml(LiveActor*, s32);
 void initActorMaterialCategory(LiveActor*, const ActorInitInfo&, const char*);
+const char* tryGetMapPartsSuffix(const ActorInitInfo&, const char*);
 
 // TODO: move these
 void initActorSceneInfo(LiveActor*, const ActorInitInfo&);
