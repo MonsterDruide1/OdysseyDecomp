@@ -4,6 +4,8 @@
 #include <math/seadVector.h>
 
 namespace al {
+void normalize(sead::Vector3f*, const sead::Vector3f&);
+
 f32 easeIn(f32);
 f32 easeOut(f32);
 f32 easeInOut(f32);

@@ -42,7 +42,7 @@ void initExecutorUpdate(LiveActor* actor, const ActorInitInfo& info, const char*
 void initNerve(LiveActor* actor, const Nerve* nerve, s32 stateCount);
 void initNerveAction(LiveActor* actor, const char* actionName,
                      alNerveFunction::NerveActionCollector* collector, s32 stateCount);
-void initMapPartsActor(LiveActor* actor, const ActorInitInfo& info, const char* name);
+void initMapPartsActor(LiveActor* actor, const ActorInitInfo& info, const char* suffix);
 void initMapPartsActorWithArchiveName(LiveActor* actor, const ActorInitInfo& info, const char* name,
                                       const char* suffix);
 bool trySyncStageSwitchKill(LiveActor* actor);
