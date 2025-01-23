@@ -9,8 +9,8 @@
 namespace al {
 struct SphereInterpolator;
 struct SphereHitInfo;
-struct CollisionPartsFilterBase;
-struct TriangleFilterBase;
+class CollisionPartsFilterBase;
+class TriangleFilterBase;
 class CollisionDirector;
 
 class Collider : public HioNode, public IUseCollision {

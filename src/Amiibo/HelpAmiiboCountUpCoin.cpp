@@ -153,7 +153,7 @@ void HelpAmiiboCountUpCoin::exeAppearCoin() {
                          (mNumberOfCoins == 3) ? 2 :
                                                  -1;
 
-    if (mCoinsSpawned == mLastCoinIndex) {
+    if ((s32)mCoinsSpawned == mLastCoinIndex) {
         al::setNerve(this, &NrvHelpAmiiboCountUpCoin.End);
         return;
     }
