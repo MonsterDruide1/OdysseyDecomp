@@ -19,6 +19,7 @@
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Item/CoinBlow.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
@@ -145,7 +146,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Coin", nullptr},
     {"Coin2D", nullptr},
     {"Coin2DCityDirector", nullptr},
-    {"CoinBlow", nullptr},
+    {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", nullptr},
     {"CoinCirclePlacement", nullptr},
     {"CoinCollect", nullptr},
