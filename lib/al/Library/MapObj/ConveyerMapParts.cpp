@@ -27,7 +27,16 @@ NERVES_MAKE_STRUCT(ConveyerMapParts, Move, StandBy)
 namespace al {
 ConveyerMapParts::ConveyerMapParts(const char* name) : LiveActor(name) {}
 
-// NON_MATCHING
+inline void test(DeriveActorGroup<ConveyerStep>* conveyerSteps, const ActorInitInfo& info,
+                 s32 actorCount) {
+    for (s32 i = 0; i < actorCount; i++) {
+        ConveyerStep* conveyerStep = new ConveyerStep("コンベア足場");
+        initCreateActorWithPlacementInfo(conveyerStep, info);
+        conveyerSteps->registerActor(conveyerStep);
+    }
+}
+
+// NON_MATCHING: inverted for loop
 void ConveyerMapParts::init(const ActorInitInfo& info) {
     using ConveyerMapPartsFunctor = FunctorV0M<ConveyerMapParts*, void (ConveyerMapParts::*)()>;
 
@@ -64,12 +73,13 @@ void ConveyerMapParts::init(const ActorInitInfo& info) {
     mOffsetCoord = modf(mPartsInterval * startRate + mPartsInterval, mPartsInterval) + 0.0f;
 
     mConveyerSteps = new DeriveActorGroup<ConveyerStep>("コンベア足場リスト", groupCount);
-    s32 maxActorCount = mConveyerSteps->getMaxActorCount();
-    for (s32 i = 0; i < maxActorCount; i++) {
-        ConveyerStep* conveyerStep = new ConveyerStep("コンベア足場");
-        initCreateActorWithPlacementInfo(conveyerStep, info);
-        mConveyerSteps->registerActor(conveyerStep);
-    }
+    //    s32 maxActorCount = mConveyerSteps->getMaxActorCount();
+    //    for (s32 i = 0; i < maxActorCount; i++) {
+    //        ConveyerStep* conveyerStep = new ConveyerStep("コンベア足場");
+    //        initCreateActorWithPlacementInfo(conveyerStep, info);
+    //        mConveyerSteps->registerActor(conveyerStep);
+    //    }
+    test(mConveyerSteps, info, mConveyerSteps->getMaxActorCount());
 
     for (s32 i = 0; i < groupCount; i++) {
         ConveyerStep* conveyerStep = mConveyerSteps->getDeriveActor(i);
