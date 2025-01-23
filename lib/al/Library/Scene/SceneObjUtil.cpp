@@ -26,7 +26,7 @@ bool isExistSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId) {
 }
 
 void deleteSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId) {
-    delete user->getSceneObjHolder()->getObj(sceneObjId);
+    delete getSceneObj(user, sceneObjId);
 }
 
 bool tryDeleteSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId) {
