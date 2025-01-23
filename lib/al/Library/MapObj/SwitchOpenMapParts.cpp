@@ -2,6 +2,7 @@
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathUtil.h"
@@ -82,5 +83,74 @@ void SwitchOpenMapParts::open() {
     }
 
     startNerveAction(this, "Open");
+}
+
+void SwitchOpenMapParts::close() {
+    if (isNerve(this, NrvSwitchOpenMapParts.WaitOpend.data())) {
+        if (mDelayTimeClose > 0) {
+            startNerveAction(this, "DelayOpen");
+
+            return;
+        }
+    } else {
+        if (isNerve(this, NrvSwitchOpenMapParts.DelayOpen.data())) {
+            startNerveAction(this, "Wait");
+
+            return;
+        }
+
+        if (!isNerve(this, NrvSwitchOpenMapParts.Open.data()))
+            return;
+    }
+
+    startNerveAction(this, "Close");
+}
+
+void SwitchOpenMapParts::exeWait() {
+    if (isFirstStep(this))
+        validateClipping(this);
+}
+
+void SwitchOpenMapParts::exeDelayOpen() {
+    if (isGreaterEqualStep(this, mDelayTimeOpen - 1))
+        startNerveAction(this, "Open");
+}
+
+void SwitchOpenMapParts::exeOpen() {
+    if (isFirstStep(this)) {
+        invalidateClipping(this);
+        if (isExistAction(this, "MoveLoop"))
+            tryStartActionIfNotPlaying(this, "MoveLoop");
+    }
+
+    mCoord += mSpeedOpen;
+    if (mCoord > mEndPointDist) {
+        mCoord = mEndPointDist;
+        setTrans(this, mCoord * mEndPointDir + mTrans);
+        startNerveAction(this, "WaitOpend");
+    } else {
+        setTrans(this, mCoord * mEndPointDir + mTrans);
+    }
+}
+
+void SwitchOpenMapParts::exeWaitOpend() {}
+
+void SwitchOpenMapParts::exeDelayClose() {
+    if (isGreaterEqualStep(this, mDelayTimeClose - 1))
+        startNerveAction(this, "Close");
+}
+
+void SwitchOpenMapParts::exeClose() {
+    if (isFirstStep(this) && isExistAction(this, "MoveLoop"))
+        tryStartActionIfNotPlaying(this, "MoveLoop");
+
+    mCoord -= mSpeedClose;
+    if (mCoord < 0.0f) {
+        mCoord = 0.0f;
+        setTrans(this, mTrans);
+        startNerveAction(this, "Wait");
+    } else {
+        setTrans(this, mCoord * mEndPointDir + mTrans);
+    }
 }
 }  // namespace al
