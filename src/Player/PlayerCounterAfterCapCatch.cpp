@@ -8,7 +8,7 @@ PlayerCounterAfterCapCatch::PlayerCounterAfterCapCatch(const PlayerConst* pConst
     : mConst(pConst), mTrigger(trigger) {}
 
 void PlayerCounterAfterCapCatch::update(const PlayerTrigger* trigger) {
-    if (mCounter <= sead::Mathi::maxNumber() - 1)
+    if (mCounter <= (u32)sead::Mathi::maxNumber() - 1)
         mCounter++;
 
     if (trigger->isOn(PlayerTrigger::EAttackSensorTrigger_val0))
@@ -19,5 +19,5 @@ bool PlayerCounterAfterCapCatch::isCapCatch() const {
     if (mTrigger->isOn(PlayerTrigger::EAttackSensorTrigger_val0))
         return true;
 
-    return mCounter <= mConst->getEnableActionFrameCapCatch();
+    return mCounter <= (u32)mConst->getEnableActionFrameCapCatch();
 }

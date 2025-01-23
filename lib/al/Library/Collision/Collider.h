@@ -9,7 +9,7 @@
 namespace al {
 struct SphereInterpolator;
 struct SphereHitInfo;
-struct CollisionPartsFilterBase;
+class CollisionPartsFilterBase;
 struct TriangleFilterBase;
 class CollisionDirector;
 

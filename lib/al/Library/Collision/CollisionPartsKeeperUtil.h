@@ -6,7 +6,7 @@ namespace al {
 class CollisionPartsFilterBase;
 class IUseCollision;
 class Triangle;
-class TriangleFilterBase;
+struct TriangleFilterBase;
 }  // namespace al
 
 namespace alCollisionUtil {

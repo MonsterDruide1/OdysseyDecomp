@@ -3,7 +3,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class TriangleFilterBase;
+struct TriangleFilterBase;
 class CollisionPartsFilterBase;
 class ActorCollisionController;
 

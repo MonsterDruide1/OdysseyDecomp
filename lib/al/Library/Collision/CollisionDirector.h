@@ -12,7 +12,7 @@ class ICollisionPartsKeeper;
 class CollisionPartsKeeperOctree;
 class CollisionPartsKeeperPtrArray;
 class CollisionPartsFilterBase;
-class TriangleFilterBase;
+struct TriangleFilterBase;
 class Strike;
 struct HitInfo;
 struct ArrowHitInfo;

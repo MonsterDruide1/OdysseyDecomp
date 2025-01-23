@@ -20,7 +20,7 @@ void AchievementInfoReader::init() {  // TODO minor mismatches during loop
         auto size = achievementInfoArray.getSize();
         mAchievements.allocBuffer(size, nullptr);
 
-        for (u32 i = 0; i < size; i++) {
+        for (s32 i = 0; i < size; i++) {
             al::ByamlIter iter;
             if (achievementInfoArray.tryGetIterByIndex(&iter, i)) {
                 const char* name = nullptr;
