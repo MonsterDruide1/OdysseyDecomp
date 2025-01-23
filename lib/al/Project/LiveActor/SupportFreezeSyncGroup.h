@@ -6,7 +6,6 @@ namespace al {
 class ActorInitInfo;
 class LiveActor;
 class HitSensor;
-class PlacementId;
 
 class SupportFreezeSyncGroup {
 public:
