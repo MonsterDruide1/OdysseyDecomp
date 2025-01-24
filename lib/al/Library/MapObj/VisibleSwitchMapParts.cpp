@@ -124,15 +124,10 @@ void VisibleSwitchMapParts::initAfterPlacement() {
         break;
     }
 
-    switch (mConnectMapDirType) {
-    case ConnectMapDirType::NegSide:
-    case ConnectMapDirType::NegUp:
-    case ConnectMapDirType::NegFront:
+    if (mConnectMapDirType == ConnectMapDirType::NegSide ||
+        mConnectMapDirType == ConnectMapDirType::NegUp ||
+        mConnectMapDirType == ConnectMapDirType::NegFront) {
         dir = -dir;
-
-        break;
-    default:
-        break;
     }
 
     attachMtxConnectorToCollision(mMtxConnector, this, getTrans(this),
@@ -158,5 +153,47 @@ bool VisibleSwitchMapParts::receiveMsg(const SensorMsg* message, HitSensor* othe
 void VisibleSwitchMapParts::exeShow() {
     if (isFirstStep(this))
         tryStartAction(this, "Wait");
+}
+
+void VisibleSwitchMapParts::exeDisappear() {
+    if ((isFirstStep(this) && !tryStartAction(this, "Disappear")) || isActionEnd(this))
+        setNerve(this, &NrvVisibleSwitchMapParts.Hide);
+}
+
+void VisibleSwitchMapParts::exeDisappearDither() {
+    setModelAlphaMask(this, 1.0f - calcNerveRate(this, mDitherFrame));
+
+    if (isGreaterEqualStep(this, mDitherFrame))
+        setNerve(this, &NrvVisibleSwitchMapParts.Hide);
+}
+
+void VisibleSwitchMapParts::exeHide() {
+    if (isFirstStep(this))
+        hideModelIfShow(this);
+}
+
+void VisibleSwitchMapParts::exeAppear() {
+    if (isFirstStep(this)) {
+        showModelIfHide(this);
+
+        if (!tryStartAction(this, "Appear")) {
+            setNerve(this, &NrvVisibleSwitchMapParts.Show);
+
+            return;
+        }
+    }
+
+    if (isActionEnd(this))
+        setNerve(this, &NrvVisibleSwitchMapParts.Show);
+}
+
+void VisibleSwitchMapParts::exeAppearDither() {
+    if (isFirstStep(this))
+        showModelIfHide(this);
+
+    setModelAlphaMask(this, calcNerveRate(this, mDitherFrame));
+
+    if (isGreaterEqualStep(this, mDitherFrame))
+        setNerve(this, &NrvVisibleSwitchMapParts.Show);
 }
 }  // namespace al
