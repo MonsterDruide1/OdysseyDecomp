@@ -20,6 +20,7 @@
 #include "Library/MapObj/SurfMapParts.h"
 #include "Library/MapObj/SwitchDitherMapParts.h"
 #include "Library/MapObj/SwitchOpenMapParts.h"
+#include "Library/MapObj/VisibleSwitchMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/Mofumofu/MofumofuScrap.h"
@@ -597,7 +598,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"SwitchDitherMapParts", al::createActorFunction<al::SwitchDitherMapParts>},
     {"SwitchKeepOnWatcher", nullptr},
     {"SwitchOpenMapParts", al::createActorFunction<al::SwitchOpenMapParts>},
-    {"VisibleSwitchMapParts", nullptr},
+    {"VisibleSwitchMapParts", al::createActorFunction<al::VisibleSwitchMapParts>},
     {"WaveSurfMapParts", nullptr},
     {"WheelMapParts", nullptr},
     {"WobbleMapParts", nullptr},
