@@ -61,6 +61,7 @@ bool isMsgItemGetAll(const al::SensorMsg*);
 bool isMsgCapIgnoreCancelLockOn(const al::SensorMsg*);
 bool isMsgKoopaHackPunchCollide(const al::SensorMsg*);
 bool isMsgItemGetAll(const al::SensorMsg*);
+bool isVisibleChameleon(const al::SensorMsg*);
 
 bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg*);
 bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg*);
