@@ -1,8 +1,22 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/LiveActor.h"
+
+namespace al {
+class ActorInitInfo;
+class HitSensor;
+class MtxConnector;
+}  // namespace al
+
+class CoinStateAppearRotate;
+class CoinRotateCalculator;
+class WaterSurfaceShadow;
+class SaveObjInfo;
+class ExternalForceKeeper;
 
 class Coin : public al::LiveActor {
 public:
@@ -56,8 +70,29 @@ public:
     void exeGot();
     void exeBlowUpDelay();
 
+    void setMtxConnector(al::MtxConnector* mtxConnector) { mMtxConnector = mtxConnector; }
+
 private:
-    char _108[0xA8];
+    CoinStateAppearRotate* mStateAppearRotate;
+    char _110[0xc];
+    sead::Quatf _11c;
+    al::MtxConnector* mMtxConnector;
+    bool _138;
+    s32 _13c;
+    sead::Vector3f _140;
+    char _14c;
+    ExternalForceKeeper* mExternalForceKeeper;
+    CoinRotateCalculator* mRotateCalculator;
+    bool _160;
+    f32 _164;
+    sead::Vector3f _168;
+    sead::Quatf _174;
+    char _184[4];
+    WaterSurfaceShadow* mWaterSurfaceShadow;
+    s32 _190;
+    sead::Vector3f _194;
+    SaveObjInfo* mSaveObjInfo;
+    bool _1a8;
 };
 
 namespace CoinFunction {
