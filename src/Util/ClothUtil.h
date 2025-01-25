@@ -11,6 +11,12 @@ class IUseSceneObjHolder;
 class IUseMessageSystem;
 }  // namespace al
 
+namespace ShopItem {
+struct ItemInfo;
+enum ItemType : u32;
+struct ShopItemInfo;
+}  // namespace ShopItem
+
 struct ItemListInfo;
 
 namespace rs {

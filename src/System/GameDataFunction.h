@@ -2,7 +2,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-#include "Layout/ShopLayoutInfo.h"
 #include "System/GameDataHolder.h"
 #include "System/GameDataHolderAccessor.h"
 #include "System/GameDataHolderWriter.h"
@@ -30,6 +29,10 @@ class PlacementId;
 class PlacementInfo;
 class Scene;
 }  // namespace al
+
+namespace ShopItem {
+struct ItemInfo;
+}
 
 enum class SessionEventProgress {
     Entry = 0,
