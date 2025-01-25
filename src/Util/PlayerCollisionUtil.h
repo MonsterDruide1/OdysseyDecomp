@@ -53,7 +53,7 @@ bool isCollisionCodeGrabCeilGrround(const IUsePlayerCollision*);
 
 void setColliderFilterCollisionParts(IUsePlayerCollision*, const al::CollisionPartsFilterBase*);
 
-void reboundVelocityFromCollision(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32);
+bool reboundVelocityFromCollision(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32);
 al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
 
 }  // namespace rs
