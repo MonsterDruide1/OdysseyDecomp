@@ -57,3 +57,7 @@ private:
 static_assert(sizeof(AudioKeeper) == 0x38);
 
 }  // namespace al
+
+namespace alAudioKeeperFunction {
+al::AudioKeeper* createAudioKeeper(const al::AudioDirector*, const char*, const char*);
+}

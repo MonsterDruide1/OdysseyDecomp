@@ -62,10 +62,10 @@ jobs:
       run: tools/build.py
     - name: Verify function states
       run: |
-        var="$(tools/check 2>&1)"
-        if [[ "$var" == "OK" ]]; then
+        var="$(tools/check 2> errfile || true)"
+        if [[ "$(cat errfile)" == "OK" ]]; then
           exit 0
         else
-          echo $var;
+          cat errfile | tr '\n' '\f' | sed 's/Stack backtrace:.*//' | tr '\f' '\n'
           exit 1
         fi

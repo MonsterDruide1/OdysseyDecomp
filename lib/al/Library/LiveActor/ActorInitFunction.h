@@ -32,6 +32,7 @@ void initExecutorDraw(LiveActor* actor, const ActorInitInfo& info, const char* e
 void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& info,
                                                     const sead::SafeString& archiveName,
                                                     const char* suffix);
+bool tryListenStageSwitchAppear(LiveActor* actor);
 bool tryListenStageSwitchKill(LiveActor* actor);
 void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& info,
                               const sead::SafeString& archiveName, const char* suffix);
