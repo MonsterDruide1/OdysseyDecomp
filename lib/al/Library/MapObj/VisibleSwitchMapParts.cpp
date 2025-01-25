@@ -126,9 +126,8 @@ void VisibleSwitchMapParts::initAfterPlacement() {
 
     if (mConnectMapDirType == ConnectMapDirType::NegSide ||
         mConnectMapDirType == ConnectMapDirType::NegUp ||
-        mConnectMapDirType == ConnectMapDirType::NegFront) {
+        mConnectMapDirType == ConnectMapDirType::NegFront)
         dir = -dir;
-    }
 
     attachMtxConnectorToCollision(mMtxConnector, this, getTrans(this),
                                   mConnectMapCheckLength * dir);
