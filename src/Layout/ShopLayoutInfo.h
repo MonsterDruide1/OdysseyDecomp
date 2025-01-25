@@ -7,5 +7,5 @@ struct ItemInfo {};
 
 struct ShopItemInfo {};
 
-enum ItemType : u32 { Cloth, Cap, Gift, Sticker, UseItem, Moon };
+enum class ItemType : u32 { Cloth, Cap, Gift, Sticker, UseItem, Moon };
 }  // namespace ShopItem
