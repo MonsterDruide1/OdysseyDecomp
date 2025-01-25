@@ -3,18 +3,13 @@
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
+#include "Layout/ShopLayoutInfo.h"
 #include "System/GameDataHolderAccessor.h"
 
 namespace al {
 class IUseSceneObjHolder;
 class IUseMessageSystem;
 }  // namespace al
-
-namespace ShopItem {
-class ItemInfo;
-class ItemType;
-class ShopItemInfo;
-}  // namespace ShopItem
 
 struct ItemListInfo;
 
