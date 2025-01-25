@@ -1,9 +1,11 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace ShopItem {
 struct ItemInfo {};
 
 struct ShopItemInfo {};
 
-struct ItemType {};
+enum ItemType : u32 { Cloth, Cap, Gift, Sticker, UseItem, Moon };
 }  // namespace ShopItem
