@@ -36,27 +36,33 @@ public:
     void exeTrample();
     void exeUpperPunch();
 
+    struct HackerStateWingFlyParam {
+        const char* actionFly = "Fly";
+        const char* actionFall = "Fall";
+        const char* actionTrample = nullptr;
+        const char* actionUpperPunch = nullptr;
+        f32 defaultAccel = 1.0f;
+        f32 swingAccel = 1.5f;
+        f32 defaultVelocityY = 15.0f;
+        f32 swingVelocityY = 23.0f;
+        f32 defaultFramerate = 1.6f;
+        f32 swingFramerate = 2.6f;
+        f32 yLerpValue = 230.0f;
+        f32 gravityVelocity = 0.6f;
+        f32 turnAngle = 20.0f;
+        f32 lerpTime = 0.1f;
+    };
+
+    static_assert(sizeof(HackerStateWingFlyParam) == 0x48, "HackerStateWingFlyParam Size");
+
 private:
     IUsePlayerHack** mHacker;
     IUsePlayerCollision* mCollision;
-    const char* mActionFly = "Fly";
-    const char* mActionFall = "Fall";
-    const char* mActionTrample = nullptr;
-    const char* mActionUpperPunch = nullptr;
-    f32 mDefaultAccel = 1.0f;
-    f32 mSwingAccel = 1.5f;
-    f32 mDefaultVelocityY = 15.0f;
-    f32 mSwingVelocityY = 23.0f;
-    f32 mDefaultFramerate = 1.6f;
-    f32 mSwingFramerate = 2.6f;
-    f32 mYLerpValue = 230.0f;
-    f32 mGravityVelocity = 0.6f;
-    f32 mTurnAngle = 20.0f;
-    f32 mLerpTime = 0.1f;
+    HackerStateWingFlyParam mParam{};
     s32 mFallTimeDelay = 0;
     f32 mAccel = 0.0f;
     f32 mVelocityY = 0.0f;
-    sead::Vector3f mTrans = sead::Vector3f::zero;
-    bool _90 = false;
+    sead::Vector3f mFlyLimit = sead::Vector3f::zero;
+    bool mIsJudgeFall = false;
     f32 mActionFrame = 0;
 };
