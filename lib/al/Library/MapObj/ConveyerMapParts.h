@@ -25,7 +25,7 @@ public:
     void exeMove();
 
 private:
-    DeriveActorGroup<ConveyerStep>* mConveyerSteps = nullptr;
+    DeriveActorGroup<ConveyerStep>* mConveyerStepGroup = nullptr;
     ConveyerKeyKeeper* mConveyerKeyKeeper = nullptr;
     sead::Vector3f mClippingTrans = sead::Vector3f::zero;
     f32 mOffsetCoord = 0.0f;
