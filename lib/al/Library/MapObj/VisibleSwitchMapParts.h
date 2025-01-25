@@ -10,6 +10,11 @@ public:
     VisibleSwitchMapParts(const char* name);
 
     void init(const ActorInitInfo& info) override;
+    /**
+     * @warning This function produce Undefined Behavior when mConnectMapDirType is equal to
+     * ConnectMapDirType::Invalid, ConnectMapDirType::NegSide, ConnectMapDirType::NegUp or
+     * ConnectMapDirType::NegFront
+     */
     void initAfterPlacement() override;
     void control() override;
     bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
