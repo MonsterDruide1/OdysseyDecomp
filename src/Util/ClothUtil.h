@@ -3,7 +3,6 @@
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
-#include "Layout/ShopLayoutInfo.h"
 #include "System/GameDataHolderAccessor.h"
 
 namespace al {
