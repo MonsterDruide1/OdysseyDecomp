@@ -12,7 +12,7 @@ class IUseMessageSystem;
 
 namespace ShopItem {
 struct ItemInfo;
-enum ItemType : u32;
+enum class ItemType : u32;
 struct ShopItemInfo;
 }  // namespace ShopItem
 
