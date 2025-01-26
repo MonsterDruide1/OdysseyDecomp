@@ -30,10 +30,10 @@ public:
 
 private:
     const Rail* mRail;
-    sead::Vector3f mPosition;
-    sead::Vector3f mDirection;
-    f32 mCoord;
-    f32 mRate;
-    bool mIsMoveForwards;
+    sead::Vector3f mPosition = sead::Vector3f::zero;
+    sead::Vector3f mDirection = sead::Vector3f::zero;
+    f32 mCoord = 0.0f;
+    f32 mRate = 0.0f;
+    bool mIsMoveForwards = true;
 };
 }  // namespace al

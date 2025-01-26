@@ -43,7 +43,7 @@ void Rail::init(const PlacementInfo& info) {
     for (s32 i = 0; i < mRailPartCount; i++) {
         PlacementInfo startInfo, endInfo;
         tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, i);
-        tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, (i + 1) % mRailPartCount);
+        tryGetPlacementInfoByIndex(&endInfo, railPointsInfo, (i + 1) % mRailPointsCount);
 
         sead::Vector3f start = sead::Vector3f::zero;
         sead::Vector3f startHandle = sead::Vector3f::zero;

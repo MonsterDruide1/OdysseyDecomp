@@ -10,9 +10,15 @@
 
 namespace al {
 
-ExecuteDirector::ExecuteDirector(s32 count) : mUpdateTableCount(count){};
+ExecuteDirector::ExecuteDirector(s32 count) : mRequestCount(count){};
 
-ExecuteDirector::~ExecuteDirector() = default;
+ExecuteDirector::~ExecuteDirector() {
+    for (s32 i = 0; i < mDrawTableCount; i++)
+        delete mDrawTables[i];
+
+    for (s32 i = 0; i < mUpdateTableCount; i++)
+        delete mUpdateTables[i];
+}
 
 void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
     mUpdateTableCount = UpdateTableSize;
