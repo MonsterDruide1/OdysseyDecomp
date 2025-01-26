@@ -23,7 +23,7 @@ private:
     f32 mRotateAccelOff = 0.0125f;
     f32 mMaxDegree = 45.0f;
     f32 mWeight = 0.0f;
-    s32 mCurrentStep = 0;
+    s32 mRemainingAccelOnFrames = 0;
 };
 
 static_assert(sizeof(SeesawMapParts) == 0x150);

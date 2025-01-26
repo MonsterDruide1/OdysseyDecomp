@@ -58,7 +58,7 @@ bool SeesawMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
         else
             pos.set(getActorTrans(self));
 
-        f32 weight = !isMsgEnemyFloorTouch(message) ? 1.0f : 0.9f;
+        f32 weight = isMsgEnemyFloorTouch(message) ? 0.9f : 1.0f;
         if (!isGreaterThanOrEqualToZero((pos - getTrans(this)).dot(mFront)))
             weight = -weight;
 
@@ -92,7 +92,7 @@ void SeesawMapParts::appearAndSetStart() {
     mRotateDegree = 0.0f;
     mRotateSpeed = 0.0f;
     mWeight = 0.0f;
-    mCurrentStep = 0;
+    mRemainingAccelOnFrames = 0;
 
     setQuat(this, mQuat);
 
@@ -101,19 +101,19 @@ void SeesawMapParts::appearAndSetStart() {
 
 void SeesawMapParts::exeWait() {
     if (mWeight > 0.0f)
-        mCurrentStep = mCurrentStep > 59 ? 60 : mCurrentStep + 1;
+        mRemainingAccelOnFrames = mRemainingAccelOnFrames > 59 ? 60 : mRemainingAccelOnFrames + 1;
     else if (mWeight < 0.0f)
-        mCurrentStep = mCurrentStep < -59 ? -60 : mCurrentStep - 1;
-    else if (mCurrentStep > 0)
-        mCurrentStep--;
-    else if (mCurrentStep < 0)
-        mCurrentStep++;
+        mRemainingAccelOnFrames = mRemainingAccelOnFrames < -59 ? -60 : mRemainingAccelOnFrames - 1;
+    else if (mRemainingAccelOnFrames > 0)
+        mRemainingAccelOnFrames--;
+    else if (mRemainingAccelOnFrames < 0)
+        mRemainingAccelOnFrames++;
 
     mWeight = 0.0f;
 
-    if (mCurrentStep > 0)
+    if (mRemainingAccelOnFrames > 0)
         mRotateSpeed += mRotateAccelOn;
-    else if (mCurrentStep < 0)
+    else if (mRemainingAccelOnFrames < 0)
         mRotateSpeed -= mRotateAccelOn;
     else if (mRotateDegree >= 0.0f)
         mRotateSpeed -= mRotateAccelOff;
