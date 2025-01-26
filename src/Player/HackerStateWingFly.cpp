@@ -142,16 +142,16 @@ void HackerStateWingFly::updateMove() {
 
     if (al::isCollidedCeiling(actor)) {
         const sead::Vector3f& ceilingNormal = al::getCollidedCeilingNormal(actor);
-        f32 dotProduct = ceilingNormal.dot(al::getVelocity(actor));
-        if (dotProduct < 0.0f)
-            *al::getVelocityPtr(actor) -= ceilingNormal * dotProduct * 1.1f;
+        f32 speedTowardsCeiling = ceilingNormal.dot(al::getVelocity(actor));
+        if (speedTowardsCeiling < 0.0f)
+            *al::getVelocityPtr(actor) -= ceilingNormal * speedTowardsCeiling * 1.1f;
     }
 
     if (al::isCollidedWall(actor)) {
         const sead::Vector3f& wallNormal = al::getCollidedWallNormal(actor);
-        f32 dotProduct = wallNormal.dot(al::getVelocity(actor));
-        if (dotProduct < 0.0f)
-            *al::getVelocityPtr(actor) -= wallNormal * dotProduct * 1.1f;
+        f32 speedTowardsWall = wallNormal.dot(al::getVelocity(actor));
+        if (speedTowardsWall < 0.0f)
+            *al::getVelocityPtr(actor) -= wallNormal * speedTowardsWall * 1.1f;
     }
 }
 
@@ -217,7 +217,7 @@ void HackerStateWingFly::exeFlyRiseToHighest() {
     if (tryUpperPunchToCollision())
         return;
 
-    if (al::getTrans(actor).y > mFlyLimit.y + mParam.yLerpValue) {
+    if (al::getTrans(actor).y > mFlyLimit.y + mParam.yOvershootMax) {
         al::setNerve(this, &NrvHostType.FlyTop);
         return;
     }
@@ -249,19 +249,19 @@ void HackerStateWingFly::exeFlyRiseToTop() {
     if (al::getTrans(actor).y < mFlyLimit.y) {
         endVelY = mVelocityY;
     } else {
-        f32 lerpTime = al::calcNerveSquareOutRate(this, 30);
-        f32 posY = mFlyLimit.y + al::lerpValue(0.0f, mParam.yLerpValue, lerpTime);
+        f32 flyLerpTime = al::calcNerveSquareOutRate(this, 30);
+        f32 posY = mFlyLimit.y + al::lerpValue(0.0f, mParam.yOvershootMax, flyLerpTime);
         endVelY = posY - getTrans(actor).y;
     }
 
     if (0.0f < endVelY) {
         f32 startVelY = al::getVelocity(actor).y;
-        endVelY = al::lerpValue(startVelY, endVelY, mParam.lerpTime);
+        endVelY = al::lerpValue(startVelY, endVelY, mParam.flyStartLerpTime);
         al::setVelocityY(actor, endVelY);
     }
 
     al::scaleVelocityHV(actor, 0.95f, 0.7f);
-    if (al::getTrans(actor).y >= mFlyLimit.y + mParam.yLerpValue) {
+    if (al::getTrans(actor).y >= mFlyLimit.y + mParam.yOvershootMax) {
         al::setNerve(this, &NrvHostType.FlyTop);
         return;
     }
@@ -280,9 +280,9 @@ void HackerStateWingFly::exeFlyTop() {
     updateFlyAction();
 
     sead::Vector3f trans = al::getTrans(actor);
-    f32 newYLerpValue = mFlyLimit.y + mParam.yLerpValue;
-    if (trans.y > newYLerpValue) {
-        al::getTransPtr(actor)->y = al::lerpValue(al::getTrans(actor).y, newYLerpValue, 0.01f);
+    f32 maxFlyY = mFlyLimit.y + mParam.yOvershootMax;
+    if (trans.y > maxFlyY) {
+        al::getTransPtr(actor)->y = al::lerpValue(al::getTrans(actor).y, maxFlyY, 0.01f);
         al::setVelocityZeroY(actor);
     }
 
@@ -307,42 +307,41 @@ void HackerStateWingFly::exeFall() {
             mAccel = mParam.defaultAccel;
             mVelocityY = mParam.defaultVelocityY;
         }
-        mActionFrame = 0;
+        mFallFrame = 0;
     }
 
-    if (al::isActionPlaying(mActor, mParam.actionFly) &&
-        al::getActionFrame(mActor) < mActionFrame) {
+    if (al::isActionPlaying(mActor, mParam.actionFly) && al::getActionFrame(mActor) < mFallFrame) {
         al::startAction(mActor, mParam.actionFall);
         al::setActionFrameRate(mActor, 1.0f);
         mAccel = mParam.defaultAccel;
         mVelocityY = mParam.defaultVelocityY;
     } else {
-        mActionFrame = al::getActionFrame(mActor);
+        mFallFrame = al::getActionFrame(mActor);
     }
 
-    al::addVelocityToGravity(mActor, mParam.gravityVelocity);
+    al::addVelocityToGravity(mActor, mParam.gravity);
     al::scaleVelocityHV(mActor, 0.95f, 0.94f);
-    if (!isTriggerHacker(mHacker)) {
-        if (isOnGround()) {
-            kill();
-            return;
+    if (isTriggerHacker(mHacker)) {
+        al::setVelocityZeroV(mActor);
+        al::LiveActor* actor = mActor;
+        if (rs::isTriggerHackSwing(*mHacker)) {
+            al::setActionFrameRate(actor, mParam.swingFramerate);
+            mAccel = mParam.swingAccel;
+            mVelocityY = mParam.swingVelocityY;
+        } else {
+            al::setActionFrameRate(actor, mParam.defaultFramerate);
+            mAccel = mParam.defaultAccel;
+            mVelocityY = mParam.defaultVelocityY;
         }
-        updateMove();
+        al::setNerve(this, &NrvHostType.FallFly);
         return;
     }
 
-    al::setVelocityZeroV(mActor);
-    al::LiveActor* actor = mActor;
-    if (rs::isTriggerHackSwing(*mHacker)) {
-        al::setActionFrameRate(actor, mParam.swingFramerate);
-        mAccel = mParam.swingAccel;
-        mVelocityY = mParam.swingVelocityY;
-    } else {
-        al::setActionFrameRate(actor, mParam.defaultFramerate);
-        mAccel = mParam.defaultAccel;
-        mVelocityY = mParam.defaultVelocityY;
+    if (isOnGround()) {
+        kill();
+        return;
     }
-    al::setNerve(this, &NrvHostType.FallFly);
+    updateMove();
 }
 
 void HackerStateWingFly::exeFallFly() {
@@ -352,7 +351,7 @@ void HackerStateWingFly::exeFallFly() {
     bool isLessStep = al::isLessStep(this, 20);
     al::LiveActor* actor = mActor;
     if (!isLessStep) {
-        al::addVelocityToGravity(actor, mParam.gravityVelocity);
+        al::addVelocityToGravity(actor, mParam.gravity);
         actor = mActor;
     }
 
@@ -391,34 +390,34 @@ void HackerStateWingFly::exeTrample() {
         return;
     }
 
-    if (!isTriggerHacker(mHacker)) {
-        if (isOnGround()) {
-            kill();
-            return;
+    if (isTriggerHacker(mHacker)) {
+        if (rs::isTriggerHackSwing(*mHacker)) {
+            al::setActionFrameRate(actor, mParam.swingFramerate);
+            mAccel = mParam.swingAccel;
+            mVelocityY = mParam.swingVelocityY;
+        } else {
+            al::setActionFrameRate(actor, mParam.defaultFramerate);
+            mAccel = mParam.defaultAccel;
+            mVelocityY = mParam.defaultVelocityY;
         }
-        al::addVelocityToGravity(actor, mParam.gravityVelocity);
-        al::scaleVelocityHV(actor, 0.95f, 0.94f);
-        updateMove();
+
+        al::Nerve* nerve;
+        if (al::getTrans(mActor).y < mFlyLimit.y)
+            nerve = &NrvHostType.FlyRiseToHighest;
+        else
+            nerve = &NrvHostType.FlyRiseToTop;
+
+        al::setNerve(this, nerve);
         return;
     }
 
-    if (rs::isTriggerHackSwing(*mHacker)) {
-        al::setActionFrameRate(actor, mParam.swingFramerate);
-        mAccel = mParam.swingAccel;
-        mVelocityY = mParam.swingVelocityY;
-    } else {
-        al::setActionFrameRate(actor, mParam.defaultFramerate);
-        mAccel = mParam.defaultAccel;
-        mVelocityY = mParam.defaultVelocityY;
+    if (isOnGround()) {
+        kill();
+        return;
     }
-
-    al::Nerve* nerve;
-    if (al::getTrans(mActor).y < mFlyLimit.y)
-        nerve = &NrvHostType.FlyRiseToHighest;
-    else
-        nerve = &NrvHostType.FlyRiseToTop;
-
-    al::setNerve(this, nerve);
+    al::addVelocityToGravity(actor, mParam.gravity);
+    al::scaleVelocityHV(actor, 0.95f, 0.94f);
+    updateMove();
 }
 
 void HackerStateWingFly::exeUpperPunch() {
@@ -431,28 +430,28 @@ void HackerStateWingFly::exeUpperPunch() {
         return;
     }
 
-    if (!al::isGreaterStep(this, 1) || !isTriggerHacker(mHacker)) {
-        al::addVelocityToGravity(actor, mParam.gravityVelocity);
-        al::scaleVelocityHV(actor, 0.95f, 0.94f);
-        updateMove();
+    if (al::isGreaterStep(this, 1) && isTriggerHacker(mHacker)) {
+        if (rs::isTriggerHackSwing(*mHacker)) {
+            al::setActionFrameRate(actor, mParam.swingFramerate);
+            mAccel = mParam.swingAccel;
+            mVelocityY = mParam.swingVelocityY;
+        } else {
+            al::setActionFrameRate(actor, mParam.defaultFramerate);
+            mAccel = mParam.defaultAccel;
+            mVelocityY = mParam.defaultVelocityY;
+        }
+
+        al::Nerve* nerve;
+        if (al::getTrans(mActor).y < mFlyLimit.y)
+            nerve = &NrvHostType.FlyRiseToHighest;
+        else
+            nerve = &NrvHostType.FlyRiseToTop;
+
+        al::setNerve(this, nerve);
         return;
     }
 
-    if (rs::isTriggerHackSwing(*mHacker)) {
-        al::setActionFrameRate(actor, mParam.swingFramerate);
-        mAccel = mParam.swingAccel;
-        mVelocityY = mParam.swingVelocityY;
-    } else {
-        al::setActionFrameRate(actor, mParam.defaultFramerate);
-        mAccel = mParam.defaultAccel;
-        mVelocityY = mParam.defaultVelocityY;
-    }
-
-    al::Nerve* nerve;
-    if (al::getTrans(mActor).y < mFlyLimit.y)
-        nerve = &NrvHostType.FlyRiseToHighest;
-    else
-        nerve = &NrvHostType.FlyRiseToTop;
-
-    al::setNerve(this, nerve);
+    al::addVelocityToGravity(actor, mParam.gravity);
+    al::scaleVelocityHV(actor, 0.95f, 0.94f);
+    updateMove();
 }

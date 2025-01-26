@@ -47,10 +47,10 @@ public:
         f32 swingVelocityY = 23.0f;
         f32 defaultFramerate = 1.6f;
         f32 swingFramerate = 2.6f;
-        f32 yLerpValue = 230.0f;
-        f32 gravityVelocity = 0.6f;
+        f32 yOvershootMax = 230.0f;
+        f32 gravity = 0.6f;
         f32 turnAngle = 20.0f;
-        f32 lerpTime = 0.1f;
+        f32 flyStartLerpTime = 0.1f;
     };
 
     static_assert(sizeof(HackerStateWingFlyParam) == 0x48, "HackerStateWingFlyParam Size");
@@ -64,5 +64,5 @@ private:
     f32 mVelocityY = 0.0f;
     sead::Vector3f mFlyLimit = sead::Vector3f::zero;
     bool mIsJudgeFall = false;
-    f32 mActionFrame = 0;
+    f32 mFallFrame = 0;
 };
