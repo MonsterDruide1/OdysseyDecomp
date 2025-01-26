@@ -7,6 +7,16 @@ class MtxConnector;
 
 class VisibleSwitchMapParts : public LiveActor {
 public:
+    enum class ConnectMapDirType : s32 {
+        Invalid = -1,
+        Side = 0,
+        NegSide = 1,
+        Up = 2,
+        NegUp = 3,
+        Front = 4,
+        NegFront = 5
+    };
+
     VisibleSwitchMapParts(const char* name);
 
     void init(const ActorInitInfo& info) override;
@@ -29,16 +39,6 @@ public:
     void exeHide();
     void exeAppear();
     void exeAppearDither();
-
-    enum class ConnectMapDirType : s32 {
-        Invalid = -1,
-        Side = 0,
-        NegSide = 1,
-        Up = 2,
-        NegUp = 3,
-        Front = 4,
-        NegFront = 5
-    };
 
 private:
     ConnectMapDirType mConnectMapDirType = ConnectMapDirType::Invalid;
