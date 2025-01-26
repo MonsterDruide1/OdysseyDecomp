@@ -242,7 +242,7 @@ bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 class alPlacementFunction {
 public:
     static s32 getCameraId(const al::ActorInitInfo& initInfo);
-    static void getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
+    static bool getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
                                const char* linkName);
     static bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
     static bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);
