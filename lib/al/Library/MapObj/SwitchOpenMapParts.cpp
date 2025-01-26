@@ -5,7 +5,7 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/Math/MathUtil.h"
+#include "Library/Math/MathAngleUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
@@ -46,7 +46,7 @@ void SwitchOpenMapParts::init(const ActorInitInfo& info) {
 
     sead::Vector3f endPointTrans;
     getTrans(&endPointTrans, endPointInfo);
-    endPointTrans.set(endPointTrans - mTrans);  // endPointTrans.sub(mTrans); ?
+    endPointTrans.set(endPointTrans - mTrans);
     mEndPointDist = endPointTrans.length();
     normalize(&mEndPointDir, endPointTrans);
 
@@ -65,45 +65,27 @@ void SwitchOpenMapParts::init(const ActorInitInfo& info) {
 }
 
 void SwitchOpenMapParts::open() {
-    if (isNerve(this, NrvSwitchOpenMapParts.Wait.data())) {
-        if (mDelayTimeOpen > 0) {
+    if (isNerve(this, NrvSwitchOpenMapParts.Wait.data()))
+        if (mDelayTimeOpen > 0)
             startNerveAction(this, "DelayOpen");
-
-            return;
-        }
-    } else {
-        if (isNerve(this, NrvSwitchOpenMapParts.DelayClose.data())) {
-            startNerveAction(this, "WaitOpend");
-
-            return;
-        }
-
-        if (!isNerve(this, NrvSwitchOpenMapParts.Close.data()))
-            return;
-    }
-
-    startNerveAction(this, "Open");
+        else
+            startNerveAction(this, "Open");
+    else if (isNerve(this, NrvSwitchOpenMapParts.DelayClose.data()))
+        startNerveAction(this, "WaitOpend");
+    else if (isNerve(this, NrvSwitchOpenMapParts.Close.data()))
+        startNerveAction(this, "Open");
 }
 
 void SwitchOpenMapParts::close() {
-    if (isNerve(this, NrvSwitchOpenMapParts.WaitOpend.data())) {
-        if (mDelayTimeClose > 0) {
+    if (isNerve(this, NrvSwitchOpenMapParts.WaitOpend.data()))
+        if (mDelayTimeClose > 0)
             startNerveAction(this, "DelayOpen");
-
-            return;
-        }
-    } else {
-        if (isNerve(this, NrvSwitchOpenMapParts.DelayOpen.data())) {
-            startNerveAction(this, "Wait");
-
-            return;
-        }
-
-        if (!isNerve(this, NrvSwitchOpenMapParts.Open.data()))
-            return;
-    }
-
-    startNerveAction(this, "Close");
+        else
+            startNerveAction(this, "Close");
+    else if (isNerve(this, NrvSwitchOpenMapParts.DelayOpen.data()))
+        startNerveAction(this, "Wait");
+    else if (isNerve(this, NrvSwitchOpenMapParts.Open.data()))
+        startNerveAction(this, "Close");
 }
 
 void SwitchOpenMapParts::exeWait() {
