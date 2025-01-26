@@ -64,6 +64,7 @@ bool isMsgDonsukeAttack(const al::SensorMsg*);
 bool isMsgPechoSpot(const al::SensorMsg*);
 bool isMsgDamageBallAttack(const al::SensorMsg*);
 bool isMsgKoopaHackPunchCollide(const al::SensorMsg*);
+bool isMsgCapEnableLockIn(const al::SensorMsg*);
 
 bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg*);
 bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg*);
