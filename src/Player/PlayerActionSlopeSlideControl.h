@@ -15,7 +15,7 @@ public:
                                   const IUsePlayerCollision*);
     void setup();
     void setupCutSlideOppositeDir();
-    void update(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, bool);
+    f32 update(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, bool);
 
 private:
     void* filler[0x48 / 8];
