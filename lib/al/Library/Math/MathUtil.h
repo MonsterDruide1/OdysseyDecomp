@@ -444,13 +444,13 @@ f32 calcFractal(f32, f32, u32, f32, f32, f32, bool);
 f32 calcMultiFractal(f32, f32, f32, u32, f32, f32, f32, bool);
 f32 calcNormalDistribution(f32, f32, f32);
 bool calcVecViewInput(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
-                     const sead::Matrix34f*);
+                      const sead::Matrix34f*);
 bool calcDirViewInput(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
-                     const sead::Matrix34f*);
+                      const sead::Matrix34f*);
 bool calcVecViewInput2D(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
-                       const sead::Matrix34f*);
+                        const sead::Matrix34f*);
 bool calcDirViewInput2D(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
-                       const sead::Matrix34f*);
+                        const sead::Matrix34f*);
 void calcBendPosAndFront(sead::Vector3f*, sead::Vector3f*, sead::Vector3f&, f32,
                          const sead::Vector3f&, const sead::Vector3f&, f32);
 void calcCirclePointPicking(sead::Vector2f*, f32, f32);
