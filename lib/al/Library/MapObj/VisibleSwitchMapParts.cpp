@@ -155,7 +155,15 @@ void VisibleSwitchMapParts::exeShow() {
 }
 
 void VisibleSwitchMapParts::exeDisappear() {
-    if ((isFirstStep(this) && !tryStartAction(this, "Disappear")) || isActionEnd(this))
+    if (isFirstStep(this)) {
+        if (!tryStartAction(this, "Disappear")) {
+            setNerve(this, &NrvVisibleSwitchMapParts.Hide);
+
+            return;
+        }
+    }
+
+    if (isActionEnd(this))
         setNerve(this, &NrvVisibleSwitchMapParts.Hide);
 }
 
