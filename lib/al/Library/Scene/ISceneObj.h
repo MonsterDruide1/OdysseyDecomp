@@ -5,9 +5,9 @@ class ActorInitInfo;
 
 class ISceneObj {
 public:
-    virtual ~ISceneObj() = default;
-
     virtual const char* getSceneObjName() const { return ""; }
+
+    virtual ~ISceneObj() = default;
 
     virtual void initAfterPlacementSceneObj(const ActorInitInfo&) {}
 

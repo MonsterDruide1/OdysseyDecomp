@@ -3,7 +3,7 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Scene/SceneUtil.h"
+#include "Library/Scene/SceneObjUtil.h"
 
 #include "Item/CoinCollectHolder.h"
 #include "Scene/SceneObjFactory.h"
@@ -17,7 +17,7 @@ void CoinCollectHintObj::init(const al::ActorInitInfo& initInfo) {
 
     rs::createCoinCollectHolder(this);
     CoinCollectHolder* holder =
-        (CoinCollectHolder*)al::getSceneObj(this, SceneObjID_CoinCollectHolder);
+        al::getSceneObj<CoinCollectHolder>(this, SceneObjID_CoinCollectHolder);
     holder->registerHintObj(this);
 
     makeActorDead();
