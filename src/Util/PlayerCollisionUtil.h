@@ -6,7 +6,9 @@ namespace al {
 class LiveActor;
 class CollisionParts;
 class CollisionPartsFilterBase;
+class HitSensor;
 }  // namespace al
+
 class IUsePlayerCollision;
 class IUsePlayerHeightCheck;
 class PlayerConst;
@@ -41,6 +43,7 @@ void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
 bool isCollisionCodeSandSink(const IUsePlayerCollision*);
 bool isCollidedWall(const IUsePlayerCollision*);
+bool isCollidedCeiling(const IUsePlayerCollision*);
 bool isActionCodeNoWallGrab(const IUsePlayerCollision*);
 
 bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
@@ -49,5 +52,8 @@ bool isCollisionCodeGrabCeilCeiling(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilGrround(const IUsePlayerCollision*);
 
 void setColliderFilterCollisionParts(IUsePlayerCollision*, const al::CollisionPartsFilterBase*);
+
+bool reboundVelocityFromCollision(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32);
+al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
 
 }  // namespace rs
