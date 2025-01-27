@@ -14,6 +14,10 @@ public:
 
     void init(const al::ActorInitInfo& info) override;
 
+    const char* getStageName() const { return mStageName; }
+
+    const sead::Vector3f& getTrans() const { return mTrans; }
+
 private:
     const char* mStageName = nullptr;
     sead::Vector3f mTrans = sead::Vector3f::zero;

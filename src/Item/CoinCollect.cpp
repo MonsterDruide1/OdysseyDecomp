@@ -66,7 +66,7 @@ void CoinCollect::init(const al::ActorInitInfo& info) {
         al::initCreateActorWithPlacementInfo(coinCollectEmpty, info);
         makeActorDead();
         mCoinCollectEmpty = coinCollectEmpty;
-        _198 = false;
+        mIsHintEnabled = false;
         return;
     }
 
@@ -261,7 +261,7 @@ void CoinCollect::exeGot() {
         alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 5000.0f);
         if (mWaterSurfaceShadow)
             mWaterSurfaceShadow->disappearShadow();
-        _198 = false;
+        mIsHintEnabled = false;
     }
 
     if (mMtxConnector)

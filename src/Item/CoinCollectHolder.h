@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
 #include "Library/Scene/ISceneObj.h"
@@ -23,16 +24,24 @@ public:
 
     const char* getSceneObjName() const override;
 
-    void registerCoinCollect(CoinCollect*);
-    void registerCoinCollect2D(CoinCollect2D*);
-    void registerHintObj(CoinCollectHintObj*);
+    void registerCoinCollect(CoinCollect* coin);
+    void registerCoinCollect2D(CoinCollect2D* coin);
+    void registerHintObj(CoinCollectHintObj* hintObj);
 
-    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f&, bool) const;
-    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f&, f32, f32, bool) const;
+    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f& playerPos, bool checkAreaOb) const;
+    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f& playerPos, f32 minRange,
+                                         f32 maxRange, bool checkAreaObj) const;
     CoinCollect* tryFindDeadButHintEnableCoinCollect() const;
-    CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f&, bool) const;
-    CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f&, f32, f32, bool) const;
-    bool tryFindExStageHintObjTrans(sead::Vector3f*, const char*);
+    CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f& playerPos,
+                                             bool checkAreaOb) const;
+    CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f& playerPos, f32 minRange,
+                                             f32 maxRange, bool checkAreaObj) const;
+    bool tryFindExStageHintObjTrans(sead::Vector3f* outTrans, const char* stageName);
+
+private:
+    sead::PtrArray<CoinCollect> mCollect;
+    sead::PtrArray<CoinCollect2D> mCollect2D;
+    sead::PtrArray<CoinCollectHintObj> mCollectHintObj;
 };
 
 namespace rs {
