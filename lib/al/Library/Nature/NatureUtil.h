@@ -13,5 +13,7 @@ bool tryAddRippleMiddle(LiveActor* actor);
 
 bool calcFindWaterSurface(sead::Vector3f*, sead::Vector3f*, const LiveActor*, const sead::Vector3f&,
                           const sead::Vector3f&, f32);
+bool calcFindWaterSurfaceFlat(sead::Vector3f*, sead::Vector3f*, const LiveActor*,
+                              const sead::Vector3f&, const sead::Vector3f&, f32);
 
 }  // namespace al
