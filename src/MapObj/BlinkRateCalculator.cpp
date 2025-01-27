@@ -13,7 +13,7 @@ void BlinkRateCalculator::reset() {
 
 void BlinkRateCalculator::update() {
     if (mCurrentFrame < mMaxFrames)
-        mCurrentFrame = ++mCurrentFrame;
+        mCurrentFrame++;
 
     if (mMaxFrames - mCurrentFrame > 150) {
         mCurrentRate = 1.0f;
@@ -22,18 +22,12 @@ void BlinkRateCalculator::update() {
 
     s32 interval = mCurrentFrame % 50;
 
-    if (interval < 5) {
+    if (interval < 5)
         mCurrentRate = al::lerpValue(1.0f, mRateThreshold, interval / 5.0f);
-        return;
-    }
-    if (interval < 20) {
+    else if (interval < 20)
         mCurrentRate = mRateThreshold;
-        return;
-    }
-    if (interval < 25) {
+    else if (interval < 25)
         mCurrentRate = al::lerpValue(mRateThreshold, 1.0f, (interval - 20) / 5.0f);
-        return;
-    }
-
-    mCurrentRate = 1.0f;
+    else
+        mCurrentRate = 1.0f;
 }
