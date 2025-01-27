@@ -11,6 +11,7 @@
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
