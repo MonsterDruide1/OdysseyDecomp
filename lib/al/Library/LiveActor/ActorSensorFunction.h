@@ -53,8 +53,8 @@ void addHitSensorEnemyBody(LiveActor*, const ActorInitInfo&, const char*, f32, u
                            const sead::Vector3f&);
 void addHitSensorEnemyAttack(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                              const sead::Vector3f&);
-void addHitSensorMapObj(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
-                        const sead::Vector3f&);
+HitSensor* addHitSensorMapObj(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
+                              const sead::Vector3f&);
 void addHitSensorBindable(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
                           const sead::Vector3f&);
 void addHitSensorBindableGoal(LiveActor*, const ActorInitInfo&, const char*, f32, u16,
