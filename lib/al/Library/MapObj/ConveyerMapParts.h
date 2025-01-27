@@ -32,9 +32,9 @@ private:
     f32 mMoveSpeed = 5.0f;
     f32 mPartsInterval = 200.0f;
     f32 mMaxCoord = 0.0f;
-    s32 _134 = 0;
-    s32 _138 = 0;
-    s32 _13c = 30;
+    s32 mAddRideActiveFrames = 0;
+    s32 mRideActiveFrames = 0;
+    s32 mMaxRideActiveFrames = 30;
     bool mIsRideOnlyMove = false;
 };
 

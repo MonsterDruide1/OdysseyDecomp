@@ -82,7 +82,7 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
         isForceReset)
         resetPosition(this);
 
-    if (newCoord > mConveyerKeyKeeper->get_34()) {
+    if (newCoord > mConveyerKeyKeeper->getTotalMoveDistance()) {
         if (mIsExist) {
             mIsExist = false;
             if (getModelKeeper() != nullptr && !isHideModel(this))

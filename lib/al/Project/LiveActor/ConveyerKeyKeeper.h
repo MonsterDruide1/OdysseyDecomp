@@ -25,14 +25,14 @@ public:
 
     s32 getConveyerKeyCount() const { return mConveyerKeyCount; }
 
-    f32 get_34() const { return _34; }
+    f32 getTotalMoveDistance() const { return mTotalMoveDistance; }
 
 private:
-    ConveyerKey** mConveyerKeys;  // array of a struct/class with a size of 0x30?
+    ConveyerKey* mConveyerKeys;  // array of a struct/class with a size of 0x30?
     s32 mConveyerKeyCount;
     sead::Quatf mQuat;
     sead::Vector3f mTrans;
-    sead::Vector3f _28;
-    f32 _34;
+    sead::Vector3f mMoveDirection;
+    f32 mTotalMoveDistance;
 };
 }  // namespace al

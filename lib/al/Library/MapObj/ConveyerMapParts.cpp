@@ -59,11 +59,11 @@ void ConveyerMapParts::init(const ActorInitInfo& info) {
     if (mPartsInterval < 10.0f)
         mPartsInterval = 10.0f;
 
-    f32 fVar10 = mConveyerKeyKeeper->get_34();
+    f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
     if (mConveyerKeyKeeper->getConveyerKeyCount() > 1)
-        isNearZero(fVar10, 0.001f);
+        isNearZero(totalMoveDistance, 0.001f);
 
-    s32 groupCount = (s32)(fVar10 / mPartsInterval) + 1;
+    s32 groupCount = (s32)(totalMoveDistance / mPartsInterval) + 1;
     mMaxCoord = mPartsInterval * (f32)groupCount;
 
     f32 startRate = 0.0f;
@@ -112,7 +112,7 @@ void ConveyerMapParts::stop() {
 
 bool ConveyerMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgFloorTouch(message)) {
-        _134 = 2;
+        mAddRideActiveFrames = 2;
 
         return true;
     }
@@ -121,19 +121,19 @@ bool ConveyerMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, Hi
 }
 
 void ConveyerMapParts::control() {
-    if (_134 > 0) {
-        if (_138 < _13c)
-            _138++;
+    if (mAddRideActiveFrames > 0) {
+        if (mRideActiveFrames < mMaxRideActiveFrames)
+            mRideActiveFrames++;
         else
-            _138 = _13c;
+            mRideActiveFrames = mMaxRideActiveFrames;
 
-        _134--;
+        mAddRideActiveFrames--;
 
         return;
     }
 
-    if (_138 != 0)
-        _138--;
+    if (mRideActiveFrames != 0)
+        mRideActiveFrames--;
 }
 
 void ConveyerMapParts::startClipped() {
@@ -153,9 +153,10 @@ void ConveyerMapParts::endClipped() {
 void ConveyerMapParts::exeStandBy() {}
 
 void ConveyerMapParts::exeMove() {
-    if (!mIsRideOnlyMove || _138 >= 1) {
-        f32 fVar3 = mIsRideOnlyMove ? (f32)_138 / (f32)_13c : 1.0f;
-        mOffsetCoord = modf(mOffsetCoord + fVar3 * mMoveSpeed + mMaxCoord, mMaxCoord) + 0.0f;
+    if (!mIsRideOnlyMove || mRideActiveFrames >= 1) {
+        f32 speedFactor =
+            mIsRideOnlyMove ? (f32)mRideActiveFrames / (f32)mMaxRideActiveFrames : 1.0f;
+        mOffsetCoord = modf(mOffsetCoord + speedFactor * mMoveSpeed + mMaxCoord, mMaxCoord) + 0.0f;
 
         bool isForwards = mMoveSpeed >= 0.0f;
         s32 actorCount = mConveyerStepGroup->getActorCount();
