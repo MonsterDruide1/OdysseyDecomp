@@ -13,7 +13,7 @@ public:
     RailRider* getRailRider() const override;
 
 private:
-    RailRider* mRailRider;
+    RailRider* mRailRider = nullptr;
 };
 
 RailKeeper* tryCreateRailKeeper(const PlacementInfo& info, const char* linkName);

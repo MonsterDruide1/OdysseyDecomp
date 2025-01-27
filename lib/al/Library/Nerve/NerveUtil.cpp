@@ -58,15 +58,11 @@ bool isInRangeStep(const IUseNerve* user, s32 startStep, s32 endStep) {
 
 bool isIntervalStep(const IUseNerve* user, s32 interval, s32 offset) {
     s32 currentStep = user->getNerveKeeper()->getCurrentStep() - offset;
-    if (currentStep < 0)
-        return false;
-    return currentStep == (interval != 0 ? currentStep / interval : 0) * interval;
+    return currentStep >= 0 && currentStep % interval == 0;
 }
 
 bool isIntervalOnOffStep(const IUseNerve* user, s32 interval, s32 offset) {
-    if (interval == 0)
-        return false;
-    return ((user->getNerveKeeper()->getCurrentStep() - offset) / interval) == 0;
+    return ((user->getNerveKeeper()->getCurrentStep() - offset) / interval) % 2 == 0;
 }
 
 bool isNerve(const IUseNerve* user, const Nerve* nerve) {
@@ -74,7 +70,7 @@ bool isNerve(const IUseNerve* user, const Nerve* nerve) {
 }
 
 bool isNewNerve(const IUseNerve* user) {
-    return user->getNerveKeeper()->isNewNerve();
+    return isLessStep(user, 0);
 }
 
 s32 calcNerveInterval(const IUseNerve* pKeeper, s32 start, s32 end) {

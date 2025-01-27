@@ -444,6 +444,8 @@ bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSens
                                              const HitSensor*);
 
 bool sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
+bool tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSensor*,
+                                     const HitSensor*, f32);
 bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
                                       const HitSensor*, f32);
 }  // namespace al

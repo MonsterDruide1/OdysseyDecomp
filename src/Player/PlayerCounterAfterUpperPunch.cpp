@@ -5,7 +5,7 @@
 PlayerCounterAfterUpperPunch::PlayerCounterAfterUpperPunch() {}
 
 void PlayerCounterAfterUpperPunch::update(const PlayerTrigger* trigger) {
-    if (mCounter <= sead::Mathi::maxNumber() - 1)
+    if (mCounter <= (u32)sead::Mathi::maxNumber() - 1)
         mCounter++;
 
     if (trigger->isOnUpperPunchHit())

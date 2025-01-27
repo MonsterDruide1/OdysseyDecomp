@@ -188,7 +188,7 @@ def common_include_order(c, path, is_header):
                          "Wrong order for includes: Found \"game\"-include outside of expected block!", path): return
                 order = 2
             else:
-                FAIL("This file is not allowed to be included with <>!", line, path)
+                FAIL("This file is not allowed to be included with \"file\"!", line, path)
                 return
         else:
             FAIL("Unknown include format", line, path)
@@ -255,6 +255,8 @@ def common_sead_math_template(c, path):
             if "using" in line or "typedef" in line:
                 continue
             if "sead::Buffer" in line:  # probably needs more exceptions at some point
+                continue
+            if "Vector3CalcCommon" in line:
                 continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
@@ -374,13 +376,13 @@ def header_check_line(line, path, visibility, should_start_class):
         if newline.endswith("]"):
             newline = newline.split("[")[0].strip()
 
-        var_name = newline.split(" ")[-1]
+        var_name = newline.split(" : ")[0].split(" ")[-1]
         var_type = " ".join(newline.split(" ")[0:-1])
 
         if var_type.startswith("enum"):
             return  # Allow enum inside class
 
-        PREFIXES = ["padding", "field", "unk", "gap", "_", "filler"]
+        PREFIXES = ["pad", "field", "unk", "gap", "_", "filler"]
 
         if var_type.startswith("static"):
             CHECK(lambda a: var_name.startswith("s") and var_name[1].isupper(), line,

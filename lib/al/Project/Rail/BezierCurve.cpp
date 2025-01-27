@@ -96,7 +96,7 @@ f32 BezierCurve::calcCurveParam(f32 distance) const {
             return percent;
     }
 
-    if (percent > 1.0f || partLength < 0.0f)
+    if (partLength < 0.0f || percent > 1.0f)
         return sead::Mathf::clamp(percent, 0.0f, 1.0f);
     return percent;
 }

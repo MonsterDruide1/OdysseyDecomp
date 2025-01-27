@@ -85,20 +85,20 @@ public:
     ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
 
 private:
-    LiveActorGroup* mKitDrawingGroup;
-    const PlacementInfo* mPlacementInfo;
-    const LayoutInitInfo* mLayoutInitInfo;
-    ActorSceneInfo mActorSceneInfo;
-    LiveActorGroup* mAllActorsGroup;
-    const ActorFactory* mActorFactory;
-    ActorResourceHolder* mActorResourceHolder;
-    AudioDirector* mAudioDirector;
-    EffectSystemInfo* mEffectSystemInfo;
-    ExecuteDirector* mExecuteDirector;
-    HitSensorDirector* mHitSensorDirector;
-    ScreenPointDirector* mScreenPointDirector;
-    StageSwitchDirector* mStageSwitchDirector;
-    ViewIdHolder* mViewIdHolder;
+    LiveActorGroup* mKitDrawingGroup = nullptr;
+    const PlacementInfo* mPlacementInfo = nullptr;
+    const LayoutInitInfo* mLayoutInitInfo = nullptr;
+    ActorSceneInfo mActorSceneInfo = {};
+    LiveActorGroup* mAllActorsGroup = nullptr;
+    const ActorFactory* mActorFactory = nullptr;
+    ActorResourceHolder* mActorResourceHolder = nullptr;
+    AudioDirector* mAudioDirector = nullptr;
+    EffectSystemInfo* mEffectSystemInfo = nullptr;
+    ExecuteDirector* mExecuteDirector = nullptr;
+    HitSensorDirector* mHitSensorDirector = nullptr;
+    ScreenPointDirector* mScreenPointDirector = nullptr;
+    StageSwitchDirector* mStageSwitchDirector = nullptr;
+    ViewIdHolder* mViewIdHolder = nullptr;
 };
 
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo);
@@ -158,6 +158,7 @@ void setSubActorOffSyncClipping(LiveActor*);
 void initScreenPointKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initScreenPointKeeperNoYaml(LiveActor*, s32);
 void initActorMaterialCategory(LiveActor*, const ActorInitInfo&, const char*);
+const char* tryGetMapPartsSuffix(const ActorInitInfo&, const char*);
 
 // TODO: move these
 void initActorSceneInfo(LiveActor*, const ActorInitInfo&);

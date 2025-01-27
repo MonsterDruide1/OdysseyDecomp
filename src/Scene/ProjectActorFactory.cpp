@@ -14,10 +14,14 @@
 #include "Library/MapObj/RailMoveMapParts.h"
 #include "Library/MapObj/RollingCubeMapParts.h"
 #include "Library/MapObj/RotateMapParts.h"
+#include "Library/MapObj/SlideMapParts.h"
+#include "Library/MapObj/SubActorLodMapParts.h"
 #include "Library/MapObj/SurfMapParts.h"
+#include "Library/MapObj/SwitchDitherMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Item/CoinBlow.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
@@ -144,7 +148,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Coin", nullptr},
     {"Coin2D", nullptr},
     {"Coin2DCityDirector", nullptr},
-    {"CoinBlow", nullptr},
+    {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", nullptr},
     {"CoinCirclePlacement", nullptr},
     {"CoinCollect", nullptr},
@@ -582,11 +586,11 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"RippleFixMapParts", nullptr},
     {"RotateMapParts", al::createActorFunction<al::RotateMapParts>},
     {"SeesawMapParts", nullptr},
-    {"SlideMapParts", nullptr},
-    {"SubActorLodMapParts", nullptr},
+    {"SlideMapParts", al::createActorFunction<al::SlideMapParts>},
+    {"SubActorLodMapParts", al::createActorFunction<al::SubActorLodMapParts>},
     {"SurfMapParts", al::createActorFunction<al::SurfMapParts>},
     {"SwingMapParts", nullptr},
-    {"SwitchDitherMapParts", nullptr},
+    {"SwitchDitherMapParts", al::createActorFunction<al::SwitchDitherMapParts>},
     {"SwitchKeepOnWatcher", nullptr},
     {"SwitchOpenMapParts", nullptr},
     {"VisibleSwitchMapParts", nullptr},

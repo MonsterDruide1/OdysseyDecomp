@@ -11,9 +11,9 @@ class IUseMessageSystem;
 }  // namespace al
 
 namespace ShopItem {
-class ItemInfo;
-class ItemType;
-class ShopItemInfo;
+struct ItemInfo;
+enum class ItemType : u32;
+struct ShopItemInfo;
 }  // namespace ShopItem
 
 struct ItemListInfo;
