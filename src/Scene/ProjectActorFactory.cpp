@@ -21,6 +21,7 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Item/CoinBlow.h"
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/CapBomb.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
@@ -106,7 +107,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CapAcceleratorKeyMoveMapParts", nullptr},
     {"CapAppearMapParts", nullptr},
     {"CapBeamer", nullptr},
-    {"CapBomb", nullptr},
+    {"CapBomb", al::createActorFunction<CapBomb>},
     {"CapCatapult", nullptr},
     {"CapFlower", nullptr},
     {"CapFlowerGroup", nullptr},
