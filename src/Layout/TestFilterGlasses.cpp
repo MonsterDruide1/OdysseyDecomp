@@ -3,6 +3,7 @@
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutInitInfo.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 namespace {
 NERVE_IMPL(TestFilterGlasses, Appear);

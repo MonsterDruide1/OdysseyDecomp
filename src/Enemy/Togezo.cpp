@@ -18,6 +18,7 @@
 #include "Library/Math/VectorUtil.h"
 #include "Library/Nature/NatureUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Player/PlayerUtil.h"
 #include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Stage/StageSwitchUtil.h"

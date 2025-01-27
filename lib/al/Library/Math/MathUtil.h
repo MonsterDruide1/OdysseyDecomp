@@ -79,4 +79,6 @@ void separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 
 void calcParabolicFunctionParam(f32*, f32*, f32, f32 verticalDistance);
 bool isSameSign(f32, f32);
+
+f32 easeByType(f32, s32);
 }  // namespace al

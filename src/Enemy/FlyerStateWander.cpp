@@ -6,6 +6,7 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathRandomUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 namespace {
 NERVE_IMPL(FlyerStateWander, Wander)
