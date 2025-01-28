@@ -54,14 +54,8 @@ void CoinStateAppearRotate::exeRotate() {
         al::makeQuatFrontUp(&quad, frontDir, upDir);
         al::setQuat(actor, quad);
 
-        mVelocity -= sead::Vector3f(0.0f, 1.5f, 0.0f);
+        mVelocity.y -= 1.5f;
         mOffset += mVelocity;
-
-        if (mOffset.y < 0.0f) {
-            al::getTransPtr(actor)->y = mInitialTransY;
-            al::setVelocityZero(actor);
-            kill();
-        }
     } else {
         al::connectPoseQT(actor, mMtxConnector);
         *al::getTransPtr(actor) += mDisplayOffset;
@@ -71,13 +65,13 @@ void CoinStateAppearRotate::exeRotate() {
         al::makeQuatFrontUp(&quad, frontDir, upDir);
         al::setQuat(actor, quad);
 
-        mVelocity -= sead::Vector3f(0.0f, 1.5f, 0.0f);
+        mVelocity.y -= 1.5f;
         mOffset += mVelocity;
+    }
 
-        if (mOffset.y < 0.0f) {
-            al::getTransPtr(actor)->y = mInitialTransY;
-            al::setVelocityZero(actor);
-            kill();
-        }
+    if (mOffset.y < 0.0f) {
+        al::getTransPtr(actor)->y = mInitialTransY;
+        al::setVelocityZero(actor);
+        kill();
     }
 }
