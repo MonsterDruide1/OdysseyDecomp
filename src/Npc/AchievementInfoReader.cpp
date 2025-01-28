@@ -6,11 +6,6 @@
 
 AchievementInfoReader::AchievementInfoReader() = default;
 
-<<<<<<< HEAD
-=======
-// NON_MATCHING: minor mismatches during loop
-
->>>>>>> cb6b574 (Addapt code to match new format checks)
 void AchievementInfoReader::init() {
     al::Resource* achievementInfoResource =
         al::findOrCreateResource("SystemData/AchievementInfo", nullptr);
@@ -21,14 +16,8 @@ void AchievementInfoReader::init() {
 
     al::ByamlIter achievementInfo = achievementInfoResource->getByml("AchievementInfo");
     al::ByamlIter achievementInfoArray;
-<<<<<<< HEAD
     if (!achievementInfo.tryGetIterByKey(&achievementInfoArray, "AchievementInfoArray"))
         return;
-=======
-    if (achievementInfo.tryGetIterByKey(&achievementInfoArray, "AchievementInfoArray")) {
-        s32 size = achievementInfoArray.getSize();
-        mAchievements.allocBuffer(size, nullptr);
->>>>>>> cb6b574 (Addapt code to match new format checks)
 
     s32 size = achievementInfoArray.getSize();
     mAchievements.allocBuffer(size, nullptr);
