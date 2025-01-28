@@ -57,7 +57,7 @@ public:
     void exeBlowUpDelay();
 
 private:
-    char _108[0xA8];
+    char _108[0xa8];
 };
 
 namespace CoinFunction {

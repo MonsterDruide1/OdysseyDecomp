@@ -114,7 +114,6 @@ void ExecuteDirector::createExecutorListTable() {
 }
 
 // NON_MATCHING
-
 void ExecuteDirector::execute(const char* tableName) const {
     if (!tableName) {
         mRequestKeeper->executeRequestActorMovementAllOn();
