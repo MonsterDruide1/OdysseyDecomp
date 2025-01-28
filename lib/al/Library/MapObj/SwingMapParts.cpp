@@ -51,9 +51,8 @@ void SwingMapParts::init(const ActorInitInfo& info) {
     tryGetArg(&mIsFloorTouchStart, info, "IsFloorTouchStart");
 
     if (mIsFloorTouchStart ||
-        listenStageSwitchOnStart(this, SwingMapPartsFunctor(this, &SwingMapParts::start))) {
+        listenStageSwitchOnStart(this, SwingMapPartsFunctor(this, &SwingMapParts::start)))
         startNerveAction(this, "StandBy");
-    }
 
     rotateQuatLocalDirDegree(this, mQuat, (s32)mRotateAxis, mSwingMovement->getCurrentAngle());
     trySyncStageSwitchAppear(this);
