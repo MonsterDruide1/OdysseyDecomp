@@ -18,24 +18,38 @@ from common.util import utils
 issueFound = False
 runAllChecks = False
 offsetCommentCheckFail = False
-doMismatchCheck = False
 functionData = None
+foundMismatchFunctionDuplicateStart = False
 
-def is_function_mismatch(namepacesAndName):
-    combinedNames = ""
-    namesArray = namepacesAndName.split("::")
-    for name in namesArray:
-        combinedNames += str(len(name)) + name
-    for info in functionData:
-        foundCtorOrDtor = False
-        if len(namesArray) > 1 and namesArray[len(namesArray) - 1] == namesArray[len(namesArray) - 2]:
-            foundCtorOrDtor = namesArray[len(namesArray) - 2] + "C1" in info.name 
-        elif len(namesArray) > 1 and namesArray[len(namesArray) - 1][0] == '~':
-            foundCtorOrDtor = namesArray[len(namesArray) - 2] + "D0" in info.name
+def binary_search_custom(array, prefix):
+    left, right = 0, len(array) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        midItem = array[mid]
+        if midItem.name.startswith(prefix):
+            return midItem.status in {utils.FunctionStatus.NonMatching, utils.FunctionStatus.Equivalent}
+        elif midItem.name < prefix:
+            left = mid + 1
+        else:
+            right = mid - 1
 
-        if combinedNames in info.name or foundCtorOrDtor:
-            return info.status == utils.FunctionStatus.NonMatching or info.status == utils.FunctionStatus.Equivalent
     return False
+
+def is_function_mismatch(namespacesAndName, isConst):
+    combinedNames = "_ZN"
+    if isConst:
+        combinedNames += "K"
+    namesArray = namespacesAndName.split("::")
+    for i, name in enumerate(namesArray):
+        if i > 0:
+            if name == namesArray[i - 1]:
+                combinedNames += "C1"
+                break
+            if name.startswith("~"):
+                combinedNames += "D0"
+                break
+        combinedNames += str(len(name)) + name
+    return binary_search_custom(functionData, combinedNames)
 
 def FAIL(message, line, path):
     print("Offending file:", path)
@@ -487,8 +501,17 @@ def source_non_matching_comment(c, path):
             startIndex = line.find(" ", 2, len(line) - 2) + 1
             if startIndex == -1 or startIndex > line.find("("):
                 startIndex = 0
-            functionNameAndNamespaces = line[startIndex:line.find("(")]
-            if is_function_mismatch(functionNameAndNamespaces):
+            functionNameAndNamespaces = "";
+            namespaceAlLocation = c.find("namespace al {")
+            if namespaceAlLocation != -1 and c.find(line) > namespaceAlLocation and "lib/al/" in path:
+                functionNameAndNamespaces = "al::"
+            else:
+                namespaceRsLocation = c.find("namespace rs {")
+                if namespaceRsLocation != -1 and c.find(line) > namespaceRsLocation and "src/" in path:
+                    functionNameAndNamespaces = "rs::"
+            functionNameAndNamespaces += line[startIndex:line.find("(")]
+            isConstFunction = line.rfind("const") > line.rfind(")")
+            if is_function_mismatch(functionNameAndNamespaces, isConstFunction):
                 if "NON_MATCHING" not in lines[i - 1] and "NON_MATCHING" not in lines[i - 2]:
                     FAIL("Functions that mismatch must have a NON_MATCHING comment above them!", line, path)
 
@@ -515,8 +538,7 @@ def check_source(c, path):
     source_no_nerve_make(c, path)
     common_const_reference(c, path)
     source_no_raw_auto(c, path)
-    if doMismatchCheck:
-        source_non_matching_comment(c, path)
+    source_non_matching_comment(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
 
@@ -578,8 +600,6 @@ def main():
                         help="Automatically run clang format before checking each file")
     parser.add_argument('-a', '--all', action='store_true',
                         help="Run all checks even if one of them fails")
-    parser.add_argument('-m', '--check-mismatch', action='store_true',
-                        help="Check for NON_MATCHING comment above mismatching functions (disabled by default because takes time to run)")
     parser.add_argument('--no-warn', action='store_true',
                         help="Disable format warning, only meant for automation")
     args = parser.parse_args()
@@ -587,11 +607,8 @@ def main():
     global runAllChecks
     runAllChecks = args.all
 
-    global doMismatchCheck
-    doMismatchCheck = args.check_mismatch
-
     global functionData
-    functionData = list(utils.get_functions())
+    functionData = sorted(utils.get_functions(), key=lambda info: info.name)
 
     if not args.run_clang_format and not args.no_warn:
         print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-f')")
