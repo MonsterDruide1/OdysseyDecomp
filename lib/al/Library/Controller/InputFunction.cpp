@@ -596,8 +596,6 @@ void calcTouchScreenPos(sead::Vector2f* vec) {
 
 void calcTouchLayoutPos(sead::Vector2f*) {}
 
-// NON_MATCHING
-
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size) {
     sead::Vector2f pos;
     calcTouchScreenPos(&pos);

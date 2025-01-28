@@ -4,8 +4,6 @@
 
 #include "System/GameDataFunction.h"
 
-// NON_MATCHING
-
 void GameDataFile::HintInfo::clear() {
     mStageName.clear();
     mObjId.clear();
