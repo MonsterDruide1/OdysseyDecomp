@@ -17,12 +17,10 @@ public:
     f32 getRotateSpeed() const;
 
 private:
-    f32 getObjAngle(bool isWater, s32 index) const;
-
     al::LiveActor* mActor = nullptr;
     f32 mRotate = 0.0f;
     f32 mLastObjAngle = 0.0f;
-    s32 mCount = 0;
+    s32 mForceFrames = 0;
     f32 mForceOffset = 0.0f;
     f32 mFishingLineOffset = 0.0f;
     s32 mObjCountOffset = 0;

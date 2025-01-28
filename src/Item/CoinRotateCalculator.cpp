@@ -12,49 +12,50 @@
 
 CoinRotateCalculator::CoinRotateCalculator(al::LiveActor* actor) : mActor(actor) {}
 
-inline f32 convergeDegree(f32 value) {
+inline f32 modDegree(f32 value) {
     return al::modf(value + 360.0f, 360.0f) + 0.0f;
 }
 
-f32 CoinRotateCalculator::getObjAngle(bool isInWater, s32 objCountOffset) const {
+inline f32 getObjAngle(al::LiveActor* actor, bool isInWater, s32 objCountOffset) {
     al::StageSyncCounter* syncObj =
-        al::getSceneObj<al::StageSyncCounter>(mActor, SceneObjID_alStageSyncCounter);
-    f32 objCounter = convergeDegree(syncObj->getCounter() + objCountOffset);
+        al::getSceneObj<al::StageSyncCounter>(actor, SceneObjID_alStageSyncCounter);
+    f32 objCounter = modDegree(syncObj->getCounter() + objCountOffset);
 
     return (isInWater ? 2.0f : 3.0f) * objCounter;
 }
 
 void CoinRotateCalculator::reset() {
     mIsInWater = al::isInWater(mActor);
-    mRotate = getObjAngle(mIsInWater, mObjCountOffset);
+    mRotate = getObjAngle(mActor, mIsInWater, mObjCountOffset);
     mLastObjAngle = mRotate;
-    mCount = 0;
+    mForceFrames = 0;
     mForceOffset = 0.0f;
     mFishingLineOffset = 0.0f;
     mRotateOffset = 0.0f;
 }
 
+// https://decomp.me/scratch/aNkgJ
 // NON_MATCHING: mismatch in storing mLastObjAngle = objAngle; (two strs instead of stp)
 void CoinRotateCalculator::update(const sead::Vector3f& force, bool checkWater) {
     if (checkWater)
         mIsInWater = al::isInWater(mActor);
 
-    f32 objAngle = getObjAngle(mIsInWater, mObjCountOffset);
+    f32 objAngle = getObjAngle(mActor, mIsInWater, mObjCountOffset);
 
     if (!al::isNearZero(force, 0.001f)) {
-        mCount = sead::Mathi::clamp(mCount + 1, 0, 120);
-        mForceOffset += mCount * 0.3f;
-    } else if (--mCount <= 0) {
-        mForceOffset = convergeDegree(mForceOffset) - 0.8f;
+        mForceFrames = sead::Mathi::clamp(mForceFrames + 1, 0, 120);
+        mForceOffset += mForceFrames * 0.3f;
+    } else if (--mForceFrames > 0) {
+        mForceOffset = modDegree(mForceOffset) - 0.8f;
         if (mForceOffset < 0.0f)
             mForceOffset = 0.0f;
     } else {
-        mForceOffset += mCount * 0.3f;
+        mForceOffset += mForceFrames * 0.3f;
     }
 
     mFishingLineOffset = sead::Mathf::clampMin(mFishingLineOffset - 0.8f, 0.0f);
 
-    if (sead::Mathf::abs(convergeDegree(objAngle) - convergeDegree(mLastObjAngle)) > 5.0f)
+    if (sead::Mathf::abs(modDegree(objAngle) - modDegree(mLastObjAngle)) > 5.0f)
         objAngle = (mIsInWater ? 3.5f : 4.0f) + mLastObjAngle;
 
     mRotate = objAngle + mForceOffset + mFishingLineOffset + mRotateOffset;
@@ -70,7 +71,5 @@ f32 CoinRotateCalculator::getRotate() const {
 }
 
 f32 CoinRotateCalculator::getRotateSpeed() const {
-    if (!al::isInWater(mActor))
-        return 3.0f;
-    return 2.0f;
+    return al::isInWater(mActor) ? 2.0f : 3.0f;
 }
