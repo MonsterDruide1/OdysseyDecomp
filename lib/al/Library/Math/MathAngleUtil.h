@@ -35,8 +35,8 @@ bool isNearAngleDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sea
 bool isInAngleOnPlaneDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
                               f32, f32, f32, f32);
 
-void normalize(sead::Vector2f*, const sead::Vector2f&);
-void normalize(sead::Vector3f*, const sead::Vector3f&);
+bool normalize(sead::Vector2f*, const sead::Vector2f&);
+bool normalize(sead::Vector3f*, const sead::Vector3f&);
 void normalize(sead::Vector2f*);
 void normalize(sead::Vector3f*);
 bool tryNormalizeOrZero(sead::Vector3f*, const sead::Vector3f&);
