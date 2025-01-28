@@ -17,7 +17,7 @@ public:
     SupportFreezeSyncGroup* tryFindGroup(const ActorInitInfo& info);
 
 private:
-    SupportFreezeSyncGroup** mSupportFreezeSyncGroups;
+    SupportFreezeSyncGroup** mSupportFreezeSyncGroups = nullptr;
     s32 mSupportFreezeSyncGroupCount = 0;
     s32 mSupportFreezeSyncGroupMaxCount = 64;
 };
