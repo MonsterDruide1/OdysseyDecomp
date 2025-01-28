@@ -37,6 +37,7 @@ void calcPlayerGroundPoseUp(sead::Vector3f*, const al::LiveActor*);
 bool isNearPlayerH(const al::LiveActor*, f32);
 void calcPlayerFollowLayoutWorldPos(sead::Vector3f*, const al::LiveActor*);
 bool isPlayerHack(const al::LiveActor*);
+bool isPlayerHackGroupUseCameraStick(const al::LiveActor*);
 bool tryCalcPlayerCeilingSpace(f32*, const al::LiveActor*, f32, f32);
 bool tryCalcKidsGuideCeilingSpace(f32*, const al::LiveActor*, f32, f32);
 const sead::Vector3f& getPlayerVelocity(const al::LiveActor*);
