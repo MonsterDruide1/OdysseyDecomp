@@ -104,4 +104,29 @@ void SwingMapParts::control() {
 }
 
 void SwingMapParts::exeStandBy() {}
+
+void SwingMapParts::exeMoveRight() {
+    mSwingMovement->updateNerve();
+
+    if (mSwingMovement->isStop())
+        startNerveAction(this, "Stop");
+}
+
+void SwingMapParts::exeMoveLeft() {
+    mSwingMovement->updateNerve();
+
+    if (mSwingMovement->isStop())
+        startNerveAction(this, "Stop");
+}
+
+void SwingMapParts::exeStop() {
+    mSwingMovement->updateNerve();
+
+    if (!mSwingMovement->isStop()) {
+        if (mSwingMovement->isLeft())
+            startNerveAction(this, "MoveLeft");
+        else
+            startNerveAction(this, "MoveRight");
+    }
+}
 }  // namespace al
