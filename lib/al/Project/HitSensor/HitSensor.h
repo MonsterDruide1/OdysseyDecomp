@@ -23,23 +23,23 @@ public:
     void update();
     void addHitSensor(HitSensor*);
 
-    const char* mName;  // _0
+    const char* mName;
     s32 _8;
     f32 _c;
     f32 _10;
     f32 _14;
     f32 _18;
-    u16 mMaxSensorCount;   // _1C
-    u16 mSensorCount;      // _1E
-    HitSensor** mSensors;  // _20
+    u16 mMaxSensorCount;
+    u16 mSensorCount;
+    HitSensor** mSensors;
     u64 _28;
-    SensorHitGroup* mHitGroup;  // _30
-    bool mIsValidBySystem;      // _38
-    bool mIsValid;              // _39
-    bool _3A[4];                // unknown type
-    u16 _3E;
-    LiveActor* mParentActor;            // _40
-    const sead::Vector3f* mFollowPos;   // _48
-    const sead::Matrix34f* mFollowMtx;  // _50
+    SensorHitGroup* mHitGroup;
+    bool mIsValidBySystem;
+    bool mIsValid;
+    bool _3a[4];
+    u16 _3e;
+    LiveActor* mParentActor;
+    const sead::Vector3f* mFollowPos;
+    const sead::Matrix34f* mFollowMtx;
 };
 }  // namespace al

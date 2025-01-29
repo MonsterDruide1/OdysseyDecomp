@@ -68,7 +68,7 @@ private:
     ByamlWriterContainer** mContainerStack = nullptr;
     s32 mContainerStackSize = 64;
     s32 mCurrentContainerIndex = -1;
-    bool _mAlwaysFalse;
+    bool mAlwaysFalse;
 };
 
 }  // namespace al

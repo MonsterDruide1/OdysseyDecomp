@@ -32,8 +32,9 @@ public:
     void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void movement() override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     void control() override;
     void updateCollider() override;

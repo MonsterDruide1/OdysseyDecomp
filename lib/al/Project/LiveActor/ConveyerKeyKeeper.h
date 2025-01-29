@@ -10,7 +10,7 @@ class PlacementInfo;
 // TODO: I'm not sure about this
 struct ConveyerKey {
     void* _0[5];
-    PlacementInfo& mPlacementInfo;
+    const PlacementInfo& mPlacementInfo;
 };
 
 class ConveyerKeyKeeper {
