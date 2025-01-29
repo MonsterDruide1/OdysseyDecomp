@@ -5,7 +5,6 @@
 #include "Project/LiveActor/SupportFreezeSyncGroup.h"
 
 namespace al {
-// NON_MATCHING: It doesn't seems to be a for loop but I don't know this pattern.
 SupportFreezeSyncGroupHolder::SupportFreezeSyncGroupHolder() : LiveActor("DRC拘束グループ監視") {
     mSupportFreezeSyncGroups = new SupportFreezeSyncGroup*[mSupportFreezeSyncGroupMaxCount];
 
@@ -18,7 +17,7 @@ void SupportFreezeSyncGroupHolder::initAfterPlacementSceneObj(const ActorInitInf
     initExecutorUpdate(this, info, "DRCアシスト同期グループ");
     initActorPoseTRSV(this);
 
-    LiveActor::initHitSensor(1);
+    initHitSensor(1);
 
     HitSensor* bodySensor = addHitSensorMapObj(this, info, "Body", 0.0f, 0, {0.0f, 0.0f, 0.0f});
     for (s32 i = 0; i < mSupportFreezeSyncGroupCount; i++)
