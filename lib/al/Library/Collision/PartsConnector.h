@@ -8,8 +8,11 @@ class MtxConnector;
 class LiveActor;
 class ActorInitInfo;
 
+MtxConnector* createMtxConnector(const LiveActor* actor);
 MtxConnector* tryCreateMtxConnector(const LiveActor* actor, const ActorInitInfo& info);
 void attachMtxConnectorToCollision(MtxConnector* mtxConnector, const LiveActor* actor, bool);
+void attachMtxConnectorToCollision(MtxConnector* mtxConnector, const LiveActor* actor,
+                                   const sead::Vector3f&, const sead::Vector3f&);
 void connectPoseQT(LiveActor* actor, const MtxConnector* mtxConnector, const sead::Quatf& quat,
                    const sead::Vector3f& trans);
 void connectPoseQT(LiveActor* actor, const MtxConnector* mtxConnector);
