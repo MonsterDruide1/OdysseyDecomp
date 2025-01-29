@@ -19,6 +19,7 @@
 #include "Library/MapObj/SlideMapParts.h"
 #include "Library/MapObj/SubActorLodMapParts.h"
 #include "Library/MapObj/SurfMapParts.h"
+#include "Library/MapObj/SwingMapParts.h"
 #include "Library/MapObj/SwitchDitherMapParts.h"
 #include "Library/MapObj/SwitchOpenMapParts.h"
 #include "Library/MapObj/VisibleSwitchMapParts.h"
@@ -597,7 +598,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"SlideMapParts", al::createActorFunction<al::SlideMapParts>},
     {"SubActorLodMapParts", al::createActorFunction<al::SubActorLodMapParts>},
     {"SurfMapParts", al::createActorFunction<al::SurfMapParts>},
-    {"SwingMapParts", nullptr},
+    {"SwingMapParts", al::createActorFunction<al::SwingMapParts>},
     {"SwitchDitherMapParts", al::createActorFunction<al::SwitchDitherMapParts>},
     {"SwitchKeepOnWatcher", nullptr},
     {"SwitchOpenMapParts", al::createActorFunction<al::SwitchOpenMapParts>},
