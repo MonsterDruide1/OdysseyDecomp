@@ -11,7 +11,7 @@ class PlacementInfo;
 class PlacementId;
 
 bool isValidInfo(const PlacementInfo& placementInfo);
-bool isPlaced(const PlacementInfo& placementInfo);
+bool isPlaced(const ActorInitInfo& initInfo);
 
 void getObjectName(const char** name, const ActorInitInfo& initInfo);
 void getObjectName(const char** name, const PlacementInfo& placementInfo);
