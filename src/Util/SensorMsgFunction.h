@@ -22,6 +22,7 @@ class Color4u8;
 }  // namespace sead
 
 class CapTargetInfo;
+class ComboCounter;
 class DigPoint;
 class FishingFish;
 class GotogotonMark;
@@ -67,7 +68,7 @@ bool sendMsgRabbitKick(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgFishingAttack(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgFishingCancel(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgFishingFishApproach(al::HitSensor* source, al::HitSensor* target);
-bool sendMsgFishingFishf32Touch(al::HitSensor* source, al::HitSensor* target);
+bool sendMsgFishingFishFloatTouch(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgFishingItemGet(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgFishingLineTouch(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgFishingStart(al::HitSensor* source, al::HitSensor* target);
@@ -626,7 +627,7 @@ bool isMsgFireBlowerAttack(const al::SensorMsg*);
 bool isMsgFishingAttack(const al::SensorMsg*);
 bool isMsgFishingCancel(const al::SensorMsg*);
 bool isMsgFishingFishApproach(const al::SensorMsg*);
-bool isMsgFishingFishf32Touch(const al::SensorMsg*);
+bool isMsgFishingFishFloatTouch(const al::SensorMsg*);
 bool isMsgFishingItemGet(const al::SensorMsg*);
 bool isMsgFishingLineTouch(const al::SensorMsg*);
 bool isMsgFishingStart(const al::SensorMsg*);
@@ -942,7 +943,7 @@ bool isMsgTsukkunThrustReflectCollide(const al::SensorMsg*, bool*);
 bool isMsgSwitchOnWithSaveRequest(const al::SensorMsg*, SaveObjInfo**);
 bool isMsgNpcCapReactionAll(const al::SensorMsg*);
 bool isMsgHackNpcCapReactionAll(const al::SensorMsg*);
-void checkMsgNpcTrampleReactionAll(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*,
+bool checkMsgNpcTrampleReactionAll(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*,
                                    bool);
 bool isMsgPlayerAndCapObjHipDropReflectAll(const al::SensorMsg*);
 bool isMsgKoopaCapPunchAll(const al::SensorMsg*);
@@ -1077,25 +1078,25 @@ bool tryGetBossMagmaDeadDemoEndTargetPos(const al::SensorMsg*, sead::Vector3f*);
 bool tryGetBossMagmaBreathForce(const al::SensorMsg*, sead::Vector3f*);
 bool tryGetBossMagmaResetPos(const al::SensorMsg*, sead::Vector3f*);
 bool isMsgBossMagmaQueryToBubble(const al::SensorMsg*);
-void getMofumofuBodyChainExplodeDelayStep(const al::SensorMsg*);
+s32 getMofumofuBodyChainExplodeDelayStep(const al::SensorMsg*);
 bool isMsgMofumofuReflectAll(const al::SensorMsg*);
 void calcFishingUpJugemDir(sead::Vector3f*, const al::SensorMsg*);
-void getFishingUpf32Pos(const al::SensorMsg*);
-bool tryGetFishingUpf32MaterialCode(const al::SensorMsg*);
-void getFishingHookSensor(const al::SensorMsg*);
+const sead::Vector3f& getFishingUpFloatPos(const al::SensorMsg*);
+const char* tryGetFishingUpFloatMaterialCode(const al::SensorMsg*);
+al::HitSensor* getFishingHookSensor(const al::SensorMsg*);
 bool sendMsgCheckFishingTarget(al::HitSensor* source, al::HitSensor* target, const FishingFish*);
 bool isMsgCheckFishingTarget(const al::SensorMsg*);
-void getCheckFishingTarget(const al::SensorMsg*);
-void getGunetterPushCenter(const al::SensorMsg*);
-void getGunetterPushRadius(const al::SensorMsg*);
-void getNumKuriboTowerOn(const al::SensorMsg*);
+const FishingFish* getCheckFishingTarget(const al::SensorMsg*);
+const sead::Vector3f& getGunetterPushCenter(const al::SensorMsg*);
+f32 getGunetterPushRadius(const al::SensorMsg*);
+u32 getNumKuriboTowerOn(const al::SensorMsg*);
 bool isMsgPlayerLookAtPosition(const al::SensorMsg*);
 void setMsgPlayerLookAtPosition(const al::SensorMsg*, const sead::Vector3f&);
 bool isMsgTargetMarkerPosition(const al::SensorMsg*);
 void setMsgTargetMarkerPosition(const al::SensorMsg*, const sead::Vector3f&);
 bool isMsgSandGeyserRaise(const al::SensorMsg*);
 bool tryGetSandGeyserRaise(const al::SensorMsg*, f32*, f32*);
-bool tryTreasureBoxPlayerTrampleJump(al::LiveActor*, al::HitSensor* source, al::HitSensor* target,
+void tryTreasureBoxPlayerTrampleJump(al::LiveActor*, al::HitSensor* source, al::HitSensor* target,
                                      f32);
 bool sendMsgPushToPlayerAndKillVelocityToTarget(al::LiveActor*, al::HitSensor* source,
                                                 al::HitSensor* target);
@@ -1140,16 +1141,16 @@ bool isMsgKillByMoonRockDemo(const al::SensorMsg*);
 bool sendMsgNpcScareByEnemy(al::HitSensor* source, al::HitSensor* target, s32);
 bool tryReceiveMsgNpcScareByEnemyIgnoreTargetHack(const al::SensorMsg*, const CapTargetInfo*);
 bool tryIncrementComboCount(s32*, const al::SensorMsg*);
-bool tryGetMsgComboCount(const al::SensorMsg*);
-void getMsgComboCount(const al::SensorMsg*);
+ComboCounter* tryGetMsgComboCount(const al::SensorMsg*);
+ComboCounter* getMsgComboCount(const al::SensorMsg*);
 bool isRideOn(const al::HitSensor*, const al::HitSensor*);
 bool isMsgKillBySwitchTimer(const al::SensorMsg*);
 bool isVisibleChameleon(const al::SensorMsg*);
 bool isMsgRequestPlayerStainWet(const al::SensorMsg*, s32*);
-bool tryGetKuriboTowerNum(al::HitSensor* source, al::HitSensor* target);
+s32 tryGetKuriboTowerNum(al::HitSensor* source, al::HitSensor* target);
 void setKuriboTowerNum(const al::SensorMsg*, s32);
-void getSpherePushCenter(const al::SensorMsg*);
-void getSpherePushRadius(const al::SensorMsg*);
-void getSmellDigPoint(const al::SensorMsg*);
+const sead::Vector3f& getSpherePushCenter(const al::SensorMsg*);
+f32 getSpherePushRadius(const al::SensorMsg*);
+DigPoint* getSmellDigPoint(const al::SensorMsg*);
 
 }  // namespace rs
