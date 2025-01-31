@@ -8,7 +8,6 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 

@@ -8,7 +8,6 @@
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
