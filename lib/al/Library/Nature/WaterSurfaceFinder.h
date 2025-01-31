@@ -10,8 +10,8 @@ public:
     WaterSurfaceFinder(const LiveActor* player);
 
     void update(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 distance);
-    void updateLocal(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 distance,
-                     bool flat, bool displacement, bool overGround);
+    void updateLocal(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 maxDistance,
+                     bool isFlat, bool isDisplacement, bool isOverGround);
     void updateForSurfaceShadow(const sead::Vector3f& position, const sead::Vector3f& gravity,
                                 f32 distance);
     void updateForDisplacement(const sead::Vector3f& position, const sead::Vector3f& gravity,

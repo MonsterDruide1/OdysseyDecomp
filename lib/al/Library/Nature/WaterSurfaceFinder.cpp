@@ -14,23 +14,24 @@ void WaterSurfaceFinder::update(const sead::Vector3f& position, const sead::Vect
 
 // NON_MATCHING: storing {0,0,0} if no surface was found (https://decomp.me/scratch/zHEdm)
 void WaterSurfaceFinder::updateLocal(const sead::Vector3f& position, const sead::Vector3f& gravity,
-                                     f32 distance, bool flat, bool displacement, bool overGround) {
+                                     f32 maxDistance, bool isFlat, bool isDisplacement,
+                                     bool isOverGround) {
     sead::Vector3f surfacePos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f surfaceNormal = {0.0f, 0.0f, 0.0f};
     mIsFoundSurface = false;
 
-    if (flat)
+    if (isFlat)
         mIsFoundSurface = calcFindWaterSurfaceFlat(&surfacePos, &surfaceNormal, mActor, position,
-                                                   gravity, distance);
-    else if (displacement)
+                                                   gravity, maxDistance);
+    else if (isDisplacement)
         mIsFoundSurface = calcFindWaterSurfaceDisplacement(&surfacePos, &surfaceNormal, mActor,
-                                                           position, gravity, distance);
-    else if (overGround)
+                                                           position, gravity, maxDistance);
+    else if (isOverGround)
         mIsFoundSurface = calcFindWaterSurfaceOverGround(&surfacePos, &surfaceNormal, mActor,
-                                                         position, gravity, distance);
+                                                         position, gravity, maxDistance);
     else
-        mIsFoundSurface =
-            calcFindWaterSurface(&surfacePos, &surfaceNormal, mActor, position, gravity, distance);
+        mIsFoundSurface = calcFindWaterSurface(&surfacePos, &surfaceNormal, mActor, position,
+                                               gravity, maxDistance);
 
     if (mIsFoundSurface) {
         // requires this manual dot product calculation to match
