@@ -29,3 +29,5 @@ private:
     f32 mRate = 1.0f;
     bool mIsSkipUpdate = false;
 };
+
+static_assert(sizeof(PlayerAnimFrameCtrl) == 0x70);
