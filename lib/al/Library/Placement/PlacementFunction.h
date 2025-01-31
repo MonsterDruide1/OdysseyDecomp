@@ -26,6 +26,8 @@ void getClassName(const char** name, const ActorInitInfo& initInfo);
 void getClassName(const char** name, const PlacementInfo& placementInfo);
 bool tryGetClassName(const char** name, const ActorInitInfo& initInfo);
 bool tryGetClassName(const char** name, const PlacementInfo& placementInfo);
+bool isClassName(const ActorInitInfo& initInfo, const char* name);
+bool isClassName(const PlacementInfo& placementInfo, const char* name);
 
 void getDisplayName(const char** name, const ActorInitInfo& initInfo);
 void getDisplayName(const char** name, const PlacementInfo& placementInfo);
@@ -51,8 +53,8 @@ void getQuat(sead::Quatf* quat, const PlacementInfo& placementInfo);
 bool tryGetQuat(sead::Quatf* quat, const ActorInitInfo& initInfo);
 bool tryGetQuat(sead::Quatf* quat, const PlacementInfo& placementInfo);
 
-void getScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 void getScale(sead::Vector3f* scale, const PlacementInfo& placementInfo);
+void getScale(f32* x, f32* y, f32* z, const PlacementInfo& placementInfo);
 bool tryGetScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 bool tryGetScale(sead::Vector3f* scale, const PlacementInfo& placementInfo);
 
@@ -152,8 +154,8 @@ PlacementId* createPlacementId(const PlacementInfo& placementInfo);
 bool tryGetPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo);
 bool tryGetPlacementId(PlacementId* placementId, const PlacementInfo& placementInfo);
 void getPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo);
-bool isEqualPlacementId(PlacementId* placementId, const PlacementId& otherPlacementId);
-bool isEqualPlacementId(PlacementId* placementId, const PlacementInfo& placementInfo);
+bool isEqualPlacementId(const PlacementId& placementId, const PlacementId& otherPlacementId);
+bool isEqualPlacementId(const PlacementInfo& placementInfo, const PlacementInfo& otherPlacementInfo);
 
 bool isExistRail(const ActorInitInfo& initInfo, const char* linkName);
 
@@ -165,9 +167,9 @@ bool tryGetMoveParameterRailIter(PlacementInfo* railPlacementInfo,
                                  const PlacementInfo& placementInfo);
 bool tryGetRailPointPos(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 void getRailPointHandlePrev(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
-void tryGetRailPointHandlePrev(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
+bool tryGetRailPointHandlePrev(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 void getRailPointHandleNext(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
-void tryGetRailPointHandleNext(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
+bool tryGetRailPointHandleNext(sead::Vector3f* railPoint, const PlacementInfo& placementInfo);
 
 bool isExistGraphRider(const ActorInitInfo& initInfo);
 
@@ -184,17 +186,17 @@ s32 calcLinkNestNum(const PlacementInfo& placementInfo, const char* linkName);
 void getLinksInfo(PlacementInfo* linkPlacementInfo, const PlacementInfo& placementInfo,
                   const char* linkName);
 void getLinksInfoByIndex(PlacementInfo* linkPlacementInfo, const PlacementInfo& placementInfo,
-                         const char* linkName, s32);
+                         const char* linkName, s32 index);
 void getLinksInfo(PlacementInfo* linkPlacementInfo, const ActorInitInfo& initInfo,
                   const char* linkName);
 void getLinksInfoByIndex(PlacementInfo* linkPlacementInfo, const ActorInitInfo& initInfo,
-                         const char* linkName, s32);
+                         const char* linkName, s32 index);
 bool tryGetLinksInfo(PlacementInfo* linkPlacementInfo, const ActorInitInfo& initInfo,
                      const char* linkName);
 
 void getLinksMatrix(sead::Matrix34f* matrix, const ActorInitInfo& initInfo, const char* linkName);
-void getLinksMatrixByIndex(sead::Matrix34f*, const ActorInitInfo& initInfo, const char* linkName,
-                           s32);
+void getLinksMatrixByIndex(sead::Matrix34f* matrix, const ActorInitInfo& initInfo, const char* linkName,
+                           s32 index);
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const PlacementInfo& placementInfo,
                const char* linkName);
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInfo& initInfo,
@@ -231,8 +233,8 @@ void getChildLinkT(sead::Vector3f* trans, const ActorInitInfo& initInfo, const c
 void getChildLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInfo& initInfo,
                     const char* linkName, s32 index);
 
-s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* linkName);
-s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkName);
+s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* matchName);
+s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* className);
 
 bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo);
 bool tryGetDisplayOffset(sead::Vector3f* offset, const ActorInitInfo& initInfo);
@@ -251,10 +253,10 @@ bool getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
                     const char* linkName);
 bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
 bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);
-void getClippingGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo);
-void createClippingViewId(const al::PlacementInfo& placementInfo);
-void getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placementInfo);
-void getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo);
+bool getClippingGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo);
+al::PlacementId* createClippingViewId(const al::PlacementInfo& placementInfo);
+bool getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placementInfo);
+bool getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo);
 void getModelName(const char** modelName, const al::ActorInitInfo& initInfo);
 void getModelName(const char** modelName, const al::PlacementInfo& placementInfo);
 bool tryGetModelName(const char** modelName, const al::PlacementInfo& placementInfo);
