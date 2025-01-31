@@ -338,6 +338,34 @@ bool tryGetMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo) {
     return tryGetMatrixTR(matrix, initInfo.getPlacementInfo());
 }
 
+// TODO: requires slight change in `sead`, but that causes other mismatches across the project
+inline void makeRT(sead::Matrix34f& o, const sead::Vector3f& r, const sead::Vector3f& t)
+{
+    const f32 sinV[3] = {std::sin(r.x), std::sin(r.y), std::sin(r.z)};
+
+    const f32 cosV[3] = {std::cos(r.x), std::cos(r.y), std::cos(r.z)};
+
+    f32 c0_c2 = cosV[0] * cosV[2];  // swapped these two
+    f32 s0_s1 = sinV[0] * sinV[1];  // lines to match
+    f32 c0_s2 = cosV[0] * sinV[2];
+
+    o.m[0][0] = cosV[1] * cosV[2];
+    o.m[1][0] = cosV[1] * sinV[2];
+    o.m[2][0] = -sinV[1];
+
+    o.m[0][1] = (s0_s1 * cosV[2]) - c0_s2;
+    o.m[1][1] = (s0_s1 * sinV[2]) + c0_c2;
+    o.m[2][1] = sinV[0] * cosV[1];
+
+    o.m[0][2] = (c0_c2 * sinV[1]) + (sinV[0] * sinV[2]);
+    o.m[1][2] = (c0_s2 * sinV[1]) - (sinV[0] * cosV[2]);
+    o.m[2][2] = cosV[0] * cosV[1];
+
+    o.m[0][3] = t.x;
+    o.m[1][3] = t.y;
+    o.m[2][3] = t.z;
+}
+
 bool tryGetMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo) {
     sead::Vector3f trans = sead::Vector3f::zero;
     sead::Vector3f rotate = sead::Vector3f::zero;
@@ -345,7 +373,7 @@ bool tryGetMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo)
         return false;
     if (!tryGetRotate(&rotate, placementInfo))
         return false;
-    matrix->makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
+    makeRT(*matrix, {sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
                     sead::Mathf::deg2rad(rotate.z)},
                    trans);
     return true;
