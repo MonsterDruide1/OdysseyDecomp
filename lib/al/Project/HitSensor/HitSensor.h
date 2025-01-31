@@ -10,7 +10,7 @@ class LiveActor;
 class HitSensorDirectror;
 class HitSensorKeeper;
 
-using SensorSortCmpFunc = bool (*)(al::HitSensor* a, al::HitSensor* b);
+using SensorSortCmpFunc = bool (*)(HitSensor* a, HitSensor* b);
 
 enum class HitSensorType : u32 {
     Eye = 0,
@@ -58,11 +58,11 @@ public:
 
     const sead::Vector3f& getOffset() const { return mOffset; }
 
-    float getRadius() const { return mRadius; }
+    f32 getRadius() const { return mRadius; }
 
     void setOffset(const sead::Vector3f& offset) { mOffset.set(offset); }
 
-    void setRadius(float radius) { mRadius = radius; }
+    void setRadius(f32 radius) { mRadius = radius; }
 
 private:
     const char* mName;

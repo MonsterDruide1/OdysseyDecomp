@@ -8,9 +8,9 @@ class HitSensor;
 
 class ActorSensorController {
 public:
-    ActorSensorController(al::LiveActor* sensorParent, const char* sensorName);
-    void setSensorScale(float scale);  // Should this be called multiplier?
-    void setSensorRadius(float radius);
+    ActorSensorController(LiveActor* sensorParent, const char* sensorName);
+    void setSensorScale(f32 scale);  // Should this be called multiplier?
+    void setSensorRadius(f32 radius);
     void setSensorFollowPosOffset(const sead::Vector3f& offset);
     void resetActorSensorController();
 
@@ -20,14 +20,14 @@ public:
 
 private:
     HitSensor* mHitSensor = nullptr;
-    float mSensorRadius = 0.0f;
+    f32 mSensorRadius = 0.0f;
     sead::Vector3f mSensorOffset = {0.0f, .0f, 0.0f};
 };
 
 class ActorSensorControllerList {
 public:
     ActorSensorControllerList(s32 maxControllers);
-    void addSensor(al::LiveActor* actor, const char* sensorName);
+    void addSensor(LiveActor* actor, const char* sensorName);
     void setAllSensorScale(f32 scale);
     void resetAllActorSensorController();
 

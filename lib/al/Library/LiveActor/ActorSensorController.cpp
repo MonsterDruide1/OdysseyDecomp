@@ -1,24 +1,25 @@
 #include "Library/LiveActor/ActorSensorController.h"
 
+#include <math/seadVectorFwd.h>
+
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Project/HitSensor/HitSensor.h"
-#include "math/seadVectorFwd.h"
 
 namespace al {
 
-ActorSensorController::ActorSensorController(al::LiveActor* sensorParent, const char* sensorName) {
-    HitSensor* actorSensor = al::getHitSensor(sensorParent, sensorName);
+ActorSensorController::ActorSensorController(LiveActor* sensorParent, const char* sensorName) {
+    HitSensor* actorSensor = getHitSensor(sensorParent, sensorName);
     mHitSensor = actorSensor;
     mSensorRadius = actorSensor->getRadius();
     mSensorOffset = actorSensor->getOffset();
 }
 
-void ActorSensorController::setSensorScale(float scale) {
+void ActorSensorController::setSensorScale(f32 scale) {
     setSensorRadius(mSensorRadius * scale);
     mHitSensor->setOffset(mSensorOffset * scale);
 }
 
-void ActorSensorController::setSensorRadius(float radius) {
+void ActorSensorController::setSensorRadius(f32 radius) {
     mHitSensor->setRadius(radius);
 }
 
@@ -38,7 +39,7 @@ ActorSensorControllerList::ActorSensorControllerList(s32 maxControllers)
         mControllers[i] = nullptr;
 }
 
-void ActorSensorControllerList::addSensor(al::LiveActor* actor, const char* sensorName) {
+void ActorSensorControllerList::addSensor(LiveActor* actor, const char* sensorName) {
     mControllers[mControllerNum++] = new ActorSensorController(actor, sensorName);
 }
 
