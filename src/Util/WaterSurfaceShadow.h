@@ -24,7 +24,5 @@ public:
 private:
     al::LiveActor* mActor = nullptr;
     WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
-    f32 _10 = 500.0f;
-    f32 _14 = 0.25f;
-    f32 _1c = 1.0f;
+    sead::Vector3f mScale = {500.0f, 0.25f, 1.0f};
 };
