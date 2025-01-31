@@ -10,7 +10,7 @@
 namespace al {
 WheelMovement::WheelMovement(LiveActor* actor, const ActorInitInfo& info)
     : NerveExecutor("車輪動作計算") {
-    tryGetArg((s32*)&mRotateAxis, info, "\"車輪動作計算\"");
+    tryGetArg((s32*)&mRotateAxis, info, "RotateAxis");
     tryGetArg(&mRotateAccel, info, "RotateAccel");
     tryGetArg(&mMoveEndDegree, info, "MoveEndDegree");
     tryGetArg(&mNoRotateWidth, info, "NoRotateWidth");
