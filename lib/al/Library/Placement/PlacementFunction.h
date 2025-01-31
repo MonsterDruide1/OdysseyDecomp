@@ -44,7 +44,7 @@ void getRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo);
 void getRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo);
 bool tryGetRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo);
 bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo);
-void tryGetZoneMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo);
+bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo);
 
 void getQuat(sead::Quatf* quat, const ActorInitInfo& initInfo);
 void getQuat(sead::Quatf* quat, const PlacementInfo& placementInfo);
@@ -83,40 +83,42 @@ bool tryGetMatrixTRS(sead::Matrix34f* matrix, const PlacementInfo& placementInfo
 bool tryGetInvertMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo);
 bool tryGetInvertMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo);
 
-void calcMatrixMultParent(sead::Matrix34f* matrix, const ActorInitInfo& initInfo);
-void calcMatrixMultParent(sead::Matrix34f* matrix, const PlacementInfo& placementInfo);
+void calcMatrixMultParent(sead::Matrix34f* matrix, const ActorInitInfo& initInfo1,
+                          const ActorInitInfo& initInfo2);
+void calcMatrixMultParent(sead::Matrix34f* matrix, const PlacementInfo& placementInfo1,
+                          const PlacementInfo& placementInfo2);
 
-bool getArg(s32* arg, const ActorInitInfo& initInfo, const char* key);
-bool getArg(s32* arg, const PlacementInfo& placementInfo, const char* key);
+void getArg(s32* arg, const ActorInitInfo& initInfo, const char* key);
+void getArg(s32* arg, const PlacementInfo& placementInfo, const char* key);
 bool tryGetArg(s32* arg, const ActorInitInfo& initInfo, const char* key);
 bool tryGetArg(s32* arg, const PlacementInfo& placementInfo, const char* key);
-bool getArg(f32* arg, const ActorInitInfo& initInfo, const char* key);
-bool getArg(f32* arg, const PlacementInfo& placementInfo, const char* key);
+void getArg(f32* arg, const ActorInitInfo& initInfo, const char* key);
+void getArg(f32* arg, const PlacementInfo& placementInfo, const char* key);
 bool tryGetArg(f32* arg, const ActorInitInfo& initInfo, const char* key);
 bool tryGetArg(f32* arg, const PlacementInfo& placementInfo, const char* key);
-bool getArg(bool* arg, const ActorInitInfo& initInfo, const char* key);
-bool getArg(bool* arg, const PlacementInfo& placementInfo, const char* key);
+void getArg(bool* arg, const ActorInitInfo& initInfo, const char* key);
+void getArg(bool* arg, const PlacementInfo& placementInfo, const char* key);
 bool tryGetArg(bool* arg, const ActorInitInfo& initInfo, const char* key);
 bool tryGetArg(bool* arg, const PlacementInfo& placementInfo, const char* key);
 
 s32 getArgS32(const ActorInitInfo& actorInitInfo, const char* key);
 f32 getArgF32(const ActorInitInfo& actorInitInfo, const char* key);
-bool getArgV3f(sead::Vector3f* arg, const ActorInitInfo& actorInitInfo, const char* key);
-bool getArgV3f(sead::Vector3f* arg, const PlacementInfo& placementInfo, const char* key);
+void getArgV3f(sead::Vector3f* arg, const ActorInitInfo& actorInitInfo, const char* key);
+void getArgV3f(sead::Vector3f* arg, const PlacementInfo& placementInfo, const char* key);
 bool tryGetArgV3f(sead::Vector3f* arg, const ActorInitInfo& actorInitInfo, const char* key);
 bool tryGetArgV3f(sead::Vector3f* arg, const PlacementInfo& placementInfo, const char* key);
 
 bool isArgBool(const ActorInitInfo& initInfo, const char* key);
 bool isArgBool(const PlacementInfo& placementInfo, const char* key);
-bool isArgString(const ActorInitInfo& initInfo, const char* arg, const char* key);
-bool isArgString(const PlacementInfo& placementInfo, const char* arg, const char* key);
+bool isArgString(const ActorInitInfo& initInfo, const char* key, const char* arg);
+bool isArgString(const PlacementInfo& placementInfo, const char* key, const char* arg);
 
 void getStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key);
 void getStringArg(const char** arg, const PlacementInfo& placementInfo, const char* key);
 void getStringArg(const char** arg, const AreaInitInfo& initInfo, const char* key);
-void getStringArg(const ActorInitInfo& initInfo, const char* key);
-void getStringArg(const PlacementInfo& placementInfo, const char* key);
-void getStringArg(const AreaInitInfo& initInfo, const char* key);
+const char* getStringArg(const ActorInitInfo& initInfo, const char* key);
+const char* getStringArg(const PlacementInfo& placementInfo, const char* key);
+const char* getStringArg(const AreaInitInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const PlacementInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const AreaInitInfo& initInfo, const char* key);
@@ -132,11 +134,14 @@ void getPlacementId(PlacementId* placementId, const PlacementInfo& placementInfo
 
 bool tryGetBoolArgOrFalse(const ActorInitInfo& initInfo, const char* key);
 s32 getCountPlacementInfo(const PlacementInfo& placementInfo);
-void getPlacementInfoByKey(PlacementInfo* outPlacementInfo, const PlacementInfo&, const char* key);
-bool tryGetPlacementInfoByKey(PlacementInfo* outPlacementInfo, const PlacementInfo&,
+void getPlacementInfoByKey(PlacementInfo* outPlacementInfo, const PlacementInfo& placementInfo,
+                           const char* key);
+bool tryGetPlacementInfoByKey(PlacementInfo* outPlacementInfo, const PlacementInfo& placementInfo,
                               const char* key);
-void getPlacementInfoByIndex(PlacementInfo* outPlacementInfo, const PlacementInfo&, s32 index);
-bool tryGetPlacementInfoByIndex(PlacementInfo* outPlacementInfo, const PlacementInfo&, s32 index);
+void getPlacementInfoByIndex(PlacementInfo* outPlacementInfo, const PlacementInfo& placementInfo,
+                             s32 index);
+bool tryGetPlacementInfoByIndex(PlacementInfo* outPlacementInfo, const PlacementInfo& placementInfo,
+                                s32 index);
 void getPlacementInfoAndKeyNameByIndex(PlacementInfo* outPlacementInfo, const char** outKey,
                                        const PlacementInfo&, s32 index);
 bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* outPlacementInfo, const char** outKey,
@@ -171,7 +176,7 @@ s32 calcLinkChildNum(const PlacementInfo& placementInfo, const char* linkName);
 
 bool isExistLinkChild(const ActorInitInfo& initInfo, const char* linkName, s32 index);
 bool isExistLinkChild(const PlacementInfo& placementInfo, const char* linkName, s32 index);
-bool isExistLinkChild(const PlacementInfo& placementInfo, const char* linkName, s32 index);
+bool isExistLinkChild(const AreaInitInfo& initInfo, const char* linkName, s32 index);
 
 s32 calcLinkNestNum(const ActorInitInfo& initInfo, const char* linkName);
 s32 calcLinkNestNum(const PlacementInfo& placementInfo, const char* linkName);
@@ -239,19 +244,20 @@ bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 
 }  // namespace al
 
-class alPlacementFunction {
-public:
-    static s32 getCameraId(const al::ActorInitInfo& initInfo);
-    static bool getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
-                               const char* linkName);
-    static bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
-    static bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);
-    static void getClippingGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo);
-    static void createClippingViewId(const al::PlacementInfo& placementInfo);
-    static void getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placementInfo);
-    static void getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo);
-    static void getModelName(const char** modelName, const al::ActorInitInfo& initInfo);
-    static void getModelName(const char** modelName, const al::PlacementInfo& placementInfo);
-    static bool tryGetModelName(const char** modelName, const al::PlacementInfo& placementInfo);
-    static bool tryGetModelName(const char** modelName, const al::ActorInitInfo& initInfo);
-};
+namespace alPlacementFunction {
+
+s32 getCameraId(const al::ActorInitInfo& initInfo);
+bool getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
+                    const char* linkName);
+bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
+bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);
+void getClippingGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo);
+void createClippingViewId(const al::PlacementInfo& placementInfo);
+void getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placementInfo);
+void getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo);
+void getModelName(const char** modelName, const al::ActorInitInfo& initInfo);
+void getModelName(const char** modelName, const al::PlacementInfo& placementInfo);
+bool tryGetModelName(const char** modelName, const al::PlacementInfo& placementInfo);
+bool tryGetModelName(const char** modelName, const al::ActorInitInfo& initInfo);
+
+}  // namespace alPlacementFunction
