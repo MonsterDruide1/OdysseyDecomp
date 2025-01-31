@@ -135,7 +135,7 @@ bool FukuwaraiFaceParts::receiveMsg(const al::SensorMsg* message, al::HitSensor*
     if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(message, mCapTargetInfo))
         return true;
 
-    if (rs::isMsgCapEnableLockIn(message))
+    if (rs::isMsgCapEnableLockOn(message))
         return al::isNerve(this, &NrvFukuwaraiFaceParts.Wait);
 
     if (al::isSensorName(self, "Body")) {
