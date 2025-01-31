@@ -25,7 +25,11 @@ public:
 
     const sead::Vector3f& getMoveDir() const { return mMoveDir; }
 
+    f32 get_48() const { return _48; }
+
     f32 get_50() const { return _50; }
+
+    bool get_66() const { return _66; }
 
 private:
     sead::Quatf _10 = sead::Quatf::unit;

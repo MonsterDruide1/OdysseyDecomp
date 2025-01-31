@@ -26,7 +26,7 @@ private:
     WheelMovement* mWheelMovement = nullptr;
     SwitchKeepOnAreaGroup* mSwitchKeepOnAreaGroup = nullptr;
     SwitchOnAreaGroup* mSwitchOnAreaGroup = nullptr;
-    s32 _150 = 0;
+    s32 mAssistStopTimer = 0;
 };
 
 static_assert(sizeof(WheelMapParts) == 0x158);

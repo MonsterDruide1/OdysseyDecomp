@@ -3,13 +3,18 @@
 #include "Library/Area/SwitchKeepOnAreaGroup.h"
 #include "Library/Area/SwitchOnAreaGroup.h"
 #include "Library/Effect/EffectSystemInfo.h"
+#include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/MapObj/ChildStep.h"
+#include "Library/Math/MathLengthUtil.h"
 #include "Library/Math/VectorUtil.h"
 #include "Library/Movement/WheelMovement.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Se/SeFunction.h"
 
 namespace {
 using namespace al;
@@ -55,5 +60,76 @@ void WheelMapParts::control() {
 
     if (mSwitchOnAreaGroup != nullptr)
         mSwitchOnAreaGroup->update(getTrans(this));
+}
+
+bool WheelMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    if (isMsgTouchAssist(message)) {
+        mAssistStopTimer = 45;
+        if (!isNerve(this, NrvWheelMapParts.AssistStop.data()))
+            startNerveAction(this, "AssistStop");
+
+        return true;
+    }
+
+    if (mWheelMovement->receiveMsg(this, message, other, self))
+        return true;
+
+    if (isMsgShowModel(message)) {
+        showModelIfHide(this);
+
+        return true;
+    }
+
+    if (isMsgHideModel(message)) {
+        hideModelIfShow(this);
+
+        return true;
+    }
+
+    if (isMsgRestart(message)) {
+        appearAndSetStart();
+
+        return true;
+    }
+
+    return false;
+}
+
+void WheelMapParts::appearAndSetStart() {
+    mAssistStopTimer = 0;
+    mWheelMovement->reset(this);
+
+    makeActorAlive();
+}
+
+void WheelMapParts::exeWait() {
+    mWheelMovement->update(this);
+
+    if (mWheelMovement->get_66())
+        startHitReaction(this, "端点接触");
+
+    if (!isNearZero(mWheelMovement->get_48(), 0.2f))
+        startNerveAction(this, "Move");
+}
+
+void WheelMapParts::exeMove() {
+    mWheelMovement->update(this);
+
+    if (mWheelMovement->get_66())
+        startHitReaction(this, "端点接触");
+
+    f32 fVar3 = mWheelMovement->get_48();
+    if (isNearZero(fVar3, 0.2f))
+        startNerveAction(this, "Wait");
+    else
+        tryHoldSeWithParam(this, "Rotate", sead::Mathf::abs(fVar3), "回転速度");
+}
+
+void WheelMapParts::exeAssistStop() {
+    mAssistStopTimer--;
+    if (mAssistStopTimer <= 0) {
+        mAssistStopTimer = 0;
+        startNerveAction(this, "Wait");
+    }
 }
 }  // namespace al
