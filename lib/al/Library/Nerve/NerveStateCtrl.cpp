@@ -10,10 +10,9 @@ NerveStateCtrl::NerveStateCtrl(s32 maxStates) : mMaxStates(maxStates) {
         mStates[i] = {nullptr, nullptr, nullptr};
 }
 
-// todo -- some scheduling problems with mStateCount's incrementation
 // adds a state to the list of states in the controller
 void NerveStateCtrl::addState(NerveStateBase* state, const Nerve* nerve, const char* name) {
-    mStates[mStateCount] = {.state = state, .nerve = nerve, .name = name};
+    mStates[mStateCount] = {state, nerve, name};
     mStateCount++;
 }
 

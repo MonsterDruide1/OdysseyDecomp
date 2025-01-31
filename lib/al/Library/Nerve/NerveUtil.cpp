@@ -19,9 +19,17 @@ void setNerveAtStep(IUseNerve* user, const Nerve* nerve, s32 step) {
         user->getNerveKeeper()->setNerve(nerve);
 }
 
+bool isStep(const IUseNerve* user, s32 step) {
+    return user->getNerveKeeper()->getCurrentStep() == step;
+}
+
 void setNerveAtGreaterEqualStep(IUseNerve* user, const Nerve* nerve, s32 step) {
     if (user->getNerveKeeper()->getCurrentStep() >= step)
         user->getNerveKeeper()->setNerve(nerve);
+}
+
+bool isNerve(const IUseNerve* user, const Nerve* nerve) {
+    return user->getNerveKeeper()->getCurrentNerve() == nerve;
 }
 
 s32 getNerveStep(const IUseNerve* user) {
@@ -30,10 +38,6 @@ s32 getNerveStep(const IUseNerve* user) {
 
 const Nerve* getCurrentNerve(const IUseNerve* user) {
     return user->getNerveKeeper()->getCurrentNerve();
-}
-
-bool isStep(const IUseNerve* user, s32 step) {
-    return user->getNerveKeeper()->getCurrentStep() == step;
 }
 
 bool isFirstStep(const IUseNerve* user) {
@@ -68,10 +72,6 @@ bool isIntervalStep(const IUseNerve* user, s32 interval, s32 offset) {
 
 bool isIntervalOnOffStep(const IUseNerve* user, s32 interval, s32 offset) {
     return ((user->getNerveKeeper()->getCurrentStep() - offset) / interval) % 2 == 0;
-}
-
-bool isNerve(const IUseNerve* user, const Nerve* nerve) {
-    return user->getNerveKeeper()->getCurrentNerve() == nerve;
 }
 
 bool isNewNerve(const IUseNerve* user) {
@@ -205,32 +205,32 @@ f32 calcNerveValue(const IUseNerve* user, s32 min, s32 max, f32 start, f32 end) 
     return lerpValue(start, end, calcNerveRate(user, min, max));
 }
 
-f32 calcNerveEaseInValue(const IUseNerve* user, s32 min, f32 start, f32 end) {
-    return lerpValue(start, end, calcNerveEaseInRate(user, min));
+f32 calcNerveEaseInValue(const IUseNerve* user, s32 max, f32 start, f32 end) {
+    return lerpValue(start, end, calcNerveEaseInRate(user, max));
 }
 
-f32 calcNerveEaseOutValue(const IUseNerve* user, s32 min, f32 start, f32 end) {
-    return lerpValue(start, end, calcNerveEaseOutRate(user, min));
+f32 calcNerveEaseOutValue(const IUseNerve* user, s32 max, f32 start, f32 end) {
+    return lerpValue(start, end, calcNerveEaseOutRate(user, max));
 }
 
 f32 calcNerveEaseOutValue(const IUseNerve* user, s32 min, s32 max, f32 start, f32 end) {
     return lerpValue(start, end, calcNerveEaseOutRate(user, min, max));
 }
 
-f32 calcNerveEaseInOutValue(const IUseNerve* user, s32 min, f32 start, f32 end) {
-    return lerpValue(start, end, calcNerveEaseInOutRate(user, min));
+f32 calcNerveEaseInOutValue(const IUseNerve* user, s32 max, f32 start, f32 end) {
+    return lerpValue(start, end, calcNerveEaseInOutRate(user, max));
 }
 
-f32 calcNerveSquareInValue(const IUseNerve* user, s32 min, f32 start, f32 end) {
-    return lerpValue(start, end, calcNerveSquareInRate(user, min));
+f32 calcNerveSquareInValue(const IUseNerve* user, s32 max, f32 start, f32 end) {
+    return lerpValue(start, end, calcNerveSquareInRate(user, max));
 }
 
 f32 calcNerveSquareInValue(const IUseNerve* user, s32 min, s32 max, f32 start, f32 end) {
     return lerpValue(start, end, calcNerveSquareInRate(user, min, max));
 }
 
-f32 calcNerveSquareOutValue(const IUseNerve* user, s32 min, f32 start, f32 end) {
-    return lerpValue(start, end, calcNerveSquareOutRate(user, min));
+f32 calcNerveSquareOutValue(const IUseNerve* user, s32 max, f32 start, f32 end) {
+    return lerpValue(start, end, calcNerveSquareOutRate(user, max));
 }
 
 f32 calcNerveSquareOutValue(const IUseNerve* user, s32 min, s32 max, f32 start, f32 end) {
