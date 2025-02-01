@@ -155,7 +155,8 @@ bool tryGetPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo);
 bool tryGetPlacementId(PlacementId* placementId, const PlacementInfo& placementInfo);
 void getPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo);
 bool isEqualPlacementId(const PlacementId& placementId, const PlacementId& otherPlacementId);
-bool isEqualPlacementId(const PlacementInfo& placementInfo, const PlacementInfo& otherPlacementInfo);
+bool isEqualPlacementId(const PlacementInfo& placementInfo,
+                        const PlacementInfo& otherPlacementInfo);
 
 bool isExistRail(const ActorInitInfo& initInfo, const char* linkName);
 
@@ -195,8 +196,8 @@ bool tryGetLinksInfo(PlacementInfo* linkPlacementInfo, const ActorInitInfo& init
                      const char* linkName);
 
 void getLinksMatrix(sead::Matrix34f* matrix, const ActorInitInfo& initInfo, const char* linkName);
-void getLinksMatrixByIndex(sead::Matrix34f* matrix, const ActorInitInfo& initInfo, const char* linkName,
-                           s32 index);
+void getLinksMatrixByIndex(sead::Matrix34f* matrix, const ActorInitInfo& initInfo,
+                           const char* linkName, s32 index);
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const PlacementInfo& placementInfo,
                const char* linkName);
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInfo& initInfo,

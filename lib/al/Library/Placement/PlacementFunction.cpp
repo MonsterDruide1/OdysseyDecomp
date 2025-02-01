@@ -481,7 +481,7 @@ bool tryGetArg(bool* arg, const PlacementInfo& placementInfo, const char* key) {
 }
 
 s32 getArgS32(const ActorInitInfo& actorInitInfo, const char* key) {
-    int arg = 0;
+    s32 arg = 0;
     getArg(&arg, actorInitInfo, key);
     return arg;
 }
@@ -505,7 +505,7 @@ bool tryGetArgV3f(sead::Vector3f* arg, const ActorInitInfo& actorInitInfo, const
 }
 
 bool tryGetArgV3f(sead::Vector3f* arg, const PlacementInfo& placementInfo, const char* key) {
-    return al::tryGetByamlV3f(arg, placementInfo.getPlacementIter(), key);
+    return tryGetByamlV3f(arg, placementInfo.getPlacementIter(), key);
 }
 
 bool isArgBool(const ActorInitInfo& initInfo, const char* key) {
@@ -576,7 +576,7 @@ bool tryGetArgV2f(sead::Vector2f* arg, const ActorInitInfo& initInfo, const char
 }
 
 bool tryGetArgV2f(sead::Vector2f* arg, const PlacementInfo& initInfo, const char* key) {
-    return al::tryGetByamlV2f(arg, initInfo.getPlacementIter(), key);
+    return tryGetByamlV2f(arg, initInfo.getPlacementIter(), key);
 }
 
 bool tryGetArgColor(sead::Color4f* arg, const ActorInitInfo& initInfo, const char* key) {
@@ -584,7 +584,7 @@ bool tryGetArgColor(sead::Color4f* arg, const ActorInitInfo& initInfo, const cha
 }
 
 bool tryGetArgColor(sead::Color4f* arg, const PlacementInfo& initInfo, const char* key) {
-    return al::tryGetByamlColor(arg, initInfo.getPlacementIter(), key);
+    return tryGetByamlColor(arg, initInfo.getPlacementIter(), key);
 }
 
 void getLayerConfigName(const char** name, const ActorInitInfo& initInfo) {
@@ -806,7 +806,7 @@ s32 calcLinkNestNum(const PlacementInfo& placementInfo, const char* linkName) {
     if (!tryGetPlacementInfoByKey(&links, placementInfo, "Links"))
         return 0;
     PlacementInfo link = links;
-    int depth = 0;
+    s32 depth = 0;
     while (tryGetPlacementInfoByKey(&link, links, linkName) &&
            link.getPlacementIter().getSize() != 0) {
         PlacementInfo item;
@@ -1087,7 +1087,7 @@ bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo) {
 namespace alPlacementFunction {
 
 s32 getCameraId(const al::ActorInitInfo& initInfo) {
-    int id = -1;
+    s32 id = -1;
     if (!al::tryGetArg(&id, initInfo, "CameraId"))
         return -1;
     return id;
