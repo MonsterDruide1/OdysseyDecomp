@@ -1,7 +1,5 @@
 #include "Library/LiveActor/ActorSensorController.h"
 
-#include <math/seadVectorFwd.h>
-
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Project/HitSensor/HitSensor.h"
 
@@ -11,12 +9,12 @@ ActorSensorController::ActorSensorController(LiveActor* sensorParent, const char
     HitSensor* actorSensor = getHitSensor(sensorParent, sensorName);
     mHitSensor = actorSensor;
     mSensorRadius = actorSensor->getRadius();
-    mSensorOffset = actorSensor->getOffset();
+    mSensorFollowPosOffset = actorSensor->getFollowPosOffset();
 }
 
 void ActorSensorController::setSensorScale(f32 scale) {
     setSensorRadius(mSensorRadius * scale);
-    mHitSensor->setOffset(mSensorOffset * scale);
+    mHitSensor->setFollowPosOffset(mSensorFollowPosOffset * scale);
 }
 
 void ActorSensorController::setSensorRadius(f32 radius) {
@@ -24,12 +22,12 @@ void ActorSensorController::setSensorRadius(f32 radius) {
 }
 
 void ActorSensorController::setSensorFollowPosOffset(const sead::Vector3f& offset) {
-    mHitSensor->setOffset(offset);
+    mHitSensor->setFollowPosOffset(offset);
 }
 
 void ActorSensorController::resetActorSensorController() {
     mHitSensor->setRadius(mSensorRadius);
-    mHitSensor->setOffset(mSensorOffset);
+    mHitSensor->setFollowPosOffset(mSensorFollowPosOffset);
 }
 
 ActorSensorControllerList::ActorSensorControllerList(s32 maxControllers)

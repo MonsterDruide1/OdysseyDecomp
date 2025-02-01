@@ -56,18 +56,18 @@ public:
     void update();
     void addHitSensor(HitSensor*);
 
-    const sead::Vector3f& getOffset() const { return mOffset; }
+    const sead::Vector3f& getFollowPosOffset() const { return mFollowPosOffset; }
 
     f32 getRadius() const { return mRadius; }
 
-    void setOffset(const sead::Vector3f& offset) { mOffset.set(offset); }
+    void setFollowPosOffset(const sead::Vector3f& offset) { mFollowPosOffset.set(offset); }
 
     void setRadius(f32 radius) { mRadius = radius; }
 
 private:
     const char* mName;
     HitSensorType mSensorType;
-    sead::Vector3f mPos = {.0f, .0f, .0f};
+    sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
     f32 mRadius;
     u16 mMaxSensorCount;
     u16 mSensorCount = 0;
@@ -81,6 +81,6 @@ private:
     LiveActor* mParentActor;
     const sead::Vector3f* mFollowPos;
     const sead::Matrix34f* mFollowMtx;
-    sead::Vector3f mOffset;
+    sead::Vector3f mFollowPosOffset;
 };
 }  // namespace al
