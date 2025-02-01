@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Library/Area/IUseAreaObj.h"
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {
+class Scene;
 class CameraSubTargetTurnParam;
 
 class CameraSubTargetBase : public CameraTargetBase {
@@ -16,6 +18,21 @@ public:
 
 private:
     CameraSubTargetTurnParam* mTurnParam;
+};
+
+class CameraStopJudge : public al::HioNode, al::IUseAreaObj {
+public:
+    void init();
+    CameraStopJudge();
+    bool isStop() const;
+    void update(sead::Vector3f const&);
+    al::AreaObjDirector* getAreaObjDirector() const override;
+
+private:
+    bool mIsInObjArea;
+    bool mIsNotInObjArea;
+    bool mStopJudge;
+    AreaObjDirector* mAreaObjDirector;
 };
 
 static_assert(sizeof(CameraSubTargetBase) == 0x18);
