@@ -13,7 +13,7 @@ ActorSensorController::ActorSensorController(LiveActor* sensorParent, const char
 }
 
 void ActorSensorController::setSensorScale(f32 scale) {
-    setSensorRadius(mSensorRadius * scale);
+    mHitSensor->setRadius(mSensorRadius * scale);
     mHitSensor->setFollowPosOffset(mSensorFollowPosOffset * scale);
 }
 
