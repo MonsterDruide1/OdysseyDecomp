@@ -18,10 +18,10 @@ WheelMovement::WheelMovement(LiveActor* actor, const ActorInitInfo& info)
     getQuat(&_20, info);
     _10 = _20;
 
-    sead::Vector3f local_80 = sead::Vector3f::ex;
-    calcQuatLocalAxis(&local_80, _20, (s32)mRotateAxis);
+    sead::Vector3f localRotateAxis = sead::Vector3f::ex;
+    calcQuatLocalAxis(&localRotateAxis, _20, (s32)mRotateAxis);
 
-    mMoveDir.setCross(local_80, sead::Vector3f::ey);
+    mMoveDir.setCross(localRotateAxis, sead::Vector3f::ey);
     if (isNearZero(mMoveDir, 0.001f))
         mMoveDir = sead::Vector3f::ez;
 
