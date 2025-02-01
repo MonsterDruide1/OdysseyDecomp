@@ -3,6 +3,7 @@
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutActor.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 namespace {
 NERVE_IMPL(HardIconParts, Hide);

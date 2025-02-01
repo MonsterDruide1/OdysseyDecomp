@@ -7,6 +7,7 @@
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 #include "System/GameDataFunction.h"
 

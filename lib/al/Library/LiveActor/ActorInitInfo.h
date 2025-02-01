@@ -9,7 +9,7 @@
 #include <prim/seadSafeString.h>
 
 #include "Library/LiveActor/ActorSceneInfo.h"
-#include "Library/Nerve/NerveUtil.h"
+#include "Library/Nerve/NerveAction.h"
 #include "Library/Placement/PlacementInfo.h"
 
 namespace al {

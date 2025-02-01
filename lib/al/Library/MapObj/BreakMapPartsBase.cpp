@@ -15,6 +15,7 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"

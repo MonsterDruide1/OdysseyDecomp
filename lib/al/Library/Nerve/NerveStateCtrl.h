@@ -28,8 +28,8 @@ public:
 
 private:
     s32 mMaxStates;
-    s32 mStateCount;
-    State* mStates;
-    State* mCurrentState;
+    s32 mStateCount = 0;
+    State* mStates = nullptr;
+    State* mCurrentState = nullptr;
 };
 }  // namespace al
