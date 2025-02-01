@@ -176,6 +176,32 @@ inline void makeRT(sead::Matrix34f& o, const sead::Vector3f& r, const sead::Vect
     o.m[2][3] = t.z;
 }
 
+template <typename T>
+void getRotation(sead::Vector3f& v, const sead::Matrix34f& n) {
+    T abs = sead::MathCalcCommon<T>::abs(n.m[2][0]);
+
+    // making sure pitch stays within bounds, setting roll to 0 otherwise
+    if ((1.0f - abs) < sead::MathCalcCommon<T>::epsilon() * 10) {
+        const T a12 = n.m[0][1];
+        const T a13 = n.m[0][2];
+        const T a31 = n.m[2][0];
+        
+        v.x = 0.0f;
+        v.y = (a31 / abs) * (-sead::numbers::pi_v<T> / 2);
+        v.z = std::atan2(-a12, -(a31 * a13));
+    } else {
+        const T a11 = n.m[0][0];
+        const T a21 = n.m[1][0];
+        const T a31 = n.m[2][0];
+        const T a32 = n.m[2][1];
+        const T a33 = n.m[2][2];
+
+        v.x = std::atan2(a32, a33);
+        v.y = std::asin(-a31);
+        v.z = std::atan2(a21, a11);
+    }
+}
+
 // NON_MATCHING: During matrix calculations (https://decomp.me/scratch/towGQ)
 bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
     if (!tryGetArgV3f(rotate, placementInfo, "Rotate"))
@@ -189,10 +215,9 @@ bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
         makeRT(rot, vec1, sead::Vector3f::zero);
         rot2 = mtx * rot;
 
-        sead::Vector3f tmp;
-        rot2.getRotation(tmp);
-        rotate->set(sead::Mathf::rad2deg(tmp.x), sead::Mathf::rad2deg(tmp.y),
-                    sead::Mathf::rad2deg(tmp.z));
+        getRotation<f32>(*rotate, rot2);
+        rotate->set(sead::Mathf::rad2deg(rotate->x), sead::Mathf::rad2deg(rotate->y),
+                    sead::Mathf::rad2deg(rotate->z));
     }
     return true;
 }
