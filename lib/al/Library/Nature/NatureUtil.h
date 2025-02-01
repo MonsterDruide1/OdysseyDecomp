@@ -15,5 +15,9 @@ bool calcFindWaterSurface(sead::Vector3f*, sead::Vector3f*, const LiveActor*, co
                           const sead::Vector3f&, f32);
 bool calcFindWaterSurfaceFlat(sead::Vector3f*, sead::Vector3f*, const LiveActor*,
                               const sead::Vector3f&, const sead::Vector3f&, f32);
+bool calcFindWaterSurfaceDisplacement(sead::Vector3f*, sead::Vector3f*, const LiveActor*,
+                                      const sead::Vector3f&, const sead::Vector3f&, f32);
+bool calcFindWaterSurfaceOverGround(sead::Vector3f*, sead::Vector3f*, const LiveActor*,
+                                    const sead::Vector3f&, const sead::Vector3f&, f32);
 
 }  // namespace al
