@@ -28,8 +28,9 @@ for line in lines:
     
     if mangled.startswith("sub_") or mangled.startswith("nullsub_"):
         mangled = ""
+        demangled = ""
     
-    line = address.strip() + "," + current_folder + "," + current_file + "\n"
+    line = address.strip() + "," + current_folder + "," + current_file + "," + demangled + "\n"
     o.write(line)
 
     mangled_symbols += [mangled]
@@ -79,3 +80,34 @@ while i < len(mangled_symbols) and j < len(functions_mangled_symbols):
         else:
             print(f"Extra symbol in CSV   ({hex(functions_addresses[j])}): CSV={functions_mangled_symbols[j]}")
             j += 1
+
+
+file = open('file_list_raw.csv', 'r')
+lines = file.readlines()[1:]
+o = open('file_list.yaml', 'w')
+for line in lines:
+    [folder, file, demangled, mangled, address] = line.split(';')
+    should_skip = False
+    for lib in ignored_libs:
+        if demangled.startswith(lib+"::") or mangled.startswith("_ZNSt"):
+            should_skip = True
+            break
+
+    if should_skip: continue
+    if folder != "" and folder != current_folder:
+        current_folder = folder
+    if file != "" and file != current_file:
+        current_file = file
+        o.write(f"{current_folder}/{current_file}:\n")
+    
+    if mangled.startswith("sub_") or mangled.startswith("nullsub_"):
+        mangled = ""
+        demangled = ""
+    
+    line = f"  - {address.strip()}: {demangled}\n"
+    o.write(line)
+
+    mangled_symbols += [mangled]
+    addresses += [int(address[2:], 16)]
+
+o.close()
