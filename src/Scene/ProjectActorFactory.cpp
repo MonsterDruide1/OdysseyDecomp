@@ -28,6 +28,7 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
+#include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapBomb.h"
@@ -160,7 +161,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", al::createActorFunction<CoinChameleon>},
     {"CoinCirclePlacement", nullptr},
-    {"CoinCollect", nullptr},
+    {"CoinCollect", al::createActorFunction<CoinCollect>},
     {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
     {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
     {"CoinLead", nullptr},
