@@ -20,18 +20,18 @@ private:
     CameraSubTargetTurnParam* mTurnParam;
 };
 
-class CameraStopJudge : public al::HioNode, al::IUseAreaObj {
+class CameraStopJudge : public HioNode, public IUseAreaObj {
 public:
     void init();
     CameraStopJudge();
     bool isStop() const;
-    void update(sead::Vector3f const&);
-    al::AreaObjDirector* getAreaObjDirector() const override;
+    void update(const sead::Vector3f&);
+    AreaObjDirector* getAreaObjDirector() const override;
 
 private:
     bool mIsInObjArea;
     bool mIsNotInObjArea;
-    bool mStopJudge;
+    bool mIsStop;
     AreaObjDirector* mAreaObjDirector;
 };
 
