@@ -23,7 +23,7 @@ public:
 private:
     al::LiveActor* mActor = nullptr;
     al::WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
-    f32 mAnimRange = 500.0f;
+    f32 mMaxDistance = 500.0f;
     f32 mEndFrame = 0.25f;
     f32 mStartFrame = 1.0f;
 };

@@ -30,21 +30,21 @@ void WaterSurfaceShadow::update(const sead::Vector3f& position, const sead::Vect
                                 f32 distance) {
     mWaterSurfaceFinder->updateForSurfaceShadow(position, gravity, distance);
 
-    if (!mWaterSurfaceFinder->isFoundSurface() || 50.0f <= mWaterSurfaceFinder->distance() ||
-        mWaterSurfaceFinder->distance() + distance < 15.0f) {
+    if (!mWaterSurfaceFinder->isFoundSurface() || mWaterSurfaceFinder->getDistance() >= 50.0f ||
+        mWaterSurfaceFinder->getDistance() + distance < 15.0f) {
         if (al::isAlive(mActor))
             mActor->kill();
         return;
     }
 
-    f32 animDistance = sead::Mathf::abs(mWaterSurfaceFinder->distance());
-    f32 animTime = al::easeIn(al::calcRate01(animDistance, 0.0f, mAnimRange));
+    f32 animDistance = sead::Mathf::abs(mWaterSurfaceFinder->getDistance());
+    f32 animTime = al::easeIn(al::calcRate01(animDistance, 0.0f, mMaxDistance));
 
     if (al::isDead(mActor))
         mActor->appear();
 
     al::setMclAnimNormalFrameAndStop(mActor, al::lerpValue(mStartFrame, mEndFrame, animTime));
-    al::resetPosition(mActor, gravity * 0.0f + mWaterSurfaceFinder->surfacePosition());
+    al::resetPosition(mActor, gravity * 0.0f + mWaterSurfaceFinder->getSurfacePosition());
 }
 
 void WaterSurfaceShadow::disappearShadow() {
@@ -53,8 +53,7 @@ void WaterSurfaceShadow::disappearShadow() {
 }
 
 void WaterSurfaceShadow::setScale(f32 scale) {
-    al::setScaleX(mActor, scale);
-    al::setScaleZ(mActor, scale);
+    setScale(scale, scale);
 }
 
 void WaterSurfaceShadow::setScale(f32 scaleX, f32 scaleZ) {

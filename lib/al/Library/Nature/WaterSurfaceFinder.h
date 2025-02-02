@@ -23,9 +23,9 @@ public:
 
     bool isFoundSurface() const { return mIsFoundSurface; };
 
-    f32 distance() const { return mDistance; };
+    f32 getDistance() const { return mDistance; };
 
-    const sead::Vector3f& surfacePosition() const { return mSurfacePosition; };
+    const sead::Vector3f& getSurfacePosition() const { return mSurfacePosition; };
 
 private:
     const LiveActor* mActor;
