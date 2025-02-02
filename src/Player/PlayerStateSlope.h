@@ -24,9 +24,9 @@ private:
     const PlayerConst* mConst;
     const IUsePlayerCollision* mCollision;
     PlayerAnimator* mAnimator;
-    PlayerActionSlopeSlideControl* mActionSlopeSlideControl = 0;
-    bool mIsForceSlide = 0;
-    bool mIsRunningRumbleLoop = 0;
+    PlayerActionSlopeSlideControl* mActionSlopeSlideControl = nullptr;
+    bool mIsForceSlide = false;
+    bool mIsRunningRumbleLoop = false;
     s32 mTimeInAir = 0;
     s32 mSlopeForceCounter = 0;
 };
