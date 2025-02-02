@@ -98,7 +98,8 @@ for line in lines:
         current_folder = folder
     if file != "" and file != current_file:
         current_file = file
-        o.write(f"{current_folder}/{current_file}:\n")
+        o.write("  .data: [0x7100123456, 0x7100345678]\n  .bss: [0x7100123456, 0x7100345678]\n")
+        o.write(f"{current_folder}/{current_file}:\n  .text:\n")
     
     if mangled.startswith("sub_") or mangled.startswith("nullsub_"):
         mangled = ""
