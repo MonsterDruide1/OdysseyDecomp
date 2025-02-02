@@ -20,8 +20,8 @@ struct HitReactionInfo {
     HitReactionInfo();
 
     const char* mReactionName;
-    EffectHitReactionInfo* mEffectHitReactionInfo;
-    SeHitReactionInfo* mSeHitReactionInfo;
+    EffectHitReactionInfo* mEffectInfo;
+    SeHitReactionInfo* mSeInfo;
     const char* mPadRumbleType;
     f32 mPadRumbleDistance;
     const char* mPadRumbleName;
@@ -67,13 +67,13 @@ private:
     IUseEffectKeeper* mEffectKeeper;
     const IUseAudioKeeper* mAudioKeeper;
     const IUseCamera* mCamera;
-    PadRumbleDirector* mPadRumbleDirector;
+    PadRumbleDirector* mRumbleDirector;
     SceneStopCtrl* mSceneStopCtrl;
     RadialBlurDirector* mRadialBlurDirector;
     const PlayerHolder* mPlayerHolder;
     s32 mNumReactions;
     HitReactionInfo* mReactions;
-    PadRumbleKeeper* mPadRumbleKeeper;
+    PadRumbleKeeper* mRumbleKeeper;
 };
 
 }  // namespace al
