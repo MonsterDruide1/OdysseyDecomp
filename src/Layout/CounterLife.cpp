@@ -5,6 +5,7 @@
 #include "Library/Layout/LayoutInitInfo.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"

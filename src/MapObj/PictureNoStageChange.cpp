@@ -1,7 +1,9 @@
 #include "MapObj/PictureNoStageChange.h"
 
+#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 
 #include "Util/SensorMsgFunction.h"
 
