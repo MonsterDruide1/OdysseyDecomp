@@ -8,7 +8,7 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Model/ModelShapeUtil.h"

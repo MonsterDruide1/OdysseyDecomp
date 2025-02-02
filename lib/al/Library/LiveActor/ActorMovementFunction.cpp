@@ -7,6 +7,7 @@
 #include "Library/HitSensor/SensorFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Screen/ScreenPointKeeper.h"
 #include "Library/Se/SeKeeper.h"

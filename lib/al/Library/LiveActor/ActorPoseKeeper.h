@@ -33,6 +33,10 @@ public:
     virtual void copyPose(const ActorPoseKeeperBase* other);
     virtual void calcBaseMtx(sead::Matrix34f* mtx) const = 0;
 
+    const sead::Vector3f& getTrans() const { return mTrans; }
+
+    sead::Vector3f* getTransPtr() { return &mTrans; }
+
 protected:  // protected so it's visible to all sub-classes (TFSV, TFGSV, ...)
     sead::Vector3f mTrans = {0, 0, 0};
 
@@ -244,97 +248,4 @@ private:
     sead::Matrix34f mMtx;
 };
 
-class LiveActor;
-
-void initActorPoseT(LiveActor* actor, const sead::Vector3f&);
-void setTrans(LiveActor* actor, const sead::Vector3f&);
-void initActorPoseTR(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&);
-void setRotate(LiveActor* actor, const sead::Vector3f&);
-void makeMtxSRT(sead::Matrix34f*, const LiveActor* actor);
-void makeMtxRT(sead::Matrix34f*, const LiveActor* actor);
-void makeMtxR(sead::Matrix34f*, const LiveActor* actor);
-void calcAnimFrontGravityPos(LiveActor* actor, const sead::Vector3f&);
-const sead::Vector3f& getGravity(const LiveActor* actor);
-const sead::Vector3f& getTrans(const LiveActor* actor);
-const sead::Vector3f& getScale(const LiveActor* actor);
-void copyPose(LiveActor* actor, const LiveActor* target);
-void updatePoseTrans(LiveActor* actor, const sead::Vector3f&);
-void updatePoseRotate(LiveActor* actor, const sead::Vector3f&);
-void updatePoseQuat(LiveActor* actor, const sead::Quatf&);
-void updatePoseMtx(LiveActor* actor, const sead::Matrix34f*);
-void calcSideDir(sead::Vector3f*, const LiveActor* actor);
-void calcLeftDir(sead::Vector3f*, const LiveActor* actor);
-void calcRightDir(sead::Vector3f*, const LiveActor* actor);
-void calcUpDir(sead::Vector3f*, const LiveActor* actor);
-void calcDownDir(sead::Vector3f*, const LiveActor* actor);
-void calcFrontDir(sead::Vector3f*, const LiveActor* actor);
-void calcBackDir(sead::Vector3f*, const LiveActor* actor);
-void calcPoseDir(sead::Vector3f*, sead::Vector3f*, sead::Vector3f*, const LiveActor* actor);
-void calcQuat(sead::Quatf*, const LiveActor* actor);
-void calcDistanceSignLocalXDir(const LiveActor* actor, const sead::Vector3f&);
-void calcDistanceSignLocalYDir(const LiveActor* actor, const sead::Vector3f&);
-void calcDistanceSignLocalZDir(const LiveActor* actor, const sead::Vector3f&);
-void calcDistanceLocalXDir(const LiveActor* actor, const sead::Vector3f&);
-void calcDistanceLocalYDir(const LiveActor* actor, const sead::Vector3f&);
-void calcDistanceLocalZDir(const LiveActor* actor, const sead::Vector3f&);
-sead::Vector3f* getTransPtr(LiveActor* actor);
-void setTrans(LiveActor* actor, f32, f32, f32);
-void setTransX(LiveActor* actor, f32);
-void setTransY(LiveActor* actor, f32);
-void setTransZ(LiveActor* actor, f32);
-const sead::Vector3f& getRotate(const LiveActor* actor);
-sead::Vector3f* getRotatePtr(LiveActor* actor);
-void setRotate(LiveActor* actor, f32, f32, f32);
-void setRotateX(LiveActor* actor, f32);
-void setRotateY(LiveActor* actor, f32);
-void setRotateZ(LiveActor* actor, f32);
-void getScalePtr(LiveActor* actor);
-bool tryGetScalePtr(LiveActor* actor);
-f32 getScaleX(const LiveActor* actor);
-f32 getScaleY(const LiveActor* actor);
-f32 getScaleZ(const LiveActor* actor);
-void setScale(LiveActor* actor, const sead::Vector3f&);
-void setScale(LiveActor* actor, f32, f32, f32);
-void setScaleAll(LiveActor* actor, f32);
-void setScaleX(LiveActor* actor, f32);
-void setScaleY(LiveActor* actor, f32);
-void setScaleZ(LiveActor* actor, f32);
-bool isFrontTarget(const LiveActor* actor, const sead::Vector3f&);
-bool isFrontDir(const LiveActor* actor, const sead::Vector3f&);
-bool isBackTarget(const LiveActor* actor, const sead::Vector3f&);
-bool isBackDir(const LiveActor* actor, const sead::Vector3f&);
-bool isLeftTarget(const LiveActor* actor, const sead::Vector3f&);
-bool isLeftDir(const LiveActor* actor, const sead::Vector3f&);
-bool isRightTarget(const LiveActor* actor, const sead::Vector3f&);
-bool isRightDir(const LiveActor* actor, const sead::Vector3f&);
-bool isUpTarget(const LiveActor* actor, const sead::Vector3f&);
-bool isUpDir(const LiveActor* actor, const sead::Vector3f&);
-bool isDownTarget(const LiveActor* actor, const sead::Vector3f&);
-bool isDownDir(const LiveActor* actor, const sead::Vector3f&);
-const sead::Quatf& getQuat(const LiveActor* actor);
-sead::Quatf* getQuatPtr(LiveActor* actor);
-bool tryGetQuatPtr(LiveActor* actor);
-void setQuat(LiveActor* actor, const sead::Quatf&);
-void getGravityPtr(const LiveActor* actor);
-void setGravity(const LiveActor* actor, const sead::Vector3f&);
-const sead::Vector3f& getFront(const LiveActor* actor);
-sead::Vector3f* getFrontPtr(LiveActor* actor);
-void setFront(LiveActor* actor, const sead::Vector3f&);
-const sead::Vector3f& getUp(const LiveActor* actor);
-sead::Vector3f* getUpPtr(LiveActor* actor);
-void setUp(LiveActor* actor, const sead::Vector3f&);
-void multVecPoseNoTrans(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-void multVecPose(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-void multVecPoseAndScale(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-void multVecInvPose(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-void multVecInvQuat(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-void multMtxInvPose(sead::Matrix34f*, const LiveActor* actor, const sead::Matrix34f&);
-void calcTransLocalOffset(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&);
-
 }  // namespace al
-
-class alActorPoseFunction {
-public:
-    void calcBaseMtx(sead::Matrix34f* mtx, const al::LiveActor* actor);
-    void updatePoseTRMSV(al::LiveActor* actor);
-};
