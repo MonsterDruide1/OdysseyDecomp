@@ -53,102 +53,60 @@ void HitSensorDirector::execute() {
 }
 
 void HitSensorDirector::executeHitCheckInSameGroup(SensorHitGroup* group) const {
-    // Forces the this pointer to be passed in to match execute
-    asm volatile("" : : "r"(this) : "memory");
-
     s32 sensorCount = group->getSensorCount();
     for (s32 i = 0; i < sensorCount; i++) {
         auto* sensor = group->getSensor(i);
         for (s32 j = i; j != sensorCount; j++) {
             auto* otherSensor = group->getSensor(j);
-            if (sensor->mParentActor != otherSensor->mParentActor) {
-                sead::Vector3f distance = (sensor->mPos - otherSensor->mPos);
-                f32 combinedRadius = sensor->mRadius + otherSensor->mRadius;
-                if (distance.squaredLength() >= combinedRadius * combinedRadius)
-                    continue;
-                if (otherSensor->mSensorType != HitSensorType::Eye &&
-                    otherSensor->mSensorType != HitSensorType::PlayerEye)
-                    sensor->addHitSensor(otherSensor);
-                if (sensor->mSensorType != HitSensorType::Eye &&
-                    sensor->mSensorType != HitSensorType::PlayerEye)
-                    otherSensor->addHitSensor(sensor);
-            }
+            executeHitCheck(sensor, otherSensor);
         }
     }
 }
 
 void HitSensorDirector::executeHitCheckGroup(SensorHitGroup* group, SensorHitGroup* group2) const {
-    // Same as above
-    asm volatile("" : : "r"(this) : "memory");
-
     s32 sensorCount = group->getSensorCount();
     for (s32 i = 0; i < sensorCount; i++) {
         auto* sensor = group->getSensor(i);
         s32 group2SensorCount = group2->getSensorCount();
         for (s32 j = 0; j < group2SensorCount; j++) {
             auto* otherSensor = group2->getSensor(j);
-            if (sensor->mParentActor != otherSensor->mParentActor) {
-                sead::Vector3f distance = (sensor->mPos - otherSensor->mPos);
-                f32 combinedRadius = sensor->mRadius + otherSensor->mRadius;
-                if (distance.squaredLength() >= combinedRadius * combinedRadius)
-                    continue;
-                if (otherSensor->mSensorType != HitSensorType::Eye &&
-                    otherSensor->mSensorType != HitSensorType::PlayerEye)
-                    sensor->addHitSensor(otherSensor);
-                if (sensor->mSensorType != HitSensorType::Eye &&
-                    sensor->mSensorType != HitSensorType::PlayerEye)
-                    otherSensor->addHitSensor(sensor);
-            }
+            executeHitCheck(sensor, otherSensor);
         }
     }
 }
 
-// Seems to be unused
 void HitSensorDirector::executeHitCheck(HitSensor* sensor, HitSensor* otherSensor) const {
-    if (sensor->mParentActor != otherSensor->mParentActor) {
-        sead::Vector3f distance = (sensor->mPos - otherSensor->mPos);
-        f32 combinedRadius = sensor->mRadius + otherSensor->mRadius;
-        if (distance.squaredLength() >= combinedRadius * combinedRadius)
-            return;
-        if (otherSensor->mSensorType != HitSensorType::Eye &&
-            otherSensor->mSensorType != HitSensorType::PlayerEye)
-            sensor->addHitSensor(otherSensor);
-        if (sensor->mSensorType != HitSensorType::Eye &&
-            sensor->mSensorType != HitSensorType::PlayerEye)
-            otherSensor->addHitSensor(sensor);
-    }
+    if (sensor->mParentActor == otherSensor->mParentActor)
+        return;
+    sead::Vector3f distance = sensor->mPos - otherSensor->mPos;
+    f32 combinedRadius = sensor->mRadius + otherSensor->mRadius;
+    if (distance.squaredLength() >= sead::Mathf::square(combinedRadius))
+        return;
+    if (otherSensor->mSensorType != HitSensorType::Eye &&
+        otherSensor->mSensorType != HitSensorType::PlayerEye)
+        sensor->addHitSensor(otherSensor);
+    if (sensor->mSensorType != HitSensorType::Eye &&
+        sensor->mSensorType != HitSensorType::PlayerEye)
+        otherSensor->addHitSensor(sensor);
 }
 
 void HitSensorDirector::initGroup(HitSensor* sensor) {
-    if (isSensorPlayerEye(sensor)) {
+    if (isSensorPlayerEye(sensor))
         sensor->mHitGroup = mPlayerEye;
-        return;
-    }
-    if (isSensorPlayerAll(sensor)) {
+    else if (isSensorPlayerAll(sensor))
         sensor->mHitGroup = mPlayer;
-        return;
-    }
-    if (isSensorRide(sensor)) {
+    else if (isSensorRide(sensor))
         sensor->mHitGroup = mRide;
-        return;
-    }
-    if (isSensorEye(sensor)) {
+    else if (isSensorEye(sensor))
         sensor->mHitGroup = mEye;
-        return;
-    }
-    if (isSensorSimple(sensor)) {
+    else if (isSensorSimple(sensor))
         sensor->mHitGroup = mSimple;
-        return;
-    }
-    if (isSensorMapObj(sensor)) {
+    else if (isSensorMapObj(sensor))
         sensor->mHitGroup = mMapObj;
-        return;
-    }
-    if (isSensorLookAt(sensor)) {
+    else if (isSensorLookAt(sensor))
         sensor->mHitGroup = mLookAt;
-        return;
-    }
-    sensor->mHitGroup = mCharacter;
+    else
+        sensor->mHitGroup = mCharacter;
 }
 
 }  // namespace al
