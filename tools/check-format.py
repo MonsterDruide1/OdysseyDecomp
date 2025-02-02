@@ -275,6 +275,8 @@ def common_string_finder(c, path):
             continue
         if "__asm__" in line:
             continue
+        if "asm volatile" in line:
+            continue
         if "//" in line:
             continue
 
@@ -384,8 +386,8 @@ def header_check_line(line, path, visibility, should_start_class):
         var_name = newline.split(" : ")[0].split(" ")[-1]
         var_type = " ".join(newline.split(" ")[0:-1])
 
-        if var_type.startswith("enum"):
-            return  # Allow enum inside class
+        if var_type.startswith("enum") or var_type.startswith("friend"):
+            return  # Allow enum and friend class
 
         PREFIXES = ["pad", "field", "unk", "gap", "_", "filler"]
 

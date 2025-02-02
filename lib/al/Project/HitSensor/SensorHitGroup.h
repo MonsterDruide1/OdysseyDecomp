@@ -12,6 +12,11 @@ public:
     void add(HitSensor* sensor);
     void remove(HitSensor* sensor);
     HitSensor* getSensor(s32 index) const;
+    void clear() const;
+
+    s32 getSensorCount() const { return mSensorCount; }
+
+
 
 private:
     s32 mMaxSensors;
