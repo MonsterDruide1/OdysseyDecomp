@@ -14,6 +14,7 @@
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Movement/WheelMovement.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Se/SeFunction.h"
 
 namespace {
