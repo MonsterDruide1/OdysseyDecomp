@@ -7,22 +7,23 @@
 namespace al {
 class ActorInitInfo;
 class LiveActor;
-}  // namespace al
-
 class WaterSurfaceFinder;
+}  // namespace al
 
 class WaterSurfaceShadow {
 public:
-    WaterSurfaceShadow(const al::ActorInitInfo&, const char*);
+    WaterSurfaceShadow(const al::ActorInitInfo& initInfo, const char* archiveName);
     bool isAppearShadow() const;
-    void update(const sead::Vector3f&, const sead::Vector3f&, f32);
+    void update(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 distance);
     void disappearShadow();
-    void setScale(f32);
-    void setScale(f32, f32);
-    void setQuat(const sead::Quatf&);
+    void setScale(f32 scale);
+    void setScale(f32 scaleX, f32 scaleZ);
+    void setQuat(const sead::Quatf& quat);
 
 private:
     al::LiveActor* mActor = nullptr;
-    WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
-    sead::Vector3f mScale = {500.0f, 0.25f, 1.0f};
+    al::WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
+    f32 mAnimRange = 500.0f;
+    f32 mEndFrame = 0.25f;
+    f32 mStartFrame = 1.0f;
 };
