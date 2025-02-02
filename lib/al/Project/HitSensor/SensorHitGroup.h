@@ -16,8 +16,6 @@ public:
 
     s32 getSensorCount() const { return mSensorCount; }
 
-
-
 private:
     s32 mMaxSensors;
     s32 mSensorCount = 0;
