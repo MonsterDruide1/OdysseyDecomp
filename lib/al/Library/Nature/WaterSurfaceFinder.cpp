@@ -6,7 +6,6 @@ namespace al {
 
 WaterSurfaceFinder::WaterSurfaceFinder(const LiveActor* actor) : mActor(actor) {}
 
-// NON_MATCHING: inlined updateLocal
 void WaterSurfaceFinder::update(const sead::Vector3f& position, const sead::Vector3f& gravity,
                                 f32 distance) {
     updateLocal(position, gravity, distance, false, false, false);
