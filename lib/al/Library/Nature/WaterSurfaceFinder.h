@@ -5,7 +5,7 @@
 namespace al {
 class LiveActor;
 
-struct SurfaceProperties {
+struct WaterSurfaceProperties {
     f32 distance = 0.0f;
     sead::Vector3f position = {0.0f, 0.0f, 0.0f};
     sead::Vector3f normal = {0.0f, 0.0f, 0.0f};
@@ -45,7 +45,7 @@ public:
 private:
     const LiveActor* mActor;
     bool mIsFoundSurface = false;
-    SurfaceProperties mSurface{};
+    WaterSurfaceProperties mSurface{};
 };
 
 static_assert(sizeof(WaterSurfaceFinder) == 0x38);
