@@ -15,6 +15,7 @@ dist/
 build/
 build-*/
 bin/
+data/split
 
 # IDEs
 .idea/
