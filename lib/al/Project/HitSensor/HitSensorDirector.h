@@ -20,7 +20,7 @@ private:
     void executeHitCheckGroup(SensorHitGroup* group, SensorHitGroup* group2) const;
     void executeHitCheck(HitSensor* sensor, HitSensor* otherSensor) const;
 
-    // The checker disallows multiple private blocks, is this intentional?
+private:
     SensorHitGroup* mPlayer = nullptr;
     SensorHitGroup* mPlayerEye = nullptr;
     SensorHitGroup* mRide = nullptr;

@@ -324,7 +324,7 @@ def header_sorted_visibility(c, path):
 
         if line in visibilities_ordered:
             i = visibilities_ordered.index(line)
-            if CHECK(lambda a: i > nest_level[-1], line,
+            if CHECK(lambda a: i > nest_level[-1] or (i == 2 and nest_level[-1] == 2), line,
                      "Wrong order of visibilities: Must be public, protected, private!", path): return
             if nest_level[
                 -1] == -2:  # outside of class, only seen in SubActorKeeper.h in a macro definition - ignore then
