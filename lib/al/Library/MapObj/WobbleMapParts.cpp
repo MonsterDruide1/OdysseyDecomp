@@ -12,6 +12,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Se/SeFunction.h"
 
 namespace {
 using namespace al;
@@ -126,10 +127,32 @@ void WobbleMapParts::exeWait() {
 }
 
 void WobbleMapParts::updateMove() {
-    sead::Vector3f up;
-    calcQuatUp(&up, _124);
+    sead::Vector3f up1;
+    calcQuatUp(&up1, _124);
 
     sead::Vector3f local_40;
+    local_40.setCross(up1, _140);
+    local_40 *= 180.0f / sead::Mathf::pi();
     limitLength(&local_40, local_40, mMaxRotate * 0.001333333f);
+
+    _134 += local_40 * 0.92f;
+    rotateQuatMomentDegree(&_124, _124, _134);
+
+    sead::Vector3f up2;
+    calcQuatUp(&up2, _124);
+
+    sead::Vector3f vStack_70;
+    bool isStop = !turnVecToVecDegree(&vStack_70, _118, up2, mMaxRotate);
+    turnQuatYDirRate(getQuatPtr(this), _108, vStack_70, 1.0f);
+
+    if (isStop)
+        _124 = getQuat(this);
+
+    _140.set(_118);
+    _15c = _134.length();
+    if (mIsStop != isStop)
+        tryStartSeWithParam(this, "Stop", _15c, "");
+
+    mIsStop = isStop;
 }
 }  // namespace al
