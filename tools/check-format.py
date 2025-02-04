@@ -3,6 +3,7 @@
 import argparse
 import csv
 import os
+import stat
 import re
 from functools import cache
 
@@ -448,6 +449,10 @@ def check_header(c, path):
     common_this_prefix(c, path)
 
 def check_file(file_str):
+    st = os.stat(file_str)
+    if st.st_mode & stat.S_IXUSR:
+        FAIL("Source and header files aren't allowed to be executable!", "NOT APPLICABLE", file_str)
+
     file = open(file_str, mode="r")
     content = file.read()
     file.close()
