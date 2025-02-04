@@ -14,7 +14,7 @@ bool CameraStopJudge::isStop() const {
 }
 
 void CameraStopJudge::update(const sead::Vector3f& position) {
-    mIsInObjArea = al::isInAreaObj(this, "CameraStopArea", position);
+    mIsInObjArea = isInAreaObj(this, "CameraStopArea", position);
 }
 
 AreaObjDirector* al::CameraStopJudge::getAreaObjDirector() const {
