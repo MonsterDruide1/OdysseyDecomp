@@ -8,7 +8,6 @@ class AreaObjDirector;
 
 class CameraStopJudge : public HioNode, public IUseAreaObj {
 public:
-    void init();
     CameraStopJudge();
     bool isStop() const;
     void update(const sead::Vector3f&);
