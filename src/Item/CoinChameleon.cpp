@@ -151,7 +151,7 @@ void CoinChameleon::exeVisible() {
 
 void CoinChameleon::exeAppear() {
     if (al::updateNerveState(this)) {
-        mCoin->appearCoinChameleon(al::getTrans(this), al::getTrans(this), mDisplayOffset);
+        mCoin->appearCoinChameleon(al::getTrans(this), al::getQuat(this), mDisplayOffset);
         kill();
         return;
     }
