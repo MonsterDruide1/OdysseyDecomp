@@ -82,5 +82,7 @@ private:
     const sead::Vector3f* mFollowPos;
     const sead::Matrix34f* mFollowMtx;
     sead::Vector3f mFollowPosOffset;
+
+    friend class HitSensorDirector;
 };
 }  // namespace al
