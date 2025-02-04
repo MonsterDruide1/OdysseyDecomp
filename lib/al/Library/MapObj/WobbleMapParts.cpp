@@ -126,6 +126,7 @@ void WobbleMapParts::exeWait() {
         startNerveAction(this, "Move");
 }
 
+// NON_MATCHING
 void WobbleMapParts::updateMove() {
     sead::Vector3f up1;
     calcQuatUp(&up1, _124);
@@ -154,5 +155,24 @@ void WobbleMapParts::updateMove() {
         tryStartSeWithParam(this, "Stop", _15c, "");
 
     mIsStop = isStop;
+}
+
+void WobbleMapParts::exeMove() {
+    updateMove();
+
+    tryStartSeWithParam(this, "Rotate", _15c, "");
+    if (_15c < 0.1f)
+        startNerveAction(this, "Wait");
+}
+
+void WobbleMapParts::exeAssistStop() {
+    mAssistStopTimer--;
+    if (mAssistStopTimer <= 0) {
+        mAssistStopTimer = 0;
+        if (_15c > 0.1f)
+            startNerveAction(this, "Move");
+        else
+            startNerveAction(this, "Wait");
+    }
 }
 }  // namespace al

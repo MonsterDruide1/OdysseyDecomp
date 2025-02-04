@@ -24,6 +24,7 @@
 #include "Library/MapObj/SwitchOpenMapParts.h"
 #include "Library/MapObj/VisibleSwitchMapParts.h"
 #include "Library/MapObj/WheelMapParts.h"
+#include "Library/MapObj/WobbleMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/BarrierField.h"
@@ -621,7 +622,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"VisibleSwitchMapParts", al::createActorFunction<al::VisibleSwitchMapParts>},
     {"WaveSurfMapParts", nullptr},
     {"WheelMapParts", al::createActorFunction<al::WheelMapParts>},
-    {"WobbleMapParts", nullptr},
+    {"WobbleMapParts", al::createActorFunction<al::WobbleMapParts>},
     {"WindBlowMapParts", nullptr},
     {"Yoshi", nullptr},
     {"YoshiFruit", nullptr},
