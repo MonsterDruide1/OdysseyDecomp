@@ -46,7 +46,6 @@ void WobbleMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-// NON_MATCHING
 bool WobbleMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgTouchAssist(message)) {
         mAssistStopTimer = 45;
@@ -59,16 +58,14 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
     if (isMsgFloorTouch(message)) {
         sead::Vector3f pos;
         if (isMySensor(self, this))
-            pos.set(getSensorPos(self));
+            pos.set(getSensorPos(other));
         else
-            pos.set(getActorTrans(other));
-        pos.set(pos - getTrans(this));
-
-        sead::Vector3f up;
-        calcQuatUp(&up, _124);
+            pos.set(getActorTrans(self));
 
         sead::Vector3f local_60;
-        verticalizeVec(&local_60, up, pos);
+        sead::Vector3f up;
+        calcQuatUp(&up, _124);
+        verticalizeVec(&local_60, up, pos - getTrans(this));
 
         f32 length = local_60.length();
         f32 fVar3 = normalize(length, 0.0f, 100.0f);
@@ -76,9 +73,9 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
         if (isNearZero(length, 0.001f))
             local_60 = sead::Vector3f::zero;
         else
-            local_60 *= sead::Mathf::sin(fVar3 * sead::Mathf::deg2rad(mMaxRotate)) / length;
+            local_60 *= sead::Mathf::sin(sead::Mathf::deg2rad(fVar3 * mMaxRotate)) / length;
 
-        f32 cos = sead::Mathf::cos(fVar3 * sead::Mathf::deg2rad(mMaxRotate));
+        f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(fVar3 * mMaxRotate));
         _140.set(cos * _118 + local_60);
 
         return true;
@@ -126,17 +123,15 @@ void WobbleMapParts::exeWait() {
         startNerveAction(this, "Move");
 }
 
-// NON_MATCHING
 void WobbleMapParts::updateMove() {
+    sead::Vector3f local_40;
     sead::Vector3f up1;
     calcQuatUp(&up1, _124);
-
-    sead::Vector3f local_40;
     local_40.setCross(up1, _140);
     local_40 *= 180.0f / sead::Mathf::pi();
     limitLength(&local_40, local_40, mMaxRotate * 0.001333333f);
 
-    _134 += local_40 * 0.92f;
+    _134 = (_134 + local_40) * 0.92f;
     rotateQuatMomentDegree(&_124, _124, _134);
 
     sead::Vector3f up2;
