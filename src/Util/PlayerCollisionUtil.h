@@ -56,4 +56,6 @@ void setColliderFilterCollisionParts(IUsePlayerCollision*, const al::CollisionPa
 bool reboundVelocityFromCollision(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32);
 al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
 
+bool isOnGroundSlopeSlideEnd(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
+
 }  // namespace rs

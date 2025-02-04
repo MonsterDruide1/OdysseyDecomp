@@ -6,32 +6,6 @@
 
 namespace al {
 
-enum SensorType {
-    SensorType_Eye = 0,
-    SensorType_Player = 1,
-    SensorType_PlayerAttack = 2,
-    SensorType_PlayerFoot = 3,
-    SensorType_PlayerDecoration = 4,
-    SensorType_PlayerEye = 5,
-    SensorType_Npc = 6,
-    SensorType_Ride = 7,
-    SensorType_Enemy = 8,
-    SensorType_EnemyBody = 9,
-    SensorType_EnemyAttack = 10,
-    SensorType_MapObj = 12,
-    SensorType_Bindable = 14,
-    SensorType_Collision = 15,
-    SensorType_PlayerFireBall = 16,
-    SensorType_HoldObj = 17,
-    SensorType_LookAt = 18,
-    SensorType_BindableGoal = 19,
-    SensorType_BindableAllPlayer = 20,
-    SensorType_BindableBubbleOutScreen = 21,
-    SensorType_BindableKoura = 22,
-    SensorType_BindableRouteDokan = 23,
-    SensorType_BindableBubblePadInput = 24
-};
-
 class LiveActor;
 class HitSensor;
 class SensorMsg;
@@ -164,10 +138,13 @@ bool isSensorPlayer(const HitSensor*);
 bool isSensorPlayerAll(const HitSensor*);
 void validateHitSensorRideAll(LiveActor*);
 bool isSensorRide(const HitSensor*);
+bool isSensorSimple(const HitSensor*);
+bool isSensorLookAt(const HitSensor*);
 void invalidateHitSensorEyeAll(LiveActor*);
 void invalidateHitSensorPlayerAll(LiveActor*);
 void invalidateHitSensorPlayerAttackAll(LiveActor*);
 bool isSensorPlayerAttack(const HitSensor*);
+bool isSensorPlayerEye(const HitSensor*);
 }  // namespace al
 
 namespace alActorSensorFunction {

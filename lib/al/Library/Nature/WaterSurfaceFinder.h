@@ -21,6 +21,12 @@ public:
 
     bool isNearSurface(f32 distance) const;
 
+    bool isFoundSurface() const { return mIsFoundSurface; };
+
+    f32 getDistance() const { return mDistance; };
+
+    const sead::Vector3f& getSurfacePosition() const { return mSurfacePosition; };
+
 private:
     const LiveActor* mActor;
     bool mIsFoundSurface = false;
