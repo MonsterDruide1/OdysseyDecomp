@@ -7,8 +7,8 @@
 
 namespace al {
 
-HitSensorKeeper::HitSensorKeeper(s32 maxSensors)
-    : mMaxSensors(maxSensors), mSensors(new HitSensor*[maxSensors]) {
+HitSensorKeeper::HitSensorKeeper(s32 maxSensors) : mMaxSensors(maxSensors) {
+    mSensors = new HitSensor*[maxSensors];
     for (s32 i = 0; i < mMaxSensors; i++)
         mSensors[i] = nullptr;
 }

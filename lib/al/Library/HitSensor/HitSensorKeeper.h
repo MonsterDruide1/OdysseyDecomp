@@ -3,8 +3,6 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-#include "Project/HitSensor/HitSensor.h"
-
 namespace al {
 class HitSensor;
 class LiveActor;
