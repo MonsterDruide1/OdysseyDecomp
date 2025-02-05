@@ -1,21 +1,25 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/HostIO/HioNode.h"
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
-class IUseSceneObjHolder;
-class NfpInfo;
 class ActorInitInfo;
 class AudioDirector;
+class IUseSceneObjHolder;
+class MessageTagDataHolder;
+
+struct NfpInfo;
+
 }  // namespace al
 
 class AmiiboNpcLayout;
 class ProjectNfpDirector;
-class MessageTagDataHolder;
+class SearchAmiiboDataTable;
 
 class AmiiboNpcDirector : public al::ISceneObj, public al::IUseHioNode, public al::IUseAudioKeeper {
 public:
@@ -43,12 +47,19 @@ public:
     al::AudioKeeper* getAudioKeeper() const override;
 
 private:
-    char filler1[8];
-    ProjectNfpDirector* mNfpDirector;
-    char filler2[8];
-    al::AudioKeeper* mAudioKeeper;
-    MessageTagDataHolder* mTagDataHolder;
-    char filler[0x1A0];
+    AmiiboNpcLayout* mNpcLayout = nullptr;
+    SearchAmiiboDataTable* mSearchDataTable = nullptr;
+    ProjectNfpDirector* mNfpDirector = nullptr;
+    al::NfpInfo* mNfpInfo = nullptr;
+    al::AudioKeeper* mAudioKeeper = nullptr;
+    al::MessageTagDataHolder* mTagDataHolder = nullptr;
+    const char* mAmiiboNameString[3];
+    sead::FixedSafeString<0x40> mAmiiboName[3];
+    const char* mTouchAmiiboNameString = nullptr;
+    sead::FixedSafeString<0x40> mTouchAmiiboName;
+    const char16* mClothName = nullptr;
+    const char16* mCapName = nullptr;
+    u64 mTime = 0;
 };
 
 static_assert(sizeof(AmiiboNpcDirector) == 0x1D8, "AmiiboNpcDirector");
@@ -75,7 +86,7 @@ void registerSearchAmiibo(const al::IUseSceneObjHolder*, const al::NfpInfo&);
 bool isSearchAmiibo(const al::IUseSceneObjHolder*, const al::NfpInfo&);
 void deleteSearchEndAmiibo(const al::IUseSceneObjHolder*);
 void setTalkStartTime(const al::IUseSceneObjHolder*);
-MessageTagDataHolder* getMessageTagDataHolder(const al::IUseSceneObjHolder*);
+al::MessageTagDataHolder* getMessageTagDataHolder(const al::IUseSceneObjHolder*);
 void setTouchAmiiboName(const al::IUseSceneObjHolder*, s32, s32);
 void trySetAmiiboCostumeName(const al::IUseSceneObjHolder*, s32);
 void tryCreateHelpAmiiboDirector(const al::IUseSceneObjHolder*);
