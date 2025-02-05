@@ -16,8 +16,6 @@ enum class ItemType : u32;
 struct ShopItemInfo;
 }  // namespace ShopItem
 
-struct ItemListInfo;
-
 namespace rs {
 void buyItemInShopItemList(const al::IUseSceneObjHolder* user, s32 itemIdx);
 bool isBuyItemInShopItemList(const al::IUseSceneObjHolder* user, s32 itemIdx);
@@ -28,13 +26,13 @@ bool isHaveCloth(GameDataHolderAccessor accessor, const char* name);
 bool isHaveCap(GameDataHolderAccessor accessor, const char* name);
 bool isHaveSticker(GameDataHolderAccessor accessor, const char* name);
 bool isHaveGift(GameDataHolderAccessor accessor, const char* name);
-const sead::PtrArray<ItemListInfo>& getClothList(GameDataHolderAccessor accessor);
+const sead::PtrArray<ShopItem::ItemInfo>& getClothList(GameDataHolderAccessor accessor);
 s32 getClothListSize(GameDataHolderAccessor accessor);
 bool isHaveCloth(GameDataHolderAccessor accessor, s32 clothIdx);
 bool isHaveClothByFileId(GameDataHolderAccessor accessor, const char* clothName, s32 fileId);
 s32 calcHaveClothNum(GameDataHolderAccessor accessor);
 void buyCloth(const al::IUseSceneObjHolder* user, const char* clothName);
-const sead::PtrArray<ItemListInfo>& getCapList(GameDataHolderAccessor accessor);
+const sead::PtrArray<ShopItem::ItemInfo>& getCapList(GameDataHolderAccessor accessor);
 s32 getCapListSize(GameDataHolderAccessor accessor);
 bool isHaveCap(GameDataHolderAccessor accessor, s32 capIdx);
 bool isHaveCapByFileId(GameDataHolderAccessor accessor, const char* capName, s32 fileId);
@@ -45,12 +43,12 @@ bool isCompleteCloth(const al::IUseSceneObjHolder* user, s32 fileId);
 bool isCompleteCap(const al::IUseSceneObjHolder* user, s32 fileId);
 s32 calcHaveCapNum(GameDataHolderAccessor accessor);
 void buyCap(const al::IUseSceneObjHolder* user, const char* capName);
-const sead::PtrArray<ItemListInfo>& getGiftList(GameDataHolderAccessor accessor);
+const sead::PtrArray<ShopItem::ItemInfo>& getGiftList(GameDataHolderAccessor accessor);
 s32 getGiftListSize(GameDataHolderAccessor accessor);
 bool isHaveGift(GameDataHolderAccessor accessor, s32 giftIdx);
 s32 calcHaveGiftNum(GameDataHolderAccessor accessor);
 bool checkCompleteGift(GameDataHolderAccessor accessor, s32 fileId);
-const sead::PtrArray<ItemListInfo>& getStickerList(GameDataHolderAccessor accessor);
+const sead::PtrArray<ShopItem::ItemInfo>& getStickerList(GameDataHolderAccessor accessor);
 s32 getStickerListSize(GameDataHolderAccessor accessor);
 bool isHaveSticker(GameDataHolderAccessor accessor, s32 fileId);
 s32 calcHaveStickerNum(GameDataHolderAccessor accessor);
