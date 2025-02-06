@@ -3,37 +3,41 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-const char* createStringIfInStack(const char*);
-void createConcatString(const char*, const char*);
-void createFileNameBySuffix(sead::BufferedSafeStringBase<char>*, const char*, const char*);
+class MatchStr;
+
+const char* createStringIfInStack(const char* str);
+const char* createConcatString(const char* start, const char* end);
+void createFileNameBySuffix(sead::BufferedSafeString*, const char*, const char*);
 void outputValueWithComma(char*, u32, u64, bool, bool);
-void extractString(char*, const char*, u32, u32);
+void extractString(char* out, const char* str, u32 len, u32 unused);
 void searchSubString(const char*, const char*);
 void searchSubString(const char*, const char*, s32);
-void extractBaseNameW(sead::BufferedSafeStringBase<char16_t>*,
-                      const sead::SafeStringBase<char16_t>&);
-void removeExtensionString(char*, u32, const char*);
-void removeStringFromEnd(char*, u32, const char*, const char*);
+const char* getSubStringUnmatched(const char**, const char*, const MatchStr&,
+                                  void (*)(const char*, const char*, void*), void*);
+const char* getSubStringUnmatched(const char*, const MatchStr&);
+void extractBaseNameW(sead::WBufferedSafeString*, const sead::WSafeString&);
+void removeExtensionString(char* out, u32 len, const char* str);
+void removeStringFromEnd(char* out, u32 len, const char* end, const char* str);
 void translateCharacters(char*, const char*, const char*);
-void tryReplaceString(sead::BufferedSafeStringBase<char>*, const char*, const char*);
-void tryReplaceString(sead::BufferedSafeStringBase<char>*, const char*, const char*, const char*);
-void tryReplaceStringNoRecursive(sead::BufferedSafeStringBase<char>*, const char*, const char*,
-                                 const char*);
-void compareStringIgnoreCase(const char*, const char*);
+void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
+void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
+void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*, const char*);
+bool isEqualString(const char16* str1, const char16* str2);
+bool isEqualSubString(const char* str, const char* subStr);
+bool isEqualSubString(const sead::SafeString& str, const sead::SafeString& subStr);
+bool isStartWithString(const char* str, const char* start);
+bool isEndWithString(const char* str, const char* end);
+bool isMatchString(const char*, const MatchStr&);
+s32 compareStringIgnoreCase(const char* str1, const char* str2);
 void makeUrlEncodeString(char*, u32, const char*);
 void makeUrlDecodeString(char*, u32, const char*);
-void copyString(char*, const char*, u32);
-void copyStringW(char16_t*, const char16_t*, u32);
+void copyString(char* out, const char* str, u32 len);
+void copyStringW(char16* out, const char16* str, u32 len);
 bool isInStack(const void*);
-bool isEqualStringCase(const char*, const char*);
-bool isEqualString(const char16_t*, const char16_t*);
-bool isEqualSubString(const char*, const char*);
-bool isEqualSubString(const sead::SafeString&, const sead::SafeString&);
-bool isStartWithString(const char*, const char*);
-bool isEndWithString(const char*, const char*);
-bool isEqualString(const char*, const char*) __attribute__((noinline));
-bool isEqualString(const sead::SafeString&, const sead::SafeString&);
-bool isEqualStringCase(const sead::SafeString&, const sead::SafeString&);
+bool isEqualString(const char* str1, const char* str2);
+bool isEqualString(const sead::SafeString& str1, const sead::SafeString& str2);
+bool isEqualStringCase(const char* str1, const char* str2);
+bool isEqualStringCase(const sead::SafeString& str1, const sead::SafeString& str2);
 
 template <s32 L>
 class StringTmp : public sead::FixedSafeString<L> {

@@ -6,17 +6,13 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "Enemy/EnemyCap.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(EnemyStateDamageCap, Wait);
 NERVE_IMPL(EnemyStateDamageCap, DamageCap);
 
-struct {
-    NERVE_MAKE(EnemyStateDamageCap, Wait);
-    NERVE_MAKE(EnemyStateDamageCap, DamageCap);
-} NrvEnemyStateDamageCap;
-
+NERVES_MAKE_STRUCT(EnemyStateDamageCap, Wait, DamageCap);
 }  // namespace
 
 EnemyStateDamageCap::EnemyStateDamageCap(al::LiveActor* actor)
@@ -33,12 +29,12 @@ void EnemyStateDamageCap::createEnemyCap(const al::ActorInitInfo& info, const ch
     mEnemyCap = rs::tryCreateEnemyCap(mActor, info, name);
 }
 
-bool EnemyStateDamageCap::tryReceiveMsgCapBlow(const al::SensorMsg* msg, al::HitSensor* source,
-                                               al::HitSensor* target) {
+bool EnemyStateDamageCap::tryReceiveMsgCapBlow(const al::SensorMsg* msg, al::HitSensor* other,
+                                               al::HitSensor* self) {
     if (!isCapOn() || !rs::isMsgCapAttack(msg))
         return false;
-    rs::requestHitReactionToAttacker(msg, target, source);
-    mEnemyCap->startBlowDown(source);
+    rs::requestHitReactionToAttacker(msg, self, other);
+    mEnemyCap->startBlowDown(other);
     al::setNerve(this, &NrvEnemyStateDamageCap.Wait);
     return true;
 }

@@ -11,14 +11,13 @@
 
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(EnemyStateHackStart, DiveIn);
 NERVE_IMPL(EnemyStateHackStart, HackStart);
 
-NERVE_MAKE(EnemyStateHackStart, DiveIn);
-NERVE_MAKE(EnemyStateHackStart, HackStart);
+NERVES_MAKE_NOSTRUCT(EnemyStateHackStart, DiveIn, HackStart);
 }  // namespace
 
 EnemyStateHackStartParam::EnemyStateHackStartParam(const char* actionName, const char* visAnimName,
@@ -39,12 +38,12 @@ EnemyStateHackStart::EnemyStateHackStart(al::LiveActor* rootActor,
     mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(rootActor, shaderParam);
 }
 
-IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* sensor, al::HitSensor* source,
-                                              al::HitSensor* target) {
-    if (!rs::isMsgStartHack(sensor))
+IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* msg, al::HitSensor* other,
+                                              al::HitSensor* self) {
+    if (!rs::isMsgStartHack(msg))
         return nullptr;
     al::setVelocityZero(mActor);
-    mHackActor = rs::startHack(target, source, 0);
+    mHackActor = rs::startHack(self, other, 0);
     rs::startHackStartDemo(mHackActor, mActor);
     al::setNerve(this, &DiveIn);
     return mHackActor;

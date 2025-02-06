@@ -5,7 +5,7 @@
 namespace al {
 class MtxConnector;
 
-using JudgeFuncPtr = bool (*)(const SensorMsg* message, HitSensor* source, HitSensor* target);
+using JudgeFuncPtr = bool (*)(const SensorMsg* message, HitSensor* other, HitSensor* self);
 
 class BreakMapPartsBase : public LiveActor {
 public:
@@ -19,7 +19,7 @@ public:
     void exeWait();
     void exeBreak();
     void startBreakByProgram();
-    bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) override;
+    bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
     virtual JudgeFuncPtr getJudgeFunction(const char* name) const;
 
 private:

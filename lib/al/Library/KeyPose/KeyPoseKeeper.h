@@ -30,6 +30,8 @@ public:
     void setMoveTypeStop();
     void setMoveTypeRestart();
 
+    s32 getKeyPoseCurrentIdx() const { return mKeyPoseCurrentIdx; }
+
 private:
     KeyPose** mKeyPoses = nullptr;
     s32 mKeyPoseCount = 0;

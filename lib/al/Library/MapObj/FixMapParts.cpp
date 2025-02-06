@@ -41,7 +41,7 @@ void FixMapParts::calcAnim() {
         calcViewModel(this);
 }
 
-bool FixMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool FixMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgAskSafetyPoint(message))
         return !isValidSwitchAppear(this) && !isValidSwitchKill(this);
 

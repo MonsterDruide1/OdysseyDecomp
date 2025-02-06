@@ -19,15 +19,6 @@ struct SearchAmiiboData {
     u64 mSearchStartTime;
 };
 
-struct SearchAmiiboDataTableEntries {
-    SearchAmiiboDataTableEntries() {
-        for (auto& entry : e)
-            entry.init();
-    };
-
-    SearchAmiiboData e[3];
-};
-
 class SearchAmiiboDataTable : public al::HioNode {
 public:
     SearchAmiiboDataTable();
@@ -47,5 +38,5 @@ public:
     void initByIndex(s32 index);
 
 private:
-    SearchAmiiboDataTableEntries* mEntries;
+    SearchAmiiboData* mEntries;
 };

@@ -6,8 +6,7 @@
 #include "Library/Area/AreaShapeCylinder.h"
 #include "Library/Area/AreaShapeInfinite.h"
 #include "Library/Area/AreaShapeSphere.h"
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 
 namespace al {

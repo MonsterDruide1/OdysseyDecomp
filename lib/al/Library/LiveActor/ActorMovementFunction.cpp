@@ -2,7 +2,7 @@
 
 #include <math/seadVector.h>
 
-#include "Library/Audio/AudioKeeper.h"
+#include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Collision/Collider.h"
 #include "Library/HitSensor/SensorFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"

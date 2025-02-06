@@ -11,7 +11,7 @@ class PlacementInfo;
 class PlacementId;
 
 bool isValidInfo(const PlacementInfo& placementInfo);
-bool isPlaced(const PlacementInfo& placementInfo);
+bool isPlaced(const ActorInitInfo& initInfo);
 
 void getObjectName(const char** name, const ActorInitInfo& initInfo);
 void getObjectName(const char** name, const PlacementInfo& placementInfo);
@@ -118,6 +118,7 @@ void getStringArg(const ActorInitInfo& initInfo, const char* key);
 void getStringArg(const PlacementInfo& placementInfo, const char* key);
 void getStringArg(const AreaInitInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key);
+bool tryGetStringArg(const char** arg, const PlacementInfo& initInfo, const char* key);
 bool tryGetStringArg(const char** arg, const AreaInitInfo& initInfo, const char* key);
 bool tryGetArgV2f(sead::Vector2f* arg, const ActorInitInfo& initInfo, const char* key);
 bool tryGetArgV2f(sead::Vector2f* arg, const PlacementInfo& initInfo, const char* key);
@@ -241,7 +242,7 @@ bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo);
 class alPlacementFunction {
 public:
     static s32 getCameraId(const al::ActorInitInfo& initInfo);
-    static void getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
+    static bool getLinkGroupId(al::PlacementId* groupId, const al::ActorInitInfo& initInfo,
                                const char* linkName);
     static bool isEnableLinkGroupId(const al::ActorInitInfo& initInfo, const char* linkName);
     static bool isEnableGroupClipping(const al::ActorInitInfo& initInfo);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {
@@ -24,5 +26,7 @@ private:
     const sead::Vector3f* mLocalOffset;
     f32 mYOffset;
 };
+
+static_assert(sizeof(ActorCameraTarget) == 0x28);
 
 }  // namespace al

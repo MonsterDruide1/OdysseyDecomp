@@ -1,12 +1,13 @@
 #include "Npc/AchievementHolder.h"
 
 #include "Library/Base/StringUtil.h"
-#include "Library/Resource/ResourceUtil.h"
 
 #include "Npc/Achievement.h"
 #include "Npc/AchievementInfoReader.h"
 #include "System/GameDataFunction.h"
-#include "Util/ResourceUtil.h"
+#include "System/GameDataUtil.h"
+#include "Util/AchievementUtil.h"
+#include "Util/ClothUtil.h"
 
 AchievementHolder::AchievementHolder() = default;
 
@@ -186,12 +187,10 @@ s32 AchievementHolder::calcMoonGetTotalNum(GameDataHolderAccessor accessor) cons
     return count;
 }
 
-Achievement*
-AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {  // TODO mismatch
-    s32 i = 0;
-    for (; i < mArray.capacity(); i++)
+Achievement* AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {
+    for (s32 i = 0; i < mArray.capacity(); i++)
         if (!mArray[i]->isGet(accessor) &&
-            getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->get(i)->mNum)
-            break;
-    return mArray[i];
+            getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->unsafeAt(i)->mNum)
+            return mArray[i];
+    return nullptr;
 }

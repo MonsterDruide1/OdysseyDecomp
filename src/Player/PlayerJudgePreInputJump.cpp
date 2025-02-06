@@ -4,6 +4,7 @@
 
 #include "Player/PlayerConst.h"
 #include "Player/PlayerInput.h"
+#include "Util/JudgeUtil.h"
 
 PlayerJudgePreInputJump::PlayerJudgePreInputJump(const PlayerConst* pConst,
                                                  const PlayerInput* input,
@@ -22,5 +23,9 @@ void PlayerJudgePreInputJump::update() {
 }
 
 bool PlayerJudgePreInputJump::judge() const {
+    if (rs::updateJudgeAndResult(mJudgeForceSlopeSlide))
+        return false;
+    if (mInput->isTriggerJump())
+        return true;
     return mRemainJumpFrame > 0;
 }

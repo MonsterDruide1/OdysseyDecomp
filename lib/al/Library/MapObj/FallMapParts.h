@@ -8,7 +8,7 @@ public:
     FallMapParts(const char* name);
 
     void init(const ActorInitInfo& info) override;
-    bool receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) override;
+    bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
     void appearAndSetStart();
     void exeAppear();
     void exeWait();

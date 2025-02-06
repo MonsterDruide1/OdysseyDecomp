@@ -7,8 +7,7 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActorUtil.h"
-#include "Library/Math/MathRandomUtil.h"
-#include "Library/Math/VectorUtil.h"
+#include "Library/Math/MathUtil.h"
 
 SenobiLeaf::SenobiLeaf(const char* actorName) : al::LiveActor(actorName) {}
 
@@ -38,12 +37,15 @@ void SenobiLeaf::updatePose() {
     al::updatePoseTrans(this, al::getTrans(this) - newFrontDir * 15.0f);
 }
 
-// NON_MATCHING: regswap when adding
 void SenobiLeaf::registerToHost(al::LiveActor* host, bool flip) {
     mHostActor = host;
     getName();  // unused
     al::invalidateClipping(this);
     al::registerSubActorSyncClipping(host, this);
     al::onSyncHideSubActor(host, this);
-    mYDegree = al::getRandom(-60.0f, 60.0f) + (flip ? -90.0f : 90.0f);
+
+    if (flip)
+        mYDegree = al::getRandom(-60.0f, 60.0f) - 90.0f;
+    else
+        mYDegree = al::getRandom(-60.0f, 60.0f) + 90.0f;
 }

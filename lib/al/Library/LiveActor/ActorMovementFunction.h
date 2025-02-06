@@ -8,7 +8,7 @@
 namespace al {
 class LiveActor;
 class HitSensor;
-class ActorParamMove;
+struct ActorParamMove;
 
 void resetPosition(LiveActor* actor);
 void resetPosition(LiveActor* actor, const sead::Vector3f& trans);
@@ -168,8 +168,10 @@ void addRotateAndRepeatZ(LiveActor* actor, f32);
 void addRandomRotateY(LiveActor* actor);
 void calcQuatSide(sead::Vector3f*, const LiveActor* actor);
 void calcQuatUp(sead::Vector3f*, const LiveActor* actor);
+void calcQuatUp(sead::Vector3f*, const sead::Quatf& quat);
 void calcQuatFront(sead::Vector3f*, const LiveActor* actor);
 void calcQuatLocalAxis(sead::Vector3f*, const LiveActor* actor, s32);
+void calcQuatLocalAxis(sead::Vector3f*, const sead::Quatf&, s32);
 void calcTransOffsetFront(sead::Vector3f*, const LiveActor* actor, f32);
 void calcTransOffsetUp(sead::Vector3f*, const LiveActor* actor, f32);
 void calcTransOffsetSide(sead::Vector3f*, const LiveActor* actor, f32);
@@ -184,6 +186,7 @@ void rotateQuatZDirDegree(LiveActor* actor, f32);
 void rotateQuatZDirDegree(LiveActor* actor, const sead::Quatf&, f32);
 void rotateQuatLocalDirDegree(LiveActor* actor, s32, f32);
 void rotateQuatLocalDirDegree(LiveActor* actor, const sead::Quatf&, s32, f32);
+void rotateQuatLocalDirDegree(sead::Quatf* out, const sead::Quatf&, s32, f32);
 void rotateQuatYDirRandomDegree(LiveActor* actor);
 void rotateQuatYDirRandomDegree(LiveActor* actor, const sead::Quatf&);
 void turnQuatFrontToDirDegreeH(LiveActor* actor, const sead::Vector3f&, f32);

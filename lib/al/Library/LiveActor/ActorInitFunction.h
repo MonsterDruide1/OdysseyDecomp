@@ -17,10 +17,6 @@ class LiveActor;
 class Resource;
 class HitSensor;
 class ActorInitInfo;
-class ByamlIter;
-class ActorResource;
-class PlacementInfo;
-class LiveActorGroup;
 class Nerve;
 class ShadowMaskBase;
 class SceneCameraInfo;
@@ -173,56 +169,32 @@ void initNerve(LiveActor* actor, const Nerve* nerve, s32 maxStates);
 void initNerveAction(LiveActor* actor, const char* actionName,
                      alNerveFunction::NerveActionCollector* collector, s32 maxStates);
 
+void initActorSceneInfo(LiveActor* actor, const ActorInitInfo& info);
+void initStageSwitch(LiveActor* actor, const ActorInitInfo& info);
+void initExecutorWatchObj(LiveActor* actor, const ActorInitInfo& info);
 bool trySyncStageSwitchAppear(LiveActor* actor);
 void initActorSRT(LiveActor* actor, const ActorInitInfo& info);
 bool trySyncStageSwitchAppearAndKill(LiveActor* actor);
 void initActorCollisionWithResource(LiveActor* actor, const Resource* res,
                                     const sead::SafeString& collisionFileName, HitSensor* hitSensor,
                                     const sead::Matrix34f* joinMtx, const char* suffix);
+void initExecutorMapObjMovement(LiveActor* actor, const ActorInitInfo& info);
 void initExecutorCollisionMapObjDecorationMovement(LiveActor* actor, const ActorInitInfo& info);
 void initActorModelKeeperByHost(LiveActor* actor, const LiveActor* parent);
 void initExecutorDraw(LiveActor* actor, const ActorInitInfo& info, const char* executorDrawName);
 void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& info,
                                                     const sead::SafeString& archiveName,
                                                     const char* suffix);
+bool tryListenStageSwitchAppear(LiveActor* actor);
 bool tryListenStageSwitchKill(LiveActor* actor);
 void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& info,
                               const sead::SafeString& archiveName, const char* suffix);
 void initActorEffectKeeper(LiveActor* actor, const ActorInitInfo& info, const char* name);
 void initExecutorUpdate(LiveActor* actor, const ActorInitInfo& info, const char* name);
 void initNerveAction(LiveActor* actor, const char* actionName,
-                     alNerveFunction::NerveActionCollector* collector, s32 step);
+                     alNerveFunction::NerveActionCollector* collector, s32 stateCount);
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& info, const char* name);
 bool trySyncStageSwitchKill(LiveActor* actor);
 void initLinksActor(LiveActor* actor, const ActorInitInfo& info, const char* linkName, s32 linkNum);
-bool trySyncStageSwitchAppear(LiveActor* actor);
-bool trySyncStageSwitchKill(LiveActor* actor);
-bool trySyncStageSwitchAppearAndKill(LiveActor* actor);
-bool tryListenStageSwitchAppear(LiveActor* actor);
-bool tryListenStageSwitchKill(LiveActor* actor);
-
-void syncSensorScaleY(LiveActor* actor);
-void syncSensorAndColliderScaleY(LiveActor* actor);
-
-void setMaterialCode(LiveActor* actor, const char*);
-void initMaterialCode(LiveActor* actor, const ActorInitInfo& initInfo);
-
-bool tryAddDisplayRotate(LiveActor* actor, const ActorInitInfo& initInfo);
-bool tryAddDisplayOffset(LiveActor* actor, const ActorInitInfo& initInfo);
-bool tryAddDisplayScale(LiveActor* actor, const ActorInitInfo& initInfo);
-
-PlacementInfo* getPlacementInfo(const ActorInitInfo& initInfo);
-const LayoutInitInfo* getLayoutInitInfo(const ActorInitInfo& initInfo);
-AudioDirector* getAudioDirector(const ActorInitInfo& initInfo);
-CollisionDirector* getCollisionDirectorFromInfo(const ActorInitInfo& initInfo);
-const SceneCameraInfo* getSceneCameraInfoFromInfo(const ActorInitInfo& initInfo);
-GraphicsSystemInfo* getGraphicsSystemInfo(const ActorInitInfo& initInfo);
-sead::DrawContext* getDrawContext(const ActorInitInfo& initInfo);
-
-void getActorRecourseDataF32(f32*, LiveActor*, const char*, const char*);
-void getActorRecourseDataString(const char**, LiveActor*, const char*, const char*);
-void getActorRecourseDataV3f(sead::Vector3f*, LiveActor* actor, const char*, const char*);
-void getActorRecourseDataBox3f(sead::BoundBox3f* box, LiveActor* actor, const char*, const char*);
-
-void createPartsEffectGroup(LiveActor* actor, const ActorInitInfo& initInfo, s32);
+void initMaterialCode(LiveActor* actor, const ActorInitInfo& info);
 }  // namespace al

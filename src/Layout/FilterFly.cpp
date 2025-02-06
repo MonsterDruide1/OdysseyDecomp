@@ -3,8 +3,7 @@
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/Layout/LayoutInitInfo.h"
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -13,9 +12,7 @@ NERVE_IMPL(FilterFly, Wait);
 NERVE_IMPL(FilterFly, WaitEnd);
 NERVE_IMPL(FilterFly, Move);
 
-NERVE_MAKE(FilterFly, Wait);
-NERVE_MAKE(FilterFly, WaitEnd);
-NERVE_MAKE(FilterFly, Move);
+NERVES_MAKE_NOSTRUCT(FilterFly, Wait, WaitEnd, Move);
 }  // namespace
 
 const sead::Vector2f sStartingPosition = {600.0f, -300.0f};

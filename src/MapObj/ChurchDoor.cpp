@@ -11,8 +11,8 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "System/GameDataFunction.h"
-#include "Util/Sensor.h"
-#include "Util/StageSensorMsgFunction.h"
+#include "System/GameDataUtil.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(ChurchDoor, DemoEnterChurch);
@@ -53,8 +53,7 @@ void ChurchDoor::init(const al::ActorInitInfo& info) {
     makeActorAlive();
 }
 
-bool ChurchDoor::receiveMsg(const al::SensorMsg* msg, al::HitSensor* source,
-                            al::HitSensor* target) {
+bool ChurchDoor::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) {
     if (rs::isMsgPlayerDisregardTargetMarker(msg))
         return true;
 
@@ -63,7 +62,7 @@ bool ChurchDoor::receiveMsg(const al::SensorMsg* msg, al::HitSensor* source,
             al::isLessEqualStep(this, 10))
             return true;
 
-        rs::requestHitReactionToAttacker(msg, source, al::getSensorPos(source));
+        rs::requestHitReactionToAttacker(msg, other, al::getSensorPos(other));
 
         if (al::isNerve(this, &CloseWait1)) {
             al::startHitReaction(this, "ヒット1回目");

@@ -9,7 +9,8 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/Sensor.h"
+#include "Util/PlayerUtil.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(ItemAmiiboKoopa, Wait);
@@ -48,6 +49,6 @@ void ItemAmiiboKoopa::exeWait() {
     al::setTrans(this, rs::getPlayerPos(this));
 }
 
-void ItemAmiiboKoopa::attackSensor(al::HitSensor* target, al::HitSensor* source) {
-    rs::sendMsgItemAmiiboKoopa(source, target);
+void ItemAmiiboKoopa::attackSensor(al::HitSensor* self, al::HitSensor* other) {
+    rs::sendMsgItemAmiiboKoopa(other, self);
 }

@@ -10,6 +10,7 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
 namespace {
@@ -40,7 +41,7 @@ void FallMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-bool FallMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool FallMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgFloorTouch(message) && isNerve(this, NrvFallMapParts.Wait.data())) {
         startNerveAction(this, "FallSign");
         invalidateClipping(this);

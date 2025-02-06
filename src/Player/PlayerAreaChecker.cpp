@@ -5,8 +5,8 @@
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Nature/NatureUtil.h"
 
-#include "System/GameDataHolderAccessor.h"
-#include "Util/Area.h"
+#include "System/GameDataUtil.h"
+#include "Util/AreaUtil.h"
 #include "Util/ObjUtil.h"
 
 PlayerAreaChecker::PlayerAreaChecker(const al::LiveActor* player,

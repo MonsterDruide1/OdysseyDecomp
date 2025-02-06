@@ -4,11 +4,7 @@
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
-#include "Library/Math/MathRandomUtil.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Math/VectorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -17,9 +13,7 @@ NERVE_IMPL(EnemyStateRunAway, Run);
 NERVE_IMPL(EnemyStateRunAway, PanicRun);
 NERVE_IMPL(EnemyStateRunAway, PanicRunCollided);
 
-NERVE_MAKE(EnemyStateRunAway, Run);
-NERVE_MAKE(EnemyStateRunAway, PanicRun);
-NERVE_MAKE(EnemyStateRunAway, PanicRunCollided);
+NERVES_MAKE_NOSTRUCT(EnemyStateRunAway, Run, PanicRun, PanicRunCollided);
 }  // namespace
 
 EnemyStateRunAway::EnemyStateRunAway(al::LiveActor* actor, const ParamEnemyStateRunAway* param,

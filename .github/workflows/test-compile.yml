@@ -3,23 +3,25 @@ on: [push, pull_request]
 
 jobs:
   test_compile:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Check out project
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Set up dependencies
-      run: sudo apt update && sudo apt install -y ninja-build cmake ccache clang curl libncurses5
+      run: |
+        sudo apt update && sudo apt install -y ninja-build cmake ccache clang curl
+        wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
     - name: Set up python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install toml
     - name: Set up cache for clang
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         key: clang391-401
         path: |

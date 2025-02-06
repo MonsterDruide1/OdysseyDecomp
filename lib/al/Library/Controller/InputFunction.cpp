@@ -594,29 +594,17 @@ void getPadCrossDirSideways(sead::Vector2f* vec, s32 port) {
         vec->y = 1;
 }
 
-#ifdef NON_MATCHING
 void calcTouchScreenPos(sead::Vector2f* vec) {
-    *vec = getController(getTouchPanelPort())->getPointer();  // uses w8 for storage instead and
-                                                              // inserts another write at +4 bytes
+    vec->set(getController(getTouchPanelPort())->getPointer());
 }
-#endif
 
 void calcTouchLayoutPos(sead::Vector2f*) {}
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size) {
     sead::Vector2f pos;
     calcTouchScreenPos(&pos);
-
-    if (rect_pos.x > pos.x)
-        return false;
-    if (pos.x >= (rect_pos.x + size.x))
-        return false;
-    if (rect_pos.y > pos.y)
-        return false;
-    if (pos.y > rect_pos.y + size.y)
-        return false;
-
-    return true;
+    return rect_pos.x <= pos.x && pos.x < rect_pos.x + size.x && rect_pos.y <= pos.y &&
+           pos.y < rect_pos.y + size.y;
 }
 
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {

@@ -7,7 +7,9 @@ PlayerModelHolder::PlayerModelHolder(u32 bufferSize) {
 }
 
 void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name) {
-    mBuffer.pushBack(new Entry{sead::FixedSafeString<128>(name), liveActor});
+    Entry* entry = new Entry{liveActor};
+    entry->mName = name;
+    mBuffer.pushBack(entry);
 }
 
 void PlayerModelHolder::changeModel(const char* name) {

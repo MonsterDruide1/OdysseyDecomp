@@ -10,8 +10,9 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
 namespace {
@@ -53,7 +54,7 @@ void FloaterMapParts::init(const ActorInitInfo& info) {
     trySyncStageSwitchAppear(this);
 }
 
-bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
+bool FloaterMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
     if (isMsgFloorTouch(message)) {
         mMoveType = FloaterMoveType::Sink;
 

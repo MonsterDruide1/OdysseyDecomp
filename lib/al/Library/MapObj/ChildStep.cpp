@@ -7,15 +7,13 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
+namespace al {
 namespace {
-using namespace al;
-
 NERVE_IMPL(ChildStep, Wait)
 
 NERVES_MAKE_STRUCT(ChildStep, Wait)
 }  // namespace
 
-namespace al {
 ChildStep::ChildStep(const char* name, LiveActor* parent) : LiveActor(name), mParent(parent) {}
 
 void ChildStep::init(const ActorInitInfo& info) {
@@ -27,8 +25,8 @@ void ChildStep::init(const ActorInitInfo& info) {
     makeActorAlive();
 }
 
-bool ChildStep::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    return mParent->receiveMsg(message, source, target);
+bool ChildStep::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    return mParent->receiveMsg(message, other, self);
 }
 
 void ChildStep::exeWait() {

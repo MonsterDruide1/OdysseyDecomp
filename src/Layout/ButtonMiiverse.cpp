@@ -18,7 +18,7 @@ NERVE_IMPL(ButtonMiiverse, HoldOff);
 NERVES_MAKE_STRUCT(ButtonMiiverse, Wait, Decide, OnWait, Disable, HoldOn, HoldOff);
 }  // namespace
 
-ButtonMiiverse::ButtonMiiverse() : al::LayoutActor("Miiverse") {}
+ButtonMiiverse::ButtonMiiverse() : al::LayoutActor("Miiverseボタン") {}
 
 void ButtonMiiverse::init(const al::LayoutInitInfo& info) {
     al::initLayoutActor(this, info, "ButtonMiiverse", 0);

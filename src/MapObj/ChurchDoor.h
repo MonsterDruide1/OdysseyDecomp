@@ -9,8 +9,7 @@ public:
     ChurchDoor(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
-    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* source,
-                    al::HitSensor* target) override;
+    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
 
     bool isOpenWait() const;
     bool isDemoEnterChurch() const;

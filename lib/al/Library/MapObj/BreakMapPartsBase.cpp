@@ -13,8 +13,9 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/SubActorKeeper.h"
-#include "Library/Math/MathRandomUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
@@ -151,8 +152,8 @@ void BreakMapPartsBase::startBreakByProgram() {
     setNerve(this, &NrvBreakMapPartsBase.Break);
 }
 
-bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mJudgeFunction(message, source, target)) {
+bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mJudgeFunction(message, other, self)) {
         startBreakByProgram();
 
         return true;

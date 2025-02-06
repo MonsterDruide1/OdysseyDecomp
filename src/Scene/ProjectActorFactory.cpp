@@ -2,16 +2,43 @@
 
 #include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
+#include "Library/MapObj/BackHideParts.h"
+#include "Library/MapObj/ClockMapParts.h"
+#include "Library/MapObj/ConveyerMapParts.h"
 #include "Library/MapObj/FallMapParts.h"
 #include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
 #include "Library/MapObj/GateMapParts.h"
+#include "Library/MapObj/KeyMoveMapParts.h"
+#include "Library/MapObj/KeyMoveMapPartsGenerator.h"
+#include "Library/MapObj/OneMeshFixMapParts.h"
+#include "Library/MapObj/RailMoveMapParts.h"
+#include "Library/MapObj/RollingCubeMapParts.h"
+#include "Library/MapObj/RotateMapParts.h"
+#include "Library/MapObj/SeesawMapParts.h"
+#include "Library/MapObj/SlideMapParts.h"
+#include "Library/MapObj/SubActorLodMapParts.h"
+#include "Library/MapObj/SurfMapParts.h"
+#include "Library/MapObj/SwingMapParts.h"
+#include "Library/MapObj/SwitchDitherMapParts.h"
+#include "Library/MapObj/SwitchOpenMapParts.h"
+#include "Library/MapObj/VisibleSwitchMapParts.h"
+#include "Library/MapObj/WheelMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
+#include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Item/CoinBlow.h"
+#include "Item/CoinChameleon.h"
+#include "Item/CoinCollect.h"
+#include "Item/CoinCollect2D.h"
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/CapBomb.h"
+#include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
+#include "MapObj/CoinCollectHintObj.h"
 #include "MapObj/FireDrum2D.h"
+#include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/WorldMapEarth.h"
 
 static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
@@ -92,7 +119,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CapAcceleratorKeyMoveMapParts", nullptr},
     {"CapAppearMapParts", nullptr},
     {"CapBeamer", nullptr},
-    {"CapBomb", nullptr},
+    {"CapBomb", al::createActorFunction<CapBomb>},
     {"CapCatapult", nullptr},
     {"CapFlower", nullptr},
     {"CapFlowerGroup", nullptr},
@@ -102,8 +129,8 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"CapRackTimer", nullptr},
     {"CapRailMover", nullptr},
     {"CapSlotBase", nullptr},
-    {"CapSwitch", nullptr},
-    {"CapSwitchSave", nullptr},
+    {"CapSwitch", al::createActorFunction<CapSwitch>},
+    {"CapSwitchSave", al::createActorFunction<CapSwitch>},
     {"CapSwitchTimer", nullptr},
     {"CapThrower", nullptr},
     {"CapTrampoline", nullptr},
@@ -132,12 +159,12 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Coin", nullptr},
     {"Coin2D", nullptr},
     {"Coin2DCityDirector", nullptr},
-    {"CoinBlow", nullptr},
-    {"CoinChameleon", nullptr},
+    {"CoinBlow", al::createActorFunction<CoinBlow>},
+    {"CoinChameleon", al::createActorFunction<CoinChameleon>},
     {"CoinCirclePlacement", nullptr},
-    {"CoinCollect", nullptr},
-    {"CoinCollectHintObj", nullptr},
-    {"CoinCollect2D", nullptr},
+    {"CoinCollect", al::createActorFunction<CoinCollect>},
+    {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
+    {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
     {"CoinLead", nullptr},
     {"CoinRail", nullptr},
     {"CoinRing", nullptr},
@@ -311,13 +338,13 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"MoonBasementMeteorAreaObj", nullptr},
     {"MoonBasementPillar", nullptr},
     {"MoonBasementRock", nullptr},
-    {"MoonBasementSlideObj", nullptr},
+    {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
     {"MoonWorldBell", nullptr},
     {"MoonWorldCaptureParadeLift", nullptr},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
-    {"MofumofuScrap", nullptr},
+    {"MofumofuScrap", al::createActorFunction<MofumofuScrap>},
     {"Motorcycle", nullptr},
     {"MotorcycleParkingLot", nullptr},
     {"MoveHomeNpc", nullptr},
@@ -336,7 +363,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"OceanWave", nullptr},
     {"CloudOcean", nullptr},
     {"DemoCloudOcean", nullptr},
-    {"OneMeshFixMapParts", nullptr},
+    {"OneMeshFixMapParts", al::createActorFunction<al::OneMeshFixMapParts>},
     {"OpeningStageStartDemo", nullptr},
     {"PackunFire", nullptr},
     {"PadRumblePoint", nullptr},
@@ -545,41 +572,41 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Fastener", nullptr},
     {"FastenerObj", nullptr},
     {"AtmosScatterRequester", nullptr},
-    {"BackHideParts", nullptr},
+    {"BackHideParts", al::createActorFunction<al::BackHideParts>},
     {"BreakMapParts", nullptr},
     {"CapRotateMapParts", nullptr},
-    {"ClockMapParts", nullptr},
-    {"ConveyerMapParts", nullptr},
+    {"ClockMapParts", al::createActorFunction<al::ClockMapParts>},
+    {"ConveyerMapParts", al::createActorFunction<al::ConveyerMapParts>},
     {"FallMapParts", al::createActorFunction<al::FallMapParts>},
     {"FixMapParts", al::createActorFunction<al::FixMapParts>},
     {"FloaterMapParts", al::createActorFunction<al::FloaterMapParts>},
     {"FlowMapParts", nullptr},
     {"GateMapParts", al::createActorFunction<al::GateMapParts>},
-    {"KeyMoveMapParts", nullptr},
-    {"KeyMoveMapPartsGenerator", nullptr},
+    {"KeyMoveMapParts", al::createActorFunction<al::KeyMoveMapParts>},
+    {"KeyMoveMapPartsGenerator", al::createActorFunction<al::KeyMoveMapPartsGenerator>},
     {"PossessedMapParts", nullptr},
     {"Pukupuku", nullptr},
     {"PulseSwitch", nullptr},
     {"RailCollision", nullptr},
-    {"RailMoveMapParts", nullptr},
+    {"RailMoveMapParts", al::createActorFunction<al::RailMoveMapParts>},
     {"RiseMapParts", nullptr},
     {"ReactionMapParts", nullptr},
     {"RiseMapPartsHolder", nullptr},
     {"RocketFlower", nullptr},
-    {"RollingCubeMapParts", nullptr},
+    {"RollingCubeMapParts", al::createActorFunction<al::RollingCubeMapParts>},
     {"RippleFixMapParts", nullptr},
-    {"RotateMapParts", nullptr},
-    {"SeesawMapParts", nullptr},
-    {"SlideMapParts", nullptr},
-    {"SubActorLodMapParts", nullptr},
-    {"SurfMapParts", nullptr},
-    {"SwingMapParts", nullptr},
-    {"SwitchDitherMapParts", nullptr},
+    {"RotateMapParts", al::createActorFunction<al::RotateMapParts>},
+    {"SeesawMapParts", al::createActorFunction<al::SeesawMapParts>},
+    {"SlideMapParts", al::createActorFunction<al::SlideMapParts>},
+    {"SubActorLodMapParts", al::createActorFunction<al::SubActorLodMapParts>},
+    {"SurfMapParts", al::createActorFunction<al::SurfMapParts>},
+    {"SwingMapParts", al::createActorFunction<al::SwingMapParts>},
+    {"SwitchDitherMapParts", al::createActorFunction<al::SwitchDitherMapParts>},
     {"SwitchKeepOnWatcher", nullptr},
-    {"SwitchOpenMapParts", nullptr},
-    {"VisibleSwitchMapParts", nullptr},
+    {"SwitchOpenMapParts", al::createActorFunction<al::SwitchOpenMapParts>},
+    {"VisibleSwitchMapParts", al::createActorFunction<al::VisibleSwitchMapParts>},
     {"WaveSurfMapParts", nullptr},
-    {"WheelMapParts", nullptr},
+    {"WheelMapParts", al::createActorFunction<al::WheelMapParts>},
     {"WobbleMapParts", nullptr},
     {"WindBlowMapParts", nullptr},
     {"Yoshi", nullptr},

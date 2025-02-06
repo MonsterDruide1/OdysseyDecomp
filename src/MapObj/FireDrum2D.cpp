@@ -8,7 +8,7 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "Util/ActorDimensionKeeper.h"
-#include "Util/Sensor.h"
+#include "Util/SensorMsgFunction.h"
 
 namespace {
 NERVE_IMPL(FireDrum2D, Wait);
@@ -49,12 +49,12 @@ void FireDrum2D::exeBurn() {
         al::setNerve(this, &Wait);
 }
 
-void FireDrum2D::attackSensor(al::HitSensor* source, al::HitSensor* target) {
-    if (rs::sendMsgTouchFireDrum2D(target, source) || rs::sendMsgEnemyAttack2D(target, source))
+void FireDrum2D::attackSensor(al::HitSensor* self, al::HitSensor* other) {
+    if (rs::sendMsgTouchFireDrum2D(other, self) || rs::sendMsgEnemyAttack2D(other, self))
         al::setNerve(this, &Burn);
 }
 
-bool FireDrum2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                            al::HitSensor* target) {
+bool FireDrum2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self) {
     return al::isMsgPlayerDisregard(message);
 }

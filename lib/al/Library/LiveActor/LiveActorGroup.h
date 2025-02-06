@@ -26,6 +26,8 @@ public:
     void makeActorAliveAll();
     void makeActorDeadAll();
 
+    s32 getMaxActorCount() const { return mMaxActorCount; }
+
     s32 getActorCount() const { return mActorCount; }
 
     LiveActor* getActor(s32 idx) const { return mActors[idx]; }
@@ -40,28 +42,11 @@ private:
 template <class T>
 class DeriveActorGroup : public LiveActorGroup {
 public:
-    s32 registerActor(T* actor) { LiveActorGroup::registerActor(actor); }
+    DeriveActorGroup(const char* groupName, s32 groupCount)
+        : LiveActorGroup(groupName, groupCount) {}
 
-    void removeActor(const T* actor) { LiveActorGroup::removeActor(actor); }
+    T* getDeriveActor(s32 idx) const { return (T*)LiveActorGroup::getActor(idx); }
 
-    void removeActorAll() { LiveActorGroup::removeActorAll(); }
-
-    bool isExistActor(const T* actor) const { return LiveActorGroup::isExistActor(actor); }
-
-    bool isFull() const { return LiveActorGroup::isFull(); }
-
-    s32 calcAliveActorNum() const { return LiveActorGroup::calcAliveActorNum(); }
-
-    T* getDeadActor() const { return LiveActorGroup::getDeadActor(); }
-
-    T* tryFindDeadActor() const { return LiveActorGroup::tryFindDeadActor(); }
-
-    void appearAll() { LiveActorGroup::appearAll(); }
-
-    void killAll() { LiveActorGroup::killAll(); }
-
-    void makeActorAliveAll() { LiveActorGroup::makeActorAliveAll(); }
-
-    void makeActorDeadAll() { LiveActorGroup::makeActorDeadAll(); }
+    T* tryFindDeadDeriveActor() const { return (T*)LiveActorGroup::tryFindDeadActor(); }
 };
 }  // namespace al

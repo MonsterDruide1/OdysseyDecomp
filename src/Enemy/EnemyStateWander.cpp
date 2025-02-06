@@ -4,7 +4,7 @@
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/Math/MathRandomUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -13,12 +13,7 @@ NERVE_IMPL(EnemyStateWander, Wait);
 NERVE_IMPL(EnemyStateWander, Walk);
 NERVE_IMPL(EnemyStateWander, Fall);
 
-struct {
-    NERVE_MAKE(EnemyStateWander, Wait);
-    NERVE_MAKE(EnemyStateWander, Walk);
-    NERVE_MAKE(EnemyStateWander, Fall);
-} NrvEnemyStateWander;
-
+NERVES_MAKE_STRUCT(EnemyStateWander, Wait, Walk, Fall);
 }  // namespace
 
 EnemyStateWander::EnemyStateWander(al::LiveActor* actor, const char* stateName)

@@ -1,6 +1,5 @@
 #include "Project/Camera/CameraAngleSwingInfo.h"
 
-#include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 
@@ -14,7 +13,7 @@ CameraAngleSwingInfo::CameraAngleSwingInfo() {
 }
 
 void CameraAngleSwingInfo::load(const ByamlIter& iter) {
-    tryGetByamlBool(&mIsInvalidSwing, iter, "IsInvalidString");
+    tryGetByamlBool(&mIsInvalidSwing, iter, "IsInvalidSwing");
     if (mIsInvalidSwing)
         return;
 

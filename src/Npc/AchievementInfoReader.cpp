@@ -6,34 +6,35 @@
 
 AchievementInfoReader::AchievementInfoReader() = default;
 
-void AchievementInfoReader::init() {  // TODO minor mismatches during loop
+void AchievementInfoReader::init() {
     al::Resource* achievementInfoResource =
         al::findOrCreateResource("SystemData/AchievementInfo", nullptr);
-    const char* byamlFileName = al::StringTmp<256>{"%s.byml", "AchievementInfo"}.cstr();
+    al::StringTmp<256> bymlName = {"%s.byml", "AchievementInfo"};
 
-    if (!achievementInfoResource->isExistFile(byamlFileName))
+    if (!achievementInfoResource->isExistFile(bymlName.cstr()))
         return;
 
     al::ByamlIter achievementInfo = achievementInfoResource->getByml("AchievementInfo");
     al::ByamlIter achievementInfoArray;
-    if (achievementInfo.tryGetIterByKey(&achievementInfoArray, "AchievementInfoArray")) {
-        auto size = achievementInfoArray.getSize();
-        mAchievements.allocBuffer(size, nullptr);
+    if (!achievementInfo.tryGetIterByKey(&achievementInfoArray, "AchievementInfoArray"))
+        return;
 
-        for (u32 i = 0; i < size; i++) {
-            al::ByamlIter iter;
-            if (achievementInfoArray.tryGetIterByIndex(&iter, i)) {
-                const char* name = nullptr;
-                iter.tryGetStringByKey(&name, "Name");
-                const char* note = nullptr;
-                iter.tryGetStringByKey(&note, "Note");
-                s32 num = 1;
-                iter.tryGetIntByKey(&num, "Num");
-                s32 level = -1;
-                iter.tryGetIntByKey(&level, "Level");
+    s32 size = achievementInfoArray.getSize();
+    mAchievements.allocBuffer(size, nullptr);
 
-                mAchievements.pushBack(new AchievementInfo(name, num, level, note));
-            }
+    for (s32 i = 0; i < size; i++) {
+        al::ByamlIter iter;
+        if (achievementInfoArray.tryGetIterByIndex(&iter, i)) {
+            const char* name = nullptr;
+            iter.tryGetStringByKey(&name, "Name");
+            const char* note = nullptr;
+            iter.tryGetStringByKey(&note, "Note");
+            s32 num = 1;
+            iter.tryGetIntByKey(&num, "Num");
+            s32 level = -1;
+            iter.tryGetIntByKey(&level, "Level");
+
+            mAchievements.pushBack(new AchievementInfo(name, num, level, note));
         }
     }
 }

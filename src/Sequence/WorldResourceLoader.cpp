@@ -9,30 +9,31 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
-s32 priority = sead::Thread::cDefaultPriority;
+const s32 priority = sead::Thread::cDefaultPriority;
 
 // for some reason tools/check doesn't show this?
-WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) {
-    mDataHolder = dataHolder;
+WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) : mDataHolder(dataHolder) {
+    using WorldResourceLoaderFunctor =
+        al::FunctorV0M<WorldResourceLoader*, void (WorldResourceLoader::*)()>;
 
-    auto functor = al::FunctorV0M<WorldResourceLoader*, void (WorldResourceLoader::*)()>(
-        this, &WorldResourceLoader::loadResource);
-
-    mWorldResourceLoader = new al::AsyncFunctorThread("WorldResourceLoader", functor, priority,
-                                                      0x100000, sead::CoreId::cMain);
+    mWorldResourceLoader = new al::AsyncFunctorThread(
+        "WorldResourceLoader", WorldResourceLoaderFunctor{this, &WorldResourceLoader::loadResource},
+        priority, 0x100000, sead::CoreId::cMain);
 }
 
 WorldResourceLoader::~WorldResourceLoader() {
     mIsCancelled = true;
     mCurLoadCount = 0;
 
-    if (mWorldResourceLoader)
+    if (mWorldResourceLoader) {
         delete mWorldResourceLoader;
+        mWorldResourceLoader = nullptr;
+    }
 
     tryDestroyWorldResource();
 }
 
-void WorldResourceLoader::loadResource() {}
+// void WorldResourceLoader::loadResource() {}
 
 void WorldResourceLoader::cancelLoadWorldResource() {
     mIsCancelled = true;
@@ -164,12 +165,12 @@ s32 WorldResourceLoader::getLoadWorldId() const {
     return mLoadWorldId;
 }
 
-al::Resource* WorldResourceLoader::tryLoadResource(const char* resPath, const char* category,
-                                                   const char* str3) {
-    if (category) {
-        if (str3)
-            return al::findOrCreateResourceCategory(resPath, str3, category);
-        return al::findOrCreateResource(resPath, category);
+al::Resource* WorldResourceLoader::tryLoadResource(const char* resPath, const char* ext,
+                                                   const char* category) {
+    if (ext) {
+        if (category)
+            return al::findOrCreateResourceCategory(resPath, category, ext);
+        return al::findOrCreateResource(resPath, ext);
     } else {
         return al::findOrCreateResource(resPath, nullptr);
     }
@@ -198,45 +199,21 @@ void WorldResourceLoader::loadWorldResource(s32 loadWorldId, s32 scenario, bool 
     s32 resSize = resourceListIter.getSize();
     mMaxLoadCount = resSize;
 
-    if (resSize > 0) {
-        if (resourceCategory) {
-            for (s32 i = 0; i < resSize; i++) {
-                al::ByamlIter resEntry;
-                resourceListIter.tryGetIterByIndex(&resEntry, i);
+    for (s32 i = 0; i < resSize; i++) {
+        al::ByamlIter resEntry;
+        resourceListIter.tryGetIterByIndex(&resEntry, i);
 
-                const char* resName = nullptr;
-                const char* resExt = nullptr;
-                resEntry.tryGetStringByKey(&resName, "Name");
-                resEntry.tryGetStringByKey(&resExt, "Ext");
+        const char* resName = nullptr;
+        const char* resExt = nullptr;
+        resEntry.tryGetStringByKey(&resName, "Name");
+        resEntry.tryGetStringByKey(&resExt, "Ext");
 
-                if (resExt)
-                    al::findOrCreateResourceCategory(resName, resourceCategory, resExt);
-                else
-                    al::findOrCreateResource(resName, nullptr);
+        tryLoadResource(resName, resExt, resourceCategory);
 
-                if (mIsCancelled)
-                    return;
+        if (mIsCancelled)
+            return;
 
-                mCurLoadCount = i;
-            }
-        } else {
-            for (s32 i = 0; i < resSize; i++) {
-                al::ByamlIter resEntry;
-                resourceListIter.tryGetIterByIndex(&resEntry, i);
-
-                const char* resName = nullptr;
-                const char* resExt = nullptr;
-                resEntry.tryGetStringByKey(&resName, "Name");
-                resEntry.tryGetStringByKey(&resExt, "Ext");
-
-                al::findOrCreateResource(resName, resExt);
-
-                if (mIsCancelled)
-                    return;
-
-                mCurLoadCount = i;
-            }
-        }
+        mCurLoadCount = i;
     }
 
     mCurLoadCount = mMaxLoadCount;
