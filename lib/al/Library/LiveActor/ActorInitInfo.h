@@ -1,8 +1,13 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <gfx/seadColor.h>
+#include <gfx/seadDrawContext.h>
+#include <math/seadBoundBox.h>
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/Nerve/NerveAction.h"
 #include "Library/Placement/PlacementInfo.h"
