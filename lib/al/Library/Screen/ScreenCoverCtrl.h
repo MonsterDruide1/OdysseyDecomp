@@ -12,7 +12,7 @@ public:
 
 private:
     s32 mCoverFrames = -1;
-    bool mIsScreenCovered = false;
+    bool mIsActive = false;
 };
 
 static_assert(sizeof(ScreenCoverCtrl) == 0x8);
