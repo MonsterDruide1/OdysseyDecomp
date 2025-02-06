@@ -6,11 +6,14 @@ namespace al {
 class ScreenCoverCtrl {
 public:
     ScreenCoverCtrl();
-    void requestCaptureScreenCover(s32 coverFrames);
+
     void update();
+    void reqeustCaptureScreenCover(s32 coverFrames);
 
 private:
     s32 mCoverFrames = -1;
-    bool mIsCover = false;
+    bool mIsScreenCovered = false;
 };
+
+static_assert(sizeof(ScreenCoverCtrl) == 0x8);
 }  // namespace al
