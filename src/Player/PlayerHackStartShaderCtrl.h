@@ -7,7 +7,14 @@ namespace al {
 class LiveActor;
 }
 
-struct PlayerHackStartShaderParam {};
+struct PlayerHackStartShaderParam {
+    bool _0;
+    float _4;
+    int _8;
+    int _c;
+};
+
+static_assert(sizeof(PlayerHackStartShaderParam) == 0x10, "PlayerHackStartShaderParam Size");
 
 class PlayerHackStartShaderCtrl {
 public:
