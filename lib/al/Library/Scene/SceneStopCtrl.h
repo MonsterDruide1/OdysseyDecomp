@@ -1,0 +1,22 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+
+namespace al {
+
+class SceneStopCtrl {
+public:
+    SceneStopCtrl();
+
+    void update();
+    void reqeustStopScene(s32 stopFrames, s32 delayFrames);
+
+    bool isStop() { return !mDelayFrames && mStopFrames > 0; }
+
+private:
+    s32 mStopFrames = 0;
+    s32 mDelayFrames = -1;
+};
+
+static_assert(sizeof(SceneStopCtrl) == 0x8);
+}  // namespace al
