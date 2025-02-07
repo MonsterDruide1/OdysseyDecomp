@@ -24,6 +24,9 @@ cp -r ./lib/sead/include/* $DESTINATION_PATH/sead
 mkdir $DESTINATION_PATH/game
 rsync -a --prune-empty-dirs --include '*/' --include '*.h' --exclude '*' src/ $DESTINATION_PATH/game
 
+# Copy CMakeLists.txt for header only library
+cp ./.github/files/HeadersCMakeLists.txt $DESTINATION_PATH/CMakeLists.txt
+
 # Make all contents of every class public
 grep -rli 'private:' * | xargs -i@ sed -i 's/private:/public:/g' @
 grep -rli 'protected:' * | xargs -i@ sed -i 's/protected:/public:/g' @

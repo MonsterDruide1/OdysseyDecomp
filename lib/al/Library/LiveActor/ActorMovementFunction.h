@@ -186,6 +186,7 @@ void rotateQuatZDirDegree(LiveActor* actor, f32);
 void rotateQuatZDirDegree(LiveActor* actor, const sead::Quatf&, f32);
 void rotateQuatLocalDirDegree(LiveActor* actor, s32, f32);
 void rotateQuatLocalDirDegree(LiveActor* actor, const sead::Quatf&, s32, f32);
+void rotateQuatLocalDirDegree(sead::Quatf* out, const sead::Quatf&, s32, f32);
 void rotateQuatYDirRandomDegree(LiveActor* actor);
 void rotateQuatYDirRandomDegree(LiveActor* actor, const sead::Quatf&);
 void turnQuatFrontToDirDegreeH(LiveActor* actor, const sead::Vector3f&, f32);
