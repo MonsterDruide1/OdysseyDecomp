@@ -23,7 +23,7 @@ class IUsePlayerHack;
 class Gamane : public al::LiveActor {
 public:
     Gamane(const char* name);
-    
+
     void init(const al::ActorInitInfo& info) override;
     void attackSensor(al::HitSensor* target, al::HitSensor* source) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
@@ -53,7 +53,7 @@ public:
     CapTargetInfo* getCapTargetInfo() { return mCapTargetInfo; }
 
 private:
-    IUsePlayerHack* somePlayerHack = nullptr;
+    IUsePlayerHack* mPlayerHackAction = nullptr;
     CapTargetInfo* mCapTargetInfo = nullptr;
     EnemyStateSwoon* mEnemyStateSwoon = nullptr;
     GamaneHackState* mGamaneHackState = nullptr;
@@ -63,13 +63,13 @@ private:
     al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilter = nullptr;
 
     bool mIsInLove = false;
-    int mCoinDelay = 30;
-    int mHackDelay = 0;
-    int mMaterialIndex = 0;
-    int mRefractDelayTransisionTime = 0;
-    int mRefractDelay = 0;
+    s32 mCoinDelay = 30;
+    s32 mHackDelay = 0;
+    s32 mMaterialIndex = 0;
+    s32 mRefractTransitionTime = 0;
+    s32 mRefractDelay = 0;
     bool mIsStartRefract = true;
-    float mShadowMaskIntensity = 0.2;
+    f32 mShadowMaskIntensity = 0.2f;
     HackerDepthShadowMapCtrl* mHackerDepthShadowMapCtrl = nullptr;
 };
 

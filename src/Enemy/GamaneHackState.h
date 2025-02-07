@@ -32,7 +32,7 @@ public:
     bool isHackEnd() const;
     void updateMovement();
     bool judgeShoot();
-    void shoot(int);
+    void shoot(s32);
 
     void exeWait();
     void exeMove();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <gfx/seadColor.h>
 #include <math/seadQuat.h>
 
@@ -8,13 +9,12 @@ class LiveActor;
 }
 
 struct PlayerHackStartShaderParam {
-    PlayerHackStartShaderParam(bool a1, float a2, int a3, int a4)
-        : _0(a1), _4(a2), _8(a3), _c(a4) {}
+    PlayerHackStartShaderParam(bool a1, f32 a2, s32 a3, s32 a4) : _0(a1), _4(a2), _8(a3), _c(a4) {}
 
     bool _0;
-    float _4;
-    int _8;
-    int _c;
+    f32 _4;
+    s32 _8;
+    s32 _c;
 };
 
 static_assert(sizeof(PlayerHackStartShaderParam) == 0x10, "PlayerHackStartShaderParam Size");
