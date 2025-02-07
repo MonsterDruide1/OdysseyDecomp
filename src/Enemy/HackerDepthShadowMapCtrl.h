@@ -21,8 +21,8 @@ private:
     const char* _8;
     f32 _10;
     bool _14;
-    float _18;
+    f32 _18;
     s32 _1c;
-    float _20;
-    float _24;
+    f32 _20;
+    f32 _24;
 };

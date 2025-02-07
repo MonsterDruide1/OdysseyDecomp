@@ -113,12 +113,15 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
 void Gamane::attackSensor(al::HitSensor* target, al::HitSensor* source) {
     if (al::isNerve(this, &NrvGamane.PressDown) || al::isNerve(this, &NrvGamane.BlowDown))
         return;
-    if (somePlayerHack != nullptr) {
+
+    if (mPlayerHackAction != nullptr) {
         mGamaneHackState->attackSensor(target, source);
         return;
     }
+
     if (al::isSensorEnemyBody(target) && al::isSensorEnemyBody(source))
         al::sendMsgPushAndKillVelocityToTarget(this, target, source);
+
     if (al::isSensorEnemyBody(target)) {
         al::sendMsgPush(source, target);
         rs::sendMsgPushToPlayer(source, target);
@@ -166,9 +169,9 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
             return true;
     }
 
-    if (somePlayerHack != nullptr) {
+    if (mPlayerHackAction != nullptr) {
         if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-            rs::endHack(&somePlayerHack);
+            rs::endHack(&mPlayerHackAction);
             rs::endHackShadow(this);
             al::startVisAnim(this, "CapOff");
             al::startMtpAnim(this, "CapOff");
@@ -178,7 +181,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
 
         bool result = mGamaneHackState->receiveMsg(message, source, target);
         if (mGamaneHackState->isHackEnd()) {
-            somePlayerHack = nullptr;
+            mPlayerHackAction = nullptr;
             rs::endHackShadow(this);
             al::startVisAnim(this, "CapOff");
             al::startMtpAnim(this, "CapOff");
@@ -250,20 +253,23 @@ void Gamane::control() {
         al::setMaterialCode(this, al::getCollidedFloorMaterialCodeName(this));
         al::updateMaterialCodePuddle(this);
     }
-    if (al::isNerve(this, &NrvGamane.Hack) && somePlayerHack != nullptr)
+
+    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHackAction != nullptr)
         mHackerDepthShadowMapCtrl->update(nullptr);
+
     if (!al::isNerve(this, &NrvGamane.Hack) || al::isHideModel(this))
         al::hideSilhouetteModelIfShow(this);
-
     else
         al::showSilhouetteModelIfHide(this);
-    if (!al::isInDeathArea(this) && !al::isInWaterArea(this) &&
-        !al::isCollidedFloorCode(this, "DamageFire") && !al::isCollidedFloorCode(this, "Poison"))
-        return;
-    if (!al::isInDeathArea(this) && somePlayerHack != nullptr)
-        rs::endHack(&somePlayerHack);
-    al::startHitReaction(this, "消滅");
-    kill();
+
+    if (al::isInDeathArea(this) || al::isInWaterArea(this) ||
+        al::isCollidedFloorCode(this, "DamageFire") || al::isCollidedFloorCode(this, "Poison")) {
+        if (!al::isInDeathArea(this) && mPlayerHackAction != nullptr)
+            rs::endHack(&mPlayerHackAction);
+
+        al::startHitReaction(this, "消滅");
+        kill();
+    }
 }
 
 void Gamane::endClipped() {
@@ -283,44 +289,48 @@ void Gamane::updateCollider() {
         al::setVelocity(this, velocity);
         mGamaneHackState->setVelocity(sead::Vector3f(0.0f, 0.0f, 0.0f));
     }
+
     al::LiveActor::updateCollider();
 }
 
 void Gamane::startHack(const al::SensorMsg* message, al::HitSensor* source, al::HitSensor* target) {
     al::invalidateClipping(this);
-    somePlayerHack = mEnemyStateHackStart->tryStart(message, source, target);
-    mGamaneHackState->setPlayerHackAction(somePlayerHack);
-    rs::hideShadowHackCap(somePlayerHack);
+    mPlayerHackAction = mEnemyStateHackStart->tryStart(message, source, target);
+    mGamaneHackState->setPlayerHackAction(mPlayerHackAction);
+    rs::hideShadowHackCap(mPlayerHackAction);
     rs::setupHackShadow(this);
     al::setColliderFilterCollisionParts(this, nullptr);
     endRefract(50);
 }
 
 void Gamane::updateRefract() {
-    if (mRefractDelayTransisionTime == 0) {
+    if (mRefractTransitionTime == 0) {
         al::setShadowMaskIntensity(this, "シャドウマスク", mShadowMaskIntensity);
         return;
     }
-    f32 refractPercentage = mRefractDelayTransisionTime / 50.0f;
+
+    f32 refractPercentage = mRefractTransitionTime / 50.0f;
     if (mIsStartRefract != false)
         refractPercentage = 1.0f - refractPercentage;
     al::setModelMaterialParameterF32(this, mMaterialIndex, "const_single0", refractPercentage);
     al::setModelMaterialParameterF32(this, mMaterialIndex, "const_single2",
                                      refractPercentage * 0.5);
-    mRefractDelayTransisionTime--;
-    if (somePlayerHack == nullptr) {
-        f32 intensity = al::lerpValue(mShadowMaskIntensity, 1.0, refractPercentage);
-        al::setShadowMaskIntensity(this, "シャドウマスク", intensity);
-        if (mRefractDelayTransisionTime == 0) {
-            if (mIsStartRefract != false) {
-                al::hideShadowMask(this);
-                al::validateClipping(this);
-                return;
-            }
-            al::startVisAnim(this, "On");
-            al::invalidateClipping(this);
+    mRefractTransitionTime--;
+
+    if (mPlayerHackAction != nullptr)
+        return;
+
+    f32 intensity = al::lerpValue(mShadowMaskIntensity, 1.0, refractPercentage);
+    al::setShadowMaskIntensity(this, "シャドウマスク", intensity);
+    if (mRefractTransitionTime == 0) {
+        if (mIsStartRefract != false) {
+            al::hideShadowMask(this);
+            al::validateClipping(this);
             return;
         }
+        al::startVisAnim(this, "On");
+        al::invalidateClipping(this);
+        return;
     }
 }
 
@@ -335,17 +345,17 @@ void Gamane::updateMovement() {
     al::addVelocityToGravityNaturalOrFittedGround(this, 1.5f);
 }
 
-void Gamane::startRefract(int delay) {
-    if (mRefractDelayTransisionTime < 1 && !mIsStartRefract) {
-        mRefractDelayTransisionTime = delay;
+void Gamane::startRefract(s32 delay) {
+    if (mRefractTransitionTime < 1 && !mIsStartRefract) {
+        mRefractTransitionTime = delay;
         mIsStartRefract = true;
         al::startVisAnim(this, "Off");
     }
 }
 
 void Gamane::endRefract(s32 delay) {
-    if (mRefractDelayTransisionTime < 1 && mIsStartRefract) {
-        mRefractDelayTransisionTime = delay;
+    if (mRefractTransitionTime < 1 && mIsStartRefract) {
+        mRefractTransitionTime = delay;
         mIsStartRefract = false;
         al::showShadowMask(this);
     }
@@ -437,6 +447,7 @@ void Gamane::exeFall() {
         al::startAction(this, "Fall");
         al::invalidateClipping(this);
     }
+
     al::addVelocityToGravity(this, 0.7f);
     al::scaleVelocity(this, 0.99f);
 
@@ -452,6 +463,7 @@ void Gamane::exeLand() {
         al::startAction(this, "Land");
         al::setVelocityZero(this);
     }
+
     updateMovement();
 
     if (al::isActionEnd(this))
@@ -460,10 +472,11 @@ void Gamane::exeLand() {
 
 void Gamane::exeSwoon() {
     if (al::isFirstStep(this)) {
+        sead::Vector3f velocity = sead::Vector3f(0.0f, 25.0f, 0.0f);
         sead::Vector3f frontDir = sead::Vector3f::ez;
         al::calcFrontDir(&frontDir, this);
-
-        al::setVelocity(this, frontDir * 0.0f + sead::Vector3f(0.0f, 25.0f, 0.0f));
+        velocity += frontDir * 0.0f;
+        al::setVelocity(this, velocity);
         mIsInLove = false;
     }
 
@@ -483,6 +496,7 @@ void Gamane::exeHackStart() {
         al::startVisAnim(this, "CapOn");
         al::startMtpAnim(this, "CapOn");
     }
+
     updateMovement();
 
     if (al::updateNerveState(this)) {
@@ -517,7 +531,6 @@ void Gamane::exePressDown() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "PressDown");
         al::invalidateClipping(this);
-
         endRefract(50);
     }
 
