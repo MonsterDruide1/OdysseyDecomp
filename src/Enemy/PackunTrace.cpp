@@ -1,4 +1,5 @@
 #include "Enemy/PackunTrace.h"
+
 #include "Library/Base/StringUtil.h"
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -11,12 +12,10 @@ void PackunTrace::init(const al::ActorInitInfo& info) {
     const char* objectName;
     al::getObjectName(&objectName, info);
 
-    const char* archiveName;
-    if (!al::isEqualString("PackunFlowerBig", objectName) &&
-        !al::isEqualString("PackunPoisonBig", objectName))
+    const char* archiveName = "PackunTrace";
+    if (al::isEqualString("PackunFlowerBig", objectName) ||
+        al::isEqualString("PackunPoisonBig", objectName))
         archiveName = "PackunTraceBig";
-    else
-        archiveName = "PackunTrace";
 
     al::initActorWithArchiveName(this, info, archiveName, nullptr);
 
