@@ -8,6 +8,9 @@ class LiveActor;
 }
 
 struct PlayerHackStartShaderParam {
+    PlayerHackStartShaderParam(bool a1, float a2, int a3, int a4)
+        : _0(a1), _4(a2), _8(a3), _c(a4) {}
+
     bool _0;
     float _4;
     int _8;

@@ -54,35 +54,14 @@ NERVES_MAKE_STRUCT(Gamane, Wait, Swoon, Hack, BlowDown, HackStart, Trampled, Pre
                    Runaway);
 }  // namespace
 
-al::EnemyStateBlowDownParam gEnemyStateBlowDownParam;
-PlayerHackStartShaderParam gPlayerHackStartShaderParam;
-EnemyStateSwoonInitParam gEnemyStateSwoonInitParam;
+static al::EnemyStateBlowDownParam gEnemyStateBlowDownParam =
+    al::EnemyStateBlowDownParam("BlowDown", 18.0f, 35.0f, 1.0f, 0.98f, 120, true);
 
-void initializeGamaneGlobals() {
-    gEnemyStateBlowDownParam =
-        al::EnemyStateBlowDownParam("BlowDown", 18.0f, 35.0f, 1.0f, 0.98f, 120, true);
+static PlayerHackStartShaderParam gPlayerHackStartShaderParam =
+    PlayerHackStartShaderParam(false, 300.0f, 10, 20);
 
-    gPlayerHackStartShaderParam = {
-        ._0 = false,
-        ._4 = 300.0f,
-        ._8 = 10,
-        ._c = 20,
-    };
-
-    gEnemyStateSwoonInitParam = {
-        ._00 = "SwoonStart",
-        ._08 = "Swoon",
-        ._10 = "SwoonEnd",
-        ._18 = nullptr,
-        ._20 = "SwoonStartFall",
-        ._28 = "SwoonStartLand",
-        ._71 = true,
-        ._72 = false,
-        ._73 = false,
-        ._74 = 600,
-        ._78 = 60,
-    };
-}
+static EnemyStateSwoonInitParam gEnemyStateSwoonInitParam = EnemyStateSwoonInitParam(
+    "SwoonStart", "Swoon", "SwoonEnd", nullptr, "SwoonStartFall", "SwoonStartLand");
 
 Gamane::Gamane(const char* name) : al::LiveActor(name) {}
 

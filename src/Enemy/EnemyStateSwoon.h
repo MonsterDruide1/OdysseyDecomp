@@ -10,26 +10,33 @@ class WaterSurfaceFinder;
 }  // namespace al
 
 struct EnemyStateSwoonInitParam {
-    const char* _00;
-    const char* _08;
-    const char* _10;
-    const char* _18;
-    const char* _20;
-    const char* _28;
-    const char* _30;
-    const char* _38;
-    const char* _40;
-    const char* _48;
-    const char* _50;
-    const char* _58;
-    const char* _60;
-    const char* _68;
-    bool _70;
-    bool _71;
-    bool _72;
-    bool _73;
-    s32 _74;
-    s32 _78;
+    EnemyStateSwoonInitParam(const char* startName, const char* defaultName, const char* endName,
+                             const char* trampledName, const char* startFallName,
+                             const char* startLandName)
+        : mStartName(startName), mDefaultName(defaultName), mEndName(endName),
+          mTrampledName(trampledName), mStartFallName(startFallName),
+          mStartLandName(startLandName) {}
+
+    const char* mStartName = "SwoonStart";
+    const char* mDefaultName = "Swoon";
+    const char* mEndName = "SwoonEnd";
+    const char* mTrampledName = "SwoonTrampled";
+    const char* mStartFallName = "SwoonStartFall";
+    const char* mStartLandName = "SwoonStartLand";
+    const char* _30 = nullptr;
+    const char* _38 = nullptr;
+    const char* _40 = nullptr;
+    const char* _48 = nullptr;
+    const char* _50 = nullptr;
+    const char* _58 = nullptr;
+    const char* _60 = nullptr;
+    const char* _68 = nullptr;
+    bool _70 = false;
+    bool _71 = true;
+    bool _72 = false;
+    bool _73 = false;
+    s32 _74 = 600;
+    s32 _78 = 60;
 };
 
 static_assert(sizeof(EnemyStateSwoonInitParam) == 0x80, "EnemyStateSwoonInitParam Size");
