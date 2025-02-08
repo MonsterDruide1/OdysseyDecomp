@@ -10,7 +10,20 @@ class GameDataHolder;
 
 class GameSequenceInfo {
 public:
+    enum ShopStatus : s32 {
+        ShopStatus_None = 0,
+        ShopStatus_BuyShine = 1,
+        ShopStatus_BuyShineMany = 2,
+        ShopStatus_BuyMaxLifeUpItem = 3
+    };
+
+    enum SceneStatus : s32 {
+        SceneStatus_None = 0,
+        SceneStatus_BossBattle = 1,
+    };
+
     GameSequenceInfo();
+
     void init();
     void resetSceneStatus();
     void setSceneStatusBossBattle();
@@ -20,28 +33,41 @@ public:
     bool isSceneStatusBossBattle() const;
     bool isSceneStatusBossBattleForPlayerAnim() const;
     bool isSceneStatusInvalidSave() const;
-    bool isShopStatus(s32) const;
-    void setShopStatus(s32);
+    bool isShopStatus(s32 shopStatus) const;
+    void setShopStatus(s32 shopStatus);
+
+    ShopStatus getShopStatus() const { return mShopStatus; }
+
+    bool isWipeOpenEnd() const { return mIsWipeOpenEnd; }
+
+    void setWipeOpenEnd(bool isEnd) { mIsWipeOpenEnd = isEnd; }
+
+private:
+    s32 mSceneStatus;
+    bool mIsStatusBossBattle;
+    bool mIsStatusInvalidSave;
+    bool mIsWipeOpenEnd;
+    ShopStatus mShopStatus;
 };
 
 namespace rs {
-void setSceneStatusBossBattle(const al::LiveActor*);
-void setSceneStatusBossBattleEnd(const al::LiveActor*);
-void setSceneStatusBossBattleEndForPlayerAnim(const al::LiveActor*);
-bool isSceneStatusBossBattle(GameDataHolderAccessor);
-bool isSceneStatusBossBattleForPlayerAnim(const al::LiveActor*);
-bool isSceneStatusInvalidSave(GameDataHolderAccessor);
-void setSceneStatusInvalidSave(GameDataHolderAccessor);
-bool isInvalidSaveStage(const char*);
-bool isWipeOpenEnd(const al::LiveActor*);
-void endWipeOpen(const GameDataHolder*);
-void startWipeOpen(const GameDataHolder*);
-bool isShopStatusBuyItem(const al::LiveActor*);
-bool isShopStatusBuyShine(const al::LiveActor*);
-bool isShopStatusBuyShineMany(const al::LiveActor*);
-bool isShopStatusBuyMaxLifeUpItem(const al::LiveActor*);
-void setShopStatusBuyShine(const al::LiveActor*);
-void setShopStatusBuyShineMany(const al::LiveActor*);
-void setShopStatusBuyMaxLifeUpItem(const al::LiveActor*);
-void setShopStatusNone(const al::LiveActor*);
+void setSceneStatusBossBattle(const al::LiveActor* actor);
+void setSceneStatusBossBattleEnd(const al::LiveActor* actor);
+void setSceneStatusBossBattleEndForPlayerAnim(const al::LiveActor* actor);
+bool isSceneStatusBossBattle(GameDataHolderAccessor accessor);
+bool isSceneStatusBossBattleForPlayerAnim(const al::LiveActor* actor);
+bool isSceneStatusInvalidSave(GameDataHolderAccessor accessor);
+void setSceneStatusInvalidSave(GameDataHolderAccessor accessor);
+bool isInvalidSaveStage(const char* stageName);
+bool isWipeOpenEnd(const al::LiveActor* actor);
+void endWipeOpen(const GameDataHolder* holder);
+void startWipeOpen(const GameDataHolder* holder);
+bool isShopStatusBuyItem(const al::LiveActor* actor);
+bool isShopStatusBuyShine(const al::LiveActor* actor);
+bool isShopStatusBuyShineMany(const al::LiveActor* actor);
+bool isShopStatusBuyMaxLifeUpItem(const al::LiveActor* actor);
+void setShopStatusBuyShine(const al::LiveActor* actor);
+void setShopStatusBuyShineMany(const al::LiveActor* actor);
+void setShopStatusBuyMaxLifeUpItem(const al::LiveActor* actor);
+void setShopStatusNone(const al::LiveActor* actor);
 }  // namespace rs
