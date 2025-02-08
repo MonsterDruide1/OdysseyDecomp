@@ -262,7 +262,7 @@ s32 Rail::calcRailPointNum(f32 distance1, f32 distance2) const {
            ((part2->getPartLength() - partDistance2) < 0.01f);
 }
 
-// NON_MATCHING: FIXME regalloc in length calculation
+// NON_MATCHING: regalloc in length calculation
 f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance) const {
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);

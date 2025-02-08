@@ -27,5 +27,5 @@ private:
     al::SceneCameraInfo* mSceneCamInfo = nullptr;
     const al::PlayerHolder* mPlayerHolder = nullptr;
     sead::Vector3f field_140 = {0.0f, 0.0f, 0.0f};
-    f32 field_14C = 0.0f;
+    f32 field_14c = 0.0f;
 };

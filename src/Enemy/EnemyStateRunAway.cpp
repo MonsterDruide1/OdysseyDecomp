@@ -70,7 +70,7 @@ void EnemyStateRunAway::exeRun() {
             al::normalize(&mFrontDir, mFrontDir);
         }
     }
-    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,
+    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_c,
                                mParam->field_10, mParam->field_4, true);
 }
 
@@ -95,13 +95,13 @@ void EnemyStateRunAway::exePanicRun() {
             mFrontDir.set(collidedWallNormal);
         al::setNerve(this, &PanicRunCollided);
     } else {
-        al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,
+        al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_c,
                                    mParam->field_10, mParam->field_4, true);
     }
 }
 
 void EnemyStateRunAway::exePanicRunCollided() {
-    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,
+    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_c,
                                mParam->field_10, mParam->field_8, true);
     if (al::isGreaterEqualStep(this, 180))
         al::setNerve(this, &PanicRun);
