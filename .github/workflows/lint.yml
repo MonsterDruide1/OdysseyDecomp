@@ -24,4 +24,4 @@ jobs:
     - name: Set up python package dependencies
       run: pip install capstone colorama cxxfilt pyelftools watchdog python-Levenshtein toml
     - name: Run custom code styling checks
-      run: tools/check-format.py --no-warn
+      run: tools/check-format.py --ci
