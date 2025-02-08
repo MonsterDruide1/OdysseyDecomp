@@ -44,7 +44,7 @@ void Compass::appear() {
     if (GameDataFunction::isMainStage(this)) {
         al::LayoutActor::appear();
         al::setNerve(this, &Appear);
-        field_14C = 0.0f;
+        field_14c = 0.0f;
 
         al::LiveActor* player = al::tryGetPlayerActor(mPlayerHolder, 0);
 
@@ -79,7 +79,7 @@ void Compass::appear() {
 
         al::LayoutActor::appear();
         al::setNerve(this, &Appear);
-        field_14C = 0.0f;
+        field_14c = 0.0f;
     }
 }
 

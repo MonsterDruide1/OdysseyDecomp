@@ -116,14 +116,14 @@ private:
     u32 mRequireSaveFrame;
     bool mIsInvalidSaveForMoonGet;
     bool unk_changeStageRelated;
-    u8 field_4A;
-    u8 field_4B;
-    u32 field_4C;
+    u8 field_4a;
+    u8 field_4b;
+    u32 field_4c;
     sead::BufferedSafeString mLanguage;
     u8 gap_58[0x28];
     sead::Heap* field_90;
     u8 gap_98[0x20];
-    u64* field_B8;  // TempSaveData*
+    u64* field_b8;  // TempSaveData*
     u8 gap_C0[0x110 - 0xc0];
     sead::PtrArray<ShopItem::ItemInfo> mItemCloth;
     sead::PtrArray<ShopItem::ItemInfo> mItemCap;

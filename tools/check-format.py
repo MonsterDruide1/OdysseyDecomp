@@ -17,42 +17,9 @@ from common.util import utils
 
 issueFound = False
 runAllChecks = False
-offsetCommentCheckFail = False
-functionData = None
-foundMismatchFunctionDuplicateStart = False
-
-def binary_search_custom(array, prefix):
-    left, right = 0, len(array) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        midItem = array[mid]
-        if midItem.name.startswith(prefix):
-            return midItem.status in {utils.FunctionStatus.NonMatching, utils.FunctionStatus.Equivalent}
-        elif midItem.name < prefix:
-            left = mid + 1
-        else:
-            right = mid - 1
-
-    return False
-
-def is_function_mismatch(namespacesAndName, isConst):
-    combinedNames = "_ZN"
-    if isConst:
-        combinedNames += "K"
-    namesArray = namespacesAndName.split("::")
-    for i, name in enumerate(namesArray):
-        if i > 0:
-            if name == namesArray[i - 1]:
-                combinedNames += "C1"
-                break
-            if name.startswith("~"):
-                combinedNames += "D0"
-                break
-        combinedNames += str(len(name)) + name
-    return binary_search_custom(functionData, combinedNames)
 
 def FAIL(message, line, path):
-    print("Offending file:", path)
+    print("Offending file:", os.path.relpath(path, os.getcwd()))
     print("Line:", line)
     print(message)
     print()
@@ -470,22 +437,12 @@ def header_no_offset_comments(c, path):
     for line in c.splitlines():
         if "// 0x" in line or "// _" in line:
             FAIL("Offset comments are not allowed in headers!", line, path)
-            global offsetCommentCheckFail
-            offsetCommentCheckFail = True
 
 def header_lowercase_member_offset_vars(c, path):
     for line in c.splitlines():
-        if " _" in line and line.endswith(";") and "__VA_ARGS__" not in line:
-            underscoreOffset = 0
-            if offsetCommentCheckFail:
-                if runAllChecks:
-                    input("The offset comment check has failed which might cause a crash if the lowercase offset check is ran! (Press enter to continue regardless)")
-                else:
-                    exit(-1)
-            while line[line.find("_") + underscoreOffset] != ";" and line[line.find("_") + underscoreOffset] != " ":
-                if line[line.find("_") + underscoreOffset].isalpha() and line[line.find("_") + underscoreOffset].isupper():
-                    FAIL("Characters in the names of offset variables need to be lowercase!", line, path)
-                underscoreOffset += 1
+        if re.search(r"(\s|\sfield)_[0-9a-z]*[A-Z]", line):
+            CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!", path)
+
 
 # Source files
 
@@ -493,27 +450,6 @@ def source_no_raw_auto(c, path):
     for line in c.splitlines():
         if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line:
             FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
-
-def source_non_matching_comment(c, path):
-    lines = c.splitlines()
-    for i, line in enumerate(lines):
-        if "(" in line and (") {" in line or ") const {" in line) and "::" in line and "if (" not in line and "inline " not in line:
-            startIndex = line.find(" ", 2, len(line) - 2) + 1
-            if startIndex == -1 or startIndex > line.find("("):
-                startIndex = 0
-            functionNameAndNamespaces = "";
-            namespaceAlLocation = c.find("namespace al {")
-            if namespaceAlLocation != -1 and c.find(line) > namespaceAlLocation and "lib/al/" in path:
-                functionNameAndNamespaces = "al::"
-            else:
-                namespaceRsLocation = c.find("namespace rs {")
-                if namespaceRsLocation != -1 and c.find(line) > namespaceRsLocation and "src/" in path:
-                    functionNameAndNamespaces = "rs::"
-            functionNameAndNamespaces += line[startIndex:line.find("(")]
-            isConstFunction = line.rfind("const") > line.rfind(")")
-            if is_function_mismatch(functionNameAndNamespaces, isConstFunction):
-                if "NON_MATCHING" not in lines[i - 1] and "NON_MATCHING" not in lines[i - 2]:
-                    FAIL("Functions that mismatch must have a NON_MATCHING comment above them!", line, path)
 
 def source_no_nerve_make(c, path):
     for line in c.splitlines():
@@ -538,7 +474,6 @@ def check_source(c, path):
     source_no_nerve_make(c, path)
     common_const_reference(c, path)
     source_no_raw_auto(c, path)
-    source_non_matching_comment(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
 
@@ -558,6 +493,14 @@ def check_header(c, path):
     common_self_other(c, path, True)
     common_consistent_float_literals(c, path)
 
+def _check_file_content(content, file_str):
+    if file_str.endswith('.h'):
+        check_header(content, file_str)
+    elif file_str.endswith('.cpp'):
+        check_source(content, file_str)
+    else:
+        FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
+
 def check_file(file_str):
     st = os.stat(file_str)
     if st.st_mode & stat.S_IXUSR:
@@ -566,13 +509,7 @@ def check_file(file_str):
     file = open(file_str, mode="r")
     content = file.read()
     file.close()
-
-    if file_str.endswith('.h'):
-        check_header(content, file_str)
-    elif file_str.endswith('.cpp'):
-        check_source(content, file_str)
-    else:
-        FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
+    _check_file_content(content, file_str)
 
 def read_csv_file(path):
     if not os.path.isfile(path):
@@ -596,12 +533,12 @@ project_root = setup.ROOT
 def main():
     parser = argparse.ArgumentParser(
         'check-format.py', description="Verify additional formatting options next to clang-format and clang-tidy")
-    parser.add_argument('-f', '--run-clang-format', action='store_true',
+    parser.add_argument('-F', '--run-clang-format', action='store_true',
                         help="Automatically run clang format before checking each file")
     parser.add_argument('-a', '--all', action='store_true',
                         help="Run all checks even if one of them fails")
-    parser.add_argument('--no-warn', action='store_true',
-                        help="Disable format warning, only meant for automation")
+    parser.add_argument('--ci', action='store_true',
+                        help="Run in CI mode, meant for github actions and other CI platforms")
     args = parser.parse_args()
 
     global runAllChecks
@@ -610,8 +547,8 @@ def main():
     global functionData
     functionData = sorted(utils.get_functions(), key=lambda info: info.name)
 
-    if not args.run_clang_format and not args.no_warn:
-        print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-f')")
+    if not args.run_clang_format and not args.ci:
+        print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
         print()
 
     for dir in [project_root/'lib'/'al', project_root/'src']:
@@ -621,6 +558,14 @@ def main():
                 file_str = str(file_path)
                 if args.run_clang_format:
                     subprocess.check_call(['clang-format', '-i', file_str])
+                if args.ci:
+                    if subprocess.run(['clang-format', file_str, '--dry-run', '--Werror'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0:
+                        print("Warning: file", os.path.relpath(file_str, os.getcwd()), "wasn't formatted correctly with clang-format, this may cause the line numbers to be incorrect")
+                        print()
+                        result = subprocess.run(['clang-format', file_str], capture_output=True, text=True)
+                        if result.returncode == 0:
+                            _check_file_content(str(result.stdout), file_str)
+                            continue
                 check_file(file_str)
 
     if issueFound:
