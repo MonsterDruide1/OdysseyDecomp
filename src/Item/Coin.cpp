@@ -65,7 +65,7 @@ NERVES_MAKE_STRUCT(Coin, WaitConnectMtx, Wait, Appear, AppearCoinLead, WaitPlaye
                    WaitOnDemoEnd);
 }  // namespace
 
-const sead::Vector3f appearAboveVelocity(0.0f, 25.0f, 0.0f);
+const sead::Vector3f sAppearAboveVelocity(0.0f, 25.0f, 0.0f);
 
 Coin::Coin(const char* name, bool isDemo) : al::LiveActor(name), mIsDemo(isDemo) {}
 
@@ -166,6 +166,8 @@ void Coin::makeActorAlive() {
     al::showModelIfHide(this);
 }
 
+// https://decomp.me/scratch/5pT1P
+// NON_MATCHING: Different stack pointer order
 void Coin::control() {
     sead::Vector3f force = sead::Vector3f::zero;
     mExternalForceKeeper->calcForce(&force);
@@ -184,13 +186,13 @@ void Coin::control() {
         return;
     }
 
-    if (0 < mAppearDelay) {
-        mAppearDelay--;
-        if (mAppearDelay <= 0) {
+    if (mTimeLimit > 0) {
+        mTimeLimit--;
+        if (mTimeLimit <= 0) {
             kill();
             return;
         }
-        if (!(mAppearDelay >= 201 || !al::blinkModel(this, mAppearDelay, 6, 0)))
+        if (!(mTimeLimit >= 201 || !al::blinkModel(this, mTimeLimit, 6, 0)))
             al::startSe(this, "PgBlink");
     }
 
@@ -275,36 +277,36 @@ void Coin::appearPopUpCommon(bool startHitReaction) {
 void Coin::appearPopUp() {
     if (!al::isNerve(this, &NrvCoin.Got) || !mIsPlaced) {
         appearPopUpCommon(true);
-        mAppearDelay = 600;
+        mTimeLimit = 600;
     }
 }
 
 void Coin::appearPopUpWithoutHitReaction() {
     if (!al::isNerve(this, &NrvCoin.Got) || !mIsPlaced) {
         appearPopUpCommon(false);
-        mAppearDelay = 600;
+        mTimeLimit = 600;
     }
 }
 
 void Coin::appearPopUpVelocity() {
     appearPopUp();
 
-    sead::Vector3f frontDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
-    sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
-    al::calcFrontDir(&frontDir, this);
-    al::calcUpDir(&upDir, this);
+    sead::Vector3f frontOffset = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    sead::Vector3f upOffset = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    al::calcFrontDir(&frontOffset, this);
+    al::calcUpDir(&upOffset, this);
     f32 frontScale = al::getRandom(10.0f, 15.0f);
     f32 upScale = al::getRandom(20.0f, 30.0f);
-    al::setVelocity(this, frontScale * frontDir + upScale * upDir);
+    al::setVelocity(this, frontScale * frontOffset + upScale * upOffset);
 }
 
 void Coin::appearAbove() {
     appear();
     al::invalidateClipping(this);
-    al::setVelocity(this, appearAboveVelocity);
+    al::setVelocity(this, sAppearAboveVelocity);
     al::setNerve(this, &NrvCoin.PopUpNormal);
     al::startHitReaction(this, "真上に出現");
-    mAppearDelay = -1;
+    mTimeLimit = -1;
 }
 
 inline void appearCountUpReset(al::LiveActor* actor, ExternalForceKeeper* forceKeeper) {
@@ -338,14 +340,14 @@ void Coin::appearCountUp() {
     al::setNerve(this, &NrvCoin.CountUp);
     al::setQuat(this, sead::Quatf::unit);
     appearCountUpReset(this, mExternalForceKeeper);
-    mAppearDelay = -1;
+    mTimeLimit = -1;
 }
 
 void Coin::appearCountUpFiveCount() {
     al::setNerve(this, &NrvCoin.CountUpFive);
     al::setQuat(this, sead::Quatf::unit);
     appearCountUpReset(this, mExternalForceKeeper);
-    mAppearDelay = -1;
+    mTimeLimit = -1;
 }
 
 void Coin::appearCountUp3(s32 coinIndex) {
@@ -371,7 +373,7 @@ void Coin::appearCountUp3(s32 coinIndex) {
     appearCountUpReset(this, mExternalForceKeeper);
     al::rotateVectorQuat(&direction, al::getQuat(this));
     al::getTransPtr(this)->add(direction);
-    mAppearDelay = -1;
+    mTimeLimit = -1;
     appearCountUpCommon(mBlowVelocity, mCountUpDelay);
 }
 
@@ -406,7 +408,7 @@ void Coin::appearCountUp5(s32 coinIndex) {
     appearCountUpReset(this, mExternalForceKeeper);
     al::rotateVectorQuat(&direction, al::getQuat(this));
     al::setTrans(this, al::getTrans(this) + direction);
-    mAppearDelay = -1;
+    mTimeLimit = -1;
     appearCountUpCommon(mBlowVelocity, mCountUpDelay);
 }
 
@@ -433,14 +435,14 @@ void Coin::appearCountUp10(s32 coinIndex) {
     appearCountUpReset(this, mExternalForceKeeper);
     al::rotateVectorQuat(&direction, al::getQuat(this));
     al::getTransPtr(this)->add(direction);
-    mAppearDelay = -1;
+    mTimeLimit = -1;
     appearCountUpCommon(mBlowVelocity, mCountUpDelay);
 }
 
 void Coin::appearCountUpFixPos10(s32 coinIndex) {
     al::setNerve(this, &NrvCoin.CountUp);
     appearCountUpReset(this, mExternalForceKeeper);
-    mAppearDelay = -1;
+    mTimeLimit = -1;
     mCountUpDelay = coinIndex * 8;
     appearCountUpCommon(mBlowVelocity, mCountUpDelay);
 }
@@ -463,7 +465,7 @@ void Coin::appearLimitTime(s32 timeLimit) {
     al::setNerve(this, &NrvCoin.AppearCoinLead);
     al::invalidateClipping(this);
     appear();
-    mAppearDelay = timeLimit;
+    mTimeLimit = timeLimit;
 }
 
 void Coin::appearBlow(const sead::Vector3f& velocity, s32 timeLimit) {
@@ -471,7 +473,7 @@ void Coin::appearBlow(const sead::Vector3f& velocity, s32 timeLimit) {
     al::invalidateClipping(this);
     al::startHitReaction(this, "飛出し出現");
     al::setVelocity(this, velocity);
-    mAppearDelay = timeLimit;
+    mTimeLimit = timeLimit;
     al::validateHitSensors(this);
     al::showModelIfHide(this);
 
@@ -491,8 +493,7 @@ void Coin::rotate() {
     if (mMtxConnector != nullptr && al::isMtxConnectorConnecting(mMtxConnector) &&
         (al::isNerve(this, &NrvCoin.Appear) || al::isNerve(this, &NrvCoin.WaitConnectMtx))) {
         al::connectPoseQT(this, mMtxConnector, mPoseQuat, mPoseTrans);
-        sead::Vector3f* trans = al::getTransPtr(this);
-        trans->add(mChameleonOffset);
+        al::getTransPtr(this)->add(mChameleonOffset);
     } else {
         al::setQuat(this, mStartingQuat);
     }
@@ -517,19 +518,19 @@ void Coin::appearBlowUpCommon(s32 delayTime, f32 horizontalForce, f32 verticalFo
     }
 }
 
-void Coin::appearBlowUp(s32 coinCount, s32 coinIndex) {
-    appearBlowUpCommon(coinCount * 5, 6.0f, 40.0f, coinIndex, coinCount);
+void Coin::appearBlowUp(s32 coinIndex, s32 coinCount) {
+    appearBlowUpCommon(coinIndex * 5, 6.0f, 40.0f, coinCount, coinIndex);
 }
 
-void Coin::appearBlowUpLittle(s32 coinCount, s32 coinIndex) {
-    appearBlowUpCommon(coinCount * 5, 3.0f, 35.0f, coinIndex, coinCount);
+void Coin::appearBlowUpLittle(s32 coinIndex, s32 coinCount) {
+    appearBlowUpCommon(coinIndex * 5, 3.0f, 35.0f, coinCount, coinIndex);
 }
 
 void Coin::appearFall(const sead::Vector3f& velocity, s32 timeLimit) {
     appear();
     al::invalidateClipping(this);
     al::setVelocity(this, velocity);
-    mAppearDelay = timeLimit;
+    mTimeLimit = timeLimit;
     al::setNerve(this, &NrvCoin.PopUpNormal);
 }
 
@@ -548,7 +549,7 @@ void Coin::appearPlayerDead(const sead::Vector3f& position, const sead::Vector3f
     appear();
     al::invalidateClipping(this);
     al::startHitReaction(this, "飛出し出現[死亡]");
-    mAppearDelay = -1;
+    mTimeLimit = -1;
 
     if (isTimeBalloon)
         al::setNerve(this, &NrvCoin.PopUpPlayerDeadTimeBalloon);
@@ -743,7 +744,7 @@ void Coin::exeCountUp() {
 
 void Coin::exeWait() {
     if (al::isFirstStep(this)) {
-        if (mAppearDelay == -1 && !al::isNerve(this, &NrvCoin.WaitCoinRail) &&
+        if (mTimeLimit == -1 && !al::isNerve(this, &NrvCoin.WaitCoinRail) &&
             !al::isNerve(this, &NrvCoin.WaitCircle))
             al::validateClipping(this);
         al::startAction(this, "Wait");
@@ -752,9 +753,8 @@ void Coin::exeWait() {
     if (al::isNerve(this, &NrvCoin.WaitOnDemo)) {
         mRotateCalculator->increaseObjCountOffset();
         rotate();
-        if (rs::isActiveDemo(this))
-            return;
-        al::setNerve(this, &NrvCoin.WaitOnDemoEnd);
+        if (!rs::isActiveDemo(this))
+            al::setNerve(this, &NrvCoin.WaitOnDemoEnd);
         return;
     }
 
@@ -792,7 +792,7 @@ void Coin::exeBlowUpDelay() {
 }
 
 const sead::Vector3f& CoinFunction::getAppearAboveVelocity() {
-    return appearAboveVelocity;
+    return sAppearAboveVelocity;
 }
 
 void CoinFunction::appearCoinBlowVeryLittle(Coin* coin, const sead::Vector3f& direction) {
