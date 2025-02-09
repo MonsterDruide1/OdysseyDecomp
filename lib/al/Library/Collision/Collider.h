@@ -13,6 +13,10 @@ class CollisionPartsFilterBase;
 class TriangleFilterBase;
 class CollisionDirector;
 
+bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
+bool isFloorPolygon(const sead::Vector3f&, const sead::Vector3f&);
+bool isCeilingPolygon(const sead::Vector3f&, const sead::Vector3f&);
+
 class Collider : public HioNode, public IUseCollision {
 public:
     Collider(CollisionDirector*, const sead::Matrix34f*, const sead::Vector3f*,
