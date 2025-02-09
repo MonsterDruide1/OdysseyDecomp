@@ -31,7 +31,7 @@ HitSensor* SensorHitGroup::getSensor(s32 idx) const {
 
 void SensorHitGroup::clear() const {
     for (s32 i = 0; i < mSensorCount; i++)
-        mSensors[i]->setSensorCountZero();
+        mSensors[i]->clearSensors();
 }
 
 }  // namespace al
