@@ -17,9 +17,9 @@ public:
     void exeAssistStop();
 
 private:
-    sead::Quatf _108 = sead::Quatf::unit;
-    sead::Vector3f _118 = sead::Vector3f::ey;
-    sead::Quatf _124 = sead::Quatf::unit;
+    sead::Quatf mInitialQuat = sead::Quatf::unit;
+    sead::Vector3f mInitialUp = sead::Vector3f::ey;
+    sead::Quatf mCurrentQuat = sead::Quatf::unit;
     sead::Vector3f _134 = sead::Vector3f::zero;
     sead::Vector3f _140 = sead::Vector3f::ey;
     sead::Vector3f _14c = sead::Vector3f::ey;
