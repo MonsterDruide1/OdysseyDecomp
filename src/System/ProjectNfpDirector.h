@@ -13,8 +13,8 @@ class Result;
 class ProjectNfpDirector : public al::NfpDirector {
 public:
     ProjectNfpDirector();
-    void update();
-    void showError(const nn::Result& result);
+    void update() override;
+    void showError(const nn::Result& result) override;
     al::NfpInfo* tryGetTriggerTouchNfpInfo();
 
 private:

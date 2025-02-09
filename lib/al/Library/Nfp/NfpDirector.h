@@ -2,6 +2,8 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/HostIO/HioNode.h"
+
 namespace nn {
 class Result;
 }  // namespace nn
@@ -14,7 +16,7 @@ namespace al {
 
 enum NfpApplicationCommand : u32;
 
-class NfpDirector {
+class NfpDirector : public IUseHioNode {
 public:
     NfpDirector(s32);
 
@@ -22,13 +24,13 @@ public:
     void initialize();
     void enqueueCommand(NfpApplicationCommand);
     void finalize();
-    void update();
+    virtual void update();
     void stop();
     void listDevices();
     void start();
     void clearCommand();
     void resetError();
-    void showError(const nn::Result&);
+    virtual void showError(const nn::Result&);
     void executeCommandInitialize();
     void executeCommandFinalize();
     void executeCommandListDevices();
