@@ -63,7 +63,7 @@ public:
     bool tryReceiveMsgEnableLockOn(const al::SensorMsg*);
     bool tryReceiveMsgStartLockOn(const al::SensorMsg*);
 
-    void requestTrampled();
+    bool requestTrampled();
     void initParams(s32, const char*);
     void initParams(const EnemyStateSwoonInitParam&);
     const char* getSwoonStartAnimName() const;
