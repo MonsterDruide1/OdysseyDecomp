@@ -11,6 +11,7 @@
 #include "Library/Player/PlayerUtil.h"
 #include "Library/Screen/ScreenPointKeeper.h"
 #include "Library/Se/SeKeeper.h"
+#include "basis/seadTypes.h"
 
 namespace al {
 
@@ -659,14 +660,144 @@ void limitVelocityDirSign(LiveActor* actor, const sead::Vector3f& dir, f32 limit
     }
     setVelocity(actor, parallel + vertical);
 }
-// void limitVelocityDirV(LiveActor* actor, const sead::Vector3f& dir, f32 limit);
-// void limitVelocityDirVRate(LiveActor* actor, const sead::Vector3f&, f32, f32);
-// void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f&, f32, f32);
-// void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
-// void reboundVelocityPart(LiveActor* actor, f32, f32);
-// void reboundVelocityPart(LiveActor* actor, f32, f32, f32, f32);
-// void reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
-// void reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
+
+void limitVelocityDirV(LiveActor* actor, const sead::Vector3f& dir, f32 limit) {
+    sead::Vector3f parallel = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vertical = {0.0f, 0.0f, 0.0f};
+    separateVelocityParallelVertical(&parallel, &vertical, actor, dir);
+    if (vertical.squaredLength() > sead::Mathf::square(limit)) {
+        f32 length = vertical.length();
+        if(length > 0.0f)
+            vertical *= limit / length;
+    }
+    setVelocity(actor, parallel + vertical);
+}
+
+void limitVelocityDirVRate(LiveActor* actor, const sead::Vector3f& dir, f32 limit, f32 rate) {
+    sead::Vector3f parallel = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vertical = {0.0f, 0.0f, 0.0f};
+    separateVelocityParallelVertical(&parallel, &vertical, actor, dir);
+    if (vertical.squaredLength() > sead::Mathf::square(limit)) {
+        f32 length1 = vertical.length();
+        f32 length = vertical.length();
+        if(length > 0.0f)
+            vertical *= ((length1 - limit) * rate + limit) / length;
+    }
+    setVelocity(actor, parallel + vertical);
+}
+
+void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& dir, f32 parallel, f32 vertical) {
+    limitVectorParallelVertical(getVelocityPtr(actor), dir, parallel, vertical);
+}
+
+void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& dir, f32 horizontal, f32 vertical) {
+    limitVectorSeparateHV(getVelocityPtr(actor), dir, horizontal, vertical);
+}
+
+u32 reboundVelocityPart(LiveActor* actor, f32 rebound, f32 threshold) {
+    return reboundVelocityPart(actor, rebound, rebound, rebound, threshold);
+}
+
+u32 reboundVelocityPart(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32 threshold) {
+    u32 result = 0;
+    if(isCollidedGround(actor)) {
+        sead::Vector3f normal = getCollidedGroundNormal(actor);
+        f32 dot = normal.dot(getVelocity(actor));
+        if (ground < 0.0f || dot < -threshold) {
+            addVelocity(actor, -(normal * ((ground + 1.0f) * dot)));
+            if (ground >= 0.0f)
+                result |= 1;
+        } else if(dot < 0.0f) {
+            addVelocity(actor, -(normal * dot));
+        }
+    }
+
+    if(isCollidedWall(actor)) {
+        sead::Vector3f normal = getCollidedWallNormal(actor);
+        f32 dot = normal.dot(getVelocity(actor));
+        if (wall < 0.0f || dot < -threshold) {
+            addVelocity(actor, -(normal * ((wall + 1.0f) * dot)));
+            if (wall >= 0.0f)
+                result |= 2;
+        } else if(dot < 0.0f) {
+            addVelocity(actor, -(normal * dot));
+        }
+    }
+
+    if(isCollidedCeiling(actor)) {
+        sead::Vector3f normal = getCollidedCeilingNormal(actor);
+        f32 dot = normal.dot(getVelocity(actor));
+        if (ceiling < 0.0f || dot < -threshold) {
+            addVelocity(actor, -(normal * ((ceiling + 1.0f) * dot)));
+            if (ceiling >= 0.0f)
+                result |= 4;
+        } else if(dot < 0.0f) {
+            addVelocity(actor, -(normal * dot));
+        }
+    }
+
+    return result;
+}
+
+bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32 threshold) {
+    if(!isCollided(actor))
+        return false;
+
+    sead::Vector3f normalSum;
+    calcCollidedNormalSum(actor, &normalSum);
+    if(isNearZero(normalSum, 0.001f))
+        return false;
+
+    normalize(&normalSum);
+    const sead::Vector3f& gravity = getGravity(actor);
+    f32 rebound;
+    if(isFloorPolygon(normalSum, gravity))
+        rebound = ground;
+    else if(isWallPolygon(normalSum, gravity))
+        rebound = wall;
+    else if(isCeilingPolygon(normalSum, gravity))
+        rebound = ceiling;
+    else
+        rebound = 0.0f;
+
+    f32 dot = normalSum.dot(getVelocity(actor));
+    if (dot < -threshold) {
+        sead::Vector3f* velocity = getVelocityPtr(actor);
+        f32 mul = (rebound + 1.0f) * dot;
+        velocity->x -= normalSum.x * mul;
+        velocity->y -= normalSum.y * mul;
+        velocity->z -= normalSum.z * mul;
+        return true;
+    } else if(dot < 0.0f) {
+        sead::Vector3f* velocity = getVelocityPtr(actor);
+        velocity->x -= dot * normalSum.x;
+        velocity->y -= dot * normalSum.y;
+        velocity->z -= dot * normalSum.z;
+    }
+    return false;
+}
+
+bool reboundVelocityFromCollision(LiveActor* actor, f32 a, f32 b, f32 c) {
+    if(!isCollided(actor))
+        return false;
+
+    sead::Vector3f normalSum;
+    calcCollidedNormalSum(actor, &normalSum);
+    if(isNearZero(normalSum, 0.001f))
+        return false;
+
+    normalize(&normalSum);
+    f32 dot = normalSum.dot(getVelocity(actor));
+    if (dot < -b) {
+        *getVelocityPtr(actor) -= normalSum * dot;
+        *getVelocityPtr(actor) *= b;
+        *getVelocityPtr(actor) -= normalSum * dot * a;
+        return true;
+    } else if(dot < 0.0f) {
+        *getVelocityPtr(actor) -= normalSum * dot;
+    }
+    return false;
+}
 // void reboundVelocityFromTriangles(LiveActor* actor, f32, f32);
 // void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32);
 // void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&,                              f32);

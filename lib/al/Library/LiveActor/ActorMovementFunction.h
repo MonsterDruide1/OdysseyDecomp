@@ -107,13 +107,13 @@ void limitVelocityUpGravityH(LiveActor* actor, f32 limitDown, f32 limitUp, f32 l
 void limitVelocityDir(LiveActor* actor, const sead::Vector3f& dir, f32 limit);
 void limitVelocityDirSign(LiveActor* actor, const sead::Vector3f& dir, f32 limit);
 void limitVelocityDirV(LiveActor* actor, const sead::Vector3f& dir, f32 limit);
-void limitVelocityDirVRate(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void reboundVelocityPart(LiveActor* actor, f32, f32);
-void reboundVelocityPart(LiveActor* actor, f32, f32, f32, f32);
-void reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
-void reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
+void limitVelocityDirVRate(LiveActor* actor, const sead::Vector3f& dir, f32 limit, f32 rate);
+void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& dir, f32 parallel, f32 vertical);
+void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& dir, f32 horizontal, f32 vertical);
+u32 reboundVelocityPart(LiveActor* actor, f32 rebound, f32 threshold);
+u32 reboundVelocityPart(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32 threshold);
+bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32 threshold);
+bool reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
 void reboundVelocityFromTriangles(LiveActor* actor, f32, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&,
