@@ -34,10 +34,10 @@ void WobbleMapParts::init(const ActorInitInfo& info) {
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);
 
-    _108 = getQuat(this);
-    _124 = _108;
-    calcQuatUp(&_118, _108);
-    _140.set(_118);
+    mInitialQuat = getQuat(this);
+    mCurrentQuat = mInitialQuat;
+    calcQuatUp(&mInitialUp, mInitialQuat);
+    _140.set(mInitialUp);
     tryGetArg(&mMaxRotate, info, "MaxRotate");
 
     initMaterialCode(this, info);
@@ -62,21 +62,22 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
         else
             pos.set(getActorTrans(self));
 
-        sead::Vector3f local_60;
-        sead::Vector3f up;
-        calcQuatUp(&up, _124);
-        verticalizeVec(&local_60, up, pos - getTrans(this));
+        sead::Vector3f currentHorizontal;
+        sead::Vector3f currentUp;
+        calcQuatUp(&currentUp, mCurrentQuat);
+        verticalizeVec(&currentHorizontal, currentUp, pos - getTrans(this));
 
-        f32 length = local_60.length();
-        f32 fVar3 = normalize(length, 0.0f, 100.0f);
+        f32 hDist = currentHorizontal.length();
+        f32 normHDist = normalize(hDist, 0.0f, 100.0f);
 
-        if (isNearZero(length, 0.001f))
-            local_60 = sead::Vector3f::zero;
+        if (isNearZero(hDist, 0.001f))
+            currentHorizontal = sead::Vector3f::zero;
         else
-            local_60 *= sead::Mathf::sin(sead::Mathf::deg2rad(fVar3 * mMaxRotate)) / length;
+            currentHorizontal *=
+                sead::Mathf::sin(sead::Mathf::deg2rad(normHDist * mMaxRotate)) / hDist;
 
-        f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(fVar3 * mMaxRotate));
-        _140.set(cos * _118 + local_60);
+        f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(normHDist * mMaxRotate));
+        _140.set(cos * mInitialUp + currentHorizontal);
 
         return true;
     }
@@ -107,10 +108,10 @@ void WobbleMapParts::appearAndSetStart() {
     _15c = 0.0f;
     mAssistStopTimer = 0;
     _134.set(sead::Vector3f::zero);
-    _124.set(_108);
-    _140.set(_118);
+    mCurrentQuat.set(mInitialQuat);
+    _140.set(mInitialUp);
 
-    setQuat(this, _108);
+    setQuat(this, mInitialQuat);
     startNerveAction(this, "Wait");
 
     makeActorAlive();
@@ -124,27 +125,27 @@ void WobbleMapParts::exeWait() {
 }
 
 void WobbleMapParts::updateMove() {
-    sead::Vector3f local_40;
-    sead::Vector3f up1;
-    calcQuatUp(&up1, _124);
-    local_40.setCross(up1, _140);
-    local_40 *= 180.0f / sead::Mathf::pi();
-    limitLength(&local_40, local_40, mMaxRotate * 0.001333333f);
+    sead::Vector3f currentHorizontal;
+    sead::Vector3f currentUp;
+    calcQuatUp(&currentUp, mCurrentQuat);
+    currentHorizontal.setCross(currentUp, _140);
+    currentHorizontal *= 180.0f / sead::Mathf::pi();
+    limitLength(&currentHorizontal, currentHorizontal, mMaxRotate * 0.001333333f);
 
-    _134 = (_134 + local_40) * 0.92f;
-    rotateQuatMomentDegree(&_124, _124, _134);
+    _134 = (_134 + currentHorizontal) * 0.92f;
+    rotateQuatMomentDegree(&mCurrentQuat, mCurrentQuat, _134);
 
-    sead::Vector3f up2;
-    calcQuatUp(&up2, _124);
+    sead::Vector3f currentUp2;
+    calcQuatUp(&currentUp2, mCurrentQuat);
 
     sead::Vector3f vStack_70;
-    bool isStop = !turnVecToVecDegree(&vStack_70, _118, up2, mMaxRotate);
-    turnQuatYDirRate(getQuatPtr(this), _108, vStack_70, 1.0f);
+    bool isStop = !turnVecToVecDegree(&vStack_70, mInitialUp, currentUp2, mMaxRotate);
+    turnQuatYDirRate(getQuatPtr(this), mInitialQuat, vStack_70, 1.0f);
 
     if (isStop)
-        _124 = getQuat(this);
+        mCurrentQuat = getQuat(this);
 
-    _140.set(_118);
+    _140.set(mInitialUp);
     _15c = _134.length();
     if (mIsStop != isStop)
         tryStartSeWithParam(this, "Stop", _15c, "");
