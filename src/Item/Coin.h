@@ -86,7 +86,7 @@ private:
     sead::Quatf mStartingQuat = sead::Quatf::unit;
     al::MtxConnector* mMtxConnector = nullptr;
     bool mIsConnectToCollisionBack = false;
-    s32 mAppearDelay = -1;
+    s32 mTimeLimit = -1;
     sead::Vector3f mChameleonOffset = sead::Vector3f::zero;
     ExternalForceKeeper* mExternalForceKeeper = nullptr;
     CoinRotateCalculator* mRotateCalculator = nullptr;
