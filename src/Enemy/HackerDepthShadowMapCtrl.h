@@ -2,8 +2,6 @@
 
 #include <basis/seadTypes.h>
 
-#include "Player/IUsePlayerHack.h"
-
 namespace al {
 class LiveActor;
 }

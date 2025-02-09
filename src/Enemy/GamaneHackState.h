@@ -43,20 +43,18 @@ public:
     void exeSwingAttack();
     void exeEnd();
 
-    void setPlayerHackAction(IUsePlayerHack* playerHackAction) {
-        mPlayerHackAction = playerHackAction;
-    }
+    void setPlayerHackAction(IUsePlayerHack* playerHackAction) { mPlayerHack = playerHackAction; }
 
     const sead::Vector3f& getVelocity() { return mVelocity; }
 
     void setVelocity(const sead::Vector3f& vector) { mVelocity.set(vector); }
 
 private:
-    HackerJudgeNormalFall* mNormalFall;
-    HackerJudgeStartRun* mStartRun;
-    HackerJudgeNormalJump* mNormalJump;
+    HackerJudgeNormalFall* mJudgeNormalFall;
+    HackerJudgeStartRun* mJudgeStartRun;
+    HackerJudgeNormalJump* mJudgeNormalJump;
     PlayerActionTurnControl* mPlayerActionTurnControl;
-    IUsePlayerHack* mPlayerHackAction;
+    IUsePlayerHack* mPlayerHack;
     void** _48;
     s64 _50;
     s32 _58;
