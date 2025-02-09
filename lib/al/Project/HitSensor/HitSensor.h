@@ -3,12 +3,12 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-#include "Project/HitSensor/SensorHitGroup.h"
-
 namespace al {
 class LiveActor;
 class HitSensorDirectror;
 class HitSensorKeeper;
+class SensorHitGroup;
+class HitSensor;
 
 using SensorSortCmpFunc = bool (*)(HitSensor* a, HitSensor* b);
 
@@ -84,5 +84,6 @@ private:
     sead::Vector3f mFollowPosOffset;
 
     friend class HitSensorDirector;
+    friend class HitSensorKeeper;
 };
 }  // namespace al
