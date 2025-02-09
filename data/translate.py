@@ -182,7 +182,7 @@ def hexint_presenter(dumper, data):
 yaml.add_representer(int, hexint_presenter)
 
 with open('file_list_new.yaml', 'w') as file:
-    yaml.dump(file_list, file)
+    yaml.dump(file_list, file, sort_keys=False)
 
 with open('test_data.txt', 'w') as file:
     yaml.dump(segments, file)
