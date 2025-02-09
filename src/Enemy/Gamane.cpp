@@ -79,21 +79,20 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
 
     al::initNerveState(this, mEnemyStateSwoon, &NrvGamane.Swoon, "気絶");
 
-    mGamaneHackState = new GamaneHackState(this);
-    al::initNerveState(this, mGamaneHackState, &NrvGamane.Hack, "憑依");
-    mGamaneHackState->initialize(initInfo);
+    mHackState = new GamaneHackState(this);
+    al::initNerveState(this, mHackState, &NrvGamane.Hack, "憑依");
+    mHackState->initialize(initInfo);
 
-    mEnemyStateBlowDown =
-        new al::EnemyStateBlowDown(this, &gEnemyStateBlowDownParam, "吹き飛び状態");
-    al::initNerveState(this, mEnemyStateBlowDown, &NrvGamane.BlowDown, "吹き飛び");
+    mStateBlowDown = new al::EnemyStateBlowDown(this, &gEnemyStateBlowDownParam, "吹き飛び状態");
+    al::initNerveState(this, mStateBlowDown, &NrvGamane.BlowDown, "吹き飛び");
 
-    mHackerJudgeNormalFall = new HackerJudgeNormalFall(this, 5);
+    mJudgeNormalFall = new HackerJudgeNormalFall(this, 5);
 
     mCollisionPartsFilter = new al::CollisionPartsFilterSpecialPurpose("MoveLimit");
     al::setColliderFilterCollisionParts(this, mCollisionPartsFilter);
 
-    mEnemyStateHackStart = new EnemyStateHackStart(this, nullptr, &gPlayerHackStartShaderParam);
-    al::initNerveState(this, mEnemyStateHackStart, &NrvGamane.HackStart, "ひょうい開始");
+    mStateHackStart = new EnemyStateHackStart(this, nullptr, &gPlayerHackStartShaderParam);
+    al::initNerveState(this, mStateHackStart, &NrvGamane.HackStart, "ひょうい開始");
 
     al::setMaterialProgrammable(this);
     mMaterialIndex = al::getMaterialIndex(this, "TransMT");
@@ -107,15 +106,15 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
     makeActorAlive();
 
     rs::initHackShadow(this);
-    mHackerDepthShadowMapCtrl = new HackerDepthShadowMapCtrl(this, "Ground", 50.0f, 0.3f, 0.5f);
+    mDepthShadowMapCtrl = new HackerDepthShadowMapCtrl(this, "Ground", 50.0f, 0.3f, 0.5f);
 }
 
 void Gamane::attackSensor(al::HitSensor* target, al::HitSensor* source) {
     if (al::isNerve(this, &NrvGamane.PressDown) || al::isNerve(this, &NrvGamane.BlowDown))
         return;
 
-    if (mPlayerHackAction != nullptr) {
-        mGamaneHackState->attackSensor(target, source);
+    if (mPlayerHack != nullptr) {
+        mHackState->attackSensor(target, source);
         return;
     }
 
@@ -169,9 +168,9 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
             return true;
     }
 
-    if (mPlayerHackAction != nullptr) {
+    if (mPlayerHack != nullptr) {
         if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-            rs::endHack(&mPlayerHackAction);
+            rs::endHack(&mPlayerHack);
             rs::endHackShadow(this);
             al::startVisAnim(this, "CapOff");
             al::startMtpAnim(this, "CapOff");
@@ -179,9 +178,9 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
             return true;
         }
 
-        bool result = mGamaneHackState->receiveMsg(message, source, target);
-        if (mGamaneHackState->isHackEnd()) {
-            mPlayerHackAction = nullptr;
+        bool result = mHackState->receiveMsg(message, source, target);
+        if (mHackState->isHackEnd()) {
+            mPlayerHack = nullptr;
             rs::endHackShadow(this);
             al::startVisAnim(this, "CapOff");
             al::startMtpAnim(this, "CapOff");
@@ -198,9 +197,9 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
 
     if (al::isMsgPlayerTrampleReflect(message) || rs::isMsgSenobiTrample(message)) {
         rs::requestHitReactionToAttacker(message, target, source);
-        if (0 < mCoinDelay) {
+        if (mCoinLeft > 0) {
             rs::tryAppearMultiCoinFromObj(this, al::getHitSensor(this, "Body"), 0, 150.0f);
-            mCoinDelay--;
+            mCoinLeft--;
         }
         endRefract(25);
         if (al::isNerve(this, &NrvGamane.Swoon)) {
@@ -225,7 +224,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
         }
 
         rs::requestHitReactionToAttacker(message, target, source);
-        mEnemyStateBlowDown->start(source);
+        mStateBlowDown->start(source);
         al::setNerve(this, &NrvGamane.BlowDown);
         return true;
     }
@@ -254,8 +253,8 @@ void Gamane::control() {
         al::updateMaterialCodePuddle(this);
     }
 
-    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHackAction != nullptr)
-        mHackerDepthShadowMapCtrl->update(nullptr);
+    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHack != nullptr)
+        mDepthShadowMapCtrl->update(nullptr);
 
     if (!al::isNerve(this, &NrvGamane.Hack) || al::isHideModel(this))
         al::hideSilhouetteModelIfShow(this);
@@ -264,8 +263,8 @@ void Gamane::control() {
 
     if (al::isInDeathArea(this) || al::isInWaterArea(this) ||
         al::isCollidedFloorCode(this, "DamageFire") || al::isCollidedFloorCode(this, "Poison")) {
-        if (!al::isInDeathArea(this) && mPlayerHackAction != nullptr)
-            rs::endHack(&mPlayerHackAction);
+        if (!al::isInDeathArea(this) && mPlayerHack != nullptr)
+            rs::endHack(&mPlayerHack);
 
         al::startHitReaction(this, "消滅");
         kill();
@@ -283,11 +282,11 @@ void Gamane::updateCollider() {
         return;
 
     if (al::isNerve(this, &NrvGamane.Hack)) {
-        sead::Vector3f hackVelocity = mGamaneHackState->getVelocity();
+        sead::Vector3f hackVelocity = mHackState->getVelocity();
         sead::Vector3f velocity = al::getVelocity(this);
         velocity += hackVelocity;
         al::setVelocity(this, velocity);
-        mGamaneHackState->setVelocity(sead::Vector3f(0.0f, 0.0f, 0.0f));
+        mHackState->setVelocity(sead::Vector3f(0.0f, 0.0f, 0.0f));
     }
 
     al::LiveActor::updateCollider();
@@ -295,9 +294,9 @@ void Gamane::updateCollider() {
 
 void Gamane::startHack(const al::SensorMsg* message, al::HitSensor* source, al::HitSensor* target) {
     al::invalidateClipping(this);
-    mPlayerHackAction = mEnemyStateHackStart->tryStart(message, source, target);
-    mGamaneHackState->setPlayerHackAction(mPlayerHackAction);
-    rs::hideShadowHackCap(mPlayerHackAction);
+    mPlayerHack = mStateHackStart->tryStart(message, source, target);
+    mHackState->setPlayerHackAction(mPlayerHack);
+    rs::hideShadowHackCap(mPlayerHack);
     rs::setupHackShadow(this);
     al::setColliderFilterCollisionParts(this, nullptr);
     endRefract(50);
@@ -317,20 +316,19 @@ void Gamane::updateRefract() {
                                      refractPercentage * 0.5);
     mRefractTransitionTime--;
 
-    if (mPlayerHackAction != nullptr)
+    if (mPlayerHack != nullptr)
         return;
 
     f32 intensity = al::lerpValue(mShadowMaskIntensity, 1.0, refractPercentage);
     al::setShadowMaskIntensity(this, "シャドウマスク", intensity);
     if (mRefractTransitionTime == 0) {
-        if (mIsStartRefract != false) {
+        if (mIsStartRefract) {
             al::hideShadowMask(this);
             al::validateClipping(this);
-            return;
+        } else {
+            al::startVisAnim(this, "On");
+            al::invalidateClipping(this);
         }
-        al::startVisAnim(this, "On");
-        al::invalidateClipping(this);
-        return;
     }
 }
 
@@ -345,17 +343,17 @@ void Gamane::updateMovement() {
     al::addVelocityToGravityNaturalOrFittedGround(this, 1.5f);
 }
 
-void Gamane::startRefract(s32 delay) {
+void Gamane::startRefract(s32 transitionTime) {
     if (mRefractTransitionTime < 1 && !mIsStartRefract) {
-        mRefractTransitionTime = delay;
+        mRefractTransitionTime = transitionTime;
         mIsStartRefract = true;
         al::startVisAnim(this, "Off");
     }
 }
 
-void Gamane::endRefract(s32 delay) {
+void Gamane::endRefract(s32 transitionTime) {
     if (mRefractTransitionTime < 1 && mIsStartRefract) {
-        mRefractTransitionTime = delay;
+        mRefractTransitionTime = transitionTime;
         mIsStartRefract = false;
         al::showShadowMask(this);
     }
@@ -365,20 +363,20 @@ void Gamane::exeWait() {
     if (al::isFirstStep(this)) {
         al::setVelocityZero(this);
         al::startAction(this, "Wait");
-        rs::resetJudge(mHackerJudgeNormalFall);
+        rs::resetJudge(mJudgeNormalFall);
     }
 
     updateMovement();
 
-    if (rs::updateJudgeAndResult(mHackerJudgeNormalFall)) {
+    if (rs::updateJudgeAndResult(mJudgeNormalFall)) {
         al::setNerve(this, &NrvGamane.Fall);
         return;
     }
 
-    if (al::isStep(this, 0xb4))
+    if (al::isStep(this, 180))
         startRefract(50);
 
-    if (1000.0 > al::calcDistanceH(this, al::getPlayerActor(this, 0)))
+    if (al::calcDistanceH(this, al::getPlayerActor(this, 0)) < 1000.0f)
         al::setNerve(this, &NrvGamane.Find);
 }
 
@@ -401,8 +399,8 @@ void Gamane::exeFind() {
 void Gamane::exeRunaway() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Run");
-        rs::resetJudge(mHackerJudgeNormalFall);
-        mRefractDelay = 0;
+        rs::resetJudge(mJudgeNormalFall);
+        mRunAwayRefractDelay = 0;
     }
 
     sead::Vector3f dirToActor;
@@ -426,14 +424,14 @@ void Gamane::exeRunaway() {
     al::addVelocityToGravityNaturalOrFittedGround(this, 1.8f);
 
     if (!mIsStartRefract)
-        mRefractDelay++;
+        mRunAwayRefractDelay++;
 
-    if (mRefractDelay == 240) {
+    if (mRunAwayRefractDelay == 240) {
         startRefract(50);
-        mRefractDelay = 0;
+        mRunAwayRefractDelay = 0;
     }
 
-    if (rs::updateJudgeAndResult(mHackerJudgeNormalFall)) {
+    if (rs::updateJudgeAndResult(mJudgeNormalFall)) {
         al::setNerve(this, &NrvGamane.Fall);
         return;
     }
@@ -483,7 +481,7 @@ void Gamane::exeSwoon() {
     updateMovement();
 
     if (al::updateNerveState(this) && !mIsInLove) {
-        if (1000.0 > al::calcDistanceH(this, al::getPlayerActor(this, 0)))
+        if (al::calcDistanceH(this, al::getPlayerActor(this, 0)) < 1000.0f)
             al::setNerve(this, &NrvGamane.Runaway);
         else
             al::setNerve(this, &NrvGamane.Wait);
@@ -491,8 +489,7 @@ void Gamane::exeSwoon() {
 }
 
 void Gamane::exeHackStart() {
-    if (mEnemyStateHackStart->isHackStart() &&
-        mEnemyStateHackStart->calcHackStartNerveRate() == 0.0f) {
+    if (mStateHackStart->isHackStart() && mStateHackStart->calcHackStartNerveRate() == 0.0f) {
         al::startVisAnim(this, "CapOn");
         al::startMtpAnim(this, "CapOn");
     }
@@ -507,12 +504,12 @@ void Gamane::exeHackStart() {
 
 void Gamane::exeHack() {
     al::updateNerveState(this);
-    if (0 < mCoinDelay && mHackDelay == 0) {
+    if (mCoinLeft > 0 && mHackCoinAppearCounter == 0) {
         rs::tryAppearMultiCoinFromObj(this, al::getHitSensor(this, "Body"), 0, 150.0f);
-        mCoinDelay--;
+        mCoinLeft--;
     }
 
-    mHackDelay = al::modi((mHackDelay++ + 1) + 6, 6);
+    mHackCoinAppearCounter = al::modi((mHackCoinAppearCounter++ + 1) + 6, 6);
 }
 
 void Gamane::exeTrampled() {
