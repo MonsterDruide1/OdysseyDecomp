@@ -6,7 +6,7 @@
 
 class SphinxRideMiniGameObjGenerator : public al::LiveActor {
 public:
-    SphinxRideMiniGameObjGenerator(const char* name, f32 a2, f32 a3);
+    SphinxRideMiniGameObjGenerator(const char* name, f32 unused1, f32 unused2);
 
     void init(const al::ActorInitInfo& info) override;
     void makeActorDeadAllActor();

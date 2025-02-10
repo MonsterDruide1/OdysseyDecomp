@@ -12,7 +12,8 @@ NERVE_IMPL(SphinxRideMiniGameObjGenerator, Wait)
 NERVES_MAKE_NOSTRUCT(SphinxRideMiniGameObjGenerator, Wait)
 }  // namespace
 
-SphinxRideMiniGameObjGenerator::SphinxRideMiniGameObjGenerator(const char* name, f32 a2, f32 a3)
+SphinxRideMiniGameObjGenerator::SphinxRideMiniGameObjGenerator(const char* name, f32 unused1,
+                                                               f32 unused2)
     : al::LiveActor("乗れるスフィンクスのミニゲームオブジェジェネレータ") {}
 
 void SphinxRideMiniGameObjGenerator::init(const al::ActorInitInfo& info) {
@@ -24,19 +25,20 @@ void SphinxRideMiniGameObjGenerator::init(const al::ActorInitInfo& info) {
 
     if (linkChildNum <= 0) {
         makeActorDead();
-    } else {
-        mActorArray.allocBuffer(linkChildNum, nullptr, 8);
-        mTransArray = new sead::Vector3f[linkChildNum];
-
-        for (s32 i = 0; i != linkChildNum; i++) {
-            al::LiveActor* linksActor = al::createLinksActorFromFactory(info, "CreateObj", i);
-            mActorArray.pushBack(linksActor);
-            mTransArray[i] = al::getTrans(linksActor);
-        }
-
-        makeActorDeadAllActor();
-        makeActorAlive();
+        return;
     }
+
+    mActorArray.allocBuffer(linkChildNum, nullptr, 8);
+    mTransArray = new sead::Vector3f[linkChildNum];
+
+    for (s32 i = 0; i != linkChildNum; i++) {
+        al::LiveActor* linksActor = al::createLinksActorFromFactory(info, "CreateObj", i);
+        mActorArray.pushBack(linksActor);
+        mTransArray[i] = al::getTrans(linksActor);
+    }
+
+    makeActorDeadAllActor();
+    makeActorAlive();
 }
 
 void SphinxRideMiniGameObjGenerator::makeActorDeadAllActor() {
