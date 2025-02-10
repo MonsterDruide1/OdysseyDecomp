@@ -16,7 +16,7 @@ bool isStopScene(SceneStopCtrl* ctrl);
 void requestCaptureScreenCover(const LiveActor* actor, s32 coverFrames);
 
 bool requestStartDemo(const LiveActor* actor, const char* name);
-bool requestEndDemo(const LiveActor* actor, const char* name);
+void requestEndDemo(const LiveActor* actor, const char* name);
 void addDemoActor(LiveActor* actor);
 
 }  // namespace al
