@@ -33,8 +33,8 @@ bool requestStartDemo(const LiveActor* actor, const char* name) {
     return actor->getSceneInfo()->mDemoDirector->requestStartDemo(name);
 }
 
-bool requestEndDemo(const LiveActor* actor, const char* name) {
-    return actor->getSceneInfo()->mDemoDirector->requestEndDemo(name);
+void requestEndDemo(const LiveActor* actor, const char* name) {
+    actor->getSceneInfo()->mDemoDirector->requestEndDemo(name);
 }
 
 void addDemoActor(LiveActor* actor) {
