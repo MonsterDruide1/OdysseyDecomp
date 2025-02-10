@@ -4,16 +4,12 @@
 
 namespace al {
 
-sead::ControllerBase* getController_(s32 port) {
-    return isValidReplayController(port) ? getReplayController(port) :
-                                           sead::ControllerMgr::instance()->getController(port);
-}
-
-sead::ControllerBase* getController(s32 port) {
+inline sead::ControllerBase* getController(s32 port) {
     if (port == -1)
         port = getMainControllerPort();
 
-    return getController_(port);
+    return isValidReplayController(port) ? getReplayController(port) :
+                                           sead::ControllerMgr::instance()->getController(port);
 }
 
 bool isPadTrigger(s32 port, s32 button) {
@@ -172,7 +168,7 @@ bool isPadTriggerPressRightStick(s32 port) {
     return isPadTrigger2(port);
 }
 
-bool isPadRepeat(s32 port, s32 button) {
+inline bool isPadRepeat(s32 port, s32 button) {
     return getController(port)->isTrigWithRepeat(button);
 }
 
@@ -444,7 +440,7 @@ bool isPadHoldRightStick(s32 port) {
     return isPadHold(port, 0xF000000);
 }
 
-bool isPadRelease(s32 port, s32 button) {
+inline bool isPadRelease(s32 port, s32 button) {
     return getController(port)->isRelease(button);
 }
 

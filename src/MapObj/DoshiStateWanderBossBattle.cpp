@@ -11,9 +11,8 @@
 
 namespace {
 NERVE_IMPL(DoshiStateWanderBossBattle, Wait);
-NERVE_IMPL(DoshiStateWanderBossBattle, Reaction);
 
-NERVES_MAKE_STRUCT(DoshiStateWanderBossBattle, Wait, Reaction);
+NERVES_MAKE_STRUCT(DoshiStateWanderBossBattle, Wait);
 }  // namespace
 
 DoshiStateWanderBossBattle::DoshiStateWanderBossBattle(Doshi* doshi)

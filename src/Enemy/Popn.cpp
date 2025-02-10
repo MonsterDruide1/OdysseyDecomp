@@ -183,14 +183,14 @@ void Popn::appearByGenerater(const sead::Vector3f& pos, s32 color, bool isAppear
     }
 }
 
-bool shouldAwake(f32 awakeDistance, al::LiveActor* popn) {
+inline bool shouldAwake(f32 awakeDistance, al::LiveActor* popn) {
     al::LiveActor* nearestPlayerActor = al::tryFindNearestPlayerActor(popn);
     if (!nearestPlayerActor)
         return false;
     return al::calcDistance(nearestPlayerActor, al::getTrans(popn)) < awakeDistance;
 }
 
-void applyInertia(al::LiveActor* popn) {
+inline void applyInertia(al::LiveActor* popn) {
     if (al::isOnGround(popn, 0)) {
         al::scaleVelocity(popn, 0.8f);
         al::addVelocityToGravityFittedGround(popn, 0.55f, 0);
