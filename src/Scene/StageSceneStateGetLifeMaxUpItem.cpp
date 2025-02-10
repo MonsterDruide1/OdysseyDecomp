@@ -32,7 +32,7 @@ void StageSceneStateGetLifeMaxUpItem::kill() {
 
 void StageSceneStateGetLifeMaxUpItem::exeDemoGetLifeMaxUpItem() {
     if (al::isFirstStep(this)) {
-        GameDataFunction::getLifeMaxUpItem(rs::getPlayerActor(getHost()));  // unused
+        GameDataFunction::getLifeMaxUpItem(rs::getPlayerActor(getHost()));
         mLayout->tryStartDemoGetLifeMaxUpItem(false);
         al::startBgm(getHost(), "GetLifeMaxUp", -1, 0);
     }

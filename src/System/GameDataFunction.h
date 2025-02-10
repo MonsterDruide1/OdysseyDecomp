@@ -118,7 +118,7 @@ s32 getStartShineNextIndex(GameDataHolderAccessor accessor);
 bool isAlreadyShowExplainCheckpointFlag(GameDataHolderAccessor accessor);
 bool isEnableShowExplainCheckpointFlag(GameDataHolderAccessor accessor);
 void showExplainCheckpointFlag(GameDataHolderAccessor accessor);
-al::LiveActor* getLifeMaxUpItem(const al::LiveActor* actor);
+void getLifeMaxUpItem(const al::LiveActor* actor);
 s32 getPlayerHitPoint(GameDataHolderAccessor accessor);
 s32 getPlayerHitPointMaxCurrent(GameDataHolderAccessor accessor);
 s32 getPlayerHitPointMaxNormal(GameDataHolderAccessor accessor);
