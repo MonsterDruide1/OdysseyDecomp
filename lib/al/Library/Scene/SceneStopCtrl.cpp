@@ -3,16 +3,16 @@
 namespace al {
 SceneStopCtrl::SceneStopCtrl() {}
 
-void SceneStopCtrl::reqeustStopScene(s32 stopForFrames, s32 updateForFrames) {
-    if (mStopFrames <= 0 && mUpdateFrames <= 0)
-        mUpdateFrames = updateForFrames;
-    if (mStopFrames < stopForFrames)
-        mStopFrames = stopForFrames;
+void SceneStopCtrl::reqeustStopScene(s32 stopFrames, s32 delayFrames) {
+    if (mStopFrames <= 0 && mDelayFrames <= 0)
+        mDelayFrames = delayFrames;
+    if (mStopFrames < stopFrames)
+        mStopFrames = stopFrames;
 }
 
 void SceneStopCtrl::update() {
-    if (mUpdateFrames >= 1)
-        mUpdateFrames--;
+    if (mDelayFrames >= 1)
+        mDelayFrames--;
     else if (mStopFrames >= 1)
         mStopFrames--;
 }

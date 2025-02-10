@@ -3,11 +3,11 @@
 namespace al {
 ScreenCoverCtrl::ScreenCoverCtrl() {}
 
-void ScreenCoverCtrl::requestCaptureScreenCover(s32 coverForFrames) {
-    if (mCoverFrames < coverForFrames) {
+void ScreenCoverCtrl::requestCaptureScreenCover(s32 coverFrames) {
+    if (mCoverFrames < coverFrames) {
         if (mCoverFrames <= 0)
-            mIsActive = true;
-        mCoverFrames = coverForFrames;
+            mIsCover = true;
+        mCoverFrames = coverFrames;
     }
 }
 
@@ -15,7 +15,7 @@ void ScreenCoverCtrl::update() {
     if (mCoverFrames >= 1) {
         mCoverFrames--;
         if (mCoverFrames == 0)
-            mIsActive = false;
+            mIsCover = false;
     }
 }
 }  // namespace al
