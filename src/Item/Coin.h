@@ -54,8 +54,8 @@ public:
     void rotate();
     void appearBlowUpCommon(s32 delayTime, f32 horizontalForce, f32 verticalForce, s32 coinCount,
                             s32 coinIndex);
-    void appearBlowUp(s32 coinCount, s32 coinIndex);
-    void appearBlowUpLittle(s32 coinCount, s32 coinIndex);
+    void appearBlowUp(s32 coinIndex, s32 coinCount);
+    void appearBlowUpLittle(s32 coinIndex, s32 coinCount);
     void appearFall(const sead::Vector3f& velocity, s32 timeLimit);
     void appearPlayerDead(const sead::Vector3f& position, const sead::Vector3f& direction,
                           bool isInWater, bool isTimeBalloon);

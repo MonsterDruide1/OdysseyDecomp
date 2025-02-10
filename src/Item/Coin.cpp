@@ -180,19 +180,13 @@ void Coin::control() {
 
     mRotateCalculator->update(force, checkWater);
 
-    if (rs::isActiveDemo(this)) {
-        if (!al::isNerve(this, &NrvCoin.Got))
-            rs::tryUpdateWaterSurfaceCoinShadow(mWaterSurfaceShadow, this, mShadowSize);
-        return;
-    }
-
-    if (mTimeLimit > 0) {
+    if (!rs::isActiveDemo(this) && mTimeLimit > 0) {
         mTimeLimit--;
         if (mTimeLimit <= 0) {
             kill();
             return;
         }
-        if (!(mTimeLimit >= 201 || !al::blinkModel(this, mTimeLimit, 6, 0)))
+        if (!(mTimeLimit >= 201) && al::blinkModel(this, mTimeLimit, 6, 0))
             al::startSe(this, "PgBlink");
     }
 
@@ -291,13 +285,13 @@ void Coin::appearPopUpWithoutHitReaction() {
 void Coin::appearPopUpVelocity() {
     appearPopUp();
 
-    sead::Vector3f frontOffset = sead::Vector3f(0.0f, 0.0f, 0.0f);
-    sead::Vector3f upOffset = sead::Vector3f(0.0f, 0.0f, 0.0f);
-    al::calcFrontDir(&frontOffset, this);
-    al::calcUpDir(&upOffset, this);
-    f32 frontScale = al::getRandom(10.0f, 15.0f);
-    f32 upScale = al::getRandom(20.0f, 30.0f);
-    al::setVelocity(this, frontScale * frontOffset + upScale * upOffset);
+    sead::Vector3f fronDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    al::calcFrontDir(&fronDir, this);
+    al::calcUpDir(&upDir, this);
+    f32 frontOffset = al::getRandom(10.0f, 15.0f);
+    f32 upOffset = al::getRandom(20.0f, 30.0f);
+    al::setVelocity(this, frontOffset * fronDir + upOffset * upDir);
 }
 
 void Coin::appearAbove() {
