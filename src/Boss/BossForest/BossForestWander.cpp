@@ -53,12 +53,9 @@ void BossForestWander::exeWait() {
             mWaitTime = waitTime;
     }
     if (al::isGreaterEqualStep(this, mWaitTime)) {
-        if (al::checkIsPlayingSe(this, "PgSenario2StartMove", nullptr))
-            al::setNerve(this, &Move);
-        else {
+        if (!al::checkIsPlayingSe(this, "PgSenario2StartMove", nullptr))
             al::tryStartSe(this, "PgSenario2StartMove");
-            al::setNerve(this, &Move);
-        }
+        al::setNerve(this, &Move);
     }
 }
 

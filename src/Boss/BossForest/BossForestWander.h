@@ -9,7 +9,7 @@ class KeyPoseKeeper;
 class BossForestWander : public al::LiveActor {
 public:
     BossForestWander(const char* name);
-    void init(const al::ActorInitInfo& info);
+    void init(const al::ActorInitInfo& info) override;
 
     void exeWaitSwitchStart();
     void exeWait();
