@@ -124,7 +124,7 @@ private:
     sead::Heap* field_90;
     u8 gap_98[0x20];
     u64* field_b8;  // TempSaveData*
-    u8 gap_C0[0x110 - 0xc0];
+    u8 gap_c0[0x110 - 0xc0];
     sead::PtrArray<ShopItem::ItemInfo> mItemCloth;
     sead::PtrArray<ShopItem::ItemInfo> mItemCap;
     sead::PtrArray<ShopItem::ItemInfo> mItemGift;
