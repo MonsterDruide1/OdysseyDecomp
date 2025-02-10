@@ -55,7 +55,7 @@ public:
 private:
     IUsePlayerHack* mPlayerHack = nullptr;
     CapTargetInfo* mCapTargetInfo = nullptr;
-    EnemyStateSwoon* mEnemyStateSwoon = nullptr;
+    EnemyStateSwoon* mStateSwoon = nullptr;
     GamaneHackState* mHackState = nullptr;
     al::EnemyStateBlowDown* mStateBlowDown = nullptr;
     EnemyStateHackStart* mStateHackStart = nullptr;
@@ -63,7 +63,7 @@ private:
     al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilter = nullptr;
 
     bool mIsInLove = false;
-    s32 mCoinLeft = 30;
+    s32 mCoinsLeft = 30;
     s32 mHackCoinAppearCounter = 0;
     s32 mMaterialIndex = 0;
     s32 mRefractTransitionTime = 0;
