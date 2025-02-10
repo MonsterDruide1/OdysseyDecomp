@@ -18,6 +18,7 @@ class StageInfo;
 class PauseCameraCtrl;
 class AudioDirectorInitInfo;
 class Projection;
+class LiveActor;
 class LiveActorGroup;
 class AreaObjFactory;
 class DemoDirector;
@@ -30,6 +31,7 @@ class AreaObjDirector;
 class ExecuteDirector;
 class PlayerHolder;
 class ItemDirectorBase;
+class Resource;
 
 s32 getStageInfoMapNum(const Scene*);
 s32 getStageInfoDesignNum(const Scene*);
@@ -48,7 +50,7 @@ f32 getSceneFrameBufferMainAspect(const Scene*);
 bool isChangedGraphicsQualityMode(const Scene*);
 AreaObjDirector* getSceneAreaObjDirector(const Scene*);
 ExecuteDirector* getSceneExecuteDirector(const Scene*);
-const PlayerHolder* getScenePlayerHolder(const Scene*);
+PlayerHolder* getScenePlayerHolder(const Scene*);
 ItemDirectorBase* getSceneItemDirector(const Scene*);
 void initActorInitInfo(ActorInitInfo*, const Scene*, const PlacementInfo*, const LayoutInitInfo*,
                        const ActorFactory*, SceneMsgCtrl*, GameDataHolderBase*);
@@ -60,8 +62,9 @@ void initPlacementObjectMap(Scene*, const ActorInitInfo&, const char*);
 void initPlacementByStageInfo(const StageInfo*, const char*, const ActorInitInfo&);
 void initPlacementObjectDesign(Scene*, const ActorInitInfo&, const char*);
 void initPlacementObjectSound(Scene*, const ActorInitInfo&, const char*);
-bool tryInitPlacementSingleObject(Scene*, const ActorInitInfo&, s32, const char*);
-bool tryInitPlacementSingleObject(Scene*, const ActorInitInfo&, s32, const char*, const char*);
+LiveActor* tryInitPlacementSingleObject(Scene*, const ActorInitInfo&, s32, const char*);
+LiveActor* tryInitPlacementSingleObject(Scene*, const ActorInitInfo&, s32, const char*,
+                                        const char*);
 bool tryInitPlacementActorGroup(LiveActorGroup*, Scene*, const ActorInitInfo&, s32, const char*,
                                 const char*);
 void initPlacementByStageInfoSingle(const StageInfo*, const char*, const ActorInitInfo&);
@@ -153,8 +156,8 @@ void decrementPostProcessingFilterPreset(const Scene*);
 s32 getPostProcessingFilterPresetId(const Scene*);
 bool isActiveDemo(const Scene*);
 const char* getActiveDemoName(const Scene*);
-void* getDemoActorList(const Scene*);  // unknown return type
-void* getDemoActorNum(const Scene*);   // unknown return type
+LiveActor* getDemoActorList(const Scene*);
+s32 getDemoActorNum(const Scene*);
 void updateDemoActor(const Scene*);
 void updateDemoActorForPauseEffect(const Scene*);
 void stopAllSe(const Scene*, u32);
@@ -165,7 +168,7 @@ void endPausePadRumble(const Scene*);
 void validatePadRumble(Scene*);
 void invalidatePadRumble(Scene*);
 void setPadRumblePowerLevel(Scene*, s32);
-void* getPreLoadFileListArc();  // unknown return type
+const Resource* getPreLoadFileListArc();
 bool tryRequestPreLoadFile(const Scene*, const SceneInitInfo&, s32, sead::Heap*);
 }  // namespace al
 

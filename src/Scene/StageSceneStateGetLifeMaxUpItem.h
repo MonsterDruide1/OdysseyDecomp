@@ -11,8 +11,8 @@ class StageSceneStateGetLifeMaxUpItem : public al::HostStateBase<al::Scene> {
 public:
     StageSceneStateGetLifeMaxUpItem(const char* name, al::Scene* scene,
                                     StageSceneLayout* stageSceneLayout);
-    virtual void appear() override;
-    virtual void kill() override;
+    void appear() override;
+    void kill() override;
     void exeDemoGetLifeMaxUpItem();
 
 private:
