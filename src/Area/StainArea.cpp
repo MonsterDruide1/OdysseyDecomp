@@ -9,5 +9,5 @@ void StainArea::init(const al::AreaInitInfo& info) {
     AreaObj::init(info);
     s32 stainType = 0;
     al::tryGetArg(&stainType, info.getPlacementInfo(), "StainType");
-    mStainType = stainType;
+    mStainType = (StainType)stainType;
 }

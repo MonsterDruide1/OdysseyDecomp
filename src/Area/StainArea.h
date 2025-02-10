@@ -4,11 +4,19 @@
 
 class StainArea : public al::AreaObj {
 public:
+    enum class StainType : s32 {
+        None = 0,
+        Blizzard = 1,
+        WaterFall = 2,
+        WaterSplash = 3,
+        BlackSmoke = 4,
+    };
+
     StainArea(const char* name);
     void init(const al::AreaInitInfo& info) override;
 
-    s32 getStainType() const { return mStainType; }
+    StainType getStainType() const { return mStainType; }
 
 private:
-    s32 mStainType = 0;
+    StainType mStainType = StainType::None;
 };
