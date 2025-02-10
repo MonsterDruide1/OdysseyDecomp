@@ -55,7 +55,7 @@ void SimpleLayoutMenu::exeAppear() {
 void SimpleLayoutMenu::exeWait() {
     if (al::isFirstStep(this))
         al::startAction(this, "Wait", nullptr);
-    if (field_12C >= 0 && al::isGreaterEqualStep(this, field_12C))
+    if (mWaitDuration >= 0 && al::isGreaterEqualStep(this, mWaitDuration))
         al::setNerve(this, &NrvHostType.End);
 }
 

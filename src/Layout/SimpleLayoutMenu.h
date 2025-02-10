@@ -24,5 +24,5 @@ public:
     bool isEndWait() const;
 
 private:
-    s32 field_12C = -1;
+    s32 mWaitDuration = -1;
 };
