@@ -440,7 +440,7 @@ def header_no_offset_comments(c, path):
 
 def header_lowercase_member_offset_vars(c, path):
     for line in c.splitlines():
-        if re.search(r"(\s|\sfield)_[0-9a-z]*[A-Z]", line):
+        if re.search(r"\s(field|gap|filler|pad)?_[0-9a-z]*[A-Z]", line):
             CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!", path)
 
 
