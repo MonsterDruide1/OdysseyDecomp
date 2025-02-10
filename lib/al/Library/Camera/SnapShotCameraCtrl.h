@@ -34,7 +34,9 @@ public:
     void exeWait();
     void exeReset();
 
-    f32 getFovyDegree() const { return mFovyDegree; };
+    f32 getFovyDegree() const { return mFovyDegree; }
+
+    AudioKeeper* getAudioKeeper() const override { return nullptr; }
 
 private:
     const SnapShotCameraSceneInfo* mCameraSceneInfo = nullptr;

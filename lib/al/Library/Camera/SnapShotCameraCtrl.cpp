@@ -57,9 +57,12 @@ void SnapShotCameraCtrl::load(const ByamlIter& iter) {
 
 // NON_MATCHING
 void SnapShotCameraCtrl::startReset(s32 unk) {
-    field_64 = unk < 0 ? 15 : unk;
+    field_64 = unk >= 0 ? unk : 15;
     setNerve(this, &NrvSnapShotCameraCtrl.Reset);
 }
+
+f32 minRoll = -90.0f;
+f32 maxRoll = 90.0f;
 
 void SnapShotCameraCtrl::update(const sead::LookAtCamera& camera, const IUseCollision* collision,
                                 const ICameraInput* input) {
@@ -71,86 +74,56 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& camera, const IUseColl
         f32 prevFovyDegree = mFovyDegree;
         f32 v11 = field_50;
         if (input->isHoldSnapShotZoomIn())
-            v11 -= 3.0f;
+            v11 = field_50 - 3.0f;
         else if (input->isHoldSnapShotZoomOut())
-            v11 += 3.0f;
+            v11 = field_50 + 3.0f;
 
         f32 min = mParam->mHasMin ? mParam->mMinFovyDegree : 5.0f;
-        f32 max = mParam->mHasMax               ? mParam->mMaxFovyDegree :
-                  mMaxZoomOutFovyDegree >= 0.0f ? mMaxZoomOutFovyDegree :
-                                                  field_4C;
+        f32 max = mParam->mHasMax              ? mParam->mMaxFovyDegree :
+                  mMaxZoomOutFovyDegree > 0.0f ? mMaxZoomOutFovyDegree :
+                                                 field_4C;
 
-        field_50 = al::lerpValue(v11, sead::Mathf::clamp(v11, min, max), 0.3f);
+        f32 clamped = sead::Mathf::clamp(v11, min, max);
+        field_50 = al::lerpValue(field_50, clamped, 0.3f);
         mFovyDegree = al::lerpValue(mFovyDegree, field_50, 0.3f);
 
-        if (getAudioKeeper()) {
-            f32 v21 = mFovyDegree - prevFovyDegree;
-            if (mFovyDegree - prevFovyDegree <= 0.0f)
-                v21 = -(mFovyDegree - prevFovyDegree);
-            if (v21 > 0.5f)
-                al::holdSeWithParam(this, "Zoom", mFovyDegree, nullptr);
-        }
+        if (getAudioKeeper() && sead::Mathf::abs(mFovyDegree - prevFovyDegree) > 0.5f)
+            al::holdSeWithParam(this, "Zoom", mFovyDegree, "");
     }
 
     if (mIsValidRoll) {
         f32 prevRollDegree = mRollDegree;
         f32 prevRollTarget = mRollTarget;
-        f32 add;
+        f32 rollTarget = prevRollTarget;
         if (input->isHoldSnapShotRollLeft())
-            add = -3.0f;
+            rollTarget = mRollTarget - 3.0f;
         else if (input->isHoldSnapShotRollRight())
-            add = 3.0f;
-        prevRollTarget = prevRollTarget + add;
+            rollTarget = mRollTarget + 3.0f;
 
-        f32 v26 = -90.0f;
-        if (prevRollTarget >= -90.0f) {
-            v26 = prevRollTarget;
-            if (prevRollTarget > 90.0f)
-                v26 = 90.0f;
-        }
-        f32 v27 = al::lerpValue(mRollTarget, v26, 0.2f);
-        mRollTarget = v27;
-        f32 v29 = al::lerpValue(mRollDegree, v27, 0.15f);
-        mRollDegree = v29;
-        if (getAudioKeeper()) {
-            f32 v21 = mRollDegree - prevRollDegree;
-            if (mRollDegree - prevRollDegree <= 0.0f)
-                v21 = -(mRollDegree - prevRollDegree);
-            if (v21 > 0.2f)
-                al::holdSeWithParam(this, "Roll", mRollDegree, nullptr);
-        }
+        f32 v26 = sead::Mathf::clamp(rollTarget, minRoll, maxRoll);
+        mRollTarget = al::lerpValue(mRollTarget, v26, 0.2f);
+        mRollDegree = al::lerpValue(mRollDegree, mRollTarget, 0.15f);
+        if (getAudioKeeper() && sead::Mathf::abs(mRollDegree - prevRollDegree) > 0.2f)
+            al::holdSeWithParam(this, "Roll", mRollDegree, "");
     }
 
     if (mIsValidLookAtOffset) {
+        sead::Vector3f offset = {0.0f, 0.0f, 0.0f};
         sead::Vector2f moveStick = sead::Vector2f(0.0f, 0.0f);
         if (input->tryCalcSnapShotMoveStick(&moveStick) && !al::isNearZero(moveStick, 0.001f)) {
+            sead::Vector3f field38_before = field_38;
             sead::Vector3f forward = camera.getAt() - camera.getPos();
             al::normalize(&forward);
             sead::Vector3f up = camera.getUp();
             al::rotateVectorDegree(&up, up, forward, mRollDegree);
             al::normalize(&up);
-            sead::Vector3f v38;
-            sead::Vector3f offset;
-            if (al::isNearZero(moveStick.x, 0.001f)) {
-                v38 = sead::Vector3f(0.0f, 0.0f, 0.0f);
-            } else {
-                v38.z =
-                    (float)((float)((float)((float)(forward.y * up.z) - (float)(forward.z * up.y)) *
-                                    moveStick.x) *
-                            50.0f) +
-                    0.0f;
-                v38.y = (float)((float)(moveStick.x * (float)((float)(forward.z * up.x) -
-                                                              (float)(up.z * forward.x))) *
-                                50.0f) +
-                        0.0f;
-                v38.x = (float)((float)(moveStick.x * (float)((float)(up.y * forward.x) -
-                                                              (float)(forward.y * up.x))) *
-                                50.0f) +
-                        0.0f;
-                offset = v38;
+            if (!al::isNearZero(moveStick.x, 0.001f)) {
+                sead::Vector3f side;
+                side.setCross(forward, up);
+                offset = moveStick.x * side * 50.0f + sead::Vector3f{0.0f, 0.0f, 0.0f};
             }
             if (!al::isNearZero(moveStick.y, 0.001f))
-                offset = moveStick.y * up * 50.0f + v38;
+                offset += moveStick.y * up * 50.0f;
             if (!al::isNearZero(offset, 0.001f)) {
                 sead::Vector3f clampedOffset = mLookAtOffset + offset;
                 al::clampV3f(&clampedOffset, sead::Vector3f(-500.0f, -500.0f, -500.0f),
@@ -159,29 +132,23 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& camera, const IUseColl
             }
             if (mCameraSceneInfo->field_8) {
                 if (field_38.y < 0.0f) {
-                    f32 v46 = camera.getAt().y;
-                    f32 v47 = mCameraSceneInfo->field_C;
-                    if (field_38.y + camera.getAt().y < v47) {
-                        f32 v48;
-                        if (v47 >= v46)
-                            v48 = camera.getAt().y;
-                        else
-                            v48 = mCameraSceneInfo->field_C;
-                        field_38.y = v48 - v46;
+                    if (field_38.y + camera.getAt().y < mCameraSceneInfo->field_C) {
+                        field_38.y = sead::Mathf::min(camera.getAt().y, mCameraSceneInfo->field_C) -
+                                     camera.getAt().y;
                     }
                 }
             }
-            sead::Vector3f newAt = camera.getAt() + field_38;
-            alCameraPoserFunction::checkCameraCollisionMoveSphere(&newAt, collision, newAt, newAt,
+            sead::Vector3f camAt = camera.getAt();
+            sead::Vector3f otherAt = camAt + field38_before;
+            sead::Vector3f newAt = camAt + field_38;
+            alCameraPoserFunction::checkCameraCollisionMoveSphere(&newAt, collision, otherAt, newAt,
                                                                   75.0f);
             field_38 = newAt - camera.getAt();
         }
         al::lerpVec(&mLookAtOffset, mLookAtOffset, field_38, 0.3f);
     }
-    if (unk5 && input->isTriggerReset()) {  // startReset()?
-        field_64 = 15;
-        al::setNerve(this, &NrvSnapShotCameraCtrl.Reset);
-    }
+    if (unk5 && input->isTriggerReset())
+        startReset(-1);
 }
 
 void SnapShotCameraCtrl::makeLookAtCameraPost(sead::LookAtCamera* camera) const {
