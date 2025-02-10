@@ -70,14 +70,14 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
     al::initNerve(this, &NrvGamane.Wait, 5);
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
-    mEnemyStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
+    mStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
 
     gEnemyStateSwoonInitParam._74 = 180;
     gEnemyStateSwoonInitParam._60 = "着地";
-    mEnemyStateSwoon->initParams(gEnemyStateSwoonInitParam);
-    mEnemyStateSwoon->set9b(true);
+    mStateSwoon->initParams(gEnemyStateSwoonInitParam);
+    mStateSwoon->set9b(true);
 
-    al::initNerveState(this, mEnemyStateSwoon, &NrvGamane.Swoon, "気絶");
+    al::initNerveState(this, mStateSwoon, &NrvGamane.Swoon, "気絶");
 
     mHackState = new GamaneHackState(this);
     al::initNerveState(this, mHackState, &NrvGamane.Hack, "憑依");
@@ -147,9 +147,9 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
     if (!al::isNerve(this, &NrvGamane.Hack) && !al::isNerve(this, &NrvGamane.HackStart) &&
         !al::isNerve(this, &NrvGamane.Swoon)) {
         if (rs::isMsgCapEnableLockOn(message) || rs::isMsgCapCancelLockOn(message) ||
-            mEnemyStateSwoon->tryReceiveMsgStartLockOn(message))
+            mStateSwoon->tryReceiveMsgStartLockOn(message))
             return true;
-        if (mEnemyStateSwoon->tryReceiveMsgStartHack(message)) {
+        if (mStateSwoon->tryReceiveMsgStartHack(message)) {
             startHack(message, source, target);
             al::setNerve(this, &NrvGamane.HackStart);
             return true;
@@ -157,14 +157,14 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
     }
 
     if (al::isNerve(this, &NrvGamane.Swoon)) {
-        if (mEnemyStateSwoon->tryReceiveMsgEnableLockOn(message))
+        if (mStateSwoon->tryReceiveMsgEnableLockOn(message))
             return true;
-        if (mEnemyStateSwoon->tryReceiveMsgStartHack(message)) {
+        if (mStateSwoon->tryReceiveMsgStartHack(message)) {
             startHack(message, source, target);
             al::setNerve(this, &NrvGamane.HackStart);
             return true;
         }
-        if (mEnemyStateSwoon->tryReceiveMsgEndSwoon(message))
+        if (mStateSwoon->tryReceiveMsgEndSwoon(message))
             return true;
     }
 
@@ -197,13 +197,13 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
 
     if (al::isMsgPlayerTrampleReflect(message) || rs::isMsgSenobiTrample(message)) {
         rs::requestHitReactionToAttacker(message, target, source);
-        if (mCoinLeft > 0) {
+        if (mCoinsLeft > 0) {
             rs::tryAppearMultiCoinFromObj(this, al::getHitSensor(this, "Body"), 0, 150.0f);
-            mCoinLeft--;
+            mCoinsLeft--;
         }
         endRefract(25);
         if (al::isNerve(this, &NrvGamane.Swoon)) {
-            mEnemyStateSwoon->requestTrampled();
+            mStateSwoon->requestTrampled();
             return true;
         }
         al::setNerve(this, &NrvGamane.Trampled);
@@ -504,9 +504,9 @@ void Gamane::exeHackStart() {
 
 void Gamane::exeHack() {
     al::updateNerveState(this);
-    if (mCoinLeft > 0 && mHackCoinAppearCounter == 0) {
+    if (mCoinsLeft > 0 && mHackCoinAppearCounter == 0) {
         rs::tryAppearMultiCoinFromObj(this, al::getHitSensor(this, "Body"), 0, 150.0f);
-        mCoinLeft--;
+        mCoinsLeft--;
     }
 
     mHackCoinAppearCounter = al::modi((mHackCoinAppearCounter++ + 1) + 6, 6);
