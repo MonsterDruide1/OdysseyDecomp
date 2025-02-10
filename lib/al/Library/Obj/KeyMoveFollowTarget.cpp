@@ -66,12 +66,12 @@ void KeyMoveFollowTarget::exeMove() {
 
         if (!isStop(mKeyPoseKeeper)) {
             startHitReaction(this, "移動終了");
-            startAction(this, "Wait");
+            startNerveAction(this, "Wait");
 
             return;
         }
 
-        startAction(this, "Stop");
+        startNerveAction(this, "Stop");
     }
 }
 

@@ -82,7 +82,7 @@ void GateMapParts::exeOpen() {
         mHitReactionCurrent = 0;
 
         if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
-            startAction(this, "Bound");
+            startNerveAction(this, "Bound");
 
             return;
         }
@@ -90,7 +90,7 @@ void GateMapParts::exeOpen() {
         if (mSuccessSeObj != nullptr)
             startSe(mSuccessSeObj, "Riddle");
 
-        startAction(this, "End");
+        startNerveAction(this, "End");
 
         if (mHitReactionCount < 2)
             startHitReaction(this, "バウンド1回目");
@@ -123,7 +123,7 @@ void GateMapParts::exeBound() {
         mCurrentBoundSteps = (s32)(mBoundRate * (f32)mCurrentBoundSteps);
 
         if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
-            startAction(this, "Bound");
+            startNerveAction(this, "Bound");
 
             return;
         }
@@ -131,7 +131,7 @@ void GateMapParts::exeBound() {
         if (mSuccessSeObj != nullptr)
             startSe(mSuccessSeObj, "Riddle");
 
-        startAction(this, "End");
+        startNerveAction(this, "End");
     }
 }
 
