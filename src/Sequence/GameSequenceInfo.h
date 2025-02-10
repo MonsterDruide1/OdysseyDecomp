@@ -36,14 +36,12 @@ public:
     bool isShopStatus(s32 shopStatus) const;
     void setShopStatus(s32 shopStatus);
 
-    ShopStatus getShopStatus() const { return mShopStatus; }
-
     bool isWipeOpenEnd() const { return mIsWipeOpenEnd; }
 
     void setWipeOpenEnd(bool isEnd) { mIsWipeOpenEnd = isEnd; }
 
 private:
-    s32 mSceneStatus;
+    SceneStatus mSceneStatus;
     bool mIsStatusBossBattle;
     bool mIsStatusInvalidSave;
     bool mIsWipeOpenEnd;

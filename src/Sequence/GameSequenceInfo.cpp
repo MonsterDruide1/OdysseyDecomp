@@ -16,7 +16,7 @@ void GameSequenceInfo::init() {
     mIsStatusBossBattle = false;
     mIsStatusInvalidSave = false;
     mIsWipeOpenEnd = true;
-    mShopStatus = ShopStatus::ShopStatus_None;
+    mShopStatus = ShopStatus_None;
 }
 
 void GameSequenceInfo::resetSceneStatus() {
@@ -60,7 +60,7 @@ bool GameSequenceInfo::isShopStatus(s32 shopStatus) const {
 }
 
 void GameSequenceInfo::setShopStatus(s32 shopStatus) {
-    mShopStatus = ShopStatus(shopStatus);
+    mShopStatus = (ShopStatus)shopStatus;
 }
 
 namespace rs {
@@ -101,10 +101,8 @@ void setSceneStatusInvalidSave(GameDataHolderAccessor accessor) {
 }
 
 bool isInvalidSaveStage(const char* stageName) {
-    if (al::isEqualString(stageName, "MoonWorldBasementStage"))
-        return true;
-    else
-        return al::isEqualString(stageName, "SnowWorldLobby001Stage");
+    return al::isEqualString(stageName, "MoonWorldBasementStage") ||
+           al::isEqualString(stageName, "SnowWorldLobby001Stage");
 }
 
 bool isWipeOpenEnd(const al::LiveActor* actor) {
@@ -129,43 +127,43 @@ bool isShopStatusBuyItem(const al::LiveActor* actor) {
 bool isShopStatusBuyShine(const al::LiveActor* actor) {
     return ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->isShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_BuyShine);
+        ->isShopStatus(GameSequenceInfo::ShopStatus_BuyShine);
 }
 
 bool isShopStatusBuyShineMany(const al::LiveActor* actor) {
     return ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->isShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_BuyShineMany);
+        ->isShopStatus(GameSequenceInfo::ShopStatus_BuyShineMany);
 }
 
 bool isShopStatusBuyMaxLifeUpItem(const al::LiveActor* actor) {
     return ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->isShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_BuyMaxLifeUpItem);
+        ->isShopStatus(GameSequenceInfo::ShopStatus_BuyMaxLifeUpItem);
 }
 
 void setShopStatusBuyShine(const al::LiveActor* actor) {
     ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->setShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_BuyShine);
+        ->setShopStatus(GameSequenceInfo::ShopStatus_BuyShine);
 }
 
 void setShopStatusBuyShineMany(const al::LiveActor* actor) {
     ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->setShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_BuyShineMany);
+        ->setShopStatus(GameSequenceInfo::ShopStatus_BuyShineMany);
 }
 
 void setShopStatusBuyMaxLifeUpItem(const al::LiveActor* actor) {
     ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->setShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_BuyMaxLifeUpItem);
+        ->setShopStatus(GameSequenceInfo::ShopStatus_BuyMaxLifeUpItem);
 }
 
 void setShopStatusNone(const al::LiveActor* actor) {
     ((GameDataHolder*)actor->getSceneInfo()->mGameDataHolder)
         ->getSequenceInfo()
-        ->setShopStatus(GameSequenceInfo::ShopStatus::ShopStatus_None);
+        ->setShopStatus(GameSequenceInfo::ShopStatus_None);
 }
 
 }  // namespace rs
