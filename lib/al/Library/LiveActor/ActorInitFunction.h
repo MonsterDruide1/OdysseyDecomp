@@ -20,6 +20,7 @@ void initStageSwitch(LiveActor* actor, const ActorInitInfo& info);
 void initExecutorWatchObj(LiveActor* actor, const ActorInitInfo& info);
 bool trySyncStageSwitchAppear(LiveActor* actor);
 void initActorPoseTRSV(LiveActor* actor);
+void initActorPoseTFSV(LiveActor* actor);
 void initActorSRT(LiveActor* actor, const ActorInitInfo& info);
 bool trySyncStageSwitchAppearAndKill(LiveActor* actor);
 void initActorCollisionWithResource(LiveActor* actor, const Resource* res,
