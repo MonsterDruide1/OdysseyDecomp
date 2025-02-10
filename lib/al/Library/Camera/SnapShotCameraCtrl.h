@@ -6,20 +6,24 @@
 #include "Library/Nerve/NerveExecutor.h"
 #include "Library/Yaml/ByamlIter.h"
 
-struct CameraParam {
-    bool mHasMin;
-    bool mHasMax;
-    f32 mMinFovyDegree;
-    f32 mMaxFovyDegree;
-};
-
 namespace al {
-class SnapShotCameraSceneInfo;
+struct SnapShotCameraSceneInfo {
+    void* unk;
+    bool field_8;
+    f32 field_C;
+};
 class ICameraInput;
 class IUseCollision;
 
 class SnapShotCameraCtrl : public NerveExecutor, public IUseAudioKeeper {
 public:
+    struct CameraParam {
+        bool mHasMin;
+        bool mHasMax;
+        f32 mMinFovyDegree;
+        f32 mMaxFovyDegree;
+    };
+
     SnapShotCameraCtrl(const SnapShotCameraSceneInfo*);
     void start(f32);
     void load(const ByamlIter&);
@@ -33,20 +37,20 @@ public:
     f32 getFovyDegree() const { return mFovyDegree; };
 
 private:
-    SnapShotCameraSceneInfo* mCameraSceneInfo;
-    CameraParam* mParam;
-    bool mIsValidLookAtOffset;
-    sead::Vector3f mLookAtOffset;
-    sead::Vector3f unk1;
-    bool mIsValidZoomFovy;
-    f32 mFovyDegree;
-    f32 unk2;
-    f32 unk3;
-    f32 mMaxZoomOutFovyDegree;
-    bool mIsValidRoll;
-    f32 mRollDegree;
-    f32 mRollTarget;
-    u32 unk4;
-    bool unk5;
+    const SnapShotCameraSceneInfo* mCameraSceneInfo = nullptr;
+    CameraParam* mParam = nullptr;
+    bool mIsValidLookAtOffset = false;
+    sead::Vector3f mLookAtOffset = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    sead::Vector3f field_38 = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    bool mIsValidZoomFovy = false;
+    f32 mFovyDegree = 0.0f;
+    f32 field_4C = 0.0f;
+    f32 field_50 = 0.0f;
+    f32 mMaxZoomOutFovyDegree = -1.0f;
+    bool mIsValidRoll = false;
+    f32 mRollDegree = false;
+    f32 mRollTarget = false;
+    u32 field_64 = -1;
+    bool unk5 = false;
 };
 }  // namespace al
