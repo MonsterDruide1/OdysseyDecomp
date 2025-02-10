@@ -1,7 +1,6 @@
 #include "Item/CoinRotateCalculator.h"
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Math/MathAngleUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"
 #include "Library/Scene/ISceneObj.h"
@@ -34,22 +33,22 @@ void CoinRotateCalculator::reset() {
     mRotateOffset = 0.0f;
 }
 
-// https://decomp.me/scratch/aNkgJ
-// NON_MATCHING: mismatch in storing mLastObjAngle = objAngle; (two strs instead of stp)
 void CoinRotateCalculator::update(const sead::Vector3f& force, bool checkWater) {
     if (checkWater)
         mIsInWater = al::isInWater(mActor);
 
     f32 objAngle = getObjAngle(mActor, mIsInWater, mObjCountOffset);
 
-    if (!al::isNearZero(force, 0.001f)) {
-        mForceFrames = sead::Mathi::clamp(mForceFrames + 1, 0, 120);
-        mForceOffset += mForceFrames * 0.3f;
-    } else if (--mForceFrames > 0) {
-        mForceOffset = modDegree(mForceOffset) - 0.8f;
-        if (mForceOffset < 0.0f)
-            mForceOffset = 0.0f;
+    if (al::isNearZero(force, 0.001f)) {
+        if (--mForceFrames <= 0) {
+            mForceOffset = modDegree(mForceOffset) - 0.8f;
+            if (mForceOffset < 0.0f)
+                mForceOffset = 0.0f;
+        } else {
+            mForceOffset += mForceFrames * 0.3f;
+        }
     } else {
+        mForceFrames = sead::Mathi::clamp(mForceFrames + 1, 0, 120);
         mForceOffset += mForceFrames * 0.3f;
     }
 
