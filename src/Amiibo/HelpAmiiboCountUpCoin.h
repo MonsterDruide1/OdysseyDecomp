@@ -11,7 +11,7 @@ class ActorInitInfo;
 class IUseNerve;
 class LiveActor;
 class NerveKeeper;
-class NfpInfo;
+struct NfpInfo;
 }  // namespace al
 
 class HelpAmiiboDirector;

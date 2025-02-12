@@ -3,7 +3,7 @@
 #include "Amiibo/HelpAmiiboExecutor.h"
 
 namespace al {
-class NfpInfo;
+struct NfpInfo;
 class LiveActor;
 class ActorInitInfo;
 }  // namespace al
