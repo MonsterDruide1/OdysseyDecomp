@@ -65,8 +65,10 @@ void AnagramAlphabetCharacter::init(const al::ActorInitInfo& info) {
 }
 
 void AnagramAlphabetCharacter::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (mHackerParent)
-        return rs::sendMsgHackerNoReaction(mHackerParent, other, self);
+    if (mHackerParent) {
+        rs::sendMsgHackerNoReaction(mHackerParent, other, self);
+        return;
+    }
     if (!al::isSensorNpc(self))
         return;
     if (al::isSensorPlayer(other) && al::isSensorName(other, "Pushed"))

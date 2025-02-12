@@ -5,6 +5,7 @@
 
 namespace al {
 class LiveActor;
+class WaterSurfaceFinder;
 
 bool isInWaterPos(const LiveActor* actor, const sead::Vector3f& pos);
 bool isInWater(const LiveActor* actor);
@@ -19,5 +20,6 @@ bool calcFindWaterSurfaceDisplacement(sead::Vector3f*, sead::Vector3f*, const Li
                                       const sead::Vector3f&, const sead::Vector3f&, f32);
 bool calcFindWaterSurfaceOverGround(sead::Vector3f*, sead::Vector3f*, const LiveActor*,
                                     const sead::Vector3f&, const sead::Vector3f&, f32);
-
+void approachWaterSurfaceSpringDumper(al::LiveActor*, const WaterSurfaceFinder*, f32, f32, f32, f32,
+                                      f32);
 }  // namespace al
