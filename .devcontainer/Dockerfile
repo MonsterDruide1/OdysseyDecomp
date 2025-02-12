@@ -12,7 +12,6 @@ RUN apt install -y git
 
 # install dependencies for building and running the project
 RUN apt install -y ccache clang cmake curl less libncurses6 libssl-dev ninja-build pip pkg-config python3-full xdelta3
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN pip install --break-system-packages capstone colorama cxxfilt pyelftools python-Levenshtein toml watchdog
 
 # install dependencies for code environment
