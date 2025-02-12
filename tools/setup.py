@@ -78,10 +78,10 @@ def setup_cached_tools(viking_from_source):
 
     def remove_old_toolchain():
         if exists_toolchain_file("clang-3.9.1/bin/clang"):
-            input("Removing toolchain/clang-3.9.1 since full toolchains are no longer needed (Press enter to continue)")
+            print("Removing toolchain/clang-3.9.1 since full toolchains are no longer needed")
             shutil.rmtree(f"{get_repo_root()}/toolchain/clang-3.9.1")
         if exists_toolchain_file("clang-4.0.1/bin/lld"):
-            input("Removing toolchain/clang-4.0.1 since full toolchains are no longer needed (Press enter to continue)")
+            print("Removing toolchain/clang-4.0.1")
             shutil.rmtree(f"{get_repo_root()}/toolchain/clang-4.0.1")
 
     remove_old_toolchain()
