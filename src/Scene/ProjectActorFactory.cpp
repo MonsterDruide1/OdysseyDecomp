@@ -40,6 +40,7 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/WorldMapEarth.h"
+#include "Npc/KuriboGirl.h"
 
 static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
@@ -306,7 +307,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"KoopaShip", nullptr},
     {"Kuribo2D3D", nullptr},
     {"KuriboGenerator2D3D", nullptr},
-    {"KuriboGirl", nullptr},
+    {"KuriboGirl", al::createActorFunction<KuriboGirl>},
     {"KuriboPossessed", nullptr},
     {"KuriboMini", nullptr},
     {"KuriboTowerSwitch", nullptr},
