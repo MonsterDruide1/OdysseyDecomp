@@ -32,7 +32,7 @@ NERVE_IMPL(Nokonoko, CaptureStart);
 NERVE_IMPL(Nokonoko, CaptureEnd);
 NERVE_IMPL(Nokonoko, CaptureStartEnd);
 NERVE_IMPL(Nokonoko, CaptureWait);
-NERVE_IMPL_(Nokonoko, CaptureSwimWait, CaptureSpinStandbyStart);
+NERVE_IMPL_(Nokonoko, CaptureSwimWait, CaptureWait);
 NERVE_IMPL(Nokonoko, CaptureSpinStandbyStart);
 NERVE_IMPL(Nokonoko, CaptureJumpStart);
 NERVE_IMPL_(Nokonoko, CaptureSwim, CaptureJump);
@@ -49,6 +49,12 @@ NERVES_MAKE_STRUCT(Nokonoko, Wait, Swoon, CaptureSpin, CaptureSpinCapRethrow, Di
                    CaptureJumpStart, CaptureSwim, CaptureWalk, CaptureSwimWalk, CaptureJump,
                    CaptureJumpEnd, CaptureSpinDrift, CaptureSpinEnd);
 }  // namespace
+
+const sead::Vector3f gShellLockOnOffset1 = {0.0f, 72.0f, 37.0f};
+const sead::Vector3f gShellLockOnOffset2 = {-18.0f, 0.0f, 0.0f};
+
+const sead::Vector3f gShellSpinLockOnOffset1 = {0.0f, 100.0f, 0.0f};
+const sead::Vector3f gShellSpinLockOnOffset2 = {0.0f, 0.0f, 0.0f};
 
 Nokonoko::Nokonoko(const char* name) : al::LiveActor(name) {}
 
@@ -100,10 +106,6 @@ void Nokonoko::attackSensor(al::HitSensor* other, al::HitSensor* self) {
     }
 }
 
-const sead::Vector3f t1 = {0.0f, 72.0f, 37.0f};
-const sead::Vector3f t2 = {-18.0f, 0.0f, 0.0f};
-
-// NON_MATCHING
 bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al::HitSensor* other) {
     if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(message, mCapTargetInfo))
         return true;
@@ -126,26 +128,31 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
         }
         if (rs::isMsgCapEnableLockOn(message))
             return true;
+
         if (rs::isMsgStartHack(message)) {
-            // mismatch in this block
             al::invalidateClipping(this);
             mHackActor = rs::startHack(other, self, nullptr);
             rs::startHackStartDemo(mHackActor, this);
             al::setNerve(this, &NrvNokonoko.CaptureStart);
             return true;
         }
-    } else if (al::isNerve(this, &NrvNokonoko.Swoon)) {
-        if (mEnemyStateSwoon->tryReceiveMsgEnableLockOn(message) ||
-            mEnemyStateSwoon->tryReceiveMsgEndSwoon(message))
+
+        return false;
+    }
+
+    if (al::isNerve(this, &NrvNokonoko.Swoon)) {
+        if (mEnemyStateSwoon->tryReceiveMsgEnableLockOn(message))
+            return true;
+        if (mEnemyStateSwoon->tryReceiveMsgEndSwoon(message))
             return true;
         if (mEnemyStateSwoon->tryReceiveMsgStartHack(message)) {
-            // this probably shouldn't be repeated
             al::invalidateClipping(this);
             mHackActor = rs::startHack(other, self, nullptr);
             rs::startHackStartDemo(mHackActor, this);
             al::setNerve(this, &NrvNokonoko.CaptureStart);
             return true;
         }
+        return false;
     }
 
     if (al::isNerve(this, &NrvNokonoko.CaptureStart))
@@ -168,10 +175,10 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
              al::isNerve(this, &NrvNokonoko.CaptureSpinCapRethrow)) &&
             rs::isMsgCapRethrow(message)) {
             rs::tryGetCapRethrowPos(al::getTransPtr(this), message);
-            sead::Vector3f front = sead::Vector3f(0.0f, 0.0f, 0.0f);
-            if (rs::tryGetCapRethrowFront(&front, message)) {
-                al::makeQuatFrontUp(al::getQuatPtr(this), front, sead::Vector3<float>::ey);
-                al::setVelocity(this, front * 80.0f);
+            sead::Vector3f rethrowFront = sead::Vector3f(0.0f, 0.0f, 0.0f);
+            if (rs::tryGetCapRethrowFront(&rethrowFront, message)) {
+                al::makeQuatFrontUp(al::getQuatPtr(this), rethrowFront, sead::Vector3f::ey);
+                al::setVelocity(this, rethrowFront * 80.0f);
                 al::setNerve(this, &NrvNokonoko.CaptureSpinCapRethrow);
                 return true;
             }
@@ -185,13 +192,12 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
             return true;
         }
     }
-
     return false;
 }
 
 void Nokonoko::endCapture() {
     rs::endHack(&mHackActor);
-    mCapTargetInfo->setFollowLockOnMtx("Head", t1, t2);
+    mCapTargetInfo->setFollowLockOnMtx("Head", gShellLockOnOffset1, gShellLockOnOffset2);
     al::validateClipping(this);
 }
 
@@ -220,9 +226,9 @@ void updateNokonokoGravity(al::LiveActor* self, al::WaterSurfaceFinder* waterSur
     if (al::isOnGround(self, 0)) {
         sead::Vector3f collidedGroundNormal = al::getCollidedGroundNormal(self);
         if (collidedGroundNormal.dot(al::getVelocity(self)) < 0.0f) {
-            sead::Vector3f vec;
-            al::parallelizeVec(&vec, collidedGroundNormal, al::getVelocity(self));
-            al::addVelocity(self, collidedGroundNormal * (vec.length() * 0.9f));
+            sead::Vector3f parallelVec;
+            al::parallelizeVec(&parallelVec, collidedGroundNormal, al::getVelocity(self));
+            al::addVelocity(self, collidedGroundNormal * (parallelVec.length() * 0.9f));
         }
 
         f32 scale = 0.99f;
@@ -237,13 +243,12 @@ void updateNokonokoGravity(al::LiveActor* self, al::WaterSurfaceFinder* waterSur
 }
 
 inline bool Nokonoko::updateAccelStick() {
-    sead::Vector3f accel;
-    if (rs::addHackActorAccelStick(this, mHackActor, &accel, al::isOnGround(this, 0) ? 0.2f : 1.2f,
-                                   sead::Vector3f::ey)) {
-        sead::Quatf quat;
-        al::makeQuatFrontUp(&quat, accel, sead::Vector3f::ey);
-        sead::Quatf* quatPtr = al::getQuatPtr(this);
-        al::slerpQuat(quatPtr, al::getQuat(this), quat, 0.3f);
+    sead::Vector3f stickAccel;
+    if (rs::addHackActorAccelStick(this, mHackActor, &stickAccel,
+                                   al::isOnGround(this, 0) ? 0.2f : 1.2f, sead::Vector3f::ey)) {
+        sead::Quatf targetQuat;
+        al::makeQuatFrontUp(&targetQuat, stickAccel, sead::Vector3f::ey);
+        al::slerpQuat(al::getQuatPtr(this), al::getQuat(this), targetQuat, 0.3f);
         return true;
     }
     return false;
@@ -257,8 +262,8 @@ void Nokonoko::exeWait() {
             al::startAction(this, "Wait");
     }
     if (al::isExistRail(this)) {
-        sead::Vector3f railMoveDir;
-        al::calcRailMoveDir(&railMoveDir, this);
+        sead::Vector3f moveDirection;
+        al::calcRailMoveDir(&moveDirection, this);
 
         switch (mMoveType) {
         case MoveType::Loop:
@@ -267,8 +272,8 @@ void Nokonoko::exeWait() {
         case MoveType::Turn: {
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
-            if (al::isParallelDirection(railMoveDir, sead::Vector3f::ey, 0.01f) ||
-                al::calcAngleDegree(frontDir, railMoveDir) < 20.0f)
+            if (al::isParallelDirection(moveDirection, sead::Vector3f::ey, 0.01f) ||
+                al::calcAngleDegree(frontDir, moveDirection) < 20.0f)
                 al::moveSyncRailTurn(this, 5.0f);
             break;
         }
@@ -277,7 +282,7 @@ void Nokonoko::exeWait() {
             break;
         }
 
-        if (!al::isParallelDirection(railMoveDir, sead::Vector3f::ey, 0.01f))
+        if (!al::isParallelDirection(moveDirection, sead::Vector3f::ey, 0.01f))
             al::turnToRailDir(this, al::calcNerveRate(this, 60) * 5.0f);
     } else
         updateNokonokoGravity(this, nullptr);
@@ -408,10 +413,9 @@ void Nokonoko::exeCaptureJumpStart() {
         al::setNerve(this, &NrvNokonoko.CaptureJump);
 }
 
-// NON_MATCHING
 void Nokonoko::exeCaptureJump() {
     if (al::isFirstStep(this))
-        al::startAction(this, al::isNerve(this, &NrvNokonoko.CaptureWalk) ? "Jump" : "Swim");
+        al::startAction(this, al::isNerve(this, &NrvNokonoko.CaptureJump) ? "Jump" : "Swim");
 
     updateNokonokoGravity(this, nullptr);
 
@@ -427,12 +431,14 @@ void Nokonoko::exeCaptureJump() {
 
     updateAccelStick();
 
-    if (al::isNerve(this, &NrvNokonoko.CaptureJump) && al::isOnGround(this, 0)) {
+    if (al::isNerve(this, &NrvNokonoko.CaptureJump)) {
+        if (!al::isOnGround(this, 0))
+            return;
+
         al::setNerve(this, &NrvNokonoko.CaptureJumpEnd);
-        return;
     }
 
-    if (al::isNerve(this, &NrvNokonoko.CaptureSwim)) {
+    else if (al::isNerve(this, &NrvNokonoko.CaptureSwim)) {
         if (rs::isTriggerHackJump(mHackActor)) {
             al::addVelocityJump(this, 10.0f);
             al::setNerve(this, &NrvNokonoko.CaptureSwim);
@@ -455,21 +461,19 @@ void Nokonoko::exeCaptureJumpEnd() {
         al::setNerve(this, &NrvNokonoko.CaptureWait);
 }
 
-const sead::Vector3f shellLockOn1 = {0.0f, 100.0f, 0.0f};
-const sead::Vector3f shellLockOn2 = {0.0f, 0.0f, 0.0f};
-
 void Nokonoko::exeCaptureSpinStandbyStart() {
     if (al::isFirstStep(this))
-        al::startAction(this, "SpinStandByStart");
+        al::startAction(this, "SpinStandbyStart");
 
     updateNokonokoGravity(this, nullptr);
 
     if (al::isActionEnd(this)) {
-        sead::Vector3f dir;
-        if (rs::calcHackerMoveDir(&dir, mHackActor, sead::Vector3f::ey))
-            al::makeQuatFrontUp(al::getQuatPtr(this), dir, sead::Vector3f::ey);
+        sead::Vector3f hackerMoveDir;
+        if (rs::calcHackerMoveDir(&hackerMoveDir, mHackActor, sead::Vector3f::ey))
+            al::makeQuatFrontUp(al::getQuatPtr(this), hackerMoveDir, sead::Vector3f::ey);
 
-        mCapTargetInfo->setFollowLockOnMtx("Shell", shellLockOn1, shellLockOn2);
+        mCapTargetInfo->setFollowLockOnMtx("Shell", gShellSpinLockOnOffset1,
+                                           gShellSpinLockOnOffset2);
         al::setNerve(this, &NrvNokonoko.CaptureSpin);
     }
 }
@@ -508,22 +512,22 @@ void Nokonoko::exeCaptureSpin() {
     }
 
     if (al::isCollidedWallVelocity(this)) {
-        sead::Vector3f normal = al::isCollidedWallVelocity(this) ?
-                                    al::getCollidedWallNormal(this) :
-                                    al::getCollidedCeilingNormal(this);
-        if (normal.dot(al::getVelocity(this)) < 0.0f) {
+        sead::Vector3f collisionNormal = al::isCollidedWallVelocity(this) ?
+                                             al::getCollidedWallNormal(this) :
+                                             al::getCollidedCeilingNormal(this);
+        if (collisionNormal.dot(al::getVelocity(this)) < 0.0f) {
             sead::Vector3f collidedPos = al::isCollidedWall(this) ? al::getCollidedWallPos(this) :
                                                                     al::getCollidedCeilingPos(this);
             al::startHitReactionHitEffect(this, "衝突", collidedPos);
-            sead::Vector3f vec;
-            al::parallelizeVec(&vec, normal, al::getVelocity(this));
-            al::addVelocity(this, vec.length() * 1.9f * normal);
+            sead::Vector3f parallelVec;
+            al::parallelizeVec(&parallelVec, collisionNormal, al::getVelocity(this));
+            al::addVelocity(this, parallelVec.length() * 1.9f * collisionNormal);
 
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
 
-            f32 dot = normal.dot(frontDir);
-            sead::Vector3f reflection = frontDir - (dot * (2 * normal));
+            f32 dot = collisionNormal.dot(frontDir);
+            sead::Vector3f reflection = frontDir - (dot * (2 * collisionNormal));
 
             if (al::tryNormalizeOrZero(&reflection))
                 al::makeQuatFrontUp(al::getQuatPtr(this), reflection, sead::Vector3f::ey);
@@ -545,6 +549,7 @@ void Nokonoko::exeCaptureSpin() {
         f32 degree = al::isNerve(this, &NrvNokonoko.CaptureSpinDrift) ? 5.0f : 1.7f;
         if (al::isInWater(this))
             degree = 1.6f;
+
         al::rotateQuatYDirDegree(al::getQuatPtr(this), al::getQuat(this),
                                  -(hackMoveStick * degree));
 
@@ -593,7 +598,7 @@ void Nokonoko::exeCaptureSpin() {
 void Nokonoko::exeCaptureSpinEnd() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "SpinEnd");
-        mCapTargetInfo->setFollowLockOnMtx("Head", t1, t2);
+        mCapTargetInfo->setFollowLockOnMtx("Head", gShellLockOnOffset1, gShellLockOnOffset2);
     }
 
     updateNokonokoGravity(this, nullptr);
