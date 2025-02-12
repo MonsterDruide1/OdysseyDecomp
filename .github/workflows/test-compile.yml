@@ -20,6 +20,13 @@ jobs:
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install toml
+    - name: Set up cache for toolchain
+      uses: actions/cache@v4
+      with:
+        key: tools-libs
+        path: |
+          toolchain/bin
+          toolchain/include
     - name: Run simplified setup
       run: tools/setup.py --project
     - name: Create testing source files
