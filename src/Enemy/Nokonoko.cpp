@@ -103,6 +103,7 @@ void Nokonoko::attackSensor(al::HitSensor* other, al::HitSensor* self) {
 const sead::Vector3f t1 = {0.0f, 72.0f, 37.0f};
 const sead::Vector3f t2 = {-18.0f, 0.0f, 0.0f};
 
+// NON_MATCHING
 bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al::HitSensor* other) {
     if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(message, mCapTargetInfo))
         return true;
@@ -407,6 +408,7 @@ void Nokonoko::exeCaptureJumpStart() {
         al::setNerve(this, &NrvNokonoko.CaptureJump);
 }
 
+// NON_MATCHING
 void Nokonoko::exeCaptureJump() {
     if (al::isFirstStep(this))
         al::startAction(this, al::isNerve(this, &NrvNokonoko.CaptureWalk) ? "Jump" : "Swim");
