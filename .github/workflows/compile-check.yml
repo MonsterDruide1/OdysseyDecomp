@@ -45,13 +45,6 @@ jobs:
       uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       with:
         cache: false
-    - name: Set up rust caching
-      uses: Swatinem/rust-cache@v2
-      with:
-        workspaces: "tools/common/viking"
-        cache-directories: |
-          toolchain/clang-3.9.1
-          toolchain/clang-4.0.1
     - name: Download main.nso from secret
       env:
         EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}

@@ -27,7 +27,7 @@
           pkg-config
 
           rustToolchain
-          (python3.withPackages (python-pkgs: [
+          (python311.withPackages (python-pkgs: [
             python-pkgs.capstone
             python-pkgs.colorama
             python-pkgs.cxxfilt
