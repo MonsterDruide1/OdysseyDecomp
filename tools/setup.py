@@ -2,14 +2,23 @@
 
 import argparse
 import hashlib
+import os
+import shutil
 from pathlib import Path
 import subprocess
 from typing import Optional
 from common import setup_common as setup
 from enum import Enum
+import platform
+import tarfile
+import tempfile
+import urllib.request
+import urllib.parse
+from common.util.config import get_repo_root
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
+CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1"
 
 class Version(Enum):
     VER_100 = "1.0"
@@ -59,8 +68,54 @@ def prepare_executable(original_nso: Optional[Path]):
 def get_build_dir():
     return setup.ROOT / "build"
 
+def setup_cached_tools(viking_from_source):
+
+    def exists_tool(tool_name):
+        return os.path.isfile(f"{get_repo_root()}/tools/{tool_name}")
+
+    def exists_toolchain_file(file_path_rel):
+        return os.path.isfile(f"{get_repo_root()}/toolchain/{file_path_rel}")
+
+    def remove_old_toolchain():
+        if exists_toolchain_file("clang-3.9.1/bin/clang"):
+            input("Removing toolchain/clang-3.9.1 since full toolchains are no longer needed (Press enter to continue)")
+            shutil.rmtree(f"{get_repo_root()}/toolchain/clang-3.9.1")
+        if exists_toolchain_file("clang-4.0.1/bin/lld"):
+            input("Removing toolchain/clang-4.0.1 since full toolchains are no longer needed (Press enter to continue)")
+            shutil.rmtree(f"{get_repo_root()}/toolchain/clang-4.0.1")
+
+    remove_old_toolchain()
+    with tempfile.TemporaryDirectory() as tmpdir:
+        if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
+            print(">>> Downloading clang, lld and viking...")
+            path = tmpdir + "/OdysseyDecomp-cache-bin.tar.xz"
+            url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-binaries_{platform.system()}.tar.xz")
+            urllib.request.urlretrieve(url, path)
+
+            print(">>> extracting tools...")
+            with tarfile.open(path) as f:
+                f.extractall(f"{get_repo_root()}/toolchain/")
+            if viking_from_source:
+                setup.install_viking()
+            else:
+                if not exists_tool("check"):
+                    os.symlink(f"{get_repo_root()}/toolchain/bin/check", f"{get_repo_root()}/tools/check")
+                if not exists_tool("decompme"):
+                    os.symlink(f"{get_repo_root()}/toolchain/bin/decompme", f"{get_repo_root()}/tools/decompme")
+                if not exists_tool("listsym"):
+                    os.symlink(f"{get_repo_root()}/toolchain/bin/listsym", f"{get_repo_root()}/tools/listsym")
+
+        if not exists_toolchain_file("include/arm_neon.h"):
+            print(">>> Downloading llvm-3.9 libc++ headers...")
+            path = tmpdir + "/OdysseyDecomp-libcxx-headers.tar.xz"
+            url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-libcxx-headers.tar.xz")
+            urllib.request.urlretrieve(url, path)
+            print(">>> extracting libc++ headers...")
+            with tarfile.open(path) as f:
+                f.extractall(f"{get_repo_root()}/toolchain/")
+
 def create_build_dir(ver, cmake_backend):
-    if(ver != Version.VER_100): return # TODO remove this when multiple versions should be built
+    if(ver != Version.VER_100): return # TODO: remove this when multiple versions should be built
     build_dir = get_build_dir()
     if build_dir.is_dir():
         print(">>> build directory already exists: nothing to do")
@@ -78,14 +133,14 @@ def main():
     parser.add_argument("--cmake_backend", type=str,
                         help="CMake backend to use (Ninja, Unix Makefiles, etc.)", nargs="?", default="Ninja")
     parser.add_argument("--project-only", action="store_true",
-                        help="Disable viking and original NSO setup")
+                    help="Disable original NSO setup")
+    parser.add_argument("--viking-from-src", action="store_true",
+                    help="Build viking from source instead of using a prebuilt binary")
     args = parser.parse_args()
-    
+
+    setup_cached_tools(args.viking_from_src)
     if not args.project_only:
-        setup.install_viking()
         prepare_executable(args.original_nso)
-    setup.set_up_compiler("3.9.1")
-    setup.set_up_compiler("4.0.1")
     create_build_dir(Version.VER_100, args.cmake_backend)
     create_build_dir(Version.VER_101, args.cmake_backend)
     create_build_dir(Version.VER_110, args.cmake_backend)
