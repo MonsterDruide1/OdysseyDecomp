@@ -56,6 +56,8 @@ public:
                                           const sead::Matrix34f&);
     CameraTicket* createCameraFromFactory(CameraPoser*, const PlacementId*, const char*, s32,
                                           const sead::Matrix34f&, bool);
+    CameraTicket* createCamera(CameraPoser*, const PlacementId*, const char*, s32,
+                               const sead::Matrix34f&, bool);
     CameraTicket* createObjectCamera(const PlacementId*, const char*, const char*, s32,
                                      const sead::Matrix34f&);
     CameraTicket* createObjectEntranceCamera(const PlacementId*, const char*,
@@ -80,6 +82,8 @@ public:
 
     SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
 
+    SceneCameraCtrl* getSceneCameraCtrl() const { return mSceneCameraCtrl; }
+
 private:
     s32 mCountCameraPoseUpdaters;
     SceneCameraInfo* mSceneCameraInfo;
@@ -102,4 +106,7 @@ private:
     CameraInSwitchOnAreaDirector* mInSwitchOnAreaDirector;
     void* unk2;
 };
+
+static_assert(sizeof(CameraDirector) == 0xA8);
+
 }  // namespace al
