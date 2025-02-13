@@ -3,8 +3,8 @@
 #include "Library/Camera/ActorCameraSubTarget.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Project/Camera/CameraSubTargetTurnParam.h"
 
 namespace al {

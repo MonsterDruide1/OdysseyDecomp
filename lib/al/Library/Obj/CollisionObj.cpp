@@ -1,9 +1,7 @@
 #include "Library/Obj/CollisionObj.h"
 
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/Resource/Resource.h"
 
 namespace al {
 CollisionObj::CollisionObj(const ActorInitInfo& info, Resource* res, const char* collisionFileName,

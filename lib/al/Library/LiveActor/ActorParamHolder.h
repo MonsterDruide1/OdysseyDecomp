@@ -17,4 +17,7 @@ public:
 private:
     ActorParamHolder(LiveActor* actor, const Resource* resource, const char* suffix);
 };
+
+f32* findActorParamF32(const LiveActor* actor, const char* paramName);  // TODO: check return type
+s32* findActorParamS32(const LiveActor* actor, const char* paramName);
 }  // namespace al
