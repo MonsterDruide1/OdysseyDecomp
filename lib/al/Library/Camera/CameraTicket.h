@@ -32,6 +32,10 @@ public:
 
     s32 getPriority() const { return mPriority; }
 
+    bool getActive() const { return mIsActiveCamera; }
+
+    void setActive(bool state) { mIsActiveCamera = state; }
+
 private:
     CameraPoser* mPoser;
     const CameraTicketId* mTicketId;

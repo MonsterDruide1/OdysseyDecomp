@@ -26,6 +26,17 @@ f32 Projection::getFar() const {
     return mBase.getFar();
 }
 
+/*
+void Projection::setProjTBLRNF(f32 top, f32 bottom, f32 left, f32 right, f32 near, f32 far) {
+    mNear = near;
+    mFar = far;
+    mBase.setNear(near);
+    mBase.setFar(far);
+    mBase.setDirty();
+    mBase.setTBLR(top, bottom, left, right);
+    mBase.top
+}*/
+
 void Projection::setFovy(f32 fovy) {
     mFovy = fovy;
     mFocalLength = tanf(fovy * 0.5f);

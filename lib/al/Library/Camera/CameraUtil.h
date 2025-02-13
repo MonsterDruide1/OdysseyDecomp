@@ -6,29 +6,29 @@
 #include <math/seadVector.h>
 
 namespace al {
-class CameraTicket;
-class ICameraInput;
+class ActorBackAroundCameraSubTarget;
+class ActorCameraSubTarget;
+class ActorCameraTarget;
+class ActorInitInfo;
+class ActorMatrixCameraTarget;
+class CameraDistanceCurve;
 class CameraFlagCtrl;
-class IUseCamera;
+class CameraPoser;
+struct CameraPoseInfo;
 class CameraSubTargetBase;
 class CameraSubTargetTurnParam;
-class SceneCameraInfo;
-class PlacementId;
-class Resource;
-class ActorInitInfo;
-class LiveActor;
-class PlacementInfo;
-class CameraPoser;
-class CameraPoseInfo;
 class CameraTargetBase;
+class CameraTicket;
+class ICameraInput;
+class IUseCamera;
+class LiveActor;
+class PlacementId;
+class PlacementInfo;
 class Projection;
+class Resource;
+class SceneCameraInfo;
 class SimpleCameraInput;
-class ActorCameraTarget;
-class ActorMatrixCameraTarget;
-class ActorCameraSubTarget;
-class ActorBackAroundCameraSubTarget;
 class TransCameraSubTarget;
-class CameraDistanceCurve;
 
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user);
 s32 getViewNumMax(const IUseCamera* user);
