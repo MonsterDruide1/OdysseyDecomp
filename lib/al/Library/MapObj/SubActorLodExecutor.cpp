@@ -1,6 +1,6 @@
 #include "Library/MapObj/SubActorLodExecutor.h"
 
-#include "Library/LiveActor/ActorDrawFunction.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/SubActorKeeper.h"
