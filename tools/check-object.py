@@ -1,10 +1,11 @@
+#!/usr/bin/env python3
+
 import argparse
+import os
 import requests
 import csv
 import curses
-import os
 import subprocess
-import sys
 from curses import wrapper
 from io import StringIO
 
@@ -16,6 +17,8 @@ TSV_PATH = 'data/odyssey_mappings.tsv'
 CSV_PATH = 'data/odyssey_functions.csv'
 
 args = None
+
+# Process spreadsheet
 
 def download_sheets_data():
     url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=tsv&gid={SHEET_GID}"
@@ -40,11 +43,7 @@ def read_odyssey_data(odyssey_functions_path):
 
 def extract_class_name(function_name):
     first_paren_index = function_name.find('(')
-    if first_paren_index != -1:
-        truncated_name = function_name[:first_paren_index]
-    else:
-        truncated_name = function_name
-
+    truncated_name = function_name[:first_paren_index] if first_paren_index != -1 else function_name
     split_by_colons = truncated_name.split('::')
     
     if len(split_by_colons) > 2:
@@ -53,6 +52,14 @@ def extract_class_name(function_name):
         return '::'.join(split_by_colons[:1]) + '::'
     else:
         return ''
+
+def find_mangled_name_in_odyssey_functions(start_address):
+    with open(CSV_PATH, 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if int(row['Address'], 16) == start_address:
+                return row['Name']
+    return None
 
 def preprocess_tsv(spreadsheet_functions_path, odyssey_functions_path):
     odyssey_data = read_odyssey_data(odyssey_functions_path)
@@ -93,14 +100,7 @@ def preprocess_tsv(spreadsheet_functions_path, odyssey_functions_path):
     
     return processed_data, unorganized_data
 
-
-def find_mangled_name_in_odyssey_functions(start_address):
-    with open(CSV_PATH, 'r', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if int(row['Address'], 16) == start_address:
-                return row['Name']
-    return None
+# Processed data buffer
 
 def create_buffer(functions):
     buffer = []
@@ -123,81 +123,13 @@ def create_buffer(functions):
             color = 2  # Green
         elif quality == 'U':
             color = 1  # Red
-        elif quality == 'M' or quality == 'm':
+        elif quality in ['M', 'm']:
             color = 3  # Yellow
 
         formatted_string = f"{quality} {function}\n"
         buffer.append((formatted_string, color))
 
     return buffer, completed_functions, total_functions, completed_size_bytes, object_size_bytes
-
-
-def run_tools_check(name):
-    command = f"tools/check {name}"
-    subprocess.run(command, shell=True, check=False, cwd=os.getcwd())
-
-def parse_arguments():
-    parser = argparse.ArgumentParser(description='Fetch functions from a Google Sheets document')
-    parser.add_argument('folder_object', nargs='?', default=None, type=str, help='Folder/Object to search for')
-    parser.add_argument('-r', '--refresh', action='store_true', help='Redownload the TSV file')
-    parser.add_argument('-f', '--folder_view', action='store_true', help='View folders instead of functions')
-    parser.add_argument('-m', '--mismatch_view', action='store_true', help='View mismatched functions')
-
-    args = parser.parse_args()
-
-    if args.folder_object is None and not args.folder_view and not args.mismatch_view:
-        parser.error("The following arguments are required: folder_object")
-
-    return args
-
-def setup_curses():
-    curses.start_color()
-    curses.use_default_colors()
-    curses.init_pair(1, curses.COLOR_RED, -1)    # -1 indicates the default background color
-    curses.init_pair(2, curses.COLOR_GREEN, -1)
-    curses.init_pair(3, curses.COLOR_YELLOW, -1)
-    curses.init_pair(4, curses.COLOR_WHITE, -1)
-    curses.curs_set(0)
-
-def load_tsv_data(args):
-    if args.refresh or not os.path.exists(TSV_PATH):
-        tsv_data = download_sheets_data()
-        with open(TSV_PATH, 'w', encoding='utf-8') as file:
-            file.write(tsv_data)
-    else:
-        if os.path.exists(TSV_PATH):
-            with open(TSV_PATH, 'r', encoding='utf-8') as file:
-                tsv_data = file.read()
-        else:
-            raise Exception(f"Cannot read {TSV_PATH}")
-    return tsv_data
-
-def main(stdscr):
-    args = parse_arguments()
-    stdscr.erase()
-    stdscr.keypad(True)
-    setup_curses()
-
-    window = curses.newwin(curses.LINES-1, curses.COLS-1, 0, 0)
-    window.keypad(True)
-    window.timeout(100)
-
-    tsv_data = load_tsv_data(args)
-    folders, unorganized_functions = preprocess_tsv(TSV_PATH, CSV_PATH)
-
-    if args.mismatch_view:
-        mismatch_view(stdscr, window, folders)
-    elif args.folder_view:
-        if args.folder_object:
-            folder_object = folder_view(stdscr, window, folders, [args.folder_object])
-        else:
-            all_folders = [folder for folder in folders]
-            folder_object = folder_view(stdscr, window, folders, all_folders)
-        if folder_object is not None:
-            function_view(stdscr, window, folders, folder_object, unorganized_functions)
-    else:
-        function_view(stdscr, window, folders, args.folder_object, unorganized_functions)
-
 
 def create_folder_buffer(folders, folder):
     if folder not in folders:
@@ -243,6 +175,28 @@ def create_folder_buffer(folders, folder):
 
         buffer.append((f"{progress_string} | {percentage_string} | {folder}/{obj.ljust(30)}", color))
     return buffer, total_completed_size, total_size, total_completed_functions, total_functions
+
+def create_mismatch_buffer(folders):
+    buffer = []
+
+    longest_object_length = max(len(obj) for objects in folders.values() for obj in objects.keys())
+
+    for folder, objects in folders.items():
+        for obj, functions in objects.items():
+            for function_name, start_address, size, quality in functions:
+                if quality in ['M', 'm']:
+                    object_name = f'{folder}/{obj}'
+
+                    if quality == 'm':
+                        color = 2  # Green
+                    else:
+                        color = 3  # Yellow
+
+                    buffer.append((
+                        f"{object_name.ljust(longest_object_length)} | {quality} {hex(start_address).ljust(8)} {function_name.ljust(30)}",
+                        color
+                    ))
+    return buffer
 
 def scroll_down(current_row, first_visible_row, max_display_rows, buffer):
     if current_row < len(buffer) - 1:
@@ -296,9 +250,15 @@ def display_items(window, max_display_rows, first_visible_row, filtered_buffer, 
         else:
             window.addstr(i - first_visible_row, 0, string, curses.color_pair(color))
 
+# Main functionality
+
+def run_tools_check(name):
+    command = f"tools/check {name}"
+    subprocess.run(command, shell=True, check=False, cwd=os.getcwd())
+
 def create_header_file(folder, object_name, functions):
     if folder.startswith('Library') or folder.startswith('Project'):
-        path = os.path.join('lib/al/include', folder, f'{object_name}.h')
+        path = os.path.join('lib/al', folder, f'{object_name}.h')
     else:
         path = os.path.join('src', folder, f'{object_name}.h')
 
@@ -317,6 +277,32 @@ def create_header_file(folder, object_name, functions):
         print(f"Created {os.path.abspath(path)}")
     else:
         print("Header file already exists!")
+
+def main(stdscr):
+    args = parse_arguments()
+    stdscr.erase()
+    stdscr.keypad(True)
+    setup_curses()
+
+    window = curses.newwin(curses.LINES-1, curses.COLS-1, 0, 0)
+    window.keypad(True)
+    window.timeout(100)
+
+    tsv_data = load_tsv_data(args)
+    folders, unorganized_functions = preprocess_tsv(TSV_PATH, CSV_PATH)
+
+    if args.mismatch_view:
+        mismatch_view(stdscr, window, folders)
+    elif args.folder_view:
+        if args.folder_object:
+            folder_object = folder_view(stdscr, window, folders, [args.folder_object])
+        else:
+            all_folders = [folder for folder in folders]
+            folder_object = folder_view(stdscr, window, folders, all_folders)
+        if folder_object is not None:
+            function_view(stdscr, window, folders, folder_object, unorganized_functions)
+    else:
+        function_view(stdscr, window, folders, args.folder_object, unorganized_functions)
 
 def function_view(stdscr, window, folders, folder_object, unorganized_functions):
     if not folder_object.endswith('.o'):
@@ -394,8 +380,6 @@ def function_view(stdscr, window, folders, folder_object, unorganized_functions)
 
         current_row, first_visible_row, filtered_buffer, search_string = handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string)
 
-
-
 def folder_view(stdscr, window, folders, folder_list):
     all_buffers = []
     total_completed_size = 0
@@ -454,28 +438,6 @@ def folder_view(stdscr, window, folders, folder_list):
         else:
             current_row, first_visible_row, filtered_buffers, search_string = result
 
-def create_mismatch_buffer(folders):
-    buffer = []
-
-    longest_object_length = max(len(obj) for objects in folders.values() for obj in objects.keys())
-
-    for folder, objects in folders.items():
-        for obj, functions in objects.items():
-            for function_name, start_address, size, quality in functions:
-                if quality in ['M', 'm']:
-                    object_name = f'{folder}/{obj}'
-
-                    if quality == 'm':
-                        color = 2  # Green
-                    else:
-                        color = 3  # Yellow
-
-                    buffer.append((
-                        f"{object_name.ljust(longest_object_length)} | {quality} {hex(start_address).ljust(8)} {function_name.ljust(30)}",
-                        color
-                    ))
-    return buffer
-
 def mismatch_view(stdscr, window, folders):
     buffer = create_mismatch_buffer(folders)
     current_row = 0
@@ -516,6 +478,44 @@ def mismatch_view(stdscr, window, folders):
             result = handle_key_press(key, current_row, first_visible_row, max_display_rows, buffer, search_string)
             if result is not None:
                 current_row, first_visible_row, filtered_buffer, search_string = result
+
+# Setup
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Check individual object files in the decomp')
+    parser.add_argument('folder_object', nargs='?', default=None, type=str, help='Folder/Object to search for')
+    parser.add_argument('-r', '--refresh', action='store_true', help='Redownload the TSV file')
+    parser.add_argument('-f', '--folder_view', action='store_true', help='View folders instead of functions')
+    parser.add_argument('-m', '--mismatch_view', action='store_true', help='View mismatched functions')
+
+    args = parser.parse_args()
+
+    if args.folder_object is None and not args.folder_view and not args.mismatch_view:
+        parser.error("The following arguments are required: folder_object")
+
+    return args
+
+def setup_curses():
+    curses.start_color()
+    curses.use_default_colors()
+    curses.init_pair(1, curses.COLOR_RED, -1)    # -1 indicates the default background color
+    curses.init_pair(2, curses.COLOR_GREEN, -1)
+    curses.init_pair(3, curses.COLOR_YELLOW, -1)
+    curses.init_pair(4, curses.COLOR_WHITE, -1)
+    curses.curs_set(0)
+
+def load_tsv_data(args):
+    if args.refresh or not os.path.exists(TSV_PATH):
+        tsv_data = download_sheets_data()
+        with open(TSV_PATH, 'w', encoding='utf-8') as file:
+            file.write(tsv_data)
+    else:
+        if os.path.exists(TSV_PATH):
+            with open(TSV_PATH, 'r', encoding='utf-8') as file:
+                tsv_data = file.read()
+        else:
+            raise Exception(f"Cannot read {TSV_PATH}")
+    return tsv_data
 
 if __name__ == "__main__":
     args = parse_arguments()
