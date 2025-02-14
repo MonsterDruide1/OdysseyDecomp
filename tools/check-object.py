@@ -2,12 +2,15 @@
 
 import argparse
 import os
-import requests
+from pathlib import Path
+import urllib.request
+import urllib.parse
 import csv
 import curses
 import subprocess
 from curses import wrapper
 from io import StringIO
+import re
 
 # SMO Decomp Function Map: https://docs.google.com/spreadsheets/d/198vrkkDqktrRDLInSAkK2HsG5hy1Fl8cmCNRMND3nCY/edit?gid=4087080#gid=4087080
 SHEET_ID = '198vrkkDqktrRDLInSAkK2HsG5hy1Fl8cmCNRMND3nCY'
@@ -23,11 +26,7 @@ args = None
 def download_sheets_data():
     url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=tsv&gid={SHEET_GID}"
     print(f"Downloading function map from {url}")
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.text
-    else:
-        raise Exception(f"Failed to download Google Sheet: {response.status_code}")
+    urllib.request.urlretrieve(url, TSV_PATH)
 
 def read_odyssey_data(odyssey_functions_path):
     odyssey_data = {}
@@ -256,6 +255,10 @@ def run_tools_check(name):
     command = f"tools/check {name}"
     subprocess.run(command, shell=True, check=False, cwd=os.getcwd())
 
+def format_function_name(name):
+    formatted_name = re.sub(r"([:\w]+) const([\*&])", r"const \1\2", name);
+    return formatted_name
+
 def create_header_file(folder, object_name, functions):
     if folder.startswith('Library') or folder.startswith('Project'):
         path = os.path.join('lib/al', folder, f'{object_name}.h')
@@ -272,7 +275,8 @@ def create_header_file(folder, object_name, functions):
 
             header_file.write("/*\n")
             for function_name, _, _, _ in functions:
-                header_file.write("{}\n".format(function_name))
+                formatted_name = format_function_name(function_name)
+                header_file.write("{}\n".format(formatted_name))
             header_file.write("*/\n")
         print(f"Created {os.path.abspath(path)}")
     else:
@@ -506,15 +510,13 @@ def setup_curses():
 
 def load_tsv_data(args):
     if args.refresh or not os.path.exists(TSV_PATH):
-        tsv_data = download_sheets_data()
-        with open(TSV_PATH, 'w', encoding='utf-8') as file:
-            file.write(tsv_data)
+        download_sheets_data()
+
+    if os.path.exists(TSV_PATH):
+        with open(TSV_PATH, 'r', encoding='utf-8') as file:
+            tsv_data = file.read()
     else:
-        if os.path.exists(TSV_PATH):
-            with open(TSV_PATH, 'r', encoding='utf-8') as file:
-                tsv_data = file.read()
-        else:
-            raise Exception(f"Cannot read {TSV_PATH}")
+        raise Exception(f"Cannot read {TSV_PATH}")
     return tsv_data
 
 if __name__ == "__main__":
