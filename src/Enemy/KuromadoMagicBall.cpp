@@ -4,7 +4,12 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
+<<<<<<< HEAD
 #include "Library/LiveActor/ActorPoseUtil.h"
+=======
+#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorSensorMsgFunction.h"
+>>>>>>> 9ae314e (PR: fix clang-format for headers with changed include)
 #include "Library/LiveActor/ActorSensorUtil.h"
 
 #include "Util/SensorMsgFunction.h"
