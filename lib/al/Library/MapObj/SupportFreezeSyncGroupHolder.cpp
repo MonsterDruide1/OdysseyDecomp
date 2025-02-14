@@ -1,7 +1,7 @@
 #include "Library/MapObj/SupportFreezeSyncGroupHolder.h"
 
 #include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Project/LiveActor/SupportFreezeSyncGroup.h"
 
 namespace al {
