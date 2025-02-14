@@ -6,7 +6,7 @@
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"
 
 const al::EnemyStateBlowDownParam sEnemyStateBlowDownParam = al::EnemyStateBlowDownParam();

@@ -4,7 +4,7 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Math/MathUtil.h"

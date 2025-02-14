@@ -14,7 +14,7 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Math/MathUtil.h"

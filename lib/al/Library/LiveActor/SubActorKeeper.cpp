@@ -4,7 +4,7 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Obj/BreakModel.h"
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/DepthShadowModel.h"
