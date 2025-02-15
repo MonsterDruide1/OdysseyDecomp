@@ -112,8 +112,8 @@ void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f&, f32,
 void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
 void reboundVelocityPart(LiveActor* actor, f32, f32);
 void reboundVelocityPart(LiveActor* actor, f32, f32, f32, f32);
-void reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
-void reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
+bool reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
+bool reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
 void reboundVelocityFromTriangles(LiveActor* actor, f32, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&,
