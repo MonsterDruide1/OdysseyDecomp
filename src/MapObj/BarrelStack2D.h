@@ -21,3 +21,5 @@ public:
 private:
     ActorDimensionKeeper* mActorDimensionKeeper = nullptr;
 };
+
+static_assert(sizeof(BarrelStack2D) == 0x118);
