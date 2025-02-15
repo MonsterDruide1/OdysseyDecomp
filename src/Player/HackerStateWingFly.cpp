@@ -29,7 +29,7 @@ NERVES_MAKE_STRUCT(HostType, FlyRiseToHighest, Fall, Trample, UpperPunch, FlyRis
                    FallFly);
 }  // namespace
 
-bool isTriggerHacker(IUsePlayerHack** hacker) {
+inline bool isTriggerHacker(IUsePlayerHack** hacker) {
     return rs::isTriggerHackAnyButton(*hacker) || rs::isTriggerHackSwing(*hacker);
 }
 
