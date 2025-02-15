@@ -62,7 +62,7 @@ private:
     HackerJudgeNormalFall* mJudgeNormalFall = nullptr;
     al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilter = nullptr;
 
-    bool mIsInLove = false;
+    bool mIsKeepSwoon = false;
     s32 mCoinsLeft = 30;
     s32 mHackCoinAppearCounter = 0;
     s32 mMaterialIndex = 0;

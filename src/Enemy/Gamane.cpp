@@ -475,12 +475,12 @@ void Gamane::exeSwoon() {
         al::calcFrontDir(&frontDir, this);
         velocity += frontDir * 0.0f;
         al::setVelocity(this, velocity);
-        mIsInLove = false;
+        mIsKeepSwoon = false;
     }
 
     updateMovement();
 
-    if (al::updateNerveState(this) && !mIsInLove) {
+    if (al::updateNerveState(this) && !mIsKeepSwoon) {
         if (al::calcDistanceH(this, al::getPlayerActor(this, 0)) < 1000.0f)
             al::setNerve(this, &NrvGamane.Runaway);
         else
