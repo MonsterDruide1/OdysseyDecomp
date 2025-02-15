@@ -285,13 +285,13 @@ void Coin::appearPopUpWithoutHitReaction() {
 void Coin::appearPopUpVelocity() {
     appearPopUp();
 
-    sead::Vector3f fronDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
+    sead::Vector3f frontDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
     sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
-    al::calcFrontDir(&fronDir, this);
+    al::calcFrontDir(&frontDir, this);
     al::calcUpDir(&upDir, this);
     f32 frontOffset = al::getRandom(10.0f, 15.0f);
     f32 upOffset = al::getRandom(20.0f, 30.0f);
-    al::setVelocity(this, frontOffset * fronDir + upOffset * upDir);
+    al::setVelocity(this, frontOffset * frontDir + upOffset * upDir);
 }
 
 void Coin::appearAbove() {
