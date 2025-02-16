@@ -50,11 +50,11 @@ NERVES_MAKE_STRUCT(Nokonoko, Wait, Swoon, CaptureSpin, CaptureSpinCapRethrow, Di
                    CaptureJumpEnd, CaptureSpinDrift, CaptureSpinEnd);
 }  // namespace
 
-const sead::Vector3f gShellLockOnOffset1 = {0.0f, 72.0f, 37.0f};
-const sead::Vector3f gShellLockOnOffset2 = {-18.0f, 0.0f, 0.0f};
+const sead::Vector3f sShellLockOnOffset = {0.0f, 72.0f, 37.0f};
+const sead::Vector3f sShellLockOnRotation = {-18.0f, 0.0f, 0.0f};
 
-const sead::Vector3f gShellSpinLockOnOffset1 = {0.0f, 100.0f, 0.0f};
-const sead::Vector3f gShellSpinLockOnOffset2 = {0.0f, 0.0f, 0.0f};
+const sead::Vector3f sShellSpinLockOnOffset = {0.0f, 100.0f, 0.0f};
+const sead::Vector3f sShellSpinLockOnRotation = {0.0f, 0.0f, 0.0f};
 
 Nokonoko::Nokonoko(const char* name) : al::LiveActor(name) {}
 
@@ -69,9 +69,9 @@ void Nokonoko::init(const al::ActorInitInfo& info) {
 
     mWaterSurfaceFinder = new al::WaterSurfaceFinder(this);
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
-    mEnemyStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, false);
+    mStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, false);
 
-    al::initNerveState(this, mEnemyStateSwoon, &NrvNokonoko.Swoon, "気絶");
+    al::initNerveState(this, mStateSwoon, &NrvNokonoko.Swoon, "気絶");
     makeActorAlive();
 }
 
@@ -87,19 +87,28 @@ void Nokonoko::attackSensor(al::HitSensor* other, al::HitSensor* self) {
         al::sendMsgPushAndKillVelocityToTarget(this, other, self);
     }
 
-    if (mHackActor &&
-        (!al::isSensorEnemyBody(other) || (!rs::sendMsgHackerNoReaction(mHackActor, self, other) &&
-                                           !rs::sendMsgHackAttackMapObj(self, other))) &&
-        (al::isNerve(this, &NrvNokonoko.CaptureSpin) ||
-         al::isNerve(this, &NrvNokonoko.CaptureSpinCapRethrow))) {
+    if (!mHackActor)
+        return;
+
+    if (al::isSensorEnemyBody(other)) {
+        if (rs::sendMsgHackerNoReaction(mHackActor, self, other))
+            return;
+        if (rs::sendMsgHackAttackMapObj(self, other))
+            return;
+    }
+
+    if (al::isNerve(this, &NrvNokonoko.CaptureSpin) ||
+        al::isNerve(this, &NrvNokonoko.CaptureSpinCapRethrow)) {
         rs::sendMsgCapItemGet(self, other);
 
         if (al::isSensorName(other, "AttackSpin")) {
-            if (al::isSensorEnemyBody(self) &&
-                (rs::sendMsgHackAttack(self, other) ||
-                 (al::getVelocity(this).y < -1.0f &&
-                  al::sendMsgPlayerAttackTrample(self, other, nullptr))))
-                return;
+            if (al::isSensorEnemyBody(self)) {
+                if (rs::sendMsgHackAttack(self, other))
+                    return;
+                if (al::getVelocity(this).y < -1.0f &&
+                    al::sendMsgPlayerAttackTrample(self, other, nullptr))
+                    return;
+            }
             if (al::isSensorMapObj(self))
                 rs::sendMsgHackUpperPunch(self, other);
         }
@@ -141,11 +150,11 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
     }
 
     if (al::isNerve(this, &NrvNokonoko.Swoon)) {
-        if (mEnemyStateSwoon->tryReceiveMsgEnableLockOn(message))
+        if (mStateSwoon->tryReceiveMsgEnableLockOn(message))
             return true;
-        if (mEnemyStateSwoon->tryReceiveMsgEndSwoon(message))
+        if (mStateSwoon->tryReceiveMsgEndSwoon(message))
             return true;
-        if (mEnemyStateSwoon->tryReceiveMsgStartHack(message)) {
+        if (mStateSwoon->tryReceiveMsgStartHack(message)) {
             al::invalidateClipping(this);
             mHackActor = rs::startHack(other, self, nullptr);
             rs::startHackStartDemo(mHackActor, this);
@@ -197,11 +206,11 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
 
 void Nokonoko::endCapture() {
     rs::endHack(&mHackActor);
-    mCapTargetInfo->setFollowLockOnMtx("Head", gShellLockOnOffset1, gShellLockOnOffset2);
+    mCapTargetInfo->setFollowLockOnMtx("Head", sShellLockOnOffset, sShellLockOnRotation);
     al::validateClipping(this);
 }
 
-void updateNokonokoGravity(al::LiveActor* self, al::WaterSurfaceFinder* waterSurfaceFinder) {
+void updateNokonokoVelocity(al::LiveActor* self, al::WaterSurfaceFinder* waterSurfaceFinder) {
     if (!waterSurfaceFinder || !waterSurfaceFinder->isFoundSurface()) {
         if (al::isInWater(self)) {
             al::addVelocityToGravity(self, 0.1f);
@@ -226,17 +235,21 @@ void updateNokonokoGravity(al::LiveActor* self, al::WaterSurfaceFinder* waterSur
     if (al::isOnGround(self, 0)) {
         sead::Vector3f collidedGroundNormal = al::getCollidedGroundNormal(self);
         if (collidedGroundNormal.dot(al::getVelocity(self)) < 0.0f) {
-            sead::Vector3f parallelVec;
-            al::parallelizeVec(&parallelVec, collidedGroundNormal, al::getVelocity(self));
-            al::addVelocity(self, collidedGroundNormal * (parallelVec.length() * 0.9f));
+            sead::Vector3f upVel;
+            al::parallelizeVec(&upVel, collidedGroundNormal, al::getVelocity(self));
+            al::addVelocity(self, collidedGroundNormal * (upVel.length() * 0.9f));
         }
 
-        f32 scale = 0.99f;
+        f32 scale;
         if (al::isNerve(self, &NrvNokonoko.CaptureSpin))
             scale = 0.98f;
-        else if (!al::isNerve(self, &NrvNokonoko.CaptureSpinDrift) &&
-                 !al::isNerve(self, &NrvNokonoko.CaptureSpinEnd))
-            scale = al::isNerve(self, &NrvNokonoko.CaptureSpinStandbyStart) ? 0.95f : 0.9f;
+        else if (al::isNerve(self, &NrvNokonoko.CaptureSpinDrift) ||
+                 al::isNerve(self, &NrvNokonoko.CaptureSpinEnd))
+            scale = 0.99f;
+        else if (al::isNerve(self, &NrvNokonoko.CaptureSpinStandbyStart))
+            scale = 0.95f;
+        else
+            scale = 0.9f;
         al::scaleVelocity(self, scale);
     } else
         al::scaleVelocity(self, 0.998f);
@@ -266,10 +279,10 @@ void Nokonoko::exeWait() {
         al::calcRailMoveDir(&moveDirection, this);
 
         switch (mMoveType) {
-        case MoveType::Loop:
+        case al::MoveType::Loop:
             al::moveSyncRailLoop(this, 5.0f);
             break;
-        case MoveType::Turn: {
+        case al::MoveType::Turn: {
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
             if (al::isParallelDirection(moveDirection, sead::Vector3f::ey, 0.01f) ||
@@ -285,14 +298,14 @@ void Nokonoko::exeWait() {
         if (!al::isParallelDirection(moveDirection, sead::Vector3f::ey, 0.01f))
             al::turnToRailDir(this, al::calcNerveRate(this, 60) * 5.0f);
     } else
-        updateNokonokoGravity(this, nullptr);
+        updateNokonokoVelocity(this, nullptr);
 }
 
 void Nokonoko::exeSwoon() {
     if (al::updateNerveState(this))
         al::setNerve(this, &NrvNokonoko.Wait);
     else
-        updateNokonokoGravity(this, nullptr);
+        updateNokonokoVelocity(this, nullptr);
 }
 
 void Nokonoko::exeCaptureStart() {
@@ -330,7 +343,7 @@ void Nokonoko::exeCaptureWait() {
         return;
     }
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
 
     if (rs::isHoldHackAction(mHackActor)) {
         al::setNerve(this, &NrvNokonoko.CaptureSpinStandbyStart);
@@ -351,9 +364,14 @@ void Nokonoko::exeCaptureWait() {
     }
 
     if (updateAccelStick() && al::isOnGround(this, 0)) {
-        al::setNerve(this, al::isNerve(this, &NrvNokonoko.CaptureWait) ?
-                               &NrvNokonoko.CaptureWalk :
-                               (al::Nerve*)&NrvNokonoko.CaptureSwimWalk);
+        al::Nerve* nerve;
+
+        if (al::isNerve(this, &NrvNokonoko.CaptureWait))
+            nerve = &NrvNokonoko.CaptureWalk;
+        else
+            nerve = &NrvNokonoko.CaptureSwimWalk;
+
+        al::setNerve(this, nerve);
     }
 }
 
@@ -361,7 +379,7 @@ void Nokonoko::exeCaptureWalk() {
     if (al::isFirstStep(this))
         al::startAction(this, al::isNerve(this, &NrvNokonoko.CaptureWalk) ? "Walk" : "SwimWalk");
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
 
     if (al::isNerve(this, &NrvNokonoko.CaptureWalk)) {
         if (al::isInWater(this)) {
@@ -373,7 +391,7 @@ void Nokonoko::exeCaptureWalk() {
         return;
     }
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
 
     if (rs::isHoldHackAction(mHackActor)) {
         al::setNerve(this, &NrvNokonoko.CaptureSpinStandbyStart);
@@ -394,9 +412,14 @@ void Nokonoko::exeCaptureWalk() {
     }
 
     if (!updateAccelStick()) {
-        al::setNerve(this, al::isNerve(this, &NrvNokonoko.CaptureWalk) ?
-                               &NrvNokonoko.CaptureWait :
-                               (al::Nerve*)&NrvNokonoko.CaptureSwimWait);
+        al::Nerve* nerve;
+
+        if (al::isNerve(this, &NrvNokonoko.CaptureWalk))
+            nerve = &NrvNokonoko.CaptureWait;
+        else
+            nerve = &NrvNokonoko.CaptureSwimWait;
+
+        al::setNerve(this, nerve);
     }
 }
 
@@ -406,7 +429,7 @@ void Nokonoko::exeCaptureJumpStart() {
         al::addVelocityJump(this, 10.0f);
     }
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
     updateAccelStick();
 
     if (al::isActionEnd(this))
@@ -417,7 +440,7 @@ void Nokonoko::exeCaptureJump() {
     if (al::isFirstStep(this))
         al::startAction(this, al::isNerve(this, &NrvNokonoko.CaptureJump) ? "Jump" : "Swim");
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
 
     if (al::isNerve(this, &NrvNokonoko.CaptureJump)) {
         if (al::isInWater(this)) {
@@ -432,10 +455,8 @@ void Nokonoko::exeCaptureJump() {
     updateAccelStick();
 
     if (al::isNerve(this, &NrvNokonoko.CaptureJump)) {
-        if (!al::isOnGround(this, 0))
-            return;
-
-        al::setNerve(this, &NrvNokonoko.CaptureJumpEnd);
+        if (al::isOnGround(this, 0))
+            al::setNerve(this, &NrvNokonoko.CaptureJumpEnd);
     }
 
     else if (al::isNerve(this, &NrvNokonoko.CaptureSwim)) {
@@ -454,7 +475,7 @@ void Nokonoko::exeCaptureJumpEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, "JumpEnd");
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
     updateAccelStick();
 
     if (al::isActionEnd(this))
@@ -465,15 +486,15 @@ void Nokonoko::exeCaptureSpinStandbyStart() {
     if (al::isFirstStep(this))
         al::startAction(this, "SpinStandbyStart");
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
 
     if (al::isActionEnd(this)) {
         sead::Vector3f hackerMoveDir;
         if (rs::calcHackerMoveDir(&hackerMoveDir, mHackActor, sead::Vector3f::ey))
             al::makeQuatFrontUp(al::getQuatPtr(this), hackerMoveDir, sead::Vector3f::ey);
 
-        mCapTargetInfo->setFollowLockOnMtx("Shell", gShellSpinLockOnOffset1,
-                                           gShellSpinLockOnOffset2);
+        mCapTargetInfo->setFollowLockOnMtx("Shell", sShellSpinLockOnOffset,
+                                           sShellSpinLockOnRotation);
         al::setNerve(this, &NrvNokonoko.CaptureSpin);
     }
 }
@@ -485,7 +506,7 @@ void Nokonoko::exeCaptureSpin() {
     }
 
     mWaterSurfaceFinder->update(al::getTrans(this), -al::getGravity(this), 50.0f);
-    updateNokonokoGravity(this, mWaterSurfaceFinder);
+    updateNokonokoVelocity(this, mWaterSurfaceFinder);
 
     if (mWaterSurfaceSpringCooldown)
         mWaterSurfaceSpringCooldown--;
@@ -519,9 +540,9 @@ void Nokonoko::exeCaptureSpin() {
             sead::Vector3f collidedPos = al::isCollidedWall(this) ? al::getCollidedWallPos(this) :
                                                                     al::getCollidedCeilingPos(this);
             al::startHitReactionHitEffect(this, "衝突", collidedPos);
-            sead::Vector3f parallelVec;
-            al::parallelizeVec(&parallelVec, collisionNormal, al::getVelocity(this));
-            al::addVelocity(this, parallelVec.length() * 1.9f * collisionNormal);
+            sead::Vector3f upVel;
+            al::parallelizeVec(&upVel, collisionNormal, al::getVelocity(this));
+            al::addVelocity(this, upVel.length() * 1.9f * collisionNormal);
 
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
@@ -540,39 +561,38 @@ void Nokonoko::exeCaptureSpin() {
 
     bool isOnGround = al::isOnGround(this, 0);
     bool isFoundWater = mWaterSurfaceFinder->isFoundSurface();
-    f32 velMul = (isOnGround || isFoundWater) ? 0.9f : 0.2f;
+    f32 frontVel = (isOnGround || isFoundWater) ? 0.9f : 0.2f;
 
-    al::addVelocity(this, frontDir * velMul);
+    al::addVelocity(this, frontDir * frontVel);
 
     if (al::isOnGround(this, 0) || al::isInWater(this) || mWaterSurfaceFinder->isFoundSurface()) {
         f32 hackMoveStick = rs::getHackMoveStickRaw(mHackActor);
-        f32 degree = al::isNerve(this, &NrvNokonoko.CaptureSpinDrift) ? 5.0f : 1.7f;
+        f32 rotateMaxDegree = al::isNerve(this, &NrvNokonoko.CaptureSpinDrift) ? 5.0f : 1.7f;
         if (al::isInWater(this))
-            degree = 1.6f;
+            rotateMaxDegree = 1.6f;
 
         al::rotateQuatYDirDegree(al::getQuatPtr(this), al::getQuat(this),
-                                 -(hackMoveStick * degree));
+                                 -(hackMoveStick * rotateMaxDegree));
 
         if (al::isNerve(this, &NrvNokonoko.CaptureSpinDrift)) {
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
-            if (al::calcAngleDegree(frontDir, mFrontDir) > 135.0f) {
+            if (al::calcAngleDegree(frontDir, mStartSpinDriftFrontDir) > 135.0f) {
                 sead::Quatf quat;
-                al::makeQuatFrontUp(&quat, mFrontDir, sead::Vector3f::ey);
+                al::makeQuatFrontUp(&quat, mStartSpinDriftFrontDir, sead::Vector3f::ey);
                 al::rotateQuatYDirDegree(al::getQuatPtr(this), quat,
-                                         al::sign(mSideDir.dot(frontDir)) * 135.0f);
+                                         al::sign(mStartSpinDriftSideDir.dot(frontDir)) * 135.0f);
             }
         }
     }
 
     if (!al::isNerve(this, &NrvNokonoko.CaptureSpin)) {
         if (al::isNerve(this, &NrvNokonoko.CaptureSpinDrift)) {
-            if (!al::isGreaterStep(this, 90) && rs::isHoldHackJump(mHackActor))
-                return;
-        } else if (!al::isNerve(this, &NrvNokonoko.CaptureSpinCapRethrow) ||
-                   !(al::isGreaterStep(this, 15)))
-            return;
-        al::setNerve(this, &NrvNokonoko.CaptureSpin);
+            if (al::isGreaterStep(this, 90) || !rs::isHoldHackJump(mHackActor))
+                al::setNerve(this, &NrvNokonoko.CaptureSpin);
+        } else if (al::isNerve(this, &NrvNokonoko.CaptureSpinCapRethrow) &&
+                   al::isGreaterStep(this, 15))
+            al::setNerve(this, &NrvNokonoko.CaptureSpin);
         return;
     }
 
@@ -587,8 +607,8 @@ void Nokonoko::exeCaptureSpin() {
         rs::calcHackerMoveVec(&moveVec, mHackActor, sead::Vector3f::ey);
         if (moveVec.length() > 0.5f) {
             al::startHitReaction(this, "ドリフト開始");
-            al::calcSideDir(&mSideDir, this);
-            al::calcFrontDir(&mFrontDir, this);
+            al::calcSideDir(&mStartSpinDriftSideDir, this);
+            al::calcFrontDir(&mStartSpinDriftFrontDir, this);
 
             al::setNerve(this, &NrvNokonoko.CaptureSpinDrift);
         }
@@ -598,10 +618,10 @@ void Nokonoko::exeCaptureSpin() {
 void Nokonoko::exeCaptureSpinEnd() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "SpinEnd");
-        mCapTargetInfo->setFollowLockOnMtx("Head", gShellLockOnOffset1, gShellLockOnOffset2);
+        mCapTargetInfo->setFollowLockOnMtx("Head", sShellLockOnOffset, sShellLockOnRotation);
     }
 
-    updateNokonokoGravity(this, nullptr);
+    updateNokonokoVelocity(this, nullptr);
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvNokonoko.CaptureWait);

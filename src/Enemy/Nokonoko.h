@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/Movement/MoveType.h"
 
 namespace al {
 class WaterSurfaceFinder;
@@ -11,8 +12,6 @@ class IUsePlayerHack;
 
 class Nokonoko : public al::LiveActor {
 public:
-    enum class MoveType : s32 { Loop = 0, Turn = 1 };
-
     Nokonoko(const char* name);
     void init(const al::ActorInitInfo& info) override;
     void control() override;
@@ -41,14 +40,14 @@ public:
 
 private:
     CapTargetInfo* mCapTargetInfo = nullptr;
-    EnemyStateSwoon* mEnemyStateSwoon = nullptr;
+    EnemyStateSwoon* mStateSwoon = nullptr;
     IUsePlayerHack* mHackActor = nullptr;
-    sead::Vector3f field_120 = sead::Vector3f::zero;
-    sead::Vector3f field_12C = sead::Vector3f::zero;
+    sead::Vector3f mUnused1 = sead::Vector3f::zero;
+    sead::Vector3f mUnused2 = sead::Vector3f::zero;
     s32 mHackSwingCooldown = 0;
-    MoveType mMoveType = MoveType::Loop;
-    sead::Vector3f mSideDir = sead::Vector3f::ex;
-    sead::Vector3f mFrontDir = sead::Vector3f::ez;
+    al::MoveType mMoveType = al::MoveType::Loop;
+    sead::Vector3f mStartSpinDriftSideDir = sead::Vector3f::ex;
+    sead::Vector3f mStartSpinDriftFrontDir = sead::Vector3f::ez;
     al::WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
     s32 mWaterSurfaceSpringCooldown = 0;
 };

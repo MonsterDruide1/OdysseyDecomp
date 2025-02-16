@@ -26,5 +26,5 @@ void calcRailPointPos(sead::Vector3f* out, const IUseRail* railHolder, s32 index
 s32 getRailPointNum(const IUseRail* railHolder);
 bool isRailPlusDir(const IUseRail* railHolder, const sead::Vector3f& dir);
 f32 getRailTotalLength(const IUseRail* railHolder);
-void turnToRailDir(LiveActor* actor, f32 speed);
+bool turnToRailDir(LiveActor* actor, f32 speed);
 }  // namespace al
