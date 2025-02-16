@@ -18,6 +18,7 @@ SHEET_GID = 4087080
 
 TSV_PATH = 'data/odyssey_mappings.tsv'
 CSV_PATH = 'data/odyssey_functions.csv'
+SEAD_TYPES_MAP = { "int" : "s32", "unsigned int" : "u32", "float" : "f32", "double" : "f64", "unsigned char" : "u8", "char16_t" : "char16" }
 
 args = None
 
@@ -257,6 +258,8 @@ def run_tools_check(name):
 
 def format_function_name(name):
     formatted_name = re.sub(r"([:\w]+) const([\*&])", r"const \1\2", name);
+    for old, new in SEAD_TYPES_MAP.items():
+        formatted_name = formatted_name.replace(old, new)
     return formatted_name
 
 def create_header_file(folder, object_name, functions):
@@ -272,6 +275,7 @@ def create_header_file(folder, object_name, functions):
     if not os.path.exists(path):
         with open(path, 'w') as header_file:
             header_file.write("#pragma once\n\n")
+            header_file.write("#include <basis/seadTypes.h>\n")
 
             header_file.write("/*\n")
             for function_name, _, _, _ in functions:
