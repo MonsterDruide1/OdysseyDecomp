@@ -51,7 +51,8 @@ NERVES_MAKE_STRUCT(Mummy, Sleep, SleepShineStop, SleepShine, Walk, WalkStart, Bl
                    HalfReaction, HeadLost, AppearAir, HideStart, Wait, Hide)
 }  // namespace
 
-const f32 gWalkSpeeds[2]{0.76f, 0.43f};
+const f32 sWalkSpeedHeadLost = 0.43f;
+const f32 sWalkSpeedNormal = 0.76f;
 
 Mummy::Mummy(const char* name) : al::LiveActor(name) {}
 
@@ -73,11 +74,11 @@ void Mummy::init(const al::ActorInitInfo& info) {
     mJointSpringControllerHolder = new al::JointSpringControllerHolder();
     mJointSpringControllerHolder->init(this, "JointSpringControllerInfo");
 
-    mSleepTimer = al::getRandom(0, 60) + 390;
+    mTimeLimit = al::getRandom(0, 60) + 390;
     makeActorAlive();
 }
 
-inline void Mummy::setupMatrix() {
+inline void Mummy::setupEffectMatrix() {
     sead::Vector3f hitPos;
     sead::Vector3f normal = sead::Vector3f::ey;
     alCollisionUtil::getHitPosAndNormalOnArrow(
@@ -96,7 +97,7 @@ inline void Mummy::checkEffects() {
     }
 }
 
-inline void Mummy::fitToGround() {
+inline void Mummy::adjustVelocity() {
     bool isOnGround = al::isOnGround(this, 0);
     al::scaleVelocity(this, 0.92f);
     if (isOnGround)
@@ -105,7 +106,7 @@ inline void Mummy::fitToGround() {
         al::addVelocityToGravity(this, 1.05f);
 }
 
-inline bool Mummy::isAsleep() {
+inline bool Mummy::isAsleep() const {
     return al::isNerve(this, &NrvMummy.Sleep) || al::isNerve(this, &NrvMummy.SleepShine) ||
            al::isNerve(this, &NrvMummy.SleepShineStop);
 }
@@ -247,7 +248,7 @@ void Mummy::control() {
 }
 
 void Mummy::setKnuckleMode() {
-    mSleepTimer = al::getRandom(0, 70) + 195;
+    mTimeLimit = al::getRandom(0, 70) + 195;
 }
 
 void Mummy::appearWithTrans(const sead::Vector3f& trans) {
@@ -258,7 +259,7 @@ void Mummy::appearWithTrans(const sead::Vector3f& trans) {
         al::faceToTarget(this, nearestPlayerActor);
 
     mIsHeadLost = false;
-    mSleepTimer = 390;
+    mTimeLimit = 390;
     al::showModelIfHide(this);
 
     setupEffect();
@@ -272,7 +273,7 @@ void Mummy::appearWithTrans(const sead::Vector3f& trans) {
 }
 
 void Mummy::setupEffect() {
-    setupMatrix();
+    setupEffectMatrix();
     al::setEffectFollowMtxPtr(this, "MummyAppear", &mEffectMatrix);
     al::setEffectFollowMtxPtr(this, "MummyHide", &mEffectMatrix);
 }
@@ -283,7 +284,7 @@ void Mummy::appearByTreasureBox(const sead::Vector3f& trans) {
 
     mIsHeadLost = false;
     al::faceToTarget(this, rs::getPlayerPos(this));
-    mSleepTimer = 390;
+    mTimeLimit = 390;
     mHasItemToAppear = false;
     mIsTreasureBoxSpawned = true;
 
@@ -310,7 +311,7 @@ void Mummy::sleep() {
             al::setNerve(this, &NrvMummy.SleepShine);
         else
             al::setNerve(this, &NrvMummy.Sleep);
-    } else if (isSpecialCollisionType()) {
+    } else if (isOnSpecialGround()) {
         al::validateClipping(this);
         al::setNerve(this, &NrvMummy.HideStart);
     }
@@ -339,7 +340,7 @@ void Mummy::exeSleepShine() {
             mIsHeadLost = false;
             al::faceToTarget(this, rs::getPlayerPos(this));
             mHasItemToAppear = false;
-            mSleepTimer = 390;
+            mTimeLimit = 390;
             al::setNerve(this, &Appear);
         }
     }
@@ -362,7 +363,7 @@ void Mummy::exeAppear() {
             al::emitEffect(this, "ShineGlow", nullptr);
     }
 
-    fitToGround();
+    adjustVelocity();
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvMummy.WalkStart);
@@ -386,7 +387,7 @@ void Mummy::exeWalkStart() {
 void Mummy::walk() {
     al::LiveActor* nearestPlayerActor = al::tryFindNearestPlayerActor(this);
     if (!nearestPlayerActor || (al::calcDistanceH(this, nearestPlayerActor) > 3500.0f &&
-                                !mIsTreasureBoxSpawned && isSpecialCollisionType()))
+                                !mIsTreasureBoxSpawned && isOnSpecialGround()))
         al::setNerve(this, &NrvMummy.HideStart);
     else {
         sead::Vector3f dir;
@@ -397,10 +398,10 @@ void Mummy::walk() {
             f32 nerveRate = al::calcNerveRate(this, al::getActionFrameMax(this, "WalkStart"));
             al::addVelocityToFront(this, nerveRate * nerveRate * 0.76f);
         } else {
-            al::addVelocityToFront(this, gWalkSpeeds[mIsHeadLost]);
+            al::addVelocityToFront(this, mIsHeadLost ? sWalkSpeedHeadLost : sWalkSpeedNormal);
         }
 
-        fitToGround();
+        adjustVelocity();
 
         if (--mWalkDirectionChangeTimer <= 0) {
             mWalkDirectionOffset = al::getRandom(-25.0f, 25.0f);
@@ -419,18 +420,18 @@ void Mummy::exeWalk() {
 
     if (mIsHeadLost) {
         if (--mHeadRegenTimer <= 0) {
-            mIsHeadLost = 0;
+            mIsHeadLost = false;
             al::startHitReaction(this, "頭復活");
             mEffectTimer = 24;
         }
     } else
         checkEffects();
 
-    if (--mSleepTimer <= 0 && isHideByTimeLimit())
+    if (--mTimeLimit <= 0 && isHideByTimeLimit())
         al::setNerve(this, &NrvMummy.HideStart);
 }
 
-inline bool Mummy::isSpecialCollisionType() const {
+inline bool Mummy::isOnSpecialGround() const {
     if (al::isOnGround(this, 0)) {
         const char* materialName = al::getCollidedFloorMaterialCodeName(this);
         if (!materialName)
@@ -444,10 +445,10 @@ inline bool Mummy::isSpecialCollisionType() const {
 }
 
 bool Mummy::isHideByTimeLimit() const {
-    if (mSleepTimer > 0 || mIsTreasureBoxSpawned)
+    if (mTimeLimit > 0 || mIsTreasureBoxSpawned)
         return false;
 
-    return isSpecialCollisionType();
+    return isOnSpecialGround();
 }
 
 void Mummy::exeHeadLost() {
@@ -460,7 +461,7 @@ void Mummy::exeHeadLost() {
         mInvulnerableTimer = 25;
     }
 
-    fitToGround();
+    adjustVelocity();
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvMummy.Walk);
@@ -474,7 +475,7 @@ void Mummy::exeHalfReaction() {
     }
 
     checkEffects();
-    fitToGround();
+    adjustVelocity();
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvMummy.Walk);
@@ -484,7 +485,7 @@ void Mummy::exeHideStart() {
     if (al::isFirstStep(this))
         al::startAction(this, "HideStart");
 
-    fitToGround();
+    adjustVelocity();
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvMummy.Hide);
@@ -493,12 +494,12 @@ void Mummy::exeHideStart() {
 void Mummy::exeHide() {
     if (al::isFirstStep(this)) {
         al::setVelocityZero(this);
-        setupMatrix();
+        setupEffectMatrix();
         al::startAction(this, "Hide");
     }
 
     checkEffects();
-    fitToGround();
+    adjustVelocity();
 
     if (al::isActionEnd(this)) {
         if (mShineActor) {

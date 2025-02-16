@@ -9,8 +9,8 @@ class LiveActor;
 bool isInWaterPos(const LiveActor* actor, const sead::Vector3f& pos);
 bool isInWater(const LiveActor* actor);
 bool isInIceWaterPos(const LiveActor* actor, const sead::Vector3f& pos);
-bool tryAddRippleMiddle(LiveActor* actor);
-bool tryAddRippleLarge(LiveActor* actor);
+bool tryAddRippleMiddle(const LiveActor* actor);
+bool tryAddRippleLarge(const LiveActor* actor);
 
 bool calcFindWaterSurface(sead::Vector3f*, sead::Vector3f*, const LiveActor*, const sead::Vector3f&,
                           const sead::Vector3f&, f32);

@@ -13,10 +13,10 @@ public:
 
     void init(const al::ActorInitInfo& info) override;
 
-    inline void setupMatrix();
+    inline void setupEffectMatrix();
     inline void checkEffects();
-    inline void fitToGround();
-    inline bool isAsleep();
+    inline void adjustVelocity();
+    inline bool isAsleep() const;
 
     void startSleep();
     void attackSensor(al::HitSensor* other, al::HitSensor* self) override;
@@ -41,7 +41,7 @@ public:
     void exeWalkStart();
     void walk();
     void exeWalk();
-    inline bool isSpecialCollisionType() const;
+    inline bool isOnSpecialGround() const;
     bool isHideByTimeLimit() const;
     void exeHeadLost();
     void exeHalfReaction();
@@ -56,7 +56,7 @@ private:
     s32 mWalkDirectionChangeTimer = 60;
     s32 mHeadRegenTimer = 0;
     s32 mEffectTimer = 0;
-    s32 mSleepTimer = 0;
+    s32 mTimeLimit = 0;
     s32 mInvulnerableTimer = 0;
     sead::Matrix34f mEffectMatrix = sead::Matrix34f::ident;
     bool mIsHeadLost = false;
