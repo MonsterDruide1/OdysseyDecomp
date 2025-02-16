@@ -44,8 +44,7 @@ void KuromadoMagicBall::control() {
 
 void KuromadoMagicBall::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::sendMsgEnemyAttackFire(other, self, nullptr) ||
-        rs::sendMsgEnemyAttackStrong(other, self) ||
-        rs::sendMsgEnemyAttackDash(other, self)) {
+        rs::sendMsgEnemyAttackStrong(other, self) || rs::sendMsgEnemyAttackDash(other, self)) {
         al::emitEffect(this, "Hit", nullptr);
         kill();
     }
