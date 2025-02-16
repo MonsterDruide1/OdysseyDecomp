@@ -55,3 +55,6 @@ tools/decompme
 # direnv
 .direnv/
 .envrc.private
+
+# Cache
+data/odyssey_mappings.tsv
