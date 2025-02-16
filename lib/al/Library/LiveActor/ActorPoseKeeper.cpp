@@ -6,12 +6,12 @@
 
 namespace al {
 
-static void rotationAndTranslationFromMatrix(sead::Vector3f& trans, sead::Vector3f& rot,
+static void rotationAndTranslationFromMatrix(sead::Vector3f* trans, sead::Vector3f* rot,
                                              const sead::Matrix34f* mtx) {
     sead::Vector3f tmp;
     mtx->getRotation(tmp);
-    rot.set(sead::Mathf::rad2deg(tmp.x), sead::Mathf::rad2deg(tmp.y), sead::Mathf::rad2deg(tmp.z));
-    mtx->getTranslation(trans);
+    rot->set(sead::Mathf::rad2deg(tmp.x), sead::Mathf::rad2deg(tmp.y), sead::Mathf::rad2deg(tmp.z));
+    mtx->getTranslation(*trans);
 }
 
 ActorPoseKeeperBase::ActorPoseKeeperBase() = default;
@@ -447,7 +447,7 @@ void ActorPoseKeeperTRSV::updatePoseQuat(const sead::Quatf& quat) {
 }
 
 void ActorPoseKeeperTRSV::updatePoseMtx(const sead::Matrix34f* mtx) {
-    rotationAndTranslationFromMatrix(mTrans, mRotate, mtx);
+    rotationAndTranslationFromMatrix(&mTrans, &mRotate, mtx);
 }
 
 void ActorPoseKeeperTRSV::calcBaseMtx(sead::Matrix34f* mtx) const {
@@ -512,7 +512,7 @@ void ActorPoseKeeperTRMSV::updatePoseQuat(const sead::Quatf& quat) {
 
 void ActorPoseKeeperTRMSV::updatePoseMtx(const sead::Matrix34f* mtx) {
     mMtx = *mtx;
-    rotationAndTranslationFromMatrix(mTrans, mRotate, mtx);
+    rotationAndTranslationFromMatrix(&mTrans, &mRotate, mtx);
 }
 
 void ActorPoseKeeperTRMSV::calcBaseMtx(sead::Matrix34f* mtx) const {
@@ -586,7 +586,7 @@ void ActorPoseKeeperTRGMSV::updatePoseQuat(const sead::Quatf& quat) {
 
 void ActorPoseKeeperTRGMSV::updatePoseMtx(const sead::Matrix34f* mtx) {
     mMtx = *mtx;
-    rotationAndTranslationFromMatrix(mTrans, mRotate, mtx);
+    rotationAndTranslationFromMatrix(&mTrans, &mRotate, mtx);
 }
 
 void ActorPoseKeeperTRGMSV::calcBaseMtx(sead::Matrix34f* mtx) const {
