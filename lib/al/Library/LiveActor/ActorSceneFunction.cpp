@@ -26,7 +26,7 @@ bool isStopScene(SceneStopCtrl* ctrl) {
 }
 
 void requestCaptureScreenCover(const LiveActor* actor, s32 coverFrames) {
-    actor->getSceneInfo()->mScreenCoverCtrl->reqeustCaptureScreenCover(coverFrames);
+    actor->getSceneInfo()->mScreenCoverCtrl->requestCaptureScreenCover(coverFrames);
 }
 
 bool requestStartDemo(const LiveActor* actor, const char* name) {

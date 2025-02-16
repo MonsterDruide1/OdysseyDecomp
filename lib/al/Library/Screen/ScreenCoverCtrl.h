@@ -8,7 +8,7 @@ public:
     ScreenCoverCtrl();
 
     void update();
-    void reqeustCaptureScreenCover(s32 coverFrames);
+    void requestCaptureScreenCover(s32 coverFrames);
 
 private:
     s32 mCoverFrames = -1;
