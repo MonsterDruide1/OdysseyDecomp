@@ -4,9 +4,9 @@
 
 namespace al {
 struct NfpCharacterId {
-    u16 _0;
-    u16 _2;
-    u16 _4;
+    u16 gameId;
+    u16 characterId;
+    u16 characterVariant;
 };
 
 struct NfpInfo {
@@ -14,15 +14,15 @@ struct NfpInfo {
     nn::nfp::ModelInfo modelInfo{};
     u16 _98;
     u16 _9a;
-    u16 _9c{};
+    u16 _9c = 0;
     u16 _9e;
     char _a0[0x140]{};
-    bool _1e0{};
-    bool isValid{};
-    bool _1e2{};
-    bool _1e3{};
-    bool _1e4{};
-    bool _1e5{};
+    bool _1e0 = false;
+    bool isValid = false;
+    bool _1e2 = false;
+    bool _1e3 = false;
+    bool _1e4 = false;
+    bool _1e5 = false;
 
     NfpInfo() {}
 };

@@ -5,6 +5,7 @@
 
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/HostIO/HioNode.h"
+#include "Library/Nfp/NfpTypes.h"
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
@@ -12,9 +13,6 @@ class ActorInitInfo;
 class AudioDirector;
 class IUseSceneObjHolder;
 class MessageTagDataHolder;
-
-struct NfpInfo;
-
 }  // namespace al
 
 class AmiiboNpcLayout;
@@ -50,7 +48,7 @@ private:
     AmiiboNpcLayout* mNpcLayout = nullptr;
     SearchAmiiboDataTable* mSearchDataTable = nullptr;
     ProjectNfpDirector* mNfpDirector = nullptr;
-    al::NfpInfo* mNfpInfo = nullptr;
+    al::NfpInfo* mNfpInfo = new al::NfpInfo();
     al::AudioKeeper* mAudioKeeper = nullptr;
     al::MessageTagDataHolder* mTagDataHolder = nullptr;
     const char* mAmiiboNameCstr[3];

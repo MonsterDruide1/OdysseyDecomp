@@ -8,7 +8,6 @@
 #include "Library/Message/MessageHolder.h"
 #include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nfp/NfpFunction.h"
-#include "Library/Nfp/NfpTypes.h"
 #include "Library/Se/SeFunction.h"
 
 #include "Amiibo/SearchAmiiboDataTable.h"
@@ -20,7 +19,7 @@
 #include "Util/ClothUtil.h"
 #include "Util/TimeUtil.h"
 
-AmiiboNpcDirector::AmiiboNpcDirector() : mNfpInfo(new al::NfpInfo()) {
+AmiiboNpcDirector::AmiiboNpcDirector() {
     for (s32 i = 0; i < 3; i++)
         mAmiiboNameCstr[i] = nullptr;
 }
@@ -90,7 +89,7 @@ void AmiiboNpcDirector::updateSearchAmiiboName() {
 }
 
 bool AmiiboNpcDirector::requestAppearAmiiboLayout() {
-    if (al::isDead(mNpcLayout)) {
+    if (isEndAmiiboLayout()) {
         mNpcLayout->appear();
         return true;
     }
@@ -111,12 +110,12 @@ bool AmiiboNpcDirector::isEndAmiiboLayout() {
 
 void AmiiboNpcDirector::registerSearchAmiibo(s32 id, s32 numberingId, u64 searchStartTime) {
     for (s32 i = 0; i < mSearchDataTable->getDataNumMax(); i++) {
-        if (!mSearchDataTable->isInvalidId(i))
-            continue;
-        mSearchDataTable->setId(id, numberingId, i);
-        mSearchDataTable->setSearchStartTime(searchStartTime, i);
-        updateSearchAmiiboName();
-        return;
+        if (mSearchDataTable->isInvalidId(i)) {
+            mSearchDataTable->setId(id, numberingId, i);
+            mSearchDataTable->setSearchStartTime(searchStartTime, i);
+            updateSearchAmiiboName();
+            return;
+        }
     }
 }
 
@@ -130,16 +129,17 @@ void AmiiboNpcDirector::deleteSearchEndAmiibo() {
             }
             break;
         }
-        if ((s64)(mTime - mSearchDataTable->getSearchStartTime(i)) > 300) {
+
+        if ((s64)mTime - (s64)mSearchDataTable->getSearchStartTime(i) > 300) {
             mSearchDataTable->initByIndex(i);
             continue;
         }
 
-        if (i == assignedIndex) {
-            assignedIndex++;
-        } else {
+        if (i != assignedIndex) {
             mSearchDataTable->copy(assignedIndex, i);
             mSearchDataTable->initByIndex(i);
+            assignedIndex++;
+        } else {
             assignedIndex++;
         }
     }
