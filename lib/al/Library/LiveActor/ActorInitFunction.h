@@ -67,7 +67,7 @@ void initActorSeKeeper(LiveActor*, const ActorInitInfo&, const char*, const sead
 void initActorSeKeeper(LiveActor*, const ActorInitInfo&, const char*);
 void initActorSeKeeperWithout3D(LiveActor*, const ActorInitInfo&, const char*);
 void initActorBgmKeeper(LiveActor*, const ActorInitInfo&, const char*);
-void isInitializedBgmKeeper(LiveActor*);
+bool isInitializedBgmKeeper(LiveActor*);
 void initHitReactionKeeper(LiveActor*, const char*);
 void initHitReactionKeeper(LiveActor*, const Resource*, const char*);
 void initActorParamHolder(LiveActor*, const char*);
@@ -82,16 +82,14 @@ void declareUseDepthShadowMap(const LiveActor*, s32);
 void createDepthShadowMap(const LiveActor*, const char*, s32, s32, s32);
 void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);
 void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
-ShadowMaskBase* createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
-ShadowMaskBase* createShadowMaskCube(LiveActor*, const char*, const char*, const char*,
-                                     const sead::Color4f&, const sead::Vector3f&, f32, f32, f32,
-                                     const sead::Vector3f&, f32);
-ShadowMaskBase* createShadowMaskCylinder(LiveActor*, const char*, const char*, const char*,
-                                         const sead::Color4f&, const sead::Vector3f&, f32, f32, f32,
-                                         f32, f32);
-ShadowMaskBase* createShadowMaskCastOvalCylinder(LiveActor*, const char*, const char*, const char*,
-                                                 const sead::Color4f&, const sead::Vector3f&,
-                                                 const sead::Vector3f&, f32, f32, f32, f32);
+void createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
+void createShadowMaskCube(LiveActor*, const char*, const char*, const char*, const sead::Color4f&,
+                          const sead::Vector3f&, f32, f32, f32, const sead::Vector3f&, f32);
+void createShadowMaskCylinder(LiveActor*, const char*, const char*, const char*,
+                              const sead::Color4f&, const sead::Vector3f&, f32, f32, f32, f32, f32);
+void createShadowMaskCastOvalCylinder(LiveActor*, const char*, const char*, const char*,
+                                      const sead::Color4f&, const sead::Vector3f&,
+                                      const sead::Vector3f&, f32, f32, f32, f32);
 void initActorCollision(LiveActor*, const sead::SafeString&, HitSensor*, const sead::Matrix34f*);
 void initActorCollisionWithResource(LiveActor*, const Resource*, const sead::SafeString&,
                                     HitSensor*, const sead::Matrix34f*, const char*);
@@ -101,7 +99,7 @@ void initActorCollisionWithFilePtr(LiveActor*, void*, const void*, HitSensor*,
                                    const sead::Matrix34f*, const char*, const char*, s32);
 void initStageSwitch(LiveActor*, const ActorInitInfo&);
 void initActorItemKeeper(LiveActor*, const ActorInitInfo&, const ByamlIter&);
-void initActorPrePassLightKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
+bool initActorPrePassLightKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initActorOcclusionKeeper(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
 void initSubActorKeeper(LiveActor*, const ActorInitInfo&, const char*, s32);
 void initSubActorKeeperNoFile(LiveActor*, const ActorInitInfo&, s32);
