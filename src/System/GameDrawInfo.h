@@ -3,7 +3,7 @@
 namespace agl {
 class RenderBuffer;
 class DrawContext;
-}
+}  // namespace agl
 
 namespace al {
 struct GameDrawInfo {
