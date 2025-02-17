@@ -20,6 +20,7 @@ class LayoutInitInfo;
 class LiveActor;
 class LiveActorGroup;
 class Nerve;
+class PartsEffectGroup;
 class PlacementInfo;
 class SceneCameraInfo;
 
@@ -37,27 +38,27 @@ void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const Acto
 void initChildActorWithArchiveNameNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
                                                   const sead::SafeString& archiveName,
                                                   const char* suffix);
-void createChildLinkSimpleActor(const char* actorName, const char* archiveName,
-                                const ActorInitInfo& initInfo, bool alive);
-void createChildLinkMapPartsActor(const char* actorName, const char* archiveName,
-                                  const ActorInitInfo& initInfo, s32 linkIndex, bool alive);
+LiveActor* createChildLinkSimpleActor(const char* actorName, const char* archiveName,
+                                      const ActorInitInfo& initInfo, bool alive);
+LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* archiveName,
+                                        const ActorInitInfo& initInfo, s32 linkIndex, bool alive);
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
 void initLinksActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix,
                     s32 linkIndex);
 ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo);
-char* getLinksActorClassName(const ActorInitInfo&, const char*, s32);
-char* getLinksActorDisplayName(const ActorInitInfo&, const char*, s32);
-char* getLinksActorObjectName(const ActorInitInfo&, const char*, s32);
+const char* getLinksActorClassName(const ActorInitInfo&, const char*, s32);
+const char* getLinksActorDisplayName(const ActorInitInfo&, const char*, s32);
+const char* getLinksActorObjectName(const ActorInitInfo&, const char*, s32);
 void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const PlacementInfo&);
 void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
 void initCreateActorNoPlacementInfoNoViewId(LiveActor*, const ActorInitInfo&);
-void createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
+LiveActor* createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
 LiveActor* createLinksActorFromFactory(const ActorInitInfo& info, const char* linkName,
                                        s32 linkNum);
-void createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-void tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-void tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
+LiveActorGroup* createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
+LiveActorGroup* tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
+LiveActorGroup* tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
 void createAndRegisterLinksActorFromFactory(LiveActorGroup*, const ActorInitInfo&, const char*);
 void makeMapPartsModelName(sead::BufferedSafeString*, sead::BufferedSafeString*,
                            const PlacementInfo&);
@@ -80,7 +81,7 @@ void initMaterialCode(LiveActor* actor, const ActorInitInfo& initInfo);
 bool tryAddDisplayRotate(LiveActor* actor, const ActorInitInfo& initInfo);
 bool tryAddDisplayOffset(LiveActor* actor, const ActorInitInfo& initInfo);
 bool tryAddDisplayScale(LiveActor* actor, const ActorInitInfo& initInfo);
-PlacementInfo* getPlacementInfo(const ActorInitInfo& initInfo);
+const PlacementInfo* getPlacementInfo(const ActorInitInfo& initInfo);
 const LayoutInitInfo& getLayoutInitInfo(const ActorInitInfo& initInfo);
 AudioDirector* getAudioDirector(const ActorInitInfo& initInfo);
 CollisionDirector* getCollisionDirectorFromInfo(const ActorInitInfo& initInfo);
@@ -91,5 +92,5 @@ void getActorRecourseDataF32(f32*, LiveActor*, const char*, const char*);
 void getActorRecourseDataString(const char**, LiveActor*, const char*, const char*);
 void getActorRecourseDataV3f(sead::Vector3f*, LiveActor* actor, const char*, const char*);
 void getActorRecourseDataBox3f(sead::BoundBox3f* box, LiveActor* actor, const char*, const char*);
-void createPartsEffectGroup(LiveActor* actor, const ActorInitInfo& initInfo, s32);
+PartsEffectGroup* createPartsEffectGroup(LiveActor* actor, const ActorInitInfo& initInfo, s32);
 }  // namespace al
