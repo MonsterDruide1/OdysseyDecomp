@@ -1,7 +1,9 @@
 #pragma once
 
-#include <common/aglDrawContext.h>
-#include <common/aglRenderBuffer.h>
+namespace agl {
+class RenderBuffer;
+class DrawContext;
+}
 
 namespace al {
 struct GameDrawInfo {
