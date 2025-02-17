@@ -27,6 +27,7 @@
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Enemy/Pecho.h"
 #include "Item/Coin.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
@@ -375,7 +376,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"PeachWorldGate", nullptr},
     {"PeachWorldMoatWater", nullptr},
     {"PeachWorldTree", nullptr},
-    {"Pecho", nullptr},
+    {"Pecho", al::createActorFunction<Pecho>},
     {"Pen", nullptr},
     {"PictureStageChange", nullptr},
     {"PillarKeyMoveParts", nullptr},
