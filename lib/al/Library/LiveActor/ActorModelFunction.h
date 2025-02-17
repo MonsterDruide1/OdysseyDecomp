@@ -36,7 +36,7 @@ void hideModel(LiveActor* actor);
 void hideModelIfShow(LiveActor* actor);
 bool isExistModel(const LiveActor* actor);
 void switchShowHideModelIfNearCamera(LiveActor* actor, f32);
-void blinkModel(LiveActor* actor, s32, s32, s32);
+bool blinkModel(LiveActor* actor, s32, s32, s32);
 void calcViewModelSystem(LiveActor* actor);
 void calcViewModel(LiveActor* actor);
 void showSilhouetteModel(LiveActor* actor);

@@ -8,6 +8,7 @@ class LiveActor;
 class Scene;
 class IUseSceneObjHolder;
 }  // namespace al
+
 class BarrierField;
 class OceanWaveActor;
 class ShineTowerRocket;

@@ -4,8 +4,8 @@
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
 class ActorInitInfo;
+class LiveActor;
 }  // namespace al
 
 class WaterSurfaceShadow;

@@ -9,6 +9,7 @@
 namespace al {
 class ActorInitInfo;
 class HitSensor;
+class IUseNerve;
 class MtxConnector;
 }  // namespace al
 
@@ -32,34 +33,40 @@ public:
                     al::HitSensor* self) override;
 
     void tryCreateMtxConnector();
-    bool isGot() const;
     void appearCirclePlacement();
+    void appearPopUpCommon(bool startHitReaction);
     void appearPopUp();
     void appearPopUpWithoutHitReaction();
     void appearPopUpVelocity();
     void appearAbove();
+    void appearCountUpCommon(sead::Vector3f& velocity, s32 delay);
     void appearCountUp();
     void appearCountUpFiveCount();
-    void appearCountUp3(s32);
-    void appearCountUp5(s32);
-    void appearCountUp10(s32);
-    void appearCountUpFixPos10(s32);
+    void appearCountUp3(s32 coinIndex);
+    void appearCountUp5(s32 coinIndex);
+    void appearCountUp10(s32 coinIndex);
+    void appearCountUpFixPos10(s32 coinIndex);
     void appearCoinRail();
     void appearCoinChameleon(const sead::Vector3f& trans, const sead::Quatf& quat,
                              const sead::Vector3f& position);
-    void appearLimitTime(s32);
+    void appearLimitTime(s32 timeLimit);
     void appearBlow(const sead::Vector3f& velocity, s32 delayTime);
     void rotate();
-    void appearBlowUp(s32, s32);
-    void appearBlowUpCommon(s32, f32, f32, s32, s32);
-    void appearBlowUpLittle(s32, s32);
-    void appearFall(const sead::Vector3f&, s32);
-    void appearPlayerDead(const sead::Vector3f&, const sead::Vector3f&, bool, bool);
-    void appearPlayerDeadReplace(const sead::Vector3f&);
+    void appearBlowUpCommon(s32 delayTime, f32 horizontalForce, f32 verticalForce, s32 coinCount,
+                            s32 coinIndex);
+    void appearBlowUp(s32 coinIndex, s32 coinCount);
+    void appearBlowUpLittle(s32 coinIndex, s32 coinCount);
+    void appearFall(const sead::Vector3f& velocity, s32 timeLimit);
+    void appearPlayerDead(const sead::Vector3f& position, const sead::Vector3f& direction,
+                          bool isInWater, bool isTimeBalloon);
+    void appearPlayerDeadReplace(const sead::Vector3f& position);
     void setShadowDropLength(f32 shadowLength);
     void get();
+
+    bool isGot() const;
     bool isGotOrRotate() const;
     bool isWait() const;
+    bool isAnyWaitOrAppear() const;
 
     void exeAppear();
     void exeAppearCoinLead();
@@ -79,7 +86,7 @@ private:
     sead::Quatf mStartingQuat = sead::Quatf::unit;
     al::MtxConnector* mMtxConnector = nullptr;
     bool mIsConnectToCollisionBack = false;
-    s32 mAppearDelay = -1;
+    s32 mTimeLimit = -1;
     sead::Vector3f mChameleonOffset = sead::Vector3f::zero;
     ExternalForceKeeper* mExternalForceKeeper = nullptr;
     CoinRotateCalculator* mRotateCalculator = nullptr;
