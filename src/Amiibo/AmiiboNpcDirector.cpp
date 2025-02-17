@@ -8,6 +8,7 @@
 #include "Library/Message/MessageHolder.h"
 #include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nfp/NfpFunction.h"
+#include "Library/Nfp/NfpTypes.h"
 #include "Library/Se/SeFunction.h"
 
 #include "Amiibo/SearchAmiiboDataTable.h"
@@ -19,7 +20,7 @@
 #include "Util/ClothUtil.h"
 #include "Util/TimeUtil.h"
 
-AmiiboNpcDirector::AmiiboNpcDirector() {
+AmiiboNpcDirector::AmiiboNpcDirector() : mNfpInfo(new al::NfpInfo()) {
     for (s32 i = 0; i < 3; i++)
         mAmiiboNameCstr[i] = nullptr;
 }
