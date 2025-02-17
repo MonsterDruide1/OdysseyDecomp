@@ -4,8 +4,7 @@
 #include <common/aglRenderBuffer.h>
 
 namespace al {
-class GameDrawInfo {
-public:
+struct GameDrawInfo {
     agl::RenderBuffer* mFirstRenderBuffer;
     agl::RenderBuffer* mSecondRenderBuffer;
     bool mIsFirst;
