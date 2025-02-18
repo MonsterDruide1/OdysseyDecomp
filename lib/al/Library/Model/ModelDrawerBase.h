@@ -17,7 +17,11 @@ class ModelCtrl;
 
 class ModelDrawerBase : public HioNode {
 public:
-    void createTable();
+    ModelDrawerBase(const char* name);
+    virtual ~ModelDrawerBase();
+
+    virtual void createTable() = 0;
+    virtual void draw() const = 0;
 
     virtual void registerModel(ModelCtrl*);
     virtual void addModel(ModelCtrl*);
