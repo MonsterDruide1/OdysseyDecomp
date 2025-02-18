@@ -21,7 +21,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Player/PlayerUtil.h"
-#include "Library/Shadow/DepthShadowDrawer.h"
+#include "Library/Shadow/ActorShadowUtil.h"
 
 #include "Enemy/EnemyStateHackStart.h"
 #include "Enemy/EnemyStateSwoon.h"

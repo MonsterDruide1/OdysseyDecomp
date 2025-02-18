@@ -7,7 +7,7 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-#include "Library/Shadow/DepthShadowDrawer.h"
+#include "Library/Shadow/ActorShadowUtil.h"
 
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
