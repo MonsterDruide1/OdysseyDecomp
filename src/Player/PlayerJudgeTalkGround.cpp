@@ -3,7 +3,7 @@
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 
 #include "Player/IPlayerModelChanger.h"

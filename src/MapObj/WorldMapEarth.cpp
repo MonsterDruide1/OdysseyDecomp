@@ -1,7 +1,7 @@
 #include "MapObj/WorldMapEarth.h"
 
 #include "Library/LiveActor/ActorInitInfo.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 
 WorldMapEarth::WorldMapEarth(const char* name) : al::LiveActor(name) {}
