@@ -262,32 +262,24 @@ void Pecho::updateVelocityEscapeWallAndFall(f32 force, f32 velocity) {
 }
 
 bool Pecho::isEnablePush() const {
-    if (al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
-        al::isNerve(this, &NrvPecho.AttackSuccess) || al::isNerve(this, &NrvPecho.Move))
-        return true;
-    return false;
+    return al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
+           al::isNerve(this, &NrvPecho.AttackSuccess) || al::isNerve(this, &NrvPecho.Move);
 }
 
 bool Pecho::isEnableAttack() const {
-    if (al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
-        al::isNerve(this, &NrvPecho.Move) || al::isNerve(this, &NrvPecho.AttackSuccess) ||
-        al::isNerve(this, &NrvPecho.LiquidStart) || al::isNerve(this, &NrvPecho.Liquid))
-        return true;
-    return false;
+    return al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
+           al::isNerve(this, &NrvPecho.Move) || al::isNerve(this, &NrvPecho.AttackSuccess) ||
+           al::isNerve(this, &NrvPecho.LiquidStart) || al::isNerve(this, &NrvPecho.Liquid);
 }
 
 bool Pecho::isEnableCap() const {
-    if (al::isNerve(this, &NrvPecho.Appear) || al::isNerve(this, &NrvPecho.AttackSuccess) ||
-        al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
-        al::isNerve(this, &NrvPecho.Move))
-        return true;
-    return false;
+    return al::isNerve(this, &NrvPecho.Appear) || al::isNerve(this, &NrvPecho.AttackSuccess) ||
+           al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
+           al::isNerve(this, &NrvPecho.Move);
 }
 
 bool Pecho::isEnableSendPechoSpot() const {
-    if (al::isNerve(this, &NrvPecho.LiquidStart) || al::isNerve(this, &NrvPecho.Liquid))
-        return true;
-    return false;
+    return al::isNerve(this, &NrvPecho.LiquidStart) || al::isNerve(this, &NrvPecho.Liquid);
 }
 
 void Pecho::exeAppear() {
