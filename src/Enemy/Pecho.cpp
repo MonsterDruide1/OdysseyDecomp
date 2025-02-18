@@ -94,7 +94,7 @@ bool Pecho::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::H
     }
 
     if ((rs::isMsgCapAttack(message) || rs::isMsgBlowDown(message)) &&
-        (al::isSensorEnemyBody(self) && isEnablePush())) {
+        al::isSensorEnemyBody(self) && isEnablePush()) {
         al::startHitReaction(this, "帽子ヒット");
         rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
         rs::requestHitReactionToAttacker(message, self, other);
@@ -171,7 +171,7 @@ void Pecho::startLiquidFast() {
     al::setVelocityZero(this);
     al::setNerve(this, &NrvPecho.LiquidSign);
     mIsStartLiquidFast = true;
-    mLiquidState = "LiquidStartFast";
+    mLiquidStartAction = "LiquidStartFast";
     al::setSensorRadius(this, "BodyLiquid", 290.0);
     al::setSensorRadius(this, "AttackLiquid", 250.0);
 }
@@ -182,7 +182,7 @@ void Pecho::startLiquid() {
     al::setVelocityZero(this);
     al::setNerve(this, &NrvPecho.LiquidSign);
     mIsStartLiquidFast = false;
-    mLiquidState = "LiquidStart";
+    mLiquidStartAction = "LiquidStart";
 }
 
 void Pecho::startLiquidCap() {
@@ -191,7 +191,7 @@ void Pecho::startLiquidCap() {
     al::setVelocityZero(this);
     al::setNerve(this, &NrvPecho.LiquidSign);
     mIsStartLiquidFast = false;
-    mLiquidState = "LiquidStartCap";
+    mLiquidStartAction = "LiquidStartCap";
 }
 
 void Pecho::updateVelocity() {
@@ -212,21 +212,21 @@ void Pecho::updateVelocity() {
 }
 
 bool Pecho::tryStartFind() {
-    if (al::isNearPlayer(this, 800.0f)) {
-        al::invalidateClipping(this);
-        sead::Vector3f dirH;
-        if (al::calcDirH(&dirH, al::getTrans(this), al::getPlayerPos(this, 0)))
-            mNextBodyOrientation = mStartingQuat;
-        else
-            al::makeQuatUpFront(&mNextBodyOrientation, sead::Vector3f::ey, dirH);
+    if (!al::isNearPlayer(this, 800.0f))
+        return false;
 
-        al::setNerve(this, &NrvPecho.Find);
-        return true;
-    }
+    al::invalidateClipping(this);
+    sead::Vector3f dirH;
+    if (al::calcDirH(&dirH, al::getTrans(this), al::getPlayerPos(this, 0)))
+        mNextBodyOrientation = mStartingQuat;
+    else
+        al::makeQuatUpFront(&mNextBodyOrientation, sead::Vector3f::ey, dirH);
 
-    return false;
+    al::setNerve(this, &NrvPecho.Find);
+    return true;
 }
 
+// NON_MATCHING: regswap (https://decomp.me/scratch/D3wWz)
 void Pecho::updateVelocityEscapeWallAndFall(f32 force, f32 velocity) {
     sead::Vector3f direction = sead::Vector3f::zero;
     s32 hitCount = 0;
@@ -241,12 +241,10 @@ void Pecho::updateVelocityEscapeWallAndFall(f32 force, f32 velocity) {
                                               arrowDirection * force, nullptr, nullptr) != 0) {
             direction += arrowDirection;
             hitCount++;
-            continue;
-        }
-
-        if (alCollisionUtil::checkStrikeArrow(
-                this, al::getTrans(this) + 20.0f * sead::Vector3f::ey + arrowDirection * force,
-                -70.0f * sead::Vector3f::ey, nullptr, nullptr) == 0) {
+        } else if (alCollisionUtil::checkStrikeArrow(
+                       this,
+                       al::getTrans(this) + 20.0f * sead::Vector3f::ey + arrowDirection * force,
+                       -70.0f * sead::Vector3f::ey, nullptr, nullptr) == 0) {
             direction += arrowDirection;
             hitCount++;
         }
@@ -264,51 +262,30 @@ void Pecho::updateVelocityEscapeWallAndFall(f32 force, f32 velocity) {
 }
 
 bool Pecho::isEnablePush() const {
-    if (al::isNerve(this, &NrvPecho.Wait))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Find))
-        return true;
-    if (al::isNerve(this, &NrvPecho.AttackSuccess))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Move))
+    if (al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
+        al::isNerve(this, &NrvPecho.AttackSuccess) || al::isNerve(this, &NrvPecho.Move))
         return true;
     return false;
 }
 
 bool Pecho::isEnableAttack() const {
-    if (al::isNerve(this, &NrvPecho.Wait))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Find))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Move))
-        return true;
-    if (al::isNerve(this, &NrvPecho.AttackSuccess))
-        return true;
-    if (al::isNerve(this, &NrvPecho.LiquidStart))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Liquid))
+    if (al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
+        al::isNerve(this, &NrvPecho.Move) || al::isNerve(this, &NrvPecho.AttackSuccess) ||
+        al::isNerve(this, &NrvPecho.LiquidStart) || al::isNerve(this, &NrvPecho.Liquid))
         return true;
     return false;
 }
 
 bool Pecho::isEnableCap() const {
-    if (al::isNerve(this, &NrvPecho.Appear))
-        return true;
-    if (al::isNerve(this, &NrvPecho.AttackSuccess))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Wait))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Find))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Move))
+    if (al::isNerve(this, &NrvPecho.Appear) || al::isNerve(this, &NrvPecho.AttackSuccess) ||
+        al::isNerve(this, &NrvPecho.Wait) || al::isNerve(this, &NrvPecho.Find) ||
+        al::isNerve(this, &NrvPecho.Move))
         return true;
     return false;
 }
 
 bool Pecho::isEnableSendPechoSpot() const {
-    if (al::isNerve(this, &NrvPecho.LiquidStart))
-        return true;
-    if (al::isNerve(this, &NrvPecho.Liquid))
+    if (al::isNerve(this, &NrvPecho.LiquidStart) || al::isNerve(this, &NrvPecho.Liquid))
         return true;
     return false;
 }
@@ -341,17 +318,17 @@ void Pecho::exeWait() {
     if (al::isFirstStep(this)) {
         al::tryStartActionIfNotPlaying(this, "Wait");
         al::getRandomDirH(&mVelocity, sead::Vector3f::ey);
-        mNextTrans.set(al::getTrans(this));
-        mIsRotationPositive = al::isHalfProbability();
+        mWaitTrans.set(al::getTrans(this));
+        mIsWaitTiltClockwise = al::isHalfProbability();
     }
 
     if (al::isLessEqualStep(this, 120)) {
         sead::Vector3f vel = sead::Vector3f::zero;
-        f32 fVar6 = al::calcNerveValue(this, 120, 0.0, mIsRotationPositive ? 720.0f : -720.0f);
-        al::rotateVectorDegree(&vel, mVelocity, sead::Vector3f::ey, fVar6);
+        f32 degree = al::calcNerveValue(this, 120, 0.0, mIsWaitTiltClockwise ? 720.0f : -720.0f);
+        al::rotateVectorDegree(&vel, mVelocity, sead::Vector3f::ey, degree);
         al::addVelocity(this, vel * 0.25f);
     } else {
-        al::addVelocityDampToTarget(this, mNextTrans, 0.03f, 0.1f);
+        al::addVelocityDampToTarget(this, mWaitTrans, 0.03f, 0.1f);
     }
 
     updateVelocity();
@@ -360,7 +337,7 @@ void Pecho::exeWait() {
 
     if (al::isGreaterEqualStep(this, 80))
         al::turnQuatYDirRadian(&mBodyOrientation, mBodyOrientation, sead::Vector3f::ey,
-                               sead::Mathf::pi() / 600.0f);
+                               sead::Mathf::deg2rad(0.3f));
 
     if (!tryStartFind() && al::isGreaterEqualStep(this, 140))
         al::setNerve(this, &NrvPecho.Wait);
@@ -420,7 +397,7 @@ void Pecho::exeLiquidSign() {
 
 void Pecho::exeLiquidStart() {
     if (al::isFirstStep(this)) {
-        al::startAction(this, mLiquidState);
+        al::startAction(this, mLiquidStartAction);
         al::rotateQuatYDirRandomDegree(this);
         al::validateCollisionParts(this);
     }
@@ -429,8 +406,8 @@ void Pecho::exeLiquidStart() {
     al::calcJointScale(&jointScale, this, "JointRoot");
     if (!mIsStartLiquidFast) {
         al::setSensorRadius(this, "BodyLiquid", jointScale.x * 290.0f);
-        f32 fVar2 = mIsStartLiquidFast ? 250.0f : jointScale.x * 250.0f;
-        al::setSensorRadius(this, "AttackLiquid", fVar2);
+        f32 attackLiquidRadius = mIsStartLiquidFast ? 250.0f : jointScale.x * 250.0f;
+        al::setSensorRadius(this, "AttackLiquid", attackLiquidRadius);
     }
 
     updateVelocityEscapeWallAndFall(jointScale.x * 150.0f,
