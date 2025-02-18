@@ -51,13 +51,13 @@ private:
     sead::Quatf mStartingQuat = sead::Quatf::unit;
     sead::Vector3f mStartingTrans = sead::Vector3f::zero;
     sead::Quatf mNextBodyOrientation;
-    sead::Vector3f mNextTrans;
+    sead::Vector3f mWaitTrans;
     sead::Quatf mBodyOrientation = sead::Quatf::unit;
     sead::Vector3f mMoment = sead::Vector3f::zero;
     sead::Vector3f mVelocity = sead::Vector3f::zero;
 
-    const char* mLiquidState = "LiquidStart";
+    const char* mLiquidStartAction = "LiquidStart";
     bool mIsStartLiquidFast = false;
-    bool mIsRotationPositive = true;
+    bool mIsWaitTiltClockwise = true;
     bool mIsBubbleReaction = false;
 };
