@@ -4,7 +4,7 @@
 #include <math/seadVector.h>
 
 namespace sead {
-struct Color4f;
+class Color4f;
 }
 
 namespace al {
