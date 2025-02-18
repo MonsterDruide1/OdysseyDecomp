@@ -45,6 +45,16 @@ public:
     al::NfpInfo* tryGetTriggerTouchNfpInfo();
     al::AudioKeeper* getAudioKeeper() const override;
 
+    AmiiboNpcLayout* getAmiiboNpcLayout() const { return mNpcLayout; }
+
+    ProjectNfpDirector* getProjectNfpDirector() const { return mNfpDirector; }
+
+    al::NfpInfo* getNfpInfo() const { return mNfpInfo; }
+
+    al::MessageTagDataHolder* getMessageTagDataHolder() const { return mTagDataHolder; }
+
+    void setTime(u64 time) { mTime = time; }
+
 private:
     AmiiboNpcLayout* mNpcLayout = nullptr;
     SearchAmiiboDataTable* mSearchDataTable = nullptr;
@@ -63,35 +73,27 @@ private:
 
 static_assert(sizeof(AmiiboNpcDirector) == 0x1D8, "AmiiboNpcDirector");
 
-// Can't be split since these functions are in the middle of AmiiboNpcDirector in the executable
-
 namespace AmiiboFunction {
-al::NfpInfo* tryGetTriggerTouchNfpInfo(const al::IUseSceneObjHolder*);
-al::NfpInfo* getLastTriggerTouchNfpInfo(const al::IUseSceneObjHolder*);
-void startNfpTouch(const al::IUseSceneObjHolder*);
-void stopNfpTouch(const al::IUseSceneObjHolder*);
-bool isNfpErrorHandled(const al::IUseSceneObjHolder*);
-bool requestAppearAmiiboLayout(const al::IUseSceneObjHolder*);
-void requestDecideAmiiboLayout(const al::IUseSceneObjHolder*);
-void requestEndAmiiboLayout(const al::IUseSceneObjHolder*);
-bool isEndAmiiboLayout(const al::IUseSceneObjHolder*);
-AmiiboNpcLayout* getAmiiboTouchLayout(const al::IUseSceneObjHolder*);
-// These might return s32
-u32 getSearchAmiiboNum(const al::IUseSceneObjHolder*);
-u32 getSearchEndAmiiboNum(const al::IUseSceneObjHolder*);
-u32 getSearchEndAmiiboNumRealTime(const al::IUseSceneObjHolder*);
-void registerSearchAmiibo(const al::IUseSceneObjHolder*, const al::NfpInfo&);
 
-bool isSearchAmiibo(const al::IUseSceneObjHolder*, const al::NfpInfo&);
-void deleteSearchEndAmiibo(const al::IUseSceneObjHolder*);
-void setTalkStartTime(const al::IUseSceneObjHolder*);
-al::MessageTagDataHolder* getMessageTagDataHolder(const al::IUseSceneObjHolder*);
-void setTouchAmiiboName(const al::IUseSceneObjHolder*, s32, s32);
-void trySetAmiiboCostumeName(const al::IUseSceneObjHolder*, s32);
-void tryCreateHelpAmiiboDirector(const al::IUseSceneObjHolder*);
-bool isTriggerTouchAmiiboMario(const al::IUseSceneObjHolder*);
-bool isTriggerTouchAmiiboPeach(const al::IUseSceneObjHolder*);
-bool isTriggerTouchAmiiboKoopa(const al::IUseSceneObjHolder*);
-bool isTriggerTouchAmiiboAll(const al::IUseSceneObjHolder*);
+al::NfpInfo* tryGetTriggerTouchNfpInfo(const al::IUseSceneObjHolder* objHolder);
+al::NfpInfo* getLastTriggerTouchNfpInfo(const al::IUseSceneObjHolder* objHolder);
+void startNfpTouch(const al::IUseSceneObjHolder* objHolder);
+void stopNfpTouch(const al::IUseSceneObjHolder* objHolder);
+bool isNfpErrorHandled(const al::IUseSceneObjHolder* objHolder);
+bool requestAppearAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
+void requestDecideAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
+void requestEndAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
+bool isEndAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
+AmiiboNpcLayout* getAmiiboTouchLayout(const al::IUseSceneObjHolder* objHolder);
+u32 getSearchAmiiboNum(const al::IUseSceneObjHolder* objHolder);
+u32 getSearchEndAmiiboNum(const al::IUseSceneObjHolder* objHolder);
+u32 getSearchEndAmiiboNumRealTime(const al::IUseSceneObjHolder* objHolder);
+void registerSearchAmiibo(const al::IUseSceneObjHolder* objHolder, const al::NfpInfo& nfpInfo);
+bool isSearchAmiibo(const al::IUseSceneObjHolder* objHolder, const al::NfpInfo& nfpInfo);
+void deleteSearchEndAmiibo(const al::IUseSceneObjHolder* objHolder);
+void setTalkStartTime(const al::IUseSceneObjHolder* objHolder);
+al::MessageTagDataHolder* getMessageTagDataHolder(const al::IUseSceneObjHolder* objHolder);
+void setTouchAmiiboName(const al::IUseSceneObjHolder* objHolder, s32 id, s32 numberingId);
+void trySetAmiiboCostumeName(const al::IUseSceneObjHolder* objHolder, s32 id);
 
 }  // namespace AmiiboFunction
