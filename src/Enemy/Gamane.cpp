@@ -10,7 +10,7 @@
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
@@ -37,21 +37,21 @@
 #include "Util/ShadowUtil.h"
 
 namespace {
-NERVE_IMPL(Gamane, Wait);
-NERVE_IMPL(Gamane, Find);
-NERVE_IMPL(Gamane, Runaway);
-NERVE_IMPL(Gamane, Fall);
-NERVE_IMPL(Gamane, Land);
-NERVE_IMPL(Gamane, Swoon);
-NERVE_IMPL(Gamane, HackStart);
-NERVE_IMPL(Gamane, Hack);
-NERVE_IMPL(Gamane, Trampled);
-NERVE_IMPL(Gamane, PressDown);
-NERVE_IMPL(Gamane, BlowDown);
+NERVE_IMPL(Gamane, Wait)
+NERVE_IMPL(Gamane, Find)
+NERVE_IMPL(Gamane, Runaway)
+NERVE_IMPL(Gamane, Fall)
+NERVE_IMPL(Gamane, Land)
+NERVE_IMPL(Gamane, Swoon)
+NERVE_IMPL(Gamane, HackStart)
+NERVE_IMPL(Gamane, Hack)
+NERVE_IMPL(Gamane, Trampled)
+NERVE_IMPL(Gamane, PressDown)
+NERVE_IMPL(Gamane, BlowDown)
 
-NERVES_MAKE_NOSTRUCT(Gamane, Land);
+NERVES_MAKE_NOSTRUCT(Gamane, Land)
 NERVES_MAKE_STRUCT(Gamane, Wait, Swoon, Hack, BlowDown, HackStart, Trampled, PressDown, Fall, Find,
-                   Runaway);
+                   Runaway)
 }  // namespace
 
 static al::EnemyStateBlowDownParam gEnemyStateBlowDownParam =
