@@ -37,7 +37,6 @@
           ncurses6
         ];
         LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
-        LIBCLANG_PATH = "${pkgs.libclang.lib}/lib";
       };
     };
   };

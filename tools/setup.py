@@ -14,6 +14,7 @@ import tarfile
 import tempfile
 import urllib.request
 import urllib.parse
+import urllib.error
 from common.util.config import get_repo_root
 
 TARGET_PATH = setup.get_target_path()
@@ -86,11 +87,27 @@ def setup_cached_tools(viking_from_source):
 
     remove_old_toolchain()
     with tempfile.TemporaryDirectory() as tmpdir:
+
+        if not exists_toolchain_file("include/arm_neon.h"):
+            print(">>> Downloading llvm-3.9 libc++ headers...")
+            path = tmpdir + "/OdysseyDecomp-libcxx-headers.tar.xz"
+            url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-libcxx-headers.tar.xz")
+            urllib.request.urlretrieve(url, path)
+            print(">>> extracting libc++ headers...")
+            with tarfile.open(path) as f:
+                f.extractall(f"{get_repo_root()}/toolchain/")
+
         if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
             print(">>> Downloading clang, lld and viking...")
             path = tmpdir + "/OdysseyDecomp-cache-bin.tar.xz"
-            url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-binaries_{platform.system()}.tar.xz")
-            urllib.request.urlretrieve(url, path)
+            try:
+                url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-binaries_{platform.system()}.tar.xz")
+                urllib.request.urlretrieve(url, path)
+            except urllib.error.HTTPError:
+                print(f"Prebuilt binaries not found for platform: {platform.system()}! Please manually build `clang` 3.9.0 and `ld.lld` from source")
+                print("Automatically installing viking from source since prebuilt version isn't available")
+                setup.install_viking()
+                return
 
             print(">>> extracting tools...")
             with tarfile.open(path) as f:
@@ -104,15 +121,6 @@ def setup_cached_tools(viking_from_source):
                     os.symlink(f"{get_repo_root()}/toolchain/bin/decompme", f"{get_repo_root()}/tools/decompme")
                 if not exists_tool("listsym"):
                     os.symlink(f"{get_repo_root()}/toolchain/bin/listsym", f"{get_repo_root()}/tools/listsym")
-
-        if not exists_toolchain_file("include/arm_neon.h"):
-            print(">>> Downloading llvm-3.9 libc++ headers...")
-            path = tmpdir + "/OdysseyDecomp-libcxx-headers.tar.xz"
-            url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-libcxx-headers.tar.xz")
-            urllib.request.urlretrieve(url, path)
-            print(">>> extracting libc++ headers...")
-            with tarfile.open(path) as f:
-                f.extractall(f"{get_repo_root()}/toolchain/")
 
 def create_build_dir(ver, cmake_backend):
     if(ver != Version.VER_100): return # TODO: remove this when multiple versions should be built
