@@ -17,7 +17,7 @@ jobs:
         fetch-depth: 0
     - name: Check out required PRs list to master
       run: |
-        git checkout master -- .github/files/rebase-requirement-prs.txt
+        git checkout origin/master -- .github/files/rebase-requirement-prs.txt || true
     - name: Run rebase requirement check
       run: |
         glog_out="$(git log --pretty=format:"%s")"
