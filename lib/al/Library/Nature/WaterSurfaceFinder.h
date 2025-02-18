@@ -5,6 +5,21 @@
 namespace al {
 class LiveActor;
 
+struct WaterSurfaceProperties {
+    f32 distance = 0.0f;
+    sead::Vector3f position = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f normal = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _1c = {0.0f, 0.0f, 0.0f};
+
+    void setDistance(f32 value) { distance = value; }
+
+    void setPosition(const sead::Vector3f& vector) { position.set(vector); }
+
+    void setNormal(const sead::Vector3f& vector) { normal.set(vector); }
+
+    void set1c(const sead::Vector3f& vector) { _1c.set(vector); }
+};
+
 class WaterSurfaceFinder {
 public:
     WaterSurfaceFinder(const LiveActor* player);
@@ -23,17 +38,14 @@ public:
 
     bool isFoundSurface() const { return mIsFoundSurface; };
 
-    f32 getDistance() const { return mDistance; };
+    f32 getDistance() const { return mSurface.distance; };
 
-    const sead::Vector3f& getSurfacePosition() const { return mSurfacePosition; };
+    const sead::Vector3f& getSurfacePosition() const { return mSurface.position; };
 
 private:
     const LiveActor* mActor;
     bool mIsFoundSurface = false;
-    f32 mDistance = 0.0f;
-    sead::Vector3f mSurfacePosition = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mSurfaceNormal = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f _28 = {0.0f, 0.0f, 0.0f};
+    WaterSurfaceProperties mSurface{};
 };
 
 static_assert(sizeof(WaterSurfaceFinder) == 0x38);
