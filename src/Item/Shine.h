@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Util/IUseDimension.h"
@@ -108,8 +110,14 @@ public:
     void updateModelActorResetPosition();
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
+    const sead::Vector3f& get_16c() { return _16c; }
+
+    void set_16c(const sead::Vector3f& newValue) { _16c.set(newValue); }
+
 private:
-    void* filler_380[78];
+    char filler_16c[92];
+    sead::Vector3f _16c;
+    void* filler_380[65];
 };
 
 static_assert(sizeof(Shine) == 0x380);
