@@ -37,8 +37,8 @@ private:
     s32 mKeyPoseCurrentIdx = 0;
     MoveType mMoveType = MoveType::Loop;
     bool mIsForward = true;
-    bool mHasNext = false;
-    bool mHasPrevious = false;
+    bool mIsStop = false;
+    bool mIsRestart = false;
 };
 
 static_assert(sizeof(KeyPoseKeeper) == 0x18);
