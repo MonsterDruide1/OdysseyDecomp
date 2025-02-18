@@ -448,5 +448,8 @@ bool tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSens
                                      const HitSensor*, f32);
 bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
                                       const HitSensor*, f32);
+bool pushAndAddVelocity(LiveActor*, const HitSensor*, const HitSensor*, f32);
+bool pushAndAddVelocityH(LiveActor*, const HitSensor*, const HitSensor*, f32);
+bool pushAndAddVelocityV(LiveActor*, const HitSensor*, const HitSensor*, f32);
 bool isMySensor(const HitSensor* sensor, const LiveActor* actor);
 }  // namespace al
