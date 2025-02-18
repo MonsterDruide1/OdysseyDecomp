@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadVector.h>
+
 #include "Library/Area/IUseAreaObj.h"
 #include "Library/HostIO/HioNode.h"
 
