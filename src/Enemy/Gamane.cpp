@@ -109,27 +109,26 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
     mDepthShadowMapCtrl = new HackerDepthShadowMapCtrl(this, "Ground", 50.0f, 0.3f, 0.5f);
 }
 
-void Gamane::attackSensor(al::HitSensor* target, al::HitSensor* source) {
+void Gamane::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvGamane.PressDown) || al::isNerve(this, &NrvGamane.BlowDown))
         return;
 
     if (mPlayerHack != nullptr) {
-        mHackState->attackSensor(target, source);
+        mHackState->attackSensor(self, other);
         return;
     }
 
-    if (al::isSensorEnemyBody(target) && al::isSensorEnemyBody(source))
-        al::sendMsgPushAndKillVelocityToTarget(this, target, source);
+    if (al::isSensorEnemyBody(self) && al::isSensorEnemyBody(other))
+        al::sendMsgPushAndKillVelocityToTarget(this, self, other);
 
-    if (al::isSensorEnemyBody(target)) {
-        al::sendMsgPush(source, target);
-        rs::sendMsgPushToPlayer(source, target);
+    if (al::isSensorEnemyBody(self)) {
+        al::sendMsgPush(other, self);
+        rs::sendMsgPushToPlayer(other, self);
     }
 }
 
-bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                        al::HitSensor* target) {
-    if ((!al::isSensorEnemyBody(target) || al::isNerve(this, &NrvGamane.PressDown) ||
+bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+    if ((!al::isSensorEnemyBody(self) || al::isNerve(this, &NrvGamane.PressDown) ||
          al::isNerve(this, &NrvGamane.BlowDown)) &&
         (al::isMsgPlayerDisregard(message) || rs::isMsgPlayerDisregardHomingAttack(message) ||
          rs::isMsgPlayerDisregardTargetMarker(message)))
@@ -150,7 +149,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
             mStateSwoon->tryReceiveMsgStartLockOn(message))
             return true;
         if (mStateSwoon->tryReceiveMsgStartHack(message)) {
-            startHack(message, source, target);
+            startHack(message, other, self);
             al::setNerve(this, &NrvGamane.HackStart);
             return true;
         }
@@ -160,7 +159,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
         if (mStateSwoon->tryReceiveMsgEnableLockOn(message))
             return true;
         if (mStateSwoon->tryReceiveMsgStartHack(message)) {
-            startHack(message, source, target);
+            startHack(message, other, self);
             al::setNerve(this, &NrvGamane.HackStart);
             return true;
         }
@@ -178,7 +177,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
             return true;
         }
 
-        bool result = mHackState->receiveMsg(message, source, target);
+        bool result = mHackState->receiveMsg(message, other, self);
         if (mHackState->isHackEnd()) {
             mPlayerHack = nullptr;
             rs::endHackShadow(this);
@@ -191,12 +190,12 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
         return result;
     }
 
-    if ((al::isSensorEnemyBody(source) || al::isSensorMapObj(source)) &&
-        al::tryReceiveMsgPushAndAddVelocity(this, message, source, target, 3.0f))
+    if ((al::isSensorEnemyBody(other) || al::isSensorMapObj(other)) &&
+        al::tryReceiveMsgPushAndAddVelocity(this, message, other, self, 3.0f))
         return true;
 
     if (al::isMsgPlayerTrampleReflect(message) || rs::isMsgSenobiTrample(message)) {
-        rs::requestHitReactionToAttacker(message, target, source);
+        rs::requestHitReactionToAttacker(message, self, other);
         if (mCoinsLeft > 0) {
             rs::tryAppearMultiCoinFromObj(this, al::getHitSensor(this, "Body"), 0, 150.0f);
             mCoinsLeft--;
@@ -211,20 +210,20 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
     }
 
     if (rs::isMsgPressDown(message) && !al::isMsgPlayerTrample(message)) {
-        rs::requestHitReactionToAttacker(message, target, source);
+        rs::requestHitReactionToAttacker(message, self, other);
         al::setNerve(this, &NrvGamane.PressDown);
         return true;
     }
 
     if (rs::isMsgBlowDown(message)) {
         if (rs::isMsgGamaneBullet(message)) {
-            GamaneBullet* bullet = (GamaneBullet*)al::getSensorHost(source);
+            GamaneBullet* bullet = (GamaneBullet*)al::getSensorHost(other);
             if (bullet != nullptr && bullet->getParent() == this)
                 return false;
         }
 
-        rs::requestHitReactionToAttacker(message, target, source);
-        mStateBlowDown->start(source);
+        rs::requestHitReactionToAttacker(message, self, other);
+        mStateBlowDown->start(other);
         al::setNerve(this, &NrvGamane.BlowDown);
         return true;
     }
@@ -239,7 +238,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
         return true;
 
     if (al::isMsgEnemyAttackFire(message)) {
-        rs::requestHitReactionToAttacker(message, target, source);
+        rs::requestHitReactionToAttacker(message, self, other);
         return true;
     }
 
@@ -292,9 +291,9 @@ void Gamane::updateCollider() {
     al::LiveActor::updateCollider();
 }
 
-void Gamane::startHack(const al::SensorMsg* message, al::HitSensor* source, al::HitSensor* target) {
+void Gamane::startHack(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
     al::invalidateClipping(this);
-    mPlayerHack = mStateHackStart->tryStart(message, source, target);
+    mPlayerHack = mStateHackStart->tryStart(message, other, self);
     mHackState->setPlayerHackAction(mPlayerHack);
     rs::hideShadowHackCap(mPlayerHack);
     rs::setupHackShadow(this);
