@@ -12,8 +12,8 @@ public:
     PartsModel(const char*);
     void endClipped() override;
     void calcAnim() override;
-    void attackSensor(HitSensor*, HitSensor*) override;
-    bool receiveMsg(const SensorMsg*, HitSensor*, HitSensor*) override;
+    void attackSensor(HitSensor* self, HitSensor* other) override;
+    bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
 
     void initPartsDirect(LiveActor*, const ActorInitInfo&, const char*, const sead::Matrix34f*,
                          const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, bool);

@@ -39,7 +39,7 @@ public:
     void appearPopUpWithoutHitReaction();
     void appearPopUpVelocity();
     void appearAbove();
-    void appearCountUpCommon(sead::Vector3f& velocity, s32 delay);
+    void appearCountUpCommon(sead::Vector3f* velocity, s32 delay);
     void appearCountUp();
     void appearCountUpFiveCount();
     void appearCountUp3(s32 coinIndex);

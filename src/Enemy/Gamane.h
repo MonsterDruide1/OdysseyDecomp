@@ -25,14 +25,14 @@ public:
     Gamane(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
-    void attackSensor(al::HitSensor* target, al::HitSensor* source) override;
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                    al::HitSensor* target) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void control() override;
     void endClipped() override;
     void updateCollider() override;
 
-    void startHack(const al::SensorMsg* message, al::HitSensor* source, al::HitSensor* target);
+    void startHack(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     void updateRefract();
     void updateMovement();
     void startRefract(s32 transitionTime);

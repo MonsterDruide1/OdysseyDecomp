@@ -314,11 +314,11 @@ inline void appearCountUpReset(al::LiveActor* actor, ExternalForceKeeper* forceK
     actor->appear();
 }
 
-void Coin::appearCountUpCommon(sead::Vector3f& velocity, s32 delay) {
+void Coin::appearCountUpCommon(sead::Vector3f* velocity, s32 delay) {
     al::setVelocityZero(this);
     sead::Vector3f quatUp = sead::Vector3f::zero;
     al::calcQuatUp(&quatUp, this);
-    velocity.set(quatUp * 16.0f);
+    velocity->set(quatUp * 16.0f);
 
     if (delay != 0) {
         al::setNerve(this, &NrvCoin.CountUpDelay);
@@ -327,7 +327,7 @@ void Coin::appearCountUpCommon(sead::Vector3f& velocity, s32 delay) {
     }
 
     al::setNerve(this, &NrvCoin.CountUp);
-    al::setVelocity(this, velocity);
+    al::setVelocity(this, *velocity);
 }
 
 void Coin::appearCountUp() {
@@ -368,7 +368,7 @@ void Coin::appearCountUp3(s32 coinIndex) {
     al::rotateVectorQuat(&direction, al::getQuat(this));
     al::getTransPtr(this)->add(direction);
     mTimeLimit = -1;
-    appearCountUpCommon(mBlowVelocity, mCountUpDelay);
+    appearCountUpCommon(&mBlowVelocity, mCountUpDelay);
 }
 
 void Coin::appearCountUp5(s32 coinIndex) {
@@ -403,7 +403,7 @@ void Coin::appearCountUp5(s32 coinIndex) {
     al::rotateVectorQuat(&direction, al::getQuat(this));
     al::setTrans(this, al::getTrans(this) + direction);
     mTimeLimit = -1;
-    appearCountUpCommon(mBlowVelocity, mCountUpDelay);
+    appearCountUpCommon(&mBlowVelocity, mCountUpDelay);
 }
 
 void Coin::appearCountUp10(s32 coinIndex) {
@@ -430,7 +430,7 @@ void Coin::appearCountUp10(s32 coinIndex) {
     al::rotateVectorQuat(&direction, al::getQuat(this));
     al::getTransPtr(this)->add(direction);
     mTimeLimit = -1;
-    appearCountUpCommon(mBlowVelocity, mCountUpDelay);
+    appearCountUpCommon(&mBlowVelocity, mCountUpDelay);
 }
 
 void Coin::appearCountUpFixPos10(s32 coinIndex) {
@@ -438,7 +438,7 @@ void Coin::appearCountUpFixPos10(s32 coinIndex) {
     appearCountUpReset(this, mExternalForceKeeper);
     mTimeLimit = -1;
     mCountUpDelay = coinIndex * 8;
-    appearCountUpCommon(mBlowVelocity, mCountUpDelay);
+    appearCountUpCommon(&mBlowVelocity, mCountUpDelay);
 }
 
 void Coin::appearCoinRail() {

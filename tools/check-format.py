@@ -5,18 +5,21 @@ import csv
 import os
 import stat
 import re
+import subprocess
 from functools import cache
 
 from common import setup_common as setup
+from common.util import utils
 
 # ------
 # CHECKS
 # ------
 
 issueFound = False
+runAllChecks = False
 
 def FAIL(message, line, path):
-    print("Offending file:", path)
+    print("Offending file:", os.path.relpath(path, os.getcwd()))
     print("Line:", line)
     print(message)
     print()
@@ -81,7 +84,8 @@ def common_no_namespace_qualifiers(c, path):
     if len(nest_level) != 0:
         print("ERROR: nest_level not empty at end of the file!")
         print("nest_level", nest_level)
-        exit(1)
+        if not runAllChecks:
+            exit(1)
 
 @cache
 def get_includes():
@@ -206,7 +210,7 @@ def common_newline_eof(c, path):
     CHECK(lambda a: a == "", c.split("\n")[-1], "Files should end with a newline!", path)
 
 def common_sead_types(c, path):
-    FORBIDDEN_TYPES = ["int", "float", "short", "long", "double"]
+    FORBIDDEN_TYPES = ["int", "float", "short", "long", "double", "char16_t"]
     for line in c.splitlines():
         for t in FORBIDDEN_TYPES:
             index = 0
@@ -253,6 +257,12 @@ def common_this_prefix(c, path):
         if 'this->' in line:
             FAIL("this-> is not allowed!", line, path)
 
+def common_consistent_float_literals(c, path):
+    for line in c.splitlines():
+        index = line.find(".f")
+        if index != -1 and not line[index + 2].isalpha():
+            FAIL(" '.f' is not allowed, use '.0f' instead!", line, path)
+
 def common_sead_math_template(c, path):
     for line in c.splitlines():
         if "<f32>" in line or "<s32>" in line or "<u32>" in line or "<f64>" in line or "<s64>" in line or "<u64>" in line:
@@ -293,6 +303,19 @@ def common_string_finder(c, path):
                     break
             if not found:
                 FAIL("String not found in binary: \""+match+"\"", line, path)
+
+def common_const_reference(c, path):
+    for line in c.splitlines():
+        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line:
+            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line):
+                FAIL("References must be const!", line, path)
+
+def common_self_other(c, path, is_header):
+    lines = c.splitlines()
+    for i, line in enumerate(lines):
+        if (("attackSensor(" in line and "void HitSensor" not in line) or "receiveMsg(" in line) and (is_header or "::" in line) and (("self" not in line and "self" not in lines[i + 1]) or "other" not in line) and "Library/HitSensor/HitSensorKeeper.h" not in path:
+            FAIL("'attackSensor' and 'receiveMsg' should have 'self' and 'other' params!", line, path)
+            return
 
 # Header files
 
@@ -341,8 +364,10 @@ def header_sorted_visibility(c, path):
     if len(nest_level) != 1:
         print("ERROR: nest_level not empty at end of the file!")
         print("nest_level", nest_level)
-        exit(1)
 
+        if not runAllChecks:
+            exit(1)
+ 
 def header_check_line(line, path, visibility, should_start_class):
     if visibility == -2:  # outside of class/struct/...
         if (line.startswith("class") and (not line.endswith(";") or "{" in line)) or should_start_class:
@@ -401,7 +426,7 @@ def header_check_line(line, path, visibility, should_start_class):
             CHECK(lambda a: allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
         if var_type == "bool":
-            BOOL_PREFIXES = ["mIs", "mHas"]
+            BOOL_PREFIXES = ["mIs", "mHas", "mAlways"]
             allowed_name = any(
                 [var_name.startswith(p) and (var_name[len(p)].isupper() or var_name[len(p)].isdigit()) for p in
                  BOOL_PREFIXES]) or any([var_name.startswith(p) for p in PREFIXES])
@@ -410,9 +435,21 @@ def header_check_line(line, path, visibility, should_start_class):
 
 def header_no_offset_comments(c, path):
     for line in c.splitlines():
-        CHECK(lambda a: "// 0x" not in a, line, "Offset comments are not allowed in headers!", path)
+        if "// 0x" in line or "// _" in line:
+            FAIL("Offset comments are not allowed in headers!", line, path)
+
+def header_lowercase_member_offset_vars(c, path):
+    for line in c.splitlines():
+        if re.search(r"\s(field|gap|filler|pad)?_[0-9a-z]*[A-Z]", line):
+            CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!", path)
+
 
 # Source files
+
+def source_no_raw_auto(c, path):
+    for line in c.splitlines():
+        if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line:
+            FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
 
 def source_no_nerve_make(c, path):
     for line in c.splitlines():
@@ -435,6 +472,10 @@ def check_source(c, path):
     common_string_finder(c, path)
     common_sead_math_template(c, path)
     source_no_nerve_make(c, path)
+    common_const_reference(c, path)
+    source_no_raw_auto(c, path)
+    common_self_other(c, path, False)
+    common_consistent_float_literals(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -447,6 +488,18 @@ def check_header(c, path):
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
     common_this_prefix(c, path)
+    common_const_reference(c, path)
+    header_lowercase_member_offset_vars(c, path)
+    common_self_other(c, path, True)
+    common_consistent_float_literals(c, path)
+
+def _check_file_content(content, file_str):
+    if file_str.endswith('.h'):
+        check_header(content, file_str)
+    elif file_str.endswith('.cpp'):
+        check_source(content, file_str)
+    else:
+        FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
 
 def check_file(file_str):
     st = os.stat(file_str)
@@ -456,13 +509,7 @@ def check_file(file_str):
     file = open(file_str, mode="r")
     content = file.read()
     file.close()
-
-    if file_str.endswith('.h'):
-        check_header(content, file_str)
-    elif file_str.endswith('.cpp'):
-        check_source(content, file_str)
-    else:
-        FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
+    _check_file_content(content, file_str)
 
 def read_csv_file(path):
     if not os.path.isfile(path):
@@ -486,21 +533,44 @@ project_root = setup.ROOT
 def main():
     parser = argparse.ArgumentParser(
         'check-format.py', description="Verify additional formatting options next to clang-format and clang-tidy")
-    parser.add_argument('--verbose', action='store_true',
-                        help="Give verbose output")
+    parser.add_argument('-F', '--run-clang-format', action='store_true',
+                        help="Automatically run clang format before checking each file")
+    parser.add_argument('-a', '--all', action='store_true',
+                        help="Run all checks even if one of them fails")
+    parser.add_argument('--ci', action='store_true',
+                        help="Run in CI mode, meant for github actions and other CI platforms")
     args = parser.parse_args()
 
-    for dir in [project_root / 'lib' / 'al', project_root / 'src']:
+    global runAllChecks
+    runAllChecks = args.all
+
+    global functionData
+    functionData = sorted(utils.get_functions(), key=lambda info: info.name)
+
+    if not args.run_clang_format and not args.ci:
+        print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
+        print()
+
+    for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
+                if args.run_clang_format:
+                    subprocess.check_call(['clang-format', '-i', file_str])
+                if args.ci:
+                    if subprocess.run(['clang-format', file_str, '--dry-run', '--Werror'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0:
+                        print("Warning: file", os.path.relpath(file_str, os.getcwd()), "wasn't formatted correctly with clang-format, this may cause the line numbers to be incorrect")
+                        print()
+                        result = subprocess.run(['clang-format', file_str], capture_output=True, text=True)
+                        if result.returncode == 0:
+                            _check_file_content(str(result.stdout), file_str)
+                            continue
                 check_file(file_str)
 
     if issueFound:
         exit(1)
-    else:
-        print("No issues found!")
+    print("No issues found!")
 
 if __name__ == "__main__":
     main()
