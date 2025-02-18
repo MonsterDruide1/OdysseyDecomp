@@ -1,7 +1,6 @@
 #pragma once
 
 #include <math/seadQuat.h>
-#include <math/seadVector.h>
 
 #include "Library/Movement/MoveType.h"
 
@@ -16,9 +15,9 @@ public:
     KeyPoseKeeper();
 
     void init(const PlacementInfo& info);
-    KeyPose* getKeyPose(s32 idx) const;
-    KeyPose* getCurrentKeyPose() const;
-    KeyPose* getNextKeyPose() const;
+    const KeyPose& getKeyPose(s32 idx) const;
+    const KeyPose& getCurrentKeyPose() const;
+    const KeyPose& getNextKeyPose() const;
     s32 calcNextPoseIndex() const;
     void reset();
     void next();
@@ -33,7 +32,7 @@ public:
     s32 getKeyPoseCurrentIdx() const { return mKeyPoseCurrentIdx; }
 
 private:
-    KeyPose** mKeyPoses = nullptr;
+    KeyPose* mKeyPoses = nullptr;
     s32 mKeyPoseCount = 0;
     s32 mKeyPoseCurrentIdx = 0;
     MoveType mMoveType = MoveType::Loop;
