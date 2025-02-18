@@ -2,7 +2,7 @@
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"

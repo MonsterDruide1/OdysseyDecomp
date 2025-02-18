@@ -2,7 +2,7 @@
 
 #include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Nerve/NerveSetupUtil.h"

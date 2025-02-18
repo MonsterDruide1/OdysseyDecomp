@@ -1,8 +1,8 @@
 #include "Library/Obj/DepthShadowModel.h"
 
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 
 namespace al {
 DepthShadowModel::DepthShadowModel(LiveActor* parent, const ActorInitInfo& info,

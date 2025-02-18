@@ -2,7 +2,7 @@
 
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"

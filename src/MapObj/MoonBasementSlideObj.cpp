@@ -3,7 +3,7 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorFunction.h"

@@ -3,8 +3,8 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Placement/PlacementFunction.h"
 

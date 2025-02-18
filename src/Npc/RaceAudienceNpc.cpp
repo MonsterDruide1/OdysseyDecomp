@@ -1,7 +1,7 @@
 #include "Npc/RaceAudienceNpc.h"
 
 #include "Library/LiveActor/ActorActionFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"

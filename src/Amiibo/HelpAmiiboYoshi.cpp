@@ -2,8 +2,8 @@
 
 #include <math/seadVector.h>
 
-#include "Library/LiveActor/ActorDrawFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/Nfp/NfpFunction.h"
 

@@ -4,7 +4,7 @@
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Effect/EffectSystemInfo.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"

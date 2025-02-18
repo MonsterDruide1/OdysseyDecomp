@@ -1,6 +1,6 @@
 #include "MapObj/WorldMapEarth.h"
 
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathUtil.h"
 

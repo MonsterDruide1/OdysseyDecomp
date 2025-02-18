@@ -4,7 +4,7 @@
 
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Layout/LayoutActorUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Message/MessageHolder.h"
 #include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nfp/NfpFunction.h"
