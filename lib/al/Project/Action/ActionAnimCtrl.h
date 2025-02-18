@@ -22,7 +22,9 @@ public:
     void sortCtrlInfo();
     const char* findAnimInfo(const char*) const;
     const char* getPlayingActionName();
-    s32 getActionFrameMax(const char*) const;
+    f32 getActionFrameMax(const char*) const;
+    f32 getFrame() const;
+    f32 getFrameRate() const;
 
 private:
     LiveActor* mParentActor;
