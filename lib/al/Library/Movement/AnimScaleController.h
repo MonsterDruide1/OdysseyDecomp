@@ -51,11 +51,11 @@ public:
     void exeStop();
     void exeAnim();
     void updateScale(f32, f32);
-    void tryStop();
+    bool tryStop();
     void exeVibration();
     void exeHitReaction();
     void exeCrush();
-    void isHitReaction(s32) const;
+    bool isHitReaction(s32) const;
     void setOriginalScale(const sead::Vector3f&);
     void update();
 
