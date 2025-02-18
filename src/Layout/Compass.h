@@ -7,7 +7,7 @@
 namespace al {
 class LayoutInitInfo;
 class PlayerHolder;
-class SceneCameraInfo;
+struct SceneCameraInfo;
 }  // namespace al
 
 class Compass : public al::LayoutActor {

@@ -32,11 +32,17 @@ public:
 
     s32 getPriority() const { return mPriority; }
 
+    bool isActiveCamera() const { return mIsActiveCamera; }
+
+    void setActiveCamera(bool is) { mIsActiveCamera = is; }
+
 private:
     CameraPoser* mPoser;
     const CameraTicketId* mTicketId;
     s32 mPriority;
     bool mIsActiveCamera = false;
 };
+
+static_assert(sizeof(CameraTicket) == 0x18);
 
 }  // namespace al
