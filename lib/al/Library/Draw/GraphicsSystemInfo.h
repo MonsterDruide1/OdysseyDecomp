@@ -10,7 +10,7 @@ class AreaObjDirector;
 class ExecuteDirector;
 class EffectSystem;
 class PlayerHolder;
-class SceneCameraInfo;
+struct SceneCameraInfo;
 class ShaderHolder;
 
 class GraphicsSystemInfo {

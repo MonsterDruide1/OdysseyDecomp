@@ -12,7 +12,7 @@
 
 namespace al {
 
-class SceneCameraInfo;
+struct SceneCameraInfo;
 class ScreenCapture;
 
 class ScreenCaptureExecutor : public IUseHioNode {

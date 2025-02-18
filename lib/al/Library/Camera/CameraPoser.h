@@ -21,7 +21,7 @@ class CameraArrowCollider;
 class CameraOffsetCtrlPreset;
 class CameraParamMoveLimit;
 class GyroCameraCtrl;
-class CameraViewInfo;
+struct CameraViewInfo;
 class CameraStartInfo;
 class CameraObjectRequestInfo;
 class CameraTurnInfo;

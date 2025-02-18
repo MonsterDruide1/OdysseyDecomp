@@ -17,7 +17,7 @@ class GraphicsSystemInfo;
 class AreaObjDirector;
 class ExecuteDirector;
 class EffectSystem;
-class SceneCameraInfo;
+struct SceneCameraInfo;
 class PlayerHolder;
 class Projection;
 class ShaderHolder;

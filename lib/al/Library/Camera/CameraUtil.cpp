@@ -1,16 +1,32 @@
 #include "Library/Camera/CameraUtil.h"
 
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraPoseUpdater.h"
+#include "Library/Camera/CameraPoser.h"
+#include "Library/Camera/CameraPoserFix.h"
+#include "Library/Camera/CameraSwitchRequester.h"
+#include "Library/Camera/CameraTicket.h"
+#include "Library/Camera/CameraViewCtrl.h"
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/IUseCamera.h"
 #include "Library/Camera/SceneCameraInfo.h"
+#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/Math/MathUtil.h"
+#include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
 #include "Library/Projection/Projection.h"
 
 namespace al {
 
 inline CameraDirector* getCameraDirector(const IUseCamera* user) {
     return user->getCameraDirector();
+}
+
+inline void vectorNeg(sead::Vector3f* vector) {
+    vector->x = -vector->x;
+    vector->y = -vector->y;
+    vector->z = -vector->z;
 }
 
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user) {
@@ -62,6 +78,14 @@ const sead::Matrix44f& getProjectionMtx(const IUseCamera* user, s32 viewIdx) {
 }
 
 const sead::Matrix44f& getProjectionMtx(const SceneCameraInfo* info, s32 viewIdx) {
+    return *info->getViewAt(viewIdx)->getProjMtx();
+}
+
+const sead::Matrix44f* getProjectionMtxPtr(const IUseCamera* user, s32 viewIdx) {
+    return getProjectionMtxPtr(getSceneCameraInfo(user), viewIdx);
+}
+
+const sead::Matrix44f* getProjectionMtxPtr(const SceneCameraInfo* info, s32 viewIdx) {
     return info->getViewAt(viewIdx)->getProjMtx();
 }
 
@@ -166,4 +190,131 @@ f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
 
     return fovy / fovy2;
 }
+
+void calcCameraFront(sead::Vector3f* vec, const IUseCamera* user, s32 viewIdx) {
+    vec->set(getCameraAt(user, viewIdx) - getCameraPos(user, viewIdx));
+    normalize(vec);
+}
+
+void setNearClipDistance(const IUseCamera* user, f32 distance, s32 updaterIdx) {
+    getCameraDirector(user)->getPoseUpdater(updaterIdx)->setNearClipDistance(distance);
+}
+
+void setFarClipDistance(const IUseCamera* user, f32 distance, s32 updaterIdx) {
+    getCameraDirector(user)->getPoseUpdater(updaterIdx)->setFarClipDistance(distance);
+}
+
+void calcCameraDir(sead::Vector3f* dir, const IUseCamera* user, s32 viewIdx) {
+    const sead::Matrix34f& mtx = getLookAtCamera(user, viewIdx).getMatrix();
+    dir->set(mtx.m[2][0], mtx.m[2][1], mtx.m[2][2]);
+}
+
+void calcCameraLookDir(sead::Vector3f* dir, const IUseCamera* user, s32 viewIdx) {
+    const sead::Matrix34f& mtx = getLookAtCamera(user, viewIdx).getMatrix();
+    dir->set(mtx.m[2][0], mtx.m[2][1], mtx.m[2][2]);
+    vectorNeg(dir);
+}
+
+void calcCameraSideDir(sead::Vector3f* sideDir, const IUseCamera* user, s32 viewIdx) {
+    return getLookAtCamera(user, viewIdx).getRightVectorByMatrix(sideDir);
+}
+
+void calcCameraUpDir(sead::Vector3f* upDir, const IUseCamera* user, s32 viewIdx) {
+    return getLookAtCamera(user, viewIdx).getUpVectorByMatrix(upDir);
+}
+
+bool tryCalcCameraDir(sead::Vector3f* dir, const SceneCameraInfo* info, s32 viewIdx) {
+    const sead::Matrix34f& mtx = info->getViewAt(viewIdx)->getLookAtCam().getMatrix();
+    dir->set(mtx.m[2][0], mtx.m[2][1], mtx.m[2][2]);
+
+    return tryNormalizeOrZero(dir);
+}
+
+bool tryCalcCameraDirH(sead::Vector3f* dirH, const SceneCameraInfo* info,
+                       const sead::Vector3f& upDir, s32 viewIdx) {
+    const sead::Matrix34f& mtx = info->getViewAt(viewIdx)->getLookAtCam().getMatrix();
+    verticalizeVec(dirH, upDir, {mtx.m[2][0], mtx.m[2][1], mtx.m[2][2]});
+
+    return tryNormalizeOrZero(dirH);
+}
+
+bool tryCalcCameraLookDirH(sead::Vector3f* dir, const SceneCameraInfo* info,
+                           const sead::Vector3f& upDir, s32 viewIdx) {
+    if (!tryCalcCameraDirH(dir, info, upDir, viewIdx))
+        return false;
+
+    dir->set(dir->x, dir->y, dir->z);
+    vectorNeg(dir);
+    return true;
+}
+
+void startCamera(const IUseCamera* user, CameraTicket* ticket, s32 num) {
+    getCameraDirector(user)
+        ->getSceneCameraCtrl()
+        ->getSceneViewAt(0)
+        ->getSwitchRequester()
+        ->requestStart(ticket, num);
+}
+
+void startCameraSub(const IUseCamera* user, CameraTicket* ticket, s32 num) {
+    getCameraDirector(user)
+        ->getSceneCameraCtrl()
+        ->getSceneViewAt(1)
+        ->getSwitchRequester()
+        ->requestStart(ticket, num);
+}
+
+bool isActiveCamera(const CameraTicket* ticket) {
+    return ticket->isActiveCamera();
+}
+
+CameraTicket* initObjectCamera(const IUseCamera* user, const PlacementInfo& placementInfo,
+                               const char* str0, const char* str1) {
+    sead::Matrix34f mat;
+    memcpy(&mat, &sead::Matrix34f::ident, sizeof(mat));
+    tryGetZoneMatrixTR(&mat, placementInfo);
+
+    return getCameraDirector(user)->createObjectCamera(createPlacementId(placementInfo), str0, str1,
+                                                       5, mat);
+}
+
+CameraTicket* initObjectCamera(const IUseCamera* user, const ActorInitInfo& actorInitInfo,
+                               const char* str0, const char* str1) {
+    const PlacementInfo* placementInfo = getPlacementInfo(actorInitInfo);
+    sead::Matrix34f mat;
+    memcpy(&mat, &sead::Matrix34f::ident, sizeof(mat));
+    tryGetZoneMatrixTR(&mat, *placementInfo);
+
+    return getCameraDirector(user)->createObjectCamera(createPlacementId(*placementInfo), str0,
+                                                       str1, 5, mat);
+}
+
+CameraTicket* initObjectCameraNoPlacementInfo(const IUseCamera* user, const char* str0,
+                                              const char* str1) {
+    return getCameraDirector(user)->createObjectCamera(nullptr, str0, str1, 5,
+                                                       sead::Matrix34f::ident);
+}
+
+CameraTicket* initFixCamera(const IUseCamera* user, const char* str, const sead::Vector3f& camPos,
+                            const sead::Vector3f& lookAtPos) {
+    CameraPoserFix* poserFix = new CameraPoserFix("固定");
+
+    CameraTicket* ticket = getCameraDirector(user)->createCamera(poserFix, nullptr, str, 5,
+                                                                 sead::Matrix34f::ident, true);
+
+    poserFix->initCameraPosAndLookAtPos(camPos, lookAtPos);
+    return ticket;
+}
+
+CameraTicket* initFixDoorwayCamera(const IUseCamera* user, const char* str,
+                                   const sead::Vector3f& camPos, const sead::Vector3f& lookAtPos) {
+    CameraPoserFix* poser = new CameraPoserFix(CameraPoserFix::getFixDoorwayCameraName());
+
+    CameraTicket* ticket =
+        getCameraDirector(user)->createCamera(poser, nullptr, str, 5, sead::Matrix34f::ident, true);
+
+    poser->initCameraPosAndLookAtPos(camPos, lookAtPos);
+    return ticket;
+}
+
 }  // namespace al

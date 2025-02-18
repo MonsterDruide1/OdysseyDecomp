@@ -8,7 +8,7 @@
 namespace al {
 class AreaObjDirector;
 class PlayerHolder;
-class SceneCameraInfo;
+struct SceneCameraInfo;
 class ViewIdHolder;
 class ActorInitInfo;
 class LiveActor;

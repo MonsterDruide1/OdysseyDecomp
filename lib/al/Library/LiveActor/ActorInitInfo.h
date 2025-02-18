@@ -48,7 +48,7 @@ class HitSensorDirector;
 class StageSwitchDirector;
 class ScreenPointDirector;
 class ViewIdHolder;
-class SceneCameraInfo;
+struct SceneCameraInfo;
 class Nerve;
 class PlacementInfo;
 class Resource;
