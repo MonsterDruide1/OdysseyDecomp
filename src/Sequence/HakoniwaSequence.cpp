@@ -12,10 +12,10 @@
 void HakoniwaSequence::drawMain() const {
     al::Sequence::drawMain();
     al::DrawSystemInfo* info = getDrawInfo();
-    agl::DrawContext* context = info->drawContext;
-    const agl::RenderBuffer* buffer = info->dockedRenderBuffer;
-    if (!info->isDocked)
-        buffer = info->handheldRenderBuffer;
+    agl::DrawContext* context = info->mDrawContext;
+    const agl::RenderBuffer* buffer = info->mDockedRenderBuffer;
+    if (!info->mIsDocked)
+        buffer = info->mHandheldRenderBuffer;
 
     mScreenCaptureExecutor->tryCaptureAndDraw(context, buffer, 0);
     sead::Viewport viewport = sead::Viewport(*buffer);
