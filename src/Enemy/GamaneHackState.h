@@ -24,8 +24,8 @@ public:
     void appear() override;
     void kill() override;
 
-    void attackSensor(al::HitSensor* target, al::HitSensor* source);
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source, al::HitSensor* target);
+    void attackSensor(al::HitSensor* self, al::HitSensor* other);
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     void initialize(const al::ActorInitInfo& info);
     bool isJump() const;
     void tryJump();

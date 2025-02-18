@@ -39,7 +39,7 @@ public:
     void appearPopUpWithoutHitReaction();
     void appearPopUpVelocity();
     void appearAbove();
-    void appearCountUpCommon(sead::Vector3f& velocity, s32 delay);
+    void appearCountUpCommon(sead::Vector3f* velocity, s32 delay);
     void appearCountUp();
     void appearCountUpFiveCount();
     void appearCountUp3(s32 coinIndex);
@@ -52,8 +52,8 @@ public:
     void appearLimitTime(s32 timeLimit);
     void appearBlow(const sead::Vector3f& velocity, s32 delayTime);
     void rotate();
-    void appearBlowUpCommon(s32 delayTime, f32 horizontalForce, f32 verticalForce, s32 coinCount,
-                            s32 coinIndex);
+    void appearBlowUpCommon(s32 delayTime, f32 horizontalForce, f32 verticalForce,
+                                   s32 coinCount, s32 coinIndex);
     void appearBlowUp(s32 coinIndex, s32 coinCount);
     void appearBlowUpLittle(s32 coinIndex, s32 coinCount);
     void appearFall(const sead::Vector3f& velocity, s32 timeLimit);
