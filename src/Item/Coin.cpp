@@ -23,7 +23,7 @@
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Shadow/DepthShadowDrawer.h"
+#include "Library/Shadow/ActorShadowUtil.h"
 #include "Library/Stage/StageSwitchUtil.h"
 
 #include "Item/CoinRotateCalculator.h"
