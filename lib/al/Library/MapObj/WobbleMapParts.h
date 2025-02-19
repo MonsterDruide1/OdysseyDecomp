@@ -20,11 +20,11 @@ private:
     sead::Quatf mInitialQuat = sead::Quatf::unit;
     sead::Vector3f mInitialUp = sead::Vector3f::ey;
     sead::Quatf mCurrentQuat = sead::Quatf::unit;
-    sead::Vector3f _134 = sead::Vector3f::zero;
-    sead::Vector3f _140 = sead::Vector3f::ey;
-    sead::Vector3f _14c = sead::Vector3f::ey;
+    sead::Vector3f mMoment = sead::Vector3f::zero;
+    sead::Vector3f mTargetUp = sead::Vector3f::ey;
+    sead::Vector3f mUnused = sead::Vector3f::ey;
     f32 mMaxRotate = 10.0f;
-    f32 _15c = 0.0f;
+    f32 mTiltSpeed = 0.0f;
     s32 mAssistStopTimer = 0;
     bool mIsStop = false;
 };
