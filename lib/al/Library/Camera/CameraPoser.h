@@ -22,7 +22,7 @@ class CameraOffsetCtrlPreset;
 class CameraParamMoveLimit;
 class GyroCameraCtrl;
 class CameraViewInfo;
-class CameraStartInfo;
+struct CameraStartInfo;
 class CameraObjectRequestInfo;
 class CameraTurnInfo;
 class CameraPoserFlag;
