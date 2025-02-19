@@ -1,6 +1,6 @@
 #include "MapObj/SpaceShuttleChild.h"
 
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 
 namespace {
