@@ -119,15 +119,17 @@ void Mummy::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (isHide())
         return;
 
-    if (!al::isNerve(this, &NrvMummy.SleepShineStop)) {
-        if (al::isSensorEnemyBody(self) && al::isSensorEnemyBody(other))
-            al::sendMsgPushAndKillVelocityToTarget(this, self, other);
+    if (al::isNerve(this, &NrvMummy.SleepShineStop))
+        return;
 
-        if (al::isSensorEnemyAttack(self))
-            if (!(al::isNerve(this, &NrvMummy.Walk) || al::isNerve(this, &NrvMummy.WalkStart)) ||
-                !al::sendMsgEnemyAttack(other, self))
-                rs::sendMsgPushToPlayer(other, self);
-    }
+    if (al::isSensorEnemyBody(self) && al::isSensorEnemyBody(other))
+        al::sendMsgPushAndKillVelocityToTarget(this, self, other);
+
+    if (al::isSensorEnemyAttack(self))
+        if (!(al::isNerve(this, &NrvMummy.Walk) || al::isNerve(this, &NrvMummy.WalkStart)) ||
+            !al::sendMsgEnemyAttack(other, self))
+
+            rs::sendMsgPushToPlayer(other, self);
 }
 
 bool Mummy::isHide() {
@@ -153,12 +155,12 @@ bool Mummy::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::H
         return true;
 
     if (rs::isMsgPressDown(message)) {
-        if (mHasHitReactionEffect)
+        if (mIsNoHitStop)
             al::startHitReactionHitEffect(this, "ヒットマーク", other, self);
         else
             rs::requestHitReactionToAttacker(message, self, other);
 
-        if (mHasItemToAppear)
+        if (mHasCoin)
             rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
 
         al::tryDeleteEffect(this, "Core");
@@ -170,14 +172,14 @@ bool Mummy::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::H
         rs::isMsgGamaneBulletThrough(message) || rs::isMsgBlowDown(message) ||
         al::isMsgExplosion(message) || rs::isMsgBossKnuckleFallAttack(message) ||
         rs::isMsgBossKnuckleIceFallToMummy(message)) {
-        if (mHasHitReactionEffect)
+        if (mIsNoHitStop)
             al::startHitReactionHitEffect(this, "ヒットマーク", other, self);
         else
             rs::requestHitReactionToAttacker(message, self, other);
 
-        if (mHasItemToAppear) {
+        if (mHasCoin) {
             if (rs::isMsgCactusNeedleAttack(message))
-                mHasItemToAppear = false;
+                mHasCoin = false;
             else
                 rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
         }
@@ -199,7 +201,7 @@ bool Mummy::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::H
             if (mInvulnerableTimer > 0)
                 return false;
 
-            if (mHasHitReactionEffect)
+            if (mIsNoHitStop)
                 al::startHitReactionHitEffect(this, "ヒットマーク", other, self);
             else
                 rs::requestHitReactionToAttacker(message, self, other);
@@ -208,7 +210,7 @@ bool Mummy::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::H
             al::setNerve(this, &NrvMummy.HalfReaction);
             return false;
         } else {
-            if (mHasHitReactionEffect)
+            if (mIsNoHitStop)
                 al::startHitReactionHitEffect(this, "ヒットマーク", other, self);
             else
                 rs::requestHitReactionToAttacker(message, self, other);
@@ -226,24 +228,24 @@ void Mummy::control() {
     if (mInvulnerableTimer > 0)
         --mInvulnerableTimer;
 
-    if (isHide() || !al::isCollidedFloorCode(this, "Needle")) {
-        if (al::isInDeathArea(this, al::getTrans(this)) ||
-            al::isCollidedFloorCode(this, "Poison") ||
-            al::isCollidedFloorCode(this, "DamageFire") || al::isInWater(this)) {
-            al::tryAddRippleLarge(this);
-            al::startHitReaction(this, "死亡");
-            kill();
-        }
-        if (!al::isNerve(this, &NrvMummy.Sleep) && !al::isNerve(this, &NrvMummy.SleepShine) &&
-            !al::isNerve(this, &NrvMummy.SleepShineStop) && al::isOnGround(this, 0)) {
-            const char* collidedFloorMaterialCodeName = al::getCollidedFloorMaterialCodeName(this);
-            if (collidedFloorMaterialCodeName)
-                al::setMaterialCode(this, collidedFloorMaterialCodeName);
-        }
-    } else {
+    if (!isHide() && al::isCollidedFloorCode(this, "Needle")) {
         al::tryDeleteEffect(this, "Core");
         al::setNerve(this, &NrvMummy.BlowDown);
-        mHasItemToAppear = false;
+        mHasCoin = false;
+        return;
+    }
+
+    if (al::isInDeathArea(this, al::getTrans(this)) || al::isCollidedFloorCode(this, "Poison") ||
+        al::isCollidedFloorCode(this, "DamageFire") || al::isInWater(this)) {
+        al::tryAddRippleLarge(this);
+        al::startHitReaction(this, "死亡");
+        kill();
+    }
+
+    if (!isAsleep() && al::isOnGround(this, 0)) {
+        const char* collidedFloorMaterialCodeName = al::getCollidedFloorMaterialCodeName(this);
+        if (collidedFloorMaterialCodeName)
+            al::setMaterialCode(this, collidedFloorMaterialCodeName);
     }
 }
 
@@ -285,7 +287,7 @@ void Mummy::appearByTreasureBox(const sead::Vector3f& trans) {
     mIsHeadLost = false;
     al::faceToTarget(this, rs::getPlayerPos(this));
     mTimeLimit = 390;
-    mHasItemToAppear = false;
+    mHasCoin = false;
     mIsTreasureBoxSpawned = true;
 
     al::showModelIfHide(this);
@@ -339,7 +341,7 @@ void Mummy::exeSleepShine() {
             al::invalidateClipping(this);
             mIsHeadLost = false;
             al::faceToTarget(this, rs::getPlayerPos(this));
-            mHasItemToAppear = false;
+            mHasCoin = false;
             mTimeLimit = 390;
             al::setNerve(this, &Appear);
         }
@@ -387,29 +389,30 @@ void Mummy::exeWalkStart() {
 void Mummy::walk() {
     al::LiveActor* nearestPlayerActor = al::tryFindNearestPlayerActor(this);
     if (!nearestPlayerActor || (al::calcDistanceH(this, nearestPlayerActor) > 3500.0f &&
-                                !mIsTreasureBoxSpawned && isOnSpecialGround()))
+                                !mIsTreasureBoxSpawned && isOnSpecialGround())) {
         al::setNerve(this, &NrvMummy.HideStart);
-    else {
-        sead::Vector3f dir;
-        al::calcDirToActor(&dir, this, nearestPlayerActor);
-        al::rotateVectorDegreeY(&dir, mWalkDirectionOffset);
-        al::turnToDirection(this, dir, 1.8f);
-        if (al::isNerve(this, &NrvMummy.WalkStart)) {
-            f32 nerveRate = al::calcNerveRate(this, al::getActionFrameMax(this, "WalkStart"));
-            al::addVelocityToFront(this, nerveRate * nerveRate * 0.76f);
-        } else {
-            al::addVelocityToFront(this, mIsHeadLost ? sWalkSpeedHeadLost : sWalkSpeedNormal);
-        }
-
-        adjustVelocity();
-
-        if (--mWalkDirectionChangeTimer <= 0) {
-            mWalkDirectionOffset = al::getRandom(-25.0f, 25.0f);
-            mWalkDirectionChangeTimer = al::getRandom(-30.0f, 30.0f) + 60.0f;
-        }
-
-        al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
+        return;
     }
+
+    sead::Vector3f dir;
+    al::calcDirToActor(&dir, this, nearestPlayerActor);
+    al::rotateVectorDegreeY(&dir, mWalkDirectionOffset);
+    al::turnToDirection(this, dir, 1.8f);
+    if (al::isNerve(this, &NrvMummy.WalkStart)) {
+        f32 nerveRate = al::calcNerveRate(this, al::getActionFrameMax(this, "WalkStart"));
+        al::addVelocityToFront(this, nerveRate * nerveRate * 0.76f);
+    } else {
+        al::addVelocityToFront(this, mIsHeadLost ? sWalkSpeedHeadLost : sWalkSpeedNormal);
+    }
+
+    adjustVelocity();
+
+    if (--mWalkDirectionChangeTimer <= 0) {
+        mWalkDirectionOffset = al::getRandom(-25.0f, 25.0f);
+        mWalkDirectionChangeTimer = al::getRandom(-30.0f, 30.0f) + 60.0f;
+    }
+
+    al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
 }
 
 void Mummy::exeWalk() {
@@ -524,7 +527,7 @@ void Mummy::exeBlowDown() {
             mShineActor = nullptr;
             al::deleteEffect(this, "ShineGlow");
         }
-        if (mHasItemToAppear)
+        if (mHasCoin)
             al::appearItem(this);
     }
     if (al::isActionEnd(this) && al::isGreaterEqualStep(this, 90))

@@ -60,7 +60,7 @@ private:
     s32 mInvulnerableTimer = 0;
     sead::Matrix34f mEffectMatrix = sead::Matrix34f::ident;
     bool mIsHeadLost = false;
-    bool mHasItemToAppear = false;
+    bool mHasCoin = false;
     bool mIsTreasureBoxSpawned = false;
-    bool mHasHitReactionEffect = false;
+    bool mIsNoHitStop = false;
 };
