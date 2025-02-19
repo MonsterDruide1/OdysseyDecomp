@@ -3,7 +3,6 @@
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {
-class Scene;
 class CameraSubTargetTurnParam;
 
 class CameraSubTargetBase : public CameraTargetBase {
