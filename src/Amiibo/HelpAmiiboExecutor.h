@@ -5,7 +5,7 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-class NfpInfo;
+struct NfpInfo;
 class LiveActor;
 class ActorInitInfo;
 }  // namespace al

@@ -116,7 +116,7 @@ f32 getRandom() {
 }
 
 f32 getRandom(f32 factor) {
-    return getRandom(0.f, factor);
+    return getRandom(0.0f, factor);
 }
 
 f32 getRandom(f32 min, f32 max) {
@@ -132,7 +132,7 @@ s32 getRandom(s32 min, s32 max) {
 }
 
 f32 getRandomDegree() {
-    return getRandom(360.f);
+    return getRandom(360.0f);
 }
 
 f32 getRandomRadian() {
@@ -149,10 +149,10 @@ void getRandomVector(sead::Vector3f* vec, f32 factor) {
 }
 
 void getRandomDir(sead::Vector3f* vec) {
-    getRandomVector(vec, 10.f);
+    getRandomVector(vec, 10.0f);
     while (vec->dot(*vec) < 0.000001f) {
         *vec = {0.0f, 0.0f, 0.0f};
-        getRandomVector(vec, 10.f);
+        getRandomVector(vec, 10.0f);
     }
     vec->normalize();
 }

@@ -4,15 +4,18 @@
 #include <math/seadVector.h>
 
 namespace al {
-class MtxConnector;
-class LiveActor;
 class ActorInitInfo;
+class CollisionParts;
+class LiveActor;
+class MtxConnector;
 
 MtxConnector* createMtxConnector(const LiveActor* actor);
 MtxConnector* tryCreateMtxConnector(const LiveActor* actor, const ActorInitInfo& info);
 void attachMtxConnectorToCollision(MtxConnector* mtxConnector, const LiveActor* actor, bool);
 void attachMtxConnectorToCollision(MtxConnector* mtxConnector, const LiveActor* actor,
                                    const sead::Vector3f&, const sead::Vector3f&);
+CollisionParts* attachMtxConnectorToCollision(MtxConnector* mtxConnector, const LiveActor* actor,
+                                              f32, f32);
 void connectPoseQT(LiveActor* actor, const MtxConnector* mtxConnector, const sead::Quatf& quat,
                    const sead::Vector3f& trans);
 void connectPoseQT(LiveActor* actor, const MtxConnector* mtxConnector);

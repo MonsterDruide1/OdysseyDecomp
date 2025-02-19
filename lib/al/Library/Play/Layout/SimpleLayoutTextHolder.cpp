@@ -14,7 +14,7 @@ SimpleLayoutTextWrapper* SimpleLayoutTextWrapper::start(const sead::Vector2f& po
 }
 
 SimpleLayoutTextWrapper* SimpleLayoutTextWrapper::start(const sead::Vector2f& pos,
-                                                        const char16_t* str, s32 lifetime) {
+                                                        const char16* str, s32 lifetime) {
     mSimpleLayoutText->start(pos, str, lifetime);
     return this;
 }
@@ -59,7 +59,7 @@ SimpleLayoutTextHolderEntry* SimpleLayoutTextHolder::start(const sead::Vector2f&
 }
 
 SimpleLayoutTextHolderEntry* SimpleLayoutTextHolder::start(const sead::Vector2f& pos,
-                                                           const char16_t* str) {
+                                                           const char16* str) {
     SimpleLayoutTextHolderEntry* entry = mEntries[mCurrentIndex++];
     entry->text->start(pos, str, 1);
     return entry;
