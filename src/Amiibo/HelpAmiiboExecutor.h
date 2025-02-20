@@ -13,14 +13,11 @@ class ActorInitInfo;
 class HelpAmiiboDirector;
 
 enum class HelpAmiiboType : s32 {
-    PlayerInvincible = 0,
-    FallCoin = 1,
-    LifeMaxUpItem = 1,
-    CoinCollect = 2,
-    InvincibleAttack = 2,
-    NavigateCoinCollect = 2,
+    Mario = 0,
+    Peach = 1,
+    Koopa = 2,
     Yoshi = 3,
-    CountUpCoin = 4,
+    All = 4,
 };
 
 class HelpAmiiboExecutor : public al::IUseHioNode {
@@ -37,6 +34,10 @@ public:
 
     bool tryTouch(const al::NfpInfo&);
     void tryExecute();
+
+    bool isTouched() const { return mIsTouched; }
+
+    HelpAmiiboDirector* getDirector() const { return mHelpAmiiboDirector; }
 
     al::LiveActor* getActor() const { return mHelpAmiiboActor; }
 
