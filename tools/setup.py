@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import os
+from os.path import isfile
 import shutil
 from pathlib import Path
 import subprocess
@@ -85,7 +86,31 @@ def setup_cached_tools(viking_from_source):
             print("Removing toolchain/clang-4.0.1")
             shutil.rmtree(f"{get_repo_root()}/toolchain/clang-4.0.1")
 
+    def check_download_url_updated():
+        if not exists_toolchain_file("cache-version-url.txt"):
+            with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "w") as f:
+                f.write(CACHE_REPO_RELEASE_URL)
+            return
+        with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "r+") as f:
+            data = f.read()
+            if data != CACHE_REPO_RELEASE_URL:
+                f.seek(0)
+                f.write(CACHE_REPO_RELEASE_URL)
+                f.truncate()
+                print("Old toolchain files found. Removing them and downloading new release")
+                if exists_toolchain_file("bin/clang"):
+                    shutil.rmtree(f"{get_repo_root()}/toolchain/bin")
+                if exists_toolchain_file("include/arm_neon.h"):
+                    shutil.rmtree(f"{get_repo_root()}/toolchain/include")
+                if exists_tool("check"):
+                    os.remove(f"{get_repo_root()}/tools/check")
+                if exists_tool("decompme"):
+                    os.remove(f"{get_repo_root()}/tools/decompme")
+                if exists_tool("listsym"):
+                    os.remove(f"{get_repo_root()}/tools/listsym")
+
     remove_old_toolchain()
+    check_download_url_updated()
     with tempfile.TemporaryDirectory() as tmpdir:
 
         if not exists_toolchain_file("include/arm_neon.h"):
