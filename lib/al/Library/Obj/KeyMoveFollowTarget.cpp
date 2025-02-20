@@ -55,7 +55,7 @@ void KeyMoveFollowTarget::exeWait() {
 
 void KeyMoveFollowTarget::exeMove() {
     if (isFirstStep(this))
-        mTimer = calcKeyMoveWaitTime(mKeyPoseKeeper);
+        mTimer = calcKeyMoveMoveTime(mKeyPoseKeeper);
 
     f32 rate = calcNerveRate(this, mTimer);
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);

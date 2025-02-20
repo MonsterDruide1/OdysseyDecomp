@@ -11,9 +11,11 @@ public:
 
     void init(const PlacementInfo& info);
 
-    const sead::Quatf& getQuat() { return mQuat; }
+    const sead::Quatf& getQuat() const { return mQuat; }
 
-    const sead::Vector3f& getTrans() { return mTrans; }
+    const sead::Vector3f& getTrans() const { return mTrans; }
+
+    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
 
 private:
     sead::Quatf mQuat = sead::Quatf::unit;
