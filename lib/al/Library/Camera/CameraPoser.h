@@ -25,7 +25,7 @@ class CameraViewInfo;
 class CameraStartInfo;
 class CameraObjectRequestInfo;
 class CameraTurnInfo;
-class CameraPoserFlag;
+struct CameraPoserFlag;
 class RailKeeper;
 class PlacementInfo;
 class ByamlIter;
