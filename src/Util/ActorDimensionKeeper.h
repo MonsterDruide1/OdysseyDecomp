@@ -56,5 +56,6 @@ bool isChange2D(const IUseDimension* dimension);
 bool isChange3D(const IUseDimension* dimension);
 bool is3D(const IUseDimension* dimension);
 void snap2D(const al::LiveActor* actor, const IUseDimension* dimension, f32 unk_distance);
+void snap2DGravity(const al::LiveActor* actor, const IUseDimension* dimension, f32 unk_distance);
 
 }  // namespace rs
