@@ -38,7 +38,7 @@ const KeyPose& KeyPoseKeeper::getNextKeyPose() const {
 s32 KeyPoseKeeper::calcNextPoseIndex() const {
     s32 nextIdx;
 
-    if (!mIsForward)
+    if (!mIsGoingToEnd)
         if (mKeyPoseCurrentIdx < 1)
             nextIdx = mKeyPoseCount - 1;
         else
@@ -53,7 +53,7 @@ s32 KeyPoseKeeper::calcNextPoseIndex() const {
 
 void KeyPoseKeeper::reset() {
     mKeyPoseCurrentIdx = 0;
-    mIsForward = true;
+    mIsGoingToEnd = true;
     mIsStop = false;
     mIsRestart = false;
 }
@@ -66,7 +66,7 @@ void KeyPoseKeeper::next() {
         if (!isLastKey())
             return;
 
-        mIsForward = !mIsForward;
+        mIsGoingToEnd = !mIsGoingToEnd;
 
         return;
     case (MoveType::Stop):
@@ -89,11 +89,11 @@ void KeyPoseKeeper::next() {
 }
 
 bool KeyPoseKeeper::isLastKey() const {
-    return mIsForward ? mKeyPoseCurrentIdx + 1 >= mKeyPoseCount : mKeyPoseCurrentIdx < 1;
+    return mIsGoingToEnd ? mKeyPoseCurrentIdx + 1 >= mKeyPoseCount : mKeyPoseCurrentIdx < 1;
 }
 
 void KeyPoseKeeper::reverse() {
-    mIsForward = !mIsForward;
+    mIsGoingToEnd = !mIsGoingToEnd;
 
     if (mMoveType != MoveType::Stop)
         return;
