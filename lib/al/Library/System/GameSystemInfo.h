@@ -17,26 +17,26 @@ class ApplicationMessageReceiver;
 class FontHolder;
 
 struct DrawSystemInfo {
-    agl::RenderBuffer* dockedRenderBuffer;
-    agl::RenderBuffer* handheldRenderBuffer;
-    bool isDocked;
-    agl::DrawContext* drawContext;
+    agl::RenderBuffer* mDockedRenderBuffer;
+    agl::RenderBuffer* mHandheldRenderBuffer;
+    bool mIsDocked;
+    agl::DrawContext* mDrawContext;
 };
 
 struct GameSystemInfo {
-    AudioSystem* audioSystem;
-    EffectSystem* effectSystem;
-    LayoutSystem* layoutSystem;
-    MessageSystem* messageSystem;
-    NetworkSystem* networkSystem;
+    AudioSystem* mAudioSystem;
+    EffectSystem* mEffectSystem;
+    LayoutSystem* mLayoutSystem;
+    MessageSystem* mMessageSystem;
+    NetworkSystem* mNetworkSystem;
     void* field_28;
-    GamePadSystem* gamePadSystem;
-    DrawSystemInfo* drawSystemInfo;
+    GamePadSystem* mGamePadSystem;
+    DrawSystemInfo* mDrawSystemInfo;
     FontHolder* mFontHolder;
-    NfpDirector* nfpDirector;
-    HtmlViewer* htmlViewer;
-    ApplicationMessageReceiver* applicationMessageReciever;
-    WaveVibrationHolder* waveVibrationHolder;
+    NfpDirector* mNfpDirector;
+    HtmlViewer* mHtmlViewer;
+    ApplicationMessageReceiver* mApplicationMessageReciever;
+    WaveVibrationHolder* mWaveVibrationHolder;
 };
 
 }  // namespace al
