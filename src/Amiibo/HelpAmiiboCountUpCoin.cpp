@@ -109,7 +109,7 @@ void HelpAmiiboCountUpCoin::activate() {
 }
 
 HelpAmiiboType HelpAmiiboCountUpCoin::getType() const {
-    return HelpAmiiboType::CountUpCoin;
+    return HelpAmiiboType::All;
 }
 
 al::NerveKeeper* HelpAmiiboCountUpCoin::getNerveKeeper() const {

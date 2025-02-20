@@ -38,6 +38,8 @@
 #include "Item/CoinChameleon.h"
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
+#include "Item/LifeMaxUpItem.h"
+#include "Item/LifeMaxUpItem2D.h"
 #include "Item/LifeUpItem.h"
 #include "Item/LifeUpItem2D.h"
 #include "MapObj/AnagramAlphabet.h"
@@ -329,8 +331,8 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"LavaStewVeget", nullptr},
     {"LavaPan", al::createActorFunction<LavaPan>},
     {"LavaWave", nullptr},
-    {"LifeMaxUpItem", nullptr},
-    {"LifeMaxUpItem2D", nullptr},
+    {"LifeMaxUpItem", al::createActorFunction<LifeMaxUpItem>},
+    {"LifeMaxUpItem2D", al::createActorFunction<LifeMaxUpItem2D>},
     {"LifeUpItem", al::createActorFunction<LifeUpItem>},
     {"LifeUpItem2D", al::createActorFunction<LifeUpItem2D>},
     {"LightningController", nullptr},
