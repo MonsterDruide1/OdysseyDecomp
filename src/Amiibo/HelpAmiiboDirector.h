@@ -3,6 +3,7 @@
 #include <container/seadPtrArray.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"
+#include "Library/HostIO/HioNode.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Scene/ISceneObj.h"
 
@@ -24,7 +25,10 @@ class ProjectNfpDirector;
 class HelpAmiiboCoinCollect;
 class HelpAmiiboExecutor;
 
-class HelpAmiiboDirector : public al::ISceneObj, public al::IUseAudioKeeper, public al::IUseNerve {
+class HelpAmiiboDirector : public al::IUseHioNode,
+                           public al::ISceneObj,
+                           public al::IUseAudioKeeper,
+                           public al::IUseNerve {
 public:
     HelpAmiiboDirector();
     void init(ProjectNfpDirector* projectNfpDirector, const al::PlayerHolder* playerHolder,
