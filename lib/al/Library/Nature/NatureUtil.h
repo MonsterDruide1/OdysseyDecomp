@@ -27,6 +27,8 @@ bool isInFirePos(const LiveActor*, const sead::Vector3f&);
 bool isInFire(const LiveActor*);
 bool isInCloudPos(const LiveActor*, const sead::Vector3f&);
 bool isInCloud(const LiveActor*);
+bool tryAddRippleMiddle(const LiveActor*);
+bool tryAddRippleLarge(const LiveActor*);
 bool isWaterAreaIgnore(const AreaObj*);
 const char* getFireMaterialCode(const LiveActor*);
 
