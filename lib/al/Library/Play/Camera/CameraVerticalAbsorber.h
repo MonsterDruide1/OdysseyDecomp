@@ -13,7 +13,7 @@
 
 namespace al {
 class CameraPoser;
-class CameraStartInfo;
+struct CameraStartInfo;
 
 class CameraVerticalAbsorber : public NerveExecutor {
 public:
