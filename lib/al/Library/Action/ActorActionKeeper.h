@@ -30,6 +30,8 @@ public:
 
     ActionAnimCtrl* getAnimCtrl() const { return mAnimCtrl; }
 
+    ActionSeCtrl* getSeCtrl() const { return mSeCtrl; }
+
 private:
     LiveActor* mParentActor;
     const char* mActorName;

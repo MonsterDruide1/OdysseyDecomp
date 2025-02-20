@@ -15,6 +15,10 @@ public:
 
     NerveAction* findNerve(const char* name) const;
 
+    s32 getNumActions() const { return mNumActions; }
+
+    NerveAction* getAction(s32 idx) const { return mActions[idx]; }
+
 private:
     s32 mNumActions = 0;
     NerveAction** mActions = nullptr;

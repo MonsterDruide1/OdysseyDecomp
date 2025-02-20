@@ -10,7 +10,7 @@ class LiveActor;
 class Nerve;
 
 void startAction(LiveActor* actor, const char* actionName);
-void startActionAtRandomFrame(LiveActor* actor, const char* actionName);
+s32 startActionAtRandomFrame(LiveActor* actor, const char* actionName);
 bool tryStartAction(LiveActor* actor, const char* actionName);
 bool tryStartActionIfNotPlaying(LiveActor* actor, const char* actionName);
 bool tryStartActionIfActionEnd(LiveActor* actor, const char* actionName);
@@ -39,15 +39,18 @@ void startNerveAction(LiveActor* actor, const char* actionName);
 void setNerveAtActionEnd(LiveActor* actor, const Nerve* nerve);
 void resetNerveActionForInit(LiveActor* actor);
 
-void startHitReaction(const LiveActor*, const char*);
-void startHitReactionHitEffect(const LiveActor*, const char*, const HitSensor*, const HitSensor*);
-void startHitReactionHitEffect(const LiveActor*, const char*, const sead::Vector3f&);
-void startHitReactionHitEffect(const LiveActor*, const char*, const sead::Matrix34f*);
-void startHitReactionBlowHit(const LiveActor*, const HitSensor*, const HitSensor*);
-void startHitReactionBlowHit(const LiveActor*, const sead::Vector3f&);
-void startHitReactionBlowHit(const LiveActor*);
-void startHitReactionBlowHitDirect(const LiveActor*, const HitSensor*, const HitSensor*);
-void startHitReactionBlowHitDirect(const LiveActor*, const sead::Vector3f&);
-void startHitReactionBlowHitDirect(const LiveActor*);
+void startHitReaction(const LiveActor* actor, const char* name);
+void startHitReactionHitEffect(const LiveActor* actor, const char* name, const HitSensor* other,
+                               const HitSensor* self);
+void startHitReactionHitEffect(const LiveActor* actor, const char* name, const sead::Vector3f& pos);
+void startHitReactionHitEffect(const LiveActor* actor, const char* name,
+                               const sead::Matrix34f* mtx);
+void startHitReactionBlowHit(const LiveActor* actor, const HitSensor* other, const HitSensor* self);
+void startHitReactionBlowHit(const LiveActor* actor, const sead::Vector3f& pos);
+void startHitReactionBlowHit(const LiveActor* actor);
+void startHitReactionBlowHitDirect(const LiveActor* actor, const HitSensor* other,
+                                   const HitSensor* self);
+void startHitReactionBlowHitDirect(const LiveActor* actor, const sead::Vector3f& pos);
+void startHitReactionBlowHitDirect(const LiveActor* actor);
 
 }  // namespace al

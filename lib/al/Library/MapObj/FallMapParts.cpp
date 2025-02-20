@@ -86,14 +86,14 @@ void FallMapParts::exeAppear() {
     if (isFirstStep(this)) {
         validateCollisionParts(this);
         if (!tryStartAction(this, "Appear")) {
-            startAction(this, "Wait");
+            startNerveAction(this, "Wait");
 
             return;
         }
     }
 
     if (!isExistAction(this) || isActionEnd(this))
-        startAction(this, "Wait");
+        startNerveAction(this, "Wait");
 }
 
 void FallMapParts::exeWait() {
