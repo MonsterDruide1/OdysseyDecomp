@@ -56,7 +56,6 @@ PenaltyBreakString: 1000
 PenaltyExcessCharacter: 1000000
 PenaltyReturnTypeOnItsOwnLine: 60
 PointerAlignment: Left
-ReferenceAlignment: Left
 ReflowComments:  true
 RemoveBracesLLVM: true
 SeparateDefinitionBlocks: Always
