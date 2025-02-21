@@ -7,7 +7,7 @@ class ReplayController;
 class IUsePadDataReader;
 class IUsePadDataWriter;
 
-ReplayController* createReplayController(u32 port);
+void createReplayController(u32 port);
 void unregistReplayController(u32 port);
 ReplayController* getReplayController(u32 port);
 void setPadDataReader(IUsePadDataReader* reader, u32 port);

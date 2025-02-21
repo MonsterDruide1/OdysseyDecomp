@@ -11,7 +11,7 @@ class ReplayController : public sead::ControllerWrapper {
 
 public:
     ReplayController(sead::Controller* controller);
-    ~ReplayController();
+    ~ReplayController() override;
     void unregist();
     void startReplay();
     void pauseReplay();
@@ -32,7 +32,7 @@ private:
     bool mIsReplaying = false;
     IUsePadDataWriter* mPadDataWriter = nullptr;
     bool mIsRecording = false;
-    bool mIsValidController = true;
+    bool mIsValidPadReplay = true;
     bool mIsReadPadReplayData = false;
 };
 }  // namespace al
