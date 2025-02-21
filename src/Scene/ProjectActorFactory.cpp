@@ -32,6 +32,7 @@
 #include "Enemy/Gamane.h"
 #include "Enemy/PackunTrace.h"
 #include "Enemy/Togezo.h"
+#include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
 #include "Item/Coin2D.h"
 #include "Item/CoinBlow.h"
@@ -544,7 +545,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"TextureReplaceScreen", nullptr},
     {"ThunderRenderRequester", nullptr},
     {"Togezo", al::createActorFunction<Togezo>},
-    {"Togezo2D", nullptr},
+    {"Togezo2D", al::createActorFunction<Togezo2D>},
     {"TokimekiMayorNpc", nullptr},
     {"TrampleBush", nullptr},
     {"TrampleSwitch", nullptr},

@@ -6,12 +6,12 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -114,15 +114,15 @@ void Togezo2D::control() {
     }
     if (al::isNerve(this, &NrvTogezo2D.Damage))
         return;
-    if (rs::isIn2DArea(this)) {
-        if (al::isOnGround(this, 0)) {
-            al::setVelocityToFront(this, mVelocityFront);
-            al::addVelocityToGravity(this, 0.65f);
-        }
-        rs::snap2DGravity(this, this, 500.0f);
+    if (!rs::isIn2DArea(this)) {
+        al::setNerve(this, &NrvTogezo2D.HideWait);
         return;
     }
-    al::setNerve(this, &NrvTogezo2D.HideWait);
+    if (al::isOnGround(this, 0)) {
+        al::setVelocityToFront(this, mVelocityFront);
+        al::addVelocityToGravity(this, 0.65f);
+    }
+    rs::snap2DGravity(this, this, 500.0f);
 }
 
 void Togezo2D::exeWalk() {
@@ -150,28 +150,25 @@ void Togezo2D::exeDamage() {
         mVelocityFront = 2.5f;
         mLocalZRotator = 180.0f;
         al::setVelocityToFront(this, mVelocityFront);
-        sead::Vector3f gravity = al::getGravity(this);
-        sead::Vector3f velocityFromGravity;
-        sead::Vector3CalcCommon<f32>::multScalar(velocityFromGravity, gravity, -20.0f);
-        al::addVelocity(this, velocityFromGravity);
+        al::addVelocity(this, al::getGravity(this) * -20.0f);
     }
     if (al::isGreaterStep(this, 90))
         al::setNerve(this, &NrvTogezo2D.HideWait);
 }
 
 void Togezo2D::exeHideWait() {
-    if (!al::isFirstStep(this))
-        return;
-    al::invalidateClipping(this);
-    al::offCollide(this);
-    al::hideModelIfShow(this);
-    al::invalidateHitSensors(this);
-    al::setVelocityZero(this);
-    al::setTrans(this, mInitTrans);
-    al::setFront(this, mInitFront);
-    if (mIsAlwaysFalse)
-        mIsAlwaysFalse = false;
-    al::resetPosition(this);
+    if (al::isFirstStep(this)) {
+        al::invalidateClipping(this);
+        al::offCollide(this);
+        al::hideModelIfShow(this);
+        al::invalidateHitSensors(this);
+        al::setVelocityZero(this);
+        al::setTrans(this, mInitTrans);
+        al::setFront(this, mInitFront);
+        if (mIsAlwaysFalse)
+            mIsAlwaysFalse = false;
+        al::resetPosition(this);
+    }
 }
 
 ActorDimensionKeeper* Togezo2D::getActorDimensionKeeper() const {
