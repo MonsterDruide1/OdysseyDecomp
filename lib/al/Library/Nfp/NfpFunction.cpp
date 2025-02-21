@@ -124,17 +124,17 @@ void getAmiiboOwnerName(sead::BufferedSafeStringBase<char16>* ownerName, const N
 }
 
 void getAmiiboNickName(sead::BufferedSafeStringBase<char16>* nickName, const NfpInfo& nfpInfo) {
-    nickName->copy(sead::SafeStringBase<char16>((char16*)&nfpInfo.nickName));
+    nickName->copy(nfpInfo.nickName);
 }
 
 bool isInvalidFormatVersion(const NfpInfo& nfpInfo) {
     if (!nfpInfo.isFormatVersionSet)
         return false;
 
-    if ((nfpInfo.formatVersion & 0x1ff) != 0x73)
+    if (nfpInfo.formatVersion.minor != 0x73)
         return false;
 
-    return (nfpInfo.formatVersion & 0x3ffe00) == 0x17000;
+    return nfpInfo.formatVersion.major == 0xb8;
 }
 
 bool isEqualCharacterIdBase(const nn::nfp::ModelInfo& modelInfo,

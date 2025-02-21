@@ -10,15 +10,20 @@ struct NfpCharacterId {
     s16 characterVariant;
 };
 
+struct NfpFormatVersion {
+    u16 minor : 9;
+    u32 major : 13;
+};
+
 struct NfpInfo {
     nn::nfp::TagInfo tagInfo{};
     nn::nfp::ModelInfo modelInfo{};
-    u32 formatVersion;
+    NfpFormatVersion formatVersion;
     u16 _9c = 0;
     u16 _9e;
     char _a0[0x9c]{};
-    char16 nickName[nn::nfp::AmiiboNameLength * 4 + 1]{};
-    char _18e[0x52]{};
+    char16 nickName[nn::nfp::AmiiboNameLength + 1]{};
+    char _18e[0x8e]{};
     bool isNormalNfc = false;
     bool isAmiibo = false;
     bool isFormatVersionSet = false;
