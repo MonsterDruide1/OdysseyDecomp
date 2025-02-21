@@ -3,6 +3,7 @@
 #include <controller/seadControllerMgr.h>
 
 #include "al/Library/Controller/PadReplayFunction.h"
+#include "al/Library/Controller/ReplayController.h"
 
 namespace al {
 
@@ -10,8 +11,10 @@ inline sead::ControllerBase* getController(s32 port) {
     if (port == -1)
         port = getMainControllerPort();
 
-    return isValidReplayController(port) ? getReplayController(port) :
-                                           sead::ControllerMgr::instance()->getController(port);
+    if (isValidReplayController(port))
+        return getReplayController(port);
+
+    return sead::ControllerMgr::instance()->getController(port);
 }
 
 bool isPadTrigger(s32 port, s32 button) {
