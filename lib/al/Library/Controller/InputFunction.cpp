@@ -2,6 +2,8 @@
 
 #include <controller/seadControllerMgr.h>
 
+#include "al/Library/Controller/PadReplayFunction.h"
+
 namespace al {
 
 inline sead::ControllerBase* getController(s32 port) {

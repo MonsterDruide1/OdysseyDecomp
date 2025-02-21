@@ -25,6 +25,8 @@ public:
 
     void setPadDataReader(IUsePadDataReader* reader) { mPadDataReader = reader; }
 
+    void setPadDataWriter(IUsePadDataWriter* writer) { mPadDataWriter = writer; }
+
 private:
     IUsePadDataReader* mPadDataReader = nullptr;
     bool mIsReplaying = false;
