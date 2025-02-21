@@ -31,7 +31,6 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/Mummy.h"
-#include "Enemy/PackunTrace.h"
 #include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"

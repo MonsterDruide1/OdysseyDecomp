@@ -4,6 +4,7 @@
 
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
 #include "Library/Item/ItemUtil.h"
+#include "Library/Joint/JointControllerKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -11,12 +12,13 @@
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Movement/AnimScaleController.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -311,12 +313,13 @@ void Pecho::exeWait() {
         al::tryStartActionIfNotPlaying(this, "Wait");
         al::getRandomDirH(&mVelocity, sead::Vector3f::ey);
         mWaitTrans.set(al::getTrans(this));
-        mIsWaitTiltClockwise = al::isHalfProbability();
+        mIsWaitTiltCounterClockwise = al::isHalfProbability();
     }
 
     if (al::isLessEqualStep(this, 120)) {
         sead::Vector3f vel = sead::Vector3f::zero;
-        f32 degree = al::calcNerveValue(this, 120, 0.0, mIsWaitTiltClockwise ? 720.0f : -720.0f);
+        f32 degree =
+            al::calcNerveValue(this, 120, 0.0, mIsWaitTiltCounterClockwise ? 720.0f : -720.0f);
         al::rotateVectorDegree(&vel, mVelocity, sead::Vector3f::ey, degree);
         al::addVelocity(this, vel * 0.25f);
     } else {
