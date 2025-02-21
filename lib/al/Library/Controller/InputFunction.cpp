@@ -2,8 +2,8 @@
 
 #include <controller/seadControllerMgr.h>
 
-#include "al/Library/Controller/PadReplayFunction.h"
-#include "al/Library/Controller/ReplayController.h"
+#include "Library/Controller/PadReplayFunction.h"
+#include "Library/Controller/ReplayController.h"
 
 namespace al {
 
