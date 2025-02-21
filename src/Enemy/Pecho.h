@@ -58,6 +58,6 @@ private:
 
     const char* mLiquidStartAction = "LiquidStart";
     bool mIsStartLiquidFast = false;
-    bool mIsWaitTiltClockwise = true;
+    bool mIsWaitTiltCounterClockwise = true;
     bool mIsBubbleReaction = false;
 };

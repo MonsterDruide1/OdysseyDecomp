@@ -311,12 +311,13 @@ void Pecho::exeWait() {
         al::tryStartActionIfNotPlaying(this, "Wait");
         al::getRandomDirH(&mVelocity, sead::Vector3f::ey);
         mWaitTrans.set(al::getTrans(this));
-        mIsWaitTiltClockwise = al::isHalfProbability();
+        mIsWaitTiltCounterClockwise = al::isHalfProbability();
     }
 
     if (al::isLessEqualStep(this, 120)) {
         sead::Vector3f vel = sead::Vector3f::zero;
-        f32 degree = al::calcNerveValue(this, 120, 0.0, mIsWaitTiltClockwise ? 720.0f : -720.0f);
+        f32 degree =
+            al::calcNerveValue(this, 120, 0.0, mIsWaitTiltCounterClockwise ? 720.0f : -720.0f);
         al::rotateVectorDegree(&vel, mVelocity, sead::Vector3f::ey, degree);
         al::addVelocity(this, vel * 0.25f);
     } else {
