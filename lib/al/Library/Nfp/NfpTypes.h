@@ -11,7 +11,7 @@ struct NfpCharacterId {
 };
 
 struct NfpFormatVersion {
-    u16 minor : 9;
+    u32 minor : 9;
     u32 major : 13;
 };
 
@@ -22,7 +22,10 @@ struct NfpInfo {
     u16 _9c = 0;
     u16 _9e;
     char _a0[0x9c]{};
+
+    // Unknown size
     char16 nickName[nn::nfp::AmiiboNameLength + 1]{};
+
     char _18e[0x8e]{};
     bool isNormalNfc = false;
     bool isAmiibo = false;
