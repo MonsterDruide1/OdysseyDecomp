@@ -35,13 +35,8 @@ bool isEqualCharacterId(const NfpInfo& nfpInfo, NfpCharacterId characterId) {
 }
 
 bool isEqualCharacterId(const nn::nfp::ModelInfo& modelInfo, const NfpCharacterId& characterId) {
-    if (characterId.gameId != modelInfo.gameId)
-        return false;
-
-    if (characterId.characterId != modelInfo.characterId)
-        return false;
-
-    return characterId.characterVariant == modelInfo.characterVariant;
+    return isEqualCharacterIdBase(modelInfo, characterId) &&
+           characterId.characterVariant == modelInfo.characterVariant;
 }
 
 bool isEqualCharacterIdBase(const NfpInfo& nfpInfo, NfpCharacterId characterId) {
@@ -117,7 +112,7 @@ bool isNeedRegister(const NfpInfo& nfpInfo) {
 }
 
 bool isNeedRegisterNickName(const NfpInfo& nfpInfo) {
-    return nfpInfo.nickName[0] == '\0';
+    return (char)nfpInfo.nickName[0] == '\0';
 }
 
 bool isValidRegisterInfo(const NfpInfo& nfpInfo) {
@@ -126,6 +121,10 @@ bool isValidRegisterInfo(const NfpInfo& nfpInfo) {
 
 void getAmiiboOwnerName(sead::BufferedSafeStringBase<char16>* ownerName, const NfpInfo& nfpInfo) {
     // Stubbed in game
+}
+
+void getAmiiboNickName(sead::BufferedSafeStringBase<char16>* nickName, const NfpInfo& nfpInfo) {
+    nickName->copy(sead::SafeStringBase<char16>((char16*)&nfpInfo.nickName));
 }
 
 bool isInvalidFormatVersion(const NfpInfo& nfpInfo) {
