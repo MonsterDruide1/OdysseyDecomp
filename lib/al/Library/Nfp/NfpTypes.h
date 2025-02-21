@@ -17,8 +17,8 @@ struct NfpInfo {
     u16 _9c = 0;
     u16 _9e;
     char _a0[0x9c]{};
-    char nickName[nn::nfp::AmiiboNameLength * 4 + 1]{};
-    char _18e[0x7b]{};
+    char16 nickName[nn::nfp::AmiiboNameLength * 4 + 1]{};
+    char _18e[0x52]{};
     bool isNormalNfc = false;
     bool isAmiibo = false;
     bool isFormatVersionSet = false;
