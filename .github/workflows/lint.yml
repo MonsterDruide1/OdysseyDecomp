@@ -9,7 +9,7 @@ jobs:
       with:
         source: 'src lib'
         exclude: 'lib/NintendoSDK lib/aarch64 lib/agl lib/eui lib/sead'
-        clangFormatVersion: 19
+        clangFormatVersion: 18
   custom-lint:
     runs-on: ubuntu-latest
     steps:
