@@ -129,7 +129,7 @@ def setup_cached_tools(viking_from_source):
                 url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-binaries_{platform.system()}.tar.xz")
                 urllib.request.urlretrieve(url, path)
             except urllib.error.HTTPError:
-                print(f"Prebuilt binaries not found for platform: {platform.system()}! Please manually build `clang` 3.9.0 and `ld.lld` from source")
+                print(f"Prebuilt binaries not found for platform: {platform.system()}! Please manually build `clang` 3.9.1 and `ld.lld` from source")
                 print("Automatically installing viking from source since prebuilt version isn't available")
                 setup.install_viking()
                 return
