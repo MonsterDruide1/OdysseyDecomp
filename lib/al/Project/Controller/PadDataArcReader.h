@@ -16,7 +16,7 @@ public:
     void read(PadDataPack* frameData) override;
     bool isEnd() const override;
     u32 getCursorFrame() const override;
-    u32 getRemainFrame() const override;
+    s32 getRemainFrame() const override;
 
 private:
     PadDataPack* mDataFrames = nullptr;

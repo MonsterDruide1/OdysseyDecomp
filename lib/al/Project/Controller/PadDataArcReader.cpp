@@ -35,8 +35,7 @@ void PadDataArcReader::read(PadDataPack* frameData) {
     if (mIsEnd)
         return;
 
-    const PadDataPack& curFrame = mDataFrames[mCursorFrame++];
-    *frameData = curFrame;
+    *frameData = mDataFrames[mCursorFrame++];
     checkEnd();
 }
 
@@ -48,7 +47,7 @@ u32 PadDataArcReader::getCursorFrame() const {
     return mCursorFrame;
 }
 
-u32 PadDataArcReader::getRemainFrame() const {
+s32 PadDataArcReader::getRemainFrame() const {
     return mTotalFrame - mCursorFrame;
 }
 
