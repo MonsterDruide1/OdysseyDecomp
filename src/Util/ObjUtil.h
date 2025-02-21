@@ -28,4 +28,6 @@ bool findGrabCeilPosWallHit(const al::CollisionParts**, sead::Vector3f*, sead::V
 
 void calcOffsetAllRoot(sead::Vector3f* offset, const PlayerModelHolder* model);
 
+void moveDivingJump(al::LiveActor*, const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32, f32);
+
 }  // namespace rs

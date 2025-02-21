@@ -22,6 +22,7 @@ public:
     void clearUpperBodyAnim();
 
     bool isAnim(const sead::SafeString& animName) const;
+    bool isAnimEnd() const;
     bool isSubAnim(const sead::SafeString& subAnimName) const;
     bool isSubAnimEnd() const;
     bool isUpperBodyAnimAttached() const;
