@@ -770,9 +770,9 @@ bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f3
         return true;
     } else if(dot < 0.0f) {
         sead::Vector3f* velocity = getVelocityPtr(actor);
-        velocity->x -= dot * normalSum.x;
-        velocity->y -= dot * normalSum.y;
-        velocity->z -= dot * normalSum.z;
+        velocity->x -= normalSum.x * dot;
+        velocity->y -= normalSum.y * dot;
+        velocity->z -= normalSum.z * dot;
     }
     return false;
 }
@@ -790,7 +790,7 @@ bool reboundVelocityFromCollision(LiveActor* actor, f32 a, f32 b, f32 c) {
     f32 dot = normalSum.dot(getVelocity(actor));
     if (dot < -b) {
         *getVelocityPtr(actor) -= normalSum * dot;
-        *getVelocityPtr(actor) *= b;
+        *getVelocityPtr(actor) *= c;
         *getVelocityPtr(actor) -= normalSum * dot * a;
         return true;
     } else if(dot < 0.0f) {
