@@ -6,7 +6,7 @@
 namespace al {
 
 PadDataArcReader::PadDataArcReader(const char* path) : mPath(path) {
-    al::findOrCreateResource(path, nullptr);
+    findOrCreateResource(path, nullptr);
 }
 
 PadDataArcReader::PadDataArcReader(const char* path, const char* resourceName) : mPath(path) {
@@ -15,7 +15,7 @@ PadDataArcReader::PadDataArcReader(const char* path, const char* resourceName) :
 
 void PadDataArcReader::readResource(const char* resourceName) {
     mCursorFrame = 0;
-    al::Resource* resource = al::findOrCreateResource(mPath, nullptr);
+    Resource* resource = findOrCreateResource(mPath, nullptr);
     sead::FixedSafeString<256> filename;
     filename.format("%s.bin", resourceName);
     mDataFrames = (PadDataPack*)resource->getOtherFile(filename);
