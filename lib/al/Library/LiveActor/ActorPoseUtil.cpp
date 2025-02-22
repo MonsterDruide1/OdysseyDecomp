@@ -106,9 +106,8 @@ void calcLeftDir(sead::Vector3f* left, const LiveActor* actor) {
 void calcRightDir(sead::Vector3f* right, const LiveActor* actor) {
     sead::Vector3f left;
     calcLeftDir(&left, actor);
-    right->x = -left.x;
-    right->y = -left.y;
-    right->z = -left.z;
+    *right = left;
+    right->negate();
 }
 
 void calcUpDir(sead::Vector3f* up, const LiveActor* actor) {
@@ -120,9 +119,8 @@ void calcUpDir(sead::Vector3f* up, const LiveActor* actor) {
 void calcDownDir(sead::Vector3f* down, const LiveActor* actor) {
     sead::Vector3f up;
     calcUpDir(&up, actor);
-    down->x = -up.x;
-    down->y = -up.y;
-    down->z = -up.z;
+    *down = up;
+    down->negate();
 }
 
 void calcFrontDir(sead::Vector3f* front, const LiveActor* actor) {
@@ -134,9 +132,8 @@ void calcFrontDir(sead::Vector3f* front, const LiveActor* actor) {
 void calcBackDir(sead::Vector3f* back, const LiveActor* actor) {
     sead::Vector3f front;
     calcFrontDir(&front, actor);
-    back->x = -front.x;
-    back->y = -front.y;
-    back->z = -front.z;
+    *back = front;
+    back->negate();
 }
 
 void calcPoseDir(sead::Vector3f* side, sead::Vector3f* up, sead::Vector3f* front,
