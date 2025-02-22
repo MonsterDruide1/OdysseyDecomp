@@ -4,7 +4,7 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchUtil.h"
 
