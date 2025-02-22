@@ -3,6 +3,8 @@
 #include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 
 class Resource;
@@ -13,10 +15,10 @@ class DepthShadowMapInfo;
 class ModelDrawerDepthShadowMap;
 class ModelDrawerMask;
 
-class DepthShadowMapCtrl {
+class DepthShadowMapCtrl : public HioNode {
 public:
     DepthShadowMapCtrl(const Resource* resource);
-    ~DepthShadowMapCtrl();
+    virtual ~DepthShadowMapCtrl();
 
     void actorModelDrawDepth();
     void actorModelDrawMask();
@@ -43,5 +45,7 @@ private:
     sead::PtrArray<ModelDrawerDepthShadowMap> mModelDrawerDepthShadowMaps;
     sead::PtrArray<ModelDrawerMask> mModelDrawerMasks;
 };
+
+static_assert(sizeof(DepthShadowMapCtrl) == 0x50);
 
 }  // namespace al

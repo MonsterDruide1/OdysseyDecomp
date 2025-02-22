@@ -7,7 +7,7 @@
 
 namespace al {
 class CameraPoser;
-class CameraStartInfo;
+struct CameraStartInfo;
 class CameraObjectRequestInfo;
 class IUseCollision;
 class PlacementInfo;

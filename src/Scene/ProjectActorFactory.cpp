@@ -24,6 +24,7 @@
 #include "Library/MapObj/SwitchOpenMapParts.h"
 #include "Library/MapObj/VisibleSwitchMapParts.h"
 #include "Library/MapObj/WheelMapParts.h"
+#include "Library/MapObj/WobbleMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
 
 #include "Boss/BarrierField.h"
@@ -32,12 +33,15 @@
 #include "Enemy/Gamane.h"
 #include "Enemy/PackunTrace.h"
 #include "Enemy/Togezo.h"
+#include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
 #include "Item/Coin2D.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
+#include "Item/LifeMaxUpItem.h"
+#include "Item/LifeMaxUpItem2D.h"
 #include "Item/LifeUpItem.h"
 #include "Item/LifeUpItem2D.h"
 #include "MapObj/AnagramAlphabet.h"
@@ -329,8 +333,8 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"LavaStewVeget", nullptr},
     {"LavaPan", al::createActorFunction<LavaPan>},
     {"LavaWave", nullptr},
-    {"LifeMaxUpItem", nullptr},
-    {"LifeMaxUpItem2D", nullptr},
+    {"LifeMaxUpItem", al::createActorFunction<LifeMaxUpItem>},
+    {"LifeMaxUpItem2D", al::createActorFunction<LifeMaxUpItem2D>},
     {"LifeUpItem", al::createActorFunction<LifeUpItem>},
     {"LifeUpItem2D", al::createActorFunction<LifeUpItem2D>},
     {"LightningController", nullptr},
@@ -544,7 +548,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"TextureReplaceScreen", nullptr},
     {"ThunderRenderRequester", nullptr},
     {"Togezo", al::createActorFunction<Togezo>},
-    {"Togezo2D", nullptr},
+    {"Togezo2D", al::createActorFunction<Togezo2D>},
     {"TokimekiMayorNpc", nullptr},
     {"TrampleBush", nullptr},
     {"TrampleSwitch", nullptr},
@@ -621,7 +625,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"VisibleSwitchMapParts", al::createActorFunction<al::VisibleSwitchMapParts>},
     {"WaveSurfMapParts", nullptr},
     {"WheelMapParts", al::createActorFunction<al::WheelMapParts>},
-    {"WobbleMapParts", nullptr},
+    {"WobbleMapParts", al::createActorFunction<al::WobbleMapParts>},
     {"WindBlowMapParts", nullptr},
     {"Yoshi", nullptr},
     {"YoshiFruit", nullptr},

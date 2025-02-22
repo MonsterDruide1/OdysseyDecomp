@@ -3,7 +3,7 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
 PackunTrace::PackunTrace(al::LiveActor* parentActor) : al::LiveActor("パックンの茎") {}

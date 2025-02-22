@@ -4,28 +4,28 @@
 #include "Library/Collision/CollisionPartsTriangle.h"
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Controller/PadRumbleFunction.h"
+#include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Shadow/DepthShadowDrawer.h"
+#include "Library/Shadow/ActorShadowUtil.h"
 #include "Library/Stage/StageSwitchUtil.h"
 
-#include "Amiibo/HelpAmiiboFunction.h"
 #include "Item/CoinRotateCalculator.h"
 #include "Item/CoinStateAppearRotate.h"
 #include "System/GameDataFunction.h"
@@ -38,31 +38,31 @@
 #include "Util/WaterSurfaceShadow.h"
 
 namespace {
-NERVE_IMPL_(Coin, WaitConnectMtx, Wait);
-NERVE_IMPL(Coin, Wait);
-NERVE_IMPL(Coin, Appear);
-NERVE_IMPL(Coin, AppearCoinLead);
-NERVE_IMPL_(Coin, WaitPlayerDead, Wait);
-NERVE_IMPL(Coin, Got);
-NERVE_IMPL_(Coin, WaitCircle, Wait);
-NERVE_IMPL_(Coin, PopUpNormal, PopUp);
-NERVE_IMPL(Coin, CountUp);
-NERVE_IMPL_(Coin, CountUpFive, CountUp);
-NERVE_IMPL(Coin, CountUpDelay);
-NERVE_IMPL_(Coin, WaitCoinRail, Wait);
-NERVE_IMPL_(Coin, PopUpPlayerDeadTimeBalloon, PopUp);
-NERVE_IMPL_(Coin, PopUpPlayerDead, PopUp);
-NERVE_IMPL_(Coin, AppearOnDemo, Appear);
-NERVE_IMPL_(Coin, WaitOnDemo, Wait);
-NERVE_IMPL_(Coin, GotNoCoin, Got);
-NERVE_IMPL(Coin, WaitOnDemoEnd);
-NERVE_IMPL(Coin, BlowUpDelay);
+NERVE_IMPL_(Coin, WaitConnectMtx, Wait)
+NERVE_IMPL(Coin, Wait)
+NERVE_IMPL(Coin, Appear)
+NERVE_IMPL(Coin, AppearCoinLead)
+NERVE_IMPL_(Coin, WaitPlayerDead, Wait)
+NERVE_IMPL(Coin, Got)
+NERVE_IMPL_(Coin, WaitCircle, Wait)
+NERVE_IMPL_(Coin, PopUpNormal, PopUp)
+NERVE_IMPL(Coin, CountUp)
+NERVE_IMPL_(Coin, CountUpFive, CountUp)
+NERVE_IMPL(Coin, CountUpDelay)
+NERVE_IMPL_(Coin, WaitCoinRail, Wait)
+NERVE_IMPL_(Coin, PopUpPlayerDeadTimeBalloon, PopUp)
+NERVE_IMPL_(Coin, PopUpPlayerDead, PopUp)
+NERVE_IMPL_(Coin, AppearOnDemo, Appear)
+NERVE_IMPL_(Coin, WaitOnDemo, Wait)
+NERVE_IMPL_(Coin, GotNoCoin, Got)
+NERVE_IMPL(Coin, WaitOnDemoEnd)
+NERVE_IMPL(Coin, BlowUpDelay)
 
 NERVES_MAKE_NOSTRUCT(Coin, BlowUpDelay)
 NERVES_MAKE_STRUCT(Coin, WaitConnectMtx, Wait, Appear, AppearCoinLead, WaitPlayerDead, Got,
                    WaitCircle, PopUpNormal, CountUp, CountUpFive, CountUpDelay, WaitCoinRail,
                    PopUpPlayerDeadTimeBalloon, PopUpPlayerDead, AppearOnDemo, WaitOnDemo, GotNoCoin,
-                   WaitOnDemoEnd);
+                   WaitOnDemoEnd)
 }  // namespace
 
 const sead::Vector3f sAppearAboveVelocity(0.0f, 25.0f, 0.0f);

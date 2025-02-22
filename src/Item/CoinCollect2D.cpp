@@ -1,14 +1,12 @@
 #include "Item/CoinCollect2D.h"
 
-#include <math/seadVector.h>
-
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Controller/PadRumbleFunction.h"
-#include "Library/Layout/LayoutActionFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"

@@ -3,9 +3,10 @@
 #include "Library/Camera/CameraDirector.h"
 #include "Library/Camera/CameraLimitRailKeeper.h"
 #include "Library/Camera/CameraUtil.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
+#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
 
 namespace al {
 CameraRailHolder::CameraRailHolder(const char* name) : LiveActor(name) {}

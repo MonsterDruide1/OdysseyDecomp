@@ -4,16 +4,18 @@
 
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Layout/LayoutActorUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Message/MessageHolder.h"
 #include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Nfp/NfpTypes.h"
+#include "Library/Scene/SceneObjUtil.h"
 #include "Library/Se/SeFunction.h"
 
 #include "Amiibo/SearchAmiiboDataTable.h"
 #include "Layout/AmiiboNpcLayout.h"
 #include "Layout/ShopLayoutInfo.h"
+#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "System/ProjectNfpDirector.h"
 #include "Util/AmiiboUtil.h"
@@ -245,3 +247,106 @@ al::NfpInfo* AmiiboNpcDirector::tryGetTriggerTouchNfpInfo() {
 al::AudioKeeper* AmiiboNpcDirector::getAudioKeeper() const {
     return mAudioKeeper;
 }
+
+namespace AmiiboFunction {
+
+inline AmiiboNpcDirector* getAmiiboNpcDirector(const al::IUseSceneObjHolder* objHolder) {
+    return al::getSceneObj<AmiiboNpcDirector>(objHolder, SceneObjID_AmiiboNpcDirector);
+}
+
+al::NfpInfo* tryGetTriggerTouchNfpInfo(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->tryGetTriggerTouchNfpInfo();
+}
+
+al::NfpInfo* getLastTriggerTouchNfpInfo(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getNfpInfo();
+}
+
+void startNfpTouch(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getProjectNfpDirector()->start();
+}
+
+void stopNfpTouch(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getProjectNfpDirector()->stop();
+}
+
+bool isNfpErrorHandled(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getProjectNfpDirector()->isNfpErrorHandled();
+}
+
+bool requestAppearAmiiboLayout(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->requestAppearAmiiboLayout();
+}
+
+void requestDecideAmiiboLayout(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->requestDecideAmiiboLayout();
+}
+
+void requestEndAmiiboLayout(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->requestEndAmiiboLayout();
+}
+
+bool isEndAmiiboLayout(const al::IUseSceneObjHolder* objHolder) {
+    return al::isDead(getAmiiboNpcDirector(objHolder)->getAmiiboNpcLayout());
+}
+
+AmiiboNpcLayout* getAmiiboTouchLayout(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getAmiiboNpcLayout();
+}
+
+u32 getSearchAmiiboNum(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getSearchAmiiboNum();
+}
+
+u32 getSearchEndAmiiboNum(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getSearchEndAmiiboNum();
+}
+
+u32 getSearchEndAmiiboNumRealTime(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getSearchEndAmiiboNumRealTime();
+}
+
+void registerSearchAmiibo(const al::IUseSceneObjHolder* objHolder, const al::NfpInfo& nfpInfo) {
+    al::NfpCharacterId characterId{};
+    al::tryGetCharacterId(&characterId, nfpInfo);
+    AmiiboNpcDirector* director = getAmiiboNpcDirector(objHolder);
+
+    s32 id = rs::createCharacterIdS32(characterId);
+    s32 numberingId = 0;
+    al::tryGetNumberingId(&numberingId, nfpInfo);
+
+    u64 now = sead::DateTime(0).setNow();
+    director->registerSearchAmiibo(id, numberingId, now);
+}
+
+bool isSearchAmiibo(const al::IUseSceneObjHolder* objHolder, const al::NfpInfo& nfpInfo) {
+    al::NfpCharacterId characterId{};
+    al::tryGetCharacterId(&characterId, nfpInfo);
+    return getAmiiboNpcDirector(objHolder)->isSearchAmiibo(rs::createCharacterIdS32(characterId));
+}
+
+void deleteSearchEndAmiibo(const al::IUseSceneObjHolder* objHolder) {
+    getAmiiboNpcDirector(objHolder)->deleteSearchEndAmiibo();
+}
+
+void setTalkStartTime(const al::IUseSceneObjHolder* objHolder) {
+    sead::DateTime dateTime = sead::DateTime(0);
+    AmiiboNpcDirector* director = getAmiiboNpcDirector(objHolder);
+
+    director->setTime(dateTime.setNow());
+    director->checkTimeReverseAndRestore();
+}
+
+al::MessageTagDataHolder* getMessageTagDataHolder(const al::IUseSceneObjHolder* objHolder) {
+    return getAmiiboNpcDirector(objHolder)->getMessageTagDataHolder();
+}
+
+void setTouchAmiiboName(const al::IUseSceneObjHolder* objHolder, s32 id, s32 numberingId) {
+    getAmiiboNpcDirector(objHolder)->setTouchAmiiboName(id, numberingId);
+}
+
+void trySetAmiiboCostumeName(const al::IUseSceneObjHolder* objHolder, s32 id) {
+    getAmiiboNpcDirector(objHolder)->trySetAmiiboCostumeName(id);
+}
+
+}  // namespace AmiiboFunction
