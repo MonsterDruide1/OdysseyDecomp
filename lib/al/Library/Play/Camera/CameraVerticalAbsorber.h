@@ -27,7 +27,7 @@ public:
     void invalidate();
     bool isAbsorbing() const;
     bool isValid() const;
-    void liverateAbsorb();
+    void liberateAbsorb();
     void load(const ByamlIter&);
     void makeLookAtCamera(sead::LookAtCamera*) const;
     void start(const sead::Vector3f&, const CameraStartInfo&);
