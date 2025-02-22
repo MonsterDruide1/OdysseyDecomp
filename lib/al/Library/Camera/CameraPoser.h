@@ -110,7 +110,7 @@ public:
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
 
-private:
+protected:
     const char* mPoserName;
     f32 field_38;
     sead::Vector3f mPosition;
