@@ -19,10 +19,12 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 =======
 #include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
+<<<<<<< HEAD
 #include "Library/LiveActor/LiveActorUtil.h"
 >>>>>>> 9ae314e (PR: fix clang-format for headers with changed include)
+=======
+>>>>>>> b6e1615 (Merge ActorSensorMsgFunction into ActorSensorUtil)
 #include "Library/Math/MathUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
 #include "Library/Nature/NatureUtil.h"
