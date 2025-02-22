@@ -1,7 +1,7 @@
 #include "Project/LiveActor/SupportFreezeSyncGroup.h"
 
 #include "Library/HitSensor/HitSensorKeeper.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Placement/PlacementFunction.h"
 
