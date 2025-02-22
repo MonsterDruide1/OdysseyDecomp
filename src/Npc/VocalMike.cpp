@@ -1,7 +1,7 @@
 #include "Npc/VocalMike.h"
 
 #include "Library/LiveActor/ActorInitUtil.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 
 #include "Util/SensorMsgFunction.h"
 
