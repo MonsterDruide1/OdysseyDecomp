@@ -9,9 +9,6 @@ class ControllerBase;
 namespace al {
 class IUseCamera;
 
-bool isValidReplayController(u32);
-sead::ControllerBase* getReplayController(u32);  // return type might be wrong
-
 bool isPadTypeJoySingle(s32 port);
 
 bool isPadTrigger(s32 port, s32 button);
