@@ -508,23 +508,8 @@ void scaleVelocityZ(LiveActor* actor, f32 factorZ) {
     getVelocityPtr(actor)->z *= factorZ;
 }
 
-// NON_MATCHING: mismatch in inlined function
 void scaleVelocityHV(LiveActor* actor, f32 factorH, f32 factorV) {
-    //scaleVelocityParallelVertical(actor, getGravity(actor), factorV, factorH);
-    const sead::Vector3f& direction = getGravity(actor);
-    const sead::Vector3f& velocity = getVelocity(actor);
-
-    f32 speedV = direction.dot(velocity);
-    sead::Vector3f parallelVec = direction * (speedV * factorV);
-    sead::Vector3f verticalVec = velocity;
-    verticalVec.x -= direction.x*speedV;
-    verticalVec.y -= direction.y*speedV;
-    verticalVec.z -= direction.z*speedV;
-
-    sead::Vector3f* newVelocity = getVelocityPtr(actor);
-    newVelocity->x = parallelVec.x + verticalVec.x * factorH;
-    newVelocity->y = parallelVec.y + verticalVec.y * factorH;
-    newVelocity->z = parallelVec.z + verticalVec.z * factorH;
+    scaleVelocityParallelVertical(actor, getGravity(actor), factorV, factorH);
 }
 
 void scaleVelocityDirection(LiveActor* actor, const sead::Vector3f& direction, f32 factor) {
@@ -548,6 +533,7 @@ void scaleVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& direc
     verticalVec.z -= direction.z*speedV;
 
     sead::Vector3f* newVelocity = getVelocityPtr(actor);
+    *newVelocity = parallelVec;
     newVelocity->x = parallelVec.x + verticalVec.x * vertical;
     newVelocity->y = parallelVec.y + verticalVec.y * vertical;
     newVelocity->z = parallelVec.z + verticalVec.z * vertical;
