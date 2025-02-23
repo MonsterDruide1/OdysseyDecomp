@@ -33,27 +33,27 @@ void HelpAmiiboNavigateCoinCollect::activate() {
         al::getSceneObj<CoinCollectHolder>(getActor(), SceneObjID_CoinCollectHolder)
             ->tryFindAliveCoinCollect(sead::Vector3f::zero, true);
 
-    if (coinCollect != nullptr) {
-        al::startSe(getDirector(), "AmiiboMario");
-        mCoinCollect = coinCollect;
-        mTimeBalloonHintArrow->updateRotate(al::getTrans(coinCollect));
-        mTimeBalloonHintArrow->appear();
+    if (coinCollect == nullptr) {
+        al::startSe(getDirector(), "AmiiboKoopa");
         return;
     }
 
-    al::startSe(getDirector(), "AmiiboKoopa");
+    al::startSe(getDirector(), "AmiiboMario");
+    mHintedCoinCollect = coinCollect;
+    mTimeBalloonHintArrow->updateRotate(al::getTrans(coinCollect));
+    mTimeBalloonHintArrow->appear();
 }
 
 bool HelpAmiiboNavigateCoinCollect::execute() {
-    if (mCoinCollect == nullptr)
+    if (mHintedCoinCollect == nullptr)
         return true;
 
-    if (al::isDead(mCoinCollect)) {
+    if (al::isDead(mHintedCoinCollect)) {
         mTimeBalloonHintArrow->kill();
         return true;
     }
 
-    mTimeBalloonHintArrow->updateRotate(al::getTrans(mCoinCollect));
+    mTimeBalloonHintArrow->updateRotate(al::getTrans(mHintedCoinCollect));
     return false;
 }
 
