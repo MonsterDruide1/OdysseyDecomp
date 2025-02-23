@@ -22,6 +22,7 @@ public:
     void clearUpperBodyAnim();
 
     bool isAnim(const sead::SafeString& animName) const;
+    bool isAnimEnd() const;
     bool isSubAnim(const sead::SafeString& subAnimName) const;
     bool isSubAnimEnd() const;
     bool isUpperBodyAnimAttached() const;
@@ -44,12 +45,17 @@ public:
     void setPartsAnimRate(f32, const char*);
     void setPartsAnimFrame(f32, const char*);
 
+    bool get_1a2() const { return _1a2; }
+
 private:
     PlayerModelHolder* mModelHolder;
     al::LiveActor* mPlayerDeco;
     void* _10;
     PlayerAnimFrameCtrl* mAnimFrameCtrl;
-    sead::SafeString mCurAnim;
-    unsigned char padding_78[0x78 - 0x30];
-    sead::SafeString mCurSubAnim;
+    sead::FixedSafeString<64> mCurAnim;
+    sead::FixedSafeString<64> mCurSubAnim;
+    sead::FixedSafeString<64> mCurUpperBodyAnim;
+    sead::FixedSafeString<64> _128;
+    char padding_180[0x1A2 - 0x180];
+    bool _1a2;
 };
