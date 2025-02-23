@@ -32,14 +32,14 @@ void CameraPoserFix::initCameraPosAndLookAtPos(const sead::Vector3f& cameraPos,
                                                const sead::Vector3f& lookAtPos) {
     mLookAtPos.set(lookAtPos);
     mDistance = (lookAtPos - cameraPos).length();
-    sead::Vector3f nextPos;
+    sead::Vector3f viewDir;
     nextPos.set(cameraPos - lookAtPos);
-    normalize(&nextPos);
-    mAngleV = sead::Mathf::rad2deg(asinf(nextPos.y));
-    sead::Vector3f nextSth = nextPos;
-    nextSth.y = 0;
-    tryNormalizeOrDirZ(&nextSth);
-    mAngleH = calcAngleOnPlaneDegree(sead::Vector3f::ez, nextSth, sead::Vector3f::ey);
+    normalize(&viewDir);
+    mAngleV = sead::Mathf::rad2deg(asinf(viewDir.y));
+    sead::Vector3f viewDirPlane = viewDir;
+    viewDirPlane.y = 0;
+    tryNormalizeOrDirZ(&viewDirPlane);
+    mAngleH = calcAngleOnPlaneDegree(sead::Vector3f::ez, viewDirPlane, sead::Vector3f::ey);
 }
 
 void CameraPoserFix::loadParam(const ByamlIter& iter) {
@@ -70,10 +70,10 @@ void CameraPoserFix::update() {
     normalize(&viewDir);
     mPosition.set((mDistance * viewDir) + mTargetTrans);
     if (mIsCalcNearestAtFromPreAt) {
-        sead::Vector3f lookAtOffset = mPreLookAtPos - mPosition;
-        parallelizeVec(&lookAtOffset, viewDir, lookAtOffset);
-        if (!isNearZero(lookAtOffset, 0.001f) && viewDir.dot(lookAtOffset) < 0.0f)
-            mTargetTrans.set(lookAtOffset + mPosition);
+        sead::Vector3f offset = mPreLookAtPos - mPosition;
+        parallelizeVec(&offset, viewDir, offset);
+        if (!isNearZero(offset, 0.001f) && viewDir.dot(offset) < 0.0f)
+            mTargetTrans.set(offset + mPosition);
     }
 }
 
