@@ -10,7 +10,7 @@
 
 namespace al {
 
-ExecuteDirector::ExecuteDirector(s32 count) : mRequestCount(count){};
+ExecuteDirector::ExecuteDirector(s32 count) : mRequestCount(count) {}
 
 ExecuteDirector::~ExecuteDirector() {
     for (s32 i = 0; i < mDrawTableCount; i++)
