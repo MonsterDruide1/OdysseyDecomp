@@ -31,6 +31,7 @@
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
+#include "Enemy/Mummy.h"
 #include "Enemy/PackunTrace.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
@@ -369,7 +370,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"MoviePlayerMapParts", nullptr},
     {"MultiGateKeeperBonfire", nullptr},
     {"MultiGateKeeperWatcher", nullptr},
-    {"Mummy", nullptr},
+    {"Mummy", al::createActorFunction<Mummy>},
     {"MummyGenerator", nullptr},
     {"NeedleTrap", nullptr},
     {"Nokonoko2D", nullptr},
