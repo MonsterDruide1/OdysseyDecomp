@@ -16,13 +16,13 @@ public:
         : mFactoryName(factoryName), mFactoryEntries(nullptr), mNumFactoryEntries(0) {}
 
     template <s32 N>
-    inline Factory(const char* factoryName, NameToCreator<T> (&entries)[N])
+    inline Factory(const char* factoryName, const NameToCreator<T> (&entries)[N])
         : mFactoryName(factoryName) {
         initFactory(entries);
     }
 
     template <s32 N>
-    inline void initFactory(NameToCreator<T> (&entries)[N]) {
+    inline void initFactory(const NameToCreator<T> (&entries)[N]) {
         mFactoryEntries = entries;
         mNumFactoryEntries = N;
     }
@@ -31,7 +31,7 @@ public:
 
 private:
     const char* mFactoryName;
-    NameToCreator<T>* mFactoryEntries;
+    const NameToCreator<T>* mFactoryEntries;
     s32 mNumFactoryEntries;
 };
 
