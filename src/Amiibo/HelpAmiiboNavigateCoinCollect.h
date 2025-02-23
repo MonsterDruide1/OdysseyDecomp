@@ -23,6 +23,6 @@ public:
     HelpAmiiboType getType() const override;
 
 private:
-    CoinCollect* mCoinCollect = nullptr;
+    CoinCollect* mHintedCoinCollect = nullptr;
     TimeBalloonHintArrow* mTimeBalloonHintArrow = nullptr;
 };
