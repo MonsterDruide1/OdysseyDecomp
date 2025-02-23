@@ -12,7 +12,7 @@ class ActorInitInfo;
 
 class HelpAmiiboDirector;
 
-enum class HelpAmiiboType : s32 {
+enum class HelpAmiiboType : s64 {
     Mario = 0,
     Peach = 1,
     Koopa = 2,
