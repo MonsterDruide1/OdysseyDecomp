@@ -32,6 +32,7 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/PackunTrace.h"
+#include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
@@ -392,7 +393,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"PeachWorldGate", nullptr},
     {"PeachWorldMoatWater", nullptr},
     {"PeachWorldTree", al::createActorFunction<PeachWorldTree>},
-    {"Pecho", nullptr},
+    {"Pecho", al::createActorFunction<Pecho>},
     {"Pen", nullptr},
     {"PictureStageChange", nullptr},
     {"PillarKeyMoveParts", nullptr},
