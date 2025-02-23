@@ -1,6 +1,5 @@
 #include "Scene/ProjectActorFactory.h"
 
-#include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
 #include "Library/MapObj/ClockMapParts.h"
@@ -32,7 +31,6 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/Mummy.h"
-#include "Enemy/PackunTrace.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
@@ -60,7 +58,7 @@
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WorldMapEarth.h"
 
-static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
+const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
     {"AirBubble", nullptr},
     {"AirBubbleGenerator", nullptr},
