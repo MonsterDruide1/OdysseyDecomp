@@ -1,4 +1,4 @@
-#include "Amiibo/HelpAmiiboPlayerInvicible.h"
+#include "Amiibo/HelpAmiiboPlayerInvincible.h"
 
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Se/SeFunction.h"
