@@ -7,7 +7,7 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
@@ -39,7 +39,8 @@ bool HelpAmiiboCoinCollect::isTriggerTouch(const al::NfpInfo& nfpInfo) const {
 }
 
 bool HelpAmiiboCoinCollect::isEnableUse() {
-    CoinCollectHolder* coinHolder = (CoinCollectHolder*)al::tryGetSceneObj(getActor(), 7);
+    CoinCollectHolder* coinHolder =
+        al::tryGetSceneObj<CoinCollectHolder>(getActor(), SceneObjID_CoinCollectHolder);
     if (coinHolder == nullptr)
         return false;
 
@@ -58,13 +59,14 @@ bool HelpAmiiboCoinCollect::isEnableUse() {
         return true;
 
     if (al::tryFindAreaObj(mCoinCollectDummy, "InvalidateStageMapArea", playerPos) == nullptr) {
-        sead::Vector3f vector = sead::Vector3f::zero;
-        const char* text = nullptr;
+        sead::Vector3f stagePos = sead::Vector3f::zero;
+        const char* stageName = nullptr;
         if (GameDataFunction::tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(
-                &vector, &text, getActor()) &&
-            (GameDataFunction::isMainStage(mCoinCollectDummy) ||
-             coinHolder->tryFindExStageHintObjTrans(&vector, text)))
-            return true;
+                &stagePos, &stageName, getActor())) {
+            if (GameDataFunction::isMainStage(mCoinCollectDummy) ||
+                coinHolder->tryFindExStageHintObjTrans(&stagePos, stageName))
+                return true;
+        }
     }
 
     return false;
@@ -75,21 +77,8 @@ bool HelpAmiiboCoinCollect::execute() {
 
     al::AreaObj* areaObj =
         al::tryFindAreaObj(mCoinCollectDummy, "InvalidateStageMapArea", playerPos);
-    if (areaObj != mAreaObj) {
-        if (mCoinCollect != nullptr) {
-            mCoinCollect->deleteHelpAmiiboEffect();
-            mCoinCollect = nullptr;
-            return true;
-        }
-
-        if (mCoinCollect2D != nullptr) {
-            mCoinCollect2D->deleteHintEffect();
-            mCoinCollect2D = nullptr;
-            return true;
-        }
-
-        if (al::isAlive(mCoinCollectDummy))
-            mCoinCollectDummy->kill();
+    if (areaObj != mStartInvalidateStageMapArea) {
+        deleteHintEffect();
         return true;
     }
 
@@ -118,17 +107,18 @@ void HelpAmiiboCoinCollect::activate() {
     al::LiveActor* actor = getActor();
     const sead::Vector3f& playerPos = rs::getPlayerPos(actor);
     CoinCollectHolder* coinHolder =
-        (CoinCollectHolder*)al::tryGetSceneObj(actor, SceneObjID_CoinCollectHolder);
-    mAreaObj = al::tryFindAreaObj(mCoinCollectDummy, "InvalidateStageMapArea", playerPos);
+        al::tryGetSceneObj<CoinCollectHolder>(actor, SceneObjID_CoinCollectHolder);
+    mStartInvalidateStageMapArea =
+        al::tryFindAreaObj(mCoinCollectDummy, "InvalidateStageMapArea", playerPos);
 
     CoinCollect* aliveCoinCollect =
         coinHolder->tryFindAliveCoinCollect(playerPos, 5000.0f, 10000.0f, true);
     if (aliveCoinCollect != nullptr) {
         al::startSe(getDirector(), "AmiiboKoopa");
         if (isUseDummyModel(aliveCoinCollect)) {
-            sead::Vector3f vector2 = sead::Vector3f::zero;
-            getDummyEffectEmitPos(&vector2, aliveCoinCollect);
-            mCoinCollectDummy->appearHint(vector2);
+            sead::Vector3f dummyEffectEmitPos = sead::Vector3f::zero;
+            getDummyEffectEmitPos(&dummyEffectEmitPos, aliveCoinCollect);
+            mCoinCollectDummy->appearHint(dummyEffectEmitPos);
             return;
         }
         aliveCoinCollect->appearHelpAmiiboEffect();
@@ -141,9 +131,9 @@ void HelpAmiiboCoinCollect::activate() {
     if (aliveCoinCollect2D != nullptr) {
         al::startSe(getDirector(), "AmiiboKoopa");
         if (isUseDummyModel(aliveCoinCollect2D)) {
-            sead::Vector3f vector2 = sead::Vector3f::zero;
-            getDummyEffectEmitPos(&vector2, aliveCoinCollect2D);
-            mCoinCollectDummy->appearHint(vector2);
+            sead::Vector3f dummyEffectEmitPos = sead::Vector3f::zero;
+            getDummyEffectEmitPos(&dummyEffectEmitPos, aliveCoinCollect2D);
+            mCoinCollectDummy->appearHint(dummyEffectEmitPos);
             return;
         }
         aliveCoinCollect2D->appearHintEffect();
@@ -155,9 +145,9 @@ void HelpAmiiboCoinCollect::activate() {
     if (coinCollect != nullptr) {
         al::startSe(getDirector(), "AmiiboKoopa");
         if (isUseDummyModel(coinCollect)) {
-            sead::Vector3f vector2 = sead::Vector3f::zero;
-            getDummyEffectEmitPos(&vector2, coinCollect);
-            mCoinCollectDummy->appearHint(vector2);
+            sead::Vector3f dummyEffectEmitPos = sead::Vector3f::zero;
+            getDummyEffectEmitPos(&dummyEffectEmitPos, coinCollect);
+            mCoinCollectDummy->appearHint(dummyEffectEmitPos);
             return;
         }
         coinCollect->appearHelpAmiiboEffect();
@@ -170,9 +160,9 @@ void HelpAmiiboCoinCollect::activate() {
     if (coinCollect2D != nullptr) {
         al::startSe(getDirector(), "AmiiboKoopa");
         if (isUseDummyModel(coinCollect2D)) {
-            sead::Vector3f vector2 = sead::Vector3f::zero;
-            getDummyEffectEmitPos(&vector2, coinCollect2D);
-            mCoinCollectDummy->appearHint(vector2);
+            sead::Vector3f dummyEffectEmitPos = sead::Vector3f::zero;
+            getDummyEffectEmitPos(&dummyEffectEmitPos, coinCollect2D);
+            mCoinCollectDummy->appearHint(dummyEffectEmitPos);
             return;
         }
         coinCollect2D->appearHintEffect();
@@ -184,9 +174,9 @@ void HelpAmiiboCoinCollect::activate() {
     if (deadCoinCollect != nullptr) {
         al::startSe(getDirector(), "AmiiboKoopa");
         if (isUseDummyModel(deadCoinCollect)) {
-            sead::Vector3f vector2 = sead::Vector3f::zero;
-            getDummyEffectEmitPos(&vector2, deadCoinCollect);
-            mCoinCollectDummy->appearHint(vector2);
+            sead::Vector3f dummyEffectEmitPos = sead::Vector3f::zero;
+            getDummyEffectEmitPos(&dummyEffectEmitPos, deadCoinCollect);
+            mCoinCollectDummy->appearHint(dummyEffectEmitPos);
             return;
         }
         deadCoinCollect->appearHelpAmiiboEffect();
@@ -195,13 +185,13 @@ void HelpAmiiboCoinCollect::activate() {
     }
 
     if (al::tryFindAreaObj(mCoinCollectDummy, "InvalidateStageMapArea", playerPos) == nullptr) {
-        sead::Vector3f vector = sead::Vector3f::zero;
-        const char* name = nullptr;
+        sead::Vector3f stagePos = sead::Vector3f::zero;
+        const char* stageName = nullptr;
         if (GameDataFunction::tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(
-                &vector, &name, actor)) {
+                &stagePos, &stageName, actor)) {
             if (GameDataFunction::isMainStage(actor) ||
-                coinHolder->tryFindExStageHintObjTrans(&vector, name)) {
-                mCoinCollectDummy->appearHint(vector);
+                coinHolder->tryFindExStageHintObjTrans(&stagePos, stageName)) {
+                mCoinCollectDummy->appearHint(stagePos);
                 al::startSe(getDirector(), "AmiiboKoopa");
             }
         }
