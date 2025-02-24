@@ -394,7 +394,7 @@ void initActorImpl(LiveActor* actor, const ActorInitInfo& initInfo,
 
         ByamlIter initShadowMask;
         if (tryGetActorInitFileIter(&initShadowMask, modelRes, "InitShadowMask", unk)) {
-            initShadowMaskCtrl(actor, initInfo, initShadowMask, unk);
+            initShadowMaskCtrl(actor, initInfo, initShadowMask, "InitShadowMask");
             if (usingDepthShadow)
                 invalidateShadowMaskIntensityAll(actor);
         }
