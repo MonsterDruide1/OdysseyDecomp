@@ -1,11 +1,11 @@
 #pragma once
 
-namespace al{
+namespace al {
 class HitSensorKeeper;
 class HitSensor;
 class LiveActor;
 class SensorMsg;
-}
+}  // namespace al
 
 namespace alActorSensorFunction {
 al::HitSensorKeeper* getSensorKeeper(const al::LiveActor* actor);
