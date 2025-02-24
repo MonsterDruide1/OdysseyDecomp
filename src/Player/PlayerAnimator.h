@@ -45,7 +45,7 @@ public:
     void setPartsAnimRate(f32, const char*);
     void setPartsAnimFrame(f32, const char*);
 
-    bool get_1a2() const { return _1a2; }
+    bool isSubAnimPlaying() const { return mIsSubAnimPlaying; }
 
 private:
     PlayerModelHolder* mModelHolder;
@@ -57,5 +57,5 @@ private:
     sead::FixedSafeString<64> mCurUpperBodyAnim;
     sead::FixedSafeString<64> _128;
     char padding_180[0x1A2 - 0x180];
-    bool _1a2;
+    bool mIsSubAnimPlaying;
 };

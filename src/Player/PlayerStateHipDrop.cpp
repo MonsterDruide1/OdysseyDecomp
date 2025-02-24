@@ -33,7 +33,7 @@ PlayerStateHipDrop::PlayerStateHipDrop(al::LiveActor* player, const PlayerConst*
 
 void PlayerStateHipDrop::appear() {
     setDead(false);
-    if (mPlayerAnimator->get_1a2())
+    if (mPlayerAnimator->isSubAnimPlaying())
         mPlayerAnimator->endSubAnim();
     mIsLandGround = false;
     mLandPos = {0.0f, 0.0f, 0.0f};
