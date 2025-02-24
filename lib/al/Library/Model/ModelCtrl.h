@@ -11,6 +11,8 @@ class GpuMemAllocator;
 class ModelShaderHolder;
 class Resource;
 class ActorDitherAnimator;
+class GraphicsQualityInfo;
+class ModelOcclusionQuery;
 
 class ModelCtrl {
 public:
@@ -26,15 +28,28 @@ public:
 
     ActorDitherAnimator* getActorDitherAnimator() const { return mActorDitherAnimator; }
 
+    void setCalcViewCore(s32 core) { mCalcViewCore = core; }
+
+    void setGraphicsQualityInfo(GraphicsQualityInfo* info) { mGraphicsQualityInfo = info; }
+
+    void setModelOcclusionQuery(ModelOcclusionQuery* query) { mModelOcclusionQuery = query; }
+
 private:
     nn::g3d::ModelObj* mModelObj;
     s32 _8;
     GpuMemAllocator* mGpuMemAllocator;
     ModelShaderHolder* mShaderHolder;
     s32 mBlockBufferSize;
-    unsigned char padding1[0x354];
+    unsigned char padding1[332];
+    al::GraphicsQualityInfo* mGraphicsQualityInfo;
+    unsigned char padding2[514];
     ActorDitherAnimator* mActorDitherAnimator;
-    unsigned char padding2[0xc8];
+    unsigned char padding3[36];
+    int mCalcViewCore;
+    int pad_3b0;
+    unsigned char padding4[124];
+    al::ModelOcclusionQuery* mModelOcclusionQuery;
+    unsigned char padding5[16];
 };
 
 static_assert(sizeof(ModelCtrl) == 0x448);
