@@ -49,4 +49,6 @@ private:
     u32 unk4;
     bool unk5;
 };
+
+static_assert(sizeof(SnapShotCameraCtrl) == 0x70);
 }  // namespace al
