@@ -1,28 +1,38 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <nn/nfp/nfp_types.h>
 
 namespace al {
 struct NfpCharacterId {
-    u16 gameId;
-    u16 characterId;
-    u16 characterVariant;
+    s16 gameId;
+    s16 characterId;
+    s16 characterVariant;
+};
+
+struct NfpFormatVersion {
+    u32 minor : 9;
+    u32 major : 13;
 };
 
 struct NfpInfo {
     nn::nfp::TagInfo tagInfo{};
     nn::nfp::ModelInfo modelInfo{};
-    u16 _98;
-    u16 _9a;
+    NfpFormatVersion formatVersion;
     u16 _9c = 0;
     u16 _9e;
-    char _a0[0x140]{};
-    bool _1e0 = false;
-    bool isValid = false;
-    bool _1e2 = false;
-    bool _1e3 = false;
-    bool _1e4 = false;
-    bool _1e5 = false;
+    char _a0[0x9c]{};
+
+    // Unknown size
+    char16 nickName[nn::nfp::AmiiboNameLength + 1]{};
+
+    char _18e[0x8e]{};
+    bool isNormalNfc = false;
+    bool isAmiibo = false;
+    bool isFormatVersionSet = false;
+    bool isNeedRegister = false;
+    bool isNeedFormat = false;
+    bool isNeedRestore = false;
 
     NfpInfo() {}
 };
