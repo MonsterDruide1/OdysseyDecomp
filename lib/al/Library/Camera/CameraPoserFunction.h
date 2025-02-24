@@ -202,9 +202,9 @@ void checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f*, sead::Vector3f*,
                                                const sead::Vector3f&);
 void checkCameraCollisionMoveSphere(sead::Vector3f*, const al::IUseCollision*,
                                     const sead::Vector3f&, const sead::Vector3f&, f32);
-void calcZoneRotateAngleH(f32, const al::CameraPoser*);
-void calcZoneRotateAngleH(f32, const sead::Matrix34f&);
-void calcZoneInvRotateAngleH(f32, const sead::Matrix34f&);
+f32 calcZoneRotateAngleH(f32, const al::CameraPoser*);
+f32 calcZoneRotateAngleH(f32, const sead::Matrix34f&);
+f32 calcZoneInvRotateAngleH(f32, const sead::Matrix34f&);
 void multVecZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
 void multVecInvZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
 void rotateVecZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
