@@ -5,8 +5,7 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 
 #include "Util/SensorMsgFunction.h"
 
