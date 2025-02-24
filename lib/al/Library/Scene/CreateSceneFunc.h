@@ -6,7 +6,7 @@ class Scene;
 
 namespace alSceneFunction {
 template <typename T>
-al::Scene* createSceneFunc(const char* sceneName) {
-    return new T(sceneName);
+al::Scene* createSceneFunc() {
+    return new T();
 }
 }  // namespace alSceneFunction
