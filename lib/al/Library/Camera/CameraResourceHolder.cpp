@@ -19,8 +19,8 @@ CameraResourceHolder::CameraResourceHolder(const char* stageName, s32 maxResourc
 
 // too large to inline with heuristic, but needs to be explicit function (or inline lambda) for
 // stack ordering to match original assembly
-__attribute__((always_inline)) void getStageName(StringTmp<128>* stageName,
-                                                 const char* archiveName) {
+__attribute__((always_inline)) static void getStageName(StringTmp<128>* stageName,
+                                                        const char* archiveName) {
     sead::FixedSafeString<256> safeArchiveName;
     safeArchiveName.format("%s", archiveName);
     if (safeArchiveName.endsWith("Map"))
