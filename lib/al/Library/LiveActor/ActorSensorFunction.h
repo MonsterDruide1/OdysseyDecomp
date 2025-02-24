@@ -1,5 +1,12 @@
 #pragma once
 
+namespace al{
+class HitSensorKeeper;
+class HitSensor;
+class LiveActor;
+class SensorMsg;
+}
+
 namespace alActorSensorFunction {
 al::HitSensorKeeper* getSensorKeeper(const al::LiveActor* actor);
 // NOTE: The order of sensors here is the opposite of sendMsg functions
