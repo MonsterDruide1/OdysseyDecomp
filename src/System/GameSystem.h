@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Library/Nerve/NerveExecutor.h"
-#include "Library/System/GameSystemInfo.h"
 
 namespace al {
 class Sequence;
@@ -13,6 +12,7 @@ class NetworkSystem;
 class HtmlViewer;
 class GamePadSystem;
 class ApplicationMessageReceiver;
+class WaveVibrationHolder;
 }  // namespace al
 
 class GameConfigData;

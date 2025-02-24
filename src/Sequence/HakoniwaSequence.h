@@ -31,6 +31,8 @@ class SeadAudioPlayer;
 class AudioBusSendFader;
 class SimpleAudioUser;
 class ScreenCaptureExecutor;
+class GamePadSystem;
+class EffectSystem;
 
 }  // namespace al
 
