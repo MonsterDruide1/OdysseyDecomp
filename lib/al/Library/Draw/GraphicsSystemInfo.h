@@ -12,6 +12,9 @@ class EffectSystem;
 class PlayerHolder;
 class SceneCameraInfo;
 class ShaderHolder;
+class GraphicsQualityController;
+class ModelLodAllCtrl;
+class MaterialCategoryKeeper;
 
 class GraphicsSystemInfo {
 public:
@@ -28,9 +31,15 @@ public:
     void updateGraphics();
     void preDrawGraphics(SceneCameraInfo*);
 
-    // incomplete
-private:
-    void* filler[312];
+    // being accessed directly in a lot of places
+public:
+    void* size0[24];
+    GraphicsQualityController* mGraphicsQualityController;
+    void* size1[46];
+    MaterialCategoryKeeper* mMaterialCategoryKeeper;
+    void* size2[234];
+    ModelLodAllCtrl* mModelLodAllCtrl;
+    void* size3[5];
 };
 
 static_assert(sizeof(GraphicsSystemInfo) == 0x9c0);

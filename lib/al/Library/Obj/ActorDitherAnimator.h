@@ -4,10 +4,13 @@
 
 namespace al {
 class LiveActor;
+class Resource;
 
 // TODO: Finish this
 class ActorDitherAnimator : public DitherAnimator {
 public:
+    static ActorDitherAnimator* tryCreate(LiveActor*, const Resource*, const char*);
+
     ActorDitherAnimator(LiveActor* host);
 
     void validateDitherAnim();
