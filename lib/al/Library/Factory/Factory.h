@@ -5,8 +5,8 @@
 namespace al {
 template <typename T>
 struct NameToCreator {
-    const char* mName;
-    T mCreationFunction;
+    const char* name;
+    T creationFunction;
 };
 
 template <typename T>
