@@ -1,7 +1,7 @@
 #include "Player/PlayerAreaChecker.h"
 
 #include "Library/Area/AreaObjUtil.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Nature/NatureUtil.h"
 
