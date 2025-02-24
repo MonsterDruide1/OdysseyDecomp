@@ -12,7 +12,7 @@ class CameraPoserFactory : public Factory<CameraPoserCreatorFunction> {
 public:
     CameraPoserFactory(const char* factoryName);
 
-    CameraPoserEntrance* createEntranceCameraPoser() const;
+    virtual CameraPoserEntrance* createEntranceCameraPoser() const;
 };
 }  // namespace al
 
@@ -27,4 +27,12 @@ void initAndCreateTableWithAnotherFactory(
 void initAndCreateTableWithPresetPosers(
     al::CameraPoserFactory* out, const al::NameToCreator<al::CameraPoserCreatorFunction>* table,
     s32 tableCount);
+
+template <s32 N1, s32 N2>
+inline void initAndCreateTableFromOtherTable(
+    al::CameraPoserFactory* out,
+    const al::NameToCreator<al::CameraPoserCreatorFunction> (&table1)[N1],
+    const al::NameToCreator<al::CameraPoserCreatorFunction> (&table2)[N2]) {
+    initAndCreateTableFromOtherTable2(out, table1, N1, table2, N2);
+}
 }  // namespace alCameraPoserFactoryFunction
