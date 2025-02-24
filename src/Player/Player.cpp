@@ -9,11 +9,7 @@
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-<<<<<<< HEAD
 #include "Library/LiveActor/ActorPoseUtil.h"
-=======
-#include "Library/LiveActor/ActorPoseKeeper.h"
->>>>>>> b6e1615 (Merge ActorSensorMsgFunction into ActorSensorUtil)
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"

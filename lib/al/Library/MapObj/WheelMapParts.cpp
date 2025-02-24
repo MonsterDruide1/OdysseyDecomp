@@ -7,13 +7,8 @@
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
-<<<<<<< HEAD
 #include "Library/LiveActor/ActorPoseUtil.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
-=======
-#include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
->>>>>>> b6e1615 (Merge ActorSensorMsgFunction into ActorSensorUtil)
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"

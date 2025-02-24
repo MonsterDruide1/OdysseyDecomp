@@ -7,15 +7,7 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-<<<<<<< HEAD
 #include "Library/LiveActor/ActorPoseUtil.h"
-=======
-#include "Library/LiveActor/ActorPoseKeeper.h"
-<<<<<<< HEAD
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
->>>>>>> 9ae314e (PR: fix clang-format for headers with changed include)
-=======
->>>>>>> b6e1615 (Merge ActorSensorMsgFunction into ActorSensorUtil)
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathUtil.h"
