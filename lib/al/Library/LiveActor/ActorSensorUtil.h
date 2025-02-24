@@ -126,7 +126,6 @@ bool isHitCircleSensor(const HitSensor*, const sead::Vector3f&, const sead::Vect
 bool isHitCircleSensor(const HitSensor*, const HitSensor*, const sead::Vector3f&, f32, f32);
 bool isHitPlaneSensor(const HitSensor*, const sead::Vector3f&, const sead::Vector3f&, f32);
 bool isHitPlaneSensor(const HitSensor*, const HitSensor*, const sead::Vector3f&, f32);
-/* ------------------- */
 
 const sead::Vector3f& getActorTrans(const HitSensor*);
 const sead::Vector3f& getActorVelocity(const HitSensor*);
