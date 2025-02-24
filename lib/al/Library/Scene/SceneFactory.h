@@ -2,10 +2,12 @@
 
 #include "Library/Factory/Factory.h"
 
-namespace alSceneFunction {
+namespace al {
 class Scene;
+}
 
-using SceneCreatorFunction = Scene* (*)(const char* sceneName);
+namespace alSceneFunction {
+using SceneCreatorFunction = al::Scene* (*)();
 
 class SceneFactory : public al::Factory<SceneCreatorFunction> {
 public:
