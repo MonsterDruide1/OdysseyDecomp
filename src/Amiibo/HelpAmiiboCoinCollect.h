@@ -37,5 +37,5 @@ private:
     CoinCollect* mCoinCollect = nullptr;
     CoinCollect2D* mCoinCollect2D = nullptr;
     CoinCollectDummy* mCoinCollectDummy = nullptr;
-    al::AreaObj* mAreaObj = nullptr;
+    al::AreaObj* mStartInvalidateStageMapArea = nullptr;
 };
