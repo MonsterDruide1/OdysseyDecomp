@@ -33,7 +33,7 @@ void CameraPoserFix::initCameraPosAndLookAtPos(const sead::Vector3f& cameraPos,
     mLookAtPos.set(lookAtPos);
     mDistance = (lookAtPos - cameraPos).length();
     sead::Vector3f viewDir;
-    nextPos.set(cameraPos - lookAtPos);
+    viewDir.set(cameraPos - lookAtPos);
     normalize(&viewDir);
     mAngleV = sead::Mathf::rad2deg(asinf(viewDir.y));
     sead::Vector3f viewDirPlane = viewDir;
