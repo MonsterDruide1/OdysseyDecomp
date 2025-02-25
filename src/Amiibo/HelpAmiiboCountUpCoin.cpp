@@ -3,9 +3,9 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -109,7 +109,7 @@ void HelpAmiiboCountUpCoin::activate() {
 }
 
 HelpAmiiboType HelpAmiiboCountUpCoin::getType() const {
-    return HelpAmiiboType::CountUpCoin;
+    return HelpAmiiboType::All;
 }
 
 al::NerveKeeper* HelpAmiiboCountUpCoin::getNerveKeeper() const {

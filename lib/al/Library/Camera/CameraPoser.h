@@ -22,10 +22,10 @@ class CameraOffsetCtrlPreset;
 class CameraParamMoveLimit;
 class GyroCameraCtrl;
 class CameraViewInfo;
-class CameraStartInfo;
+struct CameraStartInfo;
 class CameraObjectRequestInfo;
 class CameraTurnInfo;
-class CameraPoserFlag;
+struct CameraPoserFlag;
 class RailKeeper;
 class PlacementInfo;
 class ByamlIter;
@@ -110,7 +110,7 @@ public:
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
 
-private:
+protected:
     const char* mPoserName;
     f32 field_38;
     sead::Vector3f mPosition;

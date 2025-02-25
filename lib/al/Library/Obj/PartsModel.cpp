@@ -3,11 +3,11 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/SubActorFunction.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
@@ -26,12 +26,12 @@ void PartsModel::calcAnim() {
     LiveActor::calcAnim();
 }
 
-void PartsModel::attackSensor(HitSensor* target, HitSensor* source) {
-    mParentModel->attackSensor(target, source);
+void PartsModel::attackSensor(HitSensor* self, HitSensor* other) {
+    mParentModel->attackSensor(self, other);
 }
 
-bool PartsModel::receiveMsg(const SensorMsg* message, HitSensor* source, HitSensor* target) {
-    return mParentModel->receiveMsg(message, source, target);
+bool PartsModel::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+    return mParentModel->receiveMsg(message, other, self);
 }
 
 void PartsModel::initPartsDirect(LiveActor* parent, const ActorInitInfo& initInfo,
@@ -118,7 +118,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
     makeActorAlive();
 }
 
-// NON-MATCHING: needs to have proper matrix math implemented still
+// NON_MATCHING: needs to have proper matrix math implemented still
 void PartsModel::updatePose() {
     sead::Matrix34f poseMtx;
     sead::Matrix34f jointMtx;

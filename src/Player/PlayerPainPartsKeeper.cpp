@@ -1,9 +1,9 @@
 #include "Player/PlayerPainPartsKeeper.h"
 
 #include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Obj/PartsModel.h"
 

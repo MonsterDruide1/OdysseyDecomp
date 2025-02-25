@@ -3,9 +3,9 @@
 #include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -66,12 +66,12 @@ void KeyMoveFollowTarget::exeMove() {
 
         if (!isStop(mKeyPoseKeeper)) {
             startHitReaction(this, "移動終了");
-            startAction(this, "Wait");
+            startNerveAction(this, "Wait");
 
             return;
         }
 
-        startAction(this, "Stop");
+        startNerveAction(this, "Stop");
     }
 }
 

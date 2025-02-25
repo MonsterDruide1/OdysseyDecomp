@@ -56,6 +56,8 @@ public:
     void update();
     void addHitSensor(HitSensor*);
 
+    void clearSensors() { mSensorCount = 0; }
+
     const sead::Vector3f& getFollowPosOffset() const { return mFollowPosOffset; }
 
     f32 getRadius() const { return mRadius; }

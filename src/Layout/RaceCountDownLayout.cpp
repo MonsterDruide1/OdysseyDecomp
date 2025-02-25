@@ -51,7 +51,7 @@ void RaceCountDownLayout::reset() {
 
 void RaceCountDownLayout::exeWait() {}
 
-void toggleNumberLayouts(al::LayoutActor* countLayout, s32 count) {
+inline void toggleNumberLayouts(al::LayoutActor* countLayout, s32 count) {
     for (s32 i = 0; i < 11; i++) {
         al::startAction(countLayout, (count == i) ? "On" : "Off",
                         al::StringTmp<32>("Number%02d", i).cstr());

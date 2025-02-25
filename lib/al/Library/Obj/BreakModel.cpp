@@ -2,9 +2,9 @@
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"

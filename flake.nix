@@ -22,7 +22,7 @@
         buildInputs = with pkgs; [
           cmake
           ninja
-          llvmPackages_14.clang
+          llvmPackages_18.clang
           ccache
           pkg-config
 
@@ -37,7 +37,7 @@
             python-pkgs.toml
           ]))
           openssl
-          llvmPackages_14.libclang
+          llvmPackages_18.libclang
           ncurses5
           ncurses6
         ];

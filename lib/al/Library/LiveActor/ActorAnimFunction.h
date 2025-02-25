@@ -332,7 +332,7 @@ bool isPartialAnimPlaying(const LiveActor*, s32);
 namespace alAnimFunction {
 bool isAllAnimEnd(const al::LiveActor*, s32);
 f32 getAllAnimFrame(const al::LiveActor*, s32);
-f32 getAllAnimFrameMax(const al::LiveActor*, s32);
+f32 getAllAnimFrameMax(const al::LiveActor*, const char*, s32);
 f32 getAllAnimFrameRate(const al::LiveActor*, s32);
 const char* getAllAnimName(const al::LiveActor*);
 }  // namespace alAnimFunction

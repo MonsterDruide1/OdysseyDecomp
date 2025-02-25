@@ -6,13 +6,11 @@ namespace al {
 
 WaterSurfaceFinder::WaterSurfaceFinder(const LiveActor* actor) : mActor(actor) {}
 
-// NON_MATCHING: inlined updateLocal
 void WaterSurfaceFinder::update(const sead::Vector3f& position, const sead::Vector3f& gravity,
                                 f32 distance) {
     updateLocal(position, gravity, distance, false, false, false);
 }
 
-// NON_MATCHING: storing {0,0,0} if no surface was found (https://decomp.me/scratch/zHEdm)
 void WaterSurfaceFinder::updateLocal(const sead::Vector3f& position, const sead::Vector3f& gravity,
                                      f32 maxDistance, bool isFlat, bool isDisplacement,
                                      bool isOverGround) {
@@ -35,41 +33,37 @@ void WaterSurfaceFinder::updateLocal(const sead::Vector3f& position, const sead:
 
     if (mIsFoundSurface) {
         // requires this manual dot product calculation to match
-        mDistance = gravity.x * (surfacePos.x - position.x) +
-                    gravity.y * (surfacePos.y - position.y) +
-                    gravity.z * (surfacePos.z - position.z);
-        // mDistance = gravity.dot(surfacePos - position);
-        mSurfacePosition.set(surfacePos);
-        mSurfaceNormal.set(surfaceNormal);
+        mSurface.setDistance(gravity.x * (surfacePos.x - position.x) +
+                             gravity.y * (surfacePos.y - position.y) +
+                             gravity.z * (surfacePos.z - position.z));
+        mSurface.setPosition(surfacePos);
+        mSurface.setNormal(surfaceNormal);
     } else {
-        mDistance = 0.0f;
-        mSurfacePosition = {0.0f, 0.0f, 0.0f};
-        mSurfaceNormal = {0.0f, 0.0f, 0.0f};
+        mSurface.setDistance(0.0f);
+        mSurface.setPosition({0.0f, 0.0f, 0.0f});
+        mSurface.setNormal({0.0f, 0.0f, 0.0f});
     }
 
-    _28 = {0.0f, 0.0f, 0.0f};
+    mSurface.set1c({0.0f, 0.0f, 0.0f});
 }
 
-// NON_MATCHING: inlined updateLocal
 void WaterSurfaceFinder::updateForSurfaceShadow(const sead::Vector3f& position,
                                                 const sead::Vector3f& gravity, f32 distance) {
     updateLocal(position, gravity, distance, true, false, false);
 }
 
-// NON_MATCHING: inlined updateLocal
 void WaterSurfaceFinder::updateForDisplacement(const sead::Vector3f& position,
                                                const sead::Vector3f& gravity, f32 distance) {
     updateLocal(position, gravity, distance, false, true, false);
 }
 
-// NON_MATCHING: inlined updateLocal
 void WaterSurfaceFinder::updateConsiderGround(const sead::Vector3f& position,
                                               const sead::Vector3f& gravity, f32 distance) {
     updateLocal(position, gravity, distance, false, false, true);
 }
 
 bool WaterSurfaceFinder::isNearSurface(f32 distance) const {
-    return mIsFoundSurface && sead::Mathf::abs(mDistance) < distance;
+    return mIsFoundSurface && sead::Mathf::abs(mSurface.distance) < distance;
 }
 
 }  // namespace al

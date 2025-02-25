@@ -3,10 +3,9 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
 #include "Util/ActorDimensionKeeper.h"

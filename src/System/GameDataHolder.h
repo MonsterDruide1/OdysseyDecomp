@@ -11,22 +11,14 @@ namespace al {
 class PlacementId;
 }
 
-class GameDataFile;
+namespace ShopItem {
+struct ItemInfo;
+}
+
 class ChangeStageInfo;
-
-struct ItemAmiiboInfo {
-    s32 mCharacterId;
-    s32 mNumberingId;
-};
-
-struct ItemListInfo {
-    s32 mIndex;
-    char mName[0x80];
-    s32 mType;
-    u32 mAmiiboCount;
-    ItemAmiiboInfo* mAmiiboInfo;
-    bool mIsAOC;
-};
+class GameDataFile;
+class GameSequenceInfo;
+class TimeBalloonSequenceInfo;
 
 class GameDataHolder : public al::GameDataHolderBase {
 public:
@@ -103,13 +95,15 @@ public:
 
     s32 findUseScenarioNo(const char*);
 
-    const sead::PtrArray<ItemListInfo>& getClothList() const { return mItemCloth; }
+    const sead::PtrArray<ShopItem::ItemInfo>& getClothList() const { return mItemCloth; }
 
-    const sead::PtrArray<ItemListInfo>& getCapList() const { return mItemCap; }
+    const sead::PtrArray<ShopItem::ItemInfo>& getCapList() const { return mItemCap; }
 
-    const sead::PtrArray<ItemListInfo>& getGiftList() const { return mItemGift; }
+    const sead::PtrArray<ShopItem::ItemInfo>& getGiftList() const { return mItemGift; }
 
-    const sead::PtrArray<ItemListInfo>& getStickerList() const { return mItemSticker; }
+    const sead::PtrArray<ShopItem::ItemInfo>& getStickerList() const { return mItemSticker; }
+
+    GameSequenceInfo* getSequenceInfo() const { return mSequenceInfo; }
 
 private:
     s32 padding;
@@ -122,22 +116,24 @@ private:
     u32 mRequireSaveFrame;
     bool mIsInvalidSaveForMoonGet;
     bool unk_changeStageRelated;
-    u8 field_4A;
-    u8 field_4B;
-    u32 field_4C;
+    u8 field_4a;
+    u8 field_4b;
+    u32 field_4c;
     sead::BufferedSafeString mLanguage;
     u8 gap_58[0x28];
     sead::Heap* field_90;
     u8 gap_98[0x20];
-    u64* field_B8;  // TempSaveData*
-    u8 gap_C0[0x110 - 0xc0];
-    sead::PtrArray<ItemListInfo> mItemCloth;
-    sead::PtrArray<ItemListInfo> mItemCap;
-    sead::PtrArray<ItemListInfo> mItemGift;
-    sead::PtrArray<ItemListInfo> mItemSticker;
+    u64* field_b8;  // TempSaveData*
+    u8 gap_c0[0x110 - 0xc0];
+    sead::PtrArray<ShopItem::ItemInfo> mItemCloth;
+    sead::PtrArray<ShopItem::ItemInfo> mItemCap;
+    sead::PtrArray<ShopItem::ItemInfo> mItemGift;
+    sead::PtrArray<ShopItem::ItemInfo> mItemSticker;
     u8 gap_150[0x190 - 0x150];
     WorldList* mWorldList;
-    u8 gap_198[0x268 - 0x198];
+    u8 gap_198[0x258 - 0x198];
+    GameSequenceInfo* mSequenceInfo;
+    TimeBalloonSequenceInfo* mTimeBalloonSequenceInfo;
 };
 
 static_assert(sizeof(GameDataHolder) == 0x268);

@@ -1,7 +1,8 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 
 #include "Library/Base/StringUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
@@ -27,7 +28,7 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
     mCurActorCount++;
 }
 
-// NON-MATCHING
+// NON_MATCHING
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
     s32 creatorCount;

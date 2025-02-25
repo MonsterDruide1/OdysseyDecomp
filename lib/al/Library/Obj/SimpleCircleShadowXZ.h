@@ -20,14 +20,14 @@ public:
 private:
     LiveActor* mRootActor;
     sead::Vector3f mOffsetInterpole;
-    bool field_11C;
-    bool field_11D;
+    bool field_11c;
+    bool field_11d;
     sead::Vector3f mActorScale;
     sead::Vector3f mScale;
     sead::Vector3f field_138;
     sead::Vector3f mOffset;
     sead::Vector3f field_150;
-    sead::Vector3f field_15C;
+    sead::Vector3f field_15c;
     sead::Vector3f mRotate;
     s32 mInterpoleStep;
     s32 mInterpoleFrame;

@@ -5,7 +5,8 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -82,7 +83,7 @@ void GateMapParts::exeOpen() {
         mHitReactionCurrent = 0;
 
         if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
-            startAction(this, "Bound");
+            startNerveAction(this, "Bound");
 
             return;
         }
@@ -90,7 +91,7 @@ void GateMapParts::exeOpen() {
         if (mSuccessSeObj != nullptr)
             startSe(mSuccessSeObj, "Riddle");
 
-        startAction(this, "End");
+        startNerveAction(this, "End");
 
         if (mHitReactionCount < 2)
             startHitReaction(this, "バウンド1回目");
@@ -123,7 +124,7 @@ void GateMapParts::exeBound() {
         mCurrentBoundSteps = (s32)(mBoundRate * (f32)mCurrentBoundSteps);
 
         if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
-            startAction(this, "Bound");
+            startNerveAction(this, "Bound");
 
             return;
         }
@@ -131,7 +132,7 @@ void GateMapParts::exeBound() {
         if (mSuccessSeObj != nullptr)
             startSe(mSuccessSeObj, "Riddle");
 
-        startAction(this, "End");
+        startNerveAction(this, "End");
     }
 }
 

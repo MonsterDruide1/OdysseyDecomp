@@ -5,10 +5,10 @@
 #include "Library/Audio/IUseAudioKeeper.h"
 #include "Library/Nerve/NerveExecutor.h"
 #include "Library/Sequence/IUseSceneCreator.h"
-#include "Library/System/GameSystemInfo.h"
 
 namespace al {
 struct GameSystemInfo;
+struct DrawSystemInfo;
 struct SequenceInitInfo;
 struct AudioSystemInfo;
 class AudioDirector;

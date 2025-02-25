@@ -1,0 +1,32 @@
+name: Check that the commits of required PRs are in the git history
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  rebase-requirement:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out PR branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        fetch-depth: 0
+    - name: Check out required PRs list to master
+      run: |
+        git checkout origin/master -- .github/files/rebase-requirement-prs.txt || true
+    - name: Run rebase requirement check
+      run: |
+        glog_out="$(git log --pretty=format:"%s")"
+        while read PR; do
+          if [[ $glog_out != *"(${PR})"* ]] && [[ "${PR}" != "#${PR_NUM}" ]]; then
+            echo "The commit of PR ${PR} is required to be part of this PR's commit history, but was not found. Please rebase your changes on top of it!"
+            exit 1
+          fi
+        done < .github/files/rebase-requirement-prs.txt
+        echo "No issues found with PR being outdated!"
+      env:
+        PR_NUM: ${{ github.event.pull_request.number }}

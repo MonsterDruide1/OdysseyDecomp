@@ -42,11 +42,11 @@ const MenuSelectParts::Selection sPauseMenuParts[5] = {
     MenuSelectParts::Selection::Help, MenuSelectParts::Selection::Save,
     MenuSelectParts::Selection::Setting};
 
-const MenuSelectParts::Selection* getPartsArray(bool isPauseMenu) {
+inline const MenuSelectParts::Selection* getPartsArray(bool isPauseMenu) {
     return isPauseMenu ? sPauseMenuParts : sMainMenuParts;
 }
 
-void setCursorPaneTrans(al::LayoutActor* cursorActor, al::LayoutActor* actor) {
+inline void setCursorPaneTrans(al::LayoutActor* cursorActor, al::LayoutActor* actor) {
     sead::Vector2f cursorTrans = {0.0f, 0.0f};
     al::calcPaneTrans(&cursorTrans, actor, "Cursor");
     al::setLocalTrans(cursorActor, cursorTrans);

@@ -10,7 +10,7 @@
 
 namespace al {
 
-ExecuteDirector::ExecuteDirector(s32 count) : mRequestCount(count){};
+ExecuteDirector::ExecuteDirector(s32 count) : mRequestCount(count) {}
 
 ExecuteDirector::~ExecuteDirector() {
     for (s32 i = 0; i < mDrawTableCount; i++)
@@ -113,6 +113,7 @@ void ExecuteDirector::createExecutorListTable() {
         mDrawTables[i]->createExecutorListTable();
 }
 
+// NON_MATCHING
 void ExecuteDirector::execute(const char* tableName) const {
     if (!tableName) {
         mRequestKeeper->executeRequestActorMovementAllOn();

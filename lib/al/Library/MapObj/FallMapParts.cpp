@@ -4,10 +4,10 @@
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -86,14 +86,14 @@ void FallMapParts::exeAppear() {
     if (isFirstStep(this)) {
         validateCollisionParts(this);
         if (!tryStartAction(this, "Appear")) {
-            startAction(this, "Wait");
+            startNerveAction(this, "Wait");
 
             return;
         }
     }
 
     if (!isExistAction(this) || isActionEnd(this))
-        startAction(this, "Wait");
+        startNerveAction(this, "Wait");
 }
 
 void FallMapParts::exeWait() {

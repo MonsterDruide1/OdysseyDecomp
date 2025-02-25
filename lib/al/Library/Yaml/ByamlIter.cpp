@@ -233,7 +233,7 @@ bool ByamlIter::tryConvertString(const char** value, const ByamlData* data) cons
     if (data->getType() != ByamlDataType::TYPE_STRING)
         return false;
 
-    const auto string_table = alByamlLocalUtil::getStringTable(mData);
+    ByamlStringTableIter string_table = alByamlLocalUtil::getStringTable(mData);
     if (!string_table.isValidate())
         return false;
     *value = string_table.getString(data->getValue());
@@ -261,7 +261,7 @@ bool ByamlIter::tryConvertBinary(const u8** value, s32* size, const ByamlData* d
     if (data->getType() != ByamlDataType::TYPE_STRING)
         return false;
 
-    const auto string_table = alByamlLocalUtil::getStringTable(mData);
+    ByamlStringTableIter string_table = alByamlLocalUtil::getStringTable(mData);
     if (!string_table.isValidate())
         return false;
     *value = (const u8*)string_table.getString(data->getValue());

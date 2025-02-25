@@ -2,11 +2,9 @@
 
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorDrawFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 
@@ -42,10 +40,9 @@ void KuromadoMagicBall::control() {
     }
 }
 
-void KuromadoMagicBall::attackSensor(al::HitSensor* target, al::HitSensor* source) {
-    if (al::sendMsgEnemyAttackFire(source, target, nullptr) ||
-        rs::sendMsgEnemyAttackStrong(source, target) ||
-        rs::sendMsgEnemyAttackDash(source, target)) {
+void KuromadoMagicBall::attackSensor(al::HitSensor* self, al::HitSensor* other) {
+    if (al::sendMsgEnemyAttackFire(other, self, nullptr) ||
+        rs::sendMsgEnemyAttackStrong(other, self) || rs::sendMsgEnemyAttackDash(other, self)) {
         al::emitEffect(this, "Hit", nullptr);
         kill();
     }

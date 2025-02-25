@@ -1,8 +1,8 @@
 #include "MapObj/PeachWorldTree.h"
 
 #include "Library/Camera/CameraUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 
 PeachWorldTree::PeachWorldTree(const char* name) : al::LiveActor(name) {}

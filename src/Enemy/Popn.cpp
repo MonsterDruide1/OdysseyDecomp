@@ -5,6 +5,7 @@
 #include "Library/Collision/KCollisionServer.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/Item/ItemUtil.h"
+#include "Library/Joint/JointControllerKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
@@ -12,11 +13,11 @@
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
 #include "Library/Nature/NatureUtil.h"
@@ -62,22 +63,22 @@ void Popn::init(const al::ActorInitInfo& info) {
     makeActorAlive();
 }
 
-void Popn::attackSensor(al::HitSensor* target, al::HitSensor* source) {
+void Popn::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvPopn.BlowDown))
         return;
 
     if (al::isNerve(this, &NrvPopn.Appear) && al::isLessStep(this, 80))
         return;
 
-    if (al::isSensorEnemyBody(target) && al::isSensorEnemyBody(source) &&
+    if (al::isSensorEnemyBody(self) && al::isSensorEnemyBody(other) &&
         !al::isNerve(this, &NrvPopn.Move))
-        al::sendMsgPushAndKillVelocityToTarget(this, target, source);
+        al::sendMsgPushAndKillVelocityToTarget(this, self, other);
 
-    if (al::isSensorEnemyAttack(target))
-        rs::sendMsgPushToPlayer(source, target) || al::sendMsgEnemyAttack(source, target);
+    if (al::isSensorEnemyAttack(self))
+        rs::sendMsgPushToPlayer(other, self) || al::sendMsgEnemyAttack(other, self);
 }
 
-bool Popn::receiveMsg(const al::SensorMsg* message, al::HitSensor* source, al::HitSensor* target) {
+bool Popn::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
     if (rs::isMsgNpcScareByEnemy(message))
         return true;
     if (rs::isMsgKillByShineGet(message) || rs::isMsgKillByHomeDemo(message)) {
@@ -97,23 +98,23 @@ bool Popn::receiveMsg(const al::SensorMsg* message, al::HitSensor* source, al::H
     if (al::isNerve(this, nrv))
         return false;
 
-    if (al::isSensorEnemyAttack(target))
+    if (al::isSensorEnemyAttack(self))
         return false;
     if (al::isNerve(this, &NrvPopn.Appear) && al::isLessStep(this, 15))
         return false;
-    if (al::tryReceiveMsgPushAndAddVelocityH(this, message, source, target, 2.0f))
+    if (al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 2.0f))
         return true;
 
     if (rs::isMsgCapAttack(message) || rs::isMsgBlowDown(message) ||
         rs::isMsgSeedAttackHold(message) || rs::isMsgWanwanEnemyAttack(message) ||
         rs::isMsgTankExplosion(message) || rs::isMsgTankBullet(message)) {
         al::tryDeleteEffect(this, "PopnAppear");
-        rs::requestHitReactionToAttacker(message, target, source);
+        rs::requestHitReactionToAttacker(message, self, other);
 
         if (mIsGenerateItem)
-            rs::setAppearItemFactorAndOffsetByMsg(this, message, source);
+            rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
 
-        mStateBlowDown->start(source, target);
+        mStateBlowDown->start(other, self);
         al::invalidateClipping(this);
         al::setNerve(this, &NrvPopn.BlowDown);
 
@@ -183,14 +184,14 @@ void Popn::appearByGenerater(const sead::Vector3f& pos, s32 color, bool isAppear
     }
 }
 
-bool shouldAwake(f32 awakeDistance, al::LiveActor* popn) {
+inline bool shouldAwake(f32 awakeDistance, al::LiveActor* popn) {
     al::LiveActor* nearestPlayerActor = al::tryFindNearestPlayerActor(popn);
     if (!nearestPlayerActor)
         return false;
     return al::calcDistance(nearestPlayerActor, al::getTrans(popn)) < awakeDistance;
 }
 
-void applyInertia(al::LiveActor* popn) {
+inline void applyInertia(al::LiveActor* popn) {
     if (al::isOnGround(popn, 0)) {
         al::scaleVelocity(popn, 0.8f);
         al::addVelocityToGravityFittedGround(popn, 0.55f, 0);

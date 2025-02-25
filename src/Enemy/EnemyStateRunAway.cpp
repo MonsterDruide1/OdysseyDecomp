@@ -3,7 +3,7 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -35,8 +35,8 @@ void EnemyStateRunAway::calcRunDirBase(sead::Vector3f* direction) {
     if (!mScaredOfActor) {
         *direction = sead::Vector3f::ez;
     } else {
-        auto& s = al::getTrans(mScaredOfActor);
-        auto& t = al::getTrans(mActor);
+        const auto& s = al::getTrans(mScaredOfActor);
+        const auto& t = al::getTrans(mActor);
         sead::Vector3f normalized;
         normalized.x = s.x - t.x;
         normalized.z = s.z - t.z;
@@ -70,7 +70,7 @@ void EnemyStateRunAway::exeRun() {
             al::normalize(&mFrontDir, mFrontDir);
         }
     }
-    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,
+    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_c,
                                mParam->field_10, mParam->field_4, true);
 }
 
@@ -95,13 +95,13 @@ void EnemyStateRunAway::exePanicRun() {
             mFrontDir.set(collidedWallNormal);
         al::setNerve(this, &PanicRunCollided);
     } else {
-        al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,
+        al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_c,
                                    mParam->field_10, mParam->field_4, true);
     }
 }
 
 void EnemyStateRunAway::exePanicRunCollided() {
-    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_C,
+    al::walkAndTurnToDirection(mActor, mFrontDir, mParam->field_0, mParam->field_c,
                                mParam->field_10, mParam->field_8, true);
     if (al::isGreaterEqualStep(this, 180))
         al::setNerve(this, &PanicRun);
