@@ -4,8 +4,9 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/ActorSensorMsgFunction.h"
 #include "Library/LiveActor/LiveActor.h"
@@ -257,14 +258,14 @@ void updateNokonokoVelocity(al::LiveActor* self, al::WaterSurfaceFinder* waterSu
 
 inline bool Nokonoko::updateAccelStick() {
     sead::Vector3f stickAccel;
-    if (rs::addHackActorAccelStick(this, mHackActor, &stickAccel,
-                                   al::isOnGround(this, 0) ? 0.2f : 1.2f, sead::Vector3f::ey)) {
-        sead::Quatf targetQuat;
-        al::makeQuatFrontUp(&targetQuat, stickAccel, sead::Vector3f::ey);
-        al::slerpQuat(al::getQuatPtr(this), al::getQuat(this), targetQuat, 0.3f);
-        return true;
-    }
-    return false;
+    if (!rs::addHackActorAccelStick(this, mHackActor, &stickAccel,
+                                    al::isOnGround(this, 0) ? 0.2f : 1.2f, sead::Vector3f::ey))
+        return false;
+
+    sead::Quatf targetQuat;
+    al::makeQuatFrontUp(&targetQuat, stickAccel, sead::Vector3f::ey);
+    al::slerpQuat(al::getQuatPtr(this), al::getQuat(this), targetQuat, 0.3f);
+    return true;
 }
 
 void Nokonoko::exeWait() {
