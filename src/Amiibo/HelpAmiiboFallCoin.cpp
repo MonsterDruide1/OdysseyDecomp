@@ -67,9 +67,7 @@ al::NerveKeeper* HelpAmiiboFallCoin::getNerveKeeper() const {
     return mNerveKeeper;
 }
 
-void HelpAmiiboFallCoin::exeWait() {
-    // Stubbed in game
-}
+void HelpAmiiboFallCoin::exeWait() {}
 
 void HelpAmiiboFallCoin::exeFall() {
     if (al::isFirstStep(this)) {
