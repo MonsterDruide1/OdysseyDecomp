@@ -38,9 +38,9 @@ void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const Acto
 void initChildActorWithArchiveNameNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
                                                   const sead::SafeString& archiveName,
                                                   const char* suffix);
-LiveActor* createChildLinkSimpleActor(const char* actorName, const char* archiveName,
+LiveActor* createChildLinkSimpleActor(const char* actorName, const char* linkName,
                                       const ActorInitInfo& initInfo, bool alive);
-LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* archiveName,
+LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* linkName,
                                         const ActorInitInfo& initInfo, s32 linkIndex, bool alive);
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
 void initLinksActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix,

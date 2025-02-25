@@ -1,4 +1,8 @@
 #include "Library/LiveActor/ActorInitUtil.h"
+
+#include <math/seadBoundBox.h>
+#include <nn/g3d/ModelObj.h>
+
 #include "Library/Action/ActorActionKeeper.h"
 #include "Library/Base/HashCodeUtil.h"
 #include "Library/Base/StringUtil.h"
@@ -26,14 +30,13 @@
 #include "Library/Obj/ActorDitherAnimator.h"
 #include "Library/Obj/FarDistanceDitherAnimator.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Placement/PlacementInfo.h"
 #include "Library/Resource/Resource.h"
 #include "Library/Resource/ResourceHolder.h"
 #include "Library/Shadow/ActorShadowUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 #include "Project/Item/ActorScoreKeeper.h"
-#include "math/seadBoundBox.h"
-#include "nn/g3d/ModelObj.h"
 
 namespace al {
 
@@ -50,12 +53,10 @@ void initActorImpl(LiveActor* actor, const ActorInitInfo& initInfo,
                    const char*);
 
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo) {
-    const char* objName = nullptr;
-    tryGetObjectName(&objName, initInfo);
-    initActorImpl(actor, initInfo, "ObjectData", objName, nullptr);
+    initActorSuffix(actor, initInfo, nullptr);
 }
 
-__attribute__((always_inline)) bool test(const char* pose, LiveActor* actor) {
+__attribute__((always_inline)) bool initActorPoseKeeper(const char* pose, LiveActor* actor) {
     if (pose == nullptr)
         return false;
     s32 poseId = -1;
@@ -72,405 +73,558 @@ __attribute__((always_inline)) bool test(const char* pose, LiveActor* actor) {
     return false;
 }
 
+__attribute__((always_inline)) void initActorPose(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                  Resource* modelRes, const char* suffix) {
+    ByamlIter initPose;
+    if (!tryGetActorInitFileIter(&initPose, modelRes, "InitPose", suffix))
+        return;
+
+    const char* pose = nullptr;
+    if (!initPose.tryGetStringByKey(&pose, "Pose"))
+        return;
+
+    if (!initActorPoseKeeper(pose, actor))
+        return;
+
+    if (isEqualString(pose, "TFUSV") && tryGetByamlKeyBoolOrFalse(initPose, "IsFrontUp"))
+        ((ActorPoseKeeperTFUSV*)actor->getPoseKeeper())->setFrontUp(true);
+}
+
+__attribute__((always_inline)) void initActorScale(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                   Resource* modelRes, const char* suffix) {
+    ByamlIter initScale;
+    if (!tryGetActorInitFileIter(&initScale, modelRes, "InitScale", suffix))
+        return;
+
+    sead::Vector3f scale = {1.0f, 1.0f, 1.0f};
+    if (!tryGetByamlScale(&scale, initScale, "Scale"))
+        return;
+
+    const sead::Vector3f& prevScale = getScale(actor);
+    scale.x = scale.x * prevScale.x;
+    scale.y = scale.y * prevScale.y;
+    scale.z = scale.z * prevScale.z;
+    setScale(actor, scale);
+}
+
+__attribute__((always_inline)) ModelLodCtrl*
+initActorModelLodCtrl(LiveActor* actor, Resource* modelRes, const char* suffix) {
+    ByamlIter initLod;
+    if (!tryGetActorInitFileIter(&initLod, modelRes, "InitLod", suffix))
+        return nullptr;
+
+    sead::BoundBox3f modelBoundingBox;
+    s32 lodModelCount = 5;
+    if (isExistModel(actor)) {
+        lodModelCount = getLodModelCount(actor);
+        calcModelBoundingBox(&modelBoundingBox, actor);
+    }
+
+    ModelLodCtrl* modelLodCtrl = new ModelLodCtrl{
+        actor,        getTransPtr(actor), actor->getBaseMtx(), getScalePtr(actor), modelBoundingBox,
+        lodModelCount};
+    modelLodCtrl->init(initLod);
+
+    return modelLodCtrl;
+}
+
+__attribute__((always_inline)) void initActorModel(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                   Resource* modelRes, ActorResource* actorResource,
+                                                   const char* suffix) {
+    ByamlIter initModel;
+    if (!tryGetActorInitFileIter(&initModel, modelRes, "InitModel", suffix))
+        return;
+
+    s32 blendAnimMax = 1;
+    initModel.tryGetIntByKey(&blendAnimMax, "BlendAnimMax");
+    const char* displayRootJointName = nullptr;
+    initModel.tryGetStringByKey(&displayRootJointName, "DisplayRootJointName");
+
+    initActorModelKeeper(actor, initInfo, actorResource, blendAnimMax);
+    if (displayRootJointName != nullptr)
+        actor->getModelKeeper()->setDisplayRootJointMtxPtr(
+            getJointMtxPtr(actor, displayRootJointName));
+
+    bool isCreateUniqShader = false;
+    initModel.tryGetBoolByKey(&isCreateUniqShader, "IsCreateUniqShader");
+    if (isCreateUniqShader)
+        createUniqueShader(actor);
+
+    s32 partialAnimSlotNum = 0;
+    initModel.tryGetIntByKey(&partialAnimSlotNum, "PartialAnimSlotNum");
+    s32 partialAnimGroupNum = partialAnimSlotNum;
+    initModel.tryGetIntByKey(&partialAnimGroupNum, "PartialAnimGroupNum");
+    s32 partialAnimPartsListBufferSize = 16;
+    initModel.tryGetIntByKey(&partialAnimPartsListBufferSize, "PartialAnimPartsListBufferSize");
+    if (partialAnimGroupNum >= 1)
+        initPartialSklAnim(actor, partialAnimSlotNum, partialAnimGroupNum,
+                           partialAnimPartsListBufferSize);
+
+    bool isFixedModel = false;
+    initModel.tryGetBoolByKey(&isFixedModel, "IsFixedModel");
+    if (isFixedModel)
+        setFixedModelFlag(actor);
+
+    bool isIgnoreUpdateOnDrawClipping = false;
+    initModel.tryGetBoolByKey(&isIgnoreUpdateOnDrawClipping, "IsIgnoreUpdateOnDrawClipping");
+    if (isIgnoreUpdateOnDrawClipping)
+        setIgnoreUpdateDrawClipping(actor, true);
+
+    ModelKeeper* modelKeeper = actor->getModelKeeper();
+
+    ModelLodCtrl* modelLodCtrl = initActorModelLodCtrl(actor, modelRes, suffix);
+    modelKeeper->setModelLodCtrl(modelLodCtrl);
+    if (modelLodCtrl)
+        initInfo.getActorSceneInfo().mGraphicsSystemInfo->mModelLodAllCtrl->registerLodCtrl(
+            modelLodCtrl);
+
+    MaterialCategoryKeeper* materialCategoryKeeper =
+        initInfo.getActorSceneInfo().mGraphicsSystemInfo->mMaterialCategoryKeeper;
+    ModelMaterialCategory::tryCreate(modelKeeper->getModelCtrl(), modelRes, suffix,
+                                     materialCategoryKeeper);
+
+    GraphicsQualityInfo* graphicsQualityInfo =
+        initInfo.getActorSceneInfo()
+            .mGraphicsSystemInfo->mGraphicsQualityController->getGraphicsQualityInfo();
+    modelKeeper->getModelCtrl()->setGraphicsQualityInfo(graphicsQualityInfo);
+
+    ModelOcclusionQuery* modelOcclusionQuery =
+        ModelOcclusionQuery::tryCreate(actor, modelRes, suffix);
+    modelKeeper->getModelCtrl()->setModelOcclusionQuery(modelOcclusionQuery);
+
+    bool isCalcViewCore1 = false;
+    initModel.tryGetBoolByKey(&isCalcViewCore1, "IsCalcViewCore1");
+    if (isCalcViewCore1)
+        modelKeeper->getModelCtrl()->setCalcViewCore(1);
+
+    bool isCalcViewCore2 = false;
+    initModel.tryGetBoolByKey(&isCalcViewCore2, "IsCalcViewCore2");
+    if (isCalcViewCore2)
+        modelKeeper->getModelCtrl()->setCalcViewCore(2);
+}
+
+__attribute__((always_inline)) void initActorExecutor(LiveActor* actor,
+                                                      const ActorInitInfo& initInfo,
+                                                      Resource* modelRes, const char* suffix) {
+    ByamlIter initExecutor;
+    if (!tryGetActorInitFileIter(&initExecutor, modelRes, "InitExecutor", suffix)) {
+        ModelKeeper* modelKeeper = actor->getModelKeeper();
+        if (modelKeeper && modelKeeper->getModelCtrl()->getModelObj()->GetNumShapes())
+            initExecutorModelUpdate(actor, initInfo);
+        return;
+    }
+
+    const char* updaterCategoryName = nullptr;
+    const char* drawerCategoryName = nullptr;
+
+    ByamlIter iter;
+    if (initExecutor.tryGetIterByKey(&iter, "Updater") && iter.isTypeArray()) {
+        ByamlIter entry;
+        s32 index = 0;
+        while (iter.tryGetIterByIndex(&entry, index)) {
+            entry.tryGetStringByKey(&updaterCategoryName, "CategoryName");
+            initExecutorUpdate(actor, initInfo, updaterCategoryName);
+            index++;
+        }
+    }
+
+    if (initExecutor.tryGetIterByKey(&iter, "Drawer")) {
+        ModelKeeper* modelKeeper = actor->getModelKeeper();
+        if (modelKeeper && modelKeeper->getModelCtrl()->getModelObj()->GetNumShapes())
+            initExecutorModelUpdate(actor, initInfo);
+
+        if (iter.isTypeArray()) {
+            ByamlIter entry;
+            s32 index = 0;
+            while (iter.tryGetIterByIndex(&entry, index)) {
+                entry.tryGetStringByKey(&drawerCategoryName, "CategoryName");
+                initExecutorDraw(actor, initInfo, drawerCategoryName);
+                index++;
+            }
+        }
+    }
+}
+
+__attribute__((always_inline)) void initActorSensor(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                    Resource* modelRes, const char* suffix) {
+    ByamlIter initSensor;
+    if (!tryGetActorInitFileIter(&initSensor, modelRes, "InitSensor", suffix))
+        return;
+
+    s32 numSensors = initSensor.getSize();
+    if (numSensors <= 0)
+        return;
+
+    actor->initHitSensor(numSensors);
+    for (s32 i = 0; i < numSensors; i++) {
+        ByamlIter sensor;
+        if (!initSensor.tryGetIterByIndex(&sensor, i))
+            continue;
+
+        const char* sensorName = nullptr;
+        if (!sensor.tryGetStringByKey(&sensorName, "Name"))
+            continue;
+
+        const char* sensorType = nullptr;
+        if (!sensor.tryGetStringByKey(&sensorType, "Type"))
+            continue;
+
+        f32 radius = 0.0f;
+        sensor.tryGetFloatByKey(&radius, "Radius");
+
+        s32 maxCount = 8;
+        sensor.tryGetIntByKey(&maxCount, "MaxCount");
+
+        sead::Vector3f offset = sead::Vector3f::zero;
+        tryGetByamlV3f(&offset, sensor);
+
+        u32 type = alSensorFunction::findSensorTypeByName(sensorType);
+        // CollisionParts
+        if (type == 15)
+            maxCount = 0;
+
+        addHitSensor(actor, initInfo, sensorName, type, radius, maxCount, offset);
+
+        const char* joint = nullptr;
+        sensor.tryGetStringByKey(&joint, "Joint");
+        if (joint)
+            setHitSensorJointMtx(actor, sensorName, joint);
+    }
+}
+
+__attribute__((always_inline)) void initActorCollision(LiveActor* actor,
+                                                       const ActorInitInfo& initInfo,
+                                                       Resource* modelRes, const char* suffix) {
+    ByamlIter initCollision;
+    if (!tryGetActorInitFileIter(&initCollision, modelRes, "InitCollision", suffix))
+        return;
+
+    const char* name = nullptr;
+    initCollision.tryGetStringByKey(&name, "Name");
+    sead::FixedSafeString<256> unused;
+
+    if (name == nullptr)
+        name = getBaseName(modelRes->getArchiveName());
+
+    const char* sensorName = nullptr;
+    HitSensor* sensor = nullptr;
+    if (initCollision.tryGetStringByKey(&sensorName, "Sensor"))
+        sensor = getHitSensor(actor, sensorName);
+
+    const char* joint = nullptr;
+    initCollision.tryGetStringByKey(&joint, "Joint");
+    sead::Matrix34f* jointMtx = nullptr;
+    if (joint != nullptr)
+        jointMtx = getJointMtxPtr(actor, joint);
+
+    initActorCollisionWithResource(actor, modelRes, name, sensor, jointMtx, suffix);
+}
+
+__attribute__((always_inline)) void initActorCollider(LiveActor* actor,
+                                                      const ActorInitInfo& initInfo,
+                                                      Resource* modelRes, const char* suffix) {
+    ByamlIter initCollider;
+    if (!tryGetActorInitFileIter(&initCollider, modelRes, "InitCollider", suffix))
+        return;
+
+    f32 radius = 0.0f;
+    initCollider.tryGetFloatByKey(&radius, "Radius");
+
+    u32 planeNum = 0;
+    initCollider.tryGetUIntByKey(&planeNum, "PlaneNum");
+
+    sead::Vector3f offset = sead::Vector3f::zero;
+    tryGetByamlV3f(&offset, initCollider);
+
+    actor->initCollider(radius, offset.y, planeNum);
+}
+
+__attribute__((always_inline)) void initActorEffect(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                    Resource* modelRes, const char* suffix) {
+    ByamlIter initEffect;
+    if (!tryGetActorInitFileIter(&initEffect, modelRes, "InitEffect", suffix))
+        return;
+
+    const char* name = nullptr;
+    if (!initEffect.tryGetStringByKey(&name, "Name"))
+        return;
+
+    initActorEffectKeeper(actor, initInfo, name);
+}
+
+__attribute__((always_inline)) void initActorSound(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                   Resource* modelRes, const char* suffix) {
+    ByamlIter initSound;
+    const char* seName = nullptr;
+    const char* bgmName = nullptr;
+    if (tryGetActorInitFileIter(&initSound, modelRes, "InitSound", suffix)) {
+        initSound.tryGetStringByKey(&seName, "Name");
+    } else if (tryGetActorInitFileIter(&initSound, modelRes, "InitAudio", suffix)) {
+        initSound.tryGetStringByKey(&seName, "SeUserName");
+        initSound.tryGetStringByKey(&bgmName, "BgmUserName");
+    } else
+        return;
+
+    if (seName != nullptr)
+        initActorSeKeeper(actor, initInfo, seName);
+    if (initSound.isExistKey("BgmUserName"))
+        initActorBgmKeeper(actor, initInfo, bgmName);
+}
+
+__attribute__((always_inline)) void initActorRail(LiveActor* actor, const ActorInitInfo& initInfo) {
+    if (isExistRail(initInfo, "Rail"))
+        actor->initRailKeeper(initInfo, "Rail");
+}
+
+__attribute__((always_inline)) void initActorGroupClipping(LiveActor* actor,
+                                                           const ActorInitInfo& initInfo,
+                                                           const ByamlIter& initClipping) {
+    if (initClipping.isExistKey("NoGroupClipping"))
+        return;
+
+    ByamlIter groupClipping;
+    if (!initClipping.tryGetIterByKey(&groupClipping, "GroupClipping"))
+        return;
+
+    initGroupClipping(actor, initInfo);
+}
+
+__attribute__((always_inline)) void initActorClipping(LiveActor* actor,
+                                                      const ActorInitInfo& initInfo,
+                                                      Resource* modelRes, const char* suffix) {
+    ByamlIter initClipping;
+    if (!tryGetActorInitFileIter(&initClipping, modelRes, "InitClipping", suffix))
+        return;
+    initActorClipping(actor, initInfo);
+
+    bool invalidate = false;
+    initClipping.tryGetBoolByKey(&invalidate, "Invalidate");
+    if (invalidate)
+        invalidateClipping(actor);
+
+    f32 radius = 0.0f;
+    if (initClipping.tryGetFloatByKey(&radius, "Radius")) {
+        setClippingInfo(actor, radius, nullptr);
+    } else if (actor->getModelKeeper()) {
+        const sead::Vector3f& scale = getScale(actor);
+        f32 maxXY = sead::Mathf::max(sead::Mathf::abs(scale.x), sead::Mathf::abs(scale.y));
+        f32 maxXYZ = sead::Mathf::max(maxXY, sead::Mathf::abs(scale.z));
+
+        f32 radius = calcModelBoundingSphereRadius(actor) * maxXYZ;
+        setClippingInfo(actor, radius, nullptr);
+    }
+
+    sead::BoundBox3f obb;
+    if (tryGetByamlBox3f(&obb, initClipping, "Obb"))
+        setClippingObb(actor, obb);
+
+    f32 nearClipDistance = 0.0f;
+    if (initClipping.tryGetFloatByKey(&nearClipDistance, "NearClipDistance"))
+        setClippingNearDistance(actor, nearClipDistance);
+
+    initActorGroupClipping(actor, initInfo, initClipping);
+}
+
+__attribute__((always_inline)) void initActorShadowMask(LiveActor* actor,
+                                                        const ActorInitInfo& initInfo,
+                                                        Resource* modelRes, const char* suffix) {
+    bool usingDepthShadow = false;
+    tryGetArg(&usingDepthShadow, initInfo, "UsingDepthShadow");
+    initDepthShadowMapCtrl(actor, modelRes, initInfo, suffix);
+
+    ByamlIter initShadowMask;
+    if (!tryGetActorInitFileIter(&initShadowMask, modelRes, "InitShadowMask", suffix))
+        return;
+
+    initShadowMaskCtrl(actor, initInfo, initShadowMask, "InitShadowMask");
+    if (usingDepthShadow)
+        invalidateShadowMaskIntensityAll(actor);
+}
+
+__attribute__((always_inline)) void initActorFlag(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                  Resource* modelRes, const char* suffix) {
+    ByamlIter initFlag;
+    if (!tryGetActorInitFileIter(&initFlag, modelRes, "InitFlag", suffix))
+        return;
+
+    ByamlIter tmp;
+    if (initFlag.tryGetIterByKey(&tmp, "MaterialCode"))
+        validateMaterialCode(actor);
+    if (initFlag.tryGetIterByKey(&tmp, "UpdatePuddleMaterial"))
+        validatePuddleMaterial(actor);
+}
+
+__attribute__((always_inline)) void initActorItem(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                  Resource* modelRes, const char* suffix) {
+    ByamlIter initItem;
+    if (!tryGetActorInitFileIter(&initItem, modelRes, "InitItem", suffix))
+        return;
+
+    initActorItemKeeper(actor, initInfo, initItem);
+}
+
+__attribute__((always_inline)) void initActorScore(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                   Resource* modelRes, const char* suffix) {
+    ByamlIter initScore;
+    if (!tryGetActorInitFileIter(&initScore, modelRes, "InitScore", suffix))
+        return;
+
+    actor->initScoreKeeper();
+    actor->getActorScoreKeeper()->init(initScore);
+}
+
+__attribute__((always_inline)) void initActorAction(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                    Resource* modelRes,
+                                                    ActorResource* actorResource,
+                                                    const char* suffix) {
+    const char* archiveName = actorResource->getModelRes()->getArchiveName();
+    initActorActionKeeper(actor, actorResource, archiveName, suffix);
+
+    if (!actor->getModelKeeper())
+        return;
+
+    if (!tryStartAction(actor, archiveName)) {
+        ActorActionKeeper* actionKeeper = actor->getActorActionKeeper();
+        if (actionKeeper)
+            actionKeeper->startAction(archiveName);
+    }
+
+    ModelKeeper* modelKeeper = actor->getModelKeeper();
+    if (!modelKeeper)
+        return;
+
+    DitherAnimator* ditherAnimator = ActorDitherAnimator::tryCreate(actor, modelRes, suffix);
+    if (ditherAnimator) {
+        modelKeeper->setDitherAnimator(ditherAnimator);
+        return;
+    }
+
+    ditherAnimator = FarDistanceDitherAnimator::tryCreate(actor, modelRes, suffix);
+    if (ditherAnimator)
+        modelKeeper->setDitherAnimator(ditherAnimator);
+}
+
 void initActorImpl(LiveActor* actor, const ActorInitInfo& initInfo,
                    const sead::SafeString& folderName, const sead::SafeString& fileName,
-                   const char* unk) {
+                   const char* suffix) {
     al::StringTmp<256> path = {"%s/%s", folderName.cstr(), fileName.cstr()};
     ActorResource* actorResource =
-        al::findOrCreateActorResource(initInfo.getActorResourceHolder(), path.cstr(), unk);
+        al::findOrCreateActorResource(initInfo.getActorResourceHolder(), path.cstr(), suffix);
     Resource* modelRes = actorResource->getModelRes();
     if (actor->getSceneInfo() == nullptr)
         initActorSceneInfo(actor, initInfo);
 
-    {
-        ByamlIter initPose;
-        if (tryGetActorInitFileIter(&initPose, modelRes, "InitPose", unk)) {
-            const char* pose = nullptr;
-            if (initPose.tryGetStringByKey(&pose, "Pose")) {
-                if (test(pose, actor)) {
-                    if (isEqualString(pose, "TFUSV") &&
-                        tryGetByamlKeyBoolOrFalse(initPose, "IsFrontUp"))
-                        ((ActorPoseKeeperTFUSV*)actor->getPoseKeeper())->setFrontUp(true);
-                }
-            }
-        }
+    initActorPose(actor, initInfo, modelRes, suffix);
+    initActorSRT(actor, initInfo);
+    initActorScale(actor, initInfo, modelRes, suffix);
+    initActorModel(actor, initInfo, actorResource->getModelRes(), actorResource, suffix);
+    initActorPrePassLightKeeper(actor, modelRes, initInfo, suffix);
+    initActorExecutor(actor, initInfo, modelRes, suffix);
+    initActorSensor(actor, initInfo, modelRes, suffix);
+    initActorCollision(actor, initInfo, modelRes, suffix);
+    initActorCollider(actor, initInfo, modelRes, suffix);
+    initActorEffect(actor, initInfo, modelRes, suffix);
+    initActorSound(actor, initInfo, modelRes, suffix);
+    initActorRail(actor, initInfo);
+    initStageSwitch(actor, initInfo);
+    initActorClipping(actor, initInfo, modelRes, suffix);
+    initActorOcclusionKeeper(actor, modelRes, initInfo, suffix);
+    initActorShadowMask(actor, initInfo, modelRes, suffix);
+    initActorFlag(actor, initInfo, modelRes, suffix);
+    initActorItem(actor, initInfo, modelRes, suffix);
+    initActorScore(actor, initInfo, modelRes, suffix);
+    initScreenPointKeeper(actor, modelRes, initInfo, suffix);
+    initHitReactionKeeper(actor, modelRes, suffix);
+    initActorParamHolder(actor, modelRes, suffix);
+    initActorAction(actor, initInfo, modelRes, actorResource, suffix);
 
-        initActorSRT(actor, initInfo);
-    }
-    {
-        ByamlIter initScale;
-        if (tryGetActorInitFileIter(&initScale, modelRes, "InitScale", unk)) {
-            sead::Vector3f scale = {1.0f, 1.0f, 1.0f};
-            if (tryGetByamlScale(&scale, initScale, "Scale")) {
-                const sead::Vector3f& prevScale = getScale(actor);
-                sead::Vector3f newScale;
-                newScale.x = scale.x * prevScale.x;
-                newScale.y = scale.y * prevScale.y;
-                newScale.z = scale.z * prevScale.z;
-                setScale(actor, newScale);
-            }
-        }
-    }
-    {
-        Resource* modelRes = actorResource->getModelRes();
-        ByamlIter initModel;
-        if (tryGetActorInitFileIter(&initModel, modelRes, "InitModel", unk)) {
-            s32 blendAnimMax = 1;
-            initModel.tryGetIntByKey(&blendAnimMax, "BlendAnimMax");
-            const char* displayRootJointName = nullptr;
-            initModel.tryGetStringByKey(&displayRootJointName, "DisplayRootJointName");
+    if (actor->getNerveKeeper() && actor->getNerveKeeper()->getActionCtrl())
+        resetNerveActionForInit(actor);
 
-            initActorModelKeeper(actor, initInfo, actorResource, blendAnimMax);
-            if (displayRootJointName != nullptr)
-                actor->getModelKeeper()->setDisplayRootJointMtxPtr(
-                    getJointMtxPtr(actor, displayRootJointName));
+    if (!actor->getSubActorKeeper())
+        initSubActorKeeper(actor, initInfo, suffix, 0);
+}
 
-            bool isCreateUniqShader = false;
-            initModel.tryGetBoolByKey(&isCreateUniqShader, "IsCreateUniqShader");
-            if (isCreateUniqShader)
-                createUniqueShader(actor);
+void initActorSuffix(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix) {
+    const char* objName = nullptr;
+    tryGetObjectName(&objName, initInfo);
+    initActorImpl(actor, initInfo, "ObjectData", objName, suffix);
+}
 
-            s32 partialAnimSlotNum = 0;
-            initModel.tryGetIntByKey(&partialAnimSlotNum, "PartialAnimSlotNum");
-            s32 partialAnimGroupNum = partialAnimSlotNum;
-            initModel.tryGetIntByKey(&partialAnimGroupNum, "PartialAnimGroupNum");
-            s32 partialAnimPartsListBufferSize = 16;
-            initModel.tryGetIntByKey(&partialAnimPartsListBufferSize,
-                                     "PartialAnimPartsListBufferSize");
-            if (partialAnimSlotNum >= 1)
-                initPartialSklAnim(actor, partialAnimSlotNum, partialAnimGroupNum,
-                                   partialAnimPartsListBufferSize);
+void initActorChangeModel(LiveActor* actor, const ActorInitInfo& initInfo) {
+    initActorChangeModelSuffix(actor, initInfo, nullptr);
+}
 
-            bool isFixedModel = false;
-            initModel.tryGetBoolByKey(&isFixedModel, "IsFixedModel");
-            if (isFixedModel)
-                setFixedModelFlag(actor);
+const char* getModelName(const ActorInitInfo& initInfo) {
+    const char* name = nullptr;
+    if (alPlacementFunction::tryGetModelName(&name, initInfo))
+        return name;
+    else if (tryGetObjectName(&name, initInfo))
+        return name;
+    return nullptr;
+}
 
-            bool isIgnoreUpdateOnDrawClipping = false;
-            initModel.tryGetBoolByKey(&isIgnoreUpdateOnDrawClipping,
-                                      "IsIgnoreUpdateOnDrawClipping");
-            if (isIgnoreUpdateOnDrawClipping)
-                setIgnoreUpdateDrawClipping(actor, true);
+void initActorChangeModelSuffix(LiveActor* actor, const ActorInitInfo& initInfo,
+                                const char* suffix) {
+    const char* file = getModelName(initInfo);
+    initActorImpl(actor, initInfo, "ObjectData", file, suffix);
+}
 
-            ModelKeeper* modelKeeper = actor->getModelKeeper();
+void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& initInfo,
+                              const sead::SafeString& archiveName, const char* suffix) {
+    initChildActorWithArchiveNameWithPlacementInfo(actor, initInfo, archiveName, suffix);
+}
 
-            ByamlIter initLod;
-            ModelLodCtrl* modelLodCtrl = nullptr;
-            if (tryGetActorInitFileIter(&initLod, modelRes, "InitLod", unk)) {
-                sead::BoundBox3f modelBoundingBox;
-                s32 lodModelCount = 5;
-                if (isExistModel(actor)) {
-                    lodModelCount = getLodModelCount(actor);
-                    calcModelBoundingBox(&modelBoundingBox, actor);
-                }
+void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                    const sead::SafeString& archiveName,
+                                                    const char* suffix) {
+    initActorImpl(actor, initInfo, "ObjectData", archiveName.cstr(), suffix);
+}
 
-                modelLodCtrl = new ModelLodCtrl{actor,
-                                                getTransPtr(actor),
-                                                actor->getBaseMtx(),
-                                                getScalePtr(actor),
-                                                modelBoundingBox,
-                                                lodModelCount};
-                modelLodCtrl->init(initLod);
-            }
+void initChildActorWithArchiveNameNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
+                                                  const sead::SafeString& archiveName,
+                                                  const char* suffix) {
+    PlacementInfo placementInfo;
+    ActorInitInfo childInitInfo;
+    childInitInfo.initViewIdHost(&placementInfo, initInfo);
+    initActorImpl(actor, childInitInfo, "ObjectData", archiveName.cstr(), suffix);
+}
 
-            modelKeeper->setModelLodCtrl(modelLodCtrl);
-            if (modelLodCtrl)
-                initInfo.getActorSceneInfo().mGraphicsSystemInfo->mModelLodAllCtrl->registerLodCtrl(
-                    modelLodCtrl);
+LiveActor* createChildLinkSimpleActor(const char* actorName, const char* linkName,
+                                      const ActorInitInfo& initInfo, bool alive) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, 0);
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
 
-            ModelMaterialCategory::tryCreate(
-                modelKeeper->getModelCtrl(), modelRes, unk,
-                initInfo.getActorSceneInfo().mGraphicsSystemInfo->mMaterialCategoryKeeper);
-            modelKeeper->getModelCtrl()->setGraphicsQualityInfo(
-                initInfo.getActorSceneInfo()
-                    .mGraphicsSystemInfo->mGraphicsQualityController->getGraphicsQualityInfo());
-            ModelOcclusionQuery* modelOcclusionQuery =
-                ModelOcclusionQuery::tryCreate(actor, modelRes, unk);
-            modelKeeper->getModelCtrl()->setModelOcclusionQuery(modelOcclusionQuery);
+    LiveActor* actor = new LiveActor(actorName);
+    initActor(actor, childInitInfo);
 
-            bool isCalcViewCore1 = false;
-            initModel.tryGetBoolByKey(&isCalcViewCore1, "IsCalcViewCore1");
-            if (isCalcViewCore1)
-                modelKeeper->getModelCtrl()->setCalcViewCore(1);
+    if (alive)
+        actor->makeActorAlive();
+    else
+        actor->makeActorDead();
+    return actor;
+}
 
-            bool isCalcViewCore2 = false;
-            initModel.tryGetBoolByKey(&isCalcViewCore2, "IsCalcViewCore2");
-            if (isCalcViewCore2)
-                modelKeeper->getModelCtrl()->setCalcViewCore(2);
-        }
+LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* linkName,
+                                        const ActorInitInfo& initInfo, s32 linkIndex, bool alive) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, linkIndex);
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
 
-        initActorPrePassLightKeeper(actor, modelRes, initInfo, unk);
-    }
-    {
-        ByamlIter initExecutor;
-        if (tryGetActorInitFileIter(&initExecutor, modelRes, "InitExecutor", unk)) {
-            const char* updaterCategoryName = nullptr;
-            const char* drawerCategoryName = nullptr;
+    LiveActor* actor = new LiveActor(actorName);
+    initMapPartsActor(actor, childInitInfo, nullptr);
 
-            ByamlIter iter;
-            if (initExecutor.tryGetIterByKey(&iter, "Updater") && iter.isTypeArray()) {
-                ByamlIter entry;
-                s32 index = 0;
-                while (iter.tryGetIterByIndex(&entry, index)) {
-                    entry.tryGetStringByKey(&updaterCategoryName, "CategoryName");
-                    initExecutorUpdate(actor, initInfo, updaterCategoryName);
-                    index++;
-                }
-            }
-
-            if (initExecutor.tryGetIterByKey(&iter, "Drawer")) {
-                ModelKeeper* modelKeeper = actor->getModelKeeper();
-                if (modelKeeper && modelKeeper->getModelCtrl()->getModelObj()->GetNumShapes())
-                    initExecutorModelUpdate(actor, initInfo);
-
-                if (iter.isTypeArray()) {
-                    ByamlIter entry;
-                    s32 index = 0;
-                    while (iter.tryGetIterByIndex(&entry, index)) {
-                        entry.tryGetStringByKey(&drawerCategoryName, "CategoryName");
-                        initExecutorDraw(actor, initInfo, drawerCategoryName);
-                        index++;
-                    }
-                }
-            }
-        } else {
-            ModelKeeper* modelKeeper = actor->getModelKeeper();
-            if (modelKeeper && modelKeeper->getModelCtrl()->getModelObj()->GetNumShapes())
-                initExecutorModelUpdate(actor, initInfo);
-        }
-    }
-    {
-        ByamlIter initSensor;
-        if (tryGetActorInitFileIter(&initSensor, modelRes, "InitSensor", unk)) {
-            s32 numSensors = initSensor.getSize();
-            if (numSensors >= 1)
-                actor->initHitSensor(numSensors);
-            for (s32 i = 0; i < numSensors; i++) {
-                ByamlIter sensor;
-                if (!initSensor.tryGetIterByIndex(&sensor, i))
-                    continue;
-
-                const char* sensorName = nullptr;
-                if (!sensor.tryGetStringByKey(&sensorName, "Name"))
-                    continue;
-
-                const char* sensorType = nullptr;
-                if (!sensor.tryGetStringByKey(&sensorType, "Type"))
-                    continue;
-
-                f32 radius = 0.0f;
-                sensor.tryGetFloatByKey(&radius, "Radius");
-
-                s32 maxCount = 8;
-                sensor.tryGetIntByKey(&maxCount, "MaxCount");
-
-                sead::Vector3f offset = sead::Vector3f::zero;
-                tryGetByamlV3f(&offset, sensor);
-
-                u32 type = alSensorFunction::findSensorTypeByName(sensorType);
-                // CollisionParts
-                if (type == 15)
-                    maxCount = 0;
-
-                addHitSensor(actor, initInfo, sensorName, type, radius, maxCount, offset);
-
-                const char* joint = nullptr;
-                if (sensor.tryGetStringByKey(&joint, "Joint"))
-                    setHitSensorJointMtx(actor, sensorName, joint);
-            }
-        }
-    }
-    {
-        ByamlIter initCollision;
-        if (tryGetActorInitFileIter(&initCollision, modelRes, "InitCollision", unk)) {
-            const char* name = nullptr;
-            initCollision.tryGetStringByKey(&name, "Name");
-            sead::FixedSafeString<256> unused;
-
-            if (name == nullptr)
-                name = getBaseName(modelRes->getArchiveName());
-
-            const char* sensorName = nullptr;
-            HitSensor* sensor = nullptr;
-            if (initCollision.tryGetStringByKey(&sensorName, "Sensor"))
-                sensor = getHitSensor(actor, sensorName);
-
-            const char* joint = nullptr;
-            initCollision.tryGetStringByKey(&joint, "Joint");
-            sead::Matrix34f* jointMtx = nullptr;
-            if (joint != nullptr)
-                jointMtx = getJointMtxPtr(actor, joint);
-
-            initActorCollisionWithResource(actor, modelRes, name, sensor, jointMtx, unk);
-        }
-    }
-    {
-        ByamlIter initCollider;
-        if (tryGetActorInitFileIter(&initCollider, modelRes, "InitCollider", unk)) {
-            f32 radius = 0.0f;
-            initCollider.tryGetFloatByKey(&radius, "Radius");
-
-            u32 planeNum = 0;
-            initCollider.tryGetUIntByKey(&planeNum, "PlaneNum");
-
-            sead::Vector3f offset = sead::Vector3f::zero;
-            tryGetByamlV3f(&offset, initCollider);
-
-            actor->initCollider(radius, offset.y, planeNum);
-        }
-    }
-    {
-        ByamlIter initEffect;
-        if (tryGetActorInitFileIter(&initEffect, modelRes, "InitEffect", unk)) {
-            const char* name = nullptr;
-            if (initEffect.tryGetStringByKey(&name, "Name"))
-                initActorEffectKeeper(actor, initInfo, name);
-        }
-    }
-    {
-        ByamlIter initSound;
-        const char* seName = nullptr;
-        const char* bgmName = nullptr;
-        if (tryGetActorInitFileIter(&initSound, modelRes, "InitSound", unk)) {
-            initSound.tryGetStringByKey(&seName, "Name");
-        } else if (tryGetActorInitFileIter(&initSound, modelRes, "InitAudio", unk)) {
-            initSound.tryGetStringByKey(&seName, "SeUserName");
-            initSound.tryGetStringByKey(&bgmName, "BgmUserName");
-        }
-        if (seName != nullptr)
-            initActorSeKeeper(actor, initInfo, seName);
-        if (initSound.isExistKey("BgmUserName"))
-            initActorBgmKeeper(actor, initInfo, bgmName);
-    }
-    {
-        if (isExistRail(initInfo, "Rail"))
-            actor->initRailKeeper(initInfo, "Rail");
-
-        initStageSwitch(actor, initInfo);
-    }
-    {
-        ByamlIter initClipping;
-        if (tryGetActorInitFileIter(&initClipping, modelRes, "InitClipping", unk)) {
-            initActorClipping(actor, initInfo);
-
-            bool invalidate = false;
-            initClipping.tryGetBoolByKey(&invalidate, "Invalidate");
-            if (invalidate)
-                invalidateClipping(actor);
-
-            f32 radius = 0.0f;
-            if (initClipping.tryGetFloatByKey(&radius, "Radius")) {
-                setClippingInfo(actor, radius, nullptr);
-            } else if (actor->getModelKeeper()) {
-                const sead::Vector3f& scale = getScale(actor);
-                f32 maxXY = sead::Mathf::max(sead::Mathf::abs(scale.x), sead::Mathf::abs(scale.y));
-                f32 maxXYZ = sead::Mathf::max(maxXY, sead::Mathf::abs(scale.z));
-
-                f32 radius = calcModelBoundingSphereRadius(actor) * maxXYZ;
-                setClippingInfo(actor, radius, nullptr);
-            }
-
-            sead::BoundBox3f obb;
-            if (tryGetByamlBox3f(&obb, initClipping, "Obb"))
-                setClippingObb(actor, obb);
-
-            f32 nearClipDistance = 0.0f;
-            if (initClipping.tryGetFloatByKey(&nearClipDistance, "NearClipDistance"))
-                setClippingNearDistance(actor, nearClipDistance);
-
-            if (!initClipping.isExistKey("NoGroupClipping")) {
-                ByamlIter groupClipping;
-                if (initClipping.tryGetIterByKey(&groupClipping, "GroupClipping"))
-                    initGroupClipping(actor, initInfo);
-            }
-        }
-
-        initActorOcclusionKeeper(actor, modelRes, initInfo, unk);
-    }
-    {
-        bool usingDepthShadow = false;
-        tryGetArg(&usingDepthShadow, initInfo, "UsingDepthShadow");
-        initDepthShadowMapCtrl(actor, modelRes, initInfo, unk);
-
-        ByamlIter initShadowMask;
-        if (tryGetActorInitFileIter(&initShadowMask, modelRes, "InitShadowMask", unk)) {
-            initShadowMaskCtrl(actor, initInfo, initShadowMask, "InitShadowMask");
-            if (usingDepthShadow)
-                invalidateShadowMaskIntensityAll(actor);
-        }
-    }
-    {
-        ByamlIter initFlag;
-        if (tryGetActorInitFileIter(&initFlag, modelRes, "InitFlag", unk)) {
-            ByamlIter tmp;
-            if (initFlag.tryGetIterByKey(&tmp, "MaterialCode"))
-                validateMaterialCode(actor);
-            if (initFlag.tryGetIterByKey(&tmp, "UpdatePuddleMaterial"))
-                validatePuddleMaterial(actor);
-        }
-    }
-    {
-        ByamlIter initItem;
-        if (tryGetActorInitFileIter(&initItem, modelRes, "InitItem", unk))
-            initActorItemKeeper(actor, initInfo, initItem);
-    }
-    {
-        ByamlIter initScore;
-        if (tryGetActorInitFileIter(&initScore, modelRes, "InitScore", unk)) {
-            actor->initScoreKeeper();
-            actor->getActorScoreKeeper()->init(initScore);
-        }
-        
-        initScreenPointKeeper(actor, modelRes, initInfo, unk);
-        initHitReactionKeeper(actor, modelRes, unk);
-        initActorParamHolder(actor, modelRes, unk);
-        const char* archiveName = modelRes->getArchiveName();
-        initActorActionKeeper(actor, actorResource, archiveName, unk);
-
-        if (actor->getModelKeeper()) {
-            if (!tryStartAction(actor, archiveName)) {
-                ActorActionKeeper* actionKeeper = actor->getActorActionKeeper();
-                if (actionKeeper)
-                    actionKeeper->startAction(archiveName);
-            }
-
-            ModelKeeper* modelKeeper = actor->getModelKeeper();
-            if (modelKeeper) {
-                DitherAnimator* ditherAnimator =
-                    ActorDitherAnimator::tryCreate(actor, modelRes, unk);
-                if (!ditherAnimator)
-                    ditherAnimator = FarDistanceDitherAnimator::tryCreate(actor, modelRes, unk);
-
-                if (ditherAnimator)
-                    modelKeeper->setDitherAnimator(ditherAnimator);
-            }
-        }
-
-        if (actor->getNerveKeeper() && actor->getNerveKeeper()->getActionCtrl())
-            resetNerveActionForInit(actor);
-
-        if (!actor->getSubActorKeeper())
-            initSubActorKeeper(actor, initInfo, unk, 0);
-    }
+    if (alive)
+        actor->makeActorAlive();
+    else
+        actor->makeActorDead();
+    return actor;
 }
 
 /*
-void initActorSuffix(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
-void initActorChangeModel(LiveActor* actor, const ActorInitInfo& initInfo);
-void initActorChangeModelSuffix(LiveActor* actor, const ActorInitInfo& initInfo,
-                                const char* suffix);
-void initActorWithArchiveName(LiveActor* actor, const ActorInitInfo& initInfo,
-                              const sead::SafeString& archiveName, const char* suffix);
-void initChildActorWithArchiveNameWithPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
-                                                    const sead::SafeString& archiveName,
-                                                    const char* suffix);
-void initChildActorWithArchiveNameNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
-                                                  const sead::SafeString& archiveName,
-                                                  const char* suffix);
-LiveActor* createChildLinkSimpleActor(const char* actorName, const char* archiveName,
-                                      const ActorInitInfo& initInfo, bool alive);
-LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* archiveName,
-                                        const ActorInitInfo& initInfo, s32 linkIndex, bool alive);
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
 void initLinksActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix,
                     s32 linkIndex);
