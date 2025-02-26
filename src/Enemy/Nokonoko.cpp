@@ -78,45 +78,45 @@ void Nokonoko::init(const al::ActorInitInfo& info) {
 
 void Nokonoko::control() {}
 
-void Nokonoko::attackSensor(al::HitSensor* other, al::HitSensor* self) {
+void Nokonoko::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvNokonoko.Wait)) {
-        if (al::isSensorName(other, "Attack")) {
-            al::sendMsgEnemyAttack(self, other);
+        if (al::isSensorName(self, "Attack")) {
+            al::sendMsgEnemyAttack(other, self);
             return;
         }
-    } else if (al::isNerve(this, &NrvNokonoko.Swoon) && al::isSensorEnemyBody(other)) {
-        al::sendMsgPushAndKillVelocityToTarget(this, other, self);
+    } else if (al::isNerve(this, &NrvNokonoko.Swoon) && al::isSensorEnemyBody(self)) {
+        al::sendMsgPushAndKillVelocityToTarget(this, self, other);
     }
 
     if (!mHackActor)
         return;
 
-    if (al::isSensorEnemyBody(other)) {
-        if (rs::sendMsgHackerNoReaction(mHackActor, self, other))
+    if (al::isSensorEnemyBody(self)) {
+        if (rs::sendMsgHackerNoReaction(mHackActor, other, self))
             return;
-        if (rs::sendMsgHackAttackMapObj(self, other))
+        if (rs::sendMsgHackAttackMapObj(other, self))
             return;
     }
 
     if (al::isNerve(this, &NrvNokonoko.CaptureSpin) ||
         al::isNerve(this, &NrvNokonoko.CaptureSpinCapRethrow)) {
-        rs::sendMsgCapItemGet(self, other);
+        rs::sendMsgCapItemGet(other, self);
 
-        if (al::isSensorName(other, "AttackSpin")) {
-            if (al::isSensorEnemyBody(self)) {
-                if (rs::sendMsgHackAttack(self, other))
+        if (al::isSensorName(self, "AttackSpin")) {
+            if (al::isSensorEnemyBody(other)) {
+                if (rs::sendMsgHackAttack(other, self))
                     return;
                 if (al::getVelocity(this).y < -1.0f &&
-                    al::sendMsgPlayerAttackTrample(self, other, nullptr))
+                    al::sendMsgPlayerAttackTrample(other, self, nullptr))
                     return;
             }
-            if (al::isSensorMapObj(self))
-                rs::sendMsgHackUpperPunch(self, other);
+            if (al::isSensorMapObj(other))
+                rs::sendMsgHackUpperPunch(other, self);
         }
     }
 }
 
-bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al::HitSensor* other) {
+bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
     if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(message, mCapTargetInfo))
         return true;
 
@@ -132,7 +132,7 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
     if (al::isNerve(this, &NrvNokonoko.Wait)) {
         if (rs::isMsgHackAttack(message) || al::isMsgPlayerTrample(message) ||
             rs::isMsgPlayerAndCapObjHipDropAll(message)) {
-            rs::requestHitReactionToAttacker(message, other, self);
+            rs::requestHitReactionToAttacker(message, self, other);
             al::setNerve(this, &NrvNokonoko.Swoon);
             return true;
         }
@@ -141,7 +141,7 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
 
         if (rs::isMsgStartHack(message)) {
             al::invalidateClipping(this);
-            mHackActor = rs::startHack(other, self, nullptr);
+            mHackActor = rs::startHack(self, other, nullptr);
             rs::startHackStartDemo(mHackActor, this);
             al::setNerve(this, &NrvNokonoko.CaptureStart);
             return true;
@@ -157,7 +157,7 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
             return true;
         if (mStateSwoon->tryReceiveMsgStartHack(message)) {
             al::invalidateClipping(this);
-            mHackActor = rs::startHack(other, self, nullptr);
+            mHackActor = rs::startHack(self, other, nullptr);
             rs::startHackStartDemo(mHackActor, this);
             al::setNerve(this, &NrvNokonoko.CaptureStart);
             return true;
@@ -196,7 +196,7 @@ bool Nokonoko::receiveMsg(const al::SensorMsg* message, al::HitSensor* self, al:
 
         if (rs::isMsgCancelHack(message) ||
             ((al::isMsgEnemyAttack(message) || al::isMsgExplosion(message)) &&
-             al::isSensorEnemyBody(other))) {
+             al::isSensorEnemyBody(self))) {
             endCapture();
             al::setNerve(this, &NrvNokonoko.CaptureEnd);
             return true;
