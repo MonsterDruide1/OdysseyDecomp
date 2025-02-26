@@ -10,6 +10,7 @@ class PlacementInfo;
 void setSyncRailToNearestPos(LiveActor* actor);
 void setSyncRailToCoord(LiveActor* actor, f32 coord);
 void setRailPosToStart(IUseRail* railHolder);
+void calcRailMoveDir(sead::Vector3f* out, const IUseRail* railHolder);
 void moveSyncRail(LiveActor* actor, f32 speed);
 void moveSyncRailLoop(LiveActor* actor, f32 speed);
 void moveSyncRailTurn(LiveActor* actor, f32 speed);
@@ -25,4 +26,5 @@ void calcRailPointPos(sead::Vector3f* out, const IUseRail* railHolder, s32 index
 s32 getRailPointNum(const IUseRail* railHolder);
 bool isRailPlusDir(const IUseRail* railHolder, const sead::Vector3f& dir);
 f32 getRailTotalLength(const IUseRail* railHolder);
+bool turnToRailDir(LiveActor* actor, f32 speed);
 }  // namespace al
