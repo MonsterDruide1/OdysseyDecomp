@@ -50,6 +50,8 @@ static_assert(sizeof(StageSwitchDirector) == 0x20);
 bool tryOnStageSwitch(IUseStageSwitch*, const char*);
 bool tryOffStageSwitch(IUseStageSwitch*, const char*);
 bool tryOnSwitchDeadOn(IUseStageSwitch* stageSwitch);
+bool listenStageSwitchOff(al::IUseStageSwitch* stageSwitchHolder, const char* eventName,
+                          const FunctorBase& actionOnOff);
 bool listenStageSwitchOn(IUseStageSwitch* stageSwitchHolder, const char* eventName,
                          const FunctorBase& actionOnOn);
 bool listenStageSwitchOnAppear(IUseStageSwitch* stageSwitchHolder,
