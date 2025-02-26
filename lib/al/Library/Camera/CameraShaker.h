@@ -11,11 +11,11 @@ public:
     enum class ShakeDirection : s32 { Both, Vertical };
 
     struct ShakeInfo {
-        const char* mName = nullptr;
-        s32 mSteps = 0;
-        f32 mSpeed = 0.0f;
-        f32 mStrength = 0.0f;
-        ShakeDirection mDirection = ShakeDirection::Both;
+        const char* name = nullptr;
+        s32 steps = 0;
+        f32 speed = 0.0f;
+        f32 strength = 0.0f;
+        ShakeDirection direction = ShakeDirection::Both;
 
         bool operator>(const ShakeInfo& other) const {
             if (mStrength < other.mStrength)

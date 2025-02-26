@@ -13,16 +13,15 @@ struct EnemyStateSwoonInitParam {
     EnemyStateSwoonInitParam(const char* startName, const char* defaultName, const char* endName,
                              const char* trampledName, const char* startFallName,
                              const char* startLandName)
-        : mStartName(startName), mDefaultName(defaultName), mEndName(endName),
-          mTrampledName(trampledName), mStartFallName(startFallName),
-          mStartLandName(startLandName) {}
+        : startName(startName), defaultName(defaultName), endName(endName),
+          trampledName(trampledName), startFallName(startFallName), startLandName(startLandName) {}
 
-    const char* mStartName = "SwoonStart";
-    const char* mDefaultName = "Swoon";
-    const char* mEndName = "SwoonEnd";
-    const char* mTrampledName = "SwoonTrampled";
-    const char* mStartFallName = "SwoonStartFall";
-    const char* mStartLandName = "SwoonStartLand";
+    const char* startName = "SwoonStart";
+    const char* defaultName = "Swoon";
+    const char* endName = "SwoonEnd";
+    const char* trampledName = "SwoonTrampled";
+    const char* startFallName = "SwoonStartFall";
+    const char* startLandName = "SwoonStartLand";
     const char* _30 = nullptr;
     const char* _38 = nullptr;
     const char* _40 = nullptr;

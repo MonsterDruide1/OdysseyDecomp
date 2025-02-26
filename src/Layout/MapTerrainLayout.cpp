@@ -15,7 +15,7 @@ bool MapTerrainLayout::tryChangePrintWorld(s32 worldId) {
     if (!mMapData)
         return false;
 
-    al::setPaneTexture(this, "PicMap00", mMapData->mTexture2dMap);
+    al::setPaneTexture(this, "PicMap00", mMapData->texture2dMap);
     al::setPaneLocalScale(this, "PicMap00", sead::Vector2f(256.0f, 256.0f));
 
     return true;

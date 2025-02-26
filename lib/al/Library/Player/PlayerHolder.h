@@ -22,8 +22,8 @@ public:
 
 private:
     struct Player {
-        LiveActor* mActor = nullptr;
-        PadRumbleKeeper* mPadRumbleKeeper = nullptr;
+        LiveActor* actor = nullptr;
+        PadRumbleKeeper* padRumbleKeeper = nullptr;
     };
 
     Player* mPlayers = nullptr;
