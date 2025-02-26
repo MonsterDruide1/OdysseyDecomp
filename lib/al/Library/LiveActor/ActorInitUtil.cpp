@@ -14,6 +14,7 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorFactory.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
@@ -23,6 +24,7 @@
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Model/ModelKeeper.h"
 #include "Library/Model/ModelLodCtrl.h"
 #include "Library/Model/ModelOcclusionQuery.h"
@@ -624,25 +626,187 @@ LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* linkN
     return actor;
 }
 
-/*
-void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);
+void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix) {
+    const char* modelName;
+    sead::FixedSafeString<256> fileName;
+    sead::FixedSafeString<256> folderName;
+
+    const PlacementInfo& placementInfo = initInfo.getPlacementInfo();
+    modelName = nullptr;
+    if (alPlacementFunction::tryGetModelName(&modelName, placementInfo) &&
+        !isEqualString(modelName, "")) {
+        fileName = modelName;
+        folderName = "ObjectData";
+    } else {
+        tryGetStringArg(&modelName, placementInfo, "UnitConfigName");
+        fileName = modelName;
+        folderName = "ObjectData";
+    }
+
+    initActorImpl(actor, initInfo, folderName, fileName, suffix);
+}
+
 void initLinksActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix,
-                    s32 linkIndex);
-ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo);
-const char* getLinksActorClassName(const ActorInitInfo&, const char*, s32);
-const char* getLinksActorDisplayName(const ActorInitInfo&, const char*, s32);
-const char* getLinksActorObjectName(const ActorInitInfo&, const char*, s32);
-void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&);
-void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const PlacementInfo&);
-void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
-void initCreateActorNoPlacementInfoNoViewId(LiveActor*, const ActorInitInfo&);
-LiveActor* createPlacementActorFromFactory(const ActorInitInfo&, const PlacementInfo*);
-LiveActor* createLinksActorFromFactory(const ActorInitInfo& info, const char* linkName,
-                                       s32 linkNum);
-LiveActorGroup* createLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-LiveActorGroup* tryCreateLinksActorGroupFromFactory(const ActorInitInfo&, const char*, const char*);
-LiveActorGroup* tryCreateLinksActorFromFactorySingle(const ActorInitInfo&, const char*);
-void createAndRegisterLinksActorFromFactory(LiveActorGroup*, const ActorInitInfo&, const char*);
+                    s32 linkIndex) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), suffix, linkIndex);
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    actor->init(childInitInfo);
+}
+
+ActorInitInfo* createLinksPlayerActorInfo(LiveActor* actor, const ActorInitInfo& initInfo) {
+    s32 startPosNum = calcLinkChildNum(initInfo, "PlayerRestartPos");
+    ActorInitInfo* result = new ActorInitInfo();
+    if (startPosNum == 1) {
+        PlacementInfo* placementInfo = new PlacementInfo();
+        getLinksInfoByIndex(placementInfo, initInfo.getPlacementInfo(), "PlayerRestartPos", 0);
+        result->initViewIdSelf(placementInfo, initInfo);
+    }
+    return result;
+}
+
+const char* getLinksActorClassName(const ActorInitInfo& initInfo, const char* linkName,
+                                   s32 linkIndex) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+
+    const char* className = nullptr;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, linkIndex);
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    getClassName(&className, childInitInfo);
+    return className;
+}
+
+const char* getLinksActorDisplayName(const ActorInitInfo& initInfo, const char* linkName,
+                                     s32 linkIndex) {
+    PlacementInfo placementInfo;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, linkIndex);
+    const char* displayName = nullptr;
+    getDisplayName(&displayName, placementInfo);
+    return displayName;
+}
+
+const char* getLinksActorObjectName(const ActorInitInfo& initInfo, const char* linkName,
+                                    s32 linkIndex) {
+    PlacementInfo placementInfo;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, linkIndex);
+    const char* objectName = nullptr;
+    getObjectName(&objectName, placementInfo);
+    return objectName;
+}
+
+void initCreateActorWithPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo) {
+    actor->init(initInfo);
+}
+
+void initCreateActorWithPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo,
+                                      const PlacementInfo& placementInfo) {
+    ActorInitInfo childInitInfo;
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    actor->init(childInitInfo);
+}
+
+void initCreateActorNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo) {
+    PlacementInfo placementInfo;
+    ActorInitInfo childInitInfo;
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    actor->init(childInitInfo);
+}
+
+void initCreateActorNoPlacementInfoNoViewId(LiveActor* actor, const ActorInitInfo& initInfo) {
+    PlacementInfo placementInfo;
+    ActorInitInfo childInitInfo;
+    childInitInfo.initNoViewId(&placementInfo, initInfo);
+    actor->init(childInitInfo);
+}
+
+__attribute__((always_inline)) LiveActor*
+createActorFromFactory(const ActorInitInfo& childInitInfo, const PlacementInfo* placementInfo) {
+    const ActorFactory* factory = childInitInfo.getActorFactory();
+
+    const char* objectName = nullptr;
+    getObjectName(&objectName, childInitInfo);
+    const char* className = nullptr;
+    getClassName(&className, childInitInfo);
+
+    const NameToCreator<ActorCreatorFunction>* creator = factory->getFactoryEntry(className);
+    if (creator == nullptr)
+        return nullptr;
+
+    const char* displayName;
+    getDisplayName(&displayName, *placementInfo);
+    LiveActor* actor = creator->mCreationFunction(displayName);
+    actor->init(childInitInfo);
+    return actor;
+}
+
+// NON_MATCHING
+LiveActor* createPlacementActorFromFactory(const ActorInitInfo& initInfo,
+                                           const PlacementInfo* placementInfo) {
+    ActorInitInfo childInitInfo;
+    childInitInfo.initViewIdSelf(placementInfo, initInfo);
+    return createActorFromFactory(childInitInfo, placementInfo);
+}
+
+// NON_MATCHING
+LiveActor* createLinksActorFromFactory(const ActorInitInfo& initInfo, const char* linkName,
+                                       s32 linkNum) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+    getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, linkNum);
+    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    return createActorFromFactory(childInitInfo, &placementInfo);
+}
+
+LiveActorGroup* createLinksActorGroupFromFactory(const ActorInitInfo& initInfo,
+                                                 const char* linkName, const char* groupName) {
+    return tryCreateLinksActorGroupFromFactory(initInfo, linkName, groupName);
+}
+
+// NON_MATCHING
+LiveActorGroup* tryCreateLinksActorGroupFromFactory(const ActorInitInfo& initInfo,
+                                                    const char* linkName, const char* groupName) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+    s32 linkChildNum = calcLinkChildNum(initInfo, linkName);
+    if (linkChildNum < 1)
+        return nullptr;
+
+    LiveActorGroup* group = new LiveActorGroup(groupName, linkChildNum);
+    for (s32 i = 0; i < linkChildNum; i++) {
+        getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, i);
+        childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+        LiveActor* actor = createActorFromFactory(childInitInfo, &placementInfo);
+        group->registerActor(actor);
+    }
+}
+
+LiveActor* tryCreateLinksActorFromFactorySingle(const ActorInitInfo& initInfo,
+                                                const char* linkName) {
+    if (calcLinkChildNum(initInfo, linkName) < 1)
+        return nullptr;
+    return createLinksActorFromFactory(initInfo, linkName, 0);
+}
+
+// NON_MATCHING
+void createAndRegisterLinksActorFromFactory(LiveActorGroup* group, const ActorInitInfo& initInfo,
+                                            const char* linkName) {
+    ActorInitInfo childInitInfo;
+    PlacementInfo placementInfo;
+    s32 linkChildNum = calcLinkChildNum(initInfo, linkName);
+    if (linkChildNum < 1)
+        return;
+
+    for (s32 i = 0; i < linkChildNum; i++) {
+        getLinksInfoByIndex(&placementInfo, initInfo.getPlacementInfo(), linkName, i);
+        childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+        LiveActor* actor = createActorFromFactory(childInitInfo, &placementInfo);
+        group->registerActor(actor);
+    }
+}
+
+/*
 void makeMapPartsModelName(sead::BufferedSafeString*, sead::BufferedSafeString*,
                            const PlacementInfo&);
 void makeMapPartsModelName(sead::BufferedSafeString*, sead::BufferedSafeString*,

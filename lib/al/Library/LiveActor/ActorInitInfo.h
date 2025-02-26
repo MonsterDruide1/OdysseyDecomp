@@ -65,6 +65,8 @@ public:
 
     ActorResourceHolder* getActorResourceHolder() const { return mActorResourceHolder; }
 
+    const ActorFactory* getActorFactory() const { return mActorFactory; }
+
 private:
     LiveActorGroup* mKitDrawingGroup = nullptr;
     const PlacementInfo* mPlacementInfo = nullptr;
