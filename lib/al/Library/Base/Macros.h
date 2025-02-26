@@ -94,29 +94,24 @@
 
 #define FOR_EACH_TUPL(action, ...) FOR_EACH(_FUNC_, action, __VA_ARGS__)
 
-#define DECL_MEMBER_VAR(type, name)\
-  type m##name;
+#define DECL_MEMBER_VAR(type, name) type m##name;
 
-#define PARAM_END_COMMA(type, name)\
-    type p##name,
+#define PARAM_END_COMMA(type, name) type p##name,
 
-#define DECL_GET(type, name)\
-  type get##name() const {return m##name;}
+#define DECL_GET(type, name)                                                                       \
+    type get##name() const {                                                                       \
+        return m##name;                                                                            \
+    }
 
-#define POINTER_PARAM_END_COMMA(type, name)\
-    type * p##name,
+#define POINTER_PARAM_END_COMMA(type, name) type *p##name,
 
-#define PARAM_START_COMMA(type, name)\
-    , type p##name
+#define PARAM_START_COMMA(type, name) , type p##name
 
-#define CALL_PARAM_START_COMMA(_, name)\
-    , p##name
+#define CALL_PARAM_START_COMMA(_, name) , p##name
 
-#define SET_MEMBER_PARAM(_, name)\
-    m##name = p##name;
+#define SET_MEMBER_PARAM(_, name) m##name = p##name;
 
-#define SET_OUT_VAR_MEMBER(_, name)\
-    * p##name = m##name;
+#define SET_OUT_VAR_MEMBER(_, name) *p##name = m##name;
 
 #define DECL_MEMBER_VAR_MULTI(...) FOR_EACH_TUPL(DECL_MEMBER_VAR, __VA_ARGS__)
 #define DECL_GET_MULTI(...) FOR_EACH_TUPL(DECL_GET, __VA_ARGS__)
