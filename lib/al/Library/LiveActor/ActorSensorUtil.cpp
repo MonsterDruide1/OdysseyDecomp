@@ -1,10 +1,11 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
+
 #include "Library/HitSensor/SensorMsgSetupUtil.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
 
 namespace al {
 
-//Create the SensorMsg classes
+// Create the SensorMsg classes
 
 SENSOR_MSG_CBC(PlayerAttackTrample);
 SENSOR_MSG_CBC(PlayerTrampleReflect);
@@ -48,7 +49,8 @@ SENSOR_MSG_CBC(PlayerCooperationHipDrop);
 SENSOR_MSG_CBC(PlayerGiantHipDrop);
 SENSOR_MSG(PlayerDisregard);
 SENSOR_MSG(PlayerDamageTouch);
-SENSOR_MSG(PlayerFloorTouchBind); //This msg is referenced by al::isMsgFloorTouchBind, but doesn't appear in the executable because it's never used
+SENSOR_MSG(PlayerFloorTouchBind);  // This msg is referenced by al::isMsgFloorTouchBind, but doesn't
+                                   // appear in the executable because it's never used
 SENSOR_MSG(PlayerFloorTouch);
 SENSOR_MSG(PlayerTouch);
 SENSOR_MSG_CBC(PlayerInvincibleTouch);
@@ -73,7 +75,8 @@ SENSOR_MSG(RideAllPlayerItemGet);
 SENSOR_MSG(KillerItemGet);
 
 SENSOR_MSG(EnemyAttack);
-SENSOR_MSG_WITH_DATA(EnemyAttackFire, (const char*, FireMaterialCode)); //Usually null, sometimes "LavaRed"
+SENSOR_MSG_WITH_DATA(EnemyAttackFire,
+                     (const char*, FireMaterialCode));  // Usually null, sometimes "LavaRed"
 SENSOR_MSG(EnemyAttackKnockDown);
 SENSOR_MSG(EnemyAttackBoomerang);
 SENSOR_MSG(EnemyAttackNeedle);
@@ -106,7 +109,8 @@ SENSOR_MSG_WITH_DATA(ChangeAlpha, (f32, Alpha));
 SENSOR_MSG(ShowModel);
 SENSOR_MSG(HideModel);
 SENSOR_MSG(Restart);
-SENSOR_MSG_WITH_DATA(CollisionImpulse, (sead::Vector3f*, VecPtr), (sead::Vector3f, VecVal), (f32, FloatVal), (sead::Vector3f, VecVal2), (f32, FloatVal2));
+SENSOR_MSG_WITH_DATA(CollisionImpulse, (sead::Vector3f*, VecPtr), (sead::Vector3f, VecVal),
+                     (f32, FloatVal), (sead::Vector3f, VecVal2), (f32, FloatVal2));
 SENSOR_MSG(EnemyTouch);
 SENSOR_MSG(EnemyUpperPunch);
 SENSOR_MSG(EnemyTrample);
@@ -155,7 +159,7 @@ SENSOR_MSG(SwitchKillOffInit);
 SENSOR_MSG_WITH_DATA(AskSafetyPoint, (sead::Vector3f**, SafetyPoint));
 SENSOR_MSG(TouchAssist);
 
-//These ten are also referenced by isMsgs but don't appear in the executable
+// These ten are also referenced by isMsgs but don't appear in the executable
 SENSOR_MSG(PlayerGiantTouch);
 SENSOR_MSG(PlayerAttackDash);
 SENSOR_MSG(TouchAssistTrig);
@@ -201,12 +205,11 @@ SENSOR_MSG(AtmosOnlineLight);
 SENSOR_MSG(LightBurn);
 SENSOR_MSG(MoonLightBurn);
 
-
 SENSOR_MSG_WITH_DATA(String, (const char*, Str));
 SENSOR_MSG_WITH_DATA(StringV4fPtr, (const char*, Str), (sead::Vector4f*, Vec));
-SENSOR_MSG_WITH_DATA(StringV4fSensorPtr, (const char*, Str), (sead::Vector4f*, Vec), (HitSensor*, Sender));
+SENSOR_MSG_WITH_DATA(StringV4fSensorPtr, (const char*, Str), (sead::Vector4f*, Vec),
+                     (HitSensor*, Sender));
 SENSOR_MSG_WITH_DATA(StringVoidPtr, (const char*, Str), (void*, Ptr));
-
 
 // SensorMsg related function implementations
 
@@ -310,7 +313,8 @@ SEND_MSG_DATA_TO_ACTOR_IMPL(ChangeAlpha, f32);
 SEND_MSG_IMPL(ShowModel);
 SEND_MSG_IMPL(HideModel);
 SEND_MSG_IMPL(Restart);
-SEND_MSG_DATA_MULTI_IMPL(CollisionImpulse, sead::Vector3f*, (const sead::Vector3f&, VecRef), (f32, FloatVal), (const sead::Vector3f&, VecRef2), (f32, FloatVal2))
+SEND_MSG_DATA_MULTI_IMPL(CollisionImpulse, sead::Vector3f*, (const sead::Vector3f&, VecRef),
+                         (f32, FloatVal), (const sead::Vector3f&, VecRef2), (f32, FloatVal2))
 SEND_MSG_IMPL(EnemyTouch);
 SEND_MSG_IMPL(EnemyUpperPunch);
 SEND_MSG_IMPL(EnemyTrample);
@@ -347,7 +351,7 @@ SEND_MSG_IMPL(BallAttackCollide);
 SEND_MSG_CBC_IMPL(BallTrample);
 SEND_MSG_IMPL(BallTrampleCollide);
 SEND_MSG_IMPL(BallItemGet);
-SEND_MSG_IMPL_(FireBalCollide, FireBallCollide); //Nintendo made a funny typo here
+SEND_MSG_IMPL_(FireBalCollide, FireBallCollide);  // Nintendo made a funny typo here
 SEND_MSG_IMPL(FireBallFloorTouch);
 SEND_MSG_IMPL(DokanBazookaAttack);
 
@@ -397,7 +401,8 @@ SEND_MSG_IMPL(MoonLightBurn);
 SEND_MSG_DATA_IMPL(String, const char*);
 SEND_MSG_DATA_MULTI_IMPL(StringV4fPtr, const char*, (sead::Vector4f*, Vec));
 
-bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const char *str, sead::Vector4f *vec){
+bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const char* str,
+                               sead::Vector4f* vec) {
     SensorMsgStringV4fSensorPtr msg(str, vec, sender);
     return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);
 }
@@ -409,8 +414,12 @@ SEND_MSG_TO_ACTOR_IMPL(ShowModel);
 SEND_MSG_TO_ACTOR_IMPL(Restart);
 
 // NON_MATCHING
-bool sendMsgPlayerReflectOrTrample(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter){
-    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerTrampleReflect(comboCounter), sender, receiver) || alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerAttackTrample(comboCounter), sender, receiver);
+bool sendMsgPlayerReflectOrTrample(HitSensor* receiver, HitSensor* sender,
+                                   ComboCounter* comboCounter) {
+    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerTrampleReflect(comboCounter),
+                                                        sender, receiver) ||
+           alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerAttackTrample(comboCounter),
+                                                        sender, receiver);
 }
 
 IS_MSG_IMPL_(PlayerTrample, PlayerAttackTrample);
@@ -504,7 +513,7 @@ IS_MSG_IMPL(ChangeAlpha);
 IS_MSG_IMPL(ShowModel);
 IS_MSG_IMPL(HideModel);
 IS_MSG_IMPL(Restart);
-//IMPULSE msg HERE
+// IMPULSE msg HERE
 IS_MSG_IMPL(EnemyTouch);
 IS_MSG_IMPL(EnemyTrample);
 IS_MSG_IMPL(MapObjTrample);
@@ -593,19 +602,21 @@ IS_MSG_IMPL(StringVoidPtr);
 
 IS_MSG_MULTIPLE_IMPL(PushAll, Push, PushStrong, PushVeryStrong);
 IS_MSG_MULTIPLE_IMPL(SwordBeamAttack, SwordBeamAttack, SwordBeamReflectAttack);
-IS_MSG_MULTIPLE_IMPL(HoldReleaseAll, HoldCancel, PlayerRelease, PlayerReleaseBySwing, PlayerReleaseDead, PlayerReleaseDamage, PlayerReleaseDemo);
+IS_MSG_MULTIPLE_IMPL(HoldReleaseAll, HoldCancel, PlayerRelease, PlayerReleaseBySwing,
+                     PlayerReleaseDead, PlayerReleaseDamage, PlayerReleaseDemo);
 IS_MSG_MULTIPLE_IMPL(ItemGetDirectAll, PlayerItemGet, RideAllPlayerItemGet, PlayerAttackTailAttack);
 IS_MSG_MULTIPLE_IMPL(ItemGetByObjAll, BallItemGet, KickKouraGetItem, KillerItemGet);
 
-bool isMsgItemGetAll(const SensorMsg* msg){
+bool isMsgItemGetAll(const SensorMsg* msg) {
     return isMsgItemGetDirectAll(msg) || isMsgItemGetByObjAll(msg);
 }
 
 IS_MSG_MULTIPLE_IMPL(PlayerHipDropAll, PlayerAttackHipDrop, PlayerAttackStatueDrop);
 IS_MSG_MULTIPLE_IMPL(PlayerObjHipDropAll, PlayerAttackObjHipDrop, PlayerAttackObjStatueDrop);
-IS_MSG_MULTIPLE_IMPL(PlayerObjHipDropReflectAll, PlayerAttackObjHipDropReflect, PlayerAttackObjStatueDropReflect);
+IS_MSG_MULTIPLE_IMPL(PlayerObjHipDropReflectAll, PlayerAttackObjHipDropReflect,
+                     PlayerAttackObjStatueDropReflect);
 
 IS_MSG_MULTIPLE_IMPL(TouchAssistAll, TouchAssist, TouchAssistTrig);
 IS_MSG_MULTIPLE_IMPL(EnemyAttack, EnemyAttack, EnemyAttackFire, EnemyAttackKnockDown);
 
-}
+}  // namespace al
