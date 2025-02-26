@@ -5,8 +5,7 @@
 #include <math/seadVector.h>
 #include <prim/seadRuntimeTypeInfo.h>
 
-
-namespace al{
+namespace al {
 class LiveActor;
 class HitSensor;
 class SensorMsg;
