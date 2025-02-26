@@ -6,6 +6,7 @@
 #include <prim/seadRuntimeTypeInfo.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 namespace al {
 
 class SensorMsg;
@@ -16,6 +17,9 @@ struct ActorInitInfo;
 =======
 
 namespace al{
+=======
+namespace al {
+>>>>>>> 11e2b7ac (PR: fix formatting)
 class LiveActor;
 class HitSensor;
 class SensorMsg;
