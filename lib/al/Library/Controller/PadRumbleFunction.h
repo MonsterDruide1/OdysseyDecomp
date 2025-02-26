@@ -12,21 +12,21 @@ struct PadRumbleParam {
                    f32 rumblePitchVol = 1.0f, f32 rumblePitchLeft = 1.0f,
                    f32 rumblePitchRight = 1.0f, s32 _18 = 0, bool isUseController = false,
                    bool _1d = false)
-        : mRumbleNear(rumbleNear), mRumbleFar(rumbleFar), mRumbleVolume(rumbleVolume),
-          mRumblePitchVol(rumblePitchVol), mRumblePitchLeft(rumblePitchLeft),
-          mRumblePitchRight(rumblePitchRight), field_18(_18), mIsUseController(isUseController),
+        : rumbleNear(rumbleNear), rumbleFar(rumbleFar), rumbleVolume(rumbleVolume),
+          rumblePitchVol(rumblePitchVol), rumblePitchLeft(rumblePitchLeft),
+          rumblePitchRight(rumblePitchRight), field_18(_18), isUseController(isUseController),
           field_1d(_1d) {}
 
     void setVolumeByBalance(f32);
 
-    f32 mRumbleNear;
-    f32 mRumbleFar;
-    f32 mRumbleVolume;
-    f32 mRumblePitchVol;
-    f32 mRumblePitchLeft;
-    f32 mRumblePitchRight;
+    f32 rumbleNear;
+    f32 rumbleFar;
+    f32 rumbleVolume;
+    f32 rumblePitchVol;
+    f32 rumblePitchLeft;
+    f32 rumblePitchRight;
     s32 field_18;
-    bool mIsUseController;
+    bool isUseController;
     bool field_1d;
 };
 

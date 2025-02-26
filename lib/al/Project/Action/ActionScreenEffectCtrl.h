@@ -6,8 +6,8 @@ namespace al {
 class LiveActor;
 
 struct ActionScreenEffectCtrlInfo {
-    const char* mName;
-    bool mIsActive;
+    const char* name;
+    bool isActive;
     // note: member list not complete.
 };
 

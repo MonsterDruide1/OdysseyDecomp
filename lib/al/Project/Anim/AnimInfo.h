@@ -8,10 +8,10 @@ class ResMaterialAnim;
 
 namespace al {
 struct AnimResInfo {
-    const char* mName;
-    const nn::g3d::ResMaterialAnim* mResMaterialAnim;
-    s32 mFrameMax;
-    bool mIsLoop;
+    const char* name;
+    const nn::g3d::ResMaterialAnim* resMaterialAnim;
+    s32 frameMax;
+    bool isLoop;
 };
 
 class AnimInfoTable {

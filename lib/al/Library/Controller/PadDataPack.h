@@ -5,9 +5,9 @@
 
 namespace al {
 struct PadDataPack {
-    s32 mTrig = 0;
-    s32 mHold = 0;
-    sead::Vector2f mLeftStick = sead::Vector2f::zero;
-    sead::Vector2f mPointer = sead::Vector2f::zero;
+    s32 trig = 0;
+    s32 hold = 0;
+    sead::Vector2f leftStick = sead::Vector2f::zero;
+    sead::Vector2f pointer = sead::Vector2f::zero;
 };
 }  // namespace al

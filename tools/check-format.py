@@ -320,15 +320,20 @@ def common_self_other(c, path, is_header):
 # Header files
 
 def header_sorted_visibility(c, path):
+    is_in_struct = False
     visibilities_ordered = ["public:", "protected:", "private:"]
     nest_level = [-2]  # -2 = outside of class ; -1 = inside class ; 0 = public ; 1 = protected ; 2 = private
     should_start_class = False
     for line in c.splitlines():
+        if re.search(r"^\s*struct.*{", line):
+            is_in_struct = True
+        if "};" in line:
+            is_in_struct = False
         line = line[0:line.find("//")] if "//" in line else line
         if line.endswith("\\"): line = line[0:-1]
         line = line.strip()
         if line not in visibilities_ordered:
-            header_check_line(line, path, nest_level[-1], should_start_class)
+            header_check_line(line, path, nest_level[-1], should_start_class, is_in_struct)
         if "{" in line and "}" in line:
             if CHECK(lambda a: a.count("{") == a.count("}") or (a.startswith("{") and a.endswith("}};")), line,
                      "Unbalanced \"{\" and \"}\" in the same line! (exception: end of brace-initialized array)",
@@ -367,15 +372,20 @@ def header_sorted_visibility(c, path):
 
         if not runAllChecks:
             exit(1)
- 
-def header_check_line(line, path, visibility, should_start_class):
+
+def header_check_line(line, path, visibility, should_start_class, is_in_struct):
+
+    if is_in_struct:
+        if re.search(r"\w+\*?\s+(m[A-Z][a-z0-9]*|[A-Z])\w*(\s*=|;)", line):
+            FAIL("Struct member variables should be formatted as noPrefixCamelCase!", line, path)
+
     if visibility == -2:  # outside of class/struct/...
         if (line.startswith("class") and (not line.endswith(";") or "{" in line)) or should_start_class:
             if ": " in line and not ": public" in line and not ": virtual public" in line:
                 FAIL("All superclasses must be public!", line, path)
             if should_start_class and not ": " in line and not line.startswith("public") and not line.startswith(
                     "virtual public"):
-                FAIL("All superclasses must be public!", line, path)
+                FAIL("All superclasses must be public!", line, path) 
 
             if line.startswith("class") and "{" in line and ": " in line:
                 index = 0
