@@ -5,7 +5,7 @@ class EventFlowEventData;
 
 class IEventFlowEventReceiver {
 public:
-    virtual bool receiveEvent(const EventFlowEventData*);
+    virtual bool receiveEvent(const EventFlowEventData* event);
 };
 
 }  // namespace al

@@ -38,14 +38,14 @@ NERVES_MAKE_STRUCT(VolleyballBall, Wait, Return, ReturnSmash, Attack, Miss, Miss
                    OnGround, RetryEnd)
 }  // namespace
 
-const sead::Vector3f defaultPose = {0.0f, 200.0f, 200.0f};
+const sead::Vector3f sCoinDropOffset = {0.0f, 200.0f, 200.0f};
 
 VolleyballBall::VolleyballBall(const char* name) : al::LiveActor(name) {}
 
 void VolleyballBall::init(const al::ActorInitInfo& initInfo) {
     al::initActorWithArchiveName(this, initInfo, "VolleyballBall", nullptr);
     al::initNerve(this, &NrvVolleyballBall.Wait, 0);
-    mFlyPath = new al::ParabolicPath();
+    mAttackPath = new al::ParabolicPath();
     mReturnPath = new al::ParabolicPath();
     al::initJointControllerKeeper(this, 1);
     al::initJointGlobalQuatController(this, &mOrientation, "AllRoot");
@@ -92,35 +92,34 @@ bool VolleyballBall::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
     if (al::isNerve(this, &NrvVolleyballBall.Attack) && al::isLessStep(this, 20))
         return false;
 
-    if (!al::isMsgPlayerKick(message) && !rs::isMsgUpperPunchAll(message) &&
-        !rs::isMsgCapAttack(message) && !rs::isMsgPlayerBallToss(message) &&
-        !al::isMsgPlayerSpinAttack(message))
-        return false;
+    if (al::isMsgPlayerKick(message) || rs::isMsgUpperPunchAll(message) ||
+        rs::isMsgCapAttack(message) || rs::isMsgPlayerBallToss(message) ||
+        al::isMsgPlayerSpinAttack(message)) {
+        if (al::isNerve(this, &NrvVolleyballBall.OnGround) && al::isGreaterEqualStep(this, 15))
+            return true;
 
-    if (al::isNerve(this, &NrvVolleyballBall.OnGround) && al::isGreaterEqualStep(this, 15))
-        return true;
+        if (al::isSensorName(self, "Smash") && !al::isMsgPlayerSpinAttack(message))
+            return false;
 
-    if (al::isSensorName(self, "Smash") && !al::isMsgPlayerSpinAttack(message))
-        return false;
+        if (al::isMsgPlayerSpinAttack(message) &&
+            al::getTrans(mNpc).y <= al::getTrans(this).y + -100.0f &&
+            al::getTrans(mNpc).y <= al::getSensorPos(other).y + -30.0f) {
+            if (!al::isNerve(this, &NrvVolleyballBall.Return))
+                mNpc->addSuccessCount();
+            al::startHitReactionHitEffect(this, "スマッシュ", other, self);
+            al::setNerve(this, &NrvVolleyballBall.ReturnSmash);
+            return true;
+        }
 
-    if (al::isMsgPlayerSpinAttack(message) &&
-        al::getTrans(mNpc).y <= al::getTrans(this).y + -100.0f &&
-        al::getTrans(mNpc).y <= al::getSensorPos(other).y + -30.0f) {
-        if (!al::isNerve(this, &NrvVolleyballBall.Return))
+        if (!al::isNerve(this, &NrvVolleyballBall.Return)) {
             mNpc->addSuccessCount();
-        al::startHitReactionHitEffect(this, "スマッシュ", other, self);
-        al::setNerve(this, &NrvVolleyballBall.ReturnSmash);
-        return true;
+            rs::requestHitReactionToAttacker(message, self, other);
+            al::startHitReactionHitEffect(this, "リターン", other, self);
+            al::setNerve(this, &NrvVolleyballBall.Return);
+            return true;
+        }
     }
-
-    if (al::isNerve(this, &NrvVolleyballBall.Return))
-        return false;
-
-    mNpc->addSuccessCount();
-    rs::requestHitReactionToAttacker(message, self, other);
-    al::startHitReactionHitEffect(this, "リターン", other, self);
-    al::setNerve(this, &NrvVolleyballBall.Return);
-    return true;
+    return false;
 }
 
 void VolleyballBall::attackSensor(al::HitSensor* self, al::HitSensor* other) {
@@ -133,21 +132,20 @@ void VolleyballBall::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         al::sendMsgPush(other, self);
 }
 
-void VolleyballBall::attack(const sead::Vector3f& startingPostion,
-                            const sead::Vector3f& endPosition, f32 averageSeed) {
-    al::resetPosition(this, startingPostion);
+void VolleyballBall::attack(const sead::Vector3f& startPosition, const sead::Vector3f& endPosition,
+                            f32 attackSpeed) {
+    al::resetPosition(this, startPosition);
     mEndPosition.set(endPosition);
-    mFlyPath->initFromUpVectorAddHeight(startingPostion, mEndPosition, sead::Vector3f::ey, 500.0f);
-    mPathTime = mFlyPath->calcPathTimeFromAverageSpeed(averageSeed);
-    mAverageSpeed = averageSeed;
+    mAttackPath->initFromUpVectorAddHeight(startPosition, mEndPosition, sead::Vector3f::ey, 500.0f);
+    mPathTime = mAttackPath->calcPathTimeFromAverageSpeed(attackSpeed);
+    mAttackSpeed = attackSpeed;
     al::invalidateClipping(this);
     al::setNerve(this, &NrvVolleyballBall.Attack);
     appear();
 }
 
-void VolleyballBall::toss(const sead::Vector3f& startingPostion,
-                          const sead::Vector3f& endPosition) {
-    al::resetPosition(this, startingPostion);
+void VolleyballBall::toss(const sead::Vector3f& startPosition, const sead::Vector3f& endPosition) {
+    al::resetPosition(this, startPosition);
     mEndPosition.set(endPosition);
     al::invalidateClipping(this);
     al::offCollide(this);
@@ -202,13 +200,13 @@ void VolleyballBall::exeAttack() {
     if (al::isActionPlaying(this, "Reaction") && al::isActionEnd(this))
         al::startAction(this, "FlyWait");
 
-    sead::Vector3f trans = al::getTrans(this);
-    sead::Vector3f position = sead::Vector3f::zero;
-    mFlyPath->calcPosition(&position, al::getNerveStep(this) / (f32)mPathTime);
-    al::resetPosition(this, position);
+    sead::Vector3f prevPos = al::getTrans(this);
+    sead::Vector3f newPos = sead::Vector3f::zero;
+    mAttackPath->calcPosition(&newPos, al::getNerveStep(this) / (f32)mPathTime);
+    al::resetPosition(this, newPos);
 
     sead::Quatf mOrientationCopy = mOrientation;
-    al::rotateQuatRollBall(&mOrientation, mOrientationCopy, trans - position, al::getGravity(this),
+    al::rotateQuatRollBall(&mOrientation, mOrientationCopy, prevPos - newPos, al::getGravity(this),
                            90.0f);
     if (al::isGreaterEqualStep(this, mPathTime)) {
         al::resetPosition(this, mEndPosition);
@@ -240,7 +238,7 @@ void VolleyballBall::endOnGround() {
 
 void VolleyballBall::exeReturn() {
     if (al::isFirstStep(this)) {
-        sead::Vector3f startPosition = mFlyPath->getStart();
+        sead::Vector3f startPosition = mAttackPath->getStart();
         mReturnPath->initFromUpVectorAddHeight(al::getTrans(this), startPosition,
                                                sead::Vector3f::ey, 500.0f);
         al::startAction(this, "Reaction");
@@ -249,43 +247,43 @@ void VolleyballBall::exeReturn() {
     if (al::isActionPlaying(this, "Reaction") && al::isActionEnd(this))
         al::startAction(this, "FlyWait");
 
-    sead::Vector3f trans = al::getTrans(this);
-    sead::Vector3f position = sead::Vector3f::zero;
-    mReturnPath->calcPosition(&position, al::getNerveStep(this) / (f32)mPathTime);
-    al::resetPosition(this, position);
+    sead::Vector3f prevPos = al::getTrans(this);
+    sead::Vector3f newPos = sead::Vector3f::zero;
+    mReturnPath->calcPosition(&newPos, al::getNerveStep(this) / (f32)mPathTime);
+    al::resetPosition(this, newPos);
 
     sead::Quatf mOrientationCopy = mOrientation;
-    al::rotateQuatRollBall(&mOrientation, mOrientationCopy, trans - position, al::getGravity(this),
+    al::rotateQuatRollBall(&mOrientation, mOrientationCopy, prevPos - newPos, al::getGravity(this),
                            90.0f);
     if (al::isGreaterEqualStep(this, mPathTime))
         al::setNerve(this, &ReturnEnd);
 }
 
 void VolleyballBall::exeReturnSmash() {
-    sead::Vector3f direction = al::getTrans(mNpc) - al::getTrans(this);
+    sead::Vector3f targetVec = al::getTrans(mNpc) - al::getTrans(this);
     if (al::isFirstStep(this)) {
-        sead::Vector3f directioncpy = direction;
-        al::normalize(&directioncpy);
-        al::setVelocityToDirection(this, directioncpy, 50.0f);
+        sead::Vector3f direction = targetVec;
+        al::normalize(&direction);
+        al::setVelocityToDirection(this, direction, 50.0f);
         al::startAction(this, "Smash");
         al::makeQuatFrontNoSupport(&mOrientation, al::getVelocity(this));
     }
 
-    f32 dirLen = direction.length();
-    if (al::getVelocity(this).length() > dirLen) {
-        s32 random = al::getRandom(1, 4);
-        mRandomDeviation = (mRandomDeviation == 3 && random == 3) ? 1 : random;
-        s32 i = mRandomDeviation;
+    f32 targetLen = targetVec.length();
+    if (al::getVelocity(this).length() > targetLen) {
+        s32 smashCoins = al::getRandom(1, 4);
+        mLastSmashCoins = (mLastSmashCoins == 3 && smashCoins == 3) ? 1 : smashCoins;
+        s32 i = mLastSmashCoins;
         if (i > 0)
             do {
                 sead::Vector3f frontDir = mNpc->getFrontDir();
                 al::rotateVectorDegreeY(&frontDir, al::getRandom(-80.0f, 80.0f));
-                sead::Vector3f pose = defaultPose;
+                sead::Vector3f pose = sCoinDropOffset;
                 al::multVecPose(&pose, mNpc, pose);
                 al::appearItemTiming(mNpc, "スマッシュ", pose, frontDir, nullptr);
                 i--;
             } while (i != 0);
-        al::resetPosition(this, mFlyPath->getStart());
+        al::resetPosition(this, mAttackPath->getStart());
         mNpc->startSmashReaction();
         al::setNerve(this, &ReturnEnd);
     }
@@ -328,7 +326,7 @@ void VolleyballBall::exeTossEnd() {}
 
 void VolleyballBall::exeRetry() {
     if (al::isFirstStep(this)) {
-        sead::Vector3f startPosition = mFlyPath->getStart();
+        sead::Vector3f startPosition = mAttackPath->getStart();
         mReturnPath->initFromUpVectorAddHeight(al::getTrans(this), startPosition,
                                                sead::Vector3f::ey, 500.0f);
         al::startAction(this, "Reaction");
@@ -337,13 +335,13 @@ void VolleyballBall::exeRetry() {
 
     if (al::isActionPlaying(this, "Reaction") && al::isActionEnd(this))
         al::startAction(this, "FlyWait");
-    sead::Vector3f trans = al::getTrans(this);
-    sead::Vector3f position = sead::Vector3f::zero;
-    mReturnPath->calcPosition(&position, al::getNerveStep(this) / (f32)mPathTime);
-    al::resetPosition(this, position);
+    sead::Vector3f prevPos = al::getTrans(this);
+    sead::Vector3f newPos = sead::Vector3f::zero;
+    mReturnPath->calcPosition(&newPos, al::getNerveStep(this) / (f32)mPathTime);
+    al::resetPosition(this, newPos);
 
     sead::Quatf mOrientationCopy = mOrientation;
-    al::rotateQuatRollBall(&mOrientation, mOrientationCopy, trans - position, al::getGravity(this),
+    al::rotateQuatRollBall(&mOrientation, mOrientationCopy, prevPos - newPos, al::getGravity(this),
                            90.0f);
     if (al::isGreaterEqualStep(this, mPathTime))
         al::setNerve(this, &NrvVolleyballBall.RetryEnd);
