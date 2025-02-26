@@ -5,6 +5,7 @@
 #include <math/seadVector.h>
 #include <prim/seadRuntimeTypeInfo.h>
 
+<<<<<<< HEAD
 namespace al {
 
 class SensorMsg;
@@ -12,6 +13,14 @@ class LiveActor;
 class HitSensor;
 class SensorMsg;
 struct ActorInitInfo;
+=======
+
+namespace al{
+class LiveActor;
+class HitSensor;
+class SensorMsg;
+class ActorInitInfo;
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 class SensorSortCmpFuncBase;
 class ActorSensorController;
 class ComboCounter;
@@ -79,17 +88,29 @@ f32 calcDistance(const HitSensor*, const HitSensor*);
 const sead::Vector3f& getSensorPos(const HitSensor*);
 f32 calcDistanceV(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 f32 calcDistanceH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
+<<<<<<< HEAD
 bool calcDirBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
 bool calcDirBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
 bool calcDirBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
+=======
+void calcDirBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
+void calcDirBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
+void calcDirBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
                                  sead::Vector3f);
 void calcVecBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
 void calcVecBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
 void calcVecBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
                                  sead::Vector3f);
+<<<<<<< HEAD
 s32 calcStrikeArrowCollideWallAndCeilingBetweenAttackSensor(const LiveActor*, const HitSensor*,
                                                             const HitSensor*, const sead::Vector3f&,
                                                             f32);
+=======
+void calcStrikeArrowCollideWallAndCeilingBetweenAttackSensor(const LiveActor*, const HitSensor*,
+                                                             const HitSensor*,
+                                                             const sead::Vector3f&, f32);
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 LiveActor* getSensorHost(const HitSensor*);
 bool isFaceBetweenSensors(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 bool isFaceBetweenSensorsH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
@@ -113,6 +134,10 @@ bool isHitCircleSensor(const HitSensor*, const sead::Vector3f&, const sead::Vect
 bool isHitCircleSensor(const HitSensor*, const HitSensor*, const sead::Vector3f&, f32, f32);
 bool isHitPlaneSensor(const HitSensor*, const sead::Vector3f&, const sead::Vector3f&, f32);
 bool isHitPlaneSensor(const HitSensor*, const HitSensor*, const sead::Vector3f&, f32);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 const sead::Vector3f& getActorTrans(const HitSensor*);
 const sead::Vector3f& getActorVelocity(const HitSensor*);
 const sead::Vector3f& getActorGravity(const HitSensor*);
@@ -139,13 +164,34 @@ bool isSensorMapObj(const HitSensor*);
 void validateHitSensorNpcAll(LiveActor*);
 bool isSensorNpc(const HitSensor*);
 void validateHitSensorPlayerAll(LiveActor*);
+<<<<<<< HEAD
 bool isSensorPlayerAll(const HitSensor*);
 void validateHitSensorRideAll(LiveActor*);
 bool isSensorRide(const HitSensor*);
+=======
+bool isSensorPlayer(const HitSensor*);
+bool isSensorPlayerAll(const HitSensor*);
+void validateHitSensorRideAll(LiveActor*);
+bool isSensorRide(const HitSensor*);
+bool isSensorSimple(const HitSensor*);
+bool isSensorLookAt(const HitSensor*);
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 void invalidateHitSensorEyeAll(LiveActor*);
 void invalidateHitSensorPlayerAll(LiveActor*);
 void invalidateHitSensorPlayerAttackAll(LiveActor*);
 bool isSensorPlayerAttack(const HitSensor*);
+<<<<<<< HEAD
+=======
+bool isSensorPlayerEye(const HitSensor*);
+
+bool isSensorBindableGoal(const HitSensor*);
+bool isSensorBindableAllPlayer(const HitSensor*);
+bool isSensorBindableBubbleOutScreen(const HitSensor*);
+bool isSensorBindableKoura(const HitSensor*);
+bool isSensorBindableRouteDokan(const HitSensor*);
+bool isSensorBindableBubblePadInput(const HitSensor*);
+bool isSensorBindable(const HitSensor*);
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 
 bool sendMsgPlayerAttackTrample(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
 bool sendMsgPlayerTrampleReflect(HitSensor* receiver, HitSensor* sender,
@@ -299,7 +345,11 @@ bool sendMsgHideModel(LiveActor* receiver);
 bool sendMsgShowModel(LiveActor* receiver);
 bool sendMsgRestart(LiveActor* receiver);
 bool sendMsgCollisionImpulse(HitSensor* receiver, HitSensor* sender, sead::Vector3f*,
+<<<<<<< HEAD
                              const sead::Vector3f&, f32, const sead::Vector3f&, f32);
+=======
+                             const sead::Vector3f&, const f32, sead::Vector3f&, f32);
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 bool sendMsgSwitchOn(LiveActor* receiver);
 bool sendMsgSwitchOnInit(LiveActor* receiver);
 bool sendMsgSwitchOffInit(LiveActor* receiver);
@@ -560,13 +610,17 @@ bool isMsgStringV4fPtr(const SensorMsg* msg);
 bool isMsgStringV4fSensorPtr(const SensorMsg* msg);
 bool isMsgStringVoidPtr(const SensorMsg* msg);
 bool isMsgPlayerTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor*, const HitSensor*);
+<<<<<<< HEAD
 // Unnamed function at 8FD424 here
+=======
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 bool isMsgPlayerTrampleReflectForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                                  const HitSensor*);
 bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                              const HitSensor*, f32);
 bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                              const HitSensor*);
+<<<<<<< HEAD
 bool sendMsgEnemyAttackForCrossoverSensor(HitSensor*, HitSensor*);
 bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor*, HitSensor*, const sead::Vector3f&,
                                                   const sead::Vector3f&, f32);
@@ -598,10 +652,15 @@ bool sendMsgPushAndKillVelocityToTargetH(LiveActor*, HitSensor*, HitSensor*);
 bool pushAndAddVelocity(LiveActor*, const HitSensor*, const HitSensor*, f32);
 bool pushAndAddVelocityH(LiveActor*, const HitSensor*, const HitSensor*, f32);
 bool pushAndAddVelocityV(LiveActor*, const HitSensor*, const HitSensor*, f32);
+=======
+
+bool sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
 bool tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSensor*,
                                      const HitSensor*, f32);
 bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
                                       const HitSensor*, f32);
+<<<<<<< HEAD
 bool tryReceiveMsgPushAndCalcPushTrans(sead::Vector3f*, const SensorMsg*, const LiveActor*,
                                        const HitSensor*, const HitSensor*, f32);
 bool sendMsgCollidePush(HitSensor*, HitSensor*, const sead::Vector3f&);
@@ -623,3 +682,8 @@ al::HitSensor* findNearestAttackSensor(const al::HitSensor*);
 }  // namespace AttackSensorFunction
 
 // Unnamed function at 8FEB0C here
+=======
+bool isMySensor(const HitSensor* sensor, const LiveActor* actor);
+
+}  // namespace al
+>>>>>>> 6da8aca0 (Implement SensorMsg related functions in al)
