@@ -47,9 +47,9 @@ void SupportFreezeSyncGroup::movement() {
 
     for (s32 i = 0; i < mActorCount; i++)
         if (isAnyNerveSupportFreeze)
-            sendMsgOffSyncSupportFreeze(mActors[i]->getHitSensorKeeper()->getSensor(0),
+            sendMsgOnSyncSupportFreeze(mActors[i]->getHitSensorKeeper()->getSensor(0),
                                         mHostSensor);
         else
-            sendMsgOnSyncSupportFreeze(mActors[i]->getHitSensorKeeper()->getSensor(0), mHostSensor);
+            sendMsgOffSyncSupportFreeze(mActors[i]->getHitSensorKeeper()->getSensor(0), mHostSensor);
 }
 }  // namespace al
