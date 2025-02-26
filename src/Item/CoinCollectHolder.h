@@ -28,7 +28,7 @@ public:
     CoinCollect* tryFindDeadButHintEnableCoinCollect() const;
     CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f&, bool) const;
     CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f&, f32, f32, bool) const;
-    CoinCollectHintObj* tryFindExStageHintObjTrans(sead::Vector3f*, const char*);
+    bool tryFindExStageHintObjTrans(sead::Vector3f*, const char*);
 };
 
 namespace rs {
