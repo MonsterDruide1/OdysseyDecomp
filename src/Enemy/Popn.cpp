@@ -73,7 +73,7 @@ void Popn::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         al::sendMsgPushAndKillVelocityToTarget(this, self, other);
 
     if (al::isSensorEnemyAttack(self))
-        rs::sendMsgPushToPlayer(other, self) || al::sendMsgEnemyAttack(other, self);
+        al::sendMsgEnemyAttack(other, self) || rs::sendMsgPushToPlayer(other, self);
 }
 
 bool Popn::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
