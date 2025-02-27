@@ -92,15 +92,15 @@ f32 calcDistance(const HitSensor*, const HitSensor*);
 const sead::Vector3f& getSensorPos(const HitSensor*);
 f32 calcDistanceV(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 f32 calcDistanceH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
-void calcDirBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
-void calcDirBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
-void calcDirBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
+bool calcDirBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
+bool calcDirBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
+bool calcDirBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
                                  sead::Vector3f);
 void calcVecBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
 void calcVecBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*);
 void calcVecBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
                                  sead::Vector3f);
-void calcStrikeArrowCollideWallAndCeilingBetweenAttackSensor(const LiveActor*, const HitSensor*,
+s32 calcStrikeArrowCollideWallAndCeilingBetweenAttackSensor(const LiveActor*, const HitSensor*,
                                                              const HitSensor*,
                                                              const sead::Vector3f&, f32);
 LiveActor* getSensorHost(const HitSensor*);
