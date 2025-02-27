@@ -130,8 +130,7 @@ void PlayerStateHipDrop::exeFall() {
 
     al::addVelocityToGravityLimit(mActor, mConst->getHipDropGravity(),
                                   mConst->getHipDropSpeedMax());
-    if (mTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1) &&
-        mInput->isHoldHipDrop()) {
+    if (mTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1) && mInput->isHoldHipDrop()) {
         mHipDropMsgIntervalCounter = mConst->getHipDropMsgInterval();
         mAnimator->startAnim("HipDropReaction");
         mIsLandGround = false;
@@ -169,9 +168,8 @@ void PlayerStateHipDrop::exeLand() {
     }
 
     if (rs::isOnGroundRunAngle(mActor, mCollision, mConst)) {
-        rs::waitGround(mActor, mCollision, mConst->getGravityMove(),
-                       mConst->getFallSpeedMax(), mConst->getSlerpQuatRateWait(),
-                       mConst->getWaitPoseDegreeMax());
+        rs::waitGround(mActor, mCollision, mConst->getGravityMove(), mConst->getFallSpeedMax(),
+                       mConst->getSlerpQuatRateWait(), mConst->getWaitPoseDegreeMax());
     } else {
         kill();
     }
