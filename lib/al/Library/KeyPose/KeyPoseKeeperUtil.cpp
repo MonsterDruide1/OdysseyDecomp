@@ -1,7 +1,7 @@
 #include "Library/KeyPose/KeyPoseKeeperUtil.h"
 
 #include "Library/KeyPose/KeyPoseKeeper.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Project/Joint/KeyPose.h"
@@ -26,7 +26,6 @@ void nextKeyPose(KeyPoseKeeper* keyPoseKeeper) {
     keyPoseKeeper->next();
 }
 
-// NON_MATCHING
 void restartKeyPose(KeyPoseKeeper* keyPoseKeeper, sead::Vector3f* pos, sead::Quatf* orientation) {
     resetKeyPose(keyPoseKeeper);
 
@@ -185,4 +184,8 @@ s32 calcKeyMoveMoveTime(const KeyPoseKeeper* keyPoseKeeper) {
     f32 v = calcKeyMoveSpeed(keyPoseKeeper);
     return v > 0.0f ? calcTimeToNextKeyMove(keyPoseKeeper, v) : 60;
 }
+
+// TODO: Implement al::calcKeyMoveClippingInfo and al::setKeyMoveClippingInfo
+// void calcKeyMoveClippingInfo(sead::Vector3f*, f32*, const KeyPoseKeeper*, f32) {}
+// void setKeyMoveClippingInfo(LiveActor*, sead::Vector3f*, const KeyPoseKeeper*) {}
 }  // namespace al
