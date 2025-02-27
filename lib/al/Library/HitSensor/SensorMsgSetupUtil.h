@@ -11,6 +11,9 @@ class ComboCounter;
 
 class SensorMsg {
     SEAD_RTTI_BASE(SensorMsg);
+
+public:
+    virtual ~SensorMsg() = default;
 };
 }  // namespace al
 
