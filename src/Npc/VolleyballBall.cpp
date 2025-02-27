@@ -273,16 +273,15 @@ void VolleyballBall::exeReturnSmash() {
     if (al::getVelocity(this).length() > targetLen) {
         s32 smashCoins = al::getRandom(1, 4);
         mLastSmashCoins = (mLastSmashCoins == 3 && smashCoins == 3) ? 1 : smashCoins;
-        s32 i = mLastSmashCoins;
-        if (i > 0)
-            do {
+        if (mLastSmashCoins > 0) {
+            for (s32 i = mLastSmashCoins; i != 0; i--) {
                 sead::Vector3f frontDir = mNpc->getFrontDir();
                 al::rotateVectorDegreeY(&frontDir, al::getRandom(-80.0f, 80.0f));
                 sead::Vector3f pose = sCoinDropOffset;
                 al::multVecPose(&pose, mNpc, pose);
                 al::appearItemTiming(mNpc, "スマッシュ", pose, frontDir, nullptr);
-                i--;
-            } while (i != 0);
+            }
+        }
         al::resetPosition(this, mAttackPath->getStart());
         mNpc->startSmashReaction();
         al::setNerve(this, &ReturnEnd);
