@@ -44,7 +44,7 @@ namespace al {
 RollingCubeMapParts::RollingCubeMapParts(const char* name) : LiveActor(name) {}
 
 void RollingCubeMapParts::init(const ActorInitInfo& info) {
-    initNerveAction(this, "Wait", &NrvRollingCubeMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvRollingCubeMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
 

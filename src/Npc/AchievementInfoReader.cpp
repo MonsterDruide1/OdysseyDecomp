@@ -41,7 +41,7 @@ void AchievementInfoReader::init() {
 
 s32 AchievementInfoReader::tryFindIndexByName(const char* name) const {
     for (s32 i = 0; i < mAchievements.size(); i++)
-        if (al::isEqualString(name, mAchievements[i]->mName))
+        if (al::isEqualString(name, mAchievements[i]->name))
             return i;
     return -1;
 }

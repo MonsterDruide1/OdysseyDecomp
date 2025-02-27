@@ -32,7 +32,7 @@ struct ActorSceneInfo {
     DemoDirector* demoDirector = nullptr;
     GameDataHolderBase* gameDataHolder = nullptr;
     GravityHolder* gravityHolder = nullptr;
-    ItemDirectorBase* itedirector = nullptr;
+    ItemDirectorBase* itemDirector = nullptr;
     NatureDirector* natureDirector = nullptr;
     const GamePadSystem* gamePadSystem = nullptr;
     PadRumbleDirector* padRumbleDirector = nullptr;

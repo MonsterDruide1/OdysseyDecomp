@@ -18,29 +18,29 @@ public:
         ShakeDirection direction = ShakeDirection::Both;
 
         bool operator>(const ShakeInfo& other) const {
-            if (mStrength < other.mStrength)
+            if (strength < other.strength)
                 return false;
-            if (other.mStrength < mStrength)
+            if (other.strength < strength)
                 return true;
 
-            if (other.mSteps > 0 && mSteps < 0)
+            if (other.steps > 0 && steps < 0)
                 return false;
-            if (other.mSteps < 0 && mSteps > 0)
+            if (other.steps < 0 && steps > 0)
                 return true;
 
-            if (mSteps < other.mSteps)
+            if (steps < other.steps)
                 return false;
-            if (other.mSteps < mSteps)
+            if (other.steps < steps)
                 return true;
 
-            s32 otherDirection = (s32)other.mDirection;
-            s32 direction = (s32)mDirection;
-            if (otherDirection < direction)
+            s32 otherDirection = (s32)other.direction;
+            s32 directionCopy = (s32)direction;
+            if (otherDirection < directionCopy)
                 return false;
-            if (direction < otherDirection)
+            if (directionCopy < otherDirection)
                 return true;
 
-            if (mSpeed < other.mSpeed)
+            if (speed < other.speed)
                 return true;
             return false;
         }

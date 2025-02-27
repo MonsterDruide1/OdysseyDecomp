@@ -31,19 +31,19 @@ const char* LiveActor::getName() const {
 }
 
 CollisionDirector* LiveActor::getCollisionDirector() const {
-    return mSceneInfo->mCollisionDirector;
+    return mSceneInfo->collisionDirector;
 }
 
 AreaObjDirector* LiveActor::getAreaObjDirector() const {
-    return mSceneInfo->mAreaObjDirector;
+    return mSceneInfo->areaObjDirector;
 }
 
 CameraDirector* LiveActor::getCameraDirector() const {
-    return mSceneInfo->mCameraDirector;
+    return mSceneInfo->cameraDirector;
 }
 
 SceneObjHolder* LiveActor::getSceneObjHolder() const {
-    return mSceneInfo->mSceneObjHolder;
+    return mSceneInfo->sceneObjHolder;
 }
 
 EffectKeeper* LiveActor::getEffectKeeper() const {

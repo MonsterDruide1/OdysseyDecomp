@@ -31,7 +31,7 @@ RailMoveMapParts::RailMoveMapParts(const char* name) : LiveActor(name) {}
 void RailMoveMapParts::init(const ActorInitInfo& info) {
     using RailMoveMapPartsFunctor = FunctorV0M<RailMoveMapParts*, void (RailMoveMapParts::*)()>;
 
-    initNerveAction(this, "StandBy", &NrvRailMoveMapParts.mCollector, 1);
+    initNerveAction(this, "StandBy", &NrvRailMoveMapParts.collector, 1);
     initMapPartsActor(this, info, nullptr);
     registerAreaHostMtx(this, info);
 

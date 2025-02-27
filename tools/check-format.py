@@ -376,7 +376,7 @@ def header_sorted_visibility(c, path):
 def header_check_line(line, path, visibility, should_start_class, is_in_struct):
 
     if is_in_struct:
-        if re.search(r"\w+\*?\s+(m[A-Z][a-z0-9]*|[A-Z])\w*(\s*=|;)", line):
+        if re.search(r"\w+[\*&]*\s+m[A-Z]", line):
             FAIL("Struct member variables should be formatted as noPrefixCamelCase!", line, path)
 
     if visibility == -2:  # outside of class/struct/...

@@ -142,9 +142,9 @@ void CameraShaker::startShakeByIndex(s32 index, s32 steps) {
         // requires doing this copy to match
         // https://decomp.me/scratch/asjPP
         ShakeInfo shake2 = shake;
-        mEditedShake = {shake.mName, steps, shake.mSpeed, shake.mStrength, shake.mDirection};
+        mEditedShake = {shake.name, steps, shake.speed, shake.strength, shake.direction};
         mActiveShake = &mEditedShake;
-        mEditedShake.mSpeed = ((f32)steps / (f32)shake2.mSteps) * shake.mSpeed;
+        mEditedShake.speed = ((f32)steps / (f32)shake2.steps) * shake.speed;
     }
 
     setNerve(this, &Shake);
