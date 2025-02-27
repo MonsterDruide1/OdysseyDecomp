@@ -34,11 +34,11 @@ public:
     void exeLand();
 
 private:
-    const PlayerConst* mPlayerConst;
-    const PlayerInput* mPlayerInput;
-    const IUsePlayerCollision* mPlayerCollision;
-    PlayerAnimator* mPlayerAnimator;
-    PlayerTrigger* mPlayerTrigger;
+    const PlayerConst* mConst;
+    const PlayerInput* mInput;
+    const IUsePlayerCollision* mCollision;
+    PlayerAnimator* mAnimator;
+    PlayerTrigger* mTrigger;
     s32 mHipDropMsgIntervalCounter = 0;
     bool mIsLandGround = false;
     sead::Vector3f mLandPos = {0.0f, 0.0f, 0.0f};

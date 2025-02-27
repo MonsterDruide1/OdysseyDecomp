@@ -26,15 +26,15 @@ PlayerStateHipDrop::PlayerStateHipDrop(al::LiveActor* player, const PlayerConst*
                                        const PlayerInput* input,
                                        const IUsePlayerCollision* collider,
                                        PlayerAnimator* animator, PlayerTrigger* trigger)
-    : al::ActorStateBase("ヒップドロップ", player), mPlayerConst(pConst), mPlayerInput(input),
-      mPlayerCollision(collider), mPlayerAnimator(animator), mPlayerTrigger(trigger) {
+    : al::ActorStateBase("ヒップドロップ", player), mConst(pConst), mInput(input),
+      mCollision(collider), mAnimator(animator), mTrigger(trigger) {
     initNerve(&Start, 0);
 }
 
 void PlayerStateHipDrop::appear() {
     setDead(false);
-    if (mPlayerAnimator->isSubAnimPlaying())
-        mPlayerAnimator->endSubAnim();
+    if (mAnimator->isSubAnimPlaying())
+        mAnimator->endSubAnim();
     mIsLandGround = false;
     mLandPos = {0.0f, 0.0f, 0.0f};
     al::setNerve(this, &Start);
@@ -66,15 +66,15 @@ bool PlayerStateHipDrop::isEnableLandCancel() const {
     if (!al::isNerve(this, &Land))
         return false;
     s32 nerveStep = al::getNerveStep(this);
-    return nerveStep >= mPlayerConst->getJumpHipDropPermitBeginFrame() &&
-           nerveStep <= mPlayerConst->getJumpHipDropPermitEndFrame();
+    return nerveStep >= mConst->getJumpHipDropPermitBeginFrame() &&
+           nerveStep <= mConst->getJumpHipDropPermitEndFrame();
 }
 
 bool PlayerStateHipDrop::isEnableMove() const {
     if (isDead())
         return false;
     return al::isNerve(this, &Land) &&
-           al::isGreaterEqualStep(this, mPlayerConst->getHipDropLandCancelFrame());
+           al::isGreaterEqualStep(this, mConst->getHipDropLandCancelFrame());
 }
 
 bool PlayerStateHipDrop::isEnableInWater() const {
@@ -94,22 +94,22 @@ bool PlayerStateHipDrop::isEnableIK() const {
 }
 
 bool PlayerStateHipDrop::isLandTrigger() const {
-    if (mPlayerTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1))
+    if (mTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1))
         return true;
     return al::isNerve(this, &Land) && al::isFirstStep(this);
 }
 
 void PlayerStateHipDrop::exeStart() {
     if (al::isFirstStep(this)) {
-        mPlayerAnimator->startAnim("HipDropStart");
+        mAnimator->startAnim("HipDropStart");
         al::setVelocityZero(mActor);
         sead::Vector3f negGravity = -al::getGravity(mActor);
         sead::Vector3f up = {0.0f, 0.0f, 0.0f};
         al::calcUpDir(&up, mActor);
 
         if (up.dot(negGravity) <=
-            sead::Mathf::cos(sead::Mathf::deg2rad(mPlayerConst->getCollisionResetLimit())))
-            mPlayerTrigger->set(PlayerTrigger::EActionTrigger_val3);
+            sead::Mathf::cos(sead::Mathf::deg2rad(mConst->getCollisionResetLimit())))
+            mTrigger->set(PlayerTrigger::EActionTrigger_val3);
 
         sead::Quatf quat;
         al::calcQuat(&quat, mActor);
@@ -117,48 +117,48 @@ void PlayerStateHipDrop::exeStart() {
         al::updatePoseQuat(mActor, quat);
     }
 
-    if (mPlayerAnimator->isAnimEnd())
+    if (mAnimator->isAnimEnd())
         al::setNerve(this, &Fall);
 }
 
 void PlayerStateHipDrop::exeFall() {
     if (al::isFirstStep(this)) {
-        mPlayerAnimator->startAnim("HipDrop");
-        al::addVelocityToGravityLimit(mActor, mPlayerConst->getHipDropSpeed(),
-                                      mPlayerConst->getHipDropSpeedMax());
+        mAnimator->startAnim("HipDrop");
+        al::addVelocityToGravityLimit(mActor, mConst->getHipDropSpeed(),
+                                      mConst->getHipDropSpeedMax());
     }
 
-    al::addVelocityToGravityLimit(mActor, mPlayerConst->getHipDropGravity(),
-                                  mPlayerConst->getHipDropSpeedMax());
-    if (mPlayerTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1) &&
-        mPlayerInput->isHoldHipDrop()) {
-        mHipDropMsgIntervalCounter = mPlayerConst->getHipDropMsgInterval();
-        mPlayerAnimator->startAnim("HipDropReaction");
+    al::addVelocityToGravityLimit(mActor, mConst->getHipDropGravity(),
+                                  mConst->getHipDropSpeedMax());
+    if (mTrigger->isOn(PlayerTrigger::ECollisionTrigger_val1) &&
+        mInput->isHoldHipDrop()) {
+        mHipDropMsgIntervalCounter = mConst->getHipDropMsgInterval();
+        mAnimator->startAnim("HipDropReaction");
         mIsLandGround = false;
-        if (rs::isCollidedGround(mPlayerCollision)) {
+        if (rs::isCollidedGround(mCollision)) {
             mIsLandGround = true;
-            mLandPos = rs::getCollidedGroundPos(mPlayerCollision);
+            mLandPos = rs::getCollidedGroundPos(mCollision);
         }
     }
 
     if (mHipDropMsgIntervalCounter > 0) {
-        if (rs::convergeOnGroundCount(&mHipDropMsgIntervalCounter, mActor, mPlayerCollision, 0, 1))
+        if (rs::convergeOnGroundCount(&mHipDropMsgIntervalCounter, mActor, mCollision, 0, 1))
             return;
         mHipDropMsgIntervalCounter = 0;
     }
 
-    if (rs::isOnGroundRunAngle(mActor, mPlayerCollision, mPlayerConst))
+    if (rs::isOnGroundRunAngle(mActor, mCollision, mConst))
         al::setNerve(this, &Land);
 }
 
 void PlayerStateHipDrop::exeLand() {
     if (al::isFirstStep(this)) {
-        mPlayerAnimator->startAnim("HipDropLand");
+        mAnimator->startAnim("HipDropLand");
 
         al::LiveActor* actor = mActor;
         bool isLandingWeak = false;
         if (mIsLandGround) {
-            const IUsePlayerCollision* collision = mPlayerCollision;
+            const IUsePlayerCollision* collision = mCollision;
             if (rs::isCollidedGround(collision)) {
                 const sead::Vector3f& gravity = al::getGravity(actor);
                 isLandingWeak =
@@ -168,14 +168,14 @@ void PlayerStateHipDrop::exeLand() {
         rs::startHitReactionHipDropLand(actor, isLandingWeak);
     }
 
-    if (rs::isOnGroundRunAngle(mActor, mPlayerCollision, mPlayerConst)) {
-        rs::waitGround(mActor, mPlayerCollision, mPlayerConst->getGravityMove(),
-                       mPlayerConst->getFallSpeedMax(), mPlayerConst->getSlerpQuatRateWait(),
-                       mPlayerConst->getWaitPoseDegreeMax());
+    if (rs::isOnGroundRunAngle(mActor, mCollision, mConst)) {
+        rs::waitGround(mActor, mCollision, mConst->getGravityMove(),
+                       mConst->getFallSpeedMax(), mConst->getSlerpQuatRateWait(),
+                       mConst->getWaitPoseDegreeMax());
     } else {
         kill();
     }
 
-    if (mPlayerAnimator->isAnimEnd())
+    if (mAnimator->isAnimEnd())
         kill();
 }
