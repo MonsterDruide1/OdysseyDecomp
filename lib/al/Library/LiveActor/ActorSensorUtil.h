@@ -101,8 +101,8 @@ void calcVecBetweenSensorsH(sead::Vector3f*, const HitSensor*, const HitSensor*)
 void calcVecBetweenSensorsNormal(sead::Vector3f*, const HitSensor*, const HitSensor*,
                                  sead::Vector3f);
 s32 calcStrikeArrowCollideWallAndCeilingBetweenAttackSensor(const LiveActor*, const HitSensor*,
-                                                             const HitSensor*,
-                                                             const sead::Vector3f&, f32);
+                                                            const HitSensor*, const sead::Vector3f&,
+                                                            f32);
 LiveActor* getSensorHost(const HitSensor*);
 bool isFaceBetweenSensors(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 bool isFaceBetweenSensorsH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
