@@ -29,9 +29,8 @@ namespace al {
 
 CameraPoser::CameraPoser(const char* name) : mPoserName(name) {
     mPoserFlag = new CameraPoserFlag();
-    mActiveInterpoleParam =
-        new CameraInterpoleParam(CameraInterpoleStepType::ByCameraDistance, -1, false, false);
-    mEndInterpoleParam = new CameraInterpoleStep(CameraInterpoleStepType::Undefined, -1);
+    mActiveInterpoleParam = new CameraInterpoleParam();
+    mEndInterpoleParam = new CameraInterpoleStep();
 };
 
 void CameraPoser::init() {}
@@ -174,7 +173,8 @@ void CameraPoser::initArrowCollider(CameraArrowCollider* arrowCollider) {
 }
 
 void CameraPoser::initAudioKeeper(const char* name) {
-    mAudioKeeper = alAudioKeeperFunction::createAudioKeeper(mSceneInfo->mAudioDirector, name, NULL);
+    mAudioKeeper =
+        alAudioKeeperFunction::createAudioKeeper(mSceneInfo->mAudioDirector, name, nullptr);
 }
 
 void CameraPoser::initRail(const PlacementInfo& mInfo) {
@@ -190,7 +190,7 @@ void CameraPoser::initLookAtInterpole(f32 v) {
 }
 
 void CameraPoser::initOrthoProjectionParam() {
-    mOrthoProjectionParam = new OrthoProjectionParam(false, {-1.0f, -1.0f});
+    mOrthoProjectionParam = new OrthoProjectionParam();
 }
 
 void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {

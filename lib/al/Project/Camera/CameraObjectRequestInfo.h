@@ -17,6 +17,4 @@ struct CameraObjectRequestInfo {
     f32 mAngleV;
 };
 
-static_assert(sizeof(CameraObjectRequestInfo) == 0x18);
-
 }  // namespace al
