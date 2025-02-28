@@ -28,7 +28,7 @@ private:
     sead::Vector3f mUp = sead::Vector3f::zero;
     sead::Vector3f mFront = sead::Vector3f::zero;
     f32 mCurrentAngle = 0.0f;
-    char filler[12];
+    char pad[12];
     f32 mCircleXWidth = 0.0f;
     f32 mCircleZWidth = 0.0f;
     sead::Vector3f _154 = sead::Vector3f::zero;

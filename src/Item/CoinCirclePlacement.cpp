@@ -54,7 +54,7 @@ void CoinCirclePlacement::init(const al::ActorInitInfo& initInfo) {
         f32 zWidth = mCircleZWidth * sead::Mathf::sin(coinAngle) * 100.0f;
 
         const sead::Vector3f& centerPos = al::getTrans(this);
-        sead::Vector3f coinPos = xWidth * mSide + centerPos + zWidth * mFront;
+        sead::Vector3f coinPos = centerPos + xWidth * mSide + zWidth * mFront;
 
         al::setTrans(mCoinArray[i], coinPos);
         al::setScale(mCoinArray[i], {1.0f, 1.0f, 1.0f});
@@ -66,12 +66,10 @@ void CoinCirclePlacement::init(const al::ActorInitInfo& initInfo) {
 
     f32 clippingRadius = 0.0f;
     const sead::Vector3f& centerPosition = al::getTrans(this);
-    if (mCoinNum >= 1) {
-        for (s32 i = 0; i < mCoinNum; i++) {
-            sead::Vector3f distanceToCenter = al::getTrans(mCoinArray[i]) - centerPosition;
-            f32 coinRadius = distanceToCenter.length() + al::getClippingRadius(mCoinArray[i]);
-            clippingRadius = sead::Mathf::max(coinRadius, clippingRadius);
-        }
+    for (s32 i = 0; i < mCoinNum; i++) {
+        sead::Vector3f distanceToCenter = al::getTrans(mCoinArray[i]) - centerPosition;
+        f32 coinRadius = distanceToCenter.length() + al::getClippingRadius(mCoinArray[i]);
+        clippingRadius = sead::Mathf::max(coinRadius, clippingRadius);
     }
     al::setClippingInfo(this, clippingRadius, al::getTransPtr(this));
 
@@ -104,19 +102,19 @@ void CoinCirclePlacement::exeMove() {
     s32 coinNum = mCoinNum;
     bool isNoCoinAlive = true;
     for (s32 i = 0; i < mCoinNum; i++) {
-        if (!al::isDead(mCoinArray[i]) && mCoinArray[i]->isWait()) {
-            f32 prevY = al::getTrans(mCoinArray[i]).y;
-            f32 coinAngle = sead::Mathf::deg2rad(modDegree(mCurrentAngle + (360.0f / coinNum) * i));
-            f32 xWidth = mCircleXWidth * sead::Mathf::cos(coinAngle) * 100.0f;
-            f32 zWidth = mCircleZWidth * sead::Mathf::sin(coinAngle) * 100.0f;
+        if (al::isDead(mCoinArray[i]) || !mCoinArray[i]->isWait())
+            continue;
+        f32 prevY = al::getTrans(mCoinArray[i]).y;
+        f32 coinAngle = sead::Mathf::deg2rad(modDegree(mCurrentAngle + (360.0f / coinNum) * i));
+        f32 xWidth = mCircleXWidth * sead::Mathf::cos(coinAngle) * 100.0f;
+        f32 zWidth = mCircleZWidth * sead::Mathf::sin(coinAngle) * 100.0f;
 
-            const sead::Vector3f& centerPos = al::getTrans(this);
-            sead::Vector3f newCoinPos = -xWidth * mSide + centerPos + zWidth * mFront;
-            newCoinPos.y = prevY;
+        const sead::Vector3f& centerPos = al::getTrans(this);
+        sead::Vector3f newCoinPos = -xWidth * mSide + centerPos + zWidth * mFront;
+        newCoinPos.y = prevY;
 
-            al::setTrans(mCoinArray[i], newCoinPos);
-            isNoCoinAlive = false;
-        }
+        al::setTrans(mCoinArray[i], newCoinPos);
+        isNoCoinAlive = false;
     }
 
     if (isNoCoinAlive)
