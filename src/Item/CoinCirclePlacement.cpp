@@ -110,6 +110,8 @@ void CoinCirclePlacement::exeMove() {
         f32 zWidth = mCircleZWidth * sead::Mathf::sin(coinAngle) * 100.0f;
 
         const sead::Vector3f& centerPos = al::getTrans(this);
+        // The coin's new position is inverted on the X axis from the spawn point.
+        // This is likely a game bug with no adverse effects.
         sead::Vector3f newCoinPos = -xWidth * mSide + centerPos + zWidth * mFront;
         newCoinPos.y = prevY;
 
