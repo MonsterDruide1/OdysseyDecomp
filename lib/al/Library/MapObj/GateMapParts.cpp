@@ -32,7 +32,7 @@ GateMapParts::GateMapParts(const char* name) : LiveActor(name) {}
 void GateMapParts::init(const ActorInitInfo& info) {
     using GateMapPartsFunctor = FunctorV0M<GateMapParts*, void (GateMapParts::*)()>;
 
-    initNerveAction(this, "Wait", &NrvGateMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvGateMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
 

@@ -10,11 +10,11 @@ namespace al {
 ActorSceneInfo::ActorSceneInfo() = default;
 
 void stopScene(const LiveActor* actor, s32 stopFrames, s32 delayFrames) {
-    stopScene(actor->getSceneInfo()->mSceneStopCtrl, stopFrames, delayFrames);
+    stopScene(actor->getSceneInfo()->sceneStopCtrl, stopFrames, delayFrames);
 }
 
 bool isStopScene(const LiveActor* actor) {
-    return isStopScene(actor->getSceneInfo()->mSceneStopCtrl);
+    return isStopScene(actor->getSceneInfo()->sceneStopCtrl);
 }
 
 void stopScene(SceneStopCtrl* ctrl, s32 stopFrames, s32 delayFrames) {
@@ -26,19 +26,19 @@ bool isStopScene(SceneStopCtrl* ctrl) {
 }
 
 void requestCaptureScreenCover(const LiveActor* actor, s32 coverFrames) {
-    actor->getSceneInfo()->mScreenCoverCtrl->requestCaptureScreenCover(coverFrames);
+    actor->getSceneInfo()->screenCoverCtrl->requestCaptureScreenCover(coverFrames);
 }
 
 bool requestStartDemo(const LiveActor* actor, const char* name) {
-    return actor->getSceneInfo()->mDemoDirector->requestStartDemo(name);
+    return actor->getSceneInfo()->demoDirector->requestStartDemo(name);
 }
 
 void requestEndDemo(const LiveActor* actor, const char* name) {
-    actor->getSceneInfo()->mDemoDirector->requestEndDemo(name);
+    actor->getSceneInfo()->demoDirector->requestEndDemo(name);
 }
 
 void addDemoActor(LiveActor* actor) {
-    actor->getSceneInfo()->mDemoDirector->addDemoActor(actor);
+    actor->getSceneInfo()->demoDirector->addDemoActor(actor);
 }
 
 }  // namespace al

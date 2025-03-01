@@ -64,13 +64,13 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
     if (index > -1) {
         const ConveyerKey* conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
 
-        if (tryGetStringArg(&keyHitReactionName, conveyerKey->mPlacementInfo,
+        if (tryGetStringArg(&keyHitReactionName, conveyerKey->placementInfo,
                             "KeyHitReactionName") &&
             (mKeyHitReactionName == nullptr ||
              !isEqualString(mKeyHitReactionName, keyHitReactionName)))
             startHitReaction(this, keyHitReactionName);
 
-        if (tryGetStringArg(&actionName, conveyerKey->mPlacementInfo, "ActionName") &&
+        if (tryGetStringArg(&actionName, conveyerKey->placementInfo, "ActionName") &&
             (mActionName == nullptr || !isEqualString(mActionName, actionName)))
             startAction(this, actionName);
     }

@@ -81,7 +81,7 @@ void LiveActorKit::init(s32 maxCameras) {
 
     ExecuteSystemInitInfo info{};
     mExecuteDirector = new ExecuteDirector(mMaxActors);
-    info.mDrawCtx = mSceneDrawContext;
+    info.drawCtx = mSceneDrawContext;
     mExecuteDirector->init(info);
 
     mModelDrawBufferUpdater = new ModelDrawBufferUpdater(mExecuteDirector);

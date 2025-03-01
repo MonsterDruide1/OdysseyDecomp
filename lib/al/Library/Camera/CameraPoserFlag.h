@@ -12,21 +12,21 @@ struct CameraPoserFlag {
     void load(const ByamlIter& iter);
     bool isValidKeepPreSelfPoseNextCamera() const;
 
-    bool mIsFirstCalc = true;
-    bool mIsOffVerticalAbsorb = false;
-    bool mIsInvalidCollider = true;
+    bool isFirstCalc = true;
+    bool isOffVerticalAbsorb = false;
+    bool isInvalidCollider = true;
     bool _3 = false;
-    bool mIsValidKeepPreSelfPoseNextCameraByParam = false;
-    bool mIsOverWriteProgram = false;
-    bool mIsInvalidKeepPreSelfPoseNextCameraOverWriteProgram = false;
-    bool mIsInvalidKeepDistanceNextCamera = false;
-    bool mIsInvalidKeepDistanceNextCameraIfNoCollide = false;
-    bool mIsValidCtrlSubjective = false;
-    bool mIsInvalidChangeSubjective = false;
-    bool mIsInvalidCameraBlur = false;
+    bool isValidKeepPreSelfPoseNextCameraByParam = false;
+    bool isOverWriteProgram = false;
+    bool isInvalidKeepPreSelfPoseNextCameraOverWriteProgram = false;
+    bool isInvalidKeepDistanceNextCamera = false;
+    bool isInvalidKeepDistanceNextCameraIfNoCollide = false;
+    bool isValidCtrlSubjective = false;
+    bool isInvalidChangeSubjective = false;
+    bool isInvalidCameraBlur = false;
     bool _c = false;
-    bool mIsInvalidPreCameraEndAfterInterpole = false;
-    bool mIsStopUpdateGyro = false;
+    bool isInvalidPreCameraEndAfterInterpole = false;
+    bool isStopUpdateGyro = false;
 };
 
 static_assert(sizeof(CameraPoserFlag) == 0xF);

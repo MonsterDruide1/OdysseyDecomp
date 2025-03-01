@@ -43,7 +43,7 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     using ClockMapPartsFunctor = FunctorV0M<ClockMapParts*, void (ClockMapParts::*)()>;
 
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Rotate", &NrvClockMapParts.mCollector, 0);
+    initNerveAction(this, "Rotate", &NrvClockMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);

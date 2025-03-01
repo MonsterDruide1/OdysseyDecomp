@@ -7,16 +7,16 @@ namespace al {
 CameraPoserFlag::CameraPoserFlag() = default;
 
 void CameraPoserFlag::load(const ByamlIter& iter) {
-    tryGetByamlBool(&mIsInvalidChangeSubjective, iter, "IsInvalidChangeSubjective");
-    tryGetByamlBool(&mIsValidKeepPreSelfPoseNextCameraByParam, iter,
+    tryGetByamlBool(&isInvalidChangeSubjective, iter, "IsInvalidChangeSubjective");
+    tryGetByamlBool(&isValidKeepPreSelfPoseNextCameraByParam, iter,
                     "IsValidKeepPreSelfPoseNextCameraByParam");
-    tryGetByamlBool(&mIsInvalidKeepPreSelfPoseNextCameraOverWriteProgram, iter,
+    tryGetByamlBool(&isInvalidKeepPreSelfPoseNextCameraOverWriteProgram, iter,
                     "IsInvalidKeepPreSelfPoseNextCameraOverWriteProgram");
-    tryGetByamlBool(&mIsInvalidKeepDistanceNextCamera, iter, "IsInvalidKeepDistanceNextCamera");
+    tryGetByamlBool(&isInvalidKeepDistanceNextCamera, iter, "IsInvalidKeepDistanceNextCamera");
 }
 
 bool CameraPoserFlag::isValidKeepPreSelfPoseNextCamera() const {
-    return mIsOverWriteProgram ? !mIsInvalidKeepPreSelfPoseNextCameraOverWriteProgram :
-                                 mIsValidKeepPreSelfPoseNextCameraByParam;
+    return isOverWriteProgram ? !isInvalidKeepPreSelfPoseNextCameraOverWriteProgram :
+                                isValidKeepPreSelfPoseNextCameraByParam;
 }
 }  // namespace al

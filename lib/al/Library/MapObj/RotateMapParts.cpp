@@ -30,7 +30,7 @@ void RotateMapParts::init(const ActorInitInfo& info) {
     using RotateMapPartsFunctor = FunctorV0M<RotateMapParts*, void (RotateMapParts::*)()>;
 
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Rotate", &NrvRotateMapParts.mCollector, 0);
+    initNerveAction(this, "Rotate", &NrvRotateMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);

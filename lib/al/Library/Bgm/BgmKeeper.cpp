@@ -27,6 +27,6 @@ void BgmKeeper::update() {}
 const char* BgmKeeper::getUserName() const {
     if (mBgmUserInfo == nullptr)
         return nullptr;
-    return mBgmUserInfo->mName;
+    return mBgmUserInfo->name;
 }
 }  // namespace al

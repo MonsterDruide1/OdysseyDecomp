@@ -32,7 +32,7 @@ WheelMapParts::WheelMapParts(const char* name) : LiveActor(name) {}
 
 void WheelMapParts::init(const ActorInitInfo& info) {
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Wait", &NrvWheelMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvWheelMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);

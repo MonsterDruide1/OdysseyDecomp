@@ -29,7 +29,7 @@ WobbleMapParts::WobbleMapParts(const char* name) : LiveActor(name) {}
 
 void WobbleMapParts::init(const ActorInitInfo& info) {
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Wait", &NrvWobbleMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvWobbleMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);

@@ -40,8 +40,8 @@ struct BgmUserInfo {
     static s32 compareInfo(const BgmUserInfo*, const BgmUserInfo*);
     static s32 compareInfoByKey(const BgmUserInfo*, const char*);
 
-    const char* mName = nullptr;
-    AudioInfoListWithParts* mBgmActionInfoList = nullptr;
-    AudioInfoListWithParts* mBgmSourceInfoList = nullptr;
+    const char* name = nullptr;
+    AudioInfoListWithParts* bgmActionInfoList = nullptr;
+    AudioInfoListWithParts* bgmSourceInfoList = nullptr;
 };
 }  // namespace al

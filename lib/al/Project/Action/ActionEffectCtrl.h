@@ -6,9 +6,9 @@
 
 namespace al {
 struct ActionEffectCtrlInfo {
-    const char* mName;
-    const char* mMaterialName;
-    bool mHasEmittedEffect;
+    const char* name;
+    const char* materialName;
+    bool hasEmittedEffect;
 };
 
 class ActionEffectCtrl : public IUseEffectKeeper {

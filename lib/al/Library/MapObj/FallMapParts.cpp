@@ -29,7 +29,7 @@ namespace al {
 FallMapParts::FallMapParts(const char* name) : LiveActor(name) {}
 
 void FallMapParts::init(const ActorInitInfo& info) {
-    initNerveAction(this, "Wait", &NrvFallMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvFallMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     registerAreaHostMtx(this, info);
 

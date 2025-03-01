@@ -16,15 +16,15 @@ class IUseSceneObjHolder;
 }  // namespace al
 
 struct MapData {
-    sead::Matrix44f mViewProjMatrix;
-    sead::Matrix34f mViewMatrix;
-    sead::Matrix44f mProjMatrix;
-    nn::ui2d::TextureInfo* mTexture2dMap;
+    sead::Matrix44f viewProjMatrix;
+    sead::Matrix34f viewMatrix;
+    sead::Matrix44f projMatrix;
+    nn::ui2d::TextureInfo* texture2dMap;
     void* field_b8;  // TODO unknown type
-    s32 mPartsNum;
-    void** mParts;  // TODO unknown type
-    s32 mWorldScenarioNum;
-    sead::PtrArray<MapData> mScenarioMapData;
+    s32 partsNum;
+    void** parts;  // TODO unknown type
+    s32 worldScenarioNum;
+    sead::PtrArray<MapData> scenarioMapData;
 };
 
 class MapDataHolder {

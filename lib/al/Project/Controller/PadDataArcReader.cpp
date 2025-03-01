@@ -21,13 +21,13 @@ void PadDataArcReader::readResource(const char* resourceName) {
     mDataFrames = (PadDataPack*)resource->getOtherFile(filename);
     checkEnd();
     PadDataPack* checkFrame = mDataFrames;
-    while (checkFrame->mTrig != -1)
+    while (checkFrame->trig != -1)
         checkFrame++;
     mTotalFrame = checkFrame - mDataFrames;
 }
 
 void PadDataArcReader::checkEnd() {
-    if (mDataFrames[mCursorFrame].mTrig == -1)
+    if (mDataFrames[mCursorFrame].trig == -1)
         mIsEnd = true;
 }
 

@@ -11,9 +11,9 @@ class PlacementId;
 class CameraResourceHolder {
 public:
     struct Entry {
-        ByamlIter* mCameraParam = nullptr;
-        ByamlIter* mInterpoleParam = nullptr;
-        sead::FixedSafeString<128> mStageName = {""};
+        ByamlIter* cameraParam = nullptr;
+        ByamlIter* interpoleParam = nullptr;
+        sead::FixedSafeString<128> stageName = {""};
     };
 
     enum ParamType : s32 {

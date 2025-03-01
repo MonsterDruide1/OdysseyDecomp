@@ -6,9 +6,9 @@
 namespace alActionFunction {
 const char* getAnimName(const al::ActionAnimCtrlInfo* infoCtrl,
                         const al::ActionAnimDataInfo* infoData) {
-    const char* animName = infoData->mActionName;
+    const char* animName = infoData->actionName;
     if (animName == nullptr)
-        animName = infoCtrl->mActionName;
+        animName = infoCtrl->actionName;
     return animName;
 }
 }  // namespace alActionFunction

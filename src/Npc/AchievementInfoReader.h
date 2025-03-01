@@ -2,17 +2,15 @@
 
 #include <container/seadPtrArray.h>
 
-#include "Library/Base/StringUtil.h"
-
-class AchievementInfo {
+struct AchievementInfo {
 public:
     AchievementInfo(const char* name, s32 num, s32 level, const char* note)
-        : mName(name), mNum(num), mLevel(level), mNote(note) {}
+        : name(name), num(num), level(level), note(note) {}
 
-    const char* mName;
-    s32 mNum;
-    s32 mLevel;
-    const char* mNote;
+    const char* name;
+    s32 num;
+    s32 level;
+    const char* note;
 };
 
 class AchievementInfoReader {

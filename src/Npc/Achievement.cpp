@@ -6,5 +6,5 @@
 Achievement::Achievement(const AchievementInfo* info) : mInfo(info) {}
 
 bool Achievement::isGet(GameDataHolderAccessor accessor) const {
-    return mIsGet || rs::checkGetAchievement(accessor, mInfo->mName);
+    return mIsGet || rs::checkGetAchievement(accessor, mInfo->name);
 }

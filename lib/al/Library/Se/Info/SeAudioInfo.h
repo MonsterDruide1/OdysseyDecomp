@@ -17,12 +17,12 @@ struct SeUserInfo {
 
     static s32 compareInfo(const SeUserInfo*, const SeUserInfo*);
 
-    const char* mName;
-    bool mIsPartsUser = false;
-    sead::PtrArray<const char*> mPartsUserNameList;
-    AudioInfoListWithParts* mEmitterInfoList;
-    AudioInfoListWithParts* mActionInfoList;
-    AudioInfoListWithParts* mPlayInfoList;
-    AudioInfoListWithParts* mHitReactionInfoList;
+    const char* name;
+    bool isPartsUser = false;
+    sead::PtrArray<const char*> partsUserNameList;
+    AudioInfoListWithParts* emitterInfoList;
+    AudioInfoListWithParts* actionInfoList;
+    AudioInfoListWithParts* playInfoList;
+    AudioInfoListWithParts* hitReactionInfoList;
 };
 }  // namespace al

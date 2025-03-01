@@ -10,7 +10,7 @@ struct ParamEnemyStateRunAway {
     f32 field_8;
     f32 field_c;
     f32 field_10;
-    bool mShouldFaceDir;
+    bool shouldFaceDir;
 };
 
 class EnemyStateRunAway : public al::ActorStateBase {

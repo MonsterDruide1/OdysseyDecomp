@@ -6,40 +6,40 @@ struct PlayerHeadCostumeInfo {
 public:
     PlayerHeadCostumeInfo(const char*);
 
-    const char* mCostumeName;
-    bool mIsFullFace = false;
-    bool mIsShrinkNose = false;
-    bool mIsPreventHead = false;
-    bool mIsEnableBigEar = false;
-    bool mIsEnableHairNoCap = false;
-    bool mIsMario64 = false;
-    bool mIsHaveShort = false;
-    bool mIsHideBeard = false;
-    bool mIsHideEarringPeach = false;
-    bool mIsHideEarringLink = false;
-    bool mIsUseStrap = false;
-    bool mIsInvisibleHead = false;
+    const char* costumeName;
+    bool isFullFace = false;
+    bool isShrinkNose = false;
+    bool isPreventHead = false;
+    bool isEnableBigEar = false;
+    bool isEnableHairNoCap = false;
+    bool isMario64 = false;
+    bool isHaveShort = false;
+    bool isHideBeard = false;
+    bool isHideEarringPeach = false;
+    bool isHideEarringLink = false;
+    bool isUseStrap = false;
+    bool isInvisibleHead = false;
 };
 
 struct PlayerBodyCostumeInfo {
 public:
     PlayerBodyCostumeInfo(const char*);
 
-    const char* mCostumeName;
-    s32 mWarmLevel = 0;
-    bool mIsIgnoreTemperature = false;
-    bool mIsUseHeadSuffix = false;
-    bool mIsBigEar = false;
-    bool mIsHideHeadHair = false;
-    bool mIsUseBodyHair = false;
-    bool mIsExistHairNoCap = false;
-    bool mIsUseShortHead = false;
-    bool mIsNoPairHead = false;
-    bool mIsMario64 = false;
-    bool mIsHidePainNose = false;
-    bool mIsUseBeard = false;
-    bool mIsUseEarringPeach = false;
-    bool mIsUseEarringLink = false;
+    const char* costumeName;
+    s32 warmLevel = 0;
+    bool isIgnoreTemperature = false;
+    bool isUseHeadSuffix = false;
+    bool isBigEar = false;
+    bool isHideHeadHair = false;
+    bool isUseBodyHair = false;
+    bool isExistHairNoCap = false;
+    bool isUseShortHead = false;
+    bool isNoPairHead = false;
+    bool isMario64 = false;
+    bool isHidePainNose = false;
+    bool isUseBeard = false;
+    bool isUseEarringPeach = false;
+    bool isUseEarringLink = false;
 };
 
 class PlayerCostumeInfo {

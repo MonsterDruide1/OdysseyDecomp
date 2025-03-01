@@ -10,7 +10,7 @@ class HitSensorKeeper;
 class LiveActor;
 
 struct ActionFlagCtrlInfo {
-    const char* mName;
+    const char* name;
     void* _8;
     void* _10;
 };

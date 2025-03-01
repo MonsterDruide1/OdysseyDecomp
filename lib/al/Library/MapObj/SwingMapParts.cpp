@@ -36,9 +36,9 @@ void SwingMapParts::init(const ActorInitInfo& info) {
     mSwingMovement = new SwingMovement(info);
 
     if (mSwingMovement->isLeft())
-        initNerveAction(this, "MoveLeft", &NrvSwingMapParts.mCollector, 0);
+        initNerveAction(this, "MoveLeft", &NrvSwingMapParts.collector, 0);
     else
-        initNerveAction(this, "MoveRight", &NrvSwingMapParts.mCollector, 0);
+        initNerveAction(this, "MoveRight", &NrvSwingMapParts.collector, 0);
 
     tryInitSubActorKeeperChildStep(this, info);
     initMapPartsActor(this, info, nullptr);

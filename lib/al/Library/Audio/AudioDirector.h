@@ -28,7 +28,7 @@ class PlayerHolder;
 class AudioDirector : public IUseAreaObj, public HioNode, public IAudioSystemPause {
 public:
     struct PauseSystemEntry {
-        const char* mName;
+        const char* name;
         bool _8;
         bool _9;
     };

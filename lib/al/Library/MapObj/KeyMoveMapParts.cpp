@@ -40,7 +40,7 @@ KeyMoveMapParts::KeyMoveMapParts(const char* name) : LiveActor(name) {}
 void KeyMoveMapParts::init(const ActorInitInfo& info) {
     using KeyMoveMapPartsFunctor = FunctorV0M<KeyMoveMapParts*, void (KeyMoveMapParts::*)()>;
 
-    initNerveAction(this, "Wait", &NrvKeyMoveMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvKeyMoveMapParts.collector, 0);
 
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "SuffixName");

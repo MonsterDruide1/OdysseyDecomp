@@ -385,7 +385,7 @@ constexpr bool strings_equal(const char* a, const char* b) {
 
 static constexpr s32 getUpdateTableIndex(const char* listName) {
     for (u64 i = 0; i < sizeof(updateTableArr) / sizeof(updateTableArr[0]); i++)
-        if (strings_equal(updateTableArr[i].mListName, listName))
+        if (strings_equal(updateTableArr[i].listName, listName))
             return i;
     return 0;
 }
@@ -393,17 +393,17 @@ static constexpr s32 getUpdateTableIndex(const char* listName) {
 static constexpr al::ExecuteTable
 createUpdateTable(const char* tableName, const char* startListName, const char* endListName) {
     al::ExecuteTable drawTable;
-    drawTable.mName = tableName;
+    drawTable.name = tableName;
     s32 startIndex = getUpdateTableIndex(startListName);
-    drawTable.mExecuteOrders = &updateTableArr[startIndex];
-    drawTable.mExecuteOrderCount = (getUpdateTableIndex(endListName) - startIndex) + 1;
+    drawTable.executeOrders = &updateTableArr[startIndex];
+    drawTable.executeOrderCount = (getUpdateTableIndex(endListName) - startIndex) + 1;
     return drawTable;
 }
 
 static constexpr s32 getDrawTableIndex(const char* listName, const char* groupName) {
     for (u64 i = 0; i < sizeof(drawTableArr) / sizeof(drawTableArr[0]); i++)
-        if (strings_equal(drawTableArr[i].mListName, listName) &&
-            strings_equal(drawTableArr[i].mExecuteGroup, groupName))
+        if (strings_equal(drawTableArr[i].listName, listName) &&
+            strings_equal(drawTableArr[i].executeGroup, groupName))
             return i;
     return 0;
 }
@@ -413,10 +413,10 @@ static constexpr al::ExecuteTable createDrawTable(const char* tableName, const c
                                                   const char* endListName,
                                                   const char* groupEndName) {
     al::ExecuteTable drawTable;
-    drawTable.mName = tableName;
+    drawTable.name = tableName;
     s32 startIndex = getDrawTableIndex(startListName, groupStartName);
-    drawTable.mExecuteOrders = &drawTableArr[startIndex];
-    drawTable.mExecuteOrderCount = (getDrawTableIndex(endListName, groupEndName) - startIndex) + 1;
+    drawTable.executeOrders = &drawTableArr[startIndex];
+    drawTable.executeOrderCount = (getDrawTableIndex(endListName, groupEndName) - startIndex) + 1;
     return drawTable;
 }
 

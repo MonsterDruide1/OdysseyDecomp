@@ -14,9 +14,9 @@ struct SearchAmiiboData {
     void init();
     bool isInvalidId() const;
 
-    s32 mId;
-    s32 mNumberingId;
-    u64 mSearchStartTime;
+    s32 id;
+    s32 numberingId;
+    u64 searchStartTime;
 };
 
 class SearchAmiiboDataTable : public al::HioNode {
