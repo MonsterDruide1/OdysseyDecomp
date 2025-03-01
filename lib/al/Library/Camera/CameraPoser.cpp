@@ -29,9 +29,8 @@ namespace al {
 
 CameraPoser::CameraPoser(const char* name) : mPoserName(name) {
     mPoserFlag = new CameraPoserFlag();
-    mActiveInterpoleParam =
-        new CameraInterpoleParam(CameraInterpoleStep(CameraInterpoleStepType::ByCameraDistance));
-    mEndInterpoleParam = new CameraInterpoleStep(CameraInterpoleStepType::Undefined);
+    mActiveInterpoleParam = new CameraInterpoleParam(CameraInterpoleStepType::ByCameraDistance, -1);
+    mEndInterpoleParam = new CameraInterpoleStep(CameraInterpoleStepType::Undefined, -1);
 };
 
 void CameraPoser::init() {}
@@ -133,11 +132,11 @@ RailRider* CameraPoser::getRailRider() const {
 }
 
 bool CameraPoser::isInterpoleByCameraDistance() const {
-    return mActiveInterpoleParam->mStep.mStepType == CameraInterpoleStepType::ByCameraDistance;
+    return mActiveInterpoleParam->mStepType == CameraInterpoleStepType::ByCameraDistance;
 }
 
 s32 CameraPoser::getInterpoleStep() const {
-    return mActiveInterpoleParam->mStep.mStepNum < 0 ? 60 : mActiveInterpoleParam->mStep.mStepNum;
+    return mActiveInterpoleParam->mStepNum < 0 ? 60 : mActiveInterpoleParam->mStepNum;
 }
 
 void CameraPoser::setInterpoleStep(s32 step) {
@@ -201,23 +200,23 @@ void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {
 
 inline void CameraPoser::CameraInterpoleParam::set(CameraInterpoleStepType type, s32 step,
                                                    bool isInterpolate) {
-    mStep.mStepType = type;
-    mStep.mStepNum = step;
+    mStepType = type;
+    mStepNum = step;
     mIsInterpolate = isInterpolate;
 }
 
 inline void CameraPoser::CameraInterpoleParam::load(const ByamlIter& iter) {
-    tryGetByamlS32((s32*)&mStep.mStepType, iter, "InterpoleStepType");
+    tryGetByamlS32((s32*)&mStepType, iter, "InterpoleStepType");
 
     const char* curveType = nullptr;
     if (tryGetByamlString(&curveType, iter, "InterpoleCurveType") != 0 && curveType &&
         isEqualString(curveType, "EaseOut"))
         mIsEaseOut = true;
 
-    bool isInterpolate = tryGetByamlS32(&mStep.mStepNum, iter, "InterpoleStep");
+    bool isInterpolate = tryGetByamlS32(&mStepNum, iter, "InterpoleStep");
     mIsInterpolate = isInterpolate;
     if (isInterpolate)
-        mStep.mStepType = CameraInterpoleStepType::ByStep;
+        mStepType = CameraInterpoleStepType::ByStep;
 }
 
 inline void CameraPoser::CameraInterpoleStep::load(const ByamlIter& iter) {

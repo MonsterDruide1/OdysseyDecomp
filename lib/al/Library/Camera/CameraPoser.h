@@ -84,7 +84,8 @@ public:
     static_assert(sizeof(LookAtInterpole) == 0x10);
 
     struct CameraInterpoleStep {
-        CameraInterpoleStep(CameraInterpoleStepType type) : mStepType(type) {}
+        CameraInterpoleStep(CameraInterpoleStepType type, s32 stepNum)
+            : mStepType(type), mStepNum(stepNum) {}
 
         void load(const ByamlIter& iter);
 
@@ -94,13 +95,13 @@ public:
 
     static_assert(sizeof(CameraInterpoleStep) == 0x8);
 
-    struct CameraInterpoleParam {
-        CameraInterpoleParam(CameraInterpoleStep interpoleStep) : mStep(interpoleStep) {};
+    struct CameraInterpoleParam : public CameraInterpoleStep {
+        CameraInterpoleParam(CameraInterpoleStepType type, s32 stepNum)
+            : CameraInterpoleStep(type, stepNum) {};
 
         void load(const ByamlIter& iter);
         void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
 
-        CameraInterpoleStep mStep;
         s8 mIsEaseOut = false;
         s8 mIsInterpolate = false;
     };
