@@ -148,10 +148,9 @@ bool isSensorRide(const HitSensor*);
 void invalidateHitSensorEyeAll(LiveActor*);
 void invalidateHitSensorPlayerAll(LiveActor*);
 void invalidateHitSensorPlayerAttackAll(LiveActor*);
-bool isSensorPlayerAttack(const HitSensor*)
+bool isSensorPlayerAttack(const HitSensor*);
 
-    bool sendMsgPlayerAttackTrample(HitSensor* receiver, HitSensor* sender,
-                                    ComboCounter* comboCounter);
+bool sendMsgPlayerAttackTrample(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
 bool sendMsgPlayerTrampleReflect(HitSensor* receiver, HitSensor* sender,
                                  ComboCounter* comboCounter);
 bool sendMsgPlayerReflectOrTrample(HitSensor* receiver, HitSensor* sender,
