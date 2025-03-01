@@ -48,7 +48,7 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowClimbPoleNoInterp);
     if (alCameraPoserFunction::isTargetGrabCeil(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowSlow);
-    if (!info.mIsGrounded || alCameraPoserFunction::isTargetCollideGround(mCameraPoser))
+    if (!info.isGrounded || alCameraPoserFunction::isTargetCollideGround(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowGround);
 
     mPrevTargetTrans = alCameraPoserFunction::getPreLookAtPos(mCameraPoser);

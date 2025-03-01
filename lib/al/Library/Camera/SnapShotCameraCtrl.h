@@ -7,10 +7,10 @@
 #include "Library/Yaml/ByamlIter.h"
 
 struct CameraParam {
-    bool mHasMin;
-    bool mHasMax;
-    f32 mMinFovyDegree;
-    f32 mMaxFovyDegree;
+    bool hasMin;
+    bool hasMax;
+    f32 minFovyDegree;
+    f32 maxFovyDegree;
 };
 
 namespace al {

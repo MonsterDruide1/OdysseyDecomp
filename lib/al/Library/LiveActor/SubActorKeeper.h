@@ -88,15 +88,15 @@ struct SubActorSync {
     AL_BITS(SubActorSync)
 };
 
-class SubActorInfo {
+struct SubActorInfo {
 public:
     SubActorInfo();
 
-    SubActorInfo(LiveActor* actor, SubActorSync syncType) : mSubActor(actor), mSyncType(syncType) {}
+    SubActorInfo(LiveActor* actor, SubActorSync syncType) : subActor(actor), syncType(syncType) {}
 
-    LiveActor* mSubActor = nullptr;
+    LiveActor* subActor = nullptr;
     void* field_8 = nullptr;
-    SubActorSync mSyncType = SubActorSync::cNone;
+    SubActorSync syncType = SubActorSync::cNone;
 };
 
 class SubActorKeeper {
