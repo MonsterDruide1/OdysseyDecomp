@@ -100,7 +100,7 @@ void calcSlerpKeyQuat(sead::Quatf* out, const KeyPoseKeeper* keyPoseKeeper, f32 
 
 bool isMoveSignKey(const KeyPoseKeeper* keyPoseKeeper) {
     bool isPlaySign = false;
-    tryGetArg(&isPlaySign, keyPoseKeeper->getCurrentKeyPose().getPlacementInfo(), "IsPlaySign");
+    tryGetArg(&isPlaySign, getCurrentKeyPlacementInfo(keyPoseKeeper), "IsPlaySign");
 
     return isPlaySign;
 }
@@ -126,9 +126,7 @@ bool isRestart(const KeyPoseKeeper* keyPoseKeeper) {
 }
 
 f32 calcDistanceNextKeyTrans(const KeyPoseKeeper* keyPoseKeeper) {
-    return (keyPoseKeeper->getCurrentKeyPose().getTrans() -
-            keyPoseKeeper->getNextKeyPose().getTrans())
-        .length();
+    return (getCurrentKeyTrans(keyPoseKeeper) - getNextKeyTrans(keyPoseKeeper)).length();
 }
 
 s32 calcTimeToNextKeyMove(const KeyPoseKeeper* keyPoseKeeper, f32 speed) {
@@ -136,8 +134,8 @@ s32 calcTimeToNextKeyMove(const KeyPoseKeeper* keyPoseKeeper, f32 speed) {
 }
 
 void calcDirToNextKey(sead::Vector3f* out, const KeyPoseKeeper* keyPoseKeeper) {
-    const sead::Vector3f& currTrans = keyPoseKeeper->getCurrentKeyPose().getTrans();
-    const sead::Vector3f& nextTrans = keyPoseKeeper->getNextKeyPose().getTrans();
+    const sead::Vector3f& currTrans = getCurrentKeyTrans(keyPoseKeeper);
+    const sead::Vector3f& nextTrans = getNextKeyTrans(keyPoseKeeper);
 
     out->x = nextTrans.x - currTrans.x;
     out->y = nextTrans.y - currTrans.y;
@@ -149,29 +147,27 @@ void calcDirToNextKey(sead::Vector3f* out, const KeyPoseKeeper* keyPoseKeeper) {
 
 f32 calcKeyMoveSpeed(const KeyPoseKeeper* keyPoseKeeper) {
     f32 speed = -1.0f;
-    tryGetArg(&speed, keyPoseKeeper->getCurrentKeyPose().getPlacementInfo(), "Speed");
+    tryGetArg(&speed, getCurrentKeyPlacementInfo(keyPoseKeeper), "Speed");
 
-    f32 v = -1.0f;
-    if (!(speed < 0.0f))
-        v = speed;
+    if (speed < 0.0f)
+        return -1.0f;
 
-    return v;
+    return speed;
 }
 
 f32 calcKeyMoveSpeedByTime(const KeyPoseKeeper* keyPoseKeeper) {
     s32 speed = -1;
-    tryGetArg(&speed, keyPoseKeeper->getCurrentKeyPose().getPlacementInfo(), "SpeedByTime");
+    tryGetArg(&speed, getCurrentKeyPlacementInfo(keyPoseKeeper), "SpeedByTime");
 
-    f32 v = -1.0f;
-    if (!(speed < 0))
-        v = (f32)speed;
+    if (speed < 0.0f)
+        return -1.0f;
 
-    return v;
+    return speed;
 }
 
 s32 calcKeyMoveWaitTime(const KeyPoseKeeper* keyPoseKeeper) {
     s32 waitTime = -1;
-    tryGetArg(&waitTime, keyPoseKeeper->getCurrentKeyPose().getPlacementInfo(), "WaitTime");
+    tryGetArg(&waitTime, getCurrentKeyPlacementInfo(keyPoseKeeper), "WaitTime");
 
     return sead::Mathi::max(waitTime, -1);
 }

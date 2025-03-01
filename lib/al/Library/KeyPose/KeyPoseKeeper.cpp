@@ -36,19 +36,15 @@ const KeyPose& KeyPoseKeeper::getNextKeyPose() const {
 }
 
 s32 KeyPoseKeeper::calcNextPoseIndex() const {
-    s32 nextIdx;
-
     if (!mIsGoingToEnd)
         if (mKeyPoseCurrentIdx < 1)
-            nextIdx = mKeyPoseCount - 1;
+            return mKeyPoseCount - 1;
         else
-            nextIdx = mKeyPoseCurrentIdx - 1;
+            return mKeyPoseCurrentIdx - 1;
     else if (mKeyPoseCurrentIdx + 1 < mKeyPoseCount)
-        nextIdx = mKeyPoseCurrentIdx + 1;
-    else
-        nextIdx = 0;
+        return mKeyPoseCurrentIdx + 1;
 
-    return nextIdx;
+    return 0;
 }
 
 void KeyPoseKeeper::reset() {
@@ -62,29 +58,23 @@ void KeyPoseKeeper::next() {
     mKeyPoseCurrentIdx = calcNextPoseIndex();
 
     switch (mMoveType) {
-    case (MoveType::Turn):
-        if (!isLastKey())
-            return;
+    case MoveType::Turn:
+        if (isLastKey())
+            mIsGoingToEnd = !mIsGoingToEnd;
 
-        mIsGoingToEnd = !mIsGoingToEnd;
+        break;
+    case MoveType::Stop:
+        if (isLastKey())
+            mIsStop = true;
 
-        return;
-    case (MoveType::Stop):
-        if (!isLastKey())
-            return;
+        break;
+    case MoveType::Restart:
+        if (isLastKey())
+            mIsRestart = true;
 
-        mIsStop = true;
-
-        return;
-    case (MoveType::Restart):
-        if (!isLastKey())
-            return;
-
-        mIsRestart = true;
-
-        return;
+        break;
     default:
-        return;
+        break;
     }
 }
 
@@ -95,10 +85,8 @@ bool KeyPoseKeeper::isLastKey() const {
 void KeyPoseKeeper::reverse() {
     mIsGoingToEnd = !mIsGoingToEnd;
 
-    if (mMoveType != MoveType::Stop)
-        return;
-
-    mIsStop = isLastKey();
+    if (mMoveType == MoveType::Stop)
+        mIsStop = isLastKey();
 }
 
 bool KeyPoseKeeper::isFirstKey() const {
