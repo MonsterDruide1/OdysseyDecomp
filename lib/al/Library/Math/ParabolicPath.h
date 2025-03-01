@@ -31,6 +31,8 @@ public:
     s32 calcPathTimeFromAverageSpeed(f32 frames) const;
     s32 calcPathTimeFromHorizontalSpeed(f32 frames) const;
 
+    const sead::Vector3f& getStart() const { return mStart; }
+
 private:
     sead::Vector3f mStart = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mUp = {0.0f, 1.0f, 0.0f};
