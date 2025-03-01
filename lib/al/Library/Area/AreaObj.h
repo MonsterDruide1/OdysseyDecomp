@@ -26,13 +26,9 @@ public:
     virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
     SceneObjHolder* getSceneObjHolder() const override;
 
-<<<<<<< HEAD
-    PlacementInfo* getPlacementInfo() const { return mPlacementInfo; }
-
     AreaShape* getAreaShape() const { return mAreaShape; }
-=======
-    PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; };
->>>>>>> e99f2c9 (Project/Camera: Implemented)
+
+    PlacementInfo* getPlacementInfo() const { return mPlacementInfo; };
 
 private:
     const char* mName;
