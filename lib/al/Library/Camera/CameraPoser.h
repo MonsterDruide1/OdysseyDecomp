@@ -84,19 +84,23 @@ public:
     static_assert(sizeof(LookAtInterpole) == 0x10);
 
     struct CameraInterpoleStep {
+        CameraInterpoleStep(CameraInterpoleStepType type) : mStepType(type) {}
+
         void load(const ByamlIter& iter);
 
-        CameraInterpoleStepType mStepType = CameraInterpoleStepType::Undefined;
+        CameraInterpoleStepType mStepType;
         s32 mStepNum = -1;
     };
 
     static_assert(sizeof(CameraInterpoleStep) == 0x8);
 
     struct CameraInterpoleParam {
+        CameraInterpoleParam(CameraInterpoleStep interpoleStep) : mStep(interpoleStep) {};
+
         void load(const ByamlIter& iter);
         void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
 
-        CameraInterpoleStep mStep = {CameraInterpoleStepType::ByCameraDistance, -1};
+        CameraInterpoleStep mStep;
         s8 mIsEaseOut = false;
         s8 mIsInterpolate = false;
     };
@@ -104,6 +108,8 @@ public:
     static_assert(sizeof(CameraInterpoleParam) == 0xC);
 
     struct OrthoProjectionParam {
+        OrthoProjectionParam(OrthoProjectionInfo info) : mInfo(info) {}
+
         void load(const ByamlIter& iter);
 
         bool mIsSetInfo = false;

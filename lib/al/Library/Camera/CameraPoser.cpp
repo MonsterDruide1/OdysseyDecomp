@@ -29,8 +29,9 @@ namespace al {
 
 CameraPoser::CameraPoser(const char* name) : mPoserName(name) {
     mPoserFlag = new CameraPoserFlag();
-    mActiveInterpoleParam = new CameraInterpoleParam();
-    mEndInterpoleParam = new CameraInterpoleStep();
+    mActiveInterpoleParam =
+        new CameraInterpoleParam(CameraInterpoleStep(CameraInterpoleStepType::ByCameraDistance));
+    mEndInterpoleParam = new CameraInterpoleStep(CameraInterpoleStepType::Undefined);
 };
 
 void CameraPoser::init() {}
@@ -190,7 +191,8 @@ void CameraPoser::initLookAtInterpole(f32 v) {
 }
 
 void CameraPoser::initOrthoProjectionParam() {
-    mOrthoProjectionParam = new OrthoProjectionParam();
+    OrthoProjectionInfo info = OrthoProjectionInfo();
+    mOrthoProjectionParam = new OrthoProjectionParam(info);
 }
 
 void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {
