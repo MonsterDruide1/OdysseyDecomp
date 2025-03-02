@@ -4,11 +4,7 @@
 #include <gfx/seadProjection.h>
 
 #include "Library/Camera/CameraPoserFunction.h"
-#include "Library/Nerve/Nerve.h"
 #include "Library/Nerve/NerveExecutor.h"
-#include "Library/Nerve/NerveKeeper.h"
-#include "Library/Nerve/NerveSetupUtil.h"
-#include "Library/Nerve/NerveUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {
@@ -27,7 +23,7 @@ public:
     void invalidate();
     bool isAbsorbing() const;
     bool isValid() const;
-    void liverateAbsorb();
+    void liberateAbsorb();
     void load(const ByamlIter&);
     void makeLookAtCamera(sead::LookAtCamera*) const;
     void start(const sead::Vector3f&, const CameraStartInfo&);
