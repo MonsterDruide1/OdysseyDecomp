@@ -50,4 +50,3 @@ private:
 static_assert(sizeof(GyroCameraCtrl) == 0xC8);
 
 }  // namespace al
-

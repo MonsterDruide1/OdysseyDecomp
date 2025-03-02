@@ -39,4 +39,3 @@ private:
 static_assert(sizeof(SceneCameraCtrl) == 0x20);
 
 }  // namespace al
-
