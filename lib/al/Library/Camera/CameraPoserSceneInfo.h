@@ -15,21 +15,22 @@ class CollisionDirector;
 struct SnapShotCameraSceneInfo;
 
 struct CameraPoserSceneInfo {
+    CameraPoserSceneInfo();
     void init(AreaObjDirector* areaObj, CollisionDirector* collision, const AudioDirector* audio);
     void registerCameraRailHolder(CameraRailHolder* railHolder);
 
-    f32 mSceneFovyDegree;
-    AreaObjDirector* mAreaObjDirector;
-    CollisionDirector* mCollisionDirector;
-    const AudioDirector* mAudioDirector;
-    CameraInputHolder* mInputHolder;
-    CameraTargetHolder* mTargetHolder;
-    CameraFlagCtrl* mFlagCtrl;
-    CameraRequestParamHolder* mRequestParamHolder;
-    CameraTargetCollideInfoHolder* mTargetColliedeInfoHolder;
-    SnapShotCameraSceneInfo* mSnapShotCameraSceneInfo;
-    CameraRailHolder* mRailHolders;
-    s32 mRailHolderNum;
+    f32 sceneFovyDegree = 35.0f;
+    AreaObjDirector* areaObjDirector = nullptr;
+    CollisionDirector* collisionDirector = nullptr;
+    const AudioDirector* audioDirector = nullptr;
+    CameraInputHolder* inputHolder = nullptr;
+    CameraTargetHolder* targetHolder = nullptr;
+    CameraFlagCtrl* flagCtrl = nullptr;
+    CameraRequestParamHolder* requestParamHolder = nullptr;
+    CameraTargetCollideInfoHolder* targetCollideInfoHolder = nullptr;
+    SnapShotCameraSceneInfo* snapShotCameraSceneInfo = nullptr;
+    CameraRailHolder** railHolders = nullptr;
+    s32 railHolderNum = 0;
 };
 
 }  // namespace al
