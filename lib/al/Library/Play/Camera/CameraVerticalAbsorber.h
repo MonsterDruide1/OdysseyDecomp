@@ -64,4 +64,3 @@ private:
 static_assert(sizeof(CameraVerticalAbsorber) == 0x1B0);
 
 }  // namespace al
-

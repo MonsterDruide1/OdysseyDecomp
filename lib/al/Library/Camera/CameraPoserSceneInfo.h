@@ -18,18 +18,18 @@ struct CameraPoserSceneInfo {
     void init(AreaObjDirector* areaObj, CollisionDirector* collision, const AudioDirector* audio);
     void registerCameraRailHolder(CameraRailHolder* railHolder);
 
-    f32 mSceneFovyDegree;
-    AreaObjDirector* mAreaObjDirector;
-    CollisionDirector* mCollisionDirector;
-    const AudioDirector* mAudioDirector;
-    CameraInputHolder* mInputHolder;
-    CameraTargetHolder* mTargetHolder;
-    CameraFlagCtrl* mFlagCtrl;
-    CameraRequestParamHolder* mRequestParamHolder;
-    CameraTargetCollideInfoHolder* mTargetColliedeInfoHolder;
-    SnapShotCameraSceneInfo* mSnapShotCameraSceneInfo;
-    CameraRailHolder* mRailHolders;
-    s32 mRailHolderNum;
+    f32 sceneFovyDegree;
+    AreaObjDirector* areaObjDirector;
+    CollisionDirector* collisionDirector;
+    const AudioDirector* audioDirector;
+    CameraInputHolder* inputHolder;
+    CameraTargetHolder* targetHolder;
+    CameraFlagCtrl* flagCtrl;
+    CameraRequestParamHolder* requestParamHolder;
+    CameraTargetCollideInfoHolder* targetColliedeInfoHolder;
+    SnapShotCameraSceneInfo* snapShotCameraSceneInfo;
+    CameraRailHolder* railHolders;
+    s32 railHolderNum;
 };
 
 }  // namespace al
