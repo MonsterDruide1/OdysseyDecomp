@@ -5,16 +5,16 @@
 namespace al {
 
 struct CameraObjectRequestInfo {
-    bool mIsStopVerticalAbsorb;
-    bool mIsResetPosition;
-    bool mIsResetAngleV;
-    bool mIsDownToDefaultAngleBySpeed;
-    bool mIsUpToTargetAngleBySpeed;
-    f32 mTargetAngleV;
-    f32 mAngleSpeed;
-    bool mMoveDownAngle;
-    bool mSetAngleV;
-    f32 mAngleV;
+    bool isStopVerticalAbsorb;
+    bool isResetPosition;
+    bool isResetAngleV;
+    bool isDownToDefaultAngleBySpeed;
+    bool isUpToTargetAngleBySpeed;
+    f32 targetAngleV;
+    f32 angleSpeed;
+    bool moveDownAngle;
+    bool setAngleV;
+    f32 angleV;
 };
 
 }  // namespace al
