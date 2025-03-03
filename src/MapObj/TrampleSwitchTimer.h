@@ -12,9 +12,9 @@ class TrampleSwitchTimer : public al::LiveActor {
 public:
     TrampleSwitchTimer(const char* actorName);
 
-    virtual void init(const al::ActorInitInfo& info) override;
-    virtual void initAfterPlacement() override;
-    virtual void control() override;
+    void init(const al::ActorInitInfo& info) override;
+    void initAfterPlacement() override;
+    void control() override;
 
     void exeOn();
     void exeOnWait();
@@ -22,8 +22,8 @@ public:
     void exeOffWait();
     void exeFreeze();
 
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
-                            al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
 private:
     bool mIsFacingUp = false;

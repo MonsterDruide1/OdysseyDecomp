@@ -8,12 +8,12 @@ class TrampleBush : public al::LiveActor {
 public:
     TrampleBush(const char* actorName);
 
-    virtual void init(const al::ActorInitInfo& info) override;
-    virtual void initAfterPlacement() override;
+    void init(const al::ActorInitInfo& info) override;
+    void initAfterPlacement() override;
 
-    virtual void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
-                            al::HitSensor* self) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     inline bool isReady();
     inline bool isCapOnSwitch(const al::SensorMsg* message);

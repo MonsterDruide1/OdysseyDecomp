@@ -12,9 +12,9 @@ class WeightSwitch : public al::LiveActor {
 public:
     WeightSwitch(const char* actorName);
 
-    virtual void init(const al::ActorInitInfo& info) override;
-    virtual void initAfterPlacement() override;
-    virtual void control() override;
+    void init(const al::ActorInitInfo& info) override;
+    void initAfterPlacement() override;
+    void control() override;
 
     void exeOffWait();
     void exeOn();
@@ -24,8 +24,8 @@ public:
     void exeOnWait();
     void exeOff();
 
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
-                            al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
 private:
     al::LiveActor* mDemoActor = nullptr;
