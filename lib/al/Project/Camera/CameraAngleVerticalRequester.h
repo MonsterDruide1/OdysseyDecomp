@@ -21,7 +21,7 @@ public:
 
 private:
     s32 mFramesUnchanged = 0;
-    f32 mAngleVertical = 0.f;
+    f32 mAngleVertical = 0.0f;
     const AreaObj* mRequestArea = nullptr;
     const AreaObjGroup* mRequestAreaGroup = nullptr;
     AreaObjDirector* mAreaObjDirector = nullptr;
