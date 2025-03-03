@@ -16,6 +16,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
 
+#include "Item/Shine.h"
 #include "Util/DemoUtil.h"
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
@@ -46,7 +47,7 @@ void WeightSwitch::init(const al::ActorInitInfo& info) {
     if (isValidObjectCamera)
         mDemoCamera = al::initDemoObjectCamera(this, info, nullptr, "固定");
 
-    mShine = (al::LiveActor*)rs::tryInitLinkShine(info, "ShineActor", 0);
+    mShine = rs::tryInitLinkShine(info, "ShineActor", 0);
     mCollisionBody = al::createCollisionObj(this, info, "TrampleSwitch_Body",
                                             al::getHitSensor(this, "PPanel"), nullptr, nullptr);
     mCollisionBody->makeActorAlive();

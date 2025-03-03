@@ -8,6 +8,8 @@ class CameraTicket;
 class MtxConnector;
 }  // namespace al
 
+class Shine;
+
 class WeightSwitch : public al::LiveActor {
 public:
     WeightSwitch(const char* actorName);
@@ -28,7 +30,7 @@ public:
                     al::HitSensor* self) override;
 
 private:
-    al::LiveActor* mShine = nullptr;
+    Shine* mShine = nullptr;
     al::CollisionObj* mCollisionBody = nullptr;
     al::CameraTicket* mDemoCamera = nullptr;
     al::MtxConnector* mMtxConnector = nullptr;
