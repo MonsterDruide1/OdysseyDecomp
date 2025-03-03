@@ -55,6 +55,7 @@
 #include "MapObj/LavaPan.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TransparentWall.h"
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WorldMapEarth.h"
@@ -507,7 +508,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Stacker", nullptr},
     {"StackerCapWorldCtrl", nullptr},
     {"StageEventDemo", nullptr},
-    {"StageSwitchSelector", nullptr},
+    {"StageSwitchSelector", al::createActorFunction<StageSwitchSelector>},
     {"StageTalkDemoNpcCap", nullptr},
     {"StageTalkDemoNpcCapMoonRock", nullptr},
     {"Stake", nullptr},
