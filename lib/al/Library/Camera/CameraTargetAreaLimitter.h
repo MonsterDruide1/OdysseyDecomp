@@ -8,7 +8,7 @@ class PlacementInfo;
 
 class CameraTargetAreaLimitter {
 public:
-    CameraTargetAreaLimitter();
+    CameraTargetAreaLimitter(const AreaShape* shape);
 
     static CameraTargetAreaLimitter* tryCreate(const PlacementInfo& placementInfo);
 
