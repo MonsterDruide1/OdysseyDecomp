@@ -11,11 +11,11 @@ struct PlayerJumpMessageRequest {
     PlayerJumpMessageRequest();
     void clear();
 
-    PlayerJumpType mJumpType = PlayerJumpType::Standard;
-    f32 mJumpPower = 0;
-    s32 mExtendFrame = 0;
-    sead::Vector3f mTurnJumpAngle = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mActorTrans = {0.0f, 0.0f, 0.0f};
-    bool mIsSpinClockwise = 0;
-    bool mIsEnableStandUp = 0;
+    PlayerJumpType jumpType = PlayerJumpType::Standard;
+    f32 jumpPower = 0;
+    s32 extendFrame = 0;
+    sead::Vector3f turnJumpAngle = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f actorTrans = {0.0f, 0.0f, 0.0f};
+    bool isSpinClockwise = 0;
+    bool isEnableStandUp = 0;
 };

@@ -11,7 +11,7 @@ Decompilation of all Super Mario Odyssey versions, from 1.0.0 to 1.3.0.
 ## For Windows users
 
 While Linux is not a hard requirement, it is strongly advised
-to [set up WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to simplify the setup process. Ubuntu 22.04
+to [set up WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to simplify the setup process. Ubuntu 24.04
 is usually a good choice.
 
 The instructions below assume that you are using Linux (native or WSL) or macOS.
@@ -120,19 +120,6 @@ Anyone is welcome to contribute to this project, just send a pull request!
 
 - Enable comparison between different versions and check for mis-matches in all versions using `tools/check`
 - 1.3.0 uses a different optimization method, find it and implement it into the toolchain
-
-#### from the re-organization
-
-- Rework the al/Library/Yaml-File structure (should be fewer files, merge a few of them)
-- Find proper place for Factories (+Placement of ActorFactory?)
-- Graph in Rails misordered
-- LiveActorGroup vs. Kit are in the wrong order
-- Split files/functions in Library/Resource
-- Library/Stage: Proper place for StageInfo
-- Library/Math: Split up into multiple files
-- Library/Player: Re-organize Util
-- game/Util/ResourceUtil remove/cleanup
-- Once open-ead/sead#130 is merged, clean up RootTask
 
 # Credits
 

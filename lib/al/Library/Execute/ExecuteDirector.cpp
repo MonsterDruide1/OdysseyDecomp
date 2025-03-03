@@ -26,8 +26,8 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
 
     for (s32 i = 0; i < mUpdateTableCount; ++i) {
         mUpdateTables[i] = new ExecuteTableHolderUpdate();
-        mUpdateTables[i]->init(UpdateTable[i].mName, initInfo, UpdateTable[i].mExecuteOrders,
-                               UpdateTable[i].mExecuteOrderCount);
+        mUpdateTables[i]->init(UpdateTable[i].name, initInfo, UpdateTable[i].executeOrders,
+                               UpdateTable[i].executeOrderCount);
     }
 
     mDrawTableCount = DrawTableSize;
@@ -35,8 +35,8 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& initInfo) {
 
     for (s32 i = 0; i < mDrawTableCount; ++i) {
         mDrawTables[i] = new ExecuteTableHolderDraw();
-        mDrawTables[i]->init(DrawTable[i].mName, initInfo, DrawTable[i].mExecuteOrders,
-                             DrawTable[i].mExecuteOrderCount);
+        mDrawTables[i]->init(DrawTable[i].name, initInfo, DrawTable[i].executeOrders,
+                             DrawTable[i].executeOrderCount);
     }
 
     mRequestKeeper = new ExecuteRequestKeeper(mRequestCount);

@@ -251,7 +251,7 @@ void MenuSelectParts::exeSelect() {
         alPadRumbleFunction::makePadRumbleParamNearFarVolumePitch(&param, 0.0f, 500.0f,
                                                                   pitch * 0.05f, pitch);
 
-        param.mIsUseController = 1;
+        param.isUseController = 1;
         alPadRumbleFunction::startPadRumbleNo3DWithParam(
             alPadRumbleFunction::getPadRumbleDirector(mLayoutActor), "240Hz単発", param, -1);
 

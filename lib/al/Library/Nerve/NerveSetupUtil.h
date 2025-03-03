@@ -38,7 +38,7 @@ namespace {
     // and no variants without it have been found so far
 }
 
-al::initNerveAction(this, "Hide", &NrvExampleUseCase.mCollector, 0);
+al::initNerveAction(this, "Hide", &NrvExampleUseCase.collector, 0);
 
 */
 
@@ -106,7 +106,7 @@ al::initNerveAction(this, "Hide", &NrvExampleUseCase.mCollector, 0);
     struct NrvStruct##Class {                                                                      \
         FOR_EACH(NERVE_ACTION_MAKE, Class, __VA_ARGS__)                                            \
                                                                                                    \
-        alNerveFunction::NerveActionCollector mCollector;                                          \
+        alNerveFunction::NerveActionCollector collector;                                           \
                                                                                                    \
         NrvStruct##Class() {                                                                       \
             FOR_EACH(NERVE_ACTION_CONSTRUCT, Class, __VA_ARGS__)                                   \

@@ -32,7 +32,7 @@ SlideMapParts::SlideMapParts(const char* name) : LiveActor(name) {}
 void SlideMapParts::init(const ActorInitInfo& info) {
     using SlideMapPartsFunctor = FunctorV0M<SlideMapParts*, void (SlideMapParts::*)()>;
 
-    initNerveAction(this, "Move", &NrvSlideMapParts.mCollector, 0);
+    initNerveAction(this, "Move", &NrvSlideMapParts.collector, 0);
     initMapPartsActor(this, info, tryGetMapPartsSuffix(info, "SlideMapParts"));
     registerAreaHostMtx(this, info);
 

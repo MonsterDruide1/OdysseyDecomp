@@ -32,18 +32,18 @@ bool CameraResourceHolder::tryInitCameraResource(const Resource* resource, s32 u
     getStageName(&stageName, resource->getArchiveName());
 
     for (s32 i = 0; i < mNumEntries; i++)
-        if (isEqualString(stageName.cstr(), mEntries[i]->mStageName))
+        if (isEqualString(stageName.cstr(), mEntries[i]->stageName))
             return false;
 
     Entry* entry = new Entry;
 
     if (resource->isExistFile(StringTmp<64>{"%s.byml", "CameraParam"}))
-        entry->mCameraParam = new ByamlIter(resource->getByml("CameraParam"));
+        entry->cameraParam = new ByamlIter(resource->getByml("CameraParam"));
 
     if (resource->isExistFile(StringTmp<64>{"%s.byml", "InterpoleParam"}))
-        entry->mInterpoleParam = new ByamlIter(resource->getByml("InterpoleParam"));
+        entry->interpoleParam = new ByamlIter(resource->getByml("InterpoleParam"));
 
-    entry->mStageName = stageName;
+    entry->stageName = stageName;
 
     mEntries[mNumEntries] = entry;
     mNumEntries++;
@@ -95,9 +95,9 @@ s32 CameraResourceHolder::calcEntranceCameraParamNum() const {
 bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* paramList, const char* stageName,
                                                   const char* paramName) const {
     CameraResourceHolder::Entry* entry = findCameraResource(stageName);
-    if (!entry || !entry->mCameraParam)
+    if (!entry || !entry->cameraParam)
         return false;
-    return entry->mCameraParam->tryGetIterByKey(paramList, paramName);
+    return entry->cameraParam->tryGetIterByKey(paramList, paramName);
 }
 
 void CameraResourceHolder::getEntranceCameraParamResource(ByamlIter* ticket, s32 index) const {
@@ -108,7 +108,7 @@ void CameraResourceHolder::getEntranceCameraParamResource(ByamlIter* ticket, s32
 
 CameraResourceHolder::Entry* CameraResourceHolder::findCameraResource(const char* stageName) const {
     for (s32 i = 0; i < mNumEntries; i++)
-        if (isEqualString(stageName, mEntries[i]->mStageName))
+        if (isEqualString(stageName, mEntries[i]->stageName))
             return mEntries[i];
 
     return nullptr;

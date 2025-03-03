@@ -26,7 +26,7 @@ SeesawMapParts::SeesawMapParts(const char* name) : LiveActor(name) {}
 
 void SeesawMapParts::init(const ActorInitInfo& info) {
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Wait", &NrvSeesawMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvSeesawMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
 

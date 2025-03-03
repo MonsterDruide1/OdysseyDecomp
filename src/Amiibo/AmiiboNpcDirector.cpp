@@ -56,7 +56,7 @@ void AmiiboNpcDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& init
     const sead::PtrArray<ShopItem::ItemInfo>& clothList = rs::getClothList(mNpcLayout);
 
     for (s32 i = 0; i < clothList.size(); i++) {
-        if (al::isEqualString(clothList.at(i)->mName, currentCostumeTypeName)) {
+        if (al::isEqualString(clothList.at(i)->name, currentCostumeTypeName)) {
             mClothName = rs::getDisplayName(mNpcLayout, *clothList.at(i));
             break;
         }
@@ -66,7 +66,7 @@ void AmiiboNpcDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& init
     const sead::PtrArray<ShopItem::ItemInfo>& capList = rs::getCapList(mNpcLayout);
 
     for (s32 i = 0; i < capList.size(); i++) {
-        if (al::isEqualString(capList.at(i)->mName, currentCapTypeName)) {
+        if (al::isEqualString(capList.at(i)->name, currentCapTypeName)) {
             mCapName = rs::getDisplayName(mNpcLayout, *capList.at(i));
             break;
         }

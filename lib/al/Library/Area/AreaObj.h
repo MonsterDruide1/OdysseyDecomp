@@ -27,6 +27,8 @@ public:
 
     PlacementInfo* getPlacementInfo() const { return mPlacementInfo; }
 
+    AreaShape* getAreaShape() const { return mAreaShape; }
+
 private:
     const char* mName;
     AreaShape* mAreaShape;

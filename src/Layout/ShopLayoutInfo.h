@@ -7,17 +7,17 @@ namespace ShopItem {
 enum class ItemType : u32 { Cloth, Cap, Gift, Sticker, UseItem, Moon };
 
 struct ShopItemInfo {
-    s32 mCharacterId;
-    s32 mNumberingId;
+    s32 characterId;
+    s32 numberingId;
 };
 
 struct ItemInfo {
-    s32 mIndex;
-    char mName[0x80];
-    ItemType mType;
-    u32 mItemCount;
-    ShopItemInfo* mShopItemInfo;
-    bool mIsAOC;
+    s32 index;
+    char name[0x80];
+    ItemType type;
+    u32 itemCount;
+    ShopItemInfo* shopItemInfo;
+    bool isAOC;
 };
 
 }  // namespace ShopItem

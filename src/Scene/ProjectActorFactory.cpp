@@ -1,6 +1,5 @@
 #include "Scene/ProjectActorFactory.h"
 
-#include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
 #include "Library/MapObj/ClockMapParts.h"
@@ -32,13 +31,13 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/Mummy.h"
-#include "Enemy/PackunTrace.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
 #include "Item/Coin2D.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
+#include "Item/CoinCirclePlacement.h"
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
 #include "Item/LifeMaxUpItem.h"
@@ -59,8 +58,9 @@
 #include "MapObj/TransparentWall.h"
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WorldMapEarth.h"
+#include "Npc/KuriboGirl.h"
 
-static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
+const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
     {"AirBubble", nullptr},
     {"AirBubbleGenerator", nullptr},
@@ -180,7 +180,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"Coin2DCityDirector", nullptr},
     {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", al::createActorFunction<CoinChameleon>},
-    {"CoinCirclePlacement", nullptr},
+    {"CoinCirclePlacement", al::createActorFunction<CoinCirclePlacement>},
     {"CoinCollect", al::createActorFunction<CoinCollect>},
     {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
     {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
@@ -325,7 +325,7 @@ static al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[]
     {"KoopaShip", nullptr},
     {"Kuribo2D3D", nullptr},
     {"KuriboGenerator2D3D", nullptr},
-    {"KuriboGirl", nullptr},
+    {"KuriboGirl", al::createActorFunction<KuriboGirl>},
     {"KuriboPossessed", nullptr},
     {"KuriboMini", nullptr},
     {"KuriboTowerSwitch", nullptr},

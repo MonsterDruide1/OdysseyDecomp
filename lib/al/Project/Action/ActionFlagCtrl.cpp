@@ -35,7 +35,7 @@ void ActionFlagCtrl::start(const char* name) {
 ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionFlagCtrlInfo* flagInfo = mInfos[i];
-        if (isEqualStringCase(flagInfo->mName, name))
+        if (isEqualStringCase(flagInfo->name, name))
             return flagInfo;
     }
     return nullptr;

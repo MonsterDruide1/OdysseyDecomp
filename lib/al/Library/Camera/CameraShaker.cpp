@@ -100,7 +100,7 @@ void CameraShaker::exeWait() {
 }
 
 void CameraShaker::exeShake() {
-    if (isGreaterEqualStep(this, mActiveShake->mSteps)) {
+    if (isGreaterEqualStep(this, mActiveShake->steps)) {
         if (mShakeLoop) {
             setNerve(this, &NrvCameraShaker.ShakeLoop);
         } else {
@@ -111,23 +111,23 @@ void CameraShaker::exeShake() {
         return;
     }
 
-    f32 shakeSpeed = (mActiveShake->mSpeed * 360.0f) / mActiveShake->mSteps;
+    f32 shakeSpeed = (mActiveShake->speed * 360.0f) / mActiveShake->steps;
     f32 currentShakeStrength =
         sead::Mathf::cos(sead::Mathf::deg2rad(shakeSpeed * getNerveStep(this)));
     f32 shakeOffset =
-        currentShakeStrength * (mActiveShake->mStrength *
-                                (mActiveShake->mSteps - getNerveStep(this)) / mActiveShake->mSteps);
+        currentShakeStrength *
+        (mActiveShake->strength * (mActiveShake->steps - getNerveStep(this)) / mActiveShake->steps);
     mOffset = {shakeOffset, shakeOffset};
-    if (mActiveShake->mDirection == ShakeDirection::Vertical)
+    if (mActiveShake->direction == ShakeDirection::Vertical)
         mOffset.x = 0.0f;
 }
 
 void CameraShaker::exeShakeLoop() {
     s32 nerveStep = getNerveStep(this);
-    f32 shakeStep = nerveStep <= 0 ? 0.0f : nerveStep / mShakeLoop->mSpeed * sead::Mathf::pi2();
-    f32 shakeOffset = mShakeLoop->mStrength * sead::Mathf::cos(shakeStep);
+    f32 shakeStep = nerveStep <= 0 ? 0.0f : nerveStep / mShakeLoop->speed * sead::Mathf::pi2();
+    f32 shakeOffset = mShakeLoop->strength * sead::Mathf::cos(shakeStep);
     mOffset = {shakeOffset, shakeOffset};
-    if (mShakeLoop->mDirection == ShakeDirection::Vertical)
+    if (mShakeLoop->direction == ShakeDirection::Vertical)
         mOffset.x = 0.0f;
 }
 
@@ -142,9 +142,9 @@ void CameraShaker::startShakeByIndex(s32 index, s32 steps) {
         // requires doing this copy to match
         // https://decomp.me/scratch/asjPP
         ShakeInfo shake2 = shake;
-        mEditedShake = {shake.mName, steps, shake.mSpeed, shake.mStrength, shake.mDirection};
+        mEditedShake = {shake.name, steps, shake.speed, shake.strength, shake.direction};
         mActiveShake = &mEditedShake;
-        mEditedShake.mSpeed = ((f32)steps / (f32)shake2.mSteps) * shake.mSpeed;
+        mEditedShake.speed = ((f32)steps / (f32)shake2.steps) * shake.speed;
     }
 
     setNerve(this, &Shake);
