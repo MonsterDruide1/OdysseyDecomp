@@ -37,6 +37,7 @@
 #include "Item/Coin2D.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
+#include "Item/CoinCirclePlacement.h"
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
 #include "Item/LifeMaxUpItem.h"
@@ -179,7 +180,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Coin2DCityDirector", nullptr},
     {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", al::createActorFunction<CoinChameleon>},
-    {"CoinCirclePlacement", nullptr},
+    {"CoinCirclePlacement", al::createActorFunction<CoinCirclePlacement>},
     {"CoinCollect", al::createActorFunction<CoinCollect>},
     {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
     {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
