@@ -21,7 +21,7 @@ public:
     void exeCloseEnd();
     void exeOpen();
 
-    virtual void appear();
+    void appear() override;
 
 private:
     s32 mFrames = -1;
