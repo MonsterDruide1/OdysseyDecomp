@@ -53,6 +53,7 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MoonBasementSlideObj.h"
+#include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/TransparentWall.h"
 #include "MapObj/VolleyballNet.h"
@@ -359,7 +360,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
     {"MoonWorldBell", nullptr},
-    {"MoonWorldCaptureParadeLift", nullptr},
+    {"MoonWorldCaptureParadeLift", al::createActorFunction<MoonWorldCaptureParadeLift>},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
     {"MofumofuScrap", al::createActorFunction<MofumofuScrap>},
