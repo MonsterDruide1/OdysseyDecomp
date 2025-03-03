@@ -112,7 +112,7 @@ f32 getLoopEndBeat(const IUseAudioKeeper*);
 f32 getFramePerMeasure(const IUseAudioKeeper*);
 s32 getBeatPerMeasure(const IUseAudioKeeper*);
 bool isChangeActiveBgmResourceName(const IUseAudioKeeper*);
-bool istryRegistTargetBgmResourceName(const IUseAudioKeeper*, const char*);
+bool tryRegistTargetBgmResourceName(const IUseAudioKeeper*, const char*);
 void muteOnRunningLineTrack(IUseAudioKeeper*, u32, bool);
 void muteOffRunningLineTrack(IUseAudioKeeper*, u32, bool);
 

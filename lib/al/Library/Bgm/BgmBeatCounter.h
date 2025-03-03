@@ -7,18 +7,18 @@ class IUseAudioKeeper;
 
 class BgmBeatCounter {
 public:
-    BgmBeatCounter(IUseAudioKeeper* audioKeeper, f32 threshold);
+    BgmBeatCounter(IUseAudioKeeper* audioKeeper, f32 triggerBeatOffset);
     void update();
     bool isTriggerBeat(s32 interval, s32 delayTime) const;
 
-    bool isAboveThreshold() const { return mIsAboveThreshold; }
+    bool isOnBeat() const { return mIsOnBeat; }
 
 private:
     IUseAudioKeeper* mAudioKeeper = nullptr;
-    f32 mThreshold = 0.0f;
-    f32 mTriggerBeatValue = 0.0f;
-    f32 mCurrentBeat = 0.0f;
-    bool mIsAboveThreshold = false;
+    f32 mTriggerBeatOffset = 0.0f;
+    f32 mCurBeatWithOffset = 0.0f;
+    f32 mPrevBeat = 0.0f;
+    bool mIsOnBeat = false;
 };
 
 }  // namespace al
