@@ -140,9 +140,9 @@ void Coin2D::appearCountUp() {
     if (areaObj != nullptr) {
         sead::Vector3f lockDir = sead::Vector3f::zero;
         rs::calc2DAreaLockDir(&lockDir, areaObj, al::getTrans(this));
-        sead::Quatf quatFrontUp = sead::Quatf::unit;
-        al::makeQuatFrontUp(&quatFrontUp, -lockDir, up);
-        al::setQuat(this, quatFrontUp);
+        sead::Quatf quat = sead::Quatf::unit;
+        al::makeQuatFrontUp(&quat, -lockDir, up);
+        al::setQuat(this, quat);
     }
 
     al::setNerve(this, &NrvCoin2D.CountUp);
