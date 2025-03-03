@@ -35,16 +35,17 @@ void StageSwitchSelector::init(const al::ActorInitInfo& info) {
     if (mAppearSwitchSave->isOn()) {
         al::tryOnStageSwitch(this, "AfterSwitchingOn");
         makeActorDead();
-    } else {
-        al::tryGetArg(&mSwitchingStartFrameNum, info, "SwitchingStartFrameNum");
-        if (al::isValidStageSwitch(this, "SwitchStart")) {
-            al::initNerve(this, &NrvStageSwitchSelector.WaitStatUp, 0);
-        } else {
-            al::tryOnStageSwitch(this, "BeforeSwitchingOn");
-            al::initNerve(this, &NrvStageSwitchSelector.WaitStartSwitching, 0);
-        }
-        makeActorAlive();
+        return;
     }
+
+    al::tryGetArg(&mSwitchingStartFrameNum, info, "SwitchingStartFrameNum");
+    if (al::isValidStageSwitch(this, "SwitchStart")) {
+        al::initNerve(this, &NrvStageSwitchSelector.WaitStatUp, 0);
+    } else {
+        al::tryOnStageSwitch(this, "BeforeSwitchingOn");
+        al::initNerve(this, &NrvStageSwitchSelector.WaitStartSwitching, 0);
+    }
+    makeActorAlive();
 }
 
 void StageSwitchSelector::exeWaitStatUp() {
