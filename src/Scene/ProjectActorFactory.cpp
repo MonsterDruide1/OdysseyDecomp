@@ -44,6 +44,7 @@
 #include "Item/CoinCirclePlacement.h"
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
+#include "Item/CoinRail.h"
 #include "Item/LifeMaxUpItem.h"
 #include "Item/LifeMaxUpItem2D.h"
 #include "Item/LifeUpItem.h"
@@ -202,7 +203,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
     {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
     {"CoinLead", nullptr},
-    {"CoinRail", nullptr},
+    {"CoinRail", al::createActorFunction<CoinRail>},
     {"CoinRing", nullptr},
     {"CoinStackGroup", nullptr},
     {"CrystalBreakable", nullptr},
