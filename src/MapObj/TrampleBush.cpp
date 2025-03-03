@@ -42,32 +42,57 @@ void TrampleBush::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         al::sendMsgPush(other, self);
 }
 
+inline bool TrampleBush::isReady() {
+    return al::isNerve(this, &NrvTrampleBush.Wait) && al::isGreaterEqualStep(this, 10);
+}
+
+inline bool TrampleBush::isCapOnSwitch(const al::SensorMsg* message) {
+    return rs::isMsgCapAttack(message) && isReady();
+}
+
 inline bool TrampleBush::isSensorOnSwitch(const al::SensorMsg* message, al::HitSensor* other) {
-    return al::isMsgPlayerObjTouch(message) &&
-           !al::isNear(mActorTrans, al::getActorTrans(other), 3.0f) &&
-           al::isNerve(this, &NrvTrampleBush.Wait) && al::isGreaterEqualStep(this, 10);
+    sead::Vector3f prevTrans = mActorTrans;
+    sead::Vector3f actorTrans = al::getActorTrans(other);
+    mActorTrans.set(actorTrans);
+
+    return !al::isNear(prevTrans, actorTrans, 3.0f) && isReady();
 }
 
 bool TrampleBush::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                              al::HitSensor* self) {
-    if (rs::isMsgPlayerDisregardHomingAttack(message) ||
-        rs::isMsgPlayerDisregardTargetMarker(message) || al::isMsgPlayerDisregard(message))
+    if (rs::isMsgPlayerDisregardHomingAttack(message))
+        return true;
+    if (rs::isMsgPlayerDisregardTargetMarker(message))
+        return true;
+    if (al::isMsgPlayerDisregard(message))
         return true;
 
-    if (!al::isNerve(this, &NrvTrampleBush.Wait) && !al::isNerve(this, &NrvTrampleBush.Reaction))
-        return false;
+    if (al::isNerve(this, &NrvTrampleBush.Wait) || al::isNerve(this, &NrvTrampleBush.Reaction)) {
+        if (rs::isMsgFrogHackTrample(message)) {
+            al::setNerve(this, &NrvTrampleBush.Reaction);
+            al::startAction(this, "Reaction");
+            return true;
+        }
 
-    if (rs::isMsgFrogHackTrample(message) ||
-        (rs::isMsgCapAttack(message) && al::isNerve(this, &NrvTrampleBush.Wait) &&
-         al::isGreaterEqualStep(this, 10)) ||
-        al::isMsgEnemyTouch(message) || al::isMsgPlayerTouch(message) ||
-        isSensorOnSwitch(message, other)) {
-        al::setNerve(this, &NrvTrampleBush.Reaction);
-        return true;
-    }
-    if (rs::isMsgPressDown(message)) {
-        al::setNerve(this, &NrvTrampleBush.Trample);
-        return true;
+        if (rs::isMsgCapAttack(message) && isReady()) {
+            al::setNerve(this, &NrvTrampleBush.Reaction);
+            al::startAction(this, "Reaction");
+            return true;
+        }
+
+        if (al::isMsgEnemyTouch(message) || al::isMsgPlayerTouch(message) ||
+            al::isMsgPlayerObjTouch(message)) {
+            if (isSensorOnSwitch(message, other)) {
+                al::setNerve(this, &NrvTrampleBush.Reaction);
+                al::startAction(this, "Reaction");
+                return true;
+            }
+        }
+
+        if (rs::isMsgPressDown(message)) {
+            al::setNerve(this, &NrvTrampleBush.Trample);
+            return true;
+        }
     }
     return false;
 }
