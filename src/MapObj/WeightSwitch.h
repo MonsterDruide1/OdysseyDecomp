@@ -24,8 +24,8 @@ public:
     void exeOnWait();
     void exeOff();
 
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                            al::HitSensor* target) override;
+    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self) override;
 
 private:
     al::LiveActor* mDemoActor = nullptr;

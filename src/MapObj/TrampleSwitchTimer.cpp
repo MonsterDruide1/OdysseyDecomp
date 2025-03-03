@@ -1,4 +1,5 @@
 #include "MapObj/TrampleSwitchTimer.h"
+
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -14,6 +15,7 @@
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
+
 #include "MapObj/AppearSwitchTimer.h"
 #include "Util/SensorMsgFunction.h"
 
@@ -24,7 +26,7 @@ NERVE_IMPL(TrampleSwitchTimer, OnWait);
 NERVE_IMPL(TrampleSwitchTimer, Off);
 NERVE_IMPL(TrampleSwitchTimer, On);
 
-NERVE_MAKE(TrampleSwitchTimer, OnWait);
+NERVES_MAKE_NOSTRUCT(TrampleSwitchTimer, OnWait);
 NERVES_MAKE_STRUCT(TrampleSwitchTimer, Freeze, OffWait, Off, On);
 }  // namespace
 
@@ -32,17 +34,22 @@ TrampleSwitchTimer::TrampleSwitchTimer(const char* actorName) : LiveActor(actorN
 
 void TrampleSwitchTimer::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "TrampleSwitch", nullptr);
+
     bool isNoReaction = false;
     bool tryGetArg = al::tryGetArg(&isNoReaction, info, "IsNoReaction");
+
     if (!isNoReaction || !tryGetArg) {
         al::initNerve(this, &NrvTrampleSwitchTimer.OffWait, 0);
         mAppearSwitchTimer = new AppearSwitchTimer();
         mAppearSwitchTimer->init(info, this, this, this, this);
+
         mIsFacingUp = al::isNearZeroOrLess(al::calcQuatUpY(al::getQuat(this)), 0.001f);
+
         mCollisionObj = al::createCollisionObj(this, info, "TrampleSwitch_Body",
                                                al::getHitSensor(this, "PPanel"), nullptr, nullptr);
         mCollisionObj->makeActorAlive();
         al::validateCollisionParts(mCollisionObj);
+
         mMtxConnector = al::createMtxConnector(this);
     } else {
         al::startAction(this, "OffWait");
@@ -63,6 +70,7 @@ void TrampleSwitchTimer::control() {
     if (!al::isNerve(this, &NrvTrampleSwitchTimer.Freeze)) {
         if (mMtxConnector)
             al::connectPoseQT(this, mMtxConnector);
+
         mAppearSwitchTimer->updateNerve();
     }
 }
@@ -81,6 +89,7 @@ void TrampleSwitchTimer::exeOnWait() {
         al::startAction(this, "OnWait");
         mAppearSwitchTimer->onSwitch();
     }
+
     if (!mAppearSwitchTimer->isSwitchOn())
         al::setNerve(this, &NrvTrampleSwitchTimer.Off);
 }
@@ -102,6 +111,7 @@ void TrampleSwitchTimer::exeOffWait() {
 
 void TrampleSwitchTimer::exeFreeze() {}
 
+// NON_MATCHING
 bool TrampleSwitchTimer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                     al::HitSensor* self) {
     if (al::isNerve(this, &NrvTrampleSwitchTimer.Freeze))
@@ -113,17 +123,17 @@ bool TrampleSwitchTimer::receiveMsg(const al::SensorMsg* message, al::HitSensor*
     if (al::isSensorName(self, "PlayerRegard")) {
         if (!mIsFacingUp && rs::isMsgPlayerDisregardTargetMarker(message))
             return true;
-        else
-            return false;
+        return false;
     }
 
     if (mIsFacingUp && !al::isSensorName(self, "PPanel"))
         return false;
 
     bool v10 = (rs::isMsgCapTouchWall(message) || rs::isMsgCapAttackCollide(message)) &&
-               (mIsFacingUp || !al::isNearZeroOrGreater(al::getActorVelocity(other).y, 0.001));
+               (mIsFacingUp || !al::isNearZeroOrGreater(al::getActorVelocity(other).y, 0.001f));
     bool v11 = rs::isMsgCapHipDrop(message);
     bool v12 = al::isMsgPlayerTouch(message);
+
     if (v12 || v10 || v11) {
         if (al::isNerve(this, &NrvTrampleSwitchTimer.OffWait)) {
             al::invalidateClipping(this);

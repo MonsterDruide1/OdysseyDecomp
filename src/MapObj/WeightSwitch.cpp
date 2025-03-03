@@ -15,6 +15,7 @@
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchKeeper.h"
+
 #include "Util/DemoUtil.h"
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
@@ -37,16 +38,20 @@ WeightSwitch::WeightSwitch(const char* actorName) : al::LiveActor(actorName) {}
 void WeightSwitch::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "TrampleSwitch", nullptr);
     al::initNerve(this, &NrvWeightSwitch.OffWait, 0);
+
     mMtxConnector = al::createMtxConnector(this);
+
     bool isValidObjectCamera = false;
     al::tryGetArg(&isValidObjectCamera, info, "IsValidObjectCamera");
     if (isValidObjectCamera)
         mDemoCamera = al::initDemoObjectCamera(this, info, nullptr, "固定");
+
     mDemoActor = (al::LiveActor*)rs::tryInitLinkShine(info, "ShineActor", 0);
     mCollisionBody = al::createCollisionObj(this, info, "TrampleSwitch_Body",
                                             al::getHitSensor(this, "PPanel"), nullptr, nullptr);
     mCollisionBody->makeActorAlive();
     al::validateCollisionParts(mCollisionBody);
+
     makeActorAlive();
 }
 
@@ -131,11 +136,11 @@ void WeightSwitch::exeOff() {
         al::setNerve(this, &NrvWeightSwitch.OffWait);
 }
 
-bool WeightSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* source,
-                              al::HitSensor* target) {
-    if (al::isSensorName(target, "PlayerRegard"))
+bool WeightSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                              al::HitSensor* self) {
+    if (al::isSensorName(self, "PlayerRegard"))
         return rs::isMsgPlayerDisregardTargetMarker(message);
-    if (!al::isNerve(this, &NrvWeightSwitch.OffWait) || al::isSensorName(target, "PPanel")) {
+    if (!al::isNerve(this, &NrvWeightSwitch.OffWait) || al::isSensorName(self, "PPanel")) {
         if (al::isMsgPlayerTouch(message))
             mWeight = 7;
         else if (al::isMsgEnemyFloorTouch(message))

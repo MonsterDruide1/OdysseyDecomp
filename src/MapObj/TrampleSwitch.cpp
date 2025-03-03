@@ -20,6 +20,7 @@
 #include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
+
 #include "MapObj/AppearSwitchSave.h"
 #include "Util/DemoUtil.h"
 #include "Util/SensorMsgFunction.h"
@@ -32,7 +33,7 @@ NERVE_IMPL(TrampleSwitch, Off);
 NERVE_IMPL(TrampleSwitch, OnDemoWaitStart);
 NERVE_IMPL(TrampleSwitch, OnDemo);
 
-NERVE_MAKE(TrampleSwitch, OnDemo);
+NERVES_MAKE_NOSTRUCT(TrampleSwitch, OnDemo);
 NERVES_MAKE_STRUCT(TrampleSwitch, OffWait, OnWait, On, Off, OnDemoWaitStart);
 }  // namespace
 
@@ -41,10 +42,9 @@ TrampleSwitch::TrampleSwitch(const char* actorName) : al::LiveActor(actorName) {
 void TrampleSwitch::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "TrampleSwitch", nullptr);
     al::initNerve(this, &NrvTrampleSwitch.OffWait, 0);
+
     mMtxConnector = al::createMtxConnector(this);
-
     mAddDemoInfo = al::registDemoRequesterToAddDemoInfo(this, info, 0);
-
     mIsFacingUp = al::isNearZeroOrLess(al::calcQuatUpY(al::getQuat(this)), 0.001f);
 
     mCollisionBody = al::createCollisionObj(this, info, "TrampleSwitch_Body",
@@ -52,7 +52,7 @@ void TrampleSwitch::init(const al::ActorInitInfo& info) {
     mCollisionBody->makeActorAlive();
     al::validateCollisionParts(mCollisionBody);
 
-    if (al::isObjectName(info, "AppearSwitchSave")) {
+    if (al::isObjectName(info, "TrampleSwitchSave")) {
         mAppearSwitchSave = new AppearSwitchSave(this, info);
         if (mAppearSwitchSave->isOn()) {
             al::invalidateClipping(this);
@@ -164,6 +164,7 @@ bool TrampleSwitch::isOn() const {
     return al::isNerve(this, &NrvTrampleSwitch.OnWait);
 }
 
+// NON_MATCHING
 bool TrampleSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                al::HitSensor* self) {
     if (al::isNerve(this, &NrvTrampleSwitch.Off))
@@ -171,16 +172,16 @@ bool TrampleSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
     if (al::isSensorName(self, "PlayerRegard")) {
         if (!mIsFacingUp && rs::isMsgPlayerDisregardTargetMarker(message))
             return true;
-        else
-            return false;
+        return false;
     }
     if (mIsFacingUp && !al::isSensorName(self, "PPanel"))
         return false;
 
     bool v10 = (rs::isMsgCapTouchWall(message) || rs::isMsgCapAttackCollide(message)) &&
-               (mIsFacingUp || !al::isNearZeroOrGreater(al::getActorVelocity(other).y, 0.001));
+               (mIsFacingUp || !al::isNearZeroOrGreater(al::getActorVelocity(other).y, 0.001f));
     bool v11 = rs::isMsgCapHipDrop(message);
     bool v12 = al::isMsgPlayerTouch(message);
+
     if (v12 || v10 || v11)
         return trySetNerveOn();
 

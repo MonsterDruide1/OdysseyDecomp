@@ -1,4 +1,5 @@
 #include "MapObj/TrampleBush.h"
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -8,6 +9,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+
 #include "Util/ItemGenerator.h"
 #include "Util/SensorMsgFunction.h"
 
