@@ -34,3 +34,4 @@ struct CameraPoserSceneInfo {
 };
 
 }  // namespace al
+
