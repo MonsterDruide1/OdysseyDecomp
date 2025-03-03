@@ -17,19 +17,19 @@ void CameraAngleVerticalRequester::init(AreaObjDirector* areaObjDirector) {
 }
 
 void CameraAngleVerticalRequester::initAfterPlacement() {
-    mAreaObjGroup = tryFindAreaObjGroup(this, "CameraAngleVerticalRequestArea");
+    mRequestAreaGroup = tryFindAreaObjGroup(this, "CameraAngleVerticalRequestArea");
 }
 
 void CameraAngleVerticalRequester::update(const sead::Vector3f& position) {
-    if (mAreaObjGroup != nullptr) {
-        AreaObj* areaObj = tryGetAreaObj(mAreaObjGroup, position);
-        if (areaObj != mAreaObj) {
-            mAreaObj = areaObj;
-            mUpdateIndex = -1;
-            if (areaObj != nullptr)
-                getArg(&mVerticalAngle, *mAreaObj->getPlacementInfo(), "AngleVertical");
-        }
-        mUpdateIndex++;
+    if (mAreaObjGroup == nullptr) return;
+    AreaObj* areaObj = tryGetAreaObj(mRequestAreaGroup, position);
+    if (areaObj != mRequestArea) {
+        mRequestArea = areaObj;
+        mUpdateIndex = -1;
+        if (areaObj != nullptr)
+            getArg(&AngleVertical, *mAreaObj->getPlacementInfo(), "AngleVertical");
     }
+    mUpdateIndex++;
+    
 }
 }  // namespace al
