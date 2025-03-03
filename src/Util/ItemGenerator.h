@@ -3,8 +3,6 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Util/ItemUtil.h"
-
 namespace al {
 class ActorInitInfo;
 class LiveActor;

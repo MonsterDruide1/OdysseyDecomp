@@ -28,7 +28,7 @@ public:
                     al::HitSensor* self) override;
 
 private:
-    al::LiveActor* mDemoActor = nullptr;
+    al::LiveActor* mShine = nullptr;
     al::CollisionObj* mCollisionBody = nullptr;
     al::CameraTicket* mDemoCamera = nullptr;
     al::MtxConnector* mMtxConnector = nullptr;

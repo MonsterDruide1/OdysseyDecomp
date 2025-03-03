@@ -112,12 +112,12 @@ void TrampleSwitch::exeOn() {
         if (mDemoCamera) {
             al::setNerve(this, &NrvTrampleSwitch.OnDemoWaitStart);
             return;
-        } else {
-            if (mAppearSwitchSave)
-                mAppearSwitchSave->onSwitch();
-            else
-                al::tryOnStageSwitch(this, "SwitchTrampleOn");
         }
+
+        if (mAppearSwitchSave)
+            mAppearSwitchSave->onSwitch();
+        else
+            al::tryOnStageSwitch(this, "SwitchTrampleOn");
 
         al::setNerve(this, &NrvTrampleSwitch.OnWait);
     }
@@ -164,7 +164,7 @@ bool TrampleSwitch::isOn() const {
     return al::isNerve(this, &NrvTrampleSwitch.OnWait);
 }
 
-// NON_MATCHING
+// NON_MATCHING: extra register used for the last comparsion, https://decomp.me/scratch/HyCSL
 bool TrampleSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                al::HitSensor* self) {
     if (al::isNerve(this, &NrvTrampleSwitch.Off))

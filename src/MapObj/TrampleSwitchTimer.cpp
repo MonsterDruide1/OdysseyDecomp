@@ -67,12 +67,13 @@ void TrampleSwitchTimer::initAfterPlacement() {
 }
 
 void TrampleSwitchTimer::control() {
-    if (!al::isNerve(this, &NrvTrampleSwitchTimer.Freeze)) {
-        if (mMtxConnector)
-            al::connectPoseQT(this, mMtxConnector);
+    if (al::isNerve(this, &NrvTrampleSwitchTimer.Freeze))
+        return;
 
-        mAppearSwitchTimer->updateNerve();
-    }
+    if (mMtxConnector)
+        al::connectPoseQT(this, mMtxConnector);
+
+    mAppearSwitchTimer->updateNerve();
 }
 
 void TrampleSwitchTimer::exeOn() {
@@ -111,7 +112,7 @@ void TrampleSwitchTimer::exeOffWait() {
 
 void TrampleSwitchTimer::exeFreeze() {}
 
-// NON_MATCHING
+// NON_MATCHING: extra register used for the last comparsion, https://decomp.me/scratch/IEP6S
 bool TrampleSwitchTimer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                     al::HitSensor* self) {
     if (al::isNerve(this, &NrvTrampleSwitchTimer.Freeze))

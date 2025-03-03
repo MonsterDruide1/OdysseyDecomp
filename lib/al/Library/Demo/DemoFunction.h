@@ -11,7 +11,7 @@ class Scene;
 
 al::AddDemoInfo* registDemoRequesterToAddDemoInfo(const LiveActor* actor,
                                                   const ActorInitInfo& initInfo, s32 index);
-al::AddDemoInfo* registActorToDemoInfo(LiveActor* actor, const ActorInitInfo& initInfo);
+void registActorToDemoInfo(LiveActor* actor, const ActorInitInfo& initInfo);
 void addDemoActorFromAddDemoInfo(const LiveActor* actor, const AddDemoInfo* info);
 void addDemoActorFromDemoActorHolder(const LiveActor* actor, const DemoActorHolder* holder);
 void addDemoActorFromDemoActorHolder(const Scene* scene, const DemoActorHolder* holder);

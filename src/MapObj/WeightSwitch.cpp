@@ -120,7 +120,9 @@ void WeightSwitch::exeOnWait() {
     if (al::isFirstStep(this))
         al::startAction(this, "OnWait");
 
-    if (--mWeight <= 0) {
+    mWeight--;
+
+    if (mWeight <= 0) {
         al::tryOffStageSwitch(this, "SwitchTrampleOn");
         if (mDemoActor)
             mDemoActor->kill();

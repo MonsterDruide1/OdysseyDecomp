@@ -16,7 +16,6 @@ public:
                     al::HitSensor* self) override;
 
     inline bool isReady();
-    inline bool isCapOnSwitch(const al::SensorMsg* message);
     inline bool isSensorOnSwitch(const al::SensorMsg* message, al::HitSensor* other);
 
     void exeWait();
@@ -25,5 +24,5 @@ public:
 
 private:
     ItemGenerator* mItemGenerator = nullptr;
-    sead::Vector3f mActorTrans;
+    sead::Vector3f mAttackerTrans;
 };

@@ -40,22 +40,17 @@ void TrampleBush::initAfterPlacement() {
 }
 
 void TrampleBush::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (!rs::sendMsgPushToPlayer(other, self))
-        al::sendMsgPush(other, self);
+    rs::sendMsgPushToPlayer(other, self) || al::sendMsgPush(other, self);
 }
 
 inline bool TrampleBush::isReady() {
     return al::isNerve(this, &NrvTrampleBush.Wait) && al::isGreaterEqualStep(this, 10);
 }
 
-inline bool TrampleBush::isCapOnSwitch(const al::SensorMsg* message) {
-    return rs::isMsgCapAttack(message) && isReady();
-}
-
 inline bool TrampleBush::isSensorOnSwitch(const al::SensorMsg* message, al::HitSensor* other) {
-    sead::Vector3f prevTrans = mActorTrans;
+    sead::Vector3f prevTrans = mAttackerTrans;
     sead::Vector3f actorTrans = al::getActorTrans(other);
-    mActorTrans.set(actorTrans);
+    mAttackerTrans.set(actorTrans);
 
     return !al::isNear(prevTrans, actorTrans, 3.0f) && isReady();
 }
