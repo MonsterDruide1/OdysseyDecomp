@@ -36,15 +36,17 @@ const KeyPose& KeyPoseKeeper::getNextKeyPose() const {
 }
 
 s32 KeyPoseKeeper::calcNextPoseIndex() const {
-    if (!mIsGoingToEnd)
-        if (mKeyPoseCurrentIdx < 1)
+    if (!mIsGoingToEnd) {
+        if (mKeyPoseCurrentIdx - 1 < 0)
             return mKeyPoseCount - 1;
-        else
-            return mKeyPoseCurrentIdx - 1;
-    else if (mKeyPoseCurrentIdx + 1 < mKeyPoseCount)
-        return mKeyPoseCurrentIdx + 1;
 
-    return 0;
+        return mKeyPoseCurrentIdx - 1;
+    } else {
+        if (mKeyPoseCurrentIdx + 1 >= mKeyPoseCount)
+            return 0;
+
+        return mKeyPoseCurrentIdx + 1;
+    }
 }
 
 void KeyPoseKeeper::reset() {
