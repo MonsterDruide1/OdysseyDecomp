@@ -43,6 +43,6 @@ private:
     Shine* mLinkShine = nullptr;
     KuriboMini** mKuriboMiniArray = nullptr;
     s32 mKuriboMiniCount = 0;
-    s32 mItemType = -1;  // mismatches as rs::ItemType despite it being that
+    s32 mItemType = -1;
     s32 field_20 = 0;
 };
