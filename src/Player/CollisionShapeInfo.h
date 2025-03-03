@@ -5,7 +5,11 @@
 
 #include "Library/HostIO/HioNode.h"
 
-enum class CollisionShapeId : u32 {};
+enum class CollisionShapeId : u32 {
+    Arrow,
+    Sphere,
+    Disk,
+};
 
 class CollisionShapeInfoBase : public al::HioNode {
 public:
@@ -20,6 +24,10 @@ public:
     virtual void updateShapeOffset(const sead::Vector3f&);
     virtual void calcWorldShapeInfo(const sead::Matrix34f&, f32);
     virtual void calcRelativeShapeInfo(const sead::Matrix34f&);
+
+    CollisionShapeId getId() const { return mId; }
+
+    const char* getName() const { return mName; }
 
 private:
     CollisionShapeId mId;

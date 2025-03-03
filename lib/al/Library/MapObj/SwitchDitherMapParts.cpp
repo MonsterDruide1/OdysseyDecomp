@@ -21,7 +21,7 @@ void SwitchDitherMapParts::init(const ActorInitInfo& info) {
     using SwitchDitherMapPartsFunctor =
         FunctorV0M<SwitchDitherMapParts*, void (SwitchDitherMapParts::*)()>;
 
-    initNerveAction(this, "Wait", &NrvSwitchDitherMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvSwitchDitherMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
 
     bool isListenStartOnOff = listenStageSwitchOnOff(

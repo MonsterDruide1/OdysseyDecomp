@@ -12,9 +12,9 @@ class PlayerHackStartShaderCtrl;
 
 struct FukuwaraiPart {
     const char* name;
-    f32 mBasePoints;
-    f32 mAnglePoints;
-    f32 mDistancePoints;
+    f32 basePoints;
+    f32 anglePoints;
+    f32 distancePoints;
 };
 
 class FukuwaraiFaceParts : public al::LiveActor {

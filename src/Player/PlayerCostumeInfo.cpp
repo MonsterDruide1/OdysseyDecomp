@@ -4,11 +4,11 @@
 #include "Library/Math/MathUtil.h"
 
 PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(const char* a1) {
-    mCostumeName = a1;
+    costumeName = a1;
 }
 
 PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(const char* a1) {
-    mCostumeName = a1;
+    costumeName = a1;
 }
 
 PlayerCostumeInfo::PlayerCostumeInfo() = default;
@@ -19,83 +19,83 @@ void PlayerCostumeInfo::init(const PlayerBodyCostumeInfo* body, const PlayerHead
 }
 
 bool PlayerCostumeInfo::isEnableBigEar() const {
-    return mBodyInfo->mIsBigEar && mHeadInfo->mIsEnableBigEar;
+    return mBodyInfo->isBigEar && mHeadInfo->isEnableBigEar;
 }
 
 bool PlayerCostumeInfo::isEnableHairNoCap() const {
-    return mHeadInfo->mIsEnableHairNoCap &&
-           (mBodyInfo->mIsUseBodyHair && mBodyInfo->mIsExistHairNoCap);
+    return mHeadInfo->isEnableHairNoCap &&
+           (mBodyInfo->isUseBodyHair && mBodyInfo->isExistHairNoCap);
 }
 
 bool PlayerCostumeInfo::isEnableCostume2D() const {
-    if (mBodyInfo->mIsNoPairHead)
-        return al::isEqualString(mHeadInfo->mCostumeName, "Mario");
-    return al::isEqualString(mBodyInfo->mCostumeName, mHeadInfo->mCostumeName);
+    if (mBodyInfo->isNoPairHead)
+        return al::isEqualString(mHeadInfo->costumeName, "Mario");
+    return al::isEqualString(mBodyInfo->costumeName, mHeadInfo->costumeName);
 }
 
 bool PlayerCostumeInfo::isNeedShrinkNose() const {
-    return mHeadInfo->mIsShrinkNose;
+    return mHeadInfo->isShrinkNose;
 }
 
 bool PlayerCostumeInfo::isNeedBodyHair() const {
-    if (!mBodyInfo->mIsUseBodyHair || (mBodyInfo->mIsMario64 && mHeadInfo->mIsMario64))
+    if (!mBodyInfo->isUseBodyHair || (mBodyInfo->isMario64 && mHeadInfo->isMario64))
         return false;
     return true;
 }
 
 bool PlayerCostumeInfo::isNeedSyncBodyHair() const {
 #ifdef MATCHING_HACK_NX_CLANG
-    s64 v1 = *(s64*)&mBodyInfo->mIsUseBodyHair;
+    s64 v1 = *(s64*)&mBodyInfo->isUseBodyHair;
     if (!((char)v1))
         return false;
-    if ((v1 & 0xFF00000000LL) && mHeadInfo->mIsMario64)
+    if ((v1 & 0xFF00000000LL) && mHeadInfo->isMario64)
         return false;
-    return !mBodyInfo->mIsMario64;
+    return !mBodyInfo->isMario64;
 #else
-    if (!mBodyInfo->mIsUseBodyHair)
+    if (!mBodyInfo->isUseBodyHair)
         return false;
-    if (mBodyInfo->mIsMario64 && mHeadInfo->mIsMario64)
+    if (mBodyInfo->isMario64 && mHeadInfo->isMario64)
         return false;
-    return !mBodyInfo->mIsMario64;
+    return !mBodyInfo->isMario64;
 #endif
 }
 
 bool PlayerCostumeInfo::isNeedFullFaceAnim() const {
-    return mHeadInfo->mIsFullFace;
+    return mHeadInfo->isFullFace;
 }
 
 bool PlayerCostumeInfo::isHidePainNose() const {
-    return mBodyInfo->mIsHidePainNose || mHeadInfo->mIsInvisibleHead;
+    return mBodyInfo->isHidePainNose || mHeadInfo->isInvisibleHead;
 }
 
 bool PlayerCostumeInfo::isEnableEarring() const {
-    if (mBodyInfo->mIsUseEarringPeach)
-        return !mHeadInfo->mIsHideEarringPeach;
-    return !mBodyInfo->mIsUseEarringLink || !mHeadInfo->mIsHideEarringLink;
+    if (mBodyInfo->isUseEarringPeach)
+        return !mHeadInfo->isHideEarringPeach;
+    return !mBodyInfo->isUseEarringLink || !mHeadInfo->isHideEarringLink;
 }
 
 bool PlayerCostumeInfo::isSyncFaceBeard() const {
-    return mBodyInfo->mIsUseBeard && mHeadInfo->mIsHideBeard;
+    return mBodyInfo->isUseBeard && mHeadInfo->isHideBeard;
 }
 
 bool PlayerCostumeInfo::isSyncStrap() const {
-    return mHeadInfo->mIsUseStrap && !mBodyInfo->mIsUseBeard;
+    return mHeadInfo->isUseStrap && !mBodyInfo->isUseBeard;
 }
 
 bool PlayerCostumeInfo::isFollowJoeStrap() const {
-    return mHeadInfo->mIsUseStrap && !mBodyInfo->mIsMario64;
+    return mHeadInfo->isUseStrap && !mBodyInfo->isMario64;
 }
 
 bool PlayerCostumeInfo::isPreventHeadPain() const {
-    return mHeadInfo->mIsPreventHead;
+    return mHeadInfo->isPreventHead;
 }
 
 bool PlayerCostumeInfo::isInvisibleHead() const {
-    return mHeadInfo->mIsInvisibleHead;
+    return mHeadInfo->isInvisibleHead;
 }
 
 s32 PlayerCostumeInfo::calcWarmLevel(s32 baseLevel) const {
-    if (mBodyInfo->mIsIgnoreTemperature)
+    if (mBodyInfo->isIgnoreTemperature)
         return false;
-    return al::clamp(mBodyInfo->mWarmLevel + baseLevel, -3, 3);
+    return al::clamp(mBodyInfo->warmLevel + baseLevel, -3, 3);
 }

@@ -24,7 +24,7 @@ EnemyStateRunAway::EnemyStateRunAway(al::LiveActor* actor, const ParamEnemyState
 
 void EnemyStateRunAway::appear() {
     setDead(false);
-    if (mParam->mShouldFaceDir)
+    if (mParam->shouldFaceDir)
         mIsNeedToFaceToDirection = true;
     al::calcFrontDir(&mFrontDir, mActor);
     calcRunDirBase(&mFrontDir);

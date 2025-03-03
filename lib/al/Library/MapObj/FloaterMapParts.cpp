@@ -29,7 +29,7 @@ namespace al {
 FloaterMapParts::FloaterMapParts(const char* name) : LiveActor(name) {}
 
 void FloaterMapParts::init(const ActorInitInfo& info) {
-    initNerveAction(this, "Wait", &NrvFloaterMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvFloaterMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
 
     tryGetQuatPtr(this);

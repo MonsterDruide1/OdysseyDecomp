@@ -33,7 +33,7 @@ void SwitchOpenMapParts::init(const ActorInitInfo& info) {
     using SwitchOpenMapPartsFunctor =
         FunctorV0M<SwitchOpenMapParts*, void (SwitchOpenMapParts::*)()>;
 
-    initNerveAction(this, "Wait", &NrvSwitchOpenMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvSwitchOpenMapParts.collector, 0);
 
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "SuffixName");
