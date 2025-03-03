@@ -9,8 +9,8 @@ namespace al {
 class GyroCameraCtrl {
 public:
     GyroCameraCtrl();
-    void reset(const sead::Vector3f, const sead::Vector3f&, const sead::Vector3f&);
-    void update(const sead::Vector3f, const sead::Vector3f&, const sead::Vector3f&);
+    void reset(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
+    void update(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
     void reduceSensitivity();
 
     void setIsValidGyro(bool isValidGyro) { mIsValidGyro = isValidGyro; }
