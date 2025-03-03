@@ -20,10 +20,10 @@ public:
     void update(const sead::Vector3f& position);
 
 private:
-    s32 mUpdateIndex;
-    f32 mVerticalAngle;
-    const AreaObj* mAreaObj;
-    const AreaObjGroup* mAreaObjGroup;
-    AreaObjDirector* mAreaObjDirector;
+    s32 mFramesUnchanged = 0;
+    f32 mAngleVertical = 0.f;
+    const AreaObj* mRequestArea = nullptr;
+    const AreaObjGroup* mRequestAreaGroup = nullptr;
+    AreaObjDirector* mAreaObjDirector = nullptr;
 };
 }  // namespace al
