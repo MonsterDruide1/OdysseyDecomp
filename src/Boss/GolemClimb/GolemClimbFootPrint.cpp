@@ -10,7 +10,7 @@ void GolemClimbFootPrint::init(const al::ActorInitInfo& info) {
 
 void GolemClimbFootPrint::appear() {
     al::startAction(this, "Disappear");
-    makeActorAlive();
+    al::LiveActor::makeActorAlive();
 }
 
 void GolemClimbFootPrint::control() {
