@@ -39,7 +39,7 @@ void Coin2DCity::init(const al::ActorInitInfo& initInfo) {
     rs::updateDimensionKeeper(mDimensionKeeper);
 
     mCityDirector->registerCoin(this);
-    al::PlacementInfo placementInfo = al::PlacementInfo();
+    al::PlacementInfo placementInfo;
     if (al::isExistLinkChild(initInfo, "NextCoin", 0)) {
         al::getLinksInfo(&placementInfo, initInfo, "NextCoin");
         mNextCoin = new Coin2DCity("コイン2D都市", mCityDirector);
@@ -54,7 +54,7 @@ void Coin2DCity::init(const al::ActorInitInfo& initInfo) {
 void Coin2DCity::control() {
     mSyncCounter =
         al::getSceneObj<al::StageSyncCounter>(this, SceneObjID_alStageSyncCounter)->getCounter();
-    if (-1 < mLightTime && mCityDirector->isTriggerBeat()) {
+    if (mLightTime > -1 && mCityDirector->isTriggerBeat()) {
         if (mNextCoin != nullptr && mLightTime == 1)
             mNextCoin->startLight();
 
