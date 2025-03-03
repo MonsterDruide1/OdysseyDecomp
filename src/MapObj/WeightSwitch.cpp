@@ -46,7 +46,7 @@ void WeightSwitch::init(const al::ActorInitInfo& info) {
     if (isValidObjectCamera)
         mDemoCamera = al::initDemoObjectCamera(this, info, nullptr, "固定");
 
-    mDemoActor = (al::LiveActor*)rs::tryInitLinkShine(info, "ShineActor", 0);
+    mShine = (al::LiveActor*)rs::tryInitLinkShine(info, "ShineActor", 0);
     mCollisionBody = al::createCollisionObj(this, info, "TrampleSwitch_Body",
                                             al::getHitSensor(this, "PPanel"), nullptr, nullptr);
     mCollisionBody->makeActorAlive();
@@ -82,8 +82,8 @@ void WeightSwitch::exeOn() {
         }
         al::tryOnStageSwitch(this, "SwitchTrampleOn");
 
-        if (mDemoActor)
-            al::sendMsgRestart(mDemoActor);
+        if (mShine)
+            al::sendMsgRestart(mShine);
         al::setNerve(this, &NrvWeightSwitch.OnWait);
     }
 }
@@ -102,9 +102,9 @@ void WeightSwitch::exeOnDemoWaitCameraInterpoling() {
 }
 
 void WeightSwitch::exeOnDemo() {
-    if (al::isFirstStep(this) && mDemoActor) {
-        al::sendMsgRestart(mDemoActor);
-        rs::addDemoActor(mDemoActor, false);
+    if (al::isFirstStep(this) && mShine) {
+        al::sendMsgRestart(mShine);
+        rs::addDemoActor(mShine, false);
     }
     if (al::isActionPlaying(this, "On") && al::isActionEnd(this))
         al::startAction(this, "OnWait");
@@ -124,8 +124,8 @@ void WeightSwitch::exeOnWait() {
 
     if (mWeight <= 0) {
         al::tryOffStageSwitch(this, "SwitchTrampleOn");
-        if (mDemoActor)
-            mDemoActor->kill();
+        if (mShine)
+            mShine->kill();
         al::setNerve(this, &Off);
     }
 }
