@@ -17,5 +17,5 @@ public:
 private:
     f32 mSpeed = 0.0f;
     s32 mDelay = 0;
-    sead::Vector3f mRailPos = sead::Vector3f::zero;
+    sead::Vector3f mRailClippingInfo = sead::Vector3f::zero;
 };

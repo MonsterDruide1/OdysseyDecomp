@@ -33,7 +33,7 @@ void MoonWorldCaptureParadeLift::init(const al::ActorInitInfo& info) {
     if (al::isExistRail(this)) {
         f32 clippingRadius = al::getClippingRadius(this);
         al::setSyncRailToNearestPos(this);
-        al::setRailClippingInfo(&mRailPos, this, 100.0f, clippingRadius);
+        al::setRailClippingInfo(&mRailClippingInfo, this, 100.0f, clippingRadius);
     }
 
     al::getArg(&mSpeed, info, "Speed");
