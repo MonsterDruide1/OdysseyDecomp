@@ -22,7 +22,7 @@ public:
     void initAfterPlacement() override;
     void control() override;
 
-    void registerCoin(Coin2DCity*);
+    void registerCoin(Coin2DCity* coin);
     void getCoin();
     bool isTriggerBeat() const;
 
@@ -32,11 +32,11 @@ public:
 
 private:
     sead::PtrArray<Coin2DCity> mCoinHolder;
-    sead::Vector3f _118;
-    s32 mNextCoinLightTime;
-    s32 mLightTime;
-    s32 mLightInterval;
-    s32 _130;
-    s32 mDelayTime;
-    al::BgmBeatCounter* mBgmBeatCounter;
+    sead::Vector3f mClippingPos = sead::Vector3f::zero;
+    s32 mNextCoinLightTime = 0;
+    s32 mLightTime = 0;
+    s32 mLightInterval = 0;
+    s32 mCoinsCollected = 0;
+    s32 mDelayTime = 0;
+    al::BgmBeatCounter* mBgmBeatCounter = nullptr;
 };
