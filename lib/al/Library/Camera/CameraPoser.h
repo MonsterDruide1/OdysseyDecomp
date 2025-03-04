@@ -7,7 +7,6 @@
 
 #include "Library/Area/IUseAreaObj.h"
 #include "Library/Audio/IUseAudioKeeper.h"
-#include "Library/Camera/CameraPoserFlag.h"
 #include "Library/Collision/IUseCollision.h"
 #include "Library/HostIO/HioNode.h"
 #include "Library/HostIO/IUseName.h"
@@ -23,12 +22,9 @@ class CameraAngleSwingInfo;
 class CameraArrowCollider;
 class CameraFlagCtrl;
 class CameraInputHolder;
-struct CameraObjectRequestInfo;
 class CameraOffsetCtrlPreset;
 class CameraParamMoveLimit;
-struct CameraPoserSceneInfo;
 class CameraRequestParamHolder;
-struct CameraStartInfo;
 class CameraTargetAreaLimitter;
 class CameraTargetCollideInfoHolder;
 class CameraTargetHolder;
@@ -37,10 +33,14 @@ class CameraVerticalAbsorber;
 class CameraViewInfo;
 class GyroCameraCtrl;
 class Nerve;
-struct OrthoProjectionInfo;
 class PlacementInfo;
 class RailKeeper;
 class SnapShotCameraCtrl;
+struct CameraObjectRequestInfo;
+struct CameraPoserFlag;
+struct CameraPoserSceneInfo;
+struct CameraStartInfo;
+struct OrthoProjectionInfo;
 struct SnapShotCameraSceneInfo;
 
 class CameraPoser : public HioNode,
@@ -241,3 +241,4 @@ protected:
 static_assert(sizeof(CameraPoser) == 0x140);
 
 }  // namespace al
+

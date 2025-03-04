@@ -21,3 +21,4 @@ void CameraPoserSceneInfo::registerCameraRailHolder(CameraRailHolder* railHolder
 }
 
 }  // namespace al
+

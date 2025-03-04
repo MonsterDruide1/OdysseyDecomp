@@ -32,3 +32,4 @@ private:
 static_assert(sizeof(CameraPoserFix) == 0x168);
 
 }  // namespace al
+
