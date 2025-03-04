@@ -82,9 +82,9 @@ bool CameraPoser::requestTurnToDirection(const CameraTurnInfo* mInfo) {
 
 bool CameraPoser::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo) const {
     OrthoProjectionParam* param = mOrthoProjectionParam;
-    if (param && param->mIsSetInfo && param->mInfo.nearClipWidth > 0.1f &&
-        param->mInfo.nearClipHeight > 0.1f) {
-        *projectionInfo = {param->mInfo.nearClipWidth, param->mInfo.nearClipHeight};
+    if (param && param->isSetInfo && param->info.nearClipWidth > 0.1f &&
+        param->info.nearClipHeight > 0.1f) {
+        *projectionInfo = {param->info.nearClipWidth, param->info.nearClipHeight};
         return true;
     }
     return false;
@@ -133,11 +133,11 @@ RailRider* CameraPoser::getRailRider() const {
 }
 
 bool CameraPoser::isInterpoleByCameraDistance() const {
-    return mActiveInterpoleParam->mStepType == CameraInterpoleStepType::ByCameraDistance;
+    return mActiveInterpoleParam->stepType == CameraInterpoleStepType::ByCameraDistance;
 }
 
 s32 CameraPoser::getInterpoleStep() const {
-    return mActiveInterpoleParam->mStepNum < 0 ? 60 : mActiveInterpoleParam->mStepNum;
+    return mActiveInterpoleParam->stepNum < 0 ? 60 : mActiveInterpoleParam->stepNum;
 }
 
 void CameraPoser::setInterpoleStep(s32 step) {
@@ -149,19 +149,19 @@ void CameraPoser::resetInterpoleStep() {
 }
 
 bool CameraPoser::isInterpoleEaseOut() const {
-    return mActiveInterpoleParam->mIsEaseOut;
+    return mActiveInterpoleParam->isEaseOut;
 }
 
 void CameraPoser::setInterpoleEaseOut() {
-    mActiveInterpoleParam->mIsEaseOut = true;
+    mActiveInterpoleParam->isEaseOut = true;
 }
 
 bool CameraPoser::isEndInterpoleByStep() const {
-    return mEndInterpoleParam->mStepType == CameraInterpoleStepType::ByStep;
+    return mEndInterpoleParam->stepType == CameraInterpoleStepType::ByStep;
 }
 
 s32 CameraPoser::getEndInterpoleStep() const {
-    return mEndInterpoleParam->mStepNum;
+    return mEndInterpoleParam->stepNum;
 }
 
 void CameraPoser::initNerve(const Nerve* nerve, s32 maxStates) {
@@ -200,42 +200,41 @@ void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {
 }
 
 inline void CameraPoser::CameraInterpoleParam::set(CameraInterpoleStepType type, s32 step,
-                                                   bool isInterpolate) {
-    mStepType = type;
-    mStepNum = step;
-    mIsInterpolate = isInterpolate;
+                                                   bool is_interpolate) {
+    stepType = type;
+    stepNum = step;
+    isInterpolate = is_interpolate;
 }
 
 inline void CameraPoser::CameraInterpoleParam::load(const ByamlIter& iter) {
-    tryGetByamlS32((s32*)&mStepType, iter, "InterpoleStepType");
+    tryGetByamlS32((s32*)&stepType, iter, "InterpoleStepType");
 
     const char* curveType = nullptr;
     if (tryGetByamlString(&curveType, iter, "InterpoleCurveType") != 0 && curveType &&
         isEqualString(curveType, "EaseOut"))
-        mIsEaseOut = true;
+        isEaseOut = true;
 
-    bool isInterpolate = tryGetByamlS32(&mStepNum, iter, "InterpoleStep");
-    mIsInterpolate = isInterpolate;
+    isInterpolate = tryGetByamlS32(&stepNum, iter, "InterpoleStep");
     if (isInterpolate)
-        mStepType = CameraInterpoleStepType::ByStep;
+        stepType = CameraInterpoleStepType::ByStep;
 }
 
 inline void CameraPoser::CameraInterpoleStep::load(const ByamlIter& iter) {
     ByamlIter newIter;
     if (tryGetByamlIterByKey(&newIter, iter, "EndInterpoleParam")) {
         if (isEqualString(getByamlKeyString(newIter, "Type"), "Step"))
-            mStepType = CameraInterpoleStepType::ByStep;
-        if (mStepType == CameraInterpoleStepType::ByStep)
-            mStepNum = getByamlKeyInt(newIter, "Step");
+            stepType = CameraInterpoleStepType::ByStep;
+        if (stepType == CameraInterpoleStepType::ByStep)
+            stepNum = getByamlKeyInt(newIter, "Step");
     }
 }
 
 inline void CameraPoser::OrthoProjectionParam::load(const ByamlIter& iter) {
-    bool isExist = tryGetByamlBool(&mIsSetInfo, iter, "IsSetOrthoProjectionInfo");
+    bool isExist = tryGetByamlBool(&isSetInfo, iter, "IsSetOrthoProjectionInfo");
 
-    if (isExist && mIsSetInfo) {
-        tryGetByamlF32(&mInfo.nearClipWidth, iter, "OrthoProjectionNearClipWidth");
-        tryGetByamlF32(&mInfo.nearClipHeight, iter, "OrthoProjectionNearClipHeight");
+    if (isExist && isSetInfo) {
+        tryGetByamlF32(&info.nearClipWidth, iter, "OrthoProjectionNearClipWidth");
+        tryGetByamlF32(&info.nearClipHeight, iter, "OrthoProjectionNearClipHeight");
     }
 }
 
@@ -274,7 +273,7 @@ bool CameraPoser::isFirstCalc() const {
 }
 
 void CameraPoser::appear(const CameraStartInfo& mInfo) {
-    mActiveState = ActiveState::Run;
+    mActiveState = ActiveState::Work;
     if (mAngleCtrlInfo != nullptr) {
         sead::Vector3f vec = {0, 0, 0};
         alCameraPoserFunction::calcPreCameraDir(&vec, this);
@@ -293,7 +292,7 @@ void CameraPoser::appear(const CameraStartInfo& mInfo) {
         mVerticalAbsorber->start(mTargetTrans, mInfo);
 
     if (mLookAtInterpole != nullptr)
-        mLookAtInterpole->mLookAtPos.set(mTargetTrans);
+        mLookAtInterpole->lookAtPos.set(mTargetTrans);
 }
 
 // TODO: CameraPoser::movement
@@ -304,8 +303,8 @@ inline void CameraPoser::LocalInterpole::interpolate(sead::LookAtCamera* cam) {
 
         sead::Vector3f camPosNext = sead::Vector3f(0, 0, 0);
         sead::Vector3f lookAtPosNext = sead::Vector3f(0, 0, 0);
-        lerpVec(&camPosNext, mCameraPos, cam->getPos(), rate);
-        lerpVec(&lookAtPosNext, mLookAtPos, cam->getAt(), rate);
+        lerpVec(&camPosNext, cameraPos, cam->getPos(), rate);
+        lerpVec(&lookAtPosNext, lookAtPos, cam->getAt(), rate);
 
         cam->setPos(camPosNext);
         cam->setAt(lookAtPosNext);
