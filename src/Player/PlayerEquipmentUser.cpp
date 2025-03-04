@@ -1,6 +1,6 @@
 #include "Player/PlayerEquipmentUser.h"
 
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 
 #include "Util/SensorMsgFunction.h"
 

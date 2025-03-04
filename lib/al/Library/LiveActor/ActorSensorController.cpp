@@ -1,6 +1,6 @@
 #include "Library/LiveActor/ActorSensorController.h"
 
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Project/HitSensor/HitSensor.h"
 
 namespace al {
