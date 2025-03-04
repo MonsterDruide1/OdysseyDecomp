@@ -7,10 +7,7 @@
 
 namespace al {
 
-class SensorMsg {
-    SEAD_RTTI_BASE(SensorMsg);
-};
-
+class SensorMsg;
 class LiveActor;
 class HitSensor;
 class SensorMsg;
@@ -570,6 +567,10 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSens
                                              const HitSensor*, f32);
 bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor*,
                                              const HitSensor*);
+bool sendMsgEnemyAttackForCrossoverSensor(HitSensor*, HitSensor*);
+bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor*, HitSensor*, const sead::Vector3f&,
+                                                  const sead::Vector3f&, f32);
+
 bool isSensorPlayer(const HitSensor*);
 bool isSensorPlayerFoot(const HitSensor*);
 bool isSensorPlayerDecoration(const HitSensor*);
@@ -591,35 +592,34 @@ void updateHitSensorsAll(LiveActor*);
 bool isMySensor(const HitSensor*, const LiveActor*);
 bool isSensorHitAnyPlane(const HitSensor*, const HitSensor*, const sead::Vector3f&);
 bool isSensorHitRingShape(const HitSensor*, const HitSensor*, f32);
-void tryGetEnemyAttackFireMaterialCode(const char**, const SensorMsg*);
-void sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
-void sendMsgPushAndKillVelocityToTargetH(LiveActor*, HitSensor*, HitSensor*);
-void pushAndAddVelocity(LiveActor*, const HitSensor*, const HitSensor*, f32);
-void pushAndAddVelocityH(LiveActor*, const HitSensor*, const HitSensor*, f32);
-void pushAndAddVelocityV(LiveActor*, const HitSensor*, const HitSensor*, f32);
-void tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSensor*,
+bool tryGetEnemyAttackFireMaterialCode(const char**, const SensorMsg*);
+bool sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
+bool sendMsgPushAndKillVelocityToTargetH(LiveActor*, HitSensor*, HitSensor*);
+bool pushAndAddVelocity(LiveActor*, const HitSensor*, const HitSensor*, f32);
+bool pushAndAddVelocityH(LiveActor*, const HitSensor*, const HitSensor*, f32);
+bool pushAndAddVelocityV(LiveActor*, const HitSensor*, const HitSensor*, f32);
+bool tryReceiveMsgPushAndAddVelocity(LiveActor*, const SensorMsg*, const HitSensor*,
                                      const HitSensor*, f32);
-void tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
+bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSensor*,
                                       const HitSensor*, f32);
-void tryReceiveMsgPushAndCalcPushTrans(sead::Vector3f*, const SensorMsg*, const LiveActor*,
+bool tryReceiveMsgPushAndCalcPushTrans(sead::Vector3f*, const SensorMsg*, const LiveActor*,
                                        const HitSensor*, const HitSensor*, f32);
-void sendMsgCollidePush(HitSensor*, HitSensor*, const sead::Vector3f&);
-void tryReceiveMsgCollidePush(sead::Vector3f*, const SensorMsg*);
-void getChangeAlphaValue(const SensorMsg*);
-void getBindInitType(const SensorMsg*);
-void getMsgString(const SensorMsg*);
-void getMsgStringV4fPtr(const SensorMsg*, sead::Vector4f**);
-void getMsgStringV4fSensorPtr(const SensorMsg*, sead::Vector4f, HitSensor**);
-void getMsgStringVoidPtr(const SensorMsg*, void**);
-void getPlayerReleaseEquipmentGoalType(const SensorMsg*)
+bool sendMsgCollidePush(HitSensor*, HitSensor*, const sead::Vector3f&);
+bool tryReceiveMsgCollidePush(sead::Vector3f*, const SensorMsg*);
+f32 getChangeAlphaValue(const SensorMsg*);
+u32 getBindInitType(const SensorMsg*);
+const char* getMsgString(const SensorMsg*);
+const char* getMsgStringV4fPtr(const SensorMsg*, sead::Vector4f**);
+const char* getMsgStringV4fSensorPtr(const SensorMsg*, sead::Vector4f, HitSensor**);
+const char* getMsgStringVoidPtr(const SensorMsg*, void**);
+u32 getPlayerReleaseEquipmentGoalType(const SensorMsg*);
 }  // namespace al
 
-class AttackSensorFunction {
-public:
-    static getAttackSensorNum(const HitSensor*);
-    static getAttackSensorNumMax(const HitSensor*);
-    static getAttackSensor(const HitSensor*, s32);
-    static findNearestAttackSensor(const HitSensor*);
-};
+namespace AttackSensorFunction {
+u16 getAttackSensorNum(const al::HitSensor*);
+u16 getAttackSensorNumMax(const al::HitSensor*);
+al::HitSensor* getAttackSensor(const al::HitSensor*, s32);
+al::HitSensor* findNearestAttackSensor(const al::HitSensor*);
+}  // namespace AttackSensorFunction
 
 // Unnamed function at 8FEB0C here
