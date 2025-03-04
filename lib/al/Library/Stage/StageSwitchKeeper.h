@@ -4,7 +4,6 @@
 
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/HostIO/HioNode.h"
-#include "Library/HostIO/IUseName.h"
 
 namespace al {
 class ExecuteDirector;
@@ -50,6 +49,8 @@ static_assert(sizeof(StageSwitchDirector) == 0x20);
 bool tryOnStageSwitch(IUseStageSwitch*, const char*);
 bool tryOffStageSwitch(IUseStageSwitch*, const char*);
 bool tryOnSwitchDeadOn(IUseStageSwitch* stageSwitch);
+bool listenStageSwitchOff(IUseStageSwitch* stageSwitchHolder, const char* eventName,
+                          const FunctorBase& actionOnOff);
 bool listenStageSwitchOn(IUseStageSwitch* stageSwitchHolder, const char* eventName,
                          const FunctorBase& actionOnOn);
 bool listenStageSwitchOnAppear(IUseStageSwitch* stageSwitchHolder,
