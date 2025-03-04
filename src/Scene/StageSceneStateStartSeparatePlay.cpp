@@ -6,9 +6,9 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Play/Layout/SimpleLayoutAppearWaitEnd.h"
+#include "Library/Play/Layout/WipeSimple.h"
 #include "Library/Scene/Scene.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Wipe/WipeSimple.h"
 
 #include "Layout/FooterParts.h"
 #include "Scene/StageSceneStatePauseMenu.h"
