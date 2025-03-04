@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Library/Area/IUseAreaObj.h"
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {
+class Scene;
 class CameraSubTargetTurnParam;
 
 class CameraSubTargetBase : public CameraTargetBase {
