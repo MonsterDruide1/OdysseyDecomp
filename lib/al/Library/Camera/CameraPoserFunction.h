@@ -238,4 +238,3 @@ bool isPlayerTypeHighJump(const al::CameraPoser*);
 bool isPlayerTypeNotTouchGround(const al::CameraPoser*);
 bool isOnRideObj(const al::CameraPoser*);
 }  // namespace alCameraPoserFunction
-

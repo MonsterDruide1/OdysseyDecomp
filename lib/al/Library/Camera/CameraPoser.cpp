@@ -396,4 +396,3 @@ void CameraPoser::endSnapShotModeCore() {
     endSnapShotMode();
 }
 }  // namespace al
-

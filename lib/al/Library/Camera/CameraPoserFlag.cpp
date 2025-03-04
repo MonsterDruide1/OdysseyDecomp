@@ -20,4 +20,3 @@ bool CameraPoserFlag::isValidKeepPreSelfPoseNextCamera() const {
                                 isValidKeepPreSelfPoseNextCameraByParam;
 }
 }  // namespace al
-
