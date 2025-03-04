@@ -8,6 +8,7 @@
 #include "Library/Camera/CameraArrowCollider.h"
 #include "Library/Camera/CameraOffsetCtrlPreset.h"
 #include "Library/Camera/CameraParamMoveLimit.h"
+#include "Library/Camera/CameraPoserFlag.h"
 #include "Library/Camera/CameraPoserFunction.h"
 #include "Library/Camera/CameraPoserSceneInfo.h"
 #include "Library/Camera/CameraStartInfo.h"
@@ -81,9 +82,9 @@ bool CameraPoser::requestTurnToDirection(const CameraTurnInfo* mInfo) {
 
 bool CameraPoser::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo) const {
     OrthoProjectionParam* param = mOrthoProjectionParam;
-    if (param && param->mIsSetInfo && param->mInfo.mNearClipWidth > 0.1f &&
-        param->mInfo.mNearClipHeight > 0.1f) {
-        *projectionInfo = {param->mInfo.mNearClipWidth, param->mInfo.mNearClipHeight};
+    if (param && param->mIsSetInfo && param->mInfo.nearClipWidth > 0.1f &&
+        param->mInfo.nearClipHeight > 0.1f) {
+        *projectionInfo = {param->mInfo.nearClipWidth, param->mInfo.nearClipHeight};
         return true;
     }
     return false;
@@ -104,27 +105,27 @@ f32 CameraPoser::getFovyDegree() const {
 }
 
 f32 CameraPoser::getSceneFovyDegree() const {
-    return mSceneInfo->mSceneFovyDegree;
+    return mSceneInfo->sceneFovyDegree;
 }
 
 AreaObjDirector* CameraPoser::getAreaObjDirector() const {
-    return mSceneInfo->mAreaObjDirector;
+    return mSceneInfo->areaObjDirector;
 }
 
 CollisionDirector* CameraPoser::getCollisionDirector() const {
-    return mSceneInfo->mCollisionDirector;
+    return mSceneInfo->collisionDirector;
 }
 
 CameraInputHolder* CameraPoser::getInputHolder() const {
-    return mSceneInfo->mInputHolder;
+    return mSceneInfo->inputHolder;
 }
 
 CameraTargetHolder* CameraPoser::getTargetHolder() const {
-    return mSceneInfo->mTargetHolder;
+    return mSceneInfo->targetHolder;
 }
 
 CameraFlagCtrl* CameraPoser::getFlagCtrl() const {
-    return mSceneInfo->mFlagCtrl;
+    return mSceneInfo->flagCtrl;
 }
 
 RailRider* CameraPoser::getRailRider() const {
@@ -169,12 +170,12 @@ void CameraPoser::initNerve(const Nerve* nerve, s32 maxStates) {
 
 void CameraPoser::initArrowCollider(CameraArrowCollider* arrowCollider) {
     mArrowCollider = arrowCollider;
-    mPoserFlag->mIsInvalidCollider = false;
+    mPoserFlag->isInvalidCollider = false;
 }
 
 void CameraPoser::initAudioKeeper(const char* name) {
     mAudioKeeper =
-        alAudioKeeperFunction::createAudioKeeper(mSceneInfo->mAudioDirector, name, nullptr);
+        alAudioKeeperFunction::createAudioKeeper(mSceneInfo->audioDirector, name, nullptr);
 }
 
 void CameraPoser::initRail(const PlacementInfo& mInfo) {
@@ -233,8 +234,8 @@ inline void CameraPoser::OrthoProjectionParam::load(const ByamlIter& iter) {
     bool isExist = tryGetByamlBool(&mIsSetInfo, iter, "IsSetOrthoProjectionInfo");
 
     if (isExist && mIsSetInfo) {
-        tryGetByamlF32(&mInfo.mNearClipWidth, iter, "OrthoProjectionNearClipWidth");
-        tryGetByamlF32(&mInfo.mNearClipHeight, iter, "OrthoProjectionNearClipHeight");
+        tryGetByamlF32(&mInfo.nearClipWidth, iter, "OrthoProjectionNearClipWidth");
+        tryGetByamlF32(&mInfo.nearClipHeight, iter, "OrthoProjectionNearClipHeight");
     }
 }
 
@@ -269,7 +270,7 @@ void CameraPoser::load(const ByamlIter& iter) {
 }
 
 bool CameraPoser::isFirstCalc() const {
-    return mPoserFlag->mIsFirstCalc;
+    return mPoserFlag->isFirstCalc;
 }
 
 void CameraPoser::appear(const CameraStartInfo& mInfo) {
@@ -285,10 +286,10 @@ void CameraPoser::appear(const CameraStartInfo& mInfo) {
 
     start(mInfo);
 
-    if (mArrowCollider != nullptr && !mPoserFlag->mIsInvalidCollider)
+    if (mArrowCollider != nullptr && !mPoserFlag->isInvalidCollider)
         mArrowCollider->start();
 
-    if (mVerticalAbsorber != nullptr && !mPoserFlag->mIsOffVerticalAbsorb)
+    if (mVerticalAbsorber != nullptr && !mPoserFlag->isOffVerticalAbsorb)
         mVerticalAbsorber->start(mTargetTrans, mInfo);
 
     if (mLookAtInterpole != nullptr)
@@ -317,7 +318,7 @@ void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* cam) const {
     cam->setUp(mCameraUp);
     cam->normalizeUp();
 
-    if (mVerticalAbsorber != nullptr && !mPoserFlag->mIsOffVerticalAbsorb)
+    if (mVerticalAbsorber != nullptr && !mPoserFlag->isOffVerticalAbsorb)
         mVerticalAbsorber->makeLookAtCamera(cam);
 
     if (mLocalInterpole != nullptr)
@@ -350,7 +351,7 @@ void CameraPoser::makeLookAtCameraLast(sead::LookAtCamera* cam) const {
 }
 
 void CameraPoser::makeLookAtCameraCollide(sead::LookAtCamera* cam) const {
-    if (!mPoserFlag->mIsInvalidCollider && mArrowCollider)
+    if (!mPoserFlag->isInvalidCollider && mArrowCollider)
         mArrowCollider->makeLookAtCamera(cam);
 }
 
@@ -364,7 +365,7 @@ void CameraPoser::calcCameraPose(sead::LookAtCamera* cam) const {
     if (mParamMoveLimit != nullptr)
         mParamMoveLimit->apply(cam);
 
-    if (!mPoserFlag->mIsInvalidCollider && mArrowCollider != nullptr)
+    if (!mPoserFlag->isInvalidCollider && mArrowCollider != nullptr)
         mArrowCollider->makeLookAtCamera(cam);
 
     if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
@@ -375,7 +376,7 @@ bool CameraPoser::receiveRequestFromObjectCore(const CameraObjectRequestInfo& mI
     if (receiveRequestFromObject(mInfo))
         return true;
 
-    if (mVerticalAbsorber != nullptr && mInfo.mIsStopVerticalAbsorb) {
+    if (mVerticalAbsorber != nullptr && mInfo.isStopVerticalAbsorb) {
         mVerticalAbsorber->liberateAbsorb();
         return true;
     }
@@ -396,3 +397,4 @@ void CameraPoser::endSnapShotModeCore() {
     endSnapShotMode();
 }
 }  // namespace al
+

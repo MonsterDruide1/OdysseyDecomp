@@ -85,3 +85,4 @@ const char* CameraPoserFix::getFixDoorwayCameraName() {
     return "出入口専用固定";
 }
 }  // namespace al
+
