@@ -53,7 +53,7 @@ class CameraPoser : public HioNode,
 public:
     enum class ActiveState : s32 {
         Start = 0,
-        Run = 1,
+        Work = 1,
         End = 2,
     };
 
@@ -68,8 +68,8 @@ public:
 
         s32 _0 = -1;
         s32 _4 = 0;
-        sead::Vector3f mCameraPos = {0, 0, 0};
-        sead::Vector3f mLookAtPos = {0, 0, 0};
+        sead::Vector3f cameraPos = {0, 0, 0};
+        sead::Vector3f lookAtPos = {0, 0, 0};
     };
 
     static_assert(sizeof(LocalInterpole) == 0x20);
@@ -77,7 +77,7 @@ public:
     struct LookAtInterpole {
         LookAtInterpole(f32 v) : _c(v) {}
 
-        sead::Vector3f mLookAtPos = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f lookAtPos = {0.0f, 0.0f, 0.0f};
         f32 _c;
     };
 
@@ -85,12 +85,12 @@ public:
 
     struct CameraInterpoleStep {
         CameraInterpoleStep(CameraInterpoleStepType type, s32 stepNum)
-            : mStepType(type), mStepNum(stepNum) {}
+            : stepType(type), stepNum(stepNum) {}
 
         void load(const ByamlIter& iter);
 
-        CameraInterpoleStepType mStepType;
-        s32 mStepNum = -1;
+        CameraInterpoleStepType stepType;
+        s32 stepNum = -1;
     };
 
     static_assert(sizeof(CameraInterpoleStep) == 0x8);
@@ -102,19 +102,19 @@ public:
         void load(const ByamlIter& iter);
         void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
 
-        s8 mIsEaseOut = false;
-        s8 mIsInterpolate = false;
+        s8 isEaseOut = false;
+        s8 isInterpolate = false;
     };
 
     static_assert(sizeof(CameraInterpoleParam) == 0xC);
 
     struct OrthoProjectionParam {
-        OrthoProjectionParam(OrthoProjectionInfo info) : mInfo(info) {}
+        OrthoProjectionParam(OrthoProjectionInfo info) : info(info) {}
 
         void load(const ByamlIter& iter);
 
-        bool mIsSetInfo = false;
-        OrthoProjectionInfo mInfo;
+        bool isSetInfo = false;
+        OrthoProjectionInfo info;
     };
 
     static_assert(sizeof(OrthoProjectionParam) == 0xC);
