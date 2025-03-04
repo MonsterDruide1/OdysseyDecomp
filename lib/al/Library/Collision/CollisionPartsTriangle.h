@@ -113,9 +113,9 @@ public:
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
 
-    HitInfo& operator*() { return *mHitInfo; }
+    HitInfo* operator*() { return mHitInfo.data(); }
 
-    const HitInfo& operator*() const { return *mHitInfo; }
+    const HitInfo* operator*() const { return mHitInfo.data(); }
 
     HitInfo& operator->() { return *mHitInfo; }
 
@@ -129,9 +129,9 @@ public:
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
 
-    HitInfo& operator*() { return *mHitInfo; }
+    HitInfo* operator*() { return mHitInfo.data(); }
 
-    const HitInfo& operator*() const { return *mHitInfo; }
+    const HitInfo* operator*() const { return mHitInfo.data(); }
 
     HitInfo& operator->() { return *mHitInfo; }
 
