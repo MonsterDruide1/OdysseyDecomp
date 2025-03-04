@@ -32,4 +32,3 @@ struct CameraPoserFlag {
 static_assert(sizeof(CameraPoserFlag) == 0xF);
 
 }  // namespace al
-
