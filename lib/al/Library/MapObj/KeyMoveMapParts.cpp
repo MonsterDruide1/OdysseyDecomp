@@ -5,6 +5,7 @@
 #include "Library/Demo/DemoFunction.h"
 #include "Library/Fluid/RippleCtrl.h"
 #include "Library/KeyPose/KeyPoseKeeper.h"
+#include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

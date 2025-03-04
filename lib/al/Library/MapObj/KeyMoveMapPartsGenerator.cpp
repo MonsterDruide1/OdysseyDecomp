@@ -1,6 +1,6 @@
 #include "Library/MapObj/KeyMoveMapPartsGenerator.h"
 
-#include "Library/KeyPose/KeyPoseKeeper.h"
+#include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

@@ -1,7 +1,7 @@
 #include "Library/MapObj/FloaterMapParts.h"
 
 #include "Library/Effect/EffectSystemInfo.h"
-#include "Library/KeyPose/KeyPoseKeeper.h"
+#include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
