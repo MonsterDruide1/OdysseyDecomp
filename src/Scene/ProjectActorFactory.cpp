@@ -36,6 +36,7 @@
 #include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
 #include "Item/Coin2D.h"
+#include "Item/Coin2DCityDirector.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
 #include "Item/CoinCirclePlacement.h"
@@ -178,7 +179,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CollectionList", nullptr},
     {"Coin", al::createActorFunction<Coin>},
     {"Coin2D", al::createActorFunction<Coin2D>},
-    {"Coin2DCityDirector", nullptr},
+    {"Coin2DCityDirector", al::createActorFunction<Coin2DCityDirector>},
     {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", al::createActorFunction<CoinChameleon>},
     {"CoinCirclePlacement", al::createActorFunction<CoinCirclePlacement>},
