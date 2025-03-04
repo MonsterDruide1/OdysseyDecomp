@@ -8,17 +8,6 @@ class CameraRequestParamHolder;
 class CameraSwitchRequester;
 class SpecialCameraHolder;
 
-class PauseCameraCtrl {
-public:
-    PauseCameraCtrl(f32 v);
-
-private:
-    bool mIsCameraPause = false;
-    f32 _4;
-};
-
-static_assert(sizeof(PauseCameraCtrl) == 0x8);
-
 class SceneCameraViewCtrl {
 public:
     SceneCameraViewCtrl();
