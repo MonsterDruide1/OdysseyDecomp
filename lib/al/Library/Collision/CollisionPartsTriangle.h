@@ -97,9 +97,9 @@ protected:
 
 class ArrowHitInfo {
 public:
-    HitInfo& operator*() { return *mHitInfo; }
+    HitInfo* operator*() { return mHitInfo.data(); }
 
-    const HitInfo& operator*() const { return *mHitInfo; }
+    const HitInfo* operator*() const { return mHitInfo.data(); }
 
     HitInfo& operator->() { return *mHitInfo; }
 
