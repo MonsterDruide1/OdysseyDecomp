@@ -7,7 +7,7 @@ namespace al {
 CameraViewInfo::CameraViewInfo(s32 index, const sead::LookAtCamera& lookAtCam,
                                const Projection& projection, const CameraViewFlag& flag,
                                const OrthoProjectionInfo& orthoProjectionInfo)
-    : mIndex(index), mLookAtCam(lookAtCam), mProjection(projection), mCamViewFlag(flag),
+    : mIndex(index), mLookAtCam(lookAtCam), mProjection(projection), mViewFlag(flag),
       mOrthoProjectionInfo(orthoProjectionInfo) {}
 
 const sead::Projection& CameraViewInfo::getProjectionSead() const {

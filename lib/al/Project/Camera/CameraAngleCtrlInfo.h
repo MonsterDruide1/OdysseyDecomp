@@ -15,7 +15,7 @@ public:
 
     void start(f32);
     void load(const ByamlIter& iter);
-    void update(const sead::Vector2f&, f32, bool);
+    void update(const sead::Vector2f& cameraStick, f32 sensitivityScale, bool isTriggerReset);
 
     s32 getMaxResetStep() const;
     bool isFixByRangeHV() const;
