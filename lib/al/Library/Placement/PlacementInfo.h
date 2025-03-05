@@ -1,7 +1,5 @@
 #pragma once
 
-#include <resource/seadResource.h>
-
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {
@@ -14,6 +12,11 @@ public:
     const ByamlIter& getPlacementIter() const { return mPlacementIter; }
 
     const ByamlIter& getZoneIter() const { return mZoneIter; }
+
+protected:
+    void setPlacementIter(const ByamlIter& placementIter) { mPlacementIter = placementIter; }
+
+    void setZoneIter(const ByamlIter& zoneIter) { mZoneIter = zoneIter; }
 
 private:
     ByamlIter mPlacementIter;
