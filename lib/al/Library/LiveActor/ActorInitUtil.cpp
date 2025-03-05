@@ -23,6 +23,7 @@
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Model/ModelKeeper.h"
@@ -63,13 +64,13 @@ __attribute__((always_inline)) bool initActorPoseKeeper(const char* pose, LiveAc
         return false;
     s32 poseId = -1;
     for (s32 i = 0; i < 9; i++) {
-        if (isEqualString(gActorPoseTable[i].mName, pose)) {
+        if (isEqualString(gActorPoseTable[i].name, pose)) {
             poseId = i;
             break;
         }
     }
     if (poseId != -1) {
-        gActorPoseTable[poseId].mCreationFunction(actor);
+        gActorPoseTable[poseId].creationFunction(actor);
         return true;
     }
     return false;
@@ -177,17 +178,17 @@ __attribute__((always_inline)) void initActorModel(LiveActor* actor, const Actor
     ModelLodCtrl* modelLodCtrl = initActorModelLodCtrl(actor, modelRes, suffix);
     modelKeeper->setModelLodCtrl(modelLodCtrl);
     if (modelLodCtrl)
-        initInfo.getActorSceneInfo().mGraphicsSystemInfo->mModelLodAllCtrl->registerLodCtrl(
+        initInfo.getActorSceneInfo().graphicsSystemInfo->mModelLodAllCtrl->registerLodCtrl(
             modelLodCtrl);
 
     MaterialCategoryKeeper* materialCategoryKeeper =
-        initInfo.getActorSceneInfo().mGraphicsSystemInfo->mMaterialCategoryKeeper;
+        initInfo.getActorSceneInfo().graphicsSystemInfo->mMaterialCategoryKeeper;
     ModelMaterialCategory::tryCreate(modelKeeper->getModelCtrl(), modelRes, suffix,
                                      materialCategoryKeeper);
 
     GraphicsQualityInfo* graphicsQualityInfo =
         initInfo.getActorSceneInfo()
-            .mGraphicsSystemInfo->mGraphicsQualityController->getGraphicsQualityInfo();
+            .graphicsSystemInfo->mGraphicsQualityController->getGraphicsQualityInfo();
     modelKeeper->getModelCtrl()->setGraphicsQualityInfo(graphicsQualityInfo);
 
     ModelOcclusionQuery* modelOcclusionQuery =
@@ -736,7 +737,7 @@ createActorFromFactory(const ActorInitInfo& childInitInfo, const PlacementInfo* 
 
     const char* displayName;
     getDisplayName(&displayName, *placementInfo);
-    LiveActor* actor = creator->mCreationFunction(displayName);
+    LiveActor* actor = creator->creationFunction(displayName);
     actor->init(childInitInfo);
     return actor;
 }
