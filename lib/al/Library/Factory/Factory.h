@@ -35,14 +35,20 @@ public:
         const char* convertedName = convertName(name);
         s32 numEntries = mNumFactoryEntries;
         for (s32 i = 0; i < numEntries; ++i) {
-            const NameToCreator<T>* entry = &mFactoryEntries[i];
-            if (isEqualString(convertedName, entry->mName))
-                return entry;
+            const NameToCreator<T>& entry = mFactoryEntries[i];
+            if (isEqualString(convertedName, entry.name))
+                return &entry;
         }
         return nullptr;
     }
+    inline const T* getCreationFunction(const char* name) const {
+        const NameToCreator<T>* entry = getFactoryEntry(name);
+        if (entry == nullptr)
+            return nullptr;
+        return &entry->creationFunction;
+    }
 
-private:
+public:
     const char* mFactoryName;
     const NameToCreator<T>* mFactoryEntries;
     s32 mNumFactoryEntries;
