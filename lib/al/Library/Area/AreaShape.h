@@ -2,13 +2,10 @@
 
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
-#include <math/seadVector.h>
 
-#include "Library/Factory/Factory.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-
 class AreaShape : public HioNode {
 public:
     AreaShape();
@@ -22,26 +19,17 @@ public:
                                      const sead::Vector3f& a4, const sead::Vector3f& a5) const = 0;
     virtual bool calcLocalBoundingBox(sead::BoundBox3f* boundingBox) const = 0;
 
-    const sead::Vector3f& getScale() const { return mScale; }
-
     void setBaseMtxPtr(const sead::Matrix34f* baseMtxPtr);
     void setScale(const sead::Vector3f& scale);
-
     bool calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& trans) const;
     bool calcWorldPos(sead::Vector3f* worldPos, const sead::Vector3f& trans) const;
     bool calcWorldDir(sead::Vector3f* worldDir, const sead::Vector3f& trans) const;
     void calcTrans(sead::Vector3f* trans) const;
 
+    const sead::Vector3f& getScale() const { return mScale; }
+
 private:
     const sead::Matrix34f* mBaseMtxPtr = nullptr;
     sead::Vector3f mScale = {1.0f, 1.0f, 1.0f};
 };
-
-using AreaShapeCreatorFunction = AreaShape* (*)();
-
-class AreaShapeFactory : public Factory<AreaShapeCreatorFunction> {
-public:
-    AreaShapeFactory(const char* factoryName);
-};
-
 }  // namespace al
