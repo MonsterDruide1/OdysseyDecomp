@@ -150,7 +150,7 @@ bool tryGetRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo) {
 }
 
 // TODO: requires slight change in `sead`, but that causes other mismatches across the project
-inline void makeRT(sead::Matrix34f& o, const sead::Vector3f& r, const sead::Vector3f& t) {
+inline void makeRT(sead::Matrix34f* o, const sead::Vector3f& r, const sead::Vector3f& t) {
     const f32 sinV[3] = {std::sin(r.x), std::sin(r.y), std::sin(r.z)};
 
     const f32 cosV[3] = {std::cos(r.x), std::cos(r.y), std::cos(r.z)};
@@ -159,25 +159,25 @@ inline void makeRT(sead::Matrix34f& o, const sead::Vector3f& r, const sead::Vect
     f32 s0_s1 = sinV[0] * sinV[1];  // lines to match
     f32 c0_s2 = cosV[0] * sinV[2];
 
-    o.m[0][0] = cosV[1] * cosV[2];
-    o.m[1][0] = cosV[1] * sinV[2];
-    o.m[2][0] = -sinV[1];
+    o->m[0][0] = cosV[1] * cosV[2];
+    o->m[1][0] = cosV[1] * sinV[2];
+    o->m[2][0] = -sinV[1];
 
-    o.m[0][1] = (s0_s1 * cosV[2]) - c0_s2;
-    o.m[1][1] = (s0_s1 * sinV[2]) + c0_c2;
-    o.m[2][1] = sinV[0] * cosV[1];
+    o->m[0][1] = (s0_s1 * cosV[2]) - c0_s2;
+    o->m[1][1] = (s0_s1 * sinV[2]) + c0_c2;
+    o->m[2][1] = sinV[0] * cosV[1];
 
-    o.m[0][2] = (c0_c2 * sinV[1]) + (sinV[0] * sinV[2]);
-    o.m[1][2] = (c0_s2 * sinV[1]) - (sinV[0] * cosV[2]);
-    o.m[2][2] = cosV[0] * cosV[1];
+    o->m[0][2] = (c0_c2 * sinV[1]) + (sinV[0] * sinV[2]);
+    o->m[1][2] = (c0_s2 * sinV[1]) - (sinV[0] * cosV[2]);
+    o->m[2][2] = cosV[0] * cosV[1];
 
-    o.m[0][3] = t.x;
-    o.m[1][3] = t.y;
-    o.m[2][3] = t.z;
+    o->m[0][3] = t.x;
+    o->m[1][3] = t.y;
+    o->m[2][3] = t.z;
 }
 
 template <typename T>
-void getRotation(sead::Vector3f& v, const sead::Matrix34f& n) {
+inline void getRotation(sead::Vector3f* v, const sead::Matrix34f& n) {
     T abs = sead::MathCalcCommon<T>::abs(n.m[2][0]);
 
     // making sure pitch stays within bounds, setting roll to 0 otherwise
@@ -185,10 +185,10 @@ void getRotation(sead::Vector3f& v, const sead::Matrix34f& n) {
         const T a12 = n.m[0][1];
         const T a13 = n.m[0][2];
         const T a31 = n.m[2][0];
-        
-        v.x = 0.0f;
-        v.y = (a31 / abs) * (-sead::numbers::pi_v<T> / 2);
-        v.z = std::atan2(-a12, -(a31 * a13));
+
+        v->x = 0.0f;
+        v->y = (a31 / abs) * (-sead::numbers::pi_v<T> / 2);
+        v->z = std::atan2(-a12, -(a31 * a13));
     } else {
         const T a11 = n.m[0][0];
         const T a21 = n.m[1][0];
@@ -196,13 +196,12 @@ void getRotation(sead::Vector3f& v, const sead::Matrix34f& n) {
         const T a32 = n.m[2][1];
         const T a33 = n.m[2][2];
 
-        v.x = std::atan2(a32, a33);
-        v.y = std::asin(-a31);
-        v.z = std::atan2(a21, a11);
+        v->x = std::atan2(a32, a33);
+        v->y = std::asin(-a31);
+        v->z = std::atan2(a21, a11);
     }
 }
 
-// NON_MATCHING: During matrix calculations (https://decomp.me/scratch/towGQ)
 bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
     if (!tryGetArgV3f(rotate, placementInfo, "Rotate"))
         return false;
@@ -212,10 +211,10 @@ bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
         sead::Matrix34f rot, rot2;
         sead::Vector3f vec1 = {sead::Mathf::deg2rad(rotate->x), sead::Mathf::deg2rad(rotate->y),
                                sead::Mathf::deg2rad(rotate->z)};
-        makeRT(rot, vec1, sead::Vector3f::zero);
+        makeRT(&rot, vec1, sead::Vector3f::zero);
         rot2 = mtx * rot;
 
-        getRotation<f32>(*rotate, rot2);
+        getRotation<f32>(rotate, rot2);
         rotate->set(sead::Mathf::rad2deg(rotate->x), sead::Mathf::rad2deg(rotate->y),
                     sead::Mathf::rad2deg(rotate->z));
     }
@@ -235,7 +234,7 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementI
     if (!tryGetByamlV3f(&rotate, zone, "Rotate"))
         return false;
 
-    makeRT(*matrix,
+    makeRT(matrix,
            {sead::Mathf::rad2deg(rotate.x), sead::Mathf::rad2deg(rotate.y),
             sead::Mathf::rad2deg(rotate.z)},
            translate);
@@ -401,7 +400,7 @@ bool tryGetMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo)
         return false;
     if (!tryGetRotate(&rotate, placementInfo))
         return false;
-    makeRT(*matrix,
+    makeRT(matrix,
            {sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
             sead::Mathf::deg2rad(rotate.z)},
            trans);
