@@ -731,13 +731,13 @@ createActorFromFactory(const ActorInitInfo& childInitInfo, const PlacementInfo* 
     const char* className = nullptr;
     getClassName(&className, childInitInfo);
 
-    const NameToCreator<ActorCreatorFunction>* creator = factory->getFactoryEntry(className);
-    if (creator == nullptr)
+    const ActorCreatorFunction* creationFunction = factory->getCreationFunction(className);
+    if (creationFunction == nullptr)
         return nullptr;
 
     const char* displayName;
     getDisplayName(&displayName, *placementInfo);
-    LiveActor* actor = creator->creationFunction(displayName);
+    LiveActor* actor = (*creationFunction)(displayName);
     actor->init(childInitInfo);
     return actor;
 }
