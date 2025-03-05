@@ -18,7 +18,6 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveKeeper.h"
 #include "Library/Play/Camera/CameraVerticalAbsorber.h"
-#include "Library/Projection/OrthoProjectionInfo.h"
 #include "Library/Rail/RailKeeper.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
@@ -30,8 +29,8 @@ namespace al {
 
 CameraPoser::CameraPoser(const char* name) : mPoserName(name) {
     mPoserFlag = new CameraPoserFlag();
-    mActiveInterpoleParam = new CameraInterpoleParam(CameraInterpoleStepType::ByCameraDistance, -1);
-    mEndInterpoleParam = new CameraInterpoleStep(CameraInterpoleStepType::Undefined, -1);
+    mActiveInterpoleParam = new CameraInterpoleParam();
+    mEndInterpoleParam = new CameraInterpoleStep();
 };
 
 void CameraPoser::init() {}
@@ -94,7 +93,10 @@ bool CameraPoser::isEnableRotateByPad() const {
     if (mAngleCtrlInfo != nullptr)
         return !mAngleCtrlInfo->isFixByRangeHV();
 
-    return mAngleSwingInfo && !mAngleSwingInfo->isInvalidSwing();
+    if (mAngleSwingInfo != nullptr)
+        return !mAngleSwingInfo->isInvalidSwing();
+
+    return false;
 }
 
 f32 CameraPoser::getFovyDegree() const {
@@ -191,8 +193,7 @@ void CameraPoser::initLookAtInterpole(f32 v) {
 }
 
 void CameraPoser::initOrthoProjectionParam() {
-    OrthoProjectionInfo info = OrthoProjectionInfo();
-    mOrthoProjectionParam = new OrthoProjectionParam(info);
+    mOrthoProjectionParam = new OrthoProjectionParam();
 }
 
 void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {
@@ -200,10 +201,10 @@ void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {
 }
 
 inline void CameraPoser::CameraInterpoleParam::set(CameraInterpoleStepType type, s32 step,
-                                                   bool is_interpolate) {
+                                                   bool is_interpolate_by_step) {
     stepType = type;
     stepNum = step;
-    isInterpolate = is_interpolate;
+    isInterpolateByStep = is_interpolate_by_step;
 }
 
 inline void CameraPoser::CameraInterpoleParam::load(const ByamlIter& iter) {
@@ -214,8 +215,8 @@ inline void CameraPoser::CameraInterpoleParam::load(const ByamlIter& iter) {
         isEqualString(curveType, "EaseOut"))
         isEaseOut = true;
 
-    isInterpolate = tryGetByamlS32(&stepNum, iter, "InterpoleStep");
-    if (isInterpolate)
+    isInterpolateByStep = tryGetByamlS32(&stepNum, iter, "InterpoleStep");
+    if (isInterpolateByStep)
         stepType = CameraInterpoleStepType::ByStep;
 }
 
@@ -273,7 +274,7 @@ bool CameraPoser::isFirstCalc() const {
 }
 
 void CameraPoser::appear(const CameraStartInfo& mInfo) {
-    mActiveState = ActiveState::Work;
+    mActiveState = ActiveState::Active;
     if (mAngleCtrlInfo != nullptr) {
         sead::Vector3f vec = {0, 0, 0};
         alCameraPoserFunction::calcPreCameraDir(&vec, this);
@@ -357,18 +358,9 @@ void CameraPoser::makeLookAtCameraCollide(sead::LookAtCamera* cam) const {
 void CameraPoser::calcCameraPose(sead::LookAtCamera* cam) const {
     makeLookAtCameraPrev(cam);
     makeLookAtCamera(cam);
-
-    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
-        mSnapShotCtrl->makeLookAtCameraPost(cam);
-
-    if (mParamMoveLimit != nullptr)
-        mParamMoveLimit->apply(cam);
-
-    if (!mPoserFlag->isInvalidCollider && mArrowCollider != nullptr)
-        mArrowCollider->makeLookAtCamera(cam);
-
-    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
-        mSnapShotCtrl->makeLookAtCameraLast(cam);
+    makeLookAtCameraPost(cam);
+    makeLookAtCameraCollide(cam);
+    makeLookAtCameraLast(cam);
 }
 
 bool CameraPoser::receiveRequestFromObjectCore(const CameraObjectRequestInfo& mInfo) {
