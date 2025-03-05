@@ -353,13 +353,12 @@ bool tryGetLocalAxis(sead::Vector3f* front, const ActorInitInfo& initInfo, s32 a
 }
 
 bool tryGetLocalAxis(sead::Vector3f* front, const PlacementInfo& placementInfo, s32 axis) {
-    // does not align with Math/Axis.h
-    switch (axis) {
-    case 0:
+    switch ((Axis)(axis + 1)) {
+    case Axis::X:
         return tryGetSide(front, placementInfo);
-    case 1:
+    case Axis::Y:
         return tryGetUp(front, placementInfo);
-    case 2:
+    case Axis::Z:
         return tryGetFront(front, placementInfo);
     default:
         return false;
