@@ -56,9 +56,14 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MoonBasementSlideObj.h"
+#include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/TrampleBush.h"
+#include "MapObj/TrampleSwitch.h"
+#include "MapObj/TrampleSwitchTimer.h"
 #include "MapObj/TransparentWall.h"
 #include "MapObj/VolleyballNet.h"
+#include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
 #include "Npc/KuriboGirl.h"
 
@@ -362,7 +367,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
     {"MoonWorldBell", nullptr},
-    {"MoonWorldCaptureParadeLift", nullptr},
+    {"MoonWorldCaptureParadeLift", al::createActorFunction<MoonWorldCaptureParadeLift>},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
     {"MofumofuScrap", al::createActorFunction<MofumofuScrap>},
@@ -553,10 +558,10 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Togezo", al::createActorFunction<Togezo>},
     {"Togezo2D", al::createActorFunction<Togezo2D>},
     {"TokimekiMayorNpc", nullptr},
-    {"TrampleBush", nullptr},
-    {"TrampleSwitch", nullptr},
-    {"TrampleSwitchSave", nullptr},
-    {"TrampleSwitchTimer", nullptr},
+    {"TrampleBush", al::createActorFunction<TrampleBush>},
+    {"TrampleSwitch", al::createActorFunction<TrampleSwitch>},
+    {"TrampleSwitchSave", al::createActorFunction<TrampleSwitch>},
+    {"TrampleSwitchTimer", al::createActorFunction<TrampleSwitchTimer>},
     {"TransparentWall", al::createActorFunction<TransparentWall>},
     {"TreasureBox", nullptr},
     {"TreasureBoxKey", nullptr},
@@ -583,7 +588,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"WaterfallWorldHomeCage", nullptr},
     {"WaterfallWorldWaterfall", nullptr},
     {"WaterRoad", nullptr},
-    {"WeightSwitch", nullptr},
+    {"WeightSwitch", al::createActorFunction<WeightSwitch>},
     {"WheelWaveSurfParts", nullptr},
     {"WindBlowPuzzle", nullptr},
     {"WorldMapEarth", al::createActorFunction<WorldMapEarth>},
