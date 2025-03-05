@@ -14,6 +14,8 @@ public:
     bool isHurryStart() const;
     s32 getLastTime() const;
 
+    s32 getTime() const { return mLastTime; }
+
 private:
     s32 mLastTime = -1;
     s32 mDuration;

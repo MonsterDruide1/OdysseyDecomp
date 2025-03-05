@@ -42,6 +42,8 @@ public:
 
     const sead::Vector3f& getSurfacePosition() const { return mSurface.position; };
 
+    const sead::Vector3f& getSurfaceNormal() const { return mSurface.normal; };
+
 private:
     const LiveActor* mActor;
     bool mIsFoundSurface = false;
