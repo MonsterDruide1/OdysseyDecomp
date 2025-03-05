@@ -6,7 +6,7 @@ namespace al {
 
 class AreaShapeCylinder : public AreaShape {
 public:
-    enum class OriginType { Center, Base, Top };
+    enum class OriginType : s32 { Center, Base, Top };
 
     AreaShapeCylinder(AreaShapeCylinder::OriginType);
 
