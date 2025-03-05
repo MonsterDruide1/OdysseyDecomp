@@ -26,6 +26,7 @@ bin/
 compile_commands.json
 .clangd
 manifest.json
+.lite_project.lua
 
 # IDA
 *.id0
@@ -56,3 +57,4 @@ tools/decompme
 # direnv
 .direnv/
 .envrc.private
+

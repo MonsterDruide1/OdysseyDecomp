@@ -299,13 +299,13 @@ void CameraPoser::appear(const CameraStartInfo& mInfo) {
 // TODO: CameraPoser::movement
 
 inline void CameraPoser::LocalInterpole::interpolate(sead::LookAtCamera* cam) {
-    if (_0 > -1) {
-        f32 rate = hermiteRate(normalize(_0, 0, _4), 1.5f, 0.0f);
+    if (step > -1) {
+        f32 rate = hermiteRate(normalize(step, 0, end), 1.5f, 0.0f);
 
         sead::Vector3f camPosNext = sead::Vector3f(0, 0, 0);
         sead::Vector3f lookAtPosNext = sead::Vector3f(0, 0, 0);
-        lerpVec(&camPosNext, cameraPos, cam->getPos(), rate);
-        lerpVec(&lookAtPosNext, lookAtPos, cam->getAt(), rate);
+        lerpVec(&camPosNext, prevCameraPos, cam->getPos(), rate);
+        lerpVec(&lookAtPosNext, prevLookAtPos, cam->getAt(), rate);
 
         cam->setPos(camPosNext);
         cam->setAt(lookAtPosNext);
@@ -388,3 +388,4 @@ void CameraPoser::endSnapShotModeCore() {
     endSnapShotMode();
 }
 }  // namespace al
+
