@@ -1,7 +1,7 @@
 #include "Library/Area/AreaInitInfo.h"
 
 namespace al {
-AreaInitInfo::AreaInitInfo() : PlacementInfo() {}
+AreaInitInfo::AreaInitInfo() = default;
 
 AreaInitInfo::AreaInitInfo(const PlacementInfo& placementInfo,
                            StageSwitchDirector* stageSwitchDirector, SceneObjHolder* sceneObjHolder)
