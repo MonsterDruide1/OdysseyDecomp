@@ -95,7 +95,6 @@ public:
     struct CameraInterpoleParam : public CameraInterpoleStep {
         inline CameraInterpoleParam()
             : CameraInterpoleStep({CameraInterpoleStepType::ByCameraDistance}) {}
-            
 
         inline void load(const ByamlIter& iter);
         inline void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
@@ -107,7 +106,7 @@ public:
     static_assert(sizeof(CameraInterpoleParam) == 0xC);
 
     struct OrthoProjectionParam {
-        inline OrthoProjectionParam() : info(OrthoProjectionInfo()) {}
+        OrthoProjectionParam() {}
 
         inline void load(const ByamlIter& iter);
 
@@ -239,3 +238,4 @@ protected:
 static_assert(sizeof(CameraPoser) == 0x140);
 
 }  // namespace al
+
