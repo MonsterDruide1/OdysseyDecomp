@@ -66,10 +66,10 @@ public:
     struct LocalInterpole {
         inline void interpolate(sead::LookAtCamera* cam);
 
-        s32 _0 = -1;
-        s32 _4 = 0;
-        sead::Vector3f cameraPos = {0, 0, 0};
-        sead::Vector3f lookAtPos = {0, 0, 0};
+        s32 step = -1;
+        s32 end = 0;
+        sead::Vector3f prevCameraPos = {0, 0, 0};
+        sead::Vector3f prevLookAtPos = {0, 0, 0};
     };
 
     static_assert(sizeof(LocalInterpole) == 0x20);
