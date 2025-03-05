@@ -348,43 +348,43 @@ bool tryGetFront(sead::Vector3f* front, const PlacementInfo& placementInfo) {
     return true;
 }
 
-bool tryGetLocalAxis(sead::Vector3f* front, const ActorInitInfo& initInfo, s32 axis) {
-    return tryGetLocalAxis(front, initInfo.getPlacementInfo(), axis);
+bool tryGetLocalAxis(sead::Vector3f* dir, const ActorInitInfo& initInfo, s32 axis) {
+    return tryGetLocalAxis(dir, initInfo.getPlacementInfo(), axis);
 }
 
-bool tryGetLocalAxis(sead::Vector3f* front, const PlacementInfo& placementInfo, s32 axis) {
+bool tryGetLocalAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s32 axis) {
     switch ((Axis)(axis + 1)) {
     case Axis::X:
-        return tryGetSide(front, placementInfo);
+        return tryGetSide(dir, placementInfo);
     case Axis::Y:
-        return tryGetUp(front, placementInfo);
+        return tryGetUp(dir, placementInfo);
     case Axis::Z:
-        return tryGetFront(front, placementInfo);
+        return tryGetFront(dir, placementInfo);
     default:
         return false;
     }
 }
 
-bool tryGetLocalSignAxis(sead::Vector3f* front, const ActorInitInfo& initInfo, s32 axis) {
-    return tryGetLocalSignAxis(front, initInfo.getPlacementInfo(), axis);
+bool tryGetLocalSignAxis(sead::Vector3f* dir, const ActorInitInfo& initInfo, s32 axis) {
+    return tryGetLocalSignAxis(dir, initInfo.getPlacementInfo(), axis);
 }
 
-bool tryGetLocalSignAxis(sead::Vector3f* front, const PlacementInfo& placementInfo, s32 axis) {
+bool tryGetLocalSignAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s32 axis) {
     switch ((Axis)sead::Mathi::abs(axis)) {
     case Axis::X:
-        tryGetSide(front, placementInfo);
+        tryGetSide(dir, placementInfo);
         break;
     case Axis::Y:
-        tryGetUp(front, placementInfo);
+        tryGetUp(dir, placementInfo);
         break;
     case Axis::Z:
-        tryGetFront(front, placementInfo);
+        tryGetFront(dir, placementInfo);
         break;
     default:
         return false;
     }
     if (axis < 0)
-        *front *= -1;
+        *dir *= -1;
     return true;
 }
 

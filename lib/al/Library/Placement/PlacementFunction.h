@@ -73,10 +73,10 @@ void getFront(sead::Vector3f* front, const PlacementInfo& placementInfo);
 bool tryGetFront(sead::Vector3f* front, const ActorInitInfo& initInfo);
 bool tryGetFront(sead::Vector3f* front, const PlacementInfo& placementInfo);
 
-bool tryGetLocalAxis(sead::Vector3f* front, const ActorInitInfo& initInfo, s32 axis);
-bool tryGetLocalAxis(sead::Vector3f* front, const PlacementInfo& placementInfo, s32 axis);
-bool tryGetLocalSignAxis(sead::Vector3f* front, const ActorInitInfo& initInfo, s32 axis);
-bool tryGetLocalSignAxis(sead::Vector3f* front, const PlacementInfo& placementInfo, s32 axis);
+bool tryGetLocalAxis(sead::Vector3f* dir, const ActorInitInfo& initInfo, s32 axis);
+bool tryGetLocalAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s32 axis);
+bool tryGetLocalSignAxis(sead::Vector3f* dir, const ActorInitInfo& initInfo, s32 axis);
+bool tryGetLocalSignAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s32 axis);
 
 bool tryGetMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo);
 bool tryGetMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo);
