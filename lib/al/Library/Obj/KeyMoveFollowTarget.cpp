@@ -1,6 +1,6 @@
 #include "Library/Obj/KeyMoveFollowTarget.h"
 
-#include "Library/KeyPose/KeyPoseKeeper.h"
+#include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -55,7 +55,7 @@ void KeyMoveFollowTarget::exeWait() {
 
 void KeyMoveFollowTarget::exeMove() {
     if (isFirstStep(this))
-        mTimer = calcKeyMoveWaitTime(mKeyPoseKeeper);
+        mTimer = calcKeyMoveMoveTime(mKeyPoseKeeper);
 
     f32 rate = calcNerveRate(this, mTimer);
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);

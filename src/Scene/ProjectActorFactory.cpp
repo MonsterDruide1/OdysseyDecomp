@@ -31,10 +31,12 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/Mummy.h"
+#include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
 #include "Item/Coin.h"
 #include "Item/Coin2D.h"
+#include "Item/Coin2DCityDirector.h"
 #include "Item/CoinBlow.h"
 #include "Item/CoinChameleon.h"
 #include "Item/CoinCirclePlacement.h"
@@ -54,10 +56,15 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MoonBasementSlideObj.h"
+#include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/StageSwitchSelector.h"
+#include "MapObj/TrampleBush.h"
+#include "MapObj/TrampleSwitch.h"
+#include "MapObj/TrampleSwitchTimer.h"
 #include "MapObj/TransparentWall.h"
 #include "MapObj/VolleyballNet.h"
+#include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
 #include "Npc/KuriboGirl.h"
 
@@ -178,7 +185,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CollectionList", nullptr},
     {"Coin", al::createActorFunction<Coin>},
     {"Coin2D", al::createActorFunction<Coin2D>},
-    {"Coin2DCityDirector", nullptr},
+    {"Coin2DCityDirector", al::createActorFunction<Coin2DCityDirector>},
     {"CoinBlow", al::createActorFunction<CoinBlow>},
     {"CoinChameleon", al::createActorFunction<CoinChameleon>},
     {"CoinCirclePlacement", al::createActorFunction<CoinCirclePlacement>},
@@ -361,7 +368,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
     {"MoonWorldBell", nullptr},
-    {"MoonWorldCaptureParadeLift", nullptr},
+    {"MoonWorldCaptureParadeLift", al::createActorFunction<MoonWorldCaptureParadeLift>},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
     {"MofumofuScrap", al::createActorFunction<MofumofuScrap>},
@@ -394,7 +401,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PeachWorldGate", nullptr},
     {"PeachWorldMoatWater", nullptr},
     {"PeachWorldTree", al::createActorFunction<PeachWorldTree>},
-    {"Pecho", nullptr},
+    {"Pecho", al::createActorFunction<Pecho>},
     {"Pen", nullptr},
     {"PictureStageChange", nullptr},
     {"PillarKeyMoveParts", nullptr},
@@ -552,10 +559,10 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Togezo", al::createActorFunction<Togezo>},
     {"Togezo2D", al::createActorFunction<Togezo2D>},
     {"TokimekiMayorNpc", nullptr},
-    {"TrampleBush", nullptr},
-    {"TrampleSwitch", nullptr},
-    {"TrampleSwitchSave", nullptr},
-    {"TrampleSwitchTimer", nullptr},
+    {"TrampleBush", al::createActorFunction<TrampleBush>},
+    {"TrampleSwitch", al::createActorFunction<TrampleSwitch>},
+    {"TrampleSwitchSave", al::createActorFunction<TrampleSwitch>},
+    {"TrampleSwitchTimer", al::createActorFunction<TrampleSwitchTimer>},
     {"TransparentWall", al::createActorFunction<TransparentWall>},
     {"TreasureBox", nullptr},
     {"TreasureBoxKey", nullptr},
@@ -582,7 +589,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"WaterfallWorldHomeCage", nullptr},
     {"WaterfallWorldWaterfall", nullptr},
     {"WaterRoad", nullptr},
-    {"WeightSwitch", nullptr},
+    {"WeightSwitch", al::createActorFunction<WeightSwitch>},
     {"WheelWaveSurfParts", nullptr},
     {"WindBlowPuzzle", nullptr},
     {"WorldMapEarth", al::createActorFunction<WorldMapEarth>},

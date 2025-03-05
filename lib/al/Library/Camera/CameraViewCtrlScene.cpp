@@ -1,8 +1,6 @@
-#include "Library/Camera/CameraViewCtrl.h"
+#include "Library/Camera/CameraViewCtrlScene.h"
 
 namespace al {
-
-PauseCameraCtrl::PauseCameraCtrl(f32 v) : _4(v) {}
 
 SceneCameraViewCtrl::SceneCameraViewCtrl() = default;
 
