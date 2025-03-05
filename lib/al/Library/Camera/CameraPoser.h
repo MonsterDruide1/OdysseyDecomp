@@ -84,22 +84,18 @@ public:
     static_assert(sizeof(LookAtInterpole) == 0x10);
 
     struct CameraInterpoleStep {
-        inline CameraInterpoleStep(
-            CameraInterpoleStepType step_type = CameraInterpoleStepType::Undefined)
-            : stepType(step_type), stepNum(-1) {}
-
         inline void load(const ByamlIter& iter);
 
-        CameraInterpoleStepType stepType;
+        CameraInterpoleStepType stepType = CameraInterpoleStepType::Undefined;
         s32 stepNum = -1;
     };
 
     static_assert(sizeof(CameraInterpoleStep) == 0x8);
 
     struct CameraInterpoleParam : public CameraInterpoleStep {
-        inline CameraInterpoleParam(
-            CameraInterpoleStepType step_type = CameraInterpoleStepType::ByCameraDistance)
-            : CameraInterpoleStep(step_type) {}
+        inline CameraInterpoleParam()
+            : CameraInterpoleStep({CameraInterpoleStepType::ByCameraDistance}) {}
+            
 
         inline void load(const ByamlIter& iter);
         inline void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
