@@ -560,7 +560,7 @@ void getStringArg(const char** arg, const PlacementInfo& placementInfo, const ch
 }
 
 void getStringArg(const char** arg, const AreaInitInfo& initInfo, const char* key) {
-    getStringArg(arg, initInfo.getPlacementInfo(), key);
+    getStringArg(arg, (const PlacementInfo&)initInfo, key);
 }
 
 const char* getStringArg(const ActorInitInfo& initInfo, const char* key) {
@@ -575,7 +575,7 @@ const char* getStringArg(const PlacementInfo& placementInfo, const char* key) {
 }
 
 const char* getStringArg(const AreaInitInfo& initInfo, const char* key) {
-    return getStringArg(initInfo.getPlacementInfo(), key);
+    return getStringArg((const PlacementInfo&)initInfo, key);
 }
 
 bool tryGetStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key) {
@@ -591,7 +591,7 @@ bool tryGetStringArg(const char** arg, const PlacementInfo& initInfo, const char
 }
 
 bool tryGetStringArg(const char** arg, const AreaInitInfo& initInfo, const char* key) {
-    return tryGetStringArg(arg, initInfo.getPlacementInfo(), key);
+    return tryGetStringArg(arg, (const PlacementInfo&)initInfo, key);
 }
 
 bool tryGetArgV2f(sead::Vector2f* arg, const ActorInitInfo& initInfo, const char* key) {
@@ -817,7 +817,7 @@ bool isExistLinkChild(const PlacementInfo& placementInfo, const char* linkName, 
 }
 
 bool isExistLinkChild(const AreaInitInfo& initInfo, const char* linkName, s32 index) {
-    return isExistLinkChild(initInfo.getPlacementInfo(), linkName, index);
+    return isExistLinkChild((const PlacementInfo&)initInfo, linkName, index);
 }
 
 s32 calcLinkNestNum(const ActorInitInfo& initInfo, const char* linkName) {
@@ -897,7 +897,7 @@ void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInf
 
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const AreaInitInfo& initInfo,
                const char* linkName) {
-    getLinkTR(trans, rotate, initInfo.getPlacementInfo(), linkName);
+    getLinkTR(trans, rotate, (const PlacementInfo&)initInfo, linkName);
 }
 
 void getLinksQT(sead::Quatf* quat, sead::Vector3f* trans, const ActorInitInfo& initInfo,
@@ -954,7 +954,7 @@ bool tryGetLinksMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo,
 bool tryGetLinksMatrixTR(sead::Matrix34f* matrix, const AreaInitInfo& initInfo,
                          const char* linkName) {
     PlacementInfo info;
-    if (!tryGetLinksInfo(&info, initInfo.getPlacementInfo(), linkName))
+    if (!tryGetLinksInfo(&info, (const PlacementInfo&)initInfo, linkName))
         return false;
     return tryGetMatrixTR(matrix, info);
 }
@@ -1007,7 +1007,7 @@ void getChildTrans(sead::Vector3f* trans, const ActorInitInfo& initInfo, const c
 }
 
 void getChildTrans(sead::Vector3f* trans, const AreaInitInfo& initInfo, const char* linkName) {
-    getChildTrans(trans, initInfo.getPlacementInfo(), linkName);
+    getChildTrans(trans, (const PlacementInfo&)initInfo, linkName);
 }
 
 void getChildLinkT(sead::Vector3f* trans, const ActorInitInfo& initInfo, const char* linkName,
