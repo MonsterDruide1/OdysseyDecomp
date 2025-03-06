@@ -2,6 +2,7 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include <prim/seadStorageFor.h>
 
 namespace al {
 class Triangle;
@@ -81,6 +82,10 @@ public:
     bool isCollisionAtCorner() const;
     const sead::Vector3f& tryGetHitEdgeNormal() const;
 
+    friend class ArrowHitInfo;
+    friend class SphereHitInfo;
+    friend class DiskHitInfo;
+
 protected:
     Triangle mTriangle;
     f32 _70 = 0.0f;
@@ -90,18 +95,49 @@ protected:
     CollisionLocation mCollisionLocation = CollisionLocation::None;
 };
 
-class ArrowHitInfo : public HitInfo {};
-
-class SphereHitInfo : public HitInfo {
+class ArrowHitInfo {
 public:
-    void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
-    void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
+    HitInfo* operator*() { return mHitInfo.data(); }
+
+    const HitInfo* operator*() const { return mHitInfo.data(); }
+
+    HitInfo& operator->() { return *mHitInfo; }
+
+    const HitInfo& operator->() const { return *mHitInfo; }
+
+    sead::StorageFor<HitInfo> mHitInfo{sead::ZeroInitializeTag{}};
 };
 
-class DiskHitInfo : public HitInfo {
+class SphereHitInfo {
 public:
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
+
+    HitInfo* operator*() { return mHitInfo.data(); }
+
+    const HitInfo* operator*() const { return mHitInfo.data(); }
+
+    HitInfo& operator->() { return *mHitInfo; }
+
+    const HitInfo& operator->() const { return *mHitInfo; }
+
+    sead::StorageFor<HitInfo> mHitInfo{sead::ZeroInitializeTag{}};
+};
+
+class DiskHitInfo {
+public:
+    void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
+    void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
+
+    HitInfo* operator*() { return mHitInfo.data(); }
+
+    const HitInfo* operator*() const { return mHitInfo.data(); }
+
+    HitInfo& operator->() { return *mHitInfo; }
+
+    const HitInfo& operator->() const { return *mHitInfo; }
+
+    sead::StorageFor<HitInfo> mHitInfo{sead::ZeroInitializeTag{}};
 };
 
 }  // namespace al
