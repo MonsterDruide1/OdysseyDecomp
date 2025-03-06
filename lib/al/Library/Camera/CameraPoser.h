@@ -238,4 +238,3 @@ protected:
 static_assert(sizeof(CameraPoser) == 0x140);
 
 }  // namespace al
-
