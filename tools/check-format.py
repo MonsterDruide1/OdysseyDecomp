@@ -307,7 +307,7 @@ def common_string_finder(c, path):
 def common_const_reference(c, path):
     for line in c.splitlines():
         if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line:
-            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line):
+            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line) and ("operator->" not in line):
                 FAIL("References must be const!", line, path)
 
 def common_self_other(c, path, is_header):
