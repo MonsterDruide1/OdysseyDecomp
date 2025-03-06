@@ -7,16 +7,16 @@ class AreaShapeCube : public AreaShape {
 public:
     enum class OriginType : s32 { Center, Base, Top };
 
-    AreaShapeCube(AreaShapeCube::OriginType);
+    AreaShapeCube(AreaShapeCube::OriginType originType);
 
-    bool isInVolume(const sead::Vector3f&) const override;
-    bool isInVolumeOffset(const sead::Vector3f&, f32) const override;
-    bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const override;
-    bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                             const sead::Vector3f&) const override;
-    bool calcLocalBoundingBox(sead::BoundBox3f*) const override;
+    bool isInVolume(const sead::Vector3f& trans) const override;
+    bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
+    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                             const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 
-    bool isInLocalVolume(const sead::Vector3f&) const;
+    bool isInLocalVolume(const sead::Vector3f& trans) const;
 
     f32 calcBottom() const {
         if (mOriginType == OriginType::Base)
@@ -59,38 +59,38 @@ class AreaShapeSphere : public AreaShape {
 public:
     AreaShapeSphere();
 
-    bool isInVolume(const sead::Vector3f&) const override;
-    bool isInVolumeOffset(const sead::Vector3f&, f32) const override;
-    bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const override;
-    bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                             const sead::Vector3f&) const override;
-    bool calcLocalBoundingBox(sead::BoundBox3f*) const override;
+    bool isInVolume(const sead::Vector3f& trans) const override;
+    bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
+    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                             const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 };
 
 class AreaShapeOval : public AreaShape {
 public:
     AreaShapeOval();
 
-    bool isInVolume(const sead::Vector3f&) const override;
-    bool isInVolumeOffset(const sead::Vector3f&, f32) const override;
-    bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const override;
-    bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                             const sead::Vector3f&) const override;
-    bool calcLocalBoundingBox(sead::BoundBox3f*) const override;
+    bool isInVolume(const sead::Vector3f& trans) const override;
+    bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
+    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                             const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 };
 
 class AreaShapeCylinder : public AreaShape {
 public:
     enum class OriginType : s32 { Center, Base, Top };
 
-    AreaShapeCylinder(AreaShapeCylinder::OriginType);
+    AreaShapeCylinder(AreaShapeCylinder::OriginType originType);
 
-    bool isInVolume(const sead::Vector3f&) const override;
-    bool isInVolumeOffset(const sead::Vector3f&, f32) const override;
-    bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const override;
-    bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                             const sead::Vector3f&) const override;
-    bool calcLocalBoundingBox(sead::BoundBox3f*) const override;
+    bool isInVolume(const sead::Vector3f& trans) const override;
+    bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
+    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                             const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 
 private:
     AreaShapeCylinder::OriginType mOriginType;
@@ -115,11 +115,11 @@ class AreaShapeInfinite : public AreaShape {
 public:
     AreaShapeInfinite();
 
-    bool isInVolume(const sead::Vector3f&) const override;
-    bool isInVolumeOffset(const sead::Vector3f&, f32) const override;
-    bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const override;
-    bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                             const sead::Vector3f&) const override;
-    bool calcLocalBoundingBox(sead::BoundBox3f*) const override;
+    bool isInVolume(const sead::Vector3f& trans) const override;
+    bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
+    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                             const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 };
 }  // namespace al

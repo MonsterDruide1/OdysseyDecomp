@@ -1,9 +1,31 @@
 #include "Library/Area/AreaShapes.h"
 
-namespace al {
-AreaShapeCube::AreaShapeCube(AreaShapeCube::OriginType originType) : mOriginType(originType) {}
+#include "Library/Math/MathUtil.h"
 
-// bool AreaShapeCube::calcLocalBoundingBox(sead::BoundBox3f*) const {}
+namespace al {
+AreaShapeCube::AreaShapeCube(AreaShapeCube::OriginType originType)
+    : AreaShape(), mOriginType(originType) {}
+
+/*bool AreaShapeCube::calcLocalBoundingBox(sead::BoundBox3f* out) const {
+    out->setUndef();
+
+    f32 bottom = calcBottom();
+    out->set({-500.0f, bottom, -500.0f}, {-500.0f, bottom, -500.0f});
+
+    f32 top = calcTop();
+
+    if (bottom > top)
+        out->setMinY(top);
+
+    out->setMaxX(500.0f);
+
+    if (bottom < top)
+        out->setMaxY(top);
+
+    out->setMaxZ(500.0f);
+
+    return true;
+}*/
 
 bool AreaShapeCube::isInVolume(const sead::Vector3f& trans) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
@@ -12,8 +34,39 @@ bool AreaShapeCube::isInVolume(const sead::Vector3f& trans) const {
     return isInLocalVolume(localPos);
 }
 
-// bool AreaShapeCube::isInVolumeOffset(const sead::Vector3f&, f32) const {}
-// bool AreaShapeCube::calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const {}
+// NON_MATCHING
+bool AreaShapeCube::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
+    sead::Vector3f localPos = sead::Vector3f::zero;
+    calcLocalPos(&localPos, trans);
+
+    sead::Vector3f scale = getScale();
+    f32 bottom = calcBottom();
+    f32 top = calcTop();
+
+    if (isNearZero(scale.x, 0.001f))
+        return false;
+    if (isNearZero(scale.y, 0.001f))
+        return false;
+    if (isNearZero(scale.z, 0.001f))
+        return false;
+
+    scale.y = offset / scale.y;
+    if (localPos.y < bottom - scale.y || top + scale.y < localPos.y)
+        return false;
+
+    scale.x = offset / scale.x;
+    if (localPos.x < -500.0f - scale.x || 500.0f + scale.x < localPos.x)
+        return false;
+
+    scale.z = offset / scale.z;
+    if (localPos.z < -500.0f - scale.z || 500.0f + scale.z < localPos.z)
+        return false;
+
+    return true;
+}
+
+// bool AreaShapeCube::calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const
+// {}
 
 bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
     sead::Vector3f min = {-500.0f, calcBottom(), -500.0f};
@@ -26,6 +79,158 @@ bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
         return true;
 }
 
-// bool AreaShapeCube::checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-//                                         const sead::Vector3f&) const {}
+// bool AreaShapeCube::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+//                                         const sead::Vector3f& pos1,
+//                                         const sead::Vector3f& pos2) const {}
+
+AreaShapeSphere::AreaShapeSphere() = default;
+
+bool AreaShapeSphere::calcLocalBoundingBox(sead::BoundBox3f* out) const {
+    out->set({-500.0f, -500.0f, -500.0f}, {500.0f, 500.0f, 500.0f});
+
+    return true;
+}
+
+bool AreaShapeSphere::isInVolume(const sead::Vector3f& trans) const {
+    sead::Vector3f baseTrans;
+    calcTrans(&baseTrans);
+    sead::Vector3f offsetTrans = trans - baseTrans;
+    f32 radius = getScale().x * 500.0f;
+
+    return offsetTrans.squaredLength() <= sead::Mathf::square(radius);
+}
+
+bool AreaShapeSphere::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
+    sead::Vector3f baseTrans;
+    calcTrans(&baseTrans);
+    sead::Vector3f offsetTrans = trans - baseTrans;
+    f32 radius = getScale().x * 500.0f + offset;
+
+    return offsetTrans.squaredLength() <= sead::Mathf::square(radius);
+}
+
+bool AreaShapeSphere::calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const {
+    sead::Vector3f localPos = sead::Vector3f::zero;
+    calcLocalPos(&localPos, trans);
+    f32 length = localPos.length();
+
+    if (length > 0.0f)
+        localPos *= 500.0f / length;
+
+    calcWorldPos(out, localPos);
+
+    return true;
+}
+
+bool AreaShapeSphere::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                                          const sead::Vector3f& pos1,
+                                          const sead::Vector3f& pos2) const {
+    return false;
+}
+
+AreaShapeOval::AreaShapeOval() = default;
+
+bool AreaShapeOval::isInVolume(const sead::Vector3f& trans) const {
+    sead::Vector3f localPos = sead::Vector3f::zero;
+    calcLocalPos(&localPos, trans);
+
+    return localPos.squaredLength() <= sead::Mathf::square(500.0f);
+}
+
+bool AreaShapeOval::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
+    sead::Vector3f scale = getScale();
+
+    // has to be this way around to match
+    if (scale.x == scale.y && scale.y == scale.z) {
+        sead::Vector3f baseTrans;
+        calcTrans(&baseTrans);
+        sead::Vector3f offsetTrans = trans - baseTrans;
+        f32 radius = scale.x * 500.0f + offset;
+
+        return offsetTrans.squaredLength() <= sead::Mathf::square(radius);
+    }
+
+    return false;
+}
+
+bool AreaShapeOval::calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const {
+    sead::Vector3f localPos = sead::Vector3f::zero;
+    calcLocalPos(&localPos, trans);
+    f32 length = localPos.length();
+
+    if (length > 0.0f)
+        localPos *= 500.0f / length;
+
+    calcWorldPos(out, localPos);
+
+    return true;
+}
+
+bool AreaShapeOval::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                                        const sead::Vector3f& pos1,
+                                        const sead::Vector3f& pos2) const {
+    sead::Vector3f localA4 = sead::Vector3f::zero;
+    calcLocalPos(&localA4, pos1);
+    sead::Vector3f localA5 = sead::Vector3f::zero;
+    calcLocalPos(&localA5, pos2);
+
+    sead::Vector3f tmp1 = {0, 0, 0};
+    sead::Vector3f tmp2 = {0, 0, 0};
+    calcWorldPos(&tmp1, localA4);
+    calcWorldPos(&tmp2, localA5);
+
+    if (!checkHitSegmentSphere(sead::Vector3f::zero, localA4, localA5, 500.0f, outDir, outTrans))
+        return false;
+
+    calcWorldPos(outTrans, *outTrans);
+    calcWorldDir(outDir, *outDir);
+    *outDir *= -1.0f;
+
+    return true;
+}
+
+AreaShapeCylinder::AreaShapeCylinder(AreaShapeCylinder::OriginType originType)
+    : AreaShape(), mOriginType(originType) {}
+
+// bool AreaShapeCylinder::calcLocalBoundingBox(sead::BoundBox3f* out) const {}
+
+// bool AreaShapeCylinder::isInVolume(const sead::Vector3f& trans) const {}
+
+// bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {}
+
+// bool AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3f* out,
+//                                              const sead::Vector3f& trans) const {}
+
+// bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+//                                             const sead::Vector3f& pos1,
+//                                             const sead::Vector3f& pos2) const {}
+
+AreaShapeInfinite::AreaShapeInfinite() = default;
+
+bool AreaShapeInfinite::isInVolume(const sead::Vector3f& trans) const {
+    return true;
+}
+
+bool AreaShapeInfinite::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
+    return true;
+}
+
+bool AreaShapeInfinite::calcNearestEdgePoint(sead::Vector3f* out,
+                                             const sead::Vector3f& trans) const {
+    return false;
+}
+
+bool AreaShapeInfinite::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                                            const sead::Vector3f& pos1,
+                                            const sead::Vector3f& pos2) const {
+    return false;
+}
+
+bool AreaShapeInfinite::calcLocalBoundingBox(sead::BoundBox3f* out) const {
+    return false;
+}
+
+bool AreaShapeOval::calcLocalBoundingBox(sead::BoundBox3f* out) const {
+    return false;
+}
 }  // namespace al
