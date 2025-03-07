@@ -18,5 +18,23 @@ private:
     CameraSubTargetTurnParam* mTurnParam;
 };
 
+<<<<<<< HEAD
+=======
+class CameraStopJudge : public HioNode, public IUseAreaObj {
+public:
+    void init();
+    CameraStopJudge();
+    bool isStop() const;
+    void update(const sead::Vector3f&);
+    AreaObjDirector* getAreaObjDirector() const override;
+
+private:
+    bool mIsInObjArea;
+    bool mIsNotInObjArea;
+    bool mIsStop;
+    AreaObjDirector* mAreaObjDirector;
+};
+
+>>>>>>> d049a23 (Fixed format issues)
 static_assert(sizeof(CameraSubTargetBase) == 0x18);
 }  // namespace al
