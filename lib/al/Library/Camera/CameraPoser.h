@@ -100,7 +100,7 @@ public:
         inline void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
 
         s8 isEaseOut = false;
-        s8 isInterpolateByStep = false;
+        bool isInterpolateByStep = false;
     };
 
     static_assert(sizeof(CameraInterpoleParam) == 0xC);
