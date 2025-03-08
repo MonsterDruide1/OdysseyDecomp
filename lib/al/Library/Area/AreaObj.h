@@ -4,7 +4,6 @@
 #include <math/seadVector.h>
 
 #include "Library/HostIO/HioNode.h"
-#include "Library/Placement/PlacementInfo.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
 #include "Library/Stage/IUseStageSwitch.h"
 
@@ -26,9 +25,9 @@ public:
     virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
     SceneObjHolder* getSceneObjHolder() const override;
 
-    AreaShape* getAreaShape() const { return mAreaShape; }
+    PlacementInfo* getPlacementInfo() const { return mPlacementInfo; }
 
-    PlacementInfo* getPlacementInfo() const { return mPlacementInfo; };
+    AreaShape* getAreaShape() const { return mAreaShape; }
 
 private:
     const char* mName;
