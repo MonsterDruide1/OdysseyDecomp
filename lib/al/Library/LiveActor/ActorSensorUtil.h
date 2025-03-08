@@ -299,7 +299,7 @@ bool sendMsgHideModel(LiveActor* receiver);
 bool sendMsgShowModel(LiveActor* receiver);
 bool sendMsgRestart(LiveActor* receiver);
 bool sendMsgCollisionImpulse(HitSensor* receiver, HitSensor* sender, sead::Vector3f*,
-                             const sead::Vector3f&, const f32, sead::Vector3f&, f32);
+                             const sead::Vector3f&, f32, const sead::Vector3f&, f32);
 bool sendMsgSwitchOn(LiveActor* receiver);
 bool sendMsgSwitchOnInit(LiveActor* receiver);
 bool sendMsgSwitchOffInit(LiveActor* receiver);
@@ -312,7 +312,7 @@ bool sendMsgEnemyFloorTouchToColliderGround(LiveActor* receiver, HitSensor* send
 bool sendMsgEnemyUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
 bool sendMsgAskSafetyPoint(HitSensor* receiver, HitSensor* sender, sead::Vector3f**);
 bool sendMsgAskSafetyPointToColliderGround(LiveActor* receiver, HitSensor* sender,
-                                           sead::Vector3f**);
+                                           sead::Vector3f** safetyPointAccessor);
 bool sendMsgTouchAssist(HitSensor* receiver, HitSensor* sender);
 bool sendMsgTouchAssistTrig(HitSensor* receiver, HitSensor* sender);
 bool sendMsgTouchStroke(HitSensor* receiver, HitSensor* sender);
