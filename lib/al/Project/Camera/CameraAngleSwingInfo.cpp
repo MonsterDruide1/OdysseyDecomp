@@ -51,7 +51,7 @@ void CameraAngleSwingInfo::makeLookAtCamera(sead::LookAtCamera* camera) const {
     cameraSideDir.setCross(cameraLookDirection, cameraLookHDir);
     normalize(&cameraSideDir);
     rotateVectorDegree(&cameraLookDirection, cameraLookDirection, cameraSideDir, mCurrentAngle.y);
-    camera->getAt() = (cameraLookDistance * cameraLookDirection) + camera->getPos();
+    camera->setAt((cameraLookDistance * cameraLookDirection) + camera->getPos());
 }
 
 }  // namespace al

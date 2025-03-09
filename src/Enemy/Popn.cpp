@@ -277,11 +277,8 @@ void Popn::exeTurn() {
     if (!al::tryNormalizeOrZero(&diff))
         al::calcFrontDir(&diff, this);
 
-    if (rs::isPlayerHackTRex(this)) {
-        diff.x = -diff.x;
-        diff.y = -diff.y;
-        diff.z = -diff.z;
-    }
+    if (rs::isPlayerHackTRex(this))
+        diff.negate();
 
     al::turnToDirection(this, diff, turnSpeed);
 
