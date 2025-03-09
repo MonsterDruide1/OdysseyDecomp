@@ -120,7 +120,7 @@ void BirdPlayerGlideCtrl::initAfterPlacement() {
 }
 
 void BirdPlayerGlideCtrl::validateGlideOnNose() {
-    mValidOnNose = true;
+    mIsValidOnNose = true;
     if (al::isNerve(this, &NrvBirdPlayerGlideCtrl.Invalid))
         al::setNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnNose);
     else if (!al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnNose) && mBird)
@@ -128,10 +128,10 @@ void BirdPlayerGlideCtrl::validateGlideOnNose() {
 }
 
 void BirdPlayerGlideCtrl::invalidateGlideOnNose() {
-    mValidOnNose = false;
+    mIsValidOnNose = false;
     if (mBird)
         al::setNerve(this, &NrvBirdPlayerGlideCtrl.WaitFlyAway);
-    else if (mValidOnSitDownHead)
+    else if (mIsValidOnSitDownHead)
         if (PlayerCapFunction::isEnableBirdLandPlayerCapOn(this))
             al::setNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadWithCap);
         else
@@ -141,8 +141,8 @@ void BirdPlayerGlideCtrl::invalidateGlideOnNose() {
 }
 
 void BirdPlayerGlideCtrl::validateGlideOnSitDownHead() {
-    mValidOnSitDownHead = true;
-    if (mValidOnNose)
+    mIsValidOnSitDownHead = true;
+    if (mIsValidOnNose)
         return;
     if (al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadWithCap) ||
         al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadNoCap))
@@ -156,7 +156,7 @@ void BirdPlayerGlideCtrl::validateGlideOnSitDownHead() {
 }
 
 void BirdPlayerGlideCtrl::invalidateGlideOnSitDownHead() {
-    mValidOnSitDownHead = false;
+    mIsValidOnSitDownHead = false;
     if (!(al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadWithCap) ||
           al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadNoCap)))
         return;
@@ -262,9 +262,9 @@ void BirdPlayerGlideCtrl::exeValidOnSitDownHead() {
 void BirdPlayerGlideCtrl::exeWaitFlyAway() {
     if (mBird && !al::isDead(mBird))
         mBird->tryStartFlyAway();
-    else if (mValidOnNose)
+    else if (mIsValidOnNose)
         al::setNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnNose);
-    else if (mValidOnSitDownHead)
+    else if (mIsValidOnSitDownHead)
         if (PlayerCapFunction::isEnableBirdLandPlayerCapOn(this))
             al::setNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadWithCap);
         else
@@ -277,35 +277,35 @@ namespace rs {
 
 void validateGlideBirdOnPlayerNose(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
         obj->validateGlideOnNose();
     }
 }
 
 void invalidateGlideBirdOnPlayerNose(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
         obj->invalidateGlideOnNose();
     }
 }
 
 void validateGlideBirdOnSitDownPlayerHead(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
         obj->validateGlideOnSitDownHead();
     }
 }
 
 void invalidateGlideBirdOnSitDownPlayerHead(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
         obj->invalidateGlideOnSitDownHead();
     }
 }
 
 bool isPlayerSitDownChair(const Bird* bird) {
     if (al::isExistSceneObj(bird, 2)) {
-        auto obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(bird, 2));
+        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(bird, 2));
         return obj->isValidOnSitDownHead();
     }
     return false;

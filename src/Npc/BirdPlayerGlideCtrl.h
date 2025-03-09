@@ -25,7 +25,7 @@ public:
     void exeWaitFlyAway();
     const char* getSceneObjName() const override;
 
-    bool isValidOnSitDownHead() const { return mValidOnSitDownHead; }
+    bool isValidOnSitDownHead() const { return mIsValidOnSitDownHead; }
 
 private:
     sead::StrTreeMap<32, sead::Vector3f> mCapOffsetInfo;
@@ -37,8 +37,8 @@ private:
     sead::Vector3f mCapOffset;
     sead::Vector3f mCostumeOffsetScale = {1, 1, 1};
     s32 mGlideDownTime = 0;
-    bool mValidOnNose = false;
-    bool mValidOnSitDownHead = false;
+    bool mIsValidOnNose = false;
+    bool mIsValidOnSitDownHead = false;
 };
 
 static_assert(sizeof(BirdPlayerGlideCtrl) == 0x1b8);
