@@ -13,9 +13,9 @@ bool isInAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f
 
 bool isInDeathArea(const IUseAreaObj*, const sead::Vector3f&);
 
-bool tryGetAreaObjArg(s32*, const AreaObj*, const char*);
-bool tryGetAreaObjArg(f32*, const AreaObj*, const char*);
-bool tryGetAreaObjArg(bool*, const AreaObj*, const char*);
-bool tryGetAreaObjStringArg(const char**, const AreaObj*, const char*);
+bool tryGetAreaObjArg(s32* out, const AreaObj* area, const char* name);
+bool tryGetAreaObjArg(f32* out, const AreaObj* area, const char* name);
+bool tryGetAreaObjArg(bool* out, const AreaObj* area, const char* name);
+bool tryGetAreaObjStringArg(const char** out, const AreaObj* area, const char* name);
 
 }  // namespace al

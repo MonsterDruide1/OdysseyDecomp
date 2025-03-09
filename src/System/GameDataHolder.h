@@ -95,6 +95,8 @@ public:
 
     s32 findUseScenarioNo(const char*);
 
+    GameDataFile* getGameDataFile() const { return mGameDataFile; }
+
     const sead::PtrArray<ShopItem::ItemInfo>& getClothList() const { return mItemCloth; }
 
     const sead::PtrArray<ShopItem::ItemInfo>& getCapList() const { return mItemCap; }
