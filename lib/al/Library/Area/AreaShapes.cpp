@@ -39,10 +39,10 @@ bool AreaShapeCube::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) co
     sead::Vector3f localPos = sead::Vector3f::zero;
     calcLocalPos(&localPos, trans);
 
-    sead::Vector3f scale = getScale();
     f32 bottom = calcBottom();
     f32 top = calcTop();
 
+    sead::Vector3f scale = getScale();
     if (isNearZero(scale.x, 0.001f))
         return false;
     if (isNearZero(scale.y, 0.001f))
