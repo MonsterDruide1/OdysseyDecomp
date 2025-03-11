@@ -23,7 +23,8 @@ public:
     void exeValidOnNose();
     void exeValidOnSitDownHead();
     void exeWaitFlyAway();
-    const char* getSceneObjName() const override;
+
+    const char* getSceneObjName() const override { return getName(); }
 
     bool isValidOnSitDownHead() const { return mIsValidOnSitDownHead; }
 

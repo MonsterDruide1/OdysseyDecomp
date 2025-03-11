@@ -121,9 +121,11 @@ void BirdPlayerGlideCtrl::initAfterPlacement() {
 
 void BirdPlayerGlideCtrl::validateGlideOnNose() {
     mIsValidOnNose = true;
-    if (al::isNerve(this, &NrvBirdPlayerGlideCtrl.Invalid))
+    if (al::isNerve(this, &NrvBirdPlayerGlideCtrl.Invalid)) {
         al::setNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnNose);
-    else if (!al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnNose) && mBird)
+        return;
+    }
+    if (!al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnNose) && mBird)
         al::setNerve(this, &NrvBirdPlayerGlideCtrl.WaitFlyAway);
 }
 
@@ -277,42 +279,38 @@ namespace rs {
 
 void validateGlideBirdOnPlayerNose(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = al::getSceneObj<BirdPlayerGlideCtrl>(player, 2);
         obj->validateGlideOnNose();
     }
 }
 
 void invalidateGlideBirdOnPlayerNose(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = al::getSceneObj<BirdPlayerGlideCtrl>(player, 2);
         obj->invalidateGlideOnNose();
     }
 }
 
 void validateGlideBirdOnSitDownPlayerHead(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = al::getSceneObj<BirdPlayerGlideCtrl>(player, 2);
         obj->validateGlideOnSitDownHead();
     }
 }
 
 void invalidateGlideBirdOnSitDownPlayerHead(const al::LiveActor* player) {
     if (al::isExistSceneObj(player, 2)) {
-        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(player, 2));
+        auto* obj = al::getSceneObj<BirdPlayerGlideCtrl>(player, 2);
         obj->invalidateGlideOnSitDownHead();
     }
 }
 
 bool isPlayerSitDownChair(const Bird* bird) {
     if (al::isExistSceneObj(bird, 2)) {
-        auto* obj = static_cast<BirdPlayerGlideCtrl*>(al::getSceneObj(bird, 2));
+        auto* obj = al::getSceneObj<BirdPlayerGlideCtrl>(bird, 2);
         return obj->isValidOnSitDownHead();
     }
     return false;
 }
 
 }  // namespace rs
-
-const char* BirdPlayerGlideCtrl::getSceneObjName() const {
-    return getName();
-}
