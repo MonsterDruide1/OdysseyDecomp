@@ -110,12 +110,12 @@ void BirdPlayerGlideCtrl::initAfterPlacement() {
     if (reinterpret_cast<void**>(&mCapOffsetInfo)[2]) {
         const char* name = GameDataFunction::getCurrentCapTypeName(this);
         if (auto node = mCapOffsetInfo.find(name))
-            std::memcpy(&mCapOffset, &node->value(), sizeof mCapOffset);
+            mCapOffset.set(node->value());
     }
     if (reinterpret_cast<void**>(&mCostumeOffsetScaleInfo)[2]) {
         const char* name = GameDataFunction::getCurrentCostumeTypeName(this);
         if (auto node = mCostumeOffsetScaleInfo.find(name))
-            std::memcpy(&mCostumeOffsetScale, &node->value(), sizeof mCostumeOffsetScale);
+            mCostumeOffsetScale.set(node->value());
     }
 }
 
