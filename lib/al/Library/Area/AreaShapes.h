@@ -92,6 +92,24 @@ public:
                              const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 
+    f32 calcBottom() const {
+        if (mOriginType == OriginType::Base)
+            return 0.0f;
+        else if (mOriginType == OriginType::Top)
+            return -500.0f;
+        else
+            return -250.0f;
+    }
+
+    f32 calcTop() const {
+        if (mOriginType == OriginType::Base)
+            return 500.0f;
+        else if (mOriginType == OriginType::Top)
+            return 0.0f;
+        else
+            return 250.0f;
+    }
+
 private:
     AreaShapeCylinder::OriginType mOriginType;
 };
