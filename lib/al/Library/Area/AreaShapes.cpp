@@ -228,7 +228,6 @@ bool AreaShapeCylinder::isInVolume(const sead::Vector3f& trans) const {
            sead::Mathf::square(500.0f);
 }
 
-// NON_MATCHING
 bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
     sead::Vector3f scale = getScale();
     if (isNearZero(scale.x, 0.001f))
@@ -238,9 +237,7 @@ bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset
     if (isNearZero(scale.z, 0.001f))
         return false;
 
-    scale.x = offset / scale.x;
     scale.y = offset / scale.y;
-    scale.z = offset / scale.z;
 
     sead::Vector3f localPos = sead::Vector3f::zero;
     calcLocalPos(&localPos, trans);
@@ -248,6 +245,7 @@ bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset
     f32 bottom = calcBottom();
     f32 top = calcTop();
 
+    scale.x = offset / scale.x + 500.0f;
     if (localPos.y < bottom - scale.y || scale.y + top < localPos.y)
         return false;
 
@@ -258,9 +256,27 @@ bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset
 // bool AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3f* out,
 //                                              const sead::Vector3f& trans) const {}
 
-// bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
-//                                             const sead::Vector3f& pos1,
-//                                             const sead::Vector3f& pos2) const {}
+bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+                                            const sead::Vector3f& pos1,
+                                            const sead::Vector3f& pos2) const {
+    sead::Vector3f localPos1 = sead::Vector3f::zero;
+    calcLocalPos(&localPos1, pos1);
+    sead::Vector3f localPos2 = sead::Vector3f::zero;
+    calcLocalPos(&localPos2, pos2);
+
+    sead::Vector3f local_70 = sead::Vector3f::zero;
+    local_70.y = calcBottom();
+    if (!checkHitSegmentCylinder(local_70, 500.0f, sead::Vector3f::ey, 500.0f, localPos1, localPos2,
+                                 outTrans, outDir))
+        return false;
+
+    if (outTrans)
+        calcWorldPos(outTrans, *outTrans);
+    if (outDir)
+        calcWorldDir(outDir, *outDir);
+
+    return true;
+}
 
 AreaShapeInfinite::AreaShapeInfinite() = default;
 
