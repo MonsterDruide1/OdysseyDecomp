@@ -3,6 +3,8 @@
 #include "Library/Camera/CameraPoser.h"
 #include "Library/Camera/CameraStartInfo.h"
 #include "Library/Math/MathUtil.h"
+#include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace {
