@@ -291,9 +291,12 @@ def common_string_finder(c, path):
         if "//" in line:
             continue
 
-        matches = re.findall(r'"(.*?)"', line)
+        matches = re.findall(r'(u?".*?")', line)
 
         for match in matches:
+            if not match.startswith("u"):
+                # Remove quotes from utf8 strings
+                match = match[1:-1]
             if len(match) < 2:
                 continue
             found = False
