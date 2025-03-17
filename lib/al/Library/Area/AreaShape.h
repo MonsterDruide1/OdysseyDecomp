@@ -13,7 +13,7 @@ public:
     virtual bool isInVolume(const sead::Vector3f& trans) const = 0;
     virtual bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const = 0;
     virtual bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const = 0;
-    virtual bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+    virtual bool checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                                      const sead::Vector3f& pos1,
                                      const sead::Vector3f& pos2) const = 0;
     virtual bool calcLocalBoundingBox(sead::BoundBox3f* out) const = 0;

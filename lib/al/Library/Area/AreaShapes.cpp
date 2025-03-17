@@ -3,8 +3,7 @@
 #include "Library/Math/MathUtil.h"
 
 namespace al {
-AreaShapeCube::AreaShapeCube(AreaShapeCube::OriginType originType)
-    : AreaShape(), mOriginType(originType) {}
+AreaShapeCube::AreaShapeCube(AreaShapeCube::OriginType originType) : mOriginType(originType) {}
 
 /*bool AreaShapeCube::calcLocalBoundingBox(sead::BoundBox3f* out) const {
     out->setUndef();
@@ -79,7 +78,7 @@ bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
         return true;
 }
 
-// bool AreaShapeCube::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+// bool AreaShapeCube::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
 //                                         const sead::Vector3f& pos1,
 //                                         const sead::Vector3f& pos2) const {}
 
@@ -166,7 +165,7 @@ bool AreaShapeOval::calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector
     return true;
 }
 
-bool AreaShapeOval::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+bool AreaShapeOval::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                                         const sead::Vector3f& pos1,
                                         const sead::Vector3f& pos2) const {
     sead::Vector3f localPos1 = sead::Vector3f::zero;
@@ -179,19 +178,19 @@ bool AreaShapeOval::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f
     calcWorldPos(&worldPos1, localPos1);
     calcWorldPos(&worldPos2, localPos2);
 
-    if (!checkHitSegmentSphere(sead::Vector3f::zero, localPos1, localPos2, 500.0f, outDir,
-                               outTrans))
+    if (!checkHitSegmentSphere(sead::Vector3f::zero, localPos1, localPos2, 500.0f, outNormal,
+                               outPos))
         return false;
 
-    calcWorldPos(outTrans, *outTrans);
-    calcWorldDir(outDir, *outDir);
-    *outDir *= -1.0f;
+    calcWorldPos(outPos, *outPos);
+    calcWorldDir(outNormal, *outNormal);
+    *outNormal *= -1.0f;
 
     return true;
 }
 
 AreaShapeCylinder::AreaShapeCylinder(AreaShapeCylinder::OriginType originType)
-    : AreaShape(), mOriginType(originType) {}
+    : mOriginType(originType) {}
 
 /*bool AreaShapeCylinder::calcLocalBoundingBox(sead::BoundBox3f* out) const {
     out->setUndef();
@@ -256,7 +255,7 @@ bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset
 // bool AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3f* out,
 //                                              const sead::Vector3f& trans) const {}
 
-bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                                             const sead::Vector3f& pos1,
                                             const sead::Vector3f& pos2) const {
     sead::Vector3f localPos1 = sead::Vector3f::zero;
@@ -264,16 +263,16 @@ bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outTrans, sead::Vect
     sead::Vector3f localPos2 = sead::Vector3f::zero;
     calcLocalPos(&localPos2, pos2);
 
-    sead::Vector3f local_70 = sead::Vector3f::zero;
-    local_70.y = calcBottom();
-    if (!checkHitSegmentCylinder(local_70, 500.0f, sead::Vector3f::ey, 500.0f, localPos1, localPos2,
-                                 outTrans, outDir))
+    sead::Vector3f bottomPos = sead::Vector3f::zero;
+    bottomPos.y = calcBottom();
+    if (!checkHitSegmentCylinder(bottomPos, 500.0f, sead::Vector3f::ey, 500.0f, localPos1,
+                                 localPos2, outPos, outNormal))
         return false;
 
-    if (outTrans)
-        calcWorldPos(outTrans, *outTrans);
-    if (outDir)
-        calcWorldDir(outDir, *outDir);
+    if (outPos)
+        calcWorldPos(outPos, *outPos);
+    if (outNormal)
+        calcWorldDir(outNormal, *outNormal);
 
     return true;
 }
@@ -293,7 +292,7 @@ bool AreaShapeInfinite::calcNearestEdgePoint(sead::Vector3f* out,
     return false;
 }
 
-bool AreaShapeInfinite::checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+bool AreaShapeInfinite::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                                             const sead::Vector3f& pos1,
                                             const sead::Vector3f& pos2) const {
     return false;
