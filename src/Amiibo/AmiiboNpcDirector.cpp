@@ -15,7 +15,6 @@
 #include "Amiibo/SearchAmiiboDataTable.h"
 #include "Layout/AmiiboNpcLayout.h"
 #include "Layout/ShopLayoutInfo.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "System/ProjectNfpDirector.h"
 #include "Util/AmiiboUtil.h"
@@ -251,7 +250,7 @@ al::AudioKeeper* AmiiboNpcDirector::getAudioKeeper() const {
 namespace AmiiboFunction {
 
 inline AmiiboNpcDirector* getAmiiboNpcDirector(const al::IUseSceneObjHolder* objHolder) {
-    return al::getSceneObj<AmiiboNpcDirector>(objHolder, SceneObjID_AmiiboNpcDirector);
+    return al::getSceneObj<AmiiboNpcDirector>(objHolder);
 }
 
 al::NfpInfo* tryGetTriggerTouchNfpInfo(const al::IUseSceneObjHolder* objHolder) {
