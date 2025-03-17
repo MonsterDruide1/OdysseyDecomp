@@ -12,7 +12,7 @@ public:
     bool isInVolume(const sead::Vector3f& trans) const override;
     bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
     bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
-    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+    bool checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                              const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 
@@ -21,19 +21,21 @@ public:
     f32 calcBottom() const {
         if (mOriginType == OriginType::Base)
             return 0.0f;
-        else if (mOriginType == OriginType::Top)
+
+        if (mOriginType == OriginType::Top)
             return -1000.0f;
-        else
-            return -500.0f;
+
+        return -500.0f;
     }
 
     f32 calcTop() const {
         if (mOriginType == OriginType::Base)
             return 1000.0f;
-        else if (mOriginType == OriginType::Top)
+
+        if (mOriginType == OriginType::Top)
             return 0.0f;
-        else
-            return 500.0f;
+
+        return 500.0f;
     }
 
 private:
@@ -62,7 +64,7 @@ public:
     bool isInVolume(const sead::Vector3f& trans) const override;
     bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
     bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
-    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+    bool checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                              const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 };
@@ -74,7 +76,7 @@ public:
     bool isInVolume(const sead::Vector3f& trans) const override;
     bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
     bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
-    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+    bool checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                              const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 };
@@ -88,26 +90,28 @@ public:
     bool isInVolume(const sead::Vector3f& trans) const override;
     bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
     bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
-    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+    bool checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                              const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 
     f32 calcBottom() const {
         if (mOriginType == OriginType::Base)
             return 0.0f;
-        else if (mOriginType == OriginType::Top)
+
+        if (mOriginType == OriginType::Top)
             return -500.0f;
-        else
-            return -250.0f;
+
+        return -250.0f;
     }
 
     f32 calcTop() const {
         if (mOriginType == OriginType::Base)
             return 500.0f;
-        else if (mOriginType == OriginType::Top)
+
+        if (mOriginType == OriginType::Top)
             return 0.0f;
-        else
-            return 250.0f;
+
+        return 250.0f;
     }
 
 private:
@@ -136,7 +140,7 @@ public:
     bool isInVolume(const sead::Vector3f& trans) const override;
     bool isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const override;
     bool calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const override;
-    bool checkArrowCollision(sead::Vector3f* outTrans, sead::Vector3f* outDir,
+    bool checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                              const sead::Vector3f& pos1, const sead::Vector3f& pos2) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f* out) const override;
 };
