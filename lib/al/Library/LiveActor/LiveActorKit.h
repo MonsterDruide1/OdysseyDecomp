@@ -65,6 +65,66 @@ public:
     void updateGraphics();
     void preDrawGraphics();
 
+    ActorResourceHolder* getActorResourceHolder() const { return mActorResourceHolder; }
+
+    AreaObjDirector* getAreaObjDirector() const { return mAreaObjDirector; }
+
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
+
+    GravityHolder* getGravityHolder() const { return mGravityHolder; }
+
+    EffectSystem* getEffectSystem() const { return mEffectSystem; }
+
+    GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
+
+    DrawBufferDirector* getDrawBufferDirector() const { return mDrawBufferDirector; }
+
+    ModelDrawBufferUpdater* getModelDrawBufferUpdater() const { return mModelDrawBufferUpdater; }
+
+    ExecuteAsyncExecutorUpdate* getExecutorCore1() const { return mExecutorCore1; }
+
+    ExecuteAsyncExecutorUpdate* getExecutorCore2() const { return mExecutorCore2; }
+
+    ModelDisplayListController* getModelDisplayListController() const {
+        return mModelDisplayListController;
+    }
+
+    agl::DrawContext* getSceneDrawContext() const { return mSceneDrawContext; }
+
+    LiveActorGroup* getDynamicDrawActorGroup() const { return mDynamicDrawActorGroup; }
+
+    CameraDirector* getCameraDirector() const { return mCameraDirector; }
+
+    ClippingDirector* getClippingDirector() const { return mClippingDirector; }
+
+    CollisionDirector* getCollisionDirector() const { return mCollisionDirector; }
+
+    ItemDirectorBase* getItemDirector() const { return mItemDirector; }
+
+    PlayerHolder* getPlayerHolder() const { return mPlayerHolder; }
+
+    HitSensorDirector* getHitSensorDirector() const { return mHitSensorDirector; }
+
+    ScreenPointDirector* getScreenPointDirector() const { return mScreenPointDirector; }
+
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+
+    StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+
+    SwitchAreaDirector* getSwitchAreaDirector() const { return mSwitchAreaDirector; }
+
+    LiveActorGroup* getLiveActorGroupAllActors() const { return mLiveActorGroupAllActors; }
+
+    DemoDirector* getDemoDirector() const { return mDemoDirector; }
+
+    GamePadSystem* getGamePadSystem() const { return mGamePadSystem; }
+
+    PadRumbleDirector* getPadRumbleDirector() const { return mPadRumbleDirector; }
+
+    NatureDirector* getNatureDirector() const { return mNatureDirector; }
+
+    ModelGroup* getModelGroup() const { return mModelGroup; }
+
 private:
     s32 mMaxActors;
     ActorResourceHolder* mActorResourceHolder = nullptr;
