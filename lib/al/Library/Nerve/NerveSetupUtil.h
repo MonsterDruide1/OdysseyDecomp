@@ -1,11 +1,13 @@
 #pragma once
 
+// IWYU pragma: begin_keep
 #include <prim/seadStorageFor.h>
 
 #include "Library/Base/Macros.h"
 #include "Library/Nerve/Nerve.h"
 #include "Library/Nerve/NerveAction.h"
 #include "Library/Nerve/NerveKeeper.h"
+// IWYU pragma: end_keep
 
 /*
 
