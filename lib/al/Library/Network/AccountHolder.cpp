@@ -1,5 +1,7 @@
 #include "Library/Network/AccountHolder.h"
 
+#include <vapours/results/results_common.hpp>
+
 namespace al {
 AccountHolder::AccountHolder() {
     nn::account::Initialize();

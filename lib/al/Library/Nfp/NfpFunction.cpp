@@ -1,5 +1,8 @@
 #include "Library/Nfp/NfpFunction.h"
 
+#include <nn/nfp/nfp_types.h>
+#include <prim/seadSafeString.h>
+
 #include "Library/Nfp/NfpTypes.h"
 
 namespace al {

@@ -1,6 +1,10 @@
 #pragma once
 
-#include <prim/seadSafeString.h>
+#include <basis/seadTypes.h>
+
+namespace sead {
+template <typename T> class BufferedSafeStringBase;
+}  // namespace sead
 
 namespace nn {
 class Result;
@@ -13,8 +17,8 @@ struct TagInfo;
 }  // namespace nn::nfp
 
 namespace al {
-struct NfpCharacterId;
 class NfpDirector;
+struct NfpCharacterId;
 struct NfpInfo;
 
 bool isNfpTriggerTouch(NfpDirector*, s32);

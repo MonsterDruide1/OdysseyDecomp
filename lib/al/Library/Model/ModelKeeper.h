@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -8,11 +9,10 @@
 namespace al {
 class ActorResource;
 class AnimPlayerMat;
-class AnimPlayerSimple;
 class AnimPlayerSkl;
 class AnimPlayerVis;
-class ModelCtrl;
 class DitherAnimator;
+class ModelCtrl;
 
 class ModelKeeper : public HioNode {
 public:

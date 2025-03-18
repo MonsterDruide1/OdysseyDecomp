@@ -5,6 +5,6 @@
 namespace al {
 class HtmlViewer {
 public:
-    void call(const char*, sead::BufferedSafeStringBase<char>*) const;
+    void call(const char*, sead::BufferedSafeString*) const;
 };
 }  // namespace al
