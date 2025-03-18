@@ -1539,8 +1539,8 @@ def _GetNamespaceLevelReorderSpans(file_lines):
 _MAIN_CU_INCLUDE_KIND = 1         # e.g. #include "foo.h" when editing foo.cc
 _C_SYSTEM_INCLUDE_KIND = 2        # e.g. #include <stdio.h>
 _CXX_SYSTEM_INCLUDE_KIND = 3      # e.g. #include <vector>
-_NONSYSTEM_INCLUDE_KIND = 4       # e.g. #include "bar.h"
-_PROJECT_INCLUDE_KIND = 5         # e.g. #include "myproject/quux.h"
+_PROJECT_INCLUDE_KIND = 4         # e.g. #include "myproject/quux.h"
+_NONSYSTEM_INCLUDE_KIND = 5       # e.g. #include "bar.h"
 _FORWARD_DECLARE_KIND = 6         # e.g. class Baz;
 _EOF_KIND = 7                     # used at eof
 
@@ -1678,7 +1678,7 @@ def _GetLineKind(file_line, filename, separate_project_includes):
     return _CXX_SYSTEM_INCLUDE_KIND
   elif file_line.type == _INCLUDE_RE:
     if (separate_project_includes and
-        _IsSameProject(file_line, filename, separate_project_includes)):
+        any(_IsSameProject(file_line, filename, separate_project_include) for separate_project_include in separate_project_includes)):
       return _PROJECT_INCLUDE_KIND
     return _NONSYSTEM_INCLUDE_KIND
   elif file_line.type == _FORWARD_DECLARE_RE:
@@ -2120,7 +2120,6 @@ def FixFileLines(iwyu_record, file_lines, flags, fileinfo):
   """
   # First delete the includes and forward-declares that we should delete.
   # This is easy since iwyu tells us the line numbers.
-  print(iwyu_record.filename, flags.safe_headers, _MayBeHeaderFile(iwyu_record.filename))
   if not (flags.safe_headers and _MayBeHeaderFile(iwyu_record.filename)):
     _DeleteLinesAccordingToIwyu(iwyu_record, file_lines)
 
@@ -2441,7 +2440,7 @@ def main(argv):
                       help=('%(prog)s will skip editing any file whose name'
                             ' does not match this regular expression.'))
 
-  parser.add_argument('--separate_project_includes', default=None,
+  parser.add_argument('--separate_project_includes', default=None, action='append',
                       help=('Sort #includes for current project separately'
                             ' from all other #includes.  This flag specifies'
                             ' the root directory of the current project.'
@@ -2475,12 +2474,6 @@ def main(argv):
     files_to_modify = set(flags.files)
   else:
     files_to_modify = None
-
-  if (flags.separate_project_includes and
-      not flags.separate_project_includes.startswith('<') and  # 'special' vals
-      not flags.separate_project_includes.endswith(os.path.sep) and
-      not flags.separate_project_includes.endswith('/')):
-    flags.separate_project_includes += os.path.sep
 
   if flags.update_comments:
     flags.comments = True

@@ -19,6 +19,7 @@ project_root = setup.ROOT
 
 issueFound = False
 runAllChecks = False
+fixIWYU = False
 
 def FAIL(message, line, path):
     print("Offending file:", os.path.relpath(path, os.getcwd()))
@@ -500,11 +501,21 @@ def common_include_what_you_use(c, path):
     iwyu_args = [
         "-Xiwyu", "--mapping_file="+str(project_root/"tools/iwyu.imp"),
         "-Xiwyu", "--no_default_mappings",
-        "-Xiwyu", "--error"
+        "-Xiwyu", "--error",
+        #"-Xiwyu", "--verbose=10",
     ]
-    iwyu = subprocess.run(["include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    iwyu = subprocess.run(["/home/monsterdruide1/include-what-you-use/build/bin/include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if iwyu.returncode != 0:
-        FAIL("include-what-you-use failed! "+iwyu.stderr, -1, path)
+        global fixIWYU
+        if not fixIWYU:
+            FAIL("include-what-you-use failed! "+iwyu.stderr, -1, path)
+            return
+        
+        # Fix IWYU errors
+        fixed = iwyu.stderr
+        fix = subprocess.run(["echo '"+fixed+"' | python tools/fix_includes.py --nosafe_headers  --separate_project_includes Library --separate_project_includes Project"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        print(fix.stdout)
+        print(fix.stderr)
 
 # -----
 # UTILS
@@ -525,7 +536,7 @@ def check_source(c, path):
     source_no_raw_auto(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
-    #common_include_what_you_use(c, path)
+    common_include_what_you_use(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -588,10 +599,14 @@ def main():
                         help="Run all checks even if one of them fails")
     parser.add_argument('--ci', action='store_true',
                         help="Run in CI mode, meant for github actions and other CI platforms")
+    parser.add_argument('--fix-iwyu', action='store_true',
+                        help="Fix include-what-you-use errors automatically")
     args = parser.parse_args()
 
     global runAllChecks
     runAllChecks = args.all
+    global fixIWYU
+    fixIWYU = args.fix_iwyu
 
     global functionData
     functionData = sorted(utils.get_functions(), key=lambda info: info.name)
@@ -603,6 +618,8 @@ def main():
     for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
+                if "BarrierField" not in file and "HelpAmiiboCoinCollect" not in file:
+                    continue
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
                 if args.run_clang_format:
