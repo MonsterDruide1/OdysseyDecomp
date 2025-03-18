@@ -513,7 +513,7 @@ def common_include_what_you_use(c, path):
         
         # Fix IWYU errors
         fixed = iwyu.stderr
-        fix = subprocess.run(["echo '"+fixed+"' | python tools/fix_includes.py --nosafe_headers  --separate_project_includes Library --separate_project_includes Project"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        fix = subprocess.run(["echo '"+fixed+"' | python tools/fix_includes.py --nosafe_headers --reorder --separate_project_includes Library --separate_project_includes Project"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         print(fix.stdout)
         print(fix.stderr)
 
@@ -618,8 +618,6 @@ def main():
     for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
-                if "BarrierField" not in file and "HelpAmiiboCoinCollect" not in file:
-                    continue
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
                 if args.run_clang_format:

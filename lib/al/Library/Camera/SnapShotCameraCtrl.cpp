@@ -1,5 +1,6 @@
 #include "Library/Camera/SnapShotCameraCtrl.h"
 
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace al {

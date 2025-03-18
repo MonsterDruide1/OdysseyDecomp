@@ -1,5 +1,8 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
@@ -7,7 +10,6 @@ class KeyPoseKeeper;
 class SwitchKeepOnAreaGroup;
 class SwitchOnAreaGroup;
 class RippleCtrl;
-class FunctorBase;
 
 class KeyMoveMapParts : public LiveActor {
 public:

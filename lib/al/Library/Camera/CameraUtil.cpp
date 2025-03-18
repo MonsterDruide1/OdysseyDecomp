@@ -1,6 +1,7 @@
 #include "Library/Camera/CameraUtil.h"
 
 #include <gfx/seadCamera.h>
+#include <math/seadMathCalcCommon.h>
 
 #include "Library/Camera/CameraDirector.h"
 #include "Library/Camera/CameraViewInfo.h"

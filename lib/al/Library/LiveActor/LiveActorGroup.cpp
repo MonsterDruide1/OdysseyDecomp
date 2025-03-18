@@ -1,6 +1,7 @@
 #include "Library/LiveActor/LiveActorGroup.h"
 
 #include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 LiveActorGroup::LiveActorGroup(const char* groupName, s32 maxActors)
