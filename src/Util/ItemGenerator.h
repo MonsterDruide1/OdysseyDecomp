@@ -13,19 +13,19 @@ class KuriboMini;
 class ItemGenerator {
 public:
     ItemGenerator();
-    ItemGenerator(al::LiveActor*, const al::ActorInitInfo&);
+    ItemGenerator(al::LiveActor* creator, const al::ActorInitInfo& info);
 
-    void initLinkShine(al::LiveActor*, const al::ActorInitInfo&, bool);
-    void initNoLinkShine(al::LiveActor*, const al::ActorInitInfo&, bool);
-    void initHintPhotoShine(al::LiveActor*, const al::ActorInitInfo&);
-    void createShineEffectInsideObject(const al::ActorInitInfo&);
+    void initLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool a3);
+    void initNoLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool a3);
+    void initHintPhotoShine(al::LiveActor* creator, const al::ActorInitInfo& info);
+    void createShineEffectInsideObject(const al::ActorInitInfo& info);
     bool tryUpdateHintTransIfExistShine();
-    bool tryUpdateHintTransIfExistShine(const sead::Vector3f&);
-    bool isEnableGenerateByCount(s32) const;
-    void generate(const sead::Vector3f&, const sead::Quatf&);
-    void generate(const sead::Vector3f&, const sead::Vector3f&);
-    bool tryGenerate(const sead::Vector3f&, const sead::Quatf&, s32);
-    bool tryGenerate(const sead::Vector3f&, const sead::Vector3f&, s32);
+    bool tryUpdateHintTransIfExistShine(const sead::Vector3f& trans);
+    bool isEnableGenerateByCount(s32 count) const;
+    void generate(const sead::Vector3f& pos, const sead::Quatf& quat);
+    void generate(const sead::Vector3f& pos, const sead::Vector3f& vec);
+    bool tryGenerate(const sead::Vector3f& pos, const sead::Quatf& quat, s32 count);
+    bool tryGenerate(const sead::Vector3f& pos, const sead::Vector3f& vec, s32 count);
     bool isNone() const;
     bool isShine() const;
     bool isLifeUp() const;
@@ -42,5 +42,5 @@ private:
     KuriboMini** mKuriboMiniArray = nullptr;
     s32 mKuriboMiniCount = 0;
     s32 mItemType = -1;
-    s32 field_20 = 0;
+    s32 mGeneratedItemCount = 0;
 };
