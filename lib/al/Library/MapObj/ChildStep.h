@@ -1,8 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
+
 class ChildStep : public LiveActor {
 public:
     ChildStep(const char* name, LiveActor* parent);

@@ -1,5 +1,7 @@
 #include "Library/KeyPose/KeyPoseKeeperUtil.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/KeyPose/KeyPoseKeeper.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Math/MathUtil.h"

@@ -11,6 +11,7 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Player/PlayerUtil.h"

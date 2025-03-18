@@ -6,6 +6,7 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+class AreaObjDirector;
 
 class CameraStopJudge : public HioNode, public IUseAreaObj {
 public:

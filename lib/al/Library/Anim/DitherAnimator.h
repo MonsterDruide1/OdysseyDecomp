@@ -3,8 +3,6 @@
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
-class LiveActor;
-
 class DitherAnimator : public NerveExecutor {
 public:
     DitherAnimator(const char* name) : NerveExecutor(name) {}

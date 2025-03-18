@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <cstdarg>
 #include <prim/seadSafeString.h>
 
 namespace al {

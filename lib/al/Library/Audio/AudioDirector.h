@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 #include "Library/Area/IUseAreaObj.h"
@@ -16,7 +17,6 @@ class SeDirector;
 class BgmDirector;
 class AudioMic;
 class AudioEventController;
-class AudioRequest;
 class AudioRequestKeeperSyncedBgm;
 struct AudioSystemInfo;
 class AreaObjDirector;

@@ -15,6 +15,10 @@
 #include "Library/Thread/FunctorV0M.h"
 #include "Project/LiveActor/ConveyerKeyKeeper.h"
 
+namespace al {
+class ActorInitInfo;
+}  // namespace al
+
 namespace {
 using namespace al;
 

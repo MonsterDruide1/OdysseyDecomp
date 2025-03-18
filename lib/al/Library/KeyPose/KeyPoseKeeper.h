@@ -1,12 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Movement/MoveType.h"
 
 namespace al {
 struct ActorInitInfo;
 class PlacementInfo;
 class KeyPose;
-class LiveActor;
 
 class KeyPoseKeeper {
 public:

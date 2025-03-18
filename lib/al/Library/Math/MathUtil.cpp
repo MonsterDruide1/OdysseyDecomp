@@ -1,5 +1,6 @@
 #include "Library/Math/MathUtil.h"
 
+#include <cmath>
 #include <math/seadMathCalcCommon.h>
 #include <prim/seadBitUtil.h>
 #include <random/seadGlobalRandom.h>

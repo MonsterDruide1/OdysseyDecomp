@@ -1,8 +1,7 @@
 #pragma once
 
-#include <gfx/seadCamera.h>
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
-#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 #include "Library/Area/IUseAreaObj.h"
@@ -14,8 +13,11 @@
 #include "Library/Projection/OrthoProjectionInfo.h"
 #include "Library/Rail/IUseRail.h"
 
+namespace sead {
+class LookAtCamera;
+}  // namespace sead
+
 namespace al {
-class AudioDirector;
 class ByamlIter;
 class CameraAngleCtrlInfo;
 class CameraAngleSwingInfo;
@@ -24,9 +26,7 @@ class CameraFlagCtrl;
 class CameraInputHolder;
 class CameraOffsetCtrlPreset;
 class CameraParamMoveLimit;
-class CameraRequestParamHolder;
 class CameraTargetAreaLimitter;
-class CameraTargetCollideInfoHolder;
 class CameraTargetHolder;
 class CameraTurnInfo;
 class CameraVerticalAbsorber;
@@ -40,8 +40,8 @@ struct CameraObjectRequestInfo;
 struct CameraPoserFlag;
 struct CameraPoserSceneInfo;
 struct CameraStartInfo;
-struct OrthoProjectionInfo;
-struct SnapShotCameraSceneInfo;
+class AudioKeeper;
+class NerveKeeper;
 
 class CameraPoser : public HioNode,
                     public IUseAreaObj,

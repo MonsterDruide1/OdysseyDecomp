@@ -1,9 +1,11 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraPoser.h"
 
 namespace al {
-class LiveActor;
 
 class CameraPoserFix : public CameraPoser {
 public:

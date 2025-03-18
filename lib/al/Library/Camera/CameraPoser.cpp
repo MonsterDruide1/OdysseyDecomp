@@ -1,8 +1,9 @@
 #include "Library/Camera/CameraPoser.h"
 
+#include <cmath>
 #include <gfx/seadCamera.h>
+#include <math/seadMathCalcCommon.h>
 
-#include "Library/Area/AreaObjDirector.h"
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraArrowCollider.h"
@@ -11,9 +12,7 @@
 #include "Library/Camera/CameraPoserFlag.h"
 #include "Library/Camera/CameraPoserFunction.h"
 #include "Library/Camera/CameraPoserSceneInfo.h"
-#include "Library/Camera/CameraStartInfo.h"
 #include "Library/Camera/CameraTargetAreaLimitter.h"
-#include "Library/Camera/CameraViewCtrlGyro.h"
 #include "Library/Camera/SnapShotCameraCtrl.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveKeeper.h"

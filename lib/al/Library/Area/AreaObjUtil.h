@@ -7,7 +7,6 @@ namespace al {
 class AreaObj;
 class AreaObjGroup;
 class IUseAreaObj;
-class AreaObjGroup;
 
 AreaObj* tryFindAreaObj(const IUseAreaObj* area, const char* name, const sead::Vector3f& pos);
 bool isInAreaObj(const AreaObjGroup* group, const sead::Vector3f& pos);

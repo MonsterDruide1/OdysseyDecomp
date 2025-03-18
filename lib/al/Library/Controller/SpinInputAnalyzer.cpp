@@ -1,5 +1,7 @@
 #include "Library/Controller/SpinInputAnalyzer.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 
 namespace al {

@@ -3,6 +3,8 @@
 #include <devenv/seadEnvUtil.h>
 #include <nn/os.h>
 
+#include "Library/Base/StringUtil.h"
+
 namespace al {
 void getComputerName(sead::BufferedSafeString* computerName) {
     tryGetComputerName(computerName);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -11,8 +12,8 @@
 
 namespace al {
 class AnimPlayerMat;
-class LiveActor;
 struct SklAnimRetargettingInfo;
+class AnimPlayerVis;
 
 // Inlined
 

@@ -3,7 +3,6 @@
 #include <basis/seadTypes.h>
 
 #include "Library/HostIO/HioNode.h"
-#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 class LiveActor;

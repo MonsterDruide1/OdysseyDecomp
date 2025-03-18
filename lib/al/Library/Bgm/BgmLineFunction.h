@@ -1,8 +1,12 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <container/seadPtrArray.h>
 #include <math/seadVector.h>
+
+namespace sead {
+template <typename T>
+class PtrArray;
+}  // namespace sead
 
 namespace al {
 class BgmDirector;

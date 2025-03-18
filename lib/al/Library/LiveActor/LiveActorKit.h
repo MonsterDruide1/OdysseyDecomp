@@ -30,7 +30,6 @@ class ScreenPointDirector;
 class ShadowDirector;
 class StageSwitchDirector;
 class SwitchAreaDirector;
-class LiveActorGroup;
 class DemoDirector;
 class GamePadSystem;
 class PadRumbleDirector;

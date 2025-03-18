@@ -1,6 +1,8 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
+#include <math/seadVector.h>
 
 namespace al {
 struct ActorInitInfo;

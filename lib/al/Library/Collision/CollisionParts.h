@@ -1,8 +1,14 @@
 #pragma once
 
-#include <container/seadTList.h>
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
+
+namespace sead {
+template <typename T>
+class TList;
+}  // namespace sead
 
 namespace al {
 class KCollisionServer;

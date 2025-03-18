@@ -1,6 +1,8 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
+#include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
 namespace agl {

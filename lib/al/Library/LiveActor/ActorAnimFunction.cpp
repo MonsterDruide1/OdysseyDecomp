@@ -1,12 +1,9 @@
 #include "Library/LiveActor/ActorAnimFunction.h"
 
 #include <basis/seadTypes.h>
-#include <nn/g3d/ResSkeleton.h>
 
-#include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
-#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Project/Anim/AnimPlayerVisual.h"
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 namespace al {
@@ -9,7 +10,6 @@ struct ExecuteSystemInitInfo;
 class ExecutorListActorExecuteBase;
 class ExecutorListBase;
 class ExecutorListFunctor;
-class ExecutorListIUseExecutorDraw;
 class ExecutorListIUseExecutorUpdate;
 class ExecutorListLayoutUpdate;
 class FunctorBase;

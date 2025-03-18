@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Project/Action/InitResourceDataAction.h"
-#include "Project/Anim/InitResourceDataAnim.h"
-
 namespace al {
 class Resource;
+class InitResourceDataAction;
+class InitResourceDataAnim;
 
 class ActorInitResourceData {
 public:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 namespace al {

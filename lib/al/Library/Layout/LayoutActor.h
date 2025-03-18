@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"
@@ -22,11 +23,7 @@ class EffectKeeper;
 class AudioKeeper;
 class LayoutExecuteInfo;
 class HitReactionKeeper;
-class LayoutSceneInfo;
 class LayoutPartsActorKeeper;
-class CameraDirector;
-class SceneObjHolder;
-class MessageSystem;
 class Nerve;
 
 class LayoutActor : public IUseHioNode,

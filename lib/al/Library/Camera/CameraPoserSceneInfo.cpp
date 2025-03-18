@@ -1,7 +1,5 @@
 #include "Library/Camera/CameraPoserSceneInfo.h"
 
-#include "Library/Obj/CameraRailHolder.h"
-
 namespace al {
 
 CameraPoserSceneInfo::CameraPoserSceneInfo() {

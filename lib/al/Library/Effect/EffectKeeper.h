@@ -1,8 +1,12 @@
 #pragma once
 
-#include <gfx/seadColor.h>
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+
+namespace sead {
+class Color4f;
+}  // namespace sead
 
 namespace al {
 class Effect;
@@ -10,7 +14,6 @@ class EffectUserInfo;
 class MtxPtrHolder;
 class EffectSystemInfo;
 class EffectPrefixType;
-class EffectSystemInfo;
 class EffectResourceInfo;
 class IUseEffectKeeper;
 class ModelKeeper;

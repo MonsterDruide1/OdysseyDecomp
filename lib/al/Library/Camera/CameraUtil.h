@@ -1,9 +1,13 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <gfx/seadCamera.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+
+namespace sead {
+class LookAtCamera;
+class Projection;
+}  // namespace sead
 
 namespace al {
 class CameraTicket;

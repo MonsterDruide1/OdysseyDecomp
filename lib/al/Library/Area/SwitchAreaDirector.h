@@ -11,6 +11,7 @@ class CameraDirector;
 class SwitchOnAreaGroup;
 class SwitchKeepOnAreaGroup;
 class SwitchAreaTargetInfo;
+class AreaObjDirector;
 
 class SwitchAreaDirector : public IUseAreaObj {
 public:
