@@ -1,10 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <heap/seadDisposer.h>
 
+namespace sead {
+class Heap;
+}  // namespace sead
+
 namespace al {
-class SystemKit;
-class GameFrameworkNx;
 class AccountHolder;
 struct DrawSystemInfo;
 }  // namespace al

@@ -1,6 +1,7 @@
 #include "System/PlayerHitPointData.h"
 
-#include "Library/Math/MathUtil.h"
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/Writer/ByamlWriter.h"
 

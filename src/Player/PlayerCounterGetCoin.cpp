@@ -1,5 +1,7 @@
 #include "Player/PlayerCounterGetCoin.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 
 PlayerCounterGetCoin::PlayerCounterGetCoin() = default;

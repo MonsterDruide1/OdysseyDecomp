@@ -1,10 +1,15 @@
 #pragma once
 
 #include <framework/seadTask.h>
-#include <gfx/seadDrawContext.h>
-#include <hostio/seadHostIONode.h>
 
 class GameSystem;
+namespace sead {
+class DrawContext;
+struct TaskConstructArg;
+namespace hostio {
+class Node;
+}  // namespace hostio
+}  // namespace sead
 
 class RootTask : public sead::Task {
 public:

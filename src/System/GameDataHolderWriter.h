@@ -2,6 +2,11 @@
 
 #include "System/GameDataHolderAccessor.h"
 
+namespace al {
+class IUseSceneObjHolder;
+class SceneObjHolder;
+}  // namespace al
+
 class GameDataHolderWriter : public GameDataHolderAccessor {
 public:
     GameDataHolderWriter(const al::IUseSceneObjHolder* holder) : GameDataHolderAccessor(holder) {}

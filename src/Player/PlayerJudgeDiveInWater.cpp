@@ -1,5 +1,8 @@
 #include "Player/PlayerJudgeDiveInWater.h"
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Nature/NatureUtil.h"
 

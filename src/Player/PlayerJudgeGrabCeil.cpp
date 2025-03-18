@@ -1,5 +1,8 @@
 #include "Player/PlayerJudgeGrabCeil.h"
 
+#include <basis/seadTypes.h>
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Collision/CollisionParts.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

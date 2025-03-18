@@ -1,6 +1,6 @@
 #include "Util/SequentialUtil.h"
 
-#include "Library/Math/MathUtil.h"
+#include <math/seadMathCalcCommon.h>
 
 void rs::convertCsecTo(s32* minutes, s32* seconds, s32* csec, s32 time) {
     *minutes = time / 6000;

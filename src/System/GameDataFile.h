@@ -1,11 +1,12 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 #include <prim/seadBitFlag.h>
 #include <prim/seadSafeString.h>
 
-class GameProgressData;
 class GameDataHolder;
+class GameProgressData;
 
 class GameDataFile {
 public:

@@ -1,6 +1,7 @@
 #include "Library/Yaml/ByamlHeader.h"
 
 #include <byteswap.h>
+#include <cstring>
 #include <prim/seadEndian.h>
 #include <stream/seadStream.h>
 

@@ -4,7 +4,6 @@ namespace al {
 class IUseSceneObjHolder;
 class SceneObjHolder;
 }  // namespace al
-class SaveObjInfo;
 class GameDataHolder;
 
 class GameDataHolderAccessor {

@@ -12,9 +12,9 @@ class HitSensor;
 class LiveActor;
 class MtxConnector;
 class ParabolicPath;
-class SensorMsg;
-class ScreenPointer;
 class ScreenPointTarget;
+class ScreenPointer;
+class SensorMsg;
 }  // namespace al
 
 namespace sead {
@@ -1052,7 +1052,7 @@ bool tryGetCheckPaintAlphaPos(sead::Vector3f*, const al::SensorMsg*);
 bool tryGetSenobiPartsMoveDistance(f32*, const al::SensorMsg*);
 bool tryGetSenobiPartsCollidedNormal(sead::Vector3f*, const al::SensorMsg*);
 bool tryGetStampTo2DForce(sead::Vector3f*, const al::SensorMsg*);
-bool tryGetGhostStartOkObjId(sead::BufferedSafeStringBase<char>*, const al::SensorMsg*);
+bool tryGetGhostStartOkObjId(sead::BufferedSafeString*, const al::SensorMsg*);
 bool tryGetAirExplosionForce(sead::Vector3f*, const al::SensorMsg*);
 bool sendMsgGotogotonOn(al::HitSensor* source, al::HitSensor* target);
 bool sendMsgGotogotonGetJumpPath(al::HitSensor* source, al::HitSensor* target, al::ParabolicPath*);

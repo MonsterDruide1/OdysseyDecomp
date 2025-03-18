@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math/seadVector.h>
+#include <basis/seadTypes.h>
 
 class PlayerConst;
 

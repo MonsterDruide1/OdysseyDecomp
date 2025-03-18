@@ -1,16 +1,10 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
 #include "System/ByamlSave.h"
 #include "Util/SequentialUtil.h"
-
-namespace al {
-class ByamlIter;
-class ByamlWriter;
-}  // namespace al
 
 class RaceRecord : public ByamlSave {
 public:

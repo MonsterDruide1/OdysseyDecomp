@@ -1,6 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+
 #include "MapObj/WorldMapParts.h"
+
+namespace al {
+class ActorInitInfo;
+}  // namespace al
 
 class WorldMapRoute : public WorldMapParts {
 public:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
@@ -7,8 +8,8 @@ namespace al {
 struct ActorInitInfo;
 class LiveActor;
 }  // namespace al
-class Shine;
 class KuriboMini;
+class Shine;
 
 class ItemGenerator {
 public:

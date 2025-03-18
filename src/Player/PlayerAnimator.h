@@ -1,12 +1,12 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
-
-#include "Player/PlayerAnimFrameCtrl.h"
 
 namespace al {
 class LiveActor;
 }
+class PlayerAnimFrameCtrl;
 class PlayerModelHolder;
 
 class PlayerAnimator {

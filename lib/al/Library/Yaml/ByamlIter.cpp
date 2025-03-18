@@ -1,5 +1,7 @@
 #include "Library/Yaml/ByamlIter.h"
 
+#include <cstring>
+
 #include "Library/Yaml/ByamlContainerHeader.h"
 #include "Library/Yaml/ByamlData.h"
 #include "Library/Yaml/ByamlHeader.h"

@@ -1,5 +1,8 @@
 #include "Player/PlayerStateHipDrop.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadQuat.h>
+
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"

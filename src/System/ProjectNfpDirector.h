@@ -6,10 +6,6 @@ namespace al {
 struct NfpInfo;
 }  // namespace al
 
-namespace nn {
-class Result;
-}  // namespace nn
-
 class ProjectNfpDirector : public al::NfpDirector {
 public:
     ProjectNfpDirector();

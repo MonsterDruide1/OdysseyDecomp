@@ -1,6 +1,8 @@
 #include "System/GameProgressData.h"
 
-#include "Library/Yaml/ByamlUtil.h"
+#include <math/seadMathCalcCommon.h>
+
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/Writer/ByamlWriter.h"
 
 #include "System/GameDataFunction.h"

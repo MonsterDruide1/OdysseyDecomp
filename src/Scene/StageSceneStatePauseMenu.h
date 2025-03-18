@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Nerve/NerveStateBase.h"
 
 #include "System/GameDataHolderAccessor.h"
@@ -9,12 +11,14 @@ struct ActorInitInfo;
 class HtmlViewer;
 class KeyRepeatCtrl;
 class LayoutInitInfo;
+class LiveActor;
+class Nerve;
 class PauseCameraCtrl;
 class Scene;
-struct SceneInitInfo;
 class SimpleLayoutAppearWaitEnd;
 class WindowConfirm;
 class WipeSimple;
+struct SceneInitInfo;
 }  // namespace al
 class FooterParts;
 class GameDataHolder;

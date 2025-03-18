@@ -1,16 +1,17 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-class IUsePlayerHack;
-class IUsePlayerCollision;
 class CapTargetInfo;
+class IUsePlayerCollision;
+class IUsePlayerHack;
 
 namespace al {
-class LiveActor;
 class HitSensor;
+class LiveActor;
 class SensorMsg;
 }  // namespace al
 

@@ -1,38 +1,39 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
 #include "Library/Sequence/Sequence.h"
 
 #include "System/GameDataHolderAccessor.h"
 
-class HakoniwaStateDemoOpening;
-class HakoniwaStateDemoEnding;
-class HakoniwaStateDemoWorldWarp;
-class HakoniwaStateSimpleDemo;
+class BootLayout;
+class CollectBgmPlayer;
 class HakoniwaStateBootLoadData;
 class HakoniwaStateDeleteScene;
-class WorldResourceLoader;
-class StageScene;
-class GameDataHolderAccessor;
-class BootLayout;
-class TimeBalloonSequenceInfo;
-class CollectBgmPlayer;
+class HakoniwaStateDemoEnding;
+class HakoniwaStateDemoOpening;
+class HakoniwaStateDemoWorldWarp;
+class HakoniwaStateSimpleDemo;
 class LoadLayoutCtrl;
+class TimeBalloonSequenceInfo;
+class WorldResourceLoader;
+namespace sead {
+class Heap;
+}  // namespace sead
 
 namespace al {
-class WipeHolder;
-class Scene;
-class AudioDirector;
-class LayoutKit;
-class SimpleLayoutAppearWaitEnd;
 class AsyncFunctorThread;
-class SeadAudioPlayer;
 class AudioBusSendFader;
-class SimpleAudioUser;
-class ScreenCaptureExecutor;
-class GamePadSystem;
 class EffectSystem;
+class GamePadSystem;
+class LayoutKit;
+class Scene;
+class ScreenCaptureExecutor;
+class SeadAudioPlayer;
+class SimpleAudioUser;
+class SimpleLayoutAppearWaitEnd;
+class WipeHolder;
 
 }  // namespace al
 

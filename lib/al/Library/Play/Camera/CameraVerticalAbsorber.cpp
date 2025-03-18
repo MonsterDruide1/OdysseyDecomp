@@ -1,11 +1,14 @@
 #include "Library/Play/Camera/CameraVerticalAbsorber.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Camera/CameraPoser.h"
 #include "Library/Camera/CameraPoserFunction.h"
 #include "Library/Camera/CameraStartInfo.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace {

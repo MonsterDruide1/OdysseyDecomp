@@ -6,6 +6,10 @@
 
 #include "System/GameSystem.h"
 
+namespace sead {
+struct TaskConstructArg;
+}  // namespace sead
+
 RootTask::RootTask(const sead::TaskConstructArg& constructArg)
     : sead::Task(constructArg, "RootTask") {}
 

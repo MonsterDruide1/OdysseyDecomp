@@ -1,8 +1,10 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
+#include <math/seadVector.h>
 
 namespace al {
 class RollingCubePose;

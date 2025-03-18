@@ -1,6 +1,9 @@
 #include "Project/Controller/PadDataArcReader.h"
 
+#include <prim/seadSafeString.h>
+
 #include "Library/Controller/PadDataPack.h"
+#include "Library/Resource/Resource.h"
 #include "Library/Resource/ResourceUtil.h"
 
 namespace al {
