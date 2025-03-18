@@ -1,5 +1,7 @@
 #include "Library/Math/InOutParam.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 

@@ -1,12 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
-class IUseAudioKeeper;
 class ISeModifier;
+class IUseAudioKeeper;
 class MeInfo;
 class SePlayParamList;
 class AudioDirector;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
@@ -11,6 +12,8 @@ class LiveActor;
 struct ActorInitInfo;
 class SensorMsg;
 class HitSensor;
+class LiveActor;
+class SensorMsg;
 
 class WheelMovement : public NerveExecutor {
 public:

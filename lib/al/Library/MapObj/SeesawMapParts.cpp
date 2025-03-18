@@ -1,7 +1,8 @@
 #include "Library/MapObj/SeesawMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorAreaFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

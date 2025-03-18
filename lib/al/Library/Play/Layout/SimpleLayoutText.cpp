@@ -1,5 +1,6 @@
 #include "Library/Play/Layout/SimpleLayoutText.h"
 
+#include <prim/seadSafeString.h>
 #include <prim/seadStringUtil.h>
 
 #include "Library/Layout/LayoutActorUtil.h"

@@ -1,18 +1,19 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 namespace al {
 class AudioSystemInfo;
-class SeDirector;
+class CameraDirector;
+class IAudioResourceLoader;
 class MeInfo;
-class SeadAudioPlayer;
+class ModelKeeper;
+class SeDirector;
 class SePlayParamList;
 class SeRequestParam;
-class IAudioResourceLoader;
-class ModelKeeper;
-class CameraDirector;
+class SeadAudioPlayer;
 
 class SeKeeper {
 public:

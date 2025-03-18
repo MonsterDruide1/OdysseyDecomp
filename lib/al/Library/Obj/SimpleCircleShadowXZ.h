@@ -1,8 +1,12 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
 
 class SimpleCircleShadowXZ : public LiveActor {
 public:

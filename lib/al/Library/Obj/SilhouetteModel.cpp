@@ -4,6 +4,8 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 
 namespace al {
+class ActorInitInfo;
+
 SilhouetteModel::SilhouetteModel(LiveActor* parent, const ActorInitInfo& initInfo,
                                  const char* category)
     : LiveActor("シルエットモデル") {

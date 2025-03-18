@@ -2,15 +2,12 @@
 
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/AreaObjUtil.h"
-#include "Library/Area/IUseAreaObj.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
-#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Placement/PlacementInfo.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Se/SeFunction.h"
 

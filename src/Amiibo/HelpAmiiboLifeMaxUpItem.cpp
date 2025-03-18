@@ -1,5 +1,7 @@
 #include "Amiibo/HelpAmiiboLifeMaxUpItem.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Nfp/NfpFunction.h"

@@ -2,6 +2,10 @@
 
 #include "Library/Play/Layout/SimpleLayoutText.h"
 
+namespace sead {
+class Color4u8;
+}  // namespace sead
+
 namespace al {
 
 SimpleLayoutTextWrapper::SimpleLayoutTextWrapper(SimpleLayoutText* simpleLayoutText)

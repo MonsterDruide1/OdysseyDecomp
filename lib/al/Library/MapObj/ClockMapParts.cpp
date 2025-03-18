@@ -1,9 +1,10 @@
 #include "Library/MapObj/ClockMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Fluid/RippleCtrl.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"

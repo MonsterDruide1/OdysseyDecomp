@@ -9,11 +9,12 @@ struct NfpInfo;
 class LiveActor;
 struct ActorInitInfo;
 class AreaObj;
+class LiveActor;
 }  // namespace al
 
+class CoinCollect2D;
 class CoinCollect;
 class CoinCollectDummy;
-class CoinCollect2D;
 class HelpAmiiboDirector;
 
 class HelpAmiiboCoinCollect : public HelpAmiiboExecutor {

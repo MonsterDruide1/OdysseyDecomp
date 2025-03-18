@@ -7,6 +7,7 @@
 #include "Library/Nerve/NerveAction.h"
 #include "Library/Nerve/NerveActionCtrl.h"
 #include "Library/Nerve/NerveKeeper.h"
+#include "Library/Nerve/NerveStateBase.h"
 #include "Library/Nerve/NerveStateCtrl.h"
 
 namespace al {

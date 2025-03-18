@@ -1,5 +1,7 @@
 #include "Library/MapObj/SwingMapParts.h"
 
+#include <basis/seadTypes.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

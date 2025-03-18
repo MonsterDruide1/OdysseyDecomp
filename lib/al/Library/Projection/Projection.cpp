@@ -1,5 +1,7 @@
 #include "Library/Projection/Projection.h"
 
+#include <cmath>
+
 namespace al {
 
 f32 Projection::getTop() const {

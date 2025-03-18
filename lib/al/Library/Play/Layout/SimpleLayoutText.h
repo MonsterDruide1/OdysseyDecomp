@@ -1,9 +1,13 @@
 #pragma once
 
-#include <gfx/seadColor.h>
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Layout/LayoutActor.h"
+
+namespace sead {
+class Color4u8;
+}  // namespace sead
 
 namespace al {
 struct ActorInitInfo;

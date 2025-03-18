@@ -3,8 +3,6 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Library/LiveActor/LiveActorKit.h"
-
 namespace al {
 struct ActorInitInfo;
 class HitSensor;

@@ -9,7 +9,6 @@
 
 namespace al {
 struct NfpInfo;
-
 struct ActorInitInfo;
 class AudioDirector;
 class AudioKeeper;
@@ -19,11 +18,12 @@ class LayoutInitInfo;
 class NerveKeeper;
 class PlayerHolder;
 class SimpleLayoutAppearWaitEnd;
+struct NfpInfo;
 }  // namespace al
 
-class ProjectNfpDirector;
 class HelpAmiiboCoinCollect;
 class HelpAmiiboExecutor;
+class ProjectNfpDirector;
 
 class HelpAmiiboDirector : public al::IUseHioNode,
                            public al::ISceneObj,

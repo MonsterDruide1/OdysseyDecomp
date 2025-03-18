@@ -1,5 +1,9 @@
 #include "Library/Placement/PlacementFunction.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadMathNumbers.h>
+#include <cmath>
+
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorInitInfo.h"
@@ -9,6 +13,10 @@
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
+
+namespace sead {
+class Color4f;
+}  // namespace sead
 
 namespace al {
 

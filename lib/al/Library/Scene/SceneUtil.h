@@ -1,9 +1,16 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <common/aglRenderBuffer.h>
-#include <gfx/seadCamera.h>
-#include <heap/seadHeap.h>
+#include <math/seadVector.h>
+
+namespace agl {
+class DrawContext;
+class RenderBuffer;
+}  // namespace agl
+namespace sead {
+class Heap;
+class LookAtCamera;
+}  // namespace sead
 
 namespace al {
 class ActorFactory;
@@ -18,20 +25,28 @@ class StageInfo;
 class PauseCameraCtrl;
 struct AudioDirectorInitInfo;
 class Projection;
+class AreaObjDirector;
+class AreaObjFactory;
+class CameraPoserFactory;
+class DemoDirector;
+class ExecuteDirector;
+class GameDataHolderBase;
+class IUseAudioKeeper;
+class ItemDirectorBase;
+class LayoutInitInfo;
 class LiveActor;
 class LiveActorGroup;
-class AreaObjFactory;
-class DemoDirector;
-class ItemDirectorBase;
-class SwitchOnAreaGroup;
-class SwitchKeepOnAreaGroup;
-class CameraPoserFactory;
-class IUseAudioKeeper;
-class AreaObjDirector;
-class ExecuteDirector;
+class PauseCameraCtrl;
+class PlacementInfo;
 class PlayerHolder;
-class ItemDirectorBase;
+class Projection;
 class Resource;
+class Scene;
+class SceneMsgCtrl;
+class StageInfo;
+class SwitchKeepOnAreaGroup;
+class SwitchOnAreaGroup;
+struct SceneInitInfo;
 
 s32 getStageInfoMapNum(const Scene*);
 s32 getStageInfoDesignNum(const Scene*);

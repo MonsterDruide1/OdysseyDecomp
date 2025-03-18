@@ -1,9 +1,14 @@
 #pragma once
 
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
 class EnemyStateBlowDown;
+class HitSensor;
 struct EnemyStateBlowDownParam;
 }  // namespace al
 

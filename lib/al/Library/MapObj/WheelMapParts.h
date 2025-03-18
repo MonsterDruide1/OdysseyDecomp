@@ -1,11 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class WheelMovement;
 class SwitchKeepOnAreaGroup;
 class SwitchOnAreaGroup;
+class WheelMovement;
 
 class WheelMapParts : public LiveActor {
 public:

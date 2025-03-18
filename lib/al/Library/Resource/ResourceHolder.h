@@ -1,14 +1,19 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
+
+namespace sead {
+class Heap;
+}  // namespace sead
 
 // this probably isnt a good spot
 namespace al {
 
+class ActorResource;
+class ActorResourceHolder;
 class Resource;
 class SeadAudioPlayer;
-class ActorResourceHolder;
-class ActorResource;
 
 void addResourceCategory(const sead::SafeString&, s32, sead::Heap*);
 bool isEmptyCategoryResource(const sead::SafeString&);

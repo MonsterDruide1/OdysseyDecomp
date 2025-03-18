@@ -2,15 +2,15 @@
 
 #include "Amiibo/HelpAmiiboExecutor.h"
 
-namespace al {
-struct NfpInfo;
+class HelpAmiiboDirector;
 
+namespace al {
 struct ActorInitInfo;
 class LiveActor;
 }  // namespace al
 
-class LifeMaxUpItem;
 class LifeMaxUpItem2D;
+class LifeMaxUpItem;
 
 class HelpAmiiboLifeMaxUpItem : public HelpAmiiboExecutor {
 public:

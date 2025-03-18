@@ -1,14 +1,19 @@
 #pragma once
 
-#include <gfx/seadColor.h>
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
+
+namespace sead {
+class Color4f;
+}  // namespace sead
 
 namespace al {
 struct ActorInitInfo;
 class AreaInitInfo;
-class PlacementInfo;
 class PlacementId;
+class PlacementInfo;
 
 bool isValidInfo(const PlacementInfo& placementInfo);
 bool isPlaced(const ActorInitInfo& initInfo);

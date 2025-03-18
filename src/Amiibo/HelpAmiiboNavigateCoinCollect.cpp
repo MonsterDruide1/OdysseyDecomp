@@ -1,7 +1,10 @@
 #include "Amiibo/HelpAmiiboNavigateCoinCollect.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Se/SeFunction.h"

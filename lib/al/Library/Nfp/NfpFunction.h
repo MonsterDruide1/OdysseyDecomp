@@ -1,10 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-
-namespace sead {
-template <typename T> class BufferedSafeStringBase;
-}  // namespace sead
+#include <prim/seadSafeString.h>
 
 namespace nn {
 class Result;
@@ -51,8 +48,8 @@ bool isNeedRestore(const NfpInfo& nfpInfo);
 bool isNeedRegister(const NfpInfo& nfpInfo);
 bool isNeedRegisterNickName(const NfpInfo& nfpInfo);
 bool isValidRegisterInfo(const NfpInfo& nfpInfo);
-void getAmiiboOwnerName(sead::BufferedSafeStringBase<char16>* ownerName, const NfpInfo& nfpInfo);
-void getAmiiboNickName(sead::BufferedSafeStringBase<char16>* nickName, const NfpInfo& nfpInfo);
+void getAmiiboOwnerName(sead::WBufferedSafeString* ownerName, const NfpInfo& nfpInfo);
+void getAmiiboNickName(sead::WBufferedSafeString* nickName, const NfpInfo& nfpInfo);
 bool isInvalidFormatVersion(const NfpInfo& nfpInfo);
 bool isEqualCharacterIdBase(const nn::nfp::ModelInfo& modelInfo, const NfpCharacterId& characterId);
 bool isEqualUniqueNfcId(const nn::nfp::TagInfo& tagInfoA, const NfpInfo& nfpInfoB);

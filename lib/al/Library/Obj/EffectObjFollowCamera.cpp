@@ -1,12 +1,10 @@
 #include "Library/Obj/EffectObjFollowCamera.h"
 
 #include "Library/Camera/CameraUtil.h"
-#include "Library/Effect/EffectKeeper.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
-#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/EffectObjFunction.h"

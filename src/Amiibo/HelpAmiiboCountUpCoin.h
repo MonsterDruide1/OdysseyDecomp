@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 #include "Library/Nerve/IUseNerve.h"
@@ -11,14 +12,13 @@ struct ActorInitInfo;
 class IUseNerve;
 class LiveActor;
 class NerveKeeper;
-struct NfpInfo;
 }  // namespace al
 
-class HelpAmiiboDirector;
-class LifeUpItem;
-class LifeUpItem2D;
-class Coin;
 class Coin2D;
+class Coin;
+class HelpAmiiboDirector;
+class LifeUpItem2D;
+class LifeUpItem;
 
 class HelpAmiiboCountUpCoin : public HelpAmiiboExecutor, public al::IUseNerve {
 public:

@@ -1,8 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.h"
+
+namespace al {
+class LiveActor;
+}  // namespace al
 
 struct ParamEnemyStateRunAway {
     f32 field_0;

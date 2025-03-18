@@ -1,5 +1,7 @@
 #include "Library/MapObj/VisibleSwitchMapParts.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

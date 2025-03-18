@@ -1,5 +1,7 @@
 #include "Library/MapObj/SlideMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"

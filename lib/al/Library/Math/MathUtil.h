@@ -1,14 +1,18 @@
 #pragma once
 
-#include <gfx/seadColor.h>
+#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Library/Math/Axis.h"
+namespace sead {
+class Color4f;
+}  // namespace sead
 
 namespace al {
 class VisitCellCallBack;
+enum class Axis : s32;
 
 template <typename T>
 inline T clamp(T value, T min, T max) {

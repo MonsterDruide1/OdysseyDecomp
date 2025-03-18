@@ -5,9 +5,7 @@
 namespace al {
 class IUseNerve;
 class Nerve;
-class NerveAction;
 class NerveStateBase;
-class LiveActor;
 
 void setNerve(IUseNerve* user, const Nerve* nerve);
 void setNerveAtStep(IUseNerve* user, const Nerve* nerve, s32 step);

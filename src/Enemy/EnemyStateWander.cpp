@@ -1,5 +1,7 @@
 #include "Enemy/EnemyStateWander.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"

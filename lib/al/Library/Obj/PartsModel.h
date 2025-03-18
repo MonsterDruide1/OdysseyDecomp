@@ -6,6 +6,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
 
 class PartsModel : public LiveActor {
 public:
