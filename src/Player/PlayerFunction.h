@@ -1,18 +1,19 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
-class LiveActor;
 class ActorInitInfo;
-class Resource;
 class AudioKeeper;
+class LiveActor;
+class Resource;
 }  // namespace al
 
+class PlayerBodyCostumeInfo;
 class PlayerConst;
 class PlayerCostumeInfo;
-class PlayerBodyCostumeInfo;
 class PlayerJointControlPartsDynamics;
 
 class PlayerFunction {
@@ -28,7 +29,7 @@ public:
     static void hideHairVisibility(al::LiveActor*);
 
     static PlayerConst* createMarioConst(const char*);
-    static void createCapModelName(sead::BufferedSafeStringBase<char>*, const char*);
+    static void createCapModelName(sead::BufferedSafeString*, const char*);
 
     static void initMarioModelActor2D(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
                                       const char* model2DName, bool isInvisCap);

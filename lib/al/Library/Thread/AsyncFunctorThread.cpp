@@ -3,7 +3,8 @@
 #include <prim/seadDelegate.h>
 #include <thread/seadDelegateThread.h>
 #include <thread/seadMessageQueue.h>
-#include <thread/seadThread.h>
+
+#include "Library/Thread/FunctorV0M.h"
 
 namespace al {
 

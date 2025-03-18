@@ -1,16 +1,19 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <gfx/seadCamera.h>
 #include <math/seadVector.h>
 
+namespace sead {
+class LookAtCamera;
+}  // namespace sead
+
 namespace al {
-class LiveActor;
+class CameraDistanceCurve;
 class CameraTicket;
 class IUseCamera;
+class LiveActor;
 struct ActorInitInfo;
 struct CameraStartInfo;
-class CameraDistanceCurve;
 }  // namespace al
 
 namespace rs {

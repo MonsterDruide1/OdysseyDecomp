@@ -1,6 +1,7 @@
 #include "MapObj/ElectricWire/ElectricWireRailKeeper.h"
 
-#include "Library/Camera/CameraTicket.h"
+#include <prim/seadSafeString.h>
+
 #include "Library/Camera/CameraUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"

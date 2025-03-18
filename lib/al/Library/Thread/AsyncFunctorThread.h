@@ -1,17 +1,17 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <mc/seadCoreInfo.h>
 #include <prim/seadSafeString.h>
 
-#include "Library/Thread/FunctorV0M.h"
-
 namespace sead {
+class CoreId;
 class DelegateThread;
 class Thread;
 }  // namespace sead
 
 namespace al {
+class FunctorBase;
+
 class AsyncFunctorThread {
 public:
     AsyncFunctorThread(const sead::SafeString& functor_name, const FunctorBase& functor,

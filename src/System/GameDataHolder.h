@@ -1,11 +1,15 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/Message/MessageSystem.h"
 #include "Library/Scene/GameDataHolderBase.h"
 
-#include "System/WorldList.h"
+namespace sead {
+class Heap;
+}  // namespace sead
 
 namespace al {
 class PlacementId;
@@ -19,6 +23,7 @@ class ChangeStageInfo;
 class GameDataFile;
 class GameSequenceInfo;
 class TimeBalloonSequenceInfo;
+class WorldList;
 
 class GameDataHolder : public al::GameDataHolderBase {
 public:

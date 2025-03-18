@@ -6,7 +6,6 @@
 
 namespace al {
 class HitSensor;
-class SensorMsg;
 class WaterSurfaceFinder;
 }  // namespace al
 
@@ -16,8 +15,8 @@ class PlayerColliderYoshi;
 class PlayerConst;
 class PlayerEffect;
 class PlayerJumpMessageRequest;
-class PlayerModelHolder;
 class PlayerModelChangerYoshi;
+class PlayerModelHolder;
 class PlayerPushReceiver;
 class PlayerTrigger;
 class YoshiJointControlKeeper;

@@ -1,28 +1,33 @@
 #pragma once
 
-#include <container/seadPtrArray.h>
+#include <basis/seadTypes.h>
 
-#include "Library/Layout/LayoutActor.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/Nerve/NerveStateBase.h"
-#include "Library/Scene/Scene.h"
-
-#include "MapObj/WorldMapParts.h"
-#include "MapObj/WorldMapRoute.h"
 
 class ShineTowerRocket;
 class StageSceneStateCollectionList;
 class TalkMessage;
+class WorldMapParts;
+class WorldMapRoute;
+namespace sead {
+class PtrArrayImpl;
+}  // namespace sead
 
 namespace al {
-struct SceneInitInfo;
+class ActorInitInfo;
+class KeyRepeatCtrl;
+class LayoutActor;
+class LayoutInitInfo;
+class LiveActor;
+class LiveActorGroup;
+class Scene;
 class SimpleLayoutAppearWaitEnd;
 class WipeSimple;
-class KeyRepeatCtrl;
+struct SceneInitInfo;
 }  // namespace al
 
-class WorldMapPlayerIcon;
 class WorldMapCamera;
+class WorldMapPlayerIcon;
 
 class StageSceneStateWorldMap : public al::HostStateBase<al::Scene> {
 public:

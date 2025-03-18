@@ -1,10 +1,11 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
 class AreaObj;
+class LiveActor;
 }  // namespace al
 class PlayerModelHolder;
 

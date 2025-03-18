@@ -1,6 +1,9 @@
 #include "Library/Yaml/ByamlUtil.h"
 
+#include <gfx/seadColor.h>
+
 #include "Library/Yaml/ByamlData.h"
+#include "Library/Yaml/ByamlHeader.h"
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {

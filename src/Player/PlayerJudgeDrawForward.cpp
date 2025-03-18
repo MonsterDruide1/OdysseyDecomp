@@ -1,8 +1,9 @@
 #include "Player/PlayerJudgeDrawForward.h"
 
+#include "Library/LiveActor/LiveActor.h"
+
 #include "Player/PlayerJudgeDeadWipeStart.h"
 #include "System/GameDataFunction.h"
-#include "System/GameDataHolderAccessor.h"
 
 PlayerJudgeDrawForward::PlayerJudgeDrawForward(
     const al::LiveActor* playerActor, const PlayerJudgeDeadWipeStart* playerJudgeDeadWipeStart)

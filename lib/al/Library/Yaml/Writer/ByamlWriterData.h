@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadListImpl.h>
 #include <container/seadTList.h>
 
 namespace sead {
@@ -142,7 +143,6 @@ private:
 
 class ByamlWriterHash;
 class ByamlWriterArray;
-class ByamlWriterStringTable;
 
 class ByamlWriterContainer : public ByamlWriterData {
 public:

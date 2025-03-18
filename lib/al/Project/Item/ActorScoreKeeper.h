@@ -8,8 +8,8 @@ class ByamlIter;
 class ActorScoreKeeper {
 public:
     struct Entry {
-        const char* factorName;
-        const char* categoryName;
+        const char* factorName = nullptr;
+        const char* categoryName = nullptr;
     };
 
     ActorScoreKeeper();

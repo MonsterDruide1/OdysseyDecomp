@@ -1,5 +1,7 @@
 #include "Util/WaterSurfaceShadow.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

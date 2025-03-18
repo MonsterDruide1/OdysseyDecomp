@@ -1,8 +1,7 @@
 #pragma once
 
-#include "System/GameDataHolderAccessor.h"
-
 class AchievementInfo;
+class GameDataHolderAccessor;
 
 class Achievement {
 public:

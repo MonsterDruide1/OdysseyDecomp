@@ -1,14 +1,15 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
-#include "Player/IUsePlayerCollision.h"
-#include "Util/IUseDimension.h"
+class IUseDimension;
+class IUsePlayerCollision;
 
 namespace al {
+class JoyPadAccelPoseAnalyzer;
 class LiveActor;
 class SpinInputAnalyzer;
-class JoyPadAccelPoseAnalyzer;
 }  // namespace al
 
 class PlayerInput {

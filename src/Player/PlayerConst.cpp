@@ -1,5 +1,7 @@
 #include "Player/PlayerConst.h"
 
+#include "Library/Yaml/ByamlIter.h"
+
 PlayerConst::PlayerConst() {
     mGravity = 3.0;
     mFrictionAttack = 0.9;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
@@ -7,13 +8,13 @@
 
 namespace al {
 
-class Resource;
 class ByamlIter;
+class DepthShadowMapInfo;
 class GraphicsSystemInfo;
 class LiveActor;
-class DepthShadowMapInfo;
 class ModelDrawerDepthShadowMap;
 class ModelDrawerMask;
+class Resource;
 
 class DepthShadowMapCtrl : public HioNode {
 public:

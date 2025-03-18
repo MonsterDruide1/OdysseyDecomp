@@ -1,12 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
 class CollisionParts;
 class CollisionPartsFilterBase;
 class HitSensor;
+class LiveActor;
 }  // namespace al
 
 class IUsePlayerCollision;

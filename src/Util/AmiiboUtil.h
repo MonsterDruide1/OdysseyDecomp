@@ -2,13 +2,12 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/Base/StringUtil.h"
-
 namespace al {
-struct NfpCharacterId;
-struct NfpInfo;
 class IUseMessageSystem;
 class IUseSceneObjHolder;
+struct NfpCharacterId;
+struct NfpInfo;
+template <s32 L> class StringTmp;
 }  // namespace al
 
 namespace ShopItem {

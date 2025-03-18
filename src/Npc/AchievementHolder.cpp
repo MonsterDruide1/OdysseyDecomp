@@ -5,6 +5,7 @@
 #include "Npc/Achievement.h"
 #include "Npc/AchievementInfoReader.h"
 #include "System/GameDataFunction.h"
+#include "System/GameDataHolderAccessor.h"
 #include "System/GameDataUtil.h"
 #include "Util/AchievementUtil.h"
 #include "Util/ClothUtil.h"

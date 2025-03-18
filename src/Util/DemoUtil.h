@@ -1,23 +1,24 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
 class ActorInitInfo;
+class IUseSceneObjHolder;
 class LiveActor;
 class Scene;
-class IUseSceneObjHolder;
 }  // namespace al
 
 class BarrierField;
-class OceanWaveActor;
-class ShineTowerRocket;
-class RiseMapPartsHolder;
-class Shine;
-class IUseDemoSkip;
 class CaptionInfoHolder;
 class CinemaCaption;
 class DemoHackFirstDirector;
+class IUseDemoSkip;
+class OceanWaveActor;
+class RiseMapPartsHolder;
+class Shine;
+class ShineTowerRocket;
 
 namespace rs {
 al::LiveActor* createDemoPeachWedding(const al::ActorInitInfo&);

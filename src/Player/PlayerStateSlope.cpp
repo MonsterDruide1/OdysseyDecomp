@@ -1,5 +1,7 @@
 #include "Player/PlayerStateSlope.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
@@ -11,6 +13,10 @@
 #include "Player/PlayerAnimator.h"
 #include "Player/PlayerConst.h"
 #include "Util/PlayerCollisionUtil.h"
+
+namespace al {
+class LiveActor;
+}  // namespace al
 
 namespace {
 NERVE_IMPL(PlayerStateSlope, Slide)

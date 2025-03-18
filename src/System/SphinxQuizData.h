@@ -4,11 +4,6 @@
 
 #include "System/ByamlSave.h"
 
-namespace al {
-class ByamlIter;
-class ByamlWriter;
-}  // namespace al
-
 class SphinxQuizData : public ByamlSave {
 public:
     SphinxQuizData(s32 arraySize);

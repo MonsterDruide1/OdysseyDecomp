@@ -1,7 +1,10 @@
 #include "Scene/SceneObjFactory.h"
 
-#include "Library/Scene/ISceneObj.h"
 #include "Library/Scene/SceneObjHolder.h"
+
+namespace al {
+class ISceneObj;
+}  // namespace al
 
 static al::ISceneObj* sceneObjCreator(s32 id) {
     // TODO

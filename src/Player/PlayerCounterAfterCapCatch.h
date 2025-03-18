@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMathCalcCommon.h>
 
 class PlayerConst;
