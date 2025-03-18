@@ -75,12 +75,12 @@ void addVelocityToTargetH(LiveActor* actor, const sead::Vector3f&, f32);
 void addVelocityToTargetHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
 void addVelocityDampToTarget(LiveActor* actor, const sead::Vector3f&, f32);
 void addVelocityDampToTarget(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void addVelocityToPlayer(LiveActor* actor, const f32, sead::Vector3f&);
-void addVelocityToPlayerHV(LiveActor* actor, const f32, f32, sead::Vector3f&);
+void addVelocityToPlayer(LiveActor* actor, f32, const sead::Vector3f&);
+void addVelocityToPlayerHV(LiveActor* actor, f32, f32, const sead::Vector3f&);
 void addVelocityFromTarget(LiveActor* actor, const sead::Vector3f&, f32);
 void addVelocityFromTargetHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void addVelocityFromPlayer(LiveActor* actor, const f32, sead::Vector3f&);
-void addVelocityFromPlayerHV(LiveActor* actor, const f32, f32, sead::Vector3f&);
+void addVelocityFromPlayer(LiveActor* actor, f32, const sead::Vector3f&);
+void addVelocityFromPlayerHV(LiveActor* actor, f32, f32, const sead::Vector3f&);
 void addVelocityClockwiseToDirection(LiveActor* actor, const sead::Vector3f&, f32);
 void calcVelocityClockwiseToDirection(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&);
 void addVelocityClockwiseToTarget(LiveActor* actor, const sead::Vector3f&, f32);
@@ -265,7 +265,7 @@ void walkAndTurnToTargetFittedGroundGravity(LiveActor* actor, const sead::Vector
 bool tryKillByDeathArea(LiveActor* actor);
 void rotateAndKeepColliderPosRate(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&,
                                   f32);
-void calcSpringMovement(LiveActor* actor, const sead::Vector3f&, const f32, f32, sead::Vector3f&,
+void calcSpringMovement(LiveActor* actor, const sead::Vector3f&, f32, f32, const sead::Vector3f&,
                         f32, f32);
 void addVelocityClockwiseToPlayer(LiveActor* actor, f32);
 void calcDirClockwiseToPlayer(sead::Vector3f*, const LiveActor* actor);
