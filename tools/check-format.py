@@ -11,6 +11,8 @@ from functools import cache
 from common import setup_common as setup
 from common.util import utils
 
+project_root = setup.ROOT
+
 # ------
 # CHECKS
 # ------
@@ -474,6 +476,28 @@ def source_no_nerve_make(c, path):
         if "NERVE_MAKE(" in line:
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
+def common_include_what_you_use(c, path):
+    # -I to show up with "quotes", -isystem to show up with <angle brackets>
+    arguments = [
+        "-I"+str(project_root/"src"),
+        "-I"+str(project_root/"lib"),
+        "-I"+str(project_root/"lib/al"),
+        "-isystem"+str(project_root/"lib/aarch64"),
+        "-isystem"+str(project_root/"lib/NintendoSDK/include"),
+        "-isystem"+str(project_root/"lib/sead/include"),
+        "-isystem"+str(project_root/"lib/agl/include"),
+        "-isystem"+str(project_root/"lib/eui/include"),
+        "-isystem"+str(project_root/"toolchain/clang-3.9.1/include/c++/v1/"),
+        "-isystem"+str(project_root/"toolchain/musl/include"),
+        "-DNNSDK",
+        "-stdlib=libc++",  # also allow "compiling" headers for checks
+        "-x", "c++",
+        "-std=c++1z",
+        "-Wno-pragma-once-outside-header",  # disable warning about #pragma once on headers
+    ]
+    iwyu = subprocess.run(["include-what-you-use", "-Xiwyu", "--error", "-Xiwyu", "--mapping_file="+str(project_root/"tools/iwyu.imp")] + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if iwyu.returncode != 0:
+        FAIL("include-what-you-use failed! "+iwyu.stderr, -1, path)
 
 # -----
 # UTILS
@@ -494,6 +518,7 @@ def check_source(c, path):
     source_no_raw_auto(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
+    common_include_what_you_use(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -510,6 +535,7 @@ def check_header(c, path):
     header_lowercase_member_offset_vars(c, path)
     common_self_other(c, path, True)
     common_consistent_float_literals(c, path)
+    common_include_what_you_use(c, path)
 
 def _check_file_content(content, file_str):
     if file_str.endswith('.h'):
@@ -540,13 +566,11 @@ def read_csv_file(path):
         for row in reader:
             rows.append(row)
 
-    return rows;
+    return rows
 
 @cache
 def get_string_table():
     return read_csv_file(project_root / 'data' / "data_strings.csv");
-
-project_root = setup.ROOT
 
 def main():
     parser = argparse.ArgumentParser(
