@@ -1,0 +1,4 @@
+[
+    { "include": ["<math/seadVectorFwd.h>", "private", "<math/seadVector.h>", "public"] },
+    { "include": ["<nn/types.h>", "private", "<basis/seadTypes.h>", "public"] }
+]
