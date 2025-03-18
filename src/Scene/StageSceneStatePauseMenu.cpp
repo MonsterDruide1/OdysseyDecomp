@@ -1,5 +1,7 @@
 #include "Scene/StageSceneStatePauseMenu.h"
 
+#include <nn/oe.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/Bgm/BgmLineFunction.h"
 #include "Library/Camera/CameraUtil.h"
@@ -13,7 +15,6 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/LiveActor.h"
@@ -49,8 +50,6 @@
 #include "Util/SpecialBuildUtil.h"
 #include "Util/StageInputFunction.h"
 
-#include <nn/oe.h>
-
 namespace {
 NERVE_IMPL(StageSceneStatePauseMenu, Appear);
 NERVE_IMPL(StageSceneStatePauseMenu, StartSeparatePlay);
@@ -67,7 +66,7 @@ NERVE_IMPL(StageSceneStatePauseMenu, FadeBeforeHelp);
 NERVE_IMPL(StageSceneStatePauseMenu, StartHelp);
 NERVE_IMPL_(StageSceneStatePauseMenu, StartHelpFromOption, StartHelp);
 
-NERVE_MAKE(StageSceneStatePauseMenu, StartHelp);
+NERVES_MAKE_NOSTRUCT(StageSceneStatePauseMenu, StartHelp);
 NERVES_MAKE_STRUCT(StageSceneStatePauseMenu, Appear, StartSeparatePlay, EndSeparatePlay, Option,
                    OptionFromHelp, Wait, End, WaitDraw, Save, ConfirmNewGame, NotExistEmptyFile,
                    FadeBeforeHelp, StartHelpFromOption);
@@ -88,12 +87,12 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
     al::initActorWithArchiveName(mMarioActor, actorInitInfo, "MarioHigh", "PauseMenu");
     mMarioActor->makeActorDead();
 
-    al::PartsModel* capEyes = new al::PartsModel("メニュー用キャップ目");
-    al::LiveActor* hatActor = al::getSubActor(mMarioActor, "頭");
-    capEyes->initPartsFixFile(hatActor, actorInitInfo, "CapManHeroHighEyes", nullptr, nullptr);
-    capEyes->makeActorDead();
-    al::onSyncAppearSubActor(hatActor, capEyes);
-    al::startAction(capEyes, "Wait");
+    al::PartsModel* capManEyes = new al::PartsModel("メニュー用キャップ目");
+    al::LiveActor* marioHat = al::getSubActor(mMarioActor, "頭");
+    capManEyes->initPartsFixFile(marioHat, actorInitInfo, "CapManHeroHighEyes", nullptr, nullptr);
+    capManEyes->makeActorDead();
+    al::onSyncAppearSubActor(marioHat, capManEyes);
+    al::startAction(capManEyes, "Wait");
 
     mSelectParts =
         new MenuSelectParts("[ポーズメニュー]選択肢", mMenuLayout, mMarioActor, layoutInitInfo, 6);
@@ -118,17 +117,22 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
     mMenuWipe->kill();
     mHelpWipe = new al::WipeSimple("ヘルプ黒フェード", "FadeBlack", layoutInitInfo, "BeforeWindow");
     mHelpWipe->kill();
+
     mPauseCameraCtrl = al::initAndCreatePauseCameraCtrl(getHost(), 10.0f);
     mKeyRepeatCtrl = new al::KeyRepeatCtrl();
     mKeyRepeatCtrl->init(30, 5);
+
     initNerve(&NrvStageSceneStatePauseMenu.Appear, 4);
+
     al::GamePadSystem* gamePadSystem = sceneInitInfo.gameSysInfo->gamePadSystem;
+
     mStateStartSeparatePlay = new StageSceneStateStartSeparatePlay(
         "おすそ分け開始", this, layoutInitInfo, mMenuWipe, gamePadSystem, mFooterParts);
     mStateEndSeparatePlay = new StageSceneStateEndSeparatePlay(
         "おすそ分け終了", this, layoutInitInfo, mMenuWipe, gamePadSystem);
     mStateOption = new StageSceneStateOption("オプション画面", getHost(), layoutInitInfo,
                                              mFooterParts, mGameDataHolderAccessor, a11);
+
     al::initNerveState(this, mStateStartSeparatePlay,
                        &NrvStageSceneStatePauseMenu.StartSeparatePlay, "おすそ分けプレイ開始");
     al::initNerveState(this, mStateEndSeparatePlay, &NrvStageSceneStatePauseMenu.EndSeparatePlay,
@@ -136,12 +140,13 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
     al::initNerveState(this, mStateOption, &NrvStageSceneStatePauseMenu.Option, "オプション画面");
     al::addNerveState(this, mStateOption, &NrvStageSceneStatePauseMenu.OptionFromHelp,
                       "オプション画面[ヘルプから遷移]");
+
     rs::registerGraphicsPresetPause(getHost());
     mHtmlViewer = sceneInitInfo.gameSysInfo->htmlViewer;
 }
 
 void StageSceneStatePauseMenu::appear() {
-    mStartType = 0;
+    mStartType = StartType::Title;
     setDead(false);
     if (rs::isModeE3LiveRom()) {
         if (rs::isSeparatePlay(getHost()))
@@ -155,13 +160,16 @@ void StageSceneStatePauseMenu::appear() {
 
 void StageSceneStatePauseMenu::kill() {
     rs::updateGyroText(getHost());
+
     setDead(true);
     killPauseMenu();
     killMarioModel();  // redundant as killPauseMenu() already does this
+
     if (!isNeedKillHost() && mSceneAudioSystemPauseController) {
         mSceneAudioSystemPauseController->resume(1);
         al::endPausePadRumble(getHost());
     }
+
     alGraphicsFunction::validateGpuStressAnalyzer(getHost());
 }
 
@@ -169,6 +177,7 @@ void StageSceneStatePauseMenu::killPauseMenu() {
     mMenuLayout->kill();
     mMenuRight->kill();
     mMenuGuide->kill();
+
     al::endCameraPause(mPauseCameraCtrl);
     killMarioModel();
 }
@@ -176,24 +185,24 @@ void StageSceneStatePauseMenu::killPauseMenu() {
 void StageSceneStatePauseMenu::killMarioModel() {
     if (mIsPauseMenu)
         al::setNearClipDistance(getHost(), mPrevNearClipDistance, 0);
+
     if (al::isAlive(mMarioActor))
         mMarioActor->kill();
 }
 
 bool StageSceneStatePauseMenu::isNeedKillHost() const {
-    return mStateOption->get180() || mIsNewGame || mStateOption->isChangeLanguage() ||
-           mStateOption->isModeSelectEnd();
+    return isLoadData() || isNewGame() || isChangeLanguage() || isModeSelectEnd();
 }
 
 void StageSceneStatePauseMenu::startNormal() {
-    mStartType = 1;
+    mStartType = StartType::Normal;
     al::pausePadRumble(getHost());
-    mSceneAudioSystemPauseController->pause(0);
+    mSceneAudioSystemPauseController->pause(false);
     alGraphicsFunction::invalidateGpuStressAnalyzer(getHost());
 }
 
 void StageSceneStatePauseMenu::startAfterTitle() {
-    mStartType = 2;
+    mStartType = StartType::AfterTitle;
 }
 
 void StageSceneStatePauseMenu::killAllOptionLayout() {
@@ -209,7 +218,7 @@ bool StageSceneStatePauseMenu::isEndToHelp() const {
 }
 
 bool StageSceneStatePauseMenu::isLoadData() const {
-    return mStateOption->get180();
+    return mStateOption->isLoadData();
 }
 
 s32 StageSceneStatePauseMenu::getSelectedFileId() const {
@@ -240,10 +249,11 @@ bool StageSceneStatePauseMenu::checkNeedKillByHostAndEnd() {
         al::stopAllBgm(getHost(), 0);
         return true;
     }
+
     return false;
 }
 
-void StageSceneStatePauseMenu::startActionMario(char const* actionName) {
+void StageSceneStatePauseMenu::startActionMario(const char* actionName) {
     mSelectParts->startActionMario(mMarioActor, actionName);
 }
 
@@ -267,8 +277,10 @@ bool StageSceneStatePauseMenu::isDrawViewRenderer() const {
         al::isNerve(this, &NrvStageSceneStatePauseMenu.WaitDraw) ||
         al::isNerve(this, &NrvStageSceneStatePauseMenu.End))
         return true;
+
     if (al::isNerve(this, &NrvStageSceneStatePauseMenu.Appear))
         return al::isDead(mMarioActor);
+
     return false;
 }
 
@@ -289,21 +301,24 @@ bool StageSceneStatePauseMenu::isDrawChromakey() const {
 
         return true;
     }
+
     return false;
 }
 
 void StageSceneStatePauseMenu::exeAppear() {
     if (al::isFirstStep(this))
-        al::startCameraPause(mPauseCameraCtrl);
+        startPauseCamera();
+
     if (al::isStep(this, 1)) {
-        if (mStartType == 1)
+        if (mStartType == StartType::Normal)
             setNormal();
-        if (mStartType == 2) {
+        if (mStartType == StartType::AfterTitle) {
             mMenuRight->appear();
             mMenuGuide->appear();
             al::startAction(mMenuLayout, "SelectTitle", "Select");
         }
     }
+
     if (al::isStep(this, 2)) {
         if (!mIsPauseMenu)
             mPrevNearClipDistance = alCameraFunction::getNearClipDistance(getHost(), 0);
@@ -312,23 +327,27 @@ void StageSceneStatePauseMenu::exeAppear() {
         mMarioActor->appear();
         mIsPauseMenu = true;
     }
+
     updatePlayerPose();
     al::updateKitListPrev(getHost());
     if (al::isGreaterEqualStep(this, 2) || !mIsNormal) {
         rs::requestGraphicsPresetAndCubeMapPause(getHost());
         alGraphicsFunction::requestUpdateMaterialInfo(getHost());
     }
+
     al::updateKitList(getHost(), "デモ");
     al::updateKitList(getHost(), "シャドウマスク");
     al::updateKitList(getHost(), "グラフィックス要求者");
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
+
     if (al::isGreaterEqualStep(this, 3) && mMenuLayout->isWait())
         al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
 }
 
 void StageSceneStatePauseMenu::setNormal() {
     mIsNormal = true;
+
     if (mMenuLayout->isAlive())
         mSelectParts->appearWait();
     else {
@@ -336,17 +355,20 @@ void StageSceneStatePauseMenu::setNormal() {
         mMenuRight->appear();
         mMenuGuide->appear();
     }
-    mSelectParts->appear(5);
 
+    mSelectParts->appear(MenuSelectParts::cMenuItemAmount);
     mSelectParts->setSelectMessage(
-        0, al::getSystemMessageString(mMenuLayout, "MenuMessage", "Continue"));
+        MenuSelectParts::Selection::Continue,
+        al::getSystemMessageString(mMenuLayout, "MenuMessage", "Continue"));
 
     if (rs::isSeparatePlay(getHost()))
         mSelectParts->setSelectMessage(
-            1, al::getSystemMessageString(mMenuLayout, "MenuMessage", "EndSeparatePlay"));
+            MenuSelectParts::Selection::SeparatePlay,
+            al::getSystemMessageString(mMenuLayout, "MenuMessage", "EndSeparatePlay"));
     else
         mSelectParts->setSelectMessage(
-            1, al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartSeparatePlay"));
+            MenuSelectParts::Selection::SeparatePlay,
+            al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartSeparatePlay"));
 
     al::startAction(mMenuLayout, "SelectPause", "Select");
 }
@@ -354,17 +376,16 @@ void StageSceneStatePauseMenu::setNormal() {
 void StageSceneStatePauseMenu::appearMarioModel() {
     if (!mIsPauseMenu)
         mPrevNearClipDistance = alCameraFunction::getNearClipDistance(getHost(), 0);
+
     al::setNearClipDistance(getHost(), 400.0f, 0);
     updatePlayerPose();
     mMarioActor->appear();
     mIsPauseMenu = true;
 }
 
-// NON_MATCHING: offset shouldn't create a const variable
 void StageSceneStatePauseMenu::updatePlayerPose() {
     sead::Vector3f worldPos = sead::Vector3f::zero;
-    sead::Vector2f offset = {310.0f, -960.0f};
-    al::calcWorldPosFromLayoutPos(&worldPos, getHost(), offset, 500.0f);
+    al::calcWorldPosFromLayoutPos(&worldPos, getHost(), {310.0f, -960.0f}, 500.0f);
     al::setTrans(mMarioActor, worldPos);
 
     sead::Quatf quat = sead::Quatf::unit;
@@ -379,10 +400,12 @@ void StageSceneStatePauseMenu::exeWait() {
     if (mIsNormal) {
         if (rs::isSeparatePlay(getHost()))
             mSelectParts->setSelectMessage(
-                1, al::getSystemMessageString(mMenuLayout, "MenuMessage", "EndSeparatePlay"));
+                MenuSelectParts::Selection::SeparatePlay,
+                al::getSystemMessageString(mMenuLayout, "MenuMessage", "EndSeparatePlay"));
         else
             mSelectParts->setSelectMessage(
-                1, al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartSeparatePlay"));
+                MenuSelectParts::Selection::SeparatePlay,
+                al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartSeparatePlay"));
     }
 
     al::updateKitListPrev(getHost());
@@ -397,15 +420,15 @@ void StageSceneStatePauseMenu::exeWait() {
 
     if (mSelectParts->isDecideSave()) {
         al::setNerve(this, &NrvStageSceneStatePauseMenu.Save);
-        return;
     }
-    if (mSelectParts->isDecideContinue()) {
+
+    else if (mSelectParts->isDecideContinue()) {
         killMarioModel();
         al::endCameraPause(mPauseCameraCtrl);
         al::setNerve(this, &NrvStageSceneStatePauseMenu.WaitDraw);
-        return;
     }
-    if (mSelectParts->isDecideSeparatePlay()) {
+
+    else if (mSelectParts->isDecideSeparatePlay()) {
         if (rs::isSeparatePlay(getHost()) && !mIsNormal) {
             al::setNerve(this, &NrvStageSceneStatePauseMenu.WaitDraw);
             return;
@@ -414,24 +437,26 @@ void StageSceneStatePauseMenu::exeWait() {
             al::setNerve(this, &NrvStageSceneStatePauseMenu.EndSeparatePlay);
         else
             al::setNerve(this, &NrvStageSceneStatePauseMenu.StartSeparatePlay);
-        return;
+
     }
-    if (mSelectParts->isDecideNewGame()) {
-        if (mGameDataHolderAccessor->tryFindEmptyFileId() & 0x80000000)
+
+    else if (mSelectParts->isDecideNewGame()) {
+        if (mGameDataHolderAccessor->tryFindEmptyFileId() < 0)
             al::setNerve(this, &NrvStageSceneStatePauseMenu.NotExistEmptyFile);
         else
             al::setNerve(this, &NrvStageSceneStatePauseMenu.ConfirmNewGame);
-        return;
     }
-    if (mSelectParts->isDecideHelp()) {
+
+    else if (mSelectParts->isDecideHelp()) {
         al::setNerve(this, &NrvStageSceneStatePauseMenu.FadeBeforeHelp);
-        return;
     }
-    if (mSelectParts->isDecideSetting()) {
+
+    else if (!isEndToCancel()) {
         al::setNerve(this, &NrvStageSceneStatePauseMenu.Option);
-        return;
     }
-    al::updateKitListPost(getHost());
+
+    else
+        al::updateKitListPost(getHost());
 }
 
 void StageSceneStatePauseMenu::changeNerveAndReturn(const al::Nerve* nerve) {
@@ -441,6 +466,7 @@ void StageSceneStatePauseMenu::changeNerveAndReturn(const al::Nerve* nerve) {
 void StageSceneStatePauseMenu::exeFadeBeforeHelp() {
     if (al::isFirstStep(this))
         mHelpWipe->startClose(-1);
+
     al::updateKitListPrev(getHost());
     al::updateKitList(getHost(), "カメラ");
     rs::requestGraphicsPresetAndCubeMapPause(getHost());
@@ -448,6 +474,7 @@ void StageSceneStatePauseMenu::exeFadeBeforeHelp() {
     al::updateKitList(getHost(), "グラフィックス要求者");
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
+
     if (mHelpWipe->isCloseEnd())
         al::setNerve(this, &StartHelp);
 }
@@ -462,15 +489,16 @@ void StageSceneStatePauseMenu::exeStartHelp() {
     al::updateKitListPost(getHost());
 
     if (al::isFirstStep(this)) {
-        bool test2 = al::isNerve(this, &NrvStageSceneStatePauseMenu.StartHelpFromOption);
-        GameDataHolderAccessor accessor = getHost();
-        bool test = rs::isSceneStatusInvalidSave(accessor);
+        bool isStartHelpFromOption =
+            al::isNerve(this, &NrvStageSceneStatePauseMenu.StartHelpFromOption);
+        bool isSceneStatusInvalidSave = rs::isSceneStatusInvalidSave(getHost());
 
         al::StringTmp<256> helpUrl;
-        HelpFunction::callHelp(mHtmlViewer, mGameDataHolderAccessor, test2, test, false, &helpUrl);
+        HelpFunction::callHelp(mHtmlViewer, mGameDataHolderAccessor, isStartHelpFromOption,
+                               isSceneStatusInvalidSave, false, &helpUrl);
 
         if (al::isEqualString("http://localhost/ChangeMode", helpUrl.cstr())) {
-            mStateOption->set51(true);
+            mStateOption->set_51(true);
             al::setNerve(this, &NrvStageSceneStatePauseMenu.OptionFromHelp);
             return;
         }
@@ -529,7 +557,7 @@ void StageSceneStatePauseMenu::exeStartSeparatePlay() {
     if (al::updateNerveState(this)) {
         if (mStageSceneLayout)
             mStageSceneLayout->setDirtyFlagForPlayGuideMenu();
-        if (this->mStateStartSeparatePlay->isCancel() && !rs::isModeE3LiveRom()) {
+        if (mStateStartSeparatePlay->isCancel() && !rs::isModeE3LiveRom()) {
             mSelectParts->appearWait();
             al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
             return;
@@ -567,19 +595,20 @@ void StageSceneStatePauseMenu::exeOption() {
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
 
-    if (al::updateNerveState(this)) {
-        if (mStateOption->isChangeLanguage() || mStateOption->get180()) {
-            kill();
-        } else {
-            mSelectParts->appearWait();
-            mFooterParts->tryChangeTextFade(
-                al::getSystemMessageString(mMenuGuide, "Footer", "MenuMessage_Footer"));
+    if (!al::updateNerveState(this))
+        return;
 
-            if (al::isNerve(this, &NrvStageSceneStatePauseMenu.OptionFromHelp))
-                al::setNerve(this, &NrvStageSceneStatePauseMenu.StartHelpFromOption);
-            else
-                al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
-        }
+    if (isChangeLanguage() || isLoadData()) {
+        kill();
+    } else {
+        mSelectParts->appearWait();
+        mFooterParts->tryChangeTextFade(
+            al::getSystemMessageString(mMenuGuide, "Footer", "MenuMessage_Footer"));
+
+        if (al::isNerve(this, &NrvStageSceneStatePauseMenu.OptionFromHelp))
+            al::setNerve(this, &NrvStageSceneStatePauseMenu.StartHelpFromOption);
+        else
+            al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
     }
 }
 
@@ -588,8 +617,10 @@ void StageSceneStatePauseMenu::exeSave() {
     rs::requestGraphicsPresetAndCubeMapPause(getHost());
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
+
     if (al::isFirstStep(this))
         SaveDataAccessFunction::startSaveDataWriteWithWindow(mGameDataHolderAccessor);
+
     if (SaveDataAccessFunction::updateSaveDataAccess(mGameDataHolderAccessor, false)) {
         mSelectParts->appearWait();
         al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
@@ -599,43 +630,53 @@ void StageSceneStatePauseMenu::exeSave() {
 void StageSceneStatePauseMenu::exeConfirmNewGame() {
     if (al::isFirstStep(this)) {
         mWindowConfirm->setListNum(2);
+
         mWindowConfirm->setTxtMessage(
             al::getSystemMessageString(mWindowConfirm, "ConfirmMessage", "NewGame"));
         mWindowConfirm->setTxtList(
             0, al::getSystemMessageString(mWindowConfirm, "ConfirmMessage", "NewGame_Yes"));
         mWindowConfirm->setTxtList(
             1, al::getSystemMessageString(mWindowConfirm, "ConfirmMessage", "NewGame_No"));
+
         mWindowConfirm->appear();
         mKeyRepeatCtrl->reset();
     }
+
     al::updateKitListPrev(getHost());
     rs::requestGraphicsPresetAndCubeMapPause(getHost());
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
 
     mKeyRepeatCtrl->update(rs::isHoldUiUp(getHost()), rs::isHoldUiDown(getHost()));
+
     if (mKeyRepeatCtrl->isUp())
         mWindowConfirm->tryUp();
+
     if (mKeyRepeatCtrl->isDown())
         mWindowConfirm->tryDown();
 
-    s32 unk = mWindowConfirm->getField134();
+    al::WindowConfirm::SelectionType selectionType = mWindowConfirm->getPrevSelectionType();
+
     if (rs::isTriggerUiDecide(getHost())) {
-        if (unk == 0)
+        if (selectionType == al::WindowConfirm::SelectionType::HardKey)
             mWindowConfirm->tryDecideWithoutEnd();
-        if (unk == 1)
+        if (selectionType == al::WindowConfirm::SelectionType::List00)
             mWindowConfirm->tryCancel();
     }
+
     if (rs::isTriggerUiCancel(getHost()))
         mWindowConfirm->tryCancel();
-    if (unk == 0 && mWindowConfirm->isNerveEnd()) {
+
+    if (selectionType == al::WindowConfirm::SelectionType::HardKey &&
+        mWindowConfirm->isNerveEnd()) {
         mWindowConfirm->tryDecide();
         s32 emptyFileId = mGameDataHolderAccessor->tryFindEmptyFileId();
         mGameDataHolderAccessor->requestSetPlayingFileId(emptyFileId);
         mGameDataHolderAccessor->setRequireSave();
         mIsNewGame = true;
     }
-    if (unk == 1) {
+
+    if (selectionType == al::WindowConfirm::SelectionType::List00) {
         if (al::isDead(mWindowConfirm)) {
             mSelectParts->appearWait();
             al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
@@ -650,12 +691,15 @@ void StageSceneStatePauseMenu::exeNotExistEmptyFile() {
             al::getSystemMessageString(mWindowConfirm, "ConfirmMessage", "NotExistEmptyFile"));
         mWindowConfirm->appear();
     }
+
     al::updateKitListPrev(getHost());
     rs::requestGraphicsPresetAndCubeMapPause(getHost());
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
+
     if (rs::isTriggerUiDecide(getHost()) || rs::isTriggerUiCancel(getHost()))
         mWindowConfirm->tryDecide();
+
     if (al::isDead(mWindowConfirm)) {
         mSelectParts->appearWait();
         al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
@@ -668,12 +712,17 @@ void StageSceneStatePauseMenu::startPauseCamera() {
 
 void StageSceneStatePauseMenu::setAfterTitle() {
     mIsNormal = false;
-    mSelectParts->appear(5);
+
+    mSelectParts->appear(MenuSelectParts::cMenuItemAmount);
     mSelectParts->setMainMenu(true);
+
     mSelectParts->setSelectMessage(
-        0, al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartGame"));
+        MenuSelectParts::Selection::Continue,
+        al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartGame"));
     mSelectParts->setSelectMessage(
-        1, al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartGameSeparatePlay"));
+        MenuSelectParts::Selection::SeparatePlay,
+        al::getSystemMessageString(mMenuLayout, "MenuMessage", "StartGameSeparatePlay"));
     mSelectParts->setSelectMessage(
-        2, al::getSystemMessageString(mMenuLayout, "MenuMessage", "NewGame"));
+        MenuSelectParts::Selection::NewGame,
+        al::getSystemMessageString(mMenuLayout, "MenuMessage", "NewGame"));
 }

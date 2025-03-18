@@ -41,10 +41,10 @@ public:
 
 namespace rs {
 void tryStartRaceStage(al::Scene*, GameDataHolder*);
-void updateNormalState(al::Scene*);
+bool updateNormalState(al::Scene*);
 void updateEffectSystemEnv(al::Scene*);
-void updateNormalStateExcludeGraphics(al::Scene*);
-void updateBirdCarryMeat(al::Scene*);
+bool updateNormalStateExcludeGraphics(al::Scene*);
+bool updateBirdCarryMeat(al::Scene*);
 void updateKitListExcludePlayer(al::Scene*);
 void updateKitListExcludeCamera(al::Scene*);
 void updateKitListExcludeCameraDemoChangeWorld(al::Scene*);

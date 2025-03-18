@@ -9,6 +9,25 @@ class LayoutInitInfo;
 
 class WindowConfirm : public LayoutActor {
 public:
+    enum class SelectionType {
+        None = -1,
+        HardKey = 0,
+        List00 = 1,
+        List01 = 2,
+        List02 = 3,
+    };
+
+    enum class Direction {
+        None = 0,
+        Up = 1,
+        Down = 2,
+    };
+
+    struct Selection {
+        SelectionType selectionType;
+        SelectionType prevSelectionType;
+    };
+
     WindowConfirm(const LayoutInitInfo&, const char*, const char*);
 
     void setTxtMessage(const char16*);
@@ -34,15 +53,14 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
-    s32 getField134() { return field_134; }
+    SelectionType getPrevSelectionType() { return mSelection.prevSelectionType; }
 
 private:
-    s32 field_12c = 0;
-    s32 field_130 = -1;
-    s32 field_134 = -1;
-    s32 field_138 = -1;
-    bool field_13c = false;
-    s32 field_140 = -1;
+    Direction mDirection;
+    Selection mSelection;
+    s32 mCancelIdx;
+    bool mIsDecided;
+    s32 mCooldown;
     sead::PtrArray<LayoutActor> mParListArray;
     LayoutActor* mCursorActor;
     LayoutActor* mButtonActor;

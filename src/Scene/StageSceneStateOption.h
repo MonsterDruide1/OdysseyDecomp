@@ -25,9 +25,9 @@ public:
 
     void updateConfigDataInfo(const GameConfigData*);
     void killAllLayouts();
-    virtual void init();
-    virtual void appear();
-    virtual void kill();
+    void init() override;
+    void appear() override;
+    void kill() override;
     bool isModeSelectEnd() const;
     s32 getSelectedFileId() const;
     bool isChangeLanguage() const;
@@ -66,9 +66,9 @@ public:
 
     const char* getLanguage() const { return mLanguage; };
 
-    void set51(bool isTrue) { field_51 = isTrue; }
+    void set_51(bool isTrue) { field_51 = isTrue; }
 
-    bool get180() const { return field_180; }
+    bool isLoadData() const { return mIsLoadData; }
 
 private:
     void* field_28;
@@ -116,7 +116,7 @@ private:
     const char* mLanguage;
     al::Scene* mScene;
     GameDataHolder* mGameDataHolder;
-    bool field_180;
+    bool mIsLoadData;
     al::MessageSystem* mMessageSystem;
     InputSeparator* mInputSeperator;
 };

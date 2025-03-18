@@ -27,6 +27,8 @@ class StageSceneStateStartSeparatePlay;
 
 class StageSceneStatePauseMenu : public al::HostStateBase<al::Scene> {
 public:
+    enum class StartType { Title, Normal, AfterTitle };
+
     StageSceneStatePauseMenu(const char* name, al::Scene* host,
                              al::SimpleLayoutAppearWaitEnd* menuLayout,
                              GameDataHolder* gameDataHolder, const al::SceneInitInfo& sceneInitInfo,
@@ -36,8 +38,8 @@ public:
                              bool a11,
                              SceneAudioSystemPauseController* sceneAudioSystemPauseController);
 
-    virtual void appear();
-    virtual void kill();
+    void appear() override;
+    void kill() override;
 
     void killPauseMenu();
     void killMarioModel();
@@ -54,12 +56,15 @@ public:
     bool isNewGame() const;
     bool isModeSelectEnd() const;
     bool checkNeedKillByHostAndEnd();
+
     void startActionMario(const char*);
     al::LiveActor* getMarioActor() const;
+
     bool isDrawLayout() const;
     bool isDrawLayoutMain() const;
     bool isDrawViewRenderer() const;
     bool isDrawChromakey() const;
+
     void exeAppear();
     void setNormal();
     void appearMarioModel();
@@ -76,6 +81,7 @@ public:
     void exeSave();
     void exeConfirmNewGame();
     void exeNotExistEmptyFile();
+
     void startPauseCamera();
     void setAfterTitle();
 
@@ -87,7 +93,7 @@ private:
     MenuSelectParts* mSelectParts = nullptr;
     al::WipeSimple* mMenuWipe = nullptr;
     al::WipeSimple* mHelpWipe = nullptr;
-    s32 mStartType = 0;
+    StartType mStartType = StartType::Title;
     StageSceneStateStartSeparatePlay* mStateStartSeparatePlay = nullptr;
     StageSceneStateEndSeparatePlay* mStateEndSeparatePlay = nullptr;
     StageSceneStateOption* mStateOption = nullptr;
