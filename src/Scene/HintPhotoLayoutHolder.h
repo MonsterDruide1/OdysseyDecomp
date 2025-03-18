@@ -11,7 +11,7 @@ class DecideIconLayout;
 class HintPhotoLayoutHolder : public al::ISceneObj {
 public:
     HintPhotoLayoutHolder();
-    void init(const al::LayoutInitInfo& info);
+    void init(const al::LayoutInitInfo& initInfo);
     bool isInit() const;
     const al::LayoutActor* getPhotoLayout() const;
     DecideIconLayout* getDecideIcon() const;
