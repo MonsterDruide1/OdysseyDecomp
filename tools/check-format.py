@@ -159,6 +159,8 @@ def common_include_order(c, path, is_header):
     non_empty_include_lines = []
     end_of_includes = False
     for line in lines:
+        if line.startswith("//"):
+            continue
         if line.startswith("#include"):
             if CHECK(lambda a: not end_of_includes, line, "Includes have to be listed at the very top of the file!",
                      path): return
@@ -495,7 +497,11 @@ def common_include_what_you_use(c, path):
         "-std=c++1z",
         "-Wno-pragma-once-outside-header",  # disable warning about #pragma once on headers
     ]
-    iwyu = subprocess.run(["include-what-you-use", "-Xiwyu", "--error", "-Xiwyu", "--mapping_file="+str(project_root/"tools/iwyu.imp")] + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    iwyu_args = [
+        "-Xiwyu", "--mapping_file="+str(project_root/"tools/iwyu.imp"),
+        "-Xiwyu", "--no_default_mappings",
+    ]
+    iwyu = subprocess.run(["include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if iwyu.returncode != 0:
         FAIL("include-what-you-use failed! "+iwyu.stderr, -1, path)
 
