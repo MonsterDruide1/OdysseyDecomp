@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadTList.h>
 
 namespace sead {
@@ -9,14 +10,12 @@ class WriteStream;
 
 namespace al {
 
-class ByamlWriterStringTable;
-class ByamlWriterContainer;
-class ByamlWriterBigDataList;
-
-class ByamlWriterArray;
-class ByamlWriterHash;
-
 class ByamlIter;
+class ByamlWriterArray;
+class ByamlWriterBigDataList;
+class ByamlWriterContainer;
+class ByamlWriterHash;
+class ByamlWriterStringTable;
 
 class ByamlWriter {
 public:

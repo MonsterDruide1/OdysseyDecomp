@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
@@ -8,8 +9,6 @@
 namespace al {
 struct ActorInitInfo;
 class BgmBeatCounter;
-class HitSensor;
-class SensorMsg;
 }  // namespace al
 
 class Coin2DCity;

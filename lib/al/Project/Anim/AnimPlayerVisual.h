@@ -1,10 +1,11 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Project/Anim/AnimPlayerSimple.h"
 
 namespace al {
 struct AnimPlayerInitInfo;
-struct AnimResInfo;
 
 class AnimPlayerMat : public AnimPlayerSimple {
 public:

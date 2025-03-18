@@ -25,6 +25,10 @@
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
 
+namespace al {
+class AreaObj;
+}  // namespace al
+
 namespace {
 NERVE_IMPL(Coin2D, Appear);
 NERVE_IMPL(Coin2D, Wait);

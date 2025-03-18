@@ -1,5 +1,6 @@
 #include "Layout/WindowConfirmData.h"
 
+#include <math/seadVector.h>
 #include <time/seadDateTime.h>
 
 #include "Library/Base/StringUtil.h"

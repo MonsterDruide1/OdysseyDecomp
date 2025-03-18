@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Event/IEventFlowEventReceiver.h"
@@ -9,18 +10,15 @@ namespace al {
 
 struct ActorInitInfo;
 class AreaObj;
-class EventFlowEventData;
 class EventFlowExecutor;
-class HitSensor;
 class LiveActorGroup;
-class SensorMsg;
 }  // namespace al
 
 class NpcEventStateScare;
+class Shine;
 class VolleyballBall;
 class VolleyballBase;
 class VolleyballLayout;
-class Shine;
 
 class VolleyballNpc : public al::LiveActor, public al::IEventFlowEventReceiver {
 public:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadQuat.h>
+#include <math/seadVector.h>
 
 namespace al {
 class PlacementInfo;

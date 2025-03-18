@@ -13,8 +13,8 @@ class EventFlowExecutor;
 class HitSensor;
 class JointLookAtController;
 class JointRippleGenerator;
-class SensorMsg;
 class Nerve;
+class SensorMsg;
 }  // namespace al
 
 class DoshiStateWanderBossBattle;

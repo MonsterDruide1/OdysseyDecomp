@@ -1,13 +1,17 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
+class AnagramAlphabet;
+class CapTargetInfo;
+class CapTargetParts;
 class HackerJudgeNormalFall;
 class HackerJudgeStartRun;
-class CapTargetInfo;
-class AnagramAlphabet;
 class IUsePlayerHack;
-class CapTargetParts;
 class PlayerHackStartShaderCtrl;
 
 class AnagramAlphabetCharacter : public al::LiveActor {

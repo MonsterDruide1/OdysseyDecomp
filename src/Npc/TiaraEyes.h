@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Obj/PartsModel.h"
 
 class TiaraEyes : public al::PartsModel {

@@ -1,11 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Placement/PlacementId.h"
 
 namespace al {
 struct ActorInitInfo;
 class LiveActor;
 class HitSensor;
+class LiveActor;
 
 class SupportFreezeSyncGroup {
 public:

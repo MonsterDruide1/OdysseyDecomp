@@ -1,13 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
 class LiveActor;
 }
+class IUsePlayerCollision;
 class PlayerConst;
 class PlayerInput;
-class IUsePlayerCollision;
 
 class PlayerActionSlopeSlideControl {
 public:

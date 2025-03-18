@@ -1,5 +1,7 @@
 #include "Player/PlayerActionFunction.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 
 namespace PlayerActionFunction {

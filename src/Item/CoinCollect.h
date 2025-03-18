@@ -8,10 +8,8 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class HitSensor;
 class MtxConnector;
 class PlacementId;
-class SensorMsg;
 }  // namespace al
 
 class CoinCollectEmpty;

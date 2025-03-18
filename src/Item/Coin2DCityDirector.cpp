@@ -1,5 +1,7 @@
 #include "Item/Coin2DCityDirector.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Bgm/BgmBeatCounter.h"
 #include "Library/Bgm/BgmLineFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

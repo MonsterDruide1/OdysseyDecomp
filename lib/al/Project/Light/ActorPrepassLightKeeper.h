@@ -1,7 +1,11 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
-#include <gfx/seadColor.h>
+
+namespace sead {
+class Color4f;
+}  // namespace sead
 
 namespace al {
 class PrePassLightBase;
@@ -14,6 +18,15 @@ class ParameterArray;
 class LiveActor;
 class Resource;
 struct ActorInitInfo;
+class LiveActor;
+class ParameterArray;
+class ParameterBool;
+class ParameterC4f;
+class ParameterIo;
+class ParameterObj;
+class ParameterStringRef;
+class PrePassLightBase;
+class Resource;
 
 class ActorPrePassLightKeeper {
 public:

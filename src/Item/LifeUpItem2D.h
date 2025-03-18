@@ -10,7 +10,6 @@ namespace al {
 struct ActorInitInfo;
 class HitSensor;
 class NerveStateBase;
-class SensorMsg;
 }  // namespace al
 
 class ActorDimensionKeeper;

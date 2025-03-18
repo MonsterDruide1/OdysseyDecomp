@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
@@ -34,6 +35,7 @@ template <typename T>
 class AudioInfoListWithParts;
 class BgmActionInfo;
 class BgmSourceInfo;
+class ByamlIter;
 
 struct BgmUserInfo {
     static BgmUserInfo* createInfo(const ByamlIter&, const sead::SafeString&);

@@ -1,6 +1,5 @@
 #include "Project/Action/ActionFunction.h"
 
-#include "Project/Action/ActionAnimCtrl.h"
 #include "Project/Action/ActionAnimInfo.h"
 
 namespace alActionFunction {

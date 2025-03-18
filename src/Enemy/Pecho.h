@@ -9,8 +9,6 @@
 namespace al {
 struct ActorInitInfo;
 class AnimScaleController;
-class HitSensor;
-class SensorMsg;
 }  // namespace al
 
 class Pecho : public al::LiveActor {

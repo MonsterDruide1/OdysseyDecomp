@@ -10,7 +10,6 @@ namespace al {
 struct ActorInitInfo;
 class HitSensor;
 class MtxConnector;
-class SensorMsg;
 }  // namespace al
 
 class Coin;

@@ -6,7 +6,6 @@
 
 namespace al {
 class LayoutInitInfo;
-class LiveActor;
 }  // namespace al
 
 class CoinCounter : public al::LayoutActor {

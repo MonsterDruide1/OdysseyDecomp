@@ -9,10 +9,9 @@ namespace al {
 struct ActorInitInfo;
 class AreaObjGroup;
 class ActorCameraTarget;
+class AreaObjGroup;
 class CameraTicket;
-class HitSensor;
 class JointSpringControllerHolder;
-class SensorMsg;
 }  // namespace al
 class Shine;
 

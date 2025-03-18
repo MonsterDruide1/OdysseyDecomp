@@ -1,8 +1,9 @@
 #include "Project/Action/ActionFlagCtrl.h"
 
+#include <prim/seadSafeString.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 ActionFlagCtrl::ActionFlagCtrl(LiveActor* actor, const char* name)

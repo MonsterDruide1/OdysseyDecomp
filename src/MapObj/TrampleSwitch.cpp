@@ -1,12 +1,13 @@
 #include "MapObj/TrampleSwitch.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"

@@ -1,5 +1,7 @@
 #include "MapObj/TransparentWall.h"
 
+#include <cmath>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"

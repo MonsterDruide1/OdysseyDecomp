@@ -1,8 +1,14 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 class ItemGenerator;
+namespace al {
+class HitSensor;
+class SensorMsg;
+}  // namespace al
 
 class TrampleBush : public al::LiveActor {
 public:

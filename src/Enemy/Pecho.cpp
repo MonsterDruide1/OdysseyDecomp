@@ -1,6 +1,6 @@
 #include "Enemy/Pecho.h"
 
-#include <math/seadVectorCalcCommon.h>
+#include <math/seadMathCalcCommon.h>
 
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
 #include "Library/Item/ItemUtil.h"
@@ -10,8 +10,6 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"

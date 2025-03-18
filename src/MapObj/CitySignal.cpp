@@ -1,5 +1,7 @@
 #include "MapObj/CitySignal.h"
 
+#include <basis/seadTypes.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

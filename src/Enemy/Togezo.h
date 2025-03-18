@@ -1,11 +1,12 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/LiveActor.h"
 
-class ExternalForceKeeper;
 class EnemyStateWander;
+class ExternalForceKeeper;
 
 class Togezo : public al::LiveActor {
 public:

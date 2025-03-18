@@ -1,5 +1,7 @@
 #include "Layout/CoinCollectLayout.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/Layout/LayoutInitInfo.h"

@@ -1,5 +1,7 @@
 #include "Item/CoinRotateCalculator.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"

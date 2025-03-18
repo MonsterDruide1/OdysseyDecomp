@@ -1,18 +1,22 @@
 #pragma once
 
-#include <heap/seadHeap.h>
+#include <basis/seadTypes.h>
+
+namespace sead {
+class Heap;
+}  // namespace sead
 
 namespace alSceneFunction {
 class SceneFactory;
 }
 
 namespace al {
-struct GameSystemInfo;
-class GameDataHolderBase;
-class ScreenCaptureExecutor;
-class InitializeThread;
 class AudioDirector;
+class GameDataHolderBase;
+class InitializeThread;
 class Scene;
+class ScreenCaptureExecutor;
+struct GameSystemInfo;
 
 class SceneCreator {
 public:

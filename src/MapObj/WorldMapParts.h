@@ -4,6 +4,10 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
+namespace al {
+class ActorInitInfo;
+}  // namespace al
+
 class WorldMapParts : public al::LiveActor {
 public:
     WorldMapParts(const char*);

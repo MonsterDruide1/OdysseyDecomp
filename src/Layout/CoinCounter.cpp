@@ -10,6 +10,10 @@
 #include "System/GameDataFunction.h"
 #include "Util/StageLayoutFunction.h"
 
+namespace al {
+class IUseLayout;
+}  // namespace al
+
 namespace {
 NERVE_IMPL(CoinCounter, Appear);
 NERVE_IMPL(CoinCounter, Wait);

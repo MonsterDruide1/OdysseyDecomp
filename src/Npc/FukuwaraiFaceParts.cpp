@@ -1,5 +1,7 @@
 #include "Npc/FukuwaraiFaceParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Collision/KCollisionServer.h"

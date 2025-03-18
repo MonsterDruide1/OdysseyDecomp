@@ -1,13 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <mc/seadCoreInfo.h>
-#include <thread/seadThread.h>
 
 #include "Library/HostIO/HioNode.h"
 
 namespace sead {
-class Event;
 class DelegateThread;
+class Event;
+class Thread;
 }  // namespace sead
 
 namespace al {

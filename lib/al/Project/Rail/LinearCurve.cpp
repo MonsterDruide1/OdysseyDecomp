@@ -1,5 +1,7 @@
 #include "Project/Rail/LinearCurve.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 
 namespace al {
