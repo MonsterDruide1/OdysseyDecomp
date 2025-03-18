@@ -1,5 +1,6 @@
 #include "Item/CoinCollectEmpty.h"
 
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 #include "Library/Collision/PartsConnector.h"

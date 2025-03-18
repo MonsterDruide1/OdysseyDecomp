@@ -1,11 +1,12 @@
 #include "MapObj/FurnitureStateWait.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/PlayerCollisionUtil.h"
 #include "Util/PlayerUtil.h"
 
 namespace {

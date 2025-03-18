@@ -7,10 +7,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
-class HitSensor;
 class MtxConnector;
-class SensorMsg;
 }  // namespace al
 
 class Coin;

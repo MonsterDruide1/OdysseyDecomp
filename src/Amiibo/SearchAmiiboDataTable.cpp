@@ -5,11 +5,6 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/Writer/ByamlWriter.h"
 
-namespace al {
-class ByamlIter;
-class ByamlWriter;
-}  // namespace al
-
 SearchAmiiboData::SearchAmiiboData() {
     init();
 }

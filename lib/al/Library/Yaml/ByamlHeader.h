@@ -1,7 +1,10 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <stream/seadStream.h>
+
+namespace sead {
+class WriteStream;
+}  // namespace sead
 
 namespace al {
 class ByamlHeader {

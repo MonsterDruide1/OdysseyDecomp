@@ -7,11 +7,6 @@
 
 #include "Util/IUseDimension.h"
 
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-}  // namespace al
-
 class ActorDimensionKeeper;
 class FlashingCtrl;
 class LifeUpItemStateAutoGet;

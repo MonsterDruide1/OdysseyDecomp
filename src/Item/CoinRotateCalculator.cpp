@@ -1,9 +1,10 @@
 #include "Item/CoinRotateCalculator.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"
-#include "Library/Scene/ISceneObj.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Stage/StageResourceList.h"
 

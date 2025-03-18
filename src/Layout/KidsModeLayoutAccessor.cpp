@@ -3,7 +3,6 @@
 #include "Library/Scene/SceneObjUtil.h"
 
 #include "Scene/SceneObjFactory.h"
-#include "System/GameDataHolderAccessor.h"
 #include "System/GameDataUtil.h"
 
 KidsModeLayoutAccessor::KidsModeLayoutAccessor() {}

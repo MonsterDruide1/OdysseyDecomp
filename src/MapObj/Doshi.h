@@ -6,15 +6,14 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
 class BgmPlayObj;
 class CameraTicket;
 class EventFlowExecutor;
 class HitSensor;
 class JointLookAtController;
 class JointRippleGenerator;
-class SensorMsg;
 class Nerve;
+class SensorMsg;
 }  // namespace al
 
 class DoshiStateWanderBossBattle;

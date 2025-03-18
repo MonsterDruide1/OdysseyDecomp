@@ -18,6 +18,10 @@
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
 
+namespace al {
+class HitSensor;
+}  // namespace al
+
 namespace {
 NERVE_IMPL(Togezo2D, Walk)
 NERVE_IMPL(Togezo2D, Damage)

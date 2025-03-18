@@ -1,14 +1,10 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Util/IUseDimension.h"
-
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-class SensorMsg;
-}  // namespace al
 
 class ActorDimensionKeeper;
 class Coin2DCityDirector;

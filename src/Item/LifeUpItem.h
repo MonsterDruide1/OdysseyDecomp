@@ -5,15 +5,13 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
 class HitSensor;
 class MtxConnector;
 class NerveStateBase;
-class SensorMsg;
 }  // namespace al
 
-class WaterSurfaceFinder;
 class FireSurfaceFinder;
+class WaterSurfaceFinder;
 
 class LifeUpItem : public al::LiveActor {
 public:

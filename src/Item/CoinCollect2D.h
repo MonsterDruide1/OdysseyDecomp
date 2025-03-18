@@ -5,11 +5,8 @@
 #include "Util/IUseDimension.h"
 
 namespace al {
-class ActorInitInfo;
-class HitSensor;
 class MtxConnector;
 class PlacementId;
-class SensorMsg;
 }  // namespace al
 
 class ActorDimensionKeeper;

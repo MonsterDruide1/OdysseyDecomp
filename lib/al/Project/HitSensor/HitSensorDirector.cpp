@@ -1,6 +1,9 @@
 #include "Project/HitSensor/HitSensorDirector.h"
 
-#include "Library/Execute/ExecuteDirector.h"
+#include <basis/seadTypes.h>
+#include <math/seadMathCalcCommon.h>
+#include <math/seadVector.h>
+
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Project/HitSensor/HitSensor.h"

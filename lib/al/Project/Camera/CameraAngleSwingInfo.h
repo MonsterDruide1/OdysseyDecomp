@@ -1,6 +1,11 @@
 #pragma once
 
-#include <gfx/seadCamera.h>
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
+namespace sead {
+class LookAtCamera;
+}  // namespace sead
 
 namespace al {
 class ByamlIter;

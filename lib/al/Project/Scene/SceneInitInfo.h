@@ -2,7 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-#include "System/GameDataHolderAccessor.h"
+class GameDataHolderAccessor;
 
 namespace al {
 struct SceneInitInfo {

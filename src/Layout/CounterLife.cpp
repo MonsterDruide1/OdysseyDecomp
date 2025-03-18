@@ -1,5 +1,7 @@
 #include "Layout/CounterLife.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutInitInfo.h"
@@ -8,7 +10,6 @@
 #include "Library/Nerve/NerveUtil.h"
 
 #include "System/GameDataFunction.h"
-#include "System/GameDataHolderAccessor.h"
 
 namespace {
 NERVE_IMPL(CounterLife, End);

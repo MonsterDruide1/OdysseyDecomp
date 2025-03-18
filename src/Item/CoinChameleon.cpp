@@ -1,5 +1,7 @@
 #include "Item/CoinChameleon.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

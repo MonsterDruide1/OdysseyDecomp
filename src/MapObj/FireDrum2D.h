@@ -1,13 +1,9 @@
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Nerve/NerveUtil.h"
 
 #include "Util/IUseDimension.h"
 
-namespace al {
-class ActorInitInfo;
-}
 class ActorDimensionKeeper;
 
 class FireDrum2D : public al::LiveActor, public IUseDimension {

@@ -5,12 +5,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-class SensorMsg;
-}  // namespace al
-
 class CoinStackGroup;
 
 class CoinStack : public al::LiveActor {

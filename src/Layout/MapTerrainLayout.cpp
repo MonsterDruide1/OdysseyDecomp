@@ -1,5 +1,7 @@
 #include "Layout/MapTerrainLayout.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Layout/LayoutActor.h"
 #include "Library/Layout/LayoutActorUtil.h"
 

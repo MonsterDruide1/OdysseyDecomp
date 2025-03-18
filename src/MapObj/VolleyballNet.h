@@ -4,12 +4,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-class SensorMsg;
-}  // namespace al
-
 class VolleyballNet : public al::LiveActor {
 public:
     VolleyballNet(const char* name);

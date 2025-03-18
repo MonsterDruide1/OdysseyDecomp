@@ -1,5 +1,7 @@
 #include "Project/Camera/CameraAngleSwingInfo.h"
 
+#include <gfx/seadCamera.h>
+
 #include "Library/Math/MathUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 

@@ -7,10 +7,8 @@
 #include "Util/IUseDimension.h"
 
 namespace al {
-class ActorInitInfo;
 class HitSensor;
 class NerveStateBase;
-class SensorMsg;
 }  // namespace al
 
 class ActorDimensionKeeper;

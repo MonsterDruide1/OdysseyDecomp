@@ -7,8 +7,6 @@
 
 namespace al {
 class ActorInitInfo;
-class HitSensor;
-class SensorMsg;
 class PlacementId;
 }  // namespace al
 

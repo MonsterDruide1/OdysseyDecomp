@@ -1,5 +1,7 @@
 #include "Enemy/Togezo.h"
 
+#include <math/seadQuat.h>
+
 #include "Library/Collision/Collider.h"
 #include "Library/Item/ItemUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"

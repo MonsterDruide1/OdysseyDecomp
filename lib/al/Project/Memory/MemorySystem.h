@@ -1,8 +1,13 @@
 #pragma once
 
 #include <container/seadStrTreeMap.h>
-#include <heap/seadExpHeap.h>
 #include <heap/seadHeapMgr.h>
+#include <prim/seadDelegate.h>
+
+namespace sead {
+class ExpHeap;
+class Heap;
+}  // namespace sead
 
 namespace al {
 class AudioResourceDirector;

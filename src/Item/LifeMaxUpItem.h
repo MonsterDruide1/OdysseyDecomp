@@ -5,11 +5,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-}  // namespace al
-
 class LifeMaxUpItem : public al::LiveActor {
 public:
     LifeMaxUpItem(const char* name);

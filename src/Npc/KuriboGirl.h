@@ -6,13 +6,10 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
-class AreaObjGroup;
 class ActorCameraTarget;
+class AreaObjGroup;
 class CameraTicket;
-class HitSensor;
 class JointSpringControllerHolder;
-class SensorMsg;
 }  // namespace al
 class Shine;
 

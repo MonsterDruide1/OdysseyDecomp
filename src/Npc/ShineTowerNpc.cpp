@@ -1,19 +1,22 @@
 #include "Npc/ShineTowerNpc.h"
 
+#include <math/seadMathCalcCommon.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/Math/MathUtil.h"
 #include "Library/Message/MessageHolder.h"
-#include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Player/PlayerUtil.h"
 
 #include "System/GameDataFunction.h"
 #include "Util/NpcEventFlowUtil.h"
+
+namespace al {
+class MessageTagDataHolder;
+}  // namespace al
 
 namespace {
 NERVE_IMPL(ShineTowerNpc, Wait);

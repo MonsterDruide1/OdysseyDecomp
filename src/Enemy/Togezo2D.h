@@ -1,10 +1,16 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Util/IUseDimension.h"
+
+class ActorDimensionKeeper;
+namespace al {
+class HitSensor;
+}  // namespace al
 
 class Togezo2D : public al::LiveActor, public IUseDimension {
 public:

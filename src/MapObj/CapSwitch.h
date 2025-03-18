@@ -1,12 +1,14 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 class MtxConnector;
 }
-class CapTargetInfo;
 class AppearSwitchSave;
+class CapTargetInfo;
 
 class CapSwitch : public al::LiveActor {
 public:

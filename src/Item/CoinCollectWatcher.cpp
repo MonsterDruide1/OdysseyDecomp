@@ -1,6 +1,7 @@
 #include "Item/CoinCollectWatcher.h"
 
 #include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Player/PlayerUtil.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
 #include "Library/Se/SeFunction.h"

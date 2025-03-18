@@ -5,7 +5,6 @@
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
-class ActorInitInfo;
 class IUseSceneObjHolder;
 class LiveActor;
 }  // namespace al

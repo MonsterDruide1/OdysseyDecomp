@@ -1,13 +1,11 @@
 #pragma once
 
-#include <prim/seadStorageFor.h>
-
 #include "Library/Collision/CollisionPartsTriangle.h"
 
-class CollisionShapeInfoBase;
 class CollisionShapeInfoArrow;
-class CollisionShapeInfoSphere;
+class CollisionShapeInfoBase;
 class CollisionShapeInfoDisk;
+class CollisionShapeInfoSphere;
 
 class CollidedShapeResult {
 public:

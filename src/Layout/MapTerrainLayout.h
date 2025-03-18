@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Layout/LayoutActor.h"
 
 struct MapData;

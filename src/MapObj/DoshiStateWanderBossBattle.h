@@ -5,7 +5,6 @@
 #include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
-class ActorInitInfo;
 class HitSensor;
 class SensorMsg;
 }  // namespace al

@@ -5,16 +5,12 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
-class HitSensor;
 class MtxConnector;
-class SensorMsg;
 }  // namespace al
 
-class ActorDimensionKeeper;
+class CoinRotateCalculator;
 class CoinStateCountUp;
 class ExternalForceKeeper;
-class CoinRotateCalculator;
 
 class CoinCollectEmpty : public al::LiveActor {
 public:

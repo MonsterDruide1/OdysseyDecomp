@@ -5,6 +5,8 @@
 #include "Library/Effect/IUseEffectKeeper.h"
 
 namespace al {
+class EffectKeeper;
+
 struct ActionEffectCtrlInfo {
     const char* name;
     const char* materialName;

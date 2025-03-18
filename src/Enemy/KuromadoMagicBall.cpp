@@ -1,5 +1,7 @@
 #include "Enemy/KuromadoMagicBall.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"

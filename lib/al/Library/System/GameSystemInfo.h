@@ -1,20 +1,22 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-#include <common/aglRenderBuffer.h>
+namespace agl {
+class DrawContext;
+class RenderBuffer;
+}  // namespace agl
 
 namespace al {
+class ApplicationMessageReceiver;
+class AudioSystem;
 class EffectSystem;
+class FontHolder;
+class GamePadSystem;
+class HtmlViewer;
 class LayoutSystem;
 class MessageSystem;
 class NetworkSystem;
-class AudioSystem;
-class GamePadSystem;
-class HtmlViewer;
-class WaveVibrationHolder;
 class NfpDirector;
-class ApplicationMessageReceiver;
-class FontHolder;
+class WaveVibrationHolder;
 
 struct DrawSystemInfo {
     agl::RenderBuffer* dockedRenderBuffer;

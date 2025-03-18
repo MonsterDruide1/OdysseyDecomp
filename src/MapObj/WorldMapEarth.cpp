@@ -1,5 +1,7 @@
 #include "MapObj/WorldMapEarth.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"

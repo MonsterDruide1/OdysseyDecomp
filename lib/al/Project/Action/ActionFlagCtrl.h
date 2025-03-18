@@ -1,11 +1,8 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <prim/seadSafeString.h>
 
 namespace al {
-struct ActionAnimCtrlInfo;
-struct ActionAnimDataInfo;
 class HitSensorKeeper;
 class LiveActor;
 

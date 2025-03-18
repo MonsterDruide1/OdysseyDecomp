@@ -7,17 +7,14 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
-class HitSensor;
-class IUseNerve;
 class MtxConnector;
 }  // namespace al
 
-class CoinStateAppearRotate;
 class CoinRotateCalculator;
-class WaterSurfaceShadow;
-class SaveObjInfo;
+class CoinStateAppearRotate;
 class ExternalForceKeeper;
+class SaveObjInfo;
+class WaterSurfaceShadow;
 
 class Coin : public al::LiveActor {
 public:

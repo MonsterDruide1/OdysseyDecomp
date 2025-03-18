@@ -1,5 +1,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"

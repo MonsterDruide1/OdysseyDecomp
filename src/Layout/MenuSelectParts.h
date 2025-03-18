@@ -1,12 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
+class KeyRepeatCtrl;
 class LayoutActor;
 class LayoutInitInfo;
 class LiveActor;
-class KeyRepeatCtrl;
 }  // namespace al
 
 class MenuSelectParts : public al::NerveExecutor {

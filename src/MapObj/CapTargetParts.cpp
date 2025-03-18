@@ -4,6 +4,11 @@
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 
+namespace al {
+class ActorInitInfo;
+class LiveActor;
+}  // namespace al
+
 CapTargetParts::CapTargetParts(al::LiveActor* actor, const al::ActorInitInfo& initInfo)
     : al::PartsModel("帽子の的パーツ") {
     initPartsFixFileNoRegister(actor, initInfo, "CapTarget", "Parts", nullptr);

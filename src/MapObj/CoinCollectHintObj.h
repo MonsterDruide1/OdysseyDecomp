@@ -4,10 +4,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-}  // namespace al
-
 class CoinCollectHintObj : public al::LiveActor {
 public:
     CoinCollectHintObj(const char* name);

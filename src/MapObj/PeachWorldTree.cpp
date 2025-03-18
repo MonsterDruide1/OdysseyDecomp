@@ -1,5 +1,7 @@
 #include "MapObj/PeachWorldTree.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraUtil.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

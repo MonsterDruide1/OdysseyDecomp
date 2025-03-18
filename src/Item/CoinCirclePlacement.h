@@ -5,10 +5,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-}  // namespace al
-
 class Coin;
 
 class CoinCirclePlacement : public al::LiveActor {

@@ -1,5 +1,7 @@
 #include "Npc/TiaraEyes.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

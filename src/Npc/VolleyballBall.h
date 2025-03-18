@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
@@ -7,10 +8,7 @@
 
 namespace al {
 
-class ActorInitInfo;
-class HitSensor;
 class ParabolicPath;
-class SensorMsg;
 }  // namespace al
 
 class VolleyballNpc;

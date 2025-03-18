@@ -7,10 +7,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
 class AnimScaleController;
-class HitSensor;
-class SensorMsg;
 }  // namespace al
 
 class Pecho : public al::LiveActor {
