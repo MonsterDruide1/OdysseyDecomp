@@ -22,12 +22,12 @@ public:
     StageScene();
 
     virtual ~StageScene();
-    virtual void init(const al::SceneInitInfo&);
-    virtual void appear();
-    virtual void kill();
+    virtual void init(const al::SceneInitInfo&) override;
+    virtual void appear() override;
+    virtual void kill() override;
 
-    virtual void control();
-    virtual void drawMain();
+    virtual void control() override;
+    virtual void drawMain() const override;
 
     bool isEnableSave() const;
 

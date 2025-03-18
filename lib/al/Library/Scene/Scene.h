@@ -17,7 +17,7 @@ class LayoutKit;
 class SceneMsgCtrl;
 class SceneStopCtrl;
 class ScreenCoverCtrl;
-class GraphicsInitArg;
+struct GraphicsInitArg;
 struct DrawSystemInfo;
 
 class Scene : public NerveExecutor,
@@ -33,15 +33,12 @@ public:
     virtual void kill();
     virtual void movement();
     virtual void control();
-    virtual void drawMain();
-    virtual void drawSub();
+    virtual void drawMain() const;
+    virtual void drawSub() const;
     AudioKeeper* getAudioKeeper() const override;
     SceneObjHolder* getSceneObjHolder() const override;
     CameraDirector* getCameraDirector() const override;
 
-    LayoutKit* getLayoutKit() const;
-    SceneStopCtrl* getSceneStopCtrl() const;
-    SceneMsgCtrl* getSceneMsgCtrl() const;
     void initializeAsync(const SceneInitInfo&);
     void initDrawSystemInfo(const SceneInitInfo&);
     void initSceneObjHolder(SceneObjHolder*);
@@ -57,6 +54,12 @@ public:
     StageResourceKeeper* getStageResourceKeeper() const { return mStageResourceKeeper; }
 
     LiveActorKit* getLiveActorKit() const { return mLiveActorKit; }
+
+    LayoutKit* getLayoutKit() const { return mLayoutKit; }
+
+    SceneStopCtrl* getSceneStopCtrl() const { return mSceneStopCtrl; }
+
+    SceneMsgCtrl* getSceneMsgCtrl() const { return mSceneMsgCtrl; }
 
     ScreenCoverCtrl* getScreenCoverCtrl() const { return mScreenCoverCtrl; }
 
@@ -79,18 +82,5 @@ private:
     AudioDirector* mAudioDirector;
     AudioKeeper* mAudioKeeper;
     DrawSystemInfo* mDrawSystemInfo;
-};
-
-class StageScene : public Scene {
-public:
-    StageScene();
-
-    virtual ~StageScene();
-    virtual void init(const SceneInitInfo&);
-    virtual void appear();
-    virtual void kill();
-
-    virtual void control();
-    virtual void drawMain();
 };
 }  // namespace al
