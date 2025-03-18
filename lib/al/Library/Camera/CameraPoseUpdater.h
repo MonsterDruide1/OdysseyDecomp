@@ -30,8 +30,8 @@ public:
               const CameraStartParamCtrl* startParamCtrl);
     void update();
     bool trySwitchCamera();
-    bool isActiveinterpole();
-    void startinterpole();
+    bool isActiveInterpole() const;
+    void startInterpole(s32);
 
     void setNearClipDistance(f32 distance) { mNearClipDistance = distance; }
 
