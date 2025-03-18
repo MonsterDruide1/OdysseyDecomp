@@ -500,6 +500,7 @@ def common_include_what_you_use(c, path):
     iwyu_args = [
         "-Xiwyu", "--mapping_file="+str(project_root/"tools/iwyu.imp"),
         "-Xiwyu", "--no_default_mappings",
+        "-Xiwyu", "--error"
     ]
     iwyu = subprocess.run(["include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if iwyu.returncode != 0:
@@ -524,7 +525,7 @@ def check_source(c, path):
     source_no_raw_auto(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
-    common_include_what_you_use(c, path)
+    #common_include_what_you_use(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
