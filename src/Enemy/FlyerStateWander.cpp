@@ -8,6 +8,10 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
+namespace al {
+class LiveActor;
+}  // namespace al
+
 namespace {
 NERVE_IMPL(FlyerStateWander, Wander)
 NERVE_IMPL(FlyerStateWander, Wait)

@@ -8,12 +8,11 @@
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
-struct NfpInfo;
-
-class ActorInitInfo;
 class AudioDirector;
+class AudioKeeper;
 class IUseSceneObjHolder;
 class MessageTagDataHolder;
+struct NfpInfo;
 }  // namespace al
 
 class AmiiboNpcLayout;

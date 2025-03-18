@@ -1,8 +1,12 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
+
 class DepthShadowModel : public LiveActor {
 public:
     DepthShadowModel(LiveActor* parent, const ActorInitInfo& info, const char* executorDrawName,

@@ -1,7 +1,5 @@
 #include "Library/Nerve/NerveAction.h"
 
-#include "Library/Nerve/NerveUtil.h"
-
 namespace al {
 NerveAction::NerveAction() {
     alNerveFunction::NerveActionCollector* collector =

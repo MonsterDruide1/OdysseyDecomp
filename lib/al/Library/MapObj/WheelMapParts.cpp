@@ -1,5 +1,8 @@
 #include "Library/MapObj/WheelMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadVector.h>
+
 #include "Library/Area/SwitchKeepOnAreaGroup.h"
 #include "Library/Area/SwitchOnAreaGroup.h"
 #include "Library/Effect/EffectSystemInfo.h"

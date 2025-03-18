@@ -1,13 +1,17 @@
 #pragma once
 
-#include <container/seadObjArray.h>
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
+namespace sead {
+template <typename T> class ObjArray;
+}  // namespace sead
+
 namespace al {
-class ScreenPointer;
 class ScreenPointCheckGroup;
 class ScreenPointTarget;
 class ScreenPointTargetHitInfo;
+class ScreenPointer;
 
 class ScreenPointDirector {
 public:

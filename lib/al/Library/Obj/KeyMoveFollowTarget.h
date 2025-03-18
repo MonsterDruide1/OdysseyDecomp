@@ -1,8 +1,11 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
 class KeyPoseKeeper;
 
 class KeyMoveFollowTarget : public LiveActor {

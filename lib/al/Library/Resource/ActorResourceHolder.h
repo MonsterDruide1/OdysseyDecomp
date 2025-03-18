@@ -1,12 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-class Resource;
 class ActorResource;
+class Resource;
 
 class ActorResourceHolder : public HioNode {
 public:

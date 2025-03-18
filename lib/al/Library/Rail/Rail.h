@@ -1,8 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
-
-#include "Library/Rail/RailPart.h"
 
 namespace al {
 class PlacementInfo;

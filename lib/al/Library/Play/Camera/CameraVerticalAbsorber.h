@@ -1,13 +1,14 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <gfx/seadCamera.h>
 #include <gfx/seadProjection.h>
+#include <math/seadVector.h>
 
-#include "Library/Camera/CameraPoserFunction.h"
 #include "Library/Nerve/NerveExecutor.h"
-#include "Library/Yaml/ByamlIter.h"
 
 namespace al {
+class ByamlIter;
 class CameraPoser;
 struct CameraStartInfo;
 

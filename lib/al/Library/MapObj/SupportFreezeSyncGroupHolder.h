@@ -1,9 +1,12 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
+class ActorInitInfo;
 class SupportFreezeSyncGroup;
 
 class SupportFreezeSyncGroupHolder : public LiveActor, public ISceneObj {

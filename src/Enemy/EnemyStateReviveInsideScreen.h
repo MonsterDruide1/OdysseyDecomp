@@ -5,6 +5,10 @@
 
 #include "Library/Nerve/NerveStateBase.h"
 
+namespace al {
+class LiveActor;
+}  // namespace al
+
 class EnemyStateReviveInsideScreen : public al::ActorStateBase {
 public:
     EnemyStateReviveInsideScreen(al::LiveActor*);

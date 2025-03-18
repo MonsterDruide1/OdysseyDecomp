@@ -1,5 +1,8 @@
 #pragma once
 
+#include <math/seadQuat.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/Axis.h"
 

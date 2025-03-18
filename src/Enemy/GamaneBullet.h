@@ -5,12 +5,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-class SensorMsg;
-}  // namespace al
-
 class GamaneBullet : public al::LiveActor {
 public:
     GamaneBullet(const char* name, const al::LiveActor* parent);

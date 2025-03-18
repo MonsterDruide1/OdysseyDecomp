@@ -1,11 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
 class ActorInitInfo;
+class LiveActor;
 }
 
 class EnemyCap;

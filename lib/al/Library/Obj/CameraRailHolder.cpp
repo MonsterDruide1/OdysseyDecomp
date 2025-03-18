@@ -5,6 +5,7 @@
 #include "Library/Camera/CameraUtil.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 

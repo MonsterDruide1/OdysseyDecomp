@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
@@ -7,10 +8,10 @@
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
-class LiveActor;
 class ActorInitInfo;
-class SensorMsg;
 class HitSensor;
+class LiveActor;
+class SensorMsg;
 
 class WheelMovement : public NerveExecutor {
 public:

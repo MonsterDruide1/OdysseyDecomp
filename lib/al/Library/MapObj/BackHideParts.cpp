@@ -1,7 +1,10 @@
 #include "Library/MapObj/BackHideParts.h"
 
+#include <basis/seadTypes.h>
+#include <math/seadMathCalcCommon.h>
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraUtil.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

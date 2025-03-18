@@ -1,5 +1,7 @@
 #include "Library/Rail/Rail.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"

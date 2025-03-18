@@ -1,5 +1,7 @@
 #include "Library/Nature/WaterSurfaceFinder.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Nature/NatureUtil.h"
 
 namespace al {

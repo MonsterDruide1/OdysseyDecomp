@@ -1,6 +1,12 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Nerve/NerveStateBase.h"
+
+namespace al {
+class LiveActor;
+}  // namespace al
 
 class EnemyStateWander : public al::ActorStateBase {
 public:

@@ -2,10 +2,9 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/Nerve/Nerve.h"
-#include "Library/Nerve/NerveStateBase.h"
-
 namespace al {
+class Nerve;
+class NerveStateBase;
 
 class NerveStateCtrl {
 public:

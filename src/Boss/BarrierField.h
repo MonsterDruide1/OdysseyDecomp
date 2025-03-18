@@ -2,10 +2,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-class ActorInitInfo;
-}  // namespace al
-
 class BarrierField : public al::LiveActor {
 public:
     BarrierField(const char*);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadMatrix.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {

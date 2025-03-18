@@ -1,11 +1,15 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 
+#include <math/seadMatrix.h>
+#include <prim/seadSafeString.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/Obj/BreakModel.h"
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/DepthShadowModel.h"
@@ -14,6 +18,7 @@
 #include "Library/Obj/PartsModel.h"
 #include "Library/Obj/SilhouetteModel.h"
 #include "Library/Obj/SimpleCircleShadowXZ.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace al {

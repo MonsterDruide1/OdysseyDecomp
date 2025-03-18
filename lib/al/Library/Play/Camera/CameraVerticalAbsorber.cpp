@@ -1,6 +1,7 @@
 #include "Library/Play/Camera/CameraVerticalAbsorber.h"
 
 #include "Library/Camera/CameraPoser.h"
+#include "Library/Camera/CameraPoserFunction.h"
 #include "Library/Camera/CameraStartInfo.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"

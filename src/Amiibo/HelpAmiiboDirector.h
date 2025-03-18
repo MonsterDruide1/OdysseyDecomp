@@ -8,9 +8,6 @@
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
-struct NfpInfo;
-
-class ActorInitInfo;
 class AudioDirector;
 class AudioKeeper;
 class IUseSceneObjHolder;
@@ -19,11 +16,12 @@ class LayoutInitInfo;
 class NerveKeeper;
 class PlayerHolder;
 class SimpleLayoutAppearWaitEnd;
+struct NfpInfo;
 }  // namespace al
 
-class ProjectNfpDirector;
 class HelpAmiiboCoinCollect;
 class HelpAmiiboExecutor;
+class ProjectNfpDirector;
 
 class HelpAmiiboDirector : public al::IUseHioNode,
                            public al::ISceneObj,

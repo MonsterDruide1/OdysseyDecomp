@@ -3,6 +3,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class ActorInitInfo;
 
 class ModelDrawParts : public LiveActor {
 public:

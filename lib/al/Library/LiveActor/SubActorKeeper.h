@@ -72,8 +72,8 @@ private:                                                                        
     s32 m_value;
 
 namespace al {
-class LiveActor;
 class ActorInitInfo;
+class LiveActor;
 
 struct SubActorSync {
     enum Enum {

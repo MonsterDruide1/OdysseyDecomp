@@ -1,12 +1,16 @@
 #pragma once
 
-#include <heap/seadHeap.h>
+#include <basis/seadTypes.h>
+
+namespace sead {
+class Heap;
+}  // namespace sead
 
 namespace al {
 class FileLoader;
+class MemorySystem;
 class ResourceSystem;
 class SaveDataDirector;
-class MemorySystem;
 
 class SystemKit {
 public:

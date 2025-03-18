@@ -1,6 +1,7 @@
 #include "Library/Nerve/NerveStateCtrl.h"
 
 #include "Library/Nerve/NerveKeeper.h"
+#include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
 

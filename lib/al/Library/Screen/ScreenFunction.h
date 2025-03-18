@@ -1,17 +1,24 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <common/aglRenderBuffer.h>
 #include <container/seadPtrArray.h>
-#include <gfx/seadCamera.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-#include "Library/Camera/IUseCamera.h"
 #include "Library/HostIO/HioNode.h"
 
-namespace al {
+namespace agl {
+class DrawContext;
+class RenderBuffer;
+}  // namespace agl
+namespace sead {
+class Camera;
+class Projection;
+class Viewport;
+}  // namespace sead
 
+namespace al {
+class IUseCamera;
 class SceneCameraInfo;
 class ScreenCapture;
 

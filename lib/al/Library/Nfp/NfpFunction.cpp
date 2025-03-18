@@ -122,11 +122,11 @@ bool isValidRegisterInfo(const NfpInfo& nfpInfo) {
     return false;
 }
 
-void getAmiiboOwnerName(sead::BufferedSafeStringBase<char16>* ownerName, const NfpInfo& nfpInfo) {
+void getAmiiboOwnerName(sead::WBufferedSafeString* ownerName, const NfpInfo& nfpInfo) {
     // Stubbed in game
 }
 
-void getAmiiboNickName(sead::BufferedSafeStringBase<char16>* nickName, const NfpInfo& nfpInfo) {
+void getAmiiboNickName(sead::WBufferedSafeString* nickName, const NfpInfo& nfpInfo) {
     nickName->copy(nfpInfo.nickName);
 }
 

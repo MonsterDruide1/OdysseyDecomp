@@ -1,10 +1,15 @@
 #include "Library/MapObj/SupportFreezeSyncGroupHolder.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Project/LiveActor/SupportFreezeSyncGroup.h"
 
 namespace al {
+class ActorInitInfo;
+class HitSensor;
+
 SupportFreezeSyncGroupHolder::SupportFreezeSyncGroupHolder() : LiveActor("DRC拘束グループ監視") {
     mSupportFreezeSyncGroups = new SupportFreezeSyncGroup*[mSupportFreezeSyncGroupMaxCount];
 

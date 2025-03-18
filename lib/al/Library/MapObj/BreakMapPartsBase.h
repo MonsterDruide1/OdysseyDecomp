@@ -1,8 +1,11 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+class IUseAudioKeeper;
 class MtxConnector;
 
 using JudgeFuncPtr = bool (*)(const SensorMsg* message, HitSensor* other, HitSensor* self);
