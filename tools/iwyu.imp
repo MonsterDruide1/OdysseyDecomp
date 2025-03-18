@@ -2,5 +2,9 @@
     { "include": ["<math/seadVectorFwd.h>", "private", "<math/seadVector.h>", "public"] },
     { "include": ["<nn/types.h>", "private", "<basis/seadTypes.h>", "public"] },
     { "include": ["<string.h>", "private", "<cstring>", "public"] },
+    { "include": ["<stddef.h>", "private", "<cstddef>", "public"] },
+    { "include": ["<ctype.h>", "private", "<cctype>", "public"] },
+    { "include": ["<stdarg.h>", "private", "<cstdarg>", "public"] },
+    { "include": ["<stdio.h>", "private", "<cstdio>", "public"] },
     { "include": ["<math.h>", "private", "<cmath>", "public"] }
 ]
