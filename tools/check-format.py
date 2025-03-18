@@ -19,6 +19,7 @@ project_root = setup.ROOT
 
 issueFound = False
 runAllChecks = False
+runIWYU = False
 fixIWYU = False
 
 def FAIL(message, line, path):
@@ -179,6 +180,8 @@ def common_include_order(c, path, is_header):
 
     order = -1  # -1=none (after initial newline) ; 0=angled (sead, agl, nn, eui) ; 1=al ; 2=game ; -2,-3,-4=newline after respective section (angled, al, game)
     for line in include_lines:
+        line = line.split("//")[0].strip()
+
         if line == "":
             if CHECK(lambda a: order in [0, 1, 2], line,
                      "Unexpected newline in includes! Please re-read the contribution guide and format accordingly.",
@@ -480,6 +483,10 @@ def source_no_nerve_make(c, path):
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
 def common_include_what_you_use(c, path):
+    global runIWYU
+    if not runIWYU:
+        return
+
     # -I to show up with "quotes", -isystem to show up with <angle brackets>
     arguments = [
         "-I"+str(project_root/"src"),
@@ -599,14 +606,20 @@ def main():
                         help="Run all checks even if one of them fails")
     parser.add_argument('--ci', action='store_true',
                         help="Run in CI mode, meant for github actions and other CI platforms")
-    parser.add_argument('--fix-iwyu', action='store_true',
+    parser.add_argument('--fix-iwyu', action='store_true', default=False,
                         help="Fix include-what-you-use errors automatically")
+    parser.add_argument('--iwyu', action='store_true', default=False,
+                        help="Run include-what-you-use checks")
     args = parser.parse_args()
 
     global runAllChecks
     runAllChecks = args.all
     global fixIWYU
+    global runIWYU
+    runIWYU = args.iwyu
     fixIWYU = args.fix_iwyu
+    if fixIWYU:
+        runIWYU = True
 
     global functionData
     functionData = sorted(utils.get_functions(), key=lambda info: info.name)
