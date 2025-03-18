@@ -1,7 +1,6 @@
 #pragma once
 
 namespace al {
-class AudioDirector;
 class BgmDataBase;
 struct BgmUserInfo;
 }  // namespace al

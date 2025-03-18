@@ -1,5 +1,7 @@
 #include "Library/Camera/CameraShaker.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"

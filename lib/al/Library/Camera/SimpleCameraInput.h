@@ -1,5 +1,8 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
 #include "Library/Camera/ICameraInput.h"
 
 namespace al {

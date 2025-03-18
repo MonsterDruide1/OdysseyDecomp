@@ -1,5 +1,7 @@
 #include "Library/Collision/CollisionPartsTriangle.h"
 
+#include <math/seadVectorCalcCommon.h>
+
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/KCollisionServer.h"
 #include "Library/Math/MathUtil.h"

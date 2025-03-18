@@ -1,9 +1,11 @@
 #include "Library/Camera/CameraPoserFix.h"
 
+#include <cmath>
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraPoser.h"
 #include "Library/Camera/CameraPoserFunction.h"
-#include "Library/Camera/CameraStartInfo.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 

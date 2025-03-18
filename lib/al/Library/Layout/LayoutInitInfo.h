@@ -8,6 +8,11 @@ class EffectSystemInfo;
 class AudioDirector;
 class LayoutSystem;
 class LayoutActor;
+class CameraDirector;
+class GamePadSystem;
+class MessageSystem;
+class PadRumbleDirector;
+class SceneObjHolder;
 
 class LayoutInitInfo : public LayoutSceneInfo {
 public:

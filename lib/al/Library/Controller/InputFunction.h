@@ -1,10 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
-
-namespace sead {
-class ControllerBase;
-}
 
 namespace al {
 class IUseCamera;

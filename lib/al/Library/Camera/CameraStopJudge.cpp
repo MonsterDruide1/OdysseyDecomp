@@ -1,7 +1,6 @@
 #include "Library/Camera/CameraStopJudge.h"
 
 #include "Library/Area/AreaObjUtil.h"
-#include "Library/Area/IUseAreaObj.h"
 
 namespace al {
 

@@ -1,5 +1,7 @@
 #include "Library/LiveActor/ActorPoseUtil.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
@@ -7,7 +9,6 @@
 #include "Library/Matrix/MatrixUtil.h"
 
 namespace al {
-class LiveActor;
 
 void initActorPoseT(LiveActor* actor, const sead::Vector3f& trans) {
     actor->initPoseKeeper(new ActorPoseKeeperTRSV());

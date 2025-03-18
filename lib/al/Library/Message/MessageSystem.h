@@ -1,11 +1,13 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <container/seadStrTreeMap.h>
 
 namespace sead {
 class MessageProject;
-}
+class Heap;
+}  // namespace sead
 
 namespace al {
 class MessageProjectEx;

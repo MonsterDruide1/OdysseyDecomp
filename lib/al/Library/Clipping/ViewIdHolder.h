@@ -1,6 +1,6 @@
 #pragma once
 
-#include <container/seadBuffer.h>
+#include <basis/seadTypes.h>
 
 namespace al {
 class PlacementInfo;

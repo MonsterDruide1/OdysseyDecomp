@@ -1,10 +1,7 @@
 #include "Library/Bgm/BgmKeeper.h"
 
 #include "Library/Audio/System/AudioSystemInfo.h"
-#include "Library/Bgm/BgmDirector.h"
 #include "Library/Bgm/BgmFunction.h"
-#include "Library/Bgm/BgmLineFunction.h"
-#include "Library/Resource/Resource.h"
 #include "Project/Bgm/BgmInfo.h"
 
 namespace al {

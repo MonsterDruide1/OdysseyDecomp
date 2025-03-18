@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {

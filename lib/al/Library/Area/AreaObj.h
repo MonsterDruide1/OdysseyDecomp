@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -12,6 +13,8 @@ namespace al {
 class AreaShape;
 class PlacementInfo;
 class AreaInitInfo;
+class SceneObjHolder;
+class StageSwitchKeeper;
 
 class AreaObj : public IUseStageSwitch, public IUseSceneObjHolder, public HioNode {
 public:

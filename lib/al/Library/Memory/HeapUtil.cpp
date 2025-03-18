@@ -1,5 +1,6 @@
 #include "Library/Memory/HeapUtil.h"
 
+#include <heap/seadExpHeap.h>
 #include <heap/seadHeapMgr.h>
 
 #include "Library/File/FileUtil.h"

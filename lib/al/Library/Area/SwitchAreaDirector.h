@@ -9,6 +9,7 @@ class PlayerHolder;
 class CameraDirector;
 class SwitchOnAreaGroup;
 class SwitchKeepOnAreaGroup;
+class AreaObjDirector;
 
 class SwitchAreaDirector : public IUseAreaObj {
 public:

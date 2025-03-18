@@ -1,7 +1,5 @@
 #pragma once
 
-#include <prim/seadSafeString.h>
-
 namespace al {
 class AudioSystemInfo;
 class BgmDirector;

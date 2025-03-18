@@ -1,5 +1,9 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadBoundBox.h>
+#include <math/seadVector.h>
+
 #include "Library/Area/AreaShape.h"
 
 namespace al {

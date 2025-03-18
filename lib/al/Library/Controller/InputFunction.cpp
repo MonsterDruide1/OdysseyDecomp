@@ -1,5 +1,8 @@
 #include "Library/Controller/InputFunction.h"
 
+#include <controller/seadController.h>
+#include <controller/seadControllerBase.h>
+#include <controller/seadControllerDefine.h>
 #include <controller/seadControllerMgr.h>
 
 #include "Library/Controller/PadReplayFunction.h"

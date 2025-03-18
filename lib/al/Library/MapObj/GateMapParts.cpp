@@ -1,10 +1,11 @@
 #include "Library/MapObj/GateMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Audio/System/SimpleAudioUser.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"

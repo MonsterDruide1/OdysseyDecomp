@@ -1,7 +1,12 @@
 #pragma once
 
-#include <gfx/seadCamera.h>
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+
+namespace sead {
+class LookAtCamera;
+class Projection;
+}  // namespace sead
 
 namespace al {
 

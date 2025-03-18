@@ -1,6 +1,8 @@
 #pragma once
 
-#include <heap/seadHeap.h>
+namespace sead {
+class Heap;
+}  // namespace sead
 
 namespace agl {
 class DrawContext;

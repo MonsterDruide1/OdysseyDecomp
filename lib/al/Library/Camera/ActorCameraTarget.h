@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Camera/CameraTargetBase.h"

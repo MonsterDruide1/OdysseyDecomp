@@ -2,6 +2,11 @@
 
 #include "Library/Projection/Projection.h"
 
+namespace sead {
+class LookAtCamera;
+class Projection;
+}  // namespace sead
+
 namespace al {
 
 CameraViewInfo::CameraViewInfo(s32 index, const sead::LookAtCamera& lookAtCam,

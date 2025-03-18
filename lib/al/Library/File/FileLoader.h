@@ -1,11 +1,13 @@
 #pragma once
 
-#include <prim/seadSafeString.hpp>
+#include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 #include <thread/seadCriticalSection.h>
 
 namespace sead {
 class FileDevice;
 class Resource;
+class Heap;
 }  // namespace sead
 
 namespace al {

@@ -1,16 +1,18 @@
 #pragma once
 
-#include <gfx/seadCamera.h>
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Collision/IUseCollision.h"
 #include "Library/Nerve/NerveExecutor.h"
 
+namespace sead {
+class LookAtCamera;
+}  // namespace sead
+
 namespace al {
-class CameraPoser;
 class CollisionDirector;
 class CollisionParts;
-class LookAtCamera;
 
 class CameraArrowCollider : public NerveExecutor, public IUseCollision {
 public:

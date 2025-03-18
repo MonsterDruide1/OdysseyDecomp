@@ -1,16 +1,15 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
-#include <prim/seadRuntimeTypeInfo.h>
 
 namespace al {
 
 class SensorMsg;
 class LiveActor;
 class HitSensor;
-class SensorMsg;
 class ActorInitInfo;
 class SensorSortCmpFuncBase;
 class ActorSensorController;
