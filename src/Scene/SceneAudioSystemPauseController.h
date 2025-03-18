@@ -10,7 +10,7 @@ class SceneAudioSystemPauseController {
 public:
     SceneAudioSystemPauseController(al::AudioDirector*);
     void update();
-    bool tryResume();
+    void tryResume();
     void pause(bool);
     void resume(s32);
 

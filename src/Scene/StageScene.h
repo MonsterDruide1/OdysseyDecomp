@@ -9,7 +9,7 @@
 namespace al {
 class LayoutActor;
 }
-class DemoShine;
+class Shine;
 class GameDataHolder;
 class MapLayout;
 class ProjectItemDirector;
@@ -95,6 +95,6 @@ void requestGraphicsPresetAndCubeMapPause(const al::Scene*);
 void requestGraphicsPresetAndCubeMapPauseNoFixedAngle(const al::Scene*);
 void calcQuatPoseCheckpointWarpCap(sead::Quatf*, const sead::Vector3f&, const al::IUseCamera*);
 ProjectDemoDirector* getDemoDirector(const al::Scene*);
-DemoShine* getDemoShineActor(const al::Scene*);
+Shine* getDemoShineActor(const al::Scene*);
 bool isExistDemoShine(const al::Scene*);
 }  // namespace rs
