@@ -609,7 +609,7 @@ def main():
     global runIWYU
     runIWYU = args.iwyu
     fixIWYU = args.fix_iwyu
-    if fixIWYU:
+    if fixIWYU or args.ci:
         runIWYU = True
 
     global functionData
