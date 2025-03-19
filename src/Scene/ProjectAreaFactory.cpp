@@ -1,6 +1,8 @@
 #include "Scene/ProjectAreaFactory.h"
 
-#include "Library/Area/CreateAreaObjFunction.h"
+// TODO remove pragma once it is used
+#include "Library/Area/CreateAreaObjFunction.h" // IWYU pragma: keep
+#include "Library/Factory/Factory.h"
 
 const al::AreaGroupInfo sAreaGroupInfos[] = {{"GraphicsArea", 1}};
 

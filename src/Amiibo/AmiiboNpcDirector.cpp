@@ -19,6 +19,7 @@
 #include "Layout/ShopLayoutInfo.h"
 #include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
+#include "System/GameDataHolderAccessor.h"
 #include "System/ProjectNfpDirector.h"
 #include "Util/AmiiboUtil.h"
 #include "Util/ClothUtil.h"

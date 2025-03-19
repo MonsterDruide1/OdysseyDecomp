@@ -4,6 +4,10 @@
 
 #include "Library/HostIO/HioNode.h"
 
+namespace sead {
+class Heap;
+}  // namespace sead
+
 namespace al {
 
 class ShaderHolder : public HioNode {

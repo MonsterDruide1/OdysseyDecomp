@@ -1,6 +1,7 @@
 #include "Project/Rail/BezierCurve.h"
 
 #include <math/seadMathCalcCommon.h>
+#include <algorithm>
 #include <cmath>
 
 namespace al {

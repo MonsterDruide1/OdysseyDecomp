@@ -32,7 +32,7 @@ bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& tra
     if (mBaseMtxPtr)
         calcMtxLocalTrans(localPos, *mBaseMtxPtr, trans);
     else
-        localPos->e = trans.e;
+        localPos->set(trans);
 
     f32 localX = localPos->x;
     localPos->x = localX / mScale.x;
@@ -86,7 +86,7 @@ void AreaShape::calcTrans(sead::Vector3f* trans) const {
     if (mBaseMtxPtr)
         mBaseMtxPtr->getTranslation(*trans);
     else
-        trans->e = sead::Vector3f::zero.e;
+        trans->set(sead::Vector3f::zero);
 }
 
 template <typename T>
