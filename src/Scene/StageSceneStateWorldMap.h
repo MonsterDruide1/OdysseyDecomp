@@ -9,6 +9,7 @@ class StageSceneStateCollectionList;
 class TalkMessage;
 class WorldMapParts;
 class WorldMapRoute;
+
 namespace sead {
 class PtrArrayImpl;
 }  // namespace sead

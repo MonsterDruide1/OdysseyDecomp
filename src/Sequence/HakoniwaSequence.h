@@ -18,6 +18,7 @@ class HakoniwaStateSimpleDemo;
 class LoadLayoutCtrl;
 class TimeBalloonSequenceInfo;
 class WorldResourceLoader;
+
 namespace sead {
 class Heap;
 }  // namespace sead

@@ -8,7 +8,7 @@
 namespace al {
 struct ActorInitInfo;
 class LiveActor;
-}
+}  // namespace al
 
 class EnemyCap;
 

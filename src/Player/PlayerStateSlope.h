@@ -9,6 +9,7 @@ class PlayerActionSlopeSlideControl;
 class PlayerAnimator;
 class PlayerConst;
 class PlayerInput;
+
 namespace al {
 class LiveActor;
 }  // namespace al

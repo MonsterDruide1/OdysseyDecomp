@@ -7,4 +7,4 @@ class Resource;
 
 Resource* findOrCreateResource(const sead::SafeString&, const char*);
 
-}
+}  // namespace al

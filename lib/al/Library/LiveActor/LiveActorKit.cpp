@@ -90,8 +90,10 @@ void LiveActorKit::init(s32 maxCameras) {
     mExecuteDirector->init(info);
 
     mModelDrawBufferUpdater = new ModelDrawBufferUpdater(mExecuteDirector);
-    mExecutorCore1 = new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア1)", sead::CoreId::cSub1);
-    mExecutorCore2 = new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア2)", sead::CoreId::cSub2);
+    mExecutorCore1 =
+        new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア1)", sead::CoreId::cSub1);
+    mExecutorCore2 =
+        new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア2)", sead::CoreId::cSub2);
     mAreaObjDirector = new AreaObjDirector();
     mCollisionDirector = new CollisionDirector(mExecuteDirector);
     mCameraDirector = new CameraDirector(maxCameras);

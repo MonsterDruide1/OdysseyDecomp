@@ -1,8 +1,8 @@
 #include "Project/Rail/BezierCurve.h"
 
-#include <math/seadMathCalcCommon.h>
 #include <algorithm>
 #include <cmath>
+#include <math/seadMathCalcCommon.h>
 
 namespace al {
 

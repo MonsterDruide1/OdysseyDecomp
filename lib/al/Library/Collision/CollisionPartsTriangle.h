@@ -4,7 +4,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
-#include <prim/seadStorageFor.h> // IWYU pragma: export 
+#include <prim/seadStorageFor.h>  // IWYU pragma: export
 
 namespace al {
 class Triangle;

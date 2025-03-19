@@ -7,7 +7,7 @@
 namespace agl {
 class DrawContext;
 class IndexStream;
-}
+}  // namespace agl
 
 namespace al {
 class MeshQuadtree;

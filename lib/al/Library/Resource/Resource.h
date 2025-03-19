@@ -2,6 +2,10 @@
 
 #include <prim/seadSafeString.h>
 
+namespace nn::g3d {
+class ResFile;
+}  // namespace nn::g3d
+
 namespace sead {
 class ArchiveFileDevice;
 class ArchiveRes;

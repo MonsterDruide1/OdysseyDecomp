@@ -4,7 +4,8 @@
 #include <math/seadVector.h>
 
 namespace sead {
-template <typename T> class ObjArray;
+template <typename T>
+class ObjArray;
 }  // namespace sead
 
 namespace al {

@@ -1,11 +1,11 @@
 #pragma once
 
-#include <prim/seadStorageFor.h> // IWYU pragma: export keep
+#include <prim/seadStorageFor.h>  // IWYU pragma: export keep
 
-#include "Library/Base/Macros.h" // IWYU pragma: export keep
-#include "Library/Nerve/Nerve.h" // IWYU pragma: export keep
-#include "Library/Nerve/NerveAction.h" // IWYU pragma: export keep
-#include "Library/Nerve/NerveKeeper.h" // IWYU pragma: export keep
+#include "Library/Base/Macros.h"        // IWYU pragma: export keep
+#include "Library/Nerve/Nerve.h"        // IWYU pragma: export keep
+#include "Library/Nerve/NerveAction.h"  // IWYU pragma: export keep
+#include "Library/Nerve/NerveKeeper.h"  // IWYU pragma: export keep
 
 /*
 

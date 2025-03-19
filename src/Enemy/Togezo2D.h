@@ -8,6 +8,7 @@
 #include "Util/IUseDimension.h"
 
 class ActorDimensionKeeper;
+
 namespace al {
 class HitSensor;
 }  // namespace al

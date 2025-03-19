@@ -10,7 +10,8 @@ class HitSensor;
 class IUseMessageSystem;
 class LiveActor;
 struct SklAnimRetargettingInfo;
-template <s32 L> class StringTmp;
+template <s32 L>
+class StringTmp;
 }  // namespace al
 
 class CapTargetInfo;
