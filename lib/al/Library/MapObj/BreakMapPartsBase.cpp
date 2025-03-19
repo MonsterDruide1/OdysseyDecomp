@@ -8,7 +8,6 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"

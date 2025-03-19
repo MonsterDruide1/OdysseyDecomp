@@ -511,8 +511,6 @@ def common_include_what_you_use(c, path):
         "-Xiwyu", "--error",
         #"-Xiwyu", "--verbose=10",
     ]
-    if not "Factory" in path:
-        return
     iwyu = subprocess.run(["/home/monsterdruide1/include-what-you-use/build/bin/include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if iwyu.returncode != 0:
         global fixIWYU
@@ -523,8 +521,7 @@ def common_include_what_you_use(c, path):
         # Fix IWYU errors
         fixed = iwyu.stderr
         fix = subprocess.run(["echo '"+fixed+"' | python tools/fix_includes.py --nosafe_headers --reorder --separate_project_includes Library --separate_project_includes Project"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        print(fix.stdout)
-        print(fix.stderr)
+        FAIL("include-what-you-use reported errors! Fixed automatically.\n"+fix.stdout+"\n"+fix.stderr, -1, path)
 
 # -----
 # UTILS

@@ -1,8 +1,9 @@
 #include "Layout/MenuSelectParts.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/Controller/KeyRepeatCtrl.h"
-#include "Library/Controller/PadRumbleDirector.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutActor.h"

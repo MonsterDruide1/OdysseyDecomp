@@ -1,5 +1,7 @@
 #include "Library/Execute/ExecuteUtil.h"
 
+#include <basis/seadTypes.h>
+
 #include "Library/Execute/ActorExecuteInfo.h"
 #include "Library/Execute/ExecuteDirector.h"
 #include "Library/Execute/ExecuteRequestKeeper.h"
