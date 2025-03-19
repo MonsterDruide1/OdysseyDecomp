@@ -1,33 +1,46 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
+#include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 
-#include "System/GameDataHolder.h"
-#include "System/GameDataHolderAccessor.h"
-#include "System/GameDataHolderWriter.h"
+#include "System/GameDataHolderAccessor.h" // IWYU pragma: keep
+#include "System/GameDataHolderWriter.h" // IWYU pragma: keep
 
-struct BindInfo;
 class ChangeStageInfo;
-class ScenarioStartCamera;
-struct ShineInfo;
-class Shine;
-class RiseMapPartsHolder;
-class QuestInfo;
-class WorldTravelingNpc;
-class HackObjInfo;
 class CollectBgm;
+class GameDataFile;
+class GameDataHolder;
+class HackObjInfo;
+class QuestInfo;
+class RiseMapPartsHolder;
+class ScenarioStartCamera;
+class Shine;
+class WorldTravelingNpc;
+struct BindInfo;
+struct ShineInfo;
+
+namespace sead {
+template <typename T> class PtrArray;
+}  // namespace sead
 
 namespace nn::g3d {
 class ResFile;
 }
 
 namespace al {
+class ActorInitInfo;
 class CameraTicket;
 class GameDataHolderBase;
+class IUseMessageSystem;
+class IUseSceneObjHolder;
 class LayoutActor;
+class LiveActor;
 class PlacementId;
 class PlacementInfo;
 class Scene;
+class SceneObjHolder;
 }  // namespace al
 
 namespace ShopItem {
@@ -144,8 +157,8 @@ ShineInfo* getLatestGetShineInfo(GameDataHolderAccessor accessor);
 s32 getCurrentShineNum(GameDataHolderAccessor accessor);
 s32 getTotalShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
 s32 getTotalShopShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
-bool tryGetNextMainScenarioLabel(sead::BufferedSafeStringBase<char>* scenarioName,
-                                 sead::BufferedSafeStringBase<char>* stageName,
+bool tryGetNextMainScenarioLabel(sead::BufferedSafeString* scenarioName,
+                                 sead::BufferedSafeString* stageName,
                                  const al::IUseSceneObjHolder* holder);
 s32 getMainScenarioNumMax(GameDataHolderAccessor accessor);
 void setMainScenarioNo(GameDataHolderWriter writer, s32 worldId);
@@ -329,7 +342,7 @@ bool checkEnableUnlockWorldSpecial2(const al::LiveActor* actor);
 const char16* tryGetWorldNameByFileId(const al::LayoutActor* layout, s32 fileId);
 bool isNewSaveDataByFileId(const al::LayoutActor*, s32 fileId);
 u64 getLastUpdateFileTime(const al::LayoutActor*, s32 fileId);
-void makeTextureSaveDataFileName(sead::BufferedSafeStringBase<char>* fileName,
+void makeTextureSaveDataFileName(sead::BufferedSafeString* fileName,
                                  const nn::g3d::ResFile* textureSaveData,
                                  const GameDataHolder* holder, s32 fileId);
 s32 getWorldIndexPeach();

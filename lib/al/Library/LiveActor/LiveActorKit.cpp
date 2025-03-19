@@ -1,5 +1,7 @@
 #include "Library/LiveActor/LiveActorKit.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/Area/AreaObjDirector.h"
 #include "Library/Area/SwitchAreaDirector.h"
 #include "Library/Camera/CameraDirector.h"
@@ -10,6 +12,7 @@
 #include "Library/Execute/ExecuteDirector.h"
 #include "Library/Execute/ExecuteSystemInitInfo.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
+#include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Model/ModelDisplayListController.h"
 #include "Library/Model/ModelDrawBufferUpdater.h"
@@ -30,6 +33,7 @@
 #include "Project/HitSensor/HitSensorDirector.h"
 
 namespace al {
+class AreaObjGroup;
 
 LiveActorKit::LiveActorKit(s32 maxActors, s32 maxPlayers) : mMaxActors(maxActors) {
     mLiveActorGroupAllActors = new LiveActorGroup("全てのアクター", maxActors);

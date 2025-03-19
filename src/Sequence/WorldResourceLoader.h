@@ -2,9 +2,8 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/Thread/AsyncFunctorThread.h"
-
 class GameDataHolder;
+
 namespace al {
 class AsyncFunctorThread;
 class Resource;

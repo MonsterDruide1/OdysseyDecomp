@@ -3,6 +3,7 @@
 #include "Library/Bgm/BgmLineFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+#include "Library/Scene/Scene.h"
 #include "Library/Scene/SceneUtil.h"
 
 #include "Layout/StageSceneLayout.h"

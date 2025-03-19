@@ -12,10 +12,9 @@ class ResFile;
 }
 
 namespace al {
+class ActorInitResourceData;
 class InitResourceDataAction;
 class InitResourceDataAnim;
-struct ActionAnimCtrlInfo;
-class ActorInitResourceData;
 
 class Resource {
 public:

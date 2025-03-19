@@ -1,8 +1,10 @@
 #include "Amiibo/AmiiboNpcDirector.h"
 
+#include <container/seadPtrArray.h>
 #include <time/seadDateTime.h>
 
 #include "Library/Audio/System/AudioKeeper.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Message/MessageHolder.h"
@@ -20,6 +22,10 @@
 #include "Util/AmiiboUtil.h"
 #include "Util/ClothUtil.h"
 #include "Util/TimeUtil.h"
+
+namespace al {
+class LayoutInitInfo;
+}  // namespace al
 
 AmiiboNpcDirector::AmiiboNpcDirector() : mNfpInfo(new al::NfpInfo()) {
     for (s32 i = 0; i < 3; i++)

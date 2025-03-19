@@ -1,5 +1,7 @@
 #include "Util/ExternalForceKeeper.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Util/SensorMsgFunction.h"
 
 ExternalForceKeeper::ExternalForceKeeper() {}

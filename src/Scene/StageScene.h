@@ -4,7 +4,11 @@
 
 #include "Library/Scene/Scene.h"
 
-#include "Layout/StageSceneLayout.h"
+class GameDataHolderAccessor;
+class StageSceneLayout;
+namespace al {
+class LiveActor;
+}  // namespace al
 
 namespace al {
 class LayoutActor;

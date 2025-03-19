@@ -1,5 +1,8 @@
 #include "Project/Rail/BezierCurve.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <cmath>
+
 namespace al {
 
 BezierCurve::BezierCurve() = default;

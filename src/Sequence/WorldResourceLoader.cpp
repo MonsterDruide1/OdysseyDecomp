@@ -1,11 +1,14 @@
 #include "Sequence/WorldResourceLoader.h"
 
+#include <heap/seadFrameHeap.h>
 #include <thread/seadThread.h>
 
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
 #include "Library/Resource/ResourceHolder.h"
+#include "Library/Thread/AsyncFunctorThread.h"
+#include "Library/Thread/FunctorV0M.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
