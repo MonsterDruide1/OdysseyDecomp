@@ -1,5 +1,8 @@
 #include "Library/Obj/PartsModel.h"
 
+#include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
@@ -11,6 +14,7 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace al {

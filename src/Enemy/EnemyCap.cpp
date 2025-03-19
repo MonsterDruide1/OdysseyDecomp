@@ -1,6 +1,8 @@
 #include "Enemy/EnemyCap.h"
 
+#include <math/seadMathCalcCommon.h>
 #include <math/seadMatrix.h>
+#include <cmath>
 
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -20,6 +22,7 @@
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace {

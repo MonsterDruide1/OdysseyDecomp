@@ -8,6 +8,8 @@
 #include "Library/Placement/PlacementFunction.h"
 
 namespace al {
+class ModelKeeper;
+
 SubActorLodExecutor::SubActorLodExecutor(LiveActor* actor, const ActorInitInfo& info,
                                          s32 subActorInfoIndex)
     : mActor(actor), mSubActorInfoIndex(subActorInfoIndex) {

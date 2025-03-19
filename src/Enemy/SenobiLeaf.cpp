@@ -1,11 +1,11 @@
 #include "Enemy/SenobiLeaf.h"
 
 #include <math/seadMathCalcCommon.h>
+#include <math/seadQuat.h>
 
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
