@@ -1,7 +1,7 @@
 #include "Scene/ProjectEventFlowNodeFactory.h"
 
 // TODO remove pragma once it is used
-#include "Library/Event/CreateEventFlowNode.h" // IWYU pragma: keep
+#include "Library/Event/CreateEventFlowNode.h"  // IWYU pragma: keep
 #include "Library/Factory/Factory.h"
 
 const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeFactoryEntries[] = {

@@ -5,8 +5,8 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
-#include "System/GameDataHolderAccessor.h" // IWYU pragma: keep
-#include "System/GameDataHolderWriter.h" // IWYU pragma: keep
+#include "System/GameDataHolderAccessor.h"  // IWYU pragma: keep
+#include "System/GameDataHolderWriter.h"    // IWYU pragma: keep
 
 class ChangeStageInfo;
 class CollectBgm;
@@ -22,7 +22,8 @@ struct BindInfo;
 struct ShineInfo;
 
 namespace sead {
-template <typename T> class PtrArray;
+template <typename T>
+class PtrArray;
 }  // namespace sead
 
 namespace nn::g3d {

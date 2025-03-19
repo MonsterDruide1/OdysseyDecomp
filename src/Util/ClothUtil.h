@@ -3,8 +3,10 @@
 #include <basis/seadTypes.h>
 
 class GameDataHolderAccessor;
+
 namespace sead {
-template <typename T> class PtrArray;
+template <typename T>
+class PtrArray;
 }  // namespace sead
 
 namespace al {

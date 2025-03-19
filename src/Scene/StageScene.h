@@ -4,6 +4,7 @@
 
 class GameDataHolderAccessor;
 class StageSceneLayout;
+
 namespace al {
 class LiveActor;
 }  // namespace al

@@ -5,7 +5,7 @@
 
 namespace nn::g3d {
 class ResFile;
-}  // namespace nn
+}  // namespace nn::g3d
 
 namespace sead {
 class ArchiveFileDevice;

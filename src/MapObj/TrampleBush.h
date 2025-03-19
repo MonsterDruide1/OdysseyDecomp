@@ -5,6 +5,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 class ItemGenerator;
+
 namespace al {
 class HitSensor;
 class SensorMsg;

@@ -19,7 +19,7 @@ class UniformBlock;
 namespace nn::gfx {
 class DescriptorSlot;
 class ResTexture;
-}
+}  // namespace nn::gfx
 
 namespace al {
 class LayoutTextureRenderObj;

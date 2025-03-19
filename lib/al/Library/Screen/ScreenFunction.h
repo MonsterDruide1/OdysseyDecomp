@@ -11,6 +11,7 @@ namespace agl {
 class DrawContext;
 class RenderBuffer;
 }  // namespace agl
+
 namespace sead {
 class Camera;
 class Projection;

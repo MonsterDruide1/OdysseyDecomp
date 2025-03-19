@@ -1,8 +1,8 @@
 #include "Library/Placement/PlacementFunction.h"
 
+#include <cmath>
 #include <math/seadMathCalcCommon.h>
 #include <math/seadMathNumbers.h>
-#include <cmath>
 
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Base/StringUtil.h"

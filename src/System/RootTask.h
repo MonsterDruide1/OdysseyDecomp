@@ -3,9 +3,11 @@
 #include <framework/seadTask.h>
 
 class GameSystem;
+
 namespace sead {
 class DrawContext;
 struct TaskConstructArg;
+
 namespace hostio {
 class Node;
 }  // namespace hostio

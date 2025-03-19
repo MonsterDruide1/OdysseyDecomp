@@ -8,6 +8,7 @@ namespace al {
 class AsyncFunctorThread;
 class Resource;
 }  // namespace al
+
 namespace sead {
 class FrameHeap;
 class Heap;

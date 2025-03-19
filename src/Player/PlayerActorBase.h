@@ -12,7 +12,7 @@ class ActorInitInfo;
 class DemoActor;
 class HitSensor;
 class SensorMsg;
-}
+}  // namespace al
 
 class IUsePlayerCollision;
 class PlayerAnimator;
