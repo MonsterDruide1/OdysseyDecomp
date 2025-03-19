@@ -98,18 +98,8 @@ void generateKuribos(KuriboMini** kuriboMiniArray, s32 kuriboMiniCount, al::Live
         al::makeQuatFrontUp(&quat, frontDir, v);
         al::updatePoseQuat(kuriboMiniArray[i], quat);
 
-        /*
-        f32 v13 = ((quat.y * 150.0f) - (quat.z * 0.0f)) + (quat.w * 0.0f);
-        f32 v14 = (quat.w * 0.0f) + ((quat.z * 0.0f) - (quat.x * 150.0f));
-        f32 v15 = (quat.w * 150.0f) + ((quat.x * 0.0f) - (quat.y * 0.0f));
-        f32 v16 = (-(quat.x * 0.0f) - (quat.y * 0.0f)) - (quat.z * 150.0f);
-        sead::Vector3f pos;
-        pos.x = ((quat.y * v15) + ((quat.w * v13) - (quat.z * v14))) - (quat.x * v16);
-        pos.y = (((quat.z * v13) + (quat.w * v14)) - (quat.x * v15)) - (quat.y * v16);
-        pos.z = ((quat.w * v15) + ((quat.x * v14) - (quat.y * v13))) - (quat.z * v16);
-        */
-        sead::Vector3f pos;
-        sead::Vector3CalcCommon<f32>::rotate(pos, quat, sead::Vector3f(0.0f, 150.0f, 0.0f));
+        sead::Vector3f pos = sead::Vector3f(0.0f, 0.0f, 150.0f);
+        pos.rotate(quat);
 
         al::setTrans(kuriboMiniArray[i], al::getTrans(creator) - pos);
         kuriboMiniArray[i]->appearPopBack();
