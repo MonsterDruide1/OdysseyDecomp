@@ -1,18 +1,20 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <container/seadPtrArray.h>
 
-#include "System/GameDataHolderAccessor.h"
+class GameDataHolderAccessor;
+namespace sead {
+template <typename T> class PtrArray;
+}  // namespace sead
 
 namespace al {
-class IUseSceneObjHolder;
 class IUseMessageSystem;
+class IUseSceneObjHolder;
 }  // namespace al
 
 namespace ShopItem {
-struct ItemInfo;
 enum class ItemType : u32;
+struct ItemInfo;
 struct ShopItemInfo;
 }  // namespace ShopItem
 

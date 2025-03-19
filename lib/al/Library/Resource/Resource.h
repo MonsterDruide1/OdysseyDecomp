@@ -1,16 +1,22 @@
 #pragma once
 
-#include <filedevice/seadArchiveFileDevice.h>
-#include <filedevice/seadFileDevice.h>
-#include <nn/g3d/ResFile.h>
-#include <resource/seadArchiveRes.h>
-#include <resource/seadResource.h>
+#include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
+
+namespace nn::g3d {
+class ResFile;
+}  // namespace nn
+
+namespace sead {
+class ArchiveFileDevice;
+class ArchiveRes;
+class Heap;
+}  // namespace sead
 
 namespace al {
+class ActorInitResourceData;
 class InitResourceDataAction;
 class InitResourceDataAnim;
-struct ActionAnimCtrlInfo;
-class ActorInitResourceData;
 
 class Resource {
 public:

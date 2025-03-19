@@ -1,5 +1,6 @@
 #include "Scene/ProjectAppearSwitchFactory.h"
 
+#include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/FallMapParts.h"
 #include "Library/MapObj/FixMapParts.h"

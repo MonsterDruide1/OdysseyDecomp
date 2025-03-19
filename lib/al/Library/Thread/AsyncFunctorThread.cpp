@@ -1,5 +1,6 @@
 #include "Library/Thread/AsyncFunctorThread.h"
 
+#include <mc/seadCoreInfo.h>
 #include <prim/seadDelegate.h>
 #include <thread/seadDelegateThread.h>
 #include <thread/seadMessageQueue.h>

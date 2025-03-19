@@ -1,9 +1,12 @@
 #include "Library/MapObj/RollingCubeMapParts.h"
 
+#include <math/seadBoundBox.h>
+#include <math/seadMathCalcCommon.h>
+#include <prim/seadSafeString.h>
+
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

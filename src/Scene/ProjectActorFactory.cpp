@@ -1,5 +1,6 @@
 #include "Scene/ProjectActorFactory.h"
 
+#include "Library/Factory/Factory.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
 #include "Library/MapObj/ClockMapParts.h"

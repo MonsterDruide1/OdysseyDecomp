@@ -2,9 +2,9 @@
 
 #include <basis/seadTypes.h>
 #include <stream/seadStream.h>
+#include <cstring>
 
 #include "Library/Yaml/ByamlHeader.h"
-#include "Library/Yaml/ByamlUtil.h"
 
 namespace al {
 

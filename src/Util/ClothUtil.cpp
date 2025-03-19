@@ -1,6 +1,7 @@
 #include "Util/ClothUtil.h"
 
 #include "System/GameDataHolder.h"
+#include "System/GameDataHolderAccessor.h"
 
 const sead::PtrArray<ShopItem::ItemInfo>& rs::getClothList(GameDataHolderAccessor accessor) {
     return accessor->getClothList();

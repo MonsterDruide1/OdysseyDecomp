@@ -1,14 +1,15 @@
+#include <basis/seadTypes.h>
 #include <heap/seadHeapMgr.h>
 #include <nn/init.h>
-#include <nn/mem.h>
 #include <nn/oe.h>
+#include <nn/os.h>
 
 #include "System/Application.h"
 #include "System/ApplicationFunction.h"
 
 extern "C" void nninitStartup() {
-    uintptr_t allocatorHeap;
-    uintptr_t recordingHeap;
+    u64 allocatorHeap;
+    u64 recordingHeap;
 
     nn::os::SetMemoryHeapSize(0xc8000000);
     nn::os::AllocateMemoryBlock(&allocatorHeap, 0x2400000);
