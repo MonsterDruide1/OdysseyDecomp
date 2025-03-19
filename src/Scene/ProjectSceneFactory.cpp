@@ -1,6 +1,8 @@
 #include "Scene/ProjectSceneFactory.h"
 
-#include "Library/Scene/CreateSceneFunc.h"
+#include "Library/Factory/Factory.h"
+// TODO remove pragma once it is used
+#include "Library/Scene/CreateSceneFunc.h"  // IWYU pragma: keep
 
 #include "Scene/TitleMenuScene.h"
 

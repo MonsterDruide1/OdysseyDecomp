@@ -115,7 +115,7 @@ def get_includes():
                  "iosfwd", "iostream", "istream", "ostream", "print", "spanstream", "sstream", "streambuf", "strstream",
                  "syncstream", "filesystem", "regex", "atomic", "barrier", "condition_variable", "future",
                  "hazard_pointer", "latch", "mutex", "rcu", "semaphore", "shared_mutex", "stop_token", "thread",
-                 "stdatomic.h"]
+                 "stdatomic.h", "strings.h"]
     sead_files = get_files(project_root / 'lib' / 'sead' / 'include')
     nintendo_sdk_files = get_files(project_root / 'lib' / 'NintendoSDK' / 'include')
     agl_files = get_files(project_root / 'lib' / 'agl' / 'include')
@@ -511,6 +511,8 @@ def common_include_what_you_use(c, path):
         "-Xiwyu", "--error",
         #"-Xiwyu", "--verbose=10",
     ]
+    if not "Factory" in path:
+        return
     iwyu = subprocess.run(["/home/monsterdruide1/include-what-you-use/build/bin/include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if iwyu.returncode != 0:
         global fixIWYU

@@ -1,6 +1,7 @@
 #include "Library/LiveActor/LiveActorKit.h"
 
 #include <basis/seadNew.h>
+#include <mc/seadCoreInfo.h>
 
 #include "Library/Area/AreaObjDirector.h"
 #include "Library/Area/SwitchAreaDirector.h"
@@ -89,8 +90,8 @@ void LiveActorKit::init(s32 maxCameras) {
     mExecuteDirector->init(info);
 
     mModelDrawBufferUpdater = new ModelDrawBufferUpdater(mExecuteDirector);
-    mExecutorCore1 = new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア1)", 1);
-    mExecutorCore2 = new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア2)", 2);
+    mExecutorCore1 = new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア1)", sead::CoreId::cSub1);
+    mExecutorCore2 = new ExecuteAsyncExecutorUpdate(mExecuteDirector, "ビュー更新(コア2)", sead::CoreId::cSub2);
     mAreaObjDirector = new AreaObjDirector();
     mCollisionDirector = new CollisionDirector(mExecuteDirector);
     mCameraDirector = new CameraDirector(maxCameras);

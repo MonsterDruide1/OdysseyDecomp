@@ -1,6 +1,8 @@
 #include "Scene/ProjectCameraPoserFactory.h"
 
-#include "Library/Camera/CreateCameraPoserFunction.h"
+// TODO remove pragma once it is used
+#include "Library/Camera/CreateCameraPoserFunction.h" // IWYU pragma: keep
+#include "Library/Factory/Factory.h"
 
 const al::NameToCreator<al::CameraPoserCreatorFunction> sProjectCameraPoserFactoryEntries1[] = {
     /* CameraPoserFollowLimit */ {"制限付きフォロー", nullptr},

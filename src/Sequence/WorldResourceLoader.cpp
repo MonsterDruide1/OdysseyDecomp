@@ -1,6 +1,9 @@
 #include "Sequence/WorldResourceLoader.h"
 
 #include <heap/seadFrameHeap.h>
+#include <heap/seadHeap.h>
+#include <mc/seadCoreInfo.h>
+#include <nn/os.h>
 #include <thread/seadThread.h>
 
 #include "Library/Base/StringUtil.h"
