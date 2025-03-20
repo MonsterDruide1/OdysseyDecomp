@@ -20,7 +20,7 @@ namespace al {
 
 class GpuPerf;
 
-class GameFrameworkNx : public sead::GameFrameworkNx, public al::HioNode {
+class GameFrameworkNx : public sead::GameFrameworkNx, public HioNode {
     SEAD_RTTI_OVERRIDE(GameFrameworkNx, sead::GameFrameworkNx);
 
 public:
@@ -30,15 +30,16 @@ public:
     void createHostIOMgr(sead::TaskBase* base, sead::HostIOMgr::Parameter* hostioParam,
                          sead::Heap* heap) override;
     void createInfLoopChecker(sead::TaskBase* base, const sead::TickSpan&, s32) override;
-    void procFrame_() override;
-    void procDraw_() override;
-    void present_() override;
 
     void clearFrameBuffer();
     void initAgl(sead::Heap* heap, s32 virtWidth, s32 virtHeight, s32 dockedWidth, s32 dockedHeight,
                  s32 handheldWidth, s32 handheldHeight);
 
 private:
+    void procFrame_() override;
+    void procDraw_() override;
+    void present_() override;
+
     agl::DrawContext* mDrawContext;
     agl::RenderBuffer* mDockedRenderBuffer;
     agl::RenderTargetColor* mDockedClearColor;
