@@ -5,6 +5,8 @@
 
 #include "Library/Scene/ISceneObj.h"
 
+#include "Scene/SceneObjFactory.h"
+
 namespace al {
 class IUseSceneObjHolder;
 }  // namespace al
@@ -15,6 +17,8 @@ class CoinCollectHintObj;
 
 class CoinCollectHolder : public al::ISceneObj {
 public:
+    static constexpr s32 sSceneObjId = SceneObjID_CoinCollectHolder;
+
     CoinCollectHolder();
 
     const char* getSceneObjName() const override;

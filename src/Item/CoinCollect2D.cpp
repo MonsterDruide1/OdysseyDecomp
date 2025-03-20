@@ -18,7 +18,6 @@
 #include "Item/CoinCollectHolder.h"
 #include "Item/CoinCollectWatcher.h"
 #include "MapObj/CapMessageShowInfo.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "Util/ActorDimensionKeeper.h"
 #include "Util/ActorDimensionUtil.h"
@@ -39,16 +38,14 @@ void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
     al::initActorSceneInfo(this, initInfo);
     rs::createCoinCollectWatcher(this);
     rs::createCoinCollectHolder(this);
-    CoinCollectHolder* holder =
-        al::getSceneObj<CoinCollectHolder>(this, SceneObjID_CoinCollectHolder);
+    CoinCollectHolder* holder = al::getSceneObj<CoinCollectHolder>(this);
     holder->registerCoinCollect2D(this);
 
     if (!GameDataFunction::isGotCoinCollect(this, initInfo)) {
         al::initActorWithArchiveName(this, initInfo, rs::getStageCoinCollect2DArchiveName(this),
                                      nullptr);
         makeActorAlive();
-        CoinCollectWatcher* watcher =
-            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
+        CoinCollectWatcher* watcher = al::getSceneObj<CoinCollectWatcher>(this);
         watcher->registerCoin(false);
         al::initNerve(this, &NrvCoinCollect2D.Wait, 1);
 
@@ -66,8 +63,7 @@ void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
     } else {
         makeActorDead();
         const char* archiveName = rs::getStageCoinCollect2DEmptyArchiveName(this);
-        CoinCollectWatcher* watcher =
-            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
+        CoinCollectWatcher* watcher = al::getSceneObj<CoinCollectWatcher>(this);
         watcher->registerCoin(true);
 
         CoinCollectEmpty2D* coinCollectEmpty2d =
@@ -145,8 +141,7 @@ void CoinCollect2D::exeWaitHint() {
 void CoinCollect2D::exeGot() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Got");
-        CoinCollectWatcher* watcher =
-            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
+        CoinCollectWatcher* watcher = al::getSceneObj<CoinCollectWatcher>(this);
         watcher->countup(this);
 
         GameDataFunction::addCoinCollect(this, mPlacementId);
