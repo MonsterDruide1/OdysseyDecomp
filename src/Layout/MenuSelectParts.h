@@ -11,8 +11,6 @@ class KeyRepeatCtrl;
 
 class MenuSelectParts : public al::NerveExecutor {
 public:
-    static const s32 cMenuItemAmount = 5;
-
     enum Selection : s32 {
         Continue = 0,
         SeparatePlay = 1,

@@ -27,6 +27,7 @@ class StageSceneStateStartSeparatePlay;
 
 class StageSceneStatePauseMenu : public al::HostStateBase<al::Scene> {
 public:
+    static const s32 cMenuItemAmount = 5;
     enum class StartType { Title, Normal, AfterTitle };
 
     StageSceneStatePauseMenu(const char* name, al::Scene* host,
@@ -35,7 +36,7 @@ public:
                              const al::ActorInitInfo& actorInitInfo,
                              const al::LayoutInitInfo& layoutInitInfo,
                              al::WindowConfirm* windowConfirm, StageSceneLayout* stageSceneLayout,
-                             bool a11,
+                             bool isTitle,
                              SceneAudioSystemPauseController* sceneAudioSystemPauseController);
 
     void appear() override;
@@ -106,7 +107,7 @@ private:
     al::KeyRepeatCtrl* mKeyRepeatCtrl = nullptr;
     StageSceneLayout* mStageSceneLayout = nullptr;
     bool mIsNormal = true;
-    bool mIsPauseMenu = false;
+    bool mIsShowMarioModel = false;
     f32 mPrevNearClipDistance = 25.0f;
     SceneAudioSystemPauseController* mSceneAudioSystemPauseController = nullptr;
     al::HtmlViewer* mHtmlViewer = nullptr;

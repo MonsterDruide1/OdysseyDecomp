@@ -64,6 +64,8 @@ public:
     void exeClose();
     void changeNerve(const al::Nerve*, SimpleLayoutMenu*, CommonVerticalList*);
 
+    const al::MessageSystem* getMessageSystem() const override;
+
     const char* getLanguage() const { return mLanguage; };
 
     void set_51(bool isTrue) { field_51 = isTrue; }

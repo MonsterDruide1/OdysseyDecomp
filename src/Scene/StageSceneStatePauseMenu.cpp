@@ -76,7 +76,7 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
     const char* name, al::Scene* host, al::SimpleLayoutAppearWaitEnd* menuLayout,
     GameDataHolder* gameDataHolder, const al::SceneInitInfo& sceneInitInfo,
     const al::ActorInitInfo& actorInitInfo, const al::LayoutInitInfo& layoutInitInfo,
-    al::WindowConfirm* windowConfirm, StageSceneLayout* stageSceneLayout, bool a11,
+    al::WindowConfirm* windowConfirm, StageSceneLayout* stageSceneLayout, bool isTitle,
     SceneAudioSystemPauseController* sceneAudioSystemPauseController)
     : al::HostStateBase<al::Scene>(name, host), mMenuLayout(menuLayout),
       mGameDataHolderAccessor(gameDataHolder), mWindowConfirm(windowConfirm),
@@ -131,7 +131,7 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
     mStateEndSeparatePlay = new StageSceneStateEndSeparatePlay(
         "おすそ分け終了", this, layoutInitInfo, mMenuWipe, gamePadSystem);
     mStateOption = new StageSceneStateOption("オプション画面", getHost(), layoutInitInfo,
-                                             mFooterParts, mGameDataHolderAccessor, a11);
+                                             mFooterParts, mGameDataHolderAccessor, isTitle);
 
     al::initNerveState(this, mStateStartSeparatePlay,
                        &NrvStageSceneStatePauseMenu.StartSeparatePlay, "おすそ分けプレイ開始");
@@ -183,7 +183,7 @@ void StageSceneStatePauseMenu::killPauseMenu() {
 }
 
 void StageSceneStatePauseMenu::killMarioModel() {
-    if (mIsPauseMenu)
+    if (mIsShowMarioModel)
         al::setNearClipDistance(getHost(), mPrevNearClipDistance, 0);
 
     if (al::isAlive(mMarioActor))
@@ -242,15 +242,14 @@ bool StageSceneStatePauseMenu::isModeSelectEnd() const {
 }
 
 bool StageSceneStatePauseMenu::checkNeedKillByHostAndEnd() {
-    if (isNeedKillHost()) {
-        getHost()->getLiveActorKit()->getEffectSystem()->set_69(false);
-        mSceneAudioSystemPauseController->resume(0);
-        alSeFunction::stopAllSe(getHost()->getAudioDirector(), 0);
-        al::stopAllBgm(getHost(), 0);
-        return true;
-    }
+    if (!isNeedKillHost())
+        return false;
 
-    return false;
+    getHost()->getLiveActorKit()->getEffectSystem()->set_69(false);
+    mSceneAudioSystemPauseController->resume(0);
+    alSeFunction::stopAllSe(getHost()->getAudioDirector(), 0);
+    al::stopAllBgm(getHost(), 0);
+    return true;
 }
 
 void StageSceneStatePauseMenu::startActionMario(const char* actionName) {
@@ -291,18 +290,7 @@ bool StageSceneStatePauseMenu::isDrawChromakey() const {
         al::isNerve(this, &NrvStageSceneStatePauseMenu.EndSeparatePlay))
         return true;
 
-    if (!mStateStartSeparatePlay->isDrawViewRenderer()) {
-        if (mStateEndSeparatePlay->isDrawViewRenderer() ||
-            al::isNerve(this, &NrvStageSceneStatePauseMenu.WaitDraw) ||
-            al::isNerve(this, &NrvStageSceneStatePauseMenu.End))
-            return false;
-        if (al::isNerve(this, &NrvStageSceneStatePauseMenu.Appear))
-            return !al::isDead(mMarioActor);
-
-        return true;
-    }
-
-    return false;
+    return !isDrawViewRenderer();
 }
 
 void StageSceneStatePauseMenu::exeAppear() {
@@ -319,14 +307,8 @@ void StageSceneStatePauseMenu::exeAppear() {
         }
     }
 
-    if (al::isStep(this, 2)) {
-        if (!mIsPauseMenu)
-            mPrevNearClipDistance = alCameraFunction::getNearClipDistance(getHost(), 0);
-        al::setNearClipDistance(getHost(), 400.0f, 0);
-        updatePlayerPose();
-        mMarioActor->appear();
-        mIsPauseMenu = true;
-    }
+    if (al::isStep(this, 2))
+        appearMarioModel();
 
     updatePlayerPose();
     al::updateKitListPrev(getHost());
@@ -356,7 +338,7 @@ void StageSceneStatePauseMenu::setNormal() {
         mMenuGuide->appear();
     }
 
-    mSelectParts->appear(MenuSelectParts::cMenuItemAmount);
+    mSelectParts->appear(cMenuItemAmount);
     mSelectParts->setSelectMessage(
         MenuSelectParts::Selection::Continue,
         al::getSystemMessageString(mMenuLayout, "MenuMessage", "Continue"));
@@ -374,13 +356,13 @@ void StageSceneStatePauseMenu::setNormal() {
 }
 
 void StageSceneStatePauseMenu::appearMarioModel() {
-    if (!mIsPauseMenu)
+    if (!mIsShowMarioModel)
         mPrevNearClipDistance = alCameraFunction::getNearClipDistance(getHost(), 0);
 
     al::setNearClipDistance(getHost(), 400.0f, 0);
     updatePlayerPose();
     mMarioActor->appear();
-    mIsPauseMenu = true;
+    mIsShowMarioModel = true;
 }
 
 void StageSceneStatePauseMenu::updatePlayerPose() {
@@ -595,12 +577,12 @@ void StageSceneStatePauseMenu::exeOption() {
     al::updateKitList(getHost(), "２Ｄ（ポーズ無視）");
     al::updateKitListPost(getHost());
 
-    if (!al::updateNerveState(this))
-        return;
+    if (al::updateNerveState(this)) {
+        if (isChangeLanguage() || isLoadData()) {
+            kill();
+            return;
+        }
 
-    if (isChangeLanguage() || isLoadData()) {
-        kill();
-    } else {
         mSelectParts->appearWait();
         mFooterParts->tryChangeTextFade(
             al::getSystemMessageString(mMenuGuide, "Footer", "MenuMessage_Footer"));
@@ -713,7 +695,7 @@ void StageSceneStatePauseMenu::startPauseCamera() {
 void StageSceneStatePauseMenu::setAfterTitle() {
     mIsNormal = false;
 
-    mSelectParts->appear(MenuSelectParts::cMenuItemAmount);
+    mSelectParts->appear(cMenuItemAmount);
     mSelectParts->setMainMenu(true);
 
     mSelectParts->setSelectMessage(
