@@ -48,7 +48,7 @@ void resetQuatPosition(LiveActor* actor, const sead::Quatf& quat, const sead::Ve
 }
 
 void resetMtxPosition(LiveActor* actor, const sead::Matrix34f& mtx) {
-    updatePoseMtx(actor, mtx);
+    updatePoseMtx(actor, &mtx);
     resetPosition(actor);
 }
 
