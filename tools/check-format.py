@@ -273,7 +273,9 @@ def common_sead_math_template(c, path):
                 continue
             if "sead::Buffer" in line:  # probably needs more exceptions at some point
                 continue
-            if "Vector3CalcCommon" in line:
+            if "sead::PtrArray" in line:
+                continue
+            if "CalcCommon" in line:
                 continue
             if "BitUtil" in line:
                 continue
