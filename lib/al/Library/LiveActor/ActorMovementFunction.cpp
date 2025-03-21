@@ -3,10 +3,12 @@
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Collision/Collider.h"
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
+#include "Library/Collision/CollisionPartsTriangle.h"
 #include "Library/HitSensor/SensorFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Player/PlayerUtil.h"
 #include "Library/Screen/ScreenPointKeeper.h"
@@ -60,7 +62,8 @@ bool trySetPosOnGround(LiveActor* actor) {
     sead::Vector3f pos = getTrans(actor);
     sead::Vector3f dir = {0.0f, -500.0f, 0.0f};
     pos.y += 200.0f;
-    return alCollisionUtil::getFirstPolyOnArrow(actor, getTransPtr(actor), nullptr, pos, dir, nullptr, nullptr);
+    return alCollisionUtil::getFirstPolyOnArrow(actor, getTransPtr(actor), nullptr, pos, dir,
+                                                nullptr, nullptr);
 }
 
 const sead::Vector3f& getVelocity(const LiveActor* actor) {
@@ -71,15 +74,18 @@ sead::Vector3f* getVelocityPtr(LiveActor* actor) {
     return actor->getPoseKeeper()->getVelocityPtr();
 }
 
-void separateVelocityHV(sead::Vector3f* horizontal, sead::Vector3f* vertical, const LiveActor* actor) {
+void separateVelocityHV(sead::Vector3f* horizontal, sead::Vector3f* vertical,
+                        const LiveActor* actor) {
     separateVelocityDirHV(horizontal, vertical, actor, getGravity(actor));
 }
 
-void separateVelocityDirHV(sead::Vector3f* horizontal, sead::Vector3f* vertical, const LiveActor* actor, const sead::Vector3f& dir) {
+void separateVelocityDirHV(sead::Vector3f* horizontal, sead::Vector3f* vertical,
+                           const LiveActor* actor, const sead::Vector3f& dir) {
     separateVectorHV(horizontal, vertical, dir, getVelocity(actor));
 }
 
-void separateVelocityParallelVertical(sead::Vector3f* parallel, sead::Vector3f* vertical, const LiveActor* actor,  const sead::Vector3f& dir) {
+void separateVelocityParallelVertical(sead::Vector3f* parallel, sead::Vector3f* vertical,
+                                      const LiveActor* actor, const sead::Vector3f& dir) {
     separateVectorParallelVertical(parallel, vertical, dir, getVelocity(actor));
 }
 
@@ -114,6 +120,7 @@ void setVelocityZeroX(LiveActor* actor) {
 void setVelocityZeroY(LiveActor* actor) {
     setVelocityY(actor, 0.0f);
 }
+
 void setVelocityZeroZ(LiveActor* actor) {
     setVelocityZ(actor, 0.0f);
 }
@@ -188,7 +195,9 @@ void setVelocityToGravity(LiveActor* actor, f32 speed) {
     velocity->y = gravity.y * speed;
     velocity->z = gravity.z * speed;
 }
-void setVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& h, const sead::Vector3f& v, f32 speedH, f32 speedV) {
+
+void setVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& h, const sead::Vector3f& v,
+                           f32 speedH, f32 speedV) {
     calcVectorSeparateHV(getVelocityPtr(actor), h, v, speedH, speedV);
 }
 
@@ -196,7 +205,8 @@ void setVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& h, f32 speedH
     calcVelocitySeparateHV(getVelocityPtr(actor), actor, h, speedH, speedV);
 }
 
-void calcVelocitySeparateHV(sead::Vector3f* velocity, const LiveActor* actor, const sead::Vector3f& h, f32 speedH, f32 speedV) {
+void calcVelocitySeparateHV(sead::Vector3f* velocity, const LiveActor* actor,
+                            const sead::Vector3f& h, f32 speedH, f32 speedV) {
     calcVectorSeparateHV(velocity, h, -getGravity(actor), speedH, speedV);
 }
 
@@ -285,11 +295,13 @@ void addVelocityToDown(LiveActor* actor, f32 force) {
     calcDownDir(&down, actor);
     addVelocityInline(actor, down, force);
 }
+
 void addVelocityToDirection(LiveActor* actor, const sead::Vector3f& dir, f32 force) {
     sead::Vector3f normDir;
     tryNormalizeOrZero(&normDir, dir);
     addVelocityInline(actor, normDir, force);
 }
+
 void addVelocityToGravity(LiveActor* actor, f32 force) {
     sead::Vector3f* velocity = getVelocityPtr(actor);
     const sead::Vector3f& gravity = getGravity(actor);
@@ -331,7 +343,8 @@ void addVelocityToTarget(LiveActor* actor, const sead::Vector3f& target, f32 for
     addVelocityInline(actor, diff, force);
 }
 
-void addVelocityToTarget(LiveActor* actor, const sead::Vector3f& target, f32 minForce, f32 maxForce, f32 minDistance, f32 maxDistance) {
+void addVelocityToTarget(LiveActor* actor, const sead::Vector3f& target, f32 minForce, f32 maxForce,
+                         f32 minDistance, f32 maxDistance) {
     sead::Vector3f diff = target;
     diff -= getTrans(actor);
     f32 distance;
@@ -378,7 +391,7 @@ void addVelocityDampToTarget(LiveActor* actor, const sead::Vector3f& target, f32
 
 bool addVelocityToPlayer(LiveActor* actor, f32 force, const sead::Vector3f& offset) {
     sead::Vector3f playerPos = {0.0f, 0.0f, 0.0f};
-    if(!tryFindNearestPlayerPos(&playerPos, actor))
+    if (!tryFindNearestPlayerPos(&playerPos, actor))
         return false;
 
     addVelocityToTarget(actor, playerPos + offset, force);
@@ -387,7 +400,7 @@ bool addVelocityToPlayer(LiveActor* actor, f32 force, const sead::Vector3f& offs
 
 bool addVelocityToPlayerHV(LiveActor* actor, f32 forceH, f32 forceV, const sead::Vector3f& offset) {
     sead::Vector3f playerPos = {0.0f, 0.0f, 0.0f};
-    if(!tryFindNearestPlayerPos(&playerPos, actor))
+    if (!tryFindNearestPlayerPos(&playerPos, actor))
         return false;
 
     addVelocityToTargetHV(actor, playerPos + offset, forceH, forceV);
@@ -401,7 +414,8 @@ void addVelocityFromTarget(LiveActor* actor, const sead::Vector3f& target, f32 f
     addVelocityInline(actor, diff, force);
 }
 
-void addVelocityFromTargetHV(LiveActor* actor, const sead::Vector3f& target, f32 forceH, f32 forceV) {
+void addVelocityFromTargetHV(LiveActor* actor, const sead::Vector3f& target, f32 forceH,
+                             f32 forceV) {
     sead::Vector3f diff = getTrans(actor);
     diff -= target;
     f32 diffDown = diff.dot(getGravity(actor));
@@ -415,16 +429,17 @@ void addVelocityFromTargetHV(LiveActor* actor, const sead::Vector3f& target, f32
 
 bool addVelocityFromPlayer(LiveActor* actor, f32 force, const sead::Vector3f& offset) {
     sead::Vector3f playerPos = {0.0f, 0.0f, 0.0f};
-    if(!tryFindNearestPlayerPos(&playerPos, actor))
+    if (!tryFindNearestPlayerPos(&playerPos, actor))
         return false;
 
     addVelocityFromTarget(actor, playerPos + offset, force);
     return true;
 }
 
-bool addVelocityFromPlayerHV(LiveActor* actor, f32 forceH, f32 forceV, const sead::Vector3f& offset) {
+bool addVelocityFromPlayerHV(LiveActor* actor, f32 forceH, f32 forceV,
+                             const sead::Vector3f& offset) {
     sead::Vector3f playerPos = {0.0f, 0.0f, 0.0f};
-    if(!tryFindNearestPlayerPos(&playerPos, actor))
+    if (!tryFindNearestPlayerPos(&playerPos, actor))
         return false;
 
     addVelocityFromTargetHV(actor, playerPos + offset, forceH, forceV);
@@ -433,16 +448,17 @@ bool addVelocityFromPlayerHV(LiveActor* actor, f32 forceH, f32 forceV, const sea
 
 void addVelocityClockwiseToDirection(LiveActor* actor, const sead::Vector3f& dir, f32 force) {
     sead::Vector3f dirVelocity;
-    if(!calcVelocityClockwiseToDirection(actor, &dirVelocity, dir))
+    if (!calcVelocityClockwiseToDirection(actor, &dirVelocity, dir))
         return;
     sead::Vector3f normDir;
     tryNormalizeOrZero(&normDir, dirVelocity);
     addVelocityInline(actor, normDir, force);
 }
 
-bool calcVelocityClockwiseToDirection(LiveActor* actor, sead::Vector3f* dirVelocity, const sead::Vector3f& dir) {
+bool calcVelocityClockwiseToDirection(LiveActor* actor, sead::Vector3f* dirVelocity,
+                                      const sead::Vector3f& dir) {
     sead::Vector3f normDir;
-    if(!dirVelocity || !tryNormalizeOrZero(&normDir, dir))
+    if (!dirVelocity || !tryNormalizeOrZero(&normDir, dir))
         return false;
 
     dirVelocity->setCross(getGravity(actor), normDir);
@@ -465,7 +481,8 @@ void tryAddVelocityLimit(LiveActor* actor, const sead::Vector3f& velocity, f32 l
     setVelocity(actor, newVelocity);
 }
 
-void subVelocityExceptDirectionLimit(LiveActor* actor, const sead::Vector3f& direction, f32 subVel, f32 limit) {
+void subVelocityExceptDirectionLimit(LiveActor* actor, const sead::Vector3f& direction, f32 subVel,
+                                     f32 limit) {
     sead::Vector3f horizontal = {0.0f, 0.0f, 0.0f};
     sead::Vector3f vertical = {0.0f, 0.0f, 0.0f};
     separateVelocityDirHV(&horizontal, &vertical, actor, direction);
@@ -486,11 +503,11 @@ void scaleVelocity(LiveActor* actor, f32 factor) {
 void scaleVelocityLimit(LiveActor* actor, f32 factor, f32 limit) {
     sead::Vector3f direction = {0.0f, 0.0f, 0.0f};
     f32 scalar = 0.0f;
-    if(separateScalarAndDirection(&scalar, &direction, getVelocity(actor)))
+    if (separateScalarAndDirection(&scalar, &direction, getVelocity(actor)))
         return;
 
     // enforces a *lower* limit = minimum speed!
-    if(scalar < limit)
+    if (scalar < limit)
         return;
     scalar = sead::Mathf::clampMin(scalar * factor, limit);
     setVelocity(actor, scalar * direction);
@@ -522,15 +539,16 @@ void scaleVelocityExceptDirection(LiveActor* actor, const sead::Vector3f& direct
     scaleVectorExceptDirection(velocity, direction, *velocity, factor);
 }
 
-void scaleVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& direction, f32 parallel, f32 vertical) {
+void scaleVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& direction, f32 parallel,
+                                   f32 vertical) {
     const sead::Vector3f& velocity = getVelocity(actor);
 
     f32 speedV = direction.dot(velocity);
     sead::Vector3f parallelVec = direction * (speedV * parallel);
     sead::Vector3f verticalVec = velocity;
-    verticalVec.x -= direction.x*speedV;
-    verticalVec.y -= direction.y*speedV;
-    verticalVec.z -= direction.z*speedV;
+    verticalVec.x -= direction.x * speedV;
+    verticalVec.y -= direction.y * speedV;
+    verticalVec.z -= direction.z * speedV;
 
     sead::Vector3f* newVelocity = getVelocityPtr(actor);
     *newVelocity = parallelVec;
@@ -540,7 +558,7 @@ void scaleVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& direc
 }
 
 void limitVelocity(LiveActor* actor, f32 limit) {
-    if(calcSpeed(actor) > limit) {
+    if (calcSpeed(actor) > limit) {
         tryNormalizeOrZero(getVelocityPtr(actor));
         scaleVelocity(actor, limit);
     }
@@ -577,7 +595,7 @@ void limitVelocityH(LiveActor* actor, f32 limitH) {
     separateVelocityParallelVertical(&vertical, &horizontal, actor, getGravity(actor));
     if (horizontal.squaredLength() > sead::Mathf::square(limitH)) {
         f32 length = horizontal.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             horizontal *= limitH / length;
     }
     setVelocity(actor, vertical + horizontal);
@@ -588,12 +606,12 @@ void limitVelocityHV(LiveActor* actor, f32 limitH, f32 limitV) {
     separateVelocityHV(&horizontal, &vertical, actor);
     if (horizontal.squaredLength() > sead::Mathf::square(limitH)) {
         f32 length = horizontal.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             horizontal *= limitH / length;
     }
     if (vertical.squaredLength() > sead::Mathf::square(limitV)) {
         f32 length = vertical.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             vertical *= limitV / length;
     }
     setVelocity(actor, horizontal + vertical);
@@ -605,18 +623,16 @@ void limitVelocityUpGravityH(LiveActor* actor, f32 limitDown, f32 limitUp, f32 l
     separateVelocityParallelVertical(&vertical, &horizontal, actor, getGravity(actor));
     if (horizontal.squaredLength() > sead::Mathf::square(limitH)) {
         f32 length = horizontal.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             horizontal *= limitH / length;
     }
 
     f32 speedV = vertical.dot(getGravity(actor));
-    if (speedV > limitUp) {
+    if (speedV > limitUp)
         vertical = getGravity(actor) * limitUp;
-    }
     f32 x = -limitDown;
-    if(speedV < x) {
+    if (speedV < x)
         vertical = getGravity(actor) * x;
-    }
     setVelocity(actor, vertical + horizontal);
 }
 
@@ -626,7 +642,7 @@ void limitVelocityDir(LiveActor* actor, const sead::Vector3f& dir, f32 limit) {
     separateVelocityParallelVertical(&parallel, &vertical, actor, dir);
     if (parallel.squaredLength() > sead::Mathf::square(limit)) {
         f32 length = parallel.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             parallel *= limit / length;
     }
     setVelocity(actor, parallel + vertical);
@@ -641,7 +657,7 @@ void limitVelocityDirSign(LiveActor* actor, const sead::Vector3f& dir, f32 limit
 
     if (parallel.squaredLength() > sead::Mathf::square(limit)) {
         f32 length = parallel.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             parallel *= limit / length;
     }
     setVelocity(actor, parallel + vertical);
@@ -653,7 +669,7 @@ void limitVelocityDirV(LiveActor* actor, const sead::Vector3f& dir, f32 limit) {
     separateVelocityParallelVertical(&parallel, &vertical, actor, dir);
     if (vertical.squaredLength() > sead::Mathf::square(limit)) {
         f32 length = vertical.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             vertical *= limit / length;
     }
     setVelocity(actor, parallel + vertical);
@@ -666,17 +682,19 @@ void limitVelocityDirVRate(LiveActor* actor, const sead::Vector3f& dir, f32 limi
     if (vertical.squaredLength() > sead::Mathf::square(limit)) {
         f32 length1 = vertical.length();
         f32 length = vertical.length();
-        if(length > 0.0f)
+        if (length > 0.0f)
             vertical *= ((length1 - limit) * rate + limit) / length;
     }
     setVelocity(actor, parallel + vertical);
 }
 
-void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& dir, f32 parallel, f32 vertical) {
+void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f& dir, f32 parallel,
+                                   f32 vertical) {
     limitVectorParallelVertical(getVelocityPtr(actor), dir, parallel, vertical);
 }
 
-void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& dir, f32 horizontal, f32 vertical) {
+void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f& dir, f32 horizontal,
+                             f32 vertical) {
     limitVectorSeparateHV(getVelocityPtr(actor), dir, horizontal, vertical);
 }
 
@@ -686,38 +704,38 @@ u32 reboundVelocityPart(LiveActor* actor, f32 rebound, f32 threshold) {
 
 u32 reboundVelocityPart(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32 threshold) {
     u32 result = 0;
-    if(isCollidedGround(actor)) {
+    if (isCollidedGround(actor)) {
         sead::Vector3f normal = getCollidedGroundNormal(actor);
         f32 dot = normal.dot(getVelocity(actor));
         if (ground < 0.0f || dot < -threshold) {
             addVelocity(actor, -(normal * ((ground + 1.0f) * dot)));
             if (ground >= 0.0f)
                 result |= 1;
-        } else if(dot < 0.0f) {
+        } else if (dot < 0.0f) {
             addVelocity(actor, -(normal * dot));
         }
     }
 
-    if(isCollidedWall(actor)) {
+    if (isCollidedWall(actor)) {
         sead::Vector3f normal = getCollidedWallNormal(actor);
         f32 dot = normal.dot(getVelocity(actor));
         if (wall < 0.0f || dot < -threshold) {
             addVelocity(actor, -(normal * ((wall + 1.0f) * dot)));
             if (wall >= 0.0f)
                 result |= 2;
-        } else if(dot < 0.0f) {
+        } else if (dot < 0.0f) {
             addVelocity(actor, -(normal * dot));
         }
     }
 
-    if(isCollidedCeiling(actor)) {
+    if (isCollidedCeiling(actor)) {
         sead::Vector3f normal = getCollidedCeilingNormal(actor);
         f32 dot = normal.dot(getVelocity(actor));
         if (ceiling < 0.0f || dot < -threshold) {
             addVelocity(actor, -(normal * ((ceiling + 1.0f) * dot)));
             if (ceiling >= 0.0f)
                 result |= 4;
-        } else if(dot < 0.0f) {
+        } else if (dot < 0.0f) {
             addVelocity(actor, -(normal * dot));
         }
     }
@@ -725,23 +743,24 @@ u32 reboundVelocityPart(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32
     return result;
 }
 
-bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f32 ceiling, f32 threshold) {
-    if(!isCollided(actor))
+bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f32 ceiling,
+                                      f32 threshold) {
+    if (!isCollided(actor))
         return false;
 
     sead::Vector3f normalSum;
     calcCollidedNormalSum(actor, &normalSum);
-    if(isNearZero(normalSum, 0.001f))
+    if (isNearZero(normalSum, 0.001f))
         return false;
 
     normalize(&normalSum);
     const sead::Vector3f& gravity = getGravity(actor);
     f32 rebound;
-    if(isFloorPolygon(normalSum, gravity))
+    if (isFloorPolygon(normalSum, gravity))
         rebound = ground;
-    else if(isWallPolygon(normalSum, gravity))
+    else if (isWallPolygon(normalSum, gravity))
         rebound = wall;
-    else if(isCeilingPolygon(normalSum, gravity))
+    else if (isCeilingPolygon(normalSum, gravity))
         rebound = ceiling;
     else
         rebound = 0.0f;
@@ -754,7 +773,7 @@ bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f3
         velocity->y -= normalSum.y * mul;
         velocity->z -= normalSum.z * mul;
         return true;
-    } else if(dot < 0.0f) {
+    } else if (dot < 0.0f) {
         sead::Vector3f* velocity = getVelocityPtr(actor);
         velocity->x -= normalSum.x * dot;
         velocity->y -= normalSum.y * dot;
@@ -763,13 +782,14 @@ bool reboundVelocityFromEachCollision(LiveActor* actor, f32 ground, f32 wall, f3
     return false;
 }
 
+// TODO assign proper names to a, b, c and in header
 bool reboundVelocityFromCollision(LiveActor* actor, f32 a, f32 b, f32 c) {
-    if(!isCollided(actor))
+    if (!isCollided(actor))
         return false;
 
     sead::Vector3f normalSum;
     calcCollidedNormalSum(actor, &normalSum);
-    if(isNearZero(normalSum, 0.001f))
+    if (isNearZero(normalSum, 0.001f))
         return false;
 
     normalize(&normalSum);
@@ -779,56 +799,290 @@ bool reboundVelocityFromCollision(LiveActor* actor, f32 a, f32 b, f32 c) {
         *getVelocityPtr(actor) *= c;
         *getVelocityPtr(actor) -= normalSum * dot * a;
         return true;
-    } else if(dot < 0.0f) {
+    } else if (dot < 0.0f) {
         *getVelocityPtr(actor) -= normalSum * dot;
     }
     return false;
 }
-// void reboundVelocityFromTriangles(LiveActor* actor, f32, f32);
-// void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32);
-// void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&,                              f32);
-// void reboundVelocityFromSensor(LiveActor* actor, const HitSensor*, f32);
-// void reboundVelocityFromSensor(LiveActor* actor, const HitSensor*, const sead::Vector3f&, f32);
-// void calcDirToActor(sead::Vector3f*, const LiveActor* actor, const LiveActor* target);
-// void reboundVelocityBetweenActor(LiveActor* actor, LiveActor* target, f32);
-// void reboundVelocityBetweenSensor(HitSensor*, HitSensor*, f32);
-// void calcVelocityKeepLengthBetweenActor(sead::Vector3f*, const LiveActor* actor,                                        const LiveActor* target, f32, f32);
-// void addVelocityKeepLengthBetweenActor(LiveActor* actor, LiveActor* target, f32, f32);
-// void addVelocityDumpKeepLengthBetweenActor(LiveActor* actor, LiveActor* target, f32, f32, f32);
-// void calcVelocityBlowAttack(sead::Vector3f*, const LiveActor* actor, const sead::Vector3f&, f32,                            f32);
-// void addVelocityBlowAttack(LiveActor* actor, const sead::Vector3f&, f32, f32);
-// void addVelocityBlowAttack(LiveActor* actor, const HitSensor*, f32, f32);
-// void setVelocityBlowAttack(LiveActor* actor, const sead::Vector3f&, f32, f32);
-// void setVelocityBlowAttack(LiveActor* actor, const HitSensor*, f32, f32);
-// void setVelocityBlowAttackAndTurnToTarget(LiveActor* actor, const sead::Vector3f&, f32, f32);
-// bool isVelocityFast(const LiveActor* actor, f32);
-// bool isVelocityFastH(const LiveActor* actor, f32);
-// bool isVelocitySlow(const LiveActor* actor, f32);
-// bool isVelocitySlowH(const LiveActor* actor, f32);
-// f32 calcSpeedH(const LiveActor* actor);
-// f32 calcSpeedV(const LiveActor* actor);
-// void calcSpeedDirection(const LiveActor* actor, const sead::Vector3f&);
-// void calcSpeedExceptDir(const LiveActor* actor, const sead::Vector3f&);
-// bool isNear(const LiveActor* actor, const LiveActor* target, f32);
-// bool isNear(const LiveActor* actor, const sead::Vector3f&, f32);
-// bool isNearXZ(const LiveActor* actor, const sead::Vector3f&, f32);
-// bool isNearH(const LiveActor* actor, const sead::Vector3f&, f32);
-// f32 calcDistanceH(const LiveActor* actor, const sead::Vector3f&);
-// bool isNearV(const LiveActor* actor, const sead::Vector3f&, f32);
-// f32 calcDistanceV(const LiveActor* actor, const sead::Vector3f&);
-// bool isNearHV(const LiveActor* actor, const sead::Vector3f&, f32, f32);
-// bool isNearHV(const LiveActor* actor, const sead::Vector3f&, f32, f32, f32);
-// void calcHeight(const LiveActor* actor, const sead::Vector3f&);
-// bool isFar(const LiveActor* actor, const LiveActor* target, f32);
-// bool isFar(const LiveActor* actor, const sead::Vector3f&, f32);
-// f32 calcDistance(const LiveActor* actor, const LiveActor* target);
-// f32 calcDistance(const LiveActor* actor, const sead::Vector3f&);
-// f32 calcDistanceV(const LiveActor* actor, const LiveActor* target);
-// f32 calcDistanceH(const LiveActor* actor, const LiveActor* target);
-// f32 calcDistanceH(const LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&);
-// f32 calcHeight(const LiveActor* actor, const LiveActor* target);
-// void calcDistanceFront(const LiveActor* actor, const sead::Vector3f&);
-// void calcDistanceFront(const LiveActor* actor, const LiveActor* target);
+
+// TODO assign proper names to locals ; a, b and in header
+bool reboundVelocityFromTriangles(LiveActor* actor, f32 a, f32 b) {
+    Collider* collider = getActorCollider(actor);
+    s32 _4c = collider->get_4c();
+    if (collider->get_48() == 0)
+        return false;
+
+    bool v10 = false;
+    for (s32 v12 = 0; v12 != _4c; v12++) {
+        sead::Vector3f normal = collider->getPlane(v12)->getNormal(0);
+        f32 v33 = normal.dot(getVelocity(actor));
+        if (a < 0.0) {
+            addVelocity(actor, -((a + 1.0f) * v33 * normal));
+            v10 = true;
+        } else if (v33 < -b) {
+            addVelocity(actor, -((a + 1.0f) * v33 * normal));
+            v10 = true;
+        } else if (v33 < 0.0)
+            addVelocity(actor, -(v33 * normal));
+    }
+
+    return v10;
+}
+
+// TODO assign proper names to a and in header
+bool reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32 a) {
+    return reboundVelocityFromActor(actor, target, getVelocity(target), a);
+}
+
+// TODO assign proper names to a and in header
+bool reboundVelocityFromActor(LiveActor* actor, const LiveActor* target,
+                              const sead::Vector3f& targetVelocity, f32 a) {
+    sead::Vector3f direction;
+    calcDirToActor(&direction, actor, target);
+    f32 dot = (getVelocity(actor) - targetVelocity).dot(direction);
+    if (dot <= 0.0f)  // moving away from each other
+        return false;
+    addVelocity(actor, -(direction * dot * (a + 1.0f)));
+    return true;
+}
+
+// TODO assign proper names to a and in header
+bool reboundVelocityFromSensor(LiveActor* actor, const HitSensor* sensor, f32 a) {
+    return reboundVelocityFromSensor(actor, sensor, getActorVelocity(sensor), a);
+}
+
+// TODO assign proper names to a and in header
+bool reboundVelocityFromSensor(LiveActor* actor, const HitSensor* sensor,
+                               const sead::Vector3f& targetVelocity, f32 a) {
+    return reboundVelocityFromActor(actor, getSensorHost(sensor), targetVelocity, a);
+}
+
+bool calcDirToActor(sead::Vector3f* dir, const LiveActor* actor, const LiveActor* target) {
+    // TODO sead::Vector3f::setSub(X, Y);
+    sead::Vector3CalcCommon<f32>::sub(*dir, getTrans(target), getTrans(actor));
+    return !tryNormalizeOrZero(dir);
+}
+
+bool reboundVelocityBetweenActor(LiveActor* actor, LiveActor* target,
+                                 const sead::Vector3f& direction, f32 a);
+
+// TODO assign proper names to a and in header
+bool reboundVelocityBetweenActor(LiveActor* actor, LiveActor* target, f32 a) {
+    sead::Vector3f direction;
+    calcDirToActor(&direction, actor, target);
+    return reboundVelocityBetweenActor(actor, target, direction, a);
+}
+
+// TODO assign proper names to a
+bool reboundVelocityBetweenActor(LiveActor* actor, LiveActor* target,
+                                 const sead::Vector3f& direction, f32 a) {
+    f32 dot = (getVelocity(actor) - getVelocity(target)).dot(direction);
+    if (dot <= 0.0f)  // moving away from each other
+        return false;
+    sead::Vector3f vel = direction * dot * ((a + 1.0f) * 0.5f);
+    addVelocity(target, vel);
+    addVelocity(actor, -vel);
+    return true;
+}
+
+// TODO assign proper names to a and in header
+bool reboundVelocityBetweenSensor(HitSensor* sensorA, HitSensor* sensorB, f32 a) {
+    sead::Vector3f direction;
+    calcDirBetweenSensors(&direction, sensorA, sensorB);
+    return reboundVelocityBetweenActor(getSensorHost(sensorA), getSensorHost(sensorB), direction,
+                                       a);
+}
+
+// TODO assign proper names to a, b and in header
+void calcVelocityKeepLengthBetweenActor(sead::Vector3f* vel, const LiveActor* actor,
+                                        const LiveActor* target, f32 a, f32 b) {
+    sead::Vector3f dir;
+    // TODO sead::Vector3f::setSub(X, Y);
+    sead::Vector3CalcCommon<f32>::sub(dir, getTrans(target), getTrans(actor));
+    f32 len = dir.length();
+    tryNormalizeOrDirZ(&dir);
+    *vel = (a - len) * dir * b * 0.5f;
+}
+
+// TODO assign proper names to a, b and in header
+void addVelocityKeepLengthBetweenActor(LiveActor* actor, LiveActor* target, f32 a, f32 b) {
+    sead::Vector3f vel;
+    calcVelocityKeepLengthBetweenActor(&vel, actor, target, a, b);
+    addVelocity(actor, -vel);
+    addVelocity(target, vel);
+}
+
+// TODO assign proper names to a, b and in header
+void addVelocityDumpKeepLengthBetweenActor(LiveActor* actor, LiveActor* target, f32 a, f32 b,
+                                           f32 force) {
+    sead::Vector3f vel;
+    calcVelocityKeepLengthBetweenActor(&vel, actor, target, a, b);
+    addVelocityDump(actor, -vel, force);
+    addVelocityDump(target, vel, force);
+}
+
+void calcVelocityBlowAttack(sead::Vector3f* velocity, const LiveActor* actor,
+                            const sead::Vector3f& trans, f32 speedH, f32 speedV) {
+    calcVelocitySeparateHV(velocity, actor, getTrans(actor) - trans, speedH, speedV);
+}
+
+void addVelocityBlowAttack(LiveActor* actor, const sead::Vector3f& trans, f32 speedH, f32 speedV) {
+    sead::Vector3f velocity;
+    calcVelocityBlowAttack(&velocity, actor, trans, speedH, speedV);
+    addVelocity(actor, velocity);
+}
+
+void addVelocityBlowAttack(LiveActor* actor, const HitSensor* sensor, f32 speedH, f32 speedV) {
+    addVelocityBlowAttack(actor, getSensorPos(sensor), speedH, speedV);
+}
+
+void setVelocityBlowAttack(LiveActor* actor, const sead::Vector3f& trans, f32 speedH, f32 speedV) {
+    setVelocitySeparateHV(actor, getTrans(actor) - trans, speedH, speedV);
+}
+
+void setVelocityBlowAttack(LiveActor* actor, const HitSensor* sensor, f32 speedH, f32 speedV) {
+    setVelocitySeparateHV(actor, getTrans(actor) - getSensorPos(sensor), speedH, speedV);
+}
+
+// FIXME implement when turnToTarget functions exist
+// void setVelocityBlowAttackAndTurnToTarget(LiveActor* actor, const sead::Vector3f&, f32, f32)
+
+bool isVelocityFast(const LiveActor* actor, f32 threshold) {
+    return getVelocity(actor).squaredLength() > sead::Mathf::square(threshold);
+}
+
+bool isVelocityFastH(const LiveActor* actor, f32 threshold) {
+    sead::Vector3f velocity = getVelocity(actor);
+    verticalizeVec(&velocity, getGravity(actor), velocity);
+    return sead::Mathf::square(threshold) < velocity.squaredLength();
+}
+
+bool isVelocitySlow(const LiveActor* actor, f32 threshold) {
+    return getVelocity(actor).squaredLength() < sead::Mathf::square(threshold);
+}
+
+bool isVelocitySlowH(const LiveActor* actor, f32 threshold) {
+    sead::Vector3f velocity = getVelocity(actor);
+    verticalizeVec(&velocity, getGravity(actor), velocity);
+    return velocity.squaredLength() < sead::Mathf::square(threshold);
+}
+
+f32 calcSpeedH(const LiveActor* actor) {
+    sead::Vector3f velocityH;
+    verticalizeVec(&velocityH, getGravity(actor), getVelocity(actor));
+    return velocityH.length();
+}
+
+f32 calcSpeedV(const LiveActor* actor) {
+    return -getVelocity(actor).dot(getGravity(actor));
+}
+
+f32 calcSpeedDirection(const LiveActor* actor, const sead::Vector3f& dir) {
+    return sead::Mathf::abs(getVelocity(actor).dot(dir));
+}
+
+f32 calcSpeedExceptDir(const LiveActor* actor, const sead::Vector3f& dir) {
+    sead::Vector3f velocityExceptDir = {0.0f, 0.0f, 0.0f};
+    verticalizeVec(&velocityExceptDir, dir, getVelocity(actor));
+    return velocityExceptDir.length();
+}
+
+bool isNear(const LiveActor* actor, const LiveActor* target, f32 threshold) {
+    return isNear(actor, getTrans(target), threshold);
+}
+
+bool isNear(const LiveActor* actor, const sead::Vector3f& trans, f32 threshold) {
+    return (getTrans(actor) - trans).squaredLength() < sead::Mathf::square(threshold);
+}
+
+bool isNearXZ(const LiveActor* actor, const sead::Vector3f& trans, f32 threshold) {
+    const sead::Vector3f& actorTrans = getTrans(actor);
+    return sead::Mathf::square(actorTrans.x - trans.x) +
+               sead::Mathf::square(actorTrans.z - trans.z) <
+           sead::Mathf::square(threshold);
+}
+
+bool isNearH(const LiveActor* actor, const sead::Vector3f& trans, f32 threshold) {
+    return calcDistanceH(actor, trans) < threshold;
+}
+
+f32 calcDistanceH(const LiveActor* actor, const sead::Vector3f& trans) {
+    sead::Vector3f dist;
+    verticalizeVec(&dist, getGravity(actor), trans - getTrans(actor));
+    return dist.length();
+}
+
+bool isNearV(const LiveActor* actor, const sead::Vector3f& trans, f32 threshold) {
+    return calcDistanceV(actor, trans) < threshold;
+}
+
+f32 calcDistanceV(const LiveActor* actor, const sead::Vector3f& trans) {
+    const sead::Vector3f& gravity = getGravity(actor);
+    return sead::Mathf::abs((trans - getTrans(actor)).dot(gravity));
+}
+
+bool isNearHV(const LiveActor* actor, const sead::Vector3f& trans, f32 threshH, f32 threshV) {
+    if (calcDistanceV(actor, trans) > threshV)
+        return false;
+    return isNearH(actor, trans, threshH);
+}
+
+bool isNearHV(const LiveActor* actor, const sead::Vector3f& trans, f32 threshH, f32 minV,
+              f32 maxV) {
+    f32 height = calcHeight(actor, trans);
+    if (height < minV || height > maxV)
+        return false;
+    return isNearH(actor, trans, threshH);
+}
+
+f32 calcHeight(const LiveActor* actor, const sead::Vector3f& trans) {
+    const sead::Vector3f& gravity = getGravity(actor);
+    return -(trans - getTrans(actor)).dot(gravity);
+}
+
+bool isFar(const LiveActor* actor, const LiveActor* target, f32 threshold) {
+    return isFar(actor, getTrans(target), threshold);
+}
+
+bool isFar(const LiveActor* actor, const sead::Vector3f& trans, f32 threshold) {
+    return (getTrans(actor) - trans).squaredLength() > sead::Mathf::square(threshold);
+}
+
+f32 calcDistance(const LiveActor* actor, const LiveActor* target) {
+    return calcDistance(actor, getTrans(target));
+}
+
+f32 calcDistance(const LiveActor* actor, const sead::Vector3f& trans) {
+    return (getTrans(actor) - trans).length();
+}
+
+f32 calcDistanceV(const LiveActor* actor, const LiveActor* target) {
+    return calcDistanceV(actor, getTrans(target));
+}
+
+f32 calcDistanceH(const LiveActor* actor, const LiveActor* target) {
+    return calcDistanceH(actor, getTrans(target));
+}
+
+f32 calcDistanceH(const LiveActor* actor, const sead::Vector3f& trans1, const sead::Vector3f& trans2) {
+    sead::Vector3f dist;
+    verticalizeVec(&dist, getGravity(actor), trans2 - trans1);
+    return dist.length();
+}
+
+f32 calcHeight(const LiveActor* actor, const LiveActor* target) {
+    return calcHeight(actor, getTrans(target));
+}
+
+f32 calcDistanceFront(const LiveActor* actor, const sead::Vector3f& trans) {
+    sead::Vector3f front;
+    calcFrontDir(&front, actor);
+    return (trans - getTrans(actor)).dot(front);
+}
+
+f32 calcDistanceFront(const LiveActor* actor, const LiveActor* target) {
+    return calcDistanceFront(actor, getTrans(target));
+}
 // void addRotateAndRepeatX(LiveActor* actor, f32);
 // void addRotateAndRepeatY(LiveActor* actor, f32);
 // void addRotateAndRepeatZ(LiveActor* actor, f32);
