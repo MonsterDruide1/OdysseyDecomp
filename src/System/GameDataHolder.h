@@ -70,11 +70,11 @@ public:
     void onObjNoWriteSaveData(const al::PlacementId*);
     void offObjNoWriteSaveData(const al::PlacementId*);
     bool isOnObjNoWriteSaveData(const al::PlacementId*) const;
-    void onObjNoWriteSaveDataResetMiniGame(const al::PlacementId);
-    void offObjNoWriteSaveDataResetMiniGame(const al::PlacementId);
-    bool isOnObjNoWriteSaveDataResetMiniGame(const al::PlacementId) const;
-    void onObjNoWriteSaveDataInSameScenario(const al::PlacementId);
-    bool isOnObjNoWriteSaveDataInSameScenario(const al::PlacementId) const;
+    void onObjNoWriteSaveDataResetMiniGame(const al::PlacementId*);
+    void offObjNoWriteSaveDataResetMiniGame(const al::PlacementId*);
+    bool isOnObjNoWriteSaveDataResetMiniGame(const al::PlacementId*) const;
+    void onObjNoWriteSaveDataInSameScenario(const al::PlacementId*);
+    bool isOnObjNoWriteSaveDataInSameScenario(const al::PlacementId*) const;
     void writeTempSaveDataToHash(const char*, bool);
 
     void resetMiniGameData();
