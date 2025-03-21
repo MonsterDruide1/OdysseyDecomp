@@ -50,30 +50,30 @@ bool isInScreen(const sead::Vector2f&, f32);
 
 bool calcWorldPosFromScreen(sead::Vector3f* output, const sead::Vector2f&, const sead::Matrix34f&,
                             f32);  // Always returns true
-void calcWorldPosFromScreenPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
+void calcWorldPosFromScreenPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
                                f32);
-void calcWorldPosFromScreenPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
-                               const sead::Vector3f);
-void calcWorldPosFromScreenPos(sead::Vector3f* output, const SceneCameraInfo*, const sead::Vector2f,
-                               f32, s32);
-void calcWorldPosFromScreenPos(sead::Vector3f* output, const SceneCameraInfo*, const sead::Vector2f,
-                               const sead::Vector3f, s32);
-void calcWorldPosFromScreenPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
+void calcWorldPosFromScreenPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
+                               const sead::Vector3f&);
+void calcWorldPosFromScreenPos(sead::Vector3f* output, const SceneCameraInfo*,
+                               const sead::Vector2f&, f32, s32);
+void calcWorldPosFromScreenPos(sead::Vector3f* output, const SceneCameraInfo*,
+                               const sead::Vector2f&, const sead::Vector3f&, s32);
+void calcWorldPosFromScreenPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
                                   f32);
-void calcWorldPosFromScreenPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
-                                  const sead::Vector3f);
-void calcWorldPosFromLayoutPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
+void calcWorldPosFromScreenPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
+                                  const sead::Vector3f&);
+void calcWorldPosFromLayoutPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
                                f32);
-void calcWorldPosFromLayoutPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
-                               const sead::Vector3f);
-void calcWorldPosFromLayoutPos(sead::Vector3f* output, const SceneCameraInfo*, const sead::Vector2f,
-                               s32, s32);
-void calcWorldPosFromLayoutPos(sead::Vector3f* output, const SceneCameraInfo*, const sead::Vector2f,
-                               const sead::Vector3f, s32);
-void calcWorldPosFromLayoutPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
+void calcWorldPosFromLayoutPos(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
+                               const sead::Vector3f&);
+void calcWorldPosFromLayoutPos(sead::Vector3f* output, const SceneCameraInfo*,
+                               const sead::Vector2f&, s32, s32);
+void calcWorldPosFromLayoutPos(sead::Vector3f* output, const SceneCameraInfo*,
+                               const sead::Vector2f&, const sead::Vector3f&, s32);
+void calcWorldPosFromLayoutPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
                                   f32);
-void calcWorldPosFromLayoutPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f,
-                                  const sead::Vector3f);
+void calcWorldPosFromLayoutPosSub(sead::Vector3f* output, const IUseCamera*, const sead::Vector2f&,
+                                  const sead::Vector3f&);
 
 void calcScreenPosFromWorldPos(sead::Vector2f* output, const IUseCamera*, const sead::Vector3f&);
 void calcScreenPosFromWorldPosSub(sead::Vector2f* output, const IUseCamera*, const sead::Vector3f&);

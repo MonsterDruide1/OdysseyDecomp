@@ -9,6 +9,7 @@ class IUseAudioKeeper;
 class ISeModifier;
 class MeInfo;
 class SePlayParamList;
+class AudioDirector;
 
 void startSe(const IUseAudioKeeper*, const sead::SafeString&);
 bool verifySeKeeperNull(const IUseAudioKeeper*, const sead::SafeString&);
@@ -59,3 +60,7 @@ void setSeUserSyncParamPtrInt(const IUseAudioKeeper*, const s32*, const char*);
 void setSeOutputFromController(SePlayParamList*, s32, bool);
 void setSeOutputTvDrcRemoteAll(SePlayParamList*);
 }  // namespace al
+
+namespace alSeFunction {
+void stopAllSe(const al::AudioDirector*, u32);
+}

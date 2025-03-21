@@ -54,6 +54,8 @@ public:
     void exeDecideInterval();
     void exeDecideEnd();
 
+    void setMainMenu(bool isMainMenu) { mIsMainMenu = isMainMenu; }
+
 private:
     al::LayoutActor* mLayoutActor;
     s32 mMenuItemAmount = 0;

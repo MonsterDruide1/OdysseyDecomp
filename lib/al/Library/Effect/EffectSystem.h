@@ -24,9 +24,13 @@ public:
     void setCameraDirector(CameraDirector*);
     void setGraphicsSystemInfo(const GraphicsSystemInfo*);
 
+    void set_69(bool val) { _69 = val; }
+
     // incomplete
 private:
-    // missing
+    void* filler[13];
+    bool _68;
+    bool _69;
 };
 
 }  // namespace al

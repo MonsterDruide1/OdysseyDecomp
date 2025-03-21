@@ -37,7 +37,8 @@ def CHECK(cond, line, message, path):
 def common_no_namespace_qualifiers(c, path):
     nest_level = []
     for line in c.splitlines():
-        line = line[0:line.find("//")] if "//" in line else line
+        if "http://" not in line:
+            line = line[0:line.find("//")] if "//" in line else line
         if line.startswith("using namespace"):
             match = re.search(r"^using namespace ([^;\s]+);$", line)
             if CHECK(lambda a: match, line,
