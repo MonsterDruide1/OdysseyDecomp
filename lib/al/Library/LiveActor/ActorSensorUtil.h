@@ -312,7 +312,7 @@ bool sendMsgEnemyFloorTouchToColliderGround(LiveActor* receiver, HitSensor* send
 bool sendMsgEnemyUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
 bool sendMsgAskSafetyPoint(HitSensor* receiver, HitSensor* sender, sead::Vector3f**);
 bool sendMsgAskSafetyPointToColliderGround(LiveActor* receiver, HitSensor* sender,
-                                           sead::Vector3f**);
+                                           sead::Vector3f** safetyPointAccessor);
 bool sendMsgTouchAssist(HitSensor* receiver, HitSensor* sender);
 bool sendMsgTouchAssistTrig(HitSensor* receiver, HitSensor* sender);
 bool sendMsgTouchStroke(HitSensor* receiver, HitSensor* sender);
