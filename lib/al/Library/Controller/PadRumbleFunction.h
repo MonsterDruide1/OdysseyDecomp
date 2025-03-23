@@ -8,23 +8,21 @@ class LayoutActor;
 class PadRumbleDirector;
 
 struct PadRumbleParam {
-    PadRumbleParam(f32 rumbleNear = 0.0f, f32 rumbleFar = 3000.0f, f32 rumbleVolume = 1.0f,
-                   f32 rumblePitchVol = 1.0f, f32 rumblePitchLeft = 1.0f,
-                   f32 rumblePitchRight = 1.0f, s32 _18 = 0, bool isUseController = false,
-                   bool _1d = false)
-        : rumbleNear(rumbleNear), rumbleFar(rumbleFar), rumbleVolume(rumbleVolume),
-          rumblePitchVol(rumblePitchVol), rumblePitchLeft(rumblePitchLeft),
-          rumblePitchRight(rumblePitchRight), field_18(_18), isUseController(isUseController),
-          field_1d(_1d) {}
+    PadRumbleParam(f32 near = 0.0f, f32 far = 3000.0f, f32 volumeLeft = 1.0f,
+                   f32 volumeRight = 1.0f, f32 pitchLeft = 1.0f, f32 pitchRight = 1.0f, s32 _18 = 0,
+                   bool isUseController = false, bool _1d = false)
+        : near(near), far(far), volumeLeft(volumeLeft), volumeRight(volumeRight),
+          pitchLeft(pitchLeft), pitchRight(pitchRight), field_18(_18),
+          isUseController(isUseController), field_1d(_1d) {}
 
     void setVolumeByBalance(f32);
 
-    f32 rumbleNear;
-    f32 rumbleFar;
-    f32 rumbleVolume;
-    f32 rumblePitchVol;
-    f32 rumblePitchLeft;
-    f32 rumblePitchRight;
+    f32 near;
+    f32 far;
+    f32 volumeLeft;
+    f32 volumeRight;
+    f32 pitchLeft;
+    f32 pitchRight;
     s32 field_18;
     bool isUseController;
     bool field_1d;
