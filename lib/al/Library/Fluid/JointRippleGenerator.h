@@ -14,7 +14,7 @@ public:
 
 private:
     const LiveActor* mParent = nullptr;
-    sead::Vector3f mOffsetPos = sead::Vector3f::zero;
+    sead::Vector3f mLastJointOffset = sead::Vector3f::zero;
     const char* mJoint = nullptr;
     sead::Vector3f mOffset = sead::Vector3f::zero;
     f32 _2c = 0.0f;
