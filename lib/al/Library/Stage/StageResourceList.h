@@ -5,10 +5,14 @@
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/Scene/ISceneObj.h"
 
+#include "Scene/SceneObjFactory.h"
+
 namespace al {
 
 class StageSyncCounter : public IUseExecutor, public ISceneObj {
 public:
+    static constexpr s32 sSceneObjId = SceneObjID_alStageSyncCounter;
+
     StageSyncCounter();
 
     void execute() override;

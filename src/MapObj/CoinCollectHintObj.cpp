@@ -1,12 +1,10 @@
 #include "MapObj/CoinCollectHintObj.h"
 
 #include "Library/LiveActor/ActorInitFunction.h"
-#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
 
 #include "Item/CoinCollectHolder.h"
-#include "Scene/SceneObjFactory.h"
 
 CoinCollectHintObj::CoinCollectHintObj(const char* name) : al::LiveActor(name) {}
 
@@ -16,8 +14,7 @@ void CoinCollectHintObj::init(const al::ActorInitInfo& initInfo) {
     al::getTrans(&mTrans, initInfo);
 
     rs::createCoinCollectHolder(this);
-    CoinCollectHolder* holder =
-        al::getSceneObj<CoinCollectHolder>(this, SceneObjID_CoinCollectHolder);
+    CoinCollectHolder* holder = al::getSceneObj<CoinCollectHolder>(this);
     holder->registerHintObj(this);
 
     makeActorDead();

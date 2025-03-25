@@ -19,7 +19,6 @@
 #include "Item/CoinCollect2D.h"
 #include "Item/CoinCollectDummy.h"
 #include "Item/CoinCollectHolder.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "Util/PlayerUtil.h"
 
@@ -39,8 +38,7 @@ bool HelpAmiiboCoinCollect::isTriggerTouch(const al::NfpInfo& nfpInfo) const {
 }
 
 bool HelpAmiiboCoinCollect::isEnableUse() {
-    CoinCollectHolder* coinHolder =
-        al::tryGetSceneObj<CoinCollectHolder>(getActor(), SceneObjID_CoinCollectHolder);
+    CoinCollectHolder* coinHolder = al::tryGetSceneObj<CoinCollectHolder>(getActor());
     if (coinHolder == nullptr)
         return false;
 
@@ -106,8 +104,7 @@ void HelpAmiiboCoinCollect::activate() {
 
     al::LiveActor* actor = getActor();
     const sead::Vector3f& playerPos = rs::getPlayerPos(actor);
-    CoinCollectHolder* coinHolder =
-        al::tryGetSceneObj<CoinCollectHolder>(actor, SceneObjID_CoinCollectHolder);
+    CoinCollectHolder* coinHolder = al::tryGetSceneObj<CoinCollectHolder>(actor);
     mStartInvalidateStageMapArea =
         al::tryFindAreaObj(mCoinCollectDummy, "InvalidateStageMapArea", playerPos);
 

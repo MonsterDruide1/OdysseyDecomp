@@ -157,8 +157,8 @@ void calcModelBoundingBoxMtx(sead::Matrix34f*, const LiveActor* actor);
 void submitViewModel(const LiveActor* actor, const sead::Matrix34f&);
 void replaceMaterialTextureRef(LiveActor* actor, nn::g3d::TextureRef*, const char*, const char*);
 void replaceMaterialResTexture(LiveActor* actor, nn::gfx::ResTexture*, const char*, const char*);
-void replaceMaterialResTexture(LiveActor*, const char*, const char*, const nn::gfx::DescriptorSlot,
-                               nn::gfx::TextureView*);
+void replaceMaterialResTexture(LiveActor*, const char*, const char*, nn::gfx::DescriptorSlot,
+                               const nn::gfx::TextureView*);
 void replaceMaterialLayoutTexture(LiveActor* actor, const LayoutTextureRenderObj*, const char*,
                                   const char*);
 void recreateModelDisplayList(const LiveActor* actor);

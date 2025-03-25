@@ -14,7 +14,6 @@
 #include "Library/Stage/StageResourceList.h"
 
 #include "Item/Coin2DCityDirector.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "Util/ActorDimensionKeeper.h"
 #include "Util/SensorMsgFunction.h"
@@ -52,8 +51,7 @@ void Coin2DCity::init(const al::ActorInitInfo& initInfo) {
 }
 
 void Coin2DCity::control() {
-    mSyncCounter =
-        al::getSceneObj<al::StageSyncCounter>(this, SceneObjID_alStageSyncCounter)->getCounter();
+    mSyncCounter = al::getSceneObj<al::StageSyncCounter>(this)->getCounter();
     if (mLightTime > -1 && mCityDirector->isTriggerBeat()) {
         if (mNextCoin != nullptr && mLightTime == 1)
             mNextCoin->startLight();
@@ -87,8 +85,7 @@ void Coin2DCity::startLight() {
         al::startVisAnim(this, "LightOn");
     }
 
-    al::StageSyncCounter* syncCounter =
-        al::getSceneObj<al::StageSyncCounter>(this, SceneObjID_alStageSyncCounter);
+    al::StageSyncCounter* syncCounter = al::getSceneObj<al::StageSyncCounter>(this);
     if (mSyncCounter == syncCounter->getCounter() && mCityDirector->isTriggerBeat()) {
         if (mNextCoin != nullptr && mLightTime == 1)
             mNextCoin->startLight();

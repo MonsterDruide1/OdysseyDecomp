@@ -7,6 +7,8 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Scene/ISceneObj.h"
 
+#include "Scene/SceneObjFactory.h"
+
 namespace al {
 struct NfpInfo;
 
@@ -22,6 +24,8 @@ class SearchAmiiboDataTable;
 
 class AmiiboNpcDirector : public al::ISceneObj, public al::IUseHioNode, public al::IUseAudioKeeper {
 public:
+    static constexpr s32 sSceneObjId = SceneObjID_AmiiboNpcDirector;
+
     AmiiboNpcDirector();
 
     const char* getSceneObjName() const override;
