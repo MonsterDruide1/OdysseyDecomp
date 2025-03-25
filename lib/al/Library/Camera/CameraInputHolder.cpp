@@ -4,7 +4,7 @@
 
 #include "Library/Camera/SimpleCameraInput.h"
 
-al::CameraInputHolder::CameraInputHolder(const s32 size) : mInputsSize(size) {
+al::CameraInputHolder::CameraInputHolder(s32 size) : mInputsSize(size) {
     mInputs = new SimpleCameraInput*[mInputsSize];
     for (s32 index = 0; index < mInputsSize; index++)
         mInputs[index] = nullptr;

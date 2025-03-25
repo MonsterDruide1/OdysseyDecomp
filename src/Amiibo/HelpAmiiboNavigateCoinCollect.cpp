@@ -10,7 +10,6 @@
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollectHolder.h"
 #include "ModeBalloon/TimeBalloonHintArrow.h"
-#include "Scene/SceneObjFactory.h"
 
 HelpAmiiboNavigateCoinCollect::HelpAmiiboNavigateCoinCollect(HelpAmiiboDirector* director,
                                                              al::LiveActor* actor)
@@ -29,9 +28,8 @@ bool HelpAmiiboNavigateCoinCollect::isTriggerTouch(const al::NfpInfo& nfpInfo) c
 
 void HelpAmiiboNavigateCoinCollect::activate() {
     HelpAmiiboExecutor::activate();
-    CoinCollect* coinCollect =
-        al::getSceneObj<CoinCollectHolder>(getActor(), SceneObjID_CoinCollectHolder)
-            ->tryFindAliveCoinCollect(sead::Vector3f::zero, true);
+    CoinCollect* coinCollect = al::getSceneObj<CoinCollectHolder>(getActor())
+                                   ->tryFindAliveCoinCollect(sead::Vector3f::zero, true);
 
     if (coinCollect == nullptr) {
         al::startSe(getDirector(), "AmiiboKoopa");
