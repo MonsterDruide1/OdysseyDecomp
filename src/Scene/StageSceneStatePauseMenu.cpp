@@ -94,8 +94,8 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
     al::onSyncAppearSubActor(marioHat, capManEyes);
     al::startAction(capManEyes, "Wait");
 
-    mSelectParts =
-        new MenuSelectParts("[ポーズメニュー]選択肢", mMenuLayout, mMarioActor, layoutInitInfo, 6);
+    mSelectParts = new MenuSelectParts("[ポーズメニュー]選択肢", mMenuLayout, mMarioActor,
+                                       layoutInitInfo, cMenuItemAmount + 1);
     mMenuGuide = new al::SimpleLayoutAppearWaitEnd("[ポーズメニュー]フッター", "MenuGuide",
                                                    layoutInitInfo, nullptr, false);
     mMenuRight = new al::SimpleLayoutAppearWaitEnd("[ポーズメニュー]権利", "MenuRight",

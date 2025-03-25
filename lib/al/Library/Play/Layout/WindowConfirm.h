@@ -34,7 +34,7 @@ public:
     void setTxtList(s32, const char16*);
     void setListNum(s32);
     void setCancelIdx(s32);
-    void appear();
+    void appear() override;
     void appearWithChoicingCancel();
     bool isNerveEnd();
     bool tryEnd();
