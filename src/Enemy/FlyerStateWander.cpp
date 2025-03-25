@@ -40,8 +40,9 @@ void FlyerStateWander::exeWander() {
     }
 
     const al::ActorParamMove* actorParamMove = mFlyerStateWanderParam->getActorParamMove();
-    al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->_0, actorParamMove->_4,
-                           actorParamMove->_8, actorParamMove->_c);
+    al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->forceFront,
+                           actorParamMove->forceGravity, actorParamMove->decay,
+                           actorParamMove->turnDegrees);
 
     if (al::isGreaterEqualStep(this, mNerveTime))
         al::setNerve(this, &Wait);

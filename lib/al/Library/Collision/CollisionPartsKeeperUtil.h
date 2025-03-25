@@ -7,6 +7,8 @@ class CollisionPartsFilterBase;
 class IUseCollision;
 class Triangle;
 class TriangleFilterBase;
+
+bool isFloorCode(const Triangle&, const char*);
 }  // namespace al
 
 namespace alCollisionUtil {
