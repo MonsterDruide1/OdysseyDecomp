@@ -5,9 +5,9 @@
 namespace al {
 struct ActorParamMove {
 public:
-    f32 _0;
-    f32 _4;
-    f32 _8;
-    f32 _c;
+    f32 forceFront;
+    f32 forceGravity;
+    f32 decay;
+    f32 turnDegrees;
 };
 }  // namespace al
