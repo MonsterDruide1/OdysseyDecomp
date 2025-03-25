@@ -3,6 +3,7 @@
 #include "Library/Base/StringUtil.h"
 
 #include "System/GameDataFunction.h"
+#include "System/GameProgressData.h"
 
 // NON_MATCHING
 void GameDataFile::HintInfo::clear() {
@@ -92,4 +93,17 @@ bool GameDataFile::HintInfo::testFunc(s32 curWorldId, bool isGameClear, s32 scen
     if (mProgressBitflag.countOnBit())
         return mProgressBitflag.isOnBit(scenarioNo - 1);
     return true;
+}
+
+bool GameDataFile::isGameClear() const {
+    return isUnlockedWorld(GameDataFunction::getWorldIndexPeach()) &&
+           isAlreadyGoWorld(GameDataFunction::getWorldIndexPeach());
+}
+
+bool GameDataFile::isUnlockedWorld(s32 index) const {
+    return mGameProgressData->isUnlockWorld(index);
+}
+
+bool GameDataFile::isAlreadyGoWorld(s32 index) const {
+    return mGameProgressData->isAlreadyGoWorld(index);
 }

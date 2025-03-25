@@ -66,6 +66,8 @@
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
+#include "Npc/Bird.h"
+#include "Npc/BirdPlayerGlideCtrl.h"
 #include "Npc/KuriboGirl.h"
 
 const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
@@ -87,9 +89,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BazookaElectric", nullptr},
     {"BendLeafTree", nullptr},
     {"BgmPlayObj", nullptr},
-    {"Bird", nullptr},
+    {"Bird", al::createActorFunction<Bird>},
     {"BirdCarryMeat", nullptr},
-    {"BirdPlayerGlideCtrl", nullptr},
+    {"BirdPlayerGlideCtrl", al::createActorFunction<BirdPlayerGlideCtrl>},
     {"BlockBrick", nullptr},
     {"BlockBrick2D", nullptr},
     {"BlockBrickBig2D", nullptr},
