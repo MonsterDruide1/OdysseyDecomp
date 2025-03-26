@@ -75,8 +75,8 @@ void startPadRumbleNo3DWithParam(al::PadRumbleDirector* director, const char* na
 }
 
 void startPadRumbleNo3DWithParam(al::PadRumbleDirector* director, const char* name, f32 volumeLeft,
-                                 f32 volumeRight, f32 pichLeft, f32 pichRight, s32 port) {
-    al::PadRumbleParam rumbleParam(0.0f, 0.0f, volumeLeft, volumeRight, pichLeft, pichRight);
+                                 f32 volumeRight, f32 pitchLeft, f32 pitchRight, s32 port) {
+    al::PadRumbleParam rumbleParam(0.0f, 0.0f, volumeLeft, volumeRight, pitchLeft, pitchRight);
     director->startRumbleNo3D(name, rumbleParam, port);
 }
 
@@ -103,9 +103,10 @@ void startPadRumbleNo3DWithParam(const al::LiveActor* actor, const char* name,
 }
 
 void startPadRumbleNo3DWithParam(const al::LiveActor* actor, const char* name, f32 volumeLeft,
-                                 f32 volumeRight, f32 pichLeft, f32 pichRight, s32 port) {
+                                 f32 volumeRight, f32 pitchLeft, f32 pitchRight, s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(actor);
-    startPadRumbleNo3DWithParam(director, name, volumeLeft, volumeRight, pichLeft, pichRight, port);
+    startPadRumbleNo3DWithParam(director, name, volumeLeft, volumeRight, pitchLeft, pitchRight,
+                                port);
 }
 
 void stopPadRumbleOneTime(al::PadRumbleDirector* director, const char* name, s32 port) {
@@ -118,6 +119,7 @@ void stopPadRumbleOneTime(const al::LiveActor* actor, const char* name, s32 port
 
 void startPadRumbleLoop(al::PadRumbleDirector* director, const char* name,
                         const sead::Vector3f* position, f32 near, f32 far, s32 port) {
+    // BUG: ignores near and far parameters
     director->startRumbleLoop(name, position, {}, port);
 }
 
@@ -252,11 +254,11 @@ void changePadRumbleLoopVolmueEaseInRange(const al::LiveActor* actor, const char
 }
 
 void changePadRumbleLoopPitch(const al::LiveActor* actor, const char* name,
-                              const sead::Vector3f* position, f32 pichLeft, f32 pichRight,
+                              const sead::Vector3f* position, f32 pitchLeft, f32 pitchRight,
                               s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(actor);
     if (port >= 0) {
-        director->changeRumbleLoopPitch(name, position, pichLeft, pichRight, port);
+        director->changeRumbleLoopPitch(name, position, pitchLeft, pitchRight, port);
         return;
     }
 
@@ -265,10 +267,11 @@ void changePadRumbleLoopPitch(const al::LiveActor* actor, const char* name,
         if (al::isPlayerDead(actor, i))
             continue;
         s32 port = al::getPlayerPort(actor, i);
-        director->changeRumbleLoopPitch(name, position, pichLeft, pichRight, port);
+        director->changeRumbleLoopPitch(name, position, pitchLeft, pitchRight, port);
     }
 }
 
+// TODO: add proper names to a, b, c, d, e, f and in header
 void startPadRumbleDirectValue(const al::LiveActor* actor, f32 a, f32 b, f32 c, f32 d, f32 e, f32 f,
                                s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(actor);
@@ -336,8 +339,8 @@ void makePadRumbleParamNearFarVolumeLR(al::PadRumbleParam* rumbleParam, f32 near
 }
 
 void makePadRumbleParamNearFarVolumePitch(al::PadRumbleParam* rumbleParam, f32 near, f32 far,
-                                          f32 volume, f32 pich) {
-    makePadRumbleParamNearFarVolumePitchLR(rumbleParam, near, far, volume, volume, pich, pich);
+                                          f32 volume, f32 pitch) {
+    makePadRumbleParamNearFarVolumePitchLR(rumbleParam, near, far, volume, volume, pitch, pitch);
 }
 
 void makePadRumbleParamNearFarVolumePitchLR(al::PadRumbleParam* rumbleParam, f32 near, f32 far,
