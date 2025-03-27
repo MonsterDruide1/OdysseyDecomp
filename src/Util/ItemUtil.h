@@ -22,11 +22,14 @@ s32 getItemType(const al::ActorInitInfo& info);
 s32 getItemType(const char* name);
 bool isItemTypeKuriboMini(s32* out, s32 type);
 
-void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info, bool a3);
-bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info, bool a3);
+void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
+                             bool isAppearAbove);
+bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
+                                bool isAppearAbove);
 void initItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info);
 bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info);
-bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info, bool a4);
+bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info,
+                 bool isAppearAbove);
 
 Shine* tryInitShineByPlacementInfoWithItemMenu(const al::ActorInitInfo& info);
 Shine* initShineByPlacementInfo(const al::ActorInitInfo& info);

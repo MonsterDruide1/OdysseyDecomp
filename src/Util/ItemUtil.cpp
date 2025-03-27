@@ -127,7 +127,7 @@ bool isItemTypeKuriboMini(s32* out, s32 type) {
 }
 
 bool tryInitItemAndAddToKeeper(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info,
-                               bool a4) {
+                               bool isAppearAbove) {
     if (itemType == ItemType::Random) {
         actor->initItemKeeper(2);
         al::addItem(actor, info, "ライフアップアイテム[飛出し出現]", "ライフアップ", nullptr, -1,
@@ -138,68 +138,72 @@ bool tryInitItemAndAddToKeeper(al::LiveActor* actor, s32 itemType, const al::Act
 
     actor->initItemKeeper(1);
 
-    const char* str;
+    const char* name;
     switch (itemType) {
     case ItemType::Coin:
     case ItemType::Coin10:
     case ItemType::Coin100:
-        str = "コイン[自動取得]";
+        name = "コイン[自動取得]";
         break;
     case ItemType::CoinBlow:
-        str = "コイン[放出]";
+        name = "コイン[放出]";
         break;
     case ItemType::CoinBlowVeryLittle:
-        str = "コイン[放出・極小]";
+        name = "コイン[放出・極小]";
         break;
     case ItemType::CoinPopUp:
-        str = "コイン[飛出し出現]";
+        name = "コイン[飛出し出現]";
         break;
     case ItemType::CoinPopUpWithoutHitReaction:
-        str = "コイン[飛出し出現・出現音無し]";
+        name = "コイン[飛出し出現・出現音無し]";
         break;
     case ItemType::Coin3:
-        str = "コインx3[自動取得]";
+        name = "コインx3[自動取得]";
         break;
     case ItemType::Coin5:
-        str = "コインx5[自動取得]";
+        name = "コインx5[自動取得]";
         break;
     case ItemType::Coin10Auto:
-        str = "コインx10[自動取得]";
+        name = "コインx10[自動取得]";
         break;
     case ItemType::Coin5Count:
-        str = "コイン[自動取得5枚]";
+        name = "コイン[自動取得5枚]";
         break;
     case ItemType::LifeUpItem:
-        str = a4 ? "ライフアップアイテム[真上出現]" : "ライフアップアイテム[飛出し出現]";
+        name =
+            isAppearAbove ? "ライフアップアイテム[真上出現]" : "ライフアップアイテム[飛出し出現]";
         break;
     case ItemType::LifeUpItemBack:
-        str = "ライフアップアイテム[逆向き飛出し出現]";
+        name = "ライフアップアイテム[逆向き飛出し出現]";
         break;
     case ItemType::LifeMaxUpItem:
-        str = a4 ? "最大ライフアップアイテム[真上出現]" : "最大ライフアップアイテム[飛出し出現]";
+        name = isAppearAbove ? "最大ライフアップアイテム[真上出現]" :
+                               "最大ライフアップアイテム[飛出し出現]";
         break;
     case ItemType::AirBubble:
-        str = "空気泡";
+        name = "空気泡";
         break;
     case ItemType::DotMarioCat:
-        str = al::isPercentProbability(10.0f) ? "ドットキャラクター(レア)" : "コイン[自動取得]";
+        name = al::isPercentProbability(10.0f) ? "ドットキャラクター(レア)" : "コイン[自動取得]";
         break;
     case ItemType::CoinStackBound:
-        str = "跳ねる積みコイン";
+        name = "跳ねる積みコイン";
         break;
     default:
         return false;
     }
 
-    al::addItem(actor, info, str, 0);
+    al::addItem(actor, info, name, 0);
     return true;
 }
 
-void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info, bool a3) {
-    tryInitItemByPlacementInfo(actor, info, a3);
+void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
+                             bool isAppearAbove) {
+    tryInitItemByPlacementInfo(actor, info, isAppearAbove);
 }
 
-bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info, bool a3) {
+bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
+                                bool isAppearAbove) {
     const char* itemType = nullptr;
     if ((al::tryGetStringArg(&itemType, info, "ItemType") ||
          al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") ||
@@ -207,7 +211,7 @@ bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& i
         !al::isEqualString(itemType, "None")) {
         s32 type = getItemType(itemType);
         if (type != -1 && type != ItemType::Shine)
-            return tryInitItemAndAddToKeeper(actor, type, info, a3);
+            return tryInitItemAndAddToKeeper(actor, type, info, isAppearAbove);
     }
     return false;
 }
@@ -216,6 +220,7 @@ void initItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& in
     tryInitItem2DByPlacementInfo(actor, info);
 }
 
+// https://decomp.me/scratch/xEiXr
 // NON_MATCHING: Extra comparison and the default return is placed in a different spot
 bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info) {
     const char* itemType = nullptr;
@@ -247,17 +252,20 @@ bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo&
     return false;
 }
 
-bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info, bool a4) {
+bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info,
+                 bool isAppearAbove) {
     return itemType != -1 && itemType != ItemType::Shine &&
-           tryInitItemAndAddToKeeper(actor, itemType, info, a4);
+           tryInitItemAndAddToKeeper(actor, itemType, info, isAppearAbove);
 }
 
 Shine* tryInitShineByPlacementInfoWithItemMenu(const al::ActorInitInfo& info) {
     const char* itemType = nullptr;
-    if ((!al::tryGetStringArg(&itemType, info, "ItemType") &&
-         !al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") &&
-         !al::tryGetStringArg(&itemType, info, "ItemType2D3D")) ||
-        al::isEqualString(itemType, "None") || getItemType(itemType) != ItemType::Shine)
+    if (!al::tryGetStringArg(&itemType, info, "ItemType") &&
+        !al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") &&
+        !al::tryGetStringArg(&itemType, info, "ItemType2D3D"))
+        return nullptr;
+
+    if (al::isEqualString(itemType, "None") || getItemType(itemType) != ItemType::Shine)
         return nullptr;
 
     return initShineByPlacementInfo(info);
@@ -272,26 +280,26 @@ Shine* initShineByPlacementInfo(const al::ActorInitInfo& info) {
 }
 
 Shine* tryInitLinkShine(const al::ActorInitInfo& info, const char* name, s32 linkIndex) {
-    if (al::isExistLinkChild(info, name, linkIndex)) {
-        Shine* shine = new Shine("シャイン");
-        al::initLinksActor(shine, info, name, linkIndex);
-        if (al::isEqualString(name, ShineFunction::getMovePointLinkName()))
-            shine->initAppearDemoFromHost(info, al::getTrans(shine));
-        shine->makeActorDead();
-        return shine;
-    }
-    return nullptr;
+    if (!al::isExistLinkChild(info, name, linkIndex))
+        return nullptr;
+
+    Shine* shine = new Shine("シャイン");
+    al::initLinksActor(shine, info, name, linkIndex);
+    if (al::isEqualString(name, ShineFunction::getMovePointLinkName()))
+        shine->initAppearDemoFromHost(info, al::getTrans(shine));
+    shine->makeActorDead();
+    return shine;
 }
 
 Shine* tryInitLinkShineHintPhoto(const al::ActorInitInfo& info, const char* name, s32 linkIndex) {
-    if (al::isExistLinkChild(info, name, linkIndex)) {
-        Shine* shine = new Shine("シャイン");
-        shine->setHintPhotoShine(info);
-        al::initLinksActor(shine, info, name, linkIndex);
-        shine->makeActorDead();
-        return shine;
-    }
-    return nullptr;
+    if (!al::isExistLinkChild(info, name, linkIndex))
+        return nullptr;
+
+    Shine* shine = new Shine("シャイン");
+    shine->setHintPhotoShine(info);
+    al::initLinksActor(shine, info, name, linkIndex);
+    shine->makeActorDead();
+    return shine;
 }
 
 Shine* initLinkShine(const al::ActorInitInfo& info, const char* name, s32 linkIndex) {
@@ -299,16 +307,16 @@ Shine* initLinkShine(const al::ActorInitInfo& info, const char* name, s32 linkIn
 }
 
 Shine* initLinkShopShine(const al::ActorInitInfo& info, const char* name) {
-    if (al::isExistLinkChild(info, name, 0)) {
-        Shine* shine = new Shine("シャイン");
-        shine->setShopShine();
-        al::initLinksActor(shine, info, name, 0);
-        if (al::isEqualString(name, ShineFunction::getMovePointLinkName()))
-            shine->initAppearDemoFromHost(info, al::getTrans(shine));
-        shine->makeActorDead();
-        return shine;
-    }
-    return nullptr;
+    if (!al::isExistLinkChild(info, name, 0))
+        return nullptr;
+
+    Shine* shine = new Shine("シャイン");
+    shine->setShopShine();
+    al::initLinksActor(shine, info, name, 0);
+    if (al::isEqualString(name, ShineFunction::getMovePointLinkName()))
+        shine->initAppearDemoFromHost(info, al::getTrans(shine));
+    shine->makeActorDead();
+    return shine;
 }
 
 Shine* initLinkShineChipShine(const al::ActorInitInfo& info) {
@@ -483,6 +491,7 @@ void appearItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, const sead::
     al::appearItem(actor);
 }
 
+// https://decomp.me/scratch/FI77t
 // NON_MATCHING: IDA shows the quat variable being used as a vector
 void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
                               const sead::Vector3f& offset) {
@@ -509,7 +518,7 @@ void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
     al::appearItem(actor, al::getTrans(actor), quat, nullptr);
 }
 
-// Requires RandomItemSelector
+// TODO: Requires RandomItemSelector
 // void appearRandomItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset) {}
 
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 a3, f32 a4) {
@@ -518,7 +527,7 @@ bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans
 
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans,
                                const sead::Quatf& quat, s32 a3, f32 a4) {
-    if (a3 % 10)
+    if (a3 % 10 != 0)
         return false;
 
     sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
@@ -530,7 +539,7 @@ bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans
 }
 
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 a3, f32 a4) {
-    if (a3 % 10)
+    if (a3 % 10 != 0)
         return false;
 
     sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
@@ -660,4 +669,11 @@ void setProjectionMtxAsEmptyModel2d(al::LiveActor* actor, const sead::Vector2f& 
     al::setModelProjMtx0(actor->getModelKeeper(), matrix);
 }
 
+// void addDemoRacePrizeCoin(al::LiveActor* actor); TODO
+
 }  // namespace rs
+
+namespace StageSceneFunction {
+// void appearPlayerDeadCoin(al::LiveActor* actor); TODO
+
+}  // namespace StageSceneFunction

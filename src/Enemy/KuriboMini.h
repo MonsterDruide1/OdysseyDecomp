@@ -14,7 +14,7 @@ public:
     virtual void appearPop();
     virtual void appearPopBack();
     void control() override;
-    void checkSandSinkPrecisely();
+    bool checkSandSinkPrecisely();
     void updateCollider() override;
     void startClipped() override;
     void endClipped() override;
@@ -39,7 +39,7 @@ public:
     void exeLand();
     bool tryShiftChaseOrWander();
     void exeSink();
-    void updateSink();
+    bool updateSink();
     void exeReset();
     void exeSandGeyser();
     void exeDrown();
