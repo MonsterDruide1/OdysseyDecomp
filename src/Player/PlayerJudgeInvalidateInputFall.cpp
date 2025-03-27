@@ -18,9 +18,8 @@ void PlayerJudgeInvalidateInputFall::reset() {
 
 void PlayerJudgeInvalidateInputFall::update() {
     mInvalidateInputFallArea = nullptr;
-    if (rs::isCollidedGround(mCollision))
-        return;
-    mInvalidateInputFallArea = mAreaChecker->tryFindInvalidateInputFall(al::getTrans(mActor));
+    if (!rs::isCollidedGround(mCollision))
+        mInvalidateInputFallArea = mAreaChecker->tryFindInvalidateInputFall(al::getTrans(mActor));
 }
 
 bool PlayerJudgeInvalidateInputFall::judge() const {
