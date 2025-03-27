@@ -2,8 +2,6 @@
 
 #include "Library/Scene/SceneObjUtil.h"
 
-#include "Scene/SceneObjFactory.h"
-#include "System/GameDataHolderAccessor.h"
 #include "System/GameDataUtil.h"
 
 KidsModeLayoutAccessor::KidsModeLayoutAccessor() {}
@@ -14,19 +12,16 @@ const char* KidsModeLayoutAccessor::getSceneObjName() const {
 
 namespace rs {
 void setKidsModeLayoutDisable(const al::IUseSceneObjHolder* user) {
-    al::getSceneObj<KidsModeLayoutAccessor>(user, SceneObjID_KidsModeLayoutAccessor)
-        ->setKidsModeLayoutDisable();
+    al::getSceneObj<KidsModeLayoutAccessor>(user)->setKidsModeLayoutDisable();
 }
 
 void setKidsModeLayoutEnable(const al::IUseSceneObjHolder* user) {
-    al::getSceneObj<KidsModeLayoutAccessor>(user, SceneObjID_KidsModeLayoutAccessor)
-        ->setKidsModeLayoutEnable();
+    al::getSceneObj<KidsModeLayoutAccessor>(user)->setKidsModeLayoutEnable();
 }
 
 bool isKidsModeLayoutDisable(const al::IUseSceneObjHolder* user) {
     return !rs::isKidsMode(user) ||
-           al::getSceneObj<KidsModeLayoutAccessor>(user, SceneObjID_KidsModeLayoutAccessor)
-               ->isKidsModeLayoutDisable();
+           al::getSceneObj<KidsModeLayoutAccessor>(user)->isKidsModeLayoutDisable();
 }
 
 }  // namespace rs

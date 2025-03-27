@@ -614,15 +614,15 @@ void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
 
 s32 getPlayerControllerPort(s32 playerNo) {
     auto* manager = sead::ControllerMgr::instance();
-    sead::Controller* controller =
-        manager->getControllerByOrder(sead::ControllerDefine::ControllerId::_15, playerNo);
+    sead::Controller* controller = manager->getControllerByOrder(
+        sead::ControllerDefine::ControllerId::cController_Npad, playerNo);
     return manager->findControllerPort(controller);
 }
 
 s32 getTouchPanelPort() {
     auto* manager = sead::ControllerMgr::instance();
-    sead::Controller* controller =
-        manager->getControllerByOrder(sead::ControllerDefine::ControllerId::_16, 0);
+    sead::Controller* controller = manager->getControllerByOrder(
+        sead::ControllerDefine::ControllerId::cController_PadTouch, 0);
     return manager->findControllerPort(controller);
 }
 

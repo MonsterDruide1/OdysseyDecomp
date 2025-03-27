@@ -299,7 +299,7 @@ SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor*, const char*
 void bindSklAnimRetargetting(const LiveActor*, const SklAnimRetargettingInfo*);
 SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor*, const LiveActor*,
                                                    const sead::Vector3f&);
-void unbindSklAnimRetargetting(const LiveActor);
+void unbindSklAnimRetargetting(const LiveActor*);
 
 // Partial Skl
 

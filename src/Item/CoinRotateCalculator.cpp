@@ -3,11 +3,8 @@
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"
-#include "Library/Scene/ISceneObj.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Stage/StageResourceList.h"
-
-#include "Scene/SceneObjFactory.h"
 
 CoinRotateCalculator::CoinRotateCalculator(al::LiveActor* actor) : mActor(actor) {}
 
@@ -16,8 +13,7 @@ inline f32 modDegree(f32 value) {
 }
 
 inline f32 getObjAngle(al::LiveActor* actor, bool isInWater, s32 objCountOffset) {
-    al::StageSyncCounter* syncObj =
-        al::getSceneObj<al::StageSyncCounter>(actor, SceneObjID_alStageSyncCounter);
+    al::StageSyncCounter* syncObj = al::getSceneObj<al::StageSyncCounter>(actor);
     f32 objCounter = modDegree(syncObj->getCounter() + objCountOffset);
 
     return (isInWater ? 2.0f : 3.0f) * objCounter;
