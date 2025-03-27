@@ -35,10 +35,10 @@ private:
     AreaObjDirector* mAreaObjDirector;
     const PlayerHolder* mPlayerHolder;
     const CameraDirector* mCameraDirector;
-    SwitchAreaTargetInfo* mSwitchAreaTargetInfo;
-    sead::PtrArray<SwitchOnAreaGroup> mSwitchOnAreaGroups;
-    sead::PtrArray<SwitchKeepOnAreaGroup> mSwitchKeepOnAreaGroups;
-    bool mHasSwitchAreas;
+    SwitchAreaTargetInfo* mSwitchAreaTargetInfo = nullptr;
+    sead::PtrArray<SwitchOnAreaGroup> mSwitchOnAreaGroups = {};
+    sead::PtrArray<SwitchKeepOnAreaGroup> mSwitchKeepOnAreaGroups = {};
+    bool mHasSwitchAreas = false;
 };
 
 static_assert(sizeof(SwitchAreaDirector) == 0x50);
