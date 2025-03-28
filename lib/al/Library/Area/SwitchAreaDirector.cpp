@@ -1,28 +1,13 @@
 #include "Library/Area/SwitchAreaDirector.h"
 
 #include "Library/Area/AreaObjDirector.h"
+#include "Library/Area/SwitchAreaTargetInfo.h"
 #include "Library/Area/SwitchKeepOnAreaGroup.h"
 #include "Library/Area/SwitchOnAreaGroup.h"
 #include "Library/Camera/CameraDirector.h"
 #include "Library/Camera/CameraUtil.h"
 
 namespace al {
-// TODO
-class SwitchAreaTargetInfo {
-public:
-    SwitchAreaTargetInfo(s32, s32);
-    SwitchAreaTargetInfo(sead::Vector3f*, s32);
-
-    void update(const PlayerHolder*, const SceneCameraInfo*);
-
-public:
-    sead::Vector3f* _0;
-    s32 _8;
-    unsigned char padding[0x24];
-};
-
-static_assert(sizeof(SwitchAreaTargetInfo) == 0x30);
-
 SwitchAreaDirector* SwitchAreaDirector::tryCreate(AreaObjDirector* areaObjDirector,
                                                   const PlayerHolder* playerHolder,
                                                   const CameraDirector* cameraDirector,
@@ -39,7 +24,7 @@ void SwitchAreaDirector::update() {
     mSwitchAreaTargetInfo->update(mPlayerHolder, mCameraDirector->getSceneCameraInfo());
 
     for (SwitchOnAreaGroup& switchOnAreaGroup : mSwitchOnAreaGroups)
-        switchOnAreaGroup.update(mSwitchAreaTargetInfo->_0, mSwitchAreaTargetInfo->_8);
+        switchOnAreaGroup.update(mSwitchAreaTargetInfo->get_0(), mSwitchAreaTargetInfo->get_8());
 
     getCameraAt(mCameraDirector->getSceneCameraInfo(), 0);
 
