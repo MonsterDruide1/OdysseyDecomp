@@ -10,7 +10,7 @@ with open('odyssey_functions.csv', 'r') as file:
         # Address,Quality,Size,Name
         function_csv[int(parts[0].strip(), 16)] = (parts[1].strip(), int(parts[2].strip()), parts[3].strip())
 
-# offset: (file, name)
+# offset: (file, name, lazy?)
 drive_list = {}
 
 with open('file_list_raw.csv', 'r') as file:
@@ -18,13 +18,14 @@ with open('file_list_raw.csv', 'r') as file:
     last_folder = ""
     last_file = ""
     for line in lines:
-        parts = line.split(';')
-        # Folder;Object;Demangled Name;Mangled Name;Start Address
+        parts = line.split('\t')
+        # Folder;Object;Not in Obj;Demangled Name;Mangled Name;Start Address
+        # tabs are used to separate the columns
         if parts[0].strip() != "":
             last_folder = parts[0].strip()
         if parts[1].strip() != "":
             last_file = parts[1].strip()
-        drive_list[int(parts[4].strip(), 16)] = (last_folder+"/"+last_file, parts[3].strip())
+        drive_list[int(parts[5].strip(), 16)] = (last_folder+"/"+last_file, parts[4].strip(), parts[2].strip() == "TRUE")
 
 # verify that no function listed in the file list is missing from the function list
 for offset in drive_list:
@@ -37,6 +38,7 @@ for offset in drive_list:
 
 print("Collecting symbols...")
 
+"""
 class Symbol:
     def __init__(self, name, start, end):
         self.name = name
@@ -124,6 +126,7 @@ for segment in segments.segments:
             unref_symbols += 1
     print("Unreferenced symbols in %s: %d" % (segment.name, unref_symbols))
 
+"""
 print("Generating .text list...")
 
 # name: {.text: [offset: name], .data: [start, end], ...}
@@ -135,15 +138,18 @@ for function in function_csv:
     if function not in drive_list:
         file = last_file
         unknown_file_counter += 1
+        lazy = False
     else:
         file = drive_list[function][0]
         last_file = file
+        lazy = drive_list[function][2]
     
     if not file in file_list:
         file_list[file] = {".text": []}
     
-    file_list[file][".text"].append({function: function_csv[function][2]})
+    file_list[file][".text"].append({function: ("LAZY " if lazy else "") + function_csv[function][2]})
 
+"""
 def generate_section(section, symbols):
     global file_list
     # contains file names in order of appearance
@@ -174,6 +180,7 @@ def generate_section(section, symbols):
 print("Unknown files: %d" % unknown_file_counter)
 
 print("Writing output files...")
+"""
 
 import yaml
 
