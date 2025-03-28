@@ -37,11 +37,8 @@ void startFreezeAction(IUseLayoutAction* layout, const char* actionName, f32 fra
 }
 
 void startFreezeActionEnd(IUseLayoutAction* layout, const char* actionName, const char* paneName) {
-    f32 animFrameMax = getActionFrameMax(layout, actionName, paneName);
-    startAction(layout, actionName, paneName);
-    LayoutPaneGroup* paneGroup = getLayoutPaneGroup(layout, paneName);
-    paneGroup->setAnimFrame(animFrameMax);
-    paneGroup->setAnimFrameRate(0.0f);
+    f32 animFrameEnd = getActionFrameMax(layout, actionName, paneName);
+    startFreezeAction(layout, actionName, animFrameEnd, paneName);
 }
 
 f32 getActionFrameMax(const IUseLayoutAction* layout, const char* actionName,
@@ -53,18 +50,15 @@ void startFreezeGaugeAction(IUseLayoutAction* layout, f32 value, f32 minFrame, f
                             const char* actionName, const char* paneName) {
     f32 frame =
         calcRate01(value, minFrame, maxFrame) * getActionFrameMax(layout, actionName, paneName);
-    startAction(layout, actionName, paneName);
-    LayoutPaneGroup* paneGroup = getLayoutPaneGroup(layout, paneName);
-    paneGroup->setAnimFrame(frame);
-    paneGroup->setAnimFrameRate(0.0f);
+    startFreezeAction(layout, actionName, frame, paneName);
 }
 
 bool tryStartAction(IUseLayoutAction* layout, const char* actionName, const char* paneName) {
-    if (isExistAction(layout, actionName, paneName)) {
-        startAction(layout, actionName, paneName);
-        return true;
-    }
-    return false;
+    if (!isExistAction(layout, actionName, paneName))
+        return false;
+
+    startAction(layout, actionName, paneName);
+    return true;
 }
 
 bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName) {
@@ -79,8 +73,8 @@ bool isActionEnd(const IUseLayoutAction* layout, const char* paneName) {
     return true;
 }
 
-bool isExistAction(const IUseLayoutAction* layout, const char* actionName) {
-    return layout->getLayoutActionKeeper()->getLayoutPaneGroup(actionName) != nullptr;
+bool isExistAction(const IUseLayoutAction* layout, const char* paneName) {
+    return layout->getLayoutActionKeeper()->getLayoutPaneGroup(paneName) != nullptr;
 }
 
 bool isActionOneTime(const IUseLayoutAction* layout, const char* actionName, const char* paneName) {
