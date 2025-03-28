@@ -54,8 +54,6 @@ public:
     CameraPoseUpdater* getPoseUpdater(s32 index);
     CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32,
                                           const sead::Matrix34f&);
-    CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32,
-                                          const sead::Matrix34f&, bool);
     CameraTicket* createCamera(CameraPoser*, const PlacementId*, const char*, s32,
                                const sead::Matrix34f&, bool);
     CameraTicket* createObjectCamera(const PlacementId*, const char*, const char*, s32,
