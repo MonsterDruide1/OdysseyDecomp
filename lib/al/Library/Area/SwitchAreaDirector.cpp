@@ -32,39 +32,19 @@ SwitchAreaDirector* SwitchAreaDirector::tryCreate(AreaObjDirector* areaObjDirect
                                   switchOnAreaGroupCount, switchKeepOnAreaGroupCount);
 }
 
-// NON_MATCHING
 void SwitchAreaDirector::update() {
     if (!mHasSwitchAreas)
         return;
 
     mSwitchAreaTargetInfo->update(mPlayerHolder, mCameraDirector->getSceneCameraInfo());
 
-    if (mSwitchOnAreaGroups.size() != 0) {
-        s64 lVar4 = mSwitchOnAreaGroups.size() * 8L;
-        auto** ppSVar2 = mSwitchOnAreaGroups.data();
-        do {
-            (*ppSVar2)->update(mSwitchAreaTargetInfo->_0, mSwitchAreaTargetInfo->_8);
-            lVar4 -= 8L;
-            ppSVar2++;
-        } while (lVar4 != 0L);
-    }
-    //    for (s32 i = mSwitchOnAreaGroups.size(); i != 0; i--)
-    //        mSwitchOnAreaGroups(i)->update(mSwitchAreaTargetInfo->_0, mSwitchAreaTargetInfo->_8);
+    for (SwitchOnAreaGroup& switchOnAreaGroup : mSwitchOnAreaGroups)
+        switchOnAreaGroup.update(mSwitchAreaTargetInfo->_0, mSwitchAreaTargetInfo->_8);
 
     getCameraAt(mCameraDirector->getSceneCameraInfo(), 0);
 
-    if (mSwitchKeepOnAreaGroups.size() != 0) {
-        s64 lVar4 = mSwitchKeepOnAreaGroups.size() * 8L;
-        auto** ppSVar2 = mSwitchKeepOnAreaGroups.data();
-        do {
-            (*ppSVar2)->update(mSwitchAreaTargetInfo);
-            lVar4 -= 8L;
-            ppSVar2++;
-        } while (lVar4 != 0L);
-    }
-
-    //    for (s32 i = mSwitchKeepOnAreaGroups.size(); i != 0; i--)
-    //        mSwitchKeepOnAreaGroups(i)->update(mSwitchAreaTargetInfo);
+    for (SwitchKeepOnAreaGroup& switchKeepOnAreaGroup : mSwitchKeepOnAreaGroups)
+        switchKeepOnAreaGroup.update(mSwitchAreaTargetInfo);
 }
 
 void SwitchAreaDirector::endInit() {
