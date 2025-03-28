@@ -54,6 +54,16 @@ public:
     void initScreenCoverCtrl();
     void endInit(const ActorInitInfo&);
 
+    StageResourceKeeper* getStageResourceKeeper() const { return mStageResourceKeeper; }
+
+    LiveActorKit* getLiveActorKit() const { return mLiveActorKit; }
+
+    ScreenCoverCtrl* getScreenCoverCtrl() const { return mScreenCoverCtrl; }
+
+    AudioDirector* getAudioDirector() const { return mAudioDirector; }
+
+    DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
+
 private:
     void initLiveActorKitImpl(const SceneInitInfo&, s32, s32, s32);
 
