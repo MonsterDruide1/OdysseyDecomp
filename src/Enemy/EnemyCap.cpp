@@ -76,28 +76,17 @@ void EnemyCap::makeActorAlive() {
     al::setNerve(this, &NrvEnemyCap.Wait);
 }
 
-inline sead::Matrix34f helper(sead::Vector3f v) {
-    std::sin(0.0f);
-    std::sin(0.0f);
-    std::sin(0.0f);
-    std::cos(0.0f);
-    std::cos(0.0f);
-    std::cos(0.0f);
-
-    sead::Matrix34f result = sead::Matrix34f::ident;
-    result.setTranslation(v);
-
-    return result;
-}
-
-// NON_MATCHING: Pain to match
 void EnemyCap::updatePose() {
     if (!mIsNotAtOrigin) {
         sead::Matrix34f baseMtx = *mCapBaseMtx;
         if (mIsUseFollowMtxScale) {
             sead::Vector3f mtxScale;
             al::calcMtxScale(&mtxScale, baseMtx);
-            al::setScale(this, 1.0f * mtxScale);
+            const sead::Vector3f& scale = sead::Vector3f::ones;
+            mtxScale.x *= scale.x;
+            mtxScale.y *= scale.y;
+            mtxScale.z *= scale.z;
+            al::setScale(this, mtxScale);
         }
         al::normalize(&baseMtx);
         al::updatePoseMtx(this, &baseMtx);
@@ -110,39 +99,36 @@ void EnemyCap::updatePose() {
                           sead::Mathf::deg2rad(mLocalRotate.z));
     rotationMatrix.makeR(rotate);
 
-    sead::Matrix34f poseMatrix;
-    poseMatrix.setMul(rotationMatrix, helper(mLocalTrans));
+    sead::Matrix34f translationMatrix;
+    translationMatrix.makeRT({0.0f, 0.0f, 0.0f}, mLocalTrans);
+
+    sead::Matrix34f poseMatrix = translationMatrix * rotationMatrix;
 
     sead::Matrix34f baseMtx = *mCapBaseMtx;
 
     if (mIsUseFollowMtxScale) {
-        sead::Matrix34f rotBaseMtx;
-        rotBaseMtx.setMul(rotationMatrix, baseMtx);
+        sead::Matrix34f rotBaseMtx = baseMtx * rotationMatrix;
 
         sead::Vector3f mtxScale = {0.0f, 0.0f, 0.0f};
         al::calcMtxScale(&mtxScale, rotBaseMtx);
 
-        sead::Vector3f vec;
-        vec.x = mtxScale.x * rotBaseMtx.m[0][3];
-        vec.y = mtxScale.y * rotBaseMtx.m[1][3];
-        vec.z = mtxScale.z * rotBaseMtx.m[2][3];
+        poseMatrix.m[0][3] *= mtxScale.x;
+        poseMatrix.m[1][3] *= mtxScale.y;
+        poseMatrix.m[2][3] *= mtxScale.z;
 
         if (mIsUseLocalScale) {
-            mLocalScale = {mLocalScale.x * mtxScale.x, mLocalScale.y * mtxScale.y,
-                           mLocalScale.z * mtxScale.z};
+            mtxScale.x *= mLocalScale.x;
+            mtxScale.y *= mLocalScale.y;
+            mtxScale.z *= mLocalScale.z;
         }
 
-        rotBaseMtx.m[0][3] = vec.x;
-        rotBaseMtx.m[1][3] = vec.y;
-        rotBaseMtx.m[2][3] = vec.z;
-
-        al::setScale(this, mLocalScale);
+        al::setScale(this, mtxScale);
     } else if (mIsUseLocalScale) {
         al::setScale(this, mLocalScale);
     }
 
     al::normalize(&baseMtx);
-    baseMtx.setMul(poseMatrix, baseMtx);
+    baseMtx = baseMtx * poseMatrix;
     al::updatePoseMtx(this, &baseMtx);
 }
 
