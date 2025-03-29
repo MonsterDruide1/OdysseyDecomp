@@ -41,4 +41,6 @@ void waitGround(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32, f32);
 void slerpUpFront(al::LiveActor*, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
 
 bool calcSlideDir(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
+
+void moveDivingJump(al::LiveActor*, const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32, f32);
 }  // namespace rs
