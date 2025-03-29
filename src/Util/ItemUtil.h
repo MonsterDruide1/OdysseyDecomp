@@ -13,7 +13,8 @@ class SensorMsg;
 class Shine;
 
 namespace rs {
-SEAD_ENUM(ItemType, Coin, Coin2D, CoinBlow, CoinBlowVeryLittle, CoinPopUp, 
+// TODO: Replace this with SEAD_ENUM_EX when its ValueArray constructor matches
+SEAD_ENUM(ItemType, None = -1, Coin, Coin2D, CoinBlow, CoinBlowVeryLittle, CoinPopUp, 
 CoinPopUpWithoutHitReaction, Coin3, Coin5, Coin10, Coin10Auto, Coin5Count, Coin100, LifeUpItem, 
 LifeUpItemBack, LifeUpItem2D, LifeMaxUpItem, LifeMaxUpItem2D, Shine, AirBubble, DotMarioCat, 
 KuriboMini3, KuriboMini8, CoinStackBound, Random);

@@ -21,7 +21,6 @@
 #include "Library/Stage/StageResourceList.h"
 
 #include "Item/Shine.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolder.h"
 #include "Util/SensorMsgFunction.h"
@@ -553,7 +552,7 @@ bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 
 
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 a4,
                                const sead::Vector3f& offset) {
-    if (a4 % 10)
+    if (a4 % 10 != 0)
         return false;
 
     sead::Vector3f localOffset;
