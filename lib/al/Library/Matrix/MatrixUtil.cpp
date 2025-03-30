@@ -266,6 +266,28 @@ void normalizeMtxScale(sead::Matrix34f* out, const sead::Matrix34f& mtx) {
     }
 }
 
+bool al::tryNormalizeMtxScaleOrIdentity(sead::Matrix34f* out, const sead::Matrix34f& mtx) {
+    sead::Vector3f scale;
+    calcMtxScale(&scale, mtx);
+
+    if (!isNearZero(scale.x, 0.001f) && !isNearZero(scale.y, 0.001f) &&
+        !isNearZero(scale.z, 0.001f)) {
+        f32 xInv = 1.0f / scale.x;
+        f32 yInv = 1.0f / scale.y;
+        f32 zInv = 1.0f / scale.z;
+
+        *out = mtx;
+        out->scaleBases(xInv, yInv, zInv);
+        return true;
+    }
+
+    sead::Vector3f base = mtx.getBase(3);
+    out->makeIdentity();
+    out->setBase(3, base);
+
+    return false;
+}
+
 void preScaleMtx(sead::Matrix34f* outMtx, const sead::Vector3f& scale) {
     outMtx->scaleBases(scale.x, scale.y, scale.z);
 }
