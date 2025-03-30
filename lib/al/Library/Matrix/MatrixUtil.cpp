@@ -229,29 +229,29 @@ void rotateMtxZDirDegree(sead::Matrix34f* outMtx, const sead::Matrix34f& baseMtx
     *outMtx = baseMtx * rotationMatrix;
 }
 
-void calcMtxScale(sead::Vector3f* out, const sead::Matrix34f& mtx) {
-    out->x = sead::Mathf::sqrt(mtx.m[0][0] * mtx.m[0][0] + mtx.m[1][0] * mtx.m[1][0] +
-                               mtx.m[2][0] * mtx.m[2][0]);
+void calcMtxScale(sead::Vector3f* outMtx, const sead::Matrix34f& mtx) {
+    outMtx->x = sead::Mathf::sqrt(mtx.m[0][0] * mtx.m[0][0] + mtx.m[1][0] * mtx.m[1][0] +
+                                  mtx.m[2][0] * mtx.m[2][0]);
 
-    out->y = sead::Mathf::sqrt(mtx.m[0][1] * mtx.m[0][1] + mtx.m[1][1] * mtx.m[1][1] +
-                               mtx.m[2][1] * mtx.m[2][1]);
+    outMtx->y = sead::Mathf::sqrt(mtx.m[0][1] * mtx.m[0][1] + mtx.m[1][1] * mtx.m[1][1] +
+                                  mtx.m[2][1] * mtx.m[2][1]);
 
-    out->z = sead::Mathf::sqrt(mtx.m[0][2] * mtx.m[0][2] + mtx.m[1][2] * mtx.m[1][2] +
-                               mtx.m[2][2] * mtx.m[2][2]);
+    outMtx->z = sead::Mathf::sqrt(mtx.m[0][2] * mtx.m[0][2] + mtx.m[1][2] * mtx.m[1][2] +
+                                  mtx.m[2][2] * mtx.m[2][2]);
 }
 
-void calcMtxScale(sead::Vector3f* out, const Matrix43f& mtx) {
-    out->x = sead::Mathf::sqrt(mtx.m[0][0] * mtx.m[0][0] + mtx.m[0][1] * mtx.m[0][1] +
-                               mtx.m[0][2] * mtx.m[0][2]);
+void calcMtxScale(sead::Vector3f* outMtx, const Matrix43f& mtx) {
+    outMtx->x = sead::Mathf::sqrt(mtx.m[0][0] * mtx.m[0][0] + mtx.m[0][1] * mtx.m[0][1] +
+                                  mtx.m[0][2] * mtx.m[0][2]);
 
-    out->y = sead::Mathf::sqrt(mtx.m[1][0] * mtx.m[1][0] + mtx.m[1][1] * mtx.m[1][1] +
-                               mtx.m[1][2] * mtx.m[1][2]);
+    outMtx->y = sead::Mathf::sqrt(mtx.m[1][0] * mtx.m[1][0] + mtx.m[1][1] * mtx.m[1][1] +
+                                  mtx.m[1][2] * mtx.m[1][2]);
 
-    out->z = sead::Mathf::sqrt(mtx.m[2][0] * mtx.m[2][0] + mtx.m[2][1] * mtx.m[2][1] +
-                               mtx.m[2][2] * mtx.m[2][2]);
+    outMtx->z = sead::Mathf::sqrt(mtx.m[2][0] * mtx.m[2][0] + mtx.m[2][1] * mtx.m[2][1] +
+                                  mtx.m[2][2] * mtx.m[2][2]);
 }
 
-void normalizeMtxScale(sead::Matrix34f* out, const sead::Matrix34f& mtx) {
+void normalizeMtxScale(sead::Matrix34f* outMtx, const sead::Matrix34f& mtx) {
     sead::Vector3f scale;
     calcMtxScale(&scale, mtx);
 
@@ -261,12 +261,12 @@ void normalizeMtxScale(sead::Matrix34f* out, const sead::Matrix34f& mtx) {
         f32 yInv = 1.0f / scale.y;
         f32 zInv = 1.0f / scale.z;
 
-        *out = mtx;
-        out->scaleBases(xInv, yInv, zInv);
+        *outMtx = mtx;
+        outMtx->scaleBases(xInv, yInv, zInv);
     }
 }
 
-bool al::tryNormalizeMtxScaleOrIdentity(sead::Matrix34f* out, const sead::Matrix34f& mtx) {
+bool tryNormalizeMtxScaleOrIdentity(sead::Matrix34f* outMtx, const sead::Matrix34f& mtx) {
     sead::Vector3f scale;
     calcMtxScale(&scale, mtx);
 
@@ -276,14 +276,15 @@ bool al::tryNormalizeMtxScaleOrIdentity(sead::Matrix34f* out, const sead::Matrix
         f32 yInv = 1.0f / scale.y;
         f32 zInv = 1.0f / scale.z;
 
-        *out = mtx;
-        out->scaleBases(xInv, yInv, zInv);
+        *outMtx = mtx;
+        outMtx->scaleBases(xInv, yInv, zInv);
         return true;
     }
 
-    sead::Vector3f base = mtx.getBase(3);
-    out->makeIdentity();
-    out->setBase(3, base);
+    sead::Vector3f base;
+    mtx.getBase(base, 3);
+    outMtx->makeIdentity();
+    outMtx->setBase(3, base);
 
     return false;
 }
