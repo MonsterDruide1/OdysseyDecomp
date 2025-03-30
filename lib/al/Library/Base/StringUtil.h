@@ -5,6 +5,8 @@
 namespace al {
 struct MatchStr {
     const char* str;
+
+    MatchStr(const char* str) : str(str) {}
 };
 
 const char* createStringIfInStack(const char* str);
