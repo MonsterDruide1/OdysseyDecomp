@@ -30,7 +30,7 @@ s32 StageSwitchDirector::useSwitch(const StageSwitchAccesser* accesser) {
 }
 
 s32 StageSwitchDirector::findSwitchNoFromObjId(const PlacementId* placementId) {
-    if (placementId == nullptr)
+    if (!placementId)
         return 0;
 
     for (s32 i = 0; i < mSwitchInfoCount; i++)

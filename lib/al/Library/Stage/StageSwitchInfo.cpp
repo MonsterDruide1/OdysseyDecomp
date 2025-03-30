@@ -1,5 +1,5 @@
 #include "Library/Stage/StageSwitchInfo.h"
 
 namespace al {
-StageSwitchInfo::StageSwitchInfo() {}
+StageSwitchInfo::StageSwitchInfo() = default;
 }  // namespace al

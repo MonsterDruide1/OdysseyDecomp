@@ -6,7 +6,7 @@
 
 namespace al {
 
-StageSwitchAccesser::StageSwitchAccesser() {}
+StageSwitchAccesser::StageSwitchAccesser() = default;
 
 bool StageSwitchAccesser::init(StageSwitchDirector* director, const char* linkName,
                                const PlacementId& placementId) {
@@ -14,7 +14,7 @@ bool StageSwitchAccesser::init(StageSwitchDirector* director, const char* linkNa
     mLinkName = linkName;
     mPlacementId = new PlacementId(placementId);
 
-    if (isMatchString(linkName, "*On") || isMatchString(linkName, "*Off"))
+    if (isMatchString(linkName, MatchStr{"*On"}) || isMatchString(linkName, MatchStr{"*Off"}))
         mSwitchKind = SwitchKind::Write;
     else
         mSwitchKind = SwitchKind::Read;
