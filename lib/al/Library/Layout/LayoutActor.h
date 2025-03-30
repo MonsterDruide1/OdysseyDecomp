@@ -90,7 +90,9 @@ public:
 
     bool isAlive() const { return mIsAlive; }
 
-    LayoutExecuteInfo* getExecuteInfo() { return mExecuteInfo; }
+    LayoutExecuteInfo* getExecuteInfo() const { return mExecuteInfo; }
+
+    LayoutSceneInfo* getLayoutSceneInfo() const { return mLayoutSceneInfo; }
 
 private:
     sead::FixedSafeString<0x80> mName;

@@ -58,6 +58,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
 #include "MapObj/TrampleSwitch.h"
@@ -504,7 +505,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SnowManRaceNpc", nullptr},
     {"SnowVolume", nullptr},
     {"SnowVolumeEraser", nullptr},
-    {"Souvenir", nullptr},
+    {"Souvenir", al::createActorFunction<Souvenir>},
     {"SouvenirDirector", nullptr},
     {"Special2KeyMoveLift", nullptr},
     {"Special2KeyMoveParts", nullptr},
