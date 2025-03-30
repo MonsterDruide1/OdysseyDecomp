@@ -15,8 +15,8 @@ public:
     ItemGenerator();
     ItemGenerator(al::LiveActor* creator, const al::ActorInitInfo& info);
 
-    void initLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool a3);
-    void initNoLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool a3);
+    void initLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool isAppearAbove);
+    void initNoLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool isAppearAbove);
     void initHintPhotoShine(al::LiveActor* creator, const al::ActorInitInfo& info);
     void createShineEffectInsideObject(const al::ActorInitInfo& info);
     bool tryUpdateHintTransIfExistShine();

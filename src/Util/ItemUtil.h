@@ -71,7 +71,7 @@ void setAppearItemFactorByMsg(const al::LiveActor* actor, const al::SensorMsg* m
 void setAppearItemFactorAndOffsetByMsg(const al::LiveActor* actor, const al::SensorMsg* msg,
                                        const al::HitSensor* sensor);
 void setAppearItemFactorAndOffsetForCombo(const al::LiveActor* actor, const al::SensorMsg* msg,
-                                          const al::HitSensor* sensor, bool a4);
+                                          const al::HitSensor* sensor, bool isSuperCombo);
 void appearItemFromObj(al::LiveActor* actor, const sead::Vector3f& trans, const sead::Quatf& quat,
                        f32 offset);
 void appearItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset);

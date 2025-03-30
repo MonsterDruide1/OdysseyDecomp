@@ -55,7 +55,7 @@ s32 getItemType(const al::ActorInitInfo& info) {
         !al::isEqualString(name, "None"))
         return getItemType(name);
     else
-        return -1;
+        return ItemType::None;
 }
 
 s32 getItemTypeFromName(const char* name) {
@@ -107,7 +107,7 @@ s32 getItemTypeFromName(const char* name) {
         return ItemType::CoinStackBound;
     if (al::isEqualString(name, "Random"))
         return ItemType::Random;
-    return -1;
+    return ItemType::None;
 }
 
 s32 getItemType(const char* name) {
@@ -130,8 +130,8 @@ bool tryInitItemAndAddToKeeper(al::LiveActor* actor, s32 itemType, const al::Act
     if (itemType == ItemType::Random) {
         actor->initItemKeeper(2);
         al::addItem(actor, info, "ライフアップアイテム[飛出し出現]", "ライフアップ", nullptr, -1,
-                    0);
-        al::addItem(actor, info, "コイン[自動取得]", "コイン", nullptr, -1, 0);
+                    false);
+        al::addItem(actor, info, "コイン[自動取得]", "コイン", nullptr, -1, false);
         return true;
     }
 
@@ -209,7 +209,7 @@ bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& i
          al::tryGetStringArg(&itemType, info, "ItemType2D3D")) &&
         !al::isEqualString(itemType, "None")) {
         s32 type = getItemType(itemType);
-        if (type != -1 && type != ItemType::Shine)
+        if (type != ItemType::None && type != ItemType::Shine)
             return tryInitItemAndAddToKeeper(actor, type, info, isAppearAbove);
     }
     return false;
@@ -228,14 +228,14 @@ bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo&
          al::tryGetStringArg(&itemType, info, "ItemType2D3D")) &&
         !al::isEqualString(itemType, "None")) {
         s32 type = getItemType(itemType);
-        if (type == -1 || type == ItemType::Shine)
+        if (type == ItemType::None || type == ItemType::Shine)
             return false;
 
         if (type == ItemType::Random) {
             actor->initItemKeeper(2);
             al::addItem(actor, info, "ライフアップアイテム[飛出し出現]", "ライフアップ", nullptr,
-                        -1, 0);
-            al::addItem(actor, info, "コイン2D[自動取得]", "コイン", nullptr, -1, 0);
+                        -1, false);
+            al::addItem(actor, info, "コイン2D[自動取得]", "コイン", nullptr, -1, false);
             return true;
         }
 
@@ -253,7 +253,7 @@ bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo&
 
 bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info,
                  bool isAppearAbove) {
-    return itemType != -1 && itemType != ItemType::Shine &&
+    return itemType != ItemType::None && itemType != ItemType::Shine &&
            tryInitItemAndAddToKeeper(actor, itemType, info, isAppearAbove);
 }
 
@@ -451,8 +451,8 @@ void setAppearItemFactorAndOffsetByMsg(const al::LiveActor* actor, const al::Sen
 }
 
 void setAppearItemFactorAndOffsetForCombo(const al::LiveActor* actor, const al::SensorMsg* msg,
-                                          const al::HitSensor* sensor, bool a4) {
-    if (a4)
+                                          const al::HitSensor* sensor, bool isSuperCombo) {
+    if (isSuperCombo)
         al::setAppearItemFactor(actor, "スーパーコンボ", sensor);
     else
         al::setAppearItemFactor(actor, "コンボ", sensor);
@@ -520,39 +520,41 @@ void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
 // TODO: Requires RandomItemSelector
 // void appearRandomItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset) {}
 
-bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 a3, f32 a4) {
-    return tryAppearMultiCoinFromObj(actor, trans, sead::Quatf::unit, a3, a4);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 step,
+                               f32 offsetAbove) {
+    return tryAppearMultiCoinFromObj(actor, trans, sead::Quatf::unit, step, offsetAbove);
 }
 
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans,
-                               const sead::Quatf& quat, s32 a3, f32 a4) {
-    if (a3 % 10 != 0)
+                               const sead::Quatf& quat, s32 step, f32 offsetAbove) {
+    if (step % 10 != 0)
         return false;
 
     sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
     al::calcUpDir(&upDir, actor);
 
-    al::setAppearItemOffset(actor, upDir * a4);
+    al::setAppearItemOffset(actor, upDir * offsetAbove);
     al::appearItem(actor, trans, quat, nullptr);
     return true;
 }
 
-bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 a3, f32 a4) {
-    if (a3 % 10 != 0)
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 step,
+                               f32 offsetAbove) {
+    if (step % 10 != 0)
         return false;
 
     sead::Vector3f upDir = sead::Vector3f(0.0f, 0.0f, 0.0f);
     al::calcUpDir(&upDir, actor);
 
-    al::setAppearItemOffset(actor, upDir * a4);
+    al::setAppearItemOffset(actor, upDir * offsetAbove);
     al::setAppearItemAttackerSensor(actor, sensor);
     al::appearItem(actor);
     return true;
 }
 
-bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 a4,
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 step,
                                const sead::Vector3f& offset) {
-    if (a4 % 10 != 0)
+    if (step % 10 != 0)
         return false;
 
     sead::Vector3f localOffset;

@@ -19,7 +19,8 @@ ItemGenerator::ItemGenerator(al::LiveActor* creator, const al::ActorInitInfo& in
     initLinkShine(creator, info, false);
 }
 
-void ItemGenerator::initLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info, bool a3) {
+void ItemGenerator::initLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info,
+                                  bool isAppearAbove) {
     mCreator = creator;
     mItemType = rs::getItemType(info);
 
@@ -33,12 +34,12 @@ void ItemGenerator::initLinkShine(al::LiveActor* creator, const al::ActorInitInf
             mKuriboMiniArray[i]->makeActorDead();
         }
     } else {
-        rs::tryInitItemByPlacementInfo(mCreator, info, a3);
+        rs::tryInitItemByPlacementInfo(mCreator, info, isAppearAbove);
     }
 }
 
 void ItemGenerator::initNoLinkShine(al::LiveActor* creator, const al::ActorInitInfo& info,
-                                    bool a3) {
+                                    bool isAppearAbove) {
     mCreator = creator;
     mItemType = rs::getItemType(info);
 
@@ -52,7 +53,7 @@ void ItemGenerator::initNoLinkShine(al::LiveActor* creator, const al::ActorInitI
             mKuriboMiniArray[i]->makeActorDead();
         }
     } else {
-        rs::tryInitItemByPlacementInfo(mCreator, info, a3);
+        rs::tryInitItemByPlacementInfo(mCreator, info, isAppearAbove);
     }
 }
 
@@ -166,7 +167,7 @@ bool ItemGenerator::tryGenerate(const sead::Vector3f& pos, const sead::Vector3f&
 }
 
 bool ItemGenerator::isNone() const {
-    return mItemType == -1;
+    return mItemType == rs::ItemType::None;
 }
 
 bool ItemGenerator::isShine() const {
