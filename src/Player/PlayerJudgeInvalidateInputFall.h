@@ -19,8 +19,8 @@ public:
     bool judge() const override;
 
 private:
-    const al::LiveActor* mActor;
-    const PlayerAreaChecker* mAreaChecker;
-    const IUsePlayerCollision* mCollision;
+    const al::LiveActor* mActor = nullptr;
+    const PlayerAreaChecker* mAreaChecker = nullptr;
+    const IUsePlayerCollision* mCollision = nullptr;
     const al::AreaObj* mInvalidateInputFallArea = nullptr;
 };
