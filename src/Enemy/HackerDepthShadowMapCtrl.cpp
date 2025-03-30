@@ -30,7 +30,6 @@ void HackerDepthShadowMapCtrl::resetAndUpdate() {
     mLerpedLength = prevLength;
 }
 
-// NON_MATCHING: Likely a compiler difference
 void HackerDepthShadowMapCtrl::update(PlayerCollider* playerCollider) {
     if (playerCollider && mIsActive) {
         if (playerCollider->get_70() >= 0.0f) {
@@ -64,11 +63,10 @@ void HackerDepthShadowMapCtrl::update(PlayerCollider* playerCollider) {
         al::verticalizeVec(&offset, areaUp, offset);
 
         sead::Vector3f offsetAreaPos = areaPos + offset;
-        const sead::Vector3f& actorTrans2 = al::getTrans(mActor);
+        sead::Vector3f difference = (offsetAreaPos - al::getTrans(mActor));
 
-        // One of the LDRs produced here needs to be placed after the .length()
         shadowLengthArea->getAreaMtx().getBase(groundNormal, 1);
-        groundDistance = (offsetAreaPos - actorTrans2).length();
+        groundDistance = difference.length();
 
     } else if (mIsActive && playerCollider && mOnGroundTimer >= 1) {
         groundNormal = playerCollider->getCollidedGroundNormal();
