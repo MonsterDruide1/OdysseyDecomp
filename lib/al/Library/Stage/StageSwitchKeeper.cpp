@@ -7,17 +7,16 @@
 #include "Project/Stage/StageSwitchAccesser.h"
 
 namespace al {
-StageSwitchAccesserList::StageSwitchAccesserList() {}
+StageSwitchAccesserList::StageSwitchAccesserList() = default;
 
 StageSwitchAccesserList::StageSwitchAccesserList(const StageSwitchAccesser* accessers)
-    : stageSwitchAccessers(accessers) {}
+    : accessers(accessers) {}
 
-StageSwitchKeeper::StageSwitchKeeper() {}
+StageSwitchKeeper::StageSwitchKeeper() = default;
 
 void StageSwitchKeeper::init(StageSwitchDirector* director, const PlacementInfo& placementInfo) {
-    s32 stageSwitchCount = calcLinkCountClassName(placementInfo, "StageSwitch");
-    mAccesserCapacity = stageSwitchCount;
-    mStageSwitchAccessers = new StageSwitchAccesser[stageSwitchCount];
+    mAccesserSize = calcLinkCountClassName(placementInfo, "StageSwitch");
+    mAccessers = new StageSwitchAccesser[mAccesserSize];
 
     PlacementInfo links;
     tryGetPlacementInfoByKey(&links, placementInfo, "Links");
@@ -32,17 +31,17 @@ void StageSwitchKeeper::init(StageSwitchDirector* director, const PlacementInfo&
         if (isClassName(linkData, "StageSwitch")) {
             PlacementId placementId;
             tryGetPlacementId(&placementId, linkData);
-            mStageSwitchAccessers[validIndex].setUseName(mUseName);
-            mStageSwitchAccessers[validIndex].init(director, linkName, placementId);
+            mAccessers[validIndex].setUseName(mUseName);
+            mAccessers[validIndex].init(director, linkName, placementId);
             validIndex++;
         }
     }
 }
 
 StageSwitchAccesser* StageSwitchKeeper::tryGetStageSwitchAccesser(const char* linkName) const {
-    for (s32 i = 0; i < mAccesserCapacity; i++)
-        if (isEqualString(linkName, mStageSwitchAccessers[i].getLinkName()))
-            return &mStageSwitchAccessers[i];
+    for (s32 i = 0; i < mAccesserSize; i++)
+        if (isEqualString(linkName, mAccessers[i].getLinkName()))
+            return &mAccessers[i];
 
     return nullptr;
 }

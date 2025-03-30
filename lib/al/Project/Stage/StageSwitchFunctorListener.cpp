@@ -3,7 +3,7 @@
 #include "Library/Thread/FunctorV0M.h"
 
 namespace al {
-StageSwitchFunctorListener::StageSwitchFunctorListener() {}
+StageSwitchFunctorListener::StageSwitchFunctorListener() = default;
 
 void StageSwitchFunctorListener::setOnFunctor(const FunctorBase& functor) {
     mOnFunctor = functor.clone();

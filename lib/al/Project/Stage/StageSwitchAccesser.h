@@ -25,7 +25,7 @@ public:
 
     const char* getLinkName() const { return mLinkName; }
 
-    void setUseName(IUseName* useName) { mName = useName; }
+    void setUseName(IUseName* useName) { mUseName = useName; }
 
     PlacementId* getPlacementId() const { return mPlacementId; }
 
@@ -35,7 +35,7 @@ private:
     enum class SwitchKind : u32 { Invalid = 0, Read = 1, Write = 2 };
 
     StageSwitchDirector* mStageSwitchDirector = nullptr;
-    IUseName* mName = nullptr;
+    IUseName* mUseName = nullptr;
     const char* mLinkName = "";
     PlacementId* mPlacementId = nullptr;
     s32 mInfoIndex = -1;

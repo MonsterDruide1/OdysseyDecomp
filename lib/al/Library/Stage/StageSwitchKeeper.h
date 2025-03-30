@@ -17,7 +17,7 @@ struct StageSwitchAccesserList {
     StageSwitchAccesserList();
     StageSwitchAccesserList(const StageSwitchAccesser* accessers);
 
-    const StageSwitchAccesser* stageSwitchAccessers = nullptr;
+    const StageSwitchAccesser* accessers = nullptr;
     s32 accesserSize = 0;
     s32 accesserCapacity = 0;
 };
@@ -31,8 +31,8 @@ public:
     void setUseName(IUseName* useName) { mUseName = useName; }
 
 private:
-    StageSwitchAccesser* mStageSwitchAccessers = nullptr;
-    s32 mAccesserCapacity = 0;
+    StageSwitchAccesser* mAccessers = nullptr;
+    s32 mAccesserSize = 0;
     IUseName* mUseName = nullptr;
 };
 
