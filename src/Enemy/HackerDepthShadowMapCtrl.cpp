@@ -13,21 +13,24 @@
 #include "Player/PlayerCollider.h"
 
 HackerDepthShadowMapCtrl::HackerDepthShadowMapCtrl(al::LiveActor* actor, const char* shadowMapName,
-                                                   f32 shadowLengthOffset, f32 lerpFactorX,
-                                                   f32 lerpFactorY)
+                                                   f32 shadowLengthOffset, f32 lerpLength,
+                                                   f32 lerpGradationLength)
     : mActor(actor), mShadowMapName(shadowMapName), mShadowLengthOffset(shadowLengthOffset),
-      mLerpedLength(lerpFactorX, lerpFactorY) {
+      mLerpLength(lerpLength), mLerpGradationLength(lerpGradationLength) {
     al::setEnableDepthShadowMapBottomGradation(actor, shadowMapName, true);
 }
 
 void HackerDepthShadowMapCtrl::resetAndUpdate() {
-    sead::Vector2f prevLength = mLerpedLength;
+    f32 prevLerpLength = mLerpLength;
+    f32 prevLerpGradationLength = mLerpGradationLength;
     mOnGroundTimer = 0;
     mIsActive = false;
-    mLerpedLength = {1.0f, 1.0f};
+    mLerpLength = 1.0f;
+    mLerpGradationLength = 1.0f;
     update(nullptr);
     mIsActive = true;
-    mLerpedLength = prevLength;
+    mLerpLength = prevLerpLength;
+    mLerpGradationLength = prevLerpGradationLength;
 }
 
 void HackerDepthShadowMapCtrl::update(PlayerCollider* playerCollider) {
@@ -91,28 +94,28 @@ void HackerDepthShadowMapCtrl::update(PlayerCollider* playerCollider) {
         }
     }
 
-    f32 upDir = sead::Mathf::clamp(1.0f - groundNormal.dot(sead::Vector3f::ey), 0.0f, 1.0f);
-    f32 shadowLength = groundDistance + (upDir * 300.0f);
+    f32 tilt = sead::Mathf::clamp(1.0f - groundNormal.dot(sead::Vector3f::ey), 0.0f, 1.0f);
+    f32 gradationTargetLength = groundDistance + (tilt * 300.0f);
     f32 targetLength;
     if (shadowLengthArea)
-        targetLength = shadowLength + 40.0f;
+        targetLength = gradationTargetLength + 40.0f;
     else {
-        shadowLength += mShadowLengthOffset;
-        targetLength = shadowLength * 1.8f;
+        gradationTargetLength += mShadowLengthOffset;
+        targetLength = gradationTargetLength * 1.8f;
     }
     f32 depthShadowLength = al::getDepthShadowMapLength(mActor, mShadowMapName);
     al::setDepthShadowMapLength(
-        mActor, depthShadowLength * (1.0f - mLerpedLength.x) + (targetLength * mLerpedLength.x),
+        mActor, depthShadowLength * (1.0f - mLerpLength) + (targetLength * mLerpLength),
         mShadowMapName);
 
     if (al::isEnableDepthShadowMapBottomGradation(mActor, mShadowMapName)) {
         f32 currentLength = al::getDepthShadowMapLength(mActor, mShadowMapName);
-        mSmoothedLength =
-            ((1.0f - mLerpedLength.y) * mSmoothedLength) + (shadowLength * mLerpedLength.y);
+        mGradationLength = ((1.0f - mLerpGradationLength) * mGradationLength) +
+                           (gradationTargetLength * mLerpGradationLength);
 
         al::setDepthShadowMapBottomGradationLength(
             mActor, mShadowMapName,
-            sead::Mathf::clampMin((currentLength - mSmoothedLength) - (currentLength * 0.05f),
+            sead::Mathf::clampMin((currentLength - mGradationLength) - (currentLength * 0.05f),
                                   0.0f));
     }
 }

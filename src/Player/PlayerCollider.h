@@ -27,11 +27,11 @@ public:
     void clear();
     void calcCheckPos(sead::Vector3f*) const;
     void resetPose(const sead::Quatf&);
-    void collide(const sead::Vector3f&);
-    void calcMovePowerByContact(sead::Vector3f*, const sead::Vector3f&);
+    sead::Vector3f collide(const sead::Vector3f&);
+    bool calcMovePowerByContact(sead::Vector3f*, const sead::Vector3f&);
     void moveCollide(sead::Vector3f*, f32*, sead::Quatf*, const sead::Vector3f&, f32,
                      const sead::Quatf&, const sead::Vector3f&, f32, bool);
-    void findCollidePos(al::SpherePoseInterpolator*);
+    bool findCollidePos(al::SpherePoseInterpolator*);
     void calcResultVec(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&);
     void calcGroundArrowAverage(bool*, sead::Vector3f*, bool*, sead::Vector3f*,
                                 const CollisionShapeKeeper*);
@@ -49,7 +49,7 @@ public:
     void setCollisionPartsFilter(const al::CollisionPartsFilterBase*);
     void calcBoundingCenter(sead::Vector3f*) const;
     void validateCorrectMovePartsCheck();
-    al::CollisionDirector* getCollisionDirector() const;
+    al::CollisionDirector* getCollisionDirector() const override;
 
     f32 get_70() const { return _70; }
 
