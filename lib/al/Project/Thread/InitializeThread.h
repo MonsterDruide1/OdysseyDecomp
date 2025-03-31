@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
+#include <thread/seadMessageQueue.h>
 
 namespace sead {
 class Heap;
@@ -20,7 +21,7 @@ public:
     bool tryWaitDoneAndDestroy();
 
 private:
-    void threadFunction(sead::Thread* thread, s64);
+    void threadFunction(sead::Thread* thread, sead::MessageQueue::Element message);
 
     sead::DelegateThread* mThread = nullptr;
     sead::Heap* mHeap = nullptr;
