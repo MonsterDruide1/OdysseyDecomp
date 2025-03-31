@@ -67,11 +67,11 @@ void PlayerStateWallAir::startSlideSpinAttack() {
     al::updatePoseQuat(player, quat);
 }
 
-void PlayerStateWallAir::calcSnapMoveCutDir(sead::Vector3f* snap) const {
+void PlayerStateWallAir::calcSnapMoveCutDir(sead::Vector3f* cutDir) const {
     if (al::isNerve(this, &Slide))
-        snap->set(mStateNormalWallSlide->getNormalStart());
+        cutDir->set(mStateNormalWallSlide->getNormalStart());
     else
-        snap->set(mStateNormalWallJump->getFront());
+        cutDir->set(mStateNormalWallJump->getFront());
 }
 
 void PlayerStateWallAir::exeSlide() {

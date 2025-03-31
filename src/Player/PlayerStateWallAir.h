@@ -29,7 +29,7 @@ public:
     bool isJustJump() const;
     bool isEnableReactionCapCatch() const;
     void startSlideSpinAttack();
-    void calcSnapMoveCutDir(sead::Vector3f* snap) const;
+    void calcSnapMoveCutDir(sead::Vector3f* cutDir) const;
     void exeSlide();
     void exeJump();
 
