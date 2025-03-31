@@ -6,7 +6,7 @@ namespace al {
 class ByamlIter;
 class LiveActor;
 class ActorResource;
-class ActorInitInfo;
+struct ActorInitInfo;
 class ParameterIo;
 class Resource;
 

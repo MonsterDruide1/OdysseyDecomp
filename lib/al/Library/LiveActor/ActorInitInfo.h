@@ -37,8 +37,7 @@ class ShadowDirector;
 class StageSwitchDirector;
 class ViewIdHolder;
 
-class ActorInitInfo {
-public:
+struct ActorInitInfo {
     ActorInitInfo();
 
     void initNew(const PlacementInfo*, const LayoutInitInfo*, LiveActorGroup*, const ActorFactory*,
@@ -55,28 +54,19 @@ public:
     void initViewIdHostActor(const ActorInitInfo&, const LiveActor*);
     void initNoViewId(const PlacementInfo*, const ActorInitInfo&);
 
-    const LayoutInitInfo& getLayoutInitInfo() const { return *mLayoutInitInfo; }
-
-    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
-
-    const ActorSceneInfo& getActorSceneInfo() const { return mActorSceneInfo; }
-
-    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
-
-private:
-    LiveActorGroup* mKitDrawingGroup = nullptr;
-    const PlacementInfo* mPlacementInfo = nullptr;
-    const LayoutInitInfo* mLayoutInitInfo = nullptr;
-    ActorSceneInfo mActorSceneInfo = {};
-    LiveActorGroup* mAllActorsGroup = nullptr;
-    const ActorFactory* mActorFactory = nullptr;
-    ActorResourceHolder* mActorResourceHolder = nullptr;
-    AudioDirector* mAudioDirector = nullptr;
-    EffectSystemInfo* mEffectSystemInfo = nullptr;
-    ExecuteDirector* mExecuteDirector = nullptr;
-    HitSensorDirector* mHitSensorDirector = nullptr;
-    ScreenPointDirector* mScreenPointDirector = nullptr;
-    StageSwitchDirector* mStageSwitchDirector = nullptr;
-    ViewIdHolder* mViewIdHolder = nullptr;
+    LiveActorGroup* kitDrawingGroup = nullptr;
+    const PlacementInfo* placementInfo = nullptr;
+    const LayoutInitInfo* layoutInitInfo = nullptr;
+    ActorSceneInfo actorSceneInfo = {};
+    LiveActorGroup* allActorsGroup = nullptr;
+    const ActorFactory* actorFactory = nullptr;
+    ActorResourceHolder* actorResourceHolder = nullptr;
+    AudioDirector* audioDirector = nullptr;
+    EffectSystemInfo* effectSystemInfo = nullptr;
+    ExecuteDirector* executeDirector = nullptr;
+    HitSensorDirector* hitSensorDirector = nullptr;
+    ScreenPointDirector* screenPointDirector = nullptr;
+    StageSwitchDirector* stageSwitchDirector = nullptr;
+    ViewIdHolder* viewIdHolder = nullptr;
 };
 }  // namespace al

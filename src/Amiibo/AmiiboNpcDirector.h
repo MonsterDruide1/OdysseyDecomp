@@ -12,7 +12,7 @@
 namespace al {
 struct NfpInfo;
 
-class ActorInitInfo;
+struct ActorInitInfo;
 class AudioDirector;
 class IUseSceneObjHolder;
 class MessageTagDataHolder;

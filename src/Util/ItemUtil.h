@@ -5,7 +5,7 @@
 #include <prim/seadEnum.h>
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class LiveActor;
 class HitSensor;
 class SensorMsg;
