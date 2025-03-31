@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class LiveActor;
 }
@@ -9,7 +11,6 @@ namespace alSensorFunction {
 void updateHitSensorsAll(al::LiveActor*);
 void clearHitSensors(al::LiveActor*);
 
-// TODO: find this type
-void findSensorTypeByName(const char*);
+u32 findSensorTypeByName(const char*);
 
 }  // namespace alSensorFunction
