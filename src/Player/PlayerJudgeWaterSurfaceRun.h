@@ -24,7 +24,7 @@ public:
     bool judge() const override;
 
 private:
-    bool mIsJudge = false;
+    bool mIsWaterSurfaceRun = false;
     bool mIsEnable = false;
     const al::LiveActor* mPlayer;
     const PlayerConst* mConst;
