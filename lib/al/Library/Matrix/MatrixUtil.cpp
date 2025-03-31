@@ -15,19 +15,19 @@ void makeMtxFromTwoAxis(sead::Matrix34f* outMtx, const sead::Vector3f& vectorA,
                         const sead::Vector3f& vectorB, s32 axisA, s32 axisB) {
     sead::Vector3f dir[3];
 
-    s32 index;
+    s32 axisC;
     if (axisA == 0)
-        index = axisB == 1 ? 2 : 1;
+        axisC = axisB == 1 ? 2 : 1;
     else if (axisA == 1)
-        index = axisB == 0 ? 2 : 0;
+        axisC = axisB == 0 ? 2 : 0;
     else
-        index = axisB == 0 ? 1 : 0;
+        axisC = axisB == 0 ? 1 : 0;
 
     normalize(&dir[axisA], vectorA);
     dir[axisB] = vectorB;
 
-    dir[index].setCross(dir[(index + 1) % 3], dir[(index + 2) % 3]);
-    normalize(&dir[index]);
+    dir[axisC].setCross(dir[(axisC + 1) % 3], dir[(axisC + 2) % 3]);
+    normalize(&dir[axisC]);
 
     dir[axisB].setCross(dir[(axisB + 1) % 3], dir[(axisB + 2) % 3]);
 
@@ -184,13 +184,13 @@ void makeMtxUpSidePos(sead::Matrix34f* outMtx, const sead::Vector3f& up, const s
 
 void makeMtxSideUpPos(sead::Matrix34f* outMtx, const sead::Vector3f& side, const sead::Vector3f& up,
                       const sead::Vector3f& pos) {
-    makeMtxFromTwoAxis(outMtx, side, up, 0, 1);
+    makeMtxSideUp(outMtx, side, up);
     outMtx->setBase(3, pos);
 }
 
 void makeMtxSideFrontPos(sead::Matrix34f* outMtx, const sead::Vector3f& side,
                          const sead::Vector3f& front, const sead::Vector3f& pos) {
-    makeMtxFromTwoAxis(outMtx, side, front, 0, 2);
+    makeMtxSideFront(outMtx, side, front);
     outMtx->setBase(3, pos);
 }
 
