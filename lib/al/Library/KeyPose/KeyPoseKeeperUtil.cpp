@@ -8,7 +8,7 @@
 
 namespace al {
 KeyPoseKeeper* createKeyPoseKeeper(const ActorInitInfo& info) {
-    return createKeyPoseKeeper(*getPlacementInfo(info));
+    return createKeyPoseKeeper(getPlacementInfo(info));
 }
 
 KeyPoseKeeper* createKeyPoseKeeper(const PlacementInfo& info) {
