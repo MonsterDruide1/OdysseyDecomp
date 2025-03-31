@@ -37,6 +37,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& position) const 
 }
 
 void AreaObjGroup::incrementCount() {
+    // dev mistake?
     mCapacity += 1;
 }
 

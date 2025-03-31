@@ -11,12 +11,11 @@ s32 AreaObjFactory::tryFindAddBufferSize(const char* bufferName) const {
     if (mAreaGroupInfo == nullptr || mNumBuffers < 1)
         return 0;
 
-    s32 offset = 0;
-    while (!isEqualString(bufferName, mAreaGroupInfo[offset].name)) {
-        if (++offset >= mNumBuffers)
-            return 0;
+    for (s32 i = 0; i < mNumBuffers; i++) {
+        if (isEqualString(bufferName, mAreaGroupInfo[i].name))
+            return mAreaGroupInfo[i].size;
     }
-    return mAreaGroupInfo[offset].size;
+    return 0;
 }
 
 }  // namespace al
