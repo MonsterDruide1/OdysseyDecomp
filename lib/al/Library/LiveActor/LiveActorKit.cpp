@@ -23,7 +23,7 @@
 #include "Library/Shader/ForwardRendering/ShaderHolder.h"
 #include "Library/Shadow/ShadowDirector.h"
 #include "Library/Shadow/ShadowKeeper.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchDirector.h"
 #include "Project/Clipping/ClippingDirector.h"
 #include "Project/Execute/ExecuteAsyncExecutor.h"
 #include "Project/Gravity/GravityHolder.h"
