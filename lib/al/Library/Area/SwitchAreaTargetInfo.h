@@ -13,29 +13,29 @@ public:
      * @info mCameraLookAtPositions will be set to an array of cameraLookAtPositionMaxCount
      * sead::Vector3f but only one is used/updated.
      */
-    SwitchAreaTargetInfo(s32 playersPositionCount, s32 cameraLookAtPositionMaxCount);
+    SwitchAreaTargetInfo(s32 playerPositionSize, s32 cameraLookAtPositionSize);
     /**
      * @warning Using this ctor will cause a crash when calling update because
      * mCameraLookAtPositions is nullptr by default.
      */
-    SwitchAreaTargetInfo(sead::Vector3f* mPlayersPositions, s32 playersPositionCount);
+    SwitchAreaTargetInfo(sead::Vector3f* mPlayerPositions, s32 playersPositionCount);
 
     void update(const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
 
-    const sead::Vector3f* getPlayersTargetPositions() const { return mPlayersTargetPositions; }
+    const sead::Vector3f* getPlayerTargetPositions() const { return mPlayerTargetPositions; }
 
-    s32 getPlayersTargetPositionCount() const { return mPlayersTargetPositionCount; }
+    s32 getPlayerTargetPositionCount() const { return mPlayerTargetPositionCount; }
 
 private:
-    sead::Vector3f* mPlayersTargetPositions = nullptr;
-    s32 mPlayersTargetPositionCount = 0;
-    s32 mPlayersTargetPositionMaxCount = 0;
-    sead::Vector3f* mPlayersPositions = nullptr;
-    s32 mPlayersPositionCount = 0;
-    s32 mPlayersPositionMaxCount = 0;
+    sead::Vector3f* mPlayerTargetPositions = nullptr;
+    s32 mPlayerTargetPositionCount = 0;
+    s32 mPlayerTargetPositionSize = 0;
+    sead::Vector3f* mPlayerPositions = nullptr;
+    s32 mPlayerPositionCount = 0;
+    s32 mPlayerPositionSize = 0;
     sead::Vector3f* mCameraLookAtPositions = nullptr;
     s32 mCameraLookAtPositionCount = 0;
-    s32 mCameraLookAtPositionMaxCount = 0;
+    s32 mCameraLookAtPositionSize = 0;
 };
 
 static_assert(sizeof(SwitchAreaTargetInfo) == 0x30);

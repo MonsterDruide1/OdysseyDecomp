@@ -4,37 +4,35 @@
 #include "Library/Player/PlayerUtil.h"
 
 namespace al {
-SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 playersPositionCount,
-                                           s32 cameraLookAtPositionMaxCount)
-    : mPlayersTargetPositionMaxCount(playersPositionCount),
-      mPlayersPositionMaxCount(playersPositionCount),
-      mCameraLookAtPositionMaxCount(cameraLookAtPositionMaxCount) {
-    mPlayersTargetPositions = new sead::Vector3f[mPlayersTargetPositionMaxCount];
-    mPlayersPositions = new sead::Vector3f[mPlayersPositionMaxCount];
-    mCameraLookAtPositions = new sead::Vector3f[mCameraLookAtPositionMaxCount];
+SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 playerPositionCount, s32 cameraLookAtPositionSize)
+    : mPlayerTargetPositionSize(playerPositionCount), mPlayerPositionSize(playerPositionCount),
+      mCameraLookAtPositionSize(cameraLookAtPositionSize) {
+    mPlayerTargetPositions = new sead::Vector3f[mPlayerTargetPositionSize];
+    mPlayerPositions = new sead::Vector3f[mPlayerPositionSize];
+    mCameraLookAtPositions = new sead::Vector3f[mCameraLookAtPositionSize];
 }
 
-SwitchAreaTargetInfo::SwitchAreaTargetInfo(sead::Vector3f* mPlayersPositions,
-                                           s32 playersPositionCount)
-    : mPlayersTargetPositions(mPlayersPositions), mPlayersTargetPositionCount(playersPositionCount),
-      mPlayersTargetPositionMaxCount(playersPositionCount), mPlayersPositions(mPlayersPositions),
-      mPlayersPositionCount(playersPositionCount), mPlayersPositionMaxCount(playersPositionCount) {}
+SwitchAreaTargetInfo::SwitchAreaTargetInfo(sead::Vector3f* mPlayerPositions,
+                                           s32 playerPositionCount)
+    : mPlayerTargetPositions(mPlayerPositions), mPlayerTargetPositionCount(playerPositionCount),
+      mPlayerTargetPositionSize(playerPositionCount), mPlayerPositions(mPlayerPositions),
+      mPlayerPositionCount(playerPositionCount), mPlayerPositionSize(playerPositionCount) {}
 
 void SwitchAreaTargetInfo::update(const PlayerHolder* playerHolder,
                                   const SceneCameraInfo* sceneCameraInfo) {
-    mPlayersTargetPositionCount = 0;
-    mPlayersPositionCount = 0;
+    mPlayerTargetPositionCount = 0;
+    mPlayerPositionCount = 0;
 
     s32 playerNumMax = getPlayerNumMax(playerHolder);
     for (s32 i = 0; i < playerNumMax; i++) {
         const sead::Vector3f& playerPos = getPlayerPos(playerHolder, i);
 
-        mPlayersPositions[mPlayersPositionCount] = playerPos;
-        mPlayersPositionCount++;
+        mPlayerPositions[mPlayerPositionCount] = playerPos;
+        mPlayerPositionCount++;
 
         if (!isPlayerDead(playerHolder, i) && isPlayerAreaTarget(playerHolder, i)) {
-            mPlayersTargetPositions[mPlayersTargetPositionCount] = playerPos;
-            mPlayersTargetPositionCount++;
+            mPlayerTargetPositions[mPlayerTargetPositionCount] = playerPos;
+            mPlayerTargetPositionCount++;
         }
     }
 
