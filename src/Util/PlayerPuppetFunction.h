@@ -1,11 +1,12 @@
 #pragma once
 
 #include <math/seadVector.h>
-
-#include "MapObj/ShineTowerBackDoor.h"
+#include <math/seadQuat.h>
 
 namespace al {
 class HitSensor;
+class LiveActor;
+class SensorMsg;
 }
 class IUsePlayerPuppet;
 class BindKeepDemoInfo;
@@ -49,8 +50,8 @@ bool isPuppetHidden(const IUsePlayerPuppet* playerPuppet);
 void syncPuppetVisibility(al::LiveActor* actor, const IUsePlayerPuppet* playerPuppet);
 void hidePuppetSilhouette(IUsePlayerPuppet* playerPuppet);
 void showPuppetSilhouette(IUsePlayerPuppet* playerPuppet);
-bool hidePuppetShadow(IUsePlayerPuppet* playerPuppet);
-bool showPuppetShadow(IUsePlayerPuppet* playerPuppet);
+void hidePuppetShadow(IUsePlayerPuppet* playerPuppet);
+void showPuppetShadow(IUsePlayerPuppet* playerPuppet);
 void validatePuppetSensor(IUsePlayerPuppet* playerPuppet);
 void invalidatePuppetSensor(IUsePlayerPuppet* playerPuppet);
 void invalidatePuppetCollider(IUsePlayerPuppet* playerPuppet);
@@ -79,7 +80,7 @@ void validateWaterSurfaceShadow(IUsePlayerPuppet* playerPuppet);
 void invalidateWaterSurfaceShadow(IUsePlayerPuppet* playerPuppet);
 bool isPuppetInputCapThrow(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetInputSwing(const IUsePlayerPuppet* playerPuppet);
-void initBindKeepDemoInfo();
+BindKeepDemoInfo* initBindKeepDemoInfo();
 bool isActiveBindKeepDemo(const BindKeepDemoInfo* bindKeepDemoInfo);
 bool tryStartBindKeepDemo(BindKeepDemoInfo* bindKeepDemoInfo, const al::SensorMsg* msg,
                           const IUsePlayerPuppet* playerPuppet);
