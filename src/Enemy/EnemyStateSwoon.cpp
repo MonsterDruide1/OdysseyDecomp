@@ -157,8 +157,8 @@ bool EnemyStateSwoon::requestTrampled() {
     return false;
 }
 
-void EnemyStateSwoon::initParams(s32 loopDelay, const char* trampledAnimName) {
-    mLoopDelay = loopDelay;
+void EnemyStateSwoon::initParams(s32 swoonDuration, const char* trampledAnimName) {
+    mSwoonDuration = swoonDuration;
     if (trampledAnimName != nullptr)
         mTrampledAnimName = trampledAnimName;
 }
@@ -169,34 +169,34 @@ void EnemyStateSwoon::initParams(const EnemyStateSwoonInitParam& initParam) {
     mEndAnimName = initParam.endAnimName;
     if (initParam.trampledAnimName)
         mTrampledAnimName = initParam.trampledAnimName;
-    mStartFallName = initParam.startFallName;
-    mStartLandName = initParam.startLandName;
+    mStartFallAnimName = initParam.startFallAnimName;
+    mStartLandAnimName = initParam.startLandAnimName;
     mEndSignAnimName = initParam.endSignAnimName;
     mNearWaterStartAnimName = initParam.nearWaterStartAnimName;
     mNearWaterLoopAnimName = initParam.nearWaterLoopAnimName;
     mNearWaterEndAnimName = initParam.nearWaterEndAnimName;
-    mNearWaterStartLandName = initParam.nearWaterStartLandName;
+    mNearWaterStartLandAnimName = initParam.nearWaterStartLandAnimName;
     mNearWaterTrampledAnimName = initParam.nearWaterTrampledAnimName;
     mHitReactionAnimName = initParam.hitReactionAnimName;
     mHitReactionLandAnimName = initParam.hitReactionLandAnimName;
     mHasSubActors = initParam.hasSubActors;
     mHasStartLandAnimation = initParam.hasStartLandAnimation;
     mHasLockOnDelay = initParam.hasLockOnDelay;
-    mLoopDelay = initParam.loopDelay;
+    mSwoonDuration = initParam.swoonDuration;
     mEndSignDelay = initParam.endSignDelay;
     mIsCancelLoopOnProhibitedArea = initParam.isCancelLoopOnProhibitedArea;
 }
 
 const char* EnemyStateSwoon::getSwoonStartAnimName() const {
-    if (!isNearWater(mWaterSurfaceFinder, mActor) || mNearWaterStartAnimName == nullptr)
-        return mStartAnimName;
-    return mNearWaterStartAnimName;
+    if (isNearWater(mWaterSurfaceFinder, mActor) && mNearWaterStartAnimName)
+        return mNearWaterStartAnimName;
+    return mStartAnimName;
 }
 
 const char* EnemyStateSwoon::getSwoonStartLandAnimName() const {
-    if (!isNearWater(mWaterSurfaceFinder, mActor) || mNearWaterStartLandName == nullptr)
-        return mStartLandName;
-    return mNearWaterStartLandName;
+    if (isNearWater(mWaterSurfaceFinder, mActor) && mNearWaterStartLandAnimName)
+        return mNearWaterStartLandAnimName;
+    return mStartLandAnimName;
 }
 
 bool EnemyStateSwoon::isOnGroundOrWaterSurface() const {
@@ -207,14 +207,14 @@ bool EnemyStateSwoon::isOnGroundOrWaterSurface() const {
 
 bool EnemyStateSwoon::tryStartHitReactionLand() {
     if (isNearWater(mWaterSurfaceFinder, mActor)) {
-        if (mHitReactionLandAnimName != nullptr) {
+        if (mHitReactionLandAnimName) {
             al::startHitReaction(mActor, mHitReactionLandAnimName);
             return true;
         }
         return false;
     }
 
-    if (mHitReactionAnimName != nullptr) {
+    if (mHitReactionAnimName) {
         al::startHitReaction(mActor, mHitReactionAnimName);
         return true;
     }
@@ -223,9 +223,9 @@ bool EnemyStateSwoon::tryStartHitReactionLand() {
 }
 
 const char* EnemyStateSwoon::getSwoonLoopAnimName() const {
-    if (!isNearWater(mWaterSurfaceFinder, mActor) || mNearWaterLoopAnimName == nullptr)
-        return mLoopAnimName;
-    return mNearWaterLoopAnimName;
+    if (isNearWater(mWaterSurfaceFinder, mActor) && mNearWaterLoopAnimName)
+        return mNearWaterLoopAnimName;
+    return mLoopAnimName;
 }
 
 bool EnemyStateSwoon::isPlayingActionIncorrect() const {
@@ -242,15 +242,15 @@ bool EnemyStateSwoon::isPlayingActionIncorrect() const {
 }
 
 const char* EnemyStateSwoon::getSwoonEndAnimName() const {
-    if (!isNearWater(mWaterSurfaceFinder, mActor) || mNearWaterEndAnimName == nullptr)
-        return mEndAnimName;
-    return mNearWaterEndAnimName;
+    if (isNearWater(mWaterSurfaceFinder, mActor) && mNearWaterEndAnimName)
+        return mNearWaterEndAnimName;
+    return mEndAnimName;
 }
 
 const char* EnemyStateSwoon::getSwoonTrampledAnimName() const {
-    if (!isNearWater(mWaterSurfaceFinder, mActor) || mNearWaterTrampledAnimName == nullptr)
-        return mTrampledAnimName;
-    return mNearWaterTrampledAnimName;
+    if (isNearWater(mWaterSurfaceFinder, mActor) && mNearWaterTrampledAnimName)
+        return mNearWaterTrampledAnimName;
+    return mTrampledAnimName;
 }
 
 void inline startAction(al::LiveActor* actor, const char* animName, bool hasSubActors) {
@@ -276,16 +276,14 @@ void EnemyStateSwoon::exeSwoonStart() {
         startAction(mActor, getSwoonStartAnimName(), mHasSubActors);
 
     if (al::isActionEnd(mActor)) {
-        if (mHasStartLandAnimation) {
-            if (al::isExistAction(mActor, getSwoonStartLandAnimName())) {
-                if (!isNearWater(mWaterSurfaceFinder, mActor) && !al::isOnGround(mActor, 0)) {
-                    al::setNerve(this, &NrvEnemyStateSwoon.SwoonStartFall);
-                    return;
-                }
-                if (!isNearWater(mWaterSurfaceFinder, mActor)) {
-                    al::setNerve(this, &NrvEnemyStateSwoon.SwoonStartLand);
-                    return;
-                }
+        if (mHasStartLandAnimation && al::isExistAction(mActor, getSwoonStartLandAnimName())) {
+            if (!isNearWater(mWaterSurfaceFinder, mActor) && !al::isOnGround(mActor, 0)) {
+                al::setNerve(this, &NrvEnemyStateSwoon.SwoonStartFall);
+                return;
+            }
+            if (!isNearWater(mWaterSurfaceFinder, mActor)) {
+                al::setNerve(this, &NrvEnemyStateSwoon.SwoonStartLand);
+                return;
             }
         }
         al::setNerve(this, &NrvEnemyStateSwoon.SwoonLoop);
@@ -294,7 +292,7 @@ void EnemyStateSwoon::exeSwoonStart() {
 
 void EnemyStateSwoon::exeSwoonStartFall() {
     if (al::isFirstStep(this))
-        tryStartAction(mActor, mStartFallName, mHasSubActors);
+        tryStartAction(mActor, mStartFallAnimName, mHasSubActors);
 
     if (isNearWater(mWaterSurfaceFinder, mActor) || al::isOnGround(mActor, 0)) {
         tryStartHitReactionLand();
@@ -324,12 +322,12 @@ void EnemyStateSwoon::exeSwoonLoop() {
         return;
     }
 
-    if (al::isGreaterEqualStep(this, mLoopDelay)) {
-        if (mEndSignAnimName == nullptr) {
-            al::setNerve(this, &NrvEnemyStateSwoon.SwoonEnd);
+    if (al::isGreaterEqualStep(this, mSwoonDuration)) {
+        if (mEndSignAnimName) {
+            al::setNerve(this, &NrvEnemyStateSwoon.SwoonEndSign);
             return;
         }
-        al::setNerve(this, &NrvEnemyStateSwoon.SwoonEndSign);
+        al::setNerve(this, &NrvEnemyStateSwoon.SwoonEnd);
     }
 }
 
@@ -363,19 +361,20 @@ void EnemyStateSwoon::exeSwoonTrampled() {
 }
 
 bool isNearWater(al::WaterSurfaceFinder* waterSurfaceFinder, al::LiveActor* actor) {
-    if (waterSurfaceFinder != nullptr && waterSurfaceFinder->isFoundSurface()) {
-        sead::Vector3f gravity = al::getGravity(actor);
-        sead::Vector3f nextPosition = al::getTrans(actor) - gravity * 100.0f;
-        sead::Vector3f direction = gravity * 800.0f;
-        sead::Vector3f hitPos;
-        if (!alCollisionUtil::getHitPosOnArrow(actor, &hitPos, nextPosition, direction, nullptr,
-                                               nullptr) ||
-            !(gravity.dot(hitPos - waterSurfaceFinder->getSurfacePosition()) < 0.0f)) {
-            bool isNearWater = waterSurfaceFinder->isNearSurface(60.0f);
-            if (gravity.dot(al::getVelocity(actor)) > 0.0)
-                isNearWater = -60.0f < waterSurfaceFinder->getDistance();
-            return isNearWater;
-        }
+    if (!waterSurfaceFinder || !waterSurfaceFinder->isFoundSurface())
+        return false;
+
+    sead::Vector3f gravity = al::getGravity(actor);
+    sead::Vector3f nextPosition = al::getTrans(actor) - gravity * 100.0f;
+    sead::Vector3f direction = gravity * 800.0f;
+    sead::Vector3f hitPos;
+    if (!alCollisionUtil::getHitPosOnArrow(actor, &hitPos, nextPosition, direction, nullptr,
+                                           nullptr) ||
+        !(gravity.dot(hitPos - waterSurfaceFinder->getSurfacePosition()) < 0.0f)) {
+        bool isNearWater = waterSurfaceFinder->isNearSurface(60.0f);
+        if (gravity.dot(al::getVelocity(actor)) > 0.0)
+            isNearWater = waterSurfaceFinder->getDistance() > -60.0f;
+        return isNearWater;
     }
     return false;
 }

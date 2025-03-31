@@ -12,22 +12,22 @@ class WaterSurfaceFinder;
 struct EnemyStateSwoonInitParam {
     EnemyStateSwoonInitParam(const char* startAnimName, const char* loopAnimName,
                              const char* endAnimName, const char* trampledAnimName,
-                             const char* startFallName, const char* startLandName)
+                             const char* startFallAnimName, const char* startLandAnimName)
         : startAnimName(startAnimName), loopAnimName(loopAnimName), endAnimName(endAnimName),
-          trampledAnimName(trampledAnimName), startFallName(startFallName),
-          startLandName(startLandName) {}
+          trampledAnimName(trampledAnimName), startFallAnimName(startFallAnimName),
+          startLandAnimName(startLandAnimName) {}
 
     const char* startAnimName = "SwoonStart";
     const char* loopAnimName = "Swoon";
     const char* endAnimName = "SwoonEnd";
     const char* trampledAnimName = "SwoonTrampled";
-    const char* startFallName = "SwoonStartFall";
-    const char* startLandName = "SwoonStartLand";
+    const char* startFallAnimName = "SwoonStartFall";
+    const char* startLandAnimName = "SwoonStartLand";
     const char* endSignAnimName = nullptr;
     const char* nearWaterStartAnimName = nullptr;
     const char* nearWaterLoopAnimName = nullptr;
     const char* nearWaterEndAnimName = nullptr;
-    const char* nearWaterStartLandName = nullptr;
+    const char* nearWaterStartLandAnimName = nullptr;
     const char* nearWaterTrampledAnimName = nullptr;
     const char* hitReactionAnimName = nullptr;
     const char* hitReactionLandAnimName = nullptr;
@@ -35,7 +35,7 @@ struct EnemyStateSwoonInitParam {
     bool hasStartLandAnimation = true;
     bool hasLockOnDelay = false;
     bool isCancelLoopOnProhibitedArea = false;
-    s32 loopDelay = 600;
+    s32 swoonDuration = 600;
     s32 endSignDelay = 60;
 };
 
@@ -67,7 +67,7 @@ public:
     bool tryReceiveMsgStartLockOn(const al::SensorMsg* message);
 
     bool requestTrampled();
-    void initParams(s32 loopDelay, const char* trampledAnimName);
+    void initParams(s32 swoonDuration, const char* trampledAnimName);
     void initParams(const EnemyStateSwoonInitParam& initParam);
     const char* getSwoonStartAnimName() const;
     const char* getSwoonStartLandAnimName() const;
@@ -89,19 +89,19 @@ public:
     void enableLockOnDelay(bool hasLockOnDelay) { mHasLockOnDelay = hasLockOnDelay; }
 
 private:
-    s32 mLoopDelay = 600;
+    s32 mSwoonDuration = 600;
     s32 _24 = 0;  // A delay counter
     const char* mStartAnimName = nullptr;
     const char* mLoopAnimName = nullptr;
     const char* mEndAnimName = nullptr;
     const char* mTrampledAnimName = "SwoonTrampled";
-    const char* mStartFallName = "SwoonStartFall";
-    const char* mStartLandName = "SwoonStartLand";
+    const char* mStartFallAnimName = "SwoonStartFall";
+    const char* mStartLandAnimName = "SwoonStartLand";
     const char* mEndSignAnimName = nullptr;
     const char* mNearWaterStartAnimName = nullptr;
     const char* mNearWaterLoopAnimName = nullptr;
     const char* mNearWaterEndAnimName = nullptr;
-    const char* mNearWaterStartLandName = nullptr;
+    const char* mNearWaterStartLandAnimName = nullptr;
     const char* mNearWaterTrampledAnimName = nullptr;
     const char* mHitReactionAnimName = nullptr;
     const char* mHitReactionLandAnimName = nullptr;

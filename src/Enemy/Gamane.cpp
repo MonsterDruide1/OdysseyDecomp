@@ -71,7 +71,7 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
 
     mStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
 
-    gEnemyStateSwoonInitParam.loopDelay = 180;
+    gEnemyStateSwoonInitParam.swoonDuration = 180;
     gEnemyStateSwoonInitParam.hitReactionAnimName = "着地";
     mStateSwoon->initParams(gEnemyStateSwoonInitParam);
     mStateSwoon->enableLockOnDelay(true);
