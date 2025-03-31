@@ -10,7 +10,7 @@ class AreaObjDirector;
 class PlayerHolder;
 class SceneCameraInfo;
 class ViewIdHolder;
-class ActorInitInfo;
+struct ActorInitInfo;
 class LiveActor;
 
 class ClippingDirector : public HioNode, public IUseExecutor {

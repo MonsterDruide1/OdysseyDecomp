@@ -16,7 +16,7 @@ const char* StageSyncCounter::getSceneObjName() const {
 }
 
 void StageSyncCounter::initAfterPlacementSceneObj(const ActorInitInfo& initInfo) {
-    registerExecutorUser(this, initInfo.getExecuteDirector(), getSceneObjName());
+    registerExecutorUser(this, initInfo.executeDirector, getSceneObjName());
 }
 
 }  // namespace al

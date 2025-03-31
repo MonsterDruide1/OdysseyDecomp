@@ -37,7 +37,7 @@ class SubActorKeeper;
 class ActorParamHolder;
 struct ActorSceneInfo;
 struct LiveActorFlag;
-class ActorInitInfo;
+struct ActorInitInfo;
 class HitSensor;
 class SensorMsg;
 class ScreenPointer;
