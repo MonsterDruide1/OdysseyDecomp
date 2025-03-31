@@ -114,5 +114,3 @@ private:
     bool mIsAppearItem = false;
     bool mIsCancelLoopOnProhibitedArea = false;
 };
-
-bool isNearWater(al::WaterSurfaceFinder* waterSurfaceFinder, al::LiveActor* actor);

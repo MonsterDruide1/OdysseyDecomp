@@ -32,6 +32,25 @@ NERVES_MAKE_STRUCT(EnemyStateSwoon, SwoonEnd, SwoonLoop, SwoonStartFall, SwoonSt
                    SwoonEndSign);
 }  // namespace
 
+bool isNearWater(al::WaterSurfaceFinder* waterSurfaceFinder, al::LiveActor* actor) {
+    if (!waterSurfaceFinder || !waterSurfaceFinder->isFoundSurface())
+        return false;
+
+    sead::Vector3f gravity = al::getGravity(actor);
+    sead::Vector3f nextPosition = al::getTrans(actor) - gravity * 100.0f;
+    sead::Vector3f direction = gravity * 800.0f;
+    sead::Vector3f hitPos;
+    if (!alCollisionUtil::getHitPosOnArrow(actor, &hitPos, nextPosition, direction, nullptr,
+                                           nullptr) ||
+        !(gravity.dot(hitPos - waterSurfaceFinder->getSurfacePosition()) < 0.0f)) {
+        bool isNearWater = waterSurfaceFinder->isNearSurface(60.0f);
+        if (gravity.dot(al::getVelocity(actor)) > 0.0)
+            isNearWater = waterSurfaceFinder->getDistance() > -60.0f;
+        return isNearWater;
+    }
+    return false;
+}
+
 EnemyStateSwoon::EnemyStateSwoon(al::LiveActor* actor, const char* startAnimName,
                                  const char* loopAnimName, const char* endAnimName,
                                  bool hasSubActors, bool hasStartLandAnimation)
@@ -358,23 +377,4 @@ void EnemyStateSwoon::exeSwoonTrampled() {
         }
         al::setNerve(this, &NrvEnemyStateSwoon.SwoonLoop);
     }
-}
-
-bool isNearWater(al::WaterSurfaceFinder* waterSurfaceFinder, al::LiveActor* actor) {
-    if (!waterSurfaceFinder || !waterSurfaceFinder->isFoundSurface())
-        return false;
-
-    sead::Vector3f gravity = al::getGravity(actor);
-    sead::Vector3f nextPosition = al::getTrans(actor) - gravity * 100.0f;
-    sead::Vector3f direction = gravity * 800.0f;
-    sead::Vector3f hitPos;
-    if (!alCollisionUtil::getHitPosOnArrow(actor, &hitPos, nextPosition, direction, nullptr,
-                                           nullptr) ||
-        !(gravity.dot(hitPos - waterSurfaceFinder->getSurfacePosition()) < 0.0f)) {
-        bool isNearWater = waterSurfaceFinder->isNearSurface(60.0f);
-        if (gravity.dot(al::getVelocity(actor)) > 0.0)
-            isNearWater = waterSurfaceFinder->getDistance() > -60.0f;
-        return isNearWater;
-    }
-    return false;
 }
