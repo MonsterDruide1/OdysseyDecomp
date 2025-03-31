@@ -25,9 +25,10 @@ void PlayerJudgeWaterSurfaceRun::update() {
     const al::LiveActor* player = mPlayer;
     f32 borderSpeedH = getBorderSpeedH();
     const PlayerCounterForceRun* counterForceRun = mCounterForceRun;
-    mIsWaterSurfaceRun = mWaterSurfaceFinder->isFoundSurface() &&
-               al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance(), 0.001f) &&
-               (counterForceRun->getCounter() > 0 || al::calcSpeedH(player) > borderSpeedH);
+    mIsWaterSurfaceRun =
+        mWaterSurfaceFinder->isFoundSurface() &&
+        al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance(), 0.001f) &&
+        (counterForceRun->getCounter() > 0 || al::calcSpeedH(player) > borderSpeedH);
 }
 
 void PlayerJudgeWaterSurfaceRun::reset() {
