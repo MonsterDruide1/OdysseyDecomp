@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math/seadVector.h>
 #include <math/seadQuat.h>
+#include <math/seadVector.h>
 
 namespace al {
 class HitSensor;
