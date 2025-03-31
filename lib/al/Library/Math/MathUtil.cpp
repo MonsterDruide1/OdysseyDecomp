@@ -5,11 +5,16 @@
 #include "prim/seadBitUtil.h"
 
 namespace al {
-// f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b) {
-//     sead::Vector3f cross;
-//     cross.setCross(a, b);
-//     return sead::Mathf::atan2(cross.length(), a.dot(b));
-// }
+f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b) {
+    f32 dot = a.dot(b);
+    sead::Vector3f cross;
+    cross.setCross(a, b);
+    return sead::Mathf::atan2(cross.length(), dot);
+}
+
+f32 calcAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b) {
+    return sead::Mathf::rad2deg(calcAngleRadian(a, b));
+}
 
 f32 calcAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b) {
     if (isNearZero(a, 0.001) || isNearZero(b, 0.001))
@@ -22,8 +27,46 @@ bool isNearZero(const sead::Vector2f& vec, f32 tolerance) {
     return vec.squaredLength() < tolerance * tolerance;
 }
 
+bool tryCalcAngleDegree(f32* out, const sead::Vector3f& a, const sead::Vector3f& b) {
+    if (isNearZero(a, 0.001) || isNearZero(b, 0.001))
+        return false;
+
+    *out = calcAngleDegree(a, b);
+    return true;
+}
+
 bool isNearZero(const sead::Vector3f& vec, f32 tolerance) {
     return vec.squaredLength() < tolerance * tolerance;
+}
+
+f32 calcAngleOnPlaneRadian(const sead::Vector3f& a, const sead::Vector3f& b,
+                           const sead::Vector3f& vertical) {
+    sead::Vector3f v1;
+    verticalizeVec(&v1, vertical, a);
+    sead::Vector3f v2;
+    verticalizeVec(&v2, vertical, b);
+
+    f32 dot = v1.dot(v2);
+    sead::Vector3f cross;
+    cross.setCross(v1, v2);
+    f32 angle = sead::Mathf::atan2(cross.length(), dot);
+
+    return vertical.dot(cross) < 0.0f ? -angle : angle;
+}
+
+/**
+ * Takes the plane perpendicular to unit vector `vertical`, projects `vec` onto it, and
+ * stores the result in `out`. The effect is that `vec` and `out` will look equal
+ * if looking in the direction of `vertical`.
+ */
+void verticalizeVec(sead::Vector3f* out, const sead::Vector3f& vertical,
+                    const sead::Vector3f& vec) {
+    out->setScaleAdd(-vertical.dot(vec), vertical, vec);
+}
+
+f32 calcAngleOnPlaneDegree(const sead::Vector3f& a, const sead::Vector3f& b,
+                           const sead::Vector3f& c) {
+    return sead::Mathf::rad2deg(calcAngleOnPlaneRadian(a, b, c));
 }
 
 f32 calcAngleOnPlaneDegreeOrZero(const sead::Vector3f& a, const sead::Vector3f& b,
@@ -65,6 +108,7 @@ bool isNearZero(f32 value, f32 tolerance) {
 
 bool isNearZero(const sead::Matrix34f& value, f32 tolerance) {
     sead::Vector3f vec;
+
     value.getBase(vec, 0);
     if (vec.squaredLength() < tolerance * tolerance)
         return true;
@@ -110,7 +154,7 @@ bool isNearDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 toler
 void normalize(sead::Vector2f* vec) {
     f32 len = vec->length();
     if (len > 0.0f) {
-        const f32 invLen = 1.0f / len;
+        f32 invLen = 1.0f / len;
         *vec *= invLen;
     }
 }
@@ -131,7 +175,7 @@ bool tryNormalizeOrZero(sead::Vector2f* vec) {
 
 bool tryNormalizeOrDirZ(sead::Vector3f* vec) {
     if (isNearZero(*vec, 0.001f)) {
-        // mismatch if this isn't set twice
+        // mismatches if this isn't set twice
         vec->set(0.0f, 0.0f, 0.0f);
         vec->set(sead::Vector3f::ez);
         return false;
@@ -144,20 +188,20 @@ bool tryNormalizeOrDirZ(sead::Vector3f* vec) {
 void setLength(sead::Vector3f* vec, f32 lenSet) {
     f32 len = vec->length();
     if (len > 0.0f) {
-        const f32 scale = lenSet / len;
+        f32 scale = lenSet / len;
         *vec *= scale;
     }
 }
 
 void setProjectionLength(sead::Vector3f* out, const sead::Vector3f& vec, f32 len) {
-    const f32 scale = len / sead::Mathf::abs(vec.dot(*out));
+    f32 scale = len / sead::Mathf::abs(vec.dot(*out));
     *out *= scale;
 }
 
 bool limitLength(sead::Vector2f* out, const sead::Vector2f& vec, f32 limit) {
     f32 len = vec.length();
     if (len > limit) {
-        const f32 invLen = limit / len;
+        f32 invLen = limit / len;
         out->x = invLen * vec.x;
         out->y = invLen * vec.y;
         return true;
@@ -170,7 +214,7 @@ bool limitLength(sead::Vector2f* out, const sead::Vector2f& vec, f32 limit) {
 bool limitLength(sead::Vector3f* out, const sead::Vector3f& vec, f32 limit) {
     f32 len = vec.length();
     if (len > limit) {
-        const f32 invLen = limit / len;
+        f32 invLen = limit / len;
         out->x = invLen * vec.x;
         out->y = invLen * vec.y;
         out->z = invLen * vec.z;
@@ -241,7 +285,7 @@ s32 sign(s32 var) {
 }
 
 f32 cubeRoot(f32 x) {
-    const f32 onethird = 1.0f / 3.0f;
+    f32 onethird = 1.0f / 3.0f;
 
     u32 i = 0x54a0fc86 - sead::BitUtil::bitCast<u32>(x) / 3;
     f32 y = sead::BitUtil::bitCast<f32>(i);
