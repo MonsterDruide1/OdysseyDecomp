@@ -35,5 +35,5 @@ private:
     const al::PlacementId* mPlacementId;
     bool mIsOn = false;
     SaveType mSaveType;
-    GameDataHolder* mGameDataHolder{};
+    GameDataHolder* mGameDataHolder = nullptr;
 };
