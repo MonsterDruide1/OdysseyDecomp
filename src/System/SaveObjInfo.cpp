@@ -1,27 +1,36 @@
 #include "System/SaveObjInfo.h"
 
-#include "GameDataFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 
+#include "System/GameDataFunction.h"
 
-SaveObjInfo* SaveObjInfo::createSaveObjInfoWriteSaveData(const al::ActorInitInfo& initInfo, const al::PlacementId* id) {
+SaveObjInfo* SaveObjInfo::createSaveObjInfoWriteSaveData(const al::ActorInitInfo& initInfo,
+                                                         const al::PlacementId* id) {
     return new SaveObjInfo(initInfo, id, SaveType::Write);
 }
-SaveObjInfo* SaveObjInfo::createSaveObjInfoNoWriteSaveDataInSameWorld(const al::ActorInitInfo& initInfo, const al::PlacementId* id) {
+
+SaveObjInfo*
+SaveObjInfo::createSaveObjInfoNoWriteSaveDataInSameWorld(const al::ActorInitInfo& initInfo,
+                                                         const al::PlacementId* id) {
     return new SaveObjInfo(initInfo, id, SaveType::NoWriteInSameWorld);
 }
-SaveObjInfo* SaveObjInfo::createSaveObjInfoNoWriteSaveDataInSameWorldResetMiniGame(const al::ActorInitInfo& initInfo, const al::PlacementId* id) {
+
+SaveObjInfo* SaveObjInfo::createSaveObjInfoNoWriteSaveDataInSameWorldResetMiniGame(
+    const al::ActorInitInfo& initInfo, const al::PlacementId* id) {
     return new SaveObjInfo(initInfo, id, SaveType::NoWriteResetMinigame);
 }
-SaveObjInfo* SaveObjInfo::createSaveObjInfoNoWriteSaveDataInSameScenario(const al::ActorInitInfo& initInfo, const al::PlacementId* id) {
+
+SaveObjInfo*
+SaveObjInfo::createSaveObjInfoNoWriteSaveDataInSameScenario(const al::ActorInitInfo& initInfo,
+                                                            const al::PlacementId* id) {
     return new SaveObjInfo(initInfo, id, SaveType::NoWriteInSameScenario);
 }
 
 SaveObjInfo::SaveObjInfo(const al::ActorInitInfo& initInfo, const al::PlacementId* placementId,
                          SaveType saveType)
-    : mPlacementId(placementId),
-      mSaveType(saveType){
-    mGameDataHolder = reinterpret_cast<GameDataHolder*>(initInfo.getActorSceneInfo().gameDataHolder);
+    : mPlacementId(placementId), mSaveType(saveType) {
+    mGameDataHolder =
+        reinterpret_cast<GameDataHolder*>(initInfo.getActorSceneInfo().gameDataHolder);
     mIsOn = checkIsOn();
 }
 
