@@ -819,18 +819,18 @@ void createAndRegisterLinksActorFromFactory(LiveActorGroup* group, const ActorIn
     }
 }
 
-// NON_MATCHING: regswap (https://decomp.me/scratch/9J2sk)
 void makeMapPartsModelName(sead::BufferedSafeString* modelName, sead::BufferedSafeString* path,
                            const PlacementInfo& placementInfo) {
     const char* lModelName = nullptr;
     if (alPlacementFunction::tryGetModelName(&lModelName, placementInfo) &&
         !isEqualString(lModelName, "")) {
         modelName->copy(lModelName);
+        path->format("ObjectData/%s", lModelName);
     } else {
         tryGetStringArg(&lModelName, placementInfo, "UnitConfigName");
         modelName->copy(lModelName);
+        path->format("ObjectData/%s", lModelName);
     }
-    path->format("ObjectData/%s", lModelName);
 }
 
 void makeMapPartsModelName(sead::BufferedSafeString* modelName, sead::BufferedSafeString* path,
