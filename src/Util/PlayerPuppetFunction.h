@@ -7,7 +7,7 @@ namespace al {
 class HitSensor;
 class LiveActor;
 class SensorMsg;
-}
+}  // namespace al
 class IUsePlayerPuppet;
 class BindKeepDemoInfo;
 class IUsePlayerCollision;
