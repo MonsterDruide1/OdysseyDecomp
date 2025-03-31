@@ -821,15 +821,15 @@ void createAndRegisterLinksActorFromFactory(LiveActorGroup* group, const ActorIn
 
 void makeMapPartsModelName(sead::BufferedSafeString* modelName, sead::BufferedSafeString* path,
                            const PlacementInfo& placementInfo) {
-    const char* lModelName = nullptr;
-    if (alPlacementFunction::tryGetModelName(&lModelName, placementInfo) &&
-        !isEqualString(lModelName, "")) {
-        modelName->copy(lModelName);
-        path->format("ObjectData/%s", lModelName);
+    const char* archiveName = nullptr;
+    if (alPlacementFunction::tryGetModelName(&archiveName, placementInfo) &&
+        !isEqualString(archiveName, "")) {
+        modelName->copy(archiveName);
+        path->format("ObjectData/%s", archiveName);
     } else {
-        tryGetStringArg(&lModelName, placementInfo, "UnitConfigName");
-        modelName->copy(lModelName);
-        path->format("ObjectData/%s", lModelName);
+        tryGetStringArg(&archiveName, placementInfo, "UnitConfigName");
+        modelName->copy(archiveName);
+        path->format("ObjectData/%s", archiveName);
     }
 }
 
