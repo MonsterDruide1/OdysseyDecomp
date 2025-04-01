@@ -114,20 +114,18 @@ void ItemGenerator::generate(const sead::Vector3f& pos, const sead::Quatf& quat)
     if (isNone())
         return;
 
+    KuriboMini** kuriboMiniArray = mKuriboMiniArray;
     if (mLinkShine)
         rs::appearPopupShine(mLinkShine, pos);
-    else {
-        KuriboMini** kuriboMiniArray = mKuriboMiniArray;
-        if (kuriboMiniArray) {
-            al::LiveActor* creator = mCreator;
-            s32 kuriboMiniCount = mKuriboMiniCount;
-            sead::Vector3f vec = sead::Vector3f(0.0f, 0.0f, 0.0f);
-            al::calcQuatFront(&vec, quat);
-            generateKuribos(kuriboMiniArray, kuriboMiniCount, creator, vec);
-        } else {
-            al::appearItem(mCreator, pos, quat, nullptr);
-        }
-    }
+    else if (kuriboMiniArray) {
+        al::LiveActor* creator = mCreator;
+        s32 kuriboMiniCount = mKuriboMiniCount;
+        sead::Vector3f vec = sead::Vector3f(0.0f, 0.0f, 0.0f);
+        al::calcQuatFront(&vec, quat);
+        generateKuribos(kuriboMiniArray, kuriboMiniCount, creator, vec);
+    } else
+        al::appearItem(mCreator, pos, quat, nullptr);
+
     mGeneratedItemCount++;
 }
 

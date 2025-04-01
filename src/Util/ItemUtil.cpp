@@ -49,13 +49,13 @@ namespace rs {
 
 ItemType::ValueType getItemType(const al::ActorInitInfo& info) {
     const char* name = nullptr;
-    if ((al::tryGetStringArg(&name, info, "ItemType") ||
-         al::tryGetStringArg(&name, info, "ItemTypeNoShine") ||
-         al::tryGetStringArg(&name, info, "ItemType2D3D")) &&
-        !al::isEqualString(name, "None"))
-        return getItemType(name);
-    else
+    if (!al::tryGetStringArg(&name, info, "ItemType") &&
+        !al::tryGetStringArg(&name, info, "ItemTypeNoShine") &&
+        !al::tryGetStringArg(&name, info, "ItemType2D3D"))
         return ItemType::None;
+    if (al::isEqualString(name, "None"))
+        return ItemType::None;
+    return getItemType(name);
 }
 
 ItemType::ValueType getItemTypeFromName(const char* name) {
@@ -204,57 +204,62 @@ void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info
 bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
                                 bool isAppearAbove) {
     const char* itemType = nullptr;
-    if ((al::tryGetStringArg(&itemType, info, "ItemType") ||
-         al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") ||
-         al::tryGetStringArg(&itemType, info, "ItemType2D3D")) &&
-        !al::isEqualString(itemType, "None")) {
-        s32 type = getItemType(itemType);
-        if (type != ItemType::None && type != ItemType::Shine)
-            return tryInitItemAndAddToKeeper(actor, type, info, isAppearAbove);
-    }
-    return false;
+    if ((!al::tryGetStringArg(&itemType, info, "ItemType") &&
+         !al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") &&
+         !al::tryGetStringArg(&itemType, info, "ItemType2D3D")) ||
+        al::isEqualString(itemType, "None"))
+        return false;
+
+    s32 type = getItemType(itemType);
+    if (type == ItemType::None || type == ItemType::Shine)
+        return false;
+
+    return tryInitItemAndAddToKeeper(actor, type, info, isAppearAbove);
 }
 
 void initItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info) {
     tryInitItem2DByPlacementInfo(actor, info);
 }
 
-// https://decomp.me/scratch/xEiXr
+// https://decomp.me/scratch/QRKyC
 // NON_MATCHING: Extra comparison and the default return is placed in a different spot
 bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info) {
     const char* itemType = nullptr;
-    if ((al::tryGetStringArg(&itemType, info, "ItemType") ||
-         al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") ||
-         al::tryGetStringArg(&itemType, info, "ItemType2D3D")) &&
-        !al::isEqualString(itemType, "None")) {
-        s32 type = getItemType(itemType);
-        if (type == ItemType::None || type == ItemType::Shine)
-            return false;
+    if ((!al::tryGetStringArg(&itemType, info, "ItemType") &&
+         !al::tryGetStringArg(&itemType, info, "ItemTypeNoShine") &&
+         !al::tryGetStringArg(&itemType, info, "ItemType2D3D")) ||
+        al::isEqualString(itemType, "None"))
+        return false;
 
-        if (type == ItemType::Random) {
-            actor->initItemKeeper(2);
-            al::addItem(actor, info, "ライフアップアイテム[飛出し出現]", "ライフアップ", nullptr,
-                        -1, false);
-            al::addItem(actor, info, "コイン2D[自動取得]", "コイン", nullptr, -1, false);
-            return true;
-        }
+    s32 type = getItemType(itemType);
+    if (type == ItemType::None || type == ItemType::Shine)
+        return false;
 
-        actor->initItemKeeper(1);
-        if (type <= ItemType::LifeMaxUpItem2D && type != ItemType::Coin &&
-            type != ItemType::CoinPopUp && type != ItemType::Coin10 &&
-            type != ItemType::LifeUpItem && type != ItemType::LifeUpItemBack &&
-            type != ItemType::LifeUpItem2D && type != ItemType::LifeMaxUpItem2D) {
-            al::addItem(actor, info, sItem2DNames[type], 0);
-            return true;
-        }
+    if (type == ItemType::Random) {
+        actor->initItemKeeper(2);
+        al::addItem(actor, info, "ライフアップアイテム[飛出し出現]", "ライフアップ", nullptr, -1,
+                    false);
+        al::addItem(actor, info, "コイン2D[自動取得]", "コイン", nullptr, -1, false);
+        return true;
+    }
+
+    actor->initItemKeeper(1);
+    if (type <= ItemType::LifeMaxUpItem2D && type != ItemType::Coin &&
+        type != ItemType::CoinPopUp && type != ItemType::Coin10 && type != ItemType::LifeUpItem &&
+        type != ItemType::LifeUpItemBack && type != ItemType::LifeUpItem2D &&
+        type != ItemType::LifeMaxUpItem2D) {
+        al::addItem(actor, info, sItem2DNames[type], 0);
+        return true;
     }
     return false;
 }
 
 bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info,
                  bool isAppearAbove) {
-    return itemType != ItemType::None && itemType != ItemType::Shine &&
-           tryInitItemAndAddToKeeper(actor, itemType, info, isAppearAbove);
+    if (itemType == ItemType::None || itemType == ItemType::Shine)
+        return false;
+
+    return tryInitItemAndAddToKeeper(actor, itemType, info, isAppearAbove);
 }
 
 Shine* tryInitShineByPlacementInfoWithItemMenu(const al::ActorInitInfo& info) {
@@ -382,6 +387,7 @@ void appearPopupShineWithoutWarp(Shine* shine) {
     shine->appearPopupWithoutWarp();
 }
 
+// TODO rename a2 here and in header
 void appearPopupShineGrandByBoss(Shine* shine, s32 a2) {
     shine->appearPopupGrandByBoss(a2);
 }
@@ -423,6 +429,7 @@ void endShineBossDemo(Shine* shine) {
     shine->endBossDemo();
 }
 
+// TODO rename a2 here and in header
 void endShineBossDemoAndStartFall(Shine* shine, f32 a2) {
     shine->endBossDemoAndStartFall(a2);
 }
@@ -490,8 +497,6 @@ void appearItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, const sead::
     al::appearItem(actor);
 }
 
-// https://decomp.me/scratch/FI77t
-// NON_MATCHING: IDA shows the quat variable being used as a vector
 void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
                               const sead::Vector3f& offset) {
     sead::Vector3f localOffset;
@@ -502,18 +507,12 @@ void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
     sead::Vector3f frontDir;
     al::calcFrontDir(&frontDir, actor);
 
-    sead::Vector3f up;
-    sead::Vector3f front;
-    if (al::isParallelDirection(frontDir, -al::getGravity(actor), 0.01f)) {
-        up = -al::getGravity(actor);
-        front = sead::Vector3f::ez;
-    } else {
-        up = -al::getGravity(actor);
-        front = frontDir;
-    }
-
     sead::Quatf quat;
-    al::makeQuatUpFront(&quat, up, front);
+    if (al::isParallelDirection(frontDir, -al::getGravity(actor), 0.01f))
+        al::makeQuatUpFront(&quat, -al::getGravity(actor), sead::Vector3f::ez);
+    else
+        al::makeQuatUpFront(&quat, -al::getGravity(actor), frontDir);
+
     al::appearItem(actor, al::getTrans(actor), quat, nullptr);
 }
 
