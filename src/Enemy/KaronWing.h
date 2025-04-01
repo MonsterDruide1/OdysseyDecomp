@@ -42,10 +42,10 @@ private:
     CapTargetInfo* mCapTargetInfo = nullptr;
     KaronWingStateHack* mStateHack = nullptr;
     EnemyStateSwoon* mStateSwoon = nullptr;
-    EnemyStateSwoon* mStateSwoonBreak = nullptr;
+    EnemyStateSwoon* mStateBreak = nullptr;
     EnemyStateHackStart* mStateHackStart = nullptr;
     FlyerStateWander* mStateWander = nullptr;
     EnemyCap* mEnemyCap = nullptr;
-    f32 _148 = 0.0f;
+    f32 mDamageStartY = 0.0f;
     sead::Vector3f mSpawnTrans = sead::Vector3f::zero;
 };
