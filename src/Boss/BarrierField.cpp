@@ -6,7 +6,7 @@
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 
 #include "System/GameDataFunction.h"
 #include "Util/DemoUtil.h"
