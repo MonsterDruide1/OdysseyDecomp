@@ -133,9 +133,9 @@ void makeMtxUpNoSupport(sead::Matrix34f* outMtx, const sead::Vector3f& up) {
     bool isZAxis = getMaxAbsElementIndex(up) == 2;
 
     sead::Vector3f front;
-    front.x = isZAxis ? sead::Vector3f::ez.x : sead::Vector3f::ex.x;
-    front.y = isZAxis ? sead::Vector3f::ez.y : sead::Vector3f::ex.y;
-    front.z = isZAxis ? sead::Vector3f::ez.z : sead::Vector3f::ex.z;
+    front.x = isZAxis ? sead::Vector3f::ex.x : sead::Vector3f::ez.x;
+    front.y = isZAxis ? sead::Vector3f::ex.y : sead::Vector3f::ez.y;
+    front.z = isZAxis ? sead::Vector3f::ex.z : sead::Vector3f::ez.z;
 
     makeMtxUpFront(outMtx, up, front);
 }
