@@ -30,6 +30,7 @@
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
+#include "Enemy/KaronWing.h"
 #include "Enemy/Mummy.h"
 #include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
@@ -319,7 +320,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"JugemFishing", nullptr},
     {"JumpingRopeNpc", nullptr},
     {"Kakku", nullptr},
-    {"KaronWing", nullptr},
+    {"KaronWing", al::createActorFunction<KaronWing>},
     {"KeyMoveCameraFix", nullptr},
     {"KickStone", nullptr},
     {"KillerLauncher", nullptr},
