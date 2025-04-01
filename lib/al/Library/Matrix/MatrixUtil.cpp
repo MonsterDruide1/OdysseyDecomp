@@ -146,18 +146,6 @@ void makeMtxUpNoSupportPos(sead::Matrix34f* outMtx, const sead::Vector3f& up,
     outMtx->setBase(3, pos);
 }
 
-void makeMtxQuatPos(sead::Matrix34f* outMtx, const sead::Quatf& quat, const sead::Vector3f& pos) {
-    sead::Matrix34CalcCommon<f32>::makeQ(*outMtx, quat);
-    outMtx->setBase(3, pos);
-}
-
-void makeMtxQuatScalePos(sead::Matrix34f* outMtx, const sead::Quatf& quat,
-                         const sead::Vector3f& scale, const sead::Vector3f& pos) {
-    sead::Matrix34CalcCommon<f32>::makeQ(*outMtx, quat);
-    outMtx->scaleBases(scale.x, scale.y, scale.z);
-    outMtx->setBase(3, pos);
-}
-
 void makeMtxFrontUpPos(sead::Matrix34f* outMtx, const sead::Vector3f& front,
                        const sead::Vector3f& up, const sead::Vector3f& pos) {
     makeMtxFrontUp(outMtx, front, up);

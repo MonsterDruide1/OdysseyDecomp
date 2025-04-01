@@ -275,8 +275,6 @@ def common_sead_math_template(c, path):
                 continue
             if "Vector3CalcCommon" in line:
                 continue
-            if "Matrix34CalcCommon" in line:
-                continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
 def common_string_finder(c, path):
