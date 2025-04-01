@@ -118,32 +118,63 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
     makeActorAlive();
 }
 
-// NON_MATCHING: needs to have proper matrix math implemented still
 void PartsModel::updatePose() {
-    sead::Matrix34f poseMtx;
-    sead::Matrix34f jointMtx;
-
     if (!mIsUpdate)
         return;
-    if (mIsUseLocalPos) {
-        jointMtx = *mJointMtx;
+
+    if (!mIsUseLocalPos) {
+        sead::Matrix34f baseMtx = *mJointMtx;
         if (mIsUseFollowMtxScale) {
             sead::Vector3f mtxScale;
-            calcMtxScale(&mtxScale, jointMtx);
-            mtxScale *= 1.0f;
+            calcMtxScale(&mtxScale, baseMtx);
+            const sead::Vector3f& scale = sead::Vector3f::ones;
+            mtxScale.x *= scale.x;
+            mtxScale.y *= scale.y;
+            mtxScale.z *= scale.z;
             setScale(this, mtxScale);
         }
-        normalize(&jointMtx);
-        updatePoseMtx(this, &jointMtx);
+        normalize(&baseMtx);
+        updatePoseMtx(this, &baseMtx);
         return;
     }
 
-    mLocalRotate *= 0.017453f;
+    sead::Matrix34f rotationMatrix;
+    sead::Vector3f rotate(sead::Mathf::deg2rad(mLocalRotate.x),
+                          sead::Mathf::deg2rad(mLocalRotate.y),
+                          sead::Mathf::deg2rad(mLocalRotate.z));
+    rotationMatrix.makeR(rotate);
 
-    poseMtx.makeRT(mLocalRotate, mLocalTrans);
+    sead::Matrix34f translationMatrix;
+    translationMatrix.makeRT({0.0f, 0.0f, 0.0f}, mLocalTrans);
 
-    if (mIsUseFollowMtxScale || mIsUseLocalScale) {
+    sead::Matrix34f poseMatrix = rotationMatrix * translationMatrix;
+
+    sead::Matrix34f baseMtx = *mJointMtx;
+
+    if (mIsUseFollowMtxScale) {
+        sead::Matrix34f rotBaseMtx = baseMtx * rotationMatrix;
+
+        sead::Vector3f mtxScale = {0.0f, 0.0f, 0.0f};
+        calcMtxScale(&mtxScale, rotBaseMtx);
+
+        poseMatrix.m[0][3] *= mtxScale.x;
+        poseMatrix.m[1][3] *= mtxScale.y;
+        poseMatrix.m[2][3] *= mtxScale.z;
+
+        if (mIsUseLocalScale) {
+            mtxScale.x *= mLocalScale.x;
+            mtxScale.y *= mLocalScale.y;
+            mtxScale.z *= mLocalScale.z;
+        }
+
+        setScale(this, mtxScale);
+    } else if (mIsUseLocalScale) {
+        setScale(this, mLocalScale);
     }
+
+    normalize(&baseMtx);
+    baseMtx = baseMtx * poseMatrix;
+    updatePoseMtx(this, &baseMtx);
 }
 
 void PartsModel::offSyncAppearAndHide() {
