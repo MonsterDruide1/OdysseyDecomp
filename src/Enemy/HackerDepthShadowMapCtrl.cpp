@@ -94,7 +94,9 @@ void HackerDepthShadowMapCtrl::update(PlayerCollider* playerCollider) {
         }
     }
 
+    // 1 for wall, 0 for flat ground
     f32 tilt = sead::Mathf::clamp(1.0f - groundNormal.dot(sead::Vector3f::ey), 0.0f, 1.0f);
+
     f32 gradationTargetLength = groundDistance + (tilt * 300.0f);
     f32 targetLength;
     if (shadowLengthArea)
