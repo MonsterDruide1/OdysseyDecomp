@@ -19,8 +19,8 @@ CoinPopUpWithoutHitReaction, Coin3, Coin5, Coin10, Coin10Auto, Coin5Count, Coin1
 LifeUpItemBack, LifeUpItem2D, LifeMaxUpItem, LifeMaxUpItem2D, Shine, AirBubble, DotMarioCat, 
 KuriboMini3, KuriboMini8, CoinStackBound, Random);
 
-s32 getItemType(const al::ActorInitInfo& info);
-s32 getItemType(const char* name);
+ItemType::ValueType getItemType(const al::ActorInitInfo& info);
+ItemType::ValueType getItemType(const char* name);
 bool isItemTypeKuriboMini(s32* out, s32 type);
 
 void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
@@ -79,11 +79,13 @@ void appearItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, const sead::
 void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
                               const sead::Vector3f& offset);
 void appearRandomItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset);
-bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 a3, f32 a4);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 step,
+                               f32 offsetAbove);
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans,
-                               const sead::Quatf& quat, s32 a3, f32 a4);
-bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 a3, f32 a4);
-bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 a4,
+                               const sead::Quatf& quat, s32 step, f32 offsetAbove);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 step,
+                               f32 offsetAbove);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 step,
                                const sead::Vector3f& offset);
 
 void syncCoin2DAnimFrame(al::LiveActor* actor, const char* name);
@@ -97,7 +99,7 @@ s32 getStageShineAnimFrame(const al::LiveActor* actor);
 s32 getStageShineAnimFrame(const al::LiveActor* actor, s32 worldId);
 s32 getStageShineAnimFrame(const al::LiveActor* actor, const char* stageName);
 void setStageShineAnimFrame(al::LiveActor* actor, const char* stageName, s32 shineAnimFrame,
-                            bool a4);
+                            bool isMatAnim);
 
 const char* getStageShineArchiveName(const al::LiveActor* actor, const char* stageName);
 const char* getStageShineEmptyArchiveName(const al::LiveActor* actor, const char* stageName);

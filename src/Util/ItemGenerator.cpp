@@ -73,29 +73,29 @@ bool ItemGenerator::tryUpdateHintTransIfExistShine() {
 }
 
 bool ItemGenerator::tryUpdateHintTransIfExistShine(const sead::Vector3f& trans) {
-    if (mLinkShine && mGeneratedItemCount <= 0) {
-        rs::updateHintTrans(mLinkShine, trans);
-        return true;
-    }
-    return false;
+    if (!mLinkShine || mGeneratedItemCount > 0)
+        return false;
+
+    rs::updateHintTrans(mLinkShine, trans);
+    return true;
 }
 
 void generateKuribos(KuriboMini** kuriboMiniArray, s32 kuriboMiniCount, al::LiveActor* creator,
-                     const sead::Vector3f& vec) {
-    sead::Vector3f v = sead::Vector3f(0.0f, 1.0f, 0.0f);
-    al::verticalizeVec(&v, vec, v);
+                     const sead::Vector3f& front) {
+    sead::Vector3f up = sead::Vector3f(0.0f, 1.0f, 0.0f);
+    al::verticalizeVec(&up, front, up);
 
-    if (!al::tryNormalizeOrZero(&v))
-        al::calcDirVerticalAny(&v, vec);
+    if (!al::tryNormalizeOrZero(&up))
+        al::calcDirVerticalAny(&up, front);
 
     for (s32 i = 0; i < kuriboMiniCount; i++) {
-        sead::Vector3f frontDir = vec;
-        al::rotateVectorDegree(&frontDir, frontDir, v,
+        sead::Vector3f frontDir = front;
+        al::rotateVectorDegree(&frontDir, frontDir, up,
                                al::normalize(i, 0, kuriboMiniCount) * 360.0f);
         al::normalize(&frontDir);
 
         sead::Quatf quat = sead::Quatf::unit;
-        al::makeQuatFrontUp(&quat, frontDir, v);
+        al::makeQuatFrontUp(&quat, frontDir, up);
         al::updatePoseQuat(kuriboMiniArray[i], quat);
 
         sead::Vector3f pos = sead::Vector3f(0.0f, 0.0f, 150.0f);
@@ -118,8 +118,8 @@ void ItemGenerator::generate(const sead::Vector3f& pos, const sead::Quatf& quat)
         rs::appearPopupShine(mLinkShine, pos);
     else {
         KuriboMini** kuriboMiniArray = mKuriboMiniArray;
-        al::LiveActor* creator = mCreator;
         if (kuriboMiniArray) {
+            al::LiveActor* creator = mCreator;
             s32 kuriboMiniCount = mKuriboMiniCount;
             sead::Vector3f vec = sead::Vector3f(0.0f, 0.0f, 0.0f);
             al::calcQuatFront(&vec, quat);
@@ -135,35 +135,32 @@ void ItemGenerator::generate(const sead::Vector3f& pos, const sead::Vector3f& ve
     if (isNone())
         return;
 
+    KuriboMini** kuriboMiniArray = mKuriboMiniArray;
+
     if (mLinkShine)
         rs::appearPopupShine(mLinkShine, pos);
-    else {
-        KuriboMini** kuriboMiniArray = mKuriboMiniArray;
-        al::LiveActor* creator = mCreator;
-        if (kuriboMiniArray) {
-            s32 kuriboMiniCount = mKuriboMiniCount;
-            generateKuribos(kuriboMiniArray, kuriboMiniCount, creator, vec);
-        } else {
-            al::appearItem(mCreator, pos, vec, nullptr);
-        }
-    }
+    else if (kuriboMiniArray)
+        generateKuribos(mKuriboMiniArray, mKuriboMiniCount, mCreator, vec);
+    else
+        al::appearItem(mCreator, pos, vec, nullptr);
+
     mGeneratedItemCount++;
 }
 
 bool ItemGenerator::tryGenerate(const sead::Vector3f& pos, const sead::Quatf& quat, s32 count) {
-    if (!isNone() && isEnableGenerateByCount(count)) {
-        generate(pos, quat);
-        return true;
-    }
-    return false;
+    if (isNone() || !isEnableGenerateByCount(count))
+        return false;
+
+    generate(pos, quat);
+    return true;
 }
 
 bool ItemGenerator::tryGenerate(const sead::Vector3f& pos, const sead::Vector3f& vec, s32 count) {
-    if (!isNone() && isEnableGenerateByCount(count)) {
-        generate(pos, vec);
-        return true;
-    }
-    return false;
+    if (isNone() || !isEnableGenerateByCount(count))
+        return false;
+
+    generate(pos, vec);
+    return true;
 }
 
 bool ItemGenerator::isNone() const {

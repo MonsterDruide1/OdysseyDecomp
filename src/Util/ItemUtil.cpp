@@ -47,7 +47,7 @@ const char* sItem2DNames[] = {
 
 namespace rs {
 
-s32 getItemType(const al::ActorInitInfo& info) {
+ItemType::ValueType getItemType(const al::ActorInitInfo& info) {
     const char* name = nullptr;
     if ((al::tryGetStringArg(&name, info, "ItemType") ||
          al::tryGetStringArg(&name, info, "ItemTypeNoShine") ||
@@ -58,7 +58,7 @@ s32 getItemType(const al::ActorInitInfo& info) {
         return ItemType::None;
 }
 
-s32 getItemTypeFromName(const char* name) {
+ItemType::ValueType getItemTypeFromName(const char* name) {
     if (al::isEqualString(name, "Coin"))
         return ItemType::Coin;
     if (al::isEqualString(name, "Coin2D"))
@@ -110,7 +110,7 @@ s32 getItemTypeFromName(const char* name) {
     return ItemType::None;
 }
 
-s32 getItemType(const char* name) {
+ItemType::ValueType getItemType(const char* name) {
     return getItemTypeFromName(name);
 }
 
@@ -613,25 +613,25 @@ s32 getStageShineAnimFrame(const al::LiveActor* actor, const char* stageName) {
 }
 
 void startShineAnimAndSetFrameAndStop(al::LiveActor* actor, const char* animName, s32 frame,
-                                      bool a4) {
-    a4 ? al::startMtpAnimAndSetFrameAndStop(actor, animName, frame) :
-         al::startMclAnimAndSetFrameAndStop(actor, animName, frame);
+                                      bool isMatAnim) {
+    isMatAnim ? al::startMtpAnimAndSetFrameAndStop(actor, animName, frame) :
+                al::startMclAnimAndSetFrameAndStop(actor, animName, frame);
 }
 
 void setStageShineAnimFrame(al::LiveActor* actor, const char* stageName, s32 shineAnimFrame,
-                            bool a4) {
+                            bool isMatAnim) {
     if (shineAnimFrame != -1) {
         if (shineAnimFrame == 99)
             return;
-        return startShineAnimAndSetFrameAndStop(actor, "Color", shineAnimFrame, a4);
+        return startShineAnimAndSetFrameAndStop(actor, "Color", shineAnimFrame, isMatAnim);
     }
     if (stageName) {
         shineAnimFrame = getStageShineAnimFrame(actor, stageName);
-        return startShineAnimAndSetFrameAndStop(actor, "Color", shineAnimFrame, a4);
+        return startShineAnimAndSetFrameAndStop(actor, "Color", shineAnimFrame, isMatAnim);
     }
     shineAnimFrame = getStageShineAnimFrame(actor);
     if (shineAnimFrame != -1)
-        startShineAnimAndSetFrameAndStop(actor, "Color", shineAnimFrame, a4);
+        startShineAnimAndSetFrameAndStop(actor, "Color", shineAnimFrame, isMatAnim);
 }
 
 const char* getStageShineArchiveName(const al::LiveActor* actor, const char* stageName) {
