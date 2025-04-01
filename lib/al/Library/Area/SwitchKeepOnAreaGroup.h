@@ -21,7 +21,9 @@ public:
 
 private:
     AreaObjGroup* mAreaObjGroup;
-    unsigned char padding[0x10];
+    AreaObj** _10 = nullptr;
+    s32 _18 = 0;
+    s32 _1c = 0;
 };
 
 static_assert(sizeof(SwitchKeepOnAreaGroup) == 0x20);
