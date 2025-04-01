@@ -5,7 +5,7 @@
 
 namespace al {
 class LiveActor;
-class IusePlayerCollision;
+class IUsePlayerCollision;
 }  // namespace al
 
 class CapTargetInfo {
@@ -26,7 +26,7 @@ public:
 private:
     const al::LiveActor* mActor = nullptr;
     const char* mHackName = nullptr;
-    al::IusePlayerCollision* mPlayerCollision = nullptr;
+    al::IUsePlayerCollision* mPlayerCollision = nullptr;
     sead::Matrix34f* mPoseMatrix = nullptr;
     const sead::Matrix34f* mJointMtx = nullptr;
     sead::Vector3f mLocalTrans = sead::Vector3f::zero;
