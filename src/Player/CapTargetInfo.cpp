@@ -53,24 +53,14 @@ void CapTargetInfo::setFollowLockOnMtx(const char* jointName, const sead::Vector
 void CapTargetInfo::setLockOnStartAnimName(const char* animName) {
     mLockOnStartAnimName = animName;
     mIsLockOnStart = !al::isEqualString(animName, "Capture");
-
-    if (!al::isEqualString(animName, "Capture")) {
-        mIsLockOn = false;
-        return;
-    }
-
-    mIsLockOn = al::isEqualString(mLockOnAnimName, "Capture");
+    mIsLockOn =
+        al::isEqualString(animName, "Capture") && al::isEqualString(mLockOnAnimName, "Capture");
 }
 
 void CapTargetInfo::setLockOnAnimName(const char* animName) {
     mLockOnAnimName = animName;
-
-    if (!al::isEqualString(mLockOnAnimName, "Capture")) {
-        mIsLockOn = false;
-        return;
-    }
-
-    mIsLockOn = al::isEqualString(mLockOnStartAnimName, "Capture");
+    mIsLockOn = al::isEqualString(mLockOnAnimName, "Capture") &&
+                al::isEqualString(mLockOnStartAnimName, "Capture");
 }
 
 void CapTargetInfo::setHackName(const char* hackName) {
@@ -121,14 +111,14 @@ void CapTargetInfo::calcLockOnFollowTargetScale(sead::Vector3f* targetScale) con
         return;
     }
 
-    if (mPoseMatrix != nullptr) {
+    if (mPoseMatrix) {
         al::calcMtxScale(targetScale, *mPoseMatrix);
         *targetScale *= mLockOnScale;
         return;
     }
 
     sead::Matrix34f baseMtx = sead::Matrix34f::ident;
-    if (mJointMtx != nullptr)
+    if (mJointMtx)
         baseMtx = *mJointMtx;
     else
         al::makeMtxRT(&baseMtx, mActor);
