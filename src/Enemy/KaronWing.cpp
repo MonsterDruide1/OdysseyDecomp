@@ -76,9 +76,9 @@ void KaronWing::init(const al::ActorInitInfo& info) {
     mStateSwoon->initParams(swoonParam);
     al::initNerveState(this, mStateSwoon, &NrvKaronWing.Swoon, "気絶");
 
-    mStateSwoonBreak = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
-    mStateSwoonBreak->initParams(swoonParam);
-    al::initNerveState(this, mStateSwoonBreak, &NrvKaronWing.Break, "壊れ");
+    mStateBreak = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
+    mStateBreak->initParams(swoonParam);
+    al::initNerveState(this, mStateBreak, &NrvKaronWing.Break, "壊れ");
 
     EnemyStateReviveInsideScreen* stateRevive = new EnemyStateReviveInsideScreen(this);
     al::initNerveState(this, stateRevive, &NrvKaronWing.Revive, "画面内復活");
@@ -191,10 +191,8 @@ bool KaronWing::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
         }
         if (mStateSwoon->tryReceiveMsgEndSwoon(message))
             return true;
-        if (rs::isMsgTankExplosion(message)) {
-            (al::isNerve(this, &NrvKaronWing.Swoon) ? mStateSwoon : mStateSwoonBreak)
-                ->requestTrampled();
-        }
+        if (rs::isMsgTankExplosion(message))
+            (al::isNerve(this, &NrvKaronWing.Swoon) ? mStateSwoon : mStateBreak)->requestTrampled();
     }
 
     if (al::isNerve(this, &NrvKaronWing.ReviveAppear) || al::isNerve(this, &NrvKaronWing.Wait) ||
@@ -202,7 +200,7 @@ bool KaronWing::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
         al::isNerve(this, &NrvKaronWing.Find) || al::isNerve(this, &NrvKaronWing.Chase)) {
         if (mStateSwoon->tryReceiveMsgAttack(message)) {
             if (rs::tryStartEnemyCapBlowDown(mEnemyCap, other)) {
-                _148 = al::getTrans(this).y;
+                mDamageStartY = al::getTrans(this).y;
                 al::setVelocityBlowAttackAndTurnToTarget(this, rs::getPlayerBodyPos(this), 7.0f,
                                                          25.0f);
                 al::setNerve(this, &NrvKaronWing.DamageCap);
@@ -363,7 +361,7 @@ void KaronWing::exeDamageCap() {
     if (al::isActionEnd(this)) {
         const sead::Vector3f& trans = al::getTrans(this);
         const sead::Vector3f& velocity = al::getVelocity(this);
-        if (trans.y + velocity.y <= _148 || al::isOnGround(this, 0))
+        if (trans.y + velocity.y <= mDamageStartY || al::isOnGround(this, 0))
             al::setNerve(this, &NrvKaronWing.Wait);
     }
 }
