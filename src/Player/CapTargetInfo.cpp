@@ -68,12 +68,12 @@ void CapTargetInfo::setHackName(const char* hackName) {
 }
 
 void CapTargetInfo::makeLockOnMtx(sead::Matrix34f* outMtx) const {
-    if (mPoseMatrix != nullptr) {
+    if (mPoseMatrix) {
         *outMtx = *mPoseMatrix;
         return;
     }
 
-    if (mJointMtx == nullptr) {
+    if (!mJointMtx) {
         al::makeMtxRT(outMtx, mActor);
         return;
     }
