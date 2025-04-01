@@ -95,13 +95,13 @@ void KaronWing::init(const al::ActorInitInfo& info) {
         makeActorAlive();
 }
 
-// NON_MATCHING: stack cleanup snippet at wrong location (https://decomp.me/scratch/72Cld)
 void KaronWing::control() {
-    if (al::isNerve(this, &NrvKaronWing.HackStart) || al::isNerve(this, &NrvKaronWing.Revive))
+    if (al::isNerve(this, &NrvKaronWing.HackStart))
         return;
 
-    if (al::isCollidedFloorCode(this, "DamageFire") || al::isCollidedFloorCode(this, "Needle") ||
-        al::isCollidedFloorCode(this, "Poison")) {
+    if (!al::isNerve(this, &NrvKaronWing.Revive) &&
+        (al::isCollidedFloorCode(this, "DamageFire") || al::isCollidedFloorCode(this, "Needle") ||
+         al::isCollidedFloorCode(this, "Poison"))) {
         al::startHitReaction(this, "死亡");
         al::setNerve(this, &NrvKaronWing.Revive);
     } else if (al::isInDeathArea(this) && !al::isNerve(this, &NrvKaronWing.Revive)) {
