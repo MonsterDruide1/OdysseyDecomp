@@ -13,91 +13,103 @@ class SensorMsg;
 class Shine;
 
 namespace rs {
-SEAD_ENUM(ItemType, Coin, Coin2D, CoinBlow, CoinBlowVeryLittle, CoinPopUp, 
+// TODO: Replace this with SEAD_ENUM_EX when its ValueArray constructor matches
+SEAD_ENUM(ItemType, None = -1, Coin, Coin2D, CoinBlow, CoinBlowVeryLittle, CoinPopUp, 
 CoinPopUpWithoutHitReaction, Coin3, Coin5, Coin10, Coin10Auto, Coin5Count, Coin100, LifeUpItem, 
 LifeUpItemBack, LifeUpItem2D, LifeMaxUpItem, LifeMaxUpItem2D, Shine, AirBubble, DotMarioCat, 
 KuriboMini3, KuriboMini8, CoinStackBound, Random);
 
-s32 getItemType(const al::ActorInitInfo&);
-s32 getItemType(const char*);
-bool isItemTypeKuriboMini(s32*, s32);
+ItemType::ValueType getItemType(const al::ActorInitInfo& info);
+ItemType::ValueType getItemType(const char* name);
+bool isItemTypeKuriboMini(s32* out, s32 type);
 
-void initItemByPlacementInfo(al::LiveActor*, const al::ActorInitInfo&, bool);
-bool tryInitItemByPlacementInfo(al::LiveActor*, const al::ActorInitInfo&, bool);
-void initItem2DByPlacementInfo(al::LiveActor*, const al::ActorInitInfo&);
-bool tryInitItem2DByPlacementInfo(al::LiveActor*, const al::ActorInitInfo&);
-bool tryInitItem(al::LiveActor*, s32, const al::ActorInitInfo&, bool);
+void initItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
+                             bool isAppearAbove);
+bool tryInitItemByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info,
+                                bool isAppearAbove);
+void initItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info);
+bool tryInitItem2DByPlacementInfo(al::LiveActor* actor, const al::ActorInitInfo& info);
+bool tryInitItem(al::LiveActor* actor, s32 itemType, const al::ActorInitInfo& info,
+                 bool isAppearAbove);
 
-Shine* tryInitShineByPlacementInfoWithItemMenu(const al::ActorInitInfo&);
-Shine* initShineByPlacementInfo(const al::ActorInitInfo&);
-Shine* tryInitLinkShine(const al::ActorInitInfo&, const char*, s32);
-Shine* tryInitLinkShineHintPhoto(const al::ActorInitInfo&, const char*, s32);
-Shine* initLinkShine(const al::ActorInitInfo&, const char*, s32);
-Shine* initLinkShopShine(const al::ActorInitInfo&, const char*);
-Shine* initLinkShineChipShine(const al::ActorInitInfo&);
-Shine* initLinkBossShine(const al::ActorInitInfo&);
+Shine* tryInitShineByPlacementInfoWithItemMenu(const al::ActorInitInfo& info);
+Shine* initShineByPlacementInfo(const al::ActorInitInfo& info);
+Shine* tryInitLinkShine(const al::ActorInitInfo& info, const char* name, s32 linkIndex);
+Shine* tryInitLinkShineHintPhoto(const al::ActorInitInfo& info, const char* name, s32 linkIndex);
+Shine* initLinkShine(const al::ActorInitInfo& info, const char* name, s32 linkIndex);
+Shine* initLinkShopShine(const al::ActorInitInfo& info, const char* name);
+Shine* initLinkShineChipShine(const al::ActorInitInfo& info);
+Shine* initLinkBossShine(const al::ActorInitInfo& info);
 
-void createShineEffectInsideObject(Shine*, const al::LiveActor*, const al::ActorInitInfo&);
+void createShineEffectInsideObject(Shine* shine, const al::LiveActor* actor,
+                                   const al::ActorInitInfo& info);
 
-void appearPopupShine(Shine*);
-void appearPopupShine(Shine*, const al::LiveActor*);
-void appearPopupShine(Shine*, const sead::Vector3f&);
-void appearPopupShineWithoutDemo(Shine*);
-void appearPopupShineWithoutDemo(Shine*, const al::LiveActor*);
-void appearPopupShineWithoutDemo(Shine*, const sead::Vector3f&);
-void appearPopupShineWithoutWarp(Shine*);
-void appearPopupShineGrandByBoss(Shine*, s32);
-void appearWaitShine(Shine*);
-void appearWaitShine(Shine*, const sead::Vector3f&);
+void appearPopupShine(Shine* shine);
+void appearPopupShine(Shine* shine, const al::LiveActor* actor);
+void appearPopupShine(Shine* shine, const sead::Vector3f& trans);
+void appearPopupShineWithoutDemo(Shine* shine);
+void appearPopupShineWithoutDemo(Shine* shine, const al::LiveActor* actor);
+void appearPopupShineWithoutDemo(Shine* shine, const sead::Vector3f& trans);
+void appearPopupShineWithoutWarp(Shine* shine);
+void appearPopupShineGrandByBoss(Shine* shine, s32 a2);
+void appearWaitShine(Shine* shine);
+void appearWaitShine(Shine* shine, const sead::Vector3f& trans);
 
-bool isEndAppearShine(const Shine*);
-bool isGotShine(const Shine*);
-bool isAliveShine(const Shine*);
-bool isMainShine(const Shine*);
+bool isEndAppearShine(const Shine* shine);
+bool isGotShine(const Shine* shine);
+bool isAliveShine(const Shine* shine);
+bool isMainShine(const Shine* shine);
 
-void updateHintTrans(const Shine*, const sead::Vector3f&);
-void appearShineAndJoinBossDemo(Shine*, const char*, const sead::Quatf&, const sead::Vector3f&);
-void endShineBossDemo(Shine*);
-void endShineBossDemoAndStartFall(Shine*, f32);
+void updateHintTrans(const Shine* shine, const sead::Vector3f& trans);
+void appearShineAndJoinBossDemo(Shine* shine, const char* name, const sead::Quatf& quat,
+                                const sead::Vector3f& trans);
+void endShineBossDemo(Shine* shine);
+void endShineBossDemoAndStartFall(Shine* shine, f32 a2);
 
-void setAppearItemFactorByMsg(const al::LiveActor*, const al::SensorMsg*, const al::HitSensor*);
-void setAppearItemFactorAndOffsetByMsg(const al::LiveActor*, const al::SensorMsg*,
-                                       const al::HitSensor*);
-void setAppearItemFactorAndOffsetForCombo(const al::LiveActor*, const al::SensorMsg*,
-                                          const al::HitSensor*, bool);
-void appearItemFromObj(al::LiveActor*, const sead::Vector3f&, const sead::Quatf&, f32);
-void appearItemFromObj(al::LiveActor*, al::HitSensor*, f32);
-void appearItemFromObj(al::LiveActor*, al::HitSensor*, const sead::Vector3f&);
-void appearItemFromObjGravity(al::LiveActor*, al::HitSensor*, const sead::Vector3f&);
-void appearRandomItemFromObj(al::LiveActor*, al::HitSensor*, f32);
-bool tryAppearMultiCoinFromObj(al::LiveActor*, const sead::Vector3f&, s32, f32);
-bool tryAppearMultiCoinFromObj(al::LiveActor*, const sead::Vector3f&, const sead::Quatf&, s32, f32);
-bool tryAppearMultiCoinFromObj(al::LiveActor*, al::HitSensor*, s32, f32);
-bool tryAppearMultiCoinFromObj(al::LiveActor*, al::HitSensor*, s32, const sead::Vector3f&);
+void setAppearItemFactorByMsg(const al::LiveActor* actor, const al::SensorMsg* msg,
+                              const al::HitSensor* sensor);
+void setAppearItemFactorAndOffsetByMsg(const al::LiveActor* actor, const al::SensorMsg* msg,
+                                       const al::HitSensor* sensor);
+void setAppearItemFactorAndOffsetForCombo(const al::LiveActor* actor, const al::SensorMsg* msg,
+                                          const al::HitSensor* sensor, bool isSuperCombo);
+void appearItemFromObj(al::LiveActor* actor, const sead::Vector3f& trans, const sead::Quatf& quat,
+                       f32 offset);
+void appearItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset);
+void appearItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, const sead::Vector3f& offset);
+void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
+                              const sead::Vector3f& offset);
+void appearRandomItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 step,
+                               f32 offsetAbove);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans,
+                               const sead::Quatf& quat, s32 step, f32 offsetAbove);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 step,
+                               f32 offsetAbove);
+bool tryAppearMultiCoinFromObj(al::LiveActor* actor, al::HitSensor* sensor, s32 step,
+                               const sead::Vector3f& offset);
 
-void syncCoin2DAnimFrame(al::LiveActor*, const char*);
+void syncCoin2DAnimFrame(al::LiveActor* actor, const char* name);
 
-const char* getStageCoinCollectArchiveName(const al::LiveActor*);
-const char* getStageCoinCollectEmptyArchiveName(const al::LiveActor*);
-const char* getStageCoinCollect2DArchiveName(const al::LiveActor*);
-const char* getStageCoinCollect2DEmptyArchiveName(const al::LiveActor*);
+const char* getStageCoinCollectArchiveName(const al::LiveActor* actor);
+const char* getStageCoinCollectEmptyArchiveName(const al::LiveActor* actor);
+const char* getStageCoinCollect2DArchiveName(const al::LiveActor* actor);
+const char* getStageCoinCollect2DEmptyArchiveName(const al::LiveActor* actor);
 
-s32 getStageShineAnimFrame(const al::LiveActor*);
-s32 getStageShineAnimFrame(const al::LiveActor*, s32);
-s32 getStageShineAnimFrame(const al::LiveActor*, const char*);
-void setStageShineAnimFrame(al::LiveActor*, const char*, s32, bool);
+s32 getStageShineAnimFrame(const al::LiveActor* actor);
+s32 getStageShineAnimFrame(const al::LiveActor* actor, s32 worldId);
+s32 getStageShineAnimFrame(const al::LiveActor* actor, const char* stageName);
+void setStageShineAnimFrame(al::LiveActor* actor, const char* stageName, s32 shineAnimFrame,
+                            bool isMatAnim);
 
-const char* getStageShineArchiveName(const al::LiveActor*, const char*);
-const char* getStageShineEmptyArchiveName(const al::LiveActor*, const char*);
+const char* getStageShineArchiveName(const al::LiveActor* actor, const char* stageName);
+const char* getStageShineEmptyArchiveName(const al::LiveActor* actor, const char* stageName);
 
-void setMaterialAsEmptyModel(al::LiveActor*);
-void setProjectionMtxAsEmptyModel2d(al::LiveActor*, const sead::Vector2f&);
-void addDemoRacePrizeCoin(al::LiveActor*);
+void setMaterialAsEmptyModel(al::LiveActor* actor);
+void setProjectionMtxAsEmptyModel2d(al::LiveActor* actor, const sead::Vector2f& vec);
+void addDemoRacePrizeCoin(al::LiveActor* actor);
 
 }  // namespace rs
 
 namespace StageSceneFunction {
-
-void appearPlayerDeadCoin(al::LiveActor*);
-
+void appearPlayerDeadCoin(al::LiveActor* actor);
 }
