@@ -16,16 +16,16 @@ NERVE_IMPL(PlayerStateAutoDash, Dash)
 NERVES_MAKE_NOSTRUCT(PlayerStateAutoDash, Run, Dash)
 }  // namespace
 
-PlayerStateAutoDash::PlayerStateAutoDash(al::LiveActor* parent)
-    : al::ActorStateBase("自動ダッシュ", parent) {
+PlayerStateAutoDash::PlayerStateAutoDash(al::LiveActor* player)
+    : al::ActorStateBase("自動ダッシュ", player) {
     initNerve(&Run, 0);
 }
 
 void PlayerStateAutoDash::appear() {
-    al::LiveActor* actor = mActor;
+    al::LiveActor* player = mActor;
     setDead(false);
 
-    if (al::calcSpeed(actor) < 12.0f)
+    if (al::calcSpeed(player) < 12.0f)
         al::setNerve(this, &Run);
     else
         al::setNerve(this, &Dash);
@@ -40,8 +40,8 @@ void PlayerStateAutoDash::exeDash() {
     al::addVelocityToGravity(mActor, 6.0f);
     al::scaleVelocity(mActor, 0.7f);
 
-    al::LiveActor* actor = mActor;
-    al::setSklAnimFrameRate(actor, al::calcSpeed(actor) * 0.08f, 0);
+    al::LiveActor* player = mActor;
+    al::setSklAnimFrameRate(player, al::calcSpeed(player) * 0.08f, 0);
 
     sead::Vector3f accelDir = {0.0f, 0.0f, 0.0f};
     al::addPlayerAccelStickGravity(mActor, &accelDir, 6.0f, {0.0f, 1.0f, 0.0f},
@@ -49,10 +49,12 @@ void PlayerStateAutoDash::exeDash() {
                                    &PlayerFunction::getPlayerViewMtx(mActor));
     al::faceToDirection(mActor, accelDir);
 
-    if (al::isVelocitySlow(mActor, 6.0f))
+    if (al::isVelocitySlow(mActor, 6.0f)) {
         kill();
-    else
-        al::reboundVelocityFromCollision(mActor, 0.0f, 0.0f, 1.0f);
+        return;
+    }
+
+    al::reboundVelocityFromCollision(mActor, 0.0f, 0.0f, 1.0f);
 }
 
 void PlayerStateAutoDash::exeRun() {
@@ -70,15 +72,16 @@ void PlayerStateAutoDash::exeRun() {
                                    &PlayerFunction::getPlayerViewMtx(mActor));
     al::faceToDirection(mActor, accelDir);
 
-    al::LiveActor* actor = mActor;
-    al::setSklAnimFrameRate(actor, al::calcSpeed(actor) * 0.27f, 0);
+    al::LiveActor* player = mActor;
+    al::setSklAnimFrameRate(player, al::calcSpeed(player) * 0.27f, 0);
 
-    if (al::isVelocitySlow(mActor, 3.0f))
+    if (al::isVelocitySlow(mActor, 3.0f)) {
         kill();
-    else {
-        al::reboundVelocityFromCollision(mActor, 0.0f, 0.0f, 1.0f);
-        mRunTimer++;
-        if (mRunTimer >= 60)
-            al::setNerve(this, &Dash);
+        return;
     }
+
+    al::reboundVelocityFromCollision(mActor, 0.0f, 0.0f, 1.0f);
+    mRunTimer++;
+    if (mRunTimer >= 60)
+        al::setNerve(this, &Dash);
 }

@@ -8,9 +8,9 @@ class LiveActor;
 
 class PlayerStateAutoDash : public al::ActorStateBase {
 public:
-    PlayerStateAutoDash(al::LiveActor* parent);
+    PlayerStateAutoDash(al::LiveActor* player);
 
-    void appear();
+    void appear() override;
     void exeDash();
     void exeRun();
 
