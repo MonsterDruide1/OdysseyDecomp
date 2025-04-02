@@ -14,10 +14,10 @@ struct AudioDirectorInitInfo {
     Sequence* curSequence = nullptr;
     const char* curStage = nullptr;
     s32 scenarioNo = 0;
-    void* field_20 = nullptr;
+    void* _20 = nullptr;
     SeDirectorInitInfo seDirectorInitInfo;
     BgmDirectorInitInfo bgmDirectorInitInfo;
-    const char* mDuckingName = nullptr;
+    const char* duckingName = nullptr;
 };
 
 }  // namespace al

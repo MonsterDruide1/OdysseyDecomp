@@ -5,9 +5,10 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-class LiveActor;
+class AddDemoInfo;
 class ActorInitInfo;
 class EffectSystem;
+class LiveActor;
 class PlacementId;
 
 class DemoDirector : public HioNode {
@@ -17,20 +18,20 @@ public:
     void addDemoActorWithSubActor(LiveActor*);
     void addDemoActor(LiveActor*);
     virtual void endInit(const ActorInitInfo&);
-    void isActiveDemo() const;
-    void getActiveDemoName() const;
-    void requestStartDemo(const char*);
-    void requestEndDemo(const char*);
-    void tryAddDemoActor(LiveActor*);
-    void getDemoActorList() const;
-    void getDemoActorNum() const;
+    bool isActiveDemo() const;
+    const char* getActiveDemoName() const;
+    bool requestStartDemo(const char*);
+    bool requestEndDemo(const char*);
+    bool tryAddDemoActor(LiveActor*);
+    void* getDemoActorList() const;  // unknown return type
+    s32 getDemoActorNum() const;
     virtual void updateDemoActor(EffectSystem*);
     void registDemoRequesterToAddDemoInfo(const PlacementId&);
-    void findOrCreateAddDemoInfo(const PlacementId&);
+    AddDemoInfo* findOrCreateAddDemoInfo(const PlacementId&);
     void registActorToAddDemoInfo(LiveActor*, const PlacementId&);
-    void tryFindAddDemoInfo(const PlacementId&) const;
-    void findAddDemoInfo(const PlacementId&) const;
-    virtual void startDemo(const char*);
+    AddDemoInfo* tryFindAddDemoInfo(const PlacementId&) const;
+    AddDemoInfo* findAddDemoInfo(const PlacementId&) const;
+    virtual bool startDemo(const char*);
     virtual void endDemo(const char*);
 
 private:

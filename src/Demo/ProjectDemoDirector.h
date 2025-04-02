@@ -14,6 +14,7 @@ class Shine;
 class ShineTowerRocket;
 class RiseMapPartsHolder;
 class DemoChangeEffectObj;
+class DemoHackFirstDirector;
 
 class ProjectDemoDirector : public al::DemoDirector {
 public:
@@ -30,47 +31,48 @@ public:
 
     ProjectDemoDirector(const al::PlayerHolder*, al::GraphicsSystemInfo*);
 
-    void endInit(const al::ActorInitInfo&);
+    void endInit(const al::ActorInitInfo&) override;
     void updateSystemOnly();
     void updateDemoSyncEventKeeper();
-    void updateDemoActor(al::EffectSystem*);
-    void isActiveDemo(const char*);
-    void isActiveDemoWithPlayer();
-    void isActiveDemoWithCinemaCaption() const;
-    void requestStartDemo(const char*, ProjectDemoDirector::DemoType);
-    void requestEndDemo(const char*, ProjectDemoDirector::DemoType);
-    void requestStartDemoShineMainGet(Shine*, const char*);
-    void requestEndDemoShineMainGet(const char*);
-    void requestStartDemoShineGrandGet(Shine*, const char*);
-    void requestEndDemoShineGrandGet(const char*);
+    void updateDemoActor(al::EffectSystem*) override;
+    bool isActiveDemo(const char*);
+    bool isActiveDemoWithPlayer();
+    bool isActiveDemoWithCinemaCaption() const;
+    bool requestStartDemo(const char*, ProjectDemoDirector::DemoType);
+    bool requestEndDemo(const char*, ProjectDemoDirector::DemoType);
+    bool requestStartDemoShineMainGet(Shine*, const char*);
+    bool requestEndDemoShineMainGet(const char*);
+    bool requestStartDemoShineGrandGet(Shine*, const char*);
+    bool requestEndDemoShineGrandGet(const char*);
     void setShine(Shine*);
     void clearShine();
-    void requestStartDemoScenarioCamera(const char*);
-    void requestEndDemoScenarioCamera(const char*);
+    bool requestStartDemoScenarioCamera(const char*);
+    bool requestEndDemoScenarioCamera(const char*);
     void addDemoAppearFromHomeToList(ShineTowerRocket*);
-    void requestStartDemoAppearFromHome(const char*);
-    void requestEndDemoAppearFromHome(const char*);
+    bool requestStartDemoAppearFromHome(const char*);
+    bool requestEndDemoAppearFromHome(const char*);
     void addDemoReturnToHomeToList(ShineTowerRocket*);
-    void requestStartDemoReturnToHome(const char*);
-    void requestEndDemoReturnToHome(const char*);
+    bool requestStartDemoReturnToHome(const char*);
+    bool requestEndDemoReturnToHome(const char*);
     void addDemoRiseMapPartsToList(RiseMapPartsHolder*);
-    void requestStartDemoRiseMapParts(const char*);
-    void requestEndDemoRiseMapParts(const char*);
-    void isExistDemoWorldLandInList() const;
-    void isExistDemoAppearFromHomeInList() const;
-    void isExistDemoReturnToHome() const;
-    void isExistDemoRiseMapPartsInList() const;
+    bool requestStartDemoRiseMapParts(const char*);
+    bool requestEndDemoRiseMapParts(const char*);
+    bool isExistDemoWorldLandInList() const;
+    bool isExistDemoAppearFromHomeInList() const;
+    bool isExistDemoReturnToHome() const;
+    bool isExistDemoRiseMapPartsInList() const;
     void startCloseDemoFade(s32);
     void startOpenDemoFade(s32);
-    void isDemoFadeCloseEnd() const;
-    void isDemoFadeOpenEnd() const;
-    void isWipeStateEnableOpenMenuOrSnapShotMode() const;
-    void tryCreateDemoHackFirstDirector(al::LiveActor*, s32, const al::ActorInitInfo&);
+    bool isDemoFadeCloseEnd() const;
+    bool isDemoFadeOpenEnd() const;
+    bool isWipeStateEnableOpenMenuOrSnapShotMode() const;
+    DemoHackFirstDirector* tryCreateDemoHackFirstDirector(al::LiveActor*, s32,
+                                                          const al::ActorInitInfo&);
     void noticeDemoStartToDemoHackFirstDirector();
     void setDemoEnvironmentChangeFlag(bool);
     void registerDemoChangeEffectObj(DemoChangeEffectObj*);
-    void startDemo(const char*);
-    void endDemo(const char*);
+    bool startDemo(const char*) override;
+    void endDemo(const char*) override;
 
 private:
     al::PlayerHolder* mPlayerHolder;

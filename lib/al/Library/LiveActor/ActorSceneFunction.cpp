@@ -1,8 +1,8 @@
 #include "Library/LiveActor/ActorSceneFunction.h"
 
-#include "Library/Demo/DemoDirector.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/Scene/DemoDirector.h"
 #include "Library/Scene/SceneStopCtrl.h"
 #include "Library/Screen/ScreenCoverCtrl.h"
 

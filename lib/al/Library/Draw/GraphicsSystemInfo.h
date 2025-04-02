@@ -99,25 +99,25 @@ struct GraphicsInitArg {
     bool isUsingCubeMapAtmosScatter() const;
     u8 getAtmosScatterViewNum() const;
 
-    s32 dword_0;
-    bool field_4;
+    s32 _0;
+    bool _4;
     u8 atmosScatterViewNum;
-    bool field_6;
+    bool _6;
     s32 displayWidth;
     s32 displayHeight;
-    s32 dword_10;
-    s32 dword_14;
-    s32 dword_18;
-    s32 dword_1c;
-    bool byte_20;
-    s32 dword_24;
-    bool byte_28;
-    s32 dword_2c;
-    s32 dword_30;
-    s32 dword_34;
-    s32 dword_38;
-    s32 dword_3c;
-    agl::DrawContext* field_40;
+    s32 _10;
+    s32 _14;
+    s32 _18;
+    s32 _1c;
+    bool _20;
+    s32 _24;
+    bool _28;
+    s32 _2c;
+    s32 _30;
+    s32 _34;
+    s32 _38;
+    s32 _3c;
+    agl::DrawContext* drawContext;
 };
 
 class GraphicsSystemInfo {
@@ -135,7 +135,7 @@ public:
     void updateGraphics();
     void preDrawGraphics(SceneCameraInfo*);
 
-    void setField2f4(s32 set) { field_2f4 = set; }
+    void set_2f4(s32 set) { _2f4 = set; }
 
     const ViewRenderer* getViewRenderer() const { return mViewRenderer; }
 
@@ -155,7 +155,7 @@ private:
     DepthOfFieldDrawer* mDepthOfFieldDrawer;
     GraphicsQualityController* mGraphicsQualityController;
     ShaderMirrorDirector* mShaderMirrorDirector;
-    GraphicsParamRequesterImpl* field_d0;
+    GraphicsParamRequesterImpl* _d0;
     GraphicsParamRequesterImpl* mColorCorrection;
     FlareFilterDirector* mFlareFilterDirector;
     GodRayDirector* mGodRayDirector;
@@ -166,7 +166,7 @@ private:
     SSIIKeeper* mSSIIKeeper;
     agl::sdw::PrimitiveOcclusion* mPrimitiveOcclusion;
     nn::g3d::ViewVolume mViewVolume;
-    void* field_208;
+    void* _208;
     OceanWave* mOceanWave;
     RandomTextureKeeper* mRandomTextureKeeper;
     WorldAODirector* mWorldAODirector;
@@ -186,7 +186,7 @@ private:
     FootPrintTextureKeeper* mFootPrintTextureKeeper;
     ProgramTextureKeeper* mProgramTextureKeeper;
     RippleTextureKeeper* mRippleTextureKeeper;
-    sead::PtrArrayImpl* field_2a8;
+    sead::PtrArrayImpl* _2a8;
     ViewRenderer* mViewRenderer;
     SubCameraRenderer* mSubCameraRenderer;
     TemporalInterlace* mTemporalInterface;
@@ -196,20 +196,20 @@ private:
     const sead::Camera* mDrawEnvCamera;
     const Projection* mDrawEnvProjection;
     s32 mDrawEnvViewIndex;
-    s32 field_2f4;
+    s32 _2f4;
     agl::pfx::FilterAA* mFilterAA;
     AtmosScatter* mAtmosScatter;
     AtmosScatterDrawer* mAtmosScatterDrawer;
     GraphicsParamFilePath* mParamFilePath;
-    // agl::utl::IParameterIO field_318;
-    // agl::utl::IParameterObj field_4e8;
+    // agl::utl::IParameterIO _318;
+    // agl::utl::IParameterObj _4e8;
     // agl::utl::ParameterOfInt mAreaFindMode;
     // agl::utl::ParameterOfInt mAtmosScatterType;
     // agl::utl::ParameterOfBool mIsUsingUpdateAtmosCubeMap;
     // agl::utl::ParameterOfBool mIsUsingOceanWave;
     // agl::utl::ParameterOfInt mOccGroupNum;
-    // agl::utl::IParameterIO field_5b8;
-    // agl::utl::IParameterObj field_788;
+    // agl::utl::IParameterIO _5b8;
+    // agl::utl::IParameterObj _788;
     // agl::utl::ParameterOfBool mIsUsingTemporal;
     // agl::utl::ParameterOfBool mIsUsingPeriphery;
     // agl::utl::ParameterOfBool mIsUsingStarrySky;
@@ -223,25 +223,25 @@ private:
     // agl::utl::ParameterOfFloat mLightColorScale;
     char filler[0x918 - 0x318];  // TODO: Replace this with the real params once the Parameter types
                                  // are added to agl
-    UniformBlock* field_918;
-    Resource* field_920;
+    UniformBlock* _918;
+    Resource* _920;
     AreaObjDirector* mAreaObjDirector;
     ExecuteDirector* mExecuteDirector;
     EffectSystem* mEffectSystem;
     SceneCameraInfo* mSceneCameraInfo;
-    const char* field_948;
-    void* field_950[3];  // sead::OffsetList
+    const char* _948;
+    void* _950[3];  // sead::OffsetList
     VastGridMeshDirector* mVastGridMeshDirector;
     FullScreenTriangle* mFullScreenTriangle;
-    s32 field_978;
+    s32 _978;
     ReducedBufferRenderer* mReducedBufferRenderer;
     ModelOcclusionCullingDirector* mModelOcclusionCullingDirector;
     ModelLodAllCtrl* mModelLodAllCtrl;
     ModelShaderHolder* mModelShaderHolder;
     PrepassTriangleCulling* mPrepassTriangleCulling;
-    bool field_9a8;
+    bool _9a8;
     ApplicationMessageReceiver* mApplicationMessageReceiver;
-    void* field_9b8;
+    void* _9b8;
 };
 
 static_assert(sizeof(GraphicsSystemInfo) == 0x9c0);

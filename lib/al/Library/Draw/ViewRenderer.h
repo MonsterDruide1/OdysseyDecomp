@@ -48,12 +48,12 @@ private:
     SceneCameraInfo* mSceneCameraInfo;
     GraphicsQualityInfo* mGraphicsQualityInfo;
     ScreenFader* mScreenFader;
-    void* field_40;
-    void* field_48;
-    bool field_50;
+    void* _40;
+    void* _48;
+    bool _50;
     bool mIsWorldMap;
     const agl::TextureData* mEffectTextureColor;
-    void* field_60;
+    void* _60;
 };
 }  // namespace al
 

@@ -45,7 +45,7 @@ private:
     al::WipeSimple* mFadeBlack = nullptr;
     BootLayout* mBootLayout = nullptr;
     f32 mLoadPercent = 0.0f;
-    f32 field_11c = 0.0f;
+    f32 mLoadPercent2 = 0.0f;  // unused
     bool mIsCancelLoadResource = false;
     s32 mEnableKillStep = 0;
 };

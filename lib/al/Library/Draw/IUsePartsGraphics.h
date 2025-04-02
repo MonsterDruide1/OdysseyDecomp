@@ -23,6 +23,6 @@ public:
     virtual void drawLdr(const GraphicsRenderInfo&) const;
     virtual void drawIndirect(const GraphicsRenderInfo&, const RenderVariables&) const;
     virtual void drawCubemap(const GraphicsRenderInfo&) const;
-    virtual void getName() const;
+    virtual const char* getName() const;
 };
 }  // namespace al

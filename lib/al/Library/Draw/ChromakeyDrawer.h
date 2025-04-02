@@ -22,13 +22,13 @@ class ChromakeyDrawer : public IUsePartsGraphics {
 public:
     ChromakeyDrawer(GraphicsSystemInfo*, const ExecuteDirector*, const EffectSystem*);
 
-    virtual void finalize();
+    void finalize() override;
     void drawChromakey(agl::DrawContext*, const Projection&, const sead::Camera&,
                        const agl::RenderBuffer*, const sead::Viewport&, const char*, const char*,
                        const char*);
-    virtual void update(const GraphicsUpdateInfo&);
-    virtual void calcGpu(const GraphicsCalcGpuInfo&);
-    void getName() const;
+    void update(const GraphicsUpdateInfo&) override;
+    void calcGpu(const GraphicsCalcGpuInfo&) override;
+    const char* getName() const override;
 
     void setPhysicalArea(sead::Vector2f area) { mPhysicalArea = area; }
 
@@ -38,7 +38,7 @@ private:
     const ExecuteDirector* mExecuteDirector;
     const EffectSystem* mEffectSystem;
     sead::Vector2f mPhysicalArea;
-    bool field_30;
+    bool _30;
     SimpleModelEnv* mSimpleModelEnv;
 };
 }  // namespace al

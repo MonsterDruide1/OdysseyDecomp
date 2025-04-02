@@ -87,14 +87,14 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
 
     al::GraphicsInitArg graphicsInitArg(al::getSceneDrawContext(this),
                                         al::getSceneFrameBufferConsole(this));
-    graphicsInitArg.dword_3c = true;
-    graphicsInitArg.dword_10 = 1 << graphicsInitArg.atmosScatterViewNum;
-    graphicsInitArg.field_6 = true;
+    graphicsInitArg._3c = true;
+    graphicsInitArg._10 = 1 << graphicsInitArg.atmosScatterViewNum;
+    graphicsInitArg._6 = true;
 
     initLiveActorKitWithGraphics(graphicsInitArg, info, 1024, 1, 1);
     al::initGraphicsSystemInfo(this, "SandWorldHomeStage", 1);
 
-    getLiveActorKit()->getGraphicsSystemInfo()->setField2f4(2);
+    getLiveActorKit()->getGraphicsSystemInfo()->set_2f4(2);
 
     getLiveActorKit()->initHitSensorDirector();
 
@@ -282,7 +282,7 @@ bool TitleMenuScene::isCancelLoadWorldResource() const {
 void TitleMenuScene::startLoadWorldResource() {
     mIsCancelLoadResource = false;
     mLoadPercent = 0.0f;
-    field_11c = 0.0f;
+    mLoadPercent2 = 0.0f;
 }
 
 void TitleMenuScene::exeAppear() {
@@ -366,7 +366,7 @@ void TitleMenuScene::exeWipe() {
     if (mStatePauseMenu->isLoadData()) {
         mIsCancelLoadResource = true;
         mLoadPercent = 0.0f;
-        field_11c = 0.0f;
+        mLoadPercent2 = 0.0f;
         GameDataHolderAccessor(this)->receiveSetPlayingFileIdMsg();
 
         s32 fileId = GameDataHolderAccessor(this)->getPlayingFileId();
@@ -409,7 +409,7 @@ void TitleMenuScene::exeLoadWait() {
     else
         percent = al::lerpValue(0.0f, mLoadPercent, al::calcNerveRate(this, 140));
 
-    field_11c = percent;
+    mLoadPercent2 = percent;
 
     if (percent > 100.0f)
         ++mEnableKillStep;
