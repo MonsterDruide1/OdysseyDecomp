@@ -58,6 +58,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
@@ -462,7 +463,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SandGeyser", nullptr},
     {"SandWorldHomeLift", nullptr},
     {"SaucePan", nullptr},
-    {"SaveFlagCheckObj", nullptr},
+    {"SaveFlagCheckObj", al::createActorFunction<SaveFlagCheckObj>},
     {"ScenarioStartCameraAnim", nullptr},
     {"ScenarioStartCameraSimpleZoom", nullptr},
     {"ScenarioStartCameraRailMove", nullptr},
