@@ -10,8 +10,10 @@ class LiveActor;
 class PlayerModelHolder {
 public:
     struct Entry {
-        sead::FixedSafeString<128> mName;
-        al::LiveActor* mLiveActor;
+        Entry(al::LiveActor* actor) : actor(actor) {}
+
+        sead::FixedSafeString<128> name;
+        al::LiveActor* actor;
     };
 
     PlayerModelHolder(u32);

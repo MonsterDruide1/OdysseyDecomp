@@ -4,10 +4,10 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
@@ -64,13 +64,13 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
     if (index > -1) {
         const ConveyerKey* conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
 
-        if (tryGetStringArg(&keyHitReactionName, conveyerKey->mPlacementInfo,
+        if (tryGetStringArg(&keyHitReactionName, conveyerKey->placementInfo,
                             "KeyHitReactionName") &&
             (mKeyHitReactionName == nullptr ||
              !isEqualString(mKeyHitReactionName, keyHitReactionName)))
             startHitReaction(this, keyHitReactionName);
 
-        if (tryGetStringArg(&actionName, conveyerKey->mPlacementInfo, "ActionName") &&
+        if (tryGetStringArg(&actionName, conveyerKey->placementInfo, "ActionName") &&
             (mActionName == nullptr || !isEqualString(mActionName, actionName)))
             startAction(this, actionName);
     }
@@ -82,7 +82,7 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
         isForceReset)
         resetPosition(this);
 
-    if (newCoord > mConveyerKeyKeeper->get_34()) {
+    if (newCoord > mConveyerKeyKeeper->getTotalMoveDistance()) {
         if (mIsExist) {
             mIsExist = false;
             if (getModelKeeper() != nullptr && !isHideModel(this))

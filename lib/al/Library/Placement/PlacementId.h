@@ -1,6 +1,6 @@
 #pragma once
 
-#include <resource/seadResource.h>
+#include <prim/seadSafeString.h>
 
 namespace al {
 class PlacementInfo;
@@ -18,6 +18,8 @@ public:
     bool makeString(sead::BufferedSafeString*) const;
 
     const char* getId() const { return mId; }
+
+    const char* getUnitConfigName() const { return mUnitConfigName; }
 
 private:
     const char* mId;

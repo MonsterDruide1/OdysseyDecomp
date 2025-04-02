@@ -35,14 +35,14 @@ bool AchievementHolder::isGetMoon(s32 index, GameDataHolderAccessor accessor) co
 
 bool AchievementHolder::isAchieve(s32 index, GameDataHolderAccessor accessor) const {
     return getAchievementProgressCurrent(index, accessor) >=
-           mAchievementInfoReader->get(index)->mNum;
+           mAchievementInfoReader->get(index)->num;
 }
 
 s32 AchievementHolder::getAchievementProgressCurrent(s32 index,
                                                      GameDataHolderAccessor accessor) const {
     s32 progressCurrentRow = getAchievementProgressCurrentRow(index, accessor);
     auto* infoItem = mAchievementInfoReader->get(index);
-    const char** name = infoItem ? &infoItem->mName : nullptr;
+    const char** name = infoItem ? &infoItem->name : nullptr;
 
     if (al::isEqualSubString(*name, "Shine_")) {
         s32 max = 999;
@@ -65,13 +65,13 @@ s32 AchievementHolder::getAchievementProgressCurrent(s32 index,
 }
 
 s32 AchievementHolder::getAchievementProgressMax(s32 index, GameDataHolderAccessor) const {
-    return mAchievementInfoReader->get(index)->mNum;
+    return mAchievementInfoReader->get(index)->num;
 }
 
 s32 AchievementHolder::getAchievementProgressCurrentRow(s32 index,
                                                         GameDataHolderAccessor accessor) const {
     auto* infoItem = mAchievementInfoReader->get(index);
-    const char** name = infoItem ? &infoItem->mName : nullptr;
+    const char** name = infoItem ? &infoItem->name : nullptr;
 
     if (al::isEqualString(*name, "Scenario_Ending"))
         return 1;
@@ -171,7 +171,7 @@ s32 AchievementHolder::calcAchieveTotalNum(GameDataHolderAccessor accessor) cons
     s32 count = 0;
 
     for (s32 i = 0; i < mArray.capacity(); i++)
-        if (getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->get(i)->mNum)
+        if (getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->get(i)->num)
             count++;
 
     return count;
@@ -187,12 +187,10 @@ s32 AchievementHolder::calcMoonGetTotalNum(GameDataHolderAccessor accessor) cons
     return count;
 }
 
-Achievement*
-AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {  // TODO mismatch
-    s32 i = 0;
-    for (; i < mArray.capacity(); i++)
+Achievement* AchievementHolder::tryGetNewAchievement(GameDataHolderAccessor accessor) const {
+    for (s32 i = 0; i < mArray.capacity(); i++)
         if (!mArray[i]->isGet(accessor) &&
-            getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->get(i)->mNum)
-            break;
-    return mArray[i];
+            getAchievementProgressCurrent(i, accessor) >= mAchievementInfoReader->unsafeAt(i)->num)
+            return mArray[i];
+    return nullptr;
 }

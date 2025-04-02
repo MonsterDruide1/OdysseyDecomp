@@ -6,7 +6,7 @@
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 
 // TODO: Finish this
 class RippleCtrl : public IUseFluidSurface {

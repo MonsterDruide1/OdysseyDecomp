@@ -73,7 +73,7 @@ private:                                                                        
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 
 struct SubActorSync {
     enum Enum {
@@ -85,17 +85,18 @@ struct SubActorSync {
         cAll = cAppear | cClipping | cHide | cAlphaMask  // 15
     };
 
-    AL_BITS(SubActorSync);
+    AL_BITS(SubActorSync)
 };
 
-class SubActorInfo {
+struct SubActorInfo {
 public:
     SubActorInfo();
-    SubActorInfo(LiveActor* actor, SubActorSync syncType) : mSubActor(actor), mSyncType(syncType){};
 
-    LiveActor* mSubActor = nullptr;
+    SubActorInfo(LiveActor* actor, SubActorSync syncType) : subActor(actor), syncType(syncType) {}
+
+    LiveActor* subActor = nullptr;
     void* field_8 = nullptr;
-    SubActorSync mSyncType = SubActorSync::cNone;
+    SubActorSync syncType = SubActorSync::cNone;
 };
 
 class SubActorKeeper {
@@ -120,7 +121,7 @@ private:
 bool isExistSubActorKeeper(const LiveActor*);
 LiveActor* getSubActor(const LiveActor* actor, const char* subActorName);
 LiveActor* tryGetSubActor(const LiveActor* actor, const char* subActorName);
-LiveActor* getSubActor(const LiveActor*, s32);
+LiveActor* getSubActor(const LiveActor* actor, s32 subActorInfoIndex);
 s32 getSubActorNum(const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const LiveActor*);
 void offSyncClippingSubActor(LiveActor*, const char*);

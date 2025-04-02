@@ -2,7 +2,7 @@
 
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-#include "Library/Wipe/WipeSimple.h"
+#include "Library/Play/Layout/WipeSimple.h"
 
 #include "Scene/StageSceneStatePauseMenu.h"
 #include "Util/StageInputFunction.h"

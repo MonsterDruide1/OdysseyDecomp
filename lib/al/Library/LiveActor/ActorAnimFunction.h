@@ -299,7 +299,7 @@ SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor*, const char*
 void bindSklAnimRetargetting(const LiveActor*, const SklAnimRetargettingInfo*);
 SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor*, const LiveActor*,
                                                    const sead::Vector3f&);
-void unbindSklAnimRetargetting(const LiveActor);
+void unbindSklAnimRetargetting(const LiveActor*);
 
 // Partial Skl
 
@@ -332,7 +332,7 @@ bool isPartialAnimPlaying(const LiveActor*, s32);
 namespace alAnimFunction {
 bool isAllAnimEnd(const al::LiveActor*, s32);
 f32 getAllAnimFrame(const al::LiveActor*, s32);
-f32 getAllAnimFrameMax(const al::LiveActor*, s32);
+f32 getAllAnimFrameMax(const al::LiveActor*, const char*, s32);
 f32 getAllAnimFrameRate(const al::LiveActor*, s32);
 const char* getAllAnimName(const al::LiveActor*);
 }  // namespace alAnimFunction

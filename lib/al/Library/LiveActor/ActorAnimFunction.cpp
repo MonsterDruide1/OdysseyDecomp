@@ -5,7 +5,8 @@
 
 #include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/Base/StringUtil.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/Execute/ExecuteTableHolderUpdate.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Project/Anim/AnimPlayerVisual.h"
 
@@ -558,6 +559,7 @@ bool isMatAnimPlaying(const LiveActor* actor, const char* animName) {
 
 void clearMatAnim(LiveActor* actor) {
     getMat(actor)->clearAnim();
+    updateModelDraw(actor);
 }
 
 bool isMatAnimExist(const LiveActor* actor) {
@@ -639,6 +641,7 @@ bool isVisAnimPlaying(const LiveActor* actor, const char* animName) {
 
 void clearVisAnim(LiveActor* actor) {
     getVis(actor)->clearAnim();
+    alActorSystemFunction::updateExecutorDraw(actor);
 }
 
 bool isVisAnimExist(const LiveActor* actor) {
@@ -731,6 +734,7 @@ bool isVisAnimPlayingForAction(const LiveActor* actor, const char* animName) {
 
 void clearVisAnimForAction(LiveActor* actor) {
     getVisForAction(actor)->clearAnim();
+    alActorSystemFunction::updateExecutorDraw(actor);
 }
 
 bool isVisAnimEndForAction(const LiveActor* actor) {

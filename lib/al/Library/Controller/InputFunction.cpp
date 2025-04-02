@@ -2,18 +2,19 @@
 
 #include <controller/seadControllerMgr.h>
 
+#include "Library/Controller/PadReplayFunction.h"
+#include "Library/Controller/ReplayController.h"
+
 namespace al {
 
-sead::ControllerBase* getController_(s32 port) {
-    return isValidReplayController(port) ? getReplayController(port) :
-                                           sead::ControllerMgr::instance()->getController(port);
-}
-
-sead::ControllerBase* getController(s32 port) {
+inline sead::ControllerBase* getController(s32 port) {
     if (port == -1)
         port = getMainControllerPort();
 
-    return getController_(port);
+    if (isValidReplayController(port))
+        return getReplayController(port);
+
+    return sead::ControllerMgr::instance()->getController(port);
 }
 
 bool isPadTrigger(s32 port, s32 button) {
@@ -172,7 +173,7 @@ bool isPadTriggerPressRightStick(s32 port) {
     return isPadTrigger2(port);
 }
 
-bool isPadRepeat(s32 port, s32 button) {
+inline bool isPadRepeat(s32 port, s32 button) {
     return getController(port)->isTrigWithRepeat(button);
 }
 
@@ -444,7 +445,7 @@ bool isPadHoldRightStick(s32 port) {
     return isPadHold(port, 0xF000000);
 }
 
-bool isPadRelease(s32 port, s32 button) {
+inline bool isPadRelease(s32 port, s32 button) {
     return getController(port)->isRelease(button);
 }
 
@@ -594,29 +595,17 @@ void getPadCrossDirSideways(sead::Vector2f* vec, s32 port) {
         vec->y = 1;
 }
 
-#ifdef NON_MATCHING
 void calcTouchScreenPos(sead::Vector2f* vec) {
-    *vec = getController(getTouchPanelPort())->getPointer();  // uses w8 for storage instead and
-                                                              // inserts another write at +4 bytes
+    vec->set(getController(getTouchPanelPort())->getPointer());
 }
-#endif
 
 void calcTouchLayoutPos(sead::Vector2f*) {}
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size) {
     sead::Vector2f pos;
     calcTouchScreenPos(&pos);
-
-    if (rect_pos.x > pos.x)
-        return false;
-    if (pos.x >= (rect_pos.x + size.x))
-        return false;
-    if (rect_pos.y > pos.y)
-        return false;
-    if (pos.y > rect_pos.y + size.y)
-        return false;
-
-    return true;
+    return rect_pos.x <= pos.x && pos.x < rect_pos.x + size.x && rect_pos.y <= pos.y &&
+           pos.y < rect_pos.y + size.y;
 }
 
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
@@ -625,15 +614,15 @@ void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
 
 s32 getPlayerControllerPort(s32 playerNo) {
     auto* manager = sead::ControllerMgr::instance();
-    sead::Controller* controller =
-        manager->getControllerByOrder(sead::ControllerDefine::ControllerId::_15, playerNo);
+    sead::Controller* controller = manager->getControllerByOrder(
+        sead::ControllerDefine::ControllerId::cController_Npad, playerNo);
     return manager->findControllerPort(controller);
 }
 
 s32 getTouchPanelPort() {
     auto* manager = sead::ControllerMgr::instance();
-    sead::Controller* controller =
-        manager->getControllerByOrder(sead::ControllerDefine::ControllerId::_16, 0);
+    sead::Controller* controller = manager->getControllerByOrder(
+        sead::ControllerDefine::ControllerId::cController_PadTouch, 0);
     return manager->findControllerPort(controller);
 }
 

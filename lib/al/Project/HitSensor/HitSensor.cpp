@@ -1,5 +1,7 @@
 #include "Project/HitSensor/HitSensor.h"
 
+#include "Project/HitSensor/SensorHitGroup.h"
+
 namespace al {
 void HitSensor::setFollowPosPtr(const sead::Vector3f* pFollowPos) {
     mFollowPos = pFollowPos;

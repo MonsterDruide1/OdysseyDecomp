@@ -18,39 +18,46 @@ struct Matrix43 {
 
 using Matrix43f = Matrix43<f32>;
 
-void makeMtxRotateTrans(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxFromTwoAxis(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&, s32, s32);
-void makeMtxFrontUp(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxFrontSide(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxUpFront(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxUpSide(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxSideUp(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxSideFront(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxFrontNoSupport(sead::Matrix34f*, const sead::Vector3f&);
-void makeMtxFrontNoSupportPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxUpNoSupport(sead::Matrix34f*, const sead::Vector3f&);
-void makeMtxUpNoSupportPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxSideNoSupport(sead::Matrix34f*, const sead::Vector3f&);
-void makeMtxSideNoSupportPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&);
-void makeMtxQuatPos(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&);
-void makeMtxQuatScalePos(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&,
-                         const sead::Vector3f&);
-void makeMtxQuatScalePos(sead::Matrix44f*, const sead::Quatf&, const sead::Vector3f&,
-                         const sead::Vector3f&);
-void makeMtxFrontUpPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
-                       const sead::Vector3f&);
-void makeMtxFrontSidePos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
-                         const sead::Vector3f&);
-void makeMtxUpFrontPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
-                       const sead::Vector3f&);
-void makeMtxUpSidePos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
-                      const sead::Vector3f&);
-void makeMtxSideUpPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
-                      const sead::Vector3f&);
-void makeMtxSideFrontPos(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&,
-                         const sead::Vector3f&);
-void makeMtxFollowTarget(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
-                         const sead::Vector3f&);
+void makeMtxRotateTrans(sead::Matrix34f* outMtx, const sead::Vector3f& rotate,
+                        const sead::Vector3f& trans);
+void makeMtxFromTwoAxis(sead::Matrix34f* outMtx, const sead::Vector3f& vectorA,
+                        const sead::Vector3f& vectorB, s32 axisA, s32 axisB);
+void makeMtxFrontUp(sead::Matrix34f* outMtx, const sead::Vector3f& front, const sead::Vector3f& up);
+void makeMtxFrontSide(sead::Matrix34f* outMtx, const sead::Vector3f& front,
+                      const sead::Vector3f& side);
+void makeMtxUpFront(sead::Matrix34f* outMtx, const sead::Vector3f& up, const sead::Vector3f& front);
+void makeMtxUpSide(sead::Matrix34f* outMtx, const sead::Vector3f& up, const sead::Vector3f& side);
+void makeMtxSideUp(sead::Matrix34f* outMtx, const sead::Vector3f& side, const sead::Vector3f& up);
+void makeMtxSideFront(sead::Matrix34f* outMtx, const sead::Vector3f& side,
+                      const sead::Vector3f& front);
+void makeMtxFrontNoSupport(sead::Matrix34f* outMtx, const sead::Vector3f& front);
+void makeMtxFrontNoSupportPos(sead::Matrix34f* outMtx, const sead::Vector3f& front,
+                              const sead::Vector3f& pos);
+void makeMtxUpNoSupport(sead::Matrix34f* outMtx, const sead::Vector3f& up);
+void makeMtxUpNoSupportPos(sead::Matrix34f* outMtx, const sead::Vector3f& up,
+                           const sead::Vector3f& pos);
+void makeMtxSideNoSupport(sead::Matrix34f* outMtx, const sead::Vector3f& side);
+void makeMtxSideNoSupportPos(sead::Matrix34f* outMtx, const sead::Vector3f& side,
+                             const sead::Vector3f& pos);
+void makeMtxQuatPos(sead::Matrix34f* outMtx, const sead::Quatf& quat, const sead::Vector3f& pos);
+void makeMtxQuatScalePos(sead::Matrix34f* outMtx, const sead::Quatf& quat,
+                         const sead::Vector3f& scale, const sead::Vector3f& pos);
+void makeMtxQuatScalePos(sead::Matrix44f* outMtx, const sead::Quatf& quat,
+                         const sead::Vector3f& scale, const sead::Vector3f& pos);
+void makeMtxFrontUpPos(sead::Matrix34f* outMtx, const sead::Vector3f& front,
+                       const sead::Vector3f& up, const sead::Vector3f& pos);
+void makeMtxFrontSidePos(sead::Matrix34f* outMtx, const sead::Vector3f& front,
+                         const sead::Vector3f& side, const sead::Vector3f& pos);
+void makeMtxUpFrontPos(sead::Matrix34f* outMtx, const sead::Vector3f& up,
+                       const sead::Vector3f& front, const sead::Vector3f& pos);
+void makeMtxUpSidePos(sead::Matrix34f* outMtx, const sead::Vector3f& up, const sead::Vector3f& side,
+                      const sead::Vector3f& pos);
+void makeMtxSideUpPos(sead::Matrix34f* outMtx, const sead::Vector3f& side, const sead::Vector3f& up,
+                      const sead::Vector3f& pos);
+void makeMtxSideFrontPos(sead::Matrix34f* outMtx, const sead::Vector3f& side,
+                         const sead::Vector3f& front, const sead::Vector3f& pos);
+void makeMtxFollowTarget(sead::Matrix34f* outMtx, const sead::Matrix34f& baseMtx,
+                         const sead::Vector3f& trans, const sead::Vector3f& rotate);
 void makeMtxProj(sead::Matrix44f*, const sead::Vector2f&, const sead::Vector3f&,
                  const sead::Vector3f&);
 void makeMtxProjFromQuatPoseUp(sead::Matrix44f*, const sead::Quatf&, const sead::Vector2f&,
@@ -61,9 +68,9 @@ void makeMtxProjFromQuatPoseSide(sead::Matrix44f*, const sead::Quatf&, const sea
                                  const sead::Vector3f&);
 void makeMtxProjFromUp(sead::Matrix44f*, const sead::Vector2f&, const sead::Vector3f&);
 
-void rotateMtxXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, f32);
-void rotateMtxYDirDegree(sead::Matrix34f*, const sead::Matrix34f&, f32);
-void rotateMtxZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, f32);
+void rotateMtxXDirDegree(sead::Matrix34f* outMtx, const sead::Matrix34f& baseMtx, f32 angle);
+void rotateMtxYDirDegree(sead::Matrix34f* outMtx, const sead::Matrix34f& baseMtx, f32 angle);
+void rotateMtxZDirDegree(sead::Matrix34f* outMtx, const sead::Matrix34f& baseMtx, f32 angle);
 void rotateMtxCenterPosXDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
                                   f32);
 void rotateMtxCenterPosAxisDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&,
@@ -82,13 +89,13 @@ bool turnMtxZDirDegree(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vec
 void calcCameraPosFromViewMtx(sead::Vector3f*, const sead::Matrix34f&);
 void calcMtxMul(sead::Vector3f*, const sead::Matrix34f&, const sead::Vector3f&);
 void calcMtxMul(sead::Vector3f*, const Matrix43f&, const sead::Vector3f&);
-void calcMtxScale(sead::Vector3f*, const sead::Matrix34f&);
-void calcMtxScale(sead::Vector3f*, const Matrix43f&);
-void normalizeMtxScale(sead::Matrix34f*, const sead::Matrix34f&);
-bool tryNormalizeMtxScaleOrIdentity(sead::Matrix34f*, const sead::Matrix34f&);
+void calcMtxScale(sead::Vector3f* outMtx, const sead::Matrix34f& mtx);
+void calcMtxScale(sead::Vector3f* outMtx, const Matrix43f& mtx);
+void normalizeMtxScale(sead::Matrix34f* outMtx, const sead::Matrix34f& mtx);
+bool tryNormalizeMtxScaleOrIdentity(sead::Matrix34f* outMtx, const sead::Matrix34f& mtx);
 void calcMtxLocalTrans(sead::Vector3f*, const sead::Matrix34f&, const sead::Vector3f&);
 void calcTransLocalOffsetByMtx(sead::Vector3f*, const sead::Matrix34f&, const sead::Vector3f&);
-void preScaleMtx(sead::Matrix34f*, const sead::Vector3f&);
+void preScaleMtx(sead::Matrix34f* outMtx, const sead::Vector3f& scale);
 void addTransMtxLocalOffset(sead::Matrix34f*, const sead::Matrix34f&, const sead::Vector3f&);
 
 void blendMtx(sead::Matrix34f*, const sead::Matrix34f&, const sead::Matrix34f&, f32);

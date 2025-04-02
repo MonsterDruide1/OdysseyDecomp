@@ -4,16 +4,18 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 #include "MapObj/SubActorLodFixPartsScenarioAction.h"
@@ -41,7 +43,7 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     using ClockMapPartsFunctor = FunctorV0M<ClockMapParts*, void (ClockMapParts::*)()>;
 
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Rotate", &NrvClockMapParts.mCollector, 0);
+    initNerveAction(this, "Rotate", &NrvClockMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);

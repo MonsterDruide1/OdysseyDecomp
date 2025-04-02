@@ -33,12 +33,12 @@ public:
                              u32) const;
     const u8* getByml(const sead::SafeString& name) const;
     void* getFile(const sead::SafeString& name) const;
-    void tryGetByml(const sead::SafeString& name) const;
-    void getKcl(const sead::SafeString& name) const;
-    void tryGetKcl(const sead::SafeString& name) const;
-    void getPa(const sead::SafeString& name) const;
-    void tryGetPa(const sead::SafeString& name) const;
-    void getOtherFile(const sead::SafeString& name) const;
+    void* tryGetByml(const sead::SafeString& name) const;
+    void* getKcl(const sead::SafeString& name) const;
+    void* tryGetKcl(const sead::SafeString& name) const;
+    void* getPa(const sead::SafeString& name) const;
+    void* tryGetPa(const sead::SafeString& name) const;
+    void* getOtherFile(const sead::SafeString& name) const;
     const char* getArchiveName() const;
 
     ActorInitResourceData* getResData() const { return mData; }

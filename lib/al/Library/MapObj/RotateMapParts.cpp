@@ -2,16 +2,17 @@
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 namespace al {
@@ -29,7 +30,7 @@ void RotateMapParts::init(const ActorInitInfo& info) {
     using RotateMapPartsFunctor = FunctorV0M<RotateMapParts*, void (RotateMapParts::*)()>;
 
     tryInitSubActorKeeperChildStep(this, info);
-    initNerveAction(this, "Rotate", &NrvRotateMapParts.mCollector, 0);
+    initNerveAction(this, "Rotate", &NrvRotateMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
     registerAreaHostMtx(this, info);

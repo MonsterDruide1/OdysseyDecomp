@@ -10,19 +10,19 @@ PlayerHolder::PlayerHolder(s32 count) {
 
 void PlayerHolder::clear() {
     for (s32 i = 0; i < mBufferSize; i++) {
-        mPlayers[i].mActor = nullptr;
-        mPlayers[i].mPadRumbleKeeper = nullptr;
+        mPlayers[i].actor = nullptr;
+        mPlayers[i].padRumbleKeeper = nullptr;
     }
 }
 
 void PlayerHolder::registerPlayer(LiveActor* actor, PadRumbleKeeper* rumbleKeeper) {
-    mPlayers[mPlayerNum].mActor = actor;
-    mPlayers[mPlayerNum].mPadRumbleKeeper = rumbleKeeper;
+    mPlayers[mPlayerNum].actor = actor;
+    mPlayers[mPlayerNum].padRumbleKeeper = rumbleKeeper;
     mPlayerNum++;
 }
 
 LiveActor* PlayerHolder::getPlayer(s32 index) const {
-    return mPlayers[index].mActor;
+    return mPlayers[index].actor;
 }
 
 LiveActor* PlayerHolder::tryGetPlayer(s32 index) const {
@@ -31,7 +31,7 @@ LiveActor* PlayerHolder::tryGetPlayer(s32 index) const {
     else if (mPlayerNum <= index)
         return nullptr;
 
-    return mPlayers[index].mActor;
+    return mPlayers[index].actor;
 }
 
 s32 PlayerHolder::getPlayerNum() const {
@@ -47,10 +47,10 @@ bool PlayerHolder::isFull() const {
 }
 
 bool PlayerHolder::isExistPadRumbleKeeper(s32 index) const {
-    return mPlayers[index].mPadRumbleKeeper != nullptr;
+    return mPlayers[index].padRumbleKeeper != nullptr;
 }
 
 PadRumbleKeeper* PlayerHolder::getPadRumbleKeeper(s32 index) const {
-    return mPlayers[index].mPadRumbleKeeper;
+    return mPlayers[index].padRumbleKeeper;
 }
 }  // namespace al

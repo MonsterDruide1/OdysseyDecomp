@@ -4,12 +4,14 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
-#include "Library/Math/MathAngleUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/PartsModel.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Yaml/ByamlIter.h"
@@ -42,7 +44,7 @@ namespace al {
 RollingCubeMapParts::RollingCubeMapParts(const char* name) : LiveActor(name) {}
 
 void RollingCubeMapParts::init(const ActorInitInfo& info) {
-    initNerveAction(this, "Wait", &NrvRollingCubeMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvRollingCubeMapParts.collector, 0);
     initMapPartsActor(this, info, nullptr);
     tryGetQuatPtr(this);
 

@@ -1,7 +1,6 @@
 #include "Project/Rail/LinearCurve.h"
 
-#include "Library/Math/MathLengthUtil.h"
-#include "Library/Math/VectorUtil.h"
+#include "Library/Math/MathUtil.h"
 
 namespace al {
 
@@ -49,7 +48,7 @@ f32 LinearCurve::calcNearestLength(f32* length, const sead::Vector3f& pos, f32 p
 
     sead::Vector3f nearestPos;
     calcPos(&nearestPos, nearestParam);
-    auto diff = nearestPos - pos;
+    sead::Vector3f diff = nearestPos - pos;
     f32 len = diff.squaredLength();
 
     *length = nearestParam * param;

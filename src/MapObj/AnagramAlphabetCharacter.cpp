@@ -4,11 +4,11 @@
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -65,8 +65,10 @@ void AnagramAlphabetCharacter::init(const al::ActorInitInfo& info) {
 }
 
 void AnagramAlphabetCharacter::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (mHackerParent)
-        return rs::sendMsgHackerNoReaction(mHackerParent, other, self);
+    if (mHackerParent) {
+        rs::sendMsgHackerNoReaction(mHackerParent, other, self);
+        return;
+    }
     if (!al::isSensorNpc(self))
         return;
     if (al::isSensorPlayer(other) && al::isSensorName(other, "Pushed"))

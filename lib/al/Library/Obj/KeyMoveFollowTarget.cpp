@@ -1,11 +1,11 @@
 #include "Library/Obj/KeyMoveFollowTarget.h"
 
-#include "Library/KeyPose/KeyPoseKeeper.h"
+#include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -25,7 +25,7 @@ KeyMoveFollowTarget::KeyMoveFollowTarget(const char* name) : LiveActor(name) {}
 
 void KeyMoveFollowTarget::initKeyMoveFollowTarget(const ActorInitInfo& info,
                                                   const char* archiveName, const char* suffix) {
-    initNerveAction(this, "Wait", &NrvKeyMoveFollowTarget.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvKeyMoveFollowTarget.collector, 0);
     initActorWithArchiveName(this, info, archiveName, suffix);
 
     mKeyPoseKeeper = createKeyPoseKeeper(info);
@@ -55,7 +55,7 @@ void KeyMoveFollowTarget::exeWait() {
 
 void KeyMoveFollowTarget::exeMove() {
     if (isFirstStep(this))
-        mTimer = calcKeyMoveWaitTime(mKeyPoseKeeper);
+        mTimer = calcKeyMoveMoveTime(mKeyPoseKeeper);
 
     f32 rate = calcNerveRate(this, mTimer);
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
@@ -66,12 +66,12 @@ void KeyMoveFollowTarget::exeMove() {
 
         if (!isStop(mKeyPoseKeeper)) {
             startHitReaction(this, "移動終了");
-            startAction(this, "Wait");
+            startNerveAction(this, "Wait");
 
             return;
         }
 
-        startAction(this, "Stop");
+        startNerveAction(this, "Stop");
     }
 }
 
