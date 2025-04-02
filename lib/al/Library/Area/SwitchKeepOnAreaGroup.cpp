@@ -15,8 +15,8 @@ SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* areaObjGroup)
 // void SwitchKeepOnAreaGroup::update(const SwitchAreaTargetInfo* info) {}
 
 void SwitchKeepOnAreaGroup::update(const sead::Vector3f& trans) {
-    sead::Vector3f t = trans;
-    SwitchAreaTargetInfo info = {&t, 1};
+    sead::Vector3f pos = trans;
+    SwitchAreaTargetInfo info = {&pos, 1};
 
     update(&info);
 }
