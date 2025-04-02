@@ -93,6 +93,8 @@ public:
     void updatePoseMtx(const sead::Matrix34f* mtx) override;
     void calcBaseMtx(sead::Matrix34f* mtx) const override;
 
+    void setFrontUp(bool isFrontUp) { mIsFrontUp = isFrontUp; }
+
 private:
     sead::Vector3f mUp = sead::Vector3f::ey;
     bool mIsFrontUp = false;

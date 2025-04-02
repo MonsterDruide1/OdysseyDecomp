@@ -66,6 +66,11 @@ public:
 
     void setRadius(f32 radius) { mRadius = radius; }
 
+    void scaleY(f32 scaleY) {
+        mRadius *= scaleY;
+        mFollowPosOffset.y *= scaleY;
+    }
+
 private:
     const char* mName;
     HitSensorType mSensorType;

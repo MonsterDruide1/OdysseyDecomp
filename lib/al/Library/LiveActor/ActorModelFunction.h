@@ -168,7 +168,7 @@ void calcPolygonNumCurrentLodWithoutVisAnim(const LiveActor* actor);
 void getLodLevel(const LiveActor* actor);
 void getMaterialLodLevel(const LiveActor* actor);
 void getLodLevelNoClamp(const LiveActor* actor);
-void getLodModelCount(const LiveActor* actor);
+s32 getLodModelCount(const LiveActor* actor);
 void forceLodLevel(LiveActor* actor, s32);
 void unforceLodLevel(LiveActor* actor);
 bool isExistLodModel(const LiveActor* actor);
