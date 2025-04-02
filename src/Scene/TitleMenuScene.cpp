@@ -68,7 +68,7 @@ NERVES_MAKE_STRUCT(TitleMenuScene, Appear, LoadAppear, Menu, Wipe);
 TitleMenuScene::TitleMenuScene() : al::Scene("TitleMenuScene") {}
 
 TitleMenuScene::~TitleMenuScene() {
-    Application::instance()->getGameFramework()->disableRendering();
+    Application::instance()->getGameFramework()->enableClearRenderBuffer();
     if (mChromakeyDrawer)
         mChromakeyDrawer->finalize();
 }
@@ -172,7 +172,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
 
 void TitleMenuScene::appear() {
     al::Scene::appear();
-    Application::instance()->getGameFramework()->enableRendering();
+    Application::instance()->getGameFramework()->disableClearRenderBuffer();
 }
 
 void TitleMenuScene::control() {}
