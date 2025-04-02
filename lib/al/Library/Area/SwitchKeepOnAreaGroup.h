@@ -14,7 +14,7 @@ public:
     void update(const SwitchAreaTargetInfo* info);
     void update(const sead::Vector3f& trans);
 
-    virtual void selectTargetPosArray(bool*, sead::Vector3f** targetPos, s32* count,
+    virtual void selectTargetPosArray(bool*, sead::Vector3f** outTargetPos, s32* outTargetPosCount,
                                       const AreaObj* areaObj, const SwitchAreaTargetInfo* info);
 
     virtual bool isExternalCondition() const { return true; }

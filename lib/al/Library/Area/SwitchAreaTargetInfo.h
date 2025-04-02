@@ -22,9 +22,13 @@ public:
 
     void update(const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
 
-    const sead::Vector3f* getPlayerTargetPositions() const { return mPlayerTargetPositions; }
+    sead::Vector3f* getPlayerTargetPositions() const { return mPlayerTargetPositions; }
 
     s32 getPlayerTargetPositionCount() const { return mPlayerTargetPositionCount; }
+
+    sead::Vector3f* getCameraLookAtPositions() const { return mCameraLookAtPositions; }
+
+    s32 getCameraLookAtPositionCount() const { return mCameraLookAtPositionCount; }
 
 private:
     sead::Vector3f* mPlayerTargetPositions = nullptr;
