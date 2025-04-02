@@ -7,7 +7,7 @@
 
 namespace al {
 
-class ActorInitInfo;
+struct ActorInitInfo;
 class AreaObj;
 class EventFlowEventData;
 class EventFlowExecutor;

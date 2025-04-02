@@ -85,7 +85,7 @@ void SimpleLayoutText::exeWait() {
 
 SimpleLayoutText* createSimpleLayoutText(const ActorInitInfo& info, const char* name,
                                          const char* paneName, const char* archiveName) {
-    return new SimpleLayoutText(info.getLayoutInitInfo(), name, paneName, archiveName);
+    return new SimpleLayoutText(*info.layoutInitInfo, name, paneName, archiveName);
 }
 
 }  // namespace al

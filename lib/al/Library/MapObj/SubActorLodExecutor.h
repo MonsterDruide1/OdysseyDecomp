@@ -4,7 +4,7 @@
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 
 class SubActorLodExecutor {
 public:
