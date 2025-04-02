@@ -129,7 +129,7 @@ void TrampleSwitch::exeOnDemoWaitStart() {
             al::tryOnStageSwitch(this, "SwitchTrampleOn");
             al::tryOnStageSwitch(this, "SwitchPermanentOn");
         }
-        al::startCamera(this, mDemoCamera, -1);
+        al::startCamera(this, mDemoCamera);
         al::addDemoActorFromAddDemoInfo(this, mAddDemoInfo);
         al::setNerve(this, &OnDemo);
     }
