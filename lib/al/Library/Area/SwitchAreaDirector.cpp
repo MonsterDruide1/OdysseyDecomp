@@ -24,7 +24,8 @@ void SwitchAreaDirector::update() {
     mSwitchAreaTargetInfo->update(mPlayerHolder, mCameraDirector->getSceneCameraInfo());
 
     for (SwitchOnAreaGroup& switchOnAreaGroup : mSwitchOnAreaGroups)
-        switchOnAreaGroup.update(mSwitchAreaTargetInfo->get_0(), mSwitchAreaTargetInfo->get_8());
+        switchOnAreaGroup.update(mSwitchAreaTargetInfo->getPlayerTargetPositions(),
+                                 mSwitchAreaTargetInfo->getPlayerTargetPositionCount());
 
     getCameraAt(mCameraDirector->getSceneCameraInfo(), 0);
 
