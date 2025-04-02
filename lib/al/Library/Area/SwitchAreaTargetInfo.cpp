@@ -12,10 +12,9 @@ SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 playerPositionCount, s32 cameraLo
     mCameraLookAtPositions = new sead::Vector3f[mCameraLookAtPositionSize];
 }
 
-SwitchAreaTargetInfo::SwitchAreaTargetInfo(sead::Vector3f* mPlayerPositions,
-                                           s32 playerPositionCount)
-    : mPlayerTargetPositions(mPlayerPositions), mPlayerTargetPositionCount(playerPositionCount),
-      mPlayerTargetPositionSize(playerPositionCount), mPlayerPositions(mPlayerPositions),
+SwitchAreaTargetInfo::SwitchAreaTargetInfo(sead::Vector3f* playerPositions, s32 playerPositionCount)
+    : mPlayerTargetPositions(playerPositions), mPlayerTargetPositionCount(playerPositionCount),
+      mPlayerTargetPositionSize(playerPositionCount), mPlayerPositions(playerPositions),
       mPlayerPositionCount(playerPositionCount), mPlayerPositionSize(playerPositionCount) {}
 
 void SwitchAreaTargetInfo::update(const PlayerHolder* playerHolder,
