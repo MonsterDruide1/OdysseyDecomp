@@ -173,7 +173,7 @@ void Coin2D::exeGot() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Got");
         al::onStageSwitch(this, "SwitchGetOn");
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 3000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 3000.0f);
         if (!al::isNerve(this, &GotNoCoin))
             GameDataFunction::addCoin(this, 1);
     }

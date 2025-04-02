@@ -134,7 +134,7 @@ void CounterLife::exeEnd() {
 }
 
 void CounterLife::exeGauge() {
-    if (al::isNear(mGoalFrame, mCurFrame, 0.001f)) {
+    if (al::isNear(mGoalFrame, mCurFrame)) {
         mCurFrame = mGoalFrame;
 
         setGaugeAnim();

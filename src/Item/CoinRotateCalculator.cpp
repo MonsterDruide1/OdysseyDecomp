@@ -35,7 +35,7 @@ void CoinRotateCalculator::update(const sead::Vector3f& force, bool checkWater) 
 
     f32 objAngle = getObjAngle(mActor, mIsInWater, mObjCountOffset);
 
-    if (al::isNearZero(force, 0.001f)) {
+    if (al::isNearZero(force)) {
         if (--mForceFrames <= 0) {
             mForceOffset = modDegree(mForceOffset) - 0.8f;
             if (mForceOffset < 0.0f)

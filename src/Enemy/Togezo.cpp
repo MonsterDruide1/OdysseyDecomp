@@ -160,7 +160,7 @@ void Togezo::control() {
 
     mForceKeeper->reset();
 
-    if (!al::isNearZero(calculatedForce, 0.001f)) {
+    if (!al::isNearZero(calculatedForce)) {
         mWanderCooldown = 180;
         al::invalidateClipping(this);
     }

@@ -258,7 +258,7 @@ void CoinCollect::exeGot() {
     if (al::isFirstStep(this)) {
         rs::tryShowCapMsgCollectCoinGetFirst(this);
         al::startAction(this, "Got");
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 5000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 5000.0f);
         if (mWaterSurfaceShadow != nullptr)
             mWaterSurfaceShadow->disappearShadow();
         _198 = false;
@@ -277,7 +277,7 @@ void CoinCollect::exeGot() {
 
 void CoinCollect::exeCountUp() {
     if (al::isFirstStep(this))
-        alPadRumbleFunction::startPadRumble(this, "コッ（弱）", 500.0f, 2000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（弱）", 500.0f, 2000.0f);
 
     if (!mIsSurfaceUpdated && !al::isInWater(this)) {
         sead::Vector3f surface = sead::Vector3f::zero;

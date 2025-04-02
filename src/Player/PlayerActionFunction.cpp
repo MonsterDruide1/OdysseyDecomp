@@ -31,7 +31,7 @@ f32 brakeLimit(f32 speed, u32 frames, f32 speedMax, f32 speedMin) {
 }
 
 f32 calcJumpSpeed(f32 speedFront, f32 speedMin, f32 speedMax, f32 jumpPowerMin, f32 jumpPowerMax) {
-    if (al::isNearZero(jumpPowerMax - jumpPowerMin, 0.001f))
+    if (al::isNearZero(jumpPowerMax - jumpPowerMin))
         return jumpPowerMax;
 
     f32 clampedSpeedFront = sead::Mathf::clamp(speedFront, speedMin, speedMax);

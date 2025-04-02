@@ -94,7 +94,7 @@ inline f32 modDegree(f32 value) {
 }
 
 void CoinCirclePlacement::exeMove() {
-    if (al::isNearZero(mRotateVelocity, 0.001f))
+    if (al::isNearZero(mRotateVelocity))
         return;
 
     mCurrentAngle = modDegree(mCurrentAngle + mRotateVelocity);

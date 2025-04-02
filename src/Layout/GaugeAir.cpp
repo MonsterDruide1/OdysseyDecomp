@@ -40,7 +40,7 @@ void GaugeAir::updateStateAnim() {
         return;
     }
 
-    if (al::isNearZeroOrLess(mRate, 0.001f)) {
+    if (al::isNearZeroOrLess(mRate)) {
         if (!al::isActionPlaying(this, "Empty", "State"))
             al::startAction(this, "Empty", "State");
         return;

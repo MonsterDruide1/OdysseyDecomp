@@ -54,7 +54,7 @@ void BreakModel::appear() {
 
     if (mBreakAction) {
         startAction(this, mBreakAction);
-        if (!isNearZero(1.0f - mActionFrameRate, 0.001f))
+        if (!isNearZero(1.0f - mActionFrameRate))
             setActionFrameRate(this, mActionFrameRate);
     }
     setNerve(this, &Break);

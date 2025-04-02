@@ -50,9 +50,8 @@ void Souvenir::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 
 bool Souvenir::receiveMsg(const al::SensorMsg* msg, al::HitSensor* self, al::HitSensor* other) {
     if (al::isMsgPlayerDisregard(msg) || rs::isMsgPlayerDisregardHomingAttack(msg) ||
-        rs::isMsgPlayerDisregardTargetMarker(msg)) {
+        rs::isMsgPlayerDisregardTargetMarker(msg))
         return true;
-    }
 
     if (rs::isMsgCapTouchWall(msg) || rs::isMsgCapAttack(msg) || al::isMsgPlayerTrample(msg) ||
         rs::isMsgPlayerAndCapHipDropAll(msg) || rs::isMsgPlayerAndCapObjHipDropAll(msg) ||
@@ -97,9 +96,8 @@ void Souvenir::exeWait() {
               al::isActionPlaying(this, "ReactionCap3")) ||
              (al::isExistAction(this, "ReactionCap4") &&
               al::isActionPlaying(this, "ReactionCap4"))) &&
-            getNextAction() != nullptr) {
+            getNextAction() != nullptr)
             return;
-        }
 
         if (mIsWait) {
             al::tryStartAction(this, "Wait");
