@@ -6,32 +6,32 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-class SceneCameraInfo;
-class SceneCameraCtrl;
-class CameraPoseUpdater;
-class CameraPoserFactory;
-class CameraPoserSceneInfo;
-class CameraTicketHolder;
-class SpecialCameraHolder;
-class CameraTargetCollideInfoHolder;
-class CameraTargetHolder;
-class CameraInputHolder;
+class AreaObjDirector;
 class CameraAngleVerticalRequester;
+class CameraFlagCtrl;
+class CameraInputHolder;
+class CameraInSwitchOnAreaDirector;
+class CameraParamTransfer;
+class CameraPoser;
+class CameraPoserFactory;
+class CameraPoseUpdater;
+class CameraRailHolder;
+class CameraResourceHolder;
 class CameraStartParamCtrl;
 class CameraStopJudge;
-class CameraParamTransfer;
-class CameraResourceHolder;
-class CameraFlagCtrl;
-class CameraInSwitchOnAreaDirector;
+class CameraTargetCollideInfoHolder;
+class CameraTargetHolder;
 class CameraTicket;
+class CameraTicketHolder;
 class ICameraInput;
+class IUseAudioKeeper;
+class NameToCameraParamTransferFunc;
 class PlacementId;
 class PlayerHolder;
-class CameraPoser;
-class AreaObjDirector;
-class IUseAudioKeeper;
-class CameraRailHolder;
-class NameToCameraParamTransferFunc;
+class SceneCameraCtrl;
+class SceneCameraInfo;
+class SpecialCameraHolder;
+struct CameraPoserSceneInfo;
 
 class CameraDirector : public HioNode, public IUseExecutor {
 public:
@@ -54,8 +54,8 @@ public:
     CameraPoseUpdater* getPoseUpdater(s32 index);
     CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32,
                                           const sead::Matrix34f&);
-    CameraTicket* createCameraFromFactory(CameraPoser*, const PlacementId*, const char*, s32,
-                                          const sead::Matrix34f&, bool);
+    CameraTicket* createCamera(CameraPoser*, const PlacementId*, const char*, s32,
+                               const sead::Matrix34f&, bool);
     CameraTicket* createObjectCamera(const PlacementId*, const char*, const char*, s32,
                                      const sead::Matrix34f&);
     CameraTicket* createObjectEntranceCamera(const PlacementId*, const char*,
@@ -80,6 +80,8 @@ public:
 
     SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
 
+    SceneCameraCtrl* getSceneCameraCtrl() const { return mSceneCameraCtrl; }
+
 private:
     s32 mCountCameraPoseUpdaters;
     SceneCameraInfo* mSceneCameraInfo;
@@ -102,4 +104,7 @@ private:
     CameraInSwitchOnAreaDirector* mInSwitchOnAreaDirector;
     void* unk2;
 };
+
+static_assert(sizeof(CameraDirector) == 0xA8);
+
 }  // namespace al

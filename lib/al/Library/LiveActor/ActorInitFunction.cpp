@@ -1,7 +1,7 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 namespace al {

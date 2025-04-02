@@ -7,7 +7,7 @@
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/PartsFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 
 #include "Util/SensorMsgFunction.h"
 

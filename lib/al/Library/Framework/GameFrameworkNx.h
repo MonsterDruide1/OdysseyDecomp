@@ -1,50 +1,59 @@
 #pragma once
 
-#include <common/aglDrawContext.h>
-#include <common/aglRenderBuffer.h>
+#include <basis/seadTypes.h>
 #include <framework/nx/seadGameFrameworkNx.h>
 
 #include "Library/HostIO/HioNode.h"
+
+namespace agl {
+class DisplayList;
+class DrawContext;
+class RenderBuffer;
+class RenderTargetColor;
+}  // namespace agl
 
 namespace sead {
 class Event;
 }
 
 namespace al {
+
 class GpuPerf;
 
 class GameFrameworkNx : public sead::GameFrameworkNx, public HioNode {
-    SEAD_RTTI_OVERRIDE(GameFrameworkNx, sead::GameFramework);
+    SEAD_RTTI_OVERRIDE(GameFrameworkNx, sead::GameFrameworkNx);
 
 public:
-    GameFrameworkNx(const sead::GameFrameworkNx::CreateArg&);
-    virtual void createControllerMgr(sead::TaskBase*) override;
-    void initAgl(sead::Heap*, s32, s32, s32, s32, s32, s32);
-    virtual void createInfLoopChecker(sead::TaskBase*, const sead::TickSpan&, s32) override;
-    virtual void createHostIOMgr(sead::TaskBase*, sead::HostIOMgr::Parameter*,
-                                 sead::Heap*) override;
+    GameFrameworkNx();
+    ~GameFrameworkNx() override;
+    void createControllerMgr(sead::TaskBase* base) override;
+    void createHostIOMgr(sead::TaskBase* base, sead::HostIOMgr::Parameter* hostioParam,
+                         sead::Heap* heap) override;
+    void createInfLoopChecker(sead::TaskBase* base, const sead::TickSpan&, s32) override;
+
     void clearFrameBuffer();
-
-    void enableRendering() { mIsNotRendering = false; }
-
-    void disableRendering() { mIsNotRendering = true; }
+    void initAgl(sead::Heap* heap, s32 virtWidth, s32 virtHeight, s32 dockedWidth, s32 dockedHeight,
+                 s32 handheldWidth, s32 handheldHeight);
 
 private:
-    void procFrame_();
-    void procDraw_();
-    void present_();
+    void procFrame_() override;
+    void procDraw_() override;
+    void present_() override;
 
     agl::DrawContext* mDrawContext;
-    agl::RenderBuffer* mRenderBuffer;
-    agl::RenderTargetColor* mRenderTargetColor;
-    agl::RenderBuffer* mRenderBuffer2;
-    agl::RenderTargetColor* mRenderTargetColor2;
+    agl::RenderBuffer* mDockedRenderBuffer;
+    agl::RenderTargetColor* mDockedClearColor;
+    agl::RenderBuffer* mHandheldRenderBuffer;
+    agl::RenderTargetColor* mHandheldClearColor;
     agl::DisplayList* mDisplayList[2];
     GpuPerf* mGpuPerf;
-    s32 mDisplaySelection;
-    void* mDisplayControlMem[2];
-    bool mIsNotRendering;
-    bool mIsBufferSelection;
-    sead::Event* mEvent;
+    s32 mCurDisplayListIdx;
+    void* mDisplayControlMemory[2];
+    bool mIsClearRenderBuffer;
+    bool mIsDocked;
+    sead::Event* mDrawReadyEvent;
 };
+
+static_assert(sizeof(GameFrameworkNx) == 0x278);
+
 }  // namespace al

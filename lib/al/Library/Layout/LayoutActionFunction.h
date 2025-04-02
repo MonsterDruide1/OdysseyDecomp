@@ -11,9 +11,9 @@ class MessageTagDataHolder;
 class Nerve;
 class ReplaceTagProcessorBase;
 
-bool startAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
-bool startActionAtRandomFrame(IUseLayoutAction* layout, const char* actionName,
-                              const char* paneName);
+void startAction(IUseLayoutAction* layout, const char* actionName, const char* paneName);
+s32 startActionAtRandomFrame(IUseLayoutAction* layout, const char* actionName,
+                             const char* paneName);
 void startFreezeAction(IUseLayoutAction* layout, const char* actionName, f32 frame,
                        const char* paneName);
 void startFreezeActionEnd(IUseLayoutAction* layout, const char* actionName, const char* paneName);
@@ -27,7 +27,7 @@ bool tryStartAction(IUseLayoutAction* layout, const char* actionName, const char
 
 bool isExistAction(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 bool isActionEnd(const IUseLayoutAction* layout, const char* paneName);
-bool isExistAction(const IUseLayoutAction* layout, const char* actionName);
+bool isExistAction(const IUseLayoutAction* layout, const char* paneName);
 bool isActionOneTime(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 
 f32 getActionFrame(const IUseLayoutAction* layout, const char* paneName);
@@ -40,7 +40,7 @@ const char* getActionName(const IUseLayoutAction* layout, const char* paneName);
 bool isActionPlaying(const IUseLayoutAction* layout, const char* actionName, const char* paneName);
 bool isAnyActionPlaying(const IUseLayoutAction* layout, const char* paneName);
 
-void setNerveAtActionEnd(LayoutActor*, const Nerve* nerve);
+void setNerveAtActionEnd(LayoutActor* layout, const Nerve* nerve);
 
 void startTextPaneAnim(LayoutActor*, const char16*, const MessageTagDataHolder*,
                        const ReplaceTagProcessorBase*);

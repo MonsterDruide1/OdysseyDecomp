@@ -20,7 +20,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 #include "Item/CoinCollectEmpty.h"
