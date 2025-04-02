@@ -5,8 +5,9 @@
 
 namespace al {
 class LiveActor;
-class IUsePlayerCollision;
 }  // namespace al
+
+class IUsePlayerCollision;
 
 class CapTargetInfo {
 public:
@@ -23,10 +24,43 @@ public:
 
     void setPoseMatrix(sead::Matrix34f* mtx) { mPoseMatrix = mtx; }
 
+    void setEscapeLocalOffset(const sead::Vector3f& offset) {
+        mIsEscapeLocalOffset = true;
+        mEscapeLocalOffset.x = offset.x;
+        mEscapeLocalOffset.y = offset.y;
+        mEscapeLocalOffset.z = offset.z;
+    }
+
+    void setPlayerCollision(IUsePlayerCollision* playerCollision) {
+        mPlayerCollision = playerCollision;
+    }
+
+    void setLockOnScale(f32 lockOnScale) { mLockOnScale = lockOnScale; }
+
+    void useLockOnFollowMtxScale(bool isUseLockOnFollowMtxScale) {
+        mIsUseLockOnFollowMtxScale = isUseLockOnFollowMtxScale;
+    }
+
+    void useFollowScaleLocalOffset(bool isUseFollowScaleLocalOffset) {
+        mIsUseFollowScaleLocalOffset = isUseFollowScaleLocalOffset;
+    }
+
+    void setLockOnOnly(bool isLockOnOnly) { mIsLockOnOnly = isLockOnOnly; }
+
+    void setHackNameToCamera(bool isSetHackNameToCamera) {
+        mIsSetHackNameToCamera = isSetHackNameToCamera;
+    }
+
+    void setInvalidHackThrow(bool isInvalidHackThrow) { mIsInvalidHackThrow = isInvalidHackThrow; }
+
+    void setInvalidCapEye(bool isInvalidCapEye) { mIsInvalidCapEye = isInvalidCapEye; }
+
+    void useDepthShadow(bool isUseDepthShadow) { mIsUseDepthShadow = isUseDepthShadow; }
+
 private:
     const al::LiveActor* mActor = nullptr;
     const char* mHackName = nullptr;
-    al::IUsePlayerCollision* mPlayerCollision = nullptr;
+    IUsePlayerCollision* mPlayerCollision = nullptr;
     sead::Matrix34f* mPoseMatrix = nullptr;
     const sead::Matrix34f* mJointMtx = nullptr;
     sead::Vector3f mLocalTrans = sead::Vector3f::zero;
@@ -56,3 +90,8 @@ private:
     bool _7e = false;
     bool _7f = false;
 };
+
+namespace CapTargetInfoFunction {
+void initIterCapTargetInfo(CapTargetInfo* capTargetInfo, IUsePlayerCollision*,
+                           const al::LiveActor* actor, const char* name);
+}  // namespace CapTargetInfoFunction
