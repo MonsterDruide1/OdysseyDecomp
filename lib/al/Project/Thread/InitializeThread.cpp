@@ -35,7 +35,7 @@ bool InitializeThread::tryWaitDoneAndDestroy() {
     return false;
 }
 
-void InitializeThread::threadFunction(sead::Thread*, sead::MessageQueue::Element message) {
+void InitializeThread::threadFunction(sead::Thread* thread, sead::MessageQueue::Element message) {
     sead::ScopedCurrentHeapSetter heapSetter(mHeap);
 
     (*mFunctor)();
