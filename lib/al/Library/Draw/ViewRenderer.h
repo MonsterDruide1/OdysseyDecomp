@@ -23,6 +23,7 @@ class ShaderHolder;
 class ViewRenderer {
 public:
     ViewRenderer(GraphicsSystemInfo*, ExecuteDirector*, EffectSystem*, SceneCameraInfo*);
+    ~ViewRenderer();
 
     void clearRequest();
     void calcView(s32, const sead::Camera*, const Projection*);

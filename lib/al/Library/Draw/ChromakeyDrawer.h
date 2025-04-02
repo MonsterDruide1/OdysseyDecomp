@@ -6,6 +6,7 @@
 #include <gfx/seadViewport.h>
 
 #include "Library/Draw/IUsePartsGraphics.h"
+#include "Library/HostIO/HioNode.h"
 
 namespace agl::pfx {
 class FilterAA;
@@ -18,7 +19,7 @@ class EffectSystem;
 class Projection;
 class SimpleModelEnv;
 
-class ChromakeyDrawer : public IUsePartsGraphics {
+class ChromakeyDrawer : public IUsePartsGraphics, public HioNode {
 public:
     ChromakeyDrawer(GraphicsSystemInfo*, const ExecuteDirector*, const EffectSystem*);
 

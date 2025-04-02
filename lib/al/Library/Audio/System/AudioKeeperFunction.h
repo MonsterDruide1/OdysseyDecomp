@@ -64,9 +64,9 @@ void enableAudioMaximizer(const al::GameSystemInfo*);
 void disableAudioMaximizer(const al::GameSystemInfo*);
 bool loadSoundItem(al::IUseSeadAudioPlayer*, u32, u32);
 bool isLoadedSoundItem(al::IUseSeadAudioPlayer*, u32);
-void saveHeapState(al::IUseSeadAudioPlayer*);
+s32 saveHeapState(al::IUseSeadAudioPlayer*);
 void loadHeapState(al::IUseSeadAudioPlayer*, s32);
-void* getCurrentHeapStateLevel(al::IUseSeadAudioPlayer*);  // unknown return type
+s32 getCurrentHeapStateLevel(al::IUseSeadAudioPlayer*);
 u64 getSoundResourceHeapFreeSize(al::IUseSeadAudioPlayer*);
 void resetDataDependedStage(const al::AudioDirector*, const char*, s32);
 }  // namespace alAudioSystemFunction

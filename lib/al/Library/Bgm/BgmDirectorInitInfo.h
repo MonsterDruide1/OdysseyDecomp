@@ -7,8 +7,6 @@ struct BgmDirectorInitInfo {
     BgmDirectorInitInfo() {}
 
     bool field_0 = false;
-    s32 field_4;
-    s32 field_8 = 0;
-    s32 field_c = 0;
+    const char* field_8 = nullptr;
 };
 }  // namespace al
