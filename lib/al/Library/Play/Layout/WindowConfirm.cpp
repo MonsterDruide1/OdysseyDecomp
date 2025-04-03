@@ -64,10 +64,10 @@ void WindowConfirm::setTxtList(s32 index, const char16* message) {
 }
 
 void WindowConfirm::setListNum(s32 num) {
-    mSelectionType = (SelectionType)num;
-    if (num == SelectionType_List01)
+    mSelection.selectionType = (SelectionType)num;
+    if (num == (s32)SelectionType::List01)
         mCancelIdx = 1;
-    if (num == SelectionType_List02)
+    if (num == (s32)SelectionType::List02)
         mCancelIdx = 0;
 }
 
@@ -78,25 +78,25 @@ void WindowConfirm::setCancelIdx(s32 index) {
 void WindowConfirm::appear() {
     if (isAlive())
         return;
-    mSelectionIndex = 0;
-    mDirection = Direction_None;
+    mSelection.index = 0;
+    mDirection = Direction::None;
 
     startAction(this, "Appear", nullptr);
-    switch (mSelectionType) {
-    case SelectionType_HardKey:
+    switch (mSelection.selectionType) {
+    case SelectionType::HardKey:
         startAction(this, "SelectHardKey", "Select");
 
         hidePane(this, "ParCursor");
         hidePane(this, "ParHardKey");
         break;
-    case SelectionType_List00:
+    case SelectionType::List00:
         startAction(this, "SelectHardKey", "Select");
         startAction(mButtonActor, "Appear", nullptr);
 
         hidePane(this, "ParCursor");
         showPane(this, "ParHardKey");
         break;
-    case SelectionType_List01:
+    case SelectionType::List01:
         startAction(this, "Select2", "Select");
         startAction(mCursorActor, "Appear", nullptr);
         startAction(mParListArray[0], "Select", nullptr);
@@ -105,7 +105,7 @@ void WindowConfirm::appear() {
         showPane(this, "ParCursor");
         hidePane(this, "ParHardKey");
         break;
-    case SelectionType_List02:
+    case SelectionType::List02:
         startAction(this, "Select3", "Select");
         startAction(mCursorActor, "Appear", nullptr);
         startAction(mParListArray[0], "Select", nullptr);
@@ -127,15 +127,15 @@ void WindowConfirm::appearWithChoicingCancel() {
         return;
     appear();
 
-    if (mSelectionType == SelectionType_List01) {
-        startAction(mParListArray[mSelectionIndex], "Wait", nullptr);
+    if (mSelection.selectionType == SelectionType::List01) {
+        startAction(mParListArray[(s32)mSelection.index], "Wait", nullptr);
         startAction(mParListArray[mCancelIdx], "Select", nullptr);
-    } else if (mSelectionType == SelectionType_List02) {
-        startAction(mParListArray[mSelectionIndex], "Wait", nullptr);
+    } else if (mSelection.selectionType == SelectionType::List02) {
+        startAction(mParListArray[(s32)mSelection.index], "Wait", nullptr);
         startAction(mParListArray[mCancelIdx], "Select", nullptr);
     }
 
-    mSelectionIndex = mCancelIdx;
+    mSelection.index = mCancelIdx;
 }
 
 bool WindowConfirm::isNerveEnd() {
@@ -161,7 +161,7 @@ bool WindowConfirm::isEnableInput() {
 
 bool WindowConfirm::tryUp() {
     if (isEnableInput()) {
-        mDirection = Direction_Up;
+        mDirection = Direction::Up;
         return true;
     }
     return false;
@@ -169,7 +169,7 @@ bool WindowConfirm::tryUp() {
 
 bool WindowConfirm::tryDown() {
     if (isEnableInput()) {
-        mDirection = Direction_Down;
+        mDirection = Direction::Down;
         return true;
     }
     return false;
@@ -197,11 +197,12 @@ bool WindowConfirm::tryDecideWithoutEnd() {
 bool WindowConfirm::tryCancel() {
     if (!isEnableInput())
         return false;
-    if ((mSelectionType == SelectionType_List01 || mSelectionType == SelectionType_List02) &&
-        mSelectionIndex != mCancelIdx) {
-        startAction(mParListArray[mSelectionIndex], "Wait", nullptr);
-        startAction(mParListArray[mCancelIdx], "Select", nullptr);
-        mSelectionIndex = mCancelIdx;
+    if ((mSelection.selectionType == SelectionType::List01 ||
+         mSelection.selectionType == SelectionType::List02) &&
+        mSelection.index != mCancelIdx) {
+        startAction(mParListArray[(s32)mSelection.index], "Wait", nullptr);
+        startAction(mParListArray[(s32)mCancelIdx], "Select", nullptr);
+        mSelection.index = mCancelIdx;
         setCursorToPane();
     }
     startHitReaction(this, "キャンセル", nullptr);
@@ -211,20 +212,21 @@ bool WindowConfirm::tryCancel() {
 }
 
 void WindowConfirm::setCursorToPane() {
-    if (mSelectionType < SelectionType_List01)
+    if (mSelection.selectionType < SelectionType::List01)
         return;
     sead::Vector3f trans = {1.0f, 1.0f, 1.0f};
-    calcPaneTrans(&trans, mParListArray[mSelectionIndex], "Cursor");
+    calcPaneTrans(&trans, mParListArray[mSelection.index], "Cursor");
     setPaneLocalTrans(this, "ParCursor", trans);
 }
 
 bool WindowConfirm::tryCancelWithoutEnd() {
     if (isEnableInput()) {
-        if ((mSelectionType == SelectionType_List01 || mSelectionType == SelectionType_List02) &&
-            mSelectionIndex != mCancelIdx) {
-            startAction(mParListArray[mSelectionIndex], "Wait", nullptr);
+        if ((mSelection.selectionType == SelectionType::List01 ||
+             mSelection.selectionType == SelectionType::List02) &&
+            mSelection.index != mCancelIdx) {
+            startAction(mParListArray[(s32)mSelection.index], "Wait", nullptr);
             startAction(mParListArray[mCancelIdx], "Select", nullptr);
-            mSelectionIndex = mCancelIdx;
+            mSelection.index = mCancelIdx;
             setCursorToPane();
         }
         mIsDecided = true;
@@ -237,7 +239,8 @@ bool WindowConfirm::tryCancelWithoutEnd() {
 void WindowConfirm::exeHide() {}
 
 void WindowConfirm::exeAppear() {
-    if (mSelectionType == SelectionType_List01 || mSelectionType == SelectionType_List02)
+    if (mSelection.selectionType == SelectionType::List01 ||
+        mSelection.selectionType == SelectionType::List02)
         setCursorToPane();
     if (isActionEnd(this, nullptr))
         setNerve(this, &NrvWindowConfirm.Wait);
@@ -248,35 +251,36 @@ void WindowConfirm::exeWait() {
         startAction(this, "Wait", nullptr);
         mCooldown = -1;
     }
-    if (mSelectionType == SelectionType_List01 || mSelectionType == SelectionType_List02) {
+    if (mSelection.selectionType == SelectionType::List01 ||
+        mSelection.selectionType == SelectionType::List02) {
         if (isActionPlaying(mCursorActor, "Appear", nullptr) && isActionEnd(mCursorActor, nullptr))
             startAction(mCursorActor, "Wait", nullptr);
     } else {
-        if (mSelectionType == SelectionType_List00)
+        if (mSelection.selectionType == SelectionType::List00)
             if (isActionPlaying(mButtonActor, "Appear", nullptr) &&
                 isActionEnd(mButtonActor, nullptr))
                 startAction(mButtonActor, "Wait", nullptr);
     }
 
-    if (mDirection == Direction_Up) {
-        startAction(mParListArray[mSelectionIndex], "Wait", nullptr);
-        if (mSelectionIndex-- <= 0)
-            mSelectionIndex = mSelectionType - 1;
+    if (mDirection == Direction::Up) {
+        startAction(mParListArray[mSelection.index], "Wait", nullptr);
+        if (mSelection.index-- <= 0)
+            mSelection.index = (s32)mSelection.selectionType - 1;
 
-        startAction(mParListArray[mSelectionIndex], "Select", nullptr);
+        startAction(mParListArray[mSelection.index], "Select", nullptr);
         setCursorToPane();
     }
-    if (mDirection == Direction_Down) {
-        startAction(mParListArray[mSelectionIndex], "Wait", nullptr);
-        mSelectionIndex++;
-        if (mSelectionIndex >= mSelectionType)
-            mSelectionIndex = 0;
+    if (mDirection == Direction::Down) {
+        startAction(mParListArray[mSelection.index], "Wait", nullptr);
+        mSelection.index++;
+        if (mSelection.index >= (s32)mSelection.selectionType)
+            mSelection.index = 0;
 
-        startAction(mParListArray[mSelectionIndex], "Select", nullptr);
+        startAction(mParListArray[mSelection.index], "Select", nullptr);
         setCursorToPane();
     }
 
-    mDirection = Direction_None;
+    mDirection = Direction::None;
 
     if (mCooldown >= 0)
         mCooldown--;
@@ -284,17 +288,17 @@ void WindowConfirm::exeWait() {
 
 void WindowConfirm::exeDecide() {
     if (isFirstStep(this)) {
-        if ((mSelectionType & 0xFFFFFFFE) == 2) {
-            startAction(mParListArray[mSelectionIndex], "Decide", nullptr);
+        if (((s32)mSelection.selectionType & 0xFFFFFFFE) == 2) {
+            startAction(mParListArray[mSelection.index], "Decide", nullptr);
             startAction(mCursorActor, "End", nullptr);
-        } else if ((mSelectionType & 0xFFFFFFFE) == 1) {
+        } else if (((s32)mSelection.selectionType & 0xFFFFFFFE) == 1) {
             startAction(mButtonActor, "PageEnd", nullptr);
-        } else if ((mSelectionType & 0xFFFFFFFE) == 0) {
+        } else if (((s32)mSelection.selectionType & 0xFFFFFFFE) == 0) {
             setNerve(this, &DecideAfter);
         }
     }
-    if ((mSelectionType & 0xFFFFFFFE) == 2) {
-        if (isActionEnd(mParListArray[mSelectionIndex], nullptr))
+    if (((s32)mSelection.selectionType & 0xFFFFFFFE) == 2) {
+        if (isActionEnd(mParListArray[mSelection.index], nullptr))
             setNerve(this, &DecideAfter);
     } else if (isActionEnd(mButtonActor, nullptr))
         setNerve(this, &DecideAfter);
