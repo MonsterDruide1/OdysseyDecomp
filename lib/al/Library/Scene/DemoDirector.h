@@ -23,7 +23,7 @@ public:
     bool requestStartDemo(const char*);
     void requestEndDemo(const char*);
     bool tryAddDemoActor(LiveActor*);
-    al::LiveActor** getDemoActorList() const;
+    LiveActor** getDemoActorList() const;
     s32 getDemoActorNum() const;
     virtual void updateDemoActor(EffectSystem*);
     AddDemoInfo* registDemoRequesterToAddDemoInfo(const PlacementId&);
