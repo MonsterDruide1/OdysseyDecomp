@@ -96,8 +96,8 @@ void calcJointAngleYDirToTargetOnXDir(const LiveActor* actor, const char*, const
 void calcJointAngleYDirToTargetOnZDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleZDirToTargetOnXDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleZDirToTargetOnYDir(const LiveActor* actor, const char*, const sead::Vector3f&);
-void getMaterialName(const LiveActor* actor, s32);
-void getMaterialCount(const LiveActor* actor);
+const char* getMaterialName(const LiveActor* actor, s32);
+s32 getMaterialCount(const LiveActor* actor);
 bool isExistMaterial(const LiveActor* actor, const char*);
 void getMaterialObj(const LiveActor* actor, s32);
 void getMaterialObj(const LiveActor* actor, const char*);
