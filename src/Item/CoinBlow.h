@@ -3,7 +3,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 class CoinBlow : public al::LiveActor {

@@ -29,6 +29,8 @@ public:
 
     AreaShape* getAreaShape() const { return mAreaShape; }
 
+    const sead::Matrix34f& getAreaMtx() const { return mAreaTR; }
+
 private:
     const char* mName;
     AreaShape* mAreaShape;

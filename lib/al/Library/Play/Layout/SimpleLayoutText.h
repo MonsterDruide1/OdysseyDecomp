@@ -6,7 +6,7 @@
 #include "Library/Layout/LayoutActor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class LayoutInitInfo;
 
 class SimpleLayoutText : public LayoutActor {

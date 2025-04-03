@@ -3,7 +3,7 @@
 #include <math/seadMatrix.h>
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class BreakModel;
 class HitSensor;
 class HostSyncTowerCamera;

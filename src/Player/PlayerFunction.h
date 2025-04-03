@@ -5,7 +5,7 @@
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 class Resource;
 class AudioKeeper;
 }  // namespace al

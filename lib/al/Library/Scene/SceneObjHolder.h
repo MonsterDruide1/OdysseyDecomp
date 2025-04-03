@@ -4,7 +4,7 @@
 
 namespace al {
 class ISceneObj;
-class ActorInitInfo;
+struct ActorInitInfo;
 
 class SceneObjHolder {
 public:

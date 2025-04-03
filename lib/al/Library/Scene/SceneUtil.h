@@ -7,7 +7,7 @@
 
 namespace al {
 class ActorFactory;
-class ActorInitInfo;
+struct ActorInitInfo;
 class LayoutInitInfo;
 class GameDataHolderBase;
 class SceneMsgCtrl;

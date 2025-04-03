@@ -5,7 +5,7 @@
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 class ClippingDirector;
 
 void initActorClipping(LiveActor* actor, const ActorInitInfo& initInfo);

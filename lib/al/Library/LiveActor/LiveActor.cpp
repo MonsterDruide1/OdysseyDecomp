@@ -118,7 +118,7 @@ void LiveActor::initExecuteInfo(ActorExecuteInfo* executeInfo) {
 }
 
 void LiveActor::initRailKeeper(const ActorInitInfo& info, const char* linkName) {
-    mRailKeeper = tryCreateRailKeeper(info.getPlacementInfo(), linkName);
+    mRailKeeper = tryCreateRailKeeper(*info.placementInfo, linkName);
 }
 
 void LiveActor::initModelKeeper(ModelKeeper* modelKeeper) {
