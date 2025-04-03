@@ -83,7 +83,7 @@ bool tryCalcCameraLookDirH(sead::Vector3f* lookDirH, const SceneCameraInfo* info
                            const sead::Vector3f& upDir, s32 viewIdx);
 void startCamera(const IUseCamera* user, CameraTicket* ticket, s32 unk = -1);
 void startCameraSub(const IUseCamera* user, CameraTicket* ticket, s32 unk = -1);
-void startAnimCamera(const IUseCamera* user, CameraTicket* ticket, const char* animName, s32);
+void startAnimCamera(const IUseCamera* user, CameraTicket* ticket, const char* animName, s32 unk = 0);
 void startAnimCameraAnim(CameraTicket* ticket, const char*, s32, s32, s32);
 void startAnimCameraWithStartStepAndEndStepAndPlayStep(const IUseCamera* user, CameraTicket* ticket,
                                                        const char* animName, s32, s32, s32, s32);

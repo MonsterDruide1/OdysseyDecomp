@@ -51,8 +51,8 @@ GameDataHolder* getGameDataHolder(const al::IUseSceneObjHolder* holder);
 GameDataHolder* getGameDataHolder(const al::SceneObjHolder* holder);
 GameDataHolder* getGameDataHolder(al::GameDataHolderBase* holder);
 GameDataFile* getGameDataFile(GameDataHolderWriter writer);
-void setPlayingFileId(GameDataHolderWriter writer, s32 fileId = -1);
-void initializeData(GameDataHolderWriter writer, s32 fileId = -1);
+void setPlayingFileId(GameDataHolderWriter writer, s32 fileId);
+void initializeData(GameDataHolderWriter writer, s32 fileId);
 bool isPlayDemoOpening(GameDataHolderAccessor accessor);
 bool isGameClear(GameDataHolderAccessor accessor);
 void setRequireSave(GameDataHolderWriter writer);
@@ -79,7 +79,7 @@ bool isTimeBalloonSequence(GameDataHolderAccessor accessor);
 const char* getNextStageName(GameDataHolderAccessor accessor);
 const char* getCurrentStageName(GameDataHolderAccessor accessor, s32 fileId);
 bool isSeaOfTreeStage(GameDataHolderAccessor accessor);
-const char* getNextStageName(GameDataHolderAccessor accessor, s32 fileId = -1);
+const char* getNextStageName(GameDataHolderAccessor accessor, s32 fileId);
 s32 calcNextScenarioNo(GameDataHolderAccessor accessor);
 void restartStage(GameDataHolderWriter writer);
 void missAndRestartStage(GameDataHolderWriter writer);
@@ -173,10 +173,10 @@ bool calcIsGetShineAllInAllWorld(GameDataHolderAccessor accessor);
 bool tryFindAndInitShineInfoByOptionalId(ShineInfo* shineInfo, GameDataHolderAccessor accessor,
                                          const char* optionalId);
 bool isGotLinkedShineBeforeInitActor(const al::ActorInitInfo& actorInitInfo, const char* linkName);
-bool checkIsComplete(const al::IUseSceneObjHolder* holder, s32 fileId = -1);
+bool checkIsComplete(const al::IUseSceneObjHolder* holder, s32 fileId);
 bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hackName,
-                             s32 fileId = -1);
-s32 getCollectedBgmNum(GameDataHolderAccessor accessor, s32 fileId = -1);
+                             s32 fileId);
+s32 getCollectedBgmNum(GameDataHolderAccessor accessor, s32 fileId);
 s32 getCollectedBgmMaxNum(GameDataHolderWriter writer);
 bool isEnableOpenMoonRock(const al::LiveActor* actor);
 void openMoonRock(const al::LiveActor* actor, const al::PlacementId* moonRock);
@@ -327,12 +327,12 @@ s32 tryFindWorldIdByMainStageName(const al::IUseSceneObjHolder* holder, const ch
 bool checkEnableUnlockWorldSpecial1(const al::LiveActor* actor);
 s32 getWorldIndexSpecial1();
 bool checkEnableUnlockWorldSpecial2(const al::LiveActor* actor);
-const char16* tryGetWorldNameByFileId(const al::LayoutActor* layout, s32 fileId = -1);
-bool isNewSaveDataByFileId(const al::LayoutActor*, s32 fileId = -1);
-u64 getLastUpdateFileTime(const al::LayoutActor*, s32 fileId = -1);
+const char16* tryGetWorldNameByFileId(const al::LayoutActor* layout, s32 fileId);
+bool isNewSaveDataByFileId(const al::LayoutActor*, s32 fileId);
+u64 getLastUpdateFileTime(const al::LayoutActor*, s32 fileId);
 void makeTextureSaveDataFileName(sead::BufferedSafeStringBase<char>* fileName,
                                  const nn::g3d::ResFile* textureSaveData,
-                                 const GameDataHolder* holder, s32 fileId = -1);
+                                 const GameDataHolder* holder, s32 fileId);
 s32 getWorldIndexPeach();
 s32 getWorldIndexCity();
 bool isCityWorldCeremonyAll(s32 worldId, s32 scenarioNo);
