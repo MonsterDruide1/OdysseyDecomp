@@ -41,7 +41,7 @@ const char16* getNullShinePictureFont(const al::LayoutActor*);
 const char16* getWorldCoinCollectPictureFont(const al::LayoutActor*, s32);
 const char16* getWorldCoinCollectPictureFont(const al::LayoutActor*);
 const char* getPlacementStageName(GameDataHolderAccessor, const al::PlacementInfo&);
-void getCollectBgmMessage(const al::IUseMessageSystem*, const CollectBgm*);
+const char16* getCollectBgmMessage(const al::IUseMessageSystem*, const CollectBgm*);
 void setPaneCurrentCoinNum(al::LayoutActor*);
 bool tryGetMapMainScenarioLabel(sead::BufferedSafeString*, sead::BufferedSafeString*, bool*,
                                 const al::IUseSceneObjHolder*);

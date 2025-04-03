@@ -21,21 +21,22 @@ public:
     bool isActiveDemo() const;
     const char* getActiveDemoName() const;
     bool requestStartDemo(const char*);
-    bool requestEndDemo(const char*);
+    void requestEndDemo(const char*);
     bool tryAddDemoActor(LiveActor*);
-    void* getDemoActorList() const;  // unknown return type
+    al::LiveActor** getDemoActorList() const;
     s32 getDemoActorNum() const;
     virtual void updateDemoActor(EffectSystem*);
-    void registDemoRequesterToAddDemoInfo(const PlacementId&);
+    AddDemoInfo* registDemoRequesterToAddDemoInfo(const PlacementId&);
     AddDemoInfo* findOrCreateAddDemoInfo(const PlacementId&);
     void registActorToAddDemoInfo(LiveActor*, const PlacementId&);
     AddDemoInfo* tryFindAddDemoInfo(const PlacementId&) const;
+    // BUG: only ever returns `nullptr`
     AddDemoInfo* findAddDemoInfo(const PlacementId&) const;
     virtual bool startDemo(const char*);
     virtual void endDemo(const char*);
 
 private:
-    const char* mDemoName;
+    const char* mActiveDemoName;
     void* filler[8];
 };
 }  // namespace al
