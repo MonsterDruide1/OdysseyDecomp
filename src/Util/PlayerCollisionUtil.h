@@ -57,5 +57,6 @@ bool reboundVelocityFromCollision(al::LiveActor*, const IUsePlayerCollision*, f3
 al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
 
 bool isOnGroundSlopeSlideEnd(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
+bool isAutoRunOnGroundSkateCode(const al::LiveActor*, const IUsePlayerCollision*, f32);
 
 }  // namespace rs

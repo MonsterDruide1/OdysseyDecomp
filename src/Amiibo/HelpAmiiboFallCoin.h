@@ -9,7 +9,7 @@
 namespace al {
 struct NfpInfo;
 
-class ActorInitInfo;
+struct ActorInitInfo;
 class LiveActor;
 class NerveKeeper;
 }  // namespace al

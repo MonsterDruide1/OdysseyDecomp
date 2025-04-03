@@ -5,7 +5,7 @@
 #include "System/GameDataHolderAccessor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class HtmlViewer;
 class KeyRepeatCtrl;
 class LayoutInitInfo;
@@ -27,17 +27,20 @@ class StageSceneStateStartSeparatePlay;
 
 class StageSceneStatePauseMenu : public al::HostStateBase<al::Scene> {
 public:
+    static const s32 cMenuItemAmount = 5;
+    enum class StartType { Title, Normal, AfterTitle };
+
     StageSceneStatePauseMenu(const char* name, al::Scene* host,
                              al::SimpleLayoutAppearWaitEnd* menuLayout,
                              GameDataHolder* gameDataHolder, const al::SceneInitInfo& sceneInitInfo,
                              const al::ActorInitInfo& actorInitInfo,
                              const al::LayoutInitInfo& layoutInitInfo,
                              al::WindowConfirm* windowConfirm, StageSceneLayout* stageSceneLayout,
-                             bool a11,
+                             bool isTitle,
                              SceneAudioSystemPauseController* sceneAudioSystemPauseController);
 
-    virtual void appear();
-    virtual void kill();
+    void appear() override;
+    void kill() override;
 
     void killPauseMenu();
     void killMarioModel();
@@ -54,12 +57,15 @@ public:
     bool isNewGame() const;
     bool isModeSelectEnd() const;
     bool checkNeedKillByHostAndEnd();
+
     void startActionMario(const char*);
     al::LiveActor* getMarioActor() const;
+
     bool isDrawLayout() const;
     bool isDrawLayoutMain() const;
     bool isDrawViewRenderer() const;
     bool isDrawChromakey() const;
+
     void exeAppear();
     void setNormal();
     void appearMarioModel();
@@ -76,6 +82,7 @@ public:
     void exeSave();
     void exeConfirmNewGame();
     void exeNotExistEmptyFile();
+
     void startPauseCamera();
     void setAfterTitle();
 
@@ -87,7 +94,7 @@ private:
     MenuSelectParts* mSelectParts = nullptr;
     al::WipeSimple* mMenuWipe = nullptr;
     al::WipeSimple* mHelpWipe = nullptr;
-    s32 mStartType = 0;
+    StartType mStartType = StartType::Title;
     StageSceneStateStartSeparatePlay* mStateStartSeparatePlay = nullptr;
     StageSceneStateEndSeparatePlay* mStateEndSeparatePlay = nullptr;
     StageSceneStateOption* mStateOption = nullptr;
@@ -100,7 +107,7 @@ private:
     al::KeyRepeatCtrl* mKeyRepeatCtrl = nullptr;
     StageSceneLayout* mStageSceneLayout = nullptr;
     bool mIsNormal = true;
-    bool mIsPauseMenu = false;
+    bool mIsShowMarioModel = false;
     f32 mPrevNearClipDistance = 25.0f;
     SceneAudioSystemPauseController* mSceneAudioSystemPauseController = nullptr;
     al::HtmlViewer* mHtmlViewer = nullptr;

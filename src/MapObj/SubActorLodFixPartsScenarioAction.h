@@ -2,7 +2,7 @@
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 
 void registSupportFreezeSyncGroup(LiveActor* actor, const ActorInitInfo& info);
 }  // namespace al

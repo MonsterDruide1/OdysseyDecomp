@@ -7,7 +7,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class HitSensor;
 class IUseNerve;
 class MtxConnector;

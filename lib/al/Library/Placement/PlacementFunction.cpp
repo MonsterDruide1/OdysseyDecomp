@@ -17,11 +17,11 @@ bool isValidInfo(const PlacementInfo& placementInfo) {
 }
 
 bool isPlaced(const ActorInitInfo& initInfo) {
-    return isValidInfo(initInfo.getPlacementInfo());
+    return isValidInfo(*initInfo.placementInfo);
 }
 
 void getObjectName(const char** name, const ActorInitInfo& initInfo) {
-    getObjectName(name, initInfo.getPlacementInfo());
+    getObjectName(name, *initInfo.placementInfo);
 }
 
 void getObjectName(const char** name, const PlacementInfo& placementInfo) {
@@ -29,7 +29,7 @@ void getObjectName(const char** name, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetObjectName(const char** name, const ActorInitInfo& initInfo) {
-    return tryGetObjectName(name, initInfo.getPlacementInfo());
+    return tryGetObjectName(name, *initInfo.placementInfo);
 }
 
 bool tryGetObjectName(const char** name, const PlacementInfo& placementInfo) {
@@ -42,7 +42,7 @@ bool tryGetObjectName(const char** name, const PlacementInfo& placementInfo) {
 }
 
 bool isObjectName(const ActorInitInfo& initInfo, const char* name) {
-    return isObjectName(initInfo.getPlacementInfo(), name);
+    return isObjectName(*initInfo.placementInfo, name);
 }
 
 bool isObjectName(const PlacementInfo& placementInfo, const char* name) {
@@ -51,7 +51,7 @@ bool isObjectName(const PlacementInfo& placementInfo, const char* name) {
 }
 
 bool isObjectNameSubStr(const ActorInitInfo& initInfo, const char* name) {
-    return isObjectNameSubStr(initInfo.getPlacementInfo(), name);
+    return isObjectNameSubStr(*initInfo.placementInfo, name);
 }
 
 bool isObjectNameSubStr(const PlacementInfo& placementInfo, const char* name) {
@@ -60,7 +60,7 @@ bool isObjectNameSubStr(const PlacementInfo& placementInfo, const char* name) {
 }
 
 void getClassName(const char** name, const ActorInitInfo& initInfo) {
-    getClassName(name, initInfo.getPlacementInfo());
+    getClassName(name, *initInfo.placementInfo);
 }
 
 void getClassName(const char** name, const PlacementInfo& placementInfo) {
@@ -68,7 +68,7 @@ void getClassName(const char** name, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetClassName(const char** name, const ActorInitInfo& initInfo) {
-    return tryGetClassName(name, initInfo.getPlacementInfo());
+    return tryGetClassName(name, *initInfo.placementInfo);
 }
 
 bool tryGetClassName(const char** name, const PlacementInfo& placementInfo) {
@@ -79,7 +79,7 @@ bool tryGetClassName(const char** name, const PlacementInfo& placementInfo) {
 }
 
 bool isClassName(const ActorInitInfo& initInfo, const char* name) {
-    return isClassName(initInfo.getPlacementInfo(), name);
+    return isClassName(*initInfo.placementInfo, name);
 }
 
 bool isClassName(const PlacementInfo& placementInfo, const char* name) {
@@ -88,7 +88,7 @@ bool isClassName(const PlacementInfo& placementInfo, const char* name) {
 }
 
 void getDisplayName(const char** name, const ActorInitInfo& initInfo) {
-    getDisplayName(name, initInfo.getPlacementInfo());
+    getDisplayName(name, *initInfo.placementInfo);
 }
 
 void getDisplayName(const char** name, const PlacementInfo& placementInfo) {
@@ -96,7 +96,7 @@ void getDisplayName(const char** name, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetDisplayName(const char** name, const ActorInitInfo& initInfo) {
-    return tryGetDisplayName(name, initInfo.getPlacementInfo());
+    return tryGetDisplayName(name, *initInfo.placementInfo);
 }
 
 bool tryGetDisplayName(const char** name, const PlacementInfo& placementInfo) {
@@ -113,7 +113,7 @@ void getPlacementTargetFile(const char** targetFile, const PlacementInfo& placem
 }
 
 void getTrans(sead::Vector3f* trans, const ActorInitInfo& initInfo) {
-    getTrans(trans, initInfo.getPlacementInfo());
+    getTrans(trans, *initInfo.placementInfo);
 }
 
 void getTrans(sead::Vector3f* trans, const PlacementInfo& placementInfo) {
@@ -127,7 +127,7 @@ void multZoneMtx(sead::Vector3f* trans, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetTrans(sead::Vector3f* trans, const ActorInitInfo& initInfo) {
-    return tryGetTrans(trans, initInfo.getPlacementInfo());
+    return tryGetTrans(trans, *initInfo.placementInfo);
 }
 
 bool tryGetTrans(sead::Vector3f* trans, const PlacementInfo& placementInfo) {
@@ -146,34 +146,7 @@ void getRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo) {
-    return tryGetRotate(rotate, initInfo.getPlacementInfo());
-}
-
-// TODO: requires slight change in `sead`, but that causes other mismatches across the project
-inline void makeRT(sead::Matrix34f* o, const sead::Vector3f& r, const sead::Vector3f& t) {
-    const f32 sinV[3] = {std::sin(r.x), std::sin(r.y), std::sin(r.z)};
-
-    const f32 cosV[3] = {std::cos(r.x), std::cos(r.y), std::cos(r.z)};
-
-    f32 c0_c2 = cosV[0] * cosV[2];  // swapped these two
-    f32 s0_s1 = sinV[0] * sinV[1];  // lines to match
-    f32 c0_s2 = cosV[0] * sinV[2];
-
-    o->m[0][0] = cosV[1] * cosV[2];
-    o->m[1][0] = cosV[1] * sinV[2];
-    o->m[2][0] = -sinV[1];
-
-    o->m[0][1] = (s0_s1 * cosV[2]) - c0_s2;
-    o->m[1][1] = (s0_s1 * sinV[2]) + c0_c2;
-    o->m[2][1] = sinV[0] * cosV[1];
-
-    o->m[0][2] = (c0_c2 * sinV[1]) + (sinV[0] * sinV[2]);
-    o->m[1][2] = (c0_s2 * sinV[1]) - (sinV[0] * cosV[2]);
-    o->m[2][2] = cosV[0] * cosV[1];
-
-    o->m[0][3] = t.x;
-    o->m[1][3] = t.y;
-    o->m[2][3] = t.z;
+    return tryGetRotate(rotate, *initInfo.placementInfo);
 }
 
 template <typename T>
@@ -211,7 +184,7 @@ bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
         sead::Matrix34f rot, rot2;
         sead::Vector3f vec1 = {sead::Mathf::deg2rad(rotate->x), sead::Mathf::deg2rad(rotate->y),
                                sead::Mathf::deg2rad(rotate->z)};
-        makeRT(&rot, vec1, sead::Vector3f::zero);
+        rot.makeRT(vec1, sead::Vector3f::zero);
         rot2 = mtx * rot;
 
         getRotation<f32>(rotate, rot2);
@@ -234,10 +207,9 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementI
     if (!tryGetByamlV3f(&rotate, zone, "Rotate"))
         return false;
 
-    makeRT(matrix,
-           {sead::Mathf::rad2deg(rotate.x), sead::Mathf::rad2deg(rotate.y),
-            sead::Mathf::rad2deg(rotate.z)},
-           translate);
+    matrix->makeRT({sead::Mathf::rad2deg(rotate.x), sead::Mathf::rad2deg(rotate.y),
+                    sead::Mathf::rad2deg(rotate.z)},
+                   translate);
     return true;
 }
 
@@ -250,7 +222,7 @@ void getQuat(sead::Quatf* quat, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetQuat(sead::Quatf* quat, const ActorInitInfo& initInfo) {
-    return tryGetQuat(quat, initInfo.getPlacementInfo());
+    return tryGetQuat(quat, *initInfo.placementInfo);
 }
 
 bool tryGetQuat(sead::Quatf* quat, const PlacementInfo& placementInfo) {
@@ -281,7 +253,7 @@ void getScale(f32* x, f32* y, f32* z, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetScale(sead::Vector3f* scale, const ActorInitInfo& initInfo) {
-    return tryGetScale(scale, initInfo.getPlacementInfo());
+    return tryGetScale(scale, *initInfo.placementInfo);
 }
 
 bool tryGetScale(sead::Vector3f* scale, const PlacementInfo& placementInfo) {
@@ -297,7 +269,7 @@ void getSide(sead::Vector3f* side, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetSide(sead::Vector3f* side, const ActorInitInfo& initInfo) {
-    return tryGetSide(side, initInfo.getPlacementInfo());
+    return tryGetSide(side, *initInfo.placementInfo);
 }
 
 bool tryGetSide(sead::Vector3f* side, const PlacementInfo& placementInfo) {
@@ -317,7 +289,7 @@ void getUp(sead::Vector3f* up, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetUp(sead::Vector3f* up, const ActorInitInfo& initInfo) {
-    return tryGetUp(up, initInfo.getPlacementInfo());
+    return tryGetUp(up, *initInfo.placementInfo);
 }
 
 bool tryGetUp(sead::Vector3f* up, const PlacementInfo& placementInfo) {
@@ -337,7 +309,7 @@ void getFront(sead::Vector3f* front, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetFront(sead::Vector3f* front, const ActorInitInfo& initInfo) {
-    return tryGetFront(front, initInfo.getPlacementInfo());
+    return tryGetFront(front, *initInfo.placementInfo);
 }
 
 bool tryGetFront(sead::Vector3f* front, const PlacementInfo& placementInfo) {
@@ -349,7 +321,7 @@ bool tryGetFront(sead::Vector3f* front, const PlacementInfo& placementInfo) {
 }
 
 bool tryGetLocalAxis(sead::Vector3f* dir, const ActorInitInfo& initInfo, s32 axis) {
-    return tryGetLocalAxis(dir, initInfo.getPlacementInfo(), axis);
+    return tryGetLocalAxis(dir, *initInfo.placementInfo, axis);
 }
 
 bool tryGetLocalAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s32 axis) {
@@ -366,7 +338,7 @@ bool tryGetLocalAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s3
 }
 
 bool tryGetLocalSignAxis(sead::Vector3f* dir, const ActorInitInfo& initInfo, s32 axis) {
-    return tryGetLocalSignAxis(dir, initInfo.getPlacementInfo(), axis);
+    return tryGetLocalSignAxis(dir, *initInfo.placementInfo, axis);
 }
 
 bool tryGetLocalSignAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo, s32 axis) {
@@ -389,7 +361,7 @@ bool tryGetLocalSignAxis(sead::Vector3f* dir, const PlacementInfo& placementInfo
 }
 
 bool tryGetMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo) {
-    return tryGetMatrixTR(matrix, initInfo.getPlacementInfo());
+    return tryGetMatrixTR(matrix, *initInfo.placementInfo);
 }
 
 bool tryGetMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo) {
@@ -399,15 +371,14 @@ bool tryGetMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo)
         return false;
     if (!tryGetRotate(&rotate, placementInfo))
         return false;
-    makeRT(matrix,
-           {sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
-            sead::Mathf::deg2rad(rotate.z)},
-           trans);
+    matrix->makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
+                    sead::Mathf::deg2rad(rotate.z)},
+                   trans);
     return true;
 }
 
 bool tryGetMatrixTRS(sead::Matrix34f* matrix, const ActorInitInfo& initInfo) {
-    return tryGetMatrixTRS(matrix, initInfo.getPlacementInfo());
+    return tryGetMatrixTRS(matrix, *initInfo.placementInfo);
 }
 
 bool tryGetMatrixTRS(sead::Matrix34f* matrix, const PlacementInfo& placementInfo) {
@@ -428,7 +399,7 @@ bool tryGetMatrixTRS(sead::Matrix34f* matrix, const PlacementInfo& placementInfo
 }
 
 bool tryGetInvertMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo) {
-    return tryGetInvertMatrixTR(matrix, initInfo.getPlacementInfo());
+    return tryGetInvertMatrixTR(matrix, *initInfo.placementInfo);
 }
 
 bool tryGetInvertMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementInfo) {
@@ -441,7 +412,7 @@ bool tryGetInvertMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placemen
 
 void calcMatrixMultParent(sead::Matrix34f* matrix, const ActorInitInfo& initInfo1,
                           const ActorInitInfo& initInfo2) {
-    calcMatrixMultParent(matrix, initInfo1.getPlacementInfo(), initInfo2.getPlacementInfo());
+    calcMatrixMultParent(matrix, *initInfo1.placementInfo, *initInfo2.placementInfo);
 }
 
 void calcMatrixMultParent(sead::Matrix34f* matrix, const PlacementInfo& placementInfo1,
@@ -456,7 +427,7 @@ void calcMatrixMultParent(sead::Matrix34f* matrix, const PlacementInfo& placemen
 }
 
 void getArg(s32* arg, const ActorInitInfo& initInfo, const char* key) {
-    getArg(arg, initInfo.getPlacementInfo(), key);
+    getArg(arg, *initInfo.placementInfo, key);
 }
 
 void getArg(s32* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -464,7 +435,7 @@ void getArg(s32* arg, const PlacementInfo& placementInfo, const char* key) {
 }
 
 bool tryGetArg(s32* arg, const ActorInitInfo& initInfo, const char* key) {
-    return tryGetArg(arg, initInfo.getPlacementInfo(), key);
+    return tryGetArg(arg, *initInfo.placementInfo, key);
 }
 
 bool tryGetArg(s32* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -472,7 +443,7 @@ bool tryGetArg(s32* arg, const PlacementInfo& placementInfo, const char* key) {
 }
 
 void getArg(f32* arg, const ActorInitInfo& initInfo, const char* key) {
-    getArg(arg, initInfo.getPlacementInfo(), key);
+    getArg(arg, *initInfo.placementInfo, key);
 }
 
 void getArg(f32* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -480,7 +451,7 @@ void getArg(f32* arg, const PlacementInfo& placementInfo, const char* key) {
 }
 
 bool tryGetArg(f32* arg, const ActorInitInfo& initInfo, const char* key) {
-    return tryGetArg(arg, initInfo.getPlacementInfo(), key);
+    return tryGetArg(arg, *initInfo.placementInfo, key);
 }
 
 bool tryGetArg(f32* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -488,7 +459,7 @@ bool tryGetArg(f32* arg, const PlacementInfo& placementInfo, const char* key) {
 }
 
 void getArg(bool* arg, const ActorInitInfo& initInfo, const char* key) {
-    getArg(arg, initInfo.getPlacementInfo(), key);
+    getArg(arg, *initInfo.placementInfo, key);
 }
 
 void getArg(bool* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -496,7 +467,7 @@ void getArg(bool* arg, const PlacementInfo& placementInfo, const char* key) {
 }
 
 bool tryGetArg(bool* arg, const ActorInitInfo& initInfo, const char* key) {
-    return tryGetArg(arg, initInfo.getPlacementInfo(), key);
+    return tryGetArg(arg, *initInfo.placementInfo, key);
 }
 
 bool tryGetArg(bool* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -524,7 +495,7 @@ void getArgV3f(sead::Vector3f* arg, const PlacementInfo& placementInfo, const ch
 }
 
 bool tryGetArgV3f(sead::Vector3f* arg, const ActorInitInfo& actorInitInfo, const char* key) {
-    return tryGetArgV3f(arg, actorInitInfo.getPlacementInfo(), key);
+    return tryGetArgV3f(arg, *actorInitInfo.placementInfo, key);
 }
 
 bool tryGetArgV3f(sead::Vector3f* arg, const PlacementInfo& placementInfo, const char* key) {
@@ -544,7 +515,7 @@ bool isArgBool(const PlacementInfo& placementInfo, const char* key) {
 }
 
 bool isArgString(const ActorInitInfo& initInfo, const char* key, const char* arg) {
-    return isArgString(initInfo.getPlacementInfo(), key, arg);
+    return isArgString(*initInfo.placementInfo, key, arg);
 }
 
 bool isArgString(const PlacementInfo& placementInfo, const char* key, const char* arg) {
@@ -552,7 +523,7 @@ bool isArgString(const PlacementInfo& placementInfo, const char* key, const char
 }
 
 void getStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key) {
-    getStringArg(arg, initInfo.getPlacementInfo(), key);
+    getStringArg(arg, *initInfo.placementInfo, key);
 }
 
 void getStringArg(const char** arg, const PlacementInfo& placementInfo, const char* key) {
@@ -564,7 +535,7 @@ void getStringArg(const char** arg, const AreaInitInfo& initInfo, const char* ke
 }
 
 const char* getStringArg(const ActorInitInfo& initInfo, const char* key) {
-    return getStringArg(initInfo.getPlacementInfo(), key);
+    return getStringArg(*initInfo.placementInfo, key);
 }
 
 const char* getStringArg(const PlacementInfo& placementInfo, const char* key) {
@@ -579,7 +550,7 @@ const char* getStringArg(const AreaInitInfo& initInfo, const char* key) {
 }
 
 bool tryGetStringArg(const char** arg, const ActorInitInfo& initInfo, const char* key) {
-    return tryGetStringArg(arg, initInfo.getPlacementInfo(), key);
+    return tryGetStringArg(arg, *initInfo.placementInfo, key);
 }
 
 bool tryGetStringArg(const char** arg, const PlacementInfo& initInfo, const char* key) {
@@ -595,7 +566,7 @@ bool tryGetStringArg(const char** arg, const AreaInitInfo& initInfo, const char*
 }
 
 bool tryGetArgV2f(sead::Vector2f* arg, const ActorInitInfo& initInfo, const char* key) {
-    return tryGetArgV2f(arg, initInfo.getPlacementInfo(), key);
+    return tryGetArgV2f(arg, *initInfo.placementInfo, key);
 }
 
 bool tryGetArgV2f(sead::Vector2f* arg, const PlacementInfo& initInfo, const char* key) {
@@ -603,7 +574,7 @@ bool tryGetArgV2f(sead::Vector2f* arg, const PlacementInfo& initInfo, const char
 }
 
 bool tryGetArgColor(sead::Color4f* arg, const ActorInitInfo& initInfo, const char* key) {
-    return tryGetArgColor(arg, initInfo.getPlacementInfo(), key);
+    return tryGetArgColor(arg, *initInfo.placementInfo, key);
 }
 
 bool tryGetArgColor(sead::Color4f* arg, const PlacementInfo& initInfo, const char* key) {
@@ -611,7 +582,7 @@ bool tryGetArgColor(sead::Color4f* arg, const PlacementInfo& initInfo, const cha
 }
 
 void getLayerConfigName(const char** name, const ActorInitInfo& initInfo) {
-    getLayerConfigName(name, initInfo.getPlacementInfo());
+    getLayerConfigName(name, *initInfo.placementInfo);
 }
 
 void getLayerConfigName(const char** name, const PlacementInfo& initInfo) {
@@ -685,7 +656,7 @@ bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* outPlacementInfo, const
 }
 
 PlacementId* createPlacementId(const ActorInitInfo& initInfo) {
-    return createPlacementId(initInfo.getPlacementInfo());
+    return createPlacementId(*initInfo.placementInfo);
 }
 
 PlacementId* createPlacementId(const PlacementInfo& placementInfo) {
@@ -695,7 +666,7 @@ PlacementId* createPlacementId(const PlacementInfo& placementInfo) {
 }
 
 bool tryGetPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo) {
-    return tryGetPlacementId(placementId, initInfo.getPlacementInfo());
+    return tryGetPlacementId(placementId, *initInfo.placementInfo);
 }
 
 bool tryGetPlacementId(PlacementId* placementId, const PlacementInfo& placementInfo) {
@@ -703,7 +674,7 @@ bool tryGetPlacementId(PlacementId* placementId, const PlacementInfo& placementI
 }
 
 void getPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo) {
-    getPlacementId(placementId, initInfo.getPlacementInfo());
+    getPlacementId(placementId, *initInfo.placementInfo);
 }
 
 bool isEqualPlacementId(const PlacementId& placementId, const PlacementId& otherPlacementId) {
@@ -723,7 +694,7 @@ bool isEqualPlacementId(const PlacementInfo& placementInfo,
 
 bool isExistRail(const ActorInitInfo& initInfo, const char* linkName) {
     PlacementInfo info;
-    return tryGetRailIter(&info, initInfo.getPlacementInfo(), linkName);
+    return tryGetRailIter(&info, *initInfo.placementInfo, linkName);
 }
 
 bool tryGetRailIter(PlacementInfo* railPlacementInfo, const PlacementInfo& placementInfo,
@@ -791,11 +762,11 @@ bool tryGetRailPointHandleNext(sead::Vector3f* railPoint, const PlacementInfo& p
 
 bool isExistGraphRider(const ActorInitInfo& initInfo) {
     PlacementInfo info;
-    return tryGetRailIter(&info, initInfo.getPlacementInfo(), "Rail");
+    return tryGetRailIter(&info, *initInfo.placementInfo, "Rail");
 }
 
 s32 calcLinkChildNum(const ActorInitInfo& initInfo, const char* linkName) {
-    return calcLinkChildNum(initInfo.getPlacementInfo(), linkName);
+    return calcLinkChildNum(*initInfo.placementInfo, linkName);
 }
 
 s32 calcLinkChildNum(const PlacementInfo& placementInfo, const char* linkName) {
@@ -809,7 +780,7 @@ s32 calcLinkChildNum(const PlacementInfo& placementInfo, const char* linkName) {
 }
 
 bool isExistLinkChild(const ActorInitInfo& initInfo, const char* linkName, s32 index) {
-    return isExistLinkChild(initInfo.getPlacementInfo(), linkName, index);
+    return isExistLinkChild(*initInfo.placementInfo, linkName, index);
 }
 
 bool isExistLinkChild(const PlacementInfo& placementInfo, const char* linkName, s32 index) {
@@ -821,7 +792,7 @@ bool isExistLinkChild(const AreaInitInfo& initInfo, const char* linkName, s32 in
 }
 
 s32 calcLinkNestNum(const ActorInitInfo& initInfo, const char* linkName) {
-    return calcLinkNestNum(initInfo.getPlacementInfo(), linkName);
+    return calcLinkNestNum(*initInfo.placementInfo, linkName);
 }
 
 s32 calcLinkNestNum(const PlacementInfo& placementInfo, const char* linkName) {
@@ -858,17 +829,17 @@ void getLinksInfoByIndex(PlacementInfo* linkPlacementInfo, const PlacementInfo& 
 
 void getLinksInfo(PlacementInfo* linkPlacementInfo, const ActorInitInfo& initInfo,
                   const char* linkName) {
-    getLinksInfo(linkPlacementInfo, initInfo.getPlacementInfo(), linkName);
+    getLinksInfo(linkPlacementInfo, *initInfo.placementInfo, linkName);
 }
 
 void getLinksInfoByIndex(PlacementInfo* linkPlacementInfo, const ActorInitInfo& initInfo,
                          const char* linkName, s32 index) {
-    getLinksInfoByIndex(linkPlacementInfo, initInfo.getPlacementInfo(), linkName, index);
+    getLinksInfoByIndex(linkPlacementInfo, *initInfo.placementInfo, linkName, index);
 }
 
 bool tryGetLinksInfo(PlacementInfo* linkPlacementInfo, const ActorInitInfo& initInfo,
                      const char* linkName) {
-    return tryGetLinksInfo(linkPlacementInfo, initInfo.getPlacementInfo(), linkName);
+    return tryGetLinksInfo(linkPlacementInfo, *initInfo.placementInfo, linkName);
 }
 
 void getLinksMatrix(sead::Matrix34f* matrix, const ActorInitInfo& initInfo, const char* linkName) {
@@ -892,7 +863,7 @@ void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const PlacementInf
 
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInfo& initInfo,
                const char* linkName) {
-    getLinkTR(trans, rotate, initInfo.getPlacementInfo(), linkName);
+    getLinkTR(trans, rotate, *initInfo.placementInfo, linkName);
 }
 
 void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const AreaInitInfo& initInfo,
@@ -902,7 +873,7 @@ void getLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const AreaInitInfo
 
 void getLinksQT(sead::Quatf* quat, sead::Vector3f* trans, const ActorInitInfo& initInfo,
                 const char* linkName) {
-    getLinksQT(quat, trans, initInfo.getPlacementInfo(), linkName);
+    getLinksQT(quat, trans, *initInfo.placementInfo, linkName);
 }
 
 void getLinksQT(sead::Quatf* quat, sead::Vector3f* trans, const PlacementInfo& placementInfo,
@@ -946,7 +917,7 @@ bool tryGetLinksQTS(sead::Quatf* quat, sead::Vector3f* trans, sead::Vector3f* sc
 bool tryGetLinksMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo,
                          const char* linkName) {
     PlacementInfo info;
-    if (!tryGetLinksInfo(&info, initInfo.getPlacementInfo(), linkName))
+    if (!tryGetLinksInfo(&info, *initInfo.placementInfo, linkName))
         return false;
     return tryGetMatrixTR(matrix, info);
 }
@@ -962,7 +933,7 @@ bool tryGetLinksMatrixTR(sead::Matrix34f* matrix, const AreaInitInfo& initInfo,
 bool tryGetLinksMatrixTRS(sead::Matrix34f* matrix, const ActorInitInfo& initInfo,
                           const char* linkName) {
     PlacementInfo info;
-    if (!tryGetLinksInfo(&info, initInfo.getPlacementInfo(), linkName))
+    if (!tryGetLinksInfo(&info, *initInfo.placementInfo, linkName))
         return false;
     return tryGetMatrixTRS(matrix, info);
 }
@@ -1003,7 +974,7 @@ void getChildTrans(sead::Vector3f* trans, const PlacementInfo& placementInfo,
 }
 
 void getChildTrans(sead::Vector3f* trans, const ActorInitInfo& initInfo, const char* linkName) {
-    getChildTrans(trans, initInfo.getPlacementInfo(), linkName);
+    getChildTrans(trans, *initInfo.placementInfo, linkName);
 }
 
 void getChildTrans(sead::Vector3f* trans, const AreaInitInfo& initInfo, const char* linkName) {
@@ -1061,11 +1032,11 @@ s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkN
 }
 
 bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo) {
-    return tryGetZoneMatrixTR(matrix, initInfo.getPlacementInfo());
+    return tryGetZoneMatrixTR(matrix, *initInfo.placementInfo);
 }
 
 bool tryGetDisplayOffset(sead::Vector3f* offset, const ActorInitInfo& initInfo) {
-    return tryGetDisplayOffset(offset, initInfo.getPlacementInfo());
+    return tryGetDisplayOffset(offset, *initInfo.placementInfo);
 }
 
 bool tryGetDisplayOffset(sead::Vector3f* offset, const PlacementInfo& placementInfo) {
@@ -1095,13 +1066,13 @@ bool tryGetChildDisplayOffset(sead::Vector3f* offset, const ActorInitInfo& initI
 
 bool tryGetDisplayRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo) {
     PlacementInfo info;
-    getPlacementInfoByKey(&info, initInfo.getPlacementInfo(), "UnitConfig");
+    getPlacementInfoByKey(&info, *initInfo.placementInfo, "UnitConfig");
     return tryGetArgV3f(rotate, info, "DisplayRotate");
 }
 
 bool tryGetDisplayScale(sead::Vector3f* scale, const ActorInitInfo& initInfo) {
     PlacementInfo info;
-    getPlacementInfoByKey(&info, initInfo.getPlacementInfo(), "UnitConfig");
+    getPlacementInfoByKey(&info, *initInfo.placementInfo, "UnitConfig");
     return tryGetArgV3f(scale, info, "DisplayScale");
 }
 
@@ -1154,11 +1125,11 @@ bool getClippingViewId(al::PlacementId* viewId, const al::PlacementInfo& placeme
 }
 
 bool getClippingViewId(al::PlacementId* viewId, const al::ActorInitInfo& initInfo) {
-    return getClippingViewId(viewId, initInfo.getPlacementInfo());
+    return getClippingViewId(viewId, *initInfo.placementInfo);
 }
 
 void getModelName(const char** modelName, const al::ActorInitInfo& initInfo) {
-    getModelName(modelName, initInfo.getPlacementInfo());
+    getModelName(modelName, *initInfo.placementInfo);
 }
 
 void getModelName(const char** modelName, const al::PlacementInfo& placementInfo) {
@@ -1171,7 +1142,7 @@ bool tryGetModelName(const char** modelName, const al::PlacementInfo& placementI
 }
 
 bool tryGetModelName(const char** modelName, const al::ActorInitInfo& initInfo) {
-    return tryGetModelName(modelName, initInfo.getPlacementInfo());
+    return tryGetModelName(modelName, *initInfo.placementInfo);
 }
 
 }  // namespace alPlacementFunction

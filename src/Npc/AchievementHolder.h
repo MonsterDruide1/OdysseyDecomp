@@ -6,7 +6,7 @@
 #include "System/GameDataHolderAccessor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 }
 class Achievement;
 class AchievementInfoReader;

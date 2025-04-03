@@ -5,7 +5,7 @@
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class IUseAudioKeeper;
 class IUseStageSwitch;
 class IUseCamera;

@@ -21,8 +21,8 @@ public:
 
 private:
     AreaObjGroup* mAreaObjGroup;
-    unsigned char padding[0x18];
+    unsigned char padding[0x10];
 };
 
-static_assert(sizeof(SwitchKeepOnAreaGroup) == 0x28);
+static_assert(sizeof(SwitchKeepOnAreaGroup) == 0x20);
 }  // namespace al

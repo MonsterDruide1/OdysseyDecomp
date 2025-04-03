@@ -1,7 +1,7 @@
 #pragma once
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class LiveActor;
 }  // namespace al
 

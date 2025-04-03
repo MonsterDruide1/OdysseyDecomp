@@ -13,7 +13,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Rail/RailUtil.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 #include "MapObj/ElectricWire/ElectricWire.h"
@@ -73,7 +73,7 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
         if (isRailPointIsNeedStartCameraHackEnd(i)) {
             auto* id = new sead::FixedSafeString<0x20>();
             id->format("%d(Entrance)", i);
-            ticketHack = al::initEntranceCamera(mElectricWire, info.getPlacementInfo(), id->cstr());
+            ticketHack = al::initEntranceCamera(mElectricWire, *info.placementInfo, id->cstr());
         }
         if (ticket != nullptr || ticketHack != nullptr)
             mCameraTickets.pushBack(new TicketHolder{ticket, ticketHack, i});
