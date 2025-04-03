@@ -174,8 +174,7 @@ bool tryFindAndInitShineInfoByOptionalId(ShineInfo* shineInfo, GameDataHolderAcc
                                          const char* optionalId);
 bool isGotLinkedShineBeforeInitActor(const al::ActorInitInfo& actorInitInfo, const char* linkName);
 bool checkIsComplete(const al::IUseSceneObjHolder* holder, s32 fileId);
-bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hackName,
-                             s32 fileId);
+bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hackName, s32 fileId);
 s32 getCollectedBgmNum(GameDataHolderAccessor accessor, s32 fileId);
 s32 getCollectedBgmMaxNum(GameDataHolderWriter writer);
 bool isEnableOpenMoonRock(const al::LiveActor* actor);
