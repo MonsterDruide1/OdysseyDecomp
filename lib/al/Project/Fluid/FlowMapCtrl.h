@@ -9,12 +9,12 @@ class FlowMapCtrl {
 public:
     friend FlowMapParts;
 
-    FlowMapCtrl(al::LiveActor* parentActor);
+    FlowMapCtrl(LiveActor* parentActor);
     void update();
 
 private:
-    al::LiveActor* mParentActor;
-    s32 _8 = 0;
+    LiveActor* mParentActor = nullptr;
+    s32 mFlowStep = 0;
     s32 mInterval = 60;
     f32 mSpeed = 1.0f;
 };

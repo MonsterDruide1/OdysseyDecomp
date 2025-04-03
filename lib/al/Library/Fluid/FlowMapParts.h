@@ -15,7 +15,7 @@ public:
     bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
 
 private:
-    bool _108 = false;
+    bool mIsViewDependentModel = false;
     FlowMapCtrl* mFlowMapCtrl = nullptr;
 };
 }  // namespace al

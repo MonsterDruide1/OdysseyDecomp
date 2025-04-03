@@ -1,4 +1,5 @@
 #include "Library/Fluid/FlowMapParts.h"
+
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -10,22 +11,25 @@
 #include "Project/Fluid/FlowMapCtrl.h"
 
 namespace al {
-FlowMapParts::FlowMapParts(const char* name) : al::LiveActor(name) {}
+FlowMapParts::FlowMapParts(const char* name) : LiveActor(name) {}
 
 void FlowMapParts::init(const ActorInitInfo& info) {
     const char* suffix = nullptr;
-    al::tryGetStringArg(&suffix, info, "Suffix");
-    al::initMapPartsActor(this, info, suffix);
+    tryGetStringArg(&suffix, info, "Suffix");
+    initMapPartsActor(this, info, suffix);
+
     s32 interval = 60;
     f32 speed = 1.0f;
-    al::tryGetArg(&interval, info, "Interval");
-    al::tryGetArg(&speed, info, "Speed");
-    al::trySyncStageSwitchAppearAndKill(this);
-    al::registActorToDemoInfo(this, info);
+    tryGetArg(&interval, info, "Interval");
+    tryGetArg(&speed, info, "Speed");
+
+    trySyncStageSwitchAppearAndKill(this);
+    registActorToDemoInfo(this, info);
     if (getModelKeeper()) {
-        if (!al::isExistAction(this) && !al::isViewDependentModel(this))
-            _108 = true;
+        if (!isExistAction(this) && !isViewDependentModel(this))
+            mIsViewDependentModel = true;
     }
+
     mFlowMapCtrl = new FlowMapCtrl(this);
     mFlowMapCtrl->mInterval = interval;
     mFlowMapCtrl->mSpeed = speed;
@@ -33,37 +37,37 @@ void FlowMapParts::init(const ActorInitInfo& info) {
 
 void FlowMapParts::appear() {
     LiveActor::appear();
-    al::tryStartAction(this, "Appear");
+    tryStartAction(this, "Appear");
 }
 
 void FlowMapParts::movement() {
     mFlowMapCtrl->update();
-    if (!_108)
+    if (!mIsViewDependentModel)
         LiveActor::movement();
 }
 
 void FlowMapParts::calcAnim() {
-    if (_108) {
-        al::calcViewModel(this);
+    if (mIsViewDependentModel) {
+        calcViewModel(this);
         return;
     }
     LiveActor::calcAnim();
 }
 
 bool FlowMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
-    if (al::isMsgAskSafetyPoint(message)) {
-        if (al::isValidSwitchAppear(this))
+    if (isMsgAskSafetyPoint(message)) {
+        if (isValidSwitchAppear(this))
             return false;
-        return !al::isValidSwitchKill(this);
+        return !isValidSwitchKill(this);
     }
 
-    if (al::isMsgShowModel(message)) {
-        al::showModelIfHide(this);
+    if (isMsgShowModel(message)) {
+        showModelIfHide(this);
         return true;
     }
 
-    if (al::isMsgHideModel(message)) {
-        al::hideModelIfShow(this);
+    if (isMsgHideModel(message)) {
+        hideModelIfShow(this);
         return true;
     }
 
