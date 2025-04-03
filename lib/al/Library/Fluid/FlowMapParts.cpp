@@ -25,14 +25,11 @@ void FlowMapParts::init(const ActorInitInfo& info) {
 
     trySyncStageSwitchAppearAndKill(this);
     registActorToDemoInfo(this, info);
-    if (getModelKeeper()) {
-        if (!isExistAction(this) && !isViewDependentModel(this))
-            mIsViewDependentModel = true;
-    }
+    if (getModelKeeper() && !isExistAction(this) && !isViewDependentModel(this))
+        mIsStatic = true;
 
     mFlowMapCtrl = new FlowMapCtrl(this);
-    mFlowMapCtrl->mInterval = interval;
-    mFlowMapCtrl->mSpeed = speed;
+    mFlowMapCtrl->init(interval, speed);
 }
 
 void FlowMapParts::appear() {
@@ -42,12 +39,13 @@ void FlowMapParts::appear() {
 
 void FlowMapParts::movement() {
     mFlowMapCtrl->update();
-    if (!mIsViewDependentModel)
-        LiveActor::movement();
+    if (mIsStatic)
+        return;
+    LiveActor::movement();
 }
 
 void FlowMapParts::calcAnim() {
-    if (mIsViewDependentModel) {
+    if (mIsStatic) {
         calcViewModel(this);
         return;
     }
@@ -58,7 +56,9 @@ bool FlowMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitSen
     if (isMsgAskSafetyPoint(message)) {
         if (isValidSwitchAppear(this))
             return false;
-        return !isValidSwitchKill(this);
+        if (isValidSwitchKill(this))
+            return false;
+        return true;
     }
 
     if (isMsgShowModel(message)) {

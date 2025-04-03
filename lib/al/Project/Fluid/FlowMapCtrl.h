@@ -7,13 +7,16 @@ class FlowMapParts;
 
 class FlowMapCtrl {
 public:
-    friend FlowMapParts;
-
     FlowMapCtrl(LiveActor* parentActor);
     void update();
 
+    void init(s32 interval, f32 speed) {
+        mInterval = interval;
+        mSpeed = speed;
+    }
+
 private:
-    LiveActor* mParentActor = nullptr;
+    LiveActor* mParent = nullptr;
     s32 mFlowStep = 0;
     s32 mInterval = 60;
     f32 mSpeed = 1.0f;

@@ -5,7 +5,7 @@
 
 namespace al {
 
-FlowMapCtrl::FlowMapCtrl(LiveActor* parentActor) : mParentActor(parentActor) {
+FlowMapCtrl::FlowMapCtrl(LiveActor* parentActor) : mParent(parentActor) {
     setMaterialProgrammable(parentActor);
 }
 
@@ -20,14 +20,14 @@ void FlowMapCtrl::update() {
     flowParameters.w =
         calcRate01(modi(mFlowStep + halfInterval + mInterval, mInterval), 0.0f, mInterval);
 
-    s32 materialCount = getMaterialCount(mParentActor);
+    s32 materialCount = getMaterialCount(mParent);
     for (s32 i = 0; i < materialCount; i++) {
-        const char* materialName = getMaterialName(mParentActor, i);
-        setModelMaterialParameterV4F(mParentActor, materialName, "flow0_param", flowParameters);
+        const char* materialName = getMaterialName(mParent, i);
+        setModelMaterialParameterV4F(mParent, materialName, "flow0_param", flowParameters);
     }
 
     mFlowStep++;
-    mFlowStep = modi(mInterval + mFlowStep, mInterval);
+    mFlowStep = modi(mFlowStep + mInterval, mInterval);
 }
 
 }  // namespace al
