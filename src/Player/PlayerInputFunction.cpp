@@ -5,6 +5,6 @@
 
 bool PlayerInputFunction::isTriggerAction(const al::LiveActor* actor, s32 port) {
     if (rs::isSeparatePlay(actor) && al::isPadTypeJoySingle(port))
-        return true;
+        return al::isPadTriggerY(port);
     return al::isPadTriggerX(port) || al::isPadTriggerY(port);
 }

@@ -5,6 +5,7 @@
 namespace al {
 ActorScoreKeeper::ActorScoreKeeper() = default;
 
+// NON_MATCHING
 void ActorScoreKeeper::init(const ByamlIter& iter) {
     if (iter.isTypeArray()) {
         mSize = iter.getSize();
@@ -22,15 +23,15 @@ void ActorScoreKeeper::init(const ByamlIter& iter) {
 }
 
 inline void ActorScoreKeeper::allocArray() {
-    Entry* local_array = new Entry[mSize];
+    Entry* local_array = new Entry[mSize]();
     if (mSize)
         memset(local_array, 0, sizeof(Entry) * mSize);
     mArray = local_array;
 }
 
 inline void ActorScoreKeeper::putEntry(s32 index, const ByamlIter& iter) {
-    auto& entry = mArray[index];
-    iter.tryGetStringByKey(&entry.factorName, "FactorName");
-    iter.tryGetStringByKey(&entry.categoryName, "CategoryName");
+    auto* entry = &mArray[index];
+    iter.tryGetStringByKey(&entry->factorName, "FactorName");
+    iter.tryGetStringByKey(&entry->categoryName, "CategoryName");
 }
 }  // namespace al

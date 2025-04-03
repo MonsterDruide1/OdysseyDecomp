@@ -9,15 +9,24 @@ class LayoutInitInfo;
 
 class WindowConfirm : public LayoutActor {
 public:
-    enum SelectionType : s32 {
-        SelectionType_None = -1,
-        SelectionType_HardKey = 0,
-        SelectionType_List00 = 1,
-        SelectionType_List01 = 2,
-        SelectionType_List02 = 3,
+    enum class SelectionType {
+        None = -1,
+        HardKey = 0,
+        List00 = 1,
+        List01 = 2,
+        List02 = 3,
     };
 
-    enum Direction : s32 { Direction_None = 0, Direction_Up = 1, Direction_Down = 2 };
+    enum class Direction {
+        None = 0,
+        Up = 1,
+        Down = 2,
+    };
+
+    struct Selection {
+        SelectionType selectionType = SelectionType::None;
+        SelectionType prevSelectionType = SelectionType::None;
+    };
 
     WindowConfirm(const LayoutInitInfo&, const char*, const char*);
 
@@ -25,7 +34,7 @@ public:
     void setTxtList(s32, const char16*);
     void setListNum(s32);
     void setCancelIdx(s32);
-    void appear();
+    void appear() override;
     void appearWithChoicingCancel();
     bool isNerveEnd();
     bool tryEnd();
@@ -37,7 +46,6 @@ public:
     bool tryCancel();
     void setCursorToPane();
     bool tryCancelWithoutEnd();
-
     void exeHide();
     void exeAppear();
     void exeWait();
@@ -45,12 +53,11 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
-    // s32 getField134() { return mPrevSelectionIndex; }
+    SelectionType getPrevSelectionType() { return mSelection.prevSelectionType; }
 
 private:
-    Direction mDirection = Direction_None;
-    SelectionType mSelectionType = SelectionType_None;
-    s32 mSelectionIndex = -1;
+    Direction mDirection;
+    Selection mSelection;
     s32 mCancelIdx = -1;
     bool mIsDecided = false;
     s32 mCooldown = -1;

@@ -98,13 +98,13 @@ CLion interacts with CMake directly, so you need to make sure CLion's build prof
 9. Before opening a PR, reformat the code with clang-format and run `tools/check`.
     * You can use clang-format via your editor – VSCode and CLion have built-in clang-format support — or by calling `git clang-format` (for files you have `git add`ed and not yet committed).
     * If your editor does not have built-in support for clang-format, or if you need to invoke clang-format in a terminal, you'll need to install it manually.
-        * If your Linux distro or system (e.g. macOS) does not package clang-format 12, you can download it from [the LLVM project website here](https://releases.llvm.org/download.html)
+        * If your Linux distro or system (e.g. macOS) does not package clang-format, you can download it from [the LLVM project website here](https://releases.llvm.org/download.html)
 
 ## Code style
 
 Super Mario Odyssey has 31MB of code and contributors *need* to read and modify existing parts of the codebase very often: inconsistencies lead to a loss of efficiency, and we literally cannot afford that considering our small number of contributors. To avoid wasting time on formatting issues, we use clang-format to automatically enforce a consistent coding style.
 
-Before opening a PR, please format your code with clang-format 12 and ensure the following guidelines are followed. This will allow your contributions to be reviewed more quickly.
+Before opening a PR, please format your code with clang-format and ensure the following guidelines are followed. This will allow your contributions to be reviewed more quickly.
 
 ### General
 

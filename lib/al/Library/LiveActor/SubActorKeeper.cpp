@@ -1,10 +1,11 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 
 #include "Library/Base/StringUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Obj/BreakModel.h"
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/DepthShadowModel.h"
@@ -27,7 +28,7 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
     mCurActorCount++;
 }
 
-// NON-MATCHING
+// NON_MATCHING
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
     s32 creatorCount;
@@ -96,18 +97,18 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
             bool isSyncAppear = false;
             bool isGotSyncAppear = tryGetByamlBool(&isSyncAppear, subActorIter, "IsSyncAppear");
             if (isSyncAppear)
-                actorInfo->mSyncType |= SubActorSync::cAppear;
+                actorInfo->syncType |= SubActorSync::cAppear;
 
             bool isSyncHide = false;
             bool isGotSyncHide = tryGetByamlBool(&isSyncHide, subActorIter, "IsSyncHide");
             if (isSyncHide)
-                actorInfo->mSyncType |= SubActorSync::cHide;
+                actorInfo->syncType |= SubActorSync::cHide;
 
             if (tryGetByamlKeyBoolOrFalse(subActorIter, "IsSyncAlphaMask"))
-                actorInfo->mSyncType |= SubActorSync::cAlphaMask;
+                actorInfo->syncType |= SubActorSync::cAlphaMask;
 
             if (tryGetByamlKeyBoolOrFalse(subActorIter, "IsSyncClipping"))
-                actorInfo->mSyncType |= SubActorSync::cClipping;
+                actorInfo->syncType |= SubActorSync::cClipping;
 
             bool isCalcDepthShadowLength = true;
             tryGetByamlBool(&isCalcDepthShadowLength, subActorIter, "IsCalcDepthShadowLength");
@@ -119,17 +120,17 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
                     PartsModel* partsModel = new PartsModel(actorObjectName);
                     partsModel->initPartsFixFileNoRegister(mRootActor, initInfo, actorModelName,
                                                            actorSuffix, actorFixFileSuffixName);
-                    actorInfo->mSubActor = partsModel;
+                    actorInfo->subActor = partsModel;
 
-                    actorInfo->mSyncType =
-                        (!isGotSyncAppear ? actorInfo->mSyncType | SubActorSync::cAppear :
-                                            actorInfo->mSyncType) |
+                    actorInfo->syncType =
+                        (!isGotSyncAppear ? actorInfo->syncType | SubActorSync::cAppear :
+                                            actorInfo->syncType) |
                         SubActorSync::cClipping;
 
                     if (isExistModel(partsModel)) {
-                        actorInfo->mSyncType =
-                            (!isGotSyncHide ? actorInfo->mSyncType | SubActorSync::cHide :
-                                              actorInfo->mSyncType) |
+                        actorInfo->syncType =
+                            (!isGotSyncHide ? actorInfo->syncType | SubActorSync::cHide :
+                                              actorInfo->syncType) |
                             SubActorSync::cAlphaMask;
                     }
                 } else if (isEqualString(actorClassName, "BreakModel")) {
@@ -147,18 +148,18 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
                                        jointMtxPtr, actionName);
 
                     initCreateActorNoPlacementInfo(breakModel, initInfo);
-                    actorInfo->mSubActor = breakModel;
+                    actorInfo->subActor = breakModel;
                 } else if (isEqualString(actorClassName, "SilhouetteModel")) {
-                    actorInfo->mSubActor =
+                    actorInfo->subActor =
                         new SilhouetteModel(mRootActor, initInfo, actorCategoryName);
                 } else if (isEqualString(actorClassName, "DepthShadowModel")) {
-                    actorInfo->mSubActor = new DepthShadowModel(
+                    actorInfo->subActor = new DepthShadowModel(
                         mRootActor, initInfo, actorCategoryName ? actorCategoryName : actorSuffix,
                         isCalcDepthShadowLength);
 
                     continue;
                 } else if (isEqualString(actorClassName, "InvincibleModel")) {
-                    actorInfo->mSubActor =
+                    actorInfo->subActor =
                         new ModelDrawParts("無敵モデル", mRootActor, initInfo, actorCategoryName);
                 } else {
                     if (!isEqualString(actorClassName, "SimpleCircleShadowXZ")) {
@@ -184,16 +185,16 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
 
                             auto* sensor = getHitSensor(mRootActor, newSensorName);
 
-                            actorInfo->mSubActor = createCollisionObj(
+                            actorInfo->subActor = createCollisionObj(
                                 mRootActor, initInfo, collName, sensor, jointName, collSuffixName);
                             if (actorObjectName)
-                                actorInfo->mSubActor->setName(actorObjectName);
+                                actorInfo->subActor->setName(actorObjectName);
 
                             continue;
                         }
 
-                        actorInfo->mSubActor = new LiveActor(actorObjectName);
-                        initActorWithArchiveName(actorInfo->mSubActor, initInfo, actorModelName,
+                        actorInfo->subActor = new LiveActor(actorObjectName);
+                        initActorWithArchiveName(actorInfo->subActor, initInfo, actorModelName,
                                                  actorSuffix);
 
                         continue;
@@ -202,31 +203,31 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
                     SimpleCircleShadowXZ* dropShadow = new SimpleCircleShadowXZ(actorObjectName);
                     dropShadow->initSimpleCircleShadow(mRootActor, initInfo, actorModelName,
                                                        actorSuffix);
-                    actorInfo->mSubActor = dropShadow;
+                    actorInfo->subActor = dropShadow;
                 }
             } else {
-                actorInfo->mSubActor = new LiveActor(actorObjectName);
+                actorInfo->subActor = new LiveActor(actorObjectName);
 
                 if (isUseHostPlacementInfo) {
-                    initActorWithArchiveName(actorInfo->mSubActor, initInfo, actorModelName,
+                    initActorWithArchiveName(actorInfo->subActor, initInfo, actorModelName,
                                              actorSuffix);
                 } else {
-                    initChildActorWithArchiveNameNoPlacementInfo(actorInfo->mSubActor, initInfo,
+                    initChildActorWithArchiveNameNoPlacementInfo(actorInfo->subActor, initInfo,
                                                                  actorModelName, actorSuffix);
                 }
             }
 
-            initActorModelForceCubeMap(actorInfo->mSubActor, initInfo);
+            initActorModelForceCubeMap(actorInfo->subActor, initInfo);
 
             if (isAliveResult) {
                 if (isAlive)
-                    actorInfo->mSubActor->makeActorAlive();
+                    actorInfo->subActor->makeActorAlive();
                 else
-                    actorInfo->mSubActor->makeActorDead();
+                    actorInfo->subActor->makeActorDead();
             }
             bool isShow = false;
             if (tryGetByamlBool(&isShow, subActorIter, "IsShow") && !isShow)
-                hideModel(actorInfo->mSubActor);
+                hideModel(actorInfo->subActor);
         }
     }
 }

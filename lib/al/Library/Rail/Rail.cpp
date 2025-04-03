@@ -43,7 +43,7 @@ void Rail::init(const PlacementInfo& info) {
     for (s32 i = 0; i < mRailPartCount; i++) {
         PlacementInfo startInfo, endInfo;
         tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, i);
-        tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, (i + 1) % mRailPartCount);
+        tryGetPlacementInfoByIndex(&endInfo, railPointsInfo, (i + 1) % mRailPointsCount);
 
         sead::Vector3f start = sead::Vector3f::zero;
         sead::Vector3f startHandle = sead::Vector3f::zero;
@@ -67,7 +67,7 @@ void Rail::calcPos(sead::Vector3f* pos, f32 distance) const {
     part->calcPos(pos, part->calcCurveParam(partDistance));
 }
 
-// FIXME: minor reorderings
+// NON_MATCHING: minor reorderings
 s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 distance) const {
     f32 distanceOnRail = normalizeLength(distance);
     f32 startDistanceOnRail = 0.0;
@@ -200,13 +200,13 @@ f32 Rail::normalizeLength(f32 distance) const {
     return sead::Mathf::clamp(distance, 0.0, getTotalLength());
 }
 
-// FIXME diff issue due to bug in tools/check
+// NON_MATCHING: diff issue due to bug in tools/check
 f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval) const {
     f32 tmp;
     return calcNearestRailPosCoord(pos, interval, &tmp);
 }
 
-// FIXME diff issue due to bug in tools/check
+// NON_MATCHING: diff issue due to bug in tools/check
 f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* distance) const {
     *distance = sead::Mathf::maxNumber();
     f32 bestParam = sead::Mathf::maxNumber();
@@ -230,7 +230,7 @@ f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* 
     return bestParam;
 }
 
-// FIXME diff issue due to bug in tools/check
+// NON_MATCHING: diff issue due to bug in tools/check
 f32 Rail::calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos,
                              f32 interval) const {
     f32 coord = calcNearestRailPosCoord(pos, interval);
@@ -262,7 +262,7 @@ s32 Rail::calcRailPointNum(f32 distance1, f32 distance2) const {
            ((part2->getPartLength() - partDistance2) < 0.01f);
 }
 
-// FIXME regalloc in length calculation
+// NON_MATCHING: regalloc in length calculation
 f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance) const {
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);

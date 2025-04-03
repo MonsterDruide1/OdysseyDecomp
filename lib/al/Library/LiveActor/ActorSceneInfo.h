@@ -23,25 +23,27 @@ class GraphicsSystemInfo;
 class ModelDrawBufferCounter;
 
 struct ActorSceneInfo {
-    AreaObjDirector* mAreaObjDirector;
-    CameraDirector* mCameraDirector;
-    ClippingDirector* mClippingDirector;
-    CollisionDirector* mCollisionDirector;
-    DemoDirector* mDemoDirector;
-    GameDataHolderBase* mGameDataHolder;
-    GravityHolder* mGravityHolder;
-    ItemDirectorBase* mItemDirector;
-    NatureDirector* mNatureDirector;
-    const GamePadSystem* mGamePadSystem;
-    PadRumbleDirector* mPadRumbleDirector;
-    PlayerHolder* mPlayerHolder;
-    SceneObjHolder* mSceneObjHolder;
-    SceneStopCtrl* mSceneStopCtrl;
-    SceneMsgCtrl* mSceneMsgCtrl;
-    ScreenCoverCtrl* mScreenCoverCtrl;
-    ShadowDirector* mShadowDirector;
-    ModelGroup* mModelGroup;
-    GraphicsSystemInfo* mGraphicsSystemInfo;
-    ModelDrawBufferCounter* mModelDrawBufferCounter;
+    ActorSceneInfo();
+
+    AreaObjDirector* areaObjDirector = nullptr;
+    CameraDirector* cameraDirector = nullptr;
+    ClippingDirector* clippingDirector = nullptr;
+    CollisionDirector* collisionDirector = nullptr;
+    DemoDirector* demoDirector = nullptr;
+    GameDataHolderBase* gameDataHolder = nullptr;
+    GravityHolder* gravityHolder = nullptr;
+    ItemDirectorBase* itemDirector = nullptr;
+    NatureDirector* natureDirector = nullptr;
+    const GamePadSystem* gamePadSystem = nullptr;
+    PadRumbleDirector* padRumbleDirector = nullptr;
+    PlayerHolder* playerHolder = nullptr;
+    SceneObjHolder* sceneObjHolder = nullptr;
+    SceneStopCtrl* sceneStopCtrl = nullptr;
+    SceneMsgCtrl* sceneMsgCtrl = nullptr;
+    ScreenCoverCtrl* screenCoverCtrl = nullptr;
+    ShadowDirector* shadowDirector = nullptr;
+    ModelGroup* modelGroup = nullptr;
+    GraphicsSystemInfo* graphicsSystemInfo = nullptr;
+    ModelDrawBufferCounter* modelDrawBufferCounter = nullptr;
 };
 }  // namespace al

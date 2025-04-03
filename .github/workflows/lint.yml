@@ -9,7 +9,7 @@ jobs:
       with:
         source: 'src lib'
         exclude: 'lib/NintendoSDK lib/aarch64 lib/agl lib/eui lib/sead'
-        clangFormatVersion: 14
+        clangFormatVersion: 18
   custom-lint:
     runs-on: ubuntu-latest
     steps:
@@ -19,9 +19,9 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.13'
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install capstone colorama cxxfilt pyelftools watchdog python-Levenshtein toml
     - name: Run custom code styling checks
-      run: tools/check-format.py
+      run: tools/check-format.py --ci

@@ -40,7 +40,7 @@ f32 BezierCurve::calcLength(f32 startParam, f32 endParam, s32 stepCount) const {
 
     return std::floor((halfStepSize * 0.33333f) *
                       (avgVelocity + (sumVelFullStep * 2) + (sumVelHalfStep * 4)) * 1024.0f) /
-           1024.f;
+           1024.0f;
 }
 
 void BezierCurve::calcPos(sead::Vector3f* pos, f32 param) const {
@@ -96,7 +96,7 @@ f32 BezierCurve::calcCurveParam(f32 distance) const {
             return percent;
     }
 
-    if (percent > 1.0f || partLength < 0.0f)
+    if (partLength < 0.0f || percent > 1.0f)
         return sead::Mathf::clamp(percent, 0.0f, 1.0f);
     return percent;
 }

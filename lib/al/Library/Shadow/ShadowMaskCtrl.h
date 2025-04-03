@@ -7,7 +7,7 @@ namespace al {
 
 class ShadowMaskBase;
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 class ByamlIter;
 class ShadowMaskCastOvalCylinder;
 class ShadowMaskCube;

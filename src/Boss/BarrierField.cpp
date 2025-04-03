@@ -3,13 +3,12 @@
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 
 #include "System/GameDataFunction.h"
-#include "System/GameDataHolderAccessor.h"
 #include "Util/DemoUtil.h"
 
 namespace {
@@ -25,7 +24,7 @@ NERVE_ACTIONS_MAKE_STRUCT(BarrierField, Appear, AppearBreedaMoonWorld, Hide, Dis
 BarrierField::BarrierField(const char* name) : al::LiveActor(name) {}
 
 void BarrierField::init(const al::ActorInitInfo& initInfo) {
-    al::initNerveAction(this, "Hide", &NrvBarrierField.mCollector, 0);
+    al::initNerveAction(this, "Hide", &NrvBarrierField.collector, 0);
     al::initMapPartsActor(this, initInfo, nullptr);
     al::tryGetArg(&mIsDisappearByShineGet, initInfo, "IsDisappearByShineGet");
     if (al::isObjectName(initInfo, "WaterfallWorldHomeBarrier") &&

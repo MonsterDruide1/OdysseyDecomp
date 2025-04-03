@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Util/IUseDimension.h"
@@ -24,8 +26,9 @@ public:
     void makeActorDead() override;
     void control() override;
     void updateModelActorPose();
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void showCurrentModel();
     void appearPopup();
     void addDemoActorWithModel();
@@ -107,8 +110,23 @@ public:
     void updateModelActorResetPosition();
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
+    const sead::Vector3f& get_16c() { return _16c; }
+
+    void set_16c(const sead::Vector3f& newValue) { _16c.set(newValue); }
+
+    bool isMainShine() const { return mIsMainShine; }
+
 private:
-    void* filler_380[78];
+    char filler_16c[92];
+    sead::Vector3f _16c;
+    void* filler[35];
+    s32 filler2;
+    bool mIsMainShine;
+    void* filler3[29];
 };
 
 static_assert(sizeof(Shine) == 0x380);
+
+namespace ShineFunction {
+const char* getMovePointLinkName();
+}

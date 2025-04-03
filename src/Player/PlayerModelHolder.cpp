@@ -7,12 +7,14 @@ PlayerModelHolder::PlayerModelHolder(u32 bufferSize) {
 }
 
 void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name) {
-    mBuffer.pushBack(new Entry{sead::FixedSafeString<128>(name), liveActor});
+    Entry* entry = new Entry{liveActor};
+    entry->name = name;
+    mBuffer.pushBack(entry);
 }
 
 void PlayerModelHolder::changeModel(const char* name) {
     for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it) {
-        if (al::isEqualString(it->mName, sead::SafeString(name))) {
+        if (al::isEqualString(it->name, sead::SafeString(name))) {
             mCurrentModel = &*it;
             return;
         }
@@ -21,22 +23,22 @@ void PlayerModelHolder::changeModel(const char* name) {
 
 al::LiveActor* PlayerModelHolder::findModelActor(const char* name) const {
     for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it)
-        if (al::isEqualString(it->mName, sead::SafeString(name)))
-            return it->mLiveActor;
-    return mCurrentModel->mLiveActor;
+        if (al::isEqualString(it->name, sead::SafeString(name)))
+            return it->actor;
+    return mCurrentModel->actor;
 }
 
 al::LiveActor* PlayerModelHolder::tryFindModelActor(const char* name) const {
     for (auto it = mBuffer.begin(), end = mBuffer.end(); it != end; ++it)
-        if (al::isEqualString(it->mName, sead::SafeString(name)))
-            return it->mLiveActor;
+        if (al::isEqualString(it->name, sead::SafeString(name)))
+            return it->actor;
     return nullptr;
 }
 
 bool PlayerModelHolder::isCurrentModelLabel(const char* name) const {
-    return al::isEqualString(mCurrentModel->mName.cstr(), name);
+    return al::isEqualString(mCurrentModel->name.cstr(), name);
 }
 
 bool PlayerModelHolder::isCurrentModelLabelSubString(const char* name) const {
-    return al::isEqualSubString(mCurrentModel->mName.cstr(), name);
+    return al::isEqualSubString(mCurrentModel->name.cstr(), name);
 }

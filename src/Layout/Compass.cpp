@@ -5,10 +5,10 @@
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutInitInfo.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/Math/MathAngleUtil.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Player/PlayerUtil.h"
 
 #include "Layout/MapLayout.h"
@@ -44,7 +44,7 @@ void Compass::appear() {
     if (GameDataFunction::isMainStage(this)) {
         al::LayoutActor::appear();
         al::setNerve(this, &Appear);
-        field_14C = 0.0f;
+        field_14c = 0.0f;
 
         al::LiveActor* player = al::tryGetPlayerActor(mPlayerHolder, 0);
 
@@ -79,7 +79,7 @@ void Compass::appear() {
 
         al::LayoutActor::appear();
         al::setNerve(this, &Appear);
-        field_14C = 0.0f;
+        field_14c = 0.0f;
     }
 }
 

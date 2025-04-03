@@ -4,10 +4,10 @@
 #include "Library/HitSensor/HitSensorKeeper.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
+#include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/LiveActorFlag.h"
-#include "Library/LiveActor/LiveActorUtil.h"
 #include "Library/Rail/RailKeeper.h"
 #include "Library/Shadow/ShadowKeeper.h"
 #include "Library/Stage/StageSwitchKeeper.h"
@@ -31,19 +31,19 @@ const char* LiveActor::getName() const {
 }
 
 CollisionDirector* LiveActor::getCollisionDirector() const {
-    return mSceneInfo->mCollisionDirector;
+    return mSceneInfo->collisionDirector;
 }
 
 AreaObjDirector* LiveActor::getAreaObjDirector() const {
-    return mSceneInfo->mAreaObjDirector;
+    return mSceneInfo->areaObjDirector;
 }
 
 CameraDirector* LiveActor::getCameraDirector() const {
-    return mSceneInfo->mCameraDirector;
+    return mSceneInfo->cameraDirector;
 }
 
 SceneObjHolder* LiveActor::getSceneObjHolder() const {
-    return mSceneInfo->mSceneObjHolder;
+    return mSceneInfo->sceneObjHolder;
 }
 
 EffectKeeper* LiveActor::getEffectKeeper() const {
@@ -118,7 +118,7 @@ void LiveActor::initExecuteInfo(ActorExecuteInfo* executeInfo) {
 }
 
 void LiveActor::initRailKeeper(const ActorInitInfo& info, const char* linkName) {
-    mRailKeeper = tryCreateRailKeeper(info.getPlacementInfo(), linkName);
+    mRailKeeper = tryCreateRailKeeper(*info.placementInfo, linkName);
 }
 
 void LiveActor::initModelKeeper(ModelKeeper* modelKeeper) {

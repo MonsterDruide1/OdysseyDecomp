@@ -75,12 +75,12 @@ void addVelocityToTargetH(LiveActor* actor, const sead::Vector3f&, f32);
 void addVelocityToTargetHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
 void addVelocityDampToTarget(LiveActor* actor, const sead::Vector3f&, f32);
 void addVelocityDampToTarget(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void addVelocityToPlayer(LiveActor* actor, const f32, sead::Vector3f&);
-void addVelocityToPlayerHV(LiveActor* actor, const f32, f32, sead::Vector3f&);
+void addVelocityToPlayer(LiveActor* actor, f32, const sead::Vector3f&);
+void addVelocityToPlayerHV(LiveActor* actor, f32, f32, const sead::Vector3f&);
 void addVelocityFromTarget(LiveActor* actor, const sead::Vector3f&, f32);
 void addVelocityFromTargetHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
-void addVelocityFromPlayer(LiveActor* actor, const f32, sead::Vector3f&);
-void addVelocityFromPlayerHV(LiveActor* actor, const f32, f32, sead::Vector3f&);
+void addVelocityFromPlayer(LiveActor* actor, f32, const sead::Vector3f&);
+void addVelocityFromPlayerHV(LiveActor* actor, f32, f32, const sead::Vector3f&);
 void addVelocityClockwiseToDirection(LiveActor* actor, const sead::Vector3f&, f32);
 void calcVelocityClockwiseToDirection(LiveActor* actor, sead::Vector3f*, const sead::Vector3f&);
 void addVelocityClockwiseToTarget(LiveActor* actor, const sead::Vector3f&, f32);
@@ -112,8 +112,8 @@ void limitVelocityParallelVertical(LiveActor* actor, const sead::Vector3f&, f32,
 void limitVelocitySeparateHV(LiveActor* actor, const sead::Vector3f&, f32, f32);
 void reboundVelocityPart(LiveActor* actor, f32, f32);
 void reboundVelocityPart(LiveActor* actor, f32, f32, f32, f32);
-void reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
-void reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
+bool reboundVelocityFromEachCollision(LiveActor* actor, f32, f32, f32, f32);
+bool reboundVelocityFromCollision(LiveActor* actor, f32, f32, f32);
 void reboundVelocityFromTriangles(LiveActor* actor, f32, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32);
 void reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, const sead::Vector3f&,
@@ -171,6 +171,7 @@ void calcQuatUp(sead::Vector3f*, const LiveActor* actor);
 void calcQuatUp(sead::Vector3f*, const sead::Quatf& quat);
 void calcQuatFront(sead::Vector3f*, const LiveActor* actor);
 void calcQuatLocalAxis(sead::Vector3f*, const LiveActor* actor, s32);
+void calcQuatLocalAxis(sead::Vector3f*, const sead::Quatf&, s32);
 void calcTransOffsetFront(sead::Vector3f*, const LiveActor* actor, f32);
 void calcTransOffsetUp(sead::Vector3f*, const LiveActor* actor, f32);
 void calcTransOffsetSide(sead::Vector3f*, const LiveActor* actor, f32);
@@ -185,6 +186,7 @@ void rotateQuatZDirDegree(LiveActor* actor, f32);
 void rotateQuatZDirDegree(LiveActor* actor, const sead::Quatf&, f32);
 void rotateQuatLocalDirDegree(LiveActor* actor, s32, f32);
 void rotateQuatLocalDirDegree(LiveActor* actor, const sead::Quatf&, s32, f32);
+void rotateQuatLocalDirDegree(sead::Quatf* out, const sead::Quatf&, s32, f32);
 void rotateQuatYDirRandomDegree(LiveActor* actor);
 void rotateQuatYDirRandomDegree(LiveActor* actor, const sead::Quatf&);
 void turnQuatFrontToDirDegreeH(LiveActor* actor, const sead::Vector3f&, f32);
@@ -263,7 +265,7 @@ void walkAndTurnToTargetFittedGroundGravity(LiveActor* actor, const sead::Vector
 bool tryKillByDeathArea(LiveActor* actor);
 void rotateAndKeepColliderPosRate(LiveActor* actor, const sead::Vector3f&, const sead::Vector3f&,
                                   f32);
-void calcSpringMovement(LiveActor* actor, const sead::Vector3f&, const f32, f32, sead::Vector3f&,
+void calcSpringMovement(LiveActor* actor, const sead::Vector3f&, f32, f32, const sead::Vector3f&,
                         f32, f32);
 void addVelocityClockwiseToPlayer(LiveActor* actor, f32);
 void calcDirClockwiseToPlayer(sead::Vector3f*, const LiveActor* actor);

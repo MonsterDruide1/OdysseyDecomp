@@ -3,9 +3,9 @@
 #include "Amiibo/HelpAmiiboExecutor.h"
 
 namespace al {
-class NfpInfo;
+struct NfpInfo;
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 class HelpAmiiboDirector;

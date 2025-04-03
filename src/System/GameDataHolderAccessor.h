@@ -3,9 +3,6 @@
 namespace al {
 class IUseSceneObjHolder;
 class SceneObjHolder;
-class ISceneObj;
-class LiveActor;
-class ActorInitInfo;
 }  // namespace al
 class SaveObjInfo;
 class GameDataHolder;
@@ -14,6 +11,8 @@ class GameDataHolderAccessor {
 public:
     GameDataHolderAccessor(const al::IUseSceneObjHolder*);
     GameDataHolderAccessor(const al::SceneObjHolder*);
+
+    GameDataHolderAccessor(GameDataHolder* holder) { mData = holder; }
 
     operator GameDataHolder*() const { return mData; }
 

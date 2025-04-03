@@ -7,8 +7,8 @@
 
 namespace al {
 class CameraPoser;
-class CameraStartInfo;
-class CameraObjectRequestInfo;
+struct CameraStartInfo;
+struct CameraObjectRequestInfo;
 class IUseCollision;
 class PlacementInfo;
 }  // namespace al
@@ -24,8 +24,8 @@ void getProjectionMtx(const al::CameraPoser*);
 f32 getNear(const al::CameraPoser*);
 f32 getFar(const al::CameraPoser*);
 f32 getAspect(const al::CameraPoser*);
-void getPreCameraPos(const al::CameraPoser*);
-sead::Vector3f& getPreLookAtPos(const al::CameraPoser*);
+const sead::Vector3f& getPreCameraPos(const al::CameraPoser*);
+const sead::Vector3f& getPreLookAtPos(const al::CameraPoser*);
 void getPreUpDir(const al::CameraPoser*);
 void getPreFovyDegree(const al::CameraPoser*);
 void getPreFovyRadian(const al::CameraPoser*);
@@ -202,9 +202,9 @@ void checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f*, sead::Vector3f*,
                                                const sead::Vector3f&);
 void checkCameraCollisionMoveSphere(sead::Vector3f*, const al::IUseCollision*,
                                     const sead::Vector3f&, const sead::Vector3f&, f32);
-void calcZoneRotateAngleH(f32, const al::CameraPoser*);
-void calcZoneRotateAngleH(f32, const sead::Matrix34f&);
-void calcZoneInvRotateAngleH(f32, const sead::Matrix34f&);
+f32 calcZoneRotateAngleH(f32, const al::CameraPoser*);
+f32 calcZoneRotateAngleH(f32, const sead::Matrix34f&);
+f32 calcZoneInvRotateAngleH(f32, const sead::Matrix34f&);
 void multVecZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
 void multVecInvZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
 void rotateVecZone(sead::Vector3f*, const sead::Vector3f&, const al::CameraPoser*);
@@ -216,7 +216,7 @@ void initCameraRail(al::CameraPoser*, const al::PlacementInfo&, const char*);
 bool tryGetCameraRailArg(f32*, const al::PlacementInfo&, const char*, const char*);
 // void getCameraRailPointObjId(al::CameraPoser const*, s32);
 bool tryFindNearestLimitRailKeeper(const al::CameraPoser*, const sead::Vector3f&);
-sead::Vector2f calcCameraRotateStick(sead::Vector2f*, const al::CameraPoser*);
+void calcCameraRotateStick(sead::Vector2f*, const al::CameraPoser*);
 f32 calcCameraRotateStickH(const al::CameraPoser*);
 f32 calcCameraRotateStickV(const al::CameraPoser*);
 f32 calcCameraRotateStickPower(const al::CameraPoser*);

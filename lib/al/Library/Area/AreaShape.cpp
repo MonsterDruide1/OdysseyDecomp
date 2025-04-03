@@ -6,8 +6,7 @@
 #include "Library/Area/AreaShapeCylinder.h"
 #include "Library/Area/AreaShapeInfinite.h"
 #include "Library/Area/AreaShapeSphere.h"
-#include "Library/Math/MathAngleUtil.h"
-#include "Library/Math/MathLengthUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 
 namespace al {
@@ -35,11 +34,11 @@ bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& tra
     else
         localPos->e = trans.e;
 
-    auto localX = localPos->x;
+    f32 localX = localPos->x;
     localPos->x = localX / mScale.x;
-    auto localY = localPos->y;
+    f32 localY = localPos->y;
     localPos->y = localY / mScale.y;
-    auto localZ = localPos->z;
+    f32 localZ = localPos->z;
     localPos->z = localZ / mScale.z;
 
     return true;

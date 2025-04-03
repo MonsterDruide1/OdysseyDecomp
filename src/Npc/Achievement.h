@@ -2,7 +2,7 @@
 
 #include "System/GameDataHolderAccessor.h"
 
-class AchievementInfo;
+struct AchievementInfo;
 
 class Achievement {
 public:

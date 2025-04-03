@@ -5,19 +5,20 @@
 #include "Library/Demo/DemoFunction.h"
 #include "Library/Fluid/RippleCtrl.h"
 #include "Library/KeyPose/KeyPoseKeeper.h"
+#include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorMsgFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/MapObj/ChildStep.h"
 #include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
@@ -39,7 +40,7 @@ KeyMoveMapParts::KeyMoveMapParts(const char* name) : LiveActor(name) {}
 void KeyMoveMapParts::init(const ActorInitInfo& info) {
     using KeyMoveMapPartsFunctor = FunctorV0M<KeyMoveMapParts*, void (KeyMoveMapParts::*)()>;
 
-    initNerveAction(this, "Wait", &NrvKeyMoveMapParts.mCollector, 0);
+    initNerveAction(this, "Wait", &NrvKeyMoveMapParts.collector, 0);
 
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "SuffixName");

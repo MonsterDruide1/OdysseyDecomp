@@ -6,9 +6,9 @@ namespace al {
 struct ExecuteOrder;
 
 struct ExecuteTable {
-    const char* mName = nullptr;
-    const ExecuteOrder* mExecuteOrders = nullptr;
-    s32 mExecuteOrderCount = 0;
+    const char* name = nullptr;
+    const ExecuteOrder* executeOrders = nullptr;
+    s32 executeOrderCount = 0;
 };
 
 static_assert(sizeof(ExecuteTable) == 0x18);

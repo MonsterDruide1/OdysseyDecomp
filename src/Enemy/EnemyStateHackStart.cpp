@@ -7,7 +7,7 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-#include "Library/Shadow/DepthShadowDrawer.h"
+#include "Library/Shadow/ActorShadowUtil.h"
 
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
@@ -23,8 +23,8 @@ NERVES_MAKE_NOSTRUCT(EnemyStateHackStart, DiveIn, HackStart);
 EnemyStateHackStartParam::EnemyStateHackStartParam(const char* actionName, const char* visAnimName,
                                                    const char* mtpAnimName, bool hasSubActors,
                                                    bool updateSubActorShadowMap)
-    : mActionName(actionName), mVisAnimName(visAnimName), mMtpAnimName(mtpAnimName),
-      mHasSubActors(hasSubActors), mUpdateSubActorShadowMap(updateSubActorShadowMap) {}
+    : actionName(actionName), visAnimName(visAnimName), mtpAnimName(mtpAnimName),
+      hasSubActors(hasSubActors), updateSubActorShadowMap(updateSubActorShadowMap) {}
 
 static EnemyStateHackStartParam sEnemyStateHackStartParam("HackStart", 0, 0, 0, 0);
 
@@ -65,14 +65,14 @@ f32 EnemyStateHackStart::calcHackStartNerveRate() const {
     if (!isHackStart())
         return 0.0f;
 
-    s32 frameMax = al::getActionFrameMax(mActor, mParam->mActionName);
+    s32 frameMax = al::getActionFrameMax(mActor, mParam->actionName);
     return al::calcNerveRate(this, frameMax);
 }
 
 void EnemyStateHackStart::exeDiveIn() {
     if (!rs::isHackStartDemoEnterMario(mHackActor))
         return;
-    if (mParam->mActionName)
+    if (mParam->actionName)
         al::setNerve(this, &HackStart);
     else
         kill();
@@ -81,25 +81,25 @@ void EnemyStateHackStart::exeDiveIn() {
 void EnemyStateHackStart::exeHackStart() {
     if (al::isFirstStep(this)) {
         mPlayerHackStartShaderCtrl->start();
-        al::startAction(mActor, mParam->mActionName);
+        al::startAction(mActor, mParam->actionName);
 
-        if (mParam->mHasSubActors) {
+        if (mParam->hasSubActors) {
             s32 subActorNum = al::getSubActorNum(mActor);
             for (s32 i = 0; i < subActorNum; i++)
-                if (al::isExistAction(al::getSubActor(mActor, i), mParam->mActionName))
-                    al::startAction(al::getSubActor(mActor, i), mParam->mActionName);
+                if (al::isExistAction(al::getSubActor(mActor, i), mParam->actionName))
+                    al::startAction(al::getSubActor(mActor, i), mParam->actionName);
         }
-        if (mParam->mVisAnimName)
-            al::startVisAnim(mActor, mParam->mVisAnimName);
-        if (mParam->mMtpAnimName)
-            al::startMtpAnim(mActor, mParam->mMtpAnimName);
+        if (mParam->visAnimName)
+            al::startVisAnim(mActor, mParam->visAnimName);
+        if (mParam->mtpAnimName)
+            al::startMtpAnim(mActor, mParam->mtpAnimName);
         al::LiveActor* actor = mActor;
         if (al::isExistDepthShadowMapCtrl(actor)) {
             al::invalidateShadow(actor);
             al::offDepthShadowModel(actor);
             al::validateDepthShadowMap(actor);
         }
-        if (mParam->mUpdateSubActorShadowMap) {
+        if (mParam->updateSubActorShadowMap) {
             s32 subActorNum = al::getSubActorNum(mActor);
             for (s32 i = 0; i < subActorNum; i++) {
                 al::LiveActor* subActor = al::getSubActor(mActor, i);
@@ -125,7 +125,7 @@ void startHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam*
         al::offDepthShadowModel(actor);
         al::validateDepthShadowMap(actor);
     }
-    if (param && param->mUpdateSubActorShadowMap) {
+    if (param && param->updateSubActorShadowMap) {
         s32 subActorNum = al::getSubActorNum(actor);
         for (s32 i = 0; i < subActorNum; i++) {
             al::LiveActor* subActor = al::getSubActor(actor, i);
@@ -144,7 +144,7 @@ void endHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam* p
         al::onDepthShadowModel(actor);
         al::invalidateDepthShadowMap(actor);
     }
-    if (param && param->mUpdateSubActorShadowMap) {
+    if (param && param->updateSubActorShadowMap) {
         s32 subActorNum = al::getSubActorNum(actor);
         for (s32 i = 0; i < subActorNum; i++) {
             al::LiveActor* subActor = al::getSubActor(actor, i);

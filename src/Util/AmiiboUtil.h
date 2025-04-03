@@ -6,19 +6,19 @@
 
 namespace al {
 struct NfpCharacterId;
-class NfpInfo;
+struct NfpInfo;
 class IUseMessageSystem;
 class IUseSceneObjHolder;
 }  // namespace al
 
 namespace ShopItem {
-class ItemInfo;
+struct ItemInfo;
 }
 
 class SearchAmiiboDataTable;
 
 namespace rs {
-void calcSearchAmiiboBit(s32*, s32*, s32*, s32);
+void calcSearchAmiiboBit(s32* gameId, s32* characterId, s32* characterVariant, s32 characterIdS32);
 s32 createCharacterIdS32(const al::NfpCharacterId& characterId);
 bool isEnableUseStageSceneAmiibo(const al::NfpInfo& nfpInfo);
 bool isExistAmiiboMstxtData(const al::IUseMessageSystem* user, const al::NfpInfo& nfpInfo);

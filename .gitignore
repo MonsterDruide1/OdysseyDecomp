@@ -25,6 +25,8 @@ bin/
 /cmake-build-*
 compile_commands.json
 .clangd
+manifest.json
+.lite_project.lua
 
 # IDA
 *.id0

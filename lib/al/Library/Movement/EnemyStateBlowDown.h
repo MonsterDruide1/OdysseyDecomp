@@ -16,13 +16,13 @@ public:
                             f32 velocityMultiplier, f32 velocityScale, s32 blowDownLength,
                             bool faceAwayFromActor);
 
-    const char* mActionName = "BlowDown";
-    f32 mVelocityStrength = 10.3f;
-    f32 mGravityStrength = 28.2f;
-    f32 mVelocityMultiplier = 1.1f;
-    f32 mVelocityScale = 0.995f;
-    s32 mBlowDownLength = 120;
-    bool mFaceAwayFromActor = true;
+    const char* actionName = "BlowDown";
+    f32 velocityStrength = 10.3f;
+    f32 gravityStrength = 28.2f;
+    f32 velocityMultiplier = 1.1f;
+    f32 velocityScale = 0.995f;
+    s32 blowDownLength = 120;
+    bool faceAwayFromActor = true;
 };
 
 class EnemyStateBlowDown : public ActorStateBase {

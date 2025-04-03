@@ -5,9 +5,9 @@
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorPoseKeeper.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
-#include "Library/Math/MathAngleUtil.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/Math/MathUtil.h"
 
 const al::EnemyStateBlowDownParam sEnemyStateBlowDownParam = al::EnemyStateBlowDownParam();
 
@@ -31,13 +31,13 @@ void EnemyStateBlowDown::start(const HitSensor* sensor) {
 }
 
 void EnemyStateBlowDown::start(const sead::Vector3f& dir) {
-    if (mParam->mFaceAwayFromActor)
+    if (mParam->faceAwayFromActor)
         faceToDirection(mActor, -dir);
 
     auto* actor = mActor;
-    sead::Vector3f direction = dir * mParam->mVelocityStrength;
+    sead::Vector3f direction = dir * mParam->velocityStrength;
     sead::Vector3f gravity = getGravity(actor);
-    sead::Vector3f velocity = gravity * mParam->mGravityStrength;
+    sead::Vector3f velocity = gravity * mParam->gravityStrength;
     setVelocity(actor, direction - velocity);
 }
 
@@ -78,34 +78,32 @@ void EnemyStateBlowDown::kill() {
 
 void EnemyStateBlowDown::control() {
     if (mBlowDownTimer == 0) {
-        if (mParam->mActionName)
-            startAction(mActor, mParam->mActionName);
+        if (mParam->actionName)
+            startAction(mActor, mParam->actionName);
         if (isExistActorCollider(mActor))
             onCollide(mActor);
     }
-    if ((mParam->mBlowDownLength <= mBlowDownTimer) ||
-        (mParam->mActionName && isActionOneTime(mActor, mParam->mActionName) &&
+    if ((mParam->blowDownLength <= mBlowDownTimer) ||
+        (mParam->actionName && isActionOneTime(mActor, mParam->actionName) &&
          isActionEnd(mActor)) ||
         (isExistActorCollider(mActor) && isOnGround(mActor, 0))) {
         kill();
         return;
     }
-    addVelocityToGravity(mActor, mParam->mVelocityMultiplier);
-    scaleVelocity(mActor, mParam->mVelocityScale);
+    addVelocityToGravity(mActor, mParam->velocityMultiplier);
+    scaleVelocity(mActor, mParam->velocityScale);
     mBlowDownTimer++;
 }
 
 EnemyStateBlowDownParam::EnemyStateBlowDownParam() {}
 
-EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName)
-    : mActionName(actionName) {}
+EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName) : actionName(actionName) {}
 
 EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName, f32 velocityStrength,
                                                  f32 gravityStrength, f32 velocityMultiplier,
                                                  f32 velocityScale, s32 blowDownLength,
                                                  bool faceAwayFromActor)
-    : mActionName(actionName), mVelocityStrength(velocityStrength),
-      mGravityStrength(gravityStrength), mVelocityMultiplier(velocityMultiplier),
-      mVelocityScale(velocityScale), mBlowDownLength(blowDownLength),
-      mFaceAwayFromActor(faceAwayFromActor) {}
+    : actionName(actionName), velocityStrength(velocityStrength), gravityStrength(gravityStrength),
+      velocityMultiplier(velocityMultiplier), velocityScale(velocityScale),
+      blowDownLength(blowDownLength), faceAwayFromActor(faceAwayFromActor) {}
 }  // namespace al

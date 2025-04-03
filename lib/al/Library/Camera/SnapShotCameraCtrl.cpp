@@ -4,15 +4,15 @@
 
 namespace al {
 
-// NON_MATCHING
 void SnapShotCameraCtrl::load(const ByamlIter& iter) {
-    ByamlIter param;
-    if (!tryGetByamlIterByKey(&param, iter, "SnapShotParam"))
+    CameraParam* param = mParam;
+    ByamlIter paramIter;
+    if (!tryGetByamlIterByKey(&paramIter, iter, "SnapShotParam"))
         return;
-    if (tryGetByamlF32(&mParam->mMinFovyDegree, param, "MinFovyDegree"))
-        mParam->mHasMin = true;
-    if (tryGetByamlF32(&mParam->mMinFovyDegree, param, "MinFovyDegree"))
-        mParam->mHasMax = true;
+    if (tryGetByamlF32(&param->minFovyDegree, paramIter, "MinFovyDegree"))
+        param->hasMin = true;
+    if (tryGetByamlF32(&param->maxFovyDegree, paramIter, "MaxFovyDegree"))
+        param->hasMax = true;
 }
 
 }  // namespace al

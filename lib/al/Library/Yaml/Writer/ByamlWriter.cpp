@@ -11,7 +11,7 @@
 namespace al {
 
 ByamlWriter::ByamlWriter(sead::Heap* heap, bool _alwaysFalse)
-    : mHeap(heap), _mAlwaysFalse(_alwaysFalse) {
+    : mHeap(heap), mAlwaysFalse(_alwaysFalse) {
     sead::ScopedCurrentHeapSetter setter{mHeap};
     mStringTable1 = new ByamlWriterStringTable();
     mStringTable2 = new ByamlWriterStringTable();
@@ -20,7 +20,7 @@ ByamlWriter::ByamlWriter(sead::Heap* heap, bool _alwaysFalse)
 }
 
 ByamlWriter::~ByamlWriter() {
-    if (_mAlwaysFalse) {
+    if (mAlwaysFalse) {
         delete mStringTable1;
         delete mStringTable2;
         delete mBigDataList;

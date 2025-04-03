@@ -8,7 +8,7 @@ namespace al {
 class RollingCubePose;
 class PlacementInfo;
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 
 // TODO: Complete RollingCubePoseKeeper
 class RollingCubePoseKeeper {

@@ -2,6 +2,7 @@
 
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include <prim/seadStorageFor.h>
 
 namespace al {
 class Triangle;
@@ -15,8 +16,8 @@ namespace al {
 class ByamlIter;
 class CollisionParts;
 class HitSensor;
-class KCPrismData;
-class KCPrismHeader;
+struct KCPrismData;
+struct KCPrismHeader;
 class LiveActor;
 
 class Triangle {
@@ -48,8 +49,10 @@ public:
     const sead::Matrix34f& getBaseInvMtx() const;
     const sead::Matrix34f& getPrevBaseMtx() const;
 
+    // clang-format off
     friend bool ::operator==(const Triangle& tri1, const Triangle& tri2);
     friend bool ::operator!=(const Triangle& tri1, const Triangle& tri2);
+    // clang-format on
 
 private:
     const CollisionParts* mCollisionParts;
@@ -57,6 +60,84 @@ private:
     const KCPrismHeader* mKCPrismHeader;
     sead::Vector3f mNormals[4];  // FaceNormal, then three EdgeNormals
     sead::Vector3f mPositions[3];
+};
+
+enum class CollisionLocation : u8 {
+    None = 0,
+    Face = 1,
+    Edge1 = 2,
+    Edge2 = 3,
+    Edge3 = 4,
+    Corner1 = 5,
+    Corner2 = 6,
+    Corner3 = 7,
+};
+
+class HitInfo {
+public:
+    HitInfo();
+
+    bool isCollisionAtFace() const;
+    bool isCollisionAtEdge() const;
+    bool isCollisionAtCorner() const;
+    const sead::Vector3f& tryGetHitEdgeNormal() const;
+
+    friend class ArrowHitInfo;
+    friend class SphereHitInfo;
+    friend class DiskHitInfo;
+
+protected:
+    Triangle mTriangle;
+    f32 _70 = 0.0f;
+    sead::Vector3f mCollisionHitPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _80 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mCollisionMovingReaction = {0.0f, 0.0f, 0.0f};
+    CollisionLocation mCollisionLocation = CollisionLocation::None;
+};
+
+class ArrowHitInfo {
+public:
+    HitInfo* operator*() { return mHitInfo.data(); }
+
+    const HitInfo* operator*() const { return mHitInfo.data(); }
+
+    HitInfo& operator->() { return *mHitInfo; }
+
+    const HitInfo& operator->() const { return *mHitInfo; }
+
+    sead::StorageFor<HitInfo> mHitInfo{sead::ZeroInitializeTag{}};
+};
+
+class SphereHitInfo {
+public:
+    void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
+    void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
+
+    HitInfo* operator*() { return mHitInfo.data(); }
+
+    const HitInfo* operator*() const { return mHitInfo.data(); }
+
+    HitInfo& operator->() { return *mHitInfo; }
+
+    const HitInfo& operator->() const { return *mHitInfo; }
+
+    sead::StorageFor<HitInfo> mHitInfo{sead::ZeroInitializeTag{}};
+};
+
+class DiskHitInfo {
+public:
+    void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
+    void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
+
+    HitInfo* operator*() { return mHitInfo.data(); }
+
+    const HitInfo* operator*() const { return mHitInfo.data(); }
+
+    HitInfo& operator->() { return *mHitInfo; }
+
+    const HitInfo& operator->() const { return *mHitInfo; }
+
+    sead::StorageFor<HitInfo> mHitInfo{sead::ZeroInitializeTag{}};
 };
 
 }  // namespace al

@@ -6,54 +6,54 @@ namespace al {
 ActorInitInfo::ActorInitInfo() = default;
 
 void ActorInitInfo::initNew(
-    const PlacementInfo* placementInfo, const LayoutInitInfo* layoutInitInfo,
-    LiveActorGroup* allActorsGroup, const ActorFactory* actorFactory,
-    ActorResourceHolder* actorResourceHolder, AreaObjDirector* areaObjDirector,
-    AudioDirector* audioDirector, CameraDirector* cameraDirector,
-    ClippingDirector* clippingDirector, CollisionDirector* collisionDirector,
-    DemoDirector* demoDirector, EffectSystemInfo* effectSystemInfo,
-    ExecuteDirector* executeDirector, GameDataHolderBase* gameDataHolder,
-    GravityHolder* gravityHolder, HitSensorDirector* hitSensorDirector,
-    ItemDirectorBase* itemDirector, NatureDirector* natureDirector,
-    const GamePadSystem* gamePadSystem, PadRumbleDirector* padRumbleDirector,
-    PlayerHolder* playerHolder, SceneObjHolder* sceneObjHolder, SceneMsgCtrl* sceneMsgCtrl,
-    SceneStopCtrl* sceneStopCtrl, ScreenCoverCtrl* screenCoverCtrl,
-    ScreenPointDirector* screenPointDirector, ShadowDirector* shadowDirector,
-    StageSwitchDirector* stageSwitchDirector, ModelGroup* modelGroup,
-    GraphicsSystemInfo* graphicsSystemInfo, ModelDrawBufferCounter* modelDrawBufferCounter,
-    LiveActorGroup* kitDrawingGroup) {
-    mActorSceneInfo.mModelDrawBufferCounter = modelDrawBufferCounter;
-    mAllActorsGroup = allActorsGroup;
-    mActorFactory = actorFactory;
-    mActorResourceHolder = actorResourceHolder;
-    mEffectSystemInfo = effectSystemInfo;
-    mExecuteDirector = executeDirector;
-    mLayoutInitInfo = layoutInitInfo;
-    mActorSceneInfo.mAreaObjDirector = areaObjDirector;
-    mHitSensorDirector = hitSensorDirector;
-    mStageSwitchDirector = stageSwitchDirector;
-    mScreenPointDirector = screenPointDirector;
-    mActorSceneInfo.mCameraDirector = cameraDirector;
-    mActorSceneInfo.mClippingDirector = clippingDirector;
-    mActorSceneInfo.mGameDataHolder = gameDataHolder;
-    mActorSceneInfo.mGravityHolder = gravityHolder;
-    mActorSceneInfo.mCollisionDirector = collisionDirector;
-    mActorSceneInfo.mDemoDirector = demoDirector;
-    mActorSceneInfo.mItemDirector = itemDirector;
-    mActorSceneInfo.mNatureDirector = natureDirector;
-    mActorSceneInfo.mGamePadSystem = gamePadSystem;
-    mActorSceneInfo.mPadRumbleDirector = padRumbleDirector;
-    mActorSceneInfo.mPlayerHolder = playerHolder;
-    mActorSceneInfo.mSceneObjHolder = sceneObjHolder;
-    mActorSceneInfo.mSceneStopCtrl = sceneStopCtrl;
-    mActorSceneInfo.mSceneMsgCtrl = sceneMsgCtrl;
-    mActorSceneInfo.mScreenCoverCtrl = screenCoverCtrl;
-    mActorSceneInfo.mShadowDirector = shadowDirector;
-    mActorSceneInfo.mModelGroup = modelGroup;
-    mActorSceneInfo.mGraphicsSystemInfo = graphicsSystemInfo;
-    mKitDrawingGroup = kitDrawingGroup;
-    mAudioDirector = audioDirector;
-    mPlacementInfo = placementInfo;
-    mViewIdHolder = ViewIdHolder::tryCreate(*placementInfo);
+    const PlacementInfo* pPlacementInfo, const LayoutInitInfo* pLayoutInitInfo,
+    LiveActorGroup* pAllActorsGroup, const ActorFactory* pActorFactory,
+    ActorResourceHolder* pActorResourceHolder, AreaObjDirector* pAreaObjDirector,
+    AudioDirector* pAudioDirector, CameraDirector* pCameraDirector,
+    ClippingDirector* pClippingDirector, CollisionDirector* pCollisionDirector,
+    DemoDirector* pDemoDirector, EffectSystemInfo* pEffectSystemInfo,
+    ExecuteDirector* pExecuteDirector, GameDataHolderBase* pGameDataHolder,
+    GravityHolder* pGravityHolder, HitSensorDirector* pHitSensorDirector,
+    ItemDirectorBase* pItemDirector, NatureDirector* pNatureDirector,
+    const GamePadSystem* pGamePadSystem, PadRumbleDirector* pPadRumbleDirector,
+    PlayerHolder* pPlayerHolder, SceneObjHolder* pSceneObjHolder, SceneMsgCtrl* pSceneMsgCtrl,
+    SceneStopCtrl* pSceneStopCtrl, ScreenCoverCtrl* pScreenCoverCtrl,
+    ScreenPointDirector* pScreenPointDirector, ShadowDirector* pShadowDirector,
+    StageSwitchDirector* pStageSwitchDirector, ModelGroup* pModelGroup,
+    GraphicsSystemInfo* pGraphicsSystemInfo, ModelDrawBufferCounter* pModelDrawBufferCounter,
+    LiveActorGroup* pKitDrawingGroup) {
+    actorSceneInfo.modelDrawBufferCounter = pModelDrawBufferCounter;
+    allActorsGroup = pAllActorsGroup;
+    actorFactory = pActorFactory;
+    actorResourceHolder = pActorResourceHolder;
+    effectSystemInfo = pEffectSystemInfo;
+    executeDirector = pExecuteDirector;
+    layoutInitInfo = pLayoutInitInfo;
+    actorSceneInfo.areaObjDirector = pAreaObjDirector;
+    hitSensorDirector = pHitSensorDirector;
+    stageSwitchDirector = pStageSwitchDirector;
+    screenPointDirector = pScreenPointDirector;
+    actorSceneInfo.cameraDirector = pCameraDirector;
+    actorSceneInfo.clippingDirector = pClippingDirector;
+    actorSceneInfo.gameDataHolder = pGameDataHolder;
+    actorSceneInfo.gravityHolder = pGravityHolder;
+    actorSceneInfo.collisionDirector = pCollisionDirector;
+    actorSceneInfo.demoDirector = pDemoDirector;
+    actorSceneInfo.itemDirector = pItemDirector;
+    actorSceneInfo.natureDirector = pNatureDirector;
+    actorSceneInfo.gamePadSystem = pGamePadSystem;
+    actorSceneInfo.padRumbleDirector = pPadRumbleDirector;
+    actorSceneInfo.playerHolder = pPlayerHolder;
+    actorSceneInfo.sceneObjHolder = pSceneObjHolder;
+    actorSceneInfo.sceneStopCtrl = pSceneStopCtrl;
+    actorSceneInfo.sceneMsgCtrl = pSceneMsgCtrl;
+    actorSceneInfo.screenCoverCtrl = pScreenCoverCtrl;
+    actorSceneInfo.shadowDirector = pShadowDirector;
+    actorSceneInfo.modelGroup = pModelGroup;
+    actorSceneInfo.graphicsSystemInfo = pGraphicsSystemInfo;
+    kitDrawingGroup = pKitDrawingGroup;
+    audioDirector = pAudioDirector;
+    placementInfo = pPlacementInfo;
+    viewIdHolder = ViewIdHolder::tryCreate(*pPlacementInfo);
 }
 }  // namespace al
