@@ -25,7 +25,7 @@ public:
 
     struct Selection {
         SelectionType selectionType = SelectionType::None;
-        SelectionType prevSelectionType = SelectionType::None;
+        s32 index = -1;
     };
 
     WindowConfirm(const LayoutInitInfo&, const char*, const char*);
@@ -53,10 +53,10 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
-    SelectionType getPrevSelectionType() { return mSelection.prevSelectionType; }
+    SelectionType getPrevSelectionType() { return (SelectionType)mSelection.index; }
 
 private:
-    Direction mDirection;
+    Direction mDirection = Direction::None;
     Selection mSelection;
     s32 mCancelIdx = -1;
     bool mIsDecided = false;
