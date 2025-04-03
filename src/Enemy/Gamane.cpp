@@ -71,10 +71,10 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
 
     mStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
 
-    gEnemyStateSwoonInitParam._74 = 180;
-    gEnemyStateSwoonInitParam._60 = "着地";
+    gEnemyStateSwoonInitParam.swoonDuration = 180;
+    gEnemyStateSwoonInitParam.hitReactionAnimName = "着地";
     mStateSwoon->initParams(gEnemyStateSwoonInitParam);
-    mStateSwoon->set9b(true);
+    mStateSwoon->enableLockOnDelay(true);
 
     al::initNerveState(this, mStateSwoon, &NrvGamane.Swoon, "気絶");
 

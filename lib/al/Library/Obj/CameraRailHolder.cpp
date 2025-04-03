@@ -14,7 +14,7 @@ CameraRailHolder::CameraRailHolder(const char* name) : LiveActor(name) {}
 void CameraRailHolder::init(const ActorInitInfo& info) {
     initActorSceneInfo(this, info);
     initExecutorWatchObj(this, info);
-    info.getActorSceneInfo().cameraDirector->registerCameraRailHolder(this);
+    info.actorSceneInfo.cameraDirector->registerCameraRailHolder(this);
 
     mCameraRailCount = calcLinkChildNum(info, "Rail");
 
