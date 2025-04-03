@@ -64,11 +64,12 @@ void WindowConfirm::setTxtList(s32 index, const char16* message) {
 }
 
 void WindowConfirm::setListNum(s32 num) {
-    mSelection.selectionType = (SelectionType)num;
-    if (num == (s32)SelectionType::List01)
-        mCancelIdx = 1;
-    if (num == (s32)SelectionType::List02)
-        mCancelIdx = 0;
+    SelectionType selectionType = (SelectionType)num;
+    mSelection.selectionType = selectionType;
+    if (selectionType == SelectionType::List01)
+        setCancelIdx(1);
+    if (selectionType == SelectionType::List02)
+        setCancelIdx(0);
 }
 
 void WindowConfirm::setCancelIdx(s32 index) {
@@ -78,6 +79,7 @@ void WindowConfirm::setCancelIdx(s32 index) {
 void WindowConfirm::appear() {
     if (isAlive())
         return;
+
     mSelection.index = 0;
     mDirection = Direction::None;
 
@@ -125,13 +127,14 @@ void WindowConfirm::appear() {
 void WindowConfirm::appearWithChoicingCancel() {
     if (isAlive())
         return;
+
     appear();
 
     if (mSelection.selectionType == SelectionType::List01) {
-        startAction(mParListArray[(s32)mSelection.index], "Wait", nullptr);
+        startAction(mParListArray[mSelection.index], "Wait", nullptr);
         startAction(mParListArray[mCancelIdx], "Select", nullptr);
     } else if (mSelection.selectionType == SelectionType::List02) {
-        startAction(mParListArray[(s32)mSelection.index], "Wait", nullptr);
+        startAction(mParListArray[mSelection.index], "Wait", nullptr);
         startAction(mParListArray[mCancelIdx], "Select", nullptr);
     }
 
