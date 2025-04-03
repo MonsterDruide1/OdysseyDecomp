@@ -14,51 +14,59 @@ SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* areaObjGroup)
         _10 = new AreaObj*[_18];
 }
 
-// NON_MATCHING
+inline bool isInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
+    for (s32 j = 0; j < targetPosCount; j++)
+        if (areaObj->isInVolume(targetPos[j]))
+            return true;
+
+    return false;
+}
+
+inline bool isNotInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
+    __asm("");
+    for (s32 j = 0; j < targetPosCount; j++)
+        if (!areaObj->isInVolume(targetPos[j]))
+            return false;
+
+    return true;
+}
+
 void SwitchKeepOnAreaGroup::update(const SwitchAreaTargetInfo* info) {
     _1c = 0;
     s32 size = mAreaObjGroup->getSize();
     for (s32 i = 0; i < size; i++) {
         AreaObj* areaObj = mAreaObjGroup->getAreaObj(i);
-        for (s32 j = 0; j < _1c; j++)
-            if (isSameStageSwitch(areaObj, _10[i], "SwitchAreaOn"))
+        bool shouldSkip = false;
+        for (s32 j = 0; j < _1c; j++) {
+            if (isSameStageSwitch(areaObj, _10[j], "SwitchAreaOn")) {
+                shouldSkip = true;
+
                 break;
+            }
+        }
+
+        if (shouldSkip)
+            continue;
 
         bool local_54 = false;
         sead::Vector3f* targetPos = nullptr;
         s32 targetPosCount = 0;
         selectTargetPosArray(&local_54, &targetPos, &targetPosCount, areaObj, info);
-        if (targetPosCount == 0) {
-            tryOffStageSwitch(areaObj, "SwitchAreaOn");
 
-            continue;
-        } else if (!local_54) {
-            for (s32 j = 0; j < targetPosCount; j++) {
-                if (!areaObj->isInVolume(targetPos[j])) {
-                    tryOnStageSwitch(areaObj, "SwitchAreaOn");
-                    _10[_1c] = areaObj;
-                    _1c++;
+        if (targetPosCount != 0) {
+            bool result = local_54 ? isNotInVolume(areaObj, targetPos, targetPosCount) :
+                                     isInVolume(areaObj, targetPos, targetPosCount);
 
-                    tryOffStageSwitch(areaObj, "SwitchAreaOn");
-                    break;
-                }
-            }
-        } else {
-            for (s32 j = 0; j < targetPosCount; j++) {
-                if (!areaObj->isInVolume(targetPos[j])) {
-                    tryOffStageSwitch(areaObj, "SwitchAreaOn");
-                    break;
-                }
+            if (result && isExternalCondition()) {
+                tryOnStageSwitch(areaObj, "SwitchAreaOn");
+                _10[_1c] = areaObj;
+                _1c++;
+
+                continue;
             }
         }
 
-        if (!isExternalCondition()) {
-            tryOffStageSwitch(areaObj, "SwitchAreaOn");
-        } else {
-            tryOnStageSwitch(areaObj, "SwitchAreaOn");
-            _10[_1c] = areaObj;
-            _1c++;
-        }
+        tryOffStageSwitch(areaObj, "SwitchAreaOn");
     }
 }
 
