@@ -17,6 +17,7 @@ bool isInDeathArea(const LiveActor*);
 bool isInWaterArea(const LiveActor*);
 
 AreaObj* tryFindAreaObj(const LiveActor*, const char*);
+AreaObj* createAreaObj(const ActorInitInfo& actorInitInfo, const char* name);
 
 void registerAreaHostMtx(LiveActor* actor, const ActorInitInfo& info);
 
