@@ -1,17 +1,17 @@
 #pragma once
 
+#include <container/seadPtrArray.h>
+#include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
-#include "Library/Layout/LayoutInitInfo.h"
-#include "Library/Message/MessageSystem.h"
 #include "Library/Scene/GameDataHolderBase.h"
 
 #include "Scene/SceneObjFactory.h"
-#include "System/WorldList.h"
 
 namespace al {
 class PlacementId;
 class PlacementInfo;
+class LayoutInitInfo;
 }  // namespace al
 
 namespace ShopItem {
@@ -34,6 +34,7 @@ class TemporaryScenarioCameraHolder;
 class TempSaveData;
 class TimeBalloonSequenceInfo;
 class UniqObjInfo;
+class WorldList;
 
 class GameDataHolder : public al::GameDataHolderBase {
 public:
