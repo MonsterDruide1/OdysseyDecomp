@@ -9,9 +9,9 @@
 namespace al {
 SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* areaObjGroup)
     : mAreaObjGroup(areaObjGroup) {
-    _18 = areaObjGroup->getSize();
-    if (_18 > 0)
-        _10 = new AreaObj*[_18];
+    mOnAreaObjSize = areaObjGroup->getSize();
+    if (mOnAreaObjSize > 0)
+        mOnAreaObjs = new AreaObj*[mOnAreaObjSize];
 }
 
 inline bool isInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
@@ -32,13 +32,13 @@ inline bool isNotInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targe
 }
 
 void SwitchKeepOnAreaGroup::update(const SwitchAreaTargetInfo* info) {
-    _1c = 0;
+    mOnAreaObjCount = 0;
     s32 size = mAreaObjGroup->getSize();
     for (s32 i = 0; i < size; i++) {
         AreaObj* areaObj = mAreaObjGroup->getAreaObj(i);
         bool shouldSkip = false;
-        for (s32 j = 0; j < _1c; j++) {
-            if (isSameStageSwitch(areaObj, _10[j], "SwitchAreaOn")) {
+        for (s32 j = 0; j < mOnAreaObjCount; j++) {
+            if (isSameStageSwitch(areaObj, mOnAreaObjs[j], "SwitchAreaOn")) {
                 shouldSkip = true;
 
                 break;
@@ -59,8 +59,8 @@ void SwitchKeepOnAreaGroup::update(const SwitchAreaTargetInfo* info) {
 
             if (result && isExternalCondition()) {
                 tryOnStageSwitch(areaObj, "SwitchAreaOn");
-                _10[_1c] = areaObj;
-                _1c++;
+                mOnAreaObjs[mOnAreaObjCount] = areaObj;
+                mOnAreaObjCount++;
 
                 continue;
             }

@@ -21,9 +21,9 @@ public:
 
 private:
     AreaObjGroup* mAreaObjGroup;
-    AreaObj** _10 = nullptr;
-    s32 _18 = 0;
-    s32 _1c = 0;
+    AreaObj** mOnAreaObjs = nullptr;
+    s32 mOnAreaObjSize = 0;
+    s32 mOnAreaObjCount = 0;
 };
 
 static_assert(sizeof(SwitchKeepOnAreaGroup) == 0x20);
