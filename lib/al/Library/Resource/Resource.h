@@ -1,11 +1,15 @@
 #pragma once
 
-#include <filedevice/seadArchiveFileDevice.h>
-#include <filedevice/seadFileDevice.h>
-#include <heap/seadHeapMgr.h>
-#include <nn/g3d/ResFile.h>
-#include <resource/seadArchiveRes.h>
-#include <resource/seadResource.h>
+#include <prim/seadSafeString.h>
+
+namespace sead {
+class ArchiveFileDevice;
+class ArchiveRes;
+}  // namespace sead
+
+namespace nn::g3d {
+class ResFile;
+}
 
 namespace al {
 class InitResourceDataAction;
@@ -18,26 +22,24 @@ public:
     Resource(const sead::SafeString& path);
     Resource(const sead::SafeString& path, sead::ArchiveRes* archive);
 
-    bool isExistFile(const sead::SafeString& name) const;
-    bool isExistByml(const char*) const;
+    bool isExistFile(const sead::SafeString& filePath) const;
+    bool isExistByml(const char* filePath) const;
     u32 getSize() const;
     u32 getEntryNum(const sead::SafeString& directoryPath) const;
     void getEntryName(sead::BufferedSafeString* outName, const sead::SafeString& directoryPath,
                       u32 entryNum) const;
     u32 getFileSize(const sead::SafeString& filePath) const;
     const u8* getByml(const sead::SafeString& filePath) const;
-    void* getFile(const sead::SafeString& name) const;
-
+    const void* getFile(const sead::SafeString& filePath) const;
+    const u8* tryGetByml(const sead::SafeString& filePath) const;
+    const void* getKcl(const sead::SafeString& filePath) const;
+    const void* tryGetKcl(const sead::SafeString& filePath) const;
+    const void* getPa(const sead::SafeString& filePath) const;
+    const void* tryGetPa(const sead::SafeString& filePath) const;
+    const void* getOtherFile(const sead::SafeString& filePath) const;
+    const char* getArchiveName() const;
     bool tryCreateResGraphicsFile(const sead::SafeString& name, nn::g3d::ResFile* resFile);
     void cleanupResGraphicsFile();
-
-    void* tryGetByml(const sead::SafeString& name) const;
-    void* getKcl(const sead::SafeString& name) const;
-    void* tryGetKcl(const sead::SafeString& name) const;
-    void* getPa(const sead::SafeString& name) const;
-    void* tryGetPa(const sead::SafeString& name) const;
-    void* getOtherFile(const sead::SafeString& name) const;
-    const char* getArchiveName() const;
 
     ActorInitResourceData* getResData() const { return mData; }
 
@@ -47,7 +49,7 @@ private:
     sead::ArchiveRes* mArchive = nullptr;
     sead::ArchiveFileDevice* mDevice = nullptr;
     sead::FixedSafeString<0x80> mName;
-    sead::Heap* mHeap = sead::HeapMgr::instance()->getCurrentHeap();
+    sead::Heap* mHeap;
     ActorInitResourceData* mData = nullptr;
     nn::g3d::ResFile* mResFile = nullptr;
 };
