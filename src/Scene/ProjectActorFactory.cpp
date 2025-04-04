@@ -1,5 +1,6 @@
 #include "Scene/ProjectActorFactory.h"
 
+#include "Library/Fluid/FlowMapParts.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
 #include "Library/MapObj/ClockMapParts.h"
@@ -610,7 +611,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"FallMapParts", al::createActorFunction<al::FallMapParts>},
     {"FixMapParts", al::createActorFunction<al::FixMapParts>},
     {"FloaterMapParts", al::createActorFunction<al::FloaterMapParts>},
-    {"FlowMapParts", nullptr},
+    {"FlowMapParts", al::createActorFunction<al::FlowMapParts>},
     {"GateMapParts", al::createActorFunction<al::GateMapParts>},
     {"KeyMoveMapParts", al::createActorFunction<al::KeyMoveMapParts>},
     {"KeyMoveMapPartsGenerator", al::createActorFunction<al::KeyMoveMapPartsGenerator>},
