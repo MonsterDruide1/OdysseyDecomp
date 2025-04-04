@@ -5,16 +5,16 @@
 
 namespace al {
 class AudioSystemInfo;
+class AreaObjDirector;
+class DemoDirector;
 class Sequence;
 
 struct AudioDirectorInitInfo {
-    AudioDirectorInitInfo() {}
-
     AudioSystemInfo* audioSystemInfo = nullptr;
-    Sequence* curSequence = nullptr;
+    AreaObjDirector* areaObjDirector = nullptr;
     const char* curStage = nullptr;
     s32 scenarioNo = 0;
-    void* _20 = nullptr;
+    DemoDirector* demoDirector = nullptr;
     SeDirectorInitInfo seDirectorInitInfo;
     BgmDirectorInitInfo bgmDirectorInitInfo;
     const char* duckingName = nullptr;
