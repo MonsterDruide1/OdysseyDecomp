@@ -18,7 +18,7 @@ struct SeDirectorInitInfo {
     s32 field_30 = -1;
     sead::Vector3f* cameraPos = nullptr;
     sead::Matrix34f* cameraMatrix = nullptr;
-    al::Projection* cameraProjection = nullptr;
+    Projection* cameraProjection = nullptr;
     sead::Vector3f* cameraAt = nullptr;
     void* field_58 = nullptr;
     f32 interiorSize = -1.0f;
