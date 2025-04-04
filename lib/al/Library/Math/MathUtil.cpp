@@ -425,10 +425,9 @@ f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t) {
 f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width) {
     t *= 1.0f / width;
     f32 a1 = y0 - y1;
-    f32 a2 = t + -1.0f;
-    f32 a3 = t + t + -3.0f;
-    f32 a4 = a2 * m0 + t * m1;
-    return a1 * a3 * t * t + y0 + t * a2 * a4;
+    f32 a2 = t - 1.0f;
+    f32 a3 = t + t - 3.0f;
+    return y0 + (a1 * a3) * t * t + (t * a2) * (t * m1 + a2 * m0);
 }
 
 f32 calcFourthOrderRate(f32 t, f32 scale) {
