@@ -41,14 +41,14 @@ bool isNearZero(const sead::Vector3f& vec, f32 tolerance) {
 
 f32 calcAngleOnPlaneRadian(const sead::Vector3f& a, const sead::Vector3f& b,
                            const sead::Vector3f& vertical) {
-    sead::Vector3f v1;
-    verticalizeVec(&v1, vertical, a);
-    sead::Vector3f v2;
-    verticalizeVec(&v2, vertical, b);
+    sead::Vector3f planeA;
+    verticalizeVec(&planeA, vertical, a);
+    sead::Vector3f planeB;
+    verticalizeVec(&planeB, vertical, b);
 
-    f32 dot = v1.dot(v2);
+    f32 dot = planeA.dot(planeB);
     sead::Vector3f cross;
-    cross.setCross(v1, v2);
+    cross.setCross(planeA, planeB);
     f32 angle = sead::Mathf::atan2(cross.length(), dot);
 
     return vertical.dot(cross) < 0.0f ? -angle : angle;
@@ -80,13 +80,13 @@ f32 calcAngleOnPlaneDegreeOrZero(const sead::Vector3f& a, const sead::Vector3f& 
 
 s32 calcAngleSignOnPlane(const sead::Vector3f& a, const sead::Vector3f& b,
                          const sead::Vector3f& vertical) {
-    sead::Vector3f v1;
-    verticalizeVec(&v1, vertical, a);
-    sead::Vector3f v2;
-    verticalizeVec(&v2, vertical, b);
+    sead::Vector3f planeA;
+    verticalizeVec(&planeA, vertical, a);
+    sead::Vector3f planeB;
+    verticalizeVec(&planeB, vertical, b);
 
     sead::Vector3f cross;
-    cross.setCross(v1, v2);
+    cross.setCross(planeA, planeB);
     const f32 angle = vertical.dot(cross);
 
     if (angle > 0.0f)
@@ -111,10 +111,10 @@ bool tryNormalizeOrZero(sead::Vector3f* vec) {
     if (isNearZero(*vec, 0.001f)) {
         *vec = {0.0f, 0.0f, 0.0f};
         return false;
-    } else {
-        normalize(vec);
-        return true;
     }
+
+    normalize(vec);
+    return true;
 }
 
 bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec) {
@@ -122,6 +122,7 @@ bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec) {
     return tryNormalizeOrZero(out);
 }
 
+// TODO: Rename parameters here and in header
 bool isNearAngleDegreeHV(const sead::Vector3f& a, const sead::Vector3f& b, const sead::Vector3f& c,
                          f32 d, f32 e) {
     return isNearAngleRadianHV(a, b, c, sead::Mathf::deg2rad(d), sead::Mathf::deg2rad(e));
@@ -154,29 +155,29 @@ bool isNearZero(const sead::Matrix34f& value, f32 tolerance) {
     sead::Vector3f vec;
 
     value.getBase(vec, 0);
-    if (vec.squaredLength() < tolerance * tolerance)
+    if (isNearZero(vec, tolerance))
         return true;
     value.getBase(vec, 1);
-    if (vec.squaredLength() < tolerance * tolerance)
+    if (isNearZero(vec, tolerance))
         return true;
     value.getBase(vec, 2);
-    if (vec.squaredLength() < tolerance * tolerance)
+    if (isNearZero(vec, tolerance))
         return true;
 
     return false;
 }
 
 bool isNearZeroOrGreater(f32 value, f32 tolerance) {
-    return value >= 0.0f || sead::Mathf::abs(value) < tolerance;
+    return value >= 0.0f || isNearZero(value, tolerance);
 }
 
 bool isNearZeroOrLess(f32 value, f32 tolerance) {
-    return value <= 0.0f || sead::Mathf::abs(value) < tolerance;
+    return value <= 0.0f || isNearZero(value, tolerance);
 }
 
 bool isExistNearZeroVal(const sead::Vector3f& vec, f32 tolerance) {
-    return sead::Mathf::abs(vec.x) < tolerance || sead::Mathf::abs(vec.y) < tolerance ||
-           sead::Mathf::abs(vec.z) < tolerance;
+    return isNearZero(vec.x, tolerance) || isNearZero(vec.y, tolerance) ||
+           isNearZero(vec.z, tolerance);
 }
 
 bool isNormalize(const sead::Vector3f& vec, f32 tolerance) {
@@ -184,24 +185,30 @@ bool isNormalize(const sead::Vector3f& vec, f32 tolerance) {
 }
 
 bool isParallelDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
-    // looks awkward but mismatches without this
-    return !(tolerance < sead::Mathf::abs(a.cross(b)));
+    return !(sead::Mathf::abs(a.cross(b)) > tolerance);
 }
 
 bool isNearDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
     if (a.dot(b) < 0.0f)
         return false;
 
-    return !(sead::Mathf::abs(a.cross(b)) > tolerance);
+    return isParallelDirection(a, b, tolerance);
 }
 
 bool isInRange(s32 x, s32 a, s32 b) {
     return (b < a) ? (a >= x && x >= b) : (b >= x && x >= a);
 }
 
-// NON_MATCHING
 bool isInRange(f32 x, f32 a, f32 b) {
-    return (b < a) ? (a >= x && x >= b) : (b >= x && x >= a);
+    if (b < a) {
+        if (x < b || a < x)
+            return false;
+        return true;
+    } else {
+        if (x < a || b < x)
+            return false;
+        return true;
+    }
 }
 
 void normalize(sead::Vector2f* vec) {
@@ -220,10 +227,10 @@ bool tryNormalizeOrZero(sead::Vector2f* vec) {
     if (isNearZero(*vec, 0.001f)) {
         *vec = {0.0f, 0.0f};
         return false;
-    } else {
-        normalize(vec);
-        return true;
     }
+
+    normalize(vec);
+    return true;
 }
 
 bool tryNormalizeOrZero(sead::Vector2f* out, const sead::Vector2f& vec) {
@@ -237,10 +244,10 @@ bool tryNormalizeOrDirZ(sead::Vector3f* vec) {
         vec->set(0.0f, 0.0f, 0.0f);
         vec->set(sead::Vector3f::ez);
         return false;
-    } else {
-        normalize(vec);
-        return true;
     }
+
+    normalize(vec);
+    return true;
 }
 
 bool tryNormalizeOrDirZ(sead::Vector3f* out, const sead::Vector3f& vec) {
@@ -278,9 +285,7 @@ bool limitLength(sead::Vector3f* out, const sead::Vector3f& vec, f32 limit) {
     f32 len = vec.length();
     if (len > limit) {
         f32 invLen = limit / len;
-        out->x = invLen * vec.x;
-        out->y = invLen * vec.y;
-        out->z = invLen * vec.z;
+        out->setScale(vec, invLen);
         return true;
     } else {
         out->set(vec);
@@ -308,40 +313,23 @@ f32 normalize(f32 x, f32 min, f32 max) {
 }
 
 f32 normalize(s32 x, s32 min, s32 max) {
-    s32 v3;
-    f32 result;
-
     if (x <= min)
         return 0.0f;
-
     if (max - min <= 0) {
-        result = 1.0f;
-
         if (x < min)
-            result = 0.0f;
-    } else {
-        if (x <= max)
-            v3 = x;
+            return 0.0f;
         else
-            v3 = max;
-
-        if (x < min)
-            v3 = min;
-
-        result = (static_cast<f32>(v3 - min) / static_cast<f32>(max - min));
+            return 1.0f;
     }
 
-    return result;
+    return (static_cast<f32>(clamp(x, min, max) - min) / static_cast<f32>(max - min));
 }
 
 f32 sign(f32 x) {
-    f32 v1;
-    v1 = x < 0.0f;
+    if (x < 0.0f)
+        return -1.0f;
     if (x > 0.0f)
-        x = 1.0f;
-    if (v1)
-        x = -1.0f;
-
+        return 1.0f;
     return x;
 }
 
@@ -350,8 +338,7 @@ s32 sign(s32 x) {
         return -1;
     if (x > 0)
         return 1;
-
-    return 0;
+    return x;
 }
 
 f32 cubeRoot(f32 x) {
@@ -418,10 +405,7 @@ f32 hermiteRate(f32 t, f32 m0, f32 m1) {
 }
 
 f32 lerpValue(f32 a, f32 b, f32 t) {
-    if (t < 0.0f)
-        t = 0.0f;
-    else if (t > 1.0f)
-        t = 1.0f;
+    t = sead::Mathf::clamp(t, 0.0f, 1.0f);
     return (a * (1.0f - t)) + (t * b);
 }
 
@@ -500,12 +484,11 @@ void getRandomDir(sead::Vector3f* vec) {
 
 void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
                                 f32 verticalDistance) {
-    // can be 0, 1, or -1
-    f32 signOfA3 = maxHeight < 0.0f ? -1.0f : maxHeight > 0.0f ? 1.0f : maxHeight;
+    f32 maxHeightSign = sign(maxHeight);
 
     f32 maxHeightAdjusted =
         sead::Mathf::sqrt(sead::Mathf::clampMin((maxHeight - verticalDistance) * maxHeight, 0.0));
-    *initialVelY = 2 * ((signOfA3 * maxHeightAdjusted) + maxHeight);
+    *initialVelY = 2 * ((maxHeightSign * maxHeightAdjusted) + maxHeight);
     *gravity = verticalDistance - *initialVelY;
 }
 
