@@ -5,6 +5,7 @@
 #include <container/seadStrTreeMap.h>
 #include <gfx/seadCamera.h>
 #include <gfx/seadFrameBuffer.h>
+#include <nn/g3d/ViewVolume.h>
 #include <utility/aglParameterIO.h>
 
 namespace agl {
@@ -18,13 +19,6 @@ namespace sdw {
 class PrimitiveOcclusion;
 }  // namespace sdw
 }  // namespace agl
-
-namespace nn::g3d {
-class ViewVolume {
-private:
-    char filler[0xE8];  // TODO: Move this to nn::g3d
-};
-}  // namespace nn::g3d
 
 namespace al {
 class AreaObjDirector;
