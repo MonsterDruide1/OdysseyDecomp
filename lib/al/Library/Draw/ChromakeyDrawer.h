@@ -26,7 +26,7 @@ public:
     void finalize() override;
     void drawChromakey(agl::DrawContext*, const Projection&, const sead::Camera&,
                        const agl::RenderBuffer*, const sead::Viewport&, const char*, const char*,
-                       const char*);
+                       const char*) const;
     void update(const GraphicsUpdateInfo&) override;
     void calcGpu(const GraphicsCalcGpuInfo&) override;
     const char* getName() const override;
