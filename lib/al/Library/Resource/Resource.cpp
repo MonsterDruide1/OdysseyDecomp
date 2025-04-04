@@ -1,43 +1,61 @@
 #include "Library/Resource/Resource.h"
 
-#include <filedevice/seadFileDevice.h>
 #include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeap.h>
-#include <heap/seadHeapMgr.h>
-#include <resource/seadResource.h>
 
 #include "Library/File/FileUtil.h"
 
+const sead::DirectoryEntry sEntries[0x1000];
+
 namespace al {
-Resource::Resource(const sead::SafeString& path)
-    : mArchive(nullptr), mDevice(nullptr), mName(path) {
-    mHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
-    mData = nullptr;
-    mResFile = nullptr;
+Resource::Resource(const sead::SafeString& path) : mName(path) {
     mArchive = loadArchive(path);
     mDevice = new sead::ArchiveFileDevice(mArchive);
 }
 
-Resource::Resource(const sead::SafeString& path, sead::ArchiveRes* archive)
-    : mArchive(nullptr), mDevice(nullptr), mName(path) {
-    mHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
-    mData = nullptr;
-    mResFile = nullptr;
+Resource::Resource(const sead::SafeString& path, sead::ArchiveRes* archive) : mName(path) {
     mArchive = archive;
     mDevice = new sead::ArchiveFileDevice(mArchive);
 }
 
 bool Resource::isExistFile(const sead::SafeString& path) const {
-    bool ret = false;
-    mDevice->tryIsExistFile(&ret, path);
-    return ret;
+    bool exists = false;
+    mDevice->tryIsExistFile(&exists, path);
+
+    return exists;
 }
 
-u32 Resource::getFileSize(const sead::SafeString& path) const {
-    auto* device = mDevice;
-    u32 ret = 0;
-    device->tryGetFileSize(&ret, path);
-    return ret;
+// bool Resource::isExistByml(const char*) const {}
+
+u32 Resource::getSize() const {
+    return mArchive->getRawSize();
+}
+
+u32 Resource::getEntryNum(const sead::SafeString& directoryPath) const {
+    sead::DirectoryHandle handle;
+
+    if (!mDevice->tryOpenDirectory(&handle, directoryPath))
+        return 0;
+
+    u32 entriesRead = mDevice->readDirectory(&handle, (sead::DirectoryEntry*)sEntries, 0x1000);
+    mDevice->tryCloseDirectory(&handle);
+
+    return entriesRead;
+}
+
+void Resource::getEntryName(sead::BufferedSafeString* outName,
+                            const sead::SafeString& directoryPath, u32 entryNum) const {
+    sead::DirectoryHandle handle;
+
+    mDevice->tryOpenDirectory(&handle, directoryPath);
+    mDevice->readDirectory(&handle, (sead::DirectoryEntry*)sEntries, 0x1000);
+    mDevice->tryCloseDirectory(&handle);
+
+    outName->format("%s", sEntries[entryNum].name.cstr());
+}
+
+u32 Resource::getFileSize(const sead::SafeString& filePath) const {
+    return mDevice->getFileSize(filePath);
 }
 
 void Resource::cleanupResGraphicsFile() {
