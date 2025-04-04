@@ -14,7 +14,7 @@ SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* areaObjGroup)
         mOnAreaObjs = new AreaObj*[mOnAreaObjSize];
 }
 
-inline bool isInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
+inline bool isAnyPosInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
     for (s32 j = 0; j < targetPosCount; j++)
         if (areaObj->isInVolume(targetPos[j]))
             return true;
@@ -22,7 +22,7 @@ inline bool isInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPo
     return false;
 }
 
-inline bool isNotInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
+inline bool isAllPosInVolume(AreaObj* areaObj, sead::Vector3f* targetPos, s32 targetPosCount) {
     __asm("");
     for (s32 j = 0; j < targetPosCount; j++)
         if (!areaObj->isInVolume(targetPos[j]))
@@ -48,14 +48,14 @@ void SwitchKeepOnAreaGroup::update(const SwitchAreaTargetInfo* info) {
         if (shouldSkip)
             continue;
 
-        bool local_54 = false;
+        bool checkAllPos = false;
         sead::Vector3f* targetPos = nullptr;
         s32 targetPosCount = 0;
-        selectTargetPosArray(&local_54, &targetPos, &targetPosCount, areaObj, info);
+        selectTargetPosArray(&checkAllPos, &targetPos, &targetPosCount, areaObj, info);
 
         if (targetPosCount != 0) {
-            bool result = local_54 ? isNotInVolume(areaObj, targetPos, targetPosCount) :
-                                     isInVolume(areaObj, targetPos, targetPosCount);
+            bool result = checkAllPos ? isAllPosInVolume(areaObj, targetPos, targetPosCount) :
+                                        isAnyPosInVolume(areaObj, targetPos, targetPosCount);
 
             if (result && isExternalCondition()) {
                 tryOnStageSwitch(areaObj, "SwitchAreaOn");
@@ -70,14 +70,15 @@ void SwitchKeepOnAreaGroup::update(const SwitchAreaTargetInfo* info) {
     }
 }
 
-void SwitchKeepOnAreaGroup::update(const sead::Vector3f& trans) {
-    sead::Vector3f pos = trans;
+void SwitchKeepOnAreaGroup::update(const sead::Vector3f& playerPos) {
+    sead::Vector3f pos = playerPos;
     SwitchAreaTargetInfo info = {&pos, 1};
 
     update(&info);
 }
 
-void SwitchKeepOnAreaGroup::selectTargetPosArray(bool* out, sead::Vector3f** outTargetPos,
+void SwitchKeepOnAreaGroup::selectTargetPosArray(bool* outCheckAllPos,
+                                                 sead::Vector3f** outTargetPos,
                                                  s32* outTargetPosCount, const AreaObj* areaObj,
                                                  const SwitchAreaTargetInfo* info) {
     s32 onCondition = 0;
@@ -85,19 +86,19 @@ void SwitchKeepOnAreaGroup::selectTargetPosArray(bool* out, sead::Vector3f** out
 
     switch (onCondition) {
     case 0:
-        *out = false;
+        *outCheckAllPos = false;
         *outTargetPos = info->getPlayerTargetPositions();
         *outTargetPosCount = info->getPlayerTargetPositionCount();
 
         break;
     case 1:
-        *out = true;
+        *outCheckAllPos = true;
         *outTargetPos = info->getPlayerTargetPositions();
         *outTargetPosCount = info->getPlayerTargetPositionCount();
 
         break;
     case 2:
-        *out = false;
+        *outCheckAllPos = false;
         *outTargetPos = info->getCameraLookAtPositions();
         *outTargetPosCount = info->getCameraLookAtPositionCount();
 
