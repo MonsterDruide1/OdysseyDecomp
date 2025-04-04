@@ -20,14 +20,13 @@ class StageSceneLayout;
 class StageScene : public al::Scene {
 public:
     StageScene();
+    ~StageScene() override;
+    void init(const al::SceneInitInfo&) override;
+    void appear() override;
+    void kill() override;
 
-    virtual ~StageScene();
-    virtual void init(const al::SceneInitInfo&) override;
-    virtual void appear() override;
-    virtual void kill() override;
-
-    virtual void control() override;
-    virtual void drawMain() const override;
+    void control() override;
+    void drawMain() const override;
 
     bool isEnableSave() const;
 

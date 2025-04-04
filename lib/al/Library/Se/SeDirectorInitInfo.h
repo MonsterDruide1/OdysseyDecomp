@@ -1,32 +1,27 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
 
 namespace al {
-class SeDirectorInitInfo {
-public:
-    SeDirectorInitInfo() {}
+class Projection;
 
-private:
-    s32 field_0 = -1;
-    s32 field_4 = -1;
-    s32 field_8 = 1;
-    s32 field_c;
-    const char* field_10 = "注視点";
-    void* field_18 = nullptr;
-    bool field_20 = true;
-    bool field_21 = false;
-    s32 field_24;
-    s32 field_28 = 0;
-    s32 field_2c = 0;
+struct SeDirectorInitInfo {
+    s32 maxRequests = -1;
+    s32 playerCount = -1;
+    s32 listenerCount = 1;
+    const char* defaultListenerName = "注視点";
+    const char* defaultStageEffectName = nullptr;
+    bool useMeInfo = true;
+    bool useLoopSequencer = false;
+    s32* field_28 = nullptr;
     s32 field_30 = -1;
-    s32 field_34;
-    void* field_38 = nullptr;
-    void* field_40 = nullptr;
-    void* field_48 = nullptr;
-    void* field_50 = nullptr;
+    sead::Vector3f* cameraPos = nullptr;
+    sead::Matrix34f* cameraMatrix = nullptr;
+    al::Projection* cameraProjection = nullptr;
+    sead::Vector3f* cameraAt = nullptr;
     void* field_58 = nullptr;
-    f32 field_60 = -1.0f;
-    f32 field_64 = 1.0f;
+    f32 interiorSize = -1.0f;
+    f32 pitchModifier = 1.0f;
 };
 }  // namespace al
