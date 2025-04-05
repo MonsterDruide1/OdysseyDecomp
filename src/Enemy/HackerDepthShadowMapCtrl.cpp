@@ -50,7 +50,7 @@ void HackerDepthShadowMapCtrl::update(PlayerCollider* playerCollider) {
     if (shadowLengthArea) {
         const sead::Vector3f& actorTrans = al::getTrans(mActor);
         sead::Vector3f areaScale = {0.0f, 0.0f, 0.0f};
-        al::tryGetScale(&areaScale, *shadowLengthArea->getPlacementInfo());
+        al::tryGetScale(&areaScale, shadowLengthArea->getPlacementInfo());
 
         const sead::Matrix34f& areaMtx = al::getAreaObjBaseMtx(shadowLengthArea);
 
