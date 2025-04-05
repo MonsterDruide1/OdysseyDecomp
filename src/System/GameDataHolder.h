@@ -267,7 +267,7 @@ private:
     sead::PtrArray<sead::FixedSafeString<128>> mShowHackTutorialList;
     bool* mIsShowBindTutorial;
     MapDataHolder* mMapDataHolder;
-    sead::PtrArray<WorldItemTypeInfo> mWorldArchiveInfo;
+    sead::PtrArray<WorldItemTypeInfo> mWorldItemTypeInfo;
     s32* mCoinCollectNumMax;
     s32* mWorldWarpHoleDestIds;
     WorldWarpHoleInfo* mWorldWarpHoleInfos;
