@@ -2,6 +2,8 @@
 
 #include "Library/Scene/CreateSceneFunc.h"
 
+#include "Scene/TitleMenuScene.h"
+
 const al::NameToCreator<alSceneFunction::SceneCreatorFunction> sProjectSceneFactoryEntries[] = {
     {"DemoChangeWorldScene", nullptr},
     {"DemoScene", nullptr},
@@ -10,7 +12,7 @@ const al::NameToCreator<alSceneFunction::SceneCreatorFunction> sProjectSceneFact
     {"FirstSequenceScene", nullptr},
     {"StageScene", nullptr},
     {"StaffRollScene", nullptr},
-    {"TitleMenuScene", nullptr},
+    {"TitleMenuScene", alSceneFunction::createSceneFunc<TitleMenuScene>},
     {"WorldWarpHoleScene", nullptr}};
 
 ProjectSceneFactory::ProjectSceneFactory() : SceneFactory("シーン生成") {

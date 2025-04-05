@@ -30,7 +30,10 @@ private:
 struct BgmUserInfo;
 class ByamlIter;
 class SafeString;
+template <typename T>
 class AudioInfoListWithParts;
+class BgmActionInfo;
+class BgmSourceInfo;
 
 struct BgmUserInfo {
     static BgmUserInfo* createInfo(const ByamlIter&, const sead::SafeString&);
@@ -41,7 +44,7 @@ struct BgmUserInfo {
     static s32 compareInfoByKey(const BgmUserInfo*, const char*);
 
     const char* name = nullptr;
-    AudioInfoListWithParts* bgmActionInfoList = nullptr;
-    AudioInfoListWithParts* bgmSourceInfoList = nullptr;
+    AudioInfoListWithParts<BgmActionInfo>* bgmActionInfoList = nullptr;
+    AudioInfoListWithParts<BgmSourceInfo>* bgmSourceInfoList = nullptr;
 };
 }  // namespace al
