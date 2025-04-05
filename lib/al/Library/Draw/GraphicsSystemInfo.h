@@ -91,7 +91,7 @@ class ApplicationMessageReceiver;
 struct GraphicsInitArg {
     GraphicsInitArg(agl::DrawContext*, sead::FrameBuffer*);
     bool isUsingCubeMapAtmosScatter() const;
-    u8 getAtmosScatterViewNum() const;
+    u32 getAtmosScatterViewNum() const;
 
     s32 _0;
     bool _4;

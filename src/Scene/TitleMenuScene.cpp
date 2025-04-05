@@ -79,9 +79,8 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
     al::SceneObjHolder* sceneObjHolder = SceneObjFactory::createSceneObjHolder();
     initSceneObjHolder(sceneObjHolder);
 
-    al::setSceneObj(
-        this, GameDataFunction::getGameDataHolder((al::GameDataHolderBase*)info.gameDataHolder),
-        SceneObjID_GameDataHolder);
+    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder),
+                    SceneObjID_GameDataHolder);
 
     initSceneStopCtrl();
 
@@ -108,14 +107,13 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
     alAudioSystemFunction::disableAudioMaximizer(info.gameSysInfo);
 
     ProjectCameraPoserFactory* projectCameraPoserFactory = new ProjectCameraPoserFactory();
-    al::initCameraDirectorWithoutStageResource(this,
-                                               (al::CameraPoserFactory*)projectCameraPoserFactory);
+    al::initCameraDirectorWithoutStageResource(this, projectCameraPoserFactory);
 
     al::setCameraAspect(this, al::getSceneFrameBufferMainAspect(this), -1.0f);
 
     al::AreaObjDirector* areaObjDirector = getLiveActorKit()->getAreaObjDirector();
     ProjectAreaFactory* projectAreaFactory = new ProjectAreaFactory();
-    areaObjDirector->init((al::AreaObjFactory*)projectAreaFactory);
+    areaObjDirector->init(projectAreaFactory);
 
     al::initPadRumble(this, info);
 
@@ -129,8 +127,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
     ProjectActorFactory* projectActorFactory = new ProjectActorFactory();
 
     al::initActorInitInfo(&actorInitInfo, this, &placementInfo, &layoutInitInfo,
-                          (al::ActorFactory*)projectActorFactory, nullptr,
-                          (al::GameDataHolderBase*)info.gameDataHolder);
+                          projectActorFactory, nullptr, info.gameDataHolder);
 
     initNerve(&NrvTitleMenuScene.Appear, 1);
 
@@ -144,9 +141,9 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
 
     mFadeBlack = new al::WipeSimple("フェード", "FadeBlack", layoutInitInfo, nullptr);
     mWindowConfirm = new al::WindowConfirm(layoutInitInfo, "WindowConfirm", "WindowConfirm");
-    mMenuLayout =
+    mLayoutMenu =
         new al::SimpleLayoutAppearWaitEnd("ポーズメニュー", "Menu", layoutInitInfo, nullptr, false);
-    mMenuLayout->kill();
+    mLayoutMenu->kill();
     mLayoutContinueLoading = new al::SimpleLayoutAppearWaitEnd("ロード", "ContinueLoading",
                                                                layoutInitInfo, nullptr, false);
     mLayoutContinueLoading->kill();
@@ -154,7 +151,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
                                                      layoutInitInfo, nullptr);
 
     mStatePauseMenu = new StageSceneStatePauseMenu(
-        "ポーズメニュー", this, mMenuLayout, (GameDataHolder*)info.gameDataHolder, info,
+        "ポーズメニュー", this, mLayoutMenu, (GameDataHolder*)info.gameDataHolder, info,
         actorInitInfo, layoutInitInfo, mWindowConfirm, nullptr, true, nullptr);
 
     al::initNerveState(this, mStatePauseMenu, &NrvTitleMenuScene.Menu, "ポーズメニュー");
@@ -214,8 +211,8 @@ void TitleMenuScene::drawMain() const {
 }
 
 bool TitleMenuScene::isEnableKill() const {
-    return al::isNerve(this, &LoadWait) && (al::isGreaterEqualStep(this, 140)) &&
-           mEnableKillStep > 15;
+    return al::isNerve(this, &LoadWait) && al::isGreaterEqualStep(this, 140) &&
+           mLoadCompleteCounter > 15;
 }
 
 bool TitleMenuScene::isChangeLanguage() const {
@@ -228,7 +225,7 @@ const char* TitleMenuScene::getLanguage() const {
 
 bool TitleMenuScene::isNewGame() const {
     if (mStatePauseMenu->isLoadData() &&
-        GameDataFunction::isNewSaveDataByFileId(mMenuLayout, mStatePauseMenu->getSelectedFileId()))
+        GameDataFunction::isNewSaveDataByFileId(mLayoutMenu, mStatePauseMenu->getSelectedFileId()))
         return true;
     else
         return mStatePauseMenu->isNewGame();
@@ -250,18 +247,18 @@ void TitleMenuScene::startLoadDirect(bool isGameLoad) {
 }
 
 void TitleMenuScene::setScenario() {
-    al::StringTmp<256> str1;
-    al::StringTmp<256> str2;
-    bool isStageMessage = false;
+    al::StringTmp<256> scenarioLabel;
+    al::StringTmp<256> stageLabel;
+    bool isNextScenario = false;
 
-    if (rs::tryGetMapMainScenarioLabel(&str1, &str2, &isStageMessage, this)) {
-        if (isStageMessage) {
+    if (rs::tryGetMapMainScenarioLabel(&scenarioLabel, &stageLabel, &isNextScenario, this)) {
+        if (isNextScenario) {
             if (rs::trySetPaneStageMessageIfExist(mLayoutContinueLoading, "TxtScenario",
-                                                  str1.cstr(), str2.cstr()))
+                                                  scenarioLabel.cstr(), stageLabel.cstr()))
                 return;
         } else {
             if (rs::trySetPaneSystemMessageIfExist(mLayoutContinueLoading, "TxtScenario",
-                                                   str2.cstr(), str1.cstr()))
+                                                   stageLabel.cstr(), scenarioLabel.cstr()))
                 return;
         }
     }
@@ -282,7 +279,7 @@ bool TitleMenuScene::isCancelLoadWorldResource() const {
 void TitleMenuScene::startLoadWorldResource() {
     mIsCancelLoadResource = false;
     mLoadPercent = 0.0f;
-    mLoadPercent2 = 0.0f;
+    mLoadPercentBuffered = 0.0f;
 }
 
 void TitleMenuScene::exeAppear() {
@@ -292,8 +289,8 @@ void TitleMenuScene::exeAppear() {
     }
 
     if (al::isStep(this, 2)) {
-        mMenuLayout->startWait();
-        al::startAction(mMenuLayout, "Boot", "Boot");
+        mLayoutMenu->startWait();
+        al::startAction(mLayoutMenu, "Boot", "Boot");
         mStatePauseMenu->setAfterTitle();
     }
 
@@ -310,7 +307,7 @@ void TitleMenuScene::exeAppear() {
     al::updateKitListPost(this);
     al::updateKitListPostOnNerveEnd(this);
 
-    if (al::isGreaterEqualStep(this, 3) && al::isActionEnd(mMenuLayout, "Boot") &&
+    if (al::isGreaterEqualStep(this, 3) && al::isActionEnd(mLayoutMenu, "Boot") &&
         al::isActionEnd(mStatePauseMenu->getMarioActor()))
         al::setNerve(this, &NrvTitleMenuScene.Menu);
 }
@@ -338,14 +335,17 @@ void TitleMenuScene::exeMenu() {
         al::updateKitListPostOnNerveEnd(this);
 
         al::setNerve(this, &NrvTitleMenuScene.LoadAppear);
+        return;
+    }
 
-    } else if (mStatePauseMenu->isModeSelectEnd() || mStatePauseMenu->isLoadData()) {
+    if (mStatePauseMenu->isModeSelectEnd() || mStatePauseMenu->isLoadData()) {
         mStatePauseMenu->kill();
         al::updateKitListPostOnNerveEnd(this);
         al::setNerve(this, &NrvTitleMenuScene.Wipe);
-    } else {
-        al::updateKitListPostOnNerveEnd(this);
+        return;
     }
+
+    al::updateKitListPostOnNerveEnd(this);
 }
 
 void TitleMenuScene::exeWipe() {
@@ -355,33 +355,32 @@ void TitleMenuScene::exeWipe() {
     al::updateKit(this);
     al::updateGraphicsPrev(this);
 
-    if (!mFadeBlack->isCloseEnd())
-        return;
+    if (mFadeBlack->isCloseEnd()) {
+        mStatePauseMenu->killAllOptionLayout();
+        mLayoutMenu->kill();
+        mFadeBlack->startOpen(-1);
+        mWindowConfirm->kill();
 
-    mStatePauseMenu->killAllOptionLayout();
-    mMenuLayout->kill();
-    mFadeBlack->startOpen(-1);
-    mWindowConfirm->kill();
+        if (mStatePauseMenu->isLoadData()) {
+            mIsCancelLoadResource = true;
+            mLoadPercent = 0.0f;
+            mLoadPercentBuffered = 0.0f;
+            GameDataHolderAccessor(this)->receiveSetPlayingFileIdMsg();
 
-    if (mStatePauseMenu->isLoadData()) {
-        mIsCancelLoadResource = true;
-        mLoadPercent = 0.0f;
-        mLoadPercent2 = 0.0f;
-        GameDataHolderAccessor(this)->receiveSetPlayingFileIdMsg();
+            s32 fileId = GameDataHolderAccessor(this)->getPlayingFileId();
+            GameDataHolderAccessor(this)->setPlayingFileId(fileId);
 
-        s32 fileId = GameDataHolderAccessor(this)->getPlayingFileId();
-        GameDataHolderAccessor(this)->setPlayingFileId(fileId);
+            GameDataHolderAccessor(this)->setRequireSave();
+        }
 
-        GameDataHolderAccessor(this)->setRequireSave();
+        setScenario();
+        mLayoutContinueLoading->startWait();
+        mLayoutParBG->startWait();
+        al::setActionFrame(mLayoutParBG, mBootLayout->getBgFrame(), nullptr);
+        al::startAction(mLayoutContinueLoading, "Loop", "Loop");
+
+        al::setNerve(this, &LoadWait);
     }
-
-    setScenario();
-    mLayoutContinueLoading->startWait();
-    mLayoutParBG->startWait();
-    al::setActionFrame(mLayoutParBG, mBootLayout->getBgFrame(), nullptr);
-    al::startAction(mLayoutContinueLoading, "Loop", "Loop");
-
-    al::setNerve(this, &LoadWait);
 }
 
 void TitleMenuScene::exeLoadAppear() {
@@ -409,13 +408,13 @@ void TitleMenuScene::exeLoadWait() {
     else
         percent = al::lerpValue(0.0f, mLoadPercent, al::calcNerveRate(this, 140));
 
-    mLoadPercent2 = percent;
+    mLoadPercentBuffered = percent;
 
     if (percent > 100.0f)
-        ++mEnableKillStep;
+        ++mLoadCompleteCounter;
 
-    al::startFreezeAction(mLayoutContinueLoading, "ProgressBar", std::min(percent, 100.0f),
-                          "ProgressBar");
+    al::startFreezeAction(mLayoutContinueLoading, "ProgressBar",
+                          sead::Mathf::clampMax(percent, 100.0f), "ProgressBar");
     al::updateKit(this);
     al::updateGraphicsPrev(this);
 }

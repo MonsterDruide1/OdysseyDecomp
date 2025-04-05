@@ -10,6 +10,7 @@ namespace al {
 class LayoutActor;
 }
 class Shine;
+class GameDataHolderAccessor;
 class GameDataHolder;
 class MapLayout;
 class ProjectItemDirector;

@@ -38,14 +38,14 @@ public:
 private:
     StageSceneStatePauseMenu* mStatePauseMenu = nullptr;
     al::ChromakeyDrawer* mChromakeyDrawer = nullptr;
-    al::SimpleLayoutAppearWaitEnd* mMenuLayout = nullptr;
+    al::SimpleLayoutAppearWaitEnd* mLayoutMenu = nullptr;
     al::SimpleLayoutAppearWaitEnd* mLayoutContinueLoading = nullptr;
     al::SimpleLayoutAppearWaitEnd* mLayoutParBG = nullptr;
     al::WindowConfirm* mWindowConfirm = nullptr;
     al::WipeSimple* mFadeBlack = nullptr;
     BootLayout* mBootLayout = nullptr;
     f32 mLoadPercent = 0.0f;
-    f32 mLoadPercent2 = 0.0f;  // unused
+    f32 mLoadPercentBuffered = 0.0f;  // unused
     bool mIsCancelLoadResource = false;
-    s32 mEnableKillStep = 0;
+    s32 mLoadCompleteCounter = 0;
 };
