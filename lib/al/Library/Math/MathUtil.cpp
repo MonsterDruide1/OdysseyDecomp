@@ -19,9 +19,9 @@ bool isParallelDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 t
 }
 
 bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
-    if (isNearZero(a, 0.001f))
+    if (isNearZero(a))
         return false;
-    if (isNearZero(b, 0.001f))
+    if (isNearZero(b))
         return false;
 
     sead::Vector2f aNorm;
@@ -33,9 +33,9 @@ bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tol
 }
 
 bool isNearAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance) {
-    if (isNearZero(a, 0.001f))
+    if (isNearZero(a))
         return false;
-    if (isNearZero(b, 0.001f))
+    if (isNearZero(b))
         return false;
 
     sead::Vector3f aNorm;
@@ -55,34 +55,23 @@ bool isNearAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b, f32 tol
 }
 
 void normalize(sead::Matrix33f* mtx) {
-    // TODO: Add new Matrix33f functions to sead
-    sead::Vector3f up = {mtx->m[0][0], mtx->m[1][0], mtx->m[2][0]};
-    sead::Vector3f front = {mtx->m[0][1], mtx->m[1][1], mtx->m[2][1]};
-    sead::Vector3f side = {mtx->m[0][2], mtx->m[1][2], mtx->m[2][2]};
+    sead::Vector3f up = mtx->getBase(0);
+    sead::Vector3f front = mtx->getBase(1);
+    sead::Vector3f side = mtx->getBase(2);
 
     up.normalize();
     front.normalize();
     side.normalize();
 
-    mtx->m[0][0] = up.x;
-    mtx->m[1][0] = up.y;
-    mtx->m[2][0] = up.z;
-    mtx->m[0][1] = front.x;
-    mtx->m[1][1] = front.y;
-    mtx->m[2][1] = front.z;
-    mtx->m[0][2] = side.x;
-    mtx->m[1][2] = side.y;
-    mtx->m[2][2] = side.z;
+    mtx->setBase(0, up);
+    mtx->setBase(1, front);
+    mtx->setBase(2, side);
 }
 
 void normalize(sead::Matrix34f* mtx) {
-    sead::Vector3f up;
-    sead::Vector3f front;
-    sead::Vector3f side;
-
-    mtx->getBase(up, 0);
-    mtx->getBase(front, 1);
-    mtx->getBase(side, 2);
+    sead::Vector3f up = mtx->getBase(0);
+    sead::Vector3f front = mtx->getBase(1);
+    sead::Vector3f side = mtx->getBase(2);
 
     up.normalize();
     front.normalize();
@@ -222,7 +211,7 @@ f32 lerpValue(f32 x, f32 y, f32 time) {
 
 f32 calcRate01(f32 t, f32 min, f32 max) {
     f32 range = max - min;
-    if (isNearZero(range, 0.001f))
+    if (isNearZero(range))
         return 1.0f;
     return sead::Mathf::clamp((t - min) / range, 0.0f, 1.0f);
 }
@@ -320,6 +309,28 @@ f32 calcAccel(f32 a, f32 b) {
 
 f32 calcFriction(f32 a, f32 b) {
     return (a + b) / b;
+}
+
+void calcDirFromLongitudeLatitude(sead::Vector3f* outVec, f32 longitude, f32 latitude) {
+    outVec->y = -sead::Mathf::sin(sead::Mathf::deg2rad(latitude));
+    f32 cosLatitude = -sead::Mathf::cos(sead::Mathf::deg2rad(latitude));
+    outVec->x = sead::Mathf::sin(sead::Mathf::deg2rad(longitude)) * cosLatitude;
+    outVec->z = sead::Mathf::cos(sead::Mathf::deg2rad(longitude)) * cosLatitude;
+}
+
+void calcLongitudeLatitudeFromDir(f32* longitude, f32* latitude, const sead::Vector3f& vect) {
+    sead::Vector3f vec = vect;
+    vec.normalize();
+    if (isNearZero(vec))
+        return;
+    *latitude = sead::Mathf::asin(sead::Mathf::clamp(-vec.y, -1.0f, 1.0f));
+
+    sead::Vector2f newVec = {-vec.z, -vec.x};
+    newVec.normalize();
+    if (isNearZero(newVec))
+        return;
+
+    *longitude = sead::Mathf::atan2(newVec.y, newVec.x);
 }
 
 u32 getMaxAbsElementIndex(const sead::Vector3i& vec) {

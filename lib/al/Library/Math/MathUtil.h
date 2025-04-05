@@ -61,7 +61,7 @@ bool isNear(const sead::Vector2f& value, const sead::Vector2f& target, f32 toler
 bool isNear(const sead::Vector3f& value, const sead::Vector3f& target, f32 tolerance = 0.001f);
 bool isNear(const sead::Color4f& value, const sead::Color4f& target, f32 tolerance = 0.001f);
 bool isNearZero(f32 value, f32 tolerance = 0.001f);
-bool isNearZero(const sead::Matrix34f& value, f32 tolerance = 0.001f);
+bool isNearZero(const sead::Matrix34f& mtx, f32 tolerance = 0.001f);
 bool isNearZeroOrGreater(f32 value, f32 tolerance = 0.001f);
 bool isNearZeroOrLess(f32 value, f32 tolerance = 0.001f);
 bool isExistNearZeroVal(const sead::Vector3f&, f32);
@@ -229,7 +229,7 @@ bool calcDirH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 bool calcDirOnPlane(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                     const sead::Vector3f&);
 f32 mapRangeLogarithmic(f32, f32, f32, f32, f32, f32);
-void calcDirFromLongitudeLatitude(sead::Vector3f*, f32, f32);
+void calcDirFromLongitudeLatitude(sead::Vector3f* outVec, f32 longitude, f32 latitude);
 void calcLongitudeLatitudeFromDir(f32*, f32*, const sead::Vector3f&);
 
 u32 getMaxAbsElementIndex(const sead::Vector3i& vec);
