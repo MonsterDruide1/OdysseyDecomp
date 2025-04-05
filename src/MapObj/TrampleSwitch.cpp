@@ -43,7 +43,7 @@ void TrampleSwitch::init(const al::ActorInitInfo& info) {
 
     mMtxConnector = al::createMtxConnector(this);
     mAddDemoInfo = al::registDemoRequesterToAddDemoInfo(this, info, 0);
-    mIsFacingUp = al::isNearZeroOrLess(al::calcQuatUpY(al::getQuat(this)), 0.001f);
+    mIsFacingUp = al::isNearZeroOrLess(al::calcQuatUpY(al::getQuat(this)));
 
     mCollisionBody = al::createCollisionObj(this, info, "TrampleSwitch_Body",
                                             al::getHitSensor(this, "PPanel"), nullptr, nullptr);
@@ -129,7 +129,7 @@ void TrampleSwitch::exeOnDemoWaitStart() {
             al::tryOnStageSwitch(this, "SwitchTrampleOn");
             al::tryOnStageSwitch(this, "SwitchPermanentOn");
         }
-        al::startCamera(this, mDemoCamera, -1);
+        al::startCamera(this, mDemoCamera);
         al::addDemoActorFromAddDemoInfo(this, mAddDemoInfo);
         al::setNerve(this, &OnDemo);
     }
@@ -176,7 +176,7 @@ bool TrampleSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
         return false;
 
     bool v10 = (rs::isMsgCapTouchWall(message) || rs::isMsgCapAttackCollide(message)) &&
-               (mIsFacingUp || !al::isNearZeroOrGreater(al::getActorVelocity(other).y, 0.001f));
+               (mIsFacingUp || !al::isNearZeroOrGreater(al::getActorVelocity(other).y));
     bool v11 = rs::isMsgCapHipDrop(message);
     bool v12 = al::isMsgPlayerTouch(message);
 

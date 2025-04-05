@@ -45,7 +45,7 @@ void Player::exeWait() {
 
     if (al::isPadTriggerA(mPort))
         al::setNerve(this, &NrvPlayer.Jump);
-    else if (!al::isNearZero(al::getLeftStick(mPort), 0.001f))
+    else if (!al::isNearZero(al::getLeftStick(mPort)))
         al::setNerve(this, &NrvPlayer.Run);
 }
 
@@ -157,7 +157,7 @@ bool Player::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
             al::verticalizeVec(&offset, al::getGravity(this), offset);
             al::tryNormalizeOrZero(&offset);
 
-            if (!al::isNearZero(offset, 0.001f)) {
+            if (!al::isNearZero(offset)) {
                 sead::Vector3f* front = al::getFrontPtr(this);
                 front->set(offset);
             }

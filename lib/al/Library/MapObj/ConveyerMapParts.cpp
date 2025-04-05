@@ -61,7 +61,7 @@ void ConveyerMapParts::init(const ActorInitInfo& info) {
 
     f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
     if (mConveyerKeyKeeper->getConveyerKeyCount() > 1)
-        isNearZero(totalMoveDistance, 0.001f);
+        isNearZero(totalMoveDistance);
 
     s32 groupCount = (s32)(totalMoveDistance / mPartsInterval) + 1;
     mMaxCoord = mPartsInterval * (f32)groupCount;

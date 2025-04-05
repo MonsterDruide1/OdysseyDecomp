@@ -49,7 +49,7 @@ void calcAnimFrontGravityPos(LiveActor* actor, const sead::Vector3f& front) {
         const sead::Matrix34f* mtx = actor->getBaseMtx();
         sead::Vector3f side;
         side.setCross(front, up);
-        if (isNearZero(side, 0.001f)) {
+        if (isNearZero(side)) {
             sead::Vector3f side;
             mtx->getBase(side, 0);
             up.setCross(front, side);

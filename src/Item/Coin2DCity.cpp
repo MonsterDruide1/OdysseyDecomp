@@ -111,7 +111,7 @@ void Coin2DCity::exeLight() {}
 void Coin2DCity::exeGot() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Got");
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 3000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 3000.0f);
         GameDataFunction::addCoin(this, 1);
     }
     if (al::isActionEnd(this))

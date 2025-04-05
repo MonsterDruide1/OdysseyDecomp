@@ -96,7 +96,7 @@ void FloaterMapParts::appearAndSetStart() {
 }
 
 void FloaterMapParts::control() {
-    f32 rate = isNearZero(mMaxCoord, 0.001f) ? 0.0f : mCoord / mMaxCoord;
+    f32 rate = isNearZero(mMaxCoord) ? 0.0f : mCoord / mMaxCoord;
 
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
     calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);

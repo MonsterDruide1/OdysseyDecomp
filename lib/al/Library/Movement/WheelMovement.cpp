@@ -20,7 +20,7 @@ WheelMovement::WheelMovement(LiveActor* actor, const ActorInitInfo& info)
     calcQuatLocalAxis(&localRotateAxis, _20, (s32)mRotateAxis);
 
     mMoveDir.setCross(localRotateAxis, sead::Vector3f::ey);
-    if (isNearZero(mMoveDir, 0.001f))
+    if (isNearZero(mMoveDir))
         mMoveDir = sead::Vector3f::ez;
 
     if (isExistRail(actor)) {
