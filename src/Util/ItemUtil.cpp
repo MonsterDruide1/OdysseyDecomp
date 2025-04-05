@@ -23,6 +23,7 @@
 #include "Item/Shine.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolder.h"
+#include "System/WorldList.h"
 #include "Util/SensorMsgFunction.h"
 
 const char* sItem2DNames[] = {
