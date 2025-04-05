@@ -18,7 +18,7 @@
 #include "Library/Model/ModelShapeUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageResourceList.h"
+#include "Library/Stage/StageRhythm.h"
 
 #include "Item/Shine.h"
 #include "System/GameDataFunction.h"

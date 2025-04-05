@@ -4,7 +4,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageResourceList.h"
+#include "Library/Stage/StageRhythm.h"
 
 CoinRotateCalculator::CoinRotateCalculator(al::LiveActor* actor) : mActor(actor) {}
 
