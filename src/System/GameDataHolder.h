@@ -36,23 +36,32 @@ class TimeBalloonSequenceInfo;
 class UniqObjInfo;
 class WorldList;
 
-class GameDataHolder : public al::GameDataHolderBase {
+class GameDataHolder : public al::GameDataHolderBase,
+                       public al::ISceneObj,
+                       public al::HioNode,
+                       public al::IUseMessageSystem {
 public:
     static constexpr s32 sSceneObjId = SceneObjID_GameDataHolder;
 
-    struct ChangeStageItem {};
+    struct ChangeStageItem {
+        sead::FixedSafeString<128> srcStageName;
+        sead::FixedSafeString<128> srcLabel;
+        sead::FixedSafeString<128> destStageName;
+        sead::FixedSafeString<128> destLabel;
+    };
 
-    // TODO: member variable names
+    static_assert(sizeof(ChangeStageItem) == 0x260);
+
     struct WorldWarpHoleInfo {
         sead::FixedSafeString<128> stageName;
         s32 worldId;
         s32 scenarioNo;
-        sead::FixedSafeString<128> label;
+        sead::FixedSafeString<128> name;
     };
 
     static_assert(sizeof(WorldWarpHoleInfo) == 0x138);
 
-    struct WorldArchiveInfo {
+    struct WorldItemTypeInfo {
         sead::FixedSafeString<128> coinCollect;
         sead::FixedSafeString<128> coinCollectEmpty;
         sead::FixedSafeString<128> coinCollect2D;
@@ -60,11 +69,11 @@ public:
         s32 shineAnimFrame;
     };
 
-    static_assert(sizeof(WorldArchiveInfo) == 0x268);
+    static_assert(sizeof(WorldItemTypeInfo) == 0x268);
 
     struct StageLockInfo {
         s32* shineNumInfo;
-        s32 stageInfoNum;
+        s32 shineNumInfoNum;
         bool isCountTotal;
         bool isCrash;
     };
@@ -86,20 +95,20 @@ public:
 
     static_assert(sizeof(HackObjInfo) == 0x20);
 
-    struct InvalidMapOpenInfo {
+    struct InvalidOpenMapInfo {
         const char* name;
         s32 scenario;
     };
 
-    static_assert(sizeof(InvalidMapOpenInfo) == 0x10);
+    static_assert(sizeof(InvalidOpenMapInfo) == 0x10);
 
     GameDataHolder(const al::MessageSystem* messageSystem);
     GameDataHolder();
 
-    virtual ~GameDataHolder();
+    ~GameDataHolder() override;
 
-    virtual const char* getSceneObjName() const;
-    virtual al::MessageSystem* getMessageSystem() const;
+    const char* getSceneObjName() const override;
+    al::MessageSystem* getMessageSystem() const override;
 
     void setPlayingFileId(s32 fileId);
     void initializeData();
@@ -254,11 +263,11 @@ private:
     WorldList* mWorldList;
     sead::PtrArray<ChangeStageItem> mChangeStageList;
     sead::PtrArray<sead::FixedSafeString<128>> mExStageList;
-    sead::PtrArray<InvalidMapOpenInfo> mInvalidOpenMapList;
+    sead::PtrArray<InvalidOpenMapInfo> mInvalidOpenMapList;
     sead::PtrArray<sead::FixedSafeString<128>> mShowHackTutorialList;
     bool* mIsShowBindTutorial;
     MapDataHolder* mMapDataHolder;
-    sead::PtrArray<WorldArchiveInfo> mWorldArchiveInfo;
+    sead::PtrArray<WorldItemTypeInfo> mWorldArchiveInfo;
     s32* mCoinCollectNumMax;
     s32* mWorldWarpHoleDestIds;
     WorldWarpHoleInfo* mWorldWarpHoleInfos;
