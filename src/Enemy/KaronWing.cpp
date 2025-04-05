@@ -47,7 +47,7 @@ NERVES_MAKE_STRUCT(KaronWing, Wait, Hack, Swoon, Break, Revive, HackStart, Wande
                    DamageCap, Turn, Find, Chase, ReviveAppear);
 }  // namespace
 
-static al::ActorParamMove cMoveParam{0.1f, 0.0f, 0.95f, 0.7f};
+const al::ActorParamMove cMoveParam{0.1f, 0.0f, 0.95f, 0.7f};
 static FlyerStateWanderParam cWanderParam{30, 540, 180, "EnemyFly", &cMoveParam};
 
 // NON_MATCHING: creating the `EnemyStateSwoonInitParam` (https://decomp.me/scratch/CDB2W)
