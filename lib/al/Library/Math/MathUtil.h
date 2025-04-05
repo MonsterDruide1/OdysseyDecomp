@@ -229,7 +229,7 @@ bool calcDirH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 bool calcDirOnPlane(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                     const sead::Vector3f&);
 f32 mapRangeLogarithmic(f32, f32, f32, f32, f32, f32);
-void calcDirFromLongitudeLatitude(sead::Vector3f*, f32, f32);
+void calcDirFromLongitudeLatitude(sead::Vector3f* outVec, f32 longitude, f32 latitude);
 void calcLongitudeLatitudeFromDir(f32*, f32*, const sead::Vector3f&);
 
 u32 getMaxAbsElementIndex(const sead::Vector3i& vec);

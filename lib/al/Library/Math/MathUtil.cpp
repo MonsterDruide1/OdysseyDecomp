@@ -19,9 +19,9 @@ bool isParallelDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 t
 }
 
 bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
-    if (isNearZero(a, 0.001f))
+    if (isNearZero(a))
         return false;
-    if (isNearZero(b, 0.001f))
+    if (isNearZero(b))
         return false;
 
     sead::Vector2f aNorm;
@@ -33,9 +33,9 @@ bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tol
 }
 
 bool isNearAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance) {
-    if (isNearZero(a, 0.001f))
+    if (isNearZero(a))
         return false;
-    if (isNearZero(b, 0.001f))
+    if (isNearZero(b))
         return false;
 
     sead::Vector3f aNorm;
@@ -222,7 +222,7 @@ f32 lerpValue(f32 x, f32 y, f32 time) {
 
 f32 calcRate01(f32 t, f32 min, f32 max) {
     f32 range = max - min;
-    if (isNearZero(range, 0.001f))
+    if (isNearZero(range))
         return 1.0f;
     return sead::Mathf::clamp((t - min) / range, 0.0f, 1.0f);
 }
@@ -320,6 +320,30 @@ f32 calcAccel(f32 a, f32 b) {
 
 f32 calcFriction(f32 a, f32 b) {
     return (a + b) / b;
+}
+
+void calcDirFromLongitudeLatitude(sead::Vector3f* outVec, f32 longitude, f32 latitude){
+  outVec->y = -sead::Mathf::sin(sead::Mathf::deg2rad(latitude));
+  f32 cosLatitude = -sead::Mathf::cos(sead::Mathf::deg2rad(latitude));
+  outVec->x = sead::Mathf::sin(sead::Mathf::deg2rad(longitude))* cosLatitude;
+  outVec->z = sead::Mathf::cos(sead::Mathf::deg2rad(longitude)) * cosLatitude;
+}
+
+void calcLongitudeLatitudeFromDir(f32* longitude, f32* latitude, const sead::Vector3f& vect){
+  sead::Vector3f vec=vect;
+  vec.normalize();
+  if(isNearZero(vec)){
+    return;
+  }
+  *latitude = sead::Mathf::asin(sead::Mathf::clamp(-vec.y,-1.0f,1.0f));
+  
+  sead::Vector2f newVec = {-vec.z,-vec.x};
+  newVec.normalize();
+  if(isNearZero(newVec)){
+    return;
+  }
+  
+  *longitude = sead::Mathf::atan2(newVec.y,newVec.x);
 }
 
 u32 getMaxAbsElementIndex(const sead::Vector3i& vec) {
