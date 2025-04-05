@@ -18,13 +18,17 @@ public:
      * @warning Using this ctor will cause a crash when calling update because
      * mCameraLookAtPositions is nullptr by default.
      */
-    SwitchAreaTargetInfo(sead::Vector3f* mPlayerPositions, s32 playersPositionCount);
+    SwitchAreaTargetInfo(sead::Vector3f* playerPositions, s32 playerPositionCount);
 
     void update(const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
 
-    const sead::Vector3f* getPlayerTargetPositions() const { return mPlayerTargetPositions; }
+    sead::Vector3f* getPlayerTargetPositions() const { return mPlayerTargetPositions; }
 
     s32 getPlayerTargetPositionCount() const { return mPlayerTargetPositionCount; }
+
+    sead::Vector3f* getCameraLookAtPositions() const { return mCameraLookAtPositions; }
+
+    s32 getCameraLookAtPositionCount() const { return mCameraLookAtPositionCount; }
 
 private:
     sead::Vector3f* mPlayerTargetPositions = nullptr;

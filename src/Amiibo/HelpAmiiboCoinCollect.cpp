@@ -256,5 +256,5 @@ bool HelpAmiiboCoinCollect::isUseDummyModel(al::LiveActor* actor) {
 void HelpAmiiboCoinCollect::getDummyEffectEmitPos(sead::Vector3f* position, al::LiveActor* actor) {
     al::AreaObj* areaObj = al::tryFindAreaObj(actor, "InvalidateStageMapArea", al::getTrans(actor));
     if (areaObj != nullptr)
-        al::tryGetLinksTrans(position, *areaObj->getPlacementInfo(), "PlayerPoint");
+        al::tryGetLinksTrans(position, areaObj->getPlacementInfo(), "PlayerPoint");
 }
