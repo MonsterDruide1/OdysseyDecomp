@@ -22,7 +22,11 @@ public:
     void createAreaObjGroupBuffer();
     void placementAreaObj(const AreaInitInfo& initInfo);
     AreaObjGroup* getAreaObjGroup(const char* name) const;
+<<<<<<< HEAD
     bool isExistAreaGroup(const char* name) const;
+=======
+    bool isExistAreaGroup(const char* name);
+>>>>>>> 01c3dd20 (Implemented ClippingFarAreaObserver)
     AreaObj* getInVolumeAreaObj(const char* name, const sead::Vector3f& position);
     AreaObjMtxConnecterHolder* getMtxConnecterHolder() const;
 
