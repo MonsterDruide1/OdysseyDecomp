@@ -60,22 +60,31 @@ public:
     void updateClipping(const ClippingJudge*);
     void updateClipping(ClippingRequestKeeper*, const ClippingJudge*);
     void updateFarClipLevel();
+
     const LiveActor* getLiveActor() const { return mLiveActor; }
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
 =======
+=======
+
+>>>>>>> 72f5b95b (Implemented ClippingDirector)
     void setIsClipping(bool value) { mIsClippingEnable = value; }
 >>>>>>> 8ff7bde3 (More uploading to switch branches)
 
 private:
     LiveActor* mLiveActor;
-    void* filler[0xc]; // offset isClippingEnable to the correct place
+    void* filler[0xc];  // offset isClippingEnable to the correct place
     bool mIsClippingEnable;
     // Remaining Member's missing
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 }  // namespace al
 =======
 }  // namespace al
 >>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
+=======
+}  // namespace al
+>>>>>>> 72f5b95b (Implemented ClippingDirector)

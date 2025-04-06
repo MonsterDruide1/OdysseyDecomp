@@ -19,7 +19,8 @@ class ClippingFarAreaObserver;
 
 class ClippingDirector : public HioNode, public IUseExecutor {
 public:
-    ClippingDirector(s32, const AreaObjDirector* areaObjDirector, const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
+    ClippingDirector(s32, const AreaObjDirector* areaObjDirector, const PlayerHolder* playerHolder,
+                     const SceneCameraInfo* sceneCameraInfo);
     ~ClippingDirector();
 
     void execute() override;
@@ -35,14 +36,14 @@ public:
     void startCheckViewCtrlByCameraPos();
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
+
 private:
-    ClippingActorHolder* mClippingActorHolder = nullptr;
+    ClippingJudge* mClippingJudge = nullptr;
     ClippingFarAreaObserver* mFarAreaObserver = nullptr;
+    ClippingActorHolder* mClippingActorHolder = nullptr;
     ClippingGroupHolder* mGroupHolder = nullptr;
     ViewInfoCtrl* mViewInfoCtrl = nullptr;
-    ClippingJudge* mClippingJudge = nullptr;
     bool mIsExecute = true;
-
 };
 
 }  // namespace al
