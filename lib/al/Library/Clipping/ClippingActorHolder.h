@@ -16,7 +16,7 @@ public:
     void addToClippingTarget(LiveActor* liveActor);
     ClippingActorHolder(int);
     void endInit(ClippingGroupHolder*);
-    void find(const LiveActor* liveActor) const;
+    ClippingActorInfo* find(const LiveActor* liveActor) const;
     ClippingActorInfo* getClippingCenterPos(const LiveActor* liveActor);
     LiveActor* getClippingObb(const LiveActor* liveActor);
     ClippingActorInfo* getClippingRadius(const LiveActor* liveActor);
