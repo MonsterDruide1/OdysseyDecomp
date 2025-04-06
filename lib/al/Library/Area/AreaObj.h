@@ -31,6 +31,8 @@ public:
 
     const sead::Matrix34f& getAreaMtx() const { return mAreaTR; }
 
+    s32 getPriority() const { return mPriority; }
+
 private:
     const char* mName;
     AreaShape* mAreaShape;
