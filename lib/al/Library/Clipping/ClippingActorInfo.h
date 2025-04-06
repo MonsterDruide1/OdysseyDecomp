@@ -31,7 +31,9 @@ public:
     bool checkActiveViewGroupAny() const;
     void initViewGroup(const ViewIdHolder*);
     void registerViewGroupFarClipFlag(const bool*);
+
     const LiveActor* getLiveActor() const { return mLiveActor; }
+
 private:
     LiveActor* mLiveActor;
     // Remaining Member's missing

@@ -20,11 +20,11 @@ public:
     bool isInClipFrustum(const sead::Vector3f&, f32, f32, s32) const;
     bool isInClipFrustumAllView(const sead::Vector3f&, f32, f32) const;
     bool isJudgedToClipFrustumUnUseFarLevelObb(const sead::Matrix34f*, const sead::BoundBox3f&,
-                                           f32) const;
+                                               f32) const;
     bool isJudgedToClipFrustumCoreObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32) const;
     bool isInClipFrustumObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32, s32) const;
     bool isJudgedToClipFrustumCoreObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32,
-                                  f32) const;
+                                      f32) const;
     bool isJudgedToClipFrustumObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32, s32) const;
 };
 
