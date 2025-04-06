@@ -14,7 +14,7 @@ public:
     void setDefaultFarClipDistance(f32 distance);
     void setDefaultFarClipDistanceSub(f32 distance);
     void update();
-
+    f32 getFarClipDistance() { return mFarClipDistance; }
 private:
     const AreaObjDirector* mAreaObjDirector;
     const PlayerHolder* mPlayerHolder;
