@@ -19,7 +19,7 @@ class ClippingFarAreaObserver;
 
 class ClippingDirector : public HioNode, public IUseExecutor {
 public:
-    ClippingDirector(s32, const AreaObjDirector*, const PlayerHolder*, const SceneCameraInfo*);
+    ClippingDirector(s32, const AreaObjDirector* areaObjDirector, const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
     ~ClippingDirector();
 
     void execute() override;
@@ -27,7 +27,7 @@ public:
     void endInit(const AreaObjDirector* areaObjDirector);
     void setDefaultFarClipDistance(f32 distance);
     void setDefaultFarClipDistanceSub(f32 distance);
-    void getFarClipDistance();
+    f32 getFarClipDistance() const;
     void registerActor(LiveActor* liveActor, const ViewIdHolder* idHolder);
     void addToGroupClipping(LiveActor* liveActor, const ActorInitInfo& actorInitInfo);
     void onGroupClipping(LiveActor* liveActor);
@@ -36,12 +36,13 @@ public:
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
 private:
-    ClippingFarAreaObserver* mFarAreaObserver;
-    ClippingGroupHolder* mGroupHolder;
-    ClippingActorHolder* mClippingActorHolder;
-    ViewInfoCtrl* mViewInfoCtrl;
-    ClippingJudge* mClippingJudge;
-    bool mIsExecute;
+    ClippingActorHolder* mClippingActorHolder = nullptr;
+    ClippingFarAreaObserver* mFarAreaObserver = nullptr;
+    ClippingGroupHolder* mGroupHolder = nullptr;
+    ViewInfoCtrl* mViewInfoCtrl = nullptr;
+    ClippingJudge* mClippingJudge = nullptr;
+    bool mIsExecute = true;
+
 };
 
 }  // namespace al

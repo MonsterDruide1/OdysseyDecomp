@@ -8,10 +8,14 @@ enum ClippingRequestKeeper {};
 namespace al {
 class LiveActor;
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct ActorInitInfo;
 =======
 class ActorInitInfo;
 >>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
+=======
+struct ActorInitInfo;
+>>>>>>> 8ff7bde3 (More uploading to switch branches)
 class ClippingJudge;
 class ViewIdHolder;
 
@@ -56,12 +60,17 @@ public:
     void updateClipping(const ClippingJudge*);
     void updateClipping(ClippingRequestKeeper*, const ClippingJudge*);
     void updateFarClipLevel();
-
     const LiveActor* getLiveActor() const { return mLiveActor; }
+<<<<<<< HEAD
 >>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
+=======
+    void setIsClipping(bool value) { mIsClippingEnable = value; }
+>>>>>>> 8ff7bde3 (More uploading to switch branches)
 
 private:
     LiveActor* mLiveActor;
+    void* filler[0xc]; // offset isClippingEnable to the correct place
+    bool mIsClippingEnable;
     // Remaining Member's missing
 };
 
