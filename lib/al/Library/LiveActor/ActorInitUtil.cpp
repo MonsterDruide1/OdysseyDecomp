@@ -189,8 +189,7 @@ __attribute__((always_inline)) void initActorModel(LiveActor* actor, const Actor
     ModelLodCtrl* modelLodCtrl = initActorModelLodCtrl(actor, modelRes, suffix);
     modelKeeper->setModelLodCtrl(modelLodCtrl);
     if (modelLodCtrl)
-        initInfo.actorSceneInfo.graphicsSystemInfo->modelLodAllCtrl->registerLodCtrl(
-            modelLodCtrl);
+        initInfo.actorSceneInfo.graphicsSystemInfo->modelLodAllCtrl->registerLodCtrl(modelLodCtrl);
 
     MaterialCategoryKeeper* materialCategoryKeeper =
         initInfo.actorSceneInfo.graphicsSystemInfo->materialCategoryKeeper;
@@ -198,8 +197,8 @@ __attribute__((always_inline)) void initActorModel(LiveActor* actor, const Actor
                                      materialCategoryKeeper);
 
     GraphicsQualityInfo* graphicsQualityInfo =
-        initInfo.actorSceneInfo
-            .graphicsSystemInfo->graphicsQualityController->getGraphicsQualityInfo();
+        initInfo.actorSceneInfo.graphicsSystemInfo->graphicsQualityController
+            ->getGraphicsQualityInfo();
     modelKeeper->getModelCtrl()->setGraphicsQualityInfo(graphicsQualityInfo);
 
     ModelOcclusionQuery* modelOcclusionQuery =
