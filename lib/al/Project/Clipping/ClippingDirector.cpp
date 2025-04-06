@@ -1,23 +1,20 @@
 #include "Project/Clipping/ClippingDirector.h"
 
 #include "Library/Area/AreaObjDirector.h"
-#include "Library/Area/AreaObjGroup.h"
 #include "Library/Clipping/ClippingActorHolder.h"
 #include "Library/Clipping/ClippingActorInfo.h"
 #include "Library/Clipping/ClippingJudge.h"
 #include "Library/Placement/PlacementFunction.h"
-
-#include "Project/Clipping/ViewInfoCtrl.h"
 #include "Project/Clipping/ClippingFarAreaObserver.h"
+#include "Project/Clipping/ViewInfoCtrl.h"
 
 namespace al {
 
 void ClippingDirector::addToGroupClipping(LiveActor* liveActor,
                                           const ActorInitInfo& actorInitInfo) {
     bool isEnableGroupClipping = alPlacementFunction::isEnableGroupClipping(actorInitInfo);
-    if (isEnableGroupClipping) {
+    if (isEnableGroupClipping)
         mClippingActorHolder->initGroupClipping(liveActor, actorInitInfo);
-    }
 }
 
 void ClippingDirector::endInit(const AreaObjDirector* areaObjDirector) {
@@ -33,9 +30,8 @@ void ClippingDirector::execute() {
         mFarAreaObserver->update();
         mClippingJudge->update();
         bool isUpdate = mViewInfoCtrl->update();
-        if (isUpdate) {
+        if (isUpdate)
             mClippingActorHolder->updateFarClipLevel();
-        }
         mClippingActorHolder->update(mClippingJudge);
         mGroupHolder->update(mClippingJudge);
     }
@@ -89,7 +85,8 @@ void ClippingDirector::startCheckViewCtrlByPlayerPos() {
     mViewInfoCtrl->startCheckByPlayerPos();
 }
 
-ClippingDirector::ClippingDirector(s32 index, const AreaObjDirector* areaObjDirector, const PlayerHolder* playerHolder,
+ClippingDirector::ClippingDirector(s32 index, const AreaObjDirector* areaObjDirector,
+                                   const PlayerHolder* playerHolder,
                                    const SceneCameraInfo* sceneCameraInfo) {
     mFarAreaObserver = new ClippingFarAreaObserver(areaObjDirector, playerHolder);
     mClippingJudge = new ClippingJudge(mFarAreaObserver, sceneCameraInfo);
@@ -105,6 +102,4 @@ ClippingDirector::~ClippingDirector() {
     }
 }
 
-
-
-} // namespace al
+}  // namespace al

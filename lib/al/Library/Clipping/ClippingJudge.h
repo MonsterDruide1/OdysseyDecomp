@@ -41,7 +41,13 @@ public:
     bool isJudgedToClipFrustumUpUseFarLevelObb(const sead::Matrix34f*, const sead::BoundBox3f&,
                                                f32) const;
     void update();
+<<<<<<< HEAD
 >>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
+=======
+
+private:
+    void* filler[0x3];
+>>>>>>> 72f5b95b (Implemented ClippingDirector)
 };
 
 }  // namespace al
