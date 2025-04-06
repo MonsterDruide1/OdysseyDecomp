@@ -31,22 +31,19 @@ public:
 
     virtual const char* convertName(const char* name) const { return name; }
 
-    inline const NameToCreator<T>* getFactoryEntry(const char* name) const {
-        const char* convertedName = convertName(name);
-        s32 numEntries = mNumFactoryEntries;
-        for (s32 i = 0; i < numEntries; ++i) {
-            const NameToCreator<T>& entry = mFactoryEntries[i];
-            if (isEqualString(convertedName, entry.name))
-                return &entry;
-        }
-        return nullptr;
-    }
+    s32 getNumFactoryEntries() const { return mNumFactoryEntries; }
 
-    inline const T* getCreationFunction(const char* name) const {
-        const NameToCreator<T>* entry = getFactoryEntry(name);
-        if (entry == nullptr)
-            return nullptr;
-        return &entry->creationFunction;
+    s32 getEntryIndex(T* creationPtr, const char* entryName) const {
+        const char* name = convertName(entryName);
+        s32 nFactoryEntries = mNumFactoryEntries;
+        const NameToCreator<T>* entries = mFactoryEntries;
+        for (s32 i = 0; i < nFactoryEntries; i++) {
+            if (isEqualString(name, entries[i].name)) {
+                *creationPtr = entries[i].creationFunction;
+                return i;
+            }
+        }
+        return -1;
     }
 
 private:
