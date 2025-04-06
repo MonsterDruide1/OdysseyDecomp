@@ -16,13 +16,13 @@ void ClippingFarAreaObserver::endInit() {
 }
 
 void ClippingFarAreaObserver::setDefaultFarClipDistance(f32 distance) {
-    mDefaultFarClipDistanceHorizontal = distance;
-    mDefaultFarClipDistanceVertical = distance;
+    mFarClipDistance = distance;
+    mDefaultFarClipDistance = distance;
 }
 
 void ClippingFarAreaObserver::setDefaultFarClipDistanceSub(f32 distance) {
-    mDefaultFarClipDistanceHorizontalSub = distance;
-    mDefaultFarClipDistanceVerticalSub = distance;
+    mFarClipDistanceSub = distance;
+    mDefaultFarClipDistanceSub = distance;
 }
 
 void ClippingFarAreaObserver::update() {
@@ -39,11 +39,11 @@ void ClippingFarAreaObserver::update() {
         if (areaObj && (!mAreaObj || areaObj->getPriority() > mAreaObj->getPriority()))
             mAreaObj = areaObj;
     }
-    mDefaultFarClipDistanceHorizontal = mDefaultFarClipDistanceVertical;
-    mDefaultFarClipDistanceHorizontalSub = mDefaultFarClipDistanceVerticalSub;
+    mFarClipDistance = mDefaultFarClipDistance;
+    mFarClipDistanceSub = mDefaultFarClipDistanceSub;
     if (mAreaObj) {
-        tryGetAreaObjArg(&mDefaultFarClipDistanceHorizontal, mAreaObj, "FarClipDistance");
-        tryGetAreaObjArg(&mDefaultFarClipDistanceHorizontalSub, mAreaObj, "FarClipDistanceSub");
+        tryGetAreaObjArg(&mFarClipDistance, mAreaObj, "FarClipDistance");
+        tryGetAreaObjArg(&mFarClipDistanceSub, mAreaObj, "FarClipDistanceSub");
     }
 }
 }  // namespace al
