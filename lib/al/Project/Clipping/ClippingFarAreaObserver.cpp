@@ -29,13 +29,11 @@ void ClippingFarAreaObserver::update() {
     if (!mAreaObjGroup)
         return;
     mAreaObj = nullptr;
-    const s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
-    for (s32 i = 0; i < playerNumMax; ++i) {
+    s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
+    for (s32 i = 0; i < playerNumMax; i++) {
         if (isPlayerDead(mPlayerHolder, i))
             continue;
-        const AreaObjGroup* group = mAreaObjGroup;
-        const sead::Vector3f& playerPos = getPlayerPos(mPlayerHolder, i);
-        AreaObj* areaObj = group->getInVolumeAreaObj(playerPos);
+        AreaObj* areaObj = mAreaObjGroup->getInVolumeAreaObj(getPlayerPos(mPlayerHolder, i));
         if (areaObj && (!mAreaObj || areaObj->getPriority() > mAreaObj->getPriority()))
             mAreaObj = areaObj;
     }
