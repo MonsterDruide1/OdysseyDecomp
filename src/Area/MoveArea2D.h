@@ -6,6 +6,8 @@
 
 class MoveArea2D : public al::AreaObj {
 public:
+    enum class ShapeType { Cube = 1, Cylinder, CylinderCenter, Disk };
+
     MoveArea2D(const char* name);
 
     void init(const al::AreaInitInfo& areaInitInfo) override;
@@ -20,7 +22,7 @@ public:
     bool calcSnapPowerDisk(sead::Vector3f*, f32*, const sead::Vector3f&, f32);
 
 private:
-    s32 mModelIndex;
+    ShapeType mShapeType;
     f32 mSurfaceDistance;
     f32 mGravityOffset;
 };

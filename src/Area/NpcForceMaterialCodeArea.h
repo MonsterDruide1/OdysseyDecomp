@@ -9,5 +9,5 @@ public:
     void init(const al::AreaInitInfo& areaInitInfo) override;
 
 private:
-    char* mMaterialCodeName = nullptr;
+    const char* mMaterialCodeName = nullptr;
 };

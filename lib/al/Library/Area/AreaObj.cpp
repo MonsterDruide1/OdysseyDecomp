@@ -26,6 +26,8 @@ void AreaObj::initStageSwitchKeeper() {
 }
 
 void AreaObj::init(const AreaInitInfo& initInfo) {
+    using AreaObjFunctor = FunctorV0M<AreaObj*, void (AreaObj::*)()>;
+
     mPlacementInfo = new PlacementInfo(initInfo);
     mSceneObjHolder = initInfo.getSceneObjHolder();
     tryGetMatrixTR(&mAreaTR, *mPlacementInfo);
@@ -35,23 +37,21 @@ void AreaObj::init(const AreaInitInfo& initInfo) {
     alPlacementFunction::tryGetModelName(&modelName, *mPlacementInfo);
 
     AreaShapeFactory areaShapeFactory("エリアシェイプファクトリー");
-    AreaShape* (*creatorFunc)() = nullptr;
+    AreaShapeCreatorFunction creatorFunc = nullptr;
     areaShapeFactory.getEntryIndex(&creatorFunc, modelName);
     mAreaShape = creatorFunc();
 
     mAreaShape->setBaseMtxPtr(&mAreaTR);
-    sead::Vector3f scale = {1.0, 1.0, 1.0};
+    sead::Vector3f scale = {1.0f, 1.0f, 1.0f};
     tryGetScale(&scale, *mPlacementInfo);
     mAreaShape->setScale(scale);
 
     initStageSwitch(this, initInfo.getStageSwitchDirector(), initInfo);
-    if (listenStageSwitchOnOffAppear(
-            this, FunctorV0M<AreaObj*, void (AreaObj::*)()>(this, &AreaObj::invalidate),
-            FunctorV0M<AreaObj*, void (AreaObj::*)()>(this, &AreaObj::validate)))
+    if (listenStageSwitchOnOffAppear(this, AreaObjFunctor(this, &AreaObj::invalidate),
+                                     AreaObjFunctor(this, &AreaObj::validate)))
         invalidate();
 
-    if (listenStageSwitchOnKill(
-            this, FunctorV0M<AreaObj*, void (AreaObj::*)()>(this, &AreaObj::validate)))
+    if (listenStageSwitchOnKill(this, AreaObjFunctor(this, &AreaObj::validate)))
         validate();
 }
 

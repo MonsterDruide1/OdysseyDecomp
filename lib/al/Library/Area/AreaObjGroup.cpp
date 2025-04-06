@@ -25,7 +25,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& position) const 
     AreaObj* bestInVolumeAreaObj = nullptr;
     for (s32 i = 0; i < mCount; i++) {
         AreaObj* currentAreaObj = mBuffer[i];
-        if (bestInVolumeAreaObj == nullptr ||
+        if (!bestInVolumeAreaObj ||
             bestInVolumeAreaObj->getPriority() <= currentAreaObj->getPriority()) {
             if (currentAreaObj->isInVolume(position))
                 bestInVolumeAreaObj = currentAreaObj;
@@ -35,7 +35,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& position) const 
 }
 
 void AreaObjGroup::incrementCount() {
-    // dev mistake?
+    // BUG: dev mistake?
     mCapacity += 1;
 }
 

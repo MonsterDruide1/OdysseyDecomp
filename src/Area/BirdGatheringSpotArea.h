@@ -11,9 +11,11 @@ class ClippingJudge;
 class BirdGatheringSpotArea : public al::AreaObj {
 public:
     struct AreaClippingInfo {
+        AreaClippingInfo();
+
         bool isClipped = false;
-        f32 sightDistance = 0.0;
-        sead::BoundBox3f boundingBox = sead::BoundBox3f(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        f32 sightDistance = 0.0f;
+        sead::BoundBox3f boundingBox = sead::BoundBox3f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     };
 
     BirdGatheringSpotArea(const char* name);
@@ -21,7 +23,7 @@ public:
     void init(const al::AreaInitInfo& initInfo) override;
 
     void calcRandomGroundTrans(sead::Vector3f* trans) const;
-    s32 getSightDistance() const;
+    f32 getSightDistance() const;
     bool isClipped() const;
     bool isGreaterPriorityNotClipped(const BirdGatheringSpotArea* other) const;
     void updateClipping(const al::ClippingJudge*, const sead::Vector3f&);

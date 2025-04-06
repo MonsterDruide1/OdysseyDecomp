@@ -34,7 +34,7 @@ public:
                            const ValidatorBase* validatorBase);
     void registerSyncParentMtx(const sead::Matrix34f* parentMtx, const PlacementInfo& placementInfo,
                                const ValidatorBase* validatorBase);
-    s32 tryAddArea(AreaObj* areaObj, const PlacementInfo& placementInfo);
+    bool tryAddArea(AreaObj* areaObj, const PlacementInfo& placementInfo);
     void update();
 
 private:

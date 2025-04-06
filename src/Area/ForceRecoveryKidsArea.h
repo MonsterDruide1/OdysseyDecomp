@@ -11,6 +11,6 @@ public:
     void init(const al::AreaInitInfo& areaInitInfo) override;
 
 private:
-    sead::Vector3f mTrans;
-    sead::Vector3f mYRot;
+    sead::Vector3f mTargetPos;
+    sead::Vector3f mTargetUp;
 };

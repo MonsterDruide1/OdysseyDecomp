@@ -8,7 +8,7 @@ AreaObjFactory::AreaObjFactory(const char* factoryName)
     : Factory<AreaCreatorFunction>(factoryName) {}
 
 s32 AreaObjFactory::tryFindAddBufferSize(const char* bufferName) const {
-    if (mAreaGroupInfos == nullptr || mAreaGroupInfoCount < 1)
+    if (!mAreaGroupInfos || mAreaGroupInfoCount < 1)
         return 0;
 
     for (s32 i = 0; i < mAreaGroupInfoCount; i++)

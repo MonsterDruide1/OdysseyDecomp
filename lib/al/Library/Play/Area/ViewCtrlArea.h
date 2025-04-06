@@ -12,6 +12,6 @@ public:
     void init(const AreaInitInfo& areaInitInfo) override;
 
 private:
-    PlacementId* mPlacementId;
+    PlacementId* mClippingViewId;
 };
 }  // namespace al

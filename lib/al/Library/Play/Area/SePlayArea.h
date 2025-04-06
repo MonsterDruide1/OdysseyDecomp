@@ -10,6 +10,6 @@ public:
     void init(const AreaInitInfo& areaInitInfo) override;
 
 private:
-    char* mSePlayName = nullptr;
+    const char* mSePlayName = nullptr;
 };
 }  // namespace al
