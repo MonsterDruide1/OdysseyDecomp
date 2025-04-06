@@ -7,13 +7,18 @@ enum ClippingRequestKeeper {};
 
 namespace al {
 class LiveActor;
+<<<<<<< HEAD
 struct ActorInitInfo;
+=======
+class ActorInitInfo;
+>>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
 class ClippingJudge;
 class ViewIdHolder;
 
 class ClippingActorInfo {
 public:
     ClippingActorInfo(LiveActor*);
+<<<<<<< HEAD
     void setTypeToSphere(f32, const sead::Vector3f*);
     void startClipped();
     void endClipped();
@@ -33,10 +38,35 @@ public:
     void registerViewGroupFarClipFlag(const bool*);
 
     LiveActor* getLiveActor() const { return mLiveActor; }
+=======
+    bool checkActiveViewGroupAny() const;
+    void endClipping();
+    void initViewGroup(const ViewIdHolder*);
+    bool isFarClipLevelMax() const;
+    bool isGroupClipping() const;
+    bool isGroupClippingInit() const;
+    bool JudgeClipping(const ClippingJudge*) const;
+    void registerViewGroupFarClipFlag(const bool*);
+    void setFarClipLevel20M();
+    void setFarClipLevelMax();
+    void setGroupClippingId(const ActorInitInfo&);
+    void setTypeToObb(const sead::BoundBox3f&, const sead::Matrix34f*);
+    void setTypeToSphere(f32, const sead::Vector3f*);
+    void startClipped();
+    void updateClipping(const ClippingJudge*);
+    void updateClipping(ClippingRequestKeeper*, const ClippingJudge*);
+    void updateFarClipLevel();
+
+    const LiveActor* getLiveActor() const { return mLiveActor; }
+>>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
 
 private:
     LiveActor* mLiveActor;
     // Remaining Member's missing
 };
 
+<<<<<<< HEAD
 }  // namespace al
+=======
+}  // namespace al
+>>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)

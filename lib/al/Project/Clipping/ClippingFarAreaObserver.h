@@ -19,7 +19,11 @@ private:
     const AreaObjDirector* mAreaObjDirector;
     const PlayerHolder* mPlayerHolder;
     const AreaObjGroup* mAreaObjGroup = nullptr;
+<<<<<<< HEAD
     AreaObj* mAreaObj = nullptr;
+=======
+    const AreaObj* mAreaObj = nullptr;
+>>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
     f32 mFarClipDistance = 7000.0f;
     f32 mDefaultFarClipDistance = 7000.0f;
     f32 mFarClipDistanceSub = 4000.0f;
