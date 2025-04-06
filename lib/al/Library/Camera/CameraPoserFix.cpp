@@ -72,7 +72,7 @@ void CameraPoserFix::update() {
     if (mIsCalcNearestAtFromPreAt) {
         sead::Vector3f offset = mPreLookAtPos - mPosition;
         parallelizeVec(&offset, viewDir, offset);
-        if (!isNearZero(offset, 0.001f) && viewDir.dot(offset) < 0.0f)
+        if (!isNearZero(offset) && viewDir.dot(offset) < 0.0f)
             mTargetTrans.set(offset + mPosition);
     }
 }

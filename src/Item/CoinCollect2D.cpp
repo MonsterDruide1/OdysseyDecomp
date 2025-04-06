@@ -146,7 +146,7 @@ void CoinCollect2D::exeGot() {
 
         GameDataFunction::addCoinCollect(this, mPlacementId);
         rs::tryShowCapMsgCollectCoinGetFirst(this);
-        alPadRumbleFunction::startPadRumble(this, "コッ（弱）", 1000.0f, 3000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（弱）", 1000.0f, 3000.0f);
     }
 
     if (al::isActionEnd(this))

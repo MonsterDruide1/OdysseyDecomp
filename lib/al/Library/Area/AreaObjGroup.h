@@ -18,6 +18,8 @@ public:
 
     const char* getName() const { return mGroupName; };
 
+    s32 getSize() const { return mSize; }
+
 private:
     const char* mGroupName;
     AreaObj** mBuffer = nullptr;

@@ -139,11 +139,11 @@ bool isGotShine(GameDataHolderAccessor accessor, const char* stageName, const ch
 bool isGotShine(GameDataHolderAccessor accessor, s32 shineIdx);
 bool isGotShine(const Shine* shineActor);
 void setGotShine(GameDataHolderWriter writer, const ShineInfo* shineInfo);
-s32 getGotShineNum(GameDataHolderAccessor accessor, s32 fileId);
+s32 getGotShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
 ShineInfo* getLatestGetShineInfo(GameDataHolderAccessor accessor);
 s32 getCurrentShineNum(GameDataHolderAccessor accessor);
-s32 getTotalShineNum(GameDataHolderAccessor accessor, s32 fileId);
-s32 getTotalShopShineNum(GameDataHolderAccessor accessor, s32 fileId);
+s32 getTotalShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
+s32 getTotalShopShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
 bool tryGetNextMainScenarioLabel(sead::BufferedSafeStringBase<char>* scenarioName,
                                  sead::BufferedSafeStringBase<char>* stageName,
                                  const al::IUseSceneObjHolder* holder);

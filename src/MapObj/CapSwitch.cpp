@@ -130,7 +130,7 @@ void CapSwitch::exeOffWaitCapHold() {
     sead::Vector3f frontDir = sead::Vector3f::ez;
     al::calcFrontDir(&frontDir, this);
 
-    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize(), 0.001f) ?
+    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize()) ?
                     0.0f :
                     al::calcAngleDegree(frontDir, hitTargetPos - mPlayerPos);
 

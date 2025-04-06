@@ -27,7 +27,7 @@ void PlayerJudgeWaterSurfaceRun::update() {
     const PlayerCounterForceRun* counterForceRun = mCounterForceRun;
     mIsWaterSurfaceRun =
         mWaterSurfaceFinder->isFoundSurface() &&
-        al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance(), 0.001f) &&
+        al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance()) &&
         (counterForceRun->getCounter() > 0 || al::calcSpeedH(player) > borderSpeedH);
 }
 

@@ -37,7 +37,7 @@ void PlayerStateSlope::appear() {
 
     if (rs::isOnGroundForceSlideCode(mActor, mCollision, mConst)) {
         sead::Vector3f direction = mActionSlopeSlideControl->getDirSlide();
-        if (al::isNearZero(direction, 0.001f))
+        if (al::isNearZero(direction))
             al::setVelocityZero(mActor);
         else {
             sead::Vector3f* velocityPtr = al::getVelocityPtr(mActor);
@@ -62,7 +62,7 @@ void PlayerStateSlope::kill() {
 
     if (mIsRunningRumbleLoop) {
         alPadRumbleFunction::stopPadRumbleLoop(mActor, "【ループ】ジリジリ（中）",
-                                               al::getTransPtr(mActor), -1);
+                                               al::getTransPtr(mActor));
         mIsRunningRumbleLoop = false;
     }
 }
@@ -88,19 +88,19 @@ void PlayerStateSlope::exeSlide() {
     if (isCollidedGround) {
         if (!mIsRunningRumbleLoop) {
             alPadRumbleFunction::startPadRumbleLoopNo3D(actor, "【ループ】ジリジリ（中）",
-                                                        al::getTransPtr(actor), -1);
+                                                        al::getTransPtr(actor));
             mIsRunningRumbleLoop = true;
         }
     } else if (mIsRunningRumbleLoop) {
         alPadRumbleFunction::stopPadRumbleLoop(actor, "【ループ】ジリジリ（中）",
-                                               al::getTransPtr(actor), -1);
+                                               al::getTransPtr(actor));
         mIsRunningRumbleLoop = false;
     }
 
     bool isForceSlide = rs::isOnGroundForceSlideCode(mActor, mCollision, mConst);
     if (!mIsForceSlide && isForceSlide) {
         sead::Vector3f direction = mActionSlopeSlideControl->getDirSlide();
-        if (al::isNearZero(direction, 0.001f))
+        if (al::isNearZero(direction))
             al::setVelocityZero(mActor);
         else {
             sead::Vector3f* velocityPtr = al::getVelocityPtr(mActor);

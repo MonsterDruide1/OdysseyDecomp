@@ -136,9 +136,8 @@ void ShineTowerBackDoor::exeEnter() {
 
     if (al::isGreaterEqualStep(this, 75)) {
         GameDataHolder* gameDataHolder = GameDataFunction::getGameDataHolder(this);
-        ChangeStageInfo changeStageInfo = ChangeStageInfo(
-            gameDataHolder, "HomeBackDoor", GameDataFunction::getHomeShipStageName(), false, -1,
-            ChangeStageInfo::NO_SUB_SCENARIO);
+        ChangeStageInfo changeStageInfo = ChangeStageInfo(gameDataHolder, "HomeBackDoor",
+                                                          GameDataFunction::getHomeShipStageName());
         GameDataFunction::tryChangeNextStage(this, &changeStageInfo);
     }
 }

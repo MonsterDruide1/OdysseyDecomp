@@ -45,11 +45,11 @@ bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& tra
 }
 
 bool AreaShape::calcWorldPos(sead::Vector3f* worldPos, const sead::Vector3f& trans) const {
-    if (isNearZero(mScale.x, 0.001f))
+    if (isNearZero(mScale.x))
         return false;
-    if (isNearZero(mScale.y, 0.001f))
+    if (isNearZero(mScale.y))
         return false;
-    if (isNearZero(mScale.z, 0.001f))
+    if (isNearZero(mScale.z))
         return false;
 
     worldPos->x = trans.x * mScale.x;
@@ -63,11 +63,11 @@ bool AreaShape::calcWorldPos(sead::Vector3f* worldPos, const sead::Vector3f& tra
 }
 
 bool AreaShape::calcWorldDir(sead::Vector3f* worldDir, const sead::Vector3f& trans) const {
-    if (isNearZero(mScale.x, 0.001f))
+    if (isNearZero(mScale.x))
         return false;
-    if (isNearZero(mScale.y, 0.001f))
+    if (isNearZero(mScale.y))
         return false;
-    if (isNearZero(mScale.z, 0.001f))
+    if (isNearZero(mScale.z))
         return false;
 
     worldDir->x = trans.x * mScale.x;
