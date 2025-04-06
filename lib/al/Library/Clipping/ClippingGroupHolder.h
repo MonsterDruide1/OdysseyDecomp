@@ -14,6 +14,9 @@ public:
     void registerInfo(ClippingActorInfo*);
     void tryFindGroup(const ClippingActorInfo*);
     void update(const ClippingJudge*);
+
+private:
+    void* filler[0x2];
 };
 
-} // namespace al
+}  // namespace al
