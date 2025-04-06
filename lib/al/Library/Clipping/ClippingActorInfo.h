@@ -20,7 +20,7 @@ public:
     bool isFarClipLevelMax() const;
     bool isGroupClipping() const;
     bool isGroupClippingInit() const;
-    bool JudgeClipping(const ClippingJudge*) const;
+    bool judgeClipping(const ClippingJudge*) const;
     void registerViewGroupFarClipFlag(const bool*);
     void setFarClipLevel20M();
     void setFarClipLevelMax();
