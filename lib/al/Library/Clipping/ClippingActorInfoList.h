@@ -8,16 +8,16 @@ class ClippingActorInfo;
 
 class ClippingActorInfoList {
 public:
-    ClippingActorInfoList(s32 param);
     void add(ClippingActorInfo* clippingActorInfo);
+    ClippingActorInfoList(s32 param);
     ClippingActorInfo* find(const LiveActor* liveActor, s32* index) const;
     bool isInList(const LiveActor* liveActor) const;
-    ClippingActorInfo* remove(LiveActor*);
+    ClippingActorInfo* remove(LiveActor* liveActor);
     ClippingActorInfo* tryFind(const LiveActor* liveActor) const;
 
 private:
-    s32 mMaxClippingInfo;
-    s32 mClippingInfoCount;
+    s32 mMaxClippingInfo = 0;
+    s32 mClippingInfoCount = 0;
     ClippingActorInfo** mClippingActorInfo;
 };
 }  // namespace al

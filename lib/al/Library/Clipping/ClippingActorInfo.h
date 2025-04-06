@@ -20,7 +20,7 @@ public:
     bool isFarClipLevelMax() const;
     bool isGroupClipping() const;
     bool isGroupClippingInit() const;
-    void JudgeClipping(ClippingJudge*) const;
+    bool JudgeClipping(const ClippingJudge*) const;
     void registerViewGroupFarClipFlag(const bool*);
     void setFarClipLevel20M();
     void setFarClipLevelMax();
@@ -36,6 +36,7 @@ public:
 
 private:
     LiveActor* mLiveActor;
+    // Remaining Member's missing
 };
 
 }  // namespace al
