@@ -18,4 +18,4 @@ public:
     void drawResult(agl::DrawContext* drawContext, const sead::FrameBuffer* frameBuffer) const;
 };
 
-}
+}  // namespace al
