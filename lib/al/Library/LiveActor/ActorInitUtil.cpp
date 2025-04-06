@@ -742,18 +742,18 @@ createActorFromFactory(const ActorInitInfo& childInitInfo, const PlacementInfo* 
     const char* className = nullptr;
     getClassName(&className, childInitInfo);
 
-    const ActorCreatorFunction* creationFunction = factory->getCreationFunction(className);
+    ActorCreatorFunction creationFunction = nullptr;
+    factory->getEntryIndex(&creationFunction, className);
     if (creationFunction == nullptr)
         return nullptr;
 
     const char* displayName;
-    getDisplayName(&displayName, *placementInfo);
+    getDisplayName(&displayName, childInitInfo);
     LiveActor* actor = (*creationFunction)(displayName);
     actor->init(childInitInfo);
     return actor;
 }
 
-// NON_MATCHING: Major mismatches for creating actor (https://decomp.me/scratch/JtIxt)
 LiveActor* createPlacementActorFromFactory(const ActorInitInfo& initInfo,
                                            const PlacementInfo* placementInfo) {
     ActorInitInfo childInitInfo;
@@ -761,7 +761,6 @@ LiveActor* createPlacementActorFromFactory(const ActorInitInfo& initInfo,
     return createActorFromFactory(childInitInfo, placementInfo);
 }
 
-// NON_MATCHING: Same as above
 LiveActor* createLinksActorFromFactory(const ActorInitInfo& initInfo, const char* linkName,
                                        s32 linkNum) {
     ActorInitInfo childInitInfo;
@@ -776,7 +775,6 @@ LiveActorGroup* createLinksActorGroupFromFactory(const ActorInitInfo& initInfo,
     return tryCreateLinksActorGroupFromFactory(initInfo, linkName, groupName);
 }
 
-// NON_MATCHING: Same as above
 LiveActorGroup* tryCreateLinksActorGroupFromFactory(const ActorInitInfo& initInfo,
                                                     const char* linkName, const char* groupName) {
     ActorInitInfo childInitInfo;
@@ -789,8 +787,7 @@ LiveActorGroup* tryCreateLinksActorGroupFromFactory(const ActorInitInfo& initInf
     for (s32 i = 0; i < linkChildNum; i++) {
         getLinksInfoByIndex(&placementInfo, *initInfo.placementInfo, linkName, i);
         childInitInfo.initViewIdSelf(&placementInfo, initInfo);
-        LiveActor* actor = createActorFromFactory(childInitInfo, &placementInfo);
-        group->registerActor(actor);
+        group->registerActor(createActorFromFactory(childInitInfo, &placementInfo));
     }
     return group;
 }
@@ -814,8 +811,7 @@ void createAndRegisterLinksActorFromFactory(LiveActorGroup* group, const ActorIn
     for (s32 i = 0; i < linkChildNum; i++) {
         getLinksInfoByIndex(&placementInfo, *initInfo.placementInfo, linkName, i);
         childInitInfo.initViewIdSelf(&placementInfo, initInfo);
-        LiveActor* actor = createActorFromFactory(childInitInfo, &placementInfo);
-        group->registerActor(actor);
+        group->registerActor(createActorFromFactory(childInitInfo, &placementInfo));
     }
 }
 
