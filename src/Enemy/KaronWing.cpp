@@ -66,12 +66,12 @@ void KaronWing::init(const al::ActorInitInfo& info) {
 
     EnemyStateSwoonInitParam swoonParam{"Trampled",      "BreakWait", "Recover",
                                         "BreakReaction", "Break",     "BreakGroundHit"};
-    swoonParam._71 = true;
-    swoonParam._72 = true;
-    swoonParam._73 = false;
-    swoonParam._74 = 180;
-    swoonParam._78 = 60;
-    swoonParam._30 = "RecoverSign";
+    swoonParam.hasStartLandAnimation = true;
+    swoonParam.hasLockOnDelay = true;
+    swoonParam.isCancelLoopOnProhibitedArea = false;
+    swoonParam.swoonDuration = 180;
+    swoonParam.endSignDelay = 60;
+    swoonParam.endSignAnimName = "RecoverSign";
 
     mStateSwoon->initParams(swoonParam);
     al::initNerveState(this, mStateSwoon, &NrvKaronWing.Swoon, "気絶");
