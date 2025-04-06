@@ -3,8 +3,9 @@
 #include "Library/Area/AreaObjDirector.h"
 #include "Library/Area/AreaObjGroup.h"
 #include "Library/Clipping/ClippingActorHolder.h"
-#include "Library/Placement/PlacementFunction.h"
+#include "Library/Clipping/ClippingActorInfo.h"
 #include "Library/Clipping/ClippingJudge.h"
+#include "Library/Placement/PlacementFunction.h"
 
 #include "Project/Clipping/ViewInfoCtrl.h"
 #include "Project/Clipping/ClippingFarAreaObserver.h"
@@ -37,6 +38,70 @@ void ClippingDirector::execute() {
         }
         mClippingActorHolder->update(mClippingJudge);
         mGroupHolder->update(mClippingJudge);
+    }
+}
+
+f32 ClippingDirector::getFarClipDistance() const {
+    return mFarAreaObserver->getFarClipDistance();
+}
+
+void ClippingDirector::offGroupClipping(LiveActor* liveActor) {
+    ClippingActorInfo* clippingActorInfo = mClippingActorHolder->find(liveActor);
+    if (clippingActorInfo->isGroupClippingInit()) {
+        mClippingActorHolder->offGroupClipping(liveActor);
+        mGroupHolder->leave(clippingActorInfo);
+        clippingActorInfo->setIsClipping(false);
+    }
+}
+
+void ClippingDirector::onGroupClipping(LiveActor* liveActor) {
+    ClippingActorInfo* clippingActorInfo = mClippingActorHolder->find(liveActor);
+    if (clippingActorInfo->isGroupClippingInit()) {
+        mClippingActorHolder->onGroupClipping(liveActor);
+        mGroupHolder->leave(clippingActorInfo);
+        clippingActorInfo->setIsClipping(true);
+    }
+}
+
+void ClippingDirector::registerActor(LiveActor* liveActor, const ViewIdHolder* idHolder) {
+    ClippingActorInfo* clippingActorInfo = mClippingActorHolder->registerActor(liveActor);
+    clippingActorInfo->initViewGroup(idHolder);
+    mViewInfoCtrl->initActorInfo(clippingActorInfo);
+}
+
+void ClippingDirector::setDefaultFarClipDistance(f32 distance) {
+    mFarAreaObserver->setDefaultFarClipDistance(distance);
+}
+
+void ClippingDirector::setDefaultFarClipDistanceSub(f32 distance) {
+    mFarAreaObserver->setDefaultFarClipDistanceSub(distance);
+}
+
+void ClippingDirector::startCheckViewCtrlByCameraPos() {
+    mViewInfoCtrl->startCheckByCameraPos();
+}
+
+void ClippingDirector::startCheckViewCtrlByLookAtPos() {
+    mViewInfoCtrl->startCheckByLookAtPos();
+}
+
+void ClippingDirector::startCheckViewCtrlByPlayerPos() {
+    mViewInfoCtrl->startCheckByPlayerPos();
+}
+
+ClippingDirector::ClippingDirector(s32 index, const AreaObjDirector* areaObjDirector, const PlayerHolder* playerHolder,
+                                   const SceneCameraInfo* sceneCameraInfo) {
+    mFarAreaObserver = new ClippingFarAreaObserver(areaObjDirector, playerHolder);
+    mClippingJudge = new ClippingJudge(mFarAreaObserver, sceneCameraInfo);
+    mClippingActorHolder = new ClippingActorHolder(index);
+    mGroupHolder = new ClippingGroupHolder();
+    mViewInfoCtrl = new ViewInfoCtrl(playerHolder, sceneCameraInfo);
+}
+
+ClippingDirector::~ClippingDirector() {
+    if (mClippingActorHolder) {
+        delete mClippingActorHolder;
+        mClippingActorHolder = nullptr;
     }
 }
 

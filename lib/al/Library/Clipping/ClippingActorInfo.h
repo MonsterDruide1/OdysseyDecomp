@@ -7,7 +7,7 @@ enum ClippingRequestKeeper {};
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 class ClippingJudge;
 class ViewIdHolder;
 
@@ -31,11 +31,13 @@ public:
     void updateClipping(const ClippingJudge*);
     void updateClipping(ClippingRequestKeeper*, const ClippingJudge*);
     void updateFarClipLevel();
-
     const LiveActor* getLiveActor() const { return mLiveActor; }
+    void setIsClipping(bool value) { mIsClippingEnable = value; }
 
 private:
     LiveActor* mLiveActor;
+    void* filler[0xc]; // offset isClippingEnable to the correct place
+    bool mIsClippingEnable;
     // Remaining Member's missing
 };
 
