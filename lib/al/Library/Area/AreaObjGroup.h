@@ -18,7 +18,7 @@ public:
 
     const char* getName() const { return mGroupName; };
 
-    s32 getSize() const { return mSize; }
+    s32 getSize() const { return mCount; }
 
 private:
     const char* mGroupName;
