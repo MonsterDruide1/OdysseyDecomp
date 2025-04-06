@@ -14,26 +14,24 @@ class ViewIdHolder;
 class ClippingActorInfo {
 public:
     ClippingActorInfo(LiveActor*);
-    bool checkActiveViewGroupAny() const;
-    void endClipping();
-    void initViewGroup(const ViewIdHolder*);
-    bool isFarClipLevelMax() const;
-    bool isGroupClipping() const;
-    bool isGroupClippingInit() const;
-    bool judgeClipping(const ClippingJudge*) const;
-    void registerViewGroupFarClipFlag(const bool*);
-    void setFarClipLevel20M();
-    void setFarClipLevelMax();
-    void setGroupClippingId(const ActorInitInfo&);
-    void setTypeToObb(const sead::BoundBox3f&, const sead::Matrix34f*);
     void setTypeToSphere(f32, const sead::Vector3f*);
     void startClipped();
+    void endClipped();
     void updateClipping(const ClippingJudge*);
+    bool judgeClipping(const ClippingJudge*) const;
     void updateClipping(ClippingRequestKeeper*, const ClippingJudge*);
+    bool isGroupClipping() const;
+    bool isGroupClippingInit() const;
+    void setTypeToObb(const sead::BoundBox3f&, const sead::Matrix34f*);
+    void setGroupClippingId(const ActorInitInfo&);
+    void setFarClipLevel20M();
     void updateFarClipLevel();
-
+    void setFarClipLevelMax();
+    bool isFarClipLevelMax() const;
+    bool checkActiveViewGroupAny() const;
+    void initViewGroup(const ViewIdHolder*);
+    void registerViewGroupFarClipFlag(const bool*);
     const LiveActor* getLiveActor() const { return mLiveActor; }
-
 private:
     LiveActor* mLiveActor;
     // Remaining Member's missing
