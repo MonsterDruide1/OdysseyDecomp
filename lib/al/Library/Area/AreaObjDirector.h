@@ -22,7 +22,11 @@ public:
     void createAreaObjGroupBuffer();
     void placementAreaObj(const AreaInitInfo& initInfo);
     AreaObjGroup* getAreaObjGroup(const char* name) const;
+<<<<<<< HEAD
     bool isExistAreaGroup(const char* name) const;
+=======
+    bool isExistAreaGroup(const char* name);
+>>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
     AreaObj* getInVolumeAreaObj(const char* name, const sead::Vector3f& position);
     AreaObjMtxConnecterHolder* getMtxConnecterHolder() const;
 
