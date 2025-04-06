@@ -25,6 +25,9 @@ public:
     bool isJudgedToClipFrustumUpUseFarLevelObb(const sead::Matrix34f*, const sead::BoundBox3f&,
                                                f32) const;
     void update();
+
+private:
+    void* filler[0x3];
 };
 
 }  // namespace al

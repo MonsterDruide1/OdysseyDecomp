@@ -1,8 +1,8 @@
 #pragma once
 
-#include "basis/seadTypes.h"
-#include "math/seadBoundBox.h"
-#include "thread/seadThread.h"
+#include <basis/seadTypes.h>
+#include <math/seadBoundBox.h>
+#include <thread/seadThread.h>
 
 namespace al {
 struct ActorInitInfo;
@@ -14,7 +14,7 @@ class ClippingJudge;
 class ClippingActorHolder {
 public:
     void addToClippingTarget(LiveActor* liveActor);
-    ClippingActorHolder(int);
+    ClippingActorHolder(s32);
     void endInit(ClippingGroupHolder*);
     ClippingActorInfo* find(const LiveActor* liveActor) const;
     ClippingActorInfo* getClippingCenterPos(const LiveActor* liveActor);
@@ -32,10 +32,13 @@ public:
     void setTypeToObb(LiveActor* liveActor, const sead::BoundBox3f&);
     void setTypeToSphere(LiveActor* liveActor, const sead::BoundBox3f*);
     void update(const ClippingJudge*);
-    void updateAsync(sead::Thread*, long);
+    void updateAsync(sead::Thread*, s64);
     void updateFarClipLevel();
     void validateClipping(LiveActor* liveActor);
     ~ClippingActorHolder();
+
+private:
+    void* filler[0x8];
 };
 
-} // namespace al
+}  // namespace al

@@ -16,6 +16,8 @@ public:
     bool update();
     ViewInfoCtrl(const PlayerHolder*, const SceneCameraInfo*);
 
+private:
+    void* filler[0x7];
 };
 
-} // namespace al
+}  // namespace al
