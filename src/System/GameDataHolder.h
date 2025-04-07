@@ -248,8 +248,8 @@ private:
     TemporaryScenarioCameraHolder* mTemporaryScenarioCameraHolder;
     bool* mIsPlayAlreadyScenarioStartCamera;
     sead::PtrArray<StageLockInfo> mStageLockList;
-    sead::PtrArray<ShopItem::ShopItemInfo> mShopItemList;
-    sead::PtrArray<ShopItem::ShopItemInfo> mShopItemListE3;
+    sead::PtrArray<ShopItem::ItemInfo> mShopItemList;
+    sead::PtrArray<ShopItem::ItemInfo> mShopItemListE3;
     sead::PtrArray<ShopItem::ItemInfo> mItemCloth;
     sead::PtrArray<ShopItem::ItemInfo> mItemCap;
     sead::PtrArray<ShopItem::ItemInfo> mItemGift;
