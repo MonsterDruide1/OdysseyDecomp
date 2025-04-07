@@ -11,7 +11,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageResourceList.h"
+#include "Library/Stage/StageRhythm.h"
 
 #include "Item/Coin2DCityDirector.h"
 #include "System/GameDataFunction.h"
