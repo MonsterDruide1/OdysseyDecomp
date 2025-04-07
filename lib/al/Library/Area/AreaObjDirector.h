@@ -21,7 +21,7 @@ public:
     void createAreaObjGroup(const AreaInitInfo& initInfo);
     void createAreaObjGroupBuffer(const AreaInitInfo& initInfo);
     void placementAreaObj(const AreaInitInfo& initInfo);
-    AreaObjGroup* getAreaObjGroup(const char* name);
+    AreaObjGroup* getAreaObjGroup(const char* name) const;
     bool isExistAreaGroup(const char* name);
     AreaObj* getInVolumeAreaObj(const char* name, const sead::Vector3f& position);
     AreaObjMtxConnecterHolder* getMtxConnecterHolder();
