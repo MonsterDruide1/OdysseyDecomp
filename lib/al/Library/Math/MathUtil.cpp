@@ -420,8 +420,6 @@ f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t) {
     return y0 - coef_y1 * y0 + coef_y1 * y1 + coef_m0 * m0 + coef_m1 * m1;
 }
 
-// NON_MATCHING: regswap; this function computes the same thing as the one above it, just in a
-// different way (and the width scaling)
 f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width) {
     t *= 1.0f / width;
     f32 a1 = y0 - y1;

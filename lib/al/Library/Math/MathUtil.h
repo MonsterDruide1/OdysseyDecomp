@@ -42,7 +42,7 @@ f32 calcAngleOnPlaneDegreeOrZero(const sead::Vector3f& a, const sead::Vector3f& 
                                  const sead::Vector3f& vertical);
 bool tryCalcAngleOnPlaneDegree(f32* angle, const sead::Vector3f& a, const sead::Vector3f& b,
                                const sead::Vector3f& vertical);
-bool isParallelDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance);
+bool isParallelDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance = 0.01f);
 s32 calcAngleSignOnPlane(const sead::Vector3f& a, const sead::Vector3f& b,
                          const sead::Vector3f& vertical);
 bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance);
@@ -68,12 +68,12 @@ bool isNearZero(const sead::Matrix34f& value, f32 tolerance = 0.001f);
 bool isNearZeroOrGreater(f32 value, f32 tolerance = 0.001f);
 bool isNearZeroOrLess(f32 value, f32 tolerance = 0.001f);
 bool isExistNearZeroVal(const sead::Vector3f& vec, f32 tolerance);
-bool isNormalize(const sead::Vector3f& vec, f32 tolerance);
+bool isNormalize(const sead::Vector3f& vec, f32 tolerance = 0.001f);
 bool isNormalize(const sead::Matrix34f& mtx);
-bool isParallelDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance);
-bool isReverseDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance);
-bool isNearDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance);
-bool isNearDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance);
+bool isParallelDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance = 0.01f);
+bool isReverseDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance = 0.01f);
+bool isNearDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance = 0.01f);
+bool isNearDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance = 0.01f);
 bool isInRange(s32 x, s32 a, s32 b);
 bool isInRange(f32 x, f32 a, f32 b);
 void normalize(sead::Vector2f* vec);
@@ -166,7 +166,7 @@ s32 getRandom(s32 max);
 s32 getRandom(s32 min, s32 max);
 f32 getRandomDegree();
 f32 getRandomRadian();
-void getRandomVector(sead::Vector3f* vec, f32 factor);
+void getRandomVector(sead::Vector3f* vec, f32 maxComponent);
 void getRandomDir(sead::Vector3f* vec);
 void getRandomDirH(sead::Vector3f*, const sead::Vector3f&);
 void rotateVectorDegree(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
