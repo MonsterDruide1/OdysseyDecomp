@@ -137,19 +137,19 @@ const char* Resource::getArchiveName() const {
     return getBaseName(mName.cstr());
 }
 
-// bool Resource::tryCreateResGraphicsFile(const sead::SafeString& name, nn::g3d::ResFile* resFile)
-// {
-//     if (mResFile)
-//         return false;
-//
-//     mResFile = nn::g3d::ResFile::ResCast((void*)getFile(name));
-//     if (resFile)
-//         agl::g3d::ResFile::BindTexture(mResFile, resFile);
-//     agl::g3d::ResFile::Setup(mResFile);
-//     agl::g3d::ResFile::BindTexture(mResFile, mResFile);
-//
-//     return true;
-// }
+bool Resource::tryCreateResGraphicsFile(const sead::SafeString& filePath,
+                                        nn::g3d::ResFile* resFile) {
+    if (mResFile)
+        return false;
+
+    mResFile = nn::g3d::ResFile::ResCast((void*)getFile(filePath));
+    if (resFile)
+        agl::g3d::ResFile::BindTexture(mResFile, resFile);
+    agl::g3d::ResFile::Setup(mResFile);
+    agl::g3d::ResFile::BindTexture(mResFile, mResFile);
+
+    return true;
+}
 
 void Resource::cleanupResGraphicsFile() {
     if (!mResFile)

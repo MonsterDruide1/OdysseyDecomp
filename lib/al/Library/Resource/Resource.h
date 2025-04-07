@@ -38,7 +38,7 @@ public:
     const void* tryGetPa(const sead::SafeString& filePath) const;
     const void* getOtherFile(const sead::SafeString& filePath) const;
     const char* getArchiveName() const;
-    bool tryCreateResGraphicsFile(const sead::SafeString& name, nn::g3d::ResFile* resFile);
+    bool tryCreateResGraphicsFile(const sead::SafeString& filePath, nn::g3d::ResFile* resFile);
     void cleanupResGraphicsFile();
 
     ActorInitResourceData* getResData() const { return mData; }
