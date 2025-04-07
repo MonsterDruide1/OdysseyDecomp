@@ -10,7 +10,7 @@
 
 namespace al {
 
-AreaObjDirector::AreaObjDirector() {}
+AreaObjDirector::AreaObjDirector() = default;
 
 void AreaObjDirector::init(const AreaObjFactory* factory) {
     mFactory = factory;
