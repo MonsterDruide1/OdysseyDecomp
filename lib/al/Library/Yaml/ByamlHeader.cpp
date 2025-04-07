@@ -6,8 +6,8 @@
 
 #include "Library/Yaml/ByamlData.h"
 
-#define BYAML_LE_TAG 0x5942
-#define BYAML_BE_TAG 0x4259
+#define BYAML_LE_TAG 0x5942  // 'YB'
+#define BYAML_BE_TAG 0x4259  // 'BY'
 
 namespace al {
 u16 ByamlHeader::getTag() const {
