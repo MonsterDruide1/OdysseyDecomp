@@ -17,9 +17,9 @@ NERVES_MAKE_NOSTRUCT(PlayGuideSkip, Appear, Wait, End);
 
 PlayGuideSkip::PlayGuideSkip(const char* name, const al::LayoutInitInfo& info)
     : al::LayoutActor(name) {
-    al::initLayoutActorLocalized(this, info, "PlayGuideSkip", nullptr);
+    al::initLayoutActorLocalized(this, info, "PlayGuideSkip");
     al::setPaneSystemMessage(this, "TxtGuide", "PlayGuideSkip", "PlayGuideDemoSkip");
-    initNerve(&Appear, 0);
+    initNerve(&Appear);
 }
 
 void PlayGuideSkip::kill() {
@@ -35,7 +35,7 @@ bool PlayGuideSkip::tryAppear() {
 }
 
 void PlayGuideSkip::appearCore() {
-    al::startAction(this, "Appear", nullptr);
+    al::startAction(this, "Appear");
     al::LayoutActor::appear();
     al::setNerve(this, &Appear);
 }
@@ -50,19 +50,19 @@ bool PlayGuideSkip::isEnableSkipDemo() const {
 }
 
 void PlayGuideSkip::exeAppear() {
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
 void PlayGuideSkip::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 }
 
 void PlayGuideSkip::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
+        al::startAction(this, "End");
 
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }

@@ -17,7 +17,7 @@ TestFilterGlasses::TestFilterGlasses(const char* name, const al::LayoutInitInfo&
                                      const char* suffix)
     : al::LayoutActor(name) {
     al::initLayoutActor(this, info, "FilterGlasses", suffix);
-    initNerve(&Appear, 0);
+    initNerve(&Appear);
     kill();
 }
 
@@ -32,20 +32,20 @@ void TestFilterGlasses::end() {
 
 void TestFilterGlasses::exeAppear() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Appear", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "Appear");
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
 void TestFilterGlasses::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 }
 
 void TestFilterGlasses::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "End");
+    if (al::isActionEnd(this))
         kill();
 }
 

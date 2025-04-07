@@ -105,7 +105,7 @@ void StageSceneStateStartSeparatePlay::exeFadeOut() {
     if (al::isFirstStep(this)) {
         mWipeSimple->startClose(60);
         al::startSe(mControllerGuideMulti, "Decide");
-        al::startAction(mControllerGuideMulti, "Decide", nullptr);
+        al::startAction(mControllerGuideMulti, "Decide");
     }
     if (mWipeSimple->isCloseEnd())
         al::setNerve(this, &Applet);

@@ -19,7 +19,7 @@ SimpleLayoutAppearWait::SimpleLayoutAppearWait(const char* name, const char* lay
                                                const LayoutInitInfo& info, const char* archiveName)
     : LayoutActor(name) {
     initLayoutActor(this, info, layoutName, archiveName);
-    initNerve(&Appear, 0);
+    initNerve(&Appear);
 }
 
 SimpleLayoutAppearWait::SimpleLayoutAppearWait(LayoutActor* parentActor, const char* name,
@@ -27,11 +27,11 @@ SimpleLayoutAppearWait::SimpleLayoutAppearWait(LayoutActor* parentActor, const c
                                                const char* archiveName)
     : LayoutActor(name) {
     initLayoutPartsActor(this, parentActor, info, layoutName, archiveName);
-    initNerve(&Appear, 0);
+    initNerve(&Appear);
 }
 
 void SimpleLayoutAppearWait::appear() {
-    startAction(this, "Appear", nullptr);
+    startAction(this, "Appear");
     LayoutActor::appear();
     setNerve(this, &Appear);
 }
@@ -47,7 +47,7 @@ void SimpleLayoutAppearWait::exeAppear() {
 
 void SimpleLayoutAppearWait::exeWait() {
     if (isFirstStep(this))
-        startAction(this, "Wait", 0);
+        startAction(this, "Wait");
 }
 
 }  // namespace al

@@ -16,7 +16,7 @@ public:
     virtual NerveKeeper* getNerveKeeper() const;
     virtual ~NerveExecutor();
 
-    void initNerve(const Nerve* nerve, s32 stateCount);
+    void initNerve(const Nerve* nerve, s32 stateCount = 0);
     void updateNerve();
 
 private:
