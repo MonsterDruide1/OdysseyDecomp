@@ -1,5 +1,6 @@
 #include "Scene/ProjectActorFactory.h"
 
+#include "Library/Fluid/FlowMapParts.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
 #include "Library/MapObj/ClockMapParts.h"
@@ -55,9 +56,11 @@
 #include "MapObj/Doshi.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/LavaPan.h"
+#include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
@@ -67,6 +70,8 @@
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
+#include "Npc/Bird.h"
+#include "Npc/BirdPlayerGlideCtrl.h"
 #include "Npc/KuriboGirl.h"
 
 const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
@@ -88,9 +93,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BazookaElectric", nullptr},
     {"BendLeafTree", nullptr},
     {"BgmPlayObj", nullptr},
-    {"Bird", nullptr},
+    {"Bird", al::createActorFunction<Bird>},
     {"BirdCarryMeat", nullptr},
-    {"BirdPlayerGlideCtrl", nullptr},
+    {"BirdPlayerGlideCtrl", al::createActorFunction<BirdPlayerGlideCtrl>},
     {"BlockBrick", nullptr},
     {"BlockBrick2D", nullptr},
     {"BlockBrickBig2D", nullptr},
@@ -354,7 +359,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Megane", nullptr},
     {"MeganeLiftExLift", nullptr},
     {"MeganeKeyMoveMapParts", nullptr},
-    {"MeganeMapParts", nullptr},
+    {"MeganeMapParts", al::createActorFunction<MeganeMapParts>},
     {"Mirror", nullptr},
     {"MoonBasementBreakParts", nullptr},
     {"MoonBasementClimaxWatcher", nullptr},
@@ -462,7 +467,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SandGeyser", nullptr},
     {"SandWorldHomeLift", nullptr},
     {"SaucePan", nullptr},
-    {"SaveFlagCheckObj", nullptr},
+    {"SaveFlagCheckObj", al::createActorFunction<SaveFlagCheckObj>},
     {"ScenarioStartCameraAnim", nullptr},
     {"ScenarioStartCameraSimpleZoom", nullptr},
     {"ScenarioStartCameraRailMove", nullptr},
@@ -608,7 +613,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"FallMapParts", al::createActorFunction<al::FallMapParts>},
     {"FixMapParts", al::createActorFunction<al::FixMapParts>},
     {"FloaterMapParts", al::createActorFunction<al::FloaterMapParts>},
-    {"FlowMapParts", nullptr},
+    {"FlowMapParts", al::createActorFunction<al::FlowMapParts>},
     {"GateMapParts", al::createActorFunction<al::GateMapParts>},
     {"KeyMoveMapParts", al::createActorFunction<al::KeyMoveMapParts>},
     {"KeyMoveMapPartsGenerator", al::createActorFunction<al::KeyMoveMapPartsGenerator>},

@@ -765,7 +765,7 @@ void Coin::exeGot() {
             GameDataFunction::addCoin(this, 1);
 
         al::onStageSwitch(this, "SwitchGetOn");
-        alPadRumbleFunction::startPadRumble(this, "コッ（最小）", 1000.0f, 5000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（最小）", 1000.0f, 5000.0f);
         if (mWaterSurfaceShadow != nullptr)
             mWaterSurfaceShadow->disappearShadow();
     }

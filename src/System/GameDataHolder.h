@@ -80,6 +80,7 @@ public:
     void resetMiniGameData();
     s32 getPlayingFileId() const;
     void requestSetPlayingFileId(s32);
+    void receiveSetPlayingFileIdMsg();
 
     s32 findUnlockShineNum(bool*, s32) const;
     s32 calcBeforePhaseWorldNumMax(s32) const;
@@ -101,6 +102,8 @@ public:
     void changeNextStage(const ChangeStageInfo*, s32);
 
     s32 findUseScenarioNo(const char*);
+
+    GameDataFile* getGameDataFile() const { return mGameDataFile; }
 
     const sead::PtrArray<ShopItem::ItemInfo>& getClothList() const { return mItemCloth; }
 

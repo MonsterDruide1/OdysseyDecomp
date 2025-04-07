@@ -13,11 +13,10 @@ void BgmBeatCounter::update() {
 
     f32 currentBeat = getCurBeatOnMeasure(mAudioKeeper);
     if (currentBeat - (s32)currentBeat > mTriggerBeatOffset + 1.0f &&
-        mPrevBeat - (s32)currentBeat <= mTriggerBeatOffset + 1.0f) {
+        mPrevBeat - (s32)currentBeat <= mTriggerBeatOffset + 1.0f)
         mIsOnBeat = true;
-    } else {
+    else
         mIsOnBeat = false;
-    }
 
     mCurBeatWithOffset = getCurBeat(mAudioKeeper) - mTriggerBeatOffset;
     mPrevBeat = currentBeat;

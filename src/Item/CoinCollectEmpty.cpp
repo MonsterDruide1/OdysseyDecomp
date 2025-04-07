@@ -114,7 +114,7 @@ void CoinCollectEmpty::exeWait() {
 
 void CoinCollectEmpty::exeGot() {
     if (al::isFirstStep(this)) {
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 500.0f, 2000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 500.0f, 2000.0f);
         al::startAction(this, "Got");
         GameDataFunction::addCoin(this, 1);
         GameDataFunction::addCoin(this, 1);

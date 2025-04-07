@@ -18,6 +18,6 @@ void PlayerJudgeStartWaterSurfaceRun::update() {}
 
 bool PlayerJudgeStartWaterSurfaceRun::judge() const {
     return mCounterForceRun->getCounter() > 0 && mWaterSurfaceFinder->isFoundSurface() &&
-           al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance(), 0.001f) &&
+           al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance()) &&
            al::getGravity(mPlayer).dot(al::getVelocity(mPlayer)) > 0.0f;
 }

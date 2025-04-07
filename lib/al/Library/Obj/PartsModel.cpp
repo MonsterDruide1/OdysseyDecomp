@@ -110,7 +110,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
 
     mIsUseLocalScale = tryGetByamlKeyBoolOrFalse(modelResIter, "UseLocalScale");
 
-    if (!isNearZero(mLocalTrans, 0.001f) || !isNearZero(mLocalRotate, 0.001f) || mIsUseLocalScale)
+    if (!isNearZero(mLocalTrans) || !isNearZero(mLocalRotate) || mIsUseLocalScale)
         mIsUseLocalPos = true;
 
     mIsUseFollowMtxScale = tryGetByamlKeyBoolOrFalse(modelResIter, "UseFollowMtxScale");

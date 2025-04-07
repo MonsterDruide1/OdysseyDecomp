@@ -100,7 +100,7 @@ void Togezo2D::control() {
     if (al::isNerve(this, &NrvTogezo2D.HideWait))
         return;
     al::addVelocityToGravity(this, 0.65f);
-    al::addVelocityToDirection(this, al::getGravity(this), 0.98f);
+    al::scaleVelocityDirection(this, al::getGravity(this), 0.98f);
     if (al::isCollidedWall(this)) {
         al::turnFront(this, 150.0f);
         if (al::isOnGround(this, 0)) {

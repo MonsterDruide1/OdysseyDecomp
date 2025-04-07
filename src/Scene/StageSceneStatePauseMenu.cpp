@@ -447,7 +447,7 @@ void StageSceneStatePauseMenu::changeNerveAndReturn(const al::Nerve* nerve) {
 
 void StageSceneStatePauseMenu::exeFadeBeforeHelp() {
     if (al::isFirstStep(this))
-        mHelpWipe->startClose(-1);
+        mHelpWipe->startClose();
 
     al::updateKitListPrev(getHost());
     al::updateKitList(getHost(), "カメラ");
@@ -484,7 +484,7 @@ void StageSceneStatePauseMenu::exeStartHelp() {
             al::setNerve(this, &NrvStageSceneStatePauseMenu.OptionFromHelp);
             return;
         }
-        mHelpWipe->startOpen(-1);
+        mHelpWipe->startOpen();
     }
 
     if (mHelpWipe->isOpenEnd()) {

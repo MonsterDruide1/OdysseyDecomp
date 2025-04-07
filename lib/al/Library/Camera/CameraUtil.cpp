@@ -161,7 +161,7 @@ f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
     f32 fovy = getFovyDegree(user, viewIdx);
     f32 fovy2 = getCameraDirector(user)->getSceneFovyDegree();
 
-    if (isNearZero(fovy, 0.001f) || isNearZero(fovy2, 0.001f))
+    if (isNearZero(fovy) || isNearZero(fovy2))
         return 0;
 
     return fovy / fovy2;

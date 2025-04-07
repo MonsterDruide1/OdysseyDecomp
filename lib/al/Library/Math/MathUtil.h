@@ -30,9 +30,9 @@ enum EaseType : s32 {
 f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b);
 f32 calcAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b);
 f32 calcAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b);
-bool isNearZero(const sead::Vector2f& vec, f32 tolerance);
+bool isNearZero(const sead::Vector2f& vec, f32 tolerance = 0.001f);
 bool tryCalcAngleDegree(f32* angle, const sead::Vector3f& a, const sead::Vector3f& b);
-bool isNearZero(const sead::Vector3f& vec, f32 tolerance);
+bool isNearZero(const sead::Vector3f& vec, f32 tolerance = 0.001f);
 f32 calcAngleOnPlaneRadian(const sead::Vector3f& a, const sead::Vector3f& b,
                            const sead::Vector3f& vertical);
 void verticalizeVec(sead::Vector3f* out, const sead::Vector3f& vertical, const sead::Vector3f& vec);
@@ -59,14 +59,14 @@ bool isNearAngleDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sea
                          f32);
 bool isInAngleOnPlaneDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
                               f32, f32, f32, f32);
-bool isNear(f32 value, f32 target, f32 tolerance);
-bool isNear(const sead::Vector2f& value, const sead::Vector2f& target, f32 tolerance);
-bool isNear(const sead::Vector3f& value, const sead::Vector3f& target, f32 tolerance);
-bool isNear(const sead::Color4f& value, const sead::Color4f& target, f32 tolerance);
-bool isNearZero(f32 value, f32 tolerance);
-bool isNearZero(const sead::Matrix34f& value, f32 tolerance);
-bool isNearZeroOrGreater(f32 value, f32 tolerance);
-bool isNearZeroOrLess(f32 value, f32 tolerance);
+bool isNear(f32 value, f32 target, f32 tolerance = 0.001f);
+bool isNear(const sead::Vector2f& value, const sead::Vector2f& target, f32 tolerance = 0.001f);
+bool isNear(const sead::Vector3f& value, const sead::Vector3f& target, f32 tolerance = 0.001f);
+bool isNear(const sead::Color4f& value, const sead::Color4f& target, f32 tolerance = 0.001f);
+bool isNearZero(f32 value, f32 tolerance = 0.001f);
+bool isNearZero(const sead::Matrix34f& value, f32 tolerance = 0.001f);
+bool isNearZeroOrGreater(f32 value, f32 tolerance = 0.001f);
+bool isNearZeroOrLess(f32 value, f32 tolerance = 0.001f);
 bool isExistNearZeroVal(const sead::Vector3f& vec, f32 tolerance);
 bool isNormalize(const sead::Vector3f& vec, f32 tolerance);
 bool isNormalize(const sead::Matrix34f& mtx);
