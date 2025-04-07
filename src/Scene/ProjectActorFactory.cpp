@@ -56,6 +56,7 @@
 #include "MapObj/Doshi.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/LavaPan.h"
+#include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
@@ -358,7 +359,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Megane", nullptr},
     {"MeganeLiftExLift", nullptr},
     {"MeganeKeyMoveMapParts", nullptr},
-    {"MeganeMapParts", nullptr},
+    {"MeganeMapParts", al::createActorFunction<MeganeMapParts>},
     {"Mirror", nullptr},
     {"MoonBasementBreakParts", nullptr},
     {"MoonBasementClimaxWatcher", nullptr},
