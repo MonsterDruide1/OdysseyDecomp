@@ -32,7 +32,7 @@ public:
     void initViewGroup(const ViewIdHolder*);
     void registerViewGroupFarClipFlag(const bool*);
 
-    const LiveActor* getLiveActor() const { return mLiveActor; }
+    LiveActor* getLiveActor() const { return mLiveActor; }
 
 private:
     LiveActor* mLiveActor;
