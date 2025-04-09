@@ -7,12 +7,12 @@
 #include "Library/Thread/AsyncFunctorThread.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
-#include "Sequence/E3Sequence.h"
 #include "System/GameDataFunction.h"
 #include "heap/seadFrameHeap.h"
+#include "thread/seadThread.h"
 
-s32 cE3Priority = E3Sequence::cLoaderPriority;
-s32 cDefaultPriority = E3Sequence::cDefaultPriority;
+s32 cE3Priority = sead::Thread::cDefaultPriority + 6;
+static s32 cDefaultPriority = sead::Thread::cDefaultPriority;
 
 // NON_MATCHING: Compiler creates the first functor in the wrong place
 E3ResourceLoader::E3ResourceLoader() {
