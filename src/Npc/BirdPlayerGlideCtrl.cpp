@@ -186,14 +186,10 @@ static bool tryCalcGlideOnNoseMtx(sead::Matrix34f* out, const al::LiveActor* act
     sead::Matrix34f mtx = sead::Matrix34f::ident;
     if (!rs::tryCalcPlayerModelNoseJointMtx(&mtx, actor))
         return false;
-    sead::Vector3f side;
-    mtx.getBase(side, 0);
-    sead::Vector3f up;
-    mtx.getBase(up, 1);
-    sead::Vector3f front;
-    mtx.getBase(front, 2);
-    sead::Vector3f pos;
-    mtx.getBase(pos, 3);
+    sead::Vector3f side = mtx.getBase(0);
+    sead::Vector3f up = mtx.getBase(1);
+    sead::Vector3f front = mtx.getBase(2);
+    sead::Vector3f pos = mtx.getBase(3);
     sead::Vector3f offset = {13, -2.5, 0};
     al::makeMtxFrontUpPos(out, front, up, pos + offset.x * side + offset.y * up + offset.z * front);
     return true;
