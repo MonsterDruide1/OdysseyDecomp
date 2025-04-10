@@ -60,6 +60,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
@@ -460,7 +461,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"RippleGeneratePoint", nullptr},
     {"RippleGenerateSquare", nullptr},
     {"RotateTarget", nullptr},
-    {"RouletteSwitch", nullptr},
+    {"RouletteSwitch", al::createActorFunction<RouletteSwitch>},
     {"RouteGuideArrow", nullptr},
     {"RouteGuideRail", nullptr},
     {"RunAwayNpc", nullptr},
