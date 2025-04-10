@@ -317,16 +317,16 @@ bool HackFork::tryTouch(f32 force, const char* reactionName) {
     return false;
 }
 
-// NON_MATCHING: Incomplete https://decomp.me/scratch/TN2Xb
 void HackFork::resetCapMtx(al::HitSensor* sensor) {
     calcHackDir(sensor);
     sead::Matrix34f jointMtx = *al::getJointMtxPtr(this, mJointName);
     al::normalize(&jointMtx);
 
-    sead::Matrix34f poseMtx;
-    poseMtx.setMul(jointMtx, mStartingPoseMtx);
+    sead::Matrix34f poseMtx = jointMtx * mStartingPoseMtx;
 
     sead::Vector3f vector;
+    poseMtx.getBase(vector, 1);
+
     sead::Vector3f normal;
     if (mIsControlledByPlayer)
         normal.set({0.0f, 1.0f, 0.0f});
@@ -340,11 +340,18 @@ void HackFork::resetCapMtx(al::HitSensor* sensor) {
     } else {
         sead::Matrix34f invPoseMtx;
         invPoseMtx.setInverse(poseMtx);
-        sead::Quatf quat;
-        al::makeQuatRotationRate(&quat, sead::Vector3f::ez, normal, 1.0f);
-        sead::Matrix34f invJointMatrix;
-        invJointMatrix.setInverse(jointMtx);
-        mNextPoseMtx.setMul(poseMtx, invJointMatrix);
+
+        normal.rotate(invPoseMtx);
+
+        sead::Quatf quatRotation;
+        al::makeQuatRotationRate(&quatRotation, sead::Vector3f::ez, normal, 1.0f);
+        sead::Matrix34f quatRotationMtx;
+        quatRotationMtx.fromQuat(quatRotation);
+
+        sead::Matrix34f invJointMtx;
+        invJointMtx.setInverse(jointMtx);
+
+        mNextPoseMtx = (invJointMtx * poseMtx) * quatRotationMtx;
     }
     updateCapMtx();
 }
@@ -550,7 +557,7 @@ void HackFork::calcAnim() {
 void HackFork::updateCapMtx() {
     sead::Matrix34f mtx = *al::getJointMtxPtr(this, mJointName);
     al::normalize(&mtx);
-    mPoseMtx.setMul(mtx, mNextPoseMtx);
+    mPoseMtx = mtx * mNextPoseMtx;
 }
 
 void HackFork::calcHackDir(al::HitSensor* sensor) {
