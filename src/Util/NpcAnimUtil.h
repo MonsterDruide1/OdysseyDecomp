@@ -51,12 +51,12 @@ bool tryStartForestManFlowerAnim(al::LiveActor*);
 bool tryUpdateMaterialCodeByFloorCollisionOnArrow(al::LiveActor*);
 void tryAttachConnectorToCollisionTFSV(al::LiveActor*, al::MtxConnector*, sead::Quatf*);
 void tryConnectToCollisionTFSV(al::LiveActor*, const al::MtxConnector*, sead::Quatf*);
-al::LiveActor tryGetSubActorCityMayorFace(const al::LiveActor*);
+al::LiveActor* tryGetSubActorCityMayorFace(const al::LiveActor*);
 void syncActionCityMayorFace(al::LiveActor*);
 void syncMtsAnimCityMayorFace(al::LiveActor*);
 bool isExistFaceAnim(al::LiveActor*, const char*);
 void animateCityMayorFace(al::LiveActor*, const char*, f32);
-ShellActorStateReaction createNpcStateReaction(al::LiveActor*, const TalkNpcParam*,
-                                               const NpcStateReactionParam*);
+ShellActorStateReaction* createNpcStateReaction(al::LiveActor*, const TalkNpcParam*,
+                                                const NpcStateReactionParam*);
 bool isInvalidTrampleSensor(const al::HitSensor*, const TalkNpcParam*);
 }  // namespace rs
