@@ -55,6 +55,7 @@
 #include "MapObj/CoinCollectHintObj.h"
 #include "MapObj/Doshi.h"
 #include "MapObj/FireDrum2D.h"
+#include "MapObj/HackFork.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
@@ -297,7 +298,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Gunetter", nullptr},
     {"GunetterMove", nullptr},
     {"HackCar", nullptr},
-    {"HackFork", nullptr},
+    {"HackFork", al::createActorFunction<HackFork>},
     {"HammerBrosPossessed", nullptr},
     {"HammerBros2D", nullptr},
     {"HelpNpc", nullptr},
