@@ -324,8 +324,7 @@ void HackFork::resetCapMtx(al::HitSensor* sensor) {
 
     sead::Matrix34f poseMtx = jointMtx * mStartingPoseMtx;
 
-    sead::Vector3f vector;
-    poseMtx.getBase(vector, 1);
+    sead::Vector3f vector = poseMtx.getBase(1);
 
     sead::Vector3f normal;
     if (mIsControlledByPlayer)

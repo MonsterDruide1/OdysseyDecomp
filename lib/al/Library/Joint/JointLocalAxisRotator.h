@@ -12,8 +12,8 @@ class JointLocalAxisRotator : public JointControllerBase {
 public:
     JointLocalAxisRotator(const f32*, const sead::Vector3f&, bool);
 
-    void calcJointCallback(s32, sead::Matrix34f*);
-    const char* getCtrlTypeName() const;
+    void calcJointCallback(s32, sead::Matrix34f*) override;
+    const char* getCtrlTypeName() const override;
 
     void setVector28(const sead::Vector3f& v) { _28.set(v); }
 

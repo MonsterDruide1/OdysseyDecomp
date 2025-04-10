@@ -21,11 +21,11 @@ public:
 };
 
 bool isNodeName(const EventFlowNode*, const char*);
-void getScareMessage(const EventFlowNode*);
+const char16* getScareMessage(const EventFlowNode*);
 void startEventCamera(EventFlowNode*, const char*, s32);
 void startEventAnimCamera(EventFlowNode*, const char*, const char*, s32);
 void endEventCamera(EventFlowNode*, const char*, s32, bool);
-void tryEndEventCameraIfPlaying(EventFlowNode*, const char*, s32, bool);
+bool tryEndEventCameraIfPlaying(EventFlowNode*, const char*, s32, bool);
 bool isEndInterpoleEventCamera(const EventFlowNode*, const char*);
 bool isPlayingEventAnimCamera(const EventFlowNode*, const char*);
 void requestDemoAction(EventFlowNode*, const char*, bool);
@@ -42,7 +42,7 @@ void calcPlayerWatchTrans(sead::Vector3f*, const EventFlowNode*);
 void requestCommandCloseTalkMessageLayout(EventFlowNode*);
 bool isActive(const EventFlowExecutor*);
 bool isScare(const IUseEventFlowData*);
-void tryGetScareEnemyPos(sead::Vector3f*, const IUseEventFlowData*);
+bool tryGetScareEnemyPos(sead::Vector3f*, const IUseEventFlowData*);
 void invalidateUiCollisionCheck(EventFlowExecutor*);
 void onExistLookAtJointCtrl(EventFlowExecutor*);
 void setTalkSubActorName(EventFlowExecutor*, const char*);
@@ -51,46 +51,46 @@ void startEventAction(LiveActor*, const IUseEventFlowData*, const char*);
 void makeEventActionName(sead::BufferedSafeStringBase<char>*, const IUseEventFlowData*,
                          const char*);
 void startEventActionAtRandomFrame(LiveActor*, const IUseEventFlowData*, const char*);
-void tryStartEventActionIfNotPlaying(LiveActor*, const IUseEventFlowData*, const char*);
+bool tryStartEventActionIfNotPlaying(LiveActor*, const IUseEventFlowData*, const char*);
 bool isPlayingEventAction(const LiveActor*, const IUseEventFlowData*, const char*);
 bool isExistEventAction(const LiveActor*, const IUseEventFlowData*, const char*);
 bool isOneTimeEventAction(const LiveActor*, const IUseEventFlowData*, const char*);
-void getEventActionFrameMax(const LiveActor*, const IUseEventFlowData*, const char*);
-void getParamMoveSpeed(const IUseEventFlowData*);
-void getParamTurnSpeedDegree(const IUseEventFlowData*);
-void getRecordActorFront(const IUseEventFlowData*);
+f32 getEventActionFrameMax(const LiveActor*, const IUseEventFlowData*, const char*);
+f32 getParamMoveSpeed(const IUseEventFlowData*);
+f32 getParamTurnSpeedDegree(const IUseEventFlowData*);
+const sead::Vector3f& getRecordActorFront(const IUseEventFlowData*);
 void recordActorFront(IUseEventFlowData*, const sead::Vector3f&);
-void checkInsideTerritoryPos(const IUseEventFlowData*, const LiveActor*, const sead::Vector3f&,
+bool checkInsideTerritoryPos(const IUseEventFlowData*, const LiveActor*, const sead::Vector3f&,
                              f32);
-void checkInsideEmotionTerritoryPos(const IUseEventFlowData*, const LiveActor*,
+bool checkInsideEmotionTerritoryPos(const IUseEventFlowData*, const LiveActor*,
                                     const sead::Vector3f&);
-void checkInsideEmotionLowPriorityTerritoryPos(const IUseEventFlowData*, const LiveActor*,
+bool checkInsideEmotionLowPriorityTerritoryPos(const IUseEventFlowData*, const LiveActor*,
                                                const sead::Vector3f&);
-void checkInsideTalkTerritoryPos(const IUseEventFlowData*, const LiveActor*, const sead::Vector3f&);
+bool checkInsideTalkTerritoryPos(const IUseEventFlowData*, const LiveActor*, const sead::Vector3f&);
 void calcBalloonOffset(sead::Vector3f*, const IUseEventFlowData*, const LiveActor*);
 void setBalloonLocalOffset(EventFlowExecutor*, const sead::Vector3f&);
-void getBalloonCollisionCheckOffsetRadius(const IUseEventFlowData*);
+f32 getBalloonCollisionCheckOffsetRadius(const IUseEventFlowData*);
 bool isDisableOpenBalloonByOrderGroup(const LiveActor*, const IUseEventFlowData*);
 bool isEnableForceOpenBalloonByOrderGroup(const LiveActor*, const IUseEventFlowData*);
 bool isWaitAtPointMovement(const EventFlowExecutor*);
 bool isStopMovement(const IUseEventFlowData*);
 bool isRequestEventDemoAction(const EventFlowExecutor*);
 bool isPlayingEventDemoAction(const EventFlowExecutor*);
-void getEventDemoActionName(const EventFlowExecutor*);
+const char* getEventDemoActionName(const EventFlowExecutor*);
 bool isExistEventDemoTalkAction(const EventFlowExecutor*);
-void getEventDemoTalkActionName(const EventFlowExecutor*);
+const char* getEventDemoTalkActionName(const EventFlowExecutor*);
 bool isResetEventDemoPlayerDynamics(const EventFlowExecutor*);
 void startEventDemoAction(EventFlowExecutor*);
 void endEventDemoAction(EventFlowExecutor*);
 bool isRequestEventDemoCamera(const EventFlowExecutor*);
-void getEventDemoCameraAnimName(const EventFlowExecutor*);
+const char* getEventDemoCameraAnimName(const EventFlowExecutor*);
 void clearEventDemoCameraRequest(EventFlowExecutor*);
 bool isHideDemoPlayer(const EventFlowExecutor*);
 bool isExistEventEntry(const EventFlowExecutor*, const char*);
 bool isCurrentEventEntry(const EventFlowExecutor*, const char*);
 bool isEventName(const EventFlowEventData*, const char*, ...);
-void getEventName(const EventFlowEventData*);
-void getEventDataParamString(const EventFlowEventData*, const char*);
+const char* getEventName(const EventFlowEventData*);
+bool getEventDataParamString(const EventFlowEventData*, const char*);
 bool isEventDataParamBool(const EventFlowEventData*, const char*);
 }  // namespace al
 
