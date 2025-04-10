@@ -14,11 +14,11 @@ class ActorMatrixCameraTarget : public CameraTargetBase {
 public:
     ActorMatrixCameraTarget(const LiveActor*, const sead::Matrix34f*);
 
-    void calcTrans(sead::Vector3f*) const;
-    void calcSide(sead::Vector3f*) const;
-    void calcUp(sead::Vector3f*) const;
-    void calcFront(sead::Vector3f*) const;
-    void calcVelocity(sead::Vector3f*) const;
+    void calcTrans(sead::Vector3f*) const override;
+    void calcSide(sead::Vector3f*) const override;
+    void calcUp(sead::Vector3f*) const override;
+    void calcFront(sead::Vector3f*) const override;
+    void calcVelocity(sead::Vector3f*) const override;
 
 private:
     char filler[0x20];
