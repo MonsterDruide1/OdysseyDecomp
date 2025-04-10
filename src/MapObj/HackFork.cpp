@@ -486,7 +486,6 @@ void HackFork::shoot() {
     al::tryStartAction(this, "HackEnd");
 }
 
-// NON_MATCHING: https://decomp.me/scratch/8ReuA
 void HackFork::control() {
     mHackStartShaderCtrl->update();
     if (mMtxConnector != nullptr) {
@@ -502,17 +501,17 @@ void HackFork::control() {
     if (mTouchDelay != 0)
         mTouchDelay--;
     if (isHack()) {
-        sead::Vector3f upDir;
         if (mIsControlledByPlayer) {
-            al::calcFrontDir(&upDir, this);
-            upDir.y = 0.0f;
-            al::tryNormalizeOrDirZ(&upDir);
+            sead::Vector3f frontDir;
+            al::calcFrontDir(&frontDir, this);
+            frontDir.y = 0.0f;
+            al::tryNormalizeOrDirZ(&frontDir);
+            frontDir.negate();
             sead::Vector3f sideDir;
-            sideDir.setCross(upDir, sead::Vector3f::ey);
+            sideDir.setCross(sead::Vector3f::ey, frontDir);
             mCameraTargetMtx.setBase(0, sideDir);
             mCameraTargetMtx.setBase(1, sead::Vector3f::ey);
-            mCameraTargetMtx.setBase(2, -upDir);
-            upDir.x *= -1.0f;
+            mCameraTargetMtx.setBase(2, frontDir);
         } else {
             sead::Vector3f upDir;
             al::calcUpDir(&upDir, this);
@@ -520,7 +519,7 @@ void HackFork::control() {
             al::tryNormalizeOrDirZ(&upDir);
             sead::Vector3f sideDir;
             sideDir.setCross(sead::Vector3f::ey, upDir);
-            if (0.0 <= sideDir.dot(al::getCameraPos(this, 0) - al::getTrans(this))) {
+            if ((al::getCameraPos(this, 0) - al::getTrans(this)).dot(upDir) >= 0.0f) {
                 upDir = -upDir;
                 sideDir = -sideDir;
             }
@@ -529,11 +528,12 @@ void HackFork::control() {
             mCameraTargetMtx.setBase(2, upDir);
         }
 
-        sead::Vector3f cameraPos = mCameraOffset;
-        cameraPos.rotate(al::getQuat(this));
+        sead::Vector3f cameraPos;
+        cameraPos.setRotated(al::getQuat(this), mCameraOffset);
         if (mIsControlledByPlayer) {
-            al::calcFrontDir(&upDir, this);
-            mCameraOffset += upDir * 100.0f;
+            sead::Vector3f frontDir;
+            al::calcFrontDir(&frontDir, this);
+            cameraPos += frontDir * 100.0f;
         }
         mCameraTargetMtx.setBase(3, cameraPos + al::getTrans(this));
         al::calcJointPos(&mHeadGuidePos, this, "Stick05");
