@@ -189,15 +189,16 @@ __attribute__((always_inline)) void initActorModel(LiveActor* actor, const Actor
     ModelLodCtrl* modelLodCtrl = initActorModelLodCtrl(actor, modelRes, suffix);
     modelKeeper->setModelLodCtrl(modelLodCtrl);
     if (modelLodCtrl)
-        initInfo.actorSceneInfo.graphicsSystemInfo->modelLodAllCtrl->registerLodCtrl(modelLodCtrl);
+        initInfo.actorSceneInfo.graphicsSystemInfo->getModelLodAllCtrl()->registerLodCtrl(
+            modelLodCtrl);
 
     MaterialCategoryKeeper* materialCategoryKeeper =
-        initInfo.actorSceneInfo.graphicsSystemInfo->materialCategoryKeeper;
+        initInfo.actorSceneInfo.graphicsSystemInfo->getMaterialCategoryKeeper();
     ModelMaterialCategory::tryCreate(modelKeeper->getModelCtrl(), modelRes, suffix,
                                      materialCategoryKeeper);
 
     GraphicsQualityInfo* graphicsQualityInfo =
-        initInfo.actorSceneInfo.graphicsSystemInfo->graphicsQualityController
+        initInfo.actorSceneInfo.graphicsSystemInfo->getGraphicsQualityController()
             ->getGraphicsQualityInfo();
     modelKeeper->getModelCtrl()->setGraphicsQualityInfo(graphicsQualityInfo);
 
