@@ -2,6 +2,8 @@
 
 #include <basis/seadTypes.h>
 
+#include "Project/HitSensor/HitSensor.h"
+
 namespace al {
 class LiveActor;
 }
@@ -11,6 +13,6 @@ namespace alSensorFunction {
 void updateHitSensorsAll(al::LiveActor*);
 void clearHitSensors(al::LiveActor*);
 
-u32 findSensorTypeByName(const char*);
+al::HitSensorType findSensorTypeByName(const char*);
 
 }  // namespace alSensorFunction

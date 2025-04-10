@@ -1,16 +1,18 @@
 #pragma once
 
+#include "Library/Nerve/NerveExecutor.h"
+
 namespace al {
 class GraphicsQualityInfo;
 
-class GraphicsQualityController {
+class GraphicsQualityController : public NerveExecutor {
 public:
     // missing
 
     GraphicsQualityInfo* getGraphicsQualityInfo() const { return mGraphicsQualityInfo; }
 
 private:
-    void* _0[3];
+    void* _0[1];
     GraphicsQualityInfo* mGraphicsQualityInfo;
     void* _20[29];
 };

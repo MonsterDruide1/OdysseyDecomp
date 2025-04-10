@@ -62,16 +62,12 @@ const NameToCreator<PoseKeeperCreatorFunction> gActorPoseTable[] = {
     {"TQSV", initActorPoseTQSV}, {"TQGSV", initActorPoseTQGSV}, {"TQGMSV", initActorPoseTQGMSV},
 };
 
-void initActorImpl(LiveActor* actor, const ActorInitInfo& initInfo,
-                   const sead::SafeString& folderName, const sead::SafeString& fileName,
-                   const char*);
-
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo) {
     initActorSuffix(actor, initInfo, nullptr);
 }
 
 __attribute__((always_inline)) bool initActorPoseKeeper(const char* pose, LiveActor* actor) {
-    if (pose == nullptr)
+    if (!pose)
         return false;
     s32 poseId = -1;
     for (s32 i = 0; i < 9; i++) {
@@ -135,8 +131,13 @@ initActorModelLodCtrl(LiveActor* actor, Resource* modelRes, const char* suffix) 
     }
 
     ModelLodCtrl* modelLodCtrl = new ModelLodCtrl{
-        actor,        getTransPtr(actor), actor->getBaseMtx(), getScalePtr(actor), modelBoundingBox,
-        lodModelCount};
+        actor,
+        getTransPtr(actor),
+        actor->getBaseMtx(),
+        getScalePtr(actor),
+        modelBoundingBox,
+        lodModelCount,
+    };
     modelLodCtrl->init(initLod);
 
     return modelLodCtrl;
@@ -292,12 +293,11 @@ __attribute__((always_inline)) void initActorSensor(LiveActor* actor, const Acto
         sead::Vector3f offset = sead::Vector3f::zero;
         tryGetByamlV3f(&offset, sensor);
 
-        u32 type = alSensorFunction::findSensorTypeByName(sensorType);
-        // CollisionParts
-        if (type == 15)
+        HitSensorType type = alSensorFunction::findSensorTypeByName(sensorType);
+        if (type == HitSensorType::CollisionParts)
             maxCount = 0;
 
-        addHitSensor(actor, initInfo, sensorName, type, radius, maxCount, offset);
+        addHitSensor(actor, initInfo, sensorName, (u32)type, radius, maxCount, offset);
 
         const char* joint = nullptr;
         sensor.tryGetStringByKey(&joint, "Joint");
