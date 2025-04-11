@@ -99,7 +99,7 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     makeActorAlive();
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
-    al::ByamlIter iter(al::getModelResourceYaml(this, "InitHackCap", nullptr));
+    al::ByamlIter iter = {al::getModelResourceYaml(this, "InitHackCap", nullptr)};
     mJointName = al::tryGetByamlKeyStringOrNULL(iter, "JointName");
     sead::Vector3f localTrans = {0.0f, 0.0f, 0.0f};
     al::tryGetByamlV3f(&localTrans, iter, "LocalTrans");
@@ -107,7 +107,10 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     al::tryGetByamlV3f(&localRotate, iter, "LocalRotate");
 
     sead::Matrix34f rotationMatrix;
-    rotationMatrix.makeR(localRotate * 0.01745329f);
+    sead::Vector3f rotateRad(sead::Mathf::deg2rad(localRotate.x),
+                             sead::Mathf::deg2rad(localRotate.y),
+                             sead::Mathf::deg2rad(localRotate.z));
+    rotationMatrix.makeR(rotateRad);
 
     sead::Matrix34f translationMatrix;
     translationMatrix.makeRT({0.0f, 0.0f, 0.0f}, localTrans * al::getScaleY(this));
@@ -137,46 +140,14 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
     if (rs::isMsgEnableMapCheckPointWarp(message))
         return false;
 
-    if (rs::isMsgMotorcycleDashAttack(message)) {
-        if (mTouchDelay != 0) {
-            mTouchDelay = 30;
-            return false;
-        }
-        if (al::isNerve(this, &NrvHackFork.Wait) || al::isNerve(this, &NrvHackFork.Damping)) {
-            mTouchForce = 5.0f;
-            mTouchDelay = 30;
-            al::setNerve(this, &NrvHackFork.Damping);
-            al::startHitReaction(this, "タッチ（強）");
-            return true;
-        }
-        return false;
-    }
+    if (rs::isMsgMotorcycleDashAttack(message))
+        return tryTouch(5.0f, "タッチ（強）");
     if (al::isMsgPlayerObjTouch(message) || al::isMsgKickStoneAttackReflect(message) ||
         rs::isMsgRadishReflect(message) || rs::isMsgSeedReflect(message)) {
-        if (mTouchDelay != 0) {
-            mTouchDelay = 30;
-            return false;
-        }
-        if (al::isNerve(this, &NrvHackFork.Wait) || al::isNerve(this, &NrvHackFork.Damping)) {
-            mTouchForce = 2.0f;
-            mTouchDelay = 30;
-            al::setNerve(this, &NrvHackFork.Damping);
-            al::startHitReaction(this, "タッチ（弱）");
-            return true;
-        }
-        return false;
+        return tryTouch(2.0f, "タッチ（弱）");
     }
     if (rs::isMsgHammerBrosHammerHackAttack(message) || al::isMsgPlayerFireBallAttack(message)) {
-        if (mTouchDelay == 0) {
-            if (al::isNerve(this, &NrvHackFork.Wait) || al::isNerve(this, &NrvHackFork.Damping)) {
-                mTouchForce = 2.0f;
-                mTouchDelay = 30;
-                al::setNerve(this, &NrvHackFork.Damping);
-                al::startHitReaction(this, "タッチ（弱）");
-            }
-        } else {
-            mTouchDelay = 30;
-        }
+        tryTouch(2.0f, "タッチ（弱）");
         rs::requestHitReactionToAttacker(message, self, other);
         return true;
     }
@@ -184,17 +155,14 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
         resetCapMtx(self);
         return true;
     }
-    if (rs::isMsgPlayerDisregardTargetMarker(message)) {
-        if (mEventFlowExecutor != nullptr)
-            return al::isActive(mEventFlowExecutor);
-        return false;
-    }
+    if (rs::isMsgPlayerDisregardTargetMarker(message))
+        return mEventFlowExecutor && al::isActive(mEventFlowExecutor);
     if (rs::isMsgTargetMarkerPosition(message)) {
         sead::Vector3f position = al::getSensorPos(this, "Stick05") + 50.0f * sead::Vector3f::ey;
         rs::setMsgTargetMarkerPosition(message, position);
         return true;
     }
-    if (al::isNerve(this, &NrvHackFork.Wait) || al::isNerve(this, &NrvHackFork.Damping)) {
+    if (isNerveHackable()) {
         if (rs::isMsgCapEnableLockOn(message))
             return true;
         if (rs::isMsgStartHack(message)) {
@@ -242,7 +210,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
                 rs::endHackDir(&mPlayerHack, upDir);
             } else {
                 sead::Vector3f front;
-                if (al::isNearZero(mPullDirection, 0.001f))
+                if (al::isNearZero(mPullDirection))
                     front.set(-mPullDirection2);
                 else
                     front.set(mPullDirection);
@@ -292,7 +260,7 @@ void HackFork::initBasicPoseInfo() {
 }
 
 void HackFork::initAfterPlacement() {
-    if (mMtxConnector != nullptr) {
+    if (mMtxConnector) {
         sead::Vector3f frontDir;
         al::calcFrontDir(&frontDir, this);
         sead::Vector3f a = al::getTrans(this) + frontDir * 100.0f;
@@ -366,9 +334,9 @@ bool HackFork::isHack() const {
 }
 
 void HackFork::controlSpring() {
-    f32 fVar2 = mDampingForce * 0.92f;
-    mTouchForce += fVar2 * -0.5f;
-    mDampingForce = fVar2 + mTouchForce;
+    f32 dampedForce = mDampingForce * 0.92f;
+    mTouchForce += dampedForce * -0.5f;
+    mDampingForce = dampedForce + mTouchForce;
 }
 
 void HackFork::checkSwing() {
@@ -416,7 +384,7 @@ bool HackFork::updateInput(sead::Vector3f* pullDirection, sead::Vector3f frontDi
     sead::Vector3f lookdir;
     al::calcCameraLookDir(&lookdir, this, 0);
 
-    if (frontDir.dot(sead::Vector3f::ey) < sead::Mathf::cos(sead::Mathf::deg2rad(45)) &&
+    if (frontDir.dot(sead::Vector3f::ey) < sead::Mathf::cos(sead::Mathf::deg2rad(45.0f)) &&
         frontDir.dot(lookdir) > 0.0f)
         frontDir = -frontDir;
 
@@ -494,12 +462,12 @@ void HackFork::shoot() {
 
 void HackFork::control() {
     mHackStartShaderCtrl->update();
-    if (mMtxConnector != nullptr) {
+    if (mMtxConnector) {
         al::connectPoseQT(this, mMtxConnector);
         initBasicPoseInfo();
     }
     if (!isHack()) {
-        if (mCameraTicket != nullptr && al::isActiveCamera(mCameraTicket))
+        if (mCameraTicket && al::isActiveCamera(mCameraTicket))
             al::endCamera(this, mCameraTicket, -1, false);
         if (al::isActiveCameraTarget(mMatrixCameraTarget))
             al::resetCameraTarget(this, mMatrixCameraTarget);
@@ -579,13 +547,13 @@ void HackFork::exeWait() {
         al::startAction(this, "Wait");
         al::showModelIfHide(this);
     }
-    if (mEventFlowExecutor != nullptr)
+    if (mEventFlowExecutor)
         rs::updateEventFlow(mEventFlowExecutor);
 }
 
 void HackFork::exeHackStartWait() {
     if (al::isFirstStep(this)) {
-        if (mCameraTicket != nullptr) {
+        if (mCameraTicket) {
             al::startCamera(this, mCameraTicket, -1);
             al::requestStopCameraVerticalAbsorb(this);
         }
@@ -610,10 +578,10 @@ void HackFork::exeHackStartWait() {
 void HackFork::exeDamping() {
     if (al::isFirstStep(this))
         al::showModelIfHide(this);
-    if (!al::isNearZero(mTouchForce, 0.001f) || !al::isNearZero(mDampingForce, 0.001f)) {
+    if (!al::isNearZero(mTouchForce) || !al::isNearZero(mDampingForce)) {
         controlSpring();
     } else {
-        if (al::isNearZero(mDampingStrength, 0.001f)) {
+        if (al::isNearZero(mDampingStrength)) {
             mDampingStrength = 0.0f;
             mDampingForce = 0.0f;
             mTouchForce = 0.0f;
@@ -646,7 +614,7 @@ void HackFork::exeHackWait() {
     sead::Vector3f pullDirection;
     if (!trySwingJump() && updateInput(&pullDirection, frontDir) &&
         sead::Mathf::abs(pullDirection.dot(mUpDir)) >
-            sead::Mathf::cos(mIsLimitterFree ? 3.1415927f : 0.78539819f)) {
+            sead::Mathf::cos(sead::Mathf::deg2rad(getJumpRange()))) {
         mPullDirection.set(pullDirection);
         mIsJumpFoward = mPullDirection.dot(mUpDir) < 0.0f;
         al::setNerve(this, &NrvHackFork.HackBend);
@@ -678,14 +646,14 @@ void HackFork::exeHackBend() {
         f32 jumpDir = mIsJumpFoward ? -1.0f : 1.0f;
 
         f32 angle = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
-        if (sead::Mathf::rad2deg(acosf(angle)) < (mIsLimitterFree ? 180.0f : 45.0f))
+        if (sead::Mathf::rad2deg(acosf(angle)) < getJumpRange())
             mPullDirection = mPullDirection * 0.5f + pullDirection * 0.5f;
         al::normalize(&mPullDirection);
         f32 oldmDampingForce = mDampingForce;
         bendAndTwist(mPullDirection, frontDir);
         f32 rumbleVolume =
             (mDampingForce - oldmDampingForce) * 0.5f + (mPullDirection - oldJump).length() * 3.3f;
-        if (!al::isNearZero(rumbleVolume, 0.001f)) {
+        if (!al::isNearZero(rumbleVolume)) {
             al::holdSe(this, "PgBendLv");
             sead::Vector3f jointPos;
             al::calcJointPos(&jointPos, this, "Stick03");
@@ -693,7 +661,7 @@ void HackFork::exeHackBend() {
                 al::PadRumbleParam(0.0f, 1300.0f, rumbleVolume, rumbleVolume);
             alPadRumbleFunction::startPadRumbleWithParam(this, jointPos, "パルス（中）", param, -1);
         }
-        if (4.5 <= mDampingForce)
+        if (mDampingForce >= 4.5f)
             mIsReadyToShoot = true;
     }
 }
