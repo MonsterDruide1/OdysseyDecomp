@@ -53,7 +53,7 @@ public:
     void sendMsgEnableMapCheckPointWarp();
     void sendMsgSelfCeilingCheckMiss();
     void receiveRequestTransferHack(al::HitSensor*);
-    void requestDamage();
+    bool requestDamage();
     void receiveRequestDamage();
     void sendSyncDamageVisibility();
     void pushWorldEndBorder(const sead::Vector3f&);

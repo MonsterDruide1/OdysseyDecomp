@@ -42,7 +42,7 @@ void endHackFastenerToDestination(IUsePlayerHack**, const sead::Vector3f&, const
 void endHackBazookaElectricToDestination(IUsePlayerHack**, const sead::Vector3f&,
                                          const sead::Vector3f&, const sead::Quatf&, s32, f32);
 void endHackThrowed(IUsePlayerHack**, const sead::Vector3f&);
-void requestDamage(IUsePlayerHack*);
+bool requestDamage(IUsePlayerHack*);
 void syncDamageVisibility(al::LiveActor*, const IUsePlayerHack*);
 bool isDamageVisibilityHide(const IUsePlayerHack*);
 bool isTouchHackCancelCollisionCode(const al::LiveActor*, const IUsePlayerCollision*);
@@ -63,7 +63,7 @@ bool sendMsgHackerNoReactionWithoutShine(const IUsePlayerHack*, al::HitSensor*, 
 bool isMsgHackerDamageAndCancel(const al::SensorMsg*);
 bool isMsgEnableMapCheckPointWarpCollidedGround(const al::SensorMsg*, const al::LiveActor*);
 bool isMsgEnableMapCheckPointWarpCollidedGround(const al::SensorMsg*, const IUsePlayerCollision*);
-void receiveMsgRequestTransferHack(const al::SensorMsg*, IUsePlayerHack*, al::HitSensor*);
+bool receiveMsgRequestTransferHack(const al::SensorMsg*, IUsePlayerHack*, al::HitSensor*);
 void hideHackCap(IUsePlayerHack*);
 void showHackCap(IUsePlayerHack*);
 void hideShadowHackCap(IUsePlayerHack*);

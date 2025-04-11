@@ -4,13 +4,14 @@
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
+class JointAimInfo;
 class JointControllerBase;
 class JointDirectionInfo;
-class JointAimInfo;
-class JointTranslateShaker;
-class JointMasher;
+class JointLocalAxisRotator;
 class JointLookAtController;
+class JointMasher;
+class JointTranslateShaker;
+class LiveActor;
 
 void initJointControllerKeeper(const LiveActor*, s32);
 void isExistJointControllerKeeper(const LiveActor*);
@@ -20,8 +21,8 @@ void initJointLocalRotator(const LiveActor*, sead::Vector3f*, const char*);
 void initJointLocalXRotator(const LiveActor*, const f32*, const char*);
 void initJointLocalYRotator(const LiveActor*, const f32*, const char*);
 void initJointLocalZRotator(const LiveActor*, const f32*, const char*);
-void initJointLocalAxisRotator(const LiveActor*, const sead::Vector3f&, const f32*, const char*,
-                               bool);
+JointLocalAxisRotator* initJointLocalAxisRotator(const LiveActor*, const sead::Vector3f&,
+                                                 const f32*, const char*, bool);
 void initJointLocalMinusXRotator(const LiveActor*, const f32*, const char*);
 void initJointLocalMinusYRotator(const LiveActor*, const f32*, const char*);
 void initJointLocalMinusZRotator(const LiveActor*, const f32*, const char*);
