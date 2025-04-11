@@ -2,6 +2,8 @@
 
 #include <prim/seadSafeString.h>
 
+#include "Library/Base/StringUtil.h"
+
 namespace al {
 class PlacementInfo;
 
@@ -15,7 +17,7 @@ public:
     bool init(const PlacementInfo&);
     bool isEqual(const PlacementId&) const;
     bool isValid() const;
-    bool makeString(sead::BufferedSafeString*) const;
+    void makeString(sead::BufferedSafeString* out) const;
 
     const char* getId() const { return mId; }
 
@@ -27,4 +29,6 @@ private:
     const char* mZoneId;
     const char* mCommonID;
 };
+
+StringTmp<128> makeStringPlacementId(const PlacementId* placement_id);
 }  // namespace al
