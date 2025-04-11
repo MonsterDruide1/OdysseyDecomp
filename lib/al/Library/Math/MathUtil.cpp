@@ -212,11 +212,7 @@ bool isInRange(f32 x, f32 a, f32 b) {
 }
 
 void normalize(sead::Vector2f* vec) {
-    f32 len = vec->length();
-    if (len > 0.0f) {
-        f32 invLen = 1.0f / len;
-        *vec *= invLen;
-    }
+    vec->normalize();
 }
 
 void normalize(sead::Vector3f* vec) {
@@ -272,8 +268,7 @@ bool limitLength(sead::Vector2f* out, const sead::Vector2f& vec, f32 limit) {
     f32 len = vec.length();
     if (len > limit) {
         f32 invLen = limit / len;
-        out->x = invLen * vec.x;
-        out->y = invLen * vec.y;
+        out->setScale(vec, invLen);
         return true;
     } else {
         out->set(vec);
