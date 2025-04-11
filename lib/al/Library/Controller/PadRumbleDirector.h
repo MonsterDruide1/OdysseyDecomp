@@ -7,6 +7,8 @@ class PlayerHolder;
 class CameraDirector;
 class WaveVibrationHolder;
 struct PadRumbleParam;
+class PadRumbleKeeper;
+class LiveActor;
 
 class PadRumbleDirector {
 public:
@@ -41,5 +43,7 @@ public:
 private:
     void* filler[14];
 };
+
+PadRumbleKeeper* createPadRumbleKeeper(const LiveActor*, s32);
 
 }  // namespace al

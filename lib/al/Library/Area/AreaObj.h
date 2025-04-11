@@ -24,21 +24,25 @@ public:
     virtual bool isInVolume(const sead::Vector3f& pos) const;
     virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
     SceneObjHolder* getSceneObjHolder() const override;
+    void validate();
+    void invalidate();
 
-    PlacementInfo* getPlacementInfo() const { return mPlacementInfo; }
+    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
 
     AreaShape* getAreaShape() const { return mAreaShape; }
 
     const sead::Matrix34f& getAreaMtx() const { return mAreaTR; }
 
+    s32 getPriority() { return mPriority; };
+
 private:
     const char* mName;
-    AreaShape* mAreaShape;
-    StageSwitchKeeper* mStageSwitchKeeper;
-    SceneObjHolder* mSceneObjHolder;
-    sead::Matrix34f mAreaTR;
-    PlacementInfo* mPlacementInfo;
-    s32 mPriority;
-    bool mIsValid;
+    AreaShape* mAreaShape = nullptr;
+    StageSwitchKeeper* mStageSwitchKeeper = nullptr;
+    SceneObjHolder* mSceneObjHolder = nullptr;
+    sead::Matrix34f mAreaTR = sead::Matrix34f::ident;
+    PlacementInfo* mPlacementInfo = nullptr;
+    s32 mPriority = -1;
+    bool mIsValid = true;
 };
 }  // namespace al

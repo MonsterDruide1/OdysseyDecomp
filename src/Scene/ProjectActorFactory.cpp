@@ -56,9 +56,11 @@
 #include "MapObj/Doshi.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/LavaPan.h"
+#include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
@@ -357,7 +359,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Megane", nullptr},
     {"MeganeLiftExLift", nullptr},
     {"MeganeKeyMoveMapParts", nullptr},
-    {"MeganeMapParts", nullptr},
+    {"MeganeMapParts", al::createActorFunction<MeganeMapParts>},
     {"Mirror", nullptr},
     {"MoonBasementBreakParts", nullptr},
     {"MoonBasementClimaxWatcher", nullptr},
@@ -465,7 +467,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SandGeyser", nullptr},
     {"SandWorldHomeLift", nullptr},
     {"SaucePan", nullptr},
-    {"SaveFlagCheckObj", nullptr},
+    {"SaveFlagCheckObj", al::createActorFunction<SaveFlagCheckObj>},
     {"ScenarioStartCameraAnim", nullptr},
     {"ScenarioStartCameraSimpleZoom", nullptr},
     {"ScenarioStartCameraRailMove", nullptr},

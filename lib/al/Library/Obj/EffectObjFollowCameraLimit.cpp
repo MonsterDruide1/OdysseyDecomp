@@ -80,7 +80,7 @@ void EffectObjFollowCameraLimit::control() {
 
     pos.y = sead::Mathf::max(pos.y, mLimitBottom);
 
-    if (!isNearZero(mLimitTop + 1, 0.001f))
+    if (!isNearZero(mLimitTop + 1))
         pos.y = sead::Mathf::min(pos.y, mLimitTop);
 
     if (!isParallelDirection(sead::Vector3f::ey, front, 0.01f))
