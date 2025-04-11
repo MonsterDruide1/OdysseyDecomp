@@ -13,6 +13,7 @@ class AnimPlayerSkl;
 class AnimPlayerVis;
 class ModelCtrl;
 class DitherAnimator;
+class ModelLodCtrl;
 
 class ModelKeeper : public HioNode {
 public:
@@ -24,6 +25,8 @@ public:
     void initResource();
     void createMatAnimForProgram(s32);
     void setDitherAnimator(DitherAnimator* ditherAnimator);
+    void setDisplayRootJointMtxPtr(const sead::Matrix34f* mtx);
+    void setModelLodCtrl(ModelLodCtrl* modelLodCtrl);
 
     ModelCtrl* getModelCtrl() const { return mModelCtrl; }
 
