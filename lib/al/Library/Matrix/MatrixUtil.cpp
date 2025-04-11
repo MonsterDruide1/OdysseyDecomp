@@ -269,8 +269,7 @@ bool tryNormalizeMtxScaleOrIdentity(sead::Matrix34f* outMtx, const sead::Matrix3
         return true;
     }
 
-    sead::Vector3f base;
-    mtx.getBase(base, 3);
+    sead::Vector3f base = mtx.getBase(3);
     outMtx->makeIdentity();
     outMtx->setBase(3, base);
 
