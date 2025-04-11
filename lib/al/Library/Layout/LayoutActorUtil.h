@@ -84,7 +84,7 @@ bool isReleaseTouchPane(const IUseLayout*, const char*);
 s32 getPaneChildNum(const IUseLayout*, const char*);
 const char* getPaneChildName(const IUseLayout*, const char*, s32);
 void setPaneStringLength(IUseLayout*, const char*, const char16*, u16, u16);
-void setPaneString(IUseLayout*, const char*, const char16*, u16);
+void setPaneString(IUseLayout*, const char*, const char16*, u16 = 0);
 void setPaneCounterDigit1(IUseLayout*, const char*, s32, u16);
 void setPaneCounterDigit2(IUseLayout*, const char*, s32, u16);
 void setPaneCounterDigit3(IUseLayout*, const char*, s32, u16);
