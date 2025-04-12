@@ -67,6 +67,10 @@ public:                                                                         
         m_value ^= e;                                                                              \
         return *this;                                                                              \
     }                                                                                              \
+    CLASS& operator=(const CLASS& c) {                                                             \
+        m_value = c.m_value;                                                                       \
+        return *this;                                                                              \
+    }                                                                                              \
                                                                                                    \
 private:                                                                                           \
     s32 m_value;
