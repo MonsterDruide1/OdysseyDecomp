@@ -5,8 +5,8 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+struct ActorInitInfo;
 class AddDemoInfo;
-class ActorInitInfo;
 class EffectSystem;
 class LiveActor;
 class PlacementId;

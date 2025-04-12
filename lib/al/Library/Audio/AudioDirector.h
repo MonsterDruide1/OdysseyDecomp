@@ -18,11 +18,11 @@ class AudioMic;
 class AudioEventController;
 class AudioRequest;
 class AudioRequestKeeperSyncedBgm;
-class AudioSystemInfo;
+struct AudioSystemInfo;
 class AreaObjDirector;
 class AudioDuckingDirector;
 class AudioEffectController;
-class AudioDirectorInitInfo;
+struct AudioDirectorInitInfo;
 class PlayerHolder;
 
 class AudioDirector : public IUseAreaObj, public HioNode, public IAudioSystemPause {

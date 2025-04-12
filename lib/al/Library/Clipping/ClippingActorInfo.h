@@ -7,7 +7,7 @@ enum ClippingRequestKeeper {};
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 class ClippingJudge;
 class ViewIdHolder;
 

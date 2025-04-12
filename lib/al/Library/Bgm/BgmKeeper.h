@@ -3,7 +3,7 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class AudioSystemInfo;
+struct AudioSystemInfo;
 class BgmDirector;
 struct BgmUserInfo;
 
