@@ -251,8 +251,7 @@ void startHitReactionHitEffect(const LiveActor* actor, const char* name,
 void startHitReactionHitEffect(const LiveActor* actor, const char* name,
                                const sead::Matrix34f* mtx) {
     if (actor->getHitReactionKeeper()) {
-        sead::Vector3f pos;
-        mtx->getBase(pos, 3);
+        sead::Vector3f pos = mtx->getBase(3);
 
         // copying around again to force more compact stp codegen
         sead::Vector3f x;
