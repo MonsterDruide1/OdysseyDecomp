@@ -75,11 +75,11 @@ StageResourceList::StageResourceList(const char* stageName, s32 scenarioNo,
             continue;
 
         Resource* resource = findOrCreateResource(archivePath, nullptr);
-        void* bymlData = resource->tryGetByml(StringTmp<256>{"%s%s", objectName, resourceType});
+        const u8* bymlData = resource->tryGetByml(StringTmp<256>{"%s%s", objectName, resourceType});
         if (!bymlData)
             continue;
 
-        ByamlIter iter = {(const u8*)bymlData};
+        ByamlIter iter = {bymlData};
         iter.tryGetIterByIndex(&iter, bymlScenarioIndex);
         mStageResources.pushBack(
             new StageInfo(resource, iter, subPlacementInfo.getPlacementIter()));
