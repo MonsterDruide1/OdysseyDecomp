@@ -43,7 +43,7 @@ public:
 
     CollisionDirector* getCollisionDirector() const override;
 
-    void set_38(f32 value) { _38 = value; };
+    void setRadius(f32 radius) { mRadius = radius; };
 
     s32 get_48() const { return _48; }
 
@@ -51,7 +51,8 @@ public:
 
 private:
     void* unknown[0x6];
-    f32 _38;
+    f32 mRadius;
+    f32 mOffsetY;
     void* unknown2;
     s32 _48;
     s32 _4c;

@@ -48,7 +48,7 @@ void MapObjStatePlayerHold::initShadowMaskDropLengthCtrl(const char* shadowMaskN
 
 void MapObjStatePlayerHold::appear() {
     setDead(false);
-    mPushPosition = {0.0f, 0.0f, 0.0f};
+    mTotalPush = {0.0f, 0.0f, 0.0f};
     al::invalidateClipping(mActor);
 
     if (mIsUseColliderPush) {
@@ -70,7 +70,7 @@ void MapObjStatePlayerHold::appear() {
 }
 
 void MapObjStatePlayerHold::kill() {
-    mHitSensor = nullptr;
+    mPlayerHitSensor = nullptr;
     al::validateClipping(mActor);
 
     if (mIsUseColliderPush)
@@ -84,7 +84,7 @@ void MapObjStatePlayerHold::kill() {
     al::restartDitherAnimAutoCtrl(mActor);
     al::setModelAlphaMask(mActor, 1.0f);
     al::validateOcclusionQuery(mActor);
-    mPushPosition = {0.0f, 0.0f, 0.0f};
+    mTotalPush = {0.0f, 0.0f, 0.0f};
     setDead(true);
 }
 
@@ -99,7 +99,7 @@ bool MapObjStatePlayerHold::receiveMsgNoRelease(const al::SensorMsg* message, al
 
     sead::Vector3f pushPos = {0.0f, 0.0f, 0.0f};
     if (al::tryReceiveMsgPushAndCalcPushTrans(&pushPos, message, mActor, other, self, 15.0f)) {
-        al::sendMsgCollidePush(mHitSensor, self, pushPos);
+        al::sendMsgCollidePush(mPlayerHitSensor, self, pushPos);
         return true;
     }
 
@@ -157,9 +157,9 @@ void MapObjStatePlayerHold::prepareThrowCollide() {
     sead::Vector3f direction = {0.0f, 0.0f, 0.0f};
     al::Collider* collider = actor->getCollider();
 
-    collider->set_38(sead::Mathf::clampMax(mColliderRadius * mColliderPushForce, 40.0f));
+    collider->setRadius(sead::Mathf::clampMax(mColliderRadius * mColliderPushForce, 40.0f));
     collider->onInvalidate();
-    collider->set_38(mColliderRadius);
+    collider->setRadius(mColliderRadius);
 
     al::setTrans(actor, collider->collide(direction) + al::getTrans(actor));
 }
@@ -179,7 +179,7 @@ bool MapObjStatePlayerHold::tryStartCarryFront(const al::SensorMsg* message,
                                                al::HitSensor* sensor) {
     if (al::isMsgPlayerCarryFront(message)) {
         mIsCarryUp = false;
-        mHitSensor = sensor;
+        mPlayerHitSensor = sensor;
         return true;
     }
     return false;
@@ -189,7 +189,7 @@ bool MapObjStatePlayerHold::tryStartCarryFrontWallKeep(const al::SensorMsg* mess
                                                        al::HitSensor* sensor) {
     if (al::isMsgPlayerCarryFrontWallKeep(message)) {
         mIsCarryUp = false;
-        mHitSensor = sensor;
+        mPlayerHitSensor = sensor;
         return true;
     }
     return false;
@@ -198,14 +198,14 @@ bool MapObjStatePlayerHold::tryStartCarryFrontWallKeep(const al::SensorMsg* mess
 bool MapObjStatePlayerHold::tryStartCarryUp(const al::SensorMsg* message, al::HitSensor* sensor) {
     if (al::isMsgPlayerCarryUp(message)) {
         mIsCarryUp = true;
-        mHitSensor = sensor;
+        mPlayerHitSensor = sensor;
         return true;
     }
     return false;
 }
 
 void MapObjStatePlayerHold::tryCancelHold(al::HitSensor* sensor) {
-    al::sendMsgHoldCancel(mHitSensor, sensor);
+    al::sendMsgHoldCancel(mPlayerHitSensor, sensor);
 }
 
 void MapObjStatePlayerHold::updateCollider(al::HitSensor* sensor) {
@@ -221,7 +221,7 @@ void MapObjStatePlayerHold::updateCollider(al::HitSensor* sensor) {
     f32 maxColliderRadius = mColliderRadius * mColliderPushForce;
     f32 colliderRadius = nextOffset * 10.0f + 40.0f;
 
-    collider->set_38(sead::Mathf::min(colliderRadius, maxColliderRadius));
+    collider->setRadius(sead::Mathf::min(colliderRadius, maxColliderRadius));
     sead::Vector3f pushPos = collider->collide(sead::Vector3f::zero);
 
     if (al::isOnGround(actor, 0)) {
@@ -229,7 +229,7 @@ void MapObjStatePlayerHold::updateCollider(al::HitSensor* sensor) {
             al::verticalizeVec(&pushPos, al::getGravity(actor), pushPos);
         } else {
             sead::Vector3f groundPos = al::getCollidedGroundPos(actor);
-            sead::Vector3f normal = al::getActorTrans(mHitSensor) - groundPos;
+            sead::Vector3f normal = al::getActorTrans(mPlayerHitSensor) - groundPos;
             al::verticalizeVec(&normal, al::getGravity(actor), normal);
             if (!al::tryNormalizeOrZero(&normal)) {
                 rs::calcPlayerFrontDir(&normal, actor);
@@ -239,7 +239,7 @@ void MapObjStatePlayerHold::updateCollider(al::HitSensor* sensor) {
         }
     } else if (mIsCarryUp && al::isLessStep(this, 3) && al::isCollidedCeiling(actor)) {
         sead::Vector3f ceilingPos = al::getCollidedCeilingPos(actor);
-        sead::Vector3f normal = al::getActorTrans(mHitSensor) - ceilingPos;
+        sead::Vector3f normal = al::getActorTrans(mPlayerHitSensor) - ceilingPos;
         al::verticalizeVec(&normal, al::getGravity(actor), normal);
         if (!al::tryNormalizeOrZero(&normal)) {
             rs::calcPlayerFrontDir(&normal, actor);
@@ -247,15 +247,15 @@ void MapObjStatePlayerHold::updateCollider(al::HitSensor* sensor) {
         }
         pushPos += mColliderRadius * normal * mColliderPushForce;
     }
-    mPushPosition = pushPos;
-    al::sendMsgCollidePush(mHitSensor, sensor, pushPos);
+    mTotalPush = pushPos;
+    al::sendMsgCollidePush(mPlayerHitSensor, sensor, pushPos);
     mColliderUpOffset = al::converge(mColliderUpOffset, 1000, 1);
 }
 
 void MapObjStatePlayerHold::exeHold() {
     rs::syncPlayerModelAlpha(mActor);
     sead::Matrix34f poseMtx = sead::Matrix34f::ident;
-    rs::calcPlayerHoldMtx(&poseMtx, mHitSensor);
+    rs::calcPlayerHoldMtx(&poseMtx, mPlayerHitSensor);
 
     sead::Vector3f position = {0.0f, 0.0f, 0.0f};
     al::calcTransLocalOffsetByMtx(&position, poseMtx, mLocalOffset);
@@ -275,7 +275,7 @@ void MapObjStatePlayerHold::exeHold() {
         mIsResetPositionNeeded = false;
     }
 
-    if (mShadowMaskName != nullptr) {
+    if (mShadowMaskName) {
         al::setShadowMaskDropLength(
             mActor, mShadowMaskDropLength + rs::getPlayerShadowDropLength(mActor), mShadowMaskName);
     }

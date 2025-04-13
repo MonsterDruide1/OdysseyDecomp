@@ -18,8 +18,8 @@ public:
 
     void initUseColliderPush(f32 pushForce);
     void initShadowMaskDropLengthCtrl(const char* shadowMaskName);
-    void appear();
-    void kill();
+    void appear() override;
+    void kill() override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other);
     bool receiveMsgNoRelease(const al::SensorMsg* message, al::HitSensor* other,
                              al::HitSensor* self);
@@ -34,7 +34,7 @@ public:
     void exeHold();
 
 private:
-    al::HitSensor* mHitSensor = nullptr;
+    al::HitSensor* mPlayerHitSensor = nullptr;
     sead::Vector3f mLocalOffset;
     sead::Vector3f mLocalRotate;
     bool mIsCarryUp = false;
@@ -42,7 +42,7 @@ private:
     s32 mColliderUpOffset = 0;
     f32 mColliderRadius = 0.0f;
     f32 mColliderPushForce = 1.0f;
-    sead::Vector3f mPushPosition = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mTotalPush = {0.0f, 0.0f, 0.0f};
     bool mIsResetPositionNeeded = false;
     const char* mShadowMaskName = nullptr;
     f32 mShadowMaskDropLength = 0.0f;
