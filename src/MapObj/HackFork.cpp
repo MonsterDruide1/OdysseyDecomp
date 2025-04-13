@@ -82,7 +82,7 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     mMatrixCameraTarget = al::createActorMatrixCameraTarget(this, &mCameraTargetMtx);
     if (!al::isEqualString(modelName, "HackBoard")) {
         mCameraOffset = {0.0f, 0.0f, 100.0f};
-        mHasCameraOffset = true;
+        mIsHackBoard = true;
     }
 
     bool hasBallon = false;
@@ -121,7 +121,7 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     al::normalize(&jointMtx);
     mInvJointMtx.setInverse(jointMtx);
 
-    mCapTargetInfo->setPoseMatrix(&mPoseMtx);
+    mCapTargetInfo->setPoseMatrix(&mCapPoseMtx);
     _340.inverse(&mHackRotation);
 
     initBasicPoseInfo();
@@ -129,7 +129,7 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
 }
 
 void HackFork::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isSensorName(self, "Push") && !al::sendMsgPush(other, self) && !mIsControlledByPlayer) {
+    if (al::isSensorName(self, "Push") && !al::sendMsgPush(other, self) && !mIsHorizontal) {
         const sead::Vector3f& velocity = al::getActorVelocity(other);
         if (velocity.x * velocity.x + velocity.z * velocity.z < 4.999696f)
             rs::sendMsgPushToPlayer(other, self);
@@ -196,7 +196,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
             return true;
         if (rs::isMsgCancelHack(message)) {
             rs::tryEndHackStartDemo(mPlayerHack, this);
-            if (mIsControlledByPlayer) {
+            if (mIsHorizontal) {
                 rs::endHack(&mPlayerHack);
                 rs::resetRouteHeadGuidePosPtr(this);
                 al::tryStartAction(this, "HackEnd");
@@ -204,7 +204,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
                 return true;
             }
 
-            if (mHasCameraOffset) {
+            if (mIsHackBoard) {
                 sead::Vector3f upDir;
                 al::calcUpDir(&upDir, this);
                 rs::endHackDir(&mPlayerHack, upDir);
@@ -253,9 +253,9 @@ void HackFork::initBasicPoseInfo() {
     al::calcFrontDir(&frontDir2, this);
     if (sead::Mathf::abs(frontDir2.y) > 0.5f) {
         al::invalidateShadow(this);
-        mIsControlledByPlayer = false;
+        mIsHorizontal = false;
     } else {
-        mIsControlledByPlayer = true;
+        mIsHorizontal = true;
     }
 }
 
@@ -263,9 +263,9 @@ void HackFork::initAfterPlacement() {
     if (mMtxConnector) {
         sead::Vector3f frontDir;
         al::calcFrontDir(&frontDir, this);
-        sead::Vector3f a = al::getTrans(this) + frontDir * 100.0f;
-        frontDir = frontDir *= -200.0f;
-        al::attachMtxConnectorToCollision(mMtxConnector, this, a, frontDir);
+        sead::Vector3f pos = al::getTrans(this) + frontDir * 100.0f;
+        frontDir *= -200.0f;
+        al::attachMtxConnectorToCollision(mMtxConnector, this, pos, frontDir);
     }
 }
 
@@ -291,19 +291,18 @@ void HackFork::resetCapMtx(al::HitSensor* sensor) {
     al::normalize(&jointMtx);
 
     sead::Matrix34f poseMtx = jointMtx * mStartingPoseMtx;
-
-    sead::Vector3f vector = poseMtx.getBase(1);
+    sead::Vector3f up = poseMtx.getBase(1);
 
     sead::Vector3f normal;
-    if (mIsControlledByPlayer)
+    if (mIsHorizontal)
         normal.set({0.0f, 1.0f, 0.0f});
     else
         normal = -mPullDirection2;
 
-    al::verticalizeVec(&normal, vector, normal);
+    al::verticalizeVec(&normal, up, normal);
 
     if (!al::tryNormalizeOrZero(&normal)) {
-        mNextPoseMtx = mStartingPoseMtx;
+        mNextCapPoseMtx = mStartingPoseMtx;
     } else {
         sead::Matrix34f invPoseMtx;
         invPoseMtx.setInverse(poseMtx);
@@ -318,7 +317,7 @@ void HackFork::resetCapMtx(al::HitSensor* sensor) {
         sead::Matrix34f invJointMtx;
         invJointMtx.setInverse(jointMtx);
 
-        mNextPoseMtx = (invJointMtx * poseMtx) * quatRotationMtx;
+        mNextCapPoseMtx = (invJointMtx * poseMtx) * quatRotationMtx;
     }
     updateCapMtx();
 }
@@ -343,9 +342,10 @@ void HackFork::checkSwing() {
     if (rs::isTriggerHackSwing(mPlayerHack)) {
         mIsHackSwing = true;
         mTimeSinceSwingStart = 0;
-    } else {
-        mTimeSinceSwingStart++;
+        return;
     }
+
+    mTimeSinceSwingStart++;
 }
 
 // NON_MATCHING: Wrong loading order https://decomp.me/scratch/VW7ZF
@@ -360,7 +360,7 @@ bool HackFork::trySwingJump() {
             return false;
     }
 
-    if (mIsControlledByPlayer) {
+    if (mIsHorizontal) {
         mPullDirection.set({0.0f, -1.0f, 0.0f});
     } else {
         sead::Vector3f pulldirection = mPullDirection2;
@@ -435,12 +435,12 @@ void HackFork::shoot() {
 
     sead::Vector3f launchDir;
     launchDir = mPullDirection;
-    if (launchDir.y < -sead::Mathf::cos(sead::Mathf::deg2rad(110)))
+    if (launchDir.y < -sead::Mathf::cos(sead::Mathf::deg2rad(110.0f)))
         launchDir += -sead::Vector3f::ey;
     al::normalize(&launchDir);
 
     f32 scale = mPullDirection.dot(-sead::Vector3f::ey);
-    f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(45));
+    f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(45.0f));
     if (scale > cos) {
         scale = sead::Mathf::clamp((scale - cos) / (1.0f - cos), 0.0f, 1.0f);
         scale = (1.0f - sead::Mathf::square(1.0f - scale)) * -8.0f;
@@ -475,7 +475,7 @@ void HackFork::control() {
     if (mTouchDelay != 0)
         mTouchDelay--;
     if (isHack()) {
-        if (mIsControlledByPlayer) {
+        if (mIsHorizontal) {
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
             frontDir.y = 0.0f;
@@ -502,14 +502,14 @@ void HackFork::control() {
             mCameraTargetMtx.setBase(2, upDir);
         }
 
-        sead::Vector3f cameraPos;
-        cameraPos.setRotated(al::getQuat(this), mCameraOffset);
-        if (mIsControlledByPlayer) {
+        sead::Vector3f cameraOffset;
+        cameraOffset.setRotated(al::getQuat(this), mCameraOffset);
+        if (mIsHorizontal) {
             sead::Vector3f frontDir;
             al::calcFrontDir(&frontDir, this);
-            cameraPos += frontDir * 100.0f;
+            cameraOffset += frontDir * 100.0f;
         }
-        mCameraTargetMtx.setBase(3, cameraPos + al::getTrans(this));
+        mCameraTargetMtx.setBase(3, cameraOffset + al::getTrans(this));
         al::calcJointPos(&mHeadGuidePos, this, "Stick05");
         mHeadGuidePos.y = sead::Mathf::max(mHeadGuidePos.y, al::getTrans(this).y) + 100.0f;
     }
@@ -524,11 +524,11 @@ void HackFork::calcAnim() {
 void HackFork::updateCapMtx() {
     sead::Matrix34f mtx = *al::getJointMtxPtr(this, mJointName);
     al::normalize(&mtx);
-    mPoseMtx = mtx * mNextPoseMtx;
+    mCapPoseMtx = mtx * mNextCapPoseMtx;
 }
 
 void HackFork::calcHackDir(al::HitSensor* sensor) {
-    if (mIsControlledByPlayer)
+    if (mIsHorizontal)
         mPullDirection2.set({0.0f, -1.0f, 0.0f});
     else
         mPullDirection2 = rs::getPlayerPos(this) - al::getSensorPos(sensor);
@@ -564,12 +564,7 @@ void HackFork::exeHackStartWait() {
         mAirVel = 0;
     }
 
-    if (rs::isTriggerHackSwing(mPlayerHack)) {
-        mIsHackSwing = true;
-        mTimeSinceSwingStart = 0;
-    } else {
-        mTimeSinceSwingStart++;
-    }
+    checkSwing();
 
     if (rs::isHackStartDemoEnterMario(mPlayerHack))
         al::setNerve(this, &NrvHackFork.HackStart);
@@ -578,9 +573,8 @@ void HackFork::exeHackStartWait() {
 void HackFork::exeDamping() {
     if (al::isFirstStep(this))
         al::showModelIfHide(this);
-    if (!al::isNearZero(mTouchForce) || !al::isNearZero(mDampingForce)) {
-        controlSpring();
-    } else {
+
+    if (al::isNearZero(mTouchForce) && al::isNearZero(mDampingForce)) {
         if (al::isNearZero(mDampingStrength)) {
             mDampingStrength = 0.0f;
             mDampingForce = 0.0f;
@@ -590,7 +584,9 @@ void HackFork::exeDamping() {
             return;
         }
         mDampingStrength *= 0.9f;
+        return;
     }
+    controlSpring();
 }
 
 void HackFork::exeHackStart() {
@@ -625,45 +621,44 @@ void HackFork::exeHackBend() {
     if (al::isFirstStep(this))
         mIsReadyToShoot = false;
 
-    if (!al::isLessEqualStep(this, 15) || !trySwingJump()) {
-        sead::Vector3f frontDir;
-        al::calcFrontDir(&frontDir, this);
+    if (al::isLessEqualStep(this, 15) && trySwingJump())
+        return;
+    sead::Vector3f frontDir;
+    al::calcFrontDir(&frontDir, this);
 
-        sead::Vector3f pullDirection;
-        bool isInput = updateInput(&pullDirection, frontDir);
-        if (!isInput || rs::isTriggerHackSwing(mPlayerHack)) {
-            if (mIsReadyToShoot == false) {
-                al::setNerve(this, &NrvHackFork.HackWait);
-            } else {
-                if (isInput) {
-                    mAirVel = 60;
-                    mIsSwingJump = true;
-                }
-                al::setNerve(this, &NrvHackFork.HackShoot);
+    sead::Vector3f pullDirection;
+    bool isInput = updateInput(&pullDirection, frontDir);
+    if (!isInput || rs::isTriggerHackSwing(mPlayerHack)) {
+        if (mIsReadyToShoot) {
+            if (isInput) {
+                mAirVel = 60;
+                mIsSwingJump = true;
             }
+            al::setNerve(this, &NrvHackFork.HackShoot);
+        } else {
+            al::setNerve(this, &NrvHackFork.HackWait);
         }
-        sead::Vector3f oldJump = mPullDirection;
-        f32 jumpDir = mIsJumpFoward ? -1.0f : 1.0f;
-
-        f32 angle = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
-        if (sead::Mathf::rad2deg(acosf(angle)) < getJumpRange())
-            mPullDirection = mPullDirection * 0.5f + pullDirection * 0.5f;
-        al::normalize(&mPullDirection);
-        f32 oldmDampingForce = mDampingForce;
-        bendAndTwist(mPullDirection, frontDir);
-        f32 rumbleVolume =
-            (mDampingForce - oldmDampingForce) * 0.5f + (mPullDirection - oldJump).length() * 3.3f;
-        if (!al::isNearZero(rumbleVolume)) {
-            al::holdSe(this, "PgBendLv");
-            sead::Vector3f jointPos;
-            al::calcJointPos(&jointPos, this, "Stick03");
-            al::PadRumbleParam param =
-                al::PadRumbleParam(0.0f, 1300.0f, rumbleVolume, rumbleVolume);
-            alPadRumbleFunction::startPadRumbleWithParam(this, jointPos, "パルス（中）", param, -1);
-        }
-        if (mDampingForce >= 4.5f)
-            mIsReadyToShoot = true;
     }
+    sead::Vector3f oldPullDirection = mPullDirection;
+    f32 jumpDir = mIsJumpFoward ? -1.0f : 1.0f;
+
+    f32 angle = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
+    if (sead::Mathf::rad2deg(sead::Mathf::cos(angle)) < getJumpRange())
+        mPullDirection = mPullDirection * 0.5f + pullDirection * 0.5f;
+    al::normalize(&mPullDirection);
+    f32 oldDampingForce = mDampingForce;
+    bendAndTwist(mPullDirection, frontDir);
+    f32 rumbleVolume = (mDampingForce - oldDampingForce) * 0.5f +
+                       (mPullDirection - oldPullDirection).length() * 3.3f;
+    if (!al::isNearZero(rumbleVolume)) {
+        al::holdSe(this, "PgBendLv");
+        sead::Vector3f jointPos;
+        al::calcJointPos(&jointPos, this, "Stick03");
+        al::PadRumbleParam param = al::PadRumbleParam(0.0f, 1300.0f, rumbleVolume, rumbleVolume);
+        alPadRumbleFunction::startPadRumbleWithParam(this, jointPos, "パルス（中）", param, -1);
+    }
+    if (mDampingForce >= 4.5f)
+        mIsReadyToShoot = true;
 }
 
 void HackFork::exeHackShoot() {
