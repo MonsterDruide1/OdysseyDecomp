@@ -152,7 +152,7 @@ bool isInRangeAngleDegree(f32, f32, f32);
 bool calcEyesAnimAngleInRange(f32*, const sead::Vector3f&, const sead::Vector3f&,
                               const sead::Vector3f&, const sead::Vector3f&, f32, f32, f32, f32);
 bool isSameSign(f32, f32);
-u8 reverseBit8(u8);
+u8 reverseBit8(u8 x);
 u16 reverseBit16(u16 x);
 u32 reverseBit32(u32 x);
 f32 calcVanDerCorput(u32 x);
@@ -191,9 +191,9 @@ f32 calcBoxMullerRandomGauss();
 void makeBoxMullerRandomGauss(sead::Vector2f*, f32, f32);
 f32 modf(f32 a, f32 b);
 s32 modi(s32 a, s32 b);
-f32 calcSpeedMax(f32 a, f32 b);
-f32 calcAccel(f32 a, f32 b);
-f32 calcFriction(f32 a, f32 b);
+f32 calcSpeedMax(f32 accel, f32 friction);
+f32 calcAccel(f32 speed, f32 friction);
+f32 calcFriction(f32 accel, f32 speed);
 bool separateScalarAndDirection(f32*, sead::Vector2f*, const sead::Vector2f&);
 bool separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 void limitVectorSeparateHV(sead::Vector3f*, const sead::Vector3f&, f32, f32);
@@ -225,12 +225,12 @@ void snapVecToGrid(sead::Vector3f* outVec, const sead::Vector3f& vec, f32 gridSi
                    const sead::Vector3f& offset);
 void snapVecToGrid(sead::Vector3f* outVec, const sead::Vector3f& vec,
                    const sead::Vector3f& gridSize, const sead::Vector3f& offset);
-void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                            const sead::Vector3f& vecB, f32 scale);
-void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                          const sead::Vector3f& vecB, f32 scale);
-void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                                const sead::Vector3f& vecB, f32 scale);
+void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& inVec,
+                            const sead::Vector3f& dir, f32 scale);
+void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
+                          const sead::Vector3f& dir, f32 scale);
+void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
+                                const sead::Vector3f& dir, f32 scale);
 void snapVecToDirAxisY(sead::Vector3f*, const sead::Vector3f&, s32);
 bool calcDir(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB);
 bool calcDirH(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB);
