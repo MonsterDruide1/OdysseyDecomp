@@ -645,16 +645,17 @@ s32 modi(s32 a, s32 b) {
     return a - (a / b) * b;
 }
 
-f32 calcSpeedMax(f32 a, f32 b) {
-    return (a * b) / (1.0f - b);
+f32 calcSpeedMax(f32 accel, f32 friction) {
+    return (accel * friction) / (1.0f - friction);
 }
 
-f32 calcAccel(f32 a, f32 b) {
-    return (1.0f - b) * a / b;
+f32 calcAccel(f32 speed, f32 friction) {
+    return (1.0f - friction) * speed / friction;
 }
 
-f32 calcFriction(f32 a, f32 b) {
-    return (a + b) / b;
+f32 calcFriction(f32 accel, f32 speed) {
+    // N's mistake here. Correct function: friction = speed / (speed + accel)
+    return (accel + speed) / speed;
 }
 
 inline f32 round(f32 v) {
@@ -698,30 +699,22 @@ void snapVecToGrid(sead::Vector3f* outVec, const sead::Vector3f& vec,
     outVec->z = snapToGrid(vec.z, gridSize.z, offset.z);
 }
 
-void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                            const sead::Vector3f& vecB, f32 scale) {
-    f32 max = vecB.dot(vecA);
-    f32 scaleNorm = -scale;
-    if (!(-scale > max)) {
-        scaleNorm = max;
-        if (0.0f < max)
-            scaleNorm = 0.0f;
-    }
-    outVec->x = -vecA.x * scaleNorm + vecB.x;
-    outVec->y = -vecA.y * scaleNorm + vecB.y;
-    outVec->z = -vecA.z * scaleNorm + vecB.z;
+void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& inVec,
+                            const sead::Vector3f& dir, f32 scale) {
+    scale = sead::Mathf::clamp(dir.dot(inVec),-scale, 0.0f);
+    outVec->setScaleAdd(-scale, inVec, dir);
 }
 
-void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                          const sead::Vector3f& vecB, f32 scale) {
-    sead::Vector3f direction = vecA * vecA.dot(vecB);
-    outVec->setScaleAdd(scale, direction, vecB - direction);
+void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
+                          const sead::Vector3f& dir, f32 scale) {
+    sead::Vector3f direction = inVec * inVec.dot(dir);
+    outVec->setScaleAdd(scale, direction, dir - direction);
 }
 
-void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                                const sead::Vector3f& vecB, f32 scale) {
-    sead::Vector3f direction = vecA * vecA.dot(vecB);
-    outVec->setScaleAdd(scale, vecB - direction, direction);
+void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
+                                const sead::Vector3f& dir, f32 scale) {
+    sead::Vector3f direction = inVec * inVec.dot(dir);
+    outVec->setScaleAdd(scale, dir - direction, direction);
 }
 
 bool calcDir(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB) {
@@ -922,7 +915,7 @@ void rotateQuatRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sead:
     rotation.y = sin * vec.y;
     rotation.z = sin * vec.z;
 
-    sead::QuatCalcCommon<f32>::setMul(*outQuat, rotation, quat);
+    *outQuat = rotation*quat;
     outQuat->normalize();
 }
 
@@ -995,6 +988,7 @@ void rotateQuatLocalDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, s32
 
     rotateQuatRadian(outQuat, quat, vec, sead::Mathf::deg2rad(angle));
 }
+
 
 void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec) {
     sead::Vector3f vecNorm = vec;
@@ -1124,7 +1118,7 @@ bool calcX(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         f32 z = vectorA.z + x * vectorB.z;
         if (min.z <= z && z <= max.z) {
             x = vectorA.x + vectorB.x * x;
-            if (outVec != nullptr) {
+            if (outVec) {
                 outVec->x = x;
                 outVec->y = y;
                 outVec->z = z;
@@ -1146,7 +1140,7 @@ bool calcY(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         f32 z = vectorA.z + y * vectorB.z;
         if (min.z <= z && z <= max.z) {
             y = vectorA.y + vectorB.y * y;
-            if (outVec != nullptr) {
+            if (outVec) {
                 outVec->x = x;
                 outVec->y = y;
                 outVec->z = z;
@@ -1168,7 +1162,7 @@ bool calcZ(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         f32 y = vectorA.y + z * vectorB.y;
         if (min.y <= y && y <= max.y) {
             z = vectorA.z + vectorB.z * z;
-            if (outVec != nullptr) {
+            if (outVec) {
                 outVec->x = x;
                 outVec->y = y;
                 outVec->z = z;
