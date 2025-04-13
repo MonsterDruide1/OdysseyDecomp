@@ -22,11 +22,11 @@ void AreaShape::setScale(const sead::Vector3f& scale) {
 }
 
 bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& trans) const {
-    if (isNearZeroOrLess(mScale.x, 0.001))
+    if (isNearZero(mScale.x, 0.001))
         return false;
-    if (isNearZeroOrLess(mScale.y, 0.001))
+    if (isNearZero(mScale.y, 0.001))
         return false;
-    if (isNearZeroOrLess(mScale.z, 0.001))
+    if (isNearZero(mScale.z, 0.001))
         return false;
 
     if (mBaseMtxPtr)

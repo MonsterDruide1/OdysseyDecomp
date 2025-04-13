@@ -27,31 +27,34 @@ enum EaseType : s32 {
     EaseType_SquareOut
 };
 
-f32 calcAngleRadian(const sead::Vector3f&, const sead::Vector3f&);
-f32 calcAngleDegree(const sead::Vector3f&, const sead::Vector3f&);
-f32 calcAngleDegree(const sead::Vector2f&, const sead::Vector2f&);
+f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b);
+f32 calcAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b);
+f32 calcAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b);
 bool isNearZero(const sead::Vector2f& vec, f32 tolerance = 0.001f);
-bool tryCalcAngleDegree(f32*, const sead::Vector3f&, const sead::Vector3f&);
+bool tryCalcAngleDegree(f32* angle, const sead::Vector3f& a, const sead::Vector3f& b);
 bool isNearZero(const sead::Vector3f& vec, f32 tolerance = 0.001f);
-f32 calcAngleOnPlaneRadian(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
+f32 calcAngleOnPlaneRadian(const sead::Vector3f& a, const sead::Vector3f& b,
+                           const sead::Vector3f& vertical);
 void verticalizeVec(sead::Vector3f* out, const sead::Vector3f& vertical, const sead::Vector3f& vec);
-f32 calcAngleOnPlaneDegree(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
-f32 calcAngleOnPlaneDegreeOrZero(const sead::Vector3f&, const sead::Vector3f&,
-                                 const sead::Vector3f&);
-bool tryCalcAngleOnPlaneDegree(f32*, const sead::Vector3f&, const sead::Vector3f&,
-                               const sead::Vector3f&);
-bool isParallelDirection(const sead::Vector3f&, const sead::Vector3f&, f32);
-s32 calcAngleSignOnPlane(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
-bool isNearAngleRadian(const sead::Vector2f&, const sead::Vector2f&, f32);
-void normalize(sead::Vector2f*, const sead::Vector2f&);
-bool isNearAngleRadian(const sead::Vector3f&, const sead::Vector3f&, f32);
-void normalize(sead::Vector3f*, const sead::Vector3f&);
-bool isNearAngleDegree(const sead::Vector2f&, const sead::Vector2f&, f32);
-bool isNearAngleDegree(const sead::Vector3f&, const sead::Vector3f&, f32);
+f32 calcAngleOnPlaneDegree(const sead::Vector3f& a, const sead::Vector3f& b,
+                           const sead::Vector3f& vertical);
+f32 calcAngleOnPlaneDegreeOrZero(const sead::Vector3f& a, const sead::Vector3f& b,
+                                 const sead::Vector3f& vertical);
+bool tryCalcAngleOnPlaneDegree(f32* angle, const sead::Vector3f& a, const sead::Vector3f& b,
+                               const sead::Vector3f& vertical);
+bool isParallelDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance = 0.01f);
+s32 calcAngleSignOnPlane(const sead::Vector3f& a, const sead::Vector3f& b,
+                         const sead::Vector3f& vertical);
+bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance);
+void normalize(sead::Vector2f* out, const sead::Vector2f& vec);
+bool isNearAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance);
+void normalize(sead::Vector3f* out, const sead::Vector3f& vec);
+bool isNearAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance);
+bool isNearAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance);
 bool isNearAngleRadianHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, f32,
                          f32);
-bool tryNormalizeOrZero(sead::Vector3f*, const sead::Vector3f&);
-bool tryNormalizeOrZero(sead::Vector3f*);
+bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec);
+bool tryNormalizeOrZero(sead::Vector3f* out);
 bool isNearAngleDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, f32,
                          f32);
 bool isInAngleOnPlaneDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
@@ -64,55 +67,55 @@ bool isNearZero(f32 value, f32 tolerance = 0.001f);
 bool isNearZero(const sead::Matrix34f& value, f32 tolerance = 0.001f);
 bool isNearZeroOrGreater(f32 value, f32 tolerance = 0.001f);
 bool isNearZeroOrLess(f32 value, f32 tolerance = 0.001f);
-bool isExistNearZeroVal(const sead::Vector3f&, f32);
-bool isNormalize(const sead::Vector3f&, f32);
-bool isNormalize(const sead::Matrix34f&);
-bool isParallelDirection(const sead::Vector2f&, const sead::Vector2f&, f32);
-bool isReverseDirection(const sead::Vector3f&, const sead::Vector3f&, f32);
-bool isNearDirection(const sead::Vector2f&, const sead::Vector2f&, f32);
-bool isNearDirection(const sead::Vector3f&, const sead::Vector3f&, f32);
-bool isInRange(s32, s32, s32);
-bool isInRange(f32, f32, f32);
-void normalize(sead::Vector2f*);
-void normalize(sead::Vector3f*);
-void normalize(sead::Matrix33f*);
-void normalize(sead::Matrix34f*);
-bool tryNormalizeOrZero(sead::Vector2f*);
-bool tryNormalizeOrZero(sead::Vector2f*, const sead::Vector2f&);
-bool tryNormalizeOrDirZ(sead::Vector3f*);
-bool tryNormalizeOrDirZ(sead::Vector3f*, const sead::Vector3f&);
-void normalizeComplement(sead::Matrix34f*);
-u32 getMaxAbsElementIndex(const sead::Vector3f&);
-void setLength(sead::Vector3f*, f32);
-void setProjectionLength(sead::Vector3f*, const sead::Vector3f&, f32);
-bool limitLength(sead::Vector2f*, const sead::Vector2f&, f32);
-bool limitLength(sead::Vector3f*, const sead::Vector3f&, f32);
-f32 normalizeAbs(f32, f32, f32);
-f32 normalize(f32, f32, f32);
-f32 normalize(s32, s32, s32);
-f32 sign(f32);
-s32 sign(s32);
-f32 cubeRoot(f32);
+bool isExistNearZeroVal(const sead::Vector3f& vec, f32 tolerance);
+bool isNormalize(const sead::Vector3f& vec, f32 tolerance = 0.001f);
+bool isNormalize(const sead::Matrix34f& mtx);
+bool isParallelDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance = 0.01f);
+bool isReverseDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance = 0.01f);
+bool isNearDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance = 0.01f);
+bool isNearDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance = 0.01f);
+bool isInRange(s32 x, s32 a, s32 b);
+bool isInRange(f32 x, f32 a, f32 b);
+void normalize(sead::Vector2f* vec);
+void normalize(sead::Vector3f* vec);
+void normalize(sead::Matrix33f* mtx);
+void normalize(sead::Matrix34f* mtx);
+bool tryNormalizeOrZero(sead::Vector2f* vec);
+bool tryNormalizeOrZero(sead::Vector2f* out, const sead::Vector2f& vec);
+bool tryNormalizeOrDirZ(sead::Vector3f* vec);
+bool tryNormalizeOrDirZ(sead::Vector3f* out, const sead::Vector3f& vec);
+void normalizeComplement(sead::Matrix34f* mtx);
+u32 getMaxAbsElementIndex(const sead::Vector3f& vec);
+void setLength(sead::Vector3f* vec, f32 length);
+void setProjectionLength(sead::Vector3f* out, const sead::Vector3f& vec, f32 length);
+bool limitLength(sead::Vector2f* out, const sead::Vector2f& vec, f32 limit);
+bool limitLength(sead::Vector3f* out, const sead::Vector3f& vec, f32 limit);
+f32 normalizeAbs(f32 x, f32 min, f32 max);
+f32 normalize(f32 x, f32 min, f32 max);
+f32 normalize(s32 x, s32 min, s32 max);
+f32 sign(f32 x);
+s32 sign(s32 x);
+f32 cubeRoot(f32 x);
 void clampV3f(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 void clampV2f(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&);
-f32 easeIn(f32);
-f32 easeOut(f32);
-f32 easeInOut(f32);
-f32 squareIn(f32);
-f32 squareOut(f32);
-f32 powerIn(f32, f32);
-f32 powerOut(f32, f32);
-f32 logarithmIn(f32, f32);
-f32 logarithmOut(f32, f32);
-f32 exponentIn(f32, f32);
-f32 exponentOut(f32, f32);
-f32 hermiteRate(f32, f32, f32);
-f32 calcFourthOrderRate(f32, f32);
+f32 easeIn(f32 t);
+f32 easeOut(f32 t);
+f32 easeInOut(f32 t);
+f32 squareIn(f32 t);
+f32 squareOut(f32 t);
+f32 powerIn(f32 t, f32 exp);
+f32 powerOut(f32 t, f32 exp);
+f32 logarithmIn(f32 t, f32 base);
+f32 logarithmOut(f32 t, f32 base);
+f32 exponentIn(f32 t, f32 exp);
+f32 exponentOut(f32 t, f32 exp);
+f32 hermiteRate(f32 t, f32 m0, f32 m1);
+f32 calcFourthOrderRate(f32 t, f32 scale);
 f32 calcTriangleWave01(f32, f32);
 f32 calcTriangleWave(f32, f32, f32, f32);
-f32 lerpValue(f32, f32, f32);
+f32 lerpValue(f32 a, f32 b, f32 t);
 f32 calcRate01(f32, f32, f32);
-f32 easeByType(f32, s32);
+f32 easeByType(f32 t, s32 easeType);
 f32 lerpValue(f32, f32, f32, f32, f32);
 f32 lerpDegree(f32, f32, f32);
 f32 lerpRadian(f32, f32, f32);
@@ -133,10 +136,10 @@ void lerpExponentVecEaseIn(sead::Vector3f*, const sead::Vector3f&, const sead::V
 void lerpExponentVecEaseOut(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32,
                             f32);
 f32 clampLeapMinAbs(f32, f32, f32, f32);
-f32 hermite(f32, f32, f32, f32, f32);
-f32 hermite(f32, f32, f32, f32, f32, f32);
-void hermiteVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                const sead::Vector3f&, const sead::Vector3f&, f32);
+f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t);
+f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width);
+void hermiteVec(sead::Vector3f* out, const sead::Vector3f& p0, const sead::Vector3f& v0,
+                const sead::Vector3f& p1, const sead::Vector3f& v1, f32 t);
 s32 converge(s32, s32, s32);
 f32 converge(f32, f32, f32);
 f32 convergeDegree(f32, f32, f32);
@@ -157,14 +160,14 @@ s32 findMaxFromArray(const s32*, s32);
 void separateMinMax(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&);
 s32 findMinFromArray(const s32*, s32);
 f32 getRandom();
-f32 getRandom(f32);
-f32 getRandom(f32, f32);
-s32 getRandom(s32);
-s32 getRandom(s32, s32);
+f32 getRandom(f32 max);
+f32 getRandom(f32 min, f32 max);
+s32 getRandom(s32 max);
+s32 getRandom(s32 min, s32 max);
 f32 getRandomDegree();
 f32 getRandomRadian();
-void getRandomVector(sead::Vector3f*, f32);
-void getRandomDir(sead::Vector3f*);
+void getRandomVector(sead::Vector3f* vec, f32 maxComponent);
+void getRandomDir(sead::Vector3f* vec);
 void getRandomDirH(sead::Vector3f*, const sead::Vector3f&);
 void rotateVectorDegree(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
 void getRandomOnCircle(sead::Vector2f*, f32);
@@ -427,7 +430,8 @@ bool calcBetweenTwoLinkPos(sead::Vector3f*, const sead::Vector3f&, const sead::V
                            const sead::Vector3f&);
 bool calcReflectionVector(sead::Vector3f*, const sead::Vector3f&, f32, f32);
 void calcReverseVector(sead::Vector3f*, const sead::Vector3f&, f32);
-void calcParabolicFunctionParam(f32*, f32*, f32, f32 verticalDistance);
+void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
+                                f32 verticalDistance);
 f32 calcConvergeVibrationValue(f32, f32, f32, f32, f32);
 bool calcSphericalPolarCoordPY(sead::Vector2f*, const sead::Vector3f&, const sead::Vector3f&,
                                const sead::Vector3f&);
