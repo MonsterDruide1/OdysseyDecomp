@@ -1,8 +1,11 @@
 #include "Library/Math/MathUtil.h"
 
 #include <math/seadMathCalcCommon.h>
+#include <math/seadMatrix.h>
 #include <prim/seadBitUtil.h>
 #include <random/seadGlobalRandom.h>
+
+#include "Library/Matrix/MatrixUtil.h"
 
 namespace al {
 f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b) {
@@ -17,7 +20,7 @@ f32 calcAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b) {
 }
 
 f32 calcAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b) {
-    if (isNearZero(a, 0.001) || isNearZero(b, 0.001))
+    if (isNearZero(a) || isNearZero(b))
         return 0.0f;
 
     return sead::Mathf::rad2deg(sead::Mathf::atan2(a.cross(b), a.dot(b)));
@@ -28,7 +31,7 @@ bool isNearZero(const sead::Vector2f& vec, f32 tolerance) {
 }
 
 bool tryCalcAngleDegree(f32* out, const sead::Vector3f& a, const sead::Vector3f& b) {
-    if (isNearZero(a, 0.001) || isNearZero(b, 0.001))
+    if (isNearZero(a) || isNearZero(b))
         return false;
 
     *out = calcAngleDegree(a, b);
@@ -78,6 +81,16 @@ f32 calcAngleOnPlaneDegreeOrZero(const sead::Vector3f& a, const sead::Vector3f& 
     return angle;
 }
 
+bool isParallelDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance) {
+    if (sead::Mathf::abs(a.y * b.z - a.z * b.y) > tolerance)
+        return false;
+    if (sead::Mathf::abs(a.z * b.x - a.x * b.z) > tolerance)
+        return false;
+    if (sead::Mathf::abs(a.x * b.y - a.y * b.x) > tolerance)
+        return false;
+    return true;
+}
+
 s32 calcAngleSignOnPlane(const sead::Vector3f& a, const sead::Vector3f& b,
                          const sead::Vector3f& vertical) {
     sead::Vector3f planeA;
@@ -97,9 +110,37 @@ s32 calcAngleSignOnPlane(const sead::Vector3f& a, const sead::Vector3f& b,
     return 0;
 }
 
+bool isNearAngleRadian(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
+    if (isNearZero(a))
+        return false;
+    if (isNearZero(b))
+        return false;
+
+    sead::Vector2f aNorm;
+    normalize(&aNorm, a);
+    sead::Vector2f bNorm;
+    normalize(&bNorm, b);
+
+    return aNorm.dot(bNorm) >= sead::Mathf::cos(tolerance);
+}
+
 void normalize(sead::Vector2f* out, const sead::Vector2f& vec) {
     *out = vec;
     normalize(out);
+}
+
+bool isNearAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance) {
+    if (isNearZero(a))
+        return false;
+    if (isNearZero(b))
+        return false;
+
+    sead::Vector3f aNorm;
+    normalize(&aNorm, a);
+    sead::Vector3f bNorm;
+    normalize(&bNorm, b);
+
+    return aNorm.dot(bNorm) >= sead::Mathf::cos(tolerance);
 }
 
 void normalize(sead::Vector3f* out, const sead::Vector3f& vec) {
@@ -107,8 +148,16 @@ void normalize(sead::Vector3f* out, const sead::Vector3f& vec) {
     normalize(out);
 }
 
+bool isNearAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
+    return isNearAngleRadian(a, b, sead::Mathf::deg2rad(tolerance));
+}
+
+bool isNearAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b, f32 tolerance) {
+    return isNearAngleRadian(a, b, sead::Mathf::deg2rad(tolerance));
+}
+
 bool tryNormalizeOrZero(sead::Vector3f* vec) {
-    if (isNearZero(*vec, 0.001f)) {
+    if (isNearZero(*vec)) {
         *vec = {0.0f, 0.0f, 0.0f};
         return false;
     }
@@ -219,8 +268,36 @@ void normalize(sead::Vector3f* vec) {
     vec->normalize();
 }
 
+void normalize(sead::Matrix33f* mtx) {
+    sead::Vector3f up = mtx->getBase(0);
+    sead::Vector3f front = mtx->getBase(1);
+    sead::Vector3f side = mtx->getBase(2);
+
+    up.normalize();
+    front.normalize();
+    side.normalize();
+
+    mtx->setBase(0, up);
+    mtx->setBase(1, front);
+    mtx->setBase(2, side);
+}
+
+void normalize(sead::Matrix34f* mtx) {
+    sead::Vector3f up = mtx->getBase(0);
+    sead::Vector3f front = mtx->getBase(1);
+    sead::Vector3f side = mtx->getBase(2);
+
+    up.normalize();
+    front.normalize();
+    side.normalize();
+
+    mtx->setBase(0, up);
+    mtx->setBase(1, front);
+    mtx->setBase(2, side);
+}
+
 bool tryNormalizeOrZero(sead::Vector2f* vec) {
-    if (isNearZero(*vec, 0.001f)) {
+    if (isNearZero(*vec)) {
         *vec = {0.0f, 0.0f};
         return false;
     }
@@ -235,7 +312,7 @@ bool tryNormalizeOrZero(sead::Vector2f* out, const sead::Vector2f& vec) {
 }
 
 bool tryNormalizeOrDirZ(sead::Vector3f* vec) {
-    if (isNearZero(*vec, 0.001f)) {
+    if (isNearZero(*vec)) {
         // mismatches if this isn't set twice
         vec->set(0.0f, 0.0f, 0.0f);
         vec->set(sead::Vector3f::ez);
@@ -249,6 +326,14 @@ bool tryNormalizeOrDirZ(sead::Vector3f* vec) {
 bool tryNormalizeOrDirZ(sead::Vector3f* out, const sead::Vector3f& vec) {
     *out = vec;
     return tryNormalizeOrDirZ(out);
+}
+
+u32 getMaxAbsElementIndex(const sead::Vector3f& vec) {
+    f32 x = sead::Mathf::abs(vec.x);
+    f32 y = sead::Mathf::abs(vec.y);
+    f32 z = sead::Mathf::abs(vec.z);
+
+    return x > z && x > y ? 0 : y > z ? 1 : 2;
 }
 
 void setLength(sead::Vector3f* vec, f32 length) {
@@ -348,6 +433,17 @@ f32 cubeRoot(f32 x) {
     return x * y * y;
 }
 
+void clampV3f(sead::Vector3f* out, const sead::Vector3f& min, const sead::Vector3f& max) {
+    out->x = sead::Mathf::clamp(out->x, min.x, max.x);
+    out->y = sead::Mathf::clamp(out->y, min.y, max.y);
+    out->z = sead::Mathf::clamp(out->z, min.z, max.z);
+}
+
+void clampV2f(sead::Vector2f* out, const sead::Vector2f& min, const sead::Vector2f& max) {
+    out->x = sead::Mathf::clamp(out->x, min.x, max.x);
+    out->y = sead::Mathf::clamp(out->y, min.y, max.y);
+}
+
 f32 easeIn(f32 t) {
     return (((t * -0.5f) + 1.5f) * t) * t;
 }
@@ -399,9 +495,50 @@ f32 hermiteRate(f32 t, f32 m0, f32 m1) {
     return hermite(0.0f, m0, 1.0f, m1, t);
 }
 
+f32 calcFourthOrderRate(f32 t, f32 scale) {
+    return ((scale + -3.0f) * t * t + (scale * -2.0f + 4.0f) * t + scale) * t * t;
+}
+
+f32 calcTriangleWave01(f32 t, f32 period) {
+    f32 val = t / (period + period);
+    s32 roundDown = ((s32)val == val) ? 0 : -!(val >= 0.0f);
+
+    val = sead::Mathf::abs(val - (roundDown + (s32)val) - 0.5f);
+    return 1.0f - (val + val);
+}
+
+f32 calcTriangleWave(f32 t, f32 min, f32 max, f32 period) {
+    f32 pos = sead::Mathf::clamp(calcTriangleWave01(t, period), 0.0f, 1.0f);
+    return (1.0f - pos) * min + pos * max;
+}
+
 f32 lerpValue(f32 a, f32 b, f32 t) {
     t = sead::Mathf::clamp(t, 0.0f, 1.0f);
     return (a * (1.0f - t)) + (t * b);
+}
+
+f32 calcRate01(f32 t, f32 min, f32 max) {
+    f32 range = max - min;
+    if (isNearZero(range))
+        return 1.0f;
+    return sead::Mathf::clamp((t - min) / range, 0.0f, 1.0f);
+}
+
+f32 easeByType(f32 t, s32 easeType) {
+    switch (easeType) {
+    case EaseType_EaseIn:
+        return easeIn(t);
+    case EaseType_EaseOut:
+        return easeOut(t);
+    case EaseType_EaseInOut:
+        return easeInOut(t);
+    case EaseType_SquareIn:
+        return squareIn(t);
+    case EaseType_SquareOut:
+        return squareOut(t);
+    default:
+        return t;
+    }
 }
 
 /**
@@ -423,8 +560,34 @@ f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width) {
     return y0 + (a1 * a3) * t * t + (t * a2) * (t * m1 + a2 * m0);
 }
 
-f32 calcFourthOrderRate(f32 t, f32 scale) {
-    return ((scale + -3.0f) * t * t + (scale * -2.0f + 4.0f) * t + scale) * t * t;
+u8 reverseBit8(u8 x) {
+    x = ((x & 0x55) << 1) | ((x >> 1) & 0x55);  // 0101...
+    x = ((x & 0x33) << 2) | ((x >> 2) & 0x33);  // 0011...
+    return x >> 4 | x << 4;
+}
+
+u16 reverseBit16(u16 x) {
+    x = ((x & 0x5555) << 1) | ((x >> 1) & 0x5555);  // 01010101...
+    x = ((x & 0x3333) << 2) | ((x >> 2) & 0x3333);  // 00110011...
+    x = ((x & 0xf0f) << 4) | ((x >> 4) & 0xf0f);    // 11110000..
+    return x >> 8 | x << 8;
+}
+
+u32 reverseBit32(u32 x) {
+    x = ((x & 0x55555555) << 1) | ((x >> 1) & 0x55555555);  // 0101010101010101...
+    x = ((x & 0x33333333) << 2) | ((x >> 2) & 0x33333333);  // 0011001100110011...
+    x = ((x & 0xf0f0f0f) << 4) | ((x >> 4) & 0xf0f0f0f);    // 1111000011110000...
+    x = ((x & 0xff00ff) << 8) | ((x >> 8) & 0xff00ff);      // 1111111100000000...
+    return x >> 0x10 | x << 0x10;
+}
+
+f32 calcVanDerCorput(u32 x) {
+    return reverseBit32(x) * 2.32830644e-10f;  // 2^(-32)
+}
+
+void calcHammersleyPoint(sead::Vector2f* outPoint, u32 i, u32 num) {
+    outPoint->x = (f32)i / (f32)num;
+    outPoint->y = calcVanDerCorput(i);
 }
 
 f32 getRandom() {
@@ -474,6 +637,468 @@ void getRandomDir(sead::Vector3f* vec) {
     vec->normalize();
 }
 
+f32 modf(f32 a, f32 b) {
+    return std::fmodf(a, b);
+}
+
+s32 modi(s32 a, s32 b) {
+    return a - (a / b) * b;
+}
+
+f32 calcSpeedMax(f32 a, f32 b) {
+    return (a * b) / (1.0f - b);
+}
+
+f32 calcAccel(f32 a, f32 b) {
+    return (1.0f - b) * a / b;
+}
+
+f32 calcFriction(f32 a, f32 b) {
+    return (a + b) / b;
+}
+
+inline f32 round(f32 v) {
+    return (s32)(v + (v >= 0.0f ? 0.5f : -0.5f));
+}
+
+void roundOffVec(sead::Vector3f* outVec, const sead::Vector3f& vec) {
+    outVec->x = round(vec.x);
+    outVec->y = round(vec.y);
+    outVec->z = round(vec.z);
+}
+
+void roundOffVec(sead::Vector3f* vec) {
+    roundOffVec(vec, *vec);
+}
+
+void roundOffVec(sead::Vector2f* outVec, const sead::Vector2f& vec) {
+    outVec->x = round(vec.x);
+    outVec->y = round(vec.y);
+}
+
+void roundOffVec(sead::Vector2f* vec) {
+    roundOffVec(vec, *vec);
+}
+
+f32 snapToGrid(f32 val, f32 gridSize, f32 offset) {
+    return round((val - offset) / gridSize) * gridSize + offset;
+}
+
+void snapVecToGrid(sead::Vector3f* outVec, const sead::Vector3f& vec, f32 gridSize,
+                   const sead::Vector3f& offset) {
+    outVec->x = snapToGrid(vec.x, gridSize, offset.x);
+    outVec->y = snapToGrid(vec.y, gridSize, offset.y);
+    outVec->z = snapToGrid(vec.z, gridSize, offset.z);
+}
+
+void snapVecToGrid(sead::Vector3f* outVec, const sead::Vector3f& vec,
+                   const sead::Vector3f& gridSize, const sead::Vector3f& offset) {
+    outVec->x = snapToGrid(vec.x, gridSize.x, offset.x);
+    outVec->y = snapToGrid(vec.y, gridSize.y, offset.y);
+    outVec->z = snapToGrid(vec.z, gridSize.z, offset.z);
+}
+
+void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                            const sead::Vector3f& vecB, f32 scale) {
+    f32 max = vecB.dot(vecA);
+    f32 scaleNorm = -scale;
+    if (!(-scale > max)) {
+        scaleNorm = max;
+        if (0.0f < max)
+            scaleNorm = 0.0f;
+    }
+    outVec->x = -vecA.x * scaleNorm + vecB.x;
+    outVec->y = -vecA.y * scaleNorm + vecB.y;
+    outVec->z = -vecA.z * scaleNorm + vecB.z;
+}
+
+void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                          const sead::Vector3f& vecB, f32 scale) {
+    sead::Vector3f direction = vecA * vecA.dot(vecB);
+    outVec->setScaleAdd(scale, direction, vecB - direction);
+}
+
+void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                                const sead::Vector3f& vecB, f32 scale) {
+    sead::Vector3f direction = vecA * vecA.dot(vecB);
+    outVec->setScaleAdd(scale, vecB - direction, direction);
+}
+
+bool calcDir(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB) {
+    outVec->x = vecB.x - vecA.x;
+    outVec->y = vecB.y - vecA.y;
+    outVec->z = vecB.z - vecA.z;
+    return !tryNormalizeOrZero(outVec);
+}
+
+bool calcDirH(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB) {
+    return calcDirOnPlane(outVec, vecA, vecB, sead::Vector3f::ey);
+}
+
+bool calcDirOnPlane(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB,
+                    const sead::Vector3f& plane) {
+    outVec->x = vecB.x - vecA.x;
+    outVec->y = vecB.y - vecA.y;
+    outVec->z = vecB.z - vecA.z;
+
+    outVec->setScaleAdd(-plane.dot(*outVec), plane, *outVec);
+    return !tryNormalizeOrZero(outVec);
+}
+
+f32 mapRangeLogarithmic(f32 x, f32 min, f32 max, f32 start, f32 end, f32 exponent) {
+    f32 base = sead::Mathf::pow(10.0f, -exponent);
+    f32 val = (x - min) / (max - min);
+    f32 range = sead::Mathf::abs(end - start);
+    f32 direction = end > start ? 1.0f : -1.0f;
+
+    return sead::Mathf::pow(val, base) * direction * range + start;
+}
+
+void calcDirFromLongitudeLatitude(sead::Vector3f* outVec, f32 longitude, f32 latitude) {
+    outVec->y = -sead::Mathf::sin(sead::Mathf::deg2rad(latitude));
+    f32 cosLatitude = -sead::Mathf::cos(sead::Mathf::deg2rad(latitude));
+    outVec->x = sead::Mathf::sin(sead::Mathf::deg2rad(longitude)) * cosLatitude;
+    outVec->z = sead::Mathf::cos(sead::Mathf::deg2rad(longitude)) * cosLatitude;
+}
+
+void calcLongitudeLatitudeFromDir(f32* longitude, f32* latitude, const sead::Vector3f& vect) {
+    sead::Vector3f vec = vect;
+    vec.normalize();
+    if (isNearZero(vec))
+        return;
+    *latitude = sead::Mathf::asin(sead::Mathf::clamp(-vec.y, -1.0f, 1.0f));
+
+    sead::Vector2f newVec = {-vec.z, -vec.x};
+    newVec.normalize();
+    if (isNearZero(newVec))
+        return;
+
+    *longitude = sead::Mathf::atan2(newVec.y, newVec.x);
+}
+
+u32 getMaxAbsElementIndex(const sead::Vector3i& vec) {
+    s32 x = sead::Mathi::abs(vec.x);
+    s32 y = sead::Mathi::abs(vec.y);
+    s32 z = sead::Mathi::abs(vec.z);
+
+    return x > z && x > y ? 0 : y > z ? 1 : 2;
+}
+
+f32 getMaxAbsElementValue(const sead::Vector3f& vec) {
+    switch (getMaxAbsElementIndex(vec)) {
+    case 0:
+        return vec.x;
+    case 1:
+        return vec.y;
+    case 2:
+        return vec.z;
+    }
+    return vec.z;
+}
+
+s32 getMaxAbsElementValue(const sead::Vector3i& vec) {
+    switch (getMaxAbsElementIndex(vec)) {
+    case 0:
+        return vec.x;
+    case 1:
+        return vec.y;
+    case 2:
+        return vec.z;
+    }
+    return vec.z;
+}
+
+u32 getMinAbsElementIndex(const sead::Vector3f& vec) {
+    f32 x = sead::Mathf::abs(vec.x);
+    f32 y = sead::Mathf::abs(vec.y);
+    f32 z = sead::Mathf::abs(vec.z);
+
+    return x < z && x < y ? 0 : y < z ? 1 : 2;
+}
+
+u32 getMinAbsElementIndex(const sead::Vector3i& vec) {
+    s32 x = sead::Mathi::abs(vec.x);
+    s32 y = sead::Mathi::abs(vec.y);
+    s32 z = sead::Mathi::abs(vec.z);
+
+    return x < z && x < y ? 0 : y < z ? 1 : 2;
+}
+
+f32 getMinAbsElementValue(const sead::Vector3f& vec) {
+    switch (getMinAbsElementIndex(vec)) {
+    case 0:
+        return vec.x;
+    case 1:
+        return vec.y;
+    case 2:
+        return vec.z;
+    }
+    return vec.z;
+}
+
+s32 getMinAbsElementValue(const sead::Vector3i& vec) {
+    switch (getMinAbsElementIndex(vec)) {
+    case 0:
+        return vec.x;
+    case 1:
+        return vec.y;
+    case 2:
+        return vec.z;
+    }
+    return vec.z;
+}
+
+void makeQuatFromTwoAxis(sead::Quatf* outQuat, const sead::Vector3f& vectorA,
+                         const sead::Vector3f& vectorB, s32 axisA, s32 axisB) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxFromTwoAxis(&mtx, vectorA, vectorB, axisA, axisB);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatFrontUp(sead::Quatf* outQuat, const sead::Vector3f& front, const sead::Vector3f& up) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxFrontUp(&mtx, front, up);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatFrontSide(sead::Quatf* outQuat, const sead::Vector3f& front,
+                       const sead::Vector3f& side) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxFrontSide(&mtx, front, side);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatFrontNoSupport(sead::Quatf* outQuat, const sead::Vector3f& front) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxFrontNoSupport(&mtx, front);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatUpFront(sead::Quatf* outQuat, const sead::Vector3f& up, const sead::Vector3f& front) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxUpFront(&mtx, up, front);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatUpSide(sead::Quatf* outQuat, const sead::Vector3f& up, const sead::Vector3f& side) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxUpSide(&mtx, up, side);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatUpNoSupport(sead::Quatf* outQuat, const sead::Vector3f& up) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxUpNoSupport(&mtx, up);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatSideUp(sead::Quatf* outQuat, const sead::Vector3f& side, const sead::Vector3f& up) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxFromTwoAxis(&mtx, side, up, 0, 1);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatSideFront(sead::Quatf* outQuat, const sead::Vector3f& side,
+                       const sead::Vector3f& front) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxFromTwoAxis(&mtx, side, front, 0, 2);
+    mtx.toQuat(*outQuat);
+}
+
+void makeQuatSideNoSupport(sead::Quatf* outQuat, const sead::Vector3f& side) {
+    sead::Matrix34f mtx = sead::Matrix34f::ident;
+    makeMtxSideNoSupport(&mtx, side);
+    mtx.toQuat(*outQuat);
+}
+
+void rotateQuatRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec,
+                      f32 angle) {
+    f32 cos = sead::Mathf::cos(angle * 0.5f);
+    f32 sin = sead::Mathf::sin(angle * 0.5f);
+
+    sead::Quatf rotation;
+    rotation.w = cos;
+    rotation.x = sin * vec.x;
+    rotation.y = sin * vec.y;
+    rotation.z = sin * vec.z;
+
+    sead::QuatCalcCommon<f32>::setMul(*outQuat, rotation, quat);
+    outQuat->normalize();
+}
+
+void makeQuatXDegree(sead::Quatf* outQuat, f32 angle) {
+    f32 angleRad = sead::Mathf::deg2rad(angle * 0.5f);
+    f32 cos = sead::Mathf::cos(angleRad);
+    f32 sin = sead::Mathf::sin(angleRad);
+    outQuat->w = cos;
+    outQuat->x = sin;
+    outQuat->y = 0.0f;
+    outQuat->z = 0.0f;
+}
+
+void makeQuatYDegree(sead::Quatf* outQuat, f32 angle) {
+    f32 angleRad = sead::Mathf::deg2rad(angle * 0.5f);
+    f32 cos = sead::Mathf::cos(angleRad);
+    f32 sin = sead::Mathf::sin(angleRad);
+    outQuat->w = cos;
+    outQuat->x = 0.0f;
+    outQuat->y = sin;
+    outQuat->z = 0.0f;
+}
+
+void makeQuatZDegree(sead::Quatf* outQuat, f32 angle) {
+    f32 angleRad = sead::Mathf::deg2rad(angle * 0.5f);
+    f32 cos = sead::Mathf::cos(angleRad);
+    f32 sin = sead::Mathf::sin(angleRad);
+    outQuat->w = cos;
+    outQuat->x = 0.0f;
+    outQuat->y = 0.0f;
+    outQuat->z = sin;
+}
+
+void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
+    sead::Quatf rotation;
+    makeQuatXDegree(&rotation, angle);
+    sead::QuatCalcCommon<f32>::setMul(*outQuat, quat, rotation);
+    outQuat->normalize();
+}
+
+void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
+    sead::Quatf rotation;
+    makeQuatYDegree(&rotation, angle);
+    sead::QuatCalcCommon<f32>::setMul(*outQuat, quat, rotation);
+    outQuat->normalize();
+}
+
+void rotateQuatZDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
+    sead::Quatf rotation;
+    makeQuatZDegree(&rotation, angle);
+    sead::QuatCalcCommon<f32>::setMul(*outQuat, quat, rotation);
+    outQuat->normalize();
+}
+
+void rotateQuatLocalDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, s32 axis, f32 angle) {
+    sead::Vector3f vec;
+    switch (axis) {
+    case 0:
+        vec.setRotated(quat, sead::Vector3f::ex);
+        break;
+    case 1:
+        vec.setRotated(quat, sead::Vector3f::ey);
+        break;
+    case 2:
+        vec.setRotated(quat, sead::Vector3f::ez);
+        break;
+    default:
+        return;
+    }
+
+    rotateQuatRadian(outQuat, quat, vec, sead::Mathf::deg2rad(angle));
+}
+
+void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec) {
+    sead::Vector3f vecNorm = vec;
+    tryNormalizeOrZero(&vecNorm);
+
+    f32 angle = vec.length() * 0.5f;
+    f32 cos = sead::Mathf::cos(angle);
+    f32 sin = sead::Mathf::sin(angle);
+
+    sead::Quatf rotation;
+    rotation.w = cos;
+    rotation.x = sin * vecNorm.x;
+    rotation.y = sin * vecNorm.y;
+    rotation.z = sin * vecNorm.z;
+    *outQuat = rotation * quat;
+    outQuat->normalize();
+}
+
+void rotateQuatMomentDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
+                            const sead::Vector3f& vec) {
+    sead::Vector3f vecNorm = vec;
+    tryNormalizeOrZero(&vecNorm);
+
+    f32 angle = sead::Mathf::deg2rad(vec.length()) * 0.5f;
+    f32 cos = sead::Mathf::cos(angle);
+    f32 sin = sead::Mathf::sin(angle);
+
+    sead::Quatf rotation;
+    rotation.w = cos;
+    rotation.x = sin * vecNorm.x;
+    rotation.y = sin * vecNorm.y;
+    rotation.z = sin * vecNorm.z;
+    *outQuat = rotation * quat;
+    outQuat->normalize();
+}
+
+void rotateQuatRollBall(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vecA,
+                        const sead::Vector3f& vecB, f32 scale) {
+    sead::Vector3f vecNorm = vecB;
+    if (tryNormalizeOrZero(&vecNorm)) {
+        scale = 1.0f / scale;
+        vecNorm.setCross(vecNorm, vecA);
+        vecNorm = scale * vecNorm;
+    }
+
+    rotateQuatMoment(outQuat, quat, vecNorm);
+}
+
+void calcMomentRollBall(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                        const sead::Vector3f& vecB, f32 scale) {
+    sead::Vector3f vecNorm = vecB;
+    if (tryNormalizeOrZero(&vecNorm)) {
+        scale = 1.0f / scale;
+        vecNorm.setCross(vecNorm, vecA);
+        vecNorm = scale * vecNorm;
+    }
+    *outVec = vecNorm;
+}
+
+void calcCirclePointPicking(sead::Vector2f* outPoint, f32 x, f32 y) {
+    f32 invLength = 1.0 / (x * x + y * y);
+    outPoint->x = (x * x - y * y) * invLength;
+    outPoint->y = (x + x) * y * invLength;
+}
+
+void pickUniformPointsOnCircleHammersley(sead::Vector2f* outPoint, u32 x, u32 y) {
+    sead::Vector2f hammersleyPoint;
+    calcHammersleyPoint(&hammersleyPoint, x, y);
+    calcCirclePointPicking(outPoint, hammersleyPoint.x, hammersleyPoint.y);
+}
+
+void calcDiskPointPicking(sead::Vector2f* outPoint, f32 radius, f32 angle) {
+    radius = sead::Mathf::sqrt(radius);
+    f32 cos = sead::Mathf::cos(angle * sead::Mathf::pi2());
+    f32 sin = sead::Mathf::sin(angle * sead::Mathf::pi2());
+    outPoint->x = radius * cos;
+    outPoint->y = radius * sin;
+}
+
+void pickUniformPointsOnDiskHammersley(sead::Vector2f* outPoint, u32 x, u32 y) {
+    sead::Vector2f hammersleyPoint;
+    calcHammersleyPoint(&hammersleyPoint, x, y);
+    calcDiskPointPicking(outPoint, hammersleyPoint.x, hammersleyPoint.y);
+}
+
+void pickUniformPointOnDisk(sead::Vector2f* outPoint) {
+    calcDiskPointPicking(outPoint, getRandom(), getRandom());
+}
+
+void calcSpherePointPicking(sead::Vector3f* outPoint, f32 x, f32 y) {
+    f32 xx = x + x - 1.0f;
+    f32 angle = y * sead::Mathf::pi() + y * sead::Mathf::pi();
+    f32 radius = sead::Mathf::sqrt(1.0f - xx * xx);
+    f32 cos = sead::Mathf::cos(angle);
+    f32 sin = sead::Mathf::sin(angle);
+    outPoint->x = radius * cos;
+    outPoint->y = radius * sin;
+    outPoint->z = xx;
+}
+
+void pickUniformPointOnSphere(sead::Vector3f* outPoint) {
+    calcSpherePointPicking(outPoint, getRandom(), getRandom());
+}
+
 void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
                                 f32 verticalDistance) {
     f32 maxHeightSign = sign(maxHeight);
@@ -485,3 +1110,73 @@ void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
 }
 
 }  // namespace al
+
+namespace Intersect {
+
+bool calcX(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
+           const sead::Vector3f& vectorB, const sead::Vector3f& min, const sead::Vector3f& max) {
+    f32 x = (value - vectorA.x) / vectorB.x;
+    if ((x < 0.0f || x != 1.0f) && (x < 0.0f || 1.0f <= x))
+        return false;
+
+    f32 y = vectorA.y + x * vectorB.y;
+    if (min.y <= y && y <= max.y) {
+        f32 z = vectorA.z + x * vectorB.z;
+        if (min.z <= z && z <= max.z) {
+            x = vectorA.x + vectorB.x * x;
+            if (outVec != nullptr) {
+                outVec->x = x;
+                outVec->y = y;
+                outVec->z = z;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+bool calcY(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
+           const sead::Vector3f& vectorB, const sead::Vector3f& min, const sead::Vector3f& max) {
+    f32 y = (value - vectorA.y) / vectorB.y;
+    if ((y < 0.0f || y != 1.0f) && (y < 0.0f || 1.0f <= y))
+        return false;
+
+    f32 x = vectorA.x + y * vectorB.x;
+    if (min.x <= x && x <= max.x) {
+        f32 z = vectorA.z + y * vectorB.z;
+        if (min.z <= z && z <= max.z) {
+            y = vectorA.y + vectorB.y * y;
+            if (outVec != nullptr) {
+                outVec->x = x;
+                outVec->y = y;
+                outVec->z = z;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+bool calcZ(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
+           const sead::Vector3f& vectorB, const sead::Vector3f& min, const sead::Vector3f& max) {
+    f32 z = (value - vectorA.z) / vectorB.z;
+    if ((z < 0.0f || z != 1.0f) && (z < 0.0f || 1.0f <= z))
+        return false;
+
+    f32 x = vectorA.x + z * vectorB.x;
+    if (min.x <= x && x <= max.x) {
+        f32 y = vectorA.y + z * vectorB.y;
+        if (min.y <= y && y <= max.y) {
+            z = vectorA.z + vectorB.z * z;
+            if (outVec != nullptr) {
+                outVec->x = x;
+                outVec->y = y;
+                outVec->z = z;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+}  // namespace Intersect
