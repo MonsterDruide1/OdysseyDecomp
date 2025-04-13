@@ -63,15 +63,15 @@ private:
     IUsePlayerHack* mPlayerHack = nullptr;
     CapTargetInfo* mCapTargetInfo = nullptr;
     const char* mJointName = nullptr;
-    sead::Matrix34f mPoseMtx = sead::Matrix34f::ident;
+    sead::Matrix34f mCapPoseMtx = sead::Matrix34f::ident;
     sead::Matrix34f mInvJointMtx = sead::Matrix34f::ident;
     sead::Matrix34f mStartingPoseMtx = sead::Matrix34f::ident;
-    sead::Matrix34f mNextPoseMtx = sead::Matrix34f::ident;
+    sead::Matrix34f mNextCapPoseMtx = sead::Matrix34f::ident;
     al::CameraTicket* mCameraTicket = nullptr;
     al::ActorMatrixCameraTarget* mMatrixCameraTarget = nullptr;
     sead::Matrix34f mCameraTargetMtx = sead::Matrix34f::ident;
     sead::Vector3f mCameraOffset = {0.0f, 0.0f, 0.0f};
-    bool mHasCameraOffset = false;
+    bool mIsHackBoard = false;
     f32 mDampingStrength = 0.0f;
     sead::Vector3f mSideDir = sead::Vector3f::ez;
     f32 mDampingForce = 0.0f;
@@ -82,7 +82,7 @@ private:
     bool mIsSwingJump = false;
     bool mIsReadyToShoot = false;
     sead::FixedRingBuffer<sead::Vector3f, 10> mInputBuffer;
-    bool mIsControlledByPlayer = false;
+    bool mIsHorizontal = false;
     sead::Quatf mHackRotation = sead::Quatf::unit;
     sead::Vector3f mPullDirection2 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mPullDirection = {0.0f, 0.0f, 0.0f};
