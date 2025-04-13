@@ -9,7 +9,8 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 
-const sead::DirectoryEntry sEntries[0x1000];
+// NON_MATCHING __cxx_global_array_dtor and _GLOBAL__sub_I_Resource.cpp are misplaced.
+static sead::DirectoryEntry sEntries[0x1000];
 
 namespace al {
 Resource::Resource(const sead::SafeString& path)
@@ -49,7 +50,7 @@ u32 Resource::getEntryNum(const sead::SafeString& directoryPath) const {
     if (!mDevice->tryOpenDirectory(&handle, directoryPath))
         return 0;
 
-    u32 entriesRead = mDevice->readDirectory(&handle, (sead::DirectoryEntry*)sEntries, 0x1000);
+    u32 entriesRead = mDevice->readDirectory(&handle, sEntries, 0x1000);
     mDevice->tryCloseDirectory(&handle);
 
     return entriesRead;
@@ -60,7 +61,7 @@ void Resource::getEntryName(sead::BufferedSafeString* outName,
     sead::DirectoryHandle handle;
 
     mDevice->tryOpenDirectory(&handle, directoryPath);
-    mDevice->readDirectory(&handle, (sead::DirectoryEntry*)sEntries, 0x1000);
+    mDevice->readDirectory(&handle, sEntries, 0x1000);
     mDevice->tryCloseDirectory(&handle);
 
     outName->format("%s", sEntries[entryNum].name.cstr());
