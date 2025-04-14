@@ -122,7 +122,7 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     mInvJointMtx.setInverse(jointMtx);
 
     mCapTargetInfo->setPoseMatrix(&mCapPoseMtx);
-    _340.inverse(&mHackRotation);
+    mUpsideDownInitialHackDir.inverse(&mInvInitialHackDir);
 
     initBasicPoseInfo();
     mHackStartShaderCtrl = new PlayerHackStartShaderCtrl(this, &sPlayerHackStartShaderParam);
@@ -247,7 +247,7 @@ void HackFork::initBasicPoseInfo() {
 
     sead::Quatf rotation;
     sead::QuatCalcCommon<f32>::setAxisAngle(rotation, frontDir, 180.0f);
-    _340 = rotation * mHackDir;
+    mUpsideDownInitialHackDir = rotation * mHackDir;
 
     sead::Vector3f frontDir2;
     al::calcFrontDir(&frontDir2, this);
@@ -364,12 +364,12 @@ bool HackFork::trySwingJump() {
         mPullDirection.set({0.0f, -1.0f, 0.0f});
     } else {
         sead::Vector3f pulldirection = mPullDirection2;
-        pulldirection.rotate(mHackDir * mHackRotation);
+        pulldirection.rotate(mHackDir * mInvInitialHackDir);
         pulldirection.y = 0;
         al::tryNormalizeOrDirZ(&pulldirection);
         mPullDirection.set(pulldirection);
     }
-    mIsJumpFoward = mPullDirection.dot(mUpDir) < 0.0f;
+    mIsPullDown = mPullDirection.dot(mUpDir) < 0.0f;
 
     mDampingForce = 22.5f;
     sead::Vector3f frontDir;
@@ -539,7 +539,7 @@ void HackFork::calcHackDir(al::HitSensor* sensor) {
     if (!al::tryNormalizeOrZero(&mPullDirection2))
         al::calcUpDir(&mPullDirection2, this);
 
-    mHackDir.inverse(&mHackRotation);
+    mHackDir.inverse(&mInvInitialHackDir);
 }
 
 void HackFork::exeWait() {
@@ -612,7 +612,7 @@ void HackFork::exeHackWait() {
         sead::Mathf::abs(pullDirection.dot(mUpDir)) >
             sead::Mathf::cos(sead::Mathf::deg2rad(getJumpRange()))) {
         mPullDirection.set(pullDirection);
-        mIsJumpFoward = mPullDirection.dot(mUpDir) < 0.0f;
+        mIsPullDown = mPullDirection.dot(mUpDir) < 0.0f;
         al::setNerve(this, &NrvHackFork.HackBend);
     }
 }
@@ -640,7 +640,7 @@ void HackFork::exeHackBend() {
         }
     }
     sead::Vector3f oldPullDirection = mPullDirection;
-    f32 jumpDir = mIsJumpFoward ? -1.0f : 1.0f;
+    f32 jumpDir = mIsPullDown ? -1.0f : 1.0f;
 
     f32 angle = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
     if (sead::Mathf::rad2deg(sead::Mathf::cos(angle)) < getJumpRange())

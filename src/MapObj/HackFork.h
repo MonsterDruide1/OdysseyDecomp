@@ -83,13 +83,13 @@ private:
     bool mIsReadyToShoot = false;
     sead::FixedRingBuffer<sead::Vector3f, 10> mInputBuffer;
     bool mIsHorizontal = false;
-    sead::Quatf mHackRotation = sead::Quatf::unit;
+    sead::Quatf mInvInitialHackDir = sead::Quatf::unit;
     sead::Vector3f mPullDirection2 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mPullDirection = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mUpDir = {0.0f, 0.0f, 0.0f};
     sead::Quatf mHackDir = sead::Quatf::unit;
-    sead::Quatf _340 = sead::Quatf::unit;
-    bool mIsJumpFoward = false;
+    sead::Quatf mUpsideDownInitialHackDir = sead::Quatf::unit;
+    bool mIsPullDown = false;
     bool mIsLimitterFree = false;
     s32 mTouchDelay = 0;
     s32 mAirVel = 0;
