@@ -6,19 +6,13 @@ class AudioSoundArchiveInfo;
 class BgmDataBase;
 class SeDataBase;
 
-class AudioSystemInfo {
-public:
+struct AudioSystemInfo {
     AudioSystemInfo();
 
-    SeDataBase* getSeDataBase() const { return mSeDataBase; }
-
-    BgmDataBase* getBgmDataBase() const { return mBgmDataBase; }
-
-private:
     void* _0;
-    AudioEffectDataBase* mAudioEffectDataBase;
-    AudioSoundArchiveInfo* mAudioSoundArchiveInfo;
-    SeDataBase* mSeDataBase;
-    BgmDataBase* mBgmDataBase;
+    AudioEffectDataBase* audioEffectDataBase;
+    AudioSoundArchiveInfo* audioSoundArchiveInfo;
+    SeDataBase* seDataBase;
+    BgmDataBase* bgmDataBase;
 };
 }  // namespace al

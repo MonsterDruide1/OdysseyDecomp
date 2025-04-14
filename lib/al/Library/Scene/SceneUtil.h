@@ -16,7 +16,7 @@ class Scene;
 struct SceneInitInfo;
 class StageInfo;
 class PauseCameraCtrl;
-class AudioDirectorInitInfo;
+struct AudioDirectorInitInfo;
 class Projection;
 class LiveActor;
 class LiveActorGroup;
