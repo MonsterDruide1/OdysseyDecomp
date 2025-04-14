@@ -13,6 +13,8 @@ class EffectPrefixType;
 class EffectSystemInfo;
 class EffectResourceInfo;
 class IUseEffectKeeper;
+class ModelKeeper;
+class IUseCamera;
 
 class EffectKeeper {
 public:
@@ -66,3 +68,8 @@ bool tryFindEffectResouceInfo(const al::EffectSystemInfo*, const char*);
 void emitEffectIfExist(al::IUseEffectKeeper* effectKeeperHolder, const char* effectName,
                        const sead::Vector3f* pos);
 }  // namespace alEffectFunction
+
+namespace alEffectKeeperInitFunction {
+void setupModelToEffectKeeper(al::EffectKeeper* effectKeeper, const al::ModelKeeper* modelKeeper);
+void setupCameraToEffectKeeper(al::EffectKeeper* effectKeeper, const al::IUseCamera* iUseCamera);
+}  // namespace alEffectKeeperInitFunction
