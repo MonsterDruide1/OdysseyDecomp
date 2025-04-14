@@ -8,6 +8,7 @@
 #include "Library/Collision/IUseCollision.h"
 #include "Library/Effect/IUseEffectKeeper.h"
 #include "Library/HostIO/HioNode.h"
+#include "Library/Nature/NatureDirector.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Rail/IUseRail.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
@@ -82,6 +83,7 @@ public:
     virtual CollisionDirector* getCollisionDirector() const override;
     virtual AreaObjDirector* getAreaObjDirector() const override;
     virtual CameraDirector* getCameraDirector() const override;
+    NatureDirector* getNatureDirector() const;
     virtual void initStageSwitchKeeper() override;
     virtual void control();
     virtual void updateCollider();
