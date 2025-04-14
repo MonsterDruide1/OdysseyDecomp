@@ -43,15 +43,20 @@ public:
 
     CollisionDirector* getCollisionDirector() const override;
 
+    void setRadius(f32 radius) { mRadius = radius; };
+
     s32 get_48() const { return _48; }
 
     s32 get_4c() const { return _4c; }
 
 private:
-    void* unknown[0x8];
+    void* unknown[0x6];
+    f32 mRadius;
+    f32 mOffsetY;
+    void* unknown2;
     s32 _48;
     s32 _4c;
-    void* unknown2[0x47];
+    void* unknown3[0x47];
 };
 
 static_assert(sizeof(Collider) == 0x288);
