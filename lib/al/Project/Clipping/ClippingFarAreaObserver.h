@@ -6,7 +6,6 @@ namespace al {
 
 class PlayerHolder;
 class AreaObjDirector;
-class LiveActor;
 
 class ClippingFarAreaObserver {
 public:
@@ -16,5 +15,4 @@ public:
     void endInit();
     void update();
 };
-
 }  // namespace al

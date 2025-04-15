@@ -115,11 +115,11 @@ public:
 
     ActorExecuteInfo* getExecuteInfo() const { return mExecuteInfo; }
 
-    ActorActionKeeper* getActorActionKeeper() const { return mActorActionKeeper; }
+    ActorActionKeeper* getActorActionKeeper() const { return mActionKeeper; }
 
-    ActorItemKeeper* getActorItemKeeper() const { return mActorItemKeeper; }
+    ActorItemKeeper* getActorItemKeeper() const { return mItemKeeper; }
 
-    ActorScoreKeeper* getActorScoreKeeper() const { return mActorScoreKeeper; }
+    ActorScoreKeeper* getActorScoreKeeper() const { return mScoreKeeper; }
 
     Collider* getCollider() const { return mCollider; }
 
@@ -135,26 +135,26 @@ public:
 
     ShadowKeeper* getShadowKeeper() const { return mShadowKeeper; }
 
-    ActorPrePassLightKeeper* getActorPrePassLightKeeper() const { return mActorPrePassLightKeeper; }
+    ActorPrePassLightKeeper* getActorPrePassLightKeeper() const { return mPrePassLightKeeper; }
 
-    ActorOcclusionKeeper* getActorOcclusionKeeper() const { return mActorOcclusionKeeper; }
+    ActorOcclusionKeeper* getActorOcclusionKeeper() const { return mOcclusionKeeper; }
 
     SubActorKeeper* getSubActorKeeper() const { return mSubActorKeeper; }
 
-    ActorParamHolder* getActorParamHolder() const { return mActorParamHolder; }
+    ActorParamHolder* getActorParamHolder() const { return mParamHolder; }
 
-    void setName(const char* newName) { mActorName = newName; }
+    void setName(const char* newName) { mName = newName; }
 
 protected:
     friend class alActorFunction;
 
 private:
-    const char* mActorName = nullptr;
+    const char* mName = nullptr;
     ActorPoseKeeperBase* mPoseKeeper = nullptr;
     ActorExecuteInfo* mExecuteInfo = nullptr;
-    ActorActionKeeper* mActorActionKeeper = nullptr;
-    ActorItemKeeper* mActorItemKeeper = nullptr;
-    ActorScoreKeeper* mActorScoreKeeper = nullptr;
+    ActorActionKeeper* mActionKeeper = nullptr;
+    ActorItemKeeper* mItemKeeper = nullptr;
+    ActorScoreKeeper* mScoreKeeper = nullptr;
     Collider* mCollider = nullptr;
     CollisionParts* mCollisionParts = nullptr;
     ModelKeeper* mModelKeeper = nullptr;
@@ -167,10 +167,10 @@ private:
     StageSwitchKeeper* mStageSwitchKeeper = nullptr;
     RailKeeper* mRailKeeper = nullptr;
     ShadowKeeper* mShadowKeeper = nullptr;
-    ActorPrePassLightKeeper* mActorPrePassLightKeeper = nullptr;
-    ActorOcclusionKeeper* mActorOcclusionKeeper = nullptr;
+    ActorPrePassLightKeeper* mPrePassLightKeeper = nullptr;
+    ActorOcclusionKeeper* mOcclusionKeeper = nullptr;
     SubActorKeeper* mSubActorKeeper = nullptr;
-    ActorParamHolder* mActorParamHolder = nullptr;
+    ActorParamHolder* mParamHolder = nullptr;
     ActorSceneInfo* mSceneInfo = nullptr;
     LiveActorFlag* mFlags = nullptr;
 };
