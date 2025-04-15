@@ -3,6 +3,7 @@
 #include "Library/Placement/PlacementInfo.h"
 
 namespace al {
+
 PlacementId::PlacementId()
     : mId(nullptr), mUnitConfigName(nullptr), mZoneId(nullptr), mCommonID(nullptr) {}
 
@@ -21,4 +22,23 @@ bool PlacementId::init(const PlacementInfo& rInfo) {
 bool PlacementId::isValid() const {
     return mCommonID || mId;
 }
+
+void PlacementId::makeString(sead::BufferedSafeString* out) const {
+    if (mCommonID)
+        out->format(mCommonID);
+    else if (mUnitConfigName)
+        out->format("%s(%s[%s])", mId, mUnitConfigName, mZoneId);
+    else if (mId)
+        out->format(mId);
+    else
+        out->format("");
+}
+
+StringTmp<128> makeStringPlacementId(const PlacementId* placement_id) {
+    StringTmp<128> string;
+    if (placement_id)
+        placement_id->makeString(&string);
+    return string;
+}
+
 }  // namespace al
