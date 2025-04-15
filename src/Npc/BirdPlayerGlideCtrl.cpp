@@ -7,7 +7,7 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Math/MtxUtil.h"
+#include "Library/Matrix/MatrixUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Resource/ResourceHolder.h"
