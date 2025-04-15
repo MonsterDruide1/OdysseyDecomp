@@ -15,7 +15,5 @@ void PlayerJudgeStartRise::reset() {}
 void PlayerJudgeStartRise::update() {}
 
 bool PlayerJudgeStartRise::judge() const {
-    if (mModelChanger->is2DModel())
-        return false;
-    return mAreaChecker->isInRise(al::getTrans(mPlayer));
+    return !mModelChanger->is2DModel() && mAreaChecker->isInRise(al::getTrans(mPlayer));
 }
