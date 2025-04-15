@@ -254,9 +254,8 @@ bool EnemyStateSwoon::isPlayingActionIncorrect() const {
         return true;
 
     if (mLoopAnimName && al::isActionPlaying(actor, mLoopAnimName) &&
-        isNearWater(mWaterSurfaceFinder, mActor)) {
+        isNearWater(mWaterSurfaceFinder, mActor))
         return true;
-    }
     return false;
 }
 

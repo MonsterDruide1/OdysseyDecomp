@@ -57,11 +57,11 @@ public:
 
     AnimPlayerVis* getAnimVisForAction() const { return mAnimVisForAction; }
 
-    bool isUnk() const { return mIsUnk; }
+    bool isFixedModel() const { return mIsFixedModel; }
 
-    bool isUnk2() const { return mIsUnk2; }
+    bool isIgnoreUpdateDrawClipping() const { return mIsIgnoreUpdateDrawClipping; }
 
-    bool isUnk3() const { return mIsUnk3; }
+    bool isNeedSetBaseMtxAndCalcAnim() const { return mIsNeedSetBaseMtxAndCalcAnim; }
 
 private:
     const char* mName;
@@ -75,9 +75,9 @@ private:
     AnimPlayerVis* mAnimVisForAction;
     AnimPlayerVis* mAnimVis;
     char gap_58[9];
-    bool mIsUnk;
-    char mIsUnk2;
-    bool mIsUnk3;
+    bool mIsFixedModel;
+    bool mIsIgnoreUpdateDrawClipping;
+    bool mIsNeedSetBaseMtxAndCalcAnim;
 };
 
 }  // namespace al

@@ -255,9 +255,8 @@ void BirdPlayerGlideCtrl::exeValidOnSitDownHead() {
         }
     }
     if (al::isNerve(this, &NrvBirdPlayerGlideCtrl.ValidOnSitDownHeadWithCap) !=
-        PlayerCapFunction::isEnableBirdLandPlayerCapOn(this)) {
+        PlayerCapFunction::isEnableBirdLandPlayerCapOn(this))
         al::setNerve(this, &NrvBirdPlayerGlideCtrl.WaitFlyAway);
-    }
 }
 
 void BirdPlayerGlideCtrl::exeWaitFlyAway() {

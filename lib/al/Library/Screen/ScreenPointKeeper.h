@@ -10,7 +10,7 @@ class ScreenPointTarget;
 
 class ScreenPointKeeper {
 public:
-    bool isExistFile(const Resource*);
+    static bool isExistFile(const Resource*);
     ScreenPointKeeper();
     void initByYaml(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
     void initArray(s32);
