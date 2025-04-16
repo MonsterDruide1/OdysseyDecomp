@@ -17,6 +17,7 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 #include "Project/Joint/RollingCubePoseKeeper.h"
+#include "Project/Joint/RollingCubePoseKeeperUtil.h"
 
 namespace {
 using namespace al;
