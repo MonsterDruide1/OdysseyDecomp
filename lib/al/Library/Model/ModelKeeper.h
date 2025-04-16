@@ -14,6 +14,11 @@ class AnimPlayerVis;
 class ModelCtrl;
 class DitherAnimator;
 class ModelLodCtrl;
+class GpuMemAllocator;
+class ModelShaderHolder;
+class ModelOcclusionCullingDirector;
+class ShadowDirector;
+class PrepassTriangleCulling;
 
 class ModelKeeper : public HioNode {
 public:
@@ -21,12 +26,20 @@ public:
 
     virtual ~ModelKeeper();
 
-    void calc(const sead::Matrix34f&, const sead::Vector3f&);
     void initResource();
     void createMatAnimForProgram(s32);
-    void setDitherAnimator(DitherAnimator* ditherAnimator);
     void setDisplayRootJointMtxPtr(const sead::Matrix34f* mtx);
     void setModelLodCtrl(ModelLodCtrl* modelLodCtrl);
+    void setDitherAnimator(DitherAnimator* ditherAnimator);
+    void initModel(s32, GpuMemAllocator*, ModelShaderHolder*, ModelOcclusionCullingDirector*,
+                   ShadowDirector*, PrepassTriangleCulling*);
+    void show();
+    void hide();
+    void update();
+    void updateLast();
+    void calc(const sead::Matrix34f&, const sead::Vector3f&);
+    const sead::Matrix34f* getBaseMtx() const;
+    sead::Matrix34f* getWorldMtxPtrByIndex(s32 index) const;
 
     ModelCtrl* getModelCtrl() const { return mModelCtrl; }
 
@@ -44,6 +57,12 @@ public:
 
     AnimPlayerVis* getAnimVisForAction() const { return mAnimVisForAction; }
 
+    bool isFixedModel() const { return mIsFixedModel; }
+
+    bool isIgnoreUpdateDrawClipping() const { return mIsIgnoreUpdateDrawClipping; }
+
+    bool isNeedSetBaseMtxAndCalcAnim() const { return mIsNeedSetBaseMtxAndCalcAnim; }
+
 private:
     const char* mName;
     ModelCtrl* mModelCtrl;
@@ -55,6 +74,10 @@ private:
     AnimPlayerMat* mAnimMat;
     AnimPlayerVis* mAnimVisForAction;
     AnimPlayerVis* mAnimVis;
+    char gap_58[9];
+    bool mIsFixedModel;
+    bool mIsIgnoreUpdateDrawClipping;
+    bool mIsNeedSetBaseMtxAndCalcAnim;
 };
 
 }  // namespace al
