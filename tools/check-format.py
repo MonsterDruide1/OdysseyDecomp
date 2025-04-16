@@ -499,6 +499,7 @@ def common_include_what_you_use(c, path):
         "-isystem"+str(project_root/"lib/eui/include"),
         "-isystem"+str(project_root/"toolchain/clang-3.9.1/include/c++/v1/"),
         "-isystem"+str(project_root/"toolchain/musl/include"),
+        "-include"+"basis/seadTypes.h",
         "-DNNSDK",
         "-stdlib=libc++",  # also allow "compiling" headers for checks
         "-x", "c++",
@@ -509,6 +510,7 @@ def common_include_what_you_use(c, path):
         "-Xiwyu", "--mapping_file="+str(project_root/"tools/iwyu.imp"),
         "-Xiwyu", "--no_default_mappings",
         "-Xiwyu", "--error",
+        "-Xiwyu", "--prefix_header_includes=remove",
         #"-Xiwyu", "--verbose=10",
     ]
     iwyu = subprocess.run(["/home/monsterdruide1/include-what-you-use/build/bin/include-what-you-use"] + iwyu_args + arguments + [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)

@@ -54,6 +54,7 @@ target_link_libraries(odyssey PUBLIC NintendoSDK)
 
 add_subdirectory(lib/sead)
 target_link_libraries(odyssey PUBLIC sead)
+target_compile_options(odyssey PRIVATE -includebasis/seadTypes.h)
 
 add_subdirectory(lib/agl)
 target_link_libraries(odyssey PUBLIC agl)
