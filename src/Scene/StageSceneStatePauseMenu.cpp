@@ -1,5 +1,7 @@
 #include "Scene/StageSceneStatePauseMenu.h"
 
+#include <math/seadQuat.h>
+#include <math/seadVector.h>
 #include <nn/oe.h>
 
 #include "Library/Base/StringUtil.h"
@@ -12,11 +14,8 @@
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
-#include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
-#include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/LiveActorKit.h"
 #include "Library/LiveActor/SubActorKeeper.h"
@@ -28,6 +27,7 @@
 #include "Library/Play/Layout/SimpleLayoutAppearWaitEnd.h"
 #include "Library/Play/Layout/WindowConfirm.h"
 #include "Library/Play/Layout/WipeSimple.h"
+#include "Library/Scene/Scene.h"
 #include "Library/Scene/SceneUtil.h"
 #include "Library/Screen/ScreenFunction.h"
 #include "Library/Se/SeFunction.h"
@@ -49,6 +49,10 @@
 #include "Util/InputInterruptTutorialUtil.h"
 #include "Util/SpecialBuildUtil.h"
 #include "Util/StageInputFunction.h"
+
+namespace al {
+class GamePadSystem;
+}  // namespace al
 
 namespace {
 NERVE_IMPL(StageSceneStatePauseMenu, Appear);

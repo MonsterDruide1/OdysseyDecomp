@@ -1,8 +1,12 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/Camera/CameraPoser.h"
 
 namespace al {
+class RailKeeper;
+
 class CameraPoserActorRailParallel : public CameraPoser {
 public:
     CameraPoserActorRailParallel(const char* name, const RailKeeper* railKeeper);

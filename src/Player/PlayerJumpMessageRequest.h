@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 enum class PlayerJumpType : u32 {

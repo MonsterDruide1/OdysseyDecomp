@@ -1,12 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
 class LiveActor;
+struct ActorInitInfo;
 }  // namespace al
 class KuriboMini;
 class Shine;

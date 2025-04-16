@@ -1,13 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/LiveActor/LiveActor.h"
 
 #include "Util/IUseDimension.h"
 
 namespace al {
-struct ActorInitInfo;
 class HitSensor;
 class NerveStateBase;
 }  // namespace al

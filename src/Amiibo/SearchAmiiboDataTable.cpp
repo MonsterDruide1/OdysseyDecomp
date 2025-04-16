@@ -1,7 +1,5 @@
 #include "Amiibo/SearchAmiiboDataTable.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/Writer/ByamlWriter.h"
 

@@ -1,11 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-struct ActorInitInfo;
 class EventFlowExecutor;
 }  // namespace al
 

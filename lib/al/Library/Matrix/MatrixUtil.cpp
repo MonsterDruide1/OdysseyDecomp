@@ -1,5 +1,7 @@
 #include "Library/Matrix/MatrixUtil.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Math/MathUtil.h"
 
 namespace al {

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 class IUsePlayerHeightCheck {
 public:
     virtual bool isAboveGround() const = 0;

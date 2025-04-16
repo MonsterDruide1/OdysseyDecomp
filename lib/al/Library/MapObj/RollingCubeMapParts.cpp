@@ -1,5 +1,6 @@
 #include "Library/MapObj/RollingCubeMapParts.h"
 
+#include <basis/seadNew.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMathCalcCommon.h>
 #include <prim/seadSafeString.h>

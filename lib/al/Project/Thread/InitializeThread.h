@@ -1,12 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 #include <thread/seadMessageQueue.h>
 
 namespace sead {
-class Heap;
 class DelegateThread;
+class Heap;
 class Thread;
 }  // namespace sead
 

@@ -4,9 +4,6 @@
 
 #include "Util/IUseDimension.h"
 
-namespace al {
-struct ActorInitInfo;
-}
 class ActorDimensionKeeper;
 
 class FireDrum2D : public al::LiveActor, public IUseDimension {

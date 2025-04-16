@@ -5,16 +5,18 @@
 #include "Library/Scene/DemoDirector.h"
 
 namespace al {
-class PlayerHolder;
 class GraphicsSystemInfo;
+class LiveActor;
+class PlayerHolder;
 class WipeSimple;
+struct ActorInitInfo;
 }  // namespace al
-class IUseDemoSkip;
-class Shine;
-class ShineTowerRocket;
-class RiseMapPartsHolder;
 class DemoChangeEffectObj;
 class DemoHackFirstDirector;
+class IUseDemoSkip;
+class RiseMapPartsHolder;
+class Shine;
+class ShineTowerRocket;
 
 class ProjectDemoDirector : public al::DemoDirector {
 public:

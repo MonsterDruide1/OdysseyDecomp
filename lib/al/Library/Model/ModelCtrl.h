@@ -1,18 +1,16 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace nn::g3d {
 class ModelObj;
 }
 
 namespace al {
-class GpuMemAllocator;
-class ModelShaderHolder;
-class Resource;
 class ActorDitherAnimator;
+class GpuMemAllocator;
 class GraphicsQualityInfo;
 class ModelOcclusionQuery;
+class ModelShaderHolder;
+class Resource;
 
 class ModelCtrl {
 public:

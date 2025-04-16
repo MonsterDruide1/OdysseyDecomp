@@ -1,5 +1,9 @@
 #include "Enemy/HackerDepthShadowMapCtrl.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Collision/CollisionPartsKeeperUtil.h"

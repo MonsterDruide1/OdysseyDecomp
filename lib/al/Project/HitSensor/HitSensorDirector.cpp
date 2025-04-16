@@ -1,6 +1,5 @@
 #include "Project/HitSensor/HitSensorDirector.h"
 
-#include <basis/seadTypes.h>
 #include <math/seadMathCalcCommon.h>
 #include <math/seadVector.h>
 

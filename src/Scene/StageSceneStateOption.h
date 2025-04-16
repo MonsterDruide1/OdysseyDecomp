@@ -5,9 +5,10 @@
 
 namespace al {
 class LayoutInitInfo;
+class MessageSystem;
+class Nerve;
 class Scene;
 class SimpleLayoutAppearWaitEnd;
-class MessageSystem;
 class WindowConfirm;
 }  // namespace al
 class CommonVerticalList;

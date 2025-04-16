@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Camera/CameraTicket.h"
 
 namespace al {

@@ -1,7 +1,5 @@
 #include "Library/Camera/CameraInputHolder.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/Camera/SimpleCameraInput.h"
 
 al::CameraInputHolder::CameraInputHolder(s32 size) : mInputsSize(size) {

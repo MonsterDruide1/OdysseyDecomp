@@ -1,5 +1,7 @@
 #include "Npc/BirdPlayerGlideCtrl.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
@@ -13,6 +15,7 @@
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Resource/ResourceHolder.h"
 #include "Library/Scene/SceneObjUtil.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 #include "Npc/Bird.h"
@@ -20,6 +23,10 @@
 #include "Util/DemoUtil.h"
 #include "Util/PlayerUtil.h"
 #include "Util/ScenePlayerCapFunction.h"
+
+namespace al {
+class Resource;
+}  // namespace al
 
 namespace {
 NERVE_IMPL(BirdPlayerGlideCtrl, Invalid);

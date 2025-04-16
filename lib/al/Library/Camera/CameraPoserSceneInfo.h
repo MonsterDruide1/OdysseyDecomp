@@ -1,16 +1,14 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class AudioDirector;
 class AreaObjDirector;
+class AudioDirector;
 class CameraFlagCtrl;
 class CameraInputHolder;
-class CameraTargetCollideInfoHolder;
-class CameraTargetHolder;
 class CameraRailHolder;
 class CameraRequestParamHolder;
+class CameraTargetCollideInfoHolder;
+class CameraTargetHolder;
 class CollisionDirector;
 struct SnapShotCameraSceneInfo;
 

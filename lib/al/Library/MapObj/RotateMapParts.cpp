@@ -1,5 +1,7 @@
 #include "Library/MapObj/RotateMapParts.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

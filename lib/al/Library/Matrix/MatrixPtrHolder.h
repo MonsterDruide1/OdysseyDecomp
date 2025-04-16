@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 
 namespace al {

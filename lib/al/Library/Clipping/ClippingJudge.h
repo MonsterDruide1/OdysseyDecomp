@@ -1,13 +1,12 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 namespace al {
-class SceneCameraInfo;
 class ClippingFarAreaObserver;
+class SceneCameraInfo;
 
 class ClippingJudge {
 public:

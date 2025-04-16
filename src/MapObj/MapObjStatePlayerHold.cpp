@@ -1,5 +1,6 @@
 #include "MapObj/MapObjStatePlayerHold.h"
 
+#include <math/seadMathCalcCommon.h>
 #include <math/seadMatrix.h>
 
 #include "Library/Collision/Collider.h"

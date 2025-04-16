@@ -1,5 +1,7 @@
 #include "Project/Thread/InitializeThread.h"
 
+#include <heap/seadHeapMgr.h>
+#include <prim/seadDelegate.h>
 #include <thread/seadDelegateThread.h>
 
 #include "Library/Thread/FunctorV0M.h"

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -17,9 +16,9 @@ class TextureData;
 }
 
 namespace al {
+class IUseLayout;
 class LayoutActor;
 class LayoutPaneGroup;
-class IUseLayout;
 class MessageHolder;
 template <typename T>
 class Matrix43;

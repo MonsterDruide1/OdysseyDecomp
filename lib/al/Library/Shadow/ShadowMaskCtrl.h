@@ -1,14 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <math/seadMatrix.h>
 
 namespace al {
 
-class ShadowMaskBase;
-class LiveActor;
-struct ActorInitInfo;
 class ByamlIter;
 class LiveActor;
 class ShadowMaskBase;
@@ -16,6 +12,7 @@ class ShadowMaskCastOvalCylinder;
 class ShadowMaskCube;
 class ShadowMaskCylinder;
 class ShadowMaskSphere;
+struct ActorInitInfo;
 
 class ShadowMaskCtrl {
 public:

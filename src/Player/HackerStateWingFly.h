@@ -1,17 +1,16 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
-class LiveActor;
 class HitSensor;
+class LiveActor;
 }  // namespace al
 
-class IUsePlayerHack;
 class IUsePlayerCollision;
+class IUsePlayerHack;
 
 class HackerStateWingFly : public al::ActorStateBase {
 public:

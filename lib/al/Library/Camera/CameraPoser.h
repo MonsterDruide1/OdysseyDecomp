@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -18,6 +17,7 @@ class LookAtCamera;
 }  // namespace sead
 
 namespace al {
+class AudioKeeper;
 class ByamlIter;
 class CameraAngleCtrlInfo;
 class CameraAngleSwingInfo;
@@ -33,6 +33,7 @@ class CameraVerticalAbsorber;
 class CameraViewInfo;
 class GyroCameraCtrl;
 class Nerve;
+class NerveKeeper;
 class PlacementInfo;
 class RailKeeper;
 class SnapShotCameraCtrl;
@@ -40,8 +41,6 @@ struct CameraObjectRequestInfo;
 struct CameraPoserFlag;
 struct CameraPoserSceneInfo;
 struct CameraStartInfo;
-class AudioKeeper;
-class NerveKeeper;
 
 class CameraPoser : public HioNode,
                     public IUseAreaObj,

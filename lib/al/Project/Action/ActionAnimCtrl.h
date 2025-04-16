@@ -1,10 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class LiveActor;
 class ActorResource;
+class LiveActor;
 struct ActionAnimCtrlInfo;
 
 class ActionAnimCtrl {

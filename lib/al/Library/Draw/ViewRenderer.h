@@ -1,24 +1,31 @@
 #pragma once
 
-#include <common/aglRenderBuffer.h>
-#include <common/aglTextureData.h>
-#include <gfx/seadCamera.h>
+namespace agl {
+class DrawContext;
+class RenderBuffer;
+class TextureData;
+}  // namespace agl
+
+namespace sead {
+class Camera;
+class Viewport;
+}  // namespace sead
 
 namespace al {
-class GraphicsSystemInfo;
-class ExecuteDirector;
-class EffectSystem;
-class SimpleModelEnv;
 class DeferredRendering;
-class SceneCameraInfo;
+class EffectSystem;
+class ExecuteDirector;
 class GraphicsQualityInfo;
-class ScreenFader;
-class Projection;
 class GraphicsRenderInfo;
+class GraphicsSystemInfo;
+class Projection;
+class RenderVariables;
+class SceneCameraInfo;
+class ScreenFader;
+class ShaderHolder;
+class SimpleModelEnv;
 class ViewInfo;
 struct DrawSystemInfo;
-class RenderVariables;
-class ShaderHolder;
 
 class ViewRenderer {
 public:

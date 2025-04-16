@@ -1,6 +1,5 @@
 #include "Player/PlayerJudgeGrabCeil.h"
 
-#include <basis/seadTypes.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Collision/CollisionParts.h"

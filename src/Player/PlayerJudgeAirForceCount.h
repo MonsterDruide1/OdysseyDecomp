@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 #include "Player/IJudge.h"
@@ -9,8 +7,8 @@
 namespace al {
 class LiveActor;
 }
-class PlayerExternalVelocity;
 class IUsePlayerCollision;
+class PlayerExternalVelocity;
 
 class PlayerJudgeAirForceCount : public al::HioNode, public IJudge {
 public:

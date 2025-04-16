@@ -1,5 +1,6 @@
 #include "Util/ItemUtil.h"
 
+#include <math/seadMathCalcCommon.h>
 #include <math/seadMatrix.h>
 
 #include "Library/Base/StringUtil.h"
@@ -7,7 +8,6 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -673,8 +673,3 @@ void setProjectionMtxAsEmptyModel2d(al::LiveActor* actor, const sead::Vector2f& 
 // void addDemoRacePrizeCoin(al::LiveActor* actor); TODO
 
 }  // namespace rs
-
-namespace StageSceneFunction {
-// void appearPlayerDeadCoin(al::LiveActor* actor); TODO
-
-}  // namespace StageSceneFunction

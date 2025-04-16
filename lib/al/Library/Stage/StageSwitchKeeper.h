@@ -1,17 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class ExecuteDirector;
-class PlacementId;
+class IUseName;
+class PlacementInfo;
 class StageSwitchAccesser;
 class StageSwitchDirector;
-class StageSwitchListener;
-class PlacementInfo;
-class IUseStageSwitch;
-class FunctorBase;
-class IUseName;
 
 struct StageSwitchAccesserList {
     StageSwitchAccesserList();

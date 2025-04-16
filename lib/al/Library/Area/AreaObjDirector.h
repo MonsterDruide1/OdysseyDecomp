@@ -1,14 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
-class AreaObjFactory;
-class AreaObjMtxConnecterHolder;
-class AreaObjGroup;
-class AreaObj;
 class AreaInitInfo;
+class AreaObj;
+class AreaObjFactory;
+class AreaObjGroup;
+class AreaObjMtxConnecterHolder;
 
 class AreaObjDirector {
 public:

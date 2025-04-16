@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"
@@ -15,16 +14,16 @@
 #include "Library/Scene/IUseSceneObjHolder.h"
 
 namespace al {
-class NerveKeeper;
-class LayoutKeeper;
-class LayoutActionKeeper;
-class LayoutTextPaneAnimator;
-class EffectKeeper;
 class AudioKeeper;
-class LayoutExecuteInfo;
+class EffectKeeper;
 class HitReactionKeeper;
+class LayoutActionKeeper;
+class LayoutExecuteInfo;
+class LayoutKeeper;
 class LayoutPartsActorKeeper;
+class LayoutTextPaneAnimator;
 class Nerve;
+class NerveKeeper;
 
 class LayoutActor : public IUseHioNode,
                     public IUseNerve,

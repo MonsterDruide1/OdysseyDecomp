@@ -1,15 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/LiveActor.h"
-
-namespace al {
-struct ActorInitInfo;
-class HitSensor;
-class SensorMsg;
-}  // namespace al
 
 class CoinStackGroup;
 

@@ -1,5 +1,7 @@
 #include "Library/MapObj/FloaterMapParts.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"

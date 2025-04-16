@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
@@ -10,12 +9,12 @@ class Color4f;
 }
 
 namespace al {
-struct ActorInitInfo;
 class ActorResource;
 class ByamlIter;
 class HitSensor;
 class LiveActor;
 class Resource;
+struct ActorInitInfo;
 
 void initActorSceneInfo(LiveActor* actor, const ActorInitInfo& info);
 void initExecutorUpdate(LiveActor* actor, const ActorInitInfo& info, const char*);

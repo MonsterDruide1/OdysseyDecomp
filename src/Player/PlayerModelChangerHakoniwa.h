@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 #include "Player/IPlayerModelChanger.h"
@@ -9,10 +7,10 @@
 namespace al {
 class LiveActor;
 }
+class IUseDimension;
+class PlayerCostumeInfo;
 class PlayerModelHolder;
 class PlayerPainPartsKeeper;
-class PlayerCostumeInfo;
-class IUseDimension;
 
 class PlayerModelChangerHakoniwa : public IPlayerModelChanger, public al::HioNode {
 public:

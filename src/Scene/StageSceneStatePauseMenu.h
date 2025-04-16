@@ -1,13 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Nerve/NerveStateBase.h"
 
 #include "System/GameDataHolderAccessor.h"
 
 namespace al {
-struct ActorInitInfo;
 class HtmlViewer;
 class KeyRepeatCtrl;
 class LayoutInitInfo;
@@ -18,6 +15,7 @@ class Scene;
 class SimpleLayoutAppearWaitEnd;
 class WindowConfirm;
 class WipeSimple;
+struct ActorInitInfo;
 struct SceneInitInfo;
 }  // namespace al
 class FooterParts;

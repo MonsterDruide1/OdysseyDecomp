@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <nvn/nvn_Cpp.h>
 
 namespace al {

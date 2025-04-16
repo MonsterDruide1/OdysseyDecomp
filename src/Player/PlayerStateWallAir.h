@@ -8,13 +8,17 @@ class IJudge;
 class IUsePlayerCollision;
 class PlayerActionDiveInWater;
 class PlayerAnimator;
-class PlayerJudgePreInputJump;
-class PlayerWallActionHistory;
-class PlayerStateNormalWallSlide;
-class PlayerStateNormalWallJump;
 class PlayerConst;
 class PlayerInput;
+class PlayerJudgePreInputJump;
+class PlayerStateNormalWallJump;
+class PlayerStateNormalWallSlide;
 class PlayerTrigger;
+class PlayerWallActionHistory;
+
+namespace al {
+class LiveActor;
+}  // namespace al
 
 class PlayerStateWallAir : public al::ActorStateBase {
 public:

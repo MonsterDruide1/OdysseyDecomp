@@ -1,5 +1,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Collision/Collider.h"

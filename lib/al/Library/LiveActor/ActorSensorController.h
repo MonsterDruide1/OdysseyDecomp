@@ -1,11 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
 class HitSensor;
+class LiveActor;
 
 class ActorSensorController {
 public:

@@ -1,13 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class IUseMessageSystem;
 class LiveActor;
 class SimpleLayoutAppearWaitEnd;
 class TalkMessageVoicePlayer;
-
 template <s32>
 class StringTmp;
 }  // namespace al

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <container/seadRingBuffer.h>
 #include <math/seadMatrix.h>
@@ -10,18 +9,16 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-struct ActorInitInfo;
 class ActorMatrixCameraTarget;
 class CameraTicket;
 class EventFlowExecutor;
 class HitSensor;
 class JointLocalAxisRotator;
 class MtxConnector;
-class SensorMsg;
 }  // namespace al
 
-class IUsePlayerHack;
 class CapTargetInfo;
+class IUsePlayerHack;
 class PlayerHackStartShaderCtrl;
 
 class HackFork : public al::LiveActor {

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
@@ -22,9 +21,9 @@ class ResTexture;
 }  // namespace nn::gfx
 
 namespace al {
+class ClippingDirector;
 class LayoutTextureRenderObj;
 class LiveActor;
-class ClippingDirector;
 
 void updateMaterialCodeGround(LiveActor* actor, const char*);
 void updateMaterialCodeAll(LiveActor* actor);

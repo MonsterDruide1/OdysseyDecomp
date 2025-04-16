@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 class BlinkRateCalculator {
 public:
     BlinkRateCalculator(s32 maxFrames);

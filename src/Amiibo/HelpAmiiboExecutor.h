@@ -1,13 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-struct NfpInfo;
 class LiveActor;
 struct ActorInitInfo;
+struct NfpInfo;
 }  // namespace al
 
 class HelpAmiiboDirector;

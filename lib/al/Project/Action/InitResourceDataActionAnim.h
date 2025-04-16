@@ -1,11 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-struct ActionAnimCtrlInfo;
 class InitResourceDataAnim;
 class Resource;
+struct ActionAnimCtrlInfo;
 
 class InitResourceDataActionAnim {
 public:

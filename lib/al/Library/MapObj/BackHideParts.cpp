@@ -1,6 +1,5 @@
 #include "Library/MapObj/BackHideParts.h"
 
-#include <basis/seadTypes.h>
 #include <math/seadMathCalcCommon.h>
 #include <math/seadVector.h>
 

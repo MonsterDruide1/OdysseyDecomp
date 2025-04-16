@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 namespace agl {
@@ -10,11 +8,11 @@ class DrawContext;
 
 namespace al {
 class GraphicsSystemInfo;
-class ModelDrawBufferCounter;
-class ModelKeeper;
-class ModelDrawDisplayList;
-class ModelCtrl;
 class MeshDrawerTable;
+class ModelCtrl;
+class ModelDrawBufferCounter;
+class ModelDrawDisplayList;
+class ModelKeeper;
 
 class ModelDrawerBase : public HioNode {
 public:

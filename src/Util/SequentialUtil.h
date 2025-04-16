@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace rs {
 void convertCsecTo(s32* minutes, s32* seconds, s32* csec, s32 time);
 }  // namespace rs

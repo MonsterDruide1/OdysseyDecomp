@@ -2,14 +2,15 @@
 
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
+#include <math/seadVector.h>
 
 enum ClippingRequestKeeper {};
 
 namespace al {
-class LiveActor;
-struct ActorInitInfo;
 class ClippingJudge;
+class LiveActor;
 class ViewIdHolder;
+struct ActorInitInfo;
 
 class ClippingActorInfo {
 public:

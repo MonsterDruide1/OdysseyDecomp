@@ -1,7 +1,6 @@
 #pragma once
 
-#include "System/GameDataHolderAccessor.h"
-
+class GameDataHolderAccessor;
 struct AchievementInfo;
 
 class Achievement {

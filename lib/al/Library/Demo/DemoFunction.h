@@ -1,13 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class AddDemoInfo;
-struct ActorInitInfo;
 class DemoActorHolder;
 class LiveActor;
 class Scene;
+struct ActorInitInfo;
 
 al::AddDemoInfo* registDemoRequesterToAddDemoInfo(const LiveActor* actor,
                                                   const ActorInitInfo& initInfo, s32 index);

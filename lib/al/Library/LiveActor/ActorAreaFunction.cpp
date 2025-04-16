@@ -3,6 +3,7 @@
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Area/AreaObj.h"
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorSceneInfo.h"
 
 namespace al {
 

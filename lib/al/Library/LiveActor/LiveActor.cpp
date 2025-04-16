@@ -1,11 +1,13 @@
 #include "Library/LiveActor/LiveActor.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Action/ActorActionKeeper.h"
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Collision/Collider.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Execute/ActorExecuteInfo.h"
-#include "Library/Execute/ExecuteUtil.h"
+#include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/HitSensor/HitSensorKeeper.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -23,9 +25,7 @@
 #include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Model/ModelKeeper.h"
-#include "Library/Nature/NatureDirector.h"
 #include "Library/Nerve/NerveKeeper.h"
-#include "Library/Placement/PlacementFunction.h"
 #include "Library/Rail/RailKeeper.h"
 #include "Library/Screen/ScreenPointKeeper.h"
 #include "Library/Shader/ActorOcclusionKeeper.h"
@@ -40,6 +40,7 @@
 #include "Project/Light/ActorPrepassLightKeeper.h"
 
 namespace al {
+class NatureDirector;
 
 LiveActor::LiveActor(const char* actorName) : mName(actorName) {
     mFlags = new LiveActorFlag();

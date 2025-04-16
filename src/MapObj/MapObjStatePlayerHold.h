@@ -1,14 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
+class HitSensor;
 class LiveActor;
 class SensorMsg;
-class HitSensor;
 }  // namespace al
 
 class MapObjStatePlayerHold : public al::ActorStateBase {

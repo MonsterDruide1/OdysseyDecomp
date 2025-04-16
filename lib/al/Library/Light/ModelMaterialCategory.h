@@ -1,11 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class ModelCtrl;
-class MaterialCategoryKeeper;
 class ByamlIter;
+class MaterialCategoryKeeper;
+class ModelCtrl;
 class Resource;
 
 class ModelMaterialCategory {

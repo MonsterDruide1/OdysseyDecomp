@@ -1,6 +1,7 @@
 #include "Library/Resource/Resource.h"
 
 #include <filedevice/seadArchiveFileDevice.h>
+#include <filedevice/seadFileDevice.h>
 #include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeapMgr.h>
 #include <nn/g3d/ResFile.h>
@@ -9,10 +10,6 @@
 #include "Library/Base/HashCodeUtil.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
-
-namespace sead {
-class ArchiveRes;
-}  // namespace sead
 
 // NON_MATCHING __cxx_global_array_dtor and _GLOBAL__sub_I_Resource.cpp are misplaced.
 static sead::DirectoryEntry sEntries[0x1000];

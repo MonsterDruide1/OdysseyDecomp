@@ -1,5 +1,8 @@
 #include "MapObj/ShineTowerBackDoor.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadVector.h>
+
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -16,6 +19,8 @@
 #include "System/GameDataFunction.h"
 #include "Util/PlayerPuppetFunction.h"
 #include "Util/SensorMsgFunction.h"
+
+class GameDataHolder;
 
 namespace {
 NERVE_IMPL(ShineTowerBackDoor, Wait);

@@ -1,5 +1,6 @@
 #include "Library/MapObj/SlideMapParts.h"
 
+#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Effect/EffectSystemInfo.h"

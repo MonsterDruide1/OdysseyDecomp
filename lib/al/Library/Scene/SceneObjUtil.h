@@ -1,10 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class IUseSceneObjHolder;
 class ISceneObj;
+class IUseSceneObjHolder;
 
 ISceneObj* createSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId);
 void setSceneObj(const IUseSceneObjHolder* user, ISceneObj*, s32 sceneObjId);

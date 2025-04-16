@@ -1,13 +1,6 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/LiveActor/LiveActor.h"
-
-namespace al {
-class HitSensor;
-class SensorMsg;
-}  // namespace al
 
 class HipDropSwitch : public al::LiveActor {
 public:

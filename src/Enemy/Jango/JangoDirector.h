@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Scene/ISceneObj.h"
 
 class Jango;

@@ -1,6 +1,5 @@
 #include "Boss/Mofumofu/MofumofuWarpHole.h"
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Effect/EffectSystemInfo.h"

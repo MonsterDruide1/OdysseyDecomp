@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -10,29 +9,29 @@ class Projection;
 }  // namespace sead
 
 namespace al {
-class CameraTicket;
-class ICameraInput;
-class CameraFlagCtrl;
-class IUseCamera;
-class CameraSubTargetBase;
-class CameraSubTargetTurnParam;
-class SceneCameraInfo;
-class PlacementId;
-class Resource;
-struct ActorInitInfo;
-class LiveActor;
-class PlacementInfo;
-class CameraPoser;
-class CameraPoseInfo;
-class CameraTargetBase;
-class Projection;
-class SimpleCameraInput;
+class ActorBackAroundCameraSubTarget;
+class ActorCameraSubTarget;
 class ActorCameraTarget;
 class ActorMatrixCameraTarget;
-class ActorCameraSubTarget;
-class ActorBackAroundCameraSubTarget;
-class TransCameraSubTarget;
 class CameraDistanceCurve;
+class CameraFlagCtrl;
+class CameraPoseInfo;
+class CameraPoser;
+class CameraSubTargetBase;
+class CameraSubTargetTurnParam;
+class CameraTargetBase;
+class CameraTicket;
+class ICameraInput;
+class IUseCamera;
+class LiveActor;
+class PlacementId;
+class PlacementInfo;
+class Projection;
+class Resource;
+class SceneCameraInfo;
+class SimpleCameraInput;
+class TransCameraSubTarget;
+struct ActorInitInfo;
 
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user);
 s32 getViewNumMax(const IUseCamera* user);

@@ -7,7 +7,6 @@
 namespace al {
 class AreaObj;
 class MtxConnector;
-class PlacementInfo;
 class ValidatorBase;
 
 class AreaObjMtxConnecter {

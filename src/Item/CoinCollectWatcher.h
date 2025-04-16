@@ -1,13 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Scene/ISceneObj.h"
 
 #include "Scene/SceneObjFactory.h"
 
 namespace al {
-struct ActorInitInfo;
 class IUseSceneObjHolder;
 class LiveActor;
 }  // namespace al

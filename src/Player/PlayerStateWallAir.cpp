@@ -1,5 +1,7 @@
 #include "Player/PlayerStateWallAir.h"
 
+#include <math/seadQuat.h>
+
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -10,6 +12,10 @@
 #include "Player/PlayerStateNormalWallSlide.h"
 #include "Player/PlayerWallActionHistory.h"
 #include "Util/JudgeUtil.h"
+
+namespace al {
+class LiveActor;
+}  // namespace al
 
 namespace {
 NERVE_IMPL(PlayerStateWallAir, Slide)

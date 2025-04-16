@@ -1,11 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class LiveActor;
-struct ActorInitInfo;
 class PartsModel;
+struct ActorInitInfo;
 }  // namespace al
 class PlayerCostumeInfo;
 class PlayerModelHolder;

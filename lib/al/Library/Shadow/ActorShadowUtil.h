@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace sead {
@@ -8,10 +7,10 @@ class Color4f;
 }
 
 namespace al {
-class LiveActor;
-class ShadowMaskBase;
 class DepthShadowMapInfo;
+class LiveActor;
 class OccSphere;
+class ShadowMaskBase;
 
 enum class ShadowMaskDrawCategory : s32 {};
 

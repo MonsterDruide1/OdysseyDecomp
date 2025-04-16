@@ -1,14 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
 class KeyPoseKeeper;
 class LiveActor;
 class PlacementInfo;
+struct ActorInitInfo;
 
 KeyPoseKeeper* createKeyPoseKeeper(const ActorInitInfo& info);
 KeyPoseKeeper* createKeyPoseKeeper(const PlacementInfo& info);

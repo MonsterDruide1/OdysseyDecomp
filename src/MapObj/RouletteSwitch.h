@@ -7,10 +7,6 @@
 class HipDropSwitch;
 class TrampleSwitch;
 
-namespace al {
-struct ActorInitInfo;
-}  // namespace al
-
 class RouletteSwitch : public al::LiveActor {
 public:
     RouletteSwitch(const char* name);

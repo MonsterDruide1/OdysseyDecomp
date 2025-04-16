@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "System/ByamlSave.h"
 
 class WorldList;

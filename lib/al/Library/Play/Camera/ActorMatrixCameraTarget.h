@@ -6,8 +6,6 @@
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {
-class CameraPoser;
-struct CameraStartInfo;
 class LiveActor;
 
 class ActorMatrixCameraTarget : public CameraTargetBase {

@@ -1,15 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-class StageSwitchListener;
+class ExecuteDirector;
 class PlacementId;
 class StageSwitchAccesser;
-class ExecuteDirector;
+class StageSwitchListener;
 class StageSwitchWatcherHolder;
 struct StageSwitchInfo;
 

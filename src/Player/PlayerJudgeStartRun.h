@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Player/IJudge.h"
 
 namespace al {
@@ -9,8 +7,8 @@ class LiveActor;
 }
 class IUsePlayerCollision;
 class PlayerConst;
-class PlayerInput;
 class PlayerCounterForceRun;
+class PlayerInput;
 
 class PlayerJudgeStartRun : public IJudge {
 public:

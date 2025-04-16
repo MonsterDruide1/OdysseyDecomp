@@ -1,5 +1,6 @@
 #include "Library/MapObj/ClockMapParts.h"
 
+#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Fluid/RippleCtrl.h"

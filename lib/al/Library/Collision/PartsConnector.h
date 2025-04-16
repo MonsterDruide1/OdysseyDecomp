@@ -1,14 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
 class CollisionParts;
 class LiveActor;
 class MtxConnector;
+struct ActorInitInfo;
 
 MtxConnector* createMtxConnector(const LiveActor* actor);
 MtxConnector* tryCreateMtxConnector(const LiveActor* actor, const ActorInitInfo& info);

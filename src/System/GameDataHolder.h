@@ -4,34 +4,41 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
+#include "Library/HostIO/HioNode.h"
+#include "Library/Message/IUseMessageSystem.h"
 #include "Library/Scene/GameDataHolderBase.h"
+#include "Library/Scene/ISceneObj.h"
 
 #include "Scene/SceneObjFactory.h"
 
+namespace sead {
+class Heap;
+}  // namespace sead
+
 namespace al {
+class LayoutInitInfo;
+class MessageSystem;
 class PlacementId;
 class PlacementInfo;
-class LayoutInitInfo;
 }  // namespace al
 
 namespace ShopItem {
 struct ItemInfo;
-struct ShopItemInfo;
 }  // namespace ShopItem
 
-class AchievementInfoReader;
 class AchievementHolder;
+class AchievementInfoReader;
 class CapMessageBossData;
 class ChangeStageInfo;
 class Coin;
-class GameDataFile;
 class GameConfigData;
+class GameDataFile;
 class GameSequenceInfo;
 class MapDataHolder;
 class QuestInfoHolder;
 class SaveDataAccessSequence;
-class TemporaryScenarioCameraHolder;
 class TempSaveData;
+class TemporaryScenarioCameraHolder;
 class TimeBalloonSequenceInfo;
 class UniqObjInfo;
 class WorldList;

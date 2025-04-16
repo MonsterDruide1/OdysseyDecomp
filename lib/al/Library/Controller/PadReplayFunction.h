@@ -1,11 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class ReplayController;
 class IUsePadDataReader;
 class IUsePadDataWriter;
+class ReplayController;
 
 void createReplayController(u32 port);
 void unregistReplayController(u32 port);

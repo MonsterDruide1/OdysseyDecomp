@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace ShopItem {
 
 enum class ItemType : u32 { Cloth, Cap, Gift, Sticker, UseItem, Moon };

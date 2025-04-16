@@ -1,12 +1,15 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
+#include <math/seadVector.h>
 #include <prim/seadBitFlag.h>
 
 #include "Library/Collision/IUseCollision.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+class CollisionDirector;
 class CollisionPartsFilterBase;
 class HitInfo;
 class SpherePoseInterpolator;

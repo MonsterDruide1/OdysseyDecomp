@@ -1,7 +1,7 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+#include <math/seadVector.h>
 
 namespace al {
 class Projection;

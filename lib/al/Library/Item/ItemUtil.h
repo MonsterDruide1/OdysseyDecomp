@@ -1,14 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
 class ActorItemInfo;
 class HitSensor;
 class LiveActor;
+struct ActorInitInfo;
 
 bool isExistItemKeeper(const LiveActor* actor);
 ActorItemInfo* addItem(LiveActor* actor, const ActorInitInfo&, const char*, const char*,

@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Library/LiveActor/LiveActor.h"
-
 namespace al {
-class FlowMapParts;
+class LiveActor;
 
 class FlowMapCtrl {
 public:

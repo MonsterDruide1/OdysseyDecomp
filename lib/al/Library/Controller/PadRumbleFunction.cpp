@@ -1,5 +1,7 @@
 #include "Library/Controller/PadRumbleFunction.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Controller/PadRumbleDirector.h"
 #include "Library/Layout/LayoutActor.h"
 #include "Library/Layout/LayoutSceneInfo.h"

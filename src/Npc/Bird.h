@@ -1,6 +1,13 @@
 #pragma once
 
+#include <math/seadMatrix.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/LiveActor.h"
+
+namespace al {
+struct ActorInitInfo;
+}  // namespace al
 
 class Bird : public al::LiveActor {
 public:

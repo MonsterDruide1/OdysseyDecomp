@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -10,14 +9,14 @@ class Color4f;
 
 namespace al {
 class Effect;
-class EffectUserInfo;
-class MtxPtrHolder;
-class EffectSystemInfo;
 class EffectPrefixType;
 class EffectResourceInfo;
+class EffectSystemInfo;
+class EffectUserInfo;
+class IUseCamera;
 class IUseEffectKeeper;
 class ModelKeeper;
-class IUseCamera;
+class MtxPtrHolder;
 
 class EffectKeeper {
 public:

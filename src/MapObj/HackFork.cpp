@@ -1,14 +1,15 @@
 #include "MapObj/HackFork.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadQuatCalcCommon.h>
+
 #include "Library/Base/StringUtil.h"
-#include "Library/Camera/CameraTicket.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/Event/EventFlowUtil.h"
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/Joint/JointLocalAxisRotator.h"
-#include "Library/Layout/LayoutActorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -24,10 +25,10 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Play/Camera/ActorMatrixCameraTarget.h"
 #include "Library/Se/SeFunction.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 #include "Player/CapTargetInfo.h"
-#include "Player/IUsePlayerHack.h"
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Scene/GuidePosInfoHolder.h"
 #include "System/GameDataUtil.h"

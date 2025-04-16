@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 
 namespace sead {
@@ -11,8 +10,8 @@ class Projection;
 namespace al {
 
 class CameraViewFlag;
-struct OrthoProjectionInfo;
 class Projection;
+struct OrthoProjectionInfo;
 
 class CameraViewInfo {
 public:

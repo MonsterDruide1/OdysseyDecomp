@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 #include "Library/Nerve/IUseNerve.h"
@@ -8,8 +7,6 @@
 #include "Amiibo/HelpAmiiboExecutor.h"
 
 namespace al {
-struct ActorInitInfo;
-class IUseNerve;
 class LiveActor;
 class NerveKeeper;
 }  // namespace al

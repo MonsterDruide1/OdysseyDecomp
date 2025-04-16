@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"
@@ -22,9 +21,9 @@ struct CameraParam {
 };
 
 namespace al {
-struct SnapShotCameraSceneInfo;
 class ICameraInput;
 class IUseCollision;
+struct SnapShotCameraSceneInfo;
 
 class SnapShotCameraCtrl : public NerveExecutor, public IUseAudioKeeper {
 public:

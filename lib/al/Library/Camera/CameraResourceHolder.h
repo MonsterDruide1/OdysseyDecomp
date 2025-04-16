@@ -1,13 +1,12 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
-class Resource;
 class ByamlIter;
 class CameraTicketId;
 class PlacementId;
+class Resource;
 
 class CameraResourceHolder {
 public:

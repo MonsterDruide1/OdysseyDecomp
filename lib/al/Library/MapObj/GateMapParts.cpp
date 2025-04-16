@@ -1,5 +1,6 @@
 #include "Library/MapObj/GateMapParts.h"
 
+#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Audio/System/SimpleAudioUser.h"

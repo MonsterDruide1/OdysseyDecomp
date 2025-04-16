@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
-struct ActorInitInfo;
 class LiveActor;
+struct ActorInitInfo;
 
 class RailMoveMovement : public HostStateBase<LiveActor> {
 public:

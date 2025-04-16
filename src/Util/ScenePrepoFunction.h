@@ -1,10 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
-class GameDataHolderAccessor;
 class GameConfigData;
+class GameDataHolderAccessor;
 
 namespace rs {
 bool trySavePrepoCompleteMainScenario(s32, s32, s64, s64, s64);

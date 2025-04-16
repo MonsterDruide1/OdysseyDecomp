@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
@@ -11,10 +10,10 @@ class LookAtCamera;
 
 namespace al {
 class CameraPoser;
-struct CameraStartInfo;
-struct CameraObjectRequestInfo;
 class IUseCollision;
 class PlacementInfo;
+struct CameraObjectRequestInfo;
+struct CameraStartInfo;
 }  // namespace al
 
 namespace alCameraPoserFunction {

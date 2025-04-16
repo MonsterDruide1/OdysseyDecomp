@@ -1,5 +1,7 @@
 #include "MapObj/MeganeMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"

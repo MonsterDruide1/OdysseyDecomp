@@ -7,8 +7,6 @@
 #include "Amiibo/HelpAmiiboExecutor.h"
 
 namespace al {
-struct NfpInfo;
-struct ActorInitInfo;
 class LiveActor;
 class NerveKeeper;
 }  // namespace al

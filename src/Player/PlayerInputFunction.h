@@ -1,10 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class LiveActor;
 class IUseSceneObjHolder;
+class LiveActor;
 }  // namespace al
 
 class PlayerInputFunction {

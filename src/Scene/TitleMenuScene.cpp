@@ -2,8 +2,11 @@
 
 #include <common/aglDrawContext.h>
 #include <common/aglRenderBuffer.h>
-#include <gfx/seadFrameBuffer.h>
+#include <gfx/seadCamera.h>
+#include <gfx/seadColor.h>
 #include <gfx/seadViewport.h>
+#include <math/seadMathCalcCommon.h>
+#include <math/seadVector.h>
 
 #include "Library/Area/AreaObjDirector.h"
 #include "Library/Audio/AudioDirectorInitInfo.h"
@@ -32,16 +35,15 @@
 #include "Library/Play/Layout/WindowConfirm.h"
 #include "Library/Play/Layout/WipeSimple.h"
 #include "Library/Player/PlayerUtil.h"
-#include "Library/Projection/Projection.h"
 #include "Library/Scene/Scene.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Scene/SceneUtil.h"
 #include "Library/Screen/ScreenFunction.h"
 #include "Library/Se/SeFunction.h"
+#include "Project/Scene/SceneInitInfo.h"
 
 #include "Demo/ProjectDemoDirector.h"
 #include "Layout/BootLayout.h"
-#include "Project/Scene/SceneInitInfo.h"
 #include "Scene/ProjectActorFactory.h"
 #include "Scene/ProjectAreaFactory.h"
 #include "Scene/ProjectCameraPoserFactory.h"
@@ -54,6 +56,11 @@
 #include "System/GameDataHolderAccessor.h"
 #include "Util/SpecialBuildUtil.h"
 #include "Util/StageLayoutFunction.h"
+
+namespace al {
+class Projection;
+class SceneObjHolder;
+}  // namespace al
 
 namespace {
 NERVE_IMPL(TitleMenuScene, Appear);

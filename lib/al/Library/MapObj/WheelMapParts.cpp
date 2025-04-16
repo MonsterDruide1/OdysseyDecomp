@@ -1,5 +1,6 @@
 #include "Library/MapObj/WheelMapParts.h"
 
+#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 #include <math/seadVector.h>
 

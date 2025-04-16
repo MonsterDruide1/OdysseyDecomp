@@ -4,10 +4,9 @@
 #include "Library/Se/SeDirectorInitInfo.h"
 
 namespace al {
-struct AudioSystemInfo;
 class AreaObjDirector;
 class DemoDirector;
-class Sequence;
+struct AudioSystemInfo;
 
 struct AudioDirectorInitInfo {
     AudioSystemInfo* audioSystemInfo = nullptr;

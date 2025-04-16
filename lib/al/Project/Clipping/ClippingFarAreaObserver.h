@@ -1,11 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 
-class PlayerHolder;
 class AreaObjDirector;
+class PlayerHolder;
 
 class ClippingFarAreaObserver {
 public:

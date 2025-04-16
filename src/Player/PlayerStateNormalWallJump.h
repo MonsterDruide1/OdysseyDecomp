@@ -4,13 +4,17 @@
 
 #include "Library/Nerve/NerveStateBase.h"
 
+class IUsePlayerCollision;
+class PlayerActionAirMoveControl;
+class PlayerActionDiveInWater;
+class PlayerAnimator;
 class PlayerConst;
 class PlayerInput;
-class IUsePlayerCollision;
 class PlayerTrigger;
-class PlayerAnimator;
-class PlayerActionDiveInWater;
-class PlayerActionAirMoveControl;
+
+namespace al {
+class LiveActor;
+}  // namespace al
 
 class PlayerStateNormalWallJump : public al::ActorStateBase {
 public:

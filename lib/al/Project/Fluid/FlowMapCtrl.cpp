@@ -1,5 +1,8 @@
 #include "Project/Fluid/FlowMapCtrl.h"
 
+#include <math/seadMathCalcCommon.h>
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/Math/MathUtil.h"
 

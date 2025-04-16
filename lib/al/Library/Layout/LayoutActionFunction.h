@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace sead {
 template <s32 L>
 class FixedSafeString;

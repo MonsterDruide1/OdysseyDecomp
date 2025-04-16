@@ -1,15 +1,14 @@
 #pragma once
 
 #include <math/seadMatrix.h>
+#include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
 namespace al {
-class LiveActor;
-struct ActorInitInfo;
-class Resource;
 class AudioKeeper;
 class LiveActor;
 class Resource;
+struct ActorInitInfo;
 }  // namespace al
 
 class PlayerBodyCostumeInfo;

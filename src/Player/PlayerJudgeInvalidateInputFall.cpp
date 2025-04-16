@@ -1,7 +1,5 @@
 #include "Player/PlayerJudgeInvalidateInputFall.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/LiveActor/ActorPoseUtil.h"
 
 #include "Player/PlayerAreaChecker.h"

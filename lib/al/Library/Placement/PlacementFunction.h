@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
@@ -10,10 +9,10 @@ class Color4f;
 }  // namespace sead
 
 namespace al {
-struct ActorInitInfo;
 class AreaInitInfo;
 class PlacementId;
 class PlacementInfo;
+struct ActorInitInfo;
 
 bool isValidInfo(const PlacementInfo& placementInfo);
 bool isPlaced(const ActorInitInfo& initInfo);

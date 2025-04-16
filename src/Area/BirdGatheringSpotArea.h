@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadBoundBox.h>
+#include <math/seadVector.h>
 
 #include "Library/Area/AreaObj.h"
 

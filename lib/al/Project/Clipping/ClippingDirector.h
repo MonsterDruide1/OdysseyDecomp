@@ -1,17 +1,15 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
 class AreaObjDirector;
+class LiveActor;
 class PlayerHolder;
 class SceneCameraInfo;
 class ViewIdHolder;
 struct ActorInitInfo;
-class LiveActor;
 
 class ClippingDirector : public HioNode, public IUseExecutor {
 public:

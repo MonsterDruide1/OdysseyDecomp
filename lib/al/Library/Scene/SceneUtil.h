@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace agl {
@@ -15,17 +14,6 @@ class LookAtCamera;
 
 namespace al {
 class ActorFactory;
-struct ActorInitInfo;
-class LayoutInitInfo;
-class GameDataHolderBase;
-class SceneMsgCtrl;
-class PlacementInfo;
-class Scene;
-struct SceneInitInfo;
-class StageInfo;
-class PauseCameraCtrl;
-struct AudioDirectorInitInfo;
-class Projection;
 class AreaObjDirector;
 class AreaObjFactory;
 class CameraPoserFactory;
@@ -47,6 +35,8 @@ class SceneMsgCtrl;
 class StageInfo;
 class SwitchKeepOnAreaGroup;
 class SwitchOnAreaGroup;
+struct ActorInitInfo;
+struct AudioDirectorInitInfo;
 struct SceneInitInfo;
 
 s32 getStageInfoMapNum(const Scene*);

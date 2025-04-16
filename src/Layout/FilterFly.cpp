@@ -1,7 +1,5 @@
 #include "Layout/FilterFly.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/Layout/LayoutActionFunction.h"
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/Layout/LayoutInitInfo.h"

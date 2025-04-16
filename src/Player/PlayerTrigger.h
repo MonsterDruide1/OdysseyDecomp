@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <prim/seadBitFlag.h>
 
 class PlayerTrigger {

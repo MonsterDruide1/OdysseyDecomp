@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadBuffer.h>
 #include <prim/seadSafeString.h>
 

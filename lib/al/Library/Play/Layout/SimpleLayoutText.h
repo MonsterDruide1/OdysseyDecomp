@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Layout/LayoutActor.h"
@@ -10,8 +9,8 @@ class Color4u8;
 }  // namespace sead
 
 namespace al {
-struct ActorInitInfo;
 class LayoutInitInfo;
+struct ActorInitInfo;
 
 class SimpleLayoutText : public LayoutActor {
 public:

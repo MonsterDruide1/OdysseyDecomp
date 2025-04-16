@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <math/seadMatrix.h>
 
@@ -11,8 +10,8 @@ class TextureInfo;
 }
 
 namespace al {
-class Resource;
 class IUseSceneObjHolder;
+class Resource;
 }  // namespace al
 
 struct MapData {

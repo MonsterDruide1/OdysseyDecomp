@@ -1,13 +1,12 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadVector.h>
 
 namespace al {
+class ClippingDirector;
 class LiveActor;
 struct ActorInitInfo;
-class ClippingDirector;
 
 void initActorClipping(LiveActor* actor, const ActorInitInfo& initInfo);
 void initGroupClipping(LiveActor* actor, const ActorInitInfo& initInfo);

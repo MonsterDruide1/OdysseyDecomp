@@ -1,5 +1,7 @@
 #include "Player/PlayerStateHeadSliding.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"

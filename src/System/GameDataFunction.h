@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
@@ -31,7 +30,6 @@ class ResFile;
 }
 
 namespace al {
-struct ActorInitInfo;
 class CameraTicket;
 class GameDataHolderBase;
 class IUseMessageSystem;
@@ -42,6 +40,7 @@ class PlacementId;
 class PlacementInfo;
 class Scene;
 class SceneObjHolder;
+struct ActorInitInfo;
 }  // namespace al
 
 namespace ShopItem {

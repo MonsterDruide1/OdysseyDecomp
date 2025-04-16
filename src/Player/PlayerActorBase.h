@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 
 #include "Library/LiveActor/LiveActor.h"
@@ -8,10 +7,10 @@
 #include "Player/IUsePlayerHack.h"
 
 namespace al {
-struct ActorInitInfo;
 class DemoActor;
 class HitSensor;
 class SensorMsg;
+struct ActorInitInfo;
 }  // namespace al
 
 class IUsePlayerCollision;

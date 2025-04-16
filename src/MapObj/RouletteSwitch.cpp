@@ -1,6 +1,6 @@
 #include "MapObj/RouletteSwitch.h"
 
-#include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"

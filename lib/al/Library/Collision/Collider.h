@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -8,12 +7,12 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-struct SphereInterpolator;
-struct SphereHitInfo;
-class CollisionPartsFilterBase;
-class TriangleFilterBase;
 class CollisionDirector;
+class CollisionPartsFilterBase;
 class Triangle;
+class TriangleFilterBase;
+struct SphereHitInfo;
+struct SphereInterpolator;
 
 bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
 bool isFloorPolygon(const sead::Vector3f&, const sead::Vector3f&);

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 #include "Player/IJudge.h"

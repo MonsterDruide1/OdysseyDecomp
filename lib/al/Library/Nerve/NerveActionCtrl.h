@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace alNerveFunction {
 class NerveActionCollector;
 }  // namespace alNerveFunction

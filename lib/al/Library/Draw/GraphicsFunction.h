@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 // TODO: Someone should add this to nnheaders!
 namespace nn::g3d {
 class MaterialObj;

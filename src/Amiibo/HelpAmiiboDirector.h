@@ -8,8 +8,6 @@
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
-struct NfpInfo;
-struct ActorInitInfo;
 class AudioDirector;
 class AudioKeeper;
 class IUseSceneObjHolder;

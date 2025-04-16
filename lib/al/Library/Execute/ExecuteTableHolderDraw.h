@@ -1,13 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 namespace al {
-struct ExecuteOrder;
-struct ExecuteSystemInitInfo;
-class ExecutorListActorModelDrawBase;
 class ExecutorListActorDraw;
+class ExecutorListActorModelDrawBase;
 class ExecutorListBase;
 class ExecutorListFunctor;
 class ExecutorListIUseExecutorDraw;
@@ -16,6 +13,8 @@ class FunctorBase;
 class IUseExecutor;
 class LayoutActor;
 class LiveActor;
+struct ExecuteOrder;
+struct ExecuteSystemInitInfo;
 
 class ExecuteTableHolderDraw {
 public:

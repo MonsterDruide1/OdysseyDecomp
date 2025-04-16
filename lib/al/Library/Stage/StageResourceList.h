@@ -1,18 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
-#include <prim/seadSafeString.h>
-
-#include "Library/Execute/IUseExecutor.h"
-#include "Library/Scene/ISceneObj.h"
-
-#include "Scene/SceneObjFactory.h"
 
 namespace al {
-class Resource;
-class PlacementInfo;
 class ByamlIter;
+class PlacementInfo;
+class Resource;
 
 class StageInfo {
 public:

@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 
-struct CameraPoseInfo;
 class CameraSwitchRequestInfo;
 class CameraTicket;
+struct CameraPoseInfo;
 
 class CameraSwitchRequester {
 public:

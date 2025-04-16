@@ -1,6 +1,8 @@
 #pragma once
 
-#include <gfx/seadFrameBuffer.h>
+namespace sead {
+class FrameBuffer;
+}  // namespace sead
 
 namespace agl {
 class DrawContext;

@@ -1,5 +1,6 @@
 #include "Library/MapObj/SeesawMapParts.h"
 
+#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/LiveActor/ActorAreaFunction.h"

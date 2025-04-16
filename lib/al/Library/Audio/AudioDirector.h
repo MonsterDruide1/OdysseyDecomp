@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 #include "Library/Area/IUseAreaObj.h"
@@ -13,17 +12,17 @@ class IAudioFrameProcess;
 }  // namespace aal
 
 namespace al {
-class SeDirector;
-class BgmDirector;
-class AudioMic;
-class AudioEventController;
-class AudioRequestKeeperSyncedBgm;
-struct AudioSystemInfo;
 class AreaObjDirector;
 class AudioDuckingDirector;
 class AudioEffectController;
-struct AudioDirectorInitInfo;
+class AudioEventController;
+class AudioMic;
+class AudioRequestKeeperSyncedBgm;
+class BgmDirector;
 class PlayerHolder;
+class SeDirector;
+struct AudioDirectorInitInfo;
+struct AudioSystemInfo;
 
 class AudioDirector : public IUseAreaObj, public HioNode, public IAudioSystemPause {
 public:

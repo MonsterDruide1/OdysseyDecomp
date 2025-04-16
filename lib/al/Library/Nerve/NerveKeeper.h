@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class IUseNerve;
 class Nerve;
-class NerveStateCtrl;
 class NerveActionCtrl;
+class NerveStateCtrl;
 
 class NerveKeeper {
 public:

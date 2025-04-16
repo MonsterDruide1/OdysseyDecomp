@@ -1,15 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-struct ActorInitInfo;
 class AddDemoInfo;
 class EffectSystem;
 class LiveActor;
 class PlacementId;
+struct ActorInitInfo;
 
 class DemoDirector : public HioNode {
 public:

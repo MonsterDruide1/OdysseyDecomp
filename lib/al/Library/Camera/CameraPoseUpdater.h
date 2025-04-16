@@ -1,7 +1,6 @@
 #pragma once
 
 #include <gfx/seadCamera.h>
-#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 #include <nn/album/album_types.h>
 

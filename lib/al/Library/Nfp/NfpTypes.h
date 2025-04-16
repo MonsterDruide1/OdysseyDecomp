@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <nn/nfp/nfp_types.h>
 
 namespace al {

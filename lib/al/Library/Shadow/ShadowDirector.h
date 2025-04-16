@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace sead {
 class Camera;
 }
@@ -13,16 +11,16 @@ class TextureData;
 }  // namespace agl
 
 namespace al {
-class GraphicsSystemInfo;
 class AreaObjDirector;
-class ExecuteDirector;
+class DepthShadowClipParam;
+class DepthShadowParam;
 class EffectSystem;
-class SceneCameraInfo;
+class ExecuteDirector;
+class GraphicsSystemInfo;
 class PlayerHolder;
 class Projection;
+class SceneCameraInfo;
 class ShaderHolder;
-class DepthShadowParam;
-class DepthShadowClipParam;
 
 class ShadowDirector {
 public:

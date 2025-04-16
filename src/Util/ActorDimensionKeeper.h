@@ -1,13 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class CollisionPartsFilterOnlySpecialPurpose;
 class LiveActor;
 }  // namespace al
-class In2DAreaMoveControl;
 class IUseDimension;
+class In2DAreaMoveControl;
 
 class ActorDimensionKeeper {
 public:

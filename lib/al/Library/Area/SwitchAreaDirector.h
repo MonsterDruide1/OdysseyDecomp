@@ -1,17 +1,16 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 
 #include "Library/Area/IUseAreaObj.h"
 
 namespace al {
-class PlayerHolder;
-class CameraDirector;
-class SwitchOnAreaGroup;
-class SwitchKeepOnAreaGroup;
-class SwitchAreaTargetInfo;
 class AreaObjDirector;
+class CameraDirector;
+class PlayerHolder;
+class SwitchAreaTargetInfo;
+class SwitchKeepOnAreaGroup;
+class SwitchOnAreaGroup;
 
 class SwitchAreaDirector : public IUseAreaObj {
 public:

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <controller/seadControllerWrapper.h>
 #include <prim/seadRuntimeTypeInfo.h>
 

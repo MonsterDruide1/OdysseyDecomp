@@ -1,5 +1,7 @@
 #include "Player/CapTargetInfo.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

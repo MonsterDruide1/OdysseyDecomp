@@ -1,26 +1,24 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-struct ActorInitInfo;
-class PlacementInfo;
-class PlacementId;
-class LiveActor;
-class Scene;
-class LayoutActor;
 class IUseSceneObjHolder;
+class LayoutActor;
+class LiveActor;
+class PlacementId;
+class PlacementInfo;
+class Scene;
+struct ActorInitInfo;
 }  // namespace al
 
-class SaveObjInfo;
+class CapMessageBossData;
+class GameDataHolder;
 class GameDataHolderAccessor;
-class NpcEventDirector;
 class KoopaShip;
+class NpcEventDirector;
 class QuestInfo;
+class SaveObjInfo;
 class ShineTowerRocket;
 class WorldWarpHole;
-class GameDataHolder;
-class CapMessageBossData;
 
 namespace rs {
 SaveObjInfo* createSaveObjInfoWriteSaveData(const al::ActorInitInfo& actorInitInfo);

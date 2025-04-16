@@ -1,12 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
-#include "Project/HitSensor/HitSensor.h"
-
 namespace al {
 class LiveActor;
-}
+enum class HitSensorType : u32;
+}  // namespace al
 
 namespace alSensorFunction {
 

@@ -1,7 +1,5 @@
 #include "Library/LiveActor/ActorAnimFunction.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/Base/StringUtil.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/LiveActor/LiveActor.h"

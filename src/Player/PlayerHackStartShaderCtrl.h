@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <gfx/seadColor.h>
 #include <math/seadQuat.h>
 

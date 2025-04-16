@@ -8,6 +8,8 @@
 #include "Library/Camera/CameraUtil.h"
 
 namespace al {
+class AreaObjGroup;
+
 SwitchAreaDirector* SwitchAreaDirector::tryCreate(AreaObjDirector* areaObjDirector,
                                                   const PlayerHolder* playerHolder,
                                                   const CameraDirector* cameraDirector,

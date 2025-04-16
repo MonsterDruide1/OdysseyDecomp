@@ -1,16 +1,15 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
 class IUseRail;
 class LiveActor;
 class LiveActorGroup;
 class PlacementInfo;
 class RailPlacementCallBack;
+struct ActorInitInfo;
 
 void setRailPosToStart(IUseRail* railHolder);
 void setRailPosToEnd(IUseRail* railHolder);

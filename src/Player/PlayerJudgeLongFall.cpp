@@ -1,7 +1,5 @@
 #include "Player/PlayerJudgeLongFall.h"
 
-#include <basis/seadTypes.h>
-
 #include "Player/IPlayerModelChanger.h"
 #include "Player/IUsePlayerFallDistanceCheck.h"
 #include "Player/PlayerBindKeeper.h"

@@ -1,6 +1,8 @@
 #include "Library/LiveActor/ActorInitUtil.h"
 
 #include <math/seadBoundBox.h>
+#include <math/seadMathCalcCommon.h>
+#include <math/seadMatrix.h>
 #include <nn/g3d/ModelObj.h>
 
 #include "Library/Action/ActorActionKeeper.h"
@@ -27,10 +29,11 @@
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/ActorSensorFunction.h"
+#include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/LiveActorGroup.h"
+#include "Library/Model/ModelCtrl.h"
 #include "Library/Model/ModelKeeper.h"
 #include "Library/Model/ModelLodCtrl.h"
 #include "Library/Model/ModelOcclusionQuery.h"
@@ -53,6 +56,9 @@
 #include "Project/Item/ActorScoreKeeper.h"
 
 namespace al {
+class DitherAnimator;
+class GraphicsQualityInfo;
+class MaterialCategoryKeeper;
 
 using PoseKeeperCreatorFunction = void (*)(LiveActor*);
 

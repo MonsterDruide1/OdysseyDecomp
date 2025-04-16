@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class LayoutPaneGroup;
-class LayoutKeeper;
 class IUseAudioKeeper;
 class IUseEffectKeeper;
+class LayoutKeeper;
+class LayoutPaneGroup;
 
 class LayoutActionKeeper {
 public:

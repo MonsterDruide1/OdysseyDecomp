@@ -2,10 +2,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-struct ActorInitInfo;
-}  // namespace al
-
 class CoinBlow : public al::LiveActor {
 public:
     CoinBlow(const char* name);

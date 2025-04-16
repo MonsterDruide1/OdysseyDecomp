@@ -1,7 +1,6 @@
 #include "Library/Clipping/ClippingActorInfoList.h"
 
 #include "Library/Clipping/ClippingActorInfo.h"
-#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 

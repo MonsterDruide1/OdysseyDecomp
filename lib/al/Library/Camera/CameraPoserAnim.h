@@ -11,9 +11,7 @@ class ResSceneAnim;
 
 namespace al {
 
-class CameraPoser;
 class Resource;
-struct CameraStartInfo;
 
 class CameraPoserAnim : public CameraPoser {
 public:

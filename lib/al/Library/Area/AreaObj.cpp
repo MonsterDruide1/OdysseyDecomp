@@ -1,7 +1,6 @@
 #include "Library/Area/AreaObj.h"
 
 #include "Library/Area/AreaInitInfo.h"
-#include "Library/Area/AreaObjGroup.h"
 #include "Library/Area/AreaShape.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"

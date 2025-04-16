@@ -1,18 +1,17 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
 class ActorCollisionController;
-class CollisionPartsFilterBase;
-class HitSensor;
-class TriangleFilterBase;
 class Collider;
 class CollisionParts;
+class CollisionPartsFilterBase;
+class HitSensor;
 class LiveActor;
+class TriangleFilterBase;
 
 Collider* getActorCollider(const LiveActor*);
 bool isExistActorCollider(const LiveActor*);

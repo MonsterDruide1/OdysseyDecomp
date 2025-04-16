@@ -1,6 +1,5 @@
 #include "Library/Yaml/Writer/ByamlWriterStringTable.h"
 
-#include <basis/seadTypes.h>
 #include <cstring>
 #include <stream/seadStream.h>
 

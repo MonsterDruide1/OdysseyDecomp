@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/LiveActor/LiveActor.h"
 
 class MoonBasementSlideObj : public al::LiveActor {

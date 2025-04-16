@@ -1,6 +1,5 @@
 #include "Enemy/EnemyCap.h"
 
-#include <cmath>
 #include <math/seadMathCalcCommon.h>
 #include <math/seadMatrix.h>
 

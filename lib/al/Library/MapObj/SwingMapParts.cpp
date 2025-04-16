@@ -1,6 +1,6 @@
 #include "Library/MapObj/SwingMapParts.h"
 
-#include <basis/seadTypes.h>
+#include <basis/seadNew.h>
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"

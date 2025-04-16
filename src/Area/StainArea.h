@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Area/AreaObj.h"
 
 class StainArea : public al::AreaObj {

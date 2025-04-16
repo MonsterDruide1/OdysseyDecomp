@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
@@ -14,7 +13,6 @@ class NerveActionCollector;
 }
 
 namespace al {
-struct ActorInitInfo;
 class AudioDirector;
 class CollisionDirector;
 class GraphicsSystemInfo;
@@ -25,6 +23,7 @@ class Nerve;
 class PartsEffectGroup;
 class PlacementInfo;
 class SceneCameraInfo;
+struct ActorInitInfo;
 
 void initActor(LiveActor* actor, const ActorInitInfo& initInfo);
 void initActorSuffix(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix);

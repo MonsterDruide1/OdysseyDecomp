@@ -1,15 +1,14 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.h"
 
 namespace al {
-struct ActorInitInfo;
 class HitSensor;
 class LiveActor;
 class SensorMsg;
+struct ActorInitInfo;
 }  // namespace al
 
 class HackerJudgeNormalFall;

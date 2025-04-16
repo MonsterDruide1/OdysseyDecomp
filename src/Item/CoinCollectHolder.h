@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Scene/ISceneObj.h"
@@ -11,8 +10,8 @@ namespace al {
 class IUseSceneObjHolder;
 }  // namespace al
 
-class CoinCollect;
 class CoinCollect2D;
+class CoinCollect;
 class CoinCollectHintObj;
 
 class CoinCollectHolder : public al::ISceneObj {

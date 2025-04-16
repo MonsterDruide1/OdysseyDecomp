@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -12,13 +11,13 @@ class AnimPlayerMat;
 class AnimPlayerSkl;
 class AnimPlayerVis;
 class DitherAnimator;
-class ModelLodCtrl;
 class GpuMemAllocator;
-class ModelShaderHolder;
-class ModelOcclusionCullingDirector;
-class ShadowDirector;
-class PrepassTriangleCulling;
 class ModelCtrl;
+class ModelLodCtrl;
+class ModelOcclusionCullingDirector;
+class ModelShaderHolder;
+class PrepassTriangleCulling;
+class ShadowDirector;
 
 class ModelKeeper : public HioNode {
 public:

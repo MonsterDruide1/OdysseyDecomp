@@ -1,12 +1,8 @@
 #include "Util/ItemGenerator.h"
 
-#include <math/seadVectorCalcCommon.h>
-
 #include "Library/Item/ItemUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
-#include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
 
 #include "Enemy/KuriboMini.h"

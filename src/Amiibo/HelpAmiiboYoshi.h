@@ -4,7 +4,6 @@
 
 namespace al {
 class LiveActor;
-struct ActorInitInfo;
 }  // namespace al
 
 class HelpAmiiboDirector;

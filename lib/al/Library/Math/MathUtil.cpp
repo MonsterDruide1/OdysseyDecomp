@@ -1,10 +1,10 @@
 #include "Library/Math/MathUtil.h"
 
 #include <cmath>
+#include <gfx/seadColor.h>
 #include <math/seadMathCalcCommon.h>
 #include <prim/seadBitUtil.h>
 #include <random/seadGlobalRandom.h>
-#include "gfx/seadColor.h"
 
 namespace al {
 f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b) {

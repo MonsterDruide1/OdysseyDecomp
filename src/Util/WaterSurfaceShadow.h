@@ -1,13 +1,12 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
 class LiveActor;
 class WaterSurfaceFinder;
+struct ActorInitInfo;
 }  // namespace al
 
 class WaterSurfaceShadow {

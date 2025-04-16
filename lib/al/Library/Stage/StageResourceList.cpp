@@ -1,9 +1,9 @@
 #include "Library/Stage/StageResourceList.h"
 
+#include <math/seadVector.h>
+
 #include "Library/Base/StringUtil.h"
-#include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/File/FileUtil.h"
-#include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Resource/Resource.h"

@@ -1,7 +1,9 @@
 #include "Scene/ProjectAreaFactory.h"
 
+#include "Library/Area/AreaObj.h"
 #include "Library/Area/CreateAreaObjFunction.h"
 #include "Library/Area/TrafficArea.h"
+#include "Library/Factory/Factory.h"
 #include "Library/Play/Area/CameraStartParamArea.h"
 #include "Library/Play/Area/SeBarrierArea.h"
 #include "Library/Play/Area/SePlayArea.h"

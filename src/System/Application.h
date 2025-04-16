@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <heap/seadDisposer.h>
 
 namespace sead {
@@ -9,9 +8,9 @@ class Heap;
 
 namespace al {
 class AccountHolder;
-struct DrawSystemInfo;
 class GameFrameworkNx;
 class SystemKit;
+struct DrawSystemInfo;
 }  // namespace al
 
 class RootTask;

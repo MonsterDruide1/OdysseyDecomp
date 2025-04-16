@@ -1,5 +1,7 @@
 #include "Boss/BarrierField.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

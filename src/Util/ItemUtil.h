@@ -1,16 +1,14 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include <prim/seadEnum.h>
 
 namespace al {
-struct ActorInitInfo;
-class LiveActor;
 class HitSensor;
 class LiveActor;
 class SensorMsg;
+struct ActorInitInfo;
 }  // namespace al
 class Shine;
 

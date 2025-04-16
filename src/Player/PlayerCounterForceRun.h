@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 class PlayerCounterForceRun {
 public:
     PlayerCounterForceRun();

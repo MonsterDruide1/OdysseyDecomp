@@ -4,12 +4,6 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
-namespace al {
-struct ActorInitInfo;
-class HitSensor;
-class SensorMsg;
-}  // namespace al
-
 class TimeBalloonHintArrow : public al::LiveActor {
 public:
     TimeBalloonHintArrow();

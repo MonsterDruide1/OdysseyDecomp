@@ -1,5 +1,7 @@
 #include "Library/Area/AreaObjDirector.h"
 
+#include <cstring>
+
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/AreaObjFactory.h"

@@ -7,13 +7,12 @@
 #include "Player/IUsePlayerCollision.h"
 
 namespace al {
-struct ActorInitInfo;
-class LiveActor;
 class HitSensor;
+class LiveActor;
 class SensorMsg;
+struct ActorInitInfo;
 }  // namespace al
 
-class KaronWing;
 class IUsePlayerHack;
 
 class KaronWingStateHack : public al::ActorStateBase, public IUsePlayerCollision {

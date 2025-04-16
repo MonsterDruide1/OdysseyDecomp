@@ -1,10 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class PlacementInfo;
 class PlacementId;
+class PlacementInfo;
 
 class ViewIdHolder {
 public:

@@ -1,15 +1,13 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
-struct ActorInitInfo;
 class IUseAudioKeeper;
-class IUseStageSwitch;
 class IUseCamera;
+class IUseStageSwitch;
 class LiveActor;
+struct ActorInitInfo;
 }  // namespace al
 
 class AppearSwitchTimer : public al::NerveExecutor {

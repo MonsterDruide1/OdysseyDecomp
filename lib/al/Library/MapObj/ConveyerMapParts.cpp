@@ -16,7 +16,7 @@
 #include "Project/LiveActor/ConveyerKeyKeeper.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 namespace {

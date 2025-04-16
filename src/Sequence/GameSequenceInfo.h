@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class LiveActor;
 }
-class GameDataHolderAccessor;
 class GameDataHolder;
+class GameDataHolderAccessor;
 
 class GameSequenceInfo {
 public:

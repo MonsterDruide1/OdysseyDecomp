@@ -1,18 +1,16 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
 class ExecuteRequestKeeper;
 class ExecuteTableHolderDraw;
 class ExecuteTableHolderUpdate;
-struct ExecuteSystemInitInfo;
 class FunctorBase;
 class IUseExecutor;
 class LayoutActor;
 class LiveActor;
+struct ExecuteSystemInitInfo;
 
 class ExecuteDirector : public HioNode {
 public:

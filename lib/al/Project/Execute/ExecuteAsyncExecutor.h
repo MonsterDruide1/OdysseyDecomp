@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <mc/seadCoreInfo.h>
 
 #include "Library/HostIO/HioNode.h"

@@ -1,18 +1,16 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Project/Anim/AnimPlayerBase.h"
 
 namespace nn::g3d {
-class SkeletalAnimObj;
 class SkeletalAnimBlender;
+class SkeletalAnimObj;
 }  // namespace nn::g3d
 
 namespace al {
 class AnimInfoTable;
-struct AnimPlayerInitInfo;
 class ModelAnimInterp;
+struct AnimPlayerInitInfo;
 struct SklAnimRetargettingInfo;
 
 class AnimPlayerSkl : public AnimPlayerBase {

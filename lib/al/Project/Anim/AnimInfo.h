@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace nn::g3d {
 class ResMaterialAnim;
 }  // namespace nn::g3d

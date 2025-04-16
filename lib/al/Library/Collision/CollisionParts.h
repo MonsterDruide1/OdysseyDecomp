@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
@@ -11,9 +10,9 @@ class TList;
 }  // namespace sead
 
 namespace al {
+class HitSensor;
 class KCollisionServer;
 class LiveActor;
-class HitSensor;
 
 class CollisionParts {
 public:

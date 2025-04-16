@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
-struct ActorInitInfo;
 
 struct AnimScaleParam {
     AnimScaleParam();

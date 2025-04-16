@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"

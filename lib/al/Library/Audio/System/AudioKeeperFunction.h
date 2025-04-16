@@ -1,26 +1,24 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace aal {
 class IAudioFrameProcess;
 }
 
 namespace al {
-template <typename T>
-class AudioInfoListWithParts;
 class AudioDirector;
-struct AudioSystemInfo;
-struct GameSystemInfo;
 class AudioResourceLoadGroupInfo;
-class SeadAudioPlayer;
-class PadRumbleDirector;
 class AudioSystem;
 class BgmDataBase;
-class SeDataBase;
-class IUseSeadAudioPlayer;
 class BgmMusicalInfo;
+class IUseSeadAudioPlayer;
+class PadRumbleDirector;
 class Resource;
+class SeDataBase;
+class SeadAudioPlayer;
+struct AudioSystemInfo;
+struct GameSystemInfo;
+template <typename T>
+class AudioInfoListWithParts;
 }  // namespace al
 
 namespace alAudioSystemFunction {

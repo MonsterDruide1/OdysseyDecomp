@@ -9,11 +9,8 @@ class ResFile;
 namespace sead {
 class ArchiveFileDevice;
 class ArchiveRes;
+class Heap;
 }  // namespace sead
-
-namespace nn::g3d {
-class ResFile;
-}
 
 namespace al {
 class ActorInitResourceData;

@@ -1,20 +1,19 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
-class IUseEffectKeeper;
+class EffectHitReactionInfo;
+class HitSensor;
 class IUseAudioKeeper;
 class IUseCamera;
+class IUseEffectKeeper;
 class PadRumbleDirector;
-class SceneStopCtrl;
-class RadialBlurDirector;
-class PlayerHolder;
 class PadRumbleKeeper;
+class PlayerHolder;
+class RadialBlurDirector;
 class Resource;
-class HitSensor;
-class EffectHitReactionInfo;
+class SceneStopCtrl;
 class SeHitReactionInfo;
 
 struct HitReactionInfo {

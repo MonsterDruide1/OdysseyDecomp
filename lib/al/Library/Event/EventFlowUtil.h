@@ -1,16 +1,19 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
-#include <prim/seadSafeString.h>
+
+namespace sead {
+template <typename T>
+class BufferedSafeStringBase;
+}  // namespace sead
 
 namespace al {
-class EventFlowNode;
 class EventFlowEventData;
-class SceneEventFlowMsg;
-class LiveActor;
 class EventFlowExecutor;
+class EventFlowNode;
 class IUseEventFlowData;
+class LiveActor;
+class SceneEventFlowMsg;
 
 class EventFlowRequestInfo {
 public:

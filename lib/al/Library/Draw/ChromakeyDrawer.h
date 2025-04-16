@@ -1,21 +1,28 @@
 #pragma once
 
-#include <common/aglDrawContext.h>
-#include <common/aglRenderBuffer.h>
-#include <gfx/seadCamera.h>
-#include <gfx/seadViewport.h>
+#include <math/seadVector.h>
 
 #include "Library/Draw/IUsePartsGraphics.h"
 #include "Library/HostIO/HioNode.h"
+
+namespace agl {
+class DrawContext;
+class RenderBuffer;
+}  // namespace agl
+
+namespace sead {
+class Camera;
+class Viewport;
+}  // namespace sead
 
 namespace agl::pfx {
 class FilterAA;
 }
 
 namespace al {
-class GraphicsSystemInfo;
-class ExecuteDirector;
 class EffectSystem;
+class ExecuteDirector;
+class GraphicsSystemInfo;
 class Projection;
 class SimpleModelEnv;
 

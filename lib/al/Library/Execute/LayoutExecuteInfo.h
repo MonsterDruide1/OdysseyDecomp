@@ -1,10 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
-class ExecutorListLayoutUpdate;
 class ExecutorListLayoutDrawBase;
+class ExecutorListLayoutUpdate;
 
 class LayoutExecuteInfo {
 public:

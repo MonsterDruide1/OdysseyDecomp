@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Execute/ExecuteOrder.h"
 #include "Library/Execute/ExecuteTable.h"
 

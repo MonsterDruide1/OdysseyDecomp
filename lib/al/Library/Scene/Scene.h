@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/Audio/IUseAudioKeeper.h"
@@ -9,7 +8,7 @@
 #include "Library/Scene/IUseSceneObjHolder.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class AudioDirector;
 class AudioKeeper;
 class LayoutKit;
@@ -18,10 +17,10 @@ class SceneMsgCtrl;
 class SceneObjHolder;
 class SceneStopCtrl;
 class ScreenCoverCtrl;
-struct GraphicsInitArg;
-struct DrawSystemInfo;
-struct SceneInitInfo;
 class StageResourceKeeper;
+struct DrawSystemInfo;
+struct GraphicsInitArg;
+struct SceneInitInfo;
 
 class Scene : public NerveExecutor,
               public IUseAudioKeeper,

@@ -1,7 +1,5 @@
 #include "MapObj/CapSwitch.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

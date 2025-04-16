@@ -1,22 +1,21 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
-class LiveActor;
 class HitSensor;
-class SensorMsg;
+class LiveActor;
 class MtxConnector;
+class SensorMsg;
+struct ActorInitInfo;
 }  // namespace al
 
-class TalkNpcParam;
 class NpcJointLookAtController;
 class NpcStateReactionParam;
 class PlayerEyeSensorHitHolder;
 class ShellActorStateReaction;
+class TalkNpcParam;
 
 namespace rs {
 bool tryApplyNpcMaterialAnimPresetFromPlacementInfo(al::LiveActor*, const al::ActorInitInfo&,

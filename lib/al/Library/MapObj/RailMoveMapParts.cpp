@@ -1,5 +1,7 @@
 #include "Library/MapObj/RailMoveMapParts.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/Area/SwitchKeepOnAreaGroup.h"
 #include "Library/Area/SwitchOnAreaGroup.h"
 #include "Library/LiveActor/ActorActionFunction.h"

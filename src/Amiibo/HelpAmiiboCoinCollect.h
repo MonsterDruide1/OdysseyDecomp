@@ -5,9 +5,6 @@
 #include "Amiibo/HelpAmiiboExecutor.h"
 
 namespace al {
-struct NfpInfo;
-class LiveActor;
-struct ActorInitInfo;
 class AreaObj;
 class LiveActor;
 }  // namespace al

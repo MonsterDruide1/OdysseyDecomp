@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Event/IEventFlowEventReceiver.h"
@@ -8,7 +7,6 @@
 
 namespace al {
 
-struct ActorInitInfo;
 class AreaObj;
 class EventFlowExecutor;
 class LiveActorGroup;

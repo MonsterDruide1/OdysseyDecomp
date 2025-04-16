@@ -1,11 +1,9 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 
-class PadRumbleKeeper;
 class LiveActor;
+class PadRumbleKeeper;
 
 class PlayerHolder {
 public:

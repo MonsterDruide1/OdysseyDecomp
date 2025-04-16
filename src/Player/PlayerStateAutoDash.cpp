@@ -1,5 +1,7 @@
 #include "Player/PlayerStateAutoDash.h"
 
+#include <math/seadVector.h>
+
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"

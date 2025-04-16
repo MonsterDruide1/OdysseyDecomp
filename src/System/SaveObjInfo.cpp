@@ -1,6 +1,7 @@
 #include "System/SaveObjInfo.h"
 
 #include "Library/LiveActor/ActorInitInfo.h"
+#include "Library/LiveActor/ActorSceneInfo.h"
 
 #include "System/GameDataFunction.h"
 

@@ -2,6 +2,11 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
+namespace al {
+class HitSensor;
+class SensorMsg;
+}  // namespace al
+
 class KuriboMini : public al::LiveActor {
 public:
     KuriboMini(const char* name);

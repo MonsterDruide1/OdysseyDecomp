@@ -1,12 +1,10 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class IUseName;
-class StageSwitchListener;
-class StageSwitchDirector;
 class PlacementId;
+class StageSwitchDirector;
+class StageSwitchListener;
 
 class StageSwitchAccesser {
 public:

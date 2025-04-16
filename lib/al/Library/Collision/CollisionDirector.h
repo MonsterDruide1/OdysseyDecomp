@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Execute/IUseExecutor.h"
@@ -14,17 +13,17 @@ class PtrArray;
 }  // namespace sead
 
 namespace al {
-class ICollisionPartsKeeper;
+class CollisionParts;
+class CollisionPartsFilterBase;
 class CollisionPartsKeeperOctree;
 class CollisionPartsKeeperPtrArray;
-class CollisionPartsFilterBase;
+class ExecuteDirector;
+class ICollisionPartsKeeper;
 class TriangleFilterBase;
-struct HitInfo;
 struct ArrowHitInfo;
 struct DiskHitInfo;
+struct HitInfo;
 struct SphereHitInfo;
-class CollisionParts;
-class ExecuteDirector;
 
 class CollisionDirector : public HioNode, public IUseExecutor {
 public:

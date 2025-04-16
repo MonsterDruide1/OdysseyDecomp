@@ -1,5 +1,7 @@
 #include "Library/MapObj/KeyMoveMapParts.h"
 
+#include <basis/seadNew.h>
+
 #include "Library/Area/SwitchKeepOnAreaGroup.h"
 #include "Library/Area/SwitchOnAreaGroup.h"
 #include "Library/Demo/DemoFunction.h"
