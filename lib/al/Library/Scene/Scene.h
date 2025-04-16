@@ -21,6 +21,7 @@ class ScreenCoverCtrl;
 struct GraphicsInitArg;
 struct DrawSystemInfo;
 struct SceneInitInfo;
+class StageResourceKeeper;
 
 class Scene : public NerveExecutor,
               public IUseAudioKeeper,

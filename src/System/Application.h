@@ -10,6 +10,8 @@ class Heap;
 namespace al {
 class AccountHolder;
 struct DrawSystemInfo;
+class GameFrameworkNx;
+class SystemKit;
 }  // namespace al
 
 class RootTask;

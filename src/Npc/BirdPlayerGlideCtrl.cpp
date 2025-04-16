@@ -1,5 +1,6 @@
 #include "Npc/BirdPlayerGlideCtrl.h"
 
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"

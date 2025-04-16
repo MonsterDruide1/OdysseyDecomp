@@ -1,5 +1,6 @@
 #include "MapObj/HackFork.h"
 
+#include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraTicket.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/PartsConnector.h"

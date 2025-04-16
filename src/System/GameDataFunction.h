@@ -31,7 +31,7 @@ class ResFile;
 }
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class CameraTicket;
 class GameDataHolderBase;
 class IUseMessageSystem;

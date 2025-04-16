@@ -9,7 +9,7 @@
 #include "Util/IUseDimension.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 class Shine : public al::LiveActor, public IUseDimension {

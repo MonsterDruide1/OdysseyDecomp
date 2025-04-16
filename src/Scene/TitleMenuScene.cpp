@@ -41,6 +41,7 @@
 
 #include "Demo/ProjectDemoDirector.h"
 #include "Layout/BootLayout.h"
+#include "Project/Scene/SceneInitInfo.h"
 #include "Scene/ProjectActorFactory.h"
 #include "Scene/ProjectAreaFactory.h"
 #include "Scene/ProjectCameraPoserFactory.h"

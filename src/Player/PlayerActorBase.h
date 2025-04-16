@@ -8,7 +8,7 @@
 #include "Player/IUsePlayerHack.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class DemoActor;
 class HitSensor;
 class SensorMsg;
