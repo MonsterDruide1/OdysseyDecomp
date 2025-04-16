@@ -1,3 +1,4 @@
+#include <basis/seadTypes.h>
 #include <heap/seadHeapMgr.h>
 #include <nn/init.h>
 #include <nn/oe.h>

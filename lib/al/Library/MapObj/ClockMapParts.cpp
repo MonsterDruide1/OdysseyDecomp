@@ -1,6 +1,5 @@
 #include "Library/MapObj/ClockMapParts.h"
 
-#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Fluid/RippleCtrl.h"
@@ -19,7 +18,6 @@
 #include "Library/Se/SeFunction.h"
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
-
 #include "MapObj/SubActorLodFixPartsScenarioAction.h"
 
 namespace {

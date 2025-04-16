@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadNew.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>

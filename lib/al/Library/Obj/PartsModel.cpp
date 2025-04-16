@@ -1,5 +1,6 @@
 #include "Library/Obj/PartsModel.h"
 
+#include <basis/seadTypes.h>
 #include <math/seadMathCalcCommon.h>
 #include <prim/seadSafeString.h>
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <gfx/seadCamera.h>
 #include <gfx/seadProjection.h>
 #include <math/seadVector.h>

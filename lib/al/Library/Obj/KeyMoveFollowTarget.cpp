@@ -1,7 +1,5 @@
 #include "Library/Obj/KeyMoveFollowTarget.h"
 
-#include <basis/seadNew.h>
-
 #include "Library/KeyPose/KeyPoseKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

@@ -1,7 +1,5 @@
 #include "Library/MapObj/SwitchDitherMapParts.h"
 
-#include <basis/seadNew.h>
-
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"

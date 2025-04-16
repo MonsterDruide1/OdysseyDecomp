@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace nn {
 namespace ui2d {
 class Layout;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadStrTreeMap.h>
 #include <nn/g3d/ViewVolume.h>
 

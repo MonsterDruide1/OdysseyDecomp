@@ -1,5 +1,7 @@
 #include "MapObj/CapSwitch.h"
 
+#include <basis/seadTypes.h>
+
 #include "Library/Collision/PartsConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -13,7 +15,6 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
-
 #include "MapObj/AppearSwitchSave.h"
 #include "Player/CapTargetInfo.h"
 #include "Util/Hack.h"

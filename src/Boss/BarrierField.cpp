@@ -1,7 +1,5 @@
 #include "Boss/BarrierField.h"
 
-#include <basis/seadNew.h>
-
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -9,7 +7,6 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Stage/StageSwitchUtil.h"
-
 #include "System/GameDataFunction.h"
 #include "Util/DemoUtil.h"
 

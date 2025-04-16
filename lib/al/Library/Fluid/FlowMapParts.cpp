@@ -1,7 +1,5 @@
 #include "Library/Fluid/FlowMapParts.h"
 
-#include <basis/seadTypes.h>
-
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"

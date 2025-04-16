@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <framework/nx/seadGameFrameworkNx.h>
 #include <hostio/seadHostIOMgr.h>
 #include <prim/seadRuntimeTypeInfo.h>

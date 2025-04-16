@@ -1,5 +1,6 @@
 #include "Boss/Mofumofu/MofumofuWarpHole.h"
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Effect/EffectSystemInfo.h"
@@ -11,7 +12,6 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-
 #include "Util/PlayerUtil.h"
 
 namespace {

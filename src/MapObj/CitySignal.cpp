@@ -1,5 +1,7 @@
 #include "MapObj/CitySignal.h"
 
+#include <basis/seadTypes.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -7,7 +9,6 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-
 #include "System/GameDataFunction.h"
 
 namespace {

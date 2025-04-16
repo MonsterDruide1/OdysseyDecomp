@@ -1,6 +1,5 @@
 #include "Library/MapObj/WobbleMapParts.h"
 
-#include <basis/seadNew.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/LiveActor/ActorActionFunction.h"
