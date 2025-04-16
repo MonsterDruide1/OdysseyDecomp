@@ -7,7 +7,7 @@
 
 #include "System/GameDataHolder.h"
 
-class WorldResourceLoader {
+class WorldResourceLoader : public al::HioNode {
 public:
     WorldResourceLoader(GameDataHolder*);
     virtual ~WorldResourceLoader();

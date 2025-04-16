@@ -7,7 +7,7 @@ namespace al {
 class RailRider;
 class PlacementInfo;
 
-class RailKeeper : public IUseHioNode, public IUseRail {
+class RailKeeper : public HioNode, public IUseRail {
 public:
     RailKeeper(const PlacementInfo&);
     RailRider* getRailRider() const override;

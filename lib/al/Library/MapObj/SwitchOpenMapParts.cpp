@@ -13,9 +13,8 @@
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
+namespace al {
 namespace {
-using namespace al;
-
 NERVE_ACTION_IMPL(SwitchOpenMapParts, Wait)
 NERVE_ACTION_IMPL(SwitchOpenMapParts, DelayOpen)
 NERVE_ACTION_IMPL(SwitchOpenMapParts, Open)
@@ -26,7 +25,6 @@ NERVE_ACTION_IMPL(SwitchOpenMapParts, Close)
 NERVE_ACTIONS_MAKE_STRUCT(SwitchOpenMapParts, Wait, DelayOpen, Open, WaitOpend, DelayClose, Close)
 }  // namespace
 
-namespace al {
 SwitchOpenMapParts::SwitchOpenMapParts(const char* name) : LiveActor(name) {}
 
 void SwitchOpenMapParts::init(const ActorInitInfo& info) {
