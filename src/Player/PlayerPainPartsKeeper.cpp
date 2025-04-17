@@ -4,7 +4,7 @@
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Obj/PartsModel.h"
 
 #include "Player/Player.h"

@@ -1,4 +1,4 @@
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorKeeper.h"
 
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorInitFunction.h"
@@ -6,6 +6,7 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/LiveActor/LiveActorInfo.h"
 #include "Library/Obj/BreakModel.h"
 #include "Library/Obj/CollisionObj.h"
 #include "Library/Obj/DepthShadowModel.h"
@@ -17,7 +18,6 @@
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace al {
-SubActorInfo::SubActorInfo() = default;
 
 SubActorKeeper::SubActorKeeper(LiveActor* rootActor) {
     mRootActor = rootActor;

@@ -3,7 +3,7 @@
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 
 void recursivelyInvalidateOcclusionQuery(al::LiveActor* actor) {
