@@ -53,6 +53,8 @@ public:
     void initAndLoadStageResource(const char* stageName, s32 scenarioNo);
     void initLiveActorKit(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
                           s32 maxCameras);
+    void initLiveActorKitImpl(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
+                              s32 maxCameras);
     void initLiveActorKitWithGraphics(const GraphicsInitArg& graphicsInitArg,
                                       const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
                                       s32 maxCameras);
@@ -79,9 +81,6 @@ public:
     DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
 
 private:
-    void initLiveActorKitImpl(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
-                              s32 maxCameras);
-
     bool mIsAlive = false;
     sead::FixedSafeString<0x40> mName;
     StageResourceKeeper* mStageResourceKeeper = nullptr;
