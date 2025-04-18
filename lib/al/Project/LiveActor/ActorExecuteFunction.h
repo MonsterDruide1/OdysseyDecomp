@@ -8,7 +8,7 @@ void executeUpdateTable(LiveActorKit*, const char*);
 void executeUpdateList(LiveActorKit*, const char*, const char*);
 void executeDraw(const LiveActorKit*, const char*);
 void executeDrawList(const LiveActorKit*, const char*, const char*);
-void isActiveDraw(const LiveActorKit*, const char*);
+bool isActiveDraw(const LiveActorKit*, const char*);
 void executeUpdateDrawBuffer(const LiveActorKit*);
 void waitUpdateDrawBuffer(const LiveActorKit*);
 void executeUpdateCalcView(const LiveActorKit*);
