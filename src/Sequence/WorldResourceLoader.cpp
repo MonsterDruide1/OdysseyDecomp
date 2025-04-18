@@ -181,7 +181,7 @@ void WorldResourceLoader::loadWorldResource(s32 loadWorldId, s32 scenario, bool 
     nn::os::GetSystemTick();
     nn::os::GetSystemTick();
 
-    u8* bymlData = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
+    const u8* bymlData = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
 
     al::ByamlIter worldResourceIter(bymlData);
     al::ByamlIter loadWorldIter;
