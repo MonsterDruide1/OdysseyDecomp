@@ -26,7 +26,7 @@ public:
 
     s32 getPoseCount() const { return mPoseCount; }
 
-    s32 getKeyIndex() const { return mKeyIndex; }
+    s32 getCurrentKeyIndex() const { return mCurrentKeyIndex; }
 
     const sead::BoundBox3f& getCubeSize() const { return mCubeSize; }
 
@@ -35,7 +35,7 @@ private:
 
     RollingCubePose* mRollingCubePoses = nullptr;
     s32 mPoseCount = 0;
-    s32 mKeyIndex = 0;
+    s32 mCurrentKeyIndex = 0;
     sead::BoundBox3f mCubeSize;
     MoveType mMoveType = MoveType::Loop;
 };

@@ -23,7 +23,7 @@ public:
     void init(const PlacementInfo&);
     void calcRotateQT(sead::Quatf*, sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&,
                       f32) const;
-    void calcBottomFaceIndex() const;
+    s32 calcBottomFaceIndex() const;
 
     const PlacementInfo& getPlacementInfo() const { return mPlacementInfo; }
 
@@ -31,9 +31,9 @@ public:
 
     const sead::Vector3f& getTrans() const { return mTrans; }
 
-    const sead::Vector3f& getFront() const { return mFront; }
+    const sead::Vector3f& getVertical() const { return mVertical; }
 
-    const sead::Vector3f& getPos() const { return mPos; }
+    const sead::Vector3f& getRotateCenter() const { return mRotateCenter; }
 
     f32 getRotateDegree() const { return mRotateDegree; }
 
@@ -44,8 +44,8 @@ private:
     sead::Quatf mQuat;
     sead::Vector3f mTrans;
     sead::BoundBox3f mCubeSize;
-    sead::Vector3f mFront;
-    sead::Vector3f mPos;
+    sead::Vector3f mVertical;
+    sead::Vector3f mRotateCenter;
     f32 mRotateDegree;
     sead::Vector3f mSlideVec;
 };
