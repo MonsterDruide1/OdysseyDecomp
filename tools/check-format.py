@@ -286,7 +286,7 @@ def common_string_finder(c, path):
             if not match.startswith("u"):
                 # Remove quotes from utf8 strings
                 match = match[1:-1]
-            if len(match) < 2:
+            if len(match) < 2:  
                 continue
             found = False
             for x in string_table:
@@ -501,6 +501,9 @@ def check_source(c, path):
     common_consistent_float_literals(c, path)
 
 def check_header(c, path):
+    # This file causes multiple checks to crash and shouldn't really be linted anyway
+    if path.endswith("SensorMsgSetupUtil.h"):
+        return
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, True)

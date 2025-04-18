@@ -11,6 +11,9 @@ class ComboCounter;
 
 class SensorMsg {
     SEAD_RTTI_BASE(SensorMsg);
+
+public:
+    virtual ~SensorMsg() = default;
 };
 }  // namespace al
 
@@ -46,8 +49,6 @@ Creating a SensorMsg class called SenosorMsgTest2 that holds a string:
             SET_MEMEBER_PARAM_MULTI(__VA_ARGS__);                                                  \
         }                                                                                          \
                                                                                                    \
-        DECL_GET_MULTI(__VA_ARGS__);                                                               \
-                                                                                                   \
         inline void extractData(POINTER_PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {     \
             SET_OUT_VAR_MEMEBER_MULTI(__VA_ARGS__);                                                \
         }                                                                                          \
@@ -57,6 +58,33 @@ Creating a SensorMsg class called SenosorMsgTest2 that holds a string:
     private:                                                                                       \
         DECL_MEMBER_VAR_MULTI(__VA_ARGS__);                                                        \
     };
+
+/*
+
+Same as above, but allows adding a custom constructor. This is especially useful for implementing
+existing SensorMsgs that store vectors because the ctor for them needs to call `set()` on the
+vector:
+
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, (sead::Vector3f, Vec))
+    inline MyVecMsg(const sead::Vector3f& pVec){
+        mVec.set(pVec);
+    }
+};
+
+*/
+
+#define SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(Type, ...)                                                \
+    class SensorMsg##Type : public al::SensorMsg {                                                 \
+        SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
+    private:                                                                                       \
+        DECL_MEMBER_VAR_MULTI(__VA_ARGS__);                                                        \
+                                                                                                   \
+    public:                                                                                        \
+        inline void extractData(POINTER_PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {     \
+            SET_OUT_VAR_MEMEBER_MULTI(__VA_ARGS__);                                                \
+        }                                                                                          \
+                                                                                                   \
+        virtual ~SensorMsg##Type() = default;
 
 // Use this in the edge cases where there's no macro to implement a specific type of isMsg
 #define MSG_TYPE_CHECK_(Type, MsgVar) sead::IsDerivedFrom<SensorMsg##Type>(MsgVar)
