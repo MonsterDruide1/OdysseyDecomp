@@ -7,7 +7,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Resource/Resource.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Scene/SceneUtil.h"
 #include "Library/Stage/StageResourceUtil.h"
 #include "Library/Yaml/ByamlIter.h"
@@ -57,7 +57,7 @@ StageResourceList::StageResourceList(const char* stageName, s32 scenarioNo,
 
     if (existsArchive) {
         Resource* resource = findOrCreateResource(archivePath, nullptr);
-        const u8* bymlData = resource->getByml(StringTmp<256>{"%s%s", stageName, resourceType});
+        const u8* bymlData = tryGetByml(resource, StringTmp<256>{"%s%s", stageName, resourceType});
         if (bymlData) {
             ByamlIter placementIter = {bymlData};
             placementIter.tryGetIterByIndex(&placementIter, bymlScenarioIndex);
@@ -75,7 +75,7 @@ StageResourceList::StageResourceList(const char* stageName, s32 scenarioNo,
             continue;
 
         Resource* resource = findOrCreateResource(archivePath, nullptr);
-        const u8* bymlData = resource->tryGetByml(StringTmp<256>{"%s%s", objectName, resourceType});
+        const u8* bymlData = tryGetByml(resource, StringTmp<256>{"%s%s", objectName, resourceType});
         if (!bymlData)
             continue;
 
