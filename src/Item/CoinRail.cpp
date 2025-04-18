@@ -30,7 +30,7 @@ __attribute__((always_inline)) void addStaticCoinToRail(CoinRail* rail,
                                                         Coin** coins, f32* railPos, s32 coinNum,
                                                         bool isLoop) {
     f32 posOnRail = 0.0f;
-    f32 railDist = al::getRailTotalLength(rail) / (coinNum - !isLoop);
+    f32 railDist = al::getRailTotalLength(rail) / (coinNum - (isLoop ? 0 : 1));
     for (s32 i = 0; i < coinNum; i++) {
         sead::Vector3f pos;
         al::calcRailPosAtCoord(&pos, rail, posOnRail);
@@ -94,7 +94,7 @@ void CoinRail::init(const al::ActorInitInfo& initInfo) {
     mCoins = new Coin*[mCoinNum];
     mRailPos = new f32[mCoinNum];
 
-    if (al::isNearZero(mMoveVelocity, 0.001f))
+    if (al::isNearZero(mMoveVelocity))
         addStaticCoinToRail(this, initInfo, mCoins, mRailPos, mCoinNum, isLoop);
     else
         addCoinToRail(this, initInfo, mCoins, mRailPos, mCoinNum);
@@ -175,7 +175,7 @@ bool CoinRail::isGot() const {
 }
 
 void CoinRail::exeMove() {
-    if (al::isNearZero(mMoveVelocity, 0.001f))
+    if (al::isNearZero(mMoveVelocity))
         return;
 
     if (mMoveVelocity > 0.0f) {
