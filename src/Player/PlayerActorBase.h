@@ -23,7 +23,8 @@ public:
 
     void movement() override;
 
-    virtual void initPlayer(const al::ActorInitInfo& actorInitInfo, const PlayerInitInfo& playerInitInfo) {}
+    virtual void initPlayer(const al::ActorInitInfo& actorInitInfo,
+                            const PlayerInitInfo& playerInitInfo) {}
 
     virtual u32 getPortNo() const;
     virtual sead::Matrix34f* getViewMtx() const;
@@ -76,7 +77,8 @@ public:
 
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
-    virtual bool receivePushMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self, f32 maxPush);
+    virtual bool receivePushMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self,
+                                f32 maxPush);
 
 private:
     sead::Matrix34f* mViewMtx = nullptr;
