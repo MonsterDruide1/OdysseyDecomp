@@ -50,7 +50,7 @@ bool ShineTowerBackDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor*
         if (_118)
             return false;
 
-        if (al::isMsgPlayerHipDropAll(message)) {
+        if (al::isMsgPlayerObjHipDropAll(message)) {
             mBindTimer = 3;
             return false;
         }
