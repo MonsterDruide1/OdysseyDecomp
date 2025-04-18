@@ -12,16 +12,13 @@ RollingCubePoseKeeper* createRollingCubePoseKeeper(const LiveActor* actor,
                                                    const ActorInitInfo& initInfo) {
     sead::BoundBox3f modelBoundBox;
     calcModelBoundingBox(&modelBoundBox, actor);
-    RollingCubePoseKeeper* keeper = new RollingCubePoseKeeper();
-    keeper->setCubeSize(modelBoundBox);
-    keeper->init(initInfo);
-    return keeper;
+    return createRollingCubePoseKeeper(modelBoundBox, initInfo);
 }
 
-RollingCubePoseKeeper* createRollingCubePoseKeeper(const sead::BoundBox3f& boundBox,
+RollingCubePoseKeeper* createRollingCubePoseKeeper(const sead::BoundBox3f& cubeSize,
                                                    const ActorInitInfo& initInfo) {
     RollingCubePoseKeeper* keeper = new RollingCubePoseKeeper();
-    keeper->setCubeSize(boundBox);
+    keeper->setCubeSize(cubeSize);
     keeper->init(initInfo);
     return keeper;
 }
@@ -71,7 +68,7 @@ const sead::Vector3f& getCurrentKeySlideVec(const RollingCubePoseKeeper* keeper)
 }
 
 s32 getCurrentKeyIndex(const RollingCubePoseKeeper* keeper) {
-    return keeper->getKeyIndex();
+    return keeper->getCurrentKeyIndex();
 }
 
 const PlacementInfo& getCurrentKeyPlacementInfo(const RollingCubePoseKeeper* keeper) {
@@ -92,10 +89,10 @@ f32 calcDistanceCurrentKeyRotateCenterToBoxCenter(const RollingCubePoseKeeper* k
     sead::Vector3f center;
     rollingCubePose.calcBoundingBoxCenter(&center);
 
-    sead::Vector3f distance = center - rollingCubePose.getPos();
+    sead::Vector3f distance = center - rollingCubePose.getRotateCenter();
 
-    if (!isNearZero(rollingCubePose.getFront()))
-        verticalizeVec(&distance, rollingCubePose.getFront(), distance);
+    if (!isNearZero(rollingCubePose.getVertical()))
+        verticalizeVec(&distance, rollingCubePose.getVertical(), distance);
 
     return distance.length();
 }

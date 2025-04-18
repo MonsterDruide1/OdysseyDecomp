@@ -13,7 +13,7 @@ struct ActorInitInfo;
 
 RollingCubePoseKeeper* createRollingCubePoseKeeper(const LiveActor* actor,
                                                    const ActorInitInfo& initInfo);
-RollingCubePoseKeeper* createRollingCubePoseKeeper(const sead::BoundBox3f& boundBox,
+RollingCubePoseKeeper* createRollingCubePoseKeeper(const sead::BoundBox3f& cubeSize,
                                                    const ActorInitInfo& initInfo);
 bool nextRollingCubeKey(RollingCubePoseKeeper* keeper);
 void setStartRollingCubeKey(RollingCubePoseKeeper* keeper);

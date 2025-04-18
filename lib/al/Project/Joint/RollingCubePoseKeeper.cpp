@@ -15,11 +15,11 @@ void RollingCubePoseKeeper::setCubeSize(const sead::BoundBox3f& cubeSize) {
 }
 
 bool RollingCubePoseKeeper::isMoveTypeTurn() const {
-    return (mMoveType | MoveType::Loop) == MoveType::All;
+    return mMoveType == MoveType::Turn || mMoveType == MoveType::All;
 }
 
 bool RollingCubePoseKeeper::isMoveTypeLoop() const {
-    return (mMoveType | MoveType::Turn) == MoveType::All;
+    return mMoveType == MoveType::Loop || mMoveType == MoveType::All;
 }
 
 void RollingCubePoseKeeper::init(const ActorInitInfo& initInfo) {
@@ -76,30 +76,30 @@ void RollingCubePoseKeeper::init(const ActorInitInfo& initInfo) {
 }
 
 bool RollingCubePoseKeeper::nextKey() {
-    mKeyIndex++;
+    mCurrentKeyIndex++;
 
-    if (mKeyIndex < mPoseCount)
+    if (mCurrentKeyIndex < mPoseCount)
         return true;
 
     if (isMoveTypeLoop()) {
-        mKeyIndex = 0;
+        mCurrentKeyIndex = 0;
         return true;
     }
 
-    mKeyIndex = mPoseCount - 1;
+    mCurrentKeyIndex = mPoseCount - 1;
     return false;
 }
 
 void RollingCubePoseKeeper::setStart() {
-    mKeyIndex = 0;
+    mCurrentKeyIndex = 0;
 }
 
 void RollingCubePoseKeeper::setKeyIndex(s32 index) {
-    mKeyIndex = index;
+    mCurrentKeyIndex = index;
 }
 
 const RollingCubePose& RollingCubePoseKeeper::getCurrentPose() const {
-    return mRollingCubePoses[mKeyIndex];
+    return mRollingCubePoses[mCurrentKeyIndex];
 }
 
 const RollingCubePose& RollingCubePoseKeeper::getPose(s32 index) const {
