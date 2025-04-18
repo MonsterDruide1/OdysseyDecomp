@@ -678,7 +678,7 @@ void getPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo) {
 }
 
 bool isEqualPlacementId(const PlacementId& placementId, const PlacementId& otherPlacementId) {
-    return placementId.isEqual(otherPlacementId);
+    return PlacementId::isEqual(placementId, otherPlacementId);
 }
 
 bool isEqualPlacementId(const PlacementInfo& placementInfo,
@@ -689,7 +689,7 @@ bool isEqualPlacementId(const PlacementInfo& placementInfo,
     PlacementId id2;
     if (!tryGetPlacementId(&id2, otherPlacementInfo))
         return false;
-    return id1.isEqual(id2);
+    return isEqualPlacementId(id1, id2);
 }
 
 bool isExistRail(const ActorInitInfo& initInfo, const char* linkName) {
