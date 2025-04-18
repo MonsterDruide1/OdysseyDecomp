@@ -20,7 +20,7 @@ public:
 /*
 
 Declares a SensorMsg class
-Creating a SensorMsg class called SenosorMsgTest:
+Creating a SensorMsg class called SensorMsgTest:
     SENSOR_MSG(Test);
 
 */
@@ -36,8 +36,8 @@ Creating a SensorMsg class called SenosorMsgTest:
 /*
 
 Declares a SensorMsg class with data.
-Creating a SensorMsg class called SenosorMsgTest2 that holds a string:
-    SENSOR_MSG_WITH_DATA(Test2, (const char*, str));
+Creating a SensorMsg class called SensorMsgTest2 that holds a string referenced as `mStr` or `pStr`:
+    SENSOR_MSG_WITH_DATA(Test2, (const char*, Str));
 
 */
 
@@ -46,11 +46,11 @@ Creating a SensorMsg class called SenosorMsgTest2 that holds a string:
         SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
     public:                                                                                        \
         inline SensorMsg##Type(PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {              \
-            SET_MEMEBER_PARAM_MULTI(__VA_ARGS__);                                                  \
+            SET_MEMBER_PARAM_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
         inline void extractData(POINTER_PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {     \
-            SET_OUT_VAR_MEMEBER_MULTI(__VA_ARGS__);                                                \
+            SET_PARAM_MEMBER_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
@@ -81,7 +81,7 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, (sead::Vector3f, Vec))
                                                                                                    \
     public:                                                                                        \
         inline void extractData(POINTER_PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {     \
-            SET_OUT_VAR_MEMEBER_MULTI(__VA_ARGS__);                                                \
+            SET_PARAM_MEMBER_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;
@@ -215,6 +215,8 @@ NOTE: all fields after the first one need to be pairs of type and name.
     SEND_MSG_DATA_MULTI_IMPL_(Name, Name, FirstDataType, __VA_ARGS__)
 
 // Shorter macros for messages that store a ComboCounter (There are 31 of them in al alone)
-#define SENSOR_MSG_CBC(Name) SENSOR_MSG_WITH_DATA(Name, (al::ComboCounter*, ComboCounter))
-#define SEND_MSG_CBC_IMPL_(Name, Type) SEND_MSG_DATA_IMPL_(Name, Type, al::ComboCounter*)
-#define SEND_MSG_CBC_IMPL(Name) SEND_MSG_DATA_IMPL_(Name, Name, al::ComboCounter*)
+#define SENSOR_MSG_COMBO(Name) SENSOR_MSG_WITH_DATA(Name, (al::ComboCounter*, ComboCounter))
+#define SEND_MSG_COMBO_IMPL_(Name, Type) SEND_MSG_DATA_IMPL_(Name, Type, al::ComboCounter*)
+#define SEND_MSG_COMBO_IMPL(Name) SEND_MSG_DATA_IMPL_(Name, Name, al::ComboCounter*)
+
+// #undef IS_MSG_MULTIPLE_PART_
