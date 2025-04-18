@@ -314,19 +314,10 @@ void CameraInterpole::exeActiveHermite() {
 
 f32 cameraGetHAngle(const sead::LookAtCamera&);
 
-void rotate(sead::Vector3f* result, const sead::Vector3f& vec, const sead::Quatf& quat) {
-    f32 xThing = (quat.y * vec.z) - (quat.z * vec.y) + (vec.x * quat.w);
-    f32 yThing = (quat.z * vec.x) - (quat.x * vec.z) + (vec.y * quat.w);
-    f32 zThing = (quat.x * vec.y) - (quat.y * vec.x) + (vec.z * quat.w);
-    f32 negLen = -(vec.x * quat.x) - (vec.y * quat.y) - (vec.z * quat.z);
-    result->x = (quat.y * zThing) - (quat.z * yThing) + (quat.w * xThing) - (quat.x * negLen);
-    result->y = (quat.z * xThing) - (quat.x * zThing) + (quat.w * yThing) - (quat.y * negLen);
-    result->z = (quat.x * yThing) - (quat.y * xThing) + (quat.w * zThing) - (quat.z * negLen);
-}
-
 void sub_something(sead::Vector3f* up, const sead::LookAtCamera& cam1,
                    const sead::LookAtCamera& cam2, sead::Vector3f pos, sead::Vector3f at,
                    f32 interpole) {
+    sead::StorageFor<sead::Quatf> quat;
     sead::Vector3f back = at - pos;
     if (tryNormalizeOrZero(&back) && !isParallelDirection(sead::Vector3f::ey, back, 0.01f)) {
         sead::Vector3f side;
@@ -340,9 +331,9 @@ void sub_something(sead::Vector3f* up, const sead::LookAtCamera& cam1,
     if (isNearDirection(cam1.getUp(), cam2.getUp(), 0.01f))
         return;
 
-    sead::Quatf quat = sead::Quatf::unit;
-    makeQuatRotationRate(&quat, cam1.getUp(), cam2.getUp(), interpole);
-    rotate(up, cam1.getUp(), quat);
+    quat.construct(sead::Quatf::unit);
+    makeQuatRotationRate(quat.data(), cam1.getUp(), cam2.getUp(), interpole);
+    up->setRotated(*quat.data(), cam1.getUp());
     normalize(up);
 }
 
@@ -464,33 +455,26 @@ void CameraInterpole::exeActiveRotateAxisY() {
         _1e4.set(a1);
     }
 
-    mAngleRotateY = calcAngleOnPlaneDegree(_1e4, v44, sead::Vector3f::ey) + mAngleRotateY;
+    mAngleRotateY += calcAngleOnPlaneDegree(_1e4, v44, sead::Vector3f::ey);
     a3.set(a1);
     rotateVectorDegreeY(&a3, mAngleRotateY);
 
-    mAngleRotateY = calcAngleOnPlaneDegree(a3, v44, sead::Vector3f::ey) + mAngleRotateY;
+    mAngleRotateY += calcAngleOnPlaneDegree(a3, v44, sead::Vector3f::ey);
     a3.set(a1);
     rotateVectorDegreeY(&a3, v10 * mAngleRotateY);
 
     _1e4.set(v44);
 
-    sead::Vector3f v43;
-    v43.setCross(a3, sead::Vector3f::ey);
-    sead::Vector3f v42;
-    v42.setCross(a1, sead::Vector3f::ey);
-    f32 v18 = calcAngleOnPlaneDegree(a1, v47, v42);
-    sead::Vector3f v41;
-    v41.setCross(v44, sead::Vector3f::ey);
-    f32 v19 = calcAngleOnPlaneDegree(v44, v45, v41);
+    sead::Vector3f v43 = a3.cross(sead::Vector3f::ey);
+    f32 v18 = calcAngleOnPlaneDegree(a1, v47, a1.cross(sead::Vector3f::ey));
+    f32 v19 = calcAngleOnPlaneDegree(v44, v45, v44.cross(sead::Vector3f::ey));
     f32 v20 = lerpValue(v18, v19, v10);
+    sead::Vector3f v42;
     v42.set(a3);
     rotateVectorDegree(&v42, v42, v43, v20);
 
     f32 v28 = lerpValue((_48.getPos() - _3c_at).length(), (_178.getPos() - _3c_at).length(), v10);
-    //_30_pos = (v28 * v42) + _3c_at;
-    _30_pos.x = v28 * v42.x + _3c_at.x;
-    _30_pos.y = v28 * v42.y + _3c_at.y;
-    _30_pos.z = v28 * v42.z + _3c_at.z;
+    _30_pos.setScaleAdd(v28, v42, _3c_at);
 
     sub_something(&_49_up, _48, _178, _30_pos, _3c_at, v10);
 
@@ -541,8 +525,7 @@ f32 cameraGetHAngle(const sead::LookAtCamera& camera) {
     if (!tryNormalizeOrZero(&back))
         return 0.0f;
 
-    sead::Vector3f side;
-    side.setCross(camera.getUp(), back);
+    sead::Vector3f side = camera.getUp().cross(back);
     normalize(&side);
     return calcAngleOnPlaneDegree(sead::Vector3f::ey, camera.getUp(), side);
 }
