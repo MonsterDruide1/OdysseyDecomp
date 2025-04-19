@@ -20,7 +20,7 @@
 #include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/LiveActorFlag.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Model/ModelKeeper.h"
 #include "Library/Nature/NatureDirector.h"
