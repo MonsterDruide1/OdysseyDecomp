@@ -3,9 +3,9 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+struct ActorInitInfo;
 class LiveActor;
-class ActorInitInfo;
-class SubActorInfo;
+struct SubActorInfo;
 
 class SubActorKeeper {
 public:
