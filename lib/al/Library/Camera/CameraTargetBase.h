@@ -6,7 +6,7 @@
 
 namespace al {
 
-class CameraTargetBase : public HioNode {
+class CameraTargetBase : public IUseHioNode {
 public:
     CameraTargetBase();
 
