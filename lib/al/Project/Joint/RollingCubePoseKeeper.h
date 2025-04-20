@@ -31,7 +31,7 @@ public:
     const sead::BoundBox3f& getCubeSize() const { return mCubeSize; }
 
 private:
-    enum MoveType : s32 { None, Loop, Turn, All };
+    enum class MoveType : s32 { None, Loop, Turn, All };
 
     RollingCubePose* mRollingCubePoses = nullptr;
     s32 mPoseCount = 0;

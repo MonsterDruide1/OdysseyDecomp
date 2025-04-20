@@ -31,7 +31,7 @@ public:
 
     const sead::Vector3f& getTrans() const { return mTrans; }
 
-    const sead::Vector3f& getVertical() const { return mVertical; }
+    const sead::Vector3f& get_3c() const { return _3c; }
 
     const sead::Vector3f& getRotateCenter() const { return mRotateCenter; }
 
@@ -40,14 +40,17 @@ public:
     const sead::Vector3f& getSlideVec() const { return mSlideVec; }
 
 private:
+    enum class MovementType { Rotate = 1, Slide };
+
     const PlacementInfo& mPlacementInfo;
     sead::Quatf mQuat;
     sead::Vector3f mTrans;
     sead::BoundBox3f mCubeSize;
-    sead::Vector3f mVertical;
+    sead::Vector3f _3c;
     sead::Vector3f mRotateCenter;
     f32 mRotateDegree;
     sead::Vector3f mSlideVec;
+    MovementType mMovementType;
 };
 
 }  // namespace al
