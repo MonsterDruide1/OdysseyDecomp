@@ -127,6 +127,12 @@ public:
 
     void setDemoDirector(DemoDirector* demoDirector) { mDemoDirector = demoDirector; }
 
+    void setSceneDrawContext(agl::DrawContext* drawContext) { mSceneDrawContext = drawContext; }
+
+    void setGamePadSystem(GamePadSystem* gamePadSystem) { mGamePadSystem = gamePadSystem; }
+
+    void setEffectSystem(EffectSystem* effectSystem) { mEffectSystem = effectSystem; }
+
 private:
     s32 mMaxActors;
     ActorResourceHolder* mActorResourceHolder = nullptr;

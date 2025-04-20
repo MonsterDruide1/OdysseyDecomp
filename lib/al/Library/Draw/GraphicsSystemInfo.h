@@ -141,6 +141,16 @@ public:
         return mGraphicsQualityController;
     }
 
+    ModelOcclusionCullingDirector* getModelOcclusionCullingDirector() {
+        return mModelOcclusionCullingDirector;
+    }
+
+    void setApplicationMessageReceiver(ApplicationMessageReceiver* applicationMessageReceiver) {
+        mApplicationMessageReceiver = applicationMessageReceiver;
+    }
+
+    SkyDirector* getSkyDirector() { return mSkyDirector; }
+
 private:
     sead::StrTreeMap<128, const sead::PtrArray<UniformBlock>*> mViewIndexedUboArrayTree;
     GraphicsInitArg mInitArg;
