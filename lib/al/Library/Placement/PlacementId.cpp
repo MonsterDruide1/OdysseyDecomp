@@ -5,7 +5,7 @@
 
 namespace al {
 
-PlacementId::PlacementId() {}
+PlacementId::PlacementId() = default;
 
 PlacementId::PlacementId(const char* id, const char* unitConfig, const char* zoneId)
     : mId(id), mUnitConfigName(unitConfig), mZoneId(zoneId) {}
@@ -23,26 +23,11 @@ bool PlacementId::init(const PlacementInfo& info) {
 }
 
 bool PlacementId::isEqual(const PlacementId& otherId) const {
-    if (mCommonId)
-        return otherId.getCommonId() && isEqualString(mCommonId, otherId.getCommonId());
-
-    if (otherId.getCommonId())
-        return false;
-
-    if (mUnitConfigName) {
-        return otherId.getUnitConfigName() &&
-               isEqualString(mUnitConfigName, otherId.getUnitConfigName()) &&
-               isEqualString(mZoneId, otherId.getZoneId()) && mId && otherId.getId() &&
-               isEqualString(mId, otherId.getId());
-    }
-
-    if (otherId.getUnitConfigName())
-        return false;
-
-    return mId && otherId.getId() && isEqualString(mId, otherId.getId());
+    return isEqual(*this, otherId);
 }
 
-bool PlacementId::isEqual(const PlacementId& selfId, const PlacementId& otherId) {
+__attribute__((always_inline)) bool PlacementId::isEqual(const PlacementId& selfId,
+                                                         const PlacementId& otherId) {
     if (selfId.getCommonId())
         return otherId.getCommonId() && isEqualString(selfId.getCommonId(), otherId.getCommonId());
 
