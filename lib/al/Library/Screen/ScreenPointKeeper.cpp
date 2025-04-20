@@ -10,7 +10,6 @@
 #include "Library/Screen/ScreenPointTarget.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ParameterBase.h"
-#include "Library/Yaml/ParameterObj.h"
 
 namespace al {
 
