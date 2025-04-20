@@ -41,16 +41,16 @@ public:
 
     PlayerActionTurnControl* getTurnControl() const { return mPlayerActionTurnControl; }
 
-    void setMoveVelocity(f32 a, f32 b, f32 c) {
-        _54 = a;
-        _5c = b;
-        mHasMoveVelocity = true;
-        _64 = c;
-    }
-
     void set_49(bool isEnabled) { _49 = isEnabled; }
 
     void set_54(f32 value) { _54 = value; }
+
+    void set_5c(f32 value) { _5c = value; }
+
+    void setMoveVelocity(f32 velocity) {
+        mHasMoveVelocity = true;
+        mMoveVelocity = velocity;
+    }
 
     void setTurnAngle(f32 turnAngle) {
         mHasTurnAngle = true;
@@ -71,7 +71,7 @@ private:
     f32 _58;
     f32 _5c;
     bool mHasMoveVelocity;
-    f32 _64;
+    f32 mMoveVelocity;
     bool mHasTurnAngle;
     f32 mTurnAngle;
     sead::Vector3f mMoveDirection;

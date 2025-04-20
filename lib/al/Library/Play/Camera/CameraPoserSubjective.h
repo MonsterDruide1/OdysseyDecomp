@@ -51,7 +51,7 @@ private:
     f32 mMaxAngleV;
     f32 mCameraOffsetUp;
     f32 mStartAngleV;
-    bool mIsSetSartAngleH;
+    bool mIsSetStartAngleH;
     f32 mStartAngleH;
     f32 _188;
     f32 _18c;
