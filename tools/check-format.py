@@ -75,7 +75,7 @@ def common_no_namespace_qualifiers(c, path):
                 del nest_level[-1]
                 continue
 
-            matches = re.findall(r"[\(,\s]([^\(,\s]+::)+[^\(,\s]+", x)
+            matches = re.findall(r"([^\(,\s]+::)+[^\(,\s]+", x)
             for match in matches:
                 match = match[0:-2]
                 # examples: "sead", "al", "nn::g3d"
