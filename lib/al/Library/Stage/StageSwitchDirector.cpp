@@ -34,7 +34,7 @@ s32 StageSwitchDirector::findSwitchNoFromObjId(const PlacementId* placementId) {
         return 0;
 
     for (s32 i = 0; i < mSwitchInfoCount; i++)
-        if (mSwitchInfos[i].placementId->isEqual(*placementId))
+        if (PlacementId::isEqual(*mSwitchInfos[i].placementId, *placementId))
             return i;
 
     return -1;
