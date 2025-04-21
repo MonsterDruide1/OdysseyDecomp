@@ -1,21 +1,5 @@
 #pragma once
 
-<<<<<<< HEAD
-#include <basis/seadTypes.h>
-
-namespace al {
-
-class PlayerHolder;
-class AreaObjDirector;
-
-class ClippingFarAreaObserver {
-public:
-    ClippingFarAreaObserver(const AreaObjDirector*, const PlayerHolder*);
-    void setDefaultFarClipDistance(f32);
-    void setDefaultFarClipDistanceSub(f32);
-    void endInit();
-    void update();
-=======
 #include "Library/Area/AreaObjGroup.h"
 
 namespace al {
@@ -36,7 +20,6 @@ private:
     const PlayerHolder* mPlayerHolder;
     const AreaObjGroup* mAreaObjGroup = nullptr;
     const AreaObj* mAreaObj = nullptr;
-<<<<<<< HEAD
     f32 mDefaultFarClipDistanceHorizontal = 7000.0f;
     f32 mDefaultFarClipDistanceVertical = 7000.0f;
     f32 mDefaultFarClipDistanceHorizontalSub = 4000.0f;
