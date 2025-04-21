@@ -32,9 +32,14 @@ public:
     AreaShape* getAreaShape() const { return mAreaShape; }
 
     const sead::Matrix34f& getAreaMtx() const { return mAreaTR; }
+<<<<<<< HEAD
 
     s32 getPriority() { return mPriority; };
 
+=======
+    s32 getPriority() const { return mPriority; }
+    bool isValid() { return mIsValid; }
+>>>>>>> cae8a58c (uploaded because need to rebase other pr)
 private:
     const char* mName;
     AreaShape* mAreaShape = nullptr;
