@@ -40,6 +40,8 @@ public:
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
 
+    ClippingActorHolder* getClippingActorHolder() const { return mClippingActorHolder; }
+
 private:
     ClippingJudge* mClippingJudge = nullptr;
     ClippingFarAreaObserver* mFarAreaObserver = nullptr;
