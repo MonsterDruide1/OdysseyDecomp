@@ -80,35 +80,6 @@ al::LiveActor* findSubActor(const al::SubActorKeeper* subActorKeeper, const char
 }  // namespace alSubActorFunction
 
 namespace al {
-bool isExistSubActorKeeper(const LiveActor* actor) {
-    return actor->getSubActorKeeper() != nullptr;
-}
-
-LiveActor* getSubActor(const LiveActor* actor, const char* subActorName) {
-    if (isExistSubActorKeeper(actor)) {
-        const SubActorKeeper* subActorKeeper = actor->getSubActorKeeper();
-        for (s32 i = 0; i < subActorKeeper->getCurActorCount(); i++) {
-            const SubActorInfo* info = subActorKeeper->getActorInfo(i);
-
-            if (isEqualString(info->subActor->getName(), subActorName))
-                return info->subActor;
-        }
-    }
-    return nullptr;
-}
-
-LiveActor* tryGetSubActor(const LiveActor* actor, const char* subActorName) {
-    return getSubActor(actor, subActorName);
-}
-
-LiveActor* getSubActor(const LiveActor* actor, s32 index) {
-    return actor->getSubActorKeeper()->getActorInfo(index)->subActor;
-}
-
-s32 getSubActorNum(const LiveActor* actor) {
-    return actor->getSubActorKeeper()->getCurActorCount();
-}
-
 inline SubActorInfo* getSubActorInfo(const LiveActor* actor, s32 index) {
     return actor->getSubActorKeeper()->getActorInfo(index);
 }
@@ -120,6 +91,28 @@ inline SubActorInfo* getSubActorInfo(const LiveActor* actor, const LiveActor* su
             return info;
     }
     return nullptr;
+}
+
+bool isExistSubActorKeeper(const LiveActor* actor) {
+    return actor->getSubActorKeeper() != nullptr;
+}
+
+LiveActor* getSubActor(const LiveActor* actor, const char* subActorName) {
+    if (isExistSubActorKeeper(actor))
+        return alSubActorFunction::findSubActor(actor->getSubActorKeeper(), subActorName);
+    return nullptr;
+}
+
+LiveActor* tryGetSubActor(const LiveActor* actor, const char* subActorName) {
+    return getSubActor(actor, subActorName);
+}
+
+LiveActor* getSubActor(const LiveActor* actor, s32 index) {
+    return getSubActorInfo(actor, index)->subActor;
+}
+
+s32 getSubActorNum(const LiveActor* actor) {
+    return actor->getSubActorKeeper()->getCurActorCount();
 }
 
 void offSyncClippingSubActor(LiveActor* actor, const LiveActor* subActor) {
@@ -272,11 +265,11 @@ bool isActionOneTimeSubActor(const LiveActor* actor, const char* subActorName, c
 }
 
 bool tryStartActionSubActorAll(const LiveActor* actor, const char* action) {
-    bool status = false;
+    bool isAnyStartAction = false;
     const SubActorKeeper* subActorKeeper = actor->getSubActorKeeper();
     for (s32 i = 0; i < subActorKeeper->getCurActorCount(); i++)
-        status |= tryStartAction(subActorKeeper->getActorInfo(i)->subActor, action);
-    return status;
+        isAnyStartAction |= tryStartAction(subActorKeeper->getActorInfo(i)->subActor, action);
+    return isAnyStartAction;
 }
 
 void makeActorDeadSubActorAll(const LiveActor* actor) {
@@ -284,7 +277,7 @@ void makeActorDeadSubActorAll(const LiveActor* actor) {
     for (s32 i = 0; i < subActorKeeper->getCurActorCount(); i++) {
         SubActorInfo* info = subActorKeeper->getActorInfo(i);
         info->subActor->makeActorDead();
-        if (info->subActor->getSubActorKeeper())
+        if (isExistSubActorKeeper(info->subActor))
             makeActorDeadSubActorAll(info->subActor);
     }
 }
