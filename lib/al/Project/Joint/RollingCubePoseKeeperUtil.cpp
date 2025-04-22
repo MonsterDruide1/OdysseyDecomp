@@ -91,8 +91,8 @@ f32 calcDistanceCurrentKeyRotateCenterToBoxCenter(const RollingCubePoseKeeper* k
 
     sead::Vector3f distance = center - rollingCubePose.getRotateCenter();
 
-    if (!isNearZero(rollingCubePose.get_3c()))
-        verticalizeVec(&distance, rollingCubePose.get_3c(), distance);
+    if (!isNearZero(rollingCubePose.getRotateAxis()))
+        verticalizeVec(&distance, rollingCubePose.getRotateAxis(), distance);
 
     return distance.length();
 }
