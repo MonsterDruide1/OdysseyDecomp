@@ -4,8 +4,8 @@
 
 namespace al {
 class LiveActor;
-class ActorInitInfo;
-class SubActorInfo;
+struct ActorInitInfo;
+struct SubActorInfo;
 
 class SubActorKeeper {
 public:
@@ -15,6 +15,10 @@ public:
 
     static SubActorKeeper* create(LiveActor*);
     static SubActorKeeper* tryCreate(LiveActor*, const char*, s32);
+
+    s32 getCurActorCount() const { return mCurActorCount; }
+
+    SubActorInfo* getActorInfo(s32 index) const { return mBuffer[index]; }
 
 protected:
     friend class alSubActorFunction;
