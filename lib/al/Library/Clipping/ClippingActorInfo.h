@@ -39,6 +39,7 @@ public:
 
 private:
     LiveActor* mLiveActor;
+    const void* filler[0xb];
     ViewIdHolder* mViewIdHolder;
 
     // Remaining Member's missing
