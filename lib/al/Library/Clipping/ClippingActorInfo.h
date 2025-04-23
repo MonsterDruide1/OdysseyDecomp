@@ -34,6 +34,7 @@ public:
     void registerViewGroupFarClipFlag(const bool*);
 
     LiveActor* getLiveActor() const { return mLiveActor; }
+
     ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
 
 private:

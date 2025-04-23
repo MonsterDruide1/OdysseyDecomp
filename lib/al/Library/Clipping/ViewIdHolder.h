@@ -13,6 +13,7 @@ public:
     const PlacementId& getViewId(s32 idx) const;
 
     static ViewIdHolder* tryCreate(const PlacementInfo& placementInfo);
+
     s32 getNumPlacements() const { return mNumPlacements; }
 
 private:
