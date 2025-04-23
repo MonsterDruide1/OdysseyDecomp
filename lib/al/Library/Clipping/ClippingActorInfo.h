@@ -7,11 +7,8 @@ enum ClippingRequestKeeper {};
 
 namespace al {
 class LiveActor;
-<<<<<<< HEAD
-struct ActorInitInfo;
-=======
 class ActorInitInfo;
->>>>>>> cae8a58c (uploaded because need to rebase other pr)
+
 class ClippingJudge;
 class ViewIdHolder;
 
@@ -37,7 +34,7 @@ public:
     void registerViewGroupFarClipFlag(const bool*);
 
     LiveActor* getLiveActor() const { return mLiveActor; }
-<<<<<<< HEAD
+    ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
 
     void setIsEnableGroupClipping(const bool isEnableGroupClipping) {
         mIsEnableGroupClipping = isEnableGroupClipping;
@@ -45,6 +42,7 @@ public:
 
 private:
     LiveActor* mLiveActor;
+<<<<<<< HEAD
 <<<<<<< HEAD
     void* filler[0xc];  // offset isEnableGroupClipping to the correct place
     bool mIsEnableGroupClipping;
@@ -56,6 +54,10 @@ private:
     ViewIdHolder* mViewIdHolder;
 >>>>>>> cae8a58c (uploaded because need to rebase other pr)
 >>>>>>> f1a16e51 (uploaded because need to rebase other pr)
+=======
+    ViewIdHolder* mViewIdHolder;
+
+>>>>>>> 6235c783 (Maybe rebased)
     // Remaining Member's missing
 };
 }  // namespace al
