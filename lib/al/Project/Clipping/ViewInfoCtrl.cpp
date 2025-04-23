@@ -14,17 +14,11 @@ namespace al {
 
 
 ViewInfoCtrl::ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraInfo* cameraInfo) {
-    mAreaGroup = nullptr;
-    mPlacementIdSize = 0;
-    mIsUpdated = false;
     mPlayerHolder = playerHolder;
     mSceneCameraInfo = cameraInfo;
-    mClippingPlacementIds = new ClippingPlacementId*;
-    for (s32 i = 0; true; i++) {
-        mClippingPlacementIds[i]->mParentId = nullptr;
-        mClippingPlacementIds[i]->mFlag2 = false;
-        mClippingPlacementIds[i]->mClipFlag = false;
-        if (i == 992) break;
+    mClippingPlacementIds = new ClippingPlacementId*[0x80];
+    for (s32 i = 0; i  < 0x80; i++) {
+        mClippingPlacementIds[i] = nullptr;
     }
 }
 
@@ -54,9 +48,9 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
         const PlacementId& viewId = viewHolder->getViewId(i);
         for (s32 j = 0; j < mPlacementIdSize; j++) {
             const ClippingPlacementId* id = mClippingPlacementIds[j];
-            if (id->mParentId && id->mParentId->isEqual(viewId)){
+            if (id->parentId && id->parentId->isEqual(viewId)){
                 if(id){
-                    actorInfo->registerViewGroupFarClipFlag(&id->mClipFlag);
+                    actorInfo->registerViewGroupFarClipFlag(&id->clipFlag);
                     found = true;
                 }
                 break;
@@ -64,8 +58,8 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
         }
         if(!found){
             ClippingPlacementId* newId = new ClippingPlacementId{nullptr, false,false};
-            newId->mParentId = &viewHolder->getViewId(i);
-            actorInfo->registerViewGroupFarClipFlag(&newId->mClipFlag);
+            newId->parentId = &viewHolder->getViewId(i);
+            actorInfo->registerViewGroupFarClipFlag(&newId->clipFlag);
             mClippingPlacementIds[mPlacementIdSize] = newId;
             mPlacementIdSize++;
         }
@@ -79,9 +73,9 @@ bool ViewInfoCtrl::update() {
     bool flags[128];
     for (s32 i = 0; i < mPlacementIdSize; i++) {
         ClippingPlacementId* clipId = mClippingPlacementIds[i];
-        flags[i] = clipId->mClipFlag;
-        clipId->mClipFlag = false;
-        clipId->mFlag2 = false;
+        flags[i] = clipId->clipFlag;
+        clipId->clipFlag = false;
+        clipId->flag2 = false;
     }
 
     s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
@@ -95,8 +89,8 @@ bool ViewInfoCtrl::update() {
         auto checkType = mCheckType;
         if (checkType == 0) {
             for (s32 j = 0; j < playerNumMax; j++) {
-                if (al::isPlayerDead(mPlayerHolder, j)) continue;
-                if (al::isInAreaPos(viewCtrlArea, al::getPlayerPos(mPlayerHolder, j))) {
+                if (isPlayerDead(mPlayerHolder, j)) continue;
+                if (isInAreaPos(viewCtrlArea, getPlayerPos(mPlayerHolder, j))) {
                     shouldSetClip = true;
                     break;
                 }
@@ -119,9 +113,9 @@ bool ViewInfoCtrl::update() {
             }
             for (s32 j = 0; j < mPlacementIdSize; j++) {
                 ClippingPlacementId* clippingId = mClippingPlacementIds[j];
-                if (clippingId->mParentId && clippingId->mParentId->isEqual(*placementId)) {
+                if (clippingId->parentId && clippingId->parentId->isEqual(*placementId)) {
                     if (clippingId)
-                        clippingId->mClipFlag = true;
+                        clippingId->clipFlag = true;
                     break;
                 }
             }
@@ -129,7 +123,7 @@ bool ViewInfoCtrl::update() {
     }
 
     for (s32 i = 0; i < mPlacementIdSize; i++) {
-        if (flags[i] != mClippingPlacementIds[i]->mClipFlag)
+        if (flags[i] != mClippingPlacementIds[i]->clipFlag)
             return true;
     }
     return false;
