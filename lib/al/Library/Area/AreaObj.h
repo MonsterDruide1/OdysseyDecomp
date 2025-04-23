@@ -34,6 +34,7 @@ public:
     const sead::Matrix34f& getAreaMtx() const { return mAreaTR; }
 
     s32 getPriority() const { return mPriority; }
+
     bool isValid() { return mIsValid; }
 
 private:

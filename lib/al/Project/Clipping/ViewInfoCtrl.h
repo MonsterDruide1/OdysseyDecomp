@@ -25,6 +25,7 @@ public:
     void startCheckByCameraPos();
     void startCheckByLookAtPos();
     void startCheckByPlayerPos();
+
 private:
     const AreaObjGroup* mAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
@@ -34,4 +35,4 @@ private:
     const SceneCameraInfo* mSceneCameraInfo = nullptr;
     s32 mCheckType = 0;
 };
-} // namespace al
+}  // namespace al
