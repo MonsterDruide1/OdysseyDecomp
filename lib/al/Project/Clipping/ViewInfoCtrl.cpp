@@ -97,8 +97,9 @@ bool ViewInfoCtrl::update() {
             for (s32 j = 0; j < getViewNumMax(mSceneCameraInfo); j++) {
                 if (!isValidView(mSceneCameraInfo, j))
                     continue;
-                if (isInAreaPos(viewCtrlArea, checkType == CheckType::LookAtPos ? getCameraAt(mSceneCameraInfo, j) :
-                                                               getCameraPos(mSceneCameraInfo, j))) {
+                if (isInAreaPos(viewCtrlArea, checkType == CheckType::LookAtPos ?
+                                                  getCameraAt(mSceneCameraInfo, j) :
+                                                  getCameraPos(mSceneCameraInfo, j))) {
                     shouldSetClip = true;
                     break;
                 }
