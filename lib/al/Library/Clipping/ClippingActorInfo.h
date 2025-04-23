@@ -52,6 +52,7 @@ private:
     ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
 private:
     LiveActor* mLiveActor;
+    const void* filler[0xb];
     ViewIdHolder* mViewIdHolder;
 >>>>>>> cae8a58c (uploaded because need to rebase other pr)
 >>>>>>> f1a16e51 (uploaded because need to rebase other pr)
