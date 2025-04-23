@@ -41,6 +41,7 @@ public:
     void startCheckByLookAtPos();
     void startCheckByPlayerPos();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 private:
     void* filler[0x7];
@@ -48,6 +49,9 @@ private:
 
 }  // namespace al
 =======
+=======
+
+>>>>>>> 02efc0b3 (Fixed issues)
 private:
     const AreaObjGroup* mAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
@@ -57,5 +61,9 @@ private:
     const SceneCameraInfo* mSceneCameraInfo = nullptr;
     s32 mCheckType = 0;
 };
+<<<<<<< HEAD
 } // namespace al
 >>>>>>> f1a16e51 (uploaded because need to rebase other pr)
+=======
+}  // namespace al
+>>>>>>> 02efc0b3 (Fixed issues)

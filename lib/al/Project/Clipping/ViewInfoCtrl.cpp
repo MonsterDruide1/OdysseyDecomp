@@ -12,14 +12,12 @@
 
 namespace al {
 
-
 ViewInfoCtrl::ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraInfo* cameraInfo) {
     mPlayerHolder = playerHolder;
     mSceneCameraInfo = cameraInfo;
     mClippingPlacementIds = new ClippingPlacementId*[0x80];
-    for (s32 i = 0; i  < 0x80; i++) {
+    for (s32 i = 0; i < 0x80; i++)
         mClippingPlacementIds[i] = nullptr;
-    }
 }
 
 void ViewInfoCtrl::initViewCtrlAreaGroup(const AreaObjGroup* areaGroup) {
@@ -48,16 +46,16 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
         const PlacementId& viewId = viewHolder->getViewId(i);
         for (s32 j = 0; j < mPlacementIdSize; j++) {
             const ClippingPlacementId* id = mClippingPlacementIds[j];
-            if (id->parentId && id->parentId->isEqual(viewId)){
-                if(id){
+            if (id->parentId && id->parentId->isEqual(viewId)) {
+                if (id) {
                     actorInfo->registerViewGroupFarClipFlag(&id->clipFlag);
                     found = true;
                 }
                 break;
             }
         }
-        if(!found){
-            ClippingPlacementId* newId = new ClippingPlacementId{nullptr, false,false};
+        if (!found) {
+            ClippingPlacementId* newId = new ClippingPlacementId{nullptr, false, false};
             newId->parentId = &viewHolder->getViewId(i);
             actorInfo->registerViewGroupFarClipFlag(&newId->clipFlag);
             mClippingPlacementIds[mPlacementIdSize] = newId;
@@ -81,15 +79,15 @@ bool ViewInfoCtrl::update() {
     s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
     for (s32 i = 0; i < mAreaGroup->getSize(); i++) {
         ViewCtrlArea* viewCtrlArea = (ViewCtrlArea*)mAreaGroup->getAreaObj(i);
-        if (!viewCtrlArea->isValid()) {
+        if (!viewCtrlArea->isValid())
             continue;
-        }
 
         bool shouldSetClip = false;
-        auto checkType = mCheckType;
+        s32 checkType = mCheckType;
         if (checkType == 0) {
             for (s32 j = 0; j < playerNumMax; j++) {
-                if (isPlayerDead(mPlayerHolder, j)) continue;
+                if (isPlayerDead(mPlayerHolder, j))
+                    continue;
                 if (isInAreaPos(viewCtrlArea, getPlayerPos(mPlayerHolder, j))) {
                     shouldSetClip = true;
                     break;
@@ -99,7 +97,8 @@ bool ViewInfoCtrl::update() {
             for (s32 j = 0; j < getViewNumMax(mSceneCameraInfo); j++) {
                 if (!isValidView(mSceneCameraInfo, j))
                     continue;
-                if (isInAreaPos(viewCtrlArea, checkType == 2 ? getCameraAt(mSceneCameraInfo, j) : getCameraPos(mSceneCameraInfo, j))) {
+                if (isInAreaPos(viewCtrlArea, checkType == 2 ? getCameraAt(mSceneCameraInfo, j) :
+                                                               getCameraPos(mSceneCameraInfo, j))) {
                     shouldSetClip = true;
                     break;
                 }
@@ -108,9 +107,8 @@ bool ViewInfoCtrl::update() {
 
         if (shouldSetClip) {
             const PlacementId* placementId = viewCtrlArea->getPlacementId();
-            if (!placementId) {
+            if (!placementId)
                 continue;
-            }
             for (s32 j = 0; j < mPlacementIdSize; j++) {
                 ClippingPlacementId* clippingId = mClippingPlacementIds[j];
                 if (clippingId->parentId && clippingId->parentId->isEqual(*placementId)) {
@@ -122,10 +120,9 @@ bool ViewInfoCtrl::update() {
         }
     }
 
-    for (s32 i = 0; i < mPlacementIdSize; i++) {
+    for (s32 i = 0; i < mPlacementIdSize; i++)
         if (flags[i] != mClippingPlacementIds[i]->clipFlag)
             return true;
-    }
     return false;
 }
-} // namespace al
+}  // namespace al
