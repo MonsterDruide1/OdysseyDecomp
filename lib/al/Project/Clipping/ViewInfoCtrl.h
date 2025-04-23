@@ -25,9 +25,9 @@ class AreaObjGroup;
 class SceneCameraInfo;
 
 struct ClippingPlacementId {
-    const PlacementId* mParentId;
-    bool mClipFlag;
-    bool mFlag2;
+    const PlacementId* parentId;
+    bool clipFlag;
+    bool flag2;
 };
 
 class ViewInfoCtrl {
@@ -51,13 +51,11 @@ private:
 private:
     const AreaObjGroup* mAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
-
     ClippingPlacementId** mClippingPlacementIds = nullptr;
-    bool mIsUpdated ;
-    ViewIdHolder* mCameraInfo = nullptr;
-    s32 mCheckType = 0;
+    bool mIsUpdated = false;
     const PlayerHolder* mPlayerHolder = nullptr;
     const SceneCameraInfo* mSceneCameraInfo = nullptr;
+    s32 mCheckType = 0;
 };
 } // namespace al
 >>>>>>> f1a16e51 (uploaded because need to rebase other pr)
