@@ -13,7 +13,7 @@ class SceneCameraInfo;
 struct ClippingPlacementId {
     const PlacementId* parentId;
     bool clipFlag;
-    bool flag2;
+    bool _9;
 };
 
 class ViewInfoCtrl {
@@ -27,12 +27,18 @@ public:
     void startCheckByPlayerPos();
 
 private:
+    enum class CheckType : s32 {
+        PlayerPos,
+        CameraPos,
+        LookAtPos,
+    };
+
     const AreaObjGroup* mAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
     ClippingPlacementId** mClippingPlacementIds = nullptr;
     bool mIsUpdated = false;
     const PlayerHolder* mPlayerHolder = nullptr;
     const SceneCameraInfo* mSceneCameraInfo = nullptr;
-    s32 mCheckType = 0;
+    CheckType mCheckType = CheckType::PlayerPos;
 };
 }  // namespace al
