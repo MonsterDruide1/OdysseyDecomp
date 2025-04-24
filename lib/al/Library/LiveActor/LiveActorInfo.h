@@ -19,6 +19,9 @@ public:                                                                         
     bool operator==(const Enum& e) const {                                                         \
         return m_value == e;                                                                       \
     }                                                                                              \
+    bool isSet(const Enum& e) const {                                                              \
+        return (m_value & e) != 0;                                                                 \
+    }                                                                                              \
     bool operator!=(const CLASS& c) const {                                                        \
         return m_value != c.m_value;                                                               \
     }                                                                                              \
@@ -70,6 +73,13 @@ public:                                                                         
     CLASS& operator=(const CLASS& c) {                                                             \
         m_value = c.m_value;                                                                       \
         return *this;                                                                              \
+    }                                                                                              \
+    void set(const Enum& e) {                                                                      \
+        m_value |= e;                                                                              \
+    }                                                                                              \
+    void unset(const Enum& e) {                                                                    \
+        if (isSet(e))                                                                              \
+            m_value &= ~e;                                                                         \
     }                                                                                              \
                                                                                                    \
 private:                                                                                           \
