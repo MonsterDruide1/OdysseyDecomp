@@ -46,6 +46,7 @@ public:
 private:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     void* filler[0x7];
 };
 
@@ -59,6 +60,8 @@ private:
 =======
 
 >>>>>>> 6da971f2 (Fixed linter)
+=======
+>>>>>>> 8e2732c7 (fixed clang-format issue)
     enum class CheckType : s32 {
         PlayerPos,
         CameraPos,
