@@ -25,19 +25,19 @@ void ViewInfoCtrl::initViewCtrlAreaGroup(const AreaObjGroup* areaGroup) {
 }
 
 void ViewInfoCtrl::startCheckByCameraPos() {
-    mCheckType = 1;
+    mCheckType = CheckType::CameraPos;
 }
 
 void ViewInfoCtrl::startCheckByLookAtPos() {
-    mCheckType = 2;
+    mCheckType = CheckType::LookAtPos;
 }
 
 void ViewInfoCtrl::startCheckByPlayerPos() {
-    mCheckType = 0;
+    mCheckType = CheckType::PlayerPos;
 }
 
 void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
-    ViewIdHolder* viewHolder = actorInfo->getViewIdHolder();
+    const ViewIdHolder* viewHolder = actorInfo->getViewIdHolder();
     if (viewHolder == nullptr)
         return;
 
@@ -73,7 +73,7 @@ bool ViewInfoCtrl::update() {
         ClippingPlacementId* clipId = mClippingPlacementIds[i];
         flags[i] = clipId->clipFlag;
         clipId->clipFlag = false;
-        clipId->flag2 = false;
+        clipId->_9 = false;
     }
 
     s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
@@ -83,8 +83,8 @@ bool ViewInfoCtrl::update() {
             continue;
 
         bool shouldSetClip = false;
-        s32 checkType = mCheckType;
-        if (checkType == 0) {
+        CheckType checkType = mCheckType;
+        if (checkType == CheckType::PlayerPos) {
             for (s32 j = 0; j < playerNumMax; j++) {
                 if (isPlayerDead(mPlayerHolder, j))
                     continue;
@@ -97,8 +97,9 @@ bool ViewInfoCtrl::update() {
             for (s32 j = 0; j < getViewNumMax(mSceneCameraInfo); j++) {
                 if (!isValidView(mSceneCameraInfo, j))
                     continue;
-                if (isInAreaPos(viewCtrlArea, checkType == 2 ? getCameraAt(mSceneCameraInfo, j) :
-                                                               getCameraPos(mSceneCameraInfo, j))) {
+                if (isInAreaPos(viewCtrlArea, checkType == CheckType::LookAtPos ?
+                                                  getCameraAt(mSceneCameraInfo, j) :
+                                                  getCameraPos(mSceneCameraInfo, j))) {
                     shouldSetClip = true;
                     break;
                 }
