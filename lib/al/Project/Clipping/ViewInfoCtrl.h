@@ -27,7 +27,6 @@ public:
     void startCheckByPlayerPos();
 
 private:
-
     enum class CheckType : s32 {
         PlayerPos,
         CameraPos,
