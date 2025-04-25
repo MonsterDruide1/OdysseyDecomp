@@ -12,29 +12,25 @@ namespace al {
 
 void ClippingDirector::addToGroupClipping(LiveActor* liveActor,
                                           const ActorInitInfo& actorInitInfo) {
-    bool isEnableGroupClipping = alPlacementFunction::isEnableGroupClipping(actorInitInfo);
-    if (isEnableGroupClipping)
+    if (alPlacementFunction::isEnableGroupClipping(actorInitInfo))
         mClippingActorHolder->initGroupClipping(liveActor, actorInitInfo);
 }
 
 void ClippingDirector::endInit(const AreaObjDirector* areaObjDirector) {
-    ViewInfoCtrl* viewInfoCtrl = mViewInfoCtrl;
-    AreaObjGroup* areaObjGroup = areaObjDirector->getAreaObjGroup("ViewCtrlArea");
-    viewInfoCtrl->initViewCtrlAreaGroup(areaObjGroup);
+    mViewInfoCtrl->initViewCtrlAreaGroup(areaObjDirector->getAreaObjGroup("ViewCtrlArea"));
     mFarAreaObserver->endInit();
     mClippingActorHolder->endInit(mGroupHolder);
 }
 
 void ClippingDirector::execute() {
-    if (mIsExecute) {
-        mFarAreaObserver->update();
-        mClippingJudge->update();
-        bool isUpdate = mViewInfoCtrl->update();
-        if (isUpdate)
-            mClippingActorHolder->updateFarClipLevel();
-        mClippingActorHolder->update(mClippingJudge);
-        mGroupHolder->update(mClippingJudge);
-    }
+    if (!mIsExecute)
+        return;
+    mFarAreaObserver->update();
+    mClippingJudge->update();
+    if (mViewInfoCtrl->update())
+        mClippingActorHolder->updateFarClipLevel();
+    mClippingActorHolder->update(mClippingJudge);
+    mGroupHolder->update(mClippingJudge);
 }
 
 f32 ClippingDirector::getFarClipDistance() const {
