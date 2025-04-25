@@ -1,13 +1,17 @@
 #include "Project/Clipping/ClippingFunction.h"
 
-#include "Library/Clipping/ClippingActorHolder.h"
-#include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/Scene/Scene.h"
+#include "Project/Clipping/ClippingDirector.h"
 
 namespace alClippingFunction {
 void addToClippingTarget(al::LiveActor* actor) {
-    al::ActorSceneInfo* actorSceneInfo = actor->getSceneInfo();
-    actorSceneInfo->
+    actor->getSceneInfo()->clippingDirector->getClippingActorHolder()->addToClippingTarget(actor);
 }
 
-} // namespace alClippingFunction
+void removeFromClippingTarget(al::LiveActor* actor) {
+    actor->getSceneInfo()->clippingDirector->getClippingActorHolder()->removeFromClippingTarget(
+        actor);
+}
+
+}  // namespace alClippingFunction

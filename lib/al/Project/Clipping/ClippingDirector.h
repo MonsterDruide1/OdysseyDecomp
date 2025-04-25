@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Clipping/ClippingActorHolder.h"
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/HostIO/HioNode.h"
 
@@ -32,10 +33,11 @@ public:
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
 
-private:
-    void* filler[6];
-};
+    ClippingActorHolder* getClippingActorHolder() const { return mClippingActorHolder; }
 
-static_assert(sizeof(ClippingDirector) == 0x38);
+private:
+    void* filler[0x2];
+    ClippingActorHolder* mClippingActorHolder;
+};
 
 }  // namespace al

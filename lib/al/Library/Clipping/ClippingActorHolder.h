@@ -1,9 +1,8 @@
 #pragma once
-#include <basis/seadTypes.h>
 
+#include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadVectorFwd.h>
-#include <prim/seadDelegate.h>
 
 namespace sead {
 class Thread;
@@ -17,7 +16,7 @@ class ClippingJudge;
 
 class ClippingActorHolder {
 public:
-    ClippingActorHolder(int);
+    ClippingActorHolder(s32);
     void updateAsync(sead::Thread*, s64);
     ~ClippingActorHolder();
     void update(const ClippingJudge*);
@@ -40,8 +39,6 @@ public:
     void setFarClipLevel20M(LiveActor*);
     void setFarClipLevelMax(LiveActor*);
     void updateFarClipLevel();
-    void sead::Delegate2<ClippingActorHolder, sead::Thread*, s64>::invoke(sead::Thread*, s32);
-    void sead::Delegate2<ClippingActorHolder, sead::Thread*, s64>::clone(sead::Heap*) const;
 };
 
-}
+}  // namespace al

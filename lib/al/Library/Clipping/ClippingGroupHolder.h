@@ -16,4 +16,4 @@ public:
     void reentry(ClippingActorInfo*);
 };
 
-} // namespace al
+}  // namespace al
