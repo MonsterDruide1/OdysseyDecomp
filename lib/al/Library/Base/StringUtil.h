@@ -52,8 +52,6 @@ public:
     }
 
     StringTmp() : sead::FixedSafeString<L>() {}
-
-    ~StringTmp() = default;
 };
 
 template <s32 L>
@@ -67,7 +65,5 @@ public:
     }
 
     WStringTmp() : sead::WFixedSafeString<L>() {}
-
-    ~WStringTmp() = default;
 };
 }  // namespace al
