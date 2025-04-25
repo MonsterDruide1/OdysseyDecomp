@@ -38,6 +38,7 @@ public:
 private:
     void* filler[0x2];
     ClippingActorHolder* mClippingActorHolder;
+    void* filler2[0x3];
 };
 
 }  // namespace al
