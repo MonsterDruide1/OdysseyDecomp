@@ -33,8 +33,8 @@ public:
     void registerViewGroupFarClipFlag(const bool*);
 
     LiveActor* getLiveActor() const { return mLiveActor; }
-    void setIsClipping(bool value) { mIsClippingEnable = value; }
 
+    void setIsClipping(bool value) { mIsClippingEnable = value; }
 
 private:
     LiveActor* mLiveActor;
@@ -42,4 +42,4 @@ private:
     bool mIsClippingEnable;
     // Remaining Member's missing
 };
-} // namespace al
+}  // namespace al
