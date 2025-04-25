@@ -7,22 +7,13 @@ enum ClippingRequestKeeper {};
 
 namespace al {
 class LiveActor;
-<<<<<<< HEAD
-<<<<<<< HEAD
 struct ActorInitInfo;
-=======
-class ActorInitInfo;
->>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
-=======
-struct ActorInitInfo;
->>>>>>> 8ff7bde3 (More uploading to switch branches)
 class ClippingJudge;
 class ViewIdHolder;
 
 class ClippingActorInfo {
 public:
     ClippingActorInfo(LiveActor*);
-<<<<<<< HEAD
     void setTypeToSphere(f32, const sead::Vector3f*);
     void startClipped();
     void endClipped();
@@ -42,35 +33,8 @@ public:
     void registerViewGroupFarClipFlag(const bool*);
 
     LiveActor* getLiveActor() const { return mLiveActor; }
-=======
-    bool checkActiveViewGroupAny() const;
-    void endClipping();
-    void initViewGroup(const ViewIdHolder*);
-    bool isFarClipLevelMax() const;
-    bool isGroupClipping() const;
-    bool isGroupClippingInit() const;
-    bool JudgeClipping(const ClippingJudge*) const;
-    void registerViewGroupFarClipFlag(const bool*);
-    void setFarClipLevel20M();
-    void setFarClipLevelMax();
-    void setGroupClippingId(const ActorInitInfo&);
-    void setTypeToObb(const sead::BoundBox3f&, const sead::Matrix34f*);
-    void setTypeToSphere(f32, const sead::Vector3f*);
-    void startClipped();
-    void updateClipping(const ClippingJudge*);
-    void updateClipping(ClippingRequestKeeper*, const ClippingJudge*);
-    void updateFarClipLevel();
-
-    const LiveActor* getLiveActor() const { return mLiveActor; }
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
-=======
-=======
-
->>>>>>> 72f5b95b (Implemented ClippingDirector)
     void setIsClipping(bool value) { mIsClippingEnable = value; }
->>>>>>> 8ff7bde3 (More uploading to switch branches)
+
 
 private:
     LiveActor* mLiveActor;
@@ -78,13 +42,4 @@ private:
     bool mIsClippingEnable;
     // Remaining Member's missing
 };
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-}  // namespace al
-=======
-}  // namespace al
->>>>>>> 9128333a (Stashing as im dealing with multiple pr's rn)
-=======
-}  // namespace al
->>>>>>> 72f5b95b (Implemented ClippingDirector)
+} // namespace al
