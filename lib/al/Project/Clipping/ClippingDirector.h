@@ -39,8 +39,7 @@ private:
     void* filler[0x2];
     ClippingActorHolder* mClippingActorHolder;
     void* filler2[0x3];
-
-
 };
+
 static_assert(sizeof(ClippingDirector) == 0x38);
 }  // namespace al
