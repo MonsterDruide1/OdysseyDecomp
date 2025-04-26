@@ -1,6 +1,7 @@
 #pragma once
 
 namespace al {
+class ClippingInfoGroup;
 class ClippingActorInfo;
 class ClippingJudge;
 
@@ -9,7 +10,7 @@ public:
     ClippingGroupHolder();
     void update(const ClippingJudge*);
     void createAndCount(ClippingActorInfo*);
-    void tryFindGroup(const ClippingActorInfo*);
+    ClippingInfoGroup* tryFindGroup(const ClippingActorInfo*);
     void allocBuffer();
     void registerInfo(ClippingActorInfo*);
     void leave(ClippingActorInfo*);

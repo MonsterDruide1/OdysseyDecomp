@@ -9,6 +9,7 @@ class Thread;
 }
 
 namespace al {
+class ClippingActorInfo;
 class ClippingGroupHolder;
 struct ActorInitInfo;
 class LiveActor;
@@ -20,8 +21,8 @@ public:
     void updateAsync(sead::Thread*, s64);
     ~ClippingActorHolder();
     void update(const ClippingJudge*);
-    void registerActor(LiveActor*);
-    void initGroupClipping(LiveActor*, const ActorInitInfo&);
+    ClippingActorInfo* registerActor(LiveActor*);
+    ClippingActorInfo* initGroupClipping(LiveActor*, const ActorInitInfo&);
     void endInit(ClippingGroupHolder*);
     void validateClipping(LiveActor*);
     void invalidateClipping(LiveActor*);
@@ -29,12 +30,12 @@ public:
     void removeFromClippingTarget(LiveActor*);
     void onGroupClipping(LiveActor*);
     void offGroupClipping(LiveActor*);
-    void getClippingRadius(const LiveActor*);
+    f32 getClippingRadius(const LiveActor*);
     void find(LiveActor*) const;
-    void getClippingCenterPos(const LiveActor*);
+    sead::Vector3f& getClippingCenterPos(const LiveActor*);
     void setTypeToSphere(LiveActor*, f32, const sead::Vector3f*);
     void setTypeToObb(LiveActor*, const sead::BoundBox3f&);
-    void getClippingObb(const LiveActor*);
+    sead::BoundBox3f& getClippingObb(const LiveActor*);
     void setNearClipDistance(LiveActor*, f32);
     void setFarClipLevel20M(LiveActor*);
     void setFarClipLevelMax(LiveActor*);
