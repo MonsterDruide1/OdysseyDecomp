@@ -8,7 +8,7 @@
 
 namespace al {
 class CollisionPartsFilterBase;
-class HitInfo;
+struct HitInfo;
 class SpherePoseInterpolator;
 }  // namespace al
 class CollidedShapeResult;
