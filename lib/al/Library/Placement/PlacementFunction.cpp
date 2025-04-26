@@ -137,10 +137,6 @@ bool tryGetTrans(sead::Vector3f* trans, const PlacementInfo& placementInfo) {
     return true;
 }
 
-void getRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo) {
-    tryGetRotate(rotate, initInfo);
-}
-
 void getRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
     tryGetRotate(rotate, placementInfo);
 }

@@ -5,7 +5,7 @@
 #include "Library/Area/AreaShapeCube.h"
 #include "Library/Area/AreaShapeCylinder.h"
 #include "Library/Area/AreaShapeInfinite.h"
-#include "Library/Area/AreaShapeSphere.h"
+#include "Library/Area/AreaShapeOval.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 
@@ -98,7 +98,7 @@ static NameToCreator<AreaShapeCreatorFunction> sAreaShapeEntries[] = {
     {"AreaCubeBase", *createAreaShapeFunction<AreaShapeCubeBase>},
     {"AreaCubeCenter", createAreaShapeFunction<AreaShapeCubeCenter>},
     {"AreaCubeTop", createAreaShapeFunction<AreaShapeCubeTop>},
-    {"AreaSphere", createAreaShapeFunction<AreaShapeSphere>},
+    {"AreaSphere", createAreaShapeFunction<AreaShapeOval>},
     {"AreaCylinder", createAreaShapeFunction<AreaShapeCylinderBase>},
     {"AreaCylinderCenter", createAreaShapeFunction<AreaShapeCylinderCenter>},
     {"AreaCylinderTop", createAreaShapeFunction<AreaShapeCylinderTop>},

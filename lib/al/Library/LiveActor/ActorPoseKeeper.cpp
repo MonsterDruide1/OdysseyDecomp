@@ -86,13 +86,6 @@ void ActorPoseKeeperBase::copyPose(const ActorPoseKeeperBase* other) {
     updatePoseMtx(&mtx);
 }
 
-void ActorPoseKeeperBase::updatePoseRotate(const sead::Vector3f& rot) {
-    sead::Quatf quat;
-    quat.setRPY(sead::Mathf::deg2rad(rot.x), sead::Mathf::deg2rad(rot.y),
-                sead::Mathf::deg2rad(rot.z));
-    updatePoseQuat(quat);
-}
-
 ActorPoseKeeperTFSV::ActorPoseKeeperTFSV() = default;
 
 const sead::Vector3f& ActorPoseKeeperTFSV::getFront() const {

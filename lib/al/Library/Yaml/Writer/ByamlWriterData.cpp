@@ -222,8 +222,6 @@ bool ByamlWriterContainer::isArray() const {
     return false;
 }
 
-void ByamlWriterContainer::deleteData() {}
-
 ByamlWriterArray::ByamlWriterArray(ByamlWriterStringTable* stringTable)
     : mStringTable(stringTable) {}
 

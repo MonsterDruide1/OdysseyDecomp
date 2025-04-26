@@ -569,7 +569,7 @@ void initActorChangeModel(LiveActor* actor, const ActorInitInfo& initInfo) {
     initActorChangeModelSuffix(actor, initInfo, nullptr);
 }
 
-const char* getModelName(const ActorInitInfo& initInfo) {
+inline const char* getModelName(const ActorInitInfo& initInfo) {
     const char* name = nullptr;
     if (alPlacementFunction::tryGetModelName(&name, initInfo))
         return name;

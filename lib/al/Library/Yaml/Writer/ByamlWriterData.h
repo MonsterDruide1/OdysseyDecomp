@@ -175,14 +175,14 @@ public:
     virtual void writeContainer(sead::WriteStream*) const;
     virtual bool isHash() const;
     virtual bool isArray() const;
-    virtual void deleteData();
+    virtual void deleteData() = 0;
 
     s32 getOffset() const { return mOffset; }
 
     void setOffset(s32 offset) { mOffset = offset; }
 
 private:
-    s32 mOffset = 0;  // FIXME shouldn't be public
+    s32 mOffset = 0;
 };
 
 class ByamlWriterArray : public ByamlWriterContainer {
