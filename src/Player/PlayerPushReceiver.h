@@ -25,7 +25,7 @@ public:
     bool receivePushMsgGrowPlant(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*,
                                  f32);
     bool receiveCollidePushMsg(const al::SensorMsg*);
-    bool receiveForceDirect(const sead::Vector3f&);
+    void receiveForceDirect(const sead::Vector3f&);
     void cutPushVec(const sead::Vector3f&);
     void calcPushVec(sead::Vector3f*) const;
     void calcOnlyCollidePushVec(sead::Vector3f*) const;
