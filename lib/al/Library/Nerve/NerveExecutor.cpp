@@ -10,10 +10,6 @@ NerveExecutor::~NerveExecutor() {
     delete mKeeper;
 }
 
-NerveKeeper* NerveExecutor::getNerveKeeper() const {
-    return mKeeper;
-}
-
 void NerveExecutor::initNerve(const Nerve* nerve, s32 stateCount) {
     mKeeper = new NerveKeeper(this, nerve, stateCount);
 }

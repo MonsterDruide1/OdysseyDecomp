@@ -118,30 +118,48 @@ public:
 
     CameraPoser(const char* poserName);
     virtual AreaObjDirector* getAreaObjDirector() const override;
-    virtual void init();
-    virtual void initByPlacementObj(const PlacementInfo&);
-    virtual void endInit();
-    virtual void start(const CameraStartInfo&);
-    virtual void update();
-    virtual void end();
-    virtual void loadParam(const ByamlIter&);
-    virtual void makeLookAtCamera(sead::LookAtCamera*) const;
-    virtual bool receiveRequestFromObject(const CameraObjectRequestInfo&);
-    virtual bool isZooming() const;
-    virtual bool isEnableRotateByPad() const;
-    virtual void startSnapShotMode();
-    virtual void endSnapShotMode();
 
-    virtual const char* getName() const override;
+    virtual void init() {}
+
+    virtual void initByPlacementObj(const PlacementInfo& info) {}
+
+    virtual void endInit() {}
+
+    virtual void start(const CameraStartInfo& info) {}
+
+    virtual void update() {}
+
+    virtual void end() { mActiveState = ActiveState::End; };
+
+    virtual void loadParam(const ByamlIter& iter) {}
+
+    virtual void makeLookAtCamera(sead::LookAtCamera* cam) const {}
+
+    virtual bool receiveRequestFromObject(const CameraObjectRequestInfo& info) { return false; }
+
+    virtual bool isZooming() const { return false; }
+
+    virtual bool isEnableRotateByPad() const;
+
+    virtual void startSnapShotMode() {}
+
+    virtual void endSnapShotMode() {}
+
+    virtual const char* getName() const override { return mPoserName; }
+
     virtual CollisionDirector* getCollisionDirector() const override;
-    virtual NerveKeeper* getNerveKeeper() const override;
-    virtual AudioKeeper* getAudioKeeper() const override;
+
+    virtual NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+
+    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
     virtual RailRider* getRailRider() const override;
 
     virtual void load(const ByamlIter& iter);
     virtual void movement();  // TODO: implementation missing
     virtual void calcCameraPose(sead::LookAtCamera* cam) const;
-    virtual bool requestTurnToDirection(const CameraTurnInfo*);
+
+    virtual bool requestTurnToDirection(const CameraTurnInfo* info) { return false; }
 
     void appear(const CameraStartInfo& startInfo);
     bool receiveRequestFromObjectCore(const CameraObjectRequestInfo& objRequestInfo);
