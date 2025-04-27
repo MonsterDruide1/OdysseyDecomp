@@ -46,14 +46,6 @@ LiveActor::LiveActor(const char* actorName) : mName(actorName) {
     mShadowKeeper = new ShadowKeeper();
 }
 
-NerveKeeper* LiveActor::getNerveKeeper() const {
-    return mNerveKeeper;
-}
-
-const char* LiveActor::getName() const {
-    return mName;
-}
-
 CollisionDirector* LiveActor::getCollisionDirector() const {
     return mSceneInfo->collisionDirector;
 }
@@ -73,33 +65,6 @@ NatureDirector* LiveActor::getNatureDirector() const {
 SceneObjHolder* LiveActor::getSceneObjHolder() const {
     return mSceneInfo->sceneObjHolder;
 }
-
-EffectKeeper* LiveActor::getEffectKeeper() const {
-    return mEffectKeeper;
-}
-
-AudioKeeper* LiveActor::getAudioKeeper() const {
-    return mAudioKeeper;
-}
-
-StageSwitchKeeper* LiveActor::getStageSwitchKeeper() const {
-    return mStageSwitchKeeper;
-}
-
-void LiveActor::init(const ActorInitInfo& info) {}
-
-void LiveActor::attackSensor(HitSensor* self, HitSensor* other) {}
-
-bool LiveActor::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
-    return false;
-}
-
-bool LiveActor::receiveMsgScreenPoint(const SensorMsg* message, ScreenPointer* source,
-                                      ScreenPointTarget* target) {
-    return false;
-}
-
-void LiveActor::control() {}
 
 void LiveActor::draw() const {}
 
