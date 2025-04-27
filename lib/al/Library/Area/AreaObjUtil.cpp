@@ -5,6 +5,7 @@
 #include "Library/Area/AreaObjGroup.h"
 #include "Library/Area/AreaShape.h"
 #include "Library/Area/IUseAreaObj.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
 namespace al {
@@ -168,5 +169,34 @@ void getAreaObjDirSide(sead::Vector3f* outSideDir, const AreaObj* areaObj) {
     outSideDir->x = getAreaObjBaseMtx(areaObj)(0, 0);
     outSideDir->y = getAreaObjBaseMtx(areaObj)(1, 0);
     outSideDir->z = getAreaObjBaseMtx(areaObj)(2, 0);
+}
+
+void calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj* areaObj,
+                               const sead::Vector3f& position) {
+    areaObj->getAreaShape()->calcNearestEdgePoint(outNearestEdgePos, position);
+}
+
+void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const AreaObj* areaObj,
+                                   const sead::Vector3f& position) {
+    sead::Vector3f scale = {0.0f, 0.0f, 0.0f};
+    tryGetScale(&scale, *areaObj->getPlacementInfo());
+
+    sead::Vector3f local_50;
+    local_50.x = getAreaObjBaseMtx(areaObj)(0, 3);
+    local_50.y = getAreaObjBaseMtx(areaObj)(1, 3);
+    local_50.z = getAreaObjBaseMtx(areaObj)(2, 3);
+
+    sead::Vector3f sideDir;
+    getAreaObjDirSide(&sideDir, areaObj);
+
+    sead::Vector3f upDir;
+    getAreaObjDirUp(&upDir, areaObj);
+
+    sead::Vector3f local_90 = local_50;
+    local_90 -= position;
+    verticalizeVec(&local_90, upDir, local_90);
+    limitVectorParallelVertical(&local_90, sideDir, scale.x * 1000.0f, scale.z * 1000.0f);
+
+    *outNearestEdgePosTopY = local_90 + (scale.y * 1000.0f) * upDir + local_50;
 }
 }  // namespace al
