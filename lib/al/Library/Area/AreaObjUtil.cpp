@@ -154,21 +154,15 @@ const sead::Vector3f& getAreaObjScale(const AreaObj* areaObj) {
 }
 
 void getAreaObjDirFront(sead::Vector3f* outFrontDir, const AreaObj* areaObj) {
-    outFrontDir->x = getAreaObjBaseMtx(areaObj)(0, 2);
-    outFrontDir->y = getAreaObjBaseMtx(areaObj)(1, 2);
-    outFrontDir->z = getAreaObjBaseMtx(areaObj)(2, 2);
+    getAreaObjBaseMtx(areaObj).getBase(*outFrontDir, 2);
 }
 
 void getAreaObjDirUp(sead::Vector3f* outUpDir, const AreaObj* areaObj) {
-    outUpDir->x = getAreaObjBaseMtx(areaObj)(0, 1);
-    outUpDir->y = getAreaObjBaseMtx(areaObj)(1, 1);
-    outUpDir->z = getAreaObjBaseMtx(areaObj)(2, 1);
+    getAreaObjBaseMtx(areaObj).getBase(*outUpDir, 1);
 }
 
 void getAreaObjDirSide(sead::Vector3f* outSideDir, const AreaObj* areaObj) {
-    outSideDir->x = getAreaObjBaseMtx(areaObj)(0, 0);
-    outSideDir->y = getAreaObjBaseMtx(areaObj)(1, 0);
-    outSideDir->z = getAreaObjBaseMtx(areaObj)(2, 0);
+    getAreaObjBaseMtx(areaObj).getBase(*outSideDir, 0);
 }
 
 void calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj* areaObj,
@@ -181,10 +175,7 @@ void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const 
     sead::Vector3f scale = {0.0f, 0.0f, 0.0f};
     tryGetScale(&scale, *areaObj->getPlacementInfo());
 
-    sead::Vector3f local_50;
-    local_50.x = getAreaObjBaseMtx(areaObj)(0, 3);
-    local_50.y = getAreaObjBaseMtx(areaObj)(1, 3);
-    local_50.z = getAreaObjBaseMtx(areaObj)(2, 3);
+    sead::Vector3f pos = getAreaObjBaseMtx(areaObj).getBase(3);
 
     sead::Vector3f sideDir;
     getAreaObjDirSide(&sideDir, areaObj);
@@ -192,11 +183,15 @@ void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const 
     sead::Vector3f upDir;
     getAreaObjDirUp(&upDir, areaObj);
 
-    sead::Vector3f local_90 = local_50;
-    local_90 -= position;
-    verticalizeVec(&local_90, upDir, local_90);
-    limitVectorParallelVertical(&local_90, sideDir, scale.x * 1000.0f, scale.z * 1000.0f);
+    sead::Vector3f vertical;
+    vertical.x = position.x - pos.x;
+    vertical.y = position.y - pos.y;
+    vertical.z = position.z - pos.z;
 
-    *outNearestEdgePosTopY = local_90 + (scale.y * 1000.0f) * upDir + local_50;
+    verticalizeVec(&vertical, upDir, vertical);
+    limitVectorParallelVertical(&vertical, sideDir, scale.x * 1000.0f, scale.z * 1000.0f);
+
+    vertical.setScaleAdd(scale.y * 1000.0f, upDir, vertical);
+    outNearestEdgePosTopY->set(vertical + pos);
 }
 }  // namespace al
