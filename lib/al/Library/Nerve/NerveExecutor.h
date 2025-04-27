@@ -13,7 +13,8 @@ class NerveExecutor : public IUseNerve, public HioNode {
 public:
     NerveExecutor(const char* name);
 
-    virtual NerveKeeper* getNerveKeeper() const;
+    virtual NerveKeeper* getNerveKeeper() const { return mKeeper; }
+
     virtual ~NerveExecutor();
 
     void initNerve(const Nerve* nerve, s32 stateCount);
