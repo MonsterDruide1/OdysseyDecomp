@@ -9,21 +9,21 @@ ParameterArray::ParameterArray() = default;
 
 void ParameterArray::tryGetParam(const ByamlIter& iter) {
     ByamlIter arrayIter;
-    iter.tryGetIterByKey(&arrayIter, mParamObjKey.cstr());
+    iter.tryGetIterByKey(&arrayIter, mKey.cstr());
 
     if (arrayIter.isValid() && arrayIter.isTypeArray()) {
         mSize = arrayIter.getSize();
 
-        ParameterObj* arrayObj = mFirstObj;
+        ParameterObj* objEntry = mRootObjNode;
         s32 index = 0;
-        while (arrayObj) {
+        while (objEntry) {
             ByamlIter paramIter;
             arrayIter.tryGetIterByIndex(&paramIter, index);
             if (paramIter.isValid()) {
-                arrayObj->tryGetParam(paramIter);
+                objEntry->tryGetParam(paramIter);
                 index++;
             }
-            arrayObj = arrayObj->getNext();
+            objEntry = objEntry->getNext();
         }
     }
 }
@@ -32,95 +32,95 @@ bool ParameterArray::isEqual(const ParameterArray& array) const {
     if (mSize != array.getSize())
         return false;
 
-    ParameterObj* arrayObj = mFirstObj;
-    ParameterObj* obj = array.getFirstObj();
+    ParameterObj* objEntry = mRootObjNode;
+    ParameterObj* obj = array.getRootObjNode();
 
-    if (arrayObj == nullptr || obj == nullptr)
-        return arrayObj == nullptr && obj == nullptr;
+    if (objEntry == nullptr || obj == nullptr)
+        return objEntry == nullptr && obj == nullptr;
 
-    while (arrayObj && obj) {
-        if (!arrayObj->isEqual(*obj))
+    while (objEntry && obj) {
+        if (!objEntry->isEqual(*obj))
             return false;
-        arrayObj = arrayObj->getNext();
+        objEntry = objEntry->getNext();
         obj = obj->getNext();
     }
     return true;
 }
 
 void ParameterArray::copy(const ParameterArray& array) {
-    ParameterObj* obj = array.getFirstObj();
-    ParameterObj* arrayObj = mFirstObj;
+    ParameterObj* obj = array.getRootObjNode();
+    ParameterObj* objEntry = mRootObjNode;
 
-    while (arrayObj && obj) {
-        arrayObj->copy(*obj);
-        arrayObj = arrayObj->getNext();
+    while (objEntry && obj) {
+        objEntry->copy(*obj);
+        objEntry = objEntry->getNext();
         obj = obj->getNext();
     }
 }
 
 void ParameterArray::copyLerp(const ParameterArray& arrayA, const ParameterArray& arrayB,
-                              f32 value) {
-    ParameterObj* arrayObjB = arrayB.getFirstObj();
-    ParameterObj* arrayObjA = arrayA.getFirstObj();
-    ParameterObj* arrayObj = mFirstObj;
+                              f32 rate) {
+    ParameterObj* objBEntry = arrayB.getRootObjNode();
+    ParameterObj* objAEntry = arrayA.getRootObjNode();
+    ParameterObj* objEntry = mRootObjNode;
 
-    while (arrayObj && arrayObjA && arrayObjB) {
-        arrayObj->copyLerp(*arrayObjA, *arrayObjB, value);
-        arrayObj = arrayObj->getNext();
-        arrayObjA = arrayObjA->getNext();
-        arrayObjB = arrayObjB->getNext();
+    while (objEntry && objAEntry && objBEntry) {
+        objEntry->copyLerp(*objAEntry, *objBEntry, rate);
+        objEntry = objEntry->getNext();
+        objAEntry = objAEntry->getNext();
+        objBEntry = objBEntry->getNext();
     }
 }
 
 void ParameterArray::addObj(ParameterObj* obj) {
-    obj->setParamObjKey(sead::SafeString::cEmptyString);
+    obj->setKey(sead::SafeString::cEmptyString);
 
-    if (!mFirstObj) {
-        mFirstObj = obj;
+    if (!mRootObjNode) {
+        mRootObjNode = obj;
         return;
     }
 
-    ParameterObj* arrayObj = mFirstObj;
-    while (arrayObj->getNext())
-        arrayObj = arrayObj->getNext();
-    arrayObj->setNext(obj);
+    ParameterObj* objEntry = mRootObjNode;
+    while (objEntry->getNext())
+        objEntry = objEntry->getNext();
+    objEntry->setNext(obj);
 }
 
 void ParameterArray::clearObj() {
-    ParameterObj* arrayObj = mFirstObj;
-    while (arrayObj) {
-        ParameterObj* next = arrayObj->getNext();
-        arrayObj->setNext(nullptr);
-        arrayObj = next;
+    ParameterObj* objEntry = mRootObjNode;
+    while (objEntry) {
+        ParameterObj* next = objEntry->getNext();
+        objEntry->setNext(nullptr);
+        objEntry = next;
     }
-    mFirstObj = nullptr;
+    mRootObjNode = nullptr;
 }
 
 void ParameterArray::removeObj(ParameterObj* obj) {
-    ParameterObj* arrayObj = mFirstObj;
-    ParameterObj* prevArrayObj = nullptr;
-    while (arrayObj) {
-        if (arrayObj == obj) {
-            if (prevArrayObj) {
-                prevArrayObj->setNext(obj->getNext());
-                arrayObj->setNext(nullptr);
+    ParameterObj* objEntry = mRootObjNode;
+    ParameterObj* prevObjEntry = nullptr;
+    while (objEntry) {
+        if (objEntry == obj) {
+            if (prevObjEntry) {
+                prevObjEntry->setNext(obj->getNext());
+                objEntry->setNext(nullptr);
             } else {
-                mFirstObj = obj->getNext();
+                mRootObjNode = obj->getNext();
                 obj->setNext(nullptr);
             }
             return;
         }
-        prevArrayObj = arrayObj;
-        arrayObj = arrayObj->getNext();
+        prevObjEntry = objEntry;
+        objEntry = objEntry->getNext();
     }
 }
 
 bool ParameterArray::isExistObj(ParameterObj* obj) {
-    ParameterObj* arrayObj = mFirstObj;
-    while (arrayObj) {
-        if (arrayObj == obj)
+    ParameterObj* objEntry = mRootObjNode;
+    while (objEntry) {
+        if (objEntry == obj)
             return true;
-        arrayObj = arrayObj->getNext();
+        objEntry = objEntry->getNext();
     }
     return false;
 }
