@@ -111,7 +111,7 @@ f32 calcWaterSinkDepth(const IUseAreaObj* areaUser, const sead::Vector3f& positi
     sead::Vector3f normal;
     sead::Vector3f position2 = {position.x, position.y + 100000.0f, position.z};
 
-    if (!areaObj->getAreaShape()->checkArrowCollision(&hitPosition, &normal, position, position2))
+    if (!checkAreaObjCollisionByArrow(&hitPosition, &normal, areaObj, position, position2))
         return -1.0f;
 
     return hitPosition.y - position.y;
@@ -193,5 +193,82 @@ void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const 
 
     vertical.setScaleAdd(scale.y * 1000.0f, upDir, vertical);
     outNearestEdgePosTopY->set(vertical + pos);
+}
+
+// NON_MATCHING
+f32 calcNearestAreaObjEdgeRateTopY(const AreaObj* areaObj, const sead::Vector3f& position) {
+    sead::Vector3f pos = getAreaObjBaseMtx(areaObj).getBase(3);
+
+    sead::Vector3f upDir;
+    getAreaObjDirUp(&upDir, areaObj);
+
+    sead::Vector3f nearestEdgePosTopY;
+    calcNearestAreaObjEdgePosTopY(&nearestEdgePosTopY, areaObj, position);
+
+    sead::Vector3f pos2 = pos + nearestEdgePosTopY;
+    f32 fVar3 = upDir.dot(pos2 - pos);
+    if (fVar3 < 0.0f || isNearZero(fVar3))
+        return 1.0f;
+
+    f32 fVar4 = sead::Mathf::clampMin(upDir.dot(pos2 - position), 0.0f) / fVar3;
+
+    return sead::Mathf::clamp(fVar4, 0.0f, 1.0f);
+}
+
+// NON_MATCHING
+void calcAreaObjCenterPos(sead::Vector3f* outCenterPosition, const AreaObj* areaObj) {
+    sead::Vector3f pos = getAreaObjBaseMtx(areaObj).getBase(3);
+
+    outCenterPosition->x = pos.x;
+    outCenterPosition->y = pos.y + areaObj->getAreaShape()->getScale().y * 1000.0f / 2.0f;
+    outCenterPosition->z = pos.z;
+}
+
+bool checkAreaObjCollisionByArrow(sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
+                                  const AreaObj* areaObj, const sead::Vector3f& position1,
+                                  const sead::Vector3f& position2) {
+    return areaObj->getAreaShape()->checkArrowCollision(outHitPosition, outNormal, position1,
+                                                        position2);
+}
+
+bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
+                         sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
+                         const sead::Vector3f& position1, const sead::Vector3f& position2) {
+    AreaObj* areaObj = tryFindAreaObj(areaUser, name, position1);
+    if (areaObj)
+        return false;
+
+    sead::Vector3f position = (position1 + position2) / 2.0f;
+    areaObj = tryFindAreaObj(areaUser, name, position);
+    if (!areaObj) {
+        areaObj = tryFindAreaObj(areaUser, name, position2);
+        if (!areaObj)
+            return false;
+    }
+
+    return checkAreaObjCollisionByArrow(outHitPosition, outNormal, areaObj, position1, position2);
+}
+
+bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
+                         sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
+                         const sead::Vector3f& position1, const sead::Vector3f& position2,
+                         f32 offset) {
+    sead::Vector3f pos1;
+    sead::Vector3f pos2;
+    pos1.setScaleAdd(offset, position2, position1);
+    pos2.setScaleAdd(offset, -position2, position1);
+
+    AreaObj* areaObj = tryFindAreaObj(areaUser, name, pos1);
+    if (areaObj)
+        return false;
+
+    areaObj = tryFindAreaObj(areaUser, name, position1);
+    if (!areaObj) {
+        areaObj = tryFindAreaObj(areaUser, name, pos2);
+        if (!areaObj)
+            return false;
+    }
+
+    return checkAreaObjCollisionByArrow(outHitPosition, outNormal, areaObj, pos1, pos2);
 }
 }  // namespace al

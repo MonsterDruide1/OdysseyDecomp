@@ -50,5 +50,13 @@ void calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj*
                                const sead::Vector3f& position);
 void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const AreaObj* areaObj,
                                    const sead::Vector3f& position);
+f32 calcNearestAreaObjEdgeRateTopY(const AreaObj* areaObj, const sead::Vector3f& position);
+void calcAreaObjCenterPos(sead::Vector3f* outCenterPosition, const AreaObj* areaObj);
+bool checkAreaObjCollisionByArrow(sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
+                                  const AreaObj* areaObj, const sead::Vector3f& position1,
+                                  const sead::Vector3f& position2);
+bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
+                         sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
+                         const sead::Vector3f& position1, const sead::Vector3f& position2);
 
 }  // namespace al
