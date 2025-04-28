@@ -215,12 +215,12 @@ f32 calcNearestAreaObjEdgeRateTopY(const AreaObj* areaObj, const sead::Vector3f&
     return sead::Mathf::clamp(fVar4, 0.0f, 1.0f);
 }
 
-// NON_MATCHING
 void calcAreaObjCenterPos(sead::Vector3f* outCenterPosition, const AreaObj* areaObj) {
     sead::Vector3f pos = getAreaObjBaseMtx(areaObj).getBase(3);
+    f32 scaleY = getAreaObjScale(areaObj).y;
 
     outCenterPosition->x = pos.x;
-    outCenterPosition->y = pos.y + areaObj->getAreaShape()->getScale().y * 1000.0f / 2.0f;
+    outCenterPosition->y = pos.y + scaleY * 1000.0f / 2.0f;
     outCenterPosition->z = pos.z;
 }
 
