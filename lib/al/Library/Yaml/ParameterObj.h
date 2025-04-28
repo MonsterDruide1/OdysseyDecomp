@@ -23,14 +23,14 @@ public:
 
     void setNext(ParameterObj* obj) { mNext = obj; }
 
-    void setParamObjKey(const sead::SafeString& objKey) { mParamObjKey = objKey; }
+    void setKey(const sead::SafeString& key) { mKey = key; }
 
 private:
     ParameterBase* mFirstParam;
     ParameterBase* mLastParam;
     ParameterObj* mNext;
     ParameterArray* mParamArray;
-    sead::FixedSafeString<0x40> mParamObjKey;
+    sead::FixedSafeString<0x40> mKey;
 };
 
 }  // namespace al
