@@ -6,7 +6,8 @@ namespace al {
 class ByamlIter;
 class ParameterObj;
 class ParameterList;
-enum class ParamType : s32 {
+
+enum class ParameterType : s32 {
     Invalid,
     Bool,
     F32,
@@ -34,7 +35,7 @@ public:
                   ParameterList*, bool);
 
     virtual const char* getParamTypeStr() = 0;
-    virtual ParamType getParamType() = 0;
+    virtual ParameterType getParamType() = 0;
     virtual const void* ptr() const = 0;
     virtual void* ptr() = 0;
 

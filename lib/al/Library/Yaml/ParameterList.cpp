@@ -7,7 +7,7 @@
 
 namespace al {
 
-ParameterList::ParameterList() {}
+ParameterList::ParameterList() = default;
 
 void ParameterList::addArray(ParameterArray* array, const sead::SafeString& key) {
     array->setKey(key);
