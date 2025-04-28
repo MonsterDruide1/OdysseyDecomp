@@ -17,19 +17,23 @@ public:
     bool isEqual(const ParameterObj&) const;
     void copy(const ParameterObj&);
     void copyLerp(const ParameterObj&, const ParameterObj&, f32);
-    void findParameter(const char*) const;
+    ParameterBase* findParameter(const char*) const;
+
+    ParameterBase* getFirstParam() const { return mFirstParam; }
 
     ParameterObj* getNext() const { return mNext; }
+
+    ParameterArray* getParamArray() const { return mParamArray; }
 
     void setNext(ParameterObj* obj) { mNext = obj; }
 
     void setKey(const sead::SafeString& key) { mKey = key; }
 
 private:
-    ParameterBase* mFirstParam;
-    ParameterBase* mLastParam;
-    ParameterObj* mNext;
-    ParameterArray* mParamArray;
+    ParameterBase* mFirstParam = nullptr;
+    ParameterBase* mLastParam = nullptr;
+    ParameterObj* mNext = nullptr;
+    ParameterArray* mParamArray = nullptr;
     sead::FixedSafeString<0x40> mKey;
 };
 

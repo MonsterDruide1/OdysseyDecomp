@@ -6,6 +6,24 @@ namespace al {
 class ByamlIter;
 class ParameterObj;
 class ParameterList;
+enum class ParamType : s32 {
+    Invalid,
+    Bool,
+    F32,
+    S32,
+    U32,
+    V2f,
+    V2s32,
+    V3f,
+    V4f,
+    Q4f,
+    C4f,
+    StringRef,
+    String32,
+    String64,
+    String128,
+    String256,
+};
 
 class ParameterBase {
 public:
@@ -15,8 +33,14 @@ public:
     ParameterBase(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
                   ParameterList*, bool);
 
+    virtual const char* getParamTypeStr() = 0;
+    virtual ParamType getParamType() = 0;
+    virtual const void* ptr() const = 0;
+    virtual void* ptr() = 0;
+
     virtual void afterGetParam() {}
 
+    virtual s32 getParamSize() = 0;
     virtual bool isEqual(const ParameterBase*);
     virtual void copy(const ParameterBase*);
     virtual void copyLerp(const ParameterBase*, const ParameterBase*, f32);
@@ -33,6 +57,8 @@ public:
     ParameterBase* getNext() const { return mNext; }
 
     void setNext(ParameterBase* param) { mNext = param; }
+
+    const sead::FixedSafeString<0x40>& getParamName() { return mParamName; }
 
 private:
     ParameterBase* mNext;
