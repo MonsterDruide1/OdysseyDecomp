@@ -11,15 +11,15 @@ class ParameterObj {
 public:
     ParameterObj();
 
-    void pushBackListNode(ParameterBase*);
-    bool tryGetParam(const ByamlIter&);
-    void addArray(ParameterArray*, const sead::SafeStringBase<char>&);
-    bool isEqual(const ParameterObj&) const;
-    void copy(const ParameterObj&);
-    void copyLerp(const ParameterObj&, const ParameterObj&, f32);
-    ParameterBase* findParameter(const char*) const;
+    void pushBackListNode(ParameterBase* param);
+    void tryGetParam(const ByamlIter& iter);
+    void addArray(ParameterArray* array, const sead::SafeStringBase<char>& key);
+    bool isEqual(const ParameterObj& obj) const;
+    void copy(const ParameterObj& obj);
+    void copyLerp(const ParameterObj& objA, const ParameterObj& objB, f32 rate);
+    ParameterBase* findParameter(const char* name) const;
 
-    ParameterBase* getFirstParam() const { return mFirstParam; }
+    ParameterBase* getRootParam() const { return mRootParam; }
 
     ParameterObj* getNext() const { return mNext; }
 
@@ -30,8 +30,8 @@ public:
     void setKey(const sead::SafeString& key) { mKey = key; }
 
 private:
-    ParameterBase* mFirstParam = nullptr;
-    ParameterBase* mLastParam = nullptr;
+    ParameterBase* mRootParam = nullptr;
+    ParameterBase* mTailParam = nullptr;
     ParameterObj* mNext = nullptr;
     ParameterArray* mParamArray = nullptr;
     sead::FixedSafeString<0x40> mKey;

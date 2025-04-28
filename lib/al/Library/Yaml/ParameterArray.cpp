@@ -35,8 +35,8 @@ bool ParameterArray::isEqual(const ParameterArray& array) const {
     ParameterObj* objEntry = mRootObjNode;
     ParameterObj* obj = array.getRootObjNode();
 
-    if (objEntry == nullptr || obj == nullptr)
-        return objEntry == nullptr && obj == nullptr;
+    if (!objEntry || !obj)
+        return !objEntry && !obj;
 
     while (objEntry && obj) {
         if (!objEntry->isEqual(*obj))
