@@ -406,9 +406,9 @@ bool calcBoundingSphereSpotLight(sead::Vector3f*, f32*, const sead::Vector3f&,
 void calcBoundingSphereBox3f(sead::Vector3f*, f32*, const sead::BoundBox3f&);
 void calcArrowAabb(sead::BoundBox3f*, const sead::Vector3f&, const sead::Vector3f&);
 bool isNearCollideSphereAabb(const sead::Vector3f&, f32, const sead::BoundBox3f&);
-void calcBoxFacePoint(sead::Vector3f*, const sead::BoundBox3f&, Axis);
-void calcBoxFacePoint(sead::Vector3f*, const sead::BoundBox3f&, Axis, const sead::Matrix34f&);
-void calcBoxFacePoint(sead::Vector3f*, const sead::BoundBox3f&, Axis, const sead::Quatf&,
+void calcBoxFacePoint(sead::Vector3f[4], const sead::BoundBox3f&, Axis);
+void calcBoxFacePoint(sead::Vector3f[4], const sead::BoundBox3f&, Axis, const sead::Matrix34f&);
+void calcBoxFacePoint(sead::Vector3f[4], const sead::BoundBox3f&, Axis, const sead::Quatf&,
                       const sead::Vector3f&);
 void calcFittingBoxPoseEqualAxisAll(sead::Quatf*, const sead::Quatf&, const sead::Quatf&);
 void calcFittingBoxPoseEqualAxisNone(sead::Quatf*, const sead::Quatf&, const sead::Quatf&);

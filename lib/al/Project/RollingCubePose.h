@@ -22,10 +22,10 @@ public:
     void calcBoundingBoxCenter(sead::Vector3f* center, const sead::Quatf& quat,
                                const sead::Vector3f& trans) const;
     void setNextCubePose(const RollingCubePose* nextPose);
-    void calcBottomFacePoint(sead::Vector3f* facePoints) const;
+    void calcBottomFacePoint(sead::Vector3f facePoints[4]) const;
     void init(const PlacementInfo& placementInfo);
     void calcRotateQT(sead::Quatf* outQuat, sead::Vector3f* outTrans, const sead::Quatf& quat,
-                      const sead::Vector3f& trans, f32 angle) const;
+                      const sead::Vector3f& trans, f32 rate) const;
     Axis calcBottomFaceIndex() const;
 
     const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
