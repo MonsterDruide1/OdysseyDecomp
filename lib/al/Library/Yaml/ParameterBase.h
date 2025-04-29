@@ -34,17 +34,15 @@ public:
     ParameterBase(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
                   ParameterList*, bool);
 
-    virtual const char* getParamTypeStr() = 0;
-    virtual ParameterType getParamType() = 0;
+    virtual const char* getParamTypeStr() const = 0;
+    virtual ParameterType getParamType() const = 0;
     virtual const void* ptr() const = 0;
     virtual void* ptr() = 0;
-
-    virtual void afterGetParam() {}
-
+    virtual void afterGetParam();
     virtual s32 getParamSize() = 0;
     virtual bool isEqual(const ParameterBase*);
-    virtual void copy(const ParameterBase*);
-    virtual void copyLerp(const ParameterBase*, const ParameterBase*, f32);
+    virtual bool copy(const ParameterBase*);
+    virtual bool copyLerp(const ParameterBase*, const ParameterBase*, f32);
 
     void initializeListNode(const sead::SafeString&, const sead::SafeString&,
                             const sead::SafeString&, ParameterObj*, bool);
@@ -59,12 +57,14 @@ public:
 
     void setNext(ParameterBase* param) { mNext = param; }
 
-    const sead::FixedSafeString<0x40>& getParamName() { return mParamName; }
+    const sead::FixedSafeString<0x40>& getParamName() const { return mName; }
+
+    s32 getHash() const { return mHash; }
 
 private:
-    ParameterBase* mNext;
-    sead::FixedSafeString<0x40> mParamName;
-    s32 mParamHash;
+    ParameterBase* mNext = nullptr;
+    sead::FixedSafeString<0x40> mName;
+    s32 mHash;
 };
 
 }  // namespace al

@@ -18,22 +18,22 @@ void ParameterObj::pushBackListNode(ParameterBase* param) {
     mTailParam = param;
 }
 
-// NON_MATCHING: Invalid write to const param? https://decomp.me/scratch/X8WDX
 void ParameterObj::tryGetParam(const ByamlIter& iter) {
+    const ByamlIter* i = &iter;
     ByamlIter iterEntry;
 
     if (!mKey.isEmpty()) {
         iter.tryGetIterByKey(&iterEntry, mKey.cstr());
-        // iter = iterEntry;
+        i = &iterEntry;
         if (!iterEntry.isValid())
             return;
     }
 
     for (ParameterBase* paramEntry = mRootParam; paramEntry; paramEntry = paramEntry->getNext())
-        paramEntry->tryGetParam(iter);
+        paramEntry->tryGetParam(*i);
 
     for (ParameterArray* arrayEntry = mParamArray; arrayEntry; arrayEntry = arrayEntry->getNext())
-        arrayEntry->tryGetParam(iter);
+        arrayEntry->tryGetParam(*i);
 }
 
 void ParameterObj::addArray(ParameterArray* array, const sead::SafeStringBase<char>& key) {
@@ -160,7 +160,6 @@ void ParameterObj::copyLerp(const ParameterObj& objA, const ParameterObj& objB, 
     ParameterArray* arrayA = objA.getParamArray();
     ParameterArray* arrayEntry = mParamArray;
     while (arrayEntry && arrayA && arrayB) {
-        // Start Inline array copyLerp??? arrayEntry->copy(*arrayA,*arrayB, rate);
         ParameterObj* objBEntry = arrayB->getRootObjNode();
         ParameterObj* objAEntry = arrayA->getRootObjNode();
         ParameterObj* objEntry = arrayEntry->getRootObjNode();
@@ -171,17 +170,15 @@ void ParameterObj::copyLerp(const ParameterObj& objA, const ParameterObj& objB, 
             objAEntry = objAEntry->getNext();
             objBEntry = objBEntry->getNext();
         }
-        // End Inline array copyLerp
         arrayEntry = arrayEntry->getNext();
         arrayA = arrayA->getNext();
         arrayB = arrayB->getNext();
     }
 }
 
-// NON_MATCHING: Doesn't use cstr() https://decomp.me/scratch/JwVLn
 ParameterBase* ParameterObj::findParameter(const char* name) const {
     ParameterBase* paramEntry = mRootParam;
-    while (paramEntry && !isEqualString(name, paramEntry->getParamName().mBuffer))
+    while (paramEntry && !isEqualString(name, paramEntry->getParamName().unsafeCstr()))
         paramEntry = paramEntry->getNext();
     return paramEntry;
 }
