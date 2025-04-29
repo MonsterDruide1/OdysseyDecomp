@@ -5,7 +5,7 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class SkyParam;
 class Sky;
 class ParamRequestInterp;

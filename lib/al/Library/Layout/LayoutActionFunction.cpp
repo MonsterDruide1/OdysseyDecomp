@@ -10,7 +10,7 @@
 
 namespace al {
 
-LayoutPaneGroup* getLayoutPaneGroup(const IUseLayoutAction* layout, const char* paneName) {
+inline LayoutPaneGroup* getLayoutPaneGroup(const IUseLayoutAction* layout, const char* paneName) {
     return layout->getLayoutActionKeeper()->getLayoutPaneGroup(paneName);
 }
 
