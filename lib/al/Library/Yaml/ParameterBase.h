@@ -24,6 +24,10 @@ enum class ParameterType : s32 {
     String64,
     String128,
     String256,
+    String512,
+    String1024,
+    String2048,
+    String4096,
 };
 
 class ParameterBase {
@@ -60,6 +64,11 @@ public:
     const sead::FixedSafeString<0x40>& getParamName() const { return mName; }
 
     s32 getHash() const { return mHash; }
+
+    template <typename T>
+    T* getValuePtr() {
+        return (T*)ptr();
+    }
 
 private:
     ParameterBase* mNext = nullptr;
