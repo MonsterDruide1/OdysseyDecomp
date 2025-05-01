@@ -5,10 +5,10 @@
 
 namespace al {
 class AreaObj;
-class AreaObjGroup;
-class IUseAreaObj;
 class AreaObjFilterBase;
 class AreaObjFindCallBack;
+class AreaObjGroup;
+class IUseAreaObj;
 
 class AreaObjFilterBase {
 public:
