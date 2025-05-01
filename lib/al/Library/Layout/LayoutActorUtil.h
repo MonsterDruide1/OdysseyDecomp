@@ -54,7 +54,7 @@ void setPaneLocalRotate(IUseLayout*, const char*, const sead::Vector3f&);
 void setPaneLocalScale(IUseLayout*, const char*, const sead::Vector2f&);
 void setPaneLocalSize(IUseLayout*, const char*, const sead::Vector2f&);
 void setPaneLocalAlpha(IUseLayout*, const char*, f32);
-const sead::Vector3f& getPaneLocalTrans(const IUseLayout*, const char*);
+sead::Vector3f getPaneLocalTrans(const IUseLayout*, const char*);
 void getPaneLocalSize(sead::Vector2f*, const IUseLayout*, const char*);
 const sead::Vector3f& getPaneLocalRotate(const IUseLayout*, const char*);
 const sead::Vector3f& getPaneLocalScale(const IUseLayout*, const char*);
