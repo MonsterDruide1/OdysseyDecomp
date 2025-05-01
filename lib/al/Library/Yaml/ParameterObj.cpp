@@ -144,7 +144,7 @@ void ParameterObj::copyLerp(const ParameterObj& objA, const ParameterObj& objB, 
 
 ParameterBase* ParameterObj::findParameter(const char* name) const {
     ParameterBase* paramEntry = mRootParam;
-    while (paramEntry && !isEqualString(name, paramEntry->getParamName().unsafeCstr()))
+    while (paramEntry && !isEqualString(name, paramEntry->getParamName().getStringTop()))
         paramEntry = paramEntry->getNext();
     return paramEntry;
 }
