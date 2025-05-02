@@ -10,22 +10,38 @@ class ActorPoseKeeperBase {
 public:
     ActorPoseKeeperBase();
 
-    virtual const sead::Vector3f& getRotate() const;
-    virtual const sead::Vector3f& getScale() const;
-    virtual const sead::Vector3f& getVelocity() const;
-    virtual const sead::Vector3f& getFront() const;
-    virtual const sead::Vector3f& getUp() const;
-    virtual const sead::Quatf& getQuat() const;
-    virtual const sead::Vector3f& getGravity() const;
-    virtual const sead::Matrix34f& getMtx() const;
-    virtual sead::Vector3f* getRotatePtr();
-    virtual sead::Vector3f* getScalePtr();
-    virtual sead::Vector3f* getVelocityPtr();
-    virtual sead::Vector3f* getFrontPtr();
-    virtual sead::Vector3f* getUpPtr();
-    virtual sead::Quatf* getQuatPtr();
-    virtual sead::Vector3f* getGravityPtr();
-    virtual sead::Matrix34f* getMtxPtr();
+    virtual const sead::Vector3f& getRotate() const { return sead::Vector3f::zero; }
+
+    virtual const sead::Vector3f& getScale() const { return sead::Vector3f::ones; }
+
+    virtual const sead::Vector3f& getVelocity() const { return sead::Vector3f::zero; }
+
+    virtual const sead::Vector3f& getFront() const { return sead::Vector3f::ez; }
+
+    virtual const sead::Vector3f& getUp() const { return sead::Vector3f::ey; }
+
+    virtual const sead::Quatf& getQuat() const { return sead::Quatf::unit; }
+
+    virtual const sead::Vector3f& getGravity() const { return sDefaultVelocity; }
+
+    virtual const sead::Matrix34f& getMtx() const { return sead::Matrix34f::ident; }
+
+    virtual sead::Vector3f* getRotatePtr() { return nullptr; }
+
+    virtual sead::Vector3f* getScalePtr() { return nullptr; }
+
+    virtual sead::Vector3f* getVelocityPtr() { return nullptr; }
+
+    virtual sead::Vector3f* getFrontPtr() { return nullptr; }
+
+    virtual sead::Vector3f* getUpPtr() { return nullptr; }
+
+    virtual sead::Quatf* getQuatPtr() { return nullptr; }
+
+    virtual sead::Vector3f* getGravityPtr() { return nullptr; }
+
+    virtual sead::Matrix34f* getMtxPtr() { return nullptr; }
+
     virtual void updatePoseTrans(const sead::Vector3f& trans) = 0;
     virtual void updatePoseRotate(const sead::Vector3f& rot) = 0;
     virtual void updatePoseQuat(const sead::Quatf& quat) = 0;
@@ -47,12 +63,18 @@ class ActorPoseKeeperTFSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTFSV();
 
-    const sead::Vector3f& getFront() const override;
-    sead::Vector3f* getFrontPtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Vector3f& getFront() const override { return mFront; }
+
+    sead::Vector3f* getFrontPtr() override { return &mFront; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; }
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -69,8 +91,10 @@ class ActorPoseKeeperTFGSV : public ActorPoseKeeperTFSV {
 public:
     ActorPoseKeeperTFGSV();
 
-    const sead::Vector3f& getGravity() const override;
-    sead::Vector3f* getGravityPtr() override;
+    const sead::Vector3f& getGravity() const override { return mGravity; }
+
+    sead::Vector3f* getGravityPtr() override { return &mGravity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -85,8 +109,10 @@ class ActorPoseKeeperTFUSV : public ActorPoseKeeperTFSV {
 public:
     ActorPoseKeeperTFUSV();
 
-    const sead::Vector3f& getUp() const override;
-    sead::Vector3f* getUpPtr() override;
+    const sead::Vector3f& getUp() const override { return mUp; }
+
+    sead::Vector3f* getUpPtr() override { return &mUp; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -104,12 +130,18 @@ class ActorPoseKeeperTQSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTQSV();
 
-    const sead::Quatf& getQuat() const override;
-    sead::Quatf* getQuatPtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Quatf& getQuat() const override { return mQuat; }
+
+    sead::Quatf* getQuatPtr() override { return &mQuat; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; }
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -126,14 +158,22 @@ class ActorPoseKeeperTQGSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTQGSV();
 
-    const sead::Quatf& getQuat() const override;
-    sead::Quatf* getQuatPtr() override;
-    const sead::Vector3f& getGravity() const override;
-    sead::Vector3f* getGravityPtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Quatf& getQuat() const override { return mQuat; }
+
+    sead::Quatf* getQuatPtr() override { return &mQuat; }
+
+    const sead::Vector3f& getGravity() const override { return mGravity; }
+
+    sead::Vector3f* getGravityPtr() override { return &mGravity; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; }
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -151,16 +191,26 @@ class ActorPoseKeeperTQGMSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTQGMSV();
 
-    const sead::Quatf& getQuat() const override;
-    sead::Quatf* getQuatPtr() override;
-    const sead::Vector3f& getGravity() const override;
-    sead::Vector3f* getGravityPtr() override;
-    const sead::Matrix34f& getMtx() const override;
-    sead::Matrix34f* getMtxPtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Quatf& getQuat() const override { return mQuat; }
+
+    sead::Quatf* getQuatPtr() override { return &mQuat; }
+
+    const sead::Vector3f& getGravity() const override { return mGravity; }
+
+    sead::Vector3f* getGravityPtr() override { return &mGravity; }
+
+    const sead::Matrix34f& getMtx() const override { return mMtx; }
+
+    sead::Matrix34f* getMtxPtr() override { return &mMtx; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; };
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -179,12 +229,18 @@ class ActorPoseKeeperTRSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTRSV();
 
-    const sead::Vector3f& getRotate() const override;
-    sead::Vector3f* getRotatePtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Vector3f& getRotate() const override { return mRotate; }
+
+    sead::Vector3f* getRotatePtr() override { return &mRotate; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; }
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -201,14 +257,22 @@ class ActorPoseKeeperTRMSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTRMSV();
 
-    const sead::Vector3f& getRotate() const override;
-    sead::Vector3f* getRotatePtr() override;
-    const sead::Matrix34f& getMtx() const override;
-    sead::Matrix34f* getMtxPtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Vector3f& getRotate() const override { return mRotate; }
+
+    sead::Vector3f* getRotatePtr() override { return &mRotate; }
+
+    const sead::Matrix34f& getMtx() const override { return mMtx; }
+
+    sead::Matrix34f* getMtxPtr() override { return &mMtx; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; }
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     __attribute__((flatten)) void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;
@@ -226,16 +290,26 @@ class ActorPoseKeeperTRGMSV : public ActorPoseKeeperBase {
 public:
     ActorPoseKeeperTRGMSV();
 
-    const sead::Vector3f& getRotate() const override;
-    sead::Vector3f* getRotatePtr() override;
-    const sead::Vector3f& getGravity() const override;
-    sead::Vector3f* getGravityPtr() override;
-    const sead::Matrix34f& getMtx() const override;
-    sead::Matrix34f* getMtxPtr() override;
-    const sead::Vector3f& getScale() const override;
-    sead::Vector3f* getScalePtr() override;
-    const sead::Vector3f& getVelocity() const override;
-    sead::Vector3f* getVelocityPtr() override;
+    const sead::Vector3f& getRotate() const override { return mRotate; }
+
+    sead::Vector3f* getRotatePtr() override { return &mRotate; }
+
+    const sead::Vector3f& getGravity() const override { return mGravity; }
+
+    sead::Vector3f* getGravityPtr() override { return &mGravity; }
+
+    const sead::Matrix34f& getMtx() const override { return mMtx; }
+
+    sead::Matrix34f* getMtxPtr() override { return &mMtx; }
+
+    const sead::Vector3f& getScale() const override { return mScale; }
+
+    sead::Vector3f* getScalePtr() override { return &mScale; }
+
+    const sead::Vector3f& getVelocity() const override { return mVelocity; }
+
+    sead::Vector3f* getVelocityPtr() override { return &mVelocity; }
+
     void updatePoseTrans(const sead::Vector3f& trans) override;
     void updatePoseRotate(const sead::Vector3f& rot) override;
     void updatePoseQuat(const sead::Quatf& quat) override;

@@ -19,10 +19,6 @@ DecideIconLayout* HintPhotoLayoutHolder::getDecideIcon() const {
     return mDecideIconLayout;
 }
 
-const char* HintPhotoLayoutHolder::getSceneObjName() const {
-    return "ヒント写真レイアウト保持";
-}
-
 void HintPhotoLayoutHolder::init(const al::LayoutInitInfo& initInfo) {
     if (mLayoutActor == nullptr) {
         mLayoutActor = new al::LayoutActor("ヒント写真");

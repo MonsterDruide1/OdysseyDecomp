@@ -34,7 +34,3 @@ void HelpAmiiboInvincibleAttack::activate() {
 bool HelpAmiiboInvincibleAttack::execute() {
     return al::isDead(mItemAmiiboKoopa);
 }
-
-HelpAmiiboType HelpAmiiboInvincibleAttack::getType() const {
-    return HelpAmiiboType::Koopa;
-}
