@@ -28,8 +28,8 @@ public:
 
     SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
 
-    void validate();
-    void invalidate();
+    void validate(){ mIsValid = true; }
+    void invalidate(){ mIsValid = false; }
 
     const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
 

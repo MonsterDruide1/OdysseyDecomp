@@ -194,10 +194,6 @@ void HelpAmiiboCoinCollect::activate() {
     }
 }
 
-HelpAmiiboType HelpAmiiboCoinCollect::getType() const {
-    return HelpAmiiboType::Koopa;
-}
-
 void HelpAmiiboCoinCollect::deleteHintEffect() {
     if (mCoinCollect != nullptr) {
         mCoinCollect->deleteHelpAmiiboEffect();

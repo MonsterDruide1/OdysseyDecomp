@@ -17,5 +17,5 @@ public:
     bool isTriggerTouch(const al::NfpInfo& nfpInfo) const override;
     bool isEnableUse() override;
     bool execute() override;
-    HelpAmiiboType getType() const override;
+    HelpAmiiboType getType() const override { return HelpAmiiboType::Mario; }
 };

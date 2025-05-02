@@ -59,10 +59,6 @@ bool HelpAmiiboFallCoin::execute() {
     return true;
 }
 
-HelpAmiiboType HelpAmiiboFallCoin::getType() const {
-    return HelpAmiiboType::Peach;
-}
-
 al::NerveKeeper* HelpAmiiboFallCoin::getNerveKeeper() const {
     return mNerveKeeper;
 }

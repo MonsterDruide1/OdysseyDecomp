@@ -21,7 +21,7 @@ public:
 
     CoinCollectWatcher();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "コインコレクト監視者"; } 
     void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
 
     void registerCoin(bool isCountUpCoin);

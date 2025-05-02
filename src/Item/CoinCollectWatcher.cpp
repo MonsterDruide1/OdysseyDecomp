@@ -11,10 +11,6 @@
 
 CoinCollectWatcher::CoinCollectWatcher() : al::ISceneObj() {}
 
-const char* CoinCollectWatcher::getSceneObjName() const {
-    return "コインコレクト監視者";
-}
-
 void CoinCollectWatcher::initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) {
     mCoinCollectLayout = new CoinCollectLayout(al::getLayoutInitInfo(initInfo));
 }

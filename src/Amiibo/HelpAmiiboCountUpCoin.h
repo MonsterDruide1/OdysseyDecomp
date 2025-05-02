@@ -29,7 +29,7 @@ public:
     bool isEnableUse() override;
     bool execute() override;
     void activate() override;
-    HelpAmiiboType getType() const override;
+    HelpAmiiboType getType() const override { return HelpAmiiboType::All; }
     al::NerveKeeper* getNerveKeeper() const override;
 
     void updateItemQT(al::LiveActor* actor);

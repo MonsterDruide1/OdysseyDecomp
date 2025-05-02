@@ -59,12 +59,4 @@ bool AreaObj::isInVolumeOffset(const sead::Vector3f& position, f32 offset) const
     return mAreaShape->isInVolumeOffset(position, offset);
 }
 
-void AreaObj::validate() {
-    mIsValid = true;
-}
-
-void AreaObj::invalidate() {
-    mIsValid = false;
-}
-
 }  // namespace al

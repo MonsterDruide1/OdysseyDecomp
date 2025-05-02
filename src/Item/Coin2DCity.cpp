@@ -74,10 +74,6 @@ bool Coin2DCity::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
     return false;
 }
 
-ActorDimensionKeeper* Coin2DCity::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}
-
 void Coin2DCity::startLight() {
     mLightTime = 0;
     if (!al::isNerve(this, &NrvCoin2DCity.Got) && !al::isNerve(this, &NrvCoin2DCity.GotWait)) {

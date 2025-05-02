@@ -21,7 +21,7 @@ public:
     bool isEnableUse() override;
     bool execute() override;
     void activate() override;
-    HelpAmiiboType getType() const override;
+    HelpAmiiboType getType() const override { return HelpAmiiboType::Peach; }
 
 private:
     LifeMaxUpItem* mItem = nullptr;
