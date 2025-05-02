@@ -1,15 +1,18 @@
 #include "Library/Sequence/Sequence.h"
 
+#include "Library/Audio/AudioDirector.h"
+
 namespace al {
 
-void Sequence::init(const SequenceInitInfo& initInfo) {}
+Sequence::Sequence(const char* name) : NerveExecutor(name), mName(name) {}
+
+Sequence::~Sequence() {
+    if (mAudioDirector)
+        mAudioDirector->finalize();
+}
 
 void Sequence::kill() {
     mIsAlive = false;
-}
-
-bool Sequence::isDisposable() const {
-    return true;
 }
 
 }  // namespace al

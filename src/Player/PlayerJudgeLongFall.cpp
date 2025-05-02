@@ -15,10 +15,6 @@ PlayerJudgeLongFall::PlayerJudgeLongFall(const al::LiveActor* player, const Play
     : mPlayer(player), mConst(pConst), mFallDistanceCheck(fallDistanceCheck),
       mHackKeeper(hackKeeper), mBindKeeper(bindKeeper), mModelChanger(modelChanger) {}
 
-void PlayerJudgeLongFall::reset() {}
-
-void PlayerJudgeLongFall::update() {}
-
 bool PlayerJudgeLongFall::judge() const {
     if (PlayerFunction::isPlayerDeadStatus(mPlayer))
         return false;
