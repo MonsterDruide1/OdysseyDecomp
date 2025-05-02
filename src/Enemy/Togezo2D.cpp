@@ -169,7 +169,3 @@ void Togezo2D::exeHideWait() {
         al::resetPosition(this);
     }
 }
-
-ActorDimensionKeeper* Togezo2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}

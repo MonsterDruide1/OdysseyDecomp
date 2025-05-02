@@ -108,10 +108,6 @@ void HelpAmiiboCountUpCoin::activate() {
     al::setNerve(this, &NrvHelpAmiiboCountUpCoin.End);
 }
 
-HelpAmiiboType HelpAmiiboCountUpCoin::getType() const {
-    return HelpAmiiboType::All;
-}
-
 al::NerveKeeper* HelpAmiiboCountUpCoin::getNerveKeeper() const {
     return mNerveKeeper;
 }

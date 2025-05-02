@@ -9,7 +9,3 @@ PlayerJudgeForceRolling::PlayerJudgeForceRolling(const al::LiveActor* player,
 bool PlayerJudgeForceRolling::judge() const {
     return rs::isOnGroundForceRollingCode(mPlayer, mCollider);
 }
-
-void PlayerJudgeForceRolling::reset() {}
-
-void PlayerJudgeForceRolling::update() {}

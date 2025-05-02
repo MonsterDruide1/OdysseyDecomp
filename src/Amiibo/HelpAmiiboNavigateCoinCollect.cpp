@@ -54,7 +54,3 @@ bool HelpAmiiboNavigateCoinCollect::execute() {
     mTimeBalloonHintArrow->updateRotate(al::getTrans(mHintedCoinCollect));
     return false;
 }
-
-HelpAmiiboType HelpAmiiboNavigateCoinCollect::getType() const {
-    return HelpAmiiboType::Koopa;
-}
