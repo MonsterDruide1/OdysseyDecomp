@@ -12,7 +12,7 @@ class AreaObjFindCallBack;
 
 class AreaObjFilterBase {
 public:
-    virtual bool isValid(AreaObj* areaObj) = 0;
+    virtual bool isValidArea(AreaObj* areaObj) const = 0;
 };
 
 class AreaObjFindCallBack {
@@ -58,5 +58,8 @@ bool checkAreaObjCollisionByArrow(sead::Vector3f* outHitPosition, sead::Vector3f
 bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
                          sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
                          const sead::Vector3f& position1, const sead::Vector3f& position2);
-
+bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
+                         sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
+                         const sead::Vector3f& position, const sead::Vector3f& direction,
+                         f32 distance);
 }  // namespace al

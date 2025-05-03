@@ -27,7 +27,7 @@ AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* areaUser, const char* name,
 
         if ((currentAreaObj == nullptr ||
              currentAreaObj->getPriority() <= areaObj->getPriority()) &&
-            areaObj->isInVolume(position) && filter->isValid(areaObj)) {
+            areaObj->isInVolume(position) && filter->isValidArea(areaObj)) {
             currentAreaObj = areaObj;
         }
     }
@@ -41,18 +41,18 @@ bool tryFindAreaObjAll(const IUseAreaObj* areaUser, const char* name,
     if (areaObjGroup == nullptr)
         return false;
 
-    bool isValid = false;
+    bool foundAnyArea = false;
     s32 size = areaObjGroup->getSize();
     for (s32 i = 0; i < size; i++) {
         AreaObj* areaObj = areaObjGroup->getAreaObj(i);
 
         if (areaObj->isInVolume(position)) {
             callBack->findArea(areaObj);
-            isValid = true;
+            foundAnyArea = true;
         }
     }
 
-    return isValid;
+    return foundAnyArea;
 }
 
 AreaObjGroup* tryFindAreaObjGroup(const IUseAreaObj* areaUser, const char* name) {
@@ -175,7 +175,7 @@ void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const 
     sead::Vector3f scale = {0.0f, 0.0f, 0.0f};
     tryGetScale(&scale, *areaObj->getPlacementInfo());
 
-    sead::Vector3f pos = getAreaObjBaseMtx(areaObj).getBase(3);
+    sead::Vector3f areaPos = getAreaObjBaseMtx(areaObj).getBase(3);
 
     sead::Vector3f sideDir;
     getAreaObjDirSide(&sideDir, areaObj);
@@ -183,20 +183,20 @@ void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const 
     sead::Vector3f upDir;
     getAreaObjDirUp(&upDir, areaObj);
 
-    sead::Vector3f vertical;
-    vertical.x = position.x - pos.x;
-    vertical.y = position.y - pos.y;
-    vertical.z = position.z - pos.z;
+    sead::Vector3f diff;
+    diff.x = position.x - areaPos.x;
+    diff.y = position.y - areaPos.y;
+    diff.z = position.z - areaPos.z;
 
-    verticalizeVec(&vertical, upDir, vertical);
-    limitVectorParallelVertical(&vertical, sideDir, scale.x * 1000.0f, scale.z * 1000.0f);
+    verticalizeVec(&diff, upDir, diff);
+    limitVectorParallelVertical(&diff, sideDir, scale.x * 1000.0f, scale.z * 1000.0f);
 
-    vertical.setScaleAdd(scale.y * 1000.0f, upDir, vertical);
-    outNearestEdgePosTopY->set(vertical + pos);
+    diff.setScaleAdd(scale.y * 1000.0f, upDir, diff);
+    outNearestEdgePosTopY->set(diff + areaPos);
 }
 
 f32 calcNearestAreaObjEdgeRateTopY(const AreaObj* areaObj, const sead::Vector3f& position) {
-    sead::Vector3f pos = getAreaObjBaseMtx(areaObj).getBase(3);
+    sead::Vector3f areaPos = getAreaObjBaseMtx(areaObj).getBase(3);
 
     sead::Vector3f upDir;
     getAreaObjDirUp(&upDir, areaObj);
@@ -204,13 +204,13 @@ f32 calcNearestAreaObjEdgeRateTopY(const AreaObj* areaObj, const sead::Vector3f&
     sead::Vector3f nearestEdgePosTopY;
     calcNearestAreaObjEdgePosTopY(&nearestEdgePosTopY, areaObj, position);
 
-    f32 distToPos = upDir.dot(nearestEdgePosTopY - pos);
-    if (distToPos < 0.0f || isNearZero(distToPos))
+    f32 distToAreaPos = upDir.dot(nearestEdgePosTopY - areaPos);
+    if (distToAreaPos < 0.0f || isNearZero(distToAreaPos))
         return 1.0f;
 
     f32 distToPosition = sead::Mathf::clampMin(upDir.dot(nearestEdgePosTopY - position), 0.0f);
 
-    return sead::Mathf::clamp(distToPosition / distToPos, 0.0f, 1.0f);
+    return sead::Mathf::clamp(distToPosition / distToAreaPos, 0.0f, 1.0f);
 }
 
 void calcAreaObjCenterPos(sead::Vector3f* outCenterPosition, const AreaObj* areaObj) {
@@ -232,12 +232,12 @@ bool checkAreaObjCollisionByArrow(sead::Vector3f* outHitPosition, sead::Vector3f
 bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
                          sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
                          const sead::Vector3f& position1, const sead::Vector3f& position2) {
-    AreaObj* areaObj = tryFindAreaObj(areaUser, name, position1);
-    if (areaObj)
+    if (tryFindAreaObj(areaUser, name, position1))
         return false;
 
-    sead::Vector3f position = (position1 + position2) / 2.0f;
-    areaObj = tryFindAreaObj(areaUser, name, position);
+    sead::Vector3f positionHalfway = (position1 + position2) / 2.0f;
+
+    AreaObj* areaObj = tryFindAreaObj(areaUser, name, positionHalfway);
     if (!areaObj) {
         areaObj = tryFindAreaObj(areaUser, name, position2);
         if (!areaObj)
@@ -249,24 +249,23 @@ bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
 
 bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
                          sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
-                         const sead::Vector3f& position1, const sead::Vector3f& position2,
-                         f32 offset) {
-    sead::Vector3f pos1;
-    sead::Vector3f pos2;
-    pos1.setScaleAdd(offset, position2, position1);
-    pos2.setScaleAdd(offset, -position2, position1);
+                         const sead::Vector3f& position, const sead::Vector3f& direction,
+                         f32 distance) {
+    sead::Vector3f position1;
+    sead::Vector3f position2;
+    position1.setScaleAdd(distance, direction, position);
+    position2.setScaleAdd(distance, -direction, position);
 
-    AreaObj* areaObj = tryFindAreaObj(areaUser, name, pos1);
-    if (areaObj)
+    if (tryFindAreaObj(areaUser, name, position1))
         return false;
 
-    areaObj = tryFindAreaObj(areaUser, name, position1);
+    AreaObj* areaObj = tryFindAreaObj(areaUser, name, position);
     if (!areaObj) {
-        areaObj = tryFindAreaObj(areaUser, name, pos2);
+        areaObj = tryFindAreaObj(areaUser, name, position2);
         if (!areaObj)
             return false;
     }
 
-    return checkAreaObjCollisionByArrow(outHitPosition, outNormal, areaObj, pos1, pos2);
+    return checkAreaObjCollisionByArrow(outHitPosition, outNormal, areaObj, position1, position2);
 }
 }  // namespace al
