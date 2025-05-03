@@ -48,13 +48,11 @@ All other systems have to manually install the required packages and programs. W
     * If you are on Ubuntu 18.04, you must
       first [update CMake by using the official CMake APT repository](https://apt.kitware.com/).
 * ccache (to speed up builds)
-* xdelta3
-* clang (not for compiling SMO code, but for compiling Rust tools)
 
 Ubuntu users can install those dependencies by running:
 
 ```shell
-sudo apt install python3 ninja-build cmake ccache xdelta3 clang libssl-dev libncurses5
+sudo apt install python3 ninja-build cmake ccache libssl-dev libncurses5
 ```
 
 If you are running Ubuntu 23.10 or later, the `libncurses5` package won't be available anymore. You can install it from
@@ -90,10 +88,7 @@ Additionally, you'll also need:
     * This will:
         * install tools/check to check for differences in decompiled code
         * convert the executable if necessary
-        * set up [Clang 3.9.1](https://releases.llvm.org/download.html#3.9.1) by downloading it from the official LLVM
-          website
-        * set up [Clang 4.0.1](https://releases.llvm.org/download.html#4.0.1) by downloading it from the official LLVM
-          website
+        * set up clang, ld.lld and other tools by downloading them from the releases of [OdysseyDecompToolsCache](https://github.com/MonsterDruide1/OdysseyDecompToolsCache/)
         * create a build directory in `build/`
     * If something goes wrong, follow the instructions given to you by the script.
     * If you wish to use a CMake generator that isn't Ninja, use `--cmake_backend` to specify it.
