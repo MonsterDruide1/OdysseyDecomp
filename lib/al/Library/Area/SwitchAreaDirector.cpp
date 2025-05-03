@@ -68,8 +68,4 @@ SwitchAreaDirector::SwitchAreaDirector(AreaObjDirector* areaObjDirector,
             registerSwitchKeepOnAreaGroup(new SwitchKeepOnAreaGroup(areaObjGroup));
     }
 }
-
-AreaObjDirector* SwitchAreaDirector::getAreaObjDirector() const {
-    return mAreaObjDirector;
-}
 }  // namespace al

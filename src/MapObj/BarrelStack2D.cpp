@@ -21,9 +21,9 @@ void BarrelStack2D::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "BarrelStack2D", nullptr);
     al::initNerve(this, &Wait, 0);
 
-    mActorDimensionKeeper = rs::createDimensionKeeper(this);
+    mDimensionKeeper = rs::createDimensionKeeper(this);
 
-    rs::updateDimensionKeeper(mActorDimensionKeeper);
+    rs::updateDimensionKeeper(mDimensionKeeper);
 
     if (!rs::isIn2DArea(this))
         makeActorDead();
@@ -49,8 +49,4 @@ void BarrelStack2D::exeBreak() {
 
     if (al::isActionEnd(this))
         kill();
-}
-
-ActorDimensionKeeper* BarrelStack2D::getActorDimensionKeeper() const {
-    return mActorDimensionKeeper;
 }

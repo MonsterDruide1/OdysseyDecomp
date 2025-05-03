@@ -29,7 +29,7 @@ NERVES_MAKE_STRUCT(CoinCollectEmpty2D, Wait, Got);
 }  // namespace
 
 CoinCollectEmpty2D::CoinCollectEmpty2D(const char* name, const char* archiveName)
-    : al::LiveActor(name), IUseDimension(), mArchiveName(archiveName) {}
+    : al::LiveActor(name), mArchiveName(archiveName) {}
 
 void CoinCollectEmpty2D::init(const al::ActorInitInfo& initInfo) {
     al::initActorSceneInfo(this, initInfo);
@@ -75,10 +75,6 @@ bool CoinCollectEmpty2D::receiveMsg(const al::SensorMsg* message, al::HitSensor*
 void CoinCollectEmpty2D::endClipped() {
     rs::syncCoin2DAnimFrame(this, "Wait");
     al::LiveActor::endClipped();
-}
-
-ActorDimensionKeeper* CoinCollectEmpty2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }
 
 void CoinCollectEmpty2D::exeWait() {

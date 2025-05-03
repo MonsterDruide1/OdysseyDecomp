@@ -242,7 +242,8 @@ public:
     void writeContainer(sead::WriteStream*) const override;
     void write(sead::WriteStream*) const override;
     void print(s32) const override;
-    bool isArray() const override;
+
+    bool isArray() const override { return true; }
 
 private:
     sead::TList<ByamlWriterData*> mList;
@@ -293,7 +294,8 @@ public:
     void writeContainer(sead::WriteStream*) const override;  // TODO implementation missing
     void write(sead::WriteStream*) const override;
     void print(s32) const override;  // TODO implementation missing
-    bool isHash() const override;
+
+    bool isHash() const override { return true; }
 
 private:
     sead::TList<ByamlWriterHashPair> mList;  // TODO not really... it's something different here.

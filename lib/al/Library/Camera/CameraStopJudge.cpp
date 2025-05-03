@@ -16,8 +16,4 @@ bool CameraStopJudge::isStop() const {
 void CameraStopJudge::update(const sead::Vector3f& position) {
     mIsInCameraStopArea = isInAreaObj(this, "CameraStopArea", position);
 }
-
-AreaObjDirector* al::CameraStopJudge::getAreaObjDirector() const {
-    return mAreaObjDirector;
-}
 }  // Namespace al

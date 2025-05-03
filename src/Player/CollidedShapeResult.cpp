@@ -52,10 +52,3 @@ const CollisionShapeInfoSphere* CollidedShapeResult::getShapeInfoSphere() const 
 const CollisionShapeInfoDisk* CollidedShapeResult::getShapeInfoDisk() const {
     return CollisionShapeFunction::getShapeInfoDisk(mShapeInfo);
 }
-
-void CollidedShapeResult::operator=(const CollidedShapeResult& other) {
-    mShapeInfo = other.mShapeInfo;
-    setArrowHitInfo(other.mArrowHitInfo);
-    setSphereHitInfo(other.mSphereHitInfo);
-    setDiskHitInfo(other.mDiskHitInfo);
-}

@@ -6,10 +6,6 @@
 
 KidsModeLayoutAccessor::KidsModeLayoutAccessor() {}
 
-const char* KidsModeLayoutAccessor::getSceneObjName() const {
-    return "キッズモードレイアウトアクセサ";
-}
-
 namespace rs {
 void setKidsModeLayoutDisable(const al::IUseSceneObjHolder* user) {
     al::getSceneObj<KidsModeLayoutAccessor>(user)->setKidsModeLayoutDisable();

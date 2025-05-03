@@ -59,10 +59,6 @@ bool HelpAmiiboFallCoin::execute() {
     return true;
 }
 
-al::NerveKeeper* HelpAmiiboFallCoin::getNerveKeeper() const {
-    return mNerveKeeper;
-}
-
 void HelpAmiiboFallCoin::exeWait() {}
 
 void HelpAmiiboFallCoin::exeFall() {

@@ -42,7 +42,3 @@ bool PlayerJudgeDiveInWater::judge() const {
 
     return true;
 }
-
-void PlayerJudgeDiveInWater::reset() {}
-
-void PlayerJudgeDiveInWater::update() {}

@@ -65,8 +65,4 @@ bool AreaShapeOval::checkArrowCollision(sead::Vector3f* a2, sead::Vector3f* a3,
     return true;
 }
 
-bool AreaShapeOval::calcLocalBoundingBox(sead::BoundBox3f* boundingBox) const {
-    return false;
-}
-
 }  // namespace al
