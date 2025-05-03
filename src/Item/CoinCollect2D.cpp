@@ -97,10 +97,6 @@ void CoinCollect2D::endClipped() {
     al::LiveActor::endClipped();
 }
 
-ActorDimensionKeeper* CoinCollect2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}
-
 void CoinCollect2D::appearHintEffect() {
     al::invalidateClipping(this);
     al::setNerve(this, &NrvCoinCollect2D.WaitHint);

@@ -162,8 +162,4 @@ bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* other, H
 
     return false;
 }
-
-JudgeFuncPtr BreakMapPartsBase::getJudgeFunction(const char* name) const {
-    return nullptr;
-}
 }  // namespace al

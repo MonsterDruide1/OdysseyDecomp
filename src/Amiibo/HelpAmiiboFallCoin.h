@@ -29,7 +29,7 @@ public:
 
     HelpAmiiboType getType() const override { return HelpAmiiboType::Peach; }
 
-    al::NerveKeeper* getNerveKeeper() const override;
+    al::NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
     void exeWait();
     void exeFall();

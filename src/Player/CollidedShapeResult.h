@@ -29,7 +29,12 @@ public:
     const CollisionShapeInfoSphere* getShapeInfoSphere() const;
     const CollisionShapeInfoDisk* getShapeInfoDisk() const;
 
-    void operator=(const CollidedShapeResult& other);
+    void operator=(const CollidedShapeResult& other) {
+        mShapeInfo = other.mShapeInfo;
+        setArrowHitInfo(other.mArrowHitInfo);
+        setSphereHitInfo(other.mSphereHitInfo);
+        setDiskHitInfo(other.mDiskHitInfo);
+    }
 
 private:
     const CollisionShapeInfoBase* mShapeInfo;

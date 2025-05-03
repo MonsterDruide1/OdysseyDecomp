@@ -11,7 +11,9 @@ public:
 
     void initKeyMoveFollowTarget(const ActorInitInfo& info, const char* archiveName,
                                  const char* suffix);
-    void init(const ActorInitInfo& info) override;
+
+    void init(const ActorInitInfo& info) override {}
+
     void exeWait();
     void exeMove();
     void exeStop();

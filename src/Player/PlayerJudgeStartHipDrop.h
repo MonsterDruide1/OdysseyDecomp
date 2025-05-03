@@ -13,9 +13,12 @@ class PlayerJudgeStartHipDrop : public al::HioNode, public IJudge {
 public:
     PlayerJudgeStartHipDrop(const PlayerConst*, const PlayerInput*, const IUsePlayerHeightCheck*,
                             const IPlayerModelChanger*);
-    void reset();
-    void update();
-    bool judge() const;
+
+    void reset() override {}
+
+    void update() override {}
+
+    bool judge() const override;
 
 private:
     const PlayerConst* mConst;

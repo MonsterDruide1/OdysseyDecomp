@@ -84,8 +84,4 @@ void EffectObjCameraEmit::kill() {
 
     LiveActor::kill();
 }
-
-const sead::Matrix34f* EffectObjCameraEmit::getBaseMtx() const {
-    return &mBaseMtx;
-}
 }  // namespace al

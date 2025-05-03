@@ -73,8 +73,4 @@ void EffectObjInterval::kill() {
 
     LiveActor::kill();
 }
-
-const sead::Matrix34f* EffectObjInterval::getBaseMtx() const {
-    return &mBaseMtx;
-}
 }  // namespace al

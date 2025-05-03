@@ -32,7 +32,7 @@ public:
 
     HelpAmiiboType getType() const override { return HelpAmiiboType::All; }
 
-    al::NerveKeeper* getNerveKeeper() const override;
+    al::NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
     void updateItemQT(al::LiveActor* actor);
 

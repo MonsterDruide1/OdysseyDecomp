@@ -118,10 +118,6 @@ bool Coin2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     return false;
 }
 
-ActorDimensionKeeper* Coin2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}
-
 void Coin2D::listenAppear() {
     appear();
     al::invalidateClipping(this);

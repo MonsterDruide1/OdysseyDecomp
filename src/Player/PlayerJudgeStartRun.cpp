@@ -23,7 +23,3 @@ bool PlayerJudgeStartRun::judge() const {
         return true;
     return false;
 }
-
-void PlayerJudgeStartRun::reset() {}
-
-void PlayerJudgeStartRun::update() {}

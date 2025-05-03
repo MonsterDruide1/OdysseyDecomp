@@ -12,10 +12,6 @@ PlayerJudgeStartWaterSurfaceRun::PlayerJudgeStartWaterSurfaceRun(
     const PlayerCounterForceRun* counterForceRun)
     : mPlayer(player), mWaterSurfaceFinder(waterSurfaceFinder), mCounterForceRun(counterForceRun) {}
 
-void PlayerJudgeStartWaterSurfaceRun::reset() {}
-
-void PlayerJudgeStartWaterSurfaceRun::update() {}
-
 bool PlayerJudgeStartWaterSurfaceRun::judge() const {
     return mCounterForceRun->getCounter() > 0 && mWaterSurfaceFinder->isFoundSurface() &&
            al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance()) &&

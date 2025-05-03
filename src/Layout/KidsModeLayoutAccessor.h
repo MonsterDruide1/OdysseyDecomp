@@ -15,7 +15,7 @@ public:
 
     KidsModeLayoutAccessor();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "キッズモードレイアウトアクセサ"; }
 
     void setKidsModeLayoutDisable() { mIsKidsModeLayoutDisable = true; }
 

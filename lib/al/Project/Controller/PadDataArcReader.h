@@ -14,9 +14,12 @@ public:
     void readResource(const char* resourceName);
     void checkEnd();
     void read(PadDataPack* frameData) override;
-    bool isEnd() const override;
-    u32 getCursorFrame() const override;
-    s32 getRemainFrame() const override;
+
+    bool isEnd() const override { return mIsEnd; }
+
+    u32 getCursorFrame() const override { return mCursorFrame; }
+
+    s32 getRemainFrame() const override { return mTotalFrame - mCursorFrame; }
 
 private:
     PadDataPack* mDataFrames = nullptr;
