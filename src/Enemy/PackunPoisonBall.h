@@ -17,7 +17,7 @@ public:
     void appear() override;
 
     void killBySwitch();
-    void setParam(const sead::Vector3f&, const sead::Quatf&, bool, f32, f32, f32);
+    void setParam(const sead::Vector3f& trans, const sead::Quatf& quat, bool isHack, f32, f32, f32);
 
     void exeMove();
     void exeFall();
@@ -29,7 +29,7 @@ private:
     al::ParabolicPath* _118;
     s32 _120 = 0;
     sead::Vector3f _124 = sead::Vector3f::zero;
-    bool _130 = false;
+    bool mIsHack = false;
     f32 _134 = 0.0f;
     f32 _138 = 200.0f;
     f32 _13c = 8.0f;
