@@ -21,7 +21,7 @@ FurnitureStateWait::FurnitureStateWait(al::LiveActor* actor, FurnitureType furni
 }
 
 void FurnitureStateWait::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &NrvFurnitureStateWait.Wait);
     mIsPlayerNotOnGround = !rs::isPlayerOnGround(mActor);
     mPlayerState = PlayerFurnitureState::Unbound;

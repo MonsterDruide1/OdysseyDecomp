@@ -27,7 +27,7 @@ FlyerStateWander::FlyerStateWander(al::LiveActor* actor, const FlyerStateWanderP
 }
 
 void FlyerStateWander::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &Wander);
 }
 
