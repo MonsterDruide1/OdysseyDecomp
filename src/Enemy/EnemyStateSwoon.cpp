@@ -61,7 +61,7 @@ EnemyStateSwoon::EnemyStateSwoon(al::LiveActor* actor, const char* startAnimName
 }
 
 void EnemyStateSwoon::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mIsLockOn = false;
     al::setNerve(this, &SwoonStart);
 }

@@ -50,7 +50,7 @@ IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* msg, al::HitS
 }
 
 void EnemyStateHackStart::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
     if (!mHackActor)
         return;
     rs::endHackStartDemo(mHackActor, mActor);

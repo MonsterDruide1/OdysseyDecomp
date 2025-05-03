@@ -43,7 +43,7 @@ StageSceneStateStartSeparatePlay::StageSceneStateStartSeparatePlay(
 void StageSceneStateStartSeparatePlay::appear() {
     field_40 = 0;
     mIsCancel = false;
-    setDead(false);
+    al::NerveStateBase::appear();
     if (rs::isModeE3LiveRom()) {
         startTreeHouse();
         return;

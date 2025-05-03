@@ -15,7 +15,7 @@ TimeBalloonStateShowAchievement::TimeBalloonStateShowAchievement(const al::Actor
 }
 
 void TimeBalloonStateShowAchievement::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &Show);
 }
 

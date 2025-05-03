@@ -38,7 +38,7 @@ PlayerStateWallAir::PlayerStateWallAir(al::LiveActor* player, const PlayerConst*
 }
 
 void PlayerStateWallAir::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &Slide);
 }
 
