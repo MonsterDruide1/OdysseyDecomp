@@ -22,7 +22,8 @@ public:
 
     void reset() override;
     void update() override;
-    bool judge() const override;
+
+    bool judge() const override { return mIsJudge; }
 
 private:
     const al::LiveActor* mPlayer;

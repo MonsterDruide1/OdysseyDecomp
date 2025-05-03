@@ -25,8 +25,10 @@ public:
                           const IUsePlayerCollision* playerCollider, const PlayerInput* playerInput,
                           const PlayerConst* playerConst, const PlayerStateWait* playerStateWait);
 
-    void reset() override;
-    void update() override;
+    void reset() override {}
+
+    void update() override {}
+
     bool judge() const override;
 
 private:

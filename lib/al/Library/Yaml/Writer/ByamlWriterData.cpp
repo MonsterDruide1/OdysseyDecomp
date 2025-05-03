@@ -232,10 +232,6 @@ void ByamlWriterArray::print(s32 unknown) const {
         node->print(unknown + 1);
 }
 
-bool ByamlWriterArray::isArray() const {
-    return true;
-}
-
 ByamlWriterHashPair::ByamlWriterHashPair(const char* key, ByamlWriterData* value)
     : mKey(key), mValue(value) {}
 
@@ -302,10 +298,6 @@ u8 ByamlWriterHash::getTypeCode() const {
 
 void ByamlWriterHash::write(sead::WriteStream* stream) const {
     stream->writeU32(getOffset());
-}
-
-bool ByamlWriterHash::isHash() const {
-    return true;
 }
 
 }  // namespace al

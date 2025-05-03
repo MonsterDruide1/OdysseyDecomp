@@ -30,11 +30,3 @@ void PlayerJudgeWaterSurfaceRun::update() {
         al::isNearZeroOrGreater(mWaterSurfaceFinder->getDistance()) &&
         (counterForceRun->getCounter() > 0 || al::calcSpeedH(player) > borderSpeedH);
 }
-
-void PlayerJudgeWaterSurfaceRun::reset() {
-    mIsWaterSurfaceRun = false;
-}
-
-bool PlayerJudgeWaterSurfaceRun::judge() const {
-    return mIsWaterSurfaceRun;
-}

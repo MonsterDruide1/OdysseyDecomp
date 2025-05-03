@@ -18,7 +18,3 @@ bool PlayerJudgeStartHipDrop::judge() const {
 
     return !(rs::getGroundHeight(mHeightCheck) < mConst->getHipDropHeight());
 }
-
-void PlayerJudgeStartHipDrop::reset() {}
-
-void PlayerJudgeStartHipDrop::update() {}

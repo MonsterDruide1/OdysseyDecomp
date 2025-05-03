@@ -16,10 +16,10 @@ public:
     void exeWait();
     void exeBreak();
 
-    ActorDimensionKeeper* getActorDimensionKeeper() const override;
+    ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; }
 
 private:
-    ActorDimensionKeeper* mActorDimensionKeeper = nullptr;
+    ActorDimensionKeeper* mDimensionKeeper = nullptr;
 };
 
 static_assert(sizeof(BarrelStack2D) == 0x118);

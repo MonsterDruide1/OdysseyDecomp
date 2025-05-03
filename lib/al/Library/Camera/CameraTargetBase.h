@@ -12,13 +12,16 @@ public:
 
     virtual const char* getTargetName() const = 0;
     virtual void calcTrans(sead::Vector3f* trans) const = 0;
-    virtual void calcSide(sead::Vector3f* side) const;
-    virtual void calcUp(sead::Vector3f* up) const;
-    virtual void calcFront(sead::Vector3f* front) const;
+
+    virtual void calcSide(sead::Vector3f* side) const {}
+
+    virtual void calcUp(sead::Vector3f* up) const {}
+
+    virtual void calcFront(sead::Vector3f* front) const {}
 
     virtual void calcGravity(sead::Vector3f* gravity) const { *gravity = {0.0f, -1.0f, 0.0f}; }
 
-    virtual void calcVelocity(sead::Vector3f* velocity) const;
+    virtual void calcVelocity(sead::Vector3f* velocity) const {}
 
     virtual bool isCollideGround() const { return false; }
 

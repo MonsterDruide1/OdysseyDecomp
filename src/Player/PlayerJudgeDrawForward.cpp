@@ -13,7 +13,3 @@ bool PlayerJudgeDrawForward::judge() const {
         return false;
     return mPlayerJudgeDeadWipeStart->isDeadTypeDrawForward();
 }
-
-void PlayerJudgeDrawForward::reset() {}
-
-void PlayerJudgeDrawForward::update() {}

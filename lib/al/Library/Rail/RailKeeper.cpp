@@ -9,8 +9,4 @@ RailKeeper::RailKeeper(const PlacementInfo& info) {
     rail->init(info);
     mRailRider = new RailRider(rail);
 }
-
-RailRider* RailKeeper::getRailRider() const {
-    return mRailRider;
-}
 }  // namespace al
