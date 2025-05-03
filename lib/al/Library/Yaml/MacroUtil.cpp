@@ -1,12 +1,12 @@
-#include "Library/Yaml/YamlMacroUtil.h"
+#include "Library/Yaml/MacroUtil.h"
 
 #include "Library/Base/StringUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
-namespace alYamlMacroUtil {
+alYamlMacroUtil::YamlParamGroup* sCurrent;
 
-YamlParamGroup* sCurrent;
+namespace alYamlMacroUtil {
 
 IUseYamlParam::IUseYamlParam(const char* name) : mName(name) {
     sCurrent->addParam(this);
@@ -16,11 +16,9 @@ bool IUseYamlParam::isEqualParamName(const char* name) const {
     return al::isEqualString(name, mName);
 }
 
-YamlParamGroup::YamlParamGroup() = default;
-
 template <typename T>
 void YamlParamGroup::setParamPtr(const char* name, T* value) {
-    IUseYamlParam* paramEntry = mRootParam;
+    IUseYamlParam* paramEntry = mHeadParam;
     while (paramEntry) {
         if (paramEntry->isEqualParamName(name)) {
             switch (paramEntry->getClassId()) {
@@ -63,17 +61,17 @@ void YamlParamGroup::setParamPtr(const char* name, T* value) {
 }
 
 void YamlParamGroup::addParam(IUseYamlParam* param) {
-    if (mRootParam) {
-        mTailParam->setNext(param);
+    if (!mHeadParam) {
+        mHeadParam = param;
         mTailParam = param;
         return;
     }
-    mRootParam = param;
+    mTailParam->setNext(param);
     mTailParam = param;
 }
 
 void YamlParamGroup::readyToSetPtr() {
-    IUseYamlParam* paramEntry = mRootParam;
+    IUseYamlParam* paramEntry = mHeadParam;
     while (paramEntry) {
         paramEntry->clearPtr();
         paramEntry = paramEntry->getNext();
@@ -81,7 +79,7 @@ void YamlParamGroup::readyToSetPtr() {
 }
 
 void YamlParamGroup::readParam(const al::ByamlIter& iter) {
-    IUseYamlParam* paramEntry = mRootParam;
+    IUseYamlParam* paramEntry = mHeadParam;
     while (paramEntry) {
         switch (paramEntry->getClassId()) {
         case YamlClassId::U8:
