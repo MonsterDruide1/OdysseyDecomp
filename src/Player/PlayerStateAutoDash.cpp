@@ -23,7 +23,7 @@ PlayerStateAutoDash::PlayerStateAutoDash(al::LiveActor* player)
 
 void PlayerStateAutoDash::appear() {
     al::LiveActor* player = mActor;
-    setDead(false);
+    al::NerveStateBase::appear();
 
     if (al::calcSpeed(player) < 12.0f)
         al::setNerve(this, &Run);

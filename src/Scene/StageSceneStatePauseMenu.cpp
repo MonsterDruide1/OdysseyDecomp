@@ -147,7 +147,7 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
 
 void StageSceneStatePauseMenu::appear() {
     mStartType = StartType::Title;
-    setDead(false);
+    al::NerveStateBase::appear();
     if (rs::isModeE3LiveRom()) {
         if (rs::isSeparatePlay(getHost()))
             al::setNerve(this, &NrvStageSceneStatePauseMenu.EndSeparatePlay);
@@ -161,7 +161,7 @@ void StageSceneStatePauseMenu::appear() {
 void StageSceneStatePauseMenu::kill() {
     rs::updateGyroText(getHost());
 
-    setDead(true);
+    al::NerveStateBase::kill();
     killPauseMenu();
     killMarioModel();  // redundant as killPauseMenu() already does this
 
