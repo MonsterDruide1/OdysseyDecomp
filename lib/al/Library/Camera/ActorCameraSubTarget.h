@@ -4,7 +4,6 @@
 #include <prim/seadSafeString.h>
 
 #include "Library/Camera/CameraSubTargetBase.h"
-#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 class LiveActor;
@@ -13,7 +12,7 @@ class ActorCameraSubTarget : public CameraSubTargetBase {
 public:
     ActorCameraSubTarget(const LiveActor* actor);
 
-    const char* getTargetName() const override { return mActor->getName(); }
+    const char* getTargetName() const override;
 
     void calcTrans(sead::Vector3f* trans) const override;
     void calcSide(sead::Vector3f* side) const override;

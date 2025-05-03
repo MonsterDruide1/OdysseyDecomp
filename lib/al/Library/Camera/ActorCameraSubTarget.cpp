@@ -2,10 +2,15 @@
 
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 
 ActorCameraSubTarget::ActorCameraSubTarget(const LiveActor* actor) : mActor(actor) {}
+
+const char* ActorCameraSubTarget::getTargetName() const {
+    return mActor->getName();
+}
 
 void ActorCameraSubTarget::calcTrans(sead::Vector3f* trans) const {
     trans->set(getTrans(mActor));
