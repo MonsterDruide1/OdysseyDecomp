@@ -22,4 +22,17 @@ void LayoutActor::initLayoutPartsActorKeeper(s32 capacity) {
 void LayoutActor::initLayoutKeeper(LayoutKeeper* layoutKeeper) {
     mLayoutKeeper = layoutKeeper;
 }
+
+CameraDirector* LayoutActor::getCameraDirector() const {
+    return mLayoutSceneInfo->getCameraDirector();
+}
+
+SceneObjHolder* LayoutActor::getSceneObjHolder() const {
+    return mLayoutSceneInfo->getSceneObjHolder();
+}
+
+const MessageSystem* LayoutActor::getMessageSystem() const {
+    return mLayoutSceneInfo->getMessageSystem();
+}
+
 }  // namespace al
