@@ -24,7 +24,7 @@ enum class YamlClassId : s32 {
 
 class IUseYamlParam {
 public:
-    IUseYamlParam(const char*);
+    IUseYamlParam(const char* name);
 
     virtual void clearPtr() = 0;
     virtual YamlClassId getClassId() const = 0;
@@ -65,7 +65,7 @@ private:
 
 class YamlParamGroup {
 public:
-    YamlParamGroup();
+    YamlParamGroup() = default;
 
     template <typename T>
     void setParamPtr(const char* name, T* value);
@@ -75,7 +75,7 @@ public:
     void readParam(const al::ByamlIter& iter);
 
 private:
-    IUseYamlParam* mRootParam = nullptr;
+    IUseYamlParam* mHeadParam = nullptr;
     IUseYamlParam* mTailParam = nullptr;
 };
 
