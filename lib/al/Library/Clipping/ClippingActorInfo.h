@@ -8,6 +8,7 @@ enum ClippingRequestKeeper {};
 namespace al {
 class LiveActor;
 struct ActorInitInfo;
+
 class ClippingJudge;
 class ViewIdHolder;
 
@@ -34,8 +35,13 @@ public:
 
     LiveActor* getLiveActor() const { return mLiveActor; }
 
+    ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
+
 private:
     LiveActor* mLiveActor;
+    const void* filler[0xb];
+    ViewIdHolder* mViewIdHolder;
+
     // Remaining Member's missing
 };
 
