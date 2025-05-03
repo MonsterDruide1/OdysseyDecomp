@@ -10,6 +10,7 @@ class JointDirectionInfo;
 class JointLocalAxisRotator;
 class JointLookAtController;
 class JointMasher;
+class JointSpringController;
 class JointTranslateShaker;
 class LiveActor;
 
@@ -71,7 +72,7 @@ void appendJointLookAtControllerNoJudgeNoOverLimitYaw(JointLookAtController*, co
 void initJointGroundSmoothController(const LiveActor*, const char*);
 void initJointPosToPosController(const LiveActor*, const char*, const sead::Vector3f*,
                                  const sead::Vector3f*, f32*, const sead::Vector3f&);
-void initJointSpringController(const LiveActor*, const char*);
+JointSpringController* initJointSpringController(const LiveActor*, const char*);
 void initJointConstrainedSpringController(const LiveActor*, const char*);
 void initJointSpringTransController(const LiveActor*, const char*);
 void initJointSimpleIK(const LiveActor*, const char*);
