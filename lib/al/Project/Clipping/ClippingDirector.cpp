@@ -63,7 +63,7 @@ void ClippingDirector::onGroupClipping(LiveActor* liveActor) {
     if (clippingActorInfo->isGroupClippingInit()) {
         mClippingActorHolder->onGroupClipping(liveActor);
         mGroupHolder->reentry(clippingActorInfo);
-        clippingActorInfo->setIsEnableGroupClipping(true);
+        clippingActorInfo->isEnableGroupClipping = true;
     }
 }
 
@@ -72,7 +72,7 @@ void ClippingDirector::offGroupClipping(LiveActor* liveActor) {
     if (clippingActorInfo->isGroupClippingInit()) {
         mClippingActorHolder->offGroupClipping(liveActor);
         mGroupHolder->leave(clippingActorInfo);
-        clippingActorInfo->setIsEnableGroupClipping(false);
+        clippingActorInfo->isEnableGroupClipping = false;
     }
 }
 
