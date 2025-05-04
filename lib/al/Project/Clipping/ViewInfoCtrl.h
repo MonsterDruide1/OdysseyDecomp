@@ -1,10 +1,10 @@
 #pragma once
 
 namespace al {
-class SceneCameraInfo;
-class PlayerHolder;
 class AreaObjGroup;
-class ClippingActorInfo;
+struct ClippingActorInfo;
+class PlayerHolder;
+class SceneCameraInfo;
 
 class ViewInfoCtrl {
 public:
