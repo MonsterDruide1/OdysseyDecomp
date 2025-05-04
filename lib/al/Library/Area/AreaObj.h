@@ -27,7 +27,7 @@ public:
     void validate();
     void invalidate();
 
-    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+    const PlacementInfo* getPlacementInfo() const { return mPlacementInfo; }
 
     AreaShape* getAreaShape() const { return mAreaShape; }
 

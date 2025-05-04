@@ -82,7 +82,7 @@ void SwitchKeepOnAreaGroup::selectTargetPosArray(bool* outCheckAllPos,
                                                  s32* outTargetPosCount, const AreaObj* areaObj,
                                                  const SwitchAreaTargetInfo* info) {
     s32 onCondition = 0;
-    tryGetArg(&onCondition, areaObj->getPlacementInfo(), "OnCondition");
+    tryGetArg(&onCondition, *areaObj->getPlacementInfo(), "OnCondition");
 
     switch (onCondition) {
     case 0:
