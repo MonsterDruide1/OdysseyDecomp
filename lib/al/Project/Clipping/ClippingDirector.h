@@ -6,17 +6,17 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+struct ActorInitInfo;
+class AreaObjDirector;
+class ClippingActorHolder;
+class ClippingFarAreaObserver;
 class ClippingGroupHolder;
 class ClippingJudge;
-class ViewInfoCtrl;
-class AreaObjDirector;
+class LiveActor;
 class PlayerHolder;
 class SceneCameraInfo;
 class ViewIdHolder;
-struct ActorInitInfo;
-class LiveActor;
-class ClippingActorHolder;
-class ClippingFarAreaObserver;
+class ViewInfoCtrl;
 
 class ClippingDirector : public HioNode, public IUseExecutor {
 public:

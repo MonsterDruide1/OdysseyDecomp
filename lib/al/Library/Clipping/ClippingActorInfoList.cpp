@@ -27,7 +27,7 @@ ClippingActorInfo* ClippingActorInfoList::remove(LiveActor* liveActor) {
 
 ClippingActorInfo* ClippingActorInfoList::find(const LiveActor* liveActor, s32* index) const {
     for (s32 i = 0; i < mClippingActorInfoCount; i++) {
-        if (mClippingActorInfo[i]->getLiveActor() == liveActor) {
+        if (mClippingActorInfo[i]->liveActor == liveActor) {
             if (index)
                 *index = i;
             return mClippingActorInfo[i];
@@ -38,14 +38,14 @@ ClippingActorInfo* ClippingActorInfoList::find(const LiveActor* liveActor, s32* 
 
 ClippingActorInfo* ClippingActorInfoList::tryFind(const LiveActor* liveActor) const {
     for (s32 i = mClippingActorInfoCount - 1; i >= 0; i--)
-        if (mClippingActorInfo[i]->getLiveActor() == liveActor)
+        if (mClippingActorInfo[i]->liveActor == liveActor)
             return mClippingActorInfo[i];
     return nullptr;
 }
 
 bool ClippingActorInfoList::isInList(const LiveActor* liveActor) const {
     for (s32 i = 0; i < mClippingActorInfoCount; i++)
-        if (mClippingActorInfo[i]->getLiveActor() == liveActor)
+        if (mClippingActorInfo[i]->liveActor == liveActor)
             return true;
     return false;
 }
