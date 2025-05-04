@@ -56,7 +56,7 @@ void registerAreaSyncHostMtx(const IUseAreaObj* areaObj, const sead::Matrix34f* 
 void registerAreaSyncHostMtx(const LiveActor* actor, const ActorInitInfo& initInfo);
 void registerAreaSyncHostMtx(const LiveActor* actor, const ActorInitInfo& initInfo,
                              const ValidatorBase& validator);
-bool tryReviseVelocityInsideAreaObj(sead::Vector3f* velocity, LiveActor* actor,
+bool tryReviseVelocityInsideAreaObj(sead::Vector3f* nearestEdgePos, LiveActor* actor,
                                     AreaObjGroup* areaGroup, const AreaObj* areaObj);
 SwitchKeepOnAreaGroup* tryCreateSwitchKeepOnAreaGroup(LiveActor* actor,
                                                       const ActorInitInfo& initInfo);

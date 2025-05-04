@@ -56,22 +56,20 @@ AreaObj* tryFindAreaObjPlayerAll(const PlayerHolder* holder, const char* name) {
     for (s32 i = 0; i < groupSize; i++) {
         AreaObj* areaObj = areaGroup->getAreaObj(i);
         AreaObj* currentAreaObject = nullptr;
-        for (s32 e = 0; e < playerNum; e++) {
-            if (isPlayerDead(holder, e))
+        for (s32 j = 0; j < playerNum; j++) {
+            if (isPlayerDead(holder, j))
                 continue;
 
-            const sead::Vector3f& playerPos = getPlayerPos(holder, e);
+            const sead::Vector3f& playerPos = getPlayerPos(holder, j);
             currentAreaObject = areaObj;
             if (!areaObj->isInVolume(playerPos)) {
                 currentAreaObject = nullptr;
                 break;
             }
         }
-        if (currentAreaObject) {
-            if (!selectedAreaObj ||
-                selectedAreaObj->getPriority() < currentAreaObject->getPriority()) {
-                selectedAreaObj = currentAreaObject;
-            }
+        if (currentAreaObject && (!selectedAreaObj || selectedAreaObj->getPriority() <
+                                                          currentAreaObject->getPriority())) {
+            selectedAreaObj = currentAreaObject;
         }
     }
     return selectedAreaObj;
@@ -79,8 +77,7 @@ AreaObj* tryFindAreaObjPlayerAll(const PlayerHolder* holder, const char* name) {
 
 AreaObj* createAreaObj(const ActorInitInfo& actorInitInfo, const char* name) {
     AreaInitInfo areaInitInfo;
-    areaInitInfo.set(*actorInitInfo.placementInfo, actorInitInfo.stageSwitchDirector,
-                     actorInitInfo.actorSceneInfo.sceneObjHolder);
+    initAreaInitInfo(&areaInitInfo, actorInitInfo);
     AreaObj* areaObj = new AreaObj(name);
     areaObj->init(areaInitInfo);
     return areaObj;
@@ -158,8 +155,7 @@ AreaObjGroup* createLinkAreaGroup(LiveActor* actor, const ActorInitInfo& initInf
         getLinksInfoByIndex(&placementInfo, actorPlacementInfo, name, i);
 
         AreaInitInfo areaInfo;
-        areaInfo.set(placementInfo, initInfo.stageSwitchDirector,
-                     initInfo.actorSceneInfo.sceneObjHolder);
+        initAreaInitInfo(&areaInfo, placementInfo, initInfo);
 
         AreaObj* areaObj = new AreaObj(areaName);
         areaObj->init(areaInfo);
@@ -250,26 +246,28 @@ void registerAreaSyncHostMtx(const LiveActor* actor, const ActorInitInfo& initIn
     registerAreaSyncHostMtx(actor, actor->getBaseMtx(), initInfo, validator);
 }
 
-bool tryReviseVelocityInsideAreaObj(sead::Vector3f* velocity, LiveActor* actor,
+bool tryReviseVelocityInsideAreaObj(sead::Vector3f* nearestEdgePos, LiveActor* actor,
                                     AreaObjGroup* areaGroup, const AreaObj* areaObj) {
     if (!areaGroup || !areaObj)
         return false;
 
-    if (isInAreaObj(areaGroup, getTrans(actor))) {
-        f32 velMagnitude = getVelocity(actor).length();
-        sead::Vector3f nextPosition = getTrans(actor) + getVelocity(actor);
-        if (isInAreaObj(areaGroup, nextPosition))
-            return false;
-        calcNearestAreaObjEdgePos(velocity, areaObj, nextPosition);
-        sead::Vector3f newVelocity = *velocity - getTrans(actor);
-        if (newVelocity.length() > velMagnitude)
-            setLength(&newVelocity, velMagnitude);
-        setVelocity(actor, newVelocity);
-    } else {
-        calcNearestAreaObjEdgePos(velocity, areaObj, getTrans(actor));
-        setTrans(actor, *velocity);
+    if (!isInAreaObj(areaGroup, getTrans(actor))) {
+        calcNearestAreaObjEdgePos(nearestEdgePos, areaObj, getTrans(actor));
+        setTrans(actor, *nearestEdgePos);
         setVelocityZero(actor);
+        return true;
     }
+
+    f32 velMagnitude = getVelocity(actor).length();
+    sead::Vector3f nextPosition = getTrans(actor) + getVelocity(actor);
+    if (isInAreaObj(areaGroup, nextPosition))
+        return false;
+
+    calcNearestAreaObjEdgePos(nearestEdgePos, areaObj, nextPosition);
+    sead::Vector3f newVelocity = *nearestEdgePos - getTrans(actor);
+    if (newVelocity.length() > velMagnitude)
+        setLength(&newVelocity, velMagnitude);
+    setVelocity(actor, newVelocity);
     return true;
 }
 
