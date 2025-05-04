@@ -3,11 +3,10 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-class ClippingActorInfo;
-class ViewIdHolder;
-class PlayerHolder;
-class PlacementId;
 class AreaObjGroup;
+struct ClippingActorInfo;
+class PlacementId;
+class PlayerHolder;
 class SceneCameraInfo;
 
 class ViewInfoCtrl {
