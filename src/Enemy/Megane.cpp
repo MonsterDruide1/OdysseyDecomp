@@ -154,7 +154,7 @@ void Megane::init(const al::ActorInitInfo& initInfo) {
         al::StringTmp<128>("ダイナミクス[%s]", jointNames[i]).cstr();
     }
 
-    mHitSensor = al::getHitSensor(this, "CapReceiver");
+    mCapReceiverSensor = al::getHitSensor(this, "CapReceiver");
 }
 
 bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
@@ -171,10 +171,10 @@ bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     if (al::isMsgPlayerDisregard(message))
         return isNerveDieOrRebirth();
 
-    f32 pa1 = 0.0f;
-    f32 pa2 = 0.0f;
-    if (rs::tryGetSandGeyserRaise(message, &pa1, &pa2)) {
-        if (mHitSensor == self)
+    f32 geyserRaiseDistance = 0.0f;
+    f32 geyserRaiseSpeed = 0.0f;
+    if (rs::tryGetSandGeyserRaise(message, &geyserRaiseDistance, &geyserRaiseSpeed)) {
+        if (self == mCapReceiverSensor)
             return false;
         if (al::getVelocity(this).y < 15.0f) {
             al::addVelocityY(this, 2.0f);
@@ -187,19 +187,19 @@ bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     if (rs::isMsgEnableMapCheckPointWarp(message))
         return rs::isMsgEnableMapCheckPointWarpCollidedGround(message, this);
 
-    if (mHitSensor != self && isNormalNerveWithWaitHack() &&
+    if (self != mCapReceiverSensor && isNormalNerveWithWaitHack() &&
         rs::tryReceiveMsgNpcScareByEnemyIgnoreTargetHack(message, mCapTargetInfo))
         return true;
 
     if (al::isMsgPushAll(message)) {
-        if (mHitSensor == self)
+        if (self == mCapReceiverSensor)
             return false;
         if (isNormalNerveWithWaitHack())
             return al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 3.0f);
     }
 
     if (al::isMsgPlayerTrampleReflect(message)) {
-        if (mHitSensor == self)
+        if (self == mCapReceiverSensor)
             return false;
 
         if (al::isNerve(this, &MeganeData.NrvMegane.WaitHack)) {
@@ -226,7 +226,7 @@ bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     }
 
     if (rs::isMsgPlayerAndCapObjHipDropReflectAll(message)) {
-        if (mHitSensor == self)
+        if (self == mCapReceiverSensor)
             return false;
 
         if (al::isNerve(this, &MeganeData.NrvMegane.WaitHack)) {
@@ -246,7 +246,7 @@ bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     }
 
     if (rs::isMsgKillByShineGet(message)) {
-        if (mHitSensor == self)
+        if (self == mCapReceiverSensor)
             return false;
         if (isNormalNerveWithWaitHack())
             return tryReceiveMsgKillByShineGet(message);
@@ -348,7 +348,7 @@ bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
         return true;
     }
 
-    if (rs::isMsgPushToPlayer(message) && mPlayerHack && mHitSensor != self) {
+    if (rs::isMsgPushToPlayer(message) && isHack() && self != mCapReceiverSensor) {
         mPlayerPushReceiver->receivePushMsg(message, other, self, 3.0f);
         return true;
     }
@@ -356,7 +356,7 @@ bool Megane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
 }
 
 void Megane::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (mHitSensor == self)
+    if (self == mCapReceiverSensor)
         return;
 
     if ((al::isNerve(this, &MeganeData.NrvMegane.Wait) ||
@@ -368,18 +368,25 @@ void Megane::attackSensor(al::HitSensor* self, al::HitSensor* other) {
          al::isNerve(this, &MeganeData.NrvMegane.Trampled) ||
          al::isNerve(this, &MeganeData.NrvMegane.WaitHack)) &&
         al::isSensorEnemyBody(self)) {
-        if (!rs::sendMsgMeganeAttack(other, self) &&
-            !al::sendMsgPushAndKillVelocityToTargetH(this, self, other)) {
-            rs::sendMsgPushToPlayer(other, self);
-        }
+        if (rs::sendMsgMeganeAttack(other, self))
+            return;
+        if (al::sendMsgPushAndKillVelocityToTargetH(this, self, other))
+            return;
+        rs::sendMsgPushToPlayer(other, self);
         return;
     }
 
-    if (mPlayerHack &&
-        (!isEnableTrample(self, other) || !rs::sendMsgMeganeHackTrample(other, self)) &&
-        !rs::sendMsgHackAttackKick(other, self) && !rs::sendMsgHackAttackMapObj(other, self) &&
-        !rs::sendMsgMeganeAttack(other, self) &&
-        !rs::sendMsgHackerNoReaction(mPlayerHack, other, self)) {
+    if (isHack()) {
+        if (isEnableTrample(self, other) && rs::sendMsgMeganeHackTrample(other, self))
+            return;
+        if (rs::sendMsgHackAttackKick(other, self))
+            return;
+        if (rs::sendMsgHackAttackMapObj(other, self))
+            return;
+        if (rs::sendMsgMeganeAttack(other, self))
+            return;
+        if (rs::sendMsgHackerNoReaction(mPlayerHack, other, self))
+            return;
         al::sendMsgPushAndKillVelocityToTargetH(this, self, other);
     }
 }
@@ -406,12 +413,12 @@ void Megane::control() {
     updateDither();
     mNerveKeeper->update();
 
-    if (mPlayerHack && !al::isHideModel(this))
+    if (isHack() && !al::isHideModel(this))
         al::showSilhouetteModelIfHide(this);
     else
         al::hideSilhouetteModelIfShow(this);
 
-    if (mPlayerHack) {
+    if (isHack()) {
         if (rs::isHackCapSeparateFlying(mPlayerHack))
             al::tryStartVisAnimIfNotPlayingForAction(this, "CapOff");
         else
@@ -436,7 +443,7 @@ void Megane::control() {
            al::isCollidedFloorCode(this, "Poison")) &&
           !al::isCollidedFloorCode(this, "Needle")) ||
          al::isInDeathArea(this))) {
-        if (mPlayerHack) {
+        if (isHack()) {
             endCameraSubjective();
             al::setColliderFilterCollisionParts(this, mCollisionPartsFilterBase);
             rs::tryEndHackStartDemo(mPlayerHack, this);
@@ -448,7 +455,7 @@ void Megane::control() {
         al::setNerve(this, &MeganeData.NrvMegane.Die);
     }
 
-    if (!mPlayerHack) {
+    if (!isHack()) {
         mIsHackTutorialVisible = false;
         return;
     }
@@ -471,7 +478,7 @@ void Megane::notifyKillSwitch() {
     if (isNerveDieOrRebirth())
         return;
 
-    if (mPlayerHack) {
+    if (isHack()) {
         endCameraSubjective();
         al::setColliderFilterCollisionParts(this, mCollisionPartsFilterBase);
         rs::tryEndHackStartDemo(mPlayerHack, this);
@@ -493,15 +500,13 @@ bool Megane::isNormalNerveWithWaitHack() const {
 }
 
 bool Megane::isNormalNerveWithoutWaitHack() const {
-    if (al::isNerve(this, &MeganeData.NrvMegane.Wait) ||
-        al::isNerve(this, &MeganeData.NrvMegane.Appear) ||
-        al::isNerve(this, &MeganeData.NrvMegane.Find) ||
-        al::isNerve(this, &MeganeData.NrvMegane.Fall) ||
-        al::isNerve(this, &MeganeData.NrvMegane.Land) ||
-        al::isNerve(this, &MeganeData.NrvMegane.Trampled)) {
-        return true;
-    }
-    return al::isNerve(this, &MeganeData.NrvMegane.RunAway);
+    return al::isNerve(this, &MeganeData.NrvMegane.Wait) ||
+           al::isNerve(this, &MeganeData.NrvMegane.Appear) ||
+           al::isNerve(this, &MeganeData.NrvMegane.Find) ||
+           al::isNerve(this, &MeganeData.NrvMegane.Fall) ||
+           al::isNerve(this, &MeganeData.NrvMegane.Land) ||
+           al::isNerve(this, &MeganeData.NrvMegane.Trampled) ||
+           al::isNerve(this, &MeganeData.NrvMegane.RunAway);
 }
 
 bool Megane::tryReceiveMsgKillByShineGet(const al::SensorMsg* message) {
@@ -564,32 +569,31 @@ bool Megane::tryShiftFall() {
 }
 
 void Megane::updateRunAwayDirection() {
-    sead::Vector3f dirToActor;
-    al::calcDirToActorH(&dirToActor, this, al::getPlayerActor(this, 0));
-    dirToActor.negate();
+    sead::Vector3f runAwayDirection;
+    al::calcDirToActorH(&runAwayDirection, this, al::getPlayerActor(this, 0));
+    runAwayDirection.negate();
     recordWallNormal();
 
     if (mRunAwayTime != 0) {
-        f32 rundot = mWallNormal.dot(dirToActor);
-        if (-0.99f > rundot) {
-            f32 tmp = -dirToActor.x;
-            dirToActor.x = dirToActor.z;
-            dirToActor.z = tmp;
+        f32 rundot = mWallNormal.dot(runAwayDirection);
+        if (rundot < -0.99f) {
+            f32 tmp = -runAwayDirection.x;
+            runAwayDirection.x = runAwayDirection.z;
+            runAwayDirection.z = tmp;
         } else if (rundot < 0.0f) {
-            al::verticalizeVec(&dirToActor, mWallNormal, dirToActor);
-            al::normalize(&dirToActor);
+            al::verticalizeVec(&runAwayDirection, mWallNormal, runAwayDirection);
+            al::normalize(&runAwayDirection);
         }
         mRunAwayTime--;
     }
-    al::turnToDirection(this, dirToActor, 4.0f);
+    al::turnToDirection(this, runAwayDirection, 4.0f);
 }
 
 void Megane::shiftWaitOrRunAway() {
-    if (al::calcDistanceH(this, al::getPlayerActor(this, 0)) < 1000.0f) {
+    if (al::calcDistanceH(this, al::getPlayerActor(this, 0)) < 1000.0f)
         al::setNerve(this, &MeganeData.NrvMegane.RunAway);
-        return;
-    }
-    al::setNerve(this, &MeganeData.NrvMegane.Wait);
+    else
+        al::setNerve(this, &MeganeData.NrvMegane.Wait);
 }
 
 bool Megane::isTriggerStare() const {
@@ -624,20 +628,18 @@ void Megane::faceToCameraFront() {
 
 void Megane::tryToggleSpectaclesNerve() {
     if (isTriggerStare()) {
-        if (mNerveKeeper->getCurrentNerve() == &MeganeData.NrvMegane.SpectaclesOn) {
+        if (mNerveKeeper->getCurrentNerve() == &MeganeData.NrvMegane.SpectaclesOn)
             mNerveKeeper->setNerve(&MeganeData.NrvMegane.SpectaclesOff);
-            return;
-        }
-        mNerveKeeper->setNerve(&MeganeData.NrvMegane.SpectaclesOn);
+        else
+            mNerveKeeper->setNerve(&MeganeData.NrvMegane.SpectaclesOn);
     }
 }
 
 void Megane::shiftHackNerveOnGround() {
-    if (mNerveKeeper->getCurrentNerve() == &MeganeData.NrvMegane.SpectaclesOn) {
+    if (mNerveKeeper->getCurrentNerve() == &MeganeData.NrvMegane.SpectaclesOn)
         al::setNerve(this, &MeganeData.NrvMegane.HackSlow);
-        return;
-    }
-    al::setNerve(this, &MeganeData.NrvMegane.Hack);
+    else
+        al::setNerve(this, &MeganeData.NrvMegane.Hack);
 }
 
 void Megane::putOnSpectaclesForce() {
@@ -649,7 +651,7 @@ void Megane::putOnSpectaclesForce() {
 }
 
 bool Megane::isWearingGlasses() const {
-    return mPlayerHack && mNerveKeeper->getCurrentNerve() == &MeganeData.NrvMegane.SpectaclesOn;
+    return isHack() && mNerveKeeper->getCurrentNerve() == &MeganeData.NrvMegane.SpectaclesOn;
 }
 
 void Megane::updateDither() {
@@ -657,14 +659,15 @@ void Megane::updateDither() {
     sead::Vector3f pos = al::getCameraAt(this, 0) - cameraPos;
     al::tryNormalizeOrZero(&pos);
 
-    sead::Vector3f actorPos = al::getTrans(this) - cameraPos;
-    f32 length = actorPos.length();
-    al::tryNormalizeOrZero(&actorPos);
+    sead::Vector3f actorDir = al::getTrans(this) - cameraPos;
+    f32 actorDistance = actorDir.length();
+    al::tryNormalizeOrZero(&actorDir);
 
     al::LiveActor* subActor = al::getSubActor(this, "メガネ");
     f32 targetAlphaMask = 0.0f;
-    if (0.0f < pos.dot(actorPos))
-        targetAlphaMask = sead::Mathf::clamp((length - 700.0f + 500.0f) / 500.0f, 0.0f, 1.0f);
+    if (pos.dot(actorDir) > 0.0f)
+        targetAlphaMask =
+            sead::Mathf::clamp((actorDistance - 700.0f + 500.0f) / 500.0f, 0.0f, 1.0f);
 
     if (mModelAlphaMask > targetAlphaMask)
         mModelAlphaMask = targetAlphaMask;
@@ -690,8 +693,8 @@ void Megane::recordWallNormal() {
     if (!al::tryNormalizeOrZero(&normal))
         return;
 
-    f32 scale = mRunAwayTime / 30.0f;
-    normal = normal * (1.0f - scale) + mWallNormal * scale;
+    f32 lerpFactor = mRunAwayTime / 30.0f;
+    normal = normal * (1.0f - lerpFactor) + mWallNormal * lerpFactor;
     if (al::tryNormalizeOrZero(&normal)) {
         mWallNormal.set(normal);
         mRunAwayTime = 30;
@@ -719,9 +722,9 @@ void Megane::exeWait() {
         if (!isFaceToTarget)
             al::startAction(this, "Turn");
     } else {
-        sead::Vector3f dirToActor;
-        al::calcDirToActorH(&dirToActor, this, al::getPlayerActor(this, 0));
-        if (al::turnToDirection(this, dirToActor, 3.0f) && mWaitDelay == 0)
+        sead::Vector3f runAwayDirection;
+        al::calcDirToActorH(&runAwayDirection, this, al::getPlayerActor(this, 0));
+        if (al::turnToDirection(this, runAwayDirection, 3.0f) && mWaitDelay == 0)
             al::startAction(this, "Wait");
     }
 
@@ -1025,7 +1028,7 @@ void Megane::exeAppear() {
 }
 
 void Megane::exeSpectaclesOff() {
-    if (mNerveKeeper->getCurrentStep() == 0 && mPlayerHack)
+    if (mNerveKeeper->getCurrentStep() == 0 && isHack())
         al::startHitReaction(this, "メガネを外した");
 
     al::LiveActor* subActor = al::tryGetSubActor(this, "メガネ");
@@ -1037,7 +1040,7 @@ void Megane::exeSpectaclesOff() {
     }
 
     if (subActor) {
-        if (mPlayerHack && !rs::isHackCapSeparateFlying(mPlayerHack)) {
+        if (isHack() && !rs::isHackCapSeparateFlying(mPlayerHack)) {
             if (!al::isActionPlaying(subActor, "SpectaclesOff")) {
                 bool isActionPlaying = al::isActionPlaying(subActor, "SpectaclesOffEnemy");
                 al::startAction(subActor, "SpectaclesOff");
@@ -1057,11 +1060,11 @@ void Megane::exeSpectaclesOff() {
 }
 
 void Megane::exeSpectaclesOn() {
-    if (mNerveKeeper->getCurrentStep() == 0 && mPlayerHack)
+    if (mNerveKeeper->getCurrentStep() == 0 && isHack())
         al::startHitReaction(this, "メガネをかけた");
 
     al::LiveActor* subActor = al::tryGetSubActor(this, "メガネ");
-    if (mPlayerHack) {
+    if (isHack()) {
         if (!mTestFilterGlasses->isAlive()) {
             mTestFilterGlasses->startAppear();
             if (subActor)

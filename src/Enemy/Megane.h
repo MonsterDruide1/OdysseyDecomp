@@ -101,7 +101,7 @@ private:
     sead::Vector3f mPlayerPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mWallNormal = {0.0f, 0.0f, 0.0f};
     u32 mRunAwayTime = 0;
-    al::HitSensor* mHitSensor = nullptr;
+    al::HitSensor* mCapReceiverSensor = nullptr;
     bool mIsHackTutorialVisible = false;
     al::NerveKeeper* mNerveKeeper = nullptr;
 };
