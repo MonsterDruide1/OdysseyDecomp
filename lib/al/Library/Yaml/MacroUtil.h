@@ -74,6 +74,8 @@ public:
     void readyToSetPtr();
     void readParam(const al::ByamlIter& iter);
 
+    static YamlParamGroup* sCurrent;
+
 private:
     IUseYamlParam* mHeadParam = nullptr;
     IUseYamlParam* mTailParam = nullptr;
