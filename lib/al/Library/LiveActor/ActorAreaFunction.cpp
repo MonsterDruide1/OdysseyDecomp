@@ -84,8 +84,7 @@ AreaObj* createAreaObj(const ActorInitInfo& actorInitInfo, const char* name) {
 }
 
 void initAreaInitInfo(AreaInitInfo* areaInitInfo, const ActorInitInfo& actorInitInfo) {
-    areaInitInfo->set(*actorInitInfo.placementInfo, actorInitInfo.stageSwitchDirector,
-                      actorInitInfo.actorSceneInfo.sceneObjHolder);
+    initAreaInitInfo(areaInitInfo, *actorInitInfo.placementInfo, actorInitInfo);
 }
 
 AreaObj* createLinkArea(const ActorInitInfo& initInfo, const char* name, const char* areaName) {
