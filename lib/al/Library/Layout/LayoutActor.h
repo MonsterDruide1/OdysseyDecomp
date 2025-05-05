@@ -8,7 +8,6 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Layout/IUseLayout.h"
 #include "Library/Layout/IUseLayoutAction.h"
-#include "Library/Layout/LayoutSceneInfo.h"
 #include "Library/Message/IUseMessageSystem.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
