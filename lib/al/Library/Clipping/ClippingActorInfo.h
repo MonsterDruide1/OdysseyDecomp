@@ -34,12 +34,14 @@ public:
 
     LiveActor* getLiveActor() const { return mLiveActor; }
 
-    void setIsClipping(bool value) { mIsClippingEnable = value; }
+    void setIsEnableGroupClipping(const bool isEnableGroupClipping) {
+        mIsEnableGroupClipping = isEnableGroupClipping;
+    }
 
 private:
     LiveActor* mLiveActor;
     void* filler[0xc];  // offset isClippingEnable to the correct place
-    bool mIsClippingEnable;
+    bool mIsEnableGroupClipping;
     // Remaining Member's missing
 };
 }  // namespace al

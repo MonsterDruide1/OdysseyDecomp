@@ -2,11 +2,12 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/Clipping/ClippingGroupHolder.h"
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+class ClippingGroupHolder;
+class ClippingJudge;
 class ViewInfoCtrl;
 class AreaObjDirector;
 class PlayerHolder;
@@ -19,11 +20,9 @@ class ClippingFarAreaObserver;
 
 class ClippingDirector : public HioNode, public IUseExecutor {
 public:
-    ClippingDirector(s32, const AreaObjDirector* areaObjDirector, const PlayerHolder* playerHolder,
-                     const SceneCameraInfo* sceneCameraInfo);
+    ClippingDirector(s32 maxActors, const AreaObjDirector* areaObjDirector,
+                     const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
     ~ClippingDirector();
-
-    void execute() override;
 
     void endInit(const AreaObjDirector* areaObjDirector);
     void setDefaultFarClipDistance(f32 distance);
@@ -33,6 +32,7 @@ public:
     void addToGroupClipping(LiveActor* liveActor, const ActorInitInfo& actorInitInfo);
     void onGroupClipping(LiveActor* liveActor);
     void offGroupClipping(LiveActor* liveActor);
+    void execute() override;
     void startCheckViewCtrlByCameraPos();
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
@@ -46,4 +46,5 @@ private:
     bool mIsExecute = true;
 };
 
+static_assert(sizeof(ClippingDirector) == 0x38);
 }  // namespace al

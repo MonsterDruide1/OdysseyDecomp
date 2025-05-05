@@ -8,13 +8,14 @@ class ClippingActorInfo;
 
 class ViewInfoCtrl {
 public:
+    ViewInfoCtrl(const PlayerHolder*, const SceneCameraInfo*);
+
     void initActorInfo(ClippingActorInfo*);
     void initViewCtrlAreaGroup(AreaObjGroup*);
+    bool update();
     void startCheckByCameraPos();
     void startCheckByLookAtPos();
     void startCheckByPlayerPos();
-    bool update();
-    ViewInfoCtrl(const PlayerHolder*, const SceneCameraInfo*);
 
 private:
     void* filler[0x7];
