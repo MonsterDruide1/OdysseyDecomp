@@ -3,6 +3,7 @@
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/Layout/LayoutPartsActorKeeper.h"
+#include "Library/Layout/LayoutSceneInfo.h"
 
 namespace al {
 void LayoutActor::appear() {
