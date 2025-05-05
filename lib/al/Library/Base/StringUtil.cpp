@@ -22,16 +22,78 @@ const char* createConcatString(const char* start, const char* end) {
     return buffer;
 }
 
-// void createFileNameBySuffix(sead::BufferedSafeString*, const char*, const char*)
-// void outputValueWithComma(char*, u32, u64, bool, bool)
+void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, const char* suffix) {
+    out->clear();
+    if (!suffix) {
+        out->append(name);
+        return;
+    }
+    out->append(name);
+    out->append(suffix);
+}
+
+u32 outputValueWithComma(char* out, u32 size, u64 value, bool usePadding, bool useFixedSize) {
+    // What caveman did this
+    if (999999999 < value) {
+        return sead::StringUtil::snprintf(out, size, "%3d,%03d,%03d,%03d",
+                                          (u32)(value / 1000000000), (u32)(value / 1000000 % 1000),
+                                          (u32)(value / 1000 % 1000), (u32)(value % 1000));
+    }
+    if (999999 < value) {
+        if (usePadding) {
+            return sead::StringUtil::snprintf(out, size, "%3d,%03d,%03d", (u32)(value / 1000000),
+                                              (u32)(value / 1000 % 1000), (u32)(value % 1000));
+        }
+        return sead::StringUtil::snprintf(out, size, "%d,%03d,%03d", (u32)(value / 1000000),
+                                          (u32)(value / 1000 % 1000), (u32)(value % 1000));
+    }
+    if (999 < value) {
+        if (usePadding) {
+            if (useFixedSize) {
+                return sead::StringUtil::snprintf(out, size, "%3d,%03d", (u32)(value / 1000),
+                                                  (u32)(value % 1000));
+            }
+            return sead::StringUtil::snprintf(out, size, "    %3d,%03d", (u32)(value / 1000),
+                                              (u32)(value % 1000));
+        }
+        return sead::StringUtil::snprintf(out, size, "%d,%03d", (u32)(value / 1000),
+                                          (u32)(value % 1000));
+    }
+    if (usePadding) {
+        if (useFixedSize)
+            return sead::StringUtil::snprintf(out, size, "    %3d", (u32)value);
+        return sead::StringUtil::snprintf(out, size, "        %3d", (u32)value);
+    }
+    return sead::StringUtil::snprintf(out, size, "%d", (u32)value);
+}
 
 void extractString(char* out, const char* str, u32 len, u32 unused) {
     strncpy(out, str, len);
     out[len] = '\0';
 }
 
-// void searchSubString(const char*, const char*);
-// void searchSubString(const char*, const char*, s32);
+const char* searchSubString(const char* haystack, const char* needle) {
+    return searchSubString(haystack, needle, strlen(needle));
+}
+
+const char* searchSubString(const char* haystack, const char* needle, s32 needleLen) {
+    while (haystack[0] != '\0') {
+        s32 size = 0;
+        for (s32 index = 0; index < needleLen; index++) {
+            if (haystack[index] == '\0' || haystack[index] != needle[index])
+                break;
+            size++;
+        }
+
+        if (size == needleLen)
+            return haystack;
+
+        haystack++;
+    }
+
+    return nullptr;
+}
+
 // const char* getSubStringUnmatched(const char**, const char*, const MatchStr&,
 //                                   void (*)(const char*, const char*, void*), void*);
 // const char* getSubStringUnmatched(const char*, const MatchStr&);
@@ -60,7 +122,16 @@ void removeStringFromEnd(char* out, u32 len, const char* end, const char* str) {
     out[lenStr - lenEnd] = '\0';
 }
 
-// void translateCharacters(char*, const char*, const char*);
+void translateCharacters(char* string, const char* charmap, const char* newCharmap) {
+    for (; charmap[0] != '\0'; charmap++) {
+        for (s32 index = 0; string[index] != '\0'; index++)
+            if (string[index] == charmap[0])
+                string[index] = newCharmap[0];
+
+        newCharmap++;
+    }
+}
+
 // void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
 // void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
 // void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*,
@@ -103,12 +174,11 @@ bool isStartWithString(const char* str, const char* start) {
     return false;
 }
 
-// NON_MATCHING: inlined return https://decomp.me/scratch/XEtRH
 bool isEndWithString(const char* str, const char* end) {
     s32 lenStr = strlen(str);
     s32 lenEnd = strlen(end);
 
-    if (lenEnd > lenStr)
+    if (lenStr < lenEnd)
         return false;
 
     return isEqualString(&str[lenStr - lenEnd], end);
@@ -133,7 +203,8 @@ void copyStringW(char16* out, const char16* str, u32 len) {
 
 // bool isInStack(const void*);
 
-bool isEqualString(const char* str1, const char* str2) {
+// Attr required for isEndWithString
+__attribute__((noinline)) bool isEqualString(const char* str1, const char* str2) {
     while (*str1 == *str2) {
         char val = *str1;
 
@@ -147,8 +218,20 @@ bool isEqualString(const char* str1, const char* str2) {
     return false;
 }
 
-bool isEqualString(const sead::SafeString& str1, const sead::SafeString& str2) {
-    return isEqualString(str1.cstr(), str2.cstr());
+bool isEqualString(const sead::SafeString& safestr1, const sead::SafeString& safestr2) {
+    const char* str1 = safestr1.cstr();
+    const char* str2 = safestr2.cstr();
+    while (*str1 == *str2) {
+        char val = *str1;
+
+        if (!val)
+            return true;
+
+        str2++;
+        str1++;
+    }
+
+    return false;
 }
 
 bool isEqualStringCase(const char* str1, const char* str2) {
