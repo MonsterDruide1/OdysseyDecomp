@@ -4,12 +4,10 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
-alYamlMacroUtil::YamlParamGroup* sCurrent;
-
 namespace alYamlMacroUtil {
 
 IUseYamlParam::IUseYamlParam(const char* name) : mName(name) {
-    sCurrent->addParam(this);
+    YamlParamGroup::sCurrent->addParam(this);
 }
 
 bool IUseYamlParam::isEqualParamName(const char* name) const {
