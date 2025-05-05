@@ -114,8 +114,10 @@ AreaObj* tryCreateLinkArea(const ActorInitInfo& initInfo, const char* name, cons
     return createLinkArea(initInfo, name, areaName);
 }
 
-AreaObjGroup* createLinkAreaGroup(const ActorInitInfo& initInfo, const char* name,
-                                  const char* groupName, const char* areaName) {
+__attribute__((always_inline)) AreaObjGroup* createLinkAreaGroup(const ActorInitInfo& initInfo,
+                                                                 const char* name,
+                                                                 const char* groupName,
+                                                                 const char* areaName) {
     s32 linkChildNum = calcLinkChildNum(initInfo, name);
     if (linkChildNum < 1)
         return nullptr;
@@ -141,27 +143,7 @@ AreaObjGroup* createLinkAreaGroup(const ActorInitInfo& initInfo, const char* nam
 
 AreaObjGroup* createLinkAreaGroup(LiveActor* actor, const ActorInitInfo& initInfo, const char* name,
                                   const char* groupName, const char* areaName) {
-    s32 linkChildNum = calcLinkChildNum(initInfo, name);
-    if (linkChildNum < 1)
-        return nullptr;
-
-    AreaObjGroup* areaGroup = new AreaObjGroup(groupName, 0);
-    areaGroup->createBuffer(linkChildNum);
-    const PlacementInfo& actorPlacementInfo = *initInfo.placementInfo;
-
-    for (s32 i = 0; i < linkChildNum; i++) {
-        PlacementInfo placementInfo;
-        getLinksInfoByIndex(&placementInfo, actorPlacementInfo, name, i);
-
-        AreaInitInfo areaInfo;
-        initAreaInitInfo(&areaInfo, placementInfo, initInfo);
-
-        AreaObj* areaObj = new AreaObj(areaName);
-        areaObj->init(areaInfo);
-
-        areaGroup->registerAreaObj(areaObj);
-    }
-    return areaGroup;
+    return createLinkAreaGroup(initInfo, name, groupName, areaName);
 }
 
 AreaObj* tryFindAreaObj(const LiveActor* actor, const char* name) {
