@@ -148,7 +148,8 @@ void PackunPoisonBall::exeMove() {
         _120 = mParabolicPath->calcPathTimeFromHorizontalSpeed(_13c);
     }
 
-    mParabolicPath->calcPosition(al::getTransPtr(this), al::calcNerveRate(this, -1, _120));
+    f32 rate = al::calcNerveRate(this, -1, _120);
+    mParabolicPath->calcPosition(al::getTransPtr(this), rate);
 
     if (al::isCollidedWall(this)) {
         al::makeMtxFrontUpPos(&mEffectCollidedWallMtx, al::getCollidedWallNormal(this),
