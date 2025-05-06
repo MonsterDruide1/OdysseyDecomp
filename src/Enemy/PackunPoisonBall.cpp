@@ -3,6 +3,7 @@
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
@@ -11,6 +12,7 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/ParabolicPath.h"
+#include "Library/Matrix/MatrixUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
@@ -26,7 +28,7 @@ NERVES_MAKE_NOSTRUCT(PackunPoisonBall, Move, Paint, Fall)
 
 PackunPoisonBall::PackunPoisonBall(al::LiveActor* param_1, bool isBig)
     : LiveActor("ポイズンパックンの毒だま"), _108(param_1), mIsBig(isBig),
-      _118(new al::ParabolicPath()) {
+      mParabolicPath(new al::ParabolicPath()) {
     getName();
 }
 
@@ -114,7 +116,65 @@ void PackunPoisonBall::appear() {
     al::setNerve(this, &Move);
 }
 
-// void PackunPoisonBall::exeMove() {}
+void FUN_7100170d28(al::LiveActor*, const sead::Vector3f&);
+
+void PackunPoisonBall::exeMove() {
+    if (al::isFirstStep(this)) {
+        sead::Vector3f front = sead::Vector3f::ez;
+        al::calcQuatFront(&front, _108);
+        sead::Vector3f side = sead::Vector3f::ex;
+        al::calcQuatSide(&side, _108);
+        _124.set(al::getTrans(this));
+        f32 fVar7;
+        f32 fVar8;
+        f32 fVar9 = 0.0f;
+        if (!mIsHack) {
+            fVar8 = 0.0f;
+            fVar7 = 0.0f;
+        } else {
+            fVar7 = al::getRandom(-50.0f, 50.0f);
+            if (!mIsHack) {
+                fVar8 = 0.0f;
+            } else {
+                fVar8 = al::getRandom(-100.0f, 100.0f);
+                fVar9 = 0.0f;
+                if (mIsHack)
+                    fVar9 = al::getRandom(-20.0f, 20.0f);
+            }
+        }
+        mParabolicPath->initFromUpVector(al::getTrans(this),
+                                         al::getTrans(this) + (fVar7 + _138) * front + fVar8 * side,
+                                         -al::getGravity(this), fVar9 + _140);
+        _120 = mParabolicPath->calcPathTimeFromHorizontalSpeed(_13c);
+    }
+
+    mParabolicPath->calcPosition(al::getTransPtr(this), al::calcNerveRate(this, -1, _120));
+
+    if (al::isCollidedWall(this)) {
+        al::makeMtxFrontUpPos(&mEffectCollidedWallMtx, al::getCollidedWallNormal(this),
+                              sead::Vector3f::ey, al::getCollidedWallPos(this));
+        al::startHitReaction(this, "壁で死亡");
+        kill();
+    } else if (al::isCollidedGround(this)) {
+        bool isFloorPoison = al::isCollidedFloorCode(this, "Poison");
+        al::startHitReaction(this, "着地");
+        if (isFloorPoison) {
+            kill();
+
+            return;
+        }
+
+        al::deleteEffect(this, "PackunPoisonBallAttack");
+        al::setNerve(this, &Paint);
+    } else if (!al::isGreaterEqualStep(this, _120)) {
+        sead::Vector3f ukn = al::getTrans(this);
+        ukn -= _124;
+        FUN_7100170d28(this, ukn);
+        _124.set(al::getTrans(this));
+    } else {
+        al::setNerve(this, &Fall);
+    }
+}
 
 // void PackunPoisonBall::exeFall() {}
 

@@ -26,7 +26,7 @@ public:
 private:
     al::LiveActor* _108;
     bool mIsBig;
-    al::ParabolicPath* _118;
+    al::ParabolicPath* mParabolicPath;
     s32 _120 = 0;
     sead::Vector3f _124 = sead::Vector3f::zero;
     bool mIsHack = false;
