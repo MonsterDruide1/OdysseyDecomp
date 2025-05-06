@@ -90,18 +90,18 @@ private:
     PlayerHackStartShaderCtrl* mPlayerHackStartShaderCtrl = nullptr;
     TestFilterGlasses* mTestFilterGlasses = nullptr;
 
-    s32 mGlassFilterDelay = 0;
+    s32 mSpectaclesOnCounter = 0;
     s32 mWaitDelay = 0;
     bool mIsHack = false;
-    al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilterBase = nullptr;
+    al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilterMoveLimit = nullptr;
     al::CameraPoserSubjective* mCameraPoserSubjective = nullptr;
     al::CameraTicket* mCameraTicket = nullptr;
     f32 mModelAlphaMask = 1.0f;
 
     sead::Vector3f mPlayerPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mWallNormal = {0.0f, 0.0f, 0.0f};
-    u32 mRunAwayTime = 0;
+    u32 mRunAwayWallTime = 0;
     al::HitSensor* mCapReceiverSensor = nullptr;
     bool mIsHackTutorialVisible = false;
-    al::NerveKeeper* mNerveKeeper = nullptr;
+    al::NerveKeeper* mSpectaclesNerveKeeper = nullptr;
 };
