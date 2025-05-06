@@ -19,7 +19,7 @@ public:
     Sequence(const char* name);
     virtual ~Sequence() override;
 
-    virtual void init(const SequenceInitInfo& initInfo) {}
+    virtual void init(const SequenceInitInfo& initInfo);
 
     virtual void update();
     virtual void kill();
