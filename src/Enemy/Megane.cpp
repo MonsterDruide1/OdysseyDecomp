@@ -569,24 +569,24 @@ bool Megane::tryShiftFall() {
 }
 
 void Megane::updateRunAwayDirection() {
-    sead::Vector3f playerDirection;
-    al::calcDirToActorH(&playerDirection, this, al::getPlayerActor(this, 0));
-    playerDirection.negate();
+    sead::Vector3f runAwayDirection;
+    al::calcDirToActorH(&runAwayDirection, this, al::getPlayerActor(this, 0));
+    runAwayDirection.negate();
     recordWallNormal();
 
     if (mRunAwayWallTime != 0) {
-        f32 rundot = mWallNormal.dot(playerDirection);
+        f32 rundot = mWallNormal.dot(runAwayDirection);
         if (rundot < -0.99f) {
-            f32 tmp = -playerDirection.x;
-            playerDirection.x = playerDirection.z;
-            playerDirection.z = tmp;
+            f32 tmp = -runAwayDirection.x;
+            runAwayDirection.x = runAwayDirection.z;
+            runAwayDirection.z = tmp;
         } else if (rundot < 0.0f) {
-            al::verticalizeVec(&playerDirection, mWallNormal, playerDirection);
-            al::normalize(&playerDirection);
+            al::verticalizeVec(&runAwayDirection, mWallNormal, runAwayDirection);
+            al::normalize(&runAwayDirection);
         }
         mRunAwayWallTime--;
     }
-    al::turnToDirection(this, playerDirection, 4.0f);
+    al::turnToDirection(this, runAwayDirection, 4.0f);
 }
 
 void Megane::shiftWaitOrRunAway() {
@@ -722,9 +722,9 @@ void Megane::exeWait() {
         if (!isFacePlayer)
             al::startAction(this, "Turn");
     } else {
-        sead::Vector3f runAwayDirection;
-        al::calcDirToActorH(&runAwayDirection, this, al::getPlayerActor(this, 0));
-        if (al::turnToDirection(this, runAwayDirection, 3.0f) && mWaitDelay == 0)
+        sead::Vector3f playerDirection;
+        al::calcDirToActorH(&playerDirection, this, al::getPlayerActor(this, 0));
+        if (al::turnToDirection(this, playerDirection, 3.0f) && mWaitDelay == 0)
             al::startAction(this, "Wait");
     }
 
