@@ -61,7 +61,6 @@ void GpuMemAllocator::createMemoryWithTmp(const char* name, s32 size, s32 tmpSiz
     block->tmpMemorySize = tmpSize;
 }
 
-// NON_MATCHING: different implementation of "if A else B"-arithmetic
 agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* name, s32 size, s32 alignment) {
     Block* block = findGpuMemInfo(name);
     if (!block)
@@ -70,13 +69,15 @@ agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* name, s32 size, s32
     if (block->usedSize + size > block->memorySize)
         return {};
 
-    s32 unalignedSize;
-    if (block->usedSize >= 0)
-        unalignedSize = block->usedSize + alignment - 1;
-    else
-        unalignedSize = block->usedSize - alignment + 1;
+    s32 alignedSize;
+    if (block->usedSize >= 0) {
+        s32 unalignedSize = block->usedSize + alignment - 1;
+        alignedSize = unalignedSize / alignment * alignment;
+    } else {
+        s32 unalignedSize = block->usedSize - alignment + 1;
+        alignedSize = unalignedSize / alignment * alignment;
+    }
 
-    s32 alignedSize = unalignedSize / alignment * alignment;
     block->usedSize = alignedSize + size;
     return {block->addr, alignedSize};
 }
