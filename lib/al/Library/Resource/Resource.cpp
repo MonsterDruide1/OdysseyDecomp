@@ -1,5 +1,6 @@
 #include "Library/Resource/Resource.h"
 
+#include <filedevice/seadArchiveFileDevice.h>
 #include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeapMgr.h>
 #include <nn/g3d/ResFile.h>
