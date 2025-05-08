@@ -73,8 +73,8 @@ bool tryRequestLoadArchive(const sead::SafeString& fileName, sead::Heap* heap) {
                                                   nullptr);
 }
 
-void loadSoundItem(u32 soundEntryId, u32 unused, IAudioResourceLoader* resLoader) {
-    getFileLoader()->loadSoundItem(soundEntryId, unused, resLoader);
+void loadSoundItem(u32 soundEntryId, u32 unknown, IAudioResourceLoader* resLoader) {
+    getFileLoader()->loadSoundItem(soundEntryId, unknown, resLoader);
 }
 
 bool tryRequestLoadSoundItem(u32 soundEntryId) {
@@ -88,17 +88,16 @@ bool tryRequestPreLoadFile(const Resource* res, s32 id, sead::Heap* heap,
 
 bool tryRequestPreLoadFile(const Resource* res, const sead::SafeString& fileName, sead::Heap* heap,
                            IAudioResourceLoader* resLoader) {
-    if (res->isExistFile(StringTmp<256>("%s.byml", fileName.cstr()))) {
-        ByamlIter byml = res->getByml(fileName);
-        FileLoader* fileLoader = getFileLoader();
-        if (!heap)
-            heap = getSceneResourceHeap();
+    if (!res->isExistFile(StringTmp<256>("%s.byml", fileName.cstr())))
+        return false;
 
-        fileLoader->requestPreLoadFile(byml, heap, resLoader);
-        return true;
-    }
+    ByamlIter byml = res->getByml(fileName);
+    FileLoader* fileLoader = getFileLoader();
+    if (!heap)
+        heap = getSceneResourceHeap();
 
-    return false;
+    fileLoader->requestPreLoadFile(byml, heap, resLoader);
+    return true;
 }
 
 void waitLoadDoneAllFile() {

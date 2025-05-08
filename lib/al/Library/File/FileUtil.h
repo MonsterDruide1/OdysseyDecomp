@@ -24,7 +24,10 @@ bool tryLoadFileToBuffer(const sead::SafeString& fileName, u8*, u32 bufferSize, 
 sead::ArchiveRes* loadArchive(const sead::SafeString& fileName);
 sead::ArchiveRes* loadArchiveWithExt(const sead::SafeString& fileName, const char* ext);
 bool tryRequestLoadArchive(const sead::SafeString& fileName, sead::Heap* heap);
-void loadSoundItem(u32 soundEntryId, u32 unused, IAudioResourceLoader* resLoader);
+
+// TODO: Replace unknown with a proper name
+void loadSoundItem(u32 soundEntryId, u32 unknown, IAudioResourceLoader* resLoader);
+
 bool tryRequestLoadSoundItem(u32 soundEntryId);
 bool tryRequestPreLoadFile(const Resource* res, s32, sead::Heap* heap,
                            IAudioResourceLoader* resLoader);
