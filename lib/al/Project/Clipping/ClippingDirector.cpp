@@ -71,7 +71,7 @@ void ClippingDirector::offGroupClipping(LiveActor* liveActor) {
     ClippingActorInfo* clippingActorInfo = mClippingActorHolder->find(liveActor);
     if (clippingActorInfo->isGroupClippingInit()) {
         mClippingActorHolder->offGroupClipping(liveActor);
-        mGroupHolder->leave(clippingActorInfo);
+        mGroupHolder->reentry(clippingActorInfo);
         clippingActorInfo->setIsEnableGroupClipping(false);
     }
 }

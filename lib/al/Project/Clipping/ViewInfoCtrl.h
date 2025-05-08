@@ -11,7 +11,7 @@ public:
     ViewInfoCtrl(const PlayerHolder*, const SceneCameraInfo*);
 
     void initActorInfo(ClippingActorInfo*);
-    void initViewCtrlAreaGroup(AreaObjGroup*);
+    void initViewCtrlAreaGroup(const AreaObjGroup*);
     bool update();
     void startCheckByCameraPos();
     void startCheckByLookAtPos();
