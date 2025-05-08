@@ -19,4 +19,4 @@ public:
     void endClippedAll();
 };
 
-} // namespace al
+}  // namespace al

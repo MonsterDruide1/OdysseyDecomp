@@ -13,7 +13,6 @@ class ClippingJudge;
 
 class ClippingActorHolder {
 public:
-
     ClippingActorHolder(s32);
     void updateAsync(sead::Thread*, s64);
     ~ClippingActorHolder();
@@ -37,6 +36,7 @@ public:
     void setFarClipLevel20M(LiveActor*);
     void setFarClipLevelMax(LiveActor*);
     void updateFarClipLevel();
+
 private:
     void* filler[0x8];
 };
