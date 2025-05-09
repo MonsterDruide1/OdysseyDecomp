@@ -6,11 +6,11 @@ FileEntryBase::FileEntryBase() {
     mMessageQueue.allocate(1, nullptr);
 }
 
-void FileEntryBase::setFileName(const sead::SafeStringBase<char>& fileName) {
+void FileEntryBase::setFileName(const sead::SafeString& fileName) {
     mFileName = fileName;
 }
 
-const sead::FixedSafeString<0x40>& FileEntryBase::getFileName() const {
+const sead::SafeString& FileEntryBase::getFileName() const {
     return mFileName;
 }
 

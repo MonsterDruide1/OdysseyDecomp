@@ -19,7 +19,7 @@ public:
     ArchiveEntry();
 
     void load() override;
-    void setLoadRequestInfo(const sead::SafeStringBase<char>& fileName, sead::Heap* heap,
+    void setLoadRequestInfo(const sead::SafeString& fileName, sead::Heap* heap,
                             sead::FileDevice* fileDevice);
     sead::ArchiveRes* getArchiveRes();
     void clear();

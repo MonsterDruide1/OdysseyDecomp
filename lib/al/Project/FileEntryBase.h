@@ -12,8 +12,8 @@ public:
 
     virtual void load() = 0;
 
-    void setFileName(const sead::SafeStringBase<char>& fileName);
-    const sead::FixedSafeString<0x40>& getFileName() const;
+    void setFileName(const sead::SafeString& fileName);
+    const sead::SafeString& getFileName() const;
     void sendMessageDone();
     void waitLoadDone();
     void clear();
