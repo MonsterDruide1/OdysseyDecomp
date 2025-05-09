@@ -26,7 +26,7 @@ public:
     virtual void drawMain() const;
     virtual void drawSub() const;
 
-    virtual bool isDisposable() const { return true; }
+    virtual bool isDisposable() const;
 
     virtual Scene* getCurrentScene() const { return nullptr; }
 
