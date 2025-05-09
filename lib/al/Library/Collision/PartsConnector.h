@@ -11,7 +11,7 @@ class HitSensor;
 class CollisionPartsConnector : public MtxConnector {
 public:
     CollisionPartsConnector();
-    
+
     bool isConnecting() const override;
     void clear() override;
 
