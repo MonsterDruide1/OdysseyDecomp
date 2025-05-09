@@ -32,6 +32,6 @@ void disconnectMtxConnector(MtxConnector* mtxConnector);
 bool isMtxConnectorConnecting(const MtxConnector* mtxConnector);
 void calcConnectTrans(sead::Vector3f* connectTrans, const MtxConnector* mtxConnector);
 void setConnectorBaseQuatTrans(const sead::Quatf& quat, const sead::Vector3f& trans,
-                                   al::MtxConnector* mtxConnector);
+                               MtxConnector* mtxConnector);
 
 }  // namespace al
