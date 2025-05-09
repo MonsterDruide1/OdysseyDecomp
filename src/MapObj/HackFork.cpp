@@ -2,7 +2,7 @@
 
 #include "Library/Camera/CameraTicket.h"
 #include "Library/Camera/CameraUtil.h"
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/Event/EventFlowUtil.h"
 #include "Library/Joint/JointControllerKeeper.h"
