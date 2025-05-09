@@ -14,7 +14,7 @@ void ArchiveEntry::load() {
     sendMessageDone();
 }
 
-void ArchiveEntry::setLoadRequestInfo(const sead::SafeStringBase<char>& fileName, sead::Heap* heap,
+void ArchiveEntry::setLoadRequestInfo(const sead::SafeString& fileName, sead::Heap* heap,
                                       sead::FileDevice* fileDevice) {
     setFileName(fileName);
     mLoadArg.path = getFileName();
