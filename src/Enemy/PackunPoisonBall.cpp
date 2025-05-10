@@ -177,7 +177,34 @@ void PackunPoisonBall::exeMove() {
     }
 }
 
-// void PackunPoisonBall::exeFall() {}
+void PackunPoisonBall::exeFall() {
+    if (al::isFirstStep(this)) {
+        sead::Vector3f velocity = al::getTrans(this);
+        velocity -= _124;
+        al::setVelocity(this, velocity);
+    }
+
+    al::addVelocityToGravity(this, 0.98f);
+    al::scaleVelocity(this, 0.998f);
+
+    if (al::isGreaterStep(this, 250)) {
+        al::startHitReaction(this, "消滅");
+        kill();
+    } else if (!al::isCollidedFloorCode(this, "Poison")) {
+        if (al::isCollided(this)) {
+            al::startHitReaction(this, "着地");
+            al::deleteEffect(this, "PackunPoisonBallAttack");
+            al::setNerve(this, &Paint);
+
+            return;
+        }
+
+        FUN_7100170d28(this, al::getVelocity(this));
+    } else {
+        al::startHitReaction(this, "着地");
+        kill();
+    }
+}
 
 void PackunPoisonBall::exePaint() {
     if (al::isFirstStep(this)) {
