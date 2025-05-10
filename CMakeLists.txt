@@ -49,14 +49,9 @@ set(NN_SDK_TYPE "Release")
 include_directories(lib)
 include_directories(lib/aarch64)
 
+add_subdirectory(lib/NintendoSDK-NEX)
 add_subdirectory(lib/NintendoSDK)
-target_link_libraries(odyssey PUBLIC NintendoSDK)
-
 add_subdirectory(lib/sead)
-target_link_libraries(odyssey PUBLIC sead)
-
 add_subdirectory(lib/agl)
-target_link_libraries(odyssey PUBLIC agl)
-
 add_subdirectory(lib/eui)
-target_link_libraries(odyssey PUBLIC eui)
+target_link_libraries(odyssey PUBLIC NintendoSDK-NEX NintendoSDK sead agl eui)
