@@ -28,7 +28,7 @@ StageSceneStateEndSeparatePlay::StageSceneStateEndSeparatePlay(const char* name,
 }
 
 void StageSceneStateEndSeparatePlay::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mIsCancel = false;
     al::setNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeOut);
 }

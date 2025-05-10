@@ -26,7 +26,7 @@ CoinStateAppearRotate::CoinStateAppearRotate(al::LiveActor* actor, al::MtxConnec
 }
 
 void CoinStateAppearRotate::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &NrvCoinStateAppearRotate.Rotate);
 }
 

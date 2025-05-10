@@ -39,16 +39,4 @@ void PadDataArcReader::read(PadDataPack* frameData) {
     checkEnd();
 }
 
-bool PadDataArcReader::isEnd() const {
-    return mIsEnd;
-}
-
-u32 PadDataArcReader::getCursorFrame() const {
-    return mCursorFrame;
-}
-
-s32 PadDataArcReader::getRemainFrame() const {
-    return mTotalFrame - mCursorFrame;
-}
-
 }  // namespace al

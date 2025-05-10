@@ -22,7 +22,7 @@ EnemyStateDamageCap::EnemyStateDamageCap(al::LiveActor* actor)
 
 void EnemyStateDamageCap::kill() {
     al::setNerve(this, &NrvEnemyStateDamageCap.Wait);
-    setDead(true);
+    al::NerveStateBase::kill();
 }
 
 void EnemyStateDamageCap::createEnemyCap(const al::ActorInitInfo& info, const char* name) {

@@ -21,7 +21,3 @@ void PlayerJudgeInvalidateInputFall::update() {
     if (!rs::isCollidedGround(mCollision))
         mInvalidateInputFallArea = mAreaChecker->tryFindInvalidateInputFall(al::getTrans(mActor));
 }
-
-bool PlayerJudgeInvalidateInputFall::judge() const {
-    return mInvalidateInputFallArea != nullptr;
-}

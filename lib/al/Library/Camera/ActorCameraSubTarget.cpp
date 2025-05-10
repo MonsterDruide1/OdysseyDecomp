@@ -50,9 +50,4 @@ void ActorBackAroundCameraSubTarget::calcTrans(sead::Vector3f* trans) const {
     calcFrontDir(&front, getActor());
     *trans += front * 200.0f;
 }
-
-const char* ActorBackAroundCameraSubTarget::getTargetName() const {
-    return mTargetName.cstr();
-}
-
 }  // namespace al

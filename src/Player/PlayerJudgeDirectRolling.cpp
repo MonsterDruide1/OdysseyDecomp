@@ -31,7 +31,3 @@ void PlayerJudgeDirectRolling::update() {
     al::verticalizeVec(&horizontalSpeed, al::getGravity(mPlayer), al::getVelocity(mPlayer));
     mIsJudge = horizontalSpeed.length() >= mConst->getDashJudgeSpeed();
 }
-
-bool PlayerJudgeDirectRolling::judge() const {
-    return mIsJudge;
-}

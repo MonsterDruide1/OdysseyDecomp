@@ -60,7 +60,7 @@ void EnemyStateBlowDown::start(const LiveActor* actor) {
 }
 
 void EnemyStateBlowDown::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     if (isInvalidClipping(mActor))
         mIsInvalidClipping = true;
     else {
@@ -71,7 +71,7 @@ void EnemyStateBlowDown::appear() {
 }
 
 void EnemyStateBlowDown::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
     if (!mIsInvalidClipping)
         validateClipping(mActor);
 }

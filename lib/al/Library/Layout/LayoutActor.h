@@ -8,7 +8,6 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Layout/IUseLayout.h"
 #include "Library/Layout/IUseLayoutAction.h"
-#include "Library/Layout/LayoutSceneInfo.h"
 #include "Library/Message/IUseMessageSystem.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
@@ -61,17 +60,11 @@ public:
 
     virtual LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
 
-    virtual CameraDirector* getCameraDirector() const override {
-        return mLayoutSceneInfo->getCameraDirector();
-    }
+    virtual CameraDirector* getCameraDirector() const override;
 
-    virtual SceneObjHolder* getSceneObjHolder() const override {
-        return mLayoutSceneInfo->getSceneObjHolder();
-    }
+    virtual SceneObjHolder* getSceneObjHolder() const override;
 
-    virtual const MessageSystem* getMessageSystem() const override {
-        return mLayoutSceneInfo->getMessageSystem();
-    }
+    virtual const MessageSystem* getMessageSystem() const override;
 
     virtual void control() {}
 

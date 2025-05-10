@@ -13,14 +13,6 @@ namespace al {
 
 AreaObj::AreaObj(const char* name) : mName(name) {}
 
-const char* AreaObj::getName() const {
-    return mName;
-}
-
-StageSwitchKeeper* AreaObj::getStageSwitchKeeper() const {
-    return mStageSwitchKeeper;
-}
-
 void AreaObj::initStageSwitchKeeper() {
     mStageSwitchKeeper = new StageSwitchKeeper();
 }
@@ -65,18 +57,6 @@ bool AreaObj::isInVolumeOffset(const sead::Vector3f& position, f32 offset) const
     if (!mIsValid)
         return false;
     return mAreaShape->isInVolumeOffset(position, offset);
-}
-
-SceneObjHolder* AreaObj::getSceneObjHolder() const {
-    return mSceneObjHolder;
-}
-
-void AreaObj::validate() {
-    mIsValid = true;
-}
-
-void AreaObj::invalidate() {
-    mIsValid = false;
 }
 
 }  // namespace al

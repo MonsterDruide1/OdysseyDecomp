@@ -16,7 +16,8 @@ public:
                                    const IUsePlayerCollision* collision);
     void reset() override;
     void update() override;
-    bool judge() const override;
+
+    bool judge() const override { return mInvalidateInputFallArea != nullptr; }
 
 private:
     const al::LiveActor* mActor = nullptr;

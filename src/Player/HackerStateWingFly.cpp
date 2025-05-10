@@ -40,7 +40,7 @@ HackerStateWingFly::HackerStateWingFly(al::LiveActor* actor, IUsePlayerHack** ha
 }
 
 void HackerStateWingFly::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mFallTimeDelay = 0;
 
     if (mIsJudgeFall) {

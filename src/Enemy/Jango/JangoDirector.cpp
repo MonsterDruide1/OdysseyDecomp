@@ -2,10 +2,6 @@
 
 JangoDirector::JangoDirector() {}
 
-const char* JangoDirector::getSceneObjName() const {
-    return "ジャンゴ保持者";
-}
-
 void JangoDirector::registerJango(Jango* jango) {
     mJangos[mJangoCount] = jango;
     ++mJangoCount;

@@ -9,7 +9,8 @@ class AnimPlayerBase : public HioNode {
 public:
     AnimPlayerBase();
 
-    virtual void updateLast();
+    virtual void updateLast() { _10 = false; }
+
     virtual bool calcNeedUpdateAnimNext() = 0;
 
     AnimInfoTable* getAnimInfoTable() { return mInfoTable; }
