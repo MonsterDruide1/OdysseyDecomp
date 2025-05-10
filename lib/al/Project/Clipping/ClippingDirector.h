@@ -2,10 +2,13 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Clipping/ClippingActorHolder.h"
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+class ViewInfoCtrl;
+class ClippingFarAreaObserver;
 class AreaObjDirector;
 class PlayerHolder;
 class SceneCameraInfo;
@@ -31,11 +34,15 @@ public:
     void startCheckViewCtrlByCameraPos();
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
-
+    ClippingActorHolder* getClippingActorHolder() const { return mClippingActorHolder; }
 private:
-    void* filler[6];
+    ClippingJudge* mClippingJudge = nullptr;
+    ClippingFarAreaObserver* mFarAreaObserver = nullptr;
+    ClippingActorHolder* mClippingActorHolder = nullptr;
+    ClippingGroupHolder* mGroupHolder = nullptr;
+    ViewInfoCtrl* mViewInfoCtrl = nullptr;
+    bool mIsExecute = true;
 };
 
 static_assert(sizeof(ClippingDirector) == 0x38);
-
 }  // namespace al
