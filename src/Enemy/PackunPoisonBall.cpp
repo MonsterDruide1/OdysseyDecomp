@@ -26,8 +26,8 @@ NERVE_IMPL(PackunPoisonBall, Fall)
 NERVES_MAKE_NOSTRUCT(PackunPoisonBall, Move, Paint, Fall)
 }  // namespace
 
-PackunPoisonBall::PackunPoisonBall(al::LiveActor* param_1, bool isBig)
-    : LiveActor("ポイズンパックンの毒だま"), _108(param_1), mIsBig(isBig),
+PackunPoisonBall::PackunPoisonBall(al::LiveActor* parent, bool isBig)
+    : LiveActor("ポイズンパックンの毒だま"), mParent(parent), mIsBig(isBig),
       mParabolicPath(new al::ParabolicPath()) {
     getName();
 }
@@ -52,7 +52,7 @@ void PackunPoisonBall::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     }
 
     if ((!al::isSensorEnemy(other) && !al::isSensorPlayer(other) && !al::isSensorMapObj(other)) ||
-        al::getSensorHost(other) == _108) {
+        al::getSensorHost(other) == mParent) {
         return;
     }
 
@@ -94,10 +94,10 @@ void PackunPoisonBall::killBySwitch() {
 }
 
 void PackunPoisonBall::setParam(const sead::Vector3f& trans, const sead::Quatf& quat, bool isHack,
-                                f32 param_4, f32 param_5, f32 param_6) {
+                                f32 param_4, f32 horizontalSpeed, f32 param_6) {
     mIsHack = isHack;
     _138 = param_4;
-    _13c = param_5;
+    mHorizontalSpeed = horizontalSpeed;
     _140 = param_6;
 
     al::setTrans(this, trans);
@@ -121,10 +121,10 @@ void FUN_7100170d28(al::LiveActor*, const sead::Vector3f&);
 void PackunPoisonBall::exeMove() {
     if (al::isFirstStep(this)) {
         sead::Vector3f front = sead::Vector3f::ez;
-        al::calcQuatFront(&front, _108);
+        al::calcQuatFront(&front, mParent);
         sead::Vector3f side = sead::Vector3f::ex;
-        al::calcQuatSide(&side, _108);
-        _124.set(al::getTrans(this));
+        al::calcQuatSide(&side, mParent);
+        mTrans.set(al::getTrans(this));
         f32 fVar7;
         f32 fVar8;
         f32 fVar9 = 0.0f;
@@ -145,10 +145,10 @@ void PackunPoisonBall::exeMove() {
         mParabolicPath->initFromUpVector(al::getTrans(this),
                                          al::getTrans(this) + (fVar7 + _138) * front + fVar8 * side,
                                          -al::getGravity(this), fVar9 + _140);
-        _120 = mParabolicPath->calcPathTimeFromHorizontalSpeed(_13c);
+        mParabolicPathTime = mParabolicPath->calcPathTimeFromHorizontalSpeed(mHorizontalSpeed);
     }
 
-    f32 rate = al::calcNerveRate(this, -1, _120);
+    f32 rate = al::calcNerveRate(this, -1, mParabolicPathTime);
     mParabolicPath->calcPosition(al::getTransPtr(this), rate);
 
     if (al::isCollidedWall(this)) {
@@ -167,20 +167,44 @@ void PackunPoisonBall::exeMove() {
 
         al::deleteEffect(this, "PackunPoisonBallAttack");
         al::setNerve(this, &Paint);
-    } else if (!al::isGreaterEqualStep(this, _120)) {
-        sead::Vector3f ukn = al::getTrans(this);
-        ukn -= _124;
-        FUN_7100170d28(this, ukn);
-        _124.set(al::getTrans(this));
+    } else if (!al::isGreaterEqualStep(this, mParabolicPathTime)) {
+        sead::Vector3f dir = al::getTrans(this);
+        dir -= mTrans;
+        FUN_7100170d28(this, dir);
+        mTrans.set(al::getTrans(this));
     } else {
         al::setNerve(this, &Fall);
     }
 }
 
+void FUN_7100170d28(al::LiveActor* actor, const sead::Vector3f& dir) {
+    sead::Vector3f front = dir;
+    if (!al::tryNormalizeOrZero(&front))
+        return;
+
+    sead::Quatf newQuat = al::getQuat(actor);
+    if (!al::isParallelDirection(front, sead::Vector3f::ey)) {
+        al::makeQuatFrontUp(&newQuat, front, sead::Vector3f::ey);
+    } else {
+        sead::Vector3f side;
+        al::calcSideDir(&side, actor);
+        if (!al::isParallelDirection(front, side)) {
+            al::makeQuatFrontSide(&newQuat, front, -side);
+        } else {
+            sead::Vector3f up;
+            al::calcUpDir(&up, actor);
+            if (!al::isParallelDirection(front, up))
+                al::makeQuatFrontUp(&newQuat, front, up);
+        }
+    }
+
+    al::slerpQuat(al::getQuatPtr(actor), al::getQuat(actor), newQuat, 0.9f);
+}
+
 void PackunPoisonBall::exeFall() {
     if (al::isFirstStep(this)) {
         sead::Vector3f velocity = al::getTrans(this);
-        velocity -= _124;
+        velocity -= mTrans;
         al::setVelocity(this, velocity);
     }
 
