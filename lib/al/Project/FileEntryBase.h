@@ -26,6 +26,7 @@ public:
     void clear();
     void setLoadStateRequested();
 
+    // TODO: Remove, mFileState optimizes differently using a getter
     friend class ArchiveHolder;
 
 private:
