@@ -1,7 +1,7 @@
 #include "MapObj/TrampleSwitch.h"
 
 #include "Library/Camera/CameraUtil.h"
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
