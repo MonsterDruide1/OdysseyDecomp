@@ -26,6 +26,8 @@ public:
     void clear();
     void setLoadStateRequested();
 
+    FileState getFileState() const { return mFileState; }
+
     // TODO: Remove, mFileState optimizes differently using a getter
     friend class ArchiveHolder;
     friend class SoundItemHolder;
