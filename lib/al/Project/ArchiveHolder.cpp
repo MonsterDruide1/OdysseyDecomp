@@ -7,7 +7,7 @@
 namespace al {
 
 ArchiveHolder::ArchiveHolder() {
-    mArchiveEntries.allocBufferAssert(0x800, nullptr, 8);
+    mArchiveEntries.allocBufferAssert(0x800, nullptr);
 }
 
 ArchiveEntry* ArchiveHolder::addNewLoadRequestEntry(const sead::SafeString& fileName,
