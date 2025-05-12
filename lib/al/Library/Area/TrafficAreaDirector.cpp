@@ -17,17 +17,12 @@ TrafficAreaDirector::TrafficAreaDirector(const AreaObjGroup* areaObjGroup,
 }
 
 bool TrafficAreaDirector::tryPermitEnterCar(const sead::Vector3f& position) {
-    for (s32 i = 0; i < mTrafficAreaCount; i++) {
-        if (!mTrafficAreas[i]->isInVolume(position))
-            continue;
+    TrafficArea* trafficArea = tryFindArea(position);
 
-        if (!mTrafficAreas[i])
-            return true;
+    if (!trafficArea)
+        return true;
 
-        return mTrafficAreas[i]->tryPermitEnterCar();
-    }
-
-    return true;
+    return trafficArea->tryPermitEnterCar();
 }
 
 TrafficArea* TrafficAreaDirector::tryFindArea(const sead::Vector3f& position) const {

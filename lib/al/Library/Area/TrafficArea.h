@@ -12,7 +12,8 @@ public:
 
     void reset() {
         *(u16*)&mIsNpcUnavailable = *(u16*)&mIsCarFull;
-        *(u16*)&mIsCarFull = false;
+        mIsCarFull = false;
+        mIsNpcFull = false;
     }
 
 private:
