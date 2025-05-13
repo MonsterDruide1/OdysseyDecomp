@@ -9,45 +9,40 @@ class DrawContext;
 }
 
 namespace al {
-struct GraphicsInitArg;
 class ActorResourceHolder;
 class AreaObjDirector;
-class ExecuteDirector;
-class GravityHolder;
-class EffectSystem;
-class GraphicsSystemInfo;
-class ModelDrawBufferUpdater;
-class ExecuteAsyncExecutorUpdate;
-class ModelDisplayListController;
-class LiveActorGroup;
 class CameraDirector;
 class ClippingDirector;
 class CollisionDirector;
-class ItemDirectorBase;
-class PlayerHolder;
+class DemoDirector;
+class EffectSystem;
+class ExecuteAsyncExecutorUpdate;
+class ExecuteDirector;
+class GamePadSystem;
+struct GraphicsInitArg;
+class GraphicsSystemInfo;
+class GravityHolder;
 class HitSensorDirector;
+class ItemDirectorBase;
+class LiveActorGroup;
+class ModelDisplayListController;
+class ModelDrawBufferUpdater;
+class ModelGroup;
+class NatureDirector;
+class PadRumbleDirector;
+class PlayerHolder;
 class ScreenPointDirector;
 class ShadowDirector;
 class StageSwitchDirector;
 class SwitchAreaDirector;
-class LiveActorGroup;
-class DemoDirector;
-class GamePadSystem;
-class PadRumbleDirector;
-class NatureDirector;
-class ModelGroup;
+
+struct ModelDrawBufferCounter {
+    s32 maxDrawBuffer = 3;
+    s32 currentDrawBuffer = 0;
+};
 
 class LiveActorKit : public HioNode {
 public:
-    class DrawBufferDirector {
-    public:
-        DrawBufferDirector() = default;
-
-    private:
-        s32 mMaxDrawBuffer = 3;
-        s32 mCurrentDrawBuffer = 0;
-    };
-
     LiveActorKit(s32 maxActors, s32 maxPlayers);
     virtual ~LiveActorKit();
 
@@ -77,7 +72,7 @@ public:
 
     GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
 
-    DrawBufferDirector* getDrawBufferDirector() const { return mDrawBufferDirector; }
+    ModelDrawBufferCounter* getModelDrawBufferCounter() const { return mModelDrawBufferCounter; }
 
     ModelDrawBufferUpdater* getModelDrawBufferUpdater() const { return mModelDrawBufferUpdater; }
 
@@ -141,7 +136,7 @@ private:
     GravityHolder* mGravityHolder = nullptr;
     EffectSystem* mEffectSystem = nullptr;
     GraphicsSystemInfo* mGraphicsSystemInfo = nullptr;
-    DrawBufferDirector* mDrawBufferDirector = nullptr;
+    ModelDrawBufferCounter* mModelDrawBufferCounter = nullptr;
     ModelDrawBufferUpdater* mModelDrawBufferUpdater = nullptr;
     ExecuteAsyncExecutorUpdate* mExecutorCore1 = nullptr;
     ExecuteAsyncExecutorUpdate* mExecutorCore2 = nullptr;

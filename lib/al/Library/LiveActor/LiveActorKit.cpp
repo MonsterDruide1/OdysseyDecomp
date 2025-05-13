@@ -77,7 +77,7 @@ LiveActorKit::~LiveActorKit() {
 }
 
 void LiveActorKit::init(s32 maxCameras) {
-    mDrawBufferDirector = new DrawBufferDirector();
+    mModelDrawBufferCounter = new ModelDrawBufferCounter();
 
     ExecuteSystemInitInfo info{};
     mExecuteDirector = new ExecuteDirector(mMaxActors);
