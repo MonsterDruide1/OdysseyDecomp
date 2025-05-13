@@ -7,7 +7,7 @@ struct CameraFlagCtrl {
 
     bool isCameraReverseInputH = false;
     bool isCameraReverseInputV = false;
-    bool isValidCameraGyro = false;
+    bool isInvalidCameraGyro = false;
     bool isSnapShotModeRunning = false;
     bool isValidCameraAreaKids = false;
     bool isSeparatePlayMode = false;

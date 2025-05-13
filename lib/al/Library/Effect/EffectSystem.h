@@ -7,6 +7,7 @@ class DrawContext;
 }
 
 namespace al {
+class EffectSystemInfo;
 class CameraDirector;
 class GraphicsSystemInfo;
 class ExecuteDirector;
@@ -26,9 +27,13 @@ public:
 
     void set_69(bool val) { _69 = val; }
 
+    EffectSystemInfo* getEffectSystemInfo() const { return mEffectSystemInfo; }
+
     // incomplete
 private:
-    void* filler[13];
+    void* filler;
+    EffectSystemInfo* mEffectSystemInfo;
+    void* filler2[11];
     bool _68;
     bool _69;
 };

@@ -6,10 +6,15 @@ namespace agl {
 class DrawContext;
 }
 
+namespace nn::ui2d {
+class DrawInfo;
+}
+
 namespace al {
+class EffectSystem;
+class ExecuteDirector;
 class FontHolder;
 class LayoutSystem;
-class EffectSystem;
 
 class LayoutKit {
 public:
@@ -28,10 +33,19 @@ public:
 
     void setEffectSystem(EffectSystem* effectSystem) { mEffectSystem = effectSystem; }
 
+    ExecuteDirector* getExecuteDirector() { return mExecuteDirector; }
+
+    EffectSystem* getEffectSystem() { return mEffectSystem; }
+
+    nn::ui2d::DrawInfo* getDrawInfo() { return mDrawInfo; }
+
 private:
-    void* _0[2];
+    FontHolder* mFontHolder;
+    ExecuteDirector* mExecuteDirector;
     EffectSystem* mEffectSystem;
-    void* _18[3];
+    LayoutSystem* mLayoutSystem;
+    agl::DrawContext* mDrawContex;
+    nn::ui2d::DrawInfo* mDrawInfo;
 };
 
 static_assert(sizeof(LayoutKit) == 0x30);

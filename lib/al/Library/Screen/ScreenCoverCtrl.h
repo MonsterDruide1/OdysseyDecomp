@@ -10,9 +10,17 @@ public:
     void update();
     void requestCaptureScreenCover(s32 coverFrames);
 
+    s32 getCoverFrames() { return mCoverFrames; }
+
+    void resetCapture() { mCoverFrames = -1; }
+
+    bool isRequestCapture() const { return mIsRequestCapture; }
+
+    void resetRequestCapture() { mIsRequestCapture = false; }
+
 private:
     s32 mCoverFrames = -1;
-    bool mIsCover = false;
+    bool mIsRequestCapture = false;
 };
 
 static_assert(sizeof(ScreenCoverCtrl) == 0x8);

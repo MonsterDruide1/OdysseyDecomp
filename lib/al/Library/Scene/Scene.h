@@ -43,6 +43,8 @@ public:
 
     AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
+    void setAudioKeeper(AudioKeeper* audioKeeper) { mAudioKeeper = audioKeeper; }
+
     SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
 
     CameraDirector* getCameraDirector() const override;
@@ -77,6 +79,8 @@ public:
     ScreenCoverCtrl* getScreenCoverCtrl() const { return mScreenCoverCtrl; }
 
     AudioDirector* getAudioDirector() const { return mAudioDirector; }
+
+    void setAudioDirector(AudioDirector* audioDirector) { mAudioDirector = audioDirector; }
 
     DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
 

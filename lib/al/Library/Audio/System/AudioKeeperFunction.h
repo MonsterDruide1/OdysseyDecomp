@@ -7,20 +7,25 @@ class IAudioFrameProcess;
 }
 
 namespace al {
+class AudioDirector;
+class AudioEffectDataBase;
 template <typename T>
 class AudioInfoListWithParts;
-class AudioDirector;
-struct AudioSystemInfo;
-struct GameSystemInfo;
 class AudioResourceLoadGroupInfo;
-class SeadAudioPlayer;
-class PadRumbleDirector;
+class AudioResourcePlayerKeeper;
+class AudioSoundArchiveInfo;
 class AudioSystem;
+class AudioSystemDebug;
+struct AudioSystemInfo;
+class AudioSystemInitInfo;
 class BgmDataBase;
-class SeDataBase;
-class IUseSeadAudioPlayer;
 class BgmMusicalInfo;
+struct GameSystemInfo;
+class IUseSeadAudioPlayer;
+class PadRumbleDirector;
 class Resource;
+class SeadAudioPlayer;
+class SeDataBase;
 }  // namespace al
 
 namespace alAudioSystemFunction {
@@ -70,3 +75,42 @@ s32 getCurrentHeapStateLevel(al::IUseSeadAudioPlayer*);
 u64 getSoundResourceHeapFreeSize(al::IUseSeadAudioPlayer*);
 void resetDataDependedStage(const al::AudioDirector*, const char*, s32);
 }  // namespace alAudioSystemFunction
+
+namespace al {
+class AudioSystem {
+public:
+    AudioSystem();
+
+    void init(const AudioSystemInitInfo&);
+    void initDataBase();
+    void initResourcePlayer(const AudioSystemInitInfo&);
+    void applyDeviceVolume();
+    void updateHWOutputSetting();
+    void changeFinalMixInputBgmChVolume();
+    void initDebugModule(const AudioSystemInitInfo&);
+    void initSystemInfo();
+    void update();
+    void finalize();
+    void addAudiioFrameProccess(aal::IAudioFrameProcess*);
+    void removeAudiioFrameProccess(aal::IAudioFrameProcess*);
+    void pauseSystemImmediately(bool, const char*, bool);
+
+    AudioSystemInfo* getAudioSystemInfo() const { return mAudioSystemInfo; }
+
+private:
+    AudioResourcePlayerKeeper* mAudioResourcePlayerKeeper;
+    AudioSoundArchiveInfo* mAudioSoundArchiveInfo;
+    SeDataBase* mSeDataBase;
+    BgmDataBase* mBgmDataBase;
+    BgmMusicalInfo* mBgmMusicalInfo;
+    AudioSystemInfo* mAudioSystemInfo;
+    AudioSystemDebug* mAudioSystemDebug;
+    f32 mMasterVolume;
+    f32 mTvOutputVolume;
+    f32 mConsoleVolume;
+    AudioEffectDataBase* mAudioEffectDataBase;
+    char filler[0x90];
+};
+
+static_assert(sizeof(AudioSystem) == 0xe0);
+}  // namespace al
