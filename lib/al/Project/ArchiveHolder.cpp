@@ -3,6 +3,7 @@
 #include <basis/seadNew.h>
 
 #include "Library/Base/StringUtil.h"
+#include "Project/ArchiveEntry.h"
 
 namespace al {
 

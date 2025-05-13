@@ -4,14 +4,13 @@
 #include <container/seadBuffer.h>
 #include <prim/seadSafeString.h>
 
-#include "Project/ArchiveEntry.h"
-
 namespace sead {
 class FileDevice;
 class Heap;
 }  // namespace sead
 
 namespace al {
+class ArchiveEntry;
 
 class ArchiveHolder {
 public:
