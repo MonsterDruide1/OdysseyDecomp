@@ -120,6 +120,8 @@ public:
 
     ModelGroup* getModelGroup() const { return mModelGroup; }
 
+    void setItemDirector(ItemDirectorBase* itemDirector) { mItemDirector = itemDirector; }
+
     void setDemoDirector(DemoDirector* demoDirector) { mDemoDirector = demoDirector; }
 
     void setSceneDrawContext(agl::DrawContext* drawContext) { mSceneDrawContext = drawContext; }
