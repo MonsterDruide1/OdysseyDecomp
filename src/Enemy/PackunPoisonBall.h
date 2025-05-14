@@ -17,8 +17,8 @@ public:
     void appear() override;
 
     void killBySwitch();
-    void setParam(const sead::Vector3f& trans, const sead::Quatf& quat, bool isHack, f32,
-                  f32 horizontalSpeed, f32);
+    void setParam(const sead::Vector3f& trans, const sead::Quatf& quat, bool isHack,
+                  f32 maxShootDist, f32 horizontalSpeed, f32 maxHeight);
 
     void exeMove();
     void exeFall();
@@ -31,10 +31,10 @@ private:
     s32 mParabolicPathTime = 0;
     sead::Vector3f mTrans = sead::Vector3f::zero;
     bool mIsHack = false;
-    f32 _134 = 0.0f;
-    f32 _138 = 200.0f;
+    f32 mAngle = 0.0f;
+    f32 mMaxShootDist = 200.0f;
     f32 mHorizontalSpeed = 8.0f;
-    f32 _140 = 50.0f;
+    f32 mMaxHeight = 50.0f;
     sead::Matrix34f mEffectCollidedWallMtx = sead::Matrix34f::ident;
 };
 
