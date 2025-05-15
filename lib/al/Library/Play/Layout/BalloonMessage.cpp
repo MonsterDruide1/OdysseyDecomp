@@ -129,18 +129,12 @@ void BalloonMessage::showPushA() {
     showPane(this, "TxtA");
 }
 
-// TODO
 void BalloonMessage::control() {
-    u16 cond;
-    if ((*(u16*)&mIsAutoUpdate & 0xff) == 0) {
-        cond = *(u16*)&mIsAutoUpdate >> 8;
-    } else {
+    if (mIsAutoUpdate)
         update();
-        cond = (u16)_15d;
-    }
 
-    if (cond == 0 || isNerve(this, &NrvBalloonMessage.End) ||
-        isNerve(this, &NrvBalloonMessage.Hide) || (!isClipped(mHostActor) && !isDead(mHostActor))) {
+    if (!_15d || isNerve(this, &NrvBalloonMessage.End) || isNerve(this, &NrvBalloonMessage.Hide) ||
+        (!isClipped(mHostActor) && !isDead(mHostActor))) {
         mTalkMessageVoicePlayer->update();
         updateTrans();
 
