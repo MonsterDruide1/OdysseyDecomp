@@ -30,18 +30,18 @@ WipeCloseAppearWaitEnd::WipeCloseAppearWaitEnd(const char* name, const char* par
     initNerve(&CloseStart, 0);
 }
 
-void WipeCloseAppearWaitEnd::startClose(s32 param_1) {
-    _130 = param_1;
+void WipeCloseAppearWaitEnd::startClose(s32 frames) {
+    mFrames = frames;
 
     startAction(this, "CloseStart", nullptr);
     LayoutActor::appear();
 
     f32 rate;
-    if (_130 <= 0) {
+    if (mFrames <= 0) {
         asm("");
         rate = 1.0f;
     } else {
-        rate = getActionFrameMax(this, "CloseStart", nullptr) / (f32)_130;
+        rate = getActionFrameMax(this, "CloseStart", nullptr) / (f32)mFrames;
     }
 
     setActionFrameRate(this, rate, nullptr);
@@ -54,8 +54,9 @@ void WipeCloseAppearWaitEnd::startCloseEnd() {
     setNerve(this, &CloseEnd);
 }
 
-void WipeCloseAppearWaitEnd::startOpen(s32 param_1) {
-    _130 = param_1;
+void WipeCloseAppearWaitEnd::startOpen(s32 frames) {
+    mFrames = frames;
+
     startAction(this, "End", nullptr);
     setNerve(this, &Open);
 }

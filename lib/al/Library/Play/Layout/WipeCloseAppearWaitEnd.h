@@ -10,9 +10,9 @@ public:
     WipeCloseAppearWaitEnd(const char* name, const char*, const LayoutInitInfo& info, const char*,
                            bool isLocalized);
 
-    void startClose(s32);
+    void startClose(s32 frames);
     void startCloseEnd();
-    void startOpen(s32);
+    void startOpen(s32 frames);
     bool isCloseEnd() const;
 
     void exeCloseStart();
@@ -23,7 +23,7 @@ public:
 
 private:
     s32 mWaitDelay = -1;
-    s32 _130;
+    s32 mFrames;
 };
 
 static_assert(sizeof(WipeCloseAppearWaitEnd) == 0x138);
