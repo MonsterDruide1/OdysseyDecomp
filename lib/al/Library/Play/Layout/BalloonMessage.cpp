@@ -37,24 +37,25 @@ BalloonMessage* BalloonMessage::create(const LiveActor* hostActor, const LayoutI
 
 BalloonMessage::BalloonMessage(const LiveActor* hostActor, const LayoutInitInfo& info,
                                const BalloonMessageInitParam& initParam, bool isAutoUpdate)
-    : LayoutActor(initParam._0), mHostActor(hostActor), _138(initParam._10), _140(initParam._20),
-      _144(initParam._24), _154(initParam._34), _158(initParam._38), mIsAutoUpdate(isAutoUpdate),
+    : LayoutActor(initParam.name), mHostActor(hostActor), mPaneName(initParam.paneName),
+      mAppearDist(initParam.appearDist), mKillDist(initParam.killDist),
+      mPlayerIndex(initParam.playerIndex), _158(initParam._38), mIsAutoUpdate(isAutoUpdate),
       _15d(initParam._3c) {
-    _148.y = initParam._30;
+    mPosOffset.y = initParam.yPosOffset;
 
-    initLayoutActor(this, info, initParam._8, initParam._28);
+    initLayoutActor(this, info, initParam.layoutName, initParam.archiveName);
 
     mTalkMessageVoicePlayer = new TalkMessageVoicePlayer();
     mTalkMessageVoicePlayer->set_420(true);
 
-    setText(initParam._18);
+    setText(initParam.message);
     initNerve(&Wait, 0);
 
     kill();
 }
 
 void BalloonMessage::setText(const char* message) {
-    setPaneStringFormat(this, _138, message);
+    setPaneStringFormat(this, mPaneName, message);
 }
 
 inline void startAppear(LayoutActor* layout) {
@@ -69,8 +70,9 @@ void BalloonMessage::appear() {
         startAction(this, "Appear", nullptr);
         LayoutActor::appear();
 
-        if (!_15e)
-            mTalkMessageVoicePlayer->start(this, mHostActor, getPaneStringBuffer(this, _138), 5);
+        if (!mIsTalkMessageVoicePlayerStarted)
+            mTalkMessageVoicePlayer->start(this, mHostActor, getPaneStringBuffer(this, mPaneName),
+                                           5);
 
         setNerve(this, &NrvBalloonMessage.Appear);
 
@@ -95,9 +97,9 @@ void BalloonMessage::updateTrans() {
     sead::Vector2f layoutPos = sead::Vector2f::zero;
 
     if (_158 == 0)
-        calcLayoutPosFromWorldPos(&layoutPos, mHostActor, getTrans(mHostActor) + _148);
+        calcLayoutPosFromWorldPos(&layoutPos, mHostActor, getTrans(mHostActor) + mPosOffset);
     else
-        calcLayoutPosFromWorldPosSub(&layoutPos, mHostActor, getTrans(mHostActor) + _148);
+        calcLayoutPosFromWorldPosSub(&layoutPos, mHostActor, getTrans(mHostActor) + mPosOffset);
 
     setLocalTrans(this, layoutPos);
 }
@@ -114,7 +116,7 @@ bool BalloonMessage::isEnableAppear() const {
         isAlive())
         return false;
 
-    return isNearPlayerActor(_140);
+    return isNearPlayerActor(mAppearDist);
 }
 
 void BalloonMessage::appearWithPushA() {
@@ -160,10 +162,10 @@ bool BalloonMessage::isVoicePlayerPlaying() const {
     if (mTalkMessageVoicePlayer->isPlaying())
         return true;
 
-    if (_168.cstr() == nullptr)
+    if (mSeName.cstr() == nullptr)
         return false;
 
-    return checkIsPlayingSe(mHostActor, _168.cstr(), nullptr);
+    return checkIsPlayingSe(mHostActor, mSeName.cstr(), nullptr);
 }
 
 bool BalloonMessage::isShowPushA() const {
@@ -175,7 +177,7 @@ bool BalloonMessage::isEnableEnd() const {
         !isAlive())
         return false;
 
-    return !isNearPlayerActor(_144);
+    return !isNearPlayerActor(mKillDist);
 }
 
 void BalloonMessage::end() {
@@ -186,7 +188,7 @@ void BalloonMessage::end() {
 }
 
 void BalloonMessage::setTextW(const char16* message) {
-    setPaneString(this, _138, message, 0);
+    setPaneString(this, mPaneName, message, 0);
 }
 
 void BalloonMessage::exeAppear() {
@@ -214,8 +216,8 @@ void BalloonMessage::exeEnd() {
 void BalloonMessage::exeHide() {}
 
 bool BalloonMessage::isNearPlayerActor(f32 threshold) const {
-    if (_154 >= 0)
-        return isNear(mHostActor, getPlayerActor(mHostActor, _154), threshold);
+    if (mPlayerIndex >= 0)
+        return isNear(mHostActor, getPlayerActor(mHostActor, mPlayerIndex), threshold);
 
     return isNearPlayer(mHostActor, threshold);
 }
@@ -232,14 +234,14 @@ BalloonMessage* createBalloonMessageNoAutoUpdate(const LiveActor* hostActor,
 }
 
 BalloonMessage* createBalloonMessage(const LiveActor* hostActor, const ActorInitInfo& info) {
-    BalloonMessageInitParam initParam = {._18 = "未設定"};
+    BalloonMessageInitParam initParam = {.message = "未設定"};
 
     return BalloonMessage::create(hostActor, getLayoutInitInfo(info), initParam, true);
 }
 
 BalloonMessage* createBalloonMessage(const LiveActor* hostActor, const ActorInitInfo& info,
                                      const char* message) {
-    BalloonMessageInitParam initParam = {._18 = message};
+    BalloonMessageInitParam initParam = {.message = message};
 
     return BalloonMessage::create(hostActor, getLayoutInitInfo(info), initParam, true);
 }

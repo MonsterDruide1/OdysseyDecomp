@@ -12,15 +12,15 @@ class TalkMessageVoicePlayer;
 
 struct BalloonMessageInitParam {
 public:
-    const char* _0 = "バルーン";
-    const char* _8 = "BalloonSpeak";
-    const char* _10 = "TxtMessage";
-    const char* _18;
-    f32 _20 = 500.0f;
-    f32 _24 = 600.0f;
-    const char* _28 = nullptr;
-    f32 _30 = 160.0f;
-    s32 _34 = -1;
+    const char* name = "バルーン";
+    const char* layoutName = "BalloonSpeak";
+    const char* paneName = "TxtMessage";
+    const char* message;
+    f32 appearDist = 500.0f;
+    f32 killDist = 600.0f;
+    const char* archiveName = nullptr;
+    f32 yPosOffset = 160.0f;
+    s32 playerIndex = -1;
     s32 _38 = 0;
     bool _3c = false;
 };
@@ -59,17 +59,17 @@ public:
 
 private:
     const LiveActor* mHostActor;
-    const char* _138;
-    f32 _140;
-    f32 _144;
-    sead::Vector3f _148 = sead::Vector3f::zero;
-    s32 _154;
+    const char* mPaneName;
+    f32 mAppearDist;
+    f32 mKillDist;
+    sead::Vector3f mPosOffset = sead::Vector3f::zero;
+    s32 mPlayerIndex;
     s32 _158;
     bool mIsAutoUpdate;
     bool _15d;
-    bool _15e = false;
+    bool mIsTalkMessageVoicePlayerStarted = false;
     TalkMessageVoicePlayer* mTalkMessageVoicePlayer = nullptr;
-    sead::FixedSafeString<0x40> _168 = {};
+    sead::FixedSafeString<0x40> mSeName = {};
 };
 
 BalloonMessage* createBalloonMessage(const LiveActor* hostActor, const ActorInitInfo& info,
