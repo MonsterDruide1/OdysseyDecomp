@@ -7,20 +7,20 @@ class ClippingDirector;
 class CollisionDirector;
 class DemoDirector;
 class GameDataHolderBase;
+class GamePadSystem;
+class GraphicsSystemInfo;
 class GravityHolder;
 class ItemDirectorBase;
+struct ModelDrawBufferCounter;
+class ModelGroup;
 class NatureDirector;
-class GamePadSystem;
 class PadRumbleDirector;
 class PlayerHolder;
-class SceneObjHolder;
-class SceneStopCtrl;
 class SceneMsgCtrl;
 class ScreenCoverCtrl;
+class SceneObjHolder;
+class SceneStopCtrl;
 class ShadowDirector;
-class ModelGroup;
-class GraphicsSystemInfo;
-class ModelDrawBufferCounter;
 
 struct ActorSceneInfo {
     ActorSceneInfo();
