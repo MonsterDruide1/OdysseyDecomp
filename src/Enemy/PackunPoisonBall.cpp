@@ -47,7 +47,7 @@ void PackunPoisonBall::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &Paint) &&
         rs::sendMsgPaintTexture(other, self,
                                 (s32)(al::calcNerveRate(this, 10) * (mIsBig ? 400.0f : 200.0f)),
-                                mAngle, 1)) {
+                                mPaintAngle, 1)) {
         return;
     }
 
@@ -94,11 +94,11 @@ void PackunPoisonBall::killBySwitch() {
 }
 
 void PackunPoisonBall::setParam(const sead::Vector3f& trans, const sead::Quatf& quat, bool isHack,
-                                f32 maxShootDist, f32 horizontalSpeed, f32 maxHeight) {
+                                f32 shootDist, f32 shootHorizontalSpeed, f32 shootHeight) {
     mIsHack = isHack;
-    mMaxShootDist = maxShootDist;
-    mHorizontalSpeed = horizontalSpeed;
-    mMaxHeight = maxHeight;
+    mShootDist = shootDist;
+    mShootHorizontalSpeed = shootHorizontalSpeed;
+    mShootHeight = shootHeight;
 
     al::setTrans(this, trans);
     al::setQuat(this, quat);
@@ -134,10 +134,10 @@ void PackunPoisonBall::exeMove() {
 
         mParabolicPath->initFromUpVector(
             al::getTrans(this),
-            al::getTrans(this) + (shootDistOffset + mMaxShootDist) * front + sideOffset * side,
-            -al::getGravity(this), heightOffset + mMaxHeight);
+            al::getTrans(this) + (shootDistOffset + mShootDist) * front + sideOffset * side,
+            -al::getGravity(this), heightOffset + mShootHeight);
 
-        mParabolicPathTime = mParabolicPath->calcPathTimeFromHorizontalSpeed(mHorizontalSpeed);
+        mParabolicPathTime = mParabolicPath->calcPathTimeFromHorizontalSpeed(mShootHorizontalSpeed);
     }
 
     f32 rate = al::calcNerveRate(this, -1, mParabolicPathTime);
@@ -226,22 +226,22 @@ void PackunPoisonBall::exeFall() {
         return;
     }
 
-    if (!al::isCollided(this)) {
-        updateQuat(this, al::getVelocity(this));
+    if (al::isCollided(this)) {
+        al::startHitReaction(this, "着地");
+        al::deleteEffect(this, "PackunPoisonBallAttack");
+        al::setNerve(this, &Paint);
 
         return;
     }
 
-    al::startHitReaction(this, "着地");
-    al::deleteEffect(this, "PackunPoisonBallAttack");
-    al::setNerve(this, &Paint);
+    updateQuat(this, al::getVelocity(this));
 }
 
 void PackunPoisonBall::exePaint() {
     if (al::isFirstStep(this)) {
         al::setVelocityZero(this);
         al::hideModelIfShow(this);
-        mAngle = al::getRandomRadian();
+        mPaintAngle = al::getRandomRadian();
     }
 
     if (al::isGreaterEqualStep(this, 10))
