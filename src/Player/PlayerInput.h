@@ -82,6 +82,7 @@ public:
     bool isThrowTypeRolling(const sead::Vector2f&) const;
 
     void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;
+    void calcMoveDirection(sead::Vector3f*, const sead::Vector3f&) const;
 
 private:
     const al::LiveActor* mLiveActor;
