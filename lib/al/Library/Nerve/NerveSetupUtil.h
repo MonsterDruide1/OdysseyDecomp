@@ -82,7 +82,7 @@ al::initNerveAction(this, "Hide", &NrvExampleUseCase.collector, 0);
         FOR_EACH(NERVE_MAKE, Class, __VA_ARGS__)                                                   \
     } Nrv##Class;
 
-#define NERVES_MAKE_NOSTRUCT(Class, ...) FOR_EACH(NERVE_MAKE, Class, __VA_ARGS__);
+#define NERVES_MAKE_NOSTRUCT(Class, ...) FOR_EACH(NERVE_MAKE, Class, __VA_ARGS__)
 
 #define NERVE_ACTION_IMPL_(Class, Action, ActionFunc)                                              \
     class Class##Nrv##Action : public al::NerveAction {                                            \

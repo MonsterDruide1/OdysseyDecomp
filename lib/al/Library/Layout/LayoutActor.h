@@ -38,7 +38,7 @@ class LayoutActor : public IUseHioNode,
                     public IUseEffectKeeper,
                     public IUseSceneObjHolder {
 public:
-    LayoutActor(const char*);
+    LayoutActor(const char* name);
 
     virtual void appear();
     virtual void kill();
