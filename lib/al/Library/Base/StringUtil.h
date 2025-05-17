@@ -9,18 +9,18 @@ struct MatchStr {
 
 const char* createStringIfInStack(const char* str);
 const char* createConcatString(const char* start, const char* end);
-void createFileNameBySuffix(sead::BufferedSafeString*, const char*, const char*);
-void outputValueWithComma(char*, u32, u64, bool, bool);
+void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, const char* suffix);
+u32 outputValueWithComma(char* out, u32 size, u64 value, bool usePadding, bool padToThousands);
 void extractString(char* out, const char* str, u32 len, u32 unused);
-void searchSubString(const char*, const char*);
-void searchSubString(const char*, const char*, s32);
+const char* searchSubString(const char* str, const char* substr);
+const char* searchSubString(const char* str, const char* substr, s32 substrLen);
 const char* getSubStringUnmatched(const char**, const char*, const MatchStr&,
                                   void (*)(const char*, const char*, void*), void*);
 const char* getSubStringUnmatched(const char*, const MatchStr&);
 void extractBaseNameW(sead::WBufferedSafeString*, const sead::WSafeString&);
 void removeExtensionString(char* out, u32 len, const char* str);
 void removeStringFromEnd(char* out, u32 len, const char* end, const char* str);
-void translateCharacters(char*, const char*, const char*);
+void translateCharacters(char* string, const char* charmap, const char* newCharmap);
 void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
 void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
 void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*, const char*);
@@ -37,7 +37,7 @@ void copyString(char* out, const char* str, u32 len);
 void copyStringW(char16* out, const char16* str, u32 len);
 bool isInStack(const void*);
 bool isEqualString(const char* str1, const char* str2);
-bool isEqualString(const sead::SafeString& str1, const sead::SafeString& str2);
+bool isEqualString(const sead::SafeString& safestr1, const sead::SafeString& safestr2);
 bool isEqualStringCase(const char* str1, const char* str2);
 bool isEqualStringCase(const sead::SafeString& str1, const sead::SafeString& str2);
 
