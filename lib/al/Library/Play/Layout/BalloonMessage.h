@@ -13,12 +13,12 @@ class TalkMessageVoicePlayer;
 struct BalloonMessageInitParam {
 public:
     const char* name = "バルーン";
-    const char* layoutName = "BalloonSpeak";
+    const char* archiveName = "BalloonSpeak";
     const char* paneName = "TxtMessage";
     const char* message;
     f32 appearDist = 500.0f;
     f32 killDist = 600.0f;
-    const char* archiveName = nullptr;
+    const char* suffix = nullptr;
     f32 yPosOffset = 160.0f;
     s32 playerIndex = -1;
     s32 _38 = 0;

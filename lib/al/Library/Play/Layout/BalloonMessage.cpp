@@ -43,7 +43,7 @@ BalloonMessage::BalloonMessage(const LiveActor* hostActor, const LayoutInitInfo&
       _15d(initParam._3c) {
     mPosOffset.y = initParam.yPosOffset;
 
-    initLayoutActor(this, info, initParam.layoutName, initParam.archiveName);
+    initLayoutActor(this, info, initParam.archiveName, initParam.suffix);
 
     mTalkMessageVoicePlayer = new TalkMessageVoicePlayer();
     mTalkMessageVoicePlayer->set_420(true);
