@@ -13,10 +13,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-    - name: Set up dependencies
-      run: |
-        sudo apt update && sudo apt install -y ninja-build cmake ccache clang curl
-        wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
     - name: Set up python
       uses: actions/setup-python@v5
       with:
@@ -24,17 +20,6 @@ jobs:
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install toml colorama cxxfilt
-    - name: Set up cache for clang
-      uses: actions/cache@v4
-      with:
-        key: clang391-401
-        path: |
-          toolchain/clang-3.9.1
-          toolchain/clang-4.0.1
-    - name: Run simplified setup
-      run: tools/setup.py --project
-    - name: Build project
-      run: tools/build.py
     - name: Upload progress state
       run: |
         full_ansi="$(tools/common/progress.py)"

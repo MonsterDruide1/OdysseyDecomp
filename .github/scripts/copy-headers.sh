@@ -30,3 +30,6 @@ cp ./.github/files/HeadersCMakeLists.txt $DESTINATION_PATH/CMakeLists.txt
 # Make all contents of every class public
 grep -rli 'private:' * | xargs -i@ sed -i 's/private:/public:/g' @
 grep -rli 'protected:' * | xargs -i@ sed -i 's/protected:/public:/g' @
+
+# Remove inline functions
+grep -rliE 'inline .*;$' $DESTINATION_PATH/game $DESTINATION_PATH/al | xargs -i@ sed -i -E '/inline .*;$/ {/= default/!d}' @
