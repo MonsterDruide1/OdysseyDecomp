@@ -722,7 +722,7 @@ void initCreateActorWithPlacementInfo(LiveActor* actor, const ActorInitInfo& ini
 void initCreateActorNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo) {
     PlacementInfo placementInfo;
     ActorInitInfo childInitInfo;
-    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    childInitInfo.initViewIdHost(&placementInfo, initInfo);
     actor->init(childInitInfo);
 }
 

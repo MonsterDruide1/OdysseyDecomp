@@ -6,12 +6,17 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
+struct ActorInitInfo;
 class AreaObjDirector;
+class ClippingActorHolder;
+class ClippingFarAreaObserver;
+class ClippingGroupHolder;
+class ClippingJudge;
+class LiveActor;
 class PlayerHolder;
 class SceneCameraInfo;
 class ViewIdHolder;
-struct ActorInitInfo;
-class LiveActor;
+class ViewInfoCtrl;
 
 class ClippingDirector : public HioNode, public IUseExecutor {
 public:
@@ -32,8 +37,15 @@ public:
     void startCheckViewCtrlByLookAtPos();
     void startCheckViewCtrlByPlayerPos();
 
+    ClippingActorHolder* getClippingActorHolder() const { return mClippingActorHolder; }
+
 private:
-    void* filler[6];
+    ClippingJudge* mClippingJudge = nullptr;
+    ClippingFarAreaObserver* mFarAreaObserver = nullptr;
+    ClippingActorHolder* mClippingActorHolder = nullptr;
+    ClippingGroupHolder* mGroupHolder = nullptr;
+    ViewInfoCtrl* mViewInfoCtrl = nullptr;
+    bool mIsExecute = true;
 };
 
 static_assert(sizeof(ClippingDirector) == 0x38);
