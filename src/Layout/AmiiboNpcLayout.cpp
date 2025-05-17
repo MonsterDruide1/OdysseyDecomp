@@ -20,34 +20,34 @@ NERVES_MAKE_NOSTRUCT(AmiiboNpcLayout, Appear, Decide, End, Wait);
 
 AmiiboNpcLayout::AmiiboNpcLayout(const al::LayoutInitInfo& info)
     : al::LayoutActor("AmiiboNpc用レイアウト") {
-    al::initLayoutActor(this, info, "ControllerGuideAmiibo", nullptr);
-    initNerve(&Appear, 0);
-    al::startAction(this, "Appear", nullptr);
+    al::initLayoutActor(this, info, "ControllerGuideAmiibo");
+    initNerve(&Appear);
+    al::startAction(this, "Appear");
     mFooterParts = new FooterParts(this, info, al::getSystemMessageString(this, "Footer", "Return"),
                                    "TxtGuide", "ParFooter");
     mAmiiboIcon = new al::LayoutActor("AmiiboNpc用レイアウト[アイコン]");
-    al::initLayoutPartsActor(mAmiiboIcon, this, info, "ParAmiiboIcon", nullptr);
+    al::initLayoutPartsActor(mAmiiboIcon, this, info, "ParAmiiboIcon");
     kill();
 }
 
 void AmiiboNpcLayout::startTouch() {
     mAmiiboIcon->appear();
-    al::startAction(mAmiiboIcon, "Appear", nullptr);
+    al::startAction(mAmiiboIcon, "Appear");
 }
 
 void AmiiboNpcLayout::endTouch() {
-    al::startAction(mAmiiboIcon, "End", nullptr);
+    al::startAction(mAmiiboIcon, "End");
 }
 
 void AmiiboNpcLayout::appear() {
     al::LayoutActor::appear();
     al::setNerve(this, &Appear);
-    al::startAction(mAmiiboIcon, "Hide", nullptr);
+    al::startAction(mAmiiboIcon, "Hide");
 }
 
 void AmiiboNpcLayout::control() {
     if (isIconEndActionEnd())
-        al::startAction(mAmiiboIcon, "Wait", nullptr);
+        al::startAction(mAmiiboIcon, "Wait");
 }
 
 void AmiiboNpcLayout::decide() {
@@ -55,41 +55,40 @@ void AmiiboNpcLayout::decide() {
 }
 
 void AmiiboNpcLayout::end() {
-    al::startAction(mAmiiboIcon, "Hide", nullptr);
+    al::startAction(mAmiiboIcon, "Hide");
     al::setNerve(this, &End);
 }
 
 bool AmiiboNpcLayout::isIconEndActionEnd() const {
-    return al::isActionPlaying(mAmiiboIcon, "End", nullptr) &&
-           al::isActionEnd(mAmiiboIcon, nullptr);
+    return al::isActionPlaying(mAmiiboIcon, "End") && al::isActionEnd(mAmiiboIcon);
 }
 
 void AmiiboNpcLayout::exeAppear() {
     if (al::isFirstStep(this)) {
-        al::startAction(this, "Appear", nullptr);
+        al::startAction(this, "Appear");
         al::startAction(this, "Loop", "Loop");
     }
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
 void AmiiboNpcLayout::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 }
 
 void AmiiboNpcLayout::exeDecide() {
     if (al::isFirstStep(this)) {
-        al::startAction(this, "Decide", nullptr);
-        al::startHitReaction(this, "タッチ", nullptr);
+        al::startAction(this, "Decide");
+        al::startHitReaction(this, "タッチ");
     }
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }
 
 void AmiiboNpcLayout::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "End");
+    if (al::isActionEnd(this))
         kill();
 }

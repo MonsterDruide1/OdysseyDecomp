@@ -16,8 +16,8 @@ NERVES_MAKE_NOSTRUCT(AimingCursor, Appear, End, Wait);
 
 AimingCursor::AimingCursor(const char* name, const al::LayoutInitInfo& info)
     : al::LayoutActor(name) {
-    al::initLayoutActor(this, info, "Aiming", nullptr);
-    initNerve(&Appear, 0);
+    al::initLayoutActor(this, info, "Aiming");
+    initNerve(&Appear);
     kill();
 }
 
@@ -57,19 +57,19 @@ bool AimingCursor::tryLookOff() {
 
 void AimingCursor::exeAppear() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Appear", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "Appear");
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
 void AimingCursor::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 }
 
 void AimingCursor::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "End");
+    if (al::isActionEnd(this))
         kill();
 }

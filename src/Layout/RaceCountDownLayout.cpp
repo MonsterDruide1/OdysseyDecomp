@@ -20,14 +20,14 @@ NERVES_MAKE_NOSTRUCT(RaceCountDownLayout, Wait, CountDown, CountDownEnd, Finish,
 RaceCountDownLayout::RaceCountDownLayout(const al::LayoutInitInfo& info)
     : al::LayoutActor("[レース]カウントダウン") {
     mCountLayout = new al::LayoutActor("[レース]カウントダウン数字");
-    al::initLayoutActor(this, info, "MiniGameCue", nullptr);
-    al::initLayoutActor(mCountLayout, info, "MiniGameCount", nullptr);
-    initNerve(&Wait, 0);
+    al::initLayoutActor(this, info, "MiniGameCue");
+    al::initLayoutActor(mCountLayout, info, "MiniGameCount");
+    initNerve(&Wait);
 }
 
 void RaceCountDownLayout::startCountDown(s32 count) {
     mCount = count;
-    al::startAction(this, "Hide", nullptr);
+    al::startAction(this, "Hide");
     al::setNerve(this, &CountDown);
     appear();
 }
@@ -64,7 +64,7 @@ void RaceCountDownLayout::exeCountDown() {
 
         toggleNumberLayouts(mCountLayout, mCount);
 
-        al::startAction(mCountLayout, "Count", nullptr);
+        al::startAction(mCountLayout, "Count");
         mCountLayout->appear();
     }
 
@@ -73,7 +73,7 @@ void RaceCountDownLayout::exeCountDown() {
 
     mCount--;
 
-    al::startAction(mCountLayout, "Count", nullptr);
+    al::startAction(mCountLayout, "Count");
     toggleNumberLayouts(mCountLayout, mCount);
 
     if (mCount != 0) {
@@ -81,20 +81,20 @@ void RaceCountDownLayout::exeCountDown() {
     } else {
         al::startSe(this, "Count2");
         mCountLayout->kill();
-        al::startAction(this, "Go", nullptr);
+        al::startAction(this, "Go");
         al::setNerve(this, &CountDownEnd);
     }
 }
 
 void RaceCountDownLayout::exeCountDownEnd() {
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }
 
 void RaceCountDownLayout::exeFinish() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Finish", nullptr);
-    if (al::isActionEnd(this, nullptr) && al::isGreaterEqualStep(this, 120)) {
+        al::startAction(this, "Finish");
+    if (al::isActionEnd(this) && al::isGreaterEqualStep(this, 120)) {
         al::setNerve(this, &FinishEnd);
         kill();
     }
