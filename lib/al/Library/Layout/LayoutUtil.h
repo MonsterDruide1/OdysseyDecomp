@@ -12,6 +12,7 @@ class LayoutInitInfo;
 class LayoutKit;
 class LayoutSystem;
 class MessageSystem;
+class SceneObjHolder;
 
 void initLayoutInitInfo(LayoutInitInfo*, const LayoutKit*, SceneObjHolder*, const AudioDirector*,
                         const LayoutSystem*, const MessageSystem*, const GamePadSystem*);

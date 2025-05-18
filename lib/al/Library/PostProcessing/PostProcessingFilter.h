@@ -13,18 +13,20 @@ class RenderBuffer;
 }  // namespace agl
 
 namespace al {
-class NoiseTextureKeeper;
-class Projection;
-class ShaderHolder;
-class DepthOfFieldDrawer;
-class GraphicsParamRequesterImpl;
-class ViewDepthDrawer;
-class EdgeDrawer;
 class CartoonDrawer;
+class ColorClampDrawer;
+class DepthOfFieldDrawer;
+class EdgeDrawer;
+class GraphicsParamRequesterImpl;
+class NoiseTextureKeeper;
+class PencilSketchDrawer;
+class Projection;
 class RetroColorDrawer;
 class ScreenBlurDrawer;
-class PencilSketchDrawer;
-class ColorClampDrawer;
+class SimpleModelEnv;
+class ShaderHolder;
+class VignettingDrawer;
+class ViewDepthDrawer;
 
 class PostProcessingFilter {
 public:
