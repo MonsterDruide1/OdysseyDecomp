@@ -20,13 +20,13 @@ jobs:
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install toml
-    - name: Set up cache for clang
+    - name: Set up cache for toolchain
       uses: actions/cache@v4
       with:
-        key: clang391-401
+        key: tools-libs
         path: |
-          toolchain/clang-3.9.1
-          toolchain/clang-4.0.1
+          toolchain/bin
+          toolchain/include
     - name: Run simplified setup
       run: tools/setup.py --project
     - name: Create testing source files
