@@ -15,13 +15,14 @@ class IAudioResourceLoader {
 public:
     virtual void func_0();
     virtual void func_8();
-    virtual bool func_10(u32 entryId, u32 unknown);
+    virtual bool tryLoad(u32 entryId, u32 unknown);
 };
 
 class SoundItemEntry : public FileEntryBase {
 public:
     SoundItemEntry();
     void load() override;
+    // TODO: unknown parameter name
     void setLoadRequestInfo(u32 itemId, u32 unknown, IAudioResourceLoader* resourceLoader);
     bool isLoadSuccess() const;
     u32 getSoundItemId() const;

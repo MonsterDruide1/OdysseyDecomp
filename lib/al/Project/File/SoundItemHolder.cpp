@@ -4,7 +4,7 @@
 
 namespace al {
 SoundItemHolder::SoundItemHolder() {
-    mSoundItemEntries.allocBufferAssert(0x280, nullptr);
+    mSoundItemEntries.allocBufferAssert(640, nullptr);
 }
 
 SoundItemEntry* SoundItemHolder::addNewLoadRequestEntry(u32 itemId, u32 unknown,

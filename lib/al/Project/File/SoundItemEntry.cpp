@@ -4,7 +4,7 @@ namespace al {
 SoundItemEntry::SoundItemEntry() = default;
 
 void SoundItemEntry::load() {
-    mIsLoadSuccess = mResourceLoader->func_10(mItemId, _bc);
+    mIsLoadSuccess = mResourceLoader->tryLoad(mItemId, _bc);
     sendMessageDone();
 }
 

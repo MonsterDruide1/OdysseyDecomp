@@ -17,6 +17,7 @@ class SoundItemEntry;
 class SoundItemHolder {
 public:
     SoundItemHolder();
+    // TODO: unknown parameter name
     SoundItemEntry* addNewLoadRequestEntry(u32 itemId, u32 unknown,
                                            IAudioResourceLoader* resourceLoader);
     SoundItemEntry* tryFindEntry(u32 itemId, IAudioResourceLoader* resourceLoader);
