@@ -403,9 +403,7 @@ void Gamane::exeRunaway() {
 
     sead::Vector3f dirToActor;
     al::calcDirToActorH(&dirToActor, this, al::getPlayerActor(this, 0));
-    dirToActor.x = -dirToActor.x;
-    dirToActor.y = -dirToActor.y;
-    dirToActor.z = -dirToActor.z;
+    dirToActor.negate();
     al::turnToDirection(this, dirToActor, 4.0f);
 
     sead::Vector3f quatFront;
