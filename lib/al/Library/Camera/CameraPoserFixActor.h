@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Library/Camera/CameraPoserFix.h"
+#include "Library/Camera/CameraPoser.h"
+#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 

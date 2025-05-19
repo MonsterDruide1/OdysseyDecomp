@@ -5,62 +5,62 @@ namespace al {
 CameraRequestParamHolder::CameraRequestParamHolder() = default;
 
 void CameraRequestParamHolder::resetPlayerType() {
-    mIsFlyerCurrType = mIsFlyerPrevType;
+    mIsCurrFlyer = mIsPrevFlyer;
     mFlyerCamera = nullptr;
-    mIsHighSpeedMoveCurrType = mIsHighSpeedMovePrevType;
+    mIsCurrHighSpeedMove = mIsPrevHighSpeedMove;
     mHighSpeedMoveCamera = nullptr;
-    mIsHighJumpCurrType = mIsHighJumpPrevType;
+    mIsCurrHighJump = mIsPrevHighJump;
     mHighJumpCamera = nullptr;
-    mIsNotTouchGroundCurrType = mIsNotTouchGroundPrevType;
+    mIsCurrNotTouchGround = mIsPrevNotTouchGround;
     mNotTouchGroundCamera = nullptr;
 }
 
 bool CameraRequestParamHolder::isPlayerTypeFlyer() const {
-    return mFlyerCamera && mIsFlyerCurrType;
+    return mFlyerCamera && mIsCurrFlyer;
 }
 
 void CameraRequestParamHolder::onPlayerTypeFlyer(const IUseCamera* camera, const char* name) {
-    mIsFlyerCurrType = true;
+    mIsCurrFlyer = true;
     mFlyerCamera = camera;
 }
 
 bool CameraRequestParamHolder::isPlayerTypeHighSpeedMove() const {
-    return mHighSpeedMoveCamera && mIsHighSpeedMoveCurrType;
+    return mHighSpeedMoveCamera && mIsCurrHighSpeedMove;
 }
 
 void CameraRequestParamHolder::onPlayerTypeHighSpeedMove(const IUseCamera* camera,
                                                          const char* name) {
-    mIsHighSpeedMoveCurrType = true;
+    mIsCurrHighSpeedMove = true;
     mHighSpeedMoveCamera = camera;
 }
 
 bool CameraRequestParamHolder::isPlayerTypeHighJump() const {
-    return mHighJumpCamera && mIsHighJumpCurrType;
+    return mHighJumpCamera && mIsCurrHighJump;
 }
 
 void CameraRequestParamHolder::onPlayerTypeHighJump(const IUseCamera* camera, const char* name) {
-    mIsHighJumpCurrType = true;
+    mIsCurrHighJump = true;
     mHighJumpCamera = camera;
 }
 
 bool CameraRequestParamHolder::isPlayerTypeNotTouchGround() const {
-    return mNotTouchGroundCamera && mIsNotTouchGroundCurrType;
+    return mNotTouchGroundCamera && mIsCurrNotTouchGround;
 }
 
 void CameraRequestParamHolder::onPlayerTypeNotTouchGround(const IUseCamera* camera,
                                                           const char* name) {
-    mIsNotTouchGroundCurrType = true;
+    mIsCurrNotTouchGround = true;
     mNotTouchGroundCamera = camera;
 }
 
 void CameraRequestParamHolder::onRideObj(const IUseCamera* camera, const char* name) {
-    mIsRideObjCurrType = true;
+    mIsCurrRideObj = true;
     mRideObjCamera = camera;
 }
 
 void CameraRequestParamHolder::offRideObj(const IUseCamera* camera, const char* name) {
     mRideObjCamera = nullptr;
-    mIsRideObjCurrType = mIsRideObjPrevType;
+    mIsCurrRideObj = mIsPrevRideObj;
 }
 
 }  // namespace al

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Library/Camera/CameraPoserFix.h"
+#include "Library/Camera/CameraPoser.h"
+#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 
@@ -11,7 +12,7 @@ public:
     void init() override;
     void start(const CameraStartInfo& startInfo) override;
 
-    sead::Vector3f* getVec() { return _140; }
+    sead::Vector3f* get_140() { return _140; }
 
 private:
     sead::Vector3f* _140;

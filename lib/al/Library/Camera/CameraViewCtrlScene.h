@@ -12,7 +12,7 @@ class SceneCameraViewCtrl {
 public:
     SceneCameraViewCtrl();
 
-    CameraSwitchRequester* getSwitchRequester() { return mSwitchRequester; }
+    const CameraSwitchRequester* getSwitchRequester() const { return mSwitchRequester; }
 
 private:
     CameraSwitchRequester* mSwitchRequester = nullptr;
@@ -27,7 +27,7 @@ public:
     SceneCameraCtrl();
     void init(s32 viewNum);
 
-    SceneCameraViewCtrl& getSceneViewAt(s32 idx) { return mViewArray[idx]; }
+    const SceneCameraViewCtrl& getSceneViewAt(s32 idx) const { return mViewArray[idx]; }
 
 private:
     s32 mViewNum = 0;
