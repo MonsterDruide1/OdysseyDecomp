@@ -169,83 +169,46 @@ ItemDirectorBase* getSceneItemDirector(const Scene* scene) {
     return scene->getLiveActorKit()->getItemDirector();
 }
 
-// https://decomp.me/scratch/xJO62
-// NON_MATCHING: Bad order of operations
 void initActorInitInfo(ActorInitInfo* actorInitInfo, const Scene* scene,
                        const PlacementInfo* placementInfo, const LayoutInitInfo* layoutInfo,
                        const ActorFactory* actorFactory, SceneMsgCtrl* sceneMsgCtrl,
                        GameDataHolderBase* gameDataHolderBase) {
-    AudioDirector* audioDirector = scene->getAudioDirector();
     LiveActorKit* actorKit = scene->getLiveActorKit();
-    ActorResourceHolder* actorResourceHolder = actorKit->getActorResourceHolder();
-    AreaObjDirector* areaObjDirector = actorKit->getAreaObjDirector();
-    CameraDirector* cameraDirector = actorKit->getCameraDirector();
-    ClippingDirector* clippingDirector = actorKit->getClippingDirector();
-    LiveActorGroup* liveActorGroup = actorKit->getLiveActorGroupAllActors();
-    DemoDirector* demoDirector = actorKit->getDemoDirector();
-    ExecuteDirector* executeDirector = actorKit->getExecuteDirector();
-    GravityHolder* gravityHolder = actorKit->getGravityHolder();
-    GamePadSystem* gamePadSystem = actorKit->getGamePadSystem();
-    PlayerHolder* playerHolder = actorKit->getPlayerHolder();
-    HitSensorDirector* hitSensorDirector = actorKit->getHitSensorDirector();
-
-    EffectSystem* effectSystem = actorKit->getEffectSystem();
-    EffectSystemInfo* effectSystemInfo =
-        effectSystem ? actorKit->getEffectSystem()->getEffectSystemInfo() : nullptr;
-
-    CollisionDirector* collisionDirector = actorKit->getCollisionDirector();
-    ItemDirectorBase* itemDirectorBase = actorKit->getItemDirector();
-    PadRumbleDirector* padRumbleDirector = actorKit->getPadRumbleDirector();
-    NatureDirector* natureDirector = actorKit->getNatureDirector();
-    SceneObjHolder* sceneObjHolder = scene->getSceneObjHolder();
 
     actorInitInfo->initNew(
-        placementInfo, layoutInfo, liveActorGroup, actorFactory, actorResourceHolder,
-        areaObjDirector, audioDirector, cameraDirector, clippingDirector, collisionDirector,
-        demoDirector, effectSystemInfo, executeDirector, gameDataHolderBase, gravityHolder,
-        hitSensorDirector, itemDirectorBase, natureDirector, gamePadSystem, padRumbleDirector,
-        playerHolder, sceneObjHolder, sceneMsgCtrl, scene->getSceneStopCtrl(),
-        scene->getScreenCoverCtrl(), actorKit->getScreenPointDirector(),
-        actorKit->getShadowDirector(), actorKit->getStageSwitchDirector(),
-        actorKit->getModelGroup(), actorKit->getGraphicsSystemInfo(),
-        actorKit->getModelDrawBufferCounter(), actorKit->getDynamicDrawActorGroup());
+        placementInfo, layoutInfo, actorKit->getLiveActorGroupAllActors(), actorFactory,
+        actorKit->getActorResourceHolder(), actorKit->getAreaObjDirector(),
+        scene->getAudioDirector(), actorKit->getCameraDirector(), actorKit->getClippingDirector(),
+        actorKit->getCollisionDirector(), actorKit->getDemoDirector(),
+        actorKit->getEffectSystem() ? actorKit->getEffectSystem()->getEffectSystemInfo() : nullptr,
+        actorKit->getExecuteDirector(), gameDataHolderBase, actorKit->getGravityHolder(),
+        actorKit->getHitSensorDirector(), actorKit->getItemDirector(),
+        actorKit->getNatureDirector(), actorKit->getGamePadSystem(),
+        actorKit->getPadRumbleDirector(), actorKit->getPlayerHolder(), scene->getSceneObjHolder(),
+        sceneMsgCtrl, scene->getSceneStopCtrl(), scene->getScreenCoverCtrl(),
+        actorKit->getScreenPointDirector(), actorKit->getShadowDirector(),
+        actorKit->getStageSwitchDirector(), actorKit->getModelGroup(),
+        actorKit->getGraphicsSystemInfo(), actorKit->getModelDrawBufferCounter(),
+        actorKit->getDynamicDrawActorGroup());
 }
 
-// https://decomp.me/scratch/xRiTU
-// NON_MATCHING: Bad order of operations
 void initLayoutInitInfo(LayoutInitInfo* layoutInfo, const Scene* scene,
                         const SceneInitInfo& sceneInfo) {
     LiveActorKit* actorKit = scene->getLiveActorKit();
     LayoutKit* layoutKit = scene->getLayoutKit();
 
-    ExecuteDirector* executeDirector;
-    EffectSystem* effectSystem;
-    SceneObjHolder* sceneObjHolder;
-    AudioDirector* audioDirector;
-    CameraDirector* cameraDirector;
-
     if (actorKit) {
-        executeDirector = actorKit->getExecuteDirector();
-        effectSystem = actorKit->getEffectSystem();
-        sceneObjHolder = scene->getSceneObjHolder();
-        audioDirector = scene->getAudioDirector();
-        cameraDirector = scene->getCameraDirector();
-        GameSystemInfo* gameSysInfo = sceneInfo.gameSysInfo;
-
-        layoutInfo->init(executeDirector, effectSystem->getEffectSystemInfo(), sceneObjHolder,
-                         audioDirector, cameraDirector, gameSysInfo->layoutSystem,
-                         gameSysInfo->messageSystem, gameSysInfo->gamePadSystem,
-                         actorKit->getPadRumbleDirector());
+        layoutInfo->init(
+            actorKit->getExecuteDirector(), actorKit->getEffectSystem()->getEffectSystemInfo(),
+            scene->getSceneObjHolder(), scene->getAudioDirector(), actorKit->getCameraDirector(),
+            sceneInfo.gameSysInfo->layoutSystem, sceneInfo.gameSysInfo->messageSystem,
+            sceneInfo.gameSysInfo->gamePadSystem, actorKit->getPadRumbleDirector());
     } else {
-        executeDirector = layoutKit->getExecuteDirector();
-        effectSystem = layoutKit->getEffectSystem();
-        sceneObjHolder = scene->getSceneObjHolder();
-        audioDirector = scene->getAudioDirector();
-        GameSystemInfo* gameSysInfo = sceneInfo.gameSysInfo;
-
-        layoutInfo->init(executeDirector, effectSystem->getEffectSystemInfo(), sceneObjHolder,
-                         scene->getAudioDirector(), nullptr, gameSysInfo->layoutSystem,
-                         gameSysInfo->messageSystem, gameSysInfo->gamePadSystem, nullptr);
+        layoutInfo->init(layoutKit->getExecuteDirector(),
+                         layoutKit->getEffectSystem()->getEffectSystemInfo(),
+                         scene->getSceneObjHolder(), scene->getAudioDirector(), nullptr,
+                         sceneInfo.gameSysInfo->layoutSystem, sceneInfo.gameSysInfo->messageSystem,
+                         sceneInfo.gameSysInfo->gamePadSystem, nullptr);
     }
 
     layoutInfo->setDrawContext(scene->getDrawSystemInfo()->drawContext);
