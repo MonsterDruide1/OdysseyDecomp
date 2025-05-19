@@ -10,7 +10,7 @@ class ByamlIter;
 class ParameterObj;
 class ParameterList;
 
-SEAD_ENUM(YamlParamType ,
+SEAD_ENUM(YamlParamType,
     Invalid,
     Bool,
     F32,
@@ -76,9 +76,9 @@ public:
 
     void setNext(ParameterBase* param) { mNext = param; }
 
-    const sead::FixedSafeString<0x40>& getParamName() const { return mName; }
+    const sead::SafeString& getParamName() const { return mName; }
 
-    s32 getHash() const { return mHash; }
+    u32 getHash() const { return mHash; }
 
     template <typename T>
     T* getValuePtr() {
@@ -88,7 +88,7 @@ public:
 private:
     ParameterBase* mNext = nullptr;
     sead::FixedSafeString<0x40> mName;
-    s32 mHash;
+    u32 mHash;
 };
 
 template <typename T>
@@ -113,13 +113,13 @@ PARAM_TYPE_DEF(V3f, sead::Vector3f)
 PARAM_TYPE_DEF(V4f, sead::Vector4f)
 PARAM_TYPE_DEF(C4f, sead::Color4f)
 PARAM_TYPE_DEF(StringRef, const char*)
-PARAM_TYPE_DEF(String32, sead::FixedSafeString<0x20>)
-PARAM_TYPE_DEF(String64, sead::FixedSafeString<0x40>)
-PARAM_TYPE_DEF(String128, sead::FixedSafeString<0x80>)
-PARAM_TYPE_DEF(String256, sead::FixedSafeString<0x100>)
-PARAM_TYPE_DEF(String512, sead::FixedSafeString<0x200>)
-PARAM_TYPE_DEF(String1024, sead::FixedSafeString<0x400>)
-PARAM_TYPE_DEF(String2048, sead::FixedSafeString<0x800>)
-PARAM_TYPE_DEF(String4096, sead::FixedSafeString<0x1000>)
+PARAM_TYPE_DEF(String32, sead::FixedSafeString<32>)
+PARAM_TYPE_DEF(String64, sead::FixedSafeString<64>)
+PARAM_TYPE_DEF(String128, sead::FixedSafeString<128>)
+PARAM_TYPE_DEF(String256, sead::FixedSafeString<256>)
+PARAM_TYPE_DEF(String512, sead::FixedSafeString<512>)
+PARAM_TYPE_DEF(String1024, sead::FixedSafeString<1024>)
+PARAM_TYPE_DEF(String2048, sead::FixedSafeString<2048>)
+PARAM_TYPE_DEF(String4096, sead::FixedSafeString<4096>)
 
 }  // namespace al

@@ -35,7 +35,7 @@ void ParameterObj::tryGetParam(const ByamlIter& iter) {
         arrayEntry->tryGetParam(*i);
 }
 
-void ParameterObj::addArray(ParameterArray* array, const sead::SafeStringBase<char>& key) {
+void ParameterObj::addArray(ParameterArray* array, const sead::SafeString& key) {
     array->setKey(key);
 
     if (!mParamArray) {
@@ -271,18 +271,16 @@ bool ParameterArray::isExistObj(ParameterObj* obj) {
 
 ParameterList::ParameterList() = default;
 
-void ParameterList::addArray(ParameterArray* array, const sead::SafeString& key) {
-    array->setKey(key);
-
-    if (!mRootArrayNode) {
-        mRootArrayNode = array;
+void ParameterList::addParam(ParameterBase* param) {
+    if (!mRootParamNode) {
+        mRootParamNode = param;
         return;
     }
 
-    ParameterArray* arrayEntry = mRootArrayNode;
-    while (arrayEntry->getNext())
-        arrayEntry = arrayEntry->getNext();
-    arrayEntry->setNext(array);
+    ParameterBase* arrayParam = mRootParamNode;
+    while (arrayParam->getNext())
+        arrayParam = arrayParam->getNext();
+    arrayParam->setNext(param);
 }
 
 void ParameterList::addList(ParameterList* list, const sead::SafeString& key) {
@@ -313,16 +311,18 @@ void ParameterList::addObj(ParameterObj* obj, const sead::SafeString& key) {
     objEntry->setNext(obj);
 }
 
-void ParameterList::addParam(ParameterBase* param) {
-    if (!mRootParamNode) {
-        mRootParamNode = param;
+void ParameterList::addArray(ParameterArray* array, const sead::SafeString& key) {
+    array->setKey(key);
+
+    if (!mRootArrayNode) {
+        mRootArrayNode = array;
         return;
     }
 
-    ParameterBase* arrayParam = mRootParamNode;
-    while (arrayParam->getNext())
-        arrayParam = arrayParam->getNext();
-    arrayParam->setNext(param);
+    ParameterArray* arrayEntry = mRootArrayNode;
+    while (arrayEntry->getNext())
+        arrayEntry = arrayEntry->getNext();
+    arrayEntry->setNext(array);
 }
 
 void ParameterList::clearList() {
@@ -343,16 +343,6 @@ void ParameterList::clearObj() {
         objEntry = next;
     }
     mRootObjNode = nullptr;
-}
-
-bool ParameterList::isExistObj(ParameterObj* obj) {
-    ParameterObj* objEntry = mRootObjNode;
-    while (objEntry) {
-        if (objEntry == obj)
-            return true;
-        objEntry = objEntry->getNext();
-    }
-    return false;
 }
 
 void ParameterList::removeList(ParameterList* list) {
@@ -391,6 +381,16 @@ void ParameterList::removeObj(ParameterObj* obj) {
         prevObjEntry = objEntry;
         objEntry = objEntry->getNext();
     }
+}
+
+bool ParameterList::isExistObj(ParameterObj* obj) {
+    ParameterObj* objEntry = mRootObjNode;
+    while (objEntry) {
+        if (objEntry == obj)
+            return true;
+        objEntry = objEntry->getNext();
+    }
+    return false;
 }
 
 void ParameterList::tryGetParam(const ByamlIter& iter) {

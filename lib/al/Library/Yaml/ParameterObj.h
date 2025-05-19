@@ -14,7 +14,7 @@ public:
 
     void pushBackListNode(ParameterBase* param);
     void tryGetParam(const ByamlIter& iter);
-    void addArray(ParameterArray* array, const sead::SafeStringBase<char>& key);
+    void addArray(ParameterArray* array, const sead::SafeString& key);
     bool isEqual(const ParameterObj& obj) const;
     void copy(const ParameterObj& obj);
     void copyLerp(const ParameterObj& objA, const ParameterObj& objB, f32 rate);
@@ -71,15 +71,15 @@ class ParameterList {
 public:
     ParameterList();
 
-    void addArray(ParameterArray* array, const sead::SafeString& key);
+    void addParam(ParameterBase* param);
     void addList(ParameterList* list, const sead::SafeString& key);
     void addObj(ParameterObj* obj, const sead::SafeString& key);
-    void addParam(ParameterBase* param);
+    void addArray(ParameterArray* array, const sead::SafeString& key);
     void clearList();
     void clearObj();
-    bool isExistObj(ParameterObj* obj);
     void removeList(ParameterList* list);
     void removeObj(ParameterObj* obj);
+    bool isExistObj(ParameterObj* obj);
     void tryGetParam(const ByamlIter& iter);
 
     ParameterList* getNext() const { return mNext; }
