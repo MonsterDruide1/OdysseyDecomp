@@ -70,10 +70,10 @@ void RollParts::updateHeaderText() {
     WStringTmp<0x20> a;
 
     for (s32 i = 0; i < _138; i++)
-        if (mSelectedIdx)
-            a.append((const char16*)L"0");
+        if (i == mSelectedIdx)
+            a.append(u"1");
         else
-            a.append((const char16*)L"1");
+            a.append(u"0");
 
     setPaneString(this, _150, a.cstr(), 0);
 }
