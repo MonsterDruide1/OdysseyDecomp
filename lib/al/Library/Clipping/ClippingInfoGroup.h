@@ -14,7 +14,7 @@ public:
     void allocBuffer();
     void setGroupId(const ClippingActorInfo*);
     bool isEqualGroupId(const PlacementId*) const;
-    void judgeClippingAll(const ClippingJudge*) const;
+    bool judgeClippingAll(const ClippingJudge*) const;
     void startClippedAll();
     void endClippedAll();
 };

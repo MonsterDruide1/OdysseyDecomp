@@ -26,12 +26,12 @@ public:
     void removeFromClippingTarget(LiveActor*);
     void onGroupClipping(LiveActor*);
     void offGroupClipping(LiveActor*);
-    ClippingActorInfo* getClippingRadius(const LiveActor*);
+    f32 getClippingRadius(const LiveActor*);
     ClippingActorInfo* find(const LiveActor*) const;
-    ClippingActorInfo* getClippingCenterPos(const LiveActor*);
+    const sead::Vector3f& getClippingCenterPos(const LiveActor*);
     void setTypeToSphere(LiveActor*, f32, const sead::Vector3f*);
     void setTypeToObb(LiveActor* liveActor, const sead::BoundBox3f&);
-    LiveActor* getClippingObb(const LiveActor*);
+    sead::BoundBox3f& getClippingObb(const LiveActor*);
     void setNearClipDistance(LiveActor*, f32);
     void setFarClipLevel20M(LiveActor*);
     void setFarClipLevelMax(LiveActor*);
