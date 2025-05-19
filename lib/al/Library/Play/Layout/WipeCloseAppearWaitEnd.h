@@ -7,12 +7,12 @@ class LayoutInitInfo;
 
 class WipeCloseAppearWaitEnd : public LayoutActor {
 public:
-    WipeCloseAppearWaitEnd(const char* name, const char*, const LayoutInitInfo& info, const char*,
-                           bool isLocalized);
+    WipeCloseAppearWaitEnd(const char* name, const char* archiveName, const LayoutInitInfo& info,
+                           const char* suffix, bool isLocalized);
 
-    void startClose(s32 frames);
+    void startClose(s32 frames = -1);
     void startCloseEnd();
-    void startOpen(s32 frames);
+    void startOpen(s32 frames = -1);
     bool isCloseEnd() const;
 
     void exeCloseStart();

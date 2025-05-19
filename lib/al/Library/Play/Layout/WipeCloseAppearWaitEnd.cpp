@@ -18,14 +18,14 @@ NERVES_MAKE_NOSTRUCT(HostType, CloseStart, CloseEnd, Open, Wait, CloseWait)
 }  // namespace
 
 namespace al {
-WipeCloseAppearWaitEnd::WipeCloseAppearWaitEnd(const char* name, const char* param_2,
-                                               const LayoutInitInfo& info, const char* param_4,
+WipeCloseAppearWaitEnd::WipeCloseAppearWaitEnd(const char* name, const char* archiveName,
+                                               const LayoutInitInfo& info, const char* suffix,
                                                bool isLocalized)
     : LayoutActor(name) {
     if (isLocalized)
-        initLayoutActorLocalized(this, info, param_2, param_4);
+        initLayoutActorLocalized(this, info, archiveName, suffix);
     else
-        initLayoutActor(this, info, param_2, param_4);
+        initLayoutActor(this, info, archiveName, suffix);
 
     initNerve(&CloseStart, 0);
 }
@@ -36,13 +36,11 @@ void WipeCloseAppearWaitEnd::startClose(s32 frames) {
     startAction(this, "CloseStart", nullptr);
     LayoutActor::appear();
 
-    f32 rate;
-    if (mFrames <= 0) {
+    f32 rate = 1.0f;
+    if (mFrames <= 0)
         asm("");
-        rate = 1.0f;
-    } else {
+    else
         rate = getActionFrameMax(this, "CloseStart", nullptr) / (f32)mFrames;
-    }
 
     setActionFrameRate(this, rate, nullptr);
     setNerve(this, &CloseStart);
