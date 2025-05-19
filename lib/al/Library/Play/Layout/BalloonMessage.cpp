@@ -67,7 +67,7 @@ void BalloonMessage::appear() {
     hidePushA();
 
     if (!mIsAutoUpdate) {
-        startAction(this, "Appear", nullptr);
+        startAppear(this);
         LayoutActor::appear();
 
         if (!mIsTalkMessageVoicePlayerStarted)
@@ -135,15 +135,15 @@ void BalloonMessage::control() {
     if (mIsAutoUpdate)
         update();
 
-    if (!_15d || isNerve(this, &NrvBalloonMessage.End) || isNerve(this, &NrvBalloonMessage.Hide) ||
-        (!isClipped(mHostActor) && !isDead(mHostActor))) {
-        mTalkMessageVoicePlayer->update();
-        updateTrans();
+    if (_15d && !isNerve(this, &NrvBalloonMessage.End) && !isNerve(this, &NrvBalloonMessage.Hide) &&
+        (isClipped(mHostActor) || isDead(mHostActor))) {
+        setNerve(this, &NrvBalloonMessage.End);
 
         return;
     }
 
-    setNerve(this, &NrvBalloonMessage.End);
+    mTalkMessageVoicePlayer->update();
+    updateTrans();
 }
 
 void BalloonMessage::update() {
@@ -162,7 +162,7 @@ bool BalloonMessage::isVoicePlayerPlaying() const {
     if (mTalkMessageVoicePlayer->isPlaying())
         return true;
 
-    if (mSeName.cstr() == nullptr)
+    if (!mSeName.cstr())
         return false;
 
     return checkIsPlayingSe(mHostActor, mSeName.cstr(), nullptr);
