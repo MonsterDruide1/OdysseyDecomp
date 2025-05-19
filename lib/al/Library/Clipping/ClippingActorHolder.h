@@ -31,7 +31,7 @@ public:
     const sead::Vector3f& getClippingCenterPos(const LiveActor*);
     void setTypeToSphere(LiveActor*, f32, const sead::Vector3f*);
     void setTypeToObb(LiveActor* liveActor, const sead::BoundBox3f&);
-    sead::BoundBox3f& getClippingObb(const LiveActor*);
+    const sead::BoundBox3f& getClippingObb(const LiveActor*);
     void setNearClipDistance(LiveActor*, f32);
     void setFarClipLevel20M(LiveActor*);
     void setFarClipLevelMax(LiveActor*);
