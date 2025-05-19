@@ -98,15 +98,8 @@ with open('split/text.s', 'r') as file:
             parts = line.split(":lo12:")
             if len(parts) != 2:
                 print(":lo12: does appear more than once in line: %s" % line)
-            if parts[1].startswith("off_"):
-                # off_7101E4EAF0
-                off_name = parts[1][0:14]
-            elif parts[1].startswith("fn_"):
-                # fn_7101E4EAF0
-                off_name = parts[1][0:13]
-            else:
-                print("Invalid offset name: %s" % parts[1])
-                off_name = parts[1]
+            off_name = parts[1]
+            off_name = off_name.split("]")[0]
 
             segments.add_reference(off_name, current_function)
 
