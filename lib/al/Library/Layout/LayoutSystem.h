@@ -33,18 +33,18 @@ public:
 
     void setEffectSystem(EffectSystem* effectSystem) { mEffectSystem = effectSystem; }
 
-    ExecuteDirector* getExecuteDirector() { return mExecuteDirector; }
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
 
-    EffectSystem* getEffectSystem() { return mEffectSystem; }
+    EffectSystem* getEffectSystem() const { return mEffectSystem; }
 
-    nn::ui2d::DrawInfo* getDrawInfo() { return mDrawInfo; }
+    nn::ui2d::DrawInfo* getDrawInfo() const { return mDrawInfo; }
 
 private:
     FontHolder* mFontHolder;
     ExecuteDirector* mExecuteDirector;
     EffectSystem* mEffectSystem;
     LayoutSystem* mLayoutSystem;
-    agl::DrawContext* mDrawContex;
+    agl::DrawContext* mDrawContext;
     nn::ui2d::DrawInfo* mDrawInfo;
 };
 
