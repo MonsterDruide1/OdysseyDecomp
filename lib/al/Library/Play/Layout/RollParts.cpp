@@ -29,14 +29,14 @@ void RollParts::startLoopAction(const char* actionName, const char* paneName) {
     startAction(this, actionName, paneName);
 }
 
-void RollParts::setData(const char16** messages, s32 param_2, bool param_3, s32 selectedIdx,
+void RollParts::setData(const char16** messages, s32 messageCount, bool isLoop, s32 selectedIdx,
                         const char* paneName) {
-    _140 = param_3;
+    mIsLoop = isLoop;
     mMessages = messages;
-    _138 = param_2;
+    mMessageCount = messageCount;
     mPaneName = paneName;
-    _190 = 3;
-    _194 = 3;
+    mCurrentActionType = ActionType::Active;
+    mNextActionType = ActionType::Active;
 
     if (selectedIdx >= 0)
         mSelectedIdx = selectedIdx;
@@ -44,10 +44,10 @@ void RollParts::setData(const char16** messages, s32 param_2, bool param_3, s32 
     setPaneString(this, mPaneName, mMessages[mSelectedIdx], 0);
     updateHeaderText();
 
-    if (!_198)
+    if (!mHasStatePane)
         return;
 
-    if (param_2 == 1) {
+    if (messageCount == 1) {
         if (!isExistAction(this, "Off", "State"))
             return;
 
@@ -62,20 +62,22 @@ void RollParts::setData(const char16** messages, s32 param_2, bool param_3, s32 
     startAction(this, "On", "State");
 }
 
-// NON_MATCHING
 void RollParts::updateHeaderText() {
-    if (!_150)
+    if (!mHeaderPaneName)
         return;
 
-    WStringTmp<0x20> a;
+    WStringTmp<0x20> text;
+    text.clear();
 
-    for (s32 i = 0; i < _138; i++)
-        if (i == mSelectedIdx)
-            a.append(u"1");
-        else
-            a.append(u"0");
+    if (mMessageCount > 1) {
+        for (s32 i = 0; i < mMessageCount; i++)
+            if (i == mSelectedIdx)
+                text.append(u"1");
+            else
+                text.append(u"0");
+    }
 
-    setPaneString(this, _150, a.cstr(), 0);
+    setPaneString(this, mHeaderPaneName, text.cstr(), 0);
 }
 
 void RollParts::setSelectedIdx(s32 idx) {
@@ -109,37 +111,37 @@ void RollParts::deactivate() {
     }
 
     if (isRoll())
-        _194 = 2;
+        mNextActionType = ActionType::Deactive;
 }
 
 void RollParts::rollRight() {
-    if ((!_140 && mSelectedIdx + 1 >= _138) || _138 <= 1)
+    if ((!mIsLoop && mSelectedIdx + 1 >= mMessageCount) || mMessageCount <= 1)
         return;
 
     if (isNerve(this, &NrvRollParts.Active)) {
-        _190 = 0;
+        mCurrentActionType = ActionType::RollRight;
         setNerve(this, &NrvRollParts.RollOut);
 
         return;
     }
 
     if (isNerve(this, &NrvRollParts.RollOut) || isNerve(this, &NrvRollParts.RollIn))
-        _194 = 0;
+        mNextActionType = ActionType::RollRight;
 }
 
 void RollParts::rollLeft() {
-    if ((!_140 && mSelectedIdx <= 0) || _138 <= 1)
+    if ((!mIsLoop && mSelectedIdx <= 0) || mMessageCount <= 1)
         return;
 
     if (isNerve(this, &NrvRollParts.Active)) {
-        _190 = 1;
+        mCurrentActionType = ActionType::RollLeft;
         setNerve(this, &NrvRollParts.RollOut);
 
         return;
     }
 
     if (isNerve(this, &NrvRollParts.RollOut) || isNerve(this, &NrvRollParts.RollIn))
-        _194 = 1;
+        mNextActionType = ActionType::RollLeft;
 }
 
 void RollParts::calcCursorTrans(sead::Vector2f* outCursorTrans) const {
@@ -147,10 +149,7 @@ void RollParts::calcCursorTrans(sead::Vector2f* outCursorTrans) const {
 }
 
 bool RollParts::isJustChangeRoll() const {
-    if (!isNerve(this, &NrvRollParts.RollIn))
-        return false;
-
-    return getNerveStep(this) == 1;
+    return isNerve(this, &NrvRollParts.RollIn) && getNerveStep(this) == 1;
 }
 
 bool RollParts::isRoll() const {
@@ -169,45 +168,51 @@ void RollParts::exeActive() {
 
 void RollParts::exeRollOut() {
     if (isFirstStep(this)) {
-        startAction(this, _190 == 1 ? _188 : _178, _158);
+        startAction(this,
+                    mCurrentActionType == ActionType::RollLeft ? mRollLeftOutAction :
+                                                                 mRollRightOutAction,
+                    mRollPaneName);
 
-        if (_190 == 1) {
+        if (mCurrentActionType == ActionType::RollLeft) {
             startHitReaction(this, "左ロール", nullptr);
             mSelectedIdx--;
 
             if (mSelectedIdx < 0)
-                mSelectedIdx = _140 ? _138 - 1 : 0;
+                mSelectedIdx = mIsLoop ? mMessageCount - 1 : 0;
         } else {
             startHitReaction(this, "右ロール", nullptr);
             mSelectedIdx++;
 
-            if (mSelectedIdx >= _138)
-                mSelectedIdx = _140 ? 0 : _138 - 1;
+            if (mSelectedIdx >= mMessageCount)
+                mSelectedIdx = mIsLoop ? 0 : mMessageCount - 1;
         }
 
         updateHeaderText();
     }
 
-    if (isActionEnd(this, _158))
+    if (isActionEnd(this, mRollPaneName))
         setNerve(this, &NrvRollParts.RollIn);
 }
 
 void RollParts::exeRollIn() {
     if (isFirstStep(this)) {
-        startAction(this, _190 == 1 ? _180 : _170, _158);
+        startAction(this,
+                    mCurrentActionType == ActionType::RollLeft ? mRollLeftInAction :
+                                                                 mRollRightInAction,
+                    mRollPaneName);
         setPaneString(this, mPaneName, mMessages[mSelectedIdx], 0);
     }
 
-    if (isActionEnd(this, _158)) {
-        _190 = _194;
-        _194 = 3;
+    if (isActionEnd(this, mRollPaneName)) {
+        mCurrentActionType = mNextActionType;
+        mNextActionType = ActionType::Active;
 
-        switch (_190) {
-        case 0:
-        case 1:
+        switch (mCurrentActionType) {
+        case ActionType::RollRight:
+        case ActionType::RollLeft:
             setNerve(this, &NrvRollParts.RollOut);
             break;
-        case 2:
+        case ActionType::Deactive:
             setNerve(this, &NrvRollParts.Deactive);
             break;
         default:

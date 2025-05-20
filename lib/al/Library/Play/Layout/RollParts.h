@@ -9,10 +9,13 @@ class LayoutInitInfo;
 
 class RollParts : public LayoutActor {
 public:
+    enum class ActionType : u32 { RollRight, RollLeft, Deactive, Active };
+
     RollParts(LayoutActor* parent, const LayoutInitInfo& info, const char* archiveName);
 
     void startLoopAction(const char* actionName, const char* paneName);
-    void setData(const char16**, s32, bool, s32, const char*);
+    void setData(const char16** messages, s32 messageCount, bool isLoop, s32 selectedIdx,
+                 const char* paneName);
     void updateHeaderText();
     void setSelectedIdx(s32 idx);
     void activate();
@@ -32,21 +35,21 @@ public:
 
 private:
     const char16** mMessages = nullptr;
-    s32 _138 = -1;
+    s32 mMessageCount = -1;
     s32 mSelectedIdx = -1;
-    bool _140 = false;
+    bool mIsLoop = false;
     const char* mPaneName = "TxtRoll";
-    const char* _150 = nullptr;
-    const char* _158 = "Change";
+    const char* mHeaderPaneName = nullptr;
+    const char* mRollPaneName = "Change";
     const char* mActiveAction = "Select";
     const char* mDeactiveAction = "Wait";
-    const char* _170 = "RightIn";
-    const char* _178 = "RightOut";
-    const char* _180 = "LeftIn";
-    const char* _188 = "LeftOut";
-    u32 _190 = 3;
-    u32 _194 = 3;
-    bool _198 = false;
+    const char* mRollRightInAction = "RightIn";
+    const char* mRollRightOutAction = "RightOut";
+    const char* mRollLeftInAction = "LeftIn";
+    const char* mRollLeftOutAction = "LeftOut";
+    ActionType mCurrentActionType = ActionType::Active;
+    ActionType mNextActionType = ActionType::Active;
+    bool mHasStatePane = false;
 };
 
 static_assert(sizeof(RollParts) == 0x1a0);
