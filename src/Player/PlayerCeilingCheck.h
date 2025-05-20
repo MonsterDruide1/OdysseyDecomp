@@ -20,8 +20,8 @@ public:
 
 private:
     PlayerCollisionCheckSphereMove* mCollisionCheckSphereMove = nullptr;
-    float mSafetyCeilSpace = 0.0f;
-    float mCeilCheckHeight = 0.0f;
+    f32 mSafetyCeilSpace = 0.0f;
+    f32 mCeilCheckHeight = 0.0f;
     bool mIsCeilingCheckNormal = true;
     bool mIsCeilingCheckGrab = false;
     bool mIsEnableStandUp = false;
