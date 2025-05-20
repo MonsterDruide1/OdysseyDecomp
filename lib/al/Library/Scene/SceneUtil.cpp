@@ -110,16 +110,13 @@ Resource* getStageResourceMap(const Scene* scene, s32 index) {
 Resource* tryGetStageResourceDesign(const Scene* scene, s32 index) {
     if (getStageInfoDesignNum(scene) == 0)
         return nullptr;
-    return scene->getStageResourceKeeper()
-        ->getDesignStageInfo()
-        ->getStageInfo(index)
-        ->getResource();
+    return getStageInfoDesign(scene, index)->getResource();
 }
 
 Resource* tryGetStageResourceSound(const Scene* scene, s32 index) {
     if (getStageInfoSoundNum(scene) == 0)
         return nullptr;
-    return scene->getStageResourceKeeper()->getSoundStageInfo()->getStageInfo(index)->getResource();
+    return getStageInfoSound(scene, index)->getResource();
 }
 
 agl::RenderBuffer* getSceneFrameBufferMain(const Scene* scene) {
@@ -255,18 +252,17 @@ void initPlacementAreaObj(Scene* scene, const ActorInitInfo& actorInfo) {
 }
 
 void initPlacementGravityObj(Scene* scene) {
-    PlacementInfo placementInfo;
+    PlacementInfo gravityList;
     for (s32 i = 0; i < getStageInfoMapNum(scene); i++) {
         StageInfo* stageInfo = getStageInfoMap(scene, i);
 
         s32 count;
-        if (tryGetPlacementInfoAndCount(&placementInfo, &count, stageInfo, "GravityList")) {
+        if (tryGetPlacementInfoAndCount(&gravityList, &count, stageInfo, "GravityList")) {
             for (s32 j = 0; j < count; j++) {
-                PlacementInfo placementInfo2;
-                getPlacementInfoByIndex(&placementInfo2, placementInfo, j);
-                if (isClassName(placementInfo2, "GravityPoint"))
-
-                    scene->getLiveActorKit()->getGravityHolder()->createGravity(placementInfo2);
+                PlacementInfo gravityListEntry;
+                getPlacementInfoByIndex(&gravityListEntry, gravityList, j);
+                if (isClassName(gravityListEntry, "GravityPoint"))
+                    scene->getLiveActorKit()->getGravityHolder()->createGravity(gravityListEntry);
             }
         }
     }
@@ -274,13 +270,13 @@ void initPlacementGravityObj(Scene* scene) {
 
 bool tryGetPlacementInfoAndCount(PlacementInfo* outPlacementInfo, s32* outCount,
                                  const StageInfo* stageInfo, const char* key) {
-    if (tryGetPlacementInfo(outPlacementInfo, stageInfo, key)) {
-        *outCount = getCountPlacementInfo(*outPlacementInfo);
-        return true;
+    if (!tryGetPlacementInfo(outPlacementInfo, stageInfo, key)) {
+        *outCount = 0;
+        return false;
     }
 
-    *outCount = 0;
-    return false;
+    *outCount = getCountPlacementInfo(*outPlacementInfo);
+    return true;
 }
 
 void initPlacementObjectMap(Scene* scene, const ActorInitInfo& actorInfo, const char* name) {
@@ -292,14 +288,14 @@ void initPlacementObjectMap(Scene* scene, const ActorInitInfo& actorInfo, const 
 void initPlacementByStageInfo(const StageInfo* stageInfo, const char* key,
                               const ActorInitInfo& actorInfo) {
     PlacementInfo placementInfo;
-    if (tryGetPlacementInfo(&placementInfo, stageInfo, key)) {
-        s32 count = getCountPlacementInfo(placementInfo);
+    s32 count;
+    if (!tryGetPlacementInfoAndCount(&placementInfo, &count, stageInfo, key))
+        return;
 
-        for (s32 i = 0; i < count; i++) {
-            PlacementInfo placementInfo2;
-            getPlacementInfoByIndex(&placementInfo2, placementInfo, i);
-            createPlacementActorFromFactory(actorInfo, &placementInfo2);
-        }
+    for (s32 i = 0; i < count; i++) {
+        PlacementInfo placementInfo2;
+        getPlacementInfoByIndex(&placementInfo2, placementInfo, i);
+        createPlacementActorFromFactory(actorInfo, &placementInfo2);
     }
 }
 
@@ -333,15 +329,16 @@ LiveActor* tryInitPlacementSingleObject(Scene* scene, const ActorInitInfo& actor
         StageInfo* stageInfo =
             scene->getStageResourceKeeper()->getStageResourceList(resourceType)->getStageInfo(i);
 
-        if (tryGetPlacementInfo(&placementInfo, stageInfo, key)) {
-            s32 count = getCountPlacementInfo(placementInfo);
-            for (s32 j = 0; j < count; j++) {
-                PlacementInfo newPlacementInfo;
-                getPlacementInfoByIndex(&newPlacementInfo, placementInfo, j);
-                LiveActor* newActor = createPlacementActorFromFactory(actorInfo, &newPlacementInfo);
-                if (newActor)
-                    actor = newActor;
-            }
+        if (!tryGetPlacementInfo(&placementInfo, stageInfo, key))
+            continue;
+
+        s32 count = getCountPlacementInfo(placementInfo);
+        for (s32 j = 0; j < count; j++) {
+            PlacementInfo newPlacementInfo;
+            getPlacementInfoByIndex(&newPlacementInfo, placementInfo, j);
+            LiveActor* newActor = createPlacementActorFromFactory(actorInfo, &newPlacementInfo);
+            if (newActor)
+                actor = newActor;
         }
     }
     return actor;
@@ -365,20 +362,22 @@ LiveActor* tryInitPlacementSingleObject(Scene* scene, const ActorInitInfo& actor
         StageInfo* stageInfo =
             scene->getStageResourceKeeper()->getStageResourceList(resourceType)->getStageInfo(i);
 
-        if (tryGetPlacementInfo(&placementInfo, stageInfo, key)) {
-            s32 count = getCountPlacementInfo(placementInfo);
-            for (s32 j = 0; j < count; j++) {
-                PlacementInfo newPlacementInfo;
-                getPlacementInfoByIndex(&newPlacementInfo, placementInfo, j);
-                const char* objName = nullptr;
-                getObjectName(&objName, newPlacementInfo);
-                if (isEqualString(objName, name)) {
-                    LiveActor* newActor =
-                        createPlacementActorFromFactory(actorInfo, &newPlacementInfo);
-                    if (newActor)
-                        actor = newActor;
-                }
-            }
+        if (!tryGetPlacementInfo(&placementInfo, stageInfo, key))
+            continue;
+
+        s32 count = getCountPlacementInfo(placementInfo);
+        for (s32 j = 0; j < count; j++) {
+            PlacementInfo newPlacementInfo;
+            getPlacementInfoByIndex(&newPlacementInfo, placementInfo, j);
+            const char* objName = nullptr;
+            getObjectName(&objName, newPlacementInfo);
+
+            if (!isEqualString(objName, name))
+                continue;
+
+            LiveActor* newActor = createPlacementActorFromFactory(actorInfo, &newPlacementInfo);
+            if (newActor)
+                actor = newActor;
         }
     }
     return actor;
@@ -402,21 +401,23 @@ bool tryInitPlacementActorGroup(LiveActorGroup* liveActorGroup, Scene* scene,
         StageInfo* stageInfo =
             scene->getStageResourceKeeper()->getStageResourceList(resourceType)->getStageInfo(i);
 
-        if (tryGetPlacementInfo(&placementInfo, stageInfo, key)) {
-            s32 count = getCountPlacementInfo(placementInfo);
-            for (s32 j = 0; j < count; j++) {
-                PlacementInfo newPlacementInfo;
-                getPlacementInfoByIndex(&newPlacementInfo, placementInfo, j);
-                const char* objName = nullptr;
-                getObjectName(&objName, newPlacementInfo);
-                if (isEqualString(objName, name)) {
-                    LiveActor* actor =
-                        createPlacementActorFromFactory(actorInfo, &newPlacementInfo);
-                    if (actor) {
-                        liveActorGroup->registerActor(actor);
-                        isRegistered = true;
-                    }
-                }
+        if (!tryGetPlacementInfo(&placementInfo, stageInfo, key))
+            continue;
+
+        s32 count = getCountPlacementInfo(placementInfo);
+        for (s32 j = 0; j < count; j++) {
+            PlacementInfo newPlacementInfo;
+            getPlacementInfoByIndex(&newPlacementInfo, placementInfo, j);
+            const char* objName = nullptr;
+            getObjectName(&objName, newPlacementInfo);
+
+            if (!isEqualString(objName, name))
+                continue;
+
+            LiveActor* actor = createPlacementActorFromFactory(actorInfo, &newPlacementInfo);
+            if (actor) {
+                liveActorGroup->registerActor(actor);
+                isRegistered = true;
             }
         }
     }
@@ -431,12 +432,11 @@ void initPlacementByStageInfoSingle(const StageInfo* stageInfo, const char* key,
 bool tryGetPlacementInfo(PlacementInfo* outPlacementInfo, const StageInfo* stageInfo,
                          const char* key) {
     ByamlIter iter;
-    if (stageInfo->getPlacementIter().tryGetIterByKey(&iter, key)) {
-        outPlacementInfo->set(iter, stageInfo->getZoneIter());
-        return true;
-    }
+    if (!stageInfo->getPlacementIter().tryGetIterByKey(&iter, key))
+        return false;
 
-    return false;
+    outPlacementInfo->set(iter, stageInfo->getZoneIter());
+    return true;
 }
 
 void getPlacementInfo(PlacementInfo* outPlacementInfo, const StageInfo* stageInfo,
@@ -491,27 +491,23 @@ void registerSwitchKeepOnAreaGroup(Scene* scene, SwitchKeepOnAreaGroup* switchKe
 }
 
 void initGraphicsSystemInfo(Scene* scene, const char* name, s32 index) {
-    if (1 < index) {
+    if (index > 1) {
         StringTmp<32> scenario{"Scenario%d"};
         GraphicsSystemInfo* systemInfo = scene->getLiveActorKit()->getGraphicsSystemInfo();
 
-        Resource* resource;
+        Resource* resource = nullptr;
         if (getStageInfoDesignNum(scene) != 0)
             resource = getStageInfoDesign(scene, 0)->getResource();
-        else
-            resource = nullptr;
         systemInfo->initStageResource(resource, name, scenario.cstr());
-        return;
+    } else {
+        GraphicsSystemInfo* systemInfo = scene->getLiveActorKit()->getGraphicsSystemInfo();
+
+        Resource* resource = nullptr;
+        if (getStageInfoDesignNum(scene) != 0)
+            resource = getStageInfoDesign(scene, 0)->getResource();
+
+        systemInfo->initStageResource(resource, name, nullptr);
     }
-
-    GraphicsSystemInfo* systemInfo = scene->getLiveActorKit()->getGraphicsSystemInfo();
-
-    Resource* resource;
-    if (getStageInfoDesignNum(scene) != 0)
-        resource = getStageInfoDesign(scene, 0)->getResource();
-    else
-        resource = nullptr;
-    systemInfo->initStageResource(resource, name, nullptr);
 }
 
 void initCameraDirectorImpl(Scene* scene, const CameraPoserFactory* cameraPoserFactory) {
@@ -798,14 +794,14 @@ void updateEffectDemo(Scene* scene) {
 }
 
 void updateEffectDemoWithPause(Scene* scene) {
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（前処理）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（プレイヤー）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（Ｚソート）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（カメラデモ）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（カメラ前エフェクト）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（ベース２Ｄ）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（２Ｄ）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（後処理）");
+    updateKitList(scene, "更新", "エフェクト（前処理）");
+    updateKitList(scene, "更新", "エフェクト（プレイヤー）");
+    updateKitList(scene, "更新", "エフェクト（Ｚソート）");
+    updateKitList(scene, "更新", "エフェクト（カメラデモ）");
+    updateKitList(scene, "更新", "エフェクト（カメラ前エフェクト）");
+    updateKitList(scene, "更新", "エフェクト（ベース２Ｄ）");
+    updateKitList(scene, "更新", "エフェクト（２Ｄ）");
+    updateKitList(scene, "更新", "エフェクト（後処理）");
 }
 
 void updateEffectLayout(Scene* scene) {
@@ -824,20 +820,20 @@ void updateKitListPrev(Scene* scene) {
 }
 
 void updateKitListPost(Scene* scene) {
-    executeUpdateList(scene->getLiveActorKit(), "更新", "帽子装着位置更新");
-    alExecuteFunction::updateEffect(scene->getLiveActorKit()->getExecuteDirector());
+    updateKitList(scene, "更新", "帽子装着位置更新");
+    updateEffect(scene);
 }
 
 void updateKitListPostDemoWithPauseNormalEffect(Scene* scene) {
-    executeUpdateList(scene->getLiveActorKit(), "更新", "帽子装着位置更新");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（前処理）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（プレイヤー）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（Ｚソート）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（カメラデモ）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（カメラ前エフェクト）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（ベース２Ｄ）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（２Ｄ）");
-    executeUpdateList(scene->getLiveActorKit(), "更新", "エフェクト（後処理）");
+    updateKitList(scene, "更新", "帽子装着位置更新");
+    updateKitList(scene, "更新", "エフェクト（前処理）");
+    updateKitList(scene, "更新", "エフェクト（プレイヤー）");
+    updateKitList(scene, "更新", "エフェクト（Ｚソート）");
+    updateKitList(scene, "更新", "エフェクト（カメラデモ）");
+    updateKitList(scene, "更新", "エフェクト（カメラ前エフェクト）");
+    updateKitList(scene, "更新", "エフェクト（ベース２Ｄ）");
+    updateKitList(scene, "更新", "エフェクト（２Ｄ）");
+    updateKitList(scene, "更新", "エフェクト（後処理）");
 }
 
 void updateKitListPostOnNerveEnd(Scene* scene) {
@@ -965,10 +961,8 @@ void updateDemoActorForPauseEffect(const Scene* scene) {
 }
 
 void stopAllSe(const Scene* scene, u32 index) {
-    if (scene && scene->getAudioDirector()) {
+    if (scene && scene->getAudioDirector())
         alSeFunction::stopAllSe(scene->getAudioDirector(), index);
-        return;
-    }
 }
 
 void initPadRumble(const Scene* scene, const SceneInitInfo& sceneInfo) {
