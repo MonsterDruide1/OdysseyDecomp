@@ -10,7 +10,7 @@ public:
     void update();
     void requestCaptureScreenCover(s32 coverFrames);
 
-    s32 getCoverFrames() { return mCoverFrames; }
+    s32 getCoverFrames() const { return mCoverFrames; }
 
     void resetCapture() { mCoverFrames = -1; }
 

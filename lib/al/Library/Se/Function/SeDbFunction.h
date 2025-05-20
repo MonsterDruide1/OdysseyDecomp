@@ -17,13 +17,13 @@ class SeUserInfo;
 }  // namespace al
 
 namespace alSeDbFunction {
-al::SeUserInfo* calcIsOneTimeInUserInfo(const al::SeUserInfo*);
-s32 convertInterpolateTypeToId(const char*);
+s32 calcIsOneTimeInUserInfo(const al::SeUserInfo*);
+al::SeInterpolateTypeId convertInterpolateTypeToId(const char*);
 const char* convertInterpolateTypeIdToName(al::SeInterpolateTypeId);
 void applyResMainInfoSettingInPlayInfo(const al::SePlayInfo*, const char*);
 f32 calcRtpcParam(const al::SeRtpcSetting*, f32);
 f32 calcRtpcVolumeMod(const al::SeResourceRtpcInfo*, f32, bool);
-const char* createDefaultEmitterInfo(const char*);
+al::SeEmitterInfo* createDefaultEmitterInfo(const char*);
 sead::PtrArray<al::SeEmitterInfo>* createDefaultEmitterInfoList();
 bool setPartsUserList(const al::SeUserInfo*, const al::AudioInfoListWithParts<al::SeUserInfo>*);
 void setDefaultEmitter(const al::SeUserInfo*, bool, bool);

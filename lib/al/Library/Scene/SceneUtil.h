@@ -64,7 +64,8 @@ void initPlacementGravityObj(Scene* scene);
 bool tryGetPlacementInfoAndCount(PlacementInfo* outPlacementInfo, s32* outCount,
                                  const StageInfo* stageInfo, const char* key);
 void initPlacementObjectMap(Scene* scene, const ActorInitInfo& actorInfo, const char* name);
-void initPlacementByStageInfo(const StageInfo*, const char* key, const ActorInitInfo& actorInfo);
+void initPlacementByStageInfo(const StageInfo* stageInfo, const char* key,
+                              const ActorInitInfo& actorInfo);
 void initPlacementObjectDesign(Scene* scene, const ActorInitInfo& actorInfo, const char* name);
 void initPlacementObjectSound(Scene* scene, const ActorInitInfo& actorInfo, const char* name);
 LiveActor* tryInitPlacementSingleObject(Scene* scene, const ActorInitInfo& actorInfo,
@@ -87,7 +88,7 @@ void initHitSensorDirector(Scene* scene);
 void initGravityHolder(Scene* scene);
 void initItemDirector(Scene* scene, ItemDirectorBase* itemDirector);
 void initNatureDirector(Scene* scene);
-void initSwitchAreaDirector(Scene* scene, s32 val1, s32 val2);
+void initSwitchAreaDirector(Scene* scene, s32 maxSwitchOnArea, s32 maxSwitchKeepOnArea);
 void registerSwitchOnAreaGroup(Scene* scene, SwitchOnAreaGroup* switchOnAreaGroup);
 void registerSwitchKeepOnAreaGroup(Scene* scene, SwitchKeepOnAreaGroup* switchKeepOnAreaGroup);
 void initGraphicsSystemInfo(Scene* scene, const char* name, s32 index);
@@ -96,7 +97,7 @@ void initCameraDirectorWithoutStageResource(Scene* scene,
                                             const CameraPoserFactory* cameraPoserFactory);
 void initCameraDirectorFix(Scene* scene, const sead::Vector3f& pos, const sead::Vector3f& lookAtPos,
                            const CameraPoserFactory* cameraPoserFactory);
-void initSceneCameraFovyDegree(Scene* scene, f32 fov);
+void initSceneCameraFovyDegree(Scene* scene, f32 fovy);
 void initSnapShotCameraAudioKeeper(Scene* scene, IUseAudioKeeper* audioKeeper);
 void setCameraAspect(Scene* scene, f32 aspectA, f32 aspectB);
 void resetSceneInitEntranceCamera(Scene* scene);
@@ -119,6 +120,7 @@ void validateCameraGyro(Scene* scene);
 void invalidateCameraGyro(Scene* scene);
 s32 getCameraGyroSensitivityLevel(const Scene* scene);
 void setCameraGyroSensitivityLevel(Scene* scene, s32 sensitivityLevel);
+// TODO: rename parameter
 PauseCameraCtrl* initAndCreatePauseCameraCtrl(Scene* scene, f32 value);
 void startCameraPause(PauseCameraCtrl* pauseCameraCtrl);
 void endCameraPause(PauseCameraCtrl* pauseCameraCtrl);
@@ -152,7 +154,9 @@ void drawKit(const Scene* scene, const char* name);
 void drawKitList(const Scene* scene, const char* listName, const char* name);
 void drawLayoutKit(const Scene* scene, const char* name);
 void drawEffectDeferred(const Scene* scene, s32 index);
+// TODO: rename parameter
 void startForwardPlayerScreenFader(const Scene* scene, s32 a, s32 b, f32 c);
+// TODO: rename parameter
 void endForwardPlayerScreenFader(const Scene* scene, s32 a);
 bool isStopScene(const Scene* scene);
 void startCheckViewCtrlByCameraPos(Scene* scene);
@@ -174,14 +178,14 @@ LiveActor** getDemoActorList(const Scene* scene);
 s32 getDemoActorNum(const Scene* scene);
 void updateDemoActor(const Scene* scene);
 void updateDemoActorForPauseEffect(const Scene* scene);
-void stopAllSe(const Scene* scene, u32);
+void stopAllSe(const Scene* scene, u32 index);
 void initPadRumble(const Scene* scene, const SceneInitInfo& sceneInfo);
 void stopPadRumble(const Scene* scene);
 void pausePadRumble(const Scene* scene);
 void endPausePadRumble(const Scene* scene);
 void validatePadRumble(Scene* scene);
 void invalidatePadRumble(Scene* scene);
-void setPadRumblePowerLevel(Scene* scene, s32 poweLevel);
+void setPadRumblePowerLevel(Scene* scene, s32 powerLevel);
 const Resource* getPreLoadFileListArc();
 bool tryRequestPreLoadFile(const Scene* scene, const SceneInitInfo& sceneInfo, s32 index,
                            sead::Heap* heap);

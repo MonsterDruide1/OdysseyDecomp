@@ -40,9 +40,9 @@ public:
     void updateInfoListOneTime();
     void testStartPadRumbleWithVolumeNoActor(const char*, f32, f32);
 
-    void validatePadRumble() { mIsValidPadRumbe = true; }
+    void validatePadRumble() { mIsValidPadRumble = true; }
 
-    void invalidatePadRumble() { mIsValidPadRumbe = false; }
+    void invalidatePadRumble() { mIsValidPadRumble = false; }
 
     void setPowerLevel(s32 powerLevel) { mPowerLevel = powerLevel; }
 
@@ -51,7 +51,7 @@ private:
     PlayerHolder* mPlayerHolder;
     CameraDirector* mCameraDirector;
     void* filler[4];
-    bool mIsValidPadRumbe;
+    bool mIsValidPadRumble;
     bool mIsPaused;
     s32 mPowerLevel;
     void* filler2[6];

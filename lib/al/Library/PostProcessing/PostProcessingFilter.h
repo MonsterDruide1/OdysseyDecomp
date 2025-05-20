@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 
 namespace sead {
 class Camera;
@@ -20,6 +21,7 @@ class EdgeDrawer;
 class GraphicsParamRequesterImpl;
 class NoiseTextureKeeper;
 class PencilSketchDrawer;
+class PostProcessingFilterPreset;
 class Projection;
 class RetroColorDrawer;
 class ScreenBlurDrawer;
@@ -31,6 +33,7 @@ class ViewDepthDrawer;
 class PostProcessingFilter {
 public:
     PostProcessingFilter(ShaderHolder*, NoiseTextureKeeper*);
+    ~PostProcessingFilter();
 
     void incrementPreset();
     void decrementPreset();
@@ -38,7 +41,7 @@ public:
     void endInit();
     void clearRequest();
     void update();
-    void findPreset(s32) const;
+    PostProcessingFilterPreset* findPreset(s32) const;
     void updateViewGpu(s32, const sead::Camera*, const Projection*);
     void drawFilter(agl::DrawContext*, s32, SimpleModelEnv*, agl::RenderBuffer&,
                     const agl::TextureData&, const agl::TextureData&, const agl::TextureData&,
@@ -48,7 +51,7 @@ public:
 
     void invalidate() { mIsValid = false; }
 
-    s32 getPresetId() { return mPresetId; }
+    s32 getPresetId() const { return mPresetId; }
 
 private:
     bool mIsValid;
@@ -63,8 +66,7 @@ private:
     ScreenBlurDrawer* mScreenBlurDrawer;
     PencilSketchDrawer* mPencilSketchDrawer;
     ColorClampDrawer* mColorClampDrawer;
-    s32 _60;
-    void** _68;
+    sead::PtrArray<PostProcessingFilterPreset> mPresets;
     s32 mPresetId;
 };
 
