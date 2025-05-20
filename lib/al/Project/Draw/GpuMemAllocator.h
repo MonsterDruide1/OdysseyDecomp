@@ -20,12 +20,14 @@ public:
     GpuMemAllocator();
     ~GpuMemAllocator();
 
-    void createMemory(const char*, s32, sead::Heap*, s32, agl::MemoryAttribute);
-    Block* findGpuMemInfo(const char*) const;
-    void createMemoryWithTmp(const char*, s32, s32, sead::Heap*, s32, agl::MemoryAttribute);
-    agl::GPUMemAddrBase allocMemory(const char*, s32, s32);
-    agl::GPUMemAddrBase getTmpMemoryAddr(const char*) const;
-    u32 getTmpMemorySize(const char*) const;
+    void createMemory(const char* name, s32 size, sead::Heap* heap, s32 alignment,
+                      agl::MemoryAttribute attribute);
+    Block* findGpuMemInfo(const char* name) const;
+    void createMemoryWithTmp(const char* name, s32 size, s32 tmpSize, sead::Heap* heap,
+                             s32 alignment, agl::MemoryAttribute attribute);
+    agl::GPUMemAddrBase allocMemory(const char* name, s32 size, s32 alignment);
+    agl::GPUMemAddrBase getTmpMemoryAddr(const char* name) const;
+    u32 getTmpMemorySize(const char* name) const;
 
 private:
     sead::PtrArray<Block> mBlocks;
