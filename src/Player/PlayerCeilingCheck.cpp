@@ -15,8 +15,8 @@ void PlayerCeilingCheck::setupCeilingCheckNormal() {
     mIsCeilingCheckGrab = false;
 }
 
-void PlayerCeilingCheck::update(const sead::Vector3f& trans, const sead::Vector3f& up, f32 tall, f32 collisionRadiusSquat,
-                                f32 headClearance, f32 holdHeight) {
+void PlayerCeilingCheck::update(const sead::Vector3f& trans, const sead::Vector3f& up, f32 tall,
+                                f32 collisionRadiusSquat, f32 headClearance, f32 holdHeight) {
     sead::Vector3f checkStart;
     checkStart.set(trans);
 
@@ -58,7 +58,6 @@ void PlayerCeilingCheck::update(const sead::Vector3f& trans, const sead::Vector3
         minIndex = minTValue2 > tValue ? i : minIndex;
         minTValue2 = sead::Mathf::clampMax(minTValue2, tValue);
     }
-
 
     f32 minTHoldUp = (0.99f * (checkHeight - holdHeight));
     f32 maxTPressedCeil = (0.01f * (checkHeight - holdHeight));

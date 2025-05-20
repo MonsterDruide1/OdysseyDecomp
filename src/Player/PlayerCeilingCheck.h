@@ -10,12 +10,13 @@ class PlayerCollisionCheckSphereMove;
 
 class PlayerCeilingCheck {
 public:
-    PlayerCeilingCheck(al::CollisionDirector*);
+    PlayerCeilingCheck(al::CollisionDirector* director);
 
     void setupCeilingCheckNormal();
-    void update(const sead::Vector3f&, const sead::Vector3f&, float, float, float, float);
+    void update(const sead::Vector3f& trans, const sead::Vector3f& up, f32 tall,
+                f32 collisionRadiusSquat, f32 headClearance, f32 holdHeight);
     void setupCeilingCheckGrab();
-    void setCollisionPartsFilter(const al::CollisionPartsFilterBase*);
+    void setCollisionPartsFilter(const al::CollisionPartsFilterBase* filter);
 
 public:
     PlayerCollisionCheckSphereMove* mCollisionCheckSphereMove = nullptr;
