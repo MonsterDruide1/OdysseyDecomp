@@ -953,7 +953,8 @@ void makeQuatZDegree(sead::Quatf* outQuat, f32 angle) {
     outQuat->z = sin;
 }
 
-// NON_MATCHING: _ZN2al20rotateQuatXDirDegreeEPN4sead4QuatIfEERKS2_f
+// https://decomp.me/scratch/utMuy
+//  NON_MATCHING: Regswap on Add
 void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatXDegree(&rotation, angle);
@@ -961,7 +962,8 @@ void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 ang
     outQuat->normalize();
 }
 
-// NON_MATCHING: _ZN2al20rotateQuatYDirDegreeEPN4sead4QuatIfEERKS2_f
+// https://decomp.me/scratch/DEZoH
+//  NON_MATCHING: Regswap on Add
 void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatYDegree(&rotation, angle);
@@ -969,7 +971,8 @@ void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 ang
     outQuat->normalize();
 }
 
-// NON_MATCHING: _ZN2al20rotateQuatZDirDegreeEPN4sead4QuatIfEERKS2_f
+// https://decomp.me/scratch/iJBbn
+//  NON_MATCHING: Regswap on Add
 void rotateQuatZDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatZDegree(&rotation, angle);
@@ -996,7 +999,8 @@ void rotateQuatLocalDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, s32
     rotateQuatRadian(outQuat, quat, vec, sead::Mathf::deg2rad(angle));
 }
 
-// NON_MATCHING: _ZN2al16rotateQuatMomentEPN4sead4QuatIfEERKS2_RKNS0_7Vector3IfEE
+// https://decomp.me/scratch/nV2zl
+// NON_MATCHING: Multiple issues
 void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec) {
     sead::Vector3f vecNorm;
     tryNormalizeOrZero(&vecNorm, vec);
@@ -1014,7 +1018,8 @@ void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead:
     outQuat->normalize();
 }
 
-// NON_MATCHING: _ZN2al22rotateQuatMomentDegreeEPN4sead4QuatIfEERKS2_RKNS0_7Vector3IfEE
+// https://decomp.me/scratch/l1K35
+// NON_MATCHING: Multiple issues
 void rotateQuatMomentDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
                             const sead::Vector3f& vec) {
     sead::Vector3f vecNorm;
@@ -1033,27 +1038,21 @@ void rotateQuatMomentDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
     outQuat->normalize();
 }
 
-// NON_MATCHING: _ZN2al18rotateQuatRollBallEPN4sead4QuatIfEERKS2_RKNS0_7Vector3IfEES9_f
 void rotateQuatRollBall(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vecA,
                         const sead::Vector3f& vecB, f32 scale) {
-    sead::Vector3f vecNorm = vecB;
-    if (tryNormalizeOrZero(&vecNorm)) {
-        scale = 1.0f / scale;
-        vecNorm.setCross(vecNorm, vecA);
-        vecNorm = scale * vecNorm;
-    }
-
+    sead::Vector3f vecNorm;
+    calcMomentRollBall(&vecNorm, vecA, vecB, scale);
     rotateQuatMoment(outQuat, quat, vecNorm);
 }
 
-// NON_MATCHING: _ZN2al18calcMomentRollBallEPN4sead7Vector3IfEERKS2_S5_f
 void calcMomentRollBall(sead::Vector3f* outVec, const sead::Vector3f& vecA,
                         const sead::Vector3f& vecB, f32 scale) {
     sead::Vector3f vecNorm = vecB;
     if (tryNormalizeOrZero(&vecNorm)) {
-        scale = 1.0f / scale;
         vecNorm.setCross(vecNorm, vecA);
-        vecNorm = scale * vecNorm;
+        scale = 1.0f / scale;
+        *outVec = scale * vecNorm;
+        return;
     }
     *outVec = vecNorm;
 }
@@ -1092,10 +1091,10 @@ void calcSpherePointPicking(sead::Vector3f* outPoint, f32 x, f32 y) {
     f32 xx = x + x - 1.0f;
     f32 angle = y * sead::Mathf::pi() + y * sead::Mathf::pi();
     f32 radius = sead::Mathf::sqrt(1.0f - xx * xx);
-    f32 cos = sead::Mathf::cos(angle);
-    f32 sin = sead::Mathf::sin(angle);
-    outPoint->x = radius * cos;
-    outPoint->y = radius * sin;
+    f32 cos = radius * sead::Mathf::cos(angle);
+    f32 sin = radius * sead::Mathf::sin(angle);
+    outPoint->x = cos;
+    outPoint->y = sin;
     outPoint->z = xx;
 }
 
