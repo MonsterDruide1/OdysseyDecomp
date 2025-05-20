@@ -12,8 +12,8 @@ class AudioEffectDataBase;
 template <typename T>
 class AudioInfoListWithParts;
 class AudioResourceLoadGroupInfo;
+class AudioResourceLoadingInfo;
 class AudioResourcePlayerKeeper;
-class AudioSoundArchiveInfo;
 class AudioSystem;
 class AudioSystemDebug;
 struct AudioSystemInfo;
@@ -99,7 +99,7 @@ public:
 
 private:
     AudioResourcePlayerKeeper* mAudioResourcePlayerKeeper;
-    AudioSoundArchiveInfo* mAudioSoundArchiveInfo;
+    AudioResourceLoadingInfo* mAudioResourceLoadingInfo;
     SeDataBase* mSeDataBase;
     BgmDataBase* mBgmDataBase;
     BgmMusicalInfo* mBgmMusicalInfo;

@@ -88,6 +88,7 @@ void setupCameraToEffectKeeper(al::EffectKeeper* effectKeeper, const al::IUseCam
 }  // namespace alEffectKeeperInitFunction
 
 namespace alEffectSystemFunction {
+void setDrawPathRenderStateSetDrawDepthShadow(const al::EffectSystem*, bool);
 void calcEffectCompute(const al::EffectSystem*);
 void drawEffectDeferred(const al::EffectSystem*, const sead::Matrix44f&, const sead::Matrix34f&,
                         f32, f32, f32);

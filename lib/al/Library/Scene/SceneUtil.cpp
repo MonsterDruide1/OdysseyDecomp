@@ -477,8 +477,8 @@ void initNatureDirector(Scene* scene) {
     scene->getLiveActorKit()->initNatureDirector();
 }
 
-void initSwitchAreaDirector(Scene* scene, s32 val1, s32 val2) {
-    scene->getLiveActorKit()->initSwitchAreaDirector(val1, val2);
+void initSwitchAreaDirector(Scene* scene, s32 maxSwitchOnArea, s32 maxSwitchKeepOnArea) {
+    scene->getLiveActorKit()->initSwitchAreaDirector(maxSwitchOnArea, maxSwitchKeepOnArea);
 }
 
 void registerSwitchOnAreaGroup(Scene* scene, SwitchOnAreaGroup* switchOnAreaGroup) {
@@ -557,8 +557,8 @@ void initCameraDirectorFix(Scene* scene, const sead::Vector3f& pos, const sead::
     startCamera(scene, initFixCamera(scene, "Scene", pos, lookAtPos));
 }
 
-void initSceneCameraFovyDegree(Scene* scene, f32 fov) {
-    scene->getLiveActorKit()->getCameraDirector()->initSceneFovyDegree(fov);
+void initSceneCameraFovyDegree(Scene* scene, f32 fovy) {
+    scene->getLiveActorKit()->getCameraDirector()->initSceneFovyDegree(fovy);
 }
 
 void initSnapShotCameraAudioKeeper(Scene* scene, IUseAudioKeeper* audioKeeper) {
