@@ -1,15 +1,15 @@
 #include "Library/System/SystemKit.h"
 
 #include <heap/seadHeapMgr.h>
+#include <resource/seadParallelSZSDecompressor.h>
+#include <resource/seadResourceMgr.h>
+#include <resource/seadSZSDecompressor.h>
+#include <resource/seadSharcArchiveRes.h>
 
 #include "Project/File/FileLoader.h"
 #include "Project/Memory/MemorySystem.h"
 #include "Project/Resource/ResourceSystem.h"
 #include "Project/SaveData/SaveDataDirector.h"
-#include "resource/seadParallelSZSDecompressor.h"
-#include "resource/seadResourceMgr.h"
-#include "resource/seadSZSDecompressor.h"
-#include "resource/seadSharcArchiveRes.h"
 
 namespace al {
 

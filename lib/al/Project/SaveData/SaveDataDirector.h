@@ -25,9 +25,9 @@ public:
     s32 getResult();
 
 private:
-    void* _0[0xa8/8];
+    void* _0[0xa8 / 8];
 };
 
 static_assert(sizeof(SaveDataDirector) == 0xa8);
 
-}
+}  // namespace al
