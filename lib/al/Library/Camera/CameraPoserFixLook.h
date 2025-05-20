@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Library/Camera/CameraPoser.h"
-#include "Library/LiveActor/LiveActor.h"
 
 namespace al {
+
+class LiveActor;
 
 class CameraPoserFixLook : public CameraPoser {
 public:
