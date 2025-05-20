@@ -59,9 +59,9 @@ public:
     virtual void* ptr() = 0;
     virtual void afterGetParam();
     virtual s32 getParamSize() const = 0;
-    virtual bool isEqual(const ParameterBase*);
-    virtual bool copy(const ParameterBase*);
-    virtual bool copyLerp(const ParameterBase*, const ParameterBase*, f32);
+    virtual bool isEqual(const ParameterBase&);
+    virtual bool copy(const ParameterBase&);
+    virtual bool copyLerp(const ParameterBase&, const ParameterBase&, f32);
 
     void initializeListNode(const sead::SafeString&, const sead::SafeString&,
                             const sead::SafeString&, ParameterObj*, bool);

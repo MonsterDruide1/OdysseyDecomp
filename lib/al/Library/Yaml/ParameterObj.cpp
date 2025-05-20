@@ -8,12 +8,12 @@ namespace al {
 ParameterObj::ParameterObj() = default;
 
 void ParameterObj::pushBackListNode(ParameterBase* param) {
-    if (mTailParam) {
-        mTailParam->setNext(param);
+    if (!mTailParam) {
+        mRootParam = param;
         mTailParam = param;
         return;
     }
-    mRootParam = param;
+    mTailParam->setNext(param);
     mTailParam = param;
 }
 
@@ -57,8 +57,9 @@ bool ParameterObj::isEqual(const ParameterObj& obj) const {
         if (param)
             return false;
     } else {
+        // BUG: Also succeeds if paramEntry != null and param == null
         while (paramEntry && param) {
-            if (!paramEntry->isEqual(param))
+            if (!paramEntry->isEqual(*param))
                 return false;
             paramEntry = paramEntry->getNext();
             param = param->getNext();
@@ -89,18 +90,19 @@ void ParameterObj::copy(const ParameterObj& obj) {
 
     if (paramEntry)
         while (paramEntry && param) {
-            paramEntry->copy(param);
+            paramEntry->copy(*param);
             paramEntry = paramEntry->getNext();
             param = param->getNext();
         }
 
     ParameterArray* array = obj.getParamArray();
     ParameterArray* arrayEntry = mParamArray;
-    while (arrayEntry && array) {
-        arrayEntry->copy(*array);
-        arrayEntry = arrayEntry->getNext();
-        array = array->getNext();
-    }
+    if (arrayEntry)
+        while (arrayEntry && array) {
+            arrayEntry->copy(*array);
+            arrayEntry = arrayEntry->getNext();
+            array = array->getNext();
+        }
 }
 
 void ParameterObj::copyLerp(const ParameterObj& objA, const ParameterObj& objB, f32 rate) {
@@ -111,19 +113,19 @@ void ParameterObj::copyLerp(const ParameterObj& objA, const ParameterObj& objB, 
     if (paramEntry) {
         if (rate <= 0.0f) {
             while (paramEntry && paramA) {
-                paramEntry->copy(paramA);
+                paramEntry->copy(*paramA);
                 paramEntry = paramEntry->getNext();
                 paramA = paramA->getNext();
             }
         } else if (rate >= 1.0f) {
             while (paramEntry && paramB) {
-                paramEntry->copy(paramB);
+                paramEntry->copy(*paramB);
                 paramEntry = paramEntry->getNext();
                 paramB = paramB->getNext();
             }
         } else {
             while (paramEntry && paramA && paramB) {
-                paramEntry->copyLerp(paramA, paramB, rate);
+                paramEntry->copyLerp(*paramA, *paramB, rate);
                 paramEntry = paramEntry->getNext();
                 paramA = paramA->getNext();
                 paramB = paramB->getNext();
@@ -143,10 +145,10 @@ void ParameterObj::copyLerp(const ParameterObj& objA, const ParameterObj& objB, 
 }
 
 ParameterBase* ParameterObj::findParameter(const char* name) const {
-    ParameterBase* paramEntry = mRootParam;
-    while (paramEntry && !isEqualString(name, paramEntry->getParamName().getStringTop()))
-        paramEntry = paramEntry->getNext();
-    return paramEntry;
+    for (ParameterBase* paramEntry = mRootParam; paramEntry; paramEntry = paramEntry->getNext())
+        if (isEqualString(name, paramEntry->getParamName().getStringTop()))
+            return paramEntry;
+    return nullptr;
 }
 
 ParameterArray::ParameterArray() = default;
@@ -155,20 +157,19 @@ void ParameterArray::tryGetParam(const ByamlIter& iter) {
     ByamlIter arrayIter;
     iter.tryGetIterByKey(&arrayIter, mKey.cstr());
 
-    if (arrayIter.isValid() && arrayIter.isTypeArray()) {
-        mSize = arrayIter.getSize();
+    if (!arrayIter.isValid() || !arrayIter.isTypeArray())
+        return;
 
-        ParameterObj* objEntry = mRootObjNode;
-        s32 index = 0;
-        while (objEntry) {
-            ByamlIter paramIter;
-            arrayIter.tryGetIterByIndex(&paramIter, index);
-            if (paramIter.isValid()) {
-                objEntry->tryGetParam(paramIter);
-                index++;
-            }
-            objEntry = objEntry->getNext();
-        }
+    mSize = arrayIter.getSize();
+
+    s32 index = 0;
+    for (ParameterObj* objEntry = mRootObjNode; objEntry; objEntry = objEntry->getNext()) {
+        ByamlIter paramIter;
+        arrayIter.tryGetIterByIndex(&paramIter, index);
+        if (!paramIter.isValid())
+            continue;
+        objEntry->tryGetParam(paramIter);
+        index++;
     }
 }
 
@@ -241,31 +242,24 @@ void ParameterArray::clearObj() {
 }
 
 void ParameterArray::removeObj(ParameterObj* obj) {
-    ParameterObj* objEntry = mRootObjNode;
     ParameterObj* prevObjEntry = nullptr;
-    while (objEntry) {
+    for (ParameterObj* objEntry = mRootObjNode; objEntry; objEntry = objEntry->getNext()) {
         if (objEntry == obj) {
-            if (prevObjEntry) {
+            if (prevObjEntry)
                 prevObjEntry->setNext(obj->getNext());
-                objEntry->setNext(nullptr);
-            } else {
+            else
                 mRootObjNode = obj->getNext();
-                obj->setNext(nullptr);
-            }
+            objEntry->setNext(nullptr);
             return;
         }
         prevObjEntry = objEntry;
-        objEntry = objEntry->getNext();
     }
 }
 
 bool ParameterArray::isExistObj(ParameterObj* obj) {
-    ParameterObj* objEntry = mRootObjNode;
-    while (objEntry) {
+    for (ParameterObj* objEntry = mRootObjNode; objEntry; objEntry = objEntry->getNext())
         if (objEntry == obj)
             return true;
-        objEntry = objEntry->getNext();
-    }
     return false;
 }
 
@@ -346,50 +340,39 @@ void ParameterList::clearObj() {
 }
 
 void ParameterList::removeList(ParameterList* list) {
-    ParameterList* listEntry = mRootListNode;
     ParameterList* prevlistEntry = nullptr;
-    while (listEntry) {
+    for (ParameterList* listEntry = mRootListNode; listEntry; listEntry = listEntry->getNext()) {
         if (listEntry == list) {
-            if (prevlistEntry) {
+            if (prevlistEntry)
                 prevlistEntry->setNext(list->getNext());
-                listEntry->setNext(nullptr);
-            } else {
+            else
                 mRootListNode = list->getNext();
-                list->setNext(nullptr);
-            }
+            listEntry->setNext(nullptr);
             return;
         }
         prevlistEntry = listEntry;
-        listEntry = listEntry->getNext();
     }
 }
 
 void ParameterList::removeObj(ParameterObj* obj) {
-    ParameterObj* objEntry = mRootObjNode;
     ParameterObj* prevObjEntry = nullptr;
-    while (objEntry) {
+    for (ParameterObj* objEntry = mRootObjNode; objEntry; objEntry = objEntry->getNext()) {
         if (objEntry == obj) {
-            if (prevObjEntry) {
+            if (prevObjEntry)
                 prevObjEntry->setNext(obj->getNext());
-                objEntry->setNext(nullptr);
-            } else {
+            else
                 mRootObjNode = obj->getNext();
-                obj->setNext(nullptr);
-            }
+            objEntry->setNext(nullptr);
             return;
         }
         prevObjEntry = objEntry;
-        objEntry = objEntry->getNext();
     }
 }
 
 bool ParameterList::isExistObj(ParameterObj* obj) {
-    ParameterObj* objEntry = mRootObjNode;
-    while (objEntry) {
+    for (ParameterObj* objEntry = mRootObjNode; objEntry; objEntry = objEntry->getNext())
         if (objEntry == obj)
             return true;
-        objEntry = objEntry->getNext();
-    }
     return false;
 }
 
