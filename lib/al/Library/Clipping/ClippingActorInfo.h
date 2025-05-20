@@ -40,7 +40,7 @@ public:
 
 private:
     LiveActor* mLiveActor;
-    void* filler[0xc];  // offset isClippingGroupEnable to the correct place
+    void* filler[0xc];  // offset isEnableGroupClipping to the correct place
     bool mIsEnableGroupClipping;
     // Remaining Member's missing
 };
