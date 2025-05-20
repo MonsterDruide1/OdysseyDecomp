@@ -18,7 +18,7 @@ public:
     void setupCeilingCheckGrab();
     void setCollisionPartsFilter(const al::CollisionPartsFilterBase* filter);
 
-public:
+private:
     PlayerCollisionCheckSphereMove* mCollisionCheckSphereMove = nullptr;
     float mSafetyCeilSpace = 0.0f;
     float mCeilCheckHeight = 0.0f;

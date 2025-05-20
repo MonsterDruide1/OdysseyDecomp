@@ -12,7 +12,7 @@ class CollisionPartsFilterBase;
 
 class PlayerCollisionCheckSphereMove : public al::IUseCollision {
 public:
-    PlayerCollisionCheckSphereMove(al::CollisionDirector*, int);
+    PlayerCollisionCheckSphereMove(al::CollisionDirector*, s32);
 
     al::CollisionDirector* getCollisionDirector() const override;
 
