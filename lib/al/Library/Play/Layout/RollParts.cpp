@@ -48,18 +48,12 @@ void RollParts::setData(const char16** messages, s32 messageCount, bool isLoop, 
         return;
 
     if (messageCount == 1) {
-        if (!isExistAction(this, "Off", "State"))
-            return;
-
-        startAction(this, "Off", "State");
-
-        return;
+        if (isExistAction(this, "Off", "State"))
+            startAction(this, "Off", "State");
+    } else {
+        if (isExistAction(this, "On", "State"))
+            startAction(this, "On", "State");
     }
-
-    if (!isExistAction(this, "On", "State"))
-        return;
-
-    startAction(this, "On", "State");
 }
 
 void RollParts::updateHeaderText() {
