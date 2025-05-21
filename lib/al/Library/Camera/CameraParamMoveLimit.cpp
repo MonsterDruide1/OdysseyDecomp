@@ -77,8 +77,8 @@ void CameraParamMoveLimit::apply(sead::LookAtCamera* camera) const {
 
     sead::Vector3f constraintAdjustment = finalViewAt - camera->getAt();
 
-    camera->getAt() = constraintAdjustment + camera->getAt();
-    camera->getPos() = constraintAdjustment + camera->getPos();
+    camera->setAt(constraintAdjustment + camera->getAt());
+    camera->setPos(constraintAdjustment + camera->getPos());
 }
 
 }  // namespace al
