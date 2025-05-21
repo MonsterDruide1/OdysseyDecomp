@@ -12,6 +12,7 @@ class ClippingFarAreaObserver;
 class ClippingJudge {
 public:
     ClippingJudge(const ClippingFarAreaObserver*, const SceneCameraInfo*);
+
     void update();
     bool isJudgedToClipFrustumUnUseFarLevel(const sead::Vector3f&, f32, f32) const;
     bool isJudgeToClipFrustumCore(const sead::Vector3f&, f32, f32) const;
@@ -26,6 +27,9 @@ public:
     bool isJudgedToClipFrustumCoreObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32,
                                       f32) const;
     bool isJudgedToClipFrustumObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32, s32) const;
+
+private:
+    void* filler[0x3];
 };
 
 }  // namespace al
