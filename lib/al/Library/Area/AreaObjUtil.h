@@ -20,7 +20,6 @@ public:
     virtual void findArea(const AreaObj* areaObj) = 0;
 };
 
-<<<<<<< HEAD
 AreaObj* tryFindAreaObj(const IUseAreaObj* areaUser, const char* name,
                         const sead::Vector3f& position);
 AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* areaUser, const char* name,
@@ -63,16 +62,4 @@ bool calcFindAreaSurface(const IUseAreaObj* areaUser, const char* name,
                          sead::Vector3f* outHitPosition, sead::Vector3f* outNormal,
                          const sead::Vector3f& position, const sead::Vector3f& direction,
                          f32 distance);
-=======
-bool isInAreaPos(const AreaObj*, const sead::Vector3f&);
-
-bool tryGetAreaObjArg(s32*, const AreaObj*, const char*);
-bool tryGetAreaObjArg(f32*, const AreaObj*, const char*);
-bool tryGetAreaObjArg(bool*, const AreaObj*, const char*);
-bool tryGetAreaObjStringArg(const char**, const AreaObj*, const char*);
-AreaObjGroup* tryFindAreaObjGroup(const IUseAreaObj* areaObj, const char* name);
-AreaObj* tryGetAreaObj(const AreaObjGroup*, const sead::Vector3f&);
-
-const sead::Matrix34f& getAreaObjBaseMtx(const AreaObj*);
->>>>>>> f1a16e51 (uploaded because need to rebase other pr)
 }  // namespace al

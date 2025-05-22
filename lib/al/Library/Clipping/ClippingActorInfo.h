@@ -43,23 +43,11 @@ public:
 
 private:
     LiveActor* mLiveActor;
-<<<<<<< HEAD
-<<<<<<< HEAD
     void* filler[0xc];  // offset isEnableGroupClipping to the correct place
     bool mIsEnableGroupClipping;
-=======
-=======
-    ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
-private:
-    LiveActor* mLiveActor;
-    const void* filler[0xb];
-    ViewIdHolder* mViewIdHolder;
->>>>>>> cae8a58c (uploaded because need to rebase other pr)
->>>>>>> f1a16e51 (uploaded because need to rebase other pr)
-=======
     ViewIdHolder* mViewIdHolder;
 
->>>>>>> 6235c783 (Maybe rebased)
-    // Remaining Member's missing
+
+
 };
 }  // namespace al
