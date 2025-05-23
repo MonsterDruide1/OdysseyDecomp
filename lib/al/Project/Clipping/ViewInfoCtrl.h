@@ -26,15 +26,12 @@ public:
     void startCheckByLookAtPos();
     void startCheckByPlayerPos();
 
-
-
 private:
     enum class CheckType : s32 {
         PlayerPos,
         CameraPos,
         LookAtPos,
     };
-
 
     const AreaObjGroup* mAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
@@ -44,4 +41,4 @@ private:
     const SceneCameraInfo* mSceneCameraInfo = nullptr;
     CheckType mCheckType = CheckType::PlayerPos;
 };
-} // namespace al
+}  // namespace al
