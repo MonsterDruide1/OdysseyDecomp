@@ -172,7 +172,7 @@ const CollisionShapeInfoDisk* CollisionShapeKeeper::getShapeInfoDisk(s32 index) 
 }
 
 u32 CollisionShapeKeeper::findShapeInfoIndex(const char* name) const {
-    int numShapes = mCollisionShape.size();
+    s32 numShapes = mCollisionShape.size();
     for (s32 i = 0; i < numShapes; i++)
         if (CollisionShapeFunction::isShapeName(mCollisionShape[i], name))
             return i;

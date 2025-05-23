@@ -56,7 +56,7 @@ public:
     void calcWorldShapeInfo(const sead::Matrix34f&, f32) override;
     void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
-public:
+private:
     void* _18[20];
 };
 
@@ -85,7 +85,7 @@ public:
 
     void setIgnoreGround() { mIsIgnoreGround = true; }
 
-public:
+private:
     void* _18[5];
     s32 _3x;
     bool mIsSupportGround;
