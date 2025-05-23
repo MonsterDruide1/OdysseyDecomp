@@ -123,10 +123,8 @@ void PlayerStateDamageLife::exeDamage() {
         return;
     }
 
-    if (rs::isPlayer2D(player) || al::isGreaterEqualStep(this, 120)) {
+    if (rs::isPlayer2D(player) || al::isGreaterEqualStep(this, 120))
         kill();
-        return;
-    }
 }
 
 void PlayerStateDamageLife::exeLand() {
