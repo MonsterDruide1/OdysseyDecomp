@@ -23,8 +23,8 @@ class FileLoader {
 public:
     FileLoader(s32 threadPriority);
 
-    static u32 listSubdirectories(sead::FixedSafeString<256>* out, s32 outSize, const char* path);
-    static u32 listFiles(sead::FixedSafeString<256>* out, s32 outSize, const char* path,
+    static u32 listSubdirectories(sead::FixedSafeString<256> out[], s32 outSize, const char* path);
+    static u32 listFiles(sead::FixedSafeString<256> out[], s32 outSize, const char* path,
                          const char* suffix);
 
     bool isExistFile(const sead::SafeString& path, sead::FileDevice* device) const;
