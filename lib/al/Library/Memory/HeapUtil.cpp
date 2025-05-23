@@ -76,7 +76,7 @@ bool printAllSequenceHeap() {
 }
 
 void createSceneHeap(const char* stageName, bool backwards) {
-    sead::ScopedCurrentHeapSetter heapSetter {getSequenceHeap()};
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     SystemKit* systemKit = alProjectInterface::getSystemKit();
     bool isSceneHeapCreated = systemKit->getMemorySystem()->createSceneHeap(stageName, backwards);
@@ -89,7 +89,7 @@ void createSceneHeap(const char* stageName, bool backwards) {
 }
 
 void createSceneResourceHeap(const char* stageName) {
-    sead::ScopedCurrentHeapSetter heapSetter {getSequenceHeap()};
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createSceneResourceHeap(stageName,
                                                                                    false);
@@ -118,7 +118,7 @@ void destroySceneHeap(bool removeCategory) {
 }
 
 void createCourseSelectHeap() {
-    sead::ScopedCurrentHeapSetter heapSetter {getSequenceHeap()};
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createCourseSelectHeap();
 
@@ -133,7 +133,7 @@ void destroyCourseSelectHeap() {
 }
 
 void createWorldResourceHeap(bool useCategory) {
-    sead::ScopedCurrentHeapSetter heapSetter {getSequenceHeap()};
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createWorldResourceHeap();
 
