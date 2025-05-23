@@ -43,8 +43,9 @@ public:
 
 private:
     LiveActor* mLiveActor;
-    void* filler[0xa];  // offset isEnableGroupClipping to the correct place
-    bool mIsEnableGroupClipping;
+    void* filler[0xb];  // offset isEnableGroupClipping to the correct place
+
     ViewIdHolder* mViewIdHolder;
+    bool mIsEnableGroupClipping;
 };
 }  // namespace al
