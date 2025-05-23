@@ -3,7 +3,6 @@
 import argparse
 import hashlib
 import os
-from os.path import islink
 import shutil
 from pathlib import Path
 import subprocess
@@ -135,8 +134,7 @@ def setup_project_tools(tools_from_source):
 
         if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
 
-            if exists_toolchain_file("bin/clang"):
-                shutil.rmtree(f"{get_repo_root()}/bin")
+            shutil.rmtree(get_build_dir())
 
             if tools_from_source:
                 build_tools_from_source(tmpdir)

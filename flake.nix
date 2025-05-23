@@ -38,6 +38,7 @@
             ncurses5
             ncurses6
           ];
+          LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
         };
       };
   };
