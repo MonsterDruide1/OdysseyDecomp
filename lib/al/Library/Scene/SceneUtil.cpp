@@ -794,14 +794,14 @@ void updateEffectDemo(Scene* scene) {
 }
 
 void updateEffectDemoWithPause(Scene* scene) {
-    updateKitList(scene, "更新", "エフェクト（前処理）");
-    updateKitList(scene, "更新", "エフェクト（プレイヤー）");
-    updateKitList(scene, "更新", "エフェクト（Ｚソート）");
-    updateKitList(scene, "更新", "エフェクト（カメラデモ）");
-    updateKitList(scene, "更新", "エフェクト（カメラ前エフェクト）");
-    updateKitList(scene, "更新", "エフェクト（ベース２Ｄ）");
-    updateKitList(scene, "更新", "エフェクト（２Ｄ）");
-    updateKitList(scene, "更新", "エフェクト（後処理）");
+    updateKitList(scene, "エフェクト（前処理）");
+    updateKitList(scene, "エフェクト（プレイヤー）");
+    updateKitList(scene, "エフェクト（Ｚソート）");
+    updateKitList(scene, "エフェクト（カメラデモ）");
+    updateKitList(scene, "エフェクト（カメラ前エフェクト）");
+    updateKitList(scene, "エフェクト（ベース２Ｄ）");
+    updateKitList(scene, "エフェクト（２Ｄ）");
+    updateKitList(scene, "エフェクト（後処理）");
 }
 
 void updateEffectLayout(Scene* scene) {
@@ -820,20 +820,13 @@ void updateKitListPrev(Scene* scene) {
 }
 
 void updateKitListPost(Scene* scene) {
-    updateKitList(scene, "更新", "帽子装着位置更新");
+    updateKitList(scene, "帽子装着位置更新");
     updateEffect(scene);
 }
 
 void updateKitListPostDemoWithPauseNormalEffect(Scene* scene) {
-    updateKitList(scene, "更新", "帽子装着位置更新");
-    updateKitList(scene, "更新", "エフェクト（前処理）");
-    updateKitList(scene, "更新", "エフェクト（プレイヤー）");
-    updateKitList(scene, "更新", "エフェクト（Ｚソート）");
-    updateKitList(scene, "更新", "エフェクト（カメラデモ）");
-    updateKitList(scene, "更新", "エフェクト（カメラ前エフェクト）");
-    updateKitList(scene, "更新", "エフェクト（ベース２Ｄ）");
-    updateKitList(scene, "更新", "エフェクト（２Ｄ）");
-    updateKitList(scene, "更新", "エフェクト（後処理）");
+    updateKitList(scene, "帽子装着位置更新");
+    updateEffectDemoWithPause(scene);
 }
 
 void updateKitListPostOnNerveEnd(Scene* scene) {
