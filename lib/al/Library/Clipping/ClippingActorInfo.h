@@ -46,8 +46,5 @@ private:
     void* filler[0xa];  // offset isEnableGroupClipping to the correct place
     bool mIsEnableGroupClipping;
     ViewIdHolder* mViewIdHolder;
-
-
-
 };
 }  // namespace al
