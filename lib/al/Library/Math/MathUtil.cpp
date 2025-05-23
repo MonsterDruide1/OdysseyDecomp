@@ -500,11 +500,11 @@ f32 calcFourthOrderRate(f32 t, f32 scale) {
 }
 
 f32 calcTriangleWave01(f32 t, f32 period) {
-    f32 val = t / (period + period);
-    s32 roundDown = ((s32)val == val) ? 0 : -!(val >= 0.0f);
+    f32 val = t / (2 * period);
+    s32 rounded = (s32)val + (((s32)val == val) ? 0 : -!(val >= 0.0f));
 
-    val = sead::Mathf::abs(val - (roundDown + (s32)val) - 0.5f);
-    return 1.0f - (val + val);
+    val = sead::Mathf::abs(val - rounded - 0.5f);
+    return 1.0f - (2 * val);
 }
 
 f32 calcTriangleWave(f32 t, f32 min, f32 max, f32 period) {
@@ -578,11 +578,11 @@ u32 reverseBit32(u32 x) {
     x = ((x & 0x33333333) << 2) | ((x >> 2) & 0x33333333);  // 0011001100110011...
     x = ((x & 0xf0f0f0f) << 4) | ((x >> 4) & 0xf0f0f0f);    // 1111000011110000...
     x = ((x & 0xff00ff) << 8) | ((x >> 8) & 0xff00ff);      // 1111111100000000...
-    return x >> 0x10 | x << 0x10;
+    return x >> 16 | x << 16;
 }
 
 f32 calcVanDerCorput(u32 x) {
-    return reverseBit32(x) * 2.32830644e-10f;  // 2^(-32)
+    return reverseBit32(x) * (f32)0x1p-32;
 }
 
 void calcHammersleyPoint(sead::Vector2f* outPoint, u32 i, u32 num) {
@@ -654,7 +654,7 @@ f32 calcAccel(f32 speed, f32 friction) {
 }
 
 f32 calcFriction(f32 accel, f32 speed) {
-    // N's mistake here. Correct function: friction = speed / (speed + accel)
+    // BUG: N's mistake here. Correct function: friction = speed / (speed + accel)
     return (accel + speed) / speed;
 }
 
@@ -705,12 +705,10 @@ void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& inVec,
     outVec->setScaleAdd(-scale, inVec, dir);
 }
 
-// https://decomp.me/scratch/xcQHa
-// NON_MATCHING: Regswap on vector add
 void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
                           const sead::Vector3f& dir, f32 scale) {
     sead::Vector3f direction = inVec * inVec.dot(dir);
-    outVec->setScaleAdd(scale, direction, dir - direction);
+    sead::Vector3CalcCommon<f32>::add(*outVec, dir - direction, direction * scale);
 }
 
 void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
@@ -720,9 +718,7 @@ void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& in
 }
 
 bool calcDir(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB) {
-    outVec->x = vecB.x - vecA.x;
-    outVec->y = vecB.y - vecA.y;
-    outVec->z = vecB.z - vecA.z;
+    outVec->setSub(vecB, vecA);
     return !tryNormalizeOrZero(outVec);
 }
 
@@ -732,10 +728,7 @@ bool calcDirH(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Ve
 
 bool calcDirOnPlane(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB,
                     const sead::Vector3f& plane) {
-    outVec->x = vecB.x - vecA.x;
-    outVec->y = vecB.y - vecA.y;
-    outVec->z = vecB.z - vecA.z;
-
+    outVec->setSub(vecB, vecA);
     outVec->setScaleAdd(-plane.dot(*outVec), plane, *outVec);
     return !tryNormalizeOrZero(outVec);
 }
@@ -756,14 +749,14 @@ void calcDirFromLongitudeLatitude(sead::Vector3f* outVec, f32 longitude, f32 lat
     outVec->z = sead::Mathf::cos(sead::Mathf::deg2rad(longitude)) * cosLatitude;
 }
 
-void calcLongitudeLatitudeFromDir(f32* longitude, f32* latitude, const sead::Vector3f& vect) {
-    sead::Vector3f vec = vect;
-    vec.normalize();
-    if (isNearZero(vec))
+void calcLongitudeLatitudeFromDir(f32* longitude, f32* latitude, const sead::Vector3f& dir) {
+    sead::Vector3f dirNormalized = dir;
+    dirNormalized.normalize();
+    if (isNearZero(dirNormalized))
         return;
-    *latitude = sead::Mathf::asin(sead::Mathf::clamp(-vec.y, -1.0f, 1.0f));
+    *latitude = sead::Mathf::asin(sead::Mathf::clamp(-dirNormalized.y, -1.0f, 1.0f));
 
-    sead::Vector2f newVec = {-vec.z, -vec.x};
+    sead::Vector2f newVec = {-dirNormalized.z, -dirNormalized.x};
     newVec.normalize();
     if (isNearZero(newVec))
         return;
@@ -958,7 +951,7 @@ void makeQuatZDegree(sead::Quatf* outQuat, f32 angle) {
 void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatXDegree(&rotation, angle);
-    sead::QuatCalcCommon<f32>::setMul(*outQuat, quat, rotation);
+    *outQuat = quat * rotation;
     outQuat->normalize();
 }
 
@@ -967,7 +960,7 @@ void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 ang
 void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatYDegree(&rotation, angle);
-    sead::QuatCalcCommon<f32>::setMul(*outQuat, quat, rotation);
+    *outQuat = quat * rotation;
     outQuat->normalize();
 }
 
@@ -976,7 +969,7 @@ void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 ang
 void rotateQuatZDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatZDegree(&rotation, angle);
-    sead::QuatCalcCommon<f32>::setMul(*outQuat, quat, rotation);
+    *outQuat = quat * rotation;
     outQuat->normalize();
 }
 
@@ -1048,19 +1041,20 @@ void rotateQuatRollBall(sead::Quatf* outQuat, const sead::Quatf& quat, const sea
 void calcMomentRollBall(sead::Vector3f* outVec, const sead::Vector3f& vecA,
                         const sead::Vector3f& vecB, f32 scale) {
     sead::Vector3f vecNorm = vecB;
-    if (tryNormalizeOrZero(&vecNorm)) {
-        vecNorm.setCross(vecNorm, vecA);
-        scale = 1.0f / scale;
-        *outVec = scale * vecNorm;
+    if (!tryNormalizeOrZero(&vecNorm)) {
+        *outVec = vecNorm;
         return;
     }
-    *outVec = vecNorm;
+
+    vecNorm.setCross(vecNorm, vecA);
+    scale = 1.0f / scale;
+    *outVec = scale * vecNorm;
 }
 
 void calcCirclePointPicking(sead::Vector2f* outPoint, f32 x, f32 y) {
     f32 invLength = 1.0 / (x * x + y * y);
     outPoint->x = (x * x - y * y) * invLength;
-    outPoint->y = (x + x) * y * invLength;
+    outPoint->y = 2 * x * y * invLength;
 }
 
 void pickUniformPointsOnCircleHammersley(sead::Vector2f* outPoint, u32 x, u32 y) {
@@ -1088,8 +1082,8 @@ void pickUniformPointOnDisk(sead::Vector2f* outPoint) {
 }
 
 void calcSpherePointPicking(sead::Vector3f* outPoint, f32 x, f32 y) {
-    f32 xx = x + x - 1.0f;
-    f32 angle = y * sead::Mathf::pi() + y * sead::Mathf::pi();
+    f32 xx = 2 * x - 1.0f;
+    f32 angle = y * sead::Mathf::pi() * 2;
     f32 radius = sead::Mathf::sqrt(1.0f - xx * xx);
     f32 cos = radius * sead::Mathf::cos(angle);
     f32 sin = radius * sead::Mathf::sin(angle);
@@ -1123,19 +1117,20 @@ bool calcX(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         return false;
 
     f32 y = vectorA.y + x * vectorB.y;
-    if (min.y <= y && y <= max.y) {
-        f32 z = vectorA.z + x * vectorB.z;
-        if (min.z <= z && z <= max.z) {
-            x = vectorA.x + vectorB.x * x;
-            if (outVec) {
-                outVec->x = x;
-                outVec->y = y;
-                outVec->z = z;
-            }
-            return true;
-        }
+    if (!(min.y <= y && y <= max.y))
+        return false;
+
+    f32 z = vectorA.z + x * vectorB.z;
+    if (!(min.z <= z && z <= max.z))
+        return false;
+
+    x = vectorA.x + vectorB.x * x;
+    if (outVec) {
+        outVec->x = x;
+        outVec->y = y;
+        outVec->z = z;
     }
-    return false;
+    return true;
 }
 
 bool calcY(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
@@ -1145,19 +1140,19 @@ bool calcY(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         return false;
 
     f32 x = vectorA.x + y * vectorB.x;
-    if (min.x <= x && x <= max.x) {
-        f32 z = vectorA.z + y * vectorB.z;
-        if (min.z <= z && z <= max.z) {
-            y = vectorA.y + vectorB.y * y;
-            if (outVec) {
-                outVec->x = x;
-                outVec->y = y;
-                outVec->z = z;
-            }
-            return true;
-        }
+    if (!(min.x <= x && x <= max.x))
+        return false;
+
+    f32 z = vectorA.z + y * vectorB.z;
+    if (!(min.z <= z && z <= max.z))
+        return false;
+    y = vectorA.y + vectorB.y * y;
+    if (outVec) {
+        outVec->x = x;
+        outVec->y = y;
+        outVec->z = z;
     }
-    return false;
+    return true;
 }
 
 bool calcZ(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
@@ -1167,19 +1162,19 @@ bool calcZ(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         return false;
 
     f32 x = vectorA.x + z * vectorB.x;
-    if (min.x <= x && x <= max.x) {
-        f32 y = vectorA.y + z * vectorB.y;
-        if (min.y <= y && y <= max.y) {
-            z = vectorA.z + vectorB.z * z;
-            if (outVec) {
-                outVec->x = x;
-                outVec->y = y;
-                outVec->z = z;
-            }
-            return true;
-        }
+    if (!(min.x <= x && x <= max.x))
+        return false;
+    f32 y = vectorA.y + z * vectorB.y;
+    if (!(min.y <= y && y <= max.y))
+        return false;
+
+    z = vectorA.z + vectorB.z * z;
+    if (outVec) {
+        outVec->x = x;
+        outVec->y = y;
+        outVec->z = z;
     }
-    return false;
+    return true;
 }
 
 }  // namespace Intersect
