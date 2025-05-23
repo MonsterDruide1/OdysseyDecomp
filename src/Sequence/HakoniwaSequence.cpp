@@ -18,7 +18,7 @@ void HakoniwaSequence::drawMain() const {
         buffer = info->handheldRenderBuffer;
 
     mScreenCaptureExecutor->tryCaptureAndDraw(context, buffer, 0);
-    sead::Viewport viewport = sead::Viewport(*buffer);
+    sead::Viewport viewport {*buffer};
     viewport.apply(context, *buffer);
     buffer->bind(context);
     al::setRenderBuffer(mLayoutKit, buffer);
