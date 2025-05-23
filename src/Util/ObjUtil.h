@@ -28,6 +28,13 @@ bool findGrabCeilPosWallHit(const al::CollisionParts**, sead::Vector3f*, sead::V
                             sead::Vector3f*, const al::LiveActor*, const sead::Vector3f&,
                             const sead::Vector3f&, f32, f32, f32);
 
+void brakeLandVelocityGroundNormal(al::LiveActor*, sead::Vector3f*, const IUsePlayerCollision*,
+                                   const sead::Vector3f&, f32, f32);
+
+void faceToCamera(al::LiveActor*);
+
+void slerpUp(al::LiveActor*, const sead::Vector3f&, f32, f32);
+
 void calcOffsetAllRoot(sead::Vector3f* offset, const PlayerModelHolder* model);
 
 bool convergeOnGroundCount(s32*, const al::LiveActor*, const IUsePlayerCollision*, s32, s32);
