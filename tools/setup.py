@@ -134,7 +134,8 @@ def setup_project_tools(tools_from_source):
 
         if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
 
-            shutil.rmtree(get_build_dir())
+            if os.path.isdir(get_build_dir()):
+                shutil.rmtree(get_build_dir())
 
             if tools_from_source:
                 build_tools_from_source(tmpdir)
