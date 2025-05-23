@@ -14,17 +14,16 @@
 #include "Project/File/SoundItemHolder.h"
 
 namespace al {
-// TODO: Find the actual path
-static sead::FixedSafeString<256> sPath;
+static sead::FixedSafeString<256> sDeviceName{"main"};
 
 FileLoader::FileLoader(s32 threadPriority) {
     mLoaderThread = new FileLoaderThread(threadPriority);
     mArchiveHolder = new ArchiveHolder();
     mSoundItemHolder = new SoundItemHolder();
-    mFileDevice = sead::FileDeviceMgr::instance()->findDevice(sPath);
+    mFileDevice = sead::FileDeviceMgr::instance()->findDevice(sDeviceName);
 }
 
-u32 getFileList(sead::FixedSafeString<256>* out, s32 outSize, const char* path,
+u32 getFileList(sead::FixedSafeString<256> out[], s32 outSize, const char* path,
                 bool isPathValid(const sead::DirectoryEntry&, const char*), const char* suffix) {
     u32 entriesRead;
     sead::FileDevice* mainFileDevice = sead::FileDeviceMgr::instance()->getMainFileDevice();
@@ -55,7 +54,8 @@ static bool isDirectoryValid(const sead::DirectoryEntry& entry, const char* suff
     return entry.is_directory;
 }
 
-u32 FileLoader::listSubdirectories(sead::FixedSafeString<256>* out, s32 outSize, const char* path) {
+u32 FileLoader::listSubdirectories(sead::FixedSafeString<256> out[], s32 outSize,
+                                   const char* path) {
     return getFileList(out, outSize, path, &isDirectoryValid, nullptr);
 }
 
@@ -76,7 +76,7 @@ static bool isFileValid(const sead::DirectoryEntry& entry, const char* suffix) {
     return strcasecmp(pathSuffix, suffix) == 0;
 }
 
-u32 FileLoader::listFiles(sead::FixedSafeString<256>* out, s32 outSize, const char* path,
+u32 FileLoader::listFiles(sead::FixedSafeString<256> out[], s32 outSize, const char* path,
                           const char* suffix) {
     return getFileList(out, outSize, path, &isFileValid, suffix);
 }
@@ -91,9 +91,7 @@ bool FileLoader::isExistFile(const sead::SafeString& path, sead::FileDevice* dev
 
 sead::FileDevice* FileLoader::getFileDevice(const sead::SafeString& path,
                                             sead::FileDevice* device) const {
-    if (!device)
-        device = mFileDevice;
-    return device;
+    return device ?: mFileDevice;
 }
 
 bool FileLoader::isExistArchive(const sead::SafeString& path, sead::FileDevice* device) const {
@@ -132,7 +130,7 @@ bool FileLoader::tryLoadFileToBuffer(const sead::SafeString& path, u8* buffer, u
     loadArg.buffer_size = bufferSize;
     loadArg.buffer_size_alignment = alignment;
 
-    return getFileDevice(path, device)->tryLoad(loadArg);
+    return getFileDevice(path, device)->tryLoad(loadArg) != nullptr;
 }
 
 sead::ArchiveRes* FileLoader::loadArchive(const sead::SafeString& path, sead::FileDevice* device) {
@@ -142,24 +140,24 @@ sead::ArchiveRes* FileLoader::loadArchive(const sead::SafeString& path, sead::Fi
 sead::ArchiveRes* FileLoader::loadArchiveLocal(const sead::SafeString& path, const char* suffix,
                                                sead::FileDevice* device) {
     ArchiveEntry* entry = mArchiveHolder->tryFindEntry(path);
-    if (!entry) {
-        if (sead::ThreadMgr::instance()->isMainThread()) {
-            sead::ResourceMgr::LoadArg loadArg;
-            loadArg.device = getFileDevice(path, device);
-            loadArg.path = path;
-            loadArg.load_data_alignment = calcFileAlignment(path);
-            loadArg.load_data_buffer_alignment = calcBufferSizeAlignment(path);
-
-            sead::Resource* resource =
-                sead::ResourceMgr::instance()->tryLoad(loadArg, suffix ? suffix : "sarc", nullptr);
-            return sead::DynamicCast<sead::ArchiveRes>(resource);
-        }
+    if (entry) {
+        if (entry->getFileState() != FileState::IsLoadDone)
+            entry->waitLoadDone();
+    } else if (!sead::ThreadMgr::instance()->isMainThread()) {
         sead::Heap* heap = sead::HeapMgr::instance()->getCurrentHeap();
         entry = requestLoadArchive(path, heap, getFileDevice(path, device));
-    } else if (entry->getFileState() == FileState::IsLoadDone)
-        return entry->getArchiveRes();
+        entry->waitLoadDone();
+    } else {
+        sead::ResourceMgr::LoadArg loadArg;
+        loadArg.device = getFileDevice(path, device);
+        loadArg.path = path;
+        loadArg.load_data_alignment = calcFileAlignment(path);
+        loadArg.load_data_buffer_alignment = calcBufferSizeAlignment(path);
+        sead::Resource* resource =
+            sead::ResourceMgr::instance()->tryLoad(loadArg, suffix ? suffix : "sarc", nullptr);
+        return sead::DynamicCast<sead::ArchiveRes>(resource);
+    }
 
-    entry->waitLoadDone();
     return entry->getArchiveRes();
 }
 
@@ -170,11 +168,10 @@ sead::ArchiveRes* FileLoader::loadArchiveWithExt(const sead::SafeString& path, c
 
 bool FileLoader::tryRequestLoadArchive(const sead::SafeString& path, sead::Heap* heap,
                                        sead::FileDevice* device) {
-    if (!mArchiveHolder->tryFindEntry(path)) {
-        requestLoadArchive(path, heap, device);
-        return true;
-    }
-    return false;
+    if (mArchiveHolder->tryFindEntry(path))
+        return false;
+    requestLoadArchive(path, heap, device);
+    return true;
 }
 
 ArchiveEntry* FileLoader::requestLoadArchive(const sead::SafeString& path, sead::Heap* heap,
@@ -187,12 +184,13 @@ ArchiveEntry* FileLoader::requestLoadArchive(const sead::SafeString& path, sead:
 
 bool FileLoader::loadSoundItem(u32 itemId, u32 unknown, IAudioResourceLoader* loader) {
     SoundItemEntry* entry = mSoundItemHolder->tryFindEntry(itemId, loader);
-    if (!entry)
+    if (!entry) {
         entry = requestLoadSoundItem(itemId, unknown, loader);
-    else if (entry->getFileState() == FileState::IsLoadDone)
-        return entry->isLoadSuccess();
+        entry->waitLoadDone();
+    } else if (entry->getFileState() != FileState::IsLoadDone) {
+        entry->waitLoadDone();
+    }
 
-    entry->waitLoadDone();
     return entry->isLoadSuccess();
 }
 
@@ -204,11 +202,11 @@ SoundItemEntry* FileLoader::requestLoadSoundItem(u32 itemId, u32 unknown,
 }
 
 bool FileLoader::tryRequestLoadSoundItem(u32 itemId, IAudioResourceLoader* loader) {
-    if (!mSoundItemHolder->tryFindEntry(itemId, loader)) {
-        requestLoadSoundItem(itemId, -1, loader);
-        return true;
-    }
-    return false;
+    if (mSoundItemHolder->tryFindEntry(itemId, loader))
+        return false;
+
+    requestLoadSoundItem(itemId, -1, loader);
+    return true;
 }
 
 void FileLoader::requestPreLoadFile(const ByamlIter& preLoadList, sead::Heap* heap,
