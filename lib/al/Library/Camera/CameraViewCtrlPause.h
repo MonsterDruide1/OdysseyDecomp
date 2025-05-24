@@ -8,6 +8,10 @@ class PauseCameraCtrl {
 public:
     PauseCameraCtrl(f32 v);
 
+    void startCameraPause() { mIsCameraPause = true; }
+
+    void endCameraPause() { mIsCameraPause = false; }
+
 private:
     bool mIsCameraPause = false;
     f32 _4;

@@ -2,12 +2,21 @@
 
 #include "Library/Layout/LayoutSceneInfo.h"
 
+namespace agl {
+class DrawContext;
+}
+
+namespace nn::ui2d {
+class DrawInfo;
+}
+
 namespace al {
 class ExecuteDirector;
 class EffectSystemInfo;
 class AudioDirector;
 class LayoutSystem;
 class LayoutActor;
+class OcclusionCullingJudge;
 
 class LayoutInitInfo : public LayoutSceneInfo {
 public:
@@ -17,10 +26,16 @@ public:
 
     MessageSystem* getMessageSystem() const;
 
+    void setDrawContext(agl::DrawContext* drawContext) { mDrawContext = drawContext; }
+
+    void setDrawInfo(nn::ui2d::DrawInfo* drawInfo) { mDrawInfo = drawInfo; }
+
+    void setOcclusionCullingJudge(OcclusionCullingJudge* judge) { mOcclusionCullingJudge = judge; }
+
 private:
-    void* field_30;
-    void* field_38;
-    void* field_40;
+    agl::DrawContext* mDrawContext;
+    nn::ui2d::DrawInfo* mDrawInfo;
+    OcclusionCullingJudge* mOcclusionCullingJudge;
     ExecuteDirector* mExecuteDirector;
     EffectSystemInfo* mEffectSysInfo;
     AudioDirector* mAudioDirector;
