@@ -22,6 +22,9 @@ class ClippingDirector : public HioNode, public IUseExecutor {
 public:
     ClippingDirector(s32 maxActors, const AreaObjDirector* areaObjDirector,
                      const PlayerHolder* playerHolder, const SceneCameraInfo* sceneCameraInfo);
+    // BUG: this destructor should have been virtual.
+    // This means that `delete clippingDirector::IUseExecutor` (or with HioNode) will cause the
+    // destructor of ClippingDirector to not be called, causing a memory leak.
     ~ClippingDirector();
 
     void endInit(const AreaObjDirector* areaObjDirector);

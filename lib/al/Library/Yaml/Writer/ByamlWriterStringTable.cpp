@@ -112,7 +112,7 @@ void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
 }
 
 void ByamlWriterStringTable::print() const {
-    for (auto& node : mList)
+    for ([[maybe_unused]] auto& _ : mList)
         ;
 }
 

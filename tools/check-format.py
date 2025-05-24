@@ -232,7 +232,7 @@ def common_sead_types(c, path):
 
 def common_void_params(c, path):
     for line in c.splitlines():
-        if "(void)" in line:
+        if "(void);" in line or "(void) {" in line or "(void) const" in line:
             FAIL("Function parameters should be empty instead of \"(void)\"!", line, path)
             return
 
@@ -285,15 +285,16 @@ def common_string_finder(c, path):
     string_table = get_string_table()
 
     for line in c.splitlines():
+        line = line.split("//")[0]
         if "#include" in line:
             continue
         if "extern \"C\"" in line:
             continue
-        if "__asm__" in line:
+        if "__asm__" in line or "asm(" in line or "asm volatile(" in line:
             continue
         if "asm volatile" in line:
             continue
-        if "//" in line:
+        if "#pragma" in line:
             continue
 
         matches = re.findall(r'(u?".*?")', line)
