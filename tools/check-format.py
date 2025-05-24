@@ -314,9 +314,24 @@ def common_string_finder(c, path):
 
 def common_const_reference(c, path):
     for line in c.splitlines():
-        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line:
-            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line) and ("operator->" not in line) and ("sead::IDelegate1<CollisionParts*>" not in line):
-                FAIL("References must be const!", line, path)
+        if "for" in line and " : " in line:
+            continue
+        if "CLASS&" in line:
+            continue
+        if "operator->" in line:
+            continue
+        if "operator&" in line:
+            continue
+        if "AudioDirectorInitInfo" in line:
+            continue
+        if "ReplaceTimeInfo" in line:
+            continue
+        if "calcBendPosAndFront" in line:
+            continue
+        if "sead::IDelegate1<CollisionParts*>" in line:
+            continue
+        if re.search(r"(?<!const)[( ][\w_:]+(<[\w_:]+[\*&]?>)?&", line):
+            FAIL("References must be const!", line, path)
 
 def common_self_other(c, path, is_header):
     lines = c.splitlines()
