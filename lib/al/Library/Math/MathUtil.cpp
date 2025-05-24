@@ -708,7 +708,7 @@ void limitVectorOppositeDir(sead::Vector3f* outVec, const sead::Vector3f& inVec,
 void scaleVectorDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
                           const sead::Vector3f& dir, f32 scale) {
     sead::Vector3f direction = inVec * inVec.dot(dir);
-    sead::Vector3CalcCommon<f32>::add(*outVec, dir - direction, direction * scale);
+    outVec->setAdd(dir - direction, direction * scale);
 }
 
 void scaleVectorExceptDirection(sead::Vector3f* outVec, const sead::Vector3f& inVec,
