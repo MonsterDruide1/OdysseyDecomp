@@ -45,4 +45,6 @@ bool calcSlideDir(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&)
 void moveDivingJump(al::LiveActor*, const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32, f32);
 
 void sendPlayerCollisionTouchMsg(const al::LiveActor*, al::HitSensor*, const IUsePlayerCollision*);
+
+bool calcAlongSkyFront(sead::Vector3f*, const al::LiveActor*);
 }  // namespace rs

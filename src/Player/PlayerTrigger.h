@@ -8,6 +8,8 @@ public:
     enum ECollisionTrigger : u32 {
         // used in PlayerStateHipDrop
         ECollisionTrigger_val1 = 1,
+        // used in PlayerJudgeWallHitDown
+        ECollisionTrigger_val9 = 9,
     };
 
     enum EAttackSensorTrigger : u32 {
