@@ -15,7 +15,7 @@
 
 #include "Item/Coin2DCityDirector.h"
 #include "System/GameDataFunction.h"
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {

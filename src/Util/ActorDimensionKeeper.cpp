@@ -1,6 +1,18 @@
 #include "Util/ActorDimensionKeeper.h"
 
+#include "Library/Area/AreaObj.h"
+#include "Library/Area/AreaObjGroup.h"
+#include "Library/Area/AreaObjUtil.h"
+#include "Library/LiveActor/ActorAreaFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/LiveActor.h"
+
+#include "Area/In2DAreaMoveControl.h"
 #include "Util/IUseDimension.h"
+
+ActorDimensionKeeper::ActorDimensionKeeper(const al::LiveActor* actor) : mActor(actor) {
+    mIn2DAreaMoveControl = new In2DAreaMoveControl();
+}
 
 void ActorDimensionKeeper::validate() {
     mIsValid = true;
@@ -17,31 +29,79 @@ void ActorDimensionKeeper::invalidate() {
     }
 }
 
-namespace rs {
-
-ActorDimensionKeeper* createDimensionKeeper(const al::LiveActor* actor) {
-    return new ActorDimensionKeeper(actor);
+void ActorDimensionKeeper::forceChange2DKeep() {
+    mIsCurrently2D = true;
 }
 
-bool is2D(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIs2D();
+void ActorDimensionKeeper::forceEndChange2DKeep() {
+    mIsCurrently2D = false;
 }
 
-bool is3D(const IUseDimension* dimension) {
-    ActorDimensionKeeper* keeper = dimension->getActorDimensionKeeper();
-    return !keeper->getIs2D() && !keeper->getIsCurrently2D();
+void get2DMoveAreas(sead::PtrArray<al::AreaObj>* areas, const al::LiveActor* actor,
+                    const sead::Vector3f& trans);
+
+void ActorDimensionKeeper::update() {
+    sead::FixedPtrArray<al::AreaObj, 8> areas;
+    areas.clear();
+
+    if (!mIsValid) {
+        if (mIsCanChange3D)
+            mIsCanChange3D = false;
+        get2DMoveAreas(&areas, mActor, al::getTrans(mActor));
+        mIsIn2DArea = areas.size() > 0;
+        return;
+    }
+
+    get2DMoveAreas(&areas, mActor, al::getTrans(mActor));
+    mIsIn2DArea = areas.size() > 0;
+    mIn2DAreaMoveControl->update(areas);
+
+    if (mIsIn2DArea)
+        mIsCurrently2D = false;
+    if (al::isInAreaObj(mActor, "2DKeepArea"))
+        mIsCurrently2D = true;
+
+    mIsCanChange2D = (mIsIn2DArea || mIsCurrently2D) && !mIs2D;
+    mIsCanChange3D = !mIsIn2DArea && mIs2D && !mIsCurrently2D;
+
+    if (mIsCanChange2D)
+        mIs2D = true;
+    if (mIsCanChange3D)
+        mIs2D = false;
 }
 
-bool isChange2D(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIsCanChange2D();
-}
+void get2DMoveAreas(sead::PtrArray<al::AreaObj>* areas, const al::LiveActor* actor,
+                    const sead::Vector3f& trans) {
+    areas->clear();
 
-bool isChange3D(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIsCanChange3D();
-}
+    al::AreaObjGroup* group = al::tryFindAreaObjGroup(actor, "2DMoveArea");
+    if (!group)
+        return;
 
-bool isIn2DArea(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIsIn2DArea();
-}
+    s32 num = group->getSize();
+    s32 maxPriority = -1;
+    for (s32 i = 0; i < num; ++i) {
+        al::AreaObj* area = group->getAreaObj(i);
+        if (!area->isInVolume(trans))
+            continue;
 
-}  // namespace rs
+        s32 areaPriority = area->getPriority();
+        if (maxPriority > areaPriority)
+            continue;
+
+        bool isIgnoreArea = false;
+        al::tryGetAreaObjArg(&isIgnoreArea, area, "IsIgnoreArea");
+        if (isIgnoreArea) {
+            maxPriority = areaPriority + 1;
+            areas->clear();
+            continue;
+        }
+
+        if (maxPriority < areaPriority) {
+            maxPriority = areaPriority;
+            areas->clear();
+        }
+        
+        areas->pushBack(area);
+    }
+}
