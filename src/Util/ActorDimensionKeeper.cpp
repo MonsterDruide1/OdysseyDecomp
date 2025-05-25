@@ -101,7 +101,7 @@ void get2DMoveAreas(sead::PtrArray<al::AreaObj>* areas, const al::LiveActor* act
             maxPriority = areaPriority;
             areas->clear();
         }
-        
+
         areas->pushBack(area);
     }
 }
