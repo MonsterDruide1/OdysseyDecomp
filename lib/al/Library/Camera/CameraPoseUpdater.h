@@ -37,6 +37,8 @@ public:
 
     void setFarClipDistance(f32 distance) { mFarClipDistance = distance; }
 
+    void setAspect(f32 aspect) { mAspect = aspect; }
+
 private:
     nn::album::ImageOrientation mSnapShotOrientation;
     SceneCameraInfo* mSceneCamInfo;
