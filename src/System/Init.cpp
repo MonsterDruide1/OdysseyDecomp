@@ -4,7 +4,6 @@
 #include <nn/oe.h>
 
 #include "System/Application.h"
-#include "System/ApplicationFunction.h"
 
 extern "C" void nninitStartup() {
     uintptr_t allocatorHeap;
