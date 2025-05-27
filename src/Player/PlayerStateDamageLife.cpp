@@ -37,7 +37,7 @@ PlayerStateDamageLife::PlayerStateDamageLife(al::LiveActor* player, const Player
 }
 
 void PlayerStateDamageLife::appear() {
-    ActorStateBase::appear();
+    al::ActorStateBase::appear();
     mBrakeLandUpFactor = 0.0f;
     rs::calcGroundNormalOrGravityDir(&mUp, mActor, mCollider);
     mIsNoDamageDown = mTrigger->isOnNoDamageDown();
