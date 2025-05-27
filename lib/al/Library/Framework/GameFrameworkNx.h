@@ -24,7 +24,7 @@ class GameFrameworkNx : public sead::GameFrameworkNx, public HioNode {
     SEAD_RTTI_OVERRIDE(GameFrameworkNx, sead::GameFrameworkNx);
 
 public:
-    GameFrameworkNx();
+    GameFrameworkNx(const sead::GameFrameworkNx::CreateArg& createArg);
     ~GameFrameworkNx() override;
     void createControllerMgr(sead::TaskBase* base) override;
     void createHostIOMgr(sead::TaskBase* base, sead::HostIOMgr::Parameter* hostioParam,
@@ -39,7 +39,19 @@ public:
 
     void disableClearRenderBuffer() { mIsClearRenderBuffer = false; }
 
-private:
+    agl::RenderBuffer* getDockedRenderBuffer() const {
+        return mDockedRenderBuffer;
+    }
+
+    agl::RenderBuffer* getHandheldRenderBuffer() const {
+        return mHandheldRenderBuffer;
+    }
+
+    agl::DrawContext* getDrawContext() const {
+        return mDrawContext;
+    }
+
+public:
     void procFrame_() override;
     void procDraw_() override;
     void present_() override;
