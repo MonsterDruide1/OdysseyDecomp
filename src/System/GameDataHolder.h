@@ -105,7 +105,7 @@ public:
     GameDataHolder(const al::MessageSystem* messageSystem);
     GameDataHolder();
 
-    ~GameDataHolder() override;
+    ~GameDataHolder() override = default;
 
     const char* getSceneObjName() const override;
     al::MessageSystem* getMessageSystem() const override;
