@@ -188,7 +188,7 @@ bool FukuwaraiFaceParts::receiveMsg(const al::SensorMsg* message, al::HitSensor*
     return false;
 }
 
-// NON_MATCHING
+// NON_MATCHING: https://decomp.me/scratch/bIDOJ
 f32 FukuwaraiFaceParts::calcScore(bool isMario) const {
     if (!isPlaced())
         return 0.0f;

@@ -59,7 +59,7 @@ u32 ByamlStringTableIter::getStringAddress(s32 idx) const {
     return getAddressTable()[idx];
 }
 
-// NON_MATCHING: regalloc
+// NON_MATCHING: regalloc (https://decomp.me/scratch/AdRVH)
 u32 ByamlStringTableIter::getEndAddress() const {
     u32 val = getAddressTable()[getSize()];
     return mIsRev ? bswap_32(val) : val;
@@ -166,7 +166,7 @@ void writeU24(sead::WriteStream* stream, s32 val) {
 }
 
 // NON_MATCHING: inlined verifiHeader, splitted loads for unswappedAfterOffset and diff in final
-// logic
+// logic (https://decomp.me/scratch/5xOvy)
 bool verifiByaml(const u8* data) {
     if (!verifiByamlHeader(data))
         return false;
@@ -208,7 +208,7 @@ bool verifiByaml(const u8* data) {
            (afterStringOffset <= rootOffset || !stringOffset || !rootOffset);
 }
 
-// NON_MATCHING: missing & 0xFFFF
+// NON_MATCHING: missing & 0xFFFF (https://decomp.me/scratch/dRP3R)
 bool verifiByamlHeader(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
     return header->getTag() == BYAML_BE_TAG && (u32)(header->getVersion() - 1) < 3;

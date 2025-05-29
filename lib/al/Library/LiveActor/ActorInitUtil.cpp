@@ -799,7 +799,6 @@ LiveActor* tryCreateLinksActorFromFactorySingle(const ActorInitInfo& initInfo,
     return createLinksActorFromFactory(initInfo, linkName, 0);
 }
 
-// NON_MATCHING: Same as above
 void createAndRegisterLinksActorFromFactory(LiveActorGroup* group, const ActorInitInfo& initInfo,
                                             const char* linkName) {
     ActorInitInfo childInitInfo;

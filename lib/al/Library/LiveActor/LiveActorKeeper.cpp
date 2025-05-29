@@ -28,7 +28,7 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
     mCurActorCount++;
 }
 
-// NON_MATCHING
+// NON_MATCHING: https://decomp.me/scratch/9V8dS
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
     s32 creatorCount;

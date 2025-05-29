@@ -5,7 +5,7 @@
 namespace al {
 ActorScoreKeeper::ActorScoreKeeper() = default;
 
-// NON_MATCHING
+// NON_MATCHING: https://decomp.me/scratch/twz7r
 void ActorScoreKeeper::init(const ByamlIter& iter) {
     if (iter.isTypeArray()) {
         mSize = iter.getSize();

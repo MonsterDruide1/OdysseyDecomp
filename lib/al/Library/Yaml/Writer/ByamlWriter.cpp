@@ -320,7 +320,7 @@ u32 ByamlWriter::calcPackSize() const {
     return size;
 }
 
-// NON_MATCHING: offsetBigDataList increased "too early"
+// NON_MATCHING: offsetBigDataList increased "too early" (https://decomp.me/scratch/xXvTw)
 void ByamlWriter::write(sead::WriteStream* stream) {
     stream->writeU16(0x4259);
     stream->writeU16(3);
