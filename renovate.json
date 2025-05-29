@@ -6,5 +6,15 @@
   ],
   "git-submodules": {
     "enabled": true
-  }
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["/tools/setup.py$"],
+      "matchStrings": [
+        "CACHE_REPO_RELEASE_URL = \"https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/(?<currentValue>.+?)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"
+    }
+  ]
 }
