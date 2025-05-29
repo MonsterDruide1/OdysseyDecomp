@@ -7,6 +7,7 @@ import stat
 import re
 import subprocess
 from functools import cache
+import yaml
 
 from common import setup_common as setup
 from common.util import utils
@@ -475,6 +476,30 @@ def source_no_nerve_make(c, path):
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
 
+
+# Global checks
+
+def check_csv_yml_names():
+    file_list = get_file_list()
+    file_list_functions = []
+    for file in file_list:
+        functions = file_list[file][".text"]
+        functions = [next(iter(off.values())) for off in functions]
+        functions = [f.split(" ")[-1] for f in functions]
+        file_list_functions += functions
+
+    functionData = get_functions_csv()
+    csv_functions = [f[3] for f in functionData]
+
+    for f in file_list_functions:
+        if f not in csv_functions:
+            FAIL("Function " + f + " not found in odyssey_functions.csv!", "NOT APPLICABLE", "odyssey_functions.csv")
+
+    for f in csv_functions:
+        if f not in file_list_functions:
+            FAIL("Function " + f + " not found in file_list.yml!", "NOT APPLICABLE", "file_list.yml")
+
+
 # -----
 # UTILS
 # -----
@@ -529,6 +554,9 @@ def check_file(file_str):
     file.close()
     _check_file_content(content, file_str)
 
+def global_checks():
+    check_csv_yml_names()
+
 def read_csv_file(path):
     if not os.path.isfile(path):
         raise FileNotFoundError('CSV File not found')
@@ -540,11 +568,20 @@ def read_csv_file(path):
         for row in reader:
             rows.append(row)
 
-    return rows;
+    return rows
 
 @cache
 def get_string_table():
-    return read_csv_file(project_root / 'data' / "data_strings.csv");
+    return read_csv_file(project_root / 'data' / "data_strings.csv")
+
+@cache
+def get_file_list():
+    with open(project_root / 'data' / 'file_list.yml', 'r') as file:
+        return yaml.safe_load(file)
+
+@cache
+def get_functions_csv():
+    return read_csv_file(project_root / 'data' / 'odyssey_functions.csv')
 
 project_root = setup.ROOT
 
@@ -568,6 +605,8 @@ def main():
     if not args.run_clang_format and not args.ci:
         print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
         print()
+
+    global_checks()
 
     for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
