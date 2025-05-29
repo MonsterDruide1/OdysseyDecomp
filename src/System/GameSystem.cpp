@@ -5,7 +5,6 @@
 namespace {
 NERVE_IMPL(GameSystem, Play);
 
-// TODO: Remove this once this class is implemented and the nerves are used
-[[maybe_unused]]
-NERVES_MAKE_STRUCT(GameSystem, Play);
+// TODO: Remove maybe_unused once this class is implemented and the nerves are used
+[[maybe_unused]] NERVES_MAKE_STRUCT(GameSystem, Play);
 }  // namespace
