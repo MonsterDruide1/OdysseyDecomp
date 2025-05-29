@@ -79,7 +79,8 @@ f32 BezierCurve::calcDeltaLength(f32 param) const {
     return tmp.length();
 }
 
-// NON_MATCHING: flipped parts of if in last statement and unoptimized 1.0f - load (https://decomp.me/scratch/hGwGZ)
+// NON_MATCHING: flipped parts of if in last statement and unoptimized 1.0f - load
+// (https://decomp.me/scratch/hGwGZ)
 f32 BezierCurve::calcCurveParam(f32 distance) const {
     f32 percent = distance / mDistance;
     f32 partLength = calcLength(0, percent, 10);
