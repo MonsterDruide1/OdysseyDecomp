@@ -18,6 +18,12 @@ public:
 class AreaObjFindCallBack {
 public:
     virtual void findArea(const AreaObj* areaObj) = 0;
+
+private:
+    const AreaObj* _8;
+    sead::Vector3f _10;
+    sead::Vector3f _1c;
+    f32 _28;
 };
 
 AreaObj* tryFindAreaObj(const IUseAreaObj* areaUser, const char* name,
