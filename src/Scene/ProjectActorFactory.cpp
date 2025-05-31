@@ -65,6 +65,7 @@
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
+#include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
@@ -498,7 +499,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ShopBgmPlayer", nullptr},
     {"ShopMark", nullptr},
     {"ShoppingWatcher", nullptr},
-    {"SignBoardDanger", nullptr},
+    {"SignBoardDanger", al::createActorFunction<SignBoardDanger>},
     {"SignBoardLayoutTexture", nullptr},
     {"SkyFukankunZoomCapMessage", nullptr},
     {"SkyWorldCloud", nullptr},
