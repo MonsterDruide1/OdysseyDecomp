@@ -18,15 +18,15 @@ public:
     void forceEndChange2DKeep();
     void update();
 
-    bool getIs2D() const { return mIs2D; }
+    bool is2D() const { return mIs2D; }
 
-    bool getIsIn2DArea() const { return mIsIn2DArea; }
+    bool isIn2DArea() const { return mIsIn2DArea; }
 
-    bool getIsCurrently2D() const { return mIsCurrently2D; }
+    bool isCurrently2D() const { return mIsCurrently2D; }
 
-    bool getIsCanChange2D() const { return mIsCanChange2D; }
+    bool isCanChange2D() const { return mIsCanChange2D; }
 
-    bool getIsCanChange3D() const { return mIsCanChange3D; }
+    bool isCanChange3D() const { return mIsCanChange3D; }
 
 private:
     const al::LiveActor* mActor;

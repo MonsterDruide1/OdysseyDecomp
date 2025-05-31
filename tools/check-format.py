@@ -477,6 +477,10 @@ def header_lowercase_member_offset_vars(c, path):
         if re.search(r"\s(field|gap|filler|pad)?_[0-9a-z]*[A-Z]", line):
             CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!", path)
 
+def header_bool_getter_name_prefix(c, path):
+    for line in c.splitlines():
+        if re.search(r"bool\s(?!(is|has|get_))\w+\(\)\s*const\s*{", line):
+            FAIL("Boolean getter names should be prefix with `is` or `has`", line, path)
 
 # Source files
 
@@ -526,6 +530,7 @@ def check_header(c, path):
     header_lowercase_member_offset_vars(c, path)
     common_self_other(c, path, True)
     common_consistent_float_literals(c, path)
+    header_bool_getter_name_prefix(c, path)
 
 def _check_file_content(content, file_str):
     if file_str.endswith('.h'):
