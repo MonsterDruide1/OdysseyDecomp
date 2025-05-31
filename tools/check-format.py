@@ -437,6 +437,12 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
             newline = line.split("=")[0].strip()
         elif line.endswith(";"):
             newline = line.split(";")[0].strip()
+        elif line.endswith("{"):
+            newline = line.split("{")[0].strip()
+        elif line.endswith("}"):
+            newline = line.split("}")[0].strip()
+        elif line.endswith(","):
+            newline = line.split(",")[0].strip()
         else:
             FAIL("Unknown private line!", line, path)
 
