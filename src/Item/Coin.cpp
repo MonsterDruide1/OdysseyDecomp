@@ -2,7 +2,7 @@
 
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
 #include "Library/Collision/CollisionPartsTriangle.h"
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
