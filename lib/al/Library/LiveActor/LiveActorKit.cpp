@@ -47,7 +47,12 @@ LiveActorKit::~LiveActorKit() {
         mCameraDirector = nullptr;
     }
     if (mClippingDirector) {
+#pragma clang diagnostic push
+        // in this case, mClippingDirector has the correct type,
+        // causing the destructor to be called correctly
+#pragma clang diagnostic ignored "-Wdelete-non-virtual-dtor"
         delete mClippingDirector;
+#pragma clang diagnostic pop
         mClippingDirector = nullptr;
     }
     if (mModelGroup) {
