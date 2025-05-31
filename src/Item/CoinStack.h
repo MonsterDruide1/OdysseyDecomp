@@ -6,7 +6,7 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class HitSensor;
 class SensorMsg;
 }  // namespace al
@@ -16,7 +16,7 @@ class CoinStackGroup;
 class CoinStack : public al::LiveActor {
 public:
     CoinStack(const char* name);
-    virtual ~CoinStack();
+    virtual ~CoinStack() = default;
 
     void init(const al::ActorInitInfo& initInfo) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,

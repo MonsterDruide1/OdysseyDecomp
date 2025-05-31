@@ -7,7 +7,7 @@
 
 namespace al {
 class AudioKeeper;
-class BgmUserInfo;
+struct BgmUserInfo;
 
 class ActionBgmCtrl : public HioNode, public IUseAudioKeeper {
 public:

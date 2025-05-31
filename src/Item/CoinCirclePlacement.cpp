@@ -8,7 +8,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 #include "Item/Coin.h"
@@ -94,7 +94,7 @@ inline f32 modDegree(f32 value) {
 }
 
 void CoinCirclePlacement::exeMove() {
-    if (al::isNearZero(mRotateVelocity, 0.001f))
+    if (al::isNearZero(mRotateVelocity))
         return;
 
     mCurrentAngle = modDegree(mCurrentAngle + mRotateVelocity);

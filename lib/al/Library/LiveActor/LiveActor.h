@@ -8,6 +8,7 @@
 #include "Library/Collision/IUseCollision.h"
 #include "Library/Effect/IUseEffectKeeper.h"
 #include "Library/HostIO/HioNode.h"
+#include "Library/Nature/NatureDirector.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Rail/IUseRail.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
@@ -37,7 +38,7 @@ class SubActorKeeper;
 class ActorParamHolder;
 struct ActorSceneInfo;
 struct LiveActorFlag;
-class ActorInitInfo;
+struct ActorInitInfo;
 class HitSensor;
 class SensorMsg;
 class ScreenPointer;
@@ -56,8 +57,10 @@ class LiveActor : public IUseNerve,
 public:
     LiveActor(const char* actorName);
 
-    NerveKeeper* getNerveKeeper() const override;
-    virtual void init(const ActorInitInfo& info);
+    NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+
+    virtual void init(const ActorInitInfo& info) {}
+
     virtual void initAfterPlacement();
     virtual void appear();
     virtual void makeActorAlive();
@@ -68,22 +71,38 @@ public:
     virtual void draw() const;
     virtual void startClipped();
     virtual void endClipped();
-    virtual void attackSensor(HitSensor* self, HitSensor* other);
-    virtual bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self);
+
+    virtual void attackSensor(HitSensor* self, HitSensor* other) {}
+
+    virtual bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
+        return false;
+    }
+
     virtual bool receiveMsgScreenPoint(const SensorMsg* message, ScreenPointer* source,
-                                       ScreenPointTarget* target);
-    virtual const char* getName() const override;
+                                       ScreenPointTarget* target) {
+        return false;
+    }
+
+    virtual const char* getName() const override { return mName; }
+
     virtual const sead::Matrix34f* getBaseMtx() const;
-    virtual EffectKeeper* getEffectKeeper() const override;
-    virtual AudioKeeper* getAudioKeeper() const override;
-    virtual StageSwitchKeeper* getStageSwitchKeeper() const override;
+
+    virtual EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
+
+    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
+    virtual StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
+
     virtual RailRider* getRailRider() const override;
     virtual SceneObjHolder* getSceneObjHolder() const override;
     virtual CollisionDirector* getCollisionDirector() const override;
     virtual AreaObjDirector* getAreaObjDirector() const override;
     virtual CameraDirector* getCameraDirector() const override;
+    NatureDirector* getNatureDirector() const;
     virtual void initStageSwitchKeeper() override;
-    virtual void control();
+
+    virtual void control() {}
+
     virtual void updateCollider();
 
     ActorSceneInfo* getSceneInfo() const;
@@ -113,11 +132,11 @@ public:
 
     ActorExecuteInfo* getExecuteInfo() const { return mExecuteInfo; }
 
-    ActorActionKeeper* getActorActionKeeper() const { return mActorActionKeeper; }
+    ActorActionKeeper* getActorActionKeeper() const { return mActionKeeper; }
 
-    ActorItemKeeper* getActorItemKeeper() const { return mActorItemKeeper; }
+    ActorItemKeeper* getActorItemKeeper() const { return mItemKeeper; }
 
-    ActorScoreKeeper* getActorScoreKeeper() const { return mActorScoreKeeper; }
+    ActorScoreKeeper* getActorScoreKeeper() const { return mScoreKeeper; }
 
     Collider* getCollider() const { return mCollider; }
 
@@ -133,26 +152,26 @@ public:
 
     ShadowKeeper* getShadowKeeper() const { return mShadowKeeper; }
 
-    ActorPrePassLightKeeper* getActorPrePassLightKeeper() const { return mActorPrePassLightKeeper; }
+    ActorPrePassLightKeeper* getActorPrePassLightKeeper() const { return mPrePassLightKeeper; }
 
-    ActorOcclusionKeeper* getActorOcclusionKeeper() const { return mActorOcclusionKeeper; }
+    ActorOcclusionKeeper* getActorOcclusionKeeper() const { return mOcclusionKeeper; }
 
     SubActorKeeper* getSubActorKeeper() const { return mSubActorKeeper; }
 
-    ActorParamHolder* getActorParamHolder() const { return mActorParamHolder; }
+    ActorParamHolder* getActorParamHolder() const { return mParamHolder; }
 
-    void setName(const char* newName) { mActorName = newName; }
+    void setName(const char* newName) { mName = newName; }
 
 protected:
     friend class alActorFunction;
 
 private:
-    const char* mActorName = nullptr;
+    const char* mName = nullptr;
     ActorPoseKeeperBase* mPoseKeeper = nullptr;
     ActorExecuteInfo* mExecuteInfo = nullptr;
-    ActorActionKeeper* mActorActionKeeper = nullptr;
-    ActorItemKeeper* mActorItemKeeper = nullptr;
-    ActorScoreKeeper* mActorScoreKeeper = nullptr;
+    ActorActionKeeper* mActionKeeper = nullptr;
+    ActorItemKeeper* mItemKeeper = nullptr;
+    ActorScoreKeeper* mScoreKeeper = nullptr;
     Collider* mCollider = nullptr;
     CollisionParts* mCollisionParts = nullptr;
     ModelKeeper* mModelKeeper = nullptr;
@@ -165,10 +184,10 @@ private:
     StageSwitchKeeper* mStageSwitchKeeper = nullptr;
     RailKeeper* mRailKeeper = nullptr;
     ShadowKeeper* mShadowKeeper = nullptr;
-    ActorPrePassLightKeeper* mActorPrePassLightKeeper = nullptr;
-    ActorOcclusionKeeper* mActorOcclusionKeeper = nullptr;
+    ActorPrePassLightKeeper* mPrePassLightKeeper = nullptr;
+    ActorOcclusionKeeper* mOcclusionKeeper = nullptr;
     SubActorKeeper* mSubActorKeeper = nullptr;
-    ActorParamHolder* mActorParamHolder = nullptr;
+    ActorParamHolder* mParamHolder = nullptr;
     ActorSceneInfo* mSceneInfo = nullptr;
     LiveActorFlag* mFlags = nullptr;
 };

@@ -13,14 +13,14 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Obj/PartsFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
@@ -161,9 +161,5 @@ bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* other, H
     }
 
     return false;
-}
-
-JudgeFuncPtr BreakMapPartsBase::getJudgeFunction(const char* name) const {
-    return nullptr;
 }
 }  // namespace al

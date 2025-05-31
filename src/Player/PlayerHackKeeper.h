@@ -5,7 +5,7 @@
 namespace al {
 class LiveActor;
 class HitSensor;
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 class PlayerRecoverySafetyPoint;
@@ -53,7 +53,7 @@ public:
     void sendMsgEnableMapCheckPointWarp();
     void sendMsgSelfCeilingCheckMiss();
     void receiveRequestTransferHack(al::HitSensor*);
-    void requestDamage();
+    bool requestDamage();
     void receiveRequestDamage();
     void sendSyncDamageVisibility();
     void pushWorldEndBorder(const sead::Vector3f&);

@@ -96,8 +96,8 @@ void calcJointAngleYDirToTargetOnXDir(const LiveActor* actor, const char*, const
 void calcJointAngleYDirToTargetOnZDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleZDirToTargetOnXDir(const LiveActor* actor, const char*, const sead::Vector3f&);
 void calcJointAngleZDirToTargetOnYDir(const LiveActor* actor, const char*, const sead::Vector3f&);
-void getMaterialName(const LiveActor* actor, s32);
-void getMaterialCount(const LiveActor* actor);
+const char* getMaterialName(const LiveActor* actor, s32);
+s32 getMaterialCount(const LiveActor* actor);
 bool isExistMaterial(const LiveActor* actor, const char*);
 void getMaterialObj(const LiveActor* actor, s32);
 void getMaterialObj(const LiveActor* actor, const char*);
@@ -157,8 +157,8 @@ void calcModelBoundingBoxMtx(sead::Matrix34f*, const LiveActor* actor);
 void submitViewModel(const LiveActor* actor, const sead::Matrix34f&);
 void replaceMaterialTextureRef(LiveActor* actor, nn::g3d::TextureRef*, const char*, const char*);
 void replaceMaterialResTexture(LiveActor* actor, nn::gfx::ResTexture*, const char*, const char*);
-void replaceMaterialResTexture(LiveActor*, const char*, const char*, const nn::gfx::DescriptorSlot,
-                               nn::gfx::TextureView*);
+void replaceMaterialResTexture(LiveActor*, const char*, const char*, nn::gfx::DescriptorSlot,
+                               const nn::gfx::TextureView*);
 void replaceMaterialLayoutTexture(LiveActor* actor, const LayoutTextureRenderObj*, const char*,
                                   const char*);
 void recreateModelDisplayList(const LiveActor* actor);
@@ -168,7 +168,7 @@ void calcPolygonNumCurrentLodWithoutVisAnim(const LiveActor* actor);
 void getLodLevel(const LiveActor* actor);
 void getMaterialLodLevel(const LiveActor* actor);
 void getLodLevelNoClamp(const LiveActor* actor);
-void getLodModelCount(const LiveActor* actor);
+s32 getLodModelCount(const LiveActor* actor);
 void forceLodLevel(LiveActor* actor, s32);
 void unforceLodLevel(LiveActor* actor);
 bool isExistLodModel(const LiveActor* actor);

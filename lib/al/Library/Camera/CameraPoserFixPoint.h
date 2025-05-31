@@ -1,8 +1,10 @@
 #pragma once
 
-#include "Library/Camera/CameraPoserFix.h"
+#include "Library/Camera/CameraPoser.h"
 
 namespace al {
+
+class LiveActor;
 
 class CameraPoserFixPoint : public CameraPoser {
 public:

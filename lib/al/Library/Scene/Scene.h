@@ -17,7 +17,7 @@ class LayoutKit;
 class SceneMsgCtrl;
 class SceneStopCtrl;
 class ScreenCoverCtrl;
-class GraphicsInitArg;
+struct GraphicsInitArg;
 struct DrawSystemInfo;
 
 class Scene : public NerveExecutor,
@@ -28,59 +28,74 @@ public:
     Scene(const char*);
 
     virtual ~Scene();
-    virtual void init(const SceneInitInfo& initInfo);
+
+    virtual void init(const SceneInitInfo& initInfo) {}
+
     virtual void appear();
     virtual void kill();
     virtual void movement();
-    virtual void control();
-    virtual void drawMain();
-    virtual void drawSub();
-    AudioKeeper* getAudioKeeper() const override;
-    SceneObjHolder* getSceneObjHolder() const override;
+
+    virtual void control() {}
+
+    virtual void drawMain() const {}
+
+    virtual void drawSub() const {}
+
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
+    void setAudioKeeper(AudioKeeper* audioKeeper) { mAudioKeeper = audioKeeper; }
+
+    SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
+
     CameraDirector* getCameraDirector() const override;
 
-    LayoutKit* getLayoutKit() const;
-    SceneStopCtrl* getSceneStopCtrl() const;
-    SceneMsgCtrl* getSceneMsgCtrl() const;
-    void initializeAsync(const SceneInitInfo&);
-    void initDrawSystemInfo(const SceneInitInfo&);
-    void initSceneObjHolder(SceneObjHolder*);
-    void initAndLoadStageResource(const char*, s32);
-    void initLiveActorKit(const SceneInitInfo&, s32, s32, s32);
-    void initLiveActorKitWithGraphics(const GraphicsInitArg&, const SceneInitInfo&, s32, s32, s32);
-    void initLayoutKit(const SceneInitInfo&);
+    void initializeAsync(const SceneInitInfo& initInfo);
+    void initDrawSystemInfo(const SceneInitInfo& initInfo);
+    void initSceneObjHolder(SceneObjHolder* sceneObjHolder);
+    void initAndLoadStageResource(const char* stageName, s32 scenarioNo);
+    void initLiveActorKit(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
+                          s32 maxCameras);
+    void initLiveActorKitImpl(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
+                              s32 maxCameras);
+    void initLiveActorKitWithGraphics(const GraphicsInitArg& graphicsInitArg,
+                                      const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
+                                      s32 maxCameras);
+    void initLayoutKit(const SceneInitInfo& initInfo);
     void initSceneStopCtrl();
     void initSceneMsgCtrl();
     void initScreenCoverCtrl();
-    void endInit(const ActorInitInfo&);
+    void endInit(const ActorInitInfo& initInfo);
+
+    StageResourceKeeper* getStageResourceKeeper() const { return mStageResourceKeeper; }
+
+    LiveActorKit* getLiveActorKit() const { return mLiveActorKit; }
+
+    LayoutKit* getLayoutKit() const { return mLayoutKit; }
+
+    SceneStopCtrl* getSceneStopCtrl() const { return mSceneStopCtrl; }
+
+    SceneMsgCtrl* getSceneMsgCtrl() const { return mSceneMsgCtrl; }
+
+    ScreenCoverCtrl* getScreenCoverCtrl() const { return mScreenCoverCtrl; }
+
+    AudioDirector* getAudioDirector() const { return mAudioDirector; }
+
+    void setAudioDirector(AudioDirector* audioDirector) { mAudioDirector = audioDirector; }
+
+    DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
 
 private:
-    void initLiveActorKitImpl(const SceneInitInfo&, s32, s32, s32);
-
-    bool mIsAlive;
+    bool mIsAlive = false;
     sead::FixedSafeString<0x40> mName;
-    StageResourceKeeper* mStageResourceKeeper;
-    LiveActorKit* mLiveActorKit;
-    LayoutKit* mLayoutKit;
-    SceneObjHolder* mSceneObjHolder;
-    SceneStopCtrl* mSceneStopCtrl;
-    SceneMsgCtrl* mSceneMsgCtrl;
-    ScreenCoverCtrl* mScreenCoverCtrl;
-    AudioDirector* mAudioDirector;
-    AudioKeeper* mAudioKeeper;
-    DrawSystemInfo* mDrawSystemInfo;
-};
-
-class StageScene : public Scene {
-public:
-    StageScene();
-
-    virtual ~StageScene();
-    virtual void init(const SceneInitInfo&);
-    virtual void appear();
-    virtual void kill();
-
-    virtual void control();
-    virtual void drawMain();
+    StageResourceKeeper* mStageResourceKeeper = nullptr;
+    LiveActorKit* mLiveActorKit = nullptr;
+    LayoutKit* mLayoutKit = nullptr;
+    SceneObjHolder* mSceneObjHolder = nullptr;
+    SceneStopCtrl* mSceneStopCtrl = nullptr;
+    SceneMsgCtrl* mSceneMsgCtrl = nullptr;
+    ScreenCoverCtrl* mScreenCoverCtrl = nullptr;
+    AudioDirector* mAudioDirector = nullptr;
+    AudioKeeper* mAudioKeeper = nullptr;
+    DrawSystemInfo* mDrawSystemInfo = nullptr;
 };
 }  // namespace al

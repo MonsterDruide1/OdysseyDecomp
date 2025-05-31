@@ -9,45 +9,40 @@ class DrawContext;
 }
 
 namespace al {
-class GraphicsInitArg;
 class ActorResourceHolder;
 class AreaObjDirector;
-class ExecuteDirector;
-class GravityHolder;
-class EffectSystem;
-class GraphicsSystemInfo;
-class ModelDrawBufferUpdater;
-class ExecuteAsyncExecutorUpdate;
-class ModelDisplayListController;
-class LiveActorGroup;
 class CameraDirector;
 class ClippingDirector;
 class CollisionDirector;
-class ItemDirectorBase;
-class PlayerHolder;
+class DemoDirector;
+class EffectSystem;
+class ExecuteAsyncExecutorUpdate;
+class ExecuteDirector;
+class GamePadSystem;
+struct GraphicsInitArg;
+class GraphicsSystemInfo;
+class GravityHolder;
 class HitSensorDirector;
+class ItemDirectorBase;
+class LiveActorGroup;
+class ModelDisplayListController;
+class ModelDrawBufferUpdater;
+class ModelGroup;
+class NatureDirector;
+class PadRumbleDirector;
+class PlayerHolder;
 class ScreenPointDirector;
 class ShadowDirector;
 class StageSwitchDirector;
 class SwitchAreaDirector;
-class LiveActorGroup;
-class DemoDirector;
-class GamePadSystem;
-class PadRumbleDirector;
-class NatureDirector;
-class ModelGroup;
+
+struct ModelDrawBufferCounter {
+    s32 maxDrawBuffer = 3;
+    s32 currentDrawBuffer = 0;
+};
 
 class LiveActorKit : public HioNode {
 public:
-    class DrawBufferDirector {
-    public:
-        DrawBufferDirector() = default;
-
-    private:
-        s32 mMaxDrawBuffer = 3;
-        s32 mCurrentDrawBuffer = 0;
-    };
-
     LiveActorKit(s32 maxActors, s32 maxPlayers);
     virtual ~LiveActorKit();
 
@@ -65,6 +60,76 @@ public:
     void updateGraphics();
     void preDrawGraphics();
 
+    ActorResourceHolder* getActorResourceHolder() const { return mActorResourceHolder; }
+
+    AreaObjDirector* getAreaObjDirector() const { return mAreaObjDirector; }
+
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
+
+    GravityHolder* getGravityHolder() const { return mGravityHolder; }
+
+    EffectSystem* getEffectSystem() const { return mEffectSystem; }
+
+    GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
+
+    ModelDrawBufferCounter* getModelDrawBufferCounter() const { return mModelDrawBufferCounter; }
+
+    ModelDrawBufferUpdater* getModelDrawBufferUpdater() const { return mModelDrawBufferUpdater; }
+
+    ExecuteAsyncExecutorUpdate* getExecutorCore1() const { return mExecutorCore1; }
+
+    ExecuteAsyncExecutorUpdate* getExecutorCore2() const { return mExecutorCore2; }
+
+    ModelDisplayListController* getModelDisplayListController() const {
+        return mModelDisplayListController;
+    }
+
+    agl::DrawContext* getSceneDrawContext() const { return mSceneDrawContext; }
+
+    LiveActorGroup* getDynamicDrawActorGroup() const { return mDynamicDrawActorGroup; }
+
+    CameraDirector* getCameraDirector() const { return mCameraDirector; }
+
+    ClippingDirector* getClippingDirector() const { return mClippingDirector; }
+
+    CollisionDirector* getCollisionDirector() const { return mCollisionDirector; }
+
+    ItemDirectorBase* getItemDirector() const { return mItemDirector; }
+
+    PlayerHolder* getPlayerHolder() const { return mPlayerHolder; }
+
+    HitSensorDirector* getHitSensorDirector() const { return mHitSensorDirector; }
+
+    ScreenPointDirector* getScreenPointDirector() const { return mScreenPointDirector; }
+
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+
+    StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+
+    SwitchAreaDirector* getSwitchAreaDirector() const { return mSwitchAreaDirector; }
+
+    LiveActorGroup* getLiveActorGroupAllActors() const { return mLiveActorGroupAllActors; }
+
+    DemoDirector* getDemoDirector() const { return mDemoDirector; }
+
+    GamePadSystem* getGamePadSystem() const { return mGamePadSystem; }
+
+    PadRumbleDirector* getPadRumbleDirector() const { return mPadRumbleDirector; }
+
+    NatureDirector* getNatureDirector() const { return mNatureDirector; }
+
+    ModelGroup* getModelGroup() const { return mModelGroup; }
+
+    void setItemDirector(ItemDirectorBase* itemDirector) { mItemDirector = itemDirector; }
+
+    void setDemoDirector(DemoDirector* demoDirector) { mDemoDirector = demoDirector; }
+
+    void setSceneDrawContext(agl::DrawContext* drawContext) { mSceneDrawContext = drawContext; }
+
+    void setGamePadSystem(GamePadSystem* gamePadSystem) { mGamePadSystem = gamePadSystem; }
+
+    void setEffectSystem(EffectSystem* effectSystem) { mEffectSystem = effectSystem; }
+
 private:
     s32 mMaxActors;
     ActorResourceHolder* mActorResourceHolder = nullptr;
@@ -73,7 +138,7 @@ private:
     GravityHolder* mGravityHolder = nullptr;
     EffectSystem* mEffectSystem = nullptr;
     GraphicsSystemInfo* mGraphicsSystemInfo = nullptr;
-    DrawBufferDirector* mDrawBufferDirector = nullptr;
+    ModelDrawBufferCounter* mModelDrawBufferCounter = nullptr;
     ModelDrawBufferUpdater* mModelDrawBufferUpdater = nullptr;
     ExecuteAsyncExecutorUpdate* mExecutorCore1 = nullptr;
     ExecuteAsyncExecutorUpdate* mExecutorCore2 = nullptr;

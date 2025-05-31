@@ -9,13 +9,11 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
+namespace al {
 namespace {
-using namespace al;
-
 NERVE_IMPL(VisibleSwitchMapParts, Show)
 NERVE_IMPL(VisibleSwitchMapParts, Hide)
 NERVE_IMPL(VisibleSwitchMapParts, Disappear)
@@ -27,7 +25,6 @@ NERVES_MAKE_STRUCT(VisibleSwitchMapParts, Show, Hide, Disappear, DisappearDither
                    AppearDither)
 }  // namespace
 
-namespace al {
 VisibleSwitchMapParts::VisibleSwitchMapParts(const char* name) : LiveActor(name) {}
 
 void VisibleSwitchMapParts::init(const ActorInitInfo& info) {

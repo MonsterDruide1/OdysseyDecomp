@@ -2,14 +2,25 @@
 
 import argparse
 import hashlib
+import os
+import shutil
 from pathlib import Path
 import subprocess
 from typing import Optional
 from common import setup_common as setup
 from enum import Enum
+import platform
+import tarfile
+import tempfile
+import urllib.request
+import urllib.parse
+import urllib.error
+from common.util.config import get_repo_root
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
+CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.0"
+LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 
 class Version(Enum):
     VER_100 = "1.0"
@@ -59,8 +70,92 @@ def prepare_executable(original_nso: Optional[Path]):
 def get_build_dir():
     return setup.ROOT / "build"
 
+def setup_project_tools(tools_from_source):
+
+    def exists_tool(tool_name):
+        return os.path.isfile(f"{get_repo_root()}/tools/{tool_name}") or os.path.islink(f"{get_repo_root()}/tools/{tool_name}")
+
+    def exists_toolchain_file(file_path_rel):
+        return os.path.isfile(f"{get_repo_root()}/toolchain/{file_path_rel}")
+
+    def build_tools_from_source(tmpdir_path):
+        cwd = os.getcwd()
+        url_parts = CACHE_REPO_RELEASE_URL.split("/")
+        tag_name = url_parts[len(url_parts) - 1]
+        subprocess.check_call(["git", "clone", "--depth=1", "--branch", tag_name, "https://github.com/MonsterDruide1/OdysseyDecompToolsCache.git", f"{tmpdir_path}/OdysseyDecompToolsCache"])
+        os.chdir(f"{tmpdir}/OdysseyDecompToolsCache")
+        subprocess.check_call(["git", "submodule", "update", "--init"])
+        subprocess.check_call(["./generate.sh", "--no-tarball"])
+        os.chdir(cwd)
+        shutil.copytree(f"{tmpdir_path}/OdysseyDecompToolsCache/build/OdysseyDecomp-binaries_{platform.machine()}-{platform.system()}/bin", f"{get_repo_root()}/toolchain/bin")
+
+    def remove_old_toolchain():
+        if exists_toolchain_file("clang-3.9.1/bin/clang"):
+            print("Removing toolchain/clang-3.9.1 since full toolchains are no longer needed")
+            shutil.rmtree(f"{get_repo_root()}/toolchain/clang-3.9.1")
+        if exists_toolchain_file("clang-4.0.1/bin/lld"):
+            print("Removing toolchain/clang-4.0.1")
+            shutil.rmtree(f"{get_repo_root()}/toolchain/clang-4.0.1")
+
+    def check_download_url_updated():
+        if not exists_toolchain_file("cache-version-url.txt"):
+            with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "w") as f:
+                f.write(CACHE_REPO_RELEASE_URL)
+            return
+        with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "r+") as f:
+            data = f.read()
+            if data != CACHE_REPO_RELEASE_URL:
+                f.seek(0)
+                f.write(CACHE_REPO_RELEASE_URL)
+                f.truncate()
+                print("Old toolchain files found. Replacing them with ones from the latest release")
+                if exists_toolchain_file("bin/clang"):
+                    shutil.rmtree(f"{get_repo_root()}/toolchain/bin")
+
+    remove_old_toolchain()
+    check_download_url_updated()
+
+    if not exists_tool("check"):
+        os.symlink(f"{get_repo_root()}/toolchain/bin/check", f"{get_repo_root()}/tools/check")
+    if not exists_tool("decompme"):
+        os.symlink(f"{get_repo_root()}/toolchain/bin/decompme", f"{get_repo_root()}/tools/decompme")
+    if not exists_tool("listsym"):
+        os.symlink(f"{get_repo_root()}/toolchain/bin/listsym", f"{get_repo_root()}/tools/listsym")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        if not exists_toolchain_file("include/__config"):
+            print(">>> Downloading llvm-3.9 libc++ headers...")
+            path = tmpdir + "/libcxx-3.9.1.src.tar.xz"
+            urllib.request.urlretrieve(LIBCXX_SRC_URL, path)
+            print(">>> Extracting libc++ headers...")
+            with tarfile.open(path) as f:
+                f.extractall(tmpdir, filter='tar')
+            shutil.copytree(f"{tmpdir}/libcxx-3.9.1.src/include", f"{get_repo_root()}/toolchain/include", dirs_exist_ok=True)
+
+        if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
+
+            if os.path.isdir(get_build_dir()):
+                shutil.rmtree(get_build_dir())
+
+            if tools_from_source:
+                build_tools_from_source(tmpdir)
+                return
+
+            target = f"{platform.machine()}-{platform.system()}"
+            path = tmpdir + f"/OdysseyDecomp-binaries_{target}"
+            try:
+                print(">>> Downloading clang, lld and viking...")
+                url = CACHE_REPO_RELEASE_URL + urllib.parse.quote(f"/OdysseyDecomp-binaries_{target}.tar.xz")
+                urllib.request.urlretrieve(url, path)
+                print(">>> Extracting tools...")
+                with tarfile.open(path) as f:
+                    f.extractall(f"{get_repo_root()}/toolchain/", filter='tar')
+            except urllib.error.HTTPError:
+                input(f"Prebuilt binaries not found for platform: {target}. Do you want to build llvm, clang, lld and viking from source? (Press enter to accept)")
+                build_tools_from_source(tmpdir)
+
 def create_build_dir(ver, cmake_backend):
-    if(ver != Version.VER_100): return # TODO remove this when multiple versions should be built
+    if(ver != Version.VER_100): return # TODO: remove this when multiple versions should be built
     build_dir = get_build_dir()
     if build_dir.is_dir():
         print(">>> build directory already exists: nothing to do")
@@ -78,14 +173,14 @@ def main():
     parser.add_argument("--cmake_backend", type=str,
                         help="CMake backend to use (Ninja, Unix Makefiles, etc.)", nargs="?", default="Ninja")
     parser.add_argument("--project-only", action="store_true",
-                        help="Disable viking and original NSO setup")
+                    help="Disable original NSO setup")
+    parser.add_argument("--tools-from-src", action="store_true",
+                    help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
-    
+
+    setup_project_tools(args.tools_from_src)
     if not args.project_only:
-        setup.install_viking()
         prepare_executable(args.original_nso)
-    setup.set_up_compiler("3.9.1")
-    setup.set_up_compiler("4.0.1")
     create_build_dir(Version.VER_100, args.cmake_backend)
     create_build_dir(Version.VER_101, args.cmake_backend)
     create_build_dir(Version.VER_110, args.cmake_backend)

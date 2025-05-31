@@ -5,7 +5,7 @@
 #include <math/seadVector.h>
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class AreaInitInfo;
 class PlacementInfo;
 class PlacementId;
@@ -42,7 +42,6 @@ void multZoneMtx(sead::Vector3f* trans, const PlacementInfo& placementInfo);
 bool tryGetTrans(sead::Vector3f* trans, const ActorInitInfo& initInfo);
 bool tryGetTrans(sead::Vector3f* trans, const PlacementInfo& placementInfo);
 
-void getRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo);
 void getRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo);
 bool tryGetRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo);
 bool tryGetRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo);

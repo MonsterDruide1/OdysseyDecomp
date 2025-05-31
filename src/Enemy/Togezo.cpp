@@ -16,7 +16,6 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Player/PlayerUtil.h"
-#include "Library/Stage/StageSwitchKeeper.h"
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
@@ -161,7 +160,7 @@ void Togezo::control() {
 
     mForceKeeper->reset();
 
-    if (!al::isNearZero(calculatedForce, 0.001f)) {
+    if (!al::isNearZero(calculatedForce)) {
         mWanderCooldown = 180;
         al::invalidateClipping(this);
     }
@@ -384,7 +383,7 @@ void Togezo::exeCapHit() {
         al::setVelocity(this, capDirection * 20.0f);
 
         sead::Quatf frontUp = sead::Quatf::unit;
-        al::makeQuatUpFront(&frontUp, capDirection, sead::Vector3f::ey);
+        al::makeQuatFrontUp(&frontUp, capDirection, sead::Vector3f::ey);
 
         mAirTime = 0;
 

@@ -2,21 +2,27 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/HostIO/HioNode.h"
 #include "Library/Scene/ISceneObj.h"
 
+#include "Scene/SceneObjFactory.h"
+
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class IUseSceneObjHolder;
 class LiveActor;
 }  // namespace al
 
 class CoinCollectLayout;
 
-class CoinCollectWatcher : public al::ISceneObj {
+class CoinCollectWatcher : public al::ISceneObj, public al::IUseHioNode {
 public:
+    static constexpr s32 sSceneObjId = SceneObjID_CoinCollectWatcher;
+
     CoinCollectWatcher();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "コインコレクト監視者"; }
+
     void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
 
     void registerCoin(bool isCountUpCoin);

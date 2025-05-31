@@ -24,8 +24,8 @@ namespace al {
 BreakModel::BreakModel(const LiveActor* rootActor, const char* objName, const char* modelName,
                        const char* fileSuffixName, const sead::Matrix34f* rootMtx,
                        const char* breakActionName)
-    : LiveActor(objName), mInitSuffix(fileSuffixName), mParent(rootActor), mRootMtx(rootMtx),
-      mModelName(modelName), mBreakAction(breakActionName) {}
+    : LiveActor(objName), mParent(rootActor), mRootMtx(rootMtx), mModelName(modelName),
+      mBreakAction(breakActionName), mInitSuffix(fileSuffixName) {}
 
 void BreakModel::init(const ActorInitInfo& initInfo) {
     initActorWithArchiveName(this, initInfo, mModelName, mInitSuffix);
@@ -54,7 +54,7 @@ void BreakModel::appear() {
 
     if (mBreakAction) {
         startAction(this, mBreakAction);
-        if (!isNearZero(1.0f - mActionFrameRate, 0.001f))
+        if (!isNearZero(1.0f - mActionFrameRate))
             setActionFrameRate(this, mActionFrameRate);
     }
     setNerve(this, &Break);

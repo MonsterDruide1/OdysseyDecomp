@@ -22,7 +22,3 @@ bool HelpAmiiboPlayerInvincible::execute() {
     al::startSe(getDirector(), "AmiiboMario");
     return true;
 }
-
-HelpAmiiboType HelpAmiiboPlayerInvincible::getType() const {
-    return HelpAmiiboType::Mario;
-}

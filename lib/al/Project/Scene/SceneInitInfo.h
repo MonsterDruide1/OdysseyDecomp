@@ -2,14 +2,19 @@
 
 #include <basis/seadTypes.h>
 
-#include "System/GameDataHolderAccessor.h"
-
 namespace al {
+class AudioDirector;
+class GameDataHolderBase;
+
 struct SceneInitInfo {
     struct GameSystemInfo* gameSysInfo;
-    GameDataHolderAccessor* gameDataHolder;
+    GameDataHolderBase* gameDataHolder;
     char field_0x10[8];
     char* initStageName;
     u32 scenarioNo;
+    char filler[0x218];
+    AudioDirector* audioDirector;
 };
+
+static_assert(sizeof(SceneInitInfo) == 0x248);
 }  // namespace al

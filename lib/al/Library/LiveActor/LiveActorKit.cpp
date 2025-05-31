@@ -23,7 +23,7 @@
 #include "Library/Shader/ForwardRendering/ShaderHolder.h"
 #include "Library/Shadow/ShadowDirector.h"
 #include "Library/Shadow/ShadowKeeper.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchDirector.h"
 #include "Project/Clipping/ClippingDirector.h"
 #include "Project/Execute/ExecuteAsyncExecutor.h"
 #include "Project/Gravity/GravityHolder.h"
@@ -47,7 +47,12 @@ LiveActorKit::~LiveActorKit() {
         mCameraDirector = nullptr;
     }
     if (mClippingDirector) {
+#pragma clang diagnostic push
+        // in this case, mClippingDirector has the correct type,
+        // causing the destructor to be called correctly
+#pragma clang diagnostic ignored "-Wdelete-non-virtual-dtor"
         delete mClippingDirector;
+#pragma clang diagnostic pop
         mClippingDirector = nullptr;
     }
     if (mModelGroup) {
@@ -77,7 +82,7 @@ LiveActorKit::~LiveActorKit() {
 }
 
 void LiveActorKit::init(s32 maxCameras) {
-    mDrawBufferDirector = new DrawBufferDirector();
+    mModelDrawBufferCounter = new ModelDrawBufferCounter();
 
     ExecuteSystemInitInfo info{};
     mExecuteDirector = new ExecuteDirector(mMaxActors);

@@ -5,7 +5,7 @@
 #include "Library/Area/AreaShapeCube.h"
 #include "Library/Area/AreaShapeCylinder.h"
 #include "Library/Area/AreaShapeInfinite.h"
-#include "Library/Area/AreaShapeSphere.h"
+#include "Library/Area/AreaShapeOval.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 
@@ -22,11 +22,11 @@ void AreaShape::setScale(const sead::Vector3f& scale) {
 }
 
 bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& trans) const {
-    if (isNearZeroOrLess(mScale.x, 0.001))
+    if (isNearZero(mScale.x, 0.001))
         return false;
-    if (isNearZeroOrLess(mScale.y, 0.001))
+    if (isNearZero(mScale.y, 0.001))
         return false;
-    if (isNearZeroOrLess(mScale.z, 0.001))
+    if (isNearZero(mScale.z, 0.001))
         return false;
 
     if (mBaseMtxPtr)
@@ -45,11 +45,11 @@ bool AreaShape::calcLocalPos(sead::Vector3f* localPos, const sead::Vector3f& tra
 }
 
 bool AreaShape::calcWorldPos(sead::Vector3f* worldPos, const sead::Vector3f& trans) const {
-    if (isNearZero(mScale.x, 0.001f))
+    if (isNearZero(mScale.x))
         return false;
-    if (isNearZero(mScale.y, 0.001f))
+    if (isNearZero(mScale.y))
         return false;
-    if (isNearZero(mScale.z, 0.001f))
+    if (isNearZero(mScale.z))
         return false;
 
     worldPos->x = trans.x * mScale.x;
@@ -63,11 +63,11 @@ bool AreaShape::calcWorldPos(sead::Vector3f* worldPos, const sead::Vector3f& tra
 }
 
 bool AreaShape::calcWorldDir(sead::Vector3f* worldDir, const sead::Vector3f& trans) const {
-    if (isNearZero(mScale.x, 0.001f))
+    if (isNearZero(mScale.x))
         return false;
-    if (isNearZero(mScale.y, 0.001f))
+    if (isNearZero(mScale.y))
         return false;
-    if (isNearZero(mScale.z, 0.001f))
+    if (isNearZero(mScale.z))
         return false;
 
     worldDir->x = trans.x * mScale.x;
@@ -98,7 +98,7 @@ static NameToCreator<AreaShapeCreatorFunction> sAreaShapeEntries[] = {
     {"AreaCubeBase", *createAreaShapeFunction<AreaShapeCubeBase>},
     {"AreaCubeCenter", createAreaShapeFunction<AreaShapeCubeCenter>},
     {"AreaCubeTop", createAreaShapeFunction<AreaShapeCubeTop>},
-    {"AreaSphere", createAreaShapeFunction<AreaShapeSphere>},
+    {"AreaSphere", createAreaShapeFunction<AreaShapeOval>},
     {"AreaCylinder", createAreaShapeFunction<AreaShapeCylinderBase>},
     {"AreaCylinderCenter", createAreaShapeFunction<AreaShapeCylinderCenter>},
     {"AreaCylinderTop", createAreaShapeFunction<AreaShapeCylinderTop>},

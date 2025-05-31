@@ -4,7 +4,7 @@
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Shadow/ActorShadowUtil.h"
@@ -50,7 +50,7 @@ IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* msg, al::HitS
 }
 
 void EnemyStateHackStart::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
     if (!mHackActor)
         return;
     rs::endHackStartDemo(mHackActor, mActor);

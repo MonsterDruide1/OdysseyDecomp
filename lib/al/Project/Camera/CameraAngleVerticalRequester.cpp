@@ -8,10 +8,6 @@ namespace al {
 
 CameraAngleVerticalRequester::CameraAngleVerticalRequester() = default;
 
-AreaObjDirector* CameraAngleVerticalRequester::getAreaObjDirector() const {
-    return mAreaObjDirector;
-}
-
 void CameraAngleVerticalRequester::init(AreaObjDirector* areaObjDirector) {
     mAreaObjDirector = areaObjDirector;
 }

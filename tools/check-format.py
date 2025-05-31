@@ -37,7 +37,8 @@ def CHECK(cond, line, message, path):
 def common_no_namespace_qualifiers(c, path):
     nest_level = []
     for line in c.splitlines():
-        line = line[0:line.find("//")] if "//" in line else line
+        if "http://" not in line:
+            line = line[0:line.find("//")] if "//" in line else line
         if line.startswith("using namespace"):
             match = re.search(r"^using namespace ([^;\s]+);$", line)
             if CHECK(lambda a: match, line,
@@ -74,7 +75,7 @@ def common_no_namespace_qualifiers(c, path):
                 del nest_level[-1]
                 continue
 
-            matches = re.findall(r"[\(,\s]([^\(,\s]+::)+[^\(,\s]+", x)
+            matches = re.findall(r"([^\(,\s]+::)+[^\(,\s]+", x)
             for match in matches:
                 match = match[0:-2]
                 # examples: "sead", "al", "nn::g3d"
@@ -231,7 +232,7 @@ def common_sead_types(c, path):
 
 def common_void_params(c, path):
     for line in c.splitlines():
-        if "(void)" in line:
+        if "(void);" in line or "(void) {" in line or "(void) const" in line:
             FAIL("Function parameters should be empty instead of \"(void)\"!", line, path)
             return
 
@@ -272,7 +273,11 @@ def common_sead_math_template(c, path):
                 continue
             if "sead::Buffer" in line:  # probably needs more exceptions at some point
                 continue
-            if "Vector3CalcCommon" in line:
+            if "sead::PtrArray" in line:
+                continue
+            if "CalcCommon" in line:
+                continue
+            if "BitUtil" in line:
                 continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
@@ -280,20 +285,24 @@ def common_string_finder(c, path):
     string_table = get_string_table()
 
     for line in c.splitlines():
+        line = line.split("//")[0]
         if "#include" in line:
             continue
         if "extern \"C\"" in line:
             continue
-        if "__asm__" in line:
+        if "__asm__" in line or "asm(" in line or "asm volatile(" in line:
             continue
         if "asm volatile" in line:
             continue
-        if "//" in line:
+        if "#pragma" in line:
             continue
 
-        matches = re.findall(r'"(.*?)"', line)
+        matches = re.findall(r'(u?".*?")', line)
 
         for match in matches:
+            if not match.startswith("u"):
+                # Remove quotes from utf8 strings
+                match = match[1:-1]
             if len(match) < 2:
                 continue
             found = False
@@ -306,9 +315,24 @@ def common_string_finder(c, path):
 
 def common_const_reference(c, path):
     for line in c.splitlines():
-        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line:
-            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line) and ("operator->" not in line):
-                FAIL("References must be const!", line, path)
+        if "for" in line and " : " in line:
+            continue
+        if "CLASS&" in line:
+            continue
+        if "operator->" in line:
+            continue
+        if "operator&" in line:
+            continue
+        if "AudioDirectorInitInfo" in line:
+            continue
+        if "ReplaceTimeInfo" in line:
+            continue
+        if "calcBendPosAndFront" in line:
+            continue
+        if "sead::IDelegate1<CollisionParts*>" in line:
+            continue
+        if re.search(r"(?<!const)[( ][\w_:]+(<[\w_:]+[\*&]?>)?&", line):
+            FAIL("References must be const!", line, path)
 
 def common_self_other(c, path, is_header):
     lines = c.splitlines()

@@ -11,7 +11,7 @@ class SensorMsg;
 class LiveActor;
 class HitSensor;
 class SensorMsg;
-class ActorInitInfo;
+struct ActorInitInfo;
 class SensorSortCmpFuncBase;
 class ActorSensorController;
 class ComboCounter;
@@ -299,7 +299,7 @@ bool sendMsgHideModel(LiveActor* receiver);
 bool sendMsgShowModel(LiveActor* receiver);
 bool sendMsgRestart(LiveActor* receiver);
 bool sendMsgCollisionImpulse(HitSensor* receiver, HitSensor* sender, sead::Vector3f*,
-                             const sead::Vector3f&, const f32, sead::Vector3f&, f32);
+                             const sead::Vector3f&, f32, const sead::Vector3f&, f32);
 bool sendMsgSwitchOn(LiveActor* receiver);
 bool sendMsgSwitchOnInit(LiveActor* receiver);
 bool sendMsgSwitchOffInit(LiveActor* receiver);

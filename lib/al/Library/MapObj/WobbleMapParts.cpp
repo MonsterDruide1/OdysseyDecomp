@@ -69,7 +69,7 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, HitS
         f32 hDist = currentHorizontal.length();
         f32 normHDist = normalize(hDist, 0.0f, 100.0f);
 
-        if (isNearZero(hDist, 0.001f))
+        if (isNearZero(hDist))
             currentHorizontal = sead::Vector3f::zero;
         else
             currentHorizontal *=

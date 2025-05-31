@@ -22,7 +22,7 @@ EnemyStateWander::EnemyStateWander(al::LiveActor* actor, const char* stateName)
 }
 
 void EnemyStateWander::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &NrvEnemyStateWander.Walk);
 }
 

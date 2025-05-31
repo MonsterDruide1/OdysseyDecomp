@@ -5,15 +5,15 @@
 #include "Library/Camera/CameraPoser.h"
 
 namespace nn::g3d {
-class ResFile;
 class CameraAnimResult;
+class ResSceneAnim;
 }  // namespace nn::g3d
 
 namespace al {
 
-class CameraStartInfo;
 class CameraPoser;
 class Resource;
+struct CameraStartInfo;
 
 class CameraPoserAnim : public CameraPoser {
 public:
@@ -30,21 +30,12 @@ public:
 
 private:
     Resource* mRes;
-    nn::g3d::ResFile* mResFile;
+    nn::g3d::ResSceneAnim* mResFile;
     nn::g3d::CameraAnimResult* mAnimResult;
-    f32 _158;
-    f32 _15c;
-    f32 _160;
-    f32 _164;
-    f32 _168;
-    f32 _16c;
-    f32 _170;
-    f32 _174;
-    f32 _178;
-    f32 _17c;
+    f32 _158[10];
     const char* mPlayingAnimName;
     f32 _188;
-    f32 _18c;
+    s32 _18c;
     f32 _190;
     f32 _194;
     f32 _198;

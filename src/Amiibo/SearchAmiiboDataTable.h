@@ -2,12 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/HostIO/HioNode.h"
-
-namespace al {
-class ByamlIter;
-class ByamlWriter;
-}  // namespace al
+#include "System/ByamlSave.h"
 
 struct SearchAmiiboData {
     SearchAmiiboData();
@@ -19,13 +14,13 @@ struct SearchAmiiboData {
     u64 searchStartTime;
 };
 
-class SearchAmiiboDataTable : public al::HioNode {
+class SearchAmiiboDataTable : public ByamlSave {
 public:
     SearchAmiiboDataTable();
 
     void init();
-    virtual void write(al::ByamlWriter* writer);
-    virtual void read(const al::ByamlIter& iter);
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& iter) override;
     s32 getDataNumMax() const;
     bool isInvalidId(s32 index) const;
     const SearchAmiiboData& getData(s32 index) const;

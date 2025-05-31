@@ -8,7 +8,6 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Layout/IUseLayout.h"
 #include "Library/Layout/IUseLayoutAction.h"
-#include "Library/Layout/LayoutSceneInfo.h"
 #include "Library/Message/IUseMessageSystem.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
@@ -39,7 +38,7 @@ class LayoutActor : public IUseHioNode,
                     public IUseEffectKeeper,
                     public IUseSceneObjHolder {
 public:
-    LayoutActor(const char*);
+    LayoutActor(const char* name);
 
     virtual void appear();
     virtual void kill();
@@ -61,17 +60,11 @@ public:
 
     virtual LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
 
-    virtual CameraDirector* getCameraDirector() const override {
-        return mLayoutSceneInfo->getCameraDirector();
-    }
+    virtual CameraDirector* getCameraDirector() const override;
 
-    virtual SceneObjHolder* getSceneObjHolder() const override {
-        return mLayoutSceneInfo->getSceneObjHolder();
-    }
+    virtual SceneObjHolder* getSceneObjHolder() const override;
 
-    virtual const MessageSystem* getMessageSystem() const override {
-        return mLayoutSceneInfo->getMessageSystem();
-    }
+    virtual const MessageSystem* getMessageSystem() const override;
 
     virtual void control() {}
 
@@ -90,7 +83,9 @@ public:
 
     bool isAlive() const { return mIsAlive; }
 
-    LayoutExecuteInfo* getExecuteInfo() { return mExecuteInfo; }
+    LayoutExecuteInfo* getExecuteInfo() const { return mExecuteInfo; }
+
+    LayoutSceneInfo* getLayoutSceneInfo() const { return mLayoutSceneInfo; }
 
 private:
     sead::FixedSafeString<0x80> mName;

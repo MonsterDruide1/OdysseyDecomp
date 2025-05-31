@@ -6,7 +6,7 @@
 #include "Util/IUseDimension.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 }
 class ActorDimensionKeeper;
 
@@ -21,8 +21,8 @@ public:
     void exeWait();
     void exeBurn();
 
-    ActorDimensionKeeper* getActorDimensionKeeper() const override;
+    ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; }
 
 private:
-    ActorDimensionKeeper* mActorDimensionKeeper = nullptr;
+    ActorDimensionKeeper* mDimensionKeeper = nullptr;
 };

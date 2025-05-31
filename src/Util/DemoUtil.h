@@ -3,7 +3,7 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class LiveActor;
 class Scene;
 class IUseSceneObjHolder;

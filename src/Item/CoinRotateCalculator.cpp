@@ -3,11 +3,8 @@
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/NatureUtil.h"
-#include "Library/Scene/ISceneObj.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageResourceList.h"
-
-#include "Scene/SceneObjFactory.h"
+#include "Library/Stage/StageRhythm.h"
 
 CoinRotateCalculator::CoinRotateCalculator(al::LiveActor* actor) : mActor(actor) {}
 
@@ -16,8 +13,7 @@ inline f32 modDegree(f32 value) {
 }
 
 inline f32 getObjAngle(al::LiveActor* actor, bool isInWater, s32 objCountOffset) {
-    al::StageSyncCounter* syncObj =
-        al::getSceneObj<al::StageSyncCounter>(actor, SceneObjID_alStageSyncCounter);
+    al::StageSyncCounter* syncObj = al::getSceneObj<al::StageSyncCounter>(actor);
     f32 objCounter = modDegree(syncObj->getCounter() + objCountOffset);
 
     return (isInWater ? 2.0f : 3.0f) * objCounter;
@@ -39,7 +35,7 @@ void CoinRotateCalculator::update(const sead::Vector3f& force, bool checkWater) 
 
     f32 objAngle = getObjAngle(mActor, mIsInWater, mObjCountOffset);
 
-    if (al::isNearZero(force, 0.001f)) {
+    if (al::isNearZero(force)) {
         if (--mForceFrames <= 0) {
             mForceOffset = modDegree(mForceOffset) - 0.8f;
             if (mForceOffset < 0.0f)

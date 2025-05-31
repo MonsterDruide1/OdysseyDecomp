@@ -6,29 +6,29 @@
 #include <math/seadVector.h>
 
 namespace al {
-class ActorBackAroundCameraSubTarget;
-class ActorCameraSubTarget;
-class ActorCameraTarget;
-class ActorInitInfo;
-class ActorMatrixCameraTarget;
-class CameraDistanceCurve;
-class CameraFlagCtrl;
-class CameraPoser;
-struct CameraPoseInfo;
-class CameraSubTargetBase;
-class CameraSubTargetTurnParam;
-class CameraTargetBase;
 class CameraTicket;
 class ICameraInput;
+struct CameraFlagCtrl;
 class IUseCamera;
-class LiveActor;
-class PlacementId;
-class PlacementInfo;
-class Projection;
-class Resource;
+class CameraSubTargetBase;
+class CameraSubTargetTurnParam;
 class SceneCameraInfo;
+class PlacementId;
+class Resource;
+struct ActorInitInfo;
+class LiveActor;
+class PlacementInfo;
+class CameraPoser;
+struct CameraPoseInfo;
+class CameraTargetBase;
+class Projection;
 class SimpleCameraInput;
+class ActorCameraTarget;
+class ActorMatrixCameraTarget;
+class ActorCameraSubTarget;
+class ActorBackAroundCameraSubTarget;
 class TransCameraSubTarget;
+class CameraDistanceCurve;
 
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user);
 s32 getViewNumMax(const IUseCamera* user);
@@ -81,9 +81,10 @@ bool tryCalcCameraDirH(sead::Vector3f* dirH, const SceneCameraInfo* info,
                        const sead::Vector3f& upDir, s32 viewIdx);
 bool tryCalcCameraLookDirH(sead::Vector3f* lookDirH, const SceneCameraInfo* info,
                            const sead::Vector3f& upDir, s32 viewIdx);
-void startCamera(const IUseCamera* user, CameraTicket* ticket, s32);
-void startCameraSub(const IUseCamera* user, CameraTicket* ticket, s32);
-void startAnimCamera(const IUseCamera* user, CameraTicket* ticket, const char* animName, s32);
+void startCamera(const IUseCamera* user, CameraTicket* ticket, s32 unk = -1);
+void startCameraSub(const IUseCamera* user, CameraTicket* ticket, s32 unk = -1);
+void startAnimCamera(const IUseCamera* user, CameraTicket* ticket, const char* animName,
+                     s32 unk = 0);
 void startAnimCameraAnim(CameraTicket* ticket, const char*, s32, s32, s32);
 void startAnimCameraWithStartStepAndEndStepAndPlayStep(const IUseCamera* user, CameraTicket* ticket,
                                                        const char* animName, s32, s32, s32, s32);

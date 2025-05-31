@@ -32,6 +32,8 @@ public:
 
     ActionSeCtrl* getSeCtrl() const { return mSeCtrl; }
 
+    ActionPadAndCameraCtrl* getPadAndCameraCtrl() const { return mPadAndCameraCtrl; }
+
 private:
     LiveActor* mParentActor;
     const char* mActorName;

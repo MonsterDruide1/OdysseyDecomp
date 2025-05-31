@@ -8,7 +8,7 @@
 #include "Library/Obj/EffectObjFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 namespace al {
@@ -72,9 +72,5 @@ void EffectObjInterval::kill() {
     mIsStarted = false;
 
     LiveActor::kill();
-}
-
-const sead::Matrix34f* EffectObjInterval::getBaseMtx() const {
-    return &mBaseMtx;
 }
 }  // namespace al

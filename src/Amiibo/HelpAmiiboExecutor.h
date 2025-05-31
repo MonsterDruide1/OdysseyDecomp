@@ -7,7 +7,7 @@
 namespace al {
 struct NfpInfo;
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 class HelpAmiiboDirector;

@@ -5,7 +5,7 @@
 #include "Util/IUseDimension.h"
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class HitSensor;
 class MtxConnector;
 class PlacementId;
@@ -25,7 +25,7 @@ public:
                     al::HitSensor* self) override;
     void endClipped() override;
 
-    ActorDimensionKeeper* getActorDimensionKeeper() const override;
+    ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; }
 
     void appearHintEffect();
     void deleteHintEffect();

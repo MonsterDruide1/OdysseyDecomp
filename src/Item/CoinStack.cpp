@@ -26,8 +26,6 @@ NERVES_MAKE_STRUCT(CoinStack, Wait, Fall, Float);
 
 CoinStack::CoinStack(const char* name) : al::LiveActor(name) {}
 
-CoinStack::~CoinStack() = default;
-
 void CoinStack::init(const al::ActorInitInfo& initInfo) {
     al::initActorWithArchiveName(this, initInfo, "CoinStack", nullptr);
     al::initNerve(this, &NrvCoinStack.Wait, 0);

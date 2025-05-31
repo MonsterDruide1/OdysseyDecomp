@@ -5,7 +5,7 @@
 namespace al {
 struct NfpInfo;
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 }  // namespace al
 
 class HelpAmiiboDirector;
@@ -19,7 +19,8 @@ public:
     bool isTriggerTouch(const al::NfpInfo& nfpInfo) const override;
     bool execute() override;
     void activate() override;
-    HelpAmiiboType getType() const override;
+
+    HelpAmiiboType getType() const override { return HelpAmiiboType::Yoshi; }
 
 private:
     Yoshi* mYoshi = nullptr;

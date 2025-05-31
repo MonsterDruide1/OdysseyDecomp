@@ -10,7 +10,3 @@ PlayerJudgeEnableStandUp::PlayerJudgeEnableStandUp(const IUsePlayerCollision* co
 bool PlayerJudgeEnableStandUp::judge() const {
     return mCeilingChecker->isEnableStandUp() || !rs::isCollidedGround(mCollider);
 }
-
-void PlayerJudgeEnableStandUp::reset() {}
-
-void PlayerJudgeEnableStandUp::update() {}

@@ -7,7 +7,7 @@
 namespace al {
 struct NfpInfo;
 class LiveActor;
-class ActorInitInfo;
+struct ActorInitInfo;
 class AreaObj;
 }  // namespace al
 
@@ -25,7 +25,8 @@ public:
     bool isEnableUse() override;
     bool execute() override;
     void activate() override;
-    HelpAmiiboType getType() const override;
+
+    HelpAmiiboType getType() const override { return HelpAmiiboType::Koopa; }
 
     void deleteHintEffect();
     void appearEffect();

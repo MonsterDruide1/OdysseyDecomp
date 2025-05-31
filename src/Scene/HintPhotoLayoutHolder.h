@@ -11,11 +11,12 @@ class DecideIconLayout;
 class HintPhotoLayoutHolder : public al::ISceneObj {
 public:
     HintPhotoLayoutHolder();
-    void init(const al::LayoutInitInfo& info);
+    void init(const al::LayoutInitInfo& initInfo);
     bool isInit() const;
     const al::LayoutActor* getPhotoLayout() const;
     DecideIconLayout* getDecideIcon() const;
-    const char* getSceneObjName() const;
+
+    const char* getSceneObjName() const { return "ヒント写真レイアウト保持"; }
 
 private:
     al::LayoutActor* mLayoutActor = nullptr;

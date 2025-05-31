@@ -1,7 +1,9 @@
 #pragma once
 
+#include <gfx/seadCamera.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include <nn/album/album_types.h>
 
 #include "Library/Nerve/NerveExecutor.h"
 
@@ -9,11 +11,14 @@ namespace al {
 
 class CameraInterpole;
 class CameraParamTransfer;
-class CameraStopJudge;
+class CameraShaker;
 class CameraStartParamCtrl;
+class CameraStopJudge;
+class CameraSwitcher;
 class CameraTicket;
-class CameraViewInfo;
 class CameraViewFlag;
+class CameraViewInfo;
+class PauseCameraCtrl;
 class Projection;
 class SceneCameraInfo;
 
@@ -25,43 +30,40 @@ public:
               const CameraStartParamCtrl* startParamCtrl);
     void update();
     bool trySwitchCamera();
-    bool isActiveinterpole();
-    void startinterpole();
+    bool isActiveInterpole() const;
+    void startInterpole(s32);
 
     void setNearClipDistance(f32 distance) { mNearClipDistance = distance; }
 
     void setFarClipDistance(f32 distance) { mFarClipDistance = distance; }
 
+    void setAspect(f32 aspect) { mAspect = aspect; }
+
 private:
-    s32 mSnapShotOrientation;  // nn::album::ImageOrientation type
+    nn::album::ImageOrientation mSnapShotOrientation;
     SceneCameraInfo* mSceneCamInfo;
     void* _20;
     CameraViewInfo* mViewInfo;
     CameraViewFlag* mViewFlag;
     bool mIsMainView;
-    s32 mViewIdx;
-    void* _40;
-    sead::Matrix34f mMatrix;
-    s32 _78;
-    sead::Vector2f _7c;
-    sead::Vector2f _84;
-    sead::Vector2f _8c;
-    sead::Vector2f _94;
+    const s32 mViewIdx;
+    sead::LookAtCamera mLookAtCamera;
     CameraTicket* mTicket;
     Projection* mProjection;
     sead::Vector2f _b0;
     f32 mNearClipDistance;
     f32 mFarClipDistance;
-    f32 _c0;
-    f32 _c4;
-    f32 _c8;
-    f32 _c;
-    f32 _d0;
+    f32 mAspect;
+    f32 mFovyDegree;
+    CameraSwitcher* mSwitcher;
+    CameraStartParamCtrl* mStartParamCtrl;
     CameraStopJudge* mStopJudge;
-    void* _e0;
-    void* _e8;
+    CameraParamTransfer* mParamTransfer;
+    PauseCameraCtrl* mCtrlPausePtr;
     CameraInterpole* mInterpole;
-    void* _f8;
+    CameraShaker* mShaker;
 };
+
+static_assert(sizeof(CameraPoseUpdater) == 0x100);
 
 }  // namespace al

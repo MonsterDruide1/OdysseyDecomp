@@ -17,40 +17,68 @@ class PlayerPuppet;
 
 class PlayerActorBase : public al::LiveActor, public IUsePlayerHack {
 public:
-    PlayerActorBase(const char*);
+    PlayerActorBase(const char* name);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& initInfo) override {}
+
     void movement() override;
-    PlayerHackKeeper* getPlayerHackKeeper() const override;
 
-    virtual void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&);
+    virtual void initPlayer(const al::ActorInitInfo& actorInitInfo,
+                            const PlayerInitInfo& playerInitInfo) {}
+
     virtual u32 getPortNo() const;
-    virtual void* getViewMtx() const;  // NOTE: unknown return type
-    virtual IUsePlayerCollision* getPlayerCollision() const;
-    virtual bool isEnableDemo();
-    virtual void startDemo();
-    virtual void endDemo();
-    virtual void startDemoPuppetable();
-    virtual void endDemoPuppetable();
-    virtual void startDemoShineGet();
-    virtual void endDemoShineGet();
-    virtual void startDemoMainShineGet();
-    virtual void endDemoMainShineGet();
-    virtual void startDemoHack();
-    virtual void endDemoHack();
-    virtual void startDemoKeepBind();
-    virtual void noticeDemoKeepBindExecute();
-    virtual void endDemoKeepBind();
-    virtual void startDemoKeepCarry();
-    virtual void endDemoKeepCarry();
-    virtual al::DemoActor* getDemoActor();
-    virtual PlayerAnimator* getDemoAnimator();
-    virtual bool isDamageStopDemo() const;
-    virtual PlayerPuppet* getPlayerPuppet();
-    virtual PlayerInfo* getPlayerInfo() const;
+    virtual sead::Matrix34f* getViewMtx() const;
+
+    virtual IUsePlayerCollision* getPlayerCollision() const { return nullptr; }
+
+    PlayerHackKeeper* getPlayerHackKeeper() const override { return nullptr; }
+
+    virtual bool isEnableDemo() { return false; }
+
+    virtual void startDemo() {}
+
+    virtual void endDemo() {}
+
+    virtual void startDemoPuppetable() {}
+
+    virtual void endDemoPuppetable() {}
+
+    virtual void startDemoShineGet() {}
+
+    virtual void endDemoShineGet() {}
+
+    virtual void startDemoMainShineGet() {}
+
+    virtual void endDemoMainShineGet() {}
+
+    virtual void startDemoHack() {}
+
+    virtual void endDemoHack() {}
+
+    virtual void startDemoKeepBind() {}
+
+    virtual void noticeDemoKeepBindExecute() {}
+
+    virtual void endDemoKeepBind() {}
+
+    virtual void startDemoKeepCarry() {}
+
+    virtual void endDemoKeepCarry() {}
+
+    virtual al::DemoActor* getDemoActor() { return reinterpret_cast<al::DemoActor*>(this); }
+
+    virtual PlayerAnimator* getDemoAnimator() { return nullptr; }
+
+    virtual bool isDamageStopDemo() const { return false; }
+
+    virtual PlayerPuppet* getPlayerPuppet() { return nullptr; }
+
+    virtual PlayerInfo* getPlayerInfo() const { return nullptr; }
+
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
-    virtual bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32);
+    virtual bool receivePushMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self,
+                                f32 maxPush);
 
 private:
     sead::Matrix34f* mViewMtx = nullptr;

@@ -4,7 +4,7 @@
 #include <math/seadVector.h>
 
 namespace al {
-class AudioSystemInfo;
+struct AudioSystemInfo;
 class SeDirector;
 class MeInfo;
 class SeadAudioPlayer;

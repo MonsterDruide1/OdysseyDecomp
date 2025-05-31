@@ -15,7 +15,6 @@
 #include "Amiibo/SearchAmiiboDataTable.h"
 #include "Layout/AmiiboNpcLayout.h"
 #include "Layout/ShopLayoutInfo.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "System/ProjectNfpDirector.h"
 #include "Util/AmiiboUtil.h"
@@ -25,10 +24,6 @@
 AmiiboNpcDirector::AmiiboNpcDirector() : mNfpInfo(new al::NfpInfo()) {
     for (s32 i = 0; i < 3; i++)
         mAmiiboNameCstr[i] = nullptr;
-}
-
-const char* AmiiboNpcDirector::getSceneObjName() const {
-    return "AmiiboNpc用データホルダ";
 }
 
 void AmiiboNpcDirector::init(ProjectNfpDirector* nfpDirector, al::AudioDirector* audioDirector) {
@@ -244,14 +239,10 @@ al::NfpInfo* AmiiboNpcDirector::tryGetTriggerTouchNfpInfo() {
     return mNfpInfo;
 }
 
-al::AudioKeeper* AmiiboNpcDirector::getAudioKeeper() const {
-    return mAudioKeeper;
-}
-
 namespace AmiiboFunction {
 
 inline AmiiboNpcDirector* getAmiiboNpcDirector(const al::IUseSceneObjHolder* objHolder) {
-    return al::getSceneObj<AmiiboNpcDirector>(objHolder, SceneObjID_AmiiboNpcDirector);
+    return al::getSceneObj<AmiiboNpcDirector>(objHolder);
 }
 
 al::NfpInfo* tryGetTriggerTouchNfpInfo(const al::IUseSceneObjHolder* objHolder) {

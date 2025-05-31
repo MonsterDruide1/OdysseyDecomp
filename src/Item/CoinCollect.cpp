@@ -20,7 +20,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Se/SeFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 #include "Item/CoinCollectEmpty.h"
@@ -30,7 +30,6 @@
 #include "Item/CoinRotateCalculator.h"
 #include "Item/CoinStateCountUp.h"
 #include "MapObj/CapMessageShowInfo.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
 #include "Util/ExternalForceKeeper.h"
 #include "Util/ItemUtil.h"
@@ -58,13 +57,11 @@ void CoinCollect::init(const al::ActorInitInfo& initInfo) {
     rs::createCoinCollectWatcher(this);
     rs::createCoinCollectHolder(this);
 
-    al::getSceneObj<CoinCollectHolder>(this, SceneObjID_CoinCollectHolder)
-        ->registerCoinCollect(this);
+    al::getSceneObj<CoinCollectHolder>(this)->registerCoinCollect(this);
 
     if (GameDataFunction::isGotCoinCollect(this, initInfo)) {
         const char* archiveName = rs::getStageCoinCollectEmptyArchiveName(this);
-        al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher)
-            ->registerCoin(true);
+        al::getSceneObj<CoinCollectWatcher>(this)->registerCoin(true);
         CoinCollectEmpty* coinCollectEmpty = new CoinCollectEmpty("コレクトコイン空", archiveName);
         al::initCreateActorWithPlacementInfo(coinCollectEmpty, initInfo);
         makeActorDead();
@@ -73,7 +70,7 @@ void CoinCollect::init(const al::ActorInitInfo& initInfo) {
         return;
     }
 
-    al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher)->registerCoin(false);
+    al::getSceneObj<CoinCollectWatcher>(this)->registerCoin(false);
     const char* archiveName = rs::getStageCoinCollectArchiveName(this);
     al::initActorWithArchiveName(this, initInfo, archiveName, nullptr);
     al::initNerve(this, &NrvCoinCollect.Wait, 2);
@@ -261,7 +258,7 @@ void CoinCollect::exeGot() {
     if (al::isFirstStep(this)) {
         rs::tryShowCapMsgCollectCoinGetFirst(this);
         al::startAction(this, "Got");
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 5000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 5000.0f);
         if (mWaterSurfaceShadow != nullptr)
             mWaterSurfaceShadow->disappearShadow();
         _198 = false;
@@ -271,8 +268,7 @@ void CoinCollect::exeGot() {
         al::connectPoseQT(this, mMtxConnector);
 
     if (al::isActionEnd(this)) {
-        CoinCollectWatcher* watcher =
-            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
+        CoinCollectWatcher* watcher = al::getSceneObj<CoinCollectWatcher>(this);
         watcher->countup(this);
         GameDataFunction::addCoinCollect(this, mPlacementId);
         kill();
@@ -281,7 +277,7 @@ void CoinCollect::exeGot() {
 
 void CoinCollect::exeCountUp() {
     if (al::isFirstStep(this))
-        alPadRumbleFunction::startPadRumble(this, "コッ（弱）", 500.0f, 2000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（弱）", 500.0f, 2000.0f);
 
     if (!mIsSurfaceUpdated && !al::isInWater(this)) {
         sead::Vector3f surface = sead::Vector3f::zero;
@@ -292,8 +288,7 @@ void CoinCollect::exeCountUp() {
         mIsSurfaceUpdated = true;
     }
     if (al::updateNerveState(this)) {
-        CoinCollectWatcher* watcher =
-            al::getSceneObj<CoinCollectWatcher>(this, SceneObjID_CoinCollectWatcher);
+        CoinCollectWatcher* watcher = al::getSceneObj<CoinCollectWatcher>(this);
         watcher->countup(this);
         GameDataFunction::addCoinCollect(this, mPlacementId);
 

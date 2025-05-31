@@ -37,7 +37,7 @@ public:
         Edge(Vertex* vertex1, Vertex* vertex2, f32 weight)
             : mVertex1(vertex1), mVertex2(vertex2), mWeight(weight) {}
 
-        virtual f32 getWeight() const;
+        virtual f32 getWeight() const { return mWeight; }
 
         Vertex* getVertex1() const { return mVertex1; }
 

@@ -7,10 +7,12 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Scene/ISceneObj.h"
 
+#include "Scene/SceneObjFactory.h"
+
 namespace al {
 struct NfpInfo;
 
-class ActorInitInfo;
+struct ActorInitInfo;
 class AudioDirector;
 class IUseSceneObjHolder;
 class MessageTagDataHolder;
@@ -22,9 +24,12 @@ class SearchAmiiboDataTable;
 
 class AmiiboNpcDirector : public al::ISceneObj, public al::IUseHioNode, public al::IUseAudioKeeper {
 public:
+    static constexpr s32 sSceneObjId = SceneObjID_AmiiboNpcDirector;
+
     AmiiboNpcDirector();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "AmiiboNpc用データホルダ"; }
+
     void init(ProjectNfpDirector* nfpDirector, al::AudioDirector* audioDirector);
     void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
     void updateSearchAmiiboName();
@@ -43,7 +48,8 @@ public:
     void trySetAmiiboCostumeName(s32 id);
     void checkTimeReverseAndRestore();
     al::NfpInfo* tryGetTriggerTouchNfpInfo();
-    al::AudioKeeper* getAudioKeeper() const override;
+
+    al::AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
     AmiiboNpcLayout* getAmiiboNpcLayout() const { return mNpcLayout; }
 

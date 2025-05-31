@@ -6,7 +6,8 @@
 
 #include "Library/Yaml/ByamlData.h"
 
-#define BYAML_LE_TAG 'YB'
+#define BYAML_LE_TAG 0x5942  // 'YB'
+#define BYAML_BE_TAG 0x4259  // 'BY'
 
 namespace al {
 u16 ByamlHeader::getTag() const {
@@ -173,7 +174,7 @@ bool verifiByaml(const u8* data) {
     bool isRev = *((const u16*)data) == BYAML_LE_TAG;
     const u32* biggerData = (const u32*)data;
 
-    s32 afterHashOffset = 0;
+    u32 afterHashOffset = 0;
     u32 hashOffset = isRev ? bswap_32(biggerData[1]) : biggerData[1];
     if (hashOffset) {
         const u8* hashData = &data[hashOffset];
@@ -186,7 +187,7 @@ bool verifiByaml(const u8* data) {
         afterHashOffset = isRev ? swappedAfterOffset : unswappedAfterOffset;
     }
 
-    s32 afterStringOffset = 0;
+    u32 afterStringOffset = 0;
     u32 stringOffset = isRev ? bswap_32(biggerData[2]) : biggerData[2];
     if (stringOffset) {
         const u8* stringData = &data[stringOffset];
@@ -210,12 +211,10 @@ bool verifiByaml(const u8* data) {
 // NON_MATCHING: missing & 0xFFFF
 bool verifiByamlHeader(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
-    return header->getTag() == 'BY' && (u32)(header->getVersion() - 1) < 3;
+    return header->getTag() == BYAML_BE_TAG && (u32)(header->getVersion() - 1) < 3;
 }
 
 bool verifiByamlStringTable(const u8* data, bool isRev) {
-    const al::ByamlStringTableIter* strings =
-        reinterpret_cast<const al::ByamlStringTableIter*>(data);
     const s32* address_table = reinterpret_cast<const s32*>(data + 4);
 
     u32 type_and_size = *reinterpret_cast<const u32*>(data);

@@ -11,13 +11,20 @@ namespace al {
 
 class ByamlWriterData {
 public:
-    virtual ~ByamlWriterData();
-    virtual void makeIndex();
-    virtual u32 calcPackSize() const;
-    virtual u8 getTypeCode() const;
-    virtual bool isContainer() const;
+    virtual ~ByamlWriterData() = default;
+
+    virtual void makeIndex() {}
+
+    virtual u32 calcPackSize() const { return 4; }
+
+    virtual u8 getTypeCode() const { return 0; }
+
+    virtual bool isContainer() const { return false; }
+
     virtual void write(sead::WriteStream*) const;
-    virtual void print(s32) const;
+
+    virtual void print(s32) const {}
+
     void printIndent(s32) const;
 };
 
@@ -92,10 +99,12 @@ class ByamlWriterBigDataList;
 class ByamlWriterBigData : public ByamlWriterData {
 public:
     ByamlWriterBigData(ByamlWriterBigDataList*);
-    ~ByamlWriterBigData();
+    ~ByamlWriterBigData() = default;
     void write(sead::WriteStream*) const override;
-    virtual u32 calcBigDataSize() const;
-    virtual void writeBigData(sead::WriteStream*) const;
+
+    virtual u32 calcBigDataSize() const { return 8; }
+
+    virtual void writeBigData(sead::WriteStream*) const {}
 
     void setOffset(s32 offset) { mOffset = offset; }
 
@@ -107,7 +116,7 @@ private:
 class ByamlWriterInt64 : public ByamlWriterBigData {
 public:
     ByamlWriterInt64(s64, ByamlWriterBigDataList*);
-    ~ByamlWriterInt64();
+    ~ByamlWriterInt64() = default;
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
     void print(s32) const override;
@@ -119,7 +128,7 @@ private:
 class ByamlWriterUInt64 : public ByamlWriterBigData {
 public:
     ByamlWriterUInt64(u64, ByamlWriterBigDataList*);
-    ~ByamlWriterUInt64();
+    ~ByamlWriterUInt64() = default;
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
     void print(s32) const override;
@@ -131,7 +140,7 @@ private:
 class ByamlWriterDouble : public ByamlWriterBigData {
 public:
     ByamlWriterDouble(f64, ByamlWriterBigDataList*);
-    ~ByamlWriterDouble();
+    ~ByamlWriterDouble() = default;
     u8 getTypeCode() const override;
     void writeBigData(sead::WriteStream*) const override;
     void print(s32) const override;
@@ -146,43 +155,66 @@ class ByamlWriterStringTable;
 
 class ByamlWriterContainer : public ByamlWriterData {
 public:
-    bool isContainer() const override;
+    bool isContainer() const override { return true; }
 
-    virtual void addBool(const char*, bool);
-    virtual void addInt(const char*, s32);
-    virtual void addUInt(const char*, u32);
-    virtual void addFloat(const char*, f32);
-    virtual void addInt64(const char*, s64, ByamlWriterBigDataList*);
-    virtual void addUInt64(const char*, u64, ByamlWriterBigDataList*);
-    virtual void addDouble(const char*, f64, ByamlWriterBigDataList*);
-    virtual void addString(const char*, const char*);
-    virtual void addHash(const char*, ByamlWriterHash*);
-    virtual void addArray(const char*, ByamlWriterArray*);
-    virtual void addNull(const char*);
+    virtual void addBool(const char*, bool) {}
 
-    virtual void addBool(bool);
-    virtual void addInt(s32);
-    virtual void addUInt(u32);
-    virtual void addFloat(f32);
-    virtual void addInt64(s64, ByamlWriterBigDataList*);
-    virtual void addUInt64(u64, ByamlWriterBigDataList*);
-    virtual void addDouble(f64, ByamlWriterBigDataList*);
-    virtual void addString(const char*);
-    virtual void addHash(ByamlWriterHash*);
-    virtual void addArray(ByamlWriterArray*);
-    virtual void addNull();
+    virtual void addInt(const char*, s32) {}
 
-    virtual void writeContainer(sead::WriteStream*) const;
-    virtual bool isHash() const;
-    virtual bool isArray() const;
-    virtual void deleteData();
+    virtual void addUInt(const char*, u32) {}
+
+    virtual void addFloat(const char*, f32) {}
+
+    virtual void addInt64(const char*, s64, ByamlWriterBigDataList*) {}
+
+    virtual void addUInt64(const char*, u64, ByamlWriterBigDataList*) {}
+
+    virtual void addDouble(const char*, f64, ByamlWriterBigDataList*) {}
+
+    virtual void addString(const char*, const char*) {}
+
+    virtual void addHash(const char*, ByamlWriterHash*) {}
+
+    virtual void addArray(const char*, ByamlWriterArray*) {}
+
+    virtual void addNull(const char*) {}
+
+    virtual void addBool(bool) {}
+
+    virtual void addInt(s32) {}
+
+    virtual void addUInt(u32) {}
+
+    virtual void addFloat(f32) {}
+
+    virtual void addInt64(s64, ByamlWriterBigDataList*) {}
+
+    virtual void addUInt64(u64, ByamlWriterBigDataList*) {}
+
+    virtual void addDouble(f64, ByamlWriterBigDataList*) {}
+
+    virtual void addString(const char*) {}
+
+    virtual void addHash(ByamlWriterHash*) {}
+
+    virtual void addArray(ByamlWriterArray*) {}
+
+    virtual void addNull() {}
+
+    virtual void writeContainer(sead::WriteStream*) const {}
+
+    virtual bool isHash() const { return false; }
+
+    virtual bool isArray() const { return false; }
+
+    virtual void deleteData() {}
 
     s32 getOffset() const { return mOffset; }
 
     void setOffset(s32 offset) { mOffset = offset; }
 
 private:
-    s32 mOffset = 0;  // FIXME shouldn't be public
+    s32 mOffset = 0;
 };
 
 class ByamlWriterArray : public ByamlWriterContainer {
@@ -210,7 +242,8 @@ public:
     void writeContainer(sead::WriteStream*) const override;
     void write(sead::WriteStream*) const override;
     void print(s32) const override;
-    bool isArray() const override;
+
+    bool isArray() const override { return true; }
 
 private:
     sead::TList<ByamlWriterData*> mList;
@@ -261,7 +294,8 @@ public:
     void writeContainer(sead::WriteStream*) const override;  // TODO implementation missing
     void write(sead::WriteStream*) const override;
     void print(s32) const override;  // TODO implementation missing
-    bool isHash() const override;
+
+    bool isHash() const override { return true; }
 
 private:
     sead::TList<ByamlWriterHashPair> mList;  // TODO not really... it's something different here.

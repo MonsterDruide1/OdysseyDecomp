@@ -10,11 +10,11 @@ class CameraSubTargetBase;
 
 class CameraTargetHolder {
 public:
-    CameraTargetHolder(u32 maxNum);
+    CameraTargetHolder(u32 maxTargets);
 
-    CameraTargetBase* tryGetViewTarget(u32 num);
-    CameraTargetBase* getViewTarget(u32 num);
-    CameraSubTargetBase* getTopSubTarget();
+    CameraTargetBase* tryGetViewTarget(u32 index) const;
+    CameraTargetBase* getViewTarget(u32 index) const;
+    CameraSubTargetBase* getTopSubTarget() const;
 
     void initAfterPlacement(const PlayerHolder*);
     void update();
@@ -24,6 +24,6 @@ public:
     void removeSubTarget(CameraSubTargetBase* subTarget);
     void addPlacementSubTarget(CameraSubTargetBase* subTarget);
     void removePlacementSubTarget(CameraSubTargetBase* subTarget);
-    bool isChangeViewTarget(u32 num);
+    bool isChangeViewTarget(u32 index) const;
 };
 }  // namespace al

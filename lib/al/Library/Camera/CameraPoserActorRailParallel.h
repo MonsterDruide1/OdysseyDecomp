@@ -6,6 +6,7 @@ namespace al {
 class CameraPoserActorRailParallel : public CameraPoser {
 public:
     CameraPoserActorRailParallel(const char* name, const RailKeeper* railKeeper);
+
     void init() override;
     void loadParam(const ByamlIter& iter) override;
     void start(const CameraStartInfo& startInfo) override;

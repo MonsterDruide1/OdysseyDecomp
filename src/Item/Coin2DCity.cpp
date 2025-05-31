@@ -11,12 +11,11 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageResourceList.h"
+#include "Library/Stage/StageRhythm.h"
 
 #include "Item/Coin2DCityDirector.h"
-#include "Scene/SceneObjFactory.h"
 #include "System/GameDataFunction.h"
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {
@@ -52,8 +51,7 @@ void Coin2DCity::init(const al::ActorInitInfo& initInfo) {
 }
 
 void Coin2DCity::control() {
-    mSyncCounter =
-        al::getSceneObj<al::StageSyncCounter>(this, SceneObjID_alStageSyncCounter)->getCounter();
+    mSyncCounter = al::getSceneObj<al::StageSyncCounter>(this)->getCounter();
     if (mLightTime > -1 && mCityDirector->isTriggerBeat()) {
         if (mNextCoin != nullptr && mLightTime == 1)
             mNextCoin->startLight();
@@ -76,10 +74,6 @@ bool Coin2DCity::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
     return false;
 }
 
-ActorDimensionKeeper* Coin2DCity::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}
-
 void Coin2DCity::startLight() {
     mLightTime = 0;
     if (!al::isNerve(this, &NrvCoin2DCity.Got) && !al::isNerve(this, &NrvCoin2DCity.GotWait)) {
@@ -87,8 +81,7 @@ void Coin2DCity::startLight() {
         al::startVisAnim(this, "LightOn");
     }
 
-    al::StageSyncCounter* syncCounter =
-        al::getSceneObj<al::StageSyncCounter>(this, SceneObjID_alStageSyncCounter);
+    al::StageSyncCounter* syncCounter = al::getSceneObj<al::StageSyncCounter>(this);
     if (mSyncCounter == syncCounter->getCounter() && mCityDirector->isTriggerBeat()) {
         if (mNextCoin != nullptr && mLightTime == 1)
             mNextCoin->startLight();
@@ -114,7 +107,7 @@ void Coin2DCity::exeLight() {}
 void Coin2DCity::exeGot() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Got");
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 3000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 3000.0f);
         GameDataFunction::addCoin(this, 1);
     }
     if (al::isActionEnd(this))

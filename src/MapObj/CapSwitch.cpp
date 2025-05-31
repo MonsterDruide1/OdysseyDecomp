@@ -12,7 +12,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Stage/StageSwitchKeeper.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
 #include "MapObj/AppearSwitchSave.h"
@@ -130,7 +130,7 @@ void CapSwitch::exeOffWaitCapHold() {
     sead::Vector3f frontDir = sead::Vector3f::ez;
     al::calcFrontDir(&frontDir, this);
 
-    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize(), 0.001f) ?
+    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize()) ?
                     0.0f :
                     al::calcAngleDegree(frontDir, hitTargetPos - mPlayerPos);
 

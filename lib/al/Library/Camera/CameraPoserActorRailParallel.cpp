@@ -16,4 +16,5 @@ void CameraPoserActorRailParallel::loadParam(const ByamlIter& iter) {
     tryGetByamlF32(&mAngleDegreeV, iter, "AngleDegreeV");
     tryGetByamlF32(&mFollowRate, iter, "FollowRate");
 }
+
 }  // namespace al

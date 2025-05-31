@@ -10,11 +10,11 @@ public:
     WipeSimple(const char* name, const char* layoutName, const LayoutInitInfo& info,
                const char* actorName);
 
-    void startClose(s32 frames);
-    void tryStartClose(s32 frames);
+    void startClose(s32 frames = -1);
+    void tryStartClose(s32 frames = -1);
     void startCloseEnd();
-    void startOpen(s32 frames);
-    void tryStartOpen(s32 frames);
+    void startOpen(s32 frames = -1);
+    void tryStartOpen(s32 frames = -1);
     bool isCloseEnd() const;
     bool isOpenEnd() const;
     void exeClose();

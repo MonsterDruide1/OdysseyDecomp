@@ -21,7 +21,7 @@ DoshiStateWanderBossBattle::DoshiStateWanderBossBattle(Doshi* doshi)
 }
 
 void DoshiStateWanderBossBattle::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &NrvDoshiStateWanderBossBattle.Wait);
 }
 
