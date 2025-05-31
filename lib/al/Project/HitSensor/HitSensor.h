@@ -60,11 +60,15 @@ public:
 
     const sead::Vector3f& getFollowPosOffset() const { return mFollowPosOffset; }
 
+    const sead::Vector3f& getPos() const { return mPos; }
+
     f32 getRadius() const { return mRadius; }
 
     void setFollowPosOffset(const sead::Vector3f& offset) { mFollowPosOffset.set(offset); }
 
     void setRadius(f32 radius) { mRadius = radius; }
+
+    LiveActor* getParentActor() const { return mParentActor; }
 
     void scaleY(f32 scaleY) {
         mRadius *= scaleY;
