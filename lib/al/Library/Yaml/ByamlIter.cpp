@@ -41,7 +41,6 @@ bool ByamlIter::isTypeContainer() const {
     return isTypeHash() || isTypeArray();
 }
 
-// NON_MATCHING: stack allocated differently
 bool ByamlIter::isExistKey(const char* key) const {
     if (!mRootNode || *mRootNode != ByamlDataType::TYPE_HASH)
         return false;
@@ -296,7 +295,7 @@ bool ByamlIter::tryConvertInt(s32* value, const ByamlData* data) const {
     return true;
 }
 
-// NON_MATCHING: mismatch in inlined convert
+// NON_MATCHING: mismatch in inlined convert (https://decomp.me/scratch/BnTuu)
 bool ByamlIter::tryGetUIntByIndex(u32* value, s32 index) const {
     ByamlData data;
     if (!getByamlDataByIndex(&data, index))
@@ -305,7 +304,7 @@ bool ByamlIter::tryGetUIntByIndex(u32* value, s32 index) const {
     return tryConvertUInt(value, &data);
 }
 
-// NON_MATCHING: mismatch in inlined convert
+// NON_MATCHING: mismatch in inlined convert (https://decomp.me/scratch/d7Ooh)
 bool ByamlIter::tryGetUIntByKey(u32* value, const char* key) const {
     ByamlData data;
     if (!getByamlDataByKey(&data, key))

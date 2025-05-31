@@ -55,7 +55,7 @@ f32 LinearCurve::calcNearestLength(f32* length, const sead::Vector3f& pos, f32 p
     return len;
 }
 
-// NON_MATCHING: Difference in loading for calcNearestParam
+// NON_MATCHING: Difference in loading for calcNearestParam (https://decomp.me/scratch/u0H2R)
 void LinearCurve::calcNearestPos(sead::Vector3f* nearest, const sead::Vector3f& pos) const {
     calcPos(nearest, calcNearestParam(pos));
 }

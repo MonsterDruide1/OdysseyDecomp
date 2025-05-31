@@ -255,7 +255,6 @@ void ActorPoseKeeperTRMSV::calcBaseMtx(sead::Matrix34f* mtx) const {
     *mtx = mMtx;
 }
 
-// NON_MATCHING: mismatch about storing mGravity
 ActorPoseKeeperTRGMSV::ActorPoseKeeperTRGMSV() {
     mMtx = sead::Matrix34f::ident;
 }

@@ -74,6 +74,7 @@ bool ByamlHashIter::getDataByIndex(ByamlData* data, s32 index) const {
 }
 
 // NON_MATCHING: minor additional instructions, probably not inlined
+// (https://decomp.me/scratch/5VLcG)
 bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
     if (!mData)
         return false;
@@ -150,7 +151,7 @@ bool ByamlArrayIter::getDataByIndex(ByamlData* data, s32 index) const {
     return true;
 }
 
-// NON_MATCHING: regalloc
+// NON_MATCHING: regalloc (https://decomp.me/scratch/dGFdU)
 const u32* ByamlArrayIter::getDataTable() const {
     return reinterpret_cast<const u32*>(getOffsetData((getSize() + 7) & 0xFFFFFFFC));
 }
