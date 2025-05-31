@@ -60,4 +60,6 @@ al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
 bool isOnGroundSlopeSlideEnd(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 bool isAutoRunOnGroundSkateCode(const al::LiveActor*, const IUsePlayerCollision*, f32);
 
+void startHitReactionLandIfLanding(const al::LiveActor*, const IUsePlayerCollision*, bool);
+
 }  // namespace rs
