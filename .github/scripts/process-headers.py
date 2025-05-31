@@ -7,7 +7,8 @@ workdir = Path(sys.argv[1])
 for root, _, files in os.walk(workdir):
     for file in files:
         file_path = os.path.join(root, file)
-        if not str(file).endswith(".h"):
+        # Only process .h and .hpp files
+        if ".h" not in str(file):
             continue
         with open(file_path, "r+") as file:
             lines = list(file)
