@@ -18,8 +18,8 @@ const sead::Matrix44f* CameraViewInfo::getProjMtx() const {
     return &mProjection.getProjMtx();
 }
 
-const sead::Matrix44f* CameraViewInfo::getProjMtxStd() const {
-    return &mProjection.getMtxStd();
+const sead::Matrix44f& CameraViewInfo::getProjMtxStd() const {
+    return mProjection.getMtxStd();
 }
 
 f32 CameraViewInfo::getAspect() const {

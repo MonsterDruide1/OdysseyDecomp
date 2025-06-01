@@ -252,7 +252,7 @@ void startCamera(const IUseCamera* user, CameraTicket* ticket, s32 num) {
     getCameraDirector(user)
         ->getSceneCameraCtrl()
         ->getSceneViewAt(0)
-        .getSwitchRequester()
+        ->getSwitchRequester()
         ->requestStart(ticket, num);
 }
 
@@ -260,7 +260,7 @@ void startCameraSub(const IUseCamera* user, CameraTicket* ticket, s32 num) {
     getCameraDirector(user)
         ->getSceneCameraCtrl()
         ->getSceneViewAt(1)
-        .getSwitchRequester()
+        ->getSwitchRequester()
         ->requestStart(ticket, num);
 }
 
@@ -280,14 +280,15 @@ CameraTicket* initObjectCamera(const IUseCamera* user, const PlacementInfo& plac
 
 CameraTicket* initObjectCamera(const IUseCamera* user, const ActorInitInfo& actorInitInfo,
                                const char* str0, const char* str1) {
-    const PlacementInfo& placementInfo = *getPlacementInfo(actorInitInfo);
+    const PlacementInfo& placeInfo = getPlacementInfo(actorInitInfo);
 
-    sead::Matrix34f mat;
-    memcpy(&mat, &sead::Matrix34f::ident, sizeof(mat));
-    tryGetZoneMatrixTR(&mat, placementInfo);
+    return initObjectCamera(user, placeInfo, str0, str1);
+}
 
-    return getCameraDirector(user)->createObjectCamera(createPlacementId(placementInfo), str0, str1,
-                                                       5, mat);
+CameraTicket* initObjectCameraWithPlacementInfo(const IUseCamera* user, const PlacementId* placeId,
+                                                const char* str0, const char* str1,
+                                                sead::Matrix34f mat) {
+    return getCameraDirector(user)->createObjectCamera(placeId, str0, str1, 5, mat);
 }
 
 CameraTicket* initObjectCameraNoPlacementInfo(const IUseCamera* user, const char* str0,

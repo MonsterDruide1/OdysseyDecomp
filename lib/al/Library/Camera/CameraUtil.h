@@ -97,6 +97,9 @@ CameraTicket* initObjectCamera(const IUseCamera* user, const PlacementInfo& plac
                                const char*, const char*);
 CameraTicket* initObjectCamera(const IUseCamera* user, const ActorInitInfo& actorInitInfo,
                                const char*, const char*);
+CameraTicket* initObjectCameraWithPlacementInfo(const IUseCamera* user, const PlacementId* placeId,
+                                                const char* str0, const char* str1,
+                                                sead::Matrix34f mat);
 CameraTicket* initObjectCameraNoPlacementInfo(const IUseCamera* user, const char*, const char*);
 CameraTicket* initFixCamera(const IUseCamera* user, const char*, const sead::Vector3f&,
                             const sead::Vector3f& lookAtPos);
