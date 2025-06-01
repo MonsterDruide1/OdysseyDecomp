@@ -13,8 +13,8 @@ ExecuteRequestInfo::ExecuteRequestInfo() = default;
 ExecuteRequestTable::ExecuteRequestTable(s32 maxSize) : mMaxSize{maxSize} {
     LiveActor** actors = new LiveActor*[mMaxSize];
 
-    if (mMaxSize != 0)
-        memset(actors, 0, (s64)mMaxSize * 8);
+    for (s64 i = 0; i != mMaxSize; i++)
+        actors[i] = nullptr;
 
     mRequests = actors;
 }

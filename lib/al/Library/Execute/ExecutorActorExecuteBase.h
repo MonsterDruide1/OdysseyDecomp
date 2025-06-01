@@ -2,10 +2,12 @@
 
 #include <container/seadPtrArray.h>
 
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 class LiveActor;
 
-class ExecutorActorExecuteBase {
+class ExecutorActorExecuteBase : public HioNode {
 public:
     ExecutorActorExecuteBase(const char* name);
 
