@@ -19,7 +19,7 @@ from common.util.config import get_repo_root
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
-CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.0"
+CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.1"
 LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 
 class Version(Enum):
@@ -72,8 +72,8 @@ def get_build_dir():
 
 def setup_project_tools(tools_from_source):
 
-    def exists_tool(tool_name):
-        return os.path.isfile(f"{get_repo_root()}/tools/{tool_name}") or os.path.islink(f"{get_repo_root()}/tools/{tool_name}")
+    def exists_tool(tool_name, check_symlink=True):
+        return os.path.isfile(f"{get_repo_root()}/tools/{tool_name}") or (check_symlink and os.path.islink(f"{get_repo_root()}/tools/{tool_name}"))
 
     def exists_toolchain_file(file_path_rel):
         return os.path.isfile(f"{get_repo_root()}/toolchain/{file_path_rel}")
@@ -109,8 +109,15 @@ def setup_project_tools(tools_from_source):
                 f.write(CACHE_REPO_RELEASE_URL)
                 f.truncate()
                 print("Old toolchain files found. Replacing them with ones from the latest release")
+                if exists_tool("check", False):
+                    os.remove(f"{get_repo_root()}/tools/check")
+                if exists_tool("decompme", False):
+                    os.remove(f"{get_repo_root()}/tools/decompme")
+                if exists_tool("listsym", False):
+                    os.remove(f"{get_repo_root()}/tools/listsym")
                 if exists_toolchain_file("bin/clang"):
                     shutil.rmtree(f"{get_repo_root()}/toolchain/bin")
+
 
     remove_old_toolchain()
     check_download_url_updated()
