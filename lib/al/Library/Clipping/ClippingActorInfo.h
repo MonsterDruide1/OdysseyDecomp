@@ -43,8 +43,7 @@ public:
 
 private:
     LiveActor* mLiveActor;
-    void* filler[0xb];  // offset isEnableGroupClipping to the correct place
-
+    void* filler[0xb];
     ViewIdHolder* mViewIdHolder;
     bool mIsEnableGroupClipping;
 };

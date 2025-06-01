@@ -40,7 +40,7 @@ public:
 
     s32 getPriority() const { return mPriority; }
 
-    bool isValid() { return mIsValid; }
+    bool isValid() const { return mIsValid; }
 
 private:
     const char* mName;

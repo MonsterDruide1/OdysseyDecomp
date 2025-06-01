@@ -20,8 +20,8 @@ ViewInfoCtrl::ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraIn
         mClippingPlacementIds[i] = nullptr;
 }
 
-void ViewInfoCtrl::initViewCtrlAreaGroup(const AreaObjGroup* areaGroup) {
-    mAreaGroup = areaGroup;
+void ViewInfoCtrl::initViewCtrlAreaGroup(const AreaObjGroup* viewCtrlAreaGroup) {
+    mViewCtrlAreaGroup = viewCtrlAreaGroup;
 }
 
 void ViewInfoCtrl::startCheckByCameraPos() {
@@ -38,7 +38,7 @@ void ViewInfoCtrl::startCheckByPlayerPos() {
 
 void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
     const ViewIdHolder* viewHolder = actorInfo->getViewIdHolder();
-    if (viewHolder == nullptr)
+    if (!viewHolder)
         return;
 
     for (s32 i = 0; i < viewHolder->getNumPlacements(); i++) {
@@ -48,16 +48,16 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
             const ClippingPlacementId* id = mClippingPlacementIds[j];
             if (id->parentId && id->parentId->isEqual(viewId)) {
                 if (id) {
-                    actorInfo->registerViewGroupFarClipFlag(&id->clipFlag);
+                    actorInfo->registerViewGroupFarClipFlag(&id->isInViewCtrlArea);
                     found = true;
                 }
                 break;
             }
         }
         if (!found) {
-            ClippingPlacementId* newId = new ClippingPlacementId{nullptr, false, false};
+            ClippingPlacementId* newId = new ClippingPlacementId();
             newId->parentId = &viewHolder->getViewId(i);
-            actorInfo->registerViewGroupFarClipFlag(&newId->clipFlag);
+            actorInfo->registerViewGroupFarClipFlag(&newId->isInViewCtrlArea);
             mClippingPlacementIds[mPlacementIdSize] = newId;
             mPlacementIdSize++;
         }
@@ -65,20 +65,20 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
 }
 
 bool ViewInfoCtrl::update() {
-    if (mIsUpdated || !mAreaGroup)
+    if (mIsUpdated || !mViewCtrlAreaGroup)
         return false;
 
     bool flags[128];
     for (s32 i = 0; i < mPlacementIdSize; i++) {
         ClippingPlacementId* clipId = mClippingPlacementIds[i];
-        flags[i] = clipId->clipFlag;
-        clipId->clipFlag = false;
+        flags[i] = clipId->isInViewCtrlArea;
+        clipId->isInViewCtrlArea = false;
         clipId->_9 = false;
     }
 
     s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
-    for (s32 i = 0; i < mAreaGroup->getSize(); i++) {
-        ViewCtrlArea* viewCtrlArea = (ViewCtrlArea*)mAreaGroup->getAreaObj(i);
+    for (s32 i = 0; i < mViewCtrlAreaGroup->getSize(); i++) {
+        ViewCtrlArea* viewCtrlArea = (ViewCtrlArea*)mViewCtrlAreaGroup->getAreaObj(i);
         if (!viewCtrlArea->isValid())
             continue;
 
@@ -114,7 +114,7 @@ bool ViewInfoCtrl::update() {
                 ClippingPlacementId* clippingId = mClippingPlacementIds[j];
                 if (clippingId->parentId && clippingId->parentId->isEqual(*placementId)) {
                     if (clippingId)
-                        clippingId->clipFlag = true;
+                        clippingId->isInViewCtrlArea = true;
                     break;
                 }
             }
@@ -122,7 +122,7 @@ bool ViewInfoCtrl::update() {
     }
 
     for (s32 i = 0; i < mPlacementIdSize; i++)
-        if (flags[i] != mClippingPlacementIds[i]->clipFlag)
+        if (flags[i] != mClippingPlacementIds[i]->isInViewCtrlArea)
             return true;
     return false;
 }

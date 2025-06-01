@@ -10,17 +10,13 @@ class PlacementId;
 class AreaObjGroup;
 class SceneCameraInfo;
 
-struct ClippingPlacementId {
-    const PlacementId* parentId;
-    bool clipFlag;
-    bool _9;
-};
+
 
 class ViewInfoCtrl {
 public:
     ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraInfo* cameraInfo);
     void initActorInfo(ClippingActorInfo* actorInfo);
-    void initViewCtrlAreaGroup(const AreaObjGroup* areaGroup);
+    void initViewCtrlAreaGroup(const AreaObjGroup* viewCtrlAreaGroup);
     bool update();
     void startCheckByCameraPos();
     void startCheckByLookAtPos();
@@ -32,8 +28,12 @@ private:
         CameraPos,
         LookAtPos,
     };
-
-    const AreaObjGroup* mAreaGroup = nullptr;
+    struct ClippingPlacementId {
+        const PlacementId* parentId;
+        bool isInViewCtrlArea;
+        bool _9;
+    };
+    const AreaObjGroup* mViewCtrlAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
     ClippingPlacementId** mClippingPlacementIds = nullptr;
     bool mIsUpdated = false;

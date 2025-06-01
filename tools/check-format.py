@@ -430,19 +430,13 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
             CHECK(lambda a: not function_name.endswith("_"), line,
                   "Functions ending with an underscore are either protected or private!", path)
     elif visibility == 2:  # private
-        if line == "};" or line == "" or line == "union {" or line.startswith("struct"): return
+        if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith("enum"): return
         if "(" in line and ")" in line: return
         newline = line
         if "=" in line:
             newline = line.split("=")[0].strip()
         elif line.endswith(";"):
             newline = line.split(";")[0].strip()
-        elif line.endswith("{"):
-            newline = line.split("{")[0].strip()
-        elif line.endswith("}"):
-            newline = line.split("}")[0].strip()
-        elif line.endswith(","):
-            newline = line.split(",")[0].strip()
         else:
             FAIL("Unknown private line!", line, path)
 

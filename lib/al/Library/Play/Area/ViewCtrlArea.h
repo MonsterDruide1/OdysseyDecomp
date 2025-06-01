@@ -11,7 +11,7 @@ public:
 
     void init(const AreaInitInfo& areaInitInfo) override;
 
-    PlacementId* getPlacementId() { return mClippingViewId; }
+    PlacementId* getPlacementId() const { return mClippingViewId; }
 
 private:
     PlacementId* mClippingViewId;
