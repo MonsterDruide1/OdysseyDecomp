@@ -10,8 +10,6 @@ class PlacementId;
 class AreaObjGroup;
 class SceneCameraInfo;
 
-
-
 class ViewInfoCtrl {
 public:
     ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraInfo* cameraInfo);
@@ -28,11 +26,13 @@ private:
         CameraPos,
         LookAtPos,
     };
+
     struct ClippingPlacementId {
         const PlacementId* parentId;
         bool isInViewCtrlArea;
         bool _9;
     };
+
     const AreaObjGroup* mViewCtrlAreaGroup = nullptr;
     s32 mPlacementIdSize = 0;
     ClippingPlacementId** mClippingPlacementIds = nullptr;

@@ -55,7 +55,7 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
             }
         }
         if (!found) {
-            ClippingPlacementId* newId = new ClippingPlacementId();
+            ClippingPlacementId* newId = new ClippingPlacementId{nullptr, false, false};
             newId->parentId = &viewHolder->getViewId(i);
             actorInfo->registerViewGroupFarClipFlag(&newId->isInViewCtrlArea);
             mClippingPlacementIds[mPlacementIdSize] = newId;
@@ -68,10 +68,10 @@ bool ViewInfoCtrl::update() {
     if (mIsUpdated || !mViewCtrlAreaGroup)
         return false;
 
-    bool flags[128];
+    bool prevIsInViewCtrlArea[128];
     for (s32 i = 0; i < mPlacementIdSize; i++) {
         ClippingPlacementId* clipId = mClippingPlacementIds[i];
-        flags[i] = clipId->isInViewCtrlArea;
+        prevIsInViewCtrlArea[i] = clipId->isInViewCtrlArea;
         clipId->isInViewCtrlArea = false;
         clipId->_9 = false;
     }
@@ -122,7 +122,7 @@ bool ViewInfoCtrl::update() {
     }
 
     for (s32 i = 0; i < mPlacementIdSize; i++)
-        if (flags[i] != mClippingPlacementIds[i]->isInViewCtrlArea)
+        if (prevIsInViewCtrlArea[i] != mClippingPlacementIds[i]->isInViewCtrlArea)
             return true;
     return false;
 }
