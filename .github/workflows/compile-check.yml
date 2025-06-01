@@ -48,10 +48,11 @@ jobs:
     - name: Set up cache for toolchain
       uses: actions/cache@v4
       with:
-        key: tools-libs
+        key: tools_libs
         path: |
           toolchain/bin
           toolchain/include
+          toolchain/cache-version-url.txt
     - name: Run setup
       run: tools/setup.py smo-main.nso
     - name: Build project
