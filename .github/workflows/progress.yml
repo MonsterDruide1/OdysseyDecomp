@@ -37,7 +37,7 @@ jobs:
       run: tools/build.py
     - name: Upload progress state
       run: |
-        full_ansi="$(tools/common/progress.py)"
+        full_ansi="$(tools/file_list_progress.py)"
         full=`echo $full_ansi | sed -e 's/\x1b\[[0-9;]*m//g'`
         echo $full
         MATCHING=`echo $full | sed -n "s/^.*matching\s(\([0-9]\+\.[0-9]\+\)%.*$/\1/p"`
