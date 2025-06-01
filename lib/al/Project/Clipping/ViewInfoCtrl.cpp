@@ -82,14 +82,14 @@ bool ViewInfoCtrl::update() {
         if (!viewCtrlArea->isValid())
             continue;
 
-        bool shouldSetClip = false;
+        bool newIsInViewCtrlArea = false;
         CheckType checkType = mCheckType;
         if (checkType == CheckType::PlayerPos) {
             for (s32 j = 0; j < playerNumMax; j++) {
                 if (isPlayerDead(mPlayerHolder, j))
                     continue;
                 if (isInAreaPos(viewCtrlArea, getPlayerPos(mPlayerHolder, j))) {
-                    shouldSetClip = true;
+                    newIsInViewCtrlArea = true;
                     break;
                 }
             }
@@ -100,13 +100,13 @@ bool ViewInfoCtrl::update() {
                 if (isInAreaPos(viewCtrlArea, checkType == CheckType::LookAtPos ?
                                                   getCameraAt(mSceneCameraInfo, j) :
                                                   getCameraPos(mSceneCameraInfo, j))) {
-                    shouldSetClip = true;
+                    newIsInViewCtrlArea = true;
                     break;
                 }
             }
         }
 
-        if (shouldSetClip) {
+        if (newIsInViewCtrlArea) {
             const PlacementId* placementId = viewCtrlArea->getPlacementId();
             if (!placementId)
                 continue;
