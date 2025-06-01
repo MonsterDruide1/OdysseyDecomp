@@ -18,7 +18,7 @@ void addNamedHeap(sead::Heap* heap, const char* heapName);
 void removeNamedHeap(const char* heapName);
 void createSequenceHeap();
 void freeAllSequenceHeap();
-bool printAllSequenceHeap();
+void printAllSequenceHeap();
 void createSceneHeap(const char* stageName, bool backwards);
 void createSceneResourceHeap(const char* stageName);
 bool isCreatedSceneResourceHeap();
