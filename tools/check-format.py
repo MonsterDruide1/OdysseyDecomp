@@ -583,9 +583,6 @@ def main():
     global runAllChecks
     runAllChecks = args.all
 
-    global functionData
-    functionData = sorted(utils.get_functions(), key=lambda info: info.name)
-
     if not args.run_clang_format and not args.ci:
         print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
         print()
