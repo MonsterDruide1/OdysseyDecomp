@@ -109,14 +109,13 @@ bool PlayerJudgeWallCatchInputDir::updateJudgeNormal() {
         moveDir.negate();
     }
 
-    // TODO rename this variable
-    f32 v8 = 75.0f;
+    f32 moveSpeed = 75.0f;
     if (mIsOnGroundSkateCode)
-        v8 += sead::Mathf::clampMax(moveDir.dot(al::getVelocity(mPlayer)), 0.0f);
+        moveSpeed += sead::Mathf::clampMax(moveDir.dot(al::getVelocity(mPlayer)), 0.0f);
 
     return rs::findWallCatchPosWallHit(
         &mCollisionParts, &mHitPos, &mHitNormal2, &mHitNormal, mPlayer, moveDir,
-        al::getTrans(mPlayer), v8, mConst->getWallKeepDegree(), mConst->getWallCatchDegree(),
+        al::getTrans(mPlayer), moveSpeed, mConst->getWallKeepDegree(), mConst->getWallCatchDegree(),
         mConst->getWallCatchHeightEdgeTop(), 0.0f, mConst->getWallCatchHeightBottom(),
         mConst->getCollisionRadius(), mConst->getCollisionRadiusStand());
 }
