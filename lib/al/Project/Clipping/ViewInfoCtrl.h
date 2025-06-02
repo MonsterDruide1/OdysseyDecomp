@@ -34,9 +34,9 @@ private:
     };
 
     const AreaObjGroup* mViewCtrlAreaGroup = nullptr;
-    s32 mPlacementIdSize = 0;
+    s32 mClippingPlacementIdsSize = 0;
     ClippingPlacementId** mClippingPlacementIds = nullptr;
-    bool mIsUpdated = false;
+    bool mIsInvalid = false;
     const PlayerHolder* mPlayerHolder = nullptr;
     const SceneCameraInfo* mSceneCameraInfo = nullptr;
     CheckType mCheckType = CheckType::PlayerPos;
