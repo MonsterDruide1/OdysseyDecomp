@@ -11,10 +11,7 @@ enum class ClippingRequestType : s32 { isClipped, isNotClipped };
 struct ClippingRequestInfo {
     ClippingRequestInfo();
 
-    ClippingRequestInfo(LiveActor* actor, ClippingRequestType type) {
-        liveActor = actor;
-        requestType = type;
-    }
+    ClippingRequestInfo(LiveActor* actor, ClippingRequestType type) : liveActor(actor), requestType(type) {}
 
     LiveActor* liveActor = nullptr;
     ClippingRequestType requestType = ClippingRequestType::isClipped;
