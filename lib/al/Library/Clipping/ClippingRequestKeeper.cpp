@@ -23,18 +23,18 @@ void ClippingRequestKeeper::request(LiveActor* actor, ClippingRequestType clippi
 
 void ClippingRequestKeeper::executeRequest() {
     for (s32 i = 0; i < mRequestTable->tableSize; i++) {
-        const ClippingRequestInfo* clippingRequestInfo = mRequestTable->tableInfo;
+        const ClippingRequestInfo clippingRequestInfo = mRequestTable->tableInfo[i];
         if (isDead(mRequestTable->tableInfo[i].liveActor))
             continue;
 
-        switch (clippingRequestInfo[i].requestType) {
+        switch (clippingRequestInfo.requestType) {
         case ClippingRequestType::isClipped:
-            if (!isClipped(clippingRequestInfo[i].liveActor))
-                clippingRequestInfo[i].liveActor->startClipped();
+            if (!isClipped(clippingRequestInfo.liveActor))
+                clippingRequestInfo.liveActor->startClipped();
             break;
         case ClippingRequestType::isNotClipped:
-            if (isClipped(clippingRequestInfo[i].liveActor))
-                clippingRequestInfo[i].liveActor->endClipped();
+            if (isClipped(clippingRequestInfo.liveActor))
+                clippingRequestInfo.liveActor->endClipped();
             break;
         }
     }
