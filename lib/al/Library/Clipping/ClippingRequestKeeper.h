@@ -3,22 +3,35 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-enum class ClippingRequestType;
 class LiveActor;
 struct ClippingRequestInfo;
 
+enum class ClippingRequestType : s32 { isClipped, isNotClipped };
+
+struct ClippingRequestInfo {
+    ClippingRequestInfo();
+
+    ClippingRequestInfo(LiveActor* actor, ClippingRequestType type) {
+        liveActor = actor;
+        requestType = type;
+    }
+
+    LiveActor* liveActor = nullptr;
+    ClippingRequestType requestType = ClippingRequestType::isClipped;
+};
+
 struct ClippingRequestTable {
-    inline ClippingRequestTable(s32 capacity);
-    s32 tableCapacity;
-    s32 tableSize;
-    ClippingRequestInfo* tableInfo;
+    ClippingRequestTable(s32 capacity);
+    s32 tableCapacity = 0;
+    s32 tableSize = 0;
+    ClippingRequestInfo* tableInfo = nullptr;
 };
 
 class ClippingRequestKeeper {
 public:
     ClippingRequestKeeper(s32 capacity);
     void executeRequest();
-    void request(LiveActor* actor, ClippingRequestType clippingRequestType);
+    void request(LiveActor* actor, ClippingRequestType requestType);
 
 private:
     ClippingRequestTable* mRequestTable;

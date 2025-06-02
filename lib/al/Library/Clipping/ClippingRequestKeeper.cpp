@@ -1,16 +1,14 @@
 #include "Library/Clipping/ClippingRequestKeeper.h"
 
-#include "Library/Clipping/ClippingRequestInfo.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
 
-ClippingRequestTable::ClippingRequestTable(s32 capacity) {
-    tableCapacity = capacity;
-    tableSize = 0;
-    tableInfo = nullptr;
+ClippingRequestInfo::ClippingRequestInfo() = default;
+
+ClippingRequestTable::ClippingRequestTable(s32 capacity) : tableCapacity(capacity) {
     tableInfo = new ClippingRequestInfo[capacity];
 }
 
