@@ -70,9 +70,6 @@ CLion interacts with CMake directly, so you need to make sure CLion's build prof
     * Non-inline function calls can just be stubbed if you don't feel like decompiling them at the moment. To "stub" a function, just declare the function (and the enclosing class/namespace/etc. if needed) without implementing/defining it.
 
 4. **Build**.
-5. **Add the function name to the list of decompiled functions.**
-    * To do so, open `data/odyssey_functions.csv`, search for the name or the address of function you have decompiled, and add the function name to the last column.
-    * Example: `0x00000071010c0d60,U,136,PlayerModelHolder::tryFindModelActor`
 
 6. **Compare the assembly** with `tools/check -mw <function name>`
     * This will bring up a two-column diff. The code on the left is the original code; the code on the right is your version of the function.
@@ -217,16 +214,31 @@ This project sometimes uses small hacks to force particular code to be generated
 
 * `MATCHING_HACK_NX_CLANG`: Hacks for Switch, when compiling with Clang.
 
+## The file list format
+
+This project uses a file list yaml file to keep track of functions in the target executable and data about them like their decompilation status and what object file they should be located in.
+At the top scope of the file list are the names of each object that we have split based on alphabetical ordering. Those objects each contain a text section which has an array of functions that should be implemented in that object. Note that the splits of which functions are in which objects and how the objects are named aren't final and often an object can be split into multiple if that makes sense based on its functions and if that split follows the alphabetical ordering.
+Each function in the `.text` section of an object has the following required fields:
+
+* `offset`: a 32-bit unsigned integer formatted as hex (padded to 6 hex digits) that is the offset of the function in the target executable
+* `size`: a 32-bit unsigned integer that is the size of the function in the target executable in bytes
+* `label`: usually a string that is the (often mangled) symbol of the function. In the case that there are multiple symbols for the same offset, this is a string array of symbols instead
+* `status`: the status of the decompilation for this function. This is an enum with the following possible values: `Matching`, `NonMatchingMinor`, `NonMatchingMajor`, `NotDecompiled`, `Wip` and `Library`
+
+In addition to these requires fields, there are also two otional boolean fields that only appear if they are set to `true`:
+* `lazy`: set to true if the symbol(s) for the function are lazy/weak (marked with `W` when using `llvm-nm`)
+* `guess`: set to true if the symbol for the function is a guess and doesn't appear in the target executable
+
 ## Project tools
 
 * Check all decompiled functions for issues: `tools/check`
 * To compare assembly: `tools/check <mangled function name>`
-    * The function **must be listed in data/odyssey_functions.csv first**.
-        * To do so, search for the name or the address of function you have decompiled, compare the mangled function name in the last column to the same as your decompiled function.
+    * The function **must be listed in data/file_list.yml first**.
+        * To do so, search for the name or the offset of function you have decompiled and compare the `label` field of your target function in the file list to the symbol of your function
     * Pass the `--source` flag to show source code interleaved with assembly code.
     * Add the `--inlines` flag to show inline function calls. This is not enabled by default because it usually produces too much output to be useful.
     * Pass `-mw3` for automatic rebuilds whenever a source file is modified.
     * For more options, see [asm-differ](https://github.com/simonlindholm/asm-differ).
-* To print progress: `tools/common/progress.py`
+* To print progress: `tools/file_list_progress.py`
     * Note that progress is only approximate because of inline functions, templating and compiler-generated functions.
 * To list symbols: `tools/listsym` (pass --help to see available options)
