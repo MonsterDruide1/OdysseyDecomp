@@ -10,24 +10,24 @@ ActorDimensionKeeper* createDimensionKeeper(const al::LiveActor* actor) {
 }
 
 bool is2D(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIs2D();
+    return dimension->getActorDimensionKeeper()->is2D();
 }
 
 bool is3D(const IUseDimension* dimension) {
     ActorDimensionKeeper* keeper = dimension->getActorDimensionKeeper();
-    return !keeper->getIs2D() && !keeper->getIsCurrently2D();
+    return !keeper->is2D() && !keeper->isCurrently2D();
 }
 
 bool isChange2D(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIsCanChange2D();
+    return dimension->getActorDimensionKeeper()->isCanChange2D();
 }
 
 bool isChange3D(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIsCanChange3D();
+    return dimension->getActorDimensionKeeper()->isCanChange3D();
 }
 
 bool isIn2DArea(const IUseDimension* dimension) {
-    return dimension->getActorDimensionKeeper()->getIsIn2DArea();
+    return dimension->getActorDimensionKeeper()->isIn2DArea();
 }
 
 }  // namespace rs
