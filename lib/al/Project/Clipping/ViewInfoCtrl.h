@@ -28,10 +28,12 @@ private:
     };
 
     struct ClippingPlacementId {
-        const PlacementId* parentId;
-        bool isInViewCtrlArea;
-        bool _9;
+        const PlacementId* parentId = nullptr;
+        bool isInViewCtrlArea = false;
+        bool _9 = false;
     };
+
+    inline ClippingPlacementId* findClippingPlacementId_(const PlacementId& id) const;
 
     const AreaObjGroup* mViewCtrlAreaGroup = nullptr;
     s32 mClippingPlacementIdsSize = 0;

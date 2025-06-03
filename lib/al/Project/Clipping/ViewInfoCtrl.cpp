@@ -12,7 +12,18 @@
 
 namespace al {
 
-ViewInfoCtrl::ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraInfo* cameraInfo) : mPlayerHolder(playerHolder), mSceneCameraInfo(cameraInfo) {
+ViewInfoCtrl::ClippingPlacementId*
+ViewInfoCtrl::findClippingPlacementId_(const PlacementId& id) const {
+    for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
+        ClippingPlacementId* clipId = mClippingPlacementIds[i];
+        if (clipId->parentId && clipId->parentId->isEqual(id))
+            return clipId;
+    }
+    return nullptr;
+}
+
+ViewInfoCtrl::ViewInfoCtrl(const PlayerHolder* playerHolder, const SceneCameraInfo* cameraInfo)
+    : mPlayerHolder(playerHolder), mSceneCameraInfo(cameraInfo) {
     mClippingPlacementIds = new ClippingPlacementId*[0x80];
     for (s32 i = 0; i < 0x80; i++)
         mClippingPlacementIds[i] = nullptr;
@@ -40,20 +51,12 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
         return;
 
     for (s32 i = 0; i < viewHolder->getNumPlacements(); i++) {
-        bool found = false;
         const PlacementId& viewId = viewHolder->getViewId(i);
-        for (s32 j = 0; j < mClippingPlacementIdsSize; j++) {
-            const ClippingPlacementId* id = mClippingPlacementIds[j];
-            if (id->parentId && id->parentId->isEqual(viewId)) {
-                if (id) {
-                    actorInfo->registerViewGroupFarClipFlag(&id->isInViewCtrlArea);
-                    found = true;
-                }
-                break;
-            }
-        }
-        if (!found) {
-            ClippingPlacementId* newId = new ClippingPlacementId{nullptr, false, false};
+        ClippingPlacementId* existingId = findClippingPlacementId_(viewId);
+        if (existingId) {
+            actorInfo->registerViewGroupFarClipFlag(&existingId->isInViewCtrlArea);
+        } else {
+            ClippingPlacementId* newId = new ClippingPlacementId;
             newId->parentId = &viewHolder->getViewId(i);
             actorInfo->registerViewGroupFarClipFlag(&newId->isInViewCtrlArea);
             mClippingPlacementIds[mClippingPlacementIdsSize] = newId;
@@ -108,14 +111,9 @@ bool ViewInfoCtrl::update() {
             const PlacementId* placementId = viewCtrlArea->getPlacementId();
             if (!placementId)
                 continue;
-            for (s32 j = 0; j < mClippingPlacementIdsSize; j++) {
-                ClippingPlacementId* clippingId = mClippingPlacementIds[j];
-                if (clippingId->parentId && clippingId->parentId->isEqual(*placementId)) {
-                    if (clippingId)
-                        clippingId->isInViewCtrlArea = true;
-                    break;
-                }
-            }
+            ClippingPlacementId* clippingId = findClippingPlacementId_(*placementId);
+            if (clippingId)
+                clippingId->isInViewCtrlArea = true;
         }
     }
 
