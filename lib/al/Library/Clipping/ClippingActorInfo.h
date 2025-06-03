@@ -3,9 +3,8 @@
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 
-enum ClippingRequestKeeper {};
-
 namespace al {
+class ClippingRequestKeeper;
 class LiveActor;
 struct ActorInitInfo;
 class ClippingJudge;
