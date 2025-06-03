@@ -1,8 +1,8 @@
 #pragma once
 
 namespace al {
+struct ClippingActorInfo;
 class ClippingInfoGroup;
-class ClippingActorInfo;
 class ClippingJudge;
 
 class ClippingGroupHolder {

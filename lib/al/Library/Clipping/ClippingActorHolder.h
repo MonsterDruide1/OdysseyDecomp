@@ -2,18 +2,23 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
-#include <thread/seadThread.h>
+#include <math/seadVector.h>
+
+namespace sead {
+class Thread;
+}
 
 namespace al {
 struct ActorInitInfo;
-class ClippingActorInfo;
-class LiveActor;
+struct ClippingActorInfo;
 class ClippingGroupHolder;
 class ClippingJudge;
+class LiveActor;
 
 class ClippingActorHolder {
 public:
     ClippingActorHolder(s32);
+
     void updateAsync(sead::Thread*, s64);
     ~ClippingActorHolder();
     void update(const ClippingJudge*);
