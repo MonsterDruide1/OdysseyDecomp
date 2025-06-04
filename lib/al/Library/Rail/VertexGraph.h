@@ -10,7 +10,6 @@ namespace al {
 class Graph {
 public:
     class Edge;
-    struct VertexInfo;
     class PosVertex;
     class PosEdge;
 
@@ -86,6 +85,10 @@ public:
 
     static_assert(sizeof(PosEdge) == 0x30);
 
+    struct VertexInfo {
+        Vertex* vertex;
+    };
+
     Graph(s32 verticesSize, s32 edgesSize);
     void appendVertex(s32 size);
     void appendVertex(Vertex* vertex);
@@ -112,19 +115,24 @@ private:
 
 static_assert(sizeof(Graph) == 0x20);
 
-void calcShortestPath(sead::ObjArray<Graph::VertexInfo>*, const Graph*, s32, s32);
-f32 calcDistanceAndNearestPos(sead::Vector3f*, const Graph::PosEdge*, const sead::Vector3f&);
+void calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Graph* graph,
+                      s32 valueA, s32 valueB);
+f32 calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge,
+                              const sead::Vector3f& pos);
 Graph::Edge* findEdgeMinimumWeight(const Graph* graph);
 Graph::Edge* findEdgeMinimumWeight(const Graph::Vertex* vertex);
 s32 findEdgeMinimumWeight(const Graph::Edge** outEdge,
                           const sead::ConstPtrArray<Graph::Edge>& edges);
 Graph::Edge* tryFindEdgeStartVertex(const Graph::Vertex*, const Graph::Vertex*);
 Graph::Edge* tryFindEdgeEndVertex(const Graph::Vertex*, const Graph::Vertex*);
-Graph::Vertex* findNearestPosVertex(const Graph*, const sead::Vector3f&, f32);
-Graph::Vertex* findFarthestPosVertex(const Graph*, const sead::Vector3f&, f32);
+Graph::PosVertex* findNearestPosVertex(const Graph* graph, const sead::Vector3f& pos,
+                                       f32 maxDistance);
+Graph::PosVertex* findFarthestPosVertex(const Graph* graph, const sead::Vector3f& pos,
+                                        f32 minDistance);
 Graph::PosEdge* findPosEdgeByVertexPosUndirect(const Graph*, const sead::Vector3f&,
                                                const sead::Vector3f&);
-Graph::PosEdge* findPosEdgeByVertexPos(const Graph*, const sead::Vector3f&, const sead::Vector3f&);
+Graph::PosEdge* findPosEdgeByVertexPos(const Graph* graph, const sead::Vector3f& posA,
+                                       const sead::Vector3f& posB);
 bool isDestinationVertex(const Graph::PosVertex* vertexA, const Graph::PosVertex* vertexB);
 bool tryRemoveEdgeFromVertex(Graph::Vertex* vertex, Graph::Edge* edge);
 bool isExistVertex(const Graph* graph, const Graph::Vertex* vertex);
