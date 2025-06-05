@@ -78,6 +78,7 @@
 #include "Npc/Bird.h"
 #include "Npc/BirdPlayerGlideCtrl.h"
 #include "Npc/KuriboGirl.h"
+#include "Npc/VocalMike.h"
 
 const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
@@ -588,7 +589,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TwistChainList", nullptr},
     {"Utsubo", nullptr},
     {"UtsuboWatcher", nullptr},
-    {"VocalMike", nullptr},
+    {"VocalMike", al::createActorFunction<VocalMike>},
     {"VolleyballBase", nullptr},
     {"VolleyballNet", al::createActorFunction<VolleyballNet>},
     {"VolleyballNpc", nullptr},
