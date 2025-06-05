@@ -72,6 +72,7 @@
 #include "MapObj/TrampleSwitch.h"
 #include "MapObj/TrampleSwitchTimer.h"
 #include "MapObj/TransparentWall.h"
+#include "MapObj/TreasureBoxKey.h"
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
@@ -576,7 +577,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TrampleSwitchTimer", al::createActorFunction<TrampleSwitchTimer>},
     {"TransparentWall", al::createActorFunction<TransparentWall>},
     {"TreasureBox", nullptr},
-    {"TreasureBoxKey", nullptr},
+    {"TreasureBoxKey", al::createActorFunction<TreasureBoxKey>},
     {"TreasureBoxSequentialDirector", nullptr},
     {"TRex", nullptr},
     {"TRexForceScroll", nullptr},
