@@ -12,82 +12,8 @@ public:
     class Edge;
     class PosVertex;
     class PosEdge;
-
-    class Vertex {
-    public:
-        inline Vertex(s32 size, s32 index) : mIndex(index) { mEdges.allocBuffer(size, nullptr); }
-
-        void addEdge(Edge* edge) { mEdges.pushBack(edge); }
-
-        void tryAddEdge(Edge* edge) {
-            for (s32 i = 0; i < mEdges.size(); i++)
-                if (mEdges[i] == edge)
-                    return;
-            addEdge(edge);
-        }
-
-        s32 getEdgeCount() const { return mEdges.size(); }
-
-        Edge* getEdge(s32 index) const { return mEdges[index]; }
-
-        void eraseEdge(s32 index) { mEdges.erase(index); }
-
-        s32 getIndex() const { return mIndex; }
-
-    private:
-        sead::PtrArray<Edge> mEdges;
-        s32 mIndex;
-    };
-
-    static_assert(sizeof(Vertex) == 0x18);
-
-    class Edge {
-    public:
-        Edge(Vertex* vertex1, Vertex* vertex2, f32 weight)
-            : mVertex1(vertex1), mVertex2(vertex2), mWeight(weight) {}
-
-        virtual f32 getWeight() const { return mWeight; }
-
-        Vertex* getVertex1() const { return mVertex1; }
-
-        Vertex* getVertex2() const { return mVertex2; }
-
-    private:
-        Vertex* mVertex1;
-        Vertex* mVertex2;
-        f32 mWeight;
-    };
-
-    static_assert(sizeof(Edge) == 0x20);
-
-    class PosVertex : public Vertex {
-    public:
-        const sead::Vector3f& getPos() const { return mPos; }
-
-    private:
-        sead::Vector3f mPos;
-    };
-
-    static_assert(sizeof(PosVertex) == 0x20);
-
-    class PosEdge : public Edge {
-    public:
-        f32 getWeight() const override {
-            const sead::Vector3f& pos1 = ((PosVertex*)getVertex1())->getPos();
-            const sead::Vector3f& pos2 = ((PosVertex*)getVertex2())->getPos();
-            return (pos2 - pos1).length();
-        }
-
-    private:
-        sead::Vector3f mPos;
-        f32 mPosLength;
-    };
-
-    static_assert(sizeof(PosEdge) == 0x30);
-
-    struct VertexInfo {
-        Vertex* vertex;
-    };
+    class Vertex;
+    struct VertexInfo;
 
     Graph(s32 verticesSize, s32 edgesSize);
     void appendVertex(s32 size);
@@ -115,7 +41,87 @@ private:
 
 static_assert(sizeof(Graph) == 0x20);
 
-void calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Graph* graph,
+class Graph::Vertex {
+public:
+    inline Vertex(s32 size, s32 index) : mIndex(index) { mEdges.allocBuffer(size, nullptr); }
+
+    void addEdge(Edge* edge) { mEdges.pushBack(edge); }
+
+    void tryAddEdge(Edge* edge) {
+        for (s32 i = 0; i < mEdges.size(); i++)
+            if (mEdges[i] == edge)
+                return;
+        addEdge(edge);
+    }
+
+    s32 getEdgeCount() const { return mEdges.size(); }
+
+    Edge* getEdge(s32 index) const { return mEdges[index]; }
+
+    void eraseEdge(s32 index) { mEdges.erase(index); }
+
+    s32 getIndex() const { return mIndex; }
+
+private:
+    sead::PtrArray<Edge> mEdges;
+    s32 mIndex;
+};
+
+static_assert(sizeof(Graph::Vertex) == 0x18);
+
+class Graph::Edge {
+public:
+    Edge(Vertex* vertex1, Vertex* vertex2, f32 weight)
+        : mVertex1(vertex1), mVertex2(vertex2), mWeight(weight) {}
+
+    virtual f32 getWeight() const { return mWeight; }
+
+    Vertex* getVertex1() const { return mVertex1; }
+
+    Vertex* getVertex2() const { return mVertex2; }
+
+private:
+    Vertex* mVertex1;
+    Vertex* mVertex2;
+    f32 mWeight;
+};
+
+static_assert(sizeof(Graph::Edge) == 0x20);
+
+class Graph::PosVertex : public Vertex {
+public:
+    const sead::Vector3f& getPos() const { return mPos; }
+
+private:
+    sead::Vector3f mPos;
+};
+
+static_assert(sizeof(Graph::PosVertex) == 0x20);
+
+class Graph::PosEdge : public Edge {
+public:
+    f32 getWeight() const override {
+        const sead::Vector3f& pos1 = ((PosVertex*)getVertex1())->getPos();
+        const sead::Vector3f& pos2 = ((PosVertex*)getVertex2())->getPos();
+        return (pos2 - pos1).length();
+    }
+
+private:
+    sead::Vector3f mPos;
+    f32 mPosLength;
+};
+
+static_assert(sizeof(Graph::PosEdge) == 0x30);
+
+struct Graph::VertexInfo {
+    Vertex* vertex;
+    s32 index;
+    f32 weight;
+};
+
+static_assert(sizeof(Graph::VertexInfo) == 0x10);
+
+bool calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Graph* graph,
                       s32 valueA, s32 valueB);
 f32 calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge,
                               const sead::Vector3f& pos);

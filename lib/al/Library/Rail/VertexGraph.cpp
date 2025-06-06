@@ -87,7 +87,28 @@ bool Graph::tryAppendEdge(s32 index_vertex1, s32 index_vertex2, f32 weight) {
     return true;
 }
 
-f32 al::calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge,
+bool calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Graph* graph,
+                      s32 startVertexIndex, s32 endVertexIndex) {
+    sead::FixedPtrArray<Graph::VertexInfo, 200> mArray;
+
+    for (s32 i = 0; i < graph->getVertexCount(); i++) {
+        Graph::VertexInfo info;
+        info.vertex = graph->getVertex(i);
+        info.index = -1;
+        info.weight = startVertexIndex != i ? sead::Mathf::maxNumber() : 0.0f;
+
+        mArray.pushBack(&info);
+    }
+
+    Graph::PosVertex* vertex1 = startVertexIndex < graph->getVertexCount() ?
+                                    (Graph::PosVertex*)graph->getVertex(startVertexIndex) :
+                                    nullptr;
+
+    vertexInfos->sort();
+    return true;
+}
+
+f32 calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge,
                               const sead::Vector3f& pos) {
     Graph::PosVertex* vertex1 = (Graph::PosVertex*)edge->getVertex1();
     Graph::PosVertex* vertex2 = (Graph::PosVertex*)edge->getVertex2();
@@ -97,24 +118,21 @@ f32 al::calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* 
     sead::Vector3f edgeDir = p2Pos - p1Pos;
     f32 originalEdgeLength = edgeDir.length();
 
-    if (!tryNormalizeOrZero(&edgeDir)) {
+    if (!tryNormalizeOrZero(&edgeDir))
         return -1.0f;
-    }
 
     sead::Vector3f nearestPos = vertex1->getPos();
     f32 dot_val = edgeDir.dot(pos - nearestPos);
 
     if (!(dot_val < 0.0f)) {
-         if (dot_val > originalEdgeLength) {
+        if (dot_val > originalEdgeLength)
             nearestPos = vertex2->getPos();
-        } else {
-            nearestPos+=dot_val*edgeDir;
-         }
+        else
+            nearestPos += dot_val * edgeDir;
     }
 
-    if (outPos) {
+    if (outPos)
         *outPos = nearestPos;
-    }
     return (nearestPos - pos).length();
 }
 
@@ -191,8 +209,8 @@ Graph::Edge* tryFindEdgeEndVertex(const Graph::Vertex* vertexA, const Graph::Ver
 
 // https://decomp.me/scratch/IJyeZ
 // NON_MATCHING: Missing code duplication
-al::Graph::PosVertex* al::findNearestPosVertex(const Graph* graph, const sead::Vector3f& pos,
-                                               f32 maxDistance) {
+Graph::PosVertex* findNearestPosVertex(const Graph* graph, const sead::Vector3f& pos,
+                                       f32 maxDistance) {
     Graph::PosVertex* nearestVertex = nullptr;
     f32 minDistance = sead::Mathf::maxNumber();
     for (s32 i = 0; i < graph->getVertexCount(); i++) {
@@ -256,8 +274,8 @@ Graph::PosEdge* findPosEdgeByVertexPosUndirect(const Graph* graph, const sead::V
     return nullptr;
 }
 
-al::Graph::PosEdge* al::findPosEdgeByVertexPos(const Graph* graph, const sead::Vector3f& posA,
-                                               const sead::Vector3f& posB) {
+Graph::PosEdge* findPosEdgeByVertexPos(const Graph* graph, const sead::Vector3f& posA,
+                                       const sead::Vector3f& posB) {
     for (s32 i = 0; i < graph->getEdgeCount(); i++) {
         Graph::PosEdge* edge = (Graph::PosEdge*)graph->getEdge(i);
         Graph::PosVertex* vertex1 = (Graph::PosVertex*)edge->getVertex1();
