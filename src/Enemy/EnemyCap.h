@@ -9,11 +9,12 @@ struct EnemyStateBlowDownParam;
 
 class EnemyCap : public al::LiveActor {
 public:
-    static EnemyCap* createEnemyCap(const char*);
+    static EnemyCap* createEnemyCap(const char* name);
 
-    EnemyCap(const char*);
+    EnemyCap(const char* name);
 
-    void initPartsFixFile(al::LiveActor*, const al::ActorInitInfo&, const char*, const char*);
+    void initPartsFixFile(al::LiveActor* cap, const al::ActorInitInfo& info,
+                          const char* archiveName, const char* suffix);
 
     void makeActorAlive() override;
     void updatePose();
@@ -25,7 +26,7 @@ public:
     void startBlowDown(const al::HitSensor* source);
     void startBlowDown();
     bool isBlowDown() const;
-    void setBlowDownParam(const al::EnemyStateBlowDownParam*);
+    void setBlowDownParam(const al::EnemyStateBlowDownParam* param);
 
     al::LiveActor* getCap() { return mCap; };
 
@@ -46,12 +47,13 @@ private:
 };
 
 namespace rs {
-EnemyCap* tryCreateEnemyCap(al::LiveActor*, const al::ActorInitInfo&);
-EnemyCap* tryCreateEnemyCap(al::LiveActor*, const al::ActorInitInfo&, const char*);
-EnemyCap* tryCreateEnemyCapSuffix(al::LiveActor*, const al::ActorInitInfo&, const char*,
-                                  const char*);
-bool tryStartEnemyCapBlowDown(EnemyCap*, const al::HitSensor*);
-bool tryStartEnemyCapBlowDown(EnemyCap*);
-bool tryAppearEnemyCap(EnemyCap*);
-bool isOnEnemyCap(EnemyCap*);
+EnemyCap* tryCreateEnemyCap(al::LiveActor* actor, const al::ActorInitInfo& info);
+EnemyCap* tryCreateEnemyCap(al::LiveActor* actor, const al::ActorInitInfo& info,
+                            const char* archiveName);
+EnemyCap* tryCreateEnemyCapSuffix(al::LiveActor* actor, const al::ActorInitInfo& info,
+                                  const char* archiveName, const char* suffix);
+bool tryStartEnemyCapBlowDown(EnemyCap* cap, const al::HitSensor* sensor);
+bool tryStartEnemyCapBlowDown(EnemyCap* cap);
+bool tryAppearEnemyCap(EnemyCap* cap);
+bool isOnEnemyCap(EnemyCap* cap);
 }  // namespace rs

@@ -8,8 +8,8 @@ class PlayerCarryKeeper;
 
 class PlayerJudgeStartSquat : public IJudge {
 public:
-    PlayerJudgeStartSquat(const PlayerInput*, const PlayerCounterForceRun*,
-                          const PlayerCarryKeeper*);
+    PlayerJudgeStartSquat(const PlayerInput* input, const PlayerCounterForceRun* counterForceRun,
+                          const PlayerCarryKeeper* carryKeeper);
 
     void reset() override {}
 

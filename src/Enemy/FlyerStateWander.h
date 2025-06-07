@@ -11,7 +11,7 @@ struct ActorParamMove;
 
 class FlyerStateWanderParam {
 public:
-    FlyerStateWanderParam(s32, s32 wanderTime, s32 waitTime, const char* actionName,
+    FlyerStateWanderParam(s32 unk, s32 wanderTime, s32 waitTime, const char* actionName,
                           const al::ActorParamMove* actorParamMove);
 
     s32 get_0() const { return _0; }
