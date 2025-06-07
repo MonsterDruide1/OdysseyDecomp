@@ -15,7 +15,8 @@ class IUsePlayerCollision;
 
 class HackerStateWingFly : public al::ActorStateBase {
 public:
-    HackerStateWingFly(al::LiveActor* actor, IUsePlayerHack** hack, IUsePlayerCollision* collision);
+    HackerStateWingFly(al::LiveActor* actor, IUsePlayerHack** hacker,
+                       IUsePlayerCollision* collision);
 
     void appear() override;
     void goFlyRise();

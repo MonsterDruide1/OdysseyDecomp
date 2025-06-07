@@ -28,14 +28,14 @@ EnemyStateHackStartParam::EnemyStateHackStartParam(const char* actionName, const
 
 static EnemyStateHackStartParam sEnemyStateHackStartParam("HackStart", 0, 0, 0, 0);
 
-EnemyStateHackStart::EnemyStateHackStart(al::LiveActor* rootActor,
+EnemyStateHackStart::EnemyStateHackStart(al::LiveActor* actor,
                                          const EnemyStateHackStartParam* param,
                                          PlayerHackStartShaderParam* shaderParam)
-    : al::ActorStateBase("憑依開始", rootActor), mParam(param) {
+    : al::ActorStateBase("憑依開始", actor), mParam(param) {
     if (!param)
         mParam = &sEnemyStateHackStartParam;
     initNerve(&DiveIn, 0);
-    mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(rootActor, shaderParam);
+    mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(actor, shaderParam);
 }
 
 IUsePlayerHack* EnemyStateHackStart::tryStart(const al::SensorMsg* msg, al::HitSensor* other,

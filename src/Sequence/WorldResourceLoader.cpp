@@ -11,7 +11,6 @@
 
 const s32 priority = sead::Thread::cDefaultPriority;
 
-// for some reason tools/check doesn't show this?
 WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) : mDataHolder(dataHolder) {
     using WorldResourceLoaderFunctor =
         al::FunctorV0M<WorldResourceLoader*, void (WorldResourceLoader::*)()>;

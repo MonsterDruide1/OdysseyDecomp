@@ -10,7 +10,7 @@ public:
     void calcAnim() override;
 
     void updatePose();
-    void registerToHost(al::LiveActor*, bool);
+    void registerToHost(al::LiveActor* host, bool flip);
 
 private:
     al::LiveActor* mHostActor = nullptr;

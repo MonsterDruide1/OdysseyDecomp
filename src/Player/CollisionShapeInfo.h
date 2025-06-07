@@ -13,7 +13,7 @@ enum class CollisionShapeId : u32 {
 
 class CollisionShapeInfoBase : public al::HioNode {
 public:
-    CollisionShapeInfoBase(CollisionShapeId, const char*);
+    CollisionShapeInfoBase(CollisionShapeId id, const char* name);
 
     virtual const sead::Vector3f& getBoundingCenter() const { return sead::Vector3f::zero; }
 
