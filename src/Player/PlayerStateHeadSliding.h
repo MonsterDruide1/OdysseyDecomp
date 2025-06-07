@@ -14,7 +14,7 @@ class PlayerAnimator;
 class PlayerStateHeadSliding : public al::ActorStateBase {
 public:
     PlayerStateHeadSliding(al::LiveActor* player, const PlayerConst* pConst,
-                           const IUsePlayerCollision* collision, const PlayerInput* input,
+                           const IUsePlayerCollision* collider, const PlayerInput* input,
                            const PlayerActionDiveInWater* actionDiveInWater,
                            PlayerAnimator* animator);
 

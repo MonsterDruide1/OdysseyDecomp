@@ -15,14 +15,14 @@ public:
 
         void clear();
 
-        bool isDisableByWorldWarpHole(bool) const;
-        bool isEnableUnlock(s32, bool, s32, bool) const;
-        bool isHintStatusUnlock(s32, s32, bool) const;
+        bool isDisableByWorldWarpHole(bool condition) const;
+        bool isEnableUnlock(s32 curWorldId, bool isGameClear, s32 scenarioNo, bool isInWorld) const;
+        bool isHintStatusUnlock(s32 curWorldId, s32 scenarioNo, bool isInWorld) const;
         bool isHintStatusUnlockByNpc() const;
         bool isHintStatusUnlockByAmiibo() const;
-        bool isEnableNameUnlockByScenario(s32, s32, bool) const;
+        bool isEnableNameUnlockByScenario(s32 curWorldId, s32 scenarioNo, bool isInWorld) const;
 
-        bool testFunc(s32, bool, s32, bool) const;
+        bool testFunc(s32 curWorldId, bool isGameClear, s32 scenarioNo, bool isInWorld) const;
 
     private:
         sead::FixedSafeString<0x80> mStageName;

@@ -30,7 +30,7 @@ public:
     f32 getFallSpeed();
     void setAbove(CoinStack* stack);
     void setBelow(CoinStack* stack);
-    void signalFall(u32 delay, f32 speed);
+    void signalFall(u32 delay, f32 radius);
     void postInit(CoinStackGroup* coinStackGroup, const sead::Vector3f& transY, CoinStack* below,
                   const sead::Vector3f& clippingPos, f32 clippingRadius, const f32* fallDistance);
 

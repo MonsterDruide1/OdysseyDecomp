@@ -9,21 +9,22 @@
 
 class WorldResourceLoader : public al::HioNode {
 public:
-    WorldResourceLoader(GameDataHolder*);
+    WorldResourceLoader(GameDataHolder* dataHolder);
     virtual ~WorldResourceLoader();
     void loadResource();
     void cancelLoadWorldResource();
     void tryDestroyWorldResource();
-    bool requestLoadWorldHomeStageResource(s32 worldIndex, s32 scenario);
+    bool requestLoadWorldHomeStageResource(s32 loadWorldId, s32 scenario);
     bool isEndLoadWorldResource() const;
-    void requestLoadWorldResourceCommon(s32);
-    bool requestLoadWorldResource(s32);
+    void requestLoadWorldResourceCommon(s32 loadWorldId);
+    bool requestLoadWorldResource(s32 loadWorldId);
     void createResourcePlayer();
     void tryDestroyWorldResourceOnlyCap();
     f32 calcLoadPercent() const;
     s32 getLoadWorldId() const;
-    al::Resource* tryLoadResource(const char*, const char*, const char*);
-    void loadWorldResource(s32, s32, bool, const char*);
+    al::Resource* tryLoadResource(const char* resPath, const char* ext, const char* category);
+    void loadWorldResource(s32 loadWorldId, s32 scenario, bool isScenarioResources,
+                           const char* resourceCategory);
     f32 calcWorldResourceHeapSize() const;
 
 private:

@@ -55,13 +55,13 @@ public:
     bool tryReceiveMsgPressDown(const al::SensorMsg* message);
     bool tryReceiveMsgObjHipDropAll(const al::SensorMsg* message);
     bool tryReceiveMsgTrample(const al::SensorMsg* message);
-    bool tryReceiveMsgTrample(const al::SensorMsg*, const al::HitSensor* other,
+    bool tryReceiveMsgTrample(const al::SensorMsg* message, const al::HitSensor* other,
                               const al::HitSensor* self);
     bool tryReceiveMsgTrampleReflect(const al::SensorMsg* message);
-    bool tryReceiveMsgTrampleReflect(const al::SensorMsg*, const al::HitSensor* other,
+    bool tryReceiveMsgTrampleReflect(const al::SensorMsg* message, const al::HitSensor* other,
                                      const al::HitSensor* self);
     bool tryReceiveMsgObjHipDropReflect(const al::SensorMsg* message);
-    bool tryReceiveMsgObjLeapFrog(const al::SensorMsg*, const al::HitSensor* other,
+    bool tryReceiveMsgObjLeapFrog(const al::SensorMsg* message, const al::HitSensor* other,
                                   const al::HitSensor* self);
     bool tryReceiveMsgEnableLockOn(const al::SensorMsg* message);
     bool tryReceiveMsgStartLockOn(const al::SensorMsg* message);

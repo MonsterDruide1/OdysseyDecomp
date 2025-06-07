@@ -17,7 +17,7 @@ class AchievementInfoReader {
 public:
     AchievementInfoReader();
     void init();
-    s32 tryFindIndexByName(const char*) const;
+    s32 tryFindIndexByName(const char* name) const;
 
     AchievementInfo* get(s32 index) { return mAchievements[index]; }
 

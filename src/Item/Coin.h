@@ -48,9 +48,9 @@ public:
     void appearCountUpFixPos10(s32 coinIndex);
     void appearCoinRail();
     void appearCoinChameleon(const sead::Vector3f& trans, const sead::Quatf& quat,
-                             const sead::Vector3f& position);
+                             const sead::Vector3f& offset);
     void appearLimitTime(s32 timeLimit);
-    void appearBlow(const sead::Vector3f& velocity, s32 delayTime);
+    void appearBlow(const sead::Vector3f& velocity, s32 timeLimit);
     void rotate();
     void appearBlowUpCommon(s32 delayTime, f32 horizontalForce, f32 verticalForce, s32 coinCount,
                             s32 coinIndex);
