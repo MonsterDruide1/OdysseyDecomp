@@ -33,6 +33,7 @@
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Mummy.h"
+#include "Enemy/Nokonoko2D.h"
 #include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
@@ -393,7 +394,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Mummy", al::createActorFunction<Mummy>},
     {"MummyGenerator", nullptr},
     {"NeedleTrap", nullptr},
-    {"Nokonoko2D", nullptr},
+    {"Nokonoko2D", al::createActorFunction<Nokonoko2D>},
     {"NoteObjFirst", nullptr},
     {"NoteObjFirst2D", nullptr},
     {"NoteObjDirector", nullptr},
