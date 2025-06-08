@@ -7,13 +7,15 @@ const s32 PoolSize = 24;
 // Only used in the three below workarounds…
 using SensorInfo = PlayerBindableSensorList::SensorInfo;
 
-// Required for matching: don’t inline PtrArray::sort(CompareCallback)
+// Workaround until https://github.com/open-ead/sead/pull/202 and ShishuTheDragon:PtrArray-dont-inline-sort are merged
+// Reason: Current implementation is heavily inlined, which causes mismatches.
 template <>
 __attribute__((noinline)) void sead::PtrArray<SensorInfo>::sort(CompareCallback cmp) {
     PtrArrayImpl::sort_<SensorInfo>(cmp);
 }
 
-// Workaround for possible bug in sead: compareT has the wrong signature
+// Workaround until https://github.com/open-ead/sead/pull/202 is merged
+// Reason: Current implementation of sort() causes compilation error due to a type mismatch.
 #define compareT _ZN4sead8PtrArrayIN24PlayerBindableSensorList10SensorInfoEE8compareTEPKS2_S5_
 extern "C" int compareT(const SensorInfo* a, const SensorInfo* b) {
     if (*a < *b)
@@ -28,7 +30,8 @@ void sead::PtrArray<SensorInfo>::sort() {
 }
 // End workaround
 
-// Workaround for possible mismatch in sead: popBack doesn't seem to match
+// Workaround until https://github.com/open-ead/sead/pull/203 is merged
+// Reason: Current implementation of popBack() is non-matching.
 template <>
 SensorInfo* sead::PtrArray<SensorInfo>::popBack() {
     if (size() < 1)
