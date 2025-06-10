@@ -33,9 +33,9 @@ public:
 
 private:
     const CollisionShapeInfoBase* mShapeInfo;
-    al::ArrowHitInfo mArrowHitInfo;
-    al::SphereHitInfo mSphereHitInfo;
-    al::DiskHitInfo mDiskHitInfo;
+    sead::StorageFor<al::ArrowHitInfo> mArrowHitInfo {sead::ZeroInitializeTag{}};
+    sead::StorageFor<al::SphereHitInfo> mSphereHitInfo {sead::ZeroInitializeTag{}};
+    sead::StorageFor<al::DiskHitInfo> mDiskHitInfo {sead::ZeroInitializeTag{}};
 };
 
 static_assert(sizeof(CollidedShapeResult) == 0x1e8);
