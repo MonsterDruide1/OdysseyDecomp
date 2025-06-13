@@ -23,7 +23,7 @@ void ClippingRequestKeeper::request(LiveActor* actor, ClippingRequestType clippi
 
 void ClippingRequestKeeper::executeRequest() {
     for (s32 i = 0; i < mRequestTable->tableSize; i++) {
-        const ClippingRequestInfo clippingRequestInfo = mRequestTable->tableInfo[i];
+        const ClippingRequestInfo& clippingRequestInfo = mRequestTable->tableInfo[i];
         if (isDead(mRequestTable->tableInfo[i].liveActor))
             continue;
 
