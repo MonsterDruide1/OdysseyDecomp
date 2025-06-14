@@ -3,13 +3,9 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/Math/MathUtil.h"
 
-PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(const char* a1) {
-    costumeName = a1;
-}
+PlayerHeadCostumeInfo::PlayerHeadCostumeInfo(const char* costumeName) : costumeName(costumeName) {}
 
-PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(const char* a1) {
-    costumeName = a1;
-}
+PlayerBodyCostumeInfo::PlayerBodyCostumeInfo(const char* costumeName) : costumeName(costumeName) {}
 
 PlayerCostumeInfo::PlayerCostumeInfo() = default;
 

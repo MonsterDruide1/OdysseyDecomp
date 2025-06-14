@@ -15,10 +15,10 @@ NERVE_IMPL(FlyerStateWander, Wait)
 NERVES_MAKE_NOSTRUCT(FlyerStateWander, Wander, Wait)
 }  // namespace
 
-FlyerStateWanderParam::FlyerStateWanderParam(s32 ukn, s32 wanderTime, s32 waitTime,
+FlyerStateWanderParam::FlyerStateWanderParam(s32 unk, s32 wanderTime, s32 waitTime,
                                              const char* actionName,
                                              const al::ActorParamMove* actorParamMove)
-    : _0(ukn), mWanderTime(wanderTime), mWaitTime(waitTime), mActionName(actionName),
+    : _0(unk), mWanderTime(wanderTime), mWaitTime(waitTime), mActionName(actionName),
       mActorParamMove(actorParamMove) {}
 
 FlyerStateWander::FlyerStateWander(al::LiveActor* actor, const FlyerStateWanderParam* param)

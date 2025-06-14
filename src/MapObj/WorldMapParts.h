@@ -6,18 +6,20 @@
 
 class WorldMapParts : public al::LiveActor {
 public:
-    WorldMapParts(const char*);
+    WorldMapParts(const char* name);
 
-    void setWorldMtx(const sead::Matrix34f&);
+    void setWorldMtx(const sead::Matrix34f& srcMtx);
     void updatePose();
     void control() override;
 
-    virtual void setLocalMtx(const sead::Matrix34f&);
+    virtual void setLocalMtx(const sead::Matrix34f& srcMtx);
 
-    static void initParts(WorldMapParts*, const char*, const al::ActorInitInfo&,
-                          const sead::Matrix34f*, const sead::Matrix34f&, const char*);
-    static WorldMapParts* create(const char*, const char*, const al::ActorInitInfo&,
-                                 const sead::Matrix34f*, const sead::Matrix34f&, const char*);
+    static void initParts(WorldMapParts* mapParts, const char* arcName,
+                          const al::ActorInitInfo& initInfo, const sead::Matrix34f* worldMtx,
+                          const sead::Matrix34f& localMtx, const char* suffix);
+    static WorldMapParts* create(const char* name, const char* arcName,
+                                 const al::ActorInitInfo& initInfo, const sead::Matrix34f* worldMtx,
+                                 const sead::Matrix34f& localMtx, const char* suffix);
 
 private:
     const sead::Matrix34f* mWorldMtx = nullptr;

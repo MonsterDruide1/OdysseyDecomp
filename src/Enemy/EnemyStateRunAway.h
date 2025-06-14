@@ -15,11 +15,12 @@ struct ParamEnemyStateRunAway {
 
 class EnemyStateRunAway : public al::ActorStateBase {
 public:
-    EnemyStateRunAway(al::LiveActor*, const ParamEnemyStateRunAway*, const char*);
+    EnemyStateRunAway(al::LiveActor* actor, const ParamEnemyStateRunAway* param,
+                      const char* animName);
 
     void appear() override;
 
-    void calcRunDirBase(sead::Vector3f*);
+    void calcRunDirBase(sead::Vector3f* direction);
 
     void exeRun();
     void exePanicRun();

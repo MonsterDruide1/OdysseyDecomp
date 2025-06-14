@@ -21,7 +21,7 @@ public:
 
     void setConfirmMessage(const char16* message, const char16* confirmMessage,
                            const char16* cancelMessage);
-    void setConfirmData(al::LayoutActor* actor, nn::ui2d::TextureInfo* textureInfo);
+    void setConfirmData(al::LayoutActor* actor, nn::ui2d::TextureInfo* texture);
     void updateConfirmDataDate();
     void appear();
     void appearWithChoicingCancel();

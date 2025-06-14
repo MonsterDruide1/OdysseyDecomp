@@ -6,8 +6,8 @@ PlayerModelHolder::PlayerModelHolder(u32 bufferSize) {
     mBuffer.allocBuffer(bufferSize, nullptr);
 }
 
-void PlayerModelHolder::registerModel(al::LiveActor* liveActor, const char* name) {
-    Entry* entry = new Entry{liveActor};
+void PlayerModelHolder::registerModel(al::LiveActor* actor, const char* name) {
+    Entry* entry = new Entry{actor};
     entry->name = name;
     mBuffer.pushBack(entry);
 }
