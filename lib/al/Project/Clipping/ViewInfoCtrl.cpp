@@ -46,7 +46,7 @@ void ViewInfoCtrl::startCheckByPlayerPos() {
 }
 
 void ViewInfoCtrl::initActorInfo(ClippingActorInfo* actorInfo) {
-    const ViewIdHolder* viewHolder = actorInfo->getViewIdHolder();
+    const ViewIdHolder* viewHolder = actorInfo->viewIdHolder;
     if (!viewHolder)
         return;
 
