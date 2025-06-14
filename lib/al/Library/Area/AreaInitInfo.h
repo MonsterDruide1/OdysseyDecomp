@@ -16,6 +16,8 @@ public:
     void set(const PlacementInfo& placementInfo, StageSwitchDirector* stageSwitchDirector,
              SceneObjHolder* sceneObjHolder);
 
+    const PlacementInfo& getPlacementInfo() const { return *this; }
+
     StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
 
     SceneObjHolder* getSceneObjHolder() const { return mSceneObjHolder; }
