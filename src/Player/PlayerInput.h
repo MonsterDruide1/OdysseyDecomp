@@ -84,6 +84,8 @@ public:
     void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;
     void calcMoveDirection(sead::Vector3f*, const sead::Vector3f&) const;
 
+    bool isSpinClockwise() const;
+
 private:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
