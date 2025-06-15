@@ -2,18 +2,19 @@
 
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
+#include <math/seadVector.h>
 
 enum ClippingRequestKeeper {};
 
 namespace al {
-class LiveActor;
 struct ActorInitInfo;
 
 class ClippingJudge;
+class LiveActor;
+class PlacementId;
 class ViewIdHolder;
 
-class ClippingActorInfo {
-public:
+struct ClippingActorInfo {
     ClippingActorInfo(LiveActor*);
     void setTypeToSphere(f32, const sead::Vector3f*);
     void startClipped();
@@ -33,18 +34,19 @@ public:
     void initViewGroup(const ViewIdHolder*);
     void registerViewGroupFarClipFlag(const bool*);
 
-    LiveActor* getLiveActor() const { return mLiveActor; }
-
-    ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
-
-    void setIsEnableGroupClipping(const bool isEnableGroupClipping) {
-        mIsEnableGroupClipping = isEnableGroupClipping;
-    }
-
-private:
-    LiveActor* mLiveActor;
-    void* filler[0xb];
-    ViewIdHolder* mViewIdHolder;
-    bool mIsEnableGroupClipping;
+    LiveActor* liveActor;
+    sead::Vector3f _8;
+    f32 _10;
+    sead::Matrix34f* _18;
+    sead::BoundBox3f _20;
+    f32 _38;
+    PlacementId* placementId;
+    s16 _48;
+    s16 _4a;
+    s32 _4c;
+    s32 _50;
+    void* _58;
+    ViewIdHolder* viewIdHolder;
+    bool isEnableGroupClipping;
 };
 }  // namespace al
