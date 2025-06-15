@@ -103,7 +103,7 @@ __attribute__((always_inline)) u64 MemorySystem::getSceneResourceHeapSize(const 
     return 0x6400000LL;
 }
 
-// NON_MATCHING
+// NON_MATCHING: within getting size and saving to mSceneResourceHeap (https://decomp.me/scratch/Pqb4H)
 void MemorySystem::createSceneResourceHeap(const char* stageName, bool backwards) {
     u64 size = getSceneResourceHeapSize(stageName);
 
