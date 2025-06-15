@@ -11,7 +11,7 @@ class ByamlIter;
 class PlayerConst : public al::HioNode {
 public:
     PlayerConst();
-    PlayerConst(const al::ByamlIter&);
+    PlayerConst(const al::ByamlIter& byaml);
 
     virtual f32 getGravity() const { return mGravity; }
 

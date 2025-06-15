@@ -43,14 +43,14 @@ public:
     enum EMaterialChangeTrigger : u32 {};
 
     PlayerTrigger();
-    void set(ECollisionTrigger);
-    void set(EAttackSensorTrigger);
-    void set(EActionTrigger);
-    void set(EReceiveSensorTrigger);
-    void set(EPreMovementTrigger);
-    void set(EDemoEndTrigger);
-    void set(EMaterialChangeTrigger);
-    void setRecMaterialTrigger(const char*);
+    void set(ECollisionTrigger flag);
+    void set(EAttackSensorTrigger flag);
+    void set(EActionTrigger flag);
+    void set(EReceiveSensorTrigger flag);
+    void set(EPreMovementTrigger flag);
+    void set(EDemoEndTrigger flag);
+    void set(EMaterialChangeTrigger flag);
+    void setRecMaterialTrigger(const char* materialTrigger);
     void clearCollisionTrigger();
     void clearAttackSensorTrigger();
     void clearActionTrigger();
@@ -58,13 +58,13 @@ public:
     void clearPreMovementTrigger();
     void clearDemoEndTrigger();
     void clearMaterialChangeTrigger();
-    bool isOn(ECollisionTrigger) const;
-    bool isOn(EAttackSensorTrigger) const;
-    bool isOn(EActionTrigger) const;
-    bool isOn(EReceiveSensorTrigger) const;
-    bool isOn(EPreMovementTrigger) const;
-    bool isOn(EDemoEndTrigger) const;
-    bool isOn(EMaterialChangeTrigger) const;
+    bool isOn(ECollisionTrigger flag) const;
+    bool isOn(EAttackSensorTrigger flag) const;
+    bool isOn(EActionTrigger flag) const;
+    bool isOn(EReceiveSensorTrigger flag) const;
+    bool isOn(EPreMovementTrigger flag) const;
+    bool isOn(EDemoEndTrigger flag) const;
+    bool isOn(EMaterialChangeTrigger flag) const;
     bool isOnUpperPunchHit() const;
     bool isOnUpperPunchHitToss() const;
     bool isOnAnyDamage() const;
@@ -75,7 +75,7 @@ public:
     bool isOnHipDropCancelThrow() const;
     bool isOnYoshiHackEnd() const;
     bool isOnCollisionExpandCheck() const;
-    bool tryGetRecMaterialCode(const char**) const;
+    bool tryGetRecMaterialCode(const char** dest) const;
 
 private:
     sead::BitFlag32 mCollisionTrigger = 0;

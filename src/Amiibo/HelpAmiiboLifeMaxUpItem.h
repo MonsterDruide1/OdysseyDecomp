@@ -14,7 +14,7 @@ class LifeMaxUpItem2D;
 
 class HelpAmiiboLifeMaxUpItem : public HelpAmiiboExecutor {
 public:
-    HelpAmiiboLifeMaxUpItem(HelpAmiiboDirector* director, al::LiveActor* amiiboActor);
+    HelpAmiiboLifeMaxUpItem(HelpAmiiboDirector* director, al::LiveActor* actor);
 
     void initAfterPlacement(const al::ActorInitInfo& initInfo) override;
     bool isTriggerTouch(const al::NfpInfo& nfpInfo) const override;

@@ -24,7 +24,7 @@ public:
     bool isChangeLanguage() const;
     const char* getLanguage() const;
     bool isNewGame() const;
-    void startLoadDirect(bool);
+    void startLoadDirect(bool isGameLoad);
     void setScenario();
     void setLoadPercent(f32 percent);
     bool isCancelLoadWorldResource() const;

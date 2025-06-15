@@ -5,12 +5,11 @@
 #include "Player/PlayerInput.h"
 #include "Util/PlayerCollisionUtil.h"
 
-PlayerJudgeStartHipDrop::PlayerJudgeStartHipDrop(const PlayerConst* playerConst,
-                                                 const PlayerInput* playerInput,
-                                                 const IUsePlayerHeightCheck* playerHeightCheck,
-                                                 const IPlayerModelChanger* playerModelChanger)
-    : mConst(playerConst), mInput(playerInput), mHeightCheck(playerHeightCheck),
-      mModelChanger(playerModelChanger) {}
+PlayerJudgeStartHipDrop::PlayerJudgeStartHipDrop(const PlayerConst* pConst,
+                                                 const PlayerInput* input,
+                                                 const IUsePlayerHeightCheck* heightCheck,
+                                                 const IPlayerModelChanger* modelChanger)
+    : mConst(pConst), mInput(input), mHeightCheck(heightCheck), mModelChanger(modelChanger) {}
 
 bool PlayerJudgeStartHipDrop::judge() const {
     if (mModelChanger->is2DModel() || !mInput->isTriggerHipDrop())
