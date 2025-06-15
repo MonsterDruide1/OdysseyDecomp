@@ -20,8 +20,7 @@ NERVES_MAKE_STRUCT(PlayerStateGroundSpin, GroundSpin);
 
 PlayerStateGroundSpin::PlayerStateGroundSpin(al::LiveActor* parent,
                                              const IUsePlayerCollision* collision,
-                                             const PlayerInput* input,
-                                             const PlayerConst* pConst,
+                                             const PlayerInput* input, const PlayerConst* pConst,
                                              PlayerAnimator* animator)
     : ActorStateBase("地上スピン", parent), mCollision(collision), mPlayerInput(input),
       mPlayerConst(pConst), mPlayerAnimator(animator) {
@@ -49,8 +48,7 @@ void PlayerStateGroundSpin::exeGroundSpin() {
     mPlayerInput->calcMoveInput(&input, mGroundMoveCtrl->getGroundNormal());
 
     velocity *= mPlayerConst->getGroundSpinBrakeRate();
-    f32 maxSpeed =
-        sead::Mathf::max(velocity.length(), mPlayerConst->getGroundSpinMoveSpeedMax());
+    f32 maxSpeed = sead::Mathf::max(velocity.length(), mPlayerConst->getGroundSpinMoveSpeedMax());
     velocity += mPlayerConst->getGroundSpinAccelRate() * input;
     al::limitLength(&velocity, velocity, maxSpeed);
 
