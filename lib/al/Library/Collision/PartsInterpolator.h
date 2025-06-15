@@ -10,7 +10,7 @@ public:
     virtual bool isInvalidTriangle(const Triangle& triangle) const = 0;
 };
 
-class TriangleFilterWallOnly : public al::TriangleFilterBase {
+class TriangleFilterWallOnly : public TriangleFilterBase {
 public:
     TriangleFilterWallOnly(const sead::Vector3f& down) : mDown(down) {}
 
