@@ -1,5 +1,6 @@
 #include "Project/Memory/MemorySystem.h"
 
+#include <basis/seadRawPrint.h>
 #include <filedevice/seadFileDeviceMgr.h>
 #include <heap/seadHeapMgr.h>
 
@@ -8,8 +9,6 @@
 #include "Library/Resource/ResourceUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Project/Memory/SceneHeapSetter.h"
-#include "basis/seadRawPrint.h"
-#include "heap/seadFrameHeap.h"
 
 namespace al {
 
@@ -28,12 +27,12 @@ MemorySystem::MemorySystem(sead::Heap* heap)
         }
 
         mIsExistFileResource = sead::FileDeviceMgr::instance()->getMainFileDevice()->isExistFile(
-            al::StringTmp<64>("%s.szs", "SystemData/MemorySystem"));
+            StringTmp<64>("%s.szs", "SystemData/MemorySystem"));
     }
 }
 
 void MemorySystem::allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallbackArg* arg) {
-    if (al::isEqualString(arg->heap->getName().cstr(), "gpu"))
+    if (isEqualString(arg->heap->getName().cstr(), "gpu"))
         return;
     arg->heap->dump();
     sead::system::Halt();
@@ -63,7 +62,7 @@ bool MemorySystem::createSceneHeap(const char* stageName, bool backwards) {
     sead::Heap::HeapDirection direction =
         backwards ? sead::Heap::cHeapDirection_Reverse : sead::Heap::cHeapDirection_Forward;
 
-    sead::Heap* currentHeap = al::getCurrentHeap();
+    sead::Heap* currentHeap = getCurrentHeap();
     if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
         size = currentHeap->getMaxAllocatableSize(8);
 
@@ -73,24 +72,25 @@ bool MemorySystem::createSceneHeap(const char* stageName, bool backwards) {
     return currentSceneResourceHeap == nullptr;
 }
 
-__attribute__((always_inline)) u64 MemorySystem::getSceneResourceHeapSize(const char* stageName) const {
-    bool isStaffRollOrDemoEnding = stageName && (al::isEqualString(stageName, "StaffRollStage") ||
-                                                 al::isEqualString(stageName, "DemoEndingStage"));
+__attribute__((always_inline)) u64
+MemorySystem::getSceneResourceHeapSize(const char* stageName) const {
+    bool isStaffRollOrDemoEnding = stageName && (isEqualString(stageName, "StaffRollStage") ||
+                                                 isEqualString(stageName, "DemoEndingStage"));
 
-    if (!isStaffRollOrDemoEnding && this->mWorldResourceHeap)
+    if (!isStaffRollOrDemoEnding && mWorldResourceHeap)
         return 0x80000LL;
 
     if (stageName && mIsExistFileResource) {
-        al::ByamlIter heapSizeMap =
-            al::findOrCreateResource("SystemData/MemorySystem", 0LL)->getByml("HeapSizeDefine");
+        ByamlIter heapSizeMap =
+            findOrCreateResource("SystemData/MemorySystem", 0LL)->getByml("HeapSizeDefine");
 
         for (s32 i = 0; i < heapSizeMap.getSize(); i++) {
-            al::ByamlIter heapSizeEntry;
+            ByamlIter heapSizeEntry;
             heapSizeMap.tryGetIterByIndex(&heapSizeEntry, i);
 
             const char* stage = nullptr;
             heapSizeEntry.tryGetStringByKey(&stage, "Stage");
-            if (al::isEqualString(stage, stageName)) {
+            if (isEqualString(stage, stageName)) {
                 f32 sceneResourceMB = 0.0;
                 if (!heapSizeEntry.tryGetFloatByKey(&sceneResourceMB, "SceneResourceNx"))
                     heapSizeEntry.tryGetFloatByKey(&sceneResourceMB, "SceneResource");
@@ -103,7 +103,8 @@ __attribute__((always_inline)) u64 MemorySystem::getSceneResourceHeapSize(const 
     return 0x6400000LL;
 }
 
-// NON_MATCHING: within getting size and saving to mSceneResourceHeap (https://decomp.me/scratch/Pqb4H)
+// NON_MATCHING: within getting size and saving to mSceneResourceHeap
+// (https://decomp.me/scratch/Pqb4H)
 void MemorySystem::createSceneResourceHeap(const char* stageName, bool backwards) {
     u64 size = getSceneResourceHeapSize(stageName);
 
@@ -111,7 +112,7 @@ void MemorySystem::createSceneResourceHeap(const char* stageName, bool backwards
         backwards ? sead::Heap::cHeapDirection_Reverse : sead::Heap::cHeapDirection_Forward;
 
     if (size != 0) {
-        sead::Heap* currentHeap = al::getCurrentHeap();
+        sead::Heap* currentHeap = getCurrentHeap();
         if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
             size = currentHeap->getMaxAllocatableSize(8);
     }
@@ -134,7 +135,7 @@ void MemorySystem::destroySceneResourceHeap() {
 void MemorySystem::createCourseSelectHeap() {
     {
         u64 size = 0xA00000;
-        sead::Heap* currentHeap = al::getCurrentHeap();
+        sead::Heap* currentHeap = getCurrentHeap();
         if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
             size = currentHeap->getMaxAllocatableSize(8);
 
@@ -144,7 +145,7 @@ void MemorySystem::createCourseSelectHeap() {
     }
     {
         u64 size = 0x2800000;
-        sead::Heap* currentHeap = al::getCurrentHeap();
+        sead::Heap* currentHeap = getCurrentHeap();
         if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
             size = currentHeap->getMaxAllocatableSize(8);
 
