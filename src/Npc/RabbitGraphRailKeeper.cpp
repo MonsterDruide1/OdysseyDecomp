@@ -105,7 +105,8 @@ void RabbitGraphRailKeeper::kill() {
 }
 
 void RabbitGraphRailKeeper::exeWait() {
-    al::isFirstStep(this);
+    if (al::isFirstStep(this)) {
+    }
 }
 
 al::RailRider* RabbitGraphRailKeeper::getRailRider() const {
