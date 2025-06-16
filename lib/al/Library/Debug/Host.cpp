@@ -23,7 +23,7 @@ void getUserName(sead::BufferedSafeString* userName) {
 }
 
 void makeUniqueTemporaryFilename(sead::BufferedSafeString* out, const char* fileName) {
-    sead::FixedSafeString<128> computerName;
+    StringTmp<128> computerName;
     getComputerName(&computerName);
 
     nn::os::Tick time = nn::os::GetSystemTick();
@@ -38,8 +38,8 @@ void expandEnvironmentString(sead::BufferedSafeString* out, const sead::SafeStri
 
 // void FUN_710086f65c(sead::BufferedSafeString* out, const sead::SafeString& envStr) {}
 
-sead::FixedSafeString<128> makeTmpExpandEnvironmentString(const sead::SafeString& envStr) {
-    sead::FixedSafeString<128> tmp;
+StringTmp<128> makeTmpExpandEnvironmentString(const sead::SafeString& envStr) {
+    StringTmp<128> tmp;
 
     expandEnvironmentString(&tmp, envStr);
 

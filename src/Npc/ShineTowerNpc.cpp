@@ -2,6 +2,7 @@
 
 #include <prim/seadSafeString.h>
 
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -65,7 +66,7 @@ void ShineTowerNpc::startBalloon() {
 
 void ShineTowerNpc::exeWait() {
     if (al::isFirstStep(this)) {
-        sead::FixedSafeString<0x40> string;
+        al::StringTmp<0x40> string;
         string.format("RestShineNum");
         rs::startEventFlow(mEventFlowExecutor, string.cstr());
     }

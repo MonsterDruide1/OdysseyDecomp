@@ -90,7 +90,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
     initChildActorWithArchiveNameNoPlacementInfo(this, initInfo, arcName, arcSuffix);
     invalidateClipping(this);
 
-    sead::FixedSafeString<0x80> initArcName;
+    StringTmp<0x80> initArcName;
     createFileNameBySuffix(&initArcName, "InitPartsFixInfo", suffix);
 
     if (!isExistModelResourceYaml(mParentModel, initArcName.cstr(), nullptr))

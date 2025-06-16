@@ -12,7 +12,7 @@ void makeUniqueTemporaryFilename(sead::BufferedSafeString* out, const char* file
 void expandEnvironmentString(sead::BufferedSafeString* out, const sead::SafeString& envStr);
 void FUN_710086f65c(sead::BufferedSafeString* out,
                     const sead::SafeString& envStr);  // TODO: Find what is this function
-sead::FixedSafeString<128> makeTmpExpandEnvironmentString(const sead::SafeString& envStr);
+StringTmp<128> makeTmpExpandEnvironmentString(const sead::SafeString& envStr);
 StringTmp<128> makeTmpFileFullPath(const char* fileName);
 const char* getALCommon();
 }  // namespace al

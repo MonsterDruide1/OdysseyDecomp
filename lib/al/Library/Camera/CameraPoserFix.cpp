@@ -56,7 +56,7 @@ void CameraPoserFix::start(const CameraStartInfo& startInfo) {
 }
 
 void CameraPoserFix::update() {
-    mCameraUp.set(sead::Vector3f::ez);
+    mCameraUp.set(sead::Vector3f::ey);
     mTargetTrans.set(mLookAtPos);
 
     mTargetTrans *= mViewMtx;

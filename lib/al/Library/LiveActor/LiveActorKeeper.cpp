@@ -238,7 +238,7 @@ SubActorKeeper* SubActorKeeper::create(LiveActor* rootActor) {
 
 SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* rootActor, const char* suffix,
                                           s32 maxSubActors) {
-    sead::FixedSafeString<0x80> actorInitFileName;
+    StringTmp<0x80> actorInitFileName;
 
     if (!isExistModelResource(rootActor) ||
         !tryGetActorInitFileName(&actorInitFileName, rootActor, "InitSubActor", suffix))

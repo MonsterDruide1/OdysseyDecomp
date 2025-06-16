@@ -315,7 +315,7 @@ __attribute__((always_inline)) void initActorCollision(LiveActor* actor,
 
     const char* name = nullptr;
     initCollision.tryGetStringByKey(&name, "Name");
-    sead::FixedSafeString<256> unused;
+    StringTmp<256> unused;
 
     if (name == nullptr)
         name = getBaseName(modelRes->getArchiveName());
@@ -638,6 +638,8 @@ LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* linkN
     return actor;
 }
 
+// NON_MATCHING: should use `al::StringTmp` instead, which causes major mismatches
+// (https://decomp.me/scratch/XDRZ2)
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix) {
     const char* modelName;
     sead::FixedSafeString<256> fileName;

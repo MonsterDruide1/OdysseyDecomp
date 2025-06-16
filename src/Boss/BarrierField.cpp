@@ -17,7 +17,7 @@ NERVE_ACTION_IMPL(BarrierField, AppearBreedaMoonWorld);
 NERVE_ACTION_IMPL(BarrierField, Hide);
 NERVE_ACTION_IMPL(BarrierField, Disappear);
 
-NERVE_ACTIONS_MAKE_STRUCT(BarrierField, Appear, AppearBreedaMoonWorld, Hide, Disappear);
+NERVE_ACTIONS_MAKE_STRUCT(BarrierField, Hide, Appear, AppearBreedaMoonWorld, Disappear);
 
 }  // namespace
 
