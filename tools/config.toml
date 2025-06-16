@@ -1,7 +1,7 @@
 file_list = "data/file_list.yml"
 build_target = "odyssey"
 file_list_removed_prefixes = [ "al/" ]
-no_object_check_for = [ "sead/", "NintendoSDK", "eui/", "agl/" ]
+no_object_check_for = [ "sead/", "NintendoSDK/", "eui/", "agl/" ]
 
 [decomp_me]
 compiler_name = "clang-3.9.1"
