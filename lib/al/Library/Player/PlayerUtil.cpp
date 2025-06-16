@@ -143,7 +143,7 @@ LiveActor* tryFindAlivePlayerActorFromPort(const LiveActor* actor, s32 port) {
 }
 
 s32 findNearestPlayerIdCondition(const LiveActor* actor, const sead::Vector3f& pos,
-                                 bool (*condition)(const al::LiveActor*), f32 threshold) {
+                                 bool (*condition)(const LiveActor*), f32 threshold) {
     PlayerHolder* holder = actor->getSceneInfo()->playerHolder;
     s32 player_num = getPlayerNumMax(holder);
 
@@ -190,7 +190,7 @@ bool tryFindNearestPlayerPos(sead::Vector3f* pos, const LiveActor* actor) {
     s32 nearest_player_id = findNearestPlayerId(actor, -1.0f);
     if (nearest_player_id < 0)
         return false;
-    al::LiveActor* player = getPlayerActor(actor, nearest_player_id);
+    LiveActor* player = getPlayerActor(actor, nearest_player_id);
     if (!player)
         return false;
 
