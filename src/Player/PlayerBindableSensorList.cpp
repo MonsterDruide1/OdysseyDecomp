@@ -30,17 +30,6 @@ void sead::PtrArray<SensorInfo>::sort() {
 }
 // End workaround
 
-// Workaround until https://github.com/open-ead/sead/pull/203 is merged
-// Reason: Current implementation of popBack() is non-matching.
-template <>
-SensorInfo* sead::PtrArray<SensorInfo>::popBack() {
-    if (size() < 1)
-        return nullptr;
-    else
-        return static_cast<SensorInfo*>(PtrArrayImpl::popBack());
-}
-// End workaround
-
 PlayerBindableSensorList::PlayerBindableSensorList() {
     mActiveSensors.allocBuffer(PoolSize, nullptr);
 
