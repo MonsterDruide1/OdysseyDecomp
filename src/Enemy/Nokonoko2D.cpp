@@ -155,7 +155,7 @@ bool Nokonoko2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
 
         updateCollider();
         rs::requestHitReactionToAttacker(message, self, other);
-        mIsTrampled = true;
+        mIsTriggerTrampled = true;
 
         if (!al::isNerve(this, &NrvNokonoko2D.Walk)) {
             if ((al::isNerve(this, &NrvNokonoko2D.KouraStop) && al::isGreaterStep(this, 4)) ||
@@ -194,9 +194,9 @@ bool Nokonoko2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
         const sead::Vector3f& front = al::getFront(this);
         const sead::Vector3f& selfSensor = al::getSensorPos(self);
         const sead::Vector3f& otherSensor = al::getSensorPos(other);
-        bool facingPlayer = (selfSensor - otherSensor).dot(front) >= 0.0f;
+        bool isFacingPlayer = (selfSensor - otherSensor).dot(front) >= 0.0f;
 
-        if (facingPlayer)
+        if (isFacingPlayer)
             al::setVelocityToFront(this, mVelocityFront);
         else
             al::setVelocityToFront(this, -mVelocityFront);
@@ -275,12 +275,12 @@ void Nokonoko2D::control() {
         if (al::isOnGround(this, 0)) {
             al::setVelocityToFront(this, mVelocityFront);
             al::addVelocityToGravity(this, 0.65f);
-        } else if (mIsTrampled) {
+        } else if (mIsTriggerTrampled) {
             sead::Vector3f parallelized;
             al::parallelizeVec(&parallelized, al::getFront(this),
                                al::getCollidedWallPos(this) - al::getTrans(this));
             f32 scale = al::getColliderRadius(this) - parallelized.length() + 1.0f;
-            sead::Vector3f ez = sead::Vector3f::ez;
+            sead::Vector3f ez = sead::Vector3f::ez;  // Required for matching
             al::addTransOffsetLocal(this, ez * scale);
         } else {
             sead::Vector3f* velocity = al::getVelocityPtr(this);
@@ -291,7 +291,7 @@ void Nokonoko2D::control() {
         updateCollider();
     }
 
-    mIsTrampled = false;
+    mIsTriggerTrampled = false;
 
     if (!al::isNerve(this, &NrvNokonoko2D.Damage) &&
         !al::isNerve(this, &NrvNokonoko2D.DamagePoison)) {
@@ -310,13 +310,13 @@ void Nokonoko2D::control() {
         bool isKouraMove = al::isNerve(this, &NrvNokonoko2D.KouraMoveNoTouch) ||
                            al::isNerve(this, &NrvNokonoko2D.KouraMove);
         if (isKouraMove && !isInClippingFrustum()) {
-            if (mOffscreenTimer++ >= mClippingTime) {
-                mOffscreenTimer = 0;
+            if (mKouraMoveOffscreenTimer++ >= mClippingTime) {
+                mKouraMoveOffscreenTimer = 0;
                 al::setNerve(this, &NrvNokonoko2D.HideWait);
                 return;
             }
         } else {
-            mOffscreenTimer = 0;
+            mKouraMoveOffscreenTimer = 0;
         }
     }
 

@@ -41,14 +41,14 @@ private:
     f32 mVelocityFront = 0.0f;
     bool mIsVertFlipped = false;
     f32 mLocalZRotator = 0.0f;
-    s32 mOffscreenTimer = 0;
+    s32 mKouraMoveOffscreenTimer = 0;
     sead::Vector3f mInitTrans = sead::Vector3f::zero;
     sead::Vector3f mInitFront = sead::Vector3f::zero;
     al::AreaObjGroup* mResetArea = nullptr;
     bool mIsResetForce = false;
     s32 mClippingTime = 300;
     bool mIsHeavyGravity = false;
-    bool mIsTrampled = false;
+    bool mIsTriggerTrampled = false;
 
     inline void setVertFlip();
     inline void clearVertFlip();
