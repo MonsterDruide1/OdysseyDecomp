@@ -4,7 +4,7 @@ import argparse
 from collections import defaultdict
 from colorama import Fore
 from common.util import utils
-from common.util.utils import FunctionStatus
+from common.util.utils import FunctionStatus, get_repo_root
 from common.util.config import CONFIG
 import typing as tp
 
@@ -26,7 +26,7 @@ num_total = 0
 code_size: tp.DefaultDict[FunctionStatus, int] = defaultdict(int)
 counts: tp.DefaultDict[FunctionStatus, int] = defaultdict(int)
 
-# TODO: Move these to uitls.py once the new file list format is upstreamed
+# TODO: Move these to utils.py once the new file list format is upstreamed
 
 class FileListEntryInfo:
     def __init__(self, label: str, status: FunctionStatus, size: int):
@@ -43,9 +43,10 @@ _status_map = {
 }
 
 # Manual parsing for better performance
+# assumes size and label to be listed before status
 def parse_file_list_data() -> tp.List[FileListEntryInfo]:
     funtions = []
-    with open(CONFIG["file_list"]) as file_list:
+    with open(get_repo_root() / CONFIG["file_list"]) as file_list:
         current_size = 0
         current_label = ""
         file_list_lines = list(file_list)
@@ -55,7 +56,7 @@ def parse_file_list_data() -> tp.List[FileListEntryInfo]:
                 line_parts = line.split(" ")
                 current_size = int(line_parts[-1])
             elif "label:" in line:
-                # Get last element if label is a string array
+                # Get the first element if label is a string array
                 if "-" in file_list_lines[i + 1]:
                     current_label = file_list_lines[i + 1].split(" ")[-1]
                 else:
