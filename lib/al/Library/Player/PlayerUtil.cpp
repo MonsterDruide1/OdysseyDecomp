@@ -1,11 +1,13 @@
 #include "Library/Player/PlayerUtil.h"
 
 #include "Library/Controller/PadRumbleDirector.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
+#include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Player/PlayerHolder.h"
 
@@ -310,22 +312,94 @@ u32 calcPlayerListOrderByDistance(const LiveActor* actor, const LiveActor** acto
     return result_num;
 }
 
-static void useless(int x) {}
+// NON_MATCHING: major mismatch, it's doing something weird with flags
+// (https://decomp.me/scratch/c1lVL)
+u32 calcAlivePlayerActor(const LiveActor* actor, const LiveActor** actor_list, u32 size) {
+    u32 playerNum = getPlayerNumMax(actor);
+    u32 result_num = 0;
+    for (u32 i = 0; i != playerNum; i++) {
+        LiveActor* player = getPlayerActor(actor, i);
+        if (!isDead(player)) {
+            actor_list[result_num] = player;
+            result_num++;
+            if (result_num >= size)
+                return size;
+        }
+    }
+    return result_num;
+}
 
-u32 calcAlivePlayerActor(const LiveActor* x, const LiveActor**, u32) {useless(3);return 0;}
-LiveActor* tryFindNearestPlayerActorCondition(const LiveActor*, bool (*)(const LiveActor*));
-bool tryFindNearestPlayerPosCondition(sead::Vector3f*, const LiveActor*,
-                                      bool (*)(const LiveActor*));
-bool isResetablePlayerPos(const LiveActor*, const sead::Vector3f&, f32, f32);
-bool isResetablePlayerPos(const LiveActor*, f32);
-void faceToPlayer(LiveActor*);
+LiveActor* tryFindNearestPlayerActorCondition(const LiveActor* actor,
+                                              bool (*condition)(const LiveActor*)) {
+    s32 nearest_player_id = findNearestPlayerIdCondition(actor, getTrans(actor), condition, -1.0f);
+    if (nearest_player_id < 0)
+        return nullptr;
+    return getPlayerActor(actor, nearest_player_id);
+}
+
+bool tryFindNearestPlayerPosCondition(sead::Vector3f* pos, const LiveActor* actor,
+                                      bool (*condition)(const LiveActor*)) {
+    LiveActor* nearest_player = tryFindNearestPlayerActorCondition(actor, condition);
+    if (!nearest_player)
+        return false;
+    *pos = getTrans(nearest_player);
+    return true;
+}
+
+bool isResetablePlayerPos(const LiveActor* actor, const sead::Vector3f& pos, f32 clippingRadius,
+                          f32 threshold) {
+    if (isJudgedToClipFrustum(actor, pos, clippingRadius, 300.0f) &&
+        !isNearPlayer(actor, threshold))
+        return true;
+    return false;
+}
+
+bool isResetablePlayerPos(const LiveActor* actor, f32 threshold) {
+    return isResetablePlayerPos(actor, getTrans(actor), getClippingRadius(actor), threshold);
+}
+
+void faceToPlayer(LiveActor* actor) {
+    sead::Vector3f dir;
+    calcDirToActorH(&dir, actor, getPlayerActor(actor, 0));
+    faceToDirection(actor, dir);
+}
+
 }  // namespace al
 
 namespace alPlayerFunction {
-void registerPlayer(al::LiveActor*, al::PadRumbleKeeper*);
-bool isFullPlayerHolder(al::LiveActor*);
-s32 findPlayerHolderIndex(const al::LiveActor*);
-s32 findPlayerHolderIndex(const al::HitSensor*);
-bool isPlayerActor(const al::LiveActor*);
-bool isPlayerActor(const al::HitSensor*);
+
+void registerPlayer(al::LiveActor* actor, al::PadRumbleKeeper* padRumbleKeeper) {
+    return actor->getSceneInfo()->playerHolder->registerPlayer(actor, padRumbleKeeper);
+}
+
+bool isFullPlayerHolder(al::LiveActor* actor) {
+    return actor->getSceneInfo()->playerHolder->isFull();
+}
+
+s32 findPlayerHolderIndex(const al::LiveActor* actor) {
+    al::PlayerHolder* playerHolder = actor->getSceneInfo()->playerHolder;
+    s32 player_num = playerHolder->getPlayerNum();
+    for (s32 i = 0; i < player_num; i++)
+        if (playerHolder->getPlayer(i) == actor)
+            return i;
+    return 0;
+}
+
+s32 findPlayerHolderIndex(const al::HitSensor* sensor) {
+    return findPlayerHolderIndex(al::getSensorHost(sensor));
+}
+
+bool isPlayerActor(const al::LiveActor* actor) {
+    al::PlayerHolder* playerHolder = actor->getSceneInfo()->playerHolder;
+    s32 player_num = playerHolder->getPlayerNum();
+    for (s32 i = 0; i < player_num; i++)
+        if (playerHolder->getPlayer(i) == actor)
+            return true;
+    return false;
+}
+
+bool isPlayerActor(const al::HitSensor* sensor) {
+    return isPlayerActor(al::getSensorHost(sensor));
+}
+
 }  // namespace alPlayerFunction
