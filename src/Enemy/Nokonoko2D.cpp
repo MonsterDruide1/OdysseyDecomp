@@ -378,8 +378,8 @@ void Nokonoko2D::exeKouraMoveNoTouch() {
         sead::Vector3f playerPos = sead::Vector3f::zero;
         if (al::tryFindNearestPlayerPos(&playerPos, this)) {
             const sead::Vector3f& front = al::getFront(this);
-            bool playerOnFrontSide = (playerPos - trans).dot(front) >= 0.0f;
-            if (playerOnFrontSide)
+            bool isFacingPlayer = (playerPos - trans).dot(front) >= 0.0f;
+            if (isFacingPlayer)
                 al::turnFront(this, 180.0f);
         }
 
