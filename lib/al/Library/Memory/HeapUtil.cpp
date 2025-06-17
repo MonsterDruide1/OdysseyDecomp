@@ -3,7 +3,7 @@
 #include <heap/seadHeapMgr.h>
 
 #include "Library/File/FileUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/System/SystemKit.h"
 #include "Project/Memory/MemorySystem.h"
 

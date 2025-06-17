@@ -54,26 +54,4 @@ private:
     nn::g3d::ResFile* mResFile = nullptr;
 };
 
-class ActorResource {
-public:
-    ActorResource(const sead::SafeString&, Resource*, Resource*);
-    virtual ~ActorResource();
-
-    void initResourceData(const char*, bool);
-
-    bool hasAnimData() const { return mHasAnimData; }
-
-    Resource* getModelRes() const { return mModelRes; }
-
-    Resource* getAnimRes() const { return mAnimRes; }
-
-private:
-    sead::FixedSafeString<0x80> mName;
-    Resource* mModelRes;
-    Resource* mAnimRes;
-    bool mHasAnimData;
-    InitResourceDataAnim* mAnimResData;
-    InitResourceDataAction* mActionResData;
-};
-
 }  // namespace al

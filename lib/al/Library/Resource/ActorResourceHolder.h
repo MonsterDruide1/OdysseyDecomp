@@ -1,5 +1,7 @@
 #pragma once
 
+#include <container/seadPtrArray.h>
+#include <container/seadStrTreeMap.h>
 #include <prim/seadSafeString.h>
 
 #include "Library/HostIO/HioNode.h"
@@ -8,20 +10,24 @@ namespace al {
 class Resource;
 class ActorResource;
 
-class ActorResourceHolder : public HioNode {
+class ActorResourceHolder : public IUseHioNode {
 public:
-    ActorResourceHolder(s32);
-    ~ActorResourceHolder();
+    ActorResourceHolder(s32 capacity);
 
-    ActorResource* tryFindActorResource(const sead::SafeString&);
-    ActorResource* findActorResourceImpl(const sead::SafeString&);
-    ActorResource* createActorResource(const sead::SafeString&, Resource*, Resource*);
+    virtual ~ActorResourceHolder() = default;
+
+    ActorResource* tryFindActorResource(const sead::SafeString& name);
+    ActorResource* findActorResourceImpl(const sead::SafeString& name);
+    ActorResource* createActorResource(const sead::SafeString& name, Resource* modelResource,
+                                       Resource* animResource);
     void removeAll();
-    void eraseResourceUser(Resource*);
+    void eraseResourceUser(Resource* resource);
     void freeErasedActorResource();
 
 private:
-    void* filler[9];
+  sead::StrTreeMap<128, al::ActorResource*> mTreeMap;
+  sead::PtrArray<ActorResource> mActorResource;
+  sead::PtrArray<ActorResource> mErasedActorResource;
 };
 
 static_assert(sizeof(ActorResourceHolder) == 0x48);
