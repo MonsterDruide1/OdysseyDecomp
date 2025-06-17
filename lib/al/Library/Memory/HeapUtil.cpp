@@ -71,7 +71,7 @@ void freeAllSequenceHeap() {
     clearFileLoaderEntry();
 }
 
-bool printAllSequenceHeap() {
+void printAllSequenceHeap() {
     return alProjectInterface::getSystemKit()->getMemorySystem()->printSequenceHeap();
 }
 
