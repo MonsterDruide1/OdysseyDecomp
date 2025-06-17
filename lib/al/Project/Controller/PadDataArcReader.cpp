@@ -1,7 +1,8 @@
 #include "Project/Controller/PadDataArcReader.h"
 
 #include "Library/Controller/PadDataPack.h"
-#include "Library/Resource/ResourceUtil.h"
+#include "Library/Resource/Resource.h"
+#include "Library/Resource/ResourceHolder.h"
 
 namespace al {
 
