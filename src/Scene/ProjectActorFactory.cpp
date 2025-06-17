@@ -1,6 +1,5 @@
 #include "Scene/ProjectActorFactory.h"
 
-#include "Camera/ScenarioStartCamera.h"
 #include "Library/Fluid/FlowMapParts.h"
 #include "Library/LiveActor/CreateActorFunction.h"
 #include "Library/MapObj/BackHideParts.h"
@@ -31,6 +30,7 @@
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Camera/ScenarioStartCamera.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Mummy.h"
