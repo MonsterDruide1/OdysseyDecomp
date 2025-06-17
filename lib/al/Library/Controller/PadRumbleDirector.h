@@ -7,7 +7,7 @@ class PlayerHolder;
 class CameraDirector;
 class WaveVibrationHolder;
 struct PadRumbleParam;
-class PadRumbleKeeper;
+struct PadRumbleKeeper;
 class LiveActor;
 
 class PadRumbleDirector {
@@ -55,6 +55,10 @@ private:
     bool mIsPaused;
     s32 mPowerLevel;
     void* filler2[6];
+};
+
+struct PadRumbleKeeper {
+    s32 port;
 };
 
 PadRumbleKeeper* createPadRumbleKeeper(const LiveActor*, s32);
