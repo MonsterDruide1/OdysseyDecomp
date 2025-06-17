@@ -1,7 +1,7 @@
 #include "Amiibo/HelpAmiiboExecutor.h"
 
 HelpAmiiboExecutor::HelpAmiiboExecutor(HelpAmiiboDirector* director, al::LiveActor* amiiboActor,
-                                       const char*)
+                                       const char* amiiboName)
     : mHelpAmiiboDirector(director), mHelpAmiiboActor(amiiboActor) {}
 
 void HelpAmiiboExecutor::initAfterPlacement(const al::ActorInitInfo&) {}

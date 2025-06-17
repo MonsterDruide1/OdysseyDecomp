@@ -11,6 +11,7 @@ struct ActorParamMove;
 
 class FlyerStateWanderParam {
 public:
+    // TODO: figure out purpose/name for this parameter/member variable
     FlyerStateWanderParam(s32 unk, s32 wanderTime, s32 waitTime, const char* actionName,
                           const al::ActorParamMove* actorParamMove);
 
