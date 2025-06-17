@@ -24,10 +24,10 @@ jobs:
         submodules: recursive
     - name: Check for W-state functions
       run: |
-        if grep -q ",W," "data/odyssey_functions.csv"; then
+        if grep -q "status: Wip" "data/odyssey_functions.csv"; then
           echo "Function list should not contain WIP-functions!"
           echo "Found the following lines:"
-          grep ",W," "data/odyssey_functions.csv"
+          grep "status: Wip" "data/odyssey_functions.csv"
           exit 1
         fi
     - name: Set up dependencies
@@ -48,10 +48,11 @@ jobs:
     - name: Set up cache for toolchain
       uses: actions/cache@v4
       with:
-        key: tools-libs
+        key: tools_libs
         path: |
           toolchain/bin
           toolchain/include
+          toolchain/cache-version-url.txt
     - name: Run setup
       run: tools/setup.py smo-main.nso
     - name: Build project
