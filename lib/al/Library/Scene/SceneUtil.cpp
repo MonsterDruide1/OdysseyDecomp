@@ -41,7 +41,7 @@
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Play/Camera/SimpleCameraPoserFactory.h"
 #include "Library/PostProcessing/PostProcessingFilter.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Scene/DemoDirector.h"
 #include "Library/Scene/Scene.h"
 #include "Library/Scene/SceneStopCtrl.h"
