@@ -30,8 +30,10 @@ public:
     bool isTriggerHipDrop() const;
     bool isTriggerHeadSliding() const;
     bool isTriggerPaddle() const;
+    // TODO: Add proper parameter name
     bool isTriggerRolling(bool a1) const;
     bool isTriggerRollingRestartSwing() const;
+    // TODO: Add proper parameter name
     bool isTriggerRollingCancelHipDrop(bool a1) const;
     bool isTriggerHackAction() const;
     bool isTriggerHackJump() const;
@@ -61,6 +63,7 @@ public:
     bool isTriggerCapSeparateHipDrop() const;
     bool isTriggerSwingPoleClimbFast() const;
     bool isHoldPoleClimbDown() const;
+    // TODO: Add proper parameter name
     bool isTriggerAppendCapAttack(bool a1) const;
 
     bool isHoldSpinCap() const;
@@ -78,7 +81,9 @@ public:
     bool isReleaseHackJump() const;
     bool isEnableDashInput() const;
 
+    // TODO: Add proper parameter name
     bool isThrowTypeSpiral(const sead::Vector2f& a1) const;
+    // TODO: Add proper parameter name
     bool isThrowTypeRolling(const sead::Vector2f& a1) const;
 
     void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;

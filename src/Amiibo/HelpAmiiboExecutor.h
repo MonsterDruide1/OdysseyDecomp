@@ -22,10 +22,11 @@ enum class HelpAmiiboType : s64 {
 
 class HelpAmiiboExecutor : public al::IUseHioNode {
 public:
-    HelpAmiiboExecutor(HelpAmiiboDirector* director, al::LiveActor* amiiboActor, const char*);
+    HelpAmiiboExecutor(HelpAmiiboDirector* director, al::LiveActor* amiiboActor,
+                       const char* amiiboName);
 
     virtual void initAfterPlacement(const al::ActorInitInfo&);
-    virtual bool isTriggerTouch(const al::NfpInfo&) const = 0;
+    virtual bool isTriggerTouch(const al::NfpInfo& nfpInfo) const = 0;
     virtual bool isEnableUse() = 0;
     virtual bool execute() = 0;
     virtual void activate();
