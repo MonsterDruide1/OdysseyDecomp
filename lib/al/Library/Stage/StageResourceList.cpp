@@ -7,7 +7,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Resource/Resource.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Scene/SceneUtil.h"
 #include "Library/Stage/StageResourceUtil.h"
 #include "Library/Yaml/ByamlIter.h"
