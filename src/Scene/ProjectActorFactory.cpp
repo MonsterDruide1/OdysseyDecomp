@@ -30,6 +30,7 @@
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Camera/ScenarioStartCamera.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Mummy.h"
@@ -81,6 +82,7 @@
 #include "Npc/BirdPlayerGlideCtrl.h"
 #include "Npc/KuriboGirl.h"
 #include "Npc/VocalMike.h"
+#include "Npc/WorldTravelingNpc.h"
 
 const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
@@ -476,9 +478,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SandWorldHomeLift", nullptr},
     {"SaucePan", nullptr},
     {"SaveFlagCheckObj", al::createActorFunction<SaveFlagCheckObj>},
-    {"ScenarioStartCameraAnim", nullptr},
-    {"ScenarioStartCameraSimpleZoom", nullptr},
-    {"ScenarioStartCameraRailMove", nullptr},
+    {"ScenarioStartCameraAnim", al::createActorFunction<ScenarioStartCamera>},
+    {"ScenarioStartCameraSimpleZoom", al::createActorFunction<ScenarioStartCamera>},
+    {"ScenarioStartCameraRailMove", al::createActorFunction<ScenarioStartCamera>},
     {"Senobi", nullptr},
     {"SenobiGeneratePoint", nullptr},
     {"SenobiMoveMapParts", nullptr},
@@ -607,7 +609,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"WheelWaveSurfParts", nullptr},
     {"WindBlowPuzzle", nullptr},
     {"WorldMapEarth", al::createActorFunction<WorldMapEarth>},
-    {"WorldTravelingNpc", nullptr},
+    {"WorldTravelingNpc", al::createActorFunction<WorldTravelingNpc>},
     {"WorldTravelingPeach", nullptr},
     {"WorldWarpHole", nullptr},
     {"Fastener", nullptr},
