@@ -13,9 +13,9 @@ public:
     CameraSwitchRequester();
 
     void init(CameraSwitchRequestInfo* start, CameraSwitchRequestInfo* end);
-    void requestStart(CameraTicket* ticket, s32);
-    void requestEnd(CameraTicket* ticket, s32, bool);
-    void requestEndWithNextCameraPose(CameraTicket* ticket, const CameraPoseInfo* poseInfo, s32);
+    void requestStart(CameraTicket* ticket, s32 i);
+    void requestEnd(CameraTicket* ticket, s32 i, bool b);
+    void requestEndWithNextCameraPose(CameraTicket* ticket, const CameraPoseInfo* poseInfo, s32 i);
 
 private:
     CameraSwitchRequestInfo* mStart = nullptr;

@@ -52,10 +52,10 @@ public:
     void initGravityHolder();
     void initShadowDirector();
     void initEffectSystem();
-    void initSwitchAreaDirector(s32, s32);
+    void initSwitchAreaDirector(s32 val1, s32 val2);
     void initNatureDirector();
     void endInit();
-    void update(const char*);
+    void update(const char* unk);
     void clearGraphicsRequest();
     void updateGraphics();
     void preDrawGraphics();

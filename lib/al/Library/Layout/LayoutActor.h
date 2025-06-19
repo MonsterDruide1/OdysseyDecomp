@@ -68,13 +68,13 @@ public:
 
     virtual void control() {}
 
-    void initLayoutKeeper(LayoutKeeper*);
+    void initLayoutKeeper(LayoutKeeper* layoutKeeper);
     void initActionKeeper();
     void initTextPaneAnimator(LayoutTextPaneAnimator*);
     void initExecuteInfo(LayoutExecuteInfo*);
     void initHitReactionKeeper(HitReactionKeeper*);
     void initSceneInfo(LayoutSceneInfo*);
-    void initLayoutPartsActorKeeper(s32);
+    void initLayoutPartsActorKeeper(s32 capacity);
     void initEffectKeeper(EffectKeeper*);
     void initAudioKeeper(AudioKeeper*);
     void initNerve(const Nerve*, s32);

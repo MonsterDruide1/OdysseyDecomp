@@ -16,14 +16,17 @@ class NerveActionCtrl;
 
 class ActorActionKeeper {
 public:
-    static ActorActionKeeper* tryCreate(LiveActor*, const ActorResource*, const char*, const char*);
+    static ActorActionKeeper* tryCreate(LiveActor* actor, const ActorResource* actorRes,
+                                        const char* string0, const char* string1);
 
-    ActorActionKeeper(LiveActor*, const char*, ActionAnimCtrl*, NerveActionCtrl*, ActionFlagCtrl*,
-                      ActionEffectCtrl*, ActionSeCtrl*, ActionBgmCtrl*, ActionPadAndCameraCtrl*,
-                      ActionScreenEffectCtrl*);
+    ActorActionKeeper(LiveActor* parentActor, const char* actorName, ActionAnimCtrl* animCtrl,
+                      NerveActionCtrl* nrvActionCtrl, ActionFlagCtrl* flagCtrl,
+                      ActionEffectCtrl* effectCtrl, ActionSeCtrl* seCtrl, ActionBgmCtrl* bgmCtrl,
+                      ActionPadAndCameraCtrl* padAndCamCtrl,
+                      ActionScreenEffectCtrl* screenEffectCtrl);
 
-    bool startAction(const char* actionName);
-    void tryStartActionNoAnim(const char* actionName);
+    bool startAction(const char* name);
+    void tryStartActionNoAnim(const char* string);
     void init();
     void updatePost();
     void updatePrev();

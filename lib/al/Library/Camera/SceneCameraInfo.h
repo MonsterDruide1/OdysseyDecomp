@@ -8,7 +8,7 @@ class CameraViewInfo;
 
 class SceneCameraInfo {
 public:
-    SceneCameraInfo(s32 num);
+    SceneCameraInfo(s32 maxViewNum);
 
     void initViewInfo(CameraViewInfo* cameraViewInfo);
     const char* getViewName(s32 num) const;
