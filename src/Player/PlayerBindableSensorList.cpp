@@ -4,14 +4,11 @@
 
 const s32 PoolSize = 24;
 
-// Only used in the three below workarounds…
-using SensorInfo = PlayerBindableSensorList::SensorInfo;
-
-// Workaround until ShishuTheDragon:PtrArray-dont-inline-sort are merged
+// Workaround until https://github.com/open-ead/sead/pull/207 is merged.
 // Reason: Current implementation is heavily inlined, which causes mismatches.
 template <>
-__attribute__((noinline)) void sead::PtrArray<SensorInfo>::sort(CompareCallback cmp) {
-    PtrArrayImpl::sort_<SensorInfo>(cmp);
+__attribute__((noinline)) void sead::PtrArray<PlayerBindableSensorList::SensorInfo>::sort(CompareCallback cmp) {
+    PtrArrayImpl::sort_<PlayerBindableSensorList::SensorInfo>(cmp);
 }
 
 PlayerBindableSensorList::PlayerBindableSensorList() {
