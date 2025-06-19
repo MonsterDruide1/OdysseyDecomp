@@ -29,16 +29,16 @@ private:
 static_assert(sizeof(PlayerBindableSensorList) == 0x20);
 
 struct PlayerBindableSensorList::SensorInfo {
-    al::HitSensor* mBindSensor = nullptr;
-    u32 mType = 0;
-    f32 mDistance = 0;
-    s32 mPriority = 0;
+    al::HitSensor* bindSensor = nullptr;
+    u32 type = 0;
+    f32 distance = 0;
+    s32 priority = 0;
 
     bool operator<(const SensorInfo& other) const {
-        if (mPriority < other.mPriority)
+        if (priority < other.priority)
             return true;
-        else if (mPriority == other.mPriority)
-            return mDistance < other.mDistance;
+        else if (priority == other.priority)
+            return distance < other.distance;
         else
             return false;
     }

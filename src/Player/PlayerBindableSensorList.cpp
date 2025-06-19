@@ -7,7 +7,8 @@ const s32 PoolSize = 24;
 // Workaround until https://github.com/open-ead/sead/pull/207 is merged.
 // Reason: Current implementation is heavily inlined, which causes mismatches.
 template <>
-__attribute__((noinline)) void sead::PtrArray<PlayerBindableSensorList::SensorInfo>::sort(CompareCallback cmp) {
+__attribute__((noinline)) void
+sead::PtrArray<PlayerBindableSensorList::SensorInfo>::sort(CompareCallback cmp) {
     PtrArrayImpl::sort_<PlayerBindableSensorList::SensorInfo>(cmp);
 }
 
@@ -32,10 +33,10 @@ void PlayerBindableSensorList::append(al::HitSensor* bindSensor, u32 type, f32 d
         return;
 
     SensorInfo* dest = mPool.popBack();
-    dest->mBindSensor = bindSensor;
-    dest->mType = type;
-    dest->mDistance = distance;
-    dest->mPriority = priority;
+    dest->bindSensor = bindSensor;
+    dest->type = type;
+    dest->distance = distance;
+    dest->priority = priority;
 
     mActiveSensors.pushBack(dest);
 }
@@ -46,7 +47,7 @@ void PlayerBindableSensorList::remove(al::HitSensor* toRemove) {
     s32 size = mActiveSensors.size();
     for (found = 0; found < size; found++) {
         const SensorInfo* item = mActiveSensors[found];
-        if (item->mBindSensor == toRemove)
+        if (item->bindSensor == toRemove)
             break;
     }
 
@@ -67,9 +68,9 @@ u32 PlayerBindableSensorList::getNum() const {
 }
 
 al::HitSensor* PlayerBindableSensorList::get(u32 index) const {
-    return mActiveSensors.at(index)->mBindSensor;
+    return mActiveSensors.at(index)->bindSensor;
 }
 
 u32 PlayerBindableSensorList::getType(u32 index) const {
-    return mActiveSensors.at(index)->mType;
+    return mActiveSensors.at(index)->type;
 }
