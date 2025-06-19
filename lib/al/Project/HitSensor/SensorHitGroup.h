@@ -9,9 +9,9 @@ class SensorHitGroup {
 public:
     SensorHitGroup(s32 maxSensors, const char* groupName);
 
-    void add(HitSensor* sensor);
+    void add(HitSensor* pSensor);
     void remove(HitSensor* sensor);
-    HitSensor* getSensor(s32 index) const;
+    HitSensor* getSensor(s32 idx) const;
     void clear() const;
 
     s32 getSensorCount() const { return mSensorCount; }

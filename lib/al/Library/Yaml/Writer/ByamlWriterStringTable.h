@@ -13,13 +13,13 @@ class ByamlWriterStringTable {
 public:
     ByamlWriterStringTable();
     virtual ~ByamlWriterStringTable();
-    const char* tryAdd(const char*);
+    const char* tryAdd(const char* string);
     u32 calcHeaderSize() const;
     u32 calcContentSize() const;
     u32 calcPackSize() const;
     bool isEmpty() const;
-    u32 calcIndex(const char*) const;
-    void write(sead::WriteStream*) const;
+    u32 calcIndex(const char* data) const;
+    void write(sead::WriteStream* stream) const;
     void print() const;
 
 private:

@@ -31,7 +31,7 @@ public:
 
     s32 getSize() const;
     const u32* getAddressTable() const;
-    u32 getStringAddress(s32 index) const;
+    u32 getStringAddress(s32 idx) const;
     u32 getEndAddress() const;
     const char* getString(s32 index) const;
     s32 getStringSize(s32 index) const;

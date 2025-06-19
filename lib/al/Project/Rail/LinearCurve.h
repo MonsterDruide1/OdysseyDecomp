@@ -16,8 +16,8 @@ public:
     f32 calcNearestParam(const sead::Vector3f& pos) const;
     f32 calcNearestLength(f32* length, const sead::Vector3f& pos, f32 param) const;
     void calcNearestPos(sead::Vector3f* nearest, const sead::Vector3f& pos) const;
-    void calcStartPos(sead::Vector3f* start) const;
-    void calcEndPos(sead::Vector3f* end) const;
+    void calcStartPos(sead::Vector3f* pos) const;
+    void calcEndPos(sead::Vector3f* pos) const;
 
     f32 getLength() const { return mDistance; }
 

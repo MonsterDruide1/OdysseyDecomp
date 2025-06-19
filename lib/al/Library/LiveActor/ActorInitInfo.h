@@ -40,19 +40,27 @@ class ViewIdHolder;
 struct ActorInitInfo {
     ActorInitInfo();
 
-    void initNew(const PlacementInfo*, const LayoutInitInfo*, LiveActorGroup*, const ActorFactory*,
-                 ActorResourceHolder*, AreaObjDirector*, AudioDirector*, CameraDirector*,
-                 ClippingDirector*, CollisionDirector*, DemoDirector*, EffectSystemInfo*,
-                 ExecuteDirector*, GameDataHolderBase*, GravityHolder*, HitSensorDirector*,
-                 ItemDirectorBase*, NatureDirector*, const GamePadSystem*, PadRumbleDirector*,
-                 PlayerHolder*, SceneObjHolder*, SceneMsgCtrl*, SceneStopCtrl*, ScreenCoverCtrl*,
-                 ScreenPointDirector*, ShadowDirector*, StageSwitchDirector*, ModelGroup*,
-                 GraphicsSystemInfo*, ModelDrawBufferCounter*, LiveActorGroup*);
-    void initViewIdSelf(const PlacementInfo*, const ActorInitInfo&);
-    void copyHostInfo(const ActorInitInfo&, const PlacementInfo*);
-    void initViewIdHost(const PlacementInfo*, const ActorInitInfo&);
-    void initViewIdHostActor(const ActorInitInfo&, const LiveActor*);
-    void initNoViewId(const PlacementInfo*, const ActorInitInfo&);
+    void initNew(const PlacementInfo* pPlacementInfo, const LayoutInitInfo* pLayoutInitInfo,
+                 LiveActorGroup* pAllActorsGroup, const ActorFactory* pActorFactory,
+                 ActorResourceHolder* pActorResourceHolder, AreaObjDirector* pAreaObjDirector,
+                 AudioDirector* pAudioDirector, CameraDirector* pCameraDirector,
+                 ClippingDirector* pClippingDirector, CollisionDirector* pCollisionDirector,
+                 DemoDirector* pDemoDirector, EffectSystemInfo* pEffectSystemInfo,
+                 ExecuteDirector* pExecuteDirector, GameDataHolderBase* pGameDataHolder,
+                 GravityHolder* pGravityHolder, HitSensorDirector* pHitSensorDirector,
+                 ItemDirectorBase* pItemDirector, NatureDirector* pNatureDirector,
+                 const GamePadSystem* pGamePadSystem, PadRumbleDirector* pPadRumbleDirector,
+                 PlayerHolder* pPlayerHolder, SceneObjHolder* pSceneObjHolder,
+                 SceneMsgCtrl* pSceneMsgCtrl, SceneStopCtrl* pSceneStopCtrl,
+                 ScreenCoverCtrl* pScreenCoverCtrl, ScreenPointDirector* pScreenPointDirector,
+                 ShadowDirector* pShadowDirector, StageSwitchDirector* pStageSwitchDirector,
+                 ModelGroup* pModelGroup, GraphicsSystemInfo* pGraphicsSystemInfo,
+                 ModelDrawBufferCounter* pModelDrawBufferCounter, LiveActorGroup* pKitDrawingGroup);
+    void initViewIdSelf(const PlacementInfo* pInfo, const ActorInitInfo& actorInfo);
+    void copyHostInfo(const ActorInitInfo& actorInfo, const PlacementInfo* pInfo);
+    void initViewIdHost(const PlacementInfo* pInfo, const ActorInitInfo& actorInfo);
+    void initViewIdHostActor(const ActorInitInfo& actorInfo, const LiveActor* actor);
+    void initNoViewId(const PlacementInfo* pInfo, const ActorInitInfo& actorInfo);
 
     LiveActorGroup* kitDrawingGroup = nullptr;
     const PlacementInfo* placementInfo = nullptr;

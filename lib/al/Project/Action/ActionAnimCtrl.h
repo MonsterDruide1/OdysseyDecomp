@@ -11,7 +11,7 @@ class ActionAnimCtrl {
 public:
     static ActionAnimCtrl* tryCreate(LiveActor*, const ActorResource*, const char*, const char*);
 
-    ActionAnimCtrl(LiveActor*);
+    ActionAnimCtrl(LiveActor* actor);
 
     void init(const ActorResource*, const char*, const char*);
     bool start(const char*);

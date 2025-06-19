@@ -13,7 +13,7 @@ public:
      * @info mCameraLookAtPositions will be set to an array of cameraLookAtPositionMaxCount
      * sead::Vector3f but only one is used/updated.
      */
-    SwitchAreaTargetInfo(s32 playerPositionSize, s32 cameraLookAtPositionSize);
+    SwitchAreaTargetInfo(s32 playerPositionCount, s32 cameraLookAtPositionSize);
     /**
      * @warning Using this ctor will cause a crash when calling update because
      * mCameraLookAtPositions is nullptr by default.
