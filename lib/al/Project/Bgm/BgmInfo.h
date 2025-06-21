@@ -8,9 +8,9 @@ class BgmChangeableParams {
 public:
     BgmChangeableParams();
 
-    void operator=(const BgmChangeableParams&);
+    void operator=(const BgmChangeableParams& value);
 
-    void calcPitch(f32);
+    void calcPitch(f32 value);
 
 private:
     f32 mVolume = 1.0;
@@ -40,8 +40,8 @@ struct BgmUserInfo {
 
     BgmUserInfo();
 
-    static s32 compareInfo(const BgmUserInfo*, const BgmUserInfo*);
-    static s32 compareInfoByKey(const BgmUserInfo*, const char*);
+    static s32 compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2);
+    static s32 compareInfoByKey(const BgmUserInfo* info, const char* string);
 
     const char* name = nullptr;
     AudioInfoListWithParts<BgmActionInfo>* bgmActionInfoList = nullptr;

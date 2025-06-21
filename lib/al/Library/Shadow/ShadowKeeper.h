@@ -9,7 +9,7 @@ class DepthShadowMapCtrl;
 class ShadowKeeper {
 public:
     ShadowKeeper();
-    void initAfterPlacement(GraphicsSystemInfo*);
+    void initAfterPlacement(GraphicsSystemInfo* info);
     void update();
     bool isHide() const;
     void hide();

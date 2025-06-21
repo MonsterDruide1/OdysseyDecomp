@@ -8,7 +8,7 @@ class AreaShapeCylinder : public AreaShape {
 public:
     enum class OriginType { Center, Base, Top };
 
-    AreaShapeCylinder(AreaShapeCylinder::OriginType);
+    AreaShapeCylinder(AreaShapeCylinder::OriginType originType);
 
     bool isInVolume(const sead::Vector3f&) const override;
     bool isInVolumeOffset(const sead::Vector3f&, f32) const override;

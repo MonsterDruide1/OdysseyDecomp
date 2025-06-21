@@ -23,7 +23,7 @@ public:
     void calcPositionHV(sead::Vector3f* pos, f32 h, f32 v) const;
     void calcPosition(sead::Vector3f* pos, f32 prog) const;
     void calcPositionEaseOutH(sead::Vector3f* pos, f32 prog) const;
-    void calcDirection(sead::Vector3f* dir, f32 prog, f32 stepSize) const;
+    void calcDirection(sead::Vector3f* pos, f32 prog, f32 stepSize) const;
     f32 calcPathSpeedFromGravityAccel(f32 frames) const;
     f32 calcPathSpeedFromAverageSpeed(f32 frames) const;
     f32 calcPathSpeedFromHorizontalSpeed(f32 frames) const;

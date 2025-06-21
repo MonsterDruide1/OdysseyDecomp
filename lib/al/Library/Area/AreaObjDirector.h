@@ -17,7 +17,7 @@ public:
     void endInit();
     void update();
     void placement(const AreaInitInfo& initInfo);
-    void placement(const AreaInitInfo* initInfo, s32 initInfoCount);
+    void placement(const AreaInitInfo* initInfoArray, s32 initInfoCount);
     void createAreaObjGroup(const AreaInitInfo& initInfo);
     void createAreaObjGroupBuffer();
     void placementAreaObj(const AreaInitInfo& initInfo);

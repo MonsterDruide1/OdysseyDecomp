@@ -22,7 +22,7 @@ struct WaterSurfaceProperties {
 
 class WaterSurfaceFinder {
 public:
-    WaterSurfaceFinder(const LiveActor* player);
+    WaterSurfaceFinder(const LiveActor* actor);
 
     void update(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 distance);
     void updateLocal(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 maxDistance,

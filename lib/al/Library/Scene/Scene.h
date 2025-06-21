@@ -25,7 +25,7 @@ class Scene : public NerveExecutor,
               public IUseCamera,
               public IUseSceneObjHolder {
 public:
-    Scene(const char*);
+    Scene(const char* name);
 
     virtual ~Scene();
 

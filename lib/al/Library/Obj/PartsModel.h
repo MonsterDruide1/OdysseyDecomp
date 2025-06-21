@@ -9,20 +9,25 @@ namespace al {
 
 class PartsModel : public LiveActor {
 public:
-    PartsModel(const char*);
+    PartsModel(const char* name);
     void endClipped() override;
     void calcAnim() override;
     void attackSensor(HitSensor* self, HitSensor* other) override;
     bool receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) override;
 
-    void initPartsDirect(LiveActor*, const ActorInitInfo&, const char*, const sead::Matrix34f*,
-                         const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, bool);
-    void initPartsSuffix(LiveActor*, const ActorInitInfo&, const char*, const char*,
-                         const sead::Matrix34f*, bool);
-    void initPartsMtx(LiveActor*, const ActorInitInfo&, const char*, const sead::Matrix34f*, bool);
-    void initPartsFixFile(LiveActor*, const ActorInitInfo&, const char*, const char*, const char*);
-    void initPartsFixFileNoRegister(LiveActor*, const ActorInitInfo&, const char*, const char*,
-                                    const char*);
+    void initPartsDirect(LiveActor* parent, const ActorInitInfo& initInfo, const char* arcName,
+                         const sead::Matrix34f* jointMtx, const sead::Vector3f& localTrans,
+                         const sead::Vector3f& localRotate, const sead::Vector3f& localScale,
+                         bool useFollowMtxScale);
+    void initPartsSuffix(LiveActor* parent, const ActorInitInfo& initInfo, const char* arcName,
+                         const char* suffix, const sead::Matrix34f* jointMtx,
+                         bool useFollowMtxScale);
+    void initPartsMtx(LiveActor* parent, const ActorInitInfo& initInfo, const char* arcName,
+                      const sead::Matrix34f* jointMtx, bool useFollowMtxScale);
+    void initPartsFixFile(LiveActor* parent, const ActorInitInfo& initInfo, const char* arcName,
+                          const char* arcSuffix, const char* suffix);
+    void initPartsFixFileNoRegister(LiveActor* parent, const ActorInitInfo& initInfo,
+                                    const char* arcName, const char* arcSuffix, const char* suffix);
 
     void updatePose();
     void offSyncAppearAndHide();
