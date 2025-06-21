@@ -48,11 +48,12 @@ All other systems have to manually install the required packages and programs. W
     * If you are on Ubuntu 18.04, you must
       first [update CMake by using the official CMake APT repository](https://apt.kitware.com/).
 * ccache (to speed up builds)
+* llvm-objdump
 
 Ubuntu users can install those dependencies by running:
 
 ```shell
-sudo apt install python3 ninja-build cmake ccache libssl-dev libncurses5
+sudo apt install python3 ninja-build cmake ccache libssl-dev libncurses5 llvm
 ```
 
 If you are running Ubuntu 23.10 or later, the `libncurses5` package won't be available anymore. You can install it from

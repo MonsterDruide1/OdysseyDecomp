@@ -11,7 +11,7 @@ RUN apt install -y tzdata
 RUN apt install -y git
 
 # install dependencies for building and running the project
-RUN apt install -y ccache cmake curl less libncurses6 libssl-dev ninja-build pip pkg-config python3
+RUN apt install -y ccache cmake curl less libncurses6 libssl-dev llvm ninja-build pip pkg-config python3
 RUN pip install --break-system-packages capstone colorama cxxfilt pyelftools python-Levenshtein toml watchdog
 
 # install dependencies for code environment
