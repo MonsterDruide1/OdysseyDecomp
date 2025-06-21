@@ -12,7 +12,9 @@ class PlayerHackStartShaderCtrl;
 struct PlayerHackStartShaderParam;
 
 struct EnemyStateHackStartParam {
-    EnemyStateHackStartParam(const char*, const char*, const char*, bool, bool);
+    EnemyStateHackStartParam(const char* actionName, const char* visAnimName,
+                             const char* mtpAnimName, bool hasSubActors,
+                             bool updateSubActorShadowMap);
 
     const char* actionName;
     const char* visAnimName;
@@ -23,10 +25,10 @@ struct EnemyStateHackStartParam {
 
 class EnemyStateHackStart : public al::ActorStateBase {
 public:
-    EnemyStateHackStart(al::LiveActor*, const EnemyStateHackStartParam*,
-                        PlayerHackStartShaderParam*);
+    EnemyStateHackStart(al::LiveActor* actor, const EnemyStateHackStartParam* param,
+                        PlayerHackStartShaderParam* shaderParam);
 
-    IUsePlayerHack* tryStart(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
+    IUsePlayerHack* tryStart(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self);
     void kill() override;
     bool isHackStart() const;
     f32 calcHackStartNerveRate() const;
@@ -41,6 +43,6 @@ private:
 };
 
 namespace EnemyStateHackFunction {
-void startHackSwitchShadow(al::LiveActor*, const EnemyStateHackStartParam*);
-void endHackSwitchShadow(al::LiveActor*, const EnemyStateHackStartParam*);
+void startHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam* param);
+void endHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam* param);
 }  // namespace EnemyStateHackFunction

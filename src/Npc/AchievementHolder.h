@@ -16,14 +16,14 @@ public:
     AchievementHolder();
     void init(const al::ActorInitInfo&);
     void init();
-    bool isGetMoon(s32, GameDataHolderAccessor) const;
-    bool isAchieve(s32, GameDataHolderAccessor) const;
-    s32 getAchievementProgressCurrent(s32, GameDataHolderAccessor) const;
-    s32 getAchievementProgressMax(s32, GameDataHolderAccessor) const;
-    s32 getAchievementProgressCurrentRow(s32, GameDataHolderAccessor) const;
-    s32 calcAchieveTotalNum(GameDataHolderAccessor) const;
-    s32 calcMoonGetTotalNum(GameDataHolderAccessor) const;
-    Achievement* tryGetNewAchievement(GameDataHolderAccessor) const;
+    bool isGetMoon(s32 index, GameDataHolderAccessor accessor) const;
+    bool isAchieve(s32 index, GameDataHolderAccessor accessor) const;
+    s32 getAchievementProgressCurrent(s32 index, GameDataHolderAccessor accessor) const;
+    s32 getAchievementProgressMax(s32 index, GameDataHolderAccessor) const;
+    s32 getAchievementProgressCurrentRow(s32 index, GameDataHolderAccessor accessor) const;
+    s32 calcAchieveTotalNum(GameDataHolderAccessor accessor) const;
+    s32 calcMoonGetTotalNum(GameDataHolderAccessor accessor) const;
+    Achievement* tryGetNewAchievement(GameDataHolderAccessor accessor) const;
 
 private:
     sead::PtrArray<Achievement> mArray;

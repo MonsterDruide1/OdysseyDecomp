@@ -19,7 +19,7 @@ public:
     void startDashSign();
     bool isWait() const;
     bool isHideWait() const;
-    void calcDashSignFront(sead::Vector3f*) const;
+    void calcDashSignFront(sead::Vector3f* front) const;
     void exeAppear();
     void exeWait();
     void exeDisappear();

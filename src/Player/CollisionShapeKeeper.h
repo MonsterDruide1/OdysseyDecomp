@@ -34,9 +34,9 @@ public:
     void updateShape();
     void clearResult();
     // TODO: rename parameters
-    void calcWorldShapeInfo(const sead::Matrix34f& a1, f32 a2);
+    void calcWorldShapeInfo(const sead::Matrix34f& a2, f32 a3);
     // TODO: rename parameter
-    void calcRelativeShapeInfo(const sead::Matrix34f& a1);
+    void calcRelativeShapeInfo(const sead::Matrix34f& a2);
     void registerCollideResult(const CollidedShapeResult& result);
     void registerCollideSupportResult(const CollidedShapeResult& result);
     bool isCollidedResultFull() const;

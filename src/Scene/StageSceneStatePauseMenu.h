@@ -58,7 +58,7 @@ public:
     bool isModeSelectEnd() const;
     bool checkNeedKillByHostAndEnd();
 
-    void startActionMario(const char*);
+    void startActionMario(const char* actionName);
     al::LiveActor* getMarioActor() const;
 
     bool isDrawLayout() const;

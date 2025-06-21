@@ -30,9 +30,11 @@ public:
     bool isTriggerHipDrop() const;
     bool isTriggerHeadSliding() const;
     bool isTriggerPaddle() const;
-    bool isTriggerRolling(bool) const;
+    // TODO: Add proper parameter name
+    bool isTriggerRolling(bool a1) const;
     bool isTriggerRollingRestartSwing() const;
-    bool isTriggerRollingCancelHipDrop(bool) const;
+    // TODO: Add proper parameter name
+    bool isTriggerRollingCancelHipDrop(bool a1) const;
     bool isTriggerHackAction() const;
     bool isTriggerHackJump() const;
     bool isTriggerHackSwing() const;
@@ -61,7 +63,8 @@ public:
     bool isTriggerCapSeparateHipDrop() const;
     bool isTriggerSwingPoleClimbFast() const;
     bool isHoldPoleClimbDown() const;
-    bool isTriggerAppendCapAttack(bool) const;
+    // TODO: Add proper parameter name
+    bool isTriggerAppendCapAttack(bool a1) const;
 
     bool isHoldSpinCap() const;
     bool isHoldCapAction() const;
@@ -78,8 +81,10 @@ public:
     bool isReleaseHackJump() const;
     bool isEnableDashInput() const;
 
-    bool isThrowTypeSpiral(const sead::Vector2f&) const;
-    bool isThrowTypeRolling(const sead::Vector2f&) const;
+    // TODO: Add proper parameter name
+    bool isThrowTypeSpiral(const sead::Vector2f& a1) const;
+    // TODO: Add proper parameter name
+    bool isThrowTypeRolling(const sead::Vector2f& a1) const;
 
     void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;
     void calcMoveDirection(sead::Vector3f*, const sead::Vector3f&) const;
