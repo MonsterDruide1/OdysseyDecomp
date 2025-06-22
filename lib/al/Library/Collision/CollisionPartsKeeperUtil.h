@@ -9,6 +9,7 @@ class Triangle;
 class TriangleFilterBase;
 struct HitInfo;
 struct ArrowHitInfo;
+class SphereHitInfo;
 
 bool isFloorCode(const Triangle&, const char*);
 }  // namespace al
@@ -33,4 +34,11 @@ const sead::Vector3f& getCollisionHitNormal(const al::HitInfo*);
 bool getLastPolyOnArrow(const al::IUseCollision*, const al::ArrowHitInfo**, const sead::Vector3f&,
                         const sead::Vector3f&, const al::CollisionPartsFilterBase*,
                         const al::TriangleFilterBase*);
+u32 getStrikeSphereInfoNum(const al::IUseCollision* collision);
+al::SphereHitInfo* getStrikeSphereInfo(const al::IUseCollision* collision, u32 index);
+s32 checkStrikeSphereMovingReaction(const al::IUseCollision*, const sead::Vector3f&, f32,
+                                     const sead::Vector3f&, const al::CollisionPartsFilterBase*,
+                                     const al::TriangleFilterBase*);
+s32 checkStrikeSphere(const al::IUseCollision*, const sead::Vector3f&, f32,
+                       const al::CollisionPartsFilterBase*, const al::TriangleFilterBase*);
 }  // namespace alCollisionUtil
