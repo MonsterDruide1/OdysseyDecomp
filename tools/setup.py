@@ -19,7 +19,7 @@ from common.util.config import get_repo_root
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
-CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.2.0"
+CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.2.1"
 LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 
 class Version(Enum):
