@@ -1,4 +1,5 @@
 #include "Library/Collision/Collider.h"
+
 #include "Library/Collision/Angle.h"
 #include "Library/Collision/CollisionDirector.h"
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
@@ -7,7 +8,6 @@
 
 namespace al {
 
-// TODO: match
 Collider::Collider(CollisionDirector* director, const sead::Matrix34f* actorBaseMtx,
                    const sead::Vector3f* actorTrans, const sead::Vector3f* actorGravity, f32 radius,
                    f32 offsetY, u32 planeNum)
@@ -15,11 +15,12 @@ Collider::Collider(CollisionDirector* director, const sead::Matrix34f* actorBase
       mActorGravity(actorGravity), mRadius(radius), mOffsetY(offsetY), mPlaneNum(planeNum) {
     mCurrentTrans.set(*actorTrans);
     mCurrentRadius = radius;
-    if (mPlaneNum != 0)
+    if (mPlaneNum != 0) {
         mPlanes = new SphereHitInfo[mPlaneNum];
+        __asm("");
+    }
     else
         mPlanes = nullptr;
-    // mPlanes = mPlaneNum != 0 ? new SphereHitInfo[mPlaneNum] : nullptr;
     clear();
     flags2 = (flags2 & 0x80) | 3;
 }
@@ -30,11 +31,11 @@ void Collider::clear() {
 }
 
 void Collider::setTriangleFilter(const TriangleFilterBase* filter) {
-    mTriangleFilter = filter;
+    mPlanes = new SphereHitInfo[mPlaneNum];
 }
 
 void Collider::setCollisionPartsFilter(const CollisionPartsFilterBase* filter) {
-    mCollisionPartsFilter = filter;
+    mPlanes = new SphereHitInfo[mPlaneNum]{};
 }
 
 void Collider::updateRecentOnGroundInfo() {
@@ -402,9 +403,8 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
     f32 a4 = mCurrentRadius;
     f32 v8 = sead::Mathf::clampMax(sead::Mathf::min(mRadius * 0.9f, a4 * 0.9f), 35.0f);
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
-    if ((flags2 & 1) != 0) {
+    if ((flags2 & 1) != 0)
         calcMovePowerByContact(&movePower, checkPos);
-    }
 
     clear();
     _64 = movePower;
@@ -419,8 +419,8 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
     interpolator.startInterp(transStart, transStart + velocity, mRadius, mRadius, v19);
     v56 = 0;
     sead::Vector3f v232526;
-    if ((findCollidePos(&v56, &interpolator, planes, planeNum) & 1) == 0 && interpolator.getPrevStep() == 1.0 &&
-        interpolator.getCurrentStep() == 1.0) {
+    if ((findCollidePos(&v56, &interpolator, planes, planeNum) & 1) == 0 &&
+        interpolator.getPrevStep() == 1.0 && interpolator.getCurrentStep() == 1.0) {
         v232526 = transStart - checkPos + velocity;
     } else {
         sead::Vector3f v272829 = {0.0f, 0.0f, 0.0f};
@@ -480,53 +480,46 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
 }
 
 // TODO: cleanup
-bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3<float>* a3, float* a4,
-                          sead::Vector3<float> const& a5, al::SphereHitInfo* buffer,
-                          u32 bufferSize) {
-    auto a1 = this;
-    const al::TriangleFilterBase* triangleFilter;
-    const al::CollisionPartsFilterBase* collisionPartsFilter;
-    unsigned int v13;
-    int v20;
-    int v21;
-    int v22;
-    float a3a;
-    sead::Vector3f v28;
-
+bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3f* a3, f32* a4,
+                          const sead::Vector3f& a5, al::SphereHitInfo* buffer, u32 bufferSize) {
     sead::Vector3f v71415 = {0.0f, 0.0f, 0.0f};
-    triangleFilter = mTriangleFilter;
-    collisionPartsFilter = mCollisionPartsFilter;
-    v13 = 0;
-    bool foundHit = 0;
-    while (interpolator->getPrevStep() != 1.0 || interpolator->getCurrentStep() != 1.0) {
-        interpolator->calcInterp(&v28, &a3a, 0LL);
+    const al::TriangleFilterBase* triangleFilter = mTriangleFilter;
+    const al::CollisionPartsFilterBase* collisionPartsFilter = mCollisionPartsFilter;
+    bool foundHit = false;
+    u32 totalStored = 0;
+    while (interpolator->getPrevStep() != 1.0f || interpolator->getCurrentStep() != 1.0f) {
+        sead::Vector3f pos;
+        f32 size;
+        interpolator->calcInterp(&pos, &size, nullptr);
+
+        s32 hits;
         if ((flags2 & 2) != 0) {
-            v20 = alCollisionUtil::checkStrikeSphereMovingReaction(
-                a1, v71415 + v28, a3a, a5, collisionPartsFilter, triangleFilter);
+            hits = alCollisionUtil::checkStrikeSphereMovingReaction(
+                this, v71415 + pos, size, a5, collisionPartsFilter, triangleFilter);
         } else {
-            v20 = alCollisionUtil::checkStrikeSphere(a1, v28, a3a, collisionPartsFilter,
+            hits = alCollisionUtil::checkStrikeSphere(this, pos, size, collisionPartsFilter,
                                                      triangleFilter);
         }
 
-        if (v20) {
-            v21 = storeCurrentHitInfo(buffer, bufferSize);
+        if (hits) {
+            s32 stored = storeCurrentHitInfo(buffer, bufferSize);
             sead::Vector3f a2a = {0.0f, 0.0f, 0.0f};
-            obtainMomentFixReaction(buffer, &a2a, nullptr, false, v13);
+            obtainMomentFixReaction(buffer, &a2a, nullptr, false, totalStored);
             v71415 += a2a;
             if (interpolator->getCurrentStep() >= 1.0) {
                 foundHit = 1;
                 break;
             }
 
-            v22 = v21 & (flags2 << 28 >> 31);
-            foundHit = 1;
-            v13 += v22;
+            if (flags2 & 0x8)
+                totalStored += stored;
+            foundHit = true;
         }
 
         interpolator->nextStep();
     }
 
-    interpolator->calcInterp(a3, a4, 0LL);
+    interpolator->calcInterp(a3, a4, nullptr);
     *a3 += v71415;
     if (foundHit) {
         storeContactPlane(buffer);
