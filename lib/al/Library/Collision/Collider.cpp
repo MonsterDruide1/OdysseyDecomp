@@ -222,7 +222,7 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
             minVecX = internalX;
             minVecY = internalY;
             minVecZ = internalZ;
-            
+
             if (maxVecX < fixVector.x) {
                 maxVecX = fixVector.x;
             } else if (fixVector.x < minVecX) {
@@ -402,36 +402,30 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
     f32 a4 = mCurrentRadius;
     f32 v8 = sead::Mathf::clampMax(sead::Mathf::min(mRadius * 0.9f, a4 * 0.9f), 35.0f);
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f xyz = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f v101314 = {0.0f, 0.0f, 0.0f};
-    if ((flags2 & 1) != 0 && calcMovePowerByContact(&movePower, checkPos)) {
-        v101314 = movePower;
-        xyz = movePower;
+    if ((flags2 & 1) != 0) {
+        calcMovePowerByContact(&movePower, checkPos);
     }
 
     clear();
-    _64 = v101314;
-    al::SphereInterpolator v58;
-    v58.startInterp(mCurrentTrans, checkPos + xyz, mCurrentRadius, mRadius, v8);
+    _64 = movePower;
+    al::SphereInterpolator interpolator;
+    interpolator.startInterp(mCurrentTrans, checkPos + movePower, mCurrentRadius, mRadius, v8);
     s32 v56 = 0;
     sead::Vector3f transEnd = (checkPos + movePower) - mCurrentTrans;
     if (!al::isNearZero(transEnd) || !al::isNearZero(mCurrentRadius - mRadius))
-        preCollide(&v58, &transStart, &a4, transEnd, planes, planeNum);
+        preCollide(&interpolator, &transStart, &a4, transEnd, planes, planeNum);
 
     f32 v19 = sead::Mathf::clampMax(mCurrentRadius * 0.9f, 35.0f);
-    v58.startInterp(transStart, transStart + velocity, mRadius, mRadius, v19);
+    interpolator.startInterp(transStart, transStart + velocity, mRadius, mRadius, v19);
     v56 = 0;
-    sead::Vector3f v212224;
     sead::Vector3f v232526;
-    if ((findCollidePos(&v56, &v58, planes, planeNum) & 1) == 0 && v58.getPrevStep() == 1.0 &&
-        v58.getCurrentStep() == 1.0) {
-        v212224 = checkPos;
+    if ((findCollidePos(&v56, &interpolator, planes, planeNum) & 1) == 0 && interpolator.getPrevStep() == 1.0 &&
+        interpolator.getCurrentStep() == 1.0) {
         v232526 = transStart - checkPos + velocity;
     } else {
         sead::Vector3f v272829 = {0.0f, 0.0f, 0.0f};
         s32 v30 = 0;
         bool v31 = true;
-        sead::Vector3f v363738;
         sead::Vector3f v53;
         do {
             sead::Vector3f v55 = {0.0f, 0.0f, 0.0f};
@@ -439,50 +433,46 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
             obtainMomentFixReaction(planes, &v55, &v54, v31, v30);
             s32 v32 = v56;
 
-            v58.calcInterp(&transStart, &a4, &v53);
-            sead::Vector3f v333435;
-            v333435 = v55;
+            interpolator.calcInterp(&transStart, &a4, &v53);
             transStart += v55;
             sead::Vector3f a1a = v55;
             if (al::isNearZero(a1a))
                 a1a = v54;
 
-            v363738 = v272829 + v333435;
+            v272829 += v55;
             v30 += v32;
             al::tryNormalizeOrZero(&a1a);
             f32 v42 = v53.dot(a1a);
             if (v42 < 0.0)
                 v53 -= a1a * v42;
 
-            v272829 = v363738;
             if (velocity.dot(v53) < 0.0)
                 break;
 
-            v58.startInterp(transStart, transStart + v53, a4, mRadius, v19);
-            v58.nextStep();
+            interpolator.startInterp(transStart, transStart + v53, a4, mRadius, v19);
+            interpolator.nextStep();
             v56 = 0;
-            bool CollidePos = findCollidePos(&v56, &v58, planes, planeNum);
-            if (CollidePos && v58.getCurrentStep() < 1.0f) {
-                v31 = false;
-                continue;
-            } else {
-                v58.calcInterpPos(&transStart);
+            bool CollidePos = findCollidePos(&v56, &interpolator, planes, planeNum);
+            if (!CollidePos || (interpolator.getCurrentStep() >= 1.0f)) {
+                interpolator.calcInterpPos(&transStart);
                 if (CollidePos && (v56 > 0)) {
-                    obtainMomentFixReaction(planes, &v55, 0LL, 0, v30);
+                    obtainMomentFixReaction(planes, &v55, nullptr, false, v30);
                     transStart += v55;
                     v30 += v56;
                 }
                 break;
+            } else {
+                v31 = false;
+                continue;
             }
         } while (true);
 
         storeContactPlane(planes);
-        mFixReaction = v363738;
-        v212224 = checkPos;
+        mFixReaction = v272829;
         v232526 = transStart - checkPos;
     }
 
-    mCurrentTrans = v232526 + v212224;
+    mCurrentTrans = v232526 + checkPos;
     mCurrentRadius = mRadius;
     updateRecentOnGroundInfo();
 
