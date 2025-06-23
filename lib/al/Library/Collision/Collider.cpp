@@ -151,152 +151,137 @@ u32 Collider::storeCurrentHitInfo(SphereHitInfo* buffer, u32 bufferSize) {
 // TODO: cleanup
 void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f* a3,
                                            sead::Vector3f* a4, bool a5, u32 a6) {
-    float minY;
-    float sX;
-    float minZ;
-    unsigned int i2;
-    float sY;
-    float sZ;
-    float aX;
-    float aY;
-    float aZ;
-    float wY2;
-    u64 i;
-    al::SphereHitInfo* v27;
-    float minX;
-    float rX2;
-    float sY2;
-    float rY2;
-    float wX2;
-    float rZ2;
-    al::SphereHitInfo* v35;
-    float wZ;
-    float wY;
-    float maxX;
-    float wX;
-    sead::Vector3f fixNormal;
-    sead::Vector3f fixVector;
-    float maxY;
-    float maxZ;
-
     flags2 &= 0x8Fu;
-    i2 = a6;
     for (u32 i = a6; i < mStoredPlaneNum; i++) {
         const sead::Vector3f& normal = a2[i].triangle.getFaceNormal();
         if (al::isFloorPolygon(normal, *mActorGravity)) {
             if (a2[i].isCollisionAtFace())
-                flags2 = flags2 | 0x10;
+                flags2 |= 0x10;
         } else if (al::isWallPolygon(normal, *mActorGravity)) {
             if (a2[i].isCollisionAtFace())
-                flags2 = flags2 | 0x20;
+                flags2 |= 0x20;
         } else {
             if (a2[i].isCollisionAtFace())
-                flags2 = flags2 | 0x40;
+                flags2 |= 0x40;
         }
     }
 
-    if (mStoredPlaneNum > i2) {
-        sX = 0.0f;
-        sY = 0.0f;
-        sZ = 0.0f;
-        aX = 0.0f;
-        aY = 0.0f;
-        aZ = 0.0f;
-        maxX = 0.0f;
-        wX = 0.0f;
-        wZ = 0.0f;
-        wY = 0.0f;
-        maxY = 0.0f;
-        maxZ = 0.0f;
-        while (1) {
-            i = i2;
-            v27 = &a2[i2];
-            minX = sY;
-            const sead::Vector3f& normal = v27->triangle.getFaceNormal();
-            if (al::isFloorPolygon(normal, *mActorGravity)) {
+    float maxVecX;
+    float maxVecY;
+    float maxVecZ;
+    float minVecX;
+    float minVecY;
+    float minVecZ;
+    float minNormX;
+    float minNormY;
+    float minNormZ;
+    float sX;
+    float sY;
+    float sZ;
+    float internalX;
+    float internalY;
+    float internalZ;
+    al::SphereHitInfo* v35;
+    sead::Vector3f fixNormal;
+    sead::Vector3f fixVector;
+
+    maxVecX = 0.0f;
+    maxVecY = 0.0f;
+    maxVecZ = 0.0f;
+    minVecX = 0.0f;
+    minVecY = 0.0f;
+    minVecZ = 0.0f;
+    minNormX = 0.0f;
+    minNormY = 0.0f;
+    minNormZ = 0.0f;
+    sX = 0.0f;
+    sY = 0.0f;
+    sZ = 0.0f;
+    internalX = 0.0f;
+    internalY = 0.0f;
+    internalZ = 0.0f;
+
+    for (u32 i2 = a6; i2 < mStoredPlaneNum; i2++) {
+        for (; 1;) {
+            const sead::Vector3f& normal = a2[i2].triangle.getFaceNormal();
+            if (al::isFloorPolygon(normal, *mActorGravity))
                 if (!flags1 || (flags2 & 0x10) != 0)
-                    v27->calcFixVectorNormal(&fixVector, &fixNormal);
+                    a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
                 else
-                    v27->calcFixVector(&fixVector, &fixNormal);
-                rX2 = maxX;
-            } else if (al::isWallPolygon(normal, *mActorGravity)) {
+                    a2[i2].calcFixVector(&fixVector, &fixNormal);
+            else if (al::isWallPolygon(normal, *mActorGravity))
                 if ((flags2 & 0x20) == 0)
-                    v27->calcFixVector(&fixVector, &fixNormal);
+                    a2[i2].calcFixVector(&fixVector, &fixNormal);
                 else
-                    v27->calcFixVectorNormal(&fixVector, &fixNormal);
-                rX2 = maxX;
-            } else {
-                if ((flags2 & 0x40) == 0)
-                    v27->calcFixVector(&fixVector, &fixNormal);
-                else
-                    v27->calcFixVectorNormal(&fixVector, &fixNormal);
-                rX2 = maxX;
+                    a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
+            else if ((flags2 & 0x40) == 0)
+                a2[i2].calcFixVector(&fixVector, &fixNormal);
+            else
+                a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
+
+            if (maxVecX < fixVector.x) {
+                maxVecX = fixVector.x;
+            } else if (fixVector.x < internalX) {
+                minVecX = fixVector.x;
+                goto endX;
             }
 
-            sY2 = minX;
-            minX = fixVector.x;
-            if (rX2 < minX)
-                maxX = minX;
-            else if (minX < aX)
-                goto endX;
-
-            minX = aX;
+            minVecX = internalX;
 
         endX:
-            rY2 = maxY;
-            minY = fixVector.y;
-            if (maxY < minY)
-                rY2 = minY;
-            else if (minY < aY)
+            if (maxVecY < fixVector.y) {
+                maxVecY = fixVector.y;
+            } else if (fixVector.y < internalY) {
+                minVecY = fixVector.y;
                 goto endY;
+            }
 
-            minY = aY;
+            minVecY = internalY;
 
         endY:
-            wX2 = wX;
-            rZ2 = maxZ;
-            minZ = fixVector.z;
-            if (maxZ < minZ)
-                rZ2 = minZ;
-            else if (minZ < aZ)
+            if (maxVecZ < fixVector.z) {
+                maxVecZ = fixVector.z;
+            } else if (fixVector.z < internalZ) {
+                minVecZ = fixVector.z;
                 goto endZ;
+            }
 
-            minZ = aZ;
+            minVecZ = internalZ;
 
         endZ:
-            maxY = rY2;
-            maxZ = rZ2;
-            if (!a4) {
-                aY = sZ;
-                aX = sY2;
-                aZ = sX;
-            } else {
-                aZ = fixNormal.x;
-                if (wX < fixNormal.x)
-                    wX2 = fixNormal.x;
-                else if (fixNormal.x < sX)
-                    goto end2X;
+            internalY = sZ;
+            internalX = sY;
+            internalZ = sX;
 
-                aZ = sX;
+            if (a4) {
+                if (minNormX < fixNormal.x) {
+                    minNormX = fixNormal.x;
+                } else if (fixNormal.x < internalZ) {
+                    internalZ = fixNormal.x;
+                    goto end2X;
+                }
+
+                internalZ = internalZ;
 
             end2X:
-                aX = fixNormal.y;
-                wX = wX2;
-                if (wY < fixNormal.y)
-                    wY = fixNormal.y;
-                else if (fixNormal.y < sY2)
+                if (minNormY < fixNormal.y) {
+                    minNormY = fixNormal.y;
+                } else if (fixNormal.y < internalX) {
+                    internalX = fixNormal.y;
                     goto end2Y;
+                }
 
-                aX = sY2;
+                internalX = internalX;
 
             end2Y:
-                aY = fixNormal.z;
-                if (wZ < aY)
-                    wZ = aY;
-                else if (aY < sZ)
+                if (minNormZ < fixNormal.z) {
+                    minNormZ = fixNormal.z;
+                } else if (fixNormal.z < internalY) {
+                    internalY = fixNormal.z;
                     goto end2Z;
+                }
 
-                aY = sZ;
+                internalY = internalY;
 
             end2Z:;
             }
@@ -304,95 +289,78 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
             if ((flags2 & 2) == 0)
                 goto LABEL_80;
 
-            if (!v27->triangle.isHostMoved())
+            if (!a2[i2].triangle.isHostMoved())
                 goto LABEL_80;
 
-            v35 = &a2[i];
-            sX = v35->collisionMovingReaction.x;
-            sY = v35->collisionMovingReaction.y;
-            sZ = v35->collisionMovingReaction.z;
-            if ((float)((float)((float)(fixVector.x * sX) + (float)(fixVector.y * sY)) +
-                        (float)(fixVector.z * sZ)) < 0.0)
+            sX = a2[i2].collisionMovingReaction.x;
+            sY = a2[i2].collisionMovingReaction.y;
+            sZ = a2[i2].collisionMovingReaction.z;
+            if ((((fixVector.x * sX) + (fixVector.y * sY)) + (fixVector.z * sZ)) < 0.0)
                 goto LABEL_80;
 
-            if (maxX < sX)
-                maxX = sX;
-            else if (sX < minX)
-                minX = sX;
+            if (maxVecX < sX)
+                maxVecX = sX;
+            else if (sX < minVecX)
+                minVecX = sX;
 
-            if (maxY < sY)
-                maxY = sY;
-            else if (sY < minY)
-                minY = sY;
+            if (maxVecY < sY)
+                maxVecY = sY;
+            else if (sY < minVecY)
+                minVecY = sY;
 
-            if (maxZ < sZ)
-                maxZ = sZ;
-            else if (sZ < minZ)
-                minZ = sZ;
+            if (maxVecZ < sZ)
+                maxVecZ = sZ;
+            else if (sZ < minVecZ)
+                minVecZ = sZ;
 
-            if (!a4) {
-            LABEL_80:
-                sZ = aY;
-                sY = aX;
-                sX = aZ;
-            } else {
-                if (wX < sX)
-                    wX = sX;
-                else if (sX < aZ)
+            if (a4) {
+                if (minNormX < sX)
+                    minNormX = sX;
+                else if (sX < internalZ)
                     goto end3X;
 
-                sX = aZ;
+                sX = internalZ;
 
             end3X:
-                wY2 = wY;
-                if (wY < sY)
-                    wY2 = sY;
-                else if (sY < aX)
+                if (minNormY < sY)
+                    minNormY = sY;
+                else if (sY < internalX)
                     goto end3Y;
 
-                sY = aX;
+                sY = internalX;
 
             end3Y:
-                wY = wY2;
-                if (wZ < sZ)
-                    wZ = sZ;
-                else if (sZ < aY)
+                if (minNormZ < sZ)
+                    minNormZ = sZ;
+                else if (sZ < internalY)
                     goto end3Z;
-                sZ = aY;
+                sZ = internalY;
 
             end3Z:;
+            } else {
+            LABEL_80:;
+                sX = internalZ;
+                sY = internalX;
+                sZ = internalY;
             }
 
-            aX = minX;
-            aY = minY;
-            aZ = minZ;
-            i2 = i + 1;
-            if ((unsigned int)(i + 1) >= mStoredPlaneNum)
+            internalX = minVecX;
+            internalY = minVecY;
+            internalZ = minVecZ;
+            i2++;
+            if (i2 >= mStoredPlaneNum)
                 goto loopBreak;
         }
     }
 
-    sX = 0.0f;
-    maxY = 0.0f;
-    wY = 0.0f;
-    maxX = 0.0f;
-    minZ = 0.0f;
-    minY = 0.0f;
-    minX = 0.0f;
-    wZ = 0.0f;
-    wX = 0.0f;
-    sZ = 0.0f;
-    sY = 0.0f;
-    maxZ = 0.0f;
-
 loopBreak:
-    a3->x = maxX + minX;
-    a3->y = maxY + minY;
-    a3->z = maxZ + minZ;
+    a3->x = maxVecX + minVecX;
+    a3->y = maxVecY + minVecY;
+    a3->z = maxVecZ + minVecZ;
     if (a4) {
-        a4->x = wX + sX;
-        a4->y = wY + sY;
-        a4->z = wZ + sZ;
+        a4->x = minNormX + sX;
+        a4->y = minNormY + sY;
+        a4->z = minNormZ + sZ;
     }
 }
 
