@@ -28,6 +28,7 @@ public:
 
     ActorDitherAnimator* getActorDitherAnimator() const { return mActorDitherAnimator; }
 
+    s32 getCalcViewCore() const { return mCalcViewCore; }
     void setCalcViewCore(s32 core) { mCalcViewCore = core; }
 
     void setGraphicsQualityInfo(GraphicsQualityInfo* info) { mGraphicsQualityInfo = info; }
