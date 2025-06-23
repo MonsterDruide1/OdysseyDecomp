@@ -94,7 +94,7 @@ bool tryGetSuffixIter(ByamlIter* iter, const Resource* resource, const char* nam
                       const char* suffix) {
     if (!suffix)
         return false;
-    al::StringTmp<128> fileNameBySuffix;
+    StringTmp<128> fileNameBySuffix;
     createFileNameBySuffix(&fileNameBySuffix, name, suffix);
     const u8* resBymlData = resource->tryGetByml(fileNameBySuffix);
     if (!resBymlData)
@@ -107,7 +107,7 @@ bool tryGetSuffixIter(ByamlIter* iter, const Resource* resource, const char* nam
 bool tryGetInitFileIterAndName(ByamlIter* iter, sead::BufferedSafeString* fileName,
                                const Resource* resource, const char* suffixIterKey,
                                const char* suffixIterSuffix, const char* suffixIterName) {
-    al::StringTmp<128> tmpFileName;
+    StringTmp<128> tmpFileName;
     if (!tryMakeInitFileName(&tmpFileName, resource, suffixIterKey, suffixIterSuffix,
                              suffixIterName))
         return false;
