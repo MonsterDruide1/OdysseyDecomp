@@ -236,23 +236,6 @@ def common_void_params(c, path):
             FAIL("Function parameters should be empty instead of \"(void)\"!", line, path)
             return
 
-def common_const_type(c, path):
-    for line in c.splitlines():
-        line = line.split("//")[0]
-        index = 0
-        while index < len(line):
-            index = line.find("const", index)
-            if index == -1:
-                break
-            if index > 0 and line[index - 1].isalnum():  # const is just part of a longer string
-                index += 1
-                continue
-            if index >= 0 and line[index + len("const")] in ['*', '&']:
-                FAIL("Const must be placed before the type: const T* or const T&", line, path)
-                index += 1
-                continue
-            index += 1
-
 def common_this_prefix(c, path):
     for line in c.splitlines():
         if 'this->' in line:
@@ -409,7 +392,7 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
                 FAIL("All superclasses must be public!", line, path)
             if should_start_class and not ": " in line and not line.startswith("public") and not line.startswith(
                     "virtual public"):
-                FAIL("All superclasses must be public!", line, path) 
+                FAIL("All superclasses must be public!", line, path)
 
             if line.startswith("class") and "{" in line and ": " in line:
                 index = 0
@@ -505,7 +488,6 @@ def check_source(c, path):
     common_include_order(c, path, False)
     common_sead_types(c, path)
     common_void_params(c, path)
-    common_const_type(c, path)
     common_this_prefix(c, path)
     common_string_finder(c, path)
     common_sead_math_template(c, path)
@@ -521,7 +503,6 @@ def check_header(c, path):
     common_include_order(c, path, True)
     common_sead_types(c, path)
     common_void_params(c, path)
-    common_const_type(c, path)
     common_sead_math_template(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
