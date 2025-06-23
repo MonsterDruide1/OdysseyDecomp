@@ -172,9 +172,9 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
     float minVecX;
     float minVecY;
     float minVecZ;
-    float minNormX;
-    float minNormY;
-    float minNormZ;
+    float maxNormX;
+    float maxNormY;
+    float maxNormZ;
     float sX;
     float sY;
     float sZ;
@@ -191,9 +191,9 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
     minVecX = 0.0f;
     minVecY = 0.0f;
     minVecZ = 0.0f;
-    minNormX = 0.0f;
-    minNormY = 0.0f;
-    minNormZ = 0.0f;
+    maxNormX = 0.0f;
+    maxNormY = 0.0f;
+    maxNormZ = 0.0f;
     sX = 0.0f;
     sY = 0.0f;
     sZ = 0.0f;
@@ -219,34 +219,32 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
             else
                 a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
 
+            minVecX = internalX;
+            minVecY = internalY;
+            minVecZ = internalZ;
+            
             if (maxVecX < fixVector.x) {
                 maxVecX = fixVector.x;
-            } else if (fixVector.x < internalX) {
+            } else if (fixVector.x < minVecX) {
                 minVecX = fixVector.x;
                 goto endX;
             }
 
-            minVecX = internalX;
-
         endX:
             if (maxVecY < fixVector.y) {
                 maxVecY = fixVector.y;
-            } else if (fixVector.y < internalY) {
+            } else if (fixVector.y < minVecY) {
                 minVecY = fixVector.y;
                 goto endY;
             }
 
-            minVecY = internalY;
-
         endY:
             if (maxVecZ < fixVector.z) {
                 maxVecZ = fixVector.z;
-            } else if (fixVector.z < internalZ) {
+            } else if (fixVector.z < minVecZ) {
                 minVecZ = fixVector.z;
                 goto endZ;
             }
-
-            minVecZ = internalZ;
 
         endZ:
             internalY = sZ;
@@ -254,8 +252,8 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
             internalZ = sX;
 
             if (a4) {
-                if (minNormX < fixNormal.x) {
-                    minNormX = fixNormal.x;
+                if (maxNormX < fixNormal.x) {
+                    maxNormX = fixNormal.x;
                 } else if (fixNormal.x < internalZ) {
                     internalZ = fixNormal.x;
                     goto end2X;
@@ -264,8 +262,8 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
                 internalZ = internalZ;
 
             end2X:
-                if (minNormY < fixNormal.y) {
-                    minNormY = fixNormal.y;
+                if (maxNormY < fixNormal.y) {
+                    maxNormY = fixNormal.y;
                 } else if (fixNormal.y < internalX) {
                     internalX = fixNormal.y;
                     goto end2Y;
@@ -274,8 +272,8 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
                 internalX = internalX;
 
             end2Y:
-                if (minNormZ < fixNormal.z) {
-                    minNormZ = fixNormal.z;
+                if (maxNormZ < fixNormal.z) {
+                    maxNormZ = fixNormal.z;
                 } else if (fixNormal.z < internalY) {
                     internalY = fixNormal.z;
                     goto end2Z;
@@ -314,24 +312,24 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
                 minVecZ = sZ;
 
             if (a4) {
-                if (minNormX < sX)
-                    minNormX = sX;
+                if (maxNormX < sX)
+                    maxNormX = sX;
                 else if (sX < internalZ)
                     goto end3X;
 
                 sX = internalZ;
 
             end3X:
-                if (minNormY < sY)
-                    minNormY = sY;
+                if (maxNormY < sY)
+                    maxNormY = sY;
                 else if (sY < internalX)
                     goto end3Y;
 
                 sY = internalX;
 
             end3Y:
-                if (minNormZ < sZ)
-                    minNormZ = sZ;
+                if (maxNormZ < sZ)
+                    maxNormZ = sZ;
                 else if (sZ < internalY)
                     goto end3Z;
                 sZ = internalY;
@@ -358,9 +356,9 @@ loopBreak:
     a3->y = maxVecY + minVecY;
     a3->z = maxVecZ + minVecZ;
     if (a4) {
-        a4->x = minNormX + sX;
-        a4->y = minNormY + sY;
-        a4->z = minNormZ + sZ;
+        a4->x = maxNormX + sX;
+        a4->y = maxNormY + sY;
+        a4->z = maxNormZ + sZ;
     }
 }
 
