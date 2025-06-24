@@ -26,7 +26,7 @@ public:
 
     virtual ~ModelKeeper();
 
-    void initResource();
+    void initResource(const ActorResource*);
     void createMatAnimForProgram(s32);
     void setDisplayRootJointMtxPtr(const sead::Matrix34f* mtx);
     void setModelLodCtrl(ModelLodCtrl* modelLodCtrl);

@@ -14,7 +14,7 @@ bool isExistModelResource(const LiveActor*);
 bool isExistAnimResource(const LiveActor*);
 void tryGetAnimResource(const LiveActor*);
 bool isExistModelResourceYaml(const LiveActor*, const char*, const char*);
-void getModelResource(const LiveActor*);
+Resource* getModelResource(const LiveActor*);
 bool isExistAnimResourceYaml(const LiveActor*, const char*, const char*);
 void getAnimResource(const LiveActor*);
 bool isExistModelOrAnimResourceYaml(const LiveActor*, const char*, const char*);

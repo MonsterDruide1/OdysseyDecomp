@@ -24,7 +24,7 @@ Resource* findOrCreateResourceCategory(const sead::SafeString& path,
 Resource* findOrCreateResourceEventData(const char*, const char*);
 Resource* findOrCreateResourceSystemData(const char*, const char*);
 ActorResource* findOrCreateActorResource(ActorResourceHolder*, const char*, const char*);
-void findOrCreateActorResourceWithAnimResource(ActorResourceHolder*, const char*, const char*,
+ActorResource* findOrCreateActorResourceWithAnimResource(ActorResourceHolder*, const char*, const char*,
                                                const char*, bool);
 bool isExistResourceYaml(const Resource*, const char*, const char*);
 bool isExistResourceYaml(const ActorResource*, const char*, const char*);
