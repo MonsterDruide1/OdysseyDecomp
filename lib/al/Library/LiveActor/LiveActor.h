@@ -162,6 +162,14 @@ public:
 
     void setName(const char* newName) { mName = newName; }
 
+    void setHitReactionKeeper(HitReactionKeeper* hitReactionKeeper) {
+        mHitReactionKeeper = hitReactionKeeper;
+    }
+
+    void setActorParamHolder(ActorParamHolder* paramHolder) {
+        mParamHolder = paramHolder;
+    }
+
 protected:
     friend class alActorFunction;
 
