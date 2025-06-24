@@ -28,7 +28,7 @@ void tryMakeInitFileName(sead::BufferedSafeString*, const Resource*, const char*
 void tryGetSuffixIter(ByamlIter*, const Resource*, const char*, const char*);
 void tryGetInitFileIterAndName(ByamlIter*, sead::BufferedSafeString*, const Resource*, const char*,
                                const char*, const char*);
-void tryGetActorInitFileIterAndName(ByamlIter*, sead::BufferedSafeString*, const Resource*,
+bool tryGetActorInitFileIterAndName(ByamlIter*, sead::BufferedSafeString*, const Resource*,
                                     const char*, const char*);
 bool tryGetActorInitFileIter(ByamlIter*, const Resource*, const char*, const char*);
 bool tryGetActorInitFileIterAndName(ByamlIter*, sead::BufferedSafeString*, const LiveActor*,

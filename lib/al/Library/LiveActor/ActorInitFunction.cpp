@@ -2,9 +2,12 @@
 
 #include "Library/Action/ActorActionKeeper.h"
 #include "Library/Audio/System/AudioKeeper.h"
+#include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraDirector.h"
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/SceneCameraInfo.h"
+#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Collision/PartsMtxConnector.h"
 #include "Library/Draw/GraphicsSystemInfo.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Execute/ExecuteDirector.h"
@@ -12,10 +15,12 @@
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorModelFunction.h"
+#include "Library/LiveActor/ActorParamHolder.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
+#include "Library/LiveActor/HitReactionKeeper.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Model/ModelCtrl.h"
@@ -26,6 +31,14 @@
 #include "Library/Play/Graphics/PrepassTriangleCulling.h"
 #include "Library/Resource/Resource.h"
 #include "Library/Resource/ResourceHolder.h"
+#include "Library/Shadow/DepthShadowMapCtrl.h"
+#include "Library/Shadow/DepthShadowMapDirector.h"
+#include "Library/Shadow/ShadowDirector.h"
+#include "Library/Shadow/ShadowKeeper.h"
+#include "Library/Shadow/ShadowMaskCtrl.h"
+#include "Library/Shadow/ShadowMaskDirector.h"
+#include "Library/Shadow/ShadowMaskSphere.h"
+#include "Library/Yaml/ByamlIter.h"
 #include "nn/g3d/ModelObj.h"
 
 namespace al {
@@ -328,22 +341,125 @@ bool isInitializedBgmKeeper(LiveActor* actor) {
     return audioKeeper && audioKeeper->getBgmKeeper();
 }
 
+void initHitReactionKeeper(LiveActor* actor, const char* suffix) {
+    initHitReactionKeeper(actor, getModelResource(actor), suffix);
+}
+
+void initHitReactionKeeper(LiveActor* actor, const Resource* resource, const char* suffix) {
+    HitReactionKeeper* hitReactionKeeper = HitReactionKeeper::tryCreate(
+        actor->getName(), getTransPtr(actor), actor, actor, actor,
+        actor->getSceneInfo()->padRumbleDirector, actor->getSceneInfo()->sceneStopCtrl,
+        actor->getSceneInfo()->graphicsSystemInfo->getRadialBlurDirector(),
+        actor->getSceneInfo()->playerHolder, resource, suffix);
+    if (hitReactionKeeper)
+        actor->setHitReactionKeeper(hitReactionKeeper);
+}
+
+void initActorParamHolder(LiveActor* actor, const char* suffix) {
+    initActorParamHolder(actor, getModelResource(actor), suffix);
+}
+
+void initActorParamHolder(LiveActor* actor, const Resource* resource, const char* suffix) {
+    ActorParamHolder* paramHolder = ActorParamHolder::tryCreate(actor, resource, suffix);
+    if (paramHolder)
+        actor->setActorParamHolder(paramHolder);
+}
+
+void initDepthShadowMapCtrl(LiveActor* actor, const Resource* resource, const ActorInitInfo& info,
+                            const char* suffix) {
+    ByamlIter fileIter;
+    sead::FixedSafeString<256> fileName;
+    if (!tryGetActorInitFileIterAndName(&fileIter, &fileName, resource, "InitDepthShadowMap",
+                                        suffix))
+        return;
+
+    DepthShadowMapCtrl* depthShadowMapCtrl = new DepthShadowMapCtrl(resource);
+    depthShadowMapCtrl->init(actor, fileIter);
+    actor->getShadowKeeper()->setDepthShadowMapCtrl(depthShadowMapCtrl);
+}
+
+void initDepthShadowMapCtrlWithoutIter(LiveActor* actor, s32 size, bool isAppendSubActor) {
+    DepthShadowMapCtrl* depthShadowMapCtrl = new DepthShadowMapCtrl(nullptr);
+    depthShadowMapCtrl->initWithoutIter(actor, size);
+    actor->getShadowKeeper()->setDepthShadowMapCtrl(depthShadowMapCtrl);
+    actor->getShadowKeeper()->getDepthShadowMapCtrl()->setAppendSubActor(isAppendSubActor);
+}
+
+// TODO: assign proper parameter names
+void addDepthShadowMapInfo(const LiveActor* actor, const char* a1, s32 a2, s32 a3, s32 a4, f32 a5,
+                           bool a6, const sead::Vector3f& a7, bool a8, const sead::Vector3f& a9,
+                           const sead::Vector3f& a10, bool a11, const char* a12, s32 a13, bool a14,
+                           f32 a15, f32 a16, f32 a17, bool a18, bool a19, f32 a20, s32 a21,
+                           bool a22) {
+    actor->getShadowKeeper()->getDepthShadowMapCtrl()->appendDepthShadowMapInfo(
+        a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20,
+        a21, a22, false, 1.0f);
+}
+
+void declareUseDepthShadowMap(const LiveActor* actor, s32 num) {
+    actor->getSceneInfo()
+        ->graphicsSystemInfo->getShadowDirector()
+        ->getDepthShadowMapDirector()
+        ->declareUseDepthShadowMap(num);
+}
+
+// TODO: assign proper parameter names
+void createDepthShadowMap(const LiveActor* actor, const char* a1, s32 a2, s32 a3, s32 a4) {
+    actor->getSceneInfo()
+        ->graphicsSystemInfo->getShadowDirector()
+        ->getDepthShadowMapDirector()
+        ->createDepthShadowMap(actor->getShadowKeeper()->getDepthShadowMapCtrl(),
+                               actor->getModelKeeper(), a1, a2, a3, a4);
+}
+
+void initShadowMaskCtrl(LiveActor* actor, const ActorInitInfo& info, const ByamlIter& iter,
+                        const char* unused) {
+    bool isIgnoreShadowMaskYaml = false;
+    tryGetArg(&isIgnoreShadowMaskYaml, info, "IsIgnoreShadowMaskYaml");
+
+    ShadowMaskCtrl* shadowMaskCtrl = new ShadowMaskCtrl(isIgnoreShadowMaskYaml);
+    shadowMaskCtrl->init(actor, info, iter);
+
+    ShadowMaskDirector* shadowMaskDirector =
+        info.actorSceneInfo.graphicsSystemInfo->getShadowDirector()->getShadowMaskDirector();
+    s32 numShadowMasks = shadowMaskCtrl->getShadowMaskNum();
+    for (s32 i = 0; i < numShadowMasks; i++)
+        shadowMaskDirector->registerShadowMask(shadowMaskCtrl->getShadowMask(i));
+
+    actor->getShadowKeeper()->setShadowMaskCtrl(shadowMaskCtrl);
+}
+
+void initShadowMaskCtrlWithoutInitFile(LiveActor* actor, const ActorInitInfo& info, s32 numMasks) {
+    ShadowMaskCtrl* shadowMaskCtrl = new ShadowMaskCtrl(false);
+    shadowMaskCtrl->init(actor, numMasks);
+
+    ShadowMaskDirector* shadowMaskDirector =
+        info.actorSceneInfo.graphicsSystemInfo->getShadowDirector()->getShadowMaskDirector();
+    s32 numShadowMasks = shadowMaskCtrl->getShadowMaskNum();
+    for (s32 i = 0; i < numShadowMasks; i++)
+        shadowMaskDirector->registerShadowMask(shadowMaskCtrl->getShadowMask(i));
+
+    actor->getShadowKeeper()->setShadowMaskCtrl(shadowMaskCtrl);
+}
+
+void createShadowMaskSphere(LiveActor* actor, const char* a2, const char* a3, const char* a4) {
+    ShadowMaskSphere* shadowMaskSphere = new ShadowMaskSphere(a2);
+    shadowMaskSphere->createMtxConnector();
+    shadowMaskSphere->setDrawCategory(a4);
+    ShadowMaskCtrl* shadowMaskCtrl = actor->getShadowKeeper()->getShadowMaskCtrl();
+    shadowMaskSphere->setHost(actor);
+    shadowMaskSphere->declare(shadowMaskSphere->get_5c());
+
+    MtxConnector* mtxConnector = shadowMaskSphere->getMtxConnector();
+    if (a3 && !isEqualString(a3, "") && isExistJoint(actor, a3))
+        attachMtxConnectorToJoint(mtxConnector, actor, a3);
+    else
+        attachMtxConnectorToActor(mtxConnector, actor);
+
+    shadowMaskCtrl->appendShadowMask(shadowMaskSphere);
+}
+
 /*
-void initHitReactionKeeper(LiveActor*, const char*);
-void initHitReactionKeeper(LiveActor*, const Resource*, const char*);
-void initActorParamHolder(LiveActor*, const char*);
-void initActorParamHolder(LiveActor*, const Resource*, const char*);
-void initDepthShadowMapCtrl(LiveActor*, const Resource*, const ActorInitInfo&, const char*);
-void initDepthShadowMapCtrlWithoutIter(LiveActor*, s32, bool);
-void addDepthShadowMapInfo(const LiveActor*, const char*, s32, s32, s32, f32, bool,
-                           const sead::Vector3f&, bool, const sead::Vector3f&,
-                           const sead::Vector3f&, bool, const char*, s32, bool, f32, f32, f32, bool,
-                           bool, f32, s32, bool);
-void declareUseDepthShadowMap(const LiveActor*, s32);
-void createDepthShadowMap(const LiveActor*, const char*, s32, s32, s32);
-void initShadowMaskCtrl(LiveActor*, const ActorInitInfo&, const ByamlIter&, const char*);
-void initShadowMaskCtrlWithoutInitFile(LiveActor*, const ActorInitInfo&, s32);
-void createShadowMaskSphere(LiveActor*, const char*, const char*, const char*);
 void createShadowMaskCube(LiveActor*, const char*, const char*, const char*, const sead::Color4f&,
                           const sead::Vector3f&, f32, f32, f32, const sead::Vector3f&, f32);
 void createShadowMaskCylinder(LiveActor*, const char*, const char*, const char*,

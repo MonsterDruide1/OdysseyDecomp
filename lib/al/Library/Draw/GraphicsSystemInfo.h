@@ -212,6 +212,10 @@ public:
         return mPrepassTriangleCulling;
     }
 
+    RadialBlurDirector* getRadialBlurDirector() const {
+        return mRadialBlurDirector;
+    }
+
 private:
     sead::StrTreeMap<128, const sead::PtrArray<UniformBlock>*> mViewIndexedUboArrayTree;
     GraphicsInitArg mInitArg;

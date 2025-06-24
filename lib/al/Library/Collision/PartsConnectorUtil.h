@@ -29,6 +29,7 @@ void attachMtxConnectorToJoint(MtxConnector* mtxConnector, const LiveActor* acto
 void attachMtxConnectorToJoint(MtxConnector* mtxConnector, const LiveActor* actor,
                                const char* jointName, const sead::Vector3f& quatInitVec,
                                const sead::Vector3f& trans);
+void attachMtxConnectorToActor(MtxConnector* mtxConnector, const LiveActor* actor);
 void disconnectMtxConnector(MtxConnector* mtxConnector);
 bool isMtxConnectorConnecting(const MtxConnector* mtxConnector);
 void calcConnectTrans(sead::Vector3f* connectTrans, const MtxConnector* mtxConnector);
