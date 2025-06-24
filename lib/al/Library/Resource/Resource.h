@@ -49,6 +49,10 @@ public:
 
     nn::g3d::ResFile* getResFile() const { return mResFile; }
 
+    const char* getName() const {
+        return mName.cstr();
+    }
+
 private:
     sead::ArchiveRes* mArchive = nullptr;
     sead::ArchiveFileDevice* mDevice = nullptr;
