@@ -37,7 +37,6 @@ private:
 
     inline bool receiveDefeatMsg(const al::SensorMsg* message, al::HitSensor* other,
                                  al::HitSensor* self, al::Nerve* nextNerve);
-    inline void scaleHorizontalVelocity(f32 targetSpeed);
 };
 
 static_assert(sizeof(Kuribo2D) == 0x130);

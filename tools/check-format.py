@@ -409,7 +409,7 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
                 FAIL("All superclasses must be public!", line, path)
             if should_start_class and not ": " in line and not line.startswith("public") and not line.startswith(
                     "virtual public"):
-                FAIL("All superclasses must be public!", line, path) 
+                FAIL("All superclasses must be public!", line, path)
 
             if line.startswith("class") and "{" in line and ": " in line:
                 index = 0
@@ -431,10 +431,11 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
                   "Functions ending with an underscore are either protected or private!", path)
     elif visibility == 2:  # private
         if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith("enum"): return
-        if "(" in line or ")" in line: return
         newline = line
         if "=" in line:
             newline = line.split("=")[0].strip()
+        elif "(" in line or ")" in line:
+            return
         elif line.endswith(";"):
             newline = line.split(";")[0].strip()
         else:

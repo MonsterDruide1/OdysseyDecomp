@@ -175,7 +175,14 @@ void Kuribo2D::exeWalk() {
     al::addVelocityToGravity(this, 0.65f);
     al::scaleVelocityDirection(this, al::getGravity(this), 0.98f);
     al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
-    scaleHorizontalVelocity(2.5f);
+
+    sead::Vector3f horizVel = al::getVelocity(this);
+    al::verticalizeVec(&horizVel, al::getGravity(this), horizVel);
+    f32 horizSpeed = horizVel.length();
+    if (horizSpeed != 0.0f && !al::isNear(horizSpeed, 2.5f)) {
+        if (al::tryNormalizeOrZero(&horizVel))
+            al::scaleVelocityDirection(this, horizVel, 2.5f / horizSpeed);
+    }
 }
 
 void Kuribo2D::exeWait() {
@@ -241,16 +248,4 @@ bool Kuribo2D::receiveDefeatMsg(const al::SensorMsg* message, al::HitSensor* oth
     al::appearItem(this);
     al::setNerve(this, nextNerve);
     return true;
-}
-
-void Kuribo2D::scaleHorizontalVelocity(f32 targetSpeed) {
-    sead::Vector3f horizVel = al::getVelocity(this);
-    al::verticalizeVec(&horizVel, al::getGravity(this), horizVel);
-
-    f32 horizSpeed = horizVel.length();
-    if (horizSpeed == 0.0f || al::isNear(horizSpeed, targetSpeed))
-        return;
-
-    if (al::tryNormalizeOrZero(&horizVel))
-        al::scaleVelocityDirection(this, horizVel, targetSpeed / horizSpeed);
 }
