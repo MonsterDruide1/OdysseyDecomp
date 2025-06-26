@@ -118,7 +118,7 @@ public:
 
 class YamlParam_YamlColor : public YamlParamBase<sead::Color4f> {
 public:
-    YamlParam_YamlColor(const char* name): YamlParamBase(name) {}
+    YamlParam_YamlColor(const char* name) : YamlParamBase(name) {}
 
     YamlClassId getClassId() const override;
     void setPtr_YamlColor(sead::Color4f* value) override;
