@@ -9,7 +9,8 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
-const s32 priority = sead::Thread::cDefaultPriority;
+const s32 cDefaultPriority = sead::Thread::cDefaultPriority;
+const s32 cPriority = cDefaultPriority + 6;
 
 WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) : mDataHolder(dataHolder) {
     using WorldResourceLoaderFunctor =
@@ -17,7 +18,7 @@ WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) : mDataHold
 
     mWorldResourceLoader = new al::AsyncFunctorThread(
         "WorldResourceLoader", WorldResourceLoaderFunctor{this, &WorldResourceLoader::loadResource},
-        priority, 0x100000, sead::CoreId::cMain);
+        cPriority, 0x100000, sead::CoreId::cMain);
 }
 
 WorldResourceLoader::~WorldResourceLoader() {
