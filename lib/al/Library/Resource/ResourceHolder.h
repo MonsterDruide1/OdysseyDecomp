@@ -28,8 +28,8 @@ void findOrCreateActorResourceWithAnimResource(ActorResourceHolder*, const char*
                                                const char*, bool);
 bool isExistResourceYaml(const Resource*, const char*, const char*);
 bool isExistResourceYaml(const ActorResource*, const char*, const char*);
-void findResourceYaml(const Resource*, const char*, const char*);
-void findResourceYaml(const ActorResource*, const char*, const char*);
+u8* findResourceYaml(const Resource*, const char*, const char*);
+u8* findResourceYaml(const ActorResource*, const char*, const char*);
 bool tryFindStageParameterFileDesign(const sead::SafeString&, const sead::SafeString&, s32);
 void loadCategoryArchiveAll(const sead::SafeString&);
 void setCurrentCategoryName(const char*);
