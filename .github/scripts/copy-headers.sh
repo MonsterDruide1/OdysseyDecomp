@@ -27,6 +27,4 @@ rsync -a --prune-empty-dirs --include '*/' --include '*.h' --exclude '*' src/ $D
 # Copy CMakeLists.txt for header only library
 cp ./.github/files/HeadersCMakeLists.txt $DESTINATION_PATH/CMakeLists.txt
 
-# Make all contents of every class public
-grep -rli 'private:' * | xargs -i@ sed -i 's/private:/public:/g' @
-grep -rli 'protected:' * | xargs -i@ sed -i 's/protected:/public:/g' @
+python3 ./.github/scripts/process-headers.py $DESTINATION_PATH
