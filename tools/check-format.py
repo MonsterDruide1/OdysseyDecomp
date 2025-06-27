@@ -414,10 +414,11 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
                   "Functions ending with an underscore are either protected or private!", path)
     elif visibility == 2:  # private
         if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith("enum"): return
-        if "(" in line and ")" in line: return
         newline = line
         if "=" in line:
             newline = line.split("=")[0].strip()
+        elif "(" in line or ")" in line:
+            return
         elif line.endswith(";"):
             newline = line.split(";")[0].strip()
         else:
@@ -571,6 +572,8 @@ def main():
     for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
+                if os.path.basename(file) == ".DS_Store":
+                    continue
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
                 if args.run_clang_format:
