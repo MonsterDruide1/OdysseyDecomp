@@ -32,7 +32,7 @@ public:
     bool isExistArchive(const sead::SafeString& path, sead::FileDevice* device) const;
     bool isExistDirectory(const sead::SafeString& path, sead::FileDevice* device) const;
     u32 getFileSize(const sead::SafeString& path, sead::FileDevice* device) const;
-    u8* loadFile(const sead::SafeString&, s32, sead::FileDevice*);
+    u8* loadFile(const sead::SafeString& path, s32 alignment, sead::FileDevice* device);
     bool tryLoadFileToBuffer(const sead::SafeString& path, u8* buffer, u32 bufferSize,
                              s32 alignment, sead::FileDevice* device);
     sead::ArchiveRes* loadArchive(const sead::SafeString& path, sead::FileDevice* device);

@@ -20,43 +20,43 @@ class ByamlIter;
 
 class ByamlWriter {
 public:
-    ByamlWriter(sead::Heap*, bool);
+    ByamlWriter(sead::Heap* heap, bool _alwaysFalse);
     virtual ~ByamlWriter();
 
-    void addBool(bool);
-    void addInt(s32);
-    void addUInt(u32);
-    void addFloat(f32);
-    void addInt64(s64);
-    void addUInt64(u64);
-    void addDouble(f64);
-    void addString(const char*);
+    void addBool(bool value);
+    void addInt(s32 value);
+    void addUInt(u32 value);
+    void addFloat(f32 value);
+    void addInt64(s64 value);
+    void addUInt64(u64 value);
+    void addDouble(f64 value);
+    void addString(const char* value);
     void addNull();
-    void addBool(const char*, bool);
-    void addInt(const char*, s32);
-    void addUInt(const char*, u32);
-    void addFloat(const char*, f32);
-    void addInt64(const char*, s64);
-    void addUInt64(const char*, u64);
-    void addDouble(const char*, f64);
-    void addString(const char*, const char*);
-    void addNull(const char*);
+    void addBool(const char* key, bool value);
+    void addInt(const char* key, s32 value);
+    void addUInt(const char* key, u32 value);
+    void addFloat(const char* key, f32 value);
+    void addInt64(const char* key, s64 value);
+    void addUInt64(const char* key, u64 value);
+    void addDouble(const char* key, f64 value);
+    void addString(const char* key, const char* value);
+    void addNull(const char* key);
 
     ByamlWriterArray* getArrayCurrentContainer();
     ByamlWriterHash* getHashCurrentContainer();
     ByamlWriterContainer* getCurrentContainer();
     void pushHash();
-    void pushContainer(ByamlWriterContainer*);
+    void pushContainer(ByamlWriterContainer* container);
     void pushArray();
-    void pushArray(const char*);
-    void pushHash(const char*);
-    void pushIter(const ByamlIter&);
-    void pushIter(const char*, const ByamlIter&);
-    void pushLocalIter(const ByamlIter&, const char*);
+    void pushArray(const char* key);
+    void pushHash(const char* key);
+    void pushIter(const ByamlIter& iter);
+    void pushIter(const char* key, const ByamlIter& iter);
+    void pushLocalIter(const ByamlIter& iter, const char* iterKey);
     void pop();
     u32 calcHeaderSize() const;
     u32 calcPackSize() const;
-    void write(sead::WriteStream*);
+    void write(sead::WriteStream* stream);
     void print() const;
 
 private:

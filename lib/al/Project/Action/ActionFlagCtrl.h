@@ -17,16 +17,16 @@ struct ActionFlagCtrlInfo {
 
 class ActionFlagCtrl {
 public:
-    static ActionFlagCtrl* tryCreate(LiveActor*, const char*);
+    static ActionFlagCtrl* tryCreate(LiveActor* actor, const char* name);
 
-    ActionFlagCtrl(LiveActor*, const char*);
+    ActionFlagCtrl(LiveActor* actor, const char* name);
 
-    ActionFlagCtrlInfo* findFlagInfo(const char*) const;
+    ActionFlagCtrlInfo* findFlagInfo(const char* name) const;
     void initPost();
-    void start(const char*);
+    void start(const char* name);
     void startCtrlFlag();
     void startCtrlSensor();
-    void update(f32, f32, f32, bool);
+    void update(f32 frame, f32 frameRate, f32 frameMax, bool isStop);
     void updateCtrlSensor(f32, f32, f32, bool);
     bool isFlagValidOn(s32, bool);
     bool isFlagValidOff(s32, bool);

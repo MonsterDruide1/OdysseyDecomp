@@ -6,7 +6,7 @@ namespace al {
 
 class SilhouetteModel : public LiveActor {
 public:
-    SilhouetteModel(LiveActor*, const ActorInitInfo&, const char*);
+    SilhouetteModel(LiveActor* parent, const ActorInitInfo& initInfo, const char* category);
     void movement() override;
 };
 

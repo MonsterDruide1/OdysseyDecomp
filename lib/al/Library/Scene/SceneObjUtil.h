@@ -7,7 +7,7 @@ class IUseSceneObjHolder;
 class ISceneObj;
 
 ISceneObj* createSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId);
-void setSceneObj(const IUseSceneObjHolder* user, ISceneObj*, s32 sceneObjId);
+void setSceneObj(const IUseSceneObjHolder* user, ISceneObj* obj, s32 sceneObjId);
 ISceneObj* getSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId);
 ISceneObj* tryGetSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId);
 bool isExistSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId);

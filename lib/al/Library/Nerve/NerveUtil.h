@@ -72,10 +72,8 @@ f32 calcNerveJumpValue(const IUseNerve* user, s32 inMax, s32 upDuration, s32 rel
 f32 calcNerveStartEndValue(const IUseNerve* user, s32 inMax, s32 upDuration, s32 release, f32 start,
                            f32 end);
 
-void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
-                    const char* hostName);
-void addNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve,
-                   const char* hostName);
+void initNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve, const char* name);
+void addNerveState(IUseNerve* user, NerveStateBase* state, const Nerve* nerve, const char* name);
 bool updateNerveState(IUseNerve* user);
 bool updateNerveStateAndNextNerve(IUseNerve* user, const Nerve* nerve);
 bool isStateEnd(const IUseNerve* user);

@@ -10,13 +10,13 @@ class LiveActor;
 
 class LiveActorGroup : public HioNode {
 public:
-    LiveActorGroup(const char*, s32);
+    LiveActorGroup(const char* groupName, s32 maxActors);
 
-    virtual s32 registerActor(LiveActor*);
+    virtual s32 registerActor(LiveActor* pActor);
 
-    void removeActor(const LiveActor*);
+    void removeActor(const LiveActor* pActor);
     void removeActorAll();
-    bool isExistActor(const LiveActor*) const;
+    bool isExistActor(const LiveActor* pActor) const;
     bool isFull() const;
     s32 calcAliveActorNum() const;
     LiveActor* getDeadActor() const;

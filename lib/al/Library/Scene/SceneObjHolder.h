@@ -8,13 +8,13 @@ struct ActorInitInfo;
 
 class SceneObjHolder {
 public:
-    SceneObjHolder(ISceneObj* (*)(s32), s32);
-    ISceneObj* create(s32);
-    ISceneObj* tryGetObj(s32) const;
-    ISceneObj* getObj(s32) const;
-    bool isExist(s32) const;
-    void setSceneObj(ISceneObj*, s32);
-    void initAfterPlacementSceneObj(const ActorInitInfo&);
+    SceneObjHolder(ISceneObj* (*creator)(s32), s32 size);
+    ISceneObj* create(s32 index);
+    ISceneObj* tryGetObj(s32 index) const;
+    ISceneObj* getObj(s32 index) const;
+    bool isExist(s32 index) const;
+    void setSceneObj(ISceneObj* obj, s32 index);
+    void initAfterPlacementSceneObj(const ActorInitInfo& info);
 
     template <typename T>
     inline T* tryGetObj() const {

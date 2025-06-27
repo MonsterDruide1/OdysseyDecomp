@@ -97,7 +97,7 @@ public:
             : CameraInterpoleStep({CameraInterpoleStepType::ByCameraDistance}) {}
 
         inline void load(const ByamlIter& iter);
-        inline void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
+        inline void set(CameraInterpoleStepType type, s32 step, bool is_interpolate_by_step);
 
         s8 isEaseOut = false;
         bool isInterpolateByStep = false;
@@ -116,7 +116,7 @@ public:
 
     static_assert(sizeof(OrthoProjectionParam) == 0xC);
 
-    CameraPoser(const char* poserName);
+    CameraPoser(const char* name);
     virtual AreaObjDirector* getAreaObjDirector() const override;
 
     virtual void init() {}
@@ -161,8 +161,8 @@ public:
 
     virtual bool requestTurnToDirection(const CameraTurnInfo* info) { return false; }
 
-    void appear(const CameraStartInfo& startInfo);
-    bool receiveRequestFromObjectCore(const CameraObjectRequestInfo& objRequestInfo);
+    void appear(const CameraStartInfo& info);
+    bool receiveRequestFromObjectCore(const CameraObjectRequestInfo& info);
 
     bool isInterpoleByCameraDistance() const;
     bool isInterpoleEaseOut() const;
@@ -172,11 +172,11 @@ public:
     void initNerve(const Nerve* nerve, s32 maxStates);
     void initArrowCollider(CameraArrowCollider* arrowCollider);
     void initAudioKeeper(const char* name);
-    void initRail(const PlacementInfo& placementInfo);
+    void initRail(const PlacementInfo& info);
     void initLocalInterpole();
-    void initLookAtInterpole(f32);
+    void initLookAtInterpole(f32 v);
     void initOrthoProjectionParam();
-    void tryInitAreaLimitter(const PlacementInfo& placementInfo);
+    void tryInitAreaLimitter(const PlacementInfo& info);
     bool tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo) const;
 
     void makeLookAtCameraPrev(sead::LookAtCamera* cam) const;

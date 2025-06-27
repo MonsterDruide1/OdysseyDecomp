@@ -35,7 +35,7 @@ bool isEqualCharacterIdBase(const NfpInfo& nfpInfo, NfpCharacterId characterId);
 bool isEqualNumberingId(const NfpInfo& nfpInfo, s32 numberingId);
 bool isEqualNumberingId(const nn::nfp::ModelInfo& modelInfo, s32 numberingId);
 bool tryGetCharacterId(NfpCharacterId* characterId, const NfpInfo& nfpInfo);
-bool tryGetNumberingId(s32*, const NfpInfo& nfpInfo);
+bool tryGetNumberingId(s32* numberingId, const NfpInfo& nfpInfo);
 bool isCharacterIdBaseMario(const NfpInfo& nfpInfo);
 bool isCharacterIdBaseDrMario(const NfpInfo& nfpInfo);
 bool isCharacterIdBasePeach(const NfpInfo& nfpInfo);

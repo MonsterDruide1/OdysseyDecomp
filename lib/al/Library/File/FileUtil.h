@@ -20,7 +20,7 @@ u32 getFileSize(const sead::SafeString& fileName);
 u32 calcFileAlignment(const sead::SafeString& fileName);
 u32 calcBufferSizeAlignment(const sead::SafeString& fileName);
 u8* loadFile(const sead::SafeString& fileName, s32 size);
-bool tryLoadFileToBuffer(const sead::SafeString& fileName, u8*, u32 bufferSize, s32 size);
+bool tryLoadFileToBuffer(const sead::SafeString& fileName, u8* buffer, u32 bufferSize, s32 size);
 sead::ArchiveRes* loadArchive(const sead::SafeString& fileName);
 sead::ArchiveRes* loadArchiveWithExt(const sead::SafeString& fileName, const char* ext);
 bool tryRequestLoadArchive(const sead::SafeString& fileName, sead::Heap* heap);
@@ -29,7 +29,7 @@ bool tryRequestLoadArchive(const sead::SafeString& fileName, sead::Heap* heap);
 void loadSoundItem(u32 soundEntryId, u32 unknown, IAudioResourceLoader* resLoader);
 
 bool tryRequestLoadSoundItem(u32 soundEntryId);
-bool tryRequestPreLoadFile(const Resource* res, s32, sead::Heap* heap,
+bool tryRequestPreLoadFile(const Resource* res, s32 id, sead::Heap* heap,
                            IAudioResourceLoader* resLoader);
 bool tryRequestPreLoadFile(const Resource* res, const sead::SafeString& fileName, sead::Heap* heap,
                            IAudioResourceLoader* resLoader);

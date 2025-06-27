@@ -9,7 +9,7 @@ class LiveActor;
 
 class HitSensorKeeper {
 public:
-    HitSensorKeeper(s32 sensorCount);
+    HitSensorKeeper(s32 maxSensors);
 
     HitSensor* addSensor(LiveActor* parentActor, const char* name, u32 hitSensorType, f32 radius,
                          u16 maxSensorCount, const sead::Vector3f* followPos,
