@@ -14,7 +14,7 @@
 #include "Project/File/SoundItemHolder.h"
 
 namespace al {
-static sead::FixedSafeString<256> sDeviceName{"main"};
+static sead::SafeString sDeviceName{"main"};
 
 FileLoader::FileLoader(s32 threadPriority) {
     mLoaderThread = new FileLoaderThread(threadPriority);
