@@ -16,7 +16,7 @@ NERVES_MAKE_NOSTRUCT(FilterScope, Appear, Wait, End);
 FilterScope::FilterScope(const char* name, const al::LayoutInitInfo& info, const char* suffix)
     : al::LayoutActor(name) {
     al::initLayoutActor(this, info, "FilterScope", suffix);
-    initNerve(&Appear, 0);
+    initNerve(&Appear);
     kill();
 }
 
@@ -31,20 +31,20 @@ void FilterScope::end() {
 
 void FilterScope::exeAppear() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Appear", 0);
-    if (al::isActionEnd(this, 0))
+        al::startAction(this, "Appear");
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
 void FilterScope::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", 0);
+        al::startAction(this, "Wait");
 }
 
 void FilterScope::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", 0);
-    if (al::isActionEnd(this, 0))
+        al::startAction(this, "End");
+    if (al::isActionEnd(this))
         kill();
 }
 
