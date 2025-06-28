@@ -2,12 +2,32 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Clipping/ClippingActorInfo.h"
+#include "Library/Placement/PlacementId.h"
+
 namespace al {
 class PlacementId;
-class ClippingInfoGroup;
 class ClippingJudge;
-
 struct ClippingActorInfo;
+
+struct ClippingInfoGroup {
+    ClippingInfoGroup();
+    void registerInfo(ClippingActorInfo* clippingActorInfo);
+    void removeInfo(ClippingActorInfo* clippingActorInfo);
+    void addCount();
+    void allocBuffer();
+    void setGroupId(const ClippingActorInfo* clippingActorInfo);
+    bool isEqualGroupId(const PlacementId* placementId) const;
+    bool judgeClippingAll(const ClippingJudge* clippingJudge) const;
+    void startClippedAll();
+    void endClippedAll();
+
+    s32 count = 0;
+    s32 size = 0;
+    ClippingActorInfo** clippingInfos = nullptr;
+    PlacementId* groupId;
+    bool isClipped = false;
+};
 
 class ClippingGroupHolder {
 public:
@@ -21,28 +41,8 @@ public:
     void reentry(ClippingActorInfo* clippingActorInfo);
 
 private:
-    void* filler[0x2];
-};
-
-class ClippingInfoGroup {
-public:
-    ClippingInfoGroup();
-    void registerInfo(ClippingActorInfo* clippingActorInfo);
-    void removeInfo(ClippingActorInfo* clippingActorInfo);
-    void addCount();
-    void allocBuffer();
-    void setGroupId(const ClippingActorInfo* clippingActorInfo);
-    bool isEqualGroupId(const PlacementId* placementId) const;
-    bool judgeClippingAll(const ClippingJudge* clippingJudge) const;
-    void startClippedAll();
-    void endClippedAll();
-
-private:
-    s32 mCount = 0;
-    s32 mSize = 0;
-    ClippingActorInfo** mClippingInfos = nullptr;
-    PlacementId* mGroupId;
-    bool mIsClipped = false;
+    s32 mGroupCount = 0;
+    ClippingInfoGroup** mGroups = nullptr;
 };
 
 }  // namespace al
