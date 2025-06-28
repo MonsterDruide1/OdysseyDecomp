@@ -19,6 +19,7 @@ from common.util.config import get_repo_root
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
+TARGET_UNCOMPRESSED_NSO_PATH = setup.config.get_versioned_data_path(setup.config.get_default_version()) / 'main.uncompressed.nso'
 CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.2.1"
 LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 
@@ -32,27 +33,34 @@ class Version(Enum):
 def prepare_executable(original_nso: Optional[Path]):
     COMPRESSED_V10_HASH = "e21692d90f8fd2def2d2d22d983d62ac81df3b8b3c762d1f2dca9d9ab7b3053a"
     UNCOMPRESSED_V10_HASH = "18ece865061704d551fe456e0600c604c26345ecb38dcbe328a24d5734b3b4eb"
+    V10_ELF_HASH = "b8f8b542c1ee6bd3eb70c9ccebb52b69c9f7ced5f7cd8aebed56ec8fe53b3aa5"
 
-    if TARGET_PATH.is_file() and hashlib.sha256(TARGET_PATH.read_bytes()).hexdigest() == TARGET_HASH and TARGET_ELF_PATH.is_file():
-        print(">>> NSO is already set up")
+    if TARGET_ELF_PATH.is_file() and hashlib.sha256(TARGET_ELF_PATH.read_bytes()).hexdigest() == V10_ELF_HASH:
+        print(">>> Converted ELF is already set up")
         return
 
     if not original_nso.is_file():
         setup.fail(f"{original_nso} is not a file")
 
-    nso_data = original_nso.read_bytes()
-    nso_hash = hashlib.sha256(nso_data).hexdigest()
+    nso_hash = hashlib.sha256(original_nso.read_bytes()).hexdigest()
 
     if nso_hash != COMPRESSED_V10_HASH and nso_hash != UNCOMPRESSED_V10_HASH:
         setup.fail(f"unknown executable: {nso_hash}")
 
-    TARGET_PATH.write_bytes(nso_data)
-    if not TARGET_PATH.is_file():
-        setup.fail("internal error while preparing executable (missing NSO); please report")
+    setup._convert_nso_to_elf(original_nso)
 
-    setup._convert_nso_to_elf(TARGET_PATH)
-    if not TARGET_ELF_PATH.is_file():
+    converted_elf_path = original_nso.with_suffix(".elf")
+
+    if not converted_elf_path.is_file():
         setup.fail("internal error while preparing executable (missing ELF); please report")
+
+    shutil.move(converted_elf_path, TARGET_ELF_PATH);
+
+    uncompressed_nso_path = original_nso.with_suffix(".uncompressed.nso")
+    shutil.move(uncompressed_nso_path, TARGET_UNCOMPRESSED_NSO_PATH);
+
+    if not TARGET_UNCOMPRESSED_NSO_PATH.is_file() or hashlib.sha256(TARGET_UNCOMPRESSED_NSO_PATH.read_bytes()).hexdigest() != UNCOMPRESSED_V10_HASH:
+        setup.fail("Internal error while exporting uncompressed NSO (uncompressed NSO either doesn't exist or has an incorrect hash); please report")
 
 def get_build_dir():
     return setup.ROOT / "build"
