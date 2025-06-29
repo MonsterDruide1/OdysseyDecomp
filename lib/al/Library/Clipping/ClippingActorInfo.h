@@ -4,11 +4,10 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-enum ClippingRequestKeeper {};
-
 namespace al {
 struct ActorInitInfo;
 
+class ClippingRequestKeeper;
 class ClippingJudge;
 class LiveActor;
 class PlacementId;
