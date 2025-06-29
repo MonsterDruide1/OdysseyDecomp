@@ -1,4 +1,4 @@
-#include "Library/Clipping/ClippingInfoGroup.h"
+#include "Library/Clipping/ClippingGroupHolder.h"
 
 #include "Library/Clipping/ClippingActorInfo.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
