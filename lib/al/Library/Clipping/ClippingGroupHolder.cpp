@@ -42,7 +42,9 @@ void ClippingInfoGroup::allocBuffer() {
             mClippingInfos[i] = nullptr;
 }
 
-void ClippingInfoGroup::setGroupId(const ClippingActorInfo* clippingActorInfo) {}
+void ClippingInfoGroup::setGroupId(const ClippingActorInfo* clippingActorInfo) {
+    *mGroupId = *clippingActorInfo->placementId;
+}
 
 bool ClippingInfoGroup::isEqualGroupId(const PlacementId* placementId) const {
     return mGroupId->isEqual(*placementId);

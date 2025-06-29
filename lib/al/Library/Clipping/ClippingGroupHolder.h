@@ -2,8 +2,6 @@
 
 #include <basis/seadTypes.h>
 
-
-
 namespace al {
 class PlacementId;
 class ClippingInfoGroup;
