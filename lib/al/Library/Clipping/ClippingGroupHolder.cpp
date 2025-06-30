@@ -9,7 +9,6 @@ namespace al {
 
 ClippingInfoGroup::ClippingInfoGroup() : mGroupId(new PlacementId()) {}
 
-
 // BUG: no bounds check
 void ClippingInfoGroup::registerInfo(ClippingActorInfo* clippingActorInfo) {
     mClippingInfos[mSize] = clippingActorInfo;
