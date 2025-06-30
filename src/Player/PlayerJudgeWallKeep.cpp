@@ -124,9 +124,8 @@ void PlayerJudgeWallKeep::update() {
                 if (sead::Mathf::abs(al::calcAngleOnPlaneDegree(
                         hitNormal, collidedWallNormal, gravity2)) > mConst->getWallFollowAngleH())
                     return;
-                else if (sead::Mathf::abs(
-                             al::calcAngleOnPlaneDegree(hitNormal, collidedWallNormal, wallSide)) >
-                         mConst->getWallFollowAngleV())
+                if (sead::Mathf::abs(al::calcAngleOnPlaneDegree(
+                        hitNormal, collidedWallNormal, wallSide)) > mConst->getWallFollowAngleV())
                     return;
             }
         }
