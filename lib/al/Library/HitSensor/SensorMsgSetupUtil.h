@@ -61,30 +61,33 @@ Creating a SensorMsg class called SensorMsgTest2 that holds a string referenced 
 
 /*
 
-Same as above, but allows adding a custom constructor. This is especially useful for implementing
-existing SensorMsgs that store vectors because the ctor for them needs to call `set()` on the
-vector:
+Same as above, but allows adding a custom constructor. The second argument is a list of member
+variables the message should store and the third argument is a list of arguments to the constructor.
+This is especially useful for implementing existing SensorMsgs that store vectors because the ctor
+for them needs to call `set()` on the vector:
 
-SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, (sead::Vector3f, Vec))
-    inline MyVecMsg(const sead::Vector3f& pVec){
-        mVec.set(pVec);
-    }
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead::Vector3f&, Vec)))
+{ mVec.set(pVec);
 };
 
 */
 
-#define SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(Type, ...)                                                \
+#define SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(Type, SensorMsgParams, CtorParams)                        \
     class SensorMsg##Type : public al::SensorMsg {                                                 \
         SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
     private:                                                                                       \
-        DECL_MEMBER_VAR_MULTI(__VA_ARGS__);                                                        \
+        DECL_MEMBER_VAR_MULTI SensorMsgParams;                                                     \
                                                                                                    \
     public:                                                                                        \
-        inline void extractData(POINTER_PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {     \
-            SET_PARAM_MEMBER_MULTI(__VA_ARGS__);                                                   \
+        SensorMsg##Type(PARAM_LIST_END_COMMA CtorParams void* _ = nullptr);                        \
+                                                                                                   \
+        inline void extractData(POINTER_PARAM_LIST_END_COMMA SensorMsgParams void* _ = nullptr) {  \
+            SET_PARAM_MEMBER_MULTI SensorMsgParams;                                                \
         }                                                                                          \
                                                                                                    \
-        virtual ~SensorMsg##Type() = default;
+        virtual ~SensorMsg##Type() = default;                                                      \
+    };                                                                                             \
+    inline SensorMsg##Type::SensorMsg##Type(PARAM_LIST_END_COMMA CtorParams void* _)
 
 // Use this in the edge cases where there's no macro to implement a specific type of isMsg
 #define MSG_TYPE_CHECK_(Type, MsgVar) sead::IsDerivedFrom<SensorMsg##Type>(MsgVar)

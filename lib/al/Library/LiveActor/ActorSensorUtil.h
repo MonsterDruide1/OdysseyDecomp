@@ -833,25 +833,23 @@ SENSOR_MSG_WITH_DATA(StringV4fSensorPtr, (const char*, Str), (sead::Vector4f*, V
                      (HitSensor*, Sender));
 SENSOR_MSG_WITH_DATA(StringVoidPtr, (const char*, Str), (void*, Ptr));
 
-SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollidePush, (sead::Vector3f, Vec));
-
-inline SensorMsgCollidePush(const sead::Vector3f& pVec) {
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollidePush, ((sead::Vector3f, Vec)),
+                                 ((const sead::Vector3f&, Vec))) {
     mVec.set(pVec);
 }
-};
 
-SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollisionImpulse, (sead::Vector3f*, VecPtr),
-                                 (const sead::Vector3f*, ConstVec), (f32, FloatVal),
-                                 (const sead::Vector3f*, ConstVec2), (f32, FloatVal2))
-
-inline SensorMsgCollisionImpulse(sead::Vector3f* pVecPtr, const sead::Vector3f& pVecRef,
-                                 f32 pFloatVal, const sead::Vector3f& pVecRef2, f32 pFloatVal2) {
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollisionImpulse,
+                                 ((sead::Vector3f*, VecPtr), (const sead::Vector3f*, ConstVec),
+                                  (f32, FloatVal), (const sead::Vector3f*, ConstVec2),
+                                  (f32, FloatVal2)),
+                                 ((sead::Vector3f*, VecPtr), (const sead::Vector3f&, VecRef),
+                                  (f32, FloatVal), (const sead::Vector3f&, VecRef2),
+                                  (f32, FloatVal2))) {
     mVecPtr = pVecPtr;
     mConstVec = &pVecRef;
     mFloatVal = pFloatVal;
     mConstVec2 = &pVecRef2;
     mFloatVal2 = pFloatVal2;
 }
-}
-;
-}
+
+}  // namespace al
