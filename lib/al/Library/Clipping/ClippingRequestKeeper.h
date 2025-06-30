@@ -6,7 +6,7 @@ namespace al {
 class LiveActor;
 struct ClippingRequestInfo;
 
-enum class ClippingRequestType : s32 { isClipped, isNotClipped };
+enum class ClippingRequestType : s32 { IsClipped, IsNotClipped };
 
 struct ClippingRequestInfo {
     ClippingRequestInfo();
@@ -15,14 +15,14 @@ struct ClippingRequestInfo {
         : liveActor(actor), requestType(type) {}
 
     LiveActor* liveActor = nullptr;
-    ClippingRequestType requestType = ClippingRequestType::isClipped;
+    ClippingRequestType requestType = ClippingRequestType::IsClipped;
 };
 
 struct ClippingRequestTable {
     ClippingRequestTable(s32 capacity);
-    s32 tableCapacity = 0;
-    s32 tableSize = 0;
-    ClippingRequestInfo* tableInfo = nullptr;
+    s32 capacity = 0;
+    s32 numEntries = 0;
+    ClippingRequestInfo* entries = nullptr;
 };
 
 class ClippingRequestKeeper {
