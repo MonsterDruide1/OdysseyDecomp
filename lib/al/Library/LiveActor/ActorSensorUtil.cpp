@@ -498,6 +498,7 @@ bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender
     return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgEnemyAttack(), sender, receiver);
 }
 
+// NON_MATCHING: Minor mismatch in stack usage (https://decomp.me/scratch/8y80i)
 bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* receiver, HitSensor* sender,
                                                   const sead::Vector3f& vec1,
                                                   const sead::Vector3f& vec2, f32 unk) {
