@@ -8,7 +8,7 @@
 #include "Library/Resource/Resource.h"
 #include "Library/Resource/ResourceUtil.h"
 #include "Library/Yaml/ByamlIter.h"
-#include "Project/Memory/SceneHeapSetter.h"
+#include "Project/Memory/Util.h"
 
 namespace al {
 
