@@ -28,6 +28,7 @@ for root, _, files in os.walk(workdir):
                             break
                         if line_inner_no_newline.endswith(";"):
                             del lines[i:i+j+1]
+                            i -= 1
                             break
                 i += 1
             file.seek(0)
