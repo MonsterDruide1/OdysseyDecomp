@@ -174,6 +174,7 @@ public:
     void initAudioKeeper(const char* name);
     void initRail(const PlacementInfo& info);
     void initLocalInterpole();
+    // TODO: rename `v`
     void initLookAtInterpole(f32 v);
     void initOrthoProjectionParam();
     void tryInitAreaLimitter(const PlacementInfo& info);

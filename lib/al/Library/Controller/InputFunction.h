@@ -169,17 +169,18 @@ bool isPadReleaseUiCursorRight(s32 port = -1);
 const sead::Vector2f& getLeftStick(s32 port = -1);
 const sead::Vector2f& getRightStick(s32 port = -1);
 
-void getPadCrossDir(sead::Vector2f* vec, s32 port);
-void getPadCrossDirSideways(sead::Vector2f* vec, s32 port);
+void getPadCrossDir(sead::Vector2f* dir, s32 port);
+void getPadCrossDirSideways(sead::Vector2f* dir, s32 port);
 
-void calcTouchScreenPos(sead::Vector2f* vec);
-void calcTouchLayoutPos(sead::Vector2f*);
+void calcTouchScreenPos(sead::Vector2f* pos);
+void calcTouchLayoutPos(sead::Vector2f* pos);
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size);
 bool isTouchPosInCircle(const sead::Vector2f&, f32);
 bool isTouchPosInCircleByWorldPos(const sead::Vector2f&, const IUseCamera*, f32, f32);
 bool isPadTouchRect(f32, f32, f32, f32);
 
+// TODO: rename parameters
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port);
 
 s32 getPlayerControllerPort(s32 playerNo);

@@ -69,10 +69,10 @@ bool ByamlWriterStringTable::isEmpty() const {
     return mList.size() == 0;
 }
 
-u32 ByamlWriterStringTable::calcIndex(const char* data) const {
+u32 ByamlWriterStringTable::calcIndex(const char* string) const {
     s32 i = 0;
     for (auto& node : mList) {
-        if (!strcmp(data, node))
+        if (!strcmp(string, node))
             return i;
         i++;
     }

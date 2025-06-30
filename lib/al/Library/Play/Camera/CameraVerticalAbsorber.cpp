@@ -63,9 +63,9 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
     setNerve(this, &NrvCameraVerticalAbsorber.Absorb);
 }
 
-void CameraVerticalAbsorber::load(const ByamlIter& data) {
+void CameraVerticalAbsorber::load(const ByamlIter& iter) {
     ByamlIter it;
-    if (!data.tryGetIterByKey(&it, "VerticalAbsorb"))
+    if (!iter.tryGetIterByKey(&it, "VerticalAbsorb"))
         return;
 
     tryGetByamlF32(&mAbsorbScreenPosUp, it, "AbsorbScreenPosUp");

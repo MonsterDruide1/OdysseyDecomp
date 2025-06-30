@@ -10,14 +10,14 @@ public:
 
     AreaShapeCube(AreaShapeCube::OriginType originType);
 
-    bool isInVolume(const sead::Vector3f& trans) const override;
+    bool isInVolume(const sead::Vector3f& pos) const override;
     bool isInVolumeOffset(const sead::Vector3f&, f32) const override;
     bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const override;
     bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
                              const sead::Vector3f&) const override;
     bool calcLocalBoundingBox(sead::BoundBox3f*) const override;
 
-    bool isInLocalVolume(const sead::Vector3f& trans) const;
+    bool isInLocalVolume(const sead::Vector3f& pos) const;
 
 private:
     AreaShapeCube::OriginType mOriginType;

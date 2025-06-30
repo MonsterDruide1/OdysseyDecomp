@@ -9,7 +9,7 @@ class LiveActor;
 
 class PlayerHolder {
 public:
-    PlayerHolder(s32 count);
+    PlayerHolder(s32 maxPlayers);
     void clear();
     void registerPlayer(LiveActor* actor, PadRumbleKeeper* rumbleKeeper);
     LiveActor* getPlayer(s32 index) const;

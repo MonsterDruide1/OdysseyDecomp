@@ -28,10 +28,10 @@ public:
 class EnemyStateBlowDown : public ActorStateBase {
 public:
     EnemyStateBlowDown(LiveActor* actor, const EnemyStateBlowDownParam* param, const char* name);
-    void start(const HitSensor* sensor);
+    void start(const HitSensor* other);
     void start(const sead::Vector3f& dir);
-    void start(const HitSensor* sensor1, const HitSensor* sensor2);
-    void start(const LiveActor* actor);
+    void start(const HitSensor* other, const HitSensor* self);
+    void start(const LiveActor* attacker);
 
     void appear() override;
     void kill() override;

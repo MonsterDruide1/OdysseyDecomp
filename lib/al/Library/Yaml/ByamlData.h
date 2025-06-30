@@ -55,7 +55,7 @@ private:
 
 class ByamlHashIter {
 public:
-    ByamlHashIter(const u8* data, bool isRev_);
+    ByamlHashIter(const u8* data, bool isRev);
     ByamlHashIter();
 
     const ByamlHashPair* findPair(s32 key) const;
@@ -73,7 +73,7 @@ private:
 
 class ByamlArrayIter {
 public:
-    ByamlArrayIter(const u8* data, bool isRev_);
+    ByamlArrayIter(const u8* data, bool isRev);
     ByamlArrayIter();
 
     bool getDataByIndex(ByamlData* data, s32 index) const;

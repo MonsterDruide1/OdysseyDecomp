@@ -233,8 +233,8 @@ void getChildLinkT(sead::Vector3f* trans, const ActorInitInfo& initInfo, const c
 void getChildLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInfo& initInfo,
                     const char* linkName, s32 index);
 
-s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* linkName);
-s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkName);
+s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* match);
+s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* className);
 
 bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo);
 bool tryGetDisplayOffset(sead::Vector3f* offset, const ActorInitInfo& initInfo);

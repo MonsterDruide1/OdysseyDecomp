@@ -18,7 +18,7 @@ public:
     u32 calcContentSize() const;
     u32 calcPackSize() const;
     bool isEmpty() const;
-    u32 calcIndex(const char* data) const;
+    u32 calcIndex(const char* string) const;
     void write(sead::WriteStream* stream) const;
     void print() const;
 

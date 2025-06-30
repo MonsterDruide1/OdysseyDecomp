@@ -9,9 +9,11 @@ struct BgmUserInfo;
 
 class BgmKeeper {
 public:
+    // TODO: rename `string`
     static BgmKeeper* create(const AudioSystemInfo* audioInfo, BgmDirector* director,
                              const char* string);
 
+    // TODO: rename `string`
     BgmKeeper(const AudioSystemInfo* audioInfo, BgmDirector* director, const char* string);
 
     const char* getUserName() const;

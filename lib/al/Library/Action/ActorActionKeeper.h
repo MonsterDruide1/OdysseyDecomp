@@ -16,6 +16,7 @@ class NerveActionCtrl;
 
 class ActorActionKeeper {
 public:
+    // TODO: rename `string0` and `string1`
     static ActorActionKeeper* tryCreate(LiveActor* actor, const ActorResource* actorRes,
                                         const char* string0, const char* string1);
 
@@ -25,8 +26,8 @@ public:
                       ActionPadAndCameraCtrl* padAndCamCtrl,
                       ActionScreenEffectCtrl* screenEffectCtrl);
 
-    bool startAction(const char* name);
-    void tryStartActionNoAnim(const char* string);
+    bool startAction(const char* action);
+    void tryStartActionNoAnim(const char* action);
     void init();
     void updatePost();
     void updatePrev();

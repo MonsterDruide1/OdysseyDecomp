@@ -36,7 +36,7 @@ s32 ByamlHashPair::getValue(bool isRev) const {
     return isRev ? bswap_32(mValue) : mValue;
 }
 
-ByamlHashIter::ByamlHashIter(const u8* data, bool isRev_) : mData(data), mIsRev(isRev_) {}
+ByamlHashIter::ByamlHashIter(const u8* data, bool isRev) : mData(data), mIsRev(isRev) {}
 
 ByamlHashIter::ByamlHashIter() : mData(nullptr), mIsRev(false) {}
 
@@ -137,7 +137,7 @@ u32 ByamlHashIter::getSize() const {
     return mIsRev ? bswap_24(val >> 8) : val >> 8;
 }
 
-ByamlArrayIter::ByamlArrayIter(const u8* data, bool isRev_) : mData(data), mIsRev(isRev_) {}
+ByamlArrayIter::ByamlArrayIter(const u8* data, bool isRev) : mData(data), mIsRev(isRev) {}
 
 ByamlArrayIter::ByamlArrayIter() : mData(nullptr), mIsRev(false) {}
 

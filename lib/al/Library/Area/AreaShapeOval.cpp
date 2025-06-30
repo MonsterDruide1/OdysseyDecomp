@@ -8,33 +8,33 @@ namespace al {
 
 AreaShapeOval::AreaShapeOval() {}
 
-bool AreaShapeOval::isInVolume(const sead::Vector3f& trans) const {
+bool AreaShapeOval::isInVolume(const sead::Vector3f& pos) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
-    calcLocalPos(&localPos, trans);
+    calcLocalPos(&localPos, pos);
 
     return localPos.squaredLength() <= sead::Mathf::square(500.0f);
 }
 
-bool AreaShapeOval::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
+bool AreaShapeOval::isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const {
     sead::Vector3f scale = getScale();
 
     // has to be this way around to match
     if (scale.x == scale.y && scale.y == scale.z) {
         sead::Vector3f baseTrans;
         calcTrans(&baseTrans);
-        sead::Vector3f offsetTrans = trans - baseTrans;
+        sead::Vector3f diff = pos - baseTrans;
         f32 radius = scale.x * 500.0f + offset;
 
-        return offsetTrans.squaredLength() <= sead::Mathf::square(radius);
+        return diff.squaredLength() <= sead::Mathf::square(radius);
     }
 
     return false;
 }
 
 bool AreaShapeOval::calcNearestEdgePoint(sead::Vector3f* edgePoint,
-                                         const sead::Vector3f& trans) const {
+                                         const sead::Vector3f& pos) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
-    calcLocalPos(&localPos, trans);
+    calcLocalPos(&localPos, pos);
     f32 length = localPos.length();
 
     if (length > 0.0f)

@@ -24,7 +24,7 @@ public:
     bool isAbsorbing() const;
     bool isValid() const;
     void liberateAbsorb();
-    void load(const ByamlIter& data);
+    void load(const ByamlIter& iter);
     void makeLookAtCamera(sead::LookAtCamera*) const;
     void start(const sead::Vector3f& pos, const CameraStartInfo& info);
     void tryResetAbsorbVecIfInCollision(const sead::Vector3f&);

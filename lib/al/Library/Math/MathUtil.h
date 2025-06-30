@@ -56,6 +56,7 @@ bool isNearAngleRadianHV(const sead::Vector3f&, const sead::Vector3f&, const sea
                          f32);
 bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec);
 bool tryNormalizeOrZero(sead::Vector3f* out);
+// TODO: rename parameters
 bool isNearAngleDegreeHV(const sead::Vector3f& a, const sead::Vector3f& b, const sead::Vector3f& c,
                          f32 d, f32 e);
 bool isInAngleOnPlaneDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,

@@ -76,7 +76,7 @@ void ParabolicPath::calcPositionEaseOutH(sead::Vector3f* pos, f32 prog) const {
     calcPositionHV(pos, easeOut(prog), prog);
 }
 
-void ParabolicPath::calcDirection(sead::Vector3f* pos, f32 prog, f32 stepSize) const {
+void ParabolicPath::calcDirection(sead::Vector3f* dir, f32 prog, f32 stepSize) const {
     f32 prog1, prog2;
     if (prog < stepSize) {
         prog1 = 0.0f;
@@ -92,8 +92,8 @@ void ParabolicPath::calcDirection(sead::Vector3f* pos, f32 prog, f32 stepSize) c
     sead::Vector3f pos1, pos2;
     calcPosition(&pos1, prog1);
     calcPosition(&pos2, prog2);
-    *pos = pos2 - pos1;
-    tryNormalizeOrZero(pos);
+    *dir = pos2 - pos1;
+    tryNormalizeOrZero(dir);
 }
 
 f32 ParabolicPath::calcPathSpeedFromGravityAccel(f32 frames) const {

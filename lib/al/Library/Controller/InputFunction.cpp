@@ -569,37 +569,37 @@ const sead::Vector2f& getRightStick(s32 port) {
     return getController(port)->getRightStick();
 }
 
-void getPadCrossDir(sead::Vector2f* vec, s32 port) {
-    vec->x = 0;
-    vec->y = 0;
+void getPadCrossDir(sead::Vector2f* dir, s32 port) {
+    dir->x = 0;
+    dir->y = 0;
     if (isPadHoldUp(port))
-        vec->y = 1;
+        dir->y = 1;
     if (isPadHoldDown(port))
-        vec->y = -1;
+        dir->y = -1;
     if (isPadHoldLeft(port))
-        vec->x = -1;
+        dir->x = -1;
     if (isPadHoldRight(port))
-        vec->x = 1;
+        dir->x = 1;
 }
 
-void getPadCrossDirSideways(sead::Vector2f* vec, s32 port) {
-    vec->x = 0;
-    vec->y = 0;
+void getPadCrossDirSideways(sead::Vector2f* dir, s32 port) {
+    dir->x = 0;
+    dir->y = 0;
     if (isPadHoldUp(port))
-        vec->x = -1;
+        dir->x = -1;
     if (isPadHoldDown(port))
-        vec->x = 1;
+        dir->x = 1;
     if (isPadHoldLeft(port))
-        vec->y = -1;
+        dir->y = -1;
     if (isPadHoldRight(port))
-        vec->y = 1;
+        dir->y = 1;
 }
 
-void calcTouchScreenPos(sead::Vector2f* vec) {
-    vec->set(getController(getTouchPanelPort())->getPointer());
+void calcTouchScreenPos(sead::Vector2f* pos) {
+    pos->set(getController(getTouchPanelPort())->getPointer());
 }
 
-void calcTouchLayoutPos(sead::Vector2f*) {}
+void calcTouchLayoutPos(sead::Vector2f* pos) {}
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size) {
     sead::Vector2f pos;
