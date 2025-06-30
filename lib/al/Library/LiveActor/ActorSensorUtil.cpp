@@ -447,7 +447,7 @@ bool isCrossoverSensor(const HitSensor* sensor1, const HitSensor* sensor2) {
     sead::Vector3f diff = sensor1->getPos() - sensor2->getPos();
     sead::Vector3f sensor2ParentGravityN = getGravity(sensor2->getParentActor());
     sead::Vector3f sensor2ParentGravity = -sensor2ParentGravityN;
-    if (!al::tryNormalizeOrZero(&diff))
+    if (!tryNormalizeOrZero(&diff))
         return false;
     if (diff.dot(sensor2ParentGravity) < sead::Mathf::deg2rad(20.0f))
         return false;
@@ -564,7 +564,7 @@ bool sendMsgPushAndKillVelocityToTarget(LiveActor* actor, HitSensor* receiver, H
     if (!tryNormalizeOrZero(&diff))
         diff.set(sead::Vector3f::ez);
     if (getVelocity(actor).dot(diff) > 0.0f)
-        verticalizeVec(al::getVelocityPtr(actor), diff, al::getVelocity(actor));
+        verticalizeVec(getVelocityPtr(actor), diff, getVelocity(actor));
     return true;
 }
 
@@ -576,7 +576,7 @@ bool sendMsgPushAndKillVelocityToTargetH(LiveActor* actor, HitSensor* receiver, 
     if (!tryNormalizeOrZero(&diff))
         diff.set(sead::Vector3f::ez);
     if (getVelocity(actor).dot(diff) > 0.0f)
-        verticalizeVec(al::getVelocityPtr(actor), diff, al::getVelocity(actor));
+        verticalizeVec(getVelocityPtr(actor), diff, getVelocity(actor));
     return true;
 }
 
