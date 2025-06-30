@@ -7,20 +7,16 @@
 
 namespace al {
 
-ClippingInfoGroup::ClippingInfoGroup() : mCount(0), mSize(0), mClippingInfos(nullptr) {
-    mGroupId = new PlacementId();
-    mIsClipped = false;
-}
+ClippingInfoGroup::ClippingInfoGroup() : mGroupId(new PlacementId()) {}
 
+
+// BUG: no bounds check
 void ClippingInfoGroup::registerInfo(ClippingActorInfo* clippingActorInfo) {
     mClippingInfos[mSize] = clippingActorInfo;
     mSize++;
 }
 
 void ClippingInfoGroup::removeInfo(ClippingActorInfo* clippingActorInfo) {
-    if (mSize < 0)
-        return;
-
     for (s32 i = 0; i < mSize; i++) {
         if (mClippingInfos[i] == clippingActorInfo) {
             mClippingInfos[i] = mClippingInfos[mSize - 1];
@@ -37,9 +33,8 @@ void ClippingInfoGroup::addCount() {
 void ClippingInfoGroup::allocBuffer() {
     mClippingInfos = new ClippingActorInfo*[mCount];
 
-    if (0 < mCount)
-        for (s32 i = 0; i < mCount; i++)
-            mClippingInfos[i] = nullptr;
+    for (s32 i = 0; i < mCount; i++)
+        mClippingInfos[i] = nullptr;
 }
 
 void ClippingInfoGroup::setGroupId(const ClippingActorInfo* clippingActorInfo) {

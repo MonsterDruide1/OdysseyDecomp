@@ -12,13 +12,13 @@ struct ClippingActorInfo;
 class ClippingGroupHolder {
 public:
     ClippingGroupHolder();
-    void update(const ClippingJudge*);
-    void createAndCount(ClippingActorInfo*);
-    ClippingInfoGroup* tryFindGroup(const ClippingActorInfo*);
+    void update(const ClippingJudge* clippingJudge);
+    void createAndCount(ClippingActorInfo* clippingActorInfo);
+    ClippingInfoGroup* tryFindGroup(const ClippingActorInfo* clippingActorInfo);
     void allocBuffer();
-    void registerInfo(ClippingActorInfo*);
-    void leave(ClippingActorInfo*);
-    void reentry(ClippingActorInfo*);
+    void registerInfo(ClippingActorInfo* clippingActorInfo);
+    void leave(ClippingActorInfo* clippingActorInfo);
+    void reentry(ClippingActorInfo* clippingActorInfo);
 
 private:
     void* filler[0x2];
@@ -31,18 +31,18 @@ public:
     void removeInfo(ClippingActorInfo* clippingActorInfo);
     void addCount();
     void allocBuffer();
-    void setGroupId(const ClippingActorInfo*);
-    bool isEqualGroupId(const PlacementId*) const;
-    bool judgeClippingAll(const ClippingJudge*) const;
+    void setGroupId(const ClippingActorInfo* clippingActorInfo);
+    bool isEqualGroupId(const PlacementId* placementId) const;
+    bool judgeClippingAll(const ClippingJudge* clippingJudge) const;
     void startClippedAll();
     void endClippedAll();
 
 private:
-    s32 mCount;
-    s32 mSize;
-    ClippingActorInfo** mClippingInfos;
+    s32 mCount = 0;
+    s32 mSize = 0;
+    ClippingActorInfo** mClippingInfos = nullptr;
     PlacementId* mGroupId;
-    bool mIsClipped;
+    bool mIsClipped = false;
 };
 
 }  // namespace al
