@@ -95,7 +95,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
 
     if (!isExistModelResourceYaml(mParentModel, initArcName.cstr(), nullptr))
         return makeActorAlive();
-    u8* modelResByml = getModelResourceYaml(mParentModel, initArcName.cstr(), nullptr);
+    const u8* modelResByml = getModelResourceYaml(mParentModel, initArcName.cstr(), nullptr);
     ByamlIter modelResIter(modelResByml);
 
     const char* jointName = nullptr;

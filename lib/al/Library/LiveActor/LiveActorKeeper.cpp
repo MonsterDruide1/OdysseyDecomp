@@ -32,7 +32,7 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
     s32 creatorCount;
-    u8* modelResourceYaml;
+    const u8* modelResourceYaml;
 
     if (isExistModelResource(mRootActor) &&
         !tryGetActorInitFileName(&actorInitFileName, mRootActor, "InitSubActor", suffix))
