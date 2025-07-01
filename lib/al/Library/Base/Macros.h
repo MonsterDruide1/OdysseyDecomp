@@ -84,7 +84,8 @@
 #define FE_62(WHAT, DELIM, X0, X1, ...) WHAT(X0, X1) DELIM() FE_61(WHAT, DELIM, X0, __VA_ARGS__)
 #define FE_63(WHAT, DELIM, X0, X1, ...) WHAT(X0, X1) DELIM() FE_62(WHAT, DELIM, X0, __VA_ARGS__)
 
-#define FOR_EACH_DELIM(action, delim, x0, ...) VFUNC(FE_, __VA_ARGS__)(action, delim, x0, __VA_ARGS__)
+#define FOR_EACH_DELIM(action, delim, x0, ...)                                                     \
+    VFUNC(FE_, __VA_ARGS__)(action, delim, x0, __VA_ARGS__)
 
 #define NO_DELIM()
 #define FOR_EACH(action, x0, ...) VFUNC(FE_, __VA_ARGS__)(action, NO_DELIM, x0, __VA_ARGS__)
