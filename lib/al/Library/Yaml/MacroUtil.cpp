@@ -127,8 +127,6 @@ void YamlParamGroup::readParam(const al::ByamlIter& iter) {
     }
 }
 
-YamlParam_YamlString::YamlParam_YamlString(const char* name) : YamlParamBase(name) {}
-
 YamlClassId YamlParam_YamlString::getClassId() const {
     return YamlClassId::String;
 }
@@ -136,8 +134,6 @@ YamlClassId YamlParam_YamlString::getClassId() const {
 void YamlParam_YamlString::setPtr_YamlString(const char** value) {
     setParamPtr(value);
 }
-
-YamlParam_V3f::YamlParam_V3f(const char* name) : YamlParamBase(name) {}
 
 YamlClassId YamlParam_V3f::getClassId() const {
     return YamlClassId::V3f;
@@ -147,8 +143,6 @@ void YamlParam_V3f::setPtr_V3f(sead::Vector3f* value) {
     setParamPtr(value);
 }
 
-YamlParam_YamlColor::YamlParam_YamlColor(const char* name) : YamlParamBase(name) {}
-
 YamlClassId YamlParam_YamlColor::getClassId() const {
     return YamlClassId::Color;
 }
@@ -156,8 +150,6 @@ YamlClassId YamlParam_YamlColor::getClassId() const {
 void YamlParam_YamlColor::setPtr_YamlColor(sead::Color4f* value) {
     setParamPtr(value);
 }
-
-YamlParam_bool::YamlParam_bool(const char* name) : YamlParamBase(name) {}
 
 YamlClassId YamlParam_bool::getClassId() const {
     return YamlClassId::Bool;
@@ -167,8 +159,6 @@ void YamlParam_bool::setPtr_bool(bool* value) {
     setParamPtr(value);
 }
 
-YamlParam_u8::YamlParam_u8(const char* name) : YamlParamBase(name) {}
-
 YamlClassId YamlParam_u8::getClassId() const {
     return YamlClassId::U8;
 }
@@ -177,8 +167,6 @@ void YamlParam_u8::setPtr_u8(u8* value) {
     setParamPtr(value);
 }
 
-YamlParam_f32::YamlParam_f32(const char* name) : YamlParamBase(name) {}
-
 YamlClassId YamlParam_f32::getClassId() const {
     return YamlClassId::F32;
 }
@@ -186,8 +174,6 @@ YamlClassId YamlParam_f32::getClassId() const {
 void YamlParam_f32::setPtr_f32(f32* value) {
     setParamPtr(value);
 }
-
-YamlParam_V2f::YamlParam_V2f(const char* name) : YamlParamBase(name) {}
 
 YamlClassId YamlParam_V2f::getClassId() const {
     return YamlClassId::V2f;
