@@ -4,9 +4,9 @@
 #include "Library/Player/PlayerUtil.h"
 
 namespace al {
-SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 maxPlayerPositions, s32 cameraLookAtPositionSize)
+SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 maxPlayerPositions, s32 maxCameraLookAtPositions)
     : mPlayerTargetPositionSize(maxPlayerPositions), mPlayerPositionSize(maxPlayerPositions),
-      mCameraLookAtPositionSize(cameraLookAtPositionSize) {
+      mCameraLookAtPositionSize(maxCameraLookAtPositions) {
     mPlayerTargetPositions = new sead::Vector3f[mPlayerTargetPositionSize];
     mPlayerPositions = new sead::Vector3f[mPlayerPositionSize];
     mCameraLookAtPositions = new sead::Vector3f[mCameraLookAtPositionSize];
