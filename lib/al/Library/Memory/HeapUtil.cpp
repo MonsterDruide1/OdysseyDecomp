@@ -71,8 +71,8 @@ void freeAllSequenceHeap() {
     clearFileLoaderEntry();
 }
 
-bool printAllSequenceHeap() {
-    return alProjectInterface::getSystemKit()->getMemorySystem()->printSequenceHeap();
+void printAllSequenceHeap() {
+    alProjectInterface::getSystemKit()->getMemorySystem()->printSequenceHeap();
 }
 
 void createSceneHeap(const char* stageName, bool backwards) {
