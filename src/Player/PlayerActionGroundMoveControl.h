@@ -34,8 +34,18 @@ public:
     f32 calcAccelRate(f32) const;
     void updatePoseUpFront(const sead::Vector3f&, const sead::Vector3f&, f32);
 
+    const sead::Vector3f& getGroundNormal() const { return mGroundNormal; }
+
+    void set_c4(bool c4) { _c4 = c4; }
+
 private:
-    void* filler[0xD8 / 8];
+    void* _0[5];
+    bool _28;
+    sead::Vector3f mGroundNormal;
+    void* _38[17];
+    f32 _c0;
+    bool _c4;
+    void* _c8[2];
 };
 
 static_assert(sizeof(PlayerActionGroundMoveControl) == 0xD8);
