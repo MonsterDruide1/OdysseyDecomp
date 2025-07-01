@@ -16,6 +16,7 @@ class PlayerConst;
 namespace rs {
 
 f32 getGroundHeight(const IUsePlayerHeightCheck*);
+bool isAboveGround(const IUsePlayerHeightCheck*);
 
 const sead::Vector3f& getCollidedWallPos(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedWallNormal(const IUsePlayerCollision*);
@@ -44,9 +45,11 @@ void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
 bool isCollisionCodeSandSink(const IUsePlayerCollision*);
 bool isCollidedWall(const IUsePlayerCollision*);
+bool isCollidedWallFace(const IUsePlayerCollision*);
 bool isCollidedCeiling(const IUsePlayerCollision*);
 bool isActionCodeNoWallGrab(const IUsePlayerCollision*);
 bool isActionCodeNoActionWall(const IUsePlayerCollision*);
+bool isActionCodeNoWallKeepWall(const IUsePlayerCollision*);
 
 bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
