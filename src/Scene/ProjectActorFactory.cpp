@@ -32,6 +32,7 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
+#include "Enemy/Kuribo2D.h"
 #include "Enemy/Mummy.h"
 #include "Enemy/Nokonoko2D.h"
 #include "Enemy/Pecho.h"
@@ -345,7 +346,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"KoopaLv2", nullptr},
     {"KoopaLv3", nullptr},
     {"KoopaShip", nullptr},
-    {"Kuribo2D3D", nullptr},
+    {"Kuribo2D3D", al::createActorFunction<Kuribo2D>},
     {"KuriboGenerator2D3D", nullptr},
     {"KuriboGirl", al::createActorFunction<KuriboGirl>},
     {"KuriboPossessed", nullptr},
