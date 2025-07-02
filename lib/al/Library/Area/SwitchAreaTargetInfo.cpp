@@ -4,18 +4,18 @@
 #include "Library/Player/PlayerUtil.h"
 
 namespace al {
-SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 playerPositionCount, s32 cameraLookAtPositionSize)
-    : mPlayerTargetPositionSize(playerPositionCount), mPlayerPositionSize(playerPositionCount),
-      mCameraLookAtPositionSize(cameraLookAtPositionSize) {
+SwitchAreaTargetInfo::SwitchAreaTargetInfo(s32 maxPlayerPositions, s32 maxCameraLookAtPositions)
+    : mPlayerTargetPositionSize(maxPlayerPositions), mPlayerPositionSize(maxPlayerPositions),
+      mCameraLookAtPositionSize(maxCameraLookAtPositions) {
     mPlayerTargetPositions = new sead::Vector3f[mPlayerTargetPositionSize];
     mPlayerPositions = new sead::Vector3f[mPlayerPositionSize];
     mCameraLookAtPositions = new sead::Vector3f[mCameraLookAtPositionSize];
 }
 
-SwitchAreaTargetInfo::SwitchAreaTargetInfo(sead::Vector3f* playerPositions, s32 playerPositionCount)
-    : mPlayerTargetPositions(playerPositions), mPlayerTargetPositionCount(playerPositionCount),
-      mPlayerTargetPositionSize(playerPositionCount), mPlayerPositions(playerPositions),
-      mPlayerPositionCount(playerPositionCount), mPlayerPositionSize(playerPositionCount) {}
+SwitchAreaTargetInfo::SwitchAreaTargetInfo(sead::Vector3f* playerPositions, s32 maxPlayerPositions)
+    : mPlayerTargetPositions(playerPositions), mPlayerTargetPositionCount(maxPlayerPositions),
+      mPlayerTargetPositionSize(maxPlayerPositions), mPlayerPositions(playerPositions),
+      mPlayerPositionCount(maxPlayerPositions), mPlayerPositionSize(maxPlayerPositions) {}
 
 void SwitchAreaTargetInfo::update(const PlayerHolder* playerHolder,
                                   const SceneCameraInfo* sceneCameraInfo) {

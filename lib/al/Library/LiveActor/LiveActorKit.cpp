@@ -189,14 +189,14 @@ void LiveActorKit::endInit() {
     mExecuteDirector->createExecutorListTable();
 }
 
-void LiveActorKit::update(const char* unk) {
+void LiveActorKit::update(const char* tableName) {
     clearGraphicsRequest();
 
     if (mPadRumbleDirector)
         mPadRumbleDirector->update();
 
     if (mExecuteDirector)
-        mExecuteDirector->execute(unk);
+        mExecuteDirector->execute(tableName);
 
     updateGraphics();
 

@@ -8,7 +8,7 @@ class Resource;
 
 class ActorInitResourceData {
 public:
-    ActorInitResourceData(Resource*);
+    ActorInitResourceData(Resource* res);
 
     InitResourceDataAction* getDataAction() const { return mResDataAction; }
 

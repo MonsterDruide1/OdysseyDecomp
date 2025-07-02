@@ -144,9 +144,9 @@ void getPlacementInfoByIndex(PlacementInfo* outPlacementInfo, const PlacementInf
 bool tryGetPlacementInfoByIndex(PlacementInfo* outPlacementInfo, const PlacementInfo& placementInfo,
                                 s32 index);
 void getPlacementInfoAndKeyNameByIndex(PlacementInfo* outPlacementInfo, const char** outKey,
-                                       const PlacementInfo&, s32 index);
+                                       const PlacementInfo& placementInfo, s32 index);
 bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* outPlacementInfo, const char** outKey,
-                                          const PlacementInfo&, s32 index);
+                                          const PlacementInfo& placementInfo, s32 index);
 
 PlacementId* createPlacementId(const ActorInitInfo& initInfo);
 PlacementId* createPlacementId(const PlacementInfo& placementInfo);
@@ -208,10 +208,10 @@ void getLinksQT(sead::Quatf* quat, sead::Vector3f* trans, const ActorInitInfo& i
 void getLinksQT(sead::Quatf* quat, sead::Vector3f* trans, const PlacementInfo& placementInfo,
                 const char* linkName);
 
-bool tryGetLinksQT(sead::Quatf*, sead::Vector3f*, const ActorInitInfo& initInfo,
+bool tryGetLinksQT(sead::Quatf* quat, sead::Vector3f* trans, const ActorInitInfo& initInfo,
                    const char* linkName);
-bool tryGetLinksQTS(sead::Quatf*, sead::Vector3f*, sead::Vector3f*, const ActorInitInfo& initInfo,
-                    const char* linkName);
+bool tryGetLinksQTS(sead::Quatf* quat, sead::Vector3f* trans, sead::Vector3f* scale,
+                    const ActorInitInfo& initInfo, const char* linkName);
 bool tryGetLinksMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo,
                          const char* linkName);
 bool tryGetLinksMatrixTR(sead::Matrix34f* matrix, const AreaInitInfo& initInfo,
@@ -233,7 +233,7 @@ void getChildLinkT(sead::Vector3f* trans, const ActorInitInfo& initInfo, const c
 void getChildLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorInitInfo& initInfo,
                     const char* linkName, s32 index);
 
-s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* matchName);
+s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* match);
 s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* className);
 
 bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const ActorInitInfo& initInfo);

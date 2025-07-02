@@ -33,9 +33,9 @@ public:
 
     // somewhere here at 0xE0: stageName
 
-    unsigned char padding_to_2D0[0x1F8];
+    unsigned char padding_d8[0x1F8];
     GameDataHolderAccessor* mHolder;
-    unsigned char padding_2F8[0x20];
+    unsigned char padding_2f8[0x20];
     StageSceneLayout* stageSceneLayout;
 };
 

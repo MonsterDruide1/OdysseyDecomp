@@ -52,11 +52,11 @@ const u32* ByamlStringTableIter::getAddressTable() const {
     return reinterpret_cast<const u32*>(mData + 4);
 }
 
-u32 ByamlStringTableIter::getStringAddress(s32 idx) const {
+u32 ByamlStringTableIter::getStringAddress(s32 index) const {
     if (mIsRev)
-        return bswap_32(getAddressTable()[idx]);
+        return bswap_32(getAddressTable()[index]);
 
-    return getAddressTable()[idx];
+    return getAddressTable()[index];
 }
 
 // NON_MATCHING: regalloc (https://decomp.me/scratch/AdRVH)

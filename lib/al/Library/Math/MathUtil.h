@@ -32,7 +32,7 @@ f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b);
 f32 calcAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b);
 f32 calcAngleDegree(const sead::Vector2f& a, const sead::Vector2f& b);
 bool isNearZero(const sead::Vector2f& vec, f32 tolerance = 0.001f);
-bool tryCalcAngleDegree(f32* angle, const sead::Vector3f& a, const sead::Vector3f& b);
+bool tryCalcAngleDegree(f32* out, const sead::Vector3f& a, const sead::Vector3f& b);
 bool isNearZero(const sead::Vector3f& vec, f32 tolerance = 0.001f);
 f32 calcAngleOnPlaneRadian(const sead::Vector3f& a, const sead::Vector3f& b,
                            const sead::Vector3f& vertical);
@@ -56,8 +56,9 @@ bool isNearAngleRadianHV(const sead::Vector3f&, const sead::Vector3f&, const sea
                          f32);
 bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec);
 bool tryNormalizeOrZero(sead::Vector3f* out);
+// TODO: rename parameters
 bool isNearAngleDegreeHV(const sead::Vector3f& a, const sead::Vector3f& b, const sead::Vector3f& c,
-                         f32 toleranceH, f32 toleranceV);
+                         f32 d, f32 e);
 bool isInAngleOnPlaneDegreeHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
                               f32, f32, f32, f32);
 bool isNear(f32 value, f32 target, f32 tolerance = 0.001f);
@@ -65,7 +66,7 @@ bool isNear(const sead::Vector2f& value, const sead::Vector2f& target, f32 toler
 bool isNear(const sead::Vector3f& value, const sead::Vector3f& target, f32 tolerance = 0.001f);
 bool isNear(const sead::Color4f& value, const sead::Color4f& target, f32 tolerance = 0.001f);
 bool isNearZero(f32 value, f32 tolerance = 0.001f);
-bool isNearZero(const sead::Matrix34f& mtx, f32 tolerance = 0.001f);
+bool isNearZero(const sead::Matrix34f& value, f32 tolerance = 0.001f);
 bool isNearZeroOrGreater(f32 value, f32 tolerance = 0.001f);
 bool isNearZeroOrLess(f32 value, f32 tolerance = 0.001f);
 bool isExistNearZeroVal(const sead::Vector3f& vec, f32 tolerance);
@@ -112,10 +113,10 @@ f32 exponentIn(f32 t, f32 exp);
 f32 exponentOut(f32 t, f32 exp);
 f32 hermiteRate(f32 t, f32 m0, f32 m1);
 f32 calcFourthOrderRate(f32 t, f32 scale);
-f32 calcTriangleWave01(f32, f32);
-f32 calcTriangleWave(f32, f32, f32, f32);
+f32 calcTriangleWave01(f32 t, f32 period);
+f32 calcTriangleWave(f32 t, f32 min, f32 max, f32 period);
 f32 lerpValue(f32 a, f32 b, f32 t);
-f32 calcRate01(f32, f32, f32);
+f32 calcRate01(f32 t, f32 min, f32 max);
 f32 easeByType(f32 t, s32 easeType);
 f32 lerpValue(f32, f32, f32, f32, f32);
 f32 lerpDegree(f32, f32, f32);
@@ -163,11 +164,11 @@ s32 findMinFromArray(const s32*, s32);
 f32 getRandom();
 f32 getRandom(f32 max);
 f32 getRandom(f32 min, f32 max);
-s32 getRandom(s32 max);
+s32 getRandom(s32 factor);
 s32 getRandom(s32 min, s32 max);
 f32 getRandomDegree();
 f32 getRandomRadian();
-void getRandomVector(sead::Vector3f* vec, f32 maxComponent);
+void getRandomVector(sead::Vector3f* vec, f32 factor);
 void getRandomDir(sead::Vector3f* vec);
 void getRandomDirH(sead::Vector3f*, const sead::Vector3f&);
 void rotateVectorDegree(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
@@ -297,19 +298,22 @@ void calcQuatRotateDegree(sead::Vector3f*, const sead::Quatf&);
 void calcQuatRotateRadian(sead::Vector3f*, const sead::Quatf&);
 void calcQuatRotateAxisAndDegree(sead::Vector3f*, f32*, const sead::Quatf&);
 void calcQuatRotateAxisAndDegree(sead::Vector3f*, f32*, const sead::Quatf&, const sead::Quatf&);
-void rotateQuatRadian(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
+void rotateQuatRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec,
+                      f32 angle);
 void makeQuatXDegree(sead::Quatf* outQuat, f32 angle);
 void makeQuatYDegree(sead::Quatf* outQuat, f32 angle);
 void makeQuatZDegree(sead::Quatf* outQuat, f32 angle);
-void rotateQuatXDirDegree(sead::Quatf*, const sead::Quatf&, f32);
-void rotateQuatYDirDegree(sead::Quatf*, const sead::Quatf&, f32);
-void rotateQuatZDirDegree(sead::Quatf*, const sead::Quatf&, f32);
-void rotateQuatLocalDirDegree(sead::Quatf*, const sead::Quatf&, s32, f32);
-void rotateQuatMoment(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&);
-void rotateQuatMomentDegree(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&);
-void rotateQuatRollBall(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&,
-                        const sead::Vector3f&, f32);
-void calcMomentRollBall(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle);
+void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle);
+void rotateQuatZDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle);
+void rotateQuatLocalDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, s32 axis, f32 angle);
+void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec);
+void rotateQuatMomentDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
+                            const sead::Vector3f& vec);
+void rotateQuatRollBall(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vecA,
+                        const sead::Vector3f& vecB, f32 scale);
+void calcMomentRollBall(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                        const sead::Vector3f& vecB, f32 scale);
 bool turnQuat(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, const sead::Vector3f&, f32);
 bool turnQuatXDirRadian(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
 bool turnQuatYDirRadian(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
@@ -438,7 +442,8 @@ bool calcBetweenTwoLinkPos(sead::Vector3f*, const sead::Vector3f&, const sead::V
                            const sead::Vector3f&);
 bool calcReflectionVector(sead::Vector3f*, const sead::Vector3f&, f32, f32);
 void calcReverseVector(sead::Vector3f*, const sead::Vector3f&, f32);
-void calcParabolicFunctionParam(f32*, f32*, f32, f32 verticalDistance);
+void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
+                                f32 verticalDistance);
 f32 calcConvergeVibrationValue(f32, f32, f32, f32, f32);
 bool calcSphericalPolarCoordPY(sead::Vector2f*, const sead::Vector3f&, const sead::Vector3f&,
                                const sead::Vector3f&);

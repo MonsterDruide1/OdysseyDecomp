@@ -22,7 +22,7 @@ struct FireSurfaceProperties {
 
 class FireSurfaceFinder {
 public:
-    FireSurfaceFinder(const LiveActor* player);
+    FireSurfaceFinder(const LiveActor* actor);
 
     void update(const sead::Vector3f& position, const sead::Vector3f& gravity, f32 distance);
 

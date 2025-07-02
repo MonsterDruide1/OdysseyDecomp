@@ -9,12 +9,12 @@ struct SubActorInfo;
 
 class SubActorKeeper {
 public:
-    SubActorKeeper(LiveActor*);
-    void registerSubActor(LiveActor*, u32);
-    void init(const ActorInitInfo&, const char*, s32);
+    SubActorKeeper(LiveActor* rootActor);
+    void registerSubActor(LiveActor* subActor, u32 syncType);
+    void init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors);
 
-    static SubActorKeeper* create(LiveActor*);
-    static SubActorKeeper* tryCreate(LiveActor*, const char*, s32);
+    static SubActorKeeper* create(LiveActor* rootActor);
+    static SubActorKeeper* tryCreate(LiveActor* rootActor, const char* suffix, s32 maxSubActors);
 
     s32 getCurActorCount() const { return mCurActorCount; }
 

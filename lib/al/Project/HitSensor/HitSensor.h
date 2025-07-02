@@ -47,14 +47,14 @@ public:
               const sead::Matrix34f* followMatrix, const sead::Vector3f& offset);
 
     bool trySensorSort();
-    void setFollowPosPtr(const sead::Vector3f*);
-    void setFollowMtxPtr(const sead::Matrix34f*);
+    void setFollowPosPtr(const sead::Vector3f* followPos);
+    void setFollowMtxPtr(const sead::Matrix34f* followMtx);
     void validate();
     void invalidate();
     void validateBySystem();
     void invalidateBySystem();
     void update();
-    void addHitSensor(HitSensor*);
+    void addHitSensor(HitSensor* sensor);
 
     void clearSensors() { mSensorCount = 0; }
 

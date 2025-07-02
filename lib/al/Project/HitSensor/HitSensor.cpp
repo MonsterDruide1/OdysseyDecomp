@@ -3,13 +3,13 @@
 #include "Project/HitSensor/SensorHitGroup.h"
 
 namespace al {
-void HitSensor::setFollowPosPtr(const sead::Vector3f* pFollowPos) {
-    mFollowPos = pFollowPos;
+void HitSensor::setFollowPosPtr(const sead::Vector3f* followPos) {
+    mFollowPos = followPos;
     mFollowMtx = nullptr;
 }
 
-void HitSensor::setFollowMtxPtr(const sead::Matrix34f* pFollowMtx) {
-    mFollowPos = nullptr, mFollowMtx = pFollowMtx;
+void HitSensor::setFollowMtxPtr(const sead::Matrix34f* followMtx) {
+    mFollowPos = nullptr, mFollowMtx = followMtx;
 }
 
 void HitSensor::validate() {
@@ -42,10 +42,10 @@ void HitSensor::invalidate() {
 // HitSensor::invalidateBySystem
 // HitSensor::update (requires some more LiveActor research)
 
-void HitSensor::addHitSensor(HitSensor* pSensor) {
+void HitSensor::addHitSensor(HitSensor* sensor) {
     // todo -- registers are different
     if (mSensorCount < mMaxSensorCount) {
-        mSensors[mSensorCount] = pSensor;
+        mSensors[mSensorCount] = sensor;
         ++mSensorCount;
     }
 }
