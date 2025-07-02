@@ -69,6 +69,8 @@ jobs:
         PR_AUTHOR_LOGIN: ${{ github.event.pull_request.user.login }}
         PR_AUTHOR_MAIL: ${{ github.event.pull_request.user.email }}
         PR_TITLE: ${{ github.event.pull_request.title }}
+    - name: Install python3
+      run: sudo apt update && sudo apt install python3 -y
     - name: Move to correct branch of OdysseyHeaders and reset history
       run: |
         cd OdysseyHeaders
