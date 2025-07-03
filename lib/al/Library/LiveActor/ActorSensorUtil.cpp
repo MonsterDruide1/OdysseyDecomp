@@ -112,8 +112,9 @@ SEND_MSG_DATA_TO_ACTOR_IMPL(ChangeAlpha, f32);
 SEND_MSG_IMPL(ShowModel);
 SEND_MSG_IMPL(HideModel);
 SEND_MSG_IMPL(Restart);
-SEND_MSG_DATA_MULTI_IMPL(CollisionImpulse, sead::Vector3f*, (const sead::Vector3f&, ConstVec),
-                         (f32, FloatVal), (const sead::Vector3f&, ConstVec2), (f32, FloatVal2));
+SEND_MSG_DATA_MULTI_IMPL(CollisionImpulse, (sead::Vector3f*, VecPtr),
+                         (const sead::Vector3f&, ConstVec), (f32, FloatVal),
+                         (const sead::Vector3f&, ConstVec2), (f32, FloatVal2));
 SEND_MSG_IMPL(EnemyTouch);
 SEND_MSG_IMPL(EnemyTrample);
 SEND_MSG_IMPL(MapObjTrample);
@@ -229,7 +230,7 @@ SEND_MSG_IMPL(LightBurn);
 SEND_MSG_IMPL(MoonLightBurn);
 
 SEND_MSG_DATA_IMPL(String, const char*);
-SEND_MSG_DATA_MULTI_IMPL(StringV4fPtr, const char*, (sead::Vector4f*, Vec));
+SEND_MSG_DATA_MULTI_IMPL(StringV4fPtr, (const char*, String), (sead::Vector4f*, Vec));
 
 bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const char* str,
                                sead::Vector4f* vec) {
@@ -237,7 +238,7 @@ bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const cha
     return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);
 }
 
-SEND_MSG_DATA_MULTI_IMPL(StringVoidPtr, const char*, (void*, Ptr));
+SEND_MSG_DATA_MULTI_IMPL(StringVoidPtr, (const char*, String), (void*, Ptr));
 
 SEND_MSG_TO_ACTOR_IMPL(HideModel);
 SEND_MSG_TO_ACTOR_IMPL(ShowModel);
