@@ -45,11 +45,11 @@ Creating a SensorMsg class called SensorMsgTest2 that holds a string referenced 
     class SensorMsg##Type : public al::SensorMsg {                                                 \
         SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
     public:                                                                                        \
-        inline SensorMsg##Type(PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {              \
+        inline SensorMsg##Type(PARAM_LIST(__VA_ARGS__)) {                                          \
             SET_MEMBER_PARAM_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
-        inline void extractData(POINTER_PARAM_LIST_END_COMMA(__VA_ARGS__) void* _ = nullptr) {     \
+        inline void extractData(POINTER_PARAM_LIST(__VA_ARGS__)) {                                 \
             SET_PARAM_MEMBER_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
@@ -79,15 +79,15 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
         DECL_MEMBER_VAR_MULTI SensorMsgParams;                                                     \
                                                                                                    \
     public:                                                                                        \
-        SensorMsg##Type(PARAM_LIST_END_COMMA CtorParams void* _ = nullptr);                        \
+        SensorMsg##Type(PARAM_LIST CtorParams);                                                    \
                                                                                                    \
-        inline void extractData(POINTER_PARAM_LIST_END_COMMA SensorMsgParams void* _ = nullptr) {  \
+        inline void extractData(POINTER_PARAM_LIST SensorMsgParams) {                              \
             SET_PARAM_MEMBER_MULTI SensorMsgParams;                                                \
         }                                                                                          \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
     };                                                                                             \
-    inline SensorMsg##Type::SensorMsg##Type(PARAM_LIST_END_COMMA CtorParams void* _)
+    inline SensorMsg##Type::SensorMsg##Type(PARAM_LIST CtorParams)
 
 // Use this in the edge cases where there's no macro to implement a specific type of isMsg
 #define MSG_TYPE_CHECK_(Type, MsgVar) sead::IsDerivedFrom<SensorMsg##Type>(MsgVar)
@@ -206,10 +206,9 @@ NOTE: all fields after the first one need to be pairs of type and name.
 
 */
 
-#define SEND_MSG_DATA_MULTI_IMPL_(Name, Type, FirstDataType, ...)                                  \
-    bool sendMsg##Name(al::HitSensor* receiver, al::HitSensor* sender,                             \
-                       FirstDataType pFirstData PARAM_LIST_START_COMMA(__VA_ARGS__)) {             \
-        SensorMsg##Type msg(pFirstData CALL_PARAM_LIST_START_COMMA(__VA_ARGS__));                  \
+#define SEND_MSG_DATA_MULTI_IMPL_(Name, Type, ...)                                                 \
+    bool sendMsg##Name(al::HitSensor* receiver, al::HitSensor* sender, PARAM_LIST(__VA_ARGS__)) {  \
+        SensorMsg##Type msg(CALL_PARAM_LIST(__VA_ARGS__));                                         \
         return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);                \
     }
 
