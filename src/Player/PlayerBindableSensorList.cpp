@@ -66,3 +66,12 @@ al::HitSensor* PlayerBindableSensorList::get(u32 index) const {
 u32 PlayerBindableSensorList::getType(u32 index) const {
     return mActiveSensors.at(index)->type;
 }
+
+bool PlayerBindableSensorList::SensorInfo::operator<(const SensorInfo& other) const {
+    if (priority < other.priority)
+        return true;
+    else if (priority == other.priority)
+        return distance < other.distance;
+    else
+        return false;
+}
