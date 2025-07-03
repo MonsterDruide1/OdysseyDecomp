@@ -17,7 +17,7 @@ RUN pip install --break-system-packages capstone colorama cxxfilt pyelftools pyt
 RUN apt update && apt install -y clangd clang-format llvm
 
 # install (outdated) libtinfo5, required for old clang version
-RUN if [ "$(dpkg --print-architecture)" = "amd64" ]; then \
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
         curl -o libtinfo5_6.3-2_amd64.deb http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && \
         dpkg -i libtinfo5_6.3-2_amd64.deb && \
         rm -f libtinfo5_6.3-2_amd64.deb; \
