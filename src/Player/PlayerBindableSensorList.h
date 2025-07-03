@@ -28,10 +28,10 @@ private:
         inline bool operator<(const SensorInfo& other) const;
     };
 
-    static_assert(sizeof(SensorInfo) == 0x18);
-
     sead::PtrArray<struct SensorInfo> mActiveSensors;
     sead::PtrArray<struct SensorInfo> mPool;
+
+    static_assert(sizeof(SensorInfo) == 0x18);
 };
 
 static_assert(sizeof(PlayerBindableSensorList) == 0x20);
