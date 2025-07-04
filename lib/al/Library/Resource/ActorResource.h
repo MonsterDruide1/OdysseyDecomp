@@ -17,6 +17,8 @@ public:
 
     void initResourceData(const char* suffix, bool mergeAnim);
 
+    const sead::SafeString& getName() const { return mName; }
+
     Resource* getModelRes() const { return mModelRes; }
 
 private:

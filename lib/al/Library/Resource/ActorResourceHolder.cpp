@@ -25,7 +25,7 @@ ActorResource* ActorResourceHolder::createActorResource(const sead::SafeString& 
                                                         Resource* modelResource,
                                                         Resource* animResource) {
     ActorResource* resource = new ActorResource(name, modelResource, animResource);
-    mTreeMap.insert(resource->mName, resource);
+    mTreeMap.insert(resource->getName(), resource);
     mActorResource.pushBack(resource);
     return resource;
 }
@@ -42,8 +42,8 @@ void ActorResourceHolder::eraseResourceUser(Resource* resource) {
 
         mActorResource.erase(mActorResource.indexOf(&res));
         mErasedActorResource.pushBack(&res);
-        if (mTreeMap.find(res.mName))
-            mTreeMap.erase(res.mName);
+        if (mTreeMap.find(res.getName()))
+            mTreeMap.erase(res.getName());
     }
 }
 
