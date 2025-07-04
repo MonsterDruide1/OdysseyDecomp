@@ -312,7 +312,8 @@ bool sendMsgPlayerFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sen
 bool sendMsgPlayerUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
 bool sendMsgEnemyFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sender);
 bool sendMsgEnemyUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
-bool sendMsgAskSafetyPoint(HitSensor* receiver, HitSensor* sender, sead::Vector3f**);
+bool sendMsgAskSafetyPoint(HitSensor* receiver, HitSensor* sender,
+                           sead::Vector3f** safetyPointAccessor);
 bool sendMsgAskSafetyPointToColliderGround(LiveActor* receiver, HitSensor* sender,
                                            sead::Vector3f** safetyPointAccessor);
 bool sendMsgTouchAssist(HitSensor* receiver, HitSensor* sender);
@@ -697,7 +698,7 @@ SENSOR_MSG(KillerItemGet);
 
 SENSOR_MSG(EnemyAttack);
 SENSOR_MSG_WITH_DATA(EnemyAttackFire,
-                     (const char*, FireMaterialCode));  // Usually null, sometimes "LavaRed"
+                     (const char*, MaterialCode));  // Usually null, sometimes "LavaRed"
 SENSOR_MSG(EnemyAttackKnockDown);
 SENSOR_MSG(EnemyAttackBoomerang);
 SENSOR_MSG(EnemyAttackNeedle);
@@ -830,14 +831,16 @@ SENSOR_MSG(MoonLightBurn);
 SENSOR_MSG_WITH_DATA(String, (const char*, Str));
 SENSOR_MSG_WITH_DATA(StringV4fPtr, (const char*, Str), (sead::Vector4f*, Vec));
 SENSOR_MSG_WITH_DATA(StringV4fSensorPtr, (const char*, Str), (sead::Vector4f*, Vec),
-                     (HitSensor*, Sender));
+                     (HitSensor*, Sensor));
 SENSOR_MSG_WITH_DATA(StringVoidPtr, (const char*, Str), (void*, Ptr));
 
+// TODO: rename variables
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollidePush, ((sead::Vector3f, Vec)),
                                  ((const sead::Vector3f&, Vec))) {
     mVec.set(pVec);
 }
 
+// TODO: rename variables
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollisionImpulse,
                                  ((sead::Vector3f*, VecPtr), (const sead::Vector3f*, ConstVec),
                                   (f32, FloatVal), (const sead::Vector3f*, ConstVec2),

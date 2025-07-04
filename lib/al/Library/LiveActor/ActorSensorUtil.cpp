@@ -112,6 +112,7 @@ SEND_MSG_DATA_TO_ACTOR_IMPL(ChangeAlpha, f32);
 SEND_MSG_IMPL(ShowModel);
 SEND_MSG_IMPL(HideModel);
 SEND_MSG_IMPL(Restart);
+// TODO: rename variables
 SEND_MSG_DATA_MULTI_IMPL(CollisionImpulse, (sead::Vector3f*, VecPtr),
                          (const sead::Vector3f&, ConstVec), (f32, FloatVal),
                          (const sead::Vector3f&, ConstVec2), (f32, FloatVal2));
@@ -163,33 +164,28 @@ SEND_MSG_TO_ACTOR_IMPL(SwitchKillOffInit);
 
 bool sendMsgPlayerFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sender) {
     HitSensor* collidedSensor = tryGetCollidedGroundSensor(receiver);
-    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerFloorTouch(), sender,
-                                                        collidedSensor);
+    return sendMsgPlayerFloorTouch(collidedSensor, sender);
 }
 
 bool sendMsgPlayerUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender) {
     HitSensor* collidedSensor = tryGetCollidedCeilingSensor(receiver);
-    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerAttackUpperPunch(), sender,
-                                                        collidedSensor);
+    return sendMsgPlayerUpperPunch(collidedSensor, sender);
 }
 
 bool sendMsgEnemyFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sender) {
     HitSensor* collidedSensor = tryGetCollidedGroundSensor(receiver);
-    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgEnemyFloorTouch(), sender,
-                                                        collidedSensor);
+    return sendMsgEnemyFloorTouch(collidedSensor, sender);
 }
 
 bool sendMsgEnemyUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender) {
     HitSensor* collidedSensor = tryGetCollidedCeilingSensor(receiver);
-    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgEnemyUpperPunch(), sender,
-                                                        collidedSensor);
+    return sendMsgEnemyUpperPunch(collidedSensor, sender);
 }
 
 bool sendMsgAskSafetyPointToColliderGround(LiveActor* receiver, HitSensor* sender,
                                            sead::Vector3f** safetyPointAccessor) {
     HitSensor* collidedSensor = tryGetCollidedGroundSensor(receiver);
-    return alActorSensorFunction::sendMsgSensorToSensor(
-        SensorMsgAskSafetyPoint(safetyPointAccessor), sender, collidedSensor);
+    return sendMsgAskSafetyPoint(collidedSensor, sender, safetyPointAccessor);
 }
 
 SEND_MSG_DATA_IMPL(AskSafetyPoint, sead::Vector3f**);
@@ -246,12 +242,8 @@ SEND_MSG_TO_ACTOR_IMPL(Restart);
 
 bool sendMsgPlayerReflectOrTrample(HitSensor* receiver, HitSensor* sender,
                                    ComboCounter* comboCounter) {
-    // return A || B mismatches, but this matches
-    if (alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerTrampleReflect(comboCounter),
-                                                     sender, receiver))
-        return true;
-    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgPlayerAttackTrample(comboCounter),
-                                                        sender, receiver);
+    return sendMsgPlayerTrampleReflect(receiver, sender, comboCounter) ||
+           sendMsgPlayerAttackTrample(receiver, sender, comboCounter);
 }
 
 IS_MSG_IMPL_(PlayerTrample, PlayerAttackTrample);
