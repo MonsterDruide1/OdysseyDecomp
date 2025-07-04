@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-from colorama import Fore
 from setup import check_download_url_updated, get_build_dir
 import subprocess
 import os
-import time
 from common import setup_common as setup
 
 project_root = setup.ROOT
@@ -16,6 +14,7 @@ def touch_cmake_lists():
 
 def warn_outdated_tools():
     if check_download_url_updated(False):
+        from colorama import Fore
         print(f"{Fore.YELLOW}Found outdated tools, consider rerunning setup.py to update them{Fore.RESET}")
 
 build_sources_path = get_build_dir() / '.build_sources'
