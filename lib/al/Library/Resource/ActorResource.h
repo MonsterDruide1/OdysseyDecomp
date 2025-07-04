@@ -19,7 +19,7 @@ public:
 
     Resource* getModelRes() const { return mModelRes; }
 
-public:
+private:
     sead::FixedSafeString<128> mName = {""};
     Resource* mModelRes;
     Resource* mAnimRes;
@@ -28,4 +28,4 @@ public:
     InitResourceDataAction* mActionResData = nullptr;
 };
 
-}
+}  // namespace al

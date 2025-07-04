@@ -60,4 +60,4 @@ void ActorResource::initResourceData(const char* suffix, bool mergeAnim) {
     }
 }
 
-}
+}  // namespace al

@@ -25,9 +25,9 @@ public:
     void freeErasedActorResource();
 
 private:
-  sead::StrTreeMap<128, al::ActorResource*> mTreeMap;
-  sead::PtrArray<ActorResource> mActorResource;
-  sead::PtrArray<ActorResource> mErasedActorResource;
+    sead::StrTreeMap<128, ActorResource*> mTreeMap;
+    sead::PtrArray<ActorResource> mActorResource;
+    sead::PtrArray<ActorResource> mErasedActorResource;
 };
 
 static_assert(sizeof(ActorResourceHolder) == 0x48);
