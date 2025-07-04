@@ -23,13 +23,13 @@ private:
     struct SensorInfo {
         al::HitSensor* bindSensor = nullptr;
         u32 type = 0;
-        f32 distance = 0;
+        f32 overlap = 0;
         s32 priority = 0;
         inline bool operator<(const SensorInfo& other) const;
     };
 
-    sead::PtrArray<struct SensorInfo> mActiveSensors;
-    sead::PtrArray<struct SensorInfo> mPool;
+    sead::PtrArray<SensorInfo> mActiveSensors;
+    sead::PtrArray<SensorInfo> mPool;
 
     static_assert(sizeof(SensorInfo) == 0x18);
 };

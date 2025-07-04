@@ -2,7 +2,7 @@
 
 #include <container/seadPtrArray.h>
 
-const s32 PoolSize = 24;
+constexpr s32 PoolSize = 24;
 
 PlayerBindableSensorList::PlayerBindableSensorList() {
     mActiveSensors.allocBuffer(PoolSize, nullptr);
@@ -27,28 +27,23 @@ void PlayerBindableSensorList::append(al::HitSensor* bindSensor, u32 type, f32 d
     SensorInfo* dest = mPool.popBack();
     dest->bindSensor = bindSensor;
     dest->type = type;
-    dest->distance = distance;
+    dest->overlap = distance;
     dest->priority = priority;
 
     mActiveSensors.pushBack(dest);
 }
 
 void PlayerBindableSensorList::remove(al::HitSensor* toRemove) {
-    s32 found;
-
     s32 size = mActiveSensors.size();
-    for (found = 0; found < size; found++) {
-        const SensorInfo* item = mActiveSensors[found];
-        if (item->bindSensor == toRemove)
-            break;
+    for (s32 i = 0; i < size; i++) {
+        const SensorInfo* item = mActiveSensors[i];
+        if (item->bindSensor == toRemove) {
+            SensorInfo* item = mActiveSensors[i];
+            mPool.pushBack(item);
+            mActiveSensors.erase(i);
+            return;
+        }
     }
-
-    if (found >= size)
-        return;
-
-    SensorInfo* item = mActiveSensors.at(found);
-    mPool.pushBack(item);
-    mActiveSensors.erase(found);
 }
 
 void PlayerBindableSensorList::sort() {
@@ -60,18 +55,18 @@ u32 PlayerBindableSensorList::getNum() const {
 }
 
 al::HitSensor* PlayerBindableSensorList::get(u32 index) const {
-    return mActiveSensors.at(index)->bindSensor;
+    return mActiveSensors[index]->bindSensor;
 }
 
 u32 PlayerBindableSensorList::getType(u32 index) const {
-    return mActiveSensors.at(index)->type;
+    return mActiveSensors[index]->type;
 }
 
 bool PlayerBindableSensorList::SensorInfo::operator<(const SensorInfo& other) const {
     if (priority < other.priority)
         return true;
     else if (priority == other.priority)
-        return distance < other.distance;
+        return overlap < other.overlap;
     else
         return false;
 }
