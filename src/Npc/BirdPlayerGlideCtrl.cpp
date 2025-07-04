@@ -10,7 +10,7 @@
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 

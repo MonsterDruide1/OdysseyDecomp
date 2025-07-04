@@ -7,8 +7,9 @@
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Model/ModelKeeper.h"
+#include "Library/Resource/ActorResource.h"
 #include "Library/Resource/Resource.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ParameterObj.h"
 
