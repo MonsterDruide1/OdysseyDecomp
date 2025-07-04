@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
-from setup import get_build_dir
+from colorama import Fore
+from setup import check_download_url_updated, get_build_dir
 import subprocess
 import os
 import time
@@ -12,6 +13,10 @@ project_root = setup.ROOT
 def touch_cmake_lists():
     cmake_lists_path = project_root / 'CMakeLists.txt'
     os.utime(cmake_lists_path, times=None)
+
+def warn_outdated_tools():
+    if check_download_url_updated(False):
+        print(f"{Fore.YELLOW}Found outdated tools, consider rerunning setup.py to update them{Fore.RESET}")
 
 build_sources_path = get_build_dir() / '.build_sources'
 
@@ -27,6 +32,8 @@ def main():
     if not get_build_dir().is_dir():
         print("Please run setup.py first.")
         exit(1)
+
+    warn_outdated_tools()
 
     cmake_args = ['cmake', '--build', str(get_build_dir())]
     if args.clean:
