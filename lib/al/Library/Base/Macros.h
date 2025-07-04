@@ -95,6 +95,7 @@
 #define FOR_EACH_TUPL_DELIM(action, delim, ...) FOR_EACH_DELIM(_FUNC_, delim, action, __VA_ARGS__)
 
 #define COMMA() ,
+#define LOGICAL_OR() ||
 
 #define DECL_MEMBER_VAR(type, name) type m##name;
 

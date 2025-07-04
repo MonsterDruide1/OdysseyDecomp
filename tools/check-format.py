@@ -443,6 +443,7 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
         else:
             allowed_name = (var_name.startswith("m") and var_name[1].isupper()) or any(
                 [var_name.startswith(p) for p in PREFIXES])
+            if path.endswith("SensorMsgSetupUtil.h") and "DECL_MEMBER_VAR_MULTI" in line: return
             CHECK(lambda a: allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
         if var_type == "bool":
@@ -501,9 +502,6 @@ def check_source(c, path):
     common_consistent_float_literals(c, path)
 
 def check_header(c, path):
-    # This file causes multiple checks to crash and shouldn't really be linted anyway
-    if path.endswith("SensorMsgSetupUtil.h"):
-        return
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
     common_include_order(c, path, True)
