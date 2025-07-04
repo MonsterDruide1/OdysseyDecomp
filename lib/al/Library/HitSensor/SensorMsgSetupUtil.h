@@ -10,7 +10,7 @@ class HitSensor;
 class ComboCounter;
 
 class SensorMsg {
-    SEAD_RTTI_BASE(SensorMsg);
+    SEAD_RTTI_BASE(SensorMsg)
 
 public:
     virtual ~SensorMsg() = default;
@@ -75,25 +75,26 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
 #define SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(Type, SensorMsgParams, CtorParams)                        \
     class SensorMsg##Type : public al::SensorMsg {                                                 \
         SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
-    private:                                                                                       \
-        DECL_MEMBER_VAR_MULTI SensorMsgParams;                                                     \
                                                                                                    \
     public:                                                                                        \
-        SensorMsg##Type(PARAM_LIST CtorParams);                                                    \
+        inline SensorMsg##Type(PARAM_LIST CtorParams);                                             \
                                                                                                    \
         inline void extractData(POINTER_PARAM_LIST SensorMsgParams) {                              \
             SET_PARAM_MEMBER_MULTI SensorMsgParams;                                                \
         }                                                                                          \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
+                                                                                                   \
+    private:                                                                                       \
+        DECL_MEMBER_VAR_MULTI SensorMsgParams;                                                     \
     };                                                                                             \
     inline SensorMsg##Type::SensorMsg##Type(PARAM_LIST CtorParams)
 
 // Use this in the edge cases where there's no macro to implement a specific type of isMsg
 #define MSG_TYPE_CHECK_(Type, MsgVar) sead::IsDerivedFrom<SensorMsg##Type>(MsgVar)
 
-// Helper macro passed into FOR_EACH, shouldn't be used directly
-#define IS_MSG_MULTIPLE_PART_(_, Type) || MSG_TYPE_CHECK_(Type, msg)
+// Helper macro passed into FOR_EACH_DELIM, shouldn't be used directly
+#define IS_MSG_MULTIPLE_HELPER_(_, Type) MSG_TYPE_CHECK_(Type, msg)
 
 /*
 
@@ -103,10 +104,9 @@ SensorMsgTest or SensorMsgTest2: IS_MSG_MULTIPLE_IMPL(TestAll, Test, Test2);
 
 */
 
-#define IS_MSG_MULTIPLE_IMPL(Name, FirstType, ...)                                                 \
+#define IS_MSG_MULTIPLE_IMPL(Name, ...)                                                            \
     bool isMsg##Name(const al::SensorMsg* msg) {                                                   \
-        return sead::IsDerivedFrom<SensorMsg##FirstType>(msg)                                      \
-            FOR_EACH(IS_MSG_MULTIPLE_PART_, _, __VA_ARGS__);                                       \
+        return FOR_EACH_DELIM(IS_MSG_MULTIPLE_HELPER_, LOGICAL_OR, _, __VA_ARGS__);                \
     }
 
 /*
@@ -149,8 +149,10 @@ Creating a function called sendMsgX that sends a SensorMsgTest2:
 /*
 
 Implements a sendMsg function that sends a message of the given type to the first sensor of the
-actor passed in. Creating a function called sendMsgX that sends a SensorMsgTest2 to the first sensor
-of the target actor: SEND_MSG_TO_ACTOR_IMPL(X, Test2);
+actor passed in.
+Creating a function called sendMsgX that sends a SensorMsgTest2 to the first sensor
+of the target actor:
+    SEND_MSG_TO_ACTOR_IMPL(X, Test2);
 
 */
 
@@ -213,12 +215,9 @@ NOTE: all fields after the first one need to be pairs of type and name.
     }
 
 // Same as above, but a shorter version
-#define SEND_MSG_DATA_MULTI_IMPL(Name, FirstDataType, ...)                                         \
-    SEND_MSG_DATA_MULTI_IMPL_(Name, Name, FirstDataType, __VA_ARGS__)
+#define SEND_MSG_DATA_MULTI_IMPL(Name, ...) SEND_MSG_DATA_MULTI_IMPL_(Name, Name, __VA_ARGS__)
 
 // Shorter macros for messages that store a ComboCounter (There are 31 of them in al alone)
 #define SENSOR_MSG_COMBO(Name) SENSOR_MSG_WITH_DATA(Name, (al::ComboCounter*, ComboCounter))
 #define SEND_MSG_COMBO_IMPL_(Name, Type) SEND_MSG_DATA_IMPL_(Name, Type, al::ComboCounter*)
 #define SEND_MSG_COMBO_IMPL(Name) SEND_MSG_DATA_IMPL_(Name, Name, al::ComboCounter*)
-
-// #undef IS_MSG_MULTIPLE_PART_
