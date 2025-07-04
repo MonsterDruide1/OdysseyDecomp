@@ -415,7 +415,9 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
     elif visibility == 2:  # private
         if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith("enum"): return
         newline = line
-        if "=" in line:
+        if line.startswith("static_assert"):
+            return
+        elif "=" in line:
             newline = line.split("=")[0].strip()
         elif "(" in line or ")" in line:
             return
