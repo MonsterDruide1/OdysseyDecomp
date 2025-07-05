@@ -9,7 +9,7 @@ public:
     ExecuteSystemInitInfo();
 
 private:
-    u64 mData;
+    u64 _0;
 };
 
 }  // namespace al

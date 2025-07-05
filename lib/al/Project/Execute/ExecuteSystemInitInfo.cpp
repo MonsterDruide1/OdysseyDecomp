@@ -2,8 +2,8 @@
 
 namespace al {
 
-ExecuteSystemInitInfo::ExecuteSystemInitInfo() : mData() {
-    mData = 0;
+ExecuteSystemInitInfo::ExecuteSystemInitInfo() : _0() {
+    _0 = 0;
 }
 
 }  // namespace al
