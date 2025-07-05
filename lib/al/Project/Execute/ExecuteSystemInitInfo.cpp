@@ -2,8 +2,6 @@
 
 namespace al {
 
-ExecuteSystemInitInfo::ExecuteSystemInitInfo() : _0() {
-    _0 = 0;
-}
+ExecuteSystemInitInfo::ExecuteSystemInitInfo() : mDrawContext(nullptr) {}
 
 }  // namespace al

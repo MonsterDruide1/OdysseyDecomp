@@ -1,6 +1,8 @@
 #pragma once
 
-#include <math/seadVector.h>
+namespace agl {
+class DrawContext;
+}
 
 namespace al {
 
@@ -9,7 +11,7 @@ public:
     ExecuteSystemInitInfo();
 
 private:
-    u64 _0;
+    agl::DrawContext* mDrawContext;
 };
 
 }  // namespace al
