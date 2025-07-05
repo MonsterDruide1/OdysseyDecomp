@@ -5,13 +5,12 @@ class DrawContext;
 }
 
 namespace al {
-
-class ExecuteSystemInitInfo {
-public:
+struct ExecuteSystemInitInfo {
     ExecuteSystemInitInfo();
 
-private:
-    agl::DrawContext* mDrawContext;
+    agl::DrawContext* drawCtx;
 };
+
+static_assert(sizeof(ExecuteSystemInitInfo) == 0x8);
 
 }  // namespace al
