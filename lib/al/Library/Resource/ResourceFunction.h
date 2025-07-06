@@ -12,8 +12,6 @@ class ActorResource;
 class ActorResourceHolder;
 class Resource;
 class SeadAudioPlayer;
-template <s32>
-class StringTmp;
 
 void addResourceCategory(const sead::SafeString& resourceName, s32 category, sead::Heap* heap);
 bool isEmptyCategoryResource(const sead::SafeString& resourceName);
@@ -30,8 +28,6 @@ Resource* findOrCreateResourceEventData(const char* eventDataName, const char* r
 Resource* findOrCreateResourceSystemData(const char* systemDataName, const char* resourceName);
 ActorResource* findOrCreateActorResource(ActorResourceHolder* resourceHolder,
                                          const char* actorResourceName, const char* suffix);
-void getActorResourceFile(StringTmp<256>* actorResourceFile, const char* actorResourceName,
-                          const char* animArc, const char* suffix);
 ActorResource* findOrCreateActorResourceWithAnimResource(ActorResourceHolder* resourceHolder,
                                                          const char* actorResourceName,
                                                          const char* animArc, const char* suffix,

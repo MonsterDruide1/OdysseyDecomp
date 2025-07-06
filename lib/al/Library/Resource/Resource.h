@@ -43,7 +43,7 @@ public:
 
     sead::ArchiveFileDevice* getFileDevice() const { return mDevice; }
 
-    const char* getPath() const { return mName.cstr(); }
+    const char* getPath() const { return mPath.cstr(); }
 
     ActorInitResourceData* getResData() const { return mData; }
 
@@ -52,7 +52,7 @@ public:
 private:
     sead::ArchiveRes* mArchive = nullptr;
     sead::ArchiveFileDevice* mDevice = nullptr;
-    sead::FixedSafeString<0x80> mName;
+    sead::FixedSafeString<0x80> mPath;
     sead::Heap* mHeap;
     ActorInitResourceData* mData = nullptr;
     nn::g3d::ResFile* mResFile = nullptr;

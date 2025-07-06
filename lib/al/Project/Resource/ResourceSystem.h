@@ -44,6 +44,7 @@ public:
 private:
     char filler[0xb0];
     const char* mCurrentCategoryName;
+    // TODO: proper names for these two
     SeadAudioPlayer* mAudioPlayerA;
     SeadAudioPlayer* mAudioPlayerB;
 };

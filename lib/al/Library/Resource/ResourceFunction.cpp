@@ -4,6 +4,7 @@
 #include "Library/File/FileUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/Memory/HeapUtil.h"
+#include "Library/Resource/ActorResource.h"
 #include "Library/Resource/ActorResourceHolder.h"
 #include "Library/Resource/Resource.h"
 #include "Library/System/SystemKit.h"
@@ -70,33 +71,6 @@ Resource* findOrCreateResourceSystemData(const char* systemDataName, const char*
     return findOrCreateResource(systemName, resourceName);
 }
 
-ActorResource* findOrCreateActorResource(ActorResourceHolder* resourceHolder,
-                                         const char* actorResourceName, const char* suffix) {
-    Resource* resource = findOrCreateResource(actorResourceName, nullptr);
-    const char* animArc = nullptr;
-    bool isMergeAnim = false;
-    ByamlIter fileIter;
-    if (tryGetActorInitFileIter(&fileIter, resource, "InitModel", suffix)) {
-        fileIter.tryGetStringByKey(&animArc, "AnimArc");
-        fileIter.tryGetBoolByKey(&isMergeAnim, "IsMergeAnim");
-    }
-
-    StringTmp<256> actorResourceFile("");
-    getActorResourceFile(&actorResourceFile, actorResourceName, animArc, suffix);
-    ActorResource* actorResource = resourceHolder->tryFindActorResource(actorResourceFile);
-    if (actorResource == nullptr) {
-        Resource* objectResource = nullptr;
-        if (animArc)
-            objectResource =
-                findOrCreateResource(StringTmp<256>("ObjectData/%s", animArc).cstr(), nullptr);
-        actorResource =
-            resourceHolder->createActorResource(actorResourceFile, resource, objectResource);
-        actorResource->initResourceData(suffix, isMergeAnim);
-    }
-
-    return actorResource;
-}
-
 void getActorResourceFile(StringTmp<256>* actorResourceFile, const char* actorResourceName,
                           const char* animArc, const char* suffix) {
     actorResourceFile->copy(actorResourceName);
@@ -112,6 +86,34 @@ void getActorResourceFile(StringTmp<256>* actorResourceFile, const char* actorRe
     }
 }
 
+ActorResource* findOrCreateActorResource(ActorResourceHolder* resourceHolder,
+                                         const char* actorResourceName, const char* suffix) {
+    Resource* resource = findOrCreateResource(actorResourceName, nullptr);
+    const char* animArc = nullptr;
+    bool isMergeAnim = false;
+    ByamlIter fileIter;
+    if (tryGetActorInitFileIter(&fileIter, resource, "InitModel", suffix)) {
+        fileIter.tryGetStringByKey(&animArc, "AnimArc");
+        fileIter.tryGetBoolByKey(&isMergeAnim, "IsMergeAnim");
+    }
+
+    StringTmp<256> actorResourceFile("");
+    getActorResourceFile(&actorResourceFile, actorResourceName, animArc, suffix);
+    ActorResource* actorResource = resourceHolder->tryFindActorResource(actorResourceFile);
+    if (actorResource)
+        return actorResource;
+
+    Resource* objectResource = nullptr;
+    if (animArc)
+        objectResource =
+            findOrCreateResource(StringTmp<256>("ObjectData/%s", animArc).cstr(), nullptr);
+    ActorResource* newActorResource =
+        resourceHolder->createActorResource(actorResourceFile, resource, objectResource);
+    newActorResource->initResourceData(suffix, isMergeAnim);
+
+    return newActorResource;
+}
+
 ActorResource* findOrCreateActorResourceWithAnimResource(ActorResourceHolder* resourceHolder,
                                                          const char* actorResourceName,
                                                          const char* animArc, const char* suffix,
@@ -119,16 +121,18 @@ ActorResource* findOrCreateActorResourceWithAnimResource(ActorResourceHolder* re
     StringTmp<256> actorResourceFile("");
     getActorResourceFile(&actorResourceFile, actorResourceName, animArc, suffix);
     ActorResource* actorResource = resourceHolder->tryFindActorResource(actorResourceFile);
-    if (actorResource == nullptr) {
-        Resource* resource = findOrCreateResource(actorResourceName, nullptr);
-        Resource* objectResource = nullptr;
-        if (animArc)
-            objectResource = findOrCreateResource(animArc, nullptr);
-        actorResource =
-            resourceHolder->createActorResource(actorResourceFile, resource, objectResource);
-        actorResource->initResourceData(suffix, isMergeAnim);
-    }
-    return actorResource;
+    if (actorResource)
+        return actorResource;
+
+    Resource* resource = findOrCreateResource(actorResourceName, nullptr);
+    Resource* objectResource = nullptr;
+    if (animArc)
+        objectResource = findOrCreateResource(animArc, nullptr);
+    ActorResource* newActorResource =
+        resourceHolder->createActorResource(actorResourceFile, resource, objectResource);
+    newActorResource->initResourceData(suffix, isMergeAnim);
+
+    return newActorResource;
 }
 
 bool isExistResourceYaml(const Resource* resource, const char* resourceName, const char* suffix) {
