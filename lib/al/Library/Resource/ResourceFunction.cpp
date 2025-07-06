@@ -81,34 +81,51 @@ ActorResource* findOrCreateActorResource(ActorResourceHolder* resourceHolder,
         fileIter.tryGetBoolByKey(&isMergeAnim, "IsMergeAnim");
     }
 
-    StringTmp<256> tmp("");
-    FUN_71009cb780(tmp, actorResourceName, animArc, suffix);
-    ActorResource* actorResource = resourceHolder->tryFindActorResource(tmp);
+    StringTmp<256> actorResourceFile("");
+    getActorResourceFile(&actorResourceFile, actorResourceName, animArc, suffix);
+    ActorResource* actorResource = resourceHolder->tryFindActorResource(actorResourceFile);
     if (actorResource == nullptr) {
         Resource* objectResource = nullptr;
         if (animArc)
             objectResource =
                 findOrCreateResource(StringTmp<256>("ObjectData/%s", animArc).cstr(), nullptr);
-        actorResource = resourceHolder->createActorResource(tmp, resource, objectResource);
+        actorResource =
+            resourceHolder->createActorResource(actorResourceFile, resource, objectResource);
         actorResource->initResourceData(suffix, isMergeAnim);
     }
 
     return actorResource;
 }
 
+void getActorResourceFile(StringTmp<256>* actorResourceFile, const char* actorResourceName,
+                          const char* animArc, const char* suffix) {
+    actorResourceFile->copy(actorResourceName);
+
+    if (animArc) {
+        actorResourceFile->append("::");
+        actorResourceFile->append(animArc);
+    }
+
+    if (suffix) {
+        actorResourceFile->append("::");
+        actorResourceFile->append(suffix);
+    }
+}
+
 ActorResource* findOrCreateActorResourceWithAnimResource(ActorResourceHolder* resourceHolder,
                                                          const char* actorResourceName,
                                                          const char* animArc, const char* suffix,
                                                          bool isMergeAnim) {
-    StringTmp<256> tmp("");
-    FUN_71009cb780(tmp, actorResourceName, animArc, suffix);
-    ActorResource* actorResource = resourceHolder->tryFindActorResource(tmp);
+    StringTmp<256> actorResourceFile("");
+    getActorResourceFile(&actorResourceFile, actorResourceName, animArc, suffix);
+    ActorResource* actorResource = resourceHolder->tryFindActorResource(actorResourceFile);
     if (actorResource == nullptr) {
         Resource* resource = findOrCreateResource(actorResourceName, nullptr);
         Resource* objectResource = nullptr;
         if (animArc)
             objectResource = findOrCreateResource(animArc, nullptr);
-        actorResource = resourceHolder->createActorResource(tmp, resource, objectResource);
+        actorResource =
+            resourceHolder->createActorResource(actorResourceFile, resource, objectResource);
         actorResource->initResourceData(suffix, isMergeAnim);
     }
     return actorResource;
