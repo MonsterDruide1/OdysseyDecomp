@@ -13,9 +13,9 @@ def touch_cmake_lists():
     os.utime(cmake_lists_path, times=None)
 
 def warn_outdated_tools():
-    if check_download_url_updated(False):
+    if check_download_url_updated():
         from colorama import Fore
-        print(f"{Fore.YELLOW}Found outdated tools, consider rerunning setup.py to update them{Fore.RESET}")
+        print(f"{Fore.YELLOW}Found unexpected version of tools, consider rerunning setup.py to fetch the version matching the current repository. Rebase onto latest master to work with the newest tools.{Fore.RESET}")
 
 build_sources_path = get_build_dir() / '.build_sources'
 
