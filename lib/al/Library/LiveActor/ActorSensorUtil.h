@@ -562,14 +562,14 @@ bool isMsgString(const SensorMsg* msg);
 bool isMsgStringV4fPtr(const SensorMsg* msg);
 bool isMsgStringV4fSensorPtr(const SensorMsg* msg);
 bool isMsgStringVoidPtr(const SensorMsg* msg);
-bool isMsgPlayerTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor* sensor1,
-                                          const HitSensor* sensor2);
-bool isMsgPlayerTrampleReflectForCrossoverSensor(const SensorMsg* msg, const HitSensor* sensor1,
-                                                 const HitSensor* sensor2);
-bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSensor* sensor1,
-                                             const HitSensor* sensor2, f32 unk);
-bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor* sensor1,
-                                             const HitSensor* sensor2);
+bool isMsgPlayerTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor* sender,
+                                          const HitSensor* receiver);
+bool isMsgPlayerTrampleReflectForCrossoverSensor(const SensorMsg* msg, const HitSensor* sender,
+                                                 const HitSensor* receiver);
+bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSensor* sender,
+                                             const HitSensor* receiver, f32 threshold);
+bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor* sender,
+                                             const HitSensor* receiver);
 bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender);
 bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor*, HitSensor*, const sead::Vector3f&,
                                                   const sead::Vector3f&, f32);
