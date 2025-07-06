@@ -5,7 +5,7 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
