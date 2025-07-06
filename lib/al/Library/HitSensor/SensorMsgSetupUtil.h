@@ -91,10 +91,7 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
     inline SensorMsg##Type::SensorMsg##Type(PARAM_LIST CtorParams)
 
 // Use this in the edge cases where there's no macro to implement a specific type of isMsg
-#define MSG_TYPE_CHECK_(Type, MsgVar) sead::IsDerivedFrom<SensorMsg##Type>(MsgVar)
-
-// Helper macro passed into FOR_EACH_DELIM, shouldn't be used directly
-#define IS_MSG_MULTIPLE_HELPER_(_, Type) MSG_TYPE_CHECK_(Type, msg)
+#define MSG_TYPE_CHECK_(MsgVar, Type) sead::IsDerivedFrom<SensorMsg##Type>(MsgVar)
 
 /*
 
@@ -106,7 +103,7 @@ SensorMsgTest or SensorMsgTest2: IS_MSG_MULTIPLE_IMPL(TestAll, Test, Test2);
 
 #define IS_MSG_MULTIPLE_IMPL(Name, ...)                                                            \
     bool isMsg##Name(const al::SensorMsg* msg) {                                                   \
-        return FOR_EACH_DELIM(IS_MSG_MULTIPLE_HELPER_, LOGICAL_OR, _, __VA_ARGS__);                \
+        return FOR_EACH_DELIM(MSG_TYPE_CHECK_, LOGICAL_OR, msg, __VA_ARGS__);                      \
     }
 
 /*
@@ -119,7 +116,7 @@ Creating a function called isMsgX that checks if the message is of type SensorMs
 
 #define IS_MSG_IMPL_(Name, Type)                                                                   \
     bool isMsg##Name(const al::SensorMsg* msg) {                                                   \
-        return sead::IsDerivedFrom<SensorMsg##Type>(msg);                                          \
+        return MSG_TYPE_CHECK_(msg, Type);                                                         \
     }
 
 /*
