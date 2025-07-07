@@ -15,13 +15,13 @@ static sead::DirectoryEntry sEntries[0x1000];
 
 namespace al {
 Resource::Resource(const sead::SafeString& path)
-    : mName(path), mHeap(sead::HeapMgr::instance()->getCurrentHeap()) {
+    : mPath(path), mHeap(sead::HeapMgr::instance()->getCurrentHeap()) {
     mArchive = loadArchive(path);
     mDevice = new sead::ArchiveFileDevice(mArchive);
 }
 
 Resource::Resource(const sead::SafeString& path, sead::ArchiveRes* archive)
-    : mName(path), mHeap(sead::HeapMgr::instance()->getCurrentHeap()) {
+    : mPath(path), mHeap(sead::HeapMgr::instance()->getCurrentHeap()) {
     mArchive = archive;
     mDevice = new sead::ArchiveFileDevice(mArchive);
 }
@@ -136,7 +136,7 @@ const void* Resource::getOtherFile(const sead::SafeString& filePath) const {
 }
 
 const char* Resource::getArchiveName() const {
-    return getBaseName(mName.cstr());
+    return getBaseName(mPath.cstr());
 }
 
 bool Resource::tryCreateResGraphicsFile(const sead::SafeString& filePath,

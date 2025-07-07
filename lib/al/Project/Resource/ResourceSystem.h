@@ -7,6 +7,7 @@
 namespace al {
 class Resource;
 class ByamlIter;
+class SeadAudioPlayer;
 
 class ResourceSystem {
 public:
@@ -33,10 +34,20 @@ public:
     bool tryGetTableCategoryIter(ByamlIter*, const sead::SafeString&) const;
     bool tryGetGraphicsInfoIter(ByamlIter*, const sead::SafeString&) const;
 
+    void resetCurrentCategoryName() { mCurrentCategoryName = nullptr; }
+
+    void setAudioPlayer(SeadAudioPlayer* audioPlayerA, SeadAudioPlayer* audioPlayerB) {
+        mAudioPlayerA = audioPlayerA;
+        mAudioPlayerB = audioPlayerB;
+    }
+
 private:
-    void* _0[0xc8 / 8];
+    char filler[0xb0];
+    const char* mCurrentCategoryName;
+    // TODO: proper names for these two
+    SeadAudioPlayer* mAudioPlayerA;
+    SeadAudioPlayer* mAudioPlayerB;
 };
 
 static_assert(sizeof(ResourceSystem) == 0xc8);
-
 }  // namespace al

@@ -21,6 +21,10 @@ public:
 
     Resource* getModelRes() const { return mModelRes; }
 
+    Resource* getAnimRes() const { return mAnimRes; }
+
+    bool hasAnimData() const { return mHasAnimData; }
+
 private:
     sead::FixedSafeString<128> mName = {""};
     Resource* mModelRes;
