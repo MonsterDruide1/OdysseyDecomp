@@ -2,6 +2,6 @@
 
 namespace al {
 
-ExecuteSystemInitInfo::ExecuteSystemInitInfo() : drawCtx(nullptr) {}
+ExecuteSystemInitInfo::ExecuteSystemInitInfo() = default;
 
 }  // namespace al

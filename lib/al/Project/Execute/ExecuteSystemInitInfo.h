@@ -8,7 +8,7 @@ namespace al {
 struct ExecuteSystemInitInfo {
     ExecuteSystemInitInfo();
 
-    agl::DrawContext* drawCtx;
+    agl::DrawContext* drawCtx = nullptr;
 };
 
 static_assert(sizeof(ExecuteSystemInitInfo) == 0x8);
