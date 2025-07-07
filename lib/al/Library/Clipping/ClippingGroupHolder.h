@@ -7,7 +7,7 @@ class PlacementId;
 class ClippingInfoGroup;
 class ClippingJudge;
 
-struct ClippingActorInfo;
+class ClippingActorInfo;
 
 class ClippingGroupHolder {
 public:

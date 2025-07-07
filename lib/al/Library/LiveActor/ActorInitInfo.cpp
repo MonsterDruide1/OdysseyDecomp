@@ -91,7 +91,7 @@ void ActorInitInfo::initViewIdHostActor(const ActorInitInfo& actorInfo, const Li
     viewIdHolder = actor->getSceneInfo()
                        ->clippingDirector->getClippingActorHolder()
                        ->find(actor)
-                       ->viewIdHolder;
+                       ->getViewIdHolder();
 
     copyHostInfo(actorInfo, actorInfo.placementInfo);
 }
