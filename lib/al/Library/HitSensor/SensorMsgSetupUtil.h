@@ -143,6 +143,9 @@ Creating a function called sendMsgX that sends a SensorMsgTest2:
         return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);                \
     }
 
+// Same as above, but a shorter version
+#define SEND_MSG_IMPL(Name) SEND_MSG_IMPL_(Name, Name)
+
 /*
 
 Implements a sendMsg function that sends a message of the given type to the first sensor of the
@@ -163,16 +166,6 @@ of the target actor:
 
 /*
 
-Same as above, but the name of the sendMsg function and the SensorMsg are the same.
-Creating a function called sendMsgTest that sends a SensorMsgTest:
-    SEND_MSG_IMPL(Test);
-
-*/
-
-#define SEND_MSG_IMPL(Name) SEND_MSG_IMPL_(Name, Name)
-
-/*
-
 Implements a sendMsg function that takes in data of a specific type and sends a message of the given
 message type with the data. Creating a function called sendMsgX that takes a const char* and sends a
 SensorMsgTest2 with that string: SEND_MSG_DATA_IMPL(X, Test2, const char*);
@@ -185,6 +178,9 @@ SensorMsgTest2 with that string: SEND_MSG_DATA_IMPL(X, Test2, const char*);
         return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);                \
     }
 
+// Same as above, but a shorter version
+#define SEND_MSG_DATA_IMPL(Name, DataType) SEND_MSG_DATA_IMPL_(Name, Name, DataType)
+
 // Same as SEND_MSG_TO_ACTOR_IMPL but also includes data like the macro above
 #define SEND_MSG_DATA_TO_ACTOR_IMPL(Name, DataType)                                                \
     bool sendMsg##Name(al::LiveActor* actor, DataType data) {                                      \
@@ -192,16 +188,12 @@ SensorMsgTest2 with that string: SEND_MSG_DATA_IMPL(X, Test2, const char*);
         return alActorSensorFunction::sendMsgToActorUnusedSensor(msg, actor);                      \
     }
 
-// Same as above, but a shorter version
-#define SEND_MSG_DATA_IMPL(Name, DataType) SEND_MSG_DATA_IMPL_(Name, Name, DataType)
-
 /*
 
 Similar to SEND_MSG_DATA_IMPL, but for sending a message with multiple different data fields.
 Creating a function called sendMsgX that takes a const char* and and a s32 and sends a
-SensorMsgTest2 with that string and s32: SEND_MSG_DATA_IMPL(X, Test2, const char*, (s32, Number));
-
-NOTE: all fields after the first one need to be pairs of type and name.
+SensorMsgTest2 with that string and s32: SEND_MSG_DATA_IMPL(X, Test2, (const char*, String), (s32,
+Number));
 
 */
 
