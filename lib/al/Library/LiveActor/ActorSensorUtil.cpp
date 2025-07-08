@@ -436,20 +436,20 @@ IS_MSG_IMPL(StringV4fPtr);
 IS_MSG_IMPL(StringV4fSensorPtr);
 IS_MSG_IMPL(StringVoidPtr);
 
-bool isCrossoverSensor(const HitSensor* sensor1, const HitSensor* sensor2) {
-    sead::Vector3f diff = sensor1->getPos() - sensor2->getPos();
-    sead::Vector3f sensor2ParentGravityN = getGravity(sensor2->getParentActor());
-    sead::Vector3f sensor2ParentGravity = -sensor2ParentGravityN;
+bool isCrossoverSensor(const HitSensor* sender, const HitSensor* receiver) {
+    sead::Vector3f diff = sender->getPos() - receiver->getPos();
+    sead::Vector3f receiverParentGravity = getGravity(receiver->getParentActor());
+    sead::Vector3f receiverUp = -receiverParentGravity;
     if (!tryNormalizeOrZero(&diff))
         return false;
     // cos(70°)
-    if (diff.dot(sensor2ParentGravity) < 0.342020153f)
+    if (diff.dot(receiverUp) < 0.342020153f)
         return false;
     sead::Vector3f velocityDir;
-    tryNormalizeOrZero(&velocityDir, getVelocity(sensor1->getParentActor()));
+    tryNormalizeOrZero(&velocityDir, getVelocity(sender->getParentActor()));
     if (diff.y < 0.0f)
         return false;
-    f32 dot = velocityDir.dot(sensor2ParentGravity);
+    f32 dot = velocityDir.dot(receiverParentGravity);
     return !isNearZero(sead::Mathf::abs(dot)) && !isNearZero(dot - 1.0f);
 }
 
