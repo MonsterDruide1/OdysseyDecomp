@@ -1,13 +1,13 @@
-#include "EffectLight.h"
+#include "Project/Effect/EffectLight.h"
 
-#include "gfx/seadColor.h"
-#include "math/seadVector.h"
+#include <math/seadMathCalcCommon.h>
 
 namespace al {
-    void EffectLight::set(const sead::Vector3<float>& pos, float intensity, const sead::Color4f& color, bool enabled) {
-        mPosition = pos;
-        mIntensity = intensity;
-        mColor = color;
-        mEnabled = enabled;
-    }
+void EffectLight::set(const sead::Mathi& pos, f32 intensity, const sead::Color4f& color,
+                      bool enabled) {
+    mPosition = pos;
+    mIntensity = intensity;
+    mColor = color;
+    mIsEnabled = enabled;
 }
+}  // namespace al
