@@ -55,13 +55,15 @@ public:
 
     const sead::Vector3f& getCollidedGroundNormal() const { return mCollidedGroundNormal; }
 
+    void set1b0(f32 value) { _1b0 = value; }
+
 private:
     void* filler[13];
     f32 _70;
     void* filler2[37];
     s32 _1a0;
     sead::Vector3f mCollidedGroundNormal;
-    void* filler3;
+    f32 _1b0;
 };
 
 static_assert(sizeof(PlayerCollider) == 0x1B8);
