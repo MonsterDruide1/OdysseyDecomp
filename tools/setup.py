@@ -52,26 +52,36 @@ def prepare_executable(original_nso: Optional[Path]):
     converted_elf_path = original_nso.with_suffix(".elf")
 
     if not converted_elf_path.is_file():
-        setup.fail("internal error while preparing executable (missing ELF); please report")
+        setup.fail("internal error while preparing executable (missing ELF) please report")
 
-    shutil.move(converted_elf_path, TARGET_ELF_PATH);
+    shutil.move(converted_elf_path, TARGET_ELF_PATH)
 
     uncompressed_nso_path = original_nso.with_suffix(".uncompressed.nso")
-    shutil.move(uncompressed_nso_path, TARGET_UNCOMPRESSED_NSO_PATH);
+    shutil.move(uncompressed_nso_path, TARGET_UNCOMPRESSED_NSO_PATH)
 
     if not TARGET_UNCOMPRESSED_NSO_PATH.is_file() or hashlib.sha256(TARGET_UNCOMPRESSED_NSO_PATH.read_bytes()).hexdigest() != UNCOMPRESSED_V10_HASH:
-        setup.fail("Internal error while exporting uncompressed NSO (uncompressed NSO either doesn't exist or has an incorrect hash); please report")
+        setup.fail("Internal error while exporting uncompressed NSO (uncompressed NSO either doesn't exist or has an incorrect hash) please report")
+
+def check_download_url_updated():
+    if not exists_toolchain_file("cache-version-url.txt"):
+        return True
+    with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "r+") as f:
+        data = f.read()
+        if data != CACHE_REPO_RELEASE_URL:
+            return True
+    return False
+
 
 def get_build_dir():
     return setup.ROOT / "build"
+
+def exists_toolchain_file(file_path_rel):
+    return os.path.isfile(f"{get_repo_root()}/toolchain/{file_path_rel}")
 
 def setup_project_tools(tools_from_source):
 
     def exists_tool(tool_name, check_symlink=True):
         return os.path.isfile(f"{get_repo_root()}/tools/{tool_name}") or (check_symlink and os.path.islink(f"{get_repo_root()}/tools/{tool_name}"))
-
-    def exists_toolchain_file(file_path_rel):
-        return os.path.isfile(f"{get_repo_root()}/toolchain/{file_path_rel}")
 
     def build_tools_from_source(tmpdir_path):
         cwd = os.getcwd()
@@ -84,6 +94,10 @@ def setup_project_tools(tools_from_source):
         os.chdir(cwd)
         shutil.copytree(f"{tmpdir_path}/OdysseyDecompToolsCache/build/OdysseyDecomp-binaries_{platform.machine()}-{platform.system()}/bin", f"{get_repo_root()}/toolchain/bin")
 
+    def update_current_cache_url():
+        with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "w") as f:
+            f.write(CACHE_REPO_RELEASE_URL)
+
     def remove_old_toolchain():
         if exists_toolchain_file("clang-3.9.1/bin/clang"):
             print("Removing toolchain/clang-3.9.1 since full toolchains are no longer needed")
@@ -92,30 +106,17 @@ def setup_project_tools(tools_from_source):
             print("Removing toolchain/clang-4.0.1")
             shutil.rmtree(f"{get_repo_root()}/toolchain/clang-4.0.1")
 
-    def check_download_url_updated():
-        if not exists_toolchain_file("cache-version-url.txt"):
-            with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "w") as f:
-                f.write(CACHE_REPO_RELEASE_URL)
-            return
-        with open(f"{get_repo_root()}/toolchain/cache-version-url.txt", "r+") as f:
-            data = f.read()
-            if data != CACHE_REPO_RELEASE_URL:
-                f.seek(0)
-                f.write(CACHE_REPO_RELEASE_URL)
-                f.truncate()
-                print("Old toolchain files found. Replacing them with ones from the latest release")
-                if exists_tool("check", False):
-                    os.remove(f"{get_repo_root()}/tools/check")
-                if exists_tool("decompme", False):
-                    os.remove(f"{get_repo_root()}/tools/decompme")
-                if exists_tool("listsym", False):
-                    os.remove(f"{get_repo_root()}/tools/listsym")
-                if exists_toolchain_file("bin/clang"):
-                    shutil.rmtree(f"{get_repo_root()}/toolchain/bin")
-
-
     remove_old_toolchain()
-    check_download_url_updated()
+    if check_download_url_updated():
+        print("Old toolchain files found. Replacing them with ones from the latest release")
+        if exists_tool("check", False):
+            os.remove(f"{get_repo_root()}/tools/check")
+        if exists_tool("decompme", False):
+            os.remove(f"{get_repo_root()}/tools/decompme")
+        if exists_tool("listsym", False):
+            os.remove(f"{get_repo_root()}/tools/listsym")
+        if exists_toolchain_file("bin/clang"):
+            shutil.rmtree(f"{get_repo_root()}/toolchain/bin")
 
     if not exists_tool("check"):
         os.symlink(f"{get_repo_root()}/toolchain/bin/check", f"{get_repo_root()}/tools/check")
@@ -141,6 +142,7 @@ def setup_project_tools(tools_from_source):
 
             if tools_from_source:
                 build_tools_from_source(tmpdir)
+                update_current_cache_url()
                 return
 
             target = f"{platform.machine()}-{platform.system()}"
@@ -155,6 +157,7 @@ def setup_project_tools(tools_from_source):
             except urllib.error.HTTPError:
                 input(f"Prebuilt binaries not found for platform: {target}. Do you want to build llvm, clang, lld and viking from source? (Press enter to accept)")
                 build_tools_from_source(tmpdir)
+            update_current_cache_url()
 
 def create_build_dir(ver, cmake_backend):
     if(ver != Version.VER_100): return # TODO: remove this when multiple versions should be built
