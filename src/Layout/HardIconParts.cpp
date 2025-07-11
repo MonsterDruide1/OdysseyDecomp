@@ -17,7 +17,7 @@ NERVES_MAKE_NOSTRUCT(HardIconParts, Hide, Appear, Wait, PageNext, PageEnd, End);
 }  // namespace
 
 HardIconParts::HardIconParts(const char* name) : al::LayoutActor(name) {
-    initNerve(&Hide, 0);
+    initNerve(&Hide);
 }
 
 bool HardIconParts::isHide() const {
@@ -46,34 +46,34 @@ void HardIconParts::startEnd() {
 
 void HardIconParts::exeHide() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Hide", nullptr);
+        al::startAction(this, "Hide");
 }
 
 void HardIconParts::exeAppear() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Appear", nullptr);
+        al::startAction(this, "Appear");
     al::setNerveAtActionEnd(this, &Wait);
 }
 
 void HardIconParts::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 }
 
 void HardIconParts::exePageNext() {
     if (al::isFirstStep(this))
-        al::startAction(this, "PageNext", nullptr);
+        al::startAction(this, "PageNext");
     al::setNerveAtActionEnd(this, &Hide);
 }
 
 void HardIconParts::exePageEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "PageEnd", nullptr);
+        al::startAction(this, "PageEnd");
     al::setNerveAtActionEnd(this, &Hide);
 }
 
 void HardIconParts::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
+        al::startAction(this, "End");
     al::setNerveAtActionEnd(this, &Hide);
 }

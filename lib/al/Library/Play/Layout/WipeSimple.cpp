@@ -22,18 +22,18 @@ WipeSimple::WipeSimple(const char* name, const char* layoutName, const LayoutIni
                        const char* actorName)
     : LayoutActor(name) {
     initLayoutActor(this, info, layoutName, actorName);
-    initNerve(&NrvWipeSimple.Close, 0);
+    initNerve(&NrvWipeSimple.Close);
 }
 
 void WipeSimple::startClose(s32 frames) {
     mFrames = frames;
-    startAction(this, "Appear", nullptr);
+    startAction(this, "Appear");
     LayoutActor::appear();
 
     if (mFrames <= 0)
-        setActionFrameRate(this, 1.0f, nullptr);
+        setActionFrameRate(this, 1.0f);
     else
-        setActionFrameRate(this, getActionFrameMax(this, "Appear", nullptr) / mFrames, nullptr);
+        setActionFrameRate(this, getActionFrameMax(this, "Appear") / mFrames);
 
     setNerve(this, &NrvWipeSimple.Close);
 }
@@ -44,14 +44,14 @@ void WipeSimple::tryStartClose(s32 frames) {
 }
 
 void WipeSimple::startCloseEnd() {
-    startAction(this, "Wait", nullptr);
+    startAction(this, "Wait");
     LayoutActor::appear();
     setNerve(this, &NrvWipeSimple.CloseEnd);
 }
 
 void WipeSimple::startOpen(s32 frames) {
     mFrames = frames;
-    startAction(this, "End", nullptr);
+    startAction(this, "End");
     setNerve(this, &Open);
 }
 
@@ -69,23 +69,23 @@ bool WipeSimple::isOpenEnd() const {
 }
 
 void WipeSimple::exeClose() {
-    if (!isFirstStep(this) && isActionEnd(this, nullptr))
+    if (!isFirstStep(this) && isActionEnd(this))
         setNerve(this, &NrvWipeSimple.CloseEnd);
 }
 
 void WipeSimple::exeCloseEnd() {
     if (isFirstStep(this))
-        startAction(this, "Wait", nullptr);
+        startAction(this, "Wait");
 }
 
 void WipeSimple::exeOpen() {
     if (isFirstStep(this)) {
         if (mFrames <= 0)
-            setActionFrameRate(this, 1.0f, nullptr);
+            setActionFrameRate(this, 1.0f);
         else
-            setActionFrameRate(this, getActionFrameMax(this, "End", nullptr) / mFrames, nullptr);
+            setActionFrameRate(this, getActionFrameMax(this, "End") / mFrames);
     }
-    if (isActionEnd(this, nullptr))
+    if (isActionEnd(this))
         kill();
 }
 

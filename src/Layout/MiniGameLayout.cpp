@@ -19,8 +19,8 @@ NERVES_MAKE_NOSTRUCT(MiniGameLayout, Wait, End, Appear);
 
 MiniGameLayout::MiniGameLayout(const char* name, const al::LayoutInitInfo& info)
     : al::LayoutActor(name) {
-    al::initLayoutActor(this, info, "MiniGame", nullptr);
-    initNerve(&Appear, 0);
+    al::initLayoutActor(this, info, "MiniGame");
+    initNerve(&Appear);
     kill();
 }
 
@@ -36,7 +36,7 @@ void MiniGameLayout::kill() {
 
 void MiniGameLayout::startJumprope() {
     al::setPaneString(this, "TxtTitle",
-                      al::getSystemMessageString(this, "MiniGame", "TitleJumprope"), 0);
+                      al::getSystemMessageString(this, "MiniGame", "TitleJumprope"));
     al::startAction(this, "Jumprope", "State");
     startNewRecordWait();
     al::setNerve(this, &Appear);
@@ -45,7 +45,7 @@ void MiniGameLayout::startJumprope() {
 
 void MiniGameLayout::startRace() {
     al::setPaneString(this, "TxtTitle",
-                      al::getSystemMessageString(this, "MiniGame", "TitleRaceManRace"), 0);
+                      al::getSystemMessageString(this, "MiniGame", "TitleRaceManRace"));
     al::startAction(this, "Runrace", "State");
     startNewRecordWait();
     al::setNerve(this, &Appear);
@@ -54,7 +54,7 @@ void MiniGameLayout::startRace() {
 
 void MiniGameLayout::startVolleyball() {
     al::setPaneString(this, "TxtTitle",
-                      al::getSystemMessageString(this, "MiniGame", "TitleVolleyball"), 0);
+                      al::getSystemMessageString(this, "MiniGame", "TitleVolleyball"));
     al::startAction(this, "Volleyball", "State");
     startNewRecordWait();
     al::setNerve(this, &Appear);
@@ -68,19 +68,19 @@ void MiniGameLayout::end() {
 void MiniGameLayout::setBestCount(s32 count) {
     al::replaceMessageTagScore(
         &mScoreText, this, al::getSystemMessageString(this, "MiniGame", "Counter"), count, "Score");
-    al::setPaneString(this, "TxtBestRecord", mScoreText.cstr(), 0);
+    al::setPaneString(this, "TxtBestRecord", mScoreText.cstr());
 }
 
 void MiniGameLayout::setTodayCount(s32 count) {
     al::replaceMessageTagScore(
         &mScoreText, this, al::getSystemMessageString(this, "MiniGame", "Counter"), count, "Score");
-    al::setPaneString(this, "TxtBestRecordToday", mScoreText.cstr(), 0);
+    al::setPaneString(this, "TxtBestRecordToday", mScoreText.cstr());
 }
 
 void MiniGameLayout::setCount(s32 count) {
     al::replaceMessageTagScore(
         &mScoreText, this, al::getSystemMessageString(this, "MiniGame", "Counter"), count, "Score");
-    al::setPaneString(this, "TxtRecord", mScoreText.cstr(), 0);
+    al::setPaneString(this, "TxtRecord", mScoreText.cstr());
 }
 
 void MiniGameLayout::startNewRecord() {
@@ -101,19 +101,19 @@ bool MiniGameLayout::isEnd() const {
 
 void MiniGameLayout::exeAppear() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Appear", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "Appear");
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
 void MiniGameLayout::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 }
 
 void MiniGameLayout::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "End");
+    if (al::isActionEnd(this))
         kill();
 }
