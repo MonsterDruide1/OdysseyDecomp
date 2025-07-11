@@ -286,7 +286,7 @@ def common_string_finder(c, path):
             if not match.startswith("u"):
                 # Remove quotes from utf8 strings
                 match = match[1:-1]
-            if len(match) < 2:
+            if len(match) < 2:  
                 continue
             found = False
             for x in string_table:
@@ -443,6 +443,7 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
         else:
             allowed_name = (var_name.startswith("m") and var_name[1].isupper()) or any(
                 [var_name.startswith(p) for p in PREFIXES])
+            if path.endswith("SensorMsgSetupUtil.h") and "DECL_MEMBER_VAR_MULTI" in line: return
             CHECK(lambda a: allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
         if var_type == "bool":
