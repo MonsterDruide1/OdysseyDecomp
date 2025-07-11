@@ -37,7 +37,7 @@ void ClippingInfoGroup::allocBuffer() {
 }
 
 void ClippingInfoGroup::setGroupId(const ClippingActorInfo* clippingActorInfo) {
-    *mGroupId = *clippingActorInfo->placementId;
+    *mGroupId = *clippingActorInfo->getPlacementId();
 }
 
 bool ClippingInfoGroup::isEqualGroupId(const PlacementId* placementId) const {
@@ -46,8 +46,8 @@ bool ClippingInfoGroup::isEqualGroupId(const PlacementId* placementId) const {
 
 bool ClippingInfoGroup::judgeClippingAll(const ClippingJudge* clippingJudge) const {
     for (s32 i = 0; i < mSize; i++) {
-        if (!isDead(mClippingInfos[i]->liveActor) &&
-            (isInvalidClipping(mClippingInfos[i]->liveActor) ||
+        if (!isDead(mClippingInfos[i]->getLiveActor()) &&
+            (isInvalidClipping(mClippingInfos[i]->getLiveActor()) ||
              !mClippingInfos[i]->judgeClipping(clippingJudge))) {
             return false;
         }

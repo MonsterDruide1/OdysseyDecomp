@@ -3,7 +3,7 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-struct ClippingActorInfo;
+class ClippingActorInfo;
 class LiveActor;
 
 class ClippingActorInfoList {
