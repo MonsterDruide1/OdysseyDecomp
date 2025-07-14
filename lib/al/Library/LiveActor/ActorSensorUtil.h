@@ -571,8 +571,9 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* msg, const HitSens
 bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSensor* sender,
                                              const HitSensor* receiver);
 bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender);
-bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor*, HitSensor*, const sead::Vector3f&,
-                                                  const sead::Vector3f&, f32);
+bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* receiver, HitSensor* sender,
+                                                  const sead::Vector3f& basePoint,
+                                                  const sead::Vector3f& upAxis, f32 unk);
 
 bool isSensorPlayer(const HitSensor*);
 bool isSensorPlayerFoot(const HitSensor*);
