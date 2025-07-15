@@ -499,7 +499,7 @@ isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender, f32 inne
                                 f32 extraRadius) {
     sead::Vector3f diff;
     diff = receiver->getPos() - sender->getPos();
-    sead::Vector3f senderParentGravity = getGravity(sender->getParentActor());
+    sead::Vector3f senderUp = -getGravity(sender->getParentActor());
     verticalizeVec(&diff, upAxis, diff);
 
     if (!(diff.squaredLength() < sead::Mathf::square(innerRadius))) {
@@ -507,11 +507,8 @@ isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender, f32 inne
         sead::Vector3f velocityDir;
         tryNormalizeOrZero(&velocityDir, getVelocity(sender->getParentActor()));
         if (!(diff.y < 0.0f)) {
-            f32 dot =
-                senderParentGravity.x * -velocityDir.x + senderParentGravity.y * -velocityDir.y +
-                senderParentGravity.z *
-                    -velocityDir.z;  // senderParentGravity.dot(-velocityDir) causes worse mismatch
-            if (!isNearZero(sead::Mathf::abs(dot), 0.001f) && !isNearZero(dot - 1.0f, 0.001f))
+            f32 dot = senderUp.dot(velocityDir);
+            if (!isNearZero(sead::Mathf::abs(dot)) && !isNearZero(dot - 1.0f))
                 return false;
         }
     }
