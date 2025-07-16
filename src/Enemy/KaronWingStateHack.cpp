@@ -40,16 +40,6 @@ NERVES_MAKE_STRUCT(HostType, Wait, WingFly, EndCancel, Walk, EndReset, EndDamage
 
 sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
 
-// Inline from math util??
-inline void makeQuatXDegree(sead::Quatf* outQuat, f32 angle) {
-    f32 angleRad = sead::Mathf::deg2rad(angle) * 0.5f;
-    f32 cos = sead::Mathf::cos(angleRad);
-    f32 sin = sead::Mathf::sin(angleRad);
-    outQuat->w = cos;
-    outQuat->x = sin;
-    outQuat->y = 0.0f;
-    outQuat->z = 0.0f;
-}
 
 // Mismatch: Missing instructions around for loop https://decomp.me/scratch/j6SPL
 KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorInitInfo& info,
@@ -92,19 +82,7 @@ KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorIni
 
     mCollisionShapeKeeper->createShapeSphereIgnoreGround("Head", 70.0f, gHead);
 
-    const char* bodyParts[] = {"LegFront", "LegLeft", "LegRight"};
-    for (s32 i = 0; i < 3; i++) {
-        sead::Quatf quat;
-        makeQuatXDegree(&quat, i * 120.0f);
-
-        sead::Vector3f va = 40.0f * sead::Vector3f::ez;
-        va.rotate(quat);
-
-        mCollisionShapeKeeper->createShapeArrow(bodyParts[i], va, -60.0f * sead::Vector3f::ey,
-                                                20.0f, i);
-    }
-
-    mCollisionShapeKeeper->updateShape();
+    maka(mCollisionShapeKeeper, 40.0f,-40.0f, sead::Vector3f(0.0f,0.0f,0.0f));
 
     mPlayerCollider = new PlayerCollider(mActor->getCollisionDirector(), mActor->getBaseMtx(),
                                          al::getTransPtr(mActor), al::getGravityPtr(mActor), false);
