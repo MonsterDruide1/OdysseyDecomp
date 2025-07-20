@@ -67,6 +67,8 @@ bool calcAlongSkyFront(sead::Vector3f*, const al::LiveActor*);
 
 void calcGroundNormalOrUpDir(sead::Vector3f*, const al::LiveActor*, const IUsePlayerCollision*);
 
-void moveInertiaSlide(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision *,const sead::Vector3f &, f32, f32, f32, f32, f32, f32, f32);
-void moveInertiaSlideOnSkate(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*, const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
+void moveInertiaSlide(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
+                      const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
+void moveInertiaSlideOnSkate(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
+                             const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
 }  // namespace rs

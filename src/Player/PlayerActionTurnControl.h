@@ -16,17 +16,11 @@ public:
     void calcTilt(sead::Vector3f*, const sead::Vector3f&, f32);
     void calcTurnPowerRate(const sead::Vector3f&) const;
 
-    void set_88(bool value) {
-        _88 = value;
-    }
+    void set_88(bool value) { _88 = value; }
 
-    const sead::Vector3f& get_5c() const {
-        return _5c;
-    }
+    const sead::Vector3f& get_5c() const { return _5c; }
 
-    bool get_69() const {
-        return _69;
-    }
+    bool get_69() const { return _69; }
 
 private:
     al::LiveActor* mPlayer;
