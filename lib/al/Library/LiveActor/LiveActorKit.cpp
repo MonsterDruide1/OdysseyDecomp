@@ -8,7 +8,6 @@
 #include "Library/Draw/GraphicsSystemInfo.h"
 #include "Library/Effect/EffectSystem.h"
 #include "Library/Execute/ExecuteDirector.h"
-#include "Library/Execute/ExecuteSystemInitInfo.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Model/ModelDisplayListController.h"
@@ -26,6 +25,7 @@
 #include "Library/Stage/StageSwitchDirector.h"
 #include "Project/Clipping/ClippingDirector.h"
 #include "Project/Execute/ExecuteAsyncExecutor.h"
+#include "Project/Execute/ExecuteSystemInitInfo.h"
 #include "Project/Gravity/GravityHolder.h"
 #include "Project/HitSensor/HitSensorDirector.h"
 
