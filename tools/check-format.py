@@ -254,7 +254,7 @@ def common_sead_math_template(c, path):
                 continue
             if "using" in line or "typedef" in line:
                 continue
-            if "sead::Buffer" in line:  # probably needs more exceptions at some point
+            if "sead::Buffer" in line or "sead::RingBuffer" in line:  # probably needs more exceptions at some point
                 continue
             if "sead::PtrArray" in line:
                 continue
