@@ -56,7 +56,9 @@ SEAD_ENUM(YamlParamType,
 class ParameterBase {
 public:
     ParameterBase(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
-                  ParameterObj*, bool);
+                  ParameterObj*, bool e) {
+        initialize("default", "parameter", "", e);
+    }
 
     ParameterBase(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
                   ParameterList*, bool);
@@ -105,7 +107,10 @@ public:
     // TODO: Add proper parameter names
     Parameter(const sead::SafeString& a, const sead::SafeString& b, const sead::SafeString& c,
               ParameterObj* d, bool e)
-        : ParameterBase(a, b, c, d, e) {}
+        : ParameterBase(a, b, c, d, e) {
+        initializeListNode(a, b, c, d, e);
+        mValue = T();
+    }
 
     // TODO: Add proper parameter names
     Parameter(const sead::SafeString& a, const sead::SafeString& b, const sead::SafeString& c,
@@ -129,7 +134,7 @@ public:
     void setValue(const T& value) { mValue = value; }
 
 private:
-    T mValue;
+    T mValue = T();
 };
 
 PARAM_TYPE_DEF(Bool, bool)
