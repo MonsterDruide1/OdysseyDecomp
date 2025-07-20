@@ -50,7 +50,7 @@ void ClippingActorInfo::updateClipping(const ClippingJudge* clippingJudge) {
 
         mLiveActor->endClipped();
     } else {
-        if (isClipped(mLiveActor) )
+        if (isClipped(mLiveActor))
             return;
         startClipped();
     }
