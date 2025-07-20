@@ -23,10 +23,10 @@ SEAD_SINGLETON_DISPOSER_IMPL(Application)
 
 static const sead::TaskFactory sFactory = sead::TTaskFactory<RootTask>;
 
-static s32 sSaveSystemThreadPriority = 20;
-static s32 sFileLoaderThreadPriority = 17;
-static s32 sResourceSystemThreadPriority = 18;
-static s32 sUnknownThreadPriority = 16;
+const s32 cDefaultPriority = sead::Thread::cDefaultPriority;
+const s32 cFileLoaderThreadPriority = cDefaultPriority + 1;
+const s32 cSaveSystemThreadPriority = cDefaultPriority + 4;
+const s32 cResourceSystemThreadPriority = cDefaultPriority + 2;
 
 Application::Application() = default;
 
@@ -78,7 +78,7 @@ void Application::init(s32 argc, char* argv[]) {
         mGameFramework->initAgl(sead::HeapMgr::instance()->getCurrentHeap(),
                                 al::getVirtualDisplayWidth(), al::getVirtualDisplayHeight(), 1600,
                                 900, 1280, 720);
-        
+
         // TODO: Issue 2: This struct creation has different codegen
         mDrawSystemInfo = new al::DrawSystemInfo{mGameFramework->getDockedRenderBuffer(),
                                                  mGameFramework->getHandheldRenderBuffer(), false,
@@ -90,7 +90,7 @@ void Application::init(s32 argc, char* argv[]) {
     {
         mAccountHolder = new al::AccountHolder();
         al::initRegionAndLanguage();
-        mSystemKit->createSaveDataSystem(0xA00400, sSaveSystemThreadPriority);
+        mSystemKit->createSaveDataSystem(0xA00400, cSaveSystemThreadPriority);
 
         GameDataHolder dataHolder;
         al::initSaveDirSync("NoUse.bin", 0xA00400, 1);
@@ -106,9 +106,8 @@ void Application::init(s32 argc, char* argv[]) {
             al::forceInitLanguage("USen");
     }
 
-    // TODO: Issue 3: (and above) Loading sXThreadPriority does not happen, the compiler just hardcodes constants instead
-    mSystemKit->createFileLoader(sFileLoaderThreadPriority);
-    mSystemKit->createResourceSystem(nullptr, sResourceSystemThreadPriority, 0x400000, true);
+    mSystemKit->createFileLoader(cFileLoaderThreadPriority);
+    mSystemKit->createResourceSystem(nullptr, cResourceSystemThreadPriority, 0x400000, true);
 
     sead::Heap* stationedResourceHeap = sead::ExpHeap::create(
         0x2D500000, "StationedResourceHeap", mSystemKit->getMemorySystem()->getStationedHeap(), 8,
@@ -141,5 +140,11 @@ RootTask* Application::getRootTask() const {
 }
 
 namespace ApplicationFunction {
-void initialize(s32 argc, char** argv);
+
+void initialize(s32 argc, char** argv) {
+    sead::Framework::InitializeArg arg = {};
+    arg.heap_size = 0xBFC00000;
+    sead::GameFrameworkNx::initialize(arg);
+}
+
 }
