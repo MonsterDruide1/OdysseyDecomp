@@ -39,11 +39,7 @@ void ClippingActorInfo::endClipped() {
 }
 
 void ClippingActorInfo::updateClipping(const ClippingJudge* clippingJudge) {
-    bool isJudged;
-    if (_20.isUndef())
-        isJudged = clippingJudge->isJudgedToClipFrustum(*mTransPtr, mClippingRadius, _38, _4a);
-    else
-        isJudged = clippingJudge->isJudgedToClipFrustumObb(_18, _20, _38, _4a);
+    bool isJudged = judgeClipping(clippingJudge);
     if (!isJudged) {
         if (!isClipped(mLiveActor))
             return;
@@ -54,16 +50,17 @@ void ClippingActorInfo::updateClipping(const ClippingJudge* clippingJudge) {
 
         mLiveActor->endClipped();
     } else {
-        if (isClipped(mLiveActor) || isDead(mLiveActor) || isClipped(mLiveActor))
+        if (isClipped(mLiveActor) )
             return;
-        mLiveActor->startClipped();
+        startClipped();
     }
 }
 
 bool ClippingActorInfo::judgeClipping(const ClippingJudge* clippingJudge) const {
     if (!_20.isUndef())
         return clippingJudge->isJudgedToClipFrustumObb(_18, _20, _38, _4a);
-    return clippingJudge->isJudgedToClipFrustum(*mTransPtr, mClippingRadius, _38, _4a);
+    else
+        return clippingJudge->isJudgedToClipFrustum(*mTransPtr, mClippingRadius, _38, _4a);
 }
 
 void ClippingActorInfo::updateClipping(ClippingRequestKeeper* clippingRequestKeeper,
@@ -85,9 +82,7 @@ void ClippingActorInfo::updateClipping(ClippingRequestKeeper* clippingRequestKee
 }
 
 bool ClippingActorInfo::isGroupClipping() const {
-    if (mIsEnableGroupClipping)
-        return mPlacementId->isValid();
-    return false;
+    return mIsEnableGroupClipping && isGroupClippingInit();
 }
 
 bool ClippingActorInfo::isGroupClippingInit() const {
@@ -108,9 +103,7 @@ void ClippingActorInfo::setGroupClippingId(const ActorInitInfo& clippingId) {
 
 void ClippingActorInfo::setFarClipLevel20M() {
     _48 = 1;
-    _4a = 1;
-    if (checkActiveViewGroupAny())
-        _4a = 0;
+    updateFarClipLevel();
 }
 
 void ClippingActorInfo::updateFarClipLevel() {
@@ -129,8 +122,9 @@ bool ClippingActorInfo::isFarClipLevelMax() const {
 }
 
 bool ClippingActorInfo::checkActiveViewGroupAny() const {
-    if (!(mFarClipFlags && 0 < mFarClipFlagSize))
+    if (!mFarClipFlags)
         return false;
+
     for (s32 i = 0; i < mFarClipFlagSize; i++) {
         const bool* farClipFlag = mFarClipFlags[i];
         if (farClipFlag && *farClipFlag)

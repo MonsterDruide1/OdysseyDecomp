@@ -42,7 +42,7 @@ public:
 
     bool isGroupClippingEnable() const { return mIsEnableGroupClipping; }
 
-    void setGroupClippingEnable(const bool i) { mIsEnableGroupClipping = i; }
+    void setGroupClippingEnable(bool enable) { mIsEnableGroupClipping = enable; }
 
 private:
     LiveActor* mLiveActor = nullptr;
