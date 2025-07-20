@@ -21,7 +21,6 @@ bool ScreenPointKeeper::isExistFile(const Resource* resource, const char* fileNa
     return resource->isExistFile(path.cstr());
 }
 
-// Mismatch: Invalid constructor for ParameterS32 https://decomp.me/scratch/nf6Mg
 ScreenPointKeeper::ScreenPointKeeper() {
     mParameterIo = new ParameterIo();
     mParameterArray = new ParameterArray();
