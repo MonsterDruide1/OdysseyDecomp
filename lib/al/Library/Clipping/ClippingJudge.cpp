@@ -10,7 +10,7 @@ namespace al {
 ClippingJudge::ClippingJudge(const ClippingFarAreaObserver* clippingFarAreaObserver,
                              const SceneCameraInfo* cameraInfo)
     : mFarAreaObserver(clippingFarAreaObserver), mCameraInfo(cameraInfo) {
-    mFrustumRadars = new FrustumRadar*[cameraInfo->getViewNumMax()];
+    mFrustumRadars = new FrustumRadar*[mCameraInfo->getViewNumMax()];
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++)
         mFrustumRadars[i] = new FrustumRadar();
 }
@@ -21,14 +21,19 @@ void ClippingJudge::update() {
         if (!cameraViewInfo->isValid())
             continue;
         FrustumRadar* frustumRadar = mFrustumRadars[i];
-        const sead::Matrix34f& mtx = cameraViewInfo->getLookAtCam().getMatrix();
-        const sead::Matrix44f& mtx2 = cameraViewInfo->getProjMtxStd();
-        frustumRadar->calcFrustumArea(mtx, mtx2, 300.0f, mFarAreaObserver->getFarClipDistance());
+        const sead::Matrix34f& camMtx = cameraViewInfo->getLookAtCam().getMatrix();
+        const sead::Matrix44f& projMtx = cameraViewInfo->getProjMtxStd();
+        frustumRadar->calcFrustumArea(camMtx, projMtx, 300.0f,
+                                      mFarAreaObserver->getFarClipDistance());
     }
 }
 
 bool ClippingJudge::isJudgedToClipFrustumUnUseFarLevel(const sead::Vector3f& pos, f32 idx,
                                                        f32 idy) const {
+    return isJudgedToClipFrustumCore(pos, idx, idy);
+}
+
+bool ClippingJudge::isJudgedToClipFrustumCore(const sead::Vector3f& pos, f32 idx, f32 idy) const {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
         if (mCameraInfo->getViewAt(i)->isValid()) {
             if (mFrustumRadars[i]->judgeInArea(pos, idx, idy))
@@ -38,17 +43,11 @@ bool ClippingJudge::isJudgedToClipFrustumUnUseFarLevel(const sead::Vector3f& pos
     return true;
 }
 
-bool ClippingJudge::isJudgedToClipFrustumCore(const sead::Vector3f& pos, f32 idx, f32 idy) const {
-    return isJudgedToClipFrustumUnUseFarLevel(pos, idx, idy);
-}
-
 bool ClippingJudge::isJudgedToClipFrustum(const sead::Vector3f& pos, f32 idx, f32 idy,
                                           s32 idz) const {
     if (idz == 0)
         return isJudgedToClipFrustumCore(pos, idx, idy, -1.0f);
-    if (mCameraInfo->getViewNumMax() > 0)
-        return isJudgedToClipFrustumCore(pos, idx, idy);
-    return true;
+    return isJudgedToClipFrustumCore(pos, idx, idy);
 }
 
 bool ClippingJudge::isJudgedToClipFrustumCore(const sead::Vector3f& pos, f32 idx, f32 idy,
@@ -67,12 +66,17 @@ bool ClippingJudge::isInClipFrustum(const sead::Vector3f& pos, f32 idx, f32 idy,
 }
 
 bool ClippingJudge::isInClipFrustumAllView(const sead::Vector3f& pos, f32 idx, f32 idy) const {
-    return !isJudgedToClipFrustumUnUseFarLevel(pos, idx, idy);
+    return !isJudgedToClipFrustumCore(pos, idx, idy);
 }
 
 bool ClippingJudge::isJudgedToClipFrustumUnUseFarLevelObb(const sead::Matrix34f* mtx,
                                                           const sead::BoundBox3f& bound,
                                                           f32 idx) const {
+    return isJudgedToClipFrustumCoreObb(mtx, bound, idx);
+}
+
+bool ClippingJudge::isJudgedToClipFrustumCoreObb(const sead::Matrix34f* mtx,
+                                                 const sead::BoundBox3f& bound, f32 idx) const {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
         if (mCameraInfo->getViewAt(i)->isValid()) {
             if (mFrustumRadars[i]->judgeInAreaObb(mtx, bound, idx))
@@ -80,11 +84,6 @@ bool ClippingJudge::isJudgedToClipFrustumUnUseFarLevelObb(const sead::Matrix34f*
         }
     }
     return true;
-}
-
-bool ClippingJudge::isJudgedToClipFrustumCoreObb(const sead::Matrix34f* mtx,
-                                                 const sead::BoundBox3f& bound, f32 idx) const {
-    return isJudgedToClipFrustumUnUseFarLevelObb(mtx, bound, idx);
 }
 
 bool ClippingJudge::isInClipFrustumObb(const sead::Matrix34f* mtx, const sead::BoundBox3f& bound,
@@ -109,7 +108,7 @@ bool ClippingJudge::isJudgedToClipFrustumObb(const sead::Matrix34f* mtx,
                                              s32 idy) const {
     if (idy == 0)
         return isJudgedToClipFrustumCoreObb(mtx, bound, idx, -1.0f);
-    return isJudgedToClipFrustumUnUseFarLevelObb(mtx, bound, idx);
+    return isJudgedToClipFrustumCoreObb(mtx, bound, idx);
 }
 
 }  // namespace al

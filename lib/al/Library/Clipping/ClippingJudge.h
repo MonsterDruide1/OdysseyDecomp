@@ -10,6 +10,7 @@ class FrustumRadar;
 class SceneCameraInfo;
 class ClippingFarAreaObserver;
 
+// TODO: rename `idx`, `idy` and `idz` across all functions
 class ClippingJudge {
 public:
     ClippingJudge(const ClippingFarAreaObserver*, const SceneCameraInfo*);
