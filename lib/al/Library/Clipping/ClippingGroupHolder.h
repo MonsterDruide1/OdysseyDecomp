@@ -2,9 +2,6 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/Clipping/ClippingActorInfo.h"
-#include "Library/Placement/PlacementId.h"
-
 namespace al {
 class PlacementId;
 class ClippingJudge;

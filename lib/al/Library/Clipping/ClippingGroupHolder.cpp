@@ -79,8 +79,6 @@ void ClippingInfoGroup::endClippedAll() {
 }
 
 ClippingGroupHolder::ClippingGroupHolder() {
-    mGroupCount = 0;
-
     mGroups = new ClippingInfoGroup*[0x40];
 
     for (s32 i = 0; i < 0x40; i++)
@@ -91,9 +89,9 @@ void ClippingGroupHolder::update(const ClippingJudge* clippingJudge) {
     for (s32 i = 0; i < mGroupCount; i++) {
         ClippingInfoGroup* group = mGroups[i];
         if (!group->judgeClippingAll(clippingJudge)) {
-            if (group->isClipped != 0)
+            if (group->isClipped)
                 group->endClippedAll();
-        } else if (group->isClipped == 0)
+        } else if (!group->isClipped)
             group->startClippedAll();
     }
 }
@@ -121,8 +119,6 @@ ClippingInfoGroup* ClippingGroupHolder::tryFindGroup(const ClippingActorInfo* cl
 }
 
 void ClippingGroupHolder::allocBuffer() {
-    if (mGroupCount < 0)
-        return;
     for (s32 i = 0; i < mGroupCount; i++)
         mGroups[i]->allocBuffer();
 }
