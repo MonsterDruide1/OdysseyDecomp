@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - decomp.dev
 
 jobs:
   publish_progress_decomp_dev:
