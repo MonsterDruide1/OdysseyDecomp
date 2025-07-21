@@ -1,0 +1,32 @@
+name: decomp-dev
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish_progress_decomp_dev:
+    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        version: ["1.0"]
+    steps:
+    - name: Check out project
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        cache: 'pip'
+    - name: Set up python package dependencies
+      run: pip install cxxfilt pyyaml protobuf
+    - name: Run report generator for decomp.dev
+      run: python .github/scripts/decomp-dev.py --version ${{ matrix.version }} -o report.json
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.version }}_report
+        path: report.json
