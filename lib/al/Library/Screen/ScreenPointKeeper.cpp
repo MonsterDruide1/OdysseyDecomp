@@ -15,50 +15,42 @@
 namespace al {
 
 bool ScreenPointKeeper::isExistFile(const Resource* resource, const char* fileName) {
-    if (!fileName)
-        fileName = "";
-    StringTmp<64> path("%s%s.byml", "InitScreenPoint", fileName);
+    StringTmp<64> path("%s%s.byml", "InitScreenPoint", fileName ?: "");
     return resource->isExistFile(path.cstr());
 }
 
 ScreenPointKeeper::ScreenPointKeeper() {
     mParameterIo = new ParameterIo();
-    mParameterArray = new ParameterArray();
-    mParameterObj = new ParameterObj();
+    mTargets = new ParameterArray();
+    mOptions = new ParameterObj();
 
-    mTargetNum =
-        new ParameterS32("AddTargetNum", "AddTargetNum", "Min=0, Max=10", mParameterObj, true);
+    mAddTargetNum =
+        new ParameterS32("AddTargetNum", "AddTargetNum", "Min=0, Max=10", mOptions, true);
 
-    mParameterIo->addObj(mParameterObj, "Options");
-    mParameterIo->addArray(mParameterArray, "Targets");
+    mParameterIo->addObj(mOptions, "Options");
+    mParameterIo->addArray(mTargets, "Targets");
 }
 
 void ScreenPointKeeper::initByYaml(LiveActor* actor, const Resource* resource,
                                    const ActorInitInfo& initInfo, const char* name) {
     initParameterIoAsActorInfo(mParameterIo, actor, "InitScreenPoint", name);
     ByamlIter iter;
+    if (!tryGetActorInitFileIter(&iter, resource, "InitScreenPoint", name))
+        return;
 
-    if (tryGetActorInitFileIter(&iter, resource, "InitScreenPoint", name)) {
-        mParameterIo->tryGetParam(iter);
-        s32 size = mParameterArray->getSize();
+    mParameterIo->tryGetParam(iter);
+    s32 size = mTargets->getSize();
+    if (size == 0)
+        return;
 
-        if (size != 0) {
-            initArray(mTargetNum->getValue() + size);
-            if (size < 1) {
-                mParameterIo->tryGetParam(iter);
-                return;
-            }
+    initArray(mAddTargetNum->getValue() + size);
 
-            for (s32 i = 0; i < size; i++) {
-                addTarget(actor, initInfo, "Tmp", 0.0f, getTransPtr(actor), nullptr,
-                          sead::Vector3f::zero);
-            }
+    for (s32 i = 0; i < size; i++)
+        addTarget(actor, initInfo, "Tmp", 0.0f, getTransPtr(actor), nullptr, sead::Vector3f::zero);
 
-            mParameterIo->tryGetParam(iter);
-            for (s32 i = 0; i < size; i++)
-                mScreenPointTargets[i]->setFollowMtxPtrByJointName(actor);
-        }
-    }
+    mParameterIo->tryGetParam(iter);
+    for (s32 i = 0; i < size; i++)
+        mScreenPointTargets[i]->setFollowMtxPtrByJointName(actor);
 }
 
 void ScreenPointKeeper::initArray(s32 size) {
@@ -71,7 +63,7 @@ ScreenPointTarget* ScreenPointKeeper::addTarget(LiveActor* actor, const ActorIni
                                                 const sead::Vector3f& vb) {
     ScreenPointTarget* target = new ScreenPointTarget(actor, targetName, radius, va, jointName, vb);
     mScreenPointTargets.pushBack(target);
-    mParameterArray->addObj(target->getParameterObj());
+    mTargets->addObj(target->getParameterObj());
 
     ScreenPointDirector* director = initInfo.screenPointDirector;
     director->registerTarget(target);

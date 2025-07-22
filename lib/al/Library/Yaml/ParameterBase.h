@@ -34,15 +34,17 @@ SEAD_ENUM(YamlParamType,
     String4096
 );
 
+// TODO: rename parameter bool e in constructor
 #define PARAM_TYPE_DEF(Name, Type)                                                                 \
     class Parameter##Name : public Parameter<Type> {                                               \
     public:                                                                                        \
-        Parameter##Name(const sead::SafeString& a, const sead::SafeString& b,                      \
-                        const sead::SafeString& c, ParameterObj* d, bool e)                        \
-            : Parameter(a, b, c, d, e) {}                                                          \
-        Parameter##Name(const sead::SafeString& a, const sead::SafeString& b,                      \
-                        const sead::SafeString& c, ParameterList* d, bool e)                       \
-            : Parameter(a, b, c, d, e) {}                                                          \
+        Parameter##Name(const sead::SafeString& name, const sead::SafeString& label,               \
+                        const sead::SafeString& meta, ParameterObj* obj, bool e)                   \
+            : Parameter(name, label, meta, obj, e) {}                                              \
+                                                                                                   \
+        Parameter##Name(const sead::SafeString& name, const sead::SafeString& label,               \
+                        const sead::SafeString& meta, ParameterList* list, bool e)                 \
+            : Parameter(name, label, meta, list, e) {}                                             \
                                                                                                    \
         const char* getParamTypeStr() const override {                                             \
             return YamlParamType::text(YamlParamType::Name);                                       \
@@ -55,13 +57,16 @@ SEAD_ENUM(YamlParamType,
 
 class ParameterBase {
 public:
-    ParameterBase(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
-                  ParameterObj*, bool e) {
-        initialize("default", "parameter", "", e);
-    }
+    static u32 calcHash(const sead::SafeString& key);
 
-    ParameterBase(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
-                  ParameterList*, bool);
+    // TODO: rename parameter bool e in all functions
+    ParameterBase(bool e) { initialize("default", "parameter", "", e); }
+
+    ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
+                  const sead::SafeString& meta, ParameterObj* obj, bool e);
+
+    ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
+                  const sead::SafeString& meta, ParameterList* list, bool e);
 
     virtual const char* getParamTypeStr() const = 0;
     virtual YamlParamType getParamType() const = 0;
@@ -69,18 +74,18 @@ public:
     virtual void* ptr() = 0;
     virtual void afterGetParam();
     virtual s32 size() const = 0;
-    virtual bool isEqual(const ParameterBase&);
-    virtual bool copy(const ParameterBase&);
-    virtual bool copyLerp(const ParameterBase&, const ParameterBase&, f32);
+    virtual bool isEqual(const ParameterBase& parameter) const;
+    virtual bool copy(const ParameterBase& parameter);
+    virtual bool copyLerp(const ParameterBase& parameterA, const ParameterBase& parameterB,
+                          f32 rate);
 
-    void initializeListNode(const sead::SafeString&, const sead::SafeString&,
-                            const sead::SafeString&, ParameterObj*, bool);
-    void initializeListNode(const sead::SafeString&, const sead::SafeString&,
-                            const sead::SafeString&, ParameterList*, bool);
-    void initialize(const sead::SafeString&, const sead::SafeString&, const sead::SafeString&,
-                    bool);
-    u32 calcHash(const sead::SafeString&);
-    void tryGetParam(const ByamlIter&);
+    void initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
+                            const sead::SafeString& meta, ParameterObj* obj, bool e);
+    void initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
+                            const sead::SafeString& meta, ParameterList* list, bool e);
+    void initialize(const sead::SafeString& name, const sead::SafeString& label,
+                    const sead::SafeString& meta, bool e);
+    void tryGetParam(const ByamlIter& iter);
 
     ParameterBase* getNext() const { return mNext; }
 
@@ -104,18 +109,20 @@ private:
 template <typename T>
 class Parameter : public ParameterBase {
 public:
-    // TODO: Add proper parameter names
-    Parameter(const sead::SafeString& a, const sead::SafeString& b, const sead::SafeString& c,
-              ParameterObj* d, bool e)
-        : ParameterBase(a, b, c, d, e) {
-        initializeListNode(a, b, c, d, e);
+    // TODO: rename parameter bool e in constructor
+    Parameter(const sead::SafeString& name, const sead::SafeString& label,
+              const sead::SafeString& meta, ParameterObj* obj, bool e)
+        : ParameterBase(e) {
+        initializeListNode(name, label, meta, obj, e);
         mValue = T();
     }
 
-    // TODO: Add proper parameter names
-    Parameter(const sead::SafeString& a, const sead::SafeString& b, const sead::SafeString& c,
-              ParameterList* d, bool e)
-        : ParameterBase(a, b, c, d, e) {}
+    Parameter(const sead::SafeString& name, const sead::SafeString& label,
+              const sead::SafeString& meta, ParameterList* list, bool e)
+        : ParameterBase(e) {
+        initializeListNode(name, label, meta, list, e);
+        mValue = T();
+    }
 
     const void* ptr() const override { return &mValue; };
 

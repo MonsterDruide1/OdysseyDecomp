@@ -18,14 +18,14 @@ public:
     void invalidate();
     void validateBySystem();
     void invalidateBySystem();
-    void getTargetRadius() const;
+    f32 getTargetRadius() const;
     const char* getTargetName() const;
     void setTargetName(const char*);
     void setTargetRadius(f32);
     void setTargetFollowPosOffset(const sead::Vector3f&);
     void setJointName(const char*);
 
-    ParameterObj* getParameterObj() { return mParameterObj; }
+    ParameterObj* getParameterObj() const { return mParameterObj; }
 
 private:
     void* filler;

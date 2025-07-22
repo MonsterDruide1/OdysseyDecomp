@@ -37,8 +37,8 @@ public:
 private:
     sead::PtrArray<ScreenPointTarget> mScreenPointTargets;
     ParameterIo* mParameterIo;
-    ParameterArray* mParameterArray;
-    ParameterObj* mParameterObj;
-    ParameterS32* mTargetNum;
+    ParameterArray* mTargets;
+    ParameterObj* mOptions;
+    ParameterS32* mAddTargetNum;
 };
 }  // namespace al
