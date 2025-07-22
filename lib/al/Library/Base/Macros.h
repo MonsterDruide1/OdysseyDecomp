@@ -112,8 +112,6 @@
 
 #define CALL_PARAM(_, name) p##name
 
-#define SET_MEMBER_PARAM(_, name) m##name = p##name;
-
 #define SET_PARAM_MEMBER(_, name) *p##name = m##name;
 
 #define DECL_MEMBER_VAR_MULTI(...) FOR_EACH_TUPL(DECL_MEMBER_VAR, __VA_ARGS__)
@@ -124,4 +122,3 @@
 #define CALL_PARAM_LIST(...) FOR_EACH_TUPL_DELIM(CALL_PARAM, COMMA, __VA_ARGS__)
 
 #define SET_MEMBER_PARAM_MULTI(...) FOR_EACH_TUPL(SET_MEMBER_PARAM, __VA_ARGS__)
-#define SET_PARAM_MEMBER_MULTI(...) FOR_EACH_TUPL(SET_PARAM_MEMBER, __VA_ARGS__)

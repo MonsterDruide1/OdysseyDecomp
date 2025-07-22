@@ -49,9 +49,7 @@ Creating a SensorMsg class called SensorMsgTest2 that holds a string referenced 
             SET_MEMBER_PARAM_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
-        inline void extractData(POINTER_PARAM_LIST(__VA_ARGS__)) {                                 \
-            SET_PARAM_MEMBER_MULTI(__VA_ARGS__);                                                   \
-        }                                                                                          \
+        DECL_GET_MULTI(__VA_ARGS__)                                                                                         \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
                                                                                                    \
@@ -79,9 +77,7 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
     public:                                                                                        \
         inline SensorMsg##Type(PARAM_LIST CtorParams);                                             \
                                                                                                    \
-        inline void extractData(POINTER_PARAM_LIST SensorMsgParams) {                              \
-            SET_PARAM_MEMBER_MULTI SensorMsgParams;                                                \
-        }                                                                                          \
+        DECL_GET_MULTI(__VA_ARGS__)                                                                                          \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
                                                                                                    \
