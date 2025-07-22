@@ -49,7 +49,7 @@ Creating a SensorMsg class called SensorMsgTest2 that holds a string referenced 
             SET_MEMBER_PARAM_MULTI(__VA_ARGS__);                                                   \
         }                                                                                          \
                                                                                                    \
-        DECL_GET_MULTI(__VA_ARGS__)                                                                                         \
+        DECL_GET_MULTI(__VA_ARGS__)                                                                \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
                                                                                                    \
@@ -77,7 +77,7 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
     public:                                                                                        \
         inline SensorMsg##Type(PARAM_LIST CtorParams);                                             \
                                                                                                    \
-        DECL_GET_MULTI(__VA_ARGS__)                                                                                          \
+        DECL_GET_MULTI(__VA_ARGS__)                                                                \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
                                                                                                    \
