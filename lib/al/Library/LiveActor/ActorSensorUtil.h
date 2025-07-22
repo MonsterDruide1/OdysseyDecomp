@@ -573,7 +573,7 @@ bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSens
 bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender);
 bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* receiver, HitSensor* sender,
                                                   const sead::Vector3f& basePoint,
-                                                  const sead::Vector3f& upAxis, f32 unk);
+                                                  const sead::Vector3f& upAxis, f32 radius);
 
 bool isSensorPlayer(const HitSensor*);
 bool isSensorPlayerFoot(const HitSensor*);
