@@ -485,47 +485,45 @@ bool isMsgKickStoneTrampleForCrossoverSensor(const SensorMsg* msg, const HitSens
 }
 
 bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender) {
-    // Not sure why this isn't checking !isCrossoverSensor. Either I named it incorrectly, I
-    // misunderstand how the function works or the devs accidentaly forgot the `!` (which is very
-    // possible since this is an unused function)
+    // BUG: should have been `!isCrossOverSensor(...)`, based on similar functions
     if (isCrossoverSensor(receiver, sender))
         return false;
     return sendMsgEnemyAttack(receiver, sender);
 }
 
 __attribute__((always_inline)) bool
-isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender, f32 innerRadius,
+isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender, f32 maxSensorDistance,
                                 const sead::Vector3f& basePoint, const sead::Vector3f& upAxis,
                                 f32 extraRadius) {
-    sead::Vector3f diff;
-    diff = receiver->getPos() - sender->getPos();
+    sead::Vector3f sensorDiff = receiver->getPos() - sender->getPos();
     sead::Vector3f senderUp = -getGravity(sender->getParentActor());
-    verticalizeVec(&diff, upAxis, diff);
+    verticalizeVec(&sensorDiff, upAxis, sensorDiff);
 
-    if (!(diff.squaredLength() < sead::Mathf::square(innerRadius))) {
-        normalize(&diff);
+    if (!(sensorDiff.squaredLength() < sead::Mathf::square(maxSensorDistance))) {
+        normalize(&sensorDiff);
         sead::Vector3f velocityDir;
         tryNormalizeOrZero(&velocityDir, getVelocity(sender->getParentActor()));
-        if (!(diff.y < 0.0f)) {
+        if (!(sensorDiff.y < 0.0f)) {
             f32 dot = senderUp.dot(velocityDir);
             if (!isNearZero(sead::Mathf::abs(dot)) && !isNearZero(dot - 1.0f))
                 return false;
         }
     }
 
-    sead::Vector3f diff2 = basePoint - receiver->getPos();
-    verticalizeVec(&diff, upAxis, diff2);
-    return diff.length() <= receiver->getRadius() + extraRadius;
+    sead::Vector3f cylinderDiff = basePoint - receiver->getPos();
+    verticalizeVec(&sensorDiff, upAxis, cylinderDiff);
+    return sensorDiff.length() <= receiver->getRadius() + extraRadius;
 }
 
 bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* receiver, HitSensor* sender,
                                                   const sead::Vector3f& basePoint,
-                                                  const sead::Vector3f& upAxis, f32 unk) {
-    if (isWithinCrossoverCylinderVolume(
-            receiver, sender, sead::Mathf::clamp(unk - 20.0f, 0.0f, unk), basePoint, upAxis, unk))
-        return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgEnemyAttack(), sender,
-                                                            receiver);
-    return false;
+                                                  const sead::Vector3f& upAxis, f32 radius) {
+    if (!isWithinCrossoverCylinderVolume(receiver, sender,
+                                         sead::Mathf::clamp(radius - 20.0f, 0.0f, radius),
+                                         basePoint, upAxis, radius))
+        return false;
+
+    return alActorSensorFunction::sendMsgSensorToSensor(SensorMsgEnemyAttack(), sender, receiver);
 }
 
 IS_MSG_MULTIPLE_IMPL(PushAll, Push, PushStrong, PushVeryStrong);
