@@ -88,9 +88,9 @@ void PlayerStateSquat::fixPressRumble() {
     al::LiveActor* actor = mActor;
     f32 distanceClippedIntoGround = sead::Mathf::clampMin(
         (rs::getCollidedGroundPos(mCollision) - al::getTrans(actor)).dot(groundNormal), 0.0f);
-    // instead of pulling the player up by half the current "clip distance",
+    // instead of pulling Mario up by half the current "clip distance",
     // it clips him further into the ground by this amount. This is probably correct, because being
-    // pushed up by the ground will move the player up even further, so in total, the player is
+    // pushed up by the ground will move Mario up even further, so in total, he is
     // moved upwards (out of the ground) by about half the clip distance.
     al::setTrans(actor, al::getTrans(actor) - (groundNormal * (distanceClippedIntoGround * 0.5f)));
 }
@@ -164,7 +164,6 @@ void PlayerStateSquat::exeBrake() {
     if (!rs::updateJudgeAndResult(mJudgeStartSquat) &&
         rs::updateJudgeAndResult(mJudgeEnableStandUp)) {
         setNerveStandUpOrKill();
-        return;
     }
 }
 
@@ -184,10 +183,8 @@ void PlayerStateSquat::exeWait() {
         return;
     }
 
-    if (rs::updateJudgeAndResult(mJudgeStartRun) && !mModelChanger->is2DModel()) {
+    if (rs::updateJudgeAndResult(mJudgeStartRun) && !mModelChanger->is2DModel())
         al::setNerve(this, &NrvPlayerStateSquat.Walk);
-        return;
-    }
 }
 
 void PlayerStateSquat::exeWalk() {
@@ -200,8 +197,7 @@ void PlayerStateSquat::exeWalk() {
     sead::Vector3f up = {0.0f, 0.0f, 0.0f};
     rs::calcGroundNormalOrUpDir(&up, actor, mCollision);
     if (rs::isCollidedGround(mCollision)) {
-        PlayerActionVelocityControl velocityControl =
-            PlayerActionVelocityControl(actor, mCollision);
+        PlayerActionVelocityControl velocityControl = {actor, mCollision};
         velocityControl.calcOnGround(up);
         velocityControl.apply();
     }
@@ -257,8 +253,6 @@ void PlayerStateSquat::exeStandUp() {
         return;
     }
 
-    if (rs::updateJudgeAndResult(mJudgeStartRun) || mAnimator->isAnimEnd()) {
+    if (rs::updateJudgeAndResult(mJudgeStartRun) || mAnimator->isAnimEnd())
         kill();
-        return;
-    }
 }
