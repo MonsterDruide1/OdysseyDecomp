@@ -77,9 +77,9 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
     public:                                                                                        \
         inline SensorMsg##Type(PARAM_LIST CtorParams);                                             \
                                                                                                    \
-        DECL_GET_MULTI SensorMsgParams                                                             \
+        DECL_GET_MULTI SensorMsgParams;                                                            \
                                                                                                    \
-            virtual ~SensorMsg##Type() = default;                                                  \
+        virtual ~SensorMsg##Type() = default;                                                      \
                                                                                                    \
     private:                                                                                       \
         DECL_MEMBER_VAR_MULTI SensorMsgParams;                                                     \

@@ -570,8 +570,8 @@ bool sendMsgPushAndKillVelocityToTargetH(LiveActor* actor, HitSensor* receiver, 
     // BUG: Param ordering is wrong here
     if (!sendMsgPush(sender, receiver))
         return false;
-    sead::Vector3f diff(sender->getPos().x - receiver->getPos().x, 0.0f,
-                        sender->getPos().z - receiver->getPos().z);
+    sead::Vector3f diff = sender->getPos() - receiver->getPos();
+    diff.y = 0.0f;
     if (!tryNormalizeOrZero(&diff))
         diff.set(sead::Vector3f::ez);
     if (getVelocity(actor).dot(diff) > 0.0f)
