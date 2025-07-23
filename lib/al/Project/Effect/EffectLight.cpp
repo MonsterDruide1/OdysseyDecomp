@@ -4,7 +4,7 @@
 
 namespace al {
 void EffectLight::set(const sead::Vector3f& pos, f32 intensity, const sead::Color4f& color,
-                      bool enabled) {    
+                      bool enabled) {
     mPosition = pos;
     mIntensity = intensity;
     mColor = color;
