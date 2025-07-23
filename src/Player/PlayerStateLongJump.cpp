@@ -18,12 +18,12 @@
 namespace {
 NERVE_IMPL(PlayerStateLongJump, Jump);
 
-NERVE_MAKE(PlayerStateLongJump, Jump);
+NERVES_MAKE_NOSTRUCT(PlayerStateLongJump, Jump);
 }  // namespace
 
-PlayerStateLongJump::PlayerStateLongJump(al::LiveActor* player, PlayerConst const* pConst,
-                                         PlayerInput const* input,
-                                         IUsePlayerCollision const* collider,
+PlayerStateLongJump::PlayerStateLongJump(al::LiveActor* player, const PlayerConst* pConst,
+                                         const PlayerInput* input,
+                                         const IUsePlayerCollision* collider,
                                          PlayerTrigger* trigger, PlayerAnimator* animator,
                                          PlayerContinuousLongJump* continuousLongJump,
                                          PlayerActionDiveInWater* actionDiveInWater)
@@ -32,8 +32,6 @@ PlayerStateLongJump::PlayerStateLongJump(al::LiveActor* player, PlayerConst cons
       mDiveInWater(actionDiveInWater) {
     initNerve(&Jump, 0);
 }
-
-PlayerStateLongJump::~PlayerStateLongJump() = default;
 
 void PlayerStateLongJump::appear() {
     al::ActorStateBase::appear();
@@ -44,7 +42,7 @@ void PlayerStateLongJump::appear() {
 void PlayerStateLongJump::exeJump() {
     al::LiveActor* actor = mActor;
     const sead::Vector3f& gravity = al::getGravity(actor);
-    
+
     if (al::isFirstStep(this)) {
         rs::setupLongJumpVelocity(mActor, mCollision, mConst->getJumpInertiaRate(),
                                   mConst->getLongJumpMovePow(), mConst->getLongJumpSpeedMin(),

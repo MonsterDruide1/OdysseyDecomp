@@ -12,10 +12,10 @@ class PlayerActionDiveInWater;
 
 class PlayerStateLongJump : public al::ActorStateBase {
 public:
-    PlayerStateLongJump(al::LiveActor*,const PlayerConst *,const PlayerInput *,
-                      const  IUsePlayerCollision *, PlayerTrigger*, PlayerAnimator*,
-                        PlayerContinuousLongJump*, PlayerActionDiveInWater*);
-    ~PlayerStateLongJump() override;
+    PlayerStateLongJump(al::LiveActor* player, const PlayerConst* pConst, const PlayerInput* input,
+                        const IUsePlayerCollision* collider, PlayerTrigger* trigger,
+                        PlayerAnimator* animator, PlayerContinuousLongJump* continuousLongJump,
+                        PlayerActionDiveInWater* actionDiveInWater);
 
     void appear() override;
     void exeJump();
