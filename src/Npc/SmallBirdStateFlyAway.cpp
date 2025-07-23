@@ -58,14 +58,6 @@ static void setLength(sead::Vector3f* vec, f32 length) {
         *vec *= length / old_length;
 }
 
-static void turnVecToVecDegree(sead::Vector3f* vec, const sead::Vector3f& other, f32 degree) {
-    al::turnVecToVecDegree(vec, *vec, other, degree);
-}
-
-static void turnVecToVecRate(sead::Vector3f* vec, const sead::Vector3f& other, f32 rate) {
-    al::turnVecToVecRate(vec, *vec, other, rate);
-}
-
 static bool tryFaceToHorizontalDirection(al::LiveActor* actor, const sead::Vector3f& dir) {
     sead::Vector3f horizontal_dir = dir;
     al::verticalizeVec(&horizontal_dir, al::getGravity(actor), horizontal_dir);
@@ -115,9 +107,9 @@ void SmallBirdStateFlyAway::exeFlyAway() {
         if (!al::tryNormalizeOrZero(&target_dir))
             target_dir.set(al::getFront(mActor));
         al::turnVecToVecDegree(&target_dir, al::getFront(mActor), target_dir, 15);
-        turnVecToVecRate(&mTargetDir, target_dir, 0.2f);
+        al::turnVecToVecRate(&mTargetDir, target_dir, 0.2f);
         al::normalize(&mTargetDir);
-        turnVecToVecRate(al::getFrontPtr(mActor), mTargetDir, 0.1f);
+        al::turnVecToVecRate(al::getFrontPtr(mActor), mTargetDir, 0.1f);
         al::normalize(al::getFrontPtr(mActor));
 
         *al::getVelocityPtr(mActor) += velocity.length() * al::getFront(mActor);
@@ -152,10 +144,10 @@ void SmallBirdStateFlyAway::exeFlyAway() {
     sead::Vector3f accel_dir = {0, mVerticalAccel, mHorizontalAccel};
     al::normalize(&accel_dir);
     if (mIsColliding) {
-        turnVecToVecDegree(&mTargetAccelDir, sead::Vector3f::ey, 2.5);
+        al::turnVecToVecDegree(&mTargetAccelDir, sead::Vector3f::ey, 2.5f);
         al::normalize(&mTargetAccelDir);
     }
-    turnVecToVecRate(&accel_dir, mTargetAccelDir, 0.15f);
+    al::turnVecToVecRate(&accel_dir, mTargetAccelDir, 0.15f);
     al::normalize(&accel_dir);
 
     accel = accel_dir * accel_mag;
