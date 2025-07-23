@@ -55,7 +55,7 @@ void PlayerStateLongJump::exeJump() {
     }
 
     if (mTrigger->isOnUpperPunchHit())
-        rs::reflectCeilingUpperPunch(mActor, mCollision, mInput, mConst, mTrigger, 0);
+        rs::reflectCeilingUpperPunch(mActor, mCollision, mInput, mConst, mTrigger, false);
 
     if (rs::isCollidedCeiling(mCollision))
         rs::reflectCeiling(mActor, 0.0f);
