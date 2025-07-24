@@ -45,11 +45,12 @@ void ClippingActorInfo::updateClipping(const ClippingJudge* clippingJudge) {
             return;
 
         startClipped();
-    }
-    if (!isClip)
-        return;
+    } else {
+        if (!isClip)
+            return;
 
-    endClipped();
+        endClipped();
+    }
 }
 
 bool ClippingActorInfo::judgeClipping(const ClippingJudge* clippingJudge) const {
