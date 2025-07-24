@@ -114,8 +114,8 @@ void FrustumRadar::setFactorStereo(const sead::Matrix44f& mtx) {
 }
 
 bool FrustumRadar::judgeInLeft(const sead::Vector3f& pos, f32 f) const {
-    f32 dot1 =mOrthoFront.dot(pos - mOrthoTrans);
-    f32 dot2 =mOrthoSide.dot(pos - mOrthoTrans);
+    f32 dot1 = mOrthoFront.dot(pos - mOrthoTrans);
+    f32 dot2 = mOrthoSide.dot(pos - mOrthoTrans);
 
     return !(dot2 < -(dot1 * _30 + _34 * f));
 }
@@ -143,29 +143,21 @@ bool FrustumRadar::judgeInBottom(const sead::Vector3f& pos, f32 f) const {
 }
 
 bool FrustumRadar::judgeInArea(const sead::Vector3f& pos, f32 f1, f32 f2, f32 f3) const {
-
-    float fVar2;
-    float f4;
-    float dot;
-
-    sead::Vector3f posMinTrans = pos - mOrthoTrans;
-
-    dot = posMinTrans.dot(mOrthoFront);
-
+    f32 dot = mOrthoFront.dot(pos - mOrthoTrans);
 
     if (!(dot < f2 - f1)) {
-
-        if (0.0 < f3 && f1 + f3 < dot) {
+        if (0.0 < f3 && f1 + f3 < dot)
             return false;
-        }
-        f4 = posMinTrans.dot(mOrthoUp);
+
+        f32 f4 = mOrthoUp.dot(pos - mOrthoTrans);
+
         if (f4 > 0.0) {
             f4 = -f4;
         }
 
         if (!(dot * _38 + _3c * f1 < f4)) {
 
-            fVar2 = posMinTrans.dot(mOrthoSide);
+            f32 fVar2 = mOrthoSide.dot(pos - mOrthoTrans);
             if (isNearZero(_40,0.001)) {
 
                 if (fVar2 <= 0.0)
@@ -180,7 +172,8 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f& pos, f32 f1, f32 f2, f32 f3
                 dot = dot * _44 + _48 * f1;
                 f32 fVar4 = fVar2 - _40;
                 fVar2 = fVar2 + _40;
-                if (fVar4 <= dot || fVar2 == fVar3 || dot < fVar4 && fVar2 < fVar3) {
+
+                if (!(fVar4 <= dot || fVar2 > fVar3 || dot < fVar4 && fVar2 < fVar3)) {
                     return true;
                 }
 
