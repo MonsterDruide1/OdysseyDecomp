@@ -38,12 +38,13 @@ public:
 
     PlacementId* getPlacementId() const { return mPlacementId; }
 
-    ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
+    const ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
 
     bool isGroupClippingEnable() const { return mIsEnableGroupClipping; }
 
     void setGroupClippingEnable(bool enable) { mIsEnableGroupClipping = enable; }
 
+    // TODO: rename unnamed member varibles
 private:
     LiveActor* mLiveActor = nullptr;
     const sead::Vector3f* mTransPtr = nullptr;
@@ -57,7 +58,7 @@ private:
     s32 mFarClipFlagEntries = 0;
     s32 mFarClipFlagSize = 0;
     const bool** mFarClipFlags = nullptr;
-    ViewIdHolder* mViewIdHolder = nullptr;
+    const ViewIdHolder* mViewIdHolder = nullptr;
     bool mIsEnableGroupClipping = true;
 };
 }  // namespace al

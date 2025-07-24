@@ -15,9 +15,7 @@ enum class ClippingRequestType;
 
 ClippingActorInfo::ClippingActorInfo(LiveActor* actor)
     : mLiveActor(actor), mPlacementId(new PlacementId()) {
-    mClippingRadius = 300.0f;
-    mTransPtr = getTransPtr(mLiveActor);
-    _20.setUndef();
+    setTypeToSphere(300.0f, nullptr);
 }
 
 void ClippingActorInfo::setTypeToSphere(f32 radius, const sead::Vector3f* pos) {
@@ -39,28 +37,25 @@ void ClippingActorInfo::endClipped() {
 }
 
 void ClippingActorInfo::updateClipping(const ClippingJudge* clippingJudge) {
-    bool isJudged = judgeClipping(clippingJudge);
-    if (!isJudged) {
-        if (!isClipped(mLiveActor))
-            return;
-        if (isDead(mLiveActor))
-            return;
-        if (!isClipped(mLiveActor))
+    bool isClipping = judgeClipping(clippingJudge);
+    bool isClip = isClipped(mLiveActor);
+
+    if (isClipping) {
+        if (isClip)
             return;
 
-        mLiveActor->endClipped();
-    } else {
-        if (isClipped(mLiveActor))
-            return;
         startClipped();
     }
+    if (!isClip)
+        return;
+
+    endClipped();
 }
 
 bool ClippingActorInfo::judgeClipping(const ClippingJudge* clippingJudge) const {
     if (!_20.isUndef())
         return clippingJudge->isJudgedToClipFrustumObb(_18, _20, _38, _4a);
-    else
-        return clippingJudge->isJudgedToClipFrustum(*mTransPtr, mClippingRadius, _38, _4a);
+    return clippingJudge->isJudgedToClipFrustum(*mTransPtr, mClippingRadius, _38, _4a);
 }
 
 void ClippingActorInfo::updateClipping(ClippingRequestKeeper* clippingRequestKeeper,
@@ -136,7 +131,7 @@ bool ClippingActorInfo::checkActiveViewGroupAny() const {
 void ClippingActorInfo::initViewGroup(const ViewIdHolder* viewIdHolder) {
     if (!viewIdHolder)
         return;
-    mViewIdHolder = (ViewIdHolder*)viewIdHolder;
+    mViewIdHolder = viewIdHolder;
     mFarClipFlagEntries = viewIdHolder->getNumPlacements();
     mFarClipFlags = new const bool*[mFarClipFlagEntries];
     for (s32 i = 0; i < mFarClipFlagEntries; i++)
