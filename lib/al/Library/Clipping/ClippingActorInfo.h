@@ -44,7 +44,7 @@ public:
 
     void setGroupClippingEnable(bool enable) { mIsEnableGroupClipping = enable; }
 
-    // TODO: rename unnamed member varibles
+    // TODO: rename unnamed member variables
 private:
     LiveActor* mLiveActor = nullptr;
     const sead::Vector3f* mTransPtr = nullptr;
