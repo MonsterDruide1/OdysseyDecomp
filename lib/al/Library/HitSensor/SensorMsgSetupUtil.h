@@ -77,6 +77,30 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(MyVecMsg, ((sead::Vector3f, Vec)), ((const sead
     public:                                                                                        \
         inline SensorMsg##Type(PARAM_LIST CtorParams);                                             \
                                                                                                    \
+        DECL_GET_MULTI CtorParams;                                                                 \
+                                                                                                   \
+        virtual ~SensorMsg##Type() = default;                                                      \
+                                                                                                   \
+    private:                                                                                       \
+        DECL_MEMBER_VAR_MULTI SensorMsgParams;                                                     \
+    };                                                                                             \
+    inline SensorMsg##Type::SensorMsg##Type(PARAM_LIST CtorParams)
+
+/*
+
+Same as above, but returns the actual stored field types from the getters
+instead of the constructor parameter types. Useful when the stored data
+types differ from the constructor argument types
+
+*/
+
+#define SENSOR_MSG_WITH_DATA_CUSTOM_CTOR_DIRECT_GETTERS(Type, SensorMsgParams, CtorParams)         \
+    class SensorMsg##Type : public al::SensorMsg {                                                 \
+        SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
+                                                                                                   \
+    public:                                                                                        \
+        inline SensorMsg##Type(PARAM_LIST CtorParams);                                             \
+                                                                                                   \
         DECL_GET_MULTI SensorMsgParams;                                                            \
                                                                                                    \
         virtual ~SensorMsg##Type() = default;                                                      \
@@ -160,49 +184,33 @@ of the target actor:
 
 #define SEND_MSG_TO_ACTOR_IMPL(Name) SEND_MSG_TO_ACTOR_IMPL_(Name, Name)
 
-/*
-
-Implements a sendMsg function that takes in data of a specific type and sends a message of the given
-message type with the data. Creating a function called sendMsgX that takes a const char* and sends a
-SensorMsgTest2 with that string: SEND_MSG_DATA_IMPL(X, Test2, const char*);
-
-*/
-
-#define SEND_MSG_DATA_IMPL_(Name, Type, DataType)                                                  \
-    bool sendMsg##Name(al::HitSensor* receiver, al::HitSensor* sender, DataType data) {            \
-        SensorMsg##Type msg(data);                                                                 \
-        return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);                \
-    }
-
-// Same as above, but a shorter version
-#define SEND_MSG_DATA_IMPL(Name, DataType) SEND_MSG_DATA_IMPL_(Name, Name, DataType)
-
 // Same as SEND_MSG_TO_ACTOR_IMPL but also includes data like the macro above
-#define SEND_MSG_DATA_TO_ACTOR_IMPL(Name, DataType)                                                \
-    bool sendMsg##Name(al::LiveActor* actor, DataType data) {                                      \
-        SensorMsg##Name msg(data);                                                                 \
+#define SEND_MSG_DATA_TO_ACTOR_IMPL(Name, DataType, DataName)                                      \
+    bool sendMsg##Name(al::LiveActor* actor, DataType DataName) {                                  \
+        SensorMsg##Name msg(DataName);                                                             \
         return alActorSensorFunction::sendMsgToActorUnusedSensor(msg, actor);                      \
     }
 
 /*
 
-Similar to SEND_MSG_DATA_IMPL, but for sending a message with multiple different data fields.
-Creating a function called sendMsgX that takes a const char* and and a s32 and sends a
-SensorMsgTest2 with that string and s32: SEND_MSG_DATA_IMPL(X, Test2, (const char*, String), (s32,
-Number));
+Implements a sendMsg function that takes in any number data variables and sends a message of the
+given message type with the data. Creating a function called sendMsgX that takes a const char* and
+and a s32 and sends a SensorMsgTest2 with that string and s32: SEND_MSG_DATA_IMPL(X, Test2, (const
+char*, String), (s32, Number));
 
 */
 
-#define SEND_MSG_DATA_MULTI_IMPL_(Name, Type, ...)                                                 \
+#define SEND_MSG_DATA_IMPL_(Name, Type, ...)                                                       \
     bool sendMsg##Name(al::HitSensor* receiver, al::HitSensor* sender, PARAM_LIST(__VA_ARGS__)) {  \
         SensorMsg##Type msg(CALL_PARAM_LIST(__VA_ARGS__));                                         \
         return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);                \
     }
 
 // Same as above, but a shorter version
-#define SEND_MSG_DATA_MULTI_IMPL(Name, ...) SEND_MSG_DATA_MULTI_IMPL_(Name, Name, __VA_ARGS__)
+#define SEND_MSG_DATA_IMPL(Name, ...) SEND_MSG_DATA_IMPL_(Name, Name, __VA_ARGS__)
 
 // Shorter macros for messages that store a ComboCounter (There are 31 of them in al alone)
 #define SENSOR_MSG_COMBO(Name) SENSOR_MSG_WITH_DATA(Name, (al::ComboCounter*, ComboCounter))
-#define SEND_MSG_COMBO_IMPL_(Name, Type) SEND_MSG_DATA_IMPL_(Name, Type, al::ComboCounter*)
-#define SEND_MSG_COMBO_IMPL(Name) SEND_MSG_DATA_IMPL_(Name, Name, al::ComboCounter*)
+#define SEND_MSG_COMBO_IMPL_(Name, Type)                                                           \
+    SEND_MSG_DATA_IMPL_(Name, Type, (al::ComboCounter*, ComboCounter))
+#define SEND_MSG_COMBO_IMPL(Name) SEND_MSG_DATA_IMPL_(Name, Name, (al::ComboCounter*, ComboCounter))
