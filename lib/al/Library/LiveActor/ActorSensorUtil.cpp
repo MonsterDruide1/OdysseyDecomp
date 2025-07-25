@@ -64,7 +64,7 @@ SEND_MSG_IMPL(PlayerTouch);
 SEND_MSG_COMBO_IMPL(PlayerInvincibleTouch);
 SEND_MSG_IMPL(PlayerPutOnEquipment);
 SEND_MSG_IMPL(PlayerReleaseEquipment);
-SEND_MSG_DATA_IMPL(PlayerReleaseEquipmentGoal, u32);
+SEND_MSG_DATA_IMPL(PlayerReleaseEquipmentGoal, (u32, Type));
 SEND_MSG_IMPL(PlayerCarryFront);
 SEND_MSG_IMPL(PlayerCarryFrontWallKeep);
 SEND_MSG_IMPL(PlayerCarryUp);
@@ -83,7 +83,7 @@ SEND_MSG_IMPL(PlayerItemGet);
 SEND_MSG_IMPL(RideAllPlayerItemGet);
 
 SEND_MSG_IMPL(EnemyAttack);
-SEND_MSG_DATA_IMPL(EnemyAttackFire, const char*);
+SEND_MSG_DATA_IMPL(EnemyAttackFire, (const char*, MaterialCode));
 SEND_MSG_IMPL(EnemyAttackKnockDown);
 SEND_MSG_IMPL(EnemyAttackBoomerang);
 SEND_MSG_IMPL(EnemyAttackNeedle);
@@ -93,7 +93,7 @@ SEND_MSG_IMPL(EnemyRouteDokanFire);
 SEND_MSG_COMBO_IMPL(Explosion);
 SEND_MSG_COMBO_IMPL(ExplosionCollide);
 SEND_MSG_IMPL(BindStart);
-SEND_MSG_DATA_IMPL(BindInit, u32);
+SEND_MSG_DATA_IMPL(BindInit, (u32, BindType));
 SEND_MSG_IMPL(BindEnd);
 SEND_MSG_IMPL(BindCancel);
 SEND_MSG_IMPL(BindCancelByDemo);
@@ -108,14 +108,13 @@ SEND_MSG_IMPL(HitVeryStrong);
 SEND_MSG_IMPL(KnockDown);
 SEND_MSG_IMPL(MapPush);
 SEND_MSG_IMPL(Vanish);
-SEND_MSG_DATA_TO_ACTOR_IMPL(ChangeAlpha, f32);
+SEND_MSG_DATA_TO_ACTOR_IMPL(ChangeAlpha, f32, pAlpha);
 SEND_MSG_IMPL(ShowModel);
 SEND_MSG_IMPL(HideModel);
 SEND_MSG_IMPL(Restart);
 // TODO: rename variables
-SEND_MSG_DATA_MULTI_IMPL(CollisionImpulse, (sead::Vector3f*, VecPtr),
-                         (const sead::Vector3f&, ConstVec), (f32, FloatVal),
-                         (const sead::Vector3f&, ConstVec2), (f32, FloatVal2));
+SEND_MSG_DATA_IMPL(CollisionImpulse, (sead::Vector3f*, VecPtr), (const sead::Vector3f&, ConstVec),
+                   (f32, FloatVal), (const sead::Vector3f&, ConstVec2), (f32, FloatVal2));
 SEND_MSG_IMPL(EnemyTouch);
 SEND_MSG_IMPL(EnemyTrample);
 SEND_MSG_IMPL(MapObjTrample);
@@ -188,7 +187,7 @@ bool sendMsgAskSafetyPointToColliderGround(LiveActor* receiver, HitSensor* sende
     return sendMsgAskSafetyPoint(collidedSensor, sender, safetyPointAccessor);
 }
 
-SEND_MSG_DATA_IMPL(AskSafetyPoint, sead::Vector3f**);
+SEND_MSG_DATA_IMPL(AskSafetyPoint, (sead::Vector3f**, SafetyPoint));
 SEND_MSG_IMPL(TouchAssist);
 SEND_MSG_IMPL(TouchAssistTrig);
 SEND_MSG_IMPL(TouchStroke);
@@ -220,13 +219,13 @@ SEND_MSG_IMPL(PlayerTouchShadow);
 SEND_MSG_IMPL(PlayerPullOutShadow);
 SEND_MSG_IMPL(PlayerAttackShadow);
 SEND_MSG_IMPL(PlayerAttackShadowStrong);
-SEND_MSG_DATA_IMPL(PlayerAttackChangePos, sead::Vector3f*);
+SEND_MSG_DATA_IMPL(PlayerAttackChangePos, (sead::Vector3f*, Pos));
 SEND_MSG_IMPL(AtmosOnlineLight);
 SEND_MSG_IMPL(LightBurn);
 SEND_MSG_IMPL(MoonLightBurn);
 
-SEND_MSG_DATA_IMPL(String, const char*);
-SEND_MSG_DATA_MULTI_IMPL(StringV4fPtr, (const char*, String), (sead::Vector4f*, Vec));
+SEND_MSG_DATA_IMPL(String, (const char*, Str));
+SEND_MSG_DATA_IMPL(StringV4fPtr, (const char*, String), (sead::Vector4f*, Vec));
 
 bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const char* str,
                                sead::Vector4f* vec) {
@@ -234,7 +233,7 @@ bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const cha
     return alActorSensorFunction::sendMsgSensorToSensor(msg, sender, receiver);
 }
 
-SEND_MSG_DATA_MULTI_IMPL(StringVoidPtr, (const char*, String), (void*, Ptr));
+SEND_MSG_DATA_IMPL(StringVoidPtr, (const char*, String), (void*, Ptr));
 
 SEND_MSG_TO_ACTOR_IMPL(HideModel);
 SEND_MSG_TO_ACTOR_IMPL(ShowModel);
@@ -552,13 +551,13 @@ IS_MSG_IMPL(TouchCarryItem);
 IS_MSG_IMPL(TouchReleaseItem);
 IS_MSG_MULTIPLE_IMPL(EnemyAttack, EnemyAttack, EnemyAttackFire, EnemyAttackKnockDown);
 
-SEND_MSG_DATA_IMPL(CollidePush, const sead::Vector3f&);
+SEND_MSG_DATA_IMPL(CollidePush, (const sead::Vector3f&, Vec));
 
 bool sendMsgPushAndKillVelocityToTarget(LiveActor* actor, HitSensor* receiver, HitSensor* sender) {
     // BUG: Param ordering is wrong here
     if (!sendMsgPush(sender, receiver))
         return false;
-    sead::Vector3f diff = sender->getPos() - receiver->getPos();
+    sead::Vector3f diff = getSensorPos(sender) - getSensorPos(receiver);
     if (!tryNormalizeOrZero(&diff))
         diff.set(sead::Vector3f::ez);
     if (getVelocity(actor).dot(diff) > 0.0f)
@@ -570,13 +569,17 @@ bool sendMsgPushAndKillVelocityToTargetH(LiveActor* actor, HitSensor* receiver, 
     // BUG: Param ordering is wrong here
     if (!sendMsgPush(sender, receiver))
         return false;
-    sead::Vector3f diff = sender->getPos() - receiver->getPos();
+    sead::Vector3f diff = getSensorPos(sender) - getSensorPos(receiver);
     diff.y = 0.0f;
     if (!tryNormalizeOrZero(&diff))
         diff.set(sead::Vector3f::ez);
     if (getVelocity(actor).dot(diff) > 0.0f)
         verticalizeVec(getVelocityPtr(actor), diff, getVelocity(actor));
     return true;
+}
+
+const sead::Vector3f& getSensorPos(const HitSensor* sensor) {
+    return sensor->getPos();
 }
 
 }  // namespace al
