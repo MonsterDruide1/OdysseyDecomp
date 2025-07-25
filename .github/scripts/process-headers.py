@@ -26,6 +26,11 @@ for root, _, files in os.walk(workdir):
                         line_inner_no_newline = line_inner.strip("\n")
                         if line_inner_no_newline.endswith("\\"):  # part of a macro definition => cut out relevant parts of the line to decide whether to delete it
                             line_inner_no_newline = line_inner_no_newline[:-1].strip()
+                        if line_inner_no_newline.strip() == "":
+                            # should not happen if everything is correct, but there's still broken stuff for macro definitions
+                            # in this case: https://github.com/MonsterDruide1/OdysseyDecomp/blob/master/lib/al/Library/HitSensor/SensorMsgSetupUtil.h#L87
+                            # (ending a macro definition with a function definition with no body)
+                            break
                         if line_inner_no_newline.endswith("{") or line_inner_no_newline.endswith("}"):
                             break
                         if line_inner_no_newline.endswith(";"):
