@@ -90,7 +90,7 @@ void calcHackerWallInputDir(sead::Vector3f*, sead::Vector3f*, const IUsePlayerHa
                             const sead::Vector3f&);
 bool addHackActorAccelStick(al::LiveActor*, const IUsePlayerHack*, sead::Vector3f*, f32,
                             const sead::Vector3f&);
-void calcHackMovePower(const IUsePlayerHack*);
+f32 calcHackMovePower(const IUsePlayerHack*);
 void checkHackerMoveDir(const IUsePlayerHack*, const sead::Vector3f&, const sead::Vector3f&, f32);
 void calcHackerTrampleJumpParam(f32*, f32*, s32*, al::LiveActor*, const IUsePlayerHack*, f32, f32,
                                 f32, f32, f32, s32, f32, f32, f32, f32, f32);
