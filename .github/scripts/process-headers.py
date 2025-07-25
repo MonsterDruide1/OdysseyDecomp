@@ -24,6 +24,8 @@ for root, _, files in os.walk(workdir):
                 if "inline " in lines[i] and "(" in lines[i] and not "= default" in lines[i]:
                     for j, line_inner in enumerate(lines[i:]):
                         line_inner_no_newline = line_inner.strip("\n")
+                        if line_inner_no_newline.endswith("\\"):  # part of a macro definition => cut out relevant parts of the line to decide whether to delete it
+                            line_inner_no_newline = line_inner_no_newline[:-1].strip()
                         if line_inner_no_newline.endswith("{") or line_inner_no_newline.endswith("}"):
                             break
                         if line_inner_no_newline.endswith(";"):
