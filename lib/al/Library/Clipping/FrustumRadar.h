@@ -25,7 +25,7 @@ public:
     bool judgeInBottom(const sead::Vector3f&, f32) const;
     bool judgeInArea(const sead::Vector3f&, f32, f32, f32) const;
     bool judgeInArea(const sead::Vector3f&, f32, f32) const;
-    bool judgeInArea(const sead::Vector3f&, f32);
+    bool judgeInArea(const sead::Vector3f&, f32) const;
     bool judgeInAreaNoFar(const sead::Vector3f&, f32) const;
     bool judgePointFlag(const sead::Vector3f&, f32, f32) const;
     bool judgeInAreaObb(const sead::Matrix34f*, const sead::BoundBox3f&, f32, f32) const;

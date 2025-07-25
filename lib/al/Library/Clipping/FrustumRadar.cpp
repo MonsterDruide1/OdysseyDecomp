@@ -143,45 +143,113 @@ bool FrustumRadar::judgeInBottom(const sead::Vector3f& pos, f32 f) const {
 }
 
 bool FrustumRadar::judgeInArea(const sead::Vector3f& pos, f32 f1, f32 f2, f32 f3) const {
-    f32 dot = mOrthoFront.dot(pos - mOrthoTrans);
+    f32 dot;
+    f32 f4;
+    f32 fVar2;
 
-    if (!(dot < f2 - f1)) {
-        if (0.0 < f3 && f1 + f3 < dot)
+    dot = mOrthoFront.dot(pos - mOrthoTrans);
+    if (dot < f2 - f1)
+        return false;
+
+    if (0.0 < f3 && f1 + f3 < dot)
+        return false;
+
+    f4 = sead::Mathf::abs(mOrthoUp.dot(pos - mOrthoTrans));
+    if (dot * _38 + _3c * f1 < f4)
+        return false;
+
+    fVar2 = mOrthoSide.dot(pos - mOrthoTrans);
+    if (isNearZero(_40, 0.001)) {
+        if (dot * _30 + _34 * f1 < sead::Mathf::abs(fVar2)) {
             return false;
-
-        f32 f4 = mOrthoUp.dot(pos - mOrthoTrans);
-
-        if (f4 > 0.0) {
-            f4 = -f4;
-        }
-
-        if (!(dot * _38 + _3c * f1 < f4)) {
-
-            f32 fVar2 = mOrthoSide.dot(pos - mOrthoTrans);
-            if (isNearZero(_40,0.001)) {
-
-                if (fVar2 <= 0.0)
-                    fVar2 = -fVar2;
-
-                if (fVar2 <= dot * _30 + _34 * f1)
-                    return true;
-
-            }
-            else {
-                f32 fVar3 = dot * _4c + _50 * f1;
-                dot = dot * _44 + _48 * f1;
-                f32 fVar4 = fVar2 - _40;
-                fVar2 = fVar2 + _40;
-
-                if (!(fVar4 <= dot || fVar2 > fVar3 || dot < fVar4 && fVar2 < fVar3)) {
-                    return true;
-                }
-
-            }
         }
     }
-    return false;
+    else {
+        f32 fVar3 = dot * _4c + _50 * f1;
+        dot = dot * _44 + _48 * f1;
+        f32 fVar4 = fVar2 - _40;
+        fVar2 = fVar2 + _40;
+
+        if (fVar4 > dot && fVar2 > fVar3)
+            return false;
+
+        f32 neg_fVar3 = -fVar3;
+        f32 neg_dot = -dot;
+
+        if (fVar4 < neg_fVar3 && fVar2 < neg_dot) {
+            return false;
+        }
+    }
+    return true;
 }
+
+bool FrustumRadar::judgeInArea(const sead::Vector3f& pos, f32 f1, f32 f2) const {
+    return judgeInArea(pos, f1, f2, _58);
+}
+
+bool FrustumRadar::judgeInArea(const sead::Vector3f& pos, f32 f1) const {
+    return judgeInArea(pos, f1, _54, _58);
+}
+
+bool FrustumRadar::judgeInAreaNoFar(const sead::Vector3f& pos, f32 f1) const {
+    return judgeInArea(pos, f1, _54, -1.0f);
+}
+
+bool FrustumRadar::judgePointFlag(const sead::Vector3f& pos, f32 f1, f32 f2) const {
+    bool bVar4;
+    bool bVar3;
+
+    sead::Vector3f transDotVec = pos - (mOrthoTrans);
+
+
+    float transDot = transDotVec.dot(mOrthoFront);
+
+    bool bVar1 = transDot < f1 | 2;
+    if (transDot <= f2 || f2 == 0.0 || (f2 < transDot && f2 < 0.0)) {
+        bVar1 = transDot < f1;
+    }
+
+    float dotUp = transDotVec.dot(mOrthoUp);
+
+    bool bVar2 = bVar1 | 4;
+    if (-(transDot * _38) <= dotUp) {
+        bVar2 = bVar1;
+    }
+    bool bVar5 = bVar2 | 8;
+    if (dotUp <= transDot * _38) {
+        bVar5 = bVar2;
+    }
+    transDotVec.x = transDotVec.x * mOrthoSide.x + transDotVec.y * mOrthoSide.y +
+                transDotVec.z * mOrthoSide.z;
+    bool bVar6 = isNearZero(_40, 0.001);
+    if (bVar6) {
+        bVar4 = bVar5 | 0x10;
+        if (-(transDot * _30) <= transDotVec.x) {
+            bVar4 = bVar5;
+        }
+        bVar6 = transDot * _30 < transDotVec.x;
+        bVar3 = bVar4 | 0x20;
+    }
+    else {
+        transDotVec.y = transDot * _44;
+        transDot = transDot * _4c;
+        transDotVec.z = transDotVec.x - _40;
+        transDotVec.x = transDotVec.x + _40;
+        bVar4 = bVar5 | 0x20;
+        if (transDotVec.x <= transDot || transDotVec.z == transDotVec.y ||
+            (transDot < transDotVec.x && transDotVec.z < transDotVec.y)) {
+            bVar4 = bVar5;
+        }
+
+        bVar3 = bVar4 | 0x10;
+        bVar6 = false;
+    }
+    if (!bVar6) {
+        bVar3 = bVar4;
+    }
+    return bVar3;
+}
+
 
 
 } // namespace al
