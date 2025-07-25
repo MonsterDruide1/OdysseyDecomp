@@ -40,9 +40,9 @@ AppearSwitchSave::AppearSwitchSave(al::LiveActor* actor, const al::ActorInitInfo
         mKillTargetArray[i] = al::createLinksActorFromFactory(info, "KillTarget", i);
         if (mIsOn) {
             if (mKillTargetArray[i]->getHitSensorKeeper())
-                al::sendMsgSwitchOnInit(mKillTargetArray[i]);
+                al::sendMsgSwitchKillOnInit(mKillTargetArray[i]);
         } else if (mKillTargetArray[i]->getHitSensorKeeper()) {
-            al::sendMsgSwitchOffInit(mKillTargetArray[i]);
+            al::sendMsgSwitchKillOffInit(mKillTargetArray[i]);
         }
     }
 
