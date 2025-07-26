@@ -22,7 +22,7 @@ SimpleLayoutText::SimpleLayoutText(const LayoutInitInfo& info, const char* name,
                                    const char* paneName, const char* archiveName)
     : LayoutActor("テキストレイアウト"), mPaneName(paneName) {
     initLayoutActor(this, info, name, archiveName);
-    initNerve(&Wait, 0);
+    initNerve(&Wait);
     kill();
 }
 
@@ -45,7 +45,7 @@ void SimpleLayoutText::setText(const char* text) {
     sead::StringUtil::convertUtf8ToUtf16(utf16str.getBuffer(), utf16str.getBufferSize(), text, -1);
 
     // doesn't match with call to setText(const char16*)
-    setPaneString(this, mPaneName, utf16str.cstr(), 0);
+    setPaneString(this, mPaneName, utf16str.cstr());
 }
 
 void SimpleLayoutText::start(const sead::Vector2f& pos, const char16* str, s32 lifetime) {
@@ -57,7 +57,7 @@ void SimpleLayoutText::start(const sead::Vector2f& pos, const char16* str, s32 l
 }
 
 void SimpleLayoutText::setText(const char16* str) {
-    setPaneString(this, mPaneName, str, 0);
+    setPaneString(this, mPaneName, str);
 }
 
 void SimpleLayoutText::start(const sead::Vector2f& pos, const char* category, const char* key,

@@ -28,11 +28,11 @@ SimplePopupMessageLayout::SimplePopupMessageLayout(const char* name, const char*
         initLayoutActorLocalized(this, info, layoutName, archiveName);
     else
         initLayoutActor(this, info, layoutName, archiveName);
-    initNerve(&NrvHostType.Appear, 0);
+    initNerve(&NrvHostType.Appear);
 }
 
 void SimplePopupMessageLayout::appear() {
-    startAction(this, "Appear", nullptr);
+    startAction(this, "Appear");
     LayoutActor::appear();
     setNerve(this, &NrvHostType.Appear);
 }
@@ -43,7 +43,7 @@ void SimplePopupMessageLayout::end() {
 }
 
 void SimplePopupMessageLayout::startWait() {
-    startAction(this, "Wait", nullptr);
+    startAction(this, "Wait");
     LayoutActor::appear();
     setNerve(this, &NrvHostType.Wait);
 }
@@ -51,7 +51,7 @@ void SimplePopupMessageLayout::startWait() {
 void SimplePopupMessageLayout::exeAppear() {
     refreshPos();
 
-    if (isActionEnd(this, nullptr))
+    if (isActionEnd(this))
         setNerve(this, &NrvHostType.Wait);
 }
 
@@ -65,7 +65,7 @@ void SimplePopupMessageLayout::exeWait() {
     refreshPos();
 
     if (isFirstStep(this))
-        startAction(this, "Wait", nullptr);
+        startAction(this, "Wait");
     if (mLifetime >= 0 && isGreaterEqualStep(this, mLifetime))
         setNerve(this, &End);
 }
@@ -74,8 +74,8 @@ void SimplePopupMessageLayout::exeEnd() {
     refreshPos();
 
     if (isFirstStep(this))
-        startAction(this, "End", nullptr);
-    if (isActionEnd(this, nullptr))
+        startAction(this, "End");
+    if (isActionEnd(this))
         kill();
 }
 

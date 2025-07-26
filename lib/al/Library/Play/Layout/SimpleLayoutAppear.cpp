@@ -11,7 +11,7 @@ SimpleLayoutAppear::SimpleLayoutAppear(const char* name, const char* layoutName,
 }
 
 void SimpleLayoutAppear::appear() {
-    startAction(this, "Appear", nullptr);
+    startAction(this, "Appear");
     LayoutActor::appear();
 }
 }  // namespace al
