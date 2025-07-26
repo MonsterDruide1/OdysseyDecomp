@@ -35,6 +35,14 @@ public:
     bool isIncludeBezierRailPart() const;
     bool isBezierRailPart(s32 index) const;
 
+    PlacementInfo* getRailPoint(s32 index) const { return mRailPoints[index]; }
+
+    s32 getRailPartCount() const { return mRailPartCount; }
+
+    s32 getRailPointsCount() const { return mRailPointsCount; }
+
+    bool isClosed() const { return mIsClosed; }
+
 private:
     PlacementInfo** mRailPoints = nullptr;
     RailPart* mRailPart = nullptr;
