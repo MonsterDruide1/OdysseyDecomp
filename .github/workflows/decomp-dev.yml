@@ -3,10 +3,10 @@ on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   publish_progress_decomp_dev:
-    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
     runs-on: ubuntu-24.04
     strategy:
       matrix:
