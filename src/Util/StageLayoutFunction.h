@@ -3,15 +3,15 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-struct ActorInitInfo;
 class IUseMessageSystem;
 class IUseSceneObjHolder;
 class LayoutActor;
-class PlacementInfo;
 class PlacementId;
+class PlacementInfo;
+struct ActorInitInfo;
 }  // namespace al
-class CollectBgm;
 class GameDataHolderAccessor;
+struct CollectBgm;
 
 namespace rs {
 const char16* searchNpcMessage(const al::ActorInitInfo&, const al::LayoutActor*);
