@@ -4,7 +4,7 @@
 
 namespace al {
 class AreaObjGroup;
-struct ClippingActorInfo;
+class ClippingActorInfo;
 class PlacementId;
 class PlayerHolder;
 class SceneCameraInfo;

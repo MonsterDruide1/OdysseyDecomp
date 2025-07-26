@@ -13,7 +13,8 @@ class LiveActor;
 class PlacementId;
 class ViewIdHolder;
 
-struct ClippingActorInfo {
+class ClippingActorInfo {
+public:
     ClippingActorInfo(LiveActor*);
     void setTypeToSphere(f32, const sead::Vector3f*);
     void startClipped();
@@ -33,19 +34,31 @@ struct ClippingActorInfo {
     void initViewGroup(const ViewIdHolder*);
     void registerViewGroupFarClipFlag(const bool*);
 
-    LiveActor* liveActor;
-    sead::Vector3f _8;
-    f32 _10;
-    sead::Matrix34f* _18;
+    LiveActor* getLiveActor() const { return mLiveActor; }
+
+    PlacementId* getPlacementId() const { return mPlacementId; }
+
+    const ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
+
+    bool isGroupClippingEnable() const { return mIsEnableGroupClipping; }
+
+    void setGroupClippingEnable(bool enable) { mIsEnableGroupClipping = enable; }
+
+    // TODO: rename unnamed member variables
+private:
+    LiveActor* mLiveActor = nullptr;
+    const sead::Vector3f* mTransPtr = nullptr;
+    f32 mClippingRadius = 0.0f;
+    const sead::Matrix34f* _18 = nullptr;
     sead::BoundBox3f _20;
-    f32 _38;
-    PlacementId* placementId;
-    s16 _48;
-    s16 _4a;
-    s32 _4c;
-    s32 _50;
-    void* _58;
-    ViewIdHolder* viewIdHolder;
-    bool isEnableGroupClipping;
+    f32 _38 = 300.0f;
+    PlacementId* mPlacementId = nullptr;
+    s16 _48 = 1;
+    s16 _4a = 1;
+    s32 mFarClipFlagEntries = 0;
+    s32 mFarClipFlagSize = 0;
+    const bool** mFarClipFlags = nullptr;
+    const ViewIdHolder* mViewIdHolder = nullptr;
+    bool mIsEnableGroupClipping = true;
 };
 }  // namespace al

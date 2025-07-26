@@ -75,6 +75,6 @@ struct ActorInitInfo {
     HitSensorDirector* hitSensorDirector = nullptr;
     ScreenPointDirector* screenPointDirector = nullptr;
     StageSwitchDirector* stageSwitchDirector = nullptr;
-    ViewIdHolder* viewIdHolder = nullptr;
+    const ViewIdHolder* viewIdHolder = nullptr;
 };
 }  // namespace al
