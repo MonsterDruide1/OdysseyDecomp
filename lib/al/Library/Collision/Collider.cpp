@@ -275,7 +275,7 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
             minNormX = a2[i2].collisionMovingReaction.x;
             minNormY = a2[i2].collisionMovingReaction.y;
             minNormZ = a2[i2].collisionMovingReaction.z;
-            if ((((fixVector.x * minNormX) + (fixVector.y * minNormY)) + (fixVector.z * minNormZ)) < 0.0f)
+            if ((fixVector.x * minNormX) + (fixVector.y * minNormY) + (fixVector.z * minNormZ) < 0.0f)
                 goto LABEL_80;
 
             if (maxVecX < minNormX)
