@@ -78,13 +78,17 @@ def get_functions(unit_name):
             return None
     
     for fun in funcs:
+        mangled_name = fun["label"] if isinstance(fun["label"], str) else fun["label"][0]
+        demangled_name = get_function_demangled_name(mangled_name)
+
         function = ReportItem()
-        function.name = fun["label"] if isinstance(fun["label"], str) else fun["label"][0]
+        function.name = mangled_name
         function.size = fun["size"]
         function.fuzzy_match_percent = get_function_fuzzy_match_percent(fun)
 
         metadata = ReportItemMetadata()
-        metadata.demangled_name = get_function_demangled_name(function.name)
+        if demangled_name is not None:
+            metadata.demangled_name = demangled_name
         metadata.virtual_address = fun["offset"]
 
         function.metadata.CopyFrom(metadata)
