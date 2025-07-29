@@ -88,7 +88,7 @@ def get_functions(unit_name):
         metadata.virtual_address = fun["offset"]
 
         function.metadata.CopyFrom(metadata)
-        function.address = None  # TODO: should be "offset from start of unit", but we don't have that info yet
+        function.address = fun["offset"] - funcs[0]["offset"]
         functions.append(function)
     
     return functions
@@ -103,7 +103,7 @@ def get_units():
         unit.functions.extend(get_functions(unit_name))
         
         metadata = ReportUnitMetadata()
-        metadata.complete = None  # TODO: no linking yet
+        # metadata.complete = False  # TODO: no linking yet
         metadata.module_name = "/".join(unit_name.split("/")[:-1])
         metadata.module_id = hash(metadata.module_name) & 0xffffffff
         metadata.source_path = unit.name + ".cpp"
