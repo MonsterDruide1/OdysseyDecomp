@@ -30,7 +30,7 @@
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Play/Graphics/PrepassTriangleCulling.h"
 #include "Library/Resource/Resource.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Shadow/DepthShadowMapCtrl.h"
 #include "Library/Shadow/DepthShadowMapDirector.h"
 #include "Library/Shadow/ShadowDirector.h"
@@ -282,7 +282,7 @@ void initActorActionKeeper(LiveActor* actor, const ActorInitInfo& info,
     ActorResource* resource = nullptr;
     if (actor->getModelKeeper()) {
         resource = findOrCreateActorResource(info.actorResourceHolder,
-                                             getModelResource(actor)->getName(), suffix);
+                                             getModelResource(actor)->getPath(), suffix);
     }
 
     initActorActionKeeper(actor, resource, modelArchiveName, suffix);
