@@ -36,7 +36,7 @@ public:
     }
 
 private:
-    void* _8[0x8/8];
+    const LiveActor* mHost;
     MtxConnector* mMtxConnector;
     void* _18[0x40/8];
     s32 _58;
