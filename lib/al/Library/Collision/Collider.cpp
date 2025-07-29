@@ -31,11 +31,11 @@ void Collider::clear() {
 }
 
 void Collider::setTriangleFilter(const TriangleFilterBase* filter) {
-    mPlanes = new SphereHitInfo[mPlaneNum];
+    mTriangleFilter = filter;
 }
 
 void Collider::setCollisionPartsFilter(const CollisionPartsFilterBase* filter) {
-    mPlanes = new SphereHitInfo[mPlaneNum]{};
+    mCollisionPartsFilter = filter;
 }
 
 void Collider::updateRecentOnGroundInfo() {
@@ -176,9 +176,9 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
     float maxNormX;
     float maxNormY;
     float maxNormZ;
-    float sX;
-    float sY;
-    float sZ;
+    float minNormX;
+    float minNormY;
+    float minNormZ;
     float internalX;
     float internalY;
     float internalZ;
@@ -195,9 +195,9 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
     maxNormX = 0.0f;
     maxNormY = 0.0f;
     maxNormZ = 0.0f;
-    sX = 0.0f;
-    sY = 0.0f;
-    sZ = 0.0f;
+    minNormX = 0.0f;
+    minNormY = 0.0f;
+    minNormZ = 0.0f;
     internalX = 0.0f;
     internalY = 0.0f;
     internalZ = 0.0f;
@@ -228,61 +228,42 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
                 maxVecX = fixVector.x;
             } else if (fixVector.x < minVecX) {
                 minVecX = fixVector.x;
-                goto endX;
             }
 
-        endX:
             if (maxVecY < fixVector.y) {
                 maxVecY = fixVector.y;
             } else if (fixVector.y < minVecY) {
                 minVecY = fixVector.y;
-                goto endY;
             }
 
-        endY:
             if (maxVecZ < fixVector.z) {
                 maxVecZ = fixVector.z;
             } else if (fixVector.z < minVecZ) {
                 minVecZ = fixVector.z;
-                goto endZ;
             }
 
-        endZ:
-            internalY = sZ;
-            internalX = sY;
-            internalZ = sX;
+            f32 iX = minNormX;
+            f32 iY = minNormY;
+            f32 iZ = minNormZ;
 
             if (a4) {
                 if (maxNormX < fixNormal.x) {
                     maxNormX = fixNormal.x;
-                } else if (fixNormal.x < internalZ) {
-                    internalZ = fixNormal.x;
-                    goto end2X;
+                } else if (fixNormal.x < iX) {
+                    iX = fixNormal.x;
                 }
 
-                internalZ = internalZ;
-
-            end2X:
                 if (maxNormY < fixNormal.y) {
                     maxNormY = fixNormal.y;
-                } else if (fixNormal.y < internalX) {
-                    internalX = fixNormal.y;
-                    goto end2Y;
+                } else if (fixNormal.y < iY) {
+                    iY = fixNormal.y;
                 }
 
-                internalX = internalX;
-
-            end2Y:
                 if (maxNormZ < fixNormal.z) {
                     maxNormZ = fixNormal.z;
-                } else if (fixNormal.z < internalY) {
-                    internalY = fixNormal.z;
-                    goto end2Z;
+                } else if (fixNormal.z < iZ) {
+                    iZ = fixNormal.z;
                 }
-
-                internalY = internalY;
-
-            end2Z:;
             }
 
             if ((flags2 & 2) == 0)
@@ -291,56 +272,56 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
             if (!a2[i2].triangle.isHostMoved())
                 goto LABEL_80;
 
-            sX = a2[i2].collisionMovingReaction.x;
-            sY = a2[i2].collisionMovingReaction.y;
-            sZ = a2[i2].collisionMovingReaction.z;
-            if ((((fixVector.x * sX) + (fixVector.y * sY)) + (fixVector.z * sZ)) < 0.0)
+            minNormX = a2[i2].collisionMovingReaction.x;
+            minNormY = a2[i2].collisionMovingReaction.y;
+            minNormZ = a2[i2].collisionMovingReaction.z;
+            if ((((fixVector.x * minNormX) + (fixVector.y * minNormY)) + (fixVector.z * minNormZ)) < 0.0f)
                 goto LABEL_80;
 
-            if (maxVecX < sX)
-                maxVecX = sX;
-            else if (sX < minVecX)
-                minVecX = sX;
+            if (maxVecX < minNormX)
+                maxVecX = minNormX;
+            else if (minNormX < minVecX)
+                minVecX = minNormX;
 
-            if (maxVecY < sY)
-                maxVecY = sY;
-            else if (sY < minVecY)
-                minVecY = sY;
+            if (maxVecY < minNormY)
+                maxVecY = minNormY;
+            else if (minNormY < minVecY)
+                minVecY = minNormY;
 
-            if (maxVecZ < sZ)
-                maxVecZ = sZ;
-            else if (sZ < minVecZ)
-                minVecZ = sZ;
+            if (maxVecZ < minNormZ)
+                maxVecZ = minNormZ;
+            else if (minNormZ < minVecZ)
+                minVecZ = minNormZ;
 
             if (a4) {
-                if (maxNormX < sX)
-                    maxNormX = sX;
-                else if (sX < internalZ)
+                if (maxNormX < minNormX)
+                    maxNormX = minNormX;
+                else if (minNormX < iX)
                     goto end3X;
 
-                sX = internalZ;
+                minNormX = iX;
 
             end3X:
-                if (maxNormY < sY)
-                    maxNormY = sY;
-                else if (sY < internalX)
+                if (maxNormY < minNormY)
+                    maxNormY = minNormY;
+                else if (minNormY < iY)
                     goto end3Y;
 
-                sY = internalX;
+                minNormY = iY;
 
             end3Y:
-                if (maxNormZ < sZ)
-                    maxNormZ = sZ;
-                else if (sZ < internalY)
+                if (maxNormZ < minNormZ)
+                    maxNormZ = minNormZ;
+                else if (minNormZ < iZ)
                     goto end3Z;
-                sZ = internalY;
+                minNormZ = iZ;
 
             end3Z:;
             } else {
             LABEL_80:;
-                sX = internalZ;
-                sY = internalX;
-                sZ = internalY;
+                minNormX = iX;
+                minNormY = iY;
+                minNormZ = iZ;
             }
 
             internalX = minVecX;
@@ -357,9 +338,9 @@ loopBreak:
     a3->y = maxVecY + minVecY;
     a3->z = maxVecZ + minVecZ;
     if (a4) {
-        a4->x = maxNormX + sX;
-        a4->y = maxNormY + sY;
-        a4->z = maxNormZ + sZ;
+        a4->x = maxNormX + minNormX;
+        a4->y = maxNormY + minNormY;
+        a4->z = maxNormZ + minNormZ;
     }
 }
 
@@ -401,7 +382,7 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
 
     sead::Vector3f transStart = mCurrentTrans;
     f32 a4 = mCurrentRadius;
-    f32 v8 = sead::Mathf::clampMax(sead::Mathf::min(mRadius * 0.9f, a4 * 0.9f), 35.0f);
+    f32 v8 = sead::Mathf::clampMax(sead::Mathf::min(0.9f * mRadius, 0.9f * a4), 35.0f);
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
     if ((flags2 & 1) != 0)
         calcMovePowerByContact(&movePower, checkPos);
@@ -419,7 +400,7 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
     interpolator.startInterp(transStart, transStart + velocity, mRadius, mRadius, v19);
     v56 = 0;
     sead::Vector3f v232526;
-    if ((findCollidePos(&v56, &interpolator, planes, planeNum) & 1) == 0 &&
+    if (!findCollidePos(&v56, &interpolator, planes, planeNum) &&
         interpolator.getPrevStep() == 1.0 && interpolator.getCurrentStep() == 1.0) {
         v232526 = transStart - checkPos + velocity;
     } else {
@@ -443,19 +424,19 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
             v30 += v32;
             al::tryNormalizeOrZero(&a1a);
             f32 v42 = v53.dot(a1a);
-            if (v42 < 0.0)
+            if (v42 < 0.0f)
                 v53 -= a1a * v42;
 
-            if (velocity.dot(v53) < 0.0)
+            if (velocity.dot(v53) < 0.0f)
                 break;
 
             interpolator.startInterp(transStart, transStart + v53, a4, mRadius, v19);
             interpolator.nextStep();
             v56 = 0;
             bool CollidePos = findCollidePos(&v56, &interpolator, planes, planeNum);
-            if (!CollidePos || (interpolator.getCurrentStep() >= 1.0f)) {
+            if (!CollidePos || interpolator.getCurrentStep() >= 1.0f) {
                 interpolator.calcInterpPos(&transStart);
-                if (CollidePos && (v56 > 0)) {
+                if (CollidePos && v56 > 0) {
                     obtainMomentFixReaction(planes, &v55, nullptr, false, v30);
                     transStart += v55;
                     v30 += v56;
@@ -501,19 +482,18 @@ bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3f* 
                                                      triangleFilter);
         }
 
-        if (hits) {
+        if (hits != 0) {
             s32 stored = storeCurrentHitInfo(buffer, bufferSize);
             sead::Vector3f a2a = {0.0f, 0.0f, 0.0f};
             obtainMomentFixReaction(buffer, &a2a, nullptr, false, totalStored);
             v71415 += a2a;
-            if (interpolator->getCurrentStep() >= 1.0) {
-                foundHit = 1;
+            foundHit = true;
+            if (interpolator->getCurrentStep() >= 1.0f) {
                 break;
             }
 
             if (flags2 & 0x8)
                 totalStored += stored;
-            foundHit = true;
         }
 
         interpolator->nextStep();
