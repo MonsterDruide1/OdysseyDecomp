@@ -20,14 +20,14 @@ const sead::Vector2f sStartingPosition = {600.0f, -300.0f};
 FilterFly::FilterFly(const char* name, const al::LayoutInitInfo& info, const char* suffix)
     : al::LayoutActor(name) {
     al::initLayoutActor(this, info, "FilterFly", suffix);
-    initNerve(&Wait, 0);
+    initNerve(&Wait);
     al::setPaneLocalTrans(this, "RootPane", sStartingPosition);
     kill();
 }
 
 void FilterFly::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", 0);
+        al::startAction(this, "Wait");
     if (al::isGreaterStep(this, 180))
         al::setNerve(this, &WaitEnd);
 }
@@ -36,7 +36,7 @@ void FilterFly::exeWaitEnd() {}
 
 void FilterFly::exeMove() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Loop", 0);
+        al::startAction(this, "Loop");
 
     sead::Vector2f currentPos = {al::getLocalTrans(this).x, al::getLocalTrans(this).y};
     sead::Vector2f direction = mTargetPos - currentPos;
