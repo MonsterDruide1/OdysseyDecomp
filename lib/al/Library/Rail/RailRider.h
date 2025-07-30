@@ -28,6 +28,16 @@ public:
     bool isReachedRailStart();
     bool isReachedEdge();
 
+    const Rail* getRail() const { return mRail; }
+
+    const sead::Vector3f& getDirection() const { return mDirection; }
+
+    const sead::Vector3f& getPosition() const { return mPosition; }
+
+    f32 getCoord() const { return mCoord; }
+
+    bool isMoveForwards() const { return mIsMoveForwards; }
+
 private:
     const Rail* mRail;
     sead::Vector3f mPosition = sead::Vector3f::zero;
