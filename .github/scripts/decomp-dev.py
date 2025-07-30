@@ -25,8 +25,7 @@ def get_measures(unit_name=None):
     matched_functions_percent = matched_functions / total_functions * 100 if total_functions > 0 else 0.0
 
     fuzzy_code = sum([fun["size"] for fun in funcs if fun["status"] != "NotDecompiled"])
-    fuzzy_code_percent = fuzzy_code / total_code * 100 if total_code > 0 else 0.0
-    fuzzy_match_percent = fuzzy_code_percent * 0.5  # TODO: 0.5 for data being missing entirely
+    fuzzy_match_percent = fuzzy_code / total_code * 100 if total_code > 0 else 0.0
 
     # TODO: we don't handle data or linking yet, so 0 for all of those
     total_data = 0
@@ -76,20 +75,24 @@ def get_functions(unit_name):
         try:
             return cxxfilt.demangle(name)
         except cxxfilt.InvalidName:
-            return name
+            return None
     
     for fun in funcs:
+        mangled_name = fun["label"] if isinstance(fun["label"], str) else fun["label"][0]
+        demangled_name = get_function_demangled_name(mangled_name)
+
         function = ReportItem()
-        function.name = fun["label"] if isinstance(fun["label"], str) else fun["label"][0]
+        function.name = mangled_name
         function.size = fun["size"]
         function.fuzzy_match_percent = get_function_fuzzy_match_percent(fun)
 
         metadata = ReportItemMetadata()
-        metadata.demangled_name = get_function_demangled_name(function.name)
+        if demangled_name is not None:
+            metadata.demangled_name = demangled_name
         metadata.virtual_address = fun["offset"]
 
         function.metadata.CopyFrom(metadata)
-        function.address = fun["offset"]
+        function.address = fun["offset"] - funcs[0]["offset"]
         functions.append(function)
     
     return functions
@@ -98,16 +101,16 @@ def get_units():
     units = []
     for unit_name, unit_data in data.items():
         unit = ReportUnit()
-        unit.name = unit_name
+        unit.name = unit_name.strip(".o")
         unit.measures.CopyFrom(get_measures(unit_name))
         unit.sections.extend([])  # TODO: no splitting by sections yet
         unit.functions.extend(get_functions(unit_name))
         
         metadata = ReportUnitMetadata()
-        metadata.complete = False  # TODO: no linking yet
+        # metadata.complete = False  # TODO: no linking yet
         metadata.module_name = "/".join(unit_name.split("/")[:-1])
         metadata.module_id = hash(metadata.module_name) & 0xffffffff
-        metadata.source_path = unit_name
+        metadata.source_path = unit.name + ".cpp"
         metadata.progress_categories.extend([])  # TODO: no progress categories yet
         metadata.auto_generated = False
 
