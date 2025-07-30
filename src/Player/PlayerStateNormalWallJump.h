@@ -14,9 +14,10 @@ class PlayerActionAirMoveControl;
 
 class PlayerStateNormalWallJump : public al::ActorStateBase {
 public:
-    PlayerStateNormalWallJump(al::LiveActor*, const PlayerConst*, const PlayerInput*,
-                              const IUsePlayerCollision*, const PlayerTrigger*, PlayerAnimator*,
-                              PlayerActionDiveInWater*);
+    PlayerStateNormalWallJump(al::LiveActor* player, const PlayerConst* pConst,
+                              const PlayerInput* input, const IUsePlayerCollision* collider,
+                              const PlayerTrigger* trigger, PlayerAnimator* animator,
+                              PlayerActionDiveInWater* actionDiveInWater);
 
     void appear() override;
     void exeJump();
@@ -25,13 +26,13 @@ public:
 
 private:
     const PlayerConst* mConst;
-    const PlayerInput* mInput;
     const IUsePlayerCollision* mCollider;
+    const PlayerInput* mInput;
     const PlayerTrigger* mTrigger;
     PlayerAnimator* mAnimator;
     PlayerActionDiveInWater* mActionDiveInWater;
     PlayerActionAirMoveControl* mAirMoveControl = nullptr;
     const char* mAnimationName = "WallJump";
     sead::Vector3f mFront;
-    bool _6c = false;
+    bool mIsJumpTowardsWall = false;
 };
