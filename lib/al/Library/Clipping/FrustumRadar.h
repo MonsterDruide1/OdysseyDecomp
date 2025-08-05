@@ -49,7 +49,6 @@ private:
     f32 _50;
     f32 _54;
     f32 _58;
-
 };
 
 }  // namespace al
