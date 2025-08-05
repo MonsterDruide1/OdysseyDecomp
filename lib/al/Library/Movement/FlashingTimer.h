@@ -9,6 +9,7 @@ public:
 
     void start(s32, s32, s32, s32);
     void update();
+
     bool isHurryStart() const;
     s32 getLastTime() const;
 
