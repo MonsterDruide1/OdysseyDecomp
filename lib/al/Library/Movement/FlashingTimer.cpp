@@ -18,18 +18,18 @@ void FlashingTimer::start(s32 param_1, s32 param_2, s32 param_3, s32 param_4) {
 
 void FlashingTimer::update() {
     bool a = _14;
-    s32 iVar3 = _0;
+    s32 b = _0;
     _15 = a;
-    if (iVar3 > -1) {
+    if (b > -1) {
         _0--;
 
         if (!isHurryStart()) {
-            if ((_0 - _8) / _c != 0) {
+            if ((((_0 - _8) / _c) & 1) != 0) {
                 _14 = true;
 
                 return;
             }
-        } else if (_0 / _10 != 0) {
+        } else if (((_0 / _10) & 1) != 0) {
             _14 = true;
 
             return;
