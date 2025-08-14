@@ -10,6 +10,12 @@ public:
     bool tryPermitEnterCar();
     bool tryPermitEnterNpc();
 
+    void reset() {
+        *(u16*)&mIsNpcUnavailable = *(u16*)&mIsCarFull;
+        mIsCarFull = false;
+        mIsNpcFull = false;
+    }
+
 private:
     bool mIsCarFull = false;
     bool mIsNpcFull = false;
