@@ -15,39 +15,39 @@ NERVES_MAKE_NOSTRUCT(MiniGameCueLayout, Wait, Appear);
 
 MiniGameCueLayout::MiniGameCueLayout(const char* name, const al::LayoutInitInfo& info)
     : al::LayoutActor(name) {
-    al::initLayoutActor(this, info, "MiniGameCue", nullptr);
-    initNerve(&Wait, 0);
+    al::initLayoutActor(this, info, "MiniGameCue");
+    initNerve(&Wait);
     kill();
 }
 
 void MiniGameCueLayout::appearMiss() {
     al::setNerve(this, &Appear);
-    al::startAction(this, "Miss", nullptr);
+    al::startAction(this, "Miss");
     appear();
 }
 
 void MiniGameCueLayout::appearCount(s32 count) {
     al::setPaneNumberDigit1(this, "TxtCount", count, 0);
     al::setNerve(this, &Appear);
-    al::startAction(this, "Count", nullptr);
+    al::startAction(this, "Count");
     appear();
 }
 
 void MiniGameCueLayout::appearGo() {
     al::setNerve(this, &Appear);
-    al::startAction(this, "Go", nullptr);
+    al::startAction(this, "Go");
     appear();
 }
 
 void MiniGameCueLayout::appearFinish() {
     al::setNerve(this, &Appear);
-    al::startAction(this, "Finish", nullptr);
+    al::startAction(this, "Finish");
     appear();
 }
 
 void MiniGameCueLayout::exeWait() {}
 
 void MiniGameCueLayout::exeAppear() {
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }

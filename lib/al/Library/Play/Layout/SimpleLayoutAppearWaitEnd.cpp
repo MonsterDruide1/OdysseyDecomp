@@ -26,7 +26,7 @@ SimpleLayoutAppearWaitEnd::SimpleLayoutAppearWaitEnd(const char* name, const cha
         initLayoutActorLocalized(this, info, layoutName, archiveName);
     else
         initLayoutActor(this, info, layoutName, archiveName);
-    initNerve(&NrvHostType.Appear, 0);
+    initNerve(&NrvHostType.Appear);
 }
 
 SimpleLayoutAppearWaitEnd::SimpleLayoutAppearWaitEnd(LayoutActor* parentActor, const char* name,
@@ -35,11 +35,11 @@ SimpleLayoutAppearWaitEnd::SimpleLayoutAppearWaitEnd(LayoutActor* parentActor, c
                                                      const char* archiveName)
     : LayoutActor(name) {
     initLayoutPartsActor(this, parentActor, info, layoutName, archiveName);
-    initNerve(&NrvHostType.Appear, 0);
+    initNerve(&NrvHostType.Appear);
 };
 
 void SimpleLayoutAppearWaitEnd::appear() {
-    startAction(this, "Appear", nullptr);
+    startAction(this, "Appear");
     LayoutActor::appear();
     setNerve(this, &NrvHostType.Appear);
 }
@@ -50,27 +50,27 @@ void SimpleLayoutAppearWaitEnd::end() {
 }
 
 void SimpleLayoutAppearWaitEnd::startWait() {
-    startAction(this, "Wait", nullptr);
+    startAction(this, "Wait");
     LayoutActor::appear();
     setNerve(this, &NrvHostType.Wait);
 }
 
 void SimpleLayoutAppearWaitEnd::exeAppear() {
-    if (isActionEnd(this, nullptr))
+    if (isActionEnd(this))
         setNerve(this, &NrvHostType.Wait);
 }
 
 void SimpleLayoutAppearWaitEnd::exeWait() {
     if (isFirstStep(this))
-        startAction(this, "Wait", nullptr);
+        startAction(this, "Wait");
     if (mLifetime >= 0 && isGreaterEqualStep(this, mLifetime))
         setNerve(this, &End);
 }
 
 void SimpleLayoutAppearWaitEnd::exeEnd() {
     if (isFirstStep(this))
-        startAction(this, "End", nullptr);
-    if (isActionEnd(this, nullptr))
+        startAction(this, "End");
+    if (isActionEnd(this))
         kill();
 }
 
