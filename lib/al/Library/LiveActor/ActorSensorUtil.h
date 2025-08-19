@@ -250,7 +250,7 @@ bool sendMsgHitVeryStrong(HitSensor* receiver, HitSensor* sender);
 bool sendMsgKnockDown(HitSensor* receiver, HitSensor* sender);
 bool sendMsgMapPush(HitSensor* receiver, HitSensor* sender);
 bool sendMsgVanish(HitSensor* receiver, HitSensor* sender);
-bool sendMsgChangeAlpha(LiveActor* actor, f32 pAlpha);
+bool sendMsgChangeAlpha(LiveActor* receiver, f32 pAlpha);
 bool sendMsgShowModel(HitSensor* receiver, HitSensor* sender);
 bool sendMsgHideModel(HitSensor* receiver, HitSensor* sender);
 bool sendMsgRestart(HitSensor* receiver, HitSensor* sender);
@@ -300,18 +300,19 @@ bool sendMsgFireBalCollide(HitSensor* receiver, HitSensor* sender);
 bool sendMsgFireBallFloorTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgDokanBazookaAttack(HitSensor* receiver, HitSensor* sender);
 bool sendMsgRideAllPlayerItemGet(HitSensor* receiver, HitSensor* sender);
-bool sendMsgHideModel(LiveActor* actor);
-bool sendMsgShowModel(LiveActor* actor);
-bool sendMsgRestart(LiveActor* actor);
+bool sendMsgHideModel(LiveActor* receiver);
+bool sendMsgShowModel(LiveActor* receiver);
+bool sendMsgRestart(LiveActor* receiver);
+// TODO: rename parameters
 bool sendMsgCollisionImpulse(HitSensor* receiver, HitSensor* sender, sead::Vector3f* pVecPtr,
                              const sead::Vector3f& pConstVec, f32 pFloatVal,
                              const sead::Vector3f& pConstVec2, f32 pFloatVal2);
-bool sendMsgSwitchOn(LiveActor* actor);
-bool sendMsgSwitchOnInit(LiveActor* actor);
-bool sendMsgSwitchOffInit(LiveActor* actor);
-bool sendMsgSwitchKillOn(LiveActor* actor);
-bool sendMsgSwitchKillOnInit(LiveActor* actor);
-bool sendMsgSwitchKillOffInit(LiveActor* actor);
+bool sendMsgSwitchOn(LiveActor* receiver);
+bool sendMsgSwitchOnInit(LiveActor* receiver);
+bool sendMsgSwitchOffInit(LiveActor* receiver);
+bool sendMsgSwitchKillOn(LiveActor* receiver);
+bool sendMsgSwitchKillOnInit(LiveActor* receiver);
+bool sendMsgSwitchKillOffInit(LiveActor* receiver);
 bool sendMsgPlayerFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sender);
 bool sendMsgPlayerUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
 bool sendMsgEnemyFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sender);

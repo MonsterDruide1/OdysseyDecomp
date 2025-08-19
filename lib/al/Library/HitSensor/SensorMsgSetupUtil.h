@@ -177,18 +177,18 @@ of the target actor:
 */
 
 #define SEND_MSG_TO_ACTOR_IMPL_(Name, Type)                                                        \
-    bool sendMsg##Name(al::LiveActor* actor) {                                                     \
+    bool sendMsg##Name(al::LiveActor* receiver) {                                                  \
         SensorMsg##Type msg;                                                                       \
-        return alActorSensorFunction::sendMsgToActorUnusedSensor(msg, actor);                      \
+        return alActorSensorFunction::sendMsgToActorUnusedSensor(msg, receiver);                   \
     }
 
 #define SEND_MSG_TO_ACTOR_IMPL(Name) SEND_MSG_TO_ACTOR_IMPL_(Name, Name)
 
 // Same as SEND_MSG_TO_ACTOR_IMPL but also includes data like the macro above
 #define SEND_MSG_DATA_TO_ACTOR_IMPL(Name, DataType, DataName)                                      \
-    bool sendMsg##Name(al::LiveActor* actor, DataType DataName) {                                  \
+    bool sendMsg##Name(al::LiveActor* receiver, DataType DataName) {                               \
         SensorMsg##Name msg(DataName);                                                             \
-        return alActorSensorFunction::sendMsgToActorUnusedSensor(msg, actor);                      \
+        return alActorSensorFunction::sendMsgToActorUnusedSensor(msg, receiver);                   \
     }
 
 /*
