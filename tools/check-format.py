@@ -334,7 +334,7 @@ def common_const_reference(c, path):
 def common_self_other(c, path, is_header):
     lines = c.splitlines()
     for i, line in enumerate(lines):
-        if (("attackSensor(" in line and "void HitSensor" not in line) or "receiveMsg(" in line) and (is_header or "::" in line) and (("self" not in line and "self" not in lines[i + 1]) or "other" not in line) and "Library/HitSensor/HitSensorKeeper.h" not in path:
+        if (("attackSensor(" in line and "void HitSensor" not in line) or "receiveMsg(" in line) and (is_header or "::" in line) and (("self" not in line and "self" not in lines[i + 1]) or "other" not in line) and "Library/HitSensor/HitSensorKeeper.h" not in path and "Library/Event/EventFlowExecutor.h" not in path:
             FAIL("'attackSensor' and 'receiveMsg' should have 'self' and 'other' params!", line, path)
             return
 
