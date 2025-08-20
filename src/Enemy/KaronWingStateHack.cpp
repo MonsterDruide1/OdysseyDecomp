@@ -40,14 +40,13 @@ NERVES_MAKE_STRUCT(HostType, Wait, WingFly, EndCancel, Walk, EndReset, EndDamage
 
 sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
 
-
 // Mismatch: Missing instructions around for loop https://decomp.me/scratch/j6SPL
 KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorInitInfo& info,
                                        IUsePlayerHack** playerHack)
     : ActorStateBase("ハック状態", parent), mPlayerHack(playerHack) {
     mPlayerActionTurnControl = new PlayerActionTurnControl(mActor);
-    mPlayerActionTurnControl->set88(true);
-    mPlayerActionTurnControl->set89(true);
+    mPlayerActionTurnControl->set_88(true);
+    mPlayerActionTurnControl->set_89(true);
     mPlayerActionTurnControl->setup(1.0f, 135.0f, 10.0f, 25.0f, 20, 1, 10);
     initNerve(&NrvHostType.Wait, 8);
     mStateWingFly = new HackerStateWingFly(mActor, mPlayerHack, this);
@@ -82,7 +81,7 @@ KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorIni
 
     mCollisionShapeKeeper->createShapeSphereIgnoreGround("Head", 70.0f, gHead);
 
-    maka(mCollisionShapeKeeper, 40.0f,-40.0f, sead::Vector3f(0.0f,0.0f,0.0f));
+    maka(mCollisionShapeKeeper, 40.0f, -40.0f, sead::Vector3f(0.0f, 0.0f, 0.0f));
 
     mPlayerCollider = new PlayerCollider(mActor->getCollisionDirector(), mActor->getBaseMtx(),
                                          al::getTransPtr(mActor), al::getGravityPtr(mActor), false);
