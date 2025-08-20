@@ -16,11 +16,13 @@ public:
     void calcTilt(sead::Vector3f*, const sead::Vector3f&, f32);
     void calcTurnPowerRate(const sead::Vector3f&) const;
 
-    void set_88(bool value) { _88 = value; }
-
-    const sead::Vector3f& get_5c() const { return _5c; }
+    const sead::Vector3f& getFaceDirection() { return mFaceDirection; }
 
     bool get_69() const { return _69; }
+
+    void set_88(bool value) { _88 = value; }
+
+    void set_89(bool value) { _89 = value; }
 
 private:
     al::LiveActor* mPlayer;
@@ -30,7 +32,7 @@ private:
     sead::Vector3f _24 = {0.0f, 0.0f, 0.0f};
     f32 _30 = 0.0f;
     sead::RingBuffer<f32> _38;
-    sead::Vector3f _50 = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mFaceDirection = {0.0f, 0.0f, 0.0f};
     sead::Vector3f _5c = {0.0f, 0.0f, 0.0f};
     bool _68 = false;
     bool _69 = false;
