@@ -11,7 +11,7 @@ public:
     WhipTargetInfo();
 
     void initWhipTarget(al::HitSensor* sensor, const sead::Vector3f* trans);
+    bool isValid() const;
     void clear();
-    bool isValid();
-    const sead::Vector3f& getTrans();
+    const sead::Vector3f& getTrans() const;
 };
