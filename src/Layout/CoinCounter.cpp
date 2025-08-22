@@ -20,7 +20,7 @@ NERVE_IMPL(CoinCounter, CountAnimAdd);
 NERVE_IMPL(CoinCounter, CountAnimSub);
 
 NERVES_MAKE_NOSTRUCT(CoinCounter, Wait);
-NERVES_MAKE_STRUCT(CoinCounter, End, Appear, Add, Sub, CountAnimAdd, CountAnimSub);
+NERVES_MAKE_STRUCT(CoinCounter, End, Appear, CountAnimAdd, CountAnimSub, Add, Sub);
 }  // namespace
 
 CoinCounter::CoinCounter(const char* name, const al::LayoutInitInfo& initInfo, bool isCoin)
@@ -96,9 +96,9 @@ void CoinCounter::startCountAnim(s32 coinNum) {
     mTotalCoins = getCountTotalFromData();
 
     if (coinNum < prevCoinCount)
-        al::setNerve(this, &NrvCoinCounter.Sub);
+        al::setNerve(this, &NrvCoinCounter.CountAnimSub);
     else
-        al::setNerve(this, &NrvCoinCounter.Add);
+        al::setNerve(this, &NrvCoinCounter.CountAnimAdd);
 }
 
 bool CoinCounter::tryUpdateCount() {
@@ -112,9 +112,9 @@ bool CoinCounter::tryUpdateCount() {
 
     al::Nerve* nerve;
     if (mTotalCoins < newTotalCoins)
-        nerve = &NrvCoinCounter.CountAnimAdd;
+        nerve = &NrvCoinCounter.Add;
     else
-        nerve = &NrvCoinCounter.CountAnimSub;
+        nerve = &NrvCoinCounter.Sub;
 
     mTotalCoins = newTotalCoins;
     mCoinNum = newCoinNum;
