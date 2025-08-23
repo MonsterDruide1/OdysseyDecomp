@@ -25,10 +25,10 @@ NERVES_MAKE_STRUCT(CoinRail, CloseMove, Move)
 
 CoinRail::CoinRail(const char* name) : al::LiveActor(name) {}
 
-__attribute__((always_inline)) void addStaticCoinToRail(CoinRail* rail,
-                                                        const al::ActorInitInfo& initInfo,
-                                                        Coin** coins, f32* railPos, s32 coinNum,
-                                                        bool isLoop) {
+__attribute__((always_inline)) inline void addStaticCoinToRail(CoinRail* rail,
+                                                               const al::ActorInitInfo& initInfo,
+                                                               Coin** coins, f32* railPos,
+                                                               s32 coinNum, bool isLoop) {
     f32 posOnRail = 0.0f;
     f32 railDist = al::getRailTotalLength(rail) / (coinNum - (isLoop ? 0 : 1));
     for (s32 i = 0; i < coinNum; i++) {
@@ -45,8 +45,9 @@ __attribute__((always_inline)) void addStaticCoinToRail(CoinRail* rail,
     }
 }
 
-__attribute__((always_inline)) void addCoinToRail(CoinRail* rail, const al::ActorInitInfo& initInfo,
-                                                  Coin** coins, f32* railPos, s32 coinNum) {
+__attribute__((always_inline)) inline void addCoinToRail(CoinRail* rail,
+                                                         const al::ActorInitInfo& initInfo,
+                                                         Coin** coins, f32* railPos, s32 coinNum) {
     f32 posOnRail = 0.0f;
     for (s32 i = 0; i < coinNum; i++) {
         sead::Vector3f pos = sead::Vector3f::zero;

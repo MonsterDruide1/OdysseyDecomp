@@ -802,7 +802,7 @@ bool reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32 reb
     return reboundVelocityFromActor(actor, target, getVelocity(target), reboundStrength);
 }
 
-__attribute__((always_inline)) bool
+__attribute__((always_inline)) inline bool
 reboundVelocityFromActorInline(LiveActor* actor, const LiveActor* target,
                                const sead::Vector3f& targetVelocity, f32 reboundStrength) {
     sead::Vector3f direction;

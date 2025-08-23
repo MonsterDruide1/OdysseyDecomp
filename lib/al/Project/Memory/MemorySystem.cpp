@@ -72,7 +72,7 @@ bool MemorySystem::createSceneHeap(const char* stageName, bool backwards) {
     return currentSceneResourceHeap == nullptr;
 }
 
-__attribute__((always_inline)) u64
+__attribute__((always_inline)) inline u64
 MemorySystem::getSceneResourceHeapSize(const char* stageName) const {
     bool isStaffRollOrDemoEnding = stageName && (isEqualString(stageName, "StaffRollStage") ||
                                                  isEqualString(stageName, "DemoEndingStage"));
