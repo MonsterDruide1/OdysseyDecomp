@@ -1,5 +1,6 @@
 #include "Enemy/KaronWingStateHack.h"
 
+#include "Library/Base/Macros.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
@@ -38,9 +39,30 @@ NERVE_HOST_TYPE_IMPL(KaronWingStateHack, EndDamage);
 NERVES_MAKE_STRUCT(HostType, Wait, WingFly, EndCancel, Walk, EndReset, EndDamage, Land);
 }  // namespace
 
-sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
+const sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
 
-// Mismatch: Missing instructions around for loop https://decomp.me/scratch/j6SPL
+// TODO: This function might be implemented in another file. Parameters need to be renamed.
+ALWAYS_INLINE void createLegCollider(CollisionShapeKeeper* collisionShapeKeeper,
+                                     const sead::Vector3f& pos, f32 valA, f32 valB, f32 radius) {
+    const char* bodyParts[] = {"LegFront", "LegLeft", "LegRight"};
+    sead::Vector3f up = sead::Vector3f::ey;
+    sead::Vector3f upDirA = valA * up;
+    sead::Vector3f upDirB = valB * up;
+    sead::Vector3f axis = radius * sead::Vector3f::ez;
+
+    for (s32 i = 0; i < 3; i++) {
+        sead::Quatf quat;
+        sead::QuatCalcCommon<f32>::setAxisAngle(quat, sead::Vector3f::ey, i * 120.0f);
+
+        sead::Vector3f start;
+        start.setRotated(quat, axis);
+        start += pos;
+        start -= upDirA;
+
+        collisionShapeKeeper->createShapeArrow(bodyParts[i], start, upDirA - upDirB, 20.0f, i);
+    }
+}
+
 KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorInitInfo& info,
                                        IUsePlayerHack** playerHack)
     : ActorStateBase("ハック状態", parent), mPlayerHack(playerHack) {
@@ -72,17 +94,15 @@ KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorIni
     al::hideSilhouetteModelIfShow(mActor);
     mCollisionShapeKeeper = new CollisionShapeKeeper(5, 64, 16);
     mCollisionShapeKeeper->set54(35.0f);
-    sead::Vector3f spherePos = 90.0f * sead::Vector3f::ey;
-    mCollisionShapeKeeper->createShapeSphere("Body", 70.0f, spherePos);
+    mCollisionShapeKeeper->createShapeSphere("Body", 70.0f, 90.0f * sead::Vector3f::ey);
 
     CollisionShapeInfoSphere* infoSphere = mCollisionShapeKeeper->getShapeInfoSphere(0);
     if (infoSphere)
         infoSphere->set48(40.0f);
 
     mCollisionShapeKeeper->createShapeSphereIgnoreGround("Head", 70.0f, gHead);
-
-    maka(mCollisionShapeKeeper, 40.0f, -40.0f, sead::Vector3f(0.0f, 0.0f, 0.0f));
-
+    createLegCollider(mCollisionShapeKeeper, {0.0f, 0.0f, 0.0f}, -40.0f, 20.0f, 40.0f);
+    mCollisionShapeKeeper->updateShape();
     mPlayerCollider = new PlayerCollider(mActor->getCollisionDirector(), mActor->getBaseMtx(),
                                          al::getTransPtr(mActor), al::getGravityPtr(mActor), false);
     mPlayerCollider->setCollisionShapeKeeper(mCollisionShapeKeeper);

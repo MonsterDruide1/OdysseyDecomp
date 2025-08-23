@@ -32,8 +32,8 @@ private:
     sead::Vector3f _24 = {0.0f, 0.0f, 0.0f};
     f32 _30 = 0.0f;
     sead::RingBuffer<f32> _38;
+    sead::Vector3f _50 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mFaceDirection = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f _5c = {0.0f, 0.0f, 0.0f};
     bool _68 = false;
     bool _69 = false;
     bool _6a = false;
