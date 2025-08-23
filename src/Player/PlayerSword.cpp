@@ -44,7 +44,6 @@ void PlayerSword::makeActorAlive() {
 }
 
 void PlayerSword::updatePose() {
-    // These are created but not used
     sead::Matrix34f t;
     sead::Matrix34f tt;
     t.makeR(sead::Vector3f(sead::Mathf::piHalf(), 0, 0));
@@ -53,7 +52,7 @@ void PlayerSword::updatePose() {
     sead::Matrix34f newPoseMtx = *mPlayerBaseMtx;
     al::normalize(&newPoseMtx);
 
-    newPoseMtx.setMul(newPoseMtx, {0, 0, 1.0f, 0, 0, -0.001f, 0.7f, 0, 1.0f, 0.001f, 0.3f, 0});
+    newPoseMtx = newPoseMtx * (t * tt);
 
     return al::updatePoseMtx(this, &newPoseMtx);
 }
