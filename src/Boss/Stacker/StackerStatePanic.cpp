@@ -51,7 +51,7 @@ void StackerStatePanic::kill() {
 
 void StackerStatePanic::control() {
     _34++;
-    if (900 < _34 && !al::isNerve(this, &NrvStackerStatePanic.Run)) {
+    if (900 < _34 && !al::isNerve(this, &NrvStackerStatePanic.CapHit)) {
         _38 = 1;
         al::setVelocityZero(mActor);
         kill();
