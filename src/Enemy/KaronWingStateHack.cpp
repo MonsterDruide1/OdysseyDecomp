@@ -38,7 +38,20 @@ NERVE_HOST_TYPE_IMPL(KaronWingStateHack, EndDamage);
 NERVES_MAKE_STRUCT(HostType, Wait, WingFly, EndCancel, Walk, EndReset, EndDamage, Land);
 }  // namespace
 
-sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
+const sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
+
+// Inline from sead
+inline void makeQuatRotateRadian(sead::Quatf* outQuat, const sead::Vector3f& axis, f32 radian) {
+    outQuat->w = sead::Mathf::cos(radian * 0.5f);
+    f32 sin = sead::Mathf::sin(radian * 0.5f);
+    outQuat->x = sin * axis.x;
+    outQuat->y = sin * axis.y;
+    outQuat->z = sin * axis.z;
+}
+
+inline void makeQuatRotateDegree(sead::Quatf* outQuat, const sead::Vector3f& axis, f32 angle) {
+    makeQuatRotateRadian(outQuat, axis, sead::Mathf::deg2rad(angle));
+}
 
 // Mismatch: Missing instructions around for loop https://decomp.me/scratch/j6SPL
 KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorInitInfo& info,
@@ -81,8 +94,27 @@ KaronWingStateHack::KaronWingStateHack(al::LiveActor* parent, const al::ActorIni
 
     mCollisionShapeKeeper->createShapeSphereIgnoreGround("Head", 70.0f, gHead);
 
-    maka(mCollisionShapeKeeper, 40.0f, -40.0f, sead::Vector3f(0.0f, 0.0f, 0.0f));
+    const char* bodyParts[] = {"LegFront", "LegLeft", "LegRight"};
+    sead::Vector3f vv = {0.0f, 0.0f, 0.0f};
+    f32 v40 = 40.0f;
+    f32 v20 = 20.0f;
+    f32 v30 = 40.0f;
+    sead::Vector3f vv40 = -v40 * sead::Vector3f::ey;
+    sead::Vector3f vv20 = v20 * sead::Vector3f::ey;
+    sead::Vector3f vv30 = v30 * sead::Vector3f::ez;
 
+    for (s32 i = 0; i < 3; i++) {
+        sead::Quatf quat;
+        makeQuatRotateDegree(&quat, sead::Vector3f::ey, i * 120.0f);
+
+        sead::Vector3f va;
+        va.setRotated(quat, vv30);
+        va += vv;
+
+        mCollisionShapeKeeper->createShapeArrow(bodyParts[i], va - vv40, vv40 - vv20, 20.0f, i);
+    }
+
+    mCollisionShapeKeeper->updateShape();
     mPlayerCollider = new PlayerCollider(mActor->getCollisionDirector(), mActor->getBaseMtx(),
                                          al::getTransPtr(mActor), al::getGravityPtr(mActor), false);
     mPlayerCollider->setCollisionShapeKeeper(mCollisionShapeKeeper);
