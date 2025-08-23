@@ -8,7 +8,6 @@ class MultiGateKeeperWatcher;
 class Stacker : public al::LiveActor {
 public:
     Stacker(const char*, MultiGateKeeperWatcher*);
-    // Stacker(const char*, MultiGateKeeperWatcher*);
     void init(const al::ActorInitInfo&) override;
     void startBattleStartDemo();
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
