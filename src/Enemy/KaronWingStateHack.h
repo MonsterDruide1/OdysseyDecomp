@@ -60,9 +60,10 @@ static void makeQuatXDegree(sead::Quatf* outQuat, f32 angle) {
     outQuat->z = 0.0f;
 }
 
-static void maka(CollisionShapeKeeper* mCollisionShapeKeeper, f32 fa, f32 fb,const sead::Vector3f& unk){
+static void maka(CollisionShapeKeeper* mCollisionShapeKeeper, f32 fa, f32 fb,
+                 const sead::Vector3f& unk) {
     sead::Vector3f vva = fa * sead::Vector3f::ez;
-    sead::Vector3f vvb = fb* sead::Vector3f::ey;
+    sead::Vector3f vvb = fb * sead::Vector3f::ey;
     const char* bodyParts[] = {"LegFront", "LegLeft", "LegRight"};
     for (s32 i = 0; i < 3; i++) {
         sead::Quatf quat;
@@ -70,11 +71,10 @@ static void maka(CollisionShapeKeeper* mCollisionShapeKeeper, f32 fa, f32 fb,con
 
         sead::Vector3f va = fa * sead::Vector3f::ey;
         va.rotate(quat);
-        va=va+ unk-vvb;
+        va = va + unk - vvb;
 
         sead::Vector3f vb = vvb - 20.0f * sead::Vector3f::ey;
-        mCollisionShapeKeeper->createShapeArrow(bodyParts[i], va,vb,
-                                                20.0f, i);
+        mCollisionShapeKeeper->createShapeArrow(bodyParts[i], va, vb, 20.0f, i);
     }
 
     mCollisionShapeKeeper->updateShape();
