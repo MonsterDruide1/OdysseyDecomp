@@ -314,6 +314,8 @@ def common_const_reference(c, path):
             continue
         if "sead::IDelegate1<CollisionParts*>" in line:
             continue
+        if "sead::IDelegate1<al::CollisionParts*>" in line:
+            continue
         if re.search(r"(?<!const)[( ][\w_:]+(<[\w_:]+[\*&]?>)?&", line):
             FAIL("References must be const!", line, path)
 
