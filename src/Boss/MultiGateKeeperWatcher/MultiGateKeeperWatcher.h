@@ -8,7 +8,6 @@ struct ActorInitInfo;
 class MultiGateKeeperWatcher {
 public:
     MultiGateKeeperWatcher(const char*);
-    MultiGateKeeperWatcher(const char*);
     void init(const al::ActorInitInfo&);
     bool isExistAliveGK() const;
     bool isEnableShowPlayer() const;
