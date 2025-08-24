@@ -30,6 +30,7 @@
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Enemy/Bubble.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Kuribo2D.h"
@@ -135,7 +136,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BossRaidRivet", nullptr},
     {"BreakablePole", nullptr},
     {"Breeda", nullptr},
-    {"Bubble", nullptr},
+    {"Bubble", al::createActorFunction<Bubble>},
     {"Bubble2D", nullptr},
     {"BubbleLauncher", nullptr},
     {"Bull", nullptr},
