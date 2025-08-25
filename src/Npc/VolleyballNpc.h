@@ -61,7 +61,11 @@ public:
     void exeReactionCap();
     void exeReactionTrample();
 
-    const sead::Vector3f& getFrontDir() { return mFrontDir; }
+    s32 getCurrentCount() const { return mCurrentCount; }
+
+    s32 getBestCount() const { return mBestCount; }
+
+    const sead::Vector3f& getFrontDir() const { return mFrontDir; }
 
 private:
     al::EventFlowExecutor* mEventFlowExecutor;
@@ -73,7 +77,7 @@ private:
     al::AreaObj* _140;
     al::AreaObj* _148;
     s32 _150;
-    s32 _154;
+    s32 mCurrentCount;
     s32 mBestCount;
     s32 mDayCount;
     f32 mSpeed;
