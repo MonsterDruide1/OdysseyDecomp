@@ -78,7 +78,7 @@ const sead::Vector3f& getOriginalSensorFollowPosOffset(const ActorSensorControll
 void resetActorSensorController(ActorSensorController*);
 void calcPosBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*, f32);
 f32 calcDistance(const HitSensor*, const HitSensor*);
-const sead::Vector3f& getSensorPos(const HitSensor*);
+const sead::Vector3f& getSensorPos(const HitSensor* sensor);
 f32 calcDistanceV(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 f32 calcDistanceH(const sead::Vector3f&, const HitSensor*, const HitSensor*);
 bool calcDirBetweenSensors(sead::Vector3f*, const HitSensor*, const HitSensor*);
@@ -149,22 +149,24 @@ void invalidateHitSensorPlayerAll(LiveActor*);
 void invalidateHitSensorPlayerAttackAll(LiveActor*);
 bool isSensorPlayerAttack(const HitSensor*);
 
-bool sendMsgPlayerAttackTrample(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerAttackTrample(HitSensor* receiver, HitSensor* sender,
+                                ComboCounter* pComboCounter);
 bool sendMsgPlayerTrampleReflect(HitSensor* receiver, HitSensor* sender,
-                                 ComboCounter* comboCounter);
+                                 ComboCounter* pComboCounter);
 bool sendMsgPlayerReflectOrTrample(HitSensor* receiver, HitSensor* sender,
                                    ComboCounter* comboCounter);
-bool sendMsgPlayerHipDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgPlayerObjHipDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerHipDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgPlayerObjHipDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgPlayerObjHipDropReflect(HitSensor* receiver, HitSensor* sender,
-                                    ComboCounter* comboCounter);
+                                    ComboCounter* pComboCounter);
 bool sendMsgPlayerObjHipDropHighJump(HitSensor* receiver, HitSensor* sender,
-                                     ComboCounter* comboCounter);
+                                     ComboCounter* pComboCounter);
 bool sendMsgPlayerHipDropKnockDown(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerStatueDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgPlayerObjStatueDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerStatueDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgPlayerObjStatueDrop(HitSensor* receiver, HitSensor* sender,
+                                ComboCounter* pComboCounter);
 bool sendMsgPlayerObjStatueDropReflect(HitSensor* receiver, HitSensor* sender,
-                                       ComboCounter* comboCounter);
+                                       ComboCounter* pComboCounter);
 bool sendMsgPlayerObjStatueDropReflectNoCondition(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerStatueTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerUpperPunch(HitSensor* receiver, HitSensor* sender);
@@ -174,38 +176,39 @@ bool sendMsgPlayerRollingReflect(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerObjRollingAttack(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerObjRollingAttackFailure(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerInvincibleAttack(HitSensor* receiver, HitSensor* sender,
-                                   ComboCounter* comboCounter);
+                                   ComboCounter* pComboCounter);
 bool sendMsgPlayerFireBallAttack(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerRouteDokanFireBallAttack(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerTailAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerTailAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgPlayerTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerKick(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerCatch(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerSlidingAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerSlidingAttack(HitSensor* receiver, HitSensor* sender,
+                                ComboCounter* pComboCounter);
 bool sendMsgPlayerBoomerangAttack(HitSensor* receiver, HitSensor* sender,
-                                  ComboCounter* comboCounter);
+                                  ComboCounter* pComboCounter);
 bool sendMsgPlayerBoomerangAttackCollide(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerBoomerangReflect(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerBoomerangBreak(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerBodyAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgPlayerBodyLanding(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerBodyAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgPlayerBodyLanding(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgPlayerBodyAttackReflect(HitSensor* receiver, HitSensor* sender,
-                                    ComboCounter* comboCounter);
-bool sendMsgPlayerClimbAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgPlayerSpinAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgPlayerGiantAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+                                    ComboCounter* pComboCounter);
+bool sendMsgPlayerClimbAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgPlayerSpinAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgPlayerGiantAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgPlayerCooperationHipDrop(HitSensor* receiver, HitSensor* sender,
-                                     ComboCounter* comboCounter);
+                                     ComboCounter* pComboCounter);
 bool sendMsgPlayerClimbSlidingAttack(HitSensor* receiver, HitSensor* sender,
-                                     ComboCounter* comboCounter);
+                                     ComboCounter* pComboCounter);
 bool sendMsgPlayerClimbRollingAttack(HitSensor* receiver, HitSensor* sender,
-                                     ComboCounter* comboCounter);
-bool sendMsgPlayerGiantHipDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+                                     ComboCounter* pComboCounter);
+bool sendMsgPlayerGiantHipDrop(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgPlayerDisregard(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerItemGet(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerPutOnEquipment(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerReleaseEquipment(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerReleaseEquipmentGoal(HitSensor* receiver, HitSensor* sender, u32);
+bool sendMsgPlayerReleaseEquipmentGoal(HitSensor* receiver, HitSensor* sender, u32 pType);
 bool sendMsgPlayerFloorTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerDamageTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerCarryFront(HitSensor* receiver, HitSensor* sender);
@@ -221,10 +224,10 @@ bool sendMsgPlayerReleaseDead(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerReleaseDemo(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerToss(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerInvincibleTouch(HitSensor* receiver, HitSensor* sender,
-                                  ComboCounter* comboCounter);
+                                  ComboCounter* pComboCounter);
 bool sendMsgEnemyAttack(HitSensor* receiver, HitSensor* sender);
 bool sendMsgEnemyAttackBoomerang(HitSensor* receiver, HitSensor* sender);
-bool sendMsgEnemyAttackFire(HitSensor* receiver, HitSensor* sender, const char*);
+bool sendMsgEnemyAttackFire(HitSensor* receiver, HitSensor* sender, const char* pMaterialCode);
 bool sendMsgEnemyAttackNeedle(HitSensor* receiver, HitSensor* sender);
 bool sendMsgEnemyFloorTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgEnemyItemGet(HitSensor* receiver, HitSensor* sender);
@@ -236,8 +239,8 @@ bool sendMsgEnemyTrample(HitSensor* receiver, HitSensor* sender);
 bool sendMsgMapObjTrample(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPressureDeath(HitSensor* receiver, HitSensor* sender);
 bool sendMsgNpcTouch(HitSensor* receiver, HitSensor* sender);
-bool sendMsgExplosion(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgExplosionCollide(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgExplosion(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgExplosionCollide(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgPush(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPushStrong(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPushVeryStrong(HitSensor* receiver, HitSensor* sender);
@@ -247,16 +250,16 @@ bool sendMsgHitVeryStrong(HitSensor* receiver, HitSensor* sender);
 bool sendMsgKnockDown(HitSensor* receiver, HitSensor* sender);
 bool sendMsgMapPush(HitSensor* receiver, HitSensor* sender);
 bool sendMsgVanish(HitSensor* receiver, HitSensor* sender);
-bool sendMsgChangeAlpha(LiveActor* receiver, f32 alpha);
+bool sendMsgChangeAlpha(LiveActor* receiver, f32 pAlpha);
 bool sendMsgShowModel(HitSensor* receiver, HitSensor* sender);
 bool sendMsgHideModel(HitSensor* receiver, HitSensor* sender);
 bool sendMsgRestart(HitSensor* receiver, HitSensor* sender);
 bool sendMsgNeedleBallAttack(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPunpunFloorTouch(HitSensor* receiver, HitSensor* sender);
 bool sendMsgInvalidateFootPrint(HitSensor* receiver, HitSensor* sender);
-bool sendMsgKickKouraAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgKickKouraAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgKickKouraAttackCollide(HitSensor* receiver, HitSensor* sender,
-                                   ComboCounter* comboCounter);
+                                   ComboCounter* pComboCounter);
 bool sendMsgKickKouraGetItem(HitSensor* receiver, HitSensor* sender);
 bool sendMsgKickKouraReflect(HitSensor* receiver, HitSensor* sender);
 bool sendMsgKickKouraCollideNoReflect(HitSensor* receiver, HitSensor* sender);
@@ -277,20 +280,20 @@ bool sendMsgJumpInhibit(HitSensor* receiver, HitSensor* sender);
 bool sendMsgGoalKill(HitSensor* receiver, HitSensor* sender);
 bool sendMsgGoal(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBindStart(HitSensor* receiver, HitSensor* sender);
-bool sendMsgBindInit(HitSensor* receiver, HitSensor* sender, u32);
+bool sendMsgBindInit(HitSensor* receiver, HitSensor* sender, u32 pBindType);
 bool sendMsgBindEnd(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBindCancel(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBindCancelByDemo(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBindDamage(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBindSteal(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBindGiant(HitSensor* receiver, HitSensor* sender);
-bool sendMsgBallAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgBallAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgBallRouteDokanAttack(HitSensor* receiver, HitSensor* sender,
-                                 ComboCounter* comboCounter);
+                                 ComboCounter* pComboCounter);
 bool sendMsgBallAttackHold(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBallAttackDRCHold(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBallAttackCollide(HitSensor* receiver, HitSensor* sender);
-bool sendMsgBallTrample(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgBallTrample(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgBallTrampleCollide(HitSensor* receiver, HitSensor* sender);
 bool sendMsgBallItemGet(HitSensor* receiver, HitSensor* sender);
 bool sendMsgFireBalCollide(HitSensor* receiver, HitSensor* sender);
@@ -300,8 +303,10 @@ bool sendMsgRideAllPlayerItemGet(HitSensor* receiver, HitSensor* sender);
 bool sendMsgHideModel(LiveActor* receiver);
 bool sendMsgShowModel(LiveActor* receiver);
 bool sendMsgRestart(LiveActor* receiver);
-bool sendMsgCollisionImpulse(HitSensor* receiver, HitSensor* sender, sead::Vector3f*,
-                             const sead::Vector3f&, f32, const sead::Vector3f&, f32);
+// TODO: rename parameters
+bool sendMsgCollisionImpulse(HitSensor* receiver, HitSensor* sender, sead::Vector3f* pVecPtr,
+                             const sead::Vector3f& pConstVec, f32 pFloatVal,
+                             const sead::Vector3f& pConstVec2, f32 pFloatVal2);
 bool sendMsgSwitchOn(LiveActor* receiver);
 bool sendMsgSwitchOnInit(LiveActor* receiver);
 bool sendMsgSwitchOffInit(LiveActor* receiver);
@@ -312,19 +317,18 @@ bool sendMsgPlayerFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sen
 bool sendMsgPlayerUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
 bool sendMsgEnemyFloorTouchToColliderGround(LiveActor* receiver, HitSensor* sender);
 bool sendMsgEnemyUpperPunchToColliderCeiling(LiveActor* receiver, HitSensor* sender);
-bool sendMsgAskSafetyPoint(HitSensor* receiver, HitSensor* sender,
-                           sead::Vector3f** safetyPointAccessor);
+bool sendMsgAskSafetyPoint(HitSensor* receiver, HitSensor* sender, sead::Vector3f** pSafetyPoint);
 bool sendMsgAskSafetyPointToColliderGround(LiveActor* receiver, HitSensor* sender,
                                            sead::Vector3f** safetyPointAccessor);
 bool sendMsgTouchAssist(HitSensor* receiver, HitSensor* sender);
 bool sendMsgTouchAssistTrig(HitSensor* receiver, HitSensor* sender);
 bool sendMsgTouchStroke(HitSensor* receiver, HitSensor* sender);
 bool sendMsgScreenPointInvalidCollisionParts(HitSensor* receiver, HitSensor* sender);
-bool sendMsgBlockUpperPunch(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
-bool sendMsgBlockLowerPunch(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgBlockUpperPunch(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
+bool sendMsgBlockLowerPunch(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgBlockItemGet(HitSensor* receiver, HitSensor* sender);
 bool sendMsgKillerItemGet(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerKouraAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* comboCounter);
+bool sendMsgPlayerKouraAttack(HitSensor* receiver, HitSensor* sender, ComboCounter* pComboCounter);
 bool sendMsgLightFlash(HitSensor* receiver, HitSensor* sender);
 bool sendMsgForceAbyss(HitSensor* receiver, HitSensor* sender);
 bool sendMsgIsNerveSupportFreeze(HitSensor* receiver, HitSensor* sender);
@@ -349,16 +353,16 @@ bool sendMsgPlayerTouchShadow(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerPullOutShadow(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerAttackShadow(HitSensor* receiver, HitSensor* sender);
 bool sendMsgPlayerAttackShadowStrong(HitSensor* receiver, HitSensor* sender);
-bool sendMsgPlayerAttackChangePos(HitSensor* receiver, HitSensor* sender, sead::Vector3f* pos);
+bool sendMsgPlayerAttackChangePos(HitSensor* receiver, HitSensor* sender, sead::Vector3f* pPos);
 bool sendMsgAtmosOnlineLight(HitSensor* receiver, HitSensor* sender);
 bool sendMsgLightBurn(HitSensor* receiver, HitSensor* sender);
 bool sendMsgMoonLightBurn(HitSensor* receiver, HitSensor* sender);
-bool sendMsgString(HitSensor* receiver, HitSensor* sender, const char* str);
-bool sendMsgStringV4fPtr(HitSensor* receiver, HitSensor* sender, const char* str,
-                         sead::Vector4f* vec);
+bool sendMsgString(HitSensor* receiver, HitSensor* sender, const char* pStr);
+bool sendMsgStringV4fPtr(HitSensor* receiver, HitSensor* sender, const char* pString,
+                         sead::Vector4f* pVec);
 bool sendMsgStringV4fSensorPtr(HitSensor* receiver, HitSensor* sender, const char* str,
                                sead::Vector4f* vec);
-bool sendMsgStringVoidPtr(HitSensor* receiver, HitSensor* sender, const char* str, void* ptr);
+bool sendMsgStringVoidPtr(HitSensor* receiver, HitSensor* sender, const char* pString, void* pPtr);
 
 bool isMsgPushAll(const SensorMsg* msg);
 bool isMsgPush(const SensorMsg* msg);
@@ -608,7 +612,7 @@ bool tryReceiveMsgPushAndAddVelocityH(LiveActor*, const SensorMsg*, const HitSen
                                       const HitSensor*, f32);
 bool tryReceiveMsgPushAndCalcPushTrans(sead::Vector3f*, const SensorMsg*, const LiveActor*,
                                        const HitSensor*, const HitSensor*, f32);
-bool sendMsgCollidePush(HitSensor*, HitSensor*, const sead::Vector3f&);
+bool sendMsgCollidePush(HitSensor* receiver, HitSensor* sender, const sead::Vector3f& pVec);
 bool tryReceiveMsgCollidePush(sead::Vector3f*, const SensorMsg*);
 f32 getChangeAlphaValue(const SensorMsg*);
 u32 getBindInitType(const SensorMsg*);
@@ -842,13 +846,12 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollidePush, ((sead::Vector3f, Vec)),
 }
 
 // TODO: rename variables
-SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(CollisionImpulse,
-                                 ((sead::Vector3f*, VecPtr), (const sead::Vector3f*, ConstVec),
-                                  (f32, FloatVal), (const sead::Vector3f*, ConstVec2),
-                                  (f32, FloatVal2)),
-                                 ((sead::Vector3f*, VecPtr), (const sead::Vector3f&, VecRef),
-                                  (f32, FloatVal), (const sead::Vector3f&, VecRef2),
-                                  (f32, FloatVal2))) {
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR_DIRECT_GETTERS(
+    CollisionImpulse,
+    ((sead::Vector3f*, VecPtr), (const sead::Vector3f*, ConstVec), (f32, FloatVal),
+     (const sead::Vector3f*, ConstVec2), (f32, FloatVal2)),
+    ((sead::Vector3f*, VecPtr), (const sead::Vector3f&, VecRef), (f32, FloatVal),
+     (const sead::Vector3f&, VecRef2), (f32, FloatVal2))) {
     mVecPtr = pVecPtr;
     mConstVec = &pVecRef;
     mFloatVal = pFloatVal;
