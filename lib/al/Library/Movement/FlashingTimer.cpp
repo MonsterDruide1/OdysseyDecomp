@@ -3,47 +3,53 @@
 #include <math/seadMathCalcCommon.h>
 
 namespace al {
-FlashingTimer::FlashingTimer(s32 param_1, s32 param_2, s32 param_3, s32 param_4)
-    : _4(param_1), _8(param_2), _c(param_3), _10(param_4) {}
+FlashingTimer::FlashingTimer(s32 param_1, s32 startHurry, s32 blinkVisibleFrames,
+                             s32 hurryBlinkVisibleFrames)
+    : _4(param_1), mStartHurry(startHurry), mBlinkVisibleFrames(blinkVisibleFrames),
+      mHurryBlinkVisibleFrames(hurryBlinkVisibleFrames) {}
 
-void FlashingTimer::start(s32 param_1, s32 param_2, s32 param_3, s32 param_4) {
-    _0 = param_1;
+void FlashingTimer::start(s32 param_1, s32 startHurry, s32 blinkVisibleFrames,
+                          s32 hurryBlinkVisibleFrames) {
+    mLastTime = param_1;
     _4 = param_1;
-    _8 = param_2;
-    _c = param_3;
-    _10 = param_4;
-    _14 = false;
-    _15 = false;
+    mStartHurry = startHurry;
+    mBlinkVisibleFrames = blinkVisibleFrames;
+    mHurryBlinkVisibleFrames = hurryBlinkVisibleFrames;
+    mIsVisible = false;
+    mIsPrevVisible = false;
 }
 
 void FlashingTimer::update() {
-    bool a = _14;
-    s32 b = _0;
-    _15 = a;
-    if (b > -1) {
-        _0--;
+    mIsPrevVisible = mIsVisible;
 
-        if (!isHurryStart()) {
-            if ((((_0 - _8) / _c) & 1) != 0) {
-                _14 = true;
+    if (mLastTime < 0) {
+        mIsVisible = false;
 
-                return;
-            }
-        } else if (((_0 / _10) & 1) != 0) {
-            _14 = true;
+        return;
+    }
+
+    mLastTime--;
+
+    if (isHurryStart()) {
+        if (((mLastTime / mHurryBlinkVisibleFrames) % 2) != 0) {
+            mIsVisible = true;
 
             return;
         }
+    } else if ((((mLastTime - mStartHurry) / mBlinkVisibleFrames) % 2) != 0) {
+        mIsVisible = true;
+
+        return;
     }
 
-    _14 = false;
+    mIsVisible = false;
 }
 
 bool FlashingTimer::isHurryStart() const {
-    return _0 < _8;
+    return mLastTime < mStartHurry;
 }
 
 s32 FlashingTimer::getLastTime() const {
-    return sead::Mathi::clampMin(_0, 0);
+    return sead::Mathi::clampMin(mLastTime, 0);
 }
 }  // namespace al

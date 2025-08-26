@@ -5,22 +5,22 @@
 namespace al {
 class FlashingTimer {
 public:
-    FlashingTimer(s32, s32, s32, s32);
+    FlashingTimer(s32, s32 startHurry, s32 blinkVisibleFrames, s32 hurryBlinkVisibleFrames);
 
-    void start(s32, s32, s32, s32);
+    void start(s32, s32 startHurry, s32 blinkVisibleFrames, s32 hurryBlinkVisibleFrames);
     void update();
 
     bool isHurryStart() const;
     s32 getLastTime() const;
 
 private:
-    s32 _0 = -1;
+    s32 mLastTime = -1;
     s32 _4;
-    s32 _8;
-    s32 _c;
-    s32 _10;
-    bool _14 = false;
-    bool _15 = false;
+    s32 mStartHurry;
+    s32 mBlinkVisibleFrames;
+    s32 mHurryBlinkVisibleFrames;
+    bool mIsVisible = false;
+    bool mIsPrevVisible = false;
 };
 
 static_assert(sizeof(FlashingTimer) == 0x18);
