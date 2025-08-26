@@ -27,7 +27,8 @@ public:
                         const ITrafficAreaUpdateJudge* trafficAreaUpdateJudge);
 
     void execute() override;
-    const char* getSceneObjName() const override;
+
+    const char* getSceneObjName() const override { return "交通整理エリア管理"; }
 
     bool tryPermitEnterCar(const sead::Vector3f& position);
     TrafficArea* tryFindArea(const sead::Vector3f& position) const;
