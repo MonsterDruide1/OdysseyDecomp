@@ -25,12 +25,11 @@ public:
     void multQT(sead::Quatf*, sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&) const;
     const sead::Quatf& getBaseQuat() const;
     const sead::Vector3f& getBaseTrans() const;
+    void setBaseQuatTrans(const sead::Quatf&, const sead::Vector3f&);
     void calcConnectInfo(sead::Vector3f*, sead::Quatf*, sead::Vector3f*, const sead::Vector3f&,
                          const sead::Vector3f&) const;
     void calcMtxWithOffset(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&) const;
     bool tryGetParentTrans(sead::Vector3f*) const;
-
-    void setBaseQuatTrans(const sead::Quatf&, const sead::Vector3f&);
 
 private:
     sead::Matrix34f _8;
