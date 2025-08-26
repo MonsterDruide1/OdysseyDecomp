@@ -4,6 +4,7 @@
 #include <container/seadPtrArray.h>
 
 #include "Library/Base/StringUtil.h"
+#include "Library/HostIO/HioNode.h"
 #include "Library/Scene/ISceneObj.h"
 
 #include "Scene/SceneObjFactory.h"
@@ -15,7 +16,7 @@ class PlacementInfo;
 }  // namespace al
 class QuestInfo;
 
-class QuestInfoHolder : public al::ISceneObj {
+class QuestInfoHolder : public al::ISceneObj, public al::HioNode {
 public:
     static constexpr s32 sSceneObjId = SceneObjID_QuestInfoHolder;
 
