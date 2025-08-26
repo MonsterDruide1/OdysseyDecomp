@@ -15,27 +15,18 @@ void SwitchOnAreaGroup::update(const sead::Vector3f* positions, s32 posCount) {
             continue;
 
         for (s32 j = 0; j < posCount; j++) {
-            if (!areaObj->isInVolume(positions[j]) || !isExternalCondition())
-                continue;
+            if (areaObj->isInVolume(positions[j]) && isExternalCondition()) {
+                onStageSwitch(areaObj, "SwitchAreaOn");
 
-            onStageSwitch(areaObj, "SwitchAreaOn");
-
-            break;
+                break;
+            }
         }
     }
 }
 
 void SwitchOnAreaGroup::update(const sead::Vector3f& position) {
-    sead::Vector3f pos = position;  // wtf are they trying to do here?
-    s32 size = mAreaObjGroup->getSize();
-    for (s32 i = 0; i < size; i++) {
-        AreaObj* areaObj = mAreaObjGroup->getAreaObj(i);
-        if (isOnStageSwitch(areaObj, "SwitchAreaOn") || !areaObj->isInVolume(pos) ||
-            !isExternalCondition())
-            continue;
-
-        onStageSwitch(areaObj, "SwitchAreaOn");
-    }
+    sead::Vector3f positions[1] = {position};
+    update(positions, 1);
 }
 
 bool SwitchOnAreaGroup::isExternalCondition() const {
