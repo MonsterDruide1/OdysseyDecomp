@@ -8,12 +8,14 @@ namespace al {
 struct ArrowHitInfo;
 class CollisionPartsFilterBase;
 class CollisionParts;
-class CollisionPartsKeeper;
 class CollisionCheckInfoBase;
+struct DiskHitInfo;
 struct HitInfo;
 class HitSensor;
+class ICollisionPartsKeeper;
 class IUseCollision;
 class LiveActor;
+struct SphereHitInfo;
 class Triangle;
 class TriangleFilterBase;
 
@@ -23,7 +25,7 @@ bool isFloorCode(const Triangle&, const char*);
 namespace alCollisionUtil {
 class SphereMoveHitInfo;
 
-al::CollisionPartsKeeper* getCollisionPartsKeeper(const al::IUseCollision*);
+al::ICollisionPartsKeeper* getCollisionPartsKeeper(const al::IUseCollision*);
 bool isCollisionMoving(const al::HitInfo*);
 const sead::Vector3f& getCollisionHitPos(const al::HitInfo*);
 const sead::Vector3f& getCollisionHitNormal(const al::HitInfo*);
@@ -31,24 +33,24 @@ const sead::Vector3f& getCollisionMovingReaction(const al::HitInfo*);
 al::HitSensor* getCollisionHitSensor(const al::HitInfo*);
 al::CollisionParts* getCollisionHitParts(const al::HitInfo*);
 al::LiveActor* getCollisionHitActor(const al::HitInfo*);
-void checkStrikeSphere(const al::IUseCollision*, const sead::Vector3f&, f32,
-                       const al::CollisionPartsFilterBase*, const al::TriangleFilterBase*);
-void checkStrikeSphereMovingReaction(const al::IUseCollision*, const sead::Vector3f&, f32,
-                                     const sead::Vector3f&, const al::CollisionPartsFilterBase*,
-                                     const al::TriangleFilterBase*);
-void checkStrikeDisk(const al::IUseCollision*, const sead::Vector3f&, f32, f32,
-                     const sead::Vector3f&, const al::CollisionPartsFilterBase*,
-                     const al::TriangleFilterBase*);
+s32 checkStrikeSphere(const al::IUseCollision*, const sead::Vector3f&, f32,
+                      const al::CollisionPartsFilterBase*, const al::TriangleFilterBase*);
+s32 checkStrikeSphereMovingReaction(const al::IUseCollision*, const sead::Vector3f&, f32,
+                                    const sead::Vector3f&, const al::CollisionPartsFilterBase*,
+                                    const al::TriangleFilterBase*);
+s32 checkStrikeDisk(const al::IUseCollision*, const sead::Vector3f&, f32, f32,
+                    const sead::Vector3f&, const al::CollisionPartsFilterBase*,
+                    const al::TriangleFilterBase*);
 s32 checkStrikeArrow(const al::IUseCollision*, const sead::Vector3f& origin,
                      const sead::Vector3f& delta, const al::CollisionPartsFilterBase*,
                      const al::TriangleFilterBase*);
-void checkStrikeSphereForPlayer(const al::IUseCollision*, const sead::Vector3f&, f32,
-                                const al::CollisionPartsFilterBase*, const al::TriangleFilterBase*);
+s32 checkStrikeSphereForPlayer(const al::IUseCollision*, const sead::Vector3f&, f32,
+                               const al::CollisionPartsFilterBase*, const al::TriangleFilterBase*);
 
 bool getFirstPolyOnArrow(const al::IUseCollision*, const al::ArrowHitInfo**, const sead::Vector3f&,
                          const sead::Vector3f&, const al::CollisionPartsFilterBase*,
                          const al::TriangleFilterBase*);
-void getStrikeArrowInfo(const al::IUseCollision*, u32);
+const al::ArrowHitInfo& getStrikeArrowInfo(const al::IUseCollision*, u32);
 bool getFirstPolyOnArrow(const al::IUseCollision*, sead::Vector3f*, al::Triangle*,
                          const sead::Vector3f&, const sead::Vector3f&, const char*);
 bool getFirstPolyOnArrow(const al::IUseCollision*, sead::Vector3f*, al::Triangle*,
@@ -87,10 +89,10 @@ al::HitSensor* tryGetStrikeArrowCollisionSensor(const al::IUseCollision*, const 
                                                 const al::CollisionPartsFilterBase*,
                                                 const al::TriangleFilterBase*);
 s32 getStrikeArrowInfoNum(const al::IUseCollision*);
-void getStrikeSphereInfo(const al::IUseCollision*, u32);
+const al::SphereHitInfo& getStrikeSphereInfo(const al::IUseCollision*, u32);
 s32 getStrikeSphereInfoNum(const al::IUseCollision*);
 const sead::Vector3f& getStrikeSphereHitPos(const al::IUseCollision*, u32);
-void getStrikeDiskInfo(const al::IUseCollision*, u32);
+const al::DiskHitInfo& getStrikeDiskInfo(const al::IUseCollision*, u32);
 s32 getStrikeDiskInfoNum(const al::IUseCollision*);
 const sead::Vector3f& getStrikeDiskHitPos(const al::IUseCollision*, u32);
 bool isInvalidParts(const al::CollisionParts&, const al::CollisionCheckInfoBase&);
@@ -103,6 +105,6 @@ void searchCollisionParts(const al::IUseCollision*, const sead::Vector3f&, f32,
                           const al::CollisionPartsFilterBase*);
 void validateCollisionPartsPtrArray(const al::IUseCollision*, sead::PtrArray<al::CollisionParts>*);
 void invalidateCollisionPartsPtrArray(const al::IUseCollision*);
-void getCollisionPartsPtrArray(const al::IUseCollision*);
+sead::PtrArray<al::CollisionParts>* getCollisionPartsPtrArray(const al::IUseCollision*);
 
 }  // namespace alCollisionUtil
