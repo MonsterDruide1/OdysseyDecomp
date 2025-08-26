@@ -13,6 +13,7 @@ struct ActorInitInfo;
 class QuestInfo : public al::IUseSceneObjHolder {
 public:
     QuestInfo();
+
     void clear();
     void init(const al::ActorInitInfo& actor_info);
     void init(const al::PlacementInfo& placement_info, const al::ActorInitInfo& actor_info);
@@ -25,19 +26,19 @@ public:
 
     s32 getQuestNo() const { return mQuestNo; }
 
-    bool isMainQuest() const { return mIsMainQuest; }
-
     al::SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
 
 private:
     s32 mQuestNo = -1;
     sead::Vector3f mTrans = sead::Vector3f::zero;
     bool mIsMainQuest = false;
-    bool _19 = false;
+    bool mIsEnded = false;
     al::SceneObjHolder* mSceneObjHolder = nullptr;
     sead::FixedSafeString<128> mLabel;
     sead::FixedSafeString<128> mStageName;
     bool mIsSingle = false;
-    sead::FixedSafeString<128> mObjId;
-    sead::FixedSafeString<128> mStageName2;
+    sead::FixedSafeString<128> mPlacementId;
+    sead::FixedSafeString<128> mPlacementStageName;
 };
+
+static_assert(sizeof(QuestInfo) == 0x290);
