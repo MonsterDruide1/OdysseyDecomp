@@ -176,7 +176,6 @@ void CameraInterpole::update(const sead::LookAtCamera& camera) {
                     rotateVectorDegree(&v53, v53, a3, v54[i].x);
                     rotateVectorDegree(&v53, v53, a1, v54[i].y);
                     alCameraPoserFunction::CameraCollisionHitResult v52;
-                    memset(&v52, 0, 24);
                     v52.mCollisionLocation = 3;
 
                     if (alCameraPoserFunction::checkFirstCameraCollisionArrow(
