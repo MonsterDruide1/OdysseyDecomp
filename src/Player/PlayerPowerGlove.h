@@ -7,8 +7,8 @@ public:
     PlayerPowerGlove();
 
     void init(const al::ActorInitInfo& info) override;
-    void initPartsMtx(al::LiveActor* other, const al::ActorInitInfo& info,
-                      const sead::Matrix34f* mtx);
+    void initPartsMtx(al::LiveActor* player, const al::ActorInitInfo& info,
+                      const sead::Matrix34f* playerBaseMtx);
     void makeActorAlive() override;
     void updatePose();
     void control() override;
