@@ -46,9 +46,9 @@ void initLayoutActor(LayoutActor* layoutActor, const LayoutInitInfo& info, const
                      const char* suffix = nullptr);
 void initLayoutActorLocalized(LayoutActor* layoutActor, const LayoutInitInfo& info,
                               const char* archiveName, const char* suffix = nullptr);
-void initLayoutActorUseOtherMessage(LayoutActor* layoutActor, const LayoutInitInfo& info,
-                                    const char* archiveName, const char* suffix,
-                                    const char* messageArchiveName);
+void initLayoutActorUseOtherMessage(LayoutActor* _layoutActor, const LayoutInitInfo& _info,
+                                    const char* _archiveName, const char* _messageArchiveName,
+                                    const char* _suffix);
 void initLayoutTextPaneAnimator(LayoutActor* layoutActor, const char* archiveName);
 void initLayoutTextPaneAnimatorWithShadow(LayoutActor* layoutActor, const char* archiveName);
 void initLayoutPartsActor(LayoutActor* partsActor, LayoutActor* parentActor,
