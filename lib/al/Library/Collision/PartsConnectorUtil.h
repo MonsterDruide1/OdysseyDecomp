@@ -36,18 +36,16 @@ CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const Liv
 CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
                                               bool isAttachToGround);
 CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              f32 scalePos, f32 scaleDir);
+                                              f32 checkOffUp, f32 checkDistance);
 void attachMtxConnectorToCollisionParts(MtxConnector* connector, const CollisionParts* parts);
 void setConnectorBaseQuatTrans(const sead::Quatf& quat, const sead::Vector3f& trans,
                                MtxConnector* connector);
 void setConnectorBaseQuatTrans(LiveActor* actor, MtxConnector* connector);
 void connectPoseQT(LiveActor* actor, const MtxConnector* connector);
-void connectPoseQT(LiveActor* actor, const MtxConnector* connector, const sead::Quatf& poseQuat,
-                   const sead::Vector3f& poseTrans);
-void connectPoseTrans(LiveActor* actor, const MtxConnector* connector,
-                      const sead::Vector3f& poseTrans);
-void connectPoseMtx(LiveActor* actor, const MtxConnector* connector,
-                    const sead::Matrix34f& poseMtx);
+void connectPoseQT(LiveActor* actor, const MtxConnector* connector, const sead::Quatf& quat,
+                   const sead::Vector3f& trans);
+void connectPoseTrans(LiveActor* actor, const MtxConnector* connector, const sead::Vector3f& trans);
+void connectPoseMtx(LiveActor* actor, const MtxConnector* connector, const sead::Matrix34f& mtx);
 void calcConnectTrans(sead::Vector3f* outTrans, const MtxConnector* connector,
                       const sead::Vector3f& trans);
 void calcConnectTrans(sead::Vector3f* outTrans, const MtxConnector* connector);

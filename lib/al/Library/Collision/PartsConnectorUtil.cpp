@@ -90,12 +90,12 @@ CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const Liv
 }
 
 CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              f32 scalePos, f32 scaleDir) {
+                                              f32 checkOffUp, f32 checkDistance) {
     sead::Vector3f upDir;
     calcUpDir(&upDir, actor);
 
-    sead::Vector3f dir = upDir * -scaleDir;
-    sead::Vector3f pos = getTrans(actor) + upDir * scalePos;
+    sead::Vector3f dir = upDir * -checkDistance;
+    sead::Vector3f pos = getTrans(actor) + upDir * checkOffUp;
     return attachMtxConnectorToCollision(connector, actor, pos, dir);
 }
 
@@ -113,25 +113,24 @@ void setConnectorBaseQuatTrans(LiveActor* actor, MtxConnector* connector) {
 }
 
 void connectPoseQT(LiveActor* actor, const MtxConnector* connector) {
-    connector->multQT(getQuatPtr(actor), getTransPtr(actor), nullptr);
+    calcConnectQT(getQuatPtr(actor), getTransPtr(actor), connector);
 }
 
-void connectPoseQT(LiveActor* actor, const MtxConnector* connector, const sead::Quatf& poseQuat,
-                   const sead::Vector3f& poseTrans) {
-    connector->multQT(getQuatPtr(actor), getTransPtr(actor), poseQuat, poseTrans);
+void connectPoseQT(LiveActor* actor, const MtxConnector* connector, const sead::Quatf& quat,
+                   const sead::Vector3f& trans) {
+    calcConnectQT(getQuatPtr(actor), getTransPtr(actor), connector, quat, trans);
 }
 
 void connectPoseTrans(LiveActor* actor, const MtxConnector* connector,
-                      const sead::Vector3f& poseTrans) {
-    connector->multTrans(getTransPtr(actor), poseTrans);
+                      const sead::Vector3f& trans) {
+    calcConnectTrans(getTransPtr(actor), connector, trans);
 }
 
-void connectPoseMtx(LiveActor* actor, const MtxConnector* connector,
-                    const sead::Matrix34f& poseMtx) {
-    sead::Matrix34f mtx;
-    connector->multMtx(&mtx, poseMtx);
-    normalize(&mtx);
-    updatePoseMtx(actor, &mtx);
+void connectPoseMtx(LiveActor* actor, const MtxConnector* connector, const sead::Matrix34f& mtx) {
+    sead::Matrix34f poseMtx;
+    calcConnectMtx(&poseMtx, connector, mtx);
+    normalize(&poseMtx);
+    updatePoseMtx(actor, &poseMtx);
 }
 
 void calcConnectTrans(sead::Vector3f* outTrans, const MtxConnector* connector,
@@ -140,7 +139,7 @@ void calcConnectTrans(sead::Vector3f* outTrans, const MtxConnector* connector,
 }
 
 void calcConnectTrans(sead::Vector3f* outTrans, const MtxConnector* connector) {
-    connector->multTrans(outTrans, connector->getBaseTrans());
+    calcConnectTrans(outTrans, connector, connector->getBaseTrans());
 }
 
 void calcConnectDir(sead::Vector3f* outDir, const MtxConnector* connector,
@@ -167,7 +166,7 @@ void calcConnectMtx(sead::Matrix34f* outMtx, const MtxConnector* connector, cons
                     const sead::Vector3f& trans) {
     sead::Matrix34f mtx;
     mtx.makeQT(quat, trans);
-    connector->multMtx(outMtx, mtx);
+    calcConnectMtx(outMtx, connector, mtx);
 }
 
 void attachMtxConnectorToCollisionRT(MtxConnector* connector, const LiveActor* actor,
@@ -187,8 +186,8 @@ void attachMtxConnectorToCollisionRT(MtxConnector* connector, const LiveActor* a
     if (parts) {
         const sead::Vector3f& rotate = getRotate(actor);
         sead::Matrix34f mtx;
-        mtx.makeRT({sead::Mathf::rad2deg(rotate.x), sead::Mathf::rad2deg(rotate.y),
-                    sead::Mathf::rad2deg(rotate.z)},
+        mtx.makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
+                    sead::Mathf::deg2rad(rotate.z)},
                    useStrikeArrowPos ? arrowPos : getTrans(actor));
         connector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
     }
@@ -217,7 +216,7 @@ void attachMtxConnectorToCollisionQT(MtxConnector* connector, const LiveActor* a
 
 void attachMtxConnectorToJoint(MtxConnector* connector, const LiveActor* actor,
                                const char* jointName) {
-    connector->init(getJointMtxPtr(actor, jointName), sead::Matrix34f::ident);
+    attachMtxConnectorToMtxPtr(connector, getJointMtxPtr(actor, jointName));
 }
 
 void attachMtxConnectorToJoint(MtxConnector* connector, const LiveActor* actor,
@@ -232,11 +231,11 @@ void attachMtxConnectorToMtxPtr(MtxConnector* connector, const sead::Matrix34f* 
     quat.setRPY(sead::Mathf::deg2rad(rotation.x), sead::Mathf::deg2rad(rotation.y),
                 sead::Mathf::deg2rad(rotation.z));
     connector->setBaseQuatTrans(quat, trans);
-    connector->init(mtx, sead::Matrix34f::ident);
+    attachMtxConnectorToMtxPtr(connector, mtx);
 }
 
 void attachMtxConnectorToActor(MtxConnector* connector, const LiveActor* actor) {
-    connector->init(actor->getBaseMtx(), sead::Matrix34f::ident);
+    attachMtxConnectorToMtxPtr(connector, actor->getBaseMtx());
 }
 
 void attachMtxConnectorToActor(MtxConnector* connector, const LiveActor* actor,
