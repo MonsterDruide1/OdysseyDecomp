@@ -325,7 +325,7 @@ bool sendMsgBossKnuckleIceFallToMummy(al::HitSensor* receiver, al::HitSensor* se
 bool sendMsgSkaterAttack(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgEnableInSaucePan(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgEnableMapCheckPointWarp(al::HitSensor* receiver, al::HitSensor* sender);
-bool sendMsgStartInSaucePan(al::HitSensor* receiver, al::HitSensor* sender, bool pUnk);
+bool sendMsgStartInSaucePan(al::HitSensor* receiver, al::HitSensor* sender, bool pIsSpawnShine);
 bool sendMsgEndInSaucePan(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgLineDancerLink(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgLongPushSensorHit(al::HitSensor* receiver, al::HitSensor* sender);
@@ -407,7 +407,7 @@ bool sendMsgDigPointSmell(al::HitSensor* receiver, al::HitSensor* sender, DigPoi
 bool sendMsgMofumofuBodyChainExplode(al::HitSensor* receiver, al::HitSensor* sender,
                                      s32 pDelayStep);
 bool sendMsgMoonBasementRockThroughCollision(al::HitSensor* receiver, al::HitSensor* sender,
-                                             bool pIsFallingTarget);
+                                             bool pIsFallOrBreak);
 bool sendMsgFishingWait(al::HitSensor* receiver, al::HitSensor* sender, al::HitSensor* pHookSensor);
 bool sendMsgFishingUpImmediately(al::HitSensor* receiver, al::HitSensor* sender,
                                  const sead::Matrix34f& mtx, const sead::Vector3f& trans,
@@ -418,7 +418,8 @@ bool sendMsgTestPunch(al::HitSensor* receiver, al::HitSensor* sender, const sead
                       s32 pUnk, s32 pTeamId);
 bool sendMsgTestPunchStrong(al::HitSensor* receiver, al::HitSensor* sender,
                             const sead::Vector3f& pInfo, s32 pUnk, s32 pTeamId);
-bool sendMsgPunchGuard(al::HitSensor* receiver, al::HitSensor* sender, s32 punk, s32 punk2);
+bool sendMsgPunchGuard(al::HitSensor* receiver, al::HitSensor* sender, s32 pPunchGuard,
+                       s32 pTeamId);
 bool sendMsgTsukkunThrust(al::HitSensor* receiver, al::HitSensor* sender,
                           const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
 bool sendMsgTsukkunThrustSpin(al::HitSensor* receiver, al::HitSensor* sender,
@@ -473,7 +474,7 @@ bool sendMsgPackunEatCancel(al::HitSensor* receiver, al::HitSensor* sender,
 bool sendMsgPackunEatEnd(al::HitSensor* receiver, al::HitSensor* sender, const sead::Vector3f& pPos,
                          const sead::Vector3f& pDir);
 bool sendMsgPackunEatStartFollow(al::HitSensor* receiver, al::HitSensor* sender,
-                                 const sead::Vector3f* pPos);
+                                 const sead::Vector3f* pPosPtr);
 bool sendMsgFireBlowerAttack(al::HitSensor* receiver, al::HitSensor* sender,
                              const sead::Vector3f& pPos, const sead::Vector3f& pDir, f32 pRadius);
 bool sendMsgPaint(al::HitSensor* receiver, al::HitSensor* sender, const sead::Color4u8& pColor,
@@ -526,8 +527,8 @@ bool sendMsgTargetMarkerPosition(al::HitSensor* receiver, al::HitSensor* sender,
                                  sead::Vector3f* pPos);
 bool sendMsgHackBlowJump(al::HitSensor* receiver, al::HitSensor* sender, const sead::Vector3f& pUp,
                          f32 pHeight);
-bool sendMsgGolemStampPushV(al::HitSensor* receiver, al::HitSensor* sender, f32 pForce);
-bool sendMsgGolemStampPushH(al::HitSensor* receiver, al::HitSensor* sender, f32 pForce);
+bool sendMsgGolemStampPushV(al::HitSensor* receiver, al::HitSensor* sender, f32 pVelocity);
+bool sendMsgGolemStampPushH(al::HitSensor* receiver, al::HitSensor* sender, f32 pVelocity);
 bool sendMsgRequestPlayerWaitAnimDigPoint(al::HitSensor* receiver, al::HitSensor* sender);
 void sendMsgEventFlowScareCheck(al::HitSensor* receiver, al::HitSensor* sender,
                                 al::EventFlowExecutor* executor);
@@ -1021,7 +1022,7 @@ bool isMsgRaceReturnToCourse(const al::SensorMsg* pMsg, sead::Vector3f* pos, sea
 bool isFallingTargetMoonBasementRock(const al::SensorMsg* pMsg);
 bool tryGetTestPunchInfo(sead::Vector3f* info, s32* unk, const al::SensorMsg* pMsg, s32 teamId);
 bool tryGetTestPunchTeamId(s32* teamId, const al::SensorMsg* pMsg);
-bool tryGetPunchGuard(s32* unk, const al::SensorMsg* pMsg, s32 teamId);
+bool tryGetPunchGuard(s32* punchGuard, const al::SensorMsg* pMsg, s32 teamId);
 bool tryGetTsukkunThrustInfo(sead::Vector3f* dir, s32* unk, const al::SensorMsg* pMsg);
 bool tryGetTsukkunThrustReflectDir(sead::Vector3f* dir, const al::SensorMsg* pMsg);
 bool tryGetTsukkunThrustHole(sead::Vector3f* jointRootPos, sead::Vector3f* beak4Pos,
@@ -1066,7 +1067,7 @@ void getPackunEatCancelPosAndFront(sead::Vector3f* pos, sead::Vector3f* front,
                                    const al::SensorMsg* pMsg);
 bool tryGetPackunEatEndPos(sead::Vector3f* pos, const al::SensorMsg* pMsg);
 bool tryGetPackunEatEndDir(sead::Vector3f* dir, const al::SensorMsg* pMsg);
-bool tryGetPackunEatStartFollowPos(const sead::Vector3f** pos, const al::SensorMsg* pMsg);
+bool tryGetPackunEatStartFollowPos(const sead::Vector3f** posPtr, const al::SensorMsg* pMsg);
 bool tryGetFireBlowerAttackPos(sead::Vector3f* pos, const al::SensorMsg* pMsg);
 bool tryGetFireBlowerAttackDir(sead::Vector3f* dir, const al::SensorMsg* pMsg);
 bool tryGetFireBlowerAttackRadius(f32* radius, const al::SensorMsg* pMsg);
@@ -1181,6 +1182,7 @@ bool isMsgHackDirectStageInit(IUsePlayerHack** hack, const al::SensorMsg* pMsg);
 bool isMsgKillByBossBattleDemo(const al::SensorMsg* msg);
 bool isMsgKillByHackFirstDemo(const al::SensorMsg* msg);
 bool isMsgKillByMoonRockDemo(const al::SensorMsg* msg);
+// TODO: rename parameter
 bool sendMsgNpcScareByEnemy(al::HitSensor* receiver, al::HitSensor* sender, s32 pUnk);
 bool tryReceiveMsgNpcScareByEnemyIgnoreTargetHack(const al::SensorMsg* pMsg,
                                                   const CapTargetInfo* info);
@@ -1488,7 +1490,7 @@ SENSOR_MSG(BossKnuckleIceFallToMummy);
 SENSOR_MSG(SkaterAttack);
 SENSOR_MSG(EnableInSaucePan);
 SENSOR_MSG(EnableMapCheckPointWarp);
-SENSOR_MSG_WITH_DATA(StartInSaucePan, (bool, Unk));
+SENSOR_MSG_WITH_DATA(StartInSaucePan, (bool, IsSpawnShine));
 SENSOR_MSG(EndInSaucePan);
 SENSOR_MSG(LineDancerLink);
 SENSOR_MSG(LongPushSensorHit);
@@ -1595,33 +1597,40 @@ SENSOR_MSG(InitHack);
 SENSOR_MSG(ShineReaction);
 SENSOR_MSG(BreakBySword);
 SENSOR_MSG_WITH_DATA(RequestPlayerWaitAnim, (const char*, Anim));
-SENSOR_MSG_WITH_DATA(PunchGuard, (s32, Unk), (s32, TeamId));
+SENSOR_MSG_WITH_DATA(PunchGuard, (s32, PunchGuard), (s32, TeamId));
 SENSOR_MSG_WITH_DATA(FishingUpImmediately, (const sead::Vector3f*, FloatPos),
                      (const sead::Vector3f*, Trans), (const char*, MaterialCode))
 SENSOR_MSG_WITH_DATA(SwitchOnWithSaveRequest, (SaveObjInfo*, Info));
 SENSOR_MSG_WITH_DATA(DigPointSmell, (DigPoint*, DigPoint));
 SENSOR_MSG_WITH_DATA(MofumofuBodyChainExplode, (s32, DelayStep));
-SENSOR_MSG_WITH_DATA(MoonBasementRockThroughCollision, (bool, IsFallingTarget));
+SENSOR_MSG_WITH_DATA(MoonBasementRockThroughCollision, (bool, IsFallOrBreak));
 SENSOR_MSG_WITH_DATA(FishingWait, (al::HitSensor*, HookSensor));
+// NOTE: as this message is unused, a proper name for the parameter cannot be determined
 SENSOR_MSG_WITH_DATA(NetworkShootingShot, (s32, Unk));
+// NOTE: as this message is unused, a proper name for the parameter cannot be determined
 SENSOR_MSG_WITH_DATA(NetworkShootingChargeShot, (s32, Unk));
+// NOTE: as this message is unused, proper names for the parameters cannot be determined
 SENSOR_MSG_WITH_DATA(CapChangeGiant, (f32, Unk), (s32, Unk2));
 SENSOR_MSG(IgnoreTouchTarget);
 SENSOR_MSG_WITH_DATA(TouchTargetInfo, (TouchTargetInfo*, Info),
                      (const sead::Vector3f*, CollisionTouchPos));
 SENSOR_MSG_WITH_DATA(Magnet, (bool, IsPower));
+// NOTE: as this message is unused, proper names for the parameters cannot be determined
 SENSOR_MSG_WITH_DATA(MagnetBulletAttack, (f32, Unk));
+// NOTE: as this message is unused, proper names for the parameters cannot be determined
 SENSOR_MSG_WITH_DATA(DashPanel, (s32, Unk));
+// NOTE: as this message is unused, proper names for the parameters cannot be determined
 SENSOR_MSG_WITH_DATA(TrampolineCrackJump, (f32, Unk), (f32, Unk2));
+// TODO: rename parameter
 SENSOR_MSG_WITH_DATA(NpcScareByEnemy, (s32, Unk));
-SENSOR_MSG_WITH_DATA(PackunEatStartFollow, (const sead::Vector3f*, Pos));
+SENSOR_MSG_WITH_DATA(PackunEatStartFollow, (const sead::Vector3f*, PosPtr));
 SENSOR_MSG_WITH_DATA(PaintTexture, (f32, Size), (f32, Rotation), (s32, DrawType));
 SENSOR_MSG_WITH_DATA(HackDirectStageInit, (IUsePlayerHack*, Hack));
 // TODO: Rename parameters
 SENSOR_MSG_WITH_DATA(SandGeyserRaise, (f32, Unk), (f32, Unk2));
 SENSOR_MSG_WITH_DATA(CheckFishingTarget, (const FishingFish*, Fish));
-SENSOR_MSG_WITH_DATA(GolemStampPushV, (f32, Force));
-SENSOR_MSG_WITH_DATA(GolemStampPushH, (f32, Force));
+SENSOR_MSG_WITH_DATA(GolemStampPushV, (f32, Velocity));
+SENSOR_MSG_WITH_DATA(GolemStampPushH, (f32, Velocity));
 SENSOR_MSG_WITH_DATA(GotogotonGoalMatch, (const GotogotonMark*, Mark));
 SENSOR_MSG_WITH_DATA(GotogotonGetJumpPath, (al::ParabolicPath*, Path));
 SENSOR_MSG_WITH_DATA(PlayerLookAtPosition, (sead::Vector3f*, Pos));
