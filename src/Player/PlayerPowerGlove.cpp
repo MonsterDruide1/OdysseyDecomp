@@ -15,15 +15,15 @@
 
 PlayerPowerGlove::PlayerPowerGlove() : al::LiveActor("パワーグローブ") {}
 
-void PlayerPowerGlove::initPartsMtx(al::LiveActor* other, const al::ActorInitInfo& info,
-                                    const sead::Matrix34f* mtx) {
-    mPlayer = other;
-    mPlayerBodySensor = al::getHitSensor(other, "Body");
-    mPlayerBaseMtx = mtx;
+void PlayerPowerGlove::initPartsMtx(al::LiveActor* player, const al::ActorInitInfo& info,
+                                    const sead::Matrix34f* playerBaseMtx) {
+    mPlayer = player;
+    mPlayerBodySensor = al::getHitSensor(player, "Body");
+    mPlayerBaseMtx = playerBaseMtx;
 
     al::initChildActorWithArchiveNameNoPlacementInfo(this, info, "PowerGrove", nullptr);
 
-    al::setHitSensorMtxPtr(this, "Attack", other->getBaseMtx());
+    al::setHitSensorMtxPtr(this, "Attack", player->getBaseMtx());
     al::invalidateClipping(this);
     al::invalidateHitSensors(this);
     makeActorAlive();
@@ -38,8 +38,8 @@ void PlayerPowerGlove::makeActorAlive() {
 void PlayerPowerGlove::updatePose() {
     sead::Matrix34f t;
     sead::Matrix34f tt;
-    t.makeR(sead::Vector3f(sead::Mathf::piHalf(), 0, 0));
-    tt.makeR(sead::Vector3f(0, 0, 0));
+    t.makeR({sead::Mathf::piHalf(), 0, 0});
+    tt.makeR({0, 0, 0});
 
     sead::Matrix34f newPoseMtx = *mPlayerBaseMtx;
     al::normalize(&newPoseMtx);
