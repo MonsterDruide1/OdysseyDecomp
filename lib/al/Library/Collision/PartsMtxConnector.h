@@ -32,7 +32,10 @@ public:
     bool tryGetParentTrans(sead::Vector3f*) const;
 
 private:
-    void* _0[0x58 / 8];
+    sead::Matrix34f _8;
+    const sead::Matrix34f* _38;
+    sead::Quatf _40;
+    sead::Vector3f _50;
 };
 
 static_assert(sizeof(MtxConnector) == 0x60);
