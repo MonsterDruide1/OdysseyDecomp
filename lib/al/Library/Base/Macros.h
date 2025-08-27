@@ -89,3 +89,36 @@
 
 #define NO_DELIM()
 #define FOR_EACH(action, x0, ...) VFUNC(FE_, __VA_ARGS__)(action, NO_DELIM, x0, __VA_ARGS__)
+
+#define _FUNC_(name, n) name n
+#define FOR_EACH_TUPL(action, ...) FOR_EACH(_FUNC_, action, __VA_ARGS__)
+#define FOR_EACH_TUPL_DELIM(action, delim, ...) FOR_EACH_DELIM(_FUNC_, delim, action, __VA_ARGS__)
+
+#define COMMA() ,
+#define LOGICAL_OR() ||
+
+#define DECL_MEMBER_VAR(type, name) type m##name;
+
+#define PARAM(type, name) type p##name
+
+#define DECL_GET(type, name)                                                                       \
+    type get##name() const {                                                                       \
+        return m##name;                                                                            \
+    }
+
+#define POINTER_PARAM(type, name) PARAM(type*, name)
+
+#define PARAM_START_COMMA(type, name) , type p##name
+
+#define CALL_PARAM(_, name) p##name
+
+#define SET_MEMBER_PARAM(_, name) m##name = p##name;
+
+#define DECL_MEMBER_VAR_MULTI(...) FOR_EACH_TUPL(DECL_MEMBER_VAR, __VA_ARGS__)
+#define DECL_GET_MULTI(...) FOR_EACH_TUPL(DECL_GET, __VA_ARGS__)
+
+#define PARAM_LIST(...) FOR_EACH_TUPL_DELIM(PARAM, COMMA, __VA_ARGS__)
+#define POINTER_PARAM_LIST(...) FOR_EACH_TUPL_DELIM(POINTER_PARAM, COMMA, __VA_ARGS__)
+#define CALL_PARAM_LIST(...) FOR_EACH_TUPL_DELIM(CALL_PARAM, COMMA, __VA_ARGS__)
+
+#define SET_MEMBER_PARAM_MULTI(...) FOR_EACH_TUPL(SET_MEMBER_PARAM, __VA_ARGS__)

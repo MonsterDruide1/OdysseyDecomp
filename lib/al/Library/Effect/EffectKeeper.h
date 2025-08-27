@@ -37,9 +37,9 @@ public:
     void tryUpdateMaterial(const char*);
     void updatePrefix(const EffectPrefixType&, bool);
     void emitEffectCurrentPos(const char*);
-    void findEffect(const char*);
+    Effect* findEffect(const char*) const;
     void emitEffect(const char*, const sead::Vector3f*);
-    void tryEmitEffect(const char*, const sead::Vector3f*);
+    bool tryEmitEffect(const char*, const sead::Vector3f*);
     void deleteEffect(const char*);
     void tryDeleteEffect(const char*);
     void tryKillEmitterAndParticleAll();
@@ -56,8 +56,8 @@ public:
     void setParticleAlpha(const char*, f32);
     void setParticleColor(const char*, const sead::Color4f&);
     void setParticleLifeScale(const char*, f32);
-    void findMtxPtr(const char*);
-    void tryFindEffect(const char*);
+    sead::Matrix34f* findMtxPtr(const char*);
+    Effect* tryFindEffect(const char*) const;
 
     bool get_21() const { return field_21; }
 

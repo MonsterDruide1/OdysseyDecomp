@@ -9,12 +9,22 @@ class LiveActor;
 class IUseCollision;
 }  // namespace al
 class PlayerWallActionHistory;
-
 class IUsePlayerCollision;
 class PlayerConst;
 class PlayerModelHolder;
+class PlayerInput;
+class PlayerTrigger;
 
 namespace rs {
+
+void reflectCeiling(al::LiveActor*, f32);
+
+void reflectCeilingUpperPunch(al::LiveActor*, const IUsePlayerCollision*, const PlayerInput*,
+                              const PlayerConst*, const PlayerTrigger*, bool);
+
+void setupLongJumpVelocity(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32, f32, f32);
+
+void noticePlayerJumpStart(PlayerTrigger*, const al::LiveActor*);
 
 bool trySendMsgPlayerReflectOrTrample(const al::LiveActor*, al::HitSensor*, al::HitSensor*);
 
@@ -64,4 +74,11 @@ void moveDivingJump(al::LiveActor*, const sead::Vector3f&, f32, f32, f32, f32, f
 void sendPlayerCollisionTouchMsg(const al::LiveActor*, al::HitSensor*, const IUsePlayerCollision*);
 
 bool calcAlongSkyFront(sead::Vector3f*, const al::LiveActor*);
+
+void calcGroundNormalOrUpDir(sead::Vector3f*, const al::LiveActor*, const IUsePlayerCollision*);
+
+void moveInertiaSlide(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
+                      const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
+void moveInertiaSlideOnSkate(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
+                             const sead::Vector3f&, f32, f32, f32, f32, f32, f32, f32);
 }  // namespace rs

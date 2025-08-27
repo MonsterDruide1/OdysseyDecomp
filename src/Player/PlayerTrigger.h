@@ -26,6 +26,8 @@ public:
         EActionTrigger_val6 = 6,
         // used in PlayerJudgeForceLand
         EActionTrigger_val11 = 11,
+        // used in PlayerStateSquat
+        EActionTrigger_val12 = 12,
         // used in PlayerJudgeWallCatch, PlayerJudgeWallKeep
         EActionTrigger_val30 = 30,
         EActionTrigger_QuickTurn = 34,
