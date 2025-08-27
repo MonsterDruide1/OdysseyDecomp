@@ -246,8 +246,8 @@ SEND_MSG_DATA_IMPL(SphinxRideAttackTouch, (const sead::Vector3f&, Pos),
 // TODO: Rename parameters
 SEND_MSG_DATA_IMPL(SandGeyserRaise, (f32, Unk), (f32, Unk2));
 SEND_MSG_DATA_IMPL(CheckFishingTarget, (const FishingFish*, Fish));
-SEND_MSG_DATA_IMPL(GolemStampPushV, (f32, Force));
-SEND_MSG_DATA_IMPL(GolemStampPushH, (f32, Force));
+SEND_MSG_DATA_IMPL(GolemStampPushV, (f32, Velocity));
+SEND_MSG_DATA_IMPL(GolemStampPushH, (f32, Velocity));
 SEND_MSG_DATA_IMPL(GotogotonGoalMatch, (const GotogotonMark*, Mark));
 SEND_MSG_DATA_IMPL(GotogotonGetJumpPath, (al::ParabolicPath*, Path));
 SEND_MSG_DATA_IMPL(PlayerLookAtPosition, (sead::Vector3f*, Pos));
@@ -332,7 +332,7 @@ SEND_MSG_IMPL(SkaterAttack);
 SEND_MSG_DATA_IMPL(SpherePush, (const sead::Vector3f&, Center), (f32, Radius));
 SEND_MSG_IMPL(EnableInSaucePan);
 SEND_MSG_IMPL(EnableMapCheckPointWarp);
-SEND_MSG_DATA_IMPL(StartInSaucePan, (bool, Unk));
+SEND_MSG_DATA_IMPL(StartInSaucePan, (bool, IsSpawnShine));
 SEND_MSG_IMPL(EndInSaucePan);
 SEND_MSG_IMPL(LineDancerLink);
 SEND_MSG_IMPL(LongPushSensorHit);
@@ -585,13 +585,13 @@ bool sendMsgTRexAttackAll(al::HitSensor* receiver, al::HitSensor* sender) {
 
 SEND_MSG_DATA_IMPL(DigPointSmell, (DigPoint*, DigPoint));
 SEND_MSG_DATA_IMPL(MofumofuBodyChainExplode, (s32, DelayStep));
-SEND_MSG_DATA_IMPL(MoonBasementRockThroughCollision, (bool, IsFallingTarget));
+SEND_MSG_DATA_IMPL(MoonBasementRockThroughCollision, (bool, IsFallOrBreak));
 SEND_MSG_DATA_IMPL(FishingWait, (al::HitSensor*, HookSensor));
 SEND_MSG_DATA_IMPL(GhostRecordStartOk, (const char*, ObjId));
 SEND_MSG_DATA_IMPL(GunetterPush, (const sead::Vector3f&, Center), (f32, Radius));
 SEND_MSG_DATA_IMPL(TestPunch, (const sead::Vector3f&, Info), (s32, Unk), (s32, TeamId));
 SEND_MSG_DATA_IMPL(TestPunchStrong, (const sead::Vector3f&, Info), (s32, Unk), (s32, TeamId));
-SEND_MSG_DATA_IMPL(PunchGuard, (s32, unk), (s32, unk2));
+SEND_MSG_DATA_IMPL(PunchGuard, (s32, PunchGuard), (s32, TeamId));
 SEND_MSG_DATA_IMPL(TsukkunThrust, (const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy));
 SEND_MSG_DATA_IMPL(TsukkunThrustSpin, (const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy));
 SEND_MSG_DATA_IMPL(TsukkunThrustReflect, (const sead::Vector3f&, Dir), (s32, Unk),
@@ -621,11 +621,12 @@ SEND_MSG_DATA_IMPL(Magnet, (bool, IsPower));
 SEND_MSG_DATA_IMPL(MagnetBulletAttack, (f32, Unk));
 SEND_MSG_DATA_IMPL(DashPanel, (s32, Unk));
 SEND_MSG_DATA_IMPL(TrampolineCrackJump, (f32, Unk), (f32, Unk2));
+// TODO: rename parameter
 SEND_MSG_DATA_IMPL(NpcScareByEnemy, (s32, Unk));
 SEND_MSG_DATA_IMPL(ObjSnapForce, (const sead::Vector3f&, Force));
 SEND_MSG_DATA_IMPL(PackunEatCancel, (const sead::Vector3f&, unk), (const sead::Vector3f&, unk2));
 SEND_MSG_DATA_IMPL(PackunEatEnd, (const sead::Vector3f&, Pos), (const sead::Vector3f&, Dir));
-SEND_MSG_DATA_IMPL(PackunEatStartFollow, (const sead::Vector3f*, Pos));
+SEND_MSG_DATA_IMPL(PackunEatStartFollow, (const sead::Vector3f*, PosPtr));
 // NOTE: The size field for these two msgs are taken in as s32s even though they are stored as f32s
 SEND_MSG_DATA_IMPL(Paint, (const sead::Color4u8&, Color), (s32, Size), (s32, DrawType));
 SEND_MSG_DATA_IMPL(PaintTexture, (s32, Size), (f32, Rotation), (s32, DrawType));
@@ -1453,12 +1454,12 @@ bool tryGetTestPunchTeamId(s32* teamId, const al::SensorMsg* pMsg) {
     return false;
 }
 
-bool tryGetPunchGuard(s32* unk, const al::SensorMsg* pMsg, s32 teamId) {
+bool tryGetPunchGuard(s32* punchGuard, const al::SensorMsg* pMsg, s32 teamId) {
     auto* msg = sead::DynamicCast<const SensorMsgPunchGuard>(pMsg);
-    if (!msg || (msg->getUnk() != -1 && *unk == msg->getUnk()) ||
+    if (!msg || (msg->getPunchGuard() != -1 && *punchGuard == msg->getPunchGuard()) ||
         (msg->getTeamId() != -1 && msg->getTeamId() == teamId))
         return false;
-    *unk = msg->getUnk();
+    *punchGuard = msg->getPunchGuard();
     return true;
 }
 
@@ -1605,19 +1606,19 @@ bool tryGetCapRethrowFront(sead::Vector3f* front, const al::SensorMsg* pMsg) {
     return true;
 }
 
-bool tryGetGolemStampPushV(f32* force, const al::SensorMsg* pMsg) {
+bool tryGetGolemStampPushV(f32* velocity, const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgGolemStampPushV>(pMsg);
     if (!msg)
         return false;
-    *force = msg->getForce();
+    *velocity = msg->getVelocity();
     return true;
 }
 
-bool tryGetGolemStampPushH(f32* force, const al::SensorMsg* pMsg) {
+bool tryGetGolemStampPushH(f32* velocity, const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgGolemStampPushH>(pMsg);
     if (!msg)
         return false;
-    *force = msg->getForce();
+    *velocity = msg->getVelocity();
     return true;
 }
 
@@ -1662,11 +1663,11 @@ bool tryGetPackunEatEndDir(sead::Vector3f* dir, const al::SensorMsg* pMsg) {
     return true;
 }
 
-bool tryGetPackunEatStartFollowPos(const sead::Vector3f** pos, const al::SensorMsg* pMsg) {
+bool tryGetPackunEatStartFollowPos(const sead::Vector3f** posPtr, const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgPackunEatStartFollow>(pMsg);
     if (!msg)
         return false;
-    *pos = msg->getPos();
+    *posPtr = msg->getPosPtr();
     return true;
 }
 
@@ -1940,7 +1941,7 @@ bool trySendMsgHackPunchToSensor(al::LiveActor* actor, al::HitSensor* receiver,
 
 bool isFallingTargetMoonBasementRock(const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgMoonBasementRockThroughCollision>(pMsg);
-    return msg->getIsFallingTarget();
+    return msg->getIsFallOrBreak();
 }
 
 // TODO: Rename unk and unk3
