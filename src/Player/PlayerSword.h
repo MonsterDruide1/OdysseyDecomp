@@ -6,8 +6,8 @@ class PlayerSword : public al::LiveActor {
 public:
     PlayerSword(const char* name);
 
-    void initPartsMtx(al::LiveActor* other, const al::ActorInitInfo& info,
-                      const sead::Matrix34f* mtx, const char* name);
+    void initPartsMtx(al::LiveActor* player, const al::ActorInitInfo& info,
+                      const sead::Matrix34f* playerBaseMtx, const char* name);
     void makeActorAlive() override;
     void updatePose();
     void control() override;
