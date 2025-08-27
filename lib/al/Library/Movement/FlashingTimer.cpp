@@ -3,15 +3,15 @@
 #include <math/seadMathCalcCommon.h>
 
 namespace al {
-FlashingTimer::FlashingTimer(s32 param_1, s32 startHurry, s32 blinkVisibleFrames,
+FlashingTimer::FlashingTimer(s32 duration, s32 startHurry, s32 blinkVisibleFrames,
                              s32 hurryBlinkVisibleFrames)
-    : _4(param_1), mStartHurry(startHurry), mBlinkVisibleFrames(blinkVisibleFrames),
+    : mDuration(duration), mStartHurry(startHurry), mBlinkVisibleFrames(blinkVisibleFrames),
       mHurryBlinkVisibleFrames(hurryBlinkVisibleFrames) {}
 
-void FlashingTimer::start(s32 param_1, s32 startHurry, s32 blinkVisibleFrames,
+void FlashingTimer::start(s32 duration, s32 startHurry, s32 blinkVisibleFrames,
                           s32 hurryBlinkVisibleFrames) {
-    mLastTime = param_1;
-    _4 = param_1;
+    mLastTime = duration;
+    mDuration = duration;
     mStartHurry = startHurry;
     mBlinkVisibleFrames = blinkVisibleFrames;
     mHurryBlinkVisibleFrames = hurryBlinkVisibleFrames;
