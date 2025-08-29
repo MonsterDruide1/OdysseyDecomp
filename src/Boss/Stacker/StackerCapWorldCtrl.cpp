@@ -16,17 +16,18 @@
 #include "Util/DemoUtil.h"
 
 namespace {
-    NERVE_IMPL(StackerCapWorldCtrl, Battle)
-    NERVE_IMPL(StackerCapWorldCtrl, DemoCamera)
     NERVE_IMPL(StackerCapWorldCtrl, ObjAppear)
-    NERVES_MAKE_STRUCT(StackerCapWorldCtrl, Battle, DemoCamera, ObjAppear)
+    NERVE_IMPL(StackerCapWorldCtrl, DemoCamera)
+    NERVE_IMPL(StackerCapWorldCtrl, Battle)
+
+    NERVES_MAKE_STRUCT(StackerCapWorldCtrl, ObjAppear, DemoCamera, Battle)
 } // namespace
 
 StackerCapWorldCtrl::StackerCapWorldCtrl(const char* name) : LiveActor(name) {}
 
 void StackerCapWorldCtrl::init(const al::ActorInitInfo& actorInitInfo) {
     al::initActorSceneInfo(this, actorInitInfo);
-    al::initNerve(this, &NrvStackerCapWorldCtrl.Battle, 0);
+    al::initNerve(this, &NrvStackerCapWorldCtrl.ObjAppear, 0);
     al::initActorPoseTQSV(this);
     al::initActorSRT(this, actorInitInfo);
     al::initExecutorEnemyMovement(this, actorInitInfo);
@@ -68,7 +69,7 @@ void StackerCapWorldCtrl::appear() {
 void StackerCapWorldCtrl::exeBattle() {
     if (al::isGreaterEqualStep(this, 5) && al::isDead(mStacker)) {
         al::startCamera(this, mCameraTicket);
-        al::setNerve(this, &NrvStackerCapWorldCtrl.Battle);
+        al::setNerve(this, &NrvStackerCapWorldCtrl.ObjAppear);
     }
 }
 
