@@ -8,13 +8,12 @@ class MultiGateKeeperWatcher;
 class Stacker : public al::LiveActor {
 public:
     Stacker(const char*, MultiGateKeeperWatcher*);
-    // Stacker(const char*, MultiGateKeeperWatcher*);
     void init(const al::ActorInitInfo&) override;
     void startBattleStartDemo();
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool receiveMsg(const al::SensorMsg* self, al::HitSensor* other,
                     al::HitSensor* hitSensor) override;
-    void blowCapOnHead(const sead::Vector3f&, const sead::Vector3f&);
+    bool blowCapOnHead(const sead::Vector3f&, const sead::Vector3f&);
     void control() override;
     void kill() override;
     void calcAnim() override;
