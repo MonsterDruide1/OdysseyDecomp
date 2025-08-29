@@ -37,11 +37,7 @@ void ClippingInfoGroup::allocBuffer() {
 }
 
 void ClippingInfoGroup::setGroupId(const ClippingActorInfo* clippingActorInfo) {
-<<<<<<< HEAD
-    *mGroupId = *clippingActorInfo->getPlacementId();
-=======
-    *groupId = *clippingActorInfo->placementId;
->>>>>>> a77f7900 (Implemented: ClippingGroupHolder)
+    *groupId = *clippingActorInfo->getPlacementId();
 }
 
 bool ClippingInfoGroup::isEqualGroupId(const PlacementId* placementId) const {
@@ -49,17 +45,10 @@ bool ClippingInfoGroup::isEqualGroupId(const PlacementId* placementId) const {
 }
 
 bool ClippingInfoGroup::judgeClippingAll(const ClippingJudge* clippingJudge) const {
-<<<<<<< HEAD
-    for (s32 i = 0; i < mSize; i++) {
-        if (!isDead(mClippingInfos[i]->getLiveActor()) &&
-            (isInvalidClipping(mClippingInfos[i]->getLiveActor()) ||
-             !mClippingInfos[i]->judgeClipping(clippingJudge))) {
-=======
     for (s32 i = 0; i < size; i++) {
-        if (!isDead(clippingInfos[i]->liveActor) &&
-            (isInvalidClipping(clippingInfos[i]->liveActor) ||
+        if (!isDead(clippingInfos[i]->getLiveActor()) &&
+            (isInvalidClipping(clippingInfos[i]->getLiveActor()) ||
              !clippingInfos[i]->judgeClipping(clippingJudge))) {
->>>>>>> a77f7900 (Implemented: ClippingGroupHolder)
             return false;
         }
     }
@@ -113,7 +102,7 @@ void ClippingGroupHolder::createAndCount(ClippingActorInfo* clippingActorInfo) {
 
 ClippingInfoGroup* ClippingGroupHolder::tryFindGroup(const ClippingActorInfo* clippingActorInfo) {
     for (s32 i = 0; i < mGroupCount; i++)
-        if (mGroups[i]->isEqualGroupId(clippingActorInfo->placementId))
+        if (mGroups[i]->isEqualGroupId(clippingActorInfo->getPlacementId()))
             return mGroups[i];
     return nullptr;
 }

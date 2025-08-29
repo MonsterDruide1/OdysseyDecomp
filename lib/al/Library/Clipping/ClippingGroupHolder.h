@@ -5,12 +5,7 @@
 namespace al {
 class PlacementId;
 class ClippingJudge;
-<<<<<<< HEAD
-
 class ClippingActorInfo;
-=======
-struct ClippingActorInfo;
->>>>>>> a77f7900 (Implemented: ClippingGroupHolder)
 
 struct ClippingInfoGroup {
     ClippingInfoGroup();
