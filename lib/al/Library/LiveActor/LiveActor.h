@@ -162,6 +162,7 @@ public:
 
     void setName(const char* newName) { mName = newName; }
 
+<<<<<<< HEAD
     void setHitReactionKeeper(HitReactionKeeper* hitReactionKeeper) {
         mHitReactionKeeper = hitReactionKeeper;
     }
@@ -169,6 +170,12 @@ public:
     void setActorParamHolder(ActorParamHolder* paramHolder) { mParamHolder = paramHolder; }
 
     void setCollisionParts(CollisionParts* collisionParts) { mCollisionParts = collisionParts; }
+=======
+    void setFlags(LiveActorFlag* flag) { mFlags = flag; }
+
+protected:
+    friend class alActorFunction;
+>>>>>>> 5281125b (Stashing)
 
 private:
     const char* mName = nullptr;
