@@ -51,6 +51,10 @@ public:
     void exeRetry();
     void exeRetryEnd();
 
+    void setNpc(VolleyballNpc* npc) { mNpc = npc; }
+
+    void set_138(bool value) { _138 = value; }
+
 private:
     sead::Vector3f mEndPosition = sead::Vector3f::zero;
     al::ParabolicPath* mAttackPath = nullptr;
