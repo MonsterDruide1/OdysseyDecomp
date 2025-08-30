@@ -437,8 +437,7 @@ IS_MSG_IMPL(StringVoidPtr);
 
 bool isCrossoverSensor(const HitSensor* sender, const HitSensor* receiver) {
     sead::Vector3f diff = sender->getPos() - receiver->getPos();
-    sead::Vector3f receiverGravity = getGravity(receiver->getParentActor());
-    sead::Vector3f receiverUp = -receiverGravity;
+    sead::Vector3f receiverUp = -getGravity(receiver->getParentActor());
     if (!tryNormalizeOrZero(&diff))
         return false;
     // cos(70°)
@@ -448,7 +447,7 @@ bool isCrossoverSensor(const HitSensor* sender, const HitSensor* receiver) {
     tryNormalizeOrZero(&velocityDir, getVelocity(sender->getParentActor()));
     if (diff.y < 0.0f)
         return false;
-    f32 dot = velocityDir.dot(receiverGravity);
+    f32 dot = velocityDir.dot(receiverUp);
     return !isNearZero(sead::Mathf::abs(dot)) && !isNearZero(dot - 1.0f);
 }
 
