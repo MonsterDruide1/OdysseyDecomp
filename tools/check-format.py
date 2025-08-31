@@ -286,7 +286,7 @@ def common_string_finder(c, path):
             if not match.startswith("u"):
                 # Remove quotes from utf8 strings
                 match = match[1:-1]
-            if len(match) < 2:  
+            if len(match) < 2:
                 continue
             found = False
             for x in string_table:
@@ -305,6 +305,8 @@ def common_const_reference(c, path):
         if "operator->" in line:
             continue
         if "operator&" in line:
+            continue
+        if "operator[]" in line:
             continue
         if "AudioDirectorInitInfo" in line:
             continue
