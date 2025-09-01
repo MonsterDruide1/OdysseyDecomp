@@ -3,6 +3,11 @@
 #include "Library/Area/AreaObj.h"
 
 namespace al {
+struct TrafficAreaState {
+    bool isCar = false;
+    bool isNpc = false;
+};
+
 class TrafficArea : public AreaObj {
 public:
     TrafficArea(const char* name);
@@ -10,10 +15,13 @@ public:
     bool tryPermitEnterCar();
     bool tryPermitEnterNpc();
 
+    void reset() {
+        mPrevState = mCurState;
+        mCurState = {};
+    }
+
 private:
-    bool mIsCarFull = false;
-    bool mIsNpcFull = false;
-    bool mIsNpcUnavailable = false;
-    bool mIsCarUnavailable = false;
+    TrafficAreaState mCurState;
+    TrafficAreaState mPrevState;
 };
 }  // namespace al
