@@ -2,13 +2,9 @@
 
 #include "Player/PlayerStateWait.h"
 
-PlayerJudgeSleep::PlayerJudgeSleep(const PlayerStateWait* pStateWait)
-    : mPlayerStateWait(pStateWait) {}
+PlayerJudgeSleep::PlayerJudgeSleep(const PlayerStateWait* stateWait)
+    : mStateWait(stateWait) {}
 
 bool PlayerJudgeSleep::judge() const {
-    return mPlayerStateWait->isSleep();
+    return mStateWait->isSleep();
 }
-
-void PlayerJudgeSleep::reset() {}
-
-void PlayerJudgeSleep::update() {}
