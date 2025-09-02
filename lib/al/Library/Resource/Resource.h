@@ -41,11 +41,15 @@ public:
     bool tryCreateResGraphicsFile(const sead::SafeString& filePath, nn::g3d::ResFile* resFile);
     void cleanupResGraphicsFile();
 
+    sead::ArchiveRes* getFileArchive() const { return mArchive; }
+
     sead::ArchiveFileDevice* getFileDevice() const { return mDevice; }
 
     const char* getPath() const { return mPath.cstr(); }
 
     ActorInitResourceData* getResData() const { return mData; }
+
+    void setActorInitResourceData(ActorInitResourceData* data) { mData = data; }
 
     nn::g3d::ResFile* getResFile() const { return mResFile; }
 
