@@ -3,16 +3,16 @@
 namespace al {
 class LiveActorKit;
 
-void executeUpdate(LiveActorKit*, const char*);
-void executeUpdateTable(LiveActorKit*, const char*);
-void executeUpdateList(LiveActorKit*, const char*, const char*);
-void executeDraw(const LiveActorKit*, const char*);
-void executeDrawList(const LiveActorKit*, const char*, const char*);
-bool isActiveDraw(const LiveActorKit*, const char*);
-void executeUpdateDrawBuffer(const LiveActorKit*);
-void waitUpdateDrawBuffer(const LiveActorKit*);
-void executeUpdateCalcView(const LiveActorKit*);
-void waitUpdateCalcView(const LiveActorKit*);
-void incrementDrawBufferCounter(const LiveActorKit*);
+void executeUpdate(LiveActorKit* actorKit, const char* tableName);
+void executeUpdateTable(LiveActorKit* actorKit, const char* tableName);
+void executeUpdateList(LiveActorKit* actorKit, const char* tableName, const char* listName);
+void executeDraw(const LiveActorKit* actorKit, const char* tableName);
+void executeDrawList(const LiveActorKit* actorKit, const char* tableName, const char* listName);
+bool isActiveDraw(const LiveActorKit* actorKit, const char* tableName);
+void executeUpdateDrawBuffer(const LiveActorKit* actorKit);
+void waitUpdateDrawBuffer(const LiveActorKit* actorKit);
+void executeUpdateCalcView(const LiveActorKit* actorKit);
+void waitUpdateCalcView(const LiveActorKit* actorKit);
+void incrementDrawBufferCounter(const LiveActorKit* actorKit);
 
 }  // namespace al
