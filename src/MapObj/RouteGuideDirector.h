@@ -35,7 +35,7 @@ static_assert(sizeof(RouteGuideAreaFinder) == 0x30);
 class RouteGuideDirector : public al::LiveActor, public al::ISceneObj {
 public:
     RouteGuideDirector();
-    void initAfterPlacementSceneObj(const al::ActorInitInfo&) override;
+    void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
     bool isValidate() const;
     void offGuideSystem();
     void deactivateGuide();

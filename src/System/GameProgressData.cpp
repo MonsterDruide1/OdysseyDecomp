@@ -374,11 +374,11 @@ void GameProgressData::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void GameProgressData::read(const al::ByamlIter& iter) {
+void GameProgressData::read(const al::ByamlIter& save) {
     init();
 
     al::ByamlIter hash;
-    iter.tryGetIterByKey(&hash, "GameProgressData");
+    save.tryGetIterByKey(&hash, "GameProgressData");
     hash.tryGetIntByKey((s32*)&mHomeStatus, "HomeStatus");
     hash.tryGetIntByKey(&mHomeLevel, "HomeLevel");
     hash.tryGetIntByKey(&mUnlockWorldNum, "UnlockWorldNum");

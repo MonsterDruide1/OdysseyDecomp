@@ -105,11 +105,11 @@ void PlayerHitPointData::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void PlayerHitPointData::read(const al::ByamlIter& reader) {
+void PlayerHitPointData::read(const al::ByamlIter& save) {
     init();
 
     al::ByamlIter hitPointData{};
-    reader.tryGetIterByKey(&hitPointData, "PlayerHitPointData");
+    save.tryGetIterByKey(&hitPointData, "PlayerHitPointData");
     hitPointData.tryGetBoolByKey(&mIsHaveMaxUpItem, "IsHaveMaxUpItem");
 
     recoverMax();
