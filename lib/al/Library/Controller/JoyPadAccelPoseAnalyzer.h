@@ -10,6 +10,7 @@ public:
     public:
         void calcHistory(const sead::Vector3f&, const sead::Vector3f&, f32);
 
+    private:
         unsigned char padding_0[0x60];
         f32 mHist0;
         unsigned char padding_1[0x70 - 0x64];
@@ -21,6 +22,7 @@ public:
     public:
         void calcHistory(const sead::Vector3f&, const sead::Vector3f&);
 
+    private:
         unsigned char padding_1[0x88];
         sead::Vector2f unkVec0;
         unsigned char padding_0[0x98 - (0x88 + 0x8)];
@@ -38,6 +40,7 @@ public:
     void update();
     JoyPadAccelPoseAnalyzer getSwingDirDoubleHandSameDir() const;
 
+private:
     s32 mControllerPort;               // port of the controller
     s32 mAccelDeviceNum;               // number of accelerometers
     bool gap00;                        // unknown
