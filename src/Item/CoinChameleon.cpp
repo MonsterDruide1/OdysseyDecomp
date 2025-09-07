@@ -27,12 +27,12 @@ NERVES_MAKE_STRUCT(CoinChameleon, Wait, Appear, Visible);
 
 CoinChameleon::CoinChameleon(const char* name) : al::LiveActor(name) {}
 
-void CoinChameleon::init(const al::ActorInitInfo& initInfo) {
-    al::initActor(this, initInfo);
+void CoinChameleon::init(const al::ActorInitInfo& info) {
+    al::initActor(this, info);
     al::initNerve(this, &NrvCoinChameleon.Wait, 1);
 
     Coin* coin = new Coin("コイン", false);
-    al::initCreateActorWithPlacementInfo(coin, initInfo);
+    al::initCreateActorWithPlacementInfo(coin, info);
     mCoin = coin;
     mCoin->makeActorDead();
 
@@ -42,26 +42,26 @@ void CoinChameleon::init(const al::ActorInitInfo& initInfo) {
     al::hideModel(this);
     al::setMaterialProgrammable(this);
 
-    mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
-    if (mMtxConnector != nullptr)
+    mMtxConnector = al::tryCreateMtxConnector(this, info);
+    if (mMtxConnector )
         mCoin->setMtxConnector(mMtxConnector);
 
-    al::tryAddDisplayOffset(this, initInfo);
-    al::tryGetDisplayOffset(&mDisplayOffset, initInfo);
+    al::tryAddDisplayOffset(this, info);
+    al::tryGetDisplayOffset(&mDisplayOffset, info);
 
     mStateAppearRotate = new CoinStateAppearRotate(this, mMtxConnector, mDisplayOffset, "出現");
     al::initNerveState(this, mStateAppearRotate, &NrvCoinChameleon.Appear, "出現");
 
-    if (al::isPlaced(initInfo)) {
+    if (al::isPlaced(info)) {
         f32 shadowLength = 1500.0f;
-        al::tryGetArg(&shadowLength, initInfo, "ShadowLength");
+        al::tryGetArg(&shadowLength, info, "ShadowLength");
         mCoin->setShadowDropLength(shadowLength);
     }
     makeActorAlive();
 }
 
 void CoinChameleon::initAfterPlacement() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector )
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -90,11 +90,11 @@ bool CoinChameleon::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
 }
 
 void CoinChameleon::rotate() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector )
         al::setQuat(this, mQuat);
 
     bool checkWater = false;
-    if (al::isNerve(this, &NrvCoinChameleon.Appear) || mMtxConnector != nullptr)
+    if (al::isNerve(this, &NrvCoinChameleon.Appear) || mMtxConnector )
         checkWater = true;
 
     mRotateCalculator->update(sead::Vector3f::zero, checkWater);
@@ -106,7 +106,7 @@ void CoinChameleon::exeWait() {
         al::validateClipping(this);
         mWaitTime = 0;
     }
-    if (mMtxConnector != nullptr) {
+    if (mMtxConnector ) {
         al::connectPoseQT(this, mMtxConnector);
         *al::getTransPtr(this) += mDisplayOffset;
     }
@@ -131,7 +131,7 @@ void CoinChameleon::exeVisible() {
         al::showModelIfHide(this);
     }
 
-    if (mMtxConnector != nullptr) {
+    if (mMtxConnector ) {
         al::connectPoseQT(this, mMtxConnector);
         *al::getTransPtr(this) += mDisplayOffset;
     }

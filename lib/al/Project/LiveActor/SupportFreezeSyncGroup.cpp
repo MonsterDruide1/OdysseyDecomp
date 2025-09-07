@@ -6,7 +6,7 @@
 #include "Library/Placement/PlacementFunction.h"
 
 namespace al {
-SupportFreezeSyncGroup::SupportFreezeSyncGroup() {}
+SupportFreezeSyncGroup::SupportFreezeSyncGroup() = default;
 
 void SupportFreezeSyncGroup::init(const ActorInitInfo& info) {
     alPlacementFunction::getLinkGroupId(mSupportFreezeSyncGroupId, info, "SupportFreezeSyncGroup");

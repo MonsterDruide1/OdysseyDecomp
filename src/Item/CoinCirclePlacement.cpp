@@ -22,31 +22,31 @@ NERVES_MAKE_STRUCT(CoinCirclePlacement, Move);
 
 CoinCirclePlacement::CoinCirclePlacement(const char* name) : al::LiveActor(name) {}
 
-void CoinCirclePlacement::init(const al::ActorInitInfo& initInfo) {
+void CoinCirclePlacement::init(const al::ActorInitInfo& info) {
     using CoinCirclePlacementFunctor =
         al::FunctorV0M<CoinCirclePlacement*, void (CoinCirclePlacement::*)()>;
 
-    al::initActor(this, initInfo);
+    al::initActor(this, info);
     al::initNerve(this, &NrvCoinCirclePlacement.Move, 0);
-    al::getArg(&mCoinNum, initInfo, "CoinNum");
+    al::getArg(&mCoinNum, info, "CoinNum");
 
     if (mCoinNum <= 0) {
         kill();
         return;
     }
 
-    al::getArg(&mRotateVelocity, initInfo, "RotateVelocity");
-    al::tryGetArg(&mCircleXWidth, initInfo, "CircleXWidth");
-    al::tryGetArg(&mCircleZWidth, initInfo, "CircleZWidth");
-    al::tryGetSide(&mSide, initInfo);
-    al::tryGetUp(&mUp, initInfo);
-    al::tryGetFront(&mFront, initInfo);
+    al::getArg(&mRotateVelocity, info, "RotateVelocity");
+    al::tryGetArg(&mCircleXWidth, info, "CircleXWidth");
+    al::tryGetArg(&mCircleZWidth, info, "CircleZWidth");
+    al::tryGetSide(&mSide, info);
+    al::tryGetUp(&mUp, info);
+    al::tryGetFront(&mFront, info);
 
     s32 coinNum = mCoinNum;
     mCoinArray = new Coin*[mCoinNum];
     for (s32 i = 0; i < mCoinNum; i++) {
         Coin* coin = new Coin("コイン", false);
-        al::initCreateActorWithPlacementInfo(coin, initInfo);
+        al::initCreateActorWithPlacementInfo(coin, info);
         mCoinArray[i] = coin;
 
         f32 coinAngle = sead::Mathf::deg2rad((360.0f / coinNum) * i);
@@ -58,9 +58,9 @@ void CoinCirclePlacement::init(const al::ActorInitInfo& initInfo) {
 
         al::setTrans(mCoinArray[i], coinPos);
         al::setScale(mCoinArray[i], {1.0f, 1.0f, 1.0f});
-        al::tryAddDisplayOffset(mCoinArray[i], initInfo);
+        al::tryAddDisplayOffset(mCoinArray[i], info);
         al::expandClippingRadiusByShadowLength(
-            this, &_154, rs::setShadowDropLength(mCoinArray[i], initInfo, "本体"));
+            this, &_154, rs::setShadowDropLength(mCoinArray[i], info, "本体"));
         mCoinArray[i]->appearCirclePlacement();
     }
 

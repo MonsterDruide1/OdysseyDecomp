@@ -208,7 +208,7 @@ const sead::Matrix34f& Triangle::getPrevBaseMtx() const {
     return mCollisionParts->getPrevBaseMtx();
 }
 
-HitInfo::HitInfo() {}
+HitInfo::HitInfo() = default;
 
 bool HitInfo::isCollisionAtFace() const {
     return collisionLocation == CollisionLocation::Face;

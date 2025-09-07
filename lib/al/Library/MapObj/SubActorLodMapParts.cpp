@@ -16,7 +16,7 @@ void SubActorLodMapParts::init(const ActorInitInfo& info) {
     initMapPartsActor(this, info, suffix);
 
     mSubActorLodExecutor = new SubActorLodExecutor(this, info, 0);
-    if (getModelKeeper() != nullptr && !isExistAction(this) && !isViewDependentModel(this))
+    if (getModelKeeper()  && !isExistAction(this) && !isViewDependentModel(this))
         mIsControlled = true;
 
     trySyncStageSwitchAppearAndKill(this);

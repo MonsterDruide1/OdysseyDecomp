@@ -12,7 +12,7 @@ public:
 
     void clear();
     void append(al::HitSensor* bindSensor, u32 type, f32 distance, s32 priority);
-    void remove(al::HitSensor* bindSensor);
+    void remove(al::HitSensor* toRemove);
     void sort();
 
     u32 getNum() const;

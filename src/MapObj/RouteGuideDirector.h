@@ -21,7 +21,7 @@ class RouteGuideAreaFinder : public al::AreaObjFindCallBack {
 public:
     RouteGuideAreaFinder();
     void reset(sead::Vector3f);
-    void findArea(const al::AreaObj*) override;
+    void findArea(const al::AreaObj* areaObj) override;
 
 private:
     const al::AreaObj* _8;

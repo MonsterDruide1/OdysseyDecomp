@@ -46,8 +46,8 @@ const al::AnimScaleParam gAnimScaleParam = al::AnimScaleParam();
 
 Pecho::Pecho(const char* name) : al::LiveActor(name) {}
 
-void Pecho::init(const al::ActorInitInfo& initInfo) {
-    al::initActor(this, initInfo);
+void Pecho::init(const al::ActorInitInfo& info) {
+    al::initActor(this, info);
     mStartingQuat = al::getQuat(this);
     mStartingTrans = al::getTrans(this);
     mBodyOrientation = al::getQuat(this);

@@ -4,7 +4,7 @@
 
 namespace al {
 
-AreaShapeSphere::AreaShapeSphere() {}
+AreaShapeSphere::AreaShapeSphere() = default;
 
 bool AreaShapeSphere::isInVolume(const sead::Vector3f& pos) const {
     sead::Vector3f baseTrans;

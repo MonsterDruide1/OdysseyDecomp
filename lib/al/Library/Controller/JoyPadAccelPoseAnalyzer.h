@@ -11,9 +11,9 @@ public:
         void calcHistory(const sead::Vector3f&, const sead::Vector3f&, f32);
 
         unsigned char padding_0[0x60];
-        f32 hist0;
+        f32 mHist0;
         unsigned char padding_1[0x70 - 0x64];
-        f32 hist1;
+        f32 mHist1;
         unsigned char padding_2[0x1c];
     };
 
@@ -41,9 +41,9 @@ public:
     s32 mControllerPort;               // port of the controller
     s32 mAccelDeviceNum;               // number of accelerometers
     bool gap00;                        // unknown
-    bool mSwingLeft;                   // shaking the left joycon
-    bool mSwingRight;                  // shaking the right joycon
-    bool mSwingAny;                    // shaking anything
+    bool mIsSwingLeft;                   // shaking the left joycon
+    bool mIsSwingRight;                  // shaking the right joycon
+    bool mIsSwingAny;                    // shaking anything
     sead::Vector2f mSwingBorder;       // Border to trigger a motion shake
     sead::Vector2f mAccelLeftVel;      // Accelerometer of the Left Joycon
     sead::Vector2f mAccelRightVel;     // Accelerometer of the Right Joycon

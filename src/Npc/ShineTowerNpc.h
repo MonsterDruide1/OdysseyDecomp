@@ -12,7 +12,7 @@ class EventFlowExecutor;
 class ShineTowerNpc : public al::LiveActor {
 public:
     ShineTowerNpc(const char* name);
-    void init(const al::ActorInitInfo& actorInitInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void noBalloon();
     void startBalloon();
     void exeWait();

@@ -17,7 +17,7 @@ AreaObj* tryFindAreaObj(const IUseAreaObj* areaUser, const char* name,
 AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* areaUser, const char* name,
                                   const sead::Vector3f& position, AreaObjFilterBase* filter) {
     AreaObjGroup* areaObjGroup = tryFindAreaObjGroup(areaUser, name);
-    if (areaObjGroup == nullptr)
+    if (!areaObjGroup )
         return nullptr;
 
     AreaObj* currentAreaObj = nullptr;
@@ -25,7 +25,7 @@ AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* areaUser, const char* name,
     for (s32 i = 0; i < size; i++) {
         AreaObj* areaObj = areaObjGroup->getAreaObj(i);
 
-        if ((currentAreaObj == nullptr ||
+        if ((!currentAreaObj  ||
              currentAreaObj->getPriority() <= areaObj->getPriority()) &&
             areaObj->isInVolume(position) && filter->isValidArea(areaObj)) {
             currentAreaObj = areaObj;
@@ -38,7 +38,7 @@ AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* areaUser, const char* name,
 bool tryFindAreaObjAll(const IUseAreaObj* areaUser, const char* name,
                        const sead::Vector3f& position, AreaObjFindCallBack* callBack) {
     AreaObjGroup* areaObjGroup = tryFindAreaObjGroup(areaUser, name);
-    if (areaObjGroup == nullptr)
+    if (!areaObjGroup )
         return false;
 
     bool foundAnyArea = false;
@@ -64,7 +64,7 @@ bool isInAreaObj(const AreaObjGroup* group, const sead::Vector3f& position) {
 }
 
 AreaObj* tryGetAreaObj(const AreaObjGroup* group, const sead::Vector3f& position) {
-    if (group == nullptr)
+    if (!group )
         return nullptr;
 
     return group->getInVolumeAreaObj(position);
@@ -96,7 +96,7 @@ bool isInPlayerControlOffArea(const IUseAreaObj* areaUser, const sead::Vector3f&
 
 s32 calcAreaObjNum(const IUseAreaObj* areaUser, const char* name) {
     AreaObjGroup* group = tryFindAreaObjGroup(areaUser, name);
-    if (group == nullptr)
+    if (!group )
         return 0;
 
     return group->getSize();
@@ -125,21 +125,21 @@ bool tryGetAreaObjArg(s32* outArg, const AreaObj* areaObj, const char* key) {
 }
 
 bool tryGetAreaObjArg(f32* outArg, const AreaObj* areaObj, const char* key) {
-    if (areaObj->getPlacementInfo() == nullptr)
+    if (!areaObj->getPlacementInfo() )
         return false;
 
     return tryGetArg(outArg, *areaObj->getPlacementInfo(), key);
 }
 
 bool tryGetAreaObjArg(bool* outArg, const AreaObj* areaObj, const char* key) {
-    if (areaObj->getPlacementInfo() == nullptr)
+    if (!areaObj->getPlacementInfo() )
         return false;
 
     return tryGetArg(outArg, *areaObj->getPlacementInfo(), key);
 }
 
 bool tryGetAreaObjStringArg(const char** outArg, const AreaObj* areaObj, const char* key) {
-    if (areaObj->getPlacementInfo() == nullptr)
+    if (!areaObj->getPlacementInfo() )
         return false;
 
     return tryGetStringArg(outArg, *areaObj->getPlacementInfo(), key);

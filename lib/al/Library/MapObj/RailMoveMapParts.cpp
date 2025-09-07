@@ -86,10 +86,10 @@ bool RailMoveMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, Hi
 }
 
 void RailMoveMapParts::control() {
-    if (mSwitchKeepOnAreaGroup != nullptr)
+    if (mSwitchKeepOnAreaGroup )
         mSwitchKeepOnAreaGroup->update(getTrans(this));
 
-    if (mSwitchOnAreaGroup != nullptr)
+    if (mSwitchOnAreaGroup )
         mSwitchOnAreaGroup->update(getTrans(this));
 }
 

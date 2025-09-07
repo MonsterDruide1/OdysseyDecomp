@@ -27,7 +27,7 @@ class Scene : public NerveExecutor,
 public:
     Scene(const char* name);
 
-    virtual ~Scene();
+    ~Scene() override;
 
     virtual void init(const SceneInitInfo& initInfo) {}
 

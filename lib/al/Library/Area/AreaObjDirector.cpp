@@ -81,7 +81,7 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
     s32 areaGroupCount = 0;
     s32 nEntries = mFactory->getNumFactoryEntries();
     for (s32 i = 0; i < nEntries; i++) {
-        if (mAreaGroups[i] == nullptr)
+        if (!mAreaGroups[i] )
             continue;
         mAreaGroups[i]->createBuffer();
         areaGroupCount++;
@@ -111,7 +111,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& initInfo) {
 
         AreaCreatorFunction creatorFunc = nullptr;
         mFactory->getEntryIndex(&creatorFunc, pInfoName);
-        if (creatorFunc == nullptr)
+        if (!creatorFunc )
             continue;
 
         const char* displayName;
