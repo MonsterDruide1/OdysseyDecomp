@@ -11,7 +11,7 @@
 
 namespace al {
 
-AreaShape::AreaShape() {}
+AreaShape::AreaShape() = default;
 
 void AreaShape::setBaseMtxPtr(const sead::Matrix34f* baseMtxPtr) {
     mBaseMtxPtr = baseMtxPtr;

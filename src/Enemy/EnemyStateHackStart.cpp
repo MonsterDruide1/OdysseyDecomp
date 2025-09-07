@@ -22,9 +22,9 @@ NERVES_MAKE_NOSTRUCT(EnemyStateHackStart, DiveIn, HackStart);
 
 EnemyStateHackStartParam::EnemyStateHackStartParam(const char* actionName, const char* visAnimName,
                                                    const char* mtpAnimName, bool hasSubActors,
-                                                   bool updateSubActorShadowMap)
+                                                   bool isUpdateSubActorShadowMap)
     : actionName(actionName), visAnimName(visAnimName), mtpAnimName(mtpAnimName),
-      hasSubActors(hasSubActors), updateSubActorShadowMap(updateSubActorShadowMap) {}
+      hasSubActors(hasSubActors), isUpdateSubActorShadowMap(isUpdateSubActorShadowMap) {}
 
 static EnemyStateHackStartParam sEnemyStateHackStartParam("HackStart", 0, 0, 0, 0);
 

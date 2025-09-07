@@ -93,13 +93,13 @@ public:
 
     virtual StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
 
-    virtual RailRider* getRailRider() const override;
-    virtual SceneObjHolder* getSceneObjHolder() const override;
-    virtual CollisionDirector* getCollisionDirector() const override;
-    virtual AreaObjDirector* getAreaObjDirector() const override;
-    virtual CameraDirector* getCameraDirector() const override;
+    RailRider* getRailRider() const override;
+    SceneObjHolder* getSceneObjHolder() const override;
+    CollisionDirector* getCollisionDirector() const override;
+    AreaObjDirector* getAreaObjDirector() const override;
+    CameraDirector* getCameraDirector() const override;
     NatureDirector* getNatureDirector() const;
-    virtual void initStageSwitchKeeper() override;
+    void initStageSwitchKeeper() override;
 
     virtual void control() {}
 

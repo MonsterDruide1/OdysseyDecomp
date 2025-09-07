@@ -29,7 +29,7 @@ VisibleSwitchMapParts::VisibleSwitchMapParts(const char* name) : LiveActor(name)
 
 void VisibleSwitchMapParts::init(const ActorInitInfo& info) {
     using VisibleSwitchMapPartsFunctor =
-        FunctorV0M<al::VisibleSwitchMapParts*, void (al::VisibleSwitchMapParts::*)()>;
+        FunctorV0M<VisibleSwitchMapParts*, void (VisibleSwitchMapParts::*)()>;
 
     initMapPartsActor(this, info, nullptr);
     initNerve(this, &NrvVisibleSwitchMapParts.Show, 0);
@@ -101,7 +101,7 @@ void VisibleSwitchMapParts::startSuddenDisappear() {
 }
 
 void VisibleSwitchMapParts::initAfterPlacement() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector )
         return;
 
     sead::Vector3f dir;
@@ -132,7 +132,7 @@ void VisibleSwitchMapParts::initAfterPlacement() {
 }
 
 void VisibleSwitchMapParts::control() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector )
         return;
 
     connectPoseQT(this, mMtxConnector);

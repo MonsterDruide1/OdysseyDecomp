@@ -1,6 +1,6 @@
 #include "Enemy/Jango/JangoDirector.h"
 
-JangoDirector::JangoDirector() {}
+JangoDirector::JangoDirector() = default;
 
 void JangoDirector::registerJango(Jango* jango) {
     mJangos[mJangoCount] = jango;

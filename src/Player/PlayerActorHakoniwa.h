@@ -141,7 +141,7 @@ public:
                     al::HitSensor* self) override;
     void control() override;
     void updateCollider() override;
-    void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&) override;
+    void initPlayer(const al::ActorInitInfo& actorInitInfo, const PlayerInitInfo& playerInitInfo) override;
     u32 getPortNo() const override;
     IUsePlayerCollision* getPlayerCollision() const override;
     PlayerHackKeeper* getPlayerHackKeeper() const override;

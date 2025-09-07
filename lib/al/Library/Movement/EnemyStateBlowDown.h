@@ -14,7 +14,7 @@ public:
     EnemyStateBlowDownParam(const char* actionName);
     EnemyStateBlowDownParam(const char* actionName, f32 velocityStrength, f32 gravityStrength,
                             f32 velocityMultiplier, f32 velocityScale, s32 blowDownLength,
-                            bool faceAwayFromActor);
+                            bool isFaceAwayFromActor);
 
     const char* actionName = "BlowDown";
     f32 velocityStrength = 10.3f;
@@ -22,7 +22,7 @@ public:
     f32 velocityMultiplier = 1.1f;
     f32 velocityScale = 0.995f;
     s32 blowDownLength = 120;
-    bool faceAwayFromActor = true;
+    bool isFaceAwayFromActor = true;
 };
 
 class EnemyStateBlowDown : public ActorStateBase {

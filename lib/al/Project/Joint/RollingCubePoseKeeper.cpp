@@ -8,7 +8,7 @@
 
 namespace al {
 
-RollingCubePoseKeeper::RollingCubePoseKeeper() {}
+RollingCubePoseKeeper::RollingCubePoseKeeper() = default;
 
 void RollingCubePoseKeeper::setCubeSize(const sead::BoundBox3f& cubeSize) {
     mCubeSize = cubeSize;

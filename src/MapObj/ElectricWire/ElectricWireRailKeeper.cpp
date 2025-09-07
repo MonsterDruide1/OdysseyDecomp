@@ -75,7 +75,7 @@ void ElectricWireRailKeeper::init(const al::ActorInitInfo& info) {
             id->format("%d(Entrance)", i);
             ticketHack = al::initEntranceCamera(mElectricWire, *info.placementInfo, id->cstr());
         }
-        if (ticket != nullptr || ticketHack != nullptr)
+        if (ticket  || ticketHack )
             mCameraTickets.pushBack(new TicketHolder{ticket, ticketHack, i});
     }
     al::initExecutorUpdate(this, info, "地形オブジェ[Movement]");

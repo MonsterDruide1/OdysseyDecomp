@@ -57,7 +57,7 @@ public:
     void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
 private:
-    void* _18[20];
+    void* _10[20];
 };
 
 static_assert(sizeof(CollisionShapeInfoArrow) == 0xb8);

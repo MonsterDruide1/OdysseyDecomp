@@ -7,7 +7,7 @@ class SeBarrierArea : public AreaObj {
 public:
     SeBarrierArea(const char* name);
 
-    void init(const AreaInitInfo& areaInitInfo) override;
+    void init(const AreaInitInfo& info) override;
 
 private:
     sead::Vector3f mTrans = {0.0, 0.0, 0.0};

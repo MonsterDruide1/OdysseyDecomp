@@ -20,9 +20,9 @@ void removeResourceCategory(const sead::SafeString& resourceName);
 const char* getResourceName(const Resource* resource);
 const char* getResourcePath(const Resource* resource);
 bool isExistResGraphicsFile(const Resource* resource);
-Resource* findResource(const sead::SafeString&);
-Resource* findOrCreateResource(const sead::SafeString& path, const char* ext);
-Resource* findOrCreateResourceCategory(const sead::SafeString& path,
+Resource* findResource(const sead::SafeString& resourceName);
+Resource* findOrCreateResource(const sead::SafeString& resourceName, const char* ext);
+Resource* findOrCreateResourceCategory(const sead::SafeString& resourceName,
                                        const sead::SafeString& category, const char* ext);
 Resource* findOrCreateResourceEventData(const char* eventDataName, const char* resourceName);
 Resource* findOrCreateResourceSystemData(const char* systemDataName, const char* resourceName);

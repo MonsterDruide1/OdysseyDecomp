@@ -10,7 +10,7 @@ class Shine : public al::LiveActor, public IUseDimension {
 public:
     Shine(const char*);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     al::LiveActor* getCurrentModel();
     bool tryExpandShadowAndClipping();
     void initAppearDemo(const al::ActorInitInfo&);
