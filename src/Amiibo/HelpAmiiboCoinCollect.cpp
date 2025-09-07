@@ -26,11 +26,11 @@ HelpAmiiboCoinCollect::HelpAmiiboCoinCollect(HelpAmiiboDirector* director,
                                              al::LiveActor* amiiboActor)
     : HelpAmiiboExecutor(director, amiiboActor, "コレクトコインお助け") {}
 
-void HelpAmiiboCoinCollect::initAfterPlacement(const al::ActorInitInfo& actorInitInfo) {
-    HelpAmiiboExecutor::initAfterPlacement(actorInitInfo);
+void HelpAmiiboCoinCollect::initAfterPlacement(const al::ActorInitInfo& initInfo) {
+    HelpAmiiboExecutor::initAfterPlacement(initInfo);
 
     mCoinCollectDummy = new CoinCollectDummy("コレクトコインお助け");
-    al::initCreateActorNoPlacementInfo(mCoinCollectDummy, actorInitInfo);
+    al::initCreateActorNoPlacementInfo(mCoinCollectDummy, initInfo);
 }
 
 bool HelpAmiiboCoinCollect::isTriggerTouch(const al::NfpInfo& nfpInfo) const {

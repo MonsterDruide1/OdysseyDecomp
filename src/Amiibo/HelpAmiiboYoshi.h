@@ -15,7 +15,7 @@ class HelpAmiiboYoshi : public HelpAmiiboExecutor {
 public:
     HelpAmiiboYoshi(HelpAmiiboDirector* director, al::LiveActor* amiiboActor);
 
-    void initAfterPlacement(const al::ActorInitInfo& actorInitInfo) override;
+    void initAfterPlacement(const al::ActorInitInfo& initInfo) override;
     bool isTriggerTouch(const al::NfpInfo& nfpInfo) const override;
     bool execute() override;
     void activate() override;
