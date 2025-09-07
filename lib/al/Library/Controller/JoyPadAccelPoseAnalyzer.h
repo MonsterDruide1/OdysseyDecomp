@@ -41,9 +41,9 @@ public:
     s32 mControllerPort;               // port of the controller
     s32 mAccelDeviceNum;               // number of accelerometers
     bool gap00;                        // unknown
-    bool mIsSwingLeft;                   // shaking the left joycon
-    bool mIsSwingRight;                  // shaking the right joycon
-    bool mIsSwingAny;                    // shaking anything
+    bool mIsSwingLeft;                 // shaking the left joycon
+    bool mIsSwingRight;                // shaking the right joycon
+    bool mIsSwingAny;                  // shaking anything
     sead::Vector2f mSwingBorder;       // Border to trigger a motion shake
     sead::Vector2f mAccelLeftVel;      // Accelerometer of the Left Joycon
     sead::Vector2f mAccelRightVel;     // Accelerometer of the Right Joycon

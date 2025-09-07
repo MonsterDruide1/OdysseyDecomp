@@ -7,7 +7,7 @@ namespace alActionFunction {
 const char* getAnimName(const al::ActionAnimCtrlInfo* infoCtrl,
                         const al::ActionAnimDataInfo* infoData) {
     const char* animName = infoData->actionName;
-    if (!animName )
+    if (!animName)
         animName = infoCtrl->actionName;
     return animName;
 }

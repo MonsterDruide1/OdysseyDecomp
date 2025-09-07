@@ -56,10 +56,10 @@ void WheelMapParts::control() {
 
     makeMtxUpFrontPos(&mSurfaceEffectMtx, sead::Vector3f::ey, moveDir, getTrans(this));
 
-    if (mSwitchKeepOnAreaGroup )
+    if (mSwitchKeepOnAreaGroup)
         mSwitchKeepOnAreaGroup->update(getTrans(this));
 
-    if (mSwitchOnAreaGroup )
+    if (mSwitchOnAreaGroup)
         mSwitchOnAreaGroup->update(getTrans(this));
 }
 

@@ -43,7 +43,7 @@ void CoinChameleon::init(const al::ActorInitInfo& info) {
     al::setMaterialProgrammable(this);
 
     mMtxConnector = al::tryCreateMtxConnector(this, info);
-    if (mMtxConnector )
+    if (mMtxConnector)
         mCoin->setMtxConnector(mMtxConnector);
 
     al::tryAddDisplayOffset(this, info);
@@ -61,7 +61,7 @@ void CoinChameleon::init(const al::ActorInitInfo& info) {
 }
 
 void CoinChameleon::initAfterPlacement() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -90,11 +90,11 @@ bool CoinChameleon::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
 }
 
 void CoinChameleon::rotate() {
-    if (!mMtxConnector )
+    if (!mMtxConnector)
         al::setQuat(this, mQuat);
 
     bool checkWater = false;
-    if (al::isNerve(this, &NrvCoinChameleon.Appear) || mMtxConnector )
+    if (al::isNerve(this, &NrvCoinChameleon.Appear) || mMtxConnector)
         checkWater = true;
 
     mRotateCalculator->update(sead::Vector3f::zero, checkWater);
@@ -106,7 +106,7 @@ void CoinChameleon::exeWait() {
         al::validateClipping(this);
         mWaitTime = 0;
     }
-    if (mMtxConnector ) {
+    if (mMtxConnector) {
         al::connectPoseQT(this, mMtxConnector);
         *al::getTransPtr(this) += mDisplayOffset;
     }
@@ -131,7 +131,7 @@ void CoinChameleon::exeVisible() {
         al::showModelIfHide(this);
     }
 
-    if (mMtxConnector ) {
+    if (mMtxConnector) {
         al::connectPoseQT(this, mMtxConnector);
         *al::getTransPtr(this) += mDisplayOffset;
     }

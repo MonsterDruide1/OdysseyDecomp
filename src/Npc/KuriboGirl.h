@@ -41,7 +41,8 @@ public:
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool isWatchStart(sead::Vector3f pos);
     bool isNrvWait();
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
 private:
     al::AreaObjGroup* mAreaObjGroup = nullptr;
