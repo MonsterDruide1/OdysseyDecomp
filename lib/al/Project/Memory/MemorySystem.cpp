@@ -4,6 +4,7 @@
 #include <filedevice/seadFileDeviceMgr.h>
 #include <heap/seadHeapMgr.h>
 
+#include "Library/Base/Macros.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Resource/Resource.h"
 #include "Library/Resource/ResourceFunction.h"
@@ -72,8 +73,7 @@ bool MemorySystem::createSceneHeap(const char* stageName, bool backwards) {
     return currentSceneResourceHeap == nullptr;
 }
 
-__attribute__((always_inline)) inline u64
-MemorySystem::getSceneResourceHeapSize(const char* stageName) const {
+ALWAYS_INLINE u64 MemorySystem::getSceneResourceHeapSize(const char* stageName) const {
     bool isStaffRollOrDemoEnding = stageName && (isEqualString(stageName, "StaffRollStage") ||
                                                  isEqualString(stageName, "DemoEndingStage"));
 

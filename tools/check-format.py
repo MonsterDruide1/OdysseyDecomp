@@ -482,6 +482,11 @@ def source_no_nerve_make(c, path):
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
 
+def source_always_inline_macro(c, path):
+    for line in c.splitlines():
+        if "__attribute__((always_inline)) inline" in line:
+            FAIL("Explicitly using `__attribute__((always_inline)) inline` is not allowed. Use ALWAYS_INLINE from Library/Base/Macros.h instead", line, path)
+
 # -----
 # UTILS
 # -----
@@ -500,6 +505,7 @@ def check_source(c, path):
     source_no_raw_auto(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
+    source_always_inline_macro(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)

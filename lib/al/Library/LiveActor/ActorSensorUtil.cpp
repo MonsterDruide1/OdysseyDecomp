@@ -490,10 +490,10 @@ bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender
     return sendMsgEnemyAttack(receiver, sender);
 }
 
-__attribute__((always_inline)) inline bool
-isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender, f32 maxSensorDistance,
-                                const sead::Vector3f& basePoint, const sead::Vector3f& upAxis,
-                                f32 extraRadius) {
+ALWAYS_INLINE bool isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender,
+                                                   f32 maxSensorDistance,
+                                                   const sead::Vector3f& basePoint,
+                                                   const sead::Vector3f& upAxis, f32 extraRadius) {
     sead::Vector3f sensorDiff = receiver->getPos() - sender->getPos();
     sead::Vector3f senderUp = -getGravity(sender->getParentActor());
     verticalizeVec(&sensorDiff, upAxis, sensorDiff);

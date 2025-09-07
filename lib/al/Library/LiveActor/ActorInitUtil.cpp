@@ -5,6 +5,7 @@
 
 #include "Library/Action/ActorActionKeeper.h"
 #include "Library/Base/HashCodeUtil.h"
+#include "Library/Base/Macros.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraDirector.h"
 #include "Library/Draw/GraphicsQualityController.h"
@@ -67,7 +68,7 @@ void initActor(LiveActor* actor, const ActorInitInfo& initInfo) {
     initActorSuffix(actor, initInfo, nullptr);
 }
 
-__attribute__((always_inline)) inline bool initActorPoseKeeper(const char* pose, LiveActor* actor) {
+ALWAYS_INLINE bool initActorPoseKeeper(const char* pose, LiveActor* actor) {
     if (!pose)
         return false;
     s32 poseId = -1;
@@ -84,9 +85,8 @@ __attribute__((always_inline)) inline bool initActorPoseKeeper(const char* pose,
     return false;
 }
 
-__attribute__((always_inline)) inline void initActorPose(LiveActor* actor,
-                                                         const ActorInitInfo& initInfo,
-                                                         Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorPose(LiveActor* actor, const ActorInitInfo& initInfo,
+                                 Resource* modelRes, const char* suffix) {
     ByamlIter initPose;
     if (!tryGetActorInitFileIter(&initPose, modelRes, "InitPose", suffix))
         return;
@@ -102,9 +102,8 @@ __attribute__((always_inline)) inline void initActorPose(LiveActor* actor,
         ((ActorPoseKeeperTFUSV*)actor->getPoseKeeper())->setFrontUp(true);
 }
 
-__attribute__((always_inline)) inline void initActorScale(LiveActor* actor,
-                                                          const ActorInitInfo& initInfo,
-                                                          Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorScale(LiveActor* actor, const ActorInitInfo& initInfo,
+                                  Resource* modelRes, const char* suffix) {
     ByamlIter initScale;
     if (!tryGetActorInitFileIter(&initScale, modelRes, "InitScale", suffix))
         return;
@@ -120,8 +119,8 @@ __attribute__((always_inline)) inline void initActorScale(LiveActor* actor,
     setScale(actor, scale);
 }
 
-__attribute__((always_inline)) inline ModelLodCtrl*
-initActorModelLodCtrl(LiveActor* actor, Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE ModelLodCtrl* initActorModelLodCtrl(LiveActor* actor, Resource* modelRes,
+                                                  const char* suffix) {
     ByamlIter initLod;
     if (!tryGetActorInitFileIter(&initLod, modelRes, "InitLod", suffix))
         return nullptr;
@@ -146,9 +145,9 @@ initActorModelLodCtrl(LiveActor* actor, Resource* modelRes, const char* suffix) 
     return modelLodCtrl;
 }
 
-__attribute__((always_inline)) inline void
-initActorModel(LiveActor* actor, const ActorInitInfo& initInfo, Resource* modelRes,
-               ActorResource* actorResource, const char* suffix) {
+ALWAYS_INLINE void initActorModel(LiveActor* actor, const ActorInitInfo& initInfo,
+                                  Resource* modelRes, ActorResource* actorResource,
+                                  const char* suffix) {
     ByamlIter initModel;
     if (!tryGetActorInitFileIter(&initModel, modelRes, "InitModel", suffix))
         return;
@@ -221,10 +220,8 @@ initActorModel(LiveActor* actor, const ActorInitInfo& initInfo, Resource* modelR
         modelKeeper->getModelCtrl()->setCalcViewCore(2);
 }
 
-__attribute__((always_inline)) inline void initActorExecutor(LiveActor* actor,
-                                                             const ActorInitInfo& initInfo,
-                                                             Resource* modelRes,
-                                                             const char* suffix) {
+ALWAYS_INLINE void initActorExecutor(LiveActor* actor, const ActorInitInfo& initInfo,
+                                     Resource* modelRes, const char* suffix) {
     ByamlIter initExecutor;
     if (!tryGetActorInitFileIter(&initExecutor, modelRes, "InitExecutor", suffix)) {
         ModelKeeper* modelKeeper = actor->getModelKeeper();
@@ -264,9 +261,8 @@ __attribute__((always_inline)) inline void initActorExecutor(LiveActor* actor,
     }
 }
 
-__attribute__((always_inline)) inline void initActorSensor(LiveActor* actor,
-                                                           const ActorInitInfo& initInfo,
-                                                           Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorSensor(LiveActor* actor, const ActorInitInfo& initInfo,
+                                   Resource* modelRes, const char* suffix) {
     ByamlIter initSensor;
     if (!tryGetActorInitFileIter(&initSensor, modelRes, "InitSensor", suffix))
         return;
@@ -311,10 +307,8 @@ __attribute__((always_inline)) inline void initActorSensor(LiveActor* actor,
     }
 }
 
-__attribute__((always_inline)) inline void initActorCollision(LiveActor* actor,
-                                                              const ActorInitInfo& initInfo,
-                                                              Resource* modelRes,
-                                                              const char* suffix) {
+ALWAYS_INLINE void initActorCollision(LiveActor* actor, const ActorInitInfo& initInfo,
+                                      Resource* modelRes, const char* suffix) {
     ByamlIter initCollision;
     if (!tryGetActorInitFileIter(&initCollision, modelRes, "InitCollision", suffix))
         return;
@@ -340,10 +334,8 @@ __attribute__((always_inline)) inline void initActorCollision(LiveActor* actor,
     initActorCollisionWithResource(actor, modelRes, name, sensor, jointMtx, suffix);
 }
 
-__attribute__((always_inline)) inline void initActorCollider(LiveActor* actor,
-                                                             const ActorInitInfo& initInfo,
-                                                             Resource* modelRes,
-                                                             const char* suffix) {
+ALWAYS_INLINE void initActorCollider(LiveActor* actor, const ActorInitInfo& initInfo,
+                                     Resource* modelRes, const char* suffix) {
     ByamlIter initCollider;
     if (!tryGetActorInitFileIter(&initCollider, modelRes, "InitCollider", suffix))
         return;
@@ -360,9 +352,8 @@ __attribute__((always_inline)) inline void initActorCollider(LiveActor* actor,
     actor->initCollider(radius, offset.y, planeNum);
 }
 
-__attribute__((always_inline)) inline void initActorEffect(LiveActor* actor,
-                                                           const ActorInitInfo& initInfo,
-                                                           Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorEffect(LiveActor* actor, const ActorInitInfo& initInfo,
+                                   Resource* modelRes, const char* suffix) {
     ByamlIter initEffect;
     if (!tryGetActorInitFileIter(&initEffect, modelRes, "InitEffect", suffix))
         return;
@@ -374,9 +365,8 @@ __attribute__((always_inline)) inline void initActorEffect(LiveActor* actor,
     initActorEffectKeeper(actor, initInfo, name);
 }
 
-__attribute__((always_inline)) inline void initActorSound(LiveActor* actor,
-                                                          const ActorInitInfo& initInfo,
-                                                          Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorSound(LiveActor* actor, const ActorInitInfo& initInfo,
+                                  Resource* modelRes, const char* suffix) {
     ByamlIter initSound;
     const char* seName = nullptr;
     const char* bgmName = nullptr;
@@ -394,15 +384,13 @@ __attribute__((always_inline)) inline void initActorSound(LiveActor* actor,
         initActorBgmKeeper(actor, initInfo, bgmName);
 }
 
-__attribute__((always_inline)) inline void initActorRail(LiveActor* actor,
-                                                         const ActorInitInfo& initInfo) {
+ALWAYS_INLINE void initActorRail(LiveActor* actor, const ActorInitInfo& initInfo) {
     if (isExistRail(initInfo, "Rail"))
         actor->initRailKeeper(initInfo, "Rail");
 }
 
-__attribute__((always_inline)) inline void initActorGroupClipping(LiveActor* actor,
-                                                                  const ActorInitInfo& initInfo,
-                                                                  const ByamlIter& initClipping) {
+ALWAYS_INLINE void initActorGroupClipping(LiveActor* actor, const ActorInitInfo& initInfo,
+                                          const ByamlIter& initClipping) {
     if (initClipping.isExistKey("NoGroupClipping"))
         return;
 
@@ -413,10 +401,8 @@ __attribute__((always_inline)) inline void initActorGroupClipping(LiveActor* act
     initGroupClipping(actor, initInfo);
 }
 
-__attribute__((always_inline)) inline void initActorClipping(LiveActor* actor,
-                                                             const ActorInitInfo& initInfo,
-                                                             Resource* modelRes,
-                                                             const char* suffix) {
+ALWAYS_INLINE void initActorClipping(LiveActor* actor, const ActorInitInfo& initInfo,
+                                     Resource* modelRes, const char* suffix) {
     ByamlIter initClipping;
     if (!tryGetActorInitFileIter(&initClipping, modelRes, "InitClipping", suffix))
         return;
@@ -450,10 +436,8 @@ __attribute__((always_inline)) inline void initActorClipping(LiveActor* actor,
     initActorGroupClipping(actor, initInfo, initClipping);
 }
 
-__attribute__((always_inline)) inline void initActorShadowMask(LiveActor* actor,
-                                                               const ActorInitInfo& initInfo,
-                                                               Resource* modelRes,
-                                                               const char* suffix) {
+ALWAYS_INLINE void initActorShadowMask(LiveActor* actor, const ActorInitInfo& initInfo,
+                                       Resource* modelRes, const char* suffix) {
     bool usingDepthShadow = false;
     tryGetArg(&usingDepthShadow, initInfo, "UsingDepthShadow");
     initDepthShadowMapCtrl(actor, modelRes, initInfo, suffix);
@@ -467,9 +451,8 @@ __attribute__((always_inline)) inline void initActorShadowMask(LiveActor* actor,
         invalidateShadowMaskIntensityAll(actor);
 }
 
-__attribute__((always_inline)) inline void initActorFlag(LiveActor* actor,
-                                                         const ActorInitInfo& initInfo,
-                                                         Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorFlag(LiveActor* actor, const ActorInitInfo& initInfo,
+                                 Resource* modelRes, const char* suffix) {
     ByamlIter initFlag;
     if (!tryGetActorInitFileIter(&initFlag, modelRes, "InitFlag", suffix))
         return;
@@ -481,9 +464,8 @@ __attribute__((always_inline)) inline void initActorFlag(LiveActor* actor,
         validatePuddleMaterial(actor);
 }
 
-__attribute__((always_inline)) inline void initActorItem(LiveActor* actor,
-                                                         const ActorInitInfo& initInfo,
-                                                         Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorItem(LiveActor* actor, const ActorInitInfo& initInfo,
+                                 Resource* modelRes, const char* suffix) {
     ByamlIter initItem;
     if (!tryGetActorInitFileIter(&initItem, modelRes, "InitItem", suffix))
         return;
@@ -491,9 +473,8 @@ __attribute__((always_inline)) inline void initActorItem(LiveActor* actor,
     initActorItemKeeper(actor, initInfo, initItem);
 }
 
-__attribute__((always_inline)) inline void initActorScore(LiveActor* actor,
-                                                          const ActorInitInfo& initInfo,
-                                                          Resource* modelRes, const char* suffix) {
+ALWAYS_INLINE void initActorScore(LiveActor* actor, const ActorInitInfo& initInfo,
+                                  Resource* modelRes, const char* suffix) {
     ByamlIter initScore;
     if (!tryGetActorInitFileIter(&initScore, modelRes, "InitScore", suffix))
         return;
@@ -502,9 +483,9 @@ __attribute__((always_inline)) inline void initActorScore(LiveActor* actor,
     actor->getActorScoreKeeper()->init(initScore);
 }
 
-__attribute__((always_inline)) inline void
-initActorAction(LiveActor* actor, const ActorInitInfo& initInfo, Resource* modelRes,
-                ActorResource* actorResource, const char* suffix) {
+ALWAYS_INLINE void initActorAction(LiveActor* actor, const ActorInitInfo& initInfo,
+                                   Resource* modelRes, ActorResource* actorResource,
+                                   const char* suffix) {
     const char* archiveName = actorResource->getModelRes()->getArchiveName();
     initActorActionKeeper(actor, actorResource, archiveName, suffix);
 
@@ -747,8 +728,8 @@ void initCreateActorNoPlacementInfoNoViewId(LiveActor* actor, const ActorInitInf
     actor->init(childInitInfo);
 }
 
-__attribute__((always_inline)) inline LiveActor*
-createActorFromFactory(const ActorInitInfo& childInitInfo, const PlacementInfo* placementInfo) {
+ALWAYS_INLINE LiveActor* createActorFromFactory(const ActorInitInfo& childInitInfo,
+                                                const PlacementInfo* placementInfo) {
     const ActorFactory* factory = childInitInfo.actorFactory;
 
     const char* objectName = nullptr;
