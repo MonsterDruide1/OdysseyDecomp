@@ -5,6 +5,6 @@
 class WorldMapEarth : public al::LiveActor {
 public:
     WorldMapEarth(const char* name);
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void control() override;
 };

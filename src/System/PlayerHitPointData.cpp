@@ -4,7 +4,7 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/Writer/ByamlWriter.h"
 
-PlayerHitPointData::PlayerHitPointData() {}
+PlayerHitPointData::PlayerHitPointData() = default;
 
 void PlayerHitPointData::setKidsModeFlag(bool kidsMode) {
     mIsKidsMode = kidsMode;

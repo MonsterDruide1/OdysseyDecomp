@@ -43,7 +43,7 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
 
     mPrevTargetTrans = pos;
 
-    if (unk_unusedBool || mIsInvalidated ||
+    if (unk_unk_unusedbool || mIsInvalidated ||
         alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
     if (alCameraPoserFunction::isTargetClimbPole(mCameraPoser))
@@ -92,7 +92,7 @@ void CameraVerticalAbsorber::update() {
     mLookAtCamera.getUp() = mCameraPoser->getCameraUp();
     if (mLookAtCamera.getUp().length() > 0.0f)
         mLookAtCamera.getUp().normalize();
-    if (!unk_unusedBool && !mIsInvalidated) {
+    if (!unk_unk_unusedbool && !mIsInvalidated) {
         mLookAtCamera.getAt() -= mTargetInterp;
         if (!mIsNoCameraPosAbsorb)
             mLookAtCamera.getPos() -= mTargetInterp;

@@ -48,13 +48,13 @@ void TreasureBoxKey::init(const al::ActorInitInfo& info) {
     }
 
     mShine = rs::initLinkShine(info, "ShineActor", 0);
-    if (mShine != nullptr) {
+    if (mShine ) {
         al::updatePoseRotate(mShine, sead::Vector3f::zero);
         sead::Vector3f trans = al::getTrans(this);
         trans.y = al::getTrans(mShine).y;
         al::setTrans(mShine, trans);
 
-        if (mShine != nullptr)
+        if (mShine )
             rs::updateHintTrans(mShine, al::getTrans(mTreasureBoxKeyOpener));
     }
 
@@ -71,38 +71,38 @@ void TreasureBoxKey::init(const al::ActorInitInfo& info) {
 
 void TreasureBoxKey::makeActorDead() {
     al::LiveActor::makeActorDead();
-    if (mTreasureBoxKeyOpener != nullptr)
+    if (mTreasureBoxKeyOpener )
         mTreasureBoxKeyOpener->makeActorDead();
 
-    if (mShine != nullptr)
+    if (mShine )
         mShine->makeActorDead();
 
-    if (mCameraTicket != nullptr && al::isActiveCamera(mCameraTicket))
+    if (mCameraTicket  && al::isActiveCamera(mCameraTicket))
         al::endCamera(this, mCameraTicket, -1, false);
 }
 
 void TreasureBoxKey::makeActorAlive() {
     al::LiveActor::makeActorAlive();
     al::validateClipping(this);
-    if (mShine != nullptr)
+    if (mShine )
         al::validateClipping(mShine);
 }
 
-bool TreasureBoxKey::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
+bool TreasureBoxKey::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                 al::HitSensor* self) {
     if (al::isSensorName(self, "PlayerRegard")) {
-        if (al::isMsgPlayerDisregard(msg) && al::isNerve(this, &NrvTreasureBoxKey.OpenWait))
+        if (al::isMsgPlayerDisregard(message) && al::isNerve(this, &NrvTreasureBoxKey.OpenWait))
             return true;
-        return rs::isMsgPlayerDisregardHomingAttack(msg);
+        return rs::isMsgPlayerDisregardHomingAttack(message);
     }
 
-    if (al::isMsgRestart(msg)) {
+    if (al::isMsgRestart(message)) {
         restart();
         return true;
     }
 
-    if (al::isMsgChangeAlpha(msg)) {
-        f32 alpha = al::getChangeAlphaValue(msg);
+    if (al::isMsgChangeAlpha(message)) {
+        f32 alpha = al::getChangeAlphaValue(message);
         al::setModelAlphaMask(this, alpha);
         al::setModelAlphaMask(mTreasureBoxKeyOpener, alpha);
         if (!al::sendMsgChangeAlpha(mShine, alpha))
@@ -110,7 +110,7 @@ bool TreasureBoxKey::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
         return true;
     }
 
-    if (rs::isMsgTimerAthleticDemoStart(msg)) {
+    if (rs::isMsgTimerAthleticDemoStart(message)) {
         al::addDemoActor(this);
         al::addDemoActor(mTreasureBoxKeyOpener);
         return true;
@@ -171,7 +171,7 @@ void TreasureBoxKey::exeOpen() {
         al::invalidateClipping(mShine);
         mShine->appearPopupWithoutDemo();
         al::sendMsgShowModel(mShine);
-        if (mCameraTicket != nullptr)
+        if (mCameraTicket )
             al::startHitReaction(this, "シャイン出現デモ演出");
     }
 
@@ -181,7 +181,7 @@ void TreasureBoxKey::exeOpen() {
         al::startAction(this, "Wait");
     }
 
-    if (mCameraTicket != nullptr) {
+    if (mCameraTicket ) {
         if (!al::isGreaterEqualStep(this, 150))
             return;
 

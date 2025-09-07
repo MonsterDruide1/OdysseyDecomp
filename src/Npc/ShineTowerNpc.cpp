@@ -26,10 +26,10 @@ NERVES_MAKE_NOSTRUCT(ShineTowerNpc, NoBalloon);
 
 ShineTowerNpc::ShineTowerNpc(const char* name) : al::LiveActor(name) {}
 
-void ShineTowerNpc::init(const al::ActorInitInfo& actorInitInfo) {
-    al::initActorWithArchiveName(this, actorInitInfo, "NpcCap", nullptr);
+void ShineTowerNpc::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "NpcCap", nullptr);
     al::initNerve(this, &NrvShineTowerNpc.Wait, 0);
-    mEventFlowExecutor = rs::initEventFlow(this, actorInitInfo, "HomeMechanicNpc", nullptr);
+    mEventFlowExecutor = rs::initEventFlow(this, info, "HomeMechanicNpc", nullptr);
     al::MessageTagDataHolder* msgTagDataHolder = al::initMessageTagDataHolder(1);
     al::registerMessageTagDataScore(msgTagDataHolder, "Score", &mRemainingShineCount);
     rs::initEventMessageTagDataHolder(mEventFlowExecutor, msgTagDataHolder);

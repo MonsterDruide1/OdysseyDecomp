@@ -6,7 +6,7 @@ class NpcForceMaterialCodeArea : public al::AreaObj {
 public:
     NpcForceMaterialCodeArea(const char* name);
 
-    void init(const al::AreaInitInfo& areaInitInfo) override;
+    void init(const al::AreaInitInfo& info) override;
 
 private:
     const char* mMaterialCodeName = nullptr;

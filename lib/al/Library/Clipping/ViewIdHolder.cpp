@@ -5,7 +5,7 @@
 #include "Library/Placement/PlacementInfo.h"
 
 namespace al {
-ViewIdHolder::ViewIdHolder() {}
+ViewIdHolder::ViewIdHolder() = default;
 
 ViewIdHolder* ViewIdHolder::tryCreate(const PlacementInfo& placementInfo) {
     if (calcLinkChildNum(placementInfo, "ViewGroup") < 1) {

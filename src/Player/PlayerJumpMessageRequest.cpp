@@ -1,6 +1,6 @@
 #include "Player/PlayerJumpMessageRequest.h"
 
-PlayerJumpMessageRequest::PlayerJumpMessageRequest() {}
+PlayerJumpMessageRequest::PlayerJumpMessageRequest() = default;
 
 void PlayerJumpMessageRequest::clear() {
     jumpType = PlayerJumpType::Standard;

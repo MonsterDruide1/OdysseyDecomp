@@ -21,17 +21,17 @@ NERVES_MAKE_STRUCT(Coin2DCityDirector, Wait);
 
 Coin2DCityDirector::Coin2DCityDirector(const char* name) : al::LiveActor(name) {}
 
-void Coin2DCityDirector::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "Coin2DCityDirector", nullptr);
-    if (!al::isExistLinkChild(initInfo, "FirstCoin", 0)) {
+void Coin2DCityDirector::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "Coin2DCityDirector", nullptr);
+    if (!al::isExistLinkChild(info, "FirstCoin", 0)) {
         kill();
         return;
     }
 
-    al::tryGetArg(&mNextCoinLightTime, initInfo, "NextCoinLightTime");
-    al::tryGetArg(&mLightTime, initInfo, "LightTime");
-    al::tryGetArg(&mLightInterval, initInfo, "LightInterval");
-    al::tryGetArg(&mDelayTime, initInfo, "DelayTime");
+    al::tryGetArg(&mNextCoinLightTime, info, "NextCoinLightTime");
+    al::tryGetArg(&mLightTime, info, "LightTime");
+    al::tryGetArg(&mLightInterval, info, "LightInterval");
+    al::tryGetArg(&mDelayTime, info, "DelayTime");
     if (mNextCoinLightTime <= -1 || mLightTime <= -1 || mLightInterval <= -1 || mDelayTime <= -1) {
         kill();
         return;
@@ -40,12 +40,12 @@ void Coin2DCityDirector::init(const al::ActorInitInfo& initInfo) {
     mCoinHolder.allocBuffer(100, nullptr);
 
     al::PlacementInfo placementInfo;
-    al::getLinksInfo(&placementInfo, initInfo, "FirstCoin");
+    al::getLinksInfo(&placementInfo, info, "FirstCoin");
     s32 linkNestNum = al::calcLinkNestNum(placementInfo, "NextCoin");
 
     Coin2DCity* coin = new Coin2DCity("コイン2D都市", this);
-    al::initCreateActorWithPlacementInfo(coin, initInfo, placementInfo);
-    al::initSubActorKeeperNoFile(this, initInfo, linkNestNum + 1);
+    al::initCreateActorWithPlacementInfo(coin, info, placementInfo);
+    al::initSubActorKeeperNoFile(this, info, linkNestNum + 1);
 
     mBgmBeatCounter = new al::BgmBeatCounter(this, -0.28f);
     al::initNerve(this, &NrvCoin2DCityDirector.Wait, 0);

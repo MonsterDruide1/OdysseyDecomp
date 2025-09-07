@@ -5,7 +5,7 @@
 #include "Project/Joint/KeyPose.h"
 
 namespace al {
-KeyPoseKeeper::KeyPoseKeeper() {}
+KeyPoseKeeper::KeyPoseKeeper() = default;
 
 void KeyPoseKeeper::init(const PlacementInfo& info) {
     mKeyPoseCount = calcLinkNestNum(info, "KeyMoveNext") + 1;

@@ -18,7 +18,7 @@ class Coin2DCityDirector : public al::LiveActor {
 public:
     Coin2DCityDirector(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void control() override;
 

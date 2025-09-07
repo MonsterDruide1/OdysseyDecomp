@@ -17,7 +17,7 @@ class Scene;
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {
 public:
     Sequence(const char* name);
-    virtual ~Sequence() override;
+    ~Sequence() override;
 
     virtual void init(const SequenceInitInfo& initInfo);
 

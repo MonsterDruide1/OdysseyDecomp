@@ -60,11 +60,11 @@ public:
 
     virtual LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
 
-    virtual CameraDirector* getCameraDirector() const override;
+    CameraDirector* getCameraDirector() const override;
 
-    virtual SceneObjHolder* getSceneObjHolder() const override;
+    SceneObjHolder* getSceneObjHolder() const override;
 
-    virtual const MessageSystem* getMessageSystem() const override;
+    const MessageSystem* getMessageSystem() const override;
 
     virtual void control() {}
 

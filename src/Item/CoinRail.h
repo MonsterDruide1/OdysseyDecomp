@@ -17,7 +17,7 @@ class CoinRail : public al::LiveActor {
 public:
     CoinRail(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void appear() override;
     void kill() override;
     void makeActorDead() override;

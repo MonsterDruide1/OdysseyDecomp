@@ -15,7 +15,7 @@ class CoinCirclePlacement : public al::LiveActor {
 public:
     CoinCirclePlacement(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
 
     void listenAppear();
     void exeMove();

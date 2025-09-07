@@ -49,7 +49,7 @@ void BreakMapPartsBase::init(const ActorInitInfo& info) {
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "SuffixName");
 
-    if (suffix != nullptr && isEqualString(suffix, "None"))
+    if (suffix  && isEqualString(suffix, "None"))
         suffix = nullptr;
 
     initMapPartsActor(this, info, suffix);
@@ -78,7 +78,7 @@ void BreakMapPartsBase::init(const ActorInitInfo& info) {
 }
 
 void BreakMapPartsBase::initAfterPlacement() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector )
         return;
 
     attachMtxConnectorToCollision(mMtxConnector, this, false);
@@ -91,36 +91,36 @@ void BreakMapPartsBase::kill() {
 }
 
 void BreakMapPartsBase::movement() {
-    if (!isNerve(this, &NrvBreakMapPartsBase.Wait) || mMtxConnector != nullptr) {
+    if (!isNerve(this, &NrvBreakMapPartsBase.Wait) || mMtxConnector ) {
         LiveActor::movement();
 
         return;
     }
 
-    if (getEffectKeeper() != nullptr && getEffectKeeper()->get_21())
+    if (getEffectKeeper()  && getEffectKeeper()->get_21())
         getEffectKeeper()->update();
 }
 
 void BreakMapPartsBase::calcAnim() {
-    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mMtxConnector == nullptr)
+    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && !mMtxConnector )
         return;
 
     LiveActor::calcAnim();
 }
 
 void BreakMapPartsBase::exeWait() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector )
         connectPoseQT(this, mMtxConnector);
 }
 
 void BreakMapPartsBase::exeBreak() {
     if (isFirstStep(this)) {
         LiveActor* subActor = tryGetSubActor(this, "壊れモデル");
-        if (subActor != nullptr)
+        if (subActor )
             subActor->appear();
 
         subActor = tryGetSubActor(this, "残留モデル");
-        if (subActor != nullptr) {
+        if (subActor ) {
             subActor->appear();
 
             if (isTraceModelRandomRotate(subActor))
@@ -130,7 +130,7 @@ void BreakMapPartsBase::exeBreak() {
         if (mIsExistHitReactionBreak)
             startHitReaction(this, "破壊");
 
-        if (mAudioKeeper != nullptr)
+        if (mAudioKeeper )
             startSe(mAudioKeeper, "Riddle");
 
         if (!isExistAction(this, "Break")) {

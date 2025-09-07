@@ -34,15 +34,15 @@ NERVES_MAKE_STRUCT(CoinCollect2D, Wait, WaitHint, Got);
 
 CoinCollect2D::CoinCollect2D(const char* name) : al::LiveActor(name) {}
 
-void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
-    al::initActorSceneInfo(this, initInfo);
+void CoinCollect2D::init(const al::ActorInitInfo& info) {
+    al::initActorSceneInfo(this, info);
     rs::createCoinCollectWatcher(this);
     rs::createCoinCollectHolder(this);
     CoinCollectHolder* holder = al::getSceneObj<CoinCollectHolder>(this);
     holder->registerCoinCollect2D(this);
 
-    if (!GameDataFunction::isGotCoinCollect(this, initInfo)) {
-        al::initActorWithArchiveName(this, initInfo, rs::getStageCoinCollect2DArchiveName(this),
+    if (!GameDataFunction::isGotCoinCollect(this, info)) {
+        al::initActorWithArchiveName(this, info, rs::getStageCoinCollect2DArchiveName(this),
                                      nullptr);
         makeActorAlive();
         CoinCollectWatcher* watcher = al::getSceneObj<CoinCollectWatcher>(this);
@@ -52,13 +52,13 @@ void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
         mHintState = new CoinCollectHintState(this);
         al::initNerveState(this, mHintState, &NrvCoinCollect2D.WaitHint, "ヒント");
 
-        al::tryAddDisplayOffset(this, initInfo);
-        mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
+        al::tryAddDisplayOffset(this, info);
+        mMtxConnector = al::tryCreateMtxConnector(this, info);
         mDimensionKeeper = rs::createDimensionKeeper(this);
         rs::updateDimensionKeeper(mDimensionKeeper);
         rs::snap2DParallelizeFront(this, this, 500.0f);
         al::startAction(this, "Wait");
-        mPlacementId = al::createPlacementId(initInfo);
+        mPlacementId = al::createPlacementId(info);
 
     } else {
         makeActorDead();
@@ -68,12 +68,12 @@ void CoinCollect2D::init(const al::ActorInitInfo& initInfo) {
 
         CoinCollectEmpty2D* coinCollectEmpty2d =
             new CoinCollectEmpty2D("コレクトコイン空2D", archiveName);
-        al::initCreateActorWithPlacementInfo(coinCollectEmpty2d, initInfo);
+        al::initCreateActorWithPlacementInfo(coinCollectEmpty2d, info);
     }
 }
 
 void CoinCollect2D::initAfterPlacement() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector )
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -122,12 +122,12 @@ void CoinCollect2D::exeWait() {
     if (al::isFirstStep(this))
         al::validateClipping(this);
 
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector )
         al::connectPoseQT(this, mMtxConnector);
 }
 
 void CoinCollect2D::exeWaitHint() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector )
         al::connectPoseQT(this, mMtxConnector);
 
     if (al::updateNerveState(this))

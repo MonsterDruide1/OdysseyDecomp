@@ -20,7 +20,7 @@ DecideIconLayout* HintPhotoLayoutHolder::getDecideIcon() const {
 }
 
 void HintPhotoLayoutHolder::init(const al::LayoutInitInfo& initInfo) {
-    if (mLayoutActor == nullptr) {
+    if (!mLayoutActor ) {
         mLayoutActor = new al::LayoutActor("ヒント写真");
         al::initLayoutActor(mLayoutActor, initInfo, "HintPhoto", nullptr);
         mDecideIconLayout = new DecideIconLayout("決定アイコン", initInfo);
