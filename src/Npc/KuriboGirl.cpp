@@ -57,14 +57,14 @@ KuriboGirl::KuriboGirl(const char* name) : al::LiveActor(name) {}
 
 void KuriboGirl::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "KuriboGirl", nullptr);
-    mAreaObjGroup = al::createLinkAreaGroup(this, info, "FindArea", "子供エリアグループ",
-                                            "子供エリア");
+    mAreaObjGroup =
+        al::createLinkAreaGroup(this, info, "FindArea", "子供エリアグループ", "子供エリア");
     mCamera = al::initObjectCamera(this, info, nullptr, nullptr);
     mCameraTarget = al::createActorCameraTarget(this, 0.0f);
 
     al::tryGetArg(&mIsMoveShine, info, "isMoveShine");
     mShineActor = rs::tryInitLinkShine(info, "ShineActor", 0);
-    if (!mShineActor ) {
+    if (!mShineActor) {
         mIsAfterShineAppear = true;
         al::initNerve(this, &NrvKuriboGirl.WaitLoveAfter, 0);
     } else {
@@ -73,7 +73,7 @@ void KuriboGirl::init(const al::ActorInitInfo& info) {
     }
 
     al::setHitSensorPosPtr(this, "WatchStart", &mHitSensorPos);
-    if (!mAreaObjGroup ) {
+    if (!mAreaObjGroup) {
         mHitSensorPos.set(al::getTrans(this));
         al::setSensorRadius(this, "WatchStart", 900.0f);
     } else {
@@ -119,9 +119,9 @@ void KuriboGirl::exeWait() {
     lookFront();
 
     al::LiveActor* nearestPlayerActor = al::tryFindNearestPlayerActor(this);
-    if (nearestPlayerActor ) {
+    if (nearestPlayerActor) {
         if (rs::isPlayerHack(this) && !rs::isPlayerHackKuriboAny(this)) {
-            if (!mAreaObjGroup ) {
+            if (!mAreaObjGroup) {
                 sead::Vector3f distance = al::getTrans(nearestPlayerActor) - al::getTrans(this);
                 if (distance.length() < 900.0f) {
                     al::setNerve(this, &NrvKuriboGirl.Surprise);
@@ -397,7 +397,7 @@ void KuriboGirl::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 }
 
 bool KuriboGirl::isWatchStart(sead::Vector3f pos) {
-    if (mAreaObjGroup ) {
+    if (mAreaObjGroup) {
         if (al::isInAreaObj(mAreaObjGroup, pos))
             return true;
     } else {
@@ -415,9 +415,10 @@ bool KuriboGirl::isNrvWait() {
            al::isNerve(this, &NrvKuriboGirl.WaitLoveAfter);
 }
 
-bool KuriboGirl::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
-    if (rs::isMsgPlayerDisregardHomingAttack(message) || rs::isMsgPlayerDisregardTargetMarker(message) ||
-        al::isMsgPlayerDisregard(message))
+bool KuriboGirl::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self) {
+    if (rs::isMsgPlayerDisregardHomingAttack(message) ||
+        rs::isMsgPlayerDisregardTargetMarker(message) || al::isMsgPlayerDisregard(message))
         return true;
 
     if ((al::isSensorPlayerAttack(other) || rs::isMsgHosuiAttack(message)) &&

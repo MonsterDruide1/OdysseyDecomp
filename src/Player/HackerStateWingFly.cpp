@@ -64,8 +64,7 @@ void HackerStateWingFly::goFlyRise() {
 }
 
 void HackerStateWingFly::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (mParam.actionTrample  &&
-        rs::trySendMsgPlayerReflectOrTrample(mActor, self, other)) {
+    if (mParam.actionTrample && rs::trySendMsgPlayerReflectOrTrample(mActor, self, other)) {
         al::setNerve(this, &NrvHostType.Trample);
         return;
     }
@@ -79,7 +78,7 @@ void HackerStateWingFly::attackSensor(al::HitSensor* self, al::HitSensor* other)
 }
 
 bool HackerStateWingFly::canUpperPunch(al::HitSensor* self, al::HitSensor* other) const {
-    if (!mParam.actionUpperPunch )
+    if (!mParam.actionUpperPunch)
         return false;
     if (al::isNerve(this, &NrvHostType.Fall))
         return false;
@@ -134,7 +133,7 @@ void HackerStateWingFly::updateMove() {
     rs::addHackActorAccelStick(actor, *mHacker, &dir, mAccel, sead::Vector3f::ey);
     al::turnToDirection(actor, dir, mParam.turnAngle);
 
-    if (mCollision ) {
+    if (mCollision) {
         rs::reboundVelocityFromCollision(actor, mCollision, 0.0f, 0.0f, 1.0f);
         return;
     }
@@ -156,7 +155,7 @@ void HackerStateWingFly::updateMove() {
 
 bool HackerStateWingFly::isOnGround() const {
     al::LiveActor* actor = mActor;
-    if (mCollision )
+    if (mCollision)
         return rs::isOnGround(actor, mCollision);
 
     return al::isOnGround(actor, 0);

@@ -105,7 +105,7 @@ bool ByamlHashIter::getDataByKey(ByamlData* data, s32 key) const {
         if (lowerBound >= upperBound)
             return false;
     }
-    if (!pair )
+    if (!pair)
         return false;
     data->set(pair, mIsRev);
     return true;

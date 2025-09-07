@@ -16,7 +16,8 @@ public:
     void reset();
     void control() override;
     bool isOn() const;
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void startClipped() override;
     bool isOnWait() const;
     void writeSave();

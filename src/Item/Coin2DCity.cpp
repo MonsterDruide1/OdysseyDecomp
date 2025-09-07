@@ -53,7 +53,7 @@ void Coin2DCity::init(const al::ActorInitInfo& info) {
 void Coin2DCity::control() {
     mSyncCounter = al::getSceneObj<al::StageSyncCounter>(this)->getCounter();
     if (mLightTime > -1 && mCityDirector->isTriggerBeat()) {
-        if (mNextCoin  && mLightTime == 1)
+        if (mNextCoin && mLightTime == 1)
             mNextCoin->startLight();
 
         if (mLightTime == mCityDirector->getLightTime())
@@ -83,7 +83,7 @@ void Coin2DCity::startLight() {
 
     al::StageSyncCounter* syncCounter = al::getSceneObj<al::StageSyncCounter>(this);
     if (mSyncCounter == syncCounter->getCounter() && mCityDirector->isTriggerBeat()) {
-        if (mNextCoin  && mLightTime == 1)
+        if (mNextCoin && mLightTime == 1)
             mNextCoin->startLight();
 
         if (mLightTime == mCityDirector->getLightTime())

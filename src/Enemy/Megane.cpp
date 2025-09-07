@@ -133,8 +133,7 @@ void Megane::init(const al::ActorInitInfo& info) {
 
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
     mCameraPoserSubjective = new al::CameraPoserSubjective("主観");
-    mCameraTicket =
-        alCameraFunction::initCamera(mCameraPoserSubjective, this, info, nullptr, 9);
+    mCameraTicket = alCameraFunction::initCamera(mCameraPoserSubjective, this, info, nullptr, 9);
     mSpectaclesNerveKeeper = new al::NerveKeeper(this, &MeganeData.NrvMegane.SpectaclesOn, 0);
 
     mPlayerHackStartShaderCtrl =

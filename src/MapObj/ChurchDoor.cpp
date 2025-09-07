@@ -52,7 +52,8 @@ void ChurchDoor::init(const al::ActorInitInfo& info) {
     makeActorAlive();
 }
 
-bool ChurchDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+bool ChurchDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                            al::HitSensor* self) {
     if (rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 

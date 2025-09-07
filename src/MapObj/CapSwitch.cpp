@@ -76,7 +76,8 @@ void CapSwitch::listenReset() {
         al::setNerve(this, &NrvCapSwitch.ReturnOff);
 }
 
-bool CapSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+bool CapSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                           al::HitSensor* self) {
     if (al::isNerve(this, &NrvCapSwitch.OffWaitInvalid))
         return rs::isMsgPlayerDisregardHomingAttack(message);
 

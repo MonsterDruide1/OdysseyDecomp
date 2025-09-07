@@ -105,7 +105,7 @@ void CoinCollect::init(const al::ActorInitInfo& info) {
 }
 
 void CoinCollect::initAfterPlacement() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -175,7 +175,7 @@ void CoinCollect::appear() {
 }
 
 void CoinCollect::makeActorAlive() {
-    if (!mCoinCollectEmpty  && !al::isNerve(this, &NrvCoinCollect.Got))
+    if (!mCoinCollectEmpty && !al::isNerve(this, &NrvCoinCollect.Got))
         al::LiveActor::makeActorAlive();
 }
 
@@ -188,7 +188,7 @@ void CoinCollect::listenAppear() {
 }
 
 const sead::Vector3f& CoinCollect::getTransForHint() const {
-    if (mCoinCollectEmpty )
+    if (mCoinCollectEmpty)
         return al::getTrans(mCoinCollectEmpty);
 
     return al::getTrans(this);
@@ -219,7 +219,7 @@ bool CoinCollect::isEnableHint() const {
 }
 
 void CoinCollect::rotate() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     al::setQuat(this, sead::Quatf::unit);
@@ -232,7 +232,7 @@ void CoinCollect::exeWait() {
         rs::tryUpdateWaterSurfaceCoinShadow(mWaterSurfaceShadow, this, mShadowLength);
     }
 
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     rotate();
@@ -242,7 +242,7 @@ void CoinCollect::exeWait() {
 }
 
 void CoinCollect::exeWaitAmiibo() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     rotate();
@@ -259,12 +259,12 @@ void CoinCollect::exeGot() {
         rs::tryShowCapMsgCollectCoinGetFirst(this);
         al::startAction(this, "Got");
         alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 1000.0f, 5000.0f);
-        if (mWaterSurfaceShadow )
+        if (mWaterSurfaceShadow)
             mWaterSurfaceShadow->disappearShadow();
         _198 = false;
     }
 
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     if (al::isActionEnd(this)) {
@@ -293,7 +293,7 @@ void CoinCollect::exeCountUp() {
         GameDataFunction::addCoinCollect(this, mPlacementId);
 
         rs::tryShowCapMsgCollectCoinGetFirst(this);
-        if (mWaterSurfaceShadow )
+        if (mWaterSurfaceShadow)
             mWaterSurfaceShadow->disappearShadow();
 
         al::startHitReaction(this, "釣り取得");
@@ -307,7 +307,7 @@ void CoinCollect::exeBlow() {
         al::onCollide(this);
     }
 
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     al::setQuat(this, sead::Quatf::unit);
@@ -317,7 +317,7 @@ void CoinCollect::exeBlow() {
 
     if (al::getVelocity(this).y < 0.0f && al::isCollidedGround(this)) {
         if (al::calcSpeed(this) < 15.0f) {
-            if (mMtxConnector )
+            if (mMtxConnector)
                 al::attachMtxConnectorToCollision(mMtxConnector, this, false);
             al::setVelocityZero(this);
             al::setNerve(this, &NrvCoinCollect.Wait);

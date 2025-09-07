@@ -48,13 +48,13 @@ void TreasureBoxKey::init(const al::ActorInitInfo& info) {
     }
 
     mShine = rs::initLinkShine(info, "ShineActor", 0);
-    if (mShine ) {
+    if (mShine) {
         al::updatePoseRotate(mShine, sead::Vector3f::zero);
         sead::Vector3f trans = al::getTrans(this);
         trans.y = al::getTrans(mShine).y;
         al::setTrans(mShine, trans);
 
-        if (mShine )
+        if (mShine)
             rs::updateHintTrans(mShine, al::getTrans(mTreasureBoxKeyOpener));
     }
 
@@ -71,20 +71,20 @@ void TreasureBoxKey::init(const al::ActorInitInfo& info) {
 
 void TreasureBoxKey::makeActorDead() {
     al::LiveActor::makeActorDead();
-    if (mTreasureBoxKeyOpener )
+    if (mTreasureBoxKeyOpener)
         mTreasureBoxKeyOpener->makeActorDead();
 
-    if (mShine )
+    if (mShine)
         mShine->makeActorDead();
 
-    if (mCameraTicket  && al::isActiveCamera(mCameraTicket))
+    if (mCameraTicket && al::isActiveCamera(mCameraTicket))
         al::endCamera(this, mCameraTicket, -1, false);
 }
 
 void TreasureBoxKey::makeActorAlive() {
     al::LiveActor::makeActorAlive();
     al::validateClipping(this);
-    if (mShine )
+    if (mShine)
         al::validateClipping(mShine);
 }
 
@@ -171,7 +171,7 @@ void TreasureBoxKey::exeOpen() {
         al::invalidateClipping(mShine);
         mShine->appearPopupWithoutDemo();
         al::sendMsgShowModel(mShine);
-        if (mCameraTicket )
+        if (mCameraTicket)
             al::startHitReaction(this, "シャイン出現デモ演出");
     }
 
@@ -181,7 +181,7 @@ void TreasureBoxKey::exeOpen() {
         al::startAction(this, "Wait");
     }
 
-    if (mCameraTicket ) {
+    if (mCameraTicket) {
         if (!al::isGreaterEqualStep(this, 150))
             return;
 

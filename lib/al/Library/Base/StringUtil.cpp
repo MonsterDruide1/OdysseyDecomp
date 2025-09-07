@@ -103,7 +103,7 @@ void removeExtensionString(char* out, u32 len, const char* str) {
     char* dot = strchr(out, '.');
     char* dirSeparator = strchr(out, '/');
 
-    if (!dot  || dot < dirSeparator || ++dirSeparator == dot)
+    if (!dot || dot < dirSeparator || ++dirSeparator == dot)
         return;
 
     *dot = '\0';

@@ -45,7 +45,7 @@ void CoinCollectEmpty2D::init(const al::ActorInitInfo& info) {
 }
 
 void CoinCollectEmpty2D::initAfterPlacement() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 
     sead::Matrix44f matrix = sead::Matrix44f::ident;
@@ -78,7 +78,7 @@ void CoinCollectEmpty2D::endClipped() {
 }
 
 void CoinCollectEmpty2D::exeWait() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 

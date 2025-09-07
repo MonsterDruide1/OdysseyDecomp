@@ -43,7 +43,7 @@ void Coin2D::init(const al::ActorInitInfo& info) {
 
     al::initActorWithArchiveName(this, info, "CoinDot", nullptr);
     mMtxConnector = al::tryCreateMtxConnector(this, info);
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::tryGetArg(&mIsConnectToCollisionBack, info, "IsConnectToCollisionBack");
 
     al::initNerve(this, &NrvCoin2D.Wait, 0);
@@ -64,7 +64,7 @@ void Coin2D::init(const al::ActorInitInfo& info) {
 }
 
 void Coin2D::initAfterPlacement() {
-    if (mMtxConnector ) {
+    if (mMtxConnector) {
         if (!mIsConnectToCollisionBack) {
             al::attachMtxConnectorToCollision(mMtxConnector, this, 50.0f, 400.0f);
             return;
@@ -78,12 +78,12 @@ void Coin2D::initAfterPlacement() {
 
 void Coin2D::appear() {
     al::LiveActor::appear();
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 
 void Coin2D::control() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 
@@ -132,7 +132,7 @@ void Coin2D::appearCountUp() {
     al::setVelocityToDirection(this, up, 16.0f);
 
     al::AreaObj* areaObj = rs::tryFind2DAreaObj(this, nullptr, nullptr);
-    if (areaObj ) {
+    if (areaObj) {
         sead::Vector3f lockDir = sead::Vector3f::zero;
         rs::calc2DAreaLockDir(&lockDir, areaObj, al::getTrans(this));
         sead::Quatf quat = sead::Quatf::unit;

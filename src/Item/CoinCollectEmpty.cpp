@@ -56,7 +56,7 @@ void CoinCollectEmpty::init(const al::ActorInitInfo& info) {
 }
 
 void CoinCollectEmpty::initAfterPlacement() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -101,7 +101,7 @@ void CoinCollectEmpty::control() {
 }
 
 void CoinCollectEmpty::rotate() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     al::setQuat(this, sead::Quatf::unit);
