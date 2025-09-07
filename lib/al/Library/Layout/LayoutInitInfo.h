@@ -42,15 +42,20 @@ private:
     LayoutSystem* mLayoutSystem;
 };
 
-void initLayoutActor(LayoutActor*, const LayoutInitInfo&, const char*, const char*);
-void initLayoutActorLocalized(LayoutActor*, const LayoutInitInfo&, const char*, const char*);
-void initLayoutActorUseOtherMessage(LayoutActor*, const LayoutInitInfo&, const char*, const char*,
-                                    const char*);
-void initLayoutTextPaneAnimator(LayoutActor*, const char*);
-void initLayoutTextPaneAnimatorWithShadow(LayoutActor*, const char*);
-void initLayoutPartsActor(LayoutActor*, LayoutActor*, const LayoutInitInfo&, const char*,
-                          const char*);
-void initLayoutPartsActorLocalized(LayoutActor*, LayoutActor*, const LayoutInitInfo&, const char*,
-                                   const char*);
+void initLayoutActor(LayoutActor* layoutActor, const LayoutInitInfo& info, const char* archiveName,
+                     const char* suffix = nullptr);
+void initLayoutActorLocalized(LayoutActor* layoutActor, const LayoutInitInfo& info,
+                              const char* archiveName, const char* suffix = nullptr);
+void initLayoutActorUseOtherMessage(LayoutActor* _layoutActor, const LayoutInitInfo& _info,
+                                    const char* _archiveName, const char* _messageArchiveName,
+                                    const char* _suffix);
+void initLayoutTextPaneAnimator(LayoutActor* layoutActor, const char* archiveName);
+void initLayoutTextPaneAnimatorWithShadow(LayoutActor* layoutActor, const char* archiveName);
+void initLayoutPartsActor(LayoutActor* partsActor, LayoutActor* parentActor,
+                          const LayoutInitInfo& info, const char* archiveName,
+                          const char* suffix = nullptr);
+void initLayoutPartsActorLocalized(LayoutActor* partsActor, LayoutActor* parentActor,
+                                   const LayoutInitInfo& info, const char* archiveName,
+                                   const char* suffix = nullptr);
 
 }  // namespace al

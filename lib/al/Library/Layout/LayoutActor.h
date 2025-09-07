@@ -77,7 +77,7 @@ public:
     void initLayoutPartsActorKeeper(s32 capacity);
     void initEffectKeeper(EffectKeeper*);
     void initAudioKeeper(AudioKeeper*);
-    void initNerve(const Nerve*, s32);
+    void initNerve(const Nerve* nerve, s32 maxStates = 0);
     void setMainGroupName(const char*);
     void syncAction();
 
