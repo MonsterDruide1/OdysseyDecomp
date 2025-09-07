@@ -57,11 +57,11 @@ void SearchAmiiboDataTable::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void SearchAmiiboDataTable::read(const al::ByamlIter& iter) {
+void SearchAmiiboDataTable::read(const al::ByamlIter& save) {
     init();
 
     al::ByamlIter dataIter;
-    iter.tryGetIterByKey(&dataIter, "SearchAmiiboData");
+    save.tryGetIterByKey(&dataIter, "SearchAmiiboData");
 
     for (s32 i = 0; i < dataIter.getSize(); i++) {
         al::ByamlIter indexIter;

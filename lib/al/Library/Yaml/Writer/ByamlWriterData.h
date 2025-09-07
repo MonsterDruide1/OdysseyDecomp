@@ -291,7 +291,7 @@ public:
     void addNull(const char* key) override;
 
     u8 getTypeCode() const override;
-    void writeContainer(sead::WriteStream*) const override;  // TODO implementation missing
+    void writeContainer(sead::WriteStream* stream) const override;  // TODO implementation missing
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;  // TODO implementation missing
 

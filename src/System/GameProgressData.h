@@ -38,7 +38,7 @@ public:
     };
 
     void write(al::ByamlWriter* writer) override;
-    void read(const al::ByamlIter& iter) override;
+    void read(const al::ByamlIter& save) override;
 
     GameProgressData(const WorldList* worldList);
     void init();

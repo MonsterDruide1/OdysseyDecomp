@@ -13,11 +13,11 @@
 HelpAmiiboYoshi::HelpAmiiboYoshi(HelpAmiiboDirector* director, al::LiveActor* amiiboActor)
     : HelpAmiiboExecutor(director, amiiboActor, "ヨッシーお助け") {}
 
-void HelpAmiiboYoshi::initAfterPlacement(const al::ActorInitInfo& actorInitInfo) {
-    HelpAmiiboExecutor::initAfterPlacement(actorInitInfo);
+void HelpAmiiboYoshi::initAfterPlacement(const al::ActorInitInfo& initInfo) {
+    HelpAmiiboExecutor::initAfterPlacement(initInfo);
 
     mYoshi = new Yoshi("amiiboヨッシー");
-    al::initCreateActorNoPlacementInfo(mYoshi, actorInitInfo);
+    al::initCreateActorNoPlacementInfo(mYoshi, initInfo);
     mYoshi->makeActorDead();
 }
 
