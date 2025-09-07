@@ -18,7 +18,7 @@ public:
     bool isAnswerCorrectSphinxQuiz(s32 index) const;
     bool isAnswerCorrectSphinxQuizAll(s32 index) const;
     void write(al::ByamlWriter* writer) override;
-    void read(const al::ByamlIter& reader) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     bool* mIsAnswerCorrectSphinxQuiz;

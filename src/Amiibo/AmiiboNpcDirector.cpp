@@ -40,8 +40,8 @@ void AmiiboNpcDirector::init(ProjectNfpDirector* nfpDirector, al::AudioDirector*
     al::registerMessageTagDataString(mTagDataHolder, "CapName", &mCapName);
 }
 
-void AmiiboNpcDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) {
-    const al::LayoutInitInfo& layoutInitInfo = al::getLayoutInitInfo(initInfo);
+void AmiiboNpcDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& info) {
+    const al::LayoutInitInfo& layoutInitInfo = al::getLayoutInitInfo(info);
     mNpcLayout = new AmiiboNpcLayout(layoutInitInfo);
 
     mSearchDataTable = rs::getSearchAmiiboData(mNpcLayout);

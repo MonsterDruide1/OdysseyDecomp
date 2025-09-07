@@ -11,8 +11,8 @@
 
 CoinCollectWatcher::CoinCollectWatcher() : al::ISceneObj() {}
 
-void CoinCollectWatcher::initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) {
-    mCoinCollectLayout = new CoinCollectLayout(al::getLayoutInitInfo(initInfo));
+void CoinCollectWatcher::initAfterPlacementSceneObj(const al::ActorInitInfo& info) {
+    mCoinCollectLayout = new CoinCollectLayout(al::getLayoutInitInfo(info));
 }
 
 void CoinCollectWatcher::registerCoin(bool isCountUpCoin) {
