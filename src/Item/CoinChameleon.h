@@ -21,7 +21,7 @@ class CoinChameleon : public al::LiveActor {
 public:
     CoinChameleon(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void endClipped() override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,

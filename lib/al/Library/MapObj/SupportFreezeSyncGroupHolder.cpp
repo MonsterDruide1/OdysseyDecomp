@@ -33,7 +33,7 @@ void SupportFreezeSyncGroupHolder::movement() {
 
 void SupportFreezeSyncGroupHolder::regist(LiveActor* actor, const ActorInitInfo& info) {
     SupportFreezeSyncGroup* supportFreezeSyncGroup = tryFindGroup(info);
-    if (supportFreezeSyncGroup == nullptr) {
+    if (!supportFreezeSyncGroup ) {
         supportFreezeSyncGroup = new SupportFreezeSyncGroup();
         supportFreezeSyncGroup->init(info);
 

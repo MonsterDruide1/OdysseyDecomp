@@ -21,9 +21,9 @@ bool PlayerJudgeLongFall::judge() const {
 
     if (mModelChanger->is2DModel())
         return false;
-    if (mBindKeeper->getBindSensor() != nullptr)
+    if (mBindKeeper->getBindSensor() )
         return false;
-    if (mHackKeeper->getUnkHitSensor() != nullptr)
+    if (mHackKeeper->getUnkHitSensor() )
         return false;
 
     f32 fallen = mFallDistanceCheck->getFallDistance();

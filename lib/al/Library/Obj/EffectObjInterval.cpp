@@ -35,14 +35,14 @@ void EffectObjInterval::init(const ActorInitInfo& info) {
 }
 
 void EffectObjInterval::initAfterPlacement() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector )
         return;
 
     attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
 void EffectObjInterval::control() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector )
         connectPoseQT(this, mMtxConnector);
 
     makeMtxRT(&mBaseMtx, this);

@@ -60,7 +60,7 @@ void EnemyStateBlowDown::start(const LiveActor* attacker) {
 }
 
 void EnemyStateBlowDown::appear() {
-    al::NerveStateBase::appear();
+    NerveStateBase::appear();
     if (isInvalidClipping(mActor))
         mIsInvalidClipping = true;
     else {
@@ -71,7 +71,7 @@ void EnemyStateBlowDown::appear() {
 }
 
 void EnemyStateBlowDown::kill() {
-    al::NerveStateBase::kill();
+    NerveStateBase::kill();
     if (!mIsInvalidClipping)
         validateClipping(mActor);
 }
@@ -95,15 +95,15 @@ void EnemyStateBlowDown::control() {
     mBlowDownTimer++;
 }
 
-EnemyStateBlowDownParam::EnemyStateBlowDownParam() {}
+EnemyStateBlowDownParam::EnemyStateBlowDownParam() = default;
 
 EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName) : actionName(actionName) {}
 
 EnemyStateBlowDownParam::EnemyStateBlowDownParam(const char* actionName, f32 velocityStrength,
                                                  f32 gravityStrength, f32 velocityMultiplier,
                                                  f32 velocityScale, s32 blowDownLength,
-                                                 bool faceAwayFromActor)
+                                                 bool isFaceAwayFromActor)
     : actionName(actionName), velocityStrength(velocityStrength), gravityStrength(gravityStrength),
       velocityMultiplier(velocityMultiplier), velocityScale(velocityScale),
-      blowDownLength(blowDownLength), faceAwayFromActor(faceAwayFromActor) {}
+      blowDownLength(blowDownLength), isFaceAwayFromActor(isFaceAwayFromActor) {}
 }  // namespace al

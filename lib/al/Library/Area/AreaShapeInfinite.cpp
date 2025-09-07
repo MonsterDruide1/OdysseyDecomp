@@ -2,7 +2,7 @@
 
 namespace al {
 
-AreaShapeInfinite::AreaShapeInfinite() {}
+AreaShapeInfinite::AreaShapeInfinite() = default;
 
 bool AreaShapeInfinite::isInVolume(const sead::Vector3f&) const {
     return true;

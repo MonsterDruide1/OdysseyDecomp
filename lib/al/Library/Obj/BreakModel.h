@@ -9,7 +9,7 @@ public:
     BreakModel(const LiveActor* rootActor, const char* objName, const char* modelName,
                const char* fileSuffixName, const sead::Matrix34f* rootMtx,
                const char* breakActionName);
-    void init(const ActorInitInfo& initInfo);
+    void init(const ActorInitInfo& info);
     void appear();
     void exeWait();
     void exeBreak();

@@ -6,7 +6,7 @@ class ExtForceArea : public al::AreaObj {
 public:
     ExtForceArea(const char* name);
 
-    void init(const al::AreaInitInfo& areaInitInfo) override;
+    void init(const al::AreaInitInfo& info) override;
 
     void calcExtForce(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                       const sead::Vector3f&) const;

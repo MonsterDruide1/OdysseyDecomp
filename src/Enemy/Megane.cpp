@@ -90,10 +90,10 @@ struct {
 
 Megane::Megane(const char* name) : al::LiveActor(name) {}
 
-void Megane::init(const al::ActorInitInfo& initInfo) {
+void Megane::init(const al::ActorInitInfo& info) {
     using MeganeFunctor = al::FunctorV0M<Megane*, void (Megane::*)()>;
 
-    al::initActorWithArchiveName(this, initInfo, "Megane", nullptr);
+    al::initActorWithArchiveName(this, info, "Megane", nullptr);
     al::initNerve(this, &MeganeData.NrvMegane.Wait, 3);
     mStateSwoon = new EnemyStateSwoon(this, "SwoonStart", "Swoon", "SwoonEnd", false, true);
     mStateSwoon->initParams(180, nullptr);
@@ -127,14 +127,14 @@ void Megane::init(const al::ActorInitInfo& initInfo) {
     al::setActionFrame(subActor, al::getActionFrameMax(subActor, "SpectaclesOn") - 1.0f);
 
     mTestFilterGlasses =
-        new TestFilterGlasses("メガネーレイアウト", al::getLayoutInitInfo(initInfo), nullptr);
+        new TestFilterGlasses("メガネーレイアウト", al::getLayoutInitInfo(info), nullptr);
     mStartingQuat.set(al::getQuat(this));
     mStartingPos.set(al::getTrans(this));
 
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
     mCameraPoserSubjective = new al::CameraPoserSubjective("主観");
     mCameraTicket =
-        alCameraFunction::initCamera(mCameraPoserSubjective, this, initInfo, nullptr, 9);
+        alCameraFunction::initCamera(mCameraPoserSubjective, this, info, nullptr, 9);
     mSpectaclesNerveKeeper = new al::NerveKeeper(this, &MeganeData.NrvMegane.SpectaclesOn, 0);
 
     mPlayerHackStartShaderCtrl =

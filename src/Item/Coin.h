@@ -23,7 +23,7 @@ class Coin : public al::LiveActor {
 public:
     Coin(const char* name, bool isDemo = false);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void appear() override;
     void makeActorAlive() override;

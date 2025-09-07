@@ -52,16 +52,16 @@ void ChurchDoor::init(const al::ActorInitInfo& info) {
     makeActorAlive();
 }
 
-bool ChurchDoor::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) {
-    if (rs::isMsgPlayerDisregardTargetMarker(msg))
+bool ChurchDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+    if (rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 
-    if (rs::isMsgCapTouchWall(msg)) {
+    if (rs::isMsgCapTouchWall(message)) {
         if ((al::isNerve(this, &Open1) || al::isNerve(this, &Open2)) &&
             al::isLessEqualStep(this, 10))
             return true;
 
-        rs::requestHitReactionToAttacker(msg, other, al::getSensorPos(other));
+        rs::requestHitReactionToAttacker(message, other, al::getSensorPos(other));
 
         if (al::isNerve(this, &CloseWait1)) {
             al::startHitReaction(this, "ヒット1回目");

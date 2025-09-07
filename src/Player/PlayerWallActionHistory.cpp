@@ -2,7 +2,7 @@
 
 #include "Util/PlayerCollisionUtil.h"
 
-PlayerWallActionHistory::PlayerWallActionHistory() {}
+PlayerWallActionHistory::PlayerWallActionHistory() = default;
 
 void PlayerWallActionHistory::update(const IUsePlayerCollision* collider) {
     if (rs::isCollidedGround(collider))

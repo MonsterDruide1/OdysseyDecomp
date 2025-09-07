@@ -54,12 +54,12 @@ PlayerHackStartShaderParam sPlayerHackStartShaderParam(true, 100.0f, 10, 20);
 HackFork::HackFork(const char* name) : al::LiveActor(name) {}
 
 // NON_MATCHING: Regswap and missing instructions https://decomp.me/scratch/NeUHJ
-void HackFork::init(const al::ActorInitInfo& initInfo) {
+void HackFork::init(const al::ActorInitInfo& info) {
     const char* modelName = nullptr;
-    if (alPlacementFunction::tryGetModelName(&modelName, initInfo))
-        al::initActorWithArchiveName(this, initInfo, modelName, nullptr);
+    if (alPlacementFunction::tryGetModelName(&modelName, info))
+        al::initActorWithArchiveName(this, info, modelName, nullptr);
     else
-        al::initActor(this, initInfo);
+        al::initActor(this, info);
 
     al::calcSideDir(&mSideDir, this);
     al::initJointControllerKeeper(this, 10);
@@ -73,11 +73,11 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     }
 
     al::initNerve(this, &NrvHackFork.Wait, 0);
-    al::tryGetArg(&mIsLimitterFree, initInfo, "LimitterFree");
+    al::tryGetArg(&mIsLimitterFree, info, "LimitterFree");
     bool hasCamera = false;
-    bool isValid = al::tryGetArg(&hasCamera, initInfo, "Camera");
+    bool isValid = al::tryGetArg(&hasCamera, info, "Camera");
     if (hasCamera && isValid)
-        mCameraTicket = al::initObjectCamera(this, initInfo, nullptr, nullptr);
+        mCameraTicket = al::initObjectCamera(this, info, nullptr, nullptr);
 
     mMatrixCameraTarget = al::createActorMatrixCameraTarget(this, &mCameraTargetMtx);
     if (!al::isEqualString(modelName, "HackBoard")) {
@@ -86,16 +86,16 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     }
 
     bool hasBallon = false;
-    bool isBallonValid = al::tryGetArg(&hasBallon, initInfo, "Balloon");
+    bool isBallonValid = al::tryGetArg(&hasBallon, info, "Balloon");
     if (hasBallon && isBallonValid && !rs::isSequenceTimeBalloonOrRace(this)) {
-        mEventFlowExecutor = rs::initEventFlow(this, initInfo, nullptr, nullptr);
+        mEventFlowExecutor = rs::initEventFlow(this, info, nullptr, nullptr);
         rs::startEventFlow(mEventFlowExecutor, "Init");
     }
     if (al::isMtpAnimExist(this)) {
-        rs::setNpcMaterialAnimFromPlacementInfo(this, initInfo);
+        rs::setNpcMaterialAnimFromPlacementInfo(this, info);
         al::tryStartMclAnimIfExist(this, al::getPlayingMtpAnimName(this));
     }
-    mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
+    mMtxConnector = al::tryCreateMtxConnector(this, info);
     makeActorAlive();
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
