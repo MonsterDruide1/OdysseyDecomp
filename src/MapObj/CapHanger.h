@@ -22,7 +22,8 @@ public:
     void kill() override;
     void control() override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void exeWait();
     void exeKeep();
     void exeRelease();

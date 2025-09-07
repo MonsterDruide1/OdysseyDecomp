@@ -100,7 +100,7 @@ void CoinStack::signalFall(u32 delay, f32 radius) {
     mClippingRadius = radius;
     mClippingPos.y += fallDistance * -0.5f;
 
-    if (mStackAbove )
+    if (mStackAbove)
         mStackAbove->signalFall(delay + 1, radius);
 
     if (!al::isNerve(this, &NrvCoinStack.Float) && !al::isNerve(this, &NrvCoinStack.Fall)) {
@@ -121,7 +121,7 @@ void CoinStack::postInit(CoinStackGroup* coinStackGroup, const sead::Vector3f& t
     al::setTrans(this, transY);
     mLandHeight = transY.y;
     mTransY = transY.y;
-    if (mStackBelow )
+    if (mStackBelow)
         mStackBelow->setAbove(this);
 }
 
@@ -147,7 +147,7 @@ void CoinStack::exeFall() {
         return;
     }
 
-    if (mStackBelow  && mTransY - mStackBelow->getTransY() < *mExternalFallDistance)
+    if (mStackBelow && mTransY - mStackBelow->getTransY() < *mExternalFallDistance)
         al::setNerve(this, &Land);
     else
         al::setTransY(this, mTransY);
@@ -160,7 +160,7 @@ void CoinStack::exeLand() {
     }
 
     if (al::isActionEnd(this)) {
-        if (!mStackAbove )
+        if (!mStackAbove)
             mCoinStackGroup->validateClipping();
 
         al::setClippingInfo(this, mClippingRadius, &mClippingPos);
@@ -180,10 +180,10 @@ void CoinStack::exeCollected() {
     GameDataFunction::addCoin(this, 5);
     mClippingRadius = mCoinStackGroup->setStackAsCollected(this);
 
-    if (mStackBelow )
+    if (mStackBelow)
         mStackBelow->setAbove(mStackAbove);
 
-    if (mStackAbove ) {
+    if (mStackAbove) {
         mStackAbove->setBelow(mStackBelow);
         mStackAbove->signalFall(0, mClippingRadius);
     }

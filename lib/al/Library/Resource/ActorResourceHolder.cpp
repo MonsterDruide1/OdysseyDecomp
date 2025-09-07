@@ -54,7 +54,7 @@ void ActorResourceHolder::freeErasedActorResource() {
         // otherwise it assumes that res is not null
         __asm("" : "=r"(res) : "0"(res));
 
-        if (!res )
+        if (!res)
             continue;
         delete res;
     }

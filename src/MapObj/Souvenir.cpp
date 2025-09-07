@@ -53,8 +53,9 @@ bool Souvenir::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
         rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 
-    if (rs::isMsgCapTouchWall(message) || rs::isMsgCapAttack(message) || al::isMsgPlayerTrample(message) ||
-        rs::isMsgPlayerAndCapHipDropAll(message) || rs::isMsgPlayerAndCapObjHipDropAll(message) ||
+    if (rs::isMsgCapTouchWall(message) || rs::isMsgCapAttack(message) ||
+        al::isMsgPlayerTrample(message) || rs::isMsgPlayerAndCapHipDropAll(message) ||
+        rs::isMsgPlayerAndCapObjHipDropAll(message) ||
         (al::isMsgPlayerObjUpperPunch(message) && mIsReactionPlayerUpperPunch) ||
         al::isMsgPlayerRollingAttack(message) || al::isMsgPlayerObjRollingAttack(message)) {
         if (!al::isExistAction(this, "ReactionCap"))
@@ -75,7 +76,8 @@ bool Souvenir::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
              rs::isMsgPlayerAndCapObjHipDropAll(message)))
             return false;
 
-        if (!rs::isMsgPlayerAndCapHipDropAll(message) && !rs::isMsgPlayerAndCapObjHipDropAll(message))
+        if (!rs::isMsgPlayerAndCapHipDropAll(message) &&
+            !rs::isMsgPlayerAndCapObjHipDropAll(message))
             al::startHitReactionHitEffect(this, "ヒット[小]", other, self);
         else
             al::startHitReactionHitEffect(this, "ヒット", other, self);
@@ -96,7 +98,7 @@ void Souvenir::exeWait() {
               al::isActionPlaying(this, "ReactionCap3")) ||
              (al::isExistAction(this, "ReactionCap4") &&
               al::isActionPlaying(this, "ReactionCap4"))) &&
-            getNextAction() )
+            getNextAction())
             return;
 
         if (mIsWait) {

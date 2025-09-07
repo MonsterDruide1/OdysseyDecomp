@@ -21,7 +21,8 @@ public:
     void endClipped();
     void updateClipping(const ClippingJudge* clippingJudge);
     bool judgeClipping(const ClippingJudge* clippingJudge) const;
-    void updateClipping(ClippingRequestKeeper* clippingRequestKeeper, const ClippingJudge* clippingJudge);
+    void updateClipping(ClippingRequestKeeper* clippingRequestKeeper,
+                        const ClippingJudge* clippingJudge);
     bool isGroupClipping() const;
     bool isGroupClippingInit() const;
     void setTypeToObb(const sead::BoundBox3f& boundBox, const sead::Matrix34f* matrix);

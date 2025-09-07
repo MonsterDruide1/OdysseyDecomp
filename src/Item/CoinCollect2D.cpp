@@ -73,7 +73,7 @@ void CoinCollect2D::init(const al::ActorInitInfo& info) {
 }
 
 void CoinCollect2D::initAfterPlacement() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -122,12 +122,12 @@ void CoinCollect2D::exeWait() {
     if (al::isFirstStep(this))
         al::validateClipping(this);
 
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 
 void CoinCollect2D::exeWaitHint() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     if (al::updateNerveState(this))

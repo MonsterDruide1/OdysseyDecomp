@@ -16,7 +16,7 @@ SubActorLodExecutor::SubActorLodExecutor(LiveActor* actor, const ActorInitInfo& 
     const char* cubeMapUnitName = nullptr;
     tryGetStringArg(&cubeMapUnitName, info, "CubeMapUnitName");
 
-    if (cubeMapUnitName )
+    if (cubeMapUnitName)
         forceApplyCubeMap(subActor, cubeMapUnitName);
 
     subActor->makeActorDead();

@@ -20,7 +20,7 @@ void CoinBlow::init(const al::ActorInitInfo& info) {
 }
 
 void CoinBlow::listenStart() {
-    if (!mBlowSize ) {
+    if (!mBlowSize) {
         al::appearItemTiming(this, "小");
         return;
     }
