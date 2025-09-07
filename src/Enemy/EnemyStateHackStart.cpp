@@ -99,7 +99,7 @@ void EnemyStateHackStart::exeHackStart() {
             al::offDepthShadowModel(actor);
             al::validateDepthShadowMap(actor);
         }
-        if (mParam->updateSubActorShadowMap) {
+        if (mParam->isUpdateSubActorShadowMap) {
             s32 subActorNum = al::getSubActorNum(mActor);
             for (s32 i = 0; i < subActorNum; i++) {
                 al::LiveActor* subActor = al::getSubActor(mActor, i);
@@ -125,7 +125,7 @@ void startHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam*
         al::offDepthShadowModel(actor);
         al::validateDepthShadowMap(actor);
     }
-    if (param && param->updateSubActorShadowMap) {
+    if (param && param->isUpdateSubActorShadowMap) {
         s32 subActorNum = al::getSubActorNum(actor);
         for (s32 i = 0; i < subActorNum; i++) {
             al::LiveActor* subActor = al::getSubActor(actor, i);
@@ -144,7 +144,7 @@ void endHackSwitchShadow(al::LiveActor* actor, const EnemyStateHackStartParam* p
         al::onDepthShadowModel(actor);
         al::invalidateDepthShadowMap(actor);
     }
-    if (param && param->updateSubActorShadowMap) {
+    if (param && param->isUpdateSubActorShadowMap) {
         s32 subActorNum = al::getSubActorNum(actor);
         for (s32 i = 0; i < subActorNum; i++) {
             al::LiveActor* subActor = al::getSubActor(actor, i);
