@@ -93,7 +93,7 @@ void ClockMapParts::init(const ActorInitInfo& info) {
     if (isExistModel(this)) {
         mRippleCtrl = RippleCtrl::tryCreate(this);
 
-        if (mRippleCtrl )
+        if (mRippleCtrl)
             mRippleCtrl->init(info);
     }
 
@@ -209,7 +209,7 @@ void ClockMapParts::setRestartNerve() {
 }
 
 void ClockMapParts::control() {
-    if (!mRippleCtrl )
+    if (!mRippleCtrl)
         return;
 
     mRippleCtrl->update();

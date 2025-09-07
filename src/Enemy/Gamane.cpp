@@ -112,7 +112,7 @@ void Gamane::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvGamane.PressDown) || al::isNerve(this, &NrvGamane.BlowDown))
         return;
 
-    if (mPlayerHack ) {
+    if (mPlayerHack) {
         mHackState->attackSensor(self, other);
         return;
     }
@@ -166,7 +166,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
             return true;
     }
 
-    if (mPlayerHack ) {
+    if (mPlayerHack) {
         if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
             rs::endHack(&mPlayerHack);
             rs::endHackShadow(this);
@@ -217,7 +217,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     if (rs::isMsgBlowDown(message)) {
         if (rs::isMsgGamaneBullet(message)) {
             GamaneBullet* bullet = (GamaneBullet*)al::getSensorHost(other);
-            if (bullet  && bullet->getParent() == this)
+            if (bullet && bullet->getParent() == this)
                 return false;
         }
 
@@ -251,7 +251,7 @@ void Gamane::control() {
         al::updateMaterialCodePuddle(this);
     }
 
-    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHack )
+    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHack)
         mDepthShadowMapCtrl->update(nullptr);
 
     if (!al::isNerve(this, &NrvGamane.Hack) || al::isHideModel(this))
@@ -261,7 +261,7 @@ void Gamane::control() {
 
     if (al::isInDeathArea(this) || al::isInWaterArea(this) ||
         al::isCollidedFloorCode(this, "DamageFire") || al::isCollidedFloorCode(this, "Poison")) {
-        if (!al::isInDeathArea(this) && mPlayerHack )
+        if (!al::isInDeathArea(this) && mPlayerHack)
             rs::endHack(&mPlayerHack);
 
         al::startHitReaction(this, "消滅");
@@ -314,7 +314,7 @@ void Gamane::updateRefract() {
                                      refractPercentage * 0.5);
     mRefractTransitionTime--;
 
-    if (mPlayerHack )
+    if (mPlayerHack)
         return;
 
     f32 intensity = al::lerpValue(mShadowMaskIntensity, 1.0, refractPercentage);

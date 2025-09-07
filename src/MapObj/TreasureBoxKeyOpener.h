@@ -17,7 +17,8 @@ public:
     void initAfterPlacement() override;
     void appear() override;
     void makeActorAlive() override;
-    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void control() override;
     bool isGot();
     void exeAppear();

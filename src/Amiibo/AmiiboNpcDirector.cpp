@@ -212,9 +212,9 @@ void AmiiboNpcDirector::trySetAmiiboCostumeName(s32 id) {
     ShopItem::ItemInfo* itemB = nullptr;
     rs::tryFindAmiiboCostumeItemInfo(&itemA, &itemB, charId, numberingId, mNpcLayout);
 
-    if (itemA )
+    if (itemA)
         mClothName = rs::getDisplayName(mNpcLayout, *itemA);
-    if (itemB )
+    if (itemB)
         mCapName = rs::getDisplayName(mNpcLayout, *itemB);
 }
 
@@ -231,7 +231,7 @@ void AmiiboNpcDirector::checkTimeReverseAndRestore() {
 
 al::NfpInfo* AmiiboNpcDirector::tryGetTriggerTouchNfpInfo() {
     al::NfpInfo* nfpInfo = mNfpDirector->tryGetTriggerTouchNfpInfo();
-    if (!nfpInfo )
+    if (!nfpInfo)
         return nullptr;
 
     *mNfpInfo = *nfpInfo;

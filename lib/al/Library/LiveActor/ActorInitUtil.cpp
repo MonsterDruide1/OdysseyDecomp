@@ -157,7 +157,7 @@ __attribute__((always_inline)) void initActorModel(LiveActor* actor, const Actor
     initModel.tryGetStringByKey(&displayRootJointName, "DisplayRootJointName");
 
     initActorModelKeeper(actor, initInfo, actorResource, blendAnimMax);
-    if (displayRootJointName )
+    if (displayRootJointName)
         actor->getModelKeeper()->setDisplayRootJointMtxPtr(
             getJointMtxPtr(actor, displayRootJointName));
 
@@ -318,7 +318,7 @@ __attribute__((always_inline)) void initActorCollision(LiveActor* actor,
     initCollision.tryGetStringByKey(&name, "Name");
     sead::FixedSafeString<256> unused;
 
-    if (!name )
+    if (!name)
         name = getBaseName(modelRes->getArchiveName());
 
     const char* sensorName = nullptr;
@@ -329,7 +329,7 @@ __attribute__((always_inline)) void initActorCollision(LiveActor* actor,
     const char* joint = nullptr;
     initCollision.tryGetStringByKey(&joint, "Joint");
     sead::Matrix34f* jointMtx = nullptr;
-    if (joint )
+    if (joint)
         jointMtx = getJointMtxPtr(actor, joint);
 
     initActorCollisionWithResource(actor, modelRes, name, sensor, jointMtx, suffix);
@@ -380,7 +380,7 @@ __attribute__((always_inline)) void initActorSound(LiveActor* actor, const Actor
     } else
         return;
 
-    if (seName )
+    if (seName)
         initActorSeKeeper(actor, initInfo, seName);
     if (initSound.isExistKey("BgmUserName"))
         initActorBgmKeeper(actor, initInfo, bgmName);
@@ -526,7 +526,7 @@ void initActorImpl(LiveActor* actor, const ActorInitInfo& initInfo,
     ActorResource* actorResource =
         findOrCreateActorResource(initInfo.actorResourceHolder, path.cstr(), suffix);
     Resource* modelRes = actorResource->getModelRes();
-    if (!actor->getSceneInfo() )
+    if (!actor->getSceneInfo())
         initActorSceneInfo(actor, initInfo);
 
     initActorPose(actor, initInfo, modelRes, suffix);
@@ -745,7 +745,7 @@ createActorFromFactory(const ActorInitInfo& childInitInfo, const PlacementInfo* 
 
     ActorCreatorFunction creationFunction = nullptr;
     factory->getEntryIndex(&creationFunction, className);
-    if (!creationFunction )
+    if (!creationFunction)
         return nullptr;
 
     const char* displayName;

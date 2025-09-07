@@ -101,7 +101,7 @@ void VisibleSwitchMapParts::startSuddenDisappear() {
 }
 
 void VisibleSwitchMapParts::initAfterPlacement() {
-    if (!mMtxConnector )
+    if (!mMtxConnector)
         return;
 
     sead::Vector3f dir;
@@ -132,7 +132,7 @@ void VisibleSwitchMapParts::initAfterPlacement() {
 }
 
 void VisibleSwitchMapParts::control() {
-    if (!mMtxConnector )
+    if (!mMtxConnector)
         return;
 
     connectPoseQT(this, mMtxConnector);

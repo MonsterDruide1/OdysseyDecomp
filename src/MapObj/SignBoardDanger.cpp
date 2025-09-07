@@ -99,7 +99,8 @@ bool SignBoardDanger::receiveMsg(const al::SensorMsg* message, al::HitSensor* ot
         return false;
     }
 
-    if (rs::isMsgPlayerDisregardHomingAttack(message) || rs::isMsgPlayerDisregardTargetMarker(message))
+    if (rs::isMsgPlayerDisregardHomingAttack(message) ||
+        rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 
     if (rs::isMsgBreakSignBoard(message)) {
@@ -127,7 +128,8 @@ bool SignBoardDanger::receiveMsg(const al::SensorMsg* message, al::HitSensor* ot
         return true;
     }
 
-    if (al::isSensorCollision(self) && rs::isMsgCapReflectCollide(message) && isCanStartReaction()) {
+    if (al::isSensorCollision(self) && rs::isMsgCapReflectCollide(message) &&
+        isCanStartReaction()) {
         rs::requestHitReactionToAttacker(message, self, other);
         al::setNerve(this, &NrvSignBoardDanger.Reaction);
         return true;

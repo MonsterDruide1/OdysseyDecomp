@@ -41,14 +41,14 @@ void EffectObjCameraEmit::switchOnKill() {
 }
 
 void EffectObjCameraEmit::initAfterPlacement() {
-    if (!mMtxConnector )
+    if (!mMtxConnector)
         return;
 
     attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
 void EffectObjCameraEmit::control() {
-    if (mMtxConnector )
+    if (mMtxConnector)
         connectPoseQT(this, mMtxConnector);
 
     makeMtxRT(&mBaseMtx, this);

@@ -87,7 +87,7 @@ void AppearSwitchTimer::init(const al::ActorInitInfo& info, const al::IUseAudioK
 
             al::ActorCreatorFunction creatorFunction = nullptr;
             switchFactory->getEntryIndex(&creatorFunction, className);
-            if (creatorFunction ) {
+            if (creatorFunction) {
                 const char* displayName;
                 al::getDisplayName(&displayName, targetInfo);
                 createdActor = creatorFunction(displayName);
@@ -100,7 +100,7 @@ void AppearSwitchTimer::init(const al::ActorInitInfo& info, const al::IUseAudioK
                 mShine = ((TreasureBoxKey*)createdActor)->getShine();
         }
 
-        if (createdActor  && createdActor->getHitSensorKeeper()  &&
+        if (createdActor && createdActor->getHitSensorKeeper() &&
             createdActor->getHitSensorKeeper()->getSensorNum() != 0) {
             if (al::isEqualString("Shine", linkActorName) ||
                 al::isEqualString("TreasureBoxKey", linkActorName)) {
@@ -111,7 +111,7 @@ void AppearSwitchTimer::init(const al::ActorInitInfo& info, const al::IUseAudioK
         }
     }
 
-    if (mShine )
+    if (mShine)
         rs::updateHintTrans(mShine, al::getTrans(mHost));
 
     mIsInvalidHideRouteGuide = al::tryGetBoolArgOrFalse(info, "IsInvalidHideRouteGuide");
@@ -156,7 +156,7 @@ void AppearSwitchTimer::onSwitch() {
     if (!mIsInvalidHideRouteGuide)
         rs::offRouteGuideByActor(mHost);
 
-    if (mShine )
+    if (mShine)
         rs::updateHintTrans(mShine, al::getTrans(mShine));
 
     if (mDemoCameraFrame != 0) {
@@ -195,7 +195,7 @@ void AppearSwitchTimer::offSwitch() {
     if (!mIsInvalidHideRouteGuide)
         rs::onRouteGuideByActor(mHost);
 
-    if (mShine )
+    if (mShine)
         rs::updateHintTrans(mShine, al::getTrans(mHost));
 
     if (isDemoPlaying()) {
@@ -220,7 +220,7 @@ void AppearSwitchTimer::exeWaitAppearDemoStart() {
         else
             al::startCamera(mCamera, mCameraTicket, mCameraStartInterpFrame);
 
-        if (mDemoInfo )
+        if (mDemoInfo)
             al::addDemoActorFromAddDemoInfo(mHost, mDemoInfo);
         al::setNerve(this, &NrvAppearSwitchTimer.WaitAppearDemoCameraInterpoling);
     }
@@ -288,7 +288,7 @@ void AppearSwitchTimer::procAppearDitherAnim(s32 offset) {
 void AppearSwitchTimer::exeOnWait() {
     procAppearDitherAnim(mDemoCameraFrame);
     al::AreaObj* area = mTimerValidArea;
-    if (area ) {
+    if (area) {
         al::LiveActor* player = al::tryFindNearestPlayerActor(mHost);
         if (player && !al::isInAreaPos(area, al::getTrans(player))) {
             offSwitch();
@@ -316,9 +316,9 @@ void AppearSwitchTimer::exeOnWaitBlink() {
         al::holdSe(mAudioKeeper, "TimerLoopFast");
 
     al::AreaObj* area = mTimerValidArea;
-    if (area ) {
+    if (area) {
         al::LiveActor* nearest = al::tryFindNearestPlayerActor(mHost);
-        if (nearest  && !al::isInAreaPos(area, al::getTrans(nearest))) {
+        if (nearest && !al::isInAreaPos(area, al::getTrans(nearest))) {
             offSwitch();
             return;
         }
