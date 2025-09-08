@@ -183,14 +183,15 @@ void attachMtxConnectorToCollisionRT(MtxConnector* connector, const LiveActor* a
     sead::Vector3f arrowPos;
     CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
         actor, &arrowPos, pos, dir, &partsFilter, nullptr);
-    if (parts) {
-        const sead::Vector3f& rotate = getRotate(actor);
-        sead::Matrix34f mtx;
-        mtx.makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
-                    sead::Mathf::deg2rad(rotate.z)},
-                   useStrikeArrowPos ? arrowPos : getTrans(actor));
-        connector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
-    }
+    if (!parts)
+        return;
+
+    const sead::Vector3f& rotate = getRotate(actor);
+    sead::Matrix34f mtx;
+    mtx.makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
+                sead::Mathf::deg2rad(rotate.z)},
+               useStrikeArrowPos ? arrowPos : getTrans(actor));
+    connector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
 }
 
 void attachMtxConnectorToCollisionQT(MtxConnector* connector, const LiveActor* actor,
@@ -207,11 +208,12 @@ void attachMtxConnectorToCollisionQT(MtxConnector* connector, const LiveActor* a
     sead::Vector3f arrowPos;
     CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
         actor, &arrowPos, pos, dir, &partsFilter, nullptr);
-    if (parts) {
-        sead::Matrix34f mtx;
-        mtx.makeQT(getQuat(actor), useStrikeArrowPos ? arrowPos : getTrans(actor));
-        connector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
-    }
+    if (!parts)
+        return;
+
+    sead::Matrix34f mtx;
+    mtx.makeQT(getQuat(actor), useStrikeArrowPos ? arrowPos : getTrans(actor));
+    connector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
 }
 
 void attachMtxConnectorToJoint(MtxConnector* connector, const LiveActor* actor,
@@ -321,7 +323,7 @@ void attachCollisionPartsConnector(CollisionPartsConnector* partsConnector,
 
 void attachCollisionPartsConnectorToGround(CollisionPartsConnector* partsConnector,
                                            const LiveActor* actor) {
-    // This is attachMtxConnectorToCollision(connector, actor, true)?
+    // Same as attachMtxConnectorToCollision(connector, actor, true)
     CollisionPartsFilterActor partsFilter = CollisionPartsFilterActor(actor);
     sead::Vector3f upDir{0.0f, 0.0f, 0.0f};
     calcUpDir(&upDir, actor);
@@ -355,14 +357,14 @@ void calcConnectInfo(const MtxConnector* connector, sead::Vector3f* outTrans, se
 }
 
 void connectPoseQTUsingConnectInfo(LiveActor* actor, const MtxConnector* connector) {
-    if (connector->isConnecting()) {
-        sead::Vector3f trans;
-        sead::Quatf quat;
-        connector->calcConnectInfo(&trans, &quat, nullptr, sead::Vector3f::zero,
-                                   sead::Vector3f::zero);
-        setTrans(actor, trans);
-        setQuat(actor, quat);
-    }
+    if (!connector->isConnecting())
+        return;
+
+    sead::Vector3f trans;
+    sead::Quatf quat;
+    connector->calcConnectInfo(&trans, &quat, nullptr, sead::Vector3f::zero, sead::Vector3f::zero);
+    setTrans(actor, trans);
+    setQuat(actor, quat);
 }
 
 const sead::Quatf& getConnectBaseQuat(const MtxConnector* connector) {
