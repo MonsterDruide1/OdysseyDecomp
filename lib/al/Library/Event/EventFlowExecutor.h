@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Library/Event/IUseEventFlowData.h"
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 class EventFlowChart;
 class EventFlowDataHolder;
@@ -9,7 +12,7 @@ class EventFlowScareCtrlBase;
 class HitSensor;
 class LiveActor;
 
-class EventFlowExecutor {
+class EventFlowExecutor : public HioNode, public IUseEventFlowData {
 public:
     EventFlowExecutor();
 
@@ -24,7 +27,7 @@ public:
     void restartMovement();
     bool isExistEntry(const char*) const;
     bool isWaitAtPointMovement() const;
-    virtual EventFlowDataHolder* getEventFlowDataHolder() const;
+    EventFlowDataHolder* getEventFlowDataHolder() const override;
 
     LiveActor* getActor() const { return mActor; }
 

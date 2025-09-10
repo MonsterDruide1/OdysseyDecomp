@@ -15,7 +15,7 @@ public:
     EventFlowDataHolder();
 
     bool isExistCameraInfo(const char*) const;
-    void getCameraName(s32) const;
+    const char* getCameraName(s32) const;
     void initCamera(const char*, CameraTicket*);
     void initCameraSubTargetAfterChart(const LiveActor*);
     void stopMovementByNode();
@@ -26,14 +26,14 @@ public:
     void setActorFront(const sead::Vector3f&);
     const char* tryGetCharacterName() const;
     void convertActionName(sead::BufferedSafeString*, const char*) const;
-    void sendEvent(const EventFlowEventData*);
-    void judgeQuery(const char*) const;
+    s32 sendEvent(const EventFlowEventData*);
+    const char* judgeQuery(const char*) const;
     void setTalkSubActorName(const char*);
     void tryCreateCameraInfoBySystem(const char*);
     void startEventCamera(IUseCamera*, const char*, s32);
     void startEventAnimCamera(IUseCamera*, const char*, const char*, s32);
     void endEventCamera(IUseCamera*, const char*, s32, bool);
-    void tryEndEventCameraIfPlaying(IUseCamera*, const char*, s32, bool);
+    bool tryEndEventCameraIfPlaying(IUseCamera*, const char*, s32, bool);
     void endAllEventCamera(IUseCamera*);
     bool isEndInterpoleCamera(const IUseCamera*, const char*) const;
     bool isPlayingEventAnimCamera(const char*) const;
