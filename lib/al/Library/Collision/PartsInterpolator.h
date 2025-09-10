@@ -20,4 +20,19 @@ private:
     const sead::Vector3f& mDown;
 };
 
+template <typename T>
+class TriangleFilterDelegator : public TriangleFilterBase {
+public:
+    using DelegateFilter = bool (T::*)(const Triangle&) const;
+
+    TriangleFilterDelegator(T* parent, DelegateFilter filter) : mParent(parent), mFunc(filter) {}
+
+    bool isInvalidTriangle(const Triangle& triangle) const override {
+        return (mParent->*mFunc)(triangle);
+    }
+
+    T* mParent;
+    DelegateFilter mFunc;
+};
+
 }  // namespace al
