@@ -7,7 +7,7 @@
 
 class Bubble;
 
-class BubbleStateInLauncher : public al::NerveStateBase {
+class BubbleStateInLauncher : public al::HostStateBase<Bubble> {
 public:
     BubbleStateInLauncher(Bubble*);
 
@@ -24,5 +24,7 @@ public:
     void exeShoot();
 
 private:
-    char filler[0x40];
+    char filler[0x38];
 };
+
+static_assert(sizeof(BubbleStateInLauncher) == 0x58);
