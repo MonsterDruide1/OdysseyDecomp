@@ -21,16 +21,16 @@ class IUseCollision;
 class LiveActor;
 class TriangleFilterBase;
 
-char* getMaterialCodeName(const Triangle&);
-char* getCollisionCodeName(const Triangle&, const char*);
-char* getFloorCodeName(const Triangle&);
-char* getWallCodeName(const Triangle&);
-char* getCameraCodeName(const Triangle&);
-char* getMaterialCodeName(const HitInfo*);
-char* getFloorCodeName(const HitInfo*);
-char* getWallCodeName(const HitInfo*);
-char* getCameraCodeName(const HitInfo*);
-char* getCollisionCodeName(const HitInfo*, const char*);
+const char* getMaterialCodeName(const Triangle&);
+const char* getCollisionCodeName(const Triangle&, const char*);
+const char* getFloorCodeName(const Triangle&);
+const char* getWallCodeName(const Triangle&);
+const char* getCameraCodeName(const Triangle&);
+const char* getMaterialCodeName(const HitInfo*);
+const char* getFloorCodeName(const HitInfo*);
+const char* getWallCodeName(const HitInfo*);
+const char* getCameraCodeName(const HitInfo*);
+const char* getCollisionCodeName(const HitInfo*, const char*);
 bool isMaterialCode(const Triangle&, const char*);
 bool isFloorCode(const Triangle&, const char*);
 bool isWallCode(const Triangle&, const char*);
@@ -41,11 +41,11 @@ bool isFloorCode(const Triangle&, const char*);
 bool isWallCode(const HitInfo*, const char*);
 bool isCameraCode(const HitInfo*, const char*);
 bool isCollisionCode(const HitInfo*, const char*, const char*);
-void getSpecialPurposeName(const HitInfo*);
+const char* getSpecialPurposeName(const HitInfo*);
 bool isCollisionValid(const CollisionParts*);
 bool isCollisionMoving(const CollisionParts*);
-void calcForceMovePower(sead::Vector3f*, const CollisionParts*, const sead::Vector3f&);
-void calcForceMovePowerExceptNormal(sead::Vector3f*, const CollisionParts*, const sead::Vector3f&,
+bool calcForceMovePower(sead::Vector3f*, const CollisionParts*, const sead::Vector3f&);
+bool calcForceMovePowerExceptNormal(sead::Vector3f*, const CollisionParts*, const sead::Vector3f&,
                                     const sead::Vector3f&);
 }  // namespace al
 

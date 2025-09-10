@@ -14,9 +14,9 @@ public:
     DisregardReceiver(al::LiveActor*, const char*);
 
     bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* self, al::HitSensor* other);
-    void checkActionDisregardAll() const;
-    void checkActionDisregardHomingAttack() const;
-    void checkActionDisregardTargetMarker() const;
+    bool checkActionDisregardAll() const;
+    bool checkActionDisregardHomingAttack() const;
+    bool checkActionDisregardTargetMarker() const;
 
     void setEDC(bool e, bool d, bool c) {
         _e = e;
