@@ -612,8 +612,8 @@ s32 getStageShineAnimFrame(const al::LiveActor* actor, const char* stageName) {
     return getStageShineAnimFrame(actor, worldId);
 }
 
-void startShineAnimAndSetFrameAndStop(al::LiveActor* actor, const char* animName, s32 frame,
-                                      bool isMatAnim) {
+inline void startShineAnimAndSetFrameAndStop(al::LiveActor* actor, const char* animName, s32 frame,
+                                             bool isMatAnim) {
     isMatAnim ? al::startMtpAnimAndSetFrameAndStop(actor, animName, frame) :
                 al::startMclAnimAndSetFrameAndStop(actor, animName, frame);
 }

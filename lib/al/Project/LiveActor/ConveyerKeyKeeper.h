@@ -15,8 +15,8 @@ struct ConveyerKey {
     s32 interpolateType;
     const PlacementInfo* placementInfo;
 
-    void init(const sead::Vector3f& keeperTrans, const sead::Vector3f& keeperDir,
-              const PlacementInfo& placement);
+    inline void init(const sead::Vector3f& keeperTrans, const sead::Vector3f& keeperDir,
+                     const PlacementInfo& placement);
 };
 
 class ConveyerKeyKeeper {
