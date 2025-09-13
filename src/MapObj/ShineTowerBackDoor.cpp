@@ -47,7 +47,7 @@ bool ShineTowerBackDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor*
         return true;
 
     if (al::isSensorMapObj(self)) {
-        if (_118)
+        if (_110)
             return false;
 
         if (al::isMsgPlayerObjHipDropAll(message)) {

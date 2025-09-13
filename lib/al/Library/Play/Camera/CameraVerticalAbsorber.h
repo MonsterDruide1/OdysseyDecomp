@@ -52,7 +52,7 @@ private:
     sead::Vector3f mPrevTargetFront;
     bool mIsNoCameraPosAbsorb;
     bool mIsInvalidated;
-    bool unk_unk_unusedbool;
+    bool mAlwaysUninit;
     bool mIsStopUpdate;
     bool mIsKeepInFrame;
 };

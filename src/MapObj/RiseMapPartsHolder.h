@@ -35,11 +35,11 @@ public:
     }
 
 private:
-    void* filler_170[13];
+    void* filler_108[13];
     al::LiveActor* mSwitchActor;
     RiseMapParts** mRiseMapPartsArray;
     s32 mRiseMapPartsNum;
-    void* filler_198[2];
+    void* filler_188[2];
 };
 
 static_assert(sizeof(RiseMapPartsHolder) == 0x198);
