@@ -74,8 +74,8 @@ public:
 
 private:
     AnimInfoTable* mAnimInfoTable;
-    u32 _10;
-    void* _18;
+    u32 _20;
+    void* _28;
     u32 mAnimObjCount0;
     nn::g3d::SkeletalAnimObj* mSkelAnimObjStack0;
     u32 mAnimObjCount1;
@@ -86,10 +86,10 @@ private:
     void* mBlendWeightStack;
     u32 mPartialAnimObjCount;
     nn::g3d::SkeletalAnimObj* mPartialAnimObjStack;
-    void* _70;
-    u32 _78;
+    void* _80;
+    u32 _88;
     SklAnimRetargettingInfo* mRetargettingInfo;
-    bool _88;
-    bool _89;
+    bool _98;
+    bool _99;
 };
 }  // namespace al

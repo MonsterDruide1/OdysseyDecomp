@@ -83,15 +83,15 @@ public:
         return false;
     }
 
-    virtual const char* getName() const override { return mName; }
+    const char* getName() const override { return mName; }
 
     virtual const sead::Matrix34f* getBaseMtx() const;
 
-    virtual EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
+    EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
 
-    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
-    virtual StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
+    StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
 
     RailRider* getRailRider() const override;
     SceneObjHolder* getSceneObjHolder() const override;

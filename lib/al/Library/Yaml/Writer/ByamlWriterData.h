@@ -165,11 +165,11 @@ public:
 
     virtual void addFloat(const char* key, f32 value) {}
 
-    virtual void addInt64(const char* key, s64, ByamlWriterBigDataList* value) {}
+    virtual void addInt64(const char* key, s64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addUInt64(const char* key, u64, ByamlWriterBigDataList* value) {}
+    virtual void addUInt64(const char* key, u64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addDouble(const char* key, f64, ByamlWriterBigDataList* value) {}
+    virtual void addDouble(const char* key, f64 value, ByamlWriterBigDataList* list) {}
 
     virtual void addString(const char* key, const char* value) {}
 

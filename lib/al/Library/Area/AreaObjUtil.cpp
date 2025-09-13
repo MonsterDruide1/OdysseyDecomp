@@ -117,7 +117,7 @@ f32 calcWaterSinkDepth(const IUseAreaObj* areaUser, const sead::Vector3f& positi
 }
 
 bool tryGetAreaObjArg(s32* outArg, const AreaObj* areaObj, const char* key) {
-    if (areaObj->getPlacementInfo() == nullptr)
+    if (!areaObj->getPlacementInfo())
         return false;
 
     return tryGetArg(outArg, *areaObj->getPlacementInfo(), key);

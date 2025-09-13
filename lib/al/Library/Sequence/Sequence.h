@@ -30,11 +30,9 @@ public:
 
     virtual Scene* getCurrentScene() const { return nullptr; }
 
-    virtual SceneCreator* getSceneCreator() const override { return mSceneCreator; }
+    SceneCreator* getSceneCreator() const override { return mSceneCreator; }
 
-    virtual void setSceneCreator(SceneCreator* sceneCreator) override {
-        mSceneCreator = sceneCreator;
-    }
+    void setSceneCreator(SceneCreator* sceneCreator) override { mSceneCreator = sceneCreator; }
 
     AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
