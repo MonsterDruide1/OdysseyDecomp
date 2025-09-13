@@ -169,7 +169,8 @@ public:
     PlayerInfo* getPlayerInfo() const override;
     bool checkDeathArea() override;
     void sendCollisionMsg() override;
-    bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32) override;
+    bool receivePushMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self,
+                        f32 maxPush) override;
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
     void updateModelShadowDropLength();

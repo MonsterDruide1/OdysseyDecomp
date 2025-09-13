@@ -73,13 +73,13 @@ TitleMenuScene::~TitleMenuScene() {
         mChromakeyDrawer->finalize();
 }
 
-void TitleMenuScene::init(const al::SceneInitInfo& initInfo) {
-    initDrawSystemInfo(initInfo);
+void TitleMenuScene::init(const al::SceneInitInfo& info) {
+    initDrawSystemInfo(info);
     initAndLoadStageResource("SandWorldHomeStage", 1);
     al::SceneObjHolder* sceneObjHolder = SceneObjFactory::createSceneObjHolder();
     initSceneObjHolder(sceneObjHolder);
 
-    al::setSceneObj(this, GameDataFunction::getGameDataHolder(initInfo.gameDataHolder),
+    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder),
                     SceneObjID_GameDataHolder);
 
     initSceneStopCtrl();
@@ -90,7 +90,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& initInfo) {
     graphicsInitArg._10 = 1 << graphicsInitArg.atmosScatterViewNum;
     graphicsInitArg._6 = true;
 
-    initLiveActorKitWithGraphics(graphicsInitArg, initInfo, 1024, 1, 1);
+    initLiveActorKitWithGraphics(graphicsInitArg, info, 1024, 1, 1);
     al::initGraphicsSystemInfo(this, "SandWorldHomeStage", 1);
 
     getLiveActorKit()->getGraphicsSystemInfo()->set_2f4(2);
@@ -101,10 +101,10 @@ void TitleMenuScene::init(const al::SceneInitInfo& initInfo) {
         getLiveActorKit()->getPlayerHolder(), getLiveActorKit()->getGraphicsSystemInfo()));
 
     al::AudioDirectorInitInfo audioDirectorInitInfo;
-    al::initAudioDirector3D(this, initInfo, audioDirectorInitInfo);
+    al::initAudioDirector3D(this, info, audioDirectorInitInfo);
 
-    al::initSceneAudioKeeper(this, initInfo, nullptr);
-    alAudioSystemFunction::disableAudioMaximizer(initInfo.gameSysInfo);
+    al::initSceneAudioKeeper(this, info, nullptr);
+    alAudioSystemFunction::disableAudioMaximizer(info.gameSysInfo);
 
     ProjectCameraPoserFactory* projectCameraPoserFactory = new ProjectCameraPoserFactory();
     al::initCameraDirectorWithoutStageResource(this, projectCameraPoserFactory);
@@ -115,11 +115,11 @@ void TitleMenuScene::init(const al::SceneInitInfo& initInfo) {
     ProjectAreaFactory* projectAreaFactory = new ProjectAreaFactory();
     areaObjDirector->init(projectAreaFactory);
 
-    al::initPadRumble(this, initInfo);
+    al::initPadRumble(this, info);
 
-    initLayoutKit(initInfo);
+    initLayoutKit(info);
     al::LayoutInitInfo layoutInitInfo;
-    al::initLayoutInitInfo(&layoutInitInfo, this, initInfo);
+    al::initLayoutInitInfo(&layoutInitInfo, this, info);
 
     al::PlacementInfo placementInfo;
     al::ActorInitInfo actorInitInfo;
@@ -127,7 +127,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& initInfo) {
     ProjectActorFactory* projectActorFactory = new ProjectActorFactory();
 
     al::initActorInitInfo(&actorInitInfo, this, &placementInfo, &layoutInitInfo,
-                          projectActorFactory, nullptr, initInfo.gameDataHolder);
+                          projectActorFactory, nullptr, info.gameDataHolder);
 
     initNerve(&NrvTitleMenuScene.Appear, 1);
 
@@ -151,7 +151,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& initInfo) {
                                                      layoutInitInfo, nullptr);
 
     mStatePauseMenu = new StageSceneStatePauseMenu(
-        "ポーズメニュー", this, mLayoutMenu, (GameDataHolder*)initInfo.gameDataHolder, initInfo,
+        "ポーズメニュー", this, mLayoutMenu, (GameDataHolder*)info.gameDataHolder, info,
         actorInitInfo, layoutInitInfo, mWindowConfirm, nullptr, true, nullptr);
 
     al::initNerveState(this, mStatePauseMenu, &NrvTitleMenuScene.Menu, "ポーズメニュー");
