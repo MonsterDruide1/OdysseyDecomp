@@ -47,7 +47,7 @@ void PlayerStateLongJump::exeJump() {
         rs::setupLongJumpVelocity(mActor, mCollision, mConst->getJumpInertiaRate(),
                                   mConst->getLongJumpMovePow(), mConst->getLongJumpSpeedMin(),
                                   mConst->getLongJumpInitSpeed(), mConst->getLongJumpJumpPow());
-        if (rs::isModeE3Rom())
+        if (rs::isModeE3MovieRom())
             mAnimator->startAnim("JumpBroad3");
         else
             mAnimator->startAnim(mContinuousLongJump->getLongJumpAnimName());
