@@ -21,7 +21,7 @@ public:
     bool isEqualName(const char* name);
     void setRecord(s32 record, s32 bestRecord, s32 lapRecord, bool isWin);
     void write(al::ByamlWriter* writer) override;
-    void read(const al::ByamlIter& reader) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     s32 mRecord = RaceTimeFunction::getRaceTimeMaxCsec();

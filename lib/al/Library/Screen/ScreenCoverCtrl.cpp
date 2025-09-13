@@ -1,7 +1,7 @@
 #include "Library/Screen/ScreenCoverCtrl.h"
 
 namespace al {
-ScreenCoverCtrl::ScreenCoverCtrl() {}
+ScreenCoverCtrl::ScreenCoverCtrl() = default;
 
 void ScreenCoverCtrl::requestCaptureScreenCover(s32 coverFrames) {
     if (mCoverFrames < coverFrames) {

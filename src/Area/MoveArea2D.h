@@ -10,7 +10,7 @@ public:
 
     MoveArea2D(const char* name);
 
-    void init(const al::AreaInitInfo& areaInitInfo) override;
+    void init(const al::AreaInitInfo& info) override;
 
     bool calcGravityCylinderCenterAxis(sead::Vector3f*, f32*, const sead::Vector3f&, bool) const;
     bool calcGravityDir(sead::Vector3f*, f32*, const sead::Vector3f&) const;

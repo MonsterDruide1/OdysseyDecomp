@@ -33,7 +33,7 @@ public:
     HelpAmiiboDirector();
     void init(ProjectNfpDirector* projectNfpDirector, const al::PlayerHolder* playerHolder,
               al::AudioDirector* audioDirector, const al::LayoutInitInfo& initInfo);
-    void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
+    void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
 
     bool isTriggerTouchAmiiboMario() const;
     bool isTriggerTouchAmiiboPeach() const;

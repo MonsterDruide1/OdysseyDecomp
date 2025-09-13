@@ -52,7 +52,7 @@ void RaceRecord::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void RaceRecord::read(const al::ByamlIter& reader) {
+void RaceRecord::read(const al::ByamlIter& save) {
     mRecord = RaceTimeFunction::getRaceTimeMaxCsec();
     mBestRecord = RaceTimeFunction::getRaceTimeMaxCsec();
     mLapRecord = RaceTimeFunction::getRaceTimeMaxCsec();
@@ -62,7 +62,7 @@ void RaceRecord::read(const al::ByamlIter& reader) {
 
     al::ByamlIter recordData{};
 
-    reader.tryGetIterByKey(&recordData, mName.cstr());
+    save.tryGetIterByKey(&recordData, mName.cstr());
     recordData.tryGetIntByKey(&mRecord, "Record");
     recordData.tryGetIntByKey(&mLapRecord, "LapRecord");
     recordData.tryGetBoolByKey(&mIsWin, "IsWin");

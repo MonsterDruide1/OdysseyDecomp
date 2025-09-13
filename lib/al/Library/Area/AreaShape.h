@@ -13,12 +13,14 @@ class AreaShape : public HioNode {
 public:
     AreaShape();
 
-    virtual bool isInVolume(const sead::Vector3f&) const = 0;
-    virtual bool isInVolumeOffset(const sead::Vector3f&, f32) const = 0;
-    virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const = 0;
-    virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                     const sead::Vector3f&) const = 0;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const = 0;
+    virtual bool isInVolume(const sead::Vector3f& pos) const = 0;
+    virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const = 0;
+    virtual bool calcNearestEdgePoint(sead::Vector3f* edgePoint,
+                                      const sead::Vector3f& pos) const = 0;
+    // TODO: rename parameters
+    virtual bool checkArrowCollision(sead::Vector3f* a2, sead::Vector3f* a3,
+                                     const sead::Vector3f& a4, const sead::Vector3f& a5) const = 0;
+    virtual bool calcLocalBoundingBox(sead::BoundBox3f* boundingBox) const = 0;
 
     const sead::Vector3f& getScale() const { return mScale; }
 

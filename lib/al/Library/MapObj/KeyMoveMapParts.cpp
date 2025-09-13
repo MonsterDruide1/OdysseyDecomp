@@ -86,7 +86,7 @@ void KeyMoveMapParts::init(const ActorInitInfo& info) {
         return;
 
     mRippleCtrl = RippleCtrl::tryCreate(this);
-    if (mRippleCtrl != nullptr)
+    if (mRippleCtrl)
         mRippleCtrl->init(info);
 }
 
@@ -113,7 +113,7 @@ void KeyMoveMapParts::stop() {
     else
         startNerveAction(this, "Stop");
 
-    if (mSeMoveName != nullptr) {
+    if (mSeMoveName) {
         tryStopSe(this, mSeMoveName, -1, nullptr);
         mSeMoveName = nullptr;
     }
@@ -174,13 +174,13 @@ bool KeyMoveMapParts::receiveMsg(const SensorMsg* message, HitSensor* other, Hit
 }
 
 void KeyMoveMapParts::control() {
-    if (mSwitchKeepOnAreaGroup != nullptr)
+    if (mSwitchKeepOnAreaGroup)
         mSwitchKeepOnAreaGroup->update(getTrans(this));
 
-    if (mSwitchOnAreaGroup != nullptr)
+    if (mSwitchOnAreaGroup)
         mSwitchOnAreaGroup->update(getTrans(this));
 
-    if (mRippleCtrl != nullptr)
+    if (mRippleCtrl)
         mRippleCtrl->update();
 }
 
@@ -254,7 +254,7 @@ void KeyMoveMapParts::exeMove() {
         mKeyMoveMoveTime = calcKeyMoveMoveTime(mKeyPoseKeeper);
 
         mSeMoveName = getSeNameByIndex(mKeyPoseKeeper->getKeyPoseCurrentIdx());
-        if (mSeMoveName != nullptr)
+        if (mSeMoveName)
             tryStartSe(this, mSeMoveName);
     }
 
@@ -270,7 +270,7 @@ void KeyMoveMapParts::exeMove() {
             setWaitEndNerve();
         else {
             startNerveAction(this, "Wait");
-            if (mSeMoveName != nullptr) {
+            if (mSeMoveName) {
                 tryStopSe(this, mSeMoveName, -1, nullptr);
                 mSeMoveName = nullptr;
             }

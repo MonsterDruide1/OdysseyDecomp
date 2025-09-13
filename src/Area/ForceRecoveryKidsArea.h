@@ -8,7 +8,7 @@ class ForceRecoveryKidsArea : public al::AreaObj {
 public:
     ForceRecoveryKidsArea(const char* name);
 
-    void init(const al::AreaInitInfo& areaInitInfo) override;
+    void init(const al::AreaInitInfo& info) override;
 
 private:
     sead::Vector3f mTargetPos;

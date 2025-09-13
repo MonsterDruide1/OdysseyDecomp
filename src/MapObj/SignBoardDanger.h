@@ -16,9 +16,10 @@ class SignBoardDanger : public al::LiveActor {
 public:
     SignBoardDanger(const char* name);
     void init(const al::ActorInitInfo& info) override;
-    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     bool isCanStartReaction();
-    void attackSensor(al::HitSensor* other, al::HitSensor* self) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     void exeWait();
     void exeReaction();
     void exeDead();

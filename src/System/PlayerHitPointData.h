@@ -30,7 +30,7 @@ public:
     void endForceNormalMode();
     bool isForceNormalMode() const;
     void write(al::ByamlWriter* writer) override;
-    void read(const al::ByamlIter& reader) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     bool mIsKidsMode = false;

@@ -12,7 +12,7 @@ class MemorySystem {
 public:
     MemorySystem(sead::Heap* heap);
 
-    void allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallbackArg*);
+    void allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallbackArg* arg);
     void createSequenceHeap();
     void freeAllSequenceHeap();
     void printSequenceHeap();

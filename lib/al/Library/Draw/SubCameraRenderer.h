@@ -34,7 +34,7 @@ public:
     void calcOnScreenPos(sead::Vector3f*, const sead::Vector3f&) const;
 
 private:
-    void* _padding[0x4a];
+    void* _10[0x4a];
 };
 
 static_assert(sizeof(SubCameraRenderer) == 0x260);

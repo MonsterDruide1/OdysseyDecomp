@@ -11,7 +11,7 @@ namespace al {
 
 BgmKeeper::BgmKeeper(const AudioSystemInfo* audioInfo, BgmDirector* director, const char* string)
     : mBgmDirector(director) {
-    if (string != nullptr)
+    if (string)
         mBgmUserInfo = alBgmFunction::tryFindBgmUserInfo(audioInfo->bgmDataBase, string);
 }
 
@@ -25,7 +25,7 @@ BgmKeeper* BgmKeeper::create(const AudioSystemInfo* audioInfo, BgmDirector* dire
 void BgmKeeper::update() {}
 
 const char* BgmKeeper::getUserName() const {
-    if (mBgmUserInfo == nullptr)
+    if (!mBgmUserInfo)
         return nullptr;
     return mBgmUserInfo->name;
 }

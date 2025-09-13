@@ -18,7 +18,7 @@ public:
                                      const al::LayoutInitInfo& info, al::WipeSimple* wipeSimple,
                                      al::GamePadSystem* gamePadSystem, FooterParts* footerParts);
 
-    virtual void appear();
+    void appear() override;
 
     void startTreeHouse();
     bool isNeedRequestGraphicsPreset() const;

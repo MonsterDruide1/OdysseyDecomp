@@ -37,7 +37,7 @@ public:
     s32 getPadRumbleLevel() const;
     void setPadRumbleLevel(s32 value);
     void write(al::ByamlWriter* writer) override;
-    void read(const al::ByamlIter& conf) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     s32 mCameraStickSensitivityLevel = -1;

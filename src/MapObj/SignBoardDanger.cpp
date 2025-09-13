@@ -85,11 +85,11 @@ void SignBoardDanger::init(const al::ActorInitInfo& info) {
     mCapHanger->makeActorAlive();
 }
 
-bool SignBoardDanger::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
+bool SignBoardDanger::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                  al::HitSensor* self) {
     if (al::isNerve(this, &NrvSignBoardDanger.Dead)) {
-        if (rs::isMsgPlayerDisregardHomingAttack(msg) ||
-            rs::isMsgPlayerDisregardTargetMarker(msg) || al::isMsgPlayerDisregard(msg)) {
+        if (rs::isMsgPlayerDisregardHomingAttack(message) ||
+            rs::isMsgPlayerDisregardTargetMarker(message) || al::isMsgPlayerDisregard(message)) {
             return true;
         }
 
@@ -99,10 +99,11 @@ bool SignBoardDanger::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
         return false;
     }
 
-    if (rs::isMsgPlayerDisregardHomingAttack(msg) || rs::isMsgPlayerDisregardTargetMarker(msg))
+    if (rs::isMsgPlayerDisregardHomingAttack(message) ||
+        rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 
-    if (rs::isMsgBreakSignBoard(msg)) {
+    if (rs::isMsgBreakSignBoard(message)) {
         SignBoardBlow* signBlow = mSignBoardBlow;
         sead::Vector3f upDir = sead::Vector3f::ey;
         sead::Vector3f rightDir;
@@ -127,8 +128,9 @@ bool SignBoardDanger::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
         return true;
     }
 
-    if (al::isSensorCollision(self) && rs::isMsgCapReflectCollide(msg) && isCanStartReaction()) {
-        rs::requestHitReactionToAttacker(msg, self, other);
+    if (al::isSensorCollision(self) && rs::isMsgCapReflectCollide(message) &&
+        isCanStartReaction()) {
+        rs::requestHitReactionToAttacker(message, self, other);
         al::setNerve(this, &NrvSignBoardDanger.Reaction);
         return true;
     }
@@ -141,10 +143,10 @@ bool SignBoardDanger::isCanStartReaction() {
     return al::isNerve(this, &NrvSignBoardDanger.Reaction) && al::isGreaterEqualStep(this, 30);
 }
 
-void SignBoardDanger::attackSensor(al::HitSensor* other, al::HitSensor* self) {
+void SignBoardDanger::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvSignBoardDanger.Dead) && (u32)mRespawnTimer < 5 &&
-        al::isSensorName(other, "Cap")) {
-        al::sendMsgPush(self, other);
+        al::isSensorName(self, "Cap")) {
+        al::sendMsgPush(other, self);
     }
 }
 

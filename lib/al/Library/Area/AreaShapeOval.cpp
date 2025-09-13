@@ -6,7 +6,7 @@
 
 namespace al {
 
-AreaShapeOval::AreaShapeOval() {}
+AreaShapeOval::AreaShapeOval() = default;
 
 bool AreaShapeOval::isInVolume(const sead::Vector3f& pos) const {
     sead::Vector3f localPos = sead::Vector3f::zero;

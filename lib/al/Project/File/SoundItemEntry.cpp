@@ -4,14 +4,14 @@ namespace al {
 SoundItemEntry::SoundItemEntry() = default;
 
 void SoundItemEntry::load() {
-    mIsLoadSuccess = mResourceLoader->tryLoad(mItemId, _bc);
+    mIsLoadSuccess = mResourceLoader->tryLoad(mItemId, _6c);
     sendMessageDone();
 }
 
 void SoundItemEntry::setLoadRequestInfo(u32 itemId, u32 unknown,
                                         IAudioResourceLoader* resourceLoader) {
     mItemId = itemId;
-    _bc = unknown;
+    _6c = unknown;
     mResourceLoader = resourceLoader;
     setLoadStateRequested();
 }
@@ -27,7 +27,7 @@ u32 SoundItemEntry::getSoundItemId() const {
 void SoundItemEntry::clear() {
     FileEntryBase::clear();
     mItemId = -1;
-    _bc = -1;
+    _6c = -1;
     mResourceLoader = nullptr;
     mIsLoadSuccess = false;
 }

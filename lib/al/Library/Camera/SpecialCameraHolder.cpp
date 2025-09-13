@@ -6,7 +6,7 @@
 
 namespace al {
 
-SpecialCameraHolder::SpecialCameraHolder() {}
+SpecialCameraHolder::SpecialCameraHolder() = default;
 
 void SpecialCameraHolder::allocEntranceCameraBuffer(s32 maxEntries) {
     mMaxEntranceCameras = maxEntries;

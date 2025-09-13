@@ -9,7 +9,7 @@ public:
 
     virtual ~ISceneObj() = default;
 
-    virtual void initAfterPlacementSceneObj(const ActorInitInfo&) {}
+    virtual void initAfterPlacementSceneObj(const ActorInitInfo& info) {}
 
     virtual void initSceneObj() {}
 };
