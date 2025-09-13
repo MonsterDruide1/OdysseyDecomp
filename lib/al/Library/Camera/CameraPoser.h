@@ -145,13 +145,13 @@ public:
 
     virtual void endSnapShotMode() {}
 
-    virtual const char* getName() const override { return mPoserName; }
+    const char* getName() const override { return mPoserName; }
 
     CollisionDirector* getCollisionDirector() const override;
 
-    virtual NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+    NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
-    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
     RailRider* getRailRider() const override;
 

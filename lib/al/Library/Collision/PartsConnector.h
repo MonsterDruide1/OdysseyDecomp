@@ -21,7 +21,7 @@ public:
     bool isConnectInvalidCollision() const;
 
 private:
-    void* _0[1];
+    void* _60[1];
 };
 
 static_assert(sizeof(CollisionPartsConnector) == 0x68);

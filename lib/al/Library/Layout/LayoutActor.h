@@ -46,19 +46,17 @@ public:
     virtual void movement();
     virtual void calcAnim(bool recursive);
 
-    virtual NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+    NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
-    virtual const char* getName() const override { return mName.cstr(); }
+    const char* getName() const override { return mName.cstr(); }
 
-    virtual EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
+    EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
 
-    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
-    virtual LayoutActionKeeper* getLayoutActionKeeper() const override {
-        return mLayoutActionKeeper;
-    }
+    LayoutActionKeeper* getLayoutActionKeeper() const override { return mLayoutActionKeeper; }
 
-    virtual LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
+    LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
 
     CameraDirector* getCameraDirector() const override;
 

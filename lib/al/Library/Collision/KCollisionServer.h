@@ -35,8 +35,8 @@ struct KCPrismData {
 struct KCHitInfo {
     const KCPrismHeader* header;
     const KCPrismData* data;
-    f32 _16;
-    u8 _20;  // collision location, enum
+    f32 _10;
+    u8 _14;  // collision location, enum
 };
 
 class KCollisionServer {

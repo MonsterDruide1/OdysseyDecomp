@@ -49,7 +49,7 @@ private:
     al::HitSensor* mHitSensor = nullptr;
     al::MtxConnector* mMtxConnector = nullptr;
     al::LiveActor* _120 = nullptr;
-    s32 _12c = 0;
+    s32 _128 = 0;
     WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
     FireSurfaceFinder* mFireSurfaceFinder = nullptr;
     s32 mShadowMaskDropLength = 0;
