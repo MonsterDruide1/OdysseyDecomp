@@ -1,5 +1,3 @@
-#include "Util/SpecialBuildUtil.h"
-
 namespace rs {
 bool isModeE3Rom() {
     return false;
