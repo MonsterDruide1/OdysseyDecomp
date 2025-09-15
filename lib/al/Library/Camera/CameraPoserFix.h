@@ -20,6 +20,10 @@ public:
     void start(const CameraStartInfo& startInfo) override;
     void update() override;
 
+    void setIsCalcNearestAtFromPreAt(bool isCalcNearestAtFromPreAt) {
+        mIsCalcNearestAtFromPreAt = isCalcNearestAtFromPreAt;
+    }
+
 private:
     sead::Vector3f mLookAtPos = {0.0f, 0.0f, 0.0f};
     f32 mDistance = 1800.0f;
