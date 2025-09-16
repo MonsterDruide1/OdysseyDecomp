@@ -74,6 +74,7 @@ public:
 
 private:
 <<<<<<< HEAD
+<<<<<<< HEAD
     char filler_108[0x1a1];
 =======
     void* pad;
@@ -89,6 +90,14 @@ private:
     bool mIsElectricWireRadio;
     char pad3[0x58];
 >>>>>>> 3eae8abd (Implemented: StakcerCapWorldCtrl)
+=======
+    void* mPad;
+    s32 _110;
+    ElectricWireRailKeeper** mElectricWireRailKeepers;
+    char mPad2[0x189];
+    bool mIsElectricWireRadio;
+    char mPad3[0x58];
+>>>>>>> 40f0138c (Fixed format issues)
 };
 
 static_assert(sizeof(ElectricWire) == 0x308);

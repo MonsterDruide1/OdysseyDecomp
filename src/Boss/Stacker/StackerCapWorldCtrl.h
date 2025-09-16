@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Library/LiveActor/LiveActor.h"
 
 class Stacker;
@@ -7,7 +8,7 @@ namespace al {
 class CameraTicket;
 struct ActorInitInfo;
 class LiveActorGroup;
-} // namespace al
+}  // namespace al
 
 class ElectricWire;
 
@@ -19,6 +20,7 @@ public:
     void exeBattle();
     void exeDemoCamera();
     void exeObjAppear();
+
 private:
     Stacker* mStacker = nullptr;
     ElectricWire* mElectricWire = nullptr;
