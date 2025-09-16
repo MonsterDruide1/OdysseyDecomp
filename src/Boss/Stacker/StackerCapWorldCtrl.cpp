@@ -76,27 +76,33 @@ void StackerCapWorldCtrl::exeBattle() {
 void StackerCapWorldCtrl::exeDemoCamera() {
     if (al::isFirstStep(this)) {
         if (!rs::requestStartDemoWithPlayer(this, false)) {
-            al::setNerve(this, &NrvStackerCapWorldCtrl.DemoCamera);
+            al::setNerve(this, (const al::Nerve*)&NrvStackerCapWorldCtrl);
+
             return;
         }
-        for (s32 i = 0; i < mActorGroup->getActorCount(); ++i) {
+
+        for (s32 i = 0; i < mActorGroup->getActorCount(); i++) {
             rs::addDemoActor(mActorGroup->getActor(i), false);
         }
+
         if (mElectricWire) {
             rs::addDemoActor(mElectricWire, false);
             mElectricWire->addDemoActorElectricWirePartsAll();
-            for (s32 i = 0; i < mElectricWire->get_110(); ++i) {
-                if (i < mElectricWire->get_110())
-                    rs::addDemoActor(mElectricWire->getElectricWireRailKeepers()[i], false);
-                else
+
+            for (s32 i = 0; i < mElectricWire->get_110(); i++) {
+                if ((u32)mElectricWire->get_110() <= (u32)i) {
                     rs::addDemoActor(nullptr, false);
+                } else {
+                    rs::addDemoActor(mElectricWire->getElectricWireRailKeepers()[i], false);
+                }
             }
         }
+
         rs::addDemoActor(mStacker, false);
     }
-    if (!al::isGreaterEqualStep(this, 0x5a))
-        return;
-    al::setNerve(this, &NrvStackerCapWorldCtrl.ObjAppear);
+
+    if (al::isGreaterEqualStep(this, 90))
+            al::setNerve(this, &NrvStackerCapWorldCtrl.DemoCamera);
 }
 
 void StackerCapWorldCtrl::exeObjAppear() {
