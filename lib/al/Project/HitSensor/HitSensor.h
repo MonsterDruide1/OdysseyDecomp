@@ -4,11 +4,11 @@
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
+class HitSensor;
 class HitSensorDirectror;
 class HitSensorKeeper;
+class LiveActor;
 class SensorHitGroup;
-class HitSensor;
 
 using SensorSortCmpFunc = bool (*)(HitSensor* a, HitSensor* b);
 
@@ -69,6 +69,8 @@ public:
     void setRadius(f32 radius) { mRadius = radius; }
 
     LiveActor* getParentActor() const { return mParentActor; }
+
+    const sead::Matrix34f* getFollowMtx() const { return mFollowMtx; }
 
     void scaleY(f32 scaleY) {
         mRadius *= scaleY;
