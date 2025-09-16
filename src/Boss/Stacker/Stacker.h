@@ -33,6 +33,7 @@ public:
     void exeInvincibleAttack();
     void exeReset();
     void exeDemoBattleEnd();
+
 private:
-    const char buf[0xa8];
+    const char mBuf[0xa8];
 };
