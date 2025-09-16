@@ -19,10 +19,10 @@ public:
     ElectricWireRailKeeper** getElectricWireRailKeepers() { return mElectricWireRailKeepers; }
 
 private:
-    void* pad;
+    void* mPad;
     s32 _110;
     ElectricWireRailKeeper** mElectricWireRailKeepers;
-    char pad2[0x189];
+    char mPad2[0x189];
     bool mIsElectricWireRadio;
-    char pad3[0x58];
+    char mPad3[0x58];
 };
