@@ -2,6 +2,7 @@
 
 #include <math/seadQuat.h>
 
+#include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Scene/Scene.h"
 
 namespace al {
@@ -15,6 +16,7 @@ class SimpleAudioUser;
 class DemoSyncedEventKeeper;
 class LayoutTextureRenderer;
 class ChromakeyDrawer;
+class HtmlViewer;
 }  // namespace al
 
 class Shine;
@@ -67,6 +69,16 @@ class ProjectNfpDirector;
 class PlayGuideSkip;
 class CinemaCaption;
 class KoopaLv1;
+class StageSceneStateWorldIntroCamera;
+class StageSceneStateTimeBalloon;
+class StageSceneStateTitleLogo ;
+class StageSceneStateTalk;
+class LocationNameCtrl;
+class ShoppingWatcher;
+class CollectionList;
+class OpeningStageStartDemo;
+class CameraTicket;
+class HelpAmiiboDirector;
 
 class StageScene : public al::Scene {
 public:
@@ -98,8 +110,8 @@ private:
     StageSceneStateSkipDemo* mStateSkipDemo;
     StageSceneStateCheckpointWarp* mStateCheckpointWarp;
     StageSceneStateCarryMeat* mStateCarryMeat;
-    void* _1a8;
-    void* _1b0;
+    StageSceneStateTimeBalloon* mStateTimeBalloon;
+    StageSceneStateTitleLogo * mStateTitleLogo;
     StageSceneStateMiss* mStateMiss;
     StageSceneStateYukimaruRace* mStateYukimaruRace;
     StageSceneStateYukimaruRaceTutorial* mStateYukimaruRaceTutorial;
@@ -108,9 +120,9 @@ private:
     StageSceneStateScenarioCamera* mStateScenarioCamera;
     StageSceneStateRecoverLife* mStateRecoverLife;
     StageSceneStateGetShineMainSandWorld* mStateGetShineMainSandWorld;
-    void* _1f8;
+    StageSceneStateTalk* mStateTalk;
     StageSceneStateWarp* mStateWarp;
-    void* _208;
+    StageSceneStateWorldIntroCamera* mStateWorldIntroCamera;
     ScenarioStartCameraHolder* mStateCameraHolder;
     sead::FixedSafeString<64> _218;
     sead::FixedSafeString<64> _270;
@@ -130,7 +142,7 @@ private:
     InputSeparator* _328;
     al::WipeSimple* _330;
     al::WipeHolder* mWipeHolder;
-    void* _340;
+    LocationNameCtrl* mLocationNameCtrl;
     al::WindowConfirm* _348;
     MiniGameMenu* mMiniGameMenu;
     char _358;
@@ -138,13 +150,13 @@ private:
     char _368;
     MapLayout* _370;
     al::SimpleLayoutAppearWaitEnd* _378;
-    al::LiveActorGroup* _380;
-    void* _388;
+    al::DeriveActorGroup<ShoppingWatcher>* _380;
+    CollectionList* mCollectionList;
     KoopaLv1* mKoopaLv1;
     TimeBalloonNpc* mTimeBalloonNpc;
     ProjectItemDirector* mProjectItemDirector;
     Pyramid* mPyramid;
-    void* _3b0;
+    OpeningStageStartDemo* mOpeningStageStartDemo;
     al::Nerve* _3b8;
     SceneAudioSystemPauseController* mAudioSystemPauseController;
     DemoSoundSynchronizer* mDemoSoundSynchronizer;
@@ -156,11 +168,11 @@ private:
     TimeBalloonDirector* mTimeBalloonDirector;
     TimeBalloonSequenceInfo* mTimeBalloonSequenceInfo;
     void* _408;
-    void* _410;
+    CameraTicket* _410;
     sead::Vector3f _418;
     sead::Vector3f _424;
-    void* _430;
-    void* _438;
+    sead::Vector3f _430;
+    s32 _43c;
     const al::LiveActor* _440;
     al::ParabolicPath* _448;
     al::LiveActor* _450;
@@ -170,13 +182,17 @@ private:
     CollectBgmRegister* mCollectBgmRegister;
     BgmAnimeSyncDirector* mBgmAnimeSyncDirector;
     al::DemoSyncedEventKeeper* mDemoSyncedEventKeeper;
-    void* _488;
+    const char* _488;
     s32 _490;
+    bool _494;
+    bool _495;
+    bool _496;
+    u8 _497;
     NpcEventDirector* mNpcEventDirector;
     al::ChromakeyDrawer* mChromakeyDrawer;
-    void* _4a8;
+    al::HtmlViewer* _4a8;
     ProjectNfpDirector* mProjectNfpDirector;
-    void* mHeapAmiiboDirector;
+    HelpAmiiboDirector* mHelpAmiiboDirector;
 };
 
 static_assert(sizeof(StageScene) == 0x4C0);
