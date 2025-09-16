@@ -78,12 +78,17 @@ private:
 =======
     void* pad;
     s32 _110;
-    char pad2[4];
     ElectricWireRailKeeper** mElectricWireRailKeepers;
+<<<<<<< HEAD
     char pad3[0x1e0];
 >>>>>>> 5281125b (Stashing)
     bool mIsElectricWireRadio;
     char filler_2aa[0x58];
+=======
+    char pad2[0x189];
+    bool mIsElectricWireRadio;
+    char pad3[0x58];
+>>>>>>> 3eae8abd (Implemented: StakcerCapWorldCtrl)
 };
 
 static_assert(sizeof(ElectricWire) == 0x308);
