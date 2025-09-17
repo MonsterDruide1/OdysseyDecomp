@@ -12,7 +12,7 @@ class AudioKeeper;
 
 class PlayerConst;
 class PlayerCostumeInfo;
-class PlayerBodyCostumeInfo;
+struct PlayerBodyCostumeInfo;
 class PlayerJointControlPartsDynamics;
 
 class PlayerFunction {
