@@ -14,8 +14,8 @@ public:
     virtual bool isConnecting() const;
     virtual void clear();
 
-    void init(const sead::Matrix34f*, const sead::Matrix34f&) const;
-    void init(const sead::Matrix34f*) const;
+    void init(const sead::Matrix34f*, const sead::Matrix34f&);
+    void init(const sead::Matrix34f*);
     void multVec(sead::Vector3f*, const sead::Vector3f&) const;
     void multTrans(sead::Vector3f*, const sead::Vector3f&) const;
     void multMtx(sead::Matrix34f*, const sead::Matrix34f&) const;
@@ -32,10 +32,10 @@ public:
     bool tryGetParentTrans(sead::Vector3f*) const;
 
 private:
-    sead::Matrix34f _8;
-    const sead::Matrix34f* _38;
-    sead::Quatf _40;
-    sead::Vector3f _50;
+    sead::Matrix34f mMtx = sead::Matrix34f::ident;
+    const sead::Matrix34f* mParentMtx = nullptr;
+    sead::Quatf mBaseQuat = sead::Quatf::unit;
+    sead::Vector3f mBaseTrans = sead::Vector3f::zero;
 };
 
 static_assert(sizeof(MtxConnector) == 0x60);
