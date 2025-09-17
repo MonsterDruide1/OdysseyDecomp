@@ -45,12 +45,14 @@ public:
     bool isShapeSphere(s32 index) const;
     bool isShapeDisk(s32 index) const;
     const CollisionShapeInfoBase* getShapeInfoBase(s32 index) const;
-    const CollisionShapeInfoArrow* getShapeInfoArrow(s32 index) const;
-    const CollisionShapeInfoSphere* getShapeInfoSphere(s32 index) const;
-    const CollisionShapeInfoDisk* getShapeInfoDisk(s32 index) const;
+    CollisionShapeInfoArrow* getShapeInfoArrow(s32 index) const;
+    CollisionShapeInfoSphere* getShapeInfoSphere(s32 index) const;
+    CollisionShapeInfoDisk* getShapeInfoDisk(s32 index) const;
     u32 findShapeInfoIndex(const char* name) const;
     const CollidedShapeResult* getCollidedShapeResult(s32 index) const;
     const CollidedShapeResult* getCollidedShapeSupportResult(s32 index) const;
+
+    void set54(f32 value) { _54 = value; }
 
 private:
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
