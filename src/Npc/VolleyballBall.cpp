@@ -77,7 +77,7 @@ bool VolleyballBall::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
         }
     }
 
-    if (_138)
+    if (mIsEndGame)
         return false;
 
     if (al::isSensorSimple(self))
@@ -158,7 +158,7 @@ void VolleyballBall::reset() {
         kill();
     }
     al::validateClipping(this);
-    _138 = false;
+    mIsEndGame = false;
     al::setNerve(this, &NrvVolleyballBall.Wait);
 }
 
