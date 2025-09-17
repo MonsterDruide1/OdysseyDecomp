@@ -162,6 +162,8 @@ public:
 
     void setName(const char* newName) { mName = newName; }
 
+    void setFlags(LiveActorFlag* flag) { mFlags = flag; }
+
 protected:
     friend class alActorFunction;
 
