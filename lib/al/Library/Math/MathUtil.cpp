@@ -2,9 +2,11 @@
 
 #include <math/seadMathCalcCommon.h>
 #include <math/seadMatrix.h>
+#include <nn/os.h>
 #include <prim/seadBitUtil.h>
 #include <random/seadGlobalRandom.h>
 
+#include "Library/Base/HashCodeUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 
 namespace al {
@@ -514,7 +516,7 @@ f32 calcTriangleWave(f32 t, f32 min, f32 max, f32 period) {
 
 f32 lerpValue(f32 a, f32 b, f32 t) {
     t = sead::Mathf::clamp(t, 0.0f, 1.0f);
-    return (a * (1.0f - t)) + (t * b);
+    return a * (1.0f - t) + t * b;
 }
 
 f32 calcRate01(f32 t, f32 min, f32 max) {
@@ -541,6 +543,156 @@ f32 easeByType(f32 t, s32 easeType) {
     }
 }
 
+f32 lerpValue(f32 a, f32 b, f32 t, f32 clampA, f32 clampB) {
+    if (sead::Mathf::abs(t - b) < 0.001f)
+        return a <= b ? clampA : clampB;
+
+    f32 rate = (a - b) / (t - b);
+    if (rate < 0.0f) {
+        t = 0.0f;
+    } else {
+        t = 1.0f;
+        if (!(1.0f < rate))
+            t = rate;
+    }
+
+    return clampA * (1.0f - t) + t * clampB;
+}
+
+f32 lerpDegree(f32 a, f32 b, f32 t) {
+    a = modf(a + 360.0f, 360.0f) + 0.0f;
+    b = modf(b + 360.0f, 360.0f) + 0.0f;
+
+    f32 aa = b - a > 180.0f ? a + 360.0f : a;
+    f32 bb = b - a < -180.0f ? b + 360.0f : b;
+
+    t = sead::Mathf::clamp(t, 0.0f, 1.0f);
+    return modf((aa * (1.0f - t) + t * bb) + 360.0f, 360.0f) + 0.0f;
+}
+
+f32 lerpRadian(f32 a, f32 b, f32 t) {
+    a = modf(a + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
+    b = modf(b + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
+
+    f32 aa = b - a > sead::Mathf::pi() ? a + sead::Mathf::pi2() : a;
+    f32 bb = b - a < -sead::Mathf::pi() ? b + sead::Mathf::pi2() : b;
+
+    t = sead::Mathf::clamp(t, 0.0f, 1.0f);
+    return modf((aa * (1.0f - t) + t * bb) + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
+}
+
+void lerpVec(sead::Vector2f* outVec, const sead::Vector2f& a, const sead::Vector2f& b, f32 t) {
+    outVec->x = a.x + (b.x - a.x) * t;
+    outVec->y = a.y + (b.y - a.y) * t;
+}
+
+void lerpVec(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b, f32 t) {
+    outVec->x = a.x + (b.x - a.x) * t;
+    outVec->y = a.y + (b.y - a.y) * t;
+    outVec->z = a.z + (b.z - a.z) * t;
+}
+
+void lerpVecHV(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+               const sead::Vector3f& c, f32 tH, f32 tV) {
+    sead::Vector3f ba = b - a;
+    sead::Vector3f v = c * ba.dot(c);
+
+    outVec->x = a.x + (ba.x - v.x) * tH;
+    outVec->y = a.y + (ba.y - v.y) * tH;
+    outVec->z = a.z + (ba.z - v.z) * tH;
+
+    outVec->x += v.x * tV;
+    outVec->y += v.y * tV;
+    outVec->z += v.z * tV;
+}
+
+void separateVectorHV(sead::Vector3f* outH, sead::Vector3f* outV, const sead::Vector3f& a,
+                      const sead::Vector3f& b) {
+    f32 dot = a.dot(b);
+
+    outV->x = a.x * dot;
+    outV->y = a.y * dot;
+    outV->z = a.z * dot;
+
+    outH->x = b.x - outV->x;
+    outH->y = b.y - outV->y;
+    outH->z = b.z - outV->z;
+}
+
+void lerpColor(sead::Color4f* outColor, const sead::Color4f& a, const sead::Color4f& b, f32 t) {
+    outColor->setLerp(a, b, t);
+}
+
+f32 lerpLogValueEaseIn(f32 a, f32 b, f32 max, f32 min) {
+    return lerpValue(a, b, logarithmIn(max, min));
+}
+
+f32 lerpLogValueEaseOut(f32 a, f32 b, f32 max, f32 min) {
+    return lerpValue(a, b, logarithmOut(max, min));
+}
+
+void lerpLogVecEaseIn(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+                      f32 max, f32 min) {
+    f32 x = lerpLogValueEaseIn(a.x, b.x, max, min);
+    f32 y = lerpLogValueEaseIn(a.y, b.y, max, min);
+    f32 z = lerpLogValueEaseIn(a.z, b.z, max, min);
+    outVec->x = x;
+    outVec->y = y;
+    outVec->z = z;
+}
+
+void lerpLogVecEaseOut(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+                       f32 max, f32 min) {
+    f32 x = lerpLogValueEaseOut(a.x, b.x, max, min);
+    f32 y = lerpLogValueEaseOut(a.y, b.y, max, min);
+    f32 z = lerpLogValueEaseOut(a.z, b.z, max, min);
+    outVec->x = x;
+    outVec->y = y;
+    outVec->z = z;
+}
+
+f32 lerpExponentValueEaseIn(f32 a, f32 b, f32 max, f32 min) {
+    return lerpValue(a, b, exponentIn(max, min));
+}
+
+f32 lerpExponentValueEaseOut(f32 a, f32 b, f32 max, f32 min) {
+    return lerpValue(a, b, exponentOut(max, min));
+}
+
+void lerpExponentVecEaseIn(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+                           f32 max, f32 min) {
+    f32 x = lerpExponentValueEaseIn(a.x, b.x, max, min);
+    f32 y = lerpExponentValueEaseIn(a.y, b.y, max, min);
+    f32 z = lerpExponentValueEaseIn(a.z, b.z, max, min);
+    outVec->x = x;
+    outVec->y = y;
+    outVec->z = z;
+}
+
+void lerpExponentVecEaseOut(sead::Vector3f* outVec, const sead::Vector3f& a,
+                            const sead::Vector3f& b, f32 max, f32 min) {
+    f32 x = lerpExponentValueEaseOut(a.x, b.x, max, min);
+    f32 y = lerpExponentValueEaseOut(a.y, b.y, max, min);
+    f32 z = lerpExponentValueEaseOut(a.z, b.z, max, min);
+    outVec->x = x;
+    outVec->y = y;
+    outVec->z = z;
+}
+
+f32 clampLeapMinAbs(f32 a, f32 b, f32 clampA, f32 clampB) {
+    f32 absA = sead::Mathf::abs(a);
+    clampA = sead::Mathf::abs(clampA);
+
+    if (sead::Mathf::abs(a) < clampA)
+        return sign(a) * sead::Mathf::abs(b);
+
+    clampB = sead::Mathf::abs(clampB);
+    if (absA > clampB)
+        return a;
+
+    return sign(a) * lerpValue(absA, clampA, clampB, sead::Mathf::abs(b), clampB);
+}
+
 /**
  * Interpolates between `y0` and `y1` as `t` goes from 0.0 to 1.0. This interpolation is defined by
  * `m0` and `m1`, which are the rates of change of `t` at the points `y0` and `y1` respectively.
@@ -558,6 +710,106 @@ f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width) {
     f32 a2 = t - 1.0f;
     f32 a3 = t + t - 3.0f;
     return y0 + (a1 * a3) * t * t + (t * a2) * (t * m1 + a2 * m0);
+}
+
+void hermiteVec(sead::Vector3f* outVec, const sead::Vector3f& y0, const sead::Vector3f& m0,
+                const sead::Vector3f& y1, const sead::Vector3f& m1, f32 t) {
+    outVec->x = hermite(y0.x, m0.x, y1.x, m1.x, t);
+    outVec->y = hermite(y0.y, m0.y, y1.y, m1.y, t);
+    outVec->z = hermite(y0.z, m0.z, y1.z, m1.z, t);
+}
+
+s32 converge(s32 a, s32 b, s32 t) {
+    s32 result = a;
+
+    if (a < b) {
+        result += t;
+        if (result > b)
+            result = b;
+    } else {
+        result -= t;
+        if (result < b)
+            result = b;
+    }
+
+    return result;
+}
+
+f32 converge(f32 a, f32 b, f32 t) {
+    f32 result = a;
+
+    if (a < b) {
+        result += t;
+        if (result > b)
+            result = b;
+    } else {
+        result -= t;
+        if (result < b)
+            result = b;
+    }
+
+    return result;
+}
+
+f32 convergeDegree(f32 a, f32 b, f32 t) {
+    if (180.0f > (b + 360.0f) - a)
+        b += 360.0f;
+    else if (a - (b - 360.0f) < 180.0f)
+        b -= 360.0f;
+
+    return fmod(converge(a, b, t) + 360.0f, 360.0f) + 0.0f;
+}
+
+f32 convergeRadian(f32 a, f32 b, f32 t) {
+    // BUG: N's mistake here. Correct comparison: pi() > (b + pi2()) - a
+    if (sead::Mathf::pi2() > (b + sead::Mathf::pi2()) - a)
+        b += sead::Mathf::pi2();
+    else if (a - (b - sead::Mathf::pi2()) < sead::Mathf::pi())
+        b -= sead::Mathf::pi2();
+
+    return fmod(converge(a, b, t) + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
+}
+
+bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& a, const sead::Vector2f& b, f32 t) {
+    sead::Vector2f dir = b - a;
+
+    bool isNotNormalized = true;
+    f32 length = dir.length();
+    if (length > t) {
+        dir *= t / length;
+        isNotNormalized = false;
+    }
+
+    outVec->x = dir.x + a.x;
+    outVec->y = dir.y + a.y;
+    return isNotNormalized;
+}
+
+bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b, f32 t) {
+    sead::Vector3f dir = b - a;
+
+    bool isNotNormalized = true;
+    f32 length = dir.length();
+    if (length > t) {
+        dir *= t / length;
+        isNotNormalized = false;
+    }
+
+    outVec->x = dir.x + a.x;
+    outVec->y = dir.y + a.y;
+    outVec->z = dir.z + a.z;
+    return isNotNormalized;
+}
+
+f32 diffNearAngleDegree(f32 a, f32 b) {
+    f32 angle = modf(b - a + 360.0f, 360.0f) + 0.0f;
+    if (180.0f <= angle)
+        angle -= 360.0f;
+    return angle;
+}
+
+bool isSameSign(f32 a, f32 b) {
+    return a * b > 0.0f;
 }
 
 u8 reverseBit8(u8 x) {
@@ -635,6 +887,100 @@ void getRandomDir(sead::Vector3f* vec) {
         getRandomVector(vec, 10.0f);
     }
     vec->normalize();
+}
+
+void getRandomOnCircle(sead::Vector2f* outPos, f32 radius) {
+    f32 angle = getRandom(sead::Mathf::pi2());
+
+    outPos->x = sead::Mathf::cos(angle) * radius;
+    outPos->y = sead::Mathf::sin(angle) * radius;
+}
+
+void getRandomInCircle(sead::Vector2f* outPos, f32 maxRadius) {
+    f32 angle = getRandom(sead::Mathf::pi2());
+    f32 radius = sead::Mathf::sqrt(getRandom()) * maxRadius;
+
+    outPos->x = radius * sead::Mathf::cos(angle);
+    outPos->y = radius * sead::Mathf::sin(angle);
+}
+
+void getRandomInCircleMinMaxRadius(sead::Vector2f* outPos, f32 minRadius, f32 maxRadius) {
+    f32 angle = getRandom(sead::Mathf::pi2());
+    f32 range = (minRadius / maxRadius) * (minRadius / maxRadius);
+    f32 radius = sead::Mathf::sqrt(range + getRandom() * (1.0f - range)) * maxRadius;
+
+    outPos->x = radius * sead::Mathf::cos(angle);
+    outPos->y = radius * sead::Mathf::sin(angle);
+}
+
+void getRandomInCircle(sead::Vector3f* outPos, const sead::Vector3f& pos,
+                       const sead::Vector3f& front, f32 maxRadius) {
+    sead::Matrix34f mtx;
+    makeMtxFrontNoSupportPos(&mtx, front, pos);
+
+    sead::Vector2f pos2D;
+    getRandomInCircle(&pos2D, maxRadius);
+
+    outPos->setMul(mtx, {pos2D.x, pos2D.y, 0.0f});
+}
+
+void getRandomOnSphere(sead::Vector3f* outPos, f32 radius) {
+    f32 angle = getRandom(sead::Mathf::pi2());
+    f32 zPos = 2.0f * getRandom() - 1.0f;
+    f32 radiusXY = sead::Mathf::sqrt(1.0f - zPos * zPos) * radius;
+
+    outPos->x = sead::Mathf::cos(angle) * radiusXY;
+    outPos->y = sead::Mathf::sin(angle) * radiusXY;
+    outPos->z = zPos * radius;
+}
+
+void initRandomSeed(u32 seed) {
+    sead::GlobalRandom::instance()->init(seed);
+}
+
+void initRandomSeedByTick() {
+    initRandomSeed(nn::os::GetSystemTick().value);
+}
+
+void initRandomSeedByString(const char* name) {
+    initRandomSeed(calcHashCode(name));
+}
+
+bool isHalfProbability() {
+    return getRandom() < 0.5f;
+}
+
+bool isPercentProbability(f32 threshold) {
+    return getRandom() * 100.0f < threshold;
+}
+
+void getRandomContext(u32* xSeed, u32* ySeed, u32* zSeed, u32* wSeed) {
+    sead::GlobalRandom::instance()->getContext(xSeed, ySeed, zSeed, wSeed);
+}
+
+void setRandomContext(u32 xSeed, u32 ySeed, u32 zSeed, u32 wSeed) {
+    sead::GlobalRandom::instance()->init(xSeed, ySeed, zSeed, wSeed);
+}
+
+void makeRandomDirXZ(sead::Vector3f* outDir) {
+    f32 angle = getRandom(sead::Mathf::pi2());
+
+    outDir->set({sead::Mathf::sin(angle), 0.0f, sead::Mathf::cos(angle)});
+}
+
+f32 calcBoxMullerRandomGauss() {
+    sead::Vector2f box;
+    makeBoxMullerRandomGauss(&box, getRandom(), getRandom());
+
+    return box.x;
+}
+
+void makeBoxMullerRandomGauss(sead::Vector2f* outBox, f32 randA, f32 randB) {
+    f32 valX = sead::Mathf::sqrt(sead::Mathf::log(randA) * -2.0f) *
+               sead::Mathf::cos(sead::Mathf::pi2() * randB);
+    f32 valY = sead::Mathf::sqrt(sead::Mathf::log(randB) * -2.0f) *
+               sead::Mathf::sin(sead::Mathf::pi2() * randA);
+    outBox->set({valX, valY});
 }
 
 f32 modf(f32 a, f32 b) {
