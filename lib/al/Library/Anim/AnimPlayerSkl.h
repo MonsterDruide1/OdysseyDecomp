@@ -73,9 +73,7 @@ public:
     void setRetargettingInfo(SklAnimRetargettingInfo* info) { mRetargettingInfo = info; }
 
 private:
-    AnimInfoTable* mAnimInfoTable;
-    u32 _20;
-    void* _28;
+    void* _18;
     u32 mAnimObjCount0;
     nn::g3d::SkeletalAnimObj* mSkelAnimObjStack0;
     u32 mAnimObjCount1;
@@ -86,10 +84,10 @@ private:
     void* mBlendWeightStack;
     u32 mPartialAnimObjCount;
     nn::g3d::SkeletalAnimObj* mPartialAnimObjStack;
-    void* _80;
-    u32 _88;
+    void* _70;
+    u32 _78;
     SklAnimRetargettingInfo* mRetargettingInfo;
-    bool _98;
-    bool _99;
+    bool _88;
+    bool _89;
 };
 }  // namespace al
