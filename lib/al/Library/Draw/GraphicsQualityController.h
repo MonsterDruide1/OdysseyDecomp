@@ -14,7 +14,7 @@ public:
     bool isChangedGraphicsQualityMode() const { return mIsChangedGraphicsQualityMode; }
 
 private:
-    void* _0[1];
+    void* _10[1];
     GraphicsQualityInfo* mGraphicsQualityInfo;
     void* _20[17];
     bool mIsChangedGraphicsQualityMode;

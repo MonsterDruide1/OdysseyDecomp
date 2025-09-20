@@ -20,7 +20,7 @@ public:
 
     void init();
     void write(al::ByamlWriter* writer) override;
-    void read(const al::ByamlIter& iter) override;
+    void read(const al::ByamlIter& save) override;
     s32 getDataNumMax() const;
     bool isInvalidId(s32 index) const;
     const SearchAmiiboData& getData(s32 index) const;

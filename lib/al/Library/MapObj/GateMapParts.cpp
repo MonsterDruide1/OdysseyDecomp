@@ -88,7 +88,7 @@ void GateMapParts::exeOpen() {
             return;
         }
 
-        if (mSuccessSeObj != nullptr)
+        if (mSuccessSeObj)
             startSe(mSuccessSeObj, "Riddle");
 
         startNerveAction(this, "End");
@@ -129,7 +129,7 @@ void GateMapParts::exeBound() {
             return;
         }
 
-        if (mSuccessSeObj != nullptr)
+        if (mSuccessSeObj)
             startSe(mSuccessSeObj, "Riddle");
 
         startNerveAction(this, "End");

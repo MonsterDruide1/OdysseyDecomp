@@ -87,12 +87,12 @@ public:
 
 private:
     void* _18[5];
-    s32 _3x;
+    s32 _40;
     bool mIsSupportGround;
     f32 _48;
     f32 _4c;
     sead::Vector3f mUp;
-    sead::Vector3f _60;
+    sead::Vector3f _5c;
     bool mIsIgnoreGround;
 };
 

@@ -4,7 +4,7 @@
 
 namespace al {
 
-AreaShapeSphere::AreaShapeSphere() {}
+AreaShapeSphere::AreaShapeSphere() = default;
 
 bool AreaShapeSphere::isInVolume(const sead::Vector3f& pos) const {
     sead::Vector3f baseTrans;
@@ -38,8 +38,9 @@ bool AreaShapeSphere::calcNearestEdgePoint(sead::Vector3f* edgePoint,
     return true;
 }
 
-bool AreaShapeSphere::checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                          const sead::Vector3f&) const {
+bool AreaShapeSphere::checkArrowCollision(sead::Vector3f* a2, sead::Vector3f* a3,
+                                          const sead::Vector3f& a4,
+                                          const sead::Vector3f& a5) const {
     return false;
 }
 

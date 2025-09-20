@@ -40,8 +40,8 @@ void AmiiboNpcDirector::init(ProjectNfpDirector* nfpDirector, al::AudioDirector*
     al::registerMessageTagDataString(mTagDataHolder, "CapName", &mCapName);
 }
 
-void AmiiboNpcDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) {
-    const al::LayoutInitInfo& layoutInitInfo = al::getLayoutInitInfo(initInfo);
+void AmiiboNpcDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& info) {
+    const al::LayoutInitInfo& layoutInitInfo = al::getLayoutInitInfo(info);
     mNpcLayout = new AmiiboNpcLayout(layoutInitInfo);
 
     mSearchDataTable = rs::getSearchAmiiboData(mNpcLayout);
@@ -212,9 +212,9 @@ void AmiiboNpcDirector::trySetAmiiboCostumeName(s32 id) {
     ShopItem::ItemInfo* itemB = nullptr;
     rs::tryFindAmiiboCostumeItemInfo(&itemA, &itemB, charId, numberingId, mNpcLayout);
 
-    if (itemA != nullptr)
+    if (itemA)
         mClothName = rs::getDisplayName(mNpcLayout, *itemA);
-    if (itemB != nullptr)
+    if (itemB)
         mCapName = rs::getDisplayName(mNpcLayout, *itemB);
 }
 
@@ -231,7 +231,7 @@ void AmiiboNpcDirector::checkTimeReverseAndRestore() {
 
 al::NfpInfo* AmiiboNpcDirector::tryGetTriggerTouchNfpInfo() {
     al::NfpInfo* nfpInfo = mNfpDirector->tryGetTriggerTouchNfpInfo();
-    if (nfpInfo == nullptr)
+    if (!nfpInfo)
         return nullptr;
 
     *mNfpInfo = *nfpInfo;

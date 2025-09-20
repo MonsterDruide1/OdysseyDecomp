@@ -11,7 +11,7 @@ public:
     void tryStartFlyAway();
 
 private:
-    void* _padding[0x19];
+    void* _108[0x19];
 };
 
 static_assert(sizeof(Bird) == 0x1d0);

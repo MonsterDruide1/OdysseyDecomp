@@ -111,7 +111,7 @@ void GameConfigData::write(al::ByamlWriter* writer) {
     writer->pop();
 }
 
-void GameConfigData::read(const al::ByamlIter& conf) {
+void GameConfigData::read(const al::ByamlIter& save) {
     mCameraStickSensitivityLevel = -1;
     mIsCameraReverseInputH = false;
     mIsCameraReverseInputV = false;
@@ -122,7 +122,7 @@ void GameConfigData::read(const al::ByamlIter& conf) {
     mPadRumbleLevel = 0;
 
     al::ByamlIter iter;
-    al::tryGetByamlIterByKey(&iter, conf, "GameConfigData");
+    al::tryGetByamlIterByKey(&iter, save, "GameConfigData");
     al::tryGetByamlS32(&mCameraStickSensitivityLevel, iter, "CameraStickSensitivityLevel");
     al::tryGetByamlBool(&mIsCameraReverseInputH, iter, "IsCameraReverseInputH");
     al::tryGetByamlBool(&mIsCameraReverseInputV, iter, "IsCameraReverseInputV");

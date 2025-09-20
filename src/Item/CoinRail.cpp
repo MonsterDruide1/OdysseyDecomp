@@ -63,15 +63,15 @@ __attribute__((always_inline)) void addCoinToRail(CoinRail* rail, const al::Acto
     al::getRailTotalLength(rail);
 }
 
-void CoinRail::init(const al::ActorInitInfo& initInfo) {
-    al::initActor(this, initInfo);
+void CoinRail::init(const al::ActorInitInfo& info) {
+    al::initActor(this, info);
 
     if (!al::isExistRail(this)) {
         kill();
         return;
     }
 
-    al::getArg(&mCoinNum, initInfo, "CoinNum");
+    al::getArg(&mCoinNum, info, "CoinNum");
     if (mCoinNum <= 1) {
         kill();
         return;
@@ -83,24 +83,24 @@ void CoinRail::init(const al::ActorInitInfo& initInfo) {
         return;
     }
 
-    al::tryGetArg(&mMoveVelocity, initInfo, "MoveVelocity");
+    al::tryGetArg(&mMoveVelocity, info, "MoveVelocity");
     if (mMoveVelocity < 0.0f) {
         kill();
         return;
     }
 
-    al::tryGetDisplayOffset(&mDisplayOffset, initInfo);
+    al::tryGetDisplayOffset(&mDisplayOffset, info);
 
     mCoins = new Coin*[mCoinNum];
     mRailPos = new f32[mCoinNum];
 
     if (al::isNearZero(mMoveVelocity))
-        addStaticCoinToRail(this, initInfo, mCoins, mRailPos, mCoinNum, isLoop);
+        addStaticCoinToRail(this, info, mCoins, mRailPos, mCoinNum, isLoop);
     else
-        addCoinToRail(this, initInfo, mCoins, mRailPos, mCoinNum);
+        addCoinToRail(this, info, mCoins, mRailPos, mCoinNum);
 
     f32 shadowLength = 1500.0f;
-    al::tryGetArg(&shadowLength, initInfo, "ShadowLength");
+    al::tryGetArg(&shadowLength, info, "ShadowLength");
     for (s32 i = 0; i < mCoinNum; i++)
         mCoins[i]->setShadowDropLength(shadowLength);
 
@@ -110,7 +110,7 @@ void CoinRail::init(const al::ActorInitInfo& initInfo) {
     f32 clipInfo = 0.0f;
     al::calcRailClippingInfo(&mClippingInfo, &clipInfo, this, 100.0f, 100.0f);
     al::setClippingInfo(this, clipInfo, &mClippingInfo);
-    al::initSubActorKeeperNoFile(this, initInfo, mCoinNum);
+    al::initSubActorKeeperNoFile(this, info, mCoinNum);
 
     for (s32 i = 0; i < mCoinNum; i++) {
         al::invalidateClipping(mCoins[i]);

@@ -46,10 +46,10 @@ public:
 
 private:
     sead::PerspectiveProjection mBase;
-    sead::Matrix44f _bc;
+    sead::Matrix44f _c0;
     sead::Matrix44f mInvMtx;
     sead::Matrix44f mStdMtx;
-    sead::Matrix44f _17c;
+    sead::Matrix44f _180;
     f32 mLeft;
     f32 mBottom;
     f32 mNear;

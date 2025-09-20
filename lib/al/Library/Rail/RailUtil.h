@@ -49,12 +49,12 @@ f32 calcNearestRailCoord(const IUseRail* railHolder, const sead::Vector3f& pos);
 f32 calcNearestRailPos(sead::Vector3f* railPos, const IUseRail* railHolder,
                        const sead::Vector3f& pos);
 void calcNearestRailDir(sead::Vector3f* dir, const IUseRail* railHolder, const sead::Vector3f& pos);
-void calcNearestRailPosAndDir(sead::Vector3f* pos, sead::Vector3f* dir, const IUseRail* railHolder,
-                              const sead::Vector3f& interval);
+void calcNearestRailPosAndDir(sead::Vector3f* railPos, sead::Vector3f* dir,
+                              const IUseRail* railHolder, const sead::Vector3f& pos);
 void calcRailPosDir(sead::Vector3f* railPos, sead::Vector3f* dir, const IUseRail* railHolder,
                     f32 coord);
 void calcRailPointPos(sead::Vector3f* pos, const IUseRail* railHolder, s32 index);
-s32 calcNearestRailPointNo(const IUseRail* railHolder, const sead::Vector3f&);
+s32 calcNearestRailPointNo(const IUseRail* railHolder, const sead::Vector3f& pos);
 s32 calcNearestRailPointNo(const IUseRail* railHolder);
 s32 calcCoordNearestRailPointNo(const IUseRail* railHolder);
 s32 getRailPartIndex(const IUseRail* railHolder);
@@ -63,7 +63,7 @@ bool isLoopRail(const IUseRail* railHolder);
 s32 getRailPointNum(const IUseRail* railHolder);
 f32 calcNearestRailPointPosCoord(const IUseRail* railHolder, const sead::Vector3f& pos);
 f32 calcRailCoordByPoint(const IUseRail* railHolder, s32 index);
-void calcRailUp(sead::Vector3f* pos, const IUseRail* railHolder);
+void calcRailUp(sead::Vector3f* up, const IUseRail* railHolder);
 PlacementInfo* getRailPointInfo(const IUseRail* railHolder, s32 index);
 s32 getRailPointNo(const IUseRail* railHolder);
 s32 getNextRailPointNo(const IUseRail* railHolder);
@@ -94,7 +94,7 @@ bool isRailPlusDir(const IUseRail* railHolder, const sead::Vector3f& dir);
 bool isRailPlusPoseSide(const LiveActor* actor);
 bool isRailPlusPoseUp(const LiveActor* actor);
 bool isRailPlusPoseFront(const LiveActor* actor);
-void calcRailPosAtCoord(sead::Vector3f* dir, const IUseRail* railHolder, f32 coord);
+void calcRailPosAtCoord(sead::Vector3f* pos, const IUseRail* railHolder, f32 coord);
 void calcRailDirAtCoord(sead::Vector3f* dir, const IUseRail* railHolder, f32 coord);
 void calcRailPosFront(sead::Vector3f* pos, const IUseRail* railHolder, f32 offset);
 void calcRailDirFront(sead::Vector3f* pos, const IUseRail* railHolder, f32 offset);
@@ -108,8 +108,8 @@ void setRailClippingInfo(sead::Vector3f* pos, LiveActor* actor, f32 step, f32 of
 void calcAndSyncMoveFitRailDir(IUseRail* railHolder, sead::Vector3f* out, f32 step,
                                const sead::Vector3f& pos, const sead::Vector3f& vertical,
                                bool reverse);
-void calcAndSyncMoveFitRailDir(IUseRail* railHolder, sead::Vector3f* out, f32 step,
-                               const sead::Vector3f& pos, const sead::Vector3f& vertical,
+void calcAndSyncMoveFitRailDir(IUseRail* railHolder, sead::Vector3f* outDir, f32 step,
+                               const sead::Vector3f& pos, const sead::Vector3f& gravity,
                                bool reverse);
 LiveActorGroup* createRailModelGroup(const ActorInitInfo& info, const sead::Vector3f& prevPointPos,
                                      const sead::Vector3f& pointPos, const char* actorName,

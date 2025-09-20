@@ -12,8 +12,8 @@ struct SeDirectorInitInfo {
     s32 listenerCount = 1;
     const char* defaultListenerName = "注視点";
     const char* defaultStageEffectName = nullptr;
-    bool useMeInfo = true;
-    bool useLoopSequencer = false;
+    bool isUseMeInfo = true;
+    bool isUseLoopSequencer = false;
     s32* field_28 = nullptr;
     s32 field_30 = -1;
     const sead::Vector3f* cameraPos = nullptr;

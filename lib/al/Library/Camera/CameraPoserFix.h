@@ -17,7 +17,7 @@ public:
 
     void init() override;
     void loadParam(const ByamlIter& iter) override;
-    void start(const CameraStartInfo& startInfo) override;
+    void start(const CameraStartInfo& info) override;
     void update() override;
 
     void setIsCalcNearestAtFromPreAt(bool isCalcNearestAtFromPreAt) {
