@@ -1191,12 +1191,12 @@ void Bubble::updateHackOnGround() {
             sead::Vector3f* velPtr = al::getVelocityPtr(this);
             al::verticalizeVec(velPtr, sead::Vector3f::ey, *velPtr);
         } else {
+            sead::Vector3f arrow;
             sead::Vector3f upDir;
             al::calcUpDir(&upDir, this);
 
             sead::Vector3f dir = al::getTrans(this) + al::getColliderOffsetY(this) * upDir;
 
-            sead::Vector3f arrow;
             if (alCollisionUtil::getFirstPolyOnArrow(this, &arrow, nullptr, dir,
                                                      (-50.0f - al::getColliderRadius(this)) *
                                                          sead::Vector3f::ey,
@@ -1229,7 +1229,7 @@ void Bubble::updateHackOnGround() {
 
     sead::Quatf quat2;
     al::makeQuatRotationRate(&quat2, mUpDir, mFireSurface, 0.1f);
-    quat2 *= al::getQuat(this);
+    sead::QuatCalcCommon<f32>::setMul(quat2, quat2, al::getQuat(this));
     al::setQuat(this, quat2);
 
     al::calcUpDir(&mUpDir, this);
