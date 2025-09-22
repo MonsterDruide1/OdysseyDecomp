@@ -156,11 +156,13 @@ void initExecutorDebugMovement(LiveActor* actor, const ActorInitInfo& info) {
     initExecutorUpdate(actor, info, "デバッグ[ActorMovement]");
 }
 
-// TODO: stores `calcViewCore` onto stack and immediately reads again
-// (https://decomp.me/scratch/vTlXW)
+inline s32 getCalcViewCore(LiveActor* actor) {
+    volatile s32 viewCore = actor->getModelKeeper()->getModelCtrl()->getCalcViewCore();
+    return viewCore;
+}
+
 void initExecutorModelUpdate(LiveActor* actor, const ActorInitInfo& info) {
-    s32 calcViewCore = actor->getModelKeeper()->getModelCtrl()->getCalcViewCore();
-    // mismatch here ^
+    s32 calcViewCore = getCalcViewCore(actor);
 
     const char* table;
     if (calcViewCore == 1)
