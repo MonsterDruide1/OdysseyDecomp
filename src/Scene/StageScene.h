@@ -72,7 +72,7 @@ class CinemaCaption;
 class KoopaLv1;
 class StageSceneStateWorldIntroCamera;
 class StageSceneStateTimeBalloon;
-class StageSceneStateTitleLogo ;
+class StageSceneStateTitleLogo;
 class StageSceneStateTalk;
 class LocationNameCtrl;
 class ShoppingWatcher;
@@ -128,7 +128,7 @@ private:
     sead::FixedSafeString<64> mCapTypeName;
     void* _2c8 = nullptr;
     GameDataHolder* mGameDataHolder = nullptr;
-    al::PlacementInfo* mPlacementInfo  = nullptr;
+    al::PlacementInfo* mPlacementInfo = nullptr;
     al::LayoutTextureRenderer* mLayoutTextureRenderer = nullptr;
     PlayGuideSkip* mPlayGuideSkip = nullptr;
     CinemaCaption* mCinemaCaption = nullptr;
@@ -148,7 +148,7 @@ private:
     bool mIsExistShineOrCoinCollectInStage = false;
     char _359[7];
     bool _360 = false;
-    void* _368  = nullptr;
+    void* _368 = nullptr;
     MapLayout* mMapLayout = nullptr;
     al::SimpleLayoutAppearWaitEnd* mPauseMenu = nullptr;
     al::DeriveActorGroup<ShoppingWatcher>* mShoppingWatcherGroup = nullptr;
@@ -177,7 +177,7 @@ private:
     al::ParabolicPath* mCheckpointWarpParabolicPath = nullptr;
     al::LiveActor* mDemoShine = nullptr;
     al::LiveActor* mDemoDotShine = nullptr;
-    void* unused_460 = nullptr;
+    void* _460 = nullptr;
     CollectBgmPlayer* mCollectBgmPlayer = nullptr;
     CollectBgmRegister* mCollectBgmRegister = nullptr;
     BgmAnimeSyncDirector* mBgmAnimeSyncDirector = nullptr;
@@ -185,7 +185,7 @@ private:
     const char* mActiveDemoName = nullptr;
     s32 mDemoSynchronizerTimer = 0;
     bool _494 = false;
-    bool mUpdateKitAndGraphics = false;
+    bool mIsUpdateKitAndGraphics = false;
     bool _496 = false;
     NpcEventDirector* mNpcEventDirector = nullptr;
     al::ChromakeyDrawer* mChromakeyDrawer = nullptr;
