@@ -1,12 +1,11 @@
 #pragma once
 
 #include <container/seadRingBuffer.h>
+#include <container/seadStrTreeMap.h>
 #include <prim/seadSafeString.h>
 
 namespace sead {
 class Heap;
-template <s32, typename>
-class StrTreeMap;
 }  // namespace sead
 
 namespace al {
@@ -17,13 +16,14 @@ class SeadAudioPlayer;
 class ResourceSystem {
 public:
     struct ResourceCategory {
+        ResourceCategory(const sead::SafeString& categoryName, sead::Heap* categoryHeap) {
+            name = categoryName;
+            heap = categoryHeap;
+        }
+
         sead::FixedSafeString<0x80> name;
-        sead::Heap* heap = nullptr;
-        sead::StrTreeMap<156, Resource*>* treeMap = nullptr;
-        void* _a8 = nullptr;
-        void* _b0 = nullptr;
-        s32 size = 0;
-        s32 id = 0;
+        sead::Heap* heap;
+        sead::StrTreeMap<156, Resource*> treeMap;
     };
 
     static_assert(sizeof(ResourceCategory) == 0xc0);
