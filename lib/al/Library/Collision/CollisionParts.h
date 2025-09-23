@@ -27,6 +27,8 @@ public:
 
     s32 get_15c() const { return _15c; }
 
+    bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
+
     bool isMoving() const { return mIsMoving; }
 
     const HitSensor* getConnectedSensor() const { return mConnectedSensor; }
