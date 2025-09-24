@@ -140,17 +140,19 @@ void lerpExponentVecEaseIn(sead::Vector3f* outVec, const sead::Vector3f& a, cons
                            f32 max, f32 min);
 void lerpExponentVecEaseOut(sead::Vector3f* outVec, const sead::Vector3f& a,
                             const sead::Vector3f& b, f32 max, f32 min);
-f32 clampLeapMinAbs(f32 a, f32 b, f32 clampA, f32 clampB);
+f32 clampLeapMinAbs(f32 a, f32 beforeLerp, f32 startLerp, f32 endLerp);
 f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t);
 f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width);
 void hermiteVec(sead::Vector3f* outVec, const sead::Vector3f& y0, const sead::Vector3f& m0,
                 const sead::Vector3f& y1, const sead::Vector3f& m1, f32 t);
-s32 converge(s32 a, s32 b, s32 t);
-f32 converge(f32 a, f32 b, f32 t);
-f32 convergeDegree(f32 a, f32 b, f32 t);
-f32 convergeRadian(f32 a, f32 b, f32 t);
-bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& a, const sead::Vector2f& b, f32 t);
-bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b, f32 t);
+s32 converge(s32 current, s32 target, s32 step);
+f32 converge(f32 current, f32 target, f32 step);
+f32 convergeDegree(f32 current, f32 target, f32 step);
+f32 convergeRadian(f32 current, f32 target, f32 step);
+bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& current,
+                 const sead::Vector2f& target, f32 step);
+bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& current,
+                 const sead::Vector3f& target, f32 step);
 f32 diffNearAngleDegree(f32 a, f32 b);
 bool isInRangeAngleDegree(f32, f32, f32);
 bool calcEyesAnimAngleInRange(f32*, const sead::Vector3f&, const sead::Vector3f&,
