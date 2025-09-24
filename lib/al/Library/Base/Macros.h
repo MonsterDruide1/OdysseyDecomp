@@ -1,5 +1,7 @@
 #pragma once
 
+#define ALWAYS_INLINE __attribute__((always_inline)) inline
+
 // https://stackoverflow.com/a/26408195/9275661
 #define __NARG__(...) __NARG_I_(__VA_ARGS__, __RSEQ_N())
 #define __NARG_I_(...) __ARG_N(__VA_ARGS__)
