@@ -685,7 +685,6 @@ void Bubble::calcAnim() {
     al::setShadowMaskOffset(this, offset, "body");
 }
 
-// NON_MATCHING: mFireSurface stored differently https://decomp.me/scratch/ffVkS
 void Bubble::recalcClippingInfo() {
     sead::Vector3f max = mCurrentPosition;
     sead::Vector3f min = mCurrentPosition;
@@ -794,6 +793,12 @@ void Bubble::revive() {
     al::setNerve(this, &NrvBubble.Revive);
 }
 
+// Hack to make updateLavaWave match
+inline void x1(sead::Vector3f* p, const sead::Vector3f& v) {
+    __asm("");
+    p->set(v);
+}
+
 void Bubble::updateLavaWave() {
     sead::Vector3f colliderY =
         (al::getColliderRadius(this) - al::getColliderOffsetY(this)) * sead::Vector3f::ey;
@@ -818,13 +823,17 @@ void Bubble::updateLavaWave() {
 
     if (isEnableSnapWaveSurface()) {
         if (isInFire) {
-            al::getTransPtr(this)->set(colliderY + checkPos);
+            sead::Vector3f* ptr = al::getTransPtr(this);
+            __asm("");
+            *ptr = colliderY + checkPos;
+
             mFireSurface.set(fireSurface);
             al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
             return;
         }
     } else if (isInFire && checkPos.y >= colliderPos.y) {
-        al::getTransPtr(this)->set(colliderY + checkPos);
+        x1(al::getTransPtr(this), colliderY + checkPos);
+
         mIsInFire = true;
         mFireSurface.set(fireSurface);
         al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
@@ -1135,7 +1144,6 @@ bool Bubble::isHoldHackAction() const {
     return !mIsPlayerCaptured && rs::isHoldHackAction(mPlayerHack);
 }
 
-// NON_MATCHING: https://decomp.me/scratch/VidWI
 bool Bubble::tryBoundMoveWall() {
     if (!al::isCollidedWall(this) || !al::isCollidedGround(this))
         return false;
@@ -1153,29 +1161,27 @@ bool Bubble::tryBoundMoveWall() {
     if (!al::tryNormalizeOrZero(&wallNormal))
         return false;
 
-    sead::Vector3f transMtx =
-        collisionParts->getBaseMtx().getBase(3) - collisionParts->getPrevBaseMtx().getBase(3);
+    sead::Vector3f prevTrans = collisionParts->getPrevBaseMtx().getBase(3);
+    sead::Vector3f baseTrans = collisionParts->getBaseMtx().getBase(3);
+    sead::Vector3f transMtx = baseTrans - prevTrans;
     al::verticalizeVec(&transMtx, groundNormal, transMtx);
 
     f32 lengthMtx = transMtx.length();
     if (al::isNearZero(lengthMtx))
         return false;
 
-    const f32 inv = 1.0f / lengthMtx;
-    transMtx.x *= inv;
-    transMtx.y *= inv;
-    transMtx.z *= inv;
+    sead::Vector3f scaledTransMtx = transMtx * (1.0f / lengthMtx);
 
-    if (transMtx.dot(wallNormal) < 0.7071068f)  // cos(45°)
+    if (scaledTransMtx.dot(wallNormal) < 0.7071068f)  // cos(45°)
         return false;
 
     sead::Vector3f parallel;
     sead::Vector3f vertical;
-    al::separateVectorParallelVertical(&parallel, &vertical, transMtx, al::getVelocity(this));
-    if (parallel.dot(transMtx) >= lengthMtx * 5.0f)
+    al::separateVectorParallelVertical(&parallel, &vertical, scaledTransMtx, al::getVelocity(this));
+    if (parallel.dot(scaledTransMtx) >= lengthMtx * 5.0f)
         return false;
 
-    al::getVelocityPtr(this)->set(5.0f * lengthMtx * transMtx + vertical);
+    al::getVelocityPtr(this)->setAdd(5.0f * lengthMtx * scaledTransMtx, vertical);
     mAnimScaleController->startHitReaction();
     return true;
 }
