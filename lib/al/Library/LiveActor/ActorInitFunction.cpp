@@ -279,10 +279,9 @@ void initActorModelKeeper(LiveActor* actor, const ActorInitInfo& info,
 
 void initActorModelKeeper(LiveActor* actor, const ActorInitInfo& info, const char* actorResource,
                           s32 blendAnimMax, const char* animResource) {
-    initActorModelKeeper(actor, info,
-                         findOrCreateActorResourceWithAnimResource(
-                             info.actorResourceHolder, actorResource, animResource, nullptr, false),
-                         blendAnimMax);
+    ActorResource* resource = findOrCreateActorResourceWithAnimResource(
+        info.actorResourceHolder, actorResource, animResource, nullptr, false);
+    initActorModelKeeper(actor, info, resource, blendAnimMax);
 }
 
 void initActorModelKeeperByHost(LiveActor* actor, const LiveActor* host) {
@@ -694,25 +693,25 @@ void initSubActorKeeperNoFile(LiveActor* actor, const ActorInitInfo& info, s32 m
 }
 
 void registerSubActor(LiveActor* actor, LiveActor* subActor) {
-    actor->getSubActorKeeper()->registerSubActor(subActor, 0);
+    actor->getSubActorKeeper()->registerSubActor(subActor, SubActorSync::cNone);
 }
 
 void registerSubActorSyncClipping(LiveActor* actor, LiveActor* subActor) {
-    actor->getSubActorKeeper()->registerSubActor(subActor, 2);
+    actor->getSubActorKeeper()->registerSubActor(subActor, SubActorSync::cClipping);
 }
 
 void registerSubActorSyncClippingAndHide(LiveActor* actor, LiveActor* subActor) {
-    actor->getSubActorKeeper()->registerSubActor(subActor, 6);
+    actor->getSubActorKeeper()->registerSubActor(subActor, SubActorSync::cClipping | SubActorSync::cHide);
 }
 
 void registerSubActorSyncAll(LiveActor* actor, LiveActor* subActor) {
-    actor->getSubActorKeeper()->registerSubActor(subActor, 15);
+    actor->getSubActorKeeper()->registerSubActor(subActor, SubActorSync::cAll);
 }
 
 void setSubActorOffSyncClipping(LiveActor* actor) {
     SubActorKeeper* keeper = actor->getSubActorKeeper();
     for (s32 i = 0; i < keeper->getCurActorCount(); i++)
-        keeper->getActorInfo(i)->syncType &= ~2;
+        keeper->getActorInfo(i)->syncType.unset(SubActorSync::cClipping);
 }
 
 void initScreenPointKeeper(LiveActor* actor, const Resource* resource, const ActorInitInfo& info,
