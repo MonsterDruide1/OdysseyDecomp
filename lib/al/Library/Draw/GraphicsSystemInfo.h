@@ -192,6 +192,20 @@ public:
 
     PostProcessingFilter* getPostProcessingFilter() const { return mPostProcessingFilter; }
 
+    GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+
+    ModelShaderHolder* getModelShaderHolder() const { return mModelShaderHolder; }
+
+    ModelOcclusionCullingDirector* getModelOcclusionCullingDirector() const {
+        return mModelOcclusionCullingDirector;
+    }
+
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+
+    PrepassTriangleCulling* getPrepassTriangleCulling() const { return mPrepassTriangleCulling; }
+
+    RadialBlurDirector* getRadialBlurDirector() const { return mRadialBlurDirector; }
+
 private:
     sead::StrTreeMap<128, const sead::PtrArray<UniformBlock>*> mViewIndexedUboArrayTree;
     GraphicsInitArg mInitArg;
