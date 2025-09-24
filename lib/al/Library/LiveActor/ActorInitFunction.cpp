@@ -701,7 +701,8 @@ void registerSubActorSyncClipping(LiveActor* actor, LiveActor* subActor) {
 }
 
 void registerSubActorSyncClippingAndHide(LiveActor* actor, LiveActor* subActor) {
-    actor->getSubActorKeeper()->registerSubActor(subActor, SubActorSync::cClipping | SubActorSync::cHide);
+    actor->getSubActorKeeper()->registerSubActor(subActor,
+                                                 SubActorSync::cClipping | SubActorSync::cHide);
 }
 
 void registerSubActorSyncAll(LiveActor* actor, LiveActor* subActor) {
@@ -711,7 +712,7 @@ void registerSubActorSyncAll(LiveActor* actor, LiveActor* subActor) {
 void setSubActorOffSyncClipping(LiveActor* actor) {
     SubActorKeeper* keeper = actor->getSubActorKeeper();
     for (s32 i = 0; i < keeper->getCurActorCount(); i++)
-        keeper->getActorInfo(i)->syncType.unset(SubActorSync::cClipping);
+        keeper->getActorInfo(i)->syncType &= ~SubActorSync::cClipping;
 }
 
 void initScreenPointKeeper(LiveActor* actor, const Resource* resource, const ActorInitInfo& info,
