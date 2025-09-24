@@ -566,8 +566,7 @@ f32 lerpDegree(f32 a, f32 b, f32 t) {
     f32 aa = b - a > 180.0f ? a + 360.0f : a;
     f32 bb = b - a < -180.0f ? b + 360.0f : b;
 
-    t = sead::Mathf::clamp(t, 0.0f, 1.0f);
-    return modf((aa * (1.0f - t) + t * bb) + 360.0f, 360.0f) + 0.0f;
+    return modf(lerpValue(aa, bb, t) + 360.0f, 360.0f) + 0.0f;
 }
 
 f32 lerpRadian(f32 a, f32 b, f32 t) {
@@ -577,8 +576,7 @@ f32 lerpRadian(f32 a, f32 b, f32 t) {
     f32 aa = b - a > sead::Mathf::pi() ? a + sead::Mathf::pi2() : a;
     f32 bb = b - a < -sead::Mathf::pi() ? b + sead::Mathf::pi2() : b;
 
-    t = sead::Mathf::clamp(t, 0.0f, 1.0f);
-    return modf((aa * (1.0f - t) + t * bb) + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
+    return modf(lerpValue(aa, bb, t) + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
 }
 
 void lerpVec(sead::Vector2f* outVec, const sead::Vector2f& a, const sead::Vector2f& b, f32 t) {
@@ -595,15 +593,15 @@ void lerpVec(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector
 void lerpVecHV(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
                const sead::Vector3f& c, f32 tH, f32 tV) {
     sead::Vector3f ba = b - a;
-    sead::Vector3f v = c * ba.dot(c);
+    sead::Vector3f totalV = c * ba.dot(c);
 
-    outVec->x = a.x + (ba.x - v.x) * tH;
-    outVec->y = a.y + (ba.y - v.y) * tH;
-    outVec->z = a.z + (ba.z - v.z) * tH;
+    outVec->x = a.x + (ba.x - totalV.x) * tH;
+    outVec->y = a.y + (ba.y - totalV.y) * tH;
+    outVec->z = a.z + (ba.z - totalV.z) * tH;
 
-    outVec->x += v.x * tV;
-    outVec->y += v.y * tV;
-    outVec->z += v.z * tV;
+    outVec->x += totalV.x * tV;
+    outVec->y += totalV.y * tV;
+    outVec->z += totalV.z * tV;
 }
 
 void separateVectorHV(sead::Vector3f* outH, sead::Vector3f* outV, const sead::Vector3f& a,
@@ -679,18 +677,19 @@ void lerpExponentVecEaseOut(sead::Vector3f* outVec, const sead::Vector3f& a,
     outVec->z = z;
 }
 
-f32 clampLeapMinAbs(f32 a, f32 b, f32 clampA, f32 clampB) {
+// BUG: should've been called clampLerpMinAbs
+f32 clampLeapMinAbs(f32 a, f32 beforeLerp, f32 startLerp, f32 endLerp) {
     f32 absA = sead::Mathf::abs(a);
-    clampA = sead::Mathf::abs(clampA);
+    startLerp = sead::Mathf::abs(startLerp);
 
-    if (sead::Mathf::abs(a) < clampA)
-        return sign(a) * sead::Mathf::abs(b);
+    if (sead::Mathf::abs(a) < startLerp)
+        return sign(a) * sead::Mathf::abs(beforeLerp);
 
-    clampB = sead::Mathf::abs(clampB);
-    if (absA > clampB)
+    endLerp = sead::Mathf::abs(endLerp);
+    if (absA > endLerp)
         return a;
 
-    return sign(a) * lerpValue(absA, clampA, clampB, sead::Mathf::abs(b), clampB);
+    return sign(a) * lerpValue(absA, startLerp, endLerp, sead::Mathf::abs(beforeLerp), endLerp);
 }
 
 /**
@@ -719,91 +718,93 @@ void hermiteVec(sead::Vector3f* outVec, const sead::Vector3f& y0, const sead::Ve
     outVec->z = hermite(y0.z, m0.z, y1.z, m1.z, t);
 }
 
-s32 converge(s32 a, s32 b, s32 t) {
-    s32 result = a;
+s32 converge(s32 current, s32 target, s32 step) {
+    s32 result = current;
 
-    if (a < b) {
-        result += t;
-        if (result > b)
-            result = b;
+    if (current < target) {
+        result += step;
+        if (result > target)
+            result = target;
     } else {
-        result -= t;
-        if (result < b)
-            result = b;
+        result -= step;
+        if (result < target)
+            result = target;
     }
 
     return result;
 }
 
-f32 converge(f32 a, f32 b, f32 t) {
-    f32 result = a;
+f32 converge(f32 current, f32 target, f32 step) {
+    f32 result = current;
 
-    if (a < b) {
-        result += t;
-        if (result > b)
-            result = b;
+    if (current < target) {
+        result += step;
+        if (result > target)
+            result = target;
     } else {
-        result -= t;
-        if (result < b)
-            result = b;
+        result -= step;
+        if (result < target)
+            result = target;
     }
 
     return result;
 }
 
-f32 convergeDegree(f32 a, f32 b, f32 t) {
-    if (180.0f > (b + 360.0f) - a)
-        b += 360.0f;
-    else if (a - (b - 360.0f) < 180.0f)
-        b -= 360.0f;
+f32 convergeDegree(f32 current, f32 target, f32 step) {
+    if (180.0f > (target + 360.0f) - current)
+        target += 360.0f;
+    else if (current - (target - 360.0f) < 180.0f)
+        target -= 360.0f;
 
-    return fmod(converge(a, b, t) + 360.0f, 360.0f) + 0.0f;
+    return fmod(converge(current, target, step) + 360.0f, 360.0f) + 0.0f;
 }
 
-f32 convergeRadian(f32 a, f32 b, f32 t) {
-    // BUG: N's mistake here. Correct comparison: pi() > (b + pi2()) - a
-    if (sead::Mathf::pi2() > (b + sead::Mathf::pi2()) - a)
-        b += sead::Mathf::pi2();
-    else if (a - (b - sead::Mathf::pi2()) < sead::Mathf::pi())
-        b -= sead::Mathf::pi2();
+f32 convergeRadian(f32 current, f32 target, f32 step) {
+    // BUG: N's mistake here. Correct comparison: pi() > (target + pi2()) - current
+    if (sead::Mathf::pi2() > (target + sead::Mathf::pi2()) - current)
+        target += sead::Mathf::pi2();
+    else if (current - (target - sead::Mathf::pi2()) < sead::Mathf::pi())
+        target -= sead::Mathf::pi2();
 
-    return fmod(converge(a, b, t) + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
+    return fmod(converge(current, target, step) + sead::Mathf::pi2(), sead::Mathf::pi2()) + 0.0f;
 }
 
-bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& a, const sead::Vector2f& b, f32 t) {
-    sead::Vector2f dir = b - a;
+bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& current,
+                 const sead::Vector2f& target, f32 step) {
+    sead::Vector2f dir = target - current;
 
     bool isNotNormalized = true;
     f32 length = dir.length();
-    if (length > t) {
-        dir *= t / length;
+    if (length > step) {
+        dir *= step / length;
         isNotNormalized = false;
     }
 
-    outVec->x = dir.x + a.x;
-    outVec->y = dir.y + a.y;
+    outVec->x = dir.x + current.x;
+    outVec->y = dir.y + current.y;
     return isNotNormalized;
 }
 
-bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b, f32 t) {
-    sead::Vector3f dir = b - a;
+bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& current,
+                 const sead::Vector3f& target, f32 step) {
+    sead::Vector3f dir = target - current;
 
     bool isNotNormalized = true;
     f32 length = dir.length();
-    if (length > t) {
-        dir *= t / length;
+    if (length > step) {
+        dir *= step / length;
         isNotNormalized = false;
     }
 
-    outVec->x = dir.x + a.x;
-    outVec->y = dir.y + a.y;
-    outVec->z = dir.z + a.z;
+    outVec->x = dir.x + current.x;
+    outVec->y = dir.y + current.y;
+    outVec->z = dir.z + current.z;
     return isNotNormalized;
 }
 
 f32 diffNearAngleDegree(f32 a, f32 b) {
     f32 angle = modf(b - a + 360.0f, 360.0f) + 0.0f;
-    if (180.0f <= angle)
+    if (angle >= 180.0f)
         angle -= 360.0f;
     return angle;
 }
@@ -906,7 +907,7 @@ void getRandomInCircle(sead::Vector2f* outPos, f32 maxRadius) {
 
 void getRandomInCircleMinMaxRadius(sead::Vector2f* outPos, f32 minRadius, f32 maxRadius) {
     f32 angle = getRandom(sead::Mathf::pi2());
-    f32 range = (minRadius / maxRadius) * (minRadius / maxRadius);
+    f32 range = sead::Mathf::square(minRadius / maxRadius);
     f32 radius = sead::Mathf::sqrt(range + getRandom() * (1.0f - range)) * maxRadius;
 
     outPos->x = radius * sead::Mathf::cos(angle);
@@ -927,7 +928,7 @@ void getRandomInCircle(sead::Vector3f* outPos, const sead::Vector3f& pos,
 void getRandomOnSphere(sead::Vector3f* outPos, f32 radius) {
     f32 angle = getRandom(sead::Mathf::pi2());
     f32 zPos = 2.0f * getRandom() - 1.0f;
-    f32 radiusXY = sead::Mathf::sqrt(1.0f - zPos * zPos) * radius;
+    f32 radiusXY = sead::Mathf::sqrt(1.0f - sead::Mathf::square(zPos)) * radius;
 
     outPos->x = sead::Mathf::cos(angle) * radiusXY;
     outPos->y = sead::Mathf::sin(angle) * radiusXY;
