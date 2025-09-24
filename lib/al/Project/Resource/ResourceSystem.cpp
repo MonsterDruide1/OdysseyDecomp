@@ -31,6 +31,20 @@ Resource* ResourceSystem::findResource(const sead::SafeString& categoryName) {
     return findResourceCore(categoryName, nullptr);
 }
 
+Resource* ResourceSystem::findResourceCore(const sead::SafeString& name,
+                                           sead::RingBuffer<ResourceCategory*>::iterator* outIter) {
+    for (auto iter = mCategories.begin(); iter != mCategories.end(); ++iter) {
+        auto* node = (*iter)->treeMap.find(name);
+        if (!node)
+            continue;
+        if (outIter)
+            *outIter = iter;
+        return node->value();
+    }
+
+    return nullptr;
+}
+
 Resource* ResourceSystem::findOrCreateResource(const sead::SafeString& categoryName,
                                                const char* name) {
     Resource* resource = findResourceCore(categoryName, nullptr);
