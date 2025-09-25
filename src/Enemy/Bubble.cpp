@@ -1404,7 +1404,7 @@ void Bubble::calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& in
     rs::calcHackerMoveVec(moveVec, mPlayerHack, inputDir);
 }
 
-// NON_MATCHING: Different quat multiplication https://decomp.me/scratch/s3det
+// NON_MATCHING: Different quat multiplication https://decomp.me/scratch/EE9He
 void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& quatA, const sead::Quatf& quatB,
                                        const sead::Quatf& quatC, bool isValue) {
     sead::Vector3f direction = al::getTrans(this) - mPreviousTrans;
@@ -1660,7 +1660,7 @@ void Bubble::updateCollisionPartsMove() {
     mLandPos.set(delta - al::getTrans(this));
 }
 
-// NON_MATCHING: Bad branch order https://decomp.me/scratch/6PN8m
+// NON_MATCHING: Bad branch order https://decomp.me/scratch/ACufd
 void Bubble::accelStick() {
     sead::Vector3f velocity;
     if (al::isOnGroundNoVelocity(this, 0))
@@ -2103,7 +2103,7 @@ void Bubble::endHackMove() {
     al::setQuat(this, mCurrentRotation);
 }
 
-// NON_MATCHING: Major issues https://decomp.me/scratch/QivBr
+// NON_MATCHING: Major issues https://decomp.me/scratch/DcTGQ
 void Bubble::exeHackJump() {
     bool isJumpHigh = al::isNerve(this, &NrvBubble.HackJumpHigh);
     f32 cosntA = !isJumpHigh ? 1.1f : 1.2f;
@@ -2365,7 +2365,7 @@ void Bubble::endHackInLauncher() {
     }
 }
 
-// NON_MATCHING: Unreachable code not https://decomp.me/scratch/R6cb7
+// NON_MATCHING: Unreachable code not https://decomp.me/scratch/xhXeL
 void Bubble::exeHackResetPos() {
     sead::Quatf quatA;
     sead::Quatf quatB;
