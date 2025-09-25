@@ -2,7 +2,7 @@
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorParamMove.h"
+#include "Library/LiveActor/ActorParamHolder.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -40,9 +40,8 @@ void FlyerStateWander::exeWander() {
     }
 
     const al::ActorParamMove* actorParamMove = mFlyerStateWanderParam->getActorParamMove();
-    al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->forceFront,
-                           actorParamMove->forceGravity, actorParamMove->decay,
-                           actorParamMove->turnDegrees);
+    al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->moveAccel, actorParamMove->gravity,
+                           actorParamMove->moveFriction, actorParamMove->turnSpeedDegree);
 
     if (al::isGreaterEqualStep(this, mNerveTime))
         al::setNerve(this, &Wait);
