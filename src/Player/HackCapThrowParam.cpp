@@ -1,6 +1,6 @@
 #include "Player/HackCapThrowParam.h"
 
-#include "Library/LiveActor/ActorParamHolder.h"
+#include "Library/LiveActor/ActorParamHolderUtil.h"
 
 HackCapThrowParam::HackCapThrowParam(al::LiveActor* actor) {
     mHackThrowHeight = al::findActorParamF32(actor, "投げる高さ");
