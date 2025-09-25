@@ -24,10 +24,6 @@ PlayerJudgeTalkGround::PlayerJudgeTalkGround(
       mCollider(playerCollider), mPlayerInput(playerInput), mPlayerConst(playerConst),
       mPlayerStateWait(playerStateWait) {}
 
-void PlayerJudgeTalkGround::reset() {}
-
-void PlayerJudgeTalkGround::update() {}
-
 bool PlayerJudgeTalkGround::judge() const {
     auto* currentHackActor = mPlayerHackKeeper->getCurrentHackActor();
     if (mPlayerHackKeeper->getUnkHitSensor()) {

@@ -2,7 +2,7 @@
 
 #include <math/seadQuat.h>
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -26,7 +26,7 @@ CoinStateAppearRotate::CoinStateAppearRotate(al::LiveActor* actor, al::MtxConnec
 }
 
 void CoinStateAppearRotate::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &NrvCoinStateAppearRotate.Rotate);
 }
 

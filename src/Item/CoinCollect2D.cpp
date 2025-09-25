@@ -1,6 +1,6 @@
 #include "Item/CoinCollect2D.h"
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -95,10 +95,6 @@ bool CoinCollect2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
 void CoinCollect2D::endClipped() {
     rs::syncCoin2DAnimFrame(this, "Wait");
     al::LiveActor::endClipped();
-}
-
-ActorDimensionKeeper* CoinCollect2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }
 
 void CoinCollect2D::appearHintEffect() {

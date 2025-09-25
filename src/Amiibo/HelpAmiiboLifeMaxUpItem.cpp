@@ -67,7 +67,3 @@ void HelpAmiiboLifeMaxUpItem::activate() {
     }
     al::startSe(getDirector(), "AmiiboPeach");
 }
-
-HelpAmiiboType HelpAmiiboLifeMaxUpItem::getType() const {
-    return HelpAmiiboType::Peach;
-}

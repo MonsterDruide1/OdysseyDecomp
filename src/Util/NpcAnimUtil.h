@@ -5,18 +5,18 @@
 #include <math/seadVector.h>
 
 namespace al {
-struct ActorInitInfo;
-class LiveActor;
 class HitSensor;
-class SensorMsg;
+class IUseNerve;
+class LiveActor;
 class MtxConnector;
+class SensorMsg;
+struct ActorInitInfo;
 }  // namespace al
-
-class TalkNpcParam;
+class ActorStateReactionBase;
 class NpcJointLookAtController;
 class NpcStateReactionParam;
 class PlayerEyeSensorHitHolder;
-class ShellActorStateReaction;
+class TalkNpcParam;
 
 namespace rs {
 bool tryApplyNpcMaterialAnimPresetFromPlacementInfo(al::LiveActor*, const al::ActorInitInfo&,
@@ -56,7 +56,16 @@ void syncActionCityMayorFace(al::LiveActor*);
 void syncMtsAnimCityMayorFace(al::LiveActor*);
 bool isExistFaceAnim(al::LiveActor*, const char*);
 void animateCityMayorFace(al::LiveActor*, const char*, f32);
-ShellActorStateReaction* createNpcStateReaction(al::LiveActor*, const TalkNpcParam*,
-                                                const NpcStateReactionParam*);
+ActorStateReactionBase* createNpcStateReaction(al::LiveActor*, const TalkNpcParam*,
+                                               const NpcStateReactionParam*);
 bool isInvalidTrampleSensor(const al::HitSensor*, const TalkNpcParam*);
 }  // namespace rs
+
+namespace TalkNpcFunction {
+bool tryGetHackingEventHackType(s32*, const al::ActorInitInfo&);
+}
+
+namespace BirdFunction {
+void tryUpdateFlyAwayDisappearDitherAlpha(al::LiveActor* actor, const al::IUseNerve* user,
+                                          s32 start_step, s32 end_step);
+}

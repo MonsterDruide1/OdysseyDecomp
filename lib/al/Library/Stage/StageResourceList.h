@@ -21,6 +21,8 @@ public:
     const ByamlIter& getPlacementIter() const;
     const ByamlIter& getZoneIter() const;
 
+    Resource* getResource() const { return mResource; }
+
 private:
     Resource* mResource;
     PlacementInfo* mPlacementInfo = nullptr;

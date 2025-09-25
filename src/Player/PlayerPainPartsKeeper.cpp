@@ -11,9 +11,9 @@
 #include "Player/PlayerCostumeInfo.h"
 #include "Player/PlayerModelHolder.h"
 
-PlayerPainPartsKeeper::PlayerPainPartsKeeper(const al::LiveActor* liveActor,
+PlayerPainPartsKeeper::PlayerPainPartsKeeper(const al::LiveActor* actor,
                                              const PlayerCostumeInfo* costumeInfo)
-    : mLiveActor(liveActor), mPlayerCostumeInfo(costumeInfo) {}
+    : mLiveActor(actor), mPlayerCostumeInfo(costumeInfo) {}
 
 void PlayerPainPartsKeeper::update() {
     updateNeedle();
@@ -57,9 +57,9 @@ bool PlayerPainPartsKeeper::isInvalidNoseDynamics() const {
 static sead::Vector3f initialPosition = {0, 0, 0};
 static sead::Vector3f initialRotation = {0, 270, 180};
 
-void PlayerPainPartsKeeper::createNoseNeedle(const PlayerModelHolder* playerModelHolder,
+void PlayerPainPartsKeeper::createNoseNeedle(const PlayerModelHolder* modelHolder,
                                              const al::ActorInitInfo& actorInitInfo) {
-    auto* playerFaceActor = playerModelHolder->findModelActor("Normal");
+    auto* playerFaceActor = modelHolder->findModelActor("Normal");
     auto* faceSubActor = al::getSubActor(playerFaceActor, "顔");
     mPlayerFaceActor = playerFaceActor;
     mNeedlesActor = new al::PartsModel("鼻のトゲ");

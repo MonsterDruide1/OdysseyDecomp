@@ -10,7 +10,7 @@ class JangoDirector : public al::ISceneObj {
 public:
     JangoDirector();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "ジャンゴ保持者"; }
 
     void registerJango(Jango* jango);
     bool isEnableCap() const;

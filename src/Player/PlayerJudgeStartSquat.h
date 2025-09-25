@@ -8,10 +8,13 @@ class PlayerCarryKeeper;
 
 class PlayerJudgeStartSquat : public IJudge {
 public:
-    PlayerJudgeStartSquat(const PlayerInput*, const PlayerCounterForceRun*,
-                          const PlayerCarryKeeper*);
-    void reset() override;
-    void update() override;
+    PlayerJudgeStartSquat(const PlayerInput* input, const PlayerCounterForceRun* counterForceRun,
+                          const PlayerCarryKeeper* carryKeeper);
+
+    void reset() override {}
+
+    void update() override {}
+
     bool judge() const override;
 
 private:

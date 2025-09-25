@@ -41,8 +41,9 @@
 #include "Library/Obj/FarDistanceDitherAnimator.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
+#include "Library/Resource/ActorResource.h"
 #include "Library/Resource/Resource.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Se/SeFunction.h"
 #include "Library/Shadow/ActorShadowUtil.h"
 #include "Library/Stage/StageSwitchUtil.h"
@@ -722,7 +723,7 @@ void initCreateActorWithPlacementInfo(LiveActor* actor, const ActorInitInfo& ini
 void initCreateActorNoPlacementInfo(LiveActor* actor, const ActorInitInfo& initInfo) {
     PlacementInfo placementInfo;
     ActorInitInfo childInitInfo;
-    childInitInfo.initViewIdSelf(&placementInfo, initInfo);
+    childInitInfo.initViewIdHost(&placementInfo, initInfo);
     actor->init(childInitInfo);
 }
 
@@ -799,7 +800,6 @@ LiveActor* tryCreateLinksActorFromFactorySingle(const ActorInitInfo& initInfo,
     return createLinksActorFromFactory(initInfo, linkName, 0);
 }
 
-// NON_MATCHING: Same as above
 void createAndRegisterLinksActorFromFactory(LiveActorGroup* group, const ActorInitInfo& initInfo,
                                             const char* linkName) {
     ActorInitInfo childInitInfo;

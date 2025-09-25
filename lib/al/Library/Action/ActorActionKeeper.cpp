@@ -73,27 +73,27 @@ void ActorActionKeeper::init() {
         mFlagCtrl->initPost();
 }
 
-bool ActorActionKeeper::startAction(const char* name) {
+bool ActorActionKeeper::startAction(const char* action) {
     mIsActionRunning = true;
     if (!mNerveActionCtrl)
-        tryStartActionNoAnim(name);
+        tryStartActionNoAnim(action);
 
-    return mAnimCtrl && mAnimCtrl->start(name);
+    return mAnimCtrl && mAnimCtrl->start(action);
 }
 
-void ActorActionKeeper::tryStartActionNoAnim(const char* string) {
+void ActorActionKeeper::tryStartActionNoAnim(const char* action) {
     if (mFlagCtrl)
-        mFlagCtrl->start(string);
+        mFlagCtrl->start(action);
     if (mEffectCtrl)
-        mEffectCtrl->startAction(string);
+        mEffectCtrl->startAction(action);
     if (mSeCtrl)
-        mSeCtrl->startAction(string);
+        mSeCtrl->startAction(action);
     if (mBgmCtrl)
-        mBgmCtrl->startAction(string);
+        mBgmCtrl->startAction(action);
     if (mPadAndCameraCtrl)
-        mPadAndCameraCtrl->startAction(string);
+        mPadAndCameraCtrl->startAction(action);
     if (mScreenEffectCtrl)
-        mScreenEffectCtrl->startAction(string);
+        mScreenEffectCtrl->startAction(action);
 }
 
 void ActorActionKeeper::updatePrev() {}

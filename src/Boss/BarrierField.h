@@ -8,8 +8,8 @@ struct ActorInitInfo;
 
 class BarrierField : public al::LiveActor {
 public:
-    BarrierField(const char*);
-    void init(const al::ActorInitInfo&) override;
+    BarrierField(const char* name);
+    void init(const al::ActorInitInfo& info) override;
     void appear() override;
     void kill() override;
     void disappearByShineGet();

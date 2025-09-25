@@ -23,8 +23,8 @@ NERVES_MAKE_STRUCT(PlayGuideCamera, Hide, Appear, End);
 PlayGuideCamera::PlayGuideCamera(const char* name, const al::LayoutInitInfo& info,
                                  const al::LiveActor* player)
     : al::LayoutActor(name), mPlayer(player) {
-    al::initLayoutActor(this, info, "PlayGuideCamera", nullptr);
-    initNerve(&NrvPlayGuideCamera.Hide, 0);
+    al::initLayoutActor(this, info, "PlayGuideCamera");
+    initNerve(&NrvPlayGuideCamera.Hide);
     appear();
     hide();
 }
@@ -58,11 +58,11 @@ bool PlayGuideCamera::tryAppear() {
 
 void PlayGuideCamera::exeAppear() {
     if (al::isFirstStep(this)) {
-        al::startAction(this, "Appear", nullptr);
+        al::startAction(this, "Appear");
         al::showPaneRoot(this);
         mIsShown = true;
     }
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
     else if (!al::isExistCameraInputAtDisableTiming(this, 0))
         mIsShown = false;
@@ -70,7 +70,7 @@ void PlayGuideCamera::exeAppear() {
 
 void PlayGuideCamera::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", nullptr);
+        al::startAction(this, "Wait");
 
     if (al::isGreaterEqualStep(this, 30)) {
         al::setNerve(this, &NrvPlayGuideCamera.End);
@@ -88,9 +88,9 @@ void PlayGuideCamera::exeWait() {
 
 void PlayGuideCamera::exeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
+        al::startAction(this, "End");
 
-    if (al::isActionEnd(this, nullptr)) {
+    if (al::isActionEnd(this)) {
         al::hidePaneRoot(this);
         al::setNerve(this, &NrvPlayGuideCamera.Hide);
     }

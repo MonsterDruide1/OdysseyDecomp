@@ -33,7 +33,7 @@ void CameraVerticalAbsorber::invalidate() {
         setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
 }
 
-// NON_MATCHING
+// NON_MATCHING: https://decomp.me/scratch/Zhx9Y
 void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartInfo& info) {
     alCameraPoserFunction::calcTargetFront(&mPrevTargetFront, mCameraPoser);
 
@@ -63,9 +63,9 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
     setNerve(this, &NrvCameraVerticalAbsorber.Absorb);
 }
 
-void CameraVerticalAbsorber::load(const ByamlIter& data) {
+void CameraVerticalAbsorber::load(const ByamlIter& iter) {
     ByamlIter it;
-    if (!data.tryGetIterByKey(&it, "VerticalAbsorb"))
+    if (!iter.tryGetIterByKey(&it, "VerticalAbsorb"))
         return;
 
     tryGetByamlF32(&mAbsorbScreenPosUp, it, "AbsorbScreenPosUp");
@@ -79,7 +79,7 @@ void CameraVerticalAbsorber::load(const ByamlIter& data) {
     mAdvanceAbsorbScreenPosUp = getByamlKeyFloat(it2, "AdvanceAbsorbScreenPosUp");
 }
 
-// NON_MATCHING
+// NON_MATCHING: https://decomp.me/scratch/JdemU
 void CameraVerticalAbsorber::update() {
     if (mIsStopUpdate)
         return;

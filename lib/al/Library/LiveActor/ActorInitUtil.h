@@ -103,7 +103,7 @@ void getActorRecourseDataString(const char** val, LiveActor* actor, const char* 
                                 const char* entryName);
 void getActorRecourseDataV3f(sead::Vector3f* val, LiveActor* actor, const char* fileName,
                              const char* entryName);
-void getActorRecourseDataBox3f(sead::BoundBox3f* val, LiveActor* actor, const char* fileName,
+void getActorRecourseDataBox3f(sead::BoundBox3f* box, LiveActor* actor, const char* fileName,
                                const char* entryName);
 PartsEffectGroup* createPartsEffectGroup(LiveActor* actor, const ActorInitInfo& initInfo,
                                          s32 maxEffects);

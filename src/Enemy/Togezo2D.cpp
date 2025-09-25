@@ -14,7 +14,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
 
@@ -168,8 +168,4 @@ void Togezo2D::exeHideWait() {
             mIsAlwaysFalse = false;
         al::resetPosition(this);
     }
-}
-
-ActorDimensionKeeper* Togezo2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }

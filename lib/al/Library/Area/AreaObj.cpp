@@ -13,23 +13,15 @@ namespace al {
 
 AreaObj::AreaObj(const char* name) : mName(name) {}
 
-const char* AreaObj::getName() const {
-    return mName;
-}
-
-StageSwitchKeeper* AreaObj::getStageSwitchKeeper() const {
-    return mStageSwitchKeeper;
-}
-
 void AreaObj::initStageSwitchKeeper() {
     mStageSwitchKeeper = new StageSwitchKeeper();
 }
 
-void AreaObj::init(const AreaInitInfo& initInfo) {
+void AreaObj::init(const AreaInitInfo& info) {
     using AreaObjFunctor = FunctorV0M<AreaObj*, void (AreaObj::*)()>;
 
-    mPlacementInfo = new PlacementInfo(initInfo);
-    mSceneObjHolder = initInfo.getSceneObjHolder();
+    mPlacementInfo = new PlacementInfo(info);
+    mSceneObjHolder = info.getSceneObjHolder();
     tryGetMatrixTR(&mAreaTR, *mPlacementInfo);
     tryGetArg(&mPriority, *mPlacementInfo, "Priority");
 
@@ -46,7 +38,7 @@ void AreaObj::init(const AreaInitInfo& initInfo) {
     tryGetScale(&scale, *mPlacementInfo);
     mAreaShape->setScale(scale);
 
-    initStageSwitch(this, initInfo.getStageSwitchDirector(), initInfo);
+    initStageSwitch(this, info.getStageSwitchDirector(), info);
     if (listenStageSwitchOnOffAppear(this, AreaObjFunctor(this, &AreaObj::invalidate),
                                      AreaObjFunctor(this, &AreaObj::validate)))
         invalidate();
@@ -55,28 +47,16 @@ void AreaObj::init(const AreaInitInfo& initInfo) {
         validate();
 }
 
-bool AreaObj::isInVolume(const sead::Vector3f& position) const {
+bool AreaObj::isInVolume(const sead::Vector3f& pos) const {
     if (!mIsValid)
         return false;
-    return mAreaShape->isInVolume(position);
+    return mAreaShape->isInVolume(pos);
 }
 
-bool AreaObj::isInVolumeOffset(const sead::Vector3f& position, f32 offset) const {
+bool AreaObj::isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const {
     if (!mIsValid)
         return false;
-    return mAreaShape->isInVolumeOffset(position, offset);
-}
-
-SceneObjHolder* AreaObj::getSceneObjHolder() const {
-    return mSceneObjHolder;
-}
-
-void AreaObj::validate() {
-    mIsValid = true;
-}
-
-void AreaObj::invalidate() {
-    mIsValid = false;
+    return mAreaShape->isInVolumeOffset(pos, offset);
 }
 
 }  // namespace al

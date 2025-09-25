@@ -15,7 +15,7 @@
 
 #include "Item/Coin2DCityDirector.h"
 #include "System/GameDataFunction.h"
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {
@@ -72,10 +72,6 @@ bool Coin2DCity::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
         return true;
     }
     return false;
-}
-
-ActorDimensionKeeper* Coin2DCity::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }
 
 void Coin2DCity::startLight() {

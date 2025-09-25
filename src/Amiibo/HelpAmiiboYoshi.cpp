@@ -36,7 +36,3 @@ void HelpAmiiboYoshi::activate() {
     al::resetPosition(mYoshi, playerPos + sead::Vector3f(0, 1000.0f, 0));
     mYoshi->appearEgg();
 }
-
-HelpAmiiboType HelpAmiiboYoshi::getType() const {
-    return HelpAmiiboType::Yoshi;
-}

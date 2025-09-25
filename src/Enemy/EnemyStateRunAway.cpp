@@ -23,7 +23,7 @@ EnemyStateRunAway::EnemyStateRunAway(al::LiveActor* actor, const ParamEnemyState
 }
 
 void EnemyStateRunAway::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     if (mParam->shouldFaceDir)
         mIsNeedToFaceToDirection = true;
     al::calcFrontDir(&mFrontDir, mActor);

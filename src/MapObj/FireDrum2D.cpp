@@ -6,7 +6,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {
@@ -21,8 +21,8 @@ FireDrum2D::FireDrum2D(const char* name) : LiveActor(name) {}
 void FireDrum2D::init(const al::ActorInitInfo& info) {
     al::initActor(this, info);
     al::initNerve(this, &Wait, 0);
-    mActorDimensionKeeper = rs::createDimensionKeeper(this);
-    rs::updateDimensionKeeper(mActorDimensionKeeper);
+    mDimensionKeeper = rs::createDimensionKeeper(this);
+    rs::updateDimensionKeeper(mDimensionKeeper);
 
     if (rs::isIn2DArea(this)) {
         rs::snap2D(this, this, 500.0f);
@@ -30,10 +30,6 @@ void FireDrum2D::init(const al::ActorInitInfo& info) {
     } else {
         makeActorDead();
     }
-}
-
-ActorDimensionKeeper* FireDrum2D::getActorDimensionKeeper() const {
-    return mActorDimensionKeeper;
 }
 
 void FireDrum2D::exeWait() {

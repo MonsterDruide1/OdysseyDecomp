@@ -4,11 +4,11 @@
 #include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
+class HitSensor;
 class HitSensorDirectror;
 class HitSensorKeeper;
+class LiveActor;
 class SensorHitGroup;
-class HitSensor;
 
 using SensorSortCmpFunc = bool (*)(HitSensor* a, HitSensor* b);
 
@@ -47,24 +47,30 @@ public:
               const sead::Matrix34f* followMatrix, const sead::Vector3f& offset);
 
     bool trySensorSort();
-    void setFollowPosPtr(const sead::Vector3f*);
-    void setFollowMtxPtr(const sead::Matrix34f*);
+    void setFollowPosPtr(const sead::Vector3f* followPos);
+    void setFollowMtxPtr(const sead::Matrix34f* followMtx);
     void validate();
     void invalidate();
     void validateBySystem();
     void invalidateBySystem();
     void update();
-    void addHitSensor(HitSensor*);
+    void addHitSensor(HitSensor* sensor);
 
     void clearSensors() { mSensorCount = 0; }
 
     const sead::Vector3f& getFollowPosOffset() const { return mFollowPosOffset; }
+
+    const sead::Vector3f& getPos() const { return mPos; }
 
     f32 getRadius() const { return mRadius; }
 
     void setFollowPosOffset(const sead::Vector3f& offset) { mFollowPosOffset.set(offset); }
 
     void setRadius(f32 radius) { mRadius = radius; }
+
+    LiveActor* getParentActor() const { return mParentActor; }
+
+    const sead::Matrix34f* getFollowMtx() const { return mFollowMtx; }
 
     void scaleY(f32 scaleY) {
         mRadius *= scaleY;

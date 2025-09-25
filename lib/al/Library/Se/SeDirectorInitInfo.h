@@ -16,10 +16,10 @@ struct SeDirectorInitInfo {
     bool useLoopSequencer = false;
     s32* field_28 = nullptr;
     s32 field_30 = -1;
-    sead::Vector3f* cameraPos = nullptr;
-    sead::Matrix34f* cameraMatrix = nullptr;
-    Projection* cameraProjection = nullptr;
-    sead::Vector3f* cameraAt = nullptr;
+    const sead::Vector3f* cameraPos = nullptr;
+    const sead::Matrix34f* cameraMatrix = nullptr;
+    const Projection* cameraProjection = nullptr;
+    const sead::Vector3f* cameraAt = nullptr;
     void* field_58 = nullptr;
     f32 interiorSize = -1.0f;
     f32 pitchModifier = 1.0f;

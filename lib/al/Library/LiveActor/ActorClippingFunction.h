@@ -21,8 +21,8 @@ bool tryExpandClippingToGround(LiveActor* actor, sead::Vector3f*, f32);
 bool tryExpandClippingByShadowMaskLength(LiveActor* actor, sead::Vector3f*);
 bool tryExpandClippingByDepthShadowLength(LiveActor* actor, sead::Vector3f*);
 bool tryExpandClippingByExpandObject(LiveActor*, const ActorInitInfo& initInfo);
-bool isClipped(const LiveActor*);
-bool isInvalidClipping(const LiveActor*);
+bool isClipped(const LiveActor* actor);
+bool isInvalidClipping(const LiveActor* actor);
 void invalidateClipping(LiveActor* actor);
 void validateClipping(LiveActor* actor);
 void onDrawClipping(LiveActor* actor);
@@ -31,7 +31,7 @@ void onGroupClipping(LiveActor* actor);
 void offGroupClipping(LiveActor* actor);
 bool isInClippingFrustum(const LiveActor* actor, const sead::Vector3f&, f32, f32, s32);
 bool isInClippingFrustum(const ClippingDirector* director, const sead::Vector3f&, f32, f32, s32);
-bool isInClippingFrustumAllView(const LiveActor* actor, const sead::Vector3f& pos, f32, f32);
+bool isInClippingFrustumAllView(const LiveActor* actor, const sead::Vector3f& pos, f32 radius, f32);
 }  // namespace al
 
 namespace alActorFunction {

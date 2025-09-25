@@ -3,6 +3,7 @@
 #include "Library/Audio/System/AudioKeeper.h"
 #include "Library/Layout/LayoutActorUtil.h"
 #include "Library/Layout/LayoutPartsActorKeeper.h"
+#include "Library/Layout/LayoutSceneInfo.h"
 
 namespace al {
 void LayoutActor::appear() {
@@ -22,4 +23,17 @@ void LayoutActor::initLayoutPartsActorKeeper(s32 capacity) {
 void LayoutActor::initLayoutKeeper(LayoutKeeper* layoutKeeper) {
     mLayoutKeeper = layoutKeeper;
 }
+
+CameraDirector* LayoutActor::getCameraDirector() const {
+    return mLayoutSceneInfo->getCameraDirector();
+}
+
+SceneObjHolder* LayoutActor::getSceneObjHolder() const {
+    return mLayoutSceneInfo->getSceneObjHolder();
+}
+
+const MessageSystem* LayoutActor::getMessageSystem() const {
+    return mLayoutSceneInfo->getMessageSystem();
+}
+
 }  // namespace al

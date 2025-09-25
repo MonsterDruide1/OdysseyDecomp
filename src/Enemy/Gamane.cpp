@@ -64,8 +64,8 @@ static EnemyStateSwoonInitParam gEnemyStateSwoonInitParam = EnemyStateSwoonInitP
 
 Gamane::Gamane(const char* name) : al::LiveActor(name) {}
 
-void Gamane::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "Gamane", nullptr);
+void Gamane::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "Gamane", nullptr);
     al::initNerve(this, &NrvGamane.Wait, 5);
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
@@ -80,7 +80,7 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
 
     mHackState = new GamaneHackState(this);
     al::initNerveState(this, mHackState, &NrvGamane.Hack, "憑依");
-    mHackState->initialize(initInfo);
+    mHackState->initialize(info);
 
     mStateBlowDown = new al::EnemyStateBlowDown(this, &gEnemyStateBlowDownParam, "吹き飛び状態");
     al::initNerveState(this, mStateBlowDown, &NrvGamane.BlowDown, "吹き飛び");
@@ -403,9 +403,7 @@ void Gamane::exeRunaway() {
 
     sead::Vector3f dirToActor;
     al::calcDirToActorH(&dirToActor, this, al::getPlayerActor(this, 0));
-    dirToActor.x = -dirToActor.x;
-    dirToActor.y = -dirToActor.y;
-    dirToActor.z = -dirToActor.z;
+    dirToActor.negate();
     al::turnToDirection(this, dirToActor, 4.0f);
 
     sead::Vector3f quatFront;

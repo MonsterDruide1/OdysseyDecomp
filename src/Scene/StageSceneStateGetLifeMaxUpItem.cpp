@@ -22,12 +22,12 @@ StageSceneStateGetLifeMaxUpItem::StageSceneStateGetLifeMaxUpItem(const char* nam
 }
 
 void StageSceneStateGetLifeMaxUpItem::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &DemoGetLifeMaxUpItem);
 }
 
 void StageSceneStateGetLifeMaxUpItem::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
 }
 
 void StageSceneStateGetLifeMaxUpItem::exeDemoGetLifeMaxUpItem() {

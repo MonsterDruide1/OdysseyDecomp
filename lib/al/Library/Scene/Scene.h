@@ -25,7 +25,7 @@ class Scene : public NerveExecutor,
               public IUseCamera,
               public IUseSceneObjHolder {
 public:
-    Scene(const char*);
+    Scene(const char* name);
 
     virtual ~Scene();
 
@@ -42,6 +42,8 @@ public:
     virtual void drawSub() const {}
 
     AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
+    void setAudioKeeper(AudioKeeper* audioKeeper) { mAudioKeeper = audioKeeper; }
 
     SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
 
@@ -77,6 +79,8 @@ public:
     ScreenCoverCtrl* getScreenCoverCtrl() const { return mScreenCoverCtrl; }
 
     AudioDirector* getAudioDirector() const { return mAudioDirector; }
+
+    void setAudioDirector(AudioDirector* audioDirector) { mAudioDirector = audioDirector; }
 
     DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
 

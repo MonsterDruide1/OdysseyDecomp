@@ -224,7 +224,7 @@ bool turnDirectionToTargetDegree(const LiveActor* actor, sead::Vector3f* vec,
                                  const sead::Vector3f& target, f32 deg);
 bool turnDirectionFromTargetDegree(const LiveActor* actor, sead::Vector3f* vec,
                                    const sead::Vector3f& target, f32 deg);
-void turnDirectionAlongGround(const LiveActor* actor, sead::Vector3f* vec);
+void turnDirectionAlongGround(const LiveActor* actor, sead::Vector3f* dir);
 void turnDirectionAlongGround(LiveActor* actor);
 bool turnToDirectionAxis(LiveActor* actor, const sead::Vector3f& horizontal,
                          const sead::Vector3f& vertical, f32 deg);
@@ -249,7 +249,7 @@ void calcDirClockwiseToDir(sead::Vector3f* out, const LiveActor* actor, const se
 void calcDirClockwiseToPos(sead::Vector3f* out, const LiveActor* actor,
                            const sead::Vector3f& target);
 void calcDirToActorH(sead::Vector3f* out, const LiveActor* actor, const LiveActor* target);
-void calcDirToActorH(sead::Vector3f* out, const LiveActor* actor, const sead::Vector3f& dir);
+void calcDirToActorH(sead::Vector3f* out, const LiveActor* actor, const sead::Vector3f& target);
 f32 calcAngleToTargetH(const LiveActor* actor, const sead::Vector3f& target);
 f32 calcAngleToTargetV(const LiveActor* actor, const sead::Vector3f& target);
 bool isFaceToTargetDegree(const LiveActor* actor, const sead::Vector3f& target,

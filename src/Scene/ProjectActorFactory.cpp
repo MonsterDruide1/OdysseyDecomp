@@ -32,7 +32,9 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
+#include "Enemy/Kuribo2D.h"
 #include "Enemy/Mummy.h"
+#include "Enemy/Nokonoko2D.h"
 #include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
@@ -65,18 +67,21 @@
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
+#include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
 #include "MapObj/TrampleSwitch.h"
 #include "MapObj/TrampleSwitchTimer.h"
 #include "MapObj/TransparentWall.h"
+#include "MapObj/TreasureBoxKey.h"
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
 #include "Npc/Bird.h"
 #include "Npc/BirdPlayerGlideCtrl.h"
 #include "Npc/KuriboGirl.h"
+#include "Npc/VocalMike.h"
 
 const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
@@ -341,7 +346,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"KoopaLv2", nullptr},
     {"KoopaLv3", nullptr},
     {"KoopaShip", nullptr},
-    {"Kuribo2D3D", nullptr},
+    {"Kuribo2D3D", al::createActorFunction<Kuribo2D>},
     {"KuriboGenerator2D3D", nullptr},
     {"KuriboGirl", al::createActorFunction<KuriboGirl>},
     {"KuriboPossessed", nullptr},
@@ -391,7 +396,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Mummy", al::createActorFunction<Mummy>},
     {"MummyGenerator", nullptr},
     {"NeedleTrap", nullptr},
-    {"Nokonoko2D", nullptr},
+    {"Nokonoko2D", al::createActorFunction<Nokonoko2D>},
     {"NoteObjFirst", nullptr},
     {"NoteObjFirst2D", nullptr},
     {"NoteObjDirector", nullptr},
@@ -498,7 +503,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ShopBgmPlayer", nullptr},
     {"ShopMark", nullptr},
     {"ShoppingWatcher", nullptr},
-    {"SignBoardDanger", nullptr},
+    {"SignBoardDanger", al::createActorFunction<SignBoardDanger>},
     {"SignBoardLayoutTexture", nullptr},
     {"SkyFukankunZoomCapMessage", nullptr},
     {"SkyWorldCloud", nullptr},
@@ -575,7 +580,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TrampleSwitchTimer", al::createActorFunction<TrampleSwitchTimer>},
     {"TransparentWall", al::createActorFunction<TransparentWall>},
     {"TreasureBox", nullptr},
-    {"TreasureBoxKey", nullptr},
+    {"TreasureBoxKey", al::createActorFunction<TreasureBoxKey>},
     {"TreasureBoxSequentialDirector", nullptr},
     {"TRex", nullptr},
     {"TRexForceScroll", nullptr},
@@ -587,7 +592,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TwistChainList", nullptr},
     {"Utsubo", nullptr},
     {"UtsuboWatcher", nullptr},
-    {"VocalMike", nullptr},
+    {"VocalMike", al::createActorFunction<VocalMike>},
     {"VolleyballBase", nullptr},
     {"VolleyballNet", al::createActorFunction<VolleyballNet>},
     {"VolleyballNpc", nullptr},

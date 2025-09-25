@@ -14,7 +14,9 @@ class PlacementInfo;
 class CameraAngleVerticalRequester : public HioNode, public IUseAreaObj {
 public:
     CameraAngleVerticalRequester();
-    AreaObjDirector* getAreaObjDirector() const override;
+
+    AreaObjDirector* getAreaObjDirector() const override { return mAreaObjDirector; }
+
     void init(AreaObjDirector* areaObjDirector);
     void initAfterPlacement();
     void update(const sead::Vector3f& position);

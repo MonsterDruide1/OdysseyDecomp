@@ -1,6 +1,6 @@
 #include "MapObj/ShineTowerBackDoor.h"
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -50,7 +50,7 @@ bool ShineTowerBackDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor*
         if (_118)
             return false;
 
-        if (al::isMsgPlayerHipDropAll(message)) {
+        if (al::isMsgPlayerObjHipDropAll(message)) {
             mBindTimer = 3;
             return false;
         }

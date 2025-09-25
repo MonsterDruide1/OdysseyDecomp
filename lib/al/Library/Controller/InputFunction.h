@@ -90,7 +90,7 @@ bool isPadRepeatUiCursorRight(s32 port = -1);
 
 bool isPadHoldPressLeftStick(s32 port = -1);
 bool isPadHoldPressRightStick(s32 port = -1);
-bool isPadHold(s32, s32);
+bool isPadHold(s32 port, s32 button);
 bool isPadHoldA(s32 port = -1);
 bool isPadHoldB(s32 port = -1);
 bool isPadHoldX(s32 port = -1);
@@ -132,7 +132,7 @@ bool isPadHoldUiCursorDown(s32 port = -1);
 bool isPadHoldUiCursorLeft(s32 port = -1);
 bool isPadHoldUiCursorRight(s32 port = -1);
 
-bool isPadRelease(s32, s32);
+bool isPadRelease(s32 port, s32 button);
 bool isPadReleaseA(s32 port = -1);
 bool isPadReleaseB(s32 port = -1);
 bool isPadReleaseX(s32 port = -1);
@@ -169,20 +169,21 @@ bool isPadReleaseUiCursorRight(s32 port = -1);
 const sead::Vector2f& getLeftStick(s32 port = -1);
 const sead::Vector2f& getRightStick(s32 port = -1);
 
-void getPadCrossDir(sead::Vector2f*, s32);
-void getPadCrossDirSideways(sead::Vector2f*, s32);
+void getPadCrossDir(sead::Vector2f* dir, s32 port);
+void getPadCrossDirSideways(sead::Vector2f* dir, s32 port);
 
-void calcTouchScreenPos(sead::Vector2f*);
-void calcTouchLayoutPos(sead::Vector2f*);
+void calcTouchScreenPos(sead::Vector2f* pos);
+void calcTouchLayoutPos(sead::Vector2f* pos);
 
-bool isTouchPosInRect(const sead::Vector2f&, const sead::Vector2f&);
+bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size);
 bool isTouchPosInCircle(const sead::Vector2f&, f32);
 bool isTouchPosInCircleByWorldPos(const sead::Vector2f&, const IUseCamera*, f32, f32);
 bool isPadTouchRect(f32, f32, f32, f32);
 
-void setPadRepeat(s32, s32, s32, s32);
+// TODO: rename parameters
+void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port);
 
-s32 getPlayerControllerPort(s32 index);
+s32 getPlayerControllerPort(s32 playerNo);
 s32 getTouchPanelPort();
 s32 getMainControllerPort();
 s32 getMainJoyPadDoublePort();

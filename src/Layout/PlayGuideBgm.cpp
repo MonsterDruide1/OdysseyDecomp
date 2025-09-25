@@ -21,7 +21,7 @@ PlayGuideBgm::PlayGuideBgm(const char* name, const al::LayoutInitInfo& info)
     mLayout = new al::SimpleLayoutAppearWaitEnd("[シーン情報]BGM再生", "PlayGuideBgm", info,
                                                 nullptr, false);
     al::killLayoutIfActive(mLayout);
-    initNerve(&NrvPlayGuideBgm.Hide, 0);
+    initNerve(&NrvPlayGuideBgm.Hide);
     appear();
 }
 

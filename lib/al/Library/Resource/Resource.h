@@ -41,6 +41,10 @@ public:
     bool tryCreateResGraphicsFile(const sead::SafeString& filePath, nn::g3d::ResFile* resFile);
     void cleanupResGraphicsFile();
 
+    sead::ArchiveFileDevice* getFileDevice() const { return mDevice; }
+
+    const char* getPath() const { return mPath.cstr(); }
+
     ActorInitResourceData* getResData() const { return mData; }
 
     nn::g3d::ResFile* getResFile() const { return mResFile; }
@@ -48,32 +52,10 @@ public:
 private:
     sead::ArchiveRes* mArchive = nullptr;
     sead::ArchiveFileDevice* mDevice = nullptr;
-    sead::FixedSafeString<0x80> mName;
+    sead::FixedSafeString<0x80> mPath;
     sead::Heap* mHeap;
     ActorInitResourceData* mData = nullptr;
     nn::g3d::ResFile* mResFile = nullptr;
-};
-
-class ActorResource {
-public:
-    ActorResource(const sead::SafeString&, Resource*, Resource*);
-    virtual ~ActorResource();
-
-    void initResourceData(const char*, bool);
-
-    bool hasAnimData() const { return mHasAnimData; }
-
-    Resource* getModelRes() const { return mModelRes; }
-
-    Resource* getAnimRes() const { return mAnimRes; }
-
-private:
-    sead::FixedSafeString<0x80> mName;
-    Resource* mModelRes;
-    Resource* mAnimRes;
-    bool mHasAnimData;
-    InitResourceDataAnim* mAnimResData;
-    InitResourceDataAction* mActionResData;
 };
 
 }  // namespace al

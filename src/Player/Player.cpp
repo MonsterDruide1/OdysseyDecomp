@@ -135,7 +135,7 @@ void Player::control() {
     }
 }
 
-// NON_MATCHING: issue with getting actorTrans
+// NON_MATCHING: issue with getting actorTrans (https://decomp.me/scratch/yXJNN)
 void Player::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     const sead::Vector3f& actorTransRef = al::getActorTrans(other);
     const sead::Vector3f& transRef = al::getTrans(this);

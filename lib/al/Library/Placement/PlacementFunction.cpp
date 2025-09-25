@@ -992,7 +992,7 @@ void getChildLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorIn
     getRotate(rotate, info);
 }
 
-s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* linkName) {
+s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* match) {
     PlacementInfo links;
     if (!tryGetPlacementInfoByKey(&links, placementInfo, "Links"))
         return 0;
@@ -1002,13 +1002,13 @@ s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* linkN
         PlacementInfo item;
         const char* key = nullptr;
         getPlacementInfoAndKeyNameByIndex(&item, &key, links, i);
-        if (isMatchString(key, {linkName}))
+        if (isMatchString(key, {match}))
             count++;
     }
     return count;
 }
 
-s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkName) {
+s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* className) {
     PlacementInfo links;
     if (!tryGetPlacementInfoByKey(&links, placementInfo, "Links"))
         return false;
@@ -1020,8 +1020,8 @@ s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkN
         PlacementInfo first;
         getPlacementInfoByIndex(&first, item, 0);
 
-        const char* className = nullptr;
-        if (tryGetClassName(&className, first) && isEqualString(className, linkName))
+        const char* classNameFirst = nullptr;
+        if (tryGetClassName(&classNameFirst, first) && isEqualString(classNameFirst, className))
             count++;
     }
     return count;

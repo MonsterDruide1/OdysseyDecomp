@@ -17,7 +17,7 @@ RollingCubePoseKeeper* createRollingCubePoseKeeper(const sead::BoundBox3f& cubeS
                                                    const ActorInitInfo& initInfo);
 bool nextRollingCubeKey(RollingCubePoseKeeper* keeper);
 void setStartRollingCubeKey(RollingCubePoseKeeper* keeper);
-void setRollingCubeKeyIndex(RollingCubePoseKeeper* keeper, s32);
+void setRollingCubeKeyIndex(RollingCubePoseKeeper* keeper, s32 index);
 bool isMoveTypeLoopRollingCube(const RollingCubePoseKeeper* keeper);
 void fittingToCurrentKeyBoundingBox(sead::Quatf* outQuat, sead::Vector3f* outTrans,
                                     const RollingCubePoseKeeper* keeper);

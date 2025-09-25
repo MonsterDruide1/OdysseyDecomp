@@ -40,18 +40,20 @@ public:
     const sead::Vector3f& calcAndGetFaceNormal();
     const sead::Vector3f& calcAndGetEdgeNormal(s32 index);
     const sead::Vector3f& calcAndGetPos(s32 index);
-    void getLocalPos(sead::Vector3f* localPos, s32 index) const;
-    void calcForceMovePower(sead::Vector3f* movePower, const sead::Vector3f& pos) const;
-    void calcForceRotatePower(sead::Quatf* rotatePower) const;
+    void getLocalPos(sead::Vector3f* pos, s32 index) const;
+    void calcForceMovePower(sead::Vector3f* power, const sead::Vector3f& pos) const;
+    void calcForceRotatePower(sead::Quatf* power) const;
     bool getAttributes(ByamlIter* iter) const;
     const HitSensor* getSensor() const;
     const sead::Matrix34f& getBaseMtx() const;
     const sead::Matrix34f& getBaseInvMtx() const;
     const sead::Matrix34f& getPrevBaseMtx() const;
 
+    const CollisionParts* getCollisionParts() const { return mCollisionParts; }
+
     // clang-format off
-    friend bool ::operator==(const Triangle& tri1, const Triangle& tri2);
-    friend bool ::operator!=(const Triangle& tri1, const Triangle& tri2);
+    friend bool ::operator==(const Triangle& lhs, const Triangle& rhs);
+    friend bool ::operator!=(const Triangle& lhs, const Triangle& rhs);
     // clang-format on
 
 private:

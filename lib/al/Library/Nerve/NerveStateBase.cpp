@@ -3,16 +3,6 @@
 namespace al {
 NerveStateBase::NerveStateBase(const char* stateName) : NerveExecutor(stateName) {}
 
-void NerveStateBase::init() {}
-
-void NerveStateBase::appear() {
-    mIsDead = false;
-}
-
-void NerveStateBase::kill() {
-    mIsDead = true;
-}
-
 bool NerveStateBase::update() {
     updateNerve();
 
@@ -23,8 +13,6 @@ bool NerveStateBase::update() {
 
     return mIsDead;
 }
-
-void NerveStateBase::control() {}
 
 ActorStateBase::ActorStateBase(const char* name, LiveActor* actor)
     : NerveStateBase(name), mActor(actor) {}

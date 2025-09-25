@@ -1,6 +1,6 @@
 #include "Library/Obj/EffectObjCameraEmit.h"
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
@@ -83,9 +83,5 @@ void EffectObjCameraEmit::kill() {
     mIsStopFollowCamera = false;
 
     LiveActor::kill();
-}
-
-const sead::Matrix34f* EffectObjCameraEmit::getBaseMtx() const {
-    return &mBaseMtx;
 }
 }  // namespace al

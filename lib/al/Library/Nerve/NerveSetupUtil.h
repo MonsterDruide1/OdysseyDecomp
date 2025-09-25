@@ -75,14 +75,14 @@ al::initNerveAction(this, "Hide", &NrvExampleUseCase.collector, 0);
 
 #define NERVE_HOST_TYPE_IMPL(Class, Action) NERVE_HOST_TYPE_IMPL_(Class, Action, Action)
 
-#define NERVE_MAKE(Class, Action) Class##Nrv##Action Action;
+#define NERVE_MAKE(Class, Action) [[maybe_unused]] Class##Nrv##Action Action;
 
 #define NERVES_MAKE_STRUCT(Class, ...)                                                             \
     struct {                                                                                       \
         FOR_EACH(NERVE_MAKE, Class, __VA_ARGS__)                                                   \
     } Nrv##Class;
 
-#define NERVES_MAKE_NOSTRUCT(Class, ...) FOR_EACH(NERVE_MAKE, Class, __VA_ARGS__);
+#define NERVES_MAKE_NOSTRUCT(Class, ...) FOR_EACH(NERVE_MAKE, Class, __VA_ARGS__)
 
 #define NERVE_ACTION_IMPL_(Class, Action, ActionFunc)                                              \
     class Class##Nrv##Action : public al::NerveAction {                                            \

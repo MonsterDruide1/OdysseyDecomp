@@ -3,7 +3,7 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -116,10 +116,6 @@ bool Coin2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     }
 
     return false;
-}
-
-ActorDimensionKeeper* Coin2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }
 
 void Coin2D::listenAppear() {

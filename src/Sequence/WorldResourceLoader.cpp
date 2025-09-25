@@ -5,20 +5,20 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
-const s32 priority = sead::Thread::cDefaultPriority;
+const s32 cDefaultPriority = sead::Thread::cDefaultPriority;
+const s32 cPriority = cDefaultPriority + 6;
 
-// for some reason tools/check doesn't show this?
 WorldResourceLoader::WorldResourceLoader(GameDataHolder* dataHolder) : mDataHolder(dataHolder) {
     using WorldResourceLoaderFunctor =
         al::FunctorV0M<WorldResourceLoader*, void (WorldResourceLoader::*)()>;
 
     mWorldResourceLoader = new al::AsyncFunctorThread(
         "WorldResourceLoader", WorldResourceLoaderFunctor{this, &WorldResourceLoader::loadResource},
-        priority, 0x100000, sead::CoreId::cMain);
+        cPriority, 0x100000, sead::CoreId::cMain);
 }
 
 WorldResourceLoader::~WorldResourceLoader() {
@@ -181,7 +181,7 @@ void WorldResourceLoader::loadWorldResource(s32 loadWorldId, s32 scenario, bool 
     nn::os::GetSystemTick();
     nn::os::GetSystemTick();
 
-    u8* bymlData = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
+    const u8* bymlData = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
 
     al::ByamlIter worldResourceIter(bymlData);
     al::ByamlIter loadWorldIter;

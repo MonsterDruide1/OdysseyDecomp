@@ -12,8 +12,11 @@ class PlayerJudgeStartGroundSpin : public IJudge {
 public:
     PlayerJudgeStartGroundSpin(const al::LiveActor* player, const IUsePlayerCollision* collider,
                                const PlayerInput* input);
-    void reset() override;
-    void update() override;
+
+    void reset() override {}
+
+    void update() override {}
+
     bool judge() const override;
 
 private:

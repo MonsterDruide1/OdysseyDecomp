@@ -8,10 +8,6 @@ PlayerJudgeStartGroundSpin::PlayerJudgeStartGroundSpin(const al::LiveActor* play
                                                        const PlayerInput* input)
     : mPlayer(player), mCollider(collider), mInput(input) {}
 
-void PlayerJudgeStartGroundSpin::reset() {}
-
-void PlayerJudgeStartGroundSpin::update() {}
-
 bool PlayerJudgeStartGroundSpin::judge() const {
     return mInput->isSpinInput() && rs::isOnGround(mPlayer, mCollider);
 }

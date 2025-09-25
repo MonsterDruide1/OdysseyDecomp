@@ -19,8 +19,8 @@ EnemyStateBlowDown::EnemyStateBlowDown(LiveActor* actor, const EnemyStateBlowDow
         mParam = &sEnemyStateBlowDownParam;
 }
 
-void EnemyStateBlowDown::start(const HitSensor* sensor) {
-    sead::Vector3f dir = getSensorPos(sensor) - getTrans(mActor);
+void EnemyStateBlowDown::start(const HitSensor* other) {
+    sead::Vector3f dir = getSensorPos(other) - getTrans(mActor);
 
     verticalizeVec(&dir, getGravity(mActor), dir);
 
@@ -41,8 +41,8 @@ void EnemyStateBlowDown::start(const sead::Vector3f& dir) {
     setVelocity(actor, direction - velocity);
 }
 
-void EnemyStateBlowDown::start(const HitSensor* sensor1, const HitSensor* sensor2) {
-    sead::Vector3f dir = getSensorPos(sensor1) - getSensorPos(sensor2);
+void EnemyStateBlowDown::start(const HitSensor* other, const HitSensor* self) {
+    sead::Vector3f dir = getSensorPos(other) - getSensorPos(self);
 
     verticalizeVec(&dir, getGravity(mActor), dir);
 
@@ -52,15 +52,15 @@ void EnemyStateBlowDown::start(const HitSensor* sensor1, const HitSensor* sensor
     start(-dir);
 }
 
-void EnemyStateBlowDown::start(const LiveActor* actor) {
+void EnemyStateBlowDown::start(const LiveActor* attacker) {
     sead::Vector3f dir;
-    calcFrontDir(&dir, actor);
+    calcFrontDir(&dir, attacker);
 
     start(-dir);
 }
 
 void EnemyStateBlowDown::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     if (isInvalidClipping(mActor))
         mIsInvalidClipping = true;
     else {
@@ -71,7 +71,7 @@ void EnemyStateBlowDown::appear() {
 }
 
 void EnemyStateBlowDown::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
     if (!mIsInvalidClipping)
         validateClipping(mActor);
 }

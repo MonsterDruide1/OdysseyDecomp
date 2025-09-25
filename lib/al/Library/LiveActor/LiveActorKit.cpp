@@ -8,7 +8,6 @@
 #include "Library/Draw/GraphicsSystemInfo.h"
 #include "Library/Effect/EffectSystem.h"
 #include "Library/Execute/ExecuteDirector.h"
-#include "Library/Execute/ExecuteSystemInitInfo.h"
 #include "Library/Execute/ExecuteTableHolderUpdate.h"
 #include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Model/ModelDisplayListController.h"
@@ -26,6 +25,7 @@
 #include "Library/Stage/StageSwitchDirector.h"
 #include "Project/Clipping/ClippingDirector.h"
 #include "Project/Execute/ExecuteAsyncExecutor.h"
+#include "Project/Execute/ExecuteSystemInitInfo.h"
 #include "Project/Gravity/GravityHolder.h"
 #include "Project/HitSensor/HitSensorDirector.h"
 
@@ -47,7 +47,12 @@ LiveActorKit::~LiveActorKit() {
         mCameraDirector = nullptr;
     }
     if (mClippingDirector) {
+#pragma clang diagnostic push
+        // in this case, mClippingDirector has the correct type,
+        // causing the destructor to be called correctly
+#pragma clang diagnostic ignored "-Wdelete-non-virtual-dtor"
         delete mClippingDirector;
+#pragma clang diagnostic pop
         mClippingDirector = nullptr;
     }
     if (mModelGroup) {
@@ -77,7 +82,7 @@ LiveActorKit::~LiveActorKit() {
 }
 
 void LiveActorKit::init(s32 maxCameras) {
-    mDrawBufferDirector = new DrawBufferDirector();
+    mModelDrawBufferCounter = new ModelDrawBufferCounter();
 
     ExecuteSystemInitInfo info{};
     mExecuteDirector = new ExecuteDirector(mMaxActors);
@@ -184,14 +189,14 @@ void LiveActorKit::endInit() {
     mExecuteDirector->createExecutorListTable();
 }
 
-void LiveActorKit::update(const char* unk) {
+void LiveActorKit::update(const char* tableName) {
     clearGraphicsRequest();
 
     if (mPadRumbleDirector)
         mPadRumbleDirector->update();
 
     if (mExecuteDirector)
-        mExecuteDirector->execute(unk);
+        mExecuteDirector->execute(tableName);
 
     updateGraphics();
 

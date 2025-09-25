@@ -4,19 +4,19 @@ namespace al {
 TrafficArea::TrafficArea(const char* name) : AreaObj(name) {}
 
 bool TrafficArea::tryPermitEnterCar() {
-    if (mIsNpcFull || mIsCarUnavailable)
+    if (mCurState.isNpc || mPrevState.isNpc)
         return false;
 
-    mIsCarFull = true;
+    mCurState.isCar = true;
 
     return true;
 }
 
 bool TrafficArea::tryPermitEnterNpc() {
-    if (mIsCarFull || mIsNpcUnavailable)
+    if (mCurState.isCar || mPrevState.isCar)
         return false;
 
-    mIsNpcFull = true;
+    mCurState.isNpc = true;
 
     return true;
 }

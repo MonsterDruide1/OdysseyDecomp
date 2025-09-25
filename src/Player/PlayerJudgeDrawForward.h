@@ -14,8 +14,11 @@ class PlayerJudgeDrawForward : public IJudge {
 public:
     PlayerJudgeDrawForward(const al::LiveActor* playerActor,
                            const PlayerJudgeDeadWipeStart* playerJudgeDeadWipeStart);
-    void reset() override;
-    void update() override;
+
+    void reset() override {}
+
+    void update() override {}
+
     bool judge() const override;
 
 private:

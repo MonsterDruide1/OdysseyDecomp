@@ -20,8 +20,10 @@ public:
     f32 getBorderSpeedH() const;
 
     void update() override;
-    void reset() override;
-    bool judge() const override;
+
+    void reset() override { mIsWaterSurfaceRun = false; }
+
+    bool judge() const override { return mIsWaterSurfaceRun; }
 
 private:
     bool mIsWaterSurfaceRun = false;

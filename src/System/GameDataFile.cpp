@@ -5,7 +5,7 @@
 #include "System/GameDataFunction.h"
 #include "System/GameProgressData.h"
 
-// NON_MATCHING
+// NON_MATCHING: https://decomp.me/scratch/jv20V
 void GameDataFile::HintInfo::clear() {
     mStageName.clear();
     mObjId.clear();

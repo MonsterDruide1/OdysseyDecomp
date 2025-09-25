@@ -4,7 +4,7 @@
 
 struct PlayerHeadCostumeInfo {
 public:
-    PlayerHeadCostumeInfo(const char*);
+    PlayerHeadCostumeInfo(const char* costumeName);
 
     const char* costumeName;
     bool isFullFace = false;
@@ -23,7 +23,7 @@ public:
 
 struct PlayerBodyCostumeInfo {
 public:
-    PlayerBodyCostumeInfo(const char*);
+    PlayerBodyCostumeInfo(const char* costumeName);
 
     const char* costumeName;
     s32 warmLevel = 0;
@@ -45,7 +45,7 @@ public:
 class PlayerCostumeInfo {
 public:
     PlayerCostumeInfo();
-    void init(const PlayerBodyCostumeInfo*, const PlayerHeadCostumeInfo*);
+    void init(const PlayerBodyCostumeInfo* body, const PlayerHeadCostumeInfo* head);
     bool isEnableBigEar() const;
     bool isEnableHairNoCap() const;
     bool isEnableCostume2D() const;
@@ -60,7 +60,7 @@ public:
     bool isFollowJoeStrap() const;
     bool isPreventHeadPain() const;
     bool isInvisibleHead() const;
-    s32 calcWarmLevel(s32) const;
+    s32 calcWarmLevel(s32 baseLevel) const;
 
 private:
     const PlayerBodyCostumeInfo* mBodyInfo = nullptr;

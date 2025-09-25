@@ -21,7 +21,7 @@ PlayGuideMap::PlayGuideMap(const char* name, const al::LayoutInitInfo& info)
     mLayout = new al::SimpleLayoutAppearWaitEnd("[シーン情報]地図操作説明", "PlayGuideMap", info,
                                                 nullptr, false);
     al::killLayoutIfActive(mLayout);
-    initNerve(&NrvPlayGuideMap.Hide, 0);
+    initNerve(&NrvPlayGuideMap.Hide);
 }
 
 void PlayGuideMap::start() {

@@ -47,7 +47,7 @@ void MapObjStatePlayerHold::initShadowMaskDropLengthCtrl(const char* shadowMaskN
 }
 
 void MapObjStatePlayerHold::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mTotalPush = {0.0f, 0.0f, 0.0f};
     al::invalidateClipping(mActor);
 
@@ -85,7 +85,7 @@ void MapObjStatePlayerHold::kill() {
     al::setModelAlphaMask(mActor, 1.0f);
     al::validateOcclusionQuery(mActor);
     mTotalPush = {0.0f, 0.0f, 0.0f};
-    setDead(true);
+    al::NerveStateBase::kill();
 }
 
 void MapObjStatePlayerHold::attackSensor(al::HitSensor* self, al::HitSensor* other) {

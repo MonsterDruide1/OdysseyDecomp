@@ -73,7 +73,7 @@ void Popn::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         al::sendMsgPushAndKillVelocityToTarget(this, self, other);
 
     if (al::isSensorEnemyAttack(self))
-        rs::sendMsgPushToPlayer(other, self) || al::sendMsgEnemyAttack(other, self);
+        al::sendMsgEnemyAttack(other, self) || rs::sendMsgPushToPlayer(other, self);
 }
 
 bool Popn::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
@@ -277,11 +277,8 @@ void Popn::exeTurn() {
     if (!al::tryNormalizeOrZero(&diff))
         al::calcFrontDir(&diff, this);
 
-    if (rs::isPlayerHackTRex(this)) {
-        diff.x = -diff.x;
-        diff.y = -diff.y;
-        diff.z = -diff.z;
-    }
+    if (rs::isPlayerHackTRex(this))
+        diff.negate();
 
     al::turnToDirection(this, diff, turnSpeed);
 

@@ -2,13 +2,15 @@
 
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
-
-enum ClippingRequestKeeper {};
+#include <math/seadVector.h>
 
 namespace al {
-class LiveActor;
 struct ActorInitInfo;
+
+class ClippingRequestKeeper;
 class ClippingJudge;
+class LiveActor;
+class PlacementId;
 class ViewIdHolder;
 
 class ClippingActorInfo {
@@ -34,9 +36,29 @@ public:
 
     LiveActor* getLiveActor() const { return mLiveActor; }
 
-private:
-    LiveActor* mLiveActor;
-    // Remaining Member's missing
-};
+    PlacementId* getPlacementId() const { return mPlacementId; }
 
+    const ViewIdHolder* getViewIdHolder() const { return mViewIdHolder; }
+
+    bool isGroupClippingEnable() const { return mIsEnableGroupClipping; }
+
+    void setGroupClippingEnable(bool enable) { mIsEnableGroupClipping = enable; }
+
+    // TODO: rename unnamed member variables
+private:
+    LiveActor* mLiveActor = nullptr;
+    const sead::Vector3f* mTransPtr = nullptr;
+    f32 mClippingRadius = 0.0f;
+    const sead::Matrix34f* _18 = nullptr;
+    sead::BoundBox3f _20;
+    f32 _38 = 300.0f;
+    PlacementId* mPlacementId = nullptr;
+    s16 _48 = 1;
+    s16 _4a = 1;
+    s32 mFarClipFlagEntries = 0;
+    s32 mFarClipFlagSize = 0;
+    const bool** mFarClipFlags = nullptr;
+    const ViewIdHolder* mViewIdHolder = nullptr;
+    bool mIsEnableGroupClipping = true;
+};
 }  // namespace al

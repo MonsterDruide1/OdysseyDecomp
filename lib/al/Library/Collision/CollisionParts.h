@@ -21,9 +21,13 @@ public:
 
     const sead::Matrix34f& getPrevBaseMtx() const { return mPrevBaseMtx; }
 
+    const sead::Matrix34f& getPrevBaseInvMtx() const { return mPrevBaseInvMtx; }
+
     KCollisionServer* getKCollisionServer() const { return mKCollisionServer; }
 
     s32 get_15c() const { return _15c; }
+
+    bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
 
     bool isMoving() const { return mIsMoving; }
 

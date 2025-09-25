@@ -17,15 +17,20 @@ class AreaObj : public IUseStageSwitch, public IUseSceneObjHolder, public HioNod
 public:
     AreaObj(const char* name);
 
-    const char* getName() const override;
-    StageSwitchKeeper* getStageSwitchKeeper() const override;
+    const char* getName() const override { return mName; }
+
+    StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
+
     void initStageSwitchKeeper() override;
     virtual void init(const AreaInitInfo& info);
     virtual bool isInVolume(const sead::Vector3f& pos) const;
     virtual bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const;
-    SceneObjHolder* getSceneObjHolder() const override;
-    void validate();
-    void invalidate();
+
+    SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
+
+    void validate() { mIsValid = true; }
+
+    void invalidate() { mIsValid = false; }
 
     const PlacementInfo* getPlacementInfo() const { return mPlacementInfo; }
 
@@ -33,7 +38,11 @@ public:
 
     const sead::Matrix34f& getAreaMtx() const { return mAreaTR; }
 
-    s32 getPriority() { return mPriority; };
+    sead::Matrix34f* getAreaMtxPtr() { return &mAreaTR; }
+
+    s32 getPriority() const { return mPriority; }
+
+    bool isValid() const { return mIsValid; }
 
 private:
     const char* mName;

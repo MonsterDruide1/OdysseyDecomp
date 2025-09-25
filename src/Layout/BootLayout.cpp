@@ -16,15 +16,15 @@ NERVES_MAKE_NOSTRUCT(BootLayout, Appear, Wait, StartWipe, EndWipe, End);
 }  // namespace
 
 BootLayout::BootLayout(const al::LayoutInitInfo& info) : al::LayoutActor("[起動]BootLoading") {
-    al::initLayoutActor(this, info, "BootLoading", 0);
+    al::initLayoutActor(this, info, "BootLoading");
     mParBg = new al::LayoutActor("[起動]BG");
-    al::initLayoutPartsActor(mParBg, this, info, "ParBG", 0);
-    initNerve(&Appear, 0);
+    al::initLayoutPartsActor(mParBg, this, info, "ParBG");
+    initNerve(&Appear);
 }
 
 void BootLayout::appear() {
-    al::startAction(this, "Appear", 0);
-    al::startAction(mParBg, "Hide", 0);
+    al::startAction(this, "Appear");
+    al::startAction(mParBg, "Hide");
     al::LayoutActor::appear();
     al::setNerve(this, &Appear);
 }
@@ -34,8 +34,8 @@ void BootLayout::kill() {
 }
 
 void BootLayout::startWipe() {
-    al::startAction(this, "Wait", 0);
-    al::startAction(mParBg, "Hide", 0);
+    al::startAction(this, "Wait");
+    al::startAction(mParBg, "Hide");
     al::LayoutActor::appear();
     al::setNerve(this, &StartWipe);
 }
@@ -63,11 +63,11 @@ bool BootLayout::isEndWipe() const {
 }
 
 f32 BootLayout::getBgFrame() const {
-    return al::getActionFrame(mParBg, 0);
+    return al::getActionFrame(mParBg);
 }
 
 void BootLayout::exeAppear() {
-    if (al::isActionEnd(this, 0))
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
@@ -79,7 +79,7 @@ void BootLayout::exeWait() {
 void BootLayout::exeStartWipe() {
     if (al::isFirstStep(this))
         al::startAction(mParBg, "Appear", "Main");
-    if (!al::isActionEnd(mParBg, 0))
+    if (!al::isActionEnd(mParBg))
         return;
     al::startAction(mParBg, "Wait", "Main");
     al::setNerve(this, &EndWipe);
