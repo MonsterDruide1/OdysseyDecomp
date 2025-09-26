@@ -1186,7 +1186,6 @@ bool Bubble::tryBoundMoveWall() {
     return true;
 }
 
-// NON_MATCHING: Stack issues https://decomp.me/scratch/d5cE6
 void Bubble::updateHackOnGround() {
     static sead::Vector3f magic = {0.0f, 0.0f, 0.0f};
 
@@ -1230,23 +1229,30 @@ void Bubble::updateHackOnGround() {
 
     sead::Quatf quat;
     al::makeQuatRotationRate(&quat, updir2, mUpDir, 1.0f);
-    quat *= al::getQuat(this);
-    al::setQuat(this, quat);
+    {
+        sead::Quatf quat1;
+        sead::QuatCalcCommon<f32>::setMul(quat1, quat, al::getQuat(this));
+        al::setQuat(this, quat1);
+    }
 
     sead::Quatf quat2;
     al::makeQuatRotationRate(&quat2, mUpDir, mFireSurface, 0.1f);
-    sead::QuatCalcCommon<f32>::setMul(quat2, quat2, al::getQuat(this));
-    al::setQuat(this, quat2);
+    {
+        sead::Quatf quat5;
+        sead::QuatCalcCommon<f32>::setMul(quat5, quat2, al::getQuat(this));
+        al::setQuat(this, quat5);
+    }
 
     al::calcUpDir(&mUpDir, this);
 
     sead::Quatf quat3;
     al::makeQuatZDegree(&quat3, ((f32)mHackTurnFrame / (f32)mHackTurnDelay) * mHackTurnAngle);
     quat3.normalize();
-
-    sead::Quatf quat4;
-    sead::QuatCalcCommon<f32>::setMul(quat4, al::getQuat(this), quat3);
-    al::setQuat(this, quat4);
+    {
+        sead::Quatf quat4;
+        sead::QuatCalcCommon<f32>::setMul(quat4, al::getQuat(this), quat3);
+        al::setQuat(this, quat4);
+    }
     al::getVelocityPtr(this)->add(mLandPos);
 }
 
@@ -1404,7 +1410,6 @@ void Bubble::calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& in
     rs::calcHackerMoveVec(moveVec, mPlayerHack, inputDir);
 }
 
-// NON_MATCHING: Different quat multiplication https://decomp.me/scratch/EE9He
 void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& quatA, const sead::Quatf& quatB,
                                        const sead::Quatf& quatC, bool isValue) {
     sead::Vector3f direction = al::getTrans(this) - mPreviousTrans;
@@ -1422,8 +1427,9 @@ void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& quatA, const sead::Qua
         al::makeQuatRotateDegree(
             &newQuat, sead::Vector3f::ex,
             sead::Mathf::max(al::calcAngleDegree(sead::Vector3f::ey, dir), angle));
-        quat *= newQuat;
-        quat *= quatC;
+        sead::Quatf x;
+        sead::QuatCalcCommon<f32>::setMul(x, quat, newQuat);
+        quat = x * quatC;
     } else {
         quat *= quatB;
     }
@@ -1671,7 +1677,7 @@ void Bubble::accelStick() {
     sead::Vector3f local_70 = mStickForce;
     if (al::tryNormalizeOrZero(&local_70)) {
         sead::Vector3f local_80;
-        local_80.setCross(local_70, velocity);
+        local_80.setCross(velocity, local_70);
         if (al::tryNormalizeOrZero(&local_80)) {
             f32 fVar8 = local_80.dot(al::getVelocity(this));
             *al::getVelocityPtr(this) -= fVar8 * local_80;
