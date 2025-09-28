@@ -61,15 +61,15 @@ public:
 
     const sead::Vector3f& getFixReaction() const { return mFixReaction; }
 
-    const HitInfo& getGroundSensor() const { return mGroundSensor; }
+    const HitInfo& getFloorHit() const { return mFloorHit; }
 
     f32 get_110() const { return _110; }
 
-    const HitInfo& getWallSensor() const { return mWallSensor; }
+    const HitInfo& getWallHit() const { return mWallHit; }
 
     f32 get_1b8() const { return _1b8; }
 
-    const HitInfo& getCeilingSensor() const { return mCeilingSensor; }
+    const HitInfo& getCeilingHit() const { return mCeilingHit; }
 
     f32 get_260() const { return _260; }
 
@@ -101,13 +101,13 @@ private:
     HitInfo* _50;
     sead::Vector3f mFixReaction;
     sead::Vector3f _64;
-    HitInfo mGroundSensor;
+    HitInfo mFloorHit;
     f32 _110;
     char filler3[0x4];
-    HitInfo mWallSensor;
+    HitInfo mWallHit;
     f32 _1b8;
     char filler4[0x4];
-    HitInfo mCeilingSensor;
+    HitInfo mCeilingHit;
     f32 _260;
     u32 _264;
     sead::Vector3f _268;
