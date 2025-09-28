@@ -63,9 +63,9 @@ public:
     void initParts(const sead::Matrix34f&);
     void invalidateBySystem();
 
-    const sead::Matrix34f* getSyncCollisonMtx() const { return mSyncCollisonMtx; }
+    const sead::Matrix34f* getSyncCollisonMtx() const { return mSyncCollisionMtx; }
 
-    void setSyncCollisionMtx(const sead::Matrix34f* mtx) { mSyncCollisonMtx = mtx; }
+    void setSyncCollisionMtx(const sead::Matrix34f* mtx) { mSyncCollisionMtx = mtx; }
 
     const sead::Matrix34f& getBaseMtx() const { return mBaseMtx; }
 
@@ -103,7 +103,7 @@ private:
     void* unk[2];
     CollisionParts* _10;  // self-reference
     sead::TList<CollisionParts*>* mPartsList;
-    const sead::Matrix34f* mSyncCollisonMtx;
+    const sead::Matrix34f* mSyncCollisionMtx;
     sead::Matrix34f mSyncMtx;
     sead::Matrix34f mBaseMtx;
     sead::Matrix34f mBaseInvMtx;

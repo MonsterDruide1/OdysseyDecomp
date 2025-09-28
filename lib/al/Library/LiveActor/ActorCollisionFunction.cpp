@@ -131,7 +131,7 @@ bool isOnGroundFace(const LiveActor* actor) {
 }
 
 bool isCollidedGroundEdgeOrCorner(const LiveActor* actor) {
-    return isCollidedGround(actor) && !actor->getCollider()->getGroundSensor().isCollisionAtFace();
+    return isCollidedGround(actor) && !actor->getCollider()->getFloorHit().isCollisionAtFace();
 }
 
 bool isOnGroundNoVelocity(const LiveActor* actor, u32 offset) {
@@ -216,7 +216,7 @@ void setColliderReactMovePower(LiveActor* actor, bool isEnabled) {
 }
 
 void calcColliderFloorRotatePower(sead::Quatf* outRotatePower, LiveActor* actor) {
-    actor->getCollider()->getGroundSensor().triangle.calcForceRotatePower(outRotatePower);
+    actor->getCollider()->getFloorHit().triangle.calcForceRotatePower(outRotatePower);
 }
 
 void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor, const sead::Vector3f& pos,
@@ -227,7 +227,7 @@ void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor, const sea
     }
 
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
-    const HitInfo& floorSensor = actor->getCollider()->getGroundSensor();
+    const HitInfo& floorSensor = actor->getCollider()->getFloorHit();
     if (floorSensor.triangle.getCollisionParts() && floorSensor.triangle.isHostMoved())
         floorSensor.triangle.calcForceMovePower(&movePower, getTrans(actor));
 
@@ -259,7 +259,7 @@ void calcJumpInertiaWall(sead::Vector3f* outJumpInertia, LiveActor* actor, f32 f
 
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
     const sead::Vector3f& trans = getTrans(actor);
-    const HitInfo& floorSensor = actor->getCollider()->getWallSensor();
+    const HitInfo& floorSensor = actor->getCollider()->getWallHit();
 
     if (floorSensor.triangle.getCollisionParts() &&
         alCollisionUtil::isCollisionMoving(&floorSensor))
@@ -329,7 +329,7 @@ void scaleVelocityInertiaWallHit(LiveActor* actor, f32 velocityScale, f32 maxVel
 }
 
 const sead::Vector3f& getCollidedWallNormal(const LiveActor* actor) {
-    return actor->getCollider()->getWallSensor().triangle.getFaceNormal();
+    return actor->getCollider()->getWallHit().triangle.getFaceNormal();
 }
 
 void calcCollidedNormalSum(const LiveActor* actor, sead::Vector3f* outNormal) {
@@ -337,13 +337,13 @@ void calcCollidedNormalSum(const LiveActor* actor, sead::Vector3f* outNormal) {
     Collider* collider = actor->getCollider();
 
     if (collider->get_110() >= 0.0f)
-        outNormal->add(collider->getGroundSensor().triangle.getFaceNormal());
+        outNormal->add(collider->getFloorHit().triangle.getFaceNormal());
 
     if (collider->get_1b8() >= 0.0f)
-        outNormal->add(collider->getWallSensor().triangle.getFaceNormal());
+        outNormal->add(collider->getWallHit().triangle.getFaceNormal());
 
     if (collider->get_260() >= 0.0f)
-        outNormal->add(collider->getCeilingSensor().triangle.getFaceNormal());
+        outNormal->add(collider->getCeilingHit().triangle.getFaceNormal());
 
     *outNormal *= 1.0f / 3.0f;
 }
@@ -358,7 +358,7 @@ void calcGroundNormalOrUpDir(sead::Vector3f* outDir, const LiveActor* actor) {
 }
 
 const sead::Vector3f& getCollidedGroundNormal(const LiveActor* actor) {
-    return actor->getCollider()->getGroundSensor().triangle.getFaceNormal();
+    return actor->getCollider()->getFloorHit().triangle.getFaceNormal();
 }
 
 void calcGroundNormalOrGravityDir(sead::Vector3f* outDir, const LiveActor* actor) {
@@ -448,15 +448,15 @@ const char* getCollidedFloorMaterialCodeName(const LiveActor* actor) {
 }
 
 const char* getCollidedFloorMaterialCodeName(const Collider* collider) {
-    return getMaterialCodeName(collider->getGroundSensor().triangle);
+    return getMaterialCodeName(collider->getFloorHit().triangle);
 }
 
 const char* getCollidedWallMaterialCodeName(const LiveActor* actor) {
-    return getMaterialCodeName(actor->getCollider()->getWallSensor().triangle);
+    return getMaterialCodeName(actor->getCollider()->getWallHit().triangle);
 }
 
 const char* getCollidedCeilingMaterialCodeName(const LiveActor* actor) {
-    return getMaterialCodeName(actor->getCollider()->getCeilingSensor().triangle);
+    return getMaterialCodeName(actor->getCollider()->getCeilingHit().triangle);
 }
 
 bool isCollidedFloorCode(const LiveActor* actor, const char* name) {
@@ -467,20 +467,20 @@ bool isCollidedCollisionCode(const LiveActor* actor, const char* sensorName, con
     Collider* collider = actor->getCollider();
     if (collider->get_48() == 0) {
         if (collider->get_110() >= 0.0f) {
-            if (isEqualString(
-                    name, getCollisionCodeName(collider->getGroundSensor().triangle, sensorName))) {
+            if (isEqualString(name,
+                              getCollisionCodeName(collider->getFloorHit().triangle, sensorName))) {
                 return true;
             }
         }
         if (collider->get_1b8() >= 0.0f) {
-            if (isEqualString(
-                    name, getCollisionCodeName(collider->getWallSensor().triangle, sensorName))) {
+            if (isEqualString(name,
+                              getCollisionCodeName(collider->getWallHit().triangle, sensorName))) {
                 return true;
             }
         }
         if (collider->get_260() >= 0.0f) {
-            if (isEqualString(name, getCollisionCodeName(collider->getCeilingSensor().triangle,
-                                                         sensorName))) {
+            if (isEqualString(
+                    name, getCollisionCodeName(collider->getCeilingHit().triangle, sensorName))) {
                 return true;
             }
         }
@@ -517,7 +517,7 @@ bool isCollidedGroundCollisionCode(const LiveActor* actor, const char* sensorNam
         return false;
 
     return isEqualString(
-        name, getCollisionCodeName(actor->getCollider()->getGroundSensor().triangle, sensorName));
+        name, getCollisionCodeName(actor->getCollider()->getFloorHit().triangle, sensorName));
 }
 
 bool isCollided(const LiveActor* actor) {
@@ -554,19 +554,19 @@ bool isCollidedCeilingVelocity(const LiveActor* actor) {
 }
 
 const sead::Vector3f& getCollidedCeilingNormal(const LiveActor* actor) {
-    return actor->getCollider()->getCeilingSensor().triangle.getFaceNormal();
+    return actor->getCollider()->getCeilingHit().triangle.getFaceNormal();
 }
 
 const sead::Vector3f& getCollidedGroundPos(const LiveActor* actor) {
-    return actor->getCollider()->getGroundSensor().collisionHitPos;
+    return actor->getCollider()->getFloorHit().collisionHitPos;
 }
 
 const sead::Vector3f& getCollidedWallPos(const LiveActor* actor) {
-    return actor->getCollider()->getWallSensor().collisionHitPos;
+    return actor->getCollider()->getWallHit().collisionHitPos;
 }
 
 const sead::Vector3f& getCollidedCeilingPos(const LiveActor* actor) {
-    return actor->getCollider()->getCeilingSensor().collisionHitPos;
+    return actor->getCollider()->getCeilingHit().collisionHitPos;
 }
 
 f32 calcSpeedCollideWall(const LiveActor* actor) {
@@ -597,7 +597,7 @@ const CollisionParts* getCollidedGroundCollisionParts(const LiveActor* actor) {
 const CollisionParts* tryGetCollidedGroundCollisionParts(const LiveActor* actor) {
     if (!isCollidedGround(actor))
         return nullptr;
-    return actor->getCollider()->getGroundSensor().triangle.getCollisionParts();
+    return actor->getCollider()->getFloorHit().triangle.getCollisionParts();
 }
 
 const CollisionParts* getCollidedWallCollisionParts(const LiveActor* actor) {
@@ -607,7 +607,7 @@ const CollisionParts* getCollidedWallCollisionParts(const LiveActor* actor) {
 const CollisionParts* tryGetCollidedWallCollisionParts(const LiveActor* actor) {
     if (!isCollidedWall(actor))
         return nullptr;
-    return actor->getCollider()->getWallSensor().triangle.getCollisionParts();
+    return actor->getCollider()->getWallHit().triangle.getCollisionParts();
 }
 
 const CollisionParts* getCollidedCeilingCollisionParts(const LiveActor* actor) {
@@ -617,7 +617,7 @@ const CollisionParts* getCollidedCeilingCollisionParts(const LiveActor* actor) {
 const CollisionParts* tryGetCollidedCeilingCollisionParts(const LiveActor* actor) {
     if (!isCollidedCeiling(actor))
         return nullptr;
-    return actor->getCollider()->getCeilingSensor().triangle.getCollisionParts();
+    return actor->getCollider()->getCeilingHit().triangle.getCollisionParts();
 }
 
 HitSensor* getCollidedGroundSensor(const LiveActor* actor) {
@@ -627,10 +627,7 @@ HitSensor* getCollidedGroundSensor(const LiveActor* actor) {
 HitSensor* tryGetCollidedGroundSensor(const LiveActor* actor) {
     if (!isCollidedGround(actor))
         return nullptr;
-    return actor->getCollider()
-        ->getGroundSensor()
-        .triangle.getCollisionParts()
-        ->getConnectedSensor();
+    return actor->getCollider()->getFloorHit().triangle.getCollisionParts()->getConnectedSensor();
 }
 
 HitSensor* getCollidedWallSensor(const LiveActor* actor) {
@@ -640,7 +637,7 @@ HitSensor* getCollidedWallSensor(const LiveActor* actor) {
 HitSensor* tryGetCollidedWallSensor(const LiveActor* actor) {
     if (!isCollidedWall(actor))
         return nullptr;
-    return actor->getCollider()->getWallSensor().triangle.getCollisionParts()->getConnectedSensor();
+    return actor->getCollider()->getWallHit().triangle.getCollisionParts()->getConnectedSensor();
 }
 
 HitSensor* getCollidedCeilingSensor(const LiveActor* actor) {
@@ -650,10 +647,7 @@ HitSensor* getCollidedCeilingSensor(const LiveActor* actor) {
 HitSensor* tryGetCollidedCeilingSensor(const LiveActor* actor) {
     if (!isCollidedCeiling(actor))
         return nullptr;
-    return actor->getCollider()
-        ->getCeilingSensor()
-        .triangle.getCollisionParts()
-        ->getConnectedSensor();
+    return actor->getCollider()->getCeilingHit().triangle.getCollisionParts()->getConnectedSensor();
 }
 
 HitSensor* tryGetCollidedSensor(const LiveActor* actor) {
@@ -693,7 +687,7 @@ void followRotateFrontAxisUpGround(LiveActor* actor) {
         return;
 
     const CollisionParts* collisionParts =
-        actor->getCollider()->getGroundSensor().triangle.getCollisionParts();
+        actor->getCollider()->getFloorHit().triangle.getCollisionParts();
 
     if (collisionParts)
         followRotateFrontAxisUp(actor, collisionParts);
