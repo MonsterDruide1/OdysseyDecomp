@@ -27,7 +27,8 @@ ResourceSystem::ResourceSystem(const char* name) {
     }
 }
 
-__attribute__((always_inline)) void createResourceCore(ResourceSystem* self, Resource* resource) {
+inline __attribute__((always_inline)) void createResourceCore(ResourceSystem* self,
+                                                              Resource* resource) {
     StringTmp<256> fileName = StringTmp<256>("%s.bfres", resource->getArchiveName());
     if (resource->isExistFile(fileName)) {
         ByamlIter iter;
@@ -58,6 +59,10 @@ Resource* ResourceSystem::createResource(const sead::SafeString& name, ResourceC
     createResourceCore(this, resource);
 
     return resource->getFileArchive() ? resource : nullptr;
+}
+
+void cleanupResGraphicsFile(const sead::SafeString& key, Resource* resource) {
+    resource->cleanupResGraphicsFile();
 }
 
 Resource* ResourceSystem::findResource(const sead::SafeString& categoryName) {
