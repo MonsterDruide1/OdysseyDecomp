@@ -165,9 +165,9 @@ void getAreaObjDirSide(sead::Vector3f* outSideDir, const AreaObj* areaObj) {
     getAreaObjBaseMtx(areaObj).getBase(*outSideDir, 0);
 }
 
-void calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj* areaObj,
+bool calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj* areaObj,
                                const sead::Vector3f& position) {
-    areaObj->getAreaShape()->calcNearestEdgePoint(outNearestEdgePos, position);
+    return areaObj->getAreaShape()->calcNearestEdgePoint(outNearestEdgePos, position);
 }
 
 void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const AreaObj* areaObj,
