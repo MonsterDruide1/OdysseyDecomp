@@ -27,6 +27,39 @@ ResourceSystem::ResourceSystem(const char* name) {
     }
 }
 
+__attribute__((always_inline)) void createResourceCore(ResourceSystem* self, Resource* resource) {
+    StringTmp<256> fileName = StringTmp<256>("%s.bfres", resource->getArchiveName());
+    if (resource->isExistFile(fileName)) {
+        ByamlIter iter;
+
+        nn::g3d::ResFile* resFile = nullptr;
+        if (tryGetActorInitFileIter(&iter, resource, "InitModel", nullptr)) {
+            const char* textureArc = nullptr;
+            iter.tryGetStringByKey(&textureArc, "TextureArc");
+
+            if (textureArc) {
+                StringTmp<256> filePath = StringTmp<256>("ObjectData/%s", textureArc);
+                resFile = self->findOrCreateResource(filePath, nullptr)->getResFile();
+            }
+        }
+        resource->tryCreateResGraphicsFile(fileName, resFile);
+        resource->setActorInitResourceData(new ActorInitResourceData(resource));
+    }
+}
+
+Resource* ResourceSystem::createResource(const sead::SafeString& name, ResourceCategory* category,
+                                         const char* ext) {
+    sead::ScopedCurrentHeapSetter setter(category->heap);
+
+    Resource* resource = nullptr;
+    resource = ext ? new Resource(name, loadArchiveWithExt(name, ext)) : new Resource(name);
+    category->treeMap.insert(name, resource);
+
+    createResourceCore(this, resource);
+
+    return resource->getFileArchive() ? resource : nullptr;
+}
+
 Resource* ResourceSystem::findResource(const sead::SafeString& categoryName) {
     return findResourceCore(categoryName, nullptr);
 }
