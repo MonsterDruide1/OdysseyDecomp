@@ -34,7 +34,7 @@ public:
 
 private:
     s32 mItemId = -1;
-    s32 _6c = -1;
+    s32 _bc = -1;
     IAudioResourceLoader* mResourceLoader = nullptr;
     volatile bool mIsLoadSuccess = false;
 };
