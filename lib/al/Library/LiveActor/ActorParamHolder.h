@@ -16,8 +16,17 @@ enum class ActorParamType : s32 {
     Rebound = 5,
 };
 
-typedef s32 ActorParamS32;
-typedef f32 ActorParamF32;
+struct ActorParamS32 {
+    s32 value;
+};
+
+static_assert(sizeof(ActorParamS32) == 0x4);
+
+struct ActorParamF32 {
+    f32 value;
+};
+
+static_assert(sizeof(ActorParamF32) == 0x4);
 
 struct ActorParamMove {
     f32 moveAccel;
@@ -58,7 +67,7 @@ struct ActorParamInfo {
     ActorParamType type = ActorParamType::None;
 
     union {
-        ActorParamS32 paramS32 = 0;
+        ActorParamS32 paramS32 = {.value = 0};
         ActorParamF32 paramF32;
         ActorParamMove* paramMove;
         ActorParamJump* paramJump;
