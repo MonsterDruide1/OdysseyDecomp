@@ -16,9 +16,7 @@ namespace al {
 ResourceSystem::ResourceSystem(const char* name) {
     addCategory("リソースシステム", 1, sead::HeapMgr::instance()->getCurrentHeap());
 
-    const char* resourceName = "SystemData/ResourceSystem";
-    if (name)
-        resourceName = name;
+    const char* resourceName = name ?: "SystemData/ResourceSystem";
 
     if (isExistArchive(resourceName)) {
         Resource* resource =
@@ -28,24 +26,25 @@ ResourceSystem::ResourceSystem(const char* name) {
     }
 }
 
-ALWAYS_INLINE void createResourceCore(ResourceSystem* self, Resource* resource) {
+ALWAYS_INLINE void ResourceSystem::createResourceCore(ResourceSystem* self, Resource* resource) {
     StringTmp<256> fileName = StringTmp<256>("%s.bfres", resource->getArchiveName());
-    if (resource->isExistFile(fileName)) {
-        ByamlIter iter;
 
-        nn::g3d::ResFile* resFile = nullptr;
-        if (tryGetActorInitFileIter(&iter, resource, "InitModel", nullptr)) {
-            const char* textureArc = nullptr;
-            iter.tryGetStringByKey(&textureArc, "TextureArc");
+    if (!resource->isExistFile(fileName))
+        return;
 
-            if (textureArc) {
-                StringTmp<256> filePath = StringTmp<256>("ObjectData/%s", textureArc);
-                resFile = self->findOrCreateResource(filePath, nullptr)->getResFile();
-            }
+    ByamlIter iter;
+    nn::g3d::ResFile* resFile = nullptr;
+    if (tryGetActorInitFileIter(&iter, resource, "InitModel", nullptr)) {
+        const char* textureArc = nullptr;
+        iter.tryGetStringByKey(&textureArc, "TextureArc");
+
+        if (textureArc) {
+            StringTmp<256> filePath = StringTmp<256>("ObjectData/%s", textureArc);
+            resFile = self->findOrCreateResource(filePath, nullptr)->getResFile();
         }
-        resource->tryCreateResGraphicsFile(fileName, resFile);
-        resource->setActorInitResourceData(new ActorInitResourceData(resource));
     }
+    resource->tryCreateResGraphicsFile(fileName, resFile);
+    resource->setActorInitResourceData(new ActorInitResourceData(resource));
 }
 
 Resource* ResourceSystem::createResource(const sead::SafeString& name, ResourceCategory* category,
@@ -85,7 +84,7 @@ Resource* ResourceSystem::findResourceCore(const sead::SafeString& name,
 
 Resource* ResourceSystem::findOrCreateResource(const sead::SafeString& categoryName,
                                                const char* name) {
-    Resource* resource = findResourceCore(categoryName, nullptr);
+    Resource* resource = findResource(categoryName);
     if (resource)
         return resource;
 
@@ -105,8 +104,8 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& na
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i))
             continue;
 
-        const char* iterName = nullptr;
-        if (!categoryIter.tryGetStringByKey(&iterName, "Category"))
+        const char* categoryName = nullptr;
+        if (!categoryIter.tryGetStringByKey(&categoryName, "Category"))
             continue;
 
         ByamlIter arcsIter;
@@ -133,7 +132,7 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& na
             }
 
             if (isEqualString(arcName, name.cstr()))
-                return iterName;
+                return categoryName;
         }
     }
 
@@ -149,11 +148,11 @@ bool ResourceSystem::tryGetTableCategoryIter(ByamlIter* iter, const sead::SafeSt
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i))
             continue;
 
-        const char* iterName = nullptr;
-        if (!categoryIter.tryGetStringByKey(&iterName, "Category"))
+        const char* categoryName = nullptr;
+        if (!categoryIter.tryGetStringByKey(&categoryName, "Category"))
             continue;
 
-        if (isEqualString(iterName, name.cstr()) &&
+        if (isEqualString(categoryName, name.cstr()) &&
             mResourceCategoryTable->tryGetIterByIndex(iter, i)) {
             return true;
         }
@@ -178,9 +177,9 @@ bool ResourceSystem::tryGetGraphicsInfoIter(ByamlIter* iter, const sead::SafeStr
         for (s32 j = 0; j < graphicsInfoIter.getSize(); j++) {
             graphicsInfoIter.tryGetIterByIndex(iter, j);
 
-            const char* iterName = nullptr;
-            iter->tryGetStringByKey(&iterName, "Arc");
-            if (isEqualString(name, iterName))
+            const char* arcName = nullptr;
+            iter->tryGetStringByKey(&arcName, "Arc");
+            if (isEqualString(name, arcName))
                 return true;
         }
     }
