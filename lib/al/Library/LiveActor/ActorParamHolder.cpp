@@ -48,12 +48,12 @@ ActorParamHolder::ActorParamHolder(LiveActor* actor, const Resource* resource, c
         ByamlIter iterKey;
         if (iter.tryGetIterByKey(&iterKey, "S32")) {
             info->type = ActorParamType::S32;
-            iterKey.tryGetIntByKey(&info->paramS32, "ParamS32");
+            iterKey.tryGetIntByKey(&info->paramS32.value, "ParamS32");
             continue;
         }
         if (iter.tryGetIterByKey(&iterKey, "F32")) {
             info->type = ActorParamType::F32;
-            iterKey.tryGetFloatByKey(&info->paramF32, "ParamF32");
+            iterKey.tryGetFloatByKey(&info->paramF32.value, "ParamF32");
             continue;
         }
         if (iter.tryGetIterByKey(&iterKey, "ActorParamMove")) {

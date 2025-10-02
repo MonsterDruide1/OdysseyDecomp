@@ -3,11 +3,11 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-typedef s32 ActorParamS32;
-typedef f32 ActorParamF32;
+struct ActorParamF32;
 struct ActorParamJump;
 struct ActorParamMove;
 struct ActorParamRebound;
+struct ActorParamS32;
 struct ActorParamSight;
 class LiveActor;
 
