@@ -16,7 +16,9 @@ namespace al {
 ResourceSystem::ResourceSystem(const char* name) {
     addCategory("リソースシステム", 1, sead::HeapMgr::instance()->getCurrentHeap());
 
-    const char* resourceName = name ?: "SystemData/ResourceSystem";
+    const char* resourceName = "SystemData/ResourceSystem";
+    if (name)
+        resourceName = name;
 
     if (isExistArchive(resourceName)) {
         Resource* resource =
