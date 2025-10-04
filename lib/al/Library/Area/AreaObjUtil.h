@@ -46,7 +46,7 @@ const sead::Vector3f& getAreaObjScale(const AreaObj* areaObj);
 void getAreaObjDirFront(sead::Vector3f* outFrontDir, const AreaObj* areaObj);
 void getAreaObjDirUp(sead::Vector3f* outUpDir, const AreaObj* areaObj);
 void getAreaObjDirSide(sead::Vector3f* outSideDir, const AreaObj* areaObj);
-void calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj* areaObj,
+bool calcNearestAreaObjEdgePos(sead::Vector3f* outNearestEdgePos, const AreaObj* areaObj,
                                const sead::Vector3f& position);
 void calcNearestAreaObjEdgePosTopY(sead::Vector3f* outNearestEdgePosTopY, const AreaObj* areaObj,
                                    const sead::Vector3f& position);
