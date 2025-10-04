@@ -9,7 +9,7 @@ class ViewCtrlArea : public AreaObj {
 public:
     ViewCtrlArea(const char* name);
 
-    void init(const AreaInitInfo& areaInitInfo) override;
+    void init(const AreaInitInfo& info) override;
 
     PlacementId* getPlacementId() const { return mClippingViewId; }
 

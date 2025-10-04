@@ -4,7 +4,7 @@
 
 BlinkRateCalculator::BlinkRateCalculator(s32 maxFrames) : mMaxFrames(maxFrames) {}
 
-BlinkRateCalculator::BlinkRateCalculator() {}
+BlinkRateCalculator::BlinkRateCalculator() = default;
 
 void BlinkRateCalculator::reset() {
     mCurrentFrame = 0;

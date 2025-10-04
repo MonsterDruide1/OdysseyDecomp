@@ -141,7 +141,8 @@ public:
                     al::HitSensor* self) override;
     void control() override;
     void updateCollider() override;
-    void initPlayer(const al::ActorInitInfo&, const PlayerInitInfo&) override;
+    void initPlayer(const al::ActorInitInfo& actorInitInfo,
+                    const PlayerInitInfo& playerInitInfo) override;
     u32 getPortNo() const override;
     IUsePlayerCollision* getPlayerCollision() const override;
     PlayerHackKeeper* getPlayerHackKeeper() const override;
@@ -168,7 +169,8 @@ public:
     PlayerInfo* getPlayerInfo() const override;
     bool checkDeathArea() override;
     void sendCollisionMsg() override;
-    bool receivePushMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*, f32) override;
+    bool receivePushMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self,
+                        f32 maxPush) override;
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
     void updateModelShadowDropLength();

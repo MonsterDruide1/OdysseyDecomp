@@ -25,7 +25,7 @@ public:
     HelpAmiiboExecutor(HelpAmiiboDirector* director, al::LiveActor* amiiboActor,
                        const char* amiiboName);
 
-    virtual void initAfterPlacement(const al::ActorInitInfo&);
+    virtual void initAfterPlacement(const al::ActorInitInfo& initInfo);
     virtual bool isTriggerTouch(const al::NfpInfo& nfpInfo) const = 0;
     virtual bool isEnableUse() = 0;
     virtual bool execute() = 0;

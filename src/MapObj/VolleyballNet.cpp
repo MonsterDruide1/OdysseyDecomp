@@ -17,8 +17,8 @@ NERVES_MAKE_NOSTRUCT(VolleyballNet, Wait, Reaction);
 
 VolleyballNet::VolleyballNet(const char* name) : al::LiveActor(name) {}
 
-void VolleyballNet::init(const al::ActorInitInfo& initInfo) {
-    al::initActor(this, initInfo);
+void VolleyballNet::init(const al::ActorInitInfo& info) {
+    al::initActor(this, info);
     al::initNerve(this, &Wait, 0);
     makeActorAlive();
 }

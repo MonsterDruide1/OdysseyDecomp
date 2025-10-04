@@ -2,7 +2,7 @@
 
 #include "Util/SensorMsgFunction.h"
 
-ExternalForceKeeper::ExternalForceKeeper() {}
+ExternalForceKeeper::ExternalForceKeeper() = default;
 
 bool ExternalForceKeeper::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                      al::HitSensor* self) {

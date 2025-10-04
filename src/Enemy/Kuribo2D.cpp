@@ -32,10 +32,10 @@ NERVES_MAKE_STRUCT(Kuribo2D, Walk, Wait, PressDown, BlowDown, FallAfterGenerate)
 
 Kuribo2D::Kuribo2D(const char* name) : al::LiveActor(name) {}
 
-void Kuribo2D::init(const al::ActorInitInfo& initInfo) {
+void Kuribo2D::init(const al::ActorInitInfo& info) {
     using Kuribo2DFunctor = al::FunctorV0M<Kuribo2D*, void (Kuribo2D::*)()>;
 
-    al::initActorWithArchiveName(this, initInfo, "Kuribo2D", nullptr);
+    al::initActorWithArchiveName(this, info, "Kuribo2D", nullptr);
     al::initNerve(this, &NrvKuribo2D.Walk, 0);
     rs::createAndSetFilter2DOnly(this);
 

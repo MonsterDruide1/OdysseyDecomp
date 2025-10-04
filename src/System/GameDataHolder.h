@@ -233,7 +233,7 @@ private:
     bool mIsRequireSave;
     u32 mRequireSaveFrame;
     bool mIsInvalidSaveForMoonGet;
-    bool _48;  // related to changeNextStage(WithWorldDemoWarp)
+    bool _49;  // related to changeNextStage(WithWorldDemoWarp)
     bool _4a;  // related to endStage
     sead::FixedSafeString<32> mLanguage;
     u64 mPlayTimeAcrossFiles;

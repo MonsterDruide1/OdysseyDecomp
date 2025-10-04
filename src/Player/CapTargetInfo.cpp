@@ -7,7 +7,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 
-CapTargetInfo::CapTargetInfo() {}
+CapTargetInfo::CapTargetInfo() = default;
 
 void CapTargetInfo::init(const al::LiveActor* actor, const char* name) {
     mActor = actor;

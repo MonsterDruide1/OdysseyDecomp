@@ -15,7 +15,7 @@ void NerveKeeper::initNerveAction(NerveActionCtrl* actionCtrl) {
 }
 
 void NerveKeeper::setNerve(const Nerve* nextNerve) {
-    if (mStep >= 0 && mCurrentNerve != nullptr)
+    if (mStep >= 0 && mCurrentNerve)
         mCurrentNerve->executeOnEnd(this);
 
     mNextNerve = nextNerve;
