@@ -37,6 +37,10 @@ public:
     void exeTrample();
     void exeUpperPunch();
 
+    void setFlyLimit(const sead::Vector3f& flyLimit) { mFlyLimit.set(flyLimit); }
+
+    void setIsJudgeFall(bool isJudgeFall) { mIsJudgeFall = isJudgeFall; }
+
     struct HackerStateWingFlyParam {
         const char* actionFly = "Fly";
         const char* actionFall = "Fall";
@@ -55,6 +59,8 @@ public:
     };
 
     static_assert(sizeof(HackerStateWingFlyParam) == 0x48, "HackerStateWingFlyParam Size");
+
+    void setFlyParam(HackerStateWingFlyParam param) { mParam = param; }
 
 private:
     IUsePlayerHack** mHacker;
