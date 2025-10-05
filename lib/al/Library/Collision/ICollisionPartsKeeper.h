@@ -5,7 +5,7 @@
 
 namespace al {
 class CollisionParts;
-class HitInfo;
+struct HitInfo;
 class SphereCheckInfo;
 class ArrowCheckInfo;
 class DiskCheckInfo;
