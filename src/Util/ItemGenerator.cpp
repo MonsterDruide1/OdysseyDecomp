@@ -12,7 +12,7 @@
 #include "Enemy/KuriboMini.h"
 #include "Util/ItemUtil.h"
 
-ItemGenerator::ItemGenerator() {}
+ItemGenerator::ItemGenerator() = default;
 
 ItemGenerator::ItemGenerator(al::LiveActor* creator, const al::ActorInitInfo& info)
     : mCreator(creator) {

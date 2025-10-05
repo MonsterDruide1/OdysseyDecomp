@@ -16,7 +16,7 @@ CameraParamMoveLimit* CameraParamMoveLimit::create(const CameraPoser* poser) {
     return result;
 }
 
-CameraParamMoveLimit::CameraParamMoveLimit() {}
+CameraParamMoveLimit::CameraParamMoveLimit() = default;
 
 void CameraParamMoveLimit::load(const ByamlIter& iter) {
     ByamlIter moveLimitIter;

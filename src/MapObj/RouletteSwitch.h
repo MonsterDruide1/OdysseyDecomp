@@ -14,7 +14,7 @@ struct ActorInitInfo;
 class RouletteSwitch : public al::LiveActor {
 public:
     RouletteSwitch(const char* name);
-    void init(const al::ActorInitInfo& actorInitInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void control() override;
     void exeWait();
 

@@ -19,7 +19,7 @@ public:
 
     const char* getSceneObjName() const override { return "ステージ同期カウンタ"; }
 
-    void initAfterPlacementSceneObj(const ActorInitInfo& initInfo) override;
+    void initAfterPlacementSceneObj(const ActorInitInfo& info) override;
 
     s32 getCounter() const { return mCounter; }
 

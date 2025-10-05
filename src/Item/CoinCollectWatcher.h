@@ -23,7 +23,7 @@ public:
 
     const char* getSceneObjName() const override { return "コインコレクト監視者"; }
 
-    void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
+    void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
 
     void registerCoin(bool isCountUpCoin);
     void countup(const al::LiveActor* actor);

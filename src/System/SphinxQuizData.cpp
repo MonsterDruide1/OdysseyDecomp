@@ -42,12 +42,12 @@ void SphinxQuizData::write(al::ByamlWriter* writer) {
     }
 }
 
-void SphinxQuizData::read(const al::ByamlIter& reader) {
+void SphinxQuizData::read(const al::ByamlIter& save) {
     init();
 
     for (s32 i = 0; i < mArraySize; i++) {
         al::ByamlIter sphinxData{};
-        reader.tryGetIterByIndex(&sphinxData, i);
+        save.tryGetIterByIndex(&sphinxData, i);
         sphinxData.tryGetBoolByKey(&mIsAnswerCorrectSphinxQuiz[i], "IsAnswerCorrectSphinxQuiz");
         sphinxData.tryGetBoolByKey(&mIsAnswerCorrectSphinxQuizAll[i],
                                    "IsAnswerCorrectSphinxQuizAll");

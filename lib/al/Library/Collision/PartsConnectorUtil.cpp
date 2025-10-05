@@ -21,7 +21,7 @@ namespace al {
 inline bool IsConnectToCollision(const ActorInitInfo& initInfo) {
     bool isConnectToCollision = false;
 
-    if (!al::tryGetArg(&isConnectToCollision, initInfo, "IsConnectToCollision"))
+    if (!tryGetArg(&isConnectToCollision, initInfo, "IsConnectToCollision"))
         return false;
 
     return isConnectToCollision;

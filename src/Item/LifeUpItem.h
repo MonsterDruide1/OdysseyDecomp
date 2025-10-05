@@ -19,7 +19,7 @@ class LifeUpItem : public al::LiveActor {
 public:
     LifeUpItem(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
@@ -49,7 +49,7 @@ private:
     al::HitSensor* mHitSensor = nullptr;
     al::MtxConnector* mMtxConnector = nullptr;
     al::LiveActor* _120 = nullptr;
-    s32 _12c = 0;
+    s32 _128 = 0;
     WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
     FireSurfaceFinder* mFireSurfaceFinder = nullptr;
     s32 mShadowMaskDropLength = 0;

@@ -10,7 +10,7 @@ class CoinBlow : public al::LiveActor {
 public:
     CoinBlow(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
 
     void listenStart();
 

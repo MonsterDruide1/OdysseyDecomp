@@ -7,8 +7,8 @@ namespace al {
 
 StageSyncCounter::StageSyncCounter() = default;
 
-void StageSyncCounter::initAfterPlacementSceneObj(const ActorInitInfo& initInfo) {
-    registerExecutorUser(this, initInfo.executeDirector, getSceneObjName());
+void StageSyncCounter::initAfterPlacementSceneObj(const ActorInitInfo& info) {
+    registerExecutorUser(this, info.executeDirector, getSceneObjName());
 }
 
 }  // namespace al

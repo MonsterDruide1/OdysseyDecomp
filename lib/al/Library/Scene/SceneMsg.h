@@ -10,8 +10,8 @@ public:
     void setMsg(const char*, const char*);
 
 private:
-    void* field_00;
-    sead::FixedSafeString<128> field_08;
+    void* field_0;
+    sead::FixedSafeString<128> field_8;
     sead::FixedSafeString<128> field_a0;
 };
 }  // namespace al

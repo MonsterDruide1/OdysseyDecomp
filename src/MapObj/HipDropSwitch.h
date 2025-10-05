@@ -12,11 +12,12 @@ class SensorMsg;
 class HipDropSwitch : public al::LiveActor {
 public:
     HipDropSwitch(const char*);
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void reset();
     void control() override;
     bool isOn() const;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void startClipped() override;
     bool isOnWait() const;
     void writeSave();

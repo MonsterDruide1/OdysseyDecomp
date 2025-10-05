@@ -15,8 +15,8 @@ public:
 
 private:
     s32 mMatType;
-    void* _30;
-    void* _38;
+    void* _18;
+    void* _20;
 };
 
 class AnimPlayerVis : public AnimPlayerSimple {

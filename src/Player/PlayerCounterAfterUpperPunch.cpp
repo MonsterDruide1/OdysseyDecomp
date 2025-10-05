@@ -2,7 +2,7 @@
 
 #include "Player/PlayerTrigger.h"
 
-PlayerCounterAfterUpperPunch::PlayerCounterAfterUpperPunch() {}
+PlayerCounterAfterUpperPunch::PlayerCounterAfterUpperPunch() = default;
 
 void PlayerCounterAfterUpperPunch::update(const PlayerTrigger* trigger) {
     if (mCounter <= (u32)sead::Mathi::maxNumber() - 1)

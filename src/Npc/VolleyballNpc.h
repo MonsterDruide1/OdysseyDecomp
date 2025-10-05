@@ -29,7 +29,7 @@ class VolleyballNpc : public al::LiveActor, public al::IEventFlowEventReceiver {
 public:
     VolleyballNpc(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void control() override;
     void endGame();
     bool receiveEvent(const al::EventFlowEventData* event) override;

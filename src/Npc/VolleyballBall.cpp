@@ -41,8 +41,8 @@ const sead::Vector3f sCoinDropOffset = {0.0f, 200.0f, 200.0f};
 
 VolleyballBall::VolleyballBall(const char* name) : al::LiveActor(name) {}
 
-void VolleyballBall::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "VolleyballBall", nullptr);
+void VolleyballBall::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "VolleyballBall", nullptr);
     al::initNerve(this, &NrvVolleyballBall.Wait, 0);
     mAttackPath = new al::ParabolicPath();
     mReturnPath = new al::ParabolicPath();

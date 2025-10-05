@@ -6,9 +6,9 @@ class PictureNoStageChange : public al::LiveActor {
 public:
     PictureNoStageChange(const char* actorName, const char* archiveName);
 
-    virtual void init(const al::ActorInitInfo& info) override;
-    virtual bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
-                            al::HitSensor* self) override;
+    void init(const al::ActorInitInfo& info) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     void exeWait();
 

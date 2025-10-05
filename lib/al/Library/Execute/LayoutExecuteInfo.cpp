@@ -1,7 +1,7 @@
 #include "Library/Execute/LayoutExecuteInfo.h"
 
 namespace al {
-LayoutExecuteInfo::LayoutExecuteInfo() {}
+LayoutExecuteInfo::LayoutExecuteInfo() = default;
 
 void LayoutExecuteInfo::addUpdater(ExecutorListLayoutUpdate* updater) {
     mUpdaters[mUpdaterCount] = updater;

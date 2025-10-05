@@ -26,7 +26,7 @@ struct NfpInfo {
     // Unknown size
     char16 nickName[nn::nfp::AmiiboNameLength + 1]{};
 
-    char _18e[0x8e]{};
+    char _152[0x8e]{};
     bool isNormalNfc = false;
     bool isAmiibo = false;
     bool isFormatVersionSet = false;

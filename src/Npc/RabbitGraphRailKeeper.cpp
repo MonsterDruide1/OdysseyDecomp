@@ -25,35 +25,35 @@ RabbitGraphRailKeeper::RabbitGraphRailKeeper(const char* name) : al::LiveActor(n
 RabbitGraphRailKeeper::RabbitGraphRailKeeper(const char* name, al::LiveActor* actor)
     : al::LiveActor(name) {}
 
-void RabbitGraphRailKeeper::init(const al::ActorInitInfo& initInfo) {
+void RabbitGraphRailKeeper::init(const al::ActorInitInfo& info) {
     using RabbitGraphRailKeeperFunctor =
         al::FunctorV0M<RabbitGraphRailKeeper*, void (RabbitGraphRailKeeper::*)()>;
 
-    al::initActorSceneInfo(this, initInfo);
+    al::initActorSceneInfo(this, info);
     al::initActorPoseTRSV(this);
-    al::initActorSRT(this, initInfo);
-    al::initActorClipping(this, initInfo);
-    al::initStageSwitch(this, initInfo);
+    al::initActorSRT(this, info);
+    al::initActorClipping(this, info);
+    al::initStageSwitch(this, info);
 
     const char* objectName;
-    al::tryGetObjectName(&objectName, initInfo);
+    al::tryGetObjectName(&objectName, info);
 
-    if (al::isObjectName(initInfo, "RailRabbit")) {
+    if (al::isObjectName(info, "RailRabbit")) {
         mRail = new al::Rail();
-        mRail->init(*initInfo.placementInfo);
+        mRail->init(*info.placementInfo);
         mRailRider = new al::RailRider(mRail);
     } else {
-        if (!al::isExistRail(initInfo, "Rail")) {
+        if (!al::isExistRail(info, "Rail")) {
             makeActorDead();
             return;
         }
 
-        initRailKeeper(initInfo, "Rail");
+        initRailKeeper(info, "Rail");
     }
 
-    al::initExecutorUpdate(this, initInfo, "地形オブジェ[Movement]");
+    al::initExecutorUpdate(this, info, "地形オブジェ[Movement]");
     al::initNerve(this, &NrvRabbitGraphRailKeeper.Wait, 0);
-    al::tryGetArg(&mIsJump, initInfo, "IsJump");
+    al::tryGetArg(&mIsJump, info, "IsJump");
     makeActorAlive();
 
     if (al::listenStageSwitchOnAppear(

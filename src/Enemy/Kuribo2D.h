@@ -12,7 +12,7 @@ class Kuribo2D : public al::LiveActor, public IUseDimension {
 public:
     Kuribo2D(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void startWalk();
     void reset();
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;

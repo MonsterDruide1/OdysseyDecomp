@@ -14,7 +14,8 @@ class SignBoardBlow : public al::LiveActor {
 public:
     SignBoardBlow(const char* actorName, const char* signBoardBlowName);
     void init(const al::ActorInitInfo& info) override;
-    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void startBlow(const sead::Vector3f&);
     void exeWait();
     void exeBlow();

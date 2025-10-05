@@ -9,6 +9,6 @@ class ByamlWriter;
 
 class ByamlSave : public al::HioNode {
 public:
-    virtual void write(al::ByamlWriter*) = 0;
-    virtual void read(const al::ByamlIter&) = 0;
+    virtual void write(al::ByamlWriter* writer) = 0;
+    virtual void read(const al::ByamlIter& save) = 0;
 };

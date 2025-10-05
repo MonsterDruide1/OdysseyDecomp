@@ -10,7 +10,7 @@ struct LiveActorFlag {
     bool isDisableCalcAnim = false;
     bool isModelHidden = false;
     bool isCollideOff = true;
-    bool field_07 = false;
+    bool field_7 = false;
     bool isMaterialCodeValid = false;
     bool isPuddleMaterialValid = false;
     bool isAreaTargetOn = true;

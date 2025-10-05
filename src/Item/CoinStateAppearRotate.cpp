@@ -46,7 +46,7 @@ void CoinStateAppearRotate::exeRotate() {
     al::calcUpDir(&upDir, actor);
     al::rotateVectorDegree(&frontDir, frontDir, upDir, 15.0f);
 
-    if (mMtxConnector == nullptr) {
+    if (!mMtxConnector) {
         al::getTransPtr(actor)->y = mInitialTransY + mOffset.y;
 
         sead::Quatf quad = sead::Quatf::unit;

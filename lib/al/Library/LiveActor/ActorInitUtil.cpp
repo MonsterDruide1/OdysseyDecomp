@@ -158,7 +158,7 @@ ALWAYS_INLINE void initActorModel(LiveActor* actor, const ActorInitInfo& initInf
     initModel.tryGetStringByKey(&displayRootJointName, "DisplayRootJointName");
 
     initActorModelKeeper(actor, initInfo, actorResource, blendAnimMax);
-    if (displayRootJointName != nullptr)
+    if (displayRootJointName)
         actor->getModelKeeper()->setDisplayRootJointMtxPtr(
             getJointMtxPtr(actor, displayRootJointName));
 
@@ -317,7 +317,7 @@ ALWAYS_INLINE void initActorCollision(LiveActor* actor, const ActorInitInfo& ini
     initCollision.tryGetStringByKey(&name, "Name");
     sead::FixedSafeString<256> unused;
 
-    if (name == nullptr)
+    if (!name)
         name = getBaseName(modelRes->getArchiveName());
 
     const char* sensorName = nullptr;
@@ -328,7 +328,7 @@ ALWAYS_INLINE void initActorCollision(LiveActor* actor, const ActorInitInfo& ini
     const char* joint = nullptr;
     initCollision.tryGetStringByKey(&joint, "Joint");
     sead::Matrix34f* jointMtx = nullptr;
-    if (joint != nullptr)
+    if (joint)
         jointMtx = getJointMtxPtr(actor, joint);
 
     initActorCollisionWithResource(actor, modelRes, name, sensor, jointMtx, suffix);
@@ -378,7 +378,7 @@ ALWAYS_INLINE void initActorSound(LiveActor* actor, const ActorInitInfo& initInf
     } else
         return;
 
-    if (seName != nullptr)
+    if (seName)
         initActorSeKeeper(actor, initInfo, seName);
     if (initSound.isExistKey("BgmUserName"))
         initActorBgmKeeper(actor, initInfo, bgmName);
@@ -520,7 +520,7 @@ void initActorImpl(LiveActor* actor, const ActorInitInfo& initInfo,
     ActorResource* actorResource =
         findOrCreateActorResource(initInfo.actorResourceHolder, path.cstr(), suffix);
     Resource* modelRes = actorResource->getModelRes();
-    if (actor->getSceneInfo() == nullptr)
+    if (!actor->getSceneInfo())
         initActorSceneInfo(actor, initInfo);
 
     initActorPose(actor, initInfo, modelRes, suffix);
@@ -739,7 +739,7 @@ ALWAYS_INLINE LiveActor* createActorFromFactory(const ActorInitInfo& childInitIn
 
     ActorCreatorFunction creationFunction = nullptr;
     factory->getEntryIndex(&creationFunction, className);
-    if (creationFunction == nullptr)
+    if (!creationFunction)
         return nullptr;
 
     const char* displayName;

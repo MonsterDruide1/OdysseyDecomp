@@ -31,7 +31,7 @@ public:
     const char* getSceneObjName() const override { return "AmiiboNpc用データホルダ"; }
 
     void init(ProjectNfpDirector* nfpDirector, al::AudioDirector* audioDirector);
-    void initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) override;
+    void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
     void updateSearchAmiiboName();
     bool requestAppearAmiiboLayout();
     void requestDecideAmiiboLayout();

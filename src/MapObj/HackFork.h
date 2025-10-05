@@ -27,7 +27,7 @@ class PlayerHackStartShaderCtrl;
 class HackFork : public al::LiveActor {
 public:
     HackFork(const char* name);
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;

@@ -14,8 +14,8 @@ class CameraPoserSubjective : public CameraPoser {
 public:
     CameraPoserSubjective(const char*);
     void init() override;
-    void loadParam(const ByamlIter&) override;
-    void start(const CameraStartInfo&) override;
+    void loadParam(const ByamlIter& iter) override;
+    void start(const CameraStartInfo& info) override;
     void movement() override;
     void update() override;
     void startSnapShotMode() override;
