@@ -2104,6 +2104,17 @@ void Bubble::endHackMove() {
     al::setQuat(this, mCurrentRotation);
 }
 
+// Inline from math util
+inline void makeQuatRadian(sead::Quatf* outQuat, const sead::Vector3f& vec, f32 angle) {
+    f32 cos = sead::Mathf::cos(angle * 0.5f);
+    f32 sin = sead::Mathf::sin(angle * 0.5f);
+
+    outQuat->w = cos;
+    outQuat->x = sin * vec.x;
+    outQuat->y = sin * vec.y;
+    outQuat->z = sin * vec.z;
+}
+
 // NON_MATCHING: Major issues https://decomp.me/scratch/DcTGQ
 void Bubble::exeHackJump() {
     bool isJumpHigh = al::isNerve(this, &NrvBubble.HackJumpHigh);
@@ -2145,15 +2156,16 @@ void Bubble::exeHackJump() {
                 al::makeQuatRotationRate(&quattB, upDir, -sead::Vector3f::ey, 1.0f);
 
                 sead::QuatCalcCommon<f32>::setMul(mCurrentRotation, quattB, mCurrentRotation);
-                mCurrentRotation *= sead::Quatf(sead::Mathf::cos(-1.5707964f),
-                                                sead::Mathf::sin(-1.5707964f), 1.0f, 0.0f);
+                sead::Quatf rotateAxis;
+                makeQuatRadian(&rotateAxis, sead::Vector3f::ey, -sead::Mathf::pi());
+                sead::QuatCalcCommon<f32>::setMul(mCurrentRotation, mCurrentRotation, rotateAxis);
             } else {
                 sead::Quatf quattA;
                 al::makeQuatRotationRate(&quattA, upDir, sead::Vector3f::ey, 1.0f);
                 sead::QuatCalcCommon<f32>::setMul(mCurrentRotation, quattA, mCurrentRotation);
             }
         }
-        sead::QuatCalcCommon<f32>::setMul(rotateA, quatC, al::getQuat(this));
+        sead::QuatCalcCommon<f32>::setMul(rotateA, al::getQuat(this), quatC);
         al::setQuat(this, rotateA);
     }
     revertTargetQuatInHackJump(&rotateA, &rotateB);
@@ -2169,15 +2181,13 @@ void Bubble::exeHackJump() {
         if (frontDir.dot(hackerMoveVec2) < sead::Mathf::cos(1.9198622f)) {
             sead::Vector3f vel = al::getVelocity(this);
             vel.y = 0.0f;
-            if (!(vel.dot(hackerMoveVec2) > 0.0f)) {
-                if (!al::isNearZero(vel, 1.0f)) {
-                    al::scaleVelocityHV(this, 0.85f, 1.0f);
-                    bVar1 = true;
-                    goto LAB_71000e5c48;
-                }
+            if (vel.dot(hackerMoveVec2) > 0.0f || al::isNearZero(vel, 1.0f)) {
+                al::addVelocity(this, -vel * 0.08f + hackerMoveVec2 * 0.57f);
+                bVar1 = true;
+            } else {
+                al::scaleVelocityHV(this, 0.85f, 1.0f);
+                bVar1 = true;
             }
-            al::addVelocity(this, -vel * 0.07999998f + hackerMoveVec2 * 0.57f);
-            bVar1 = true;
         } else {
             al::turnToDirection(this, hackerMoveVec2, 5.0f);
 
@@ -2196,7 +2206,7 @@ void Bubble::exeHackJump() {
             bVar1 = false;
         }
     }
-LAB_71000e5c48:
+
     mCurrentRotation.set(al::getQuat(this));
     makeDisplayQuatInHackJump(rotateA, rotateB, quatC, bVar1);
 
@@ -2375,14 +2385,7 @@ void Bubble::exeHackResetPos() {
     if (al::isFirstStep(this)) {
         sead::Vector3f trans = mResetTargetPos - al::getTrans(this);
         trans.y = 0.0f;
-
-        const f32 len = trans.length();
-        if (len > 0) {
-            const f32 inv_len = (len / 180.0f) / len;
-            trans.x *= inv_len;
-            trans.y *= inv_len;
-            trans.z *= inv_len;
-        }
+        normalize2(&trans, trans.length() / 180.0f);
         trans.y = mResetTargetPos.y / 180.0f + 99.0f;
 
         al::setVelocity(this, trans);
