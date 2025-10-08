@@ -15,7 +15,7 @@ class JointTranslateShaker;
 class LiveActor;
 
 void initJointControllerKeeper(const LiveActor*, s32);
-void isExistJointControllerKeeper(const LiveActor*);
+bool isExistJointControllerKeeper(const LiveActor*);
 void registerJointController(const LiveActor*, JointControllerBase*);
 void registerJointController(const LiveActor*, JointControllerBase*, const char*);
 void initJointLocalRotator(const LiveActor*, sead::Vector3f*, const char*);
