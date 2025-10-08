@@ -41,7 +41,7 @@ public:
     void* getCurrentClipParam();    // unknown return type
     bool isUsingShadowCamera() const;
     void preDrawGraphics();
-    void isEnableShadowPrePass() const;
+    bool isEnableShadowPrePass() const;
     void updateViewGpu(s32, const sead::Camera*, const Projection*);
     void* getDepthShadow();  // unknown return type
     void drawShadowPrePass(agl::DrawContext*, s32, const agl::RenderTargetDepth*,
