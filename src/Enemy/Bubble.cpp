@@ -337,7 +337,7 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
                 firepos.y = fireA.y;
                 al::resetPosition(this, firepos);
                 al::faceToTarget(this, endTargetPos);
-                mJumpForce.set({0.0f, 0.0f, 0.0f});
+                mJumpForce.set(0.0f, 0.0f, 0.0f);
                 al::setVelocityZero(this);
                 mIsInFire = true;
                 al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
@@ -345,7 +345,7 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
                 mFireSurface.set(fireB);
                 al::setNerve(this, &NrvBubble.HackMove);
             } else {
-                mJumpForce.set({0.0f, 0.0f, 0.0f});
+                mJumpForce.set(0.0f, 0.0f, 0.0f);
                 al::setVelocityZero(this);
                 al::setNerve(this, &NrvBubble.HackJump);
             }
@@ -400,7 +400,7 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
 
         al::invalidateClipping(this);
         offGroupClipping();
-        mJumpForce.set({0.0f, 0.0f, 0.0f});
+        mJumpForce.set(0.0f, 0.0f, 0.0f);
         al::onCollide(this);
         mWaitDelay = 5;
         al::setVelocityZero(this);
@@ -663,7 +663,7 @@ void Bubble::updateCollider() {
                 getCollider()->collide(al::getVelocity(this) + mColliderPos));
     }
 
-    mColliderPos.set({0.0f, 0.0f, 0.0f});
+    mColliderPos.set(0.0f, 0.0f, 0.0f);
 }
 
 void Bubble::appear() {
@@ -988,7 +988,7 @@ void Bubble::updateVelocityIfValidCollision() {
     al::separateVelocityDirHV(&velocityH, &velocityV, this, velocity);
     velocityH *= 0.92f;
     if (al::isOnGroundNoVelocity(this, 0))
-        velocityV.set({0.0f, 0.0f, 0.0f});
+        velocityV.set(0.0f, 0.0f, 0.0f);
 
     velocityV -= 1.1f * velocity;
     al::setVelocity(this, velocityH + velocityV);
@@ -1125,7 +1125,7 @@ bool Bubble::tryShiftLand() {
 
     if (mPlayerHack) {
         mShiftFallDelay = 0;
-        mLandPos.set({0.0f, 0.0f, 0.0f});
+        mLandPos.set(0.0f, 0.0f, 0.0f);
         updateCollisionPartsMove();
         al::getVelocityPtr(this)->add(mLandPos);
         if (al::isCollidedGround(this)) {
@@ -1354,7 +1354,7 @@ bool Bubble::constrainLavaDomain() {
 
 bool Bubble::tryShiftFall() {
     if (mShiftFallDelay > 9) {
-        mJumpForce.set({0.0f, 0.0f, 0.0f});
+        mJumpForce.set(0.0f, 0.0f, 0.0f);
         al::setNerve(this, &NrvBubble.HackJump);
         return true;
     }
@@ -1404,7 +1404,7 @@ void Bubble::revertTargetQuatInHackJump(sead::Quatf* quatA, sead::Quatf* quatB) 
 
 void Bubble::calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& inputDir) const {
     if (mIsPlayerCaptured) {
-        moveVec->set({0.0f, 0.0f, 0.0f});
+        moveVec->set(0.0f, 0.0f, 0.0f);
         return;
     }
     rs::calcHackerMoveVec(moveVec, mPlayerHack, inputDir);
@@ -1495,7 +1495,7 @@ bool Bubble::tryShiftContinuousJump() {
         mFireSurface.set(al::getOnGroundNormal(this, 0));
 
     mShiftFallDelay = 0;
-    mLandPos.set({0.0f, 0.0f, 0.0f});
+    mLandPos.set(0.0f, 0.0f, 0.0f);
 
     if (al::isCollidedGround(this)) {
         rs::sendMsgBubbleGroundTouchTrigger(al::getCollidedGroundSensor(this),
@@ -1508,7 +1508,7 @@ bool Bubble::tryShiftContinuousJump() {
 
 bool Bubble::calcHackerMoveDir(sead::Vector3f* moveDir, const sead::Vector3f& inputDir) const {
     if (mIsPlayerCaptured) {
-        moveDir->set({0.0f, 0.0f, 0.0f});
+        moveDir->set(0.0f, 0.0f, 0.0f);
         return false;
     }
     return rs::calcHackerMoveDir(moveDir, mPlayerHack, inputDir);
@@ -1657,7 +1657,7 @@ void Bubble::updateCollisionPartsMove() {
     al::CollisionParts* collisionParts = al::tryGetCollidedGroundCollisionParts(this);
     if (!collisionParts) {
         if (mIsInFire || mShiftFallDelay > 9)
-            mLandPos.set({0.0f, 0.0f, 0.0f});
+            mLandPos.set(0.0f, 0.0f, 0.0f);
         return;
     }
     sead::Vector3f delta = al::getTrans(this);
@@ -1668,85 +1668,80 @@ void Bubble::updateCollisionPartsMove() {
 
 // NON_MATCHING: Bad branch order https://decomp.me/scratch/ACufd
 void Bubble::accelStick() {
-    sead::Vector3f velocity;
+    sead::Vector3f upDir;
     if (al::isOnGroundNoVelocity(this, 0))
-        velocity.set(al::getOnGroundNormal(this, 0));
+        upDir.set(al::getOnGroundNormal(this, 0));
     else
-        velocity.set(sead::Vector3f::ey);
+        upDir.set(sead::Vector3f::ey);
 
-    sead::Vector3f local_70 = mStickForce;
-    if (al::tryNormalizeOrZero(&local_70)) {
-        sead::Vector3f local_80;
-        local_80.setCross(velocity, local_70);
-        if (al::tryNormalizeOrZero(&local_80)) {
-            f32 fVar8 = local_80.dot(al::getVelocity(this));
-            *al::getVelocityPtr(this) -= fVar8 * local_80;
-            *al::getVelocityPtr(this) += (fVar8 * 0.9f) * local_80;
+    sead::Vector3f stickForceNormalized = mStickForce;
+    if (al::tryNormalizeOrZero(&stickForceNormalized)) {
+        sead::Vector3f cross;
+        cross.setCross(upDir, stickForceNormalized);
+        if (al::tryNormalizeOrZero(&cross)) {
+            f32 dot = cross.dot(al::getVelocity(this));
+            *al::getVelocityPtr(this) -= dot * cross;
+            *al::getVelocityPtr(this) += (dot * 0.9f) * cross;
         }
-        f32 fVar8 = sead::Mathf::clampMax(
-            mStickForce.length() - (local_70.dot(al::getVelocity(this))), 0.5f);
-        if (fVar8 > 0.0f)
-            al::getVelocityPtr(this)->add(fVar8 * local_70);
+        f32 force = sead::Mathf::clampMax(
+            mStickForce.length() - (stickForceNormalized.dot(al::getVelocity(this))), 0.5f);
+        if (force > 0.0f)
+            al::getVelocityPtr(this)->add(force * stickForceNormalized);
     }
 
-    f32 fVar4 = velocity.dot(al::getVelocity(this));
-    sead::Vector3f rate = velocity * fVar4;
-    sead::Vector3f local_80 = (al::getVelocity(this) - rate) * 0.92f + (rate - velocity * 1.1f);
-    al::setVelocity(this, local_80);
+    sead::Vector3f velocityDir = upDir * upDir.dot(al::getVelocity(this));
+    al::setVelocity(this,
+                    (al::getVelocity(this) - velocityDir) * 0.92f + (velocityDir - upDir * 1.1f));
     mStickForce.set({0.0f, 0.0f, 0.0f});
 
     if (mIsPlayerCaptured) {
-        mHackTurnAngle = mHackTurnAngle * 0.9f;
+        mHackTurnAngle *= 0.9f;
         return;
     }
 
-    bool action = rs::isHoldHackAction(mPlayerHack);
+    // this screams for addHackActorAccelStick(&stickAccel, scale, upDir)
+    sead::Vector3f stickAccel;
+    f32 scale = rs::isHoldHackAction(mPlayerHack) ? 1.6f : 1.4f;
     if (mIsPlayerCaptured) {
-        mHackTurnAngle = mHackTurnAngle * 0.9f;
+        stickAccel.set(0.0f, 0.0f, 0.0f);
+        mHackTurnAngle *= 0.9f;
         return;
     }
 
-    f32 fVar8 = action ? 1.6f : 1.4f;
+    if (rs::addHackActorAccelStick(this, mPlayerHack, &stickAccel, scale, upDir)) {
+        al::turnToDirection(this, stickAccel, 10.0f);
 
-    if (!rs::addHackActorAccelStick(this, mPlayerHack, &local_80, fVar8, velocity)) {
-        mHackTurnAngle = mHackTurnAngle * 0.9f;
-        return;
-    }
+        sead::Vector3f rotationAxis;
+        rotationAxis.setRotated(mCurrentRotation, sead::Vector3f::ez);
+        stickAccel.y = 0.0f;
 
-    al::turnToDirection(this, local_80, 10.0f);
+        if (!al::tryNormalizeOrZero(&stickAccel))
+            stickAccel.set(rotationAxis);
 
-    sead::Vector3f ezy;
-    ezy.setRotated(mCurrentRotation, sead::Vector3f::ez);
-    local_80.y = 0.0f;
+        f32 dot = stickAccel.dot(rotationAxis);
+        f32 angle = atan2f(rotationAxis.cross(stickAccel).length(), dot);
+        angle = (sead::Mathf::clamp(angle, 0.0f, sead::Mathf::piHalf()) * 72.0f) /
+                sead::Mathf::piHalf();
+        angle =
+            rotationAxis.z * stickAccel.x - rotationAxis.x * stickAccel.z > 0.0f ? -angle : angle;
 
-    if (!al::tryNormalizeOrZero(&local_80))
-        local_80.set(ezy);
+        bool condition = !(mHackTurnAngle * angle < 0.0f) &&
+                         sead::Mathf::abs(mHackTurnAngle) > sead::Mathf::abs(angle);
 
-    sead::Vector3f cross = ezy.cross(local_80);
-    f32 tan = atan2f(cross.length(), ezy.dot(local_80));
-
-    f32 letal = (sead::Mathf::clamp(tan, 0.0f, 1.5707964f) * 72.0f) / 1.5707964f;
-    f32 bzen = mHackTurnAngle;
-    f32 notLetal = -letal;
-
-    if (ezy.z * local_80.x - ezy.x * local_80.z <= 0.0f)
-        notLetal = letal;
-
-    f32 AAAA = 0.39999998f;
-    f32 BBBB = 0.6f;
-    if (bzen * notLetal >= 0.0f) {
-        if (sead::Mathf::abs(bzen) < sead::Mathf::abs(notLetal)) {
-            AAAA = 0.95f;
-            BBBB = 0.05f;
+        if (condition) {
+            mHackTurnAngle *= 0.4f;
+            mHackTurnAngle += angle * 0.6f;
+        } else {
+            mHackTurnAngle *= 0.95f;
+            mHackTurnAngle += angle * 0.05f;
         }
     }
-    mHackTurnAngle = bzen * AAAA + notLetal * BBBB;
 }
 
 bool Bubble::addHackActorAccelStick(sead::Vector3f* stickAccel, f32 scale,
                                     const sead::Vector3f& dir) {
     if (mIsPlayerCaptured) {
-        stickAccel->set({0.0f, 0.0f, 0.0f});
+        stickAccel->set(0.0f, 0.0f, 0.0f);
         return false;
     }
     return rs::addHackActorAccelStick(this, mPlayerHack, stickAccel, scale, dir);
@@ -2273,7 +2268,7 @@ void Bubble::exeHackLand() {
 
         sead::Vector3f moveDir;
         if (mIsPlayerCaptured) {
-            moveDir.set({0.0f, 0.0f, 0.0f});
+            moveDir.set(0.0f, 0.0f, 0.0f);
             sead::Vector3f* velPtr = al::getVelocityPtr(this);
             al::parallelizeVec(velPtr, mFireSurface, *velPtr);
         } else if (!rs::calcHackerMoveDir(&moveDir, mPlayerHack, sead::Vector3f::ey)) {
@@ -2350,7 +2345,7 @@ void Bubble::exeHackInLauncher() {
 
     if (al::updateNerveState(this)) {
         if (mPlayerHack) {
-            mJumpForce.set({0.0f, 0.0f, 0.0f});
+            mJumpForce.set(0.0f, 0.0f, 0.0f);
             al::startHitReaction(this, "バブルキャノン着地");
             al::setNerve(this, &NrvBubble.HackJump);
         } else {
@@ -2413,14 +2408,14 @@ void Bubble::exeHackResetPos() {
         sead::Vector3f surfaceB;
         if (!al::calcFindFireSurface(&surfaceA, &surfaceB, this, al::getTrans(this),
                                      sead::Vector3f::ey, 800.0f)) {
-            mJumpForce.set({0.0f, 0.0f, 0.0f});
+            mJumpForce.set(0.0f, 0.0f, 0.0f);
             al::setVelocityZero(this);
             al::setNerve(this, &NrvBubble.HackJump);
         } else {
             sead::Vector3f trans = al::getTrans(this);
             trans.y = surfaceA.y;
             al::resetPosition(this, trans);
-            mJumpForce.set({0.0f, 0.0f, 0.0f});
+            mJumpForce.set(0.0f, 0.0f, 0.0f);
             al::setVelocityZero(this);
             mIsInFire = true;
             al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
