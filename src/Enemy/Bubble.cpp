@@ -2215,27 +2215,24 @@ LAB_71000e5c48:
             }
         }
     }
-    if (!(al::getVelocity(this).y < 0.0f) && al::isCollidedCeiling(this)) {
-        if (!(al::getCollidedCeilingPos(this).y - al::getTrans(this).y <= 0.0f)) {
-            if (!al::sendMsgEnemyAttackFire(al::getCollidedCeilingSensor(this),
-                                            al::getHitSensor(this, "Attack"), "LavaRed") &&
-                isHoldHackJump()) {
-                if (!al::sendMsgEnemyUpperPunch(al::getCollidedCeilingSensor(this),
-                                                al::getHitSensor(this, "Attack")))
 
-                    al::setVelocityZeroV(this);
-                else
-                    mJumpFrame = 20;
-            } else {
+    if (isRiseAttackCollision()) {
+        if (!al::sendMsgEnemyAttackFire(al::getCollidedCeilingSensor(this),
+                                        al::getHitSensor(this, "Attack"), "LavaRed") &&
+            isHoldHackJump()) {
+            if (!al::sendMsgEnemyUpperPunch(al::getCollidedCeilingSensor(this),
+                                            al::getHitSensor(this, "Attack")))
+
                 al::setVelocityZeroV(this);
-            }
-            if (mJumpFrame != 0) {
-                mJumpFrame--;
-                al::getVelocityPtr(this)->y += cosntA;
-            }
-        } else
-
-            mJumpFrame = 0;
+            else
+                mJumpFrame = 20;
+        } else {
+            al::setVelocityZeroV(this);
+        }
+        if (mJumpFrame != 0) {
+            mJumpFrame--;
+            al::getVelocityPtr(this)->y += cosntA;
+        }
     } else {
         mJumpFrame = 0;
     }
