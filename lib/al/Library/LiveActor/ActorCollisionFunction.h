@@ -17,7 +17,7 @@ void validateCollisionParts(LiveActor*);
 void invalidateCollisionParts(LiveActor*);
 void validateCollisionPartsBySystem(LiveActor*);
 void invalidateCollisionPartsBySystem(LiveActor*);
-void isValidCollisionParts(const LiveActor*);
+bool isValidCollisionParts(const LiveActor*);
 void setCollisionPartsSpecialPurposeName(LiveActor*, const char*);
 void resetAllCollisionMtx(LiveActor*);
 void syncCollisionMtx(LiveActor*, const sead::Matrix34f*);

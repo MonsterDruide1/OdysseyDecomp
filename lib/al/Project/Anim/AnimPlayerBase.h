@@ -20,4 +20,7 @@ private:
     bool _10 = false;
     bool _11 = false;
 };
+
+static_assert(sizeof(AnimPlayerBase) == 0x18);
+
 }  // namespace al
