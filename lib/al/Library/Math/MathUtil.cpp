@@ -781,9 +781,7 @@ bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& current,
         isReachedTarget = false;
     }
 
-    // TODO: Replace with outVec->setAdd(current, dir);
-    outVec->x = dir.x + current.x;
-    outVec->y = dir.y + current.y;
+    outVec->setAdd(current, dir);
     return isReachedTarget;
 }
 
