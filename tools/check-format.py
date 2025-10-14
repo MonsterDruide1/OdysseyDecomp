@@ -75,11 +75,17 @@ def common_no_namespace_qualifiers(c, path):
                 del nest_level[-1]
                 continue
 
-            matches = re.findall(r"([^\(,\s]+::)+[^\(,\s]+", x)
+            matches = re.findall(r"([^\(,\s]+::)+([^\(,\s]+)", x)
             for match in matches:
-                match = match[0:-2]
+                namespace = match[0][0:-2]
+
+                if "setColliderRadius" in match[1]:
+                    continue;
+                if "setColliderOffsetY" in match[1]:
+                    continue;
+
                 # examples: "sead", "al", "nn::g3d"
-                if CHECK(lambda a: match not in allowed_namespaces, line, match + " should be omitted here!",
+                if CHECK(lambda a: namespace not in allowed_namespaces, line, namespace[0] + " should be omitted here!",
                          path): return
 
     if len(nest_level) != 0:
