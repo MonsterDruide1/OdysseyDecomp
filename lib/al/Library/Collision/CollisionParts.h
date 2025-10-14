@@ -60,8 +60,6 @@ public:
                              const TriangleFilterBase*) const;
     void calcForceMovePower(sead::Vector3f*, const sead::Vector3f&) const;
     void calcForceRotatePower(sead::Quatf*) const;
-    void initParts(const sead::Matrix34f&);
-    void invalidateBySystem();
 
     const sead::Matrix34f* getSyncCollisonMtx() const { return mSyncCollisionMtx; }
 
@@ -75,29 +73,29 @@ public:
 
     const sead::Matrix34f& getPrevBaseInvMtx() const { return mPrevBaseInvMtx; }
 
-    KCollisionServer* getKCollisionServer() const { return mKCollisionServer; }
+    void setPriority(s32 priority) { mPriority = priority; }
 
-    s32 get_15c() const { return _15c; }
+    KCollisionServer* getKCollisionServer() const { return mKCollisionServer; }
 
     HitSensor* getConnectedSensor() const { return mConnectedSensor; }
 
-    void setSpecialPurposeName(const char* name) { mSpecialPurpose = name; };
-
-    bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
-
-    bool isMoving() const { return mIsMoving; }
-
-    void setForceCollisionScaleOne() { mForceCollisionFlag = 2; }
-
-    void set_16e(bool val) { _16e = val; }
+    void setConnectedSensor(HitSensor* sensor) { mConnectedSensor = sensor; }
 
     void setSpecialPurpose(const char* specialPurpose) { mSpecialPurpose = specialPurpose; }
 
     void setOptionalPurpose(const char* optionalPurpose) { mOptionalPurpose = optionalPurpose; }
 
-    void setPriority(s32 priority) { mPriority = priority; }
+    s32 get_15c() const { return _15c; }
 
-    void setConnectedSensor(HitSensor* sensor) { mConnectedSensor = sensor; }
+    bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
+
+    bool isMoving() const { return mIsMoving; }
+
+    void setIsMoving(bool isMoving) { mIsMoving = isMoving; }
+
+    void setForceCollisionFlag(u8 flag) { mForceCollisionFlag = flag; }
+
+    void setForceCollisionScaleOne() { mForceCollisionFlag = 2; }
 
 private:
     void* unk[2];
@@ -127,7 +125,7 @@ private:
     bool _16b;
     bool _16c;
     bool mIsMoving;
-    char mForceCollisionFlag;
+    u8 mForceCollisionFlag;
 };
 
 }  // namespace al
