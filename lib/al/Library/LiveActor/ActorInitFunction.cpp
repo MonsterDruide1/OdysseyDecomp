@@ -589,7 +589,7 @@ void initActorCollisionWithFilePtr(LiveActor* actor, void* kcl, const void* byml
                                    const char* specialPurpose, const char* optionalPurpose,
                                    s32 priority) {
     CollisionParts* parts = new CollisionParts(const_cast<void*>(kcl), byml);
-    parts->setForceCollisionFlag(1);
+    parts->setForceCollisionScaleAverage();
     parts->setSpecialPurpose(specialPurpose);
     parts->setOptionalPurpose(optionalPurpose);
     parts->setPriority(priority);

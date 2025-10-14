@@ -14,6 +14,12 @@ class LiveActor;
 class SphereHitResultBuffer;
 class TriangleFilterBase;
 
+enum class ForceCollisionFlag : u8 {
+    ScaleNone,
+    ScaleAverage,
+    ScaleOne,
+};
+
 class CollisionParts {
 public:
     CollisionParts(void* kcl, const void* byml);
@@ -93,9 +99,11 @@ public:
 
     void setIsMoving(bool isMoving) { mIsMoving = isMoving; }
 
-    void setForceCollisionFlag(u8 flag) { mForceCollisionFlag = flag; }
+    void setForceCollisionScaleNone() { mForceCollisionFlag = ForceCollisionFlag::ScaleNone; }
 
-    void setForceCollisionScaleOne() { mForceCollisionFlag = 2; }
+    void setForceCollisionScaleAverage() { mForceCollisionFlag = ForceCollisionFlag::ScaleAverage; }
+
+    void setForceCollisionScaleOne() { mForceCollisionFlag = ForceCollisionFlag::ScaleOne; }
 
 private:
     void* unk[2];
@@ -125,7 +133,7 @@ private:
     bool _16b;
     bool _16c;
     bool mIsMoving;
-    u8 mForceCollisionFlag;
+    ForceCollisionFlag mForceCollisionFlag;
 };
 
 }  // namespace al
