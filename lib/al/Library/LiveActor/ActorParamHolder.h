@@ -84,6 +84,9 @@ public:
     static ActorParamHolder* tryCreate(LiveActor* actor, const Resource* resource,
                                        const char* suffix);
 
+    // NOTE: for all of these: if the name and type of `findParam` do not align,
+    // it will just re-cast the memory and potentially return garbage/crash
+
     ActorParamS32* findParamS32(const char* name) const;
     ActorParamF32* findParamF32(const char* name) const;
     ActorParamMove* findParamMove(const char* name) const;
