@@ -20,6 +20,7 @@ void executeDrawList(const al::ExecuteDirector* executeDirector, const char* tab
 namespace alExecutorFunction {
 
 bool isListName(const al::ExecuteOrder& executeOrder, const char* listName) {
+    // TODO: potentially wrong name of member?
     return al::isEqualString(executeOrder.executeGroup, listName);
 }
 
