@@ -74,7 +74,7 @@ bool isValidCollisionParts(const LiveActor* actor) {
 }
 
 void setCollisionPartsSpecialPurposeName(LiveActor* actor, const char* name) {
-    actor->getCollisionParts()->setSpecialPurposeName(name);
+    actor->getCollisionParts()->setSpecialPurpose(name);
 }
 
 void resetAllCollisionMtx(LiveActor* actor) {

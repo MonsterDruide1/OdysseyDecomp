@@ -589,7 +589,7 @@ void initActorCollisionWithFilePtr(LiveActor* actor, void* kcl, const void* byml
                                    const char* specialPurpose, const char* optionalPurpose,
                                    s32 priority) {
     CollisionParts* parts = new CollisionParts(const_cast<void*>(kcl), byml);
-    parts->set_16e(true);
+    parts->setForceCollisionFlag(1);
     parts->setSpecialPurpose(specialPurpose);
     parts->setOptionalPurpose(optionalPurpose);
     parts->setPriority(priority);
@@ -597,7 +597,7 @@ void initActorCollisionWithFilePtr(LiveActor* actor, void* kcl, const void* byml
     makeMtxSRT(&initMtx, actor);
     parts->setConnectedSensor(connectedSensor);
     parts->initParts(initMtx);
-    parts->setJointMtx(jointMtx);
+    parts->setSyncCollisionMtx(jointMtx);
 
     actor->getCollisionDirector()->getActivePartsKeeper()->addCollisionParts(parts);
     parts->invalidateBySystem();
