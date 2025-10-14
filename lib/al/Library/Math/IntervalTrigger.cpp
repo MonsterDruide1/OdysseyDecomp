@@ -3,7 +3,7 @@
 #include "Library/Math/MathUtil.h"
 
 namespace al {
-IntervalTrigger::IntervalTrigger(f32 intervalTime) : mIntervalTime{intervalTime} {};
+IntervalTrigger::IntervalTrigger(f32 intervalTime) : mIntervalTime{intervalTime} {}
 
 void IntervalTrigger::update(f32 deltaTime) {
     mIsTriggered = false;
