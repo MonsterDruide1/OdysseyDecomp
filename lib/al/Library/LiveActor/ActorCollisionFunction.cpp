@@ -102,28 +102,24 @@ void syncCollisionMtx(LiveActor* actor, CollisionParts* collisionParts,
 
     if (collisionParts->getSyncCollisonMtx()) {
         collisionParts->syncMtx();
-        return;
-    }
-
-    if (mtx) {
+    } else if (mtx) {
         collisionParts->syncMtx(*mtx);
-        return;
+    } else {
+        sead::Matrix34f newMtx;
+        makeMtxSRT(&newMtx, actor);
+        collisionParts->syncMtx(newMtx);
     }
-
-    sead::Matrix34f newMtx;
-    makeMtxSRT(&newMtx, actor);
-    collisionParts->syncMtx(newMtx);
 }
 
 void setSyncCollisionMtxPtr(LiveActor* actor, const sead::Matrix34f* mtx) {
     actor->getCollisionParts()->setSyncCollisionMtx(mtx);
 }
 
-bool isOnGround(const LiveActor* actor, u32 offset) {
+bool isOnGround(const LiveActor* actor, u32 coyoteTime) {
     Collider* collider = actor->getCollider();
-    if (!isCollidedGround(actor) && collider->get_264() > offset)
+    if (!isCollidedGround(actor) && collider->get_264() > coyoteTime)
         return false;
-    return !(getVelocity(actor).dot(collider->getRecentOnGroundNormal(offset)) > 0.0f);
+    return !(getVelocity(actor).dot(collider->getRecentOnGroundNormal(coyoteTime)) > 0.0f);
 }
 
 bool isOnGroundFace(const LiveActor* actor) {
@@ -134,41 +130,41 @@ bool isCollidedGroundEdgeOrCorner(const LiveActor* actor) {
     return isCollidedGround(actor) && !actor->getCollider()->getFloorHit().isCollisionAtFace();
 }
 
-bool isOnGroundNoVelocity(const LiveActor* actor, u32 offset) {
+bool isOnGroundNoVelocity(const LiveActor* actor, u32 coyoteTime) {
     if (!isExistActorCollider(actor))
         return getTrans(actor).y <= 0.0f;
 
     if (isCollidedGround(actor))
         return true;
 
-    return actor->getCollider()->get_264() <= offset;
+    return actor->getCollider()->get_264() <= coyoteTime;
 }
 
-bool isOnGroundDegree(const LiveActor* actor, f32 angle, u32 offset) {
+bool isOnGroundDegree(const LiveActor* actor, f32 angle, u32 coyoteTime) {
     Collider* collider = actor->getCollider();
-    if (!(isCollidedGround(actor) || collider->get_264() <= offset))
+    if (!(isCollidedGround(actor) || collider->get_264() <= coyoteTime))
         return false;
 
-    if (sead::Mathf::abs((*collider->get_30()).dot(collider->getRecentOnGroundNormal(offset))) <
+    if (sead::Mathf::abs((*collider->get_30()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
         sead::Mathf::cos(sead::Mathf::deg2rad(angle)))
         return false;
 
-    return !(getVelocity(actor).dot(collider->getRecentOnGroundNormal(offset)) > 0.0f);
+    return !(getVelocity(actor).dot(collider->getRecentOnGroundNormal(coyoteTime)) > 0.0f);
 }
 
 bool isOnGroundFaceDegree(const LiveActor* actor, f32 angle) {
     return isOnGroundDegree(actor, angle, 0) && !isCollidedGroundEdgeOrCorner(actor);
 }
 
-bool isOnGroundNoVelocityDegree(const LiveActor* actor, f32 angle, u32 offset) {
+bool isOnGroundNoVelocityDegree(const LiveActor* actor, f32 angle, u32 coyoteTime) {
     Collider* collider = actor->getCollider();
     if (!collider)
         return getTrans(actor).y <= 0.0;
 
-    if (!(isCollidedGround(actor) || collider->get_264() <= offset))
+    if (!(isCollidedGround(actor) || collider->get_264() <= coyoteTime))
         return false;
 
-    if (sead::Mathf::abs((*collider->get_30()).dot(collider->getRecentOnGroundNormal(offset))) <
+    if (sead::Mathf::abs((*collider->get_30()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
         sead::Mathf::cos(sead::Mathf::deg2rad(angle)))
         return false;
 
@@ -219,31 +215,31 @@ void calcColliderFloorRotatePower(sead::Quatf* outRotatePower, LiveActor* actor)
     actor->getCollider()->getFloorHit().triangle.calcForceRotatePower(outRotatePower);
 }
 
-void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor, const sead::Vector3f& pos,
-                     f32 force) {
+void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor,
+                     const sead::Vector3f& velocityDir, f32 force) {
     if (!isCollidedGround(actor)) {
         outJumpInertia->set({0.0f, 0.0f, 0.0f});
         return;
     }
 
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
-    const HitInfo& floorSensor = actor->getCollider()->getFloorHit();
-    if (floorSensor.triangle.getCollisionParts() && floorSensor.triangle.isHostMoved())
-        floorSensor.triangle.calcForceMovePower(&movePower, getTrans(actor));
+    const HitInfo& floorHit = actor->getCollider()->getFloorHit();
+    if (floorHit.triangle.getCollisionParts() && floorHit.triangle.isHostMoved())
+        floorHit.triangle.calcForceMovePower(&movePower, getTrans(actor));
 
     verticalizeVec(&movePower, getGravity(actor), movePower);
 
     sead::Vector3f movePowerNormalized = movePower;
     tryNormalizeOrZero(&movePowerNormalized);
 
-    sead::Vector3f movePowerVertical = {0.0f, 0.0f, 0.0f};
-    verticalizeVec(&movePowerVertical, getGravity(actor), pos);
-    if (!tryNormalizeOrZero(&movePowerVertical)) {
+    sead::Vector3f hVelDir = {0.0f, 0.0f, 0.0f};
+    verticalizeVec(&hVelDir, getGravity(actor), velocityDir);
+    if (!tryNormalizeOrZero(&hVelDir)) {
         outJumpInertia->set(movePower * force);
         return;
     }
 
-    force *= sead::Mathf::clampMin(movePowerNormalized.dot(movePowerVertical), 0.0f);
+    force *= sead::Mathf::clampMin(movePowerNormalized.dot(hVelDir), 0.0f);
     outJumpInertia->set(movePower * force);
 }
 
@@ -259,11 +255,10 @@ void calcJumpInertiaWall(sead::Vector3f* outJumpInertia, LiveActor* actor, f32 f
 
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
     const sead::Vector3f& trans = getTrans(actor);
-    const HitInfo& floorSensor = actor->getCollider()->getWallHit();
+    const HitInfo& floorHit = actor->getCollider()->getWallHit();
 
-    if (floorSensor.triangle.getCollisionParts() &&
-        alCollisionUtil::isCollisionMoving(&floorSensor))
-        floorSensor.triangle.calcForceMovePower(&movePower, trans);
+    if (floorHit.triangle.getCollisionParts() && alCollisionUtil::isCollisionMoving(&floorHit))
+        floorHit.triangle.calcForceMovePower(&movePower, trans);
 
     verticalizeVec(&movePower, getGravity(actor), movePower);
 
@@ -274,6 +269,7 @@ bool isCollidedWall(const LiveActor* actor) {
     return actor->getCollider()->get_1b8() >= 0.0f;
 }
 
+// TODO: probably a sead function?
 inline f32 normalize2(sead::Vector3f* v, f32 scalar) {
     const f32 len = v->length();
     if (len > 0) {
@@ -286,8 +282,8 @@ inline f32 normalize2(sead::Vector3f* v, f32 scalar) {
     return len;
 }
 
-void scaleVelocityInertiaWallHit(LiveActor* actor, f32 velocityScale, f32 maxVelocity,
-                                 f32 maxScaledVelocity) {
+void scaleVelocityInertiaWallHit(LiveActor* actor, f32 velocityScaleH, f32 maxVelocityH,
+                                 f32 maxScaledVelocityH) {
     if (!isCollidedWall(actor))
         return;
 
@@ -300,32 +296,26 @@ void scaleVelocityInertiaWallHit(LiveActor* actor, f32 velocityScale, f32 maxVel
     calcJumpInertiaWall(&jumpInertia, actor, 1.0f);
 
     sead::Vector3f velocityH = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f velocityY = {0.0f, 0.0f, 0.0f};
-    separateVelocityHV(&velocityH, &velocityY, actor);
+    sead::Vector3f velocityV = {0.0f, 0.0f, 0.0f};
+    separateVelocityHV(&velocityH, &velocityV, actor);
 
     sead::Vector3f velocityDirH = {0.0f, 0.0f, 0.0f};
     tryNormalizeOrZero(&velocityDirH, velocityH);
 
     if (velocityDirH.dot(faceNormal) < -0.5f) {
-        f32 velocity = velocityH.length();
-        f32 scaledVelocity = velocity * velocityScale;
+        f32 speedH = velocityH.length();
+        f32 scaledVelocity = speedH * velocityScaleH;
+        f32 newSpeedH = sead::Mathf::clamp(scaledVelocity, sead::Mathf::min(speedH, maxVelocityH),
+                                           maxScaledVelocityH);
 
-        velocity = sead::Mathf::min(velocity, maxVelocity);
+        normalize2(&velocityH, newSpeedH);
 
-        if (!(scaledVelocity < velocity)) {
-            velocity = scaledVelocity;
-            if (maxScaledVelocity < scaledVelocity)
-                velocity = maxScaledVelocity;
-        }
-
-        normalize2(&velocityH, velocity);
-
-        f32 hammer = jumpInertia.dot(velocityDirH);
-        if (-hammer < faceNormal.dot(velocityDirH))
-            normalize2(&velocityH, hammer);
+        f32 newVelocityH = jumpInertia.dot(velocityDirH);
+        if (-newVelocityH < faceNormal.dot(velocityDirH))
+            normalize2(&velocityH, newVelocityH);
     }
 
-    setVelocity(actor, velocityH + velocityY);
+    setVelocity(actor, velocityH + velocityV);
 }
 
 const sead::Vector3f& getCollidedWallNormal(const LiveActor* actor) {
@@ -349,12 +339,10 @@ void calcCollidedNormalSum(const LiveActor* actor, sead::Vector3f* outNormal) {
 }
 
 void calcGroundNormalOrUpDir(sead::Vector3f* outDir, const LiveActor* actor) {
-    if (!isCollidedGround(actor)) {
+    if (isCollidedGround(actor))
+        *outDir = getCollidedGroundNormal(actor);
+    else
         calcUpDir(outDir, actor);
-        return;
-    }
-
-    *outDir = getCollidedGroundNormal(actor);
 }
 
 const sead::Vector3f& getCollidedGroundNormal(const LiveActor* actor) {
@@ -362,12 +350,10 @@ const sead::Vector3f& getCollidedGroundNormal(const LiveActor* actor) {
 }
 
 void calcGroundNormalOrGravityDir(sead::Vector3f* outDir, const LiveActor* actor) {
-    if (!isCollidedGround(actor)) {
+    if (isCollidedGround(actor))
+        *outDir = getCollidedGroundNormal(actor);
+    else
         *outDir = -getGravity(actor);
-        return;
-    }
-
-    *outDir = getCollidedGroundNormal(actor);
 }
 
 void setColliderFilterTriangle(LiveActor* actor, const TriangleFilterBase* triangleFilter) {
@@ -531,6 +517,7 @@ bool isCollidedCeiling(const LiveActor* actor) {
 bool isCollidedWallFace(const LiveActor* actor) {
     if (!isCollidedWall(actor))
         return false;
+
     return actor->getCollider()->isCollidedWallFace();
 }
 
@@ -538,10 +525,7 @@ bool isCollidedVelocity(const LiveActor* actor) {
     if (isOnGround(actor, 0))
         return true;
 
-    if (isCollidedWallVelocity(actor))
-        return true;
-
-    return isCollidedCeilingVelocity(actor);
+    return isCollidedWallVelocity(actor) || isCollidedCeilingVelocity(actor);
 }
 
 bool isCollidedWallVelocity(const LiveActor* actor) {
@@ -651,15 +635,9 @@ HitSensor* tryGetCollidedCeilingSensor(const LiveActor* actor) {
 }
 
 HitSensor* tryGetCollidedSensor(const LiveActor* actor) {
-    HitSensor* sensor = tryGetCollidedWallSensor(actor);
-    if (sensor)
-        return sensor;
-
-    sensor = tryGetCollidedGroundSensor(actor);
-    if (sensor)
-        return sensor;
-
-    return tryGetCollidedCeilingSensor(actor);
+    return tryGetCollidedWallSensor(actor)       ?:
+               tryGetCollidedGroundSensor(actor) ?:
+                                                   tryGetCollidedCeilingSensor(actor);
 }
 
 bool tryGetCollidedPos(sead::Vector3f* outPos, const LiveActor* actor) {
@@ -683,11 +661,7 @@ void setForceCollisionScaleOne(const LiveActor* actor) {
 }
 
 void followRotateFrontAxisUpGround(LiveActor* actor) {
-    if (!isCollidedGround(actor))
-        return;
-
-    const CollisionParts* collisionParts =
-        actor->getCollider()->getFloorHit().triangle.getCollisionParts();
+    const CollisionParts* collisionParts = tryGetCollidedGroundCollisionParts(actor);
 
     if (collisionParts)
         followRotateFrontAxisUp(actor, collisionParts);
@@ -704,11 +678,11 @@ void followRotateFrontAxisUp(LiveActor* actor, const CollisionParts* collisionPa
     sead::Vector3f upDir = {0.0f, 0.0f, 0.0f};
     calcUpDir(&upDir, actor);
 
-    sead::Vector3f newFrontdir = {0.0f, 0.0f, 0.0f};
-    turnVecToVecCosOnPlane(&newFrontdir, frontDir, sideDir, upDir, -1.0f);
+    sead::Vector3f newFrontDir = {0.0f, 0.0f, 0.0f};
+    turnVecToVecCosOnPlane(&newFrontDir, frontDir, sideDir, upDir, -1.0f);
 
     sead::Quatf quat = sead::Quatf::unit;
-    makeQuatUpFront(&quat, upDir, newFrontdir);
+    makeQuatUpFront(&quat, upDir, newFrontDir);
     updatePoseQuat(actor, quat);
 }
 

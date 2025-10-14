@@ -23,11 +23,11 @@ void resetAllCollisionMtx(LiveActor* actor);
 void syncCollisionMtx(LiveActor* actor, const sead::Matrix34f* mtx);
 void syncCollisionMtx(LiveActor* actor, CollisionParts* collisionParts, const sead::Matrix34f* mtx);
 void setSyncCollisionMtxPtr(LiveActor* actor, const sead::Matrix34f* mtx);
-bool isOnGround(const LiveActor* actor, u32 offset);
+bool isOnGround(const LiveActor* actor, u32 coyoteTime);
 bool isOnGroundFace(const LiveActor* actor);
 bool isCollidedGroundEdgeOrCorner(const LiveActor* actor);
-bool isOnGroundNoVelocity(const LiveActor* actor, u32 offset);
-bool isOnGroundDegree(const LiveActor* actor, f32 angle, u32 offset);
+bool isOnGroundNoVelocity(const LiveActor* actor, u32 coyoteTime);
+bool isOnGroundDegree(const LiveActor* actor, f32 angle, u32 coyoteTime);
 bool isOnGroundFaceDegree(const LiveActor* actor, f32 angle);
 bool isOnGroundNoVelocityDegree(const LiveActor* actor, f32, u32 angle);
 const sead::Vector3f& getOnGroundNormal(const LiveActor* actor, u32 offset);
@@ -41,13 +41,13 @@ void validateColliderRobustCheck(LiveActor* actor);
 void invalidateColliderRobustCheck(LiveActor* actor);
 void setColliderReactMovePower(LiveActor* actor, bool isEnabled);
 void calcColliderFloorRotatePower(sead::Quatf*, LiveActor* actor);
-void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor, const sead::Vector3f& pos,
-                     f32 force);
+void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor,
+                     const sead::Vector3f& velocityDir, f32 force);
 bool isCollidedGround(const LiveActor* actor);
 void calcJumpInertiaWall(sead::Vector3f* outJumpInertia, LiveActor* actor, f32 force);
 bool isCollidedWall(const LiveActor* actor);
-void scaleVelocityInertiaWallHit(LiveActor* actor, f32 velocityScale, f32 maxVelocity,
-                                 f32 maxScaledVelocity);
+void scaleVelocityInertiaWallHit(LiveActor* actor, f32 velocityScaleH, f32 maxVelocityH,
+                                 f32 maxScaledVelocityH);
 const sead::Vector3f& getCollidedWallNormal(const LiveActor* actor);
 void calcCollidedNormalSum(const LiveActor* actor, sead::Vector3f* outNormal);
 void calcGroundNormalOrUpDir(sead::Vector3f*, const LiveActor* actor);
