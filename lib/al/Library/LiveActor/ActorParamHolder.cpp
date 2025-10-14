@@ -23,7 +23,7 @@ const char* ActorParamHolder::getYamlName() {
 ActorParamHolder* ActorParamHolder::tryCreate(LiveActor* actor, const Resource* resource,
                                               const char* suffix) {
     sead::FixedSafeString<0x80> fileName;
-    tryGetActorInitFileName(&fileName, resource, "ActorParam", suffix);
+    tryGetActorInitFileName(&fileName, resource, getYamlName(), suffix);
 
     if (!isExistResourceYaml(resource, fileName.cstr(), nullptr))
         return nullptr;
@@ -34,7 +34,7 @@ ActorParamHolder* ActorParamHolder::tryCreate(LiveActor* actor, const Resource* 
 ActorParamHolder::ActorParamHolder(LiveActor* actor, const Resource* resource, const char* suffix) {
     ByamlIter actorParamIter;
 
-    tryGetActorInitFileIter(&actorParamIter, resource, "ActorParam", suffix);
+    tryGetActorInitFileIter(&actorParamIter, resource, getYamlName(), suffix);
     mSize = actorParamIter.getSize();
     mInfoArray = new ActorParamInfo[mSize];
 
@@ -96,7 +96,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* actor, const Resource* resource, c
 }
 
 ActorParamInfo* ActorParamHolder::tryFindParamInfoByName(const char* name) const {
-    for (s32 i = 0; i < mSize; ++i) {
+    for (s32 i = 0; i < mSize; i++) {
         ActorParamInfo* info = &mInfoArray[i];
 
         if (isEqualString(info->name, name))
