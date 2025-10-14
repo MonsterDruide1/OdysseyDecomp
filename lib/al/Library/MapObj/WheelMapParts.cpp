@@ -109,7 +109,7 @@ void WheelMapParts::exeWait() {
     if (mWheelMovement->isInvertDirection())
         startHitReaction(this, "端点接触");
 
-    if (!isNearZero(mWheelMovement->previousDeltaAngle(), 0.2f))
+    if (!isNearZero(mWheelMovement->nextDeltaAngle(), 0.2f))
         startNerveAction(this, "Move");
 }
 
@@ -119,11 +119,11 @@ void WheelMapParts::exeMove() {
     if (mWheelMovement->isInvertDirection())
         startHitReaction(this, "端点接触");
 
-    f32 previousDeltaAngle = mWheelMovement->previousDeltaAngle();
-    if (isNearZero(previousDeltaAngle, 0.2f))
+    f32 nextDeltaAngle = mWheelMovement->nextDeltaAngle();
+    if (isNearZero(nextDeltaAngle, 0.2f))
         startNerveAction(this, "Wait");
     else
-        tryHoldSeWithParam(this, "Rotate", sead::Mathf::abs(previousDeltaAngle), "回転速度");
+        tryHoldSeWithParam(this, "Rotate", sead::Mathf::abs(nextDeltaAngle), "回転速度");
 }
 
 void WheelMapParts::exeAssistStop() {

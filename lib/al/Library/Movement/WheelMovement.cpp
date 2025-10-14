@@ -46,19 +46,20 @@ WheelMovement::WheelMovement(LiveActor* actor, const ActorInitInfo& info)
 
 bool WheelMovement::receiveMsg(LiveActor* actor, const SensorMsg* message, HitSensor* other,
                                HitSensor* self) {
-    if (!isMsgFloorTouch(message))
-        return false;
+    if (isMsgFloorTouch(message)) {
+        sead::Vector3f pos;
+        if (isMySensor(self, actor))
+            pos = getSensorPos(other);
+        else
+            pos = getActorTrans(self);
 
-    sead::Vector3f pos;
-    if (isMySensor(self, actor))
-        pos = getSensorPos(other);
-    else
-        pos = getActorTrans(self);
+        f32 width = normalizeAbs(mMoveDir.dot(pos - getTrans(actor)), mNoRotateWidth,
+                                 mNoRotateWidth + 50.0f);
+        mRotateWidth += isMsgEnemyFloorTouch(message) ? width * 0.9f : width;
+        return true;
+    }
 
-    f32 width =
-        normalizeAbs(mMoveDir.dot(pos - getTrans(actor)), mNoRotateWidth, mNoRotateWidth + 50.0f);
-    mRotateWidth += isMsgEnemyFloorTouch(message) ? width * 0.9f : width;
-    return true;
+    return false;
 }
 
 void WheelMovement::update(LiveActor* actor) {
@@ -68,55 +69,55 @@ void WheelMovement::update(LiveActor* actor) {
 
 void WheelMovement::updateRotate() {
     mRotateWidth = sead::Mathf::clamp(mRotateWidth, -1.25f, 1.25f);
-    mDeltaAngle = (mRotateWidth * mRotateAccel * 0.001f + mPreviousDeltaAngle) * 0.97f;
+    mDeltaAngle = (mRotateWidth * mRotateAccel * 0.001f + mNextDeltaAngle) * 0.97f;
     mWheelAngle = mWheelAngle + mDeltaAngle;
 
-    mPreviousDeltaAngle = mDeltaAngle;
+    mNextDeltaAngle = mDeltaAngle;
     mIsInvertDirection = false;
     if (mIsOnRail) {
         if (mIsRailPlusDir) {
             if (mWheelAngle < 0.0f) {
                 mWheelAngle = 0.0f;
-                if (mPreviousDeltaAngle < 0.0f) {
-                    if (mPreviousDeltaAngle < mRotateAccel * -0.001f)
+                if (mNextDeltaAngle < 0.0f) {
+                    if (mNextDeltaAngle < mRotateAccel * -0.001f)
                         mIsInvertDirection = true;
                     else
-                        mPreviousDeltaAngle = 0.0f;
+                        mNextDeltaAngle = 0.0f;
                 }
             }
             if (mWheelAngle > mMoveEndDegree) {
                 mWheelAngle = mMoveEndDegree;
-                if (mPreviousDeltaAngle > 0.0f) {
-                    if (mPreviousDeltaAngle > mRotateAccel * 0.001f)
+                if (mNextDeltaAngle > 0.0f) {
+                    if (mNextDeltaAngle > mRotateAccel * 0.001f)
                         mIsInvertDirection = true;
                     else
-                        mPreviousDeltaAngle = 0.0f;
+                        mNextDeltaAngle = 0.0f;
                 }
             }
             mRailProgress = mWheelAngle / mMoveEndDegree;
         } else {
             if (mWheelAngle < -mMoveEndDegree) {
                 mWheelAngle = -mMoveEndDegree;
-                if (mPreviousDeltaAngle < 0.0f) {
-                    if (mPreviousDeltaAngle < mRotateAccel * -0.001f)
+                if (mNextDeltaAngle < 0.0f) {
+                    if (mNextDeltaAngle < mRotateAccel * -0.001f)
                         mIsInvertDirection = true;
                     else
-                        mPreviousDeltaAngle = 0.0f;
+                        mNextDeltaAngle = 0.0f;
                 }
             }
             if (mWheelAngle > 0.0f) {
                 mWheelAngle = 0.0f;
-                if (mPreviousDeltaAngle > 0.0f) {
-                    if (mPreviousDeltaAngle > mRotateAccel * 0.001f)
+                if (mNextDeltaAngle > 0.0f) {
+                    if (mNextDeltaAngle > mRotateAccel * 0.001f)
                         mIsInvertDirection = true;
                     else
-                        mPreviousDeltaAngle = 0.0f;
+                        mNextDeltaAngle = 0.0f;
                 }
             }
             mRailProgress = -mWheelAngle / mMoveEndDegree;
         }
         if (mIsInvertDirection)
-            mPreviousDeltaAngle *= -0.2f;
+            mNextDeltaAngle *= -0.2f;
     } else {
         mWheelAngle = modf(mWheelAngle + 360.0f, 360.0f) + 0.0f;
     }
@@ -133,7 +134,7 @@ void WheelMovement::updateActorPoseAndTrans(LiveActor* actor) {
 
 void WheelMovement::reset() {
     mWheelAngle = 0.0f;
-    mPreviousDeltaAngle = 0.0f;
+    mNextDeltaAngle = 0.0f;
     mRotateWidth = 0.0f;
     mIsInvertDirection = false;
     mRailProgress = mInitialRailProgress;

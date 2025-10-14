@@ -25,7 +25,7 @@ public:
 
     const sead::Vector3f& getMoveDir() const { return mMoveDir; }
 
-    f32 previousDeltaAngle() const { return mPreviousDeltaAngle; }
+    f32 nextDeltaAngle() const { return mNextDeltaAngle; }
 
     f32 deltaAngle() const { return mDeltaAngle; }
 
@@ -38,7 +38,7 @@ private:
     Axis mRotateAxis = Axis::None;
     f32 mMoveEndDegree = 360.0f;
     f32 mWheelAngle = 0.0f;
-    f32 mPreviousDeltaAngle = 0.0f;
+    f32 mNextDeltaAngle = 0.0f;
     f32 mRotateAccel = 20.0f;
     f32 mDeltaAngle = 0.0f;
     f32 mRotateWidth = 0.0f;
