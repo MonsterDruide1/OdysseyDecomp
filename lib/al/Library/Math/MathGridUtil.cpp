@@ -15,15 +15,15 @@ void calcWorldPosFromGridIndex(sead::Vector3f* outPos, const sead::Matrix34f& mt
 
 void calcGridIndexFromWorldPos(sead::Vector3i* outGridIndex, const sead::Matrix34f& mtx,
                                const sead::Vector3f& pos) {
-    sead::Vector3f dir = pos - mtx.getTranslation();
+    sead::Vector3f posOrigin = pos - mtx.getTranslation();
 
-    f32 xPos = mtx.getBase(0).dot(dir) / mtx.getBase(0).squaredLength();
+    f32 xPos = mtx.getBase(0).dot(posOrigin) / mtx.getBase(0).squaredLength();
     outGridIndex->x = xPos >= 0.0f ? xPos + 0.5f : xPos - 0.5f;
 
-    f32 yPos = mtx.getBase(1).dot(dir) / mtx.getBase(1).squaredLength();
+    f32 yPos = mtx.getBase(1).dot(posOrigin) / mtx.getBase(1).squaredLength();
     outGridIndex->y = yPos >= 0.0f ? yPos + 0.5f : yPos - 0.5f;
 
-    f32 zPos = mtx.getBase(2).dot(dir) / mtx.getBase(2).squaredLength();
+    f32 zPos = mtx.getBase(2).dot(posOrigin) / mtx.getBase(2).squaredLength();
     outGridIndex->z = zPos >= 0.0f ? zPos + 0.5f : zPos - 0.5f;
 }
 
@@ -77,10 +77,10 @@ s32 calcDirIndexNearXY(const sead::Vector3i& startGridIndex, const sead::Vector3
     if (y == 0 && x == 0)
         return DirIndex_None;
 
-    if (sead::Mathi::abs(x) < sead::Mathi::abs(y))
-        return 0 < y ? DirIndex_Y : DirIndex_NegY;
-
-    return 0 < x ? DirIndex_X : DirIndex_NegX;
+    if (sead::Mathi::abs(x) >= sead::Mathi::abs(y))
+        return x > 0 ? DirIndex_X : DirIndex_NegX;
+    else
+        return y > 0 ? DirIndex_Y : DirIndex_NegY;
 }
 
 s32 calcDirIndexNearYZ(const sead::Vector3i& startGridIndex, const sead::Vector3i& endGridIndex) {
@@ -90,10 +90,10 @@ s32 calcDirIndexNearYZ(const sead::Vector3i& startGridIndex, const sead::Vector3
     if (z == 0 && y == 0)
         return DirIndex_None;
 
-    if (sead::Mathi::abs(y) < sead::Mathi::abs(z))
+    if (sead::Mathi::abs(y) >= sead::Mathi::abs(z))
+        return 0 < y ? DirIndex_Y : DirIndex_NegY;
+    else
         return 0 < z ? DirIndex_Z : DirIndex_NegZ;
-
-    return 0 < y ? DirIndex_Y : DirIndex_NegY;
 }
 
 s32 calcDirIndexNearZX(const sead::Vector3i& startGridIndex, const sead::Vector3i& endGridIndex) {
@@ -103,10 +103,10 @@ s32 calcDirIndexNearZX(const sead::Vector3i& startGridIndex, const sead::Vector3
     if (x == 0 && z == 0)
         return DirIndex_None;
 
-    if (sead::Mathi::abs(z) < sead::Mathi::abs(x))
+    if (sead::Mathi::abs(z) >= sead::Mathi::abs(x))
+        return 0 < z ? DirIndex_Z : DirIndex_NegZ;
+    else
         return 0 < x ? DirIndex_X : DirIndex_NegX;
-
-    return 0 < z ? DirIndex_Z : DirIndex_NegZ;
 }
 
 s32 signDirIndexX(s32 dirIndex) {
@@ -130,12 +130,12 @@ s32 signDirIndexZ(s32 dirIndex) {
 void calcGridMinMaxFromOBB(sead::Vector3i* outGridIndexMin, sead::Vector3i* outGridIndexMax,
                            const sead::Matrix34f& gridMtx, const sead::Matrix34f& boxMtx,
                            const sead::BoundBox3f& boundBox) {
-    outGridIndexMin->x = std::numeric_limits<s32>::max();
-    outGridIndexMin->y = std::numeric_limits<s32>::max();
-    outGridIndexMin->z = std::numeric_limits<s32>::max();
-    outGridIndexMax->x = std::numeric_limits<s32>::min();
-    outGridIndexMax->y = std::numeric_limits<s32>::min();
-    outGridIndexMax->z = std::numeric_limits<s32>::min();
+    outGridIndexMin->x = sead::Mathi::maxNumber();
+    outGridIndexMin->y = sead::Mathi::maxNumber();
+    outGridIndexMin->z = sead::Mathi::maxNumber();
+    outGridIndexMax->x = sead::Mathi::minNumber();
+    outGridIndexMax->y = sead::Mathi::minNumber();
+    outGridIndexMax->z = sead::Mathi::minNumber();
     expandGridFromOBB(outGridIndexMin, outGridIndexMax, gridMtx, boxMtx, boundBox);
 }
 
