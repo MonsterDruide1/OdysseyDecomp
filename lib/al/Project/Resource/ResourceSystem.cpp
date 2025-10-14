@@ -28,7 +28,7 @@ ResourceSystem::ResourceSystem(const char* name) {
     }
 }
 
-ALWAYS_INLINE void ResourceSystem::createResourceCore(ResourceSystem* self, Resource* resource) {
+ALWAYS_INLINE void ResourceSystem::createResourceCore(Resource* resource) {
     StringTmp<256> fileName = StringTmp<256>("%s.bfres", resource->getArchiveName());
 
     if (!resource->isExistFile(fileName))
@@ -42,7 +42,7 @@ ALWAYS_INLINE void ResourceSystem::createResourceCore(ResourceSystem* self, Reso
 
         if (textureArc) {
             StringTmp<256> filePath = StringTmp<256>("ObjectData/%s", textureArc);
-            resFile = self->findOrCreateResource(filePath, nullptr)->getResFile();
+            resFile = findOrCreateResource(filePath, nullptr)->getResFile();
         }
     }
     resource->tryCreateResGraphicsFile(fileName, resFile);
@@ -57,7 +57,7 @@ Resource* ResourceSystem::createResource(const sead::SafeString& name, ResourceC
     resource = ext ? new Resource(name, loadArchiveWithExt(name, ext)) : new Resource(name);
     category->treeMap.insert(name, resource);
 
-    createResourceCore(this, resource);
+    createResourceCore(resource);
 
     return resource->getFileArchive() ? resource : nullptr;
 }

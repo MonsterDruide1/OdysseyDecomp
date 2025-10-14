@@ -37,7 +37,7 @@ public:
     findResourceCategoryIter(const sead::SafeString& name);
     bool isEmptyCategoryResource(const sead::SafeString& name);
     void createCategoryResourceAll(const sead::SafeString& name);
-    inline void createResourceCore(ResourceSystem* self, Resource* resource);
+    inline void createResourceCore(Resource* resource);
     Resource* createResource(const sead::SafeString& name, ResourceCategory* category,
                              const char* ext);
     void removeCategory(const sead::SafeString& name);
