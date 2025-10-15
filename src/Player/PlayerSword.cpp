@@ -52,7 +52,7 @@ void PlayerSword::updatePose() {
     sead::Matrix34f newPoseMtx = *mPlayerBaseMtx;
     al::normalize(&newPoseMtx);
 
-    newPoseMtx = newPoseMtx * (t * tt);
+    newPoseMtx *= (t * tt);
 
     return al::updatePoseMtx(this, &newPoseMtx);
 }
