@@ -118,37 +118,42 @@ f32 calcTriangleWave(f32 t, f32 min, f32 max, f32 period);
 f32 lerpValue(f32 a, f32 b, f32 t);
 f32 calcRate01(f32 t, f32 min, f32 max);
 f32 easeByType(f32 t, s32 easeType);
-f32 lerpValue(f32, f32, f32, f32, f32);
-f32 lerpDegree(f32, f32, f32);
-f32 lerpRadian(f32, f32, f32);
-void lerpVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
-void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
-void lerpVecHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
-               f32, f32);
-void separateVectorHV(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                      const sead::Vector3f&);
-void lerpColor(sead::Color4f*, const sead::Color4f&, const sead::Color4f&, f32);
-f32 lerpLogValueEaseIn(f32, f32, f32, f32);
-f32 lerpLogValueEaseOut(f32, f32, f32, f32);
-void lerpLogVecEaseIn(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
-void lerpLogVecEaseOut(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
-f32 lerpExponentValueEaseIn(f32, f32, f32, f32);
-f32 lerpExponentValueEaseOut(f32, f32, f32, f32);
-void lerpExponentVecEaseIn(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
-void lerpExponentVecEaseOut(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32,
-                            f32);
-f32 clampLeapMinAbs(f32, f32, f32, f32);
+f32 lerpValue(f32 a, f32 b, f32 t, f32 clampA, f32 clampB);
+f32 lerpDegree(f32 a, f32 b, f32 t);
+f32 lerpRadian(f32 a, f32 b, f32 t);
+void lerpVec(sead::Vector2f* outVec, const sead::Vector2f& a, const sead::Vector2f& b, f32 t);
+void lerpVec(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b, f32 t);
+void lerpVecHV(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+               const sead::Vector3f& c, f32 tH, f32 tV);
+void separateVectorHV(sead::Vector3f* outH, sead::Vector3f* outV, const sead::Vector3f& a,
+                      const sead::Vector3f& b);
+void lerpColor(sead::Color4f* outColor, const sead::Color4f& a, const sead::Color4f& b, f32 t);
+f32 lerpLogValueEaseIn(f32 a, f32 b, f32 max, f32 min);
+f32 lerpLogValueEaseOut(f32 a, f32 b, f32 max, f32 min);
+void lerpLogVecEaseIn(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+                      f32 max, f32 min);
+void lerpLogVecEaseOut(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+                       f32 max, f32 min);
+f32 lerpExponentValueEaseIn(f32 a, f32 b, f32 max, f32 min);
+f32 lerpExponentValueEaseOut(f32 a, f32 b, f32 max, f32 min);
+void lerpExponentVecEaseIn(sead::Vector3f* outVec, const sead::Vector3f& a, const sead::Vector3f& b,
+                           f32 max, f32 min);
+void lerpExponentVecEaseOut(sead::Vector3f* outVec, const sead::Vector3f& a,
+                            const sead::Vector3f& b, f32 max, f32 min);
+f32 clampLeapMinAbs(f32 a, f32 beforeLerp, f32 startLerp, f32 endLerp);
 f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t);
 f32 hermite(f32 y0, f32 m0, f32 y1, f32 m1, f32 t, f32 width);
-void hermiteVec(sead::Vector3f* out, const sead::Vector3f& p0, const sead::Vector3f& v0,
-                const sead::Vector3f& p1, const sead::Vector3f& v1, f32 t);
-s32 converge(s32, s32, s32);
-f32 converge(f32, f32, f32);
-f32 convergeDegree(f32, f32, f32);
-f32 convergeRadian(f32, f32, f32);
-void convergeVec(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&, f32);
-void convergeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
-f32 diffNearAngleDegree(f32, f32);
+void hermiteVec(sead::Vector3f* outVec, const sead::Vector3f& y0, const sead::Vector3f& m0,
+                const sead::Vector3f& y1, const sead::Vector3f& m1, f32 t);
+s32 converge(s32 current, s32 target, s32 step);
+f32 converge(f32 current, f32 target, f32 step);
+f32 convergeDegree(f32 current, f32 target, f32 step);
+f32 convergeRadian(f32 current, f32 target, f32 step);
+bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& current,
+                 const sead::Vector2f& target, f32 step);
+bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& current,
+                 const sead::Vector3f& target, f32 step);
+f32 diffNearAngleDegree(f32 a, f32 b);
 bool isInRangeAngleDegree(f32, f32, f32);
 bool calcEyesAnimAngleInRange(f32*, const sead::Vector3f&, const sead::Vector3f&,
                               const sead::Vector3f&, const sead::Vector3f&, f32, f32, f32, f32);
@@ -178,24 +183,25 @@ inline void rotateVectorDegree(sead::Vector3f* vec, const sead::Vector3f& axis, 
     rotateVectorDegree(vec, *vec, axis, degree);
 }
 
-void getRandomOnCircle(sead::Vector2f*, f32);
-void getRandomInCircle(sead::Vector2f*, f32);
-void getRandomInCircleMinMaxRadius(sead::Vector2f*, f32, f32);
-void getRandomInCircle(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
-void getRandomOnSphere(sead::Vector3f*, f32);
-void getRandomInSphere(sead::Vector3f*, f32);
+void getRandomOnCircle(sead::Vector2f* outPos, f32 radius);
+void getRandomInCircle(sead::Vector2f* outPos, f32 maxRadius);
+void getRandomInCircleMinMaxRadius(sead::Vector2f* outPos, f32 minRadius, f32 maxRadius);
+void getRandomInCircle(sead::Vector3f* outPos, const sead::Vector3f& pos,
+                       const sead::Vector3f& front, f32 maxRadius);
+void getRandomOnSphere(sead::Vector3f* outPos, f32 radius);
+void getRandomInSphere(sead::Vector3f* outPos, f32 maxRadius);
 bool calcRandomDirInCone(sead::Vector3f*, const sead::Vector3f&, f32);
 void getRandomInSphereMinMaxRadius(sead::Vector3f*, f32, f32);
-void initRandomSeed(u32);
+void initRandomSeed(u32 seed);
 void initRandomSeedByTick();
-void initRandomSeedByString(const char*);
+void initRandomSeedByString(const char* name);
 bool isHalfProbability();
-bool isPercentProbability(f32);
-void getRandomContext(u32*, u32*, u32*, u32*);
-void setRandomContext(u32, u32, u32, u32);
-void makeRandomDirXZ(sead::Vector3f*);
+bool isPercentProbability(f32 threshold);
+void getRandomContext(u32* xSeed, u32* ySeed, u32* zSeed, u32* wSeed);
+void setRandomContext(u32 xSeed, u32 ySeed, u32 zSeed, u32 wSeed);
+void makeRandomDirXZ(sead::Vector3f* outDir);
 f32 calcBoxMullerRandomGauss();
-void makeBoxMullerRandomGauss(sead::Vector2f*, f32, f32);
+void makeBoxMullerRandomGauss(sead::Vector2f* outBox, f32 randA, f32 randB);
 f32 modf(f32 a, f32 b);
 s32 modi(s32 a, s32 b);
 f32 calcSpeedMax(f32 accel, f32 friction);
