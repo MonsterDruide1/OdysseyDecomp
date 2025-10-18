@@ -8,7 +8,7 @@ class RouteGuideArea : public al::AreaObj {
 public:
     RouteGuideArea(const char* name);
 
-    void init(const al::AreaInitInfo& areaInitInfo) override;
+    void init(const al::AreaInitInfo& info) override;
     void calcGuidePos(sead::Vector3f* guidePos) const;
 
 private:

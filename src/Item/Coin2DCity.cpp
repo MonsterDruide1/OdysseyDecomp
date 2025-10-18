@@ -31,18 +31,18 @@ NERVES_MAKE_STRUCT(Coin2DCity, Got, Light, GotWait);
 Coin2DCity::Coin2DCity(const char* name, Coin2DCityDirector* director)
     : al::LiveActor(name), mCityDirector(director) {}
 
-void Coin2DCity::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "CoinDot", nullptr);
-    al::tryAddDisplayOffset(this, initInfo);
+void Coin2DCity::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "CoinDot", nullptr);
+    al::tryAddDisplayOffset(this, info);
     mDimensionKeeper = rs::createDimensionKeeper(this);
     rs::updateDimensionKeeper(mDimensionKeeper);
 
     mCityDirector->registerCoin(this);
     al::PlacementInfo placementInfo;
-    if (al::isExistLinkChild(initInfo, "NextCoin", 0)) {
-        al::getLinksInfo(&placementInfo, initInfo, "NextCoin");
+    if (al::isExistLinkChild(info, "NextCoin", 0)) {
+        al::getLinksInfo(&placementInfo, info, "NextCoin");
         mNextCoin = new Coin2DCity("コイン2D都市", mCityDirector);
-        al::initCreateActorWithPlacementInfo(mNextCoin, initInfo, placementInfo);
+        al::initCreateActorWithPlacementInfo(mNextCoin, info, placementInfo);
     }
 
     al::initNerve(this, &Wait, 0);
@@ -53,7 +53,7 @@ void Coin2DCity::init(const al::ActorInitInfo& initInfo) {
 void Coin2DCity::control() {
     mSyncCounter = al::getSceneObj<al::StageSyncCounter>(this)->getCounter();
     if (mLightTime > -1 && mCityDirector->isTriggerBeat()) {
-        if (mNextCoin != nullptr && mLightTime == 1)
+        if (mNextCoin && mLightTime == 1)
             mNextCoin->startLight();
 
         if (mLightTime == mCityDirector->getLightTime())
@@ -83,7 +83,7 @@ void Coin2DCity::startLight() {
 
     al::StageSyncCounter* syncCounter = al::getSceneObj<al::StageSyncCounter>(this);
     if (mSyncCounter == syncCounter->getCounter() && mCityDirector->isTriggerBeat()) {
-        if (mNextCoin != nullptr && mLightTime == 1)
+        if (mNextCoin && mLightTime == 1)
             mNextCoin->startLight();
 
         if (mLightTime == mCityDirector->getLightTime())

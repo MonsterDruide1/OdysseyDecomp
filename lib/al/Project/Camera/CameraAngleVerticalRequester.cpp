@@ -17,13 +17,13 @@ void CameraAngleVerticalRequester::initAfterPlacement() {
 }
 
 void CameraAngleVerticalRequester::update(const sead::Vector3f& position) {
-    if (mRequestAreaGroup == nullptr)
+    if (!mRequestAreaGroup)
         return;
     AreaObj* areaObj = tryGetAreaObj(mRequestAreaGroup, position);
     if (areaObj != mRequestArea) {
         mRequestArea = areaObj;
         mFramesUnchanged = -1;
-        if (areaObj != nullptr)
+        if (areaObj)
             getArg(&mAngleVertical, *mRequestArea->getPlacementInfo(), "AngleVertical");
     }
     mFramesUnchanged++;

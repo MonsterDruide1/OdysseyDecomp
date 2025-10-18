@@ -10,7 +10,7 @@ class CoinCollectDummy : public al::LiveActor {
 public:
     CoinCollectDummy(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void appear() override;
 
     void appearHint(const sead::Vector3f& position);

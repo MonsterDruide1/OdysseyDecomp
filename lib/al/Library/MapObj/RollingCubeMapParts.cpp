@@ -106,7 +106,7 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* other,
 }
 
 void RollingCubeMapParts::control() {
-    if (mMoveLimitMtx != nullptr)
+    if (mMoveLimitMtx)
         mMoveLimitMtx->makeQT(mInitialPoseQuat, getTrans(this));
 
     calcMtxLandEffect(&mLandEffectMtx, mRollingCubePoseKeeper, getQuat(this), getTrans(this));

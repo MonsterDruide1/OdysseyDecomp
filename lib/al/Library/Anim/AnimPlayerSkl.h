@@ -73,8 +73,6 @@ public:
     void setRetargettingInfo(SklAnimRetargettingInfo* info) { mRetargettingInfo = info; }
 
 private:
-    AnimInfoTable* mAnimInfoTable;
-    u32 _10;
     void* _18;
     u32 mAnimObjCount0;
     nn::g3d::SkeletalAnimObj* mSkelAnimObjStack0;

@@ -1,7 +1,7 @@
 #include "Library/Scene/SceneStopCtrl.h"
 
 namespace al {
-SceneStopCtrl::SceneStopCtrl() {}
+SceneStopCtrl::SceneStopCtrl() = default;
 
 void SceneStopCtrl::reqeustStopScene(s32 stopFrames, s32 delayFrames) {
     if (mStopFrames <= 0 && mDelayFrames <= 0)

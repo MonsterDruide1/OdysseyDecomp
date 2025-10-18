@@ -4,7 +4,7 @@ HelpAmiiboExecutor::HelpAmiiboExecutor(HelpAmiiboDirector* director, al::LiveAct
                                        const char* amiiboName)
     : mHelpAmiiboDirector(director), mHelpAmiiboActor(amiiboActor) {}
 
-void HelpAmiiboExecutor::initAfterPlacement(const al::ActorInitInfo&) {}
+void HelpAmiiboExecutor::initAfterPlacement(const al::ActorInitInfo& initInfo) {}
 
 bool HelpAmiiboExecutor::tryTouch(const al::NfpInfo& nfpInfo) {
     if (mIsActivated || !isTriggerTouch(nfpInfo))

@@ -25,13 +25,13 @@ NERVES_MAKE_STRUCT(Souvenir, Wait, ReactionCap);
 Souvenir::Souvenir(const char* name) : al::LiveActor(name) {}
 
 // Non-matching: regswap (https://decomp.me/scratch/8qJEm)
-void Souvenir::init(const al::ActorInitInfo& actorInitInfo) {
+void Souvenir::init(const al::ActorInitInfo& info) {
     const char* suffix = nullptr;
-    al::tryGetStringArg(&suffix, actorInitInfo, "Suffix");
-    al::initMapPartsActor(this, actorInitInfo, suffix);
-    al::tryGetArg(&mIsReactionPlayerUpperPunch, actorInitInfo, "IsReactionPlayerUpperPunch");
-    al::tryGetArg(&mIsThroughCapAttack, actorInitInfo, "IsThroughCapAttack");
-    al::tryGetArg(&mRotateYSpeed, actorInitInfo, "RotateYSpeed");
+    al::tryGetStringArg(&suffix, info, "Suffix");
+    al::initMapPartsActor(this, info, suffix);
+    al::tryGetArg(&mIsReactionPlayerUpperPunch, info, "IsReactionPlayerUpperPunch");
+    al::tryGetArg(&mIsThroughCapAttack, info, "IsThroughCapAttack");
+    al::tryGetArg(&mRotateYSpeed, info, "RotateYSpeed");
     al::initNerve(this, &NrvSouvenir.Wait, 0);
     makeActorAlive();
 }
@@ -48,20 +48,21 @@ void Souvenir::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         rs::sendMsgPushToPlayer(other, self);
 }
 
-bool Souvenir::receiveMsg(const al::SensorMsg* msg, al::HitSensor* self, al::HitSensor* other) {
-    if (al::isMsgPlayerDisregard(msg) || rs::isMsgPlayerDisregardHomingAttack(msg) ||
-        rs::isMsgPlayerDisregardTargetMarker(msg))
+bool Souvenir::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+    if (al::isMsgPlayerDisregard(message) || rs::isMsgPlayerDisregardHomingAttack(message) ||
+        rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 
-    if (rs::isMsgCapTouchWall(msg) || rs::isMsgCapAttack(msg) || al::isMsgPlayerTrample(msg) ||
-        rs::isMsgPlayerAndCapHipDropAll(msg) || rs::isMsgPlayerAndCapObjHipDropAll(msg) ||
-        (al::isMsgPlayerObjUpperPunch(msg) && mIsReactionPlayerUpperPunch) ||
-        al::isMsgPlayerRollingAttack(msg) || al::isMsgPlayerObjRollingAttack(msg)) {
+    if (rs::isMsgCapTouchWall(message) || rs::isMsgCapAttack(message) ||
+        al::isMsgPlayerTrample(message) || rs::isMsgPlayerAndCapHipDropAll(message) ||
+        rs::isMsgPlayerAndCapObjHipDropAll(message) ||
+        (al::isMsgPlayerObjUpperPunch(message) && mIsReactionPlayerUpperPunch) ||
+        al::isMsgPlayerRollingAttack(message) || al::isMsgPlayerObjRollingAttack(message)) {
         if (!al::isExistAction(this, "ReactionCap"))
             return false;
 
-        const sead::Vector3f& velocity = al::getVelocity(al::getSensorHost(self));
-        if (!rs::isMsgCapAttack(msg) && velocity.length() < 5.0f)
+        const sead::Vector3f& velocity = al::getVelocity(al::getSensorHost(other));
+        if (!rs::isMsgCapAttack(message) && velocity.length() < 5.0f)
             return false;
 
         if (!al::isNerve(this, &NrvSouvenir.Wait) &&
@@ -70,15 +71,16 @@ bool Souvenir::receiveMsg(const al::SensorMsg* msg, al::HitSensor* self, al::Hit
 
         al::setNerve(this, &NrvSouvenir.ReactionCap);
         if (mIsThroughCapAttack &&
-            (rs::isMsgCapAttack(msg) || al::isMsgPlayerObjUpperPunch(msg) ||
-             al::isMsgPlayerTrample(msg) || rs::isMsgPlayerAndCapHipDropAll(msg) ||
-             rs::isMsgPlayerAndCapObjHipDropAll(msg)))
+            (rs::isMsgCapAttack(message) || al::isMsgPlayerObjUpperPunch(message) ||
+             al::isMsgPlayerTrample(message) || rs::isMsgPlayerAndCapHipDropAll(message) ||
+             rs::isMsgPlayerAndCapObjHipDropAll(message)))
             return false;
 
-        if (!rs::isMsgPlayerAndCapHipDropAll(msg) && !rs::isMsgPlayerAndCapObjHipDropAll(msg))
-            al::startHitReactionHitEffect(this, "ヒット[小]", self, other);
+        if (!rs::isMsgPlayerAndCapHipDropAll(message) &&
+            !rs::isMsgPlayerAndCapObjHipDropAll(message))
+            al::startHitReactionHitEffect(this, "ヒット[小]", other, self);
         else
-            al::startHitReactionHitEffect(this, "ヒット", self, other);
+            al::startHitReactionHitEffect(this, "ヒット", other, self);
         return true;
     }
 
@@ -96,7 +98,7 @@ void Souvenir::exeWait() {
               al::isActionPlaying(this, "ReactionCap3")) ||
              (al::isExistAction(this, "ReactionCap4") &&
               al::isActionPlaying(this, "ReactionCap4"))) &&
-            getNextAction() != nullptr)
+            getNextAction())
             return;
 
         if (mIsWait) {

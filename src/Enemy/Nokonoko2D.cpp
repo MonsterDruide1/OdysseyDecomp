@@ -46,14 +46,14 @@ NERVES_MAKE_STRUCT(Nokonoko2D, Walk, KouraMove, KouraMoveNoTouch, Damage, Damage
 Nokonoko2D::Nokonoko2D(const char* name)
     : al::LiveActor(name), mCollisionPartsFilter{rs::createCollisionPartsFilter2DOnly()} {}
 
-void Nokonoko2D::init(const al::ActorInitInfo& initInfo) {
+void Nokonoko2D::init(const al::ActorInitInfo& info) {
     using Nokonoko2DFunctor = al::FunctorV0M<Nokonoko2D*, void (Nokonoko2D::*)()>;
 
-    mIsGreen = al::isObjectName(initInfo, "NokonokoGreen2D");
+    mIsGreen = al::isObjectName(info, "NokonokoGreen2D");
     if (mIsGreen)
-        al::initActorWithArchiveName(this, initInfo, "NokonokoGreen2D", nullptr);
+        al::initActorWithArchiveName(this, info, "NokonokoGreen2D", nullptr);
     else
-        al::initActorWithArchiveName(this, initInfo, "NokonokoRed2D", nullptr);
+        al::initActorWithArchiveName(this, info, "NokonokoRed2D", nullptr);
 
     al::initNerve(this, &NrvNokonoko2D.Walk, 0);
     rs::createAndSetFilter2DOnly(this);
@@ -73,15 +73,15 @@ void Nokonoko2D::init(const al::ActorInitInfo& initInfo) {
     mInitTrans = al::getTrans(this);
     mInitFront = al::getFront(this);
 
-    if (al::isExistLinkChild(initInfo, "Nokonoko2dResetArea", 0)) {
-        mResetArea = al::createLinkAreaGroup(this, initInfo, "Nokonoko2dResetArea",
+    if (al::isExistLinkChild(info, "Nokonoko2dResetArea", 0)) {
+        mResetArea = al::createLinkAreaGroup(this, info, "Nokonoko2dResetArea",
                                              "子供エリアグループ", "子供エリア");
         al::PlacementInfo placementInfo;
-        al::getLinksInfo(&placementInfo, initInfo, "Nokonoko2dResetArea");
+        al::getLinksInfo(&placementInfo, info, "Nokonoko2dResetArea");
         al::tryGetArg(&mIsResetForce, placementInfo, "IsResetForce");
     }
-    al::tryGetArg(&mClippingTime, initInfo, "ClippingTime");
-    al::tryGetArg(&mIsHeavyGravity, initInfo, "IsHeavyGravity");
+    al::tryGetArg(&mClippingTime, info, "ClippingTime");
+    al::tryGetArg(&mIsHeavyGravity, info, "IsHeavyGravity");
     al::listenStageSwitchOn(this, "SwitchReset", Nokonoko2DFunctor(this, &Nokonoko2D::reset));
 }
 

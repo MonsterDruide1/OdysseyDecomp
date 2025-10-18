@@ -68,20 +68,20 @@ const sead::Vector3f sAppearAboveVelocity(0.0f, 25.0f, 0.0f);
 
 Coin::Coin(const char* name, bool isDemo) : al::LiveActor(name), mIsDemo(isDemo) {}
 
-void Coin::init(const al::ActorInitInfo& initInfo) {
+void Coin::init(const al::ActorInitInfo& info) {
     const char* modelName = "Coin";
-    if (al::isPlaced(initInfo)) {
+    if (al::isPlaced(info)) {
         mIsPlaced = true;
-        alPlacementFunction::tryGetModelName(&modelName, initInfo);
+        alPlacementFunction::tryGetModelName(&modelName, info);
     } else {
         mIsPlaced = false;
     }
 
     const char* suffix = mIsDemo ? "MoveDemo" : nullptr;
-    al::initActorWithArchiveName(this, initInfo, modelName, suffix);
+    al::initActorWithArchiveName(this, info, modelName, suffix);
 
     bool isConnectToCollision = false;
-    al::tryGetArg(&isConnectToCollision, initInfo, "IsConnectToCollision");
+    al::tryGetArg(&isConnectToCollision, info, "IsConnectToCollision");
     if (!isConnectToCollision)
         al::initNerve(this, &NrvCoin.Wait, 1);
 
@@ -93,24 +93,24 @@ void Coin::init(const al::ActorInitInfo& initInfo) {
     mRotateCalculator = new CoinRotateCalculator(this);
 
     mStartingQuat.set(al::getQuat(this));
-    al::tryAddDisplayOffset(this, initInfo);
-    al::tryGetDisplayOffset(&mDisplayOffset, initInfo);
+    al::tryAddDisplayOffset(this, info);
+    al::tryGetDisplayOffset(&mDisplayOffset, info);
     mMtxConnector = al::createMtxConnector(this);
 
-    mShadowSize = rs::setShadowDropLength(this, initInfo, "本体");
+    mShadowSize = rs::setShadowDropLength(this, info, "本体");
     al::expandClippingRadiusByShadowLength(this, nullptr, mShadowSize);
-    mWaterSurfaceShadow = rs::tryCreateWaterSurfaceCoinShadow(initInfo);
+    mWaterSurfaceShadow = rs::tryCreateWaterSurfaceCoinShadow(info);
 
-    if (mMtxConnector != nullptr)
-        al::tryGetArg(&mIsConnectToCollisionBack, initInfo, "IsConnectToCollisionBack");
+    if (mMtxConnector)
+        al::tryGetArg(&mIsConnectToCollisionBack, info, "IsConnectToCollisionBack");
 
     if (al::trySyncStageSwitchAppear(this))
         al::setNerve(this, &NrvCoin.Appear);
 
     bool isCoinSave = false;
-    al::tryGetArg(&isCoinSave, initInfo, "IsCoinSave");
+    al::tryGetArg(&isCoinSave, info, "IsCoinSave");
     if (isCoinSave) {
-        mSaveObjInfo = rs::createSaveObjInfoNoWriteSaveDataInSameWorldResetMiniGame(initInfo);
+        mSaveObjInfo = rs::createSaveObjInfoNoWriteSaveDataInSameWorldResetMiniGame(info);
         if (rs::isOnSaveObjInfo(mSaveObjInfo)) {
             kill();
             return;
@@ -121,11 +121,11 @@ void Coin::init(const al::ActorInitInfo& initInfo) {
     al::initNerveState(this, mStateAppearRotate, &NrvCoin.AppearCoinLead, "誘導コイン出現");
     mPoseTrans = al::getTrans(this);
     mPoseQuat = al::getQuat(this);
-    al::registActorToDemoInfo(this, initInfo);
+    al::registActorToDemoInfo(this, info);
 }
 
 void Coin::initAfterPlacement() {
-    if (mMtxConnector != nullptr) {
+    if (mMtxConnector) {
         if (!mIsConnectToCollisionBack) {
             al::attachMtxConnectorToCollision(mMtxConnector, this, 50.0f, 400.0f);
         } else {
@@ -243,7 +243,7 @@ bool Coin::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::Hi
 }
 
 void Coin::tryCreateMtxConnector() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector)
         mMtxConnector = al::createMtxConnector(this);
 }
 
@@ -470,7 +470,7 @@ void Coin::appearBlow(const sead::Vector3f& velocity, s32 timeLimit) {
     al::validateHitSensors(this);
     al::showModelIfHide(this);
 
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::disconnectMtxConnector(mMtxConnector);
 
     rotate();
@@ -483,7 +483,7 @@ void Coin::rotate() {
         return;
     }
 
-    if (mMtxConnector != nullptr && al::isMtxConnectorConnecting(mMtxConnector) &&
+    if (mMtxConnector && al::isMtxConnectorConnecting(mMtxConnector) &&
         (al::isNerve(this, &NrvCoin.Appear) || al::isNerve(this, &NrvCoin.WaitConnectMtx))) {
         al::connectPoseQT(this, mMtxConnector, mPoseQuat, mPoseTrans);
         al::getTransPtr(this)->add(mChameleonOffset);
@@ -682,7 +682,7 @@ void Coin::exePopUp() {
 
     if (al::getVelocity(this).y < 0.0f && al::isCollidedGround(this)) {
         if (al::calcSpeed(this) < 15.0f) {
-            if (mMtxConnector != nullptr) {
+            if (mMtxConnector) {
                 al::disconnectMtxConnector(mMtxConnector);
                 mPoseTrans = al::getTrans(this);
                 al::attachMtxConnectorToCollision(mMtxConnector, this, false);
@@ -766,12 +766,12 @@ void Coin::exeGot() {
 
         al::onStageSwitch(this, "SwitchGetOn");
         alPadRumbleFunction::startPadRumble(this, "コッ（最小）", 1000.0f, 5000.0f);
-        if (mWaterSurfaceShadow != nullptr)
+        if (mWaterSurfaceShadow)
             mWaterSurfaceShadow->disappearShadow();
     }
 
     if (al::isActionEnd(this)) {
-        if (mSaveObjInfo != nullptr)
+        if (mSaveObjInfo)
             rs::onSaveObjInfo(mSaveObjInfo);
         kill();
     }

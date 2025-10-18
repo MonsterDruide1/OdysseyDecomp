@@ -20,7 +20,7 @@ class HelpAmiiboCoinCollect : public HelpAmiiboExecutor {
 public:
     HelpAmiiboCoinCollect(HelpAmiiboDirector* director, al::LiveActor* amiiboActor);
 
-    void initAfterPlacement(const al::ActorInitInfo& actorInitInfo) override;
+    void initAfterPlacement(const al::ActorInitInfo& initInfo) override;
     bool isTriggerTouch(const al::NfpInfo& nfpInfo) const override;
     bool isEnableUse() override;
     bool execute() override;

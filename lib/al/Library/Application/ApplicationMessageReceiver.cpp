@@ -3,7 +3,7 @@
 #include <nn/am.h>
 
 namespace al {
-ApplicationMessageReceiver::ApplicationMessageReceiver() {}
+ApplicationMessageReceiver::ApplicationMessageReceiver() = default;
 
 nn::oe::OperationMode ApplicationMessageReceiver::getOperationMode() const {
     nn::oe::OperationMode operationMode = nn::oe::GetOperationMode();

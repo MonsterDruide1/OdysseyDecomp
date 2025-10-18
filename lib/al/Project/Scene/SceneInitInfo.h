@@ -9,7 +9,7 @@ class GameDataHolderBase;
 struct SceneInitInfo {
     struct GameSystemInfo* gameSysInfo;
     GameDataHolderBase* gameDataHolder;
-    char field_0x10[8];
+    char field_10[8];
     char* initStageName;
     u32 scenarioNo;
     char filler[0x218];

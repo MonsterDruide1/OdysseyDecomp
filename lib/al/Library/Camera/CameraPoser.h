@@ -117,7 +117,7 @@ public:
     static_assert(sizeof(OrthoProjectionParam) == 0xC);
 
     CameraPoser(const char* name);
-    virtual AreaObjDirector* getAreaObjDirector() const override;
+    AreaObjDirector* getAreaObjDirector() const override;
 
     virtual void init() {}
 
@@ -145,15 +145,15 @@ public:
 
     virtual void endSnapShotMode() {}
 
-    virtual const char* getName() const override { return mPoserName; }
+    const char* getName() const override { return mPoserName; }
 
-    virtual CollisionDirector* getCollisionDirector() const override;
+    CollisionDirector* getCollisionDirector() const override;
 
-    virtual NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+    NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
-    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
-    virtual RailRider* getRailRider() const override;
+    RailRider* getRailRider() const override;
 
     virtual void load(const ByamlIter& iter);
     virtual void movement();  // TODO: implementation missing

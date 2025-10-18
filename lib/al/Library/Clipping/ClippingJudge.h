@@ -13,7 +13,8 @@ class ClippingFarAreaObserver;
 // TODO: rename `idx`, `idy` and `idz` across all functions
 class ClippingJudge {
 public:
-    ClippingJudge(const ClippingFarAreaObserver*, const SceneCameraInfo*);
+    ClippingJudge(const ClippingFarAreaObserver* clippingFarAreaObserver,
+                  const SceneCameraInfo* cameraInfo);
 
     void update();
     bool isJudgedToClipFrustumUnUseFarLevel(const sead::Vector3f& pos, f32 idx, f32 idy) const;

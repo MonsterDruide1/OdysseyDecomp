@@ -26,8 +26,8 @@ NERVES_MAKE_STRUCT(CoinStack, Wait, Fall, Float);
 
 CoinStack::CoinStack(const char* name) : al::LiveActor(name) {}
 
-void CoinStack::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "CoinStack", nullptr);
+void CoinStack::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "CoinStack", nullptr);
     al::initNerve(this, &NrvCoinStack.Wait, 0);
     al::setClippingNearDistance(this, -1.0f);
     makeActorDead();
@@ -100,7 +100,7 @@ void CoinStack::signalFall(u32 delay, f32 radius) {
     mClippingRadius = radius;
     mClippingPos.y += fallDistance * -0.5f;
 
-    if (mStackAbove != nullptr)
+    if (mStackAbove)
         mStackAbove->signalFall(delay + 1, radius);
 
     if (!al::isNerve(this, &NrvCoinStack.Float) && !al::isNerve(this, &NrvCoinStack.Fall)) {
@@ -121,7 +121,7 @@ void CoinStack::postInit(CoinStackGroup* coinStackGroup, const sead::Vector3f& t
     al::setTrans(this, transY);
     mLandHeight = transY.y;
     mTransY = transY.y;
-    if (mStackBelow != nullptr)
+    if (mStackBelow)
         mStackBelow->setAbove(this);
 }
 
@@ -147,7 +147,7 @@ void CoinStack::exeFall() {
         return;
     }
 
-    if (mStackBelow != nullptr && mTransY - mStackBelow->getTransY() < *mExternalFallDistance)
+    if (mStackBelow && mTransY - mStackBelow->getTransY() < *mExternalFallDistance)
         al::setNerve(this, &Land);
     else
         al::setTransY(this, mTransY);
@@ -160,7 +160,7 @@ void CoinStack::exeLand() {
     }
 
     if (al::isActionEnd(this)) {
-        if (mStackAbove == nullptr)
+        if (!mStackAbove)
             mCoinStackGroup->validateClipping();
 
         al::setClippingInfo(this, mClippingRadius, &mClippingPos);
@@ -180,10 +180,10 @@ void CoinStack::exeCollected() {
     GameDataFunction::addCoin(this, 5);
     mClippingRadius = mCoinStackGroup->setStackAsCollected(this);
 
-    if (mStackBelow != nullptr)
+    if (mStackBelow)
         mStackBelow->setAbove(mStackAbove);
 
-    if (mStackAbove != nullptr) {
+    if (mStackAbove) {
         mStackAbove->setBelow(mStackBelow);
         mStackAbove->signalFall(0, mClippingRadius);
     }

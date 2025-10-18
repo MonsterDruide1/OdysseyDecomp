@@ -55,7 +55,7 @@ bool isNearAngleDegree(const sead::Vector3f& a, const sead::Vector3f& b, f32 tol
 bool isNearAngleRadianHV(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, f32,
                          f32);
 bool tryNormalizeOrZero(sead::Vector3f* out, const sead::Vector3f& vec);
-bool tryNormalizeOrZero(sead::Vector3f* out);
+bool tryNormalizeOrZero(sead::Vector3f* vec);
 // TODO: rename parameters
 bool isNearAngleDegreeHV(const sead::Vector3f& a, const sead::Vector3f& b, const sead::Vector3f& c,
                          f32 d, f32 e);
@@ -167,7 +167,7 @@ s32 findMaxFromArray(const s32*, s32);
 void separateMinMax(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&);
 s32 findMinFromArray(const s32*, s32);
 f32 getRandom();
-f32 getRandom(f32 max);
+f32 getRandom(f32 factor);
 f32 getRandom(f32 min, f32 max);
 s32 getRandom(s32 factor);
 s32 getRandom(s32 min, s32 max);

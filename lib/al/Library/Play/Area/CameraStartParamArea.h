@@ -7,7 +7,7 @@ class CameraStartParamArea : public AreaObj {
 public:
     CameraStartParamArea(const char* name);
 
-    void init(const AreaInitInfo& areaInitInfo) override;
+    void init(const AreaInitInfo& info) override;
 
     void appear();
     void kill();

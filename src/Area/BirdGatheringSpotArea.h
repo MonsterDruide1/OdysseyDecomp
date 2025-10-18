@@ -20,7 +20,7 @@ public:
 
     BirdGatheringSpotArea(const char* name);
 
-    void init(const al::AreaInitInfo& initInfo) override;
+    void init(const al::AreaInitInfo& info) override;
 
     void calcRandomGroundTrans(sead::Vector3f* trans) const;
     f32 getSightDistance() const;

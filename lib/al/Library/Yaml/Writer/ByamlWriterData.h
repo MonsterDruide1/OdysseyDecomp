@@ -21,7 +21,7 @@ public:
 
     virtual bool isContainer() const { return false; }
 
-    virtual void write(sead::WriteStream*) const;
+    virtual void write(sead::WriteStream* stream) const;
 
     virtual void print(s32 recursionDepth) const {}
 
@@ -104,7 +104,7 @@ public:
 
     virtual u32 calcBigDataSize() const { return 8; }
 
-    virtual void writeBigData(sead::WriteStream*) const {}
+    virtual void writeBigData(sead::WriteStream* stream) const {}
 
     void setOffset(s32 offset) { mOffset = offset; }
 
@@ -157,51 +157,51 @@ class ByamlWriterContainer : public ByamlWriterData {
 public:
     bool isContainer() const override { return true; }
 
-    virtual void addBool(const char*, bool) {}
+    virtual void addBool(const char* key, bool value) {}
 
-    virtual void addInt(const char*, s32) {}
+    virtual void addInt(const char* key, s32 value) {}
 
-    virtual void addUInt(const char*, u32) {}
+    virtual void addUInt(const char* key, u32 value) {}
 
-    virtual void addFloat(const char*, f32) {}
+    virtual void addFloat(const char* key, f32 value) {}
 
-    virtual void addInt64(const char*, s64, ByamlWriterBigDataList*) {}
+    virtual void addInt64(const char* key, s64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addUInt64(const char*, u64, ByamlWriterBigDataList*) {}
+    virtual void addUInt64(const char* key, u64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addDouble(const char*, f64, ByamlWriterBigDataList*) {}
+    virtual void addDouble(const char* key, f64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addString(const char*, const char*) {}
+    virtual void addString(const char* key, const char* value) {}
 
-    virtual void addHash(const char*, ByamlWriterHash*) {}
+    virtual void addHash(const char* key, ByamlWriterHash* value) {}
 
-    virtual void addArray(const char*, ByamlWriterArray*) {}
+    virtual void addArray(const char* key, ByamlWriterArray* value) {}
 
-    virtual void addNull(const char*) {}
+    virtual void addNull(const char* key) {}
 
-    virtual void addBool(bool) {}
+    virtual void addBool(bool value) {}
 
-    virtual void addInt(s32) {}
+    virtual void addInt(s32 value) {}
 
-    virtual void addUInt(u32) {}
+    virtual void addUInt(u32 value) {}
 
-    virtual void addFloat(f32) {}
+    virtual void addFloat(f32 value) {}
 
-    virtual void addInt64(s64, ByamlWriterBigDataList*) {}
+    virtual void addInt64(s64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addUInt64(u64, ByamlWriterBigDataList*) {}
+    virtual void addUInt64(u64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addDouble(f64, ByamlWriterBigDataList*) {}
+    virtual void addDouble(f64 value, ByamlWriterBigDataList* list) {}
 
-    virtual void addString(const char*) {}
+    virtual void addString(const char* value) {}
 
-    virtual void addHash(ByamlWriterHash*) {}
+    virtual void addHash(ByamlWriterHash* hash) {}
 
-    virtual void addArray(ByamlWriterArray*) {}
+    virtual void addArray(ByamlWriterArray* array) {}
 
     virtual void addNull() {}
 
-    virtual void writeContainer(sead::WriteStream*) const {}
+    virtual void writeContainer(sead::WriteStream* stream) const {}
 
     virtual bool isHash() const { return false; }
 
@@ -291,7 +291,7 @@ public:
     void addNull(const char* key) override;
 
     u8 getTypeCode() const override;
-    void writeContainer(sead::WriteStream*) const override;  // TODO implementation missing
+    void writeContainer(sead::WriteStream* stream) const override;  // TODO implementation missing
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;  // TODO implementation missing
 
