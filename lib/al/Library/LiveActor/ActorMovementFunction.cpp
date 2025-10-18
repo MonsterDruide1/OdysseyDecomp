@@ -777,12 +777,12 @@ bool reboundVelocityFromCollision(LiveActor* actor, f32 reboundStrength, f32 reb
 
 bool reboundVelocityFromTriangles(LiveActor* actor, f32 reboundStrength, f32 reboundMin) {
     Collider* collider = getActorCollider(actor);
-    s32 _4c = collider->get_4c();
+    s32 planeCount = collider->getPlaneCount();
     if (collider->get_48() == 0)
         return false;
 
     bool isRebound = false;
-    for (s32 i = 0; i != _4c; i++) {
+    for (s32 i = 0; i != planeCount; i++) {
         sead::Vector3f normal = collider->getPlane(i)->getNormal(0);
         f32 dot = normal.dot(getVelocity(actor));
         if (reboundStrength < 0.0) {
