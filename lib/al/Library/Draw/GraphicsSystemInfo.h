@@ -146,7 +146,7 @@ public:
     void cancelLerp();
     void updateGraphics();
     void updatePartsGraphics(const GraphicsUpdateInfo&);
-    void preDrawGraphics(SceneCameraInfo*);
+    void preDrawGraphics(const SceneCameraInfo*);
     void calcGpuPartsGraphics(const GraphicsCalcGpuInfo&);
     void updateViewGpu(s32, const sead::Camera*, const Projection*);
     void updateViewVolume(const sead::Matrix34f&, const sead::Matrix44f&);
