@@ -168,7 +168,7 @@ def create_build_dir(ver, cmake_backend):
     build_dir = get_build_dir()
     if build_dir.is_dir():
         print(">>> build directory already exists: nothing to do")
-        #return
+        return
 
     subprocess.check_call(
         ['cmake', '-G', cmake_backend, f'-DCMAKE_CXX_FLAGS=-D{ver.name}', '-DCMAKE_BUILD_TYPE=RelWithDebInfo', '-DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake', '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache', '-B', str(build_dir)])
