@@ -47,6 +47,8 @@ add_compile_options(-fPIC)
 # Helps with matching as this causes Clang to emit debug type info even for dynamic classes
 # with undefined vtables.
 add_compile_options(-fstandalone-debug)
+# avoids reading system-wide headers on later clang versions (for example linter's libclang)
+add_compile_options(--gcc-toolchain=/nonexistant)
 
 add_definitions(-D SWITCH)
 add_definitions(-D NNSDK)
