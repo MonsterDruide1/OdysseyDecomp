@@ -49,6 +49,11 @@ add_compile_options(-fPIC)
 add_compile_options(-fstandalone-debug)
 # avoids reading system-wide headers on later clang versions (for example linter's libclang)
 add_compile_options(--gcc-toolchain=/nonexistant)
+# after all other includes, use fallback clang headers
+# => applied only when building this project normally, using system-wide (lib-)clang will use its own
+add_compile_options(-idirafter ${CMAKE_CURRENT_LIST_DIR}/clang-include)
+# custom libc++, provided in combination with clang-3.9.1
+include_directories(SYSTEM ${CMAKE_CURRENT_LIST_DIR}/libcxx-include)
 
 add_definitions(-D SWITCH)
 add_definitions(-D NNSDK)
@@ -58,5 +63,3 @@ add_link_options(-stdlib=libc++ -nostdlib)
 add_link_options(-fPIC -Wl,-Bsymbolic-functions -shared)
 # Use lld for performance reasons (and because we don't want a dependency on GNU tools)
 add_link_options(-fuse-ld=${ODYSSEY_CLANG_LLD})
-
-include_directories(SYSTEM ${CMAKE_CURRENT_LIST_DIR}/include)
