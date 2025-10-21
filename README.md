@@ -85,7 +85,7 @@ Additionally, you'll also need:
       follow [the instructions on the wiki](https://zeldamods.org/wiki/Help:Dumping_games#Dumping_binaries_.28executable_files.29).
     * You do not need to dump the entire game (RomFS + ExeFS + DLC). Just dumping the 1.0 ExeFS is sufficient.
 
-3. Run `tools/setup.py [path to the NSO]`
+3. If you are using Nix, run `nix run '.#setup' [path to the NSO]`. For all others, run `tools/setup.py [path to the NSO]`
     * This will:
         * install tools/check to check for differences in decompiled code
         * convert the executable if necessary
