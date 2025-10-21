@@ -239,6 +239,7 @@ const sead::Vector3f& HitInfo::tryGetHitEdgeNormal() const {
 
 void SphereHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const {
     // TODO add proper names here, once the missing names for _70 and _80 in HitInfo are found
+    auto* hitInfo = this;
     if (hitInfo->isCollisionAtFace()) {
         calcFixVectorNormal(a1, a2);
         return;
@@ -261,6 +262,7 @@ void SphereHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const 
 }
 
 void SphereHitInfo::calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const {
+    auto* hitInfo = this;
     f32 unk = hitInfo->_70;
     a1->x = hitInfo->triangle.getFaceNormal().x * unk;
     a1->y = hitInfo->triangle.getFaceNormal().y * unk;
