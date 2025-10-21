@@ -178,24 +178,24 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
     f32 minBY = 0.0f;
     f32 minBZ = 0.0f;
 
-    for (u32 i2 = a6; i2 < mStoredPlaneNum; i2++) {
-        const sead::Vector3f& normal = a2[i2].triangle.getFaceNormal();
+    for (u32 i = a6; i < mStoredPlaneNum; i++) {
+        const sead::Vector3f& normal = a2[i].triangle.getFaceNormal();
         sead::Vector3f a;
         sead::Vector3f b;
         if (al::isFloorPolygon(normal, *mActorGravity))
             if (!flags1 || (flags2 & 0x10) != 0)
-                a2[i2].calcFixVectorNormal(&a, &b);
+                a2[i].calcFixVectorNormal(&a, &b);
             else
-                a2[i2].calcFixVector(&a, &b);
+                a2[i].calcFixVector(&a, &b);
         else if (al::isWallPolygon(normal, *mActorGravity))
             if ((flags2 & 0x20) == 0)
-                a2[i2].calcFixVector(&a, &b);
+                a2[i].calcFixVector(&a, &b);
             else
-                a2[i2].calcFixVectorNormal(&a, &b);
+                a2[i].calcFixVectorNormal(&a, &b);
         else if ((flags2 & 0x40) == 0)
-            a2[i2].calcFixVector(&a, &b);
+            a2[i].calcFixVector(&a, &b);
         else
-            a2[i2].calcFixVectorNormal(&a, &b);
+            a2[i].calcFixVectorNormal(&a, &b);
 
         if (maxAX < a.x)
             maxAX = a.x;
@@ -229,41 +229,43 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
                 minBZ = b.z;
         }
 
-        if ((flags2 & 2) != 0 && a2[i2].triangle.isHostMoved()) {
-            sead::Vector3f collisionMovingReaction = a2[i2].collisionMovingReaction;
-            if (a.dot(collisionMovingReaction) >= 0.0f) {
-                if (maxAX < collisionMovingReaction.x)
-                    maxAX = collisionMovingReaction.x;
-                else if (collisionMovingReaction.x < minAX)
-                    minAX = collisionMovingReaction.x;
+        if ((flags2 & 2) == 0 || !a2[i].triangle.isHostMoved())
+            continue;
 
-                if (maxAY < collisionMovingReaction.y)
-                    maxAY = collisionMovingReaction.y;
-                else if (collisionMovingReaction.y < minAY)
-                    minAY = collisionMovingReaction.y;
+        sead::Vector3f collisionMovingReaction = a2[i].collisionMovingReaction;
+        if (a.dot(collisionMovingReaction) < 0.0f)
+            continue;
 
-                if (maxAZ < collisionMovingReaction.z)
-                    maxAZ = collisionMovingReaction.z;
-                else if (collisionMovingReaction.z < minAZ)
-                    minAZ = collisionMovingReaction.z;
+        if (maxAX < collisionMovingReaction.x)
+            maxAX = collisionMovingReaction.x;
+        else if (collisionMovingReaction.x < minAX)
+            minAX = collisionMovingReaction.x;
 
-                if (a4) {
-                    if (maxBX < collisionMovingReaction.x)
-                        maxBX = collisionMovingReaction.x;
-                    else if (collisionMovingReaction.x < minBX)
-                        minBX = collisionMovingReaction.x;
+        if (maxAY < collisionMovingReaction.y)
+            maxAY = collisionMovingReaction.y;
+        else if (collisionMovingReaction.y < minAY)
+            minAY = collisionMovingReaction.y;
 
-                    if (maxBY < collisionMovingReaction.y)
-                        maxBY = collisionMovingReaction.y;
-                    else if (collisionMovingReaction.y < minBY)
-                        minBY = collisionMovingReaction.y;
+        if (maxAZ < collisionMovingReaction.z)
+            maxAZ = collisionMovingReaction.z;
+        else if (collisionMovingReaction.z < minAZ)
+            minAZ = collisionMovingReaction.z;
 
-                    if (maxBZ < collisionMovingReaction.z)
-                        maxBZ = collisionMovingReaction.z;
-                    else if (collisionMovingReaction.z < minBZ)
-                        minBZ = collisionMovingReaction.z;
-                }
-            }
+        if (a4) {
+            if (maxBX < collisionMovingReaction.x)
+                maxBX = collisionMovingReaction.x;
+            else if (collisionMovingReaction.x < minBX)
+                minBX = collisionMovingReaction.x;
+
+            if (maxBY < collisionMovingReaction.y)
+                maxBY = collisionMovingReaction.y;
+            else if (collisionMovingReaction.y < minBY)
+                minBY = collisionMovingReaction.y;
+
+            if (maxBZ < collisionMovingReaction.z)
+                maxBZ = collisionMovingReaction.z;
+            else if (!(collisionMovingReaction.z < minBZ))  // FIXME: wrong way around?
+                minBZ = collisionMovingReaction.z;
         }
     }
 
