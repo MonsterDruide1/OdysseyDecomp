@@ -18,8 +18,7 @@ Collider::Collider(CollisionDirector* director, const sead::Matrix34f* actorBase
     if (mPlaneNum != 0) {
         mPlanes = new SphereHitInfo[mPlaneNum];
         __asm("");
-    }
-    else
+    } else
         mPlanes = nullptr;
     clear();
     flags2 = (flags2 & 0x80) | 3;
@@ -151,7 +150,7 @@ u32 Collider::storeCurrentHitInfo(SphereHitInfo* buffer, u32 bufferSize) {
 // TODO: cleanup
 void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f* a3,
                                            sead::Vector3f* a4, bool a5, u32 a6) {
-    flags2 &= 0x8Fu;
+    flags2 &= ~(0x10 | 0x20 | 0x40);
     for (u32 i = a6; i < mStoredPlaneNum; i++) {
         const sead::Vector3f& normal = a2[i].triangle.getFaceNormal();
         if (al::isFloorPolygon(normal, *mActorGravity)) {
@@ -166,167 +165,115 @@ void al::Collider::obtainMomentFixReaction(al::SphereHitInfo* a2, sead::Vector3f
         }
     }
 
-    float maxVecX;
-    float maxVecY;
-    float maxVecZ;
-    float minVecX;
-    float minVecY;
-    float minVecZ;
-    float maxNormX;
-    float maxNormY;
-    float maxNormZ;
-    float minNormX;
-    float minNormY;
-    float minNormZ;
-    al::SphereHitInfo* v35;
-    sead::Vector3f fixNormal;
-    sead::Vector3f fixVector;
-
-    maxVecX = 0.0f;
-    maxVecY = 0.0f;
-    maxVecZ = 0.0f;
-    minVecX = 0.0f;
-    minVecY = 0.0f;
-    minVecZ = 0.0f;
-    maxNormX = 0.0f;
-    maxNormY = 0.0f;
-    maxNormZ = 0.0f;
-    minNormX = 0.0f;
-    minNormY = 0.0f;
-    minNormZ = 0.0f;
+    f32 maxAX = 0.0f;
+    f32 maxAY = 0.0f;
+    f32 maxAZ = 0.0f;
+    f32 minAX = 0.0f;
+    f32 minAY = 0.0f;
+    f32 minAZ = 0.0f;
+    f32 maxBX = 0.0f;
+    f32 maxBY = 0.0f;
+    f32 maxBZ = 0.0f;
+    f32 minBX = 0.0f;
+    f32 minBY = 0.0f;
+    f32 minBZ = 0.0f;
 
     for (u32 i2 = a6; i2 < mStoredPlaneNum; i2++) {
-        for (; 1;) {
-            const sead::Vector3f& normal = a2[i2].triangle.getFaceNormal();
-            if (al::isFloorPolygon(normal, *mActorGravity))
-                if (!flags1 || (flags2 & 0x10) != 0)
-                    a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
-                else
-                    a2[i2].calcFixVector(&fixVector, &fixNormal);
-            else if (al::isWallPolygon(normal, *mActorGravity))
-                if ((flags2 & 0x20) == 0)
-                    a2[i2].calcFixVector(&fixVector, &fixNormal);
-                else
-                    a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
-            else if ((flags2 & 0x40) == 0)
-                a2[i2].calcFixVector(&fixVector, &fixNormal);
+        const sead::Vector3f& normal = a2[i2].triangle.getFaceNormal();
+        sead::Vector3f a;
+        sead::Vector3f b;
+        if (al::isFloorPolygon(normal, *mActorGravity))
+            if (!flags1 || (flags2 & 0x10) != 0)
+                a2[i2].calcFixVectorNormal(&a, &b);
             else
-                a2[i2].calcFixVectorNormal(&fixVector, &fixNormal);
+                a2[i2].calcFixVector(&a, &b);
+        else if (al::isWallPolygon(normal, *mActorGravity))
+            if ((flags2 & 0x20) == 0)
+                a2[i2].calcFixVector(&a, &b);
+            else
+                a2[i2].calcFixVectorNormal(&a, &b);
+        else if ((flags2 & 0x40) == 0)
+            a2[i2].calcFixVector(&a, &b);
+        else
+            a2[i2].calcFixVectorNormal(&a, &b);
 
-            if (maxVecX < fixVector.x) {
-                maxVecX = fixVector.x;
-            } else if (fixVector.x < minVecX) {
-                minVecX = fixVector.x;
-            }
+        if (maxAX < a.x)
+            maxAX = a.x;
+        else if (a.x < minAX)
+            minAX = a.x;
 
-            if (maxVecY < fixVector.y) {
-                maxVecY = fixVector.y;
-            } else if (fixVector.y < minVecY) {
-                minVecY = fixVector.y;
-            }
+        if (maxAY < a.y)
+            maxAY = a.y;
+        else if (a.y < minAY)
+            minAY = a.y;
 
-            if (maxVecZ < fixVector.z) {
-                maxVecZ = fixVector.z;
-            } else if (fixVector.z < minVecZ) {
-                minVecZ = fixVector.z;
-            }
+        if (maxAZ < a.z)
+            maxAZ = a.z;
+        else if (a.z < minAZ)
+            minAZ = a.z;
 
-            f32 iX = minNormX;
-            f32 iY = minNormY;
-            f32 iZ = minNormZ;
+        if (a4) {
+            if (maxBX < b.x)
+                maxBX = b.x;
+            else if (b.x < minBX)
+                minBX = b.x;
 
-            if (a4) {
-                if (maxNormX < fixNormal.x) {
-                    maxNormX = fixNormal.x;
-                } else if (fixNormal.x < iX) {
-                    iX = fixNormal.x;
+            if (maxBY < b.y)
+                maxBY = b.y;
+            else if (b.y < minBY)
+                minBY = b.y;
+
+            if (maxBZ < b.z)
+                maxBZ = b.z;
+            else if (b.z < minBZ)
+                minBZ = b.z;
+        }
+
+        if ((flags2 & 2) != 0 && a2[i2].triangle.isHostMoved()) {
+            sead::Vector3f collisionMovingReaction = a2[i2].collisionMovingReaction;
+            if (a.dot(collisionMovingReaction) >= 0.0f) {
+                if (maxAX < collisionMovingReaction.x)
+                    maxAX = collisionMovingReaction.x;
+                else if (collisionMovingReaction.x < minAX)
+                    minAX = collisionMovingReaction.x;
+
+                if (maxAY < collisionMovingReaction.y)
+                    maxAY = collisionMovingReaction.y;
+                else if (collisionMovingReaction.y < minAY)
+                    minAY = collisionMovingReaction.y;
+
+                if (maxAZ < collisionMovingReaction.z)
+                    maxAZ = collisionMovingReaction.z;
+                else if (collisionMovingReaction.z < minAZ)
+                    minAZ = collisionMovingReaction.z;
+
+                if (a4) {
+                    if (maxBX < collisionMovingReaction.x)
+                        maxBX = collisionMovingReaction.x;
+                    else if (collisionMovingReaction.x < minBX)
+                        minBX = collisionMovingReaction.x;
+
+                    if (maxBY < collisionMovingReaction.y)
+                        maxBY = collisionMovingReaction.y;
+                    else if (collisionMovingReaction.y < minBY)
+                        minBY = collisionMovingReaction.y;
+
+                    if (maxBZ < collisionMovingReaction.z)
+                        maxBZ = collisionMovingReaction.z;
+                    else if (collisionMovingReaction.z < minBZ)
+                        minBZ = collisionMovingReaction.z;
                 }
-
-                if (maxNormY < fixNormal.y) {
-                    maxNormY = fixNormal.y;
-                } else if (fixNormal.y < iY) {
-                    iY = fixNormal.y;
-                }
-
-                if (maxNormZ < fixNormal.z) {
-                    maxNormZ = fixNormal.z;
-                } else if (fixNormal.z < iZ) {
-                    iZ = fixNormal.z;
-                }
             }
-
-            if ((flags2 & 2) == 0)
-                goto LABEL_80;
-
-            if (!a2[i2].triangle.isHostMoved())
-                goto LABEL_80;
-
-            minNormX = a2[i2].collisionMovingReaction.x;
-            minNormY = a2[i2].collisionMovingReaction.y;
-            minNormZ = a2[i2].collisionMovingReaction.z;
-            if ((fixVector.x * minNormX) + (fixVector.y * minNormY) + (fixVector.z * minNormZ) < 0.0f)
-                goto LABEL_80;
-
-            if (maxVecX < minNormX)
-                maxVecX = minNormX;
-            else if (minNormX < minVecX)
-                minVecX = minNormX;
-
-            if (maxVecY < minNormY)
-                maxVecY = minNormY;
-            else if (minNormY < minVecY)
-                minVecY = minNormY;
-
-            if (maxVecZ < minNormZ)
-                maxVecZ = minNormZ;
-            else if (minNormZ < minVecZ)
-                minVecZ = minNormZ;
-
-            if (a4) {
-                if (maxNormX < minNormX)
-                    maxNormX = minNormX;
-                else if (minNormX < iX)
-                    goto end3X;
-
-                minNormX = iX;
-
-            end3X:
-                if (maxNormY < minNormY)
-                    maxNormY = minNormY;
-                else if (minNormY < iY)
-                    goto end3Y;
-
-                minNormY = iY;
-
-            end3Y:
-                if (maxNormZ < minNormZ)
-                    maxNormZ = minNormZ;
-                else if (minNormZ < iZ)
-                    goto end3Z;
-                minNormZ = iZ;
-
-            end3Z:;
-            } else {
-            LABEL_80:;
-                minNormX = iX;
-                minNormY = iY;
-                minNormZ = iZ;
-            }
-
-            i2++;
-            if (i2 >= mStoredPlaneNum)
-                goto loopBreak;
         }
     }
 
-loopBreak:
-    a3->x = maxVecX + minVecX;
-    a3->y = maxVecY + minVecY;
-    a3->z = maxVecZ + minVecZ;
+    a3->x = maxAX + minAX;
+    a3->y = maxAY + minAY;
+    a3->z = maxAZ + minAZ;
     if (a4) {
-        a4->x = maxNormX + minNormX;
-        a4->y = maxNormY + minNormY;
-        a4->z = maxNormZ + minNormZ;
+        a4->x = maxBX + minBX;
+        a4->y = maxBY + minBY;
+        a4->z = maxBZ + minBZ;
     }
 }
 
@@ -446,8 +393,9 @@ sead::Vector3f al::Collider::collide(const sead::Vector3f& velocity) {
 }
 
 // TODO: cleanup
-bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3f* trans, f32* currentRadius,
-                          const sead::Vector3f& moveDist, al::SphereHitInfo* buffer, u32 bufferSize) {
+bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3f* trans,
+                          f32* currentRadius, const sead::Vector3f& moveDist,
+                          al::SphereHitInfo* buffer, u32 bufferSize) {
     sead::Vector3f v71415 = {0.0f, 0.0f, 0.0f};
     const al::TriangleFilterBase* triangleFilter = mTriangleFilter;
     const al::CollisionPartsFilterBase* collisionPartsFilter = mCollisionPartsFilter;
@@ -464,7 +412,7 @@ bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3f* 
                 this, v71415 + pos, size, moveDist, collisionPartsFilter, triangleFilter);
         } else {
             hits = alCollisionUtil::checkStrikeSphere(this, pos, size, collisionPartsFilter,
-                                                     triangleFilter);
+                                                      triangleFilter);
         }
 
         if (hits != 0) {
@@ -473,9 +421,8 @@ bool Collider::preCollide(al::SphereInterpolator* interpolator, sead::Vector3f* 
             obtainMomentFixReaction(buffer, &a2a, nullptr, false, totalStored);
             v71415 += a2a;
             foundHit = true;
-            if (interpolator->getCurrentStep() >= 1.0f) {
+            if (interpolator->getCurrentStep() >= 1.0f)
                 break;
-            }
 
             if (flags2 & 0x8)
                 totalStored += stored;
