@@ -10,7 +10,7 @@ void CollidedShapeResult::setArrowHitInfo(const al::ArrowHitInfo& arrowHitInfo) 
 }
 
 void CollidedShapeResult::setSphereHitInfo(const al::SphereHitInfo& sphereHitInfo) {
-    *mSphereHitInfo.hitInfo = *sphereHitInfo.hitInfo;
+    mSphereHitInfo = sphereHitInfo;
 }
 
 void CollidedShapeResult::setDiskHitInfo(const al::DiskHitInfo& diskHitInfo) {
