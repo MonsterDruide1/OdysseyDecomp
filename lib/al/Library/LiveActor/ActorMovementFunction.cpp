@@ -2,6 +2,7 @@
 
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Audio/System/AudioKeeper.h"
+#include "Library/Collision/Angle.h"
 #include "Library/Collision/Collider.h"
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
 #include "Library/Collision/CollisionPartsTriangle.h"
@@ -783,7 +784,7 @@ bool reboundVelocityFromTriangles(LiveActor* actor, f32 reboundStrength, f32 reb
 
     bool isRebound = false;
     for (s32 i = 0; i != planeCount; i++) {
-        sead::Vector3f normal = collider->getPlane(i)->getNormal(0);
+        sead::Vector3f normal = collider->getPlane(i).getNormal(0);
         f32 dot = normal.dot(getVelocity(actor));
         if (reboundStrength < 0.0) {
             addVelocity(actor, -((reboundStrength + 1.0f) * dot * normal));
