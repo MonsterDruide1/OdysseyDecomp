@@ -19,4 +19,4 @@ private:
 
 static_assert(sizeof(GravityPoint) == 0x10);
 
-}
+}  // namespace al
