@@ -126,14 +126,18 @@ def setup_project_tools(tools_from_source):
         os.symlink(f"{get_repo_root()}/toolchain/bin/listsym", f"{get_repo_root()}/tools/listsym")
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        if not exists_toolchain_file("include/__config"):
+        if exists_toolchain_file("include/__config"):  # old path to libcxx headers => moved to `libcxx-include`
+            print("Removing old libc++ headers...")
+            shutil.rmtree(f"{get_repo_root()}/toolchain/include")
+
+        if not exists_toolchain_file("libcxx-include/__config"):
             print(">>> Downloading llvm-3.9 libc++ headers...")
             path = tmpdir + "/libcxx-3.9.1.src.tar.xz"
             urllib.request.urlretrieve(LIBCXX_SRC_URL, path)
             print(">>> Extracting libc++ headers...")
             with tarfile.open(path) as f:
                 f.extractall(tmpdir, filter='tar')
-            shutil.copytree(f"{tmpdir}/libcxx-3.9.1.src/include", f"{get_repo_root()}/toolchain/include", dirs_exist_ok=True)
+            shutil.copytree(f"{tmpdir}/libcxx-3.9.1.src/include", f"{get_repo_root()}/toolchain/libcxx-include", dirs_exist_ok=True)
 
         if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
 

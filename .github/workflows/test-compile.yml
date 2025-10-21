@@ -26,7 +26,7 @@ jobs:
         key: tools_libs
         path: |
           toolchain/bin
-          toolchain/include
+          toolchain/libcxx-include
           toolchain/cache-version-url.txt
     - name: Run simplified setup
       run: tools/setup.py --project

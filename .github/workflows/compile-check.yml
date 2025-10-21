@@ -51,7 +51,7 @@ jobs:
         key: tools_libs
         path: |
           toolchain/bin
-          toolchain/include
+          toolchain/libcxx-include
           toolchain/cache-version-url.txt
     - name: Run setup
       run: tools/setup.py smo-main.nso
