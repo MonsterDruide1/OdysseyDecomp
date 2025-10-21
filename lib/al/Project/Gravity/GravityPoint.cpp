@@ -1,5 +1,5 @@
-
 #include "Project/Gravity/GravityPoint.h"
+
 #include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
