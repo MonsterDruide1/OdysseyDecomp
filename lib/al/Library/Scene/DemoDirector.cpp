@@ -25,10 +25,7 @@ void AddDemoInfo::addDemoActor(LiveActor* actor) {
 }
 
 const char* AddDemoInfo::getDemoName() const {
-    if (!mName)
-        return mPlacementId->getId();
-
-    return mName;
+    return mName ?: mPlacementId->getId();
 }
 
 void AddDemoInfo::reset() {

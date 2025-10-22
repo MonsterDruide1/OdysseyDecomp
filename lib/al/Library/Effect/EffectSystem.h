@@ -22,6 +22,7 @@ class CameraDirector;
 class CollisionCodeList;
 class EffectCameraHolder;
 class EffectEnvParam;
+class EffectGroupDrawer;
 class EffectLayoutDrawer;
 class EffectShaderHolder;
 class EffectSystemInfo;
@@ -32,17 +33,17 @@ class IUseExecutor;
 class EffectSystem {
 public:
     static EffectSystem* initializeSystem(agl::DrawContext*, sead::Heap*);
+    static const char* getDefaultDataBaseResourcePath();
+    static const char* getDefaultPtclResourcePath();
+    static const char* getDefaultPtclPatchResourcePath();
+    static EffectSystem* createSystem(agl::DrawContext*, sead::Heap*);
+    static EffectSystem* createSystemWithPatchResouce(agl::DrawContext*, sead::Heap*);
+    static void loadEffectResource(EffectSystem*);
+    static EffectSystem* initializeSystemWithPatchResouce(agl::DrawContext*, sead::Heap*);
 
     EffectSystem();
 
-    const char* getDefaultDataBaseResourcePath();
-    const char* getDefaultPtclResourcePath();
-    const char* getDefaultPtclPatchResourcePath();
-    EffectSystem* createSystem(agl::DrawContext*, sead::Heap*);
-    EffectSystem* createSystemWithPatchResouce(agl::DrawContext*, sead::Heap*);
-    void loadEffectResource(EffectSystem*);
     void loadPtclResource(sead::Heap*);
-    EffectSystem* initializeSystemWithPatchResouce(agl::DrawContext*, sead::Heap*);
     bool isEnableBatchCompute();
     s32 getPauseForceCalcFrame();
     void setDrawContext(agl::DrawContext*);
@@ -60,7 +61,7 @@ public:
     void calcParticle(u64);
     void setGraphicsSystemInfo(const GraphicsSystemInfo*);
     void updateEffect(const char*) const;
-    IUseExecutor* findGroupDrawer(const char*) const;
+    EffectGroupDrawer* findGroupDrawer(const char*) const;
     void calcEffectCompute() const;
     void drawEffectWithRenderPathAndCamPos(const sead::Matrix44f&, const sead::Matrix34f&,
                                            const sead::Vector3f&, f32, f32, f32, const char*,
