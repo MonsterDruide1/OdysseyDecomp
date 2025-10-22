@@ -64,7 +64,7 @@ public:
     CameraTicket* createMirrorObjectCamera(const PlacementId*, const char*, s32,
                                            const sead::Matrix34f&);
 
-    ICameraInput* getCameraInput();
+    ICameraInput* getCameraInput(s32) const;
     void setCameraInput(const ICameraInput* input);
     void setViewCameraInput(const ICameraInput* input, s32);
     void registerCameraRailHolder(CameraRailHolder* railHolder);

@@ -32,7 +32,7 @@ public:
     bool isAnimOneTime() const;
     bool isAnimOneTime(const char*) const;
     bool isAnimPlaying() const;
-    const char* getPlayingAnimName();
+    const char* getPlayingAnimName() const;
 
 private:
     void* _18;

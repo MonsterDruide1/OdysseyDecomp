@@ -20,7 +20,7 @@ public:
     bool isActionOneTime(const char*) const;
     bool isActionEnd() const;
     void sortCtrlInfo();
-    const char* findAnimInfo(const char*) const;
+    ActionAnimCtrlInfo* findAnimInfo(const char*) const;
     const char* getPlayingActionName() const;
     f32 getActionFrameMax(const char*) const;
     f32 getFrame() const;

@@ -29,7 +29,7 @@ public:
     void clearSklAnimBlend();
     void setSklAnim(const char*, s32);
     bool calcSklAnim();
-    bool initInterp(const char*);
+    void initInterp(const char*);
     void setSklAnimBlendWeight(s32, f32);
     f32 getSklAnimBlendWeight(s32) const;
     s32 getSklAnimBlendNum() const;
@@ -57,12 +57,12 @@ public:
     void addPartialAnimJointRecursive(s32, const char*);
     void startPartialAnim(const char*, s32, s32, const SklAnimRetargettingInfo*);
     void clearPartialAnim(s32);
-    void getPartialAnimInfo(s32);
+    void getPartialAnimInfo(s32);  // TODO: unknown return type
     bool isPartialAnimEnd(s32) const;
     nn::g3d::SkeletalAnimObj* getPartialAnimObj(s32) const;
     bool isPartialAnimOneTime(s32) const;
     bool isPartialAnimAttached(s32) const;
-    void getPartialAnimInfo(s32) const;
+    void getPartialAnimInfo(s32) const;  // TODO: unknown return type
     const char* getPlayingPartialSklAnimName(s32) const;
     f32 getPartialAnimFrame(s32) const;
     void setPartialAnimFrame(s32, f32);
