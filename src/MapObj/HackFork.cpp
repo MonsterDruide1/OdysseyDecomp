@@ -348,7 +348,6 @@ void HackFork::checkSwing() {
     mTimeSinceSwingStart++;
 }
 
-// NON_MATCHING: Wrong loading order https://decomp.me/scratch/VW7ZF
 bool HackFork::trySwingJump() {
     if (rs::isTriggerHackSwing(mPlayerHack)) {
         mIsHackSwing = true;
