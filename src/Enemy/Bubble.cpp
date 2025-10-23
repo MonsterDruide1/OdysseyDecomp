@@ -2115,7 +2115,7 @@ inline void makeQuatRadian(sead::Quatf* outQuat, const sead::Vector3f& vec, f32 
     outQuat->z = sin * vec.z;
 }
 
-// NON_MATCHING: Major issues https://decomp.me/scratch/DcTGQ
+// NON_MATCHING: Wrong math operation https://decomp.me/scratch/P9h4T
 void Bubble::exeHackJump() {
     bool isJumpHigh = al::isNerve(this, &NrvBubble.HackJumpHigh);
     f32 cosntA = !isJumpHigh ? 1.1f : 1.2f;
@@ -2373,7 +2373,7 @@ void Bubble::endHackInLauncher() {
     }
 }
 
-// NON_MATCHING: Unreachable code not https://decomp.me/scratch/xhXeL
+// NON_MATCHING: Stack issues https://decomp.me/scratch/7bYZR
 void Bubble::exeHackResetPos() {
     sead::Quatf quatA;
     sead::Quatf quatB;
@@ -2383,12 +2383,13 @@ void Bubble::exeHackResetPos() {
     sead::QuatCalcCommon<f32>::setMul(quatC, quatA, quatB);
 
     if (al::isFirstStep(this)) {
-        sead::Vector3f trans = mResetTargetPos - al::getTrans(this);
-        trans.y = 0.0f;
-        normalize2(&trans, trans.length() / 180.0f);
-        trans.y = mResetTargetPos.y / 180.0f + 99.0f;
+        sead::Vector3f deltaPos = mResetTargetPos - al::getTrans(this);
+        sead::Vector3f newVelocity = deltaPos;
+        newVelocity.y = 0.0f;
+        normalize2(&newVelocity, newVelocity.length() / 180.0f);
+        newVelocity.y = deltaPos.y / 180.0f + 99.0f;
 
-        al::setVelocity(this, trans);
+        al::setVelocity(this, newVelocity);
         al::startAction(this, "HackJump");
         sead::Vector3f direction = al::getTrans(this) - mResetTargetPos;
         al::tryNormalizeOrZero(&direction);
