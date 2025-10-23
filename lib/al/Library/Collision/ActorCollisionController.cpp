@@ -4,7 +4,7 @@
 
 namespace al {
 
-ActorCollisionController::ActorCollisionController(LiveActor* actor) : mActor{actor} {
+ActorCollisionController::ActorCollisionController(LiveActor* actor) : mActor(actor) {
     mRadius = getColliderRadius(mActor);
     mOffsetY = getColliderOffsetY(mActor);
 }
