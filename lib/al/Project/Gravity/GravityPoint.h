@@ -9,8 +9,8 @@ class GravityPoint {
 public:
     GravityPoint();
 
-    void initWithPlacementInfo(const PlacementInfo&);
-    bool tryCalcGravity(sead::Vector3f*, const sead::Vector3f&) const;
+    void initWithPlacementInfo(const PlacementInfo& info);
+    bool tryCalcGravity(sead::Vector3f* gravity, const sead::Vector3f& position) const;
 
 private:
     sead::Vector3f mTrans = sead::Vector3f::zero;
