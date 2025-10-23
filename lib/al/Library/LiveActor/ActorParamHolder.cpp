@@ -38,7 +38,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* actor, const Resource* resource, c
     mSize = actorParamIter.getSize();
     mInfoArray = new ActorParamInfo[mSize];
 
-    for (s32 i = 0; i < mSize; ++i) {
+    for (s32 i = 0; i < mSize; i++) {
         ActorParamInfo* info = &mInfoArray[i];
         ByamlIter iter;
         actorParamIter.tryGetIterByIndex(&iter, i);
