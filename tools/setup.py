@@ -187,6 +187,10 @@ def main():
                     help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
 
+    if "IN_NIX_SHELL" in os.environ and "SMO_NIX_SETUP" not in os.environ:
+        print("nix users must run `nix run .#setup -- [path to NSO]` instead.")
+        exit(1)
+
     setup_project_tools(args.tools_from_src)
     if not args.project_only:
         prepare_executable(args.original_nso)

@@ -78,7 +78,7 @@
                 link ${tools-artifact}/bin/check tools/check
                 link ${tools-artifact}/bin/listsym tools/listsym
 
-                python3 tools/setup.py "$@"
+                SMO_NIX_SETUP=1 python3 tools/setup.py "$@"
               '';
               runtimeInputs = buildInputs;
               runtimeEnv = env;
