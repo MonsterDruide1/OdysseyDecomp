@@ -3,6 +3,7 @@
   fetchzip,
   url,
   sha256,
+  version,
   autoPatchelfHook,
   zlib,
   openssl,
@@ -12,7 +13,7 @@
 }:
 stdenv.mkDerivation {
   name = "tools";
-  version = "1.2.3";
+  inherit version;
 
   src = fetchzip {
     inherit url sha256;

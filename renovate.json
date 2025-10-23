@@ -16,6 +16,15 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/tools/tools.nix$/"],
+      "matchStrings": [
+        "version = \"(?<currentValue>.+?)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"
     }
   ]
 }
