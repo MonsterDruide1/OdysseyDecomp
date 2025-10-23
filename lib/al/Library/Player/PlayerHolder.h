@@ -4,7 +4,7 @@
 
 namespace al {
 
-struct PadRumbleKeeper;
+class PadRumbleKeeper;
 class LiveActor;
 
 class PlayerHolder {

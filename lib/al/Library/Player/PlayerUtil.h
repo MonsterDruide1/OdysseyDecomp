@@ -5,7 +5,7 @@
 namespace al {
 class HitSensor;
 class LiveActor;
-struct PadRumbleKeeper;
+class PadRumbleKeeper;
 class PlayerHolder;
 
 s32 getPlayerNumMax(const LiveActor*);

@@ -10,7 +10,7 @@ class PadRumbleDirector;
 class SceneStopCtrl;
 class RadialBlurDirector;
 class PlayerHolder;
-struct PadRumbleKeeper;
+class PadRumbleKeeper;
 class Resource;
 class HitSensor;
 class EffectHitReactionInfo;
