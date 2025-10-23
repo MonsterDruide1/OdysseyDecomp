@@ -28,7 +28,7 @@ public:
     enum class AchievementStatus { None, Unlocked, Got };
 
     struct HintInfo {
-        enum class HintStatus { NONE, NPC, AMIIBO };
+        enum class HintStatus { None, Npc, Amiibo };
 
         void clear();
 
@@ -108,7 +108,7 @@ public:
     const char* tryGetStageNameCurrent() const;
     const char* getStageNameNext() const;
     s32 getTotalShopShineNum() const;
-    s32 getPayShineNum(s32 worldId) const;
+    s32 getPayShineNum(s32 worldId = -1) const;
     bool isStartedObj(const char* stageName, const char* objId) const;
     const SaveObjS32* tryFindSaveObjS32(const al::PlacementId* placementId);
     void useCoinCollect(s32 purplesUsed);
@@ -144,12 +144,12 @@ private:
     char _5d0[24];
     FixedHeapArray<s32, sNumWorlds> mUseCoinCollectNum;
     FixedHeapArray<s32, sNumWorlds> mUnlockedWorldId;
-    bool mIsEmpty;
+    bool mIsPlayDemoOpening;
     char _5f9[23];
     SphinxQuizData* mSphinxQuizData;
     FixedHeapArray<bool, sNumWorlds> mIsTalkLocalLanguage;
     char _620[115];
-    bool mHasUnlockedAchievementNames;
+    bool mIsUnlockAchievement;
     char _694[20];
     GameProgressData* mGameProgressData;
     char _6b0[96];
@@ -158,7 +158,7 @@ private:
     char _7c0[24];
     FixedHeapArray<s32, sNumWorlds> mScenarioNo;
     char _7e0[72];
-    bool mIsAssistMode;
+    bool mIsKidsMode;
     char _829[39];
     GameDataHolder* mGameDataHolder;
     char _858[16];

@@ -1,7 +1,5 @@
 #include "System/GameDataFile.h"
 
-#include <numeric>
-
 #include "Library/Placement/PlacementId.h"
 
 #include "System/GameDataFunction.h"
@@ -24,7 +22,7 @@ void GameDataFile::HintInfo::clear() {
     mIsMoonRock = false;
     unkBool1 = false;
     unkPtr6 = nullptr;
-    mHintStatus = HintStatus::NONE;
+    mHintStatus = HintStatus::None;
     mIsAchievement = false;
     mIsGrand = false;
     mAchievementStatus = AchievementStatus::None;
@@ -49,7 +47,7 @@ bool GameDataFile::HintInfo::isEnableUnlock(s32 curWorldId, bool isGameClear, s3
         if (unkBool1)
             return false;
 
-        if (mHintStatus == HintStatus::NONE)
+        if (mHintStatus == HintStatus::None)
             return true;
 
         if (isGameClear && mIsMoonRock)
@@ -63,7 +61,7 @@ bool GameDataFile::HintInfo::isEnableUnlock(s32 curWorldId, bool isGameClear, s3
 
 bool GameDataFile::HintInfo::isHintStatusUnlock(s32 curWorldId, s32 scenarioNo,
                                                 bool isInWorld) const {
-    if (mWorldIndex != curWorldId || unkBool1 || mHintStatus != HintStatus::NONE ||
+    if (mWorldIndex != curWorldId || unkBool1 || mHintStatus != HintStatus::None ||
         (isInWorld ? !mIsMoonRock : mIsMoonRock))
         return false;
 
@@ -71,11 +69,11 @@ bool GameDataFile::HintInfo::isHintStatusUnlock(s32 curWorldId, s32 scenarioNo,
 }
 
 bool GameDataFile::HintInfo::isHintStatusUnlockByNpc() const {
-    return mHintStatus == HintStatus::NPC && !mIsMoonRock;
+    return mHintStatus == HintStatus::Npc && !mIsMoonRock;
 }
 
 bool GameDataFile::HintInfo::isHintStatusUnlockByAmiibo() const {
-    return mHintStatus == HintStatus::AMIIBO;
+    return mHintStatus == HintStatus::Amiibo;
 }
 
 bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(s32 curWorldId, s32 scenarioNo,
@@ -105,11 +103,11 @@ void GameDataFile::unlockAchievementShineName() {
         if (mHintList[i].mAchievementStatus == AchievementStatus::None &&
             mHintList[i].mIsAchievement)
             mHintList[i].mAchievementStatus = AchievementStatus::Unlocked;
-    mHasUnlockedAchievementNames = true;
+    mIsUnlockAchievement = true;
 }
 
 bool GameDataFile::isKidsMode() const {
-    return mIsAssistMode;
+    return mIsKidsMode;
 }
 
 void GameDataFile::updateWorldMapIndex() {
@@ -136,13 +134,15 @@ void GameDataFile::updateWorldMapIndex() {
 
 void GameDataFile::updateWorldWarpIndex() {
     mWorldWarpNum = 0;
+
     for (s32 i = 0; i < mWorldWarpIndex.size(); i++)
         mWorldWarpIndex[i] = -1;
-    for (s32 j = 0; j < mGameDataHolder->getWorldList()->getWorldNum(); j++) {
-        if (mUnlockedWorldId[j] >= 0) {
-            mWorldWarpIndex[mUnlockedWorldId[j]] = j;
-            mWorldWarpNum++;
-        }
+
+    for (s32 i = 0; i < mGameDataHolder->getWorldList()->getWorldNum(); i++) {
+        if (mUnlockedWorldId[i] < 0)
+            continue;
+        mWorldWarpIndex[mUnlockedWorldId[i]] = i;
+        mWorldWarpNum++;
     }
 }
 
@@ -155,7 +155,7 @@ s32 GameDataFile::getMainScenarioNo(s32 worldId) const {
 }
 
 bool GameDataFile::isEmpty() const {
-    return mIsEmpty;
+    return mIsPlayDemoOpening;
 }
 
 bool GameDataFile::isGameClear() const {
@@ -210,7 +210,10 @@ const char* GameDataFile::getStageNameNext() const {
 }
 
 s32 GameDataFile::getTotalShopShineNum() const {
-    return std::accumulate(mShopShineNum.begin(), mShopShineNum.end(), 0);
+    s32 sum = 0;
+    for (s32 i = 0; i < mShopShineNum.size(); i++)
+        sum += mShopShineNum[i];
+    return sum;
 }
 
 s32 GameDataFile::getPayShineNum(s32 worldId) const {
@@ -271,12 +274,17 @@ bool GameDataFile::isTalkAlreadyLocalLanguage() const {
 s32 GameDataFile::calcGetCheckpointNum() const {
     s32 count = 0;
     for (s32 i = 0; i < mGotCheckpoint.size(); i++)
-        count += !mGotCheckpoint[i].isEmpty();
+        if (!mGotCheckpoint[i].isEmpty())
+            count++;
     return count;
 }
 
 s32 GameDataFile::calcWorldWarpHoleThroughNum() const {
-    return std::accumulate(mIsWorldWarpHoleThrough.begin(), mIsWorldWarpHoleThrough.end(), 0);
+    s32 count = 0;
+    for (s32 i = 0; i < mIsWorldWarpHoleThrough.size(); i++)
+        if (mIsWorldWarpHoleThrough[i])
+            count++;
+    return count;
 }
 
 void GameDataFile::wearCostume(const char* name) {
