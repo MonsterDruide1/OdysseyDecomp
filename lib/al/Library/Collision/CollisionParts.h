@@ -45,23 +45,23 @@ public:
     void updateMtx();
     void updateScale();
     void updateBoundingSphereRangePrivate(f32);
-    void checkBoundingSphereRange(const sead::Vector3f&, f32);
-    void checkStrikePoint(HitInfo*, const sead::Vector3f&, const TriangleFilterBase*) const;
-    void checkStrikeSphere(SphereHitResultBuffer*, const sead::Vector3f&, f32, bool,
+    s32 checkBoundingSphereRange(const sead::Vector3f&, f32);
+    s32 checkStrikePoint(HitInfo*, const sead::Vector3f&, const TriangleFilterBase*) const;
+    s32 checkStrikeSphere(SphereHitResultBuffer*, const sead::Vector3f&, f32, bool,
                            const sead::Vector3f&, const TriangleFilterBase*) const;
-    void checkStrikeSphereCore(SphereHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
+    s32 checkStrikeSphereCore(SphereHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
                                const sead::Vector3f&, f32, const TriangleFilterBase*) const;
-    void checkStrikeArrow(ArrowHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
+    s32 checkStrikeArrow(ArrowHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
                           const TriangleFilterBase*) const;
-    void checkStrikeSphereForPlayer(SphereHitResultBuffer*, const sead::Vector3f&, f32,
+    s32 checkStrikeSphereForPlayer(SphereHitResultBuffer*, const sead::Vector3f&, f32,
                                     const TriangleFilterBase*) const;
-    void checkStrikeSphereForPlayerCore(SphereHitResultBuffer*, const sead::Vector3f&,
+    s32 checkStrikeSphereForPlayerCore(SphereHitResultBuffer*, const sead::Vector3f&,
                                         const sead::Vector3f&, const sead::Vector3f&,
                                         const sead::Vector3f&, f32,
                                         const TriangleFilterBase*) const;
-    void checkStrikeDisk(DiskHitResultBuffer*, const sead::Vector3f&, f32, f32,
+    s32 checkStrikeDisk(DiskHitResultBuffer*, const sead::Vector3f&, f32, f32,
                          const sead::Vector3f&, const TriangleFilterBase*) const;
-    void checkStrikeDiskCore(DiskHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
+    s32 checkStrikeDiskCore(DiskHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
                              const sead::Vector3f&, f32, f32, const sead::Vector3f&,
                              const TriangleFilterBase*) const;
     void calcForceMovePower(sead::Vector3f*, const sead::Vector3f&) const;
