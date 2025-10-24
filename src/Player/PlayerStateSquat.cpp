@@ -214,17 +214,17 @@ void PlayerStateSquat::exeWalk() {
         return;
     }
 
-    sead::Vector3f faceDir = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f unkDir = {0.0f, 0.0f, 0.0f};
     sead::Vector3f moveDir = {0.0f, 0.0f, 0.0f};
     sead::Vector3f moveInput = {0.0f, 0.0f, 0.0f};
     mInput->calcMoveInput(&moveInput, up);
     mActionTurnControl->update(moveInput, up);
 
-    // TODO: rename these variables (unk)
+    // TODO: rename these variables (unk and unkDir)
     bool unk = mActionTurnControl->get_69();
-    faceDir.set(mActionTurnControl->getFaceDirection());
+    unkDir.set(mActionTurnControl->get_5c());
     if (!unk || !al::tryNormalizeOrZero(&moveDir, moveInput))
-        moveDir.set(faceDir);
+        moveDir.set(unkDir);
 
     sead::Vector3f velocity = al::getVelocity(mActor);
     sead::Vector3f velPlane = {0.0f, 0.0f, 0.0f};
@@ -235,7 +235,7 @@ void PlayerStateSquat::exeWalk() {
 
     velUp = up * -mConst->getGravityMove();
     al::setVelocity(mActor, velUp + velPlane);
-    rs::slerpUpFront(mActor, up, faceDir, mConst->getSlerpQuatRate(),
+    rs::slerpUpFront(mActor, up, unkDir, mConst->getSlerpQuatRate(),
                      mConst->getHillPoseDegreeMax());
 }
 

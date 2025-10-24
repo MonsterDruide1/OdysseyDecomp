@@ -49,11 +49,11 @@ public:
     void exeLand();
     void exeWingFly();
 
-    void exeEndCancel() {}
+    void exeCancel() {}
 
-    void exeEndReset() {}
+    void exeReset() {}
 
-    void exeEndDamage() {}
+    void exeDamage() {}
 
 private:
     IUsePlayerHack** mPlayerHack = nullptr;

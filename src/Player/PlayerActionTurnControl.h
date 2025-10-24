@@ -16,7 +16,7 @@ public:
     void calcTilt(sead::Vector3f*, const sead::Vector3f&, f32);
     void calcTurnPowerRate(const sead::Vector3f&) const;
 
-    const sead::Vector3f& getFaceDirection() { return mFaceDirection; }
+    const sead::Vector3f& get_5c() { return _5c; }
 
     bool get_69() const { return _69; }
 
@@ -33,7 +33,7 @@ private:
     f32 _30 = 0.0f;
     sead::RingBuffer<f32> _38;
     sead::Vector3f _50 = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mFaceDirection = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f _5c = {0.0f, 0.0f, 0.0f};
     bool _68 = false;
     bool _69 = false;
     bool _6a = false;
