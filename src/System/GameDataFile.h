@@ -549,7 +549,7 @@ private:
     bool mIsTalkKakku;
     bool mIsTalkWorldTravelingPeach;
     s32 mTokimekiMayorNpcFavorabilityRating;
-    bool mFirstNetwork;
+    bool mIsFirstNetwork;
     GameDataHolder* mGameDataHolder;
     char _858[0x8];
     PlayerHitPointData* mPlayerHitPointData;
@@ -566,7 +566,7 @@ private:
     char _a42[0x1e];
     ShopTalkData* mShopTalkData;
     char _a68[0x8];
-    bool mShowExplainCheckpointFlag;
+    bool mIsShowExplainCheckpointFlag;
     char _a71[0xcf];
     FixedHeapArray<s32, sNumWorlds> mWorldMapIndex;
     s32 mWorldMapNum;
