@@ -5,6 +5,8 @@
 #include "Library/Event/IEventFlowEventReceiver.h"
 #include "Library/LiveActor/LiveActor.h"
 
+#include "Demo/IUseDemoSkip.h"
+
 namespace al {
 struct ActorInitInfo;
 class HitSensor;
@@ -20,7 +22,9 @@ void setupHomeCompLight(al::LiveActor*);
 void getHomeArchiveName(const al::LiveActor*);
 }  // namespace rs
 
-class ShineTowerRocket : public al::LiveActor, public al::IEventFlowEventReceiver {
+class ShineTowerRocket : public al::LiveActor,
+                         public al::IEventFlowEventReceiver,
+                         public IUseDemoSkip {
 public:
     ShineTowerRocket(const char*);
     void init(const al::ActorInitInfo&) override;
@@ -37,21 +41,22 @@ public:
                     al::HitSensor* self) override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool receiveEvent(const al::EventFlowEventData*) override;
-    bool tryStartEntranceCamera(s32);
-    bool isFirstDemo() const;
-    bool isEnableSkipDemo() const;
-    void skipDemo();
+    void tryStartEntranceCamera(s32);
+    bool isFirstDemo() const override;
+    bool isEnableSkipDemo() const override;
+    void skipDemo() override;
     void exeWait();
     void updateParts();
     bool isNearPlayerEntrance() const;
     void exeReaction();
     void exeDemoPrepare();
     bool tryStartDemo();
-    bool tryEndEntranceCamera();
+    void tryEndEntranceCamera();
     void exeDemoWalkPlayerToPoint();
     void calcPlayerPoseForPayDemo();
-    bool tryStartHitReactionDemoStart();
+    void tryStartHitReactionDemoStart();
     void exeDemoAppearShine();
+    void exeDemoWaitAfterAppearShine();
     bool tryLevelUp();
     void exeDemoWaitBeforeScaleUpDirect();
     void calcCameraMtxMeterUpPrev();
@@ -114,7 +119,7 @@ public:
     bool isActiveClashModel() const;
 
 private:
-    char filler[0x3d0];
+    char filler[0x3c8];
 };
 
 static_assert(sizeof(ShineTowerRocket) == 0x4e0);

@@ -24,19 +24,21 @@ public:
     void end();
     bool isEqual(const QuestInfo*) const;
 
+    al::SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
+
     s32 getQuestNo() const { return mQuestNo; }
 
 private:
     s32 mQuestNo;
-    void* filler_18;
+    void* filler_10;
     bool mIsMainQuest;
-    void* filler_28;
+    al::SceneObjHolder* mSceneObjHolder;
     sead::SafeString* mScenarioName;
-    void* filler_c0[18];
+    void* filler_30[0x12];
     sead::SafeString* mStageName;
-    void* filler_158[18];
+    void* filler_c8[0x12];
     bool mIsSingle;
-    void* filler_208[21];
+    void* filler_160[0x26];
 };
 
-static_assert(sizeof(QuestInfo) == 0x208);
+static_assert(sizeof(QuestInfo) == 0x290);

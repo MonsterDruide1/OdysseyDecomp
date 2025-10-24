@@ -33,6 +33,7 @@ public:
     void exeBind();
     void exeIn();
     void exeInAfter();
+    void exeOutBefore();
     void exeOut();
     void exeOutBindRequest();
 

@@ -9,6 +9,7 @@ struct ActorInitInfo;
 }
 class KoopaShipWeddingPartsInfo;
 class Peach;
+class PropellerRotateInfo;
 
 class KoopaShip : public al::LiveActor {
 public:
@@ -54,9 +55,10 @@ private:
 };
 
 namespace KoopaShipFunction {
-void tryCreateLinkKoopaShip(const al::ActorInitInfo&);
+al::LiveActor* tryCreateLinkKoopaShip(const al::ActorInitInfo&);
 s32 getPropellerRotateInfoNum();
-const char* getPropellerRotateInfo(s32);
+PropellerRotateInfo* getPropellerRotateInfo(s32);
+const char* getWeddingPartsInitFileName();
 }  // namespace KoopaShipFunction
 
 static_assert(sizeof(KoopaShip) == 0x1f0);

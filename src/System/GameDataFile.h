@@ -483,7 +483,6 @@ private:
     char _490[0x118];
     FixedHeapArray<s32, sNumWorlds> mPayShineNum;
     bool mIsPayShineInAllWorld;
-    //
     s32 mKeyNum;
     char _5b8[0x8];
     FixedHeapArray<UniqObjInfo, 512> mStartedObj;
@@ -500,12 +499,10 @@ private:
     char _5fa[0xe];
     s32 mSessionEventProgress;
     bool mIsPayCoinToSphinx;
-    //
     SphinxQuizData* mSphinxQuizData;
     FixedHeapArray<bool, sNumWorlds> mIsTalkLocalLanguage;
     bool mIsHintNpcFirstTalk;
     bool mIsKinopioBrigadeNpcFirstTalk;
-    //
     s32 mCapStatusForJango;
     char _628[0x4];
     s32 mJangoCount;
@@ -515,7 +512,6 @@ private:
     bool mIsPlayAlreadyWorldWarp;
     bool mIsTalkFirstAmiiboNpc;
     bool mIsUnlockAchievement;
-    //
     WorldWarpTalkData* mWorldWarpTalkData;
     VisitStageData* mVisitStageData;
     GameProgressData* mGameProgressData;
@@ -526,14 +522,12 @@ private:
     s64 mPlayTimeTotal;
     char _6f0[0x20];
     sead::FixedSafeString<64> mCurrentCostumeName;
-    //
     sead::FixedSafeString<64> mCurrentCapName;
     bool mIsCostumeRandom;
     bool mIsCapRandom;
     char _7c2[0xe];
     bool mIsRideSphinx;
     bool mIsRideMotorcycle;
-    //
     FixedHeapArray<s32, sNumWorlds> mScenarioNo;
     char _7e0[0x10];
     s32 mRaceLoseCountLv1;
@@ -542,12 +536,10 @@ private:
     s32 mJumpingRopeDayCount;
     bool mIsExistRecordJumpingRope;
     bool mIsExistRecordInDayJumpingRope;
-    //
     s32 mVolleyballBestCount;
     s32 mVolleyballDayCount;
     bool mIsExistRecordVolleyball;
     bool mIsExistRecordInDayVolleyball;
-    //
     s32 mNextWorldId;
     s32 mPrevWorldId;
     bool mIsPlayDemoPlayerDownForBattleKoopaAfter;
@@ -556,10 +548,8 @@ private:
     char _829[0x17];
     bool mIsTalkKakku;
     bool mIsTalkWorldTravelingPeach;
-    //
     s32 mTokimekiMayorNpcFavorabilityRating;
     bool mFirstNetwork;
-    //
     GameDataHolder* mGameDataHolder;
     char _858[0x8];
     PlayerHitPointData* mPlayerHitPointData;
@@ -580,13 +570,11 @@ private:
     char _a71[0xcf];
     FixedHeapArray<s32, sNumWorlds> mWorldMapIndex;
     s32 mWorldMapNum;
-    //
     FixedHeapArray<s32, sNumWorlds> mWorldWarpIndex;
     s32 mWorldWarpNum;
     char _b5c[0x9];
     bool mIsEnableCapMessageLifeOneKidsMode;
     char _b66[0x2];
-
 
     inline s32 getCurrentWorldIdNoDevelop() const;
 };
