@@ -135,7 +135,7 @@ public:
     void updateWorldWarpIndex();
     s32 getScenarioNo(s32 worldId) const;
     s32 getMainScenarioNo(s32 worldId) const;
-    bool isEmpty();
+    bool isEmpty() const;
     void initializeCheckpointTable();
     void generateSaveDataIdForPrepo();
     void resetMapIcon();
@@ -151,7 +151,7 @@ public:
     void updateSaveTime();
     void updateSaveTimeForDisp();
     void updateSaveInfoForDisp();
-    u64 getLastUpdateTime() const;
+    sead::DateTime getLastUpdateTime() const;
     void generateSaveDataIdForPrepoForWrite();
     void resetSaveDataIdForPrepoForWrite();
     void startStage(const char*, s32);
@@ -465,15 +465,15 @@ private:
     FixedHeapArray<s32, sNumWorlds> mShopShineNum;
     FixedHeapArray<s32, sNumWorlds> mMainScenarioNo;
     s32 mStartShineIndex;
-    char _02c[0x9c];
+    char _02c[0x98];
     sead::FixedSafeString<128> mPlayerStartIdForSave;
-    char _15c[0x34];
+    char _15c[0x30];
     WorldList* mWorldList;
     char _198[0x60];
     sead::FixedSafeString<128> mCheckpointName;
-    char _28c[0x9c];
+    char _28c[0x98];
     sead::FixedSafeString<128> mCurrentStageName;
-    char _3bc[0xa4];
+    char _3bc[0xa0];
     FixedHeapArray<bool, sNumWorlds> mIsWorldWarpHoleThrough;
     sead::DateTime mSaveTimeForDisp;
     sead::DateTime mSaveTime;
@@ -511,7 +511,6 @@ private:
     s32 mJangoCount;
     TimeBalloonSaveData* mTimeBalloonSaveData;
     sead::FixedSafeString<64> mWorldTravelingStatus;
-    char _68c[0x4];
     bool mIsStartWorldTravelingPeach;
     bool mIsPlayAlreadyWorldWarp;
     bool mIsTalkFirstAmiiboNpc;
@@ -529,13 +528,14 @@ private:
     sead::FixedSafeString<64> mCurrentCostumeName;
     //
     sead::FixedSafeString<64> mCurrentCapName;
-    char _7bc[0x4];
     bool mIsCostumeRandom;
     bool mIsCapRandom;
     char _7c2[0xe];
     bool mIsRideSphinx;
     bool mIsRideMotorcycle;
-    char _7d2[0x1e];
+    //
+    FixedHeapArray<s32, sNumWorlds> mScenarioNo;
+    char _7e0[0x10];
     s32 mRaceLoseCountLv1;
     s32 mRaceLoseCountLv2;
     s32 mJumpingRopeBestCount;
@@ -571,9 +571,9 @@ private:
     s32 mWorldId;
     char _9f8[0x38];
     ChangeStageInfo* mChangeStageInfo;
-    char _a38[0xa];
+    char _a38[0x9];
     bool mIsStartKoopaCapture;
-    char _a43[0x1d];
+    char _a42[0x1e];
     ShopTalkData* mShopTalkData;
     char _a68[0x8];
     bool mShowExplainCheckpointFlag;
@@ -591,4 +591,4 @@ private:
     inline s32 getCurrentWorldIdNoDevelop() const;
 };
 
-//static_assert(sizeof(GameDataFile) == 0xb68);
+static_assert(sizeof(GameDataFile) == 0xb68);
