@@ -15,11 +15,16 @@ import tempfile
 import urllib.request
 import urllib.parse
 import urllib.error
+import json
 from common.util.config import get_repo_root
+
+cache = None
+with open(f"{os.path.dirname(os.path.realpath(__file__))}/cache-version.json") as file:
+    cache = json.load(file)
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
-CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.2.3"
+CACHE_REPO_RELEASE_URL = f"{cache['urlPrefix']}/{cache['version']}"
 TARGET_UNCOMPRESSED_NSO_PATH = setup.config.get_versioned_data_path(setup.config.get_default_version()) / 'main.uncompressed.nso'
 LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 

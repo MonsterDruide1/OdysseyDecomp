@@ -1,16 +1,19 @@
 pkgs:
 let
-  toolsJson = (builtins.fromJSON (builtins.readFile ./tools.json));
-  version = toolsJson.version;
-  cacheUrl = toolsJson.cacheUrlPrefix;
-  artifacts = toolsJson.artifacts;
+  artifacts = (builtins.fromJSON (builtins.readFile ./artifacts.json));
+  cache = (builtins.fromJSON (builtins.readFile ../cache-version.json));
+  urlPrefix = cache.urlPrefix;
+  version = cache.version;
 in
-builtins.mapAttrs (
-  key:
-  { hash, filename }:
-  pkgs.callPackage ./tools.nix {
-    url = "${cacheUrl}${version}/${filename}";
-    sha256 = hash;
-    inherit version;
-  }
-) artifacts
+{
+  cacheUrl = "${urlPrefix}/${version}";
+  artifacts = builtins.mapAttrs (
+    key:
+    { hash, filename }:
+    pkgs.callPackage ./tools.nix {
+      url = "${urlPrefix}${version}/${filename}";
+      sha256 = hash;
+      inherit version;
+    }
+  ) artifacts;
+}

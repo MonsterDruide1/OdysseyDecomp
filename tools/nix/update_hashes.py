@@ -3,15 +3,20 @@ import json
 import os
 import subprocess
 
-tools = None
-toolsPath = f"{os.path.dirname(os.path.realpath(__file__))}/tools.json"
+artifacts = None
+cache = None
+cachePath = f"{os.path.dirname(os.path.realpath(__file__))}/../cache-version.json"
+artifactsPath = f"{os.path.dirname(os.path.realpath(__file__))}/artifacts.json"
 
-with open(toolsPath) as file:
-    tools = json.load(file)
-    print(tools["artifacts"])
+with open(cachePath) as file:
+    cache = json.load(file)
 
-    for system in tools["artifacts"]:
-        cmd = f"nix store prefetch-file --json --unpack {tools['cacheUrlPrefix']}{tools['version']}/{tools['artifacts'][system]['filename']}"
+with open(artifactsPath) as file:
+    artifacts = json.load(file)
+    print(artifacts)
+
+    for system in artifacts:
+        cmd = f"nix store prefetch-file --json --unpack {cache['urlPrefix']}/{cache['version']}/{artifacts[system]['filename']}"
         process = subprocess.Popen(
             cmd,
             shell=True,
@@ -22,7 +27,7 @@ with open(toolsPath) as file:
         if process.returncode == 0:
             output = json.loads(data.decode('utf-8'))
             print(f"got {output['hash']} for {output['storePath']}")
-            tools["artifacts"][system]['hash'] = output["hash"]
+            artifacts[system]['hash'] = output["hash"]
         else:
             print(f"artifact {artifact.filename} failed to download!")
             print("stdout")
@@ -31,5 +36,5 @@ with open(toolsPath) as file:
             print(err)
             exit(1)
 
-with open(toolsPath, "w") as file:
-    json.dump(tools, file, indent = 4)
+with open(artifactsPath, "w") as file:
+    json.dump(artifacts, file, indent = 4)
