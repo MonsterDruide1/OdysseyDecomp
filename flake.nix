@@ -21,7 +21,7 @@
 
           tools = import ./tools/nix pkgs;
           cacheUrl = tools.cacheUrl;
-          tools-artifact = tools.${system};
+          tools-artifact = tools.artifacts.${system};
 
           buildInputs = with pkgs; [
             cmake
