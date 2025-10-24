@@ -19,7 +19,7 @@
             inherit system;
           };
 
-          tools = import ./tools pkgs;
+          tools = import ./tools/nix pkgs;
           cacheUrl = tools.cacheUrl;
           tools-artifact = tools.${system};
 

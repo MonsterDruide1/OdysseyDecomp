@@ -19,9 +19,9 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/tools/tools.nix$/"],
+      "managerFilePatterns": ["/tools/nix/tools.json$/"],
       "matchStrings": [
-        "version = \"(?<currentValue>.+?)\""
+        "\"version\": \"(?<currentValue>.+?)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"
