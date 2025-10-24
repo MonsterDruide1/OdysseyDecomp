@@ -1060,7 +1060,7 @@ void Bubble::headUp() {
 
     sead::Quatf quat;
     al::makeQuatRotationRate(&quat, upDir, sead::Vector3f::ey, 1.0f);
-    sead::QuatCalcCommon<f32>::setMul(quat, quat, al::getQuat(this));
+    quat = quat * al::getQuat(this);
     quat.normalize();
     al::setQuat(this, quat);
 }
@@ -1118,7 +1118,7 @@ bool Bubble::tryShiftLand() {
     if (al::isOnGround(this, 0))
         mFireSurface.set(al::getOnGroundNormal(this, 0));
     sead::Quatf quat;
-    al::makeQuatRotationRate(&quat, sead::Vector3f::ey, mFireSurface, 1.0);
+    al::makeQuatRotationRate(&quat, sead::Vector3f::ey, mFireSurface, 1.0f);
     al::getVelocityPtr(this)->rotate(quat);
     sead::Vector3f* velPtr = al::getVelocityPtr(this);
     al::verticalizeVec(velPtr, mFireSurface, *velPtr);
@@ -1229,30 +1229,19 @@ void Bubble::updateHackOnGround() {
 
     sead::Quatf quat;
     al::makeQuatRotationRate(&quat, updir2, mUpDir, 1.0f);
-    {
-        sead::Quatf quat1;
-        sead::QuatCalcCommon<f32>::setMul(quat1, quat, al::getQuat(this));
-        al::setQuat(this, quat1);
-    }
+    al::setQuat(this, quat * al::getQuat(this));
 
     sead::Quatf quat2;
     al::makeQuatRotationRate(&quat2, mUpDir, mFireSurface, 0.1f);
-    {
-        sead::Quatf quat5;
-        sead::QuatCalcCommon<f32>::setMul(quat5, quat2, al::getQuat(this));
-        al::setQuat(this, quat5);
-    }
+    al::setQuat(this, quat2 * al::getQuat(this));
 
     al::calcUpDir(&mUpDir, this);
 
     sead::Quatf quat3;
     al::makeQuatZDegree(&quat3, ((f32)mHackTurnFrame / (f32)mHackTurnDelay) * mHackTurnAngle);
     quat3.normalize();
-    {
-        sead::Quatf quat4;
-        sead::QuatCalcCommon<f32>::setMul(quat4, al::getQuat(this), quat3);
-        al::setQuat(this, quat4);
-    }
+    al::setQuat(this, al::getQuat(this) * quat3);
+
     al::getVelocityPtr(this)->add(mLandPos);
 }
 
@@ -1427,9 +1416,7 @@ void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& quatA, const sead::Qua
         al::makeQuatRotateDegree(
             &newQuat, sead::Vector3f::ex,
             sead::Mathf::max(al::calcAngleDegree(sead::Vector3f::ey, dir), angle));
-        sead::Quatf x;
-        sead::QuatCalcCommon<f32>::setMul(x, quat, newQuat);
-        quat = x * quatC;
+        quat = quat * newQuat * quatC;
     } else {
         quat *= quatB;
     }
@@ -1628,9 +1615,7 @@ void Bubble::endHackCommon() {
 
 void Bubble::calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& vecA, f32 valA,
                            f32 valB) const {
-    // Remind me on how to get the fractional part
-    s32 index = (s32)valB == valB ? 0 : -!(valB >= 0.0f);
-    index += (s32)valB;
+    s32 index = sead::Mathf::floor(valB);
     f32 t = valB - index;
 
     sead::Vector3f startPos;
@@ -2121,12 +2106,11 @@ void Bubble::exeHackJump() {
     f32 cosntA = !isJumpHigh ? 1.1f : 1.2f;
     f32 cosntB = !isJumpHigh ? 0.5f : 2.5f;
 
-    sead::Quatf rotateB;
     sead::Quatf rotateA;
+    sead::Quatf rotateB;
     al::makeQuatRotateDegree(&rotateA, sead::Vector3f::ez, 180.0f);
     al::makeQuatRotateDegree(&rotateB, sead::Vector3f::ey, 180.0f);
-    sead::Quatf quatC;
-    sead::QuatCalcCommon<f32>::setMul(quatC, rotateA, rotateB);
+    sead::Quatf quatC = rotateA * rotateB;
 
     if (al::isFirstStep(this)) {
         mJumpDelay = 15;
@@ -2152,22 +2136,20 @@ void Bubble::exeHackJump() {
         al::calcUpDir(&upDir, this);
         if (upDir.y < 0.99f) {
             if (upDir.y < 0.0f) {
-                sead::Quatf quattB;
-                al::makeQuatRotationRate(&quattB, upDir, -sead::Vector3f::ey, 1.0f);
-
-                sead::QuatCalcCommon<f32>::setMul(mCurrentRotation, quattB, mCurrentRotation);
+                al::makeQuatRotationRate(&rotateA, upDir, -sead::Vector3f::ey, 1.0f);
+                mCurrentRotation = rotateA * mCurrentRotation;
                 sead::Quatf rotateAxis;
                 makeQuatRadian(&rotateAxis, sead::Vector3f::ey, -sead::Mathf::pi());
-                sead::QuatCalcCommon<f32>::setMul(mCurrentRotation, mCurrentRotation, rotateAxis);
+                mCurrentRotation = mCurrentRotation * rotateAxis;
             } else {
-                sead::Quatf quattA;
-                al::makeQuatRotationRate(&quattA, upDir, sead::Vector3f::ey, 1.0f);
-                sead::QuatCalcCommon<f32>::setMul(mCurrentRotation, quattA, mCurrentRotation);
+                al::makeQuatRotationRate(&rotateA, upDir, sead::Vector3f::ey, 1.0f);
+                mCurrentRotation = rotateA * mCurrentRotation;
             }
         }
-        sead::QuatCalcCommon<f32>::setMul(rotateA, al::getQuat(this), quatC);
+        rotateA = al::getQuat(this) * quatC;
         al::setQuat(this, rotateA);
     }
+    // Note: This overrides any data that quatA or quatB has. Consider using new variables
     revertTargetQuatInHackJump(&rotateA, &rotateB);
     al::getVelocityPtr(this)->y -= cosntA;
     sead::Vector3f frontDir;
@@ -2175,8 +2157,8 @@ void Bubble::exeHackJump() {
     sead::Vector3f hackerMoveVec = {0.0f, 0.0f, 0.0f};
     calcHackerMoveVec(&hackerMoveVec, sead::Vector3f::ey);
 
-    sead::Vector3f hackerMoveVec2 = {0.0f, 0.0f, 0.0f};
     bool bVar1 = false;
+    sead::Vector3f hackerMoveVec2 = {0.0f, 0.0f, 0.0f};
     if (al::tryNormalizeOrZero(&hackerMoveVec2, hackerMoveVec)) {
         if (frontDir.dot(hackerMoveVec2) < sead::Mathf::cos(1.9198622f)) {
             sead::Vector3f vel = al::getVelocity(this);
@@ -2191,18 +2173,18 @@ void Bubble::exeHackJump() {
         } else {
             al::turnToDirection(this, hackerMoveVec2, 5.0f);
 
-            sead::Vector3f frontDir2;
-            al::calcFrontDir(&frontDir2, this);
+            al::calcFrontDir(&frontDir, this);
 
-            sead::Vector3f verticalVec;
-            al::verticalizeVec(&verticalVec, sead::Vector3f::ey, al::getVelocity(this));
-            al::addVelocity(this, -verticalVec);
-            f32 fVar14 = frontDir2.dot(verticalVec);
-            f32 fVar16 = sead::Mathf::clamp(frontDir2.dot(hackerMoveVec2), 0.0f, 1.0f);
+            sead::Vector3f velH;
+            al::verticalizeVec(&velH, sead::Vector3f::ey, al::getVelocity(this));
+            al::addVelocity(this, -velH);
+            f32 fVar14 = frontDir.dot(velH);
+            sead::Vector3f part = (velH - frontDir * fVar14) * 0.98f;
 
-            f32 neil = cosntB > fVar14 ? fVar14 * 0.92f + cosntB * fVar16 : fVar14;
+            f32 x = fVar14 * 0.92f +
+                    cosntB * sead::Mathf::clamp(frontDir.dot(hackerMoveVec2), 0.0f, 1.0f);
 
-            al::addVelocity(this, frontDir2 * neil + (verticalVec - frontDir2 * fVar14) * 0.98f);
+            al::addVelocity(this, part + frontDir * sead::Mathf::clampMax(x, fVar14));
             bVar1 = false;
         }
     }
@@ -2314,18 +2296,6 @@ void Bubble::exeHackLand() {
         al::setNerve(this, &NrvBubble.HackMove);
 }
 
-// Custom sead mult
-inline void setQuatMul(sead::Quatf* out, const sead::Quatf& u, const sead::Quatf& v) {
-    f32 w = (u.w * v.w) - (u.x * v.x) - (u.y * v.y) - (u.z * v.z);
-    f32 x = (u.w * v.x) + (u.x * v.w) + (u.y * v.z) - (u.z * v.y);
-    f32 y = (u.w * v.y) - (u.x * v.z) + (u.y * v.w) + (u.z * v.x);
-    f32 z = (u.w * v.z) + (u.x * v.y) - (u.y * v.x) + (u.z * v.w);
-    out->x = x;
-    out->y = y;
-    out->z = z;
-    out->w = w;  // <-- this should go before out.x
-}
-
 void Bubble::exeHackInLauncher() {
     tryHitReactionThroughFence();
     bool isHack2 = isHack();
@@ -2339,9 +2309,9 @@ void Bubble::exeHackInLauncher() {
         sead::Vector3f initialDirection = sead::Vector3f::ey;
         initialDirection.rotate(al::getQuat(this));
 
-        sead::Quatf u;
-        al::makeQuatRotationRate(&u, initialDirection, sead::Vector3f::ey, 1.0f);
-        setQuatMul(&mCurrentRotation, u, al::getQuat(this));
+        sead::Quatf quat;
+        al::makeQuatRotationRate(&quat, initialDirection, sead::Vector3f::ey, 1.0f);
+        mCurrentRotation = quat * al::getQuat(this);
 
         if (isOnDamageFire())
             al::startHitReaction(this, "バブルキャノン着地");
@@ -2379,8 +2349,7 @@ void Bubble::exeHackResetPos() {
     sead::Quatf quatB;
     al::makeQuatRotateDegree(&quatA, sead::Vector3f::ez, 180.0f);
     al::makeQuatRotateDegree(&quatB, sead::Vector3f::ey, 180.0f);
-    sead::Quatf quatC;
-    sead::QuatCalcCommon<f32>::setMul(quatC, quatA, quatB);
+    sead::Quatf quatC = quatA * quatB;
 
     if (al::isFirstStep(this)) {
         sead::Vector3f deltaPos = mResetTargetPos - al::getTrans(this);
@@ -2396,11 +2365,12 @@ void Bubble::exeHackResetPos() {
         al::faceToDirection(this, direction);
         mPreviousTrans.set(al::getTrans(this));
         mCurrentRotation.set(al::getQuat(this));
-        sead::QuatCalcCommon<f32>::setMul(quatA, al::getQuat(this), quatC);
+        quatA = al::getQuat(this) * quatC;
         al::setQuat(this, quatA);
     }
 
     al::addVelocityToGravity(this, 1.1f);
+    // Note: This overrides any data that quatA or quatB has. Consider using new variables
     revertTargetQuatInHackJump(&quatA, &quatB);
     makeDisplayQuatInHackJump(quatA, quatB, quatC, true);
 
