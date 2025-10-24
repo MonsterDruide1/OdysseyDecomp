@@ -29,14 +29,14 @@
 
 namespace {
 NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Wait);
-NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Walk);
-NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Land);
 NERVE_HOST_TYPE_IMPL(KaronWingStateHack, WingFly);
-NERVE_HOST_TYPE_IMPL(KaronWingStateHack, EndCancel);
-NERVE_HOST_TYPE_IMPL(KaronWingStateHack, EndReset);
-NERVE_HOST_TYPE_IMPL(KaronWingStateHack, EndDamage);
+NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Cancel);
+NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Walk);
+NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Reset);
+NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Damage);
+NERVE_HOST_TYPE_IMPL(KaronWingStateHack, Land);
 
-NERVES_MAKE_STRUCT(HostType, Wait, WingFly, EndCancel, Walk, EndReset, EndDamage, Land);
+NERVES_MAKE_STRUCT(HostType, Wait, WingFly, Cancel, Walk, Reset, Damage, Land);
 }  // namespace
 
 const sead::Vector3f gHead{0.0f, 160.0f, 30.0f};
@@ -156,7 +156,7 @@ void KaronWingStateHack::kill() {
 void KaronWingStateHack::control() {
     if (rs::isTouchHackCancelCollisionCode(mActor, this)) {
         al::startHitReaction(mActor, "死亡");
-        al::setNerve(this, &NrvHostType.EndCancel);
+        al::setNerve(this, &NrvHostType.Cancel);
         kill();
         return;
     }
@@ -196,31 +196,31 @@ bool KaronWingStateHack::receiveMsg(const al::SensorMsg* message, al::HitSensor*
     }
 
     if (rs::isMsgCancelHack(message)) {
-        al::setNerve(this, &NrvHostType.EndCancel);
+        al::setNerve(this, &NrvHostType.Cancel);
         kill();
         return true;
     }
 
     if (rs::isMsgCancelHackByDokan(message)) {
-        al::setNerve(this, &NrvHostType.EndReset);
+        al::setNerve(this, &NrvHostType.Reset);
         kill();
         return true;
     }
 
     if (rs::receiveMsgRequestTransferHack(message, *mPlayerHack, other)) {
-        al::setNerve(this, &NrvHostType.EndCancel);
+        al::setNerve(this, &NrvHostType.Cancel);
         kill();
         return true;
     }
 
     if (rs::isMsgHackMarioDead(message) || rs::isMsgHackMarioDemo(message)) {
-        al::setNerve(this, &NrvHostType.EndDamage);
+        al::setNerve(this, &NrvHostType.Damage);
         kill();
         return true;
     }
 
     if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-        al::setNerve(this, &NrvHostType.EndCancel);
+        al::setNerve(this, &NrvHostType.Cancel);
         kill();
         return true;
     }
@@ -238,15 +238,15 @@ void KaronWingStateHack::resetFlyLimit(const sead::Vector3f& flyLimit) {
 }
 
 bool KaronWingStateHack::isEndCancel() const {
-    return al::isNerve(this, &NrvHostType.EndCancel);
+    return al::isNerve(this, &NrvHostType.Cancel);
 }
 
 bool KaronWingStateHack::isEndReset() const {
-    return al::isNerve(this, &NrvHostType.EndReset);
+    return al::isNerve(this, &NrvHostType.Reset);
 }
 
 bool KaronWingStateHack::isEndDamage() const {
-    return al::isNerve(this, &NrvHostType.EndDamage);
+    return al::isNerve(this, &NrvHostType.Damage);
 }
 
 void KaronWingStateHack::updateBasePos() {
@@ -337,8 +337,8 @@ void KaronWingStateHack::exeWalk() {
 
     rs::calcHackerMoveVec(&moveVec, *mPlayerHack, up);
     mPlayerActionTurnControl->update(moveVec, up);
-    al::faceToDirection(actor, mPlayerActionTurnControl->getFaceDirection());
-    al::addVelocity(actor, mPlayerActionTurnControl->getFaceDirection() * 4.0f *
+    al::faceToDirection(actor, mPlayerActionTurnControl->get_5c());
+    al::addVelocity(actor, mPlayerActionTurnControl->get_5c() * 4.0f *
                                rs::calcHackMovePower(*mPlayerHack));
 
     if (mStateWingFly->judgeStart())
@@ -366,15 +366,14 @@ void KaronWingStateHack::exeLand() {
 }
 
 void KaronWingStateHack::exeWingFly() {
-    if (!al::updateNerveState(this))
-        return;
-
-    if (rs::updateJudgeAndResult(mJudgeStartRun)) {
-        al::startHitReaction(mActor, "着地");
-        al::setNerve(this, &NrvHostType.Walk);
-    } else {
-        al::setVelocityZero(mActor);
-        al::startAction(mActor, "Land");
-        al::setNerve(this, &NrvHostType.Land);
+    if (al::updateNerveState(this)) {
+        if (rs::updateJudgeAndResult(mJudgeStartRun)) {
+            al::startHitReaction(mActor, "着地");
+            al::setNerve(this, &NrvHostType.Walk);
+        } else {
+            al::setVelocityZero(mActor);
+            al::startAction(mActor, "Land");
+            al::setNerve(this, &NrvHostType.Land);
+        }
     }
 }
