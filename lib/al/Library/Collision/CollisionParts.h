@@ -48,22 +48,21 @@ public:
     s32 checkBoundingSphereRange(const sead::Vector3f&, f32);
     s32 checkStrikePoint(HitInfo*, const sead::Vector3f&, const TriangleFilterBase*) const;
     s32 checkStrikeSphere(SphereHitResultBuffer*, const sead::Vector3f&, f32, bool,
-                           const sead::Vector3f&, const TriangleFilterBase*) const;
+                          const sead::Vector3f&, const TriangleFilterBase*) const;
     s32 checkStrikeSphereCore(SphereHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
-                               const sead::Vector3f&, f32, const TriangleFilterBase*) const;
+                              const sead::Vector3f&, f32, const TriangleFilterBase*) const;
     s32 checkStrikeArrow(ArrowHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
-                          const TriangleFilterBase*) const;
+                         const TriangleFilterBase*) const;
     s32 checkStrikeSphereForPlayer(SphereHitResultBuffer*, const sead::Vector3f&, f32,
-                                    const TriangleFilterBase*) const;
+                                   const TriangleFilterBase*) const;
     s32 checkStrikeSphereForPlayerCore(SphereHitResultBuffer*, const sead::Vector3f&,
-                                        const sead::Vector3f&, const sead::Vector3f&,
-                                        const sead::Vector3f&, f32,
-                                        const TriangleFilterBase*) const;
+                                       const sead::Vector3f&, const sead::Vector3f&,
+                                       const sead::Vector3f&, f32, const TriangleFilterBase*) const;
     s32 checkStrikeDisk(DiskHitResultBuffer*, const sead::Vector3f&, f32, f32,
-                         const sead::Vector3f&, const TriangleFilterBase*) const;
+                        const sead::Vector3f&, const TriangleFilterBase*) const;
     s32 checkStrikeDiskCore(DiskHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
-                             const sead::Vector3f&, f32, f32, const sead::Vector3f&,
-                             const TriangleFilterBase*) const;
+                            const sead::Vector3f&, f32, f32, const sead::Vector3f&,
+                            const TriangleFilterBase*) const;
     void calcForceMovePower(sead::Vector3f*, const sead::Vector3f&) const;
     void calcForceRotatePower(sead::Quatf*) const;
 

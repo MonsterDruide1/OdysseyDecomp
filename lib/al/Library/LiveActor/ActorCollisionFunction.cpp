@@ -229,8 +229,8 @@ void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor,
 
     verticalizeVec(&movePower, getGravity(actor), movePower);
 
-    sead::Vector3f movePowerNormalized = movePower;
-    tryNormalizeOrZero(&movePowerNormalized);
+    sead::Vector3f hMoveDir = movePower;
+    tryNormalizeOrZero(&hMoveDir);
 
     sead::Vector3f hVelDir = {0.0f, 0.0f, 0.0f};
     verticalizeVec(&hVelDir, getGravity(actor), velocityDir);
@@ -239,7 +239,7 @@ void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor,
         return;
     }
 
-    force *= sead::Mathf::clampMin(movePowerNormalized.dot(hVelDir), 0.0f);
+    force *= sead::Mathf::clampMin(hMoveDir.dot(hVelDir), 0.0f);
     outJumpInertia->set(movePower * force);
 }
 

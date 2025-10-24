@@ -18,7 +18,7 @@ private:
     LiveActor* mActor;
     f32 mRadius;
     f32 mOffsetY;
-    s32 _10 = 0;
+    s32 mDelay = 0;
 };
 
 static_assert(sizeof(ActorCollisionController) == 0x18);
