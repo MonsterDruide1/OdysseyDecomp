@@ -25,29 +25,29 @@ public:
 
     const sead::Vector3f& getMoveDir() const { return mMoveDir; }
 
-    f32 get_48() const { return _48; }
+    f32 nextDeltaAngle() const { return mNextDeltaAngle; }
 
-    f32 get_50() const { return _50; }
+    f32 deltaAngle() const { return mDeltaAngle; }
 
-    bool get_66() const { return _66; }
+    bool isInvertDirection() const { return mIsInvertDirection; }
 
 private:
-    sead::Quatf _10 = sead::Quatf::unit;
-    sead::Quatf _20 = sead::Quatf::unit;
+    sead::Quatf mActorQuat = sead::Quatf::unit;
+    sead::Quatf mInitialActorQuat = sead::Quatf::unit;
     sead::Vector3f mMoveDir = sead::Vector3f::ez;
     Axis mRotateAxis = Axis::None;
     f32 mMoveEndDegree = 360.0f;
-    f32 _44 = 0.0f;
-    f32 _48 = 0.0f;
+    f32 mWheelAngle = 0.0f;
+    f32 mNextDeltaAngle = 0.0f;
     f32 mRotateAccel = 20.0f;
-    f32 _50 = 0.0f;
-    f32 _54 = 0.0f;
+    f32 mDeltaAngle = 0.0f;
+    f32 mRotateWidth = 0.0f;
     f32 mNoRotateWidth = 25.0f;
-    f32 _5c = 0.0f;
-    f32 _60 = 0.0f;
-    bool _64 = false;
+    f32 mRailProgress = 0.0f;
+    f32 mInitialRailProgress = 0.0f;
+    bool mIsOnRail = false;
     bool mIsRailPlusDir = true;
-    bool _66 = false;
+    bool mIsInvertDirection = false;
 };
 
 static_assert(sizeof(WheelMovement) == 0x68);
