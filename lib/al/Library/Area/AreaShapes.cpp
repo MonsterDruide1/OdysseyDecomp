@@ -41,11 +41,7 @@ bool AreaShapeCube::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) co
     f32 top = calcTop();
 
     sead::Vector3f scale = getScale();
-    if (isNearZero(scale.x, 0.001f))
-        return false;
-    if (isNearZero(scale.y, 0.001f))
-        return false;
-    if (isNearZero(scale.z, 0.001f))
+    if (isNearZero(scale.x) || isNearZero(scale.y) || isNearZero(scale.z))
         return false;
 
     scale.x = offset / scale.x;
@@ -229,11 +225,7 @@ bool AreaShapeCylinder::isInVolume(const sead::Vector3f& trans) const {
 
 bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
     sead::Vector3f scale = getScale();
-    if (isNearZero(scale.x, 0.001f))
-        return false;
-    if (isNearZero(scale.y, 0.001f))
-        return false;
-    if (isNearZero(scale.z, 0.001f))
+    if (isNearZero(scale.x) || isNearZero(scale.y) || isNearZero(scale.z))
         return false;
 
     scale.y = offset / scale.y;
