@@ -503,9 +503,8 @@ f32 calcFourthOrderRate(f32 t, f32 scale) {
 
 f32 calcTriangleWave01(f32 t, f32 period) {
     f32 val = t / (2 * period);
-    s32 rounded = (s32)val + (((s32)val == val) ? 0 : -!(val >= 0.0f));
 
-    val = sead::Mathf::abs(val - rounded - 0.5f);
+    val = sead::Mathf::abs(val - sead::Mathf::floor(val) - 0.5f);
     return 1.0f - (2 * val);
 }
 
