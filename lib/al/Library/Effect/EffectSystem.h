@@ -1,9 +1,16 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
+
 #include "Library/Effect/EffectSystemInfo.h"
 
 namespace agl {
 class DrawContext;
+}
+
+namespace agl::sdw {
+class DepthShadow;
 }
 
 namespace sead {
@@ -12,26 +19,61 @@ class Heap;
 
 namespace al {
 class CameraDirector;
+class CollisionCodeList;
 class EffectCameraHolder;
 class EffectEnvParam;
+class EffectGroupDrawer;
 class EffectLayoutDrawer;
 class EffectShaderHolder;
 class EffectSystemInfo;
 class ExecuteDirector;
 class GraphicsSystemInfo;
+class IUseExecutor;
 
 class EffectSystem {
 public:
     static EffectSystem* initializeSystem(agl::DrawContext*, sead::Heap*);
+    static const char* getDefaultDataBaseResourcePath();
+    static const char* getDefaultPtclResourcePath();
+    static const char* getDefaultPtclPatchResourcePath();
+    static EffectSystem* createSystem(agl::DrawContext*, sead::Heap*);
+    static EffectSystem* createSystemWithPatchResouce(agl::DrawContext*, sead::Heap*);
+    static void loadEffectResource(EffectSystem*);
+    static EffectSystem* initializeSystemWithPatchResouce(agl::DrawContext*, sead::Heap*);
 
     EffectSystem();
 
+    void loadPtclResource(sead::Heap*);
+    bool isEnableBatchCompute();
+    s32 getPauseForceCalcFrame();
+    void setDrawContext(agl::DrawContext*);
+    void addResourcePath(const char*);
+    void init();
+    void loadDbResource(sead::Heap*);
     void initScene();
-    void startScene(ExecuteDirector*);
-    void endScene();
     void endInit();
+    void startScene(ExecuteDirector*);
+    void preprocess();
+    void postprocess();
+    void endScene();
     void setCameraDirector(CameraDirector*);
+    void setMaterialCodeList(CollisionCodeList*);
+    void calcParticle(u64);
     void setGraphicsSystemInfo(const GraphicsSystemInfo*);
+    void updateEffect(const char*) const;
+    EffectGroupDrawer* findGroupDrawer(const char*) const;
+    void calcEffectCompute() const;
+    void drawEffectWithRenderPathAndCamPos(const sead::Matrix44f&, const sead::Matrix34f&,
+                                           const sead::Vector3f&, f32, f32, f32, const char*,
+                                           u32) const;
+    void drawEffectWithRenderPath(const sead::Matrix44f&, const sead::Matrix34f&, f32, f32, f32,
+                                  const char*, u32) const;
+    void calcShadowClipVolume(agl::sdw::DepthShadow*, const char*, u32) const;
+    void addCalcEffect(u64);
+    bool isHasRenderingEmitter(u32) const;
+    void checkCalculateFlag(s32);
+    void calcParticle(s32);
+    void calcChildParticle(s32);
 
     void set_69(bool val) { _69 = val; }
 
