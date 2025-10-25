@@ -181,7 +181,7 @@ def create_build_dir(ver, cmake_backend):
 
 def check_for_nixos():
     if platform.system() != "Linux": return
-    with open("/etc/lsb-release") as file:
+    with open("/etc/os-release") as file:
         if "ID=nixos" in file.read() and "SMO_NIX_SETUP" not in os.environ:
             print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
             exit(1)
