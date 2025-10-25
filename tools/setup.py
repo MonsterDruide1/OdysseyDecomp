@@ -177,7 +177,15 @@ def create_build_dir(ver, cmake_backend):
 
     subprocess.check_call(
         ['cmake', '-G', cmake_backend, f'-DCMAKE_CXX_FLAGS=-D{ver.name}', '-DCMAKE_BUILD_TYPE=RelWithDebInfo', '-DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake', '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache', '-B', str(build_dir)])
-    print(">>> created build directory") 
+    print(">>> created build directory")
+
+def check_for_nixos():
+    if platform.system() != "Linux": return
+    with open("/etc/lsb-release") as file:
+        if "ID=nixos" in file.read() and "SMO_NIX_SETUP" not in os.environ:
+            print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
+            exit(1)
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -192,9 +200,7 @@ def main():
                     help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
 
-    if "IN_NIX_SHELL" in os.environ and "SMO_NIX_SETUP" not in os.environ:
-        print("nix users must run `nix run .#setup -- [path to NSO]` instead.")
-        exit(1)
+    check_for_nixos()
 
     setup_project_tools(args.tools_from_src)
     if not args.project_only:
