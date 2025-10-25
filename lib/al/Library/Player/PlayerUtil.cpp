@@ -310,20 +310,42 @@ u32 calcPlayerListOrderByDistance(const LiveActor* actor, const LiveActor** acto
     return size;
 }
 
-// NON_MATCHING: major mismatch, it's doing something weird with flags
-// (https://decomp.me/scratch/c1lVL)
+// TODO: flag-loop issue, this shouldn't be written like this
+static s32 blackBox(s32 value) {
+    __asm__("" : "+r"(value));
+    return value;
+}
+
 u32 calcAlivePlayerActor(const LiveActor* actor, const LiveActor** actorList, u32 size) {
     u32 playerNum = getPlayerNumMax(actor);
+    s32 flag = 2;
+    u32 result;
     u32 resultNum = 0;
-    for (u32 i = 0; i != playerNum; i++) {
-        LiveActor* player = getPlayerActor(actor, i);
-        if (!isDead(player)) {
-            actorList[resultNum] = player;
-            resultNum++;
-            if (resultNum >= size)
-                return size;
+
+    if (playerNum != 0) {
+        for (u32 i = 0; i < playerNum; i++) {
+            LiveActor* player = getPlayerActor(actor, i);
+            if (!isDead(player)) {
+                actorList[resultNum] = player;
+                resultNum++;
+                if (resultNum >= size) {
+                    result = size;
+                    flag = 1;
+                } else {
+                    flag = 0;
+                }
+            } else {
+                flag = 4;
+            }
+
+            if ((blackBox(flag | 4) & 7) != 4)
+                goto end;
         }
+        flag = 2;
     }
+end:
+    if (flag != 2)
+        resultNum = result;
     return resultNum;
 }
 
