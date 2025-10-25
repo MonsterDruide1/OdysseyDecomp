@@ -220,11 +220,11 @@ s32 GameProgressData::calcNextLockedWorldIdForWorldMap(s32 idx) const {
     case 5:
         return GameDataFunction::getWorldIndexCity();
     case 8:
-        return idx != 0 ? GameDataFunction::getWorldIndexSnow() :
-                          GameDataFunction::getWorldIndexSea();
+        return idx == 0 ? GameDataFunction::getWorldIndexSea() :
+                          GameDataFunction::getWorldIndexSnow();
     case 9:
-        return isUnlockFirstSea() ? GameDataFunction::getWorldIndexSea() :
-                                    GameDataFunction::getWorldIndexSnow();
+        return isUnlockFirstSea() ? GameDataFunction::getWorldIndexSnow() :
+                                    GameDataFunction::getWorldIndexSea();
     case 11:
         return GameDataFunction::getWorldIndexSky();
     default:
