@@ -9,7 +9,7 @@ in
   cacheUrl = "${urlPrefix}/${version}";
   artifacts = builtins.mapAttrs (
     key:
-    { hash, filename }:
+    { filename, hash }:
     pkgs.callPackage ./tools.nix {
       url = "${urlPrefix}/${version}/${filename}";
       sha256 = hash;
