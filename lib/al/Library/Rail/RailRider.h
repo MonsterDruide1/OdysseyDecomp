@@ -22,11 +22,11 @@ public:
     void setMoveGoingEnd();
     void setSpeed(f32 speed);
     void addSpeed(f32 speed);
-    void scaleSpeed(f32 speed);
-    bool isReachedGoal();
-    bool isReachedRailEnd();
-    bool isReachedRailStart();
-    bool isReachedEdge();
+    void scaleSpeed(f32 scale);
+    bool isReachedGoal() const;
+    bool isReachedRailEnd() const;
+    bool isReachedRailStart() const;
+    bool isReachedEdge() const;
 
     const Rail* getRail() const { return mRail; }
 
