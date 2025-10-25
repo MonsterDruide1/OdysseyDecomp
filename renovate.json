@@ -10,9 +10,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/tools/setup.py$/"],
+      "managerFilePatterns": ["/tools/cache-version.json$/"],
       "matchStrings": [
-        "CACHE_REPO_RELEASE_URL = \"https:\\/\\/github\\.com\\/MonsterDruide1\\/OdysseyDecompToolsCache\\/releases\\/download\\/(?<currentValue>.+?)\""
+        "\"version\": \"(?<currentValue>.+?)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"

@@ -15,11 +15,16 @@ import tempfile
 import urllib.request
 import urllib.parse
 import urllib.error
+import json
 from common.util.config import get_repo_root
+
+cache = None
+with open(f"{os.path.dirname(os.path.realpath(__file__))}/cache-version.json") as file:
+    cache = json.load(file)
 
 TARGET_PATH = setup.get_target_path()
 TARGET_ELF_PATH = setup.get_target_elf_path()
-CACHE_REPO_RELEASE_URL = "https://github.com/MonsterDruide1/OdysseyDecompToolsCache/releases/download/v1.2.3"
+CACHE_REPO_RELEASE_URL = f"{cache['urlPrefix']}/{cache['version']}"
 TARGET_UNCOMPRESSED_NSO_PATH = setup.config.get_versioned_data_path(setup.config.get_default_version()) / 'main.uncompressed.nso'
 LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 
@@ -172,7 +177,15 @@ def create_build_dir(ver, cmake_backend):
 
     subprocess.check_call(
         ['cmake', '-G', cmake_backend, f'-DCMAKE_CXX_FLAGS=-D{ver.name}', '-DCMAKE_BUILD_TYPE=RelWithDebInfo', '-DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake', '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache', '-B', str(build_dir)])
-    print(">>> created build directory") 
+    print(">>> created build directory")
+
+def check_for_nixos():
+    if platform.system() != "Linux": return
+    with open("/etc/os-release") as file:
+        if "ID=nixos" in file.read() and "SMO_NIX_SETUP" not in os.environ:
+            print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
+            exit(1)
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -186,6 +199,8 @@ def main():
     parser.add_argument("--tools-from-src", action="store_true",
                     help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
+
+    check_for_nixos()
 
     setup_project_tools(args.tools_from_src)
     if not args.project_only:
