@@ -3,6 +3,7 @@
 #include "Library/Area/AreaInitInfo.h"
 #include "Library/Area/AreaObjGroup.h"
 #include "Library/Area/AreaShape.h"
+#include "Library/Area/AreaShapeFactory.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
 #include "Library/Stage/StageSwitchKeeper.h"
