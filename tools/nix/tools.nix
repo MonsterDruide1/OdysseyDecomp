@@ -1,5 +1,6 @@
 {
   stdenv,
+  lib,
   fetchzip,
   url,
   sha256,
@@ -19,7 +20,7 @@ stdenv.mkDerivation {
     inherit url sha256;
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = lib.optionals (!stdenv.hostPlatform.isDarwin) [
     autoPatchelfHook
     zlib
     openssl

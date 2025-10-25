@@ -11,7 +11,7 @@ in
     key:
     { hash, filename }:
     pkgs.callPackage ./tools.nix {
-      url = "${urlPrefix}${version}/${filename}";
+      url = "${urlPrefix}/${version}/${filename}";
       sha256 = hash;
       inherit version;
     }
