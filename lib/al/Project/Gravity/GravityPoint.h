@@ -13,6 +13,7 @@ public:
     bool tryCalcGravity(sead::Vector3f* gravity, const sead::Vector3f& position) const;
 
     const sead::Vector3f& getTrans() const { return mTrans; }
+
     f32 getRadius() const { return mRadius; }
 
 private:
