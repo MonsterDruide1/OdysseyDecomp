@@ -5,26 +5,14 @@
 namespace al {
 AreaShapeCube::AreaShapeCube(AreaShapeCube::OriginType originType) : mOriginType(originType) {}
 
-/*bool AreaShapeCube::calcLocalBoundingBox(sead::BoundBox3f* out) const {
+bool AreaShapeCube::calcLocalBoundingBox(sead::BoundBox3f* out) const {
     out->setUndef();
 
-    f32 bottom = calcBottom();
-    out->set({-500.0f, bottom, -500.0f}, {-500.0f, bottom, -500.0f});
-
-    f32 top = calcTop();
-
-    if (bottom > top)
-        out->setMinY(top);
-
-    out->setMaxX(500.0f);
-
-    if (bottom < top)
-        out->setMaxY(top);
-
-    out->setMaxZ(500.0f);
+    out->addPoint({-500.0f, calcBottom(), -500.0f});
+    out->addPoint({500.0f, calcTop(), 500.0f});
 
     return true;
-}*/
+}
 
 bool AreaShapeCube::isInVolume(const sead::Vector3f& trans) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
@@ -188,26 +176,14 @@ bool AreaShapeOval::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* 
 AreaShapeCylinder::AreaShapeCylinder(AreaShapeCylinder::OriginType originType)
     : mOriginType(originType) {}
 
-/*bool AreaShapeCylinder::calcLocalBoundingBox(sead::BoundBox3f* out) const {
+bool AreaShapeCylinder::calcLocalBoundingBox(sead::BoundBox3f* out) const {
     out->setUndef();
 
-    f32 bottom = calcBottom();
-    out->set({-500.0f, bottom, -500.0f}, {-500.0f, bottom, -500.0f});
-
-    f32 top = calcTop();
-
-    if (bottom > top)
-        out->setMinY(top);
-
-    out->setMaxX(500.0f);
-
-    if (bottom < top)
-        out->setMaxY(top);
-
-    out->setMaxZ(500.0f);
+    out->addPoint({-500.0f, calcBottom(), -500.0f});
+    out->addPoint({500.0f, calcTop(), 500.0f});
 
     return true;
-}*/
+}
 
 bool AreaShapeCylinder::isInVolume(const sead::Vector3f& trans) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
