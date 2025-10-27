@@ -864,7 +864,7 @@ void explainShopCoin(const al::LiveActor* actor) {
     getGameDataHolderFromActor(actor)
         ->getGameDataFile()
         ->getShopTalkData()
-        ->resetIsEnabledExplainShopCoin(GameDataFunction::getCurrentWorldIdNoDevelop(actor));
+        ->resetIsEnableExplainShopCoin(GameDataFunction::getCurrentWorldIdNoDevelop(actor));
 }
 
 bool checkShowNewItemAndPrepareSave(const al::LiveActor* actor) {

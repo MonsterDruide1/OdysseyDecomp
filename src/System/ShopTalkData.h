@@ -30,12 +30,12 @@ public:
 
     void resetInNormalCoinShopFirst() { mIsInNormalCoinShopFirst = false; }
 
-    void resetIsEnabledExplainShopCoin(s32 worldId) { mIsEnabledExplainShopCoin[worldId] = false; }
+    void resetIsEnableExplainShopCoin(s32 worldId) { mIsEnableExplainShopCoin[worldId] = false; }
 
 private:
     bool mIsInNormalCoinShopFirst;
     s32 mSize;
-    bool* mIsEnabledExplainShopCoin;  // Array of bool of size mSize
+    bool* mIsEnableExplainShopCoin;  // Array of bool of size mSize
     bool* _18;
     bool* _20;
     s32* _28;

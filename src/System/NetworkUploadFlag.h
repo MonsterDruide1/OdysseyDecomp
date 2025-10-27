@@ -10,8 +10,6 @@ class ByamlWriter;
 }  // namespace al
 enum class RankingCategory : s32;
 
-// Unsure of the size of this class. Don't know if the member variable is a pointer to an array or
-// just an array.
 class NetworkUploadFlag : public ByamlSave {
 public:
     NetworkUploadFlag();
@@ -22,6 +20,13 @@ public:
     void write(al::ByamlWriter*) override;
     void read(const al::ByamlIter&) override;
 
+    struct Entry {
+        bool isNeedUpload;
+        u64 lastUploadTime;
+    };
+
 private:
-    void* _8;  // Seems to be an array of bools
+    Entry* mFlags;
 };
+
+static_assert(sizeof(NetworkUploadFlag) == 0x10);

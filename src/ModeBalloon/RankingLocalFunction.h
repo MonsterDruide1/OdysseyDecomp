@@ -7,12 +7,12 @@ enum class alignas(8) RankingCategory : s32;
 
 namespace RankingLocalFunction {
 bool isValidCourceIdYukimaruRace(s32);
-void getRankingCategoryYukimaruRace(s32);
+RankingCategory getRankingCategoryYukimaruRace(s32);
 bool isValidWorldIdRaceManRace(s32);
-void getRankingCategoryRaceManRace(s32);
+RankingCategory getRankingCategoryRaceManRace(s32);
 bool isRankingCategoryYukimaruRace(RankingCategory);
 bool isRankingCategoryRaceManRace(RankingCategory);
-void getRaceManRaceWorldId(RankingCategory);
+s32 getRaceManRaceWorldId(RankingCategory);
 bool isRankingCategoryRace(RankingCategory);
 bool tryGetRankingCategoryIndex(s32*, RankingCategory, const sead::ObjArray<RankingCategory>&);
 bool isExistRankingCategory(RankingCategory, const sead::ObjArray<RankingCategory>&);
@@ -28,7 +28,7 @@ struct RankingDataOneRecord {
 
 class RankingDataOneCategory {
 public:
-    RankingDataOneCategory(RankingCategory, const sead::ObjArray<RankingCategory>&);
+    RankingDataOneCategory(RankingCategory, s32);
     void clear();
     void setData(s32, u64, u32, u32, const char16*);
 
