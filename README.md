@@ -38,7 +38,10 @@ with the following content:
 export USE_NIX=true
 ```
 
-Finally, run `direnv allow` to setup all dependencies. The remainder of this section can be skipped.
+Run `direnv allow` to setup all dependencies, and run `direnv exec . bash` to ensure that you can access the dev shell.
+If `echo $IN_NIX_SHELL` prints "impure", then you have successfully entered the dev shell.
+The rest of the guide must be done with inside the dev shell, or you will get errors like `ModuleNotFoundError: No module named 'toml'`.
+The remainder of this section can be skipped.
 
 All other systems have to manually install the required packages and programs. We will need:
 
@@ -85,7 +88,7 @@ Additionally, you'll also need:
       follow [the instructions on the wiki](https://zeldamods.org/wiki/Help:Dumping_games#Dumping_binaries_.28executable_files.29).
     * You do not need to dump the entire game (RomFS + ExeFS + DLC). Just dumping the 1.0 ExeFS is sufficient.
 
-3. Run `tools/setup.py [path to the NSO]`
+3. If you are using Nix, run `nix run '.#setup' [path to the NSO]`. For all others, run `tools/setup.py [path to the NSO]`
     * This will:
         * install tools/check to check for differences in decompiled code
         * convert the executable if necessary
