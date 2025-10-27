@@ -122,6 +122,7 @@ bool isOnSaveObjInfo(const SaveObjInfo* saveObjInfo) {
     return saveObjInfo->isOn();
 }
 
+// TODO: rename parameters `placement1`, `placement2`
 void setGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId* placement1,
                        const al::PlacementId* placement2, u64 time) {
     getGameDataHolderFromActor(actor)->getGameDataFile()->setGrowFlowerTime(placement1, placement2,
@@ -213,10 +214,7 @@ bool isReactedLuigiCostume(const al::LiveActor* actor) {
 }
 
 s32 getPlayerRank(const al::LiveActor* actor) {
-    return getGameDataHolderFromActor(actor)
-        ->getGameDataFile()
-        ->getTimeBalloonSaveData()
-        ->getPlayerRank();
+    return getPlayerRank(getGameDataHolderFromActor(actor));
 }
 
 s32 getPlayerRank(GameDataHolderAccessor accessor) {
@@ -224,8 +222,7 @@ s32 getPlayerRank(GameDataHolderAccessor accessor) {
 }
 
 void setPlayerRank(const al::LiveActor* actor, s32 rank) {
-    getGameDataHolderFromActor(actor)->getGameDataFile()->getTimeBalloonSaveData()->setPlayerRank(
-        rank);
+    setPlayerRank(getGameDataHolderFromActor(actor), rank);
 }
 
 void setPlayerRank(GameDataHolderAccessor accessor, s32 rank) {
@@ -332,12 +329,13 @@ bool tryUnlockShineName(const al::LiveActor* actor, s32 shineIdx) {
         GameDataFunction::getCurrentWorldId(actor), shineIdx);
 }
 
-// unk seems to be an array of some sort
+// TODO: rename parameters unk, out
 void calcShineIndexTableNameAvailable(s32* unk, s32* out, const al::LiveActor* actor) {
     getGameDataHolderFromActor(actor)->getGameDataFile()->calcShineIndexTableNameAvailable(
         unk, out, GameDataFunction::getCurrentWorldId(actor));
 }
 
+// TODO: rename parameters unk, out
 void calcShineIndexTableNameUnlockable(s32* unk, s32* out, const al::LiveActor* actor) {
     getGameDataHolderFromActor(actor)->getGameDataFile()->calcShineIndexTableNameUnlockable(
         unk, out, GameDataFunction::getCurrentWorldId(actor));
@@ -381,8 +379,9 @@ bool isKidsMode(const al::IUseSceneObjHolder* user) {
 }
 
 bool isKidsMode(const GameDataHolder* holder) {
-    if (GameDataFunction::isRaceStartFlag((GameDataHolder*)holder) ||
-        GameDataFunction::isTimeBalloonSequence((GameDataHolder*)holder)) {
+    // TODO: GameDataHolderAccessor should be `const GameDataHolder*`
+    if (GameDataFunction::isRaceStartFlag(const_cast<GameDataHolder*>(holder)) ||
+        GameDataFunction::isTimeBalloonSequence(const_cast<GameDataHolder*>(holder))) {
         return false;
     }
 
@@ -400,7 +399,7 @@ void disableCapMessageLifeOneKidsMode(const al::LiveActor* actor) {
 }
 
 bool isInvalidChangeStage(const al::LiveActor* actor) {
-    return isSequenceTimeBalloonOrRace(getGameDataHolderAccessor(actor));
+    return isSequenceTimeBalloonOrRace(actor);
 }
 
 bool isSequenceTimeBalloonOrRace(const al::LiveActor* actor) {
@@ -413,7 +412,7 @@ bool isSequenceTimeBalloonOrRace(const GameDataHolder* holder) {
 }
 
 bool isTreasureBoxDeadStage(const al::LiveActor* actor) {
-    return isSequenceTimeBalloonOrRace(getGameDataHolderAccessor(actor));
+    return isSequenceTimeBalloonOrRace(actor);
 }
 
 void findRaceRecord(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
@@ -659,9 +658,9 @@ void offFlagTalkFirstAmiiboNpc(const al::LiveActor* actor) {
 }
 
 bool checkGetShineForWorldTravelingPeach(GameDataHolderAccessor accessor, const char* worldName) {
-    return 0 <
-           accessor->getGameDataFile()->calcGetShineNumByObjectNameWithWorldId(
-               "世界旅行ピーチ", GameDataFunction::findWorldIdByDevelopName(accessor, worldName));
+    return accessor->getGameDataFile()->calcGetShineNumByObjectNameWithWorldId(
+               "世界旅行ピーチ", GameDataFunction::findWorldIdByDevelopName(accessor, worldName)) >
+           0;
 }
 
 bool checkEnableAppearMoonWorldTravelingPeach(const al::LiveActor* actor) {
@@ -816,33 +815,31 @@ bool isSequenceCollectShineBeforeGameClear(const al::IUseSceneObjHolder* user) {
 }
 
 bool isSequenceCollectShineForRepairHome(const al::IUseSceneObjHolder* user) {
-    if (GameDataFunction::isWorldClash(user)) {
-        bool isCountTotal = false;
-        return GameDataFunction::getGotShineNum(user, -1) <
-               getGameDataHolderAccessor(user)->findUnlockShineNum(
-                   &isCountTotal, GameDataFunction::getWorldIndexClash());
-    }
+    if (!GameDataFunction::isWorldClash(user))
+        return false;
 
-    return false;
+    bool isCountTotal = false;
+    return GameDataFunction::getGotShineNum(user, -1) <
+           getGameDataHolderAccessor(user)->findUnlockShineNum(
+               &isCountTotal, GameDataFunction::getWorldIndexClash());
 }
 
 bool isSequenceCollectShine(const al::IUseSceneObjHolder* user) {
-    if (!isSequenceCollectShineBeforeGameClear(user)) {
-        s32 worldId = GameDataFunction::getCurrentWorldIdNoDevelop(user);
+    if (isSequenceCollectShineBeforeGameClear(user))
+        return true;
 
-        if (getGameDataHolderAccessor(user)->getGameDataFile()->isClearWorldMainScenario(worldId)) {
-            if (getGameDataHolderAccessor(user)->getGameDataFile()->getMainScenarioNo(
-                    GameDataFunction::getWorldIndexSpecial2()) != 1) {
-                if (!getGameDataHolderAccessor(user)
-                         ->getGameDataFile()
-                         ->tryGetNextMainScenarioLabel(nullptr, nullptr)) {
-                    return GameDataFunction::isGameClear(user);
-                }
-            }
-        }
+    s32 worldId = GameDataFunction::getCurrentWorldIdNoDevelop(user);
+    if (!getGameDataHolderAccessor(user)->getGameDataFile()->isClearWorldMainScenario(worldId))
         return false;
-    }
-    return true;
+
+    if (getGameDataHolderAccessor(user)->getGameDataFile()->getMainScenarioNo(
+            GameDataFunction::getWorldIndexSpecial2()) == 1)
+        return false;
+    if (getGameDataHolderAccessor(user)->getGameDataFile()->tryGetNextMainScenarioLabel(nullptr,
+                                                                                        nullptr))
+        return false;
+
+    return GameDataFunction::isGameClear(user);
 }
 
 bool isSequenceGoToMoonRock(const al::IUseSceneObjHolder* user) {
@@ -903,12 +900,12 @@ CapMessageBossData* getCapMessageBossData(const al::LiveActor* actor) {
     return getGameDataHolderAccessor(actor)->getCapMessageBossData();
 }
 
-void getYoshiFruit(SaveObjInfo* saveObjInfo) {
-    saveObjInfo->on();
+void getYoshiFruit(SaveObjInfo* yoshiFruit) {
+    yoshiFruit->on();
 }
 
-bool isGetYoshiFruit(const SaveObjInfo* saveObjInfo) {
-    return saveObjInfo->isOn();
+bool isGetYoshiFruit(const SaveObjInfo* yoshiFruit) {
+    return yoshiFruit->isOn();
 }
 
 bool isTalkKakku(const al::LiveActor* actor) {
@@ -946,10 +943,12 @@ void setTokimekiMayorNpcFavorabilityRating(const al::LiveActor* actor, s32 ratin
         rating);
 }
 
+// TODO: rename parameter `out`
 bool tryFindCoinStackSave(s32* out, const al::LiveActor* actor, const al::PlacementId* placement) {
     return GameDataFunction::tryFindSaveObjS32Value(out, actor, placement);
 }
 
+// TODO: rename parameter `value`
 void saveCoinStack(const al::LiveActor* actor, const al::PlacementId* placementId, s32 value) {
     GameDataFunction::saveObjS32(actor, placementId, value);
 }
