@@ -198,14 +198,14 @@ void initLayoutInitInfo(LayoutInitInfo* layoutInfo, const Scene* scene,
         layoutInfo->init(
             actorKit->getExecuteDirector(), actorKit->getEffectSystem()->getEffectSystemInfo(),
             scene->getSceneObjHolder(), scene->getAudioDirector(), actorKit->getCameraDirector(),
-            sceneInfo.gameSysInfo->layoutSystem, sceneInfo.gameSysInfo->messageSystem,
-            sceneInfo.gameSysInfo->gamePadSystem, actorKit->getPadRumbleDirector());
+            sceneInfo.gameSystemInfo->layoutSystem, sceneInfo.gameSystemInfo->messageSystem,
+            sceneInfo.gameSystemInfo->gamePadSystem, actorKit->getPadRumbleDirector());
     } else {
-        layoutInfo->init(layoutKit->getExecuteDirector(),
-                         layoutKit->getEffectSystem()->getEffectSystemInfo(),
-                         scene->getSceneObjHolder(), scene->getAudioDirector(), nullptr,
-                         sceneInfo.gameSysInfo->layoutSystem, sceneInfo.gameSysInfo->messageSystem,
-                         sceneInfo.gameSysInfo->gamePadSystem, nullptr);
+        layoutInfo->init(
+            layoutKit->getExecuteDirector(), layoutKit->getEffectSystem()->getEffectSystemInfo(),
+            scene->getSceneObjHolder(), scene->getAudioDirector(), nullptr,
+            sceneInfo.gameSystemInfo->layoutSystem, sceneInfo.gameSystemInfo->messageSystem,
+            sceneInfo.gameSystemInfo->gamePadSystem, nullptr);
     }
 
     layoutInfo->setDrawContext(scene->getDrawSystemInfo()->drawContext);
@@ -682,8 +682,8 @@ void endCameraPause(PauseCameraCtrl* pauseCameraCtrl) {
 AudioDirector* initAudioDirectorImpl(Scene* scene, const SceneInitInfo& sceneInfo,
                                      AudioDirectorInitInfo& audioDirectorInfo) {
     audioDirectorInfo.audioSystemInfo =
-        sceneInfo.gameSysInfo->audioSystem ?
-            sceneInfo.gameSysInfo->audioSystem->getAudioSystemInfo() :
+        sceneInfo.gameSystemInfo->audioSystem ?
+            sceneInfo.gameSystemInfo->audioSystem->getAudioSystemInfo() :
             nullptr;
 
     if (!audioDirectorInfo.curStage)
@@ -739,8 +739,8 @@ void initAudioDirector3D(Scene* scene, const SceneInitInfo& sceneInfo,
 
 void initSceneAudioKeeper(Scene* scene, const SceneInitInfo& sceneInfo, const char* name) {
     AudioSystemInfo* audioSystemInfo = nullptr;
-    if (sceneInfo.gameSysInfo->audioSystem)
-        audioSystemInfo = sceneInfo.gameSysInfo->audioSystem->getAudioSystemInfo();
+    if (sceneInfo.gameSystemInfo->audioSystem)
+        audioSystemInfo = sceneInfo.gameSystemInfo->audioSystem->getAudioSystemInfo();
 
     const char* seUserName = alSeDbFunction::tryFindSceneSeUserName(
         audioSystemInfo, sceneInfo.initStageName, sceneInfo.scenarioNo);
@@ -959,7 +959,7 @@ void stopAllSe(const Scene* scene, u32 index) {
 }
 
 void initPadRumble(const Scene* scene, const SceneInitInfo& sceneInfo) {
-    WaveVibrationHolder* waveVibrationHolder = sceneInfo.gameSysInfo->waveVibrationHolder;
+    WaveVibrationHolder* waveVibrationHolder = sceneInfo.gameSystemInfo->waveVibrationHolder;
     scene->getLiveActorKit()->getPadRumbleDirector()->setWaveVibrationHolder(waveVibrationHolder);
 
     alAudioSystemFunction::setPadRumbleDirectorForSe(
