@@ -26,7 +26,7 @@
           buildInputs = with pkgs; [
             cmake
             ninja
-            llvmPackages_18.clang-tools
+            llvmPackages_18.clang-unwrapped
             llvmPackages_18.bintools
             ccache
             pkg-config
