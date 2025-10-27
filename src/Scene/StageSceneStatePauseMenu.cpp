@@ -124,7 +124,7 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
 
     initNerve(&NrvStageSceneStatePauseMenu.Appear, 4);
 
-    al::GamePadSystem* gamePadSystem = sceneInitInfo.gameSysInfo->gamePadSystem;
+    al::GamePadSystem* gamePadSystem = sceneInitInfo.gameSystemInfo->gamePadSystem;
 
     mStateStartSeparatePlay = new StageSceneStateStartSeparatePlay(
         "おすそ分け開始", this, layoutInitInfo, mMenuWipe, gamePadSystem, mFooterParts);
@@ -142,7 +142,7 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
                       "オプション画面[ヘルプから遷移]");
 
     rs::registerGraphicsPresetPause(getHost());
-    mHtmlViewer = sceneInitInfo.gameSysInfo->htmlViewer;
+    mHtmlViewer = sceneInitInfo.gameSystemInfo->htmlViewer;
 }
 
 void StageSceneStatePauseMenu::appear() {
