@@ -2,6 +2,7 @@
 
 #include <container/seadRingBuffer.h>
 #include <math/seadVector.h>
+#include "container/seadRingBuffer.h"
 
 namespace al {
 class LiveActor;
@@ -14,7 +15,7 @@ public:
     void reset();
     void update(const sead::Vector3f&, const sead::Vector3f&);
     void calcTilt(sead::Vector3f*, const sead::Vector3f&, f32);
-    void calcTurnPowerRate(const sead::Vector3f&) const;
+    f32 calcTurnPowerRate(const sead::Vector3f&) const;
 
     void set_88(bool value) { _88 = value; }
 
@@ -22,14 +23,14 @@ public:
 
     bool get_69() const { return _69; }
 
-private:
-    al::LiveActor* mPlayer;
+public:
+    al::LiveActor* mPlayer;  // mActor
     f32 _8 = 0.0f;
     sead::Vector3f _c = {0.0f, 0.0f, 0.0f};
     sead::Vector3f _18 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f _24 = {0.0f, 0.0f, 0.0f};
     f32 _30 = 0.0f;
-    sead::RingBuffer<f32> _38;
+    sead::RingBuffer<f32> _38;  // arr/arr_size/_44/_48/_4c
     sead::Vector3f _50 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f _5c = {0.0f, 0.0f, 0.0f};
     bool _68 = false;
