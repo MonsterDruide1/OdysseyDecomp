@@ -45,15 +45,10 @@ void BigBirdStateWait::appear() {
         al::setNerve(this, getWaitInitNerve());
 }
 
-// TODO: might be a `sead` function?
-static s32 floorToInt(f32 x) {
-    s32 r = static_cast<s32>(x);
-    return r == x ? r : r + (x >= 0 ? 0 : -1);
-}
-
 static void setRandomFrame(al::LiveActor* actor) {
-    al::setActionFrame(actor, floorToInt(al::getActionFrameMax(actor, al::getActionName(actor)) *
-                                         al::getRandom(0.25f, 0.75f)));
+    al::setActionFrame(actor,
+                       sead::Mathf::floor(al::getActionFrameMax(actor, al::getActionName(actor)) *
+                                          al::getRandom(0.25f, 0.75f)));
 }
 
 static f32 getTurnFrameRate(f32 angle) {
