@@ -4,17 +4,20 @@
 
 namespace al {
 class PlacementInfo;
+class GravityPoint;
 
 class GravityHolder {
 public:
     GravityHolder();
     void init();
-    void createGravity(const PlacementInfo&);
-    bool tryCalcGravity(sead::Vector3f*, const sead::Vector3f&) const;
-    bool tryCalcBlendGravity(sead::Vector3f*, const sead::Vector3f&) const;
+    void createGravity(const PlacementInfo& info);
+    bool tryCalcGravity(sead::Vector3f* gravity, const sead::Vector3f& position) const;
+    bool tryCalcBlendGravity(sead::Vector3f* gravity, const sead::Vector3f& position) const;
 
 private:
-    void* filler[2];
+    GravityPoint** mPoints = nullptr;
+    s32 mCount = 0;
+    s32 mSize = 256;
 };
 
 static_assert(sizeof(GravityHolder) == 0x10);
