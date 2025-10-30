@@ -63,6 +63,8 @@ jobs:
             // 2. Determine new label
             let newLabel = null
 
+            // https://github.com/Reviewable/Reviewable/issues/1163
+            // other users cannot approve reviewers, requires permissions to actually say `review.state == 'approved'`
             const is_approved = review.state === 'approved' || review.body.includes("complete! all files reviewed, all discussions resolved")
 
             if (is_approved && R === O) {
