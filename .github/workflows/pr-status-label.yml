@@ -63,9 +63,11 @@ jobs:
             // 2. Determine new label
             let newLabel = null
 
-            if (review.state === 'approved' && R === O) {
+            const is_approved = review.state === 'approved' || review.body.includes("complete! all files reviewed, all discussions resolved")
+
+            if (is_approved && R === O) {
               newLabel = 'status:approved'  // standard way of approval: owner appoves PR
-            } else if (review.state === 'approved' && P === O && R !== O) {
+            } else if (is_approved && P === O && R !== O) {
               newLabel = 'status:approved'  // if owner is author, someone else must approve
             } else if (P === R) {
               newLabel = 'status:waiting for review'
