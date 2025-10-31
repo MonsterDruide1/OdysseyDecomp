@@ -34,13 +34,19 @@ public:
     void addPlacementSubTarget(CameraSubTargetBase* subTarget);
     void removePlacementSubTarget(CameraSubTargetBase* subTarget);
 
+    bool isChangeViewTarget(u32 index) const;
+
+    s8 hasTopSubTargetChanged() const { return mHasTopSubTargetChanged; }
+
+    CameraSubTargetBase* getTopSubTargetInline() const { return mTopSubTarget; }
+
 private:
     s32 mViewTargetSize = 0;
     CameraTargetBase** mViewTargetArray = nullptr;
     ViewTargetInfo* mViewTargetInfo = nullptr;
     sead::PtrArray<CameraTargetBase> mTargetArray;
     CameraSubTargetBase* mTopSubTarget = nullptr;
-    bool mHasTopSubTargetChanged = false;
+    s8 mHasTopSubTargetChanged = false;  // What? This is required to match?
     sead::PtrArray<CameraSubTargetBase> mSubTargetArray;
     sead::PtrArray<CameraSubTargetBase> mPlacementSubTargetArray;
 };
