@@ -30,7 +30,7 @@ jobs:
         EOF
 
     - name: Upload review info
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: review-event
         path: review-data/event.json
