@@ -14,6 +14,7 @@ class GraphicsContext;
 
 namespace al {
 class Scene;
+class LiveActor;
 
 f32 getDepthClearValue();
 
@@ -25,7 +26,6 @@ bool getAlphaTestEnable(nn::g3d::MaterialObj* material);
 }  // namespace al
 
 namespace alGraphicsFunction {
-
 void forceGraphicsQualityModeSnapShot(al::Scene* scene);
 void forceGraphicsQualityModeHandheld(al::Scene* scene);
 void forceGraphicsQualityModeConsole(al::Scene* scene);
