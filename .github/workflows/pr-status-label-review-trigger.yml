@@ -1,0 +1,36 @@
+name: PR-Review submitted
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Write review info to artifact
+      run: |
+        mkdir -p review-data
+        cat > review-data/event.json <<'EOF'
+        {
+          "repository": {
+            "owner": "${{ github.repository_owner }}",
+            "name": "${{ github.event.repository.name }}"
+          },
+          "pull_request": {
+            "number": ${{ github.event.pull_request.number }},
+            "author": "${{ github.event.pull_request.user.login }}"
+          },
+          "review": {
+            "state": "${{ github.event.review.state }}",
+            "body": "${{ github.event.review.body || '' }}",
+            "reviewer": "${{ github.event.review.user.login }}"
+          }
+        }
+        EOF
+
+    - name: Upload review info
+      uses: actions/upload-artifact@v4
+      with:
+        name: review-event
+        path: review-data/event.json
