@@ -30,6 +30,18 @@ public:
     void tryResetAbsorbVecIfInCollision(const sead::Vector3f&);
     void update();
 
+    f32 getAbsorbScreenPosUp() const { return mAbsorbScreenPosUp; }
+
+    f32 getAbsorbScreenPosDown() const { return mAbsorbScreenPosDown; } 
+
+    void setIsStopUpdate(bool isStopUpdate) { mIsStopUpdate = isStopUpdate; }
+
+    void setIsKeepInFrame(bool isKeepInFrame) { mIsKeepInFrame = isKeepInFrame; }
+
+    void setKeepInFrameOffsetUp(f32 keepInFrameOffsetUp) { mKeepInFrameOffsetUp = keepInFrameOffsetUp; }
+
+    void setKeepInFrameOffsetDown(f32 keepInFrameOffsetDown) { mKeepInFrameOffsetDown = keepInFrameOffsetDown; }
+
 private:
     const CameraPoser* mCameraPoser;
     sead::LookAtCamera mLookAtCamera;

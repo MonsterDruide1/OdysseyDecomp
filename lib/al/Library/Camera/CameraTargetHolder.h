@@ -25,5 +25,14 @@ public:
     void addPlacementSubTarget(CameraSubTargetBase* subTarget);
     void removePlacementSubTarget(CameraSubTargetBase* subTarget);
     bool isChangeViewTarget(u32 index) const;
+
+    CameraSubTargetBase* getSubTarget() const { return mSubTarget; }
+
+    s8 get_30() const { return _30; }
+
+private:
+    void* buffer[5];
+    CameraSubTargetBase* mSubTarget;  // This type is unconfirmed and inferred from a function name.
+    s8 _30;
 };
 }  // namespace al

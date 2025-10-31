@@ -10,6 +10,6 @@ public:
     CameraOffsetCtrlPreset();
 
     void load(const ByamlIter& iter) override;
-    f32 getOffset() const override;
+    const sead::Vector3f& getOffset() const override;
 };
 }  // namespace al
