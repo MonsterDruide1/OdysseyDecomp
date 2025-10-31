@@ -21,9 +21,9 @@ public:
                     const char* name);
     void initArray(s32 size);
 
-    // TODO: Add proper parameter names for va and vb
+    // TODO: Add proper parameter names for vb
     ScreenPointTarget* addTarget(LiveActor* actor, const ActorInitInfo& initInfo,
-                                 const char* targetName, f32 radius, const sead::Vector3f* va,
+                                 const char* targetName, f32 radius, const sead::Vector3f* actorPos,
                                  const char* jointName, const sead::Vector3f& vb);
     void update();
     void validate();
@@ -33,6 +33,8 @@ public:
     void invalidateBySystem();
     const ScreenPointTarget* getTarget(const char* targetName) const;
     bool isExistTarget(const char* targetName) const;
+
+    bool isTargetArrayFull() { return mScreenPointTargets.isFull(); }
 
 private:
     sead::PtrArray<ScreenPointTarget> mScreenPointTargets;
