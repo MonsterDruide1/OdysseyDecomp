@@ -20,7 +20,7 @@ public:
     void startAction(const char*);
     void startPadRumble(const ActionPadAndCameraInfo*);
     void stopPadRumble(const ActionPadAndCameraInfo*);
-    void update(f32, f32, f32, bool);
+    void update(f32 frame, f32 frameRateMax, f32 frameRate, bool isStop);
     void updateCamera(const ActionPadAndCameraInfo*);
     void updateCameraLoopShake(const ActionPadAndCameraInfo*);
     void updatePadRumbleSourcePos(ActionPadAndCameraInfo*);
