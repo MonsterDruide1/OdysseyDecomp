@@ -122,7 +122,7 @@ void HackFork::init(const al::ActorInitInfo& info) {
     mInvJointMtx.setInverse(jointMtx);
 
     mCapTargetInfo->setPoseMatrix(&mCapPoseMtx);
-    mUpsideDownInitialHackDir.inverse(&mInvInitialHackDir);
+    mInvInitialHackDir.setInverse(mUpsideDownInitialHackDir);
 
     initBasicPoseInfo();
     mHackStartShaderCtrl = new PlayerHackStartShaderCtrl(this, &sPlayerHackStartShaderParam);
@@ -538,7 +538,7 @@ void HackFork::calcHackDir(al::HitSensor* sensor) {
     if (!al::tryNormalizeOrZero(&mPullDirection2))
         al::calcUpDir(&mPullDirection2, this);
 
-    mHackDir.inverse(&mInvInitialHackDir);
+    mInvInitialHackDir.setInverse(mHackDir);
 }
 
 void HackFork::exeWait() {
