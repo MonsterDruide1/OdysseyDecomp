@@ -314,14 +314,11 @@ bool tryNormalizeOrZero(sead::Vector2f* out, const sead::Vector2f& vec) {
 }
 
 bool tryNormalizeOrDirZ(sead::Vector3f* vec) {
-    if (isNearZero(*vec)) {
-        // mismatches if this isn't set twice
-        vec->set(0.0f, 0.0f, 0.0f);
+    if (!tryNormalizeOrZero(vec)) {
         vec->set(sead::Vector3f::ez);
         return false;
     }
 
-    normalize(vec);
     return true;
 }
 
@@ -1243,20 +1240,11 @@ void makeQuatSideNoSupport(sead::Quatf* outQuat, const sead::Vector3f& side) {
     mtx.toQuat(*outQuat);
 }
 
-// https://decomp.me/scratch/MqKUQ
-//  NON_MATCHING: Regswap on Mult and Add
-void rotateQuatRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec,
-                      f32 angle) {
-    f32 cos = sead::Mathf::cos(angle * 0.5f);
-    f32 sin = sead::Mathf::sin(angle * 0.5f);
-
+void rotateQuatRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& axis,
+                      f32 radian) {
     sead::Quatf rotation;
-    rotation.w = cos;
-    rotation.x = sin * vec.x;
-    rotation.y = sin * vec.y;
-    rotation.z = sin * vec.z;
-
-    *outQuat = rotation * quat;
+    rotation.setAxisRadian(axis, radian);
+    outQuat->setMul(rotation, quat);
     outQuat->normalize();
 }
 
@@ -1290,30 +1278,24 @@ void makeQuatZDegree(sead::Quatf* outQuat, f32 angle) {
     outQuat->z = sin;
 }
 
-// https://decomp.me/scratch/utMuy
-//  NON_MATCHING: Regswap on Add
 void rotateQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatXDegree(&rotation, angle);
-    *outQuat = quat * rotation;
+    outQuat->setMul(quat, rotation);
     outQuat->normalize();
 }
 
-// https://decomp.me/scratch/DEZoH
-//  NON_MATCHING: Regswap on Add
 void rotateQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatYDegree(&rotation, angle);
-    *outQuat = quat * rotation;
+    outQuat->setMul(quat, rotation);
     outQuat->normalize();
 }
 
-// https://decomp.me/scratch/iJBbn
-//  NON_MATCHING: Regswap on Add
 void rotateQuatZDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, f32 angle) {
     sead::Quatf rotation;
     makeQuatZDegree(&rotation, angle);
-    *outQuat = quat * rotation;
+    outQuat->setMul(quat, rotation);
     outQuat->normalize();
 }
 
