@@ -221,6 +221,10 @@ public:
 
     WorldList* getWorldList() const { return mWorldList; }
 
+    bool isExistKoopaShip() const { return mIsExistKoopaShip; }
+
+    void setExistKoopaShip(bool isExistKoopaShip) { mIsExistKoopaShip = isExistKoopaShip; }
+
     GameSequenceInfo* getSequenceInfo() const { return mSequenceInfo; }
 
 private:
@@ -283,7 +287,7 @@ private:
     bool mIsSeparatePlay;
     bool mIsPlayDemoLavaErupt;
     QuestInfoHolder* mQuestInfoHolder;
-    bool _250;  // related to resetTempSaveData
+    bool mIsExistKoopaShip;
     GameSequenceInfo* mSequenceInfo;
     TimeBalloonSequenceInfo* mTimeBalloonSequenceInfo;
 };
