@@ -26,7 +26,7 @@ public:
     void start(const char* name);
     void startCtrlFlag();
     void startCtrlSensor();
-    void update(f32 frame, f32 frameRate, f32 frameMax, bool isStop);
+    void update(f32 frame, f32 frameRateMax, f32 frameRate, bool isStop);
     void updateCtrlSensor(f32, f32, f32, bool);
     bool isFlagValidOn(s32, bool);
     bool isFlagValidOff(s32, bool);
