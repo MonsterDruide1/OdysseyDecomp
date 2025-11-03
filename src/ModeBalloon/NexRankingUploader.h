@@ -35,6 +35,8 @@ enum class RankingCategory : s32;
 class NexRankingUploader : public al::IUseRanking, public al::LiveActor {
 public:
     NexRankingUploader(const char*, const char*);
+    ~NexRankingUploader() override;
+
     void init(const al::ActorInitInfo&) override;
     al::RankingDirector* getRankingDirector() const override;
     bool isAvailableRanking() const override;
@@ -65,20 +67,16 @@ bool tryStartAddTimeBalloonHistoryList(al::IUseDataStore*,
                                        const nn::nex::qVector<nn::nex::BufferQueueParam>&,
                                        const nn::nex::qVector<nn::nex::qBuffer>&);
 bool tryEndAddTimeBalloonHistory(bool*, al::IUseDataStore*);
-bool tryStartGetTimeBalloonHistory(al::IUseDataStore*,
-                                   const nn::nex::qVector<nn::nex::BufferQueueParam>&,
-                                   nn::nex::qVector<nn::nex::qVector<nn::nex::qBuffer>>*);
+bool tryStartGetTimeBalloonHistory(al::IUseDataStore*, nn::nex::qVector<nn::nex::qBuffer>*, u64,
+                                   u32);
 bool tryStartGetTimeBalloonHistoryList(al::IUseDataStore*,
                                        const nn::nex::qVector<nn::nex::BufferQueueParam>&,
                                        const nn::nex::qVector<nn::nex::qBuffer>&);
-bool tryEndAddTimeBalloonHistory(bool*, al::IUseDataStore*);
-bool tryStartGetTimeBalloonHistory(al::IUseDataStore*, nn::nex::qVector<nn::nex::qBuffer>*, u64,
-                                   u32);
 bool tryEndGetTimeBalloonHistory(bool*, const al::IUseDataStore*);
 void startUploadTimeBalloonBalloonData(al::IUseDataStore*, const TimeBalloon::BalloonDataServer&,
                                        nn::nex::qMap<s8, nn::nex::DataStoreRatingInitParam>*);
 bool tryEndUploadTimeBalloonBalloonData(bool*, u64*, const al::IUseDataStore*);
-bool tryStartUploadTimeBalloonFindBalloonData(
+bool tryStartUploadBalloonFindBalloonData(
     al::IUseDataStore*, u16, const void*, s32,
     const nn::nex::qMap<s8, nn::nex::DataStoreRatingInitParam>*);
 bool tryStartUpdateRatingPlayedBalloon(al::IUseDataStore*, u64, u64, bool);

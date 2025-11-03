@@ -24,6 +24,7 @@ struct ItemInfo;
 }
 
 class ChangeStageInfo;
+class CollectBgm;
 class GameDataHolder;
 class GameProgressData;
 class HintPhotoData;
@@ -97,6 +98,8 @@ public:
         bool unkBool3;
     };
 
+    struct CoinCollectInfo;
+
     template <typename T, s32 Size>
     class FixedHeapArray {
     public:
@@ -125,9 +128,9 @@ public:
     GameDataFile(GameDataHolder*);
     void initializeData();
     bool tryReadByamlData(const u8*);
-    bool tryFindCoinCollectInfo(const u8*, const u8*) const;
-    bool tryFindShineIndexByUniqueId(s32) const;
-    bool tryFindCoinCollectIndexByUniqueId(s32) const;
+    CoinCollectInfo* tryFindCoinCollectInfo(const u8*, const u8*) const;
+    s32 tryFindShineIndexByUniqueId(s32) const;
+    s32 tryFindCoinCollectIndexByUniqueId(s32) const;
     void buyDefaultItem();
     void unlockAchievementShineName();
     bool isKidsMode() const;
@@ -227,7 +230,7 @@ public:
     void talkLocalLanguage();
     bool isFirstWorldTravelingStatus() const;
     void saveWorldTravelingStatus() const;
-    void getWorldTravelingStatus() const;
+    const char* getWorldTravelingStatus() const;
     bool isStartWorldTravelingPeach();
     void startWorldTravelingPeach();
     void setGrowFlowerTime(const al::PlacementId*, const al::PlacementId*, u64 time);
@@ -243,15 +246,15 @@ public:
     void addPlayerThrowCapCount();
     s32 getPlayerThrowCapCount() const;
     bool readFromStream(sead::ReadStream*, u8*);
-    void tryReadByamlDataFromStream(sead::ReadStream*, u8*, s32);
+    bool tryReadByamlDataFromStream(sead::ReadStream*, u8*, s32);
     void writeToStream(sead::WriteStream*, sead::Heap*) const;
     bool tryWriteByByaml(sead::WriteStream*, sead::Heap*) const;
     bool isPlayDemoPlayerDownForBattleKoopaAfter() const;
     s32 getCheckpointNumMaxInWorld() const;
-    sead::Vector3f* getCheckpointTransInWorld(const char*) const;
+    const sead::Vector3f& getCheckpointTransInWorld(const char*) const;
     bool isGotCheckpointInWorld(s32) const;
     s32 calcCheckpointIndexInScenario(s32) const;
-    s32 getCheckpointObjIdInWorld(s32) const;
+    const char* getCheckpointObjIdInWorld(s32) const;
     bool isGotCheckpoint(al::PlacementId*) const;
     void changeNextSceneByGotCheckpoint(s32);
     void changeNextSceneByWarp();
@@ -268,12 +271,12 @@ public:
     void unlockHintAmiibo();
     void unlockHintAddByMoonRock();
     s32 calcHintNum() const;
-    sead::Vector3f* calcHintTrans(s32) const;
+    const sead::Vector3f& calcHintTrans(s32) const;
     HintInfo* findHint(s32) const;
-    sead::Vector3f* calcHintTransMostEasy() const;
+    const sead::Vector3f& calcHintTransMostEasy() const;
     HintInfo* findHintInfoMostEasy() const;
     s32 calcHintMoonRockNum() const;
-    sead::Vector3f* calcHintMoonRockTrans(s32) const;
+    const sead::Vector3f& calcHintMoonRockTrans(s32) const;
     HintInfo* findHintMoonRock(s32) const;
     bool tryUnlockShineName(s32, s32);
     bool isOpenMoonRock(s32) const;
@@ -286,7 +289,7 @@ public:
     s32 getWorldWarpHoleThroughNumMax() const;
     void enteredStage();
     void buyItem(const ShopItem::ItemInfo*, bool);
-    void tryFindItemList(ItemInfo*);
+    const sead::FixedSafeString<64>* tryFindItemList(ItemInfo*);
     s32 calcHaveClothNum() const;
     s32 calcHaveCapNum() const;
     s32 calcHaveStickerNum() const;
@@ -298,11 +301,11 @@ public:
     void wearCap(const char* name);
     void addHackDictionary(const char*);
     bool isExistInHackDictionary(const char*) const;
-    void findShine(s32, s32) const;
+    HintInfo* findShine(s32, s32) const;
     bool isGotShine(s32, s32) const;
     bool isOpenShineName(s32, s32) const;
     s32 calcShineNumInOneShine(s32, s32) const;
-    void checkAchievementShine(s32, s32) const;
+    bool checkAchievementShine(s32, s32) const;
     s32 getWorldTotalShineNum(s32) const;
     s32 getWorldTotalShineNumMax(s32) const;
     void winRace();
@@ -318,20 +321,20 @@ public:
     void setAmiiboNpcTrans(const sead::Vector3f&);
     void setTimeBalloonNpcTrans(const sead::Vector3f&);
     void setPoetterTrans(const sead::Vector3f&);
-    void setShopNpcTrans(const sead::Vector3f&);
+    void setShopNpcTrans(const sead::Vector3f&, const char*, s32);
     void setMoonRockTrans(const sead::Vector3f&);
     void setMiniGameInfo(const sead::Vector3f&, const char*);
     s32 calcMiniGameNum() const;
     s32 getMiniGameNumMax() const;
-    sead::Vector3f getMiniGameTrans(s32) const;
+    const sead::Vector3f& getMiniGameTrans(s32) const;
     const char* getMiniGameName(s32) const;
     bool isExistTimeBalloonNpc() const;
-    sead::Vector3f getTimeBalloonNpcTrans() const;
+    const sead::Vector3f& getTimeBalloonNpcTrans() const;
     bool isExistPoetter() const;
-    sead::Vector3f getPoetterTrans() const;
+    const sead::Vector3f& getPoetterTrans() const;
     bool isAlreadyShowExplainCheckpointFlag() const;
     void showExplainCheckpointFlag();
-    sead::Vector3f getShopNpcTrans(s32) const;
+    const sead::Vector3f& getShopNpcTrans(s32) const;
     bool isShopSellout() const;
     s32 calcShopNum() const;
     s32 getShopNpcIconNumMax() const;
@@ -364,7 +367,7 @@ public:
     s32 calcLinkedShineNum(const al::ActorInitInfo&) const;
     s32 tryFindShineIndex(const al::ActorInitInfo&) const;
     s32 tryFindShineIndex(const char*, const char*) const;
-    void disableHintById(s32);
+    void disableHintById(s32 shineIndex);
     void enableHintById(s32 shineIndex);
     void setStartShine(const ShineInfo*);
     s32 getStartShineNextIndex() const;
@@ -382,9 +385,10 @@ public:
     s32 getMainScenarioNoCurrent() const;
     void setMainScenarioNo(s32);
     bool isCollectedBgm(const char*, const char*) const;
-    void getCollectBgmByIndex(s32);
+    const CollectBgm* getCollectBgmByIndex(s32);
     bool trySetCollectedBgm(const char*, const char*);
     s32 getCollectedBgmNum() const;
+    s32 getCollectedBgmNumMax() const;
     void setGotShine(s32);
     void setGotShine(const HintInfo*);
     bool isEnableOpenMoonRock(s32) const;
