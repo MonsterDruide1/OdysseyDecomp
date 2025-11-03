@@ -44,7 +44,7 @@ jobs:
         run: unzip "${{ runner.temp }}/artifacts/review-event.zip" -d "${{ runner.temp }}/artifacts"
 
       - name: Update status labels based on review
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
