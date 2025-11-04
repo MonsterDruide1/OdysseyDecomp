@@ -1,8 +1,8 @@
 #include "Library/Screen/ScreenPointCheckGroup.h"
 
 namespace al {
-ScreenPointCheckGroup::ScreenPointCheckGroup(s32 size) : mSize{size} {
-    mScreenPointTargets = new ScreenPointTarget*[size];
+ScreenPointCheckGroup::ScreenPointCheckGroup(s32 size) : mSize(size) {
+    mScreenPointTargets = new ScreenPointTarget*[mSize];
 
     for (s32 i = 0; i < mSize; i++)
         mScreenPointTargets[i] = nullptr;
@@ -10,25 +10,24 @@ ScreenPointCheckGroup::ScreenPointCheckGroup(s32 size) : mSize{size} {
 
 void ScreenPointCheckGroup::setValid(ScreenPointTarget* target) {
     for (s32 i = mValidCount; i < mCount; i++) {
-        if (mScreenPointTargets[i] != target)
-            continue;
+        if (mScreenPointTargets[i] == target) {
+            mScreenPointTargets[i] = mScreenPointTargets[mValidCount];
+            mScreenPointTargets[mValidCount] = target;
+            mValidCount++;
 
-        mScreenPointTargets[i] = mScreenPointTargets[mValidCount];
-        mScreenPointTargets[mValidCount] = target;
-        mValidCount++;
-        break;
+            break;
+        }
     }
 }
 
 void ScreenPointCheckGroup::setInvalid(ScreenPointTarget* target) {
     for (s32 i = 0; i < mValidCount; i++) {
-        if (mScreenPointTargets[i] != target)
-            continue;
-
-        mScreenPointTargets[i] = mScreenPointTargets[mValidCount - 1];
-        mScreenPointTargets[mValidCount - 1] = target;
-        mValidCount--;
-        break;
+        if (mScreenPointTargets[i] == target) {
+            mScreenPointTargets[i] = mScreenPointTargets[mValidCount - 1];
+            mScreenPointTargets[mValidCount - 1] = target;
+            mValidCount--;
+            break;
+        }
     }
 }
 
