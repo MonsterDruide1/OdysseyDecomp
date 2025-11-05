@@ -2091,6 +2091,14 @@ void Bubble::endHackMove() {
     al::setQuat(this, mCurrentRotation);
 }
 
+inline sead::Quatf getQuatZY() {
+    sead::Quatf quatZ;
+    sead::Quatf quatY;
+    al::makeQuatRotateDegree(&quatZ, sead::Vector3f::ez, 180.0f);
+    al::makeQuatRotateDegree(&quatY, sead::Vector3f::ey, 180.0f);
+    return quatZ * quatY;
+}
+
 // NON_MATCHING: Wrong math operation https://decomp.me/scratch/P9h4T
 void Bubble::exeHackJump() {
     bool isJumpHigh = al::isNerve(this, &NrvBubble.HackJumpHigh);
@@ -2099,9 +2107,7 @@ void Bubble::exeHackJump() {
 
     sead::Quatf rotateA;
     sead::Quatf rotateB;
-    al::makeQuatRotateDegree(&rotateA, sead::Vector3f::ez, 180.0f);
-    al::makeQuatRotateDegree(&rotateB, sead::Vector3f::ey, 180.0f);
-    sead::Quatf quatC = rotateA * rotateB;
+    sead::Quatf quatC = getQuatZY();
 
     if (al::isFirstStep(this)) {
         mJumpDelay = 15;
@@ -2334,13 +2340,10 @@ void Bubble::endHackInLauncher() {
     }
 }
 
-// NON_MATCHING: Stack issues https://decomp.me/scratch/7bYZR
 void Bubble::exeHackResetPos() {
     sead::Quatf quatA;
     sead::Quatf quatB;
-    al::makeQuatRotateDegree(&quatA, sead::Vector3f::ez, 180.0f);
-    al::makeQuatRotateDegree(&quatB, sead::Vector3f::ey, 180.0f);
-    sead::Quatf quatC = quatA * quatB;
+    sead::Quatf quatZY = getQuatZY();
 
     if (al::isFirstStep(this)) {
         sead::Vector3f deltaPos = mResetTargetPos - al::getTrans(this);
@@ -2356,14 +2359,14 @@ void Bubble::exeHackResetPos() {
         al::faceToDirection(this, direction);
         mPreviousTrans.set(al::getTrans(this));
         mCurrentRotation.set(al::getQuat(this));
-        quatA = al::getQuat(this) * quatC;
-        al::setQuat(this, quatA);
+
+        al::setQuat(this, al::getQuat(this) * quatZY);
     }
 
     al::addVelocityToGravity(this, 1.1f);
-    // Note: This overrides any data that quatA or quatB has. Consider using new variables
+
     revertTargetQuatInHackJump(&quatA, &quatB);
-    makeDisplayQuatInHackJump(quatA, quatB, quatC, true);
+    makeDisplayQuatInHackJump(quatA, quatB, quatZY, true);
 
     if (al::isGreaterEqualStep(this, 180)) {
         sead::Vector3f surfaceA;
