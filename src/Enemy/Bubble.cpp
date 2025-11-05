@@ -307,11 +307,13 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
             al::setNerve(this, &NrvBubble.HackResetPos);
             return true;
         }
+
         if (rs::isMsgBossMagmaCatchPlayer(message)) {
             mIsPlayerCaptured = true;
             mIsInBossSequence = true;
             return true;
         }
+
         if (rs::isMsgBossMagmaReleasePlayer(message)) {
             mIsPlayerCaptured = false;
             return true;
@@ -568,20 +570,20 @@ void Bubble::control() {
     if (isValidCollisionOrWaveCheck()) {
         if (mIsInFire) {
             mLavaSurfaceMtx.makeQT(al::getQuat(this), {0.0f, 0.0f, 0.0f});
-            mLavaSurfaceMtx.setBase(3, al::getTrans(this));
+            mLavaSurfaceMtx.setTranslation(al::getTrans(this));
         } else if (al::isOnGround(this, 0)) {
             mLavaSurfaceMtx.makeQT(al::getQuat(this), {0.0f, 0.0f, 0.0f});
 
             sead::Vector3f trans = al::getTrans(this);
             trans.y = al::getCollidedGroundPos(this).y;
-            mLavaSurfaceMtx.setBase(3, trans);
+            mLavaSurfaceMtx.setTranslation(trans);
         }
     } else {
         mLavaSurfaceMtx.makeQT(al::getQuat(this), {0.0f, 0.0f, 0.0f});
         if (al::isExistRail(this))
             al::isRailGoingToEnd(this);
         al::getTrans(this);
-        mLavaSurfaceMtx.setBase(3, al::getTrans(this));
+        mLavaSurfaceMtx.setTranslation(al::getTrans(this));
     }
 
     if (!isHack() && !al::isNerve(this, &NrvBubble.Revive) &&
@@ -639,7 +641,7 @@ void Bubble::control() {
         al::scaleVelocityHV(this, 0.9f, 1.0f);
     mCameraMtx.makeQT(mCurrentRotation, {0.0f, 0.0f, 0.0f});
 
-    mCameraMtx.setBase(3, al::getTrans(this) + (0.0f * sead::Vector3f::ey));
+    mCameraMtx.setTranslation(al::getTrans(this) + (0.0f * sead::Vector3f::ey));
     if (al::isNerve(this, &NrvBubble.Up) || al::isNerve(this, &NrvBubble.Turn) ||
         al::isNerve(this, &NrvBubble.Down)) {
         mDisregardReceiver->setEDC(false, false, false);
@@ -1148,7 +1150,7 @@ bool Bubble::tryBoundMoveWall() {
     if (!al::isCollidedWall(this) || !al::isCollidedGround(this))
         return false;
 
-    al::CollisionParts* collisionParts = al::getCollidedWallCollisionParts(this);
+    const al::CollisionParts* collisionParts = al::getCollidedWallCollisionParts(this);
     if (collisionParts->get_15c() != 0 && !collisionParts->isMoving())
         return false;
 
@@ -1385,7 +1387,7 @@ bool Bubble::isTriggerHackJump() const {
 void Bubble::revertTargetQuatInHackJump(sead::Quatf* quatA, sead::Quatf* quatB) {
     quatA->set(al::getQuat(this));
     sead::Quatf invRotation;
-    mCurrentRotation.inverse(&invRotation);
+    invRotation.setInverse(mCurrentRotation);
     quatB->set(invRotation * al::getQuat(this));
     quatB->normalize();
     al::setQuat(this, mCurrentRotation);
@@ -1639,7 +1641,7 @@ bool Bubble::isOnGroundNoVelocity() const {
 }
 
 void Bubble::updateCollisionPartsMove() {
-    al::CollisionParts* collisionParts = al::tryGetCollidedGroundCollisionParts(this);
+    const al::CollisionParts* collisionParts = al::tryGetCollidedGroundCollisionParts(this);
     if (!collisionParts) {
         if (mIsInFire || mShiftFallDelay > 9)
             mLandPos.set(0.0f, 0.0f, 0.0f);
@@ -2089,17 +2091,6 @@ void Bubble::endHackMove() {
     al::setQuat(this, mCurrentRotation);
 }
 
-// Inline from math util
-inline void makeQuatRadian(sead::Quatf* outQuat, const sead::Vector3f& vec, f32 angle) {
-    f32 cos = sead::Mathf::cos(angle * 0.5f);
-    f32 sin = sead::Mathf::sin(angle * 0.5f);
-
-    outQuat->w = cos;
-    outQuat->x = sin * vec.x;
-    outQuat->y = sin * vec.y;
-    outQuat->z = sin * vec.z;
-}
-
 // NON_MATCHING: Wrong math operation https://decomp.me/scratch/P9h4T
 void Bubble::exeHackJump() {
     bool isJumpHigh = al::isNerve(this, &NrvBubble.HackJumpHigh);
@@ -2139,7 +2130,7 @@ void Bubble::exeHackJump() {
                 al::makeQuatRotationRate(&rotateA, upDir, -sead::Vector3f::ey, 1.0f);
                 mCurrentRotation = rotateA * mCurrentRotation;
                 sead::Quatf rotateAxis;
-                makeQuatRadian(&rotateAxis, sead::Vector3f::ey, -sead::Mathf::pi());
+                rotateAxis.setAxisRadian(sead::Vector3f::ey, -sead::Mathf::pi());
                 mCurrentRotation = mCurrentRotation * rotateAxis;
             } else {
                 al::makeQuatRotationRate(&rotateA, upDir, sead::Vector3f::ey, 1.0f);
