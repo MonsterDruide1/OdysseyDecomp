@@ -184,14 +184,102 @@ bool isEndWithString(const char* str, const char* end) {
     return isEqualString(&str[lenStr - lenEnd], end);
 }
 
-// bool isMatchString(const char*, const MatchStr&);
+bool isMatchString(const char* str, const MatchStr& matchStr) {
+    const char* subStr = getSubStringUnmatched(str, matchStr);
+
+    if (subStr)
+        return subStr[0] == '\0';
+
+    return false;
+}
 
 s32 compareStringIgnoreCase(const char* str1, const char* str2) {
     return strcasecmp(str1, str2);
 }
 
-// void makeUrlEncodeString(char*, u32, const char*);
-// void makeUrlDecodeString(char*, u32, const char*);
+inline char toUpperCase(char ch) {
+    // lowercase b: 0110 0010
+    // uppercase B: 0100 0010
+    return ch & 0b11011111;
+}
+
+inline bool isLetter(char ch) {
+    return ch < 26u;
+}
+
+inline bool isPrintable(char ch) {
+    bool isDigit = ch - '0' < 10u;
+
+    return isLetter(toUpperCase(ch) - 'A') || isDigit;
+}
+
+// NON_MATCHING: Using inverse sub operation https://decomp.me/scratch/rPdbr
+void makeUrlEncodeString(char* out, u32 len, const char* str) {
+    out[0] = '\0';
+
+    for (; *str != '\0'; str++) {
+        char newSymbols[4] = {'\0', '\0', '\0', '\0'};
+        s64 bytesWritten = 1;
+
+        if (str[0] == ' ') {
+            newSymbols[0] = '+';
+        } else if (isPrintable(str[0])) {
+            newSymbols[0] = str[0];
+        } else {
+            char digit = str[0] >> 4;
+            char digit2 = str[0] & 0xf;
+
+            newSymbols[0] = '%';
+            newSymbols[1] = digit < 0xa ? digit + '0' : digit + 'A' - 10;
+            newSymbols[2] = digit2 < 0xa ? digit2 + '0' : digit2 + 'A' - 10;
+            bytesWritten = 3;
+        }
+
+        if (strlen(out) + bytesWritten > len) {
+            out[len - 1] = '\0';
+            return;
+        }
+
+        strcat(out, newSymbols);
+    }
+}
+
+void makeUrlDecodeString(char* out, u32 len, const char* str) {
+    out[0] = '\0';
+    std::memset(out, 0, len);
+
+    s32 bytesRead = 1;
+    for (; str[0] != '\0'; str += bytesRead) {
+        char newSymbols[2] = {'\0', '\0'};
+
+        if (str[0] == '+') {
+            newSymbols[0] = ' ';
+            bytesRead = 1;
+        } else if (str[0] == '%') {
+            char offset1 = 10 - 'A';
+            char offset2 = 10 - 'A';
+
+            if (str[2] < 'A')
+                offset2 = -'0';
+            if (str[1] < 'A')
+                offset1 = -'0';
+
+            // hex string to char
+            newSymbols[0] = (offset1 + str[1]) * 0x10 | (offset2 + str[2]);
+            bytesRead = 3;
+        } else {
+            newSymbols[0] = str[0];
+            bytesRead = 1;
+        }
+
+        if (strlen(out) + bytesRead > len) {
+            out[len - 1] = '\0';
+            return;
+        }
+
+        strcat(out, newSymbols);
+    }
+}
 
 void copyString(char* out, const char* str, u32 len) {
     strncpy(out, str, len);
@@ -201,7 +289,12 @@ void copyStringW(char16* out, const char16* str, u32 len) {
     sead::StringUtil::wcs16cpy(out, len, str);
 }
 
-// bool isInStack(const void*);
+// Note: different cpp file from here?
+
+// Attr required for createStringIfInStack
+__attribute__((noinline)) bool isInStack(const void* element) {
+    return sead::MemUtil::isStack(element);
+}
 
 // Attr required for isEndWithString
 __attribute__((noinline)) bool isEqualString(const char* str1, const char* str2) {
