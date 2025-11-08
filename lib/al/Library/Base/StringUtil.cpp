@@ -132,10 +132,46 @@ void translateCharacters(char* string, const char* charmap, const char* newCharm
     }
 }
 
-// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
-// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
-// void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*,
-//                                  const char*);
+bool tryReplaceString(sead::BufferedSafeString* out, const char* oldStr, const char* newStr) {
+    return tryReplaceString(out, out->cstr(), oldStr, newStr);
+}
+
+bool tryReplaceString(sead::BufferedSafeString* out, const char* targetStr, const char* oldStr,
+                      const char* newStr) {
+    const char* subStr = searchSubString(targetStr, oldStr);
+
+    if (subStr == nullptr)
+        return false;
+
+    StringTmp<1024> before;
+    StringTmp<1024> after;
+
+    if (subStr != targetStr)
+        before.copy(targetStr, subStr - targetStr);
+    after.copy(subStr + std::strlen(oldStr));
+
+    tryReplaceString(&after, oldStr, newStr);
+    out->format("%s%s%s", before.cstr(), newStr, after.cstr());
+    return true;
+}
+
+bool tryReplaceStringNoRecursive(sead::BufferedSafeString* out, const char* targetStr,
+                                 const char* oldStr, const char* newStr) {
+    const char* subStr = searchSubString(targetStr, oldStr);
+
+    if (subStr == nullptr)
+        return false;
+
+    StringTmp<256> before;
+    StringTmp<256> after;
+
+    if (subStr != targetStr)
+        before.copy(targetStr, subStr - targetStr);
+    after.copy(subStr + std::strlen(oldStr));
+
+    out->format("%s%s%s", before.cstr(), newStr, after.cstr());
+    return true;
+}
 
 bool isEqualString(const char16* str1, const char16* str2) {
     while (*str1 == *str2) {

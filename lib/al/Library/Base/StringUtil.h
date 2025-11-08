@@ -21,9 +21,11 @@ void extractBaseNameW(sead::WBufferedSafeString*, const sead::WSafeString&);
 void removeExtensionString(char* out, u32 len, const char* str);
 void removeStringFromEnd(char* out, u32 len, const char* end, const char* str);
 void translateCharacters(char* string, const char* charmap, const char* newCharmap);
-void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
-void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
-void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*, const char*);
+bool tryReplaceString(sead::BufferedSafeString* out, const char* oldStr, const char* newStr);
+bool tryReplaceString(sead::BufferedSafeString* out, const char* targetStr, const char* oldStr,
+                      const char* newStr);
+bool tryReplaceStringNoRecursive(sead::BufferedSafeString* out, const char* targetStr,
+                                 const char* oldStr, const char* newStr);
 bool isEqualString(const char16* str1, const char16* str2);
 bool isEqualSubString(const char* str, const char* subStr);
 bool isEqualSubString(const sead::SafeString& str, const sead::SafeString& subStr);
