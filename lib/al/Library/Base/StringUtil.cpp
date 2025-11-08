@@ -132,10 +132,46 @@ void translateCharacters(char* string, const char* charmap, const char* newCharm
     }
 }
 
-// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
-// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
-// void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*,
-//                                  const char*);
+bool tryReplaceString(sead::BufferedSafeString* out, const char* oldStr, const char* newStr) {
+    return tryReplaceString(out, out->cstr(), oldStr, newStr);
+}
+
+bool tryReplaceString(sead::BufferedSafeString* out, const char* targetStr, const char* oldStr,
+                      const char* newStr) {
+    const char* subStr = searchSubString(targetStr, oldStr);
+
+    if (!subStr)
+        return false;
+
+    StringTmp<1024> before;
+    StringTmp<1024> after;
+
+    if (subStr != targetStr)
+        before.copy(targetStr, subStr - targetStr);
+    after.copy(subStr + std::strlen(oldStr));
+
+    tryReplaceString(&after, oldStr, newStr);
+    out->format("%s%s%s", before.cstr(), newStr, after.cstr());
+    return true;
+}
+
+bool tryReplaceStringNoRecursive(sead::BufferedSafeString* out, const char* targetStr,
+                                 const char* oldStr, const char* newStr) {
+    const char* subStr = searchSubString(targetStr, oldStr);
+
+    if (!subStr)
+        return false;
+
+    StringTmp<256> before;
+    StringTmp<256> after;
+
+    if (subStr != targetStr)
+        before.copy(targetStr, subStr - targetStr);
+    after.copy(subStr + std::strlen(oldStr));
+
+    out->format("%s%s%s", before.cstr(), newStr, after.cstr());
+    return true;
+}
 
 bool isEqualString(const char16* str1, const char16* str2) {
     while (*str1 == *str2) {
@@ -187,56 +223,45 @@ bool isEndWithString(const char* str, const char* end) {
 bool isMatchString(const char* str, const MatchStr& matchStr) {
     const char* subStr = getSubStringUnmatched(str, matchStr);
 
-    if (subStr)
-        return subStr[0] == '\0';
-
-    return false;
+    return subStr && subStr[0] == '\0';
 }
 
 s32 compareStringIgnoreCase(const char* str1, const char* str2) {
     return strcasecmp(str1, str2);
 }
 
-inline char toUpperCase(char ch) {
-    // lowercase b: 0110 0010
-    // uppercase B: 0100 0010
-    return ch & 0b11011111;
-}
-
 inline bool isLetter(char ch) {
-    return ch < 26u;
+    return ch - 'A' < 26u || ch - 'a' < 26u;
 }
 
-inline bool isPrintable(char ch) {
-    bool isDigit = ch - '0' < 10u;
-
-    return isLetter(toUpperCase(ch) - 'A') || isDigit;
+inline bool isDigit(char ch) {
+    return ch - '0' < 10u;
 }
 
 // NON_MATCHING: Using inverse sub operation https://decomp.me/scratch/rPdbr
-void makeUrlEncodeString(char* out, u32 len, const char* str) {
+void makeUrlEncodeString(char* out, u32 outLen, const char* str) {
     out[0] = '\0';
 
-    for (; *str != '\0'; str++) {
+    for (; str[0] != '\0'; str++) {
         char newSymbols[4] = {'\0', '\0', '\0', '\0'};
         s64 bytesWritten = 1;
 
         if (str[0] == ' ') {
             newSymbols[0] = '+';
-        } else if (isPrintable(str[0])) {
+        } else if (isLetter(str[0]) || isDigit(str[0])) {
             newSymbols[0] = str[0];
         } else {
-            char digit = str[0] >> 4;
-            char digit2 = str[0] & 0xf;
+            char digit1 = (str[0] & 0xf0) >> 4;
+            char digit2 = (str[0] & 0x0f) >> 0;
 
             newSymbols[0] = '%';
-            newSymbols[1] = digit < 0xa ? digit + '0' : digit + 'A' - 10;
-            newSymbols[2] = digit2 < 0xa ? digit2 + '0' : digit2 + 'A' - 10;
+            newSymbols[1] = digit1 < 10 ? digit1 + '0' : digit1 + 'A' - 10;
+            newSymbols[2] = digit2 < 10 ? digit2 + '0' : digit2 + 'A' - 10;
             bytesWritten = 3;
         }
 
-        if (strlen(out) + bytesWritten > len) {
-            out[len - 1] = '\0';
+        if (strlen(out) + bytesWritten > outLen) {
+            out[outLen - 1] = '\0';
             return;
         }
 
@@ -244,9 +269,9 @@ void makeUrlEncodeString(char* out, u32 len, const char* str) {
     }
 }
 
-void makeUrlDecodeString(char* out, u32 len, const char* str) {
+void makeUrlDecodeString(char* out, u32 outLen, const char* str) {
     out[0] = '\0';
-    std::memset(out, 0, len);
+    std::memset(out, 0, outLen);
 
     s32 bytesRead = 1;
     for (; str[0] != '\0'; str += bytesRead) {
@@ -272,8 +297,8 @@ void makeUrlDecodeString(char* out, u32 len, const char* str) {
             bytesRead = 1;
         }
 
-        if (strlen(out) + bytesRead > len) {
-            out[len - 1] = '\0';
+        if (strlen(out) + bytesRead > outLen) {
+            out[outLen - 1] = '\0';
             return;
         }
 
