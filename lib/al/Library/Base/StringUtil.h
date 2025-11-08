@@ -21,9 +21,11 @@ void extractBaseNameW(sead::WBufferedSafeString*, const sead::WSafeString&);
 void removeExtensionString(char* out, u32 len, const char* str);
 void removeStringFromEnd(char* out, u32 len, const char* end, const char* str);
 void translateCharacters(char* string, const char* charmap, const char* newCharmap);
-void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
-void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
-void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*, const char*);
+bool tryReplaceString(sead::BufferedSafeString* out, const char* oldStr, const char* newStr);
+bool tryReplaceString(sead::BufferedSafeString* out, const char* targetStr, const char* oldStr,
+                      const char* newStr);
+bool tryReplaceStringNoRecursive(sead::BufferedSafeString* out, const char* targetStr,
+                                 const char* oldStr, const char* newStr);
 bool isEqualString(const char16* str1, const char16* str2);
 bool isEqualSubString(const char* str, const char* subStr);
 bool isEqualSubString(const sead::SafeString& str, const sead::SafeString& subStr);
@@ -31,8 +33,8 @@ bool isStartWithString(const char* str, const char* start);
 bool isEndWithString(const char* str, const char* end);
 bool isMatchString(const char* str, const MatchStr& matchStr);
 s32 compareStringIgnoreCase(const char* str1, const char* str2);
-void makeUrlEncodeString(char* out, u32 len, const char* str);
-void makeUrlDecodeString(char* out, u32 len, const char* str);
+void makeUrlEncodeString(char* out, u32 outLen, const char* str);
+void makeUrlDecodeString(char* out, u32 outLen, const char* str);
 void copyString(char* out, const char* str, u32 len);
 void copyStringW(char16* out, const char16* str, u32 len);
 bool isInStack(const void* element);
