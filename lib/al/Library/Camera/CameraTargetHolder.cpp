@@ -20,9 +20,9 @@ CameraTargetHolder::CameraTargetHolder(s32 maxTargets) : mViewTargetSize(maxTarg
 }
 
 void CameraTargetHolder::initAfterPlacement(const PlayerHolder* holder) {
-    if (mTargetArray.size() == 0) {
+    if (mTargetArray.isEmpty()) {
         for (s32 i = 0; i < getPlayerNumMax(holder); i++) {
-            if (mTargetArray.size() >= mTargetArray.capacity())
+            if (mTargetArray.isFull())
                 break;
 
             mTargetArray.pushBack(new ActorCameraTarget(getPlayerActor(holder, i), 0.0f, nullptr));
@@ -36,7 +36,14 @@ void CameraTargetHolder::initAfterPlacement(const PlayerHolder* holder) {
 }
 
 CameraTargetBase* CameraTargetHolder::tryGetViewTarget(s32 index) const {
-    return getViewTarget(index);
+    CameraTargetBase* target = mViewTargetArray[index];
+    if (target)
+        return target;
+
+    if (mTargetArray.size() > 0)
+        return mTargetArray[0];
+
+    return nullptr;
 }
 
 void CameraTargetHolder::update() {
@@ -52,9 +59,9 @@ void CameraTargetHolder::update() {
     }
 
     CameraSubTargetBase* topSubTarget = nullptr;
-    if (mSubTargetArray.size() != 0)
-        topSubTarget = mSubTargetArray[0];
-    else if (mPlacementSubTargetArray.size() != 0)
+    if (!mSubTargetArray.isEmpty())
+        topSubTarget = mSubTargetArray.front();
+    else if (!mPlacementSubTargetArray.isEmpty())
         topSubTarget = mPlacementSubTargetArray[0];
 
     mHasTopSubTargetChanged = mTopSubTarget != topSubTarget;
@@ -79,22 +86,15 @@ void CameraTargetHolder::removeTarget(CameraTargetBase* target) {
     }
 
     for (s32 i = 0; i < mViewTargetSize; i++) {
-        if (mViewTargetArray[i] != target)
-            continue;
-        target->disableTarget();
-        mViewTargetArray[i] = nullptr;
+        if (mViewTargetArray[i] == target) {
+            target->disableTarget();
+            mViewTargetArray[i] = nullptr;
+        }
     }
 }
 
 CameraTargetBase* CameraTargetHolder::getViewTarget(s32 index) const {
-    CameraTargetBase* target = mViewTargetArray[index];
-    if (target)
-        return target;
-
-    if (mTargetArray.size() > 0)
-        return mTargetArray[0];
-
-    return nullptr;
+    return tryGetViewTarget(index);
 }
 
 bool CameraTargetHolder::isChangeViewTarget(s32 index) const {
@@ -112,7 +112,7 @@ void CameraTargetHolder::addSubTarget(CameraSubTargetBase* subTarget) {
     mSubTargetArray.pushFront(subTarget);
 }
 
-// NON_MATCHING: https://decomp.me/scratch/x8IJ0
+// NON_MATCHING: https://decomp.me/scratch/qrlL5
 void CameraTargetHolder::removeSubTarget(CameraSubTargetBase* subTarget) {
     s32 index = mSubTargetArray.indexOf(subTarget);
     if (index > -1)
@@ -127,7 +127,7 @@ void CameraTargetHolder::addPlacementSubTarget(CameraSubTargetBase* subTarget) {
     mPlacementSubTargetArray.pushFront(subTarget);
 }
 
-// NON_MATCHING: https://decomp.me/scratch/mTnr8
+// NON_MATCHING: https://decomp.me/scratch/Sv3mo
 void CameraTargetHolder::removePlacementSubTarget(CameraSubTargetBase* subTarget) {
     s32 index = mPlacementSubTargetArray.indexOf(subTarget);
     if (index > -1)
