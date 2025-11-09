@@ -24,5 +24,5 @@ private:
 
 namespace alAnimFunction {
 bool checkPass(f32, f32, f32, bool, f32);
-void createAnimInfoTableIfNeed(const al::AnimInfoTable*, const al::AnimInfoTable*);
+al::AnimInfoTable* createAnimInfoTableIfNeed(const al::AnimInfoTable*, const al::AnimInfoTable*);
 }  // namespace alAnimFunction

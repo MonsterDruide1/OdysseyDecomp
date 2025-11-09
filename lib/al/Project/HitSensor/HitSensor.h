@@ -56,7 +56,7 @@ public:
     void update();
     void addHitSensor(HitSensor* sensor);
 
-    const char* getName() { return mName; }
+    const char* getName() const { return mName; }
 
     void clearSensors() { mSensorCount = 0; }
 
