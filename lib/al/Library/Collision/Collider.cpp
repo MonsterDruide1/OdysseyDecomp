@@ -140,7 +140,8 @@ u32 Collider::storeCurrentHitInfo(SphereHitInfo* buffer, u32 bufferSize) {
             return stored;
         }
 
-        buffer[i + mStoredPlaneNum] = alCollisionUtil::getStrikeSphereInfo(this, i);
+        const al::SphereHitInfo& info = alCollisionUtil::getStrikeSphereInfo(this, i);
+        buffer[i + mStoredPlaneNum] = info;
     }
 
     mStoredPlaneNum += i;

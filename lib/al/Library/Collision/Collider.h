@@ -72,15 +72,15 @@ public:
     u32 get_264() const { return mNoGroundCounter; }
 
     void setReactMovePower(bool isEnabled) {
-        flags1 &= ~1;
-        flags1 |= isEnabled;
+        flags2 &= ~1;
+        flags2 |= isEnabled;
     }
 
-    void validateRobustCheck() { flags1 |= 2; }
+    void validateRobustCheck() { flags2 |= 2; }
 
-    void invalidateRobustCheck() { flags1 &= ~2; }
+    void invalidateRobustCheck() { flags2 &= ~2; }
 
-    bool isCollidedWallFace() { return flags1 >> 5 & 1; }
+    bool isCollidedWallFace() { return flags2 >> 5 & 1; }
 
 private:
     CollisionDirector* mCollisionDirector;
