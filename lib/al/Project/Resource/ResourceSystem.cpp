@@ -28,7 +28,6 @@ ResourceSystem::ResourceSystem(const char* name) {
     }
 }
 
-// NON_MATCHING: Depends on findResourceCategoryIter
 ResourceSystem::ResourceCategory* ResourceSystem::addCategory(const sead::SafeString& name,
                                                               s32 size, sead::Heap* heap) {
     sead::RingBuffer<ResourceCategory*>::iterator iter = findResourceCategoryIter(name);
@@ -43,7 +42,6 @@ ResourceSystem::ResourceCategory* ResourceSystem::addCategory(const sead::SafeSt
     return category;
 }
 
-// NON_MATCHING: Depends on findResourceCategoryIter
 Resource* ResourceSystem::findOrCreateResourceCategory(const sead::SafeString& name,
                                                        const sead::SafeString& category,
                                                        const char* ext) {
@@ -58,7 +56,6 @@ Resource* ResourceSystem::findOrCreateResourceCategory(const sead::SafeString& n
     return createResource(name, *iter, ext);
 }
 
-// NON_MATCHING: bad getter for iterator https://decomp.me/scratch/h44re
 sead::RingBuffer<ResourceSystem::ResourceCategory*>::iterator
 ResourceSystem::findResourceCategoryIter(const sead::SafeString& name) {
     for (auto iter = mCategories.begin(); iter != mCategories.end(); ++iter)
@@ -67,7 +64,6 @@ ResourceSystem::findResourceCategoryIter(const sead::SafeString& name) {
     return mCategories.end();
 }
 
-// NON_MATCHING: Depends on findResourceCategoryIter
 bool ResourceSystem::isEmptyCategoryResource(const sead::SafeString& name) {
     sead::RingBuffer<ResourceCategory*>::iterator iter = findResourceCategoryIter(name);
     if (iter == mCategories.end())
@@ -76,7 +72,6 @@ bool ResourceSystem::isEmptyCategoryResource(const sead::SafeString& name) {
     return (*iter)->treeMap.isEmpty();
 }
 
-// NON_MATCHING: Depends on findResourceCategoryIter
 void ResourceSystem::createCategoryResourceAll(const sead::SafeString& name) {
     if (!mResourceCategoryTable)
         return;
@@ -194,25 +189,28 @@ Resource* ResourceSystem::findOrCreateResource(const sead::SafeString& categoryN
     return createResource(categoryName, findResourceCategory(categoryName), name);
 }
 
-// NON_MATCHING: Depends on findResourceCategoryIter
 ResourceSystem::ResourceCategory*
 ResourceSystem::findResourceCategory(const sead::SafeString& name) {
-    const char* categoryName = findCategoryNameFromTable(name);
+    sead::RingBuffer<ResourceCategory*>::iterator iter(nullptr, 0);
+    bool found = false;
 
+    const char* categoryName = findCategoryNameFromTable(name);
     if (categoryName) {
-        sead::RingBuffer<ResourceCategory*>::iterator iter = findResourceCategoryIter(categoryName);
+        iter = findResourceCategoryIter(categoryName);
         if (iter != mCategories.end())
-            return *iter;
+            found = true;
     }
 
-    const char* currentCategoryName = "シーン";
-    if (mCurrentCategoryName)
-        currentCategoryName = mCurrentCategoryName;
+    if (!found) {
+        const char* currentCategoryName = "シーン";
+        if (mCurrentCategoryName)
+            currentCategoryName = mCurrentCategoryName;
+        iter = findResourceCategoryIter(currentCategoryName);
+    }
 
-    return *findResourceCategoryIter(currentCategoryName);
+    return *iter;
 }
 
-// NON_MATCHING: Depends on findResourceCategoryIter
 void ResourceSystem::loadCategoryArchiveAll(const sead::SafeString& name) {
     if (findResourceCategoryIter(name) == mCategories.end())
         return;
