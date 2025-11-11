@@ -300,11 +300,8 @@ void KaronWingStateHack::exeWait() {
         return;
     }
 
-    if (rs::isOnGround(mActor, this))
-        mStateWingFly->updateFlyLimit();
-
-    if (mStateWingFly->judgeStart())
-        al::setNerve(this, &NrvHostType.WingFly);
+    updateBasePos();
+    tryFly();
 }
 
 void KaronWingStateHack::exeWalk() {
@@ -321,8 +318,7 @@ void KaronWingStateHack::exeWalk() {
         return;
     }
 
-    if (rs::isOnGround(mActor, this))
-        mStateWingFly->updateFlyLimit();
+    updateBasePos();
 
     al::addVelocityToGravity(actor, 1.4f);
     al::scaleVelocityHV(actor, al::calcNerveEaseInValue(this, 12, 0.0f, 0.7f), 1.0f);
@@ -341,10 +337,10 @@ void KaronWingStateHack::exeWalk() {
     al::addVelocity(actor, mPlayerActionTurnControl->get_5c() * 4.0f *
                                rs::calcHackMovePower(*mPlayerHack));
 
-    if (mStateWingFly->judgeStart())
-        al::setNerve(this, &NrvHostType.WingFly);
-    else
-        rs::reboundVelocityPart(actor, this, 0.0f, 0.0f, 0.0f, 0.0f);
+    if (tryFly())
+        return;
+
+    rs::reboundVelocityPart(actor, this, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 void KaronWingStateHack::exeLand() {
@@ -356,10 +352,8 @@ void KaronWingStateHack::exeLand() {
         return;
     }
 
-    if (mStateWingFly->judgeStart()) {
-        al::setNerve(this, &NrvHostType.WingFly);
+    if (tryFly())
         return;
-    }
 
     if (al::isActionEnd(mActor))
         al::setNerve(this, &NrvHostType.Wait);
