@@ -35,7 +35,7 @@ enum class RankingCategory : s32;
 class NexRankingUploader : public al::IUseRanking, public al::LiveActor {
 public:
     NexRankingUploader(const char*, const char*);
-    ~NexRankingUploader() override;
+    virtual ~NexRankingUploader();
 
     void init(const al::ActorInitInfo&) override;
     al::RankingDirector* getRankingDirector() const override;
