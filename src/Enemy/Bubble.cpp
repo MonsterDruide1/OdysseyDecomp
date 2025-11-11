@@ -80,18 +80,18 @@ static al::AnimScaleParam gAnimScaleParam(0.15f, 0.87f, 0.6f, 1.3f, -0.4f, 0.3f,
 static PlayerHackStartShaderParam gPlayerHackStartShaderParam(true, 200.0f, 10, 20);
 
 Bubble::Bubble(const char* name)
-    : al::LiveActor{name}, mAnimScaleController{new al::AnimScaleController(&gAnimScaleParam)} {}
+    : al::LiveActor(name), mAnimScaleController(new al::AnimScaleController(&gAnimScaleParam)) {}
 
 void Bubble::init(const al::ActorInitInfo& initInfo) {
     using BubbleFunctor = al::FunctorV0M<Bubble*, void (Bubble::*)()>;
 
     al::initActorWithArchiveName(this, initInfo, "Bubble", nullptr);
 
-    sead::Vector3f linksTrans;
-    if (al::tryGetLinksTrans(&linksTrans, initInfo, "MoveNext")) {
-        mJumpHeight = sead::Mathf::abs(linksTrans.y - al::getTrans(this).y);
-        if (linksTrans.y < al::getTrans(this).y)
-            al::getTransPtr(this)->set(linksTrans);
+    sead::Vector3f moveNext;
+    if (al::tryGetLinksTrans(&moveNext, initInfo, "MoveNext")) {
+        mJumpHeight = sead::Mathf::abs(moveNext.y - al::getTrans(this).y);
+        if (moveNext.y < al::getTrans(this).y)
+            al::getTransPtr(this)->set(moveNext);
     } else {
         mJumpHeight = 800.0f;
     }
@@ -103,9 +103,11 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
         if (!al::tryGetArg(&mRailMoveFrame, initInfo, "RailMoveFrame") || mRailMoveFrame < 1) {
             f32 railMoveSpeed = 10.0f;
             al::tryGetArg(&railMoveSpeed, initInfo, "RailMoveSpeed");
-            if (railMoveSpeed <= 0.0)
-                railMoveSpeed = 10.0;
+            if (railMoveSpeed <= 0.0f)
+                railMoveSpeed = 10.0f;
             f32 frame = mRailTotalLength / railMoveSpeed;
+
+            // TODO: Replace this with sead::Mathf::ceil
             s32 foffset = (s32)frame == frame ? 0 : (u32)(0.0f <= frame);
             mRailMoveFrame = foffset + (s32)frame;
         }
@@ -149,15 +151,14 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
 
     bool stageStartHack = false;
     al::tryGetArg(&stageStartHack, initInfo, "StageStartHack");
-    if (stageStartHack) {
-        rs::requestStageStartHack(this, al::getHitSensor(this, "Cap"), mCapTargetInfo, nullptr);
-    } else {
+    if (!stageStartHack) {
         al::PlacementInfo placementInfo;
         if (al::tryGetLinksInfo(&placementInfo, initInfo, "MoveNext"))
             al::tryGetArg(&stageStartHack, placementInfo, "StageStartHack");
-        if (stageStartHack)
-            rs::requestStageStartHack(this, al::getHitSensor(this, "Cap"), mCapTargetInfo, nullptr);
     }
+
+    if (stageStartHack)
+        rs::requestStageStartHack(this, al::getHitSensor(this, "Cap"), mCapTargetInfo, nullptr);
 
     mJointSpringControllerHolder =
         al::JointSpringControllerHolder::tryCreateAndInitJointControllerKeeper(this, "Dynamics");
@@ -178,18 +179,18 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
     mCollisionPartsFilter = new al::CollisionPartsFilterSpecialPurpose("Bubble");
 
     al::setColliderFilterCollisionParts(this, mCollisionPartsFilter);
-    mProveActor = new al::LiveActor("グループ同期");
+    mProbeActor = new al::LiveActor("グループ同期");
 
-    al::initActorWithArchiveName(mProveActor, initInfo, "Bubble", "Probe");
+    al::initActorWithArchiveName(mProbeActor, initInfo, "Bubble", "Probe");
 
-    al::setClippingInfo(mProveActor, al::getClippingRadius(this), &mClippingPos);
-    mProveActor->makeActorAlive();
+    al::setClippingInfo(mProbeActor, al::getClippingRadius(this), &mClippingPos);
+    mProbeActor->makeActorAlive();
 
     if (al::isExistRail(this) && al::isExistLinkChild(initInfo, "TurnTarget", 0)) {
         sead::Vector3f trans;
-        al::tryGetLinksQT(&mRailFinalRotation, &trans, initInfo, "TurnTarget");
+        al::tryGetLinksQT(&mRailTargetRotation, &trans, initInfo, "TurnTarget");
     } else {
-        mRailFinalRotation.set(mStartingRotation);
+        mRailTargetRotation.set(mStartingRotation);
     }
 
     mShadowMaskOffset.set(al::getShadowMaskOffset(this, "body"));
@@ -219,11 +220,12 @@ void Bubble::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 
     if (!al::isSensorEnemyAttack(self)) {
         if (al::isSensorName(self, "Cap") || al::isSensorName(self, "CapAbove") ||
-            al::isSensorName(self, "CapBelow") || !al::isSensorName(self, "PechoAttack")) {
+            al::isSensorName(self, "CapBelow")) {
             return;
         }
 
-        rs::sendMsgBubbleAttackToPecho(other, self);
+        if (al::isSensorName(self, "PechoAttack"))
+            rs::sendMsgBubbleAttackToPecho(other, self);
         return;
     }
 
@@ -231,7 +233,7 @@ void Bubble::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         !al::isNerve(this, &NrvBubble.HackCancelJump) && !al::isNerve(this, &NrvBubble.HackFall) &&
         rs::sendMsgBubbleReflectH(other, self)) {
         sead::Vector3f distance = al::getSensorPos(self) - al::getSensorPos(other);
-        distance.y = 0;
+        distance.y = 0.0f;
         al::tryNormalizeOrZero(&distance);
         f32 travel = al::getVelocity(this).dot(distance);
         if (travel < 0.0f)
@@ -331,20 +333,20 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
         if (rs::isMsgBossMagmaDeadDemoEnd(message)) {
             sead::Vector3f endTargetPos;
             rs::tryGetBossMagmaDeadDemoEndTargetPos(message, &endTargetPos);
-            sead::Vector3f fireA;
-            sead::Vector3f fireB;
-            if (al::calcFindFireSurface(&fireA, &fireB, this, mResetTargetPos, sead::Vector3f::ey,
-                                        800.0f)) {
-                sead::Vector3f firepos = mResetTargetPos;
-                firepos.y = fireA.y;
-                al::resetPosition(this, firepos);
+            sead::Vector3f firePos;
+            sead::Vector3f fireNormal;
+            if (al::calcFindFireSurface(&firePos, &fireNormal, this, mResetTargetPos,
+                                        sead::Vector3f::ey, 800.0f)) {
+                sead::Vector3f resetPos = mResetTargetPos;
+                resetPos.y = firePos.y;
+                al::resetPosition(this, resetPos);
                 al::faceToTarget(this, endTargetPos);
                 mJumpForce.set(0.0f, 0.0f, 0.0f);
                 al::setVelocityZero(this);
                 mIsInFire = true;
                 al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
                 mIsInBossSequence = false;
-                mFireSurface.set(fireB);
+                mFireNormal.set(fireNormal);
                 al::setNerve(this, &NrvBubble.HackMove);
             } else {
                 mJumpForce.set(0.0f, 0.0f, 0.0f);
@@ -410,108 +412,119 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
         return true;
     }
 
-    if (!rs::isMsgStartHack(message)) {
-        if (rs::isMsgHackInvalidEscapeNoReaction(message)) {
-            if (mCancelLaunchCooldown != 0)
-                return true;
+    if (rs::isMsgStartHack(message)) {
+        if (!isCurrentNerveEnableLockOnAndStartHack())
+            return false;
 
-            if (al::isNerve(this, &NrvBubble.HackInLauncher))
-                return mBubbleStateInLauncher->isWaiting();
-
+        if (!al::isSensorName(self, "Cap") && !al::isSensorName(self, "CapAbove") &&
+            !al::isSensorName(self, "CapBelow")) {
             return false;
         }
 
-        if (rs::isMsgHackInvalidEscape(message)) {
-            if (!isHack())
-                return false;
+        startHackLocal(self, other);
+        return true;
+    }
 
-            if (!al::isInAreaObj(this, "HackInvalidEscapeArea") &&
-                !al::isNerve(this, &NrvBubble.HackResetPos))
-                return false;
+    if (rs::isMsgHackInvalidEscapeNoReaction(message)) {
+        if (mCancelLaunchCooldown != 0)
+            return true;
 
+        if (al::isNerve(this, &NrvBubble.HackInLauncher))
+            return mBubbleStateInLauncher->isWaiting();
+
+        return false;
+    }
+
+    if (rs::isMsgHackInvalidEscape(message)) {
+        if (!isHack())
+            return false;
+
+        if (!al::isInAreaObj(this, "HackInvalidEscapeArea") &&
+            !al::isNerve(this, &NrvBubble.HackResetPos))
+            return false;
+
+        return true;
+    }
+
+    if (rs::isMsgCancelHack(message) || rs::isMsgCancelHackByDokan(message)) {
+        prepareEndHack();
+        endHackByCancel();
+        return true;
+    }
+
+    if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
+        prepareEndHack();
+        endHackByCancel();
+        al::startVisAnim(this, "CapOff");
+        al::startMtpAnim(this, "CapOff");
+        return true;
+    }
+
+    if (rs::isMsgHackMarioDemo(message)) {
+        al::tryKillEmitterAndParticleAll(this);
+        forceEndHack();
+        return true;
+    }
+
+    if (rs::isMsgHackMarioDead(message)) {
+        forceEndHack();
+        return true;
+    }
+
+    if (rs::isMsgHackSyncDamageVisibility(message)) {
+        if (al::isNerve(this, &NrvBubble.HackInLauncher) || al::isNerve(this, &NrvBubble.HackDemo))
+            return false;
+
+        rs::syncDamageVisibility(this, mPlayerHack);
+        return true;
+    }
+
+    sead::Vector3f breathForce;
+    if (rs::tryGetBossMagmaBreathForce(message, &breathForce)) {
+        if (!al::isSensorName(self, "Cap"))
+            return false;
+
+        sead::Vector3f force = breathForce;
+        if (al::tryNormalizeOrZero(&force)) {
+            f32 forceLength = force.dot(al::getVelocity(this));
+            if (breathForce.length() > forceLength)
+                al::addVelocity(this, breathForce * 0.05f);
+        }
+        return true;
+    }
+
+    if (rs::isMsgBubbleLauncherStart(message)) {
+        if (!al::isSensorName(self, "Body"))
+            return false;
+
+        if (al::isNerve(this, &NrvBubble.HackJump) || al::isNerve(this, &NrvBubble.HackJumpHigh) ||
+            al::isNerve(this, &NrvBubble.HackCancelJump)) {
+            al::setNerve(this, &NrvBubble.HackInLauncher);
             return true;
         }
 
-        if (rs::isMsgCancelHack(message) || rs::isMsgCancelHackByDokan(message)) {
-            prepareEndHack();
-            endHackByCancel();
+        if (al::isNerve(this, &NrvBubble.HackInLauncher) && mPlayerHack) {
+            al::setNerve(this, &NrvBubble.HackInLauncher);
             return true;
         }
+        return false;
+    }
 
-        if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
-            prepareEndHack();
-            endHackByCancel();
-            al::startVisAnim(this, "CapOff");
-            al::startMtpAnim(this, "CapOff");
-            return true;
-        }
+    if (isHack()) {
+        if (!al::isNerve(this, &NrvBubble.HackInLauncher) &&
+            !al::isNerve(this, &NrvBubble.WaitHackStart) &&
+            !al::isNerve(this, &NrvBubble.HackResetPos)) {
+            if (rs::tryReceiveMsgPushToPlayerAndAddVelocityH(this, message, other, self, 3.0f))
+                return true;
 
-        if (rs::isMsgHackMarioDemo(message)) {
-            al::tryKillEmitterAndParticleAll(this);
-            forceEndHack();
-            return true;
-        }
-
-        if (rs::isMsgHackMarioDead(message)) {
-            forceEndHack();
-            return true;
-        }
-
-        if (rs::isMsgHackSyncDamageVisibility(message)) {
-            if (al::isNerve(this, &NrvBubble.HackInLauncher) ||
-                al::isNerve(this, &NrvBubble.HackDemo))
-                return false;
-
-            rs::syncDamageVisibility(this, mPlayerHack);
-            return true;
-        }
-
-        sead::Vector3f breathForce;
-        if (rs::tryGetBossMagmaBreathForce(message, &breathForce)) {
-            if (al::isSensorName(self, "Cap")) {
-                sead::Vector3f force = breathForce;
-                if (al::tryNormalizeOrZero(&force)) {
-                    f32 forceLength = force.dot(al::getVelocity(this));
-                    if (breathForce.length() > forceLength)
-                        al::addVelocity(this, breathForce * 0.05f);
-                }
+            if (rs::isMsgBubbleAttack(message)) {
+                al::pushAndAddVelocityH(this, other, self, 3.0f);
                 return true;
             }
-            return false;
         }
 
-        if (rs::isMsgBubbleLauncherStart(message)) {
-            if (al::isSensorName(self, "Body")) {
-                if (al::isNerve(this, &NrvBubble.HackJump) ||
-                    al::isNerve(this, &NrvBubble.HackJumpHigh) ||
-                    al::isNerve(this, &NrvBubble.HackCancelJump)) {
-                    al::setNerve(this, &NrvBubble.HackInLauncher);
-                    return true;
-                }
-
-                if (!al::isNerve(this, &NrvBubble.HackInLauncher) || mPlayerHack == nullptr)
-                    return false;
-
-                al::setNerve(this, &NrvBubble.HackInLauncher);
-                return true;
-            }
-            return false;
-        }
-
-        if (isHack()) {
-            if (!al::isNerve(this, &NrvBubble.HackInLauncher) &&
-                !al::isNerve(this, &NrvBubble.WaitHackStart) &&
-                !al::isNerve(this, &NrvBubble.HackResetPos)) {
-                if (rs::tryReceiveMsgPushToPlayerAndAddVelocityH(this, message, other, self, 3.0f))
-                    return true;
-
-                if (rs::isMsgBubbleAttack(message)) {
-                    al::pushAndAddVelocityH(this, other, self, 3.0f);
-                    return true;
-                }
-            }
-
-            if (!rs::isMsgHackerDamageAndCancel(message) || rs::isMsgFireDamageAll(message))
+        if (rs::isMsgHackerDamageAndCancel(message)) {
+            if (rs::isMsgFireDamageAll(message))
                 return false;
 
             if (rs::isMsgEnemyAttackFireCollision(message))
@@ -524,43 +537,39 @@ bool Bubble::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
                 if (rs::sendMsgBubbleAttack(other, self))
                     return false;
             }
-
             return rs::requestDamage(mPlayerHack);
         }
+        return false;
+    }
 
-        if (!al::isNoCollide(this) &&
-            al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 3.0f))
-            return true;
+    if (!al::isNoCollide(this) &&
+        al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 3.0f))
+        return true;
 
-        if (!rs::isMsgKillByShineGet(message) && !rs::isMsgKillByHomeDemo(message) &&
-            !rs::isMsgKillByMoonRockDemo(message)) {
-            if (!rs::isMsgHammerBrosHammerHackAttack(message) &&
-                !rs::isMsgHammerBrosHammerEnemyAttack(message))
-                return false;
-
-            if (!al::isNerve(this, &NrvBubble.Up) && !al::isNerve(this, &NrvBubble.Turn) &&
-                !al::isNerve(this, &NrvBubble.Down))
-                return false;
-
-            rs::requestHitReactionToAttacker(message, self, other);
-            return true;
-        }
-
+    if (rs::isMsgKillByShineGet(message) || rs::isMsgKillByHomeDemo(message) ||
+        rs::isMsgKillByMoonRockDemo(message)) {
         al::tryKillEmitterAndParticleAll(this);
         revive();
         return true;
     }
 
-    if (!isCurrentNerveEnableLockOnAndStartHack())
-        return false;
+    if (rs::isMsgHammerBrosHammerHackAttack(message) ||
+        rs::isMsgHammerBrosHammerEnemyAttack(message)) {
+        if (!al::isNerve(this, &NrvBubble.Up) && !al::isNerve(this, &NrvBubble.Turn) &&
+            !al::isNerve(this, &NrvBubble.Down))
+            return false;
 
-    if (al::isSensorName(self, "Cap") || al::isSensorName(self, "CapAbove") ||
-        al::isSensorName(self, "CapBelow")) {
-        startHackLocal(self, other);
+        rs::requestHitReactionToAttacker(message, self, other);
         return true;
     }
-
     return false;
+}
+
+inline s32 getSurfaceProbeIndex(Bubble* bubble) {
+    s32 index = 0;
+    if (al::isExistRail(bubble) && !al::isRailGoingToEnd(bubble))
+        index = 1;
+    return index;
 }
 
 void Bubble::control() {
@@ -580,8 +589,7 @@ void Bubble::control() {
         }
     } else {
         mLavaSurfaceMtx.makeQT(al::getQuat(this), {0.0f, 0.0f, 0.0f});
-        if (al::isExistRail(this))
-            al::isRailGoingToEnd(this);
+        getSurfaceProbeIndex(this);
         al::getTrans(this);
         mLavaSurfaceMtx.setTranslation(al::getTrans(this));
     }
@@ -631,12 +639,12 @@ void Bubble::control() {
         mIsHackOnGround = false;
 
     if (!al::isNerve(this, &NrvBubble.StandBy) && !al::isNerve(this, &NrvBubble.Delay) &&
-        (!isHack() || !rs::isActiveHackStartDemo(mPlayerHack)) && !al::isClipped(mProveActor) &&
+        (!isHack() || !rs::isActiveHackStartDemo(mPlayerHack)) && !al::isClipped(mProbeActor) &&
         !mIsClipped) {
-        mWaitDelayCount = al::modi(mWaitDelayCount + mWaitDelayTime + 1, mWaitDelayTime);
+        mWaitDelayCount = al::modi(mWaitDelayCount + 1 + mWaitDelayTime, mWaitDelayTime);
     }
 
-    mIsClipped = al::isClipped(mProveActor);
+    mIsClipped = al::isClipped(mProbeActor);
     if (!isHack())
         al::scaleVelocityHV(this, 0.9f, 1.0f);
     mCameraMtx.makeQT(mCurrentRotation, {0.0f, 0.0f, 0.0f});
@@ -700,13 +708,13 @@ void Bubble::recalcClippingInfo() {
             al::updateBoundingBox(pos, &max, &min);
         }
 
-        f32 railCoord = al::calcRailCoordByPoint(this, 0);
+        f32 prevRailCoord = al::calcRailCoordByPoint(this, 0);
         for (s32 i = 1; i < pointNum; i++) {
             f32 currentRailCoord = al::calcRailCoordByPoint(this, i);
             sead::Vector3f pos;
-            al::calcRailPosAtCoord(&pos, this, (railCoord + currentRailCoord) * 0.5f);
+            al::calcRailPosAtCoord(&pos, this, (prevRailCoord + currentRailCoord) * 0.5f);
             al::updateBoundingBox(pos, &max, &min);
-            railCoord = currentRailCoord;
+            prevRailCoord = currentRailCoord;
         }
     }
 
@@ -742,7 +750,7 @@ void Bubble::checkEffectPos() {
 
     al::Triangle triangle;
     if (!alCollisionUtil::getFirstPolyOnArrow(
-            this, mSurfaceProvePos, &triangle, al::getTrans(this) + 100.0f * sead::Vector3f::ey,
+            this, mSurfaceProbePos, &triangle, al::getTrans(this) + 100.0f * sead::Vector3f::ey,
             -200.0f * sead::Vector3f::ey, mCollisionPartsFilter, nullptr)) {
         return;
     }
@@ -756,7 +764,8 @@ void Bubble::checkEffectPos() {
     sead::Vector3f railPos;
     al::calcRailPosAtCoord(&railPos, this, al::getRailTotalLength(this));
 
-    if (alCollisionUtil::getFirstPolyOnArrow(this, &mSurfaceProvePos[1], nullptr,
+    // BUG: missing `mCollisionPartsFilter` as parameter
+    if (alCollisionUtil::getFirstPolyOnArrow(this, &mSurfaceProbePos[1], nullptr,
                                              railPos + 100.0f * sead::Vector3f::ey,
                                              -200.0f * sead::Vector3f::ey, nullptr, nullptr)) {
         mIsCheckEffectPosRequired = false;
@@ -829,7 +838,7 @@ void Bubble::updateLavaWave() {
             __asm("");
             *ptr = colliderY + checkPos;
 
-            mFireSurface.set(fireSurface);
+            mFireNormal.set(fireSurface);
             al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
             return;
         }
@@ -837,7 +846,7 @@ void Bubble::updateLavaWave() {
         x1(al::getTransPtr(this), colliderY + checkPos);
 
         mIsInFire = true;
-        mFireSurface.set(fireSurface);
+        mFireNormal.set(fireSurface);
         al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
         return;
     }
@@ -868,16 +877,9 @@ bool Bubble::isOnGround() const {
     return mIsInFire;
 }
 
-inline s32 getSurfaceProveIndex(Bubble* bubble) {
-    s32 index = 0;
-    if (al::isExistRail(bubble) && !al::isRailGoingToEnd(bubble))
-        index = 1;
-    return index;
-}
-
 void Bubble::setupHack() {
     if (!isValidCollisionOrWaveCheck()) {
-        f32 provePos = mSurfaceProvePos[getSurfaceProveIndex(this)].y + al::getColliderRadius(this);
+        f32 provePos = mSurfaceProbePos[getSurfaceProbeIndex(this)].y + al::getColliderRadius(this);
         if (al::getTrans(this).y < provePos)
             al::getTransPtr(this)->y = provePos;
     }
@@ -1004,11 +1006,11 @@ void Bubble::tryStartHitReactionUp() {
     if (mIsOnHitReactionEffect || mIsCheckEffectPosRequired)
         return;
 
-    s32 index = getSurfaceProveIndex(this);
+    s32 index = getSurfaceProbeIndex(this);
 
-    if (mSurfaceProvePos[index].y < al::getTrans(this).y) {
+    if (mSurfaceProbePos[index].y < al::getTrans(this).y) {
         al::startHitReactionHitEffect(this, "発射",
-                                      mSurfaceProvePos[index] + 0.0f * sead::Vector3f::ey);
+                                      mSurfaceProbePos[index] + 0.0f * sead::Vector3f::ey);
         mIsOnHitReactionEffect = true;
     }
 }
@@ -1023,11 +1025,11 @@ void Bubble::tryStartHitReactionDown() {
     if (mIsOnHitReactionEffect || mIsCheckEffectPosRequired)
         return;
 
-    s32 index = getSurfaceProveIndex(this);
+    s32 index = getSurfaceProbeIndex(this);
 
-    if (mSurfaceProvePos[index].y > al::getTrans(this).y) {
+    if (mSurfaceProbePos[index].y > al::getTrans(this).y) {
         al::startHitReactionHitEffect(this, "着地",
-                                      mSurfaceProvePos[index] + 0.0f * sead::Vector3f::ey);
+                                      mSurfaceProbePos[index] + 0.0f * sead::Vector3f::ey);
         mIsOnHitReactionEffect = true;
     }
 }
@@ -1042,13 +1044,13 @@ void Bubble::shiftSink() {
 
         hitEffect = al::getTrans(this) - (al::getColliderRadius(this) + 0.0f) * sead::Vector3f::ey;
     } else {
-        s32 index = getSurfaceProveIndex(this);
+        s32 index = getSurfaceProbeIndex(this);
         if (trySendMsgStartInSaucePan()) {
             al::setNerve(this, &NrvBubble.Sink);
             return;
         }
 
-        hitEffect = mSurfaceProvePos[index] + 0.0f * sead::Vector3f::ey;
+        hitEffect = mSurfaceProbePos[index] + 0.0f * sead::Vector3f::ey;
     }
     al::startHitReactionHitEffect(this, "着地", hitEffect);
     al::setNerve(this, &NrvBubble.Sink);
@@ -1118,12 +1120,12 @@ bool Bubble::tryShiftLand() {
     }
 
     if (al::isOnGround(this, 0))
-        mFireSurface.set(al::getOnGroundNormal(this, 0));
+        mFireNormal.set(al::getOnGroundNormal(this, 0));
     sead::Quatf quat;
-    al::makeQuatRotationRate(&quat, sead::Vector3f::ey, mFireSurface, 1.0f);
+    al::makeQuatRotationRate(&quat, sead::Vector3f::ey, mFireNormal, 1.0f);
     al::getVelocityPtr(this)->rotate(quat);
     sead::Vector3f* velPtr = al::getVelocityPtr(this);
-    al::verticalizeVec(velPtr, mFireSurface, *velPtr);
+    al::verticalizeVec(velPtr, mFireNormal, *velPtr);
 
     if (mPlayerHack) {
         mShiftFallDelay = 0;
@@ -1218,9 +1220,9 @@ void Bubble::updateHackOnGround() {
         al::verticalizeVec(velPtr, sead::Vector3f::ey, *velPtr);
     } else {
         mShiftFallDelay = 0;
-        mFireSurface.set(al::getOnGroundNormal(this, 0));
+        mFireNormal.set(al::getOnGroundNormal(this, 0));
         sead::Vector3f* velPtr = al::getVelocityPtr(this);
-        al::verticalizeVec(velPtr, mFireSurface, *velPtr);
+        al::verticalizeVec(velPtr, mFireNormal, *velPtr);
     }
     updateCollisionPartsMove();
     al::setQuat(this, mCurrentRotation);
@@ -1234,7 +1236,7 @@ void Bubble::updateHackOnGround() {
     al::setQuat(this, quat * al::getQuat(this));
 
     sead::Quatf quat2;
-    al::makeQuatRotationRate(&quat2, mUpDir, mFireSurface, 0.1f);
+    al::makeQuatRotationRate(&quat2, mUpDir, mFireNormal, 0.1f);
     al::setQuat(this, quat2 * al::getQuat(this));
 
     al::calcUpDir(&mUpDir, this);
@@ -1481,7 +1483,7 @@ bool Bubble::tryShiftContinuousJump() {
     al::setNerve(this, &NrvBubble.HackJumpHigh);
 
     if (al::isOnGround(this, 0))
-        mFireSurface.set(al::getOnGroundNormal(this, 0));
+        mFireNormal.set(al::getOnGroundNormal(this, 0));
 
     mShiftFallDelay = 0;
     mLandPos.set(0.0f, 0.0f, 0.0f);
@@ -1775,7 +1777,7 @@ void Bubble::exeRailMove() {
 
     if (al::isGreaterEqualStep(this, mRailMoveFrame)) {
         if (al::isRailGoingToEnd(this))
-            al::setQuat(this, mRailFinalRotation);
+            al::setQuat(this, mRailTargetRotation);
         else
             al::setQuat(this, mStartingRotation);
         al::reverseRail(this);
@@ -1791,7 +1793,7 @@ void Bubble::exeReady() {
                 al::getTrans(this) - (al::getColliderRadius(this) + 0.0f) * sead::Vector3f::ey);
         } else if (!mIsCheckEffectPosRequired) {
             al::startHitReactionHitEffect(this, "予兆",
-                                          mSurfaceProvePos[getSurfaceProveIndex(this)] +
+                                          mSurfaceProbePos[getSurfaceProbeIndex(this)] +
                                               0.0f * sead::Vector3f::ey);
         }
         checkEffectPos();
@@ -2256,16 +2258,16 @@ void Bubble::exeHackLand() {
         if (mIsPlayerCaptured) {
             moveDir.set(0.0f, 0.0f, 0.0f);
             sead::Vector3f* velPtr = al::getVelocityPtr(this);
-            al::parallelizeVec(velPtr, mFireSurface, *velPtr);
+            al::parallelizeVec(velPtr, mFireNormal, *velPtr);
         } else if (!rs::calcHackerMoveDir(&moveDir, mPlayerHack, sead::Vector3f::ey)) {
             sead::Vector3f* velPtr = al::getVelocityPtr(this);
-            al::parallelizeVec(velPtr, mFireSurface, *velPtr);
+            al::parallelizeVec(velPtr, mFireNormal, *velPtr);
         }
 
         al::tryAddRippleMiddle(this);
         mShiftFallDelay = 0;
         al::startBgmSituation(this, "HackBubble", false, true);
-        mUpDir = mFireSurface;
+        mUpDir = mFireNormal;
         mHackTurnFrame = 0;
         mHackTurnDelay = 60;
     }
@@ -2384,7 +2386,7 @@ void Bubble::exeHackResetPos() {
             al::setVelocityZero(this);
             mIsInFire = true;
             al::tryUpdateEffectMaterialCode(this, al::getFireMaterialCode(this));
-            mFireSurface.set(surfaceB);
+            mFireNormal.set(surfaceB);
             al::setNerve(this, &NrvBubble.HackLand);
         }
     }
