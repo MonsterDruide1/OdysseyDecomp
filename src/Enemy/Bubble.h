@@ -166,14 +166,14 @@ private:
     f32 mHackTurnAngle = 0.0f;
     u32 mHackTurnFrame = 1;
     u32 mHackTurnDelay = 1;
-    sead::Vector3f mFireSurface = sead::Vector3f::ey;
-    al::LiveActor* mProveActor = nullptr;
+    sead::Vector3f mFireNormal = sead::Vector3f::ey;
+    al::LiveActor* mProbeActor = nullptr;
     bool mIsClipped = false;
     s32 mWaitDelay = 0;
     sead::Vector3f mPreviousTrans = {0.0f, 0.0f, 0.0f};
     sead::Matrix34f _24c = sead::Matrix34f::ident;
     bool mIsWaveCheckOn = false;
-    sead::Quatf mRailFinalRotation = sead::Quatf::unit;
+    sead::Quatf mRailTargetRotation = sead::Quatf::unit;
     sead::Vector3f mShadowMaskOffset = {0.0f, 0.0f, 0.0f};
     f32 mShadowMaskDropLength = 0;
     s32 mCancelLaunchCooldown = 0;
@@ -181,7 +181,7 @@ private:
     u32 mJumpDelay = 15;
     al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilter = nullptr;
     bool mIsCheckEffectPosRequired = true;
-    sead::Vector3f mSurfaceProvePos[2];
+    sead::Vector3f mSurfaceProbePos[2];
     bool mIsOnHitReactionEffect = true;
     sead::Matrix34f mLavaSurfaceMtx = sead::Matrix34f::ident;
     const char* mMaterialCode = "";
