@@ -17,6 +17,7 @@ private:
     s32 mSize = 0;
     s32 mCount = 0;
     s32 mValidCount = 0;
+    // `mValidCount` valid targets first, followed by invalid ones up to `mCount`
     ScreenPointTarget** mScreenPointTargets = nullptr;
 };
 
