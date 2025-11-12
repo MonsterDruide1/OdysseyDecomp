@@ -104,7 +104,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
     al::initAudioDirector3D(this, info, audioDirectorInitInfo);
 
     al::initSceneAudioKeeper(this, info, nullptr);
-    alAudioSystemFunction::disableAudioMaximizer(info.gameSysInfo);
+    alAudioSystemFunction::disableAudioMaximizer(info.gameSystemInfo);
 
     ProjectCameraPoserFactory* projectCameraPoserFactory = new ProjectCameraPoserFactory();
     al::initCameraDirectorWithoutStageResource(this, projectCameraPoserFactory);
