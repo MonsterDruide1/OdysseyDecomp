@@ -49,14 +49,16 @@ SaveObjInfo* createSaveObjInfoNoWriteSaveDataInSameScenario(const al::ActorInitI
 void onSaveObjInfo(SaveObjInfo* saveObjInfo);
 void offSaveObjInfo(SaveObjInfo* saveObjInfo);
 bool isOnSaveObjInfo(const SaveObjInfo* saveObjInfo);
-void setGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId*, const al::PlacementId*,
-                       u64 time);
-void setGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId*, u64 time);
-u64 getGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId*);
-bool isUsedGrowFlowerSeed(const al::LiveActor* actor, const al::PlacementId*);
-void addGrowFlowerGrowLevel(const al::LiveActor* actor, const al::PlacementId*, u32 growLevel);
-u32 getGrowFlowerGrowLevel(const al::LiveActor* actor, const al::PlacementId*);
-const char* findGrowFlowerPotIdFromSeedId(const al::LiveActor* actor, const al::PlacementId*);
+void setGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId* placement1,
+                       const al::PlacementId* placement2, u64 time);
+void setGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId* placement, u64 time);
+u64 getGrowFlowerTime(const al::LiveActor* actor, const al::PlacementId* placement);
+bool isUsedGrowFlowerSeed(const al::LiveActor* actor, const al::PlacementId* placement);
+void addGrowFlowerGrowLevel(const al::LiveActor* actor, const al::PlacementId* placement,
+                            u32 growLevel);
+u32 getGrowFlowerGrowLevel(const al::LiveActor* actor, const al::PlacementId* placement);
+const char* findGrowFlowerPotIdFromSeedId(const al::LiveActor* actor,
+                                          const al::PlacementId* placement);
 bool isPlayFirstTimeBalloon(const al::LiveActor* actor);
 void playTimeBalloonFirst(const al::LiveActor* actor);
 void onShortExplainGet(const al::LiveActor* actor);
@@ -90,8 +92,8 @@ void resetExistKoopaShip(const KoopaShip* koopaShip);
 bool isExistKoopaShip(const ShineTowerRocket* shineTowerRocket);
 bool isExistKoopaShipInSky(const ShineTowerRocket* shineTowerRocket);
 bool tryUnlockShineName(const al::LiveActor* actor, s32 shineIdx);
-void calcShineIndexTableNameAvailable(s32*, s32*, const al::LiveActor* actor);
-void calcShineIndexTableNameUnlockable(s32*, s32*, const al::LiveActor* actor);
+void calcShineIndexTableNameAvailable(s32* unk, s32* out, const al::LiveActor* actor);
+void calcShineIndexTableNameUnlockable(s32* unk, s32* out, const al::LiveActor* actor);
 s32 calcWorldIdByWorldWarpHole(const WorldWarpHole* worldWarpHole, const char* changeStageId);
 bool checkIsOpenWorldWarpHoleCurrentScenario(const WorldWarpHole* worldWarpHole);
 bool isKidsMode(const al::LiveActor* actor);
@@ -103,31 +105,34 @@ bool isEnableCapMessageLifeOneKidsMode(const al::LiveActor* actor);
 void disableCapMessageLifeOneKidsMode(const al::LiveActor* actor);
 bool isInvalidChangeStage(const al::LiveActor* actor);
 bool isSequenceTimeBalloonOrRace(const al::LiveActor* actor);
-bool isSequenceTimeBalloonOrRace(const al::LiveActor* actor);
+bool isSequenceTimeBalloonOrRace(const GameDataHolder* holder);
 bool isTreasureBoxDeadStage(const al::LiveActor* actor);
-void findRaceRecord(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                    const al::LiveActor* actor, const char* raceName);
-void findRaceRecord(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                    const al::Scene* actor, const char* raceName);
-void findRaceRecordRaceManRace(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                               const al::Scene* scene);
-void findRaceRecordRaceManRace(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                               const al::LiveActor* actor);
-void findRaceRecordRaceManRaceWithWorldId(bool* isExistRecord, bool*, s32* record, s32*,
-                                          s32* lapRecord, const al::Scene* scene, s32 worldId);
-void findRaceRecordRaceManRaceWithWorldId(bool* isExistRecord, bool*, s32* record, s32*,
-                                          s32* lapRecord, const al::LiveActor* actor, s32 worldId);
-void findRaceRecordRadicon(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                           const al::Scene* scene);
-void findRaceRecordRadicon(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                           const al::LiveActor* actor);
-void findRaceRecordYukimaru(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                            const al::Scene* scene, s32 level);
-void findRaceRecordYukimaru(bool* isExistRecord, bool*, s32* record, s32*, s32* lapRecord,
-                            const al::LiveActor* actor, s32 level);
-void writeRaceRecord(const al::LiveActor* actor, const char* raceName, s32 record, s32,
+void findRaceRecord(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                    s32* lapRecord, const al::LiveActor* actor, const char* raceName);
+void findRaceRecord(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                    s32* lapRecord, const al::Scene* scene, const char* raceName);
+void findRaceRecordRaceManRace(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                               s32* lapRecord, const al::Scene* scene);
+void findRaceRecordRaceManRace(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                               s32* lapRecord, const al::LiveActor* actor);
+void findRaceRecordRaceManRaceWithWorldId(bool* isExistRecord, bool* isRecordSet, s32* record,
+                                          s32* bestRecord, s32* lapRecord, const al::Scene* scene,
+                                          s32 worldId);
+void findRaceRecordRaceManRaceWithWorldId(bool* isExistRecord, bool* isRecordSet, s32* record,
+                                          s32* bestRecord, s32* lapRecord,
+                                          const al::LiveActor* actor, s32 worldId);
+void findRaceRecordRadicon(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                           s32* lapRecord, const al::Scene* scene);
+void findRaceRecordRadicon(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                           s32* lapRecord, const al::LiveActor* actor);
+void findRaceRecordYukimaru(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                            s32* lapRecord, const al::Scene* scene, s32 level);
+void findRaceRecordYukimaru(bool* isExistRecord, bool* isRecordSet, s32* record, s32* bestRecord,
+                            s32* lapRecord, const al::LiveActor* actor, s32 level);
+void writeRaceRecord(const al::LiveActor* actor, const char* raceName, s32 record, s32 bestRecord,
                      s32 lapRecord);
-void writeRaceRecord(const al::Scene* scene, const char* raceName, s32 record, s32, s32 lapRecord);
+void writeRaceRecord(const al::Scene* scene, const char* raceName, s32 record, s32 bestRecord,
+                     s32 lapRecord);
 s32 getJumpingRopeBestCount(const al::LiveActor* actor);
 s32 getJumpingRopeBestCount(const al::Scene* scene);
 void setJumpingRopeBestCount(const al::LiveActor* actor, s32 count);
@@ -159,14 +164,15 @@ bool checkGetEnoughShine(const al::LiveActor* actor, s32 count);
 bool checkGetEnoughShineInCurrentWorld(const al::LiveActor* actor);
 void setFlagOnStartKoopaCapture(const al::LiveActor* actor);
 bool isStartKoopaCapture(const al::LiveActor* actor);
-bool isAlreadyTalkPrevWorldInWorldWarp(const al::LiveActor* actor, s32);
-bool isAlreadyTalkNextWorldInWorldWarp(const al::LiveActor* actor, s32);
-void setAlreadyTalkPrevWorldInWorldWarp(const al::LiveActor* actor, s32);
-void setAlreadyTalkNextWorldInWorldWarp(const al::LiveActor* actor, s32);
+bool isAlreadyTalkPrevWorldInWorldWarp(const al::LiveActor* actor, s32 worldId);
+bool isAlreadyTalkNextWorldInWorldWarp(const al::LiveActor* actor, s32 worldId);
+void setAlreadyTalkPrevWorldInWorldWarp(const al::LiveActor* actor, s32 worldId);
+void setAlreadyTalkNextWorldInWorldWarp(const al::LiveActor* actor, s32 worldId);
 bool checkNeedTalkPrevWorld(const al::LiveActor* actor);
 s32 getTipsIdInWorldWarp(const al::LiveActor* actor);
 void addTipsIdInWorldWarp(const al::LiveActor* actor);
-void setTalkSpecialInWorldWarp(const al::LiveActor* actor, bool, bool);
+void setTalkSpecialInWorldWarp(const al::LiveActor* actor, bool isTalkFindKoopa,
+                               bool isTalkBossRaid);
 bool isTalkFindKoopaInWorldWarp(const al::LiveActor* actor);
 bool isTalkBossRaidInWorldWarp(const al::LiveActor* actor);
 bool isClearMainScenario(const al::LiveActor* actor, s32 worldId);
@@ -182,7 +188,7 @@ void explainShopCoin(const al::LiveActor* actor);
 bool checkShowNewItemAndPrepareSave(const al::LiveActor* actor);
 bool isInNormalCoinShopFirst(const al::LiveActor* actor);
 void offInNormalCoinShopFirst(const al::LiveActor* actor);
-bool checkExistNewShopItem(const al::LiveActor* actor, s32, s32, bool);
+bool checkExistNewShopItem(const al::LiveActor* actor, s32 unk1, s32 unk2, bool unk3);
 CapMessageBossData* getCapMessageBossData(const al::LiveActor* actor);
 void getYoshiFruit(SaveObjInfo* saveObjInfo);
 bool isGetYoshiFruit(const SaveObjInfo* saveObjInfo);
@@ -194,8 +200,8 @@ bool isTalkCollectBgmNpc(const al::LiveActor* actor);
 void talkCollectBgmNpc(const al::LiveActor* actor);
 s32 getTokimekiMayorNpcFavorabilityRating(const al::LiveActor* actor);
 void setTokimekiMayorNpcFavorabilityRating(const al::LiveActor* actor, s32 rating);
-bool tryFindCoinStackSave(s32*, const al::LiveActor* actor, const al::PlacementId*);
-void saveCoinStack(const al::LiveActor* actor, const al::PlacementId*, s32);
+bool tryFindCoinStackSave(s32* out, const al::LiveActor* actor, const al::PlacementId* placement);
+void saveCoinStack(const al::LiveActor* actor, const al::PlacementId* placement, s32 value);
 bool isCollectedBgmCityWorldCelemony(const al::LiveActor* actor);
 bool isCollectedBgmCityWorldCelemony2D(const al::LiveActor* actor);
 s32 calcGetShineNumCollectedBgm(GameDataHolderAccessor accessor);
