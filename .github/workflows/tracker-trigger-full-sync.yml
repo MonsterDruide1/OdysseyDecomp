@@ -8,6 +8,7 @@ on:
 jobs:
   api-trigger-workflow:
     runs-on: ubuntu-latest
+    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
     steps:
       - name: Curl the api to start workflow 
         run: |
