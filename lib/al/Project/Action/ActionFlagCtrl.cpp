@@ -19,7 +19,7 @@ ActionSensorCtrlInfo::ActionSensorCtrlInfo() = default;
 ActionFlagCtrlInfo::ActionFlagCtrlInfo() = default;
 
 ActionFlagCtrl::ActionFlagCtrl(LiveActor* actor, const char* name)
-    : mParentActor(actor), mName(createStringIfInStack(name)) {}
+    : mParentActor(actor), mArchiveName(createStringIfInStack(name)) {}
 
 ActionFlagCtrl* ActionFlagCtrl::tryCreate(LiveActor* actor, const char* name) {
     if (!isExistModelResource(actor))
@@ -47,10 +47,10 @@ void ActionFlagCtrl::initPost() {
     mHitSensorKeeper = mParentActor->getHitSensorKeeper();
 
     sead::FixedSafeString<128> initFileName;
-    tryGetActorInitFileName(&initFileName, mParentActor, "ActionFlagCtrl", mName);
+    tryGetActorInitFileName(&initFileName, mParentActor, "ActionFlagCtrl", mArchiveName);
 
     ByamlIter fileIter;
-    tryGetActorInitFileIter(&fileIter, mParentActor, initFileName.cstr(), mName);
+    tryGetActorInitFileIter(&fileIter, mParentActor, initFileName.cstr(), mArchiveName);
 
     mInfoCount = fileIter.getSize();
     mCtrlInfoArray = new ActionFlagCtrlInfo*[mInfoCount];
@@ -74,15 +74,15 @@ void ActionFlagCtrl::initPost() {
             flagCtrlInfo->sensorCtrlInfoArray =
                 new ActionSensorCtrlInfo[mHitSensorKeeper->getSensorNum()];
 
-            for (s32 e = 0; e < mHitSensorKeeper->getSensorNum(); e++) {
+            for (s32 j = 0; j < mHitSensorKeeper->getSensorNum(); j++) {
                 ActionSensorCtrlInfo* sensorInfoArray = flagCtrlInfo->sensorCtrlInfoArray;
-                sensorInfoArray[e].name = mHitSensorKeeper->getSensor(e)->getName();
+                sensorInfoArray[j].name = mHitSensorKeeper->getSensor(j)->getName();
 
                 ByamlIter sensorIter;
-                if (sensorListIter.tryGetIterByKey(&sensorIter, sensorInfoArray[e].name)) {
-                    sensorInfoArray[e].state = getCtrlFlagByKey(sensorIter, "State");
-                    tryGetByamlS16(&sensorInfoArray[e].startFrame, sensorIter, "StartFrame");
-                    tryGetByamlS16(&sensorInfoArray[e].endFrame, sensorIter, "EndFrame");
+                if (sensorListIter.tryGetIterByKey(&sensorIter, sensorInfoArray[j].name)) {
+                    sensorInfoArray[j].state = getCtrlFlagByKey(sensorIter, "State");
+                    tryGetByamlS16(&sensorInfoArray[j].startFrame, sensorIter, "StartFrame");
+                    tryGetByamlS16(&sensorInfoArray[j].endFrame, sensorIter, "EndFrame");
                 }
             }
         }
@@ -90,9 +90,9 @@ void ActionFlagCtrl::initPost() {
 }
 
 void ActionFlagCtrl::start(const char* name) {
-    mLastCtrlInfo = findFlagInfo(name);
+    mCurrentCtrlInfo = findFlagInfo(name);
     mIsUpdateNeeded = false;
-    if (!mLastCtrlInfo)
+    if (!mCurrentCtrlInfo)
         return;
 
     startCtrlFlag();
@@ -140,7 +140,7 @@ void ActionFlagCtrl::startCtrlSensor() {
         return;
 
     for (s32 i = 0; i < mHitSensorKeeper->getSensorNum(); i++) {
-        ActionSensorCtrlInfo* sensor = mLastCtrlInfo->sensorCtrlInfoArray;
+        ActionSensorCtrlInfo* sensor = mCurrentCtrlInfo->sensorCtrlInfoArray;
         if (sensor[i].startFrame > 0) {
             mIsUpdateNeeded = true;
             continue;
@@ -163,7 +163,7 @@ void ActionFlagCtrl::startCtrlSensor() {
 }
 
 void ActionFlagCtrl::update(f32 frame, f32 frameRateMax, f32 frameRate, bool isStop) {
-    if (!mLastCtrlInfo || !mIsUpdateNeeded)
+    if (!mCurrentCtrlInfo || !mIsUpdateNeeded)
         return;
     if (!mHitSensorKeeper)
         return;
@@ -173,26 +173,28 @@ void ActionFlagCtrl::update(f32 frame, f32 frameRateMax, f32 frameRate, bool isS
 
 void ActionFlagCtrl::updateCtrlSensor(f32 frame, f32 frameRateMax, f32 frameRate, bool isStop) {
     for (s32 i = 0; i < mHitSensorKeeper->getSensorNum(); i++) {
-        ActionSensorCtrlInfo* ctrlInfo = mLastCtrlInfo->sensorCtrlInfoArray;
+        ActionSensorCtrlInfo* ctrlInfo = mCurrentCtrlInfo->sensorCtrlInfoArray;
 
         f32 startFrame = ctrlInfo[i].startFrame;
-        if (0 < startFrame &&
+        if (startFrame > 0 &&
             alAnimFunction::checkPass(frame, frameRateMax, frameRate, isStop, startFrame))
             validateHitSensor(mParentActor, ctrlInfo[i].name);
 
         f32 endFrame = ctrlInfo[i].endFrame;
-        if (0 < endFrame &&
+        if (endFrame > 0 &&
             alAnimFunction::checkPass(frame, frameRateMax, frameRate, isStop, endFrame))
             invalidateHitSensor(mParentActor, ctrlInfo[i].name);
     }
 }
 
 bool ActionFlagCtrl::isFlagValidOn(s32 index, bool isEnabled) const {
-    return mLastCtrlInfo && mLastCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOn && !isEnabled;
+    return mCurrentCtrlInfo && mCurrentCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOn &&
+           !isEnabled;
 }
 
 bool ActionFlagCtrl::isFlagValidOff(s32 index, bool isEnabled) const {
-    return mLastCtrlInfo && mLastCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOff && isEnabled;
+    return mCurrentCtrlInfo && mCurrentCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOff &&
+           isEnabled;
 }
 
 }  // namespace al

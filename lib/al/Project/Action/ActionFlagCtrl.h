@@ -54,11 +54,11 @@ public:
 
 private:
     LiveActor* mParentActor;
-    const char* mName;
+    const char* mArchiveName;
     HitSensorKeeper* mHitSensorKeeper = nullptr;
     s32 mInfoCount = 0;
     ActionFlagCtrlInfo** mCtrlInfoArray = nullptr;
-    ActionFlagCtrlInfo* mLastCtrlInfo = nullptr;
+    ActionFlagCtrlInfo* mCurrentCtrlInfo = nullptr;
     bool mIsUpdateNeeded = false;
 };
 
