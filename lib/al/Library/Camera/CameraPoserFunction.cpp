@@ -11,12 +11,13 @@
 #include "CameraTargetHolder.h"
 #include "CameraViewInfo.h"
 #include "Library/Base/StringUtil.h"
+#include "Library/Camera/CameraArrowCollider.h"
 #include "Library/Camera/CameraPoser.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Projection/Projection.h"
 #include "Library/Play/Camera/CameraVerticalAbsorber.h"
-#include "Library/Camera/CameraArrowCollider.h"
+#include "Library/Projection/Projection.h"
 #include "Project/Camera/CameraSubTargetTurnParam.h"
+#include "nn/util.h"
 
 namespace alCameraPoserFunction {
 
@@ -682,5 +683,6 @@ void initCameraArrowColliderWithoutThroughPassCollision(al::CameraPoser* cameraP
     cameraArrowCollider->set_48c(true);
     cameraPoser->initArrowCollider(cameraArrowCollider);
 }
+
 
 }  // namespace alCameraPoserFunction
