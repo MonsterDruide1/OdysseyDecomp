@@ -41,7 +41,7 @@ CameraTargetBase* CameraTargetHolder::tryGetViewTarget(s32 index) const {
         return target;
 
     if (mTargetArray.size() > 0)
-        return mTargetArray[0];
+        return mTargetArray.front();
 
     return nullptr;
 }
@@ -62,7 +62,7 @@ void CameraTargetHolder::update() {
     if (!mSubTargetArray.isEmpty())
         topSubTarget = mSubTargetArray.front();
     else if (!mPlacementSubTargetArray.isEmpty())
-        topSubTarget = mPlacementSubTargetArray[0];
+        topSubTarget = mPlacementSubTargetArray.front();
 
     mHasTopSubTargetChanged = mTopSubTarget != topSubTarget;
     mTopSubTarget = topSubTarget;

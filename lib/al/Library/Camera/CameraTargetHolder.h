@@ -11,6 +11,7 @@ class CameraSubTargetBase;
 
 struct ViewTargetInfo {
     CameraTargetBase* target = nullptr;
+    // Note: s8 is used instead of bool to match isChangeViewTarget
     s8 hasTargetChanged = false;
 };
 
