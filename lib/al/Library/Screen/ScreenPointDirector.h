@@ -17,9 +17,11 @@ public:
     bool hitCheckSegment(ScreenPointer* screenPointer,
                          sead::ObjArray<ScreenPointTargetHitInfo>* targetHitInfo, s32 size,
                          const sead::Vector3f& posStart, const sead::Vector3f& posEnd);
+    // TODO: Check meaning of radius and screenRadius
     bool hitCheckScreenCircle(ScreenPointer* screenPointer,
                               sead::ObjArray<ScreenPointTargetHitInfo>* targetHitInfo, s32 size,
                               const sead::Vector2f& pos, f32 radius, f32 screenRadius);
+    // TODO: Check meaning of radius and screenRadius
     bool hitCheckLayoutCircle(ScreenPointer* screenPointer,
                               sead::ObjArray<ScreenPointTargetHitInfo>* targetHitInfo, s32 size,
                               const sead::Vector2f& pos, f32 radius, f32 layoutRadius,
