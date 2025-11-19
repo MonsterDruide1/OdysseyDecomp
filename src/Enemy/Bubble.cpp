@@ -105,11 +105,7 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
             al::tryGetArg(&railMoveSpeed, initInfo, "RailMoveSpeed");
             if (railMoveSpeed <= 0.0f)
                 railMoveSpeed = 10.0f;
-            f32 frame = mRailTotalLength / railMoveSpeed;
-
-            // TODO: Replace this with sead::Mathf::ceil
-            s32 foffset = (s32)frame == frame ? 0 : (u32)(0.0f <= frame);
-            mRailMoveFrame = foffset + (s32)frame;
+            mRailMoveFrame = sead::Mathf::ceil(mRailTotalLength / railMoveSpeed);
         }
     }
 
