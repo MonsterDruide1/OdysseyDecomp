@@ -1323,11 +1323,11 @@ void makeQuatRotationRate(sead::Quatf* outQuat, const sead::Vector3f& vecA,
     sead::Vector3f axis;
     f32 radian = 0.0f;
     if (!getAxisAngleFromTwoVec(&axis, &radian, vecA, vecB)) {
-        outQuat->set(1.0f, 0.0f, 0.0f, 0.0f);
+        outQuat->makeUnit();
         return;
     }
 
-    makeQuatRotateRadian(outQuat, axis, radian * rate);
+    makeQuatRotateRadian(outQuat, axis, rate * radian);
 }
 
 bool makeQuatRotationLimit(sead::Quatf* outQuat, const sead::Vector3f& vecA,
@@ -1339,16 +1339,16 @@ bool makeQuatRotationLimit(sead::Quatf* outQuat, const sead::Vector3f& vecA,
         return false;
     }
 
-    bool isClamped = limit < radian;
+    bool isNotClamped = limit < radian;
     f32 rate = sead::Mathf::clamp(limit / radian, 0.0f, 1.0f);
     makeQuatRotateRadian(outQuat, axis, rate * radian);
 
-    return isClamped;
+    return isNotClamped;
 }
 
 void makeQuatAxisRotation(sead::Quatf* outQuat, const sead::Vector3f& vecA,
-                          const sead::Vector3f& vecB, const sead::Vector3f& vecC, f32 rotation) {
-    makeQuatRotateDegree(outQuat, vecC, calcAngleOnPlaneDegree(vecA, vecB, vecC) * rotation);
+                          const sead::Vector3f& vecB, const sead::Vector3f& axis, f32 rotation) {
+    makeQuatRotateDegree(outQuat, axis, calcAngleOnPlaneDegree(vecA, vecB, axis) * rotation);
 }
 
 void makeQuatRotateDegree(sead::Quatf* outQuat, const sead::Vector3f& axis, f32 angle) {
@@ -1391,6 +1391,7 @@ f32 calcQuatFrontY(const sead::Quatf& quat) {
 
 void calcQuatRotateDegree(sead::Vector3f* outVec, const sead::Quatf& quat) {
     calcQuatRotateRadian(outVec, quat);
+    // TODO: potentially add `sead` function to convert Vec3 between deg/rad?
     outVec->set(*outVec * (180.0f / sead::Mathf::pi()));
 }
 
@@ -1403,7 +1404,7 @@ void calcQuatRotateAxisAndDegree(sead::Vector3f* outAxis, f32* outDegree, const 
     f32 len = outAxis->length();
     f32 quatW = quat.w;
 
-    if (sead::Mathf::abs(len) < 0.001f)
+    if (isNearZero(len))
         outAxis->set(sead::Vector3f::zero);
     else
         *outAxis *= 1.0f / len;
@@ -1412,7 +1413,7 @@ void calcQuatRotateAxisAndDegree(sead::Vector3f* outAxis, f32* outDegree, const 
     f32 degree = modf(sead::Mathf::rad2deg(2.0f * radian) + 360.0f, 360.0f) + 0.0f;
 
     if (degree >= 180.0f)
-        degree += -360.0f;
+        degree -= 360.0f;
     *outDegree = degree;
 }
 
@@ -1510,6 +1511,7 @@ void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead:
     sead::Vector3f axis;
     tryNormalizeOrZero(&axis, vec);
 
+    // rotateQuatRadian(...)
     sead::Quatf rotation;
     rotation.setAxisRadian(axis, radian);
 
@@ -1526,6 +1528,7 @@ void rotateQuatMomentDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
     sead::Vector3f axis;
     tryNormalizeOrZero(&axis, vec);
 
+    // rotateQuatDegree(...)
     sead::Quatf rotation;
     rotation.setAxisAngle(axis, degree);
 

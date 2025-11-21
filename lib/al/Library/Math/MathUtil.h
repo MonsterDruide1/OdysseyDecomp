@@ -297,7 +297,7 @@ void makeQuatRotationRate(sead::Quatf* outQuat, const sead::Vector3f& vecA,
 bool makeQuatRotationLimit(sead::Quatf* outQuat, const sead::Vector3f& vecA,
                            const sead::Vector3f& vecB, f32 limit);
 void makeQuatAxisRotation(sead::Quatf* outQuat, const sead::Vector3f& vecA,
-                          const sead::Vector3f& vecB, const sead::Vector3f& vecC, f32 rotation);
+                          const sead::Vector3f& vecB, const sead::Vector3f& axis, f32 rotation);
 void makeQuatRotateDegree(sead::Quatf* outQuat, const sead::Vector3f& axis, f32 angle);
 void slerpQuat(sead::Quatf* outQuat, const sead::Quatf& quatA, const sead::Quatf& quatB, f32 rate);
 void calcQuatSide(sead::Vector3f* outVec, const sead::Quatf& quat);
