@@ -1,33 +1,52 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
+class HitSensor;
 class LiveActor;
-}
+class SensorMsg;
+}  // namespace al
+
 class ExternalForceKeeper;
 class IUsePlayerCollision;
 
 class PlayerExternalVelocity {
 public:
+    PlayerExternalVelocity(const al::LiveActor* actor, const IUsePlayerCollision* collision,
+                           const sead::Vector3f* trans);
+
+    bool receiveMsgPlayer(const al::SensorMsg* msg, al::HitSensor* self, al::HitSensor* other);
+    bool receiveMsgCap(const al::SensorMsg* msg, al::HitSensor* self, al::HitSensor* other);
+    void requestApplyLastGroundInertia();
+    void cancelAndFeedbackLastGroundInertia(al::LiveActor* actor, f32 strength, bool isFrontOnly);
+    void update();
+    void updatePadRumbleExternalForce();
+    void updateLastGroundForce(bool isOnGround);
+    void reset();
     bool isExistForce() const;
     bool isExistSnapForce() const;
 
 private:
-    ExternalForceKeeper* mExternalForceKeeper;
-    sead::Vector3f _8;
-    sead::Vector3f _14;
-    sead::Vector3f _20;
-    const al::LiveActor* mActor;
-    const IUsePlayerCollision* mCollision;
-    const sead::Vector3f* _38;
-    bool _40;
-    sead::Vector3f _44;
-    f32 _50[6];
-    sead::Vector3f mSnapForce;
-    s32 mApplyLastGroundInertia;
-    sead::Vector3f _80;
-    sead::Vector3f _8c;
+    ExternalForceKeeper* mExternalForceKeeper = nullptr;
+    sead::Vector3f mExternalVelocity = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mAreaVelocity = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mTotalVelocity = {0.0f, 0.0f, 0.0f};
+    const al::LiveActor* mActor = nullptr;
+    const IUsePlayerCollision* mCollision = nullptr;
+    const sead::Vector3f* mTrans = nullptr;
+    bool mIsRumbleActive = false;
+    sead::Vector3f mExternalForce = {0.0f, 0.0f, 0.0f};
+
+    sead::Vector2f mExternalDrag = {0.95f, 0.955f};
+    sead::Vector2f mAreaDrag = {0.95f, 0.955f};
+    sead::Vector2f mSensitivity = {0.275f, 0.275f};
+
+    sead::Vector3f mSnapForce = {0.0f, 0.0f, 0.0f};
+    s32 mGroundInertiaType = 0;
+    sead::Vector3f mMovePowerForce = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mLastGroundInertia = {0.0f, 0.0f, 0.0f};
 };
 
 static_assert(sizeof(PlayerExternalVelocity) == 0x98);
