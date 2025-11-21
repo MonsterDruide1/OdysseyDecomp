@@ -875,9 +875,9 @@ bool Bubble::isOnGround() const {
 
 void Bubble::setupHack() {
     if (!isValidCollisionOrWaveCheck()) {
-        f32 provePos = mSurfaceProbePos[getSurfaceProbeIndex(this)].y + al::getColliderRadius(this);
-        if (al::getTrans(this).y < provePos)
-            al::getTransPtr(this)->y = provePos;
+        f32 probePos = mSurfaceProbePos[getSurfaceProbeIndex(this)].y + al::getColliderRadius(this);
+        if (al::getTrans(this).y < probePos)
+            al::getTransPtr(this)->y = probePos;
     }
 
     al::invalidateClipping(this);
