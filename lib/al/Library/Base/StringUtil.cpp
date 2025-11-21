@@ -281,16 +281,10 @@ void makeUrlDecodeString(char* out, u32 outLen, const char* str) {
             newSymbols[0] = ' ';
             bytesRead = 1;
         } else if (str[0] == '%') {
-            char offset1 = 10 - 'A';
-            char offset2 = 10 - 'A';
+            u8 val1 = str[1] < 'A' ? str[1] - '0' : str[1] - 'A' + 10;
+            u8 val2 = str[2] < 'A' ? str[2] - '0' : str[2] - 'A' + 10;
 
-            if (str[2] < 'A')
-                offset2 = -'0';
-            if (str[1] < 'A')
-                offset1 = -'0';
-
-            // hex string to char
-            newSymbols[0] = (offset1 + str[1]) * 0x10 | (offset2 + str[2]);
+            newSymbols[0] = (val1 << 4) | val2;
             bytesRead = 3;
         } else {
             newSymbols[0] = str[0];
