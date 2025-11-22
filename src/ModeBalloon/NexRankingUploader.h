@@ -6,6 +6,7 @@
 
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Ranking/IUseRanking.h"
+
 #include "System/RankingCategory.h"
 
 namespace al {
