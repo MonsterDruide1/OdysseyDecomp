@@ -45,7 +45,7 @@ ResourceSystem::ResourceCategory* ResourceSystem::addCategory(const sead::SafeSt
 Resource* ResourceSystem::findOrCreateResourceCategory(const sead::SafeString& name,
                                                        const sead::SafeString& category,
                                                        const char* ext) {
-    Resource* resource = findResourceCore(name, nullptr);
+    Resource* resource = findResource(name);
     if (resource)
         return resource;
 
@@ -202,17 +202,16 @@ ResourceSystem::findResourceCategory(const sead::SafeString& name) {
     }
 
     if (!found) {
-        const char* currentCategoryName = "シーン";
-        if (mCurrentCategoryName)
-            currentCategoryName = mCurrentCategoryName;
-        iter = findResourceCategoryIter(currentCategoryName);
+        const char* fallbackCategoryName = "シーン";
+        iter = findResourceCategoryIter(mCurrentCategoryName ?: fallbackCategoryName);
     }
 
     return *iter;
 }
 
 void ResourceSystem::loadCategoryArchiveAll(const sead::SafeString& name) {
-    if (findResourceCategoryIter(name) == mCategories.end())
+    sead::RingBuffer<ResourceCategory*>::iterator iter = findResourceCategoryIter(name);
+    if (iter == mCategories.end())
         return;
 
     for (s32 i = 0; i < mResourceCategoryTable->getSize(); i++) {
@@ -220,11 +219,11 @@ void ResourceSystem::loadCategoryArchiveAll(const sead::SafeString& name) {
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i))
             continue;
 
-        const char* iterName = nullptr;
-        if (!categoryIter.tryGetStringByKey(&iterName, "Category"))
+        const char* category = nullptr;
+        if (!categoryIter.tryGetStringByKey(&category, "Category"))
             continue;
 
-        if (!isEqualString(iterName, name.cstr()))
+        if (!isEqualString(category, name.cstr()))
             continue;
 
         ByamlIter arcsIter;
