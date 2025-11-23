@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out OdysseyHeaders project
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: MonsterDruide1/OdysseyHeaders
         path: ./OdysseyHeaders

@@ -16,17 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out OdysseyDecomp project
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         submodules: recursive
     - name: Check out branch if in PR
       if: ${{ github.event_name == 'pull_request_target' }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
     - name: Check out OdysseyHeaders project
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: MonsterDruide1/OdysseyHeaders
         path: ./OdysseyHeaders
