@@ -107,43 +107,43 @@ void PlayerPushReceiver::calcOnlyCollidePushVec(sead::Vector3f* outCollidePushVe
 }
 
 void PlayerPushReceiver::calcPushedVelocity(sead::Vector3f* outPushedVelocity,
-                                            const sead::Vector3f& push) const {
+                                            const sead::Vector3f& velocity) const {
     sead::Vector3f pushVec;
     calcPushVec(&pushVec);
-    calcPushedVelocityCommon(outPushedVelocity, push, pushVec);
+    calcPushedVelocityCommon(outPushedVelocity, velocity, pushVec);
 }
 
 void PlayerPushReceiver::calcPushedVelocityCommon(sead::Vector3f* outPushedVelocity,
-                                                  const sead::Vector3f& push,
+                                                  const sead::Vector3f& velocity,
                                                   const sead::Vector3f& pushVec) const {
     sead::Vector3f pushDir{0.0f, 0.0f, 0.0f};
     if (!al::tryNormalizeOrZero(&pushDir, pushVec)) {
-        outPushedVelocity->set(push);
+        outPushedVelocity->set(velocity);
         return;
     }
 
     f32 pushForce = pushVec.length();
-    f32 maxPushForce = pushDir.dot(push);
+    f32 maxPushForce = pushDir.dot(velocity);
 
     f32 pushOffset = 1.0f;
-    sead::Vector3f pushDir1{0.0f, 0.0f, 0.0f};
+    sead::Vector3f velocityDir{0.0f, 0.0f, 0.0f};
 
-    if (al::tryNormalizeOrZero(&pushDir1, push)) {
-        f32 limit = sead::Mathf::clamp(1.0f - pushDir.dot(pushDir1), 0.0f, 1.0f);
-        pushOffset = sead::Mathf::clamp(-limit * maxPushForce, 1.0f, pushForce * 0.9f);
+    if (al::tryNormalizeOrZero(&velocityDir, velocity)) {
+        f32 rate = sead::Mathf::clamp(1.0f - pushDir.dot(velocityDir), 0.0f, 1.0f);
+        pushOffset = sead::Mathf::clamp(-rate * maxPushForce, 1.0f, pushForce * 0.9f);
     }
 
     f32 force = sead::Mathf::clampMin(pushForce - pushOffset, 0.0f);
     pushForce = sead::Mathf::clampMin(maxPushForce, force);
 
-    al::verticalizeVec(outPushedVelocity, pushDir, push);
+    al::verticalizeVec(outPushedVelocity, pushDir, velocity);
     outPushedVelocity->setScaleAdd(pushForce, pushDir, *outPushedVelocity);
 }
 
 void PlayerPushReceiver::calcPushedVelocityWithCollide(sead::Vector3f* outPushedVelocity,
-                                                       const sead::Vector3f& push,
+                                                       const sead::Vector3f& velocity,
                                                        const IUsePlayerCollision* collision,
-                                                       f32 limit) const {
+                                                       f32 collisionRadius) const {
     sead::Vector3f pushVec;
     calcPushVec(&pushVec);
 
@@ -152,14 +152,14 @@ void PlayerPushReceiver::calcPushedVelocityWithCollide(sead::Vector3f* outPushed
         sead::Vector3f trans = al::getTrans(mActor);
 
         f32 distance = sead::Mathf::clampMin(
-            limit - wallNormal.dot(trans - rs::getCollidedWallPos(collision)), 0.0f);
+            collisionRadius - wallNormal.dot(trans - rs::getCollidedWallPos(collision)), 0.0f);
 
         if (distance >= 5.0f) {
             f32 dotPushVec = wallNormal.dot(pushVec);
-            f32 dotPush = wallNormal.dot(push);
+            f32 dotVelocity = wallNormal.dot(velocity);
 
             f32 pushDistance = sead::Mathf::clampMin(
-                al::sign(dotPush * dotPushVec) * sead::Mathf::abs(dotPush), 0.0f);
+                al::sign(dotVelocity * dotPushVec) * sead::Mathf::abs(dotVelocity), 0.0f);
 
             f32 pushForce = sead::Mathf::abs(dotPushVec);
             f32 maxPushForce = sead::Mathf::clampMin(35.0f - distance - pushDistance, 0.0f);
@@ -172,5 +172,5 @@ void PlayerPushReceiver::calcPushedVelocityWithCollide(sead::Vector3f* outPushed
         }
     }
 
-    calcPushedVelocityCommon(outPushedVelocity, push, pushVec);
+    calcPushedVelocityCommon(outPushedVelocity, velocity, pushVec);
 }

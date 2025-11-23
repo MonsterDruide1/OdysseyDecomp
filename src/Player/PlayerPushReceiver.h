@@ -31,12 +31,14 @@ public:
     void cutPushVec(const sead::Vector3f& pushVec);
     void calcPushVec(sead::Vector3f* outPushVec) const;
     void calcOnlyCollidePushVec(sead::Vector3f* outCollidePushVec) const;
-    void calcPushedVelocity(sead::Vector3f* outPushedVelocity, const sead::Vector3f& push) const;
-    void calcPushedVelocityCommon(sead::Vector3f* outPushedVelocity, const sead::Vector3f& push,
+    void calcPushedVelocity(sead::Vector3f* outPushedVelocity,
+                            const sead::Vector3f& velocity) const;
+    void calcPushedVelocityCommon(sead::Vector3f* outPushedVelocity, const sead::Vector3f& velocity,
                                   const sead::Vector3f& pushVec) const;
     void calcPushedVelocityWithCollide(sead::Vector3f* outPushedVelocity,
-                                       const sead::Vector3f& push,
-                                       const IUsePlayerCollision* collision, f32 limit) const;
+                                       const sead::Vector3f& velocity,
+                                       const IUsePlayerCollision* collision,
+                                       f32 collisionRadius) const;
 
 private:
     const al::LiveActor* mActor = nullptr;
