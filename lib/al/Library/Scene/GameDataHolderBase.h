@@ -5,5 +5,6 @@
 #include "Library/Scene/ISceneObj.h"
 
 namespace al {
-class GameDataHolderBase {};
+
+class GameDataHolderBase : public ISceneObj, public HioNode, public IUseMessageSystem {};
 }  // namespace al

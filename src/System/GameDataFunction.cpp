@@ -217,7 +217,7 @@ bool isMissEndPrevStageForSceneDead(GameDataHolderAccessor accessor) {
 }
 
 void reenterStage(GameDataHolderWriter writer) {
-    writer->set_4a();
+    writer->setIsStageEnding();
 }
 
 s32 getNextWorldId(GameDataHolderAccessor accessor) {
