@@ -20,40 +20,40 @@ bool isInitializedSaveData() {
     return getSaveDataDirector()->isInitialized();
 }
 
-bool requestInitSaveDir(const char* name, u32 a, u32 b) {
-    return getSaveDataDirector()->requestInitSaveDir(name, a, b);
+bool requestInitSaveDir(const char* fileName, u32 dirSize, u32 version) {
+    return getSaveDataDirector()->requestInitSaveDir(fileName, dirSize, version);
 }
 
 bool requestFormatSaveData(s32 a, s32 b) {
     return getSaveDataDirector()->requestFormat(a, b);
 }
 
-bool requestReadSaveData(const char* name, u32 a, u32 b) {
-    return getSaveDataDirector()->requestRead(name, a, b);
+bool requestReadSaveData(const char* fileName, u32 readSize, u32 version) {
+    return getSaveDataDirector()->requestRead(fileName, readSize, version);
 }
 
-bool requestWriteSaveData(const char* name, u32 a, u32 b, bool c) {
-    return getSaveDataDirector()->requestWrite(name, a, b, c);
+bool requestWriteSaveData(const char* fileName, u32 writeSize, u32 version, bool isFlushNeeded) {
+    return getSaveDataDirector()->requestWrite(fileName, writeSize, version, isFlushNeeded);
 }
 
 bool requestFlushSaveData() {
     return getSaveDataDirector()->requestFlush();
 }
 
-bool initSaveDirSync(const char* name, u32 b, u32 c) {
-    return getSaveDataDirector()->initSaveDirSync(name, b, c);
+bool initSaveDirSync(const char* fileName, u32 dirSize, u32 version) {
+    return getSaveDataDirector()->initSaveDirSync(fileName, dirSize, version);
 }
 
 bool formatSaveDataSync(s32 a, s32 b) {
     return getSaveDataDirector()->formatSync(a, b);
 }
 
-bool readSaveDataSync(const char* name, u32 a, u32 b) {
-    return getSaveDataDirector()->readSync(name, a, b);
+bool readSaveDataSync(const char* fileName, u32 readSize, u32 version) {
+    return getSaveDataDirector()->readSync(fileName, readSize, version);
 }
 
-bool writeSaveDataSync(const char* name, u32 a, u32 b) {
-    return getSaveDataDirector()->writeSync(name, a, b);
+bool writeSaveDataSync(const char* fileName, u32 writeSize, u32 isFlushNeeded) {
+    return getSaveDataDirector()->writeSync(fileName, writeSize, isFlushNeeded);
 }
 
 void copyReadSaveDataFromBuffer(void* buffer, u32 size) {
@@ -79,10 +79,7 @@ bool isDoneSaveDataSequence() {
 }
 
 bool isCorruptedSaveDataSequenceRead() {
-    return alProjectInterface::getSystemKit()
-        ->getSaveDataDirector()
-        ->getReadSequence()
-        ->isCorrupted();
+    return getSaveDataDirector()->getReadSequence()->isCorrupted();
 }
 
 bool isCorruptedSaveDataSequenceResult() {

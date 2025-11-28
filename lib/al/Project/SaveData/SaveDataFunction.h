@@ -12,9 +12,9 @@ struct SaveDataHeader {
 
 static_assert(sizeof(SaveDataHeader) == 0xc);
 
-SaveDataHeader* getSaveDataHeader(u8*);
-const SaveDataHeader* getSaveDataHeader(const u8*);
-u32 calcSaveDataCheckSum(const u8*);
+SaveDataHeader* getSaveDataHeader(u8* buffer);
+const SaveDataHeader* getSaveDataHeader(const u8* buffer);
+u32 calcSaveDataCheckSum(const u8* buffer);
 s32 makeInvalidResult();
 
 }  // namespace al::SaveDataFunction
