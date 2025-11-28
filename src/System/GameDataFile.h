@@ -164,7 +164,7 @@ public:
     void setOriginalHintTrans(s32);
     PlayerHitPointData* getPlayerHitPointData() const;
     void startDemoStage(const char*);
-    void changeNextStage(const char*);
+    void changeNextStage(const ChangeStageInfo*, s32);
     void returnPrevStage();
     void changeNextStageWithDemoWorldWarp(const char*);
     void changeNextStageWithWorldWarpHole(const char*);
@@ -396,6 +396,8 @@ public:
     bool isEnableOpenMoonRock(s32) const;
     bool tryWriteByByaml(al::ByamlWriter*) const;
 
+    s64 getSaveDataIdForPrepo() const { return mSaveDataIdForPrepo; }
+
     bool isHintNpcFirstTalk() const { return mIsHintNpcFirstTalk; }
 
     void hintNpcFirstTalk() { mIsHintNpcFirstTalk = true; }
@@ -462,6 +464,8 @@ public:
 
     ShopTalkData* getShopTalkData() const { return mShopTalkData; }
 
+    void setWarpHoleWorldId(s32 worldId) { mWarpHoleWorldId = worldId; }
+
     bool isEnableCapMessageLifeOneKidsMode() const { return mIsEnableCapMessageLifeOneKidsMode; }
 
     void disableCapMessageLifeOneKidsMode() { mIsEnableCapMessageLifeOneKidsMode = false; }
@@ -473,6 +477,8 @@ public:
     sead::FixedSafeString<64>* getStickerName() { return mStickerNamePtr; }
 
     sead::FixedSafeString<64>* getGiftName() { return mGiftNamePtr; }
+
+    GameProgressData* getGameProgressData() { return mGameProgressData; }
 
 private:
     char _000[0x18];
@@ -589,7 +595,9 @@ private:
     s32 mWorldMapNum;
     FixedHeapArray<s32, sNumWorlds> mWorldWarpIndex;
     s32 mWorldWarpNum;
-    char _b5c[0x9];
+    char _b5c[0x4];
+    s32 mWarpHoleWorldId;
+    bool _b64;
     bool mIsEnableCapMessageLifeOneKidsMode;
     char _b66[0x2];
 
