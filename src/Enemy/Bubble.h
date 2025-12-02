@@ -153,8 +153,8 @@ private:
     sead::Quatf mStartingRotation = sead::Quatf::unit;
     sead::Vector3f mResetPosition = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mRevivePosition = {0.0f, 0.0f, 0.0f};
-    bool mIsInFire = false;
-    sead::Vector3f mLandPos = {0.0f, 0.0f, 0.0f};
+    bool mIsOnLavaSurface = false;
+    sead::Vector3f mLandVelocity = {0.0f, 0.0f, 0.0f};
     BubbleStateInLauncher* mBubbleStateInLauncher = nullptr;
     al::CameraTicket* mCameraTicket = nullptr;
     al::ActorMatrixCameraTarget* mActorMatrixCameraTarget = nullptr;
@@ -177,7 +177,7 @@ private:
     sead::Vector3f mShadowMaskOffset = {0.0f, 0.0f, 0.0f};
     f32 mShadowMaskDropLength = 0;
     s32 mCancelLaunchCooldown = 0;
-    sead::Vector3f mColliderPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mColliderGroundOffset = {0.0f, 0.0f, 0.0f};
     u32 mJumpDelay = 15;
     al::CollisionPartsFilterSpecialPurpose* mCollisionPartsFilter = nullptr;
     bool mIsCheckEffectPosRequired = true;
