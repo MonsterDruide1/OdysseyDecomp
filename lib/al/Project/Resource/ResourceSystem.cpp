@@ -3,6 +3,7 @@
 #include <container/seadStrTreeMap.h>
 #include <heap/seadHeapMgr.h>
 
+#include "Library/Audio/System/AudioKeeperFunction.h"
 #include "Library/Base/Macros.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
@@ -156,11 +157,59 @@ Resource* ResourceSystem::createResource(const sead::SafeString& name, ResourceC
     return resource->getFileArchive() ? resource : nullptr;
 }
 
-void cleanupResGraphicsFile(const sead::SafeString& key, Resource* resource) {
+void cleanupResGraphicsFile(sead::SafeString& key, Resource* resource) {
     resource->cleanupResGraphicsFile();
 }
 
-// void ResourceSystem::removeCategory(const sead::SafeString& name) {}
+class ResourceAudio {
+public:
+    ResourceAudio(ResourceSystem::ResourceAudioInfo* info) : audioPlayerInfo(info) {}
+
+    void disableSoundMemoryPoolHandler(sead::TreeMapImpl<sead::SafeString>::Node* node) {
+        ResourceSystem::ResourceAudioInfo* info = audioPlayerInfo;
+
+        if (node->key().comparen(info->filePath, info->filePath.calcLength()) != 0)
+            return;
+
+        SeadAudioPlayer* audioPlayer =
+            alAudioSystemFunction::tryFindAudioPlayerRegistedSoundMemoryPoolHandler(
+                node->key().cstr(), info->audioPlayerA, info->audioPlayerB);
+
+        if (audioPlayer) {
+            while (!alAudioSystemFunction::tryDisableSoundMemoryPoolHandlerByFilePath(
+                node->key().cstr(), audioPlayer)) {
+            }
+        }
+    }
+
+private:
+    ResourceSystem::ResourceAudioInfo* audioPlayerInfo;
+};
+
+// NON_MATCHING: https://decomp.me/scratch/R5MuA
+void ResourceSystem::removeCategory(const sead::SafeString& name) {
+    ResourceAudioInfo audioPlayerInfo(mAudioPlayerA, mAudioPlayerB, "SoundData/");
+
+    auto iter = findResourceCategoryIter(name);
+    if (iter == mCategories.end())
+        return;
+
+    (*iter)->treeMap.forEach(&cleanupResGraphicsFile);
+
+    ResourceCategory* category = *iter;
+    {
+        ResourceAudio ctx(&audioPlayerInfo);
+
+        using MapImpl = sead::TreeMapImpl<sead::SafeString>;
+        sead::Delegate1<ResourceAudio, MapImpl::Node*> delegate(
+            &ctx, &ResourceAudio::disableSoundMemoryPoolHandler);
+
+        category->treeMap.forEach2(delegate);
+    }
+
+    (*iter)->treeMap.clear();
+    mCategories.remove(iter.getIndex());
+}
 
 Resource* ResourceSystem::findResource(const sead::SafeString& categoryName) {
     return findResourceCore(categoryName, nullptr);
