@@ -20,4 +20,4 @@ private:
     AreaObjDirector* mAreaObjDirector = nullptr;
     AreaObjGroup* mAreaObjGroup = nullptr;
 };
-}
+}  // namespace al

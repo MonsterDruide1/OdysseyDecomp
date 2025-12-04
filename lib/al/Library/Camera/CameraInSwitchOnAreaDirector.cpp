@@ -1,4 +1,4 @@
-#include "CameraInSwitchOnAreaDirector.h"
+#include "Library/Camera/CameraInSwitchOnAreaDirector.h"
 
 #include <math/seadVector.h>
 
