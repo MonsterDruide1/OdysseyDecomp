@@ -20,4 +20,6 @@ private:
     AreaObjDirector* mAreaObjDirector = nullptr;
     AreaObjGroup* mAreaObjGroup = nullptr;
 };
+
+static_assert(sizeof(CameraInSwitchOnAreaDirector) == 0x20);
 }  // namespace al
