@@ -28,11 +28,11 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
     mCurActorCount++;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/9V8dS
+// NON_MATCHING: https://decomp.me/scratch/I9OJk
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
     sead::FixedSafeString<0x80> actorInitFileName;
-    s32 creatorCount;
-    const u8* modelResourceYaml;
+    s32 creatorCount = 0;
+    const u8* modelResourceYaml = nullptr;
 
     if (isExistModelResource(mRootActor) &&
         !tryGetActorInitFileName(&actorInitFileName, mRootActor, "InitSubActor", suffix))
@@ -51,28 +51,24 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
         ByamlIter creatorIter;
         if (modelResourceIter.tryGetIterByKey(&creatorIter, "CreatorList"))
             creatorCount = creatorIter.getSize();
-        else
-            creatorCount = 0;
-    } else {
-        modelResourceYaml = nullptr;
-        creatorCount = 0;
     }
 
-    s32 actorCount = maxSubActors + creatorCount;
-    mMaxActorCount = actorCount;
-    mBuffer = new SubActorInfo*[maxSubActors + creatorCount];
+    mMaxActorCount = maxSubActors + creatorCount;
+    mBuffer = new SubActorInfo*[mMaxActorCount];
 
-    if (actorCount >= 1 && mMaxActorCount >= 2)
-        for (s32 i = 1; i < mMaxActorCount; ++i)
-            mBuffer[i] = nullptr;
+    for (s32 i = 0; i < mMaxActorCount; ++i)
+        mBuffer[i] = nullptr;
 
-    if (modelResourceYaml && creatorCount > 0) {
+    if (!modelResourceYaml)
+        return;
+
+    // TODO: finish the logic for this, it seems like theres some heavy optimizations going on,
+    // making it tough to figure out original logic
+    if (creatorCount > 0) {
         ByamlIter modelResourceIter(modelResourceYaml);
         ByamlIter creatorIter;
         modelResourceIter.tryGetIterByKey(&creatorIter, "CreatorList");
 
-        // TODO: finish the logic for this, it seems like theres some heavy optimizations going on,
-        // making it tough to figure out original logic
         for (s32 i = 0; i < creatorCount; ++i) {
             ByamlIter subActorIter;
             creatorIter.tryGetIterByIndex(&subActorIter, i);
@@ -113,108 +109,89 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
             bool isCalcDepthShadowLength = true;
             tryGetByamlBool(&isCalcDepthShadowLength, subActorIter, "IsCalcDepthShadowLength");
 
-            if (actorClassName && !isEqualString(actorClassName, "LiveActor")) {
-                if (isEqualString(actorClassName, "PartsModel")) {
-                    const char* actorFixFileSuffixName =
-                        tryGetByamlKeyStringOrNULL(subActorIter, "FixFileSuffixName");
-                    PartsModel* partsModel = new PartsModel(actorObjectName);
-                    partsModel->initPartsFixFileNoRegister(mRootActor, initInfo, actorModelName,
-                                                           actorSuffix, actorFixFileSuffixName);
-                    actorInfo->subActor = partsModel;
-
-                    actorInfo->syncType =
-                        (!isGotSyncAppear ? actorInfo->syncType | SubActorSync::cAppear :
-                                            actorInfo->syncType) |
-                        SubActorSync::cClipping;
-
-                    if (isExistModel(partsModel)) {
-                        actorInfo->syncType =
-                            (!isGotSyncHide ? actorInfo->syncType | SubActorSync::cHide :
-                                              actorInfo->syncType) |
-                            SubActorSync::cAlphaMask;
-                    }
-                } else if (isEqualString(actorClassName, "BreakModel")) {
-                    const char* actionName = tryGetByamlKeyStringOrNULL(subActorIter, "ActionName");
-                    const char* jointName = tryGetByamlKeyStringOrNULL(subActorIter, "JointName");
-
-                    sead::Matrix34f* jointMtxPtr =
-                        jointName ? getJointMtxPtr(mRootActor, jointName) : nullptr;
-
-                    if (!actionName)
-                        actionName = "Break";
-
-                    BreakModel* breakModel =
-                        new BreakModel(mRootActor, actorObjectName, actorModelName, actorSuffix,
-                                       jointMtxPtr, actionName);
-
-                    initCreateActorNoPlacementInfo(breakModel, initInfo);
-                    actorInfo->subActor = breakModel;
-                } else if (isEqualString(actorClassName, "SilhouetteModel")) {
-                    actorInfo->subActor =
-                        new SilhouetteModel(mRootActor, initInfo, actorCategoryName);
-                } else if (isEqualString(actorClassName, "DepthShadowModel")) {
-                    actorInfo->subActor = new DepthShadowModel(
-                        mRootActor, initInfo, actorCategoryName ? actorCategoryName : actorSuffix,
-                        isCalcDepthShadowLength);
-
-                    continue;
-                } else if (isEqualString(actorClassName, "InvincibleModel")) {
-                    actorInfo->subActor =
-                        new ModelDrawParts("無敵モデル", mRootActor, initInfo, actorCategoryName);
-                } else {
-                    if (!isEqualString(actorClassName, "SimpleCircleShadowXZ")) {
-                        if (isEqualString(actorClassName, "CollisionObj")) {
-                            const char* collSuffixName =
-                                tryGetByamlKeyStringOrNULL(subActorIter, "CollisionSuffixName");
-                            const char* collName =
-                                tryGetByamlKeyStringOrNULL(subActorIter, "CollisionName");
-                            const char* sensorName =
-                                tryGetByamlKeyStringOrNULL(subActorIter, "SensorName");
-                            const char* fileSuffixName =
-                                tryGetByamlKeyStringOrNULL(subActorIter, "InitFileSuffixName");
-                            const char* jointName =
-                                tryGetByamlKeyStringOrNULL(subActorIter, "JointName");
-
-                            if (!collName)
-                                collName = collSuffixName;
-
-                            const char* newSensorName = sensorName ? sensorName : collSuffixName;
-
-                            if (fileSuffixName)
-                                collSuffixName = fileSuffixName;
-
-                            auto* sensor = getHitSensor(mRootActor, newSensorName);
-
-                            actorInfo->subActor = createCollisionObj(
-                                mRootActor, initInfo, collName, sensor, jointName, collSuffixName);
-                            if (actorObjectName)
-                                actorInfo->subActor->setName(actorObjectName);
-
-                            continue;
-                        }
-
-                        actorInfo->subActor = new LiveActor(actorObjectName);
-                        initActorWithArchiveName(actorInfo->subActor, initInfo, actorModelName,
-                                                 actorSuffix);
-
-                        continue;
-                    }
-
-                    SimpleCircleShadowXZ* dropShadow = new SimpleCircleShadowXZ(actorObjectName);
-                    dropShadow->initSimpleCircleShadow(mRootActor, initInfo, actorModelName,
-                                                       actorSuffix);
-                    actorInfo->subActor = dropShadow;
-                }
-            } else {
+            if (!actorClassName || isEqualString(actorClassName, "LiveActor")) {
                 actorInfo->subActor = new LiveActor(actorObjectName);
-
-                if (isUseHostPlacementInfo) {
+                if (isUseHostPlacementInfo)
                     initActorWithArchiveName(actorInfo->subActor, initInfo, actorModelName,
                                              actorSuffix);
-                } else {
+                else
                     initChildActorWithArchiveNameNoPlacementInfo(actorInfo->subActor, initInfo,
                                                                  actorModelName, actorSuffix);
+            } else if (isEqualString(actorClassName, "PartsModel")) {
+                const char* actorFixFileSuffixName =
+                    tryGetByamlKeyStringOrNULL(subActorIter, "FixFileSuffixName");
+                PartsModel* partsModel = new PartsModel(actorObjectName);
+                partsModel->initPartsFixFileNoRegister(mRootActor, initInfo, actorModelName,
+                                                       actorSuffix, actorFixFileSuffixName);
+                actorInfo->subActor = partsModel;
+
+                if (!isGotSyncAppear)
+                    actorInfo->syncType |= SubActorSync::cAppear;
+                actorInfo->syncType |= SubActorSync::cClipping;
+
+                if (isExistModel(partsModel)) {
+                    if (!isGotSyncHide)
+                        actorInfo->syncType |= SubActorSync::cHide;
+                    actorInfo->syncType |= SubActorSync::cAlphaMask;
                 }
+            } else if (isEqualString(actorClassName, "BreakModel")) {
+                const char* actionName = tryGetByamlKeyStringOrNULL(subActorIter, "ActionName");
+                const char* jointName = tryGetByamlKeyStringOrNULL(subActorIter, "JointName");
+
+                sead::Matrix34f* jointMtxPtr = nullptr;
+                if (jointName)
+                    jointMtxPtr = getJointMtxPtr(mRootActor, jointName);
+
+                if (!actionName)
+                    actionName = "Break";
+
+                BreakModel* breakModel = new BreakModel(mRootActor, actorObjectName, actorModelName,
+                                                        actorSuffix, jointMtxPtr, actionName);
+                initCreateActorNoPlacementInfo(breakModel, initInfo);
+                actorInfo->subActor = breakModel;
+            } else if (isEqualString(actorClassName, "SilhouetteModel")) {
+                actorInfo->subActor = new SilhouetteModel(mRootActor, initInfo, actorCategoryName);
+            } else if (isEqualString(actorClassName, "DepthShadowModel")) {
+                if (actorModelName) {
+                    actorInfo->subActor = new DepthShadowModel(
+                        mRootActor, initInfo, actorModelName, actorSuffix, isCalcDepthShadowLength);
+                } else {
+                    actorInfo->subActor = new DepthShadowModel(
+                        mRootActor, initInfo, actorCategoryName, isCalcDepthShadowLength);
+                }
+            } else if (isEqualString(actorClassName, "InvincibleModel")) {
+                actorInfo->subActor =
+                    new ModelDrawParts("無敵モデル", mRootActor, initInfo, actorCategoryName);
+            } else if (isEqualString(actorClassName, "SimpleCircleShadowXZ")) {
+                SimpleCircleShadowXZ* dropShadow = new SimpleCircleShadowXZ(actorObjectName);
+                dropShadow->initSimpleCircleShadow(mRootActor, initInfo, actorModelName,
+                                                   actorSuffix);
+                actorInfo->subActor = dropShadow;
+            } else if (isEqualString(actorClassName, "CollisionObj")) {
+                const char* collSuffixName =
+                    tryGetByamlKeyStringOrNULL(subActorIter, "CollisionSuffixName");
+                const char* collName = tryGetByamlKeyStringOrNULL(subActorIter, "CollisionName");
+                const char* sensorName = tryGetByamlKeyStringOrNULL(subActorIter, "SensorName");
+                const char* fileSuffixName =
+                    tryGetByamlKeyStringOrNULL(subActorIter, "InitFileSuffixName");
+                const char* jointName = tryGetByamlKeyStringOrNULL(subActorIter, "JointName");
+
+                if (!collName)
+                    collName = collSuffixName;
+                if (!sensorName)
+                    sensorName = collSuffixName;
+                if (fileSuffixName)
+                    collSuffixName = fileSuffixName;
+
+                auto* sensor = getHitSensor(mRootActor, sensorName);
+                actorInfo->subActor = createCollisionObj(mRootActor, initInfo, collName, sensor,
+                                                         jointName, collSuffixName);
+                if (actorObjectName)
+                    actorInfo->subActor->setName(actorObjectName);
+            } else {
+                actorInfo->subActor = new LiveActor(actorObjectName);
+                initActorWithArchiveName(actorInfo->subActor, initInfo, actorModelName,
+                                         actorSuffix);
             }
 
             initActorModelForceCubeMap(actorInfo->subActor, initInfo);
@@ -228,6 +205,8 @@ void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32
             bool isShow = false;
             if (tryGetByamlBool(&isShow, subActorIter, "IsShow") && !isShow)
                 hideModel(actorInfo->subActor);
+
+            mCurActorCount++;
         }
     }
 }
