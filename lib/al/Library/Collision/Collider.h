@@ -24,15 +24,15 @@ class Collider : public HioNode, public IUseCollision {
 public:
     Collider(CollisionDirector*, const sead::Matrix34f*, const sead::Vector3f*,
              const sead::Vector3f*, f32, f32, u32);
-    void calcCheckPos(sead::Vector3f*);
+    void calcCheckPos(sead::Vector3f*) const;
     void calcMovePowerByContact(sead::Vector3f*, const sead::Vector3f&);
     void clear();
     void clearContactPlane();
     void clearStoredPlaneNum();
     sead::Vector3f collide(const sead::Vector3f&);
     void findCollidePos(s32*, SphereInterpolator*, SphereHitInfo*, u32);
-    Triangle* getPlane(s32);
-    const sead::Vector3f& getRecentOnGroundNormal(u32);
+    Triangle* getPlane(s32) const;
+    const sead::Vector3f& getRecentOnGroundNormal(u32) const;
     void obtainMomentFixReaction(SphereHitInfo*, sead::Vector3f*, sead::Vector3f*, bool, u32);
     void onInvalidate();
     void preCollide(SphereInterpolator*, sead::Vector3f*, f32*, const sead::Vector3f&,
