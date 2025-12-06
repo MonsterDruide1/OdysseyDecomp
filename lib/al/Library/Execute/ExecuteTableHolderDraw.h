@@ -1,6 +1,6 @@
 #pragma once
 
-#include <container/seadPtrArray.h>
+#include <basis/seadTypes.h>
 
 namespace al {
 struct ExecuteOrder;
@@ -22,17 +22,18 @@ public:
     virtual ~ExecuteTableHolderDraw();
     void init(const char* name, const ExecuteSystemInitInfo& initInfo, const ExecuteOrder* orders,
               s32 orderCount);
-    void registerExecutorListActorModel(ExecutorListActorModelDrawBase* listActorModel);
-    void registerExecutorListActor(ExecutorListActorDraw* listActor);
-    void registerExecutorListLayout(ExecutorListLayoutDrawBase* listLayout);
-    void registerExecutorListUser(ExecutorListIUseExecutorDraw* listUser);
-    void registerExecutorListFunctor(ExecutorListFunctor* listFunctor);
+    ExecutorListActorModelDrawBase*
+    registerExecutorListActorModel(ExecutorListActorModelDrawBase* listActorModel);
+    ExecutorListActorDraw* registerExecutorListActor(ExecutorListActorDraw* listActor);
+    ExecutorListLayoutDrawBase* registerExecutorListLayout(ExecutorListLayoutDrawBase* listLayout);
+    ExecutorListIUseExecutorDraw* registerExecutorListUser(ExecutorListIUseExecutorDraw* listUser);
+    ExecutorListFunctor* registerExecutorListFunctor(ExecutorListFunctor* listFunctor);
     void registerExecutorListAll(ExecutorListBase* list);
-    void tryRegisterActor(LiveActor* actor, const char* listName);
-    void tryRegisterActorModel(LiveActor* actor, const char* listName);
-    void tryRegisterLayout(LayoutActor* layout, const char* listName);
-    void tryRegisterUser(IUseExecutor* user, const char* listName);
-    void tryRegisterFunctor(const FunctorBase& functor, const char* listName);
+    bool tryRegisterActor(LiveActor* actor, const char* listName);
+    bool tryRegisterActorModel(LiveActor* actor, const char* listName);
+    bool tryRegisterLayout(LayoutActor* layout, const char* listName);
+    bool tryRegisterUser(IUseExecutor* user, const char* listName);
+    bool tryRegisterFunctor(const FunctorBase& functor, const char* listName);
     void createExecutorListTable();
     void execute() const;
     void executeList(const char* listName) const;
@@ -41,14 +42,33 @@ public:
     const char* getName() { return mName; }
 
 private:
-    const char* mName;
-    sead::PtrArray<ExecutorListBase> mActiveExecutors;
-    sead::PtrArray<ExecutorListBase> mExecutorsAll;
-    sead::PtrArray<ExecutorListActorDraw> mExecutorsActor;
-    sead::PtrArray<ExecutorListActorModelDrawBase> mExecutorsActorModel;
-    sead::PtrArray<ExecutorListLayoutDrawBase> mExecutorsLayout;
-    sead::PtrArray<ExecutorListIUseExecutorDraw> mExecutorsUser;
-    sead::PtrArray<ExecutorListFunctor> mExecutorsFunctor;
+    const char* mName = nullptr;
+    s32 mActiveExecutorsSize = 0;
+    ExecutorListBase** mActiveExecutors = nullptr;
+
+    s32 mExecutorsAllSize = 0;
+    s32 mExecutorsAllCapacity = 0;
+    ExecutorListBase** mExecutorsAll = nullptr;
+
+    s32 mExecutorsActorCapacity = 0;
+    s32 mExecutorsActorSize = 0;
+    ExecutorListActorDraw** mExecutorsActor = nullptr;
+
+    s32 mExecutorsActorModelCapacity = 0;
+    s32 mExecutorsActorModelSize = 0;
+    ExecutorListActorModelDrawBase** mExecutorsActorModel = nullptr;
+
+    s32 mExecutorsLayoutCapacity = 0;
+    s32 mExecutorsLayoutSize = 0;
+    ExecutorListLayoutDrawBase** mExecutorsLayout = nullptr;
+
+    s32 mExecutorsUserCapacity = 0;
+    s32 mExecutorsUserSize = 0;
+    ExecutorListIUseExecutorDraw** mExecutorsUser = nullptr;
+
+    s32 mExecutorsFunctorCapacity = 0;
+    s32 mExecutorsFunctorSize = 0;
+    ExecutorListFunctor** mExecutorsFunctor = nullptr;
 };
 
 static_assert(sizeof(ExecuteTableHolderDraw) == 0x80);
