@@ -131,7 +131,7 @@ void Application::init(s32 argc, char* argv[]) {
 }
 
 void Application::run() {
-    sead::TaskBase::CreateArg createArg = {{sead::TaskClassID::cFactory, {.mFactory = sFactory}}};
+    sead::TaskBase::CreateArg createArg = {{sFactory}};
     mGameFramework->run(mSystemKit->getMemorySystem()->getStationedHeap(), createArg, {});
 }
 
