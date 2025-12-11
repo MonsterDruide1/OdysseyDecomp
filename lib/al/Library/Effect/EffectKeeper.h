@@ -31,7 +31,7 @@ class IUseCamera;
 
 class EffectKeeper {
 public:
-    EffectKeeper(EffectSystemInfo* systemInfo, const char*, const sead::Vector3f*,
+    EffectKeeper(const EffectSystemInfo* systemInfo, const char*, const sead::Vector3f*,
                  const sead::Vector3f*, const sead::Matrix34f*);
     void update();
     void tryUpdateMaterial(const char*);

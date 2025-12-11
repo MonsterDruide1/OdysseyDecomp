@@ -3,6 +3,9 @@
 #include <devenv/seadEnvUtil.h>
 #include <nn/os.h>
 
+// TODO: Find what is this function
+void FUN_710086f65c(sead::BufferedSafeString* out, const sead::SafeString& envStr);
+
 namespace al {
 void getComputerName(sead::BufferedSafeString* computerName) {
     tryGetComputerName(computerName);

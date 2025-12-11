@@ -12,7 +12,7 @@ public:
 
     static CameraTargetAreaLimitter* tryCreate(const PlacementInfo& placementInfo);
 
-    bool applyAreaLimit(sead::Vector3f* out, const sead::Vector3f& vec);
+    bool applyAreaLimit(sead::Vector3f* out, const sead::Vector3f& vec) const;
 
 private:
     const AreaShape* mAreaShape;
