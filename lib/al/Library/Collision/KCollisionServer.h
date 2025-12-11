@@ -154,14 +154,22 @@ public:
     void getMoveVector(sead::Vector3f* moveVec);
     void calcStepMoveVector(sead::Vector3f* moveVec) const;
 
+    f32 getCurrentStep() const {
+        return mCurrentStep;
+    }
+
+    f32 getPrevStep() const {
+        return mPrevStep;
+    }
+
 private:
-    sead::Vector3f mPos;
-    sead::Vector3f mMove;
-    f32 mSizeStart;
-    f32 mSizeEnd;
-    f32 mStepSize;
-    f32 mCurrentStep;
-    f32 mPrevStep;
+    sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mMove = {0.0f, 0.0f, 0.0f};
+    f32 mSizeStart = 0.0f;
+    f32 mSizeEnd = 0.0f;
+    f32 mStepSize = 0.0f;
+    f32 mCurrentStep = 0.0f;
+    f32 mPrevStep = 0.0f;
 };
 
 class SpherePoseInterpolator {

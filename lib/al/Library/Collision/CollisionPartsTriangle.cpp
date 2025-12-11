@@ -239,6 +239,7 @@ const sead::Vector3f& HitInfo::tryGetHitEdgeNormal() const {
 
 void SphereHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const {
     // TODO add proper names here, once the missing names for _70 and _80 in HitInfo are found
+    auto* hitInfo = this;
     if (hitInfo->isCollisionAtFace()) {
         calcFixVectorNormal(a1, a2);
         return;
@@ -261,6 +262,7 @@ void SphereHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const 
 }
 
 void SphereHitInfo::calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const {
+    auto* hitInfo = this;
     f32 unk = hitInfo->_70;
     a1->x = hitInfo->triangle.getFaceNormal().x * unk;
     a1->y = hitInfo->triangle.getFaceNormal().y * unk;
@@ -271,21 +273,21 @@ void SphereHitInfo::calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) 
 
 void DiskHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const {
     // TODO add proper names here, once the missing names for _70 and _80 in HitInfo are found
-    if (hitInfo->isCollisionAtFace()) {
+    if (isCollisionAtFace()) {
         calcFixVectorNormal(a1, a2);
         return;
     }
 
     sead::Vector3f v20;
-    v20.x = hitInfo->_80.x - hitInfo->collisionHitPos.x;
-    v20.y = hitInfo->_80.y - hitInfo->collisionHitPos.y;
-    v20.z = hitInfo->_80.z - hitInfo->collisionHitPos.z;
+    v20.x = _80.x - collisionHitPos.x;
+    v20.y = _80.y - collisionHitPos.y;
+    v20.z = _80.z - collisionHitPos.z;
     tryNormalizeOrZero(&v20);
 
     sead::Vector3f scaled_a1;
     sead::Vector3f scaled_a2;
-    f32 v13 = v20.dot(hitInfo->triangle.getFaceNormal() * hitInfo->_70);
-    f32 v12 = v20.dot(hitInfo->triangle.getFaceNormal());
+    f32 v13 = v20.dot(triangle.getFaceNormal() * _70);
+    f32 v12 = v20.dot(triangle.getFaceNormal());
     sead::Vector3CalcCommon<f32>::multScalar(scaled_a1, v20, v13);
     sead::Vector3CalcCommon<f32>::multScalar(scaled_a2, v20, v12);
     *a1 = scaled_a1;
@@ -293,12 +295,12 @@ void DiskHitInfo::calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const {
 }
 
 void DiskHitInfo::calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const {
-    f32 unk = hitInfo->_70;
-    a1->x = hitInfo->triangle.getFaceNormal().x * unk;
-    a1->y = hitInfo->triangle.getFaceNormal().y * unk;
-    a1->z = hitInfo->triangle.getFaceNormal().z * unk;
+    f32 unk = _70;
+    a1->x = triangle.getFaceNormal().x * unk;
+    a1->y = triangle.getFaceNormal().y * unk;
+    a1->z = triangle.getFaceNormal().z * unk;
     if (a2)
-        a2->set(hitInfo->triangle.getFaceNormal());
+        a2->set(triangle.getFaceNormal());
 }
 
 }  // namespace al

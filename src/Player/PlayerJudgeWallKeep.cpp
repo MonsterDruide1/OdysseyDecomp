@@ -117,9 +117,9 @@ void PlayerJudgeWallKeep::update() {
         if (alCollisionUtil::getLastPolyOnArrow(mPlayer, &hitInfo1, nearWallPosition + sideOffset,
                                                 -sideOffset, nullptr, &filterWallOnly)) {
             const sead::Vector3f& hitPos =
-                alCollisionUtil::getCollisionHitPos(hitInfo1->hitInfo.data());
+                alCollisionUtil::getCollisionHitPos(hitInfo1);
             const sead::Vector3f& hitNormal =
-                alCollisionUtil::getCollisionHitNormal(hitInfo1->hitInfo.data());
+                alCollisionUtil::getCollisionHitNormal(hitInfo1);
             if (!rs::calcExistCollisionBorder(mPlayer, hitPos, hitNormal)) {
                 if (sead::Mathf::abs(al::calcAngleOnPlaneDegree(
                         hitNormal, collidedWallNormal, gravity2)) > mConst->getWallFollowAngleH())
@@ -134,9 +134,9 @@ void PlayerJudgeWallKeep::update() {
         if (alCollisionUtil::getLastPolyOnArrow(mPlayer, &hitInfo2, nearWallPosition - sideOffset,
                                                 sideOffset, nullptr, &filterWallOnly)) {
             const sead::Vector3f& hitPos =
-                alCollisionUtil::getCollisionHitPos(hitInfo2->hitInfo.data());
+                alCollisionUtil::getCollisionHitPos(hitInfo2);
             const sead::Vector3f& hitNormal =
-                alCollisionUtil::getCollisionHitNormal(hitInfo2->hitInfo.data());
+                alCollisionUtil::getCollisionHitNormal(hitInfo2);
             if (!rs::calcExistCollisionBorder(mPlayer, hitPos, hitNormal)) {
                 if (sead::Mathf::abs(al::calcAngleOnPlaneDegree(
                         hitNormal, collidedWallNormal, gravity2)) > mConst->getWallFollowAngleH())

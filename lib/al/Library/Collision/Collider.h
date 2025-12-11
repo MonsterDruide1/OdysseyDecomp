@@ -16,105 +16,99 @@ class SphereInterpolator;
 class Triangle;
 class TriangleFilterBase;
 
-bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
-bool isFloorPolygon(const sead::Vector3f&, const sead::Vector3f&);
-bool isCeilingPolygon(const sead::Vector3f&, const sead::Vector3f&);
-
 class Collider : public HioNode, public IUseCollision {
 public:
     Collider(CollisionDirector*, const sead::Matrix34f*, const sead::Vector3f*,
              const sead::Vector3f*, f32, f32, u32);
     void calcCheckPos(sead::Vector3f*) const;
-    void calcMovePowerByContact(sead::Vector3f*, const sead::Vector3f&);
+    bool calcMovePowerByContact(sead::Vector3f*, const sead::Vector3f&);
     void clear();
     void clearContactPlane();
     void clearStoredPlaneNum();
     sead::Vector3f collide(const sead::Vector3f&);
-    void findCollidePos(s32*, SphereInterpolator*, SphereHitInfo*, u32);
-    Triangle* getPlane(s32) const;
+    bool findCollidePos(s32*, SphereInterpolator*, SphereHitInfo*, u32);
+    const Triangle& getPlane(s32) const;
     const sead::Vector3f& getRecentOnGroundNormal(u32) const;
     void obtainMomentFixReaction(SphereHitInfo*, sead::Vector3f*, sead::Vector3f*, bool, u32);
     void onInvalidate();
-    void preCollide(SphereInterpolator*, sead::Vector3f*, f32*, const sead::Vector3f&,
+    bool preCollide(SphereInterpolator*, sead::Vector3f*, f32*, const sead::Vector3f&,
                     SphereHitInfo*, u32);
     void setCollisionPartsFilter(const CollisionPartsFilterBase*);
     void setTriangleFilter(const TriangleFilterBase*);
     void storeContactPlane(SphereHitInfo*);
-    void storeCurrentHitInfo(SphereHitInfo*, u32);
+    u32 storeCurrentHitInfo(SphereHitInfo*, u32);
     void updateRecentOnGroundInfo();
 
     CollisionDirector* getCollisionDirector() const override;
 
-    sead::Vector3f* get_30() const { return _30; }
+    const sead::Vector3f* get_30() const { return mActorGravity; }
 
-    f32 getRadius() { return mRadius; };
+    f32 getRadius() { return mRadius; }
 
-    void setRadius(f32 radius) { mRadius = radius; };
+    void setRadius(f32 radius) { mRadius = radius; }
 
-    f32 getOffsetY() { return mOffsetY; };
+    f32 getOffsetY() { return mOffsetY; }
 
-    void setOffsetY(f32 offsetY) { mOffsetY = offsetY; };
+    void setOffsetY(f32 offsetY) { mOffsetY = offsetY; }
 
-    s32 get_48() const { return _48; }
+    s32 get_48() const { return mPlaneNum; }
 
-    u32 getPlaneCount() const { return mPlaneCount; }
+    u32 getPlaneCount() const { return mStoredPlaneNum; }
 
     const sead::Vector3f& getFixReaction() const { return mFixReaction; }
 
     const HitInfo& getFloorHit() const { return mFloorHit; }
 
-    f32 get_110() const { return _110; }
+    f32 get_110() const { return mFloor_70; }
 
     const HitInfo& getWallHit() const { return mWallHit; }
 
-    f32 get_1b8() const { return _1b8; }
+    f32 get_1b8() const { return mWall_70; }
 
     const HitInfo& getCeilingHit() const { return mCeilingHit; }
 
-    f32 get_260() const { return _260; }
+    f32 get_260() const { return mCeiling_70; }
 
-    u32 get_264() const { return _264; }
+    u32 get_264() const { return mNoGroundCounter; }
 
     void setReactMovePower(bool isEnabled) {
-        mFlag &= ~1;
-        mFlag |= isEnabled;
+        flags2 &= ~1;
+        flags2 |= isEnabled;
     }
 
-    void validateRobustCheck() { mFlag |= 2; }
+    void validateRobustCheck() { flags2 |= 2; }
 
-    void invalidateRobustCheck() { mFlag &= ~2; }
+    void invalidateRobustCheck() { flags2 &= ~2; }
 
-    bool isCollidedWallFace() { return mFlag >> 5 & 1; }
+    bool isCollidedWallFace() { return flags2 >> 5 & 1; }
 
 private:
-    CollisionDirector* _8;
-    TriangleFilterBase* _10;
-    CollisionPartsFilterBase* _18;
-    sead::Matrix34f* _20;
-    sead::Vector3f* _28;
-    sead::Vector3f* _30;
+    CollisionDirector* mCollisionDirector;
+    const TriangleFilterBase* mTriangleFilter = nullptr;
+    const CollisionPartsFilterBase* mCollisionPartsFilter = nullptr;
+    const sead::Matrix34f* mActorBaseMtx;
+    const sead::Vector3f* mActorTrans;
+    const sead::Vector3f* mActorGravity;
     f32 mRadius;
     f32 mOffsetY;
-    void* filler1;
-    u32 _48;
-    u32 mPlaneCount;
-    HitInfo* _50;
-    sead::Vector3f mFixReaction;
-    sead::Vector3f _64;
+    sead::Vector3f* unknown = nullptr;
+    u32 mPlaneNum;
+    u32 mStoredPlaneNum = 0;
+    SphereHitInfo* mPlanes = nullptr;
+    sead::Vector3f mFixReaction = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mMovePower = {0.0f, 0.0f, 0.0f};
     HitInfo mFloorHit;
-    f32 _110;
-    char filler3[0x4];
+    f32 mFloor_70 = 0.0f;
     HitInfo mWallHit;
-    f32 _1b8;
-    char filler4[0x4];
+    f32 mWall_70 = 0.0f;
     HitInfo mCeilingHit;
-    f32 _260;
-    u32 _264;
-    sead::Vector3f _268;
-    char _274;
-    char mFlag;
-    sead::Vector3f _278;
-    f32 _284;
+    f32 mCeiling_70 = 0.0f;
+    s32 mNoGroundCounter = 0;
+    sead::Vector3f mRecentOnGroundNormal = {0.0f, 1.0f, 0.0f};
+    u8 flags1 = 0;
+    u8 flags2;
+    sead::Vector3f mCurrentTrans;
+    f32 mCurrentRadius;
 };
 
 static_assert(sizeof(Collider) == 0x288);

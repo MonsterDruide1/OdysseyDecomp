@@ -475,7 +475,7 @@ bool isCollidedCollisionCode(const LiveActor* actor, const char* sensorName, con
 
     u32 size = collider->getPlaneCount();
     for (u32 i = 0; i < size; i++)
-        if (isEqualString(name, getCollisionCodeName(*collider->getPlane(i), sensorName)))
+        if (isEqualString(name, getCollisionCodeName(collider->getPlane(i), sensorName)))
             return true;
 
     return false;

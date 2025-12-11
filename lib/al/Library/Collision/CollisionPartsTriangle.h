@@ -91,46 +91,17 @@ struct HitInfo {
     CollisionLocation collisionLocation = CollisionLocation::None;
 };
 
-struct ArrowHitInfo {
-    HitInfo* operator*() { return hitInfo.data(); }
-
-    const HitInfo* operator*() const { return hitInfo.data(); }
-
-    HitInfo& operator->() { return *hitInfo; }
-
-    const HitInfo& operator->() const { return *hitInfo; }
-
-    sead::StorageFor<HitInfo> hitInfo{sead::ZeroInitializeTag{}};
+struct ArrowHitInfo : public HitInfo {
 };
 
-struct SphereHitInfo {
+struct SphereHitInfo : public HitInfo {
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
-
-    HitInfo* operator*() { return hitInfo.data(); }
-
-    const HitInfo* operator*() const { return hitInfo.data(); }
-
-    HitInfo& operator->() { return *hitInfo; }
-
-    const HitInfo& operator->() const { return *hitInfo; }
-
-    sead::StorageFor<HitInfo> hitInfo{sead::ZeroInitializeTag{}};
 };
 
-struct DiskHitInfo {
+struct DiskHitInfo : public HitInfo {
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
-
-    HitInfo* operator*() { return hitInfo.data(); }
-
-    const HitInfo* operator*() const { return hitInfo.data(); }
-
-    HitInfo& operator->() { return *hitInfo; }
-
-    const HitInfo& operator->() const { return *hitInfo; }
-
-    sead::StorageFor<HitInfo> hitInfo{sead::ZeroInitializeTag{}};
 };
 
 }  // namespace al
