@@ -17,6 +17,11 @@ class ApplicationMessageReceiver;
 class FontHolder;
 
 struct DrawSystemInfo {
+    DrawSystemInfo(agl::RenderBuffer* docked, agl::RenderBuffer* handheld, bool is_docked,
+                   agl::DrawContext* draw_ctx)
+        : dockedRenderBuffer(docked), handheldRenderBuffer(handheld), isDocked(is_docked),
+          drawContext(draw_ctx) {}
+
     agl::RenderBuffer* dockedRenderBuffer;
     agl::RenderBuffer* handheldRenderBuffer;
     bool isDocked;

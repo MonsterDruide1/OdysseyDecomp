@@ -68,7 +68,7 @@ void Application::init(s32 argc, char* argv[]) {
             .mCommandMemorySize = 0x20000,
             .mControlMemorySize = 0x40000,
             .mDebugLevel = 0,
-            ._44 = 16684,
+            ._44 = 0x4000 + 300,
         };
         mGameFramework = new al::GameFrameworkNx(createArg);
 
@@ -79,10 +79,9 @@ void Application::init(s32 argc, char* argv[]) {
                                 al::getVirtualDisplayWidth(), al::getVirtualDisplayHeight(), 1600,
                                 900, 1280, 720);
 
-        // TODO: Issue 2: This struct creation has different codegen
-        mDrawSystemInfo = new al::DrawSystemInfo{mGameFramework->getDockedRenderBuffer(),
+        mDrawSystemInfo = new al::DrawSystemInfo(mGameFramework->getDockedRenderBuffer(),
                                                  mGameFramework->getHandheldRenderBuffer(), false,
-                                                 mGameFramework->getDrawContext()};
+                                                 mGameFramework->getDrawContext());
 
         mGameFramework->requestChangeUseGPU(false);
     }
@@ -131,12 +130,12 @@ void Application::init(s32 argc, char* argv[]) {
 }
 
 void Application::run() {
-    sead::TaskBase::CreateArg createArg = {{sFactory}};
+    sead::TaskBase::CreateArg createArg = {sFactory};
     mGameFramework->run(mSystemKit->getMemorySystem()->getStationedHeap(), createArg, {});
 }
 
 RootTask* Application::getRootTask() const {
-    return static_cast<RootTask*>(mGameFramework->mTaskMgr->mRootTask);
+    return reinterpret_cast<RootTask*>(mGameFramework->mTaskMgr->mRootTask);
 }
 
 namespace ApplicationFunction {
@@ -147,4 +146,4 @@ void initialize(s32 argc, char** argv) {
     sead::GameFrameworkNx::initialize(arg);
 }
 
-}
+}  // namespace ApplicationFunction
