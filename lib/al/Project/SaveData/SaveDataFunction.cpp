@@ -5,11 +5,11 @@
 namespace al::SaveDataFunction {
 
 SaveDataHeader* getSaveDataHeader(u8* buffer) {
-    return (SaveDataHeader*)buffer;
+    return reinterpret_cast<SaveDataHeader*>(buffer);
 }
 
 const SaveDataHeader* getSaveDataHeader(const u8* buffer) {
-    return (const SaveDataHeader*)buffer;
+    return reinterpret_cast<const SaveDataHeader*>(buffer);
 }
 
 u32 calcSaveDataCheckSum(const u8* buffer) {
