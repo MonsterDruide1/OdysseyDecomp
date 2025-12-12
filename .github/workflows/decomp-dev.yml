@@ -26,7 +26,7 @@ jobs:
     - name: Run report generator for decomp.dev
       run: python .github/scripts/decomp-dev.py --version ${{ matrix.version }} -o report.json
     - name: Upload report
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ matrix.version }}_report
         path: report.json
