@@ -1,8 +1,16 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadBuffer.h>
+#include <prim/seadSafeString.h>
 
 namespace al {
+class SaveDataSequenceBase;
+class SaveDataSequenceInitDir;
+class SaveDataSequenceFormat;
+class SaveDataSequenceRead;
+class SaveDataSequenceWrite;
+class AsyncFunctorThread;
 
 class SaveDataDirector {
 public:
@@ -10,22 +18,39 @@ public:
 
     void threadFunc();
     void initCheckSaveData();
-    bool requestInitSaveDir(const char*, u32, u32);
-    bool initSaveDirSync(const char*, u32, u32);
+    bool requestInitSaveDir(const char* fileName, u32 dirSize, u32 version);
+    bool initSaveDirSync(const char* fileName, u32 dirSize, u32 version);
     bool requestFormat(s32, s32);
     bool formatSync(s32, s32);
-    bool requestRead(const char*, u32, u32);
-    bool readSync(const char*, u32, u32);
-    bool requestWrite(const char*, u32, u32, bool);
+    bool requestRead(const char* fileName, u32 readSize, u32 version);
+    bool readSync(const char* fileName, u32 readSize, u32 version);
+    bool requestWrite(const char* fileName, u32 writeSize, u32 version, bool isFlushNeeded);
     bool requestFlush();
-    bool writeSync(const char*, u32, u32);
+    bool writeSync(const char* fileName, u32 writeSize, u32 version);
     bool updateSequence();
     bool isDoneSequence() const;
     u8* getWorkBuffer();
     s32 getResult();
 
+    SaveDataSequenceRead* getReadSequence() const { return mReadSequence; }
+
+    bool isInitialized() const { return mIsInitialized; }
+
+    s32 getFSErrorCode() const { return mFileSystemErrorCode; }
+
 private:
-    void* _0[0xa8 / 8];
+    SaveDataSequenceBase* mRunningSequence = nullptr;
+    SaveDataSequenceInitDir* mInitDirSequence = nullptr;
+    SaveDataSequenceFormat* mFormatSequence = nullptr;
+    SaveDataSequenceRead* mReadSequence = nullptr;
+    SaveDataSequenceWrite* mWriteSequence = nullptr;
+    bool mIsInitialized = false;
+    bool _29 = false;
+    sead::Buffer<u8> mBuffer;
+    sead::FixedSafeString<64> mCurrentFileName;
+    AsyncFunctorThread* mSaveDataThread = nullptr;
+    s32 mResult = 0;
+    s32 mFileSystemErrorCode = 0;
 };
 
 static_assert(sizeof(SaveDataDirector) == 0xa8);
