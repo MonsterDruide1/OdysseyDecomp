@@ -46,7 +46,7 @@ jobs:
         EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
       run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
     - name: Set up cache for toolchain
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         key: tools_libs
         path: |
