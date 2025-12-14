@@ -5,6 +5,8 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
+#include "Player/IUsePlayerPuppet.h"
+
 namespace al {
 class AreaObj;
 class HitSensor;
@@ -23,51 +25,51 @@ class PlayerEffect;
 class PlayerInput;
 class WorldEndBorderKeeper;
 
-class PlayerPuppet {
+class PlayerPuppet : public IUsePlayerPuppet {
 public:
     PlayerPuppet(al::LiveActor*, HackCap*, PlayerAnimator*, IUsePlayerCollision*,
                  ActorDimensionKeeper*, IPlayerModelChanger*, WorldEndBorderKeeper*,
                  PlayerCounterForceRun*, PlayerDamageKeeper*, PlayerEffect*, const PlayerInput*,
                  const PlayerConst*);
 
-    virtual void start(al::HitSensor*, al::HitSensor*);
-    virtual void end();
-    virtual void cancel();
-    virtual void setTrans(const sead::Vector3f&);
-    virtual void setPose(const sead::Quatf&);
-    virtual void setVelocity(const sead::Vector3f&);
-    virtual void resetPosition(const sead::Vector3f&);
-    virtual const sead::Vector3f& getTrans() const;
-    virtual const sead::Vector3f& getVelocity() const;
-    virtual const sead::Vector3f& getGravity() const;
-    virtual void calcFront(sead::Vector3f*) const;
-    virtual void calcUp(sead::Vector3f*) const;
-    virtual void startAction(const sead::SafeStringBase<char>&) const;
-    virtual bool isActionEnd() const;
-    virtual bool isActionPlaying(const char*) const;
-    virtual void setAnimRate(f32) const;
-    virtual f32 getAnimFrameMax() const;
-    virtual void hide();
-    virtual void show();
-    virtual bool isHidden() const;
-    virtual void hideSilhouette();
-    virtual void showSilhouette();
-    virtual void hideShadow();
-    virtual void showShadow();
-    virtual void requestDamage();
-    virtual void clearRequestDamage();
-    virtual bool isRequestDamage() const;
-    virtual void setBindEndOnGround();
-    virtual bool isBindEndOnGround() const;
-    virtual void setBindEndJump(const sead::Vector3f&, s32);
-    virtual bool isBindEndJump() const;
-    virtual void validateCollisionCheck();
-    virtual void invalidateCollisionCheck();
-    virtual bool isValidCollisionCheck();
-    virtual bool isCollidedGround();
-    virtual const sead::Vector3f& getCollidedGroundNormal();
-    virtual void validateSensor();
-    virtual void invalidateSensor();
+    void start(al::HitSensor*, al::HitSensor*) override;
+    void end() override;
+    void cancel() override;
+    void setTrans(const sead::Vector3f&) override;
+    void setPose(const sead::Quatf&) override;
+    void setVelocity(const sead::Vector3f&) override;
+    void resetPosition(const sead::Vector3f&) override;
+    const sead::Vector3f& getTrans() const override;
+    const sead::Vector3f& getVelocity() const override;
+    const sead::Vector3f& getGravity() const override;
+    void calcFront(sead::Vector3f*) const override;
+    void calcUp(sead::Vector3f*) const override;
+    void startAction(const sead::SafeString&) const override;
+    bool isActionEnd() const override;
+    bool isActionPlaying(const char*) const override;
+    void setAnimRate(f32) const override;
+    f32 getAnimFrameMax() const override;
+    void hide() override;
+    void show() override;
+    bool isHidden() const override;
+    void hideSilhouette() override;
+    void showSilhouette() override;
+    void hideShadow() override;
+    void showShadow() override;
+    void requestDamage() override;
+    void clearRequestDamage() override;
+    bool isRequestDamage() const override;
+    void setBindEndOnGround() override;
+    bool isBindEndOnGround() const override;
+    void setBindEndJump(const sead::Vector3f&, s32) override;
+    bool isBindEndJump() const override;
+    void validateCollisionCheck() override;
+    void invalidateCollisionCheck() override;
+    bool isValidCollisionCheck() override;
+    bool isCollidedGround() override;
+    const sead::Vector3f& getCollidedGroundNormal() override;
+    void validateSensor() override;
+    void invalidateSensor() override;
 
     void startPlayerHitReaction(const char*);
     void setBindEndWallJump(const sead::Vector3f&, s32);
@@ -76,7 +78,7 @@ public:
     void endKeepOn2D();
     void requestUpdateRecoveryInfo(bool, bool, const sead::Vector3f&, const sead::Vector3f&,
                                    const al::AreaObj*);
-    void tryUpdateRecoveryInfo(bool*, bool*, sead::Vector3f*, sead::Vector3f*, const al::AreaObj**);
+    bool tryUpdateRecoveryInfo(bool*, bool*, sead::Vector3f*, sead::Vector3f*, const al::AreaObj**);
     bool isBinding() const;
     bool isNoCollide() const;
 
