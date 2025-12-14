@@ -445,6 +445,24 @@ bool isPadHoldRightStick(s32 port) {
     return isPadHold(port, 0xF000000);
 }
 
+bool isEitherPadHoldA() {
+    sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+    if (mgr->getController(0)->isHold(1) || mgr->getController(1)->isHold(1) ||
+        mgr->getController(2)->isHold(1)) {
+        return true;
+    }
+    return false;
+}
+
+bool isEitherPadHoldB() {
+    sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+    if (mgr->getController(0)->isHold(1 << 1) || mgr->getController(1)->isHold(1 << 1) ||
+        mgr->getController(2)->isHold(1 << 1)) {
+        return true;
+    }
+    return false;
+}
+
 inline bool isPadRelease(s32 port, s32 button) {
     return getController(port)->isRelease(button);
 }
@@ -608,6 +626,32 @@ bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size
            pos.y < rect_pos.y + size.y;
 }
 
+bool isTouchPosInCircle(const sead::Vector2f& center, f32 size) {
+    sead::Vector2f pos;
+    calcTouchScreenPos(&pos);
+    return (pos.x - center.x) * (pos.x - center.x) + (pos.y - center.y) * (pos.y - center.y) <=
+           size * size;
+}
+
+bool isTouchPosInCircleByWorldPos(const sead::Vector3f&, const IUseCamera*, f32, f32) {
+    return false;
+}
+
+bool isPadTouchRect(f32 left, f32 top, f32 width,
+                    f32 height) {  // TODO: fix small comparison diff I don't understand
+    bool isPadHeld = isPadHoldTouch();
+    sead::Vector2f pos;
+    if (isPadHeld) {
+        calcTouchScreenPos(&pos);
+        if (left < pos.x && pos.x < left + width) {
+            if (pos.y < top)
+                return false;
+            return pos.y < top + height;
+        }
+    }
+    return false;
+}
+
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
     getController(port)->setPadRepeat(a1, a2, a3);
 }
@@ -640,6 +684,18 @@ s32 getMainJoyPadSingleRightPort() {
 
 s32 getMainJoyPadSingleLeftPort() {
     return 2;
+}
+
+s32 getJoyPadSingleRightPort() {
+    return 1;
+}
+
+s32 getJoyPadSingleLeftPort() {
+    return 2;
+}
+
+s32 getJoyPadDoublePort() {
+    return getMainControllerPort();
 }
 
 }  // namespace al
