@@ -24,10 +24,13 @@ struct SeUserInfo {
 
     const char* name;
     bool isPartsUser = false;
-    sead::PtrArray<const char*> partsUserNameList;
+    sead::PtrArray<const char*>* partsUserNameList;
     AudioInfoListWithParts<SeEmitterInfo>* emitterInfoList;
     AudioInfoListWithParts<SeActionInfo>* actionInfoList;
     AudioInfoListWithParts<SePlayInfo>* playInfoList;
     AudioInfoListWithParts<SeHitReactionInfo>* hitReactionInfoList;
 };
+
+static_assert(sizeof(SeUserInfo) == 0x38);
+
 }  // namespace al
