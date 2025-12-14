@@ -339,7 +339,7 @@ void ByamlWriter::write(sead::WriteStream* stream) {
 
     for (auto it = mContainerList.begin(), end = mContainerList.end(); it != end; ++it) {
         (*it)->setOffset(offsetBigDataList);
-        offsetBigDataList+= (*it)->calcPackSize();
+        offsetBigDataList += (*it)->calcPackSize();
     }
     for (auto* container : mContainerList)
         container->writeContainer(stream);
