@@ -22,7 +22,7 @@ bool isPadTrigger(s32 port, s32 button) {
 }
 
 bool isPadTriggerA(s32 port) {
-    return isPadTrigger(port, 1);
+    return isPadTrigger(port, 1 << 0);
 }
 
 bool isPadTriggerB(s32 port) {
@@ -447,8 +447,8 @@ bool isPadHoldRightStick(s32 port) {
 
 bool isEitherPadHoldA() {
     sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
-    if (mgr->getController(0)->isHold(1) || mgr->getController(1)->isHold(1) ||
-        mgr->getController(2)->isHold(1)) {
+    if (mgr->getController(0)->isHold(1 << 0) || mgr->getController(1)->isHold(1 << 0) ||
+        mgr->getController(2)->isHold(1 << 0)) {
         return true;
     }
     return false;
@@ -626,30 +626,20 @@ bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size
            pos.y < rect_pos.y + size.y;
 }
 
-bool isTouchPosInCircle(const sead::Vector2f& center, f32 size) {
+bool isTouchPosInCircle(const sead::Vector2f& center, f32 radius) {
     sead::Vector2f pos;
     calcTouchScreenPos(&pos);
-    return (pos.x - center.x) * (pos.x - center.x) + (pos.y - center.y) * (pos.y - center.y) <=
-           size * size;
+    return (pos - center).squaredLength() <= sead::Mathf::square(radius);
 }
 
 bool isTouchPosInCircleByWorldPos(const sead::Vector3f&, const IUseCamera*, f32, f32) {
     return false;
 }
 
-bool isPadTouchRect(f32 left, f32 top, f32 width,
-                    f32 height) {  // TODO: fix small comparison diff I don't understand
-    bool isPadHeld = isPadHoldTouch();
-    sead::Vector2f pos;
-    if (isPadHeld) {
-        calcTouchScreenPos(&pos);
-        if (left < pos.x && pos.x < left + width) {
-            if (pos.y < top)
-                return false;
-            return pos.y < top + height;
-        }
-    }
-    return false;
+bool isPadTouchRect(f32 left, f32 top, f32 width, f32 height) {
+    if (!isPadHoldTouch())
+        return false;
+    return isTouchPosInRect(sead::Vector2f(left, top), sead::Vector2f(width, height));
 }
 
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
@@ -687,15 +677,15 @@ s32 getMainJoyPadSingleLeftPort() {
 }
 
 s32 getJoyPadSingleRightPort() {
-    return 1;
+    return getMainJoyPadSingleRightPort();
 }
 
 s32 getJoyPadSingleLeftPort() {
-    return 2;
+    return getMainJoyPadSingleLeftPort();
 }
 
 s32 getJoyPadDoublePort() {
-    return getMainControllerPort();
+    return getMainJoyPadDoublePort();
 }
 
 }  // namespace al
