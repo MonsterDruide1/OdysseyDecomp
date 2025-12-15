@@ -62,6 +62,7 @@ NERVE_IMPL(Bubble, WaitHackFall)
 NERVE_IMPL(Bubble, HackFall)
 NERVE_END_IMPL(Bubble, HackMove)
 NERVE_END_IMPL(Bubble, HackJump)
+// NOTE: this jump is actually not as high as `HackJump` - it's just triggered by motion.
 NERVE_END_IMPL_(Bubble, HackJumpHigh, HackJump)
 NERVE_END_IMPL_(Bubble, HackCancelJump, HackJump)
 NERVE_IMPL(Bubble, HackLand)
@@ -1254,46 +1255,46 @@ bool Bubble::constrainLavaDomain() {
         return true;
 
     f32 colliderRadius = al::getColliderRadius(this);
-    sead::Vector3f frontDir;
-    al::calcFrontDir(&frontDir, this);
-    frontDir.y = 0.0;
-    al::tryNormalizeOrDirZ(&frontDir);
-    frontDir *= colliderRadius;
+    sead::Vector3f front;
+    al::calcFrontDir(&front, this);
+    front.y = 0.0;
+    al::tryNormalizeOrDirZ(&front);
+    front *= colliderRadius;
 
-    sead::Vector3f crossDir;
-    crossDir.setCross(sead::Vector3f::ey, frontDir);
-    normalize2(&crossDir, colliderRadius);
+    sead::Vector3f side;
+    side.setCross(sead::Vector3f::ey, front);
+    normalize2(&side, colliderRadius);
 
-    sead::Vector3f genDir = al::getTrans(this) + colliderRadius * sead::Vector3f::ey;
-    sead::Vector3f dir[4];
-    dir[0] = genDir + (-crossDir + frontDir);
-    dir[1] = genDir + (crossDir + frontDir);
-    dir[2] = genDir + (-crossDir - frontDir);
-    dir[3] = genDir + (crossDir - frontDir);
-    sead::Vector3f posA = sead::Vector3f::ey * (colliderRadius * -3.0f);
+    sead::Vector3f basePos = al::getTrans(this) + colliderRadius * sead::Vector3f::ey;
+    sead::Vector3f checkPos[4];
+    checkPos[0] = basePos + (-side + front);
+    checkPos[1] = basePos + (side + front);
+    checkPos[2] = basePos + (-side - front);
+    checkPos[3] = basePos + (side - front);
+    sead::Vector3f checkDir = sead::Vector3f::ey * (colliderRadius * -3.0f);
 
     bool isFire[4] = {false, false, false, false};
     bool isPoly[4] = {false, false, false, false};
     f32 height[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 
     for (s32 i = 0; i < 4; i++) {
-        sead::Vector3f arrow;
+        sead::Vector3f hitPos;
         al::Triangle triangle;
-        if (alCollisionUtil::getFirstPolyOnArrow(this, &arrow, &triangle, dir[i], posA,
+        if (alCollisionUtil::getFirstPolyOnArrow(this, &hitPos, &triangle, checkPos[i], checkDir,
                                                  mCollisionPartsFilter, nullptr)) {
-            height[i] = arrow.y;
+            height[i] = hitPos.y;
             isFire[i] = al::isFloorCode(triangle, "DamageFire");
             isPoly[i] = true;
         }
     }
 
-    sead::Vector3f fireSurfaceB;
-    sead::Vector3f arrow;
+    sead::Vector3f firePos;
+    sead::Vector3f fireNormal;
     for (s32 i = 0; i < 4; i++) {
-        if (!al::calcFindFireSurface(&fireSurfaceB, &arrow, this, dir[i], sead::Vector3f::ey,
+        if (!al::calcFindFireSurface(&firePos, &fireNormal, this, checkPos[i], sead::Vector3f::ey,
                                      200.0f))
             continue;
-        if (isPoly[i] && height[i] > fireSurfaceB.y)
+        if (isPoly[i] && height[i] > firePos.y)
             continue;
 
         isFire[i] = true;
@@ -1308,26 +1309,26 @@ bool Bubble::constrainLavaDomain() {
         return false;
     }
 
-    u32 hitCount = 0;
-    sead::Vector3f hitDirection = {0.0f, 0.0f, 0.0f};
+    u32 noFirePosCount = 0;
+    sead::Vector3f noFirePosSum = {0.0f, 0.0f, 0.0f};
     for (s32 i = 0; i < 4; i++) {
         if (isPoly[i] && !isFire[i]) {
-            hitDirection += dir[i];
-            hitCount++;
+            noFirePosSum += checkPos[i];
+            noFirePosCount++;
         }
     }
 
-    if (hitCount != 0) {
-        sead::Vector3f launchDirection = -(1.0f / hitCount) * hitDirection + al::getTrans(this);
-        launchDirection.y = 0.0f;
+    if (noFirePosCount != 0) {
+        sead::Vector3f pushDirection = -(1.0f / noFirePosCount) * noFirePosSum + al::getTrans(this);
+        pushDirection.y = 0.0f;
 
-        al::tryNormalizeOrZero(&launchDirection);
-        if (launchDirection.dot(al::getVelocity(this)) > 0.0f) {
+        al::tryNormalizeOrZero(&pushDirection);
+        if (pushDirection.dot(al::getVelocity(this)) > 0.0f) {
             sead::Vector3f* velPtr = al::getVelocityPtr(this);
-            al::verticalizeVec(velPtr, launchDirection, *velPtr);
+            al::verticalizeVec(velPtr, pushDirection, *velPtr);
         }
 
-        al::addVelocity(this, launchDirection * 3.0f);
+        al::addVelocity(this, pushDirection * 3.0f);
     }
 
     return true;
@@ -1447,7 +1448,7 @@ bool Bubble::tryShiftContinuousJump() {
     if (!al::isNerve(this, &NrvBubble.HackJumpHigh))
         return false;
 
-    if (mJumpDelay < 0xf)
+    if (mJumpDelay < 15)
         mJumpDelay++;
 
     if (isTriggerHackSwing())
@@ -1462,7 +1463,7 @@ bool Bubble::tryShiftContinuousJump() {
     if (!isOnDamageFire())
         return false;
 
-    if (mJumpDelay >= 0xf)
+    if (mJumpDelay >= 15)
         return false;
 
     mJumpForce.set({0.0f, 25.0f, 0.0f});
@@ -2091,9 +2092,9 @@ inline sead::Quatf getQuatZY() {
 
 // NON_MATCHING: Wrong math operation https://decomp.me/scratch/P9h4T
 void Bubble::exeHackJump() {
-    bool isJumpHigh = al::isNerve(this, &NrvBubble.HackJumpHigh);
-    f32 cosntA = !isJumpHigh ? 1.1f : 1.2f;
-    f32 cosntB = !isJumpHigh ? 0.5f : 2.5f;
+    bool isJumpSwing = al::isNerve(this, &NrvBubble.HackJumpHigh);
+    f32 gravity = !isJumpSwing ? 1.1f : 1.2f;
+    f32 constB = !isJumpSwing ? 0.5f : 2.5f;
 
     sead::Quatf rotateA;
     sead::Quatf rotateB;
@@ -2138,7 +2139,7 @@ void Bubble::exeHackJump() {
     }
     // Note: This overrides any data that quatA or quatB has. Consider using new variables
     revertTargetQuatInHackJump(&rotateA, &rotateB);
-    al::getVelocityPtr(this)->y -= cosntA;
+    al::getVelocityPtr(this)->y -= gravity;
     sead::Vector3f frontDir;
     al::calcFrontDir(&frontDir, this);
     sead::Vector3f hackerMoveVec = {0.0f, 0.0f, 0.0f};
@@ -2147,7 +2148,7 @@ void Bubble::exeHackJump() {
     bool bVar1 = false;
     sead::Vector3f hackerMoveVec2 = {0.0f, 0.0f, 0.0f};
     if (al::tryNormalizeOrZero(&hackerMoveVec2, hackerMoveVec)) {
-        if (frontDir.dot(hackerMoveVec2) < sead::Mathf::cos(1.9198622f)) {
+        if (frontDir.dot(hackerMoveVec2) < sead::Mathf::cos(sead::Mathf::deg2rad(220.0f))) {
             sead::Vector3f vel = al::getVelocity(this);
             vel.y = 0.0f;
             if (vel.dot(hackerMoveVec2) > 0.0f || al::isNearZero(vel, 1.0f)) {
@@ -2169,7 +2170,7 @@ void Bubble::exeHackJump() {
             sead::Vector3f part = (velH - frontDir * fVar14) * 0.98f;
 
             f32 x = fVar14 * 0.92f +
-                    cosntB * sead::Mathf::clamp(frontDir.dot(hackerMoveVec2), 0.0f, 1.0f);
+                    constB * sead::Mathf::clamp(frontDir.dot(hackerMoveVec2), 0.0f, 1.0f);
 
             al::addVelocity(this, part + frontDir * sead::Mathf::clampMax(x, fVar14));
             bVar1 = false;
@@ -2210,7 +2211,7 @@ void Bubble::exeHackJump() {
         }
         if (mJumpFrame != 0) {
             mJumpFrame--;
-            al::getVelocityPtr(this)->y += cosntA;
+            al::getVelocityPtr(this)->y += gravity;
         }
     } else {
         mJumpFrame = 0;
