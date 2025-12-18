@@ -244,8 +244,31 @@ ByamlWriterHash::~ByamlWriterHash() {
         delete node;
 }
 
+void ByamlWriterHash::deleteData() {
+    for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it)
+        if (!it->mData->getValue()->isContainer())
+            delete it->mData->getValue();
+}
+
 u32 ByamlWriterHash::calcPackSize() const {
     return mList.size() * 8 + 4;
+}
+
+void ByamlWriterHash::addData(const char* key, ByamlWriterData* data) {
+    const char* str = mStringTable1->tryAdd(key);
+    ByamlWriterHashPair* pair = new ByamlWriterHashPair(str, data);
+    auto* node = reinterpret_cast<sead::TListNode<ByamlWriterHashPair*>*>(pair);
+
+    for (auto it = mList.robustBegin(); it != mList.robustEnd(); ++it) {
+        s32 cmp = strcmp(str, it->mData->getKey());
+        if (cmp == 0)
+            return;
+        if (cmp < 0) {
+            mList.insertBefore(&(*it), node);
+            return;
+        }
+    }
+    mList.pushBack(node);
 }
 
 void ByamlWriterHash::addBool(const char* key, bool value) {
@@ -293,11 +316,27 @@ void ByamlWriterHash::addNull(const char* key) {
 }
 
 u8 ByamlWriterHash::getTypeCode() const {
-    return 0xC1;
+    return 0xc1;
+}
+
+void ByamlWriterHash::writeContainer(sead::WriteStream* stream) const {
+    stream->writeU8(0xc1);
+    alByamlLocalUtil::writeU24(stream, mList.size());
+
+    for (auto it = mList.begin(); it != mList.end(); ++it) {
+        alByamlLocalUtil::writeU24(stream, mStringTable1->calcIndex((*it)->getKey()));
+        stream->writeU8((*it)->getValue()->getTypeCode());
+        (*it)->getValue()->write(stream);
+    }
 }
 
 void ByamlWriterHash::write(sead::WriteStream* stream) const {
     stream->writeU32(getOffset());
+}
+
+void ByamlWriterHash::print(s32 recursionDepth) const {
+    for (auto it = mList.begin(); it != mList.end(); ++it)
+        (*it)->getValue()->print(recursionDepth + 1);
 }
 
 }  // namespace al
