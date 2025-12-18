@@ -274,10 +274,10 @@ public:
     ByamlWriterHash(ByamlWriterStringTable* stringTable1, ByamlWriterStringTable* stringTable2);
     ~ByamlWriterHash();
 
-    void deleteData() override;  // TODO implementation missing
+    void deleteData() override;
     u32 calcPackSize() const override;
 
-    void addData(const char*, ByamlWriterData*);  // TODO implementation missing
+    void addData(const char* key, ByamlWriterData* data);
     void addBool(const char* key, bool value) override;
     void addInt(const char* key, s32 value) override;
     void addUInt(const char* key, u32 value) override;
@@ -291,14 +291,14 @@ public:
     void addNull(const char* key) override;
 
     u8 getTypeCode() const override;
-    void writeContainer(sead::WriteStream* stream) const override;  // TODO implementation missing
+    void writeContainer(sead::WriteStream* stream) const override;
     void write(sead::WriteStream* stream) const override;
-    void print(s32 recursionDepth) const override;  // TODO implementation missing
+    void print(s32 recursionDepth) const override;
 
     bool isHash() const override { return true; }
 
 private:
-    sead::TList<ByamlWriterHashPair> mList;  // TODO not really... it's something different here.
+    sead::TList<ByamlWriterHashPair*> mList;
     ByamlWriterStringTable* mStringTable1;
     ByamlWriterStringTable* mStringTable2;
 };
