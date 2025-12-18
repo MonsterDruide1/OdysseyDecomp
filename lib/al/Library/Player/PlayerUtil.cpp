@@ -279,7 +279,7 @@ u32 calcPlayerListOrderByDistance(const LiveActor* actor, const LiveActor** acto
     const sead::Vector3f& pos = getTrans(actor);
 
     f32 distances[64];
-    for (s32 i = 0; i != playerNum; i++) {
+    for (s32 i = 0; i != (s32)playerNum; i++) {
         LiveActor* player = getPlayerActor(actor, i);
         f32 distance = sead::Mathf::maxNumber();
         if (!isDead(player)) {
@@ -289,14 +289,14 @@ u32 calcPlayerListOrderByDistance(const LiveActor* actor, const LiveActor** acto
         distances[i] = distance;
     }
 
-    for (s32 i = 0; i < size; i++) {
+    for (s32 i = 0; (u32)i < size; i++) {
         f32 min_distance = sead::Mathf::maxNumber();
         s32 min_index = -1;
 
-        for (u32 i = 0; i < playerNum; i++) {
-            if (distances[i] <= min_distance) {
-                min_distance = distances[i];
-                min_index = i;
+        for (u32 j = 0; j < playerNum; j++) {
+            if (distances[j] <= min_distance) {
+                min_distance = distances[j];
+                min_index = j;
             }
         }
 
