@@ -5,6 +5,7 @@
 #include <prim/seadSafeString.h>
 
 #include "Library/Thread/FunctorV0M.h"
+#include "Project/Thread/InitializeThread.h"
 
 namespace sead {
 class DelegateThread;
@@ -27,6 +28,9 @@ private:
     FunctorBase* mFunctor = nullptr;
     bool mIsDone = true;
 };
+
+InitializeThread* createAndStartInitializeThread(sead::Heap*, s32, const FunctorBase&);
+bool tryWaitDoneAndDestroyInitializeThread(InitializeThread*);
 
 static_assert(sizeof(AsyncFunctorThread) == 0x20);
 }  // namespace al

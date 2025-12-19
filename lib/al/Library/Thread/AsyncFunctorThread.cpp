@@ -42,4 +42,16 @@ bool AsyncFunctorThread::isDone() const {
     return mIsDone;
 }
 
+InitializeThread* createAndStartInitializeThread(sead::Heap* heap, s32 priority,
+                                                 const FunctorBase& functor) {
+    InitializeThread* initializeThread =
+        new InitializeThread("シーン初期化スレッド", functor, heap, priority, 0x100000);
+    initializeThread->start();
+    return initializeThread;
+}
+
+bool tryWaitDoneAndDestroyInitializeThread(InitializeThread* thread) {
+    return thread->tryWaitDoneAndDestroy();
+}
+
 }  // namespace al
