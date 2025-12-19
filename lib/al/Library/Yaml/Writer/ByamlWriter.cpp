@@ -212,7 +212,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
         else
             iter.getByamlDataByIndex(&data, i);
 
-        if (data.getType() == 0xD0) {
+        if (data.getType() == ByamlDataType::Bool) {
             bool value;
             if (iter.tryConvertBool(&value, &data)) {
                 if (key)
@@ -221,7 +221,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addBool(value);
             }
         }
-        if (data.getType() == 0xD1) {
+        if (data.getType() == ByamlDataType::Int) {
             s32 value;
             if (iter.tryConvertInt(&value, &data)) {
                 if (key)
@@ -230,7 +230,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addInt(value);
             }
         }
-        if (data.getType() == 0xD2) {
+        if (data.getType() == ByamlDataType::Float) {
             f32 value;
             if (iter.tryConvertFloat(&value, &data)) {
                 if (key)
@@ -239,7 +239,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addFloat(value);
             }
         }
-        if (data.getType() == 0xD3) {
+        if (data.getType() == ByamlDataType::UInt) {
             u32 value;
             if (iter.tryConvertUInt(&value, &data)) {
                 if (key)
@@ -248,7 +248,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addUInt(value);
             }
         }
-        if (data.getType() == 0xD4) {
+        if (data.getType() == ByamlDataType::Int64) {
             s64 value;
             if (iter.tryConvertInt64(&value, &data)) {
                 if (key)
@@ -257,7 +257,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addInt64(value);
             }
         }
-        if (data.getType() == 0xD6) {
+        if (data.getType() == ByamlDataType::Double) {
             f64 value;
             if (iter.tryConvertDouble(&value, &data)) {
                 if (key)
@@ -266,7 +266,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addDouble(value);
             }
         }
-        if (data.getType() == 0xD5) {
+        if (data.getType() == ByamlDataType::UInt64) {
             u64 value;
             if (iter.tryConvertUInt64(&value, &data)) {
                 if (key)
@@ -275,7 +275,7 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addUInt64(value);
             }
         }
-        if (data.getType() == 0xA0) {
+        if (data.getType() == ByamlDataType::String) {
             const char* value;
             if (iter.tryConvertString(&value, &data)) {
                 if (key)
@@ -284,13 +284,13 @@ void ByamlWriter::pushLocalIter(const ByamlIter& iter, const char* iterKey) {
                     addString(value);
             }
         }
-        if (data.getType() == 0x00) {
+        if (data.getType() == ByamlDataType::None) {
             if (key)
                 addNull(key);
             else
                 addNull();
         }
-        if (data.getType() == 0xC0 || data.getType() == 0xC1) {
+        if (data.getType() == ByamlDataType::Array || data.getType() == ByamlDataType::Hash) {
             ByamlIter value;
             if (iter.tryConvertIter(&value, &data))
                 pushLocalIter(value, key);

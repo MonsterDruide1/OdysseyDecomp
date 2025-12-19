@@ -4,13 +4,13 @@
 
 namespace al {
 s32 ByamlContainerHeader::getType() const {
-    return mType;
+    return type;
 }
 
 s32 ByamlContainerHeader::getCount(bool isRev) const {
     if (isRev)
-        return bswap_32_ignore_last(mType);
+        return bswap_32_ignore_last(type);
 
-    return (mType >> 8);
+    return (type >> 8);
 }
 }  // namespace al
