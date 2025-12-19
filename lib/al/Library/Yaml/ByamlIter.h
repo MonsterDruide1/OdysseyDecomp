@@ -4,6 +4,8 @@
 #include "Library/Yaml/ByamlHeader.h"
 
 namespace al {
+struct ByamlContainerHeader;
+
 class ByamlIter {
 public:
     ByamlIter();
@@ -58,14 +60,14 @@ public:
     bool tryConvertIter(ByamlIter* iter, const ByamlData* data) const;
     bool isEqualData(const ByamlIter& other) const;
 
-    const ByamlHeader* getHeader() const { return mHeader; }
+    const ByamlHeader* getHeader() const { return reinterpret_cast<const ByamlHeader*>(mData); }
+
+    const ByamlContainerHeader* getContainerHeader() const {
+        return reinterpret_cast<const ByamlContainerHeader*>(mRootNode);
+    }
 
 private:
-    union {
-        const u8* mData;
-        const ByamlHeader* mHeader;
-    };
-
-    const u8* mRootNode;
+    const u8* mData = nullptr;
+    const u8* mRootNode = nullptr;
 };
 }  // namespace al

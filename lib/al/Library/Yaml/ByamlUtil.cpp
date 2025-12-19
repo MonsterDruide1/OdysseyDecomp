@@ -308,51 +308,51 @@ void getByamlIterByIndex(ByamlIter* out, const ByamlIter& iter, s32 index) {
 }
 
 bool isTypeBoolByIndex(const ByamlIter& iter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_BOOL>(iter, index);
+    return isTypeByIndex<ByamlDataType::Bool>(iter, index);
 }
 
 bool isTypeBoolByKey(const ByamlIter& iter, const char* key) {
-    return isTypeByKey<ByamlDataType::TYPE_BOOL>(iter, key);
+    return isTypeByKey<ByamlDataType::Bool>(iter, key);
 }
 
 bool isTypeIntByIndex(const ByamlIter& iter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_INT>(iter, index);
+    return isTypeByIndex<ByamlDataType::Int>(iter, index);
 }
 
 bool isTypeIntByKey(const ByamlIter& iter, const char* key) {
-    return isTypeByKey<ByamlDataType::TYPE_INT>(iter, key);
+    return isTypeByKey<ByamlDataType::Int>(iter, key);
 }
 
 bool isTypeFloatByIndex(const ByamlIter& iter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_FLOAT>(iter, index);
+    return isTypeByIndex<ByamlDataType::Float>(iter, index);
 }
 
 bool isTypeFloatByKey(const ByamlIter& iter, const char* key) {
-    return isTypeByKey<ByamlDataType::TYPE_FLOAT>(iter, key);
+    return isTypeByKey<ByamlDataType::Float>(iter, key);
 }
 
 bool isTypeStringByIndex(const ByamlIter& iter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_STRING>(iter, index);
+    return isTypeByIndex<ByamlDataType::String>(iter, index);
 }
 
 bool isTypeStringByKey(const ByamlIter& iter, const char* key) {
-    return isTypeByKey<ByamlDataType::TYPE_STRING>(iter, key);
+    return isTypeByKey<ByamlDataType::String>(iter, key);
 }
 
 bool isTypeArrayByIndex(const ByamlIter& iter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_ARRAY>(iter, index);
+    return isTypeByIndex<ByamlDataType::Array>(iter, index);
 }
 
 bool isTypeArrayByKey(const ByamlIter& iter, const char* key) {
-    return isTypeByKey<ByamlDataType::TYPE_ARRAY>(iter, key);
+    return isTypeByKey<ByamlDataType::Array>(iter, key);
 }
 
 bool isTypeHashByIndex(const ByamlIter& iter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_HASH>(iter, index);
+    return isTypeByIndex<ByamlDataType::Hash>(iter, index);
 }
 
 bool isTypeHashByKey(const ByamlIter& iter, const char* key) {
-    return isTypeByKey<ByamlDataType::TYPE_HASH>(iter, key);
+    return isTypeByKey<ByamlDataType::Hash>(iter, key);
 }
 
 s32 getByamlIterDataNum(const ByamlIter& iter) {
@@ -380,8 +380,7 @@ void printByamlIter_(const ByamlIter& iter, PrintParams* param) {
             const char* data = nullptr;
             iter.getByamlDataAndKeyName(&entry, &data, i);
         }
-        if (entry.getType() == ByamlDataType::TYPE_HASH ||
-            entry.getType() == ByamlDataType::TYPE_ARRAY) {
+        if (entry.getType() == ByamlDataType::Hash || entry.getType() == ByamlDataType::Array) {
             u32 v6 = entry.getValue();
             if (param) {
                 PrintParams* sub_param = param;
@@ -399,17 +398,17 @@ void printByamlIter_(const ByamlIter& iter, PrintParams* param) {
                 printByamlIter_(a1, &new_param);
             }
         } else {
-            u8 type = entry.getType();
-            if (type == ByamlDataType::TYPE_FLOAT) {
+            ByamlDataType type = entry.getType();
+            if (type == ByamlDataType::Float) {
                 f32 data;
                 iter.tryConvertFloat(&data, &entry);
-            } else if (type == ByamlDataType::TYPE_INT) {
+            } else if (type == ByamlDataType::Int) {
                 s32 data;
                 iter.tryConvertInt(&data, &entry);
-            } else if (type == ByamlDataType::TYPE_STRING) {
+            } else if (type == ByamlDataType::String) {
                 const char* data;
                 iter.tryConvertString(&data, &entry);
-            } else if (type == ByamlDataType::TYPE_BOOL) {
+            } else if (type == ByamlDataType::Bool) {
                 bool data;
                 iter.tryConvertBool(&data, &entry);
             }
