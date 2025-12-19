@@ -1,10 +1,10 @@
 #include "Library/Layout/LayoutUtil.h"
 
-#include "LayoutInitInfo.h"
-#include "LayoutSystem.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Effect/EffectSystem.h"
 #include "Library/Execute/ExecuteDirector.h"
+#include "Library/Layout/LayoutInitInfo.h"
+#include "Library/Layout/LayoutSystem.h"
 
 namespace al {
 void initLayoutInitInfo(LayoutInitInfo* info, const LayoutKit* kit, SceneObjHolder* sceneObjHolder,
