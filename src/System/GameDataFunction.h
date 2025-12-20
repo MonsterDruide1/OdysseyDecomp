@@ -2,20 +2,10 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
+#include "System/GameDataFile.h"
 #include "System/GameDataHolder.h"
 #include "System/GameDataHolderAccessor.h"
 #include "System/GameDataHolderWriter.h"
-
-struct BindInfo;
-class ChangeStageInfo;
-class ScenarioStartCamera;
-struct ShineInfo;
-class Shine;
-class RiseMapPartsHolder;
-class QuestInfo;
-class WorldTravelingNpc;
-class HackObjInfo;
-class CollectBgm;
 
 namespace nn::g3d {
 class ResFile;
@@ -23,63 +13,51 @@ class ResFile;
 
 namespace al {
 class CameraTicket;
-class GameDataHolderBase;
 class LayoutActor;
-class PlacementId;
-class PlacementInfo;
 class Scene;
 }  // namespace al
+class RiseMapPartsHolder;
+class ScenarioStartCamera;
+class Shine;
+class WorldTravelingNpc;
 
-namespace ShopItem {
-struct ItemInfo;
-}
-
-enum class SessionEventProgress {
-    Entry = 0,
-    Wait1stMusician,
-    Wait2ndMusician,
-    Wait3rdMusician,
-    Wait4thMusician,
-    RequestGoToThePowerPlant,
-    WaitThePowerPlantWorks,
-    TheCeremonyIsReady,
-    GoForTheCeremony,
+struct BindInfo {
+    const char* name;
 };
 
 namespace GameDataFunction {
-GameDataHolder* getGameDataHolder(const al::IUseSceneObjHolder* holder);
-GameDataHolder* getGameDataHolder(const al::SceneObjHolder* holder);
-GameDataHolder* getGameDataHolder(al::GameDataHolderBase* holder);
+GameDataHolder* getGameDataHolder(const al::IUseSceneObjHolder* scene_obj_holder);
+GameDataHolder* getGameDataHolder(const al::SceneObjHolder* scene_obj_holder);
+GameDataHolder* getGameDataHolder(al::GameDataHolderBase* game_data_holder);
 GameDataFile* getGameDataFile(GameDataHolderWriter writer);
-void setPlayingFileId(GameDataHolderWriter writer, s32 fileId);
-void initializeData(GameDataHolderWriter writer, s32 fileId);
+void setPlayingFileId(GameDataHolderWriter writer, s32 file_id);
+void initializeData(GameDataHolderWriter writer, s32 file_id);
 bool isPlayDemoOpening(GameDataHolderAccessor accessor);
 bool isGameClear(GameDataHolderAccessor accessor);
 void setRequireSave(GameDataHolderWriter writer);
 void setRequireSaveFrame(GameDataHolderWriter writer);
-u64 getPlayTimeTotal(GameDataHolderAccessor accessor);
-u64 getPlayTimeAcrossFile(GameDataHolderAccessor accessor);
+s64 getPlayTimeTotal(GameDataHolderAccessor accessor);
+s64 getPlayTimeAcrossFile(GameDataHolderAccessor accessor);
 s64 getSaveDataIdForPrepo(GameDataHolderAccessor accessor);
-void startDemoStage(GameDataHolderWriter writer, const char* stageName);
-bool tryChangeNextStage(GameDataHolderWriter writer, const ChangeStageInfo* stageInfo);
-bool tryChangeNextStageWithStartRaceFlag(GameDataHolderWriter writer,
-                                         const ChangeStageInfo* stageInfo);
+void startDemoStage(GameDataHolderWriter writer, const char* stage_name);
+bool tryChangeNextStage(GameDataHolderWriter writer, const ChangeStageInfo* info);
+bool tryChangeNextStageWithStartRaceFlag(GameDataHolderWriter writer, const ChangeStageInfo* info);
 bool tryChangeNextStageWithStartRaceYukimaru(GameDataHolderWriter writer,
-                                             const ChangeStageInfo* stageInfo);
-bool tryChangeNextStageWithDemoWorldWarp(GameDataHolderWriter writer, const char* stageName);
-bool tryChangeNextStageWithWorldWarpHole(GameDataHolderWriter writer, const char* stageName);
-void changeNextStageWithStartTimeBalloon(GameDataHolderWriter writer, s32 scenarioNo);
+                                             const ChangeStageInfo* info);
+bool tryChangeNextStageWithDemoWorldWarp(GameDataHolderWriter writer, const char* stage_name);
+bool tryChangeNextStageWithWorldWarpHole(GameDataHolderWriter writer, const char* stage_name);
+void changeNextStageWithStartTimeBalloon(GameDataHolderWriter writer, s32 scenario_no);
 const char* getCurrentStageName(GameDataHolderAccessor accessor);
 void changeNextStageWithEndTimeBalloon(GameDataHolderWriter writer);
 void changeNextStageWithCloset(GameDataHolderWriter writer);
 void findAreaAndChangeNextStage(GameDataHolderWriter writer, const al::LiveActor* actor,
-                                const sead::Vector3f* actorTrans);
+                                const sead::Vector3f* pos_override);
 void returnPrevStage(GameDataHolderWriter writer);
 bool isTimeBalloonSequence(GameDataHolderAccessor accessor);
 const char* getNextStageName(GameDataHolderAccessor accessor);
-const char* getCurrentStageName(GameDataHolderAccessor accessor, s32 fileId);
+const char* getCurrentStageName(GameDataHolderAccessor accessor, s32 file_id);
 bool isSeaOfTreeStage(GameDataHolderAccessor accessor);
-const char* getNextStageName(GameDataHolderAccessor accessor, s32 fileId);
+const char* getNextStageName(GameDataHolderAccessor accessor, s32 file_id);
 s32 calcNextScenarioNo(GameDataHolderAccessor accessor);
 void restartStage(GameDataHolderWriter writer);
 void missAndRestartStage(GameDataHolderWriter writer);
@@ -89,31 +67,29 @@ void reenterStage(GameDataHolderWriter writer);
 s32 getNextWorldId(GameDataHolderAccessor accessor);
 s32 getPrevWorldId(GameDataHolderAccessor accessor);
 s32 getWorldNumForNewReleaseShop(GameDataHolderAccessor accessor);
-bool isAlreadyGoWorld(GameDataHolderAccessor accessor, s32 worldId);
-const char* getWorldDevelopName(GameDataHolderAccessor accessor, s32 worldId);
-s32 getWorldIdForNewReleaseShop(GameDataHolderAccessor accessor, s32 worldId);
+s32 getWorldIdForNewReleaseShop(GameDataHolderAccessor accessor, s32 index);
 bool isForwardWorldWarpDemo(GameDataHolderAccessor accessor);
 s32 getWorldNum(GameDataHolderAccessor accessor);
 bool isFirstTimeNextWorld(GameDataHolderAccessor accessor);
 bool checkIsNewWorldInAlreadyGoWorld(GameDataHolderAccessor accessor);
-s32 getCurrentWorldIdNoDevelop(GameDataHolderAccessor accessor);
 s32 getScenarioNo(const al::LiveActor* actor);
 s32 getScenarioNo(const al::LayoutActor* layout);
 s32 getScenarioNoPlacement(GameDataHolderAccessor accessor);
-bool isEqualScenario(const RiseMapPartsHolder*, s32 scenarioNo);
+bool isEqualScenario(const RiseMapPartsHolder* actor, s32 scenario_no);
 s32 getMainQuestMin(const al::LiveActor* actor);
 s32 getCurrentWorldId(GameDataHolderAccessor accessor);
+s32 getCurrentWorldIdNoDevelop(GameDataHolderAccessor accessor);
 void clearStartId(GameDataHolderWriter writer);
-void setCheckpointId(GameDataHolderWriter writer, const al::PlacementId* checkpointFlag);
-void setRestartPointId(GameDataHolderWriter writer, const al::PlacementId* playerRestartInfo);
+void setCheckpointId(GameDataHolderWriter writer, const al::PlacementId* placement_id);
+void setRestartPointId(GameDataHolderWriter writer, const al::PlacementId* placement_id);
 const char* tryGetRestartPointIdString(GameDataHolderAccessor accessor);
 const char* tryGetPlayerStartId(GameDataHolderAccessor accessor);
-bool isPlayerStartObj(const al::LiveActor* actor, const al::ActorInitInfo& initInfo);
-bool isPlayerStartObj(const al::LiveActor* actor, const al::PlacementInfo& placementInfo);
-bool isPlayerStartObj(const al::LiveActor* actor, const char* playerStartId);
-bool isPlayerStartLinkedObj(const al::LiveActor* actor, const al::ActorInitInfo& initInfo,
-                            const char* linkName);
-void setStartShine(const al::LiveActor* actor, const ShineInfo* shineInfo);
+bool isPlayerStartObj(const al::LiveActor* actor, const al::ActorInitInfo& info);
+bool isPlayerStartObj(const al::LiveActor* actor, const al::PlacementInfo& placement_info);
+bool isPlayerStartObj(const al::LiveActor* actor, const char* start_id);
+bool isPlayerStartLinkedObj(const al::LiveActor* actor, const al::ActorInitInfo& info,
+                            const char* link_name);
+void setStartShine(const al::LiveActor* actor, const ShineInfo* info);
 s32 getStartShineNextIndex(GameDataHolderAccessor accessor);
 bool isAlreadyShowExplainCheckpointFlag(GameDataHolderAccessor accessor);
 bool isEnableShowExplainCheckpointFlag(GameDataHolderAccessor accessor);
@@ -127,58 +103,55 @@ bool isPlayerHitPointMaxWithItem(GameDataHolderAccessor accessor);
 void recoveryPlayer(const al::LiveActor* actor);
 void recoveryPlayerForDebug(const al::LiveActor* actor);
 void recoveryPlayerMax(const al::LiveActor* actor);
-void recoveryPlayerForSystem(const GameDataHolder* holder);
-void recoveryPlayerMaxForSystem(const GameDataHolder* holder);
-void initPlayerHitPointForSystem(const GameDataHolder* holder);
+void recoveryPlayerForSystem(const GameDataHolder* game_data_holder);
+void recoveryPlayerMaxForSystem(const GameDataHolder* game_data_holder);
+void initPlayerHitPointForSystem(const GameDataHolder* game_data_holder);
 void damagePlayer(GameDataHolderWriter writer);
 void killPlayer(GameDataHolderWriter writer);
 bool isPlayerLifeZero(GameDataHolderAccessor accessor);
-bool isGotShine(GameDataHolderAccessor accessor, const ShineInfo* shineInfo);
-bool isGotShine(GameDataHolderAccessor accessor, const al::PlacementId* shine);
-bool isGotShine(GameDataHolderAccessor accessor, const char* stageName, const char* objId);
-bool isGotShine(GameDataHolderAccessor accessor, s32 shineIdx);
-bool isGotShine(const Shine* shineActor);
-void setGotShine(GameDataHolderWriter writer, const ShineInfo* shineInfo);
-s32 getGotShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
-ShineInfo* getLatestGetShineInfo(GameDataHolderAccessor accessor);
+bool isGotShine(GameDataHolderAccessor accessor, const ShineInfo* info);
+bool isGotShine(GameDataHolderAccessor accessor, const al::PlacementId* placement_id);
+bool isGotShine(GameDataHolderAccessor accessor, const char* stage_name, const char* obj_id);
+bool isGotShine(GameDataHolderAccessor accessor, s32 index);
+bool isGotShine(const Shine* shine);
+void setGotShine(GameDataHolderWriter writer, const ShineInfo* info);
+s32 getGotShineNum(GameDataHolderAccessor accessor, s32 file_id = -1);
+const ShineInfo* getLatestGetShineInfo(GameDataHolderAccessor accessor);
 s32 getCurrentShineNum(GameDataHolderAccessor accessor);
-s32 getTotalShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
-s32 getTotalShopShineNum(GameDataHolderAccessor accessor, s32 fileId = -1);
-bool tryGetNextMainScenarioLabel(sead::BufferedSafeStringBase<char>* scenarioName,
-                                 sead::BufferedSafeStringBase<char>* stageName,
-                                 const al::IUseSceneObjHolder* holder);
+s32 getTotalShineNum(GameDataHolderAccessor accessor, s32 file_id = -1);
+s32 getTotalShopShineNum(GameDataHolderAccessor accessor, s32 file_id = -1);
+bool tryGetNextMainScenarioLabel(sead::BufferedSafeString* out_label,
+                                 sead::BufferedSafeString* out_stage_name,
+                                 const al::IUseSceneObjHolder* scene_obj_holder);
 s32 getMainScenarioNumMax(GameDataHolderAccessor accessor);
-void setMainScenarioNo(GameDataHolderWriter writer, s32 worldId);
-bool tryGetNextMainScenarioPos(sead::Vector3f*, GameDataHolderAccessor accessor);
-bool isPlayScenarioCamera(GameDataHolderAccessor accessor, const QuestInfo* questInfo);
-bool isPlayAlreadyScenarioStartCamera(GameDataHolderAccessor accessor, s32);
+void setMainScenarioNo(GameDataHolderWriter writer, s32 scenario_no);
+bool tryGetNextMainScenarioPos(sead::Vector3f* out, GameDataHolderAccessor accessor);
+bool isPlayScenarioCamera(GameDataHolderAccessor accessor, const QuestInfo* info);
+bool isPlayAlreadyScenarioStartCamera(GameDataHolderAccessor accessor, s32 quest_no);
 bool isEnterStageFirst(GameDataHolderAccessor accessor);
-bool isNextMainShine(GameDataHolderAccessor accessor, s32 shineIdx);
-bool isMainShine(GameDataHolderAccessor accessor, s32 shineIdx);
-bool isLatestGetMainShine(GameDataHolderAccessor accessor, const ShineInfo* shineInfo);
-s32 tryFindLinkedShineIndex(const al::LiveActor* actor, const al::ActorInitInfo& initInfo);
-s32 tryFindLinkedShineIndex(const al::LiveActor* actor, const al::ActorInitInfo& initInfo,
-                            s32 linkIdx);
-s32 tryFindLinkedShineIndexByLinkName(const al::LiveActor* actor, const al::ActorInitInfo& initInfo,
-                                      const char* linkName);
-s32 calcLinkedShineNum(const al::LiveActor* actor, const al::ActorInitInfo& initInfo);
-s32 tryFindShineIndex(const al::LiveActor* actor, const al::ActorInitInfo& initInfo);
-s32 tryFindShineIndex(const al::LiveActor* actor, const char* stageName, const char* objId);
-s32 tryFindShineUniqueId(const al::Scene* scene, const ShineInfo* shineInfo);
-void disableHintByShineIndex(const al::LiveActor* actor, s32 shineIdx);
-void enableHintByShineIndex(const al::LiveActor* actor, s32 shineIdx);
-bool calcIsGetMainShineAll(const al::IUseSceneObjHolder* holder);
-bool calcIsGetShineAllInWorld(GameDataHolderAccessor accessor, s32 worldId);
+bool isNextMainShine(GameDataHolderAccessor accessor, s32 index);
+bool isMainShine(GameDataHolderAccessor accessor, s32 index);
+bool isLatestGetMainShine(GameDataHolderAccessor accessor, const ShineInfo* info);
+s32 tryFindLinkedShineIndex(const al::LiveActor* actor, const al::ActorInitInfo& info);
+s32 tryFindLinkedShineIndex(const al::LiveActor* actor, const al::ActorInitInfo& info,
+                            s32 link_index);
+s32 tryFindLinkedShineIndexByLinkName(const al::LiveActor* actor, const al::ActorInitInfo& info,
+                                      const char* link_name);
+s32 calcLinkedShineNum(const al::LiveActor* actor, const al::ActorInitInfo& info);
+s32 tryFindShineIndex(const al::LiveActor* actor, const al::ActorInitInfo& info);
+s32 tryFindShineIndex(const al::LiveActor* actor, const char* stage_name, const char* obj_id);
+s32 tryFindShineUniqueId(const al::Scene* scene, const ShineInfo* shine_info);
+void disableHintByShineIndex(const al::LiveActor* actor, s32 index);
+void enableHintByShineIndex(const al::LiveActor* actor, s32 index);
+bool calcIsGetMainShineAll(const al::IUseSceneObjHolder* scene_obj_holder);
+bool calcIsGetShineAllInWorld(GameDataHolderAccessor accessor, s32 world_id);
 bool calcIsGetShineAllInAllWorld(GameDataHolderAccessor accessor);
-bool tryFindAndInitShineInfoByOptionalId(ShineInfo* shineInfo, GameDataHolderAccessor accessor,
-                                         const char* optionalId);
-bool isGotLinkedShineBeforeInitActor(const al::ActorInitInfo& actorInitInfo, const char* linkName);
-bool checkIsComplete(const al::IUseSceneObjHolder* holder, s32 fileId);
-bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hackName, s32 fileId);
-s32 getCollectedBgmNum(GameDataHolderAccessor accessor, s32 fileId);
-s32 getCollectedBgmMaxNum(GameDataHolderWriter writer);
+bool tryFindAndInitShineInfoByOptionalId(ShineInfo* info, GameDataHolderAccessor accessor,
+                                         const char* optional_id);
+bool isGotLinkedShineBeforeInitActor(const al::ActorInitInfo& actor_info, const char* link_name);
+bool checkIsComplete(const al::IUseSceneObjHolder* scene_obj_holder, s32 file_id);
 bool isEnableOpenMoonRock(const al::LiveActor* actor);
-void openMoonRock(const al::LiveActor* actor, const al::PlacementId* moonRock);
+void openMoonRock(const al::LiveActor* actor, const al::PlacementId* _placement_id);
 bool isOpenMoonRock(GameDataHolderAccessor accessor);
 bool isEnableShowDemoOpenMoonRockFirst(GameDataHolderAccessor accessor);
 bool isEnableShowDemoOpenMoonRockWorld(GameDataHolderAccessor accessor);
@@ -190,7 +163,7 @@ bool isAppearedMoonRockTalkMessage(GameDataHolderAccessor accessor);
 void addPayShine(GameDataHolderWriter writer, s32 count);
 void addPayShineCurrentAll(GameDataHolderWriter writer);
 s32 getPayShineNum(GameDataHolderAccessor accessor);
-s32 getPayShineNum(GameDataHolderAccessor accessor, s32 worldId);
+s32 getPayShineNum(GameDataHolderAccessor accessor, s32 world_id);
 s32 getTotalPayShineNum(GameDataHolderAccessor accessor);
 s32 getTotalPayShineNumClamp(GameDataHolderAccessor accessor);
 bool isPayShineAllInAllWorld(GameDataHolderAccessor accessor);
@@ -198,29 +171,32 @@ void addKey(GameDataHolderWriter writer, s32 count);
 s32 getKeyNum(GameDataHolderAccessor accessor);
 s32 getCurrentKeyNum(GameDataHolderAccessor accessor);
 s32 getOpenDoorLockNum(GameDataHolderAccessor accessor);
-void openDoorLock(GameDataHolderWriter writer, const al::PlacementId* doorLock);
-bool isOpenDoorLock(GameDataHolderAccessor accessor, const al::PlacementId* doorLock);
-void setObjStarted(GameDataHolder* holder, const al::PlacementId* obj);
-bool isObjStarted(const GameDataHolder* holder, const al::PlacementId* obj);
-bool isObjStarted(GameDataHolderAccessor accessor, const char* stageName, const char* objId);
-void saveObjS32(GameDataHolderWriter writer, const al::PlacementId* obj, s32 value);
-bool tryFindSaveObjS32Value(s32* outValue, GameDataHolderAccessor accessor,
-                            const al::PlacementId* obj);
-void onObjNoWriteSaveData(GameDataHolderWriter writer, const al::PlacementId* obj);
-void offObjNoWriteSaveData(GameDataHolderWriter writer, const al::PlacementId* obj);
-bool isOnObjNoWriteSaveData(GameDataHolderAccessor accessor, const al::PlacementId* obj);
-void onObjNoWriteSaveDataResetMiniGame(GameDataHolderWriter writer, const al::PlacementId* obj);
-void offObjNoWriteSaveDataResetMiniGame(GameDataHolderWriter writer, const al::PlacementId* obj);
+void openDoorLock(GameDataHolderWriter writer, const al::PlacementId* placement_id);
+bool isOpenDoorLock(GameDataHolderAccessor accessor, const al::PlacementId* placement_id);
+void setObjStarted(GameDataHolder* game_data_holder, const al::PlacementId* placement_id);
+bool isObjStarted(const GameDataHolder* game_data_holder, const al::PlacementId* placement_id);
+bool isObjStarted(GameDataHolderAccessor accessor, const char* stage_name, const char* obj_id);
+void saveObjS32(GameDataHolderWriter writer, const al::PlacementId* placement_id, s32 value);
+bool tryFindSaveObjS32Value(s32* out, GameDataHolderAccessor accessor,
+                            const al::PlacementId* placement_id);
+void onObjNoWriteSaveData(GameDataHolderWriter writer, const al::PlacementId* placement_id);
+void offObjNoWriteSaveData(GameDataHolderWriter writer, const al::PlacementId* placement_id);
+bool isOnObjNoWriteSaveData(GameDataHolderAccessor accessor, const al::PlacementId* placement_id);
+void onObjNoWriteSaveDataResetMiniGame(GameDataHolderWriter writer,
+                                       const al::PlacementId* placement_id);
+void offObjNoWriteSaveDataResetMiniGame(GameDataHolderWriter writer,
+                                        const al::PlacementId* placement_id);
 bool isOnObjNoWriteSaveDataResetMiniGame(GameDataHolderAccessor accessor,
-                                         const al::PlacementId* obj);
-void onObjNoWriteSaveDataInSameScenario(GameDataHolder* holder, const al::PlacementId* obj);
-bool isOnObjNoWriteSaveDataInSameScenario(const GameDataHolder* holder, const al::PlacementId* obj);
+                                         const al::PlacementId* placement_id);
+void onObjNoWriteSaveDataInSameScenario(GameDataHolder* game_data_holder,
+                                        const al::PlacementId* placement_id);
+bool isOnObjNoWriteSaveDataInSameScenario(const GameDataHolder* game_data_holder,
+                                          const al::PlacementId* placement_id);
 void setSessionEventProgress(GameDataHolderWriter writer, const SessionEventProgress& progress);
 const SessionEventProgress& getSessionEventProgress(GameDataHolderAccessor accessor);
 bool isPayCoinToSphinx(const al::LiveActor* actor);
 void payCoinToSphinx(const al::LiveActor* actor);
 bool isRemovedCapByJango(const al::LiveActor* actor);
-bool isMainStage(GameDataHolderAccessor accessor);
 bool isGetCapFromJango(const al::LiveActor* actor);
 void removeCapByJango(const al::LiveActor* actor);
 void getCapFromJango(const al::LiveActor* actor);
@@ -234,7 +210,7 @@ bool isRaceStartFlag(GameDataHolderAccessor accessor);
 bool isRaceStartYukimaru(GameDataHolderAccessor accessor);
 bool isRaceStartYukimaruTutorial(GameDataHolderAccessor accessor);
 bool isRaceWin(GameDataHolderAccessor accessor);
-bool isRaceWin(GameDataHolderAccessor accessor, s32);
+bool isRaceWin(GameDataHolderAccessor _accessor, s32 _unknown);
 bool isRaceResultSecond(GameDataHolderAccessor accessor);
 bool isRaceResultThird(GameDataHolderAccessor accessor);
 bool isRaceLose(GameDataHolderAccessor accessor);
@@ -249,19 +225,19 @@ void setRaceRivalLevel(const al::LiveActor* actor, s32 level);
 void setLastRaceRanking(GameDataHolderAccessor accessor, s32 ranking);
 s32 getLastRaceRanking(GameDataHolderWriter writer);
 void incrementRaceLoseCount(const al::Scene* scene, s32 level);
-s32 getRaceLoseCount(const al::LiveActor*, s32 level);
-void addCoinCollect(GameDataHolderWriter writer, const al::PlacementId* coinCollect);
+s32 getRaceLoseCount(const al::LiveActor* actor, s32 level);
+void addCoinCollect(GameDataHolderWriter writer, const al::PlacementId* placement_id);
 void useCoinCollect(GameDataHolderWriter writer, s32 count);
-bool isGotCoinCollect(GameDataHolderAccessor accessor, const al::ActorInitInfo& coinCollect);
+bool isGotCoinCollect(GameDataHolderAccessor accessor, const al::ActorInitInfo& actor_info);
 s32 getCoinCollectNum(GameDataHolderAccessor accessor);
 s32 getCoinCollectGotNum(GameDataHolderAccessor accessor);
-s32 getCoinCollectGotNum(GameDataHolderAccessor accessor, s32 worldId);
+s32 getCoinCollectGotNum(GameDataHolderAccessor accessor, s32 world_id);
 s32 getCoinCollectNumMax(GameDataHolderAccessor accessor);
-s32 getCoinCollectNumMax(GameDataHolderAccessor accessor, s32 worldId);
-bool tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(sead::Vector3f* pos,
-                                                                   const char**,
+s32 getCoinCollectNumMax(GameDataHolderAccessor accessor, s32 world_id);
+bool tryFindExistCoinCollectStagePosExcludeHomeStageInCurrentWorld(sead::Vector3f* out_pos,
+                                                                   const char** out_stage_name,
                                                                    GameDataHolderAccessor accessor);
-s32 getWorldScenarioNo(GameDataHolderAccessor accessor, s32 worldId);
+s32 getWorldScenarioNo(GameDataHolderAccessor accessor, s32 world_id);
 void addCoin(GameDataHolderWriter writer, s32 count);
 void subCoin(GameDataHolderWriter writer, s32 count);
 s32 getCoinNum(GameDataHolderAccessor accessor);
@@ -272,17 +248,18 @@ bool isEnableCheckpointWarp(GameDataHolderAccessor accessor);
 void validateCheckpointWarp(GameDataHolderWriter writer);
 void invalidateCheckpointWarp(GameDataHolderWriter writer);
 s32 getCheckpointNumMaxInWorld(GameDataHolderAccessor accessor);
-const sead::Vector3f& getCheckpointTransInWorld(GameDataHolderAccessor accessor, s32 checkpointIdx);
-const char* getCheckpointObjIdInWorld(GameDataHolderAccessor accessor, s32 checkpointIdx);
-const sead::Vector3f& getCheckpointTransInWorld(GameDataHolderAccessor accessor, const char* objId);
-bool isGotCheckpointInWorld(GameDataHolderAccessor accessor, s32 checkpointIdx);
-bool isGotCheckpoint(GameDataHolderAccessor accessor, al::PlacementId* checkpoint);
+const sead::Vector3f& getCheckpointTransInWorld(GameDataHolderAccessor accessor, s32 index);
+const sead::Vector3f& getCheckpointTransInWorld(GameDataHolderAccessor accessor,
+                                                const char* obj_id);
+const char* getCheckpointObjIdInWorld(GameDataHolderAccessor accessor, s32 index);
+bool isGotCheckpointInWorld(GameDataHolderAccessor accessor, s32 index);
+bool isGotCheckpoint(GameDataHolderAccessor accessor, al::PlacementId* placement_id);
 s32 calcGotCheckpointNumInWorld(GameDataHolderAccessor accessor);
-void changeNextSceneByGotCheckpoint(GameDataHolderWriter writer, s32 checkpointIdx);
+void changeNextSceneByGotCheckpoint(GameDataHolderWriter writer, s32 index);
 void changeNextSceneByHome(GameDataHolderWriter writer);
 bool isWarpCheckpoint(GameDataHolderAccessor accessor);
 const char* getCheckpointWarpObjId(GameDataHolderAccessor accessor);
-void registerCheckpointTrans(GameDataHolderWriter writer, const al::PlacementId* checkpoint,
+void registerCheckpointTrans(GameDataHolderWriter writer, const al::PlacementId* placement_id,
                              const sead::Vector3f& trans);
 bool isEnableUnlockHint(GameDataHolderAccessor accessor);
 void unlockHint(GameDataHolderWriter writer);
@@ -291,71 +268,67 @@ s32 calcHintNum(GameDataHolderAccessor accessor);
 s32 calcRestHintNum(GameDataHolderAccessor accessor);
 bool checkExistHint(GameDataHolderAccessor accessor);
 s32 getHintNumMax(GameDataHolderAccessor accessor);
-const sead::Vector3f& calcHintTrans(GameDataHolderAccessor accessor, s32 hintIdx);
+const sead::Vector3f& calcHintTrans(GameDataHolderAccessor accessor, s32 index);
 const sead::Vector3f& getLatestHintTrans(GameDataHolderAccessor accessor);
 bool checkLatestHintSeaOfTree(GameDataHolderAccessor accessor);
 s32 calcHintMoonRockNum(GameDataHolderAccessor accessor);
 s32 getHintMoonRockNumMax(GameDataHolderAccessor accessor);
-const sead::Vector3f& calcHintMoonRockTrans(GameDataHolderAccessor accessor, s32 hintIdx);
+const sead::Vector3f& calcHintMoonRockTrans(GameDataHolderAccessor accessor, s32 index);
 void initializeHintList(GameDataHolderWriter writer);
 const sead::Vector3f& calcHintTransMostEasy(GameDataHolderAccessor accessor);
-bool calcHintTransMostNear(sead::Vector3f* trans, GameDataHolderAccessor accessor,
+bool calcHintTransMostNear(sead::Vector3f* out, GameDataHolderAccessor accessor,
                            const sead::Vector3f& pos);
-bool checkHintSeaOfTree(GameDataHolderAccessor accessor, s32 hintIdx);
-bool checkHintSeaOfTreeMoonRock(GameDataHolderAccessor accessor, s32 hintIdx);
-s32 findUnlockShineNum(bool* isGameClear, GameDataHolderAccessor accessor);
-s32 findUnlockShineNumByWorldId(bool* isGameClear, GameDataHolderAccessor accessor, s32 worldId);
-bool isUnlockedWorld(GameDataHolderAccessor accessor, s32 worldId);
+bool checkHintSeaOfTree(GameDataHolderAccessor accessor, s32 index);
+bool checkHintSeaOfTreeMoonRock(GameDataHolderAccessor accessor, s32 index);
+s32 findUnlockShineNum(bool* out_is_game_clear, GameDataHolderAccessor accessor);
+s32 findUnlockShineNumByWorldId(bool* out_is_game_clear, GameDataHolderAccessor accessor,
+                                s32 world_id);
+bool isUnlockedWorld(GameDataHolderAccessor accessor, s32 world_id);
 bool isUnlockedNextWorld(GameDataHolderAccessor accessor);
 bool isUnlockedAllWorld(GameDataHolderAccessor accessor);
-s32 getWorldIndexSpecial2();
 bool isUnlockedCurrentWorld(GameDataHolderAccessor accessor);
 bool isCollectShineForNextWorldAndNotUnlockNextWorld(const al::LiveActor* actor);
-const char* getMainStageName(GameDataHolderAccessor accessor, s32 worldId);
+bool isAlreadyGoWorld(GameDataHolderAccessor accessor, s32 world_id);
+bool isMainStage(GameDataHolderAccessor accessor);
+const char* getMainStageName(GameDataHolderAccessor accessor, s32 world_id);
 const char* tryGetCurrentMainStageName(GameDataHolderAccessor accessor);
-const char16* tryGetWorldName(const al::LayoutActor* layout, s32 worldId);
+const char16* tryGetWorldName(const al::LayoutActor* layout, s32 world_id);
 const char16* tryGetWorldNameCurrent(const al::LayoutActor* layout);
 const char16* tryGetRegionNameCurrent(const al::LayoutActor* layout);
+const char* getWorldDevelopName(GameDataHolderAccessor accessor, s32 world_id);
 const char* getWorldDevelopNameCurrent(GameDataHolderAccessor accessor);
-s32 getWorldScenarioNum(GameDataHolderAccessor accessor, s32 worldId);
-const char* findMainStageNameByDevelopName(GameDataHolderAccessor accessor,
-                                           const char* developName);
-s32 findWorldIdByDevelopName(GameDataHolderAccessor accessor, const char* developName);
-s32 tryFindWorldIdByMainStageName(const al::Scene* scene, const char* mainStageName);
-s32 tryFindWorldIdByMainStageName(const al::IUseSceneObjHolder* holder, const char* mainStageName);
+s32 getWorldScenarioNum(GameDataHolderAccessor accessor, s32 world_id);
+const char* findMainStageNameByDevelopName(GameDataHolderAccessor accessor, const char* name);
+s32 findWorldIdByDevelopName(GameDataHolderAccessor accessor, const char* name);
+s32 tryFindWorldIdByMainStageName(const al::Scene* scene, const char* stage_name);
+s32 tryFindWorldIdByMainStageName(const al::IUseSceneObjHolder* scene_obj_holder,
+                                  const char* stage_name);
 bool checkEnableUnlockWorldSpecial1(const al::LiveActor* actor);
-s32 getWorldIndexSpecial1();
 bool checkEnableUnlockWorldSpecial2(const al::LiveActor* actor);
-const char16* tryGetWorldNameByFileId(const al::LayoutActor* layout, s32 fileId);
-bool isNewSaveDataByFileId(const al::LayoutActor*, s32 fileId);
-u64 getLastUpdateFileTime(const al::LayoutActor*, s32 fileId);
-void makeTextureSaveDataFileName(sead::BufferedSafeStringBase<char>* fileName,
-                                 const nn::g3d::ResFile* textureSaveData,
-                                 const GameDataHolder* holder, s32 fileId);
-s32 getWorldIndexPeach();
-s32 getWorldIndexCity();
-bool isCityWorldCeremonyAll(s32 worldId, s32 scenarioNo);
-s32 getWorldIndexSea();
-void unlockWorld(GameDataHolderWriter writer, s32 worldId);
-s32 getUnlockWorldIdForWorldMap(const al::LayoutActor* layout, s32 worldId);
-s32 getUnlockWorldIdForWorldMap(const al::LiveActor* actor, s32 worldId);
-s32 getUnlockWorldIdForWorldMap(const al::Scene* scene, s32 worldId);
-s32 getUnlockWorldIdForWorldMap(const GameDataHolder* holder, s32 worldId);
+const char16* tryGetWorldNameByFileId(const al::LayoutActor* layout, s32 file_id);
+bool isNewSaveDataByFileId(const al::LayoutActor* layout, s32 file_id);
+u64 getLastUpdateFileTime(const al::LayoutActor* layout, s32 file_id);
+void makeTextureSaveDataFileName(sead::BufferedSafeString* out, const nn::g3d::ResFile* res_file,
+                                 const GameDataHolder* game_data_holder, s32 file_id);
+void unlockWorld(GameDataHolderWriter writer, s32 world_id);
+s32 getUnlockWorldIdForWorldMap(const al::LayoutActor* layout, s32 world_id);
+s32 getUnlockWorldIdForWorldMap(const al::LiveActor* actor, s32 world_id);
+s32 getUnlockWorldIdForWorldMap(const al::Scene* scene, s32 world_id);
+s32 getUnlockWorldIdForWorldMap(const GameDataHolder* game_data_holder, s32 world_id);
 s32 getUnlockWorldNumForWorldMap(const al::Scene* scene);
 s32 getUnlockWorldNumForWorldMap(const al::LiveActor* actor);
 s32 getUnlockWorldNumForWorldMap(const al::LayoutActor* layout);
-s32 calcNextLockedWorldIdForWorldMap(const al::LayoutActor* layout, s32 worldId);
-s32 calcNextLockedWorldIdForWorldMap(const al::Scene* scene, s32 worldId);
+s32 calcNextLockedWorldIdForWorldMap(const al::LayoutActor* layout, s32 world_id);
+s32 calcNextLockedWorldIdForWorldMap(const al::Scene* scene, s32 world_id);
 s32 calcNextLockedWorldNumForWorldMap(const al::Scene* scene);
 s32 calcNextLockedWorldNumForWorldMap(const al::LayoutActor* layout);
-s32 getWorldIdForShineList(const al::LayoutActor* layout, s32 worldId);
+s32 getWorldIdForShineList(const al::LayoutActor* layout, s32 world_id);
 s32 calcWorldNumForShineList(const al::LayoutActor* layout);
 s32 getLatestUnlockWorldIdForShineTowerMeter(const al::LiveActor* actor);
 bool isClearSandWorldScenario1(const al::Scene* scene);
 bool isClearCityWorldScenario1(const al::Scene* scene);
 bool isClearSkyWorldScenario1(const al::Scene* scene);
-bool isCityWorldScenario2(const al::IUseSceneObjHolder* holder);
-bool isWorldCity(GameDataHolderAccessor accessor);
+bool isCityWorldScenario2(const al::IUseSceneObjHolder* scene_obj_holder);
 s32 calcNextWorldId(GameDataHolderAccessor accessor);
 bool isPlayDemoWorldWarp(GameDataHolderAccessor accessor);
 bool isPlayDemoWorldWarpHole(GameDataHolderAccessor accessor);
@@ -370,56 +343,56 @@ void disablePlayDemoPlayerDownForBattleKoopaAfter(GameDataHolderWriter writer);
 void enteredStage(GameDataHolderWriter writer);
 const char* getCurrentCostumeTypeName(GameDataHolderAccessor accessor);
 const char* getCurrentCapTypeName(GameDataHolderAccessor accessor);
-void wearCostume(GameDataHolderWriter writer, const char* costumeName);
-void wearCap(GameDataHolderWriter writer, const char* capName);
-void wearCostumeRandom(al::IUseSceneObjHolder* holder);
-void wearCapRandom(al::IUseSceneObjHolder* holder);
-void tryWearCostumeRandomIfEnable(al::IUseSceneObjHolder* holder);
-bool isCostumeRandomMode(al::IUseSceneObjHolder* holder);
-void tryWearCapRandomIfEnable(al::IUseSceneObjHolder* holder);
-bool isCapRandomMode(al::IUseSceneObjHolder* holder);
-void setCostumeRandomMode(al::IUseSceneObjHolder* holder);
-void setCapRandomMode(al::IUseSceneObjHolder* holder);
-void resetCostumeRandomMode(al::IUseSceneObjHolder* holder);
-void resetCapRandomMode(al::IUseSceneObjHolder* holder);
+void wearCostume(GameDataHolderWriter writer, const char* name);
+void wearCap(GameDataHolderWriter writer, const char* name);
+void wearCostumeRandom(al::IUseSceneObjHolder* scene_obj_holder);
+void wearCapRandom(al::IUseSceneObjHolder* scene_obj_holder);
+void tryWearCostumeRandomIfEnable(al::IUseSceneObjHolder* scene_obj_holder);
+void tryWearCapRandomIfEnable(al::IUseSceneObjHolder* scene_obj_holder);
+bool isCostumeRandomMode(al::IUseSceneObjHolder* scene_obj_holder);
+bool isCapRandomMode(al::IUseSceneObjHolder* scene_obj_holder);
+void setCostumeRandomMode(al::IUseSceneObjHolder* scene_obj_holder);
+void setCapRandomMode(al::IUseSceneObjHolder* scene_obj_holder);
+void resetCostumeRandomMode(al::IUseSceneObjHolder* scene_obj_holder);
+void resetCapRandomMode(al::IUseSceneObjHolder* scene_obj_holder);
 const sead::PtrArray<ShopItem::ShopItemInfo>& getShopItemInfoList(GameDataHolderAccessor accessor);
-bool isExistHackObjInfo(GameDataHolderAccessor accessor, const char* hackName);
-const HackObjInfo& getHackObjInfo(GameDataHolderAccessor accessor, const char* hackName);
-void addHackDictionary(GameDataHolderWriter writer, const char* hackName);
-bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hackName);
-bool isShowHackTutorial(GameDataHolderAccessor accessor, const char* hackName, const char* suffix);
-void setShowHackTutorial(GameDataHolderWriter writer, const char* hackName, const char* suffix);
-bool isShowBindTutorial(GameDataHolderAccessor accessor, const BindInfo& bindInfo);
-void setShowBindTutorial(GameDataHolderWriter writer, const BindInfo& bindInfo);
-bool isGotShine(GameDataHolderAccessor accessor, s32 worldId, s32 shineIdx);
-bool isOpenShineName(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-bool checkAchievementShine(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-s32 calcShineNumInOneShine(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-const char16* tryFindShineMessage(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
+bool isExistHackObjInfo(GameDataHolderAccessor accessor, const char* hack_name);
+const HackObjInfo* getHackObjInfo(GameDataHolderAccessor accessor, const char* hack_name);
+void addHackDictionary(GameDataHolderWriter writer, const char* hack_name);
+bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hack_name);
+bool isExistInHackDictionary(GameDataHolderAccessor accessor, const char* hack_name, s32 file_id);
+bool isShowHackTutorial(GameDataHolderAccessor accessor, const char* hack_name, const char* suffix);
+void setShowHackTutorial(GameDataHolderWriter writer, const char* hack_name, const char* suffix);
+bool isShowBindTutorial(GameDataHolderAccessor accessor, const BindInfo& bind_info);
+void setShowBindTutorial(GameDataHolderWriter writer, const BindInfo& bind_info);
+bool isGotShine(GameDataHolderAccessor accessor, s32 world_id, s32 index);
+bool isOpenShineName(const al::LayoutActor* layout, s32 world_id, s32 index);
+bool checkAchievementShine(const al::LayoutActor* layout, s32 world_id, s32 index);
+s32 calcShineNumInOneShine(const al::LayoutActor* layout, s32 world_id, s32 index);
+const char16* tryFindShineMessage(const al::LayoutActor* layout, s32 world_id, s32 index);
 const char16* tryFindShineMessage(const al::LiveActor* actor,
-                                  const al::IUseMessageSystem* messageSystem, s32 worldId,
-                                  s32 shineIdx);
-u64 findShineGetTime(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-bool checkMoonRockShineForShineList(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-bool checkUnlockHintByHintNpcForShineList(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-bool checkUnlockHintByAmiiboForShineList(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-bool checkShineSeaOfTreeForShineList(const al::LayoutActor* layout, s32 worldId, s32 shineIdx);
-s32 getWorldTotalShineNum(GameDataHolderAccessor accessor, s32 worldId);
-s32 getWorldTotalShineNumMax(GameDataHolderAccessor accessor, s32 worldId);
-void findShineTrans(sead::Vector3f* trans, GameDataHolderAccessor accessor, s32 worldId,
-                    s32 shineIdx);
+                                  const al::IUseMessageSystem* message_system, s32 world_id,
+                                  s32 index);
+u64 findShineGetTime(const al::LayoutActor* layout, s32 world_id, s32 index);
+bool checkMoonRockShineForShineList(const al::LayoutActor* layout, s32 world_id, s32 index);
+bool checkUnlockHintByHintNpcForShineList(const al::LayoutActor* layout, s32 world_id, s32 index);
+bool checkUnlockHintByAmiiboForShineList(const al::LayoutActor* layout, s32 world_id, s32 index);
+bool checkShineSeaOfTreeForShineList(const al::LayoutActor* layout, s32 world_id, s32 index);
+s32 getWorldTotalShineNum(GameDataHolderAccessor accessor, s32 world_id);
+s32 getWorldTotalShineNumMax(GameDataHolderAccessor accessor, s32 world_id);
+void findShineTrans(sead::Vector3f* out, GameDataHolderAccessor accessor, s32 world_id, s32 index);
 const sead::Vector3f& getHomeTrans(GameDataHolderAccessor accessor);
 bool isExistHome(GameDataHolderAccessor accessor);
 bool isActivateHome(GameDataHolderAccessor accessor);
 s32 getMiniGameNum(GameDataHolderAccessor accessor);
 s32 getMiniGameNumMax(GameDataHolderAccessor accessor);
-const sead::Vector3f& getMiniGameTrans(GameDataHolderAccessor accessor, s32 miniGameIdx);
-const char* getMiniGameName(GameDataHolderAccessor accessor, s32 miniGameIdx);
+const sead::Vector3f& getMiniGameTrans(GameDataHolderAccessor accessor, s32 index);
+const char* getMiniGameName(GameDataHolderAccessor accessor, s32 index);
 const sead::Vector3f& getRaceStartTrans(GameDataHolderAccessor accessor);
 const sead::Vector3f& getRaceGoalTrans(GameDataHolderAccessor accessor);
 const sead::Vector3f& getHintNpcTrans(GameDataHolderAccessor accessor);
-const sead::Vector3f& getShopNpcTrans(GameDataHolderAccessor accessor, s32 shopNpcIdx);
-bool isShopSellout(GameDataHolderAccessor accessor, s32 shopNpcIdx);
+const sead::Vector3f& getShopNpcTrans(GameDataHolderAccessor accessor, s32 index);
+bool isShopSellout(GameDataHolderAccessor accessor, s32 index);
 s32 calcShopNum(GameDataHolderAccessor accessor);
 s32 getShopNpcIconNumMax(GameDataHolderAccessor accessor);
 bool isExistRaceStartNpc(GameDataHolderAccessor accessor);
@@ -444,12 +417,12 @@ void setHintNpcTrans(const al::LiveActor* actor);
 void setJangoTrans(const al::LiveActor* actor);
 void disableJangoTrans(const al::LiveActor* actor);
 void setAmiiboNpcTrans(const al::LiveActor* actor);
-void setShopNpcTrans(const al::LiveActor* actor, const char* storeName, s32 shopNpcIdx);
-void setShopNpcTrans(GameDataHolderAccessor accessor, const al::PlacementInfo& placementInfo);
-void setMiniGameInfo(GameDataHolderAccessor accessor, const al::PlacementInfo& placementInfo);
+void setShopNpcTrans(const al::LiveActor* actor, const char* name, s32 type);
+void setShopNpcTrans(GameDataHolderAccessor accessor, const al::PlacementInfo& placement_info);
+void setMiniGameInfo(GameDataHolderAccessor accessor, const al::PlacementInfo& placement_info);
 void setTimeBalloonTrans(GameDataHolderAccessor accessor, const sead::Vector3f& trans);
 void setPoetterTrans(GameDataHolderAccessor accessor, const sead::Vector3f& trans);
-void setStageMapPlayerPos(GameDataHolderWriter writer, const sead::Vector3f& trans);
+void setStageMapPlayerPos(GameDataHolderWriter writer, const sead::Vector3f& pos);
 void setMoonRockTrans(GameDataHolderWriter writer, const sead::Vector3f& trans);
 s32 getHomeLevel(GameDataHolderAccessor accessor);
 void upHomeLevel(GameDataHolderWriter writer);
@@ -464,8 +437,8 @@ bool isBossAttackedHome(GameDataHolderAccessor accessor);
 void bossAttackHome(GameDataHolderWriter writer);
 bool isRepairHomeByCrashedBoss(GameDataHolderAccessor accessor);
 void repairHomeByCrashedBoss(GameDataHolderWriter writer);
-bool isFindKoopaNext(GameDataHolderAccessor accessor, s32 worldId);
-bool isBossAttackedHomeNext(GameDataHolderAccessor accessor, s32 worldId);
+bool isFindKoopaNext(GameDataHolderAccessor accessor, s32 world_id);
+bool isBossAttackedHomeNext(GameDataHolderAccessor accessor, s32 world_id);
 bool isFindKoopa(GameDataHolderAccessor accessor);
 void findKoopa(GameDataHolderWriter writer);
 bool isEnableCap(GameDataHolderAccessor accessor);
@@ -474,8 +447,8 @@ void enableCap(GameDataHolderWriter writer);
 void disableCapByPlacement(const al::LiveActor* actor);
 bool isTalkedCapNearHomeInWaterfall(const al::LiveActor* actor);
 void talkCapNearHomeInWaterfall(const al::LiveActor* actor);
-bool isFlagOnTalkMessageInfo(const al::IUseSceneObjHolder* holder, s32 talkMessageIdx);
-void onFlagTalkMessageInfo(const al::IUseSceneObjHolder* holder, s32 talkMessageIdx);
+bool isFlagOnTalkMessageInfo(const al::IUseSceneObjHolder* scene_obj_holder, s32 index);
+void onFlagTalkMessageInfo(const al::IUseSceneObjHolder* scene_obj_holder, s32 index);
 s32 getWorldIndexHat();
 s32 getWorldIndexWaterfall();
 s32 getWorldIndexSand();
@@ -483,11 +456,16 @@ s32 getWorldIndexForest();
 s32 getWorldIndexLake();
 s32 getWorldIndexCloud();
 s32 getWorldIndexClash();
+s32 getWorldIndexCity();
+s32 getWorldIndexSea();
 s32 getWorldIndexSnow();
 s32 getWorldIndexLava();
 s32 getWorldIndexBoss();
 s32 getWorldIndexSky();
 s32 getWorldIndexMoon();
+s32 getWorldIndexPeach();
+s32 getWorldIndexSpecial1();
+s32 getWorldIndexSpecial2();
 bool isWorldCap(GameDataHolderAccessor accessor);
 bool isWorldWaterfall(GameDataHolderAccessor accessor);
 bool isWorldSand(GameDataHolderAccessor accessor);
@@ -495,6 +473,7 @@ bool isWorldForest(GameDataHolderAccessor accessor);
 bool isWorldLake(GameDataHolderAccessor accessor);
 bool isWorldCloud(GameDataHolderAccessor accessor);
 bool isWorldClash(GameDataHolderAccessor accessor);
+bool isWorldCity(GameDataHolderAccessor accessor);
 bool isWorldSnow(GameDataHolderAccessor accessor);
 bool isWorldSea(GameDataHolderAccessor accessor);
 bool isWorldBoss(GameDataHolderAccessor accessor);
@@ -503,30 +482,31 @@ bool isWorldMoon(GameDataHolderAccessor accessor);
 bool isWorldPeach(GameDataHolderAccessor accessor);
 bool isWorldSpecial1(GameDataHolderAccessor accessor);
 bool isWorldSpecial2(GameDataHolderAccessor accessor);
-bool isWorldTypeMoon(GameDataHolderAccessor accessor, s32 worldId);
-bool isSnowMainScenario1(const al::IUseSceneObjHolder* holder);
-bool isSnowMainScenario2(const al::IUseSceneObjHolder* holder);
-bool isHomeShipStage(const GameDataHolder* holder);
+bool isWorldTypeMoon(GameDataHolderAccessor _accessor, s32 world_id);
+bool isSnowMainScenario1(const al::IUseSceneObjHolder* scene_obj_holder);
+bool isSnowMainScenario2(const al::IUseSceneObjHolder* scene_obj_holder);
+bool isHomeShipStage(const GameDataHolder* game_data_holder);
 const char* getHomeShipStageName();
-bool isCityWorldCeremonyAgain(s32 worldId, s32 scenarioNo);
+bool isCityWorldCeremonyAll(s32 world_id, s32 scenario_no);
+bool isCityWorldCeremonyAgain(s32 world_id, s32 scenario_no);
 bool isGoToCeremonyFromInsideHomeShip(GameDataHolderAccessor accessor);
-void registerScenarioStartCameraInfo(const ScenarioStartCamera* cameraInfo, s32,
-                                     al::CameraTicket* ticket);
+void registerScenarioStartCameraInfo(const ScenarioStartCamera* actor, s32 id,
+                                     al::CameraTicket* camera);
 bool isEnableExplainAmiibo(GameDataHolderAccessor accessor);
 void endExplainAmiibo(GameDataHolderWriter writer);
 void startSearchHintByAmiibo(GameDataHolderWriter writer);
 void endSearchHintByAmiibo(GameDataHolderWriter writer);
 void setKidsModeOn(const al::Scene* scene);
 void setKidsModeOff(const al::Scene* scene);
-bool isCollectedBgm(GameDataHolderAccessor accessor, const char* resourceName,
-                    const char* situationName);
-const CollectBgm& getCollectBgmByIndex(GameDataHolderAccessor accessor, s32 bgmIdx);
-bool trySetCollectedBgm(GameDataHolderWriter writer, const char* resourceName,
-                        const char* situationName);
+bool isCollectedBgm(GameDataHolderAccessor accessor, const char* name, const char* situation_name);
+const CollectBgm& getCollectBgmByIndex(GameDataHolderAccessor accessor, s32 index);
+bool trySetCollectedBgm(GameDataHolderWriter writer, const char* name, const char* situation_name);
 s32 getCollectedBgmNum(GameDataHolderWriter writer);
-void registerShineInfo(GameDataHolderAccessor accessor, const ShineInfo* shineInfo,
+s32 getCollectedBgmNum(GameDataHolderAccessor accessor, s32 file_id);
+s32 getCollectedBgmMaxNum(GameDataHolderWriter writer);
+void registerShineInfo(GameDataHolderAccessor accessor, const ShineInfo* info,
                        const sead::Vector3f& trans);
-void setHintTrans(GameDataHolderAccessor accessor, s32 shineIdx, const sead::Vector3f& trans);
-void resetHintTrans(GameDataHolderAccessor accessor, s32 shineIdx);
+void setHintTrans(GameDataHolderAccessor accessor, s32 index, const sead::Vector3f& trans);
+void resetHintTrans(GameDataHolderAccessor accessor, s32 index);
 bool isKoopaLv3(GameDataHolderAccessor accessor);
 }  // namespace GameDataFunction
