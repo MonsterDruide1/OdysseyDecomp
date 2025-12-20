@@ -19,3 +19,5 @@ public:
 private:
     const al::LiveActor* mPlayer;
 };
+
+static_assert(sizeof(PlayerJudgeDead) == 0x10);
