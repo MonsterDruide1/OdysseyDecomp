@@ -13,7 +13,8 @@ public:
     void init(const SceneCameraInfo* sceneCameraInfo, AreaObjDirector* areaObjDirector);
     void initAfterPlacement();
     void update();
-    AreaObjDirector* getAreaObjDirector() const;
+
+    AreaObjDirector* getAreaObjDirector() const { return mAreaObjDirector; };
 
 private:
     const SceneCameraInfo* mSceneCameraInfo = nullptr;

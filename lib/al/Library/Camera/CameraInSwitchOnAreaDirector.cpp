@@ -10,7 +10,7 @@
 
 namespace al {
 
-CameraInSwitchOnAreaDirector::CameraInSwitchOnAreaDirector() {}
+CameraInSwitchOnAreaDirector::CameraInSwitchOnAreaDirector() = default;
 
 void CameraInSwitchOnAreaDirector::init(const SceneCameraInfo* sceneCameraInfo,
                                         AreaObjDirector* areaObjDirector) {
@@ -23,7 +23,7 @@ void CameraInSwitchOnAreaDirector::initAfterPlacement() {
 }
 
 void CameraInSwitchOnAreaDirector::update() {
-    if (mAreaObjGroup == nullptr)
+    if (!mAreaObjGroup)
         return;
 
     s32 areaNum = mAreaObjGroup->getSize();
@@ -41,10 +41,6 @@ void CameraInSwitchOnAreaDirector::update() {
             }
         }
     }
-}
-
-AreaObjDirector* CameraInSwitchOnAreaDirector::getAreaObjDirector() const {
-    return mAreaObjDirector;
 }
 
 }  // namespace al
