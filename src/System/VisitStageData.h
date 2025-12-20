@@ -15,8 +15,8 @@ public:
     void init();
     bool checkAlreadyVisit(const char*) const;
     void visit(const char*);
-    void write(al::ByamlWriter* writer);
-    void read(const al::ByamlIter& save);
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     void* _8;

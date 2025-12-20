@@ -23,7 +23,7 @@ public:
     ChangeStageInfo(const GameDataHolder* holder, const al::PlacementInfo& info,
                     const char* entranceName, const char* stageName, bool isReturn = false,
                     s32 scenario = -1, SubScenarioType = SubScenarioType::NO_SUB_SCENARIO);
-    ChangeStageInfo(const GameDataHolder*, const char* entranceName, const char* stageName,
+    ChangeStageInfo(const GameDataHolder* holder, const char* entranceName, const char* stageName,
                     bool isReturn = false, s32 scenario = -1,
                     SubScenarioType subScenarioType = SubScenarioType::NO_SUB_SCENARIO);
     void copy(const ChangeStageInfo& other);
@@ -33,6 +33,20 @@ public:
     bool isSubScenarioTypeLifeRecover() const;
     bool isSubScenarioTypeResetMiniGame() const;
     void setWipeType(const char* wipeType);
+
+    bool isEmpty() const { return mChangeStageName.isEmpty(); }
+
+    const char* getChangeStageId() const { return mChangeStageId.cstr(); }
+
+    const char* getStageName() const { return mChangeStageName.cstr(); }
+
+    const char* getPlacementString() const { return mPlacementString.cstr(); }
+
+    bool isReturn() const { return mIsReturn; }
+
+    s32 getScenarioNo() const { return mScenarioNo; }
+
+    SubScenarioType getSubScenarioType() const { return mSubScenarioType; }
 
 private:
     sead::FixedSafeString<0x80> mChangeStageId;
