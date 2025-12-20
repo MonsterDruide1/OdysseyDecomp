@@ -48,20 +48,20 @@ bool isBuyItem(GameDataHolderAccessor accessor, const ShopItem::ItemInfo* itemIn
 
 bool isHaveCloth(GameDataHolderAccessor accessor, const char* name) {
     return accessor->getGameDataFile()->isBuyItem(name,
-                                                  accessor->getGameDataFile()->getClothName());
+                                                  accessor->getGameDataFile()->getClothList());
 }
 
 bool isHaveCap(GameDataHolderAccessor accessor, const char* name) {
-    return accessor->getGameDataFile()->isBuyItem(name, accessor->getGameDataFile()->getCapName());
+    return accessor->getGameDataFile()->isBuyItem(name, accessor->getGameDataFile()->getCapList());
 }
 
 bool isHaveSticker(GameDataHolderAccessor accessor, const char* name) {
     return accessor->getGameDataFile()->isBuyItem(name,
-                                                  accessor->getGameDataFile()->getStickerName());
+                                                  accessor->getGameDataFile()->getStickerList());
 }
 
 bool isHaveGift(GameDataHolderAccessor accessor, const char* name) {
-    return accessor->getGameDataFile()->isBuyItem(name, accessor->getGameDataFile()->getGiftName());
+    return accessor->getGameDataFile()->isBuyItem(name, accessor->getGameDataFile()->getGiftList());
 }
 
 const sead::PtrArray<ShopItem::ItemInfo>& getClothList(GameDataHolderAccessor accessor) {
@@ -74,12 +74,12 @@ s32 getClothListSize(GameDataHolderAccessor accessor) {
 
 bool isHaveCloth(GameDataHolderAccessor accessor, s32 clothIdx) {
     return accessor->getGameDataFile()->isBuyItem(getClothList(accessor)[clothIdx]->name,
-                                                  accessor->getGameDataFile()->getClothName());
+                                                  accessor->getGameDataFile()->getClothList());
 }
 
 bool isHaveClothByFileId(GameDataHolderAccessor accessor, const char* clothName, s32 fileId) {
     GameDataFile* gameDataFile = accessor->getGameDataFile(fileId);
-    return gameDataFile->isBuyItem(clothName, gameDataFile->getClothName());
+    return gameDataFile->isBuyItem(clothName, gameDataFile->getClothList());
 }
 
 s32 calcHaveClothNum(GameDataHolderAccessor accessor) {
@@ -106,12 +106,12 @@ s32 getCapListSize(GameDataHolderAccessor accessor) {
 
 bool isHaveCap(GameDataHolderAccessor accessor, s32 capIdx) {
     return accessor->getGameDataFile()->isBuyItem(getCapList(accessor)[capIdx]->name,
-                                                  accessor->getGameDataFile()->getCapName());
+                                                  accessor->getGameDataFile()->getCapList());
 }
 
 bool isHaveCapByFileId(GameDataHolderAccessor accessor, const char* capName, s32 fileId) {
     GameDataFile* gameDataFile = accessor->getGameDataFile(fileId);
-    return gameDataFile->isBuyItem(capName, gameDataFile->getCapName());
+    return gameDataFile->isBuyItem(capName, gameDataFile->getCapList());
 }
 
 bool isCompleteClothCap(const al::IUseSceneObjHolder* user) {
@@ -174,7 +174,7 @@ s32 getGiftListSize(GameDataHolderAccessor accessor) {
 
 bool isHaveGift(GameDataHolderAccessor accessor, s32 giftIdx) {
     return accessor->getGameDataFile()->isBuyItem(getGiftList(accessor)[giftIdx]->name,
-                                                  accessor->getGameDataFile()->getGiftName());
+                                                  accessor->getGameDataFile()->getGiftList());
 }
 
 s32 calcHaveGiftNum(GameDataHolderAccessor accessor) {
@@ -195,7 +195,7 @@ s32 getStickerListSize(GameDataHolderAccessor accessor) {
 
 bool isHaveSticker(GameDataHolderAccessor accessor, s32 stickerIdx) {
     return accessor->getGameDataFile()->isBuyItem(getStickerList(accessor)[stickerIdx]->name,
-                                                  accessor->getGameDataFile()->getStickerName());
+                                                  accessor->getGameDataFile()->getStickerList());
 }
 
 s32 calcHaveStickerNum(GameDataHolderAccessor accessor) {
