@@ -62,15 +62,15 @@ void HackObjMovieCameraTarget::updateHack(bool isInHack) {
     mNerveKeeper->update();
 }
 
+s32 roundAwayFromZero(f32 val) {
+    return (s32)(val >= 0 ? val + 0.5f : val - 0.5f);
+}
+
 void HackObjMovieCameraTarget::changeTargetToHackObj() {
     f32 distanceBetweenActors = (al::getTrans(getActor()) - rs::getPlayerPos(getActor())).length();
 
     f32 timeToTranstion = sead::Mathf::clampMin(distanceBetweenActors - 200.0f, 0.0f) / 30.0f;
-    f32 half = timeToTranstion >= 0 ? 0.5f : -0.5f;  // in what world is this negative??
-
-    s32 time = (s32)(timeToTranstion + half) + 15;
-    s32 clampedTime = sead::Mathi::clampMax(time, 30);
-    mTransitionTime = (s32)(timeToTranstion + half) < 0.0f ? 15 : clampedTime;
+    mTransitionTime = sead::Mathi::clamp(roundAwayFromZero(timeToTranstion) + 15, 15, 30);
 
     if (al::isNerve(this, &CenterFix))
         al::setNerve(this, &CenterFixToHackObj);
