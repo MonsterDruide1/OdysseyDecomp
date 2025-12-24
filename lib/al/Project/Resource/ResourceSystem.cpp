@@ -190,7 +190,7 @@ private:
 void ResourceSystem::removeCategory(const sead::SafeString& name) {
     ResourceAudioInfo audioPlayerInfo(mAudioPlayerA, mAudioPlayerB, "SoundData/");
 
-    auto iter = findResourceCategoryIter(name);
+    sead::RingBuffer<ResourceCategory*>::iterator iter = findResourceCategoryIter(name);
     if (iter == mCategories.end())
         return;
 
@@ -204,7 +204,7 @@ void ResourceSystem::removeCategory(const sead::SafeString& name) {
         sead::Delegate1<ResourceAudio, MapImpl::Node*> delegate(
             &ctx, &ResourceAudio::disableSoundMemoryPoolHandler);
 
-        category->treeMap.forEach2(delegate);
+        category->treeMap.forEach(delegate);
     }
 
     (*iter)->treeMap.clear();
