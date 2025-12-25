@@ -37,7 +37,7 @@
               python-pkgs.cxxfilt
               python-pkgs.pyelftools
               python-pkgs.watchdog
-              python-pkgs.python-Levenshtein
+              python-pkgs.levenshtein
               python-pkgs.toml
             ]))
             openssl
