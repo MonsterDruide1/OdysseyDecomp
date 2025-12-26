@@ -10,6 +10,8 @@ public:
     virtual void executeList() const;
     virtual bool isActive() const;
 
+    const char* getName() { return mName; }
+
 private:
     const char* mName;
 };
