@@ -297,7 +297,7 @@ public:
 
 private:
     sead::TList<ByamlWriterHashPair*> mList;
-     // TODO: find better names for these two tables
+    // TODO: find better names for these two tables
     ByamlWriterStringTable* mStringTable1;
     ByamlWriterStringTable* mStringTable2;
 };
