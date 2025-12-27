@@ -252,7 +252,7 @@ private:
 
 static_assert(sizeof(ByamlWriterArray) == 0x30);
 
-class ByamlWriterHashPair : public sead::ListNode {
+class ByamlWriterHashPair : public sead::TListNode<ByamlWriterHashPair*> {
 public:
     ByamlWriterHashPair(const char* key, ByamlWriterData* value);
 
@@ -261,8 +261,6 @@ public:
     ByamlWriterData* getValue() { return mValue; }
 
 private:
-    void* mSelfReference = this;
-    void* unk = nullptr;
     const char* mKey;
     ByamlWriterData* mValue;
 };
@@ -299,6 +297,7 @@ public:
 
 private:
     sead::TList<ByamlWriterHashPair*> mList;
+     // TODO: find better names for these two tables
     ByamlWriterStringTable* mStringTable1;
     ByamlWriterStringTable* mStringTable2;
 };
