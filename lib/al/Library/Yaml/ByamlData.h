@@ -5,21 +5,21 @@
 namespace al {
 class ByamlHashPair;
 
-enum ByamlDataType : const u8 {
-    TYPE_INVALID = 0,
-    TYPE_STRING = 0xA0,
-    TYPE_BINARY = 0xA1,
-    TYPE_ARRAY = 0xC0,
-    TYPE_HASH = 0xC1,
-    TYPE_STRING_TABLE = 0xC2,
-    TYPE_BOOL = 0xD0,
-    TYPE_INT = 0xD1,
-    TYPE_FLOAT = 0xD2,
-    TYPE_UINT = 0xD3,
-    TYPE_LONG = 0xD4,
-    TYPE_ULONG = 0xD5,
-    TYPE_DOUBLE = 0xD6,
-    TYPE_NULL = 0xFF
+enum class ByamlDataType : const u8 {
+    None = 0,
+    String = 0xa0,
+    Binary = 0xa1,
+    Array = 0xc0,
+    Hash = 0xc1,
+    StringTable = 0xc2,
+    Bool = 0xd0,
+    Int = 0xd1,
+    Float = 0xd2,
+    UInt = 0xd3,
+    Int64 = 0xd4,
+    UInt64 = 0xd5,
+    Double = 0xd6,
+    Null = 0xff,
 };
 
 class ByamlData {
@@ -39,7 +39,7 @@ public:
 
 private:
     u32 mValue = 0;
-    ByamlDataType mType = ByamlDataType::TYPE_INVALID;
+    ByamlDataType mType = ByamlDataType::None;
 };
 
 class ByamlHashPair {

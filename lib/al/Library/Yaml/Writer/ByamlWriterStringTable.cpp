@@ -82,7 +82,7 @@ u32 ByamlWriterStringTable::calcIndex(const char* string) const {
 void ByamlWriterStringTable::write(sead::WriteStream* stream) const {
     if (isEmpty())
         return;
-    stream->writeU8(0xC2);
+    stream->writeU8((u8)ByamlDataType::StringTable);
     alByamlLocalUtil::writeU24(stream, mList.size());
 
     s32 i = 4 * (mList.size() + 2);
