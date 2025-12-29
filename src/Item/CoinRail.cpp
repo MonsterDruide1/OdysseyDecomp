@@ -106,9 +106,9 @@ void CoinRail::init(const al::ActorInitInfo& info) {
     mLastCoinIndex = mCoinNum - 1;
     mFirstCoinIndex = 0;
 
-    f32 clipInfo = 0.0f;
-    al::calcRailClippingInfo(&mClippingInfo, &clipInfo, this, 100.0f, 100.0f);
-    al::setClippingInfo(this, clipInfo, &mClippingInfo);
+    f32 distance = 0.0f;
+    al::calcRailClippingInfo(&mClippingInfo, &distance, this, 100.0f, 100.0f);
+    al::setClippingInfo(this, distance, &mClippingInfo);
     al::initSubActorKeeperNoFile(this, info, mCoinNum);
 
     for (s32 i = 0; i < mCoinNum; i++) {
