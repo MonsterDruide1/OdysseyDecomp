@@ -466,6 +466,14 @@ public:
 
     void disableCapMessageLifeOneKidsMode() { mIsEnableCapMessageLifeOneKidsMode = false; }
 
+    sead::FixedSafeString<64>* getCapName() { return mCapNamePtr; }
+
+    sead::FixedSafeString<64>* getClothName() { return mClothNamePtr; }
+
+    sead::FixedSafeString<64>* getStickerName() { return mStickerNamePtr; }
+
+    sead::FixedSafeString<64>* getGiftName() { return mGiftNamePtr; }
+
 private:
     char _000[0x18];
     FixedHeapArray<s32, sNumWorlds> mShopShineNum;
@@ -526,7 +534,10 @@ private:
     char _6d8[0x8];
     HintPhotoData* mHintPhotoData;
     s64 mPlayTimeTotal;
-    char _6f0[0x20];
+    sead::FixedSafeString<64>* mCapNamePtr;
+    sead::FixedSafeString<64>* mClothNamePtr;
+    sead::FixedSafeString<64>* mStickerNamePtr;
+    sead::FixedSafeString<64>* mGiftNamePtr;
     sead::FixedSafeString<64> mCurrentCostumeName;
     sead::FixedSafeString<64> mCurrentCapName;
     bool mIsCostumeRandom;
