@@ -382,7 +382,7 @@ void setCostumeRandomMode(al::IUseSceneObjHolder* holder);
 void setCapRandomMode(al::IUseSceneObjHolder* holder);
 void resetCostumeRandomMode(al::IUseSceneObjHolder* holder);
 void resetCapRandomMode(al::IUseSceneObjHolder* holder);
-const sead::PtrArray<ShopItem::ItemInfo>& getShopItemInfoList(GameDataHolderAccessor accessor);
+const sead::PtrArray<ShopItem::ShopItemInfo>& getShopItemInfoList(GameDataHolderAccessor accessor);
 bool isExistHackObjInfo(GameDataHolderAccessor accessor, const char* hackName);
 const HackObjInfo& getHackObjInfo(GameDataHolderAccessor accessor, const char* hackName);
 void addHackDictionary(GameDataHolderWriter writer, const char* hackName);
