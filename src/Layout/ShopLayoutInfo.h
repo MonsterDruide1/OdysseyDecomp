@@ -12,7 +12,7 @@ enum class ItemType : s32 {
     Gift,
     Sticker,
     UseItem,
-    Shine,
+    Moon,
 };
 
 enum class CoinType : s32 {
