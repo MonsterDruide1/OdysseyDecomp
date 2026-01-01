@@ -12,6 +12,8 @@ public:
         ECollisionTrigger_val6 = 6,
         // used in PlayerJudgeWallHitDown
         ECollisionTrigger_val9 = 9,
+	// used in PlayerTrigger
+	ECollisionTrigger_val1024 = 1024,
     };
 
     enum EAttackSensorTrigger : u32 {
