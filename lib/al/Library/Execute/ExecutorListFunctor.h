@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 
 #include "Library/Execute/ExecutorListBase.h"
 
@@ -17,7 +18,7 @@ public:
     void registerFunctor(const FunctorBase&);
 
 private:
-    char filler[0x10];
+    sead::PtrArray<FunctorBase> list;
 };
 
 static_assert(sizeof(ExecutorListFunctor) == 0x20);

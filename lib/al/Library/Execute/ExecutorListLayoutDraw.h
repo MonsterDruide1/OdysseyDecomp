@@ -19,8 +19,13 @@ public:
     void registerLayout(LayoutActor* layout);
 
 private:
-    char filler[0x18];
+    s32 mCapacity = 0;
+    s32 mSize = 0;
+    LayoutActor** mList = nullptr;
+    agl::DrawContext* mContext = nullptr;
 };
+
+static_assert(sizeof(ExecutorListLayoutDrawBase) == 0x28);
 
 class ExecutorListLayoutDrawNormal : public ExecutorListLayoutDrawBase {
 public:
