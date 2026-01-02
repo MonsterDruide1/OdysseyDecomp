@@ -14,6 +14,7 @@ inline bool isSaveDataCorrupted(const u8* buffer, u32 version, u32 bufferSize) {
     if (header->version != version)
         return true;
 
+    // BUG: checksum verification is skipped if header->size and bufferSize do not match
     if (header->fileSize == bufferSize &&
         header->checkSum != SaveDataFunction::calcSaveDataCheckSum(buffer))
         return true;
@@ -47,7 +48,7 @@ void SaveDataSequenceRead::start(u8* buffer, u32 bufferSize, u32 version) {
 
 s32 SaveDataSequenceRead::read(sead::FileDevice* fileDevice, const char* fileName, u32* readSize) {
     sead::FileHandle fileHandle;
-    if (!fileDevice->tryOpen(&fileHandle, fileName, sead::FileDevice::cFileOpenFlag_ReadOnly, 0))
+    if (!fileDevice->tryOpen(&fileHandle, fileName, sead::FileDevice::cFileOpenFlag_ReadOnly))
         return fileDevice->getLastRawError();
 
     if (!fileDevice->tryRead(readSize, &fileHandle, mBuffer, mBufferSize))

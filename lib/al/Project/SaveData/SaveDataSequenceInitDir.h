@@ -19,7 +19,7 @@ private:
     u8* mBuffer = nullptr;
     u32 mBufferSize = 0;
     u32 mVersion = 0;
-    u8 _18 = 0;
+    u8 _18;
 };
 
 static_assert(sizeof(SaveDataSequenceInitDir) == 0x20);
