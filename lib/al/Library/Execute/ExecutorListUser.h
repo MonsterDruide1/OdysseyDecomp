@@ -19,6 +19,13 @@ private:
     char filler[0x10];
 };
 
+class ExecutorListIUseExecutorUpdate : public ExecutorListIUseExecutorBase {
+public:
+    ExecutorListIUseExecutorUpdate(const char* name, s32);
+
+    void executeList() const override;
+};
+
 class ExecutorListIUseExecutorDraw : public ExecutorListIUseExecutorBase {
 public:
     ExecutorListIUseExecutorDraw(const char* name, s32);

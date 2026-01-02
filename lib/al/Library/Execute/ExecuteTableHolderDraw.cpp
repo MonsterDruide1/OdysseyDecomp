@@ -16,7 +16,7 @@ ExecuteTableHolderDraw::ExecuteTableHolderDraw() = default;
 ExecuteTableHolderDraw::~ExecuteTableHolderDraw() {
     for (s32 i = 0; i < mExecutorsActorModelSize; i++)
         if (mExecutorsActorModel[i])
-            delete (mExecutorsActorModel[i]);
+            delete mExecutorsActorModel[i];
 };
 
 void ExecuteTableHolderDraw::init(const char* name, const ExecuteSystemInitInfo& initInfo,
@@ -41,176 +41,164 @@ void ExecuteTableHolderDraw::init(const char* name, const ExecuteSystemInitInfo&
     mExecutorsFunctorCapacity =
         alExecutorFunction::calcExecutorListNumMax(orders, orderCount, "Functor");
     mExecutorsFunctor = new ExecutorListFunctor*[mExecutorsFunctorCapacity];
+    for (s64 i = 0; i < mExecutorsAllCapacity; i++) {
+        const ExecuteOrder& order = orders[i];
 
-    for (s64 i = 0; i < mExecutorsAllCapacity; i++, orders++) {
-        ExecutorListBase* listObjBase = nullptr;
-        if (alExecutorFunction::isListName(*orders, "ActorModelDraw")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawForward(
-                orders->listName, orders->listMaxSize, initInfo));
+        ExecutorListBase* list = nullptr;
+        if (alExecutorFunction::isListName(order, "ActorModelDraw")) {
+            list = registerExecutorListActorModel(
+                new ExecutorListActorModelDrawForward(order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawForwardOnly")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawForwardOnly(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawForwardOnly")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawForwardOnly(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawForwardForce")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawForwardForce(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawForwardForce")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawForwardForce(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawPostEffectMask")) {
-            listObjBase =
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawPostEffectMask")) {
+            list =
                 registerExecutorListActorModel(new ExecutorListActorModelDrawForwardPostEffectMask(
-                    orders->listName, orders->listMaxSize, initInfo));
+                    order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawIndirect")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawIndirect(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawIndirect")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawIndirect(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawIndirectOnly")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawIndirectOnly(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawIndirectOnly")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawIndirectOnly(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferred")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferred(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferred")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferred(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredMarchingCube")) {
-            listObjBase =
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredMarchingCube")) {
+            list =
                 registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredMarchingCube(
-                    orders->listName, orders->listMaxSize, initInfo));
+                    order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredOnly")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredOnly(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredOnly")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredOnly(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredOpa")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredOpa(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredOpa")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredOpa(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredXlu")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredXlu(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredXlu")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredXlu(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthOnly")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthOnly(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthOnly")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthOnly(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawCulling")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawCulling(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawCulling")) {
+            list = registerExecutorListActorModel(
+                new ExecutorListActorModelDrawCulling(order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthForce")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthForce(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthForce")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthForce(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthXlu")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthXlu(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthXlu")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthXlu(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthIndirect")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawDepthIndirect(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthIndirect")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthIndirect(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthDither")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthDither(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthDither")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthDither(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthDitherIndirect")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawDepthDitherIndirect(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthDitherIndirect")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthDitherIndirect(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthShadow")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthShadow(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthShadow")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthShadow(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders,
-                                                  "ActorModelDrawDepthShadowMarchingCube")) {
-            listObjBase = registerExecutorListActorModel(
-                new ExecutorListActorModelDrawDepthShadowMarchingCube(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthShadowMarchingCube")) {
+            list = registerExecutorListActorModel(
+                new ExecutorListActorModelDrawDepthShadowMarchingCube(order.listName,
+                                                                      order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawStaticDepthShadow")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawStaticDepthShadow(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawStaticDepthShadow")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawStaticDepthShadow(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredSilhouette")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredSilhouette(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredSilhouette")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredSilhouette(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders,
-                                                  "ActorModelDrawDeferredSilhouetteRide")) {
-            listObjBase =
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredSilhouetteRide")) {
+            list =
                 registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredSilhouetteRide(
-                    orders->listName, orders->listMaxSize, initInfo));
+                    order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredFootPrint")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredFootPrint(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredFootPrint")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredFootPrint(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDeferredSky")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredSky(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDeferredSky")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDeferredSky(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawWorldAo")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawWorldAo(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawWorldAo")) {
+            list = registerExecutorListActorModel(
+                new ExecutorListActorModelDrawWorldAo(order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawUpdate")) {
-            listObjBase = registerExecutorListActorModel(new ExecutorListActorModelDrawUpdate(
-                orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawUpdate")) {
+            list = registerExecutorListActorModel(
+                new ExecutorListActorModelDrawUpdate(order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawPlayerChromakey")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawPlayerChromakey(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawPlayerChromakey")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawPlayerChromakey(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawPlayerChromakeyOpa")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawPlayerChromakeyOpa(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawPlayerChromakeyOpa")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawPlayerChromakeyOpa(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawPlayerChromakeyXlu")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawPlayerChromakeyXlu(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawPlayerChromakeyXlu")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawPlayerChromakeyXlu(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawCharacterChromakey")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawCharacterChromakey(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawCharacterChromakey")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawCharacterChromakey(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDepthChromakey")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawDepthChromakey(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDepthChromakey")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDepthChromakey(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorModelDrawDitherChromakey")) {
-            listObjBase =
-                registerExecutorListActorModel(new ExecutorListActorModelDrawDitherChromakey(
-                    orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "ActorModelDrawDitherChromakey")) {
+            list = registerExecutorListActorModel(new ExecutorListActorModelDrawDitherChromakey(
+                order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "ActorDraw")) {
-            listObjBase = registerExecutorListActor(
-                new ExecutorListActorDraw(orders->listName, orders->listMaxSize));
+        } else if (alExecutorFunction::isListName(order, "ActorDraw")) {
+            list = registerExecutorListActor(
+                new ExecutorListActorDraw(order.listName, order.listMaxSize));
 
-        } else if (alExecutorFunction::isListName(*orders, "LayoutDraw")) {
-            listObjBase = registerExecutorListLayout(
-                new ExecutorListLayoutDrawNormal(orders->listName, orders->listMaxSize, initInfo));
+        } else if (alExecutorFunction::isListName(order, "LayoutDraw")) {
+            list = registerExecutorListLayout(
+                new ExecutorListLayoutDrawNormal(order.listName, order.listMaxSize, initInfo));
 
-        } else if (alExecutorFunction::isListName(*orders, "Draw")) {
-            listObjBase = registerExecutorListUser(
-                new ExecutorListIUseExecutorDraw(orders->listName, orders->listMaxSize));
+        } else if (alExecutorFunction::isListName(order, "Draw")) {
+            list = registerExecutorListUser(
+                new ExecutorListIUseExecutorDraw(order.listName, order.listMaxSize));
 
-        } else if (alExecutorFunction::isListName(*orders, "Functor")) {
-            listObjBase = registerExecutorListFunctor(
-                new ExecutorListFunctor(orders->listName, orders->listMaxSize));
+        } else if (alExecutorFunction::isListName(order, "Functor")) {
+            list = registerExecutorListFunctor(
+                new ExecutorListFunctor(order.listName, order.listMaxSize));
         }
 
-        registerExecutorListAll(listObjBase);
+        registerExecutorListAll(list);
     }
 }
 

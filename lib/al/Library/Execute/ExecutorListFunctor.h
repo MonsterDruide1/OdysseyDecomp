@@ -20,4 +20,6 @@ private:
     char filler[0x10];
 };
 
+static_assert(sizeof(ExecutorListFunctor) == 0x20);
+
 }  // namespace al

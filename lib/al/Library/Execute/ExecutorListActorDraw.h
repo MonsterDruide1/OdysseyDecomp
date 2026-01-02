@@ -5,6 +5,7 @@
 #include "Library/Execute/ExecutorListBase.h"
 
 namespace al {
+class ExecutorActorExecuteBase;
 class LiveActor;
 
 class ExecutorListActorExecuteBase : public ExecutorListBase {
@@ -13,6 +14,7 @@ public:
 
     bool isActive() const override;
     void executeList() const override;
+    virtual ExecutorActorExecuteBase* createExecutor(char*) const = 0;
 
     void registerActor(LiveActor* actor);
     void createList();
@@ -24,6 +26,7 @@ private:
 class ExecutorListActorDraw : public ExecutorListActorExecuteBase {
 public:
     ExecutorListActorDraw(const char* name, s32);
+    ExecutorActorExecuteBase* createExecutor(char*) const override;
 };
 
 }  // namespace al

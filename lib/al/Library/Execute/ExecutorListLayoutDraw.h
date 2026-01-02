@@ -10,10 +10,11 @@ class LayoutActor;
 
 class ExecutorListLayoutDrawBase : public ExecutorListBase {
 public:
-    ExecutorListLayoutDrawBase(const char* name, s32);
+    ExecutorListLayoutDrawBase(const char* name, s32, const ExecuteSystemInitInfo&);
 
     bool isActive() const override;
     void executeList() const override;
+    virtual void startDraw() const = 0;
 
     void registerLayout(LayoutActor* layout);
 
@@ -25,7 +26,7 @@ class ExecutorListLayoutDrawNormal : public ExecutorListLayoutDrawBase {
 public:
     ExecutorListLayoutDrawNormal(const char*, s32, const ExecuteSystemInitInfo&);
 
-    void startDraw() const;
+    void startDraw() const override;
 };
 
 }  // namespace al
