@@ -56,7 +56,7 @@ bool tryWaitDoneAndDestroyInitializeThread(InitializeThread* thread) {
 
 sead::CoreId getCurrentCoreId() {
     sead::CoreIdMask mask = sead::ThreadMgr::instance()->getCurrentThread()->getAffinity();
-    for (int i = sead::CoreId::cMain; i <= sead::CoreId::cSub2; i++)
+    for (u8 i = sead::CoreId::cMain; i <= sead::CoreId::cSub2; i++)
         if (mask.isOn(i))
             return i;
     return sead::CoreId::cMain;
