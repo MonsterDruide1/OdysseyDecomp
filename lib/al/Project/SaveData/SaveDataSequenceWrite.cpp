@@ -43,7 +43,7 @@ void SaveDataSequenceWrite::startFlushOnly() {
 
 bool SaveDataSequenceWrite::write(sead::FileDevice* fileDevice, const char* fileName) {
     sead::FileHandle fileHandle;
-    if (!fileDevice->tryOpen(&fileHandle, fileName, sead::FileDevice::cFileOpenFlag_WriteOnly, 0))
+    if (!fileDevice->tryOpen(&fileHandle, fileName, sead::FileDevice::cFileOpenFlag_WriteOnly))
         return false;
 
     u32 writeSize = 0;
