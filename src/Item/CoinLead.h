@@ -16,7 +16,7 @@ public:
     CoinLead(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
-    void place(const sead::Vector3f&, s32, f32);
+    void place(const sead::Vector3f& pos, s32 index, f32 coord);
     void exeWait();
     void exeFirstCoinGotDelay();
     void exeMove();

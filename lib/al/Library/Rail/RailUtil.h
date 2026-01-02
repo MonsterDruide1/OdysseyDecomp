@@ -19,7 +19,7 @@ public:
 template <class T, class F>
 class RailPlacementCallFunctorClassMember : public RailPlacementCallBack {
 public:
-    inline RailPlacementCallFunctorClassMember(T objPointer, F functPointer)
+    RailPlacementCallFunctorClassMember(T objPointer, F functPointer)
         : mObjPointer(objPointer), mFunctPointer(functPointer) {}
 
     void operator()(const sead::Vector3f& pos, s32 index, f32 coord) const override {

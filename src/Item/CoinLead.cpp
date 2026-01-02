@@ -116,19 +116,17 @@ void CoinLead::exeMove() {
     if (mCoinsDisplayed >= mCoinCount)
         return;
 
-    // TODO: Clean this loop
-    s32 count = mCoinsDisplayed;
-    for (s32 i = mCoinsDisplayed; mCoinCoords[count] < mDistance; i++) {
-        mCoinArray[count]->appearLimitTime(600);
+    for (s32 i = mCoinsDisplayed; i < mCoinCount; i++) {
+        if (!(mCoinCoords[i] < mDistance)) {
+            mCoinsDisplayed = i;
+            return;
+        }
+        mCoinArray[i]->appearLimitTime(600);
         if (i == mCoinCount - 1) {
             al::setNerve(this, &WaitAllGet);
             return;
         }
-        count = i + 1;
-        if (count >= mCoinCount)
-            return;
     }
-    mCoinsDisplayed = count;
 }
 
 void CoinLead::exeWaitAllGet() {
