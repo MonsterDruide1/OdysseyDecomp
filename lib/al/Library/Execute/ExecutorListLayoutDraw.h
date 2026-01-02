@@ -4,6 +4,10 @@
 
 #include "Library/Execute/ExecutorListBase.h"
 
+namespace agl {
+class DrawContext;
+}
+
 namespace al {
 struct ExecuteSystemInitInfo;
 class LayoutActor;

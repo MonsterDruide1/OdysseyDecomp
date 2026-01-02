@@ -18,7 +18,7 @@ public:
     void registerFunctor(const FunctorBase&);
 
 private:
-    sead::PtrArray<FunctorBase> list;
+    sead::PtrArray<FunctorBase> mList;
 };
 
 static_assert(sizeof(ExecutorListFunctor) == 0x20);
