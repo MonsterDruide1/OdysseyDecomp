@@ -29,8 +29,9 @@ private:
     bool mIsDone = true;
 };
 
+static_assert(sizeof(AsyncFunctorThread) == 0x20);
+
 InitializeThread* createAndStartInitializeThread(sead::Heap*, s32, const FunctorBase&);
 bool tryWaitDoneAndDestroyInitializeThread(InitializeThread*);
-
-static_assert(sizeof(AsyncFunctorThread) == 0x20);
+sead::CoreId getCurrentCoreId();
 }  // namespace al
