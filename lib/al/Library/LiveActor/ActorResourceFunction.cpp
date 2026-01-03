@@ -11,7 +11,7 @@
 #include "Library/Resource/Resource.h"
 #include "Library/Resource/ResourceFunction.h"
 #include "Library/Yaml/ByamlIter.h"
-#include "Library/Yaml/ParameterObj.h"
+#include "Library/Yaml/ParameterBase.h"
 
 namespace al {
 
