@@ -100,33 +100,33 @@ namespace alByamlLocalUtil {
 
 const char* getDataTypeString(s32 type) {
     switch (type) {
-    case al::ByamlDataType::TYPE_INVALID:
+    case (u8)al::ByamlDataType::None:
         return "None";
-    case al::ByamlDataType::TYPE_STRING:
+    case (u8)al::ByamlDataType::String:
         return "String";
-    case al::ByamlDataType::TYPE_ARRAY:
+    case (u8)al::ByamlDataType::Array:
         return "Array";
-    case al::ByamlDataType::TYPE_HASH:
+    case (u8)al::ByamlDataType::Hash:
         return "Hash";
-    case al::ByamlDataType::TYPE_STRING_TABLE:
+    case (u8)al::ByamlDataType::StringTable:
         return "StringTable";
-    case al::ByamlDataType::TYPE_BOOL:
+    case (u8)al::ByamlDataType::Bool:
         return "Bool";
-    case al::ByamlDataType::TYPE_INT:
+    case (u8)al::ByamlDataType::Int:
         return "Int";
-    case al::ByamlDataType::TYPE_FLOAT:
+    case (u8)al::ByamlDataType::Float:
         return "Float";
-    case al::ByamlDataType::TYPE_UINT:
+    case (u8)al::ByamlDataType::UInt:
         return "UInt";
-    case al::ByamlDataType::TYPE_LONG:
+    case (u8)al::ByamlDataType::Int64:
         return "Int64";
-    case al::ByamlDataType::TYPE_ULONG:
+    case (u8)al::ByamlDataType::UInt64:
         return "UInt64";
-    case al::ByamlDataType::TYPE_DOUBLE:
+    case (u8)al::ByamlDataType::Double:
         return "Double";
-    case al::ByamlDataType::TYPE_NULL:
+    case (u8)al::ByamlDataType::Null:
         return "NULL";
-    case al::ByamlDataType::TYPE_BINARY:
+    case (u8)al::ByamlDataType::Binary:
     default:
         return "Unknown";
     };
@@ -218,7 +218,7 @@ bool verifiByamlStringTable(const u8* data, bool isRev) {
     const s32* address_table = reinterpret_cast<const s32*>(data + 4);
 
     u32 type_and_size = *reinterpret_cast<const u32*>(data);
-    if ((type_and_size & 0xff) != al::ByamlDataType::TYPE_STRING_TABLE)
+    if ((al::ByamlDataType)type_and_size != al::ByamlDataType::StringTable)
         return false;
     s32 size = isRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
     if (size < 1)
