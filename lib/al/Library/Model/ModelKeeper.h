@@ -44,6 +44,8 @@ public:
     Resource* getAnimResource() const;
     Resource* getModelResource() const;
 
+    const char* getName() const { return mName; }
+
     ModelCtrl* getModelCtrl() const { return mModelCtrl; }
 
     AnimPlayerSkl* getAnimSkl() const { return mAnimSkl; }
