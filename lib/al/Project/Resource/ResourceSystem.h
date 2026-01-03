@@ -28,6 +28,20 @@ public:
 
     static_assert(sizeof(ResourceCategory) == 0xc0);
 
+    struct ResourceAudioInfo {
+        ResourceAudioInfo(SeadAudioPlayer* playerA, SeadAudioPlayer* playerB, const char* path)
+            : audioPlayerA(playerA), audioPlayerB(playerB) {
+            filePath.format(path);
+        }
+
+        // TODO: proper names for these two
+        SeadAudioPlayer* audioPlayerA;
+        SeadAudioPlayer* audioPlayerB;
+        sead::FixedSafeString<0x40> filePath;
+    };
+
+    static_assert(sizeof(ResourceAudioInfo) == 0x68);
+
     ResourceSystem(const char* name);
 
     ResourceCategory* addCategory(const sead::SafeString& name, s32 id, sead::Heap* heap);
