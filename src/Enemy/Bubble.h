@@ -161,7 +161,7 @@ private:
     sead::Matrix34f mCameraMtx = sead::Matrix34f::ident;
     sead::Vector3f mStickForce = {0.0f, 0.0f, 0.0f};
     s32 mJumpFrame = 0;
-    sead::Quatf mCurrentRotation = sead::Quatf::unit;
+    sead::Quatf mGroundRotation = sead::Quatf::unit;
     sead::Vector3f mUpDir = sead::Vector3f::ey;
     f32 mHackTurnAngle = 0.0f;
     u32 mHackTurnFrame = 1;
