@@ -644,7 +644,7 @@ void Bubble::control() {
     mIsClipped = al::isClipped(mProbeActor);
     if (!isHack())
         al::scaleVelocityHV(this, 0.9f, 1.0f);
-    mCameraMtx.makeQT(mCurrentRotation, {0.0f, 0.0f, 0.0f});
+    mCameraMtx.makeQT(mGroundRotation, {0.0f, 0.0f, 0.0f});
 
     mCameraMtx.setTranslation(al::getTrans(this) + (0.0f * sead::Vector3f::ey));
     if (al::isNerve(this, &NrvBubble.Up) || al::isNerve(this, &NrvBubble.Turn) ||
@@ -1213,9 +1213,9 @@ void Bubble::updateHackOnGround() {
         al::verticalizeVec(velPtr, mFireNormal, *velPtr);
     }
     updateCollisionPartsMove();
-    al::setQuat(this, mCurrentRotation);
+    al::setQuat(this, mGroundRotation);
     accelStick();
-    mCurrentRotation.set(al::getQuat(this));
+    mGroundRotation.set(al::getQuat(this));
     sead::Vector3f updir2;
     al::calcUpDir(&updir2, this);
 
@@ -1375,13 +1375,13 @@ bool Bubble::isTriggerHackJump() const {
     return !mIsPlayerCaptured && rs::isTriggerHackPreInputJump(mPlayerHack);
 }
 
-void Bubble::revertTargetQuatInHackJump(sead::Quatf* quatA, sead::Quatf* quatB) {
-    quatA->set(al::getQuat(this));
+void Bubble::revertTargetQuatInHackJump(sead::Quatf* prevQuat, sead::Quatf* deltaQuat) {
+    prevQuat->set(al::getQuat(this));
     sead::Quatf invRotation;
-    invRotation.setInverse(mCurrentRotation);
-    quatB->set(invRotation * al::getQuat(this));
-    quatB->normalize();
-    al::setQuat(this, mCurrentRotation);
+    invRotation.setInverse(mGroundRotation);
+    deltaQuat->set(invRotation * al::getQuat(this));
+    deltaQuat->normalize();
+    al::setQuat(this, mGroundRotation);
 }
 
 void Bubble::calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& inputDir) const {
@@ -1392,30 +1392,30 @@ void Bubble::calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& in
     rs::calcHackerMoveVec(moveVec, mPlayerHack, inputDir);
 }
 
-void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& quatA, const sead::Quatf& quatB,
-                                       const sead::Quatf& quatC, bool isValue) {
+void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& prevQuat, const sead::Quatf& deltaQuat,
+                                       const sead::Quatf& quatZY, bool flipDirection) {
     sead::Vector3f direction = al::getTrans(this) - mPreviousTrans;
     mPreviousTrans.set(al::getTrans(this));
 
-    sead::Quatf quat = mCurrentRotation;
+    sead::Quatf quat = mGroundRotation;
     if (al::tryNormalizeOrZero(&direction)) {
         f32 angle = al::calcAngleDegree(sead::Vector3f::ey, direction);
-        if (isValue)
+        if (flipDirection)
             angle = !(al::getVelocity(this).y >= 0.0f) ? 180.0f : 0.0f;
         sead::Vector3f dir = sead::Vector3f::ey;
-        dir.rotate(quatA);
+        dir.rotate(prevQuat);
         dir.negate();
         sead::Quatf newQuat;
         al::makeQuatRotateDegree(
             &newQuat, sead::Vector3f::ex,
             sead::Mathf::max(al::calcAngleDegree(sead::Vector3f::ey, dir), angle));
-        quat = quat * newQuat * quatC;
+        quat = quat * newQuat * quatZY;
     } else {
-        quat *= quatB;
+        quat *= deltaQuat;
     }
 
     sead::Quatf slerpQuat;
-    al::slerpQuat(&slerpQuat, quatA, quat, 0.1f);
+    al::slerpQuat(&slerpQuat, prevQuat, quat, 0.1f);
     al::setQuat(this, slerpQuat);
 }
 
@@ -1432,7 +1432,10 @@ bool Bubble::isDropAttackCollision() const {
 }
 
 bool Bubble::isRiseAttackCollision() const {
-    if (al::getVelocity(this).y < 0.0f || !al::isCollidedCeiling(this))
+    if (al::getVelocity(this).y < 0.0f)
+        return false;
+
+    if (!al::isCollidedCeiling(this))
         return false;
 
     const sead::Vector3f& ceilingPos = al::getCollidedCeilingPos(this);
@@ -1690,7 +1693,7 @@ void Bubble::accelStick() {
         al::turnToDirection(this, stickAccel, 10.0f);
 
         sead::Vector3f rotationAxis;
-        rotationAxis.setRotated(mCurrentRotation, sead::Vector3f::ez);
+        rotationAxis.setRotated(mGroundRotation, sead::Vector3f::ez);
         stickAccel.y = 0.0f;
 
         if (!al::tryNormalizeOrZero(&stickAccel))
@@ -2013,7 +2016,7 @@ void Bubble::exeWaitHackFall() {
 
 void Bubble::exeHackFall() {
     if (al::isFirstStep(this))
-        mCurrentRotation.set(al::getQuat(this));
+        mGroundRotation.set(al::getQuat(this));
 
     al::getVelocityPtr(this)->y += -1.1f;
     tryHitReactionThroughFence();
@@ -2023,7 +2026,7 @@ void Bubble::exeHackFall() {
 void Bubble::exeHackMove() {
     if (al::isFirstStep(this)) {
         mShiftFallDelay = 0;
-        mCurrentRotation.set(al::getQuat(this));
+        mGroundRotation.set(al::getQuat(this));
         al::calcUpDir(&mUpDir, this);
     }
 
@@ -2079,7 +2082,7 @@ void Bubble::exeHackMove() {
 }
 
 void Bubble::endHackMove() {
-    al::setQuat(this, mCurrentRotation);
+    al::setQuat(this, mGroundRotation);
 }
 
 inline sead::Quatf getQuatZY() {
@@ -2096,9 +2099,9 @@ void Bubble::exeHackJump() {
     f32 gravity = !isJumpSwing ? 1.1f : 1.2f;
     f32 constB = !isJumpSwing ? 0.5f : 2.5f;
 
-    sead::Quatf rotateA;
-    sead::Quatf rotateB;
-    sead::Quatf quatC = getQuatZY();
+    sead::Quatf prevQuat;
+    sead::Quatf deltaQuat;
+    sead::Quatf quatZY = getQuatZY();
 
     if (al::isFirstStep(this)) {
         mJumpDelay = 15;
@@ -2118,45 +2121,46 @@ void Bubble::exeHackJump() {
         al::endBgmSituation(this, "HackBubble", false);
         mJumpFrame = 0;
         mPreviousTrans.set(al::getTrans(this));
-        mCurrentRotation.set(al::getQuat(this));
+        mGroundRotation.set(al::getQuat(this));
 
         sead::Vector3f upDir;
         al::calcUpDir(&upDir, this);
         if (upDir.y < 0.99f) {
             if (upDir.y < 0.0f) {
-                al::makeQuatRotationRate(&rotateA, upDir, -sead::Vector3f::ey, 1.0f);
-                mCurrentRotation = rotateA * mCurrentRotation;
+                al::makeQuatRotationRate(&prevQuat, upDir, -sead::Vector3f::ey, 1.0f);
+                mGroundRotation = prevQuat * mGroundRotation;
                 sead::Quatf rotateAxis;
                 rotateAxis.setAxisRadian(sead::Vector3f::ey, -sead::Mathf::pi());
-                mCurrentRotation = mCurrentRotation * rotateAxis;
+                mGroundRotation = mGroundRotation * rotateAxis;
             } else {
-                al::makeQuatRotationRate(&rotateA, upDir, sead::Vector3f::ey, 1.0f);
-                mCurrentRotation = rotateA * mCurrentRotation;
+                al::makeQuatRotationRate(&prevQuat, upDir, sead::Vector3f::ey, 1.0f);
+                mGroundRotation = prevQuat * mGroundRotation;
             }
         }
-        rotateA = al::getQuat(this) * quatC;
-        al::setQuat(this, rotateA);
+        prevQuat = al::getQuat(this) * quatZY;
+        al::setQuat(this, prevQuat);
     }
     // Note: This overrides any data that quatA or quatB has. Consider using new variables
-    revertTargetQuatInHackJump(&rotateA, &rotateB);
+    revertTargetQuatInHackJump(&prevQuat, &deltaQuat);
     al::getVelocityPtr(this)->y -= gravity;
     sead::Vector3f frontDir;
     al::calcFrontDir(&frontDir, this);
     sead::Vector3f hackerMoveVec = {0.0f, 0.0f, 0.0f};
     calcHackerMoveVec(&hackerMoveVec, sead::Vector3f::ey);
 
-    bool bVar1 = false;
+    bool flipDirection = false;
     sead::Vector3f hackerMoveVec2 = {0.0f, 0.0f, 0.0f};
     if (al::tryNormalizeOrZero(&hackerMoveVec2, hackerMoveVec)) {
+        // if angle between 140 and 220 degree => 180 +/- 40
         if (frontDir.dot(hackerMoveVec2) < sead::Mathf::cos(sead::Mathf::deg2rad(220.0f))) {
             sead::Vector3f vel = al::getVelocity(this);
             vel.y = 0.0f;
             if (vel.dot(hackerMoveVec2) > 0.0f || al::isNearZero(vel, 1.0f)) {
                 al::addVelocity(this, -vel * 0.08f + hackerMoveVec2 * 0.57f);
-                bVar1 = true;
+                flipDirection = true;
             } else {
                 al::scaleVelocityHV(this, 0.85f, 1.0f);
-                bVar1 = true;
+                flipDirection = true;
             }
         } else {
             al::turnToDirection(this, hackerMoveVec2, 5.0f);
@@ -2173,12 +2177,12 @@ void Bubble::exeHackJump() {
                     constB * sead::Mathf::clamp(frontDir.dot(hackerMoveVec2), 0.0f, 1.0f);
 
             al::addVelocity(this, part + frontDir * sead::Mathf::clampMax(x, fVar14));
-            bVar1 = false;
+            flipDirection = false;
         }
     }
 
-    mCurrentRotation.set(al::getQuat(this));
-    makeDisplayQuatInHackJump(rotateA, rotateB, quatC, bVar1);
+    mGroundRotation.set(al::getQuat(this));
+    makeDisplayQuatInHackJump(prevQuat, deltaQuat, quatZY, flipDirection);
 
     if (isDropAttackCollision()) {
         if (!al::sendMsgEnemyAttackFire(al::getCollidedGroundSensor(this),
@@ -2228,7 +2232,7 @@ void Bubble::exeHackJump() {
 }
 
 void Bubble::endHackJump() {
-    al::setQuat(this, mCurrentRotation);
+    al::setQuat(this, mGroundRotation);
 }
 
 void Bubble::exeHackLand() {
@@ -2299,7 +2303,7 @@ void Bubble::exeHackInLauncher() {
 
         sead::Quatf quat;
         al::makeQuatRotationRate(&quat, initialDirection, sead::Vector3f::ey, 1.0f);
-        mCurrentRotation = quat * al::getQuat(this);
+        mGroundRotation = quat * al::getQuat(this);
 
         if (isOnDamageFire())
             al::startHitReaction(this, "バブルキャノン着地");
@@ -2332,8 +2336,8 @@ void Bubble::endHackInLauncher() {
 }
 
 void Bubble::exeHackResetPos() {
-    sead::Quatf quatA;
-    sead::Quatf quatB;
+    sead::Quatf prevQuat;
+    sead::Quatf deltaQuat;
     sead::Quatf quatZY = getQuatZY();
 
     if (al::isFirstStep(this)) {
@@ -2349,15 +2353,15 @@ void Bubble::exeHackResetPos() {
         al::tryNormalizeOrZero(&direction);
         al::faceToDirection(this, direction);
         mPreviousTrans.set(al::getTrans(this));
-        mCurrentRotation.set(al::getQuat(this));
+        mGroundRotation.set(al::getQuat(this));
 
         al::setQuat(this, al::getQuat(this) * quatZY);
     }
 
     al::addVelocityToGravity(this, 1.1f);
 
-    revertTargetQuatInHackJump(&quatA, &quatB);
-    makeDisplayQuatInHackJump(quatA, quatB, quatZY, true);
+    revertTargetQuatInHackJump(&prevQuat, &deltaQuat);
+    makeDisplayQuatInHackJump(prevQuat, deltaQuat, quatZY, true);
 
     if (al::isGreaterEqualStep(this, 180)) {
         sead::Vector3f surfaceA;
@@ -2389,7 +2393,7 @@ void Bubble::exeRevive() {
         al::stopAction(this);
         al::resetPosition(this, mResetPosition);
         al::setQuat(this, mStartingRotation);
-        mCurrentRotation.set(mStartingRotation);
+        mGroundRotation.set(mStartingRotation);
         mCurrentPosition = mRevivePosition;
         mAnimScaleController->resetScale();
         mIsInSaucePan = false;
