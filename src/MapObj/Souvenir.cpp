@@ -87,6 +87,41 @@ bool Souvenir::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
     return false;
 }
 
+static const char* getNextAction(al::LiveActor* actor) {
+    if (al::isActionPlaying(actor, "Wait")) {
+        if (!al::isExistAction(actor, "ReactionCap"))
+            return nullptr;
+
+        return "ReactionCap";
+    } else if (al::isActionPlaying(actor, "ReactionCap")) {
+        if (!al::isExistAction(actor, "ReactionCap1"))
+            return nullptr;
+
+        return "ReactionCap1";
+    } else if (al::isActionPlaying(actor, "ReactionCap1")) {
+        if (!al::isExistAction(actor, "ReactionCap2"))
+            return nullptr;
+
+        return "ReactionCap2";
+    } else if (al::isActionPlaying(actor, "ReactionCap2")) {
+        if (!al::isExistAction(actor, "ReactionCap3"))
+            return nullptr;
+
+        return "ReactionCap3";
+    } else if (al::isActionPlaying(actor, "ReactionCap3")) {
+        if (!al::isExistAction(actor, "ReactionCap4"))
+            return nullptr;
+
+        return "ReactionCap4";
+    } else if (al::isActionPlaying(actor, "ReactionCap4"))
+        return nullptr;
+
+    if (!al::isExistAction(actor, "ReactionCap"))
+        return nullptr;
+
+    return "ReactionCap";
+}
+
 void Souvenir::exeWait() {
     if (al::isFirstStep(this)) {
         if (((al::isExistAction(this, "ReactionCap") && al::isActionPlaying(this, "ReactionCap")) ||
@@ -98,7 +133,7 @@ void Souvenir::exeWait() {
               al::isActionPlaying(this, "ReactionCap3")) ||
              (al::isExistAction(this, "ReactionCap4") &&
               al::isActionPlaying(this, "ReactionCap4"))) &&
-            getNextAction())
+            getNextAction(this) != nullptr)
             return;
 
         if (mIsWait) {
@@ -110,51 +145,16 @@ void Souvenir::exeWait() {
             al::startActionAtRandomFrame(this, "WaitShop");
             return;
         }
-        if (al::isExistAction(this, "Shop")) {
+        if (al::isExistAction(this, "Wait")) {
             al::startActionAtRandomFrame(this, "Wait");
             return;
         }
     }
 }
 
-inline const char* Souvenir::getNextAction() {
-    if (al::isActionPlaying(this, "Wait")) {
-        if (!al::isExistAction(this, "ReactionCap"))
-            return nullptr;
-
-        return "ReactionCap";
-    } else if (al::isActionPlaying(this, "ReactionCap")) {
-        if (!al::isExistAction(this, "ReactionCap1"))
-            return nullptr;
-
-        return "ReactionCap1";
-    } else if (al::isActionPlaying(this, "ReactionCap1")) {
-        if (!al::isExistAction(this, "ReactionCap2"))
-            return nullptr;
-
-        return "ReactionCap2";
-    } else if (al::isActionPlaying(this, "ReactionCap2")) {
-        if (!al::isExistAction(this, "ReactionCap3"))
-            return nullptr;
-
-        return "ReactionCap3";
-    } else if (al::isActionPlaying(this, "ReactionCap3")) {
-        if (!al::isExistAction(this, "ReactionCap4"))
-            return nullptr;
-
-        return "ReactionCap4";
-    } else if (al::isActionPlaying(this, "ReactionCap4"))
-        return nullptr;
-
-    if (!al::isExistAction(this, "ReactionCap"))
-        return nullptr;
-
-    return "ReactionCap";
-}
-
 void Souvenir::exeReactionCap() {
     if (al::isFirstStep(this))
-        al::startAction(this, getNextAction() ?: "ReactionCap");
+        al::startAction(this, getNextAction(this) ?: "ReactionCap");
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvSouvenir.Wait);

@@ -15,7 +15,7 @@ public:
 
 private:
     sead::Quatf mQuat = sead::Quatf::unit;
-    sead::Vector3f mSide = sead::Vector3f::ey;
+    sead::Vector3f mSide = sead::Vector3f::ex;
     sead::Vector3f mFront = sead::Vector3f::ez;
     f32 mRotateDegree = 0.0f;
     f32 mRotateSpeed = 0.0f;

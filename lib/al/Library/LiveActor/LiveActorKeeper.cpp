@@ -30,7 +30,7 @@ void SubActorKeeper::registerSubActor(LiveActor* subActor, u32 syncType) {
 
 // NON_MATCHING: https://decomp.me/scratch/I9OJk
 void SubActorKeeper::init(const ActorInitInfo& initInfo, const char* suffix, s32 maxSubActors) {
-    sead::FixedSafeString<0x80> actorInitFileName;
+    StringTmp<128> actorInitFileName;
     s32 creatorCount = 0;
     const u8* modelResourceYaml = nullptr;
 
@@ -217,7 +217,7 @@ SubActorKeeper* SubActorKeeper::create(LiveActor* rootActor) {
 
 SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* rootActor, const char* suffix,
                                           s32 maxSubActors) {
-    sead::FixedSafeString<0x80> actorInitFileName;
+    StringTmp<128> actorInitFileName;
 
     if (!isExistModelResource(rootActor) ||
         !tryGetActorInitFileName(&actorInitFileName, rootActor, "InitSubActor", suffix))

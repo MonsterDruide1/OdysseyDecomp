@@ -233,9 +233,9 @@ const GameDataFile::SaveObjS32*
 GameDataFile::tryFindSaveObjS32(const al::PlacementId* placementId) {
     const char* stageNameString = mCurrentStageName.cstr();
     SaveObjS32* buffer = mSaveObjS32.begin();
-    sead::FixedSafeString<128> objId;
+    al::StringTmp<128> objId;
     placementId->makeString(&objId);
-    sead::FixedSafeString<128> unusedString;
+    al::StringTmp<128> unusedString;
     for (s32 i = 0; i < mSaveObjS32.size(); i++) {
         SaveObjS32* item = &buffer[i];
         if (item->objInfo.isEqual(stageNameString, objId.cstr()))

@@ -386,7 +386,7 @@ void initActorParamHolder(LiveActor* actor, const Resource* resource, const char
 void initDepthShadowMapCtrl(LiveActor* actor, const Resource* resource, const ActorInitInfo& info,
                             const char* suffix) {
     ByamlIter fileIter;
-    sead::FixedSafeString<256> fileName;
+    StringTmp<256> fileName;
     if (!tryGetActorInitFileIterAndName(&fileIter, &fileName, resource, "InitDepthShadowMap",
                                         suffix))
         return;
@@ -552,8 +552,8 @@ void initActorCollision(LiveActor* actor, const sead::SafeString& filePath,
 void initActorCollisionWithResource(LiveActor* actor, const Resource* resource,
                                     const sead::SafeString& filePath, HitSensor* connectedSensor,
                                     const sead::Matrix34f* jointMtx, const char* suffix) {
-    sead::FixedSafeString<256> attributePath;
-    attributePath = filePath;
+    StringTmp<256> attributePath;
+    attributePath.copy(filePath);
     attributePath.append("Attribute");
 
     const void* kcl = resource->tryGetKcl(filePath);

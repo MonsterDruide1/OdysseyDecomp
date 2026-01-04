@@ -1,11 +1,9 @@
 #include "Npc/ShineTowerNpc.h"
 
-#include <prim/seadSafeString.h>
-
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/Math/MathUtil.h"
 #include "Library/Message/MessageHolder.h"
 #include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -65,7 +63,7 @@ void ShineTowerNpc::startBalloon() {
 
 void ShineTowerNpc::exeWait() {
     if (al::isFirstStep(this)) {
-        sead::FixedSafeString<0x40> string;
+        al::StringTmp<64> string;
         string.format("RestShineNum");
         rs::startEventFlow(mEventFlowExecutor, string.cstr());
     }
