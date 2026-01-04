@@ -91,6 +91,10 @@ bool PlayerTrigger::isOn(EMaterialChangeTrigger flag) const {
     return mMaterialChangeTrigger.isOnBit(flag);
 }
 
+bool PlayerTrigger::isOnYoshiHackEnd() const {
+    return mCollisionTrigger.isOn(ECollisionTrigger_val1024);
+}
+
 bool PlayerTrigger::tryGetRecMaterialCode(const char** dest) const {
     if (!mRecMaterialTrigger)
         return false;
