@@ -13,6 +13,8 @@ static void rotationAndTranslationFromMatrix(sead::Vector3f* trans, sead::Vector
     mtx->getTranslation(*trans);
 }
 
+sead::Vector3f ActorPoseKeeperBase::sDefaultVelocity = {0, -1, 0};
+
 ActorPoseKeeperBase::ActorPoseKeeperBase() = default;
 
 void ActorPoseKeeperBase::copyPose(const ActorPoseKeeperBase* other) {

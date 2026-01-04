@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorInitInfo.h"
@@ -69,7 +70,7 @@ void RouletteSwitch::control() {
     }
     bool isAnySwitchOn = false;
     for (s32 i = 0; i < mButtons.size(); i++) {
-        sead::FixedSafeString<0x100> string;
+        al::StringTmp<256> string;
         string.format("SwitchButton%dOn", i + 1);
         if (!mButtons[i]->isOn()) {
             al::offStageSwitch(this, string.cstr());

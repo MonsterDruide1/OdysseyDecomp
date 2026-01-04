@@ -34,12 +34,12 @@ void FireDrum2D::init(const al::ActorInitInfo& info) {
 
 void FireDrum2D::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Burn");
+        al::startAction(this, "Wait");
 }
 
 void FireDrum2D::exeBurn() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait");
+        al::startAction(this, "Burn");
     if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }

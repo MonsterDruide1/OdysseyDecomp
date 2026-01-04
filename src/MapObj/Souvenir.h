@@ -20,7 +20,6 @@ public:
                     al::HitSensor* self) override;
 
     void exeWait();
-    inline const char* getNextAction();
     void exeReactionCap();
 
 private:

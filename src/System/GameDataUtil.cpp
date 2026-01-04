@@ -342,8 +342,8 @@ void calcShineIndexTableNameUnlockable(s32* unk, s32* out, const al::LiveActor* 
 }
 
 s32 calcWorldIdByWorldWarpHole(const WorldWarpHole* worldWarpHole, const char* changeStageId) {
-    sead::FixedSafeString<0x80> stageName;
-    sead::FixedSafeString<0x80> label;
+    al::StringTmp<128> stageName;
+    al::StringTmp<128> label;
     getGameDataHolderFromActor(worldWarpHole)
         ->calcWorldWarpHoleLabelAndStageName(&label, &stageName, changeStageId,
                                              GameDataFunction::getCurrentWorldId(worldWarpHole));

@@ -141,9 +141,9 @@ void WindowConfirmData::exeAppear() {
 }
 
 void WindowConfirmData::changeSelectingIdx(s32 index) {
-    al::startAction(mParOptions[PaneType_Confirm], index == PaneType_Confirm ? "Wait" : "Select",
+    al::startAction(mParOptions[PaneType_Confirm], index == PaneType_Confirm ? "Select" : "Wait",
                     nullptr);
-    al::startAction(mParOptions[PaneType_Cancel], index == PaneType_Cancel ? "Wait" : "Select",
+    al::startAction(mParOptions[PaneType_Cancel], index == PaneType_Cancel ? "Select" : "Wait",
                     nullptr);
     mSelectionIndex = (PaneType)index;
 }

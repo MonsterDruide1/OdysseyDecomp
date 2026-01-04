@@ -59,7 +59,7 @@ void PlayerStateAutoDash::exeDash() {
 
 void PlayerStateAutoDash::exeRun() {
     if (al::isFirstStep(this)) {
-        al::startAction(mActor, "Dash");
+        al::startAction(mActor, "Run");
         mRunTimer = 0;
     }
 

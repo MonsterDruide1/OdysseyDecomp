@@ -78,7 +78,7 @@ void SwitchOpenMapParts::open() {
 void SwitchOpenMapParts::close() {
     if (isNerve(this, NrvSwitchOpenMapParts.WaitOpend.data()))
         if (mDelayTimeClose > 0)
-            startNerveAction(this, "DelayOpen");
+            startNerveAction(this, "DelayClose");
         else
             startNerveAction(this, "Close");
     else if (isNerve(this, NrvSwitchOpenMapParts.DelayOpen.data()))

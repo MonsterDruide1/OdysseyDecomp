@@ -22,7 +22,7 @@ const char* ActorParamHolder::getYamlName() {
 
 ActorParamHolder* ActorParamHolder::tryCreate(LiveActor* actor, const Resource* resource,
                                               const char* suffix) {
-    sead::FixedSafeString<0x80> fileName;
+    StringTmp<128> fileName;
     tryGetActorInitFileName(&fileName, resource, getYamlName(), suffix);
 
     if (!isExistResourceYaml(resource, fileName.cstr(), nullptr))
