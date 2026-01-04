@@ -753,7 +753,7 @@ void placementRailDivideForcePoint(const IUseRail* railHolder, f32 segmentLength
         for (s32 e = 0; e < railNum; e++) {
             sead::Vector3f vec = sead::Vector3f::zero;
             calcRailPosAtCoord(&vec, railHolder, coord);
-            callback.call(vec, index, coord);
+            callback(vec, index, coord);
             index++;
             coord += length / railNum;
         }
@@ -764,7 +764,7 @@ void placementRailDivideForcePoint(const IUseRail* railHolder, f32 segmentLength
         sead::Vector3f vec = sead::Vector3f::zero;
         f32 totalLength = getRailTotalLength(railHolder);
         calcRailPosAtCoord(&vec, railHolder, totalLength);
-        callback.call(vec, index, totalLength);
+        callback(vec, index, totalLength);
     }
 }
 
@@ -777,7 +777,7 @@ void placementRailDivideEqually(const IUseRail* railHolder, f32 segmentLength,
     for (s32 i = 0; i < railNum; i++) {
         sead::Vector3f vec = sead::Vector3f::zero;
         calcRailPosAtCoord(&vec, railHolder, coord);
-        callback.call(vec, i, coord);
+        callback(vec, i, coord);
         coord += length / railNum;
     }
 }
