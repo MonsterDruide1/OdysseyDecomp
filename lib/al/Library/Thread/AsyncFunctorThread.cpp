@@ -42,4 +42,23 @@ bool AsyncFunctorThread::isDone() const {
     return mIsDone;
 }
 
+InitializeThread* createAndStartInitializeThread(sead::Heap* heap, s32 priority,
+                                                 const FunctorBase& functor) {
+    InitializeThread* initializeThread =
+        new InitializeThread("シーン初期化スレッド", functor, heap, priority, 0x100000);
+    initializeThread->start();
+    return initializeThread;
+}
+
+bool tryWaitDoneAndDestroyInitializeThread(InitializeThread* thread) {
+    return thread->tryWaitDoneAndDestroy();
+}
+
+sead::CoreId getCurrentCoreId() {
+    sead::CoreIdMask mask = sead::ThreadMgr::instance()->getCurrentThread()->getAffinity();
+    for (u8 i = sead::CoreId::cMain; i <= sead::CoreId::cSub2; i++)
+        if (mask.isOn(i))
+            return i;
+    return sead::CoreId::cMain;
+}
 }  // namespace al
