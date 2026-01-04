@@ -8,7 +8,7 @@ class ExecutorListBase : public HioNode {
 public:
     ExecutorListBase(const char* name);
 
-    virtual ~ExecutorListBase();
+    virtual ~ExecutorListBase() = default;
     virtual void executeList() const = 0;
     virtual bool isActive() const = 0;
 
