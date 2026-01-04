@@ -3,5 +3,5 @@
 #include <basis/seadTypes.h>
 
 namespace rs {
-bool checkTimeReverseAndRestore(u64*, u64);
+bool checkTimeReverseAndRestore(u64* startTime, u64 currentTime);
 }
