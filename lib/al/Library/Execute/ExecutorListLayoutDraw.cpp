@@ -9,7 +9,7 @@ namespace al {
 ExecutorListLayoutDrawBase::ExecutorListLayoutDrawBase(const char* name, s32 size,
                                                        const ExecuteSystemInitInfo& initInfo)
     : ExecutorListBase(name), mCapacity(size) {
-    mList = new LayoutActor*[size];
+    mList = new LayoutActor*[mCapacity];
     for (s32 i = 0; i < mCapacity; i++)
         mList[i] = nullptr;
     mContext = initInfo.drawCtx;
@@ -20,9 +20,6 @@ bool ExecutorListLayoutDrawBase::isActive() const {
 }
 
 void ExecutorListLayoutDrawBase::executeList() const {
-    if (!ExecutorListLayoutDrawBase::isActive())
-        return;
-
     bool isAlive = false;
     for (s32 i = 0; i < mSize; i++)
         if (mList[i]->isAlive())

@@ -29,7 +29,7 @@ public:
     virtual ModelDrawerBase* createDrawer(const char* name) const = 0;
 
 private:
-    s32 mCapacity = 0;
+    s32 mCapacity;
     s32 mSize = 0;
     ModelDrawerBase** mList = nullptr;
     agl::DrawContext* mContext = nullptr;

@@ -18,9 +18,6 @@ void ExecutorListLayoutUpdate::registerLayout(LayoutActor* layout) {
 }
 
 void ExecutorListLayoutUpdate::executeList() const {
-    if (!ExecutorListLayoutUpdate::isActive())
-        return;
-
     for (s32 i = 0; i < mSize; i++) {
         LayoutActor* layout = mList[i];
         if (layout->isAlive()) {
@@ -30,7 +27,4 @@ void ExecutorListLayoutUpdate::executeList() const {
     }
 }
 
-bool ExecutorListLayoutUpdate::isActive() const {
-    return mSize > 0;
-}
 }  // namespace al

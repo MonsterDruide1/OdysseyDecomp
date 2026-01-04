@@ -25,7 +25,7 @@ namespace al {
 ExecutorListActorModelDrawBase::ExecutorListActorModelDrawBase(
     const char* name, s32 size, const ExecuteSystemInitInfo& initInfo)
     : ExecutorListBase(name), mCapacity(size) {
-    mList = new ModelDrawerBase*[size];
+    mList = new ModelDrawerBase*[mCapacity];
     for (s32 i = 0; i < mCapacity; i++)
         mList[i] = nullptr;
     mContext = initInfo.drawCtx;

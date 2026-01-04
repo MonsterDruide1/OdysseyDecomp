@@ -18,10 +18,11 @@ public:
 
     void registerLayout(LayoutActor* layout);
     void executeList() const override;
-    bool isActive() const override;
+
+    bool isActive() const override { return mSize > 0; }
 
 private:
-    s32 mCapacity = 0;
+    s32 mCapacity;
     s32 mSize = 0;
     LayoutActor** mList = nullptr;
 };

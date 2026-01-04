@@ -14,6 +14,7 @@ public:
     void registerModel(ModelCtrl*) override;
     void addModel(ModelCtrl*) override;
     void removeModel(ModelCtrl*) override;
+    void updateModel(ModelCtrl*) override;
 
     virtual void createTableCulling();
 

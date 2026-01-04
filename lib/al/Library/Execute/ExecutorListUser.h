@@ -20,7 +20,7 @@ public:
     IUseExecutor* getExecutor(s32 index) const { return mList[index]; }
 
 private:
-    s32 mCapacity = 0;
+    s32 mCapacity;
     s32 mSize = 0;
     IUseExecutor** mList = nullptr;
 };

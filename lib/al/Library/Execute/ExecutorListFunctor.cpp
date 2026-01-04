@@ -8,7 +8,7 @@ ExecutorListFunctor::ExecutorListFunctor(const char* name, s32 size) : ExecutorL
 }
 
 bool ExecutorListFunctor::isActive() const {
-    return mList.size() != 0;
+    return !mList.isEmpty();
 }
 
 void ExecutorListFunctor::executeList() const {
