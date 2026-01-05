@@ -8,7 +8,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  compile_verify:
+  nixos_verify:
     if: github.repository == 'MonsterDruide1/OdysseyDecomp'
     runs-on: ubuntu-24.04
     steps:
@@ -27,20 +27,12 @@ jobs:
         EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
       run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
     - uses: cachix/install-nix-action@v31
+    - uses: DeterminateSystems/magic-nix-cache-action@v13
     - name: Run NixOS-specific setup
       run: nix run .#setup -- smo-main.nso
     - name: Build project
       run: tools/build.py
-    - name: Verify function states
-      run: |
-        var="$(tools/check 2> errfile || true)"
-        if [[ "$(cat errfile)" == "OK" ]]; then
-          exit 0
-        else
-          cat errfile | tr '\n' '\f' | sed 's/Stack backtrace:.*//' | tr '\f' '\n'
-          exit 1
-        fi
-    - name: Check output of asm-differ
+    - name: Check viking and output of asm-differ
       run: |
         var="$(tools/check -mw3 nninitStartup --always-diff | cat > outfile || true)"
         if [[ "$(cat outfile)" == "TARGET*" ]]; then
