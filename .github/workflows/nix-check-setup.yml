@@ -27,7 +27,7 @@ jobs:
         EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
       run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
     - uses: cachix/install-nix-action@v31
-    #- uses: DeterminateSystems/magic-nix-cache-action@v13
+    - uses: DeterminateSystems/magic-nix-cache-action@v13
     - name: Install and setup direnv
       run: |
         sudo apt-get update && sudo apt-get install -y direnv
@@ -41,7 +41,7 @@ jobs:
     - name: Check viking and output of asm-differ
       run: |
         var="$(tools/check -mw3 nninitStartup --always-diff | cat > outfile || true)"
-        if [[ "$(cat outfile)" == "TARGET*" ]]; then
+        if [[ "$(cat outfile)" == "TARGET"* ]]; then
           exit 0
         else
           cat outfile
