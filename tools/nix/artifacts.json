@@ -5,7 +5,7 @@
     },
     "aarch64-linux": {
         "filename": "OdysseyDecomp-binaries_aarch64-Linux.tar.xz",
-        "hash": "sha256-a24rhpEu8m9USEDwz3EMaPA2ioMNNApa2GpNfbsN/hc="
+        "hash": "sha256-a24rhpEu8m9USEDwz3EMAPA2ioMNNApa2GpNfbsN/hc="
     },
     "aarch64-darwin": {
         "filename": "OdysseyDecomp-binaries_arm64-Darwin.tar.xz",
