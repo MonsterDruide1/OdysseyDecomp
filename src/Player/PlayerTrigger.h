@@ -6,37 +6,40 @@
 class PlayerTrigger {
 public:
     enum ECollisionTrigger : u32 {
-        // used in PlayerStateHipDrop
+        // used in PlayerStateHipDrop::isLandTrigger
         ECollisionTrigger_val1 = 1,
-        // used in PlayerStateDamageLife
+        // used in PlayerStateDamageLife::exeDead
         ECollisionTrigger_val6 = 6,
-        // used in PlayerJudgeWallHitDown
+        // used in PlayerJudgeWallHitDown::judge
         ECollisionTrigger_val9 = 9,
+        // used in PlayerTrigger::isOnYoshiHackEnd
+        ECollisionTrigger_val1024 = 1024,
     };
 
     enum EAttackSensorTrigger : u32 {
-        // used in PlayerCounterAfterCapCatch
+        // used in PlayerCounterAfterCapCatch::isCapCatch
         EAttackSensorTrigger_val0 = 0,
     };
 
     enum EActionTrigger : u32 {
-        // used in PlayerStateHipDrop
+        // used in PlayerStateHipDrop::exeStart
         EActionTrigger_val3 = 3,
-        // used in PlayerStateDamageLife
+        // used in PlayerStateDamageLife::appear
         EActionTrigger_val6 = 6,
-        // used in PlayerJudgeForceLand
+        // used in PlayerJudgeForceLand::judge
         EActionTrigger_val11 = 11,
-        // used in PlayerStateSquat
+        // used in PlayerStateSquat::appear
         EActionTrigger_val12 = 12,
-        // used in PlayerJudgeWallCatch, PlayerJudgeWallKeep
+        // used in PlayerJudgeWallCatch::update, PlayerJudgeWallKeep::update
         EActionTrigger_val30 = 30,
+        // used in PlayerCounterQuickTurnJump::isEnableTurnJump
         EActionTrigger_QuickTurn = 34,
     };
 
     enum EReceiveSensorTrigger : u32 {};
 
     enum EPreMovementTrigger : u32 {
-        // used in PlayerStateDamageLife
+        // used in PlayerStateDamageLife::appear
         EPreMovementTrigger_val2 = 2,
     };
 
