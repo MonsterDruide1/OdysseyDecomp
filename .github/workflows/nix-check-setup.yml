@@ -1,0 +1,51 @@
+name: Check and verify that setup works on NixOS
+on:
+  push:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  compile_verify:
+    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Check out project
+      uses: actions/checkout@v6
+      with:
+        submodules: recursive
+    - name: Check out branch if in PR
+      if: ${{ github.event_name == 'pull_request_target' }}
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        submodules: recursive
+    - name: Download main.nso from secret
+      env:
+        EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
+      run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
+    - uses: cachix/install-nix-action@v31
+    - name: Run NixOS-specific setup
+      run: nix run .#setup -- smo-main.nso
+    - name: Build project
+      run: tools/build.py
+    - name: Verify function states
+      run: |
+        var="$(tools/check 2> errfile || true)"
+        if [[ "$(cat errfile)" == "OK" ]]; then
+          exit 0
+        else
+          cat errfile | tr '\n' '\f' | sed 's/Stack backtrace:.*//' | tr '\f' '\n'
+          exit 1
+        fi
+    - name: Check output of asm-differ
+      run: |
+        var="$(tools/check -mw3 nninitStartup --always-diff | cat > outfile || true)"
+        if [[ "$(cat outfile)" == "TARGET*" ]]; then
+          exit 0
+        else
+          cat outfile
+          exit 1
+        fi
