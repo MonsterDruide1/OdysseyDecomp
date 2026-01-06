@@ -28,15 +28,22 @@ jobs:
       run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
     - uses: cachix/install-nix-action@v31
     - uses: DeterminateSystems/magic-nix-cache-action@v13
-    - name: Install and setup direnv
-      run: |
-        sudo apt-get update && sudo apt-get install -y direnv
-        echo "export USE_NIX=true" > .envrc.private
-        direnv allow .
-        direnv export gha > "$GITHUB_ENV"
+    - name: First check of nix flake
+      run: nix flake check --all-systems
+    - name: Try entering devshell
+      run: nix develop
+    #- name: Install and setup direnv
+    #  run: |
+    #    sudo apt-get update && sudo apt-get install -y direnv
+    #    echo "export USE_NIX=true" > .envrc.private
+    #    direnv allow .
+    #    direnv export gha > "$GITHUB_ENV"
     - name: Verify that latest artifact hashes are used
       run: |
         python3 tools/nix/update_hashes.py
+        if [[ -n $(git status --porcelain) ]]; then
+          exit 1
+        fi
         git status --porcelain
     - name: Run NixOS-specific setup
       run: nix run .#setup -- smo-main.nso
