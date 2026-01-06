@@ -34,6 +34,10 @@ jobs:
         echo "export USE_NIX=true" > .envrc.private
         direnv allow .
         direnv export gha > "$GITHUB_ENV"
+    - name: Verify that latest artifact hashes are used
+      run: |
+        python3 tools/nix/update_hashes.py
+        git status --porcelain
     - name: Run NixOS-specific setup
       run: nix run .#setup -- smo-main.nso
     - name: Build project
