@@ -315,7 +315,7 @@ ALWAYS_INLINE void initActorCollision(LiveActor* actor, const ActorInitInfo& ini
 
     const char* name = nullptr;
     initCollision.tryGetStringByKey(&name, "Name");
-    sead::FixedSafeString<256> unused;
+    StringTmp<256> unused;
 
     if (!name)
         name = getBaseName(modelRes->getArchiveName());
@@ -635,19 +635,19 @@ LiveActor* createChildLinkMapPartsActor(const char* actorName, const char* linkN
 
 void initMapPartsActor(LiveActor* actor, const ActorInitInfo& initInfo, const char* suffix) {
     const char* modelName;
-    sead::FixedSafeString<256> fileName;
-    sead::FixedSafeString<256> folderName;
+    StringTmp<256> fileName;
+    StringTmp<256> folderName;
 
     const PlacementInfo& placementInfo = *initInfo.placementInfo;
     modelName = nullptr;
     if (alPlacementFunction::tryGetModelName(&modelName, placementInfo) &&
         !isEqualString(modelName, "")) {
-        fileName = modelName;
-        folderName = "ObjectData";
+        fileName.copy(modelName);
+        folderName.copy("ObjectData");
     } else {
         tryGetStringArg(&modelName, placementInfo, "UnitConfigName");
-        fileName = modelName;
-        folderName = "ObjectData";
+        fileName.copy(modelName);
+        folderName.copy("ObjectData");
     }
 
     initActorImpl(actor, initInfo, folderName, fileName, suffix);

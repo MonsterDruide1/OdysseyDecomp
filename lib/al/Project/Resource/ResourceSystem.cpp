@@ -111,7 +111,7 @@ void ResourceSystem::createCategoryResourceAll(const sead::SafeString& name) {
 
             subArcIter.tryGetStringByKey(&arcExt, "Ext");
 
-            sead::FixedSafeString<0x80> localizedName;
+            StringTmp<128> localizedName;
             if (isLocalized) {
                 makeLocalizedArchivePath(&localizedName, arcName);
                 arcName = localizedName.cstr();
@@ -245,7 +245,7 @@ void ResourceSystem::loadCategoryArchiveAll(const sead::SafeString& name) {
 
             subArcIter.tryGetStringByKey(&arcExt, "Ext");
 
-            sead::FixedSafeString<0x80> localizedName;
+            StringTmp<128> localizedName;
             if (isLocalized) {
                 if (isEqualString(arcName, "TrialRating"))
                     makeLocalizedArchivePathByCountryCode(&localizedName, arcName);
@@ -293,7 +293,7 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& na
             if (!subArcIter.tryGetStringByKey(&arcName, "Name"))
                 continue;
 
-            sead::FixedSafeString<0x80> localizedName;
+            StringTmp<128> localizedName;
             if (isLocalized) {
                 if (isEqualString(name, "TrialRating"))
                     makeLocalizedArchivePathByCountryCode(&localizedName, name);

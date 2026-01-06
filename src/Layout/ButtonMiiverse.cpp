@@ -67,7 +67,7 @@ void ButtonMiiverse::exeHoldOn() {
 
 void ButtonMiiverse::exeHoldOff() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Touch");
+        al::startAction(this, "Wait");
     if (al::isTouchPosInPane(this, "Hit"))
         al::setNerve(this, &NrvButtonMiiverse.HoldOn);
     else if (al::isPadReleaseTouch())
