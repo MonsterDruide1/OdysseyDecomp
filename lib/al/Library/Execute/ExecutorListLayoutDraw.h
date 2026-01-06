@@ -14,13 +14,15 @@ class LayoutActor;
 
 class ExecutorListLayoutDrawBase : public ExecutorListBase {
 public:
-    ExecutorListLayoutDrawBase(const char* name, s32, const ExecuteSystemInitInfo&);
+    ExecutorListLayoutDrawBase(const char* name, s32 size, const ExecuteSystemInitInfo& initInfo);
 
     bool isActive() const override;
     void executeList() const override;
     virtual void startDraw() const = 0;
 
     void registerLayout(LayoutActor* layout);
+
+    agl::DrawContext* getContext() const { return mContext; }
 
 private:
     s32 mCapacity = 0;
@@ -33,7 +35,7 @@ static_assert(sizeof(ExecutorListLayoutDrawBase) == 0x28);
 
 class ExecutorListLayoutDrawNormal : public ExecutorListLayoutDrawBase {
 public:
-    ExecutorListLayoutDrawNormal(const char*, s32, const ExecuteSystemInitInfo&);
+    ExecutorListLayoutDrawNormal(const char* name, s32 size, const ExecuteSystemInitInfo& initInfo);
 
     void startDraw() const override;
 };
