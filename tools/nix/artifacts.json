@@ -1,7 +1,7 @@
 {
     "x86_64-linux": {
         "filename": "OdysseyDecomp-binaries_x86_64-Linux.tar.xz",
-        "hash": "sha256-QqhiIn2ERmrzihr8UXqZgoS6Ct+odggVaZ8lGfRagCQ="
+        "hash": "sha256-QQhiIn2ERmrzihr8UXqZgoS6Ct+odggVaZ8lGfRagCQ="
     },
     "aarch64-linux": {
         "filename": "OdysseyDecomp-binaries_aarch64-Linux.tar.xz",
