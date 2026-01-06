@@ -34,12 +34,12 @@ jobs:
     - name: Try entering devshell
       # causes exit code (=failure) if current system's artifact is unavailable
       run: nix develop
-    #- name: Install and setup direnv
-    #  run: |
-    #    sudo apt-get update && sudo apt-get install -y direnv
-    #    echo "export USE_NIX=true" > .envrc.private
-    #    direnv allow .
-    #    direnv export gha > "$GITHUB_ENV"
+    - name: Install and setup direnv
+      run: |
+        sudo apt-get update && sudo apt-get install -y direnv
+        echo "export USE_NIX=true" > .envrc.private
+        direnv allow .
+        direnv export gha > "$GITHUB_ENV"
     - name: Verify that latest artifact hashes are used
       # checks all system's hashes being correct and up-to-date
       run: |
