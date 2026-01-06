@@ -1,6 +1,14 @@
-# OdysseyDecomp ![Decompiled Status](https://img.shields.io/badge/dynamic/json?url=https://monsterdruide.one/OdysseyDecomp/progress.json&query=$.matching&suffix=%&label=decompiled&color=blue)
+# OdysseyDecomp 
 
-Decompilation of all Super Mario Odyssey versions, from 1.0.0 to 1.3.0.
+ [![Decompilation Progress][progress-badge]][progress] [![Discord Channel][discord-badge]][discord]
+
+[progress]: https://decomp.dev/MonsterDruide1/OdysseyDecomp
+[progress-badge]: https://img.shields.io/badge/dynamic/json?url=https://monsterdruide.one/OdysseyDecomp/progress.json&query=$.matching&suffix=%&label=decompiled&color=blue
+
+[discord]: https://discord.gg/uUecWhMHZy
+[discord-badge]: https://img.shields.io/discord/774687602996936747?color=%237289DA&logo=discord&logoColor=%23FFFFFF
+
+This is a WIP decompilation of Super Mario Odyssey 1.0.0. The purpose of the project is to recreate a source code base for the game from scratch. For more information, you can get in touch with the team on the [SMO Modding Discord Server][discord].
 
 # Building
 
