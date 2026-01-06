@@ -29,8 +29,10 @@ jobs:
     - uses: cachix/install-nix-action@v31
     - uses: DeterminateSystems/magic-nix-cache-action@v13
     - name: First check of nix flake
+      # catches syntax errors or misconfigurations of the flake on all systems
       run: nix flake check --all-systems
     - name: Try entering devshell
+      # causes exit code (=failure) if current system's artifact is unavailable
       run: nix develop
     #- name: Install and setup direnv
     #  run: |
@@ -42,9 +44,9 @@ jobs:
       run: |
         python3 tools/nix/update_hashes.py
         if [[ -n $(git status --porcelain) ]]; then
+          git status --porcelain
           exit 1
         fi
-        git status --porcelain
     - name: Run NixOS-specific setup
       run: nix run .#setup -- smo-main.nso
     - name: Build project
