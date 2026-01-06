@@ -41,12 +41,15 @@ jobs:
     #    direnv allow .
     #    direnv export gha > "$GITHUB_ENV"
     - name: Verify that latest artifact hashes are used
+      # checks all system's hashes being correct and up-to-date
       run: |
         python3 tools/nix/update_hashes.py
         if [[ -n $(git status --porcelain) ]]; then
           git status --porcelain
           exit 1
         fi
+
+    # test run of the project: setup, build, trigger diff
     - name: Run NixOS-specific setup
       run: nix run .#setup -- smo-main.nso
     - name: Build project
