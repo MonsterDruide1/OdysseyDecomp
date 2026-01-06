@@ -14,12 +14,12 @@ public:
 
     bool isConnecting() const override;
     void clear() override;
+    virtual bool isMoved() const;
 
     // TODO: Rename parameters
     void init(const sead::Matrix34f* mtxA, const sead::Matrix34f& mtxB,
               const CollisionParts* collisionParts);
     const HitSensor* getConnectingSensor() const;
-    bool isMoved() const;
     bool isConnectInvalidCollision() const;
 
 private:
