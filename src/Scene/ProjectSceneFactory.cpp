@@ -2,6 +2,7 @@
 
 #include "Library/Scene/CreateSceneFunc.h"
 
+#include "Scene/FirstSequenceScene.h"
 #include "Scene/TitleMenuScene.h"
 
 const al::NameToCreator<alSceneFunction::SceneCreatorFunction> sProjectSceneFactoryEntries[] = {
@@ -9,7 +10,7 @@ const al::NameToCreator<alSceneFunction::SceneCreatorFunction> sProjectSceneFact
     {"DemoScene", nullptr},
     {"DemoSceneWithCinemaCaption", nullptr},
     {"EndingScene", nullptr},
-    {"FirstSequenceScene", nullptr},
+    {"FirstSequenceScene", alSceneFunction::createSceneFunc<FirstSequenceScene>},
     {"StageScene", nullptr},
     {"StaffRollScene", nullptr},
     {"TitleMenuScene", alSceneFunction::createSceneFunc<TitleMenuScene>},
