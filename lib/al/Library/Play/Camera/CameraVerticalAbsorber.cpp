@@ -34,26 +34,26 @@ CameraVerticalAbsorber::CameraVerticalAbsorber(const CameraPoser* cameraParent,
 }
 
 void CameraVerticalAbsorber::load(const ByamlIter& iter) {
-    ByamlIter VerticalAbsorbIter;
-    if (!iter.tryGetIterByKey(&VerticalAbsorbIter, "VerticalAbsorb"))
+    ByamlIter verticalAbsorbIter;
+    if (!iter.tryGetIterByKey(&verticalAbsorbIter, "VerticalAbsorb"))
         return;
 
-    tryGetByamlF32(&mAbsorbScreenPosUp, VerticalAbsorbIter, "AbsorbScreenPosUp");
-    tryGetByamlF32(&mAbsorbScreenPosDown, VerticalAbsorbIter, "AbsorbScreenPosDown");
-    tryGetByamlF32(&mHighJumpJudgeSpeedV, VerticalAbsorbIter, "HighJumpJudgeSpeedV");
+    tryGetByamlF32(&mAbsorbScreenPosUp, verticalAbsorbIter, "AbsorbScreenPosUp");
+    tryGetByamlF32(&mAbsorbScreenPosDown, verticalAbsorbIter, "AbsorbScreenPosDown");
+    tryGetByamlF32(&mHighJumpJudgeSpeedV, verticalAbsorbIter, "HighJumpJudgeSpeedV");
 
-    ByamlIter AdvanceAbsorbUpIter;
-    if (VerticalAbsorbIter.tryGetIterByKey(&AdvanceAbsorbUpIter, "AdvanceAbsorbUp")) {
+    ByamlIter advanceAbsorbUpIter;
+    if (verticalAbsorbIter.tryGetIterByKey(&advanceAbsorbUpIter, "AdvanceAbsorbUp")) {
         mIsAdvanceAbsorbUp = true;
         mAdvanceAbsorbScreenPosUp =
-            getByamlKeyFloat(AdvanceAbsorbUpIter, "AdvanceAbsorbScreenPosUp");
+            getByamlKeyFloat(advanceAbsorbUpIter, "AdvanceAbsorbScreenPosUp");
     }
 }
 
 void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartInfo& info) {
     alCameraPoserFunction::calcTargetFront(&mPrevTargetFront, mCameraPoser);
 
-    mTargetInterp = {0.0f, 0.0f, 0.0f};
+    mAbsorbVec = {0.0f, 0.0f, 0.0f};
     mPrevTargetTrans.set(pos);
 
     if (!isValid() || alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser))
@@ -65,17 +65,17 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& pos, const CameraStartI
     if (alCameraPoserFunction::isTargetGrabCeil(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowSlow);
 
-    if (!info.isGrounded || alCameraPoserFunction::isTargetCollideGround(mCameraPoser))
+    if (!info._25 || alCameraPoserFunction::isTargetCollideGround(mCameraPoser))
         return setNerve(this, &NrvCameraVerticalAbsorber.FollowGround);
 
     mPrevTargetTrans.set(alCameraPoserFunction::getPreLookAtPos(mCameraPoser));
 
     const CameraPoser* poser = mCameraPoser;
-    sead::Vector3f target = {0.0f, 0.0f, 0.0f};
-    alCameraPoserFunction::calcTargetGravity(&target, poser);
+    sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
+    alCameraPoserFunction::calcTargetGravity(&gravity, poser);
 
-    mTargetInterp = pos - mPrevTargetTrans;
-    parallelizeVec(&mTargetInterp, target, mTargetInterp);
+    mAbsorbVec = pos - mPrevTargetTrans;
+    parallelizeVec(&mAbsorbVec, gravity, mAbsorbVec);
     setNerve(this, &NrvCameraVerticalAbsorber.Absorb);
 }
 
@@ -83,15 +83,15 @@ bool CameraVerticalAbsorber::isValid() const {
     return !_1aa && !mIsInvalidated;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/JdemU
+// NON_MATCHING: https://decomp.me/scratch/xNT3w
 void CameraVerticalAbsorber::update() {
     if (mIsStopUpdate)
         return;
     const CameraPoser* poser = mCameraPoser;
     sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
     alCameraPoserFunction::calcTargetGravity(&gravity, poser);
-    mTargetInterp = poser->getTargetTrans() - mPrevTargetTrans;
-    parallelizeVec(&mTargetInterp, gravity, mTargetInterp);
+    mAbsorbVec = poser->getTargetTrans() - mPrevTargetTrans;
+    parallelizeVec(&mAbsorbVec, gravity, mAbsorbVec);
 
     mLookAtCamera.setPos(mCameraPoser->getPosition());
     mLookAtCamera.setAt(mCameraPoser->getTargetTrans());
@@ -115,7 +115,7 @@ void CameraVerticalAbsorber::update() {
     updateNerve();
     sead::Vector3f prevTargetTrans = {0.0f, 0.0f, 0.0f};
     if (!mIsKeepInFrame) {
-        prevTargetTrans = mTargetInterp;
+        prevTargetTrans = mAbsorbVec;
     } else {
         sead::Vector3f offsetTrans = {0.0f, 0.0f, 0.0f};
         alCameraPoserFunction::calcTargetTransWithOffset(&offsetTrans, mCameraPoser);
@@ -123,7 +123,7 @@ void CameraVerticalAbsorber::update() {
             &gravity, &mLookAtCamera, offsetTrans, mCameraPoser, mKeepInFrameOffsetUp,
             alCameraPoserFunction::isPlayerTypeHighJump(mCameraPoser) ? 300.0f :
                                                                         mKeepInFrameOffsetDown);
-        prevTargetTrans = mTargetInterp - gravity;
+        prevTargetTrans = mAbsorbVec - gravity;
     }
     mPrevTargetTrans = mCameraPoser->getTargetTrans() - prevTargetTrans;
     mPrevTargetFront = mTargetFront;
@@ -133,9 +133,9 @@ void CameraVerticalAbsorber::makeLookAtCamera(sead::LookAtCamera* lookAtCamera) 
     if (!isValid())
         return;
 
-    lookAtCamera->setAt(lookAtCamera->getAt() - mTargetInterp);
+    lookAtCamera->setAt(lookAtCamera->getAt() - mAbsorbVec);
     if (!mIsNoCameraPosAbsorb)
-        lookAtCamera->setPos(lookAtCamera->getPos() - mTargetInterp);
+        lookAtCamera->setPos(lookAtCamera->getPos() - mAbsorbVec);
 }
 
 void CameraVerticalAbsorber::liberateAbsorb() {
@@ -155,38 +155,18 @@ void CameraVerticalAbsorber::invalidate() {
 
 void CameraVerticalAbsorber::tryResetAbsorbVecIfInCollision(const sead::Vector3f& pos) {
     if (!alCameraPoserFunction::checkFirstCameraCollisionArrow(nullptr, nullptr, mCameraPoser,
-                                                               pos + mTargetInterp, -mTargetInterp))
+                                                               pos + mAbsorbVec, -mAbsorbVec))
         return;
 
-    mTargetInterp = {0.0f, 0.0f, 0.0f};
+    mAbsorbVec = {0.0f, 0.0f, 0.0f};
     if (alCameraPoserFunction::isTargetCollideGround(mCameraPoser))
         setNerve(this, &NrvCameraVerticalAbsorber.FollowGround);
     else
         setNerve(this, &NrvCameraVerticalAbsorber.Follow);
 }
 
-inline f32 getSpeed(IUseNerve* nerve, const CameraPoser* camera) {
-    if (alCameraPoserFunction::isPlayerTypeHighJump(camera))
-        return 0.02f;
-    if (isNerve(nerve, &NrvCameraVerticalAbsorber.FollowSlow))
-        return 0.02f;
-    if (isNerve(nerve, &NrvCameraVerticalAbsorber.FollowClimbPoleNoInterp))
-        return 0.3f;
-    if (isNerve(nerve, &NrvCameraVerticalAbsorber.FollowClimbPole))
-        return calcNerveValue(nerve, 60, 0.05f, 0.3f);
-    return 0.05f;
-}
-
-void updateFollowSpeed(f32* outValue, f32 rateA, f32 rateB, IUseNerve* nerve,
-                       const CameraPoser* camera) {
-    f32 initialValue = *outValue;
-
-    f32 endValue = lerpValue(initialValue, getSpeed(nerve, camera), rateA);
-    *outValue = lerpValue(*outValue, endValue, rateB);
-}
-
 void CameraVerticalAbsorber::exeFollowAbsolute() {
-    mTargetInterp *= 0.8f;
+    mAbsorbVec *= 0.8f;
 }
 
 }  // namespace al

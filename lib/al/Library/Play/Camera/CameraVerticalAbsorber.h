@@ -34,7 +34,7 @@ private:
     const CameraPoser* mCameraPoser;
     sead::LookAtCamera mLookAtCamera;
     sead::PerspectiveProjection mProjection;
-    sead::Vector3f mTargetInterp = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mAbsorbVec = {0.0f, 0.0f, 0.0f};
     f32 mLerp1 = 0.0f;
     f32 mAbsorbScreenPosUp = -200.0f;
     f32 mAbsorbScreenPosDown = 480.0f;
