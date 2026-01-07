@@ -74,7 +74,7 @@ public:
     virtual void* ptr() = 0;
     virtual void afterGetParam();
     virtual s32 size() const = 0;
-    virtual bool isEqual(const ParameterBase& parameter) const;
+    virtual bool isEqual(const ParameterBase& parameter);
     virtual bool copy(const ParameterBase& parameter);
     virtual bool copyLerp(const ParameterBase& parameterA, const ParameterBase& parameterB,
                           f32 rate);

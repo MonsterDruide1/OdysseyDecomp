@@ -16,11 +16,11 @@ void SceneCameraInfo::initViewInfo(CameraViewInfo* cameraViewInfo) {
 
 const char* SceneCameraInfo::getViewName(s32 num) const {
     if (num == 0)
-        return "TV";
+        return "メイン";  // Main
     else if (num == 1)
         return "サブ";  // Sub/Lower
     else
-        return "メイン";  // Main
+        return "TV";
 }
 
 }  // namespace al

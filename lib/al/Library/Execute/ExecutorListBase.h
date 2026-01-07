@@ -1,14 +1,18 @@
 #pragma once
 
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 
-class ExecutorListBase {
+class ExecutorListBase : public HioNode {
 public:
     ExecutorListBase(const char* name);
 
-    virtual ~ExecutorListBase();
-    virtual void executeList() const;
-    virtual bool isActive() const;
+    virtual ~ExecutorListBase() = default;
+    virtual void executeList() const = 0;
+    virtual bool isActive() const = 0;
+
+    const char* getName() const { return mName; }
 
 private:
     const char* mName;

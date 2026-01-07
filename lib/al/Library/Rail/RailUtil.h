@@ -13,7 +13,22 @@ class PlacementInfo;
 
 class RailPlacementCallBack {
 public:
-    virtual void call(const sead::Vector3f& pos, s32 index, f32 coord) const;
+    virtual void operator()(const sead::Vector3f& pos, s32 index, f32 coord) const = 0;
+};
+
+template <class T, class F>
+class RailPlacementCallFunctorClassMember : public RailPlacementCallBack {
+public:
+    RailPlacementCallFunctorClassMember(T objPointer, F functPointer)
+        : mObjPointer(objPointer), mFunctPointer(functPointer) {}
+
+    void operator()(const sead::Vector3f& pos, s32 index, f32 coord) const override {
+        (mObjPointer->*mFunctPointer)(pos, index, coord);
+    }
+
+private:
+    T mObjPointer = nullptr;
+    F mFunctPointer = nullptr;
 };
 
 void setRailPosToStart(IUseRail* railHolder);

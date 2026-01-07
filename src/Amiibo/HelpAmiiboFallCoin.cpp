@@ -22,7 +22,7 @@ NERVES_MAKE_NOSTRUCT(HelpAmiiboFallCoin, Wait, Fall)
 }  // namespace
 
 HelpAmiiboFallCoin::HelpAmiiboFallCoin(HelpAmiiboDirector* director, al::LiveActor* actor)
-    : HelpAmiiboExecutor(director, actor, "コレクトコインお助け") {}
+    : HelpAmiiboExecutor(director, actor, "コイン降らすお助け") {}
 
 void HelpAmiiboFallCoin::initAfterPlacement(const al::ActorInitInfo& initInfo) {
     HelpAmiiboExecutor::initAfterPlacement(initInfo);

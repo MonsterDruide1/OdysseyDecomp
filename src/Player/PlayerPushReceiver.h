@@ -13,34 +13,39 @@ class IUsePlayerCollision;
 
 class PlayerPushReceiver {
 public:
-    PlayerPushReceiver(const al::LiveActor*);
+    PlayerPushReceiver(const al::LiveActor* actor);
 
     void clear();
-    bool receivePushMsg(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*, f32);
-    bool receivePushMsgHacker(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*, f32,
-                              bool);
-    bool receivePushMsgYoshiNpc(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*,
-                                f32);
-    bool receivePushMsgCap(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*, f32);
-    bool receivePushMsgGrowPlant(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*,
-                                 f32);
-    bool receiveCollidePushMsg(const al::SensorMsg*);
-    void receiveForceDirect(const sead::Vector3f&);
-    void cutPushVec(const sead::Vector3f&);
-    void calcPushVec(sead::Vector3f*) const;
-    void calcOnlyCollidePushVec(sead::Vector3f*) const;
-    void calcPushedVelocity(sead::Vector3f*, const sead::Vector3f&) const;
-    void calcPushedVelocityCommon(sead::Vector3f*, const sead::Vector3f&,
-                                  const sead::Vector3f&) const;
-    void calcPushedVelocityWithCollide(sead::Vector3f*, const sead::Vector3f&,
-                                       const IUsePlayerCollision*, f32) const;
+    bool receivePushMsg(const al::SensorMsg* msg, const al::HitSensor* self,
+                        const al::HitSensor* other, f32 maxTrans);
+    bool receivePushMsgHacker(const al::SensorMsg* msg, const al::HitSensor* self,
+                              const al::HitSensor* other, f32 maxTrans, bool isPlayer);
+    bool receivePushMsgYoshiNpc(const al::SensorMsg* msg, const al::HitSensor* self,
+                                const al::HitSensor* other, f32 maxTrans);
+    bool receivePushMsgCap(const al::SensorMsg* msg, const al::HitSensor* self,
+                           const al::HitSensor* other, f32 maxTrans);
+    bool receivePushMsgGrowPlant(const al::SensorMsg* msg, const al::HitSensor* self,
+                                 const al::HitSensor* other, f32 maxTrans);
+    bool receiveCollidePushMsg(const al::SensorMsg* msg);
+    void receiveForceDirect(const sead::Vector3f& force);
+    void cutPushVec(const sead::Vector3f& pushVec);
+    void calcPushVec(sead::Vector3f* outPushVec) const;
+    void calcOnlyCollidePushVec(sead::Vector3f* outCollidePushVec) const;
+    void calcPushedVelocity(sead::Vector3f* outPushedVelocity,
+                            const sead::Vector3f& velocity) const;
+    void calcPushedVelocityCommon(sead::Vector3f* outPushedVelocity, const sead::Vector3f& velocity,
+                                  const sead::Vector3f& pushVec) const;
+    void calcPushedVelocityWithCollide(sead::Vector3f* outPushedVelocity,
+                                       const sead::Vector3f& velocity,
+                                       const IUsePlayerCollision* collision,
+                                       f32 collisionRadius) const;
 
 private:
-    al::LiveActor* mActor;
-    sead::Vector3f _8;
-    sead::Vector3f _14;
-    sead::Vector3f _20;
-    sead::Vector3f _2c;
+    const al::LiveActor* mActor = nullptr;
+    sead::Vector3f mPushMin = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mPushMax = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mCollidePushMin = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mCollidePushMax = {0.0f, 0.0f, 0.0f};
 };
 
 static_assert(sizeof(PlayerPushReceiver) == 0x38);

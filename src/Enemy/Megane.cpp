@@ -425,11 +425,11 @@ void Megane::control() {
 
         if (!al::isNerve(this, &MeganeData.NrvMegane.HackStart) ||
             rs::isHackStartDemoEnterMario(mPlayerHack)) {
-            al::tryStartVisAnimIfNotPlaying(this, "HackOff");
-            al::tryStartMtpAnimIfNotPlaying(this, "HackOff");
-        } else {
             al::tryStartVisAnimIfNotPlaying(this, "HackOn");
             al::tryStartMtpAnimIfNotPlaying(this, "HackOn");
+        } else {
+            al::tryStartVisAnimIfNotPlaying(this, "HackOff");
+            al::tryStartMtpAnimIfNotPlaying(this, "HackOff");
         }
     } else {
         al::tryStartVisAnimIfNotPlaying(this, "HackOff");

@@ -14,7 +14,7 @@ using namespace al;
 NERVE_IMPL(AllDeadWatcher, Watch)
 NERVE_IMPL(AllDeadWatcher, Wait)
 
-NERVES_MAKE_STRUCT(AllDeadWatcher, Watch, Wait)
+NERVES_MAKE_NOSTRUCT(AllDeadWatcher, Watch, Wait)
 }  // namespace
 
 namespace al {
@@ -43,14 +43,14 @@ void AllDeadWatcher::exeWatch() {
         if (isAlive(mTargets[i]))
             return;
 
-    setNerve(this, &NrvAllDeadWatcher.Watch);
+    setNerve(this, &Wait);
 }
 
 void AllDeadWatcher::init(const ActorInitInfo& info) {
     initActorSceneInfo(this, info);
     initStageSwitch(this, info);
     initExecutorWatchObj(this, info);
-    initNerve(this, &NrvAllDeadWatcher.Watch, 0);
+    initNerve(this, &Watch, 0);
 
     mTargetCount = calcLinkChildNum(info, "WatchTargetEnemy");
     mTargets = new LiveActor*[mTargetCount];

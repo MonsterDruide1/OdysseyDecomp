@@ -29,7 +29,7 @@ with open(artifactsPath) as file:
             print(f"got {output['hash']} for {output['storePath']}")
             artifacts[system]['hash'] = output["hash"]
         else:
-            print(f"artifact {artifact.filename} failed to download!")
+            print(f"artifact {artifacts[system]['filename']} failed to download!")
             print("stdout")
             print(data)
             print("stderr")

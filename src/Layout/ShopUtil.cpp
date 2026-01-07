@@ -73,36 +73,36 @@ bool ShopUtil::isShopCap(const char* name) {
 
 const char* ShopUtil::getWaitShopInActionName(const al::LiveActor* actor) {
     if (isShopCap(al::getModelName(actor)))
-        return "WaitShop";
-    return "WaitShopIn";
+        return "WaitShopIn";
+    return "WaitShop";
 }
 
 const char* ShopUtil::getWaitShopOutActionName(const al::LiveActor* actor) {
     if (isShopCap(al::getModelName(actor)))
-        return "WaitShop";
-    return "WaitShopOut";
+        return "WaitShopOut";
+    return "WaitShop";
 }
 
 const char* ShopUtil::getTalkShopInActionName(const al::LiveActor* actor) {
     if (isShopCap(al::getModelName(actor)))
-        return "TalkShop";
-    return "TalkShopIn";
+        return "TalkShopIn";
+    return "TalkShop";
 }
 
 const char* ShopUtil::getTalkShopOutActionName(const al::LiveActor* actor) {
     if (isShopCap(al::getModelName(actor)))
-        return "TalkShop";
-    return "TalkShopOut";
+        return "TalkShopOut";
+    return "TalkShop";
 }
 
 const char* ShopUtil::getWelcomeShopInActionName(const al::LiveActor* actor) {
     if (isShopCap(al::getModelName(actor)))
-        return "Welcome";
-    return "WelcomeIn";
+        return "WelcomeIn";
+    return "Welcome";
 }
 
 const char* ShopUtil::getWelcomeShopOutActionName(const al::LiveActor* actor) {
     if (isShopCap(al::getModelName(actor)))
-        return "Welcome";
-    return "WelcomeOut";
+        return "WelcomeOut";
+    return "Welcome";
 }

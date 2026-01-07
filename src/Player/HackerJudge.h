@@ -6,11 +6,12 @@
 
 #include "Player/IJudge.h"
 
-class IUsePlayerHack;
-
 namespace al {
 class LiveActor;
 }
+
+class IUsePlayerCollision;
+class IUsePlayerHack;
 
 class HackerJudge : public al::HioNode, public IJudge {
 public:
@@ -33,10 +34,14 @@ public:
     void update() override;
     bool judge() const override;
 
+    void setPlayerCollision(IUsePlayerCollision* playerCollision) {
+        mPlayerCollision = playerCollision;
+    }
+
 private:
     s32 field_10;
     s32 field_14;
-    al::LiveActor* mParent;
+    IUsePlayerCollision* mPlayerCollision;
 };
 
 class HackerJudgeStartJump : public HackerJudge {
@@ -54,9 +59,13 @@ public:
     void update() override;
     bool judge() const override;
 
+    void setPlayerCollision(IUsePlayerCollision* playerCollision) {
+        mPlayerCollision = playerCollision;
+    }
+
 private:
     al::LiveActor* mParent;
     s32 field_18;
-    al::LiveActor* field_20;
+    IUsePlayerCollision* mPlayerCollision;
     f32 field_28;
 };

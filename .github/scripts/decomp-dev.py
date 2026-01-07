@@ -101,7 +101,7 @@ def get_units():
     units = []
     for unit_name, unit_data in data.items():
         unit = ReportUnit()
-        unit.name = unit_name.strip(".o")
+        unit.name = unit_name.removesuffix(".o")
         unit.measures.CopyFrom(get_measures(unit_name))
         unit.sections.extend([])  # TODO: no splitting by sections yet
         unit.functions.extend(get_functions(unit_name))

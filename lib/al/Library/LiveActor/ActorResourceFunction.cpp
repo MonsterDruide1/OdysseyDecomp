@@ -65,13 +65,13 @@ const u8* getModelOrAnimResourceYaml(const LiveActor* actor, const char* name, c
 }
 
 const u8* getMapPartsResourceYaml(const ActorInitInfo& initInfo, const char* name) {
-    sead::FixedSafeString<256> modelName, path;
+    StringTmp<256> modelName, path;
     makeMapPartsModelName(&modelName, &path, *initInfo.placementInfo);
     return findOrCreateResource(path, nullptr)->getByml(name);
 }
 
 const u8* tryGetMapPartsResourceYaml(const ActorInitInfo& initInfo, const char* name) {
-    sead::FixedSafeString<256> modelName, path;
+    StringTmp<256> modelName, path;
     makeMapPartsModelName(&modelName, &path, *initInfo.placementInfo);
     return findOrCreateResource(path, nullptr)->tryGetByml(name);
 }

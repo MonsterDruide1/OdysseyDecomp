@@ -121,7 +121,7 @@ void RollingCubePose::setNextCubePose(const RollingCubePose* nextPose) {
 }
 
 void RollingCubePose::calcBottomFacePoint(sead::Vector3f facePoints[4]) const {
-    calcBoxFacePoint(facePoints, mCubeSize, calcBottomFaceIndex(), mQuat, mTrans);
+    calcBoxFacePoint(facePoints, mCubeSize, (s32)calcBottomFaceIndex(), mQuat, mTrans);
 }
 
 void RollingCubePose::init(const PlacementInfo& placementInfo) {

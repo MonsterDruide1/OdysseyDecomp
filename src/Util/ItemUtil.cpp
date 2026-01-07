@@ -187,7 +187,7 @@ bool tryInitItemAndAddToKeeper(al::LiveActor* actor, s32 itemType, const al::Act
         name = al::isPercentProbability(10.0f) ? "ドットキャラクター(レア)" : "コイン[自動取得]";
         break;
     case ItemType::CoinStackBound:
-        name = "跳ねる積みコイン";
+        name = "跳ねる積みコイン]";
         break;
     default:
         return false;
