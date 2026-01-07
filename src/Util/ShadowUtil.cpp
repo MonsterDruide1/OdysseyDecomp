@@ -12,8 +12,7 @@ namespace rs {
 f32 setShadowDropLength(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
                         const char* maskName) {
     f32 shadowLength = 1500.0f;
-    bool available = al::tryGetArg(&shadowLength, initInfo, "ShadowLength");
-    if (!available)
+    if (!al::tryGetArg(&shadowLength, initInfo, "ShadowLength"))
         shadowLength = 1500.0f;
     bool isLongShadow = false;
     al::tryGetArg(&isLongShadow, initInfo, "IsLongShadow");
@@ -26,12 +25,13 @@ f32 setShadowDropLength(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
     return shadowLength;
 }
 
+// TODO: rename parameter f and f2
 void calcShadowDropClippingCenter(sead::Vector3f* vec, const al::LiveActor* actor, f32 f, f32 f2) {
-    vec->set(al::getTrans(actor) - (sead::Vector3f::ey * (f / 2 + f2 / 2)));
+    vec->set(al::getTrans(actor) - (sead::Vector3f::ey * (f / 2.0f + f2 / 2.0f)));
 }
 
 void setShadowDropOffset(al::LiveActor* actor, const char* maskName, f32 distance) {
-    al::setShadowMaskOffset(actor, sead::Vector3f::ey * distance * -0.5, maskName);
+    al::setShadowMaskOffset(actor, sead::Vector3f::ey * distance * -0.5f, maskName);
 }
 
 WaterSurfaceShadow* tryCreateWaterSurfaceShadow(const al::ActorInitInfo& initInfo,
@@ -53,7 +53,7 @@ WaterSurfaceShadow* tryCreateWaterSurfaceCoinShadow(const al::ActorInitInfo& ini
 
 void tryUpdateWaterSurfaceCoinShadow(WaterSurfaceShadow* shadow, al::LiveActor* actor,
                                      f32 distance) {
-    if (shadow != nullptr) {
+    if (shadow) {
         shadow->update(al::getTrans(actor), -al::getGravity(actor), distance);
         shadow->setQuat(al::getQuat(actor));
     }
