@@ -11,8 +11,8 @@ namespace {
 using namespace al;
 NERVE_IMPL(CameraVerticalAbsorber, FollowGround);
 NERVE_IMPL(CameraVerticalAbsorber, FollowAbsolute);
-NERVE_IMPL_(CameraVerticalAbsorber, FollowClimbPoleNoInterp, Follow);
-NERVE_IMPL_(CameraVerticalAbsorber, FollowSlow, Absorb);
+NERVE_IMPL_(CameraVerticalAbsorber, FollowClimbPoleNoInterp, FollowClimbPole);
+NERVE_IMPL_(CameraVerticalAbsorber, FollowSlow, Follow);
 NERVE_IMPL(CameraVerticalAbsorber, Absorb);
 NERVE_IMPL(CameraVerticalAbsorber, Follow);
 NERVE_IMPL(CameraVerticalAbsorber, FollowClimbPole);

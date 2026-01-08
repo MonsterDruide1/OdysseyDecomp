@@ -648,8 +648,8 @@ void HackFork::exeHackBend() {
     sead::Vector3f oldPullDirection = mPullDirection;
     f32 jumpDir = mIsPullDown ? -1.0f : 1.0f;
 
-    f32 angle = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
-    if (sead::Mathf::rad2deg(sead::Mathf::cos(angle)) < getJumpRange())
+    f32 cos = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
+    if (sead::Mathf::rad2deg(sead::Mathf::acos(cos)) < getJumpRange())
         mPullDirection = mPullDirection * 0.5f + pullDirection * 0.5f;
     al::normalize(&mPullDirection);
     f32 oldDampingForce = mDampingForce;

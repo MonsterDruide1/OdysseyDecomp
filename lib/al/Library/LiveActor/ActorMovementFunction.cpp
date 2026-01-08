@@ -1208,7 +1208,7 @@ bool turnFrontToDirGetIsFinished(LiveActor* actor, const sead::Vector3f& dir, f3
     sead::Vector3f up;
     calcFrontDir(&up, actor);
     bool finished = turnDirectionDegree(actor, &up, dir, deg);
-    rotateVectorDegree(getFrontPtr(actor), getFront(actor), up, deg);
+    turnVecToVecDegree(getFrontPtr(actor), getFront(actor), up, deg);
     normalize(getFrontPtr(actor));
     return finished;
 }
