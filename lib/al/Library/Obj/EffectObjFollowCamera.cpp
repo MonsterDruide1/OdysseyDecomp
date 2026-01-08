@@ -30,7 +30,7 @@ void EffectObjFollowCamera::init(const ActorInitInfo& info) {
 
     EffectObjFunction::initActorEffectObj(this, info);
     invalidateClipping(this);
-    setEffectNamedMtxPtr(this, "Wait", &mBaseMtx);
+    setEffectFollowMtxPtr(this, "Wait", &mBaseMtx);
     initNerve(this, &Wait, 0);
 
     listenStageSwitchOnOffAppear(

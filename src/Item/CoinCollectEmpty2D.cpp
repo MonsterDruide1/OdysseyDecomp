@@ -62,7 +62,7 @@ void CoinCollectEmpty2D::initAfterPlacement() {
 
 bool CoinCollectEmpty2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                     al::HitSensor* self) {
-    if (rs::isMsgItemGet2D(message) && al::isNerve(this, &NrvCoinCollectEmpty2D.Wait)) {
+    if (rs::isMsgPlayerItemGet2D(message) && al::isNerve(this, &NrvCoinCollectEmpty2D.Wait)) {
         al::invalidateClipping(this);
         al::setNerve(this, &NrvCoinCollectEmpty2D.Got);
         return true;

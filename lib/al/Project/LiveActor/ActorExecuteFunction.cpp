@@ -48,7 +48,8 @@ void executeUpdateCalcView(const LiveActorKit* actorKit) {
 }
 
 void waitUpdateCalcView(const LiveActorKit* actorKit) {
-    executeUpdateCalcView(actorKit);
+    actorKit->getExecutorCore1()->waitAsync();
+    actorKit->getExecutorCore2()->waitAsync();
     if (actorKit->getGraphicsSystemInfo() && actorKit->getGraphicsSystemInfo()->getSkyDirector())
         actorKit->getGraphicsSystemInfo()->getSkyDirector()->update();
 }
