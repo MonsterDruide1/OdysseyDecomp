@@ -89,7 +89,7 @@ jobs:
               newLabel = 'status:approved'  // if owner is author, someone else must approve
             } else if (P === R) {
               newLabel = 'status:waiting for review'
-            } else if (P !== R) {
+            } else if (P !== R && !is_approved) {
               newLabel = 'status:waiting for author'
             } else {
               core.info('No matching condition for new label.')
