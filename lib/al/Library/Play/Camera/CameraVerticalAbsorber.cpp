@@ -83,27 +83,32 @@ bool CameraVerticalAbsorber::isValid() const {
     return !_1aa && !mIsInvalidated;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/xNT3w
+inline void updatePoser(sead::Vector3f* outPos, const CameraPoser* poser,
+                        const sead::Vector3f& pos) {
+    sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
+    alCameraPoserFunction::calcTargetGravity(&gravity, poser);
+    *outPos = poser->getTargetTrans() - pos;
+    parallelizeVec(outPos, gravity, *outPos);
+}
+
 void CameraVerticalAbsorber::update() {
     if (mIsStopUpdate)
         return;
-    const CameraPoser* poser = mCameraPoser;
-    sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
-    alCameraPoserFunction::calcTargetGravity(&gravity, poser);
-    mAbsorbVec = poser->getTargetTrans() - mPrevTargetTrans;
-    parallelizeVec(&mAbsorbVec, gravity, mAbsorbVec);
+
+    updatePoser(&mAbsorbVec, mCameraPoser, mPrevTargetTrans);
 
     mLookAtCamera.setPos(mCameraPoser->getPosition());
     mLookAtCamera.setAt(mCameraPoser->getTargetTrans());
     mLookAtCamera.setUp(mCameraPoser->getCameraUp());
     mLookAtCamera.normalizeUp();
+
     makeLookAtCamera(&mLookAtCamera);
     mLookAtCamera.updateViewMatrix();
-
     mProjection.set(alCameraPoserFunction::getNear(mCameraPoser),
                     alCameraPoserFunction::getFar(mCameraPoser),
                     sead::Mathf::deg2rad(mCameraPoser->getFovyDegree()),
                     alCameraPoserFunction::getAspect(mCameraPoser));
+
     alCameraPoserFunction::calcTargetFront(&mTargetFront, mCameraPoser);
 
     if (!isNerve(this, &NrvCameraVerticalAbsorber.FollowGround) &&
@@ -113,20 +118,20 @@ void CameraVerticalAbsorber::update() {
         alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser))
         setNerve(this, &NrvCameraVerticalAbsorber.FollowAbsolute);
     updateNerve();
-    sead::Vector3f prevTargetTrans = {0.0f, 0.0f, 0.0f};
-    if (!mIsKeepInFrame) {
-        prevTargetTrans = mAbsorbVec;
-    } else {
+
+    sead::Vector3f offset = {0.0f, 0.0f, 0.0f};
+    if (mIsKeepInFrame) {
         sead::Vector3f offsetTrans = {0.0f, 0.0f, 0.0f};
         alCameraPoserFunction::calcTargetTransWithOffset(&offsetTrans, mCameraPoser);
+
         alCameraPoserFunction::calcOffsetCameraKeepInFrameV(
-            &gravity, &mLookAtCamera, offsetTrans, mCameraPoser, mKeepInFrameOffsetUp,
+            &offset, &mLookAtCamera, offsetTrans, mCameraPoser, mKeepInFrameOffsetUp,
             alCameraPoserFunction::isPlayerTypeHighJump(mCameraPoser) ? 300.0f :
                                                                         mKeepInFrameOffsetDown);
-        prevTargetTrans = mAbsorbVec - gravity;
+        mAbsorbVec -= offset;
     }
-    mPrevTargetTrans = mCameraPoser->getTargetTrans() - prevTargetTrans;
-    mPrevTargetFront = mTargetFront;
+    mPrevTargetTrans.set(mCameraPoser->getTargetTrans() - mAbsorbVec);
+    mPrevTargetFront.set(mTargetFront);
 }
 
 void CameraVerticalAbsorber::makeLookAtCamera(sead::LookAtCamera* lookAtCamera) const {
