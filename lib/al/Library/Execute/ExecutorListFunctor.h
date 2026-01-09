@@ -10,12 +10,12 @@ class FunctorBase;
 
 class ExecutorListFunctor : public ExecutorListBase {
 public:
-    ExecutorListFunctor(const char* name, s32);
+    ExecutorListFunctor(const char* name, s32 size);
 
     bool isActive() const override;
     void executeList() const override;
 
-    void registerFunctor(const FunctorBase&);
+    void registerFunctor(const FunctorBase& functor);
 
 private:
     sead::PtrArray<FunctorBase> mList;

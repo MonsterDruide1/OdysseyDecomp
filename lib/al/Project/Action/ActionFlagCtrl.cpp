@@ -25,7 +25,7 @@ ActionFlagCtrl* ActionFlagCtrl::tryCreate(LiveActor* actor, const char* name) {
     if (!isExistModelResource(actor))
         return nullptr;
 
-    sead::FixedSafeString<128> initFileName;
+    StringTmp<128> initFileName;
     if (!tryGetActorInitFileName(&initFileName, actor, "ActionFlagCtrl", name))
         createFileNameBySuffix(&initFileName, "ActionFlagCtrl", name);
 
@@ -46,7 +46,7 @@ inline CtrlFlag getCtrlFlagByKey(ByamlIter iter, const char* name) {
 void ActionFlagCtrl::initPost() {
     mHitSensorKeeper = mParentActor->getHitSensorKeeper();
 
-    sead::FixedSafeString<128> initFileName;
+    StringTmp<128> initFileName;
     tryGetActorInitFileName(&initFileName, mParentActor, "ActionFlagCtrl", mArchiveName);
 
     ByamlIter fileIter;

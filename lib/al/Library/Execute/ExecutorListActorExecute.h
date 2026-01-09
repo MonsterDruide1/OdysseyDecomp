@@ -10,11 +10,11 @@ class LiveActor;
 
 class ExecutorListActorExecuteBase : public ExecutorListBase {
 public:
-    ExecutorListActorExecuteBase(const char* name, s32);
+    ExecutorListActorExecuteBase(const char* name, s32 size);
 
     bool isActive() const override;
     void executeList() const override;
-    virtual ExecutorActorExecuteBase* createExecutor(const char*) const = 0;
+    virtual ExecutorActorExecuteBase* createExecutor(const char* name) const = 0;
 
     void registerActor(LiveActor* actor);
     void createList();

@@ -137,7 +137,7 @@ ActorResource* findOrCreateActorResourceWithAnimResource(ActorResourceHolder* re
 
 bool isExistResourceYaml(const Resource* resource, const char* resourceName, const char* suffix) {
     if (suffix) {
-        sead::FixedSafeString<128> fileName;
+        StringTmp<128> fileName;
         createFileNameBySuffix(&fileName, resourceName, suffix);
         return resource->isExistFile(StringTmp<64>("%s.byml", fileName.cstr()));
     }
@@ -154,7 +154,7 @@ bool isExistResourceYaml(const ActorResource* actorResource, const char* resourc
 
 const u8* findResourceYaml(const Resource* resource, const char* resourceName, const char* suffix) {
     if (suffix) {
-        sead::FixedSafeString<128> fileName;
+        StringTmp<128> fileName;
         createFileNameBySuffix(&fileName, resourceName, suffix);
         resourceName = fileName.cstr();
     }

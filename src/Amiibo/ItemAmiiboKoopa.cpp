@@ -12,23 +12,23 @@
 #include "Util/SensorMsgFunction.h"
 
 namespace {
-NERVE_IMPL(ItemAmiiboKoopa, Wait);
 NERVE_IMPL(ItemAmiiboKoopa, Expand);
+NERVE_IMPL(ItemAmiiboKoopa, Wait);
 
-NERVES_MAKE_STRUCT(ItemAmiiboKoopa, Wait, Expand);
+NERVES_MAKE_NOSTRUCT(ItemAmiiboKoopa, Expand, Wait);
 }  // namespace
 
 ItemAmiiboKoopa::ItemAmiiboKoopa(const char* actorName) : al::LiveActor(actorName) {}
 
 void ItemAmiiboKoopa::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "ItemAmiiboKoopa", nullptr);
-    al::initNerve(this, &NrvItemAmiiboKoopa.Wait, 0);
+    al::initNerve(this, &Expand, 0);
     makeActorDead();
 }
 
 void ItemAmiiboKoopa::appear() {
     al::LiveActor::appear();
-    al::setNerve(this, &NrvItemAmiiboKoopa.Wait);
+    al::setNerve(this, &Expand);
     al::startHitReaction(this, "出現");
 }
 
@@ -36,7 +36,7 @@ void ItemAmiiboKoopa::exeExpand() {
     al::setSensorRadius(this, al::getNerveStep(this) / 30.0f * 1000.0f);
     al::setTrans(this, rs::getPlayerPos(this));
     if (al::isGreaterEqualStep(this, 30))
-        al::setNerve(this, &NrvItemAmiiboKoopa.Wait);
+        al::setNerve(this, &Wait);
 }
 
 void ItemAmiiboKoopa::exeWait() {

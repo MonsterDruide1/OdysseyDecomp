@@ -29,7 +29,7 @@ HelpAmiiboCoinCollect::HelpAmiiboCoinCollect(HelpAmiiboDirector* director,
 void HelpAmiiboCoinCollect::initAfterPlacement(const al::ActorInitInfo& initInfo) {
     HelpAmiiboExecutor::initAfterPlacement(initInfo);
 
-    mCoinCollectDummy = new CoinCollectDummy("コレクトコインお助け");
+    mCoinCollectDummy = new CoinCollectDummy("コレクトコイン[amiibo]");
     al::initCreateActorNoPlacementInfo(mCoinCollectDummy, initInfo);
 }
 
