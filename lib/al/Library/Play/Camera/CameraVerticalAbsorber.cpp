@@ -83,19 +83,19 @@ bool CameraVerticalAbsorber::isValid() const {
     return !_1aa && !mIsInvalidated;
 }
 
-inline void updatePoser(sead::Vector3f* outPos, const CameraPoser* poser,
-                        const sead::Vector3f& pos) {
+inline void updateAbsorbVec(sead::Vector3f* absorbVec, const CameraPoser* poser,
+                            const sead::Vector3f& prevTrans) {
     sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
     alCameraPoserFunction::calcTargetGravity(&gravity, poser);
-    *outPos = poser->getTargetTrans() - pos;
-    parallelizeVec(outPos, gravity, *outPos);
+    *absorbVec = poser->getTargetTrans() - prevTrans;
+    parallelizeVec(absorbVec, gravity, *absorbVec);
 }
 
 void CameraVerticalAbsorber::update() {
     if (mIsStopUpdate)
         return;
 
-    updatePoser(&mAbsorbVec, mCameraPoser, mPrevTargetTrans);
+    updateAbsorbVec(&mAbsorbVec, mCameraPoser, mPrevTargetTrans);
 
     mLookAtCamera.setPos(mCameraPoser->getPosition());
     mLookAtCamera.setAt(mCameraPoser->getTargetTrans());
