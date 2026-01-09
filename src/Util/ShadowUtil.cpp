@@ -39,12 +39,12 @@ WaterSurfaceShadow* tryCreateWaterSurfaceShadow(const al::ActorInitInfo& initInf
     bool useWaterSurfaceShadow = false;
     al::tryGetArg(&useWaterSurfaceShadow, initInfo, "UseWaterSurfaceShadow");
 
-    if (useWaterSurfaceShadow) {
-        if (archiveName == nullptr)
-            return new WaterSurfaceShadow(initInfo, "WaterSurfaceShadow");
-        return new WaterSurfaceShadow(initInfo, archiveName);
-    }
-    return nullptr;
+    if (!useWaterSurfaceShadow)
+        return nullptr;
+    if (archiveName == nullptr)
+        return new WaterSurfaceShadow(initInfo, "WaterSurfaceShadow");
+    return new WaterSurfaceShadow(initInfo, archiveName);
+
 }
 
 WaterSurfaceShadow* tryCreateWaterSurfaceCoinShadow(const al::ActorInitInfo& initInfo) {
