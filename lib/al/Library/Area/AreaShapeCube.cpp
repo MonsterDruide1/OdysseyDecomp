@@ -14,7 +14,7 @@ bool AreaShapeCube::isInVolume(const sead::Vector3f& pos) const {
 bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& pos) const {
     f32 bottom = mOriginType == OriginType::Base ?
                      0.0f :
-                     (mOriginType == OriginType::Top ? -1000.0f : 500.0f);
+                     (mOriginType == OriginType::Top ? -1000.0f : -500.0f);
     f32 top = mOriginType == OriginType::Base ? 1000.0f :
                                                 (mOriginType == OriginType::Top ? 0.0f : 500.0f);
 
