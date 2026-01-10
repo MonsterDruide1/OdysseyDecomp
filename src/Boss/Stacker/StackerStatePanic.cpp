@@ -57,8 +57,7 @@ void StackerStatePanic::control() {
         kill();
     }
     al::setScale(mActor, {_3c, _3c, _3c});
-    f32 lerpVal = al::lerpValue(_3c, 1.0f, 0.12f);
-    _3c = lerpVal;
+    _3c = al::lerpValue(_3c, 1.0f, 0.12f);
 }
 
 void StackerStatePanic::attackSensor(al::HitSensor* self, al::HitSensor* other) {
@@ -75,29 +74,31 @@ bool StackerStatePanic::receiveMsg(const al::SensorMsg* self, al::HitSensor* oth
     if (_30 > 0)
         return false;
 
-    if (!al::isNerve(this, &NrvStackerStatePanic.Wait) &&
-        !al::isNerve(this, &NrvStackerStatePanic.Surprise) &&
-        !al::isNerve(this, &NrvStackerStatePanic.CapHit)) {
-        if (!rs::isMsgCapAttack(self) && !rs::isMsgStackerCapBoostAttack(self))
-            return false;
-        _30 = 10;
-        al::faceToTarget(mActor, rs::getPlayerPos(mActor));
-        al::startHitReaction(mActor, "逃げ中帽子ヒット");
-        rs::requestHitReactionToAttacker(self, hitSensor, other);
-        al::startAction(mActor, "PanicStart");
-        al::setNerve(this, &NrvStackerStatePanic.CapHit);
-        return true;
-    } else {
-        if (!rs::isMsgCapReflect(self) && !rs::isMsgStackerCapBoostAttack(self))
-            return false;
-        _30 = 10;
-        al::faceToTarget(mActor, rs::getPlayerPos(mActor));
-        al::startHitReaction(mActor, "逃げ中帽子ヒット");
-        rs::requestHitReactionToAttacker(self, hitSensor, other);
-        al::startAction(mActor, "PanicCapHit");
-    }
-    al::setNerve(this, &NrvStackerStatePanic.CapHit);
-    return true;
+    if (al::isNerve(this, &NrvStackerStatePanic.Wait) ||
+        al::isNerve(this, &NrvStackerStatePanic.Surprise) ||
+        al::isNerve(this, &NrvStackerStatePanic.CapHit)) {
+
+        if (rs::isMsgCapReflect(self) || rs::isMsgStackerCapBoostAttack(self)) {
+            _30 = 10;
+            al::faceToTarget(mActor, rs::getPlayerPos(mActor));
+            al::startHitReaction(mActor, "逃げ中帽子ヒット");
+            rs::requestHitReactionToAttacker(self, hitSensor, other);
+            al::startAction(mActor, "PanicCapHit");
+            al::setNerve(this, &NrvStackerStatePanic.CapHit);
+            return true;
+        }
+        } else {
+            if (rs::isMsgCapAttack(self) || rs::isMsgStackerCapBoostAttack(self)) {
+                _30 = 10;
+                al::faceToTarget(mActor, rs::getPlayerPos(mActor));
+                al::startHitReaction(mActor, "逃げ中帽子ヒット");
+                rs::requestHitReactionToAttacker(self, hitSensor, other);
+                al::startAction(mActor, "PanicStart");
+                al::setNerve(this, &NrvStackerStatePanic.CapHit);
+                return true;
+            }
+        }
+    return false;
 }
 
 bool StackerStatePanic::receiveMsgDamage(const al::SensorMsg* self, al::HitSensor* other,
@@ -105,7 +106,7 @@ bool StackerStatePanic::receiveMsgDamage(const al::SensorMsg* self, al::HitSenso
     if ((al::isMsgPlayerTrample(self) || rs::isMsgPlayerAndCapObjHipDropReflectAll(self)) &&
         al::getVelocity(al::getSensorHost(other)).y < 0.0f &&
         al::getTrans(mActor).y + 100.0f < al::getTrans(al::getSensorHost(other)).y) {
-        _3c = 1.0;
+        _3c = 1.0f;
         al::startHitReaction(mActor, "踏まれ");
 
         return true;
@@ -129,10 +130,10 @@ void StackerStatePanic::exeSurprise() {
     al::addVelocityToGravity(actor, 3.0f);
     al::scaleVelocity(actor, 0.9f);
     if (al::isActionEnd(actor)) {
-        if (!mIsRunAway)
-            al::setNerve(this, &NrvStackerStatePanic.Wait);
-        else
+        if (mIsRunAway)
             al::setNerve(this, &NrvStackerStatePanic.RunStart);
+        else
+            al::setNerve(this, &NrvStackerStatePanic.Wait);
     }
 }
 
@@ -150,39 +151,40 @@ void StackerStatePanic::exeWait() {
 
 void StackerStatePanic::exeRunStart() {
     al::LiveActor* actor = mActor;
-    if (isFirstStep(this)) {
+    if (al::isFirstStep(this)) {
         al::setVelocityZero(actor);
         al::startAction(actor, "PanicRunStart");
     }
     if (_30 > 0)
         _30--;
-    const sead::Vector3f& playerPos = rs::getPlayerPos(actor);
+
     sead::Vector3f dirToActorH;
-    al::calcDirToActorH(&dirToActorH, actor, playerPos);
-    const sead::Vector3f dirToActorHMin = -dirToActorH;
-    al::turnToDirection(actor, dirToActorHMin, 0.8f);
+    al::calcDirToActorH(&dirToActorH, actor, rs::getPlayerPos(actor));
+    const sead::Vector3f targetDirection = -dirToActorH;
+    al::turnToDirection(actor, targetDirection, 0.8f);
     al::addVelocityToFront(actor, 0.75f);
     al::addVelocityToGravity(actor, 3.0f);
     al::scaleVelocity(actor, 0.9f);
-    if (!al::isActionEnd(actor)) {
-        if (!al::isCollidedWallVelocity(actor))
-            return;
+
+    if (al::isActionEnd(actor)) {
+        al::setNerve(this, &NrvStackerStatePanic.Run);
+        return;
+    }
+    if (al::isCollidedWallVelocity(actor)) {
         _24 = al::getCollidedWallNormal(actor);
         al::setNerve(this, &NrvStackerStatePanic.Turn);
-    } else
-        al::setNerve(this, &NrvStackerStatePanic.Run);
+    }
 }
 
 void StackerStatePanic::exeRun() {
     al::LiveActor* actor = mActor;
-    if (isFirstStep(this))
+    if (al::isFirstStep(this))
         al::startAction(actor, "PanicRun");
     if (_30 > 0)
         _30--;
-    const sead::Vector3f& playerPos = rs::getPlayerPos(actor);
-    sead::Vector3f dirToActorH;
-    al::calcDirToActorH(&dirToActorH, actor, playerPos);
-    const sead::Vector3f dirToActorHMin = -dirToActorH;
+    sead::Vector3f targetDirection;
+    al::calcDirToActorH(&targetDirection, actor, rs::getPlayerPos(actor));
+    const sead::Vector3f dirToActorHMin = -targetDirection;
     al::turnToDirection(actor, dirToActorHMin, 0.8f);
     al::addVelocityToFront(actor, 0.75f);
     al::addVelocityToGravity(actor, 3.0f);
@@ -195,7 +197,7 @@ void StackerStatePanic::exeRun() {
 
 void StackerStatePanic::exeTurn() {
     al::LiveActor* actor = mActor;
-    if (isFirstStep(this))
+    if (al::isFirstStep(this))
         al::setVelocityZero(actor);
     if (_30 > 0)
         _30--;
@@ -208,9 +210,9 @@ void StackerStatePanic::exeTurn() {
 
 void StackerStatePanic::exeCapHit() {
     al::LiveActor* actor = mActor;
-    if (isFirstStep(this)) {
+    if (al::isFirstStep(this)) {
         al::setVelocityZero(actor);
-        al::addVelocityToFront(actor, -0.0);
+        al::addVelocityToFront(actor, -0.0f);
     }
     if (_30 > 0)
         _30--;
