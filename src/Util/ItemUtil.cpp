@@ -605,7 +605,7 @@ s32 getStageShineAnimFrame(const al::LiveActor* actor, s32 worldId) {
 
 s32 getStageShineAnimFrame(const al::LiveActor* actor, const char* stageName) {
     s32 worldId =
-        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByMainStageName(
+        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByStageName(
             stageName);
     worldId = sead::Mathi::max(0, worldId);
 
@@ -636,7 +636,7 @@ void setStageShineAnimFrame(al::LiveActor* actor, const char* stageName, s32 shi
 
 const char* getStageShineArchiveName(const al::LiveActor* actor, const char* stageName) {
     s32 worldId =
-        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByMainStageName(
+        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByStageName(
             stageName);
 
     return worldId == GameDataFunction::getWorldIndexPeach() ? "PowerStar" : "Shine";
@@ -644,7 +644,7 @@ const char* getStageShineArchiveName(const al::LiveActor* actor, const char* sta
 
 const char* getStageShineEmptyArchiveName(const al::LiveActor* actor, const char* stageName) {
     s32 worldId =
-        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByMainStageName(
+        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByStageName(
             stageName);
 
     return worldId == GameDataFunction::getWorldIndexPeach() ? "PowerStarEmpty" : "ShineEmpty";

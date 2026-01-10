@@ -2,6 +2,7 @@
 
 #include <basis/seadRawPrint.h>
 #include <filedevice/seadFileDeviceMgr.h>
+#include <heap/seadFrameHeap.h>
 #include <heap/seadHeapMgr.h>
 
 #include "Library/Base/Macros.h"
@@ -17,8 +18,8 @@ MemorySystem::MemorySystem(sead::Heap* heap)
     : mDelegate(this, &MemorySystem::allocFailedCallbackFunc) {
     sead::HeapMgr::instance()->setAllocFailedCallback(&mDelegate);
     mStationedHeap =
-        sead::ExpHeap::tryCreate((u32)heap->getMaxAllocatableSize(8) - 0x1900000, "StationedHeap",
-                                 heap, 8, sead::Heap::cHeapDirection_Forward, false);
+        sead::ExpHeap::create((u32)heap->getMaxAllocatableSize(8) - 0x1900000, "StationedHeap",
+                              heap, 8, sead::Heap::cHeapDirection_Forward, false);
 
     {
         sead::ScopedCurrentHeapSetter setter(mStationedHeap);
@@ -40,8 +41,8 @@ void MemorySystem::allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallb
 }
 
 void MemorySystem::createSequenceHeap() {
-    mSequenceHeap = sead::ExpHeap::tryCreate(0, "SequenceHeap", nullptr, 8,
-                                             sead::Heap::cHeapDirection_Forward, false);
+    mSequenceHeap = sead::ExpHeap::create(0, "SequenceHeap", nullptr, 8,
+                                          sead::Heap::cHeapDirection_Forward, false);
 }
 
 void MemorySystem::freeAllSequenceHeap() {
@@ -67,7 +68,7 @@ bool MemorySystem::createSceneHeap(const char* stageName, bool backwards) {
     if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
         size = currentHeap->getMaxAllocatableSize(8);
 
-    mSceneHeap = sead::ExpHeap::tryCreate(size, "SceneHeap", nullptr, 8, direction, false);
+    mSceneHeap = sead::FrameHeap::create(size, "SceneHeap", nullptr, 8, direction, false);
     mSceneHeap->mFlag.reset(sead::Heap::Flag::cEnableDebugFillUser);
 
     return currentSceneResourceHeap == nullptr;
@@ -139,7 +140,7 @@ void MemorySystem::createCourseSelectHeap() {
         if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
             size = currentHeap->getMaxAllocatableSize(8);
 
-        mCourseSelectResourceHeap = sead::ExpHeap::tryCreate(
+        mCourseSelectResourceHeap = sead::FrameHeap::create(
             size, "CourseSelectHeapResource", nullptr, 8, sead::Heap::cHeapDirection_Reverse, true);
         mCourseSelectResourceHeap->mFlag.reset(sead::Heap::Flag::cEnableDebugFillUser);
     }
@@ -149,8 +150,8 @@ void MemorySystem::createCourseSelectHeap() {
         if (currentHeap && currentHeap->getMaxAllocatableSize(8) < size)
             size = currentHeap->getMaxAllocatableSize(8);
 
-        mCourseSelectHeap = sead::ExpHeap::tryCreate(size, "CourseSelectHeapScene", nullptr, 8,
-                                                     sead::Heap::cHeapDirection_Reverse, false);
+        mCourseSelectHeap = sead::FrameHeap::create(size, "CourseSelectHeapScene", nullptr, 8,
+                                                    sead::Heap::cHeapDirection_Reverse, false);
         mCourseSelectHeap->mFlag.reset(sead::Heap::Flag::cEnableDebugFillUser);
     }
 }
