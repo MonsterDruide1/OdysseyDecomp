@@ -77,7 +77,6 @@ bool StackerStatePanic::receiveMsg(const al::SensorMsg* self, al::HitSensor* oth
     if (al::isNerve(this, &NrvStackerStatePanic.Wait) ||
         al::isNerve(this, &NrvStackerStatePanic.Surprise) ||
         al::isNerve(this, &NrvStackerStatePanic.CapHit)) {
-
         if (rs::isMsgCapReflect(self) || rs::isMsgStackerCapBoostAttack(self)) {
             _30 = 10;
             al::faceToTarget(mActor, rs::getPlayerPos(mActor));
@@ -87,17 +86,15 @@ bool StackerStatePanic::receiveMsg(const al::SensorMsg* self, al::HitSensor* oth
             al::setNerve(this, &NrvStackerStatePanic.CapHit);
             return true;
         }
-        } else {
-            if (rs::isMsgCapAttack(self) || rs::isMsgStackerCapBoostAttack(self)) {
-                _30 = 10;
-                al::faceToTarget(mActor, rs::getPlayerPos(mActor));
-                al::startHitReaction(mActor, "逃げ中帽子ヒット");
-                rs::requestHitReactionToAttacker(self, hitSensor, other);
-                al::startAction(mActor, "PanicStart");
-                al::setNerve(this, &NrvStackerStatePanic.CapHit);
-                return true;
-            }
-        }
+    } else if (rs::isMsgCapAttack(self) || rs::isMsgStackerCapBoostAttack(self)) {
+        _30 = 10;
+        al::faceToTarget(mActor, rs::getPlayerPos(mActor));
+        al::startHitReaction(mActor, "逃げ中帽子ヒット");
+        rs::requestHitReactionToAttacker(self, hitSensor, other);
+        al::startAction(mActor, "PanicStart");
+        al::setNerve(this, &NrvStackerStatePanic.CapHit);
+        return true;
+    }
     return false;
 }
 
