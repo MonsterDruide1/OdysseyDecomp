@@ -91,9 +91,7 @@ al::initNerveAction(this, "Hide", &NrvExampleUseCase.collector, 0);
             (keeper->getParent<Class>())->exe##ActionFunc();                                       \
         }                                                                                          \
                                                                                                    \
-        const char* getActionName() const override {                                               \
-            return #Action;                                                                        \
-        }                                                                                          \
+        const char* getActionName() const override { return #Action; }                             \
     };
 
 #define NERVE_ACTION_IMPL(Class, Action) NERVE_ACTION_IMPL_(Class, Action, Action)
@@ -108,7 +106,5 @@ al::initNerveAction(this, "Hide", &NrvExampleUseCase.collector, 0);
                                                                                                    \
         alNerveFunction::NerveActionCollector collector;                                           \
                                                                                                    \
-        NrvStruct##Class() {                                                                       \
-            FOR_EACH(NERVE_ACTION_CONSTRUCT, Class, __VA_ARGS__)                                   \
-        }                                                                                          \
+        NrvStruct##Class() { FOR_EACH(NERVE_ACTION_CONSTRUCT, Class, __VA_ARGS__) }                \
     } Nrv##Class;
