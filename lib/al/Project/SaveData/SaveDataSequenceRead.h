@@ -12,7 +12,8 @@ namespace al {
 
 class SaveDataSequenceRead : public SaveDataSequenceBase {
 public:
-    SaveDataSequenceRead(u8);
+    // TODO: Rename parameter
+    SaveDataSequenceRead(u8 a);
 
     s32 threadFunc(const char* fileName) override;
 
