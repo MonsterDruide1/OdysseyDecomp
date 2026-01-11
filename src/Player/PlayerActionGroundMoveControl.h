@@ -1,15 +1,17 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
 class LiveActor;
 }
+
 class PlayerConst;
 class PlayerInput;
-class IJudge;
 class IUsePlayerCollision;
+class IUsePlayerHack;
+class IJudge;
+class PlayerActionTurnControl;
 
 class PlayerActionGroundMoveControl {
 public:
@@ -39,13 +41,52 @@ public:
     void set_c4(bool c4) { _c4 = c4; }
 
 private:
-    void* _0[5];
-    bool _28;
+    al::LiveActor* mParent;
+    const PlayerConst* mPlayerConst;
+    const PlayerInput* mPlayerInput;
+    const IUsePlayerCollision* mCollision;
+    const IUsePlayerHack** mHack = nullptr;
+    bool mIsSetup = false;
     sead::Vector3f mGroundNormal;
-    void* _38[17];
+    f32 mMaxSpeed;
+    f32 mMinSpeed;
+    f32 _40;
+    s32 _44;
+    s32 mRunFrame;
+    s32 mStickOnBrakeFrame;
+    s32 mBrakeFrame;
+    f32 mGravityMove;
+    f32 mBrakeSpeed;
+    s32 mCounterBorder;
+    s32 _60;
+    bool _64;
+    IJudge* mJudge;
+    f32 _70;
+    s32 _74;
+    bool _78;
+    f32 _7c;
+    bool mHasStopped;
+    sead::Vector3f _84;
+    f32 _90;
+    f32 _94;
+    f32 _98;
+    bool mIsForceRunCtrlActive;
+    f32 _a0;
+    bool mAlwaysFalse;
+    f32 _a8;
+    f32 _ac;
+    PlayerActionTurnControl* mTurnCtrl;
+    bool _b8;
+    bool _b9;
+    bool _ba;
+    bool _bb;
+    bool _bc;
+    bool _bd;
     f32 _c0;
     bool _c4;
-    void* _c8[2];
+    sead::Vector3f _c8;
+    bool _d4;
+    bool _d5;
 };
 
 static_assert(sizeof(PlayerActionGroundMoveControl) == 0xD8);

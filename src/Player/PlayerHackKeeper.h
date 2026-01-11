@@ -1,10 +1,12 @@
 #pragma once
 
+#include <container/seadPtrArray.h>
 #include <math/seadMatrix.h>
 
 namespace al {
 class LiveActor;
 class HitSensor;
+class CollisionPartsFilterBase;
 struct ActorInitInfo;
 }  // namespace al
 
@@ -14,9 +16,11 @@ class PlayerInput;
 class PlayerDamageKeeper;
 class IPlayerModelChanger;
 class IUsePlayerHeightCheck;
+class HackObjInfo;
 class HackEndParam;
 class PlayerCollider;
 class CapTargetInfo;
+class PlayerHackStartTexKeeper;
 class IUsePlayerHack;
 
 class PlayerHackKeeper {
@@ -74,13 +78,47 @@ public:
     void startDemo();
     void endDemo();
 
-    al::LiveActor* getCurrentHackActor() const { return mCurrentHackActor; }
-
-    al::HitSensor* getUnkHitSensor() const { return mUnkHitSensor; }
+    void setPuppetable(bool isPuppetable) { mIsPuppetable = isPuppetable; }
+    bool isPuppetable2() const { return mIsPuppetable2; }
+    bool isHack() const { return mIsHack; }
+    bool isHackDemoStarted() const { return mIsHackDemoStarted; }
+    bool isStartedHacking() const { return mIsStartedHacking; }
+    al::LiveActor* getHack() const { return mHackActor; }
+    al::HitSensor* getHackSensor() const { return mHackHitSensor; }
 
 private:
-    char padding[0x68];
-    al::LiveActor* mCurrentHackActor;
-    al::HitSensor* mUnkHitSensor;
-    // at 0x98 PlayerHackStartTexKeeper
+    al::LiveActor* mParent;
+    HackCap* mHackCap;
+    PlayerRecoverySafetyPoint* mRecoverySafePoint;
+    void* field_18;
+    void* field_20;
+    PlayerInput* mInput;
+    sead::Matrix34f* field_30;
+    PlayerDamageKeeper* mDamageKeeper;
+    IPlayerModelChanger* mModelChanger;
+    IUsePlayerHeightCheck* mHeightCheck;
+    al::HitSensor* mParentBodySensor;
+    bool mIsPuppetable;
+    bool mIsCancellingHack;
+    bool mIsHackDemoStarted;
+    bool mIsPuppetable2;
+    bool mIsStartedHacking;
+    bool mIsHack;
+    bool mIsTookDamage;
+    al::CollisionPartsFilterBase* mCollisionFilter;
+    al::LiveActor* mHackActor;
+    al::HitSensor* mHackHitSensor;
+    HackObjInfo* mHackObjectInfo;
+    al::HitSensor* mStageStartActorSensor;
+    al::LiveActor* mStageStartActor;
+    CapTargetInfo* mStageStartCapTargetInfo;
+    PlayerHackStartTexKeeper* mHackStartTexKeeper;
+    al::LiveActor* mHackModel;
+    sead::PtrArray<sead::Matrix34f> mHackModelSlices;
+    sead::Matrix34f* field_b8;
+    s32 field_c0;
+    s32 field_c4;
+    s32 field_c8;
 };
+
+static_assert(sizeof(PlayerHackKeeper) == 0xd0);
