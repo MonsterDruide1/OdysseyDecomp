@@ -4,7 +4,7 @@
 #include "Library/Yaml/ByamlHeader.h"
 
 namespace al {
-struct ByamlContainerHeader;
+class ByamlContainerHeader;
 
 class ByamlIter {
 public:
