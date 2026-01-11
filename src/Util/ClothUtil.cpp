@@ -12,13 +12,13 @@ namespace rs {
 
 void buyItemInShopItemList(const al::IUseSceneObjHolder* user, s32 itemIdx) {
     const sead::PtrArray<ShopItem::ShopItemInfo>& itemList =
-        GameDataFunction::getShopItemInfoList(GameDataHolderAccessor(user));
-    return GameDataHolderAccessor(user)->getGameDataFile()->buyItem(&itemList[itemIdx]->info, true);
+        GameDataFunction::getShopItemInfoList(user);
+    GameDataHolderAccessor(user)->getGameDataFile()->buyItem(&itemList[itemIdx]->info, true);
 }
 
 bool isBuyItemInShopItemList(const al::IUseSceneObjHolder* user, s32 itemIdx) {
     const sead::PtrArray<ShopItem::ShopItemInfo>& itemList =
-        GameDataFunction::getShopItemInfoList(GameDataHolderAccessor(user));
+        GameDataFunction::getShopItemInfoList(user);
 
     return GameDataHolderAccessor(user)->getGameDataFile()->isBuyItem(&itemList[itemIdx]->info);
 }
@@ -87,8 +87,7 @@ s32 calcHaveClothNum(GameDataHolderAccessor accessor) {
 }
 
 void buyCloth(const al::IUseSceneObjHolder* user, const char* clothName) {
-    GameDataHolderAccessor accessor = GameDataHolderAccessor(user);
-    const sead::PtrArray<ShopItem::ItemInfo>& list = getClothList(accessor);
+    const sead::PtrArray<ShopItem::ItemInfo>& list = getClothList(user);
     for (s32 i = 0; i < list.size(); i++) {
         if (al::isEqualString(clothName, list[i]->name)) {
             buyItem(user, list[i]);
@@ -120,8 +119,7 @@ bool isCompleteClothCap(const al::IUseSceneObjHolder* user) {
 }
 
 bool isCompleteCloth(const al::IUseSceneObjHolder* user) {
-    GameDataHolderAccessor accessor = GameDataHolderAccessor(user);
-    const sead::PtrArray<ShopItem::ItemInfo>& list = getClothList(accessor);
+    const sead::PtrArray<ShopItem::ItemInfo>& list = getClothList(user);
     for (s32 i = 0; i < list.size(); i++)
         if (!list[i]->isAOC && !isHaveCloth(user, list[i]->name))
             return false;
@@ -129,8 +127,7 @@ bool isCompleteCloth(const al::IUseSceneObjHolder* user) {
 }
 
 bool isCompleteCap(const al::IUseSceneObjHolder* user) {
-    GameDataHolderAccessor accessor = GameDataHolderAccessor(user);
-    const sead::PtrArray<ShopItem::ItemInfo>& list = getCapList(accessor);
+    const sead::PtrArray<ShopItem::ItemInfo>& list = getCapList(user);
     for (s32 i = 0; i < list.size(); i++)
         if (!list[i]->isAOC && !isHaveCap(user, list[i]->name))
             return false;
@@ -138,8 +135,7 @@ bool isCompleteCap(const al::IUseSceneObjHolder* user) {
 }
 
 bool isCompleteCloth(const al::IUseSceneObjHolder* user, s32 fileId) {
-    GameDataHolderAccessor accessor = GameDataHolderAccessor(user);
-    const sead::PtrArray<ShopItem::ItemInfo>& list = getClothList(accessor);
+    const sead::PtrArray<ShopItem::ItemInfo>& list = getClothList(user);
     for (s32 i = 0; i < list.size(); i++)
         if (!list[i]->isAOC && !isHaveClothByFileId(user, list[i]->name, fileId))
             return false;
@@ -147,8 +143,7 @@ bool isCompleteCloth(const al::IUseSceneObjHolder* user, s32 fileId) {
 }
 
 bool isCompleteCap(const al::IUseSceneObjHolder* user, s32 fileId) {
-    GameDataHolderAccessor accessor = GameDataHolderAccessor(user);
-    const sead::PtrArray<ShopItem::ItemInfo>& list = getCapList(accessor);
+    const sead::PtrArray<ShopItem::ItemInfo>& list = getCapList(user);
     for (s32 i = 0; i < list.size(); i++)
         if (!list[i]->isAOC && !isHaveCapByFileId(user, list[i]->name, fileId))
             return false;
@@ -160,8 +155,7 @@ s32 calcHaveCapNum(GameDataHolderAccessor accessor) {
 }
 
 void buyCap(const al::IUseSceneObjHolder* user, const char* capName) {
-    GameDataHolderAccessor accessor = GameDataHolderAccessor(user);
-    const sead::PtrArray<ShopItem::ItemInfo>& list = getCapList(accessor);
+    const sead::PtrArray<ShopItem::ItemInfo>& list = getCapList(user);
     for (s32 i = 0; i < list.size(); i++) {
         if (al::isEqualString(capName, list[i]->name)) {
             buyItem(user, list[i]);
@@ -188,7 +182,7 @@ s32 calcHaveGiftNum(GameDataHolderAccessor accessor) {
 }
 
 bool checkCompleteGift(GameDataHolderAccessor accessor, s32 fileId) {
-    return accessor->getGameDataFile(fileId)->calcHaveGiftNum() == accessor->getGiftList().size();
+    return accessor->getGameDataFile(fileId)->calcHaveGiftNum() == getGiftListSize(accessor);
 }
 
 const sead::PtrArray<ShopItem::ItemInfo>& getStickerList(GameDataHolderAccessor accessor) {
@@ -209,8 +203,7 @@ s32 calcHaveStickerNum(GameDataHolderAccessor accessor) {
 }
 
 bool checkCompleteSticker(GameDataHolderAccessor accessor, s32 fileId) {
-    return accessor->getGameDataFile(fileId)->calcHaveStickerNum() ==
-           accessor->getStickerList().size();
+    return accessor->getGameDataFile(fileId)->calcHaveStickerNum() == getStickerListSize(accessor);
 }
 
 const char* getTestClothesName() {
