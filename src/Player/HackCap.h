@@ -173,7 +173,8 @@ public:
     void calcReturnTargetPos(sead::Vector3f*) const;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool stayRollingOrReflect();
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void endMove();
     bool isEnableCapTouchJumpInput() const;
     void prepareTransferLockOn(al::HitSensor*);
