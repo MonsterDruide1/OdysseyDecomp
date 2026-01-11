@@ -62,16 +62,11 @@ void HackObjMovieCameraTarget::updateHack(bool isInHack) {
     mNerveKeeper->update();
 }
 
-// TODO: might be sead function?
-s32 roundAwayFromZero(f32 val) {
-    return (s32)(val >= 0 ? val + 0.5f : val - 0.5f);
-}
-
 void HackObjMovieCameraTarget::changeTargetToHackObj() {
     f32 distanceBetweenActors = (al::getTrans(getActor()) - rs::getPlayerPos(getActor())).length();
 
     f32 timeToTranstion = sead::Mathf::clampMin(distanceBetweenActors - 200.0f, 0.0f) / 30.0f;
-    mTransitionTime = sead::Mathi::clamp(roundAwayFromZero(timeToTranstion) + 15, 15, 30);
+    mTransitionTime = sead::Mathi::clamp(sead::Mathf::round(timeToTranstion) + 15, 15, 30);
 
     if (al::isNerve(this, &CenterFix))
         al::setNerve(this, &CenterFixToHackObj);
