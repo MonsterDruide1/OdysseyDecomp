@@ -118,7 +118,25 @@ bool PlayerStateHack::isEnableCancelHack() const {
     return al::isGreaterEqualStep(this, 13);
 }
 
-// NON_MATCHING: https://decomp.me/scratch/XlCit
+// TODO: adjust `Vector3f::rotate` in `sead`
+inline void rotate(sead::Vector3f& o, const sead::Quatf& q, const sead::Vector3f& v) {
+    sead::Quatf r;  // quat-multiplication with 0 on w for v
+    r.x = (q.y * v.z) - (q.z * v.y) + (q.w * v.x);
+    r.y = -(q.x * v.z) + (q.z * v.x) + (q.w * v.y);
+    r.z = (q.x * v.y) - (q.y * v.x) + (q.w * v.z);
+    r.w = -(q.x * v.x) - (q.y * v.y) - (q.z * v.z);
+
+    r.w *= -1;
+
+    const f32 qw = q.w, qx = q.x, qy = q.y, qz = q.z;
+    const f32 rx = r.x, ry = r.y, rz = r.z, rw = r.w;
+
+    // quat-multiplication
+    o.x = (qw * rx) - (qz * ry) + (qy * rz) + (qx * rw);
+    o.y = (qz * rx) + (qw * ry) - (qx * rz) + (qy * rw);
+    o.z = (qw * rz) + (-(qy * rx) + (qx * ry)) + (qz * rw);
+}
+
 void PlayerStateHack::exeHackDemo() {
     sead::Vector3f frontDir;
     sead::Vector3f upDir;
@@ -186,6 +204,8 @@ void PlayerStateHack::exeHackDemo() {
                                 al::getGravity(mActor), mCurSensorTrans);
 
     frontDir.setSub(mCurSensorTrans, beforeLerpSensorTrans);
+    sead::Matrix34f* mtx = &mPossessTraceMtx;
+    sead::Matrix34f* mtx2 = &mDemoModelMtx;
     if (!al::tryNormalizeOrZero(&frontDir)) {
         frontDir.setSub(capTrans, al::getTrans(player));
         if (!al::tryNormalizeOrZero(&frontDir))
@@ -199,7 +219,7 @@ void PlayerStateHack::exeHackDemo() {
             al::calcUpDir(&upDir, player);
     }
 
-    al::makeMtxFrontUpPos(&mPossessTraceMtx, frontDir, upDir, mCurSensorTrans);
+    al::makeMtxFrontUpPos(mtx, frontDir, upDir, mCurSensorTrans);
 
     backDir = -frontDir;
     downDir = -upDir;
@@ -213,10 +233,10 @@ void PlayerStateHack::exeHackDemo() {
         reverseCameraFront = -cameraFront;
 
         al::makeQuatAxisRotation(&quat, downDir, reverseCameraFront, backDir, 1.0f);
-        downDir.rotate(quat);
+        rotate(downDir, quat, downDir);
     }
 
-    al::makeMtxSideFrontPos(&mDemoModelMtx, backDir, downDir, mCurSensorTrans);
+    al::makeMtxSideFrontPos(mtx2, backDir, downDir, mCurSensorTrans);
 
     if (al::isStep(this, mHackDemoStartLength - 1)) {
         mHackKeeper->setPuppetable(true);
