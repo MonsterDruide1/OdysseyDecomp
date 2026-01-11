@@ -119,7 +119,7 @@ bool PlayerStateHack::isEnableCancelHack() const {
 }
 
 // TODO: adjust `Vector3f::rotate` in `sead`
-inline void rotate(sead::Vector3f& o, const sead::Quatf& q, const sead::Vector3f& v) {
+inline void rotate(sead::Vector3f* o, const sead::Quatf& q, const sead::Vector3f& v) {
     sead::Quatf r;  // quat-multiplication with 0 on w for v
     r.x = (q.y * v.z) - (q.z * v.y) + (q.w * v.x);
     r.y = -(q.x * v.z) + (q.z * v.x) + (q.w * v.y);
@@ -132,9 +132,9 @@ inline void rotate(sead::Vector3f& o, const sead::Quatf& q, const sead::Vector3f
     const f32 rx = r.x, ry = r.y, rz = r.z, rw = r.w;
 
     // quat-multiplication
-    o.x = (qw * rx) - (qz * ry) + (qy * rz) + (qx * rw);
-    o.y = (qz * rx) + (qw * ry) - (qx * rz) + (qy * rw);
-    o.z = (qw * rz) + (-(qy * rx) + (qx * ry)) + (qz * rw);
+    o->x = (qw * rx) - (qz * ry) + (qy * rz) + (qx * rw);
+    o->y = (qz * rx) + (qw * ry) - (qx * rz) + (qy * rw);
+    o->z = (qw * rz) + (-(qy * rx) + (qx * ry)) + (qz * rw);
 }
 
 void PlayerStateHack::exeHackDemo() {
@@ -233,7 +233,7 @@ void PlayerStateHack::exeHackDemo() {
         reverseCameraFront = -cameraFront;
 
         al::makeQuatAxisRotation(&quat, downDir, reverseCameraFront, backDir, 1.0f);
-        rotate(downDir, quat, downDir);
+        rotate(&downDir, quat, downDir);
     }
 
     al::makeMtxSideFrontPos(mtx2, backDir, downDir, mCurSensorTrans);
