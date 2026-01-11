@@ -1,4 +1,4 @@
-#include "RumbleCalculator.h"
+#include "Library/Movement/RumbleCalculator.h"
 
 al::RumbleCalculator::RumbleCalculator(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime) {
     mFrame = rampTime;
@@ -29,7 +29,7 @@ void al::RumbleCalculator::calc() {
         return;
     }
 
-    sead::Vector3<f32> vec;
+    sead::Vector3f vec;
     f32 rate = (f32)mFrame / mRampTime;
     f32 invRate = 1.0f - rate;
 
@@ -58,8 +58,8 @@ al::RumbleCalculatorCosAddOneMultLinear::RumbleCalculatorCosAddOneMultLinear(f32
                                                                              u32 rampTime)
     : RumbleCalculator(frequency, angleDev, amplitude, rampTime) {}
 
-void al::RumbleCalculatorCosAddOneMultLinear::calcValues(sead::Vector3<f32>* mOut,
-                                                         const sead::Vector3<f32>& in) {
+void al::RumbleCalculatorCosAddOneMultLinear::calcValues(sead::Vector3f* mOut,
+                                                         const sead::Vector3f& in) {
     f32 x = cosf(in.x) + 1;
     f32 y = cosf(in.y) + 1;
     f32 z = cosf(in.z) + 1;
@@ -72,8 +72,8 @@ al::RumbleCalculatorCosMultLinear::RumbleCalculatorCosMultLinear(f32 frequency, 
                                                                  f32 amplitude, u32 rampTime)
     : RumbleCalculator(frequency, angleDev, amplitude, rampTime) {}
 
-void al::RumbleCalculatorCosMultLinear::calcValues(sead::Vector3<f32>* mOut,
-                                                   const sead::Vector3<f32>& in) {
+void al::RumbleCalculatorCosMultLinear::calcValues(sead::Vector3f* mOut,
+                                                   const sead::Vector3f& in) {
     f32 x = cosf(in.x);
     f32 y = cosf(in.y);
     f32 z = cosf(in.z);

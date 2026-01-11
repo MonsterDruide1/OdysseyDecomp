@@ -12,24 +12,26 @@ public:
     void calc();
     void reset();
 
-    virtual void calcValues(sead::Vector3<f32>*, const sead::Vector3<f32>&) = 0;
+    virtual void calcValues(sead::Vector3f*, const sead::Vector3f&) = 0;
 
 protected:
     u32 mFrame;
     u32 mRampTime;
-    sead::Vector3<f32> mOut;
+    sead::Vector3f mOut;
     f32 mFrequency;
     f32 mAngleDev;
     f32 mAmplitude;
 };
 
-class RumbleCalculatorCosAddOneMultLinear : RumbleCalculator {
-    RumbleCalculatorCosAddOneMultLinear(f32, f32, f32, u32);
-    void calcValues(sead::Vector3<f32>*, const sead::Vector3<f32>&);
+class RumbleCalculatorCosAddOneMultLinear : public RumbleCalculator {
+public:
+    RumbleCalculatorCosAddOneMultLinear(f32,f32,f32,u32);
+    void calcValues(sead::Vector3f*, const sead::Vector3f&);
 };
 
-class RumbleCalculatorCosMultLinear : RumbleCalculator {
+class RumbleCalculatorCosMultLinear : public RumbleCalculator {
+public:
     RumbleCalculatorCosMultLinear(f32, f32, f32, u32);
-    void calcValues(sead::Vector3<f32>*, const sead::Vector3<f32>&);
+    void calcValues(sead::Vector3f*, const sead::Vector3f&);
 };
 }  // namespace al
