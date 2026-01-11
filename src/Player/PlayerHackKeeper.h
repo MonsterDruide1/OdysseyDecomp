@@ -79,11 +79,17 @@ public:
     void endDemo();
 
     void setPuppetable(bool isPuppetable) { mIsPuppetable = isPuppetable; }
+
     bool isPuppetable2() const { return mIsPuppetable2; }
+
     bool isHack() const { return mIsHack; }
+
     bool isHackDemoStarted() const { return mIsHackDemoStarted; }
+
     bool isStartedHacking() const { return mIsStartedHacking; }
+
     al::LiveActor* getHack() const { return mHackActor; }
+
     al::HitSensor* getHackSensor() const { return mHackHitSensor; }
 
 private:

@@ -171,7 +171,7 @@ public:
     void exeRebound();
     void exeReturn();
     void calcReturnTargetPos(sead::Vector3f*) const;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool stayRollingOrReflect();
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
     void endMove();

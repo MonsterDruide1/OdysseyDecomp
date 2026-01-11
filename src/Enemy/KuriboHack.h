@@ -38,7 +38,7 @@ public:
     void calcAnim() override;
     void startClipped() override;
     void endClipped() override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
     void control() override;
     void updateCollider() override;
@@ -116,7 +116,7 @@ public:
     bool tryReceiveMsgPush(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     bool tryRideOnHack(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     void notifyKillByShineGetToGroup(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
-    
+
 private:
     CapTargetInfo* mCapTargetInfo;
     EnemyStateSwoon* mStateSwoon;
@@ -126,9 +126,10 @@ private:
     KuriboStateHack* mStateHack;
     EnemyStateBlowDown* mStateBlowDown;
     al::JointSpringControllerHolder* mJointSpringControllerHolder;
-    bool mIsKuriboActive;  // really abstract name... only false when kuribo is swooning, chase end, and right after damage taken
+    bool mIsKuriboActive;  // really abstract name... only false when kuribo is swooning, chase end,
+                           // and right after damage taken
     EnemyCap* mEnemyCap;
-    bool mEyebrowOff;
+    bool mIsEyebrowOff;
     KuriboHack* mKuriboTowerBottom;
     bool mIsGold;
     s32 mChaseEndTimer;  // name unsure
@@ -141,7 +142,7 @@ private:
     f32 mSandSinkJumpHeight;
     s32 mKuriboTowerIdx;  // name unsure
     s32 mStartRideTimer;
-    s32 field_1ac;
+    s32 _1ac;
     u32 mHackEndTimer;
     s32 mShiftType;
     s32 mCapCancelLockOnTimer;
@@ -160,7 +161,7 @@ private:
     al::WaterSurfaceFinder* mWaterSurfaceFinder;
     sead::Matrix34f mWaterSurfaceEffectMtx;
     sead::Matrix34f mSandSurfaceEffectMtx;
-    bool unused_2e0;  // set true in ctor, only ever checked if false
+    bool _2e0;  // set true in ctor, only ever checked if false
     sead::OffsetList<KuriboHack> mKuriboTowerOffsetList;
     sead::ListNode mKuriboTowerList;
     DisregardReceiver* mDisregardReceiver;
