@@ -102,8 +102,7 @@ void StageScene::exeDemoGetLifeMaxUpItem() {
 }
 
 void StageScene::exeDemoHackStart() {
-    bool isRadicon =
-        !GameDataFunction::isMainStage(this) && rs::isPlayerHackRadiconNpc(mDemoShine);
+    bool isRadicon = !GameDataFunction::isMainStage(this) && rs::isPlayerHackRadiconNpc(mDemoShine);
 
     if (al::isFirstStep(this)) {
         if (isRadicon) {
