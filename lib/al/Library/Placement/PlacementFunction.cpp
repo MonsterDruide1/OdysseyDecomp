@@ -203,8 +203,8 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementI
     if (!tryGetByamlV3f(&rotate, zone, "Rotate"))
         return false;
 
-    matrix->makeRT({sead::Mathf::rad2deg(rotate.x), sead::Mathf::rad2deg(rotate.y),
-                    sead::Mathf::rad2deg(rotate.z)},
+    matrix->makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
+                    sead::Mathf::deg2rad(rotate.z)},
                    translate);
     return true;
 }
