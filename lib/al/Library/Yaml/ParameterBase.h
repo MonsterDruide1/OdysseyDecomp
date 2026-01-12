@@ -108,8 +108,18 @@ public:
     u32 getHash() const { return mHash; }
 
     template <typename T>
-    T* getValuePtr() {
+    T* getMutableValuePtr() {
         return (T*)ptr();
+    }
+
+    template <typename T>
+    const T* getValuePtr() const {
+        return (T*)ptr();
+    }
+
+    template <typename T>
+    void setPtrValue(T value) {
+        *getMutableValuePtr<T>() = value;
     }
 
 protected:
