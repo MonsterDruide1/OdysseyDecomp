@@ -98,7 +98,7 @@ public:
     u32 getHash() const { return mHash; }
 
     template <typename T>
-    T* getValuePtr() {
+    T* getValuePtr() const{
         return (T*)ptr();
     }
 

@@ -23,12 +23,12 @@ void ParameterBase::afterGetParam() {}
 
 template <>
 bool ParameterBase::isEqual_<const char*>(const ParameterBase& parameter) const {
-    return isEqualString((const char*)ptr(), (const char*)parameter.ptr());
+    return isEqualString((const char*)ptr(), parameter.getValuePtr<const char>());
 }
 
 template <typename T>
 bool ParameterBase::isEqual_(const ParameterBase& parameter) const {
-    return *(T*)ptr() == *(T*)parameter.ptr();
+    return *(T*)ptr() == *parameter.getValuePtr<T>();
 }
 
 bool ParameterBase::isEqual(const ParameterBase& parameter) {
@@ -82,7 +82,7 @@ bool ParameterBase::isEqual(const ParameterBase& parameter) {
     case YamlParamType::String4096:
         // TODO: Find isEqual_ equivalent
         return isEqualString(((sead::SafeString*)((const ParameterBase*)this)->ptr())->cstr(),
-                             ((sead::SafeString*)parameter.ptr())->cstr());
+                             (parameter.getValuePtr<sead::SafeString>())->cstr());
     default:
         return false;
     }
@@ -97,13 +97,13 @@ bool ParameterBase::copy(const ParameterBase& parameter) {
 
     switch (parameter.getParamType()) {
     case YamlParamType::StringRef:
-        *(sead::SafeString*)ptr() = *(const sead::SafeString*)parameter.ptr();
+        *(sead::SafeString*)ptr() = *parameter.getValuePtr<sead::SafeString>();
         return true;
     default: {
         u8* dest = (u8*)ptr();
-        u8* source = (u8*)parameter.ptr();
+        u8* source = parameter.getValuePtr<u8>();
         s32 n = size();
-        for (s32 i = 0; i < n; ++i) {
+        for (s32 i = 0; i < n; i++) {
             *dest = *source;
             dest++;
             source++;
@@ -116,16 +116,16 @@ bool ParameterBase::copy(const ParameterBase& parameter) {
 template <>
 void ParameterBase::copyLerp_<f32>(const ParameterBase& parameterA, const ParameterBase& parameterB,
                                    f32 rate) {
-    f32 valueA = *(f32*)parameterA.ptr();
-    f32 valueB = *(f32*)parameterB.ptr();
+    f32 valueA = *parameterA.getValuePtr<f32>();
+    f32 valueB = *parameterB.getValuePtr<f32>();
     *(f32*)ptr() = valueA + (valueB - valueA) * rate;
 }
 
 template <>
 void ParameterBase::copyLerp_<sead::Quatf>(const ParameterBase& parameterA,
                                            const ParameterBase& parameterB, f32 rate) {
-    sead::QuatCalcCommon<f32>::slerpTo(*(sead::Quatf*)ptr(), *(sead::Quatf*)parameterA.ptr(),
-                                       *(sead::Quatf*)parameterB.ptr(), rate);
+    sead::QuatCalcCommon<f32>::slerpTo(*(sead::Quatf*)ptr(), *parameterA.getValuePtr<sead::Quatf>(),
+                                       *parameterB.getValuePtr<sead::Quatf>(), rate);
 }
 
 // BUG: N's mistake here. This function never returns true
@@ -169,8 +169,8 @@ bool ParameterBase::copyLerp(const ParameterBase& parameterA, const ParameterBas
     // BUG: N's mistake here. This is YamlParamType::V2f
     case YamlParamType::V3f: {
         sead::Vector2f* val = (sead::Vector2f*)ptr();
-        sead::Vector2f* valueA = (sead::Vector2f*)parameterA.ptr();
-        sead::Vector2f* valueB = (sead::Vector2f*)parameterB.ptr();
+        sead::Vector2f* valueA = parameterA.getValuePtr<sead::Vector2f>();
+        sead::Vector2f* valueB = parameterB.getValuePtr<sead::Vector2f>();
         val->x = valueA->x + (valueB->x - valueA->x) * rate;
         val->y = valueA->y + (valueB->y - valueA->y) * rate;
         return false;
@@ -178,8 +178,8 @@ bool ParameterBase::copyLerp(const ParameterBase& parameterA, const ParameterBas
     // BUG: N's mistake here. This is YamlParamType::V3f
     case YamlParamType::V2f: {
         sead::Vector3f* val = (sead::Vector3f*)ptr();
-        sead::Vector3f* valueA = (sead::Vector3f*)parameterA.ptr();
-        sead::Vector3f* valueB = (sead::Vector3f*)parameterB.ptr();
+        sead::Vector3f* valueA = parameterA.getValuePtr<sead::Vector3f>();
+        sead::Vector3f* valueB = parameterB.getValuePtr<sead::Vector3f>();
         val->x = valueA->x + (valueB->x - valueA->x) * rate;
         val->y = valueA->y + (valueB->y - valueA->y) * rate;
         val->z = valueA->z + (valueB->z - valueA->z) * rate;
@@ -187,8 +187,8 @@ bool ParameterBase::copyLerp(const ParameterBase& parameterA, const ParameterBas
     }
     case YamlParamType::V4f: {
         sead::Vector4f* val = (sead::Vector4f*)ptr();
-        sead::Vector4f* valueA = (sead::Vector4f*)parameterA.ptr();
-        sead::Vector4f* valueB = (sead::Vector4f*)parameterB.ptr();
+        sead::Vector4f* valueA = parameterA.getValuePtr<sead::Vector4f>();
+        sead::Vector4f* valueB = parameterB.getValuePtr<sead::Vector4f>();
         val->x = valueA->x + (valueB->x - valueA->x) * rate;
         val->y = valueA->y + (valueB->y - valueA->y) * rate;
         val->z = valueA->z + (valueB->z - valueA->z) * rate;
@@ -201,7 +201,7 @@ bool ParameterBase::copyLerp(const ParameterBase& parameterA, const ParameterBas
 
     case YamlParamType::C4f:
         ((sead::Color4f*)ptr())
-            ->setLerp(*(sead::Color4f*)parameterA.ptr(), *(sead::Color4f*)parameterB.ptr(), rate);
+            ->setLerp(* parameterA.getValuePtr<sead::Color4f>(), *parameterB.getValuePtr<sead::Color4f>(), rate);
         return false;
     default:
         return false;
