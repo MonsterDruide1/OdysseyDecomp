@@ -140,7 +140,7 @@ void Kuribo2D::appearByGenerator(const sead::Vector3f& trans, const sead::Vector
     al::setGravity(this, dimensionGravity);
     al::setVelocityZero(this);
     al::offCollide(this);
-    al::invalidateHitSensors(this);
+    al::invalidateClipping(this);
     appear();
     al::setNerve(this, &NrvKuribo2D.Wait);
 }

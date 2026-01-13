@@ -15,8 +15,8 @@ PlayerJudgeCameraSubjective::PlayerJudgeCameraSubjective(const al::LiveActor* pl
     : mPlayer(player), mCollider(collider), mInput(input) {
     mTicket = al::initSubjectiveCameraNoSave(player, "Subjective");
 
-    al::validateSnapShotCameraRoll(mTicket);
     al::validateSnapShotCameraZoomFovy(mTicket);
+    al::validateSnapShotCameraRoll(mTicket);
 }
 
 bool PlayerJudgeCameraSubjective::isEnableKeepSubjectiveCamera() const {

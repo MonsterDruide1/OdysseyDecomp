@@ -155,7 +155,7 @@ void WobbleMapParts::updateMove() {
 void WobbleMapParts::exeMove() {
     updateMove();
 
-    tryStartSeWithParam(this, "Rotate", mTiltSpeed, "");
+    tryHoldSeWithParam(this, "Rotate", mTiltSpeed, "");
     if (mTiltSpeed < 0.1f)
         startNerveAction(this, "Wait");
 }

@@ -34,36 +34,32 @@ void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, con
 
 u32 outputValueWithComma(char* out, u32 size, u64 value, bool usePadding, bool padToThousands) {
     if (value > 999999999) {
-        return sead::StringUtil::snprintf(out, size, "%3d,%03d,%03d,%03d",
-                                          (u32)(value / 1000000000), (u32)(value / 1000000 % 1000),
-                                          (u32)(value / 1000 % 1000), (u32)(value % 1000));
+        return snprintf(out, size, "%3d,%03d,%03d,%03d", (u32)(value / 1000000000),
+                        (u32)(value / 1000000 % 1000), (u32)(value / 1000 % 1000),
+                        (u32)(value % 1000));
     }
     if (value > 999999) {
         if (usePadding) {
-            return sead::StringUtil::snprintf(out, size, "%3d,%03d,%03d", (u32)(value / 1000000),
-                                              (u32)(value / 1000 % 1000), (u32)(value % 1000));
+            return snprintf(out, size, "%3d,%03d,%03d", (u32)(value / 1000000),
+                            (u32)(value / 1000 % 1000), (u32)(value % 1000));
         }
-        return sead::StringUtil::snprintf(out, size, "%d,%03d,%03d", (u32)(value / 1000000),
-                                          (u32)(value / 1000 % 1000), (u32)(value % 1000));
+        return snprintf(out, size, "%d,%03d,%03d", (u32)(value / 1000000),
+                        (u32)(value / 1000 % 1000), (u32)(value % 1000));
     }
     if (value > 999) {
         if (usePadding) {
-            if (padToThousands) {
-                return sead::StringUtil::snprintf(out, size, "%3d,%03d", (u32)(value / 1000),
-                                                  (u32)(value % 1000));
-            }
-            return sead::StringUtil::snprintf(out, size, "    %3d,%03d", (u32)(value / 1000),
-                                              (u32)(value % 1000));
+            if (padToThousands)
+                return snprintf(out, size, "%3d,%03d", (u32)(value / 1000), (u32)(value % 1000));
+            return snprintf(out, size, "    %3d,%03d", (u32)(value / 1000), (u32)(value % 1000));
         }
-        return sead::StringUtil::snprintf(out, size, "%d,%03d", (u32)(value / 1000),
-                                          (u32)(value % 1000));
+        return snprintf(out, size, "%d,%03d", (u32)(value / 1000), (u32)(value % 1000));
     }
     if (usePadding) {
         if (padToThousands)
-            return sead::StringUtil::snprintf(out, size, "    %3d", (u32)value);
-        return sead::StringUtil::snprintf(out, size, "        %3d", (u32)value);
+            return snprintf(out, size, "    %3d", (u32)value);
+        return snprintf(out, size, "        %3d", (u32)value);
     }
-    return sead::StringUtil::snprintf(out, size, "%d", (u32)value);
+    return snprintf(out, size, "%d", (u32)value);
 }
 
 void extractString(char* out, const char* str, u32 len, u32 unused) {
@@ -100,8 +96,8 @@ const char* searchSubString(const char* str, const char* substr, s32 substrLen) 
 
 void removeExtensionString(char* out, u32 len, const char* str) {
     snprintf(out, len, "%s", str);
-    char* dot = strchr(out, '.');
-    char* dirSeparator = strchr(out, '/');
+    char* dot = strrchr(out, '.');
+    char* dirSeparator = strrchr(out, '/');
 
     if (!dot || dot < dirSeparator || ++dirSeparator == dot)
         return;

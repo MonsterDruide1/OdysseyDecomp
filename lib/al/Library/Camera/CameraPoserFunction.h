@@ -1,12 +1,17 @@
 #pragma once
 
-#include <gfx/seadCamera.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
+namespace sead {
+class Projection;
+class LookAtCamera;
+}  // namespace sead
+
 namespace al {
 class CameraPoser;
+class Projection;
 struct CameraStartInfo;
 struct CameraObjectRequestInfo;
 class IUseCollision;
@@ -16,19 +21,19 @@ class PlacementInfo;
 namespace alCameraPoserFunction {
 class CameraCollisionHitResult;
 
-void getViewIndex(const al::CameraPoser*);
+s32 getViewIndex(const al::CameraPoser*);
 sead::LookAtCamera* getLookAtCamera(const al::CameraPoser*);
-void getProjectionSead(const al::CameraPoser*);
-void getProjection(const al::CameraPoser*);
-void getProjectionMtx(const al::CameraPoser*);
+sead::Projection* getProjectionSead(const al::CameraPoser*);
+al::Projection* getProjection(const al::CameraPoser*);
+const sead::Matrix34f& getProjectionMtx(const al::CameraPoser*);
 f32 getNear(const al::CameraPoser*);
 f32 getFar(const al::CameraPoser*);
 f32 getAspect(const al::CameraPoser*);
 const sead::Vector3f& getPreCameraPos(const al::CameraPoser*);
 const sead::Vector3f& getPreLookAtPos(const al::CameraPoser*);
-void getPreUpDir(const al::CameraPoser*);
-void getPreFovyDegree(const al::CameraPoser*);
-void getPreFovyRadian(const al::CameraPoser*);
+const sead::Vector3f& getPreUpDir(const al::CameraPoser*);
+f32 getPreFovyDegree(const al::CameraPoser*);
+f32 getPreFovyRadian(const al::CameraPoser*);
 bool isPrePriorityDemo(const al::CameraStartInfo&);
 bool isPrePriorityDemo2(const al::CameraStartInfo&);
 bool isPrePriorityDemoTalk(const al::CameraStartInfo&);
@@ -42,21 +47,21 @@ bool isInvalidKeepPreCameraDistance(const al::CameraStartInfo&);
 bool isInvalidKeepPreCameraDistanceIfNoCollide(const al::CameraStartInfo&);
 bool isValidResetPreCameraPose(const al::CameraStartInfo&);
 bool isValidKeepPreSelfCameraPose(const al::CameraStartInfo&);
-void getPreCameraSwingAngleH(const al::CameraStartInfo&);
-void getPreCameraSwingAngleV(const al::CameraStartInfo&);
-void getPreCameraMaxSwingAngleH(const al::CameraStartInfo&);
-void getPreCameraMaxSwingAngleV(const al::CameraStartInfo&);
+f32 getPreCameraSwingAngleH(const al::CameraStartInfo&);
+f32 getPreCameraSwingAngleV(const al::CameraStartInfo&);
+f32 getPreCameraMaxSwingAngleH(const al::CameraStartInfo&);
+f32 getPreCameraMaxSwingAngleV(const al::CameraStartInfo&);
 bool isExistAreaAngleH(const al::CameraStartInfo&);
 bool isExistAreaAngleV(const al::CameraStartInfo&);
-void getAreaAngleH(const al::CameraStartInfo&);
-void getAreaAngleV(const al::CameraStartInfo&);
+f32 getAreaAngleH(const al::CameraStartInfo&);
+f32 getAreaAngleV(const al::CameraStartInfo&);
 bool isExistNextPoseByPreCamera(const al::CameraStartInfo&);
-void getNextAngleHByPreCamera(const al::CameraStartInfo&);
-void getNextAngleVByPreCamera(const al::CameraStartInfo&);
+f32 getNextAngleHByPreCamera(const al::CameraStartInfo&);
+f32 getNextAngleVByPreCamera(const al::CameraStartInfo&);
 void calcCameraPose(sead::Quatf*, const al::CameraPoser*);
 void calcLookDir(sead::Vector3f*, const al::CameraPoser*);
 void calcCameraDir(sead::Vector3f*, const al::CameraPoser*);
-void calcCameraDirH(sead::Vector3f*, const al::CameraPoser*);
+bool calcCameraDirH(sead::Vector3f*, const al::CameraPoser*);
 void calcLookDirH(sead::Vector3f*, const al::CameraPoser*);
 void calcSideDir(sead::Vector3f*, const al::CameraPoser*);
 void calcPreCameraDir(sead::Vector3f*, const al::CameraPoser*);
@@ -74,21 +79,21 @@ void calcTargetTransWithOffset(sead::Vector3f*, const al::CameraPoser*);
 void calcTargetVelocity(sead::Vector3f*, const al::CameraPoser*);
 void calcTargetVelocityH(sead::Vector3f*, const al::CameraPoser*);
 void calcTargetUp(sead::Vector3f*, const al::CameraPoser*);
-void calcTargetSpeedV(const al::CameraPoser*);
+f32 calcTargetSpeedV(const al::CameraPoser*);
 void calcTargetPose(sead::Quatf*, const al::CameraPoser*);
 void calcTargetFront(sead::Vector3f*, const al::CameraPoser*);
 void calcTargetSide(sead::Vector3f*, const al::CameraPoser*);
 void calcTargetGravity(sead::Vector3f*, const al::CameraPoser*);
-void calcTargetSpeedH(const al::CameraPoser*);
-void calcTargetJumpSpeed(const al::CameraPoser*);
-void calcTargetFallSpeed(const al::CameraPoser*);
+f32 calcTargetSpeedH(const al::CameraPoser*);
+f32 calcTargetJumpSpeed(const al::CameraPoser*);
+f32 calcTargetFallSpeed(const al::CameraPoser*);
 bool isChangeTarget(const al::CameraPoser*);
 bool tryGetTargetRequestDistance(f32*, const al::CameraPoser*);
 bool tryGetBossDistanceCurve(const al::CameraPoser*);
 bool tryGetEquipmentDistanceCurve(const al::CameraPoser*);
 bool isExistCollisionUnderTarget(const al::CameraPoser*);
-void getUnderTargetCollisionPos(const al::CameraPoser*);
-void getUnderTargetCollisionNormal(const al::CameraPoser*);
+const sead::Vector3f& getUnderTargetCollisionPos(const al::CameraPoser*);
+const sead::Vector3f& getUnderTargetCollisionNormal(const al::CameraPoser*);
 bool isExistSlopeCollisionUnderTarget(const al::CameraPoser*);
 bool isExistWallCollisionUnderTarget(const al::CameraPoser*);
 bool tryCalcSlopeCollisionDownFrontDirH(sead::Vector3f*, const al::CameraPoser*);
@@ -193,11 +198,11 @@ bool isSceneCameraFirstCalc(const al::CameraPoser*);
 bool isActiveInterpole(const al::CameraPoser*);
 bool isInvalidEndEntranceCamera(const al::CameraPoser*);
 bool isPause(const al::CameraPoser*);
-void checkFirstCameraCollisionArrow(sead::Vector3f*, sead::Vector3f*, const al::IUseCollision*,
+bool checkFirstCameraCollisionArrow(sead::Vector3f*, sead::Vector3f*, const al::IUseCollision*,
                                     const sead::Vector3f&, const sead::Vector3f&);
-void checkFirstCameraCollisionArrow(CameraCollisionHitResult*, const al::IUseCollision*,
+bool checkFirstCameraCollisionArrow(CameraCollisionHitResult*, const al::IUseCollision*,
                                     const sead::Vector3f&, const sead::Vector3f&);
-void checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f*, sead::Vector3f*,
+bool checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f*, sead::Vector3f*,
                                                const al::IUseCollision*, const sead::Vector3f&,
                                                const sead::Vector3f&);
 void checkCameraCollisionMoveSphere(sead::Vector3f*, const al::IUseCollision*,

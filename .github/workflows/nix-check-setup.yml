@@ -1,0 +1,65 @@
+name: Check and verify that setup works on NixOS
+on:
+  push:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  nixos_verify:
+    if: github.repository == 'MonsterDruide1/OdysseyDecomp'
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Check out project
+      uses: actions/checkout@v6
+      with:
+        submodules: recursive
+    - name: Check out branch if in PR
+      if: ${{ github.event_name == 'pull_request_target' }}
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        submodules: recursive
+    - name: Download main.nso from secret
+      env:
+        EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
+      run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
+    - uses: cachix/install-nix-action@v31
+    - uses: DeterminateSystems/magic-nix-cache-action@v13
+    - name: First check of nix flake
+      # catches syntax errors or misconfigurations of the flake on all systems
+      run: nix flake check --all-systems
+    - name: Try entering devshell
+      # causes exit code (=failure) if current system's artifact is unavailable
+      run: nix develop
+    - name: Install and setup direnv
+      run: |
+        sudo apt-get update && sudo apt-get install -y direnv
+        echo "export USE_NIX=true" > .envrc.private
+        direnv allow .
+        direnv export gha > "$GITHUB_ENV"
+    - name: Verify that latest artifact hashes are used
+      # checks all system's hashes being correct and up-to-date
+      run: |
+        python3 tools/nix/update_hashes.py
+        if [[ -n $(git status --porcelain) ]]; then
+          git status --porcelain
+          exit 1
+        fi
+
+    # test run of the project: setup, build, trigger diff
+    - name: Run NixOS-specific setup
+      run: nix run .#setup -- smo-main.nso
+    - name: Build project
+      run: tools/build.py
+    - name: Check viking and output of asm-differ
+      run: |
+        var="$(tools/check -mw3 nninitStartup --always-diff | cat > outfile || true)"
+        if [[ "$(cat outfile)" == "TARGET"* ]]; then
+          exit 0
+        else
+          cat outfile
+          exit 1
+        fi

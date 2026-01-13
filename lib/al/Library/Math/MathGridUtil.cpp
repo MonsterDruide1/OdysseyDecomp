@@ -13,18 +13,16 @@ void calcWorldPosFromGridIndex(sead::Vector3f* outPos, const sead::Matrix34f& mt
     outPos->setMul(mtx, grid);
 }
 
-// TODO: might be a sead function?
-inline s32 round(f32 val) {
-    return val >= 0.0f ? val + 0.5f : val - 0.5f;
-}
-
 void calcGridIndexFromWorldPos(sead::Vector3i* outGridIndex, const sead::Matrix34f& mtx,
                                const sead::Vector3f& pos) {
     sead::Vector3f posOrigin = pos - mtx.getTranslation();
 
-    outGridIndex->x = round(mtx.getBase(0).dot(posOrigin) / mtx.getBase(0).squaredLength());
-    outGridIndex->y = round(mtx.getBase(1).dot(posOrigin) / mtx.getBase(1).squaredLength());
-    outGridIndex->z = round(mtx.getBase(2).dot(posOrigin) / mtx.getBase(2).squaredLength());
+    outGridIndex->x =
+        sead::Mathf::round(mtx.getBase(0).dot(posOrigin) / mtx.getBase(0).squaredLength());
+    outGridIndex->y =
+        sead::Mathf::round(mtx.getBase(1).dot(posOrigin) / mtx.getBase(1).squaredLength());
+    outGridIndex->z =
+        sead::Mathf::round(mtx.getBase(2).dot(posOrigin) / mtx.getBase(2).squaredLength());
 }
 
 sead::Vector3i calcGridIndexNext(const sead::Vector3i& gridIndex, s32 dirIndex) {

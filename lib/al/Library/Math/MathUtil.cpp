@@ -1029,14 +1029,10 @@ f32 calcFriction(f32 accel, f32 speed) {
     return (accel + speed) / speed;
 }
 
-inline f32 round(f32 v) {
-    return (s32)(v + (v >= 0.0f ? 0.5f : -0.5f));
-}
-
 void roundOffVec(sead::Vector3f* outVec, const sead::Vector3f& vec) {
-    outVec->x = round(vec.x);
-    outVec->y = round(vec.y);
-    outVec->z = round(vec.z);
+    outVec->x = sead::Mathf::round(vec.x);
+    outVec->y = sead::Mathf::round(vec.y);
+    outVec->z = sead::Mathf::round(vec.z);
 }
 
 void roundOffVec(sead::Vector3f* vec) {
@@ -1044,8 +1040,8 @@ void roundOffVec(sead::Vector3f* vec) {
 }
 
 void roundOffVec(sead::Vector2f* outVec, const sead::Vector2f& vec) {
-    outVec->x = round(vec.x);
-    outVec->y = round(vec.y);
+    outVec->x = sead::Mathf::round(vec.x);
+    outVec->y = sead::Mathf::round(vec.y);
 }
 
 void roundOffVec(sead::Vector2f* vec) {
@@ -1053,7 +1049,7 @@ void roundOffVec(sead::Vector2f* vec) {
 }
 
 f32 snapToGrid(f32 val, f32 gridSize, f32 offset) {
-    return round((val - offset) / gridSize) * gridSize + offset;
+    return sead::Mathf::round((val - offset) / gridSize) * gridSize + offset;
 }
 
 void snapVecToGrid(sead::Vector3f* outVec, const sead::Vector3f& vec, f32 gridSize,

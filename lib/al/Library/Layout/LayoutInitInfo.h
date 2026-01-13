@@ -20,6 +20,7 @@ class OcclusionCullingJudge;
 
 class LayoutInitInfo : public LayoutSceneInfo {
 public:
+    LayoutInitInfo();
     void init(ExecuteDirector*, const EffectSystemInfo*, SceneObjHolder*, const AudioDirector*,
               CameraDirector*, const LayoutSystem*, const MessageSystem*, const GamePadSystem*,
               PadRumbleDirector*);

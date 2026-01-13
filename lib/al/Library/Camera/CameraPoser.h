@@ -209,6 +209,8 @@ public:
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
 
+    bool is_98() const { return _98; }
+
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 
     // set

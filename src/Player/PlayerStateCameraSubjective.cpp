@@ -136,7 +136,7 @@ void PlayerStateCameraSubjective::exeWait() {
     if (al::isFirstStep(this)) {
         mModelChanger->hideModel();
         if (mCarryKeeper->isCarry())
-            mCarryKeeper->endCameraSubjective();
+            mCarryKeeper->startCameraSubjective();
         rs::tryAppearPlayerCameraSubjectiveTutorial(mActor);
         mAnimator->startAnim("Wait");
     }
