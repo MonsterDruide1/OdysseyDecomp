@@ -3,6 +3,8 @@
 #include <basis/seadTypes.h>
 #include <container/seadTList.h>
 
+#include "Library/Yaml/ByamlData.h"
+
 namespace sead {
 class WriteStream;
 }
@@ -17,7 +19,7 @@ public:
 
     virtual u32 calcPackSize() const { return 4; }
 
-    virtual u8 getTypeCode() const { return 0; }
+    virtual ByamlDataType getTypeCode() const { return ByamlDataType::None; }
 
     virtual bool isContainer() const { return false; }
 
@@ -31,7 +33,7 @@ public:
 class ByamlWriterBool : public ByamlWriterData {
 public:
     ByamlWriterBool(bool value);
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -42,7 +44,7 @@ private:
 class ByamlWriterInt : public ByamlWriterData {
 public:
     ByamlWriterInt(s32 value);
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -53,7 +55,7 @@ private:
 class ByamlWriterFloat : public ByamlWriterData {
 public:
     ByamlWriterFloat(f32 value);
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -64,7 +66,7 @@ private:
 class ByamlWriterUInt : public ByamlWriterData {
 public:
     ByamlWriterUInt(u32 value);
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -75,7 +77,7 @@ private:
 class ByamlWriterNull : public ByamlWriterData {
 public:
     ByamlWriterNull();
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 };
@@ -85,7 +87,7 @@ class ByamlWriterStringTable;
 class ByamlWriterString : public ByamlWriterData {
 public:
     ByamlWriterString(const char* string, ByamlWriterStringTable* stringTable);
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -117,7 +119,7 @@ class ByamlWriterInt64 : public ByamlWriterBigData {
 public:
     ByamlWriterInt64(s64 value, ByamlWriterBigDataList* list);
     ~ByamlWriterInt64() = default;
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void writeBigData(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -129,7 +131,7 @@ class ByamlWriterUInt64 : public ByamlWriterBigData {
 public:
     ByamlWriterUInt64(u64 value, ByamlWriterBigDataList* list);
     ~ByamlWriterUInt64() = default;
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void writeBigData(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -141,7 +143,7 @@ class ByamlWriterDouble : public ByamlWriterBigData {
 public:
     ByamlWriterDouble(f64 value, ByamlWriterBigDataList* list);
     ~ByamlWriterDouble() = default;
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void writeBigData(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
 
@@ -238,7 +240,7 @@ public:
     void addArray(ByamlWriterArray* array) override;
     void addNull() override;
 
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void writeContainer(sead::WriteStream* stream) const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;
@@ -288,7 +290,7 @@ public:
     void addArray(const char* key, ByamlWriterArray* value) override;
     void addNull(const char* key) override;
 
-    u8 getTypeCode() const override;
+    ByamlDataType getTypeCode() const override;
     void writeContainer(sead::WriteStream* stream) const override;
     void write(sead::WriteStream* stream) const override;
     void print(s32 recursionDepth) const override;

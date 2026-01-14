@@ -12,8 +12,8 @@ void ByamlWriterData::printIndent(s32) const {}
 
 ByamlWriterBool::ByamlWriterBool(bool value) : mValue(value) {}
 
-u8 ByamlWriterBool::getTypeCode() const {
-    return 0xD0;
+ByamlDataType ByamlWriterBool::getTypeCode() const {
+    return ByamlDataType::Bool;
 }
 
 void ByamlWriterBool::print(s32 recursionDepth) const {}
@@ -24,8 +24,8 @@ void ByamlWriterBool::write(sead::WriteStream* stream) const {
 
 ByamlWriterInt::ByamlWriterInt(s32 value) : mValue(value) {}
 
-u8 ByamlWriterInt::getTypeCode() const {
-    return 0xD1;
+ByamlDataType ByamlWriterInt::getTypeCode() const {
+    return ByamlDataType::Int;
 }
 
 void ByamlWriterInt::print(s32 recursionDepth) const {}
@@ -36,8 +36,8 @@ void ByamlWriterInt::write(sead::WriteStream* stream) const {
 
 ByamlWriterFloat::ByamlWriterFloat(f32 value) : mValue(value) {}
 
-u8 ByamlWriterFloat::getTypeCode() const {
-    return 0xD2;
+ByamlDataType ByamlWriterFloat::getTypeCode() const {
+    return ByamlDataType::Float;
 }
 
 void ByamlWriterFloat::print(s32 recursionDepth) const {}
@@ -48,8 +48,8 @@ void ByamlWriterFloat::write(sead::WriteStream* stream) const {
 
 ByamlWriterUInt::ByamlWriterUInt(u32 value) : mValue(value) {}
 
-u8 ByamlWriterUInt::getTypeCode() const {
-    return 0xD3;
+ByamlDataType ByamlWriterUInt::getTypeCode() const {
+    return ByamlDataType::UInt;
 }
 
 void ByamlWriterUInt::print(s32 recursionDepth) const {}
@@ -60,8 +60,8 @@ void ByamlWriterUInt::write(sead::WriteStream* stream) const {
 
 ByamlWriterNull::ByamlWriterNull() = default;
 
-u8 ByamlWriterNull::getTypeCode() const {
-    return 0xFF;
+ByamlDataType ByamlWriterNull::getTypeCode() const {
+    return ByamlDataType::Null;
 }
 
 void ByamlWriterNull::print(s32 recursionDepth) const {}
@@ -75,8 +75,8 @@ ByamlWriterString::ByamlWriterString(const char* string, ByamlWriterStringTable*
     mString = mStringTable->tryAdd(string);
 }
 
-u8 ByamlWriterString::getTypeCode() const {
-    return 0xA0;
+ByamlDataType ByamlWriterString::getTypeCode() const {
+    return ByamlDataType::String;
 }
 
 void ByamlWriterString::print(s32 recursionDepth) const {}
@@ -96,8 +96,8 @@ void ByamlWriterBigData::write(sead::WriteStream* stream) const {
 ByamlWriterInt64::ByamlWriterInt64(s64 value, ByamlWriterBigDataList* list)
     : ByamlWriterBigData(list), mValue(value) {}
 
-u8 ByamlWriterInt64::getTypeCode() const {
-    return 0xD4;
+ByamlDataType ByamlWriterInt64::getTypeCode() const {
+    return ByamlDataType::Int64;
 }
 
 void ByamlWriterInt64::writeBigData(sead::WriteStream* stream) const {
@@ -109,8 +109,8 @@ void ByamlWriterInt64::print(s32 recursionDepth) const {}
 ByamlWriterUInt64::ByamlWriterUInt64(u64 value, ByamlWriterBigDataList* list)
     : ByamlWriterBigData(list), mValue(value) {}
 
-u8 ByamlWriterUInt64::getTypeCode() const {
-    return 0xD5;
+ByamlDataType ByamlWriterUInt64::getTypeCode() const {
+    return ByamlDataType::UInt64;
 }
 
 void ByamlWriterUInt64::writeBigData(sead::WriteStream* stream) const {
@@ -122,8 +122,8 @@ void ByamlWriterUInt64::print(s32 recursionDepth) const {}
 ByamlWriterDouble::ByamlWriterDouble(f64 value, ByamlWriterBigDataList* list)
     : ByamlWriterBigData(list), mValue(value) {}
 
-u8 ByamlWriterDouble::getTypeCode() const {
-    return 0xD6;
+ByamlDataType ByamlWriterDouble::getTypeCode() const {
+    return ByamlDataType::Double;
 }
 
 void ByamlWriterDouble::writeBigData(sead::WriteStream* stream) const {
@@ -201,16 +201,16 @@ void ByamlWriterArray::addNull() {
     addData(new ByamlWriterNull());
 }
 
-u8 ByamlWriterArray::getTypeCode() const {
-    return 0xC0;
+ByamlDataType ByamlWriterArray::getTypeCode() const {
+    return ByamlDataType::Array;
 }
 
 void ByamlWriterArray::writeContainer(sead::WriteStream* stream) const {
-    stream->writeU8(ByamlWriterArray::getTypeCode());
+    stream->writeU8((u8)ByamlWriterArray::getTypeCode());
     alByamlLocalUtil::writeU24(stream, mList.size());
 
     for (auto& node : mList)
-        stream->writeU8(node->getTypeCode());
+        stream->writeU8((u8)node->getTypeCode());
 
     s32 i = mList.size();
     s32 v12 = i < 0 ? i + 3 : i;
@@ -314,17 +314,17 @@ void ByamlWriterHash::addNull(const char* key) {
     addData(key, new ByamlWriterNull());
 }
 
-u8 ByamlWriterHash::getTypeCode() const {
-    return 0xc1;
+ByamlDataType ByamlWriterHash::getTypeCode() const {
+    return ByamlDataType::Hash;
 }
 
 void ByamlWriterHash::writeContainer(sead::WriteStream* stream) const {
-    stream->writeU8(ByamlWriterHash::getTypeCode());
+    stream->writeU8((u8)ByamlWriterHash::getTypeCode());
     alByamlLocalUtil::writeU24(stream, mList.size());
 
     for (auto it = mList.begin(); it != mList.end(); ++it) {
         alByamlLocalUtil::writeU24(stream, mStringTable1->calcIndex((*it)->getKey()));
-        stream->writeU8((*it)->getValue()->getTypeCode());
+        stream->writeU8((u8)(*it)->getValue()->getTypeCode());
         (*it)->getValue()->write(stream);
     }
 }
