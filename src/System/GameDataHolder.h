@@ -176,7 +176,7 @@ public:
     bool isBossAttackedHomeNext(s32 worldId) const;
     void playScenarioStartCamera(s32 questNo);
     bool isPlayAlreadyScenarioStartCamera(s32 questNo) const;
-    const sead::PtrArray<ShopItem::ItemInfo>& getShopItemInfoList() const;
+    const sead::PtrArray<ShopItem::ShopItemInfo>& getShopItemInfoList() const;
     bool checkNeedTreasureMessageStage(const char* stageName) const;
     bool tryFindLinkDestStageInfo(const char** destStageName, const char** destLabel,
                                   const char* srcStageName, const char* srcLabel) const;
@@ -254,8 +254,8 @@ private:
     TemporaryScenarioCameraHolder* mTemporaryScenarioCameraHolder;
     bool* mIsPlayAlreadyScenarioStartCamera;
     sead::PtrArray<StageLockInfo> mStageLockList;
-    sead::PtrArray<ShopItem::ItemInfo> mShopItemList;
-    sead::PtrArray<ShopItem::ItemInfo> mShopItemListE3;
+    sead::PtrArray<ShopItem::ShopItemInfo> mShopItemList;
+    sead::PtrArray<ShopItem::ShopItemInfo> mShopItemListE3;
     sead::PtrArray<ShopItem::ItemInfo> mItemCloth;
     sead::PtrArray<ShopItem::ItemInfo> mItemCap;
     sead::PtrArray<ShopItem::ItemInfo> mItemGift;
