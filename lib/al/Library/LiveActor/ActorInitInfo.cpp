@@ -1,6 +1,10 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 
+#include "Library/Clipping/ClippingActorHolder.h"
+#include "Library/Clipping/ClippingActorInfo.h"
 #include "Library/Clipping/ViewIdHolder.h"
+#include "Library/LiveActor/LiveActor.h"
+#include "Project/Clipping/ClippingDirector.h"
 
 namespace al {
 ActorInitInfo::ActorInitInfo() = default;
@@ -55,5 +59,44 @@ void ActorInitInfo::initNew(
     audioDirector = pAudioDirector;
     placementInfo = pPlacementInfo;
     viewIdHolder = ViewIdHolder::tryCreate(*pPlacementInfo);
+}
+
+void ActorInitInfo::initViewIdSelf(const PlacementInfo* pInfo, const ActorInitInfo& actorInfo) {
+    viewIdHolder = ViewIdHolder::tryCreate(*pInfo);
+    copyHostInfo(actorInfo, pInfo);
+}
+
+void ActorInitInfo::copyHostInfo(const ActorInitInfo& actorInfo, const PlacementInfo* pInfo) {
+    placementInfo = pInfo;
+    layoutInitInfo = actorInfo.layoutInitInfo;
+    allActorsGroup = actorInfo.allActorsGroup;
+    actorFactory = actorInfo.actorFactory;
+    actorSceneInfo = actorInfo.actorSceneInfo;
+    actorResourceHolder = actorInfo.actorResourceHolder;
+    audioDirector = actorInfo.audioDirector;
+    executeDirector = actorInfo.executeDirector;
+    effectSystemInfo = actorInfo.effectSystemInfo;
+    hitSensorDirector = actorInfo.hitSensorDirector;
+    screenPointDirector = actorInfo.screenPointDirector;
+    stageSwitchDirector = actorInfo.stageSwitchDirector;
+    kitDrawingGroup = actorInfo.kitDrawingGroup;
+}
+
+void ActorInitInfo::initViewIdHost(const PlacementInfo* pInfo, const ActorInitInfo& actorInfo) {
+    viewIdHolder = actorInfo.viewIdHolder;
+    copyHostInfo(actorInfo, pInfo);
+}
+
+void ActorInitInfo::initViewIdHostActor(const ActorInitInfo& actorInfo, const LiveActor* actor) {
+    viewIdHolder = actor->getSceneInfo()
+                       ->clippingDirector->getClippingActorHolder()
+                       ->find(actor)
+                       ->getViewIdHolder();
+
+    copyHostInfo(actorInfo, actorInfo.placementInfo);
+}
+
+void ActorInitInfo::initNoViewId(const PlacementInfo* pInfo, const ActorInitInfo& actorInfo) {
+    copyHostInfo(actorInfo, pInfo);
 }
 }  // namespace al

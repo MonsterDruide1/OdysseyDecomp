@@ -1,11 +1,9 @@
 #include "Npc/ShineTowerNpc.h"
 
-#include <prim/seadSafeString.h>
-
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/Math/MathUtil.h"
 #include "Library/Message/MessageHolder.h"
 #include "Library/Message/MessageTagDataHolder.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -26,10 +24,10 @@ NERVES_MAKE_NOSTRUCT(ShineTowerNpc, NoBalloon);
 
 ShineTowerNpc::ShineTowerNpc(const char* name) : al::LiveActor(name) {}
 
-void ShineTowerNpc::init(const al::ActorInitInfo& actorInitInfo) {
-    al::initActorWithArchiveName(this, actorInitInfo, "NpcCap", nullptr);
+void ShineTowerNpc::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "NpcCap", nullptr);
     al::initNerve(this, &NrvShineTowerNpc.Wait, 0);
-    mEventFlowExecutor = rs::initEventFlow(this, actorInitInfo, "HomeMechanicNpc", nullptr);
+    mEventFlowExecutor = rs::initEventFlow(this, info, "HomeMechanicNpc", nullptr);
     al::MessageTagDataHolder* msgTagDataHolder = al::initMessageTagDataHolder(1);
     al::registerMessageTagDataScore(msgTagDataHolder, "Score", &mRemainingShineCount);
     rs::initEventMessageTagDataHolder(mEventFlowExecutor, msgTagDataHolder);
@@ -65,7 +63,7 @@ void ShineTowerNpc::startBalloon() {
 
 void ShineTowerNpc::exeWait() {
     if (al::isFirstStep(this)) {
-        sead::FixedSafeString<0x40> string;
+        al::StringTmp<64> string;
         string.format("RestShineNum");
         rs::startEventFlow(mEventFlowExecutor, string.cstr());
     }

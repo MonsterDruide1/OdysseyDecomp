@@ -18,11 +18,11 @@ class AudioMic;
 class AudioEventController;
 class AudioRequest;
 class AudioRequestKeeperSyncedBgm;
-class AudioSystemInfo;
+struct AudioSystemInfo;
 class AreaObjDirector;
 class AudioDuckingDirector;
 class AudioEffectController;
-class AudioDirectorInitInfo;
+struct AudioDirectorInitInfo;
 class PlayerHolder;
 
 class AudioDirector : public IUseAreaObj, public HioNode, public IAudioSystemPause {
@@ -55,6 +55,10 @@ public:
     void pauseSystem(bool, const char*, bool, f32, bool, bool, bool) override;
     AreaObjDirector* getAreaObjDirector() const override;
 
+    void setIsSafeFinalizingInParallelThread(bool isSafe) {
+        mIsSafeFinalizingInParallelThread = isSafe;
+    }
+
 private:
     SeDirector* mSeDirector;
     BgmDirector* mBgmDirector;
@@ -64,7 +68,8 @@ private:
     const AudioSystemInfo* mAudioSystemInfo;
     AreaObjDirector* mAreaObjDirector;
     AudioDuckingDirector* mAudioDuckingDirector;
-    sead::PtrArray<PauseSystemEntry> mPauseSystemEntries;
+    sead::PtrArray<PauseSystemEntry>* mPauseSystemEntries;
+    bool mIsSafeFinalizingInParallelThread;
     aal::AudioFrameProcessMgr* mAudioFrameProcessMgr;
     AudioEffectController* mAudioEffectController;
 };

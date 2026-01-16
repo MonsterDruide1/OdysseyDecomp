@@ -79,7 +79,7 @@ s32 AchievementHolder::getAchievementProgressCurrentRow(s32 index,
         return rs::calcClearWorldNum(accessor);
     if (al::isEqualString(*name, "Shine_Gather_1") || al::isEqualString(*name, "Shine_Gather_2") ||
         al::isEqualString(*name, "Shine_Gather_3"))
-        return GameDataFunction::getTotalShineNum(accessor, -1);
+        return GameDataFunction::getTotalShineNum(accessor);
     if (al::isEqualString(*name, "Shine_CollectCoinShop"))
         return rs::calcBuyItemNumForCoinCollectByWorld(accessor);
     if (al::isEqualString(*name, "Shine_Shine2D_1") || al::isEqualString(*name, "Shine_Shine2D_2"))
@@ -140,7 +140,7 @@ s32 AchievementHolder::getAchievementProgressCurrentRow(s32 index,
     if (al::isEqualString(*name, "Souvenir_Count_1") ||
         al::isEqualString(*name, "Souvenir_Count_2") ||
         al::isEqualString(*name, "Souvenir_Count_3"))
-        return rs::calcHaveStickerNum(accessor) + rs::calcHaveGiftNum(accessor);
+        return rs::calcHaveGiftNum(accessor) + rs::calcHaveStickerNum(accessor);
     if (al::isEqualString(*name, "Capture_Count_1") ||
         al::isEqualString(*name, "Capture_Count_2") || al::isEqualString(*name, "Capture_Count_3"))
         return rs::calcHackObjNum(accessor);

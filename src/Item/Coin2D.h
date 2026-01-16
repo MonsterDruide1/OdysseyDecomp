@@ -17,14 +17,15 @@ class Coin2D : public al::LiveActor, public IUseDimension {
 public:
     Coin2D(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void appear() override;
     void control() override;
     void endClipped() override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
-    ActorDimensionKeeper* getActorDimensionKeeper() const override;
+
+    ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; }
 
     void listenAppear();
     void appearCountUp();

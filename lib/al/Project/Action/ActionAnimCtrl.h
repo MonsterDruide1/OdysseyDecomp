@@ -11,17 +11,17 @@ class ActionAnimCtrl {
 public:
     static ActionAnimCtrl* tryCreate(LiveActor*, const ActorResource*, const char*, const char*);
 
-    ActionAnimCtrl(LiveActor*);
+    ActionAnimCtrl(LiveActor* actor);
 
     void init(const ActorResource*, const char*, const char*);
     bool start(const char*);
     bool trySetFrame(f32);
-    bool isExistAction(const char*);
-    bool isActionOneTime(const char*);
-    bool isActionEnd();
+    bool isExistAction(const char*) const;
+    bool isActionOneTime(const char*) const;
+    bool isActionEnd() const;
     void sortCtrlInfo();
-    const char* findAnimInfo(const char*) const;
-    const char* getPlayingActionName();
+    ActionAnimCtrlInfo* findAnimInfo(const char*) const;
+    const char* getPlayingActionName() const;
     f32 getActionFrameMax(const char*) const;
     f32 getFrame() const;
     f32 getFrameRate() const;

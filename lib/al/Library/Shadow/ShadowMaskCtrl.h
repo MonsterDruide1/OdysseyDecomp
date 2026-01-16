@@ -33,6 +33,10 @@ public:
     void show();
     void validate();
 
+    s32 getShadowMaskNum() const { return mShadowMasks.size(); }
+
+    ShadowMaskBase* getShadowMask(s32 index) const { return mShadowMasks[index]; }
+
 private:
     sead::PtrArray<ShadowMaskBase> mShadowMasks;
     sead::Matrix34f mMtx;

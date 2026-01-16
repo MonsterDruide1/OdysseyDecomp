@@ -22,7 +22,7 @@ NERVES_MAKE_NOSTRUCT(HelpAmiiboFallCoin, Wait, Fall)
 }  // namespace
 
 HelpAmiiboFallCoin::HelpAmiiboFallCoin(HelpAmiiboDirector* director, al::LiveActor* actor)
-    : HelpAmiiboExecutor(director, actor, "コレクトコインお助け") {}
+    : HelpAmiiboExecutor(director, actor, "コイン降らすお助け") {}
 
 void HelpAmiiboFallCoin::initAfterPlacement(const al::ActorInitInfo& initInfo) {
     HelpAmiiboExecutor::initAfterPlacement(initInfo);
@@ -57,14 +57,6 @@ bool HelpAmiiboFallCoin::execute() {
         if (!al::isDead(mCoinBuffer[i]))
             return false;
     return true;
-}
-
-HelpAmiiboType HelpAmiiboFallCoin::getType() const {
-    return HelpAmiiboType::Peach;
-}
-
-al::NerveKeeper* HelpAmiiboFallCoin::getNerveKeeper() const {
-    return mNerveKeeper;
 }
 
 void HelpAmiiboFallCoin::exeWait() {}

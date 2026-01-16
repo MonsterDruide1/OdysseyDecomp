@@ -13,11 +13,11 @@
 HelpAmiiboYoshi::HelpAmiiboYoshi(HelpAmiiboDirector* director, al::LiveActor* amiiboActor)
     : HelpAmiiboExecutor(director, amiiboActor, "ヨッシーお助け") {}
 
-void HelpAmiiboYoshi::initAfterPlacement(const al::ActorInitInfo& actorInitInfo) {
-    HelpAmiiboExecutor::initAfterPlacement(actorInitInfo);
+void HelpAmiiboYoshi::initAfterPlacement(const al::ActorInitInfo& initInfo) {
+    HelpAmiiboExecutor::initAfterPlacement(initInfo);
 
     mYoshi = new Yoshi("amiiboヨッシー");
-    al::initCreateActorNoPlacementInfo(mYoshi, actorInitInfo);
+    al::initCreateActorNoPlacementInfo(mYoshi, initInfo);
     mYoshi->makeActorDead();
 }
 
@@ -35,8 +35,4 @@ void HelpAmiiboYoshi::activate() {
     const sead::Vector3f& playerPos = rs::getPlayerPos(getActor());
     al::resetPosition(mYoshi, playerPos + sead::Vector3f(0, 1000.0f, 0));
     mYoshi->appearEgg();
-}
-
-HelpAmiiboType HelpAmiiboYoshi::getType() const {
-    return HelpAmiiboType::Yoshi;
 }

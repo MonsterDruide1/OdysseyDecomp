@@ -18,8 +18,8 @@
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSceneInfo.h"
 #include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/LiveActor/LiveActorKit.h"
-#include "Library/LiveActor/SubActorKeeper.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Message/MessageHolder.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -124,7 +124,7 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
 
     initNerve(&NrvStageSceneStatePauseMenu.Appear, 4);
 
-    al::GamePadSystem* gamePadSystem = sceneInitInfo.gameSysInfo->gamePadSystem;
+    al::GamePadSystem* gamePadSystem = sceneInitInfo.gameSystemInfo->gamePadSystem;
 
     mStateStartSeparatePlay = new StageSceneStateStartSeparatePlay(
         "おすそ分け開始", this, layoutInitInfo, mMenuWipe, gamePadSystem, mFooterParts);
@@ -142,12 +142,12 @@ StageSceneStatePauseMenu::StageSceneStatePauseMenu(
                       "オプション画面[ヘルプから遷移]");
 
     rs::registerGraphicsPresetPause(getHost());
-    mHtmlViewer = sceneInitInfo.gameSysInfo->htmlViewer;
+    mHtmlViewer = sceneInitInfo.gameSystemInfo->htmlViewer;
 }
 
 void StageSceneStatePauseMenu::appear() {
     mStartType = StartType::Title;
-    setDead(false);
+    al::NerveStateBase::appear();
     if (rs::isModeE3LiveRom()) {
         if (rs::isSeparatePlay(getHost()))
             al::setNerve(this, &NrvStageSceneStatePauseMenu.EndSeparatePlay);
@@ -161,7 +161,7 @@ void StageSceneStatePauseMenu::appear() {
 void StageSceneStatePauseMenu::kill() {
     rs::updateGyroText(getHost());
 
-    setDead(true);
+    al::NerveStateBase::kill();
     killPauseMenu();
     killMarioModel();  // redundant as killPauseMenu() already does this
 
@@ -447,7 +447,7 @@ void StageSceneStatePauseMenu::changeNerveAndReturn(const al::Nerve* nerve) {
 
 void StageSceneStatePauseMenu::exeFadeBeforeHelp() {
     if (al::isFirstStep(this))
-        mHelpWipe->startClose(-1);
+        mHelpWipe->startClose();
 
     al::updateKitListPrev(getHost());
     al::updateKitList(getHost(), "カメラ");
@@ -484,7 +484,7 @@ void StageSceneStatePauseMenu::exeStartHelp() {
             al::setNerve(this, &NrvStageSceneStatePauseMenu.OptionFromHelp);
             return;
         }
-        mHelpWipe->startOpen(-1);
+        mHelpWipe->startOpen();
     }
 
     if (mHelpWipe->isOpenEnd()) {

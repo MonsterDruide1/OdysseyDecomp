@@ -26,8 +26,8 @@ CounterLife::CounterLife(const char* name, const char* resName, const al::Layout
     if (al::isEqualString(resName, "CounterLifeUp"))
         mIsCounterUp = true;
 
-    al::initLayoutActor(this, info, resName, nullptr);
-    initNerve(&End, 0);
+    al::initLayoutActor(this, info, resName);
+    initNerve(&End);
 
     if (mIsCounterUp)
         return;
@@ -108,7 +108,7 @@ bool CounterLife::isWait() const {
 void CounterLife::exeNone() {}
 
 void CounterLife::exeAppear() {
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }
 
@@ -129,12 +129,12 @@ void CounterLife::exeEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, "End", "Main");
 
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }
 
 void CounterLife::exeGauge() {
-    if (al::isNear(mGoalFrame, mCurFrame, 0.001f)) {
+    if (al::isNear(mGoalFrame, mCurFrame)) {
         mCurFrame = mGoalFrame;
 
         setGaugeAnim();

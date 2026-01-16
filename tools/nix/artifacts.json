@@ -1,0 +1,14 @@
+{
+    "x86_64-linux": {
+        "filename": "OdysseyDecomp-binaries_x86_64-Linux.tar.xz",
+        "hash": "sha256-QqhiIn2ERmrzihr8UXqZgoS6Ct+odggVaZ8lGfRagCQ="
+    },
+    "aarch64-linux": {
+        "filename": "OdysseyDecomp-binaries_aarch64-Linux.tar.xz",
+        "hash": "sha256-a24rhpEu8m9USEDwz3EMaPA2ioMNNApa2GpNfbsN/hc="
+    },
+    "aarch64-darwin": {
+        "filename": "OdysseyDecomp-binaries_arm64-Darwin.tar.xz",
+        "hash": "sha256-pyhaFNViMrUbrKFNPKnX5j2YoZOVNGzzfSVk7OVoAck="
+    }
+}

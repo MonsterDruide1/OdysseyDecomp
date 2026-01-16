@@ -8,7 +8,6 @@
 namespace al {
 class AreaObjDirector;
 class CameraAngleVerticalRequester;
-class CameraFlagCtrl;
 class CameraInputHolder;
 class CameraInSwitchOnAreaDirector;
 class CameraParamTransfer;
@@ -26,11 +25,13 @@ class CameraTicketHolder;
 class ICameraInput;
 class IUseAudioKeeper;
 class NameToCameraParamTransferFunc;
+class PauseCameraCtrl;
 class PlacementId;
 class PlayerHolder;
 class SceneCameraCtrl;
 class SceneCameraInfo;
 class SpecialCameraHolder;
+struct CameraFlagCtrl;
 struct CameraPoserSceneInfo;
 
 class CameraDirector : public HioNode, public IUseExecutor {
@@ -45,13 +46,13 @@ public:
     void initSceneFovyDegree(f32 fov);
     void initSettingCloudSea(f32);
     void initSnapShotCameraAudioKeeper(IUseAudioKeeper* audioKeeper);
-    void initAndCreatePauseCameraCtrl(f32);
+    PauseCameraCtrl* initAndCreatePauseCameraCtrl(f32);
 
     void execute() override;
     void update();
     void endInit(const PlayerHolder*);
 
-    CameraPoseUpdater* getPoseUpdater(s32 index);
+    CameraPoseUpdater* getPoseUpdater(s32 index) const;
     CameraTicket* createCameraFromFactory(const char*, const PlacementId*, const char*, s32,
                                           const sead::Matrix34f&);
     CameraTicket* createCamera(CameraPoser*, const PlacementId*, const char*, s32,
@@ -63,12 +64,12 @@ public:
     CameraTicket* createMirrorObjectCamera(const PlacementId*, const char*, s32,
                                            const sead::Matrix34f&);
 
-    ICameraInput* getCameraInput();
+    ICameraInput* getCameraInput(s32) const;
     void setCameraInput(const ICameraInput* input);
     void setViewCameraInput(const ICameraInput* input, s32);
     void registerCameraRailHolder(CameraRailHolder* railHolder);
     void setCameraParamTransferFuncTable(const NameToCameraParamTransferFunc*, s32);
-    f32 getSceneFovyDegree();
+    f32 getSceneFovyDegree() const;
     void validateCameraArea2D();
     void invalidateCameraArea2D();
     void stopByDeathPlayer();
@@ -81,6 +82,8 @@ public:
     SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
 
     SceneCameraCtrl* getSceneCameraCtrl() const { return mSceneCameraCtrl; }
+
+    CameraFlagCtrl* getFlagCtrl() const { return mFlagCtrl; }
 
 private:
     s32 mCountCameraPoseUpdaters;

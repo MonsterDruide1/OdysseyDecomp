@@ -17,8 +17,8 @@ NERVES_MAKE_STRUCT(GaugeAir, Wait, End);
 }  // namespace
 
 GaugeAir::GaugeAir(const char* name, const al::LayoutInitInfo& info) : al::LayoutActor(name) {
-    al::initLayoutActor(this, info, "GaugeAir", nullptr);
-    initNerve(&Appear, 0);
+    al::initLayoutActor(this, info, "GaugeAir");
+    initNerve(&Appear);
     kill();
 }
 
@@ -40,7 +40,7 @@ void GaugeAir::updateStateAnim() {
         return;
     }
 
-    if (al::isNearZeroOrLess(mRate, 0.001f)) {
+    if (al::isNearZeroOrLess(mRate)) {
         if (!al::isActionPlaying(this, "Empty", "State"))
             al::startAction(this, "Empty", "State");
         return;
@@ -71,8 +71,8 @@ void GaugeAir::setRate(f32 rate) {
 
 void GaugeAir::exeAppear() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Appear", nullptr);
-    if (al::isActionEnd(this, nullptr))
+        al::startAction(this, "Appear");
+    if (al::isActionEnd(this))
         return al::setNerve(this, &NrvGaugeAir.Wait);
 }
 
@@ -88,16 +88,16 @@ void GaugeAir::exeEnd() {
         return;
 
     if (al::isStep(this, 30))
-        al::startAction(this, "End", nullptr);
+        al::startAction(this, "End");
 
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }
 
 void GaugeAir::exeFastEnd() {
     if (al::isFirstStep(this))
-        al::startAction(this, "End", nullptr);
+        al::startAction(this, "End");
 
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         kill();
 }

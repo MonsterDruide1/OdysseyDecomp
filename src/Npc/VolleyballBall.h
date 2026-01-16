@@ -19,7 +19,7 @@ class VolleyballBall : public al::LiveActor {
 public:
     VolleyballBall(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void control() override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
@@ -51,6 +51,10 @@ public:
     void exeRetry();
     void exeRetryEnd();
 
+    void setNpc(VolleyballNpc* npc) { mNpc = npc; }
+
+    void endGame() { mIsEndGame = true; }
+
 private:
     sead::Vector3f mEndPosition = sead::Vector3f::zero;
     al::ParabolicPath* mAttackPath = nullptr;
@@ -58,7 +62,7 @@ private:
     f32 mAttackSpeed = 0.0f;
     s32 mPathTime = 0;
     VolleyballNpc* mNpc = nullptr;
-    bool _138 = false;
+    bool mIsEndGame = false;
     sead::Quatf mOrientation = sead::Quatf::unit;
     s32 mLastSmashCoins = 0;
     s32 mMissReactionDelay = 0;

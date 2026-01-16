@@ -20,7 +20,6 @@ class ByamlIter;
 class CameraAngleCtrlInfo;
 class CameraAngleSwingInfo;
 class CameraArrowCollider;
-class CameraFlagCtrl;
 class CameraInputHolder;
 class CameraOffsetCtrlPreset;
 class CameraParamMoveLimit;
@@ -36,6 +35,7 @@ class Nerve;
 class PlacementInfo;
 class RailKeeper;
 class SnapShotCameraCtrl;
+struct CameraFlagCtrl;
 struct CameraObjectRequestInfo;
 struct CameraPoserFlag;
 struct CameraPoserSceneInfo;
@@ -97,7 +97,7 @@ public:
             : CameraInterpoleStep({CameraInterpoleStepType::ByCameraDistance}) {}
 
         inline void load(const ByamlIter& iter);
-        inline void set(CameraInterpoleStepType type, s32 step, bool isInterpolate);
+        inline void set(CameraInterpoleStepType type, s32 step, bool is_interpolate_by_step);
 
         s8 isEaseOut = false;
         bool isInterpolateByStep = false;
@@ -116,35 +116,53 @@ public:
 
     static_assert(sizeof(OrthoProjectionParam) == 0xC);
 
-    CameraPoser(const char* poserName);
-    virtual AreaObjDirector* getAreaObjDirector() const override;
-    virtual void init();
-    virtual void initByPlacementObj(const PlacementInfo&);
-    virtual void endInit();
-    virtual void start(const CameraStartInfo&);
-    virtual void update();
-    virtual void end();
-    virtual void loadParam(const ByamlIter&);
-    virtual void makeLookAtCamera(sead::LookAtCamera*) const;
-    virtual bool receiveRequestFromObject(const CameraObjectRequestInfo&);
-    virtual bool isZooming() const;
-    virtual bool isEnableRotateByPad() const;
-    virtual void startSnapShotMode();
-    virtual void endSnapShotMode();
+    CameraPoser(const char* name);
+    AreaObjDirector* getAreaObjDirector() const override;
 
-    virtual const char* getName() const override;
-    virtual CollisionDirector* getCollisionDirector() const override;
-    virtual NerveKeeper* getNerveKeeper() const override;
-    virtual AudioKeeper* getAudioKeeper() const override;
-    virtual RailRider* getRailRider() const override;
+    virtual void init() {}
+
+    virtual void initByPlacementObj(const PlacementInfo& info) {}
+
+    virtual void endInit() {}
+
+    virtual void start(const CameraStartInfo& info) {}
+
+    virtual void update() {}
+
+    virtual void end() { mActiveState = ActiveState::End; };
+
+    virtual void loadParam(const ByamlIter& iter) {}
+
+    virtual void makeLookAtCamera(sead::LookAtCamera* cam) const {}
+
+    virtual bool receiveRequestFromObject(const CameraObjectRequestInfo& info) { return false; }
+
+    virtual bool isZooming() const { return false; }
+
+    virtual bool isEnableRotateByPad() const;
+
+    virtual void startSnapShotMode() {}
+
+    virtual void endSnapShotMode() {}
+
+    const char* getName() const override { return mPoserName; }
+
+    CollisionDirector* getCollisionDirector() const override;
+
+    NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
+    RailRider* getRailRider() const override;
 
     virtual void load(const ByamlIter& iter);
     virtual void movement();  // TODO: implementation missing
     virtual void calcCameraPose(sead::LookAtCamera* cam) const;
-    virtual bool requestTurnToDirection(const CameraTurnInfo*);
 
-    void appear(const CameraStartInfo& startInfo);
-    bool receiveRequestFromObjectCore(const CameraObjectRequestInfo& objRequestInfo);
+    virtual bool requestTurnToDirection(const CameraTurnInfo* info) { return false; }
+
+    void appear(const CameraStartInfo& info);
+    bool receiveRequestFromObjectCore(const CameraObjectRequestInfo& info);
 
     bool isInterpoleByCameraDistance() const;
     bool isInterpoleEaseOut() const;
@@ -154,11 +172,12 @@ public:
     void initNerve(const Nerve* nerve, s32 maxStates);
     void initArrowCollider(CameraArrowCollider* arrowCollider);
     void initAudioKeeper(const char* name);
-    void initRail(const PlacementInfo& placementInfo);
+    void initRail(const PlacementInfo& info);
     void initLocalInterpole();
-    void initLookAtInterpole(f32);
+    // TODO: rename `v`
+    void initLookAtInterpole(f32 v);
     void initOrthoProjectionParam();
-    void tryInitAreaLimitter(const PlacementInfo& placementInfo);
+    void tryInitAreaLimitter(const PlacementInfo& info);
     bool tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo) const;
 
     void makeLookAtCameraPrev(sead::LookAtCamera* cam) const;
@@ -189,6 +208,8 @@ public:
     const sead::Vector3f& getCameraUp() const { return mCameraUp; };
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
+
+    bool is_98() const { return _98; }
 
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 

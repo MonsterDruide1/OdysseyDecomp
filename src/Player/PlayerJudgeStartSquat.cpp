@@ -12,7 +12,3 @@ PlayerJudgeStartSquat::PlayerJudgeStartSquat(const PlayerInput* input,
 bool PlayerJudgeStartSquat::judge() const {
     return !mCarryKeeper->isCarry() && mInput->isHoldSquat() && !mCounterForceRun->isForceRun();
 }
-
-void PlayerJudgeStartSquat::reset() {}
-
-void PlayerJudgeStartSquat::update() {}

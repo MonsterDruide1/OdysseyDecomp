@@ -12,7 +12,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
@@ -58,7 +58,7 @@ void EnemyCap::initPartsFixFile(al::LiveActor* cap, const al::ActorInitInfo& inf
         al::tryGetByamlV3f(&mLocalTrans, resourceYaml, "LocalTrans");
         al::tryGetByamlV3f(&mLocalRotate, resourceYaml, "LocalRotate");
         al::tryGetByamlV3f(&mLocalScale, resourceYaml, "LocalScale");
-        if (!al::isNearZero(mLocalTrans, 0.001f) || !al::isNearZero(mLocalRotate, 0.001f))
+        if (!al::isNearZero(mLocalTrans) || !al::isNearZero(mLocalRotate))
             mIsNotAtOrigin = true;
         mIsUseFollowMtxScale = al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseFollowMtxScale");
         mIsUseLocalScale = al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseLocalScale");

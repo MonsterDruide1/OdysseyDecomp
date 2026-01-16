@@ -58,7 +58,7 @@ public:
     bool isModeSelectEnd() const;
     bool checkNeedKillByHostAndEnd();
 
-    void startActionMario(const char*);
+    void startActionMario(const char* actionName);
     al::LiveActor* getMarioActor() const;
 
     bool isDrawLayout() const;
@@ -99,7 +99,7 @@ private:
     StageSceneStateEndSeparatePlay* mStateEndSeparatePlay = nullptr;
     StageSceneStateOption* mStateOption = nullptr;
     al::LiveActor* mMarioActor = nullptr;
-    char field_0x80[40];
+    char field_80[40];
     GameDataHolderAccessor mGameDataHolderAccessor;
     al::PauseCameraCtrl* mPauseCameraCtrl = nullptr;
     al::WindowConfirm* mWindowConfirm = nullptr;

@@ -169,7 +169,7 @@ bool listenStageSwitchOnAppear(IUseStageSwitch* user, const FunctorBase& action)
 
 bool listenStageSwitchOnOffAppear(IUseStageSwitch* user, const FunctorBase& actionOn,
                                   const FunctorBase& actionOff) {
-    return listenStageSwitchOnOff(user, "SwitchStart", actionOn, actionOff);
+    return listenStageSwitchOnOff(user, "SwitchAppear", actionOn, actionOff);
 }
 
 bool listenStageSwitchOnKill(IUseStageSwitch* user, const FunctorBase& action) {

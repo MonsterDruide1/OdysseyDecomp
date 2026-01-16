@@ -7,7 +7,7 @@
 
 #include "Player/PlayerFunction.h"
 #include "Player/PlayerInputFunction.h"
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 
 bool PlayerInput::isEnableCarry() const {
     if (mIsDisableInput)

@@ -9,7 +9,7 @@ class IUsePlayerCollision;
 
 class PlayerActionVelocityControl {
 public:
-    PlayerActionVelocityControl(al::LiveActor* actor, const IUsePlayerCollision* collider);
+    PlayerActionVelocityControl(al::LiveActor* actor, const IUsePlayerCollision* collision);
 
     void calcFrontBrake(f32 decel);
     void calcSideVelocityLimit(const sead::Vector3f& moveInput, f32 brakeSideAccel,

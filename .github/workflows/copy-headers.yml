@@ -16,17 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out OdysseyDecomp project
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: recursive
     - name: Check out branch if in PR
       if: ${{ github.event_name == 'pull_request_target' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
     - name: Check out OdysseyHeaders project
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: MonsterDruide1/OdysseyHeaders
         path: ./OdysseyHeaders
@@ -69,6 +69,8 @@ jobs:
         PR_AUTHOR_LOGIN: ${{ github.event.pull_request.user.login }}
         PR_AUTHOR_MAIL: ${{ github.event.pull_request.user.email }}
         PR_TITLE: ${{ github.event.pull_request.title }}
+    - name: Install python3
+      run: sudo apt update && sudo apt install python3 -y
     - name: Move to correct branch of OdysseyHeaders and reset history
       run: |
         cd OdysseyHeaders

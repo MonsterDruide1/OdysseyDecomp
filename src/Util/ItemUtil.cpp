@@ -18,11 +18,12 @@
 #include "Library/Model/ModelShapeUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageResourceList.h"
+#include "Library/Stage/StageRhythm.h"
 
 #include "Item/Shine.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolder.h"
+#include "System/WorldList.h"
 #include "Util/SensorMsgFunction.h"
 
 const char* sItem2DNames[] = {
@@ -186,7 +187,7 @@ bool tryInitItemAndAddToKeeper(al::LiveActor* actor, s32 itemType, const al::Act
         name = al::isPercentProbability(10.0f) ? "ドットキャラクター(レア)" : "コイン[自動取得]";
         break;
     case ItemType::CoinStackBound:
-        name = "跳ねる積みコイン";
+        name = "跳ねる積みコイン]";
         break;
     default:
         return false;
@@ -604,15 +605,15 @@ s32 getStageShineAnimFrame(const al::LiveActor* actor, s32 worldId) {
 
 s32 getStageShineAnimFrame(const al::LiveActor* actor, const char* stageName) {
     s32 worldId =
-        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByMainStageName(
+        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByStageName(
             stageName);
     worldId = sead::Mathi::max(0, worldId);
 
     return getStageShineAnimFrame(actor, worldId);
 }
 
-void startShineAnimAndSetFrameAndStop(al::LiveActor* actor, const char* animName, s32 frame,
-                                      bool isMatAnim) {
+inline void startShineAnimAndSetFrameAndStop(al::LiveActor* actor, const char* animName, s32 frame,
+                                             bool isMatAnim) {
     isMatAnim ? al::startMtpAnimAndSetFrameAndStop(actor, animName, frame) :
                 al::startMclAnimAndSetFrameAndStop(actor, animName, frame);
 }
@@ -635,7 +636,7 @@ void setStageShineAnimFrame(al::LiveActor* actor, const char* stageName, s32 shi
 
 const char* getStageShineArchiveName(const al::LiveActor* actor, const char* stageName) {
     s32 worldId =
-        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByMainStageName(
+        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByStageName(
             stageName);
 
     return worldId == GameDataFunction::getWorldIndexPeach() ? "PowerStar" : "Shine";
@@ -643,7 +644,7 @@ const char* getStageShineArchiveName(const al::LiveActor* actor, const char* sta
 
 const char* getStageShineEmptyArchiveName(const al::LiveActor* actor, const char* stageName) {
     s32 worldId =
-        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByMainStageName(
+        al::getSceneObj<GameDataHolder>(actor)->getWorldList()->tryFindWorldIndexByStageName(
             stageName);
 
     return worldId == GameDataFunction::getWorldIndexPeach() ? "PowerStarEmpty" : "ShineEmpty";

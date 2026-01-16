@@ -3,7 +3,7 @@
 #include <heap/seadHeapMgr.h>
 
 #include "Library/File/FileUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/System/SystemKit.h"
 #include "Project/Memory/MemorySystem.h"
 
@@ -71,12 +71,12 @@ void freeAllSequenceHeap() {
     clearFileLoaderEntry();
 }
 
-bool printAllSequenceHeap() {
-    return alProjectInterface::getSystemKit()->getMemorySystem()->printSequenceHeap();
+void printAllSequenceHeap() {
+    alProjectInterface::getSystemKit()->getMemorySystem()->printSequenceHeap();
 }
 
 void createSceneHeap(const char* stageName, bool backwards) {
-    sead::ScopedCurrentHeapSetter heapSetter = sead::ScopedCurrentHeapSetter(getSequenceHeap());
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     SystemKit* systemKit = alProjectInterface::getSystemKit();
     bool isSceneHeapCreated = systemKit->getMemorySystem()->createSceneHeap(stageName, backwards);
@@ -89,7 +89,7 @@ void createSceneHeap(const char* stageName, bool backwards) {
 }
 
 void createSceneResourceHeap(const char* stageName) {
-    sead::ScopedCurrentHeapSetter heapSetter = sead::ScopedCurrentHeapSetter(getSequenceHeap());
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createSceneResourceHeap(stageName,
                                                                                    false);
@@ -118,7 +118,7 @@ void destroySceneHeap(bool removeCategory) {
 }
 
 void createCourseSelectHeap() {
-    sead::ScopedCurrentHeapSetter heapSetter = sead::ScopedCurrentHeapSetter(getSequenceHeap());
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createCourseSelectHeap();
 
@@ -133,7 +133,7 @@ void destroyCourseSelectHeap() {
 }
 
 void createWorldResourceHeap(bool useCategory) {
-    sead::ScopedCurrentHeapSetter heapSetter = sead::ScopedCurrentHeapSetter(getSequenceHeap());
+    sead::ScopedCurrentHeapSetter heapSetter{getSequenceHeap()};
 
     alProjectInterface::getSystemKit()->getMemorySystem()->createWorldResourceHeap();
 

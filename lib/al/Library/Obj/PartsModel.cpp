@@ -8,7 +8,7 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
@@ -90,12 +90,12 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
     initChildActorWithArchiveNameNoPlacementInfo(this, initInfo, arcName, arcSuffix);
     invalidateClipping(this);
 
-    sead::FixedSafeString<0x80> initArcName;
+    StringTmp<128> initArcName;
     createFileNameBySuffix(&initArcName, "InitPartsFixInfo", suffix);
 
     if (!isExistModelResourceYaml(mParentModel, initArcName.cstr(), nullptr))
         return makeActorAlive();
-    u8* modelResByml = getModelResourceYaml(mParentModel, initArcName.cstr(), nullptr);
+    const u8* modelResByml = getModelResourceYaml(mParentModel, initArcName.cstr(), nullptr);
     ByamlIter modelResIter(modelResByml);
 
     const char* jointName = nullptr;
@@ -110,7 +110,7 @@ void PartsModel::initPartsFixFileNoRegister(LiveActor* parent, const ActorInitIn
 
     mIsUseLocalScale = tryGetByamlKeyBoolOrFalse(modelResIter, "UseLocalScale");
 
-    if (!isNearZero(mLocalTrans, 0.001f) || !isNearZero(mLocalRotate, 0.001f) || mIsUseLocalScale)
+    if (!isNearZero(mLocalTrans) || !isNearZero(mLocalRotate) || mIsUseLocalScale)
         mIsUseLocalPos = true;
 
     mIsUseFollowMtxScale = tryGetByamlKeyBoolOrFalse(modelResIter, "UseFollowMtxScale");

@@ -28,7 +28,7 @@ StageSceneStateEndSeparatePlay::StageSceneStateEndSeparatePlay(const char* name,
 }
 
 void StageSceneStateEndSeparatePlay::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mIsCancel = false;
     al::setNerve(this, &NrvStageSceneStateEndSeparatePlay.FadeOut);
 }
@@ -40,7 +40,7 @@ bool StageSceneStateEndSeparatePlay::isNeedRequestGraphicsPreset() const {
 
 void StageSceneStateEndSeparatePlay::exeFadeOut() {
     if (al::isFirstStep(this))
-        mWipeSimple->startClose(-1);
+        mWipeSimple->startClose();
     if (mWipeSimple->isCloseEnd())
         al::setNerve(this, &Applet);
 }
@@ -59,7 +59,7 @@ al::Scene* StageSceneStateEndSeparatePlay::getScene() {
 
 void StageSceneStateEndSeparatePlay::exeFadeIn() {
     if (al::isFirstStep(this))
-        mWipeSimple->startOpen(-1);
+        mWipeSimple->startOpen();
     if (mWipeSimple->isOpenEnd())
         kill();
 }

@@ -21,8 +21,8 @@ NERVES_MAKE_STRUCT(ButtonMiiverse, Wait, Decide, OnWait, Disable, HoldOn, HoldOf
 ButtonMiiverse::ButtonMiiverse() : al::LayoutActor("Miiverseボタン") {}
 
 void ButtonMiiverse::init(const al::LayoutInitInfo& info) {
-    al::initLayoutActor(this, info, "ButtonMiiverse", 0);
-    initNerve(&NrvButtonMiiverse.Wait, 0);
+    al::initLayoutActor(this, info, "ButtonMiiverse");
+    initNerve(&NrvButtonMiiverse.Wait);
     appear();
 }
 
@@ -51,14 +51,14 @@ void ButtonMiiverse::invalidate() {
 
 void ButtonMiiverse::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", 0);
+        al::startAction(this, "Wait");
     if (al::isHoldTouchPane(this, "Hit"))
         al::setNerve(this, &NrvButtonMiiverse.HoldOn);
 }
 
 void ButtonMiiverse::exeHoldOn() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Touch", 0);
+        al::startAction(this, "Touch");
     if (al::isReleaseTouchPane(this, "Hit"))
         al::setNerve(this, &NrvButtonMiiverse.Decide);
     else if (!al::isTouchPosInPane(this, "Hit"))
@@ -67,7 +67,7 @@ void ButtonMiiverse::exeHoldOn() {
 
 void ButtonMiiverse::exeHoldOff() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Touch", 0);
+        al::startAction(this, "Wait");
     if (al::isTouchPosInPane(this, "Hit"))
         al::setNerve(this, &NrvButtonMiiverse.HoldOn);
     else if (al::isPadReleaseTouch())
@@ -76,16 +76,16 @@ void ButtonMiiverse::exeHoldOff() {
 
 void ButtonMiiverse::exeDecide() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Decide", 0);
+        al::startAction(this, "Decide");
     al::setNerveAtActionEnd(this, &NrvButtonMiiverse.OnWait);
 }
 
 void ButtonMiiverse::exeOnWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", 0);
+        al::startAction(this, "Wait");
 }
 
 void ButtonMiiverse::exeDisable() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Disable", 0);
+        al::startAction(this, "Disable");
 }

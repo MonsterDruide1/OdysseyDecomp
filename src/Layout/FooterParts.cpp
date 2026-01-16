@@ -17,15 +17,15 @@ NERVES_MAKE_NOSTRUCT(FooterParts, Wait, FadeOut, FadeIn);
 FooterParts::FooterParts(al::LayoutActor* parentLayout, const al::LayoutInitInfo& info,
                          const char16* footerText, const char* textPane, const char* partPane)
     : al::LayoutActor("フッターパーツ"), mTextPane(textPane), mText(footerText) {
-    al::initLayoutPartsActor(this, parentLayout, info, partPane, nullptr);
+    al::initLayoutPartsActor(this, parentLayout, info, partPane);
 
-    al::setPaneString(this, mTextPane, mText, 0);
-    initNerve(&Wait, 0);
+    al::setPaneString(this, mTextPane, mText);
+    initNerve(&Wait);
 }
 
 void FooterParts::changeText(const char16* text) {
     mText = text;
-    al::setPaneString(this, mTextPane, text, 0);
+    al::setPaneString(this, mTextPane, text);
 }
 
 void FooterParts::changeTextFade(const char16* text) {
@@ -42,16 +42,16 @@ bool FooterParts::tryChangeTextFade(const char16* text) {
 
 void FooterParts::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, "Wait", 0);
+        al::startAction(this, "Wait");
 }
 
 void FooterParts::exeFadeOut() {}
 
 void FooterParts::exeFadeIn() {
     if (al::isFirstStep(this)) {
-        al::setPaneString(this, mTextPane, mText, 0);
-        al::startAction(this, "FadeIn", 0);
+        al::setPaneString(this, mTextPane, mText);
+        al::startAction(this, "FadeIn");
     }
-    if (al::isActionEnd(this, nullptr))
+    if (al::isActionEnd(this))
         al::setNerve(this, &Wait);
 }

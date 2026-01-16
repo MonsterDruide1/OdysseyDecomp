@@ -10,8 +10,8 @@ SensorHitGroup::SensorHitGroup(s32 maxSensors, const char* groupName) : mMaxSens
         mSensors[i] = nullptr;
 }
 
-void SensorHitGroup::add(HitSensor* pSensor) {
-    mSensors[mSensorCount] = pSensor;
+void SensorHitGroup::add(HitSensor* sensor) {
+    mSensors[mSensorCount] = sensor;
     mSensorCount++;
 }
 
@@ -25,8 +25,8 @@ void SensorHitGroup::remove(HitSensor* sensor) {
     }
 }
 
-HitSensor* SensorHitGroup::getSensor(s32 idx) const {
-    return mSensors[idx];
+HitSensor* SensorHitGroup::getSensor(s32 index) const {
+    return mSensors[index];
 }
 
 void SensorHitGroup::clear() const {

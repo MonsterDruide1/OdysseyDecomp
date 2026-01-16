@@ -5,7 +5,7 @@
 namespace al {
 class AudioDirector;
 class AreaObjDirector;
-class CameraFlagCtrl;
+struct CameraFlagCtrl;
 class CameraInputHolder;
 class CameraTargetCollideInfoHolder;
 class CameraTargetHolder;

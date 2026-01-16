@@ -32,7 +32,7 @@ PlayerStateHipDrop::PlayerStateHipDrop(al::LiveActor* player, const PlayerConst*
 }
 
 void PlayerStateHipDrop::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     if (mAnimator->isSubAnimPlaying())
         mAnimator->endSubAnim();
     mIsLandGround = false;

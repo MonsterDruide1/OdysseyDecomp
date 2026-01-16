@@ -7,6 +7,8 @@ class PlayerHolder;
 class CameraDirector;
 class WaveVibrationHolder;
 struct PadRumbleParam;
+class PadRumbleKeeper;
+class LiveActor;
 
 class PadRumbleDirector {
 public:
@@ -38,8 +40,23 @@ public:
     void updateInfoListOneTime();
     void testStartPadRumbleWithVolumeNoActor(const char*, f32, f32);
 
+    void validatePadRumble() { mIsValidPadRumble = true; }
+
+    void invalidatePadRumble() { mIsValidPadRumble = false; }
+
+    void setPowerLevel(s32 powerLevel) { mPowerLevel = powerLevel; }
+
 private:
-    void* filler[14];
+    WaveVibrationHolder* mWaveVibrationHolder;
+    PlayerHolder* mPlayerHolder;
+    CameraDirector* mCameraDirector;
+    void* filler[4];
+    bool mIsValidPadRumble;
+    bool mIsPaused;
+    s32 mPowerLevel;
+    void* filler2[6];
 };
+
+PadRumbleKeeper* createPadRumbleKeeper(const LiveActor*, s32);
 
 }  // namespace al

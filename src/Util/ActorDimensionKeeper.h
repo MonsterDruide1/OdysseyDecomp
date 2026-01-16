@@ -16,20 +16,20 @@ public:
     void invalidate();
     void forceChange2DKeep();
     void forceEndChange2DKeep();
-    bool update();
+    void update();
 
-    bool getIs2D() const { return mIs2D; }
+    bool is2D() const { return mIs2D; }
 
-    bool getIsIn2DArea() const { return mIsIn2DArea; }
+    bool isIn2DArea() const { return mIsIn2DArea; }
 
-    bool getIsCurrently2D() const { return mIsCurrently2D; }
+    bool isCurrently2D() const { return mIsCurrently2D; }
 
-    bool getIsCanChange2D() const { return mIsCanChange2D; }
+    bool isCanChange2D() const { return mIsCanChange2D; }
 
-    bool getIsCanChange3D() const { return mIsCanChange3D; }
+    bool isCanChange3D() const { return mIsCanChange3D; }
 
 private:
-    const al::LiveActor* mLiveActor;
+    const al::LiveActor* mActor;
     bool mIsValid = true;
     bool mIs2D = false;
     bool mIsIn2DArea = false;
@@ -40,22 +40,3 @@ private:
 };
 
 static_assert(sizeof(ActorDimensionKeeper) == 0x18);
-
-namespace rs {
-
-ActorDimensionKeeper* createDimensionKeeper(const al::LiveActor* actor);
-void updateDimensionKeeper(ActorDimensionKeeper* keeper);
-
-const char* getSpecialPurposeName2DOnly();
-void createAndSetFilter2DOnly(al::LiveActor* actor);
-al::CollisionPartsFilterOnlySpecialPurpose* createCollisionPartsFilter2DOnly();
-
-bool is2D(const IUseDimension* dimension);
-bool isIn2DArea(const IUseDimension* dimension);
-bool isChange2D(const IUseDimension* dimension);
-bool isChange3D(const IUseDimension* dimension);
-bool is3D(const IUseDimension* dimension);
-void snap2D(al::LiveActor* actor, const IUseDimension* dimension, f32 unk_distance);
-void snap2DGravity(al::LiveActor* actor, const IUseDimension* dimension, f32 unk_distance);
-
-}  // namespace rs

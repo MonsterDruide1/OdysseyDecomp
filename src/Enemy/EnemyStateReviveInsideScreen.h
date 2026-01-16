@@ -7,7 +7,7 @@
 
 class EnemyStateReviveInsideScreen : public al::ActorStateBase {
 public:
-    EnemyStateReviveInsideScreen(al::LiveActor*);
+    EnemyStateReviveInsideScreen(al::LiveActor* actor);
 
     void appear() override;
     void kill() override;

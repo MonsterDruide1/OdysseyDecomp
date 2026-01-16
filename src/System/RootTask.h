@@ -9,7 +9,6 @@ class GameSystem;
 class RootTask : public sead::Task {
 public:
     RootTask(const sead::TaskConstructArg& constructArg);
-    ~RootTask() override;
     void enter() override;
     void draw() override;
     void calc() override;

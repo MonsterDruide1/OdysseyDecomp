@@ -14,7 +14,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
 
@@ -100,7 +100,7 @@ void Togezo2D::control() {
     if (al::isNerve(this, &NrvTogezo2D.HideWait))
         return;
     al::addVelocityToGravity(this, 0.65f);
-    al::addVelocityToDirection(this, al::getGravity(this), 0.98f);
+    al::scaleVelocityDirection(this, al::getGravity(this), 0.98f);
     if (al::isCollidedWall(this)) {
         al::turnFront(this, 150.0f);
         if (al::isOnGround(this, 0)) {
@@ -126,7 +126,7 @@ void Togezo2D::control() {
 
 void Togezo2D::exeWalk() {
     if (al::isFirstStep(this)) {
-        al::validateClipping(this);
+        al::invalidateClipping(this);
         al::showModelIfHide(this);
         al::onCollide(this);
         al::validateHitSensors(this);
@@ -168,8 +168,4 @@ void Togezo2D::exeHideWait() {
             mIsAlwaysFalse = false;
         al::resetPosition(this);
     }
-}
-
-ActorDimensionKeeper* Togezo2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }

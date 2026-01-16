@@ -2,42 +2,199 @@
 
 #include <math/seadQuat.h>
 
+#include "Library/LiveActor/LiveActorGroup.h"
 #include "Library/Scene/Scene.h"
-
-#include "Layout/StageSceneLayout.h"
 
 namespace al {
 class LayoutActor;
-}
+class SimpleLayoutAppearWaitEnd;
+class ParabolicPath;
+class WipeSimple;
+class WipeHolder;
+class WindowConfirm;
+class SimpleAudioUser;
+class DemoSyncedEventKeeper;
+class LayoutTextureRenderer;
+class ChromakeyDrawer;
+class HtmlViewer;
+class CameraTicket;
+}  // namespace al
+
 class Shine;
+class GameDataHolderAccessor;
 class GameDataHolder;
 class MapLayout;
 class ProjectItemDirector;
 class PlayerActorHakoniwa;
 class ProjectDemoDirector;
 class StageSceneLayout;
+class TimeBalloonNpc;
+class TimeBalloonDirector;
+class TimeBalloonSequenceInfo;
+class CollectBgmPlayer;
+class CollectBgmRegister;
+class BgmAnimeSyncDirector;
+class NpcEventDirector;
+class ScenarioStartCameraHolder;
+class ControllerGuideSnapShotCtrl;
+class InputSeparator;
+class MiniGameMenu;
+class Pyramid;
+class SceneAudioSystemPauseController;
+class DemoSoundSynchronizer;
+class StageSceneStateWorldMap;
+class StageSceneStateShop;
+class StageSceneStateSnapShot;
+class StageSceneStateGetShine;
+class StageSceneStateGetShineMain;
+class StageSceneStateGetShineGrand;
+class StageSceneStateCollectBgm;
+class StageSceneStateCollectionList;
+class StageSceneStateMiniGameRanking;
+class StageSceneStatePauseMenu;
+class StageSceneStateCloset;
+class StageSceneStateSkipDemo;
+class StageSceneStateCheckpointWarp;
+class StageSceneStateCarryMeat;
+class StageSceneStateMiss;
+class StageSceneStateYukimaruRace;
+class StageSceneStateYukimaruRaceTutorial;
+class StageSceneStateRaceManRace;
+class StageSceneStateRadicon;
+class StageSceneStateScenarioCamera;
+class StageSceneStateRecoverLife;
+class StageSceneStateGetShineMainSandWorld;
+class StageSceneStateWarp;
+class ProjectSeNamedList;
+class ProjectNfpDirector;
+class PlayGuideSkip;
+class CinemaCaption;
+class KoopaLv1;
+class StageSceneStateWorldIntroCamera;
+class StageSceneStateTimeBalloon;
+class StageSceneStateTitleLogo;
+class StageSceneStateTalk;
+class LocationNameCtrl;
+class ShoppingWatcher;
+class CollectionList;
+class OpeningStageStartDemo;
+class HelpAmiiboDirector;
 
 class StageScene : public al::Scene {
 public:
     StageScene();
+    ~StageScene() override;
+    void init(const al::SceneInitInfo& info) override;
+    void appear() override;
+    void kill() override;
 
-    virtual ~StageScene();
-    virtual void init(const al::SceneInitInfo&);
-    virtual void appear();
-    virtual void kill();
-
-    virtual void control();
-    virtual void drawMain();
+    void control() override;
+    void drawMain() const override;
 
     bool isEnableSave() const;
 
-    // somewhere here at 0xE0: stageName
-
-    unsigned char padding_to_2D0[0x1F8];
-    GameDataHolderAccessor* mHolder;
-    unsigned char padding_2F8[0x20];
-    StageSceneLayout* stageSceneLayout;
+private:
+    sead::FixedSafeString<64> mStageName;
+    s32 mScenarioNo = 0;
+    StageSceneStateWorldMap* mStateWorldMap = nullptr;
+    StageSceneStateShop* mStateShop = nullptr;
+    StageSceneStateSnapShot* mStateSnapShot = nullptr;
+    StageSceneStateGetShine* mStateGetShine = nullptr;
+    StageSceneStateGetShineMain* mStateGetShineMain = nullptr;
+    StageSceneStateGetShineGrand* mStateGetShineGrand = nullptr;
+    StageSceneStateCollectBgm* mStateCollectBgm = nullptr;
+    StageSceneStateCollectionList* mStateCollectionList = nullptr;
+    StageSceneStateMiniGameRanking* mStateMiniGameRanking = nullptr;
+    StageSceneStatePauseMenu* mStagePauseMenu = nullptr;
+    StageSceneStateCloset* mStateCloset = nullptr;
+    StageSceneStateSkipDemo* mStateSkipDemo = nullptr;
+    StageSceneStateCheckpointWarp* mStateCheckpointWarp = nullptr;
+    StageSceneStateCarryMeat* mStateCarryMeat = nullptr;
+    StageSceneStateTimeBalloon* mStateTimeBalloon = nullptr;
+    StageSceneStateTitleLogo* mStateTitleLogo = nullptr;
+    StageSceneStateMiss* mStateMiss = nullptr;
+    StageSceneStateYukimaruRace* mStateYukimaruRace = nullptr;
+    StageSceneStateYukimaruRaceTutorial* mStateYukimaruRaceTutorial = nullptr;
+    StageSceneStateRaceManRace* mStateRaceManRace = nullptr;
+    StageSceneStateRadicon* mStateRadicon = nullptr;
+    StageSceneStateScenarioCamera* mStateScenarioCamera = nullptr;
+    StageSceneStateRecoverLife* mStateRecoverLife = nullptr;
+    StageSceneStateGetShineMainSandWorld* mStateGetShineMainSandWorld = nullptr;
+    StageSceneStateTalk* mStateTalk = nullptr;
+    StageSceneStateWarp* mStateWarp = nullptr;
+    StageSceneStateWorldIntroCamera* mStateWorldIntroCamera = nullptr;
+    ScenarioStartCameraHolder* mScenarioStartCameraHolder = nullptr;
+    sead::FixedSafeString<64> mCostumeName;
+    sead::FixedSafeString<64> mCapTypeName;
+    void* _2c8 = nullptr;
+    GameDataHolder* mGameDataHolder = nullptr;
+    al::PlacementInfo* mPlacementInfo = nullptr;
+    al::LayoutTextureRenderer* mLayoutTextureRenderer = nullptr;
+    PlayGuideSkip* mPlayGuideSkip = nullptr;
+    CinemaCaption* mCinemaCaption = nullptr;
+    StageSceneLayout* mSceneLayout = nullptr;
+    bool mIsPlayerHackFukankun = false;
+    bool mIsKoopaHackDemo = false;
+    al::SimpleLayoutAppearWaitEnd* mScenarioStartLayout = nullptr;
+    al::SimpleLayoutAppearWaitEnd* mWorldStartCountryLayout = nullptr;
+    al::SimpleLayoutAppearWaitEnd* mWorldStartRegionLayout = nullptr;
+    ControllerGuideSnapShotCtrl* mControllerGuideSnapshotCtrl = nullptr;
+    InputSeparator* mInputSeparator = nullptr;
+    al::WipeSimple* mWipeSimple = nullptr;
+    al::WipeHolder* mWipeHolder = nullptr;
+    LocationNameCtrl* mLocationNameCtrl = nullptr;
+    al::WindowConfirm* mWindowConfirm = nullptr;
+    MiniGameMenu* mMiniGameMenu = nullptr;
+    bool mIsExistShineOrCoinCollectInStage = false;
+    char _359[7];
+    bool _360 = false;
+    void* _368 = nullptr;
+    MapLayout* mMapLayout = nullptr;
+    al::SimpleLayoutAppearWaitEnd* mPauseMenu = nullptr;
+    al::DeriveActorGroup<ShoppingWatcher>* mShoppingWatcherGroup = nullptr;
+    CollectionList* mCollectionList = nullptr;
+    KoopaLv1* mKoopaLv1 = nullptr;
+    TimeBalloonNpc* mTimeBalloonNpc = nullptr;
+    ProjectItemDirector* mProjectItemDirector = nullptr;
+    Pyramid* mPyramid = nullptr;
+    OpeningStageStartDemo* mOpeningStageStartDemo = nullptr;
+    al::Nerve* mCurrentNerve = nullptr;
+    SceneAudioSystemPauseController* mAudioSystemPauseController = nullptr;
+    DemoSoundSynchronizer* mDemoSoundSynchronizer = nullptr;
+    al::SimpleAudioUser* mStageStartAtmosSe = nullptr;
+    al::SimpleAudioUser* mSePlayArea = nullptr;
+    al::SimpleAudioUser* mSnapShotCameraCtrl = nullptr;
+    ProjectSeNamedList* mSeNamedList = nullptr;
+    void* _3f0 = nullptr;
+    TimeBalloonDirector* mTimeBalloonDirector = nullptr;
+    TimeBalloonSequenceInfo* mTimeBalloonSequenceInfo = nullptr;
+    void* _408 = nullptr;
+    al::CameraTicket* mCheckpointWarpArriveCamera = nullptr;
+    sead::Vector3f mCheckpointWarpTargetPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mCheckpointWarpParabolicPathPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mCheckpointWarpParabolicPathEnd = {0.0f, 0.0f, 0.0f};
+    al::LiveActor* mCheckpointWarpCapActor = nullptr;
+    al::ParabolicPath* mCheckpointWarpParabolicPath = nullptr;
+    al::LiveActor* mDemoShine = nullptr;
+    al::LiveActor* mDemoDotShine = nullptr;
+    void* _460 = nullptr;
+    CollectBgmPlayer* mCollectBgmPlayer = nullptr;
+    CollectBgmRegister* mCollectBgmRegister = nullptr;
+    BgmAnimeSyncDirector* mBgmAnimeSyncDirector = nullptr;
+    al::DemoSyncedEventKeeper* mDemoSyncedEventKeeper = nullptr;
+    const char* mActiveDemoName = nullptr;
+    s32 mDemoSynchronizerTimer = 0;
+    bool _494 = false;
+    bool mIsUpdateKitAndGraphics = false;
+    bool _496 = false;
+    NpcEventDirector* mNpcEventDirector = nullptr;
+    al::ChromakeyDrawer* mChromakeyDrawer = nullptr;
+    al::HtmlViewer* mHtmlViewer = nullptr;
+    ProjectNfpDirector* mProjectNfpDirector = nullptr;
+    HelpAmiiboDirector* mHelpAmiiboDirector = nullptr;
 };
+
+static_assert(sizeof(StageScene) == 0x4C0);
 
 namespace rs {
 void tryStartRaceStage(al::Scene*, GameDataHolder*);

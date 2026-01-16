@@ -2,9 +2,9 @@
 
 namespace al {
 
-PlayerHolder::PlayerHolder(s32 count) {
-    mBufferSize = count;
-    mPlayers = new Player[count];
+PlayerHolder::PlayerHolder(s32 maxPlayers) {
+    mBufferSize = maxPlayers;
+    mPlayers = new Player[maxPlayers];
     clear();
 }
 

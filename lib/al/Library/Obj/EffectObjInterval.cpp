@@ -1,6 +1,6 @@
 #include "Library/Obj/EffectObjInterval.h"
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -35,14 +35,14 @@ void EffectObjInterval::init(const ActorInitInfo& info) {
 }
 
 void EffectObjInterval::initAfterPlacement() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector)
         return;
 
     attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
 void EffectObjInterval::control() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         connectPoseQT(this, mMtxConnector);
 
     makeMtxRT(&mBaseMtx, this);
@@ -72,9 +72,5 @@ void EffectObjInterval::kill() {
     mIsStarted = false;
 
     LiveActor::kill();
-}
-
-const sead::Matrix34f* EffectObjInterval::getBaseMtx() const {
-    return &mBaseMtx;
 }
 }  // namespace al

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Library/HostIO/HioNode.h"
+
 #include "Player/IJudge.h"
 
 namespace al {
@@ -10,7 +12,7 @@ class PlayerInput;
 class IUsePlayerCollision;
 class IPlayerModelChanger;
 
-class PlayerJudgeSlopeSlide : public IJudge {
+class PlayerJudgeSlopeSlide : public al::HioNode, public IJudge {
 public:
     PlayerJudgeSlopeSlide(const al::LiveActor* player, const PlayerConst* pConst,
                           const PlayerInput* input, const IUsePlayerCollision* collider,

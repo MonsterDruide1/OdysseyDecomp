@@ -2,10 +2,6 @@
 
 namespace al {
 
-f32 Graph::Edge::getWeight() const {
-    return mWeight;
-}
-
 Graph::Graph(s32 vertices_size, s32 edges_size) {
     mVertices.allocBuffer(vertices_size, nullptr);
     mEdges.allocBuffer(edges_size, nullptr);

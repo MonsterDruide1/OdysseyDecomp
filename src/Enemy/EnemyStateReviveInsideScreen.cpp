@@ -28,7 +28,7 @@ EnemyStateReviveInsideScreen::EnemyStateReviveInsideScreen(al::LiveActor* actor)
 }
 
 void EnemyStateReviveInsideScreen::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
 
     if (al::isHideModel(mActor)) {
         mIsModelHidden = true;
@@ -54,7 +54,7 @@ void EnemyStateReviveInsideScreen::appear() {
 
 void EnemyStateReviveInsideScreen::kill() {
     al::stopSe(mActor, "RevivalSign", 0xFFFFFFFF, 0);
-    setDead(true);
+    al::NerveStateBase::kill();
     if (!mIsModelHidden)
         al::showModel(mActor);
     if (!mIsInvalidClipping)

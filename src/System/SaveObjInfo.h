@@ -11,16 +11,16 @@ public:
     enum class SaveType { Write, NoWriteInSameWorld, NoWriteResetMinigame, NoWriteInSameScenario };
 
     static SaveObjInfo* createSaveObjInfoWriteSaveData(const al::ActorInitInfo& initInfo,
-                                                       const al::PlacementId* placementId);
+                                                       const al::PlacementId* id);
     static SaveObjInfo*
     createSaveObjInfoNoWriteSaveDataInSameWorld(const al::ActorInitInfo& initInfo,
-                                                const al::PlacementId* placementId);
+                                                const al::PlacementId* id);
     static SaveObjInfo*
     createSaveObjInfoNoWriteSaveDataInSameWorldResetMiniGame(const al::ActorInitInfo& initInfo,
-                                                             const al::PlacementId* placementId);
+                                                             const al::PlacementId* id);
     static SaveObjInfo*
     createSaveObjInfoNoWriteSaveDataInSameScenario(const al::ActorInitInfo& initInfo,
-                                                   const al::PlacementId* placementId);
+                                                   const al::PlacementId* id);
 
     SaveObjInfo(const al::ActorInitInfo& initInfo, const al::PlacementId* placementId,
                 SaveType saveType);

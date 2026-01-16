@@ -22,11 +22,21 @@ public:
     void setMoveGoingEnd();
     void setSpeed(f32 speed);
     void addSpeed(f32 speed);
-    void scaleSpeed(f32 speed);
-    bool isReachedGoal();
-    bool isReachedRailEnd();
-    bool isReachedRailStart();
-    bool isReachedEdge();
+    void scaleSpeed(f32 scale);
+    bool isReachedGoal() const;
+    bool isReachedRailEnd() const;
+    bool isReachedRailStart() const;
+    bool isReachedEdge() const;
+
+    const Rail* getRail() const { return mRail; }
+
+    const sead::Vector3f& getDirection() const { return mDirection; }
+
+    const sead::Vector3f& getPosition() const { return mPosition; }
+
+    f32 getCoord() const { return mCoord; }
+
+    bool isMoveForwards() const { return mIsMoveForwards; }
 
 private:
     const Rail* mRail;

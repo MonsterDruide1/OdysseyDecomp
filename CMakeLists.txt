@@ -18,20 +18,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-file(GLOB_RECURSE SOURCES_GAME ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/src/*.h)
-file(GLOB_RECURSE SOURCES_AL ${PROJECT_SOURCE_DIR}/lib/al/*.cpp ${PROJECT_SOURCE_DIR}/lib/al/*.c ${PROJECT_SOURCE_DIR}/lib/al/*.h ${PROJECT_SOURCE_DIR}/lib/al/*.hpp)
+file(GLOB_RECURSE SOURCES_GAME CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/src/*.h)
+file(GLOB_RECURSE SOURCES_AL CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/lib/al/*.cpp ${PROJECT_SOURCE_DIR}/lib/al/*.c ${PROJECT_SOURCE_DIR}/lib/al/*.h ${PROJECT_SOURCE_DIR}/lib/al/*.hpp)
 
 add_executable(odyssey ${SOURCES_GAME} ${SOURCES_AL})
-
-# Writing sources to a file so build.py script knows the sources
-set(SOURCES_OUTPUT_FILE "${CMAKE_BINARY_DIR}/.build_sources")
-file(WRITE ${SOURCES_OUTPUT_FILE} "")
-
-get_target_property(SOURCES_COMBINED odyssey SOURCES)
-
-foreach (SOURCE ${SOURCES_COMBINED})
-    file(APPEND ${SOURCES_OUTPUT_FILE} "${SOURCE}\n")
-endforeach ()
 
 target_include_directories(odyssey PRIVATE src)
 target_include_directories(odyssey PRIVATE lib/al)
@@ -45,6 +35,7 @@ target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 set(NN_WARE 3.5.1)
 set(NN_SDK 3.5.1)
 set(NN_SDK_TYPE "Release")
+add_compile_definitions(SEAD_VERSION=SEAD_VERSION_SMO)
 
 include_directories(lib)
 include_directories(lib/aarch64)

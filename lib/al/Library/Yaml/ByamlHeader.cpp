@@ -6,7 +6,8 @@
 
 #include "Library/Yaml/ByamlData.h"
 
-#define BYAML_LE_TAG 'YB'
+#define BYAML_LE_TAG 0x5942  // 'YB'
+#define BYAML_BE_TAG 0x4259  // 'BY'
 
 namespace al {
 u16 ByamlHeader::getTag() const {
@@ -51,14 +52,14 @@ const u32* ByamlStringTableIter::getAddressTable() const {
     return reinterpret_cast<const u32*>(mData + 4);
 }
 
-u32 ByamlStringTableIter::getStringAddress(s32 idx) const {
+u32 ByamlStringTableIter::getStringAddress(s32 index) const {
     if (mIsRev)
-        return bswap_32(getAddressTable()[idx]);
+        return bswap_32(getAddressTable()[index]);
 
-    return getAddressTable()[idx];
+    return getAddressTable()[index];
 }
 
-// NON_MATCHING: regalloc
+// NON_MATCHING: regalloc (https://decomp.me/scratch/AdRVH)
 u32 ByamlStringTableIter::getEndAddress() const {
     u32 val = getAddressTable()[getSize()];
     return mIsRev ? bswap_32(val) : val;
@@ -99,33 +100,33 @@ namespace alByamlLocalUtil {
 
 const char* getDataTypeString(s32 type) {
     switch (type) {
-    case al::ByamlDataType::TYPE_INVALID:
+    case (u8)al::ByamlDataType::None:
         return "None";
-    case al::ByamlDataType::TYPE_STRING:
+    case (u8)al::ByamlDataType::String:
         return "String";
-    case al::ByamlDataType::TYPE_ARRAY:
+    case (u8)al::ByamlDataType::Array:
         return "Array";
-    case al::ByamlDataType::TYPE_HASH:
+    case (u8)al::ByamlDataType::Hash:
         return "Hash";
-    case al::ByamlDataType::TYPE_STRING_TABLE:
+    case (u8)al::ByamlDataType::StringTable:
         return "StringTable";
-    case al::ByamlDataType::TYPE_BOOL:
+    case (u8)al::ByamlDataType::Bool:
         return "Bool";
-    case al::ByamlDataType::TYPE_INT:
+    case (u8)al::ByamlDataType::Int:
         return "Int";
-    case al::ByamlDataType::TYPE_FLOAT:
+    case (u8)al::ByamlDataType::Float:
         return "Float";
-    case al::ByamlDataType::TYPE_UINT:
+    case (u8)al::ByamlDataType::UInt:
         return "UInt";
-    case al::ByamlDataType::TYPE_LONG:
+    case (u8)al::ByamlDataType::Int64:
         return "Int64";
-    case al::ByamlDataType::TYPE_ULONG:
+    case (u8)al::ByamlDataType::UInt64:
         return "UInt64";
-    case al::ByamlDataType::TYPE_DOUBLE:
+    case (u8)al::ByamlDataType::Double:
         return "Double";
-    case al::ByamlDataType::TYPE_NULL:
+    case (u8)al::ByamlDataType::Null:
         return "NULL";
-    case al::ByamlDataType::TYPE_BINARY:
+    case (u8)al::ByamlDataType::Binary:
     default:
         return "Unknown";
     };
@@ -165,7 +166,7 @@ void writeU24(sead::WriteStream* stream, s32 val) {
 }
 
 // NON_MATCHING: inlined verifiHeader, splitted loads for unswappedAfterOffset and diff in final
-// logic
+// logic (https://decomp.me/scratch/5xOvy)
 bool verifiByaml(const u8* data) {
     if (!verifiByamlHeader(data))
         return false;
@@ -173,7 +174,7 @@ bool verifiByaml(const u8* data) {
     bool isRev = *((const u16*)data) == BYAML_LE_TAG;
     const u32* biggerData = (const u32*)data;
 
-    s32 afterHashOffset = 0;
+    u32 afterHashOffset = 0;
     u32 hashOffset = isRev ? bswap_32(biggerData[1]) : biggerData[1];
     if (hashOffset) {
         const u8* hashData = &data[hashOffset];
@@ -186,7 +187,7 @@ bool verifiByaml(const u8* data) {
         afterHashOffset = isRev ? swappedAfterOffset : unswappedAfterOffset;
     }
 
-    s32 afterStringOffset = 0;
+    u32 afterStringOffset = 0;
     u32 stringOffset = isRev ? bswap_32(biggerData[2]) : biggerData[2];
     if (stringOffset) {
         const u8* stringData = &data[stringOffset];
@@ -207,19 +208,17 @@ bool verifiByaml(const u8* data) {
            (afterStringOffset <= rootOffset || !stringOffset || !rootOffset);
 }
 
-// NON_MATCHING: missing & 0xFFFF
+// NON_MATCHING: missing & 0xFFFF (https://decomp.me/scratch/dRP3R)
 bool verifiByamlHeader(const u8* data) {
     const al::ByamlHeader* header = reinterpret_cast<const al::ByamlHeader*>(data);
-    return header->getTag() == 'BY' && (u32)(header->getVersion() - 1) < 3;
+    return header->getTag() == BYAML_BE_TAG && (u32)(header->getVersion() - 1) < 3;
 }
 
 bool verifiByamlStringTable(const u8* data, bool isRev) {
-    const al::ByamlStringTableIter* strings =
-        reinterpret_cast<const al::ByamlStringTableIter*>(data);
     const s32* address_table = reinterpret_cast<const s32*>(data + 4);
 
     u32 type_and_size = *reinterpret_cast<const u32*>(data);
-    if ((type_and_size & 0xff) != al::ByamlDataType::TYPE_STRING_TABLE)
+    if ((al::ByamlDataType)type_and_size != al::ByamlDataType::StringTable)
         return false;
     s32 size = isRev ? bswap_24(type_and_size >> 8) : type_and_size >> 8;
     if (size < 1)

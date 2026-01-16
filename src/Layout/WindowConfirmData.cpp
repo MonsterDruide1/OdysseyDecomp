@@ -29,9 +29,9 @@ WindowConfirmData::WindowConfirmData(const al::LayoutInitInfo& info, const char*
                                      const char* name, bool createDataParts)
     : al::NerveExecutor(name) {
     mWindowConfirmLayout = new al::SimpleLayoutAppearWaitEnd("セーブデータ確認ウィンドウ",
-                                                             layoutName, info, nullptr, 0);
+                                                             layoutName, info, nullptr, false);
     mParCursor = new al::LayoutActor("カーソル");
-    al::initLayoutPartsActor(mParCursor, mWindowConfirmLayout, info, "ParCursor", nullptr);
+    al::initLayoutPartsActor(mParCursor, mWindowConfirmLayout, info, "ParCursor");
 
     mParOptions[PaneType_Confirm] = new al::LayoutActor("決定");
     al::initLayoutPartsActor(mParOptions[PaneType_Confirm], mWindowConfirmLayout, info, "ParList00",
@@ -43,25 +43,25 @@ WindowConfirmData::WindowConfirmData(const al::LayoutInitInfo& info, const char*
 
     if (createDataParts) {
         mParData = new al::LayoutActor("対象データ");
-        al::initLayoutPartsActor(mParData, mWindowConfirmLayout, info, "ParData", nullptr);
+        al::initLayoutPartsActor(mParData, mWindowConfirmLayout, info, "ParData");
     }
 
-    initNerve(&Disable, 0);
+    initNerve(&Disable);
 }
 
 void WindowConfirmData::setConfirmMessage(const char16* message, const char16* confirmMessage,
                                           const char16* cancelMessage) {
-    al::setPaneString(mWindowConfirmLayout, "TxtMessage", message, 0);
-    al::setPaneString(mParOptions[PaneType_Confirm], "TxtContent", confirmMessage, 0);
-    al::setPaneString(mParOptions[PaneType_Cancel], "TxtContent", cancelMessage, 0);
+    al::setPaneString(mWindowConfirmLayout, "TxtMessage", message);
+    al::setPaneString(mParOptions[PaneType_Confirm], "TxtContent", confirmMessage);
+    al::setPaneString(mParOptions[PaneType_Cancel], "TxtContent", cancelMessage);
 }
 
 void WindowConfirmData::setConfirmData(al::LayoutActor* actor, nn::ui2d::TextureInfo* texture) {
-    al::setPaneString(mParData, "TxtNumber", al::getPaneStringBuffer(actor, "TxtNumber"), 0);
-    al::setPaneString(mParData, "TxtWorld", al::getPaneStringBuffer(actor, "TxtWorld"), 0);
-    al::setPaneString(mParData, "TxtShine", al::getPaneStringBuffer(actor, "TxtShine"), 0);
-    al::setPaneString(mParData, "TxtDay", al::getPaneStringBuffer(actor, "TxtDay"), 0);
-    al::setPaneString(mParData, "TxtPlay", al::getPaneStringBuffer(actor, "TxtPlay"), 0);
+    al::setPaneString(mParData, "TxtNumber", al::getPaneStringBuffer(actor, "TxtNumber"));
+    al::setPaneString(mParData, "TxtWorld", al::getPaneStringBuffer(actor, "TxtWorld"));
+    al::setPaneString(mParData, "TxtShine", al::getPaneStringBuffer(actor, "TxtShine"));
+    al::setPaneString(mParData, "TxtDay", al::getPaneStringBuffer(actor, "TxtDay"));
+    al::setPaneString(mParData, "TxtPlay", al::getPaneStringBuffer(actor, "TxtPlay"));
     al::setPaneTexture(mParData, "PicDummy", texture);
 
     al::startAction(mParData, al::getActionName(actor, "State"), "State");
@@ -77,7 +77,7 @@ void WindowConfirmData::updateConfirmDataDate() {
 
     al::WStringTmp<128> dateStr(u"---");
     al::replaceMessageTagTimeDirectDateDetail(&dateStr, mWindowConfirmLayout, replaceTimeInfo);
-    al::setPaneString(mParData, "TxtDay", dateStr.cstr(), 0);
+    al::setPaneString(mParData, "TxtDay", dateStr.cstr());
 }
 
 void WindowConfirmData::appear() {
@@ -103,16 +103,16 @@ bool WindowConfirmData::isEndSelect() {
     if (!al::isNerve(this, &Select))
         return false;
 
-    if (!al::isActionPlaying(mParCursor, "End", nullptr))
+    if (!al::isActionPlaying(mParCursor, "End"))
         return false;
 
-    if (!al::isActionEnd(mParCursor, nullptr))
+    if (!al::isActionEnd(mParCursor))
         return false;
 
-    if (!al::isActionPlaying(mParOptions[mSelectionIndex], "Decide", nullptr))
+    if (!al::isActionPlaying(mParOptions[mSelectionIndex], "Decide"))
         return false;
 
-    if (!al::isActionEnd(mParOptions[mSelectionIndex], nullptr))
+    if (!al::isActionEnd(mParOptions[mSelectionIndex]))
         return false;
 
     return true;
@@ -133,7 +133,7 @@ bool WindowConfirmData::isDisable() {
 void WindowConfirmData::exeAppear() {
     if (al::isFirstStep(this)) {
         mWindowConfirmLayout->appear();
-        al::startAction(mParCursor, "Hide", nullptr);
+        al::startAction(mParCursor, "Hide");
         changeSelectingIdx(mSelectionIndex);
     }
     if (mWindowConfirmLayout->isWait())
@@ -141,9 +141,9 @@ void WindowConfirmData::exeAppear() {
 }
 
 void WindowConfirmData::changeSelectingIdx(s32 index) {
-    al::startAction(mParOptions[PaneType_Confirm], index == PaneType_Confirm ? "Wait" : "Select",
+    al::startAction(mParOptions[PaneType_Confirm], index == PaneType_Confirm ? "Select" : "Wait",
                     nullptr);
-    al::startAction(mParOptions[PaneType_Cancel], index == PaneType_Cancel ? "Wait" : "Select",
+    al::startAction(mParOptions[PaneType_Cancel], index == PaneType_Cancel ? "Select" : "Wait",
                     nullptr);
     mSelectionIndex = (PaneType)index;
 }
@@ -151,11 +151,11 @@ void WindowConfirmData::changeSelectingIdx(s32 index) {
 void WindowConfirmData::exeWait() {
     if (al::isFirstStep(this)) {
         updateCursorPos();
-        al::startAction(mParCursor, "Appear", nullptr);
+        al::startAction(mParCursor, "Appear");
     }
 
-    if (al::isActionPlaying(mParCursor, "Appear", nullptr) && al::isActionEnd(mParCursor, nullptr))
-        al::startAction(mParCursor, "Wait", nullptr);
+    if (al::isActionPlaying(mParCursor, "Appear") && al::isActionEnd(mParCursor))
+        al::startAction(mParCursor, "Wait");
 
     updateCursorPos();
 
@@ -174,17 +174,17 @@ void WindowConfirmData::exeWait() {
     }
 
     if (rs::isTriggerUiDecide(mWindowConfirmLayout)) {
-        al::startHitReaction(mWindowConfirmLayout, "決定", nullptr);
+        al::startHitReaction(mWindowConfirmLayout, "決定");
         al::setNerve(this, &Select);
         return;
     }
 
     if (rs::isTriggerUiCancel(mWindowConfirmLayout)) {
-        al::startHitReaction(mWindowConfirmLayout, "キャンセル", nullptr);
+        al::startHitReaction(mWindowConfirmLayout, "キャンセル");
 
         if (mSelectionIndex != PaneType_Cancel) {
-            al::startAction(mParOptions[PaneType_Confirm], "Wait", nullptr);
-            al::startAction(mParOptions[PaneType_Cancel], "Select", nullptr);
+            al::startAction(mParOptions[PaneType_Confirm], "Wait");
+            al::startAction(mParOptions[PaneType_Cancel], "Select");
             mSelectionIndex = PaneType_Cancel;
             updateCursorPos();
         }
@@ -204,8 +204,8 @@ void WindowConfirmData::updateCursorPos() {
 
 void WindowConfirmData::exeSelect() {
     if (al::isFirstStep(this)) {
-        al::startAction(mParCursor, "End", nullptr);
-        al::startAction(mParOptions[mSelectionIndex], "Decide", nullptr);
+        al::startAction(mParCursor, "End");
+        al::startAction(mParOptions[mSelectionIndex], "Decide");
     }
 }
 

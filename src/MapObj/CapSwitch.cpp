@@ -1,6 +1,6 @@
 #include "MapObj/CapSwitch.h"
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
@@ -76,25 +76,26 @@ void CapSwitch::listenReset() {
         al::setNerve(this, &NrvCapSwitch.ReturnOff);
 }
 
-bool CapSwitch::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) {
+bool CapSwitch::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                           al::HitSensor* self) {
     if (al::isNerve(this, &NrvCapSwitch.OffWaitInvalid))
-        return rs::isMsgPlayerDisregardHomingAttack(msg);
+        return rs::isMsgPlayerDisregardHomingAttack(message);
 
-    if (rs::isMsgCapStartLockOn(msg) && al::isNerve(this, &NrvCapSwitch.OffWait))
+    if (rs::isMsgCapStartLockOn(message) && al::isNerve(this, &NrvCapSwitch.OffWait))
         return true;
 
-    if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(msg, mCapTargetInfo)) {
+    if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(message, mCapTargetInfo)) {
         rs::tryGetFlyingCapPos(&mFlyingCapPos, this);
         al::invalidateClipping(this);
         al::setNerve(this, &NrvCapSwitch.OffWaitCapHold);
         return true;
     }
 
-    if ((rs::isMsgCapKeepLockOn(msg) || rs::isMsgCapIgnoreCancelLockOn(msg)) &&
+    if ((rs::isMsgCapKeepLockOn(message) || rs::isMsgCapIgnoreCancelLockOn(message)) &&
         al::isNerve(this, &NrvCapSwitch.OffWaitCapHold))
         return true;
 
-    if (rs::isMsgCapCancelLockOn(msg))
+    if (rs::isMsgCapCancelLockOn(message))
         return true;
 
     return false;
@@ -130,7 +131,7 @@ void CapSwitch::exeOffWaitCapHold() {
     sead::Vector3f frontDir = sead::Vector3f::ez;
     al::calcFrontDir(&frontDir, this);
 
-    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize(), 0.001f) ?
+    f32 angle = al::isNearZero((hitTargetPos - mPlayerPos).normalize()) ?
                     0.0f :
                     al::calcAngleDegree(frontDir, hitTargetPos - mPlayerPos);
 

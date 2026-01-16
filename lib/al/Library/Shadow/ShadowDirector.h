@@ -23,6 +23,8 @@ class Projection;
 class ShaderHolder;
 class DepthShadowParam;
 class DepthShadowClipParam;
+class DepthShadowMapDirector;
+class ShadowMaskDirector;
 
 class ShadowDirector {
 public:
@@ -39,7 +41,7 @@ public:
     void* getCurrentClipParam();    // unknown return type
     bool isUsingShadowCamera() const;
     void preDrawGraphics();
-    void isEnableShadowPrePass() const;
+    bool isEnableShadowPrePass() const;
     void updateViewGpu(s32, const sead::Camera*, const Projection*);
     void* getDepthShadow();  // unknown return type
     void drawShadowPrePass(agl::DrawContext*, s32, const agl::RenderTargetDepth*,
@@ -53,6 +55,18 @@ public:
     void* getCurrentFar() const;          // unknown return type
     bool requestParam(s32, s32, const DepthShadowParam&);
     bool requestParam(s32, s32, const DepthShadowClipParam&);
+
+    ShadowMaskDirector* getShadowMaskDirector() const { return mShadowMaskDirector; }
+
+    DepthShadowMapDirector* getDepthShadowMapDirector() const { return mDepthShadowMapDirector; }
+
+private:
+    void* _0[1];
+    ShadowMaskDirector* mShadowMaskDirector;
+    DepthShadowMapDirector* mDepthShadowMapDirector;
+    void* _10[0x148 / 8];
 };
+
+static_assert(sizeof(ShadowDirector) == 0x160);
 
 }  // namespace al

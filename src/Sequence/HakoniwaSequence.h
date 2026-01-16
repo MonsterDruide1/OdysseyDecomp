@@ -40,7 +40,7 @@ class HakoniwaSequence : public al::Sequence {
 public:
     HakoniwaSequence(const char* name);
 
-    void init(const al::SequenceInitInfo& info) override;
+    void init(const al::SequenceInitInfo& initInfo) override;
     void update() override;
     void drawMain() const override;
 

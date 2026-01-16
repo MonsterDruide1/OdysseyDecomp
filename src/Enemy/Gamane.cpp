@@ -64,8 +64,8 @@ static EnemyStateSwoonInitParam gEnemyStateSwoonInitParam = EnemyStateSwoonInitP
 
 Gamane::Gamane(const char* name) : al::LiveActor(name) {}
 
-void Gamane::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "Gamane", nullptr);
+void Gamane::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "Gamane", nullptr);
     al::initNerve(this, &NrvGamane.Wait, 5);
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
@@ -80,7 +80,7 @@ void Gamane::init(const al::ActorInitInfo& initInfo) {
 
     mHackState = new GamaneHackState(this);
     al::initNerveState(this, mHackState, &NrvGamane.Hack, "憑依");
-    mHackState->initialize(initInfo);
+    mHackState->initialize(info);
 
     mStateBlowDown = new al::EnemyStateBlowDown(this, &gEnemyStateBlowDownParam, "吹き飛び状態");
     al::initNerveState(this, mStateBlowDown, &NrvGamane.BlowDown, "吹き飛び");
@@ -112,7 +112,7 @@ void Gamane::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvGamane.PressDown) || al::isNerve(this, &NrvGamane.BlowDown))
         return;
 
-    if (mPlayerHack != nullptr) {
+    if (mPlayerHack) {
         mHackState->attackSensor(self, other);
         return;
     }
@@ -166,7 +166,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
             return true;
     }
 
-    if (mPlayerHack != nullptr) {
+    if (mPlayerHack) {
         if (rs::isMsgHackMarioCheckpointFlagWarp(message)) {
             rs::endHack(&mPlayerHack);
             rs::endHackShadow(this);
@@ -217,7 +217,7 @@ bool Gamane::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     if (rs::isMsgBlowDown(message)) {
         if (rs::isMsgGamaneBullet(message)) {
             GamaneBullet* bullet = (GamaneBullet*)al::getSensorHost(other);
-            if (bullet != nullptr && bullet->getParent() == this)
+            if (bullet && bullet->getParent() == this)
                 return false;
         }
 
@@ -251,7 +251,7 @@ void Gamane::control() {
         al::updateMaterialCodePuddle(this);
     }
 
-    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHack != nullptr)
+    if (al::isNerve(this, &NrvGamane.Hack) && mPlayerHack)
         mDepthShadowMapCtrl->update(nullptr);
 
     if (!al::isNerve(this, &NrvGamane.Hack) || al::isHideModel(this))
@@ -261,7 +261,7 @@ void Gamane::control() {
 
     if (al::isInDeathArea(this) || al::isInWaterArea(this) ||
         al::isCollidedFloorCode(this, "DamageFire") || al::isCollidedFloorCode(this, "Poison")) {
-        if (!al::isInDeathArea(this) && mPlayerHack != nullptr)
+        if (!al::isInDeathArea(this) && mPlayerHack)
             rs::endHack(&mPlayerHack);
 
         al::startHitReaction(this, "消滅");
@@ -314,7 +314,7 @@ void Gamane::updateRefract() {
                                      refractPercentage * 0.5);
     mRefractTransitionTime--;
 
-    if (mPlayerHack != nullptr)
+    if (mPlayerHack)
         return;
 
     f32 intensity = al::lerpValue(mShadowMaskIntensity, 1.0, refractPercentage);
@@ -403,9 +403,7 @@ void Gamane::exeRunaway() {
 
     sead::Vector3f dirToActor;
     al::calcDirToActorH(&dirToActor, this, al::getPlayerActor(this, 0));
-    dirToActor.x = -dirToActor.x;
-    dirToActor.y = -dirToActor.y;
-    dirToActor.z = -dirToActor.z;
+    dirToActor.negate();
     al::turnToDirection(this, dirToActor, 4.0f);
 
     sead::Vector3f quatFront;

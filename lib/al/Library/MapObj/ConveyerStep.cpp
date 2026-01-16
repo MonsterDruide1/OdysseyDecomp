@@ -33,7 +33,7 @@ void ConveyerStep::init(const ActorInitInfo& info) {
 }
 
 bool ConveyerStep::receiveMsg(const SensorMsg* message, HitSensor* other, HitSensor* self) {
-    if (mHost != nullptr)
+    if (mHost)
         return mHost->receiveMsg(message, other, self);
 
     return false;
@@ -62,16 +62,15 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
     const char* actionName = nullptr;
 
     if (index > -1) {
-        const ConveyerKey* conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
+        const ConveyerKey& conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
 
-        if (tryGetStringArg(&keyHitReactionName, conveyerKey->placementInfo,
+        if (tryGetStringArg(&keyHitReactionName, *conveyerKey.placementInfo,
                             "KeyHitReactionName") &&
-            (mKeyHitReactionName == nullptr ||
-             !isEqualString(mKeyHitReactionName, keyHitReactionName)))
+            (!mKeyHitReactionName || !isEqualString(mKeyHitReactionName, keyHitReactionName)))
             startHitReaction(this, keyHitReactionName);
 
-        if (tryGetStringArg(&actionName, conveyerKey->placementInfo, "ActionName") &&
-            (mActionName == nullptr || !isEqualString(mActionName, actionName)))
+        if (tryGetStringArg(&actionName, *conveyerKey.placementInfo, "ActionName") &&
+            (!mActionName || !isEqualString(mActionName, actionName)))
             startAction(this, actionName);
     }
 
@@ -85,14 +84,14 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
     if (newCoord > mConveyerKeyKeeper->getTotalMoveDistance()) {
         if (mIsExist) {
             mIsExist = false;
-            if (getModelKeeper() != nullptr && !isHideModel(this))
+            if (getModelKeeper() && !isHideModel(this))
                 hideModel(this);
             if (isExistCollisionParts(this))
                 invalidateCollisionParts(this);
         }
     } else if (!mIsExist) {
         mIsExist = true;
-        if (getModelKeeper() != nullptr && isHideModel(this))
+        if (getModelKeeper() && isHideModel(this))
             showModel(this);
         if (isExistCollisionParts(this))
             validateCollisionParts(this);

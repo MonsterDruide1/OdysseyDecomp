@@ -2,7 +2,7 @@
 
 #include <math/seadVector.h>
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -34,18 +34,18 @@ NERVES_MAKE_STRUCT(CoinCollectEmpty, Wait, Got, CountUp);
 CoinCollectEmpty::CoinCollectEmpty(const char* name, const char* archiveName)
     : al::LiveActor(name), mArchiveName(archiveName) {}
 
-void CoinCollectEmpty::init(const al::ActorInitInfo& initInfo) {
-    al::initActorSceneInfo(this, initInfo);
-    al::initActorWithArchiveName(this, initInfo, mArchiveName, nullptr);
+void CoinCollectEmpty::init(const al::ActorInitInfo& info) {
+    al::initActorSceneInfo(this, info);
+    al::initActorWithArchiveName(this, info, mArchiveName, nullptr);
     al::initNerve(this, &NrvCoinCollectEmpty.Wait, 1);
     mStateCountUp = new CoinStateCountUp(this);
     al::initNerveState(this, mStateCountUp, &NrvCoinCollectEmpty.Got, "カウントアップ状態");
     mRotateCalculator = new CoinRotateCalculator(this);
-    al::tryAddDisplayOffset(this, initInfo);
-    mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
+    al::tryAddDisplayOffset(this, info);
+    mMtxConnector = al::tryCreateMtxConnector(this, info);
     mExternalForceKeeper = new ExternalForceKeeper();
     al::expandClippingRadiusByShadowLength(this, nullptr,
-                                           rs::setShadowDropLength(this, initInfo, "本体"));
+                                           rs::setShadowDropLength(this, info, "本体"));
 
     if (al::isExistDitherAnimator(this))
         al::stopDitherAnimAutoCtrl(this);
@@ -56,7 +56,7 @@ void CoinCollectEmpty::init(const al::ActorInitInfo& initInfo) {
 }
 
 void CoinCollectEmpty::initAfterPlacement() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 }
 
@@ -101,7 +101,7 @@ void CoinCollectEmpty::control() {
 }
 
 void CoinCollectEmpty::rotate() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 
     al::setQuat(this, sead::Quatf::unit);
@@ -114,7 +114,7 @@ void CoinCollectEmpty::exeWait() {
 
 void CoinCollectEmpty::exeGot() {
     if (al::isFirstStep(this)) {
-        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 500.0f, 2000.0f, -1);
+        alPadRumbleFunction::startPadRumble(this, "コッ（微弱）", 500.0f, 2000.0f);
         al::startAction(this, "Got");
         GameDataFunction::addCoin(this, 1);
         GameDataFunction::addCoin(this, 1);

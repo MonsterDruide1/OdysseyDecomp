@@ -2,7 +2,7 @@
 
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorParamMove.h"
+#include "Library/LiveActor/ActorParamHolder.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -15,10 +15,10 @@ NERVE_IMPL(FlyerStateWander, Wait)
 NERVES_MAKE_NOSTRUCT(FlyerStateWander, Wander, Wait)
 }  // namespace
 
-FlyerStateWanderParam::FlyerStateWanderParam(s32 ukn, s32 wanderTime, s32 waitTime,
+FlyerStateWanderParam::FlyerStateWanderParam(s32 unk, s32 wanderTime, s32 waitTime,
                                              const char* actionName,
                                              const al::ActorParamMove* actorParamMove)
-    : _0(ukn), mWanderTime(wanderTime), mWaitTime(waitTime), mActionName(actionName),
+    : _0(unk), mWanderTime(wanderTime), mWaitTime(waitTime), mActionName(actionName),
       mActorParamMove(actorParamMove) {}
 
 FlyerStateWander::FlyerStateWander(al::LiveActor* actor, const FlyerStateWanderParam* param)
@@ -27,7 +27,7 @@ FlyerStateWander::FlyerStateWander(al::LiveActor* actor, const FlyerStateWanderP
 }
 
 void FlyerStateWander::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &Wander);
 }
 
@@ -40,8 +40,8 @@ void FlyerStateWander::exeWander() {
     }
 
     const al::ActorParamMove* actorParamMove = mFlyerStateWanderParam->getActorParamMove();
-    al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->_0, actorParamMove->_4,
-                           actorParamMove->_8, actorParamMove->_c);
+    al::flyAndTurnToTarget(mActor, mStartTrans, actorParamMove->moveAccel, actorParamMove->gravity,
+                           actorParamMove->moveFriction, actorParamMove->turnSpeedDegree);
 
     if (al::isGreaterEqualStep(this, mNerveTime))
         al::setNerve(this, &Wait);

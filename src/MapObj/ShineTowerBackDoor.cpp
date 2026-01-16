@@ -1,6 +1,6 @@
 #include "MapObj/ShineTowerBackDoor.h"
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -47,10 +47,10 @@ bool ShineTowerBackDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor*
         return true;
 
     if (al::isSensorMapObj(self)) {
-        if (_118)
+        if (_110)
             return false;
 
-        if (al::isMsgPlayerHipDropAll(message)) {
+        if (al::isMsgPlayerObjHipDropAll(message)) {
             mBindTimer = 3;
             return false;
         }
@@ -63,7 +63,7 @@ bool ShineTowerBackDoor::receiveMsg(const al::SensorMsg* message, al::HitSensor*
         if (al::isMsgBindInit(message)) {
             al::invalidateClipping(this);
             mPlayerPuppet = rs::startPuppet(self, other);
-            rs::setPuppetVelocity(mPlayerPuppet, sead::Vector3f::ex * -45.0f);
+            rs::setPuppetVelocity(mPlayerPuppet, sead::Vector3f::ey * -45.0f);
             rs::invalidatePuppetCollider(mPlayerPuppet);
             rs::hidePuppetSilhouette(mPlayerPuppet);
             al::setNerve(this, &NrvShineTowerBackDoor.Enter);
@@ -118,7 +118,7 @@ void ShineTowerBackDoor::exeEnter() {
         al::startHitReaction(this, "入る");
     }
 
-    rs::setPuppetVelocity(mPlayerPuppet, sead::Vector3f::ex * -45.0f);
+    rs::setPuppetVelocity(mPlayerPuppet, sead::Vector3f::ey * -45.0f);
     sead::Vector3f puppetTrans = rs::getPuppetTrans(mPlayerPuppet);
     sead::Vector3f trans = al::getTrans(this);
     trans.y = puppetTrans.y;
@@ -136,9 +136,8 @@ void ShineTowerBackDoor::exeEnter() {
 
     if (al::isGreaterEqualStep(this, 75)) {
         GameDataHolder* gameDataHolder = GameDataFunction::getGameDataHolder(this);
-        ChangeStageInfo changeStageInfo = ChangeStageInfo(
-            gameDataHolder, "HomeBackDoor", GameDataFunction::getHomeShipStageName(), false, -1,
-            ChangeStageInfo::NO_SUB_SCENARIO);
+        ChangeStageInfo changeStageInfo = ChangeStageInfo(gameDataHolder, "HomeBackDoor",
+                                                          GameDataFunction::getHomeShipStageName());
         GameDataFunction::tryChangeNextStage(this, &changeStageInfo);
     }
 }

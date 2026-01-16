@@ -2,7 +2,7 @@
 
 #include "Library/Audio/System/SimpleAudioUser.h"
 #include "Library/Base/StringUtil.h"
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Item/ItemUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -13,7 +13,7 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -49,7 +49,7 @@ void BreakMapPartsBase::init(const ActorInitInfo& info) {
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, info, "SuffixName");
 
-    if (suffix != nullptr && isEqualString(suffix, "None"))
+    if (suffix && isEqualString(suffix, "None"))
         suffix = nullptr;
 
     initMapPartsActor(this, info, suffix);
@@ -78,7 +78,7 @@ void BreakMapPartsBase::init(const ActorInitInfo& info) {
 }
 
 void BreakMapPartsBase::initAfterPlacement() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector)
         return;
 
     attachMtxConnectorToCollision(mMtxConnector, this, false);
@@ -91,36 +91,36 @@ void BreakMapPartsBase::kill() {
 }
 
 void BreakMapPartsBase::movement() {
-    if (!isNerve(this, &NrvBreakMapPartsBase.Wait) || mMtxConnector != nullptr) {
+    if (!isNerve(this, &NrvBreakMapPartsBase.Wait) || mMtxConnector) {
         LiveActor::movement();
 
         return;
     }
 
-    if (getEffectKeeper() != nullptr && getEffectKeeper()->get_21())
+    if (getEffectKeeper() && getEffectKeeper()->get_21())
         getEffectKeeper()->update();
 }
 
 void BreakMapPartsBase::calcAnim() {
-    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && mMtxConnector == nullptr)
+    if (isNerve(this, &NrvBreakMapPartsBase.Wait) && !mMtxConnector)
         return;
 
     LiveActor::calcAnim();
 }
 
 void BreakMapPartsBase::exeWait() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         connectPoseQT(this, mMtxConnector);
 }
 
 void BreakMapPartsBase::exeBreak() {
     if (isFirstStep(this)) {
         LiveActor* subActor = tryGetSubActor(this, "壊れモデル");
-        if (subActor != nullptr)
+        if (subActor)
             subActor->appear();
 
         subActor = tryGetSubActor(this, "残留モデル");
-        if (subActor != nullptr) {
+        if (subActor) {
             subActor->appear();
 
             if (isTraceModelRandomRotate(subActor))
@@ -130,7 +130,7 @@ void BreakMapPartsBase::exeBreak() {
         if (mIsExistHitReactionBreak)
             startHitReaction(this, "破壊");
 
-        if (mAudioKeeper != nullptr)
+        if (mAudioKeeper)
             startSe(mAudioKeeper, "Riddle");
 
         if (!isExistAction(this, "Break")) {
@@ -161,9 +161,5 @@ bool BreakMapPartsBase::receiveMsg(const SensorMsg* message, HitSensor* other, H
     }
 
     return false;
-}
-
-JudgeFuncPtr BreakMapPartsBase::getJudgeFunction(const char* name) const {
-    return nullptr;
 }
 }  // namespace al

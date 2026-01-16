@@ -8,7 +8,3 @@ PlayerJudgeSameNerve::PlayerJudgeSameNerve(const al::IUseNerve* nerveUser, const
 bool PlayerJudgeSameNerve::judge() const {
     return al::isNerve(mNerveUser, mNerve);
 }
-
-void PlayerJudgeSameNerve::reset() {}
-
-void PlayerJudgeSameNerve::update() {}

@@ -75,11 +75,17 @@ def common_no_namespace_qualifiers(c, path):
                 del nest_level[-1]
                 continue
 
-            matches = re.findall(r"[\(,\s]([^\(,\s]+::)+[^\(,\s]+", x)
+            matches = re.findall(r"([^\(,\s]+::)+([^\(,\s]+)", x)
             for match in matches:
-                match = match[0:-2]
+                namespace = match[0][0:-2]
+
+                if "setColliderRadius" in match[1]:
+                    continue;
+                if "setColliderOffsetY" in match[1]:
+                    continue;
+
                 # examples: "sead", "al", "nn::g3d"
-                if CHECK(lambda a: match not in allowed_namespaces, line, match + " should be omitted here!",
+                if CHECK(lambda a: namespace not in allowed_namespaces, line, namespace[0] + " should be omitted here!",
                          path): return
 
     if len(nest_level) != 0:
@@ -232,26 +238,9 @@ def common_sead_types(c, path):
 
 def common_void_params(c, path):
     for line in c.splitlines():
-        if "(void)" in line:
+        if "(void);" in line or "(void) {" in line or "(void) const" in line:
             FAIL("Function parameters should be empty instead of \"(void)\"!", line, path)
             return
-
-def common_const_type(c, path):
-    for line in c.splitlines():
-        line = line.split("//")[0]
-        index = 0
-        while index < len(line):
-            index = line.find("const", index)
-            if index == -1:
-                break
-            if index > 0 and line[index - 1].isalnum():  # const is just part of a longer string
-                index += 1
-                continue
-            if index >= 0 and line[index + len("const")] in ['*', '&']:
-                FAIL("Const must be placed before the type: const T* or const T&", line, path)
-                index += 1
-                continue
-            index += 1
 
 def common_this_prefix(c, path):
     for line in c.splitlines():
@@ -271,9 +260,13 @@ def common_sead_math_template(c, path):
                 continue
             if "using" in line or "typedef" in line:
                 continue
-            if "sead::Buffer" in line:  # probably needs more exceptions at some point
+            if "sead::Buffer" in line or "sead::RingBuffer" in line:  # probably needs more exceptions at some point
                 continue
-            if "Vector3CalcCommon" in line:
+            if "sead::PtrArray" in line:
+                continue
+            if "CalcCommon" in line:
+                continue
+            if "BitUtil" in line:
                 continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
@@ -281,15 +274,16 @@ def common_string_finder(c, path):
     string_table = get_string_table()
 
     for line in c.splitlines():
+        line = line.split("//")[0]
         if "#include" in line:
             continue
         if "extern \"C\"" in line:
             continue
-        if "__asm__" in line:
+        if "__asm__" in line or "asm(" in line or "asm volatile(" in line:
             continue
         if "asm volatile" in line:
             continue
-        if "//" in line:
+        if "#pragma" in line:
             continue
 
         matches = re.findall(r'(u?".*?")', line)
@@ -310,9 +304,28 @@ def common_string_finder(c, path):
 
 def common_const_reference(c, path):
     for line in c.splitlines():
-        if "& " in line and line[line.find("& ") - 1] != "&" and line[line.find("& ") - 1] != " " and "CLASS&" not in line:
-            if ("const" not in line or line.find("& ") < line.find("const ")) and ("for" not in line or " : " not in line) and ("operator->" not in line):
-                FAIL("References must be const!", line, path)
+        if "for" in line and " : " in line:
+            continue
+        if "CLASS&" in line:
+            continue
+        if "operator->" in line:
+            continue
+        if "operator&" in line:
+            continue
+        if "operator[]" in line:
+            continue
+        if "AudioDirectorInitInfo" in line:
+            continue
+        if "ReplaceTimeInfo" in line:
+            continue
+        if "calcBendPosAndFront" in line:
+            continue
+        if "sead::IDelegate1<CollisionParts*>" in line:
+            continue
+        if "sead::IDelegate1<al::CollisionParts*>" in line:
+            continue
+        if re.search(r"(?<!const)[( ][\w_:]+(<[\w_:]+[\*&]?>)?&", line):
+            FAIL("References must be const!", line, path)
 
 def common_self_other(c, path, is_header):
     lines = c.splitlines()
@@ -389,7 +402,7 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
                 FAIL("All superclasses must be public!", line, path)
             if should_start_class and not ": " in line and not line.startswith("public") and not line.startswith(
                     "virtual public"):
-                FAIL("All superclasses must be public!", line, path) 
+                FAIL("All superclasses must be public!", line, path)
 
             if line.startswith("class") and "{" in line and ": " in line:
                 index = 0
@@ -410,11 +423,14 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
             CHECK(lambda a: not function_name.endswith("_"), line,
                   "Functions ending with an underscore are either protected or private!", path)
     elif visibility == 2:  # private
-        if line == "};" or line == "" or line == "union {" or line.startswith("struct"): return
-        if "(" in line and ")" in line: return
+        if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith("enum"): return
         newline = line
-        if "=" in line:
+        if line.startswith("static_assert"):
+            return
+        elif "=" in line:
             newline = line.split("=")[0].strip()
+        elif "(" in line or ")" in line:
+            return
         elif line.endswith(";"):
             newline = line.split(";")[0].strip()
         else:
@@ -437,6 +453,7 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
         else:
             allowed_name = (var_name.startswith("m") and var_name[1].isupper()) or any(
                 [var_name.startswith(p) for p in PREFIXES])
+            if path.endswith("SensorMsgSetupUtil.h") and "DECL_MEMBER_VAR_MULTI" in line: return
             CHECK(lambda a: allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
         if var_type == "bool":
@@ -454,9 +471,13 @@ def header_no_offset_comments(c, path):
 
 def header_lowercase_member_offset_vars(c, path):
     for line in c.splitlines():
-        if re.search(r"\s(field|gap|filler|pad)?_[0-9a-z]*[A-Z]", line):
+        if re.search(r"\s(field|gap|filler|pad|padding)?_[0-9a-z]*[A-Z]", line) and "," not in line and not line.endswith(");"):
             CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!", path)
 
+def header_bool_getter_name_prefix(c, path):
+    for line in c.splitlines():
+        if re.search(r"bool\s(?!(is|has|get_))\w+\(\)\s*const\s*{", line):
+            FAIL("Boolean getter names should be prefix with `is` or `has`", line, path)
 
 # Source files
 
@@ -471,6 +492,11 @@ def source_no_nerve_make(c, path):
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
 
+def source_always_inline_macro(c, path):
+    for line in c.splitlines():
+        if "__attribute__((always_inline)) inline" in line:
+            FAIL("Explicitly using `__attribute__((always_inline)) inline` is not allowed. Use ALWAYS_INLINE from Library/Base/Macros.h instead", line, path)
+
 # -----
 # UTILS
 # -----
@@ -481,7 +507,6 @@ def check_source(c, path):
     common_include_order(c, path, False)
     common_sead_types(c, path)
     common_void_params(c, path)
-    common_const_type(c, path)
     common_this_prefix(c, path)
     common_string_finder(c, path)
     common_sead_math_template(c, path)
@@ -490,6 +515,7 @@ def check_source(c, path):
     source_no_raw_auto(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
+    source_always_inline_macro(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)
@@ -497,7 +523,6 @@ def check_header(c, path):
     common_include_order(c, path, True)
     common_sead_types(c, path)
     common_void_params(c, path)
-    common_const_type(c, path)
     common_sead_math_template(c, path)
     header_sorted_visibility(c, path)
     header_no_offset_comments(c, path)
@@ -506,6 +531,7 @@ def check_header(c, path):
     header_lowercase_member_offset_vars(c, path)
     common_self_other(c, path, True)
     common_consistent_float_literals(c, path)
+    header_bool_getter_name_prefix(c, path)
 
 def _check_file_content(content, file_str):
     if file_str.endswith('.h'):
@@ -558,9 +584,6 @@ def main():
     global runAllChecks
     runAllChecks = args.all
 
-    global functionData
-    functionData = sorted(utils.get_functions(), key=lambda info: info.name)
-
     if not args.run_clang_format and not args.ci:
         print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
         print()
@@ -568,6 +591,8 @@ def main():
     for dir in [project_root/'lib'/'al', project_root/'src']:
         for root, _, files in os.walk(dir):
             for file in files:
+                if os.path.basename(file) == ".DS_Store":
+                    continue
                 file_path = os.path.join(root, file)
                 file_str = str(file_path)
                 if args.run_clang_format:

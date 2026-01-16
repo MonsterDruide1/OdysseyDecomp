@@ -10,7 +10,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nature/WaterSurfaceFinder.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -61,7 +61,7 @@ EnemyStateSwoon::EnemyStateSwoon(al::LiveActor* actor, const char* startAnimName
 }
 
 void EnemyStateSwoon::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mIsLockOn = false;
     al::setNerve(this, &SwoonStart);
 }
@@ -129,7 +129,7 @@ bool EnemyStateSwoon::tryReceiveMsgTrampleReflect(const al::SensorMsg* message) 
 bool EnemyStateSwoon::tryReceiveMsgTrampleReflect(const al::SensorMsg* message,
                                                   const al::HitSensor* other,
                                                   const al::HitSensor* self) {
-    if (al::isMsgPlayerTrampleForCrossoverSensor(message, other, self))
+    if (al::isMsgPlayerTrampleReflectForCrossoverSensor(message, other, self))
         return tryReceiveMsgTrampleReflect(message);
     return false;
 }
@@ -178,7 +178,7 @@ bool EnemyStateSwoon::requestTrampled() {
 
 void EnemyStateSwoon::initParams(s32 swoonDuration, const char* trampledAnimName) {
     mSwoonDuration = swoonDuration;
-    if (trampledAnimName != nullptr)
+    if (trampledAnimName)
         mTrampledAnimName = trampledAnimName;
 }
 

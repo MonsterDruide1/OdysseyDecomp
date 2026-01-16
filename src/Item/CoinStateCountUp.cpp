@@ -22,7 +22,7 @@ CoinStateCountUp::CoinStateCountUp(al::LiveActor* actor)
 }
 
 void CoinStateCountUp::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &CountUp);
 }
 
