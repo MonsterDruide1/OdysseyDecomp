@@ -19,7 +19,7 @@ class LifeUpItem2D : public al::LiveActor, public IUseDimension {
 public:
     LifeUpItem2D(const char* name);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
     ActorDimensionKeeper* getActorDimensionKeeper() const override;

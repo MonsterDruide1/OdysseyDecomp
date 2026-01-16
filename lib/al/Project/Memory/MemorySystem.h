@@ -12,7 +12,7 @@ class MemorySystem {
 public:
     MemorySystem(sead::Heap* heap);
 
-    void allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallbackArg*);
+    void allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallbackArg* arg);
     void createSequenceHeap();
     void freeAllSequenceHeap();
     void printSequenceHeap();
@@ -58,10 +58,10 @@ private:
     sead::ExpHeap* mStationedHeap = nullptr;
     sead::ExpHeap* mSequenceHeap = nullptr;
     sead::FrameHeap* mSceneResourceHeap = nullptr;
-    sead::ExpHeap* mSceneHeap = nullptr;
+    sead::FrameHeap* mSceneHeap = nullptr;
     sead::ExpHeap* mPlayerResourceHeap = nullptr;
-    sead::ExpHeap* mCourseSelectResourceHeap = nullptr;
-    sead::ExpHeap* mCourseSelectHeap = nullptr;
+    sead::FrameHeap* mCourseSelectResourceHeap = nullptr;
+    sead::FrameHeap* mCourseSelectHeap = nullptr;
     sead::ExpHeap* mWorldResourceHeap = nullptr;
     sead::StrTreeMap<32, sead::Heap*> mHeapList;
     AudioResourceDirector* mAudioResourceDirector = nullptr;

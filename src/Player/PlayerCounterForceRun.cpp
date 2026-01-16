@@ -2,7 +2,7 @@
 
 #include "Library/Math/MathUtil.h"
 
-PlayerCounterForceRun::PlayerCounterForceRun() {}
+PlayerCounterForceRun::PlayerCounterForceRun() = default;
 
 void PlayerCounterForceRun::setupForceRun(s32 frames, f32 speed) {
     mCounter = frames;

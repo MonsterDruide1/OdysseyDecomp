@@ -159,15 +159,15 @@ const CollisionShapeInfoBase* CollisionShapeKeeper::getShapeInfoBase(s32 index) 
     return mCollisionShape[index];
 }
 
-const CollisionShapeInfoArrow* CollisionShapeKeeper::getShapeInfoArrow(s32 index) const {
+CollisionShapeInfoArrow* CollisionShapeKeeper::getShapeInfoArrow(s32 index) const {
     return CollisionShapeFunction::getShapeInfoArrow(mCollisionShape[index]);
 }
 
-const CollisionShapeInfoSphere* CollisionShapeKeeper::getShapeInfoSphere(s32 index) const {
+CollisionShapeInfoSphere* CollisionShapeKeeper::getShapeInfoSphere(s32 index) const {
     return CollisionShapeFunction::getShapeInfoSphere(mCollisionShape[index]);
 }
 
-const CollisionShapeInfoDisk* CollisionShapeKeeper::getShapeInfoDisk(s32 index) const {
+CollisionShapeInfoDisk* CollisionShapeKeeper::getShapeInfoDisk(s32 index) const {
     return CollisionShapeFunction::getShapeInfoDisk(mCollisionShape[index]);
 }
 

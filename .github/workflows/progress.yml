@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Check out project
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         submodules: recursive
     - name: Set up python
       uses: actions/setup-python@v6
       with:
-        python-version: '3.13'
+        python-version: '3.14'
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install toml colorama cxxfilt

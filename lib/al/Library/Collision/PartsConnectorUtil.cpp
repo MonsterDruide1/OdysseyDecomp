@@ -6,7 +6,7 @@
 #include "Library/Collision/KCollisionServer.h"
 #include "Library/Collision/PartsConnector.h"
 #include "Library/Collision/PartsMtxConnector.h"
-#include "Library/Collision/SensorConnector.h"
+#include "Library/Collision/PartsSensorConnector.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
@@ -21,7 +21,7 @@ namespace al {
 inline bool IsConnectToCollision(const ActorInitInfo& initInfo) {
     bool isConnectToCollision = false;
 
-    if (!al::tryGetArg(&isConnectToCollision, initInfo, "IsConnectToCollision"))
+    if (!tryGetArg(&isConnectToCollision, initInfo, "IsConnectToCollision"))
         return false;
 
     return isConnectToCollision;

@@ -12,16 +12,16 @@ namespace {
 NERVE_IMPL(EnemyStateDamageCap, Wait);
 NERVE_IMPL(EnemyStateDamageCap, DamageCap);
 
-NERVES_MAKE_STRUCT(EnemyStateDamageCap, Wait, DamageCap);
+NERVES_MAKE_NOSTRUCT(EnemyStateDamageCap, Wait, DamageCap);
 }  // namespace
 
 EnemyStateDamageCap::EnemyStateDamageCap(al::LiveActor* actor)
     : al::ActorStateBase("キャプチャ敵の帽子反応ステート", actor) {
-    initNerve(&NrvEnemyStateDamageCap.Wait, 0);
+    initNerve(&Wait, 0);
 }
 
 void EnemyStateDamageCap::kill() {
-    al::setNerve(this, &NrvEnemyStateDamageCap.Wait);
+    al::setNerve(this, &Wait);
     al::NerveStateBase::kill();
 }
 
@@ -35,7 +35,7 @@ bool EnemyStateDamageCap::tryReceiveMsgCapBlow(const al::SensorMsg* msg, al::Hit
         return false;
     rs::requestHitReactionToAttacker(msg, self, other);
     mEnemyCap->startBlowDown(other);
-    al::setNerve(this, &NrvEnemyStateDamageCap.Wait);
+    al::setNerve(this, &DamageCap);
     return true;
 }
 

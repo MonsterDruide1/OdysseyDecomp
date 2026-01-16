@@ -35,6 +35,7 @@ target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
 set(NN_WARE 3.5.1)
 set(NN_SDK 3.5.1)
 set(NN_SDK_TYPE "Release")
+add_compile_definitions(SEAD_VERSION=SEAD_VERSION_SMO)
 
 include_directories(lib)
 include_directories(lib/aarch64)

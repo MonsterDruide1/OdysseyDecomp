@@ -75,11 +75,17 @@ def common_no_namespace_qualifiers(c, path):
                 del nest_level[-1]
                 continue
 
-            matches = re.findall(r"([^\(,\s]+::)+[^\(,\s]+", x)
+            matches = re.findall(r"([^\(,\s]+::)+([^\(,\s]+)", x)
             for match in matches:
-                match = match[0:-2]
+                namespace = match[0][0:-2]
+
+                if "setColliderRadius" in match[1]:
+                    continue;
+                if "setColliderOffsetY" in match[1]:
+                    continue;
+
                 # examples: "sead", "al", "nn::g3d"
-                if CHECK(lambda a: match not in allowed_namespaces, line, match + " should be omitted here!",
+                if CHECK(lambda a: namespace not in allowed_namespaces, line, namespace[0] + " should be omitted here!",
                          path): return
 
     if len(nest_level) != 0:
@@ -286,7 +292,7 @@ def common_string_finder(c, path):
             if not match.startswith("u"):
                 # Remove quotes from utf8 strings
                 match = match[1:-1]
-            if len(match) < 2:  
+            if len(match) < 2:
                 continue
             found = False
             for x in string_table:
@@ -305,6 +311,8 @@ def common_const_reference(c, path):
         if "operator->" in line:
             continue
         if "operator&" in line:
+            continue
+        if "operator[]" in line:
             continue
         if "AudioDirectorInitInfo" in line:
             continue
@@ -484,6 +492,11 @@ def source_no_nerve_make(c, path):
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
 
+def source_always_inline_macro(c, path):
+    for line in c.splitlines():
+        if "__attribute__((always_inline)) inline" in line:
+            FAIL("Explicitly using `__attribute__((always_inline)) inline` is not allowed. Use ALWAYS_INLINE from Library/Base/Macros.h instead", line, path)
+
 # -----
 # UTILS
 # -----
@@ -502,6 +515,7 @@ def check_source(c, path):
     source_no_raw_auto(c, path)
     common_self_other(c, path, False)
     common_consistent_float_literals(c, path)
+    source_always_inline_macro(c, path)
 
 def check_header(c, path):
     common_newline_eof(c, path)

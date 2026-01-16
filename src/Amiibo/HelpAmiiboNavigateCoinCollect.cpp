@@ -31,7 +31,7 @@ void HelpAmiiboNavigateCoinCollect::activate() {
     CoinCollect* coinCollect = al::getSceneObj<CoinCollectHolder>(getActor())
                                    ->tryFindAliveCoinCollect(sead::Vector3f::zero, true);
 
-    if (coinCollect == nullptr) {
+    if (!coinCollect) {
         al::startSe(getDirector(), "AmiiboKoopa");
         return;
     }
@@ -43,7 +43,7 @@ void HelpAmiiboNavigateCoinCollect::activate() {
 }
 
 bool HelpAmiiboNavigateCoinCollect::execute() {
-    if (mHintedCoinCollect == nullptr)
+    if (!mHintedCoinCollect)
         return true;
 
     if (al::isDead(mHintedCoinCollect)) {

@@ -45,21 +45,24 @@ NERVE_IMPL(HackFork, HackWait);
 NERVE_IMPL(HackFork, HackBend);
 NERVE_IMPL(HackFork, HackShoot);
 
-NERVES_MAKE_STRUCT(HackFork, Wait, HackStartWait, Damping, HackStart, HackWait, HackBend,
-                   HackShoot);
-}  // namespace
+// TODO: Find a memory layout that fits these globals perfectly
+struct {
+    NERVES_MAKE_STRUCT(HackFork, Wait, HackStartWait, Damping, HackStart, HackWait, HackBend,
+                       HackShoot);
 
-PlayerHackStartShaderParam sPlayerHackStartShaderParam(true, 100.0f, 10, 20);
+    PlayerHackStartShaderParam sPlayerHackStartShaderParam = {true, 100.0f, 10, 20};
+} HackForkData;
+
+}  // namespace
 
 HackFork::HackFork(const char* name) : al::LiveActor(name) {}
 
-// NON_MATCHING: Regswap and missing instructions https://decomp.me/scratch/NeUHJ
-void HackFork::init(const al::ActorInitInfo& initInfo) {
+void HackFork::init(const al::ActorInitInfo& info) {
     const char* modelName = nullptr;
-    if (alPlacementFunction::tryGetModelName(&modelName, initInfo))
-        al::initActorWithArchiveName(this, initInfo, modelName, nullptr);
+    if (alPlacementFunction::tryGetModelName(&modelName, info))
+        al::initActorWithArchiveName(this, info, modelName, nullptr);
     else
-        al::initActor(this, initInfo);
+        al::initActor(this, info);
 
     al::calcSideDir(&mSideDir, this);
     al::initJointControllerKeeper(this, 10);
@@ -72,12 +75,12 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
         al::initJointLocalXRotator(this, &mDampingStrength, jointNames[i]);
     }
 
-    al::initNerve(this, &NrvHackFork.Wait, 0);
-    al::tryGetArg(&mIsLimitterFree, initInfo, "LimitterFree");
+    al::initNerve(this, &HackForkData.NrvHackFork.Wait, 0);
+    al::tryGetArg(&mIsLimitterFree, info, "LimitterFree");
     bool hasCamera = false;
-    bool isValid = al::tryGetArg(&hasCamera, initInfo, "Camera");
+    bool isValid = al::tryGetArg(&hasCamera, info, "Camera");
     if (hasCamera && isValid)
-        mCameraTicket = al::initObjectCamera(this, initInfo, nullptr, nullptr);
+        mCameraTicket = al::initObjectCamera(this, info, nullptr, nullptr);
 
     mMatrixCameraTarget = al::createActorMatrixCameraTarget(this, &mCameraTargetMtx);
     if (!al::isEqualString(modelName, "HackBoard")) {
@@ -86,16 +89,16 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     }
 
     bool hasBallon = false;
-    bool isBallonValid = al::tryGetArg(&hasBallon, initInfo, "Balloon");
+    bool isBallonValid = al::tryGetArg(&hasBallon, info, "Balloon");
     if (hasBallon && isBallonValid && !rs::isSequenceTimeBalloonOrRace(this)) {
-        mEventFlowExecutor = rs::initEventFlow(this, initInfo, nullptr, nullptr);
+        mEventFlowExecutor = rs::initEventFlow(this, info, nullptr, nullptr);
         rs::startEventFlow(mEventFlowExecutor, "Init");
     }
     if (al::isMtpAnimExist(this)) {
-        rs::setNpcMaterialAnimFromPlacementInfo(this, initInfo);
+        rs::setNpcMaterialAnimFromPlacementInfo(this, info);
         al::tryStartMclAnimIfExist(this, al::getPlayingMtpAnimName(this));
     }
-    mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
+    mMtxConnector = al::tryCreateMtxConnector(this, info);
     makeActorAlive();
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
@@ -122,10 +125,11 @@ void HackFork::init(const al::ActorInitInfo& initInfo) {
     mInvJointMtx.setInverse(jointMtx);
 
     mCapTargetInfo->setPoseMatrix(&mCapPoseMtx);
-    mUpsideDownInitialHackDir.inverse(&mInvInitialHackDir);
+    mInvInitialHackDir.setInverse(mUpsideDownInitialHackDir);
 
     initBasicPoseInfo();
-    mHackStartShaderCtrl = new PlayerHackStartShaderCtrl(this, &sPlayerHackStartShaderParam);
+    mHackStartShaderCtrl =
+        new PlayerHackStartShaderCtrl(this, &HackForkData.sPlayerHackStartShaderParam);
 }
 
 void HackFork::attackSensor(al::HitSensor* self, al::HitSensor* other) {
@@ -174,7 +178,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
             mTouchForce = 0.0f;
             resetCapMtx(self);
             rs::setRouteHeadGuidePosPtr(this, &mHeadGuidePos);
-            al::setNerve(this, &NrvHackFork.HackStartWait);
+            al::setNerve(this, &HackForkData.NrvHackFork.HackStartWait);
             al::startHitReaction(this, "ひょうい開始");
             return true;
         }
@@ -200,7 +204,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
                 rs::endHack(&mPlayerHack);
                 rs::resetRouteHeadGuidePosPtr(this);
                 al::tryStartAction(this, "HackEnd");
-                al::setNerve(this, &NrvHackFork.Damping);
+                al::setNerve(this, &HackForkData.NrvHackFork.Damping);
                 return true;
             }
 
@@ -222,7 +226,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
             }
             rs::resetRouteHeadGuidePosPtr(this);
             al::tryStartAction(this, "HackEnd");
-            al::setNerve(this, &NrvHackFork.Damping);
+            al::setNerve(this, &HackForkData.NrvHackFork.Damping);
             return true;
         }
 
@@ -230,7 +234,7 @@ bool HackFork::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
             rs::endHack(&mPlayerHack);
             rs::resetRouteHeadGuidePosPtr(this);
             al::tryStartAction(this, "HackEnd");
-            al::setNerve(this, &NrvHackFork.Damping);
+            al::setNerve(this, &HackForkData.NrvHackFork.Damping);
             return true;
         }
     }
@@ -246,7 +250,7 @@ void HackFork::initBasicPoseInfo() {
     al::calcFrontDir(&frontDir, this);
 
     sead::Quatf rotation;
-    sead::QuatCalcCommon<f32>::setAxisAngle(rotation, frontDir, 180.0f);
+    rotation.setAxisAngle(frontDir, 180.0f);
     mUpsideDownInitialHackDir = rotation * mHackDir;
 
     sead::Vector3f frontDir2;
@@ -278,7 +282,7 @@ bool HackFork::tryTouch(f32 force, const char* reactionName) {
     if (isNerveHackable()) {
         mTouchForce = force;
         mTouchDelay = 30;
-        al::setNerve(this, &NrvHackFork.Damping);
+        al::setNerve(this, &HackForkData.NrvHackFork.Damping);
         al::startHitReaction(this, reactionName);
         return true;
     }
@@ -323,13 +327,16 @@ void HackFork::resetCapMtx(al::HitSensor* sensor) {
 }
 
 bool HackFork::isNerveHackable() const {
-    return al::isNerve(this, &NrvHackFork.Wait) || al::isNerve(this, &NrvHackFork.Damping);
+    return al::isNerve(this, &HackForkData.NrvHackFork.Wait) ||
+           al::isNerve(this, &HackForkData.NrvHackFork.Damping);
 }
 
 bool HackFork::isHack() const {
-    return al::isNerve(this, &NrvHackFork.HackStartWait) ||
-           al::isNerve(this, &NrvHackFork.HackStart) || al::isNerve(this, &NrvHackFork.HackWait) ||
-           al::isNerve(this, &NrvHackFork.HackBend) || al::isNerve(this, &NrvHackFork.HackShoot);
+    return al::isNerve(this, &HackForkData.NrvHackFork.HackStartWait) ||
+           al::isNerve(this, &HackForkData.NrvHackFork.HackStart) ||
+           al::isNerve(this, &HackForkData.NrvHackFork.HackWait) ||
+           al::isNerve(this, &HackForkData.NrvHackFork.HackBend) ||
+           al::isNerve(this, &HackForkData.NrvHackFork.HackShoot);
 }
 
 void HackFork::controlSpring() {
@@ -348,7 +355,6 @@ void HackFork::checkSwing() {
     mTimeSinceSwingStart++;
 }
 
-// NON_MATCHING: Wrong loading order https://decomp.me/scratch/VW7ZF
 bool HackFork::trySwingJump() {
     if (rs::isTriggerHackSwing(mPlayerHack)) {
         mIsHackSwing = true;
@@ -376,7 +382,7 @@ bool HackFork::trySwingJump() {
     al::calcFrontDir(&frontDir, this);
     bendAndTwist(mPullDirection, frontDir);
     mIsSwingJump = true;
-    al::setNerve(this, &NrvHackFork.HackShoot);
+    al::setNerve(this, &HackForkData.NrvHackFork.HackShoot);
     return true;
 }
 
@@ -539,7 +545,7 @@ void HackFork::calcHackDir(al::HitSensor* sensor) {
     if (!al::tryNormalizeOrZero(&mPullDirection2))
         al::calcUpDir(&mPullDirection2, this);
 
-    mHackDir.inverse(&mInvInitialHackDir);
+    mInvInitialHackDir.setInverse(mHackDir);
 }
 
 void HackFork::exeWait() {
@@ -567,7 +573,7 @@ void HackFork::exeHackStartWait() {
     checkSwing();
 
     if (rs::isHackStartDemoEnterMario(mPlayerHack))
-        al::setNerve(this, &NrvHackFork.HackStart);
+        al::setNerve(this, &HackForkData.NrvHackFork.HackStart);
 }
 
 void HackFork::exeDamping() {
@@ -580,7 +586,7 @@ void HackFork::exeDamping() {
             mDampingForce = 0.0f;
             mTouchForce = 0.0f;
             al::validateClipping(this);
-            al::setNerve(this, &NrvHackFork.Wait);
+            al::setNerve(this, &HackForkData.NrvHackFork.Wait);
             return;
         }
         mDampingStrength *= 0.9f;
@@ -598,7 +604,7 @@ void HackFork::exeHackStart() {
     checkSwing();
     if (al::isActionEnd(this)) {
         rs::endHackStartDemo(mPlayerHack, this);
-        al::setNerve(this, &NrvHackFork.HackWait);
+        al::setNerve(this, &HackForkData.NrvHackFork.HackWait);
     }
 }
 
@@ -613,7 +619,7 @@ void HackFork::exeHackWait() {
             sead::Mathf::cos(sead::Mathf::deg2rad(getJumpRange()))) {
         mPullDirection.set(pullDirection);
         mIsPullDown = mPullDirection.dot(mUpDir) < 0.0f;
-        al::setNerve(this, &NrvHackFork.HackBend);
+        al::setNerve(this, &HackForkData.NrvHackFork.HackBend);
     }
 }
 
@@ -634,16 +640,16 @@ void HackFork::exeHackBend() {
                 mAirVel = 60;
                 mIsSwingJump = true;
             }
-            al::setNerve(this, &NrvHackFork.HackShoot);
+            al::setNerve(this, &HackForkData.NrvHackFork.HackShoot);
         } else {
-            al::setNerve(this, &NrvHackFork.HackWait);
+            al::setNerve(this, &HackForkData.NrvHackFork.HackWait);
         }
     }
     sead::Vector3f oldPullDirection = mPullDirection;
     f32 jumpDir = mIsPullDown ? -1.0f : 1.0f;
 
-    f32 angle = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
-    if (sead::Mathf::rad2deg(sead::Mathf::cos(angle)) < getJumpRange())
+    f32 cos = sead::Mathf::clamp((jumpDir * mUpDir).dot(pullDirection), -1.0f, 1.0f);
+    if (sead::Mathf::rad2deg(sead::Mathf::acos(cos)) < getJumpRange())
         mPullDirection = mPullDirection * 0.5f + pullDirection * 0.5f;
     al::normalize(&mPullDirection);
     f32 oldDampingForce = mDampingForce;
@@ -665,6 +671,6 @@ void HackFork::exeHackShoot() {
     controlSpring();
     if (mDampingForce < 0.0f) {
         shoot();
-        al::setNerve(this, &NrvHackFork.Damping);
+        al::setNerve(this, &HackForkData.NrvHackFork.Damping);
     }
 }

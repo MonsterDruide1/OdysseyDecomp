@@ -10,7 +10,7 @@ class DrawContext;
 
 namespace al {
 class GraphicsSystemInfo;
-class ModelDrawBufferCounter;
+struct ModelDrawBufferCounter;
 class ModelKeeper;
 class ModelDrawDisplayList;
 class ModelCtrl;
@@ -33,6 +33,8 @@ public:
     void getDrawBufferIndex();
     void createModelDrawDisplayList(s32);
     bool isDraw() const;
+
+    const char* getName() const { return mName; }
 
 private:
     const char* mName;

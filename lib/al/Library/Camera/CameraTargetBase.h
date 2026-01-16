@@ -43,6 +43,12 @@ public:
 
     virtual f32 getRequestDistance() const { return -1.0f; }
 
+    bool isActiveTarget() const { return mIsActiveTarget; }
+
+    void enableTarget() { mIsActiveTarget = true; }
+
+    void disableTarget() { mIsActiveTarget = false; }
+
 private:
     bool mIsActiveTarget = false;
 };

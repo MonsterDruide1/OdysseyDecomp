@@ -83,23 +83,23 @@ public:
         return false;
     }
 
-    virtual const char* getName() const override { return mName; }
+    const char* getName() const override { return mName; }
 
     virtual const sead::Matrix34f* getBaseMtx() const;
 
-    virtual EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
+    EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
 
-    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
-    virtual StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
+    StageSwitchKeeper* getStageSwitchKeeper() const override { return mStageSwitchKeeper; }
 
-    virtual RailRider* getRailRider() const override;
-    virtual SceneObjHolder* getSceneObjHolder() const override;
-    virtual CollisionDirector* getCollisionDirector() const override;
-    virtual AreaObjDirector* getAreaObjDirector() const override;
-    virtual CameraDirector* getCameraDirector() const override;
+    RailRider* getRailRider() const override;
+    SceneObjHolder* getSceneObjHolder() const override;
+    CollisionDirector* getCollisionDirector() const override;
+    AreaObjDirector* getAreaObjDirector() const override;
+    CameraDirector* getCameraDirector() const override;
     NatureDirector* getNatureDirector() const;
-    virtual void initStageSwitchKeeper() override;
+    void initStageSwitchKeeper() override;
 
     virtual void control() {}
 
@@ -161,6 +161,14 @@ public:
     ActorParamHolder* getActorParamHolder() const { return mParamHolder; }
 
     void setName(const char* newName) { mName = newName; }
+
+    void setHitReactionKeeper(HitReactionKeeper* hitReactionKeeper) {
+        mHitReactionKeeper = hitReactionKeeper;
+    }
+
+    void setActorParamHolder(ActorParamHolder* paramHolder) { mParamHolder = paramHolder; }
+
+    void setCollisionParts(CollisionParts* collisionParts) { mCollisionParts = collisionParts; }
 
 protected:
     friend class alActorFunction;

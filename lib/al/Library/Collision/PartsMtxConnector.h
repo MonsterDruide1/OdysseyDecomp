@@ -9,7 +9,7 @@ namespace al {
 class MtxConnector {
 public:
     MtxConnector();
-    MtxConnector(const sead::Quatf&, const sead::Vector3f&);
+    MtxConnector(const sead::Quatf& quat, const sead::Vector3f& vec);
 
     virtual bool isConnecting() const;
     virtual void clear();
@@ -21,7 +21,7 @@ public:
     void multMtx(sead::Matrix34f* outMtx, const sead::Matrix34f& mtx) const;
     void multQT(sead::Quatf* outQuat, sead::Vector3f* outPos, sead::Vector3f* outScale) const;
     void multQT(sead::Quatf* outQuat, sead::Vector3f* outPos, sead::Vector3f* outScale,
-                const sead::Quatf& baseQuat, const sead::Vector3f& baseTrans) const;
+                const sead::Quatf& quat, const sead::Vector3f& trans) const;
     void multQT(sead::Quatf* outQuat, sead::Vector3f* outPos, const sead::Quatf& baseQuat,
                 const sead::Vector3f& baseTrans) const;
     const sead::Quatf& getBaseQuat() const;

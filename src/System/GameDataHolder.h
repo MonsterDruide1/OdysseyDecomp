@@ -176,7 +176,7 @@ public:
     bool isBossAttackedHomeNext(s32 worldId) const;
     void playScenarioStartCamera(s32 questNo);
     bool isPlayAlreadyScenarioStartCamera(s32 questNo) const;
-    const sead::PtrArray<ShopItem::ItemInfo>& getShopItemInfoList() const;
+    const sead::PtrArray<ShopItem::ShopItemInfo>& getShopItemInfoList() const;
     bool checkNeedTreasureMessageStage(const char* stageName) const;
     bool tryFindLinkDestStageInfo(const char** destStageName, const char** destLabel,
                                   const char* srcStageName, const char* srcLabel) const;
@@ -221,7 +221,13 @@ public:
 
     WorldList* getWorldList() const { return mWorldList; }
 
+    bool isExistKoopaShip() const { return mIsExistKoopaShip; }
+
+    void setExistKoopaShip(bool isExistKoopaShip) { mIsExistKoopaShip = isExistKoopaShip; }
+
     GameSequenceInfo* getSequenceInfo() const { return mSequenceInfo; }
+
+    GameConfigData* getGameConfigData() const { return mGameConfigData; }
 
 private:
     al::MessageSystem* mMessageSystem;
@@ -233,7 +239,7 @@ private:
     bool mIsRequireSave;
     u32 mRequireSaveFrame;
     bool mIsInvalidSaveForMoonGet;
-    bool _48;  // related to changeNextStage(WithWorldDemoWarp)
+    bool _49;  // related to changeNextStage(WithWorldDemoWarp)
     bool _4a;  // related to endStage
     sead::FixedSafeString<32> mLanguage;
     u64 mPlayTimeAcrossFiles;
@@ -248,8 +254,8 @@ private:
     TemporaryScenarioCameraHolder* mTemporaryScenarioCameraHolder;
     bool* mIsPlayAlreadyScenarioStartCamera;
     sead::PtrArray<StageLockInfo> mStageLockList;
-    sead::PtrArray<ShopItem::ItemInfo> mShopItemList;
-    sead::PtrArray<ShopItem::ItemInfo> mShopItemListE3;
+    sead::PtrArray<ShopItem::ShopItemInfo> mShopItemList;
+    sead::PtrArray<ShopItem::ShopItemInfo> mShopItemListE3;
     sead::PtrArray<ShopItem::ItemInfo> mItemCloth;
     sead::PtrArray<ShopItem::ItemInfo> mItemCap;
     sead::PtrArray<ShopItem::ItemInfo> mItemGift;
@@ -283,7 +289,7 @@ private:
     bool mIsSeparatePlay;
     bool mIsPlayDemoLavaErupt;
     QuestInfoHolder* mQuestInfoHolder;
-    bool _250;  // related to resetTempSaveData
+    bool mIsExistKoopaShip;
     GameSequenceInfo* mSequenceInfo;
     TimeBalloonSequenceInfo* mTimeBalloonSequenceInfo;
 };

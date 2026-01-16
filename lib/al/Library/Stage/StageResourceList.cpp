@@ -84,8 +84,9 @@ StageResourceList::StageResourceList(const char* stageName, s32 scenarioNo,
         mStageResources.pushBack(
             new StageInfo(resource, iter, subPlacementInfo.getPlacementIter()));
 
-        sead::Vector3f rotation = sead::Vector3f::zero;
-        sead::Vector3f scale = sead::Vector3f::ones;
+        // BUG: flipped default values for rotation and scale
+        sead::Vector3f rotation = sead::Vector3f::ones;
+        sead::Vector3f scale = sead::Vector3f::zero;
         tryGetRotate(&rotation, subPlacementInfo);
         tryGetScale(&scale, subPlacementInfo);
     }

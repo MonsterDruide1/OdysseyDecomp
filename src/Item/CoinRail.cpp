@@ -1,5 +1,6 @@
 #include "Item/CoinRail.h"
 
+#include "Library/Base/Macros.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
@@ -25,10 +26,8 @@ NERVES_MAKE_STRUCT(CoinRail, CloseMove, Move)
 
 CoinRail::CoinRail(const char* name) : al::LiveActor(name) {}
 
-__attribute__((always_inline)) void addStaticCoinToRail(CoinRail* rail,
-                                                        const al::ActorInitInfo& initInfo,
-                                                        Coin** coins, f32* railPos, s32 coinNum,
-                                                        bool isLoop) {
+ALWAYS_INLINE void addStaticCoinToRail(CoinRail* rail, const al::ActorInitInfo& initInfo,
+                                       Coin** coins, f32* railPos, s32 coinNum, bool isLoop) {
     f32 posOnRail = 0.0f;
     f32 railDist = al::getRailTotalLength(rail) / (coinNum - (isLoop ? 0 : 1));
     for (s32 i = 0; i < coinNum; i++) {
@@ -45,8 +44,8 @@ __attribute__((always_inline)) void addStaticCoinToRail(CoinRail* rail,
     }
 }
 
-__attribute__((always_inline)) void addCoinToRail(CoinRail* rail, const al::ActorInitInfo& initInfo,
-                                                  Coin** coins, f32* railPos, s32 coinNum) {
+ALWAYS_INLINE void addCoinToRail(CoinRail* rail, const al::ActorInitInfo& initInfo, Coin** coins,
+                                 f32* railPos, s32 coinNum) {
     f32 posOnRail = 0.0f;
     for (s32 i = 0; i < coinNum; i++) {
         sead::Vector3f pos = sead::Vector3f::zero;
@@ -63,15 +62,15 @@ __attribute__((always_inline)) void addCoinToRail(CoinRail* rail, const al::Acto
     al::getRailTotalLength(rail);
 }
 
-void CoinRail::init(const al::ActorInitInfo& initInfo) {
-    al::initActor(this, initInfo);
+void CoinRail::init(const al::ActorInitInfo& info) {
+    al::initActor(this, info);
 
     if (!al::isExistRail(this)) {
         kill();
         return;
     }
 
-    al::getArg(&mCoinNum, initInfo, "CoinNum");
+    al::getArg(&mCoinNum, info, "CoinNum");
     if (mCoinNum <= 1) {
         kill();
         return;
@@ -83,34 +82,34 @@ void CoinRail::init(const al::ActorInitInfo& initInfo) {
         return;
     }
 
-    al::tryGetArg(&mMoveVelocity, initInfo, "MoveVelocity");
+    al::tryGetArg(&mMoveVelocity, info, "MoveVelocity");
     if (mMoveVelocity < 0.0f) {
         kill();
         return;
     }
 
-    al::tryGetDisplayOffset(&mDisplayOffset, initInfo);
+    al::tryGetDisplayOffset(&mDisplayOffset, info);
 
     mCoins = new Coin*[mCoinNum];
     mRailPos = new f32[mCoinNum];
 
     if (al::isNearZero(mMoveVelocity))
-        addStaticCoinToRail(this, initInfo, mCoins, mRailPos, mCoinNum, isLoop);
+        addStaticCoinToRail(this, info, mCoins, mRailPos, mCoinNum, isLoop);
     else
-        addCoinToRail(this, initInfo, mCoins, mRailPos, mCoinNum);
+        addCoinToRail(this, info, mCoins, mRailPos, mCoinNum);
 
     f32 shadowLength = 1500.0f;
-    al::tryGetArg(&shadowLength, initInfo, "ShadowLength");
+    al::tryGetArg(&shadowLength, info, "ShadowLength");
     for (s32 i = 0; i < mCoinNum; i++)
         mCoins[i]->setShadowDropLength(shadowLength);
 
     mLastCoinIndex = mCoinNum - 1;
     mFirstCoinIndex = 0;
 
-    f32 clipInfo = 0.0f;
-    al::calcRailClippingInfo(&mClippingInfo, &clipInfo, this, 100.0f, 100.0f);
-    al::setClippingInfo(this, clipInfo, &mClippingInfo);
-    al::initSubActorKeeperNoFile(this, initInfo, mCoinNum);
+    f32 distance = 0.0f;
+    al::calcRailClippingInfo(&mClippingInfo, &distance, this, 100.0f, 100.0f);
+    al::setClippingInfo(this, distance, &mClippingInfo);
+    al::initSubActorKeeperNoFile(this, info, mCoinNum);
 
     for (s32 i = 0; i < mCoinNum; i++) {
         al::invalidateClipping(mCoins[i]);

@@ -106,7 +106,7 @@ SEND_MSG_IMPL(Hit);
 SEND_MSG_IMPL(HitStrong);
 SEND_MSG_IMPL(HitVeryStrong);
 SEND_MSG_IMPL(KnockDown);
-SEND_MSG_IMPL(MapPush);
+SEND_MSG_IMPL_(MapPush, Push);
 SEND_MSG_IMPL(Vanish);
 SEND_MSG_DATA_TO_ACTOR_IMPL(ChangeAlpha, f32, pAlpha);
 SEND_MSG_IMPL(ShowModel);
@@ -335,7 +335,7 @@ IS_MSG_IMPL(Hit);
 IS_MSG_IMPL(HitStrong);
 IS_MSG_IMPL(HitVeryStrong);
 IS_MSG_IMPL(KnockDown);
-IS_MSG_IMPL(MapPush);
+IS_MSG_IMPL_(MapPush, Push);
 IS_MSG_IMPL(Vanish);
 IS_MSG_IMPL(ChangeAlpha);
 IS_MSG_IMPL(ShowModel);
@@ -489,10 +489,10 @@ bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* receiver, HitSensor* sender
     return sendMsgEnemyAttack(receiver, sender);
 }
 
-__attribute__((always_inline)) bool
-isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender, f32 maxSensorDistance,
-                                const sead::Vector3f& basePoint, const sead::Vector3f& upAxis,
-                                f32 extraRadius) {
+ALWAYS_INLINE bool isWithinCrossoverCylinderVolume(HitSensor* receiver, HitSensor* sender,
+                                                   f32 maxSensorDistance,
+                                                   const sead::Vector3f& basePoint,
+                                                   const sead::Vector3f& upAxis, f32 extraRadius) {
     sead::Vector3f sensorDiff = receiver->getPos() - sender->getPos();
     sead::Vector3f senderUp = -getGravity(sender->getParentActor());
     verticalizeVec(&sensorDiff, upAxis, sensorDiff);

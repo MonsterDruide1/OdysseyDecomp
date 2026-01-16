@@ -46,6 +46,7 @@
 #include "Item/CoinCirclePlacement.h"
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
+#include "Item/CoinLead.h"
 #include "Item/CoinRail.h"
 #include "Item/LifeMaxUpItem.h"
 #include "Item/LifeMaxUpItem2D.h"
@@ -65,6 +66,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/PoleGrabCeil.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/SignBoardDanger.h"
@@ -207,7 +209,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CoinCollect", al::createActorFunction<CoinCollect>},
     {"CoinCollectHintObj", al::createActorFunction<CoinCollectHintObj>},
     {"CoinCollect2D", al::createActorFunction<CoinCollect2D>},
-    {"CoinLead", nullptr},
+    {"CoinLead", al::createActorFunction<CoinLead>},
     {"CoinRail", al::createActorFunction<CoinRail>},
     {"CoinRing", nullptr},
     {"CoinStackGroup", nullptr},
@@ -431,7 +433,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Poetter", nullptr},
     {"PoleClimbParts", nullptr},
     {"PoleClimbPartsBreak", nullptr},
-    {"PoleGrabCeil", nullptr},
+    {"PoleGrabCeil", al::createActorFunction<PoleGrabCeil>},
     {"PoleGrabCeilKeyMoveParts", nullptr},
     {"PopnGenerator", nullptr},
     {"LavaWorldPoster", nullptr},

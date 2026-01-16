@@ -41,8 +41,8 @@ const sead::Vector3f sCoinDropOffset = {0.0f, 200.0f, 200.0f};
 
 VolleyballBall::VolleyballBall(const char* name) : al::LiveActor(name) {}
 
-void VolleyballBall::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "VolleyballBall", nullptr);
+void VolleyballBall::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "VolleyballBall", nullptr);
     al::initNerve(this, &NrvVolleyballBall.Wait, 0);
     mAttackPath = new al::ParabolicPath();
     mReturnPath = new al::ParabolicPath();
@@ -77,7 +77,7 @@ bool VolleyballBall::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
         }
     }
 
-    if (_138)
+    if (mIsEndGame)
         return false;
 
     if (al::isSensorSimple(self))
@@ -158,7 +158,7 @@ void VolleyballBall::reset() {
         kill();
     }
     al::validateClipping(this);
-    _138 = false;
+    mIsEndGame = false;
     al::setNerve(this, &NrvVolleyballBall.Wait);
 }
 

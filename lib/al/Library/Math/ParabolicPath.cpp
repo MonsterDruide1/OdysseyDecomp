@@ -4,7 +4,7 @@
 
 namespace al {
 
-ParabolicPath::ParabolicPath() {}
+ParabolicPath::ParabolicPath() = default;
 
 void ParabolicPath::initFromUpVector(const sead::Vector3f& start, const sead::Vector3f& end,
                                      const sead::Vector3f& up) {

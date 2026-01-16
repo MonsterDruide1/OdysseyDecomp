@@ -78,12 +78,12 @@ CameraDirector* Scene::getCameraDirector() const {
     return mLiveActorKit->getCameraDirector();
 }
 
-void Scene::initializeAsync(const SceneInitInfo& initInfo) {
-    init(initInfo);
+void Scene::initializeAsync(const SceneInitInfo& info) {
+    init(info);
 }
 
-void Scene::initDrawSystemInfo(const SceneInitInfo& initInfo) {
-    mDrawSystemInfo = initInfo.gameSysInfo->drawSystemInfo;
+void Scene::initDrawSystemInfo(const SceneInitInfo& info) {
+    mDrawSystemInfo = info.gameSystemInfo->drawSystemInfo;
 }
 
 void Scene::initSceneObjHolder(SceneObjHolder* sceneObjHolder) {
@@ -95,11 +95,11 @@ void Scene::initAndLoadStageResource(const char* stageName, s32 scenarioNo) {
     mStageResourceKeeper->initAndLoadResource(stageName, scenarioNo);
 }
 
-void Scene::initLiveActorKit(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
+void Scene::initLiveActorKit(const SceneInitInfo& info, s32 maxActors, s32 maxPlayers,
                              s32 maxCameras) {
-    initLiveActorKitImpl(initInfo, maxActors, maxPlayers, maxCameras);
+    initLiveActorKitImpl(info, maxActors, maxPlayers, maxCameras);
 
-    DrawSystemInfo* drawSystemInfo = initInfo.gameSysInfo->drawSystemInfo;
+    DrawSystemInfo* drawSystemInfo = info.gameSystemInfo->drawSystemInfo;
     GraphicsInitArg graphicsInitArg = {getSceneDrawContext(this),
                                        drawSystemInfo->dockedRenderBuffer};
     graphicsInitArg._3c = maxCameras;
@@ -107,31 +107,31 @@ void Scene::initLiveActorKit(const SceneInitInfo& initInfo, s32 maxActors, s32 m
     mLiveActorKit->initGraphics(graphicsInitArg);
 
     mLiveActorKit->getGraphicsSystemInfo()->setApplicationMessageReceiver(
-        initInfo.gameSysInfo->applicationMessageReciever);
+        info.gameSystemInfo->applicationMessageReciever);
 }
 
-void Scene::initLiveActorKitImpl(const SceneInitInfo& initInfo, s32 maxActors, s32 maxPlayers,
+void Scene::initLiveActorKitImpl(const SceneInitInfo& info, s32 maxActors, s32 maxPlayers,
                                  s32 maxCameras) {
     mLiveActorKit = new LiveActorKit(maxActors, maxPlayers);
     mLiveActorKit->setSceneDrawContext(getSceneDrawContext(this));
-    mLiveActorKit->setGamePadSystem(initInfo.gameSysInfo->gamePadSystem);
-    mLiveActorKit->setEffectSystem(initInfo.gameSysInfo->effectSystem);
+    mLiveActorKit->setGamePadSystem(info.gameSystemInfo->gamePadSystem);
+    mLiveActorKit->setEffectSystem(info.gameSystemInfo->effectSystem);
     mLiveActorKit->init(maxCameras);
 }
 
 void Scene::initLiveActorKitWithGraphics(const GraphicsInitArg& graphicsInitArg,
-                                         const SceneInitInfo& initInfo, s32 maxActors,
-                                         s32 maxPlayers, s32 maxCameras) {
-    initLiveActorKitImpl(initInfo, maxActors, maxPlayers, maxCameras);
+                                         const SceneInitInfo& info, s32 maxActors, s32 maxPlayers,
+                                         s32 maxCameras) {
+    initLiveActorKitImpl(info, maxActors, maxPlayers, maxCameras);
     mLiveActorKit->initGraphics(graphicsInitArg);
     mLiveActorKit->getGraphicsSystemInfo()->setApplicationMessageReceiver(
-        initInfo.gameSysInfo->applicationMessageReciever);
+        info.gameSystemInfo->applicationMessageReciever);
 }
 
-void Scene::initLayoutKit(const SceneInitInfo& initInfo) {
-    mLayoutKit = new LayoutKit(initInfo.gameSysInfo->fontHolder);
-    mLayoutKit->setEffectSystem(initInfo.gameSysInfo->effectSystem);
-    mLayoutKit->setLayoutSystem(initInfo.gameSysInfo->layoutSystem);
+void Scene::initLayoutKit(const SceneInitInfo& info) {
+    mLayoutKit = new LayoutKit(info.gameSystemInfo->fontHolder);
+    mLayoutKit->setEffectSystem(info.gameSystemInfo->effectSystem);
+    mLayoutKit->setLayoutSystem(info.gameSystemInfo->layoutSystem);
     mLayoutKit->setDrawContext(getSceneDrawContext(this));
 }
 
@@ -147,18 +147,18 @@ void Scene::initScreenCoverCtrl() {
     mScreenCoverCtrl = new ScreenCoverCtrl();
 }
 
-void Scene::endInit(const ActorInitInfo& initInfo) {
+void Scene::endInit(const ActorInitInfo& info) {
     if (mAudioDirector)
         mAudioDirector->initAfterInitPlacement();
     if (mSceneObjHolder)
-        mSceneObjHolder->initAfterPlacementSceneObj(initInfo);
+        mSceneObjHolder->initAfterPlacementSceneObj(info);
     if (mLiveActorKit) {
         GraphicsSystemInfo* graphicsSystemInfo = mLiveActorKit->getGraphicsSystemInfo();
         if (graphicsSystemInfo && graphicsSystemInfo->getSkyDirector())
-            graphicsSystemInfo->getSkyDirector()->init(initInfo);
+            graphicsSystemInfo->getSkyDirector()->init(info);
         if (mLiveActorKit) {
             if (mLiveActorKit->getDemoDirector())
-                mLiveActorKit->getDemoDirector()->endInit(initInfo);
+                mLiveActorKit->getDemoDirector()->endInit(info);
             mLiveActorKit->endInit();
         }
     }

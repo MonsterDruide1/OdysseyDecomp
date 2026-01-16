@@ -7,14 +7,14 @@
 #include "Library/Collision/CollisionPartsTriangle.h"
 #include "Library/HitSensor/SensorFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
-#include "Library/LiveActor/ActorParamMove.h"
+#include "Library/LiveActor/ActorParamHolder.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Matrix/MatrixUtil.h"
 #include "Library/Player/PlayerUtil.h"
-#include "Library/Screen/ScreenPoint.h"
+#include "Library/Screen/ScreenPointerUtil.h"
 #include "Library/Se/SeKeeper.h"
 
 namespace al {
@@ -777,12 +777,12 @@ bool reboundVelocityFromCollision(LiveActor* actor, f32 reboundStrength, f32 reb
 
 bool reboundVelocityFromTriangles(LiveActor* actor, f32 reboundStrength, f32 reboundMin) {
     Collider* collider = getActorCollider(actor);
-    s32 _4c = collider->get_4c();
+    s32 planeCount = collider->getPlaneCount();
     if (collider->get_48() == 0)
         return false;
 
     bool isRebound = false;
-    for (s32 i = 0; i != _4c; i++) {
+    for (s32 i = 0; i != planeCount; i++) {
         sead::Vector3f normal = collider->getPlane(i)->getNormal(0);
         f32 dot = normal.dot(getVelocity(actor));
         if (reboundStrength < 0.0) {
@@ -802,9 +802,9 @@ bool reboundVelocityFromActor(LiveActor* actor, const LiveActor* target, f32 reb
     return reboundVelocityFromActor(actor, target, getVelocity(target), reboundStrength);
 }
 
-__attribute__((always_inline)) bool
-reboundVelocityFromActorInline(LiveActor* actor, const LiveActor* target,
-                               const sead::Vector3f& targetVelocity, f32 reboundStrength) {
+ALWAYS_INLINE bool reboundVelocityFromActorInline(LiveActor* actor, const LiveActor* target,
+                                                  const sead::Vector3f& targetVelocity,
+                                                  f32 reboundStrength) {
     sead::Vector3f direction;
     calcDirToActor(&direction, actor, target);
     f32 dot = (getVelocity(actor) - targetVelocity).dot(direction);
@@ -1208,7 +1208,7 @@ bool turnFrontToDirGetIsFinished(LiveActor* actor, const sead::Vector3f& dir, f3
     sead::Vector3f up;
     calcFrontDir(&up, actor);
     bool finished = turnDirectionDegree(actor, &up, dir, deg);
-    rotateVectorDegree(getFrontPtr(actor), getFront(actor), up, deg);
+    turnVecToVecDegree(getFrontPtr(actor), getFront(actor), up, deg);
     normalize(getFrontPtr(actor));
     return finished;
 }
@@ -1557,26 +1557,26 @@ void walkAndTurnPoseToDirection(LiveActor* actor, const sead::Vector3f& dir,
     if (getQuatPtr(actor)) {
         frontPtr = &frontForQuat;
         calcFrontDir(&frontForQuat, actor);
-        turnToDirection(actor, dir, param.turnDegrees);
+        turnToDirection(actor, dir, param.turnSpeedDegree);
     } else if (getFrontPtr(actor)) {
         frontPtr = getFrontPtr(actor);
-        turnDirectionDegree(actor, frontPtr, dir, param.turnDegrees);
+        turnDirectionDegree(actor, frontPtr, dir, param.turnSpeedDegree);
     } else
         return;
 
     if (turnAlongGround)
         turnDirectionAlongGround(actor);
 
-    f32 forceFront = param.forceFront;
+    f32 moveAccel = param.moveAccel;
     sead::Vector3f velFront;
     tryNormalizeOrZero(&velFront, *frontPtr);
-    addVelocityInline(actor, velFront, forceFront);
+    addVelocityInline(actor, velFront, moveAccel);
 
     if (!isOnGround(actor, 3))
-        addVelocityToGravity(actor, param.forceGravity);
+        addVelocityToGravity(actor, param.gravity);
 
     // BUG: should have been param.decay (_8)
-    scaleVelocity(actor, param.forceFront);
+    scaleVelocity(actor, param.moveAccel);
 }
 
 void walkAndTurnToTarget(LiveActor* actor, const sead::Vector3f& target, f32 forceFront,
@@ -1711,8 +1711,8 @@ bool flyAndTurnToPlayer(LiveActor* actor, const ActorParamMove& param) {
     sead::Vector3f playerPos = {0.0f, 0.0f, 0.0f};
     if (!tryFindNearestPlayerPos(&playerPos, actor))
         return false;
-    flyAndTurnToTarget(actor, playerPos, param.forceFront, param.forceGravity, param.decay,
-                       param.turnDegrees);
+    flyAndTurnToTarget(actor, playerPos, param.moveAccel, param.gravity, param.moveFriction,
+                       param.turnSpeedDegree);
     return true;
 }
 

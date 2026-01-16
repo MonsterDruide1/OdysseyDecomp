@@ -46,7 +46,7 @@ void AmiiboNpcLayout::appear() {
 }
 
 void AmiiboNpcLayout::control() {
-    if (isIconEndActionEnd())
+    if (al::isActionPlaying(mAmiiboIcon, "Appear") && al::isActionEnd(mAmiiboIcon))
         al::startAction(mAmiiboIcon, "Wait");
 }
 

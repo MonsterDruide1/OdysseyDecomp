@@ -166,6 +166,9 @@ bool isPadReleaseUiCursorDown(s32 port = -1);
 bool isPadReleaseUiCursorLeft(s32 port = -1);
 bool isPadReleaseUiCursorRight(s32 port = -1);
 
+bool isEitherPadHoldA();
+bool isEitherPadHoldB();
+
 const sead::Vector2f& getLeftStick(s32 port = -1);
 const sead::Vector2f& getRightStick(s32 port = -1);
 
@@ -177,7 +180,7 @@ void calcTouchLayoutPos(sead::Vector2f* pos);
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size);
 bool isTouchPosInCircle(const sead::Vector2f&, f32);
-bool isTouchPosInCircleByWorldPos(const sead::Vector2f&, const IUseCamera*, f32, f32);
+bool isTouchPosInCircleByWorldPos(const sead::Vector3f&, const IUseCamera*, f32, f32);
 bool isPadTouchRect(f32, f32, f32, f32);
 
 // TODO: rename parameters
@@ -189,6 +192,10 @@ s32 getMainControllerPort();
 s32 getMainJoyPadDoublePort();
 s32 getMainJoyPadSingleRightPort();
 s32 getMainJoyPadSingleLeftPort();
+
+s32 getJoyPadSingleRightPort();
+s32 getJoyPadSingleLeftPort();
+s32 getJoyPadDoublePort();
 
 bool isSameNpadId(u32, s32);  // TODO implement
 

@@ -8,7 +8,7 @@
 #include "Library/LiveActor/ActorInitInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
-#include "Library/LiveActor/ActorParamMove.h"
+#include "Library/LiveActor/ActorParamHolder.h"
 #include "Library/LiveActor/ActorPoseKeeper.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
@@ -47,7 +47,7 @@ NERVES_MAKE_STRUCT(KaronWing, Wait, Hack, Swoon, Break, Revive, HackStart, Wande
                    DamageCap, Turn, Find, Chase, ReviveAppear);
 }  // namespace
 
-const al::ActorParamMove cMoveParam{0.1f, 0.0f, 0.95f, 0.7f};
+static al::ActorParamMove cMoveParam{0.1f, 0.0f, 0.95f, 0.7f};
 static FlyerStateWanderParam cWanderParam{30, 540, 180, "EnemyFly", &cMoveParam};
 
 // NON_MATCHING: creating the `EnemyStateSwoonInitParam` (https://decomp.me/scratch/CDB2W)

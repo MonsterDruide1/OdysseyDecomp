@@ -21,7 +21,7 @@ class RouteGuideAreaFinder : public al::AreaObjFindCallBack {
 public:
     RouteGuideAreaFinder();
     void reset(sead::Vector3f);
-    void findArea(const al::AreaObj*) override;
+    void findArea(const al::AreaObj* areaObj) override;
 
 private:
     const al::AreaObj* _8;
@@ -35,7 +35,7 @@ static_assert(sizeof(RouteGuideAreaFinder) == 0x30);
 class RouteGuideDirector : public al::LiveActor, public al::ISceneObj {
 public:
     RouteGuideDirector();
-    void initAfterPlacementSceneObj(const al::ActorInitInfo&) override;
+    void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
     bool isValidate() const;
     void offGuideSystem();
     void deactivateGuide();

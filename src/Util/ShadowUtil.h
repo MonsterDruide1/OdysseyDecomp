@@ -13,7 +13,7 @@ class WaterSurfaceShadow;
 namespace rs {
 
 f32 setShadowDropLength(al::LiveActor*, const al::ActorInitInfo&, const char*);
-f32 calcShadowDropClippingCenter(sead::Vector3f*, const al::LiveActor*, f32, f32);
+void calcShadowDropClippingCenter(sead::Vector3f*, const al::LiveActor*, f32, f32);
 void setShadowDropOffset(al::LiveActor*, const char*, f32);
 WaterSurfaceShadow* tryCreateWaterSurfaceShadow(const al::ActorInitInfo&, const char*);
 WaterSurfaceShadow* tryCreateWaterSurfaceCoinShadow(const al::ActorInitInfo&);

@@ -146,7 +146,7 @@ public:
     void cancelLerp();
     void updateGraphics();
     void updatePartsGraphics(const GraphicsUpdateInfo&);
-    void preDrawGraphics(SceneCameraInfo*);
+    void preDrawGraphics(const SceneCameraInfo*);
     void calcGpuPartsGraphics(const GraphicsCalcGpuInfo&);
     void updateViewGpu(s32, const sead::Camera*, const Projection*);
     void updateViewVolume(const sead::Matrix34f&, const sead::Matrix44f&);
@@ -191,6 +191,20 @@ public:
     OcclusionCullingJudge* getOcclusionCullingJudge() const { return mOcclusionCullingJudge; }
 
     PostProcessingFilter* getPostProcessingFilter() const { return mPostProcessingFilter; }
+
+    GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+
+    ModelShaderHolder* getModelShaderHolder() const { return mModelShaderHolder; }
+
+    ModelOcclusionCullingDirector* getModelOcclusionCullingDirector() const {
+        return mModelOcclusionCullingDirector;
+    }
+
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+
+    PrepassTriangleCulling* getPrepassTriangleCulling() const { return mPrepassTriangleCulling; }
+
+    RadialBlurDirector* getRadialBlurDirector() const { return mRadialBlurDirector; }
 
 private:
     sead::StrTreeMap<128, const sead::PtrArray<UniformBlock>*> mViewIndexedUboArrayTree;

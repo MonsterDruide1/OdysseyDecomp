@@ -3,6 +3,8 @@
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
+#include "Library/Shadow/ShadowMaskBase.h"
+
 namespace sead {
 class Color4f;
 }
@@ -12,8 +14,6 @@ class LiveActor;
 class ShadowMaskBase;
 class DepthShadowMapInfo;
 class OccSphere;
-
-enum class ShadowMaskDrawCategory : s32 {};
 
 bool isExistShadow(LiveActor* actor);
 bool isExistShadowMaskCtrl(LiveActor* actor);

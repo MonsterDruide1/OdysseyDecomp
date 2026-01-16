@@ -50,6 +50,8 @@ perf.data.old
 
 # Tooling
 /toolchain/clang-*
+!/toolchain/clang-include
+toolchain/libcxx-include
 toolchain/include
 toolchain/cache-version-url.txt
 tools/check

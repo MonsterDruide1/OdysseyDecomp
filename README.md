@@ -1,6 +1,14 @@
-# OdysseyDecomp ![Decompiled Status](https://img.shields.io/badge/dynamic/json?url=https://monsterdruide.one/OdysseyDecomp/progress.json&query=$.matching&suffix=%&label=decompiled&color=blue)
+# OdysseyDecomp 
 
-Decompilation of all Super Mario Odyssey versions, from 1.0.0 to 1.3.0.
+ [![Decompilation Progress][progress-badge]][progress] [![Discord Channel][discord-badge]][discord]
+
+[progress]: https://decomp.dev/MonsterDruide1/OdysseyDecomp
+[progress-badge]: https://img.shields.io/badge/dynamic/json?url=https://monsterdruide.one/OdysseyDecomp/progress.json&query=$.matching&suffix=%&label=decompiled&color=blue
+
+[discord]: https://discord.gg/uUecWhMHZy
+[discord-badge]: https://img.shields.io/discord/774687602996936747?color=%237289DA&logo=discord&logoColor=%23FFFFFF
+
+This is a WIP decompilation of Super Mario Odyssey 1.0.0. The purpose of the project is to recreate a source code base for the game from scratch. For more information, you can get in touch with the team on the [SMO Modding Discord Server][discord].
 
 # Building
 
@@ -38,7 +46,10 @@ with the following content:
 export USE_NIX=true
 ```
 
-Finally, run `direnv allow` to setup all dependencies. The remainder of this section can be skipped.
+Run `direnv allow` to setup all dependencies, and run `direnv exec . bash` to ensure that you can access the dev shell.
+If `echo $IN_NIX_SHELL` prints "impure", then you have successfully entered the dev shell.
+The rest of the guide must be done with inside the dev shell, or you will get errors like `ModuleNotFoundError: No module named 'toml'`.
+The remainder of this section can be skipped.
 
 All other systems have to manually install the required packages and programs. We will need:
 
@@ -85,7 +96,7 @@ Additionally, you'll also need:
       follow [the instructions on the wiki](https://zeldamods.org/wiki/Help:Dumping_games#Dumping_binaries_.28executable_files.29).
     * You do not need to dump the entire game (RomFS + ExeFS + DLC). Just dumping the 1.0 ExeFS is sufficient.
 
-3. Run `tools/setup.py [path to the NSO]`
+3. If you are using Nix, run `nix run '.#setup' [path to the NSO]`. For all others, run `tools/setup.py [path to the NSO]`
     * This will:
         * install tools/check to check for differences in decompiled code
         * convert the executable if necessary

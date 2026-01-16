@@ -404,8 +404,24 @@ void multVecInvPose(sead::Vector3f* posOut, const LiveActor* actor, const sead::
     posOut->setMul(mtx, posIn);
 }
 
-// TODO: requires Quatf::rotate to be implemented
-// void multVecInvQuat(sead::Vector3f* posOut, const LiveActor* actor, const sead::Vector3f& posIn);
+// TODO: Find equivalent. Sead implementation of vector.rotate(quat) with quat inverted
+inline void rotateInv(sead::Vector3f* o, const sead::Quatf& q, const sead::Vector3f& v) {
+    sead::Quatf r;
+    r.x = -(q.y * v.z) + (q.z * v.y) + (q.w * v.x);
+    r.y = (q.x * v.z) - (q.z * v.x) + (q.w * v.y);
+    r.z = -(q.x * v.y) + (q.y * v.x) + (q.w * v.z);
+    r.w = (q.x * v.x) + (q.y * v.y) + (q.z * v.z);
+
+    o->x = (r.x * q.w) + (r.y * q.z) - (r.z * q.y) + (r.w * q.x);
+    o->y = -(r.x * q.z) + (r.y * q.w) + (r.z * q.x) + (r.w * q.y);
+    o->z = (r.x * q.y) - (r.y * q.x) + (r.z * q.w) + (r.w * q.z);
+}
+
+void multVecInvQuat(sead::Vector3f* posOut, const LiveActor* actor, const sead::Vector3f& posIn) {
+    ActorPoseKeeperBase* poseKeeper = actor->getPoseKeeper();
+    sead::Vector3f trans = posIn - poseKeeper->getTrans();
+    rotateInv(posOut, poseKeeper->getQuat(), trans);
+}
 
 void multMtxInvPose(sead::Matrix34f* mtxOut, const LiveActor* actor, const sead::Matrix34f& mtxIn) {
     sead::Matrix34f mtx;

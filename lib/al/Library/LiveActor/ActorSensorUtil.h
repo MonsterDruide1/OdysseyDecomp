@@ -730,13 +730,11 @@ SENSOR_MSG(Hit);
 SENSOR_MSG(HitStrong);
 SENSOR_MSG(HitVeryStrong);
 SENSOR_MSG(KnockDown);
-SENSOR_MSG(MapPush);
 SENSOR_MSG(Vanish);
 SENSOR_MSG_WITH_DATA(ChangeAlpha, (f32, Alpha));
 SENSOR_MSG(ShowModel);
 SENSOR_MSG(HideModel);
 SENSOR_MSG(Restart);
-// Impulse
 SENSOR_MSG(EnemyTouch);
 SENSOR_MSG(EnemyUpperPunch);
 SENSOR_MSG(EnemyTrample);

@@ -18,7 +18,7 @@ public:
     CoinStack(const char* name);
     virtual ~CoinStack() = default;
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
 

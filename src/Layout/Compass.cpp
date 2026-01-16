@@ -48,10 +48,10 @@ void Compass::appear() {
 
         al::LiveActor* player = al::tryGetPlayerActor(mPlayerHolder, 0);
 
-        if (player != nullptr) {
+        if (player) {
             al::AreaObj* area = al::tryFindAreaObj(player, "CompassArea", al::getTrans(player));
 
-            if (area != nullptr && isAreaMadness(area))
+            if (area && isAreaMadness(area))
                 return;
         }
 
@@ -74,7 +74,7 @@ void Compass::appear() {
     } else {
         al::LiveActor* player = al::tryGetPlayerActor(mPlayerHolder, 0);
 
-        if (player == nullptr || !al::isInAreaObj(player, "CompassArea", al::getTrans(player)))
+        if (!player || !al::isInAreaObj(player, "CompassArea", al::getTrans(player)))
             return;
 
         al::LayoutActor::appear();

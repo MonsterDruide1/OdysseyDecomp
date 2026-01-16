@@ -11,7 +11,7 @@ struct ActorInitInfo;
 class VolleyballBase : public al::LiveActor {
 public:
     VolleyballBase(const char* name);
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void startReaction();
 
     void exeWait();
