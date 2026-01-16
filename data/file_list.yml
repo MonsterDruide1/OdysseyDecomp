@@ -144705,7 +144705,7 @@ Sequence/E3ResourceLoader.o:
     label:
     - _ZN16E3ResourceLoaderC1Ev
     - _ZN16E3ResourceLoaderC2Ev
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x50a454
     size: 452
     label: _ZN16E3ResourceLoader21loadHomeStageResourceEv
