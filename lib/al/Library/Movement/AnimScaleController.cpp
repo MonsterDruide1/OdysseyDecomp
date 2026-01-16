@@ -2,7 +2,7 @@
 
 namespace al {
 
-AnimScaleParam::AnimScaleParam() {}
+AnimScaleParam::AnimScaleParam() = default;
 
 AnimScaleParam::AnimScaleParam(f32 a, f32 b, f32 c, f32 d, f32 e, f32 f, f32 g, s32 h, f32 i, f32 j,
                                f32 k, f32 l)

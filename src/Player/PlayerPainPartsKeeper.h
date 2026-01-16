@@ -12,13 +12,14 @@ class PlayerModelHolder;
 
 class PlayerPainPartsKeeper {
 public:
-    PlayerPainPartsKeeper(const al::LiveActor*, const PlayerCostumeInfo*);
+    PlayerPainPartsKeeper(const al::LiveActor* actor, const PlayerCostumeInfo* costumeInfo);
     void update();
     void updateNeedle();
     void resetPosition();
     bool isEnableNosePain() const;
     bool isInvalidNoseDynamics() const;
-    void createNoseNeedle(const PlayerModelHolder*, const al::ActorInitInfo&);
+    void createNoseNeedle(const PlayerModelHolder* modelHolder,
+                          const al::ActorInitInfo& actorInitInfo);
     void appearNeedle();
 
 private:

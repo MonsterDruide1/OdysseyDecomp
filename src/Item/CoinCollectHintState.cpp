@@ -24,13 +24,13 @@ void CoinCollectHintState::init() {
 
 void CoinCollectHintState::appear() {
     al::setNerve(this, &NrvCoinCollectHintState.Wait);
-    setDead(false);
+    al::NerveStateBase::appear();
     appearHintEffect();
 }
 
 void CoinCollectHintState::kill() {
     al::deleteEffect(mActor, "Emission");
-    setDead(true);
+    al::NerveStateBase::kill();
 }
 
 void CoinCollectHintState::deleteHintEffect() {

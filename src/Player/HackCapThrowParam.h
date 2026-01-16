@@ -3,36 +3,38 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+struct ActorParamF32;
+struct ActorParamS32;
 class LiveActor;
-}
+}  // namespace al
 
 class HackCapThrowParam {
 public:
     HackCapThrowParam(al::LiveActor* actor);
 
 private:
-    f32* mHackThrowHeight;
-    f32* mMaxVel;
-    f32* mContinuousThrowSpeed;
-    s32* mBreakTime;
-    f32* mMaxDist;
-    s32* mEndpointStopTime;
-    s32* mMaxEndpointStopTime;
-    f32* mReturnStrength;
-    f32* mMaxRetSpeed;
-    f32* mTurnAngleLimit;
-    f32* mWaterMaxSpeed;
-    f32* mWaterDist;
-    s32* mWaterBreakTime;
-    f32* mWaterMaxRetSpeed;
-    f32* mTornadoDist;
-    f32* mTornadoMaxDist;
-    s32* mTornadoReflectTime;
-    f32* mRollSpeed;
-    f32* mRollDistTop;
-    f32* mRollDistBottom;
-    s32* mRollBrakeTimeTop;
-    s32* mRollBrakeTimeBottom;
-    f32* mRollGroundGroundedPoseTrack;
-    f32* mRollGroundAerialPoseTrack;
+    al::ActorParamF32* mHackThrowHeight;
+    al::ActorParamF32* mMaxVel;
+    al::ActorParamF32* mContinuousThrowSpeed;
+    al::ActorParamS32* mBreakTime;
+    al::ActorParamF32* mMaxDist;
+    al::ActorParamS32* mEndpointStopTime;
+    al::ActorParamS32* mMaxEndpointStopTime;
+    al::ActorParamF32* mReturnStrength;
+    al::ActorParamF32* mMaxRetSpeed;
+    al::ActorParamF32* mTurnAngleLimit;
+    al::ActorParamF32* mWaterMaxSpeed;
+    al::ActorParamF32* mWaterDist;
+    al::ActorParamS32* mWaterBreakTime;
+    al::ActorParamF32* mWaterMaxRetSpeed;
+    al::ActorParamF32* mTornadoDist;
+    al::ActorParamF32* mTornadoMaxDist;
+    al::ActorParamS32* mTornadoReflectTime;
+    al::ActorParamF32* mRollSpeed;
+    al::ActorParamF32* mRollDistTop;
+    al::ActorParamF32* mRollDistBottom;
+    al::ActorParamS32* mRollBrakeTimeTop;
+    al::ActorParamS32* mRollBrakeTimeBottom;
+    al::ActorParamF32* mRollGroundGroundedPoseTrack;
+    al::ActorParamF32* mRollGroundAerialPoseTrack;
 };

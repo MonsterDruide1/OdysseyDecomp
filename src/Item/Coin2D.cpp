@@ -3,7 +3,7 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -38,20 +38,20 @@ NERVES_MAKE_STRUCT(Coin2D, Wait, Appear, CountUp, Got);
 
 Coin2D::Coin2D(const char* name) : al::LiveActor(name) {}
 
-void Coin2D::init(const al::ActorInitInfo& initInfo) {
+void Coin2D::init(const al::ActorInitInfo& info) {
     using Coin2DFunctor = al::FunctorV0M<Coin2D*, void (Coin2D::*)()>;
 
-    al::initActorWithArchiveName(this, initInfo, "CoinDot", nullptr);
-    mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
-    if (mMtxConnector != nullptr)
-        al::tryGetArg(&mIsConnectToCollisionBack, initInfo, "IsConnectToCollisionBack");
+    al::initActorWithArchiveName(this, info, "CoinDot", nullptr);
+    mMtxConnector = al::tryCreateMtxConnector(this, info);
+    if (mMtxConnector)
+        al::tryGetArg(&mIsConnectToCollisionBack, info, "IsConnectToCollisionBack");
 
     al::initNerve(this, &NrvCoin2D.Wait, 0);
-    al::tryAddDisplayOffset(this, initInfo);
+    al::tryAddDisplayOffset(this, info);
     mDimensionKeeper = rs::createDimensionKeeper(this);
     rs::updateDimensionKeeper(mDimensionKeeper);
 
-    mIsPlaced = al::isPlaced(initInfo);
+    mIsPlaced = al::isPlaced(info);
     if (mIsPlaced)
         rs::snap2DParallelizeFront(this, this, 500.0f);
 
@@ -64,7 +64,7 @@ void Coin2D::init(const al::ActorInitInfo& initInfo) {
 }
 
 void Coin2D::initAfterPlacement() {
-    if (mMtxConnector != nullptr) {
+    if (mMtxConnector) {
         if (!mIsConnectToCollisionBack) {
             al::attachMtxConnectorToCollision(mMtxConnector, this, 50.0f, 400.0f);
             return;
@@ -78,12 +78,12 @@ void Coin2D::initAfterPlacement() {
 
 void Coin2D::appear() {
     al::LiveActor::appear();
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 
 void Coin2D::control() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 
@@ -118,10 +118,6 @@ bool Coin2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     return false;
 }
 
-ActorDimensionKeeper* Coin2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}
-
 void Coin2D::listenAppear() {
     appear();
     al::invalidateClipping(this);
@@ -136,7 +132,7 @@ void Coin2D::appearCountUp() {
     al::setVelocityToDirection(this, up, 16.0f);
 
     al::AreaObj* areaObj = rs::tryFind2DAreaObj(this, nullptr, nullptr);
-    if (areaObj != nullptr) {
+    if (areaObj) {
         sead::Vector3f lockDir = sead::Vector3f::zero;
         rs::calc2DAreaLockDir(&lockDir, areaObj, al::getTrans(this));
         sead::Quatf quat = sead::Quatf::unit;

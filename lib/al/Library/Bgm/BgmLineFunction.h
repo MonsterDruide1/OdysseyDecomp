@@ -10,7 +10,7 @@ class BgmSituationDirector;
 class Bgm3DParamsController;
 class BgmLine;
 class BgmMultiPlayingController;
-class BgmPlayingRequest;
+struct BgmPlayingRequest;
 class FunctorBase;
 class IBgmParamsChanger;
 class IUseAudioKeeper;

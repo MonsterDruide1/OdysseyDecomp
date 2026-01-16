@@ -17,16 +17,14 @@
 #include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Thread/FunctorV0M.h"
 
+namespace al {
 namespace {
-using namespace al;
-
 NERVE_IMPL(EffectObjFollowCameraLimit, Wait)
 NERVE_IMPL(EffectObjFollowCameraLimit, Disappear)
 
 NERVES_MAKE_NOSTRUCT(EffectObjFollowCameraLimit, Wait, Disappear)
 }  // namespace
 
-namespace al {
 EffectObjFollowCameraLimit::EffectObjFollowCameraLimit(const char* name) : LiveActor(name) {}
 
 void EffectObjFollowCameraLimit::init(const ActorInitInfo& info) {
@@ -35,7 +33,7 @@ void EffectObjFollowCameraLimit::init(const ActorInitInfo& info) {
 
     EffectObjFunction::initActorEffectObj(this, info);
     invalidateClipping(this);
-    setEffectNamedMtxPtr(this, "Wait", &mBaseMtx);
+    setEffectFollowMtxPtr(this, "Wait", &mBaseMtx);
     initNerve(this, &Wait, 0);
 
     listenStageSwitchOnOffAppear(

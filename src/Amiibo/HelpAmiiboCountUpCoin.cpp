@@ -108,14 +108,6 @@ void HelpAmiiboCountUpCoin::activate() {
     al::setNerve(this, &NrvHelpAmiiboCountUpCoin.End);
 }
 
-HelpAmiiboType HelpAmiiboCountUpCoin::getType() const {
-    return HelpAmiiboType::All;
-}
-
-al::NerveKeeper* HelpAmiiboCountUpCoin::getNerveKeeper() const {
-    return mNerveKeeper;
-}
-
 void HelpAmiiboCountUpCoin::updateItemQT(al::LiveActor* actor) {
     sead::Quatf pose = sead::Quatf::unit;
     sead::Vector3f position = sead::Vector3f::zero;

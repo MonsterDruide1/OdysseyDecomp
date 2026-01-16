@@ -14,6 +14,6 @@ private:
     static const char* sSceneObjName;
 };
 
-ISceneObj* createSceneObj(const IUseSceneObjHolder* objHolder, s32 type);
+ISceneObj* createSceneObj(const IUseSceneObjHolder* user, s32 sceneObjId);
 
 }  // namespace al

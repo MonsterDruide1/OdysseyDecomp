@@ -17,13 +17,13 @@ class CoinCollectEmpty2D : public al::LiveActor, public IUseDimension {
 public:
     CoinCollectEmpty2D(const char* name, const char* archiveName);
 
-    void init(const al::ActorInitInfo& initInfo) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
     void endClipped() override;
 
-    ActorDimensionKeeper* getActorDimensionKeeper() const override;
+    ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; }
 
     void exeWait();
     void exeGot();

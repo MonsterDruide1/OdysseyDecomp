@@ -3,7 +3,7 @@
 #include <cmath>
 
 namespace al {
-BgmChangeableParams::BgmChangeableParams() {}
+BgmChangeableParams::BgmChangeableParams() = default;
 
 void BgmChangeableParams::calcPitch(f32 value) {
     exp2f(value / 12);
@@ -24,7 +24,7 @@ void BgmChangeableParams::operator=(const BgmChangeableParams& value) {
     mTrackVolume5 = value.mTrackVolume5;
 }
 
-BgmUserInfo::BgmUserInfo() {}
+BgmUserInfo::BgmUserInfo() = default;
 
 s32 BgmUserInfo::compareInfo(const BgmUserInfo* info_1, const BgmUserInfo* info_2) {
     return strcmp(info_1->name, info_2->name);

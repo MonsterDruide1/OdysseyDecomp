@@ -7,13 +7,15 @@ class NerveStateBase : public NerveExecutor {
 public:
     NerveStateBase(const char* stateName);
 
-    virtual void init();
-    virtual void appear();
-    virtual void kill();
-    virtual bool update();
-    virtual void control();
+    virtual void init() {}
 
-    void setDead(bool isDead) { mIsDead = isDead; }
+    virtual void appear() { mIsDead = false; }
+
+    virtual void kill() { mIsDead = true; }
+
+    virtual bool update();
+
+    virtual void control() {}
 
     bool isDead() const { return mIsDead; }
 
@@ -25,7 +27,7 @@ class LiveActor;
 
 class ActorStateBase : public NerveStateBase {
 public:
-    ActorStateBase(const char* stateName, LiveActor* actor);
+    ActorStateBase(const char* name, LiveActor* actor);
 
 protected:
     LiveActor* mActor;

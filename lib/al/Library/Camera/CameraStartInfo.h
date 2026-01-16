@@ -18,7 +18,7 @@ struct CameraStartInfo {
     bool isInvalidKeepPreCameraDistanceIfNoCollide;
     bool isValidResetPreCameraPose;
     bool isValidKeepPreSelfCameraPose;
-    bool isGrounded;
+    bool _25;
     bool isExistAreaAngleH;
     f32 areaAngleH;
     bool isExistAreaAngleV;

@@ -44,7 +44,7 @@ struct HitReactionInfo {
     f32 radialBlurStrengthEnd;
     f32 radialBlurAlphaBegin;
     f32 radialBlurAlphaEnd;
-    bool radialBlurScreenSpace;
+    bool isRadialBlurScreenSpace;
     sead::Vector2f radialBlurScreenPos;
 };
 

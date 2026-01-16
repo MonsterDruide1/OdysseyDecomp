@@ -1,5 +1,6 @@
 #include "Library/MapObj/RollingCubeMapParts.h"
 
+#include "Library/Base/StringUtil.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
@@ -17,6 +18,7 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 #include "Project/Joint/RollingCubePoseKeeper.h"
+#include "Project/Joint/RollingCubePoseKeeperUtil.h"
 
 namespace {
 using namespace al;
@@ -58,8 +60,8 @@ void RollingCubeMapParts::init(const ActorInitInfo& info) {
         mMoveLimitMtx->makeQT(mInitialPoseQuat, mInitialPoseTrans);
 
         mMoveLimitPartsModel = new PartsModel("");
-        sead::FixedSafeString<256> model;
-        sead::FixedSafeString<256> archive;
+        StringTmp<256> model;
+        StringTmp<256> archive;
         makeMapPartsModelName(&model, &archive, info);
         mMoveLimitPartsModel->initPartsSuffix(this, info, model.cstr(), "MoveLimit", mMoveLimitMtx,
                                               false);
@@ -105,7 +107,7 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* message, HitSensor* other,
 }
 
 void RollingCubeMapParts::control() {
-    if (mMoveLimitMtx != nullptr)
+    if (mMoveLimitMtx)
         mMoveLimitMtx->makeQT(mInitialPoseQuat, getTrans(this));
 
     calcMtxLandEffect(&mLandEffectMtx, mRollingCubePoseKeeper, getQuat(this), getTrans(this));

@@ -11,8 +11,9 @@ class CameraStopJudge : public HioNode, public IUseAreaObj {
 public:
     CameraStopJudge();
     bool isStop() const;
-    void update(const sead::Vector3f&);
-    AreaObjDirector* getAreaObjDirector() const override;
+    void update(const sead::Vector3f& position);
+
+    AreaObjDirector* getAreaObjDirector() const override { return mAreaObjDirector; }
 
 private:
     bool mIsInCameraStopArea = false;

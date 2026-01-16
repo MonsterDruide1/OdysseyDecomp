@@ -4,359 +4,359 @@
 #include "Library/Yaml/ByamlIter.h"
 
 namespace al {
-bool tryGetByamlU8(u8* pOut, const ByamlIter& rIter, const char* pKey) {
+bool tryGetByamlU8(u8* out, const ByamlIter& iter, const char* key) {
     s32 value = 0;
-    if (rIter.tryGetIntByKey(&value, pKey)) {
-        *pOut = value;
+    if (iter.tryGetIntByKey(&value, key)) {
+        *out = value;
         return true;
     }
     return false;
 }
 
-bool tryGetByamlU16(u16* pOut, const ByamlIter& rIter, const char* pKey) {
+bool tryGetByamlU16(u16* out, const ByamlIter& iter, const char* key) {
     s32 value = 0;
-    if (rIter.tryGetIntByKey(&value, pKey)) {
-        *pOut = value;
+    if (iter.tryGetIntByKey(&value, key)) {
+        *out = value;
         return true;
     }
     return false;
 }
 
-bool tryGetByamlS16(s16* pOut, const ByamlIter& rIter, const char* pKey) {
+bool tryGetByamlS16(s16* out, const ByamlIter& iter, const char* key) {
     s32 value = 0;
-    if (rIter.tryGetIntByKey(&value, pKey)) {
-        *pOut = value;
+    if (iter.tryGetIntByKey(&value, key)) {
+        *out = value;
         return true;
     }
     return false;
 }
 
-bool tryGetByamlS32(s32* pOut, const ByamlIter& rIter, const char* pKey) {
-    return rIter.tryGetIntByKey(pOut, pKey);
+bool tryGetByamlS32(s32* out, const ByamlIter& iter, const char* key) {
+    return iter.tryGetIntByKey(out, key);
 }
 
-bool tryGetByamlU32(u32* pOut, const ByamlIter& rIter, const char* pKey) {
+bool tryGetByamlU32(u32* out, const ByamlIter& iter, const char* key) {
     s32 value = 0;
-    bool res = rIter.tryGetIntByKey(&value, pKey);
+    bool res = iter.tryGetIntByKey(&value, key);
     if (res)
-        *pOut = value;
+        *out = value;
     return res;
 }
 
-bool tryGetByamlS64(s64* pOut, const ByamlIter& rIter, const char* pKey) {
-    return rIter.tryGetInt64ByKey(pOut, pKey);
+bool tryGetByamlS64(s64* out, const ByamlIter& iter, const char* key) {
+    return iter.tryGetInt64ByKey(out, key);
 }
 
-bool tryGetByamlU64(u64* pOut, const ByamlIter& rIter, const char* pKey) {
+bool tryGetByamlU64(u64* out, const ByamlIter& iter, const char* key) {
     u64 value = 0;
-    bool res = rIter.tryGetUInt64ByKey(&value, pKey);
+    bool res = iter.tryGetUInt64ByKey(&value, key);
     if (res)
-        *pOut = value;
+        *out = value;
     return res;
 }
 
-bool tryGetByamlF32(f32* pOut, const ByamlIter& rIter, const char* pKey) {
+bool tryGetByamlF32(f32* out, const ByamlIter& iter, const char* key) {
     f32 value = 0;
-    if (rIter.tryGetFloatByKey(&value, pKey)) {
-        *pOut = value;
+    if (iter.tryGetFloatByKey(&value, key)) {
+        *out = value;
         return true;
     }
     return false;
 }
 
-bool tryGetByamlV2f(sead::Vector2f* pOut, const ByamlIter& rIter) {
+bool tryGetByamlV2f(sead::Vector2f* out, const ByamlIter& iter) {
     f32 x = 0;
-    bool x_ret = rIter.tryGetFloatByKey(&x, "X");
+    bool x_ret = iter.tryGetFloatByKey(&x, "X");
     f32 y = 0;
-    bool y_ret = rIter.tryGetFloatByKey(&y, "Y");
+    bool y_ret = iter.tryGetFloatByKey(&y, "Y");
 
-    *pOut = {x, y};
+    *out = {x, y};
     return x_ret || y_ret;
 }
 
-bool tryGetByamlV3f(sead::Vector3f* pOut, const ByamlIter& rIter) {
+bool tryGetByamlV3f(sead::Vector3f* out, const ByamlIter& iter) {
     bool result = false;
     f32 x = 0;
-    result = rIter.tryGetFloatByKey(&x, "X");
+    result = iter.tryGetFloatByKey(&x, "X");
     f32 y = 0;
-    result |= rIter.tryGetFloatByKey(&y, "Y");
+    result |= iter.tryGetFloatByKey(&y, "Y");
     f32 z = 0;
-    result |= rIter.tryGetFloatByKey(&z, "Z");
+    result |= iter.tryGetFloatByKey(&z, "Z");
 
-    *pOut = {x, y, z};
+    *out = {x, y, z};
     return result;
 }
 
-bool tryGetByamlV4f(sead::Vector4f* pOut, const ByamlIter& rIter) {
+bool tryGetByamlV4f(sead::Vector4f* out, const ByamlIter& iter) {
     bool result = false;
     f32 x = 0;
-    result = rIter.tryGetFloatByKey(&x, "X");
+    result = iter.tryGetFloatByKey(&x, "X");
     f32 y = 0;
-    result |= rIter.tryGetFloatByKey(&y, "Y");
+    result |= iter.tryGetFloatByKey(&y, "Y");
     f32 z = 0;
-    result |= rIter.tryGetFloatByKey(&z, "Z");
+    result |= iter.tryGetFloatByKey(&z, "Z");
     f32 w = 0;
-    result |= rIter.tryGetFloatByKey(&w, "W");
+    result |= iter.tryGetFloatByKey(&w, "W");
 
-    *pOut = {x, y, z, w};
+    *out = {x, y, z, w};
     return result;
 }
 
-bool tryGetByamlScale(sead::Vector3f* pOut, const ByamlIter& rIter) {
+bool tryGetByamlScale(sead::Vector3f* out, const ByamlIter& iter) {
     bool result = false;
     f32 x = 1;
-    result = rIter.tryGetFloatByKey(&x, "X");
+    result = iter.tryGetFloatByKey(&x, "X");
     f32 y = 1;
-    result |= rIter.tryGetFloatByKey(&y, "Y");
+    result |= iter.tryGetFloatByKey(&y, "Y");
     f32 z = 1;
-    result |= rIter.tryGetFloatByKey(&z, "Z");
+    result |= iter.tryGetFloatByKey(&z, "Z");
 
-    *pOut = {x, y, z};
+    *out = {x, y, z};
     return result;
 }
 
-bool tryGetByamlV2s32(sead::Vector2i* pOut, const ByamlIter& rIter) {
+bool tryGetByamlV2s32(sead::Vector2i* out, const ByamlIter& iter) {
     s32 x = 0;
-    bool x_ret = rIter.tryGetIntByKey(&x, "X");
+    bool x_ret = iter.tryGetIntByKey(&x, "X");
     s32 y = 0;
-    bool y_ret = rIter.tryGetIntByKey(&y, "Y");
+    bool y_ret = iter.tryGetIntByKey(&y, "Y");
 
-    *pOut = {x, y};
+    *out = {x, y};
     return x_ret || y_ret;
 }
 
-bool tryGetByamlV3s32(sead::Vector3i* pOut, const ByamlIter& rIter) {
+bool tryGetByamlV3s32(sead::Vector3i* out, const ByamlIter& iter) {
     bool result = false;
     s32 x = 0;
-    result = rIter.tryGetIntByKey(&x, "X");
+    result = iter.tryGetIntByKey(&x, "X");
     s32 y = 0;
-    result |= rIter.tryGetIntByKey(&y, "Y");
+    result |= iter.tryGetIntByKey(&y, "Y");
     s32 z = 0;
-    result |= rIter.tryGetIntByKey(&z, "Z");
+    result |= iter.tryGetIntByKey(&z, "Z");
 
-    *pOut = {x, y, z};
+    *out = {x, y, z};
     return result;
 }
 
-bool tryGetByamlBox3f(sead::BoundBox3f* pOut, const ByamlIter& rIter) {
+bool tryGetByamlBox3f(sead::BoundBox3f* out, const ByamlIter& iter) {
     sead::Vector3f min, max;
-    if (!tryGetByamlV3f(&min, rIter, "Min"))
+    if (!tryGetByamlV3f(&min, iter, "Min"))
         return false;
-    if (!tryGetByamlV3f(&max, rIter, "Max"))
+    if (!tryGetByamlV3f(&max, iter, "Max"))
         return false;
-    *pOut = {min, max};
+    *out = {min, max};
     return true;
 }
 
-bool tryGetByamlV3f(sead::Vector3f* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlV3f(sead::Vector3f* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlV3f(pOut, rIter);
+    return tryGetByamlV3f(out, child);
 }
 
-bool tryGetByamlV2f(sead::Vector2f* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlV2f(sead::Vector2f* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlV2f(pOut, rIter);
+    return tryGetByamlV2f(out, child);
 }
 
-bool tryGetByamlV4f(sead::Vector4f* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlV4f(sead::Vector4f* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlV4f(pOut, rIter);
+    return tryGetByamlV4f(out, child);
 }
 
-bool tryGetByamlScale(sead::Vector3f* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlScale(sead::Vector3f* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlScale(pOut, rIter);
+    return tryGetByamlScale(out, child);
 }
 
-bool tryGetByamlV2s32(sead::Vector2i* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlV2s32(sead::Vector2i* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlV2s32(pOut, rIter);
+    return tryGetByamlV2s32(out, child);
 }
 
-bool tryGetByamlV3s32(sead::Vector3i* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlV3s32(sead::Vector3i* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlV3s32(pOut, rIter);
+    return tryGetByamlV3s32(out, child);
 }
 
-bool tryGetByamlBox3f(sead::BoundBox3f* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlBox3f(sead::BoundBox3f* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlBox3f(pOut, rIter);
+    return tryGetByamlBox3f(out, child);
 }
 
-bool tryGetByamlString(const char** pOut, const ByamlIter& rIter, const char* key) {
-    return rIter.tryGetStringByKey(pOut, key);
+bool tryGetByamlString(const char** out, const ByamlIter& iter, const char* key) {
+    return iter.tryGetStringByKey(out, key);
 }
 
-bool tryGetByamlColor(sead::Color4f* pOut, const ByamlIter& rIter) {
+bool tryGetByamlColor(sead::Color4f* out, const ByamlIter& iter) {
     bool result = false;
     f32 r = 0;
-    result = rIter.tryGetFloatByKey(&r, "R");
+    result = iter.tryGetFloatByKey(&r, "R");
     f32 g = 0;
-    result |= rIter.tryGetFloatByKey(&g, "G");
+    result |= iter.tryGetFloatByKey(&g, "G");
     f32 b = 0;
-    result |= rIter.tryGetFloatByKey(&b, "B");
+    result |= iter.tryGetFloatByKey(&b, "B");
     f32 a = 0;
-    result |= rIter.tryGetFloatByKey(&a, "A");
+    result |= iter.tryGetFloatByKey(&a, "A");
 
-    *pOut = {r, g, b, a};
+    *out = {r, g, b, a};
     return result;
 }
 
-bool tryGetByamlColor(sead::Color4f* pOut, const ByamlIter& sIter, const char* key) {
-    ByamlIter rIter;
-    if (!sIter.tryGetIterByKey(&rIter, key))
+bool tryGetByamlColor(sead::Color4f* out, const ByamlIter& iter, const char* key) {
+    ByamlIter child;
+    if (!iter.tryGetIterByKey(&child, key))
         return false;
 
-    return tryGetByamlColor(pOut, rIter);
+    return tryGetByamlColor(out, child);
 }
 
-bool tryGetByamlBool(bool* pOut, const ByamlIter& rIter, const char* key) {
-    return rIter.tryGetBoolByKey(pOut, key);
+bool tryGetByamlBool(bool* out, const ByamlIter& iter, const char* key) {
+    return iter.tryGetBoolByKey(out, key);
 }
 
-const char* tryGetByamlKeyStringOrNULL(const ByamlIter& rIter, const char* key) {
+const char* tryGetByamlKeyStringOrNULL(const ByamlIter& iter, const char* key) {
     const char* val = nullptr;
-    if (rIter.tryGetStringByKey(&val, key))
+    if (iter.tryGetStringByKey(&val, key))
         return val;
     return nullptr;
 }
 
-s32 tryGetByamlKeyIntOrZero(const ByamlIter& rIter, const char* key) {
+s32 tryGetByamlKeyIntOrZero(const ByamlIter& iter, const char* key) {
     s32 val = 0;
-    if (rIter.tryGetIntByKey(&val, key))
+    if (iter.tryGetIntByKey(&val, key))
         return val;
     return 0;
 }
 
-u32 tryGetByamlKeyU32OrZero(const ByamlIter& rIter, const char* key) {
+u32 tryGetByamlKeyU32OrZero(const ByamlIter& iter, const char* key) {
     u32 val = 0;
-    if (rIter.tryGetUIntByKey(&val, key))
+    if (iter.tryGetUIntByKey(&val, key))
         return val;
     return 0;
 }
 
-f32 tryGetByamlKeyFloatOrZero(const ByamlIter& rIter, const char* key) {
+f32 tryGetByamlKeyFloatOrZero(const ByamlIter& iter, const char* key) {
     f32 val = 0;
-    if (rIter.tryGetFloatByKey(&val, key))
+    if (iter.tryGetFloatByKey(&val, key))
         return val;
     return 0;
 }
 
-bool tryGetByamlKeyBoolOrFalse(const ByamlIter& rIter, const char* key) {
+bool tryGetByamlKeyBoolOrFalse(const ByamlIter& iter, const char* key) {
     bool val = false;
-    if (rIter.tryGetBoolByKey(&val, key))
+    if (iter.tryGetBoolByKey(&val, key))
         return val;
     return false;
 }
 
-bool tryGetByamlIterByKey(ByamlIter* pOut, const ByamlIter& rIter, const char* key) {
-    return rIter.tryGetIterByKey(pOut, key);
+bool tryGetByamlIterByKey(ByamlIter* out, const ByamlIter& iter, const char* key) {
+    return iter.tryGetIterByKey(out, key);
 }
 
-bool tryGetByamlKeyAndIntByIndex(const char** key, s32* pOut, const ByamlIter& rIter, s32 index) {
+bool tryGetByamlKeyAndIntByIndex(const char** key, s32* out, const ByamlIter& iter, s32 index) {
     ByamlData data;
-    if (!rIter.getByamlDataAndKeyName(&data, key, index))
+    if (!iter.getByamlDataAndKeyName(&data, key, index))
         return false;
-    if (!rIter.tryConvertInt(pOut, &data))
+    if (!iter.tryConvertInt(out, &data))
         return false;
     return true;
 }
 
-const char* getByamlKeyString(const ByamlIter& rIter, const char* key) {
-    return tryGetByamlKeyStringOrNULL(rIter, key);
+const char* getByamlKeyString(const ByamlIter& iter, const char* key) {
+    return tryGetByamlKeyStringOrNULL(iter, key);
 }
 
-s32 getByamlKeyInt(const ByamlIter& rIter, const char* key) {
-    return tryGetByamlKeyIntOrZero(rIter, key);
+s32 getByamlKeyInt(const ByamlIter& iter, const char* key) {
+    return tryGetByamlKeyIntOrZero(iter, key);
 }
 
-f32 getByamlKeyFloat(const ByamlIter& rIter, const char* key) {
-    return tryGetByamlKeyFloatOrZero(rIter, key);
+f32 getByamlKeyFloat(const ByamlIter& iter, const char* key) {
+    return tryGetByamlKeyFloatOrZero(iter, key);
 }
 
-bool getByamlKeyBool(const ByamlIter& rIter, const char* key) {
-    return tryGetByamlKeyBoolOrFalse(rIter, key);
+bool getByamlKeyBool(const ByamlIter& iter, const char* key) {
+    return tryGetByamlKeyBoolOrFalse(iter, key);
 }
 
-void getByamlIterByKey(ByamlIter* pOut, const ByamlIter& rIter, const char* pKey) {
-    rIter.tryGetIterByKey(pOut, pKey);
+void getByamlIterByKey(ByamlIter* out, const ByamlIter& iter, const char* key) {
+    iter.tryGetIterByKey(out, key);
 }
 
-void getByamlIterByIndex(ByamlIter* pOut, const ByamlIter& rIter, s32 index) {
-    rIter.tryGetIterByIndex(pOut, index);
+void getByamlIterByIndex(ByamlIter* out, const ByamlIter& iter, s32 index) {
+    iter.tryGetIterByIndex(out, index);
 }
 
-bool isTypeBoolByIndex(const ByamlIter& rIter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_BOOL>(rIter, index);
+bool isTypeBoolByIndex(const ByamlIter& iter, s32 index) {
+    return isTypeByIndex<ByamlDataType::Bool>(iter, index);
 }
 
-bool isTypeBoolByKey(const ByamlIter& rIter, const char* pKey) {
-    return isTypeByKey<ByamlDataType::TYPE_BOOL>(rIter, pKey);
+bool isTypeBoolByKey(const ByamlIter& iter, const char* key) {
+    return isTypeByKey<ByamlDataType::Bool>(iter, key);
 }
 
-bool isTypeIntByIndex(const ByamlIter& rIter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_INT>(rIter, index);
+bool isTypeIntByIndex(const ByamlIter& iter, s32 index) {
+    return isTypeByIndex<ByamlDataType::Int>(iter, index);
 }
 
-bool isTypeIntByKey(const ByamlIter& rIter, const char* pKey) {
-    return isTypeByKey<ByamlDataType::TYPE_INT>(rIter, pKey);
+bool isTypeIntByKey(const ByamlIter& iter, const char* key) {
+    return isTypeByKey<ByamlDataType::Int>(iter, key);
 }
 
-bool isTypeFloatByIndex(const ByamlIter& rIter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_FLOAT>(rIter, index);
+bool isTypeFloatByIndex(const ByamlIter& iter, s32 index) {
+    return isTypeByIndex<ByamlDataType::Float>(iter, index);
 }
 
-bool isTypeFloatByKey(const ByamlIter& rIter, const char* pKey) {
-    return isTypeByKey<ByamlDataType::TYPE_FLOAT>(rIter, pKey);
+bool isTypeFloatByKey(const ByamlIter& iter, const char* key) {
+    return isTypeByKey<ByamlDataType::Float>(iter, key);
 }
 
-bool isTypeStringByIndex(const ByamlIter& rIter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_STRING>(rIter, index);
+bool isTypeStringByIndex(const ByamlIter& iter, s32 index) {
+    return isTypeByIndex<ByamlDataType::String>(iter, index);
 }
 
-bool isTypeStringByKey(const ByamlIter& rIter, const char* pKey) {
-    return isTypeByKey<ByamlDataType::TYPE_STRING>(rIter, pKey);
+bool isTypeStringByKey(const ByamlIter& iter, const char* key) {
+    return isTypeByKey<ByamlDataType::String>(iter, key);
 }
 
-bool isTypeArrayByIndex(const ByamlIter& rIter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_ARRAY>(rIter, index);
+bool isTypeArrayByIndex(const ByamlIter& iter, s32 index) {
+    return isTypeByIndex<ByamlDataType::Array>(iter, index);
 }
 
-bool isTypeArrayByKey(const ByamlIter& rIter, const char* pKey) {
-    return isTypeByKey<ByamlDataType::TYPE_ARRAY>(rIter, pKey);
+bool isTypeArrayByKey(const ByamlIter& iter, const char* key) {
+    return isTypeByKey<ByamlDataType::Array>(iter, key);
 }
 
-bool isTypeHashByIndex(const ByamlIter& rIter, s32 index) {
-    return isTypeByIndex<ByamlDataType::TYPE_HASH>(rIter, index);
+bool isTypeHashByIndex(const ByamlIter& iter, s32 index) {
+    return isTypeByIndex<ByamlDataType::Hash>(iter, index);
 }
 
-bool isTypeHashByKey(const ByamlIter& rIter, const char* pKey) {
-    return isTypeByKey<ByamlDataType::TYPE_HASH>(rIter, pKey);
+bool isTypeHashByKey(const ByamlIter& iter, const char* key) {
+    return isTypeByKey<ByamlDataType::Hash>(iter, key);
 }
 
-s32 getByamlIterDataNum(const ByamlIter& rIter) {
-    return rIter.getSize();
+s32 getByamlIterDataNum(const ByamlIter& iter) {
+    return iter.getSize();
 }
 
 void printByamlIter(const u8* data) {
@@ -380,8 +380,7 @@ void printByamlIter_(const ByamlIter& iter, PrintParams* param) {
             const char* data = nullptr;
             iter.getByamlDataAndKeyName(&entry, &data, i);
         }
-        if (entry.getType() == ByamlDataType::TYPE_HASH ||
-            entry.getType() == ByamlDataType::TYPE_ARRAY) {
+        if (entry.getType() == ByamlDataType::Hash || entry.getType() == ByamlDataType::Array) {
             u32 v6 = entry.getValue();
             if (param) {
                 PrintParams* sub_param = param;
@@ -399,17 +398,17 @@ void printByamlIter_(const ByamlIter& iter, PrintParams* param) {
                 printByamlIter_(a1, &new_param);
             }
         } else {
-            u8 type = entry.getType();
-            if (type == ByamlDataType::TYPE_FLOAT) {
+            ByamlDataType type = entry.getType();
+            if (type == ByamlDataType::Float) {
                 f32 data;
                 iter.tryConvertFloat(&data, &entry);
-            } else if (type == ByamlDataType::TYPE_INT) {
+            } else if (type == ByamlDataType::Int) {
                 s32 data;
                 iter.tryConvertInt(&data, &entry);
-            } else if (type == ByamlDataType::TYPE_STRING) {
+            } else if (type == ByamlDataType::String) {
                 const char* data;
                 iter.tryConvertString(&data, &entry);
-            } else if (type == ByamlDataType::TYPE_BOOL) {
+            } else if (type == ByamlDataType::Bool) {
                 bool data;
                 iter.tryConvertBool(&data, &entry);
             }

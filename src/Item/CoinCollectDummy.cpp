@@ -20,9 +20,9 @@ NERVES_MAKE_STRUCT(CoinCollectDummy, Hint);
 
 CoinCollectDummy::CoinCollectDummy(const char* name) : al::LiveActor(name) {}
 
-void CoinCollectDummy::init(const al::ActorInitInfo& initInfo) {
-    al::initActorSceneInfo(this, initInfo);
-    al::initActorWithArchiveName(this, initInfo, rs::getStageCoinCollectArchiveName(this), nullptr);
+void CoinCollectDummy::init(const al::ActorInitInfo& info) {
+    al::initActorSceneInfo(this, info);
+    al::initActorWithArchiveName(this, info, rs::getStageCoinCollectArchiveName(this), nullptr);
     al::initNerve(this, &NrvCoinCollectDummy.Hint, 1);
     mHintState = new CoinCollectHintState(this);
     al::initNerveState(this, mHintState, &NrvCoinCollectDummy.Hint, "ヒント");

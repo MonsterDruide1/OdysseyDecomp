@@ -22,16 +22,73 @@ const char* createConcatString(const char* start, const char* end) {
     return buffer;
 }
 
-// void createFileNameBySuffix(sead::BufferedSafeString*, const char*, const char*)
-// void outputValueWithComma(char*, u32, u64, bool, bool)
+void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, const char* suffix) {
+    out->clear();
+    if (!suffix) {
+        out->append(name);
+        return;
+    }
+    out->append(name);
+    out->append(suffix);
+}
+
+u32 outputValueWithComma(char* out, u32 size, u64 value, bool usePadding, bool padToThousands) {
+    if (value > 999999999) {
+        return snprintf(out, size, "%3d,%03d,%03d,%03d", (u32)(value / 1000000000),
+                        (u32)(value / 1000000 % 1000), (u32)(value / 1000 % 1000),
+                        (u32)(value % 1000));
+    }
+    if (value > 999999) {
+        if (usePadding) {
+            return snprintf(out, size, "%3d,%03d,%03d", (u32)(value / 1000000),
+                            (u32)(value / 1000 % 1000), (u32)(value % 1000));
+        }
+        return snprintf(out, size, "%d,%03d,%03d", (u32)(value / 1000000),
+                        (u32)(value / 1000 % 1000), (u32)(value % 1000));
+    }
+    if (value > 999) {
+        if (usePadding) {
+            if (padToThousands)
+                return snprintf(out, size, "%3d,%03d", (u32)(value / 1000), (u32)(value % 1000));
+            return snprintf(out, size, "    %3d,%03d", (u32)(value / 1000), (u32)(value % 1000));
+        }
+        return snprintf(out, size, "%d,%03d", (u32)(value / 1000), (u32)(value % 1000));
+    }
+    if (usePadding) {
+        if (padToThousands)
+            return snprintf(out, size, "    %3d", (u32)value);
+        return snprintf(out, size, "        %3d", (u32)value);
+    }
+    return snprintf(out, size, "%d", (u32)value);
+}
 
 void extractString(char* out, const char* str, u32 len, u32 unused) {
     strncpy(out, str, len);
     out[len] = '\0';
 }
 
-// void searchSubString(const char*, const char*);
-// void searchSubString(const char*, const char*, s32);
+const char* searchSubString(const char* str, const char* substr) {
+    return searchSubString(str, substr, strlen(substr));
+}
+
+const char* searchSubString(const char* str, const char* substr, s32 substrLen) {
+    while (str[0] != '\0') {
+        s32 size = 0;
+        for (s32 index = 0; index < substrLen; index++) {
+            if (str[index] == '\0' || str[index] != substr[index])
+                break;
+            size++;
+        }
+
+        if (size == substrLen)
+            return str;
+
+        str++;
+    }
+
+    return nullptr;
+}
+
 // const char* getSubStringUnmatched(const char**, const char*, const MatchStr&,
 //                                   void (*)(const char*, const char*, void*), void*);
 // const char* getSubStringUnmatched(const char*, const MatchStr&);
@@ -39,10 +96,10 @@ void extractString(char* out, const char* str, u32 len, u32 unused) {
 
 void removeExtensionString(char* out, u32 len, const char* str) {
     snprintf(out, len, "%s", str);
-    char* dot = strchr(out, '.');
-    char* dirSeparator = strchr(out, '/');
+    char* dot = strrchr(out, '.');
+    char* dirSeparator = strrchr(out, '/');
 
-    if (dot == nullptr || dot < dirSeparator || ++dirSeparator == dot)
+    if (!dot || dot < dirSeparator || ++dirSeparator == dot)
         return;
 
     *dot = '\0';
@@ -60,11 +117,57 @@ void removeStringFromEnd(char* out, u32 len, const char* end, const char* str) {
     out[lenStr - lenEnd] = '\0';
 }
 
-// void translateCharacters(char*, const char*, const char*);
-// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*);
-// void tryReplaceString(sead::BufferedSafeString*, const char*, const char*, const char*);
-// void tryReplaceStringNoRecursive(sead::BufferedSafeString*, const char*, const char*,
-//                                  const char*);
+void translateCharacters(char* string, const char* charmap, const char* newCharmap) {
+    while (charmap[0] != '\0') {
+        for (s32 index = 0; string[index] != '\0'; index++)
+            if (string[index] == *charmap)
+                string[index] = *newCharmap;
+
+        newCharmap++;
+        charmap++;
+    }
+}
+
+bool tryReplaceString(sead::BufferedSafeString* out, const char* oldStr, const char* newStr) {
+    return tryReplaceString(out, out->cstr(), oldStr, newStr);
+}
+
+bool tryReplaceString(sead::BufferedSafeString* out, const char* targetStr, const char* oldStr,
+                      const char* newStr) {
+    const char* subStr = searchSubString(targetStr, oldStr);
+
+    if (!subStr)
+        return false;
+
+    StringTmp<1024> before;
+    StringTmp<1024> after;
+
+    if (subStr != targetStr)
+        before.copy(targetStr, subStr - targetStr);
+    after.copy(subStr + std::strlen(oldStr));
+
+    tryReplaceString(&after, oldStr, newStr);
+    out->format("%s%s%s", before.cstr(), newStr, after.cstr());
+    return true;
+}
+
+bool tryReplaceStringNoRecursive(sead::BufferedSafeString* out, const char* targetStr,
+                                 const char* oldStr, const char* newStr) {
+    const char* subStr = searchSubString(targetStr, oldStr);
+
+    if (!subStr)
+        return false;
+
+    StringTmp<256> before;
+    StringTmp<256> after;
+
+    if (subStr != targetStr)
+        before.copy(targetStr, subStr - targetStr);
+    after.copy(subStr + std::strlen(oldStr));
+
+    out->format("%s%s%s", before.cstr(), newStr, after.cstr());
+    return true;
+}
 
 bool isEqualString(const char16* str1, const char16* str2) {
     while (*str1 == *str2) {
@@ -103,25 +206,95 @@ bool isStartWithString(const char* str, const char* start) {
     return false;
 }
 
-// NON_MATCHING: inlined return https://decomp.me/scratch/XEtRH
 bool isEndWithString(const char* str, const char* end) {
     s32 lenStr = strlen(str);
     s32 lenEnd = strlen(end);
 
-    if (lenEnd > lenStr)
+    if (lenStr < lenEnd)
         return false;
 
     return isEqualString(&str[lenStr - lenEnd], end);
 }
 
-// bool isMatchString(const char*, const MatchStr&);
+bool isMatchString(const char* str, const MatchStr& matchStr) {
+    const char* subStr = getSubStringUnmatched(str, matchStr);
+
+    return subStr && subStr[0] == '\0';
+}
 
 s32 compareStringIgnoreCase(const char* str1, const char* str2) {
     return strcasecmp(str1, str2);
 }
 
-// void makeUrlEncodeString(char*, u32, const char*);
-// void makeUrlDecodeString(char*, u32, const char*);
+inline bool isLetter(char ch) {
+    return ch - 'A' < 26u || ch - 'a' < 26u;
+}
+
+inline bool isDigit(char ch) {
+    return ch - '0' < 10u;
+}
+
+// NON_MATCHING: Using inverse sub operation https://decomp.me/scratch/rPdbr
+void makeUrlEncodeString(char* out, u32 outLen, const char* str) {
+    out[0] = '\0';
+
+    for (; str[0] != '\0'; str++) {
+        char newSymbols[4] = {'\0', '\0', '\0', '\0'};
+        s64 bytesWritten = 1;
+
+        if (str[0] == ' ') {
+            newSymbols[0] = '+';
+        } else if (isLetter(str[0]) || isDigit(str[0])) {
+            newSymbols[0] = str[0];
+        } else {
+            char digit1 = (str[0] & 0xf0) >> 4;
+            char digit2 = (str[0] & 0x0f) >> 0;
+
+            newSymbols[0] = '%';
+            newSymbols[1] = digit1 < 10 ? digit1 + '0' : digit1 + 'A' - 10;
+            newSymbols[2] = digit2 < 10 ? digit2 + '0' : digit2 + 'A' - 10;
+            bytesWritten = 3;
+        }
+
+        if (strlen(out) + bytesWritten > outLen) {
+            out[outLen - 1] = '\0';
+            return;
+        }
+
+        strcat(out, newSymbols);
+    }
+}
+
+void makeUrlDecodeString(char* out, u32 outLen, const char* str) {
+    out[0] = '\0';
+    std::memset(out, 0, outLen);
+
+    s32 bytesRead = 1;
+    for (; str[0] != '\0'; str += bytesRead) {
+        char newSymbols[2] = {'\0', '\0'};
+
+        if (str[0] == '+') {
+            newSymbols[0] = ' ';
+            bytesRead = 1;
+        } else if (str[0] == '%') {
+            u8 val1 = str[1] < 'A' ? str[1] - '0' : str[1] - 'A' + 10;
+            u8 val2 = str[2] < 'A' ? str[2] - '0' : str[2] - 'A' + 10;
+
+            newSymbols[0] = (val1 << 4) | val2;
+            bytesRead = 3;
+        } else {
+            newSymbols[0] = str[0];
+            bytesRead = 1;
+        }
+
+        if (strlen(out) + bytesRead > outLen) {
+            out[outLen - 1] = '\0';
+            return;
+        }
+
+        strcat(out, newSymbols);
+    }
+}
 
 void copyString(char* out, const char* str, u32 len) {
     strncpy(out, str, len);
@@ -131,9 +304,15 @@ void copyStringW(char16* out, const char16* str, u32 len) {
     sead::StringUtil::wcs16cpy(out, len, str);
 }
 
-// bool isInStack(const void*);
+// Note: different cpp file from here?
 
-bool isEqualString(const char* str1, const char* str2) {
+// Attr required for createStringIfInStack
+__attribute__((noinline)) bool isInStack(const void* element) {
+    return sead::MemUtil::isStack(element);
+}
+
+// Attr required for isEndWithString
+__attribute__((noinline)) bool isEqualString(const char* str1, const char* str2) {
     while (*str1 == *str2) {
         char val = *str1;
 
@@ -147,8 +326,20 @@ bool isEqualString(const char* str1, const char* str2) {
     return false;
 }
 
-bool isEqualString(const sead::SafeString& str1, const sead::SafeString& str2) {
-    return isEqualString(str1.cstr(), str2.cstr());
+bool isEqualString(const sead::SafeString& safestr1, const sead::SafeString& safestr2) {
+    const char* str1 = safestr1.cstr();
+    const char* str2 = safestr2.cstr();
+    while (*str1 == *str2) {
+        char val = *str1;
+
+        if (!val)
+            return true;
+
+        str2++;
+        str1++;
+    }
+
+    return false;
 }
 
 bool isEqualStringCase(const char* str1, const char* str2) {

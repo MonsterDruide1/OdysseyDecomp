@@ -15,19 +15,15 @@ PlayerJudgeLongFall::PlayerJudgeLongFall(const al::LiveActor* player, const Play
     : mPlayer(player), mConst(pConst), mFallDistanceCheck(fallDistanceCheck),
       mHackKeeper(hackKeeper), mBindKeeper(bindKeeper), mModelChanger(modelChanger) {}
 
-void PlayerJudgeLongFall::reset() {}
-
-void PlayerJudgeLongFall::update() {}
-
 bool PlayerJudgeLongFall::judge() const {
     if (PlayerFunction::isPlayerDeadStatus(mPlayer))
         return false;
 
     if (mModelChanger->is2DModel())
         return false;
-    if (mBindKeeper->getBindSensor() != nullptr)
+    if (mBindKeeper->getBindSensor())
         return false;
-    if (mHackKeeper->getUnkHitSensor() != nullptr)
+    if (mHackKeeper->getUnkHitSensor())
         return false;
 
     f32 fallen = mFallDistanceCheck->getFallDistance();

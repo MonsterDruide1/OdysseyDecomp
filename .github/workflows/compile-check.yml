@@ -13,21 +13,21 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Check out project
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: recursive
     - name: Check out branch if in PR
       if: ${{ github.event_name == 'pull_request_target' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
     - name: Check for W-state functions
       run: |
-        if grep -q ",W," "data/odyssey_functions.csv"; then
+        if grep -q "status: Wip" "data/odyssey_functions.csv"; then
           echo "Function list should not contain WIP-functions!"
           echo "Found the following lines:"
-          grep ",W," "data/odyssey_functions.csv"
+          grep "status: Wip" "data/odyssey_functions.csv"
           exit 1
         fi
     - name: Set up dependencies
@@ -35,27 +35,24 @@ jobs:
         sudo apt update && sudo apt install -y python3-pip ninja-build cmake ccache xdelta3 clang libssl-dev python-is-python3 curl
         wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
     - name: Set up python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.13'
+        python-version: '3.14'
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install capstone colorama cxxfilt pyelftools watchdog python-Levenshtein toml
-    - name: Set up rust toolchain
-      uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      with:
-        cache: false
-    - name: Set up rust caching
-      uses: Swatinem/rust-cache@v2
-      with:
-        workspaces: "tools/common/viking"
-        cache-directories: |
-          toolchain/clang-3.9.1
-          toolchain/clang-4.0.1
     - name: Download main.nso from secret
       env:
         EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
       run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
+    - name: Set up cache for toolchain
+      uses: actions/cache@v5
+      with:
+        key: tools_libs
+        path: |
+          toolchain/bin
+          toolchain/libcxx-include
+          toolchain/cache-version-url.txt
     - name: Run setup
       run: tools/setup.py smo-main.nso
     - name: Build project

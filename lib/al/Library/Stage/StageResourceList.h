@@ -1,6 +1,8 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
+#include <prim/seadSafeString.h>
 
 #include "Library/Execute/IUseExecutor.h"
 #include "Library/Scene/ISceneObj.h"
@@ -8,21 +10,33 @@
 #include "Scene/SceneObjFactory.h"
 
 namespace al {
+class Resource;
+class PlacementInfo;
+class ByamlIter;
 
-class StageSyncCounter : public IUseExecutor, public ISceneObj {
+class StageInfo {
 public:
-    static constexpr s32 sSceneObjId = SceneObjID_alStageSyncCounter;
+    StageInfo(Resource* resource, const ByamlIter& placement_iter, const ByamlIter& zone_iter);
 
-    StageSyncCounter();
+    const ByamlIter& getPlacementIter() const;
+    const ByamlIter& getZoneIter() const;
 
-    void execute() override;
-    const char* getSceneObjName() const override;
-    void initAfterPlacementSceneObj(const ActorInitInfo& initInfo) override;
-
-    s32 getCounter() const { return mCounter; }
+    Resource* getResource() const { return mResource; }
 
 private:
-    s32 mCounter = 0;
+    Resource* mResource;
+    PlacementInfo* mPlacementInfo = nullptr;
+};
+
+class StageResourceList {
+public:
+    StageResourceList(const char* stageName, s32 scenarioNo, const char* resourceType);
+
+    s32 getStageResourceNum() const;
+    StageInfo* getStageInfo(s32 index) const;
+
+private:
+    sead::PtrArray<StageInfo> mStageResources;
 };
 
 }  // namespace al

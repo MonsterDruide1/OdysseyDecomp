@@ -4,7 +4,7 @@
 #include "Library/Se/SeDirectorInitInfo.h"
 
 namespace al {
-class AudioSystemInfo;
+struct AudioSystemInfo;
 class AreaObjDirector;
 class DemoDirector;
 class Sequence;

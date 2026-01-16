@@ -8,7 +8,7 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 
 TransparentWall::TransparentWall(const char* name) : al::LiveActor(name) {}
 

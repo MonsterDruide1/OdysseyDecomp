@@ -5,11 +5,29 @@
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
-class AddDemoInfo;
-class ActorInitInfo;
+struct ActorInitInfo;
 class EffectSystem;
 class LiveActor;
 class PlacementId;
+
+class AddDemoInfo {
+public:
+    AddDemoInfo(s32 size);
+    void init(const PlacementId& placementId);
+    void addDemoActor(LiveActor* actor);
+    const char* getDemoName() const;
+    void reset();
+    LiveActor* getDemoActor(s32 index) const;
+
+private:
+    const char* mName = nullptr;
+    PlacementId* mPlacementId = nullptr;
+    LiveActor** mActorList = nullptr;
+    s32 mActorListCount = 0;
+    s32 mActorListSize = 0;
+};
+
+static_assert(sizeof(AddDemoInfo) == 0x20);
 
 class DemoDirector : public HioNode {
 public:
@@ -37,6 +55,13 @@ public:
 
 private:
     const char* mActiveDemoName;
-    void* filler[8];
+    s32 _10;
+    LiveActor** mActorList;
+    s32 mActorListCount;
+    s32 mActorListSize;
+    void* filler[5];
 };
+
+static_assert(sizeof(DemoDirector) == 0x50);
+
 }  // namespace al

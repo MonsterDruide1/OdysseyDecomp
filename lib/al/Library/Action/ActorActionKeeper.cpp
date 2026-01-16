@@ -73,27 +73,80 @@ void ActorActionKeeper::init() {
         mFlagCtrl->initPost();
 }
 
-bool ActorActionKeeper::startAction(const char* name) {
+bool ActorActionKeeper::startAction(const char* action) {
     mIsActionRunning = true;
     if (!mNerveActionCtrl)
-        tryStartActionNoAnim(name);
+        tryStartActionNoAnim(action);
 
-    return mAnimCtrl && mAnimCtrl->start(name);
+    return mAnimCtrl && mAnimCtrl->start(action);
 }
 
-void ActorActionKeeper::tryStartActionNoAnim(const char* string) {
+void ActorActionKeeper::tryStartActionNoAnim(const char* action) {
     if (mFlagCtrl)
-        mFlagCtrl->start(string);
+        mFlagCtrl->start(action);
     if (mEffectCtrl)
-        mEffectCtrl->startAction(string);
+        mEffectCtrl->startAction(action);
     if (mSeCtrl)
-        mSeCtrl->startAction(string);
+        mSeCtrl->startAction(action);
     if (mBgmCtrl)
-        mBgmCtrl->startAction(string);
+        mBgmCtrl->startAction(action);
     if (mPadAndCameraCtrl)
-        mPadAndCameraCtrl->startAction(string);
+        mPadAndCameraCtrl->startAction(action);
     if (mScreenEffectCtrl)
-        mScreenEffectCtrl->startAction(string);
+        mScreenEffectCtrl->startAction(action);
+}
+
+void ActorActionKeeper::updatePost() {
+    if (!mEffectCtrl && !mSeCtrl && !mBgmCtrl && !mPadAndCameraCtrl && !mScreenEffectCtrl) {
+        mIsActionRunning = false;
+        return;
+    }
+
+    if (mNerveActionCtrl && isNewNerve(mParentActor)) {
+        mIsActionRunning = false;
+        return;
+    }
+
+    f32 frame;
+    f32 frameRateMax;
+    f32 frameRate;
+    bool isRunning;
+
+    LiveActor* actor = mParentActor;
+    if (mNerveActionCtrl) {
+        frame = actor->getNerveKeeper()->getCurrentStep() - 1;
+        frameRate = 1.0f;
+        frameRateMax = -1.0f;
+        isRunning = true;
+    } else {
+        bool isActionRunning = mIsActionRunning;
+        if (getActionName(actor)) {
+            frame = getActionFrame(actor);
+            frameRate = getActionFrameRate(actor);
+            frameRateMax = getActionFrameMax(actor);
+            isRunning = isActionRunning || isActionOneTime(actor);
+        } else {
+            frame = getActionFrame(actor);
+            frameRate = getActionFrameRate(actor);
+            frameRateMax = -1.0f;
+            isRunning = true;
+        }
+    }
+
+    bool isStop = !isRunning;
+    if (mFlagCtrl)
+        mFlagCtrl->update(frame, frameRateMax, frameRate, isStop);
+    if (mEffectCtrl)
+        mEffectCtrl->update(frame, frameRateMax, frameRate, isStop);
+    if (mSeCtrl)
+        mSeCtrl->update(frame, frameRateMax, frameRate, isStop);
+    if (mBgmCtrl)
+        mBgmCtrl->update(frame, frameRateMax, frameRate, isStop);
+    if (mPadAndCameraCtrl)
+        mPadAndCameraCtrl->update(frame, frameRateMax, frameRate, isStop);
+    if (mScreenEffectCtrl)
+        mScreenEffectCtrl->update(frame, frameRateMax, frameRate, isStop);
+    mIsActionRunning = false;
 }
 
 void ActorActionKeeper::updatePrev() {}

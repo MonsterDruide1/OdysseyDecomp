@@ -9,7 +9,7 @@ namespace al {
 
 Rail::Rail() = default;
 
-// NON_MATCHING: mismatch during `mRailPart`-array creation
+// NON_MATCHING: mismatch during `mRailPart`-array creation (https://decomp.me/scratch/e80kr)
 void Rail::init(const PlacementInfo& info) {
     mIsClosed = false;
     tryGetArg(&mIsClosed, info, "IsClosed");
@@ -67,7 +67,7 @@ void Rail::calcPos(sead::Vector3f* pos, f32 distance) const {
     part->calcPos(pos, part->calcCurveParam(partDistance));
 }
 
-// NON_MATCHING: minor reorderings
+// NON_MATCHING: minor reorderings (https://decomp.me/scratch/bWw2E)
 s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 distance) const {
     f32 distanceOnRail = normalizeLength(distance);
     f32 startDistanceOnRail = 0.0;
@@ -169,7 +169,7 @@ void Rail::calcNearestRailPointNo(s32* index, const sead::Vector3f& pos) const {
     }
 }
 
-// NON_MATCHING: mismatch in storing *rail_pos = tmp; (stp instead of two strs)
+// NON_MATCHING: mismatch in storing *rail_pos = tmp; (https://decomp.me/scratch/gS1CT)
 void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos) const {
     if (mRailPointsCount == 0)
         return;
@@ -200,13 +200,13 @@ f32 Rail::normalizeLength(f32 distance) const {
     return sead::Mathf::clamp(distance, 0.0, getTotalLength());
 }
 
-// NON_MATCHING: diff issue due to bug in tools/check
+// NON_MATCHING: diff issue due to bug in tools/check (https://decomp.me/scratch/UFGsO)
 f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval) const {
     f32 tmp;
     return calcNearestRailPosCoord(pos, interval, &tmp);
 }
 
-// NON_MATCHING: diff issue due to bug in tools/check
+// NON_MATCHING: diff issue due to bug in tools/check (https://decomp.me/scratch/zJvN3)
 f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* distance) const {
     *distance = sead::Mathf::maxNumber();
     f32 bestParam = sead::Mathf::maxNumber();
@@ -230,7 +230,7 @@ f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* 
     return bestParam;
 }
 
-// NON_MATCHING: diff issue due to bug in tools/check
+// NON_MATCHING: diff issue due to bug in tools/check (https://decomp.me/scratch/gRZVD)
 f32 Rail::calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos,
                              f32 interval) const {
     f32 coord = calcNearestRailPosCoord(pos, interval);
@@ -262,7 +262,6 @@ s32 Rail::calcRailPointNum(f32 distance1, f32 distance2) const {
            ((part2->getPartLength() - partDistance2) < 0.01f);
 }
 
-// NON_MATCHING: regalloc in length calculation
 f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance) const {
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);

@@ -22,7 +22,7 @@ bool isPadTrigger(s32 port, s32 button) {
 }
 
 bool isPadTriggerA(s32 port) {
-    return isPadTrigger(port, 1);
+    return isPadTrigger(port, 1 << 0);
 }
 
 bool isPadTriggerB(s32 port) {
@@ -445,6 +445,24 @@ bool isPadHoldRightStick(s32 port) {
     return isPadHold(port, 0xF000000);
 }
 
+bool isEitherPadHoldA() {
+    sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+    if (mgr->getController(0)->isHold(1 << 0) || mgr->getController(1)->isHold(1 << 0) ||
+        mgr->getController(2)->isHold(1 << 0)) {
+        return true;
+    }
+    return false;
+}
+
+bool isEitherPadHoldB() {
+    sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+    if (mgr->getController(0)->isHold(1 << 1) || mgr->getController(1)->isHold(1 << 1) ||
+        mgr->getController(2)->isHold(1 << 1)) {
+        return true;
+    }
+    return false;
+}
+
 inline bool isPadRelease(s32 port, s32 button) {
     return getController(port)->isRelease(button);
 }
@@ -569,43 +587,59 @@ const sead::Vector2f& getRightStick(s32 port) {
     return getController(port)->getRightStick();
 }
 
-void getPadCrossDir(sead::Vector2f* vec, s32 port) {
-    vec->x = 0;
-    vec->y = 0;
+void getPadCrossDir(sead::Vector2f* dir, s32 port) {
+    dir->x = 0;
+    dir->y = 0;
     if (isPadHoldUp(port))
-        vec->y = 1;
+        dir->y = 1;
     if (isPadHoldDown(port))
-        vec->y = -1;
+        dir->y = -1;
     if (isPadHoldLeft(port))
-        vec->x = -1;
+        dir->x = -1;
     if (isPadHoldRight(port))
-        vec->x = 1;
+        dir->x = 1;
 }
 
-void getPadCrossDirSideways(sead::Vector2f* vec, s32 port) {
-    vec->x = 0;
-    vec->y = 0;
+void getPadCrossDirSideways(sead::Vector2f* dir, s32 port) {
+    dir->x = 0;
+    dir->y = 0;
     if (isPadHoldUp(port))
-        vec->x = -1;
+        dir->x = -1;
     if (isPadHoldDown(port))
-        vec->x = 1;
+        dir->x = 1;
     if (isPadHoldLeft(port))
-        vec->y = -1;
+        dir->y = -1;
     if (isPadHoldRight(port))
-        vec->y = 1;
+        dir->y = 1;
 }
 
-void calcTouchScreenPos(sead::Vector2f* vec) {
-    vec->set(getController(getTouchPanelPort())->getPointer());
+void calcTouchScreenPos(sead::Vector2f* pos) {
+    pos->set(getController(getTouchPanelPort())->getPointer());
 }
 
-void calcTouchLayoutPos(sead::Vector2f*) {}
+void calcTouchLayoutPos(sead::Vector2f* pos) {}
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size) {
     sead::Vector2f pos;
     calcTouchScreenPos(&pos);
     return rect_pos.x <= pos.x && pos.x < rect_pos.x + size.x && rect_pos.y <= pos.y &&
            pos.y < rect_pos.y + size.y;
+}
+
+bool isTouchPosInCircle(const sead::Vector2f& center, f32 radius) {
+    sead::Vector2f pos;
+    calcTouchScreenPos(&pos);
+    return (pos - center).squaredLength() <= sead::Mathf::square(radius);
+}
+
+bool isTouchPosInCircleByWorldPos(const sead::Vector3f&, const IUseCamera*, f32, f32) {
+    return false;
+}
+
+bool isPadTouchRect(f32 left, f32 top, f32 width, f32 height) {
+    if (!isPadHoldTouch())
+        return false;
+    return isTouchPosInRect(sead::Vector2f(left, top), sead::Vector2f(width, height));
 }
 
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port) {
@@ -640,6 +674,18 @@ s32 getMainJoyPadSingleRightPort() {
 
 s32 getMainJoyPadSingleLeftPort() {
     return 2;
+}
+
+s32 getJoyPadSingleRightPort() {
+    return getMainJoyPadSingleRightPort();
+}
+
+s32 getJoyPadSingleLeftPort() {
+    return getMainJoyPadSingleLeftPort();
+}
+
+s32 getJoyPadDoublePort() {
+    return getMainJoyPadDoublePort();
 }
 
 }  // namespace al

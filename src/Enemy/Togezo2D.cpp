@@ -14,7 +14,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/ActorDimensionKeeper.h"
+#include "Util/ActorDimensionUtil.h"
 #include "Util/ItemUtil.h"
 #include "Util/SensorMsgFunction.h"
 
@@ -126,7 +126,7 @@ void Togezo2D::control() {
 
 void Togezo2D::exeWalk() {
     if (al::isFirstStep(this)) {
-        al::validateClipping(this);
+        al::invalidateClipping(this);
         al::showModelIfHide(this);
         al::onCollide(this);
         al::validateHitSensors(this);
@@ -168,8 +168,4 @@ void Togezo2D::exeHideWait() {
             mIsAlwaysFalse = false;
         al::resetPosition(this);
     }
-}
-
-ActorDimensionKeeper* Togezo2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
 }

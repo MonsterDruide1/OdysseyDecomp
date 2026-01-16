@@ -8,7 +8,6 @@
 #include "Library/HostIO/HioNode.h"
 #include "Library/Layout/IUseLayout.h"
 #include "Library/Layout/IUseLayoutAction.h"
-#include "Library/Layout/LayoutSceneInfo.h"
 #include "Library/Message/IUseMessageSystem.h"
 #include "Library/Nerve/IUseNerve.h"
 #include "Library/Scene/IUseSceneObjHolder.h"
@@ -39,7 +38,7 @@ class LayoutActor : public IUseHioNode,
                     public IUseEffectKeeper,
                     public IUseSceneObjHolder {
 public:
-    LayoutActor(const char*);
+    LayoutActor(const char* name);
 
     virtual void appear();
     virtual void kill();
@@ -47,44 +46,36 @@ public:
     virtual void movement();
     virtual void calcAnim(bool recursive);
 
-    virtual NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+    NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
-    virtual const char* getName() const override { return mName.cstr(); }
+    const char* getName() const override { return mName.cstr(); }
 
-    virtual EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
+    EffectKeeper* getEffectKeeper() const override { return mEffectKeeper; }
 
-    virtual AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
-    virtual LayoutActionKeeper* getLayoutActionKeeper() const override {
-        return mLayoutActionKeeper;
-    }
+    LayoutActionKeeper* getLayoutActionKeeper() const override { return mLayoutActionKeeper; }
 
-    virtual LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
+    LayoutKeeper* getLayoutKeeper() const override { return mLayoutKeeper; }
 
-    virtual CameraDirector* getCameraDirector() const override {
-        return mLayoutSceneInfo->getCameraDirector();
-    }
+    CameraDirector* getCameraDirector() const override;
 
-    virtual SceneObjHolder* getSceneObjHolder() const override {
-        return mLayoutSceneInfo->getSceneObjHolder();
-    }
+    SceneObjHolder* getSceneObjHolder() const override;
 
-    virtual const MessageSystem* getMessageSystem() const override {
-        return mLayoutSceneInfo->getMessageSystem();
-    }
+    const MessageSystem* getMessageSystem() const override;
 
     virtual void control() {}
 
-    void initLayoutKeeper(LayoutKeeper*);
+    void initLayoutKeeper(LayoutKeeper* layoutKeeper);
     void initActionKeeper();
     void initTextPaneAnimator(LayoutTextPaneAnimator*);
     void initExecuteInfo(LayoutExecuteInfo*);
     void initHitReactionKeeper(HitReactionKeeper*);
     void initSceneInfo(LayoutSceneInfo*);
-    void initLayoutPartsActorKeeper(s32);
+    void initLayoutPartsActorKeeper(s32 capacity);
     void initEffectKeeper(EffectKeeper*);
     void initAudioKeeper(AudioKeeper*);
-    void initNerve(const Nerve*, s32);
+    void initNerve(const Nerve* nerve, s32 maxStates = 0);
     void setMainGroupName(const char*);
     void syncAction();
 

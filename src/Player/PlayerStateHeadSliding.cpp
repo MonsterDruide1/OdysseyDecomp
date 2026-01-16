@@ -30,12 +30,12 @@ PlayerStateHeadSliding::PlayerStateHeadSliding(al::LiveActor* player, const Play
 
 void PlayerStateHeadSliding::appear() {
     mIsEnableDiveInWater = false;
-    setDead(false);
+    al::NerveStateBase::appear();
     al::setNerve(this, &Dive);
 }
 
 void PlayerStateHeadSliding::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
 }
 
 bool PlayerStateHeadSliding::isEnableDiveInWater() const {

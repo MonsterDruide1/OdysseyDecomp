@@ -17,7 +17,7 @@ public:
 
     ActionScreenEffectCtrl(const LiveActor*, const char*);
     void startAction(const char*);
-    void update(f32, f32, f32, bool);
+    void update(f32 frame, f32 frameRateMax, f32 frameRate, bool isStop);
 
 private:
     LiveActor* mParentActor;

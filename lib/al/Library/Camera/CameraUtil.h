@@ -8,7 +8,7 @@
 namespace al {
 class CameraTicket;
 class ICameraInput;
-class CameraFlagCtrl;
+struct CameraFlagCtrl;
 class IUseCamera;
 class CameraSubTargetBase;
 class CameraSubTargetTurnParam;
@@ -19,7 +19,7 @@ struct ActorInitInfo;
 class LiveActor;
 class PlacementInfo;
 class CameraPoser;
-class CameraPoseInfo;
+struct CameraPoseInfo;
 class CameraTargetBase;
 class Projection;
 class SimpleCameraInput;

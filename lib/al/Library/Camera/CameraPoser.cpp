@@ -33,52 +33,6 @@ CameraPoser::CameraPoser(const char* name) : mPoserName(name) {
     mEndInterpoleParam = new CameraInterpoleStep();
 };
 
-void CameraPoser::init() {}
-
-void CameraPoser::initByPlacementObj(const PlacementInfo& mInfo) {}
-
-void CameraPoser::endInit() {}
-
-void CameraPoser::start(const CameraStartInfo& mInfo) {}
-
-void CameraPoser::update() {}
-
-void CameraPoser::end() {
-    mActiveState = ActiveState::End;
-}
-
-void CameraPoser::loadParam(const ByamlIter& iter) {}
-
-void CameraPoser::makeLookAtCamera(sead::LookAtCamera* cam) const {}
-
-bool CameraPoser::receiveRequestFromObject(const CameraObjectRequestInfo& mInfo) {
-    return false;
-}
-
-bool CameraPoser::isZooming() const {
-    return false;
-}
-
-void CameraPoser::startSnapShotMode() {}
-
-void CameraPoser::endSnapShotMode() {}
-
-const char* CameraPoser::getName() const {
-    return mPoserName;
-}
-
-NerveKeeper* CameraPoser::getNerveKeeper() const {
-    return mNerveKeeper;
-}
-
-AudioKeeper* CameraPoser::getAudioKeeper() const {
-    return mAudioKeeper;
-}
-
-bool CameraPoser::requestTurnToDirection(const CameraTurnInfo* mInfo) {
-    return false;
-}
-
 bool CameraPoser::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo) const {
     OrthoProjectionParam* param = mOrthoProjectionParam;
     if (param && param->isSetInfo && param->info.nearClipWidth > 0.1f &&
@@ -90,10 +44,10 @@ bool CameraPoser::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo
 }
 
 bool CameraPoser::isEnableRotateByPad() const {
-    if (mAngleCtrlInfo != nullptr)
+    if (mAngleCtrlInfo)
         return !mAngleCtrlInfo->isFixByRangeHV();
 
-    if (mAngleSwingInfo != nullptr)
+    if (mAngleSwingInfo)
         return !mAngleSwingInfo->isInvalidSwing();
 
     return false;
@@ -180,8 +134,8 @@ void CameraPoser::initAudioKeeper(const char* name) {
         alAudioKeeperFunction::createAudioKeeper(mSceneInfo->audioDirector, name, nullptr);
 }
 
-void CameraPoser::initRail(const PlacementInfo& mInfo) {
-    mRailKeeper = new RailKeeper(mInfo);
+void CameraPoser::initRail(const PlacementInfo& info) {
+    mRailKeeper = new RailKeeper(info);
 }
 
 void CameraPoser::initLocalInterpole() {
@@ -196,8 +150,8 @@ void CameraPoser::initOrthoProjectionParam() {
     mOrthoProjectionParam = new OrthoProjectionParam();
 }
 
-void CameraPoser::tryInitAreaLimitter(const PlacementInfo& mInfo) {
-    mTargetAreaLimitter = CameraTargetAreaLimitter::tryCreate(mInfo);
+void CameraPoser::tryInitAreaLimitter(const PlacementInfo& info) {
+    mTargetAreaLimitter = CameraTargetAreaLimitter::tryCreate(info);
 }
 
 inline void CameraPoser::CameraInterpoleParam::set(CameraInterpoleStepType type, s32 step,
@@ -247,25 +201,25 @@ void CameraPoser::load(const ByamlIter& iter) {
     mActiveInterpoleParam->load(iter);
     mEndInterpoleParam->load(iter);
 
-    if (mVerticalAbsorber != nullptr)
+    if (mVerticalAbsorber)
         mVerticalAbsorber->load(iter);
 
-    if (mAngleCtrlInfo != nullptr)
+    if (mAngleCtrlInfo)
         mAngleCtrlInfo->load(iter);
 
-    if (mAngleSwingInfo != nullptr)
+    if (mAngleSwingInfo)
         mAngleSwingInfo->load(iter);
 
-    if (mOffsetCtrlPreset != nullptr)
+    if (mOffsetCtrlPreset)
         mOffsetCtrlPreset->load(iter);
 
-    if (mParamMoveLimit != nullptr)
+    if (mParamMoveLimit)
         mParamMoveLimit->load(iter);
 
-    if (mSnapShotCtrl != nullptr)
+    if (mSnapShotCtrl)
         mSnapShotCtrl->load(iter);
 
-    if (mOrthoProjectionParam != nullptr)
+    if (mOrthoProjectionParam)
         mOrthoProjectionParam->load(iter);
 }
 
@@ -273,26 +227,26 @@ bool CameraPoser::isFirstCalc() const {
     return mPoserFlag->isFirstCalc;
 }
 
-void CameraPoser::appear(const CameraStartInfo& mInfo) {
+void CameraPoser::appear(const CameraStartInfo& info) {
     mActiveState = ActiveState::Active;
-    if (mAngleCtrlInfo != nullptr) {
+    if (mAngleCtrlInfo) {
         sead::Vector3f vec = {0, 0, 0};
         alCameraPoserFunction::calcPreCameraDir(&vec, this);
         mAngleCtrlInfo->start(sead::Mathf::rad2deg(asinf(vec.y)));
     }
 
-    if (mAngleSwingInfo != nullptr)
+    if (mAngleSwingInfo)
         mAngleSwingInfo->setCurrentAngle({0, 0});
 
-    start(mInfo);
+    start(info);
 
-    if (mArrowCollider != nullptr && !mPoserFlag->isInvalidCollider)
+    if (mArrowCollider && !mPoserFlag->isInvalidCollider)
         mArrowCollider->start();
 
-    if (mVerticalAbsorber != nullptr && !mPoserFlag->isOffVerticalAbsorb)
-        mVerticalAbsorber->start(mTargetTrans, mInfo);
+    if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
+        mVerticalAbsorber->start(mTargetTrans, info);
 
-    if (mLookAtInterpole != nullptr)
+    if (mLookAtInterpole)
         mLookAtInterpole->lookAtPos.set(mTargetTrans);
 }
 
@@ -318,16 +272,16 @@ void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* cam) const {
     cam->setUp(mCameraUp);
     cam->normalizeUp();
 
-    if (mVerticalAbsorber != nullptr && !mPoserFlag->isOffVerticalAbsorb)
+    if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
         mVerticalAbsorber->makeLookAtCamera(cam);
 
-    if (mLocalInterpole != nullptr)
+    if (mLocalInterpole)
         mLocalInterpole->interpolate(cam);
 
-    if (mAngleSwingInfo != nullptr)
+    if (mAngleSwingInfo)
         mAngleSwingInfo->makeLookAtCamera(cam);
 
-    if (mTargetAreaLimitter != nullptr) {
+    if (mTargetAreaLimitter) {
         sead::Vector3f camPosNext = cam->getAt();
         if (mTargetAreaLimitter->applyAreaLimit(&camPosNext, camPosNext)) {
             sead::Vector3f camDiff = camPosNext - cam->getAt();
@@ -338,15 +292,15 @@ void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* cam) const {
 }
 
 void CameraPoser::makeLookAtCameraPost(sead::LookAtCamera* cam) const {
-    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl != nullptr)
+    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
         mSnapShotCtrl->makeLookAtCameraPost(cam);
 
-    if (mParamMoveLimit != nullptr)
+    if (mParamMoveLimit)
         mParamMoveLimit->apply(cam);
 }
 
 void CameraPoser::makeLookAtCameraLast(sead::LookAtCamera* cam) const {
-    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl != nullptr)
+    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
         mSnapShotCtrl->makeLookAtCameraLast((cam));
 }
 
@@ -363,22 +317,22 @@ void CameraPoser::calcCameraPose(sead::LookAtCamera* cam) const {
     makeLookAtCameraLast(cam);
 }
 
-bool CameraPoser::receiveRequestFromObjectCore(const CameraObjectRequestInfo& mInfo) {
-    if (receiveRequestFromObject(mInfo))
+bool CameraPoser::receiveRequestFromObjectCore(const CameraObjectRequestInfo& info) {
+    if (receiveRequestFromObject(info))
         return true;
 
-    if (mVerticalAbsorber != nullptr && mInfo.isStopVerticalAbsorb) {
+    if (mVerticalAbsorber && info.isStopVerticalAbsorb) {
         mVerticalAbsorber->liberateAbsorb();
         return true;
     }
-    if (mAngleCtrlInfo != nullptr && mAngleCtrlInfo->receiveRequestFromObject(mInfo))
+    if (mAngleCtrlInfo && mAngleCtrlInfo->receiveRequestFromObject(info))
         return true;
 
     return false;
 }
 
 void CameraPoser::startSnapShotModeCore() {
-    if (mSnapShotCtrl != nullptr)
+    if (mSnapShotCtrl)
         mSnapShotCtrl->start(mFovyDegree);
 
     startSnapShotMode();

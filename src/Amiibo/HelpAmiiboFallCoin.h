@@ -26,8 +26,10 @@ public:
     bool isEnableUse() override;
     void activate() override;
     bool execute() override;
-    HelpAmiiboType getType() const override;
-    al::NerveKeeper* getNerveKeeper() const override;
+
+    HelpAmiiboType getType() const override { return HelpAmiiboType::Peach; }
+
+    al::NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
     void exeWait();
     void exeFall();

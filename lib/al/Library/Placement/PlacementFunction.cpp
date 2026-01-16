@@ -137,10 +137,6 @@ bool tryGetTrans(sead::Vector3f* trans, const PlacementInfo& placementInfo) {
     return true;
 }
 
-void getRotate(sead::Vector3f* rotate, const ActorInitInfo& initInfo) {
-    tryGetRotate(rotate, initInfo);
-}
-
 void getRotate(sead::Vector3f* rotate, const PlacementInfo& placementInfo) {
     tryGetRotate(rotate, placementInfo);
 }
@@ -207,8 +203,8 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* matrix, const PlacementInfo& placementI
     if (!tryGetByamlV3f(&rotate, zone, "Rotate"))
         return false;
 
-    matrix->makeRT({sead::Mathf::rad2deg(rotate.x), sead::Mathf::rad2deg(rotate.y),
-                    sead::Mathf::rad2deg(rotate.z)},
+    matrix->makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
+                    sead::Mathf::deg2rad(rotate.z)},
                    translate);
     return true;
 }
@@ -678,7 +674,7 @@ void getPlacementId(PlacementId* placementId, const ActorInitInfo& initInfo) {
 }
 
 bool isEqualPlacementId(const PlacementId& placementId, const PlacementId& otherPlacementId) {
-    return placementId.isEqual(otherPlacementId);
+    return PlacementId::isEqual(placementId, otherPlacementId);
 }
 
 bool isEqualPlacementId(const PlacementInfo& placementInfo,
@@ -689,7 +685,7 @@ bool isEqualPlacementId(const PlacementInfo& placementInfo,
     PlacementId id2;
     if (!tryGetPlacementId(&id2, otherPlacementInfo))
         return false;
-    return id1.isEqual(id2);
+    return isEqualPlacementId(id1, id2);
 }
 
 bool isExistRail(const ActorInitInfo& initInfo, const char* linkName) {
@@ -996,7 +992,7 @@ void getChildLinkTR(sead::Vector3f* trans, sead::Vector3f* rotate, const ActorIn
     getRotate(rotate, info);
 }
 
-s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* linkName) {
+s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* match) {
     PlacementInfo links;
     if (!tryGetPlacementInfoByKey(&links, placementInfo, "Links"))
         return 0;
@@ -1006,13 +1002,13 @@ s32 calcMatchNameLinkCount(const PlacementInfo& placementInfo, const char* linkN
         PlacementInfo item;
         const char* key = nullptr;
         getPlacementInfoAndKeyNameByIndex(&item, &key, links, i);
-        if (isMatchString(key, {linkName}))
+        if (isMatchString(key, {match}))
             count++;
     }
     return count;
 }
 
-s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkName) {
+s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* className) {
     PlacementInfo links;
     if (!tryGetPlacementInfoByKey(&links, placementInfo, "Links"))
         return false;
@@ -1024,8 +1020,8 @@ s32 calcLinkCountClassName(const PlacementInfo& placementInfo, const char* linkN
         PlacementInfo first;
         getPlacementInfoByIndex(&first, item, 0);
 
-        const char* className = nullptr;
-        if (tryGetClassName(&className, first) && isEqualString(className, linkName))
+        const char* classNameFirst = nullptr;
+        if (tryGetClassName(&classNameFirst, first) && isEqualString(classNameFirst, className))
             count++;
     }
     return count;

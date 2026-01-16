@@ -50,13 +50,13 @@ void CameraPoserFix::loadParam(const ByamlIter& iter) {
     tryGetByamlBool(&mIsCalcNearestAtFromPreAt, iter, "IsCalcNearestAtFromPreAt");
 }
 
-void CameraPoserFix::start(const CameraStartInfo& startInfo) {
+void CameraPoserFix::start(const CameraStartInfo& info) {
     mPreLookAtPos.set(alCameraPoserFunction::getPreLookAtPos(this));
     update();
 }
 
 void CameraPoserFix::update() {
-    mCameraUp.set(sead::Vector3f::ez);
+    mCameraUp.set(sead::Vector3f::ey);
     mTargetTrans.set(mLookAtPos);
 
     mTargetTrans *= mViewMtx;

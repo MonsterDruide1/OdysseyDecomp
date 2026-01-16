@@ -2,6 +2,7 @@
 
 #include <prim/seadSafeString.h>
 
+#include "Library/Base/Macros.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraTicketId.h"
 #include "Library/Placement/PlacementId.h"
@@ -17,11 +18,8 @@ CameraResourceHolder::CameraResourceHolder(const char* stageName, s32 maxResourc
         mEntries[i] = nullptr;
 }
 
-// too large to inline with heuristic, but needs to be explicit function (or inline lambda) for
-// stack ordering to match original assembly
-__attribute__((always_inline)) void getStageName(StringTmp<128>* stageName,
-                                                 const char* archiveName) {
-    sead::FixedSafeString<256> safeArchiveName;
+static void getStageName(StringTmp<128>* stageName, const char* archiveName) {
+    StringTmp<256> safeArchiveName;
     safeArchiveName.format("%s", archiveName);
     if (safeArchiveName.endsWith("Map"))
         stageName->copy(safeArchiveName, safeArchiveName.calcLength() - 3);

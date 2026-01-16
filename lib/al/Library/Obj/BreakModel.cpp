@@ -24,11 +24,11 @@ namespace al {
 BreakModel::BreakModel(const LiveActor* rootActor, const char* objName, const char* modelName,
                        const char* fileSuffixName, const sead::Matrix34f* rootMtx,
                        const char* breakActionName)
-    : LiveActor(objName), mInitSuffix(fileSuffixName), mParent(rootActor), mRootMtx(rootMtx),
-      mModelName(modelName), mBreakAction(breakActionName) {}
+    : LiveActor(objName), mParent(rootActor), mRootMtx(rootMtx), mModelName(modelName),
+      mBreakAction(breakActionName), mInitSuffix(fileSuffixName) {}
 
-void BreakModel::init(const ActorInitInfo& initInfo) {
-    initActorWithArchiveName(this, initInfo, mModelName, mInitSuffix);
+void BreakModel::init(const ActorInitInfo& info) {
+    initActorWithArchiveName(this, info, mModelName, mInitSuffix);
     initNerve(this, &Wait, 0);
     invalidateClipping(this);
 

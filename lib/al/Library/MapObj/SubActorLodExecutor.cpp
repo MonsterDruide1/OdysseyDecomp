@@ -3,7 +3,7 @@
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/LiveActor.h"
-#include "Library/LiveActor/SubActorKeeper.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Model/ModelShapeUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
@@ -16,7 +16,7 @@ SubActorLodExecutor::SubActorLodExecutor(LiveActor* actor, const ActorInitInfo& 
     const char* cubeMapUnitName = nullptr;
     tryGetStringArg(&cubeMapUnitName, info, "CubeMapUnitName");
 
-    if (cubeMapUnitName != nullptr)
+    if (cubeMapUnitName)
         forceApplyCubeMap(subActor, cubeMapUnitName);
 
     subActor->makeActorDead();

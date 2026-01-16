@@ -8,7 +8,7 @@
 
 namespace al {
 KeyPoseKeeper* createKeyPoseKeeper(const ActorInitInfo& info) {
-    return createKeyPoseKeeper(*getPlacementInfo(info));
+    return createKeyPoseKeeper(getPlacementInfo(info));
 }
 
 KeyPoseKeeper* createKeyPoseKeeper(const PlacementInfo& info) {
@@ -31,10 +31,10 @@ void restartKeyPose(KeyPoseKeeper* keyPoseKeeper, sead::Vector3f* pos, sead::Qua
 
     const KeyPose& keyPose = keyPoseKeeper->getKeyPose(0);
 
-    if (pos != nullptr)
+    if (pos)
         pos->set(keyPose.getTrans());
 
-    if (orientation != nullptr)
+    if (orientation)
         orientation->set(keyPose.getQuat());
 }
 

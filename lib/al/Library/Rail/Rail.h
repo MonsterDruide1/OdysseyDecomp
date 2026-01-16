@@ -11,28 +11,37 @@ class RailPart;
 class Rail {
 public:
     Rail();
-    void init(const PlacementInfo&);
-    void calcPos(sead::Vector3f*, f32) const;
-    s32 getIncludedSection(const RailPart**, f32*, f32) const;
-    void calcDirection(sead::Vector3f*, f32) const;
-    void calcPosDir(sead::Vector3f*, sead::Vector3f*, f32) const;
+    void init(const PlacementInfo& info);
+    void calcPos(sead::Vector3f* pos, f32 distance) const;
+    s32 getIncludedSection(const RailPart** part, f32* partDistance, f32 distance) const;
+    void calcDirection(sead::Vector3f* direction, f32 distance) const;
+    void calcPosDir(sead::Vector3f* position, sead::Vector3f* direction, f32 distance) const;
     f32 getTotalLength() const;
-    f32 getPartLength(s32) const;
-    f32 getLengthToPoint(s32) const;
-    void calcRailPointPos(sead::Vector3f*, s32) const;
-    void calcNearestRailPointPosFast(sead::Vector3f*, u32*, const sead::Vector3f&) const;
-    void calcNearestRailPointNo(s32*, const sead::Vector3f&) const;
-    void calcNearestRailPointPos(sead::Vector3f*, const sead::Vector3f&) const;
-    f32 normalizeLength(f32) const;
-    f32 calcNearestRailPosCoord(const sead::Vector3f&, f32) const;
-    f32 calcNearestRailPosCoord(const sead::Vector3f&, f32, f32*) const;
-    f32 calcNearestRailPos(sead::Vector3f*, const sead::Vector3f&, f32) const;
-    bool isNearRailPoint(f32, f32) const;
-    s32 calcRailPointNum(f32, f32) const;
-    f32 getIncludedSectionLength(f32*, f32*, f32) const;
-    s32 getIncludedSectionIndex(f32) const;
+    f32 getPartLength(s32 index) const;
+    f32 getLengthToPoint(s32 index) const;
+    void calcRailPointPos(sead::Vector3f* pos, s32 index) const;
+    void calcNearestRailPointPosFast(sead::Vector3f* rail_pos, u32* index,
+                                     const sead::Vector3f& pos) const;
+    void calcNearestRailPointNo(s32* index, const sead::Vector3f& pos) const;
+    void calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos) const;
+    f32 normalizeLength(f32 distance) const;
+    f32 calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval) const;
+    f32 calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval, f32* distance) const;
+    f32 calcNearestRailPos(sead::Vector3f* rail_pos, const sead::Vector3f& pos, f32 interval) const;
+    bool isNearRailPoint(f32 distance, f32 epsilon) const;
+    s32 calcRailPointNum(f32 distance1, f32 distance2) const;
+    f32 getIncludedSectionLength(f32* partDistance, f32* length, f32 distance) const;
+    s32 getIncludedSectionIndex(f32 distance) const;
     bool isIncludeBezierRailPart() const;
-    bool isBezierRailPart(s32) const;
+    bool isBezierRailPart(s32 index) const;
+
+    PlacementInfo* getRailPoint(s32 index) const { return mRailPoints[index]; }
+
+    s32 getRailPartCount() const { return mRailPartCount; }
+
+    s32 getRailPointsCount() const { return mRailPointsCount; }
+
+    bool isClosed() const { return mIsClosed; }
 
 private:
     PlacementInfo** mRailPoints = nullptr;

@@ -4,30 +4,30 @@
 
 namespace al {
 
-AreaShapeSphere::AreaShapeSphere() {}
+AreaShapeSphere::AreaShapeSphere() = default;
 
-bool AreaShapeSphere::isInVolume(const sead::Vector3f& trans) const {
+bool AreaShapeSphere::isInVolume(const sead::Vector3f& pos) const {
     sead::Vector3f baseTrans;
     calcTrans(&baseTrans);
-    sead::Vector3f offsetTrans = trans - baseTrans;
+    sead::Vector3f diff = pos - baseTrans;
     f32 radius = getScale().x * 500.0f;
 
-    return offsetTrans.squaredLength() <= sead::Mathf::square(radius);
+    return diff.squaredLength() <= sead::Mathf::square(radius);
 }
 
-bool AreaShapeSphere::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) const {
+bool AreaShapeSphere::isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const {
     sead::Vector3f baseTrans;
     calcTrans(&baseTrans);
-    sead::Vector3f offsetTrans = trans - baseTrans;
+    sead::Vector3f diff = pos - baseTrans;
     f32 radius = getScale().x * 500.0f + offset;
 
-    return offsetTrans.squaredLength() <= sead::Mathf::square(radius);
+    return diff.squaredLength() <= sead::Mathf::square(radius);
 }
 
 bool AreaShapeSphere::calcNearestEdgePoint(sead::Vector3f* edgePoint,
-                                           const sead::Vector3f& trans) const {
+                                           const sead::Vector3f& pos) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
-    calcLocalPos(&localPos, trans);
+    calcLocalPos(&localPos, pos);
     f32 length = localPos.length();
 
     if (length > 0.0f)
@@ -38,8 +38,9 @@ bool AreaShapeSphere::calcNearestEdgePoint(sead::Vector3f* edgePoint,
     return true;
 }
 
-bool AreaShapeSphere::checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                          const sead::Vector3f&) const {
+bool AreaShapeSphere::checkArrowCollision(sead::Vector3f* a2, sead::Vector3f* a3,
+                                          const sead::Vector3f& a4,
+                                          const sead::Vector3f& a5) const {
     return false;
 }
 

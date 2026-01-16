@@ -1,7 +1,7 @@
 #include "Library/Obj/EffectObj.h"
 
 #include "Library/Base/StringUtil.h"
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorInitUtil.h"
@@ -50,7 +50,7 @@ void EffectObj::init(const ActorInitInfo& info) {
 }
 
 void EffectObj::initAfterPlacement() {
-    if (mMtxConnector == nullptr)
+    if (!mMtxConnector)
         return;
 
     attachMtxConnectorToCollision(mMtxConnector, this, false);
@@ -80,7 +80,7 @@ void EffectObj::control() {
             makeMtxFrontUpPos(&poseMtx, railDir, railUp, railTrans);
             updatePoseMtx(this, &poseMtx);
         }
-    } else if (mMtxConnector != nullptr)
+    } else if (mMtxConnector)
         connectPoseQT(this, mMtxConnector);
 
     makeMtxRT(&mBaseMtx, this);

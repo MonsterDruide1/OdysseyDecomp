@@ -23,12 +23,11 @@ NERVE_ACTIONS_MAKE_STRUCT(BarrierField, Appear, AppearBreedaMoonWorld, Hide, Dis
 
 BarrierField::BarrierField(const char* name) : al::LiveActor(name) {}
 
-void BarrierField::init(const al::ActorInitInfo& initInfo) {
+void BarrierField::init(const al::ActorInitInfo& info) {
     al::initNerveAction(this, "Hide", &NrvBarrierField.collector, 0);
-    al::initMapPartsActor(this, initInfo, nullptr);
-    al::tryGetArg(&mIsDisappearByShineGet, initInfo, "IsDisappearByShineGet");
-    if (al::isObjectName(initInfo, "WaterfallWorldHomeBarrier") &&
-        GameDataFunction::isWorldMoon(this))
+    al::initMapPartsActor(this, info, nullptr);
+    al::tryGetArg(&mIsDisappearByShineGet, info, "IsDisappearByShineGet");
+    if (al::isObjectName(info, "WaterfallWorldHomeBarrier") && GameDataFunction::isWorldMoon(this))
         mIsMoon = true;
     al::trySyncStageSwitchAppearAndKill(this);
 }

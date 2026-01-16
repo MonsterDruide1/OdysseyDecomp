@@ -6,8 +6,8 @@
 
 WorldMapEarth::WorldMapEarth(const char* name) : al::LiveActor(name) {}
 
-void WorldMapEarth::init(const al::ActorInitInfo& initInfo) {
-    al::initMapPartsActor(this, initInfo, nullptr);
+void WorldMapEarth::init(const al::ActorInitInfo& info) {
+    al::initMapPartsActor(this, info, nullptr);
     makeActorAlive();
 }
 

@@ -6,5 +6,16 @@
   ],
   "git-submodules": {
     "enabled": true
-  }
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/tools/cache-version.json$/"],
+      "matchStrings": [
+        "\"version\": \"(?<currentValue>.+?)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"
+    }
+  ]
 }

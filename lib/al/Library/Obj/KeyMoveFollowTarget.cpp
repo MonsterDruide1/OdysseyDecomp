@@ -79,6 +79,4 @@ void KeyMoveFollowTarget::exeStop() {
     if (isFirstStep(this) && isInvalidClipping(this))
         validateClipping(this);
 }
-
-void KeyMoveFollowTarget::init(const ActorInitInfo& info) {}
 }  // namespace al

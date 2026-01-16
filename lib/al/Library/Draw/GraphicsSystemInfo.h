@@ -21,72 +21,81 @@ class PrimitiveOcclusion;
 }  // namespace agl
 
 namespace al {
+class ApplicationMessageReceiver;
 class AreaObjDirector;
-class ExecuteDirector;
-class EffectSystem;
-class PlayerHolder;
-class SceneCameraInfo;
-class ShaderHolder;
-class BloomDirector;
-class CubeMapDirector;
-class DirectionalLightKeeper;
-class GraphicsAreaDirector;
-class GraphicsPresetDirector;
-class DemoGraphicsController;
-class RadialBlurDirector;
-class PrePassLightKeeper;
-class ShaderEnvTextureKeeper;
-class ShadowDirector;
-class DepthOfFieldDrawer;
-class GraphicsQualityController;
-class ShaderMirrorDirector;
-class GraphicsParamRequesterImpl;
-class GraphicsParamRequesterImpl;
-class FlareFilterDirector;
-class GodRayDirector;
-class FogDirector;
-class OccludedEffectDirector;
-class LightStreakDirector;
-class HdrCompose;
-class SSIIKeeper;
-class OceanWave;
-class RandomTextureKeeper;
-class WorldAODirector;
-class PointSpriteCursorHolder;
-class MaterialLightDirector;
-class MaterialCategoryKeeper;
-class SkyDirector;
-class OcclusionCullingJudge;
-class VignettingDrawer;
-class CameraBlurController;
-class ThunderRenderKeeper;
-class StarrySky;
-class NoiseTextureKeeper;
-class CloudRenderKeeper;
-class GpuMemAllocator;
-class FootPrintTextureKeeper;
-class ProgramTextureKeeper;
-class RippleTextureKeeper;
-class ViewRenderer;
-class SubCameraRenderer;
-class TemporalInterlace;
-class PeripheryRendering;
-class PostProcessingFilter;
-class GBufferArray;
-class Projection;
-class UniformBlock;
 class AtmosScatter;
 class AtmosScatterDrawer;
-class GraphicsParamFilePath;
-class Resource;
-class VastGridMeshDirector;
+class BloomDirector;
+class CameraBlurController;
+class CloudRenderKeeper;
+class CubeMapDirector;
+class DemoGraphicsController;
+class DepthOfFieldDrawer;
+class DirectionalLightKeeper;
+class EffectSystem;
+class ExecuteDirector;
+class FlareFilterDirector;
+class FootPrintTextureKeeper;
+class FogDirector;
 class FullScreenTriangle;
-class ReducedBufferRenderer;
-class ModelOcclusionCullingDirector;
+class GBufferArray;
+class GodRayDirector;
+class GpuMemAllocator;
+class GraphicsAreaDirector;
+class GraphicsCalcGpuInfo;
+class GraphicsComputeInfo;
+class GraphicsCopyInfo;
+class GraphicsQualityController;
+class GraphicsParamFilePath;
+class GraphicsParamRequesterImpl;
+class GraphicsParamRequesterImpl;
+class GraphicsPresetDirector;
+class GraphicsRenderInfo;
+class GraphicsUpdateInfo;
+class HdrCompose;
+class LightStreakDirector;
+class MaterialCategoryKeeper;
+class MaterialLightDirector;
 class ModelLodAllCtrl;
+class ModelOcclusionCullingDirector;
 class ModelShaderHolder;
+class NoiseTextureKeeper;
+class OccludedEffectDirector;
+class OcclusionCullingJudge;
+class OceanWave;
+class PartsGraphics;
+class PlayerHolder;
+class PeripheryRendering;
+class PointSpriteCursorHolder;
+class PostProcessingFilter;
+class PrePassLightKeeper;
 class PrepassTriangleCulling;
-class ApplicationMessageReceiver;
+class ProgramTextureKeeper;
+class Projection;
+class RadialBlurDirector;
+class RandomTextureKeeper;
+class ReducedBufferRenderer;
+class RenderVariables;
+class RippleTextureKeeper;
+class Resource;
+class SceneCameraInfo;
+class ShaderCubeMapKeeper;
+class ShaderEnvTextureKeeper;
+class ShadowDirector;
+class ShaderHolder;
+class ShaderMirrorDirector;
+class SimpleModelEnv;
+class SkyDirector;
+class SSIIKeeper;
+class StarrySky;
+class SubCameraRenderer;
+class TemporalInterlace;
+class ThunderRenderKeeper;
+class UniformBlock;
+class VastGridMeshDirector;
+class ViewRenderer;
+class VignettingDrawer;
+class WorldAODirector;
 
 struct GraphicsInitArg {
     GraphicsInitArg(agl::DrawContext*, sead::FrameBuffer*);
@@ -119,19 +128,83 @@ public:
     GraphicsSystemInfo();
     ~GraphicsSystemInfo();
 
+    SimpleModelEnv* getModelEnv() const;
+    agl::DrawContext* getDrawContext() const;
+    ShaderCubeMapKeeper* getShaderCubeMapKeeper() const;
+    const sead::PtrArray<UniformBlock>* getViewIndexedUboArray(const char*) const;
+    void setViewIndexedUboArray(const char*, const sead::PtrArray<UniformBlock>*);
+    void initAtmosScatter(ExecuteDirector*);
     void init(const GraphicsInitArg&, AreaObjDirector*, ExecuteDirector*, EffectSystem*,
               PlayerHolder*, SceneCameraInfo*, ShaderHolder*);
-
-    agl::DrawContext* getDrawContext() const;
+    void initProjectResource();
+    void initStageResource(const Resource*, const char*, const char*);
     void endInit();
     void initAfterPlacement();
+    void initAfterCreateDrawTable();
+    void setDrawEnv(s32, GBufferArray*, const sead::Camera*, const Projection*);
     void clearGraphicsRequest();
+    void cancelLerp();
     void updateGraphics();
-    void preDrawGraphics(SceneCameraInfo*);
+    void updatePartsGraphics(const GraphicsUpdateInfo&);
+    void preDrawGraphics(const SceneCameraInfo*);
+    void calcGpuPartsGraphics(const GraphicsCalcGpuInfo&);
+    void updateViewGpu(s32, const sead::Camera*, const Projection*);
+    void updateViewVolume(const sead::Matrix34f&, const sead::Matrix44f&);
+    void clearViewVolume();
+    bool tryGetAtmosLightDir(sead::Vector3f*) const;
+    bool tryDirectionalLightInfo(sead::Vector3f*) const;
+    void activateDirLitColorTex() const;
+    void activateDirLitColorTex(agl::DrawContext*) const;
+    bool registPartsGraphics(PartsGraphics*);
+    void drawSystemPartsGraphics(const GraphicsRenderInfo*) const;
+    void doPartsGraphicsCommandBufferCopy(const GraphicsCopyInfo&) const;
+    void doPartsGraphicsCompute(const GraphicsComputeInfo&) const;
+    void drawPartsGraphics(const GraphicsRenderInfo&, const RenderVariables&) const;
+    void drawPartsGraphicsGBufferAfterSky(const GraphicsRenderInfo&) const;
+    void drawPartsGraphicsDeferred(const GraphicsRenderInfo&) const;
+    void drawPartsGraphicsLdr(const GraphicsRenderInfo&) const;
+    void drawPartsGraphicsIndirect(const GraphicsRenderInfo&, const RenderVariables&) const;
+    void drawPartsGraphicsCubemap(const GraphicsRenderInfo&) const;
 
     void set_2f4(s32 set) { _2f4 = set; }
 
-    const ViewRenderer* getViewRenderer() const { return mViewRenderer; }
+    ViewRenderer* getViewRenderer() const { return mViewRenderer; }
+
+    ModelLodAllCtrl* getModelLodAllCtrl() const { return mModelLodAllCtrl; }
+
+    MaterialCategoryKeeper* getMaterialCategoryKeeper() const { return mMaterialCategoryKeeper; }
+
+    GraphicsQualityController* getGraphicsQualityController() const {
+        return mGraphicsQualityController;
+    }
+
+    ModelOcclusionCullingDirector* getModelOcclusionCullingDirector() {
+        return mModelOcclusionCullingDirector;
+    }
+
+    void setApplicationMessageReceiver(ApplicationMessageReceiver* applicationMessageReceiver) {
+        mApplicationMessageReceiver = applicationMessageReceiver;
+    }
+
+    SkyDirector* getSkyDirector() const { return mSkyDirector; }
+
+    OcclusionCullingJudge* getOcclusionCullingJudge() const { return mOcclusionCullingJudge; }
+
+    PostProcessingFilter* getPostProcessingFilter() const { return mPostProcessingFilter; }
+
+    GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+
+    ModelShaderHolder* getModelShaderHolder() const { return mModelShaderHolder; }
+
+    ModelOcclusionCullingDirector* getModelOcclusionCullingDirector() const {
+        return mModelOcclusionCullingDirector;
+    }
+
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+
+    PrepassTriangleCulling* getPrepassTriangleCulling() const { return mPrepassTriangleCulling; }
+
+    RadialBlurDirector* getRadialBlurDirector() const { return mRadialBlurDirector; }
 
 private:
     sead::StrTreeMap<128, const sead::PtrArray<UniformBlock>*> mViewIndexedUboArrayTree;

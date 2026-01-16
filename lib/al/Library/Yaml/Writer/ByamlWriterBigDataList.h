@@ -16,9 +16,9 @@ public:
     ByamlWriterBigDataList();
     virtual ~ByamlWriterBigDataList();
     u32 calcPackSize() const;
-    void addData(ByamlWriterBigData*);
-    s32 setOffset(s32);
-    void write(sead::WriteStream*);
+    void addData(ByamlWriterBigData* data);
+    s32 setOffset(s32 offset);
+    void write(sead::WriteStream* stream);
 
 private:
     sead::TList<ByamlWriterBigData*> mList;

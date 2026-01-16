@@ -3,15 +3,18 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class AudioSystemInfo;
+struct AudioSystemInfo;
 class BgmDirector;
 struct BgmUserInfo;
 
 class BgmKeeper {
 public:
-    static BgmKeeper* create(const AudioSystemInfo*, BgmDirector*, const char*);
+    // TODO: rename `string`
+    static BgmKeeper* create(const AudioSystemInfo* audioInfo, BgmDirector* director,
+                             const char* string);
 
-    BgmKeeper(const AudioSystemInfo*, BgmDirector*, const char*);
+    // TODO: rename `string`
+    BgmKeeper(const AudioSystemInfo* audioInfo, BgmDirector* director, const char* string);
 
     const char* getUserName() const;
     void update();

@@ -3,7 +3,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Collision/PartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
@@ -29,13 +29,13 @@ NERVES_MAKE_STRUCT(CoinCollectEmpty2D, Wait, Got);
 }  // namespace
 
 CoinCollectEmpty2D::CoinCollectEmpty2D(const char* name, const char* archiveName)
-    : al::LiveActor(name), IUseDimension(), mArchiveName(archiveName) {}
+    : al::LiveActor(name), mArchiveName(archiveName) {}
 
-void CoinCollectEmpty2D::init(const al::ActorInitInfo& initInfo) {
-    al::initActorSceneInfo(this, initInfo);
-    al::initActorWithArchiveName(this, initInfo, mArchiveName, nullptr);
-    al::tryAddDisplayOffset(this, initInfo);
-    mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
+void CoinCollectEmpty2D::init(const al::ActorInitInfo& info) {
+    al::initActorSceneInfo(this, info);
+    al::initActorWithArchiveName(this, info, mArchiveName, nullptr);
+    al::tryAddDisplayOffset(this, info);
+    mMtxConnector = al::tryCreateMtxConnector(this, info);
     mDimensionKeeper = rs::createDimensionKeeper(this);
     rs::updateDimensionKeeper(mDimensionKeeper);
     rs::snap2DParallelizeFront(this, this, 500.0f);
@@ -45,7 +45,7 @@ void CoinCollectEmpty2D::init(const al::ActorInitInfo& initInfo) {
 }
 
 void CoinCollectEmpty2D::initAfterPlacement() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::attachMtxConnectorToCollision(mMtxConnector, this, false);
 
     sead::Matrix44f matrix = sead::Matrix44f::ident;
@@ -62,7 +62,7 @@ void CoinCollectEmpty2D::initAfterPlacement() {
 
 bool CoinCollectEmpty2D::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                     al::HitSensor* self) {
-    if (rs::isMsgItemGet2D(message) && al::isNerve(this, &NrvCoinCollectEmpty2D.Wait)) {
+    if (rs::isMsgPlayerItemGet2D(message) && al::isNerve(this, &NrvCoinCollectEmpty2D.Wait)) {
         al::invalidateClipping(this);
         al::setNerve(this, &NrvCoinCollectEmpty2D.Got);
         return true;
@@ -77,12 +77,8 @@ void CoinCollectEmpty2D::endClipped() {
     al::LiveActor::endClipped();
 }
 
-ActorDimensionKeeper* CoinCollectEmpty2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}
-
 void CoinCollectEmpty2D::exeWait() {
-    if (mMtxConnector != nullptr)
+    if (mMtxConnector)
         al::connectPoseQT(this, mMtxConnector);
 }
 

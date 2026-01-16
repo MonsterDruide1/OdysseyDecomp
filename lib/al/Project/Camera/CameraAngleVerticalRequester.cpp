@@ -8,10 +8,6 @@ namespace al {
 
 CameraAngleVerticalRequester::CameraAngleVerticalRequester() = default;
 
-AreaObjDirector* CameraAngleVerticalRequester::getAreaObjDirector() const {
-    return mAreaObjDirector;
-}
-
 void CameraAngleVerticalRequester::init(AreaObjDirector* areaObjDirector) {
     mAreaObjDirector = areaObjDirector;
 }
@@ -21,14 +17,14 @@ void CameraAngleVerticalRequester::initAfterPlacement() {
 }
 
 void CameraAngleVerticalRequester::update(const sead::Vector3f& position) {
-    if (mRequestAreaGroup == nullptr)
+    if (!mRequestAreaGroup)
         return;
     AreaObj* areaObj = tryGetAreaObj(mRequestAreaGroup, position);
     if (areaObj != mRequestArea) {
         mRequestArea = areaObj;
         mFramesUnchanged = -1;
-        if (areaObj != nullptr)
-            getArg(&mAngleVertical, mRequestArea->getPlacementInfo(), "AngleVertical");
+        if (areaObj)
+            getArg(&mAngleVertical, *mRequestArea->getPlacementInfo(), "AngleVertical");
     }
     mFramesUnchanged++;
 }

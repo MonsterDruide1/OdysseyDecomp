@@ -1,12 +1,12 @@
 #include "Library/Screen/ScreenCoverCtrl.h"
 
 namespace al {
-ScreenCoverCtrl::ScreenCoverCtrl() {}
+ScreenCoverCtrl::ScreenCoverCtrl() = default;
 
 void ScreenCoverCtrl::requestCaptureScreenCover(s32 coverFrames) {
     if (mCoverFrames < coverFrames) {
         if (mCoverFrames <= 0)
-            mIsCover = true;
+            mIsRequestCapture = true;
         mCoverFrames = coverFrames;
     }
 }
@@ -15,7 +15,7 @@ void ScreenCoverCtrl::update() {
     if (mCoverFrames >= 1) {
         mCoverFrames--;
         if (mCoverFrames == 0)
-            mIsCover = false;
+            mIsRequestCapture = false;
     }
 }
 }  // namespace al

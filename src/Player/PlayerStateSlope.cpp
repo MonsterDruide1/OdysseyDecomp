@@ -27,7 +27,7 @@ PlayerStateSlope::PlayerStateSlope(al::LiveActor* player, const PlayerConst* pCo
 }
 
 void PlayerStateSlope::appear() {
-    setDead(false);
+    al::NerveStateBase::appear();
     mActionSlopeSlideControl->setup();
 
     mTimeInAir = 0;
@@ -58,7 +58,7 @@ void PlayerStateSlope::appear() {
 }
 
 void PlayerStateSlope::kill() {
-    setDead(true);
+    al::NerveStateBase::kill();
 
     if (mIsRunningRumbleLoop) {
         alPadRumbleFunction::stopPadRumbleLoop(mActor, "【ループ】ジリジリ（中）",

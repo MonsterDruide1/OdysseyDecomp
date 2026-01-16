@@ -7,10 +7,10 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Math/MtxUtil.h"
+#include "Library/Matrix/MatrixUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 
@@ -186,14 +186,10 @@ static bool tryCalcGlideOnNoseMtx(sead::Matrix34f* out, const al::LiveActor* act
     sead::Matrix34f mtx = sead::Matrix34f::ident;
     if (!rs::tryCalcPlayerModelNoseJointMtx(&mtx, actor))
         return false;
-    sead::Vector3f side;
-    mtx.getBase(side, 0);
-    sead::Vector3f up;
-    mtx.getBase(up, 1);
-    sead::Vector3f front;
-    mtx.getBase(front, 2);
-    sead::Vector3f pos;
-    mtx.getBase(pos, 3);
+    sead::Vector3f side = mtx.getBase(0);
+    sead::Vector3f up = mtx.getBase(1);
+    sead::Vector3f front = mtx.getBase(2);
+    sead::Vector3f pos = mtx.getBase(3);
     sead::Vector3f offset = {13, -2.5, 0};
     al::makeMtxFrontUpPos(out, front, up, pos + offset.x * side + offset.y * up + offset.z * front);
     return true;

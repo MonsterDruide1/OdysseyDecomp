@@ -3,7 +3,7 @@
 namespace al {
 class IUseSceneObjHolder;
 }
-class BindInfo;
+struct BindInfo;
 
 namespace rs {
 

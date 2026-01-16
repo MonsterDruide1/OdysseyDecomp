@@ -9,6 +9,6 @@ using ActorCreatorFunction = LiveActor* (*)(const char* actorName);
 
 class ActorFactory : public Factory<ActorCreatorFunction> {
 public:
-    ActorFactory(const char* factoryName);
+    ActorFactory(const char* pName);
 };
 }  // namespace al
