@@ -16,6 +16,8 @@ class ShineChipLayoutParts;
 class PlayGuideCamera;
 class PlayGuideBgm;
 class MapMini;
+class SimpleLayoutAppearWaitEnd;
+class GamePadPlayStyleInfo;
 
 class StageSceneLayout : public al::NerveStateBase {
 public:
@@ -37,7 +39,7 @@ public:
     bool isWait() const;
     bool isActive() const;
     bool isEndLifeDemo() const;
-    void tryStartLifeDemo();
+    bool tryStartLifeDemo();
     void startCoinCountAnim(s32);
     void startCoinCollectCountAnim(s32);
     void appearCoinCounterForDemo();
@@ -45,7 +47,7 @@ public:
     bool isEndShineChipCompleteAnim() const;
     void startShineChipCompleteAnim();
     void endShineChipCompleteAnim();
-    void tryStartDemoGetLifeMaxUpItem(bool);
+    bool tryStartDemoGetLifeMaxUpItem(bool);
     bool isEndDemoGetLifeMaxUpItem() const;
     void killShineCount();
     void appearShineCountWait();
@@ -76,6 +78,10 @@ private:
     PlayGuideBgm* mPlayGuideBgm;
     MapMini* mMapMini;
     const al::PlayerHolder* mPlayerHolder;
-    char padding2[24];
+    bool _60;
+    SimpleLayoutAppearWaitEnd* mPlayGuideMenu;
+    GamePadPlayStyleInfo* mGamePadPlayStyleInfo;
     al::LayoutActor* mLayoutActorKidsMode;
 };
+
+static_assert(sizeof(StageSceneLayout) == 0x80);

@@ -2,17 +2,17 @@
 
 class IPlayerModelChanger {
 public:
-    virtual bool isFireFlower() const;
-    virtual bool isMini() const;
-    virtual bool isChange() const;
-    virtual bool is2DModel() const;
-    virtual bool isHiddenModel() const;
-    virtual bool isHiddenShadowMask() const;
-    virtual void resetPosition();
-    virtual void hideModel();
-    virtual void hideSilhouette();
-    virtual void hideShadowMask();
-    virtual void showModel();
-    virtual void showSilhouette();
-    virtual void showShadowMask();
+    virtual bool isFireFlower() const = 0;
+    virtual bool isMini() const = 0;
+    virtual bool isChange() const = 0;
+    virtual bool is2DModel() const = 0;
+    virtual bool isHiddenModel() const = 0;
+    virtual bool isHiddenShadowMask() const = 0;
+    virtual void resetPosition() = 0;
+    virtual void hideModel() = 0;
+    virtual void hideSilhouette() = 0;
+    virtual void hideShadowMask() = 0;
+    virtual void showModel() = 0;
+    virtual void showSilhouette() = 0;
+    virtual void showShadowMask() = 0;
 };

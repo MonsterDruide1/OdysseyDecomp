@@ -25,8 +25,8 @@ PlayerJudgeTalkGround::PlayerJudgeTalkGround(
       mPlayerStateWait(playerStateWait) {}
 
 bool PlayerJudgeTalkGround::judge() const {
-    auto* currentHackActor = mPlayerHackKeeper->getCurrentHackActor();
-    if (mPlayerHackKeeper->getUnkHitSensor()) {
+    auto* currentHackActor = mPlayerHackKeeper->getHack();
+    if (mPlayerHackKeeper->getHackSensor()) {
         if (!rs::isPlayerOnGround(currentHackActor) || mPlayerInput->isMove())
             return false;
 
