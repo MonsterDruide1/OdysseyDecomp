@@ -42,9 +42,19 @@ SEAD_ENUM(YamlParamType,
                         const sead::SafeString& meta, ParameterObj* obj, bool e)                   \
             : Parameter(name, label, meta, obj, e) {}                                              \
                                                                                                    \
+        Parameter##Name(const Type& value, const sead::SafeString& name,                           \
+                        const sead::SafeString& label, const sead::SafeString& meta,               \
+                        ParameterObj* obj, bool e)                                                 \
+            : Parameter(value, name, label, meta, obj, e) {}                                       \
+                                                                                                   \
         Parameter##Name(const sead::SafeString& name, const sead::SafeString& label,               \
                         const sead::SafeString& meta, ParameterList* list, bool e)                 \
             : Parameter(name, label, meta, list, e) {}                                             \
+                                                                                                   \
+        Parameter##Name(const Type& value, const sead::SafeString& name,                           \
+                        const sead::SafeString& label, const sead::SafeString& meta,               \
+                        ParameterList* list, bool e)                                               \
+            : Parameter(value, name, label, meta, list, e) {}                                      \
                                                                                                    \
         const char* getParamTypeStr() const override {                                             \
             return YamlParamType::text(YamlParamType::Name);                                       \
@@ -117,11 +127,25 @@ public:
         mValue = T();
     }
 
+    Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
+              const sead::SafeString& meta, ParameterObj* obj, bool e)
+        : ParameterBase(e) {
+        initializeListNode(name, label, meta, obj, e);
+        mValue = value;
+    }
+
     Parameter(const sead::SafeString& name, const sead::SafeString& label,
               const sead::SafeString& meta, ParameterList* list, bool e)
         : ParameterBase(e) {
         initializeListNode(name, label, meta, list, e);
         mValue = T();
+    }
+
+    Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
+              const sead::SafeString& meta, ParameterList* list, bool e)
+        : ParameterBase(e) {
+        initializeListNode(name, label, meta, list, e);
+        mValue = value;
     }
 
     const void* ptr() const override { return &mValue; };
@@ -139,6 +163,10 @@ public:
     const T& getValue() const { return mValue; }
 
     void setValue(const T& value) { mValue = value; }
+
+    T* operator->() { return &mValue; }
+
+    const T* operator->() const { return &mValue; }
 
 private:
     T mValue = T();
