@@ -13,7 +13,7 @@
 
 #include "System/GameDataFunction.h"
 
-s32 cPriority = sead::Thread::cDefaultPriority + 6;
+static s32 cPriority = sead::Thread::cDefaultPriority + 6;
 static s32 _cDefaultPriority = sead::Thread::cDefaultPriority;
 
 // NON_MATCHING: Compiler creates the first functor in the wrong place
@@ -93,7 +93,7 @@ void E3ResourceLoader::loadHomeStageResource() {
             280 * 1024 * 1024, "SandWorldHomeStageResource", mWorldResourceHeap, 8,
             sead::Heap::cHeapDirection_Forward, false);
         mSandWorldHomeStageResource = heap;
-        al::addResourceCategory("砂ワールドホーム", 512, heap);
+        al::addResourceCategory("砂ワールドホーム", 1024, heap);
         s32 worldIndexSand = GameDataFunction::getWorldIndexSand();
         loadHomeStageResourceByWorld("砂ワールドホーム", mWorldResourceHeap, worldIndexSand, 8);
     }
@@ -103,7 +103,7 @@ void E3ResourceLoader::loadHomeStageResource() {
             290 * 1024 * 1024, "CityWorldHomeStageResource", mWorldResourceHeap, 8,
             sead::Heap::cHeapDirection_Reverse, false);
         mCityWorldHomeStageResource = heap;
-        al::addResourceCategory("都市ワールドホーム", 512, heap);
+        al::addResourceCategory("都市ワールドホーム", 1024, heap);
         s32 worldIndexCity = GameDataFunction::getWorldIndexCity();
         loadHomeStageResourceByWorld("都市ワールドホーム", heap, worldIndexCity, 12);
     }
@@ -219,7 +219,7 @@ void E3ResourceLoader::tryCreateExHeap(s32 loadWorldId) {
                                                        sead::Heap::cHeapDirection_Forward, false);
     mWorldExResource = newHeap;
 
-    al::addResourceCategory("ワールド常駐", 512, newHeap);
+    al::addResourceCategory("ワールド常駐", 1024, newHeap);
 }
 
 void E3ResourceLoader::tryDestroyWorldResource(sead::Heap* heap) {
