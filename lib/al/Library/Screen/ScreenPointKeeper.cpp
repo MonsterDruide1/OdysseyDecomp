@@ -59,9 +59,10 @@ void ScreenPointKeeper::initArray(s32 size) {
 
 ScreenPointTarget* ScreenPointKeeper::addTarget(LiveActor* actor, const ActorInitInfo& initInfo,
                                                 const char* targetName, f32 radius,
-                                                const sead::Vector3f* va, const char* jointName,
-                                                const sead::Vector3f& vb) {
-    ScreenPointTarget* target = new ScreenPointTarget(actor, targetName, radius, va, jointName, vb);
+                                                const sead::Vector3f* actorPos,
+                                                const char* jointName, const sead::Vector3f& vb) {
+    ScreenPointTarget* target =
+        new ScreenPointTarget(actor, targetName, radius, actorPos, jointName, vb);
     mScreenPointTargets.pushBack(target);
     mTargets->addObj(target->getParameterObj());
 
