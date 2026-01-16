@@ -12,6 +12,8 @@ class SaveDataSequenceRead;
 class SaveDataSequenceWrite;
 class AsyncFunctorThread;
 
+// NOTE: prone to race conditions. Requesting an action while another one is running drops the
+// second request
 class SaveDataDirector {
 public:
     SaveDataDirector(u32 workBufferSize, s32 threadPriority);
@@ -20,6 +22,7 @@ public:
     void initCheckSaveData();
     bool requestInitSaveDir(const char* fileName, u32 dirSize, u32 version);
     bool initSaveDirSync(const char* fileName, u32 dirSize, u32 version);
+    // TODO: add parameter names to requestFormat and formatSync
     bool requestFormat(s32, s32);
     bool formatSync(s32, s32);
     bool requestRead(const char* fileName, u32 readSize, u32 version);
@@ -44,6 +47,7 @@ private:
     SaveDataSequenceFormat* mFormatSequence = nullptr;
     SaveDataSequenceRead* mReadSequence = nullptr;
     SaveDataSequenceWrite* mWriteSequence = nullptr;
+    // NOTE: initialization started, possibly still running
     bool mIsInitialized = false;
     bool _29 = false;
     sead::Buffer<u8> mBuffer;
