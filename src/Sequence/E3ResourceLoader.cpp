@@ -3,7 +3,7 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
-#include "Library/Resource/ResourceHolder.h"
+#include "Library/Resource/ResourceFunction.h"
 #include "Library/Thread/AsyncFunctorThread.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
@@ -107,7 +107,7 @@ void E3ResourceLoader::loadHomeStageResource() {
 void E3ResourceLoader::loadWorldResource() {
     al::setCurrentCategoryNameDefault();
 
-    u8* byml = (al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource"));
+    const u8* byml = (al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource"));
 
     al::ByamlIter byamlIter = al::ByamlIter(byml);
     al::ByamlIter worldIter;
