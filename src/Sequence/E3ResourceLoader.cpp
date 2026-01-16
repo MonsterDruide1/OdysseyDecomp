@@ -1,5 +1,8 @@
 #include "Sequence/E3ResourceLoader.h"
+
+#include <heap/seadFrameHeap.h>
 #include <thread/seadThread.h>
+
 #include "Library/Base/StringUtil.h"
 #include "Library/File/FileUtil.h"
 #include "Library/Memory/HeapUtil.h"
@@ -7,25 +10,25 @@
 #include "Library/Thread/AsyncFunctorThread.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
-#include "System/GameDataFunction.h"
-#include "heap/seadFrameHeap.h"
-#include "thread/seadThread.h"
 
-s32 cE3Priority = sead::Thread::cDefaultPriority + 6;
-static s32 cDefaultPriority = sead::Thread::cDefaultPriority;
+#include "System/GameDataFunction.h"
+
+s32 cPriority = sead::Thread::cDefaultPriority + 6;
+static s32 _cDefaultPriority = sead::Thread::cDefaultPriority;
 
 // NON_MATCHING: Compiler creates the first functor in the wrong place
+// https://decomp.me/scratch/fyi2M
 E3ResourceLoader::E3ResourceLoader() {
     using E3ResourceLoaderFunctor = al::FunctorV0M<E3ResourceLoader*, void (E3ResourceLoader::*)()>;
 
     mLoadHomeStageResourceThread = new al::AsyncFunctorThread(
         "LoadHomeStageResourceThread",
-        E3ResourceLoaderFunctor(this, &E3ResourceLoader::loadHomeStageResource), cE3Priority,
-        0x100000, 0);
+        E3ResourceLoaderFunctor(this, &E3ResourceLoader::loadHomeStageResource), cPriority,
+        0x100000, sead::CoreId::cMain);
 
     mWorldResourceThread = new al::AsyncFunctorThread(
         "WolrdResourceThread", E3ResourceLoaderFunctor(this, &E3ResourceLoader::loadWorldResource),
-        cE3Priority, 0x100000, 0);
+        cPriority, 0x100000, sead::CoreId::cMain);
 
     al::createWorldResourceHeap(false);
     mWorldResourceHeap = al::getWorldResourceHeap();
@@ -73,11 +76,11 @@ E3ResourceLoader::~E3ResourceLoader() {
 }
 
 void E3ResourceLoader::loadHomeStageResource() {
-    if (!_30) {
+    if (!mHasCreatedResourceCategory) {
         al::createCategoryResourceAll("プレイヤーモデル");
         al::addResourceCategory("E3常駐", 0x400, mWorldResourceHeap);
         al::createCategoryResourceAll("E3常駐");
-        _30 = true;
+        mHasCreatedResourceCategory = true;
     }
     if (mWorldExResource) {
         al::removeResourceCategory("ワールド常駐");
@@ -85,20 +88,22 @@ void E3ResourceLoader::loadHomeStageResource() {
         mWorldExResource = nullptr;
     }
     if (!mSandWorldHomeStageResource) {
-        sead::FrameHeap* heap =
-            sead::FrameHeap::create(0x11800000, "SandWorldHomeStageResource", mWorldResourceHeap, 8,
-                                    sead::Heap::cHeapDirection_Forward, false);
+        // 280 MB
+        sead::FrameHeap* heap = sead::FrameHeap::create(
+            280 * 1024 * 1024, "SandWorldHomeStageResource", mWorldResourceHeap, 8,
+            sead::Heap::cHeapDirection_Forward, false);
         mSandWorldHomeStageResource = heap;
-        al::addResourceCategory("砂ワールドホーム", 0x400, heap);
+        al::addResourceCategory("砂ワールドホーム", 512, heap);
         s32 worldIndexSand = GameDataFunction::getWorldIndexSand();
         loadHomeStageResourceByWorld("砂ワールドホーム", mWorldResourceHeap, worldIndexSand, 8);
     }
     if (!mCityWorldHomeStageResource) {
-        sead::FrameHeap* heap =
-            sead::FrameHeap::create(0x12200000, "CityWorldHomeStageResource", mWorldResourceHeap, 8,
-                                    sead::Heap::cHeapDirection_Reverse, false);
+        // 290 MB
+        sead::FrameHeap* heap = sead::FrameHeap::create(
+            290 * 1024 * 1024, "CityWorldHomeStageResource", mWorldResourceHeap, 8,
+            sead::Heap::cHeapDirection_Reverse, false);
         mCityWorldHomeStageResource = heap;
-        al::addResourceCategory("都市ワールドホーム", 0x400, heap);
+        al::addResourceCategory("都市ワールドホーム", 512, heap);
         s32 worldIndexCity = GameDataFunction::getWorldIndexCity();
         loadHomeStageResourceByWorld("都市ワールドホーム", heap, worldIndexCity, 12);
     }
@@ -108,10 +113,10 @@ void E3ResourceLoader::loadWorldResource() {
     al::setCurrentCategoryNameDefault();
 
     const u8* byml = (al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource"));
-
     al::ByamlIter byamlIter = al::ByamlIter(byml);
+
     al::ByamlIter worldIter;
-    al::getByamlIterByIndex(&worldIter, byamlIter, _3c);
+    al::getByamlIterByIndex(&worldIter, byamlIter, mLoadWorldId);
     al::ByamlIter worldResourceIter;
     al::getByamlIterByKey(&worldResourceIter, worldIter, "WorldResource");
 
@@ -130,7 +135,7 @@ void E3ResourceLoader::loadWorldResource() {
         if (mHasLoadedWorldResource)
             return;
     }
-    _39 = true;
+    mIsLoaded = true;
 }
 
 void E3ResourceLoader::cancelLoadWorldResource() {
@@ -143,8 +148,8 @@ bool E3ResourceLoader::requestLoadWorldHomeStageResource() {
         return false;
     if (isEndLoadWorldHomeStageResource()) {
         mHasLoadedWorldResource = false;
-        _39 = false;
-        _3c = -1;
+        mIsLoaded = false;
+        mLoadWorldId = -1;
         al::clearFileLoaderEntry();
         mLoadHomeStageResourceThread->start();
         return true;
@@ -156,14 +161,14 @@ bool E3ResourceLoader::isEndLoadWorldHomeStageResource() const {
     return mLoadHomeStageResourceThread->isDone();
 }
 
-bool E3ResourceLoader::requestLoadWorldResource(s32 id) {
-    if (_3c == id && _39)
+bool E3ResourceLoader::requestLoadWorldResource(s32 loadWorldId) {
+    if (mLoadWorldId == loadWorldId && mIsLoaded)
         return false;
     if (isEndLoadAny()) {
         mHasLoadedWorldResource = false;
         al::clearFileLoaderEntry();
-        _39 = false;
-        _3c = id;
+        mIsLoaded = false;
+        mLoadWorldId = loadWorldId;
         mWorldResourceThread->start();
         return true;
     }
@@ -174,12 +179,13 @@ bool E3ResourceLoader::isEndLoadAny() const {
     return mWorldResourceThread->isDone() && isEndLoadWorldHomeStageResource();
 }
 
-void E3ResourceLoader::tryCreateExHeap(s32 worldId) {
+void E3ResourceLoader::tryCreateExHeap(s32 loadWorldId) {
     if (mWorldExResource)
         return;
 
-    if (GameDataFunction::getWorldIndexSand() == worldId) {
+    if (GameDataFunction::getWorldIndexSand() == loadWorldId) {
         sead::FrameHeap* cityResource = mCityWorldHomeStageResource;
+
         if (cityResource) {
             if (mSandWorldHomeStageResource == cityResource) {
                 al::removeResourceCategory("砂ワールドホーム");
@@ -193,7 +199,7 @@ void E3ResourceLoader::tryCreateExHeap(s32 worldId) {
             }
         }
 
-    } else if (GameDataFunction::getWorldIndexCity() == worldId) {
+    } else if (GameDataFunction::getWorldIndexCity() == loadWorldId) {
         sead::FrameHeap* sandResource = mSandWorldHomeStageResource;
 
         if (sandResource) {
@@ -213,7 +219,7 @@ void E3ResourceLoader::tryCreateExHeap(s32 worldId) {
                                                        sead::Heap::cHeapDirection_Forward, false);
     mWorldExResource = newHeap;
 
-    al::addResourceCategory("ワールド常駐", 0x400, newHeap);
+    al::addResourceCategory("ワールド常駐", 512, newHeap);
 }
 
 void E3ResourceLoader::tryDestroyWorldResource(sead::Heap* heap) {
@@ -235,28 +241,29 @@ void E3ResourceLoader::tryDestroyWorldResource(sead::Heap* heap) {
 
 void E3ResourceLoader::printHeapInfo() const {}
 
-void E3ResourceLoader::loadHomeStageResourceByWorld(const char* worldName, sead::Heap*, s32 id,
-                                                    s32 scenarioid) {
-    auto x = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
-    al::ByamlIter byamlIter = al::ByamlIter(x);
+void E3ResourceLoader::loadHomeStageResourceByWorld(const char* worldName, sead::Heap* _heap,
+                                                    s32 loadWorldId, s32 scenarioId) {
+    const u8* byml = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
+    al::ByamlIter byamlIter = al::ByamlIter(byml);
+
     al::ByamlIter worldIter;
-    al::getByamlIterByIndex(&worldIter, byamlIter, id);
+    al::getByamlIterByIndex(&worldIter, byamlIter, loadWorldId);
     al::ByamlIter worldResourceIter;
 
     if (!al::tryGetByamlIterByKey(&worldResourceIter, worldIter,
-                                  al::StringTmp<32>{"Scenario%d", scenarioid}.cstr()))
+                                  al::StringTmp<32>{"Scenario%d", scenarioId}.cstr()))
         return;
 
     al::setCurrentCategoryName(worldName);
 
     s32 size = worldResourceIter.getSize();
     for (s32 i = 0; i < size; i++) {
-        al::ByamlIter v8;
-        worldResourceIter.tryGetIterByIndex(&v8, i);
+        al::ByamlIter iter;
+        worldResourceIter.tryGetIterByIndex(&iter, i);
         const char* name = nullptr;
         const char* ext = nullptr;
-        v8.tryGetStringByKey(&name, "Name");
-        v8.tryGetStringByKey(&ext, "Ext");
+        iter.tryGetStringByKey(&name, "Name");
+        iter.tryGetStringByKey(&ext, "Ext");
 
         al::findOrCreateResource(name, ext);
         if (mHasLoadedWorldResource)

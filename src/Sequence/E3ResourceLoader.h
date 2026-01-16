@@ -16,12 +16,13 @@ public:
     void cancelLoadWorldResource();
     bool requestLoadWorldHomeStageResource();
     bool isEndLoadWorldHomeStageResource() const;
-    bool requestLoadWorldResource(s32);
+    bool requestLoadWorldResource(s32 loadWorldId);
     bool isEndLoadAny() const;
-    void tryCreateExHeap(s32);
-    void tryDestroyWorldResource(sead::Heap*);
+    void tryCreateExHeap(s32 loadWorldId);
+    void tryDestroyWorldResource(sead::Heap* heap);
     void printHeapInfo() const;
-    void loadHomeStageResourceByWorld(const char*, sead::Heap*, s32, s32);
+    void loadHomeStageResourceByWorld(const char* worldName, sead::Heap* _heap, s32 loadWorldId,
+                                      s32 scenarioId);
 
 private:
     al::AsyncFunctorThread* mLoadHomeStageResourceThread = nullptr;
@@ -31,7 +32,7 @@ private:
     sead::FrameHeap* mCityWorldHomeStageResource = nullptr;
     sead::FrameHeap* mWorldExResource = nullptr;
     bool mHasLoadedWorldResource = false;
-    bool _39 = false;
-    bool _30 = false;
-    s32 _3c = -1;
+    bool mIsLoaded = false;
+    bool mHasCreatedResourceCategory = false;
+    s32 mLoadWorldId = -1;
 };
