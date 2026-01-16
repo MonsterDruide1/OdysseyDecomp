@@ -55,11 +55,11 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
-    int getSelectionIdx() { return (s32)mSelection.prevSelectionType; }
+    s32 getSelectionIdx() { return (s32)mSelection.prevSelectionType; }
 
-    int getPrevSelectionIdx() { return (s32)mSelection.prevSelectionType; }
+    s32 getPrevSelectionIdx() { return (s32)mSelection.prevSelectionType; }
 
-    int getCancelIdx() { return (s32)mSelection.cancelType; }
+    s32 getCancelIdx() { return (s32)mSelection.cancelType; }
 
     SelectionType getSelectionType() { return mSelection.selectionType; }
 
