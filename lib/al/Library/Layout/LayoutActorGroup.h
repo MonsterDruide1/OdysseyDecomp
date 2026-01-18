@@ -8,9 +8,9 @@ class LayoutActor;
 class LayoutActorGroup {
 public:
     LayoutActorGroup(const char*, s32);
-    void registerActor(al::LayoutActor*);
-    al::LayoutActor* findDeadActor() const;
-    al::LayoutActor* tryFindDeadActor() const;
+    void registerActor(LayoutActor*);
+    LayoutActor* findDeadActor() const;
+    LayoutActor* tryFindDeadActor() const;
 
     const char* getGroupName() const { return mGroupName; }
 
