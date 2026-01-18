@@ -20,7 +20,7 @@ public:
 
     LayoutActor* getActor(s32 idx) const { return mActors[idx]; }
 
-public:
+private:
     const char* mGroupName;
     s32 mMaxActorCount;
     s32 mActorCount;
