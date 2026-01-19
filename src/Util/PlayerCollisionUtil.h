@@ -7,6 +7,7 @@ namespace al {
 class LiveActor;
 class CollisionParts;
 class CollisionPartsFilterBase;
+struct HitInfo;
 class HitSensor;
 }  // namespace al
 
@@ -62,6 +63,8 @@ bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilCeiling(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilGrround(const IUsePlayerCollision*);
 
+bool isCollisionCodeSafetyPoint(const al::HitInfo&);
+
 u32 reboundVelocityPart(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32, f32);
 
 void setColliderFilterCollisionParts(IUsePlayerCollision*, const al::CollisionPartsFilterBase*);
@@ -71,6 +74,9 @@ al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
 
 bool isOnGroundSlopeSlideEnd(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 bool isAutoRunOnGroundSkateCode(const al::LiveActor*, const IUsePlayerCollision*, f32);
+
+bool isEnableRecordSafetyPoint(sead::Vector3f**, const al::HitInfo&, al::HitSensor*,
+                               const sead::Vector3f&);
 
 void startHitReactionLandIfLanding(const al::LiveActor*, const IUsePlayerCollision*, bool);
 

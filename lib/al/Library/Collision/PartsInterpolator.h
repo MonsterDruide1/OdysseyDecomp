@@ -7,7 +7,17 @@ class Triangle;
 
 class TriangleFilterBase {
 public:
-    virtual bool isInvalidTriangle(const Triangle& triangle) const = 0;
+    virtual bool isInvalidTriangle(const Triangle& triangle) const;
+};
+
+class TriangleFilterGroundOnly : public TriangleFilterBase {
+public:
+    TriangleFilterGroundOnly(const sead::Vector3f& down) : mDown(down) {}
+
+    bool isInvalidTriangle(const Triangle& triangle) const override;
+
+private:
+    const sead::Vector3f& mDown;
 };
 
 class TriangleFilterWallOnly : public TriangleFilterBase {
@@ -31,7 +41,6 @@ public:
         return (mParent->*mFunc)(triangle);
     }
 
-private:
     T* mParent;
     DelegateFilter mFunc;
 };
