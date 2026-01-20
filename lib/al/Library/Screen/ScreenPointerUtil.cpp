@@ -61,7 +61,7 @@ s32 compareScreenPointTargetPriorDirectPoint(const ScreenPointTargetHitInfo* tar
 }
 
 bool isExistScreenPointTargetKeeper(LiveActor* actor) {
-    return actor->getScreenPointKeeper();
+    return actor->getScreenPointKeeper() != nullptr;
 }
 
 bool isScreenPointTargetArrayFull(LiveActor* actor) {
@@ -96,9 +96,9 @@ bool hitCheckScreenCircleScreenPointTarget(ScreenPointer* screenPointer, const s
 
 bool hitCheckLayoutCircleScreenPointTarget(ScreenPointer* screenPointer, const sead::Vector2f& pos,
                                            f32 radius, f32 layoutRadius,
-                                           s32 (*callback)(const ScreenPointTargetHitInfo*,
-                                                           const ScreenPointTargetHitInfo*)) {
-    return screenPointer->hitCheckLayoutCircle(pos, radius, layoutRadius, callback);
+                                           s32 (*cmp)(const ScreenPointTargetHitInfo*,
+                                                      const ScreenPointTargetHitInfo*)) {
+    return screenPointer->hitCheckLayoutCircle(pos, radius, layoutRadius, cmp);
 }
 
 bool isHitScreenPointTarget(ScreenPointer* screenPointer, const ScreenPointTarget* target) {

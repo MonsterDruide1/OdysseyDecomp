@@ -28,8 +28,8 @@ bool hitCheckScreenCircleScreenPointTarget(ScreenPointer* screenPointer, const s
                                            f32 radius, f32 screenRadius);
 bool hitCheckLayoutCircleScreenPointTarget(ScreenPointer* screenPointer, const sead::Vector2f& pos,
                                            f32 radius, f32 layoutRadius,
-                                           s32 (*callback)(const ScreenPointTargetHitInfo*,
-                                                           const ScreenPointTargetHitInfo*));
+                                           s32 (*cmp)(const ScreenPointTargetHitInfo*,
+                                                      const ScreenPointTargetHitInfo*));
 bool isHitScreenPointTarget(ScreenPointer* screenPointer, const ScreenPointTarget* target);
 bool sendMsgScreenPointTarget(const SensorMsg& message, ScreenPointer* screenPointer,
                               ScreenPointTarget* target);
