@@ -55,48 +55,19 @@ jobs:
             const prNumber = data.pull_request.number;
             const reviewState = data.review.state;
             const reviewBody = data.review.body;
-            const R = data.review.reviewer;      // reviewer
-            const P = data.pull_request.author;  // PR author
-            const O = owner;                     // repo owner (by repo name)
 
-            // 1. Remove all "status:[...]" labels
-            const { data: existingLabels } = await github.rest.issues.listLabelsOnIssue({
-              owner,
-              repo,
-              issue_number: prNumber
-            })
+            const changeLabel = async (currentLabels, newLabel) => {
+              // Remove all "status:[...]" labels
+              for (const label of currentLabels) {
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number: prNumber,
+                  name: label.name
+                }).catch(() => {}) // ignore if already removed
+              }
 
-            const statusLabels = existingLabels.filter(l => l.name.startsWith('status:'))
-            for (const label of statusLabels) {
-              await github.rest.issues.removeLabel({
-                owner,
-                repo,
-                issue_number: prNumber,
-                name: label.name
-              }).catch(() => {}) // ignore if already removed
-            }
-
-            // 2. Determine new label
-            let newLabel = null
-
-            // https://github.com/Reviewable/Reviewable/issues/1163
-            // other users cannot approve reviewers, requires permissions to actually say `reviewState == 'approved'`
-            const is_approved = reviewState === 'approved' || reviewBody.includes("complete! all files reviewed, all discussions resolved")
-
-            if (is_approved && R === O) {
-              newLabel = 'status:approved'  // standard way of approval: owner appoves PR
-            } else if (is_approved && P === O && R !== O) {
-              newLabel = 'status:approved'  // if owner is author, someone else must approve
-            } else if (P === R) {
-              newLabel = 'status:waiting for review'
-            } else if (P !== R && !is_approved) {
-              newLabel = 'status:waiting for author'
-            } else {
-              core.info('No matching condition for new label.')
-              core.info(`Review state: ${reviewState}, PR author: ${P}, Reviewer: ${R}, Repo owner: ${O}`)
-            }
-
-            if (newLabel) {
+              // Add new label
               await github.rest.issues.addLabels({
                 owner,
                 repo,
@@ -104,6 +75,45 @@ jobs:
                 labels: [newLabel]
               })
               core.info(`Added label: ${newLabel}`)
-            } else {
-              core.info('No new status label added.')
             }
+
+            const { data: existingLabels } = await github.rest.issues.listLabelsOnIssue({
+              owner,
+              repo,
+              issue_number: prNumber
+            })
+            const statusLabels = existingLabels.filter(l => l.name.startsWith('status:'))
+            const is_approved = statusLabels.some(l => l.name === 'status:approved' || l.name === 'status:ready to merge')
+            
+            // https://github.com/Reviewable/Reviewable/issues/1163
+            // other users cannot approve reviewers, requires permissions to actually say `reviewState == 'approved'`
+            const approve = reviewState === 'approved' || reviewBody.includes("complete! all files reviewed, all discussions resolved")
+
+            const R = data.review.reviewer;      // reviewer
+            const P = data.pull_request.author;  // PR author
+            const O = owner;                     // repo owner (by repo name)
+
+            let new_label = null;
+
+            if (is_approved && approve) {
+              core.info('PR is already approved and review is another approval. No label change needed.')
+              return;
+            }
+
+            if (approve && R === O) {
+              newLabel = 'status:approved'  // standard way of approval: owner appoves PR
+            } else if (approve && P === O && R !== O) {
+              newLabel = 'status:approved'  // if owner is author, someone else must approve
+            } else if (P === R) {
+              newLabel = 'status:waiting for review'
+            } else if (P !== R && !approve) {
+              newLabel = 'status:waiting for author'
+            } else {
+              core.info('No matching condition for new label.')
+              core.info(`Review state: ${reviewState}, PR author: ${P}, Reviewer: ${R}, Repo owner: ${O}`)
+            }
+
+            if (newLabel) {
+              await changeLabel(statusLabels, newLabel)
+            }
+
