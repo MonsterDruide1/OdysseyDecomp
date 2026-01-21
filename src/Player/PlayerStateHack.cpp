@@ -213,9 +213,9 @@ void PlayerStateHack::exeHackDemo() {
     }
 
     upDir = -al::getGravity(player);
-    if (al::isParallelDirection(upDir, frontDir, 0.01f)) {
+    if (al::isParallelDirection(upDir, frontDir)) {
         al::calcFrontDir(&upDir, player);
-        if (al::isParallelDirection(upDir, frontDir, 0.01f))
+        if (al::isParallelDirection(upDir, frontDir))
             al::calcUpDir(&upDir, player);
     }
 
@@ -225,10 +225,10 @@ void PlayerStateHack::exeHackDemo() {
     downDir = -upDir;
     cameraFront = {0.0f, 0.0f, 0.0f};
     al::calcCameraFront(&cameraFront, player, 0);
-    if (al::isParallelDirection(downDir, cameraFront, 0.01f)) {
-        if (al::isReverseDirection(downDir, cameraFront, 0.01f))
+    if (al::isParallelDirection(downDir, cameraFront)) {
+        if (al::isReverseDirection(downDir, cameraFront))
             downDir *= -1;
-    } else if (!al::isParallelDirection(cameraFront, backDir, 0.01f)) {
+    } else if (!al::isParallelDirection(cameraFront, backDir)) {
         sead::Quatf quat = sead::Quatf::unit;
         reverseCameraFront = -cameraFront;
 

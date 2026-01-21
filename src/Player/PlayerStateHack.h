@@ -21,7 +21,7 @@ public:
                     IPlayerModelChanger* modelChanger, PlayerAnimator* animator, HackCap* hackCap);
 
     void appear() override;
-    void prepareStartHack(const al::HitSensor*, const al::HitSensor*);
+    void prepareStartHack(const al::HitSensor* source, const al::HitSensor* target);
     void prepareEndHack();
     void prepareStageStartHack();
     bool isIgnoreUpdateCollider() const;
