@@ -10,8 +10,8 @@ public:
     void forcePutOn();
 
     bool isFlying() const;
-
     bool isThrowTypeSpiral() const;
+    bool isEnableRescuePlayer() const;
 
     unsigned char padding_to_118[0x10];
     al::LiveActor* mActorA;
