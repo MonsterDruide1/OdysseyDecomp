@@ -11,24 +11,31 @@ class ScreenPointTarget;
 struct ScreenPointTargetHitInfo;
 class SensorMsg;
 
-s32 compareScreenPointTarget(const ScreenPointTargetHitInfo*, const ScreenPointTargetHitInfo*);
-s32 compareScreenPointTargetPriorDirectPoint(const ScreenPointTargetHitInfo*,
-                                             const ScreenPointTargetHitInfo*);
-bool isExistScreenPointTargetKeeper(LiveActor*);
-bool isScreenPointTargetArrayFull(LiveActor*);
-bool isExistScreenPointTarget(LiveActor*, const char*);
-ScreenPointTarget* addScreenPointTarget(LiveActor*, const ActorInitInfo&, const char*, f32,
-                                        const char*, const sead::Vector3f&);
-bool hitCheckSegmentScreenPointTarget(ScreenPointer*, const sead::Vector3f&, const sead::Vector3f&);
-bool hitCheckScreenCircleScreenPointTarget(ScreenPointer*, const sead::Vector2f&, f32, f32);
-bool hitCheckLayoutCircleScreenPointTarget(ScreenPointer*, const sead::Vector2f&, f32, f32,
-                                           s32 (*)(const ScreenPointTargetHitInfo*,
-                                                   const ScreenPointTargetHitInfo*));
-bool isHitScreenPointTarget(ScreenPointer*, const ScreenPointTarget*);
-bool sendMsgScreenPointTarget(const SensorMsg&, ScreenPointer*, ScreenPointTarget*);
-s32 getHitTargetNum(ScreenPointer*);
-const sead::Vector3f& getHitTargetPos(ScreenPointer*, s32);
-f32 getHitTargetRadius(ScreenPointer*, s32);
+s32 compareScreenPointTarget(const ScreenPointTargetHitInfo* targetHitInfoA,
+                             const ScreenPointTargetHitInfo* targetHitInfoB);
+s32 compareScreenPointTargetPriorDirectPoint(const ScreenPointTargetHitInfo* targetHitInfoA,
+                                             const ScreenPointTargetHitInfo* targetHitInfoB);
+bool isExistScreenPointTargetKeeper(LiveActor* actor);
+bool isScreenPointTargetArrayFull(LiveActor* actor);
+bool isExistScreenPointTarget(LiveActor* actor, const char* name);
+// TODO: Add proper parameter names for vb
+ScreenPointTarget* addScreenPointTarget(LiveActor* actor, const ActorInitInfo& initInfo,
+                                        const char* targetName, f32 radius, const char* jointName,
+                                        const sead::Vector3f& vb);
+bool hitCheckSegmentScreenPointTarget(ScreenPointer* screenPointer, const sead::Vector3f& posStart,
+                                      const sead::Vector3f& posEnd);
+bool hitCheckScreenCircleScreenPointTarget(ScreenPointer* screenPointer, const sead::Vector2f& pos,
+                                           f32 radius, f32 screenRadius);
+bool hitCheckLayoutCircleScreenPointTarget(ScreenPointer* screenPointer, const sead::Vector2f& pos,
+                                           f32 radius, f32 layoutRadius,
+                                           s32 (*cmp)(const ScreenPointTargetHitInfo*,
+                                                      const ScreenPointTargetHitInfo*));
+bool isHitScreenPointTarget(ScreenPointer* screenPointer, const ScreenPointTarget* target);
+bool sendMsgScreenPointTarget(const SensorMsg& message, ScreenPointer* screenPointer,
+                              ScreenPointTarget* target);
+s32 getHitTargetNum(ScreenPointer* screenPointer);
+const sead::Vector3f& getHitTargetPos(ScreenPointer* screenPointer, s32 index);
+f32 getHitTargetRadius(ScreenPointer* screenPointer, s32 index);
 }  // namespace al
 
 namespace alScreenPointFunction {
