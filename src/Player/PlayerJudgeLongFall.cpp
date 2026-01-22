@@ -23,7 +23,7 @@ bool PlayerJudgeLongFall::judge() const {
         return false;
     if (mBindKeeper->getBindSensor())
         return false;
-    if (mHackKeeper->getUnkHitSensor())
+    if (mHackKeeper->getHackSensor())
         return false;
 
     f32 fallen = mFallDistanceCheck->getFallDistance();

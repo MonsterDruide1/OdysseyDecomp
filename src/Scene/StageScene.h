@@ -3,6 +3,7 @@
 #include <math/seadQuat.h>
 
 #include "Library/LiveActor/LiveActorGroup.h"
+#include "Library/Message/LanguageUtil.h"
 #include "Library/Scene/Scene.h"
 
 namespace al {
@@ -84,14 +85,92 @@ class StageScene : public al::Scene {
 public:
     StageScene();
     ~StageScene() override;
-    void init(const al::SceneInitInfo& info) override;
+
+    void init(const al::SceneInitInfo& sceneInitInfo) override;
+    void stopCollectBgm();
+    bool tryChangeDemo();
     void appear() override;
-    void kill() override;
-
     void control() override;
-    void drawMain() const override;
-
+    bool isIgnoreAddPlayTime() const;
+    void kill() override;
+    bool isGetGrandShineAndEnableWipeClose() const;
+    bool isGetGrandShine() const;
+    bool isVeilEnd() const;
+    bool isE3End() const;
+    bool isDefeatKoopaLv1() const;
+    bool isMissEnd() const;
+    bool isHackEnd() const;
+    bool isLoadData() const;
+    bool isModeSelectEnd() const;
+    bool isNewGame() const;
+    bool isChangeLanguage() const;
+    alLanguage getLanguage() const;
     bool isEnableSave() const;
+    bool isPause() const;
+    void drawMain() const override;
+    bool isEnableToDrawOddSpace() const;
+    bool updatePlay();
+    void endDemoAndChangeNerve();
+    void updateKitListPostAndChangeNextNerve(const al::Nerve*);
+    void exeStartStageBgm();
+    void exePlay();
+    void updateStageSceneLayoutForKoopaHack();
+    bool tryChangeSnapShot();
+    bool tryStartWarp();
+    bool tryChangePause();
+    bool tryChangeList();
+    void updateStageInfoLayout();
+    void endPlay();
+    void exeAmiibo();
+    void exeMiss();
+    void exeSnapShot();
+    void exePause();
+    void exeDemoStageStart();
+    void exeDemoStageStartCapManHeroTalk();
+    void exeDemoNormal();
+    void tryAppearDemoLayout();
+    void exeDemoNormalBazookaElectric();
+    void exeDemoWithPlayer();
+    void exeSkipDemo();
+    void exeDemoTalk();
+    bool tryUpdateAllForFirst();
+    void exeDemoWithPlayerUseCoin();
+    void exeDemoCountCoin();
+    void exeDemoHackStart();
+    void exeDemoHackStartFirst();
+    void exeDemoCarryMeat();
+    void exeDemoTitleLogo();
+    void exeDemoShineGet();
+    void exeDemoShineMainGet();
+    void exeWaitStartWarpForSession();
+    void exeDemoShineGrandGet();
+    void exeDemoDamageStopPlayer();
+    void exeDemoGetLifeMaxUpItem();
+    void exeDemoSceneStartPlayerWalk();
+    void exeAppearFromWorldWarpHole();
+    void exeWaitWarpToCheckpoint();
+    void exeWarpToCheckpoint();
+    void exeArriveAtCheckpoint();
+    void exeWarp();
+    void exeDemoWorldIntroCamera();
+    void exeDemoPlayerDown();
+    void exeDemoScenarioCamera();
+    void exeDemoAppearFromHome();
+    void exeDemoReturnToHome();
+    void exeDemoRiseMapParts();
+    void exeDemoRisePyramid();
+    void exeDemoShineChipComplete();
+    void exeRaceManRace();
+    void exeRaceYukimaru();
+    void exeRaceYukimaruTutorial();
+    void exeRadicon();
+    void exeCollectionList();
+    void exeShop();
+    void exeCloset();
+    void exeCollectBgm();
+    void exeMiniGameRanking();
+    void exeTimeBalloon();
+    bool isOpenEndWorldMapWipe() const;
 
 private:
     sead::FixedSafeString<64> mStageName;
