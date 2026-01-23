@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+permissions: {}
 
 jobs:
   api-trigger-workflow:

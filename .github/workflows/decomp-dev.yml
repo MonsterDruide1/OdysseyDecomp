@@ -4,6 +4,7 @@ on:
     branches:
       - master
   pull_request:
+permissions: {}
 
 jobs:
   publish_progress_decomp_dev:
