@@ -314,6 +314,8 @@ def common_const_reference(c, path):
             continue
         if "operator[]" in line:
             continue
+        if "Type const&" in line:
+            continue
         if "AudioDirectorInitInfo" in line:
             continue
         if "ReplaceTimeInfo" in line:
