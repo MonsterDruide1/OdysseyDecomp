@@ -10,7 +10,7 @@ class LiveActor;
 
 class HostSyncTowerCamera : public NerveExecutor {
 public:
-    HostSyncTowerCamera(LiveActor*, AreaObjGroup*, const ActorInitInfo&);
+    HostSyncTowerCamera(LiveActor* actor, AreaObjGroup* activationArea, const ActorInitInfo& info);
     void update();
     void activate();
     void deactivate();
@@ -20,9 +20,9 @@ public:
     void exeDeactive();
 
 private:
-    LiveActor* _10;
-    CameraTicket* _18;
-    AreaObjGroup* _20;
+    LiveActor* mActor = nullptr;
+    CameraTicket* mTowerCamera = nullptr;
+    AreaObjGroup* mActivationArea = nullptr;
 };
 
 static_assert(sizeof(HostSyncTowerCamera) == 0x28);
