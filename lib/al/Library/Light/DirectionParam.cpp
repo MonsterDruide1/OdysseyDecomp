@@ -4,6 +4,7 @@
 #include <utility/aglParameter.h>
 #include <utility/aglParameterObj.h>
 
+#include "Library/Base/StringUtil.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Yaml/ParameterBase.h"
@@ -145,4 +146,13 @@ void DirectionParam::lerp(const DirectionParam& startDirection, const DirectionP
     syncFromDirection();
 }
 
+void PlaneParam::initialize(const sead::Vector3f& direction, ParameterObj* parameterObj,
+                            const char* planeName) {
+    StringTmp<256> normal = {"%sNormal", planeName};
+    StringTmp<256> distance = {"%sDistance", planeName};
+
+    initializeDir(direction, parameterObj, normal.cstr(), "平面法線");
+    mDistanceFromOrigin = new ParameterF32(distance.cstr(), "原点からの距離",
+                                           "Min=-100000, Max=100000", parameterObj, true);
+}
 }  // namespace al

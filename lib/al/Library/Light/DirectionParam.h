@@ -10,7 +10,8 @@ class ParameterObj;
 }  // namespace agl::utl
 
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
+class ParameterF32;
 class ParameterObj;
 class ParameterV2f;
 
@@ -46,5 +47,18 @@ private:
 };
 
 static_assert(sizeof(DirectionParam) == 0x20);
+
+class PlaneParam : public DirectionParam {
+public:
+    PlaneParam() = default;
+
+    void initialize(const sead::Vector3f& direction, ParameterObj* parameterObj,
+                    const char* planeName);
+
+private:
+    ParameterF32* mDistanceFromOrigin = nullptr;
+};
+
+static_assert(sizeof(PlaneParam) == 0x28);
 
 }  // namespace al
