@@ -1,5 +1,6 @@
 name: testcompile
 on: [push, pull_request]
+permissions: {}
 
 jobs:
   test_compile:

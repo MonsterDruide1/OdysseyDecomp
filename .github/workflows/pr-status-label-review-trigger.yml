@@ -3,6 +3,7 @@ name: PR-Review submitted
 on:
   pull_request_review:
     types: [submitted]
+permissions: {}
 
 jobs:
   upload:
