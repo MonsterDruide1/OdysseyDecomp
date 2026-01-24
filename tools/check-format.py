@@ -320,6 +320,8 @@ def common_const_reference(c, path):
             continue
         if "calcBendPosAndFront" in line:
             continue
+        if "cleanupResGraphicsFile" in line:
+            continue
         if "sead::IDelegate1<CollisionParts*>" in line:
             continue
         if "sead::IDelegate1<al::CollisionParts*>" in line:
