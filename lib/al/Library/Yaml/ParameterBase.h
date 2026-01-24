@@ -109,12 +109,12 @@ public:
 
     template <typename T>
     T* getMutableValuePtr() {
-        return (T*)ptr();
+        return reinterpret_cast<T*>(ptr());
     }
 
     template <typename T>
     const T* getValuePtr() const {
-        return (T*)ptr();
+        return reinterpret_cast<const T*>(ptr());
     }
 
     template <typename T>

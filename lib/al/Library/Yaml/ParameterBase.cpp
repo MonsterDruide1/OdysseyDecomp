@@ -328,7 +328,7 @@ void ParameterBase::tryGetParam(const ByamlIter& iter) {
     case YamlParamType::String4096: {
         const char* value = tryGetByamlKeyStringOrNULL(iter, mName.cstr());
         if (value)
-            ((sead::BufferedSafeString*)ptr())->format("%s", value);
+            getMutableValuePtr<sead::BufferedSafeString>()->format("%s", value);
 
         afterGetParam();
         return;
