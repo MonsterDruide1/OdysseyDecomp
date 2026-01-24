@@ -24,16 +24,17 @@ public:
     };
 
     struct Selection {
-        SelectionType selectionType;
-        SelectionType prevSelectionType;
+        SelectionType selectionType = SelectionType::None;
+        SelectionType prevSelectionType = SelectionType::None;
+        SelectionType cancelType = SelectionType::None;
     };
 
-    WindowConfirm(const LayoutInitInfo&, const char*, const char*);
+    WindowConfirm(const LayoutInitInfo& info, const char* name, const char* actorName);
 
-    void setTxtMessage(const char16*);
-    void setTxtList(s32, const char16*);
-    void setListNum(s32);
-    void setCancelIdx(s32);
+    void setTxtMessage(const char16* message);
+    void setTxtList(s32 index, const char16* message);
+    void setListNum(s32 num);
+    void setCancelIdx(s32 index);
     void appear() override;
     void appearWithChoicingCancel();
     bool isNerveEnd();
@@ -46,6 +47,7 @@ public:
     bool tryCancel();
     void setCursorToPane();
     bool tryCancelWithoutEnd();
+
     void exeHide();
     void exeAppear();
     void exeWait();
@@ -53,14 +55,31 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
+    s32 getSelectionIdx() { return (s32)mSelection.prevSelectionType; }
+
+    s32 getPrevSelectionIdx() { return (s32)mSelection.prevSelectionType; }
+
+    s32 getCancelIdx() { return (s32)mSelection.cancelType; }
+
+    SelectionType getSelectionType() { return mSelection.selectionType; }
+
     SelectionType getPrevSelectionType() { return mSelection.prevSelectionType; }
 
+    SelectionType getCancelType() { return mSelection.cancelType; }
+
+    SelectionType updateSelectionIdx(Direction dir) {
+        if (dir == Direction::Up)
+            mSelection.prevSelectionType = (SelectionType)((s32)mSelection.prevSelectionType - 1);
+        else if (dir == Direction::Down)
+            mSelection.prevSelectionType = (SelectionType)((s32)mSelection.prevSelectionType + 1);
+        return mSelection.prevSelectionType;
+    }
+
 private:
-    Direction mDirection;
+    Direction mDirection = Direction::None;
     Selection mSelection;
-    s32 mCancelIdx;
-    bool mIsDecided;
-    s32 mCooldown;
+    bool mIsDecided = false;
+    s32 mCooldown = -1;
     sead::PtrArray<LayoutActor> mParListArray;
     LayoutActor* mCursorActor;
     LayoutActor* mButtonActor;
