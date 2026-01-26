@@ -10,9 +10,9 @@ namespace al {
 class Graph {
 public:
     class Edge;
-    class PosVertex;
-    class PosEdge;
     class Vertex;
+    class PosEdge;
+    class PosVertex;
     struct VertexInfo;
 
     Graph(s32 verticesSize, s32 edgesSize);
@@ -43,7 +43,7 @@ static_assert(sizeof(Graph) == 0x20);
 
 class Graph::Vertex {
 public:
-    inline Vertex(s32 size, s32 index) : mIndex(index) { mEdges.allocBuffer(size, nullptr); }
+    Vertex(s32 size, s32 index) : mIndex(index) { mEdges.allocBuffer(size, nullptr); }
 
     void addEdge(Edge* edge) { mEdges.pushBack(edge); }
 
@@ -90,6 +90,8 @@ static_assert(sizeof(Graph::Edge) == 0x20);
 
 class Graph::PosVertex : public Vertex {
 public:
+    PosVertex(s32 size, s32 index) : Vertex(size, index) {}
+
     const sead::Vector3f& getPos() const { return mPos; }
 
 private:
@@ -100,15 +102,26 @@ static_assert(sizeof(Graph::PosVertex) == 0x20);
 
 class Graph::PosEdge : public Edge {
 public:
-    f32 getWeight() const override {
-        const sead::Vector3f& pos1 = ((PosVertex*)getVertex1())->getPos();
-        const sead::Vector3f& pos2 = ((PosVertex*)getVertex2())->getPos();
-        return (pos2 - pos1).length();
+    PosEdge(PosVertex* vertex1, PosVertex* vertex2, f32 weight) : Edge(vertex1, vertex2, weight) {
+        mDir = vertex2->getPos() - vertex1->getPos();
+        mLength = mDir.length();
+
+        mDir.normalize();
     }
 
+    f32 getWeight() const override {
+        sead::Vector3f v1Pos = getVertex1()->getPos();
+        sead::Vector3f v2Pos = getVertex2()->getPos();
+        return (v2Pos - v1Pos).length();
+    }
+
+    PosVertex* getVertex1() const { return static_cast<PosVertex*>(Edge::getVertex1()); }
+
+    PosVertex* getVertex2() const { return static_cast<PosVertex*>(Edge::getVertex2()); }
+
 private:
-    sead::Vector3f mPos;
-    f32 mPosLength;
+    sead::Vector3f mDir;
+    f32 mLength;
 };
 
 static_assert(sizeof(Graph::PosEdge) == 0x30);
