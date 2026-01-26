@@ -176,8 +176,8 @@ bool calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Grap
 
 f32 calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge,
                               const sead::Vector3f& pos) {
-    sead::Vector3f vertexDir = ((Graph::PosVertex*)edge->getVertex2())->getPos();
-    vertexDir -= ((Graph::PosVertex*)edge->getVertex1())->getPos();
+    sead::Vector3f vertexDir = edge->getVertex2()->getPos();
+    vertexDir -= edge->getVertex1()->getPos();
 
     f32 originalEdgeLength = vertexDir.length();
     sead::Vector3f edgeDir = vertexDir;
@@ -186,15 +186,15 @@ f32 calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge
         return -1.0f;
 
     sead::Vector3f posDir = pos;
-    posDir -= ((Graph::PosVertex*)edge->getVertex1())->getPos();
+    posDir -= edge->getVertex1()->getPos();
 
     sead::Vector3f nearestPos;
     if (edgeDir.dot(posDir) < 0.0) {
-        nearestPos.set(((Graph::PosVertex*)edge->getVertex1())->getPos());
+        nearestPos.set(edge->getVertex1()->getPos());
     } else if (edgeDir.dot(posDir) > originalEdgeLength) {
-        nearestPos.set(((Graph::PosVertex*)edge->getVertex2())->getPos());
+        nearestPos.set(edge->getVertex2()->getPos());
     } else {
-        nearestPos.set(((Graph::PosVertex*)edge->getVertex1())->getPos());
+        nearestPos.set(edge->getVertex1()->getPos());
         nearestPos += edgeDir.dot(posDir) * edgeDir;
     }
 
@@ -324,8 +324,8 @@ Graph::PosEdge* findPosEdgeByVertexPosUndirect(const Graph* graph, const sead::V
                                                const sead::Vector3f& posB) {
     for (s32 i = 0; i < graph->getEdgeCount(); i++) {
         Graph::PosEdge* edge = (Graph::PosEdge*)graph->getEdge(i);
-        Graph::PosVertex* vertex1 = (Graph::PosVertex*)edge->getVertex1();
-        Graph::PosVertex* vertex2 = (Graph::PosVertex*)edge->getVertex2();
+        Graph::PosVertex* vertex1 = edge->getVertex1();
+        Graph::PosVertex* vertex2 = edge->getVertex2();
         sead::Vector3f posV1 = vertex1->getPos();
         sead::Vector3f posV2 = vertex2->getPos();
         sead::Vector3f pos1 = posV1 - posA;
@@ -348,8 +348,8 @@ Graph::PosEdge* findPosEdgeByVertexPos(const Graph* graph, const sead::Vector3f&
                                        const sead::Vector3f& posB) {
     for (s32 i = 0; i < graph->getEdgeCount(); i++) {
         Graph::PosEdge* edge = (Graph::PosEdge*)graph->getEdge(i);
-        Graph::PosVertex* vertex1 = (Graph::PosVertex*)edge->getVertex1();
-        Graph::PosVertex* vertex2 = (Graph::PosVertex*)edge->getVertex2();
+        Graph::PosVertex* vertex1 = edge->getVertex1();
+        Graph::PosVertex* vertex2 = edge->getVertex2();
         sead::Vector3f posV1 = vertex1->getPos();
         sead::Vector3f posV2 = vertex2->getPos();
         sead::Vector3f posDiff1 = posV1 - posA;
