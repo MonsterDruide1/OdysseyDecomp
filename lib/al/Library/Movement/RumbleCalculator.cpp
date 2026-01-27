@@ -1,13 +1,8 @@
 #include "Library/Movement/RumbleCalculator.h"
 
-al::RumbleCalculator::RumbleCalculator(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime) {
-    mFrame = rampTime;
-    mRampTime = rampTime;
-    mOut.set(0.0f, 0.0f, 0.0f);
-    mFrequency = frequency;
-    mAngleDev = angleDev;
-    mAmplitude = amplitude;
-}
+al::RumbleCalculator::RumbleCalculator(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime)
+    : mFrame(rampTime), mRampTime(rampTime), mFrequency(frequency), mAngleDev(angleDev),
+      mAmplitude(amplitude) {}
 
 void al::RumbleCalculator::setParam(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime) {
     mFrequency = frequency;
@@ -47,9 +42,7 @@ void al::RumbleCalculator::calc() {
 
 void al::RumbleCalculator::reset() {
     mFrame = mRampTime;
-    mOut.x = 0;
-    mOut.y = 0;
-    mOut.z = 0;
+    mOut.set(0.0f, 0.0f, 0.0f);
 }
 
 al::RumbleCalculatorCosAddOneMultLinear::RumbleCalculatorCosAddOneMultLinear(f32 frequency,
@@ -58,25 +51,15 @@ al::RumbleCalculatorCosAddOneMultLinear::RumbleCalculatorCosAddOneMultLinear(f32
                                                                              u32 rampTime)
     : RumbleCalculator(frequency, angleDev, amplitude, rampTime) {}
 
-void al::RumbleCalculatorCosAddOneMultLinear::calcValues(sead::Vector3f* mOut,
+void al::RumbleCalculatorCosAddOneMultLinear::calcValues(sead::Vector3f* out,
                                                          const sead::Vector3f& in) {
-    f32 x = cosf(in.x) + 1;
-    f32 y = cosf(in.y) + 1;
-    f32 z = cosf(in.z) + 1;
-    mOut->x = x;
-    mOut->y = y;
-    mOut->z = z;
+    out->set(cosf(in.x) + 1, cosf(in.y) + 1, cosf(in.z) + 1);
 }
 
 al::RumbleCalculatorCosMultLinear::RumbleCalculatorCosMultLinear(f32 frequency, f32 angleDev,
                                                                  f32 amplitude, u32 rampTime)
     : RumbleCalculator(frequency, angleDev, amplitude, rampTime) {}
 
-void al::RumbleCalculatorCosMultLinear::calcValues(sead::Vector3f* mOut, const sead::Vector3f& in) {
-    f32 x = cosf(in.x);
-    f32 y = cosf(in.y);
-    f32 z = cosf(in.z);
-    mOut->x = x;
-    mOut->y = y;
-    mOut->z = z;
+void al::RumbleCalculatorCosMultLinear::calcValues(sead::Vector3f* out, const sead::Vector3f& in) {
+    out->set(cosf(in.x), cosf(in.y), cosf(in.z));
 }
