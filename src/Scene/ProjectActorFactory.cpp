@@ -30,6 +30,7 @@
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Enemy/CatchBomb.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Kuribo2D.h"
@@ -182,7 +183,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CarSandWorld", nullptr},
     {"CarWatcher", nullptr},
     {"CardboardBox", nullptr},
-    {"CatchBomb", nullptr},
+    {"CatchBomb", al::createActorFunction<CatchBomb>},
     {"Chair", nullptr},
     {"CheckpointFlag", nullptr},
     {"ChorobonHolder", nullptr},
