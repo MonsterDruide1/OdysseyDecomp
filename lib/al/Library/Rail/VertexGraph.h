@@ -5,6 +5,8 @@
 #include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
+#include "Library/Rail/Rail.h"
+
 namespace al {
 
 class Graph {
@@ -90,9 +92,12 @@ static_assert(sizeof(Graph::Edge) == 0x20);
 
 class Graph::PosVertex : public Vertex {
 public:
-    PosVertex(s32 size, s32 index) : Vertex(size, index) {}
+    PosVertex(s32 index, const sead::Vector3f& pos, s32 size = 10)
+        : Vertex(size, index), mPos(pos) {}
 
     const sead::Vector3f& getPos() const { return mPos; }
+
+    sead::Vector3f* getPosPtr() { return &mPos; }
 
 private:
     sead::Vector3f mPos;
@@ -102,7 +107,7 @@ static_assert(sizeof(Graph::PosVertex) == 0x20);
 
 class Graph::PosEdge : public Edge {
 public:
-    PosEdge(PosVertex* vertex1, PosVertex* vertex2, f32 weight) : Edge(vertex1, vertex2, weight) {
+    PosEdge(PosVertex* vertex1, PosVertex* vertex2) : Edge(vertex1, vertex2, 0.0f) {
         mDir = vertex2->getPos() - vertex1->getPos();
         mLength = mDir.length();
 
@@ -163,5 +168,52 @@ bool isCircuit(const sead::ConstPtrArray<Graph::Edge>& edges);
 bool isPath(const sead::ConstPtrArray<Graph::Edge>& edges);
 bool isCycle(const sead::ConstPtrArray<Graph::Edge>& edges);
 void calcMinimumSpanningTree(sead::ConstPtrArray<Graph::Edge>* edges, const Graph* graph);
+
+template <typename Vertex, typename Edge>
+void createAndAppendEdge(Graph* graph, Vertex* vertexA, Vertex* vertexB, bool isBidirectional) {
+    if (!graph->tryFindEdge(vertexA->getIndex(), vertexB->getIndex()))
+        graph->appendEdge(new Edge(vertexA, vertexB));
+
+    if (isBidirectional && !graph->tryFindEdge(vertexB->getIndex(), vertexA->getIndex()))
+        graph->appendEdge(new Edge(vertexB, vertexA));
+}
+
+template <typename Vertex, typename Edge>
+void appendGraphFromRail(Graph* graph, const Rail* rail, bool createEdges, bool isBidirectional) {
+    s32 railPoints = rail->getRailPointsCount();
+
+    Vertex* vertexA = nullptr;
+    Vertex* vertexB = nullptr;
+    for (s32 i = 0; i < railPoints; i++) {
+        sead::Vector3f pointPos;
+        rail->calcRailPointPos(&pointPos, i);
+        Vertex* currentVertex = nullptr;
+
+        for (s32 j = 0; j < graph->getVertexCount(); j++) {
+            Vertex* v = (Vertex*)graph->getVertex(j);
+            sead::Vector3f vPos = v->getPos();
+            if ((vPos - pointPos).squaredLength() < 100.0f)
+                currentVertex = v;
+        }
+
+        if (!currentVertex) {
+            currentVertex = new Vertex(graph->getVertexCount(), pointPos);
+            graph->appendVertex(currentVertex);
+        }
+
+        if (!vertexA)
+            vertexA = currentVertex;
+
+        if (vertexB) {
+            if (vertexB != currentVertex && (!createEdges || !rail->isBezierRailPart(i - 1)))
+                createAndAppendEdge<Vertex, Edge>(graph, vertexB, currentVertex, isBidirectional);
+
+            if (i == railPoints - 1 && rail->isClosed() &&
+                (!createEdges || !rail->isBezierRailPart(i)))
+                createAndAppendEdge<Vertex, Edge>(graph, currentVertex, vertexA, isBidirectional);
+        }
+        vertexB = currentVertex;
+    }
+}
 
 }  // namespace al
