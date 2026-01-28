@@ -80,7 +80,11 @@ public:
 
     Vertex* getVertex1() const { return mVertex1; }
 
+    void setVertex1(Vertex* vertex) { mVertex1 = vertex; }
+
     Vertex* getVertex2() const { return mVertex2; }
+
+    void setVertex2(Vertex* vertex) { mVertex2 = vertex; }
 
 private:
     Vertex* mVertex1;
@@ -220,4 +224,30 @@ void appendGraphFromRail(Graph* graph, const Rail* rail, bool createEdges, bool 
     }
 }
 
+template <typename Vertex, typename Edge>
+Edge* insertVertexAndSplitEdge(Graph* graph, Vertex* newVertex, Edge* edge) {
+    Vertex* previousVertex = edge->getVertex2();
+    edge->setVertex2(newVertex);
+
+    tryRemoveEdgeFromVertex(previousVertex, edge);
+    if (!isExistVertex(graph, newVertex))
+        graph->appendVertex(newVertex);
+
+    Edge* newEdge = (Edge*)graph->tryFindEdge(newVertex->getIndex(), previousVertex->getIndex());
+    if (!newEdge)
+        newEdge = new Edge(newVertex, previousVertex);
+
+    if (!tryFindEdgeEndVertex(newVertex, previousVertex))
+        previousVertex->addEdge(newEdge);
+
+    graph->tryAppendEdge(newEdge);
+
+    if (!tryFindEdgeStartVertex(newVertex, previousVertex))
+        newVertex->addEdge(newEdge);
+
+    if (!tryFindEdgeEndVertex(edge->getVertex1(), newVertex))
+        newVertex->addEdge(edge);
+
+    return newEdge;
+}
 }  // namespace al
