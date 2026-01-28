@@ -450,19 +450,3 @@ bool isCycle(const sead::ConstPtrArray<Graph::Edge>& edges) {
 void calcMinimumSpanningTree(sead::ConstPtrArray<Graph::Edge>* edges, const Graph* graph) {}
 
 }  // namespace al
-
-namespace sead {
-
-template <>
-s32 sead::ObjArray<al::Graph::VertexInfo>::compareT(const al::Graph::VertexInfo* infoA,
-                                                    const al::Graph::VertexInfo* infoB) {
-    s32 indexA = infoA->vertex->getIndex();
-    s32 indexB = infoB->vertex->getIndex();
-    if (indexA < indexB)
-        return -1;
-    if (indexB < indexA)
-        return 1;
-    return 0;
-}
-
-}  // namespace sead

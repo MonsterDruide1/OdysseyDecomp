@@ -135,6 +135,10 @@ struct Graph::VertexInfo {
     Vertex* vertex;
     s32 index;
     f32 weight;
+
+    inline bool operator<(const VertexInfo& rhs) const {
+        return vertex->getIndex() < rhs.vertex->getIndex();
+    }
 };
 
 static_assert(sizeof(Graph::VertexInfo) == 0x10);
