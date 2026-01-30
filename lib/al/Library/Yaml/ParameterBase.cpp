@@ -1,10 +1,343 @@
-#include "Library/Yaml/ParameterObj.h"
+#include "Library/Yaml/ParameterBase.h"
+
+#include <codec/seadHashCRC32.h>
+#include <math/seadQuat.h>
 
 #include "Library/Base/StringUtil.h"
 #include "Library/Yaml/ByamlIter.h"
-#include "Library/Yaml/ParameterBase.h"
+#include "Library/Yaml/ByamlUtil.h"
 
 namespace al {
+
+ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
+                             const sead::SafeString& meta, ParameterObj* obj, bool e) {
+    initializeListNode(name, label, meta, obj, e);
+}
+
+ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
+                             const sead::SafeString& meta, ParameterList* list, bool e) {
+    initializeListNode(name, label, meta, list, e);
+}
+
+void ParameterBase::afterGetParam() {}
+
+template <>
+bool ParameterBase::isEqual_<const char*>(const ParameterBase& parameter) const {
+    return isEqualString(getValuePtr<const char>(), parameter.getValuePtr<const char>());
+}
+
+template <typename T>
+bool ParameterBase::isEqual_(const ParameterBase& parameter) const {
+    return *getValuePtr<T>() == *parameter.getValuePtr<T>();
+}
+
+bool ParameterBase::isEqual(const ParameterBase& parameter) {
+    if ((s32)getParamType() != (s32)parameter.getParamType())
+        return false;
+
+    if (mHash != parameter.getHash())
+        return false;
+
+    switch (getParamType()) {
+    case YamlParamType::Bool:
+        return isEqual_<bool>(parameter);
+
+    case YamlParamType::F32:
+        return isEqual_<f32>(parameter);
+
+    case YamlParamType::S32:
+        return isEqual_<s32>(parameter);
+
+    case YamlParamType::U32:
+        return isEqual_<u32>(parameter);
+
+    case YamlParamType::V2f:
+        return isEqual_<sead::Vector2f>(parameter);
+
+    case YamlParamType::V2s32:
+        return isEqual_<sead::Vector2i>(parameter);
+
+    case YamlParamType::V3f:
+        return isEqual_<sead::Vector3f>(parameter);
+
+    case YamlParamType::V4f:
+        return isEqual_<sead::Vector4f>(parameter);
+
+    case YamlParamType::Q4f:
+        return isEqual_<sead::Quatf>(parameter);
+
+    case YamlParamType::C4f:
+        return isEqual_<sead::Color4f>(parameter);
+
+    case YamlParamType::StringRef:
+        return isEqual_<const char*>(parameter);
+
+    case YamlParamType::String32:
+    case YamlParamType::String64:
+    case YamlParamType::String128:
+    case YamlParamType::String256:
+    case YamlParamType::String512:
+    case YamlParamType::String1024:
+    case YamlParamType::String2048:
+    case YamlParamType::String4096:
+        // TODO: Find isEqual_ equivalent
+        return isEqualString(getValuePtr<sead::SafeString>()->cstr(),
+                             parameter.getValuePtr<sead::SafeString>()->cstr());
+    default:
+        return false;
+    }
+}
+
+bool ParameterBase::copy(const ParameterBase& parameter) {
+    if ((s32)getParamType() != (s32)parameter.getParamType())
+        return false;
+
+    if (mHash != parameter.getHash())
+        return false;
+
+    switch (parameter.getParamType()) {
+    case YamlParamType::StringRef:
+        *getMutableValuePtr<sead::SafeString>() = *parameter.getValuePtr<sead::SafeString>();
+        return true;
+    default: {
+        u8* dest = getMutableValuePtr<u8>();
+        const u8* source = parameter.getValuePtr<u8>();
+        s32 n = size();
+        for (s32 i = 0; i < n; i++) {
+            *dest = *source;
+            dest++;
+            source++;
+        }
+        return true;
+    }
+    }
+}
+
+template <>
+void ParameterBase::copyLerp_<f32>(const ParameterBase& parameterA, const ParameterBase& parameterB,
+                                   f32 rate) {
+    f32 valueA = *parameterA.getValuePtr<f32>();
+    f32 valueB = *parameterB.getValuePtr<f32>();
+    setPtrValue(valueA + (valueB - valueA) * rate);
+}
+
+template <>
+void ParameterBase::copyLerp_<sead::Quatf>(const ParameterBase& parameterA,
+                                           const ParameterBase& parameterB, f32 rate) {
+    sead::QuatCalcCommon<f32>::slerpTo(*(sead::Quatf*)ptr(), *parameterA.getValuePtr<sead::Quatf>(),
+                                       *parameterB.getValuePtr<sead::Quatf>(), rate);
+}
+
+// BUG: N's mistake here. This function never returns true
+bool ParameterBase::copyLerp(const ParameterBase& parameterA, const ParameterBase& parameterB,
+                             f32 rate) {
+    if ((s32)getParamType() != (s32)parameterA.getParamType())
+        return false;
+
+    if (mHash != parameterA.getHash())
+        return false;
+
+    if ((s32)getParamType() != (s32)parameterB.getParamType())
+        return false;
+
+    if (mHash != parameterB.getHash())
+        return false;
+
+    switch (getParamType()) {
+    case YamlParamType::Bool:
+    case YamlParamType::S32:
+    case YamlParamType::U32:
+    case YamlParamType::StringRef:
+    case YamlParamType::String32:
+    case YamlParamType::String64:
+    case YamlParamType::String128:
+    case YamlParamType::String256:
+    case YamlParamType::String512:
+    case YamlParamType::String1024:
+    case YamlParamType::String2048:
+    case YamlParamType::String4096:
+        if (rate >= 0.5f && !(rate == 0.5f))
+            copy(parameterB);
+        else
+            copy(parameterA);
+        return false;
+
+    case YamlParamType::F32:
+        copyLerp_<f32>(parameterA, parameterB, rate);
+        return false;
+
+    // BUG: N's mistake here. This is YamlParamType::V2f
+    case YamlParamType::V3f: {
+        sead::Vector2f* val = getMutableValuePtr<sead::Vector2f>();
+        const sead::Vector2f* valueA = parameterA.getValuePtr<sead::Vector2f>();
+        const sead::Vector2f* valueB = parameterB.getValuePtr<sead::Vector2f>();
+        val->x = valueA->x + (valueB->x - valueA->x) * rate;
+        val->y = valueA->y + (valueB->y - valueA->y) * rate;
+        return false;
+    }
+    // BUG: N's mistake here. This is YamlParamType::V3f
+    case YamlParamType::V2f: {
+        sead::Vector3f* val = getMutableValuePtr<sead::Vector3f>();
+        const sead::Vector3f* valueA = parameterA.getValuePtr<sead::Vector3f>();
+        const sead::Vector3f* valueB = parameterB.getValuePtr<sead::Vector3f>();
+        val->x = valueA->x + (valueB->x - valueA->x) * rate;
+        val->y = valueA->y + (valueB->y - valueA->y) * rate;
+        val->z = valueA->z + (valueB->z - valueA->z) * rate;
+        return false;
+    }
+    case YamlParamType::V4f: {
+        sead::Vector4f* val = getMutableValuePtr<sead::Vector4f>();
+        const sead::Vector4f* valueA = parameterA.getValuePtr<sead::Vector4f>();
+        const sead::Vector4f* valueB = parameterB.getValuePtr<sead::Vector4f>();
+        val->x = valueA->x + (valueB->x - valueA->x) * rate;
+        val->y = valueA->y + (valueB->y - valueA->y) * rate;
+        val->z = valueA->z + (valueB->z - valueA->z) * rate;
+        val->w = valueA->w + (valueB->w - valueA->w) * rate;
+        return false;
+    }
+    case YamlParamType::Q4f:
+        copyLerp_<sead::Quatf>(parameterA, parameterB, rate);
+        return false;
+
+    case YamlParamType::C4f:
+        getMutableValuePtr<sead::Color4f>()->setLerp(*parameterA.getValuePtr<sead::Color4f>(),
+                                                     *parameterB.getValuePtr<sead::Color4f>(),
+                                                     rate);
+        return false;
+    default:
+        return false;
+    }
+}
+
+void ParameterBase::initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
+                                       const sead::SafeString& meta, ParameterObj* obj, bool e) {
+    initialize(name, label, meta, e);
+
+    if (obj)
+        obj->pushBackListNode(this);
+}
+
+void ParameterBase::initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
+                                       const sead::SafeString& meta, ParameterList* list, bool e) {
+    initialize(name, label, meta, e);
+
+    if (list)
+        list->addParam(this);
+}
+
+void ParameterBase::initialize(const sead::SafeString& name, const sead::SafeString& label,
+                               const sead::SafeString& meta, bool e) {
+    mNext = nullptr;
+    mName = name;
+    mHash = calcHash(name);
+}
+
+u32 ParameterBase::calcHash(const sead::SafeString& key) {
+    return sead::HashCRC32::calcHash(key.cstr(), key.calcLength());
+}
+
+// NON-MATCHING: https://decomp.me/scratch/yc1tk
+void ParameterBase::tryGetParam(const ByamlIter& iter) {
+    getParamTypeStr();
+    switch (getParamType().value()) {
+    case YamlParamType::Bool: {
+        bool value;
+        if (tryGetByamlBool(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+    case YamlParamType::F32: {
+        f32 value;
+        if (tryGetByamlF32(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+    case YamlParamType::S32: {
+        s32 value;
+        if (tryGetByamlS32(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+    case YamlParamType::U32: {
+        u32 value;
+        if (tryGetByamlU32(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::V2f: {
+        sead::Vector2f value;
+        if (tryGetByamlV2f(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::V2s32: {
+        sead::Vector2i value;
+        if (tryGetByamlV2s32(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::V3f: {
+        sead::Vector3f value;
+        if (tryGetByamlV3f(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::V4f:
+    case YamlParamType::Q4f: {
+        sead::Vector4f value;
+        if (tryGetByamlV4f(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::C4f: {
+        sead::Color4f value;
+        if (tryGetByamlColor(&value, iter, mName.cstr()))
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::StringRef: {
+        const char* value = tryGetByamlKeyStringOrNULL(iter, mName.cstr());
+        if (value)
+            setPtrValue(value);
+        afterGetParam();
+        return;
+    }
+
+    case YamlParamType::String32:
+    case YamlParamType::String64:
+    case YamlParamType::String128:
+    case YamlParamType::String256:
+    case YamlParamType::String512:
+    case YamlParamType::String1024:
+    case YamlParamType::String2048:
+    case YamlParamType::String4096: {
+        const char* value = tryGetByamlKeyStringOrNULL(iter, mName.cstr());
+        if (value)
+            getMutableValuePtr<sead::BufferedSafeString>()->format("%s", value);
+
+        afterGetParam();
+        return;
+    }
+    default:
+        return;
+    }
+}
+
 ParameterObj::ParameterObj() = default;
 
 void ParameterObj::pushBackListNode(ParameterBase* param) {
