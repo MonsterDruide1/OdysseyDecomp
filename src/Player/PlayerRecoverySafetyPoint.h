@@ -37,7 +37,27 @@ public:
     void endRecovery();
 
 private:
-    void* _0[0xb8 / 8];
+    al::LiveActor* mPlayer;
+    IUseDimension* mDimension;
+    al::CollisionPartsFilterBase* mCollisionPartsFilter;
+    al::HitSensor* mHitSensor;
+    al::LiveActor* mBubble3D;
+    al::LiveActor* mBubble2D;
+    f32 mRecoveryTimer;
+    f32 _34;
+    bool mHasSafety3D;
+    sead::Vector3f mSafetyPos3D;
+    sead::Vector3f mSafetyNormal3D;
+    sead::Vector3f mGravity3D;
+    al::AreaObj* mArea3D;
+    bool mHasSafety2D;
+    sead::Vector3f mSafetyPos2D;
+    sead::Vector3f mSafetyNormal2D;
+    sead::Vector3f mGravity2D;
+    al::AreaObj* mArea2D;
+    bool mIsRecovering;
+    al::AreaObj* mRecoveryArea;
+    void* _0[0x10 / 8];
 };
 
 static_assert(sizeof(PlayerRecoverySafetyPoint) == 0xb8);
