@@ -27,7 +27,8 @@ class PlayerHackKeeper {
 public:
     PlayerHackKeeper(al::LiveActor* player, HackCap* cap, PlayerRecoverySafetyPoint* safetyPoint,
                      const PlayerInput* input, const sead::Matrix34f* mtx,
-                     PlayerDamageKeeper* damageKeeper, const IPlayerModelChanger* modelChanger,
+                     const PlayerDamageKeeper* damageKeeper,
+                     const IPlayerModelChanger* modelChanger,
                      const IUsePlayerHeightCheck* heightCheck);
 
     void createHackModel(const al::ActorInitInfo&);
@@ -62,11 +63,11 @@ public:
     void sendSyncDamageVisibility();
     void pushWorldEndBorder(const sead::Vector3f&);
     const char* getCurrentHackName() const;
-    PlayerCollider* getPlayerCollision();
-    f32 getHackGuideHeight();
+    PlayerCollider* getPlayerCollision() const;
+    f32 getHackGuideHeight() const;
     bool isHackGuideEnable() const;
-    f32 getHackStayGravityMargine();
-    void* getCollisionPartsFilter();
+    f32 getHackStayGravityMargine() const;
+    al::CollisionPartsFilterBase* getCollisionPartsFilter() const;
     bool isHackGroupTalkScare() const;
     bool isHackNoCollisionMsg() const;
     bool isHackNoSeparateCameraInput() const;
@@ -74,7 +75,7 @@ public:
     bool isHackCancelCeilingCheck() const;
     bool isHackInvalidLifeRecovery() const;
     void requestForceHackStageStart(al::HitSensor*, const CapTargetInfo*, al::LiveActor*);
-    void executeForceHackStageStart(al::HitSensor*, IUsePlayerHack*);
+    bool executeForceHackStageStart(al::HitSensor*, IUsePlayerHack*);
     void startDemo();
     void endDemo();
 
