@@ -110,10 +110,10 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
         }
     }
 
-    mCurrentPosition = al::getTrans(this);
+    mStartActionPosition = al::getTrans(this);
     mStartingRotation.set(al::getQuat(this));
     mResetPosition.set(al::getTrans(this));
-    mRevivePosition.set(mCurrentPosition);
+    mRevivePosition.set(mStartActionPosition);
     mTurnFrameDelay = mJumpHeight / 13.0f;
     recalcClippingInfo();
 
@@ -693,9 +693,9 @@ void Bubble::calcAnim() {
 }
 
 void Bubble::recalcClippingInfo() {
-    sead::Vector3f max = mCurrentPosition;
-    sead::Vector3f min = mCurrentPosition;
-    al::updateBoundingBox(mJumpHeight * sead::Vector3f::ey + mCurrentPosition, &max, &min);
+    sead::Vector3f max = mStartActionPosition;
+    sead::Vector3f min = mStartActionPosition;
+    al::updateBoundingBox(mJumpHeight * sead::Vector3f::ey + mStartActionPosition, &max, &min);
 
     if (al::isExistRail(this)) {
         s32 pointNum = al::getRailPointNum(this);
@@ -723,7 +723,7 @@ void Bubble::start() {
     if (!al::isNerve(this, &NrvBubble.StandBy))
         return;
 
-    al::setTrans(this, mCurrentPosition);
+    al::setTrans(this, mStartActionPosition);
     al::hideModelIfShow(this);
     mWaitDelayCount = 0;
 
@@ -890,7 +890,7 @@ bool Bubble::isCurrentNerveEnableLockOnAndStartHack() const {
         return false;
 
     if (al::isNerve(this, &NrvBubble.Up)) {
-        if (al::getTrans(this).y - mCurrentPosition.y > al::getColliderRadius(this))
+        if (al::getTrans(this).y - mStartActionPosition.y > al::getColliderRadius(this))
             return true;
     }
 
@@ -898,7 +898,7 @@ bool Bubble::isCurrentNerveEnableLockOnAndStartHack() const {
         return true;
 
     if (al::isNerve(this, &NrvBubble.Down) &&
-        al::getTrans(this).y - mCurrentPosition.y > al::getColliderRadius(this))
+        al::getTrans(this).y - mStartActionPosition.y > al::getColliderRadius(this))
         return true;
 
     return al::isNerve(this, &NrvBubble.WaitHack) || al::isNerve(this, &NrvBubble.WaitHackFall);
@@ -1007,8 +1007,8 @@ void Bubble::tryStartHitReactionUp() {
 }
 
 void Bubble::updateShadowMaskLength() {
-    f32 newLength = sead::Mathf::clamp(al::getTrans(this).y - mCurrentPosition.y + 300.0f, 300.0f,
-                                       mShadowMaskDropLength);
+    f32 newLength = sead::Mathf::clamp(al::getTrans(this).y - mStartActionPosition.y + 300.0f,
+                                       300.0f, mShadowMaskDropLength);
     al::setShadowMaskDropLength(this, newLength);
 }
 
@@ -1394,28 +1394,28 @@ void Bubble::calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& in
 
 void Bubble::makeDisplayQuatInHackJump(const sead::Quatf& prevQuat, const sead::Quatf& deltaQuat,
                                        const sead::Quatf& quatZY, bool flipDirection) {
-    sead::Vector3f direction = al::getTrans(this) - mPreviousTrans;
+    sead::Vector3f moveDir = al::getTrans(this) - mPreviousTrans;
     mPreviousTrans.set(al::getTrans(this));
 
-    sead::Quatf quat = mGroundRotation;
-    if (al::tryNormalizeOrZero(&direction)) {
-        f32 angle = al::calcAngleDegree(sead::Vector3f::ey, direction);
+    sead::Quatf newQuat = mGroundRotation;
+    if (al::tryNormalizeOrZero(&moveDir)) {
+        f32 angle = al::calcAngleDegree(sead::Vector3f::ey, moveDir);
         if (flipDirection)
             angle = !(al::getVelocity(this).y >= 0.0f) ? 180.0f : 0.0f;
         sead::Vector3f dir = sead::Vector3f::ey;
         dir.rotate(prevQuat);
         dir.negate();
-        sead::Quatf newQuat;
+        sead::Quatf rotationQuat;
         al::makeQuatRotateDegree(
-            &newQuat, sead::Vector3f::ex,
+            &rotationQuat, sead::Vector3f::ex,
             sead::Mathf::max(al::calcAngleDegree(sead::Vector3f::ey, dir), angle));
-        quat = quat * newQuat * quatZY;
+        newQuat = newQuat * rotationQuat * quatZY;
     } else {
-        quat *= deltaQuat;
+        newQuat *= deltaQuat;
     }
 
     sead::Quatf slerpQuat;
-    al::slerpQuat(&slerpQuat, prevQuat, quat, 0.1f);
+    al::slerpQuat(&slerpQuat, prevQuat, newQuat, 0.1f);
     al::setQuat(this, slerpQuat);
 }
 
@@ -1501,18 +1501,19 @@ bool Bubble::isWaitingLaunch() const {
     return al::isNerve(this, &NrvBubble.HackInLauncher) && mBubbleStateInLauncher->isWaiting();
 }
 
-void Bubble::launch(const sead::Vector3f& dir, f32 force, al::CameraTicket* cameraTicket) {
+void Bubble::launch(const sead::Vector3f& targetPos, f32 launchDegree,
+                    al::CameraTicket* cameraTicket) {
     if (!al::isNerve(this, &NrvBubble.HackInLauncher))
         return;
 
-    mBubbleStateInLauncher->shoot(dir, force);
+    mBubbleStateInLauncher->shoot(targetPos, launchDegree);
     if (cameraTicket)
         mCameraTicket = cameraTicket;
     rs::hideTutorial(this);
     mIsShowTutorial = true;
 }
 
-void Bubble::launchCancel(const sead::Vector3f& dir) {
+void Bubble::launchCancel(const sead::Vector3f& targetPos) {
     if (!al::isNerve(this, &NrvBubble.HackInLauncher))
         return;
 
@@ -1521,7 +1522,7 @@ void Bubble::launchCancel(const sead::Vector3f& dir) {
     al::showSilhouetteModelIfHide(this);
     showHackCap();
 
-    sead::Vector3f forceH = al::getTrans(this) - dir;
+    sead::Vector3f forceH = al::getTrans(this) - targetPos;
     forceH.y = 0.0f;
     al::tryNormalizeOrZero(&forceH);
     mJumpForce.set(25.0f * sead::Vector3f::ey + 7.0f * forceH);
@@ -1570,8 +1571,8 @@ void Bubble::startJumpAnim(f32 force) {
 void Bubble::resetAndAppear(const sead::Vector3f& trans, const sead::Quatf& quat, f32 unused) {
     mResetPosition.set(trans);
     mStartingRotation.set(quat);
-    mCurrentPosition.set(trans);
-    mRevivePosition.set(mCurrentPosition);
+    mStartActionPosition.set(trans);
+    mRevivePosition.set(mStartActionPosition);
     al::resetPosition(this, trans);
     al::setQuat(this, quat);
     recalcClippingInfo();
@@ -1583,16 +1584,15 @@ void Bubble::endHackCommon() {
     sead::Vector3f colliderPos;
     al::calcColliderPos(&colliderPos, this);
     f32 colliderRadius = al::getColliderRadius(this);
-    sead::Vector3f colliderHitPos = colliderPos;
-    colliderHitPos.y += colliderRadius;
-    sead::Vector3f colliderHitRadius = colliderHitPos - colliderPos;
+    sead::Vector3f targetPos = colliderPos;
+    targetPos.y += colliderRadius;
+    sead::Vector3f move = targetPos - colliderPos;
 
     alCollisionUtil::SphereMoveHitInfo sphereMoveHitInfo;
 
     if (alCollisionUtil::checkStrikeSphereMove(this, &sphereMoveHitInfo, 8, colliderPos,
-                                               colliderRadius, colliderHitRadius, nullptr,
-                                               nullptr) != 0) {
-        colliderHitPos = sphereMoveHitInfo._0 * colliderHitRadius + colliderPos;
+                                               colliderRadius, move, nullptr, nullptr) != 0) {
+        targetPos = sphereMoveHitInfo._0 * move + colliderPos;
     }
 
     sead::Vector3f upDir;
@@ -1601,7 +1601,7 @@ void Bubble::endHackCommon() {
     al::makeQuatRotationRate(&rotationRate, upDir, sead::Vector3f::ey, 1.0f);
 
     rotationRate *= al::getQuat(this);
-    rs::endHackFromTargetPos(&mPlayerHack, colliderHitPos, rotationRate, sead::Vector3f::zero);
+    rs::endHackFromTargetPos(&mPlayerHack, targetPos, rotationRate, sead::Vector3f::zero);
     al::showModelIfHide(this);
     rs::endHackShadow(this);
     mJointSpringControllerHolder->offControlAll();
@@ -1609,15 +1609,15 @@ void Bubble::endHackCommon() {
     al::endBgmSituation(this, "HackBubble", false);
 }
 
-void Bubble::calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& vecA, f32 valA,
-                           f32 valB) const {
-    s32 index = sead::Mathf::floor(valB);
-    f32 t = valB - index;
+void Bubble::calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& targetPos, f32 launchDegree,
+                           f32 frame) const {
+    s32 index = sead::Mathf::floor(frame);
+    f32 t = frame - index;
 
     sead::Vector3f startPos;
     sead::Vector3f endPos;
-    mBubbleStateInLauncher->calcLaunchPos(&startPos, vecA, valA, index);
-    mBubbleStateInLauncher->calcLaunchPos(&endPos, vecA, valA, index + 1);
+    mBubbleStateInLauncher->calcLaunchPos(&startPos, targetPos, launchDegree, index);
+    mBubbleStateInLauncher->calcLaunchPos(&endPos, targetPos, launchDegree, index + 1);
 
     // Lerp
     pos->set((1.0f - t) * startPos + t * endPos);
@@ -1641,10 +1641,10 @@ void Bubble::updateCollisionPartsMove() {
             mLandVelocity.set(0.0f, 0.0f, 0.0f);
         return;
     }
-    sead::Vector3f delta = al::getTrans(this);
-    delta *= collisionParts->getPrevBaseInvMtx();
-    delta *= collisionParts->getBaseMtx();
-    mLandVelocity.set(delta - al::getTrans(this));
+    sead::Vector3f trans = al::getTrans(this);
+    trans *= collisionParts->getPrevBaseInvMtx();
+    trans *= collisionParts->getBaseMtx();
+    mLandVelocity.set(trans - al::getTrans(this));
 }
 
 // NON_MATCHING: Bad branch order https://decomp.me/scratch/ACufd
@@ -1703,8 +1703,9 @@ void Bubble::accelStick() {
         f32 angle = atan2f(rotationAxis.cross(stickAccel).length(), dot);
         angle = (sead::Mathf::clamp(angle, 0.0f, sead::Mathf::piHalf()) * 72.0f) /
                 sead::Mathf::piHalf();
-        angle =
-            rotationAxis.z * stickAccel.x - rotationAxis.x * stickAccel.z > 0.0f ? -angle : angle;
+
+        if (rotationAxis.z * stickAccel.x - rotationAxis.x * stickAccel.z > 0.0f)
+            angle = -angle;
 
         bool condition = !(mHackTurnAngle * angle < 0.0f) &&
                          sead::Mathf::abs(mHackTurnAngle) > sead::Mathf::abs(angle);
@@ -1804,7 +1805,7 @@ void Bubble::exeUp() {
         al::showModel(this);
         al::startAction(this, "Up");
         if (isValidCollisionOrWaveCheck()) {
-            mCurrentPosition.set(al::getTrans(this));
+            mStartActionPosition.set(al::getTrans(this));
             al::startHitReactionHitEffect(
                 this, "発射",
                 al::getTrans(this) - (al::getColliderRadius(this) + 0.0f) * sead::Vector3f::ey);
@@ -1816,14 +1817,14 @@ void Bubble::exeUp() {
         mTurnFrameCount = mTurnFrameDelay;
     }
     tryStartHitReactionUp();
-    sead::Vector3f nexPos = al::getTrans(this);
-    nexPos.y =
-        mCurrentPosition.y + al::calcNerveSquareOutValue(this, mTurnFrameCount, 0.0f, mJumpHeight);
+    sead::Vector3f nextPos = al::getTrans(this);
+    nextPos.y = mStartActionPosition.y +
+                al::calcNerveSquareOutValue(this, mTurnFrameCount, 0.0f, mJumpHeight);
 
     if (isValidCollisionOrWaveCheck())
-        al::setVelocity(this, nexPos - al::getTrans(this));
+        al::setVelocity(this, nextPos - al::getTrans(this));
     else
-        al::setTrans(this, nexPos);
+        al::setTrans(this, nextPos);
     updateShadowMaskLength();
 
     if (!al::isActionPlaying(this, "Turn") && al::isCollidedCeiling(this))
@@ -1846,8 +1847,8 @@ void Bubble::exeDown() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "Down");
         if (isValidCollisionOrWaveCheck()) {
-            mCurrentPosition.set(al::getTrans(this));
-            mCurrentPosition.y -= mJumpHeight;
+            mStartActionPosition.set(al::getTrans(this));
+            mStartActionPosition.y -= mJumpHeight;
             mIsOnHitReactionEffect = true;
         } else {
             mIsOnHitReactionEffect = false;
@@ -1855,38 +1856,38 @@ void Bubble::exeDown() {
     }
 
     tryStartHitReactionDown();
-    sead::Vector3f trans = al::getTrans(this);
+    sead::Vector3f nextPos = al::getTrans(this);
 
     f32 step = al::getNerveStep(this);
-    f32 rate = (step / mTurnFrameCount) * (step / mTurnFrameCount);
+    f32 rate = sead::Mathf::square(step / mTurnFrameCount);
     if (!isValidCollisionOrWaveCheck())
         rate = sead::Mathf::clamp(rate, 0.0f, 1.0f);
 
-    trans.y = mCurrentPosition.y + mJumpHeight * (1.0f - rate);
+    nextPos.y = mStartActionPosition.y + mJumpHeight * (1.0f - rate);
 
     if (isValidCollisionOrWaveCheck())
-        al::setVelocity(this, trans - al::getTrans(this));
+        al::setVelocity(this, nextPos - al::getTrans(this));
     else
-        al::setTrans(this, trans);
+        al::setTrans(this, nextPos);
 
     updatePosOnWave();
 
     updateShadowMaskLength();
 
     if (isValidCollisionOrWaveCheck()) {
-        if (!isOnGround())
-            return;
-        if (!isOnDamageFire()) {
-            al::startHitReaction(this, "地面での消滅");
-            revive();
-            return;
+        if (isOnGround()) {
+            if (!isOnDamageFire()) {
+                al::startHitReaction(this, "地面での消滅");
+                revive();
+            } else {
+                al::tryAddRippleMiddle(this);
+                shiftSink();
+            }
         }
-        al::tryAddRippleMiddle(this);
     } else {
-        if (!al::isGreaterEqualStep(this, mTurnFrameCount))
-            return;
+        if (al::isGreaterEqualStep(this, mTurnFrameCount))
+            shiftSink();
     }
-    shiftSink();
 }
 
 void Bubble::exeSink() {
@@ -1904,7 +1905,7 @@ void Bubble::exeSink() {
         al::setVelocityY(this, -30.0f);
         al::setColliderOffsetY(this, nerveRate * 150.0f);
     } else {
-        al::getTransPtr(this)->y = mCurrentPosition.y + nerveRate * -150.0f;
+        al::getTransPtr(this)->y = mStartActionPosition.y + nerveRate * -150.0f;
     }
 
     if (al::isGreaterEqualStep(this, 10)) {
@@ -1922,7 +1923,7 @@ void Bubble::exeWait() {
             al::getTransPtr(this)->y += al::getColliderOffsetY(this);
             al::setColliderOffsetY(this, 0.0f);
         } else {
-            al::getTransPtr(this)->y = mCurrentPosition.y;
+            al::getTransPtr(this)->y = mStartActionPosition.y;
         }
     }
 
@@ -1943,7 +1944,6 @@ void Bubble::exeWait() {
 
         if (!al::isValidSwitchStart(this) || al::isOnSwitchStart(this))
             shiftReadyOrMove();
-        return;
     }
 }
 
@@ -1962,10 +1962,10 @@ void Bubble::exeWaitHackStart() {
         al::startHitReaction(this, "憑依開始");
         if (!al::isActionPlaying(this, "HackStartDown") &&
             !al::isActionPlaying(this, "HackStart")) {
-            if (!al::isActionPlaying(this, "Down") && !al::isActionPlaying(this, "Turn"))
-                al::startAction(this, "HackStart");
-            else
+            if (al::isActionPlaying(this, "Down") || al::isActionPlaying(this, "Turn"))
                 al::startAction(this, "HackStartDown");
+            else
+                al::startAction(this, "HackStart");
             rs::setupHackShadow(this);
             mPlayerHackStartShaderCtrl->start();
             mJointSpringControllerHolder->offControlAll();
@@ -1994,31 +1994,30 @@ void Bubble::exeWaitHackFall() {
     al::addVelocityToGravity(this, 1.1f);
     al::scaleVelocityHV(this, 1.0f, 0.995f);
 
-    if (!isOnGround())
-        return;
+    if (isOnGround()) {
+        if (isOnDamageFire()) {
+            mStartActionPosition.set(al::getTrans(this));
 
-    if (isOnDamageFire()) {
-        mCurrentPosition.set(al::getTrans(this));
-
-        if (!trySendMsgStartInSaucePan()) {
-            al::startHitReactionHitEffect(
-                this, "着地",
-                al::getTrans(this) - (al::getColliderRadius(this) + 0.0f) * sead::Vector3f::ey);
+            if (!trySendMsgStartInSaucePan()) {
+                al::startHitReactionHitEffect(
+                    this, "着地",
+                    al::getTrans(this) - (al::getColliderRadius(this) + 0.0f) * sead::Vector3f::ey);
+            }
+            al::setNerve(this, &NrvBubble.Sink);
+        } else {
+            al::startHitReaction(this, "地面での消滅");
+            revive();
         }
-        al::setNerve(this, &NrvBubble.Sink);
-    } else {
-        al::startHitReaction(this, "地面での消滅");
-        revive();
-    }
 
-    al::setVelocityZero(this);
+        al::setVelocityZero(this);
+    }
 }
 
 void Bubble::exeHackFall() {
     if (al::isFirstStep(this))
         mGroundRotation.set(al::getQuat(this));
 
-    al::getVelocityPtr(this)->y += -1.1f;
+    al::getVelocityPtr(this)->y -= 1.1f;
     tryHitReactionThroughFence();
     tryShiftLand();
 }
@@ -2041,16 +2040,16 @@ void Bubble::exeHackMove() {
     if (mIsPlayerCaptured) {
         al::tryStartActionIfNotPlaying(this, "HackWait");
     } else if (!rs::isOnHackMoveStick(mPlayerHack)) {
-        if (!isHoldHackAction())
-            al::tryStartActionIfNotPlaying(this, "HackWait");
-        else
+        if (isHoldHackAction())
             al::tryStartActionIfNotPlaying(this, "HackWaitSpeedy");
-    } else if (mIsPlayerCaptured || !rs::isHoldHackAction(mPlayerHack)) {  // !isHoldHackAction()
-        al::tryStartActionIfNotPlaying(this, "Move");
-    } else {
+        else
+            al::tryStartActionIfNotPlaying(this, "HackWait");
+    } else if (!mIsPlayerCaptured && rs::isHoldHackAction(mPlayerHack)) {  // isHoldHackAction()
         al::tryStartActionIfNotPlaying(this, "MoveSpeedy");
         if (!mIsInBossSequence)
             rs::requestDownToDefaultCameraAngleBySpeed(this, 6.0f, 0);
+    } else {
+        al::tryStartActionIfNotPlaying(this, "Move");
     }
 
     if (al::isCollidedWall(this)) {
@@ -2394,7 +2393,7 @@ void Bubble::exeRevive() {
         al::resetPosition(this, mResetPosition);
         al::setQuat(this, mStartingRotation);
         mGroundRotation.set(mStartingRotation);
-        mCurrentPosition = mRevivePosition;
+        mStartActionPosition = mRevivePosition;
         mAnimScaleController->resetScale();
         mIsInSaucePan = false;
     }

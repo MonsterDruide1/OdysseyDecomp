@@ -135,7 +135,7 @@ public:
     void exeRevive();
 
 private:
-    sead::Vector3f mCurrentPosition = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mStartActionPosition = {0.0f, 0.0f, 0.0f};
     f32 mJumpHeight = 0.0f;
     s32 mTurnFrameDelay = 0;
     u32 mTurnFrameCount = 0;
