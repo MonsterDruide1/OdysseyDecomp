@@ -38,6 +38,7 @@ public:
 
 private:
     al::LiveActor* mPlayer;
+    HackCap* mHackCap;
     IUseDimension* mDimension;
     al::CollisionPartsFilterBase* mCollisionPartsFilter;
     al::HitSensor* mHitSensor;
@@ -57,7 +58,7 @@ private:
     al::AreaObj* mArea2D;
     bool mIsRecovering;
     al::AreaObj* mRecoveryArea;
-    void* _0[0x10 / 8];
+    sead::Vector3f* mSafetyPoint;
 };
 
 static_assert(sizeof(PlayerRecoverySafetyPoint) == 0xb8);
