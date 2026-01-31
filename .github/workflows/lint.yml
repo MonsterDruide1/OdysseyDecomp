@@ -1,5 +1,6 @@
 name: lint
 on: [push, pull_request]
+permissions: {}
 jobs:
   clang-format:
     runs-on: ubuntu-latest
