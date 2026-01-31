@@ -3,12 +3,12 @@
 #include <basis/seadTypes.h>
 
 #include "System/ByamlSave.h"
+#include "System/RankingCategory.h"
 
 namespace al {
 class ByamlIter;
 class ByamlWriter;
 }  // namespace al
-enum class RankingCategory : s32;
 
 class NetworkUploadFlag : public ByamlSave {
 public:
