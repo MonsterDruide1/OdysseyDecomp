@@ -98,8 +98,8 @@ bool calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Grap
     for (s32 i = 0; i < graph->getVertexCount(); i++) {
         Graph::VertexInfo info = {
             .vertex = graph->getVertex(i),
-            .index = -1,
-            .weight = i != startVertexIndex ? sead::Mathf::maxNumber() : 0.0f,
+            .prevIndex = -1,
+            .weight = i == startVertexIndex ? 0.0f : sead::Mathf::maxNumber(),
         };
         unvisitedSet.emplaceBack(info);
     }
@@ -137,7 +137,7 @@ bool calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Grap
                         continue;
                     f32 weight = currentInfo->weight + edge->getWeight();
                     if (weight < vInfo->weight) {
-                        vInfo->index = currentInfo->vertex->getIndex();
+                        vInfo->prevIndex = currentInfo->vertex->getIndex();
                         vInfo->weight = weight;
                     }
                 }
@@ -176,30 +176,31 @@ bool calcShortestPath(sead::ObjArray<Graph::VertexInfo>* vertexInfos, const Grap
 
 f32 calcDistanceAndNearestPos(sead::Vector3f* outPos, const Graph::PosEdge* edge,
                               const sead::Vector3f& pos) {
-    sead::Vector3f vertexDir = edge->getVertex2()->getPos();
-    vertexDir -= edge->getVertex1()->getPos();
+    sead::Vector3f edgeDir0 = edge->getVertex2()->getPos();
+    edgeDir0 -= edge->getVertex1()->getPos();
 
-    f32 originalEdgeLength = vertexDir.length();
-    sead::Vector3f edgeDir = vertexDir;
+    f32 originalEdgeLength = edgeDir0.length();
+    sead::Vector3f edgeDir = edgeDir0;
 
     if (!tryNormalizeOrZero(&edgeDir))
         return -1.0f;
 
     sead::Vector3f posDir = pos;
     posDir -= edge->getVertex1()->getPos();
+    f32 dot = edgeDir.dot(posDir);
 
     sead::Vector3f nearestPos;
-    if (edgeDir.dot(posDir) < 0.0) {
+    if (dot < 0.0f) {
         nearestPos.set(edge->getVertex1()->getPos());
-    } else if (edgeDir.dot(posDir) > originalEdgeLength) {
+    } else if (dot > originalEdgeLength) {
         nearestPos.set(edge->getVertex2()->getPos());
     } else {
         nearestPos.set(edge->getVertex1()->getPos());
-        nearestPos += edgeDir.dot(posDir) * edgeDir;
+        nearestPos += dot * edgeDir;
     }
 
-    sead::Vector3f verticalOut;
-    verticalizeVec(&verticalOut, edgeDir, posDir);
+    sead::Vector3f posOff;
+    verticalizeVec(&posOff, edgeDir, posDir);
 
     if (outPos)
         outPos->set(nearestPos);
@@ -242,6 +243,7 @@ s32 findEdgeMinimumWeight(const Graph::Edge** outEdge,
     Graph::Edge* minEdge = nullptr;
 
     f32 minWeight = sead::Mathf::maxNumber();
+    // BUG: should have been an `s32`
     f32 minEdgeIndex = -1.0f;
     for (s32 i = 0; i < edges.size(); i++) {
         Graph::Edge* edge = edges[i];
@@ -284,7 +286,7 @@ Graph::PosVertex* findNearestPosVertex(const Graph* graph, const sead::Vector3f&
     Graph::PosVertex* nearestVertex = nullptr;
     f32 minDistance = sead::Mathf::maxNumber();
     for (s32 i = 0; i < graph->getVertexCount(); i++) {
-        Graph::PosVertex* vertex = (Graph::PosVertex*)graph->getVertex(i);
+        Graph::PosVertex* vertex = reinterpret_cast<Graph::PosVertex*>(graph->getVertex(i));
         f32 distance = (vertex->getPos() - pos).length();
         if (maxDistance < 0.0f && distance < minDistance) {
             nearestVertex = vertex;
@@ -305,7 +307,7 @@ Graph::PosVertex* findFarthestPosVertex(const Graph* graph, const sead::Vector3f
     Graph::PosVertex* farthestVertex = nullptr;
     f32 maxDistance = 0.0f;
     for (s32 i = 0; i < graph->getVertexCount(); i++) {
-        Graph::PosVertex* vertex = (Graph::PosVertex*)graph->getVertex(i);
+        Graph::PosVertex* vertex = reinterpret_cast<Graph::PosVertex*>(graph->getVertex(i));
         f32 distance = (vertex->getPos() - pos).length();
         if (minDistance < 0.0f && distance > maxDistance) {
             farthestVertex = vertex;
@@ -323,21 +325,21 @@ Graph::PosVertex* findFarthestPosVertex(const Graph* graph, const sead::Vector3f
 Graph::PosEdge* findPosEdgeByVertexPosUndirect(const Graph* graph, const sead::Vector3f& posA,
                                                const sead::Vector3f& posB) {
     for (s32 i = 0; i < graph->getEdgeCount(); i++) {
-        Graph::PosEdge* edge = (Graph::PosEdge*)graph->getEdge(i);
+        Graph::PosEdge* edge = reinterpret_cast<Graph::PosEdge*>(graph->getEdge(i));
         Graph::PosVertex* vertex1 = edge->getVertex1();
         Graph::PosVertex* vertex2 = edge->getVertex2();
         sead::Vector3f posV1 = vertex1->getPos();
         sead::Vector3f posV2 = vertex2->getPos();
-        sead::Vector3f pos1 = posV1 - posA;
-        sead::Vector3f pos2 = posV2 - posB;
-        if (pos1.length() < 10.0f && pos2.length() < 10.0f)
+        sead::Vector3f posDiff1 = posV1 - posA;
+        sead::Vector3f posDiff2 = posV2 - posB;
+        if (posDiff1.length() < 10.0f && posDiff2.length() < 10.0f)
             return edge;
 
         sead::Vector3f posV3 = vertex1->getPos();
         sead::Vector3f posV4 = vertex2->getPos();
-        sead::Vector3f pos3 = posV3 - posB;
-        sead::Vector3f pos4 = posV4 - posA;
-        if (pos3.length() < 10.0f && pos4.length() < 10.0f)
+        sead::Vector3f posDiff3 = posV3 - posB;
+        sead::Vector3f posDiff4 = posV4 - posA;
+        if (posDiff3.length() < 10.0f && posDiff4.length() < 10.0f)
             return edge;
     }
 
@@ -347,7 +349,7 @@ Graph::PosEdge* findPosEdgeByVertexPosUndirect(const Graph* graph, const sead::V
 Graph::PosEdge* findPosEdgeByVertexPos(const Graph* graph, const sead::Vector3f& posA,
                                        const sead::Vector3f& posB) {
     for (s32 i = 0; i < graph->getEdgeCount(); i++) {
-        Graph::PosEdge* edge = (Graph::PosEdge*)graph->getEdge(i);
+        Graph::PosEdge* edge = reinterpret_cast<Graph::PosEdge*>(graph->getEdge(i));
         Graph::PosVertex* vertex1 = edge->getVertex1();
         Graph::PosVertex* vertex2 = edge->getVertex2();
         sead::Vector3f posV1 = vertex1->getPos();
@@ -395,7 +397,7 @@ bool isSpanningTree(const sead::ConstPtrArray<Graph::Edge>& edges) {
     return true;
 }
 
-inline bool isClosed(const sead::ConstPtrArray<Graph::Edge>& edges) {
+static bool isClosed(const sead::ConstPtrArray<Graph::Edge>& edges) {
     return edges[0]->getVertex1() == edges[edges.size() - 1]->getVertex2();
 }
 
@@ -413,13 +415,13 @@ bool isTrail(const sead::ConstPtrArray<Graph::Edge>& edges) {
     s32 size = edges.size();
     for (s32 i = 0; i < size; i++) {
         for (s32 j = i + 1; j < size; j++) {
-            if (edges[i]->getVertex2() == edges[j]->getVertex1())
-                if (edges[i]->getVertex1() == edges[j]->getVertex2())
-                    return false;
+            if (edges[i]->getVertex2() == edges[j]->getVertex1() &&
+                edges[i]->getVertex1() == edges[j]->getVertex2())
+                return false;
 
-            if (edges[i]->getVertex1() == edges[j]->getVertex1())
-                if (edges[i]->getVertex2() == edges[j]->getVertex2())
-                    return false;
+            if (edges[i]->getVertex1() == edges[j]->getVertex1() &&
+                edges[i]->getVertex2() == edges[j]->getVertex2())
+                return false;
         }
     }
     return true;
