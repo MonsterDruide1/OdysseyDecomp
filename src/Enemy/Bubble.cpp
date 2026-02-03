@@ -2146,21 +2146,21 @@ void Bubble::exeHackJump() {
     calcHackerMoveVec(&hackerMoveVec, sead::Vector3f::ey);
 
     bool flipDirection = false;
-    sead::Vector3f hacerMoveDir = {0.0f, 0.0f, 0.0f};
-    if (al::tryNormalizeOrZero(&hacerMoveDir, hackerMoveVec)) {
+    sead::Vector3f hackerMoveDir = {0.0f, 0.0f, 0.0f};
+    if (al::tryNormalizeOrZero(&hackerMoveDir, hackerMoveVec)) {
         // if angle between 140 and 220 degree => 180 +/- 40
-        if (frontDir.dot(hacerMoveDir) < sead::Mathf::cos(sead::Mathf::deg2rad(220.0f))) {
+        if (frontDir.dot(hackerMoveDir) < sead::Mathf::cos(sead::Mathf::deg2rad(220.0f))) {
             sead::Vector3f vel = al::getVelocity(this);
             vel.y = 0.0f;
-            if (vel.dot(hacerMoveDir) > 0.0f || al::isNearZero(vel, 1.0f)) {
-                al::addVelocity(this, -vel * 0.08f + hacerMoveDir * 0.57f);
+            if (vel.dot(hackerMoveDir) > 0.0f || al::isNearZero(vel, 1.0f)) {
+                al::addVelocity(this, -vel * 0.08f + hackerMoveDir * 0.57f);
                 flipDirection = true;
             } else {
                 al::scaleVelocityHV(this, 0.85f, 1.0f);
                 flipDirection = true;
             }
         } else {
-            al::turnToDirection(this, hacerMoveDir, 5.0f);
+            al::turnToDirection(this, hackerMoveDir, 5.0f);
 
             al::calcFrontDir(&frontDir, this);
 
@@ -2172,7 +2172,7 @@ void Bubble::exeHackJump() {
 
             f32 newFrontSpeed =
                 frontHSpeed * 0.92f +
-                frontAccel * sead::Mathf::clamp(frontDir.dot(hacerMoveDir), 0.0f, 1.0f);
+                frontAccel * sead::Mathf::clamp(frontDir.dot(hackerMoveDir), 0.0f, 1.0f);
 
             al::addVelocity(this, velHtoFront +
                                       frontDir * sead::Mathf::clampMax(newFrontSpeed, frontHSpeed));
