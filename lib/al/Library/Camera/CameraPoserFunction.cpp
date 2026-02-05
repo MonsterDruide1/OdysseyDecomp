@@ -178,33 +178,25 @@ void calcCameraPose(sead::Quatf* pose, const al::CameraPoser* poser) {
 }
 
 void calcCameraDir(sead::Vector3f* vec, const al::CameraPoser* poser) {
-    vec->x = poser->getPosition().x - poser->getTargetTrans().x;
-    vec->y = poser->getPosition().y - poser->getTargetTrans().y;
-    vec->z = poser->getPosition().z - poser->getTargetTrans().z;
+    vec->setSub(poser->getPosition(), poser->getTargetTrans());
     al::normalize(vec);
 }
 
 void calcCameraDirH(sead::Vector3f* vec, const al::CameraPoser* poser) {
-    vec->x = poser->getPosition().x - poser->getTargetTrans().x;
-    vec->y = poser->getPosition().y - poser->getTargetTrans().y;
-    vec->z = poser->getPosition().z - poser->getTargetTrans().z;
+    vec->setSub(poser->getPosition(), poser->getTargetTrans());
     al::verticalizeVec(vec, poser->getCameraUp(), *vec);
     al::tryNormalizeOrZero(vec);
 }
 
 void calcPreCameraDir(sead::Vector3f* vec, const al::CameraPoser* poser) {
     const sead::LookAtCamera* cam = &getLookAtCamera(poser);
-    vec->x = cam->getPos().x - cam->getAt().x;
-    vec->y = cam->getPos().y - cam->getAt().y;
-    vec->z = cam->getPos().z - cam->getAt().z;
+    vec->setSub(cam->getPos(), cam->getAt());
     al::normalize(vec);
 }
 
 void calcPreCameraDirH(sead::Vector3f* vec, const al::CameraPoser* poser) {
     const sead::LookAtCamera* cam = &getLookAtCamera(poser);
-    vec->x = cam->getPos().x - cam->getAt().x;
-    vec->y = cam->getPos().y - cam->getAt().y;
-    vec->z = cam->getPos().z - cam->getAt().z;
+    vec->setSub(cam->getPos(), cam->getAt());
     al::verticalizeVec(vec, sead::Vector3f::ey, *vec);
     al::tryNormalizeOrZero(vec);
 }
