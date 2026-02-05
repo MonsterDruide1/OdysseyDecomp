@@ -171,10 +171,10 @@ void calcLookDir(sead::Vector3f* vec, const al::CameraPoser* poser) {
     vec->negate();
 }
 
-void calcCameraPose(sead::Quatf* quat, const al::CameraPoser* poser) {
-    sead::Vector3f vec;
-    calcLookDir(&vec, poser);
-    al::makeQuatFrontUp(quat, vec, poser->getCameraUp());
+void calcCameraPose(sead::Quatf* pose, const al::CameraPoser* poser) {
+    sead::Vector3f lookDir;
+    calcLookDir(&lookDir, poser);
+    al::makeQuatFrontUp(pose, lookDir, poser->getCameraUp());
 }
 
 void calcCameraDir(sead::Vector3f* vec, const al::CameraPoser* poser) {
