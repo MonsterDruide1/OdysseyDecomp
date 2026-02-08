@@ -192,11 +192,10 @@ bool CoinCollectHolder::tryFindExStageHintObjTrans(sead::Vector3f* outTrans,
                                                    const char* stageName) {
     s32 size = mCollectHintObj.size();
     for (s32 i = 0; i < size; i++) {
-        if (!al::isEqualString(mCollectHintObj[i]->getStageName(), stageName))
-            continue;
-
-        outTrans->set(mCollectHintObj[i]->getTrans());
-        return true;
+        if (al::isEqualString(mCollectHintObj[i]->getStageName(), stageName)) {
+            outTrans->set(mCollectHintObj[i]->getTrans());
+            return true;
+        }
     }
     return false;
 }
