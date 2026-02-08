@@ -32,13 +32,12 @@ public:
     void exeCollected();
 
 private:
-    void* _108;
-    s32 _110;
-    sead::Vector3f mVelocityH;
+    char filler[0xc];
+    sead::Vector3f mMoveDirH;
     sead::Vector3f mRotationAxis;
     sead::Vector3f mBounceNormal;
     sead::Quatf mQuat;
-    s32 mBounceTime = 0;
+    s32 mBounceCount = 0;
     f32 mMaxVelocity = 17.5f;
     bool mHasReachedMaxVelocity = false;
     f32 mRotationSpeed = 30.0f;
@@ -49,3 +48,5 @@ private:
     al::WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
     bool mHasWallCollision = true;
 };
+
+static_assert(sizeof(CoinStackBound) == 0x1a8);
