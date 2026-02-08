@@ -54,7 +54,7 @@ void CoinStackBound::init(const al::ActorInitInfo& initInfo) {
 
 bool CoinStackBound::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                 al::HitSensor* self) {
-    if (rs::isMsgItemGetAll(message) && mBounceTime != 0 && mFlashingTimer->getLastTime() < 470) {
+    if (rs::isMsgItemGetAll(message) && mBounceCount != 0 && mFlashingTimer->getLastTime() < 470) {
         al::invalidateClipping(this);
         al::setNerve(this, &Collected);
         return true;
@@ -63,23 +63,23 @@ bool CoinStackBound::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
 }
 
 void CoinStackBound::appear() {
-    mVelocityH = al::getTrans(this) - al::getPlayerPos(this, 0);
-    mVelocityH.normalize();
+    mMoveDirH = al::getTrans(this) - al::getPlayerPos(this, 0);
+    mMoveDirH.normalize();
 
-    if (mVelocityH.dot(al::getGravity(this)) > 0.85f) {
-        mVelocityH.set(0.0f, 0.0f, 1.0f);
-        al::rotateVectorQuat(&mVelocityH, al::getQuat(this));
+    if (mMoveDirH.dot(al::getGravity(this)) > 0.85f) {
+        mMoveDirH.set(0.0f, 0.0f, 1.0f);
+        al::rotateVectorQuat(&mMoveDirH, al::getQuat(this));
     }
 
-    f32 rotationDirection = al::getRandom(20.0f, 50.0f);
-    rotationDirection *= al::getRandom() > 0.5f ? 1.0f : -1.0f;
+    f32 hOffsetDegree = al::getRandom(20.0f, 50.0f);
+    hOffsetDegree *= al::getRandom() > 0.5f ? 1.0f : -1.0f;
 
-    al::rotateVectorDegree(&mVelocityH, mVelocityH, -al::getGravity(this), rotationDirection);
+    al::rotateVectorDegree(&mMoveDirH, mMoveDirH, -al::getGravity(this), hOffsetDegree);
 
-    mRotationAxis = mVelocityH.cross(-al::getGravity(this));
+    mRotationAxis = mMoveDirH.cross(-al::getGravity(this));
     mRotationAxis.normalize();
 
-    mBounceTime = 0;
+    mBounceCount = 0;
     mRotationSpeed = 30.0f;
     mIsTimerRush = false;
     al::setVelocity(this, {0.0f, 0.0f, 0.0f});
@@ -111,7 +111,7 @@ void CoinStackBound::exeAlive() {
 
 void CoinStackBound::exeAppear() {
     al::startHitReaction(this, "出力");
-    al::setVelocitySeparateHV(this, mVelocityH, 10.0f, 30.0f);
+    al::setVelocitySeparateHV(this, mMoveDirH, 10.0f, 30.0f);
     al::setNerve(this, &NrvCoinStackBound.Fall);
 }
 
@@ -145,7 +145,7 @@ void CoinStackBound::exeFall() {
     }
 }
 
-f32 getAngle(const sead::Vector3f& v1, const sead::Vector3f& v2) {
+inline f32 getAngle(const sead::Vector3f& v1, const sead::Vector3f& v2) {
     sead::Vector3f cross;
     f32 dot = v1.dot(v2);
     cross.setCross(v1, v2);
@@ -169,7 +169,7 @@ void CoinStackBound::exeBounce() {
         mHasWaterCollision = false;
     }
 
-    mBounceTime++;
+    mBounceCount++;
     processTimer();
 
     f32 angle = sead::Mathf::rad2deg(getAngle(mBounceNormal, sead::Vector3f::ey));
@@ -178,27 +178,27 @@ void CoinStackBound::exeBounce() {
 
     al::calcReflectionVector(al::getVelocityPtr(this), mBounceNormal, 0.95f, 0.0f);
 
-    sead::Vector3f verticalVelocity;
-    sead::Vector3f horizontalVelocity;
-    al::separateVelocityHV(&verticalVelocity, &horizontalVelocity, this);
+    sead::Vector3f velV;
+    sead::Vector3f velH;
+    al::separateVelocityHV(&velV, &velH, this);
 
-    verticalVelocity *= 0.9f;
-    f32 verticalLength = verticalVelocity.length();
+    velV *= 0.9f;
+    f32 verticalLength = velV.length();
 
-    f32 horizontalLength = horizontalVelocity.length();
+    f32 horizontalLength = velH.length();
     if (horizontalLength > 28.0f)
-        horizontalVelocity *= 28.0f / horizontalLength;
+        velH *= 28.0f / horizontalLength;
 
     if (!mHasReachedMaxVelocity && verticalLength > mMaxVelocity)
         mHasReachedMaxVelocity = true;
 
     if (mHasReachedMaxVelocity) {
-        verticalVelocity *= mMaxVelocity / verticalLength;
+        velV *= mMaxVelocity / verticalLength;
         if (mMaxVelocity > 0.0f)
             mMaxVelocity -= 1.0f;
     }
 
-    al::setVelocity(this, verticalVelocity + horizontalVelocity);
+    al::setVelocity(this, velV + velH);
 
     sead::Vector3f velocity = al::getVelocity(this);
     velocity.normalize();
