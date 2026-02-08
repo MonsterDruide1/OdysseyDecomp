@@ -187,18 +187,19 @@ void createAndAppendEdge(Graph* graph, Vertex* vertexA, Vertex* vertexB, bool is
 }
 
 template <typename Vertex, typename Edge>
-void appendGraphFromRail(Graph* graph, const Rail* rail, bool createEdges, bool isBidirectional) {
+void appendGraphFromRail(Graph* graph, const Rail* rail, bool disableEdgeForBezier,
+                         bool isBidirectional) {
     s32 railPoints = rail->getRailPointsCount();
 
-    Vertex* vertexA = nullptr;
-    Vertex* vertexB = nullptr;
+    Vertex* firstVertex = nullptr;
+    Vertex* lastVertex = nullptr;
     for (s32 i = 0; i < railPoints; i++) {
         sead::Vector3f pointPos;
         rail->calcRailPointPos(&pointPos, i);
         Vertex* currentVertex = nullptr;
 
         for (s32 j = 0; j < graph->getVertexCount(); j++) {
-            Vertex* v = (Vertex*)graph->getVertex(j);
+            Vertex* v = reinterpret_cast<Vertex*>(graph->getVertex(j));
             sead::Vector3f vPos = v->getPos();
             if ((vPos - pointPos).squaredLength() < 100.0f)
                 currentVertex = v;
@@ -209,18 +210,22 @@ void appendGraphFromRail(Graph* graph, const Rail* rail, bool createEdges, bool 
             graph->appendVertex(currentVertex);
         }
 
-        if (!vertexA)
-            vertexA = currentVertex;
+        if (!firstVertex)
+            firstVertex = currentVertex;
 
-        if (vertexB) {
-            if (vertexB != currentVertex && (!createEdges || !rail->isBezierRailPart(i - 1)))
-                createAndAppendEdge<Vertex, Edge>(graph, vertexB, currentVertex, isBidirectional);
+        if (lastVertex) {
+            if (lastVertex != currentVertex &&
+                !(disableEdgeForBezier && rail->isBezierRailPart(i - 1)))
+                createAndAppendEdge<Vertex, Edge>(graph, lastVertex, currentVertex,
+                                                  isBidirectional);
 
             if (i == railPoints - 1 && rail->isClosed() &&
-                (!createEdges || !rail->isBezierRailPart(i)))
-                createAndAppendEdge<Vertex, Edge>(graph, currentVertex, vertexA, isBidirectional);
+                !(disableEdgeForBezier && rail->isBezierRailPart(i)))
+                createAndAppendEdge<Vertex, Edge>(graph, currentVertex, firstVertex,
+                                                  isBidirectional);
         }
-        vertexB = currentVertex;
+
+        lastVertex = currentVertex;
     }
 }
 
@@ -233,10 +238,9 @@ Edge* insertVertexAndSplitEdge(Graph* graph, Vertex* newVertex, Edge* edge) {
     if (!isExistVertex(graph, newVertex))
         graph->appendVertex(newVertex);
 
-    Edge* newEdge = reinterpret_cast<Edge*>(
-        graph->tryFindEdge(newVertex->getIndex(), previousVertex->getIndex()));
-    if (!newEdge)
-        newEdge = new Edge(newVertex, previousVertex);
+    Edge* newEdge =
+        reinterpret_cast<Edge*>(graph->tryFindEdge(newVertex->getIndex(), previousVertex->getIndex())) ?:
+            new Edge(newVertex, previousVertex);
 
     if (!tryFindEdgeEndVertex(newVertex, previousVertex))
         previousVertex->addEdge(newEdge);
