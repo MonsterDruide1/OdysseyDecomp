@@ -29,7 +29,7 @@ public:
     void createGraph(const al::ActorInitInfo&);
     void switchStartOn();
     void tryUpdateDisplayModel();
-    void searchAliveKeeperGraphVertexBySensor(const al::HitSensor*);
+    ElectricWireVertex* searchAliveKeeperGraphVertexBySensor(const al::HitSensor*);
     void endCapture(const sead::Vector3f*, const sead::Vector3f*, bool, bool);
     void afterSpringMovement();
     void springMovement();
@@ -47,9 +47,10 @@ public:
     void exeTurnFrontStartDemo();
     void exeMove();
     bool checkMovableInputAndNextNerve();
-    bool checkEnableMoveByGraph(const al::Graph::PosVertex**, const sead::Vector2f&,
-                                const al::LiveActor*, const al::Graph::PosVertex*);
-    bool checkMovableInputNextByGraph(bool*, const al::Graph::PosVertex*, const sead::Vector2f&);
+    f32 checkEnableMoveByGraph(const al::Graph::PosVertex**, const sead::Vector2f&,
+                               const al::LiveActor*, const al::Graph::PosVertex*);
+    ElectricWireVertex* checkMovableInputNextByGraph(bool*, const al::Graph::PosVertex*,
+                                                     const sead::Vector2f&);
     void exeMoveEnd();
     void onMoveEndEnd();
     void exeLightning();

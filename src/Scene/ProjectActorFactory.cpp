@@ -26,6 +26,13 @@
 #include "Library/MapObj/WheelMapParts.h"
 #include "Library/MapObj/WobbleMapParts.h"
 #include "Library/Obj/AllDeadWatcher.h"
+#include "Library/Obj/CameraRailHolder.h"
+#include "Library/Obj/CameraWatchPoint.h"
+#include "Library/Obj/EffectObj.h"
+#include "Library/Obj/EffectObjCameraEmit.h"
+#include "Library/Obj/EffectObjFollowCamera.h"
+#include "Library/Obj/EffectObjFollowCameraLimit.h"
+#include "Library/Obj/EffectObjInterval.h"
 
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
@@ -165,9 +172,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CageBreakable", nullptr},
     {"CameraDemoGateMapParts", nullptr},
     {"CameraDemoKeyMoveMapParts", nullptr},
-    {"CameraRailHolder", nullptr},
+    {"CameraRailHolder", al::createActorFunction<al::CameraRailHolder>},
     {"CameraSub", nullptr},
-    {"CameraWatchPoint", nullptr},
+    {"CameraWatchPoint", al::createActorFunction<al::CameraWatchPoint>},
     {"Candlestand", nullptr},
     {"CandlestandFire", nullptr},
     {"CandlestandInitializer", nullptr},
@@ -262,13 +269,13 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DoorWarp", nullptr},
     {"DoorWarpStageChange", nullptr},
     {"EchoBlockMapParts", nullptr},
-    {"EffectObj", nullptr},
+    {"EffectObj", al::createActorFunction<al::EffectObj>},
     {"EffectObjScale", nullptr},
     {"EffectObjAlpha", nullptr},
-    {"EffectObjCameraEmit", nullptr},
-    {"EffectObjFollowCamera", nullptr},
-    {"EffectObjFollowCameraLimit", nullptr},
-    {"EffectObjInterval", nullptr},
+    {"EffectObjCameraEmit", al::createActorFunction<al::EffectObjCameraEmit>},
+    {"EffectObjFollowCamera", al::createActorFunction<al::EffectObjFollowCamera>},
+    {"EffectObjFollowCameraLimit", al::createActorFunction<al::EffectObjFollowCameraLimit>},
+    {"EffectObjInterval", al::createActorFunction<al::EffectObjInterval>},
     {"EffectObjNpcManFar", nullptr},
     {"EffectObjQualityChange", nullptr},
     {"ElectricWire", al::createActorFunction<ElectricWire>},
