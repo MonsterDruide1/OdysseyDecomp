@@ -34,6 +34,8 @@
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Kuribo2D.h"
+#include "Enemy/KuriboMini.h"
+#include "Enemy/Megane.h"
 #include "Enemy/Mummy.h"
 #include "Enemy/Nokonoko2D.h"
 #include "Enemy/Pecho.h"
@@ -49,19 +51,25 @@
 #include "Item/CoinCollect2D.h"
 #include "Item/CoinLead.h"
 #include "Item/CoinRail.h"
+#include "Item/CoinStackGroup.h"
 #include "Item/LifeMaxUpItem.h"
 #include "Item/LifeMaxUpItem2D.h"
 #include "Item/LifeUpItem.h"
 #include "Item/LifeUpItem2D.h"
+#include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapBomb.h"
+#include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
 #include "MapObj/Doshi.h"
+#include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/HackFork.h"
+#include "MapObj/HipDropSwitch.h"
+#include "MapObj/KoopaShip.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
@@ -70,6 +78,7 @@
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
+#include "MapObj/ShineTowerRocket.h"
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
@@ -78,13 +87,18 @@
 #include "MapObj/TrampleSwitchTimer.h"
 #include "MapObj/TransparentWall.h"
 #include "MapObj/TreasureBoxKey.h"
+#include "MapObj/VolleyballBase.h"
 #include "MapObj/VolleyballNet.h"
 #include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
+#include "MapObj/WorldWarpHole.h"
 #include "Npc/Bird.h"
 #include "Npc/BirdPlayerGlideCtrl.h"
 #include "Npc/KuriboGirl.h"
+#include "Npc/RaceAudienceNpc.h"
 #include "Npc/VocalMike.h"
+#include "Npc/VolleyballNpc.h"
+#include "Player/Yoshi.h"
 
 const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] = {
     {"AchievementNpc", nullptr},
@@ -92,7 +106,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"AirBubbleGenerator", nullptr},
     {"AirCurrent", nullptr},
     {"AllDeadWatcher", al::createActorFunction<al::AllDeadWatcher>},
-    {"AllDeadWatcherWithShine", nullptr},
+    {"AllDeadWatcherWithShine", al::createActorFunction<AllDeadWatcherWithShine>},
     {"AmiiboHelpNpc", nullptr},
     {"AmiiboNpc", nullptr},
     {"AnagramAlphabet", al::createActorFunction<AnagramAlphabet>},
@@ -168,7 +182,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CapCatapult", nullptr},
     {"CapFlower", nullptr},
     {"CapFlowerGroup", nullptr},
-    {"CapHanger", nullptr},
+    {"CapHanger", al::createActorFunction<CapHanger>},
     {"CapMessageAfterInformation", nullptr},
     {"CapRack", nullptr},
     {"CapRackTimer", nullptr},
@@ -213,7 +227,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CoinLead", al::createActorFunction<CoinLead>},
     {"CoinRail", al::createActorFunction<CoinRail>},
     {"CoinRing", nullptr},
-    {"CoinStackGroup", nullptr},
+    {"CoinStackGroup", al::createActorFunction<CoinStackGroup>},
     {"CrystalBreakable", nullptr},
     {"DamageBallGenerator", nullptr},
     {"DelaySwitch", nullptr},
@@ -257,7 +271,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"EffectObjInterval", nullptr},
     {"EffectObjNpcManFar", nullptr},
     {"EffectObjQualityChange", nullptr},
-    {"ElectricWire", nullptr},
+    {"ElectricWire", al::createActorFunction<ElectricWire>},
     {"ElectricWireKoopa", nullptr},
     {"EntranceCameraStartObj", nullptr},
     {"EventKeyMoveCameraObjNoDemo", nullptr},
@@ -316,7 +330,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HintNpc", nullptr},
     {"HintPhoto", nullptr},
     {"HintRouteGuidePoint", nullptr},
-    {"HipDropSwitch", nullptr},
+    {"HipDropSwitch", al::createActorFunction<HipDropSwitch>},
     {"HipDropSwitchSave", nullptr},
     {"HipDropSwitchTimer", nullptr},
     {"HipDropTile", nullptr},
@@ -348,12 +362,12 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"KoopaLv1", nullptr},
     {"KoopaLv2", nullptr},
     {"KoopaLv3", nullptr},
-    {"KoopaShip", nullptr},
+    {"KoopaShip", al::createActorFunction<KoopaShip>},
     {"Kuribo2D3D", al::createActorFunction<Kuribo2D>},
     {"KuriboGenerator2D3D", nullptr},
     {"KuriboGirl", al::createActorFunction<KuriboGirl>},
     {"KuriboPossessed", nullptr},
-    {"KuriboMini", nullptr},
+    {"KuriboMini", al::createActorFunction<KuriboMini>},
     {"KuriboTowerSwitch", nullptr},
     {"KuriboWing", nullptr},
     {"LavaFryingPan", nullptr},
@@ -368,7 +382,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"LongGenerator", nullptr},
     {"MarchingCubeBlock", nullptr},
     {"MapPartsRoulette", nullptr},
-    {"Megane", nullptr},
+    {"Megane", al::createActorFunction<Megane>},
     {"MeganeLiftExLift", nullptr},
     {"MeganeKeyMoveMapParts", nullptr},
     {"MeganeMapParts", al::createActorFunction<MeganeMapParts>},
@@ -452,7 +466,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Pyramid", nullptr},
     {"QuestObj", nullptr},
     {"RabbitGraph", nullptr},
-    {"RaceAudienceNpc", nullptr},
+    {"RaceAudienceNpc", al::createActorFunction<RaceAudienceNpc>},
     {"RaceManGoal", nullptr},
     {"RaceManRace", nullptr},
     {"RaceManStart", nullptr},
@@ -502,7 +516,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ShineChipWatcher", nullptr},
     {"ShineDot", nullptr},
     {"ShineFukankunWatchObj", nullptr},
-    {"ShineTowerRocket", nullptr},
+    {"ShineTowerRocket", al::createActorFunction<ShineTowerRocket>},
     {"ShopBgmPlayer", nullptr},
     {"ShopMark", nullptr},
     {"ShoppingWatcher", nullptr},
@@ -596,9 +610,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Utsubo", nullptr},
     {"UtsuboWatcher", nullptr},
     {"VocalMike", al::createActorFunction<VocalMike>},
-    {"VolleyballBase", nullptr},
+    {"VolleyballBase", al::createActorFunction<VolleyballBase>},
     {"VolleyballNet", al::createActorFunction<VolleyballNet>},
-    {"VolleyballNpc", nullptr},
+    {"VolleyballNpc", al::createActorFunction<VolleyballNpc>},
     {"Wanwan", nullptr},
     {"WanwanHole", nullptr},
     {"WaterAreaMoveModel", nullptr},
@@ -613,7 +627,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"WorldMapEarth", al::createActorFunction<WorldMapEarth>},
     {"WorldTravelingNpc", nullptr},
     {"WorldTravelingPeach", nullptr},
-    {"WorldWarpHole", nullptr},
+    {"WorldWarpHole", al::createActorFunction<WorldWarpHole>},
     {"Fastener", nullptr},
     {"FastenerObj", nullptr},
     {"AtmosScatterRequester", nullptr},
@@ -654,7 +668,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"WheelMapParts", al::createActorFunction<al::WheelMapParts>},
     {"WobbleMapParts", al::createActorFunction<al::WobbleMapParts>},
     {"WindBlowMapParts", nullptr},
-    {"Yoshi", nullptr},
+    {"Yoshi", al::createActorFunction<Yoshi>},
     {"YoshiFruit", nullptr},
     {"YoshiFruitShineHolder", nullptr},
     {"Yukimaru", nullptr},
