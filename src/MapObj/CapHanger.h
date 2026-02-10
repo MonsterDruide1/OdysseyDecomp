@@ -12,7 +12,7 @@ class SensorMsg;
 
 class CapHanger : public al::LiveActor {
 public:
-    CapHanger(const char*, bool);
+    CapHanger(const char*, bool = false);
     void init(const al::ActorInitInfo& info) override;
     void initItem(s32, s32, const al::ActorInitInfo&);
     void switchOn();
