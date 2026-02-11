@@ -4,6 +4,7 @@
 
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/AreaObjUtil.h"
+#include "Library/Base/Macros.h"
 #include "Library/Layout/LayoutActor.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"
@@ -278,9 +279,10 @@ s32 getWorldIdForNewReleaseShop(GameDataHolderAccessor accessor, s32 index) {
                 if (index == 0) {
                     result = world_id;
                     return 1;
+                } else {
+                    index--;
+                    return 0;
                 }
-                index--;
-                break;
             }
         }
         return 0;
@@ -322,7 +324,7 @@ bool checkIsNewWorldInAlreadyGoWorld(GameDataHolderAccessor accessor) {
         return false;
     const GameProgressData* game_progress_data = accessor->getGameDataFile()->getGameProgressData();
     bool is_after_current_world = false;
-    for (s32 i = 0; i < game_progress_data->getUnlockWorldNum(); ++i) {
+    for (s32 i = 0; i < game_progress_data->getUnlockWorldNum(); i++) {
         if (!is_after_current_world) {
             if (game_progress_data->getWorldIdForWorldWarpHole(i) == world_id)
                 is_after_current_world = true;
@@ -716,7 +718,8 @@ bool checkIsComplete(const al::IUseSceneObjHolder* scene_obj_holder, s32 file_id
 
     al::Resource* resource = al::findOrCreateResource("SystemData/HackObjList", nullptr);
     al::ByamlIter iter{al::findResourceYaml(resource, "HackObjList", nullptr)};
-    for (s32 i = 0, len = iter.getSize(); i < len; i++) {
+    s32 hack_obj_count = iter.getSize();
+    for (s32 i = 0; i < hack_obj_count; i++) {
         al::ByamlIter subiter;
         iter.tryGetIterByIndex(&subiter, i);
         if (al::tryGetByamlKeyBoolOrFalse(subiter, "IsDebug"))
@@ -1901,28 +1904,27 @@ s32 calcShineNumInOneShine(const al::LayoutActor* layout, s32 world_id, s32 inde
         accessor->getGameDataFile()->calcShineNumInOneShine(world_id, index), 99);
 }
 
-const char16* tryFindShineMessage(const al::LayoutActor* layout, s32 world_id, s32 index) {
+ALWAYS_INLINE static const char16* getShineMessage(const al::IUseSceneObjHolder* scene_obj_holder,
+                                                   const al::IUseMessageSystem* message_system,
+                                                   s32 world_id, s32 index) {
     const GameDataFile::HintInfo* info =
-        getGameDataHolder(layout)->getGameDataFile()->findShine(world_id, index);
-    al::StringTmp<128> label;
-    al::PlacementId placement_id{info->objId.cstr(), nullptr, nullptr};
-    rs::makeMessageLabel(&label, &placement_id, "ScenarioName");
-    return al::isExistLabelInStageMessage(layout, info->stageName.cstr(), label.cstr()) ?
-               al::getStageMessageString(layout, info->stageName.cstr(), label.cstr()) :
-               u"シャイン名未設定";
-}
-
-const char16* tryFindShineMessage(const al::LiveActor* actor,
-                                  const al::IUseMessageSystem* message_system, s32 world_id,
-                                  s32 index) {
-    const GameDataFile::HintInfo* info =
-        getGameDataHolder(actor)->getGameDataFile()->findShine(world_id, index);
+        getGameDataHolder(scene_obj_holder)->getGameDataFile()->findShine(world_id, index);
     al::StringTmp<128> label;
     al::PlacementId placement_id{info->objId.cstr(), nullptr, nullptr};
     rs::makeMessageLabel(&label, &placement_id, "ScenarioName");
     return al::isExistLabelInStageMessage(message_system, info->stageName.cstr(), label.cstr()) ?
                al::getStageMessageString(message_system, info->stageName.cstr(), label.cstr()) :
                u"シャイン名未設定";
+}
+
+const char16* tryFindShineMessage(const al::LayoutActor* layout, s32 world_id, s32 index) {
+    return getShineMessage(layout, layout, world_id, index);
+}
+
+const char16* tryFindShineMessage(const al::LiveActor* actor,
+                                  const al::IUseMessageSystem* message_system, s32 world_id,
+                                  s32 index) {
+    return getShineMessage(actor, message_system, world_id, index);
 }
 
 u64 findShineGetTime(const al::LayoutActor* layout, s32 world_id, s32 index) {
@@ -2125,14 +2127,16 @@ void setShopNpcTrans(const al::LiveActor* actor, const char* name, s32 type) {
 void setShopNpcTrans(GameDataHolderAccessor accessor, const al::PlacementInfo& placement_info) {
     sead::Vector3f trans = sead::Vector3f::zero;
     al::getTrans(&trans, placement_info);
-    if (const char* name = nullptr; al::tryGetStringArg(&name, placement_info, "StoreName"))
+    const char* name = nullptr;
+    if (al::tryGetStringArg(&name, placement_info, "StoreName"))
         accessor->getGameDataFile()->setShopNpcTrans(trans, name, 0);
 }
 
 void setMiniGameInfo(GameDataHolderAccessor accessor, const al::PlacementInfo& placement_info) {
     sead::Vector3f trans = sead::Vector3f::zero;
     al::getTrans(&trans, placement_info);
-    if (const char* name = nullptr; al::tryGetStringArg(&name, placement_info, "MiniGameName"))
+    const char* name = nullptr;
+    if (al::tryGetStringArg(&name, placement_info, "MiniGameName"))
         accessor->getGameDataFile()->setMiniGameInfo(trans, name);
 }
 
