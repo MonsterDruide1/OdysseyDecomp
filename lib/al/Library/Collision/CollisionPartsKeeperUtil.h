@@ -59,12 +59,13 @@ struct SphereMoveHitInfo {
     f32 _0;
     f32 _4;
     sead::Vector3f _8;
-    al::Triangle mTriangle;
+    al::Triangle triangle;
 
     static bool compare(const SphereMoveHitInfo& a1, const SphereMoveHitInfo& a2) {
         return a1._0 < a2._0;
     }
 };
+
 static_assert(sizeof(SphereMoveHitInfo) == 0x88);
 
 al::ICollisionPartsKeeper* getCollisionPartsKeeper(const al::IUseCollision*);
