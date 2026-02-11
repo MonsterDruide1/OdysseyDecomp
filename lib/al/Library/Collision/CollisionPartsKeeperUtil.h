@@ -57,23 +57,15 @@ bool calcForceMovePowerExceptNormal(sead::Vector3f*, const CollisionParts*, cons
 namespace alCollisionUtil {
 struct SphereMoveHitInfo {
     f32 _0;
-    char filler[20];
-    al::Triangle _18;
-    char filler2[0x18];
-    al::Triangle _a0;
-    char filler3[0x18];
-    al::Triangle _128;
-    char filler4[0x18];
-    al::Triangle _1b0;
-    char filler5[0x18];
-    al::Triangle _238;
-    char filler6[0x18];
-    al::Triangle _2c0;
-    char filler7[0x18];
-    al::Triangle _348;
-    char filler8[0x18];
-    al::Triangle _3d0;
+    f32 _4;
+    sead::Vector3f _8;
+    al::Triangle mTriangle;
+
+    static bool compare(const SphereMoveHitInfo& a1, const SphereMoveHitInfo& a2) {
+        return a1._0 < a2._0;
+    }
 };
+static_assert(sizeof(SphereMoveHitInfo) == 0x88);
 
 al::ICollisionPartsKeeper* getCollisionPartsKeeper(const al::IUseCollision*);
 bool isCollisionMoving(const al::HitInfo*);
