@@ -12,7 +12,7 @@ s32 RaceTimeFunction::getRaceTimeMaxFrame() {
     return 215999;
 }
 
-s32 RaceTimeFunction::getRaceTimeMaxCsec() {
+u32 RaceTimeFunction::getRaceTimeMaxCsec() {
     return 359999;
 }
 

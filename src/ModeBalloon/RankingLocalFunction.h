@@ -3,7 +3,7 @@
 #include <basis/seadTypes.h>
 #include <container/seadObjArray.h>
 
-enum class alignas(8) RankingCategory : s32;
+#include "ModeBalloon/RankingCategory.h"
 
 namespace RankingLocalFunction {
 bool isValidCourceIdYukimaruRace(s32);
@@ -26,6 +26,8 @@ struct RankingDataOneRecord {
     void* filler_0[14];
 };
 
+static_assert(sizeof(RankingDataOneRecord) == 0x70);
+
 class RankingDataOneCategory {
 public:
     RankingDataOneCategory(RankingCategory, s32);
@@ -37,5 +39,4 @@ private:
     void* filler_8[3];
 };
 
-static_assert(sizeof(RankingDataOneRecord) == 0x70);
 static_assert(sizeof(RankingDataOneCategory) == 0x20);
