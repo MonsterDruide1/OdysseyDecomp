@@ -2,13 +2,13 @@
 
 #include <basis/seadTypes.h>
 
+#include "ModeBalloon/RankingCategory.h"
 #include "System/ByamlSave.h"
 
 namespace al {
 class ByamlIter;
 class ByamlWriter;
 }  // namespace al
-enum class RankingCategory : s32;
 
 class NetworkUploadFlag : public ByamlSave {
 public:

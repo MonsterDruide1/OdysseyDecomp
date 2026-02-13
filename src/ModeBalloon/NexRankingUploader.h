@@ -7,6 +7,8 @@
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Ranking/IUseRanking.h"
 
+#include "ModeBalloon/RankingCategory.h"
+
 namespace al {
 struct ActorInitInfo;
 class IUseDataStore;
@@ -29,8 +31,6 @@ namespace TimeBalloon {
 class BalloonDataServer;
 class NoticeDataServer;
 }  // namespace TimeBalloon
-
-enum class RankingCategory : s32;
 
 class NexRankingUploader : public al::IUseRanking, public al::LiveActor {
 public:
