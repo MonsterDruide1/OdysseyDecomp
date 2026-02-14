@@ -8,7 +8,7 @@ class AreaShapeCylinder : public AreaShape {
 public:
     enum class OriginType { Center, Base, Top };
 
-    AreaShapeCylinder(AreaShapeCylinder::OriginType originType);
+    AreaShapeCylinder(OriginType originType);
 
     bool isInVolume(const sead::Vector3f& pos) const override;
     bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const override;
@@ -18,7 +18,7 @@ public:
     bool calcLocalBoundingBox(sead::BoundBox3f* boundingBox) const override;
 
 private:
-    AreaShapeCylinder::OriginType mOriginType;
+    OriginType mOriginType;
 };
 
 class AreaShapeCylinderBase : public AreaShapeCylinder {

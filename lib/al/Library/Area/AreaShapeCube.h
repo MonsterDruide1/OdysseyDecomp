@@ -8,7 +8,7 @@ class AreaShapeCube : public AreaShape {
 public:
     enum class OriginType { Center, Base, Top };
 
-    AreaShapeCube(AreaShapeCube::OriginType originType);
+    AreaShapeCube(OriginType originType);
 
     bool isInVolume(const sead::Vector3f& pos) const override;
     bool isInVolumeOffset(const sead::Vector3f& pos, f32 offset) const override;
@@ -20,7 +20,7 @@ public:
     bool isInLocalVolume(const sead::Vector3f& pos) const;
 
 private:
-    AreaShapeCube::OriginType mOriginType;
+    OriginType mOriginType;
 };
 
 class AreaShapeCubeBase : public AreaShapeCube {

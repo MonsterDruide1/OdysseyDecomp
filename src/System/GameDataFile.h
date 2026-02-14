@@ -475,19 +475,19 @@ public:
     sead::FixedSafeString<64>* getGiftName() { return mGiftNamePtr; }
 
 private:
-    char _000[0x18];
+    char _0[0x18];
     FixedHeapArray<s32, sNumWorlds> mShopShineNum;
     FixedHeapArray<s32, sNumWorlds> mMainScenarioNo;
     s32 mStartShineIndex;
-    char _02c[0x98];
+    char _2c[0x98];
     sead::FixedSafeString<128> mPlayerStartIdForSave;
-    char _15c[0x30];
+    char _160[0x30];
     WorldList* mWorldList;
     char _198[0x60];
     sead::FixedSafeString<128> mCheckpointName;
-    char _28c[0x98];
+    char _290[0x98];
     sead::FixedSafeString<128> mCurrentStageName;
-    char _3bc[0xa0];
+    char _3c0[0xa0];
     FixedHeapArray<bool, sNumWorlds> mIsWorldWarpHoleThrough;
     sead::DateTime mSaveTimeForDisp;
     sead::DateTime mSaveTime;
@@ -571,7 +571,7 @@ private:
     char _858[0x8];
     PlayerHitPointData* mPlayerHitPointData;
     sead::BufferedSafeString mNextStageName;
-    char _884[0x11c];
+    char _880[0x11c];
     FixedHeapArray<HintInfo, 1024> mHintList;
     char _9a8[0x48];
     s32 mCurrentWorldId;

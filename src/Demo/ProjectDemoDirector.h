@@ -38,8 +38,8 @@ public:
     bool isActiveDemo(const char*);
     bool isActiveDemoWithPlayer();
     bool isActiveDemoWithCinemaCaption() const;
-    bool requestStartDemo(const char*, ProjectDemoDirector::DemoType);
-    void requestEndDemo(const char*, ProjectDemoDirector::DemoType);
+    bool requestStartDemo(const char*, DemoType);
+    void requestEndDemo(const char*, DemoType);
     bool requestStartDemoShineMainGet(Shine*, const char*);
     void requestEndDemoShineMainGet(const char*);
     bool requestStartDemoShineGrandGet(Shine*, const char*);

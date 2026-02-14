@@ -63,7 +63,7 @@ private:
     const char* mActorJointName;
     void* _70[7];
     sead::FixedSafeString<32> mSetHeightEvenTargetName;
-    s32 _dc[3];
+    s32 _e0[3];
 };
 
 static_assert(sizeof(ShadowMaskBase) == 0xf0);

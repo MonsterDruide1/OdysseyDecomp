@@ -16,7 +16,7 @@ public:
     void draw() const override;
 
 private:
-    char _filler[0x10];
+    char _50[0x10];
 };
 
 static_assert(sizeof(ModelDrawerDeferredSilhouette) == 0x60);
