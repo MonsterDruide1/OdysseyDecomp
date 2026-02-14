@@ -31,6 +31,7 @@ public:
         return (mParent->*mFunc)(triangle);
     }
 
+private:
     T* mParent;
     DelegateFilter mFunc;
 };
