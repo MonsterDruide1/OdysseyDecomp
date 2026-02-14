@@ -1085,7 +1085,7 @@ bool tryGetCheckPaintAlphaPos(sead::Vector3f* pos, const al::SensorMsg* pMsg);
 bool tryGetSenobiPartsMoveDistance(f32* distance, const al::SensorMsg* pMsg);
 bool tryGetSenobiPartsCollidedNormal(sead::Vector3f* collidedNormal, const al::SensorMsg* pMsg);
 bool tryGetStampTo2DForce(sead::Vector3f* force, const al::SensorMsg* pMsg);
-bool tryGetGhostStartOkObjId(sead::BufferedSafeStringBase<char>* objId, const al::SensorMsg* pMsg);
+bool tryGetGhostStartOkObjId(sead::BufferedSafeString* objId, const al::SensorMsg* pMsg);
 bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg* pMsg);
 bool sendMsgGotogotonOn(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgGotogotonGetJumpPath(al::HitSensor* receiver, al::HitSensor* sender,
