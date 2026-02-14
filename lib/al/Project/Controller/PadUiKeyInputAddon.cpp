@@ -14,9 +14,7 @@ namespace al {
 PadUiKeyInputAddon::PadUiKeyInputAddon(sead::Controller* controller)
     : sead::ControllerAddon(controller) {
     mId = sead::ControllerDefine::AddonId::cAddon_UiKeyInput;
-};
-
-PadUiKeyInputAddon::~PadUiKeyInputAddon() {}
+}
 
 bool PadUiKeyInputAddon::calc() {
     s32 port = mController->getMgr()->findControllerPort(mController);

@@ -10,7 +10,6 @@ class PadUiKeyInputAddon : public sead::ControllerAddon {
 
 public:
     PadUiKeyInputAddon(sead::Controller* controller);
-    ~PadUiKeyInputAddon();
 
     bool calc() override;
 
