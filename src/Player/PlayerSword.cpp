@@ -13,6 +13,7 @@
 
 #include "Util/SensorMsgFunction.h"
 
+// BUG: second entry should have been `PowerGlove`. Unused, so does not matter
 static const char* sWeaponTypes[] = {"Sword", "PowerGrove"};
 
 PlayerSword::PlayerSword(const char* name) : al::LiveActor(name) {}
@@ -46,8 +47,8 @@ void PlayerSword::makeActorAlive() {
 void PlayerSword::updatePose() {
     sead::Matrix34f t;
     sead::Matrix34f tt;
-    t.makeR({sead::Mathf::piHalf(), 0, 0});
-    tt.makeR({0, 0, 0});
+    t.makeR({sead::Mathf::piHalf(), 0.0f, 0.0f});
+    tt.makeR({0.0f, 0.0f, 0.0f});
 
     sead::Matrix34f newPoseMtx = *mPlayerBaseMtx;
     al::normalize(&newPoseMtx);
