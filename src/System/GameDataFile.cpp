@@ -100,8 +100,7 @@ bool GameDataFile::HintInfo::testFunc(s32 curWorldId, bool isGameClear, s32 scen
 
 void GameDataFile::unlockAchievementShineName() {
     for (s32 i = 0; i < mHintList.size(); i++)
-        if (mHintList[i].achievementStatus == AchievementStatus::None &&
-            mHintList[i].isAchievement)
+        if (mHintList[i].achievementStatus == AchievementStatus::None && mHintList[i].isAchievement)
             mHintList[i].achievementStatus = AchievementStatus::Unlocked;
     mIsUnlockAchievement = true;
 }

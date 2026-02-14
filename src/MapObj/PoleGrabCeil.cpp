@@ -36,8 +36,7 @@ void PoleGrabCeil::init(const al::ActorInitInfo& info) {
     if (al::isObjectName(info, "PoleGrabCeilKeyMoveParts")) {
         al::initActorWithArchiveName(this, info, "PoleGrabCeilKeyMoveParts", "KeyMoveParts");
         mKeyMoveFollowTarget = new al::KeyMoveFollowTarget("ぶらさがり棒[キームーブ移動]本体");
-        mKeyMoveFollowTarget->initKeyMoveFollowTarget(info, "PoleGrabCeilKeyMoveParts",
-                                                      nullptr);
+        mKeyMoveFollowTarget->initKeyMoveFollowTarget(info, "PoleGrabCeilKeyMoveParts", nullptr);
         al::initSubActorKeeperNoFile(this, info, 1);
         al::registerSubActor(this, mKeyMoveFollowTarget);
         al::tryGetArg(&mIsCollisionCheck, info, "IsCollisionCheck");

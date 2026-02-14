@@ -99,7 +99,8 @@ public:
     void startJumpAnim(f32 force);
     void resetAndAppear(const sead::Vector3f& trans, const sead::Quatf& quat, f32 unused);
     void endHackCommon();
-    void calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& targetPos, f32 launchDegree, f32 frame) const;
+    void calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& targetPos, f32 launchDegree,
+                       f32 frame) const;
     void onGroupClipping();
     bool isOnGroundNoVelocity() const;
     void updateCollisionPartsMove();

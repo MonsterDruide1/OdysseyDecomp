@@ -31,7 +31,8 @@ private:
 
 static_assert(sizeof(AsyncFunctorThread) == 0x20);
 
-InitializeThread* createAndStartInitializeThread(sead::Heap* heap, s32 priority, const FunctorBase& functor);
+InitializeThread* createAndStartInitializeThread(sead::Heap* heap, s32 priority,
+                                                 const FunctorBase& functor);
 bool tryWaitDoneAndDestroyInitializeThread(InitializeThread* thread);
 sead::CoreId getCurrentCoreId();
 }  // namespace al
