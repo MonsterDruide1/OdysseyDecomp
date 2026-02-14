@@ -42,8 +42,10 @@ public:
     bool isTriggerHipDrop() const;
     bool isTriggerHeadSliding() const;
     bool isTriggerPaddle() const;
+    // TODO: proper parameter name
     bool isTriggerRolling(bool a1) const;
     bool isTriggerRollingRestartSwing() const;
+    // TODO: proper parameter name
     bool isTriggerRollingCancelHipDrop(bool a1) const;
     bool isTriggerHackAction() const;
     bool isTriggerHackJump() const;
@@ -72,6 +74,7 @@ public:
     bool isTriggerCapSeparateHipDrop() const;
     bool isTriggerSwingPoleClimbFast() const;
     bool isHoldPoleClimbDown() const;
+    // TODO: proper parameter name
     bool isTriggerAppendCapAttack(bool a1) const;
     bool isHoldSquat() const;
     void calcInputDirectionSnap2D(sead::Vector3f*) const;
@@ -120,7 +123,9 @@ public:
     bool isSwingDirLeft() const;
     bool isSwingDirRight() const;
     bool isThrowTypeLeftRight(const sead::Vector2f&) const;
+    // TODO: proper parameter name
     bool isThrowTypeSpiral(const sead::Vector2f& a1) const;
+    // TODO: proper parameter name
     bool isThrowTypeRolling(const sead::Vector2f& a1) const;
     bool isEnableConsiderCapThrowDoubleSwing() const;
     f32 getPoseRotZDegreeLeft() const;
