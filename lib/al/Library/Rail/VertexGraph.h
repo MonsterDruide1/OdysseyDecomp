@@ -17,16 +17,16 @@ public:
     class PosVertex;
     struct VertexInfo;
 
-    Graph(s32 verticesSize, s32 edgesSize);
+    Graph(s32 vertices_size, s32 edges_size);
     void appendVertex(s32 size);
     void appendVertex(Vertex* vertex);
     void removeVertex(const Vertex* vertex);
     void removeEdge(const Edge* edge);
-    Edge* tryFindEdge(s32 indexVertex1, s32 indexVertex2) const;
+    Edge* tryFindEdge(s32 index_vertex1, s32 index_vertex2) const;
     void appendEdge(Edge* edge);
     bool tryAppendEdge(Edge* edge);
-    void appendEdge(s32 indexVertex1, s32 indexVertex2, f32 weight);
-    bool tryAppendEdge(s32 indexVertex1, s32 indexVertex2, f32 weight);
+    void appendEdge(s32 index_vertex1, s32 index_vertex2, f32 weight);
+    bool tryAppendEdge(s32 index_vertex1, s32 index_vertex2, f32 weight);
 
     s32 getVertexCount() const { return mVertices.size(); }
 

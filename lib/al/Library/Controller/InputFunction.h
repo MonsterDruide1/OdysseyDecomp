@@ -179,9 +179,9 @@ void calcTouchScreenPos(sead::Vector2f* pos);
 void calcTouchLayoutPos(sead::Vector2f* pos);
 
 bool isTouchPosInRect(const sead::Vector2f& rect_pos, const sead::Vector2f& size);
-bool isTouchPosInCircle(const sead::Vector2f&, f32);
+bool isTouchPosInCircle(const sead::Vector2f& center, f32 radius);
 bool isTouchPosInCircleByWorldPos(const sead::Vector3f&, const IUseCamera*, f32, f32);
-bool isPadTouchRect(f32, f32, f32, f32);
+bool isPadTouchRect(f32 left, f32 top, f32 width, f32 height);
 
 // TODO: rename parameters
 void setPadRepeat(s32 a1, s32 a2, s32 a3, s32 port);

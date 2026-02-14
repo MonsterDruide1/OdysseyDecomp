@@ -27,7 +27,7 @@ bool isClosetScenePlayer(const PlayerInitInfo&);
 al::GamePadSystem* getGamePadSystem(const PlayerInitInfo&);
 const char* getInitCapTypeName(const PlayerInitInfo&);
 al::SklAnimRetargettingInfo* createPlayerSklRetargettingInfo(al::LiveActor*, const sead::Vector3f&);
-const sead::Vector3f& getPlayerPos(const al::LiveActor*);
+const sead::Vector3f& getPlayerPos(const al::LiveActor* actor);
 const sead::Vector3f& getPlayerHeadPos(const al::LiveActor*);
 const sead::Vector3f& getPlayerBodyPos(const al::LiveActor*);
 void calcPlayerSideDir(sead::Vector3f*, const al::LiveActor*);

@@ -11,7 +11,7 @@ ActorCollisionController::ActorCollisionController(LiveActor* actor) : mActor(ac
 
 void ActorCollisionController::setColliderRadius(f32 radius) {
     mDelay = -1;
-    al::setColliderRadius(mActor, radius);
+    setColliderRadius(mActor, radius);
 }
 
 void ActorCollisionController::setColliderRadiusScale(f32 scale) {
@@ -21,7 +21,7 @@ void ActorCollisionController::setColliderRadiusScale(f32 scale) {
 
 void ActorCollisionController::setColliderOffsetY(f32 offsetY) {
     mDelay = -1;
-    al::setColliderOffsetY(mActor, offsetY);
+    setColliderOffsetY(mActor, offsetY);
 }
 
 void ActorCollisionController::update() {
@@ -39,8 +39,8 @@ void ActorCollisionController::update() {
 
     radius += (mRadius - radius) * rate;
     offsetY += (mOffsetY - offsetY) * rate;
-    al::setColliderRadius(mActor, radius);
-    al::setColliderOffsetY(mActor, offsetY);
+    setColliderRadius(mActor, radius);
+    setColliderOffsetY(mActor, offsetY);
 
     mDelay--;
 }
@@ -51,8 +51,8 @@ void ActorCollisionController::resetToOrigin(s32 delay) {
         return;
     }
 
-    al::setColliderRadius(mActor, mRadius);
-    al::setColliderOffsetY(mActor, mOffsetY);
+    setColliderRadius(mActor, mRadius);
+    setColliderOffsetY(mActor, mOffsetY);
     mDelay = 0;
 }
 

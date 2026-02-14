@@ -10,8 +10,8 @@ public:
     ModelDrawerStaticDepthShadow(const char* name);
 
     void createTable() override;
-    void addModel(ModelCtrl*) override;
-    void removeModel(ModelCtrl*) override;
+    void addModel(ModelCtrl* model) override;
+    void removeModel(ModelCtrl* model) override;
     void draw() const override;
 };
 

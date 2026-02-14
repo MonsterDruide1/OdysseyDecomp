@@ -163,10 +163,10 @@ void cleanupResGraphicsFile(sead::SafeString& key, Resource* resource) {
 
 class ResourceAudio {
 public:
-    ResourceAudio(ResourceSystem::ResourceAudioInfo* info) : audioPlayerInfo(info) {}
+    ResourceAudio(ResourceSystem::ResourceAudioInfo* info) : mAudioPlayerInfo(info) {}
 
     void disableSoundMemoryPoolHandler(sead::TreeMapImpl<sead::SafeString>::Node* node) {
-        ResourceSystem::ResourceAudioInfo* info = audioPlayerInfo;
+        ResourceSystem::ResourceAudioInfo* info = mAudioPlayerInfo;
 
         if (node->key().comparen(info->filePath, info->filePath.calcLength()) != 0)
             return;
@@ -183,7 +183,7 @@ public:
     }
 
 private:
-    ResourceSystem::ResourceAudioInfo* audioPlayerInfo;
+    ResourceSystem::ResourceAudioInfo* mAudioPlayerInfo;
 };
 
 // NON_MATCHING: https://decomp.me/scratch/R5MuA

@@ -22,8 +22,8 @@ public:
     void setTalkSpecial(bool isTalkFindKoopa, bool isTalkBossRaid);
     bool isTalkFindKoopa() const;
     bool isTalkBossRaid() const;
-    void write(al::ByamlWriter*) override;
-    void read(const al::ByamlIter&) override;
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     s32 mSize;

@@ -78,18 +78,18 @@ public:
     bool isTriggerHackSwing() const;
     void faceToMoveVec();
     bool isTriggerHackJump() const;
-    void revertTargetQuatInHackJump(sead::Quatf* quatA, sead::Quatf* quatB);
+    void revertTargetQuatInHackJump(sead::Quatf* prevQuat, sead::Quatf* deltaQuat);
     void calcHackerMoveVec(sead::Vector3f* moveVec, const sead::Vector3f& inputDir) const;
-    void makeDisplayQuatInHackJump(const sead::Quatf& quatA, const sead::Quatf& quatB,
-                                   const sead::Quatf& quatC, bool isValue);
+    void makeDisplayQuatInHackJump(const sead::Quatf& prevQuat, const sead::Quatf& deltaQuat,
+                                   const sead::Quatf& quatZY, bool flipDirection);
     bool isDropAttackCollision() const;
     bool isRiseAttackCollision() const;
     bool isHoldHackJump() const;
     bool tryShiftContinuousJump();
     bool calcHackerMoveDir(sead::Vector3f* moveDir, const sead::Vector3f& inputDir) const;
     bool isWaitingLaunch() const;
-    void launch(const sead::Vector3f& dir, f32 force, al::CameraTicket* cameraTicket);
-    void launchCancel(const sead::Vector3f& dir);
+    void launch(const sead::Vector3f& targetPos, f32 launchDegree, al::CameraTicket* cameraTicket);
+    void launchCancel(const sead::Vector3f& targetPos);
     void showHackCap();
     void hideHackCap();
     bool isTriggerJump() const;
@@ -99,7 +99,7 @@ public:
     void startJumpAnim(f32 force);
     void resetAndAppear(const sead::Vector3f& trans, const sead::Quatf& quat, f32 unused);
     void endHackCommon();
-    void calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& vecA, f32 valA, f32 valB) const;
+    void calcLaunchPos(sead::Vector3f* pos, const sead::Vector3f& targetPos, f32 launchDegree, f32 frame) const;
     void onGroupClipping();
     bool isOnGroundNoVelocity() const;
     void updateCollisionPartsMove();

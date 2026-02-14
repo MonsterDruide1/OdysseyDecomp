@@ -21,7 +21,7 @@ class CameraTargetHolder {
 public:
     CameraTargetHolder(s32 maxTargets);
 
-    void initAfterPlacement(const PlayerHolder*);
+    void initAfterPlacement(const PlayerHolder* holder);
     CameraTargetBase* tryGetViewTarget(s32 index) const;
     void update();
     void addTarget(CameraTargetBase* target);

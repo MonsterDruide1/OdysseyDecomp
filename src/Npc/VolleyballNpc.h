@@ -34,7 +34,7 @@ public:
     void endGame();
     bool receiveEvent(const al::EventFlowEventData* event) override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
-    void startGame(bool startEvent);
+    void startGame(bool startEventFlow);
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
     void addSuccessCount();

@@ -14,7 +14,7 @@ public:
     FirstSequenceScene();
     ~FirstSequenceScene();
 
-    void init(const al::SceneInitInfo& initInfo) override;
+    void init(const al::SceneInitInfo& info) override;
     void appear() override;
     void control() override;
     void drawMain() const override;

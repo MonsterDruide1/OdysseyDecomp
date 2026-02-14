@@ -14,7 +14,7 @@ class PropellerRotateInfo;
 class KoopaShip : public al::LiveActor {
 public:
     KoopaShip(const char*);
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void onSwitchGateKeeperOpeningDemoStart();
     void onBlurMovie();
     void initAfterPlacement() override;

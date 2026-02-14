@@ -86,7 +86,7 @@ public:
     StageScene();
     ~StageScene() override;
 
-    void init(const al::SceneInitInfo& sceneInitInfo) override;
+    void init(const al::SceneInitInfo& info) override;
     void stopCollectBgm();
     bool tryChangeDemo();
     void appear() override;

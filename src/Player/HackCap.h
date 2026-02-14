@@ -27,7 +27,7 @@ public:
             const PlayerJointControlKeeper*, HackCapJudgePreInputSeparateThrow*,
             HackCapJudgePreInputSeparateJump*);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void hide(bool);
     void movement() override;
     void updateShadowMaskOffset();

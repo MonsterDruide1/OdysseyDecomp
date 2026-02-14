@@ -10,9 +10,9 @@ public:
     ModelDrawerDepthShadow(const char* name, bool, bool);
 
     void createTable() override;
-    void registerModel(ModelCtrl*) override;
-    void addModel(ModelCtrl*) override;
-    void updateModel(ModelCtrl*) override;
+    void registerModel(ModelCtrl* model) override;
+    void addModel(ModelCtrl* model) override;
+    void updateModel(ModelCtrl* model) override;
     void draw() const override;
 
 private:

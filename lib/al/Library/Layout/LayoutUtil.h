@@ -14,12 +14,12 @@ class LayoutSystem;
 class MessageSystem;
 class SceneObjHolder;
 
-void initLayoutInitInfo(LayoutInitInfo*, const LayoutKit*, SceneObjHolder*, const AudioDirector*,
-                        const LayoutSystem*, const MessageSystem*, const GamePadSystem*);
+void initLayoutInitInfo(LayoutInitInfo* info, const LayoutKit* kit, SceneObjHolder* sceneObjHolder, const AudioDirector* audioDirector,
+                        const LayoutSystem* layoutSystem, const MessageSystem* messageSystem, const GamePadSystem* gamePadSystem);
 void setRenderBuffer(LayoutKit*, const agl::RenderBuffer*);
 void executeUpdate(LayoutKit*);
-void executeUpdateList(LayoutKit*, const char*, const char*);
-void executeUpdateEffect(LayoutKit*);
-void executeDraw(const LayoutKit*, const char*);
-void executeDrawEffect(const LayoutKit*);
+void executeUpdateList(LayoutKit* kit, const char* tableName, const char* listName);
+void executeUpdateEffect(LayoutKit* kit);
+void executeDraw(const LayoutKit* kit, const char* tableName);
+void executeDrawEffect(const LayoutKit* kit);
 }  // namespace al

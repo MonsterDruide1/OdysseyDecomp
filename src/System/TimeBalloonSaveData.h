@@ -13,8 +13,8 @@ class TimeBalloonSaveData : public ByamlSave {
 public:
     TimeBalloonSaveData();
     void init();
-    void write(al::ByamlWriter*) override;
-    void read(const al::ByamlIter&) override;
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& save) override;
 
     bool isExplainedTutorial() const { return mIsExplainedTutorial; }
 

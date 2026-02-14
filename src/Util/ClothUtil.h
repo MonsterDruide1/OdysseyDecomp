@@ -50,7 +50,7 @@ s32 calcHaveGiftNum(GameDataHolderAccessor accessor);
 bool checkCompleteGift(GameDataHolderAccessor accessor, s32 fileId);
 const sead::PtrArray<ShopItem::ItemInfo>& getStickerList(GameDataHolderAccessor accessor);
 s32 getStickerListSize(GameDataHolderAccessor accessor);
-bool isHaveSticker(GameDataHolderAccessor accessor, s32 fileId);
+bool isHaveSticker(GameDataHolderAccessor accessor, s32 stickerIdx);
 s32 calcHaveStickerNum(GameDataHolderAccessor accessor);
 bool checkCompleteSticker(GameDataHolderAccessor accessor, s32 fileId);
 const char* getTestClothesName();

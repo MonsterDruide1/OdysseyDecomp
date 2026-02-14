@@ -12,14 +12,14 @@ class WaterSurfaceShadow;
 
 namespace rs {
 
-f32 setShadowDropLength(al::LiveActor*, const al::ActorInitInfo&, const char*);
-void calcShadowDropClippingCenter(sead::Vector3f*, const al::LiveActor*, f32, f32);
-void setShadowDropOffset(al::LiveActor*, const char*, f32);
-WaterSurfaceShadow* tryCreateWaterSurfaceShadow(const al::ActorInitInfo&, const char*);
-WaterSurfaceShadow* tryCreateWaterSurfaceCoinShadow(const al::ActorInitInfo&);
-void tryUpdateWaterSurfaceCoinShadow(WaterSurfaceShadow*, al::LiveActor*, f32);
-void initHackShadow(al::LiveActor*);
-void setupHackShadow(al::LiveActor*);
-void endHackShadow(al::LiveActor*);
+f32 setShadowDropLength(al::LiveActor* actor, const al::ActorInitInfo& initInfo, const char* maskName);
+void calcShadowDropClippingCenter(sead::Vector3f* vec, const al::LiveActor* actor, f32 f, f32 f2);
+void setShadowDropOffset(al::LiveActor* actor, const char* maskName, f32 distance);
+WaterSurfaceShadow* tryCreateWaterSurfaceShadow(const al::ActorInitInfo& initInfo, const char* archiveName);
+WaterSurfaceShadow* tryCreateWaterSurfaceCoinShadow(const al::ActorInitInfo& initInfo);
+void tryUpdateWaterSurfaceCoinShadow(WaterSurfaceShadow* shadow, al::LiveActor* actor, f32 distance);
+void initHackShadow(al::LiveActor* actor);
+void setupHackShadow(al::LiveActor* actor);
+void endHackShadow(al::LiveActor* actor);
 
 }  // namespace rs

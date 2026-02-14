@@ -41,7 +41,7 @@ WaterSurfaceShadow* tryCreateWaterSurfaceShadow(const al::ActorInitInfo& initInf
 
     if (!useWaterSurfaceShadow)
         return nullptr;
-    if (archiveName == nullptr)
+    if (!archiveName )
         return new WaterSurfaceShadow(initInfo, "WaterSurfaceShadow");
     return new WaterSurfaceShadow(initInfo, archiveName);
 }

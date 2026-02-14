@@ -11,7 +11,7 @@ public:
     // TODO: Rename parameter
     SaveDataSequenceInitDir(u8 a);
 
-    s32 threadFunc(const char* fileName) override;
+    s32 threadFunc(const char* filename) override;
 
     void start(u8* buffer, u32 bufferSize, u32 version);
 

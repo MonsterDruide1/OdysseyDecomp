@@ -11,8 +11,8 @@ public:
 
     void createTable() override;
     void draw() const override;
-    void addModel(ModelCtrl*) override;
-    void removeModel(ModelCtrl*) override;
+    void addModel(ModelCtrl* model) override;
+    void removeModel(ModelCtrl* model) override;
 
 private:
     bool _50;

@@ -28,12 +28,12 @@ public:
     void registerCoinCollect2D(CoinCollect2D* coin);
     void registerHintObj(CoinCollectHintObj* hintObj);
 
-    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f& playerPos, bool checkAreaOb) const;
+    CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f& playerPos, bool checkAreaObj) const;
     CoinCollect* tryFindAliveCoinCollect(const sead::Vector3f& playerPos, f32 minRange,
                                          f32 maxRange, bool checkAreaObj) const;
     CoinCollect* tryFindDeadButHintEnableCoinCollect() const;
     CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f& playerPos,
-                                             bool checkAreaOb) const;
+                                             bool checkAreaObj) const;
     CoinCollect2D* tryFindAliveCoinCollect2D(const sead::Vector3f& playerPos, f32 minRange,
                                              f32 maxRange, bool checkAreaObj) const;
     bool tryFindExStageHintObjTrans(sead::Vector3f* outTrans, const char* stageName);

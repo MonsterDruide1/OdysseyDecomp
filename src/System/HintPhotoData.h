@@ -17,8 +17,8 @@ public:
     void init();
     void saveHintPhoto(const char*);
     bool checkSavedHintPhoto(const char*) const;
-    void write(al::ByamlWriter*) override;
-    void read(const al::ByamlIter&) override;
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& save) override;
 
 private:
     GameDataFile* mGameDataFile;

@@ -64,7 +64,7 @@ private:
     void* _0[1];
     ShadowMaskDirector* mShadowMaskDirector;
     DepthShadowMapDirector* mDepthShadowMapDirector;
-    void* _10[0x148 / 8];
+    void* _18[0x148 / 8];
 };
 
 static_assert(sizeof(ShadowDirector) == 0x160);

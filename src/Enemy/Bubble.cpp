@@ -83,13 +83,13 @@ static PlayerHackStartShaderParam gPlayerHackStartShaderParam(true, 200.0f, 10, 
 Bubble::Bubble(const char* name)
     : al::LiveActor(name), mAnimScaleController(new al::AnimScaleController(&gAnimScaleParam)) {}
 
-void Bubble::init(const al::ActorInitInfo& initInfo) {
+void Bubble::init(const al::ActorInitInfo& info) {
     using BubbleFunctor = al::FunctorV0M<Bubble*, void (Bubble::*)()>;
 
-    al::initActorWithArchiveName(this, initInfo, "Bubble", nullptr);
+    al::initActorWithArchiveName(this, info, "Bubble", nullptr);
 
     sead::Vector3f moveNext;
-    if (al::tryGetLinksTrans(&moveNext, initInfo, "MoveNext")) {
+    if (al::tryGetLinksTrans(&moveNext, info, "MoveNext")) {
         mJumpHeight = sead::Mathf::abs(moveNext.y - al::getTrans(this).y);
         if (moveNext.y < al::getTrans(this).y)
             al::getTransPtr(this)->set(moveNext);
@@ -101,9 +101,9 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
         al::setSyncRailToStart(this);
         mRailTotalLength = al::getRailTotalLength(this);
 
-        if (!al::tryGetArg(&mRailMoveFrame, initInfo, "RailMoveFrame") || mRailMoveFrame < 1) {
+        if (!al::tryGetArg(&mRailMoveFrame, info, "RailMoveFrame") || mRailMoveFrame < 1) {
             f32 railMoveSpeed = 10.0f;
-            al::tryGetArg(&railMoveSpeed, initInfo, "RailMoveSpeed");
+            al::tryGetArg(&railMoveSpeed, info, "RailMoveSpeed");
             if (railMoveSpeed <= 0.0f)
                 railMoveSpeed = 10.0f;
             mRailMoveFrame = sead::Mathf::ceil(mRailTotalLength / railMoveSpeed);
@@ -117,15 +117,15 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
     mTurnFrameDelay = mJumpHeight / 13.0f;
     recalcClippingInfo();
 
-    al::tryGetArg(&mWaitFrameNum, initInfo, "WaitFrameNum");
+    al::tryGetArg(&mWaitFrameNum, info, "WaitFrameNum");
     if (mWaitFrameNum < 0)
         mWaitFrameNum = 0;
 
-    al::tryGetArg(&mDelayFrameNum, initInfo, "DelayFrameNum");
+    al::tryGetArg(&mDelayFrameNum, info, "DelayFrameNum");
     if (mDelayFrameNum < 0)
         mDelayFrameNum = 0;
 
-    al::tryGetArg(&mIsWaveCheckOn, initInfo, "IsWaveCheckOn");
+    al::tryGetArg(&mIsWaveCheckOn, info, "IsWaveCheckOn");
     mReviveDelayTime = mTurnFrameDelay * 2 + mWaitFrameNum + 80;
 
     if (al::isExistRail(this)) {
@@ -134,7 +134,7 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
     }
 
     f32 shootDegree;
-    al::tryGetArg(&shootDegree, initInfo, "ShootDegree");
+    al::tryGetArg(&shootDegree, info, "ShootDegree");
     al::initNerve(this, &NrvBubble.StandBy, 1);
     mBubbleStateInLauncher = new BubbleStateInLauncher(this);
     al::initNerveState(this, mBubbleStateInLauncher, &NrvBubble.HackInLauncher, "バブルランチャー");
@@ -147,10 +147,10 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
     mCapTargetInfo = rs::createCapTargetInfo(this, nullptr);
 
     bool stageStartHack = false;
-    al::tryGetArg(&stageStartHack, initInfo, "StageStartHack");
+    al::tryGetArg(&stageStartHack, info, "StageStartHack");
     if (!stageStartHack) {
         al::PlacementInfo placementInfo;
-        if (al::tryGetLinksInfo(&placementInfo, initInfo, "MoveNext"))
+        if (al::tryGetLinksInfo(&placementInfo, info, "MoveNext"))
             al::tryGetArg(&stageStartHack, placementInfo, "StageStartHack");
     }
 
@@ -178,14 +178,14 @@ void Bubble::init(const al::ActorInitInfo& initInfo) {
     al::setColliderFilterCollisionParts(this, mCollisionPartsFilter);
     mClippingProbeActor = new al::LiveActor("グループ同期");
 
-    al::initActorWithArchiveName(mClippingProbeActor, initInfo, "Bubble", "Probe");
+    al::initActorWithArchiveName(mClippingProbeActor, info, "Bubble", "Probe");
 
     al::setClippingInfo(mClippingProbeActor, al::getClippingRadius(this), &mClippingPos);
     mClippingProbeActor->makeActorAlive();
 
-    if (al::isExistRail(this) && al::isExistLinkChild(initInfo, "TurnTarget", 0)) {
+    if (al::isExistRail(this) && al::isExistLinkChild(info, "TurnTarget", 0)) {
         sead::Vector3f trans;
-        al::tryGetLinksQT(&mRailTargetRotation, &trans, initInfo, "TurnTarget");
+        al::tryGetLinksQT(&mRailTargetRotation, &trans, info, "TurnTarget");
     } else {
         mRailTargetRotation.set(mStartingRotation);
     }

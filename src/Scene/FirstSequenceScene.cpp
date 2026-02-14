@@ -41,24 +41,24 @@ FirstSequenceScene::~FirstSequenceScene() {
     Application::instance()->getGameFramework()->enableClearRenderBuffer();
 }
 
-void FirstSequenceScene::init(const al::SceneInitInfo& initInfo) {
-    initDrawSystemInfo(initInfo);
+void FirstSequenceScene::init(const al::SceneInitInfo& info) {
+    initDrawSystemInfo(info);
 
     initSceneObjHolder(SceneObjFactory::createSceneObjHolder());
-    al::setSceneObj(this, GameDataFunction::getGameDataHolder(initInfo.gameDataHolder),
+    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder),
                     SceneObjID_GameDataHolder);
 
     initSceneStopCtrl();
 
     al::AudioDirectorInitInfo audioDirectorInitInfo;
-    al::initAudioDirector2D(this, initInfo, audioDirectorInitInfo);
-    alAudioSystemFunction::disableAudioMaximizer(initInfo.gameSystemInfo);
-    al::initSceneAudioKeeper(this, initInfo, nullptr);
+    al::initAudioDirector2D(this, info, audioDirectorInitInfo);
+    alAudioSystemFunction::disableAudioMaximizer(info.gameSystemInfo);
+    al::initSceneAudioKeeper(this, info, nullptr);
 
-    initLayoutKit(initInfo);
+    initLayoutKit(info);
     getLayoutKit()->createExecuteDirector(0x80);
     al::LayoutInitInfo layoutInitInfo;
-    al::initLayoutInitInfo(&layoutInitInfo, this, initInfo);
+    al::initLayoutInitInfo(&layoutInitInfo, this, info);
 
     mBootLayout = new BootLayout(layoutInitInfo);
     mBootLayout->appear();
@@ -66,7 +66,7 @@ void FirstSequenceScene::init(const al::SceneInitInfo& initInfo) {
 
     initNerve(&Wipe, 1);
 
-    mWaveVibrationHolder = initInfo.gameSystemInfo->waveVibrationHolder;
+    mWaveVibrationHolder = info.gameSystemInfo->waveVibrationHolder;
 
     mStateSelectMode = new SceneStateSelectMode("モード選択", this, layoutInitInfo, nullptr,
                                                 nullptr, mWaveVibrationHolder);

@@ -27,7 +27,7 @@ class ShineTowerRocket : public al::LiveActor,
                          public IUseDemoSkip {
 public:
     ShineTowerRocket(const char*);
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void onSwitchDither();
     void offSwitchDither();
     void makeActorDead() override;
@@ -40,7 +40,7 @@ public:
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
-    bool receiveEvent(const al::EventFlowEventData*) override;
+    bool receiveEvent(const al::EventFlowEventData* event) override;
     void tryStartEntranceCamera(s32);
     bool isFirstDemo() const override;
     bool isEnableSkipDemo() const override;

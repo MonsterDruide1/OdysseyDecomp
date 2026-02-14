@@ -17,8 +17,8 @@ public:
     bool isNeedUpload(const RankingCategory&) const;
     void upload(const RankingCategory&);
     void updateScore(const RankingCategory&);
-    void write(al::ByamlWriter*) override;
-    void read(const al::ByamlIter&) override;
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& save) override;
 
     struct Entry {
         bool isNeedUpload;

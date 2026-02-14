@@ -12,7 +12,7 @@ class CameraTicket;
 class KeyMoveCameraObj : public LiveActor {
 public:
     KeyMoveCameraObj(const char*);
-    void init(const ActorInitInfo&) override;
+    void init(const ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void switchCamera(s32);
     void appear() override;

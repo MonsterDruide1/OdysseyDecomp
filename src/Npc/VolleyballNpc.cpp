@@ -69,55 +69,55 @@ static const NpcEventStateScareActionParam gStateScare("ScaredStart", "Scared", 
 
 VolleyballNpc::VolleyballNpc(const char* name) : al::LiveActor(name) {}
 
-void VolleyballNpc::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "SeaMan", "Volleyball");
+void VolleyballNpc::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "SeaMan", "Volleyball");
     al::startMtpAnim(this, "Body1");
-    TalkNpcCap::createForVolleyballNpc(this, initInfo);
-    mEventFlowExecutor = rs::initEventFlowSuffix(this, initInfo, "Volleyball", nullptr, nullptr);
+    TalkNpcCap::createForVolleyballNpc(this, info);
+    mEventFlowExecutor = rs::initEventFlowSuffix(this, info, "Volleyball", nullptr, nullptr);
     al::MessageTagDataHolder* messageHolder = al::initMessageTagDataHolder(1);
     al::registerMessageTagDataScore(messageHolder, "Score", &mCurrentScore);
     rs::initEventMessageTagDataHolder(mEventFlowExecutor, messageHolder);
     mBestScore = rs::getVolleyballBestCount(this);
     mDayScore = rs::getVolleyballDayCount(this);
-    mShineClear = rs::tryInitLinkShine(initInfo, "ShineActor", 0);
-    mShineSuperClear = rs::tryInitLinkShine(initInfo, "ShineActor", 1);
+    mShineClear = rs::tryInitLinkShine(info, "ShineActor", 0);
+    mShineSuperClear = rs::tryInitLinkShine(info, "ShineActor", 1);
 
     al::AreaObjGroup* gameAreaGroup = al::createLinkAreaGroup(
-        this, initInfo, "VolleyballArea", "バレー開始エリア", "バレー開始エリア");
+        this, info, "VolleyballArea", "バレー開始エリア", "バレー開始エリア");
     if (gameAreaGroup && gameAreaGroup->getSize() == 1)
         mGameArea = gameAreaGroup->getAreaObj(0);
     else
         makeActorDead();
 
     al::AreaObjGroup* ballAreaGroup =
-        al::createLinkAreaGroup(this, initInfo, "BallArea", "ボール範囲", "ボール範囲");
+        al::createLinkAreaGroup(this, info, "BallArea", "ボール範囲", "ボール範囲");
     if (ballAreaGroup && ballAreaGroup->getSize() == 1)
         mBallArea = ballAreaGroup->getAreaObj(0);
     else
         makeActorDead();
 
     al::AreaObjGroup* layoutAreaGroup =
-        al::createLinkAreaGroup(this, initInfo, "LayoutArea", "レイアウト範囲", "レイアウト範囲");
+        al::createLinkAreaGroup(this, info, "LayoutArea", "レイアウト範囲", "レイアウト範囲");
     if (layoutAreaGroup && layoutAreaGroup->getSize() == 1)
         mLayoutArea = layoutAreaGroup->getAreaObj(0);
     else
         makeActorDead();
 
-    al::getArg(&mLevelUpCount, initInfo, "LevelUpCount");
-    al::getArg(&mLevelUpSpeed, initInfo, "LevelUpSpeed");
-    al::getArg(&mMaxSpeed, initInfo, "MaxSpeed");
-    al::getArg(&mInitSpeed, initInfo, "InitSpeed");
-    al::getArg(&mBallNumMax, initInfo, "BallNumMax");
-    al::getArg(&mLevelUpBallCount, initInfo, "LevelUpBallCount");
-    al::getArg(&mClearCount, initInfo, "ClearCount");
-    al::getArg(&mSuperClearCount, initInfo, "SuperClearCount");
+    al::getArg(&mLevelUpCount, info, "LevelUpCount");
+    al::getArg(&mLevelUpSpeed, info, "LevelUpSpeed");
+    al::getArg(&mMaxSpeed, info, "MaxSpeed");
+    al::getArg(&mInitSpeed, info, "InitSpeed");
+    al::getArg(&mBallNumMax, info, "BallNumMax");
+    al::getArg(&mLevelUpBallCount, info, "LevelUpBallCount");
+    al::getArg(&mClearCount, info, "ClearCount");
+    al::getArg(&mSuperClearCount, info, "SuperClearCount");
 
     al::DeriveActorGroup<VolleyballBall>* ballGroup =
         new al::DeriveActorGroup<VolleyballBall>("バレーボールのボール", mBallNumMax);
     mBallGroup = ballGroup;
     for (s32 i = 0; i < ballGroup->getMaxActorCount(); i++) {
         VolleyballBall* ball = new VolleyballBall("バレーボールのボール");
-        al::initCreateActorNoPlacementInfo(ball, initInfo);
+        al::initCreateActorNoPlacementInfo(ball, info);
         ballGroup->registerActor(ball);
     }
 
@@ -128,9 +128,9 @@ void VolleyballNpc::init(const al::ActorInitInfo& initInfo) {
     }
 
     mBase = new VolleyballBase("土台");
-    al::initLinksActor(mBase, initInfo, "Base", 0);
+    al::initLinksActor(mBase, info, "Base", 0);
 
-    mLayout = new VolleyballLayout(this, initInfo);
+    mLayout = new VolleyballLayout(this, info);
 
     al::calcFrontDir(&mFrontDir, this);
 

@@ -133,7 +133,7 @@ void Souvenir::exeWait() {
               al::isActionPlaying(this, "ReactionCap3")) ||
              (al::isExistAction(this, "ReactionCap4") &&
               al::isActionPlaying(this, "ReactionCap4"))) &&
-            getNextAction(this) != nullptr)
+            getNextAction(this) )
             return;
 
         if (mIsWait) {

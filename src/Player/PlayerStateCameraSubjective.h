@@ -15,7 +15,7 @@ class PlayerInput;
 class PlayerStateCameraSubjective : public al::ActorStateBase {
 public:
     PlayerStateCameraSubjective(al::LiveActor* player, al::CameraTicket* cameraTicket,
-                                IPlayerModelChanger* modelChanger, PlayerCarryKeeper* carrykeeper,
+                                IPlayerModelChanger* modelChanger, PlayerCarryKeeper* carryKeeper,
                                 PlayerAnimator* animator, const PlayerConst* playerConst,
                                 const IUsePlayerCollision* collider, const PlayerInput* input);
 

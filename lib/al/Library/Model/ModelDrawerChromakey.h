@@ -10,7 +10,7 @@ public:
     ModelDrawerChromakey(const char* name, bool, bool, bool, bool);
 
     void createTable() override;
-    void registerModel(ModelCtrl*) override;
+    void registerModel(ModelCtrl* model) override;
     void draw() const override;
 
 private:

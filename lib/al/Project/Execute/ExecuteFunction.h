@@ -20,11 +20,11 @@ bool isUpdateListActor(const al::ExecuteOrder& executeOrder);
 bool isDrawListActor(const al::ExecuteOrder& executeOrder);
 bool isDrawListActorModel(const al::ExecuteOrder& executeOrder);
 bool isDrawListLayout(const al::ExecuteOrder& executeOrder);
-s32 calcExecutorListNumMax(const al::ExecuteOrder* executeOrder, s32 executeDirectorSize,
+s32 calcExecutorListNumMax(const al::ExecuteOrder* executeOrder, s32 executeOrderSize,
                            const char* listName);
-s32 calcUpdateListActorNumMax(const al::ExecuteOrder* executeOrder, s32 executeDirectorSize);
-s32 calcDrawListActorNumMax(const al::ExecuteOrder* executeOrder, s32 executeDirectorSize);
-s32 calcDrawListActorModelNumMax(const al::ExecuteOrder* executeOrder, s32 executeDirectorSize);
-s32 calcDrawListLayoutNumMax(const al::ExecuteOrder* executeOrder, s32 executeDirectorSize);
+s32 calcUpdateListActorNumMax(const al::ExecuteOrder* executeOrder, s32 executeOrderSize);
+s32 calcDrawListActorNumMax(const al::ExecuteOrder* executeOrder, s32 executeOrderSize);
+s32 calcDrawListActorModelNumMax(const al::ExecuteOrder* executeOrder, s32 executeOrderSize);
+s32 calcDrawListLayoutNumMax(const al::ExecuteOrder* executeOrder, s32 executeOrderSize);
 
 }  // namespace alExecutorFunction

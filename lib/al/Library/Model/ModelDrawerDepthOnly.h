@@ -11,10 +11,10 @@ public:
 
     void createTable() override;
     void draw() const override;
-    void registerModel(ModelCtrl*) override;
-    void addModel(ModelCtrl*) override;
-    void removeModel(ModelCtrl*) override;
-    void updateModel(ModelCtrl*) override;
+    void registerModel(ModelCtrl* model) override;
+    void addModel(ModelCtrl* model) override;
+    void removeModel(ModelCtrl* model) override;
+    void updateModel(ModelCtrl* model) override;
 
     virtual void createTableCulling();
 

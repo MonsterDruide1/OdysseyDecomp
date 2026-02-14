@@ -44,7 +44,7 @@ public:
 
     ResourceSystem(const char* name);
 
-    ResourceCategory* addCategory(const sead::SafeString& name, s32 id, sead::Heap* heap);
+    ResourceCategory* addCategory(const sead::SafeString& name, s32 size, sead::Heap* heap);
     Resource* findOrCreateResourceCategory(const sead::SafeString& name,
                                            const sead::SafeString& category, const char* ext);
     sead::RingBuffer<ResourceCategory*>::iterator
@@ -55,7 +55,7 @@ public:
     Resource* createResource(const sead::SafeString& name, ResourceCategory* category,
                              const char* ext);
     void removeCategory(const sead::SafeString& name);
-    Resource* findResource(const sead::SafeString& name);
+    Resource* findResource(const sead::SafeString& categoryName);
     Resource* findResourceCore(const sead::SafeString& name,
                                sead::RingBuffer<ResourceCategory*>::iterator* outIter);
     Resource* findOrCreateResource(const sead::SafeString& categoryName, const char* name);

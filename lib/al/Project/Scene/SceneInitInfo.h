@@ -12,7 +12,7 @@ class AudioDirector;
 struct SceneInitInfo {
     SceneInitInfo(const GameSystemInfo* gameSystemInfo, GameDataHolderBase* gameDataHolder,
                   ScreenCaptureExecutor* screenCaptureExecutor, const char* initStageName,
-                  s32 scenarioNo, const char* sceneName, AudioDirector* audioDirector);
+                  s32 scenarioNo, const char* initSceneName, AudioDirector* audioDirector);
     const GameSystemInfo* gameSystemInfo;
     GameDataHolderBase* gameDataHolder;
     ScreenCaptureExecutor* screenCaptureExecutor;

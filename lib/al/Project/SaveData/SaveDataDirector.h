@@ -23,8 +23,8 @@ public:
     bool requestInitSaveDir(const char* fileName, u32 dirSize, u32 version);
     bool initSaveDirSync(const char* fileName, u32 dirSize, u32 version);
     // TODO: add parameter names to requestFormat and formatSync
-    bool requestFormat(s32, s32);
-    bool formatSync(s32, s32);
+    bool requestFormat(s32 a, s32 b);
+    bool formatSync(s32 a, s32 b);
     bool requestRead(const char* fileName, u32 readSize, u32 version);
     bool readSync(const char* fileName, u32 readSize, u32 version);
     bool requestWrite(const char* fileName, u32 writeSize, u32 version, bool isFlushNeeded);

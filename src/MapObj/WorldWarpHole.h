@@ -19,7 +19,7 @@ class IUsePlayerPuppet;
 class WorldWarpHole : public al::LiveActor {
 public:
     WorldWarpHole(const char*);
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;

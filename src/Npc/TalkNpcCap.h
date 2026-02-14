@@ -24,7 +24,7 @@ public:
     void initAttach(const al::LiveActor*);
     void makeActorAlive() override;
     void control() override;
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
 
 private:
     const char* _108;

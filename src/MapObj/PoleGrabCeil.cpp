@@ -32,21 +32,21 @@ NERVES_MAKE_STRUCT(PoleGrabCeil, Wait, Grab, GrabEnd);
 
 PoleGrabCeil::PoleGrabCeil(const char* name) : al::LiveActor(name) {}
 
-void PoleGrabCeil::init(const al::ActorInitInfo& initInfo) {
-    if (al::isObjectName(initInfo, "PoleGrabCeilKeyMoveParts")) {
-        al::initActorWithArchiveName(this, initInfo, "PoleGrabCeilKeyMoveParts", "KeyMoveParts");
+void PoleGrabCeil::init(const al::ActorInitInfo& info) {
+    if (al::isObjectName(info, "PoleGrabCeilKeyMoveParts")) {
+        al::initActorWithArchiveName(this, info, "PoleGrabCeilKeyMoveParts", "KeyMoveParts");
         mKeyMoveFollowTarget = new al::KeyMoveFollowTarget("ぶらさがり棒[キームーブ移動]本体");
-        mKeyMoveFollowTarget->initKeyMoveFollowTarget(initInfo, "PoleGrabCeilKeyMoveParts",
+        mKeyMoveFollowTarget->initKeyMoveFollowTarget(info, "PoleGrabCeilKeyMoveParts",
                                                       nullptr);
-        al::initSubActorKeeperNoFile(this, initInfo, 1);
+        al::initSubActorKeeperNoFile(this, info, 1);
         al::registerSubActor(this, mKeyMoveFollowTarget);
-        al::tryGetArg(&mIsCollisionCheck, initInfo, "IsCollisionCheck");
+        al::tryGetArg(&mIsCollisionCheck, info, "IsCollisionCheck");
         mSurfaceMatrix.makeIdentity();
         al::setEffectNamedMtxPtr(mKeyMoveFollowTarget, "Surface", &mSurfaceMatrix);
     } else {
-        al::initActorWithArchiveName(this, initInfo, "PoleGrabCeil", nullptr);
-        mMtxConnector = al::tryCreateMtxConnector(this, initInfo);
-        mIsConnectPose = al::tryGetBoolArgOrFalse(initInfo, "IsConnectPose");
+        al::initActorWithArchiveName(this, info, "PoleGrabCeil", nullptr);
+        mMtxConnector = al::tryCreateMtxConnector(this, info);
+        mIsConnectPose = al::tryGetBoolArgOrFalse(info, "IsConnectPose");
     }
 
     al::initNerve(this, &NrvPoleGrabCeil.Wait, 0);

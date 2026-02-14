@@ -39,8 +39,8 @@ CoinStackBound::CoinStackBound(const char* name) : al::LiveActor(name) {
     mBounceMtxEffect.makeIdentity();
 }
 
-void CoinStackBound::init(const al::ActorInitInfo& initInfo) {
-    al::initActorWithArchiveName(this, initInfo, "CoinStackBound", nullptr);
+void CoinStackBound::init(const al::ActorInitInfo& info) {
+    al::initActorWithArchiveName(this, info, "CoinStackBound", nullptr);
     al::initJointControllerKeeper(this, 1);
     mQuat.set(1.0f, 0.0f, 0.0f, 0.0f);
     al::initJointGlobalQuatController(this, &mQuat, "AllRoot");

@@ -10,7 +10,7 @@ class SaveDataSequenceFormat : public SaveDataSequenceBase {
 public:
     SaveDataSequenceFormat();
 
-    s32 threadFunc(const char* fileName) override;
+    s32 threadFunc(const char* filename) override;
 
     // TODO: Rename parameters
     void start(s32 a, s32 b);

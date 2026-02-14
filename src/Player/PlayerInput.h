@@ -42,9 +42,9 @@ public:
     bool isTriggerHipDrop() const;
     bool isTriggerHeadSliding() const;
     bool isTriggerPaddle() const;
-    bool isTriggerRolling(bool) const;
+    bool isTriggerRolling(bool a1) const;
     bool isTriggerRollingRestartSwing() const;
-    bool isTriggerRollingCancelHipDrop(bool) const;
+    bool isTriggerRollingCancelHipDrop(bool a1) const;
     bool isTriggerHackAction() const;
     bool isTriggerHackJump() const;
     bool isTriggerHackSwing() const;
@@ -72,7 +72,7 @@ public:
     bool isTriggerCapSeparateHipDrop() const;
     bool isTriggerSwingPoleClimbFast() const;
     bool isHoldPoleClimbDown() const;
-    bool isTriggerAppendCapAttack(bool) const;
+    bool isTriggerAppendCapAttack(bool a1) const;
     bool isHoldSquat() const;
     void calcInputDirectionSnap2D(sead::Vector3f*) const;
     bool isHoldSpinCap() const;
@@ -120,8 +120,8 @@ public:
     bool isSwingDirLeft() const;
     bool isSwingDirRight() const;
     bool isThrowTypeLeftRight(const sead::Vector2f&) const;
-    bool isThrowTypeSpiral(const sead::Vector2f&) const;
-    bool isThrowTypeRolling(const sead::Vector2f&) const;
+    bool isThrowTypeSpiral(const sead::Vector2f& a1) const;
+    bool isThrowTypeRolling(const sead::Vector2f& a1) const;
     bool isEnableConsiderCapThrowDoubleSwing() const;
     f32 getPoseRotZDegreeLeft() const;
     f32 getPoseRotZDegreeRight() const;

@@ -17,7 +17,7 @@ class HackCap;
 
 class PlayerStateHack : public al::ActorStateBase {
 public:
-    PlayerStateHack(al::LiveActor* parent, PlayerHackKeeper* hackKeeper,
+    PlayerStateHack(al::LiveActor* player, PlayerHackKeeper* hackKeeper,
                     IPlayerModelChanger* modelChanger, PlayerAnimator* animator, HackCap* hackCap);
 
     void appear() override;

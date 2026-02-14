@@ -23,8 +23,8 @@ public:
     bool isEnableExplainShopCoin(s32) const;
     bool checkShowNewItemAndPrepareSave(const GameDataHolderAccessor&, bool, s32);
     bool checkExistNewItem(const GameDataHolderAccessor&, s32, s32, bool) const;
-    void write(al::ByamlWriter*) override;
-    void read(const al::ByamlIter&) override;
+    void write(al::ByamlWriter* writer) override;
+    void read(const al::ByamlIter& save) override;
 
     bool isInNormalCoinShopFirst() const { return mIsInNormalCoinShopFirst; }
 
