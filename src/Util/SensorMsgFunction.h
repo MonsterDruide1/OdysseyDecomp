@@ -110,7 +110,7 @@ bool sendMsgKillByHomeDemo(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgEndHomeDemo(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgKillByMoonRockDemo(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgKillByShineGet(al::HitSensor* receiver, al::HitSensor* sender);
-bool sendMsgKillBySwitchTimer(al::LiveActor* actor);
+bool sendMsgKillBySwitchTimer(al::LiveActor* receiver);
 bool sendMsgKoopaBindStart(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgKoopaCapPlayerFocusTarget(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgKoopaCapPunchFinishL(al::HitSensor* receiver, al::HitSensor* sender);
@@ -305,7 +305,7 @@ bool sendMsgTankKickHack(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgTankKickEnemy(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgTankBullet(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgTankBulletNoReaction(al::HitSensor* receiver, al::HitSensor* sender);
-bool sendMsgTimerAthleticDemoStart(al::LiveActor* actor);
+bool sendMsgTimerAthleticDemoStart(al::LiveActor* receiver);
 bool sendMsgRideOnStart(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgRideOnEnd(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgRideOnRelease(al::HitSensor* receiver, al::HitSensor* sender);
@@ -400,7 +400,7 @@ bool sendMsgStackerCapBoostAttack(al::HitSensor* receiver, al::HitSensor* sender
 bool sendMsgIgnoreIgnitionBomb(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgExplosionReflectBomb(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgGolemStampPress(al::HitSensor* receiver, al::HitSensor* sender);
-bool sendMsgSwitchOnWithSaveRequest(al::LiveActor* actor, SaveObjInfo* info);
+bool sendMsgSwitchOnWithSaveRequest(al::LiveActor* receiver, SaveObjInfo* Info);
 bool sendMsgWanwanReboundAttackToCollided(const al::LiveActor* actor, al::HitSensor* receiver);
 bool sendMsgWanwanBlockAttackToCollided(const al::LiveActor* actor, al::HitSensor* receiver);
 bool sendMsgDigPointSmell(al::HitSensor* receiver, al::HitSensor* sender, DigPoint* pDigPoint);
@@ -415,25 +415,26 @@ bool sendMsgFishingUpImmediately(al::HitSensor* receiver, al::HitSensor* sender,
 bool sendMsgGunetterPush(al::HitSensor* receiver, al::HitSensor* sender,
                          const sead::Vector3f& pCenter, f32 pRadius);
 bool sendMsgTestPunch(al::HitSensor* receiver, al::HitSensor* sender, const sead::Vector3f& pInfo,
-                      s32 pUnk, s32 pTeamId);
+                      s32 pHitId, s32 pTeamId);
 bool sendMsgTestPunchStrong(al::HitSensor* receiver, al::HitSensor* sender,
-                            const sead::Vector3f& pInfo, s32 pUnk, s32 pTeamId);
+                            const sead::Vector3f& pInfo, s32 pHitId, s32 pTeamId);
 bool sendMsgPunchGuard(al::HitSensor* receiver, al::HitSensor* sender, s32 pPunchGuard,
                        s32 pTeamId);
 bool sendMsgTsukkunThrust(al::HitSensor* receiver, al::HitSensor* sender,
-                          const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
+                          const sead::Vector3f& pDir, s32 pHitId, bool pIsNonEnemy);
 bool sendMsgTsukkunThrustSpin(al::HitSensor* receiver, al::HitSensor* sender,
-                              const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
+                              const sead::Vector3f& pDir, s32 pHitId, bool pIsNonEnemy);
 bool sendMsgTsukkunThrustReflect(al::HitSensor* receiver, al::HitSensor* sender,
-                                 const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
+                                 const sead::Vector3f& pDir, s32 pHitId, bool pIsNonEnemy);
 bool sendMsgTsukkunThrustCollide(al::HitSensor* receiver, al::HitSensor* sender,
-                                 const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
+                                 const sead::Vector3f& pDir, s32 pHitId, bool pIsNonEnemy);
 bool sendMsgTsukkunThrustHitReflectCollide(al::HitSensor* receiver, al::HitSensor* sender,
-                                           const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
+                                           const sead::Vector3f& pDir, s32 pHitId,
+                                           bool pIsNonEnemy);
 bool sendMsgTsukkunThrustReflectCollide(al::HitSensor* receiver, al::HitSensor* sender,
-                                        const sead::Vector3f& pDir, s32 pUnk, bool pIsNonEnemy);
+                                        const sead::Vector3f& pDir, s32 pHitId, bool pIsNonEnemy);
 bool sendMsgTsukkunThrustHole(al::HitSensor* receiver, al::HitSensor* sender,
-                              const sead::Vector3f& pJointRootPos, const sead::Vector3f& pBeak4Pos);
+                              const sead::Vector3f& pTsukkunPos, const sead::Vector3f& pBeakPos);
 bool sendMsgTsukkunThroughCollide(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgTsukkunHoldCollide(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgTsukkunForceCancelCollide(al::HitSensor* receiver, al::HitSensor* sender);
@@ -470,7 +471,7 @@ bool sendMsgCapRethrowReturnOnly(al::HitSensor* receiver, al::HitSensor* sender,
                                  const sead::Vector3f& up);
 bool sendMsgCapChangeGiant(al::HitSensor* receiver, al::HitSensor* sender, f32 pUnk, s32 pUnk2);
 bool sendMsgPackunEatCancel(al::HitSensor* receiver, al::HitSensor* sender,
-                            const sead::Vector3f& punk, const sead::Vector3f& punk2);
+                            const sead::Vector3f& pPos, const sead::Vector3f& pFront);
 bool sendMsgPackunEatEnd(al::HitSensor* receiver, al::HitSensor* sender, const sead::Vector3f& pPos,
                          const sead::Vector3f& pDir);
 bool sendMsgPackunEatStartFollow(al::HitSensor* receiver, al::HitSensor* sender,
@@ -525,7 +526,7 @@ bool sendMsgPlayerLookAtPosition(al::HitSensor* receiver, al::HitSensor* sender,
                                  sead::Vector3f* pPos);
 bool sendMsgTargetMarkerPosition(al::HitSensor* receiver, al::HitSensor* sender,
                                  sead::Vector3f* pPos);
-bool sendMsgHackBlowJump(al::HitSensor* receiver, al::HitSensor* sender, const sead::Vector3f& pUp,
+bool sendMsgHackBlowJump(al::HitSensor* receiver, al::HitSensor* sender, const sead::Vector3f& pEnd,
                          f32 pHeight);
 bool sendMsgGolemStampPushV(al::HitSensor* receiver, al::HitSensor* sender, f32 pVelocity);
 bool sendMsgGolemStampPushH(al::HitSensor* receiver, al::HitSensor* sender, f32 pVelocity);
@@ -1020,12 +1021,12 @@ bool isMsgNetworkShootingShot(const al::SensorMsg* pMsg, s32 unk);
 bool isMsgNetworkShootingChargeShot(const al::SensorMsg* pMsg, s32 unk);
 bool isMsgRaceReturnToCourse(const al::SensorMsg* pMsg, sead::Vector3f* pos, sead::Vector3f* front);
 bool isFallingTargetMoonBasementRock(const al::SensorMsg* pMsg);
-bool tryGetTestPunchInfo(sead::Vector3f* info, s32* unk, const al::SensorMsg* pMsg, s32 teamId);
+bool tryGetTestPunchInfo(sead::Vector3f* dir, s32* hitId, const al::SensorMsg* pMsg, s32 teamId);
 bool tryGetTestPunchTeamId(s32* teamId, const al::SensorMsg* pMsg);
 bool tryGetPunchGuard(s32* punchGuard, const al::SensorMsg* pMsg, s32 teamId);
-bool tryGetTsukkunThrustInfo(sead::Vector3f* dir, s32* unk, const al::SensorMsg* pMsg);
+bool tryGetTsukkunThrustInfo(sead::Vector3f* dir, s32* hitId, const al::SensorMsg* pMsg);
 bool tryGetTsukkunThrustReflectDir(sead::Vector3f* dir, const al::SensorMsg* pMsg);
-bool tryGetTsukkunThrustHole(sead::Vector3f* jointRootPos, sead::Vector3f* beak4Pos,
+bool tryGetTsukkunThrustHole(sead::Vector3f* tsukkunPos, sead::Vector3f* beakPos,
                              const al::SensorMsg* pMsg);
 bool tryGetRequestPlayerJumpInfo(f32* power, const al::SensorMsg* pMsg);
 bool tryGetRequestPlayerTrampleJumpInfo(f32* power, const al::SensorMsg* pMsg);
@@ -1056,9 +1057,9 @@ bool isCapRethrowReturnOnly(const al::SensorMsg* pMsg);
 bool tryGetCapRethrowPos(sead::Vector3f* pos, const al::SensorMsg* pMsg);
 bool tryGetCapRethrowFront(sead::Vector3f* front, const al::SensorMsg* pMsg);
 bool tryGetCapRethrowUp(sead::Vector3f* up, const al::SensorMsg* pMsg);
-bool tryGetHackBlowJump(sead::Vector3f* up, f32* height, const al::SensorMsg* pMsg);
-bool tryGetGolemStampPushV(f32* force, const al::SensorMsg* pMsg);
-bool tryGetGolemStampPushH(f32* force, const al::SensorMsg* pMsg);
+bool tryGetHackBlowJump(sead::Vector3f* end, f32* height, const al::SensorMsg* pMsg);
+bool tryGetGolemStampPushV(f32* velocity, const al::SensorMsg* pMsg);
+bool tryGetGolemStampPushH(f32* velocity, const al::SensorMsg* pMsg);
 bool tryGetRequestPlayerWaitAnim(const char** anim, const al::SensorMsg* pMsg);
 bool tryGetCapChangeGiant(f32* unk, s32* unk2, const al::SensorMsg* pMsg);
 bool tryGetByugoBlowForce(sead::Vector3f* force, const al::SensorMsg* pMsg);
@@ -1084,7 +1085,7 @@ bool tryGetCheckPaintAlphaPos(sead::Vector3f* pos, const al::SensorMsg* pMsg);
 bool tryGetSenobiPartsMoveDistance(f32* distance, const al::SensorMsg* pMsg);
 bool tryGetSenobiPartsCollidedNormal(sead::Vector3f* collidedNormal, const al::SensorMsg* pMsg);
 bool tryGetStampTo2DForce(sead::Vector3f* force, const al::SensorMsg* pMsg);
-bool tryGetGhostStartOkObjId(sead::BufferedSafeStringBase<char>*, const al::SensorMsg*);
+bool tryGetGhostStartOkObjId(sead::BufferedSafeStringBase<char>* objId, const al::SensorMsg* pMsg);
 bool tryGetAirExplosionForce(sead::Vector3f* force, const al::SensorMsg* pMsg);
 bool sendMsgGotogotonOn(al::HitSensor* receiver, al::HitSensor* sender);
 bool sendMsgGotogotonGetJumpPath(al::HitSensor* receiver, al::HitSensor* sender,
@@ -1165,7 +1166,7 @@ bool tryReceiveMsgPushToGrowPlantAndCalcPushTrans(sead::Vector3f* trans, const a
                                                   const al::HitSensor* other,
                                                   const al::HitSensor* self, f32 power);
 bool sendMsgInitCapTarget(al::HitSensor* receiver, al::HitSensor* sender,
-                          const CapTargetInfo** pUnk);
+                          const CapTargetInfo** pInfo);
 bool isMsgInitCapTarget(const al::SensorMsg* msg);
 void setCapTargetInfo(const al::SensorMsg* pMsg, const CapTargetInfo* info);
 bool tryReceiveMsgInitCapTargetAndSetCapTargetInfo(const al::SensorMsg* msg,
@@ -1779,9 +1780,9 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(GunetterPush, ((sead::Vector3f, Center), (f32, 
     mRadius = pRadius;
 };
 
-SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(HackBlowJump, ((sead::Vector3f, Up), (f32, Height)),
-                                 ((const sead::Vector3f&, Up), (f32, Height))) {
-    mUp.set(pUp);
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(HackBlowJump, ((sead::Vector3f, End), (f32, Height)),
+                                 ((const sead::Vector3f&, End), (f32, Height))) {
+    mEnd.set(pEnd);
     mHeight = pHeight;
 };
 
@@ -1799,75 +1800,75 @@ SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(SphinxRideAttackTouch,
     mNormal.set(pNormal);
 }
 
-SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TestPunch, ((sead::Vector3f, Dir), (s32, Unk), (s32, TeamId)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (s32, TeamId))) {
+SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TestPunch, ((sead::Vector3f, Dir), (s32, HitId), (s32, TeamId)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (s32, TeamId))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mTeamId = pTeamId;
 };
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TestPunchStrong,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (s32, TeamId)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (s32, TeamId))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (s32, TeamId)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (s32, TeamId))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mTeamId = pTeamId;
 };
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrust,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (bool, IsNonEnemy)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (bool, IsNonEnemy)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mIsNonEnemy = pIsNonEnemy;
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrustSpin,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (bool, IsNonEnemy)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (bool, IsNonEnemy)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mIsNonEnemy = pIsNonEnemy;
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrustReflect,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (bool, IsNonEnemy)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (bool, IsNonEnemy)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mIsNonEnemy = pIsNonEnemy;
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrustCollide,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (bool, IsNonEnemy)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (bool, IsNonEnemy)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mIsNonEnemy = pIsNonEnemy;
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrustHitReflectCollide,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (bool, IsNonEnemy)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (bool, IsNonEnemy)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mIsNonEnemy = pIsNonEnemy;
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrustReflectCollide,
-                                 ((sead::Vector3f, Dir), (s32, Unk), (bool, IsNonEnemy)),
-                                 ((const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy))) {
+                                 ((sead::Vector3f, Dir), (s32, HitId), (bool, IsNonEnemy)),
+                                 ((const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy))) {
     mDir.set(pDir);
-    mUnk = pUnk;
+    mHitId = pHitId;
     mIsNonEnemy = pIsNonEnemy;
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(TsukkunThrustHole,
-                                 ((sead::Vector3f, JointRootPos), (sead::Vector3f, Beak4Pos)),
-                                 ((const sead::Vector3f&, JointRootPos),
-                                  (const sead::Vector3f&, Beak4Pos))) {
-    mJointRootPos.set(pJointRootPos);
-    mBeak4Pos.set(pBeak4Pos);
+                                 ((sead::Vector3f, TsukkunPos), (sead::Vector3f, BeakPos)),
+                                 ((const sead::Vector3f&, TsukkunPos),
+                                  (const sead::Vector3f&, BeakPos))) {
+    mTsukkunPos.set(pTsukkunPos);
+    mBeakPos.set(pBeakPos);
 }
 
 SENSOR_MSG_WITH_DATA_CUSTOM_CTOR(SpherePush, ((sead::Vector3f, Center), (f32, Radius)),

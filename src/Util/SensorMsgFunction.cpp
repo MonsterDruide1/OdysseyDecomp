@@ -3,6 +3,7 @@
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Event/EventFlowExecutor.h"
+#include "Library/HitSensor/SensorMsgSetupUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -239,7 +240,7 @@ SEND_MSG_DATA_IMPL(WhipThrow, (const sead::Vector3f&, Dir));
 SEND_MSG_DATA_IMPL(BossMagmaBreathForce, (const sead::Vector3f&, Force));
 SEND_MSG_DATA_IMPL(BossMagmaDeadDemoEnd, (const sead::Vector3f&, TargetPos));
 SEND_MSG_DATA_IMPL(BossMagmaResetPos, (const sead::Vector3f&, ResetPos));
-SEND_MSG_DATA_IMPL(HackBlowJump, (const sead::Vector3f&, Up), (f32, Height));
+SEND_MSG_DATA_IMPL(HackBlowJump, (const sead::Vector3f&, End), (f32, Height));
 SEND_MSG_DATA_IMPL(SphinxRideAttackTouchThrough, (const sead::Vector3f&, Pos),
                    (const sead::Vector3f&, Normal));
 SEND_MSG_DATA_IMPL(SphinxRideAttackTouch, (const sead::Vector3f&, Pos),
@@ -282,14 +283,16 @@ SEND_MSG_IMPL(HackObjUpperPunch);
 SEND_MSG_IMPL(ShineGet);
 SEND_MSG_IMPL(ShineGet2D);
 SEND_MSG_IMPL(SphinxJumpAttack);
+// TODO: rename parameters
 SEND_MSG_DATA_IMPL(NetworkShootingShot, (s32, Unk));
+// TODO: rename parameters
 SEND_MSG_DATA_IMPL(NetworkShootingChargeShot, (s32, Unk));
 SEND_MSG_IMPL(RequestPlayerJumpBreakFloor);
 SEND_MSG_DATA_IMPL(RequestPlayerJump, (f32, Power));
 SEND_MSG_DATA_IMPL(RequestPlayerTrampleJump, (f32, Power));
 SEND_MSG_DATA_IMPL(RequestPlayerSpinJump, (f32, Power));
 SEND_MSG_DATA_IMPL(RequestSphinxJump, (f32, Power));
-SEND_MSG_DATA_IMPL(InitCapTarget, (const CapTargetInfo**, Unk));
+SEND_MSG_DATA_IMPL(InitCapTarget, (const CapTargetInfo**, Info));
 SEND_MSG_DATA_IMPL(EndHack, (const HackEndParam*, Param));
 SEND_MSG_IMPL(SphinxQuizRouteKill);
 SEND_MSG_IMPL(SphinxRideAttack);
@@ -436,6 +439,7 @@ SEND_MSG_IMPL(BossMagmaQueryToBubble);
 SEND_MSG_IMPL(TransferHack);
 SEND_MSG_IMPL(RequestTransferHack);
 SEND_MSG_IMPL(InitHack);
+SEND_MSG_DATA_TO_ACTOR_IMPL(SwitchOnWithSaveRequest, SaveObjInfo*, Info);
 
 // NOTE: This function is identical to al::sendMsgPushAndKillVelocityToTarget but with a different
 // message
@@ -492,11 +496,6 @@ bool sendMsgRaceReturnToCourse(al::LiveActor* receiver, const sead::Vector3f& po
                                const sead::Vector3f& front) {
     SensorMsgRaceReturnToCourse msg(pos, front);
     return receiver->receiveMsg(&msg, nullptr, nullptr);
-}
-
-bool sendMsgSwitchOnWithSaveRequest(al::LiveActor* actor, SaveObjInfo* info) {
-    return alActorSensorFunction::sendMsgToActorUnusedSensor(SensorMsgSwitchOnWithSaveRequest(info),
-                                                             actor);
 }
 
 bool sendMsgRequestPlayerWet(al::HitSensor* receiver, al::HitSensor* sender) {
@@ -590,24 +589,26 @@ SEND_MSG_DATA_IMPL(MoonBasementRockThroughCollision, (bool, IsFallOrBreak));
 SEND_MSG_DATA_IMPL(FishingWait, (al::HitSensor*, HookSensor));
 SEND_MSG_DATA_IMPL(GhostRecordStartOk, (const char*, ObjId));
 SEND_MSG_DATA_IMPL(GunetterPush, (const sead::Vector3f&, Center), (f32, Radius));
-SEND_MSG_DATA_IMPL(TestPunch, (const sead::Vector3f&, Info), (s32, Unk), (s32, TeamId));
-SEND_MSG_DATA_IMPL(TestPunchStrong, (const sead::Vector3f&, Info), (s32, Unk), (s32, TeamId));
+SEND_MSG_DATA_IMPL(TestPunch, (const sead::Vector3f&, Info), (s32, HitId), (s32, TeamId));
+SEND_MSG_DATA_IMPL(TestPunchStrong, (const sead::Vector3f&, Info), (s32, HitId), (s32, TeamId));
 SEND_MSG_DATA_IMPL(PunchGuard, (s32, PunchGuard), (s32, TeamId));
-SEND_MSG_DATA_IMPL(TsukkunThrust, (const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy));
-SEND_MSG_DATA_IMPL(TsukkunThrustSpin, (const sead::Vector3f&, Dir), (s32, Unk), (bool, IsNonEnemy));
-SEND_MSG_DATA_IMPL(TsukkunThrustReflect, (const sead::Vector3f&, Dir), (s32, Unk),
+SEND_MSG_DATA_IMPL(TsukkunThrust, (const sead::Vector3f&, Dir), (s32, HitId), (bool, IsNonEnemy));
+SEND_MSG_DATA_IMPL(TsukkunThrustSpin, (const sead::Vector3f&, Dir), (s32, HitId),
                    (bool, IsNonEnemy));
-SEND_MSG_DATA_IMPL(TsukkunThrustCollide, (const sead::Vector3f&, Dir), (s32, Unk),
+SEND_MSG_DATA_IMPL(TsukkunThrustReflect, (const sead::Vector3f&, Dir), (s32, HitId),
                    (bool, IsNonEnemy));
-SEND_MSG_DATA_IMPL(TsukkunThrustHitReflectCollide, (const sead::Vector3f&, Dir), (s32, Unk),
+SEND_MSG_DATA_IMPL(TsukkunThrustCollide, (const sead::Vector3f&, Dir), (s32, HitId),
                    (bool, IsNonEnemy));
-SEND_MSG_DATA_IMPL(TsukkunThrustReflectCollide, (const sead::Vector3f&, Dir), (s32, Unk),
+SEND_MSG_DATA_IMPL(TsukkunThrustHitReflectCollide, (const sead::Vector3f&, Dir), (s32, HitId),
                    (bool, IsNonEnemy));
-SEND_MSG_DATA_IMPL(TsukkunThrustHole, (const sead::Vector3f&, JointRootPos),
-                   (const sead::Vector3f&, Beak4Pos));
+SEND_MSG_DATA_IMPL(TsukkunThrustReflectCollide, (const sead::Vector3f&, Dir), (s32, HitId),
+                   (bool, IsNonEnemy));
+SEND_MSG_DATA_IMPL(TsukkunThrustHole, (const sead::Vector3f&, TsukkunPos),
+                   (const sead::Vector3f&, BeakPos));
 
 SEND_MSG_DATA_IMPL(AirExplosion, (const sead::Vector3f&, Force));
 SEND_MSG_DATA_IMPL(ByugoBlow, (const sead::Vector3f&, Force));
+// TODO: rename parameters
 SEND_MSG_DATA_IMPL(CapChangeGiant, (f32, Unk), (s32, Unk2));
 SEND_MSG_DATA_IMPL(CapTouchWall, (const sead::Vector3f&, HitPos), (const sead::Vector3f&, Normal));
 // TODO: Rename variables
@@ -619,13 +620,16 @@ SEND_MSG_IMPL(IgnoreTouchTarget);
 SEND_MSG_DATA_IMPL_(InitTouchTargetInfo, TouchTargetInfo, (TouchTargetInfo*, Info),
                     (const sead::Vector3f*, CollisionTouchPos));
 SEND_MSG_DATA_IMPL(Magnet, (bool, IsPower));
+// TODO: rename parameter
 SEND_MSG_DATA_IMPL(MagnetBulletAttack, (f32, Unk));
+// TODO: rename parameter
 SEND_MSG_DATA_IMPL(DashPanel, (s32, Unk));
+// TODO: rename parameters
 SEND_MSG_DATA_IMPL(TrampolineCrackJump, (f32, Unk), (f32, Unk2));
 // TODO: rename parameter
 SEND_MSG_DATA_IMPL(NpcScareByEnemy, (s32, Unk));
 SEND_MSG_DATA_IMPL(ObjSnapForce, (const sead::Vector3f&, Force));
-SEND_MSG_DATA_IMPL(PackunEatCancel, (const sead::Vector3f&, unk), (const sead::Vector3f&, unk2));
+SEND_MSG_DATA_IMPL(PackunEatCancel, (const sead::Vector3f&, Pos), (const sead::Vector3f&, Front));
 SEND_MSG_DATA_IMPL(PackunEatEnd, (const sead::Vector3f&, Pos), (const sead::Vector3f&, Dir));
 SEND_MSG_DATA_IMPL(PackunEatStartFollow, (const sead::Vector3f*, PosPtr));
 // NOTE: The size field for these two msgs are taken in as s32s even though they are stored as f32s
@@ -635,6 +639,7 @@ SEND_MSG_DATA_IMPL(HackDirectStageInit, (IUsePlayerHack*, Hack));
 SEND_MSG_DATA_IMPL(CheckPaintClear, (const sead::Color4u8&, Color), (const sead::Vector3f&, Pos),
                    (s32, DrawType));
 SEND_MSG_DATA_IMPL(CheckPaintAlpha, (const sead::Vector3f&, Pos));
+// TODO: rename parameters
 SEND_MSG_DATA_IMPL(SeedTouch, (const sead::Vector3f&, unk), (const sead::Vector3f&, unk2));
 SEND_MSG_DATA_IMPL(SenobiPartsMove, (const sead::Vector3f&, CollidedNormal), (f32, Distance));
 SEND_MSG_DATA_IMPL(StampTo2D, (const sead::Vector3f&, Force));
@@ -1160,10 +1165,9 @@ bool isMsgHackNpcCapReactionAll(const al::SensorMsg* msg) {
 }
 
 bool isMsgPressDown(const al::SensorMsg* msg) {
-    return al::isMsgPlayerTrample(msg) || al::isMsgPlayerObjHipDropAll(msg) ||
-           isMsgCapObjHipDrop(msg) || isMsgHosuiTrample(msg) || isMsgDonsukeAttack(msg) ||
-           isMsgHammerAttackDown(msg) || isMsgMeganeHackTrample(msg) || isMsgTankHackTrample(msg) ||
-           isMsgGolemStampPress(msg);
+    return al::isMsgPlayerTrample(msg) || isMsgPlayerAndCapObjHipDropAll(msg) ||
+           isMsgHosuiTrample(msg) || isMsgDonsukeAttack(msg) || isMsgHammerAttackDown(msg) ||
+           isMsgMeganeHackTrample(msg) || isMsgTankHackTrample(msg) || isMsgGolemStampPress(msg);
 }
 
 bool isMsgBlowDown(const al::SensorMsg* msg) {
@@ -1222,8 +1226,8 @@ bool isMsgThrowObjHitReflect(const al::SensorMsg* msg) {
 }
 
 bool isMsgTrampleReflectAll(const al::SensorMsg* msg) {
-    return al::isMsgPlayerTrampleReflect(msg) || al::isMsgPlayerObjHipDropReflectAll(msg) ||
-           isMsgCapObjHipDropReflect(msg) || isMsgHosuiTrample(msg);
+    return al::isMsgPlayerTrampleReflect(msg) || isMsgPlayerAndCapObjHipDropReflectAll(msg) ||
+           isMsgHosuiTrample(msg);
 }
 
 bool isMsgPlayerAndCapHipDropAll(const al::SensorMsg* msg) {
@@ -1257,11 +1261,7 @@ bool isMsgBreakCollapseSandHill(const al::SensorMsg* msg) {
 bool isMsgPlayerDamage(const al::SensorMsg* msg) {
     return al::isMsgEnemyAttack(msg) || isMsgEnemyAttackTRex(msg) || al::isMsgExplosion(msg) ||
 
-           // What happened here?
-           ((al::isMsgEnemyAttackFire(msg) || isMsgHackAttackFire(msg) ||
-             al::isMsgPlayerFireBallAttack(msg)) &&
-            !al::isMsgPlayerFireBallAttack(msg)) ||
-
+           (isMsgFireDamageAll(msg) && !al::isMsgPlayerFireBallAttack(msg)) ||
            isMsgPoisonDamageAll(msg) || isMsgBullAttack(msg) || isMsgBossKnuckleFallAttack(msg) ||
            isMsgEnemyAttackFireCollision(msg) || isMsgEnemyAttack3D(msg) ||
            isMsgCactusNeedleAttack(msg) || isMsgCactusNeedleAttackStrong(msg) ||
@@ -1412,29 +1412,29 @@ bool isMsgRequestPlayerStainWet(const al::SensorMsg* pMsg, s32* stainType) {
     return true;
 }
 
-bool tryGetTestPunchInfo(sead::Vector3f* info, s32* unk, const al::SensorMsg* pMsg, s32 teamId) {
+bool tryGetTestPunchInfo(sead::Vector3f* dir, s32* hitId, const al::SensorMsg* pMsg, s32 teamId) {
     if (auto* msg = sead::DynamicCast<const SensorMsgTestPunch>(pMsg)) {
-        if ((msg->getUnk() == -1 || *unk != msg->getUnk()) &&
+        if ((msg->getHitId() == -1 || *hitId != msg->getHitId()) &&
             (msg->getTeamId() == -1 || msg->getTeamId() != teamId)) {
-            info->set(msg->getDir());
-            *unk = msg->getUnk();
+            dir->set(msg->getDir());
+            *hitId = msg->getHitId();
             return true;
         }
     }
 
     if (auto* msg = sead::DynamicCast<const SensorMsgTestPunchStrong>(pMsg)) {
-        if ((msg->getUnk() == -1 || *unk != msg->getUnk()) &&
+        if ((msg->getHitId() == -1 || *hitId != msg->getHitId()) &&
             (msg->getTeamId() == -1 || msg->getTeamId() != teamId)) {
-            info->set(msg->getDir());
-            *unk = msg->getUnk();
+            dir->set(msg->getDir());
+            *hitId = msg->getHitId();
             return true;
         }
     }
 
     if (auto* msg = sead::DynamicCast<const SensorMsgTsukkunThrust>(pMsg)) {
-        if (msg->getUnk() == -1 || *unk != msg->getUnk()) {
-            info->set(msg->getDir());
-            *unk = msg->getUnk();
+        if (msg->getHitId() == -1 || *hitId != msg->getHitId()) {
+            dir->set(msg->getDir());
+            *hitId = msg->getHitId();
             return true;
         }
     }
@@ -1464,12 +1464,12 @@ bool tryGetPunchGuard(s32* punchGuard, const al::SensorMsg* pMsg, s32 teamId) {
     return true;
 }
 
-bool tryGetTsukkunThrustInfo(sead::Vector3f* dir, s32* unk, const al::SensorMsg* pMsg) {
+bool tryGetTsukkunThrustInfo(sead::Vector3f* dir, s32* hitId, const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgTsukkunThrust>(pMsg);
     if (!msg)
         return false;
     dir->set(msg->getDir());
-    *unk = msg->getUnk();
+    *hitId = msg->getHitId();
     return true;
 }
 
@@ -1491,15 +1491,15 @@ bool tryGetTsukkunThrustReflectDir(sead::Vector3f* dir, const al::SensorMsg* pMs
     return true;
 }
 
-bool tryGetTsukkunThrustHole(sead::Vector3f* jointRootPos, sead::Vector3f* beak4Pos,
+bool tryGetTsukkunThrustHole(sead::Vector3f* tsukkunPos, sead::Vector3f* beakPos,
                              const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgTsukkunThrustHole>(pMsg);
     if (!msg)
         return false;
-    if (jointRootPos)
-        jointRootPos->set(msg->getJointRootPos());
-    if (beak4Pos)
-        beak4Pos->set(msg->getBeak4Pos());
+    if (tsukkunPos)
+        tsukkunPos->set(msg->getTsukkunPos());
+    if (beakPos)
+        beakPos->set(msg->getBeakPos());
     return true;
 }
 
@@ -1623,6 +1623,7 @@ bool tryGetGolemStampPushH(f32* velocity, const al::SensorMsg* pMsg) {
     return true;
 }
 
+// TODO: rename parameters
 bool tryGetCapChangeGiant(f32* unk, s32* unk2, const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgCapChangeGiant>(pMsg);
     if (!msg)
@@ -1672,11 +1673,11 @@ bool tryGetPackunEatStartFollowPos(const sead::Vector3f** posPtr, const al::Sens
     return true;
 }
 
-bool tryGetHackBlowJump(sead::Vector3f* up, f32* height, const al::SensorMsg* pMsg) {
+bool tryGetHackBlowJump(sead::Vector3f* end, f32* height, const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgHackBlowJump>(pMsg);
     if (!msg)
         return false;
-    up->set(msg->getUp());
+    end->set(msg->getEnd());
     *height = msg->getHeight();
     return true;
 }
@@ -1930,7 +1931,7 @@ bool trySendMsgHackPunchToSensor(al::LiveActor* actor, al::HitSensor* receiver,
         return false;
 
     const sead::Vector3f& gravity = al::getGravity(actor);
-    if (dir.dot(-gravity) <= 0.342020153f)
+    if (dir.dot(-gravity) <= 0.342020153f)  // cos(70°)
         return false;
 
     if ((-gravity).dot(al::getVelocity(actor)) > 0.0)
@@ -1945,7 +1946,7 @@ bool isFallingTargetMoonBasementRock(const al::SensorMsg* pMsg) {
     return msg->getIsFallOrBreak();
 }
 
-// TODO: Rename unk and unk3
+// TODO: Rename unk and unk2
 bool tryInitTouchTargetInfoBySensorOffset(const al::SensorMsg* pMsg, const al::HitSensor* sensor,
                                           const sead::Vector3f& unk, const sead::Vector3f& unk2) {
     auto* msg = sead::DynamicCast<const SensorMsgTouchTargetInfo>(pMsg);
@@ -2027,8 +2028,8 @@ bool tryMagnetBulletAttack(f32* unk, const al::SensorMsg* pMsg) {
     return true;
 }
 
-const char* tryGetHitReactionForMsg(bool* wasMsgHandled, const al::SensorMsg* msg) {
-    *wasMsgHandled = true;
+const char* tryGetHitReactionForMsg(bool* found, const al::SensorMsg* msg) {
+    *found = true;
     if (isMsgCapAttack(msg) || isMsgCapAttackRailMove(msg) || isMsgCapAttackStayRolling(msg) ||
         isMsgCapAttackCollide(msg))
         return "帽子ヒット";
@@ -2065,7 +2066,7 @@ const char* tryGetHitReactionForMsg(bool* wasMsgHandled, const al::SensorMsg* ms
     if (isMsgPukupukuDash(msg))
         return "プクプクダッシュアタック";
     if (al::isMsgExplosion(msg)) {
-        *wasMsgHandled = true;
+        *found = true;
         return nullptr;
     }
     if (isMsgGunetterAttack(msg) || isMsgGunetterBodyTouch(msg))
@@ -2130,7 +2131,7 @@ const char* tryGetHitReactionForMsg(bool* wasMsgHandled, const al::SensorMsg* ms
     if (isMsgPlayerRollingObjHit(msg))
         return "ローリングヒット";
     if (isMsgPlayerStartWallJump(msg)) {
-        *wasMsgHandled = true;
+        *found = true;
         return nullptr;
     }
     if (al::isMsgPlayerSpinAttack(msg))
@@ -2309,32 +2310,34 @@ const char* tryGetHitReactionForMsg(bool* wasMsgHandled, const al::SensorMsg* ms
     if (isMsgStatueTrampleReflect(msg))
         return "地蔵踏み[反射]";
     if (isMsgCapBeamerBeam(msg) || isMsgKuriboGirlAttack(msg)) {
-        *wasMsgHandled = true;
+        *found = true;
         return nullptr;
     }
-    *wasMsgHandled = false;
+    *found = false;
     return nullptr;
 }
 
 void requestHitReactionToAttacker(const al::SensorMsg* msg, const al::HitSensor* other,
                                   const al::HitSensor* self) {
     al::LiveActor* host = al::getSensorHost(self);
-    bool wasMsgHandled = 0;
-    if (const char* hitReaction = tryGetHitReactionForMsg(&wasMsgHandled, msg))
+    bool found = false;
+    if (const char* hitReaction = tryGetHitReactionForMsg(&found, msg))
         al::startHitReactionHitEffect(host, hitReaction, other, self);
 }
 
 void requestHitReactionToAttacker(const al::SensorMsg* msg, const al::HitSensor* other,
                                   const sead::Vector3f& pos) {
     al::LiveActor* host = al::getSensorHost(other);
-    bool wasMsgHandled = 0;
-    if (const char* hitReaction = tryGetHitReactionForMsg(&wasMsgHandled, msg))
+    bool found = false;
+    if (const char* hitReaction = tryGetHitReactionForMsg(&found, msg))
         al::startHitReactionHitEffect(host, hitReaction, pos);
 }
 
 bool isCapRethrowReturnOnly(const al::SensorMsg* pMsg) {
     auto* msg = sead::DynamicCast<const SensorMsgCapRethrow>(pMsg);
-    return msg != nullptr && msg->getIsReturnOnly();
+    if (!msg)
+        return false;
+    return msg->getIsReturnOnly();
 }
 
 void getPackunEatCancelPosAndFront(sead::Vector3f* pos, sead::Vector3f* front,
@@ -2383,6 +2386,7 @@ al::HitSensor* getFishingHookSensor(const al::SensorMsg* pMsg) {
     return msg->getHookSensor();
 }
 
+// TODO: rename parameter `unk`
 bool checkMsgNpcTrampleReactionAll(const al::SensorMsg* msg, const al::HitSensor* other,
                                    const al::HitSensor* self, bool unk) {
     if (isMsgHosuiTrampleReflect(msg))
@@ -2474,22 +2478,22 @@ bool tryReceiveMsgPushToPlayerAndAddVelocityH(al::LiveActor* actor, const al::Se
 }
 
 void calcPushTrans(sead::Vector3f* trans, const al::LiveActor* actor, const al::HitSensor* other,
-                   const al::HitSensor* self, f32 power) {
+                   const al::HitSensor* self, f32 maxPower) {
     f32 combinedRadius = al::getSensorRadius(self) + al::getSensorRadius(other);
     sead::Vector3f diff = al::getSensorPos(self) - al::getSensorPos(other);
     if (diff.squaredLength() > sead::Mathf::square(combinedRadius)) {
         *trans = {0.0f, 0.0f, 0.0f};
         return;
     }
-    sead::Vector3f diffNormalized = {0.0f, 0.0f, 0.0f};
-    f32 thing = 1.0f;
-    if (al::tryNormalizeOrZero(&diffNormalized, diff)) {
-        f32 len = diffNormalized.cross(al::getGravity(actor)).length();
-        thing = sead::Mathf::clamp(len, 0.1f, 1.0f);
+    sead::Vector3f pushDir = {0.0f, 0.0f, 0.0f};
+    f32 powerV = 1.0f;
+    if (al::tryNormalizeOrZero(&pushDir, diff)) {
+        f32 len = pushDir.cross(al::getGravity(actor)).length();
+        powerV = sead::Mathf::clamp(len, 0.1f, 1.0f);
     }
     al::verticalizeVec(&diff, al::getGravity(actor), diff);
-    f32 thing2 = sead::Mathf::clampMin(combinedRadius * thing - diff.length(), 0.0f);
-    power = sead::Mathf::min(power, thing2);
+    f32 powerH = sead::Mathf::clampMin(combinedRadius * powerV - diff.length(), 0.0f);
+    f32 power = sead::Mathf::clampMax(powerH, maxPower);
 
     if (!al::tryNormalizeOrZero(&diff)) {
         al::calcFrontDir(&diff, actor);
@@ -2517,10 +2521,7 @@ bool tryReceiveMsgPushToHackerAndCalcPushTrans(sead::Vector3f* trans, const al::
     if (isYoshi) {
         if (!isMsgPushToPlayer(msg))
             return false;
-        calcPushTrans(trans, actor, other, self, power);
-        return true;
-    }
-    if (!al::isMsgPushAll(msg))
+    } else if (!al::isMsgPushAll(msg))
         return false;
     calcPushTrans(trans, actor, other, self, power);
     return true;
@@ -2589,7 +2590,7 @@ bool isRideOn(const al::HitSensor* other, const al::HitSensor* self) {
     sead::Vector3f dir = al::getSensorPos(self) - al::getSensorPos(other);
     if (!al::tryNormalizeOrZero(&dir))
         return false;
-    if (dir.dot(al::getActorGravity(self)) < 0.342020153f)
+    if (dir.dot(al::getActorGravity(self)) < 0.342020153f)  // cos(70°)
         return false;
     sead::Vector3f velocityDir = al::getActorVelocity(other);
     return al::tryNormalizeOrZero(&velocityDir) && !(velocityDir.y > 0.0f);
