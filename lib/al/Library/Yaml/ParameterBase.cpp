@@ -22,7 +22,7 @@ ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeStrin
 void ParameterBase::afterGetParam() {}
 
 template <>
-bool isEqual_<const char*>(const ParameterBase& parameter) const {
+bool ParameterBase::isEqual_<const char*>(const ParameterBase& parameter) const {
     return isEqualString(getValuePtr<const char>(), parameter.getValuePtr<const char>());
 }
 
@@ -122,7 +122,7 @@ void ParameterBase::copyLerp_<f32>(const ParameterBase& parameterA, const Parame
 }
 
 template <>
-void copyLerp_<sead::Quatf>(const ParameterBase& parameterA,
+void ParameterBase::copyLerp_<sead::Quatf>(const ParameterBase& parameterA,
                                            const ParameterBase& parameterB, f32 rate) {
     sead::QuatCalcCommon<f32>::slerpTo(*(sead::Quatf*)ptr(), *parameterA.getValuePtr<sead::Quatf>(),
                                        *parameterB.getValuePtr<sead::Quatf>(), rate);
