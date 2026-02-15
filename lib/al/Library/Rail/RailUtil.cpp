@@ -17,11 +17,11 @@
 
 namespace al {
 
-RailRider* getRailRider(const IUseRail* railHolder) {
+static RailRider* getRailRider(const IUseRail* railHolder) {
     return railHolder->getRailRider();
 }
 
-const Rail* getRail(const IUseRail* railHolder) {
+static const Rail* getRail(const IUseRail* railHolder) {
     return getRailRider(railHolder)->getRail();
 }
 
