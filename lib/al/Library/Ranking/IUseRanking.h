@@ -5,7 +5,8 @@ class RankingDirector;
 
 class IUseRanking {
 public:
-    virtual RankingDirector* getRankingDirector() const;
-    virtual bool isAvailableRanking() const;
+    virtual RankingDirector* getRankingDirector() const = 0;
+
+    virtual bool isAvailableRanking() const { return false; }
 };
 }  // namespace al

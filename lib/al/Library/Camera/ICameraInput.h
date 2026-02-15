@@ -6,14 +6,14 @@ namespace al {
 
 class ICameraInput {
 public:
-    virtual void calcInputStick(sead::Vector2f* inputStick) const;
-    virtual bool isTriggerReset() const;
-    virtual bool isHoldZoom() const;
+    virtual void calcInputStick(sead::Vector2f* inputStick) const = 0;
+    virtual bool isTriggerReset() const = 0;
+    virtual bool isHoldZoom() const = 0;
 
     virtual bool tryCalcSnapShotMoveStick(sead::Vector2f* moveStick) const { return false; }
 
-    virtual bool isHoldSnapShotZoomIn() const;
-    virtual bool isHoldSnapShotZoomOut() const;
+    virtual bool isHoldSnapShotZoomIn() const = 0;
+    virtual bool isHoldSnapShotZoomOut() const = 0;
 
     virtual bool isHoldSnapShotRollLeft() const { return false; }
 

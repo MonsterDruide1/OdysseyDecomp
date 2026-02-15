@@ -14,10 +14,10 @@ namespace al {
 class IAudioResourceLoader {
 public:
     // TODO: placeholder functions
-    virtual void func_0();
-    virtual void func_8();
+    virtual void func_0() = 0;
+    virtual void func_8() = 0;
     // TODO: unknown parameter name
-    virtual bool tryLoad(u32 entryId, u32 unknown);
+    virtual bool tryLoad(u32 entryId, u32 unknown) = 0;
 };
 
 class SoundItemEntry : public FileEntryBase {
