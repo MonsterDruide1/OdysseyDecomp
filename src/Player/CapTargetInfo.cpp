@@ -150,65 +150,64 @@ void CapTargetInfoFunction::initIterCapTargetInfo(CapTargetInfo* capTargetInfo,
     }
 
     const char* fileNameStr = fileName.cstr();
-    if (fileNameStr != nullptr) {
-        al::ByamlIter resourceYaml(al::getModelResourceYaml(actor, fileNameStr, 0));
+    if (!fileNameStr)
+        return;
 
-        const char* jointName = al::tryGetByamlKeyStringOrNULL(resourceYaml, "JointName");
-        sead::Vector3f localTrans = {0.0f, 0.0f, 0.0f};
-        al::tryGetByamlV3f(&localTrans, resourceYaml, "LocalTrans");
-        sead::Vector3f localRotate = {0.0f, 0.0f, 0.0f};
-        al::tryGetByamlV3f(&localRotate, resourceYaml, "LocalRotate");
-        capTargetInfo->setFollowLockOnMtx(jointName, localTrans, localRotate);
+    al::ByamlIter resourceYaml(al::getModelResourceYaml(actor, fileNameStr, 0));
 
-        bool useLockOnFollowMtxScale = false;
-        al::tryGetByamlBool(&useLockOnFollowMtxScale, resourceYaml, "UseLockOnFollowMtxScale");
-        capTargetInfo->mIsUseLockOnFollowMtxScale = useLockOnFollowMtxScale;
+    const char* jointName = al::tryGetByamlKeyStringOrNULL(resourceYaml, "JointName");
+    sead::Vector3f localTrans = {0.0f, 0.0f, 0.0f};
+    al::tryGetByamlV3f(&localTrans, resourceYaml, "LocalTrans");
+    sead::Vector3f localRotate = {0.0f, 0.0f, 0.0f};
+    al::tryGetByamlV3f(&localRotate, resourceYaml, "LocalRotate");
+    capTargetInfo->setFollowLockOnMtx(jointName, localTrans, localRotate);
 
-        bool useFollowMtxScaleLocalOffset = false;
-        al::tryGetByamlBool(&useFollowMtxScaleLocalOffset, resourceYaml,
-                            "UseFollowMtxScaleLocalOffset");
-        capTargetInfo->mIsUseFollowMtxScaleLocalOffset = useFollowMtxScaleLocalOffset;
+    bool useLockOnFollowMtxScale = false;
+    al::tryGetByamlBool(&useLockOnFollowMtxScale, resourceYaml, "UseLockOnFollowMtxScale");
+    capTargetInfo->mIsUseLockOnFollowMtxScale = useLockOnFollowMtxScale;
 
-        f32 lockOnScale = 1.0f;
-        al::tryGetByamlF32(&lockOnScale, resourceYaml, "LockOnScale");
-        capTargetInfo->mLockOnScale = lockOnScale;
+    bool useFollowMtxScaleLocalOffset = false;
+    al::tryGetByamlBool(&useFollowMtxScaleLocalOffset, resourceYaml,
+                        "UseFollowMtxScaleLocalOffset");
+    capTargetInfo->mIsUseFollowMtxScaleLocalOffset = useFollowMtxScaleLocalOffset;
 
-        sead::Vector3f escapeLocalOffset = {0.0f, 0.0f, 0.0f};
-        if (al::tryGetByamlV3f(&escapeLocalOffset, resourceYaml, "EscapeLocalOffset")) {
-            capTargetInfo->mIsEscapeLocalOffset = true;
-            capTargetInfo->mEscapeLocalOffset.x = escapeLocalOffset.x;
-            capTargetInfo->mEscapeLocalOffset.y = escapeLocalOffset.y;
-            capTargetInfo->mEscapeLocalOffset.z = escapeLocalOffset.z;
-        }
+    f32 lockOnScale = 1.0f;
+    al::tryGetByamlF32(&lockOnScale, resourceYaml, "LockOnScale");
+    capTargetInfo->mLockOnScale = lockOnScale;
 
-        const char* lockOnStartAnimName =
-            al::tryGetByamlKeyStringOrNULL(resourceYaml, "LockOnStartAnimName");
-        if (lockOnStartAnimName != nullptr)
-            capTargetInfo->setLockOnStartAnimName(lockOnStartAnimName);
-
-        const char* lockOnAnimName = al::tryGetByamlKeyStringOrNULL(resourceYaml, "LockOnAnimName");
-        if (lockOnAnimName != nullptr)
-            capTargetInfo->setLockOnAnimName(lockOnAnimName);
-
-        bool isLockOnOnly = false;
-        al::tryGetByamlBool(&isLockOnOnly, resourceYaml, "LockOnOnly");
-        capTargetInfo->mIsLockOnOnly = isLockOnOnly;
-
-        capTargetInfo->setHackName(al::tryGetByamlKeyStringOrNULL(resourceYaml, "HackName"));
-
-        bool isSetHackNameToCamera = false;
-        al::tryGetByamlBool(&isSetHackNameToCamera, resourceYaml, "IsSetHackNameToCamera");
-        capTargetInfo->mIsSetHackNameToCamera = isSetHackNameToCamera;
-
-        bool isInvalidHackThrow = false;
-        al::tryGetByamlBool(&isInvalidHackThrow, resourceYaml, "IsInvalidHackThrow");
-        capTargetInfo->mIsInvalidHackThrow = isInvalidHackThrow;
-
-        bool isInvalidCapEye = false;
-        al::tryGetByamlBool(&isInvalidCapEye, resourceYaml, "IsInvalidCapEye");
-        capTargetInfo->mIsInvalidCapEye = isInvalidCapEye;
-
-        capTargetInfo->mIsUseDepthShadow =
-            al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseDepthShadow");
+    sead::Vector3f escapeLocalOffset = {0.0f, 0.0f, 0.0f};
+    if (al::tryGetByamlV3f(&escapeLocalOffset, resourceYaml, "EscapeLocalOffset")) {
+        capTargetInfo->mIsEscapeLocalOffset = true;
+        capTargetInfo->mEscapeLocalOffset = escapeLocalOffset;
     }
+
+    const char* lockOnStartAnimName =
+        al::tryGetByamlKeyStringOrNULL(resourceYaml, "LockOnStartAnimName");
+    if (lockOnStartAnimName)
+        capTargetInfo->setLockOnStartAnimName(lockOnStartAnimName);
+
+    const char* lockOnAnimName = al::tryGetByamlKeyStringOrNULL(resourceYaml, "LockOnAnimName");
+    if (lockOnAnimName)
+        capTargetInfo->setLockOnAnimName(lockOnAnimName);
+
+    bool isLockOnOnly = false;
+    al::tryGetByamlBool(&isLockOnOnly, resourceYaml, "LockOnOnly");
+    capTargetInfo->mIsLockOnOnly = isLockOnOnly;
+
+    capTargetInfo->setHackName(al::tryGetByamlKeyStringOrNULL(resourceYaml, "HackName"));
+
+    bool isSetHackNameToCamera = false;
+    al::tryGetByamlBool(&isSetHackNameToCamera, resourceYaml, "IsSetHackNameToCamera");
+    capTargetInfo->mIsSetHackNameToCamera = isSetHackNameToCamera;
+
+    bool isInvalidHackThrow = false;
+    al::tryGetByamlBool(&isInvalidHackThrow, resourceYaml, "IsInvalidHackThrow");
+    capTargetInfo->mIsInvalidHackThrow = isInvalidHackThrow;
+
+    bool isInvalidCapEye = false;
+    al::tryGetByamlBool(&isInvalidCapEye, resourceYaml, "IsInvalidCapEye");
+    capTargetInfo->mIsInvalidCapEye = isInvalidCapEye;
+
+    capTargetInfo->mIsUseDepthShadow =
+        al::tryGetByamlKeyBoolOrFalse(resourceYaml, "UseDepthShadow");
 }
