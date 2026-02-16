@@ -8,6 +8,7 @@ class LiveActor;
 }  // namespace al
 
 class IUsePlayerCollision;
+class CapTargetInfoFunction;
 
 class CapTargetInfo {
 public:
@@ -24,40 +25,8 @@ public:
 
     void setPoseMatrix(sead::Matrix34f* mtx) { mPoseMatrix = mtx; }
 
-    void setEscapeLocalOffset(const sead::Vector3f& offset) {
-        mIsEscapeLocalOffset = true;
-        mEscapeLocalOffset.x = offset.x;
-        mEscapeLocalOffset.y = offset.y;
-        mEscapeLocalOffset.z = offset.z;
-    }
-
-    void setPlayerCollision(IUsePlayerCollision* playerCollision) {
-        mPlayerCollision = playerCollision;
-    }
-
-    void setLockOnScale(f32 lockOnScale) { mLockOnScale = lockOnScale; }
-
-    void useLockOnFollowMtxScale(bool isUseLockOnFollowMtxScale) {
-        mIsUseLockOnFollowMtxScale = isUseLockOnFollowMtxScale;
-    }
-
-    void useFollowScaleLocalOffset(bool isUseFollowScaleLocalOffset) {
-        mIsUseFollowScaleLocalOffset = isUseFollowScaleLocalOffset;
-    }
-
-    void setLockOnOnly(bool isLockOnOnly) { mIsLockOnOnly = isLockOnOnly; }
-
-    void setHackNameToCamera(bool isSetHackNameToCamera) {
-        mIsSetHackNameToCamera = isSetHackNameToCamera;
-    }
-
-    void setInvalidHackThrow(bool isInvalidHackThrow) { mIsInvalidHackThrow = isInvalidHackThrow; }
-
-    void setInvalidCapEye(bool isInvalidCapEye) { mIsInvalidCapEye = isInvalidCapEye; }
-
-    void useDepthShadow(bool isUseDepthShadow) { mIsUseDepthShadow = isUseDepthShadow; }
-
 private:
+    friend CapTargetInfoFunction;
     const al::LiveActor* mActor = nullptr;
     const char* mHackName = nullptr;
     IUsePlayerCollision* mPlayerCollision = nullptr;
@@ -67,7 +36,7 @@ private:
     sead::Vector3f mLocalRotate = sead::Vector3f::zero;
     f32 mLockOnScale = 1.0f;
     bool mIsUseLockOnFollowMtxScale = false;
-    bool mIsUseFollowScaleLocalOffset = false;
+    bool mIsUseFollowMtxScaleLocalOffset = false;
     const char* mLockOnStartAnimName = "Capture";
     const char* mLockOnAnimName = "Capture";
     bool mIsEscapeLocalOffset = false;
@@ -91,7 +60,8 @@ private:
     bool _7f = false;
 };
 
-namespace CapTargetInfoFunction {
-void initIterCapTargetInfo(CapTargetInfo* capTargetInfo, IUsePlayerCollision*,
-                           const al::LiveActor* actor, const char* name);
-}  // namespace CapTargetInfoFunction
+class CapTargetInfoFunction {
+public:
+    static void initIterCapTargetInfo(CapTargetInfo* capTargetInfo, IUsePlayerCollision*,
+                                      const al::LiveActor* actor, const char* name);
+};
