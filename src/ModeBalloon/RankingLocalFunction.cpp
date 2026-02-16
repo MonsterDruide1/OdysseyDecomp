@@ -7,21 +7,21 @@
 #include "Util/SequentialUtil.h"
 
 namespace RankingLocalFunction {
-bool isValidCourceIdYukimaruRace(s32 courceId) {
-    return courceId == 0 || courceId == 1;
+bool isValidCourceIdYukimaruRace(s32 courseId) {
+    return courseId == 0 || courseId == 1;
 }
 
-RankingCategory getRankingCategoryYukimaruRace(s32 courceId) {
-    RankingCategory yukimaruCourceIdToCategory[2]{
+RankingCategory getRankingCategoryYukimaruRace(s32 courseId) {
+    RankingCategory yukimaruCourseIdToCategory[2]{
         RankingCategory::Yukimaru_1,
         RankingCategory::Yukimaru_2,
     };
 
-    return yukimaruCourceIdToCategory[courceId];
+    return yukimaruCourseIdToCategory[courseId];
 }
 
 bool isValidWorldIdRaceManRace(s32 worldId) {
-    // Note: Investigate why 5 and 11 are invalid.
+    // NOTE: Cloud (5), Ruined (11), Dark (15) and Darker Side (16) do not have a KFR
     return worldId >= 0 && worldId != 5 && worldId != 11 && (u32)worldId < 15;
 }
 
@@ -54,8 +54,6 @@ RankingCategory getRankingCategoryRaceManRace(s32 worldId) {
     case 14:
         return RankingCategory::RaceManRace_13;
 
-    case 5:
-    case 11:
     default:
         return RankingCategory::RaceManRace_1;
     }
