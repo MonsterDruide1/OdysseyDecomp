@@ -8,100 +8,95 @@
 #include "System/WorldList.h"
 #include "Util/ScenePrepoFunction.h"
 
-// NON_MATCHING: https://decomp.me/scratch/jv20V
 void GameDataFile::HintInfo::clear() {
     stageName.clear();
     objId.clear();
-    //    mScenarioName.clear();
-    objectName = nullptr;
-    trans = sead::Vector3f::zero;
-    transAgain = sead::Vector3f::zero;
+    scenarioName = nullptr;
+    trans.set(sead::Vector3f::zero);
+    originalTrans.set(sead::Vector3f::zero);
     mainScenarioNo = -1;
-    worldIndex = -1;
-    uniqueID = -1;
+    worldId = -1;
     isMoonRock = false;
-    unkBool1 = false;
-    unkPtr6 = nullptr;
-    hintStatus = HintStatus::None;
+    isGet = false;
+    getTime = 0;
+    uniqueId = -1;
+    hintStatus = HintStatus_Lock;
     isAchievement = false;
     isGrand = false;
-    achievementStatus = AchievementStatus::None;
-    isShopMoon = false;
+    status = AchievementStatus_None;
+    isShop = false;
     hintIdx = 0;
-
-    optionalID.clear();
-    progressBitflag = 0;
+    optionalId.clear();
+    progressBitFlag = 0;
     isDisabled = false;
-    unkBool3 = 0;
+    isEnableHintInCeremony = false;
 }
 
-bool GameDataFile::HintInfo::isDisableByWorldWarpHole(bool condition) const {
-    if (!condition && al::isEqualString(optionalID.cstr(), "WorldWarpHoleShine"))
+bool GameDataFile::HintInfo::isDisableByWorldWarpHole(bool is_game_clear) const {
+    if (!is_game_clear && al::isEqualString(optionalId.cstr(), "WorldWarpHoleShine"))
         return true;
     return false;
 }
 
-bool GameDataFile::HintInfo::isEnableUnlock(s32 curWorldId, bool isGameClear, s32 scenarioNo,
-                                            bool isInWorld) const {
-    if (testFunc(curWorldId, isGameClear, scenarioNo, isInWorld)) {
-        if (unkBool1)
-            return false;
-
-        if (hintStatus == HintStatus::None)
-            return true;
-
-        if (isGameClear && isMoonRock)
-            return false;
-        else if (!isGameClear && isMoonRock)
-            return true;
-    }
-
+bool GameDataFile::HintInfo::isEnableUnlock(s32 world_id, bool is_moon_rock, s32 scenario_no,
+                                            bool is_game_clear) const {
+    if (isDisableByWorldWarpHole(is_game_clear))
+        return false;
+    if (worldId != world_id)
+        return false;
+    if (isDisabled)
+        return false;
+    if (!(is_moon_rock || progressBitFlag.countOnBit() == 0 ||
+          progressBitFlag.isOnBit(scenario_no - 1)))
+        return false;
+    if (isGet)
+        return false;
+    if (hintStatus != HintStatus_Lock)
+        return false;
+    if (is_moon_rock ? isMoonRock : !isMoonRock)
+        return true;
     return false;
 }
 
-bool GameDataFile::HintInfo::isHintStatusUnlock(s32 curWorldId, s32 scenarioNo,
-                                                bool isInWorld) const {
-    if (worldIndex != curWorldId || unkBool1 || hintStatus != HintStatus::None ||
-        (isInWorld ? !isMoonRock : isMoonRock))
+bool GameDataFile::HintInfo::isHintStatusUnlock(s32 world_id, s32 scenario_no,
+                                                bool is_moon_rock) const {
+    if (worldId != world_id)
         return false;
-
-    return !GameDataFunction::isCityWorldCeremonyAll(curWorldId, scenarioNo) || unkBool3;
+    if (isGet)
+        return false;
+    if (hintStatus == HintStatus_Lock)
+        return false;
+    if (is_moon_rock ? isMoonRock : !isMoonRock) {
+        if (GameDataFunction::isCityWorldCeremonyAll(world_id, scenario_no))
+            return isEnableHintInCeremony;
+        return true;
+    }
+    return false;
 }
 
 bool GameDataFile::HintInfo::isHintStatusUnlockByNpc() const {
-    return hintStatus == HintStatus::Npc && !isMoonRock;
+    return hintStatus == HintStatus_UnlockByNpc && !isMoonRock;
 }
 
 bool GameDataFile::HintInfo::isHintStatusUnlockByAmiibo() const {
-    return hintStatus == HintStatus::Amiibo;
+    return hintStatus == HintStatus_UnlockByAmiibo;
 }
 
-bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(s32 curWorldId, s32 scenarioNo,
-                                                          bool isInWorld) const {
-    if (isDisableByWorldWarpHole(isInWorld))
+bool GameDataFile::HintInfo::isEnableNameUnlockByScenario(s32 world_id, s32 scenario_no,
+                                                          bool is_game_clear) const {
+    if (isDisableByWorldWarpHole(is_game_clear))
         return false;
-    if (worldIndex != curWorldId || isDisabled)
+    if (worldId != world_id)
         return false;
-    if (progressBitflag.countOnBit())
-        return progressBitflag.isOnBit(scenarioNo - 1);
-    return true;
-}
-
-bool GameDataFile::HintInfo::testFunc(s32 curWorldId, bool isGameClear, s32 scenarioNo,
-                                      bool isInWorld) const {
-    if (isDisableByWorldWarpHole(isInWorld))
+    if (isDisabled)
         return false;
-    if (worldIndex != curWorldId || isDisabled || isGameClear)
-        return false;
-    if (progressBitflag.countOnBit())
-        return progressBitflag.isOnBit(scenarioNo - 1);
-    return true;
+    return progressBitFlag.countOnBit() == 0 || progressBitFlag.isOnBit(scenario_no - 1);
 }
 
 void GameDataFile::unlockAchievementShineName() {
     for (s32 i = 0; i < mHintList.size(); i++)
-        if (mHintList[i].achievementStatus == AchievementStatus::None && mHintList[i].isAchievement)
-            mHintList[i].achievementStatus = AchievementStatus::Unlocked;
+        if (mHintList[i].status == AchievementStatus_None && mHintList[i].isAchievement)
+            mHintList[i].status = AchievementStatus_Unlocked;
     mIsUnlockAchievement = true;
 }
 
@@ -174,7 +169,7 @@ void GameDataFile::updateSaveTimeForDisp() {
     mSaveTimeForDisp = mSaveTime;
 }
 
-sead::DateTime GameDataFile::getLastUpdateTime() const {
+u64 GameDataFile::getLastUpdateTime() const {
     return mSaveTimeForDisp;
 }
 
@@ -297,8 +292,4 @@ void GameDataFile::wearCap(const char* name) {
 void GameDataFile::enableHintById(s32 shineIndex) {
     if (shineIndex >= 0)
         mHintList[shineIndex].isDisabled = false;
-}
-
-inline s32 GameDataFile::getCurrentWorldIdNoDevelop() const {
-    return sead::Mathi::max(mCurrentWorldId, 0);
 }

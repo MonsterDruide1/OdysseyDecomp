@@ -36,6 +36,21 @@ class TimeBalloonSequenceInfo;
 class UniqObjInfo;
 class WorldList;
 
+struct HackObjInfo {
+    const char* hackName;
+    f32 guideHeight;
+    f32 stayGravityMargine;
+    bool isScare;
+    bool isNoCollisionMsg;
+    bool isNoSeparateCameraInput;
+    bool isUsePlayerCollision;
+    bool isUseCollisionPartsFilterActor;
+    bool isGuideEnable;
+    const char* tutorialName;
+};
+
+static_assert(sizeof(HackObjInfo) == 0x20);
+
 class GameDataHolder : public al::GameDataHolderBase,
                        public al::ISceneObj,
                        public al::HioNode,
@@ -79,21 +94,6 @@ public:
     };
 
     static_assert(sizeof(StageLockInfo) == 0x10);
-
-    struct HackObjInfo {
-        const char* hackName;
-        f32 guideHeight;
-        f32 stayGravityMargine;
-        bool isScare;
-        bool isNoCollisionMsg;
-        bool isNoSeparateCameraInput;
-        bool isUsePlayerCollision;
-        bool isUseCollisionPartsFilterActor;
-        bool isGuideEnable;
-        const char* tutorialName;
-    };
-
-    static_assert(sizeof(HackObjInfo) == 0x20);
 
     struct InvalidOpenMapInfo {
         const char* name;
@@ -211,6 +211,18 @@ public:
 
     GameDataFile* getGameDataFile() const { return mPlayingFile; }
 
+    void set_49() { _49 = true; }
+
+    void set_4a() { _4a = true; }
+
+    s64 getPlayTimeAcrossFile() const { return mPlayTimeAcrossFile; }
+
+    TemporaryScenarioCameraHolder* getTemporaryScenarioCameraHolder() const {
+        return mTemporaryScenarioCameraHolder;
+    }
+
+    void resetTemporaryScenarioCameraHolder() { mTemporaryScenarioCameraHolder = nullptr; }
+
     const sead::PtrArray<ShopItem::ItemInfo>& getClothList() const { return mItemCloth; }
 
     const sead::PtrArray<ShopItem::ItemInfo>& getCapList() const { return mItemCap; }
@@ -219,7 +231,47 @@ public:
 
     const sead::PtrArray<ShopItem::ItemInfo>& getStickerList() const { return mItemSticker; }
 
+    const sead::PtrArray<HackObjInfo>& getHackObjList() const { return mHackObjList; }
+
+    const sead::PtrArray<sead::FixedSafeString<64>>& getWorldsForNewReleaseShop() const {
+        return mWorldsForNewReleaseShop;
+    }
+
+    const s32* get_170() const { return _170; }
+
+    s32 get_178() const { return _178; }
+
+    AchievementInfoReader* getAchievementInfoReader() const { return mAchievementInfoReader; }
+
     WorldList* getWorldList() const { return mWorldList; }
+
+    MapDataHolder* getMapDataHolder() const { return mMapDataHolder; }
+
+    bool isEnableExplainAmiibo() const { return !mIsDisableExplainAmiibo; }
+
+    void enableExplainAmiibo() { mIsDisableExplainAmiibo = false; }
+
+    void disableExplainAmiibo() { mIsDisableExplainAmiibo = true; }
+
+    void startSearchHintByAmiibo() { mSearchHintByAmiiboCount++; }
+
+    void endSearchHintByAmiibo() { mSearchHintByAmiiboCount--; }
+
+    bool isEnableCheckpointWarp() const { return mIsValidCheckpointWarp; }
+
+    void validateCheckpointWarp() { mIsValidCheckpointWarp = true; }
+
+    void invalidateCheckpointWarp() { mIsValidCheckpointWarp = false; }
+
+    const sead::Vector3f& getStageMapPlayerPos() const { return mStageMapPlayerPos; }
+
+    void setStageMapPlayerPos(const sead::Vector3f& pos) { mStageMapPlayerPos = pos; }
+
+    void resetDeadPlayerCoinIdx() { mDeadPlayerCoinIdx = 0; }
+
+    bool isSeparatePlay() const { return mIsSeparatePlay; }
+
+    bool isPlayDemoLavaErupt() const { return mIsPlayDemoLavaErupt; }
 
     bool isExistKoopaShip() const { return mIsExistKoopaShip; }
 
@@ -242,7 +294,7 @@ private:
     bool _49;  // related to changeNextStage(WithWorldDemoWarp)
     bool _4a;  // related to endStage
     sead::FixedSafeString<32> mLanguage;
-    u64 mPlayTimeAcrossFiles;
+    u64 mPlayTimeAcrossFile;
     sead::Heap* mSaveDataWriteThread;
     const u8* mSaveDataWorkBuffer;
     GameConfigData* mGameConfigData;
@@ -261,8 +313,8 @@ private:
     sead::PtrArray<ShopItem::ItemInfo> mItemGift;
     sead::PtrArray<ShopItem::ItemInfo> mItemSticker;
     sead::PtrArray<HackObjInfo> mHackObjList;
-    sead::PtrArray<sead::FixedSafeString<64>> _160;
-    void* _170;
+    sead::PtrArray<sead::FixedSafeString<64>> mWorldsForNewReleaseShop;
+    s32* _170;
     s32 _178;
     AchievementInfoReader* mAchievementInfoReader;
     AchievementHolder* mAchievementHolder;
@@ -279,8 +331,8 @@ private:
     WorldWarpHoleInfo* mWorldWarpHoleInfos;
     s32 mWorldWarpHoleInfoNum;
     UniqObjInfo* mLocationName;
-    bool _220;
-    s32 _224;
+    bool mIsDisableExplainAmiibo;
+    s32 mSearchHintByAmiiboCount;
     bool mIsValidCheckpointWarp;
     sead::Vector3f mStageMapPlayerPos;
     sead::Vector3f* mCoinTransForDeadPlayer;
