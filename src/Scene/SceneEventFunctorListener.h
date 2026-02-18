@@ -4,7 +4,7 @@
 
 namespace al {
 class FunctorBase;
-}
+}  // namespace al
 
 class SceneEventFunctorListener : public SceneEventListener {
 public:

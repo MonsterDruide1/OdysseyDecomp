@@ -10,6 +10,6 @@ void SceneEventFunctorListener::notify() {
     if (!mFunctor)
         return;
 
-    mFunctor->operator()();
-    // (*mFunctor)();
+    // mFunctor->operator()();
+    (*mFunctor)();
 }
