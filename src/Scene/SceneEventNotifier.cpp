@@ -8,7 +8,7 @@
 SceneEventNotifierInitTable sSceneEventNotifierInitTables[] = {{"SnapShotModeOn", 256},
                                                                {"SnapShotModeOff", 256}};
 
-// NON_MATCHING but equivalent
+// NON_MATCHING but equivalent https://decomp.me/scratch/bNYHm
 SceneEventNotifier::SceneEventNotifier() {
     initListenerHolderList(sSceneEventNotifierInitTables);
 }
