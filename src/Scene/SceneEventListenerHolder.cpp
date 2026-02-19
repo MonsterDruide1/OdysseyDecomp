@@ -3,7 +3,7 @@
 #include "Scene/SceneEventListener.h"
 
 SceneEventListenerHolder::SceneEventListenerHolder(const char* name, s32 maxListenerCount)
-    : name(name), listenerCount(0), maxListenerCount(maxListenerCount) {
+    : name(name), maxListenerCount(maxListenerCount) {
     listeners = new SceneEventListener*[maxListenerCount];
 }
 

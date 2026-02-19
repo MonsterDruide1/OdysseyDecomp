@@ -32,7 +32,6 @@
 #include "Library/Play/Layout/WindowConfirm.h"
 #include "Library/Play/Layout/WipeSimple.h"
 #include "Library/Player/PlayerUtil.h"
-#include "Library/Projection/Projection.h"
 #include "Library/Scene/Scene.h"
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Scene/SceneUtil.h"
@@ -79,8 +78,7 @@ void TitleMenuScene::init(const al::SceneInitInfo& info) {
     al::SceneObjHolder* sceneObjHolder = SceneObjFactory::createSceneObjHolder();
     initSceneObjHolder(sceneObjHolder);
 
-    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder),
-                    SceneObjID_GameDataHolder);
+    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder));
 
     initSceneStopCtrl();
 

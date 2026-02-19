@@ -14,9 +14,8 @@ public:
     void add(SceneEventListener* listener);
     void notify();
 
-private:
     const char* name;
     SceneEventListener** listeners;
-    s32 listenerCount;
+    s32 listenerCount = 0;
     s32 maxListenerCount;
 };

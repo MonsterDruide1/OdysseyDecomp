@@ -45,8 +45,7 @@ void FirstSequenceScene::init(const al::SceneInitInfo& info) {
     initDrawSystemInfo(info);
 
     initSceneObjHolder(SceneObjFactory::createSceneObjHolder());
-    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder),
-                    SceneObjID_GameDataHolder);
+    al::setSceneObj(this, GameDataFunction::getGameDataHolder(info.gameDataHolder));
 
     initSceneStopCtrl();
 
