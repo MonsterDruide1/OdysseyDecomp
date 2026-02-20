@@ -28,7 +28,7 @@ void SceneEventNotifier::addListener(const char* holderName, SceneEventListener*
 
 SceneEventListenerHolder* SceneEventNotifier::findSceneEventListenerHolder(const char* holderName) {
     for (s32 i = 0; i < mListenerHolderCount; i++)
-        if (al::isEqualString(mListenerHolders[i]->name, holderName))
+        if (al::isEqualString(mListenerHolders[i]->getName(), holderName))
             return mListenerHolders[i];
 
     return nullptr;

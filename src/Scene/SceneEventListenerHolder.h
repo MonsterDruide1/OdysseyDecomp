@@ -4,7 +4,7 @@
 
 struct SceneEventListener;
 
-struct SceneEventListenerHolder {
+class SceneEventListenerHolder {
 public:
     SceneEventListenerHolder(const char* name, s32 maxListenerCount);
 
@@ -14,8 +14,11 @@ public:
     void add(SceneEventListener* listener);
     void notify();
 
-    const char* name;
-    SceneEventListener** listeners;
-    s32 listenerCount = 0;
-    s32 maxListenerCount;
+    const char* getName() const { return mName; }
+
+private:
+    const char* mName;
+    SceneEventListener** mListeners;
+    s32 mListenerCount = 0;
+    s32 mMaxListenerCount;
 };

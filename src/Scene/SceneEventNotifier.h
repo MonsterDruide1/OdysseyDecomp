@@ -12,7 +12,7 @@ class IUseSceneObjHolder;
 }  // namespace al
 
 struct SceneEventListener;
-struct SceneEventListenerHolder;
+class SceneEventListenerHolder;
 
 struct SceneEventNotifierInitTable {
     const char* name;
