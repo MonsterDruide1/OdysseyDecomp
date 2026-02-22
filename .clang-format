@@ -174,7 +174,7 @@ SortIncludes: true
 SortUsingDeclarations: Lexicographic
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
-SpaceAfterOperatorKeyword: false
+# SpaceAfterOperatorKeyword: false
 SpaceAfterTemplateKeyword: true
 SpaceAroundPointerQualifiers: Default
 SpaceBeforeAssignmentOperators: true
