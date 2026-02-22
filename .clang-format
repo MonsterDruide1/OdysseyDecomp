@@ -162,7 +162,7 @@ QualifierAlignment: Left
 ReferenceAlignment: Pointer
 ReflowComments: true # Always
 RemoveBracesLLVM: true
-RemoveEmptyLinesInUnwrappedLines: true
+#RemoveEmptyLinesInUnwrappedLines: true
 RemoveParentheses: ReturnStatement
 RemoveSemicolon: true
 RequiresClausePosition: OwnLine
