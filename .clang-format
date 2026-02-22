@@ -40,7 +40,7 @@ AllowShortNamespacesOnASingleLine: false
 AlwaysBreakBeforeMultilineStrings: false
 AttributeMacros: [ ]
 BinPackArguments: true
-BinPackLongBracedList: true
+#BinPackLongBracedList: true
 BinPackParameters: true
 BitFieldColonSpacing: Both
 BracedInitializerIndentWidth: 4
