@@ -75,7 +75,7 @@ BreakBeforeTemplateCloser: false
 BreakBeforeTernaryOperators: false
 BreakBinaryOperations: Never
 BreakConstructorInitializers: BeforeColon
-BreakFunctionDefinitionParameters: false
+#BreakFunctionDefinitionParameters: false
 BreakInheritanceList: BeforeColon
 BreakStringLiterals: true
 BreakTemplateDeclarations: Yes
@@ -174,7 +174,7 @@ SortIncludes: true
 SortUsingDeclarations: Lexicographic
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
-# SpaceAfterOperatorKeyword: false
+#SpaceAfterOperatorKeyword: false
 SpaceAfterTemplateKeyword: true
 SpaceAroundPointerQualifiers: Default
 SpaceBeforeAssignmentOperators: true
@@ -189,7 +189,7 @@ SpaceBeforeParensOptions:
   AfterFunctionDefinitionName: false
   AfterFunctionDeclarationName: false
   AfterIfMacros: true
-  # AfterNot: false
+  #AfterNot: false
   AfterOverloadedOperator: false
   AfterPlacementOperator: true
   AfterRequiresInClause: false
@@ -206,7 +206,7 @@ SpacesInLineCommentPrefix:
   Maximum: -1
 SpacesInParens: Never
 SpacesInParensOptions:
-  # ExceptDoubleParentheses: false
+  #ExceptDoubleParentheses: false
   InCStyleCasts: false
   InConditionalStatements: false
   InEmptyParentheses: false
