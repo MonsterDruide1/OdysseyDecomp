@@ -8,10 +8,11 @@ public:
 
     void init(const al::AreaInitInfo& info) override;
 
-    void calcExtForce(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                      const sead::Vector3f&) const;
+    void calcExtForce(sead::Vector3f* pOutForce, const sead::Vector3f& pos,
+                      const sead::Vector3f& velocity, const sead::Vector3f& prevVelocity) const;
 
 private:
-    sead::Vector2f mUnknown;
-    f32 mMagnitude = 1.0;
+    f32 mSpeedStep = 0.0f;
+    f32 mSpeedTarget = 0.0f;
+    f32 mMagnitude = 1.0f;
 };
