@@ -142,7 +142,7 @@ MacroBlockEnd: ''
 #MainIncludeChar: Quote
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-OneLineFormatOffRegex: ''
+#OneLineFormatOffRegex: ''
 PackConstructorInitializers: BinPack
 PenaltyBreakAssignment: 2
 PenaltyBreakBeforeFirstCallParameter: 19
