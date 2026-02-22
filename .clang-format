@@ -139,7 +139,7 @@ LambdaBodyIndentation: Signature
 LineEnding: LF
 MacroBlockBegin: ''
 MacroBlockEnd: ''
-MainIncludeChar: Quote
+#MainIncludeChar: Quote
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 OneLineFormatOffRegex: ''
