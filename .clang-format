@@ -160,7 +160,7 @@ PointerAlignment: Left
 PPIndentWidth: -1
 QualifierAlignment: Left
 ReferenceAlignment: Pointer
-ReflowComments: Always
+ReflowComments: true # Always
 RemoveBracesLLVM: true
 RemoveEmptyLinesInUnwrappedLines: true
 RemoveParentheses: ReturnStatement
