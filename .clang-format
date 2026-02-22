@@ -73,7 +73,7 @@ BreakBeforeBraces: Attach
 BreakBeforeInlineASMColon: OnlyMultiline
 BreakBeforeTemplateCloser: false
 BreakBeforeTernaryOperators: false
-BreakBinaryOperations: Never
+#BreakBinaryOperations: Never
 BreakConstructorInitializers: BeforeColon
 #BreakFunctionDefinitionParameters: false
 BreakInheritanceList: BeforeColon
