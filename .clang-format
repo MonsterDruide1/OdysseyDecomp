@@ -28,7 +28,7 @@ AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowBreakBeforeNoexceptSpecifier: Never
 AllowShortBlocksOnASingleLine: Never
-AllowShortCaseExpressionOnASingleLine: true
+#AllowShortCaseExpressionOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: true
@@ -36,14 +36,14 @@ AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: false
-AllowShortNamespacesOnASingleLine: false
+#AllowShortNamespacesOnASingleLine: false
 AlwaysBreakBeforeMultilineStrings: false
 AttributeMacros: [ ]
 BinPackArguments: true
 #BinPackLongBracedList: true
 BinPackParameters: true
 BitFieldColonSpacing: Both
-BracedInitializerIndentWidth: 4
+BracedInitializerIndentWidth: 4 #-1
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
@@ -65,7 +65,7 @@ BraceWrapping:
   SplitEmptyNamespace: true
 BreakAdjacentStringLiterals: true
 BreakAfterAttributes: Leave
-BreakAfterReturnType: None
+#BreakAfterReturnType: None
 BreakArrays: true
 BreakBeforeBinaryOperators: None
 BreakBeforeConceptDeclarations: Always
@@ -78,7 +78,7 @@ BreakConstructorInitializers: BeforeColon
 #BreakFunctionDefinitionParameters: false
 BreakInheritanceList: BeforeColon
 BreakStringLiterals: true
-BreakTemplateDeclarations: Yes
+#BreakTemplateDeclarations: Yes
 ColumnLimit: 100
 CommentPragmas: '^ (IWYU pragma:|NOLINT)'
 CompactNamespaces: false
@@ -89,7 +89,7 @@ DerivePointerAlignment: false
 DisableFormat: false
 EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: LogicalBlock
-EnumTrailingComma: Remove
+#EnumTrailingComma: Remove
 FixNamespaceComments: true
 ForEachMacros:
   - FOR_EACH
@@ -134,7 +134,7 @@ IntegerLiteralSeparator:
 #  AtEndOfFile: false
 #  AtStartOfBlock: false
 #  AtStartOfFile: false
-KeepFormFeed: false
+#KeepFormFeed: false
 LambdaBodyIndentation: Signature
 LineEnding: LF
 MacroBlockBegin: ''
@@ -197,7 +197,7 @@ SpaceBeforeParensOptions:
   BeforeNonEmptyParentheses: false
 SpaceBeforeRangeBasedForLoopColon: true
 SpaceBeforeSquareBrackets: false
-SpaceInEmptyBraces: Never
+#SpaceInEmptyBraces: Never
 SpacesBeforeTrailingComments: 2
 SpacesInAngles: Never
 SpacesInContainerLiterals: true
@@ -222,5 +222,5 @@ WhitespaceSensitiveMacros:
   - SEAD_ENUM
   - SEAD_ENUM_EX
   - SEAD_ENUM_EX_VALUES
-WrapNamespaceBodyWithEmptyLines: Leave
+#WrapNamespaceBodyWithEmptyLines: Leave
 ...
