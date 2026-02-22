@@ -206,7 +206,7 @@ SpacesInLineCommentPrefix:
   Maximum: -1
 SpacesInParens: Never
 SpacesInParensOptions:
-  ExceptDoubleParentheses: false
+  # ExceptDoubleParentheses: false
   InCStyleCasts: false
   InConditionalStatements: false
   InEmptyParentheses: false
