@@ -170,10 +170,7 @@ RequiresExpressionIndentation: OuterScope
 SeparateDefinitionBlocks: Always
 ShortNamespaceLines: 0
 SkipMacroDefinitionBody: false
-SortIncludes:
-  Enabled: true
-  IgnoreCase: false
-  IgnoreExtension: false
+SortIncludes: true
 SortUsingDeclarations: Lexicographic
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
