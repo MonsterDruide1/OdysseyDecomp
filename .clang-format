@@ -13,8 +13,8 @@ AlignConsecutiveMacros:
   Enabled: false
 AlignConsecutiveShortCaseStatements:
   Enabled: false
-AlignConsecutiveTableGenBreakingDAGArgColons:
-  Enabled: false
+#AlignConsecutiveTableGenBreakingDAGArgColons:
+#  Enabled: false
 AlignConsecutiveTableGenCondOperatorColons:
   Enabled: false
 AlignConsecutiveTableGenDefinitionColons:
