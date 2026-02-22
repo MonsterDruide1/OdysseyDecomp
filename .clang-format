@@ -215,7 +215,7 @@ SpacesInSquareBrackets: false
 Standard: c++17
 StatementAttributeLikeMacros: [ ]
 StatementMacros: [ ]
-TableGenBreakInsideDAGArg: DontBreak
+#TableGenBreakInsideDAGArg: DontBreak
 TabWidth: 4
 UseTab: Never
 WhitespaceSensitiveMacros:
