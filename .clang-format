@@ -41,7 +41,7 @@ AlwaysBreakBeforeMultilineStrings: false
 AttributeMacros: [ ]
 BinPackArguments: true
 BinPackLongBracedList: true
-BinPackParameters: BinPack
+BinPackParameters: true
 BitFieldColonSpacing: Both
 BracedInitializerIndentWidth: -1
 BraceWrapping:
