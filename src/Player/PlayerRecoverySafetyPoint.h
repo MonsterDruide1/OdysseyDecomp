@@ -99,6 +99,31 @@ public:
     void reset();
 
 private:
+    struct MySafety {
+        bool mHasSafety = false;
+        sead::Vector3f mSafetyPos = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f mSafetyNormal = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f mGravity = {0.0f, 0.0f, 0.0f};
+        const al::AreaObj* mArea = nullptr;
+
+        inline void reset() {
+            mHasSafety = false;
+            mSafetyPos = {0.0f, 0.0f, 0.0f};
+            mSafetyNormal = {0.0f, 0.0f, 0.0f};
+            mGravity = {0.0f, 0.0f, 0.0f};
+            mArea = nullptr;
+        }
+
+        inline void set(const sead::Vector3f& safetyPos, const sead::Vector3f& safetyNormal,
+                        const sead::Vector3f& gravity, const al::AreaObj* areaObj) {
+            mHasSafety = true;
+            mSafetyPos.set(safetyPos);
+            mSafetyNormal.set(safetyNormal);
+            mGravity.set(gravity);
+            mArea = areaObj;
+        }
+    };
+
     const al::LiveActor* mActor;
     const HackCap* mHackCap;
     const IUseDimension* mDimension;

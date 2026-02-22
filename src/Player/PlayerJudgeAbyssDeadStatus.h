@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Player/IJudge.h"
-#include "Player/PlayerJudgeSameNerve.h"
 
 class PlayerJudgeSameNerve;
 class PlayerRecoverySafetyPoint;
@@ -19,3 +18,5 @@ private:
     const PlayerJudgeSameNerve* mNerve;
     const PlayerRecoverySafetyPoint* mSafePoint;
 };
+
+static_assert(sizeof(PlayerJudgeAbyssDeadStatus) == 0x18);

@@ -1,7 +1,8 @@
 #include "Player/PlayerJudgeAbyssDeadStatus.h"
-#include "Player/PlayerInfo.h"
-#include "Player/PlayerRecoverySafetyPoint.h"
 
+#include "Player/PlayerInfo.h"
+#include "Player/PlayerJudgeSameNerve.h"
+#include "Player/PlayerRecoverySafetyPoint.h"
 #include "Util/JudgeUtil.h"
 
 PlayerJudgeAbyssDeadStatus::PlayerJudgeAbyssDeadStatus(const PlayerJudgeSameNerve* nerve,
@@ -9,10 +10,7 @@ PlayerJudgeAbyssDeadStatus::PlayerJudgeAbyssDeadStatus(const PlayerJudgeSameNerv
     : mNerve(nerve), mSafePoint(safePoint) {}
 
 bool PlayerJudgeAbyssDeadStatus::judge() const {
-    if (!rs::isJudge(reinterpret_cast<const IJudge*>(mNerve)))
-        return false;
-
-    return !mSafePoint->isValid();
+    return rs::isJudge(mNerve) && !mSafePoint->isValid();
 }
 
 void PlayerJudgeAbyssDeadStatus::reset() {
