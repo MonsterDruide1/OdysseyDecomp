@@ -8239,40 +8239,40 @@ Boss/BossRaid/BossRaidNpc.o:
   - offset: 0x0413d8
     size: 128
     label: _ZN11BossRaidNpcC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x041458
     size: 140
     label: _ZN11BossRaidNpcC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0414e4
     size: 672
     label: _ZN11BossRaidNpc4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x041784
     size: 164
     label: _ZN11BossRaidNpc10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x041828
     size: 68
     label: _ZNK11BossRaidNpc16isEnableReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04186c
     size: 80
     label: _ZN11BossRaidNpc8exeEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0418bc
     size: 152
     label: _ZN11BossRaidNpc11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x041954
     size: 80
     label: _ZNK12_GLOBAL__N_119BossRaidNpcNrvEvent7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0419a4
     size: 8
     label: _ZNK12_GLOBAL__N_122BossRaidNpcNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/BossRaid/BossRaidRivet.o:
   '.text':

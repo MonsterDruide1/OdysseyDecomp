@@ -36,6 +36,7 @@
 
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
+#include "Boss/BossRaid/BossRaidNpc.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Camera/ScenarioStartCamera.h"
 #include "Demo/DemoPeachWedding.h"
@@ -200,7 +201,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BossKnuckleFix", al::createActorFunction<BossKnuckleFix>},
     {"BossMagma", nullptr},
     {"BossRaid", nullptr},
-    {"BossRaidNpc", nullptr},
+    {"BossRaidNpc", al::createActorFunction<BossRaidNpc>},
     {"BossRaidRivet", nullptr},
     {"BreakablePole", al::createActorFunction<BreakablePole>},
     {"Breeda", nullptr},
