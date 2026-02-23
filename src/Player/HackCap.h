@@ -33,6 +33,7 @@ public:
     void updateShadowMaskOffset();
     void control() override;
     bool isFlying() const;
+
     void updateTargetLayout();
     void updateCollider() override;
     void updateFrameOutLayout();
