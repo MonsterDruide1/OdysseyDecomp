@@ -14,6 +14,13 @@ public:
     void onAlreadyDeadGK(s32 world, s32 lv);
     bool isAlreadyShowDemoBattleEndKoopaLv2() const;
     void saveDemoBattleEndKoopaLv2();
+
+    bool isAlreadyShowDemoMoonBasementCollapse() const {
+        return mIsAlreadyShowDemoMoonBasementCollapse;
+    }
+
+    void saveShowDemoMoonBasementCollapse() { mIsAlreadyShowDemoMoonBasementCollapse = true; }
+
     void resetLv3Data();
     void write(al::ByamlWriter* writer) override;
     void read(const al::ByamlIter& save) override;
