@@ -90,7 +90,7 @@ void BossRaidWheel::exeRun() {
     al::scaleVelocityHV(this, 0.91f, 0.995f);
     al::reboundVelocityFromCollision(this, 0.0f, 0.0f, 1.0f);
 
-    if (al::isOnGroundNoVelocity(this, 0xA))
+    if (al::isOnGroundNoVelocity(this, 10))
         al::tryStartActionIfNotPlaying(this, "Run");
     else
         al::tryStartActionIfNotPlaying(this, "Fall");
