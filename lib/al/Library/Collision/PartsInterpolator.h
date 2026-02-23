@@ -10,6 +10,16 @@ public:
     virtual bool isInvalidTriangle(const Triangle& triangle) const = 0;
 };
 
+class TriangleFilterGroundOnly : public TriangleFilterBase {
+public:
+    TriangleFilterGroundOnly(const sead::Vector3f& down) : mDown(down) {}
+
+    bool isInvalidTriangle(const Triangle& triangle) const override;
+
+private:
+    const sead::Vector3f& mDown;
+};
+
 class TriangleFilterWallOnly : public TriangleFilterBase {
 public:
     TriangleFilterWallOnly(const sead::Vector3f& down) : mDown(down) {}
