@@ -2,63 +2,116 @@
 
 #include <math/seadVector.h>
 
-namespace al {
-class LiveActor;
-class AreaObj;
-class ActorInitInfo;
-class CollisionPartsFilterBase;
-class HitSensor;
-}  // namespace al
+#include "Library/Area/AreaObj.h"
+#include "Library/Area/AreaObjUtil.h"
+#include "Library/Camera/CameraUtil.h"
+#include "Library/Collision/CollisionPartsKeeperUtil.h"
+#include "Library/Collision/CollisionPartsTriangle.h"
+#include "Library/Collision/PartsInterpolator.h"
+#include "Library/LiveActor/ActorActionFunction.h"
+#include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
+#include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/LiveActor/LiveActor.h"
+#include "Library/LiveActor/LiveActorFunction.h"
+#include "Library/Math/MathUtil.h"
+
+#include "Player/HackCap.h"
+#include "System/GameDataUtil.h"
+
 class HackCap;
 class IUseDimension;
 
+namespace al {
+class LiveActor;
+struct ActorInitInfo;
+class CollisionPartsFilterBase;
+class AreaObj;
+class HitSensor;
+class ActorActionKeeper;
+}  // namespace al
+
+struct SafetyPoint {
+    bool hasSafety = false;
+    sead::Vector3f safetyPos = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f safetyNormal = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
+    const al::AreaObj* area = nullptr;
+
+    inline void reset() {
+        hasSafety = false;
+        safetyPos = {0.0f, 0.0f, 0.0f};
+        safetyNormal = {0.0f, 0.0f, 0.0f};
+        gravity = {0.0f, 0.0f, 0.0f};
+        area = nullptr;
+    }
+
+    inline void set(const sead::Vector3f& rSafetyPos, const sead::Vector3f& rSafetyNormal,
+                    const sead::Vector3f& rGravity, const al::AreaObj* pAreaObj) {
+        hasSafety = true;
+        safetyPos.set(rSafetyPos);
+        safetyNormal.set(rSafetyNormal);
+        gravity.set(rGravity);
+        area = pAreaObj;
+    }
+};
+
 class PlayerRecoverySafetyPoint {
 public:
-    PlayerRecoverySafetyPoint(const al::LiveActor*, const HackCap*, const al::ActorInitInfo&,
-                              const IUseDimension*, al::CollisionPartsFilterBase*, al::HitSensor*);
-    void reset();
-    void setSafetyPoint(const sead::Vector3f&, const sead::Vector3f&, const al::AreaObj*);
-    void noticeRequestSafetyPoint(const sead::Vector3f&, const sead::Vector3f&, const al::AreaObj*);
-    void noticeDangerousPoint(const sead::Vector3f&, bool);
-    void slideLastSafetyPoint(sead::Vector3f*, sead::Vector3f*, bool, const sead::Vector3f&, bool,
-                              al::CollisionPartsFilterBase*);
-    bool isValid() const;
-    bool isEnableRecovery() const;
     const sead::Vector3f& getSafetyPoint() const;
     const sead::Vector3f& getSafetyPointGravity() const;
-    const sead::Vector3f& getSafetyPointArea() const;
-    void updateRecoveryAreaValidity();
-    void setRecoveryArea(const al::AreaObj*);
-    bool isActiveRecoveryArea() const;
+    const al::AreaObj* getSafetyPointArea() const;
+
+    void setSafetyPoint(const sead::Vector3f& safetyPos, const sead::Vector3f& safetyNormal,
+                        const al::AreaObj* areaObj);
+    void setRecoveryArea(const al::AreaObj* area);
+    void slideLastSafetyPoint(sead::Vector3f* safetyPos, sead::Vector3f* safetyNormal,
+                              bool hasSafety, const sead::Vector3f& lastSafetyPos,
+                              bool doValidateRay, al::CollisionPartsFilterBase* colFilter);
+    void noticeDangerousPoint(const sead::Vector3f& pos, bool adjustFlag);
+    void noticeRequestSafetyPoint(const sead::Vector3f& safetyNormal, const sead::Vector3f&,
+                                  const al::AreaObj* areaObj);
+
     void checkInvalidateArea();
-    void startRecovery(f32);
-    void updateRecoveryBubble();
+
     void startBubbleWait();
+
+    void startRecovery(f32 height);
     void endRecovery();
 
+    bool isActiveRecoveryArea() const;
+    bool isEnableRecovery() const;
+    bool isValid() const;
+
+    void updateRecoveryAreaValidity();
+    void updateRecoveryBubble();
+
+    PlayerRecoverySafetyPoint(const al::LiveActor* actor, const HackCap* hackCap,
+                              const al::ActorInitInfo& initInfo, const IUseDimension* dimension,
+                              al::CollisionPartsFilterBase* colFilter, al::HitSensor* hitSensor);
+
+    void reset();
+
 private:
-    al::LiveActor* mPlayer;
-    HackCap* mHackCap;
-    IUseDimension* mDimension;
-    al::CollisionPartsFilterBase* mCollisionPartsFilter;
+    const al::LiveActor* mActor;
+    const HackCap* mHackCap;
+    const IUseDimension* mDimension;
+    al::CollisionPartsFilterBase* mColFilter;
     al::HitSensor* mHitSensor;
-    al::LiveActor* mBubble3D;
-    al::LiveActor* mBubble2D;
-    f32 mRecoveryTimer;
-    f32 _34;
-    bool mHasSafety3D;
-    sead::Vector3f mSafetyPos3D;
-    sead::Vector3f mSafetyNormal3D;
-    sead::Vector3f mGravity3D;
-    al::AreaObj* mArea3D;
-    bool mHasSafety2D;
-    sead::Vector3f mSafetyPos2D;
-    sead::Vector3f mSafetyNormal2D;
-    sead::Vector3f mGravity2D;
-    al::AreaObj* mArea2D;
-    bool mIsRecovering;
-    al::AreaObj* mRecoveryArea;
-    sead::Vector3f* mSafetyPoint;
+
+    al::LiveActor* mTractorBubble = nullptr;
+    al::LiveActor* mTractorBubble2D = nullptr;
+
+    f32 mBubbleHeight = 0.0f;
+
+    SafetyPoint mSafety3D;
+    SafetyPoint mSafety2D;
+    bool mIsRecovering = false;
+
+    const al::AreaObj* mRecoveryArea = nullptr;
+    sead::Vector3f* mDefaultSafetyPos = nullptr;  // Unsure of actual use
 };
 
 static_assert(sizeof(PlayerRecoverySafetyPoint) == 0xb8);
