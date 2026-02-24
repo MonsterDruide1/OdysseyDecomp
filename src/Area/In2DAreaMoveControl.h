@@ -20,7 +20,8 @@ public:
     bool isLastAreaFaceToPushOut() const;
 
 private:
-    void* filler[0xA0 / 8];
+    sead::FixedPtrArray<al::AreaObj, 8> mAreas;
+    sead::FixedPtrArray<al::AreaObj, 8> mLastAreas;
 };
 
 static_assert(sizeof(In2DAreaMoveControl) == 0xA0);
