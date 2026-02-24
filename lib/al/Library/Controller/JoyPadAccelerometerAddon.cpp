@@ -12,7 +12,7 @@ JoyPadAccelerometerAddon::JoyPadAccelerometerAddon(sead::Controller* controller,
 bool JoyPadAccelerometerAddon::calc() {
     sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
     sead::NinJoyNpadDevice* npadDevice = mgr->getControlDeviceAs<sead::NinJoyNpadDevice*>();
-    NpadController* npad = (NpadController*)mController;
+    NpadController* npad = static_cast<NpadController*>(mController);
 
     mIsEnable = false;
     mAcceleration = {0.0f, 0.0, 0.0f};

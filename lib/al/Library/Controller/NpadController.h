@@ -34,7 +34,7 @@ private:
     s32 mSixAxisSensorCount = 0;
     s32 _188 = 0;
     bool mIsConnected = false;
-    void* _190 = nullptr;
+    s64 mSamplingNumber = 0;
 };
 
 static_assert(sizeof(NpadController) == 0x198);
