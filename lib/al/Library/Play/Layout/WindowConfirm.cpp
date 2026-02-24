@@ -63,11 +63,10 @@ void WindowConfirm::setTxtList(s32 index, const char16* message) {
 }
 
 void WindowConfirm::setListNum(s32 num) {
-    SelectionType selectionType = (SelectionType)num;
-    mSelection.selectionType = selectionType;
-    if (selectionType == SelectionType::List01)
+    mSelection.selectionType = (SelectionType)num;
+    if (mSelection.selectionType == SelectionType::List01)
         setCancelIdx((s32)SelectionType::List00);
-    if (selectionType == SelectionType::List02)
+    if (mSelection.selectionType == SelectionType::List02)
         setCancelIdx((s32)SelectionType::HardKey);
 }
 
