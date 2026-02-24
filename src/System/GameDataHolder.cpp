@@ -42,8 +42,7 @@ void initializeShopItemList(sead::PtrArray<ShopItem::ShopItemInfo>* shopItemList
         return;
 
     al::Resource* resource = al::findOrCreateResource("SystemData/ItemList", nullptr);
-    const u8* yaml = al::findResourceYaml(resource, name, nullptr);
-    al::ByamlIter iter(yaml);
+    al::ByamlIter iter(al::findResourceYaml(resource, name, nullptr));
 
     s32 size = iter.getSize();
     if (size <= 0)
@@ -103,8 +102,7 @@ void initializeItemList(sead::PtrArray<ShopItem::ItemInfo>* shopItemList, const 
         return;
 
     al::Resource* resource = al::findOrCreateResource("SystemData/ItemList", nullptr);
-    const u8* yaml = al::findResourceYaml(resource, name, nullptr);
-    al::ByamlIter iter(yaml);
+    al::ByamlIter iter(al::findResourceYaml(resource, name, nullptr));
 
     s32 size = iter.getSize();
     if (size <= 0)
@@ -141,15 +139,15 @@ void initializeItemList(sead::PtrArray<ShopItem::ItemInfo>* shopItemList, const 
                 itemInfo->amiiboInfoList.tryAllocBuffer(amiiboSize, nullptr);
 
                 for (s32 j = 0; j < amiiboSize; j++) {
-                    al::ByamlIter amiiboJiter;
-                    amiiboIter.tryGetIterByIndex(&amiiboJiter, j);
+                    al::ByamlIter amiiboInfoIter;
+                    amiiboIter.tryGetIterByIndex(&amiiboInfoIter, j);
 
                     s32 characterId = -1;
-                    if (al::tryGetByamlS32(&characterId, amiiboJiter, "CharacterId"))
+                    if (al::tryGetByamlS32(&characterId, amiiboInfoIter, "CharacterId"))
                         itemInfo->amiiboInfoList[j].characterId = characterId;
 
                     s32 numberingId = -1;
-                    if (al::tryGetByamlS32(&numberingId, amiiboJiter, "NumberingId"))
+                    if (al::tryGetByamlS32(&numberingId, amiiboInfoIter, "NumberingId"))
                         itemInfo->amiiboInfoList[j].numberingId = numberingId;
                 }
             }
@@ -432,7 +430,6 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
     initializeData();
 }
 
-// NON-MATCHING: Initializer is broken https://decomp.me/scratch/vbHSh
 GameDataHolder::GameDataHolder() {
     setLanguage(al::getLanguageString());
 }
