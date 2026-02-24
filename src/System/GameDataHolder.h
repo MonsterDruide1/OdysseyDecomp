@@ -4,7 +4,10 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
+#include "Library/HostIO/HioNode.h"
+#include "Library/Message/IUseMessageSystem.h"
 #include "Library/Scene/GameDataHolderBase.h"
+#include "Library/Scene/ISceneObj.h"
 
 #include "Scene/SceneObjFactory.h"
 
@@ -51,7 +54,10 @@ struct HackObjInfo {
 
 static_assert(sizeof(HackObjInfo) == 0x20);
 
-class GameDataHolder : public al::GameDataHolderBase {
+class GameDataHolder : public al::GameDataHolderBase,
+                       public al::ISceneObj,
+                       public al::HioNode,
+                       public al::IUseMessageSystem {
 public:
     static constexpr s32 sSceneObjId = SceneObjID_GameDataHolder;
 
@@ -305,8 +311,7 @@ private:
     TempSaveData* mTempSaveData = nullptr;
     TempSaveData* mTempSaveDataBackup = nullptr;
     CapMessageBossData* mCapMessageBossData = nullptr;
-    void* _c0 = nullptr;
-    s32 _c8 = 0;
+    sead::Vector3f _c0 = sead::Vector3f::zero;
 
     TemporaryScenarioCameraHolder* mTemporaryScenarioCameraHolder = nullptr;
     bool* mIsPlayAlreadyScenarioStartCamera = nullptr;
