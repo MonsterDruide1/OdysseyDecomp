@@ -52,13 +52,10 @@ void BossRaidChain::addVelocityChain(const sead::Vector3f& velocity) {
 }
 
 void BossRaidChain::updateVelocity(BossRaidChain* other) {
-    if (other == nullptr)
+    if (!other)
         return;
 
-    const sead::Vector3f& otherTrans = al::getTrans(other);
-    const sead::Vector3f& myTrans = al::getTrans(this);
-
-    sead::Vector3f diff = otherTrans - myTrans;
+    sead::Vector3f diff = al::getTrans(other) - al::getTrans(this);
     f32 dist = diff.length();
 
     sead::Vector3f vel = sead::Vector3f::zero;
@@ -67,36 +64,29 @@ void BossRaidChain::updateVelocity(BossRaidChain* other) {
     } else {
         if (dist < mMinDist) {
             f32 scale = (dist - mMinDist) * -0.2f / (dist * mMinDist);
-            vel.x = diff.x * scale;
-            vel.y = diff.y * scale;
-            vel.z = diff.z * scale;
+            vel.setScale(diff, scale);
         }
         if (dist > mMaxDist) {
             f32 scale = (dist - mMaxDist) / dist * 0.4f;
-            vel.x = diff.x * scale;
-            vel.y = diff.y * scale;
-            vel.z = diff.z * scale;
+            vel.setScale(diff, scale);
         }
     }
 
     addVelocityChain(vel);
-
-    sead::Vector3f negVel = {-vel.x, -vel.y, -vel.z};
-    if (!other->mIsFix)
-        al::addVelocity(other, negVel);
+    other->addVelocityChain(-vel);
 }
 
 void BossRaidChain::updateDirection(f32 yRate, f32 zRate) {
     sead::Vector3f dir = sead::Vector3f::zero;
 
-    if (mPrevChain != nullptr)
+    if (mPrevChain)
         dir += al::getTrans(this) - al::getTrans(mPrevChain);
 
-    if (mNextChain != nullptr)
+    if (mNextChain)
         dir += al::getTrans(mNextChain) - al::getTrans(this);
 
-    sead::Vector3f up = sead::Vector3f::ex;
-    if (mPrevChain != nullptr)
+    sead::Vector3f up = sead::Vector3f::ey;
+    if (mPrevChain)
         al::calcUpDir(&up, mPrevChain);
 
     sead::Quatf* quat = al::getQuatPtr(this);
@@ -147,7 +137,7 @@ void BossRaidChain::reset() {
 void BossRaidChain::exeDeactive() {}
 
 void BossRaidChain::exeDemo() {
-    if (mDemoFollowMtxPtr != nullptr)
+    if (mDemoFollowMtxPtr)
         al::updatePoseMtx(this, mDemoFollowMtxPtr);
 }
 
