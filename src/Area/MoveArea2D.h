@@ -6,7 +6,18 @@
 
 class MoveArea2D : public al::AreaObj {
 public:
-    enum class ShapeType { Cube = 1, Cylinder, CylinderCenter, Disk };
+    enum class ShapeType {
+        CubeBase = 1,
+        Cylinder = 2,
+        CylinderCenter = 3,
+        Disk = 4,
+    };
+
+    enum class SnapGravityType {
+        Default = 0,
+        Vertical = 1,
+        Radial = 2,
+    };
 
     MoveArea2D(const char* name);
 
@@ -16,13 +27,13 @@ public:
     bool calcGravityDir(sead::Vector3f*, f32*, const sead::Vector3f&) const;
     bool calcGravityYDir(sead::Vector3f*, f32*) const;
 
-    bool calcSnapPower(sead::Vector3f*, f32*, const sead::Vector3f&, f32);
-    bool calcSnapPowerCube(sead::Vector3f*, f32*, const sead::Vector3f&, f32);
-    bool calcSnapPowerCylinder(sead::Vector3f*, f32*, const sead::Vector3f&, f32);
-    bool calcSnapPowerDisk(sead::Vector3f*, f32*, const sead::Vector3f&, f32);
+    bool calcSnapPower(sead::Vector3f*, f32*, const sead::Vector3f&, f32) const;
+    bool calcSnapPowerCube(sead::Vector3f*, f32*, const sead::Vector3f&, f32) const;
+    bool calcSnapPowerCylinder(sead::Vector3f*, f32*, const sead::Vector3f&, f32) const;
+    bool calcSnapPowerDisk(sead::Vector3f*, f32*, const sead::Vector3f&, f32) const;
 
 private:
-    ShapeType mShapeType;
-    f32 mSurfaceDistance;
-    f32 mGravityOffset;
+    ShapeType mShapeType = (ShapeType)0;
+    f32 mSurfaceDistance = 0.0f;
+    f32 mGravityOffset = 0.0f;
 };
