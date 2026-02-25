@@ -78,7 +78,7 @@ BreakConstructorInitializers: BeforeColon
 #BreakFunctionDefinitionParameters: false
 BreakInheritanceList: BeforeColon
 BreakStringLiterals: true
-#BreakTemplateDeclarations: Yes
+AlwaysBreakTemplateDeclarations: Yes #BreakTemplateDeclarations: Yes
 ColumnLimit: 100
 CommentPragmas: '^ (IWYU pragma:|NOLINT)'
 CompactNamespaces: false
