@@ -119,7 +119,7 @@ IndentGotoLabels: true
 IndentPPDirectives: None
 IndentRequiresClause: true
 IndentWidth: 4
-IndentWrappedFunctionNames: true
+IndentWrappedFunctionNames: false
 InsertBraces: false
 InsertNewlineAtEOF: true
 InsertTrailingCommas: None
@@ -139,6 +139,8 @@ LambdaBodyIndentation: Signature
 LineEnding: LF
 MacroBlockBegin: ''
 MacroBlockEnd: ''
+#MacrosSkippedByRemoveParentheses:
+#  - SENSOR_MSG_WITH_DATA_CUSTOM_CTOR
 #MainIncludeChar: Quote
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
@@ -163,7 +165,7 @@ ReferenceAlignment: Pointer
 ReflowComments: true # Always
 RemoveBracesLLVM: true
 #RemoveEmptyLinesInUnwrappedLines: true
-RemoveParentheses: ReturnStatement
+RemoveParentheses: Leave #ReturnStatement
 RemoveSemicolon: true
 RequiresClausePosition: OwnLine
 RequiresExpressionIndentation: OuterScope
