@@ -14,12 +14,21 @@ public:
     void onAlreadyDeadGK(s32, s32);
     bool isAlreadyShowDemoBattleEndKoopaLv2() const;
     void saveDemoBattleEndKoopaLv2();
+
+    bool isAlreadyShowDemoMoonBasementCollapse() const {
+        return mIsAlreadyShowDemoMoonBasementCollapse;
+    }
+
+    void saveShowDemoMoonBasementCollapse() { mIsAlreadyShowDemoMoonBasementCollapse = true; }
+
     void resetLv3Data();
     void write(al::ByamlWriter* writer) override;
     void read(const al::ByamlIter& save) override;
 
 private:
-    void* _padding[0x6];
+    void* _padding[0x5];
+    bool mIsAlreadyShowDemoBattleEndKoopaLv2 = false;
+    bool mIsAlreadyShowDemoMoonBasementCollapse = false;
 };
 
 static_assert(sizeof(BossSaveData) == 0x38);
