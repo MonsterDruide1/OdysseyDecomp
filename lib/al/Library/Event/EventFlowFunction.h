@@ -3,14 +3,15 @@
 #include <math/seadVector.h>
 
 namespace al {
-class EventFlowEventData;
 struct ActorInitInfo;
 class ByamlIter;
+class EventFlowEventData;
 class EventFlowExecutor;
 class EventFlowMovement;
 class EventFlowNode;
 class EventFlowNodeInitInfo;
 class IEventFlowEventReceiver;
+class IUseEventFlowData;
 class IUseMessageSystem;
 class LayoutInitInfo;
 class LiveActor;
