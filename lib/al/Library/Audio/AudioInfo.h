@@ -27,7 +27,14 @@ public:
     AudioInfoListCreateFunctor(AudioInfoList<T>* list, CreateInfoFunc fun)
         : mCreateInfoFunc(fun), mAudioInfoList(list) {}
 
-    __attribute__((noinline)) bool tryCreateAudioInfoAndSetToList(const ByamlIter& iter) override;
+    bool tryCreateAudioInfoAndSetToList(const ByamlIter& iter) override {
+        T* info = mCreateInfoFunc(iter);
+
+        if (!info)
+            return false;
+
+        return mAudioInfoList->list->pushBack(info);
+    }
 
 private:
     CreateInfoFunc mCreateInfoFunc;
@@ -36,20 +43,20 @@ private:
 
 template <typename T>
 struct AudioInfoList {
-    __attribute__((noinline)) static s32 compareInfoAndKey(const T* info, const char* key);
+    static s32 compareInfoAndKey(const T* info, const char* key) { return strcmp(info->name, key); }
 
     sead::PtrArray<T>* list;
 };
 
 template <typename T>
 struct AudioInfoListWithParts : public AudioInfoList<T> {
-    static s32 tryGetInfoIndex(const char*);
-    static void tryFindInfo(const char*);
+    s32 tryGetInfoIndex(const char*) const;
+    T* tryFindInfo(const char*) const;
 
-    s32 getPartsSize() {
-        if (parts)
-            return parts->size();
-        return 0;
+    s32 getPartsSize() const {
+        if (!parts)
+            return 0;
+        return parts->size();
     }
 
     bool _8;
@@ -57,7 +64,7 @@ struct AudioInfoListWithParts : public AudioInfoList<T> {
 };
 
 template <typename T>
-AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter, s32 key) {
+AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter, s32 maxNumParts) {
     AudioInfoListWithParts<T>* audioInfoList = new AudioInfoListWithParts<T>;
 
     s32 listSize = alAudioInfoListFunction::getCreateAudioInfoListSize(iter, 0);
@@ -67,9 +74,9 @@ AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter, s32 key) {
     audioInfoList->list->allocBuffer((listSize == 0) ? 1 : listSize, nullptr);
 
     audioInfoList->parts = nullptr;
-    if (key != 0) {
+    if (maxNumParts != 0) {
         audioInfoList->parts = new sead::PtrArray<AudioInfoList<T>>();
-        audioInfoList->parts->allocBuffer(key, nullptr);
+        audioInfoList->parts->allocBuffer(maxNumParts, nullptr);
     }
 
     AudioInfoListCreateFunctor<T> functor(audioInfoList, T::createInfo);
