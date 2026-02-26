@@ -9,11 +9,10 @@ AudioAddonSoundArchiveInfo::AudioAddonSoundArchiveInfo() = default;
 AudioAddonSoundArchiveInfo* AudioAddonSoundArchiveInfo::createInfo(const ByamlIter& iter) {
     AudioAddonSoundArchiveInfo* info = new AudioAddonSoundArchiveInfo();
 
-    info->name = nullptr;
-    if (iter.tryGetStringByKey(&info->name, "Name"))
-        return info;
+    if (!iter.tryGetStringByKey(&info->name, "Name"))
+        return nullptr;
 
-    return nullptr;
+    return info;
 }
 
 s32 AudioAddonSoundArchiveInfo::compareInfo(const AudioAddonSoundArchiveInfo* lhs,
