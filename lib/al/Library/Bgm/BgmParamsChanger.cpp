@@ -129,7 +129,7 @@ void BgmParamsChanger::changeDefaultParams(s32 stepCount) {
 void BgmParamsChanger::forceDeactivate() {
     mVolume->changeTarget(mVolume->getCurrent(), 0);
     mPitchShift->changeTarget(mPitchShift->getCurrent(), 0);
-    mPitchShiftModulation->changeTarget(mPitchShiftModulation->getAmplitude(), 0);
+    mPitchShiftModulation->changeTarget(mPitchShiftModulation->getCurrent(), 0);
     mLpf->changeTarget(mLpf->getCurrent(), 0);
     mBiquadFilter->changeTarget(mBiquadFilter->getCurrent(), 0);
     mEffectSend->changeTarget(mEffectSend->getCurrent(), 0);
@@ -147,7 +147,7 @@ f32 BgmParamsChanger::getCurPitchShift() const {
 }
 
 f32 BgmParamsChanger::getCurPitchShiftModulation() const {
-    return mPitchShiftModulation->getAmplitude();
+    return mPitchShiftModulation->getCurrent();
 }
 
 f32 BgmParamsChanger::getCurLpfCutOff() const {
