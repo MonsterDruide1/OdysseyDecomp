@@ -4,6 +4,15 @@
 
 #include "Library/Area/AreaObj.h"
 
+namespace al {
+class IUseSceneObjHolder;
+}
+
+namespace rs {
+bool isKidsMode(const al::IUseSceneObjHolder*);
+void onRouteGuideSystem(const al::IUseSceneObjHolder*);
+}  // namespace rs
+
 class RouteGuideArea : public al::AreaObj {
 public:
     RouteGuideArea(const char* name);
@@ -12,6 +21,6 @@ public:
     void calcGuidePos(sead::Vector3f* guidePos) const;
 
 private:
-    sead::Vector3f mTargetPosition = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mTargetPosition = sead::Vector3f::zero;
     bool mIsGuide3D = false;
 };
