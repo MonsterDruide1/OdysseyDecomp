@@ -5,7 +5,7 @@
 namespace al {
 class LiveActor;
 class AreaObj;
-class ActorInitInfo;
+struct ActorInitInfo;
 class CollisionPartsFilterBase;
 class HitSensor;
 }  // namespace al
