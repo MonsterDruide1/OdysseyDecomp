@@ -4,7 +4,7 @@
 
 class Donsuke : public al::LiveActor {
 public:
-    Donsuke(const char*);
+    Donsuke(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
     void endClipped() override;

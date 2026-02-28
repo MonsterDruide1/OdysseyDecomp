@@ -4,7 +4,7 @@
 
 class ChorobonHolder : public al::LiveActor {
 public:
-    ChorobonHolder(const char*);
+    ChorobonHolder(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
     void control() override;
