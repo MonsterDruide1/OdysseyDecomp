@@ -7,7 +7,7 @@ public:
     Bull(const char* name) : al::LiveActor(name) { /* TODO: Implement inlined ctor */ }
 
     const char* getSensorNameSendAttack();
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void switchOn();
     void control() override;
     void deathAndReset();
@@ -35,8 +35,9 @@ public:
     void exeReviveAppear();
     void exeHack();
 
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void startHack(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     bool tryReceiveMsgTrample(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*);
 

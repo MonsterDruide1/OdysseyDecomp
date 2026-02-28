@@ -8,7 +8,7 @@ public:
               bool createdFromFactory =
                   true);  // Defaults to true so that the default createActorFunction template works
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void onKill();
     void appear() override;
     void updateCollider() override;
@@ -23,8 +23,9 @@ public:
     void exePressDown();
     void exeDead();
 
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
 private:
     char _108[0x140 - sizeof(al::LiveActor)];

@@ -15,7 +15,7 @@ public:
     u32 calcTotalCost() const;
 };
 
-class RootSercher : public al::HioNode {
+class RootSercher : public HioNode {
 public:
     RootSercher();
 

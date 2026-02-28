@@ -16,17 +16,18 @@ class Tsukkun : public al::LiveActor {
 public:
     Tsukkun(const char* name);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void validateSensors();
     void setAnimHackOff();
     void start();
     void setAnimHackOn();
     void setBend(const sead::Vector3f&, const sead::Vector3f&, f32);
     void clearBend();
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool isEnableAttack() const;
     bool isEnablePush() const;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     bool isEnableDamage() const;
     bool isStateEnemy() const;
     void deathAndReset();

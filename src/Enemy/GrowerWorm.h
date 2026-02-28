@@ -6,7 +6,7 @@ class GrowerWorm : public al::LiveActor {
 public:
     GrowerWorm(const char* nane);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void onKill();
     void appear() override;
     bool isEnableReAppear() const;
@@ -22,8 +22,9 @@ public:
     void exePressDown();
     void exeBlowDown();
 
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
 private:
     char _108[0x130 - sizeof(al::LiveActor)];

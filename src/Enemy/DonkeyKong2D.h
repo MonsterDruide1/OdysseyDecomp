@@ -4,12 +4,13 @@
 
 #include "Util/IUseDimension.h"
 
-class DonkeyKong2D : public al::LiveActor, IUseDimension {
+class DonkeyKong2D : public al::LiveActor, public IUseDimension {
 public:
     DonkeyKong2D(const char* name);
-    void init(const al::ActorInitInfo&) override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void init(const al::ActorInitInfo& info) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     void exeWait();
     void exeThrow();
@@ -19,5 +20,5 @@ public:
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
 private:
-    char _108[0x140 - sizeof(al::LiveActor) - sizeof(IUseDimension)];
+    char _110[0x140 - sizeof(al::LiveActor) - sizeof(IUseDimension)];
 };

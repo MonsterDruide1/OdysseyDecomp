@@ -5,7 +5,7 @@
 
 class GabuZou;
 
-class GabuZouRootSercher : al::RootSercher {
+class GabuZouRootSercher : public al::RootSercher {
 public:
     bool checkReach(s32, s32) const override;
 };
@@ -14,7 +14,7 @@ class GabuZouGroup : public al::LiveActor {
 public:
     GabuZouGroup(const char* name);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     bool checkReach(const GabuZou*, const sead::Vector3f&) const;
 
 private:

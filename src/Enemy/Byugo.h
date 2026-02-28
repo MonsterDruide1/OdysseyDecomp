@@ -6,12 +6,13 @@ class Byugo : public al::LiveActor {
 public:
     Byugo(const char* name);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     void calcBlowPowerRate() const;
     void calcWindForce(sead::Vector3f*, const sead::Vector3f&, f32) const;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     void exeDelay();
     void exeRevive();

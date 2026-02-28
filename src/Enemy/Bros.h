@@ -16,7 +16,7 @@ public:
 
 private:
     char _0[0x38];
-}; 
+};
 
 class BrosWeaponBase : public al::LiveActor {
 public:
@@ -28,6 +28,7 @@ public:
                        const sead::Vector3f&);
 
     virtual u32 getBreakStep() const { return 0; }
+
     virtual bool isBreak() const { return false; }
 };
 
@@ -35,12 +36,13 @@ class BrosHackBase : public al::LiveActor {
 public:
     BrosHackBase(s32, const char*, bool, const char*);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void initAfterPlacement() override;
     void control() override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     void attackFront(al::HitSensor*, al::HitSensor*);
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     void setupReset();
     void endClipped();
@@ -63,6 +65,6 @@ public:
     void exeRevive();
 
     virtual void attach() {}
+
     virtual void attachAttack() {}
 };
-

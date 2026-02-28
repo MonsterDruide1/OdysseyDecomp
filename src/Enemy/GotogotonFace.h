@@ -17,21 +17,20 @@ public:
     void setOppositeFace(const GotogotonFace*);
     void setCenter(const sead::Vector3f&);
     void setNormal(const sead::Vector3f&);
-    s32 calcNearEdgeIndexToPos(const sead::Vector3f&, const sead::Quat<float>&,
+    s32 calcNearEdgeIndexToPos(const sead::Vector3f&, const sead::Quatf&,
                                const sead::Vector3f&) const;
-    s32 calcNearEdgeIndexToDir(const sead::Vector3f&, const sead::Quat<float>&,
+    s32 calcNearEdgeIndexToDir(const sead::Vector3f&, const sead::Quatf&,
                                const sead::Vector3f&) const;
-    void rotate(sead::Quat<float>*, sead::Vector3f*, s32, const sead::Quat<float>&,
-                const sead::Vector3f&, f32) const;
+    void rotate(sead::Quatf*, sead::Vector3f*, s32, const sead::Quatf&, const sead::Vector3f&,
+                f32) const;
     s32 calcOppositeEdgeIndex(s32) const;
-    void calcRotateCenterPos(sead::Vector3f*, s32, const sead::Quat<float>&, const sead::Vector3f&,
+    void calcRotateCenterPos(sead::Vector3f*, s32, const sead::Quatf&, const sead::Vector3f&,
                              f32) const;
-    void calcLandEffectMtx(sead::Matrix34<float>*, const sead::Quat<float>&, const sead::Vector3f&,
-                           s32) const;
-    void calcLandEffectMtxNextFace(sead::Matrix34<float>*, const sead::Quat<float>&,
-                                   const sead::Vector3f&, s32) const;
-    void calcCenterPos(sead::Vector3f*, const sead::Quat<float>&, const sead::Vector3f&) const;
-    void calcCenterDir(sead::Vector3f*, const sead::Quat<float>&) const;
+    void calcLandEffectMtx(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&, s32) const;
+    void calcLandEffectMtxNextFace(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&,
+                                   s32) const;
+    void calcCenterPos(sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&) const;
+    void calcCenterDir(sead::Vector3f*, const sead::Quatf&) const;
 
 private:
     char _0[0x28];
