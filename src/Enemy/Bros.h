@@ -1,4 +1,3 @@
-// TODO
 #pragma once
 
 #include "Library/LiveActor/LiveActor.h"
@@ -12,7 +11,7 @@ public:
     void reset();
     void nextMovePoint();
     void getNextTrans(sead::Vector3f*) const;
-    void isUseConnector() const;
+    bool isUseConnector() const;
 
 private:
     char _0[0x38];
@@ -22,9 +21,8 @@ class BrosWeaponBase : public al::LiveActor {
 public:
     BrosWeaponBase(const char* name, const al::LiveActor* bros);
 
-    void attach(const sead::Matrix34<float>*, const sead::Vector3f&, const sead::Vector3f&,
-                const char*);
-    void calcAttachMtx(sead::Matrix34<float>*, const sead::Matrix34<float>*, const sead::Vector3f&,
+    void attach(const sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&, const char*);
+    void calcAttachMtx(sead::Matrix34f*, const sead::Matrix34f*, const sead::Vector3f&,
                        const sead::Vector3f&);
 
     virtual u32 getBreakStep() const { return 0; }
@@ -45,20 +43,21 @@ public:
                     al::HitSensor* self) override;
 
     void setupReset();
-    void endClipped();
-    void kill();
+    void endClipped() override;
+    void kill() override;
     void tryAttachMtxConnect();
     void tryDetachMtxConnect();
     void tryConnectMtx();
     void tryConnectResetMtx();
     void tryBlowDownIfAlive(const sead::Vector3f&, al::HitSensor*);
     void tryAttachWeapon();
-    void tryFindDeadOrBreakWeapon() const;
-    void isEnableAttackWeapon(bool) const;
-    void tryAttachAttackWeapon();
+    al::LiveActor* tryFindDeadOrBreakWeapon() const;
+    bool isEnableAttackWeapon(bool) const;
+    bool tryAttachAttackWeapon();
     void killShineGetDemo();
     void tryKillAttachWeapon();
-    void isHacked() const;
+    bool isHacked() const;
+
     void exeEnemyMovement();
     void exeHackMovement();
     void exeReset();
