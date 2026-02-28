@@ -6,13 +6,14 @@ class Imomu : public al::LiveActor {
 public:
     Imomu(const char* name);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void control() override;
     bool tryResetHack(bool);
     void updateCameraTarget();
     void updateCollider() override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
 
     void endHack(bool);
     void exeEnemy();
