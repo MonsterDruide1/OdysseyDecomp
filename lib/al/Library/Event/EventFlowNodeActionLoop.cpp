@@ -19,8 +19,10 @@ void EventFlowNodeActionLoop::start() {
     EventFlowNode::start();
     mStep = 0;
     if (!isPlayingEventAction(getActor(), this, mActionName)) {
-        !mIsStartRandomFrame ? startEventAction(getActor(), this, mActionName) :
-                               startEventActionAtRandomFrame(getActor(), this, mActionName);
+        if (mIsStartRandomFrame)
+            startEventActionAtRandomFrame(getActor(), this, mActionName);
+        else
+            startEventAction(getActor(), this, mActionName);
     }
 
     if (mActionFrameRate > 0.0f)
@@ -31,7 +33,8 @@ void EventFlowNodeActionLoop::start() {
 }
 
 void EventFlowNodeActionLoop::control() {
-    if (mMaxStep <= ++mStep)
+    mStep++;
+    if (mMaxStep <= mStep)
         end();
 }
 }  // namespace al
