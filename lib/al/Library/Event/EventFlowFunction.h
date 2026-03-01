@@ -49,9 +49,9 @@ const char* getParamMessageLabel(const EventFlowNodeInitInfo& info, const char* 
 void restartEventMovement(EventFlowNode* node);
 void stopEventMovement(EventFlowNode* node);
 void recordActorFront(EventFlowNode* node);
-const sead::Vector3f& getRecordActorFront();
+const sead::Vector3f& getRecordActorFront(const EventFlowNode* node);
 bool sendEvent(const EventFlowNode* node, const EventFlowEventData* data);
-void* judgeQuery(const EventFlowNode* node, const char* query);
+const char* judgeQuery(const EventFlowNode* node, const char* query);
 void invalidateClipping(EventFlowNode* node);
 void validateClipping(EventFlowNode* node);
 s32 getCaseEventNum(const EventFlowNode* node);
