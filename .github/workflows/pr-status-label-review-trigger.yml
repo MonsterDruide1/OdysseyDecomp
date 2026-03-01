@@ -45,7 +45,7 @@ jobs:
           }' > review-data/event.json
 
     - name: Upload review info
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: review-event
         path: review-data/event.json

@@ -16,7 +16,7 @@ class PlayerInput;
 class PlayerDamageKeeper;
 class IPlayerModelChanger;
 class IUsePlayerHeightCheck;
-class HackObjInfo;
+struct HackObjInfo;
 class HackEndParam;
 class PlayerCollider;
 class CapTargetInfo;
