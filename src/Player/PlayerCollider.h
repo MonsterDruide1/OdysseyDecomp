@@ -59,6 +59,8 @@ public:
 
     void set1b0(f32 value) { _1b0 = value; }
 
+    CollisionShapeKeeper* getCollisionShapeKeeper() const { return mCollisionShapeKeeper; }
+
 private:
     al::CollisionDirector* mCollisionDirector;
     const sead::Matrix34f* mMtxPtr;

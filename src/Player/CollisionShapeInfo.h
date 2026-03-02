@@ -56,8 +56,10 @@ public:
     void calcWorldShapeInfo(const sead::Matrix34f&, f32) override;
     void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
+    s32 get_18() const { return _18; }
+
 private:
-    u8 _18[0x1c - 0x18];
+    s32 _18;
     sead::Vector3f mBoundingCenter;
     f32 mBoundingRadius;
     sead::Vector3f mBoundingCenterWorld;
