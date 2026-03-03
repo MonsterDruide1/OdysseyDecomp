@@ -15,13 +15,14 @@ public:
     void startAction(const char*);
     void exeLoop();
     void exeEnd();
+    ~LoopAnimState() override;
 
 private:
-    const char* _20;
-    const char* _28;
-    const char* _30;
-    const char* _38;
-    bool _40;
+    const char* mName = nullptr;
+    const char* mStartSuffix = nullptr;
+    const char* mLoopSuffix = nullptr;
+    const char* mEndSuffix = nullptr;
+    bool mIsSyncSubActor = false;
 };
 
 static_assert(sizeof(LoopAnimState) == 0x48);
