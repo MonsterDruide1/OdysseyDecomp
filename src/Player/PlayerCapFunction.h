@@ -8,6 +8,6 @@ namespace CapFunction {
 
 void putOnCapPlayer(HackCap*, PlayerAnimator*);
 void endHack(HackCap*, PlayerAnimator*);
-const HackObjInfo& getHackObjInfo(HackCap*);
+const HackObjInfo* getHackObjInfo(HackCap*);
 
 }  // namespace CapFunction
