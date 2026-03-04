@@ -4,10 +4,9 @@ class HackCap;
 class PlayerAnimator;
 struct HackObjInfo;
 
-namespace CapFunction {
-
-void putOnCapPlayer(HackCap*, PlayerAnimator*);
-void endHack(HackCap*, PlayerAnimator*);
-const HackObjInfo& getHackObjInfo(HackCap*);
-
-}  // namespace CapFunction
+class CapFunction {
+public:
+    static void putOnCapPlayer(HackCap* hackCap, PlayerAnimator* animator);
+    static void endHack(HackCap* hackCap, PlayerAnimator* animator);
+    static const HackObjInfo& getHackObjInfo(HackCap* hackCap);
+};
