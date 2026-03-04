@@ -24,7 +24,7 @@ public:
 
     EventFlowDataHolder* getEventFlowDataHolder() const override { return mEventFlowDataHolder; }
 
-    virtual void init(const EventFlowNodeInitInfo& initInfo);
+    virtual void init(const EventFlowNodeInitInfo& info);
 
     virtual void initAfterChart() {}
 
@@ -48,6 +48,8 @@ public:
 
     void initNerve(const Nerve* nerve, s32 maxStates);
     void execute();
+
+    LiveActor* getActor() const { return mActor; }
 
 private:
     LiveActor* mActor = nullptr;
