@@ -281,6 +281,8 @@ public:
 
     GameConfigData* getGameConfigData() const { return mGameConfigData; }
 
+    SaveDataAccessSequence* getSaveDataAccessSequence() const { return mSaveDataAccessSequence; }
+
 private:
     al::MessageSystem* mMessageSystem;
     GameDataFile** mFiles;
