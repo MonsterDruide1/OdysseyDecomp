@@ -1,5 +1,6 @@
 #include "Library/Se/SeDemoProcInfo.h"
 
+#include "Library/Audio/AudioInfo.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 
@@ -258,4 +259,55 @@ SeDemoPlaySeInfo::SeDemoPlaySeInfo(const SeDemoPlaySeInfo& demoPlaySeInfo)
       playName(demoPlaySeInfo.playName), fadeOutFrameNum(demoPlaySeInfo.fadeOutFrameNum),
       isStartSeEvenIfDemoSkip(demoPlaySeInfo.isStartSeEvenIfDemoSkip),
       isNotStopSeEvenIfDemoSkip(demoPlaySeInfo.isNotStopSeEvenIfDemoSkip) {}
+
+SeDemoSyncedProcInfo* SeDemoSyncedProcInfo::createInfo(const ByamlIter& iter) {
+    SeDemoSyncedProcInfo* demoSyncedProcInfo = new SeDemoSyncedProcInfo();
+
+    if (iter.tryGetStringByKey(&demoSyncedProcInfo->name, "Name")) {
+        if (!iter.tryGetBoolByKey(&demoSyncedProcInfo->isEnableEvent, "IsEnableEvent"))
+            demoSyncedProcInfo->isEnableEvent = false;
+
+        ByamlIter partsProcNameIter;
+        s32 partsProcNameSize = 0;
+        bool hasList = iter.tryGetIterByKey(&partsProcNameIter, "PartsProcNameList");
+        if (hasList)
+            partsProcNameSize = partsProcNameIter.getSize();
+
+        ByamlIter demoProcInfoIter;
+        if (iter.tryGetIterByKey(&partsProcNameIter, "DemoProcInfoList")) {
+            demoSyncedProcInfo->procInfoList =
+                createAudioInfoList<SeDemoProcInfo>(demoProcInfoIter, partsProcNameSize);
+        } else if (hasList) {
+            demoSyncedProcInfo->procInfoList = new AudioInfoListWithParts<SeDemoProcInfo>();
+        }
+
+        ByamlIter demoEndProcInfoIter;
+        if (iter.tryGetIterByKey(&partsProcNameIter, "DemoEndProcInfoList")) {
+            demoSyncedProcInfo->procEndInfoList =
+                createAudioInfoList<SeDemoProcInfo>(demoEndProcInfoIter, partsProcNameSize);
+        } else if (hasList) {
+            demoSyncedProcInfo->procEndInfoList = new AudioInfoListWithParts<SeDemoProcInfo>();
+        }
+
+        iter.tryGetBoolByKey(&demoSyncedProcInfo->isPartsProc, "IsPartsProc");
+        if (!demoSyncedProcInfo->isPartsProc) {
+            iter.tryGetBoolByKey(&demoSyncedProcInfo->isDisableAudioMaximizer,
+                                 "IsDisableAudioMaximizer");
+            iter.tryGetBoolByKey(&demoSyncedProcInfo->isNotStopOneShotSe, "IsNotStopOneShotSe");
+            iter.tryGetIntByKey(&demoSyncedProcInfo->oneShotSeFadeOutFrameNum,
+                                "OneShotSeFadeOutFrameNum");
+        }
+    }
+
+    return demoSyncedProcInfo;
+}
+
+s32 SeDemoSyncedProcInfo::compareInfo(const SeDemoSyncedProcInfo* lhs,
+                                      const SeDemoSyncedProcInfo* rhs) {
+    return strcmp(lhs->name, rhs->name);
+}
+
+SeDemoSyncedProcInfo::SeDemoSyncedProcInfo() = default;
+
+SeDemoSyncedProcInfo::SeDemoSyncedProcInfo(const SeDemoSyncedProcInfo& demoSyncedProcInfo) {}
 }  // namespace al

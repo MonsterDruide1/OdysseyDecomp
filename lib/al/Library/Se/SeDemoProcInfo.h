@@ -2,7 +2,11 @@
 
 #include <basis/seadTypes.h>
 
+#include "Project/Audio/AudioEffectProcInfo.h"
+
 namespace al {
+template <typename T>
+class AudioInfoListWithParts;
 class ByamlIter;
 
 struct SeDemoProcInfo {
@@ -101,5 +105,21 @@ struct SeDemoPlaySeInfo : public SeDemoProcInfo {
 };
 
 static_assert(sizeof(SeDemoPlaySeInfo) == 0x30);
+
+struct SeDemoSyncedProcInfo : public AudioDemoSyncedProcInfo {
+    static SeDemoSyncedProcInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const SeDemoSyncedProcInfo* lhs, const SeDemoSyncedProcInfo* rhs);
+
+    SeDemoSyncedProcInfo();
+    SeDemoSyncedProcInfo(const SeDemoSyncedProcInfo& demoSyncedProcInfo);
+
+    al::AudioInfoListWithParts<al::SeDemoProcInfo>* procInfoList=nullptr;
+    al::AudioInfoListWithParts<al::SeDemoProcInfo>* procEndInfoList=nullptr;
+    bool isDisableAudioMaximizer = false;
+    bool isNotStopOneShotSe = false;
+    s32 oneShotSeFadeOutFrameNum = 45;
+};
+
+static_assert(sizeof(SeDemoSyncedProcInfo) == 0x30);
 
 }  // namespace al
