@@ -5,6 +5,7 @@
 #include "System/ByamlSave.h"
 
 class AchievementInfoReader;
+struct AchievementEntry;
 
 class AchievementSaveData : public ByamlSave {
 public:
@@ -21,7 +22,8 @@ public:
     void read(const al::ByamlIter& save) override;
 
 private:
-    void* _padding[0x2];
+    AchievementEntry* mEntries;
+    AchievementInfoReader* mInfoReader;
 };
 
 static_assert(sizeof(AchievementSaveData) == 0x18);
