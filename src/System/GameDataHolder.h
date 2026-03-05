@@ -282,6 +282,8 @@ public:
     GameConfigData* getGameConfigData() const { return mGameConfigData; }
 
 private:
+    friend class SaveDataAccessFunction;
+
     al::MessageSystem* mMessageSystem;
     GameDataFile** mFiles;
     GameDataFile* mPlayingFile;
