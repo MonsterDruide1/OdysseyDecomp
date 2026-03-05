@@ -16,8 +16,8 @@ class CameraDirector;
 
 class SeKeeper {
 public:
-    static void create(const AudioSystemInfo*, SeDirector*, const char*, const sead::Vector3f*,
-                       const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
+    static SeKeeper* create(const AudioSystemInfo*, SeDirector*, const char*, const sead::Vector3f*,
+                            const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
     SeKeeper(const AudioSystemInfo*, SeDirector*, const char*, const sead::Vector3f*,
              const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
 
