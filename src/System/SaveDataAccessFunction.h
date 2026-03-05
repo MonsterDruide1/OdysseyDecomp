@@ -5,17 +5,17 @@
 class GameDataHolder;
 
 namespace SaveDataAccessFunction {
-void startSaveDataInit(GameDataHolder*);
-void startSaveDataInitSync(GameDataHolder*);
-void startSaveDataLoadFile(GameDataHolder*);
-void startSaveDataReadSync(GameDataHolder*);
-void startSaveDataReadAll(GameDataHolder*);
-void startSaveDataWrite(GameDataHolder*);
-void startSaveDataWriteWithWindow(GameDataHolder*);
-void startSaveDataCopyWithWindow(GameDataHolder*, s32, s32);
-void startSaveDataDeleteWithWindow(GameDataHolder*, s32);
-void startSaveDataWriteSync(GameDataHolder*);
-bool updateSaveDataAccess(GameDataHolder*, bool);
-bool isEnableSave(const GameDataHolder*);
-bool isDoneSave(GameDataHolder*);
+void startSaveDataInit(GameDataHolder* holder);
+void startSaveDataInitSync(GameDataHolder* holder);
+void startSaveDataLoadFile(GameDataHolder* holder);
+void startSaveDataReadSync(GameDataHolder* holder);
+void startSaveDataReadAll(GameDataHolder* holder);
+void startSaveDataWrite(GameDataHolder* holder);
+void startSaveDataWriteWithWindow(GameDataHolder* holder);
+void startSaveDataCopyWithWindow(GameDataHolder* holder, s32 srcFileIndex, s32 destFileIndex);
+void startSaveDataDeleteWithWindow(GameDataHolder* holder, s32 fileIndex);
+void startSaveDataWriteSync(GameDataHolder* holder);
+bool updateSaveDataAccess(GameDataHolder* holder, bool isForce);
+bool isEnableSave(const GameDataHolder* holder);
+bool isDoneSave(GameDataHolder* holder);
 }  // namespace SaveDataAccessFunction
