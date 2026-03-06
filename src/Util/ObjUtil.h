@@ -31,19 +31,19 @@ bool isEnableSendTrampleMsg(const al::LiveActor*, al::HitSensor*, al::HitSensor*
 bool isEnableSendUpperPunchMsg(const al::LiveActor*, al::HitSensor*, al::HitSensor*);
 bool trySendMsgPlayerAttackTrample(const al::LiveActor*, al::HitSensor*, al::HitSensor*);
 bool trySendMsgPlayerReflectOrTrample(const al::LiveActor*, al::HitSensor*, al::HitSensor*);
-bool sendPlayerCollisionTouchMsg(const al::LiveActor*, al::HitSensor*, const IUsePlayerCollision*);
+void sendPlayerCollisionTouchMsg(const al::LiveActor*, al::HitSensor*, const IUsePlayerCollision*);
 bool sendPlayerCollisionUpperPunchMsg(const al::LiveActor*, al::HitSensor*,
                                       const IUsePlayerCollision*, const IPlayerModelChanger*);
-bool calcGroundNormalOrUpDir(sead::Vector3f*, const al::LiveActor*, const IUsePlayerCollision*);
-bool calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
+void calcGroundNormalOrUpDir(sead::Vector3f*, const al::LiveActor*, const IUsePlayerCollision*);
+void calcGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                   const IUsePlayerCollision*);
-bool calcGroundNormalExceptJustLandOrGravityDir(sead::Vector3f*, const al::LiveActor*,
+void calcGroundNormalExceptJustLandOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                                 const IUsePlayerCollision*);
 bool calcOnGroundNormalOrGravityDir(sead::Vector3f*, const al::LiveActor*,
                                     const IUsePlayerCollision*);
 bool calcSnapGroundNormalOrGravityDir(sead::Vector3f*, sead::Vector3f*, al::LiveActor*,
                                       const IUsePlayerCollision*, f32, const sead::Vector3f&);
-bool calcWallNormalOrReverseFrontDir(sead::Vector3f*, const al::LiveActor*,
+void calcWallNormalOrReverseFrontDir(sead::Vector3f*, const al::LiveActor*,
                                      const IUsePlayerCollision*);
 bool calcAlongSkyFront(sead::Vector3f*, const al::LiveActor*);
 bool calcAlongDirFront(sead::Vector3f*, const al::LiveActor*, const sead::Vector3f&);
@@ -57,7 +57,7 @@ void calcFrontVelocityAndDirH(sead::Vector3f*, sead::Vector3f*, const al::LiveAc
 void reflectCeiling(al::LiveActor*, f32);
 void reflectCeilingUpperPunch(al::LiveActor*, const IUsePlayerCollision*, const PlayerInput*,
                               const PlayerConst*, const PlayerTrigger*, bool);
-void calcUpperPunchReflectCeilingPower(const PlayerTrigger*, const PlayerConst*);
+f32 calcUpperPunchReflectCeilingPower(const PlayerTrigger*, const PlayerConst*);
 void setupLongJumpVelocity(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32, f32, f32);
 void calcJumpInertia(sead::Vector3f*, al::LiveActor*, const IUsePlayerCollision*,
                      const sead::Vector3f&, f32);

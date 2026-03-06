@@ -22,7 +22,7 @@ namespace rs {
 void resetCollision(IUsePlayerCollision*);
 void resetCollisionPose(const IUsePlayerCollision*, const sead::Quatf&);
 void resetCollisionExpandCheck(IUsePlayerCollision*);
-bool isCollidedGround(const IUsePlayerCollision*);
+bool isCollided(const IUsePlayerCollision*);
 bool isCollidedGround(const IUsePlayerCollision*);
 bool isCollidedWall(const IUsePlayerCollision*);
 bool isCollidedCeiling(const IUsePlayerCollision*);
@@ -34,7 +34,7 @@ const sead::Vector3f& getCollidedCeilingNormal(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedGroundPos(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedWallPos(const IUsePlayerCollision*);
 const sead::Vector3f& getCollidedCeilingPos(const IUsePlayerCollision*);
-void* getCollidedFixReaction(const IUsePlayerCollision*);
+const sead::Vector3f& getCollidedFixReaction(const IUsePlayerCollision*);
 al::HitSensor* tryGetCollidedGroundSensor(const IUsePlayerCollision*);
 al::HitSensor* tryGetCollidedWallSensor(const IUsePlayerCollision*);
 al::HitSensor* tryGetCollidedCeilingSensor(const IUsePlayerCollision*);
@@ -105,7 +105,6 @@ const char* getRippleGenerateMaterialFlower();
 bool isCollidedDamageCodeAnyWallHit(const IUsePlayerCollision*);
 bool isEnableRecordSafetyPoint(sead::Vector3f**, const al::HitInfo&, al::HitSensor*,
                                const sead::Vector3f&);
-bool isCollisionCodeSafetyPoint(const al::HitInfo&);
 bool isCollisionCodeSafetyPoint(const al::HitInfo&);
 void calcCollisionCodeNoSafetyPointPos(sead::Vector3f*, bool*, const al::LiveActor*,
                                        const IUsePlayerCollision*);
