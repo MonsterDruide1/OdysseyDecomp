@@ -66,9 +66,9 @@ MenuSelectParts::MenuSelectParts(const char* name, al::LayoutActor* layoutActor,
     for (s32 i = 0; i < mMax; i++) {
         mLayoutArray[i] = new al::LayoutActor("選択肢パーツ");
 
-        al::StringTmp<32> name("%s%02d", "ParList", i);
+        al::StringTmp<32> partListName("%s%02d", "ParList", i);
 
-        al::initLayoutPartsActor(mLayoutArray[i], layoutActor, info, name.cstr());
+        al::initLayoutPartsActor(mLayoutArray[i], layoutActor, info, partListName.cstr());
         al::startAction(mLayoutArray[i], "Active", "State");
     }
 

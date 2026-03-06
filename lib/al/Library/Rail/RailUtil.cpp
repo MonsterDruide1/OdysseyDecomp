@@ -749,13 +749,13 @@ void placementRailDivideForcePoint(const IUseRail* railHolder, f32 segmentLength
     s32 index = 0;
     for (s32 i = 0; i < railNum; i++) {
         f32 length = getRailPartLength(railHolder, i);
-        s32 railNum = (s32)(length / segmentLength) + 1;
-        for (s32 e = 0; e < railNum; e++) {
+        s32 railSegments = (s32)(length / segmentLength) + 1;
+        for (s32 e = 0; e < railSegments; e++) {
             sead::Vector3f vec = sead::Vector3f::zero;
             calcRailPosAtCoord(&vec, railHolder, coord);
             callback(vec, index, coord);
             index++;
-            coord += length / railNum;
+            coord += length / railSegments;
         }
     }
 
