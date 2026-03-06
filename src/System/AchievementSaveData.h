@@ -6,6 +6,13 @@
 
 class AchievementInfoReader;
 
+struct AchievementEntry {
+    bool isGotten = false;
+    u64 getTime = 0;
+};
+
+static_assert(sizeof(AchievementEntry) == 0x10);
+
 class AchievementSaveData : public ByamlSave {
 public:
     AchievementSaveData(const AchievementInfoReader* reader);
@@ -21,7 +28,8 @@ public:
     void read(const al::ByamlIter& save) override;
 
 private:
-    void* _padding[0x2];
+    AchievementEntry* mEntries = nullptr;
+    const AchievementInfoReader* mInfoReader;
 };
 
 static_assert(sizeof(AchievementSaveData) == 0x18);
