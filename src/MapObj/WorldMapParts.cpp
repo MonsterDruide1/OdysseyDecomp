@@ -1,10 +1,13 @@
 #include "MapObj/WorldMapParts.h"
 
+#include <math/seadMathCalcCommon.h>
+
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
+#include "Library/Matrix/MatrixUtil.h"
 
 void recursivelyInvalidateOcclusionQuery(al::LiveActor* actor) {
     al::invalidateOcclusionQuery(actor);
@@ -64,4 +67,23 @@ WorldMapParts* WorldMapParts::create(const char* name, const char* arcName,
     initParts(newParts, arcName, initInfo, worldMtx, localMtx, suffix);
 
     return newParts;
+}
+
+WorldMapPartsFloat::WorldMapPartsFloat(const char* name, const sead::Vector3f& offset, s32 period,
+                                       f32 amplitude)
+    : WorldMapParts(name), mFloatOffset(offset), mPeriod(period), mAmplitude(amplitude) {}
+
+void WorldMapPartsFloat::control() {
+    s32 frameCount = mFrameCount++;
+    f32 sinVal = sead::Mathf::sin((f32)(frameCount) / (f32)mPeriod * sead::Mathf::pi2());
+    mLocalMtx.setTranslation(mTranslation + sinVal * mUpDir * mAmplitude);
+    updatePose();
+}
+
+void WorldMapPartsFloat::setLocalMtx(const sead::Matrix34f& srcMtx) {
+    al::addTransMtxLocalOffset(&mLocalMtx, srcMtx, mFloatOffset);
+
+    mTranslation = mLocalMtx.getTranslation();
+
+    mUpDir = mLocalMtx.getBase(1);
 }
