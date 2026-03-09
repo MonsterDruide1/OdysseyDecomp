@@ -67,6 +67,7 @@
 #include "Item/LifeUpItem2D.h"
 #include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/BlockEmpty2D.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
@@ -137,7 +138,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BlockBrick2D", nullptr},
     {"BlockBrickBig2D", nullptr},
     {"BlockEmpty", nullptr},
-    {"BlockEmpty2D", nullptr},
+    {"BlockEmpty2D", al::createActorFunction<BlockEmpty2D>},
     {"BlockHard", nullptr},
     {"ClashWorldBlockHard", nullptr},
     {"BlockQuestion", nullptr},
