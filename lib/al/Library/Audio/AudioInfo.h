@@ -119,14 +119,14 @@ AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter, s32 maxNum
 
 template <typename T>
 bool trySetAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const T* audioInfo,
-                     bool isUnsorted) {
+                     bool disableSort) {
     if (!audioInfoList || !audioInfo)
         return false;
 
     if (!audioInfoList->setInfo(audioInfo))
         return false;
 
-    if (!isUnsorted)
+    if (!disableSort)
         audioInfoList->sort();
 
     return true;
