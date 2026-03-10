@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math/seadVector.h>
 #include <math/seadMatrix.h>
+#include <math/seadVector.h>
 
 #include "Library/Nerve/NerveExecutor.h"
 
