@@ -1,9 +1,10 @@
 #include "Scene/ProjectEventFlowNodeFactory.h"
 
 #include "Library/Event/CreateEventFlowNode.h"
+#include "Library/Event/EventFlowNodeActionLoop.h"
 
 const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeFactoryEntries[] = {
-    {"ActionLoop", nullptr},
+    {"ActionLoop", al::createEventFlowNode<al::EventFlowNodeActionLoop>},
     {"ActionOneTime", nullptr},
     {"ActorBaseMovementEnd", nullptr},
     {"ActorBaseMovementStart", nullptr},

@@ -7,6 +7,7 @@ class IUseDimension;
 
 namespace al {
 class LiveActor;
+class AreaObj;
 struct ActorInitInfo;
 class CollisionPartsFilterBase;
 class AreaObj;

@@ -24,7 +24,7 @@ MemorySystem::MemorySystem(sead::Heap* heap)
     {
         sead::ScopedCurrentHeapSetter setter(mStationedHeap);
         {
-            sead::ScopedCurrentHeapSetter setter(mStationedHeap);
+            sead::ScopedCurrentHeapSetter setter2(mStationedHeap);
             mHeapList.allocBuffer(32, nullptr);
         }
 
