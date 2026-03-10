@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
+#include <math/seadQuat.h>
 
 #include "Library/Camera/IUseCamera.h"
 #include "Library/HostIO/HioNode.h"
@@ -12,7 +13,9 @@ struct ActorInitInfo;
 class AreaObjGroup;
 class CameraTicket;
 class IUseSceneObjHolder;
+class LiveActor;
 class PlacementInfo;
+class Scene;
 }  // namespace al
 
 class PlayerStartObj;
