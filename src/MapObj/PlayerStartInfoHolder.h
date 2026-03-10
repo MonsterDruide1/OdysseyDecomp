@@ -1,9 +1,18 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
+#include "Library/Camera/IUseCamera.h"
+#include "Library/HostIO/HioNode.h"
+#include "Library/Scene/ISceneObj.h"
+
 namespace al {
+struct ActorInitInfo;
+class AreaObjGroup;
 class CameraTicket;
 class IUseSceneObjHolder;
-struct ActorInitInfo;
+class PlacementInfo;
 }  // namespace al
 
 class PlayerStartObj;
