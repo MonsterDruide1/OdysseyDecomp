@@ -2,6 +2,10 @@
 
 #include "Library/Nerve/NerveExecutor.h"
 
+namespace al {
+struct ActorInitInfo;
+}
+
 class Bird;
 
 class BirdMtxGlideCtrl : public al::NerveExecutor {
