@@ -1,0 +1,55 @@
+#pragma once
+
+namespace al {
+class CameraTicket;
+class IUseSceneObjHolder;
+struct ActorInitInfo;
+}  // namespace al
+
+class PlayerStartObj;
+
+class PlayerStartInfoHolder : public al::ISceneObj, public al::IUseCamera, public al::HioNode {
+public:
+    PlayerStartInfoHolder();
+
+    void init(al::CameraDirector*, s32);
+    void registerPlayerStartInfo(const al::PlacementInfo*, const char*, al::CameraTicket*,
+                                 PlayerStartObj*, const sead::Vector3f*, const sead::Quatf*);
+    bool isRegistered(const al::PlacementInfo*, const char*) const;
+    void registerChangeStageAreaGroup(al::AreaObjGroup*, const al::ActorInitInfo&);
+    void registerWarpAreaGroup(al::AreaObjGroup*, const al::ActorInitInfo&);
+    void registerRestartAreaGroup(al::AreaObjGroup*);
+    void tryFindInitInfoByStartId(const char*) const;
+    void tryFindInitInfoByPlacementIdString(const char*) const;
+
+    const char* getSceneObjName() const override;
+
+    ~PlayerStartInfoHolder() override;
+
+    al::CameraDirector* getCameraDirector() const override;
+};
+
+namespace rs {
+void registerLinkedPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
+                                           const al::PlacementInfo&, const char*,
+                                           const sead::Vector3f*, const sead::Quatf*);
+void registerLinkedPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
+                                           const char*, const sead::Vector3f*, const sead::Quatf*);
+void registerPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::PlacementInfo&,
+                                     const char*, PlayerStartObj*, sead::Vector3f*,
+                                     const sead::Quatf*);
+void registerPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
+                                     const char*, PlayerStartObj*, const sead::Vector3f*,
+                                     const sead::Quatf*);
+void registerPlayerStartInfoToHolderWithCamera(al::CameraTicket*, const al::IUseSceneObjHolder*,
+                                               const al::ActorInitInfo&, const char*,
+                                               PlayerStartObj*, const sead::Vector3f*,
+                                               const sead::Quatf*);
+void registerPlayerStartInfoToHolderForTimeBalloon(const al::IUseSceneObjHolder*,
+                                                   const al::ActorInitInfo&);
+void registerPlayerStartInfoToHolderForCloset(const al::IUseSceneObjHolder*,
+                                              const al::ActorInitInfo&, const sead::Vector3f&,
+                                              const sead::Quatf&);
+void tryStartEntranceCamera(const al::Scene*, const char*);
+bool isPlayerStartCloset(const al::LiveActor*);
+}  // namespace rs

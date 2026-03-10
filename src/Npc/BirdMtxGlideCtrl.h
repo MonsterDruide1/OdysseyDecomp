@@ -1,0 +1,24 @@
+#pragma once
+
+#include "Library/Nerve/NerveExecutor.h"
+
+class Bird;
+
+class BirdMtxGlideCtrl : public al::NerveExecutor {
+public:
+    static BirdMtxGlideCtrl* tryCreateAliveWaitByLinksBird(const sead::Matrix34f*,
+                                                           const sead::Vector3f&,
+                                                           const al::ActorInitInfo&, const char*);
+    void update();
+    void makeActorDeadBirdIfAlive();
+
+    void exeInvalid();
+    void exeValid();
+
+    void validateGlide();
+    void invalidateGlide();
+    bool isWaitBird() const;
+
+    BirdMtxGlideCtrl(Bird*);
+    ~BirdMtxGlideCtrl();
+};
