@@ -13,6 +13,11 @@ public:
     enum class ActorStatus { Normal, StoppedByTraffic, StoppedByNpc };
 
     struct ActorInfo {
+        ActorInfo(const al::LiveActor* liveActor) {
+            actor = liveActor;
+            status = ActorStatus::Normal;
+        }
+
         const al::LiveActor* actor;
         ActorStatus status;
     };
