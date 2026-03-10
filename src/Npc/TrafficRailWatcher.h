@@ -10,9 +10,11 @@ class PlacementInfo;
 
 class TrafficRailWatcher {
 public:
-    struct TrafficRailActorInfo {
+    enum class ActorStatus { Normal, StoppedByTraffic, StoppedByNpc };
+
+    struct ActorInfo {
         const al::LiveActor* actor;
-        s32 status;
+        ActorStatus status;
     };
 
     TrafficRailWatcher(const al::PlacementInfo& placementInfo);
@@ -26,9 +28,9 @@ public:
     bool tryRestartByOtherNpc(const al::LiveActor* actor);
 
 private:
-    al::PlacementId* mPlacementId;
-    s32 mActorCount;
-    TrafficRailActorInfo** mActors;
+    al::PlacementId* mPlacementId = nullptr;
+    s32 mActorCount = 0;
+    ActorInfo** mActors = nullptr;
 };
 
 static_assert(sizeof(TrafficRailWatcher) == 0x18);
