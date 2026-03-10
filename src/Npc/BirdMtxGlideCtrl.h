@@ -1,10 +1,13 @@
 #pragma once
 
+#include <math/seadVector.h>
+#include <math/seadMatrix.h>
+
 #include "Library/Nerve/NerveExecutor.h"
 
 namespace al {
 struct ActorInitInfo;
-}
+}  // namespace al
 
 class Bird;
 

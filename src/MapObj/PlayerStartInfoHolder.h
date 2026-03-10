@@ -3,7 +3,6 @@
 #include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
-#include <math/seadQuat.h>
 
 #include "Library/Camera/IUseCamera.h"
 #include "Library/HostIO/HioNode.h"
