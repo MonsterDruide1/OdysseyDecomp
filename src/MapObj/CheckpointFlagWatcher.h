@@ -13,8 +13,9 @@
 
 namespace al {
 class LiveActor;
-class SimpleLayoutAppearWaitEnd;
+class PlacementInfo;
 class Scene;
+class SimpleLayoutAppearWaitEnd;
 }  // namespace al
 
 class CheckpointFlag;
