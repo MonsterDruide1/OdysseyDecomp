@@ -19,13 +19,13 @@ NERVE_IMPL(BossRaidChain, Demo);
 NERVES_MAKE_NOSTRUCT(BossRaidChain, Wait, BlowDown, Deactive, Demo);
 }  // namespace
 
-BossRaidChain::BossRaidChain(const char* name, const char* archiveName, const char* modelName,
+BossRaidChain::BossRaidChain(const char* name, const char* archiveName, const char* suffix,
                              f32 minDist, f32 maxDist)
-    : al::LiveActor(name), mArchiveName(archiveName), mModelName(modelName), mMinDist(minDist),
+    : al::LiveActor(name), mArchiveName(archiveName), mSuffix(suffix), mMinDist(minDist),
       mMaxDist(maxDist) {}
 
 void BossRaidChain::init(const al::ActorInitInfo& info) {
-    al::initActorWithArchiveName(this, info, mArchiveName, mModelName);
+    al::initActorWithArchiveName(this, info, mArchiveName, mSuffix);
     al::initNerve(this, &Wait, 0);
     makeActorAlive();
 }

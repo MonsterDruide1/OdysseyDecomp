@@ -7,7 +7,7 @@
 
 class BossRaidChain : public al::LiveActor {
 public:
-    BossRaidChain(const char* name, const char* archiveName, const char* modelName, f32 minDist,
+    BossRaidChain(const char* name, const char* archiveName, const char* suffix, f32 minDist,
                   f32 maxDist);
     void init(const al::ActorInitInfo& info) override;
     void setPrevChain(BossRaidChain* chain);
@@ -30,7 +30,7 @@ public:
 
 private:
     const char* mArchiveName = nullptr;
-    const char* mModelName = nullptr;
+    const char* mSuffix = nullptr;
     const sead::Matrix34f* mDemoFollowMtxPtr = nullptr;
     BossRaidChain* mPrevChain = nullptr;
     BossRaidChain* mNextChain = nullptr;
