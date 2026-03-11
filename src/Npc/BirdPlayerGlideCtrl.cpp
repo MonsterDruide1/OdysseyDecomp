@@ -273,27 +273,27 @@ void BirdPlayerGlideCtrl::exeWaitFlyAway() {
 namespace rs {
 
 void validateGlideBirdOnPlayerNose(const al::LiveActor* player) {
-    if (al::isExistSceneObj(player, BirdPlayerGlideCtrl::sSceneObjId))
+    if (al::isExistSceneObj<BirdPlayerGlideCtrl>(player))
         al::getSceneObj<BirdPlayerGlideCtrl>(player)->validateGlideOnNose();
 }
 
 void invalidateGlideBirdOnPlayerNose(const al::LiveActor* player) {
-    if (al::isExistSceneObj(player, BirdPlayerGlideCtrl::sSceneObjId))
+    if (al::isExistSceneObj<BirdPlayerGlideCtrl>(player))
         al::getSceneObj<BirdPlayerGlideCtrl>(player)->invalidateGlideOnNose();
 }
 
 void validateGlideBirdOnSitDownPlayerHead(const al::LiveActor* player) {
-    if (al::isExistSceneObj(player, BirdPlayerGlideCtrl::sSceneObjId))
+    if (al::isExistSceneObj<BirdPlayerGlideCtrl>(player))
         al::getSceneObj<BirdPlayerGlideCtrl>(player)->validateGlideOnSitDownHead();
 }
 
 void invalidateGlideBirdOnSitDownPlayerHead(const al::LiveActor* player) {
-    if (al::isExistSceneObj(player, BirdPlayerGlideCtrl::sSceneObjId))
+    if (al::isExistSceneObj<BirdPlayerGlideCtrl>(player))
         al::getSceneObj<BirdPlayerGlideCtrl>(player)->invalidateGlideOnSitDownHead();
 }
 
 bool isPlayerSitDownChair(const Bird* bird) {
-    return al::isExistSceneObj(bird, BirdPlayerGlideCtrl::sSceneObjId) &&
+    return al::isExistSceneObj<BirdPlayerGlideCtrl>(bird) &&
            al::getSceneObj<BirdPlayerGlideCtrl>(bird)->isValidOnSitDownHead();
 }
 

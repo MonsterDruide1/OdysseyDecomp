@@ -4,11 +4,11 @@
 #include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
+#include "Library/Scene/SceneObjUtil.h"
 
 #include "Item/CoinCollect.h"
 #include "Item/CoinCollect2D.h"
 #include "MapObj/CoinCollectHintObj.h"
-#include "Scene/SceneObjFactory.h"
 #include "Util/PlayerUtil.h"
 
 CoinCollectHolder::CoinCollectHolder() {
@@ -206,6 +206,6 @@ const char* CoinCollectHolder::getSceneObjName() const {
 
 namespace rs {
 CoinCollectHolder* createCoinCollectHolder(const al::IUseSceneObjHolder* objHolder) {
-    return (CoinCollectHolder*)al::createSceneObj(objHolder, SceneObjID_CoinCollectHolder);
+    return al::createSceneObj<CoinCollectHolder>(objHolder);
 }
 }  // namespace rs
