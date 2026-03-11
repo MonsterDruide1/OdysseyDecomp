@@ -12,15 +12,17 @@ public:
     void makeTurnQuatCircle(sead::Quatf* quat, const sead::Vector3f& targetDir) const;
     void makeTurnQuatOval(sead::Quatf* quat, const sead::Vector3f& targetDir) const;
     void makeTurnQuatRect(sead::Quatf* quat, const sead::Vector3f& targetDir) const;
-    void setBaseAimLocalDir(const sead::Vector3f& dir);
-    void setBaseUpLocalDir(const sead::Vector3f& dir);
-    void setBaseSideLocalDir(const sead::Vector3f& dir);
+    void setBaseAimLocalDir(const sead::Vector3f& aim);
+    void setBaseUpLocalDir(const sead::Vector3f& up);
+    void setBaseSideLocalDir(const sead::Vector3f& side);
     void setBaseOffsetLocal(const sead::Vector3f& offset);
     void setBaseMtxPtr(const sead::Matrix34f* mtxPtr);
     void setTargetPos(const sead::Vector3f& pos);
     void setPowerRate(f32 rate);
     void setLimitDegreeCircle(f32 degree);
+    // TODO: rename params
     void setLimitDegreeOval(f32 a, f32 b, f32 c, f32 d);
+    // TODO: rename params
     void setLimitDegreeRect(f32 a, f32 b, f32 c, f32 d);
     void setEnableBackAim(bool enable);
     void addPowerRate(f32 rate);

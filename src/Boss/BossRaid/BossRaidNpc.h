@@ -9,7 +9,7 @@ class JointAimInfo;
 
 class BossRaidNpc : public al::LiveActor {
 public:
-    explicit BossRaidNpc(const char* name);
+    BossRaidNpc(const char* name);
     void init(const al::ActorInitInfo& info) override;
     bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
     bool isEnableReaction() const;
