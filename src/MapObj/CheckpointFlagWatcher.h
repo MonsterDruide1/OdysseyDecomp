@@ -38,7 +38,7 @@ public:
     void setTouchAfterCheckpointFlag(const char* checkpointName);
     CheckpointFlag* findCheckpointFlag(const char* checkpointName) const;
     CheckpointFlag* tryFindCheckpointFlag(const char* checkpointName) const;
-    void tryFindCheckpointFlagTrans(sead::Vector3f* trans, const char* checkpointName) const;
+    bool tryFindCheckpointFlagTrans(sead::Vector3f* trans, const char* checkpointName) const;
     void requestShowNameLayout(const char16*);
     void requestCancelNameLayoutByShineGetDemo();
     void requestShowBalloon(const CheckpointFlag*, const sead::Vector3f&);
@@ -75,7 +75,7 @@ tryFindCheckpointFlagPlayerRestartInfo(const al::IUseSceneObjHolder* sceneObjHol
                                        const char* checkpointName);
 CheckpointFlag* tryFindCheckpointFlag(const al::IUseSceneObjHolder* sceneObjHolder,
                                       const char* checkpointName);
-void tryFindCheckpointFlagTrans(sead::Vector3f*, const al::IUseSceneObjHolder* sceneObjHolder,
+bool tryFindCheckpointFlagTrans(sead::Vector3f*, const al::IUseSceneObjHolder* sceneObjHolder,
                                 const char* checkpointName);
 void requestShowCheckpointFlagNameLayout(const CheckpointFlag* checkpoint, const char16* name);
 void requestShowCheckpointFlagBalloon(const CheckpointFlag*, const sead::Vector3f&);

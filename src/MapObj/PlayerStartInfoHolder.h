@@ -31,8 +31,8 @@ public:
     void registerChangeStageAreaGroup(al::AreaObjGroup*, const al::ActorInitInfo&);
     void registerWarpAreaGroup(al::AreaObjGroup*, const al::ActorInitInfo&);
     void registerRestartAreaGroup(al::AreaObjGroup*);
-    void tryFindInitInfoByStartId(const char*) const;
-    void tryFindInitInfoByPlacementIdString(const char*) const;
+    al::ActorInitInfo* tryFindInitInfoByStartId(const char*) const;
+    al::ActorInitInfo* tryFindInitInfoByPlacementIdString(const char*) const;
 
     const char* getSceneObjName() const override;
 
