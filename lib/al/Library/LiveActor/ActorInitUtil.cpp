@@ -421,8 +421,7 @@ ALWAYS_INLINE void initActorClipping(LiveActor* actor, const ActorInitInfo& init
         f32 maxXY = sead::Mathf::max(sead::Mathf::abs(scale.x), sead::Mathf::abs(scale.y));
         f32 maxXYZ = sead::Mathf::max(maxXY, sead::Mathf::abs(scale.z));
 
-        f32 radius = calcModelBoundingSphereRadius(actor) * maxXYZ;
-        setClippingInfo(actor, radius, nullptr);
+        setClippingInfo(actor, calcModelBoundingSphereRadius(actor) * maxXYZ, nullptr);
     }
 
     sead::BoundBox3f obb;
