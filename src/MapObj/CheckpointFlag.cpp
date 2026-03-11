@@ -37,7 +37,9 @@ NERVES_MAKE_STRUCT(CheckpointFlag, Before, After, Get, Shake);
 
 CheckpointFlag::CheckpointFlag(const char* name) : al::LiveActor(name) {}
 
-const sead::Vector3f birdVector = {75.0f, 0.0f, 0.0f};
+const sead::Vector3f gBirdVector = {75.0f, 0.0f, 0.0f};
+const sead::Vector3f gTransIn = {0.0f, 100.0f, 0.0f};
+const sead::Vector3f gBalloonTrans = {0.0f, 75.0f, 0.0f};
 
 void CheckpointFlag::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "CheckpointFlag", nullptr);
@@ -56,11 +58,7 @@ void CheckpointFlag::init(const al::ActorInitInfo& info) {
     if (mIsHome) {
         rs::registerLinkedPlayerStartInfoToHolder(this, info, nullptr, nullptr, nullptr);
         mFlagName = al::getSystemMessageString(this, "GlossaryObject", "Home");
-        bool isZeroGravity = mIsZeroGravity;
-        al::startAction(this, "After");
-        if (isZeroGravity)
-            al::setActionFrameRate(this, 0.2f);
-        al::setNerve(this, &NrvCheckpointFlag.After);
+        setAfter();
         makeActorAlive();
     } else {
         f32 frame = rs::getStageShineAnimFrame(this);
@@ -72,18 +70,13 @@ void CheckpointFlag::init(const al::ActorInitInfo& info) {
         const char* stageName = rs::getPlacementStageName(GameDataHolderWriter(this), info);
         if (al::isExistLabelInStageMessage(this, stageName, messageLabel.cstr()))
             mFlagName = al::getStageMessageString(this, stageName, messageLabel.cstr());
-        if (GameDataFunction::isGotCheckpoint(GameDataHolderAccessor(this), mPlaceId)) {
-            bool isZeroGravity = mIsZeroGravity;
-            al::startAction(this, "After");
-            if (isZeroGravity)
-                al::setActionFrameRate(this, 0.2f);
-            al::setNerve(this, &NrvCheckpointFlag.After);
-        }
+        if (GameDataFunction::isGotCheckpoint(GameDataHolderAccessor(this), mPlaceId))
+            setAfter();
         rs::registerLinkedPlayerStartInfoToHolder(this, info, nullptr, nullptr, nullptr);
         GameDataFunction::registerCheckpointTrans(GameDataHolderWriter(this), mPlaceId,
                                                   al::getTrans(this));
         mBirdMtxGlideCtrl = BirdMtxGlideCtrl::tryCreateAliveWaitByLinksBird(
-            al::getJointMtxPtr(this, "Pole2"), birdVector, info, "Bird");
+            al::getJointMtxPtr(this, "Pole2"), gBirdVector, info, "Bird");
         al::trySyncStageSwitchAppear(this);
     }
 }
@@ -104,48 +97,17 @@ void CheckpointFlag::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         al::sendMsgPush(other, self);
 }
 
-const sead::Vector3f transIn = {0.0f, 100.0f, 0.0f};
-
 bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                 al::HitSensor* self) {
-    if (!al::isNerve(this, &NrvCheckpointFlag.Get)) {
-        if (al::isMsgPlayerDisregard(message))
-            return !al::isSensorName(self, "BodyTop");
-        if (rs::isMsgPlayerDisregardTargetMarker(message))
-            return true;
-        if (!mIsGot) {
-            if (rs::isMsgItemGet(message)) {
-                if (rs::isPlayerHack(this) || rs::isPlayerBinding(this)) {
-                    al::startHitReaction(this, "取得");
-                    rs::setTouchCheckpointFlagToWatcher(this);
-                    AirBubble* airBubble = mAirBubble;
-                    if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-                        al::calcTransLocalOffset(al::getTransPtr(airBubble), this, transIn);
-                        airBubble->appear();
-                        mAirBubbleTimer = 180;
-                    }
-                    GameDataFunction::recoveryPlayerMax(this);
-                    rs::sendMsgAckCheckpoint(other, self);
-                    al::setNerve(this, &NrvCheckpointFlag.Get);
-                    return al::isMsgPlayerKick(message);
-                }
-            } else if (rs::isMsgCapReflect(message) || al::isMsgPlayerKick(message) ||
-                       al::isMsgPlayerItemGet(message) || rs::isMsgYoshiTongueAttack(message)) {
-                al::startHitReaction(this, "取得");
-                rs::setTouchCheckpointFlagToWatcher(this);
-                AirBubble* airBubble = mAirBubble;
-                if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-                    al::calcTransLocalOffset(al::getTransPtr(airBubble), this, transIn);
-                    airBubble->appear();
-                    mAirBubbleTimer = 180;
-                }
-                GameDataFunction::recoveryPlayerMax(this);
-                rs::sendMsgAckCheckpoint(other, self);
-                al::setNerve(this, &NrvCheckpointFlag.Get);
-                return al::isMsgPlayerKick(message);
-            }
-        } else if (rs::isMsgItemGet(message) || al::isMsgPlayerKick(message) ||
-                   al::isMsgPlayerObjTouch(message) || rs::isMsgYoshiTongueAttack(message)) {
+    if (al::isNerve(this, &NrvCheckpointFlag.Get))
+        return false;
+    if (al::isMsgPlayerDisregard(message))
+        return !al::isSensorName(self, "BodyTop");
+    if (rs::isMsgPlayerDisregardTargetMarker(message))
+        return true;
+    if (mIsGot) {
+        if (rs::isMsgItemGet(message) || al::isMsgPlayerKick(message) ||
+            al::isMsgPlayerObjTouch(message) || rs::isMsgYoshiTongueAttack(message)) {
             bool isGot = mIsGot;
             AirBubble* airBubble = mAirBubble;
             s32 hitCooldown = mHitCooldown;
@@ -155,33 +117,55 @@ bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
             if (isGot)
                 rs::setTouchCheckpointFlagToWatcher(this);
             if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, transIn);
+                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gTransIn);
                 airBubble->appear();
                 mAirBubbleTimer = 180;
             }
             al::setNerve(this, &NrvCheckpointFlag.Shake);
             return al::isMsgPlayerObjTouch(message);
         }
-        if (rs::isMsgCapReflect(message) || rs::isMsgHosuiAttack(message) ||
-            rs::isMsgHammerBrosHammerHackAttack(message) ||
-            al::isMsgPlayerFireBallAttack(message) || rs::isMsgTankBullet(message)) {
-            bool isGot = mIsGot;
+    } else {
+        bool isAcquired = false;
+        if (rs::isMsgItemGet(message)) {
+            if (rs::isPlayerHack(this) || rs::isPlayerBinding(this))
+                isAcquired = true;
+        } else if (rs::isMsgCapReflect(message) || al::isMsgPlayerKick(message) ||
+                   al::isMsgPlayerItemGet(message) || rs::isMsgYoshiTongueAttack(message))
+            isAcquired = true;
+        if (isAcquired) {
+            al::startHitReaction(this, "取得");
+            rs::setTouchCheckpointFlagToWatcher(this);
             AirBubble* airBubble = mAirBubble;
-            s32 hitCooldown = mHitCooldown;
-            mHitCooldown = 10;
-            if (hitCooldown > 0)
-                return false;
-            if (isGot)
-                rs::setTouchCheckpointFlagToWatcher(this);
             if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-                sead::Vector3f* trans = al::getTransPtr(airBubble);
-                al::calcTransLocalOffset(trans, this, transIn);
+                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gTransIn);
                 airBubble->appear();
                 mAirBubbleTimer = 180;
             }
-            al::setNerve(this, &NrvCheckpointFlag.Shake);
-            return al::isMsgPlayerObjTouch(message);
+            GameDataFunction::recoveryPlayerMax(this);
+            rs::sendMsgAckCheckpoint(other, self);
+            al::setNerve(this, &NrvCheckpointFlag.Get);
+            return al::isMsgPlayerKick(message);
         }
+    }
+    if (rs::isMsgCapReflect(message) || rs::isMsgHosuiAttack(message) ||
+        rs::isMsgHammerBrosHammerHackAttack(message) || al::isMsgPlayerFireBallAttack(message) ||
+        rs::isMsgTankBullet(message)) {
+        bool isGot = mIsGot;
+        AirBubble* airBubble = mAirBubble;
+        s32 hitCooldown = mHitCooldown;
+        mHitCooldown = 10;
+        if (hitCooldown > 0)
+            return false;
+        if (isGot)
+            rs::setTouchCheckpointFlagToWatcher(this);
+        if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
+            sead::Vector3f* trans = al::getTransPtr(airBubble);
+            al::calcTransLocalOffset(trans, this, gTransIn);
+            airBubble->appear();
+            mAirBubbleTimer = 180;
+        }
+        al::setNerve(this, &NrvCheckpointFlag.Shake);
+        return al::isMsgPlayerObjTouch(message);
     }
     return false;
 }
@@ -208,8 +192,6 @@ void CheckpointFlag::initHomeFlag(const al::ActorInitInfo& info) {
     init(info);
 }
 
-const sead::Vector3f balloonTrans = {0.0f, 75.0f, 0.0f};
-
 void CheckpointFlag::exeBefore() {
     if (al::isFirstStep(this)) {
         bool isZeroGravity = mIsZeroGravity;
@@ -221,7 +203,7 @@ void CheckpointFlag::exeBefore() {
     }
     if (!mIsHome) {
         if (mBirdMtxGlideCtrl && mBirdMtxGlideCtrl->isWaitBird())
-            rs::requestShowCheckpointFlagBalloon(this, balloonTrans);
+            rs::requestShowCheckpointFlagBalloon(this, gBalloonTrans);
         else
             rs::requestShowCheckpointFlagBalloon(this, sead::Vector3f::zero);
     }
