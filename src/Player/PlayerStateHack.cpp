@@ -153,11 +153,11 @@ void PlayerStateHack::exeHackDemo() {
         al::offCollide(player);
         al::setVelocityZero(player);
         sead::Matrix34f modelMtx = sead::Matrix34f::ident;
-        sead::Vector3f frontDir = {0.0f, 0.0f, 0.0f};
-        sead::Vector3f upDir = {0.0f, 0.0f, 0.0f};
-        al::calcFrontDir(&frontDir, player);
-        al::calcUpDir(&upDir, player);
-        al::makeMtxSideFrontPos(&modelMtx, -upDir, frontDir, mStartSensorTrans);
+        sead::Vector3f playerFrontDir = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f playerUpDir = {0.0f, 0.0f, 0.0f};
+        al::calcFrontDir(&playerFrontDir, player);
+        al::calcUpDir(&playerUpDir, player);
+        al::makeMtxSideFrontPos(&modelMtx, -playerUpDir, playerFrontDir, mStartSensorTrans);
         mHackKeeper->appearHackDemoModel(modelMtx, 0.02f);
     } else if (al::isStep(this, 1)) {
         mModelChanger->hideModel();

@@ -514,15 +514,15 @@ void Nokonoko::exeCaptureSpin() {
         al::approachWaterSurfaceSpringDumper(this, mWaterSurfaceFinder, -5.0f, 12.0f, 1.0f, 0.05f,
                                              0.9f);
 
-    sead::Vector3f frontDir;
-    al::calcFrontDir(&frontDir, this);
+    sead::Vector3f velocityDir;
+    al::calcFrontDir(&velocityDir, this);
 
     if (mHackSwingCooldown)
         mHackSwingCooldown--;
     else if (rs::isTriggerHackSwing(mHackActor)) {
         mHackSwingCooldown = 30;
         al::startHitReaction(this, "振りで加速");
-        al::addVelocity(this, frontDir * 15.0f);
+        al::addVelocity(this, velocityDir * 15.0f);
     }
 
     if ((al::isOnGround(this, 0) || mWaterSurfaceFinder->isFoundSurface()) &&
@@ -563,7 +563,7 @@ void Nokonoko::exeCaptureSpin() {
     bool isFoundWater = mWaterSurfaceFinder->isFoundSurface();
     f32 frontVel = (isOnGround || isFoundWater) ? 0.9f : 0.2f;
 
-    al::addVelocity(this, frontDir * frontVel);
+    al::addVelocity(this, velocityDir * frontVel);
 
     if (al::isOnGround(this, 0) || al::isInWater(this) || mWaterSurfaceFinder->isFoundSurface()) {
         f32 hackMoveStick = rs::getHackMoveStickRaw(mHackActor);
