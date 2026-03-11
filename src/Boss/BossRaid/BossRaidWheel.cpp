@@ -29,8 +29,8 @@ void BossRaidWheel::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "BossRaidWheel", nullptr);
     al::initNerve(this, &Land, 0);
     al::initJointControllerKeeper(this, 2);
-    al::initJointLocalXRotator(this, &mRotateAngle, "Rotate");
-    al::initJointLocalZRotator(this, &mRollAngle, "JointRoot");
+    al::initJointLocalXRotator(this, &mRotate, "Rotate");
+    al::initJointLocalZRotator(this, &mTilt, "JointRoot");
     al::setEffectFollowPosPtr(this, "FallSign", &mFallSignPos);
     al::createAndSetColliderSpecialAndIgnoreOptionalPurpose(this, "BossRaidWheel",
                                                             "NoBossRaidWheel");
@@ -47,11 +47,13 @@ void BossRaidWheel::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 
 bool BossRaidWheel::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
                                al::HitSensor* self) {
-    return rs::isMsgPlayerDisregardHomingAttack(msg);
+    if (rs::isMsgPlayerDisregardHomingAttack(msg))
+        return true;
+    return false;
 }
 
 void BossRaidWheel::control() {
-    mRotateAngle = al::modf(mRotateAngle + mRotateSpeed + 360.0f, 360.0f) + 0.0f;
+    mRotate = al::modf(mRotate + mRotateSpeed + 360.0f, 360.0f) + 0.0f;
 }
 
 void BossRaidWheel::exeLand() {
@@ -68,10 +70,10 @@ void BossRaidWheel::exeRun() {
         al::startAction(this, "Run");
 
     f32 turnDeg;
-    if (al::isLessStep(this, 120 - mRunOffset))
-        turnDeg = al::calcNerveValue(this, 30 - mRunOffset, 90 - mRunOffset, 0.0f, 1.1f);
+    if (al::isLessStep(this, 120 - mRunTurnOffset))
+        turnDeg = al::calcNerveValue(this, 30 - mRunTurnOffset, 90 - mRunTurnOffset, 0.0f, 1.1f);
     else
-        turnDeg = al::calcNerveValue(this, 120 - mRunOffset, 180 - mRunOffset, 1.1f, 0.0f);
+        turnDeg = al::calcNerveValue(this, 120 - mRunTurnOffset, 180 - mRunTurnOffset, 1.1f, 0.0f);
 
     sead::Vector3f frontDir;
     al::calcFrontDir(&frontDir, this);
@@ -83,7 +85,7 @@ void BossRaidWheel::exeRun() {
     al::calcFrontDir(&newFrontDir, this);
 
     f32 angle = al::calcAngleOnPlaneDegree(frontDir, newFrontDir, sead::Vector3f::ey);
-    mRollAngle = al::lerpValue(mRollAngle, angle * -16.0f, 0.05f);
+    mTilt = al::lerpValue(mTilt, angle * -16.0f, 0.05f);
 
     al::addVelocityToFront(this, 3.5f);
     al::addVelocityToGravity(this, 1.0f);
@@ -104,14 +106,15 @@ void BossRaidWheel::exeRun() {
         makeActorDead();
 }
 
-void BossRaidWheel::shotGround(const sead::Vector3f& pos, const sead::Vector3f& front, f32 ratio) {
-    mRotateAngle = 0.0f;
-    mRollAngle = 0.0f;
+void BossRaidWheel::shotGround(const sead::Vector3f& pos, const sead::Vector3f& dir,
+                               f32 earlyTurn) {
+    mRotate = 0.0f;
+    mTilt = 0.0f;
     mRotateSpeed = 5.0f;
-    mRunOffset = (s32)al::lerpValue(30.0f, 0.0f, ratio);
+    mRunTurnOffset = (s32)al::lerpValue(30.0f, 0.0f, earlyTurn);
 
     sead::Quatf quat;
-    al::makeQuatUpFront(&quat, sead::Vector3f::ey, front);
+    al::makeQuatUpFront(&quat, sead::Vector3f::ey, dir);
     al::resetQuatPosition(this, quat, pos);
     al::setVelocityZero(this);
     al::setNerve(this, &Land);
