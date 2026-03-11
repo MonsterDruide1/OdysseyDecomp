@@ -66,23 +66,21 @@ void BossRaidElectric::init(const al::ActorInitInfo& info) {
 }
 
 void BossRaidElectric::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (!al::isNerve(this, &Wait))
-        return;
-    if (al::isHitCylinderSensor(other, _12c, mFrontDir, 50.0f))
+    if (al::isNerve(this, &Wait) && al::isHitCylinderSensor(other, _12c, mFrontDir, 50.0f))
         al::sendMsgEnemyAttack(other, self);
 }
 
-void BossRaidElectric::shot(const sead::Vector3f& pos, const sead::Vector3f& dir,
-                            BossRaidElectric* prevBullet,
+void BossRaidElectric::shot(const sead::Vector3f& pos, const sead::Vector3f& vel,
+                            BossRaidElectric* nextBullet,
                             al::DeriveActorGroup<BossRaidElectric>* actorGroup) {
     al::setModelAlphaMask(this, 1.0f);
     al::showModelIfHide(this);
     al::resetPosition(this, pos);
-    mMoveDir.set(dir);
-    mNextBullet = prevBullet;
-    if (prevBullet != nullptr) {
+    mVelocity.set(vel);
+    mNextBullet = nextBullet;
+    if (nextBullet != nullptr) {
         al::showModelIfHide(this);
-        prevBullet->mPrevBullet = this;
+        nextBullet->mPrevBullet = this;
     } else {
         al::hideModelIfShow(this);
     }
@@ -94,22 +92,17 @@ void BossRaidElectric::shot(const sead::Vector3f& pos, const sead::Vector3f& dir
 }
 
 void BossRaidElectric::updatePosition() {
-    sead::Vector3f* trans = al::getTransPtr(this);
-    *trans += mMoveDir;
+    *al::getTransPtr(this) += mVelocity;
 }
 
 void BossRaidElectric::exeWait() {
     if (al::isFirstStep(this))
-        al::startAction(this, mNextBullet != nullptr ? "Wait" : "Hide");
+        al::startAction(this, mNextBullet ? "Wait" : "Hide");
 
     updateAnimAndJoint();
     if (_148) {
-        if (al::isInAreaObj(this, "BossRaidElectricArea", al::getTrans(this))) {
-            if (_148)
-                return;
-        } else {
+        if (!al::isInAreaObj(this, "BossRaidElectricArea", al::getTrans(this)))
             _148 = false;
-        }
     }
     if (isAirAll())
         al::setNerve(this, &Disappear);
@@ -117,13 +110,11 @@ void BossRaidElectric::exeWait() {
 
 void BossRaidElectric::updateAnimAndJoint() {
     _144 = -500.0f;
-    if (mNextBullet == nullptr) {
+    if (!mNextBullet) {
         _12c = al::getTrans(this);
         al::setSensorRadius(this, "Attack", 50.0f);
 
-        sead::Vector3f scale(1.0f, 1.0f, 1.0f);
-        al::setEffectEmitterVolumeScale(this, "Spark", scale);
-        al::setEffectParticleScale(this, "Body", scale);
+        updateEffectScale(100.0f);
 
         mFrontDir.set(sead::Vector3f::ez);
         return;
@@ -166,31 +157,18 @@ void BossRaidElectric::exeDisappear() {
 }
 
 void BossRaidElectric::exeHide() {
-    if (!al::isNerve(this, &Hide))
-        return;
-
-    BossRaidElectric* next = mNextBullet;
-    if (next == nullptr || al::isNerve(next, &Hide)) {
-        BossRaidElectric* prev = mPrevBullet;
-        if (prev == nullptr) {
-            makeActorDead();
-            return;
-        }
-        if (al::isNerve(prev, &Hide))
-            makeActorDead();
-    }
+    if (isHideAll())
+        makeActorDead();
 }
 
 bool BossRaidElectric::isHideAll() const {
     if (!isHide())
         return false;
 
-    BossRaidElectric* next = mNextBullet;
-    if (next != nullptr && !next->isHide())
+    if (mNextBullet && !mNextBullet->isHide())
         return false;
 
-    BossRaidElectric* prev = mPrevBullet;
-    if (prev != nullptr && !prev->isHide())
+    if (mPrevBullet && !mPrevBullet->isHide())
         return false;
     return true;
 }
@@ -206,13 +184,10 @@ void BossRaidElectric::updateEffectScale(f32 scale) {
 }
 
 void BossRaidElectric::calcNearPos(sead::Vector3f* outPos, const sead::Vector3f& targetPos) const {
-    BossRaidElectric* next = mNextBullet;
-    const sead::Vector3f& thisTrans = al::getTrans(this);
-
-    if (next != nullptr) {
-        const sead::Vector3f& nextTrans = al::getTrans(mNextBullet);
-        al::calcClosestSegmentPoint(outPos, thisTrans, nextTrans, targetPos);
+    if (mNextBullet) {
+        al::calcClosestSegmentPoint(outPos, al::getTrans(this), al::getTrans(mNextBullet),
+                                    targetPos);
     } else {
-        outPos->set(thisTrans);
+        outPos->set(al::getTrans(this));
     }
 }

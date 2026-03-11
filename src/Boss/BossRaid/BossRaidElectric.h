@@ -19,7 +19,7 @@ public:
     void setPrevBullet(BossRaidElectric* bullet);
     void setNextBullet(BossRaidElectric* bullet);
 
-    void shot(const sead::Vector3f& pos, const sead::Vector3f& dir, BossRaidElectric* prevBullet,
+    void shot(const sead::Vector3f& pos, const sead::Vector3f& vel, BossRaidElectric* nextBullet,
               al::DeriveActorGroup<BossRaidElectric>* actorGroup);
     void updatePosition();
     void exeWait();
@@ -38,7 +38,7 @@ private:
     BossRaidElectric* mPrevBullet = nullptr;
     sead::Vector3f mFrontDir = sead::Vector3f::ez;
     sead::Vector3f _12c = sead::Vector3f::zero;
-    sead::Vector3f mMoveDir = sead::Vector3f::zero;
+    sead::Vector3f mVelocity = sead::Vector3f::zero;
     f32 _144 = 0.0f;
     bool _148 = true;
 };
