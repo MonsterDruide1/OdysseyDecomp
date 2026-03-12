@@ -16,8 +16,8 @@ class CameraDirector;
 
 class SeKeeper {
 public:
-    static void create(const AudioSystemInfo*, SeDirector*, const char*, const sead::Vector3f*,
-                       const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
+    static SeKeeper* create(const AudioSystemInfo*, SeDirector*, const char*, const sead::Vector3f*,
+                            const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
     SeKeeper(const AudioSystemInfo*, SeDirector*, const char*, const sead::Vector3f*,
              const sead::Matrix34f*, const ModelKeeper*, CameraDirector*);
 
@@ -33,7 +33,7 @@ public:
     void setLifeTimeForHoldCall(const char*, u32, const char*);
     void stopAll(s32, const char*);
     void separatePlayingSePosFromEmitter();
-    void tryGetCurrentStreamSamplePos(const char*, const char*) const;
+    s32 tryGetCurrentStreamSamplePos(const char*, const char*) const;
     bool isPlaying(const char*);
     void checkIsPlayingSe(const char*, const char*);
     void validate();
