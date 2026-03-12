@@ -5,7 +5,7 @@
 #include "Library/Math/MathUtil.h"
 
 #include "Player/PlayerActionFunction.h"
-#include "Util/PlayerCollisionUtil.h"
+#include "Util/ObjUtil.h"
 
 PlayerActionVelocityControl::PlayerActionVelocityControl(al::LiveActor* actor,
                                                          const IUsePlayerCollision* collision)
