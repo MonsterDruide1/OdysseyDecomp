@@ -126,28 +126,24 @@ void FukanKunShineHolder::interact(FlyObject* flyObject) {
 
 FlyObject::FlyObject(const char* name) : al::LiveActor(name) {}
 
-ALWAYS_INLINE FukanKunInteractionEmpty* createFukanKunInteraction(const al::ActorInitInfo& info) {
-    FukanKunInteractionType interactionType = FukanKunInteractionType::None;
-    if (al::tryGetArg((s32*)&interactionType, info, "FukanKunInteractionType")) {
+inline FukanKunInteractionEmpty* createFukanKunInteraction(const al::ActorInitInfo& info) {
+    s32 interactionType = 0;
+    if (al::tryGetArg(&interactionType, info, "FukanKunInteractionType")) {
         switch (interactionType) {
-        case FukanKunInteractionType::None:
+        case 0:
             return new FukanKunInteractionEmpty();
-        case FukanKunInteractionType::Message:
+        case 1:
             return new FukanKunMessageHolder();
-        case FukanKunInteractionType::Shine:
+        case 2:
             return new FukanKunShineHolder();
+        default:
+            return nullptr;
         }
     }
-
-    bool isFukanKunMessageNeed = false;
-    al::tryGetArg(&isFukanKunMessageNeed, info, "IsFukanKunMessageNeed");
-    if (isFukanKunMessageNeed)
-        return new FukanKunMessageHolder();
-
-    return new FukanKunInteractionEmpty();
+    return nullptr;
 }
 
-// NON_MATCHING: Missing duplicated block https://decomp.me/scratch/eX4WB
+// NON_MATCHING: Bad load order https://decomp.me/scratch/4Q3he
 void FlyObject::init(const al::ActorInitInfo& info) {
     al::initActor(this, info);
     if (al::isExistRail(this))
@@ -160,7 +156,18 @@ void FlyObject::init(const al::ActorInitInfo& info) {
     al::tryGetArg(mBehaviour->getWaveController()->getVerticalAmplitudePtr(), info,
                   "VerticalAmplitude");
 
-    mFukanKunInteraction = createFukanKunInteraction(info);
+    FukanKunInteractionEmpty* interaction = createFukanKunInteraction(info);
+    if (interaction) {
+        mFukanKunInteraction = interaction;
+    } else {
+        bool isFukanKunMessageNeed = false;
+        al::tryGetArg(&isFukanKunMessageNeed, info, "IsFukanKunMessageNeed");
+        if (isFukanKunMessageNeed)
+            mFukanKunInteraction = new FukanKunMessageHolder();
+        else
+            mFukanKunInteraction = new FukanKunInteractionEmpty();
+    }
+
     mFukanKunInteraction->init(this, info);
 
     al::initNerve(this, &Fly, 0);
