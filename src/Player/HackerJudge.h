@@ -27,7 +27,7 @@ private:
     IUsePlayerHack** mHacker;
 };
 
-class HackerJudgeNormalFall : public HackerJudge {
+class HackerJudgeNormalFall : public al::HioNode, public IJudge {
 public:
     HackerJudgeNormalFall(const al::LiveActor* parent, s32 unk);
     void reset() override;
@@ -39,6 +39,7 @@ public:
     }
 
 private:
+    al::LiveActor* mActor;
     s32 field_10;
     s32 field_14;
     IUsePlayerCollision* mPlayerCollision;
