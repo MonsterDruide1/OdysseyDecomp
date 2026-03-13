@@ -4,6 +4,10 @@
 
 namespace al {
 class ByamlIter;
+class Resource;
+
+template <typename T>
+class AudioInfoListWithParts;
 
 struct AudioAddonSoundArchiveInfo {
     AudioAddonSoundArchiveInfo();
@@ -16,5 +20,26 @@ struct AudioAddonSoundArchiveInfo {
 };
 
 static_assert(sizeof(AudioAddonSoundArchiveInfo) == 0x8);
+
+struct AudioSoundArchiveInfo {
+    AudioSoundArchiveInfo();
+
+    static AudioSoundArchiveInfo* createInfo(const ByamlIter& iter);
+
+    AudioInfoListWithParts<AudioAddonSoundArchiveInfo>* addonInfo = nullptr;
+};
+
+static_assert(sizeof(AudioSoundArchiveInfo) == 0x8);
+
+struct AudioResourceLoadingInfo {
+    AudioResourceLoadingInfo();
+
+    static AudioResourceLoadingInfo* createInfo(const Resource* resource);
+
+    AudioSoundArchiveInfo* seInfo = nullptr;
+    AudioSoundArchiveInfo* bgmInfo = nullptr;
+};
+
+static_assert(sizeof(AudioResourceLoadingInfo) == 0x10);
 
 }  // namespace al
