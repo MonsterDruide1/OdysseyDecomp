@@ -32,11 +32,11 @@ private:
     f32 mVerticalAngle = 0.0f;
 };
 
-class Behaviour {
+class Behavior {
 public:
     virtual void setUp(al::LiveActor* actor) = 0;
     virtual void move(al::LiveActor* actor, f32 speed) = 0;
-    virtual ~Behaviour() = default;
+    virtual ~Behavior() = default;
 
     WaveMovementController* getWaveController() { return &mWaveController; }
 
@@ -44,7 +44,7 @@ private:
     WaveMovementController mWaveController;
 };
 
-class Stationary : public Behaviour {
+class Stationary : public Behavior {
 public:
     void setUp(al::LiveActor* actor) override;
     void move(al::LiveActor* actor, f32 speed) override;
@@ -55,7 +55,7 @@ private:
 
 static_assert(sizeof(Stationary) == 0x20);
 
-class OnRails : public Behaviour {
+class OnRails : public Behavior {
 public:
     void setUp(al::LiveActor* actor) override;
     void move(al::LiveActor* actor, f32 speed) override;
@@ -132,7 +132,7 @@ public:
     void exeDisappear();
 
 private:
-    Behaviour* mBehaviour = nullptr;
+    Behavior* mBehavior = nullptr;
     f32 mMovementSpeed = 22.0f;
     FukanKunInteractionEmpty* mFukanKunInteraction = nullptr;
 };

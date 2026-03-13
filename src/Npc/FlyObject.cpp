@@ -127,14 +127,14 @@ void FukanKunShineHolder::interact(FlyObject* flyObject) {
 FlyObject::FlyObject(const char* name) : al::LiveActor(name) {}
 
 inline FukanKunInteractionEmpty* createFukanKunInteraction(const al::ActorInitInfo& info) {
-    s32 interactionType = 0;
-    if (al::tryGetArg(&interactionType, info, "FukanKunInteractionType")) {
+    FukanKunInteractionType interactionType = FukanKunInteractionType::None;
+    if (al::tryGetArg((s32*)&interactionType, info, "FukanKunInteractionType")) {
         switch (interactionType) {
-        case 0:
+        case FukanKunInteractionType::None:
             return new FukanKunInteractionEmpty();
-        case 1:
+        case FukanKunInteractionType::Message:
             return new FukanKunMessageHolder();
-        case 2:
+        case FukanKunInteractionType::Shine:
             return new FukanKunShineHolder();
         default:
             return nullptr;
@@ -147,13 +147,13 @@ inline FukanKunInteractionEmpty* createFukanKunInteraction(const al::ActorInitIn
 void FlyObject::init(const al::ActorInitInfo& info) {
     al::initActor(this, info);
     if (al::isExistRail(this))
-        mBehaviour = new OnRails();
+        mBehavior = new OnRails();
     else
-        mBehaviour = new Stationary();
+        mBehavior = new Stationary();
 
     al::tryGetArg(&mMovementSpeed, info, "MovementSpeed");
-    al::tryGetArg(mBehaviour->getWaveController()->getVerticalSpeedPtr(), info, "VerticalSpeed");
-    al::tryGetArg(mBehaviour->getWaveController()->getVerticalAmplitudePtr(), info,
+    al::tryGetArg(mBehavior->getWaveController()->getVerticalSpeedPtr(), info, "VerticalSpeed");
+    al::tryGetArg(mBehavior->getWaveController()->getVerticalAmplitudePtr(), info,
                   "VerticalAmplitude");
 
     FukanKunInteractionEmpty* interaction = createFukanKunInteraction(info);
@@ -177,7 +177,7 @@ void FlyObject::init(const al::ActorInitInfo& info) {
 
 void FlyObject::initAfterPlacement() {
     mFukanKunInteraction->setUp(this);
-    mBehaviour->setUp(this);
+    mBehavior->setUp(this);
 }
 
 void FlyObject::control() {
@@ -191,7 +191,7 @@ al::MessageSystem* FlyObject::getMessageSystem() const {
 void FlyObject::exeFly() {
     if (al::isFirstStep(this))
         al::startAction(this, "Fly");
-    mBehaviour->move(this, mMovementSpeed);
+    mBehavior->move(this, mMovementSpeed);
 }
 
 void FlyObject::exeDisappear() {
