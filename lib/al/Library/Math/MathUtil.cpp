@@ -7,6 +7,7 @@
 #include <random/seadGlobalRandom.h>
 
 #include "Library/Base/HashCodeUtil.h"
+#include "Library/Math/FractalGenerator.h"
 #include "Library/Matrix/MatrixUtil.h"
 
 namespace al {
@@ -1740,6 +1741,18 @@ f32 calcSpringDumperForce(f32 a, f32 b, f32 c, f32 d) {
 
 f32 convertSpringEnergyToSpeed(f32 a, f32 b, f32 c) {
     return sead::Mathf::sqrt(a * c * a + b * b);
+}
+
+f32 calcFractal(f32 x, f32 y, u32 permutations, f32 amplitude, f32 scale, f32 nextOrdeAmplitude,
+                bool useSmoothPerlingNoise) {
+    FractalGenerator generator(permutations, amplitude, scale, nextOrdeAmplitude);
+    return generator.calcFractal(x, y, useSmoothPerlingNoise);
+}
+
+f32 calcMultiFractal(f32 x, f32 y, f32 baseAmplitude, u32 permutations, f32 amplitude, f32 scale,
+                     f32 nextOrdeAmplitude, bool useSmoothPerlingNoise) {
+    FractalGenerator generator(permutations, amplitude, scale, nextOrdeAmplitude);
+    return generator.calcMultiFractal(x, y, baseAmplitude, useSmoothPerlingNoise);
 }
 
 const char* axisIndexToString(s32 axisIndex) {
