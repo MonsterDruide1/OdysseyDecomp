@@ -19,13 +19,13 @@ public:
     void init();
     s32 tryFindIndexByName(const char* name) const;
 
-    AchievementInfo* get(s32 index) { return mAchievements[index]; }
+    AchievementInfo* get(s32 index) const { return mAchievements[index]; }
 
-    AchievementInfo* unsafeAt(s32 index) { return mAchievements.unsafeAt(index); }
+    AchievementInfo* unsafeAt(s32 index) const { return mAchievements.unsafeAt(index); }
 
-    s32 size() { return mAchievements.size(); }
+    s32 size() const { return mAchievements.size(); }
 
-    s32 capacity() { return mAchievements.capacity(); }
+    s32 capacity() const { return mAchievements.capacity(); }
 
 private:
     sead::PtrArray<AchievementInfo> mAchievements;
