@@ -192,7 +192,7 @@ void Bubble::init(const al::ActorInitInfo& info) {
 
     mShadowMaskOffset.set(al::getShadowMaskOffset(this, "body"));
     mShadowMaskDropLength = al::getShadowMaskDropLength(this, "body");
-    mDisregardReceiver = new DisregardReceiver(this, nullptr);
+    mDisregardReceiver = new DisregardReceiver(this);
     mPlayerHackStartShaderCtrl = new PlayerHackStartShaderCtrl(this, &gPlayerHackStartShaderParam);
 
     al::startAction(this, "Wait");
