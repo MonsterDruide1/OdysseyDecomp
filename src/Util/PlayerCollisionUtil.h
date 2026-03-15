@@ -74,6 +74,7 @@ bool isCollisionCodeGrabCeilAny(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilGrround(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilWall(const IUsePlayerCollision*);
 bool isCollisionCodeGrabCeilCeiling(const IUsePlayerCollision*);
+bool isCollisionCodeSafetyPoint(const al::HitInfo&);
 bool isCollisionCodePoleClimbAny(const IUsePlayerCollision*);
 bool isCollisionCodePoleClimbGround(const IUsePlayerCollision*);
 bool isCollisionCodePoleClimbWall(const IUsePlayerCollision*);
