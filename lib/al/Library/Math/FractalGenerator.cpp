@@ -39,10 +39,14 @@ f32 FractalGenerator::makeSmoothPerlinNoise(f32 x, f32 y) {
     f32 fracX = x - gridX;
     f32 fracY = y - gridY;
 
+    // NOTE: ASM is using an undef call for subsequent calls. This is not a bug since
+    // makeSmoothRandom doesn't make use of any class members. This is probably a compiler
+    // optimization error
+    FractalGenerator* gen;
     f32 r00 = makeSmoothRandom(gridX, gridY);
-    f32 r10 = makeSmoothRandom(gridX + 1, gridY);
-    f32 r01 = makeSmoothRandom(gridX, gridY + 1);
-    f32 r11 = makeSmoothRandom(gridX + 1, gridY + 1);
+    f32 r10 = gen->makeSmoothRandom(gridX + 1, gridY);
+    f32 r01 = gen->makeSmoothRandom(gridX, gridY + 1);
+    f32 r11 = gen->makeSmoothRandom(gridX + 1, gridY + 1);
 
     return lerpValue(lerpValue(r00, r10, easeInOut(fracX)), lerpValue(r01, r11, easeInOut(fracX)),
                      easeInOut(fracY));
