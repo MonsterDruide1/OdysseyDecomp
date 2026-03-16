@@ -66,7 +66,7 @@ void Compass::appear() {
             return;
 
         f32 angle = al::calcAngleOnPlaneDegree(northDir, camDir, -sead::Vector3f::ey);
-        angle = al::modf(angle + 360.0f, 360.0f) + 0.0f;
+        angle = al::wrapAngle(angle);
 
         f32 maxFrame = al::getActionFrameMax(this, "Direction", "State");
         f32 frame = al::normalize(angle, 0.0f, maxFrame);

@@ -89,15 +89,11 @@ void CoinCirclePlacement::listenAppear() {
     makeActorAlive();
 }
 
-inline f32 modDegree(f32 value) {
-    return al::modf(value + 360.0f, 360.0f) + 0.0f;
-}
-
 void CoinCirclePlacement::exeMove() {
     if (al::isNearZero(mRotateVelocity))
         return;
 
-    mCurrentAngle = modDegree(mCurrentAngle + mRotateVelocity);
+    mCurrentAngle = al::wrapAngle(mCurrentAngle + mRotateVelocity);
 
     s32 coinNum = mCoinNum;
     bool isNoCoinAlive = true;
@@ -105,7 +101,7 @@ void CoinCirclePlacement::exeMove() {
         if (al::isDead(mCoinArray[i]) || !mCoinArray[i]->isWait())
             continue;
         f32 prevY = al::getTrans(mCoinArray[i]).y;
-        f32 coinAngle = sead::Mathf::deg2rad(modDegree(mCurrentAngle + (360.0f / coinNum) * i));
+        f32 coinAngle = sead::Mathf::deg2rad(al::wrapAngle(mCurrentAngle + (360.0f / coinNum) * i));
         f32 xWidth = mCircleXWidth * sead::Mathf::cos(coinAngle) * 100.0f;
         f32 zWidth = mCircleZWidth * sead::Mathf::sin(coinAngle) * 100.0f;
 
