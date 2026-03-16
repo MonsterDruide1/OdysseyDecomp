@@ -16,7 +16,8 @@
 
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/CapTargetParts.h"
-#include "Player/HackerJudge.h"
+#include "Player/HackerJudgeNormalFall.h"
+#include "Player/HackerJudgeStartRun.h"
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
 #include "Util/JudgeUtil.h"
