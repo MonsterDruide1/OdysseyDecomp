@@ -7,10 +7,8 @@ namespace al {
 class PlacementId;
 class PlacementInfo;
 }  // namespace al
-
-class BirdMtxGlideCtrl;
-
 class AirBubble;
+class BirdMtxGlideCtrl;
 
 class CheckpointFlag : public al::LiveActor, public al::IUseMessageSystem {
 public:
@@ -33,10 +31,7 @@ public:
     void exeAfter();
     void exeShake();
 
-    const al::MessageSystem* getMessageSystem() const override { return mMessageSystem; };
-
-protected:
-    friend class CheckpointFlagWatcher;
+    const al::MessageSystem* getMessageSystem() const override { return mMessageSystem; }
 
 private:
     al::MessageSystem* mMessageSystem = nullptr;

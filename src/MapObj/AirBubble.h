@@ -27,7 +27,7 @@ public:
     void exeBreak();
 
 private:
-    char padding[0x20];
+    char _108[0x20];
 };
 
 static_assert(sizeof(AirBubble) == 0x128);

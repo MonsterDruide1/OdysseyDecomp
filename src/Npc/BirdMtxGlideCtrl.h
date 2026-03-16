@@ -16,6 +16,9 @@ public:
     static BirdMtxGlideCtrl* tryCreateAliveWaitByLinksBird(const sead::Matrix34f*,
                                                            const sead::Vector3f&,
                                                            const al::ActorInitInfo&, const char*);
+
+    BirdMtxGlideCtrl(Bird*);
+
     void update();
     void makeActorDeadBirdIfAlive();
 
@@ -26,6 +29,8 @@ public:
     void invalidateGlide();
     bool isWaitBird() const;
 
-    BirdMtxGlideCtrl(Bird*);
-    ~BirdMtxGlideCtrl();
+private:
+    char _10[0x8];
 };
+
+static_assert(sizeof(BirdMtxGlideCtrl) == 0x18);

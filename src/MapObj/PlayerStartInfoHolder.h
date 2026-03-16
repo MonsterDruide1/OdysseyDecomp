@@ -17,7 +17,7 @@ class LiveActor;
 class PlacementInfo;
 class Scene;
 }  // namespace al
-
+class PlayerStartInfo;
 class PlayerStartObj;
 
 class PlayerStartInfoHolder : public al::ISceneObj, public al::IUseCamera, public al::HioNode {
@@ -31,24 +31,22 @@ public:
     void registerChangeStageAreaGroup(al::AreaObjGroup*, const al::ActorInitInfo&);
     void registerWarpAreaGroup(al::AreaObjGroup*, const al::ActorInitInfo&);
     void registerRestartAreaGroup(al::AreaObjGroup*);
-    al::ActorInitInfo* tryFindInitInfoByStartId(const char*) const;
-    al::ActorInitInfo* tryFindInitInfoByPlacementIdString(const char*) const;
+    PlayerStartInfo* tryFindInitInfoByStartId(const char*) const;
+    PlayerStartInfo* tryFindInitInfoByPlacementIdString(const char*) const;
 
     const char* getSceneObjName() const override;
 
-    ~PlayerStartInfoHolder() override;
-
     al::CameraDirector* getCameraDirector() const override;
+
+private:
+    char _10[0x18];
 };
 
 namespace rs {
 void registerLinkedPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
-                                           const al::PlacementInfo&, const char*,
-                                           const sead::Vector3f*, const sead::Quatf*);
-void registerLinkedPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
                                            const char*, const sead::Vector3f*, const sead::Quatf*);
 void registerPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::PlacementInfo&,
-                                     const char*, PlayerStartObj*, sead::Vector3f*,
+                                     const char*, PlayerStartObj*, const sead::Vector3f*,
                                      const sead::Quatf*);
 void registerPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
                                      const char*, PlayerStartObj*, const sead::Vector3f*,
@@ -65,3 +63,5 @@ void registerPlayerStartInfoToHolderForCloset(const al::IUseSceneObjHolder*,
 void tryStartEntranceCamera(const al::Scene*, const char*);
 bool isPlayerStartCloset(const al::LiveActor*);
 }  // namespace rs
+
+static_assert(sizeof(PlayerStartInfoHolder) == 0x28);

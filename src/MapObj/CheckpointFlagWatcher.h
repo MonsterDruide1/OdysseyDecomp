@@ -48,8 +48,6 @@ public:
 
     const char* getSceneObjName() const override { return "中間ポイント監視"; }
 
-    ~CheckpointFlagWatcher() override = default;
-
     al::CameraDirector* getCameraDirector() const override { return mCameraDirector; }
 
 private:
@@ -62,7 +60,7 @@ private:
     const char* mStageName = nullptr;
     s32 mScenarioNum = 1;
     al::CameraDirector* mCameraDirector = nullptr;
-    al::LiveActor* mUnknownActor = nullptr;
+    al::LiveActor* _88 = nullptr;
 };
 
 namespace rs {

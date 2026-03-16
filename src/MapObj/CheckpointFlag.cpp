@@ -60,25 +60,24 @@ void CheckpointFlag::init(const al::ActorInitInfo& info) {
         mFlagName = al::getSystemMessageString(this, "GlossaryObject", "Home");
         setAfter();
         makeActorAlive();
-    } else {
-        f32 frame = rs::getStageShineAnimFrame(this);
-        if (frame < 0)
-            frame = 0.0f;
-        al::startMclAnimAndSetFrameAndStop(this, "Color", frame);
-        al::StringTmp<128> messageLabel("");
-        rs::makeActorMessageLabel(&messageLabel, info, rs::getCheckpointLabelPrefix());
-        const char* stageName = rs::getPlacementStageName(GameDataHolderWriter(this), info);
-        if (al::isExistLabelInStageMessage(this, stageName, messageLabel.cstr()))
-            mFlagName = al::getStageMessageString(this, stageName, messageLabel.cstr());
-        if (GameDataFunction::isGotCheckpoint(GameDataHolderAccessor(this), mPlaceId))
-            setAfter();
-        rs::registerLinkedPlayerStartInfoToHolder(this, info, nullptr, nullptr, nullptr);
-        GameDataFunction::registerCheckpointTrans(GameDataHolderWriter(this), mPlaceId,
-                                                  al::getTrans(this));
-        mBirdMtxGlideCtrl = BirdMtxGlideCtrl::tryCreateAliveWaitByLinksBird(
-            al::getJointMtxPtr(this, "Pole2"), gBirdVector, info, "Bird");
-        al::trySyncStageSwitchAppear(this);
+        return;
     }
+    f32 frame = rs::getStageShineAnimFrame(this);
+    if (frame < 0.0f)
+        frame = 0.0f;
+    al::startMclAnimAndSetFrameAndStop(this, "Color", frame);
+    al::StringTmp<128> messageLabel("");
+    rs::makeActorMessageLabel(&messageLabel, info, rs::getCheckpointLabelPrefix());
+    const char* stageName = rs::getPlacementStageName(this, info);
+    if (al::isExistLabelInStageMessage(this, stageName, messageLabel.cstr()))
+        mFlagName = al::getStageMessageString(this, stageName, messageLabel.cstr());
+    if (GameDataFunction::isGotCheckpoint(this, mPlaceId))
+        setAfter();
+    rs::registerLinkedPlayerStartInfoToHolder(this, info, nullptr, nullptr, nullptr);
+    GameDataFunction::registerCheckpointTrans(this, mPlaceId, al::getTrans(this));
+    mBirdMtxGlideCtrl = BirdMtxGlideCtrl::tryCreateAliveWaitByLinksBird(
+        al::getJointMtxPtr(this, "Pole2"), gBirdVector, info, "Bird");
+    al::trySyncStageSwitchAppear(this);
 }
 
 void CheckpointFlag::initAfterPlacement() {}
@@ -92,9 +91,8 @@ void CheckpointFlag::control() {
 }
 
 void CheckpointFlag::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isNerve(this, &NrvCheckpointFlag.After) && al::isSensorName(self, "Push") &&
-        !rs::sendMsgPushToPlayer(other, self))
-        al::sendMsgPush(other, self);
+    if (al::isNerve(this, &NrvCheckpointFlag.After) && al::isSensorName(self, "Push"))
+        rs::sendMsgPushToPlayer(other, self) || al::sendMsgPush(other, self);
 }
 
 bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
