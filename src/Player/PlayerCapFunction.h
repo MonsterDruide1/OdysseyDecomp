@@ -6,8 +6,8 @@ struct HackObjInfo;
 
 namespace CapFunction {
 
-void putOnCapPlayer(HackCap*, PlayerAnimator*);
-void endHack(HackCap*, PlayerAnimator*);
-const HackObjInfo& getHackObjInfo(HackCap*);
+void putOnCapPlayer(HackCap* hackCap, PlayerAnimator* animator);
+void endHack(HackCap* hackCap, PlayerAnimator* animator);
+const HackObjInfo* getHackObjInfo(HackCap* hackCap);
 
 }  // namespace CapFunction

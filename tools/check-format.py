@@ -85,7 +85,7 @@ def common_no_namespace_qualifiers(c, path):
                     continue;
 
                 # examples: "sead", "al", "nn::g3d"
-                if CHECK(lambda a: namespace not in allowed_namespaces, line, namespace[0] + " should be omitted here!",
+                if CHECK(lambda a: namespace not in allowed_namespaces, line, namespace + " should be omitted here!",
                          path): return
 
     if len(nest_level) != 0:

@@ -10,7 +10,7 @@ class ByamlIter;
 class AudioInfoListCreateFunctorBase;
 
 template <typename T>
-struct AudioInfoList;
+class AudioInfoList;
 
 class AudioInfoListCreateFunctorBase {
 public:
@@ -33,7 +33,7 @@ public:
         if (!info)
             return false;
 
-        return mAudioInfoList->list->pushBack(info);
+        return mAudioInfoList->setInfo(info);
     }
 
 private:
@@ -42,25 +42,65 @@ private:
 };
 
 template <typename T>
-struct AudioInfoList {
+class AudioInfoList {
+public:
     static s32 compareInfoAndKey(const T* info, const char* key) { return strcmp(info->name, key); }
 
-    sead::PtrArray<T>* list;
+    AudioInfoList() = default;
+
+    void init(s32 listSize) {
+        mIsLinearSearch = false;
+        mList = new sead::PtrArray<const T>();
+        mList->allocBuffer((listSize == 0) ? 1 : listSize, nullptr);
+    }
+
+    bool setInfo(const T* audioInfo) const { return mList->pushBack(audioInfo); }
+
+    void sort() const {
+        if (mList->size() >= 10)
+            mList->heapSort(T::compareInfo);
+        else
+            mList->sort(T::compareInfo);
+    }
+
+private:
+    sead::PtrArray<const T>* mList;
+    bool mIsLinearSearch;
 };
 
 template <typename T>
-struct AudioInfoListWithParts : public AudioInfoList<T> {
-    s32 tryGetInfoIndex(const char*) const;
-    T* tryFindInfo(const char*) const;
+class AudioInfoListWithParts : public AudioInfoList<T> {
+public:
+    AudioInfoListWithParts() = default;
 
-    s32 getPartsSize() const {
-        if (!parts)
-            return 0;
-        return parts->size();
+    s32 tryGetInfoIndex(const char* key) const;
+    const T* tryFindInfo(const char* key) const;
+
+    void init(s32 listSize, s32 maxNumParts) {
+        AudioInfoList<T>::init(listSize);
+
+        mParts = nullptr;
+        if (maxNumParts != 0) {
+            mParts = new sead::PtrArray<AudioInfoList<T>>();
+            mParts->allocBuffer(maxNumParts, nullptr);
+        }
     }
 
-    bool _8;
-    sead::PtrArray<AudioInfoList<T>>* parts;
+    void sort() const {
+        AudioInfoList<T>::sort();
+
+        for (s32 i = 0; i < getPartsSize(); i++)
+            mParts->at(i)->sort();
+    }
+
+    s32 getPartsSize() const {
+        if (!mParts)
+            return 0;
+        return mParts->size();
+    }
+
+private:
+    sead::PtrArray<AudioInfoList<T>>* mParts;
 };
 
 template <typename T>
@@ -68,33 +108,36 @@ AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter, s32 maxNum
     AudioInfoListWithParts<T>* audioInfoList = new AudioInfoListWithParts<T>;
 
     s32 listSize = alAudioInfoListFunction::getCreateAudioInfoListSize(iter, 0);
-    audioInfoList->_8 = false;
-
-    audioInfoList->list = new sead::PtrArray<T>();
-    audioInfoList->list->allocBuffer((listSize == 0) ? 1 : listSize, nullptr);
-
-    audioInfoList->parts = nullptr;
-    if (maxNumParts != 0) {
-        audioInfoList->parts = new sead::PtrArray<AudioInfoList<T>>();
-        audioInfoList->parts->allocBuffer(maxNumParts, nullptr);
-    }
+    audioInfoList->init(listSize, maxNumParts);
 
     AudioInfoListCreateFunctor<T> functor(audioInfoList, T::createInfo);
     alAudioInfoListFunction::createAudioInfoAndSetToList(&functor, iter);
+    audioInfoList->sort();
 
-    if (audioInfoList->list->size() >= 10)
-        audioInfoList->list->heapSort(T::compareInfo);
-    else
-        audioInfoList->list->sort(T::compareInfo);
-
-    for (s32 i = 0; i < audioInfoList->getPartsSize(); i++) {
-        sead::PtrArray<T>* partsList = audioInfoList->parts->at(i)->list;
-        if (partsList->size() >= 10)
-            partsList->heapSort(T::compareInfo);
-        else
-            partsList->sort(T::compareInfo);
-    }
     return audioInfoList;
+}
+
+template <typename T>
+bool trySetAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const T* audioInfo,
+                     bool disableSort) {
+    if (!audioInfoList || !audioInfo)
+        return false;
+
+    if (!audioInfoList->setInfo(audioInfo))
+        return false;
+
+    if (!disableSort)
+        audioInfoList->sort();
+
+    return true;
+}
+
+template <typename T>
+const T* tryFindAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const char* name) {
+    if (!audioInfoList || !name)
+        return nullptr;
+
+    return audioInfoList->tryFindInfo(name);
 }
 
 }  // namespace al
