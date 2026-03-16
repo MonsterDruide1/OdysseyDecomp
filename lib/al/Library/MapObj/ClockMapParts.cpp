@@ -233,7 +233,7 @@ void ClockMapParts::exeRotateSign() {
     if (isFirstStep(this))
         tryStartAction(this, "MiddleSign");
 
-    f32 angle = modf((f32)(mCurrentStep * mClockAngleDegree) + 360.0f, 360.0f) + 0.0f;
+    f32 angle = wrapAngle(mCurrentStep * mClockAngleDegree);
 
     rotateQuatLocalDirDegree(this, mQuat, mRotateAxis,
                              angle + sead::Mathf::sin((f32)mTimer * sead::Mathf::pi2() / 18.0f));
@@ -245,7 +245,7 @@ void ClockMapParts::exeRotateSign() {
 
 void ClockMapParts::exeRotate() {
     f32 time = (f32)(mTimer - mRotateSignTime) / (f32)(mRotateTimer + ~mRotateSignTime);
-    f32 angle = modf((time + (f32)mCurrentStep) * (f32)mClockAngleDegree + 360.0f, 360.0f) + 0.0f;
+    f32 angle = wrapAngle((time + mCurrentStep) * mClockAngleDegree);
     rotateQuatLocalDirDegree(this, mQuat, mRotateAxis, angle);
 
     mTimer++;
