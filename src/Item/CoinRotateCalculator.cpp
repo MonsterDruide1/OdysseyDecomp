@@ -8,13 +8,9 @@
 
 CoinRotateCalculator::CoinRotateCalculator(al::LiveActor* actor) : mActor(actor) {}
 
-inline f32 modDegree(f32 value) {
-    return al::modf(value + 360.0f, 360.0f) + 0.0f;
-}
-
 inline f32 getObjAngle(al::LiveActor* actor, bool isInWater, s32 objCountOffset) {
     al::StageSyncCounter* syncObj = al::getSceneObj<al::StageSyncCounter>(actor);
-    f32 objCounter = modDegree(syncObj->getCounter() + objCountOffset);
+    f32 objCounter = al::wrapAngle(syncObj->getCounter() + objCountOffset);
 
     return (isInWater ? 2.0f : 3.0f) * objCounter;
 }
@@ -37,7 +33,7 @@ void CoinRotateCalculator::update(const sead::Vector3f& force, bool checkWater) 
 
     if (al::isNearZero(force)) {
         if (--mForceFrames <= 0) {
-            mForceOffset = modDegree(mForceOffset) - 0.8f;
+            mForceOffset = al::wrapAngle(mForceOffset) - 0.8f;
             if (mForceOffset < 0.0f)
                 mForceOffset = 0.0f;
         } else {
@@ -50,7 +46,7 @@ void CoinRotateCalculator::update(const sead::Vector3f& force, bool checkWater) 
 
     mFishingLineOffset = sead::Mathf::clampMin(mFishingLineOffset - 0.8f, 0.0f);
 
-    if (sead::Mathf::abs(modDegree(objAngle) - modDegree(mLastObjAngle)) > 5.0f)
+    if (sead::Mathf::abs(al::wrapAngle(objAngle) - al::wrapAngle(mLastObjAngle)) > 5.0f)
         objAngle = (mIsInWater ? 3.5f : 4.0f) + mLastObjAngle;
 
     mRotate = objAngle + mForceOffset + mFishingLineOffset + mRotateOffset;
