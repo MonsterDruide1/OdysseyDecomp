@@ -36,10 +36,8 @@ void PlayerBindableSensorList::append(al::HitSensor* bindSensor, u32 type, f32 d
 void PlayerBindableSensorList::remove(al::HitSensor* toRemove) {
     s32 size = mActiveSensors.size();
     for (s32 i = 0; i < size; i++) {
-        const SensorInfo* item = mActiveSensors[i];
-        if (item->bindSensor == toRemove) {
-            SensorInfo* item = mActiveSensors[i];
-            mPool.pushBack(item);
+        if (mActiveSensors[i]->bindSensor == toRemove) {
+            mPool.pushBack(mActiveSensors[i]);
             mActiveSensors.erase(i);
             return;
         }

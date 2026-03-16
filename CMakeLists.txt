@@ -31,6 +31,8 @@ target_compile_options(odyssey PRIVATE -Wall -Wextra -Wdeprecated)
 target_compile_options(odyssey PRIVATE -Wno-unused-parameter -Wno-unused-private-field)
 target_compile_options(odyssey PRIVATE -fno-strict-aliasing)
 target_compile_options(odyssey PRIVATE -Wno-invalid-offsetof)
+target_compile_options(odyssey PRIVATE -Wshadow)
+target_compile_options(odyssey PRIVATE -Woverloaded-virtual)
 
 set(NN_WARE 3.5.1)
 set(NN_SDK 3.5.1)

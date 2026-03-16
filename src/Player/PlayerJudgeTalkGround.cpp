@@ -13,6 +13,7 @@
 #include "Player/PlayerInput.h"
 #include "Player/PlayerStateWait.h"
 #include "Util/PlayerCollisionUtil.h"
+#include "Util/PlayerUtil.h"
 
 PlayerJudgeTalkGround::PlayerJudgeTalkGround(
     const al::LiveActor* playerActor, const IPlayerModelChanger* playerModelChanger,

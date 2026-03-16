@@ -239,8 +239,8 @@ s32 getWorldNumForNewReleaseShop(GameDataHolderAccessor accessor) {
         const char* world_name = getWorldDevelopName(accessor, world_id);
         const sead::PtrArray<sead::FixedSafeString<64>>& list =
             accessor->getWorldsForNewReleaseShop();
-        for (s32 i = 0; i < list.size(); i++) {
-            if (al::isEqualString(world_name, list[i]->cstr())) {
+        for (s32 j = 0; j < list.size(); j++) {
+            if (al::isEqualString(world_name, list[j]->cstr())) {
                 count++;
                 break;
             }
@@ -275,8 +275,8 @@ s32 getWorldIdForNewReleaseShop(GameDataHolderAccessor accessor, s32 index) {
         const char* world_name = getWorldDevelopName(accessor, world_id);
         const sead::PtrArray<sead::FixedSafeString<64>>& list =
             accessor->getWorldsForNewReleaseShop();
-        for (s32 i = 0; i < list.size(); i++) {
-            if (al::isEqualString(world_name, list[i]->cstr())) {
+        for (s32 j = 0; j < list.size(); j++) {
+            if (al::isEqualString(world_name, list[j]->cstr())) {
                 if (index == 0) {
                     result = world_id;
                     return 1;

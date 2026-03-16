@@ -54,8 +54,7 @@ void startPadRumblePos(const al::LiveActor* actor, const sead::Vector3f& positio
         if (al::isPlayerDead(actor, i))
             continue;
         al::PadRumbleParam rumbleParam(near, far);
-        s32 port = al::getPlayerPort(actor, i);
-        startPadRumbleWithParam(director, position, name, rumbleParam, port);
+        startPadRumbleWithParam(director, position, name, rumbleParam, al::getPlayerPort(actor, i));
     }
 }
 
@@ -92,8 +91,7 @@ void startPadRumbleNo3D(const al::LiveActor* actor, const char* name, s32 port) 
         if (al::isPlayerDead(actor, i))
             continue;
         al::PadRumbleParam rumbleParam;
-        s32 port = al::getPlayerPort(actor, i);
-        startPadRumbleNo3DWithParam(director, name, rumbleParam, port);
+        startPadRumbleNo3DWithParam(director, name, rumbleParam, al::getPlayerPort(actor, i));
     }
 }
 
@@ -143,8 +141,7 @@ void startPadRumbleLoop(const al::LiveActor* actor, const char* name,
         if (al::isPlayerDead(actor, i))
             continue;
         al::PadRumbleParam rumbleParam(near, far);
-        s32 port = al::getPlayerPort(actor, i);
-        director->startRumbleLoop(name, position, rumbleParam, port);
+        director->startRumbleLoop(name, position, rumbleParam, al::getPlayerPort(actor, i));
     }
 }
 
@@ -178,8 +175,7 @@ void startPadRumbleLoopNo3D(const al::LiveActor* actor, const char* name,
         if (al::isPlayerDead(actor, i))
             continue;
         al::PadRumbleParam rumbleParam;
-        s32 port = al::getPlayerPort(actor, i);
-        director->startRumbleLoopNo3D(name, position, rumbleParam, port);
+        director->startRumbleLoopNo3D(name, position, rumbleParam, al::getPlayerPort(actor, i));
     }
 }
 
@@ -206,8 +202,7 @@ void stopPadRumbleLoop(const al::LiveActor* actor, const char* name, const sead:
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(actor, i))
             continue;
-        s32 port = al::getPlayerPort(actor, i);
-        director->stopRumbleLoop(name, position, port);
+        director->stopRumbleLoop(name, position, al::getPlayerPort(actor, i));
     }
 }
 
@@ -240,8 +235,8 @@ void changePadRumbleLoopVolmue(const al::LiveActor* actor, const char* name,
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(actor, i))
             continue;
-        s32 port = al::getPlayerPort(actor, i);
-        director->changeRumbleLoopVolume(name, position, volumeLeft, volumeRight, port);
+        director->changeRumbleLoopVolume(name, position, volumeLeft, volumeRight,
+                                         al::getPlayerPort(actor, i));
     }
 }
 
@@ -266,8 +261,8 @@ void changePadRumbleLoopPitch(const al::LiveActor* actor, const char* name,
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(actor, i))
             continue;
-        s32 port = al::getPlayerPort(actor, i);
-        director->changeRumbleLoopPitch(name, position, pitchLeft, pitchRight, port);
+        director->changeRumbleLoopPitch(name, position, pitchLeft, pitchRight,
+                                        al::getPlayerPort(actor, i));
     }
 }
 
@@ -284,8 +279,7 @@ void startPadRumbleDirectValue(const al::LiveActor* actor, f32 a, f32 b, f32 c, 
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(actor, i))
             continue;
-        s32 port = al::getPlayerPort(actor, i);
-        director->startRumbleDirectValue(a, b, c, d, e, f, port);
+        director->startRumbleDirectValue(a, b, c, d, e, f, al::getPlayerPort(actor, i));
     }
 }
 
@@ -300,8 +294,7 @@ void stopPadRumbleDirectValue(const al::LiveActor* actor, s32 port) {
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(actor, i))
             continue;
-        s32 port = al::getPlayerPort(actor, i);
-        director->stopRumbleDirectValue(port);
+        director->stopRumbleDirectValue(al::getPlayerPort(actor, i));
     }
 }
 
@@ -317,8 +310,7 @@ void startPadRumbleWithVolume(const al::LiveActor* actor, const char* name, f32 
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(actor, i))
             continue;
-        s32 port = al::getPlayerPort(actor, i);
-        director->startRumbleWithVolume(name, volumeLeft, volumeRight, port);
+        director->startRumbleWithVolume(name, volumeLeft, volumeRight, al::getPlayerPort(actor, i));
     }
 }
 

@@ -20,8 +20,8 @@ void Graph::appendVertex(Vertex* vertex) {
 void Graph::removeVertex(const Vertex* vertex) {
     for (s32 i = 0; i < mVertices.size(); i++) {
         if (mVertices[i] == vertex) {
-            for (s32 i = 0; i < vertex->getEdgeCount(); i++)
-                removeEdge(vertex->getEdge(i));
+            for (s32 j = 0; j < vertex->getEdgeCount(); j++)
+                removeEdge(vertex->getEdge(j));
             mVertices.erase(i);
             return;
         }
