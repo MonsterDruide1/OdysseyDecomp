@@ -440,8 +440,8 @@ bool checkInCylinder(const sead::Vector3f&, const sead::Vector3f&, f32, const se
 bool checkHitSegmentCylinder(const sead::Vector3f&, f32, const sead::Vector3f&, f32,
                              const sead::Vector3f&, const sead::Vector3f&, sead::Vector3f*,
                              sead::Vector3f*);
-bool checkHitHalfLineSphere(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
-                            f32);
+bool checkHitHalfLineSphere(const sead::Vector3f& vecA, const sead::Vector3f& vecB,
+                            const sead::Vector3f& vecC, f32 tolerance);
 
 }  // namespace al
 
@@ -503,8 +503,9 @@ void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
 f32 calcConvergeVibrationValue(f32, f32, f32, f32, f32);
 bool calcSphericalPolarCoordPY(sead::Vector2f*, const sead::Vector3f&, const sead::Vector3f&,
                                const sead::Vector3f&);
-void calcBezierPoint(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                     const sead::Vector3f&, const sead::Vector3f&, f32);
+void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& vecA,
+                     const sead::Vector3f& vecB, const sead::Vector3f& vecC,
+                     const sead::Vector3f& vecD, f32 b);
 // TODO: Find spring parameter names
 f32 calcSpringDumperForce(f32 a, f32 b, f32 c, f32 d);
 f32 convertSpringEnergyToSpeed(f32 a, f32 b, f32 c);
