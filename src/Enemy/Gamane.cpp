@@ -27,7 +27,7 @@
 #include "Enemy/GamaneBullet.h"
 #include "Enemy/GamaneHackState.h"
 #include "Enemy/HackerDepthShadowMapCtrl.h"
-#include "Player/HackerJudge.h"
+#include "Player/HackerJudgeNormalFall.h"
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Util/Hack.h"
 #include "Util/ItemUtil.h"
