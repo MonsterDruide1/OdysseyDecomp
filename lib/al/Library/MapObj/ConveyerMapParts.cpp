@@ -69,8 +69,7 @@ void ConveyerMapParts::init(const ActorInitInfo& info) {
     f32 startRate = 0.0f;
     tryGetArg(&startRate, info, "StartRate");
 
-    f32 rate = mPartsInterval * startRate;
-    mOffsetCoord = modf(rate + mPartsInterval, mPartsInterval) + 0.0f;
+    mOffsetCoord = wrapValue(mPartsInterval * startRate, mPartsInterval);
 
     mConveyerStepGroup = new DeriveActorGroup<ConveyerStep>("コンベア足場リスト", groupCount);
     registerConveyerSteps(mConveyerStepGroup, info);
@@ -156,7 +155,7 @@ void ConveyerMapParts::exeMove() {
     if (!mIsRideOnlyMove || mRideActiveFrames >= 1) {
         f32 speedFactor =
             mIsRideOnlyMove ? (f32)mRideActiveFrames / (f32)mMaxRideActiveFrames : 1.0f;
-        mOffsetCoord = modf(mOffsetCoord + speedFactor * mMoveSpeed + mMaxCoord, mMaxCoord) + 0.0f;
+        mOffsetCoord = wrapValue(mOffsetCoord + speedFactor * mMoveSpeed, mMaxCoord);
 
         bool isForwards = mMoveSpeed >= 0.0f;
         s32 actorCount = mConveyerStepGroup->getActorCount();

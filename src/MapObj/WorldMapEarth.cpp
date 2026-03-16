@@ -12,5 +12,5 @@ void WorldMapEarth::init(const al::ActorInitInfo& info) {
 }
 
 void WorldMapEarth::control() {
-    al::setRotateY(this, al::modf(al::getRotate(this).y + 0.05f + 360.0f, 360.0f) + 0.0f);
+    al::setRotateY(this, al::wrapAngle(al::getRotate(this).y + 0.05f));
 }
