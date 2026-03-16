@@ -1762,6 +1762,19 @@ bool turnVecToVecCosOnPlane(sead::Vector3f* outVec, const sead::Vector3f& vecA,
     return turnVecToVecCosOnPlane(outVec, *outVec, vecA, vecB, value);
 }
 
+bool checkHitHalfLineSphere(const sead::Vector3f& vecA, const sead::Vector3f& vecB,
+                            const sead::Vector3f& vecC, f32 tolerance) {
+    sead::Vector3f diff = vecA - vecB;
+    f32 dot = diff.dot(vecC);
+
+    if (dot < 0.0f) {
+        // NOTE: Some sort of is isNearDirection but reversed
+        return !(tolerance < -dot || tolerance * tolerance < (vecB - vecA).squaredLength());
+    }
+
+    return isNearZero(vecC * dot - diff, tolerance);
+}
+
 void updateBoundingBox(sead::Vector3f value, sead::Vector3f* min, sead::Vector3f* max) {
     if (value.x < min->x)
         min->x = value.x;
@@ -1912,6 +1925,20 @@ void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
         sead::Mathf::sqrt(sead::Mathf::clampMin((maxHeight - verticalDistance) * maxHeight, 0.0));
     *initialVelY = 2 * ((maxHeightSign * maxHeightAdjusted) + maxHeight);
     *gravity = verticalDistance - *initialVelY;
+}
+
+void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& vecA,
+                     const sead::Vector3f& vecB, const sead::Vector3f& vecC,
+                     const sead::Vector3f& vecD, f32 b) {
+    f32 a = 1.0f - b;
+    f32 a2 = a * a;
+    f32 a3 = a * a * a;
+
+    f32 b2 = b * b;
+    f32 b3 = b * b * b;
+
+    // This is (a + b)^3 = a3 + 3a2b + 3ab2 + b3
+    *outPoint = a3 * vecA + (3.0f * a2 * b) * vecB + (3.0f * a * b2) * vecC + b3 * vecD;
 }
 
 f32 calcSpringDumperForce(f32 a, f32 b, f32 c, f32 d) {
