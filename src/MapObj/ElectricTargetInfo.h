@@ -1,0 +1,43 @@
+#pragma once
+
+#include <container/seadPtrArray.h>
+#include <math/seadVector.h>
+
+namespace al {
+class LiveActor;
+}
+
+struct TargetInfo {
+    TargetInfo() {
+        actor = nullptr;
+        timer = 0;
+        target = nullptr;
+    }
+
+    f32 dist() const;
+
+    bool operator<(const TargetInfo& other) const { return dist() < other.dist(); }
+
+    const al::LiveActor* actor;
+    s32 timer;
+    const al::LiveActor* target;
+};
+
+static_assert(sizeof(TargetInfo) == 0x18);
+
+class TargetInfoList {
+public:
+    TargetInfoList();
+    void clear();
+    void append(const al::LiveActor* actor, const al::LiveActor* target, s32 timer);
+    void remove(const al::LiveActor* actor);
+    void remove(s32 index);
+    bool isInclude(const al::LiveActor* actor) const;
+    void elapse();
+    void survive();
+    void sort();
+
+private:
+    sead::PtrArray<TargetInfo>* mInfos;
+    sead::PtrArray<TargetInfo>* mPool;
+};
