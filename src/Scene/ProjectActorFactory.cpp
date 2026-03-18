@@ -81,6 +81,7 @@
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
+#include "MapObj/MoonBasementBreakParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
@@ -398,7 +399,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MeganeKeyMoveMapParts", nullptr},
     {"MeganeMapParts", al::createActorFunction<MeganeMapParts>},
     {"Mirror", nullptr},
-    {"MoonBasementBreakParts", nullptr},
+    {"MoonBasementBreakParts", al::createActorFunction<MoonBasementBreakParts>},
     {"MoonBasementClimaxWatcher", nullptr},
     {"MoonBasementFallObj", nullptr},
     {"MoonBasementFinalGate", nullptr},
