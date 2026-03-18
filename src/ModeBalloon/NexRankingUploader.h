@@ -79,7 +79,8 @@ bool tryEndUploadTimeBalloonBalloonData(bool*, u64*, const al::IUseDataStore*);
 bool tryStartUploadBalloonFindBalloonData(
     al::IUseDataStore*, u16, const void*, s32,
     const nn::nex::qMap<s8, nn::nex::DataStoreRatingInitParam>*);
-bool tryStartUpdateRatingPlayedBalloon(al::IUseDataStore*, u64, u64, bool);
+bool tryStartUpdateRatingPlayedBalloon(al::IUseDataStore*, u64 dataId, u64 ownerAchievementDataId,
+                                       bool isFriendBalloon);
 bool tryStartUpdateRatingBrokeBalloon(al::IUseDataStore*, u64, u64, u64, s32, s32);
 bool tryEndUpdateRating(bool*, al::IUseDataStore*);
 }  // namespace rs
