@@ -42,6 +42,8 @@ private:
     char _10[0x18];
 };
 
+static_assert(sizeof(PlayerStartInfoHolder) == 0x28);
+
 namespace rs {
 void registerLinkedPlayerStartInfoToHolder(const al::IUseSceneObjHolder*, const al::ActorInitInfo&,
                                            const char*, const sead::Vector3f*, const sead::Quatf*);
@@ -63,5 +65,3 @@ void registerPlayerStartInfoToHolderForCloset(const al::IUseSceneObjHolder*,
 void tryStartEntranceCamera(const al::Scene*, const char*);
 bool isPlayerStartCloset(const al::LiveActor*);
 }  // namespace rs
-
-static_assert(sizeof(PlayerStartInfoHolder) == 0x28);

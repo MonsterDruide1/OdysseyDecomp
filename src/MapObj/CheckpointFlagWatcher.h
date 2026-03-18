@@ -63,6 +63,8 @@ private:
     al::LiveActor* _88 = nullptr;
 };
 
+static_assert(sizeof(CheckpointFlagWatcher) == 0x90);
+
 namespace rs {
 void registerCheckpointFlagToWatcher(CheckpointFlag*);
 void setTouchCheckpointFlagToWatcher(CheckpointFlag*);
@@ -82,5 +84,3 @@ void requestCancelCheckpointFlagNameLayoutByShineGetDemo(const al::Scene*);
 void hideCheckpointFlagBalloonAllAtBossSequence(const al::LiveActor*);
 void showCheckpointFlagBalloonAllAfterBossSequence(const al::LiveActor*);
 }  // namespace rs
-
-static_assert(sizeof(CheckpointFlagWatcher) == 0x90);

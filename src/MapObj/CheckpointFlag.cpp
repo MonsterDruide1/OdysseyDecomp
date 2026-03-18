@@ -37,17 +37,17 @@ NERVES_MAKE_STRUCT(CheckpointFlag, Before, After, Get, Shake);
 
 CheckpointFlag::CheckpointFlag(const char* name) : al::LiveActor(name) {}
 
-const sead::Vector3f gBirdVector = {75.0f, 0.0f, 0.0f};
-const sead::Vector3f gTransIn = {0.0f, 100.0f, 0.0f};
-const sead::Vector3f gBalloonTrans = {0.0f, 75.0f, 0.0f};
+const sead::Vector3f gBirdOffset = {75.0f, 0.0f, 0.0f};
+const sead::Vector3f gAirBubbleOffset = {0.0f, 100.0f, 0.0f};
+const sead::Vector3f gBalloonOffset = {0.0f, 75.0f, 0.0f};
 
 void CheckpointFlag::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "CheckpointFlag", nullptr);
     al::initNerve(this, &NrvCheckpointFlag.Before, 0);
     rs::registerCheckpointFlagToWatcher(this);
     mMessageSystem = al::getLayoutInitInfo(info).getMessageSystem();
-    mInfo = al::createLinksPlayerActorInfo(this, info);
-    mPlaceId = al::createPlacementId(info);
+    mPlayerRestartInfo = al::createLinksPlayerActorInfo(this, info);
+    mPlacementId = al::createPlacementId(info);
     al::tryGetArg(&mIsZeroGravity, info, "IsZeroGravity");
     if (al::isInWater(this)) {
         if (al::isInWaterPos(this, al::getSensorPos(this, "BodyTop"))) {
@@ -71,12 +71,12 @@ void CheckpointFlag::init(const al::ActorInitInfo& info) {
     const char* stageName = rs::getPlacementStageName(this, info);
     if (al::isExistLabelInStageMessage(this, stageName, messageLabel.cstr()))
         mFlagName = al::getStageMessageString(this, stageName, messageLabel.cstr());
-    if (GameDataFunction::isGotCheckpoint(this, mPlaceId))
+    if (GameDataFunction::isGotCheckpoint(this, mPlacementId))
         setAfter();
     rs::registerLinkedPlayerStartInfoToHolder(this, info, nullptr, nullptr, nullptr);
-    GameDataFunction::registerCheckpointTrans(this, mPlaceId, al::getTrans(this));
+    GameDataFunction::registerCheckpointTrans(this, mPlacementId, al::getTrans(this));
     mBirdMtxGlideCtrl = BirdMtxGlideCtrl::tryCreateAliveWaitByLinksBird(
-        al::getJointMtxPtr(this, "Pole2"), gBirdVector, info, "Bird");
+        al::getJointMtxPtr(this, "Pole2"), gBirdOffset, info, "Bird");
     al::trySyncStageSwitchAppear(this);
 }
 
@@ -115,7 +115,7 @@ bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
             if (isGot)
                 rs::setTouchCheckpointFlagToWatcher(this);
             if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gTransIn);
+                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gAirBubbleOffset);
                 airBubble->appear();
                 mAirBubbleTimer = 180;
             }
@@ -135,7 +135,7 @@ bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
             rs::setTouchCheckpointFlagToWatcher(this);
             AirBubble* airBubble = mAirBubble;
             if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gTransIn);
+                al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gAirBubbleOffset);
                 airBubble->appear();
                 mAirBubbleTimer = 180;
             }
@@ -157,8 +157,7 @@ bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
         if (isGot)
             rs::setTouchCheckpointFlagToWatcher(this);
         if (airBubble && !al::isAlive(airBubble) && mAirBubbleTimer < 0) {
-            sead::Vector3f* trans = al::getTransPtr(airBubble);
-            al::calcTransLocalOffset(trans, this, gTransIn);
+            al::calcTransLocalOffset(al::getTransPtr(airBubble), this, gAirBubbleOffset);
             airBubble->appear();
             mAirBubbleTimer = 180;
         }
@@ -169,7 +168,7 @@ bool CheckpointFlag::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
 }
 
 const al::PlacementInfo* CheckpointFlag::getPlayerRestartInfo() const {
-    return &al::getPlacementInfo(*mInfo);
+    return &al::getPlacementInfo(*mPlayerRestartInfo);
 }
 
 void CheckpointFlag::setAfter() {
@@ -201,7 +200,7 @@ void CheckpointFlag::exeBefore() {
     }
     if (!mIsHome) {
         if (mBirdMtxGlideCtrl && mBirdMtxGlideCtrl->isWaitBird())
-            rs::requestShowCheckpointFlagBalloon(this, gBalloonTrans);
+            rs::requestShowCheckpointFlagBalloon(this, gBalloonOffset);
         else
             rs::requestShowCheckpointFlagBalloon(this, sead::Vector3f::zero);
     }

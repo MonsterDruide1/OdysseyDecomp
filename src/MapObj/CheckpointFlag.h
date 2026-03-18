@@ -35,8 +35,8 @@ public:
 
 private:
     al::MessageSystem* mMessageSystem = nullptr;
-    al::ActorInitInfo* mInfo = nullptr;
-    al::PlacementId* mPlaceId = nullptr;
+    al::ActorInitInfo* mPlayerRestartInfo = nullptr;
+    al::PlacementId* mPlacementId = nullptr;
     const char16* mFlagName = u"/////////////////";
     s32 mHitCooldown = 0;
     bool mIsGot = false;
