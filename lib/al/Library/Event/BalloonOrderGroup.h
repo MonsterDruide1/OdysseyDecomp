@@ -12,27 +12,17 @@ class LiveActor;
 
 class BalloonOrderGroup {
 public:
-    class Requester {
-    public:
+    struct Requester {
         Requester(const LiveActor* actor, const IUseEventFlowData* user, const ActorInitInfo& info)
-            : mActor(actor), mUser(user) {
-            getArg(&mBallonOrder, info, "BalloonOrder");
-            tryGetArg(&mBallonShowStep, info, "BallonShowStep");
+            : actor(actor), user(user) {
+            getArg(&ballonOrder, info, "BalloonOrder");
+            tryGetArg(&ballonShowStep, info, "BallonShowStep");
         }
 
-        const LiveActor* getActor() const { return mActor; }
-
-        const IUseEventFlowData* getUser() const { return mUser; }
-
-        s32 getBallonOrder() const { return mBallonOrder; }
-
-        s32 getBallonShowStep() const { return mBallonShowStep; }
-
-    private:
-        const LiveActor* mActor;
-        const IUseEventFlowData* mUser;
-        s32 mBallonOrder = 0;
-        s32 mBallonShowStep = 180;
+        const LiveActor* actor;
+        const IUseEventFlowData* user;
+        s32 ballonOrder = 0;
+        s32 ballonShowStep = 180;
     };
 
     BalloonOrderGroup(const PlacementInfo& info);

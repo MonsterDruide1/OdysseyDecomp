@@ -21,17 +21,15 @@ void BalloonOrderGroup::registerRequester(const LiveActor* actor, const IUseEven
                                           const ActorInitInfo& info) {
     Requester* requester = new Requester(actor, user, info);
 
-    s32 requesterCount = mRequesterCount;
-    for (s32 i = 0; i < requesterCount; i++) {
+    for (s32 i = 0; i < mRequesterCount; i++) {
         Requester* requesterTmp = mRequesters[i];
-        if (requester->getBallonOrder() < requesterTmp->getBallonOrder()) {
+        if (requester->ballonOrder < requesterTmp->ballonOrder) {
             mRequesters[i] = requester;
-            requesterCount = mRequesterCount;
             requester = requesterTmp;
         }
     }
 
-    mRequesters[requesterCount] = requester;
+    mRequesters[mRequesterCount] = requester;
     mRequesterCount++;
 }
 
@@ -41,15 +39,14 @@ bool BalloonOrderGroup::isEnableAppearBalloon(const LiveActor* actor) const {
 
     Requester** requesters = mRequesters;
 
-    return requesters[mActiveRequesterIdx]->getActor() == actor;
+    return requesters[mActiveRequesterIdx]->actor == actor;
 }
 
 void BalloonOrderGroup::update(const sead::Vector3f& position) {
     mIsActive = false;
 
     for (s32 i = 0; i < mRequesterCount; i++) {
-        if (checkInsideTerritoryPos(mRequesters[i]->getUser(), mRequesters[i]->getActor(), position,
-                                    0.0f)) {
+        if (checkInsideTerritoryPos(mRequesters[i]->user, mRequesters[i]->actor, position, 0.0f)) {
             mIsActive = true;
 
             break;
@@ -61,10 +58,10 @@ void BalloonOrderGroup::update(const sead::Vector3f& position) {
 
     mShowStep++;
 
-    if (mRequesters[mActiveRequesterIdx]->getBallonShowStep() > mShowStep)
-        return;
-
-    mShowStep = 0;
-    mActiveRequesterIdx = mRequesterCount > mActiveRequesterIdx + 1 ? mActiveRequesterIdx + 1 : 0;
+    if (mRequesters[mActiveRequesterIdx]->ballonShowStep <= mShowStep) {
+        mShowStep = 0;
+        mActiveRequesterIdx =
+            mRequesterCount > mActiveRequesterIdx + 1 ? mActiveRequesterIdx + 1 : 0;
+    }
 }
 }  // namespace al
