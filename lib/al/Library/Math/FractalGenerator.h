@@ -6,9 +6,9 @@ namespace al {
 
 class FractalGenerator {
 public:
-    FractalGenerator(u32 permutations, f32 amplitude, f32 scale, f32 nextOrdeAmplitude);
+    FractalGenerator(u32 permutations, f32 amplitude, f32 scale, f32 nextOrderAmplitude);
 
-    void setParam(u32 permutations, f32 amplitude, f32 scale, f32 nextOrdeAmplitude);
+    void setParam(u32 permutations, f32 amplitude, f32 scale, f32 nextOrderAmplitude);
     f32 calcFractal(f32 x, f32 y, bool useSmoothPerlingNoise);
     f32 makeSmoothPerlinNoise(f32 x, f32 y);
     f32 makePerlinNoise(f32 x, f32 y);
@@ -20,7 +20,7 @@ private:
     u32 mPermutations;
     f32 mAmplitude;
     f32 mScale;
-    f32 mNextOrdeAmplitude;
+    f32 mNextOrderAmplitude;
 };
 
 }  // namespace al

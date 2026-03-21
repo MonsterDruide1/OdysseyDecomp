@@ -4,15 +4,16 @@
 
 namespace al {
 FractalGenerator::FractalGenerator(u32 permutations, f32 amplitude, f32 scale,
-                                   f32 nextOrdeAmplitude)
+                                   f32 nextOrderAmplitude)
     : mPermutations(permutations), mAmplitude(amplitude), mScale(scale),
-      mNextOrdeAmplitude(nextOrdeAmplitude) {}
+      mNextOrderAmplitude(nextOrderAmplitude) {}
 
-void FractalGenerator::setParam(u32 permutations, f32 amplitude, f32 scale, f32 nextOrdeAmplitude) {
+void FractalGenerator::setParam(u32 permutations, f32 amplitude, f32 scale,
+                                f32 nextOrderAmplitude) {
     mPermutations = permutations;
     mAmplitude = amplitude;
     mScale = scale;
-    mNextOrdeAmplitude = nextOrdeAmplitude;
+    mNextOrderAmplitude = nextOrderAmplitude;
 }
 
 f32 FractalGenerator::calcFractal(f32 x, f32 y, bool useSmoothPerlingNoise) {
@@ -27,15 +28,15 @@ f32 FractalGenerator::calcFractal(f32 x, f32 y, bool useSmoothPerlingNoise) {
             value += makePerlinNoise(scale * x, scale * y) * amplitude;
 
         scale *= 2;
-        amplitude *= mNextOrdeAmplitude;
+        amplitude *= mNextOrderAmplitude;
     }
 
     return value;
 }
 
 f32 FractalGenerator::makeSmoothPerlinNoise(f32 x, f32 y) {
-    s32 gridX = x;
-    s32 gridY = y;
+    s32 gridX = (s32)x;
+    s32 gridY = (s32)y;
     f32 fracX = x - gridX;
     f32 fracY = y - gridY;
 
@@ -53,8 +54,8 @@ f32 FractalGenerator::makeSmoothPerlinNoise(f32 x, f32 y) {
 }
 
 f32 FractalGenerator::makePerlinNoise(f32 x, f32 y) {
-    s32 gridX = x;
-    s32 gridY = y;
+    s32 gridX = (s32)x;
+    s32 gridY = (s32)y;
     f32 fracX = x - gridX;
     f32 fracY = y - gridY;
 
@@ -80,7 +81,7 @@ f32 FractalGenerator::calcMultiFractal(f32 x, f32 y, f32 baseAmplitude,
             value *= baseAmplitude * makePerlinNoise(scale * x, scale * y) * amplitude;
 
         scale *= 2;
-        amplitude *= mNextOrdeAmplitude;
+        amplitude *= mNextOrderAmplitude;
     }
 
     return value;
@@ -103,13 +104,18 @@ f32 FractalGenerator::makeRandom(s32 x, s32 y) {
 }
 
 f32 FractalGenerator::makeSmoothRandom(s32 x, s32 y) {
+    constexpr f32 weight_corners = 0.25f;
+    constexpr f32 weight_sides = 0.5f;
+    constexpr f32 weight_center = 0.25f;
+
     f32 corners = (makeRandom(x - 1, y - 1) + makeRandom(x + 1, y - 1) + makeRandom(x - 1, y + 1) +
-                   makeRandom(x + 1, y + 1)) /
-                  16;
+                   makeRandom(x + 1, y + 1)) *
+                  ((1.0f / 4.0f) * weight_corners);
     f32 sides = (makeRandom(x - 1, y) + makeRandom(x + 1, y) + makeRandom(x, y - 1) +
-                 makeRandom(x, y + 1)) /
-                8;
-    f32 center = makeRandom(x, y) / 4;
+                 makeRandom(x, y + 1)) *
+                ((1.0f / 4.0f) * weight_sides);
+    ;
+    f32 center = makeRandom(x, y) * weight_center;
     return corners + sides + center;
 }
 

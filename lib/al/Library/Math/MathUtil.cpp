@@ -1743,15 +1743,15 @@ f32 convertSpringEnergyToSpeed(f32 a, f32 b, f32 c) {
     return sead::Mathf::sqrt(a * c * a + b * b);
 }
 
-f32 calcFractal(f32 x, f32 y, u32 permutations, f32 amplitude, f32 scale, f32 nextOrdeAmplitude,
+f32 calcFractal(f32 x, f32 y, u32 permutations, f32 amplitude, f32 scale, f32 nextOrderAmplitude,
                 bool useSmoothPerlingNoise) {
-    FractalGenerator generator(permutations, amplitude, scale, nextOrdeAmplitude);
+    FractalGenerator generator(permutations, amplitude, scale, nextOrderAmplitude);
     return generator.calcFractal(x, y, useSmoothPerlingNoise);
 }
 
 f32 calcMultiFractal(f32 x, f32 y, f32 baseAmplitude, u32 permutations, f32 amplitude, f32 scale,
-                     f32 nextOrdeAmplitude, bool useSmoothPerlingNoise) {
-    FractalGenerator generator(permutations, amplitude, scale, nextOrdeAmplitude);
+                     f32 nextOrderAmplitude, bool useSmoothPerlingNoise) {
+    FractalGenerator generator(permutations, amplitude, scale, nextOrderAmplitude);
     return generator.calcMultiFractal(x, y, baseAmplitude, useSmoothPerlingNoise);
 }
 
