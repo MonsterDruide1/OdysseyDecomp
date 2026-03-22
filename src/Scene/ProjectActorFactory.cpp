@@ -70,6 +70,7 @@
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
+#include "MapObj/CheckpointFlag.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
@@ -210,7 +211,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CardboardBox", nullptr},
     {"CatchBomb", al::createActorFunction<CatchBomb>},
     {"Chair", nullptr},
-    {"CheckpointFlag", nullptr},
+    {"CheckpointFlag", al::createActorFunction<CheckpointFlag>},
     {"ChorobonHolder", nullptr},
     {"ChurchDoor", al::createActorFunction<ChurchDoor>},
     {"CityBuilding", nullptr},
