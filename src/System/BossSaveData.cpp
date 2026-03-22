@@ -14,12 +14,12 @@ BossSaveData::BossSaveData() {
 }
 
 void BossSaveData::init() {
-    for (s32 i = 0; i < sBossBattleStartWorldNum; i++) {
+    for (s32 i = 0; i < (s32)sBossBattleStartWorldNum; i++) {
         mIsShowDemoBossBattleStartLv1[i] = false;
         mIsShowDemoBossBattleStartLv2[i] = false;
     }
 
-    for (s32 i = 0; i < sDeadGKNum; i++) {
+    for (s32 i = 0; i < (s32)sDeadGKNum; i++) {
         mIsAlreadyDeadGKLv1[i] = false;
         mIsAlreadyDeadGKLv2[i] = false;
         mIsAlreadyDeadGKLv3[i] = false;
@@ -80,7 +80,7 @@ void BossSaveData::saveDemoBattleEndKoopaLv2() {
 }
 
 void BossSaveData::resetLv3Data() {
-    for (s32 i = 0; i < sDeadGKNum; i++)
+    for (s32 i = 0; i < (s32)sDeadGKNum; i++)
         mIsAlreadyDeadGKLv3[i] = false;
 }
 
@@ -88,17 +88,17 @@ void BossSaveData::write(al::ByamlWriter* writer) {
     writer->pushHash("BossSaveData");
 
     writer->pushArray("IsShowDemoBossBattleStartLv1");
-    for (s32 i = 0; i < sBossBattleStartWorldNum; i++)
+    for (s32 i = 0; i < (s32)sBossBattleStartWorldNum; i++)
         writer->addBool(mIsShowDemoBossBattleStartLv1[i]);
     writer->pop();
 
     writer->pushArray("IsShowDemoBossBattleStartLv2");
-    for (s32 i = 0; i < sBossBattleStartWorldNum; i++)
+    for (s32 i = 0; i < (s32)sBossBattleStartWorldNum; i++)
         writer->addBool(mIsShowDemoBossBattleStartLv2[i]);
     writer->pop();
 
     writer->pushArray("IsAlreadyDeadGK");
-    for (s32 i = 0; i < sDeadGKNum; i++) {
+    for (s32 i = 0; i < (s32)sDeadGKNum; i++) {
         writer->addBool(mIsAlreadyDeadGKLv1[i]);
         writer->addBool(mIsAlreadyDeadGKLv2[i]);
     }
@@ -122,7 +122,7 @@ void BossSaveData::read(const al::ByamlIter& save) {
     al::ByamlIter lv2Iter{};
     bossIter.tryGetIterByKey(&lv2Iter, "IsShowDemoBossBattleStartLv2");
 
-    for (s32 i = 0; i < sBossBattleStartWorldNum; i++) {
+    for (s32 i = 0; i < (s32)sBossBattleStartWorldNum; i++) {
         lv1Iter.tryGetBoolByIndex(&mIsShowDemoBossBattleStartLv1[i], i);
         lv2Iter.tryGetBoolByIndex(&mIsShowDemoBossBattleStartLv2[i], i);
     }
@@ -130,7 +130,7 @@ void BossSaveData::read(const al::ByamlIter& save) {
     al::ByamlIter gkIter{};
     bossIter.tryGetIterByKey(&gkIter, "IsAlreadyDeadGK");
 
-    for (s32 i = 0; i < sDeadGKNum; i++) {
+    for (s32 i = 0; i < (s32)sDeadGKNum; i++) {
         gkIter.tryGetBoolByIndex(&mIsAlreadyDeadGKLv1[i], i * 2 + 0);
         gkIter.tryGetBoolByIndex(&mIsAlreadyDeadGKLv2[i], i * 2 + 1);
     }
