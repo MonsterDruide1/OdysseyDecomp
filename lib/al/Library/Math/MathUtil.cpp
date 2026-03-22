@@ -244,14 +244,7 @@ bool isReverseDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 to
     if (a.dot(b) >= 0.0f)
         return false;
 
-    if (tolerance < sead::Mathf::abs(a.y * b.z - b.y * a.z))
-        return false;
-    if (tolerance < sead::Mathf::abs(b.x * a.z - a.x * b.z))
-        return false;
-    if (tolerance < sead::Mathf::abs(a.x * b.y - b.x * a.y))
-        return false;
-
-    return true;
+    return isParallelDirection(a, b, tolerance);
 }
 
 bool isNearDirection(const sead::Vector2f& a, const sead::Vector2f& b, f32 tolerance) {
@@ -265,14 +258,7 @@ bool isNearDirection(const sead::Vector3f& a, const sead::Vector3f& b, f32 toler
     if (a.dot(b) < 0.0f)
         return false;
 
-    if (tolerance < sead::Mathf::abs(a.y * b.z - b.y * a.z))
-        return false;
-    if (tolerance < sead::Mathf::abs(b.x * a.z - a.x * b.z))
-        return false;
-    if (tolerance < sead::Mathf::abs(a.x * b.y - b.x * a.y))
-        return false;
-
-    return true;
+    return isParallelDirection(a, b, tolerance);
 }
 
 bool isInRange(s32 x, s32 a, s32 b) {
@@ -835,7 +821,7 @@ f32 diffNearAngleDegree(f32 a, f32 b) {
 bool isInRangeAngleDegree(f32 target, f32 start, f32 end) {
     f32 length = wrapAngle(end - start);
     f32 targetPos = wrapAngle(target - start);
-    return targetPos <= length && 0.0f <= targetPos;
+    return 0.0f <= targetPos && targetPos <= length;
 }
 
 bool isSameSign(f32 a, f32 b) {
@@ -1064,17 +1050,17 @@ f32 calcFriction(f32 accel, f32 speed) {
     return (accel + speed) / speed;
 }
 
-void parallelizeVec(sead::Vector3f* outVec, const sead::Vector3f& vecA,
-                    const sead::Vector3f& vecB) {
-    outVec->setScale(vecA, vecA.dot(vecB));
+void parallelizeVec(sead::Vector3f* outVec, const sead::Vector3f& dir, const sead::Vector3f& vec) {
+    outVec->setScale(dir, dir.dot(vec));
 }
 
 void separateVectorParallelVertical(sead::Vector3f* outH, sead::Vector3f* outV,
-                                    const sead::Vector3f& vecA, const sead::Vector3f& vecB) {
-    parallelizeVec(outH, vecA, vecB);
-    outV->setSub(vecB, *outH);
+                                    const sead::Vector3f& dir, const sead::Vector3f& vec) {
+    parallelizeVec(outH, dir, vec);
+    outV->setSub(vec, *outH);
 }
 
+// computes how many `vec`s are required to go from `origin` to plane
 f32 calcDistanceVecToPlane(const sead::Vector3f& vec, const sead::Vector3f& planePoint,
                            const sead::Vector3f& planeNormal, const sead::Vector3f& origin) {
     f32 originToPlane = planeNormal.dot(planePoint - origin);
@@ -1084,11 +1070,12 @@ f32 calcDistanceVecToPlane(const sead::Vector3f& vec, const sead::Vector3f& plan
     return originToPlane / dirProjNormal * vecLength;
 }
 
-void limitPlanePos(sead::Vector3f* outPos, const sead::Vector3f& vecA, const sead::Vector3f& vecB,
-                   const sead::Vector3f& vecC) {
-    *outPos -= vecB * vecB.dot(vecA - vecC);
+void limitPlanePos(sead::Vector3f* outPos, const sead::Vector3f& pos,
+                   const sead::Vector3f& planeNormal, const sead::Vector3f& planePoint) {
+    *outPos -= planeNormal * planeNormal.dot(pos - planePoint);
 }
 
+// TODO: proper parameter names
 bool limitCylinderInDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
                         const sead::Vector3f& vecB, const sead::Vector3f& vecC) {
     return limitCylinderInDir(outVec, *outVec, vecA, vecB, vecC);
@@ -1270,9 +1257,7 @@ s32 getMinAbsElementValue(const sead::Vector3i& vec) {
 
 Axis calcNearVecFromAxis3(sead::Vector3f* outVec, const sead::Vector3f& vec,
                           const sead::Quatf& quat) {
-    sead::Vector3f side;
-    sead::Vector3f up;
-    sead::Vector3f front;
+    sead::Vector3f side, up, front;
     calcQuatLocalAxisAll(quat, &side, &up, &front);
     return calcNearVecFromAxis3(outVec, vec, side, up, front);
 }
@@ -1359,8 +1344,7 @@ void makeQuatFromToQuat(sead::Quatf* outQuat, const sead::Quatf& quatA, const se
 
 bool getAxisAngleFromTwoVec(sead::Vector3f* outAxis, f32* outRadians, const sead::Vector3f& vecA,
                             const sead::Vector3f& vecB) {
-    // isNearDirection(vecA, vecB, 0.01f)
-    if (!(vecA.dot(vecB) >= 0.0f) && isParallelDirection(vecA, vecB, 0.01f)) {
+    if (isReverseDirection(vecA, vecB, 0.01f)) {
         sead::Vector3f dir;
         calcDirVerticalAny(&dir, vecA);
         *outRadians = sead::Mathf::pi();
@@ -1657,6 +1641,7 @@ bool turnQuatZDirRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sea
     return turnQuat(outQuat, quat, axis, dir, radian);
 }
 
+// NON_MATCHING: Out of order multiplication https://decomp.me/scratch/kvdl1
 void tiltQuatDegree(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& axis,
                     const sead::Vector3f& dir, f32 degree) {
     sead::Vector3f parallelVec;
@@ -1757,22 +1742,24 @@ f32 calcAreaTriangle(const sead::Vector3f& pointA, const sead::Vector3f& pointB,
     return (pointB - pointA).cross(pointC - pointA).length() * 0.5f;
 }
 
+// TODO: rename parameters
 bool turnVecToVecCosOnPlane(sead::Vector3f* outVec, const sead::Vector3f& vecA,
                             const sead::Vector3f& vecB, f32 value) {
     return turnVecToVecCosOnPlane(outVec, *outVec, vecA, vecB, value);
 }
 
-bool checkHitHalfLineSphere(const sead::Vector3f& vecA, const sead::Vector3f& vecB,
-                            const sead::Vector3f& vecC, f32 tolerance) {
-    sead::Vector3f diff = vecA - vecB;
-    f32 dot = diff.dot(vecC);
+bool checkHitHalfLineSphere(const sead::Vector3f& center, const sead::Vector3f& rayStart,
+                            const sead::Vector3f& rayDir, f32 radius) {
+    sead::Vector3f diff = center - rayStart;
+    f32 dot = diff.dot(rayDir);
 
     if (dot < 0.0f) {
         // NOTE: Some sort of is isNearDirection but reversed
-        return !(tolerance < -dot || tolerance * tolerance < (vecB - vecA).squaredLength());
+        // BUG: returns `true` if the sphere is too far "behind" the ray
+        return !(radius < -dot || radius * radius < (rayStart - center).squaredLength());
     }
 
-    return isNearZero(vecC * dot - diff, tolerance);
+    return isNearZero(rayDir * dot - diff, radius);
 }
 
 void updateBoundingBox(sead::Vector3f value, sead::Vector3f* min, sead::Vector3f* max) {
@@ -1792,15 +1779,15 @@ void updateBoundingBox(sead::Vector3f value, sead::Vector3f* min, sead::Vector3f
         max->z = value.z;
 }
 
-bool isNearCollideSphereAabb(const sead::Vector3f& point, f32 tolerance,
+bool isNearCollideSphereAabb(const sead::Vector3f& center, f32 radius,
                              const sead::BoundBox3f& boundBox) {
     const sead::Vector3f& min = boundBox.getMin();
     const sead::Vector3f& max = boundBox.getMax();
-    if (point.x < min.x - tolerance || max.x + tolerance < point.x)
+    if (center.x < min.x - radius || max.x + radius < center.x)
         return false;
-    if (point.y < min.y - tolerance || max.y + tolerance < point.y)
+    if (center.y < min.y - radius || max.y + radius < center.y)
         return false;
-    if (point.z < min.z - tolerance || max.z + tolerance < point.z)
+    if (center.z < min.z - radius || max.z + radius < center.z)
         return false;
     return true;
 }
@@ -1896,25 +1883,27 @@ void pickUniformPointOnSphere(sead::Vector3f* outPoint) {
     calcSpherePointPicking(outPoint, getRandom(), getRandom());
 }
 
+// TODO: rename parameters
 f32 calcDistanceToObb(const sead::Vector3f& vecA, const sead::Matrix34f& mtx,
                       const sead::Vector3f& vecB, const sead::BoundBox3f& boundBox) {
     return sead::Mathf::sqrt(calcSquaredDistanceToObb(vecA, mtx, vecB, boundBox));
 }
 
-bool calcReflectionVector(sead::Vector3f* outVec, const sead::Vector3f& vecA, f32 scale, f32 b) {
-    f32 dot = vecA.dot(*outVec);
-    if (dot < -b) {
-        calcReverseVector(outVec, vecA, scale);
+bool calcReflectionVector(sead::Vector3f* vec, const sead::Vector3f& normal, f32 reboundRate,
+                          f32 minSink) {
+    f32 dot = normal.dot(*vec);
+    if (dot < -minSink) {
+        calcReverseVector(vec, normal, reboundRate);
         return true;
     }
 
     if (dot < 0.0f)
-        *outVec -= dot * vecA;
+        *vec -= dot * normal;
     return false;
 }
 
-void calcReverseVector(sead::Vector3f* outVec, const sead::Vector3f& vecA, f32 scale) {
-    *outVec -= vecA.dot(*outVec) * vecA * (scale + 1.0f);
+void calcReverseVector(sead::Vector3f* outVec, const sead::Vector3f& normal, f32 reboundRate) {
+    *outVec -= normal.dot(*outVec) * normal * (reboundRate + 1.0f);
 }
 
 void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
@@ -1927,18 +1916,18 @@ void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
     *gravity = verticalDistance - *initialVelY;
 }
 
-void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& vecA,
-                     const sead::Vector3f& vecB, const sead::Vector3f& vecC,
-                     const sead::Vector3f& vecD, f32 b) {
-    f32 a = 1.0f - b;
+void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& start,
+                     const sead::Vector3f& handleStart, const sead::Vector3f& handleEnd,
+                     const sead::Vector3f& end, f32 t) {
+    f32 a = 1.0f - t;
     f32 a2 = a * a;
     f32 a3 = a * a * a;
 
-    f32 b2 = b * b;
-    f32 b3 = b * b * b;
+    f32 t2 = t * t;
+    f32 t3 = t * t * t;
 
-    // This is (a + b)^3 = a3 + 3a2b + 3ab2 + b3
-    *outPoint = a3 * vecA + (3.0f * a2 * b) * vecB + (3.0f * a * b2) * vecC + b3 * vecD;
+    // This is (a + t)^3 = a3 + 3a2b + 3ab2 + b3
+    *outPoint = a3 * start + (3.0f * a2 * t) * handleStart + (3.0f * a * t2) * handleEnd + t3 * end;
 }
 
 f32 calcSpringDumperForce(f32 a, f32 b, f32 c, f32 d) {
@@ -1983,44 +1972,45 @@ f32 calcMultiFractal(f32 x, f32 y, f32 baseAmplitude, u32 permutations, f32 ampl
                      f32 nextOrderAmplitude, bool useSmoothPerlingNoise) {
     FractalGenerator generator(permutations, amplitude, scale, nextOrderAmplitude);
     return generator.calcMultiFractal(x, y, baseAmplitude, useSmoothPerlingNoise);
+}
 
-    f32 calcNormalDistribution(f32 x, f32 mu, f32 sigma) {
-        return (1.0f / sead::Mathf::sqrt(sigma * sead::Mathf::pi2())) *
-               sead::Mathf::exp(sead::Mathf::pow(x - mu, 2) * -0.5f / sigma);
+f32 calcNormalDistribution(f32 x, f32 mu, f32 sigma) {
+    return (1.0f / sead::Mathf::sqrt(sigma * sead::Mathf::pi2())) *
+           sead::Mathf::exp(sead::Mathf::pow(x - mu, 2) * -0.5f / sigma);
+}
+
+const char* axisIndexToString(s32 axisIndex) {
+    switch (axisIndex) {
+    case 0:
+        return "X";
+    case 1:
+        return "Y";
+    case 2:
+        return "Z";
+    default:
+        return "UnKnown";
     }
+}
 
-    const char* axisIndexToString(s32 axisIndex) {
-        switch (axisIndex) {
-        case 0:
-            return "X";
-        case 1:
-            return "Y";
-        case 2:
-            return "Z";
-        default:
-            return "UnKnown";
-        }
-    }
+bool calcCrossLinePoint(sead::Vector2f* crossPoint, const sead::Vector2f& point1A,
+                        const sead::Vector2f& point1B, const sead::Vector2f& point2A,
+                        const sead::Vector2f& point2B) {
+    f32 det = point2B.y * point1B.x - point1B.y * point2B.x;
+    if (isNearZero(det))
+        return false;
 
-    bool calcCrossLinePoint(sead::Vector2f * crossPoint, const sead::Vector2f& point1A,
-                            const sead::Vector2f& point1B, const sead::Vector2f& point2A,
-                            const sead::Vector2f& point2B) {
-        f32 det = point2B.y * point1B.x - point1B.y * point2B.x;
-        if (isNearZero(det))
-            return false;
+    f32 t = (point1B.x * (point1A.y - point2A.y) + point1B.y * (point2A.x - point1A.x)) / det;
 
-        f32 t = (point1B.x * (point1A.y - point2A.y) + point1B.y * (point2A.x - point1A.x)) / det;
+    crossPoint->x = point2B.x * t + point2A.x;
+    crossPoint->y = point2B.y * t + point2A.y;
+    return true;
+}
 
-        crossPoint->x = point2B.x * t + point2A.x;
-        crossPoint->y = point2B.y * t + point2A.y;
-        return true;
-    }
+f32 calcCylinderRadiusDot(const sead::Vector3f& vecA, const sead::Vector3f& vecB, f32 radius) {
+    f32 cos = sead::Mathf::clamp(sead::Mathf::abs(vecB.dot(vecA)), -1.0f, 1.0f);
 
-    f32 calcCylinderRadiusDot(const sead::Vector3f& vecA, const sead::Vector3f& vecB, f32 radius) {
-        f32 cos = sead::Mathf::clamp(sead::Mathf::abs(vecB.dot(vecA)), -1.0f, 1.0f);
-
-        return sead::Mathf::sin(sead::Mathf::acos(cos)) * radius;
-    }
+    return sead::Mathf::sin(sead::Mathf::acos(cos)) * radius;
+}
 
 }  // namespace al
 
