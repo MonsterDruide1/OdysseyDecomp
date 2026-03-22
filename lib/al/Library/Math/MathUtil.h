@@ -210,7 +210,7 @@ inline f32 wrapValue(f32 value, f32 maxRange) {
 }
 
 inline f32 wrapAngle(f32 value) {
-    return wrapValue(value, 360.0) + 0.0f;
+    return wrapValue(value, 360.0);
 }
 
 f32 calcSpeedMax(f32 accel, f32 friction);
@@ -219,18 +219,18 @@ f32 calcFriction(f32 accel, f32 speed);
 bool separateScalarAndDirection(f32*, sead::Vector2f*, const sead::Vector2f&);
 bool separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 void limitVectorSeparateHV(sead::Vector3f*, const sead::Vector3f&, f32, f32);
-void parallelizeVec(sead::Vector3f* outVec, const sead::Vector3f& vecA, const sead::Vector3f& vecB);
+void parallelizeVec(sead::Vector3f* outVec, const sead::Vector3f& dir, const sead::Vector3f& vec);
 void calcVectorSeparateHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
 void limitVectorParallelVertical(sead::Vector3f*, const sead::Vector3f&, f32, f32);
 void separateVectorParallelVertical(sead::Vector3f* outH, sead::Vector3f* outV,
-                                    const sead::Vector3f& vecA, const sead::Vector3f& vecB);
+                                    const sead::Vector3f& dir, const sead::Vector3f& vec);
 bool addVectorLimit(sead::Vector3f*, const sead::Vector3f&, f32);
 void alongVectorNormalH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                         const sead::Vector3f&);
 f32 calcDistanceVecToPlane(const sead::Vector3f& vec, const sead::Vector3f& planePoint,
                            const sead::Vector3f& planeNormal, const sead::Vector3f& origin);
-void limitPlanePos(sead::Vector3f* outPos, const sead::Vector3f& vecA, const sead::Vector3f& vecB,
-                   const sead::Vector3f& vecC);
+void limitPlanePos(sead::Vector3f* outPos, const sead::Vector3f& pos,
+                   const sead::Vector3f& planeNormal, const sead::Vector3f& planePoint);
 bool limitCylinderInPos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                         const sead::Vector3f&, f32);
 bool limitCylinderInDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
@@ -470,7 +470,7 @@ bool calcBoundingSphereSpotLight(sead::Vector3f*, f32*, const sead::Vector3f&,
                                  const sead::Vector3f&, f32, f32);
 void calcBoundingSphereBox3f(sead::Vector3f*, f32*, const sead::BoundBox3f&);
 void calcArrowAabb(sead::BoundBox3f*, const sead::Vector3f&, const sead::Vector3f&);
-bool isNearCollideSphereAabb(const sead::Vector3f& point, f32 tolerance,
+bool isNearCollideSphereAabb(const sead::Vector3f& center, f32 radius,
                              const sead::BoundBox3f& boundBox);
 void calcBoxFacePoint(sead::Vector3f facePoints[4], const sead::BoundBox3f& boundBox, s32 axis);
 void calcBoxFacePoint(sead::Vector3f facePoints[4], const sead::BoundBox3f& boundBox, s32 axis,
@@ -496,16 +496,17 @@ bool calcBetweenTwoLinkMtx(sead::Matrix34f*, sead::Matrix34f*, sead::Matrix34f*,
                            const sead::Vector3f&, const sead::Vector3f&, f32, f32);
 bool calcBetweenTwoLinkPos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32,
                            const sead::Vector3f&);
-bool calcReflectionVector(sead::Vector3f* outVec, const sead::Vector3f& vecA, f32 scale, f32 b);
-void calcReverseVector(sead::Vector3f* outVec, const sead::Vector3f& vecA, f32 scale);
+bool calcReflectionVector(sead::Vector3f* vec, const sead::Vector3f& normal, f32 reboundRate,
+                          f32 minSink);
+void calcReverseVector(sead::Vector3f* outVec, const sead::Vector3f& normal, f32 reboundRate);
 void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
                                 f32 verticalDistance);
 f32 calcConvergeVibrationValue(f32, f32, f32, f32, f32);
 bool calcSphericalPolarCoordPY(sead::Vector2f*, const sead::Vector3f&, const sead::Vector3f&,
                                const sead::Vector3f&);
-void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& vecA,
-                     const sead::Vector3f& vecB, const sead::Vector3f& vecC,
-                     const sead::Vector3f& vecD, f32 b);
+void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& start,
+                     const sead::Vector3f& handleStart, const sead::Vector3f& handleEnd,
+                     const sead::Vector3f& end, f32 t);
 // TODO: Find spring parameter names
 f32 calcSpringDumperForce(f32 a, f32 b, f32 c, f32 d);
 f32 convertSpringEnergyToSpeed(f32 a, f32 b, f32 c);
