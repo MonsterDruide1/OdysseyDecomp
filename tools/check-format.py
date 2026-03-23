@@ -446,8 +446,8 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
         var_name = newline.split(" : ")[0].split(" ")[-1]
         var_type = " ".join(newline.split(" ")[0:-1])
 
-        if var_type.startswith("enum") or var_type.startswith("friend"):
-            return  # Allow enum and friend class
+        if var_type.startswith("enum") or var_type.startswith("friend") or var_type.startswith("using"):
+            return  # Allow enum, friend class and using
 
         PREFIXES = ["pad", "field", "unk", "gap", "_", "filler"]
 
