@@ -494,8 +494,10 @@ void visitCellsOverlapped(const sead::Vector3f&, const sead::Vector3f&, f32,
                           const VisitCellCallBack&);
 f32 calcMultValueToDestination(u32, f32, f32);
 f32 getHaltonSequence(u32, u32);
-f32 calcFractal(f32, f32, u32, f32, f32, f32, bool);
-f32 calcMultiFractal(f32, f32, f32, u32, f32, f32, f32, bool);
+f32 calcFractal(f32 x, f32 y, u32 permutations, f32 amplitude, f32 scale, f32 nextOrderAmplitude,
+                bool useSmoothPerlingNoise);
+f32 calcMultiFractal(f32 x, f32 y, f32 baseAmplitude, u32 permutations, f32 amplitude, f32 scale,
+                     f32 nextOrderAmplitude, bool useSmoothPerlingNoise);
 f32 calcNormalDistribution(f32, f32, f32);
 bool calcVecViewInput(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
                       const sead::Matrix34f*);
