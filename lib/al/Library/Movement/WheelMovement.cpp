@@ -40,7 +40,7 @@ WheelMovement::WheelMovement(LiveActor* actor, const ActorInitInfo& info)
             mWheelAngle = -(railProgress * mMoveEndDegree);
 
         rotateQuatLocalDirDegree(&mActorQuat, mInitialActorQuat, (s32)mRotateAxis,
-                                 modf(mWheelAngle + 360.0f, 360.0f) + 0.0f);
+                                 wrapAngle(mWheelAngle));
     }
 }
 
@@ -119,11 +119,11 @@ void WheelMovement::updateRotate() {
         if (mIsInvertDirection)
             mNextDeltaAngle *= -0.2f;
     } else {
-        mWheelAngle = modf(mWheelAngle + 360.0f, 360.0f) + 0.0f;
+        mWheelAngle = wrapAngle(mWheelAngle);
     }
     mRotateWidth = 0.0f;
     rotateQuatLocalDirDegree(&mActorQuat, mInitialActorQuat, (s32)mRotateAxis,
-                             modf(mWheelAngle + 360.0f, 360.0f) + 0.0f);
+                             wrapAngle(mWheelAngle));
 }
 
 void WheelMovement::updateActorPoseAndTrans(LiveActor* actor) {
@@ -139,7 +139,7 @@ void WheelMovement::reset() {
     mIsInvertDirection = false;
     mRailProgress = mInitialRailProgress;
     rotateQuatLocalDirDegree(&mActorQuat, mInitialActorQuat, (s32)mRotateAxis,
-                             modf(360.0f, 360.0f) + 0.0f);
+                             wrapAngle(mWheelAngle));
 }
 
 void WheelMovement::reset(LiveActor* actor) {

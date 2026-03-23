@@ -154,7 +154,7 @@ bool convergeVec(sead::Vector2f* outVec, const sead::Vector2f& current,
 bool convergeVec(sead::Vector3f* outVec, const sead::Vector3f& current,
                  const sead::Vector3f& target, f32 step);
 f32 diffNearAngleDegree(f32 a, f32 b);
-bool isInRangeAngleDegree(f32, f32, f32);
+bool isInRangeAngleDegree(f32 target, f32 start, f32 end);
 bool calcEyesAnimAngleInRange(f32*, const sead::Vector3f&, const sead::Vector3f&,
                               const sead::Vector3f&, const sead::Vector3f&, f32, f32, f32, f32);
 bool isSameSign(f32 a, f32 b);
@@ -204,31 +204,41 @@ f32 calcBoxMullerRandomGauss();
 void makeBoxMullerRandomGauss(sead::Vector2f* outBox, f32 randA, f32 randB);
 f32 modf(f32 a, f32 b);
 s32 modi(s32 a, s32 b);
+
+inline f32 wrapValue(f32 value, f32 maxRange) {
+    return modf(value + maxRange, maxRange) + 0.0f;
+}
+
+inline f32 wrapAngle(f32 value) {
+    return wrapValue(value, 360.0);
+}
+
 f32 calcSpeedMax(f32 accel, f32 friction);
 f32 calcAccel(f32 speed, f32 friction);
 f32 calcFriction(f32 accel, f32 speed);
 bool separateScalarAndDirection(f32*, sead::Vector2f*, const sead::Vector2f&);
 bool separateScalarAndDirection(f32*, sead::Vector3f*, const sead::Vector3f&);
 void limitVectorSeparateHV(sead::Vector3f*, const sead::Vector3f&, f32, f32);
-void parallelizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
+void parallelizeVec(sead::Vector3f* outVec, const sead::Vector3f& dir, const sead::Vector3f& vec);
 void calcVectorSeparateHV(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32);
 void limitVectorParallelVertical(sead::Vector3f*, const sead::Vector3f&, f32, f32);
-void separateVectorParallelVertical(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                    const sead::Vector3f&);
+void separateVectorParallelVertical(sead::Vector3f* outH, sead::Vector3f* outV,
+                                    const sead::Vector3f& dir, const sead::Vector3f& vec);
 bool addVectorLimit(sead::Vector3f*, const sead::Vector3f&, f32);
 void alongVectorNormalH(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                         const sead::Vector3f&);
-f32 calcDistanceVecToPlane(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
-                           const sead::Vector3f&);
-void limitPlanePos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                   const sead::Vector3f&);
+f32 calcDistanceVecToPlane(const sead::Vector3f& vec, const sead::Vector3f& planePoint,
+                           const sead::Vector3f& planeNormal, const sead::Vector3f& origin);
+void limitPlanePos(sead::Vector3f* outPos, const sead::Vector3f& pos,
+                   const sead::Vector3f& planeNormal, const sead::Vector3f& planePoint);
 bool limitCylinderInPos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                         const sead::Vector3f&, f32);
-bool limitCylinderInDir(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                        const sead::Vector3f&, const sead::Vector3f&);
+bool limitCylinderInDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                        const sead::Vector3f& vecB, const sead::Vector3f& vecC,
+                        const sead::Vector3f& vecD);
 bool limitCylinderInPos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
-bool limitCylinderInDir(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                        const sead::Vector3f&);
+bool limitCylinderInDir(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                        const sead::Vector3f& vecB, const sead::Vector3f& vecC);
 void roundOffVec(sead::Vector3f* outVec, const sead::Vector3f& vec);
 void roundOffVec(sead::Vector3f* vec);
 void roundOffVec(sead::Vector2f* outVec, const sead::Vector2f& vec);
@@ -267,8 +277,10 @@ Axis calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Ve
                           const sead::Vector3f&, const sead::Vector3f&);
 void calcDirVerticalAny(sead::Vector3f*, const sead::Vector3f&);
 void calcDirSlide(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
-Axis calcNearVecFromAxis3(sead::Vector3f*, const sead::Vector3f&, const sead::Quatf&);
-void calcQuatLocalAxisAll(const sead::Quatf&, sead::Vector3f*, sead::Vector3f*, sead::Vector3f*);
+Axis calcNearVecFromAxis3(sead::Vector3f* outVec, const sead::Vector3f& vec,
+                          const sead::Quatf& quat);
+void calcQuatLocalAxisAll(const sead::Quatf& quat, sead::Vector3f* outSide, sead::Vector3f* outUp,
+                          sead::Vector3f* outFront);
 void addRandomVector(sead::Vector3f*, const sead::Vector3f&, f32);
 void turnRandomVector(sead::Vector3f*, const sead::Vector3f&, f32);
 void makeAxisFrontUp(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
@@ -339,11 +351,14 @@ bool turnQuatZDirRadian(sead::Quatf* outQuat, const sead::Quatf& quat, const sea
 void turnQuatXDirRate(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
 void turnQuatYDirRate(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
 void turnQuatZDirRate(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
-void tiltQuatDegree(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, const sead::Vector3f&,
-                    f32);
-void tiltQuatXDirDegree(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
-void tiltQuatYDirDegree(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
-void tiltQuatZDirDegree(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
+void tiltQuatDegree(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& axis,
+                    const sead::Vector3f& dir, f32 degree);
+void tiltQuatXDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& dir,
+                        f32 degree);
+void tiltQuatYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& dir,
+                        f32 degree);
+void tiltQuatZDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& dir,
+                        f32 degree);
 bool turnQuatWithAxisDegree(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&,
                             const sead::Vector3f&, const sead::Vector3f&, f32);
 bool turnQuatXDirWithYDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
@@ -381,22 +396,25 @@ bool turnVecToVecCos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3
                      const sead::Vector3f&, f32);
 bool turnVecToVecCosOnPlane(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                             const sead::Vector3f&, f32);
-bool turnVecToVecCosOnPlane(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+bool turnVecToVecCosOnPlane(sead::Vector3f* outVec, const sead::Vector3f& vecA,
+                            const sead::Vector3f& vecB, f32 value);
 void rotateVectorCenterDegree(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                               const sead::Vector3f&, f32);
 void rotateVectorDegreeX(sead::Vector3f*, f32);
 void rotateVectorDegreeY(sead::Vector3f*, f32);
 void rotateVectorDegreeZ(sead::Vector3f*, f32);
 void rotateVectorQuat(sead::Vector3f*, const sead::Quatf&);
-f32 calcAreaTriangle(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
+f32 calcAreaTriangle(const sead::Vector3f& pointA, const sead::Vector3f& pointB,
+                     const sead::Vector3f& pointC);
 void createBoundingBox(const sead::Vector3f*, u32, sead::Vector3f*, sead::Vector3f*);
-void updateBoundingBox(sead::Vector3f, sead::Vector3f*, sead::Vector3f*);
+void updateBoundingBox(sead::Vector3f value, sead::Vector3f* min, sead::Vector3f* max);
 f32 calcDistanceToFarthestBoundingBoxVertex(const sead::Vector3f&, const sead::Vector3f&,
                                             const sead::Vector3f&);
 void calcSphereMargeSpheres(sead::Vector3f*, f32*, const sead::Vector3f&, f32,
                             const sead::Vector3f&, f32);
-bool calcCrossLinePoint(sead::Vector2f*, const sead::Vector2f&, const sead::Vector2f&,
-                        const sead::Vector2f&, const sead::Vector2f&);
+bool calcCrossLinePoint(sead::Vector2f* crossPoint, const sead::Vector2f& point1A,
+                        const sead::Vector2f& point1B, const sead::Vector2f& point2A,
+                        const sead::Vector2f& point2B);
 f32 calcSquaredDistanceSegmentToSegment(const sead::Vector3f&, const sead::Vector3f&,
                                         const sead::Vector3f&, const sead::Vector3f&,
                                         sead::Vector3f*, sead::Vector3f*);
@@ -407,7 +425,7 @@ void calcPerpendicFootToLineInside(sead::Vector3f*, const sead::Vector3f&, const
                                    const sead::Vector3f&);
 void calcClosestSegmentPoint(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                              const sead::Vector3f&);
-f32 calcCylinderRadiusDot(const sead::Vector3f&, const sead::Vector3f&, f32);
+f32 calcCylinderRadiusDot(const sead::Vector3f& vecA, const sead::Vector3f& vecB, f32 radius);
 bool checkHitSemilinePlane(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                            const sead::Vector3f&, const sead::Vector3f&);
 bool checkHitSegmentPlane(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
@@ -422,8 +440,8 @@ bool checkInCylinder(const sead::Vector3f&, const sead::Vector3f&, f32, const se
 bool checkHitSegmentCylinder(const sead::Vector3f&, f32, const sead::Vector3f&, f32,
                              const sead::Vector3f&, const sead::Vector3f&, sead::Vector3f*,
                              sead::Vector3f*);
-bool checkHitHalfLineSphere(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
-                            f32);
+bool checkHitHalfLineSphere(const sead::Vector3f& vecA, const sead::Vector3f& vecB,
+                            const sead::Vector3f& vecC, f32 tolerance);
 
 }  // namespace al
 
@@ -452,7 +470,8 @@ bool calcBoundingSphereSpotLight(sead::Vector3f*, f32*, const sead::Vector3f&,
                                  const sead::Vector3f&, f32, f32);
 void calcBoundingSphereBox3f(sead::Vector3f*, f32*, const sead::BoundBox3f&);
 void calcArrowAabb(sead::BoundBox3f*, const sead::Vector3f&, const sead::Vector3f&);
-bool isNearCollideSphereAabb(const sead::Vector3f&, f32, const sead::BoundBox3f&);
+bool isNearCollideSphereAabb(const sead::Vector3f& center, f32 radius,
+                             const sead::BoundBox3f& boundBox);
 void calcBoxFacePoint(sead::Vector3f facePoints[4], const sead::BoundBox3f& boundBox, s32 axis);
 void calcBoxFacePoint(sead::Vector3f facePoints[4], const sead::BoundBox3f& boundBox, s32 axis,
                       const sead::Matrix34f&);
@@ -467,8 +486,8 @@ f32 calcSquaredDistanceToObb(const sead::Vector3f&, const sead::Matrix34f&, cons
 f32 calcDistanceToObb(const sead::Vector3f&, const sead::Matrix34f&, const sead::Vector3f&);
 f32 calcSquaredDistanceToObb(const sead::Vector3f&, const sead::Matrix34f&, const sead::Vector3f&,
                              const sead::BoundBox3f&);
-f32 calcDistanceToObb(const sead::Vector3f&, const sead::Matrix34f&, const sead::Vector3f&,
-                      const sead::BoundBox3f&);
+f32 calcDistanceToObb(const sead::Vector3f& vecA, const sead::Matrix34f& mtx,
+                      const sead::Vector3f& vecB, const sead::BoundBox3f& boundBox);
 f32 calcSquaredDistanceToObb(const sead::Vector3f&, const sead::Matrix34f&);
 f32 calcDistanceToObb(const sead::Vector3f&, const sead::Matrix34f&);
 void calcObbCorners(sead::Vector3f*, const sead::Matrix34f&, const sead::BoundBox3f&);
@@ -477,15 +496,17 @@ bool calcBetweenTwoLinkMtx(sead::Matrix34f*, sead::Matrix34f*, sead::Matrix34f*,
                            const sead::Vector3f&, const sead::Vector3f&, f32, f32);
 bool calcBetweenTwoLinkPos(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32, f32,
                            const sead::Vector3f&);
-bool calcReflectionVector(sead::Vector3f*, const sead::Vector3f&, f32, f32);
-void calcReverseVector(sead::Vector3f*, const sead::Vector3f&, f32);
+bool calcReflectionVector(sead::Vector3f* vec, const sead::Vector3f& normal, f32 reboundRate,
+                          f32 minSink);
+void calcReverseVector(sead::Vector3f* outVec, const sead::Vector3f& normal, f32 reboundRate);
 void calcParabolicFunctionParam(f32* gravity, f32* initialVelY, f32 maxHeight,
                                 f32 verticalDistance);
 f32 calcConvergeVibrationValue(f32, f32, f32, f32, f32);
 bool calcSphericalPolarCoordPY(sead::Vector2f*, const sead::Vector3f&, const sead::Vector3f&,
                                const sead::Vector3f&);
-void calcBezierPoint(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
-                     const sead::Vector3f&, const sead::Vector3f&, f32);
+void calcBezierPoint(sead::Vector3f* outPoint, const sead::Vector3f& start,
+                     const sead::Vector3f& handleStart, const sead::Vector3f& handleEnd,
+                     const sead::Vector3f& end, f32 t);
 // TODO: Find spring parameter names
 f32 calcSpringDumperForce(f32 a, f32 b, f32 c, f32 d);
 f32 convertSpringEnergyToSpeed(f32 a, f32 b, f32 c);
@@ -493,12 +514,12 @@ const char* axisIndexToString(s32 axisIndex);
 void visitCellsOverlapped(const sead::Vector3f&, const sead::Vector3f&, f32,
                           const VisitCellCallBack&);
 f32 calcMultValueToDestination(u32, f32, f32);
-f32 getHaltonSequence(u32, u32);
+f32 getHaltonSequence(u32 primeIndex, u32 index);
 f32 calcFractal(f32 x, f32 y, u32 permutations, f32 amplitude, f32 scale, f32 nextOrderAmplitude,
                 bool useSmoothPerlingNoise);
 f32 calcMultiFractal(f32 x, f32 y, f32 baseAmplitude, u32 permutations, f32 amplitude, f32 scale,
                      f32 nextOrderAmplitude, bool useSmoothPerlingNoise);
-f32 calcNormalDistribution(f32, f32, f32);
+f32 calcNormalDistribution(f32 x, f32 mu, f32 sigma);
 bool calcVecViewInput(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
                       const sead::Matrix34f*);
 bool calcDirViewInput(sead::Vector3f*, const sead::Vector2f&, const sead::Vector3f&,
