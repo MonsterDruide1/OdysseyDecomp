@@ -1992,17 +1992,17 @@ const char* axisIndexToString(s32 axisIndex) {
     }
 }
 
-bool calcCrossLinePoint(sead::Vector2f* crossPoint, const sead::Vector2f& point1A,
-                        const sead::Vector2f& point1B, const sead::Vector2f& point2A,
-                        const sead::Vector2f& point2B) {
-    f32 det = point2B.y * point1B.x - point1B.y * point2B.x;
+bool calcCrossLinePoint(sead::Vector2f* crossPoint, const sead::Vector2f& pointA,
+                        const sead::Vector2f& dirA, const sead::Vector2f& pointB,
+                        const sead::Vector2f& dirB) {
+    f32 det = dirB.y * dirA.x - dirA.y * dirB.x;
     if (isNearZero(det))
         return false;
 
-    f32 t = (point1B.x * (point1A.y - point2A.y) + point1B.y * (point2A.x - point1A.x)) / det;
+    f32 distance = (dirA.x * (pointA.y - pointB.y) + dirA.y * (pointB.x - pointA.x)) / det;
 
-    crossPoint->x = point2B.x * t + point2A.x;
-    crossPoint->y = point2B.y * t + point2A.y;
+    crossPoint->x = dirB.x * distance + pointB.x;
+    crossPoint->y = dirB.y * distance + pointB.y;
     return true;
 }
 
