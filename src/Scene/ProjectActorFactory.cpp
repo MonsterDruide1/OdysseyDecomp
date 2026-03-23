@@ -77,6 +77,7 @@
 #include "MapObj/Doshi.h"
 #include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
+#include "MapObj/FixMapPartsBgmChangeAction.h"
 #include "MapObj/HackFork.h"
 #include "MapObj/HipDropSwitch.h"
 #include "MapObj/KoopaShip.h"
@@ -297,7 +298,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"FishingFish", nullptr},
     {"FixMapParts2D", nullptr},
     {"FixMapPartsAppearKillAsync", nullptr},
-    {"FixMapPartsBgmChangeAction", nullptr},
+    {"FixMapPartsBgmChangeAction", al::createActorFunction<FixMapPartsBgmChangeAction>},
     {"FixMapPartsCapHanger", nullptr},
     {"FixMapPartsDitherAppear", nullptr},
     {"FixMapPartsForceSafetyPoint", nullptr},
