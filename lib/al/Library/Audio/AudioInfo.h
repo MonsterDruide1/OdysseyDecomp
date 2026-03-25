@@ -46,6 +46,8 @@ class AudioInfoList {
 public:
     static s32 compareInfoAndKey(const T* info, const char* key) { return strcmp(info->name, key); }
 
+    static s32 compareInfoAndId(const T* info, u32 id);
+
     AudioInfoList() = default;
 
     void init(s32 listSize) {
@@ -54,7 +56,21 @@ public:
         mList->allocBuffer((listSize == 0) ? 1 : listSize, nullptr);
     }
 
-    bool setInfo(const T* audioInfo) const { return mList->pushBack(audioInfo); }
+    bool setInfo(const T* info) const { return mList->pushBack(info); }
+
+    const T* getInfoAt(s32 index) const {
+        if (index >= 0)
+            return mList->unsafeAt(index);
+        return nullptr;
+    }
+
+    bool copyAndSetInfo(const T* info) const {
+        if (!info)
+            return false;
+
+        T* newInfo = new T(*info);
+        return setInfo(newInfo);
+    }
 
     void sort() const {
         if (mList->size() >= 10)
@@ -63,9 +79,13 @@ public:
             mList->sort(T::compareInfo);
     }
 
+    s32 getTotalSize() const { return mList->size(); }
+
+    bool isValidIndex(s32 index) const { return index < getTotalSize(); }
+
 private:
     sead::PtrArray<const T>* mList;
-    bool mIsLinearSearch;
+    bool mIsLinearSearch = false;
 };
 
 template <typename T>
@@ -93,10 +113,37 @@ public:
             mParts->at(i)->sort();
     }
 
+    const T* getInfoAt(s32 index) const {
+        if (AudioInfoList<T>::isValidIndex(index))
+            return AudioInfoList<T>::getInfoAt(index);
+        index -= AudioInfoList<T>::getTotalSize();
+
+        for (s32 i = 0; i < getPartsSize(); i++) {
+            const AudioInfoList<T>* part = mParts->at(i);
+            if (part->isValidIndex(index))
+                return part->getInfoAt(index);
+            index -= part->getTotalSize();
+        }
+
+        return nullptr;
+    }
+
     s32 getPartsSize() const {
         if (!mParts)
             return 0;
         return mParts->size();
+    }
+
+    s32 getTotalSize() const {
+        if (!mParts)
+            return AudioInfoList<T>::getTotalSize();
+
+        s32 size = AudioInfoList<T>::getTotalSize();
+        s32 partsSize = 0;
+        for (s32 i = 0; i < getPartsSize(); i++)
+            partsSize += mParts->at(i)->getTotalSize();
+
+        return size + partsSize;
     }
 
 private:
@@ -140,4 +187,23 @@ const T* tryFindAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const 
     return audioInfoList->tryFindInfo(name);
 }
 
+template <typename T>
+AudioInfoListWithParts<T>* copyAudioInfoList(const AudioInfoListWithParts<T>* audioInfoList,
+                                             s32 additionalSize) {
+    if (!audioInfoList)
+        return nullptr;
+
+    s32 originalSize = audioInfoList->getTotalSize();
+    s32 newSize = originalSize + additionalSize;
+
+    AudioInfoListWithParts<T>* newAudioInfoList = new AudioInfoListWithParts<T>;
+    newAudioInfoList->init(newSize, 0);
+
+    for (s32 i = 0; i < originalSize; i++) {
+        const T* info = audioInfoList->getInfoAt(i);
+        newAudioInfoList->copyAndSetInfo(info);
+    }
+
+    return newAudioInfoList;
+}
 }  // namespace al
