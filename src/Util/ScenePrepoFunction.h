@@ -3,17 +3,26 @@
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
-class GameDataHolderAccessor;
+#include "System/GameDataHolderAccessor.h"
+
 class GameConfigData;
 
 namespace rs {
-bool trySavePrepoCompleteMainScenario(s32, s32, s64, s64, s64);
-bool trySavePrepoStartStage(const char*, const sead::Vector3f&, s64, s64, s64);
-bool trySavePrepoExitStage(const char*, const sead::Vector3f&, s64, s64, s64);
-bool trySavePrepoMissEvent(const char*, const sead::Vector3f&, s64, s64, s64);
-bool trySavePrepoShineGetEvent(const char*, s32, s32, s32, s64, s64, s64);
-bool trySavePrepoReceiveAchievement(const char* s32, s64, s64, s64);
-bool trySavePrepoAchievementProgress(GameDataHolderAccessor, s64, s64, s64);
+bool trySavePrepoCompleteMainScenario(s32 worldId, s32 mainScenarioNo, s64 playTime, s64 saveDataId,
+                                      s64 acrossPlayTime);
+bool trySavePrepoStartStage(const char* stageName, const sead::Vector3f& position, s64 playTime,
+                            s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoExitStage(const char* stageName, const sead::Vector3f& position, s64 playTime,
+                           s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoMissEvent(const char* stageName, const sead::Vector3f& position, s64 playTime,
+                           s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoShineGetEvent(const char* stageName, s32 shineId, s32 totalShineNum,
+                               s32 totalShopShineNum, s64 playTime, s64 saveDataId,
+                               s64 acrossPlayTime);
+bool trySavePrepoReceiveAchievement(const char* achievementName, s32 receivedNum, s64 playTime,
+                                    s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTime, s64 saveDataId,
+                                     s64 acrossPlayTime);
 bool trySavePrepoGetCapEvent(const char*, s32, s64, s64, s64);
 bool trySavePrepoGetClothEvent(const char*, s32, s64, s64, s64);
 bool trySavePrepoGetGiftEvent(const char*, s32, s64, s64, s64);
@@ -29,6 +38,6 @@ namespace prepo {
 void enableIsSavePrepo();
 void disableIsSavePrepo();
 s64 generateSaveDataId();
-s32 calcPrepoHashCode(const char*);
+s32 calcPrepoHashCode(const char* str);
 }  // namespace prepo
 }  // namespace rs
