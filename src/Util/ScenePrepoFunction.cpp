@@ -6,6 +6,7 @@
 
 #include "Library/Base/HashCodeUtil.h"
 
+#include "System/GameConfigData.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataUtil.h"
 #include "Util/AchievementUtil.h"
@@ -19,10 +20,7 @@ bool trySavePrepoCompleteMainScenario(s32 worldId, s32 mainScenarioNo, s64 playT
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("complete_main_scenario_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
@@ -42,17 +40,13 @@ bool trySavePrepoStartStage(const char* stageName, const sead::Vector3f& positio
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("stage_in_out_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     // 8??? shouldn't this be 9?
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
-    s32 stageNameHash = prepo::calcPrepoHashCode(stageName);
-    playReport.Add("stage_name", *reinterpret_cast<s64*>(&stageNameHash));
+    playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
     playReport.Add("x", position.x);
     playReport.Add("y", position.y);
     playReport.Add("z", position.z);
@@ -70,17 +64,13 @@ bool trySavePrepoExitStage(const char* stageName, const sead::Vector3f& position
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("stage_in_out_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     // 8??? shouldn't this be 9?
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
-    s32 stageNameHash = prepo::calcPrepoHashCode(stageName);
-    playReport.Add("stage_name", *reinterpret_cast<s64*>(&stageNameHash));
+    playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
     playReport.Add("x", position.x);
     playReport.Add("y", position.y);
     playReport.Add("z", position.z);
@@ -98,17 +88,13 @@ bool trySavePrepoMissEvent(const char* stageName, const sead::Vector3f& position
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("stage_in_out_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     // 8??? shouldn't this be 9?
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
-    s32 stageNameHash = prepo::calcPrepoHashCode(stageName);
-    playReport.Add("stage_name", *reinterpret_cast<s64*>(&stageNameHash));
+    playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
     playReport.Add("x", position.x);
     playReport.Add("y", position.y);
     playReport.Add("z", position.z);
@@ -127,16 +113,12 @@ bool trySavePrepoShineGetEvent(const char* stageName, s32 shineId, s32 totalShin
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("shine_get_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
-    s32 stageNameHash = prepo::calcPrepoHashCode(stageName);
-    playReport.Add("stage_name", *reinterpret_cast<s64*>(&stageNameHash));
+    playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
     playReport.Add("shine_id", static_cast<s64>(shineId));
     playReport.Add("total_shine_num", static_cast<s64>(totalShineNum));
     playReport.Add("total_shop_shine_num", static_cast<s64>(totalShopShineNum));
@@ -153,16 +135,12 @@ bool trySavePrepoReceiveAchievement(const char* achievementName, s32 receivedNum
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("shine_get_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
 
-    s32 achievementNameHash = prepo::calcPrepoHashCode(achievementName);
-    playReport.Add("achievement_name", *reinterpret_cast<s64*>(&achievementNameHash));
+    playReport.Add("achievement_name", static_cast<s64>(prepo::calcPrepoHashCode(achievementName)));
     playReport.Add("received_num", static_cast<s64>(receivedNum));
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
@@ -177,10 +155,7 @@ bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTi
     nn::account::Uid lastOpenedUser;
     nn::prepo::PlayReport playReport = nn::prepo::PlayReport("shine_get_event");
 
-    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure())
-        return false;
-
-    if (!lastOpenedUser.IsValid())
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(38));
@@ -236,6 +211,228 @@ bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTi
     return playReport.Save(lastOpenedUser).IsSuccess();
 }
 
+bool trySavePrepoGetCapEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                             s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("collect_item_get_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
+
+    playReport.Add("category", 0l);
+    playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
+    playReport.Add("total_num", static_cast<s64>(totalNum));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoGetClothEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                               s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("collect_item_get_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
+
+    playReport.Add("category", 1l);
+    playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
+    playReport.Add("total_num", static_cast<s64>(totalNum));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoGetGiftEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                              s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("collect_item_get_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
+
+    playReport.Add("category", 2l);
+    playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
+    playReport.Add("total_num", static_cast<s64>(totalNum));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoGetStickerEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                                 s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("collect_item_get_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
+
+    playReport.Add("category", 3l);
+    playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
+    playReport.Add("total_num", static_cast<s64>(totalNum));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoChangeCapEvent(const char* itemName, s64 playTime, s64 saveDataId,
+                                s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("cloth_change_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
+
+    playReport.Add("category", 0l);
+    playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoChangeClothEvent(const char* itemName, s64 playTime, s64 saveDataId,
+                                  s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("cloth_change_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
+
+    playReport.Add("category", 1l);
+    playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoFirstHackEvent(const char* hackObjName, s32 totalHackedObjNum, s64 playTime,
+                                s64 saveDataId, s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("first_hack_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
+
+    playReport.Add("hack_obj_name", static_cast<s64>(prepo::calcPrepoHashCode(hackObjName)));
+    playReport.Add("total_hacked_obj_num", static_cast<s64>(totalHackedObjNum));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoGetCollectBgmEvent(const char* bgmResourceName, const char* bgmSituationName,
+                                    bool isBailout, s32 collectedBgmNum, s64 playTime,
+                                    s64 saveDataId, s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("get_collect_bgm_event");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
+
+    playReport.Add("bgm_resource_name",
+                   static_cast<s64>(prepo::calcPrepoHashCode(bgmResourceName)));
+    playReport.Add("bgm_situation_name",
+                   static_cast<s64>(prepo::calcPrepoHashCode(bgmSituationName)));
+    playReport.Add("is_bailout", static_cast<s64>(isBailout));
+    playReport.Add("collected_bgm_num", static_cast<s64>(collectedBgmNum));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoSettingsState(bool isKidsMode, const char* language,
+                               const GameConfigData& configData, s64 saveDataId,
+                               s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("settings_state");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    // It should be 12 but that doesn't matter
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(14));
+
+    playReport.Add("is_kids_mode", static_cast<s64>(isKidsMode));
+    playReport.Add("language", static_cast<s64>(prepo::calcPrepoHashCode(language)));
+    playReport.Add("camera_stick_sensitivity_level",
+                   static_cast<s64>(configData.getCameraStickSensitivityLevel()));
+    bool isCameraReverseInputH = configData.isCameraReverseInputH();
+    bool isCameraReverseInputV = configData.isCameraReverseInputV();
+    s64 shiftedCameraReverseInputH = isCameraReverseInputH << 1;
+    playReport.Add("camera_reverse_input", isCameraReverseInputV | shiftedCameraReverseInputH);
+    playReport.Add("is_valid_camera_gyro", static_cast<s64>(configData.isValidCameraGyro()));
+    playReport.Add("camera_gyro_sensitivity_level",
+                   static_cast<s64>(configData.getCameraGyroSensitivityLevel()));
+    playReport.Add("is_use_open_list_additional_button",
+                   static_cast<s64>(configData.isUseOpenListAdditionalButton()));
+    playReport.Add("is_valid_pad_rumble", static_cast<s64>(configData.isValidPadRumble()));
+    playReport.Add("pad_rumble_level", static_cast<s64>(configData.getPadRumbleLevel()));
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
+bool trySavePrepoSeparatePlayMode(bool isSeparatePlayMode, s64 playTime, s64 saveDataId,
+                                  s64 acrossPlayTime) {
+    nn::account::Uid lastOpenedUser;
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("separate_play_mode_state");
+
+    if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
+        return false;
+
+    playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(5));
+
+    playReport.Add("is_kids_mode", static_cast<s64>(isSeparatePlayMode));
+    playReport.Add("play_time", playTime);
+    playReport.Add("across_play_time", acrossPlayTime);
+    playReport.Add("save_data_id", saveDataId);
+    playReport.Add("app_version", 1l);
+
+    return playReport.Save(lastOpenedUser).IsSuccess();
+}
+
 namespace prepo {
 void enableIsSavePrepo() {}
 
@@ -243,16 +440,16 @@ void disableIsSavePrepo() {}
 
 s64 generateSaveDataId() {
     if (!nn::time::IsInitialized() && nn::time::Initialize().IsFailure())
-        return -1;
+        return -1l;
 
     nn::time::PosixTime time;
     if (nn::time::StandardUserSystemClock::GetCurrentTime(&time).IsFailure())
-        return -1;
+        return -1l;
 
     return time.time;
 }
 
-s32 calcPrepoHashCode(const char* str) {
+u32 calcPrepoHashCode(const char* str) {
     if (!str)
         return 0;
 

@@ -5,7 +5,7 @@
 #include <cstring>
 
 namespace al {
-s32 calcHashCode(const char* str) {
+u32 calcHashCode(const char* str) {
     if (str[0] == '\0')
         return 0;
 

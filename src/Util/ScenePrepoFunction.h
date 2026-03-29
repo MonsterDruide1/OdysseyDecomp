@@ -23,21 +23,33 @@ bool trySavePrepoReceiveAchievement(const char* achievementName, s32 receivedNum
                                     s64 saveDataId, s64 acrossPlayTime);
 bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTime, s64 saveDataId,
                                      s64 acrossPlayTime);
-bool trySavePrepoGetCapEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetClothEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetGiftEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetStickerEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoChangeCapEvent(const char*, s64, s64, s64);
-bool trySavePrepoChangeClothEvent(const char*, s64, s64, s64);
-bool trySavePrepoFirstHackEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetCollectBgmEvent(const char*, const char*, bool, s32, s64, s64, s64);
-bool trySavePrepoSettingsState(bool, const char*, const GameConfigData&, s64, s64);
-bool trySavePrepoSeparatePlayMode(bool, s64, s64, s64);
+bool trySavePrepoGetCapEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                             s64 acrossPlayTime);
+bool trySavePrepoGetClothEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                               s64 acrossPlayTime);
+bool trySavePrepoGetGiftEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                              s64 acrossPlayTime);
+bool trySavePrepoGetStickerEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                                 s64 acrossPlayTime);
+bool trySavePrepoChangeCapEvent(const char* itemName, s64 playTime, s64 saveDataId,
+                                s64 acrossPlayTime);
+bool trySavePrepoChangeClothEvent(const char* itemName, s64 playTime, s64 saveDataId,
+                                  s64 acrossPlayTime);
+bool trySavePrepoFirstHackEvent(const char* hackObjName, s32 totalHackedObjNum, s64 playTime,
+                                s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoGetCollectBgmEvent(const char* bgmResourceName, const char* bgmSituationName,
+                                    bool isBailout, s32 collectedBgmNum, s64 playTime,
+                                    s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoSettingsState(bool isKidsMode, const char* language,
+                               const GameConfigData& configData, s64 saveDataId,
+                               s64 acrossPlayTime);
+bool trySavePrepoSeparatePlayMode(bool isSeparatePlayMode, s64 playTime, s64 saveDataId,
+                                  s64 acrossPlayTime);
 
 namespace prepo {
 void enableIsSavePrepo();
 void disableIsSavePrepo();
 s64 generateSaveDataId();
-s32 calcPrepoHashCode(const char* str);
+u32 calcPrepoHashCode(const char* str);
 }  // namespace prepo
 }  // namespace rs
