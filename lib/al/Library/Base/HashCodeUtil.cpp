@@ -9,33 +9,33 @@ u32 calcHashCode(const char* str) {
     if (str[0] == '\0')
         return 0;
 
-    s32 hashCode = 0;
+    u32 hashCode = 0;
     for (s32 i = 0; str[i] != '\0'; i++)
         hashCode = (hashCode * 0x1f) + str[i];
 
     return hashCode;
 }
 
-s32 calcHashCodeLower(const char* str) {
-    s32 hashCode = 0;
+u32 calcHashCodeLower(const char* str) {
+    u32 hashCode = 0;
     for (s32 i = 0; str[i] != '\0'; i++)
         hashCode = (hashCode * 0x1f) + tolower(str[i]);
 
     return hashCode;
 }
 
-s32 calcHashCodeFmt(const char* format, std::va_list argv) {
+u32 calcHashCodeFmt(const char* format, std::va_list argv) {
     char buf[0x100];
     vsnprintf(buf, 0x100, format, argv);
 
     return calcHashCode(buf);
 }
 
-s32 calcHashCodeFmt(const char* format, ...) {
+u32 calcHashCodeFmt(const char* format, ...) {
     std::va_list argv;
 
     va_start(argv, format);
-    s32 result = calcHashCodeFmt(format, argv);
+    u32 result = calcHashCodeFmt(format, argv);
     va_end(argv);
 
     return result;
