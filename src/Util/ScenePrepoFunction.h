@@ -8,6 +8,15 @@
 class GameConfigData;
 
 namespace rs {
+enum InOutType : s64 { InOutType_Start, InOutType_Exit, InOutType_Miss };
+
+enum ItemCategoryType : s64 {
+    ItemCategoryType_Cap,
+    ItemCategoryType_Cloth,
+    ItemCategoryType_Gift,
+    ItemCategoryType_Sticker
+};
+
 bool trySavePrepoCompleteMainScenario(s32 worldId, s32 mainScenarioNo, s64 playTime, s64 saveDataId,
                                       s64 acrossPlayTime);
 bool trySavePrepoStartStage(const char* stageName, const sead::Vector3f& position, s64 playTime,

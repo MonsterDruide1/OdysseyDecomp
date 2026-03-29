@@ -50,7 +50,7 @@ bool trySavePrepoStartStage(const char* stageName, const sead::Vector3f& positio
     playReport.Add("x", position.x);
     playReport.Add("y", position.y);
     playReport.Add("z", position.z);
-    playReport.Add("in_out_type", 0l);
+    playReport.Add("in_out_type", InOutType_Start);
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
     playReport.Add("save_data_id", saveDataId);
@@ -74,7 +74,7 @@ bool trySavePrepoExitStage(const char* stageName, const sead::Vector3f& position
     playReport.Add("x", position.x);
     playReport.Add("y", position.y);
     playReport.Add("z", position.z);
-    playReport.Add("in_out_type", 1l);
+    playReport.Add("in_out_type", InOutType_Exit);
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
     playReport.Add("save_data_id", saveDataId);
@@ -98,7 +98,7 @@ bool trySavePrepoMissEvent(const char* stageName, const sead::Vector3f& position
     playReport.Add("x", position.x);
     playReport.Add("y", position.y);
     playReport.Add("z", position.z);
-    playReport.Add("in_out_type", 2l);
+    playReport.Add("in_out_type", InOutType_Miss);
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
     playReport.Add("save_data_id", saveDataId);
@@ -222,7 +222,7 @@ bool trySavePrepoGetCapEvent(const char* itemName, s32 totalNum, s64 playTime, s
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
 
-    playReport.Add("category", 0l);
+    playReport.Add("category", ItemCategoryType_Cap);
     playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
     playReport.Add("total_num", static_cast<s64>(totalNum));
     playReport.Add("play_time", playTime);
@@ -243,7 +243,7 @@ bool trySavePrepoGetClothEvent(const char* itemName, s32 totalNum, s64 playTime,
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
 
-    playReport.Add("category", 1l);
+    playReport.Add("category", ItemCategoryType_Cloth);
     playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
     playReport.Add("total_num", static_cast<s64>(totalNum));
     playReport.Add("play_time", playTime);
@@ -264,7 +264,7 @@ bool trySavePrepoGetGiftEvent(const char* itemName, s32 totalNum, s64 playTime, 
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
 
-    playReport.Add("category", 2l);
+    playReport.Add("category", ItemCategoryType_Gift);
     playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
     playReport.Add("total_num", static_cast<s64>(totalNum));
     playReport.Add("play_time", playTime);
@@ -285,7 +285,7 @@ bool trySavePrepoGetStickerEvent(const char* itemName, s32 totalNum, s64 playTim
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(7));
 
-    playReport.Add("category", 3l);
+    playReport.Add("category", ItemCategoryType_Sticker);
     playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
     playReport.Add("total_num", static_cast<s64>(totalNum));
     playReport.Add("play_time", playTime);
@@ -306,7 +306,7 @@ bool trySavePrepoChangeCapEvent(const char* itemName, s64 playTime, s64 saveData
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
 
-    playReport.Add("category", 0l);
+    playReport.Add("category", ItemCategoryType_Cap);
     playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
@@ -326,7 +326,7 @@ bool trySavePrepoChangeClothEvent(const char* itemName, s64 playTime, s64 saveDa
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(6));
 
-    playReport.Add("category", 1l);
+    playReport.Add("category", ItemCategoryType_Cloth);
     playReport.Add("item_name", static_cast<s64>(prepo::calcPrepoHashCode(itemName)));
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
