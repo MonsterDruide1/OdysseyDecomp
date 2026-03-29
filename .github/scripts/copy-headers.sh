@@ -12,8 +12,12 @@ function l { # Log a message to the terminal.
 rm -r $DESTINATION_PATH/*
 
 # Copy libraries
-mkdir $DESTINATION_PATH/NintendoSDK $DESTINATION_PATH/agl $DESTINATION_PATH/al $DESTINATION_PATH/eui $DESTINATION_PATH/sead
+mkdir $DESTINATION_PATH/NintendoSDK $DESTINATION_PATH/NintendoSDK-NEX $DESTINATION_PATH/agl $DESTINATION_PATH/al $DESTINATION_PATH/eui $DESTINATION_PATH/sead
 cp -r ./lib/NintendoSDK/include/* $DESTINATION_PATH/NintendoSDK
+mkdir $DESTINATION_PATH/NintendoSDK-NEX/RendezVous $DESTINATION_PATH/NintendoSDK-NEX/RendezVous/Core $DESTINATION_PATH/NintendoSDK-NEX/OnlineCore
+cp -r ./lib/NintendoSDK-NEX/RendezVous/Core/include/* $DESTINATION_PATH/NintendoSDK-NEX/RendezVous/Core
+cp -r ./lib/NintendoSDK-NEX/RendezVous/include/* $DESTINATION_PATH/NintendoSDK-NEX/RendezVous
+cp -r ./lib/NintendoSDK-NEX/OnlineCore/include/* $DESTINATION_PATH/NintendoSDK-NEX/OnlineCore
 cp -r ./lib/aarch64 $DESTINATION_PATH/
 cp -r ./lib/agl/include/* $DESTINATION_PATH/agl
 rsync -a --prune-empty-dirs --include '*/' --include '*.h' --exclude '*' lib/al/ $DESTINATION_PATH/al
