@@ -13,7 +13,7 @@
 #include "Util/ClothUtil.h"
 
 namespace rs {
-static char buffer[2048];
+static char buffer[0x2000];
 
 bool trySavePrepoCompleteMainScenario(s32 worldId, s32 mainScenarioNo, s64 playTime, s64 saveDataId,
                                       s64 acrossPlayTime) {
@@ -43,7 +43,7 @@ bool trySavePrepoStartStage(const char* stageName, const sead::Vector3f& positio
     if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
-    // 8??? shouldn't this be 9?
+    // BUG: buffer too small (prepared for 8 entries, adds 9)
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
     playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
@@ -67,7 +67,7 @@ bool trySavePrepoExitStage(const char* stageName, const sead::Vector3f& position
     if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
-    // 8??? shouldn't this be 9?
+    // BUG: buffer too small (prepared for 8 entries, adds 9)
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
     playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
@@ -91,7 +91,7 @@ bool trySavePrepoMissEvent(const char* stageName, const sead::Vector3f& position
     if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
-    // 8??? shouldn't this be 9?
+    // BUG: buffer too small (prepared for 8 entries, adds 9)
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(8));
 
     playReport.Add("stage_name", static_cast<s64>(prepo::calcPrepoHashCode(stageName)));
@@ -133,7 +133,7 @@ bool trySavePrepoShineGetEvent(const char* stageName, s32 shineId, s32 totalShin
 bool trySavePrepoReceiveAchievement(const char* achievementName, s32 receivedNum, s64 playTime,
                                     s64 saveDataId, s64 acrossPlayTime) {
     nn::account::Uid lastOpenedUser;
-    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("shine_get_event");
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("receive_achievement_event");
 
     if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
@@ -153,7 +153,7 @@ bool trySavePrepoReceiveAchievement(const char* achievementName, s32 receivedNum
 bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTime, s64 saveDataId,
                                      s64 acrossPlayTime) {
     nn::account::Uid lastOpenedUser;
-    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("shine_get_event");
+    nn::prepo::PlayReport playReport = nn::prepo::PlayReport("achievement_progress_state");
 
     if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
@@ -166,6 +166,7 @@ bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTi
     playReport.Add("shine_shine_2d", static_cast<s64>(calcGetShineNumDot(accessor)));
     playReport.Add("shine_treasure_box", static_cast<s64>(calcGetShineNumTreasureBox(accessor)));
     playReport.Add("shine_music_note", static_cast<s64>(calcGetShineNumNoteObj(accessor)));
+    // typo: athretic / athletic
     playReport.Add("shine_timer_athretic",
                    static_cast<s64>(calcGetShineNumTimerAthletic(accessor)));
     playReport.Add("shine_captain_kinopio",
@@ -389,7 +390,7 @@ bool trySavePrepoSettingsState(bool isKidsMode, const char* language,
     if (nn::account::GetLastOpenedUser(&lastOpenedUser).IsFailure() || !lastOpenedUser.IsValid())
         return false;
 
-    // It should be 12 but that doesn't matter
+    // NOTE: buffer too large (prepared for 14 entries, adds 12)
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(14));
 
     playReport.Add("is_kids_mode", static_cast<s64>(isKidsMode));
@@ -398,8 +399,8 @@ bool trySavePrepoSettingsState(bool isKidsMode, const char* language,
                    static_cast<s64>(configData.getCameraStickSensitivityLevel()));
     bool isCameraReverseInputH = configData.isCameraReverseInputH();
     bool isCameraReverseInputV = configData.isCameraReverseInputV();
-    s64 shiftedCameraReverseInputH = isCameraReverseInputH << 1;
-    playReport.Add("camera_reverse_input", isCameraReverseInputV | shiftedCameraReverseInputH);
+    playReport.Add("camera_reverse_input",
+                   static_cast<s64>((isCameraReverseInputH << 1) | isCameraReverseInputV));
     playReport.Add("is_valid_camera_gyro", static_cast<s64>(configData.isValidCameraGyro()));
     playReport.Add("camera_gyro_sensitivity_level",
                    static_cast<s64>(configData.getCameraGyroSensitivityLevel()));
@@ -424,7 +425,7 @@ bool trySavePrepoSeparatePlayMode(bool isSeparatePlayMode, s64 playTime, s64 sav
 
     playReport.SetBuffer(&buffer, nn::prepo::PlayReport::CalcBufferSize(5));
 
-    playReport.Add("is_kids_mode", static_cast<s64>(isSeparatePlayMode));
+    playReport.Add("is_separate_play_mode", static_cast<s64>(isSeparatePlayMode));
     playReport.Add("play_time", playTime);
     playReport.Add("across_play_time", acrossPlayTime);
     playReport.Add("save_data_id", saveDataId);
