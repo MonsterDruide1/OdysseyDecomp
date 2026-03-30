@@ -3,32 +3,62 @@
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
-class GameDataHolderAccessor;
+#include "System/GameDataHolderAccessor.h"
+
 class GameConfigData;
 
 namespace rs {
-bool trySavePrepoCompleteMainScenario(s32, s32, s64, s64, s64);
-bool trySavePrepoStartStage(const char*, const sead::Vector3f&, s64, s64, s64);
-bool trySavePrepoExitStage(const char*, const sead::Vector3f&, s64, s64, s64);
-bool trySavePrepoMissEvent(const char*, const sead::Vector3f&, s64, s64, s64);
-bool trySavePrepoShineGetEvent(const char*, s32, s32, s32, s64, s64, s64);
-bool trySavePrepoReceiveAchievement(const char* s32, s64, s64, s64);
-bool trySavePrepoAchievementProgress(GameDataHolderAccessor, s64, s64, s64);
-bool trySavePrepoGetCapEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetClothEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetGiftEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetStickerEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoChangeCapEvent(const char*, s64, s64, s64);
-bool trySavePrepoChangeClothEvent(const char*, s64, s64, s64);
-bool trySavePrepoFirstHackEvent(const char*, s32, s64, s64, s64);
-bool trySavePrepoGetCollectBgmEvent(const char*, const char*, bool, s32, s64, s64, s64);
-bool trySavePrepoSettingsState(bool, const char*, const GameConfigData&, s64, s64);
-bool trySavePrepoSeparatePlayMode(bool, s64, s64, s64);
+enum InOutType : s64 { InOutType_Start, InOutType_Exit, InOutType_Miss };
+
+enum ItemCategoryType : s64 {
+    ItemCategoryType_Cap,
+    ItemCategoryType_Cloth,
+    ItemCategoryType_Gift,
+    ItemCategoryType_Sticker
+};
+
+bool trySavePrepoCompleteMainScenario(s32 worldId, s32 mainScenarioNo, s64 playTime, s64 saveDataId,
+                                      s64 acrossPlayTime);
+bool trySavePrepoStartStage(const char* stageName, const sead::Vector3f& position, s64 playTime,
+                            s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoExitStage(const char* stageName, const sead::Vector3f& position, s64 playTime,
+                           s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoMissEvent(const char* stageName, const sead::Vector3f& position, s64 playTime,
+                           s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoShineGetEvent(const char* stageName, s32 shineId, s32 totalShineNum,
+                               s32 totalShopShineNum, s64 playTime, s64 saveDataId,
+                               s64 acrossPlayTime);
+bool trySavePrepoReceiveAchievement(const char* achievementName, s32 receivedNum, s64 playTime,
+                                    s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoAchievementProgress(GameDataHolderAccessor accessor, s64 playTime, s64 saveDataId,
+                                     s64 acrossPlayTime);
+bool trySavePrepoGetCapEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                             s64 acrossPlayTime);
+bool trySavePrepoGetClothEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                               s64 acrossPlayTime);
+bool trySavePrepoGetGiftEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                              s64 acrossPlayTime);
+bool trySavePrepoGetStickerEvent(const char* itemName, s32 totalNum, s64 playTime, s64 saveDataId,
+                                 s64 acrossPlayTime);
+bool trySavePrepoChangeCapEvent(const char* itemName, s64 playTime, s64 saveDataId,
+                                s64 acrossPlayTime);
+bool trySavePrepoChangeClothEvent(const char* itemName, s64 playTime, s64 saveDataId,
+                                  s64 acrossPlayTime);
+bool trySavePrepoFirstHackEvent(const char* hackObjName, s32 totalHackedObjNum, s64 playTime,
+                                s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoGetCollectBgmEvent(const char* bgmResourceName, const char* bgmSituationName,
+                                    bool isBailout, s32 collectedBgmNum, s64 playTime,
+                                    s64 saveDataId, s64 acrossPlayTime);
+bool trySavePrepoSettingsState(bool isKidsMode, const char* language,
+                               const GameConfigData& configData, s64 saveDataId,
+                               s64 acrossPlayTime);
+bool trySavePrepoSeparatePlayMode(bool isSeparatePlayMode, s64 playTime, s64 saveDataId,
+                                  s64 acrossPlayTime);
 
 namespace prepo {
 void enableIsSavePrepo();
 void disableIsSavePrepo();
 s64 generateSaveDataId();
-s32 calcPrepoHashCode(const char*);
+u32 calcPrepoHashCode(const char* str);
 }  // namespace prepo
 }  // namespace rs
