@@ -53,7 +53,7 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards) {
 }
 
 void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset) {
-    f32 newCoord = modf(mMaxCoord + coord, mMaxCoord) + 0.0f;
+    f32 newCoord = wrapValue(coord, mMaxCoord);
     s32 index = -1;
 
     mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, newCoord);

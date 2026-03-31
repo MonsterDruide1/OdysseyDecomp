@@ -19,10 +19,6 @@
 
 namespace al {
 
-inline f32 modDegree(f32 deg) {
-    return modf(deg + 360.0f, 360.0f) + 0.0f;
-}
-
 void resetPosition(LiveActor* actor) {
     if (actor->getPoseKeeper())
         actor->calcAnim();
@@ -1061,15 +1057,15 @@ f32 calcDistanceFront(const LiveActor* actor, const LiveActor* target) {
 }
 
 void addRotateAndRepeatX(LiveActor* actor, f32 deg) {
-    setRotateX(actor, modDegree(getRotate(actor).x + deg));
+    setRotateX(actor, wrapAngle(getRotate(actor).x + deg));
 }
 
 void addRotateAndRepeatY(LiveActor* actor, f32 deg) {
-    setRotateY(actor, modDegree(getRotate(actor).y + deg));
+    setRotateY(actor, wrapAngle(getRotate(actor).y + deg));
 }
 
 void addRotateAndRepeatZ(LiveActor* actor, f32 deg) {
-    setRotateZ(actor, modDegree(getRotate(actor).z + deg));
+    setRotateZ(actor, wrapAngle(getRotate(actor).z + deg));
 }
 
 void addRandomRotateY(LiveActor* actor) {
