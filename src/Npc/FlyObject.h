@@ -32,6 +32,8 @@ private:
     f32 mVerticalAngle = 0.0f;
 };
 
+static_assert(sizeof(WaveMovementController) == 0xc);
+
 class Behavior {
 public:
     virtual void setUp(al::LiveActor* actor) = 0;
@@ -43,6 +45,8 @@ public:
 private:
     WaveMovementController mWaveController;
 };
+
+static_assert(sizeof(Behavior) == 0x18);
 
 class Stationary : public Behavior {
 public:
@@ -70,14 +74,16 @@ static_assert(sizeof(OnRails) == 0x20);
 
 class FukanKunInteractionEmpty {
 public:
-    FukanKunInteractionEmpty();
+    FukanKunInteractionEmpty() = default;
 
     virtual void init(FlyObject* flyObject, const al::ActorInitInfo& info);
     virtual void setUp(FlyObject* flyObject);
     virtual void control(FlyObject* flyObject);
-    virtual al::MessageSystem* getMessageSystem() const;
-    virtual void interact(FlyObject* flyObject);
+
+    virtual al::MessageSystem* getMessageSystem() const { return nullptr; }
 };
+
+static_assert(sizeof(FukanKunInteractionEmpty) == 0x8);
 
 class FukanKunInteractionBase : public FukanKunInteractionEmpty {
 public:
@@ -86,11 +92,14 @@ public:
     void init(FlyObject* flyObject, const al::ActorInitInfo& info) override;
     void setUp(FlyObject* flyObject) override;
     void control(FlyObject* flyObject) override;
+    virtual void interact(FlyObject* flyObject) = 0;
 
 private:
     bool mHasInteraction = true;
     s32 mDisplayTime;
 };
+
+static_assert(sizeof(FukanKunInteractionBase) == 0x10);
 
 class FukanKunMessageHolder : public FukanKunInteractionBase {
 public:

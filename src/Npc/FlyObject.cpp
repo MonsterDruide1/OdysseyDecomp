@@ -18,10 +18,10 @@
 #include "Util/ItemUtil.h"
 
 namespace {
-NERVE_IMPL(FlyObject, Fly)
 NERVE_IMPL(FlyObject, Disappear)
+NERVE_IMPL(FlyObject, Fly)
 
-NERVES_MAKE_NOSTRUCT(FlyObject, Fly, Disappear)
+NERVES_MAKE_NOSTRUCT(FlyObject, Disappear, Fly)
 }  // namespace
 
 WaveMovementController::WaveMovementController() = default;
@@ -67,17 +67,11 @@ void OnRails::move(al::LiveActor* actor, f32 speed) {
         al::setNerve(actor, &Disappear);
 }
 
-FukanKunInteractionEmpty::FukanKunInteractionEmpty() {}
-
 void FukanKunInteractionEmpty::init(FlyObject* flyObject, const al::ActorInitInfo& info) {}
 
 void FukanKunInteractionEmpty::setUp(FlyObject* flyObject) {}
 
 void FukanKunInteractionEmpty::control(FlyObject* flyObject) {}
-
-al::MessageSystem* FukanKunInteractionEmpty::getMessageSystem() const {
-    return nullptr;
-}
 
 FukanKunInteractionBase::FukanKunInteractionBase(s32 displayTime) : mDisplayTime(displayTime) {}
 
@@ -102,7 +96,7 @@ FukanKunMessageHolder::FukanKunMessageHolder() : FukanKunInteractionBase(180) {}
 void FukanKunMessageHolder::init(FlyObject* flyObject, const al::ActorInitInfo& info) {
     mMessageSystem = al::getLayoutInitInfo(info).getMessageSystem();
     mCapMsg = al::StringTmp<64>("CapMsg_%s", al::createPlacementId(info)->getId());
-    FukankunZoomTargetFunction::declareUseFukankunZoomTargetActor(flyObject);
+    FukanKunInteractionBase::init(flyObject, info);
 }
 
 al::MessageSystem* FukanKunMessageHolder::getMessageSystem() const {
@@ -117,7 +111,7 @@ FukanKunShineHolder::FukanKunShineHolder() : FukanKunInteractionBase(120) {}
 
 void FukanKunShineHolder::init(FlyObject* flyObject, const al::ActorInitInfo& info) {
     mShine = rs::tryInitLinkShine(info, "ShineActor", 0);
-    FukankunZoomTargetFunction::declareUseFukankunZoomTargetActor(flyObject);
+    FukanKunInteractionBase::init(flyObject, info);
 }
 
 void FukanKunShineHolder::interact(FlyObject* flyObject) {

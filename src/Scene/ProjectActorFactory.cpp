@@ -105,6 +105,7 @@
 #include "MapObj/WorldWarpHole.h"
 #include "Npc/Bird.h"
 #include "Npc/BirdPlayerGlideCtrl.h"
+#include "Npc/FlyObject.h"
 #include "Npc/KuriboGirl.h"
 #include "Npc/RaceAudienceNpc.h"
 #include "Npc/VocalMike.h"
@@ -303,7 +304,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"FixMapPartsForceSafetyPoint", nullptr},
     {"FixMapPartsFukankunZoomCapMessage", nullptr},
     {"FixMapPartsScenarioAction", nullptr},
-    {"FlyObject", nullptr},
+    {"FlyObject", al::createActorFunction<FlyObject>},
     {"ForestManSeed", nullptr},
     {"ForestWorldHomeBreakParts000", nullptr},
     {"FogRequester", nullptr},

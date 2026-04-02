@@ -19,7 +19,7 @@ void registerFukankunZoomTargetActor(const al::LiveActor*, s32, const sead::Vect
 s32 getWatchCount(const al::LiveActor*);
 s32 getFukankunWatchCountDefault();
 f32 getFukankunCameraNearDistThres();
-Fukankun* tryGetActiveFukankunLinkedShineMtx(const sead::Matrix34f**, const al::LiveActor*);
+bool tryGetActiveFukankunLinkedShineMtx(const sead::Matrix34f**, const al::LiveActor*);
 FukankunZoomObj* tryGetFukankunZoomObj(const al::IUseSceneObjHolder*, const al::PlacementInfo&);
 void registerFukankunZoomObj(const al::LiveActor*, const al::PlacementInfo&);
 s32 getFukankunZoomTargetActorNum(const al::IUseSceneObjHolder*);
