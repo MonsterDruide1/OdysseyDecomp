@@ -66,3 +66,9 @@ jobs:
           cat errfile | tr '\n' '\f' | sed 's/Stack backtrace:.*//' | tr '\f' '\n'
           exit 1
         fi
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: odyssey
+        path: build/odyssey
+        if-no-files-found: error
