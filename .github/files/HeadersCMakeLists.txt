@@ -7,5 +7,8 @@ target_include_directories(OdysseyHeaders INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/eui
     ${CMAKE_CURRENT_LIST_DIR}/sead
     ${CMAKE_CURRENT_LIST_DIR}/NintendoSDK
+    ${CMAKE_CURRENT_LIST_DIR}/NintendoSDK-NEX/RendezVous/Core
+    ${CMAKE_CURRENT_LIST_DIR}/NintendoSDK-NEX/RendezVous
+    ${CMAKE_CURRENT_LIST_DIR}/NintendoSDK-NEX/OnlineCore
     ${CMAKE_CURRENT_LIST_DIR}/aarch64
 )
