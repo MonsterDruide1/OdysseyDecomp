@@ -1,3 +1,4 @@
+// TODO: think about inlining
 #include "MapObj/DoorAreaChange.h"
 
 #include <prim/seadSafeString.h>
@@ -22,65 +23,69 @@
 #include "Util/SensorMsgFunction.h"
 
 namespace {
-using namespace al;
-
-NERVE_IMPL(DoorAreaChange, Wait);
-NERVE_IMPL(DoorAreaChange, Start);
-NERVE_IMPL(DoorAreaChange, OpenWait);
-NERVE_IMPL(DoorAreaChange, NoStart);
-NERVE_IMPL(DoorAreaChange, CloseBefore);
-NERVE_IMPL(DoorAreaChange, Open);
-NERVE_IMPL(DoorAreaChange, Close);
 NERVE_IMPL(DoorAreaChange, CloseWait);
 NERVE_IMPL(DoorAreaChange, NoStartWithMessage);
+NERVE_IMPL(DoorAreaChange, OpenWait);
+NERVE_IMPL(DoorAreaChange, NoStart);
+NERVE_IMPL(DoorAreaChange, Open);
+NERVE_IMPL(DoorAreaChange, CloseBefore);
+NERVE_IMPL(DoorAreaChange, Close);
 
-NERVES_MAKE_STRUCT(DoorAreaChange, Wait, OpenWait, NoStart, Open, CloseBefore, Start,
-                   NoStartWithMessage);
-NERVES_MAKE_NOSTRUCT(DoorAreaChange, Close, CloseWait);
+NERVES_MAKE_NOSTRUCT(DoorAreaChange, Close);
+NERVES_MAKE_STRUCT(DoorAreaChange, CloseWait, NoStartWithMessage, OpenWait, NoStart, Open,
+                   CloseBefore);
+
 }  // namespace
 
 DoorAreaChange::DoorAreaChange(const char* name) : al::LiveActor(name) {}
 
 void DoorAreaChange::init(const al::ActorInitInfo& info) {
-    using DoorAreaChangeFunctor = FunctorV0M<DoorAreaChange*, void (DoorAreaChange::*)()>;
+    using DoorAreaChangeFunctor = al::FunctorV0M<DoorAreaChange*, void (DoorAreaChange::*)()>;
 
     if (al::isObjectName(info, "ShineTowerRocket"))
-        initActorWithArchiveName(this, info, "DoorAreaChange", nullptr);
+        al::initActorWithArchiveName(this, info, "DoorAreaChange", nullptr);
     else
-        initActorWithArchiveName(this, info, "ShineTowerDoor", nullptr);
-    initNerve(this, &CloseWait, 0);
+        al::initActorWithArchiveName(this, info, "ShineTowerDoor", nullptr);
+
+    al::initNerve(this, &Close, 0);
     mSaveObjInfo = rs::createSaveObjInfoWriteSaveData(info);
-    listenStageSwitchOn(this, "SwitchCloseAgain",
-                        DoorAreaChangeFunctor(this, &DoorAreaChange::switchCloseAgain));
-    if (!rs::isInvalidChangeStage(this)) {
-        if (GameDataFunction::isPlayerStartLinkedObj(this, info, "NoDelete_DeadByPlayerStart")) {
-            setNerve(this, &NrvDoorAreaChange.OpenWait);
-            makeActorAlive();
-            return;
-        }
-        if (listenStageSwitchOnAppear(this, DoorAreaChangeFunctor(this, &DoorAreaChange::appear))) {
-            makeActorDead();
-            return;
-        }
-        if (listenStageSwitchOnStart(this, DoorAreaChangeFunctor(this, &DoorAreaChange::start))) {
-            makeActorAlive();
-            setNerve(this, &NrvDoorAreaChange.NoStart);
-            return;
-        }
-        s32 scenarioNo = 0;
-        if (tryGetArg(&scenarioNo, info, "FixScenarioNo"))
-            if (scenarioNo == GameDataFunction::getScenarioNo(this)) {
-                makeActorAlive();
-                setNerve(this, &NrvDoorAreaChange.NoStart);
-                return;
-            }
-        if (rs::isOnSaveObjInfo(mSaveObjInfo))
-            setNerve(this, &NrvDoorAreaChange.OpenWait);
-        if (tryGetArg(&mIsDoorClosed, info, "IsNeedAppearCapMessage") && mIsDoorClosed)
-            mIsDoorClosed = true;
-    } else {
-        setNerve(this, &NrvDoorAreaChange.Wait);
+    al::listenStageSwitchOn(this, "SwitchCloseAgain",
+                            DoorAreaChangeFunctor(this, &DoorAreaChange::switchCloseAgain));
+
+    if (rs::isInvalidChangeStage(this)) {
+        al::setNerve(this, &NrvDoorAreaChange.CloseWait);
+        makeActorAlive();
+        return;
     }
+
+    if (GameDataFunction::isPlayerStartLinkedObj(this, info, "NoDelete_DeadByPlayerStart")) {
+        al::setNerve(this, &NrvDoorAreaChange.NoStartWithMessage);
+        makeActorAlive();
+        return;
+    }
+    if (al::listenStageSwitchOnAppear(this, DoorAreaChangeFunctor(this, &DoorAreaChange::appear))) {
+        makeActorDead();
+        return;
+    }
+    if (al::listenStageSwitchOnStart(this, DoorAreaChangeFunctor(this, &DoorAreaChange::start))) {
+        makeActorAlive();
+        al::setNerve(this, &NrvDoorAreaChange.OpenWait);
+        return;
+    }
+    s32 scenarioNo = 0;
+    if (al::tryGetArg(&scenarioNo, info, "FixScenarioNo")) {
+        if (scenarioNo == GameDataFunction::getScenarioNo(this)) {
+            makeActorAlive();
+            al::setNerve(this, &NrvDoorAreaChange.OpenWait);
+            return;
+        }
+    }
+    if (rs::isOnSaveObjInfo(mSaveObjInfo))
+        al::setNerve(this, &NrvDoorAreaChange.NoStartWithMessage);
+    if (al::tryGetArg(&mIsNeedAppearCapMessage, info, "IsNeedAppearCapMessage") &&
+        mIsNeedAppearCapMessage)
+        mIsNeedAppearCapMessage = true;
+
     makeActorAlive();
 }
 
@@ -90,7 +95,8 @@ bool DoorAreaChange::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
         return true;
     if (rs::isMsgKoopaRingBeamInvalidTouch(message))
         return true;
-    if (isNerve(this, &NrvDoorAreaChange.Open) || isNerve(this, &NrvDoorAreaChange.OpenWait)) {
+    if (al::isNerve(this, &NrvDoorAreaChange.NoStart) ||
+        al::isNerve(this, &NrvDoorAreaChange.NoStartWithMessage)) {
         if (rs::isMsgPlayerDisregardTargetMarker(message))
             return true;
         if (rs::isMsgPlayerDisregardHomingAttack(message))
@@ -99,57 +105,60 @@ bool DoorAreaChange::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
             return true;
     }
     if (rs::isMsgCapTouchWall(message)) {
-        if (isNerve(this, &NrvDoorAreaChange.Wait)) {
-            sead::Vector3f zero = sead::Vector3f::zero;
-            rs::tryGetCapTouchWallHitPos(&zero, message);
-            startHitReactionHitEffect(this, "ヒット", zero);
-            rs::requestHitReactionToAttacker(message, other, zero);
+        if (al::isNerve(this, &NrvDoorAreaChange.CloseWait)) {
+            sead::Vector3f capTouchPos = sead::Vector3f::zero;
+            rs::tryGetCapTouchWallHitPos(&capTouchPos, message);
+            al::startHitReactionHitEffect(this, "ヒット", capTouchPos);
+            rs::requestHitReactionToAttacker(message, other, capTouchPos);
             return true;
         }
-        if (isNerve(this, &CloseWait)) {
+        if (al::isNerve(this, &Close)) {
             rs::onSaveObjInfo(mSaveObjInfo);
-            sead::Vector3f zero = sead::Vector3f::zero;
-            rs::tryGetCapTouchWallHitPos(&zero, message);
-            startHitReactionHitEffect(this, "ヒット", zero);
-            rs::requestHitReactionToAttacker(message, other, zero);
-            setNerve(this, &NrvDoorAreaChange.Open);
+            sead::Vector3f capTouchPos = sead::Vector3f::zero;
+            rs::tryGetCapTouchWallHitPos(&capTouchPos, message);
+            al::startHitReactionHitEffect(this, "ヒット", capTouchPos);
+            rs::requestHitReactionToAttacker(message, other, capTouchPos);
+            al::setNerve(this, &NrvDoorAreaChange.NoStart);
             return true;
         }
     }
-    if (!rs::isMsgCapReflect(message))
-        return false;
-    if (isNerve(this, &NrvDoorAreaChange.Wait)) {
-        startHitReactionHitEffect(this, "ヒット", other, self);
-        rs::requestHitReactionToAttacker(message, self, other);
-        rs::tryShowCapMsgWarpDisableInMiniGameDoorCap(this);
-        return true;
+    if (rs::isMsgCapReflect(message)) {
+        if (al::isNerve(this, &NrvDoorAreaChange.CloseWait)) {
+            al::startHitReactionHitEffect(this, "ヒット", other, self);
+            rs::requestHitReactionToAttacker(message, self, other);
+            rs::tryShowCapMsgWarpDisableInMiniGameDoorCap(this);
+            return true;
+        }
+        if (al::isNerve(this, &Close)) {
+            rs::onSaveObjInfo(mSaveObjInfo);
+            al::startHitReactionHitEffect(this, "ヒット", other, self);
+            rs::requestHitReactionToAttacker(message, self, other);
+            al::setNerve(this, &NrvDoorAreaChange.NoStart);
+            return true;
+        }
     }
-    if (!isNerve(this, &CloseWait))
-        return false;
-    rs::onSaveObjInfo(mSaveObjInfo);
-    startHitReactionHitEffect(this, "ヒット", other, self);
-    rs::requestHitReactionToAttacker(message, self, other);
-    setNerve(this, &NrvDoorAreaChange.Open);
-    return true;
+    return false;
 }
+
+// TODO: continue below
 
 void DoorAreaChange::switchCloseAgain() {
     al::startAction(this, "Wait");
     al::validateCollisionParts(this);
-    al::setNerve(this, &CloseWait);
+    al::setNerve(this, &Close);
 }
 
 void DoorAreaChange::start() {
-    al::setNerve(this, &CloseWait);
+    al::setNerve(this, &Close);
 }
 
 void DoorAreaChange::setNoStart() {
-    setNerve(this, &NrvDoorAreaChange.NoStart);
+    al::setNerve(this, &NrvDoorAreaChange.OpenWait);
 }
 
 void DoorAreaChange::enableStart() {
-    if (isNerve(this, &NrvDoorAreaChange.NoStart))
-        setNerve(this, &CloseWait);
+    if (al::isNerve(this, &NrvDoorAreaChange.OpenWait))
+        al::setNerve(this, &Close);
 }
 
 void DoorAreaChange::appear() {
@@ -161,9 +170,8 @@ void DoorAreaChange::appear() {
 }
 
 bool DoorAreaChange::isOpen() const {
-    if (isNerve(this, &NrvDoorAreaChange.Open))
-        return true;
-    return isNerve(this, &NrvDoorAreaChange.OpenWait);
+    return al::isNerve(this, &NrvDoorAreaChange.NoStart) ||
+           al::isNerve(this, &NrvDoorAreaChange.NoStartWithMessage);
 }
 
 void DoorAreaChange::exeOpenWait() {
@@ -175,81 +183,81 @@ void DoorAreaChange::exeOpenWait() {
         if (GameDataFunction::isEnableCap(GameDataHolderAccessor(this)))
             return;
         al::validateCollisionParts(this);
-        al::setNerve(this, &CloseWait);
+        al::setNerve(this, &Close);
     }
 }
 
 void DoorAreaChange::exeNoStart() {
-    if (isFirstStep(this)) {
-        validateCollisionParts(this);
-        if (isExistAction(this, "CloseWait"))
-            startAction(this, "Wait");
+    if (al::isFirstStep(this)) {
+        al::validateCollisionParts(this);
+        if (al::isExistAction(this, "CloseWait"))
+            al::startAction(this, "Wait");
         else
-            startAction(this, "CloseWait");
+            al::startAction(this, "CloseWait");
     }
 }
 
 void DoorAreaChange::exeCloseBefore() {
-    if (isFirstStep(this)) {
-        startAction(this, "OpenWait");
-        validateCollisionParts(this);
+    if (al::isFirstStep(this)) {
+        al::startAction(this, "OpenWait");
+        al::validateCollisionParts(this);
     }
-    if (isGreaterEqualStep(this, 30))
-        setNerve(this, &CloseWait);
+    if (al::isGreaterEqualStep(this, 30))
+        al::setNerve(this, &Close);
 }
 
 void DoorAreaChange::exeClose() {
-    if (isFirstStep(this)) {
-        startAction(this, "Close");
-        validateCollisionParts(this);
+    if (al::isFirstStep(this)) {
+        al::startAction(this, "Close");
+        al::validateCollisionParts(this);
     }
-    if (isActionEnd(this))
-        setNerve(this, &Close);
+    if (al::isActionEnd(this))
+        al::setNerve(this, &Close);
 }
 
-void DoorAreaChange::setHomeDoor(bool b) {
+void DoorAreaChange::setHomeDoor(bool isHomeDoor) {
     mIsHomeDoorSet = true;
     makeActorAlive();
 
-    if (b)
-        setNerve(this, &NrvDoorAreaChange.CloseBefore);
+    if (isHomeDoor)
+        al::setNerve(this, &NrvDoorAreaChange.Open);
     else
-        setNerve(this, &CloseWait);
+        al::setNerve(this, &Close);
 }
 
 void DoorAreaChange::exeOpen() {
-    if (isFirstStep(this)) {
-        startAction(this, "Open");
-        invalidateCollisionParts(this);
+    if (al::isFirstStep(this)) {
+        al::startAction(this, "Open");
+        al::invalidateCollisionParts(this);
         rs::tryCancelCapMessage(this, "DoorAreaChangeFirst");
     }
-    if (isActionEnd(this)) {
+    if (al::isActionEnd(this)) {
         if (!mIsHomeDoorSet) {
-            startHitReaction(this, "消滅");
-            tryOnStageSwitch(this, "SwitchMoveOn");
+            al::startHitReaction(this, "消滅");
+            al::tryOnStageSwitch(this, "SwitchMoveOn");
         }
-        setNerve(this, &NrvDoorAreaChange.OpenWait);
+        al::setNerve(this, &NrvDoorAreaChange.NoStartWithMessage);
     }
 }
 
 void DoorAreaChange::exeCloseWait() {
-    if (isFirstStep(this)) {
-        if (!isExistAction(this, "CloseWait"))
-            startAction(this, "Wait");
+    if (al::isFirstStep(this)) {
+        if (!al::isExistAction(this, "CloseWait"))
+            al::startAction(this, "Wait");
         else
-            startAction(this, "CloseWait");
+            al::startAction(this, "CloseWait");
     }
-    if (mIsDoorClosed && isNearPlayer(this, 500)) {
-        mIsDoorClosed = false;
+    if (mIsNeedAppearCapMessage && al::isNearPlayer(this, 500)) {
+        mIsNeedAppearCapMessage = false;
         rs::showCapMessage(this, "DoorAreaChangeFirst", 90, 600);
     }
 }
 
 void DoorAreaChange::exeNoStartWithMessage() {
-    if (isFirstStep(this)) {
-        if (!isExistAction(this, "CloseWait"))
-            startAction(this, "Wait");
+    if (al::isFirstStep(this)) {
+        if (!al::isExistAction(this, "CloseWait"))
+            al::startAction(this, "Wait");
         else
-            startAction(this, "CloseWait");
+            al::startAction(this, "CloseWait");
     }
 }

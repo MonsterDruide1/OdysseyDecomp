@@ -18,10 +18,8 @@ public:
 
     bool isOpen() const;
 
-    void setHomeDoor(bool b);
+    void setHomeDoor(bool isHomeDoor);
 
-    void exeWait();
-    void exeStart();
     void exeOpen();
     void exeOpenWait();
     void exeCloseWait();
@@ -32,6 +30,9 @@ public:
 
 private:
     SaveObjInfo* mSaveObjInfo = nullptr;
+    // TODO: check these
     bool mIsHomeDoorSet = false;
-    bool mIsDoorClosed = false;
+    bool mIsNeedAppearCapMessage = false;
 };
+
+static_assert(sizeof(DoorAreaChange) == 0x118);
