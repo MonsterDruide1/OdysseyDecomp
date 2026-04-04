@@ -19,7 +19,7 @@ void setupHomeMeter(al::LiveActor*);
 void setupHomeMeterFitherParam(al::LiveActor*, ShineTowerCommonKeeper*);
 void setupHomeSticker(al::LiveActor*);
 void setupHomeCompLight(al::LiveActor*);
-void getHomeArchiveName(const al::LiveActor*);
+const char* getHomeArchiveName(const al::LiveActor*);
 }  // namespace rs
 
 class ShineTowerRocket : public al::LiveActor,
