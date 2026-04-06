@@ -10,4 +10,6 @@ public:
 private:
     SceneMsg mMessages[32];
 };
+
+static_assert(sizeof(SceneMsgCtrl) == 0x2700);
 }  // namespace al

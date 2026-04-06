@@ -5,13 +5,16 @@
 namespace al {
 class SceneMsg {
 public:
-    SceneMsg();
+    __attribute__((used)) SceneMsg() = default;
+
     void clear();
-    void setMsg(const char*, const char*);
+    void setMsg(const char* label, const char* text);
 
 private:
-    void* field_0;
-    sead::FixedSafeString<128> field_8;
-    sead::FixedSafeString<128> field_a0;
+    bool mIsValid = false;
+    sead::FixedSafeString<128> mLabel;
+    sead::FixedSafeString<128> mText;
 };
+
+static_assert(sizeof(SceneMsg) == 0x138);
 }  // namespace al
