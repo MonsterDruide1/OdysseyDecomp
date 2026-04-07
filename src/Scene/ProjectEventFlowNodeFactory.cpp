@@ -3,6 +3,42 @@
 #include "Library/Event/CreateEventFlowNode.h"
 #include "Library/Event/EventFlowNodeActionLoop.h"
 
+#include "Event/EventFlowNodeCheckCompleteCollectBgm.h"
+#include "Event/EventFlowNodeCheckFirstTalkCollectBgm.h"
+#include "Event/EventFlowNodeCheckGetLinkShine.h"
+#include "Event/EventFlowNodeCheckLifeUpItem.h"
+#include "Event/EventFlowNodeCheckLink.h"
+#include "Event/EventFlowNodeCheckMoonLockOpened.h"
+#include "Event/EventFlowNodeCheckOpenDoorSnow.h"
+#include "Event/EventFlowNodeCheckPlayerOnGround.h"
+#include "Event/EventFlowNodeCheckPlayingCollectBgm.h"
+#include "Event/EventFlowNodeCloseTalkMessage.h"
+#include "Event/EventFlowNodeDemoResetPlayerDynamics.h"
+#include "Event/EventFlowNodeEnableHint.h"
+#include "Event/EventFlowNodeFirstTalkEndCollectBgmNpc.h"
+#include "Event/EventFlowNodeForcePutOnDemoCap.h"
+#include "Event/EventFlowNodeGetAmiiboNotSearchHintNum.h"
+#include "Event/EventFlowNodeGetCollectBgmBonus01.h"
+#include "Event/EventFlowNodeGetCollectBgmBonus02.h"
+#include "Event/EventFlowNodeIsEnableSearchAmiibo.h"
+#include "Event/EventFlowNodeIsTalkAmiiboHelp.h"
+#include "Event/EventFlowNodeMessageTalk.h"
+#include "Event/EventFlowNodeNextTalkMessage.h"
+#include "Event/EventFlowNodeNpcMoveToLink.h"
+#include "Event/EventFlowNodeOpenBgmList.h"
+#include "Event/EventFlowNodePlayerAction.h"
+#include "Event/EventFlowNodePopLinkShine.h"
+#include "Event/EventFlowNodeSceneWipeClose.h"
+#include "Event/EventFlowNodeSelectChoice.h"
+#include "Event/EventFlowNodeSelectYesNo.h"
+#include "Event/EventFlowNodeSessionWaitMusician.h"
+#include "Event/EventFlowNodeSetDemoInfoDemoName.h"
+#include "Event/EventFlowNodeUnlockHint.h"
+#include "Event/EventFlowNodeWaitSimple.h"
+#include "Event/EventFlowNodeWaitWipeOpenEnd.h"
+#include "Event/EventFlowNodeWipeFadeBlackClose.h"
+#include "Event/EventFlowNodeWipeFadeBlackOpen.h"
+
 const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeFactoryEntries[] = {
     {"ActionLoop", al::createEventFlowNode<al::EventFlowNodeActionLoop>},
     {"ActionOneTime", nullptr},
@@ -26,25 +62,25 @@ const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeF
     {"ChangeStage", nullptr},
     {"ChangeWorldDemoMessage", nullptr},
     {"CheckClear3CollectBgm", nullptr},
-    {"CheckCompleteCollectBgm", nullptr},
+    {"CheckCompleteCollectBgm", al::createEventFlowNode<EventFlowNodeCheckCompleteCollectBgm>},
     {"CheckCostume", nullptr},
     {"CheckCostumeInvisible", nullptr},
     {"CheckCostumeMissMatchPart", nullptr},
     {"CheckCostumePair", nullptr},
     {"CheckCount", nullptr},
-    {"CheckFirstTalkCollectBgm", nullptr},
+    {"CheckFirstTalkCollectBgm", al::createEventFlowNode<EventFlowNodeCheckFirstTalkCollectBgm>},
     {"CheckFlag", nullptr},
-    {"CheckGetLinkShine", nullptr},
-    {"CheckLifeUpItem", nullptr},
-    {"CheckLink", nullptr},
-    {"CheckMoonLockOpened", nullptr},
-    {"CheckOpenDoorSnow", nullptr},
-    {"CheckPlayingCollectBgm", nullptr},
-    {"CheckPlayerOnGround", nullptr},
+    {"CheckGetLinkShine", al::createEventFlowNode<EventFlowNodeCheckGetLinkShine>},
+    {"CheckLifeUpItem", al::createEventFlowNode<EventFlowNodeCheckLifeUpItem>},
+    {"CheckLink", al::createEventFlowNode<EventFlowNodeCheckLink>},
+    {"CheckMoonLockOpened", al::createEventFlowNode<EventFlowNodeCheckMoonLockOpened>},
+    {"CheckOpenDoorSnow", al::createEventFlowNode<EventFlowNodeCheckOpenDoorSnow>},
+    {"CheckPlayingCollectBgm", al::createEventFlowNode<EventFlowNodeCheckPlayingCollectBgm>},
+    {"CheckPlayerOnGround", al::createEventFlowNode<EventFlowNodeCheckPlayerOnGround>},
     {"CheckYukimaruRaceResult", nullptr},
     {"CheckSwitch", nullptr},
     {"CheckWaitSwitch", nullptr},
-    {"CloseTalkMessage", nullptr},
+    {"CloseTalkMessage", al::createEventFlowNode<EventFlowNodeCloseTalkMessage>},
     {"CoinPayment", nullptr},
     {"CutSceneDemoStart", nullptr},
     {"DemoAction", nullptr},
@@ -55,55 +91,55 @@ const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeF
     {"DemoPlayerAction", nullptr},
     {"DemoPlayerHide", nullptr},
     {"DemoPlayerShow", nullptr},
-    {"DemoResetPlayerDynamics", nullptr},
+    {"DemoResetPlayerDynamics", al::createEventFlowNode<EventFlowNodeDemoResetPlayerDynamics>},
     {"DemoStart", nullptr},
     {"DirectGetLinkShine", nullptr},
-    {"EnableHint", nullptr},
+    {"EnableHint", al::createEventFlowNode<EventFlowNodeEnableHint>},
     {"Event", nullptr},
     {"EventQuery", nullptr},
-    {"FirstTalkEndCollectBgmNpc", nullptr},
+    {"FirstTalkEndCollectBgmNpc", al::createEventFlowNode<EventFlowNodeFirstTalkEndCollectBgmNpc>},
     {"Fork", nullptr},
-    {"ForcePutOnDemoCap", nullptr},
+    {"ForcePutOnDemoCap", al::createEventFlowNode<EventFlowNodeForcePutOnDemoCap>},
     {"GetAmiiboCostume", nullptr},
-    {"GetAmiiboNotSearchHintNum", nullptr},
-    {"GetCollectBgmBonus01", nullptr},
-    {"GetCollectBgmBonus02", nullptr},
+    {"GetAmiiboNotSearchHintNum", al::createEventFlowNode<EventFlowNodeGetAmiiboNotSearchHintNum>},
+    {"GetCollectBgmBonus01", al::createEventFlowNode<EventFlowNodeGetCollectBgmBonus01>},
+    {"GetCollectBgmBonus02", al::createEventFlowNode<EventFlowNodeGetCollectBgmBonus02>},
     {"GetSearchAmiibo", nullptr},
     {"HitReaction", nullptr},
     {"IsCostumeAmiibo", nullptr},
-    {"IsEnableSearchAmiibo", nullptr},
-    {"IsTalkAmiiboHelp", nullptr},
+    {"IsEnableSearchAmiibo", al::createEventFlowNode<EventFlowNodeIsEnableSearchAmiibo>},
+    {"IsTalkAmiiboHelp", al::createEventFlowNode<EventFlowNodeIsTalkAmiiboHelp>},
     {"KakkuTurn", nullptr},
     {"Join", nullptr},
     {"JumpEntry", nullptr},
     {"MessageBalloon", nullptr},
-    {"MessageTalk", nullptr},
+    {"MessageTalk", al::createEventFlowNode<EventFlowNodeMessageTalk>},
     {"MessageTalkSpecialPurpose", nullptr},
-    {"NextTalkMessage", nullptr},
+    {"NextTalkMessage", al::createEventFlowNode<EventFlowNodeNextTalkMessage>},
     {"NormalDemoTryStart", nullptr},
-    {"NpcMoveToLink", nullptr},
-    {"OpenBgmList", nullptr},
-    {"PlayerAction", nullptr},
+    {"NpcMoveToLink", al::createEventFlowNode<EventFlowNodeNpcMoveToLink>},
+    {"OpenBgmList", al::createEventFlowNode<EventFlowNodeOpenBgmList>},
+    {"PlayerAction", al::createEventFlowNode<EventFlowNodePlayerAction>},
     {"PlayerTurn", nullptr},
     {"PopItem", nullptr},
-    {"PopLinkShine", nullptr},
+    {"PopLinkShine", al::createEventFlowNode<EventFlowNodePopLinkShine>},
     {"QueryJudge", nullptr},
     {"ReplacePlayer", nullptr},
-    {"SceneWipeClose", nullptr},
-    {"SelectChoice", nullptr},
-    {"SelectYesNo", nullptr},
-    {"SessionWaitMusician", nullptr},
-    {"SetDemoInfoDemoName", nullptr},
+    {"SceneWipeClose", al::createEventFlowNode<EventFlowNodeSceneWipeClose>},
+    {"SelectChoice", al::createEventFlowNode<EventFlowNodeSelectChoice>},
+    {"SelectYesNo", al::createEventFlowNode<EventFlowNodeSelectYesNo>},
+    {"SessionWaitMusician", al::createEventFlowNode<EventFlowNodeSessionWaitMusician>},
+    {"SetDemoInfoDemoName", al::createEventFlowNode<EventFlowNodeSetDemoInfoDemoName>},
     {"SwitchOn", nullptr},
     {"SwitchOff", nullptr},
     {"TurnToPlayer", nullptr},
     {"TurnToPlayerActionOneTime", nullptr},
     {"TurnToPreDir", nullptr},
-    {"UnlockHint", nullptr},
-    {"WaitWipeOpenEnd", nullptr},
-    {"WaitSimple", nullptr},
-    {"WipeFadeBlackClose", nullptr},
-    {"WipeFadeBlackOpen", nullptr}};
+    {"UnlockHint", al::createEventFlowNode<EventFlowNodeUnlockHint>},
+    {"WaitWipeOpenEnd", al::createEventFlowNode<EventFlowNodeWaitWipeOpenEnd>},
+    {"WaitSimple", al::createEventFlowNode<EventFlowNodeWaitSimple>},
+    {"WipeFadeBlackClose", al::createEventFlowNode<EventFlowNodeWipeFadeBlackClose>},
+    {"WipeFadeBlackOpen", al::createEventFlowNode<EventFlowNodeWipeFadeBlackOpen>}};
 
 ProjectEventFlowNodeFactory::ProjectEventFlowNodeFactory() : EventFlowNodeFactory() {
     initFactory(sProjectEventFlowNodeFactoryEntries);
