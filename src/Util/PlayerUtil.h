@@ -7,6 +7,7 @@
 #include "Library/Base/StringUtil.h"
 
 namespace al {
+class EventFlowNode;
 class GamePadSystem;
 class HitSensor;
 class IUseMessageSystem;
