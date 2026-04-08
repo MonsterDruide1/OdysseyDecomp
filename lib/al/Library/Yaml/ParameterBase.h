@@ -40,18 +40,10 @@ SEAD_ENUM(YamlParamType,
 #define PARAM_TYPE_DEF(Name, Type)                                                                 \
     class Parameter##Name : public Parameter<Type> {                                               \
     public:                                                                                        \
-        Parameter##Name(const sead::SafeString& name, const sead::SafeString& label,               \
-                        const sead::SafeString& meta, ParameterObj* obj, bool e)                   \
-            : Parameter(name, label, meta, obj, e) {}                                              \
-                                                                                                   \
         Parameter##Name(Type const& value, const sead::SafeString& name,                           \
                         const sead::SafeString& label, const sead::SafeString& meta,               \
                         ParameterObj* obj, bool e)                                                 \
             : Parameter(value, name, label, meta, obj, e) {}                                       \
-                                                                                                   \
-        Parameter##Name(const sead::SafeString& name, const sead::SafeString& label,               \
-                        const sead::SafeString& meta, ParameterList* list, bool e)                 \
-            : Parameter(name, label, meta, list, e) {}                                             \
                                                                                                    \
         Parameter##Name(Type const& value, const sead::SafeString& name,                           \
                         const sead::SafeString& label, const sead::SafeString& meta,               \
@@ -72,7 +64,7 @@ public:
     static u32 calcHash(const sead::SafeString& key);
 
     // TODO: rename parameter bool e in all functions
-    ParameterBase(bool e) { initialize("default", "parameter", "", e); }
+    ParameterBase() { initialize("default", "parameter", "", true); }
 
     ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
                   const sead::SafeString& meta, ParameterObj* obj, bool e);
@@ -139,32 +131,16 @@ template <typename T>
 class Parameter : public ParameterBase {
 public:
     // TODO: rename parameter bool e in constructor
-    Parameter(const sead::SafeString& name, const sead::SafeString& label,
-              const sead::SafeString& meta, ParameterObj* obj, bool e)
-        : ParameterBase(e) {
+    Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
+              const sead::SafeString& meta, ParameterObj* obj, bool e) {
         initializeListNode(name, label, meta, obj, e);
-        mValue = T();
+        setValue(value);
     }
 
     Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
-              const sead::SafeString& meta, ParameterObj* obj, bool e)
-        : ParameterBase(e) {
-        initializeListNode(name, label, meta, obj, e);
-        mValue = value;
-    }
-
-    Parameter(const sead::SafeString& name, const sead::SafeString& label,
-              const sead::SafeString& meta, ParameterList* list, bool e)
-        : ParameterBase(e) {
+              const sead::SafeString& meta, ParameterList* list, bool e) {
         initializeListNode(name, label, meta, list, e);
-        mValue = T();
-    }
-
-    Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
-              const sead::SafeString& meta, ParameterList* list, bool e)
-        : ParameterBase(e) {
-        initializeListNode(name, label, meta, list, e);
-        mValue = value;
+        setValue(value);
     }
 
     const void* ptr() const override { return &mValue; };
