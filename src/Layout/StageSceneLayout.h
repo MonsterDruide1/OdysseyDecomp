@@ -6,6 +6,7 @@ namespace al {
 class PlayerHolder;
 class LayoutActor;
 class LayoutInitInfo;
+class SimpleLayoutAppearWaitEnd;
 class SubCameraRenderer;
 }  // namespace al
 
@@ -16,38 +17,37 @@ class ShineChipLayoutParts;
 class PlayGuideCamera;
 class PlayGuideBgm;
 class MapMini;
-class SimpleLayoutAppearWaitEnd;
 class GamePadPlayStyleInfo;
 
 class StageSceneLayout : public al::NerveStateBase {
 public:
-    StageSceneLayout(const char*, const al::LayoutInitInfo&, const al::PlayerHolder*,
-                     const al::SubCameraRenderer*);
-    ~StageSceneLayout();
+    StageSceneLayout(const char* name, const al::LayoutInitInfo& initInfo,
+                     const al::PlayerHolder* playerHolder,
+                     const al::SubCameraRenderer* subCameraRenderer);
 
-    void startActionAll(const char*);
+    void startActionAll(const char* actionName);
     void control() override;
     void updatePlayGuideMenuText();
     void setDirtyFlagForPlayGuideMenu();
     void start();
     void updateCounterParts();
     void tryAppearCoinCollectCounter();
-    void startOnlyCoin(bool);
-    void endWithoutCoin(bool);
+    void startOnlyCoin(bool isOnlyCoin);
+    void endWithoutCoin(bool isOnlyCoin);
     void end();
     bool isEnd() const;
     bool isWait() const;
     bool isActive() const;
     bool isEndLifeDemo() const;
     bool tryStartLifeDemo();
-    void startCoinCountAnim(s32);
-    void startCoinCollectCountAnim(s32);
+    void startCoinCountAnim(s32 coinNum);
+    void startCoinCollectCountAnim(s32 coinNum);
     void appearCoinCounterForDemo();
     bool isEndCoinCountAnim() const;
     bool isEndShineChipCompleteAnim() const;
     void startShineChipCompleteAnim();
     void endShineChipCompleteAnim();
-    bool tryStartDemoGetLifeMaxUpItem(bool);
+    bool tryStartDemoGetLifeMaxUpItem(bool isHackKoopa);
     bool isEndDemoGetLifeMaxUpItem() const;
     void killShineCount();
     void appearShineCountWait();
@@ -56,7 +56,7 @@ public:
     void missEnd();
     void appearPlayGuideCamera();
     void exeAppear();
-    bool isActionEndAll();
+    bool isActionEndAll() const;
     void exeWait();
     void exeEnd();
     void exeEndWithoutCoin();
@@ -78,8 +78,8 @@ private:
     PlayGuideBgm* mPlayGuideBgm;
     MapMini* mMapMini;
     const al::PlayerHolder* mPlayerHolder;
-    bool _60;
-    SimpleLayoutAppearWaitEnd* mPlayGuideMenu;
+    bool mIsOnlyCoin;
+    al::SimpleLayoutAppearWaitEnd* mPlayGuideMenu;
     GamePadPlayStyleInfo* mGamePadPlayStyleInfo;
     al::LayoutActor* mLayoutActorKidsMode;
 };
