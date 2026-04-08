@@ -147,7 +147,25 @@ public:
 
     void* ptr() override { return &mValue; };
 
-    s32 size() const override { return sizeof(T); }
+    s32 size() const override {
+        // BUG: sead::FixedSafeString<128> is excluded from this list
+        if constexpr (std::is_same<T, sead::FixedSafeString<32>>())
+            return 32;
+        else if constexpr (std::is_same<T, sead::FixedSafeString<64>>())
+            return 64;
+        else if constexpr (std::is_same<T, sead::FixedSafeString<256>>())
+            return 256;
+        else if constexpr (std::is_same<T, sead::FixedSafeString<512>>())
+            return 512;
+        else if constexpr (std::is_same<T, sead::FixedSafeString<1024>>())
+            return 1024;
+        else if constexpr (std::is_same<T, sead::FixedSafeString<2048>>())
+            return 2048;
+        else if constexpr (std::is_same<T, sead::FixedSafeString<4096>>())
+            return 4096;
+        else
+            return sizeof(T);
+    }
 
     const char* getParamTypeStr() const override {
         return YamlParamType::text(YamlParamType::Invalid);
