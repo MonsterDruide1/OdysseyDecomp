@@ -30,7 +30,6 @@ public:
 
 private:
     SaveObjInfo* mSaveObjInfo = nullptr;
-    // TODO: check these
     bool mIsHomeDoorSet = false;
     bool mIsNeedAppearCapMessage = false;
 };
