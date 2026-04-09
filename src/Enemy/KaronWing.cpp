@@ -24,7 +24,7 @@
 #include "Enemy/FlyerStateWander.h"
 #include "Enemy/KaronWingStateHack.h"
 #include "Player/IUsePlayerCollision.h"
-#include "Util/Hack.h"
+#include "Util/PlayerHackFunction.h"
 #include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 

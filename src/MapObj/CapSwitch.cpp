@@ -17,7 +17,7 @@
 
 #include "MapObj/AppearSwitchSave.h"
 #include "Player/CapTargetInfo.h"
-#include "Util/Hack.h"
+#include "Util/PlayerHackFunction.h"
 #include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 

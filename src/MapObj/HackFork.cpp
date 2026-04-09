@@ -30,9 +30,10 @@
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Scene/GuidePosInfoHolder.h"
 #include "System/GameDataUtil.h"
-#include "Util/Hack.h"
 #include "Util/NpcAnimUtil.h"
 #include "Util/NpcEventFlowUtil.h"
+#include "Util/PlayerHackFunction.h"
+#include "Util/PlayerHackInputFunction.h"
 #include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 
