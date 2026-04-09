@@ -25,7 +25,7 @@
 #include "Boss/Loop/LoopAnimState.h"
 #include "Enemy/DisregardReceiver.h"
 #include "MapObj/CapMessageShowInfo.h"
-#include "Util/Hack.h"
+#include "Util/PlayerHackFunction.h"
 #include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 

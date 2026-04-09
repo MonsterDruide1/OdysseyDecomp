@@ -19,8 +19,9 @@
 #include "Player/HackerJudgeNormalFall.h"
 #include "Player/HackerJudgeStartRun.h"
 #include "Player/PlayerHackStartShaderCtrl.h"
-#include "Util/Hack.h"
 #include "Util/JudgeUtil.h"
+#include "Util/PlayerHackFunction.h"
+#include "Util/PlayerHackInputFunction.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {

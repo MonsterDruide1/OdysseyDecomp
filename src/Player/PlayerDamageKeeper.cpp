@@ -26,7 +26,7 @@ PlayerDamageKeeper::PlayerDamageKeeper(al::LiveActor* actor, PlayerEffect* playe
     : mPlayer(actor), mPlayerEffect(playerEffect) {}
 
 void PlayerDamageKeeper::invalidate(s32 damageInvalidCount) {
-    mIsUpdateModel = true;
+    mIsDamageInvalid = true;
     mDamageInvalidCount = sead::Mathi::clampMin(mDamageInvalidCount, damageInvalidCount);
 }
 
@@ -36,7 +36,7 @@ void PlayerDamageKeeper::invalidateIncludePush(s32 damageInvalidCountAbyss) {
 }
 
 void PlayerDamageKeeper::damage(s32 damageInvalidCount) {
-    mIsUpdateModel = true;
+    mIsDamageInvalid = true;
     mDamageInvalidCount = damageInvalidCount;
     if (mIsPreventDamage)
         return;
@@ -65,7 +65,7 @@ bool PlayerDamageKeeper::tryShowKidsModeLifeOneCapMessage() {
 }
 
 void PlayerDamageKeeper::damageForce(s32 damageInvalidCount) {
-    mIsUpdateModel = true;
+    mIsDamageInvalid = true;
     mDamageInvalidCount = damageInvalidCount;
 
     GameDataFunction::damagePlayer(mPlayer);
@@ -78,7 +78,7 @@ void PlayerDamageKeeper::dead() {
 }
 
 void PlayerDamageKeeper::reset(IPlayerModelChanger* modelChanger) {
-    mIsUpdateModel = false;
+    mIsDamageInvalid = false;
     mDamageInvalidCount = 0;
     mDamageInvalidCountAbyss = 0;
     if (modelChanger)
@@ -111,9 +111,9 @@ void PlayerDamageKeeper::update(IPlayerModelChanger* modelChanger, bool isRecove
         mDamageInvalidCountAbyss = al::converge(mDamageInvalidCountAbyss, 0, 1);
 
     if (mDamageInvalidCount == 0 || PlayerFunction::isPlayerDeadStatus(mPlayer)) {
-        if (mIsUpdateModel)
+        if (mIsDamageInvalid)
             modelChanger->showModel();
-        mIsUpdateModel = false;
+        mIsDamageInvalid = false;
         return;
     }
 
