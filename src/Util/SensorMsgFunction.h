@@ -24,7 +24,7 @@ class CapTargetInfo;
 class DigPoint;
 class FishingFish;
 class GotogotonMark;
-class HackEndParam;
+struct HackEndParam;
 class IUsePlayerHack;
 class SaveObjInfo;
 class TouchTargetInfo;
