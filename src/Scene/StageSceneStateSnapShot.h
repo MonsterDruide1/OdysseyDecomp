@@ -21,11 +21,10 @@ public:
     void exeWait();
 
 private:
-    al::Scene* mScene;
     ControllerGuideSnapShotCtrl* mControllerGuideSnapShotCtrl;
     SceneAudioSystemPauseController* mAudioSystemPauseController;
     InputSeparator* mInputSeparator;
     NpcEventDirector* mNpcEventDirector;
 };
 
-static_assert(sizeof(StageSceneStateSnapShot) == 0x48);
+static_assert(sizeof(StageSceneStateSnapShot) == 0x40);
