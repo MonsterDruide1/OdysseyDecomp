@@ -10,7 +10,7 @@
 #include "Library/Shadow/ActorShadowUtil.h"
 
 #include "Player/PlayerHackStartShaderCtrl.h"
-#include "Util/Hack.h"
+#include "Util/PlayerHackFunction.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {

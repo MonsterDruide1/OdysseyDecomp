@@ -49,6 +49,8 @@ class PlayerInfo {
 public:
     PlayerInfo();
 
+    HackCap* getHackCap() const { return mHackCap; }
+
 private:
     PlayerModelChangerHakoniwa* mModelChangerHakoniwa = nullptr;
     PlayerOxygen* mOxygen = nullptr;
