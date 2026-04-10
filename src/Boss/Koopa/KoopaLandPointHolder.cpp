@@ -65,8 +65,8 @@ void KoopaLandPointHolder::decidePointEitherFarSide(const sead::Vector3f& pos) {
     }
 
     mInvalidPoints[mCurrentLandPoint] = false;
-    s32 prevPoint = al::modi(mCurrentLandPoint + mLandPoints - 1, mLandPoints);
-    s32 nextPoint = al::modi(mCurrentLandPoint + mLandPoints + 1, mLandPoints);
+    s32 prevPoint = al::modi(mCurrentLandPoint - 1 + mLandPoints, mLandPoints);
+    s32 nextPoint = al::modi(mCurrentLandPoint + 1 + mLandPoints, mLandPoints);
 
     f32 prevDist = getKoopaLandPointDistance(mPointsTrans[prevPoint], pos);
     f32 nextDist = getKoopaLandPointDistance(mPointsTrans[nextPoint], pos);
@@ -102,6 +102,7 @@ void KoopaLandPointHolder::reset() {
         mInvalidPoints[i] = false;
 }
 
+// NOTE: does not care about `mInvalidPoints`
 const sead::Vector3f& KoopaLandPointHolder::findNearestPointTrans(const sead::Vector3f& pos) const {
     f32 minDistance = getKoopaLandPointDistance(mPointsTrans[0], pos);
     s32 selectedPoint = 0;
