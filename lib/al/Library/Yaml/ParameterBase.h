@@ -155,6 +155,7 @@ public:
             return 64;
         else if constexpr (std::is_same<T, sead::FixedSafeString<256>>())
             return 256;
+        // NOTE: from 512 onwards, no examples exist in the binary
         else if constexpr (std::is_same<T, sead::FixedSafeString<512>>())
             return 512;
         else if constexpr (std::is_same<T, sead::FixedSafeString<1024>>())
