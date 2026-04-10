@@ -85,9 +85,9 @@ NERVES_MAKE_STRUCT(StageScene, StartStageBgm, CollectBgm, CollectionList, MiniGa
 }  // namespace
 
 bool StageScene::isIgnoreAddPlayTime() const {
-    if (mStateSnapShot->isDead())
-        return al::isNerve(this, &NrvStageScene.Pause);
-    return true;
+    if (!mStateSnapShot->isDead())
+        return true;
+    return al::isNerve(this, &NrvStageScene.Pause);
 }
 
 void StageScene::exeDemoGetLifeMaxUpItem() {
