@@ -63,9 +63,9 @@ class ParameterBase {
 public:
     static u32 calcHash(const sead::SafeString& key);
 
-    // TODO: rename parameter bool e in all functions
     ParameterBase() { initialize("default", "parameter", "", true); }
 
+    // TODO: rename parameter bool e in all functions
     ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
                   const sead::SafeString& meta, ParameterObj* obj, bool e);
 
