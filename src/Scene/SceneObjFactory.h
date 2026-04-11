@@ -37,7 +37,7 @@ enum SceneObjID : s32 {
     SceneObjID_InformationWindowDirector,
     SceneObjID__1c,
     SceneObjID_KidsModeLayoutAccessor,
-    SceneObjID_KoopaStopHackCtrl,
+    SceneObjID_KoopaHackStopCtrl,
     SceneObjID_KoopaShipDemoRequester,
     SceneObjID_alLayoutTextureRenderer,
     SceneObjID_LifeUpItemGenerateWatcher,
