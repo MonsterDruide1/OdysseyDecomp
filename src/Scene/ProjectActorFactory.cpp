@@ -84,6 +84,7 @@
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
+#include "MapObj/MoonBasementMeteorPointObj.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
@@ -693,3 +694,5 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
 ProjectActorFactory::ProjectActorFactory() : ActorFactory("アクター生成") {  //("繧｢繧ｯ繧ｿ繝ｼ逕滓")
     initFactory(sProjectActorFactoryEntries);
 }
+
+template al::LiveActor* al::createActorFunction<MoonBasementMeteorPointObj>(const char*);
