@@ -82,6 +82,7 @@
 #include "MapObj/HackFork.h"
 #include "MapObj/HipDropSwitch.h"
 #include "MapObj/KoopaShip.h"
+#include "MapObj/LavaFryingPan.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
@@ -385,7 +386,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"KuriboMini", al::createActorFunction<KuriboMini>},
     {"KuriboTowerSwitch", nullptr},
     {"KuriboWing", nullptr},
-    {"LavaFryingPan", nullptr},
+    {"LavaFryingPan", al::createActorFunction<LavaFryingPan>},
     {"LavaStewVeget", nullptr},
     {"LavaPan", al::createActorFunction<LavaPan>},
     {"LavaWave", nullptr},
