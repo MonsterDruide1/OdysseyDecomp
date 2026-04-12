@@ -40,6 +40,7 @@
 #include "Camera/ScenarioStartCamera.h"
 #include "Enemy/Bubble.h"
 #include "Enemy/CatchBomb.h"
+#include "Enemy/DonkeyKong2D.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Kuribo2D.h"
@@ -267,7 +268,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DokanMaze", nullptr},
     {"DokanMazeDirector", nullptr},
     {"DokanStageChange", nullptr},
-    {"DonkeyKong2D", nullptr},
+    {"DonkeyKong2D", al::createActorFunction<DonkeyKong2D>},
     {"Donsuke", nullptr},
     {"Doshi", al::createActorFunction<Doshi>},
     {"DoorAreaChange", nullptr},
