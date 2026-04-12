@@ -2,6 +2,17 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
+namespace al {
+class EnemyStateBlowDown;
+class CollisionPartsFilterBase;
+}
+class ActorStateSandGeyser;
+class EnemyStateReset;
+class EnemyStateWander;
+class PlayerPushReceiver;
+class CollisionMultiShape;
+class CollisionShapeKeeper;
+
 class KuriboMini : public al::LiveActor {
 public:
     KuriboMini(const char* name);
@@ -59,5 +70,25 @@ public:
     void forceStartClipped();
 
 private:
-    void* filler[22];
+    EnemyStateReset* mStateReset;
+    EnemyStateWander* mStateWander;
+    ActorStateSandGeyser* mStateSandGeyser;
+    al::EnemyStateBlowDown* mStateBlowDown;
+    s32 mCounterChase;
+    s32 _12c;
+    al::CollisionPartsFilterBase* mCollisionFilter;
+    void* _138[1];
+    s32 _140;
+    f32 mClippingRadius;
+    PlayerPushReceiver* mPlayerPushReceiver;
+    CollisionMultiShape* mCollisionMultiShape;
+    CollisionShapeKeeper* mCollisionShapeKeeper;
+    f32 mJumpSink;
+    s32 mFramesSpecialPush;
+    s32 mShiftTypeOnGround;
+    al::LiveActor* _170;
+    sead::Vector3f _178;
+    bool mIsPopBack;
+    bool mIsInvalidateClipping;
+    sead::Matrix34f mColliderMtx;
 };

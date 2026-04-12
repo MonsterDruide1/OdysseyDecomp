@@ -23,5 +23,23 @@ public:
 
     bool receiveRequestFromObject(const CameraObjectRequestInfo& info);
     void setAngleV(f32 angleV);
+
+private:
+    void* _0;
+    void* _8[1];
+    bool mIsValidRotateH;
+    void* _18[1];
+    f32 mMinAngleH;
+    f32 mMaxAngleH;
+    f32 _28;
+    f32 mAngleV;
+    f32 _30;
+    f32 mMinAngleV;
+    f32 mMaxAngleV;
+    f32 _3c[5];
+    bool mIsKeepPreAngleV;
+    bool mIsSetResetAngleV;
+    f32 mResetAngleV;
+    bool mIsInvalidReceiveRequest;
 };
 }  // namespace al
