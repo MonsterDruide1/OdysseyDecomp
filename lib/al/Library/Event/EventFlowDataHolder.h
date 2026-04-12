@@ -42,14 +42,14 @@ public:
     bool isPlayingEventAnimCamera(const char*) const;
 
 private:
-    al::EventFlowRequestInfo* mRequestInfo;
+    EventFlowRequestInfo* mRequestInfo;
     void* _8[10];
     void* _58;
     void* _60[1];
-    al::EventFlowScareCtrlBase* mScareCtrl;
+    EventFlowScareCtrlBase* mScareCtrl;
     void* _70;
     void* _78[2];
-    al::BalloonOrderGroup* mBalloonOrderGroup;
+    BalloonOrderGroup* mBalloonOrderGroup;
     void* _90[15];
 };
 
