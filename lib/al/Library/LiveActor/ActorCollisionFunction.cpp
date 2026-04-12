@@ -145,7 +145,8 @@ bool isOnGroundDegree(const LiveActor* actor, f32 angle, u32 coyoteTime) {
     if (!(isCollidedGround(actor) || collider->getNoGroundCounter() <= coyoteTime))
         return false;
 
-    if (sead::Mathf::abs((*collider->getActorGravityPtr()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
+    if (sead::Mathf::abs(
+            (*collider->getActorGravityPtr()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
         sead::Mathf::cos(sead::Mathf::deg2rad(angle)))
         return false;
 
@@ -164,7 +165,8 @@ bool isOnGroundNoVelocityDegree(const LiveActor* actor, f32 angle, u32 coyoteTim
     if (!(isCollidedGround(actor) || collider->getNoGroundCounter() <= coyoteTime))
         return false;
 
-    if (sead::Mathf::abs((*collider->getActorGravityPtr()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
+    if (sead::Mathf::abs(
+            (*collider->getActorGravityPtr()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
         sead::Mathf::cos(sead::Mathf::deg2rad(angle)))
         return false;
 
