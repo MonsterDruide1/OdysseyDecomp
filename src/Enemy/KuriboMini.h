@@ -5,7 +5,7 @@
 namespace al {
 class EnemyStateBlowDown;
 class CollisionPartsFilterBase;
-}
+}  // namespace al
 class ActorStateSandGeyser;
 class EnemyStateReset;
 class EnemyStateWander;

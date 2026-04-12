@@ -52,6 +52,7 @@ private:
     al::BalloonOrderGroup* mBalloonOrderGroup;
     void* _90[15];
 };
+
 static_assert(sizeof(EventFlowDataHolder) == 0x108);
 
 }  // namespace al

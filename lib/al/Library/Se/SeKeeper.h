@@ -56,7 +56,7 @@ public:
     void loadSe(IAudioResourceLoader*);
 
 private:
-    void* _0[0x78/8];
+    void* _0[0x78 / 8];
 };
 
 static_assert(sizeof(SeKeeper) == 0x78);

@@ -8,7 +8,7 @@ namespace al {
 class ActorDitherAnimator;
 class WaterSurfaceFinder;
 class PadRumbleKeeper;
-}
+}  // namespace al
 class PlayerInput;
 class PlayerAreaChecker;
 class PlayerWallActionHistory;

@@ -14,7 +14,7 @@ public:
     f32 getOffset() const override;
 
 private:
-    CameraOffsetPreset *mPreset;
+    CameraOffsetPreset* mPreset;
 };
 
 static_assert(sizeof(CameraOffsetCtrlPreset) == 0x10);

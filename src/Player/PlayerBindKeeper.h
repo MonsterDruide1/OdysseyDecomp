@@ -5,7 +5,7 @@
 namespace al {
 class HitSensor;
 class SensorMsg;
-}
+}  // namespace al
 class PlayerBindableSensorList;
 class IUsePlayerPuppet;
 
