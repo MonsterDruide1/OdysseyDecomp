@@ -117,7 +117,7 @@ void setSyncCollisionMtxPtr(LiveActor* actor, const sead::Matrix34f* mtx) {
 
 bool isOnGround(const LiveActor* actor, u32 coyoteTime) {
     Collider* collider = actor->getCollider();
-    if (!isCollidedGround(actor) && collider->get_264() > coyoteTime)
+    if (!isCollidedGround(actor) && collider->getNoGroundCounter() > coyoteTime)
         return false;
     return !(getVelocity(actor).dot(collider->getRecentOnGroundNormal(coyoteTime)) > 0.0f);
 }
@@ -137,15 +137,15 @@ bool isOnGroundNoVelocity(const LiveActor* actor, u32 coyoteTime) {
     if (isCollidedGround(actor))
         return true;
 
-    return actor->getCollider()->get_264() <= coyoteTime;
+    return actor->getCollider()->getNoGroundCounter() <= coyoteTime;
 }
 
 bool isOnGroundDegree(const LiveActor* actor, f32 angle, u32 coyoteTime) {
     Collider* collider = actor->getCollider();
-    if (!(isCollidedGround(actor) || collider->get_264() <= coyoteTime))
+    if (!(isCollidedGround(actor) || collider->getNoGroundCounter() <= coyoteTime))
         return false;
 
-    if (sead::Mathf::abs((*collider->get_30()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
+    if (sead::Mathf::abs((*collider->getActorGravityPtr()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
         sead::Mathf::cos(sead::Mathf::deg2rad(angle)))
         return false;
 
@@ -161,10 +161,10 @@ bool isOnGroundNoVelocityDegree(const LiveActor* actor, f32 angle, u32 coyoteTim
     if (!collider)
         return getTrans(actor).y <= 0.0;
 
-    if (!(isCollidedGround(actor) || collider->get_264() <= coyoteTime))
+    if (!(isCollidedGround(actor) || collider->getNoGroundCounter() <= coyoteTime))
         return false;
 
-    if (sead::Mathf::abs((*collider->get_30()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
+    if (sead::Mathf::abs((*collider->getActorGravityPtr()).dot(collider->getRecentOnGroundNormal(coyoteTime))) <
         sead::Mathf::cos(sead::Mathf::deg2rad(angle)))
         return false;
 
@@ -451,7 +451,7 @@ bool isCollidedFloorCode(const LiveActor* actor, const char* name) {
 
 bool isCollidedCollisionCode(const LiveActor* actor, const char* sensorName, const char* name) {
     Collider* collider = actor->getCollider();
-    if (collider->get_48() == 0) {
+    if (collider->getPlaneNum() == 0) {
         if (collider->get_110() >= 0.0f) {
             if (isEqualString(name,
                               getCollisionCodeName(collider->getFloorHit().triangle, sensorName))) {
@@ -473,7 +473,7 @@ bool isCollidedCollisionCode(const LiveActor* actor, const char* sensorName, con
         return false;
     }
 
-    u32 size = collider->getPlaneCount();
+    u32 size = collider->getStoredPlaneNum();
     for (u32 i = 0; i < size; i++)
         if (isEqualString(name, getCollisionCodeName(*collider->getPlane(i), sensorName)))
             return true;
