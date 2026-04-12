@@ -89,6 +89,7 @@
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/RiseMapPartsHolder.h"
+#include "MapObj/RocketFlower.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/ShineTowerRocket.h"
@@ -666,7 +667,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"RiseMapParts", nullptr},
     {"ReactionMapParts", nullptr},
     {"RiseMapPartsHolder", al::createActorFunction<RiseMapPartsHolder>},
-    {"RocketFlower", nullptr},
+    {"RocketFlower", al::createActorFunction<RocketFlower>},
     {"RollingCubeMapParts", al::createActorFunction<al::RollingCubeMapParts>},
     {"RippleFixMapParts", nullptr},
     {"RotateMapParts", al::createActorFunction<al::RotateMapParts>},
