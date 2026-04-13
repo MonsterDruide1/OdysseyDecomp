@@ -90,6 +90,7 @@
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PoleGrabCeil.h"
+#include "MapObj/ReactionMapParts.h"
 #include "MapObj/RiseMapPartsHolder.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
@@ -666,7 +667,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"RailCollision", nullptr},
     {"RailMoveMapParts", al::createActorFunction<al::RailMoveMapParts>},
     {"RiseMapParts", nullptr},
-    {"ReactionMapParts", nullptr},
+    {"ReactionMapParts", al::createActorFunction<ReactionMapParts>},
     {"RiseMapPartsHolder", al::createActorFunction<RiseMapPartsHolder>},
     {"RocketFlower", nullptr},
     {"RollingCubeMapParts", al::createActorFunction<al::RollingCubeMapParts>},
