@@ -28,6 +28,8 @@ public:
 
     s32 getQuestNo() const { return mQuestNo; }
 
+    bool isMainQuest() const { return mIsMainQuest; }
+
 private:
     s32 mQuestNo;
     void* filler_10;
