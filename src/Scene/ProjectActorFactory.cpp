@@ -86,6 +86,7 @@
 #include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
+#include "MapObj/MoviePlayerMapParts.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/RiseMapPartsHolder.h"
@@ -422,7 +423,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Motorcycle", nullptr},
     {"MotorcycleParkingLot", nullptr},
     {"MoveHomeNpc", nullptr},
-    {"MoviePlayerMapParts", nullptr},
+    {"MoviePlayerMapParts", al::createActorFunction<MoviePlayerMapParts>},
     {"MultiGateKeeperBonfire", nullptr},
     {"MultiGateKeeperWatcher", nullptr},
     {"Mummy", al::createActorFunction<Mummy>},
