@@ -25,10 +25,12 @@ public:
     void setAngleV(f32 angleV);
 
 private:
-    void* _0;
-    void* _8[1];
+    void* _0;  // object of size 0x14
+    void* _8;  // object of size 0x10
     bool mIsValidRotateH;
-    void* _18[1];
+    s32 _14;
+    f32 _18;
+    f32 _1c;
     f32 mMinAngleH;
     f32 mMaxAngleH;
     f32 _28;
@@ -36,10 +38,17 @@ private:
     f32 _30;
     f32 mMinAngleV;
     f32 mMaxAngleV;
-    f32 _3c[5];
+    f32 _3c;
+    f32 _40;
+    f32 _44;
+    f32 _48;
+    f32 _4c;
     bool mIsKeepPreAngleV;
     bool mIsSetResetAngleV;
     f32 mResetAngleV;
     bool mIsInvalidReceiveRequest;
 };
+
+static_assert(sizeof(CameraAngleCtrlInfo) == 0x60);
+
 }  // namespace al

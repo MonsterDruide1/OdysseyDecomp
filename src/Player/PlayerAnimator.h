@@ -100,7 +100,8 @@ private:
     bool mIsSubAnimPlaying;
     bool _1a3;
     bool mIsUpperBodyAnimHeadVisKeep;
-    bool _1a5[2];
+    bool _1a5;
+    bool _1a6;
     bool mIsSubAnimOnlyAir;
 };
 

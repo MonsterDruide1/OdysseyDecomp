@@ -43,14 +43,19 @@ public:
 
 private:
     EventFlowRequestInfo* mRequestInfo;
-    void* _8[10];
+    void* filler_8[10];
     void* _58;
-    void* _60[1];
+    void* filler_60[1];
     EventFlowScareCtrlBase* mScareCtrl;
     void* _70;
-    void* _78[2];
+    void* filler_78[2];
     BalloonOrderGroup* mBalloonOrderGroup;
-    void* _90[15];
+    sead::WFixedSafeString<32> _90;
+    void* filler_e8[1];
+    const char* mTalkSubActorName;
+    s32 mItemTypeCapacity;
+    s32 mItemTypeCount;
+    const char** mItemTypes;
 };
 
 static_assert(sizeof(EventFlowDataHolder) == 0x108);

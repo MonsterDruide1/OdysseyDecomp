@@ -77,7 +77,7 @@ private:
     s32 mCounterChase;
     s32 _12c;
     al::CollisionPartsFilterBase* mCollisionFilter;
-    void* _138[1];
+    void* _138;
     s32 _140;
     f32 mClippingRadius;
     PlayerPushReceiver* mPlayerPushReceiver;
@@ -92,3 +92,5 @@ private:
     bool mIsInvalidateClipping;
     sead::Matrix34f mColliderMtx;
 };
+
+static_assert(sizeof(KuriboMini) == 0x1b8);

@@ -269,7 +269,7 @@ private:
     sead::Vector3f _4d4;
     sead::Vector3f _4e0;
     bool _4ec;
-    void* _4f0[1];
+    void* _4f0;
     PlayerExternalVelocity* mCapExternalVelocity;
     PlayerPushReceiver* mCapPushReceiver;
     al::HitSensor* mPlayerBodySensor;
