@@ -95,6 +95,7 @@
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
+#include "MapObj/TalkPoint.h"
 #include "MapObj/TrampleBush.h"
 #include "MapObj/TrampleSwitch.h"
 #include "MapObj/TrampleSwitchTimer.h"
@@ -597,7 +598,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TalkNpcSnowMan", nullptr},
     {"TalkNpcSnowManLeader", nullptr},
     {"TalkNpcSnowManRacer", nullptr},
-    {"TalkPoint", nullptr},
+    {"TalkPoint", al::createActorFunction<TalkPoint>},
     {"Tank", nullptr},
     {"TankReviveCtrl", nullptr},
     {"TaxiStop", nullptr},
