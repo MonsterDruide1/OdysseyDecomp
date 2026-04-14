@@ -75,6 +75,7 @@
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
+#include "MapObj/DoorSnow.h"
 #include "MapObj/Doshi.h"
 #include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
@@ -273,7 +274,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DoorAreaChange", nullptr},
     {"DoorAreaChangeCap", nullptr},
     {"DoorCity", nullptr},
-    {"DoorSnow", nullptr},
+    {"DoorSnow", al::createActorFunction<DoorSnow>},
     {"DoorWarp", nullptr},
     {"DoorWarpStageChange", nullptr},
     {"EchoBlockMapParts", nullptr},
