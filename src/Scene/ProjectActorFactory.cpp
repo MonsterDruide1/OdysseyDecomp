@@ -73,6 +73,7 @@
 #include "MapObj/BlockQuestion2D.h"
 #include "MapObj/BossKnuckleFix.h"
 #include "MapObj/BreakablePole.h"
+#include "MapObj/CameraSub.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
@@ -204,7 +205,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CameraDemoGateMapParts", nullptr},
     {"CameraDemoKeyMoveMapParts", nullptr},
     {"CameraRailHolder", al::createActorFunction<al::CameraRailHolder>},
-    {"CameraSub", nullptr},
+    {"CameraSub", al::createActorFunction<CameraSub>},
     {"CameraWatchPoint", al::createActorFunction<al::CameraWatchPoint>},
     {"Candlestand", nullptr},
     {"CandlestandFire", nullptr},
