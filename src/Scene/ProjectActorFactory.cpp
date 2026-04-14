@@ -68,6 +68,7 @@
 #include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/BlockEmpty2D.h"
+#include "MapObj/BlockQuestion2D.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
@@ -146,7 +147,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ClashWorldBlockHard", nullptr},
     {"BlockQuestion", nullptr},
     {"CityBlockQuestion", nullptr},
-    {"BlockQuestion2D", nullptr},
+    {"BlockQuestion2D", al::createActorFunction<BlockQuestion2D>},
     {"BlockTransparent", nullptr},
     {"BlockTransparent2D", nullptr},
     {"BlowObjBeans", nullptr},
