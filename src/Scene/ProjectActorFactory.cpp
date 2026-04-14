@@ -87,6 +87,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/PoleClimbParts.h"
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/RiseMapPartsHolder.h"
 #include "MapObj/RouletteSwitch.h"
@@ -461,7 +462,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PlayerStartObjNoLink", nullptr},
     {"PochiHintPhoto", nullptr},
     {"Poetter", nullptr},
-    {"PoleClimbParts", nullptr},
+    {"PoleClimbParts", al::createActorFunction<PoleClimbParts>},
     {"PoleClimbPartsBreak", nullptr},
     {"PoleGrabCeil", al::createActorFunction<PoleGrabCeil>},
     {"PoleGrabCeilKeyMoveParts", nullptr},
