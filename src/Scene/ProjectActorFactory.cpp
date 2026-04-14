@@ -6,7 +6,6 @@
 #include "Library/MapObj/ClockMapParts.h"
 #include "Library/MapObj/ConveyerMapParts.h"
 #include "Library/MapObj/FallMapParts.h"
-#include "Library/MapObj/FixMapParts.h"
 #include "Library/MapObj/FloaterMapParts.h"
 #include "Library/MapObj/GateMapParts.h"
 #include "Library/MapObj/KeyMoveMapParts.h"
@@ -67,6 +66,7 @@
 #include "Item/LifeUpItem2D.h"
 #include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/AppearSwitchFixMapParts.h"
 #include "MapObj/BlockEmpty2D.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
@@ -652,7 +652,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ClockMapParts", al::createActorFunction<al::ClockMapParts>},
     {"ConveyerMapParts", al::createActorFunction<al::ConveyerMapParts>},
     {"FallMapParts", al::createActorFunction<al::FallMapParts>},
-    {"FixMapParts", al::createActorFunction<al::FixMapParts>},
+    {"FixMapParts", al::createActorFunction<AppearSwitchFixMapParts>},
     {"FloaterMapParts", al::createActorFunction<al::FloaterMapParts>},
     {"FlowMapParts", al::createActorFunction<al::FlowMapParts>},
     {"GateMapParts", al::createActorFunction<al::GateMapParts>},
