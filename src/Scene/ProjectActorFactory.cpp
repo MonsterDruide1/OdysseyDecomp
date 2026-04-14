@@ -87,6 +87,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
+#include "MapObj/PlayerMotionObserver.h"
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/RiseMapPartsHolder.h"
 #include "MapObj/RouletteSwitch.h"
@@ -453,7 +454,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PictureStageChange", nullptr},
     {"PillarKeyMoveParts", nullptr},
     {"PillarSwitchOpenMapParts", nullptr},
-    {"PlayerMotionObserver", nullptr},
+    {"PlayerMotionObserver", al::createActorFunction<PlayerMotionObserver>},
     {"PlayerStartObj", nullptr},
     {"PlayerSubjectiveWatchCheckObj", nullptr},
     {"PlayGuideBoard", nullptr},
