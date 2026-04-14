@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 namespace al {
 struct ActorInitInfo;
@@ -14,6 +15,7 @@ al::EventFlowExecutor* initEventFlow(al::LiveActor*, const al::ActorInitInfo&, c
                                      const char*);
 al::EventFlowExecutor* initEventFlowSuffix(al::LiveActor*, const al::ActorInitInfo&, const char*,
                                            const char*, const char*);
+bool checkTriggerDecideWithRequestIcon(al::LiveActor*, const sead::Vector3f&, f32);
 void startEventFlow(al::EventFlowExecutor*, const char*);
 bool updateEventFlow(al::EventFlowExecutor*);
 void initEventMessageTagDataHolder(al::EventFlowExecutor*, const al::MessageTagDataHolder*);
