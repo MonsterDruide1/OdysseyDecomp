@@ -71,6 +71,7 @@
 #include "MapObj/BlockEmpty2D.h"
 #include "MapObj/BlockQuestion2D.h"
 #include "MapObj/BossKnuckleFix.h"
+#include "MapObj/BreakablePole.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
@@ -176,7 +177,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BossRaid", nullptr},
     {"BossRaidNpc", nullptr},
     {"BossRaidRivet", nullptr},
-    {"BreakablePole", nullptr},
+    {"BreakablePole", al::createActorFunction<BreakablePole>},
     {"Breeda", nullptr},
     {"Bubble", al::createActorFunction<Bubble>},
     {"Bubble2D", nullptr},
