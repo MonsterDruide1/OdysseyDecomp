@@ -95,6 +95,7 @@
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/ShineTowerRocket.h"
+#include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
@@ -545,7 +546,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SkyWorldKoopaFire", nullptr},
     {"SkyWorldKoopaFrame", nullptr},
     {"SkyWorldMiddleViewCloud", nullptr},
-    {"SignBoard", nullptr},
+    {"SignBoard", al::createActorFunction<SignBoard>},
     {"SnowWorldBigIcicle", nullptr},
     {"SnowWorldSequenceFlagCheckObj", nullptr},
     {"Sky", nullptr},
