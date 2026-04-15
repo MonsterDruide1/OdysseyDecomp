@@ -33,9 +33,9 @@ void BrosWeaponBase::calcAttachMtx(sead::Matrix34f* attachMtx, const sead::Matri
     sead::Matrix34f rotationMatrix;
     rotationMatrix.makeRT(rotation, sead::Vector3f::zero);
 
-    sead::Matrix34f poseMatrix = rotationMatrix * translationMatrix;
-    sead::Matrix34f copy = *poseMtx;
-    al::normalize(&copy);
+    sead::Matrix34f mtxRT = rotationMatrix * translationMatrix;
+    sead::Matrix34f poseMtxNorm = *poseMtx;
+    al::normalize(&poseMtxNorm);
 
-    attachMtx->setMul(copy, poseMatrix);
+    attachMtx->setMul(poseMtxNorm, mtxRT);
 }
