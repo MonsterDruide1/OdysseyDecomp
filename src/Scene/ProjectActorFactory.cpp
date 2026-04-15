@@ -72,6 +72,7 @@
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
+#include "MapObj/CarWatcher.h"
 #include "MapObj/CheckpointFlag.h"
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
@@ -213,7 +214,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CapTrampoline", nullptr},
     {"Car", nullptr},
     {"CarSandWorld", nullptr},
-    {"CarWatcher", nullptr},
+    {"CarWatcher", al::createActorFunction<CarWatcher>},
     {"CardboardBox", nullptr},
     {"CatchBomb", al::createActorFunction<CatchBomb>},
     {"Chair", nullptr},
