@@ -101,6 +101,7 @@
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/ShineTowerRocket.h"
+#include "MapObj/ShopMark.h"
 #include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
@@ -544,7 +545,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ShineFukankunWatchObj", nullptr},
     {"ShineTowerRocket", al::createActorFunction<ShineTowerRocket>},
     {"ShopBgmPlayer", nullptr},
-    {"ShopMark", nullptr},
+    {"ShopMark", al::createActorFunction<ShopMark>},
     {"ShoppingWatcher", nullptr},
     {"SignBoardDanger", al::createActorFunction<SignBoardDanger>},
     {"SignBoardLayoutTexture", nullptr},
