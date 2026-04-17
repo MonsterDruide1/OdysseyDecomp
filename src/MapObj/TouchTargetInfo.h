@@ -12,4 +12,5 @@ public:
     void setInfoBySensor(const al::HitSensor*, const sead::Vector3f&, const sead::Vector3f&);
     void setInfoByConnector(const al::MtxConnector*, const sead::Vector3f&, const sead::Vector3f&,
                             bool);
+    void setInfoByPosAndNrm(const sead::Vector3f&, const sead::Vector3f&);
 };
