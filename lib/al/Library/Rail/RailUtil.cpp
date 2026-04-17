@@ -323,11 +323,8 @@ s32 getNextRailPointNo(const IUseRail* railHolder) {
     s32 newIndex = getRailPointNo(railHolder) + modifier;
     s32 railPointNum = getRailPointNum(railHolder);
 
-    if (isLoop) {
-        s32 sum = railPointNum + newIndex;
-        s32 railPointNumAgain = getRailPointNum(railHolder);
-        return modi(sum + railPointNumAgain, railPointNumAgain);
-    }
+    if (isLoop)
+        return wrapValue(railPointNum + newIndex, getRailPointNum(railHolder));
 
     return sead::Mathi::clamp2(0, newIndex, railPointNum - 1);
 }
