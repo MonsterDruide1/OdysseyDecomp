@@ -82,6 +82,7 @@
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
+#include "MapObj/CollectBgmSpeaker.h"
 #include "MapObj/CollectionList.h"
 #include "MapObj/DoorCity.h"
 #include "MapObj/DoorSnow.h"
@@ -252,7 +253,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CloudStep", nullptr},
     {"CollapseSandHill", nullptr},
     {"CollectAnimalWatcher", nullptr},
-    {"CollectBgmSpeaker", nullptr},
+    {"CollectBgmSpeaker", al::createActorFunction<CollectBgmSpeaker>},
     {"CollectionList", al::createActorFunction<CollectionList>},
     {"Coin", al::createActorFunction<Coin>},
     {"Coin2D", al::createActorFunction<Coin2D>},
