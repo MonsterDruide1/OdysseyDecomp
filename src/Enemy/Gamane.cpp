@@ -505,7 +505,8 @@ void Gamane::exeHack() {
         mCoinsLeft--;
     }
 
-    mHackCoinAppearCounter = al::modi((mHackCoinAppearCounter++ + 1) + 6, 6);
+    // BUG: Non intended double increment
+    mHackCoinAppearCounter = al::wrapValue(mHackCoinAppearCounter++ + 1, 6);
 }
 
 void Gamane::exeTrampled() {

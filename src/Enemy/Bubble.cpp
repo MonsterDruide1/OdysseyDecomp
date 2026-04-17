@@ -638,7 +638,8 @@ void Bubble::control() {
     if (!al::isNerve(this, &NrvBubble.StandBy) && !al::isNerve(this, &NrvBubble.Delay) &&
         (!isHack() || !rs::isActiveHackStartDemo(mPlayerHack)) &&
         !al::isClipped(mClippingProbeActor) && !mIsClipped) {
-        mReviveDelayCount = al::modi(mReviveDelayCount + 1 + mReviveDelayTime, mReviveDelayTime);
+        mReviveDelayCount =
+            al::wrapValue(static_cast<s32>(mReviveDelayCount + 1), mReviveDelayTime);
     }
 
     mIsClipped = al::isClipped(mClippingProbeActor);

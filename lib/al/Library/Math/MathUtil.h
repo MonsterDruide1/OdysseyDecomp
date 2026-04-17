@@ -205,6 +205,10 @@ void makeBoxMullerRandomGauss(sead::Vector2f* outBox, f32 randA, f32 randB);
 f32 modf(f32 a, f32 b);
 s32 modi(s32 a, s32 b);
 
+inline s32 wrapValue(s32 value, s32 maxRange) {
+    return modi(value + maxRange, maxRange);
+}
+
 inline f32 wrapValue(f32 value, f32 maxRange) {
     return modf(value + maxRange, maxRange) + 0.0f;
 }

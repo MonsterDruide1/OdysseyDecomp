@@ -5,8 +5,9 @@
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 
-namespace al {
 namespace {
+using namespace al;
+
 NERVE_IMPL(ClockMovement, Delay);
 NERVE_IMPL(ClockMovement, RotateSign);
 NERVE_IMPL(ClockMovement, Rotate);
@@ -16,9 +17,11 @@ NERVES_MAKE_STRUCT(ClockMovement, Delay, RotateSign, Rotate);
 NERVES_MAKE_NOSTRUCT(ClockMovement, Wait);
 }  // namespace
 
+namespace al {
+
 ClockMovement::ClockMovement(const ActorInitInfo& info) : NerveExecutor("クロックパーツ動作") {
-    getQuat(&mInitialActorQuat, info);
-    mActorQuat = mInitialActorQuat;
+    getQuat(&mInitialQuat, info);
+    mCurrentQuat = mInitialQuat;
     tryGetArg(&mClockAngleDegree, info, "ClockAngleDegree");
     tryGetArg(&mRotateAxis, info, "RotateAxis");
     tryGetArg(&mDelayTime, info, "DelayTime");
@@ -36,7 +39,7 @@ ClockMovement::ClockMovement(const ActorInitInfo& info) : NerveExecutor("クロ�
         stepsPerCycle = sead::Mathi::lcm(sead::Mathi::abs(mClockAngleDegree), 360) /
                         sead::Mathi::abs(mClockAngleDegree);
     }
-    mMaxStepCount = stepsPerCycle;
+    mMaxStepIndex = stepsPerCycle;
 }
 
 void ClockMovement::exeDelay() {
@@ -49,10 +52,10 @@ void ClockMovement::exeDelay() {
 }
 
 void ClockMovement::exeRotateSign() {
-    f32 rotateAngle = wrapValue(mCurrentStepIndex * mClockAngleDegree, 360.0f);
+    f32 rotateAngle = wrapValue(static_cast<f32>(mCurrentStepIndex * mClockAngleDegree), 360.0f);
 
     // NOTE: This rotation has and aditional wobble
-    rotateQuatLocalDirDegree(&mActorQuat, mInitialActorQuat, mRotateAxis,
+    rotateQuatLocalDirDegree(&mCurrentQuat, mInitialQuat, mRotateAxis,
                              rotateAngle +
                                  sead::Mathf::sin(getNerveStep(this) * sead::Mathf::pi2() / 18.0f));
 
@@ -63,10 +66,10 @@ void ClockMovement::exeRotateSign() {
 void ClockMovement::exeRotate() {
     f32 rotateAngle = wrapValue(
         (calcNerveRate(this, mRotateTime) + mCurrentStepIndex) * mClockAngleDegree, 360.0f);
-    rotateQuatLocalDirDegree(&mActorQuat, mInitialActorQuat, mRotateAxis, rotateAngle);
+    rotateQuatLocalDirDegree(&mCurrentQuat, mInitialQuat, mRotateAxis, rotateAngle);
 
     if (isGreaterEqualStep(this, mRotateTime)) {
-        mCurrentStepIndex = modi(mCurrentStepIndex + 1 + mMaxStepCount, mMaxStepCount);
+        mCurrentStepIndex = wrapValue(mCurrentStepIndex + 1, mMaxStepIndex);
         setNerve(this, &Wait);
     }
 }

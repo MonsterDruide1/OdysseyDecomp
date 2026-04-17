@@ -243,8 +243,7 @@ void MenuSelectParts::exeSelect() {
         s32 direction = mKeyRepeatCtrl->isUp() ? -1 : 1;
 
         al::startAction(mLayoutArray[calcPartsIndex(mCursorItemIndex)], "Wait");
-        mCursorItemIndex =
-            al::modi(mCursorItemIndex + direction + mMenuItemAmount, mMenuItemAmount);
+        mCursorItemIndex = al::wrapValue(mCursorItemIndex + direction, mMenuItemAmount);
 
         f32 pitch = ((1.0f - (f32)mCursorItemIndex / (mMenuItemAmount - 1)) * 0.375f) + 1.0f;
         al::PadRumbleParam param;
