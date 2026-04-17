@@ -9,6 +9,7 @@
 #include "Item/CoinCollectHolder.h"
 #include "Item/CoinCollectWatcher.h"
 #include "Layout/KidsModeLayoutAccessor.h"
+#include "MapObj/RhyhtmInfoWatcher.h"
 #include "MapObj/RouteGuideDirector.h"
 #include "Scene/HintPhotoLayoutHolder.h"
 
@@ -84,7 +85,7 @@ static al::ISceneObj* sceneObjCreator(s32 id) {
         return nullptr;
 
     case SceneObjID_RhyhtmInfoWatcher:
-        return nullptr;
+        return new RhyhtmInfoWatcher("");
 
     case SceneObjID_RouteGuideDirector:
         return new RouteGuideDirector();
