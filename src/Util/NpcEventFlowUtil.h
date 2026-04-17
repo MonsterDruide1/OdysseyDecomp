@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 namespace al {
 struct ActorInitInfo;
@@ -24,4 +25,5 @@ void initEventCameraObjectAfterKeepPose(al::EventFlowExecutor* flowExecutor,
 void setEventBalloonFilterOnlyMiniGame(const al::LiveActor*);
 void resetEventBalloonFilter(const al::LiveActor*);
 void requestSwitchTalkNpcEventVolleyBall(al::LiveActor*, s32);
+bool checkTriggerDecideWithRequestIcon(al::LiveActor*, const sead::Vector3f&, f32);
 }  // namespace rs
