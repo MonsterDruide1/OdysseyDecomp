@@ -83,6 +83,7 @@
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
 #include "MapObj/CollectionList.h"
+#include "MapObj/DelaySwitch.h"
 #include "MapObj/DoorCity.h"
 #include "MapObj/DoorSnow.h"
 #include "MapObj/Doshi.h"
@@ -269,7 +270,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CoinStackGroup", al::createActorFunction<CoinStackGroup>},
     {"CrystalBreakable", nullptr},
     {"DamageBallGenerator", nullptr},
-    {"DelaySwitch", nullptr},
+    {"DelaySwitch", al::createActorFunction<DelaySwitch>},
     {"DemoActorCapManHero", nullptr},
     {"DemoActorCapManHeroine", nullptr},
     {"DemoActorKoopaShip", nullptr},
