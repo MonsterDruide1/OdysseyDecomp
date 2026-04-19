@@ -24,24 +24,29 @@ public:
 
     void clearAll();
     void finalizeForScene();
-    void initAfterPlacementSceneObj(const al::ActorInitInfo& _info) override;
-    void initAfterPlacementQuestObj(s32 quest_no);
-    void updateActiveList(s32 quest_no);
+    void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
+    void initAfterPlacementQuestObj(s32 questNo);
+    void updateActiveList(s32 questNo);
     void clearMainQuest();
-    void initSceneObjHolder(al::SceneObjHolder* scene_obj_holder);
-    QuestInfo* registerQuestInfo(const QuestInfo* info);
-    void validateQuest(const QuestInfo* info);
-    void invalidateQuest(const QuestInfo* info);
-    s32 getQuestNum(s32 quest_no) const;
+    void initSceneObjHolder(al::SceneObjHolder* holder);
+    QuestInfo* registerQuestInfo(const QuestInfo* quest);
+    void validateQuest(const QuestInfo* quest);
+    void invalidateQuest(const QuestInfo* quest);
+    s32 getQuestNum(s32 questNo) const;
     al::StringTmp<128> getActiveQuestLabel() const;
-    al::StringTmp<128>
-    getActiveQuestStageName(const al::IUseSceneObjHolder* scene_obj_holder) const;
-    bool isActiveQuest(const QuestInfo* info) const;
-    QuestInfo* tryFindQuest(const QuestInfo* info) const;
-    QuestInfo* tryFindQuest(const al::PlacementInfo& placement_info,
-                            al::SceneObjHolder* scene_obj_holder) const;
+    al::StringTmp<128> getActiveQuestStageName(const al::IUseSceneObjHolder* holder) const;
+    bool isActiveQuest(const QuestInfo* quest) const;
+    QuestInfo* tryFindQuest(const QuestInfo* quest) const;
+    QuestInfo* tryFindQuest(const al::PlacementInfo& placementInfo,
+                            al::SceneObjHolder* holder) const;
 
     const char* getSceneObjName() const override { return "クエスト情報保持者"; }
+
+    s32 getActiveQuestNo() const { return mActiveQuestNo; }
+
+    s32 getActiveQuestNum() const { return mActiveQuestNum; }
+
+    QuestInfo** getActiveQuestList() const { return mActiveQuests; }
 
 private:
     s32 mCapacity;
@@ -59,24 +64,24 @@ private:
 static_assert(sizeof(QuestInfoHolder) == 0x40);
 
 namespace rs {
-QuestInfoHolder* getQuestInfoHolder(const al::IUseSceneObjHolder* scene_obj_holder);
+QuestInfoHolder* getQuestInfoHolder(const al::IUseSceneObjHolder* holder);
 QuestInfo* tryCreateAndRegisterQuestInfoToHolder(const al::LiveActor* actor,
                                                  const al::ActorInitInfo& info);
 QuestInfo* createAndRegisterQuestInfoToHolderFromLinkedObj(const al::LiveActor* actor,
-                                                           const al::PlacementInfo& placement_info,
+                                                           const al::PlacementInfo& placementInfo,
                                                            bool is_dummy);
 sead::PtrArray<QuestInfo>*
 tryCreateAndRegisterQuestInfoToHolderFromLinkedObj(const al::LiveActor* actor,
                                                    const al::ActorInitInfo& info);
-void validateQuest(const QuestInfo* info);
-void invalidateQuest(const QuestInfo* info);
-const QuestInfo* const* getActiveQuestList(const al::IUseSceneObjHolder* scene_obj_holder);
-s32 getActiveQuestNum(const al::IUseSceneObjHolder* scene_obj_holder);
-s32 getActiveQuestNumForMap(const al::IUseSceneObjHolder* scene_obj_holder);
-bool isActiveQuestAllEqualNo(const al::IUseSceneObjHolder* scene_obj_holder);
-al::StringTmp<128> getActiveQuestLabel(const al::IUseSceneObjHolder* scene_obj_holder);
-al::StringTmp<128> getActiveQuestStageName(const al::IUseSceneObjHolder* scene_obj_holder);
-bool isActiveQuest(const QuestInfo* info);
+void validateQuest(const QuestInfo* quest);
+void invalidateQuest(const QuestInfo* quest);
+const QuestInfo* const* getActiveQuestList(const al::IUseSceneObjHolder* holder);
+s32 getActiveQuestNum(const al::IUseSceneObjHolder* holder);
+s32 getActiveQuestNumForMap(const al::IUseSceneObjHolder* holder);
+bool isActiveQuestAllEqualNo(const al::IUseSceneObjHolder* holder);
+al::StringTmp<128> getActiveQuestLabel(const al::IUseSceneObjHolder* holder);
+al::StringTmp<128> getActiveQuestStageName(const al::IUseSceneObjHolder* holder);
+bool isActiveQuest(const QuestInfo* quest);
 bool isActiveQuest(const sead::PtrArray<QuestInfo>* list);
-s32 getActiveQuestNo(const al::IUseSceneObjHolder* scene_obj_holder);
+s32 getActiveQuestNo(const al::IUseSceneObjHolder* holder);
 }  // namespace rs
