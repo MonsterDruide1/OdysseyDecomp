@@ -21,6 +21,7 @@ void initEventCameraObject(al::EventFlowExecutor* flowExecutor, const al::ActorI
                            const char* name);
 void initEventCameraObjectAfterKeepPose(al::EventFlowExecutor* flowExecutor,
                                         const al::ActorInitInfo& initInfo, const char* name);
+bool isSuccessNpcEventBalloonMessage(const al::LiveActor*);
 void setEventBalloonFilterOnlyMiniGame(const al::LiveActor*);
 void resetEventBalloonFilter(const al::LiveActor*);
 void requestSwitchTalkNpcEventVolleyBall(al::LiveActor*, s32);
