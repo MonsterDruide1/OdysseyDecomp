@@ -16,11 +16,13 @@ al::EventFlowExecutor* initEventFlowSuffix(al::LiveActor*, const al::ActorInitIn
                                            const char*, const char*);
 void startEventFlow(al::EventFlowExecutor*, const char*);
 bool updateEventFlow(al::EventFlowExecutor*);
+void endEventCutSceneDemoBySkip(al::LiveActor*);
 void initEventMessageTagDataHolder(al::EventFlowExecutor*, const al::MessageTagDataHolder*);
 void initEventCameraObject(al::EventFlowExecutor* flowExecutor, const al::ActorInitInfo& initInfo,
                            const char* name);
 void initEventCameraObjectAfterKeepPose(al::EventFlowExecutor* flowExecutor,
                                         const al::ActorInitInfo& initInfo, const char* name);
+bool isSuccessNpcEventBalloonMessage(const al::LiveActor*);
 void setEventBalloonFilterOnlyMiniGame(const al::LiveActor*);
 void resetEventBalloonFilter(const al::LiveActor*);
 void requestSwitchTalkNpcEventVolleyBall(al::LiveActor*, s32);
