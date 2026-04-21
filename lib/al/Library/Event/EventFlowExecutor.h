@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 #include "Library/Event/IUseEventFlowData.h"
 #include "Library/HostIO/HioNode.h"
 
@@ -11,6 +13,12 @@ class EventFlowNode;
 class EventFlowScareCtrlBase;
 class HitSensor;
 class LiveActor;
+
+struct EventFlowExecutorState {
+    bool isStopMovement = false;
+    bool isInvalidUiCollisionCheck = false;
+    bool hasLookAtJointCtrl = false;
+};
 
 class EventFlowExecutor : public HioNode, public IUseEventFlowData {
 public:
@@ -31,14 +39,27 @@ public:
 
     LiveActor* getActor() const { return mActor; }
 
+    const char* getCurrentEntryName() const { return mCurrentEntryName; }
+
+    EventFlowNode* getCurrentNode() const { return mCurrentNode; }
+
+    EventFlowMovement* getMovement() const { return mMovement; }
+
+    EventFlowExecutorState* getState() const { return mState; }
+
+    EventFlowScareCtrlBase* getScareCtrl() const { return mScareCtrl; }
+
 private:
-    LiveActor* mActor;
-    EventFlowChart* mEventFlowChart;
-    const char* mName;
-    EventFlowDataHolder* mEventFlowDataHolder;
-    EventFlowNode* mEventFlowNode;
-    EventFlowMovement* mEventFlowMovement;
-    void* _38;
-    EventFlowScareCtrlBase* mEventFlowScareCtrlBase;
+    LiveActor* mActor = nullptr;
+    EventFlowChart* mEventFlowChart = nullptr;
+    const char* mCurrentEntryName = nullptr;
+    EventFlowDataHolder* mEventFlowDataHolder = nullptr;
+    EventFlowNode* mCurrentNode = nullptr;
+    EventFlowMovement* mMovement = nullptr;
+    EventFlowExecutorState* mState = nullptr;
+    EventFlowScareCtrlBase* mScareCtrl = nullptr;
 };
+
+static_assert(sizeof(EventFlowExecutorState) == 0x3);
+static_assert(sizeof(EventFlowExecutor) == 0x48);
 }  // namespace al

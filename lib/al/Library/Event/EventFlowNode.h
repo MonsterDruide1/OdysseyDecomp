@@ -40,6 +40,8 @@ public:
 
     virtual const char* getNextEntry() const { return nullptr; }
 
+    const char* getName() const { return mName; }
+
     const MessageSystem* getMessageSystem() const override { return mMessageSystem; }
 
     NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
@@ -50,6 +52,8 @@ public:
     void execute();
 
     LiveActor* getActor() const { return mActor; }
+
+    SceneEventFlowMsg* getSceneEventFlowMsg() const { return mSceneEventFlowMsg; }
 
 private:
     LiveActor* mActor = nullptr;
