@@ -17,7 +17,6 @@ class Scene;
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {
 public:
     Sequence(const char* name);
-    ~Sequence() override;
 
     virtual void init(const SequenceInitInfo& initInfo);
 
@@ -26,6 +25,8 @@ public:
     virtual void drawMain() const;
     virtual void drawSub() const;
 
+    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+
     virtual bool isDisposable() const;
 
     virtual Scene* getCurrentScene() const { return nullptr; }
@@ -33,8 +34,6 @@ public:
     SceneCreator* getSceneCreator() const override { return mSceneCreator; }
 
     void setSceneCreator(SceneCreator* sceneCreator) override { mSceneCreator = sceneCreator; }
-
-    AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
     void initAudio(const GameSystemInfo&, const char*, s32, s32, s32, const char*);
     void initAudioKeeper(const char*);
