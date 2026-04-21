@@ -33,6 +33,9 @@ public:
     void offSyncAppearAndHide();
     void onSyncAppearAndHide();
 
+protected:
+    void setPoseUpdate(bool isUpdate) { mIsUpdate = isUpdate; }
+
 private:
     LiveActor* mParentModel = nullptr;
     const sead::Matrix34f* mJointMtx = nullptr;
