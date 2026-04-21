@@ -9,6 +9,7 @@
 #include "Item/CoinCollectHolder.h"
 #include "Item/CoinCollectWatcher.h"
 #include "Layout/KidsModeLayoutAccessor.h"
+#include "MapObj/EchoEmitterHolder.h"
 #include "MapObj/RouteGuideDirector.h"
 #include "Scene/HintPhotoLayoutHolder.h"
 
@@ -39,7 +40,7 @@ static al::ISceneObj* sceneObjCreator(s32 id) {
         return nullptr;
 
     case SceneObjID_EchoEmitterHolder:
-        return nullptr;
+        return new EchoEmitterHolder();
 
     case SceneObjID_ElectricWireCameraTicketHolder:
         return nullptr;
