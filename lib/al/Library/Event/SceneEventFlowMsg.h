@@ -10,6 +10,8 @@ public:
     bool isReceiveCommand(const char* cmd) const;
     void requestCommand(const char* cmd);
 
+    void clearCommand() { mCmd.clear(); }
+
 private:
     sead::FixedSafeString<64> mCmd = {""};
 };
