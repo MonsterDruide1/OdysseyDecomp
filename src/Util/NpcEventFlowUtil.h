@@ -16,6 +16,8 @@ al::EventFlowExecutor* initEventFlowSuffix(al::LiveActor*, const al::ActorInitIn
                                            const char*, const char*);
 void startEventFlow(al::EventFlowExecutor*, const char*);
 bool updateEventFlow(al::EventFlowExecutor*);
+bool tryStartEventCutSceneDemo(al::LiveActor*);
+void endEventCutSceneDemo(al::LiveActor*);
 void initEventMessageTagDataHolder(al::EventFlowExecutor*, const al::MessageTagDataHolder*);
 void initEventCameraObject(al::EventFlowExecutor* flowExecutor, const al::ActorInitInfo& initInfo,
                            const char* name);
