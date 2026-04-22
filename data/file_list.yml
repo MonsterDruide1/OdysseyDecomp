@@ -61870,230 +61870,228 @@ MapObj/CapMessageDirector.o:
   - offset: 0x236988
     size: 216
     label: _ZN18CapMessageDirectorC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236a60
     size: 204
     label: _ZN18CapMessageDirectorC1Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236b2c
     size: 176
     label: _ZN18CapMessageDirector26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236bdc
     size: 184
     label: _ZThn264_N18CapMessageDirector26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236c94
     size: 36
     label: _ZN18CapMessageDirector7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236cb8
     size: 240
     label: _ZN18CapMessageDirector21tryStartShowPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236da8
     size: 300
     label: _ZN18CapMessageDirector17exeDelayPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236ed4
     size: 156
     label: _ZNK18CapMessageDirector13findPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236f70
     size: 224
     label: _ZN18CapMessageDirector16exeShowPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237050
     size: 52
     label: _ZN18CapMessageDirector13forceEndInnerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237084
     size: 72
     label: _ZN18CapMessageDirector16exeShowSystemLowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2370cc
     size: 28
     label: _ZN18CapMessageDirector13exeShowSystemEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2370e8
     size: 28
     label: _ZN18CapMessageDirector21exeShowSystemContinueEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237104
     size: 28
     label: _ZN18CapMessageDirector6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237120
     size: 8
     label: _ZNK18CapMessageDirector6isShowEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237128
     size: 116
     label: _ZNK18CapMessageDirector7isDelayEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x23719c
     size: 132
     label: _ZNK18CapMessageDirector8isActiveEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237220
     size: 16
     label: _ZN18CapMessageDirector27registerCapMessagePlacementEP19CapMessagePlacement
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237230
     size: 104
     label: _ZN18CapMessageDirector20tryShowMessageSystemEPK18CapMessageShowInfoPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237298
     size: 32
     label: _ZNK18CapMessageDirector8tryCheckEPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2372b8
     size: 132
     label: _ZN18CapMessageDirector23tryShowMessageSystemLowEPK18CapMessageShowInfoPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x23733c
     size: 108
     label: _ZN18CapMessageDirector28tryShowMessageSystemContinueEPK18CapMessageShowInfoPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2373a8
     size: 76
     label: _ZN18CapMessageDirector27endCapMessageSystemContinueEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2373f4
     size: 92
     label: _ZN18CapMessageDirector26invalidateAppearCapMessageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237450
     size: 12
     label: _ZN18CapMessageDirector24validateAppearCapMessageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x23745c
     size: 52
     label: _ZN18CapMessageDirector8forceEndEv
-    status: NotDecompiled
-MapObj/CapMessageDirectorFunction.o:
-  '.text':
+    status: Matching
   - offset: 0x237490
     size: 76
     label: _ZN26CapMessageDirectorFunction27registerCapMessagePlacementEP19CapMessagePlacement
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2374dc
     size: 152
     label: _ZN26CapMessageDirectorFunction23tryShowCapMessageSystemEPKN2al18IUseSceneObjHolderEPK18CapMessageShowInfoPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237574
     size: 172
     label: _ZN26CapMessageDirectorFunction26tryShowCapMessageSystemLowEPKN2al18IUseSceneObjHolderEPK18CapMessageShowInfoPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237620
     size: 156
     label: _ZN26CapMessageDirectorFunction31tryShowCapMessageSystemContinueEPKN2al18IUseSceneObjHolderEPK18CapMessageShowInfoPK25CapMessageGameDataChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2376bc
     size: 116
     label: _ZN26CapMessageDirectorFunction27endCapMessageSystemContinueEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237730
     size: 128
     label: _ZN26CapMessageDirectorFunction29invalidateAppearCapMessageNewEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2377b0
     size: 72
     label: _ZN26CapMessageDirectorFunction27validateAppearCapMessageNewEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2377f8
     size: 100
     label: _ZN26CapMessageDirectorFunction18forceEndCapMessageEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x23785c
     size: 208
     label: _ZN26CapMessageDirectorFunction22tryCancelCapMessageNewEPKN2al18IUseSceneObjHolderEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x23792c
     size: 92
     label: _ZN26CapMessageDirectorFunction16isShowCapMessageEPKN2al18IUseSceneObjHolderEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237988
     size: 164
     label: _ZN26CapMessageDirectorFunction17isDelayCapMessageEPKN2al18IUseSceneObjHolderEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237a2c
     size: 188
     label: _ZN26CapMessageDirectorFunction18isActiveCapMessageEPKN2al18IUseSceneObjHolderEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237ae8
     size: 40
     label: _ZN26CapMessageDirectorFunction19getCapMessageKeeperEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x237b10
     size: 12
     label: _ZNK18CapMessageDirector15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x237b1c
     size: 4
     label: _ZN18CapMessageDirectorD1Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x237b20
     size: 4
     label: _ZN18CapMessageDirectorD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x237b24
     size: 12
     label: _ZThn264_NK18CapMessageDirector15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x237b30
     size: 4
     label: _ZThn264_N18CapMessageDirectorD1Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x237b34
     size: 8
     label: _ZThn264_N18CapMessageDirectorD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x237b3c
     size: 40
     label: _ZNK12_GLOBAL__N_125CapMessageDirectorNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237b64
     size: 8
     label: _ZNK12_GLOBAL__N_135CapMessageDirectorNrvDelayPlacement7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237b6c
     size: 8
     label: _ZNK12_GLOBAL__N_134CapMessageDirectorNrvShowPlacement7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237b74
     size: 32
     label: _ZNK12_GLOBAL__N_131CapMessageDirectorNrvShowSystem7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237b94
     size: 76
     label: _ZNK12_GLOBAL__N_134CapMessageDirectorNrvShowSystemLow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237be0
     size: 32
     label: _ZNK12_GLOBAL__N_139CapMessageDirectorNrvShowSystemContinue7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237c00
     size: 32
     label: _ZNK12_GLOBAL__N_124CapMessageDirectorNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x237c20
     size: 12
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_CapMessageDirector.cpp
+    status: Matching
 MapObj/CapMessageEnableChecker.o:
   '.text':
   - offset: 0x237c2c
