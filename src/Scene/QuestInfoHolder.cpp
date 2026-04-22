@@ -54,7 +54,7 @@ void QuestInfoHolder::initAfterPlacementQuestObj(s32 questNo) {
                 foundQuestNo = questNo;
 
             if (currentQuestNo == i && mQuests[j].isMainQuest()) {
-                if (hasMainQuest | mQuests[j].getScenarioName().isEmpty())
+                if (mQuests[j].getScenarioName().isEmpty() || hasMainQuest)
                     mIsMainQuest[i] = true;
                 else
                     hasMainQuest = true;
@@ -67,6 +67,7 @@ void QuestInfoHolder::initAfterPlacementQuestObj(s32 questNo) {
     else
         clearMainQuest();
 
+    // NOTE: special case for Metro festival's story moon
     if (GameDataFunction::isWorldCity(mQuests) && mActiveMainQuestNo == 8 &&
         GameDataFunction::getScenarioNoPlacement(mQuests) != 7 &&
         GameDataFunction::getScenarioNoPlacement(mQuests) != 11) {
@@ -112,7 +113,7 @@ QuestInfo* QuestInfoHolder::registerQuestInfo(const QuestInfo* quest) {
 }
 
 void QuestInfoHolder::validateQuest(const QuestInfo* quest) {
-    // BUG: No bounds checking. Will soflock if entry is not found.
+    // BUG: No bounds checking. Will softlock if entry is not found.
     for (s32 i = 0; true; i++) {
         if (mQuests[i].isEqual(quest)) {
             mQuests[i].setInvalid(false);
@@ -297,6 +298,7 @@ void validateQuest(const QuestInfo* quest) {
 void invalidateQuest(const QuestInfo* quest) {
     if (!quest)
         return;
+
     getQuestInfoHolder(quest)->invalidateQuest(quest);
 }
 
@@ -310,9 +312,11 @@ s32 getActiveQuestNum(const al::IUseSceneObjHolder* holder) {
 
 s32 getActiveQuestNumForMap(const al::IUseSceneObjHolder* holder) {
     s32 questNum = getActiveQuestNum(holder);
-    bool isWorldSnow = GameDataFunction::isWorldSnow(holder);
 
-    return (1 < questNum) & isWorldSnow ? 1 : questNum;
+    if (GameDataFunction::isWorldSnow(holder))
+        return sead::Mathi::clampMax(questNum, 1);
+
+    return questNum;
 }
 
 bool isActiveQuestAllEqualNo(const al::IUseSceneObjHolder* holder) {
