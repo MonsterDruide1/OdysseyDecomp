@@ -207,6 +207,8 @@ public:
 
     RadialBlurDirector* getRadialBlurDirector() const { return mRadialBlurDirector; }
 
+    SubCameraRenderer* getSubCameraRenderer() const { return mSubCameraRenderer; }
+
 private:
     sead::StrTreeMap<128, const sead::PtrArray<UniformBlock>*> mViewIndexedUboArrayTree;
     GraphicsInitArg mInitArg;
