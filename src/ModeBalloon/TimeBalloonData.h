@@ -20,11 +20,7 @@ struct DataStoreSearchBalloonResult;
 }  // namespace nn::nex
 
 namespace TimeBalloon {
-class BalloonDataServer {
-public:
-    BalloonDataServer();
-    virtual ~BalloonDataServer();
-};
+class BalloonDataServer;
 
 class BalloonData {
 public:
