@@ -10,7 +10,7 @@
 #include "System/GameDataFunction.h"
 #include "Util/StageLayoutFunction.h"
 
-QuestInfo::QuestInfo() {}
+QuestInfo::QuestInfo() = default;
 
 void QuestInfo::clear() {
     mQuestNo = -1;
@@ -66,6 +66,7 @@ void QuestInfo::init(const al::PlacementInfo& placementInfo, al::SceneObjHolder*
     }
 
     rs::makeMessageLabel(&mScenarioName, placementInfo, "ScenarioName");
+    // NOTE: variable format string
     mStageName.format(rs::getPlacementStageName(this, placementInfo));
 }
 
@@ -78,6 +79,7 @@ void QuestInfo::setLabel(const char* label) {
 }
 
 void QuestInfo::copy(const QuestInfo* quest) {
+    // BUG: does not copy `mIsInvalid
     mTrans.set(quest->getTrans());
     mQuestNo = quest->getQuestNo();
     mIsMainQuest = quest->isMainQuest();
@@ -90,7 +92,8 @@ void QuestInfo::copy(const QuestInfo* quest) {
 }
 
 void QuestInfo::end() {
-    mIsInvalid = !GameDataFunction::isWorldCity(this) || mQuestNo != 8;
+    // NOTE: special handling to story moon in Metro's festival
+    mIsInvalid = !(GameDataFunction::isWorldCity(this) && mQuestNo == 8);
 }
 
 bool QuestInfo::isEqual(const QuestInfo* quest) const {
