@@ -161,15 +161,15 @@ void WindowConfirmData::exeWait() {
 
     if (rs::isRepeatUiDown(mWindowConfirmLayout)) {
         if (mSelectionCooldown == 0)
-            changeSelectingIdx(al::modi((mSelectionIndex + 1) + 2, 2));
-        mSelectionCooldown = al::modi((mSelectionCooldown + 1) + 10, 10);
+            changeSelectingIdx(al::wrapValue(mSelectionIndex + 1, 2));
+        mSelectionCooldown = al::wrapValue(mSelectionCooldown + 1, 10);
         return;
     }
 
     if (rs::isRepeatUiUp(mWindowConfirmLayout)) {
         if (mSelectionCooldown == 0)
-            changeSelectingIdx(al::modi((mSelectionIndex - 1) + 2, 2));
-        mSelectionCooldown = al::modi((mSelectionCooldown + 1) + 10, 10);
+            changeSelectingIdx(al::wrapValue(mSelectionIndex - 1, 2));
+        mSelectionCooldown = al::wrapValue(mSelectionCooldown + 1, 10);
         return;
     }
 
