@@ -106,6 +106,7 @@ private:
     sead::FixedSafeString<128> mCostumeName;
     al::SimpleAudioUser* mPlayerAudioUser;
     bool mIsHackEnd;
+    bool mIsWarpCheckpoint;
     TimeBalloonSequenceInfo* mBalloonSeqInfo;
     CollectBgmPlayer* mCollectBgmPlayer;
     sead::FixedSafeString<128> mLanguage;

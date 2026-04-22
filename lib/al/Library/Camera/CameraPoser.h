@@ -231,7 +231,7 @@ protected:
     sead::Vector3f mTargetTrans = {0.0f, 0.0f, 500.0f};
     sead::Vector3f mCameraUp = sead::Vector3f::ey;
     f32 mFovyDegree = 35.0f;
-    f32 _64 = -1.0f;
+    f32 mNearClipDistance = -1.0f;
     sead::Matrix34f mViewMtx = sead::Matrix34f::ident;
     bool _98 = false;
     CameraPoserSceneInfo* mSceneInfo = nullptr;
