@@ -100,6 +100,7 @@
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/ShineTowerRocket.h"
 #include "MapObj/SignBoardDanger.h"
+#include "MapObj/SkyWorldKoopaFire.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TrampleBush.h"
@@ -546,8 +547,8 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SignBoardLayoutTexture", nullptr},
     {"SkyFukankunZoomCapMessage", nullptr},
     {"SkyWorldCloud", nullptr},
-    {"SkyWorldKoopaFire", nullptr},
-    {"SkyWorldKoopaFrame", nullptr},
+    {"SkyWorldKoopaFire", al::createActorFunction<SkyWorldKoopaFire>},
+    {"SkyWorldKoopaFrame", al::createActorFunction<SkyWorldKoopaFrame>},
     {"SkyWorldMiddleViewCloud", nullptr},
     {"SignBoard", nullptr},
     {"SnowWorldBigIcicle", nullptr},
