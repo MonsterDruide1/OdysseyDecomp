@@ -79,7 +79,7 @@ void QuestInfo::setLabel(const char* label) {
 }
 
 void QuestInfo::copy(const QuestInfo* quest) {
-    // BUG: does not copy `mIsInvalid
+    // BUG: does not copy `mIsInvalid`
     mTrans.set(quest->getTrans());
     mQuestNo = quest->getQuestNo();
     mIsMainQuest = quest->isMainQuest();
