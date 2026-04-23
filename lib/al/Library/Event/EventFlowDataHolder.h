@@ -9,6 +9,9 @@ class CameraTicket;
 class LiveActor;
 class EventFlowEventData;
 class IUseCamera;
+class EventFlowRequestInfo;
+class EventFlowScareCtrlBase;
+class BalloonOrderGroup;
 
 class EventFlowDataHolder {
 public:
@@ -37,6 +40,24 @@ public:
     void endAllEventCamera(IUseCamera*);
     bool isEndInterpoleCamera(const IUseCamera*, const char*) const;
     bool isPlayingEventAnimCamera(const char*) const;
+
+private:
+    EventFlowRequestInfo* mRequestInfo;
+    void* filler_8[10];
+    void* _58;
+    void* filler_60[1];
+    EventFlowScareCtrlBase* mScareCtrl;
+    void* _70;
+    void* filler_78[2];
+    BalloonOrderGroup* mBalloonOrderGroup;
+    sead::WFixedSafeString<32> _90;
+    void* filler_e8[1];
+    const char* mTalkSubActorName;
+    s32 mItemTypeCapacity;
+    s32 mItemTypeCount;
+    const char** mItemTypes;
 };
+
+static_assert(sizeof(EventFlowDataHolder) == 0x108);
 
 }  // namespace al

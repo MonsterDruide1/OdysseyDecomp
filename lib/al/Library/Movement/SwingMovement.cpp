@@ -59,7 +59,7 @@ void SwingMovement::exeMove() {
     if (updateRotate())
         setNerve(this, &Stop);
 
-    mFrameInCycle = modi((mFrameInCycle + 1) + mSwingCycle, mSwingCycle);
+    mFrameInCycle = wrapValue(mFrameInCycle + 1, mSwingCycle);
 }
 
 void SwingMovement::exeStop() {

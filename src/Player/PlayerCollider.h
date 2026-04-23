@@ -1,5 +1,6 @@
 #pragma once
 
+#include <container/seadPtrArray.h>
 #include <math/seadMatrix.h>
 #include <prim/seadBitFlag.h>
 
@@ -13,6 +14,7 @@ class SpherePoseInterpolator;
 }  // namespace al
 class CollidedShapeResult;
 class CollisionShapeKeeper;
+class CollisionMultiShape;
 
 class PlayerCollider : public al::HioNode, public al::IUseCollision {
 public:
@@ -58,12 +60,48 @@ public:
     void set1b0(f32 value) { _1b0 = value; }
 
 private:
-    void* filler[13];
+    al::CollisionDirector* mCollisionDirector;
+    const sead::Matrix34f* mMtxPtr;
+    const sead::Vector3f* mTransPtr;
+    const sead::Vector3f* mGravityPtr;
+    sead::Vector3f mTrans;
+    f32 mSize;
+    sead::Matrix34f mMtx;
+    al::HitInfo* _68;
     f32 _70;
-    void* filler2[37];
-    s32 _1a0;
+    al::HitInfo* _78;
+    f32 _7c;
+    al::HitInfo* _88;
+    f32 _8c;
+    sead::Vector3f mCollidedFixReaction;
+    bool _a0;
+    bool _a1;
+    sead::Vector3f mCollisionHitNormal;
+    sead::Vector3f mCollisionHitPos;
+    s32 mTimeInAir;
+    sead::Matrix34f mCollidePosMtx;
+    CollisionShapeKeeper* mCollisionShapeKeeper;
+    f32 mCollisionShapeScale;
+    CollisionMultiShape* mCollisionMultiShape;
+    s32 _108;
+    bool mIsInFastMoveCollisionArea;
+    bool mIsValidGroundSupport;
+    bool mIsDuringRecovery;
+    sead::Vector3f mCutCollideAffectDir;
+    s32 mWallBorderCheckType;
+    const al::CollisionPartsFilterBase* mCollisionPartsFilter;
+    sead::PtrArray<al::HitInfo> _128[3];
+    al::HitInfo* _158;
+    u32 _160;
+    s32 _164;
+    sead::PtrArray<al::HitInfo> _168;
+    s32 _178;
+    f32* _180;
+    s32 _188;
+    f32* _190;
+    sead::Vector3f _198;
     sead::Vector3f mCollidedGroundNormal;
     f32 _1b0;
 };
 
-static_assert(sizeof(PlayerCollider) == 0x1B8);
+static_assert(sizeof(PlayerCollider) == 0x1b8);
