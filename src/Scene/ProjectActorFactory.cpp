@@ -84,6 +84,7 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/FixMapPartsBgmChangeAction.h"
 #include "MapObj/HackFork.h"
+#include "MapObj/HintRouteGuidePoint.h"
 #include "MapObj/HipDropSwitch.h"
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaPan.h"
@@ -352,7 +353,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HelpNpc", nullptr},
     {"HintNpc", nullptr},
     {"HintPhoto", nullptr},
-    {"HintRouteGuidePoint", nullptr},
+    {"HintRouteGuidePoint", al::createActorFunction<HintRouteGuidePoint>},
     {"HipDropSwitch", al::createActorFunction<HipDropSwitch>},
     {"HipDropSwitchSave", nullptr},
     {"HipDropSwitchTimer", nullptr},
