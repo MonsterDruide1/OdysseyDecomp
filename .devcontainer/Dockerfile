@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 WORKDIR /app
 
 # avoid errors/configuration issues while installing other packages
