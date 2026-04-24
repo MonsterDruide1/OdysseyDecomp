@@ -84,6 +84,7 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/FixMapPartsBgmChangeAction.h"
 #include "MapObj/HackFork.h"
+#include "MapObj/HipDropRepairParts.h"
 #include "MapObj/HipDropSwitch.h"
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaPan.h"
@@ -358,7 +359,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HipDropSwitchTimer", nullptr},
     {"HipDropTile", nullptr},
     {"HipDropMoveLift", nullptr},
-    {"HipDropRepairParts", nullptr},
+    {"HipDropRepairParts", al::createActorFunction<HipDropRepairParts>},
     {"HipDropTransformPartsWatcher", nullptr},
     {"HomeBed", nullptr},
     {"HomeChair", nullptr},
