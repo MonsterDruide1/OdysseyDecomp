@@ -3,7 +3,7 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-enum class MoveType : s32 {
+enum class MoveType : u32 {
     Loop,
     Turn,
     Stop,
