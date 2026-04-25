@@ -14,8 +14,10 @@ public:
     void calcFront(sead::Vector3f* front) const override;
     void calcVelocity(sead::Vector3f* velocity) const override;
 
+    void initTurnParam(const CameraSubTargetTurnParam* turnParam) { mTurnParam = turnParam; }
+
 private:
-    CameraSubTargetTurnParam* mTurnParam;
+    const CameraSubTargetTurnParam* mTurnParam;
 };
 
 static_assert(sizeof(CameraSubTargetBase) == 0x18);
