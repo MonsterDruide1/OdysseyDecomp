@@ -49,6 +49,9 @@ public:
     CollisionShapeInfoSphere* getShapeInfoSphere(s32 index) const;
     CollisionShapeInfoDisk* getShapeInfoDisk(s32 index) const;
     u32 findShapeInfoIndex(const char* name) const;
+
+    s32 getShapeNum() const { return mCollisionShape.size(); }
+
     const CollidedShapeResult* getCollidedShapeResult(s32 index) const;
     const CollidedShapeResult* getCollidedShapeSupportResult(s32 index) const;
 

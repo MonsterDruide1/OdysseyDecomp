@@ -53,6 +53,40 @@ public:
     void validateCorrectMovePartsCheck();
     al::CollisionDirector* getCollisionDirector() const override;
 
+    al::HitInfo* getGroundHitInfo() const { return _68; }
+
+    f32 getGroundDistance() const { return _70; }
+
+    al::HitInfo* getWallHitInfo() const { return _78; }
+
+    f32 getWallDistance() const { return _7c; }
+
+    al::HitInfo* getCeilingHitInfo() const { return _88; }
+
+    f32 getCeilingDistance() const { return _8c; }
+
+    const sead::Vector3f& getCollidedFixReaction() const { return mCollidedFixReaction; }
+
+    bool isPressedGround() const { return _a0; }
+
+    bool isPressedWall() const { return _a1; }
+
+    const sead::Vector3f& getPressCollisionNormal() const { return mCollisionHitNormal; }
+
+    const sead::Vector3f& getPressCollisionHitPos() const { return mCollisionHitPos; }
+
+    s32 getTimeInAir() const { return mTimeInAir; }
+
+    CollisionShapeKeeper* getCollisionShapeKeeper() const { return mCollisionShapeKeeper; }
+
+    f32 getCollisionShapeScale() const { return mCollisionShapeScale; }
+
+    const sead::PtrArray<al::HitInfo>& getGroundHitInfoArray() const { return _128[0]; }
+
+    const sead::PtrArray<al::HitInfo>& getWallHitInfoArray() const { return _128[1]; }
+
+    const sead::Vector3f& getCollidedGroundPos() const { return _198; }
+
     f32 get_70() const { return _70; }
 
     const sead::Vector3f& getCollidedGroundNormal() const { return mCollidedGroundNormal; }
