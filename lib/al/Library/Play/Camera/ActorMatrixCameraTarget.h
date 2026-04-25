@@ -14,6 +14,8 @@ class ActorMatrixCameraTarget : public CameraTargetBase {
 public:
     ActorMatrixCameraTarget(const LiveActor*, const sead::Matrix34f*);
 
+    const char* getTargetName() const override { return "ActorMatrixCameraTarget"; }
+
     void calcTrans(sead::Vector3f* trans) const override;
     void calcSide(sead::Vector3f* side) const override;
     void calcUp(sead::Vector3f* up) const override;
@@ -23,5 +25,7 @@ public:
 private:
     char filler[0x20];
 };
+
+static_assert(sizeof(ActorMatrixCameraTarget) == 0x30);
 
 }  // namespace al

@@ -12,14 +12,16 @@ class SceneCameraViewCtrl {
 public:
     SceneCameraViewCtrl();
 
-    const CameraSwitchRequester* getSwitchRequester() const { return mSwitchRequester; }
+    CameraSwitchRequester* getSwitchRequester() const { return mSwitchRequester; }
 
     void resetViewName() { mViewName = nullptr; }
+
+    void setCameraShakeLoopName(const char* name) { mCameraShakeLoopName = name; }
 
 private:
     CameraSwitchRequester* mSwitchRequester = nullptr;
     const char* mViewName = "Start";
-    void* _10 = nullptr;
+    const char* mCameraShakeLoopName = nullptr;
 };
 
 static_assert(sizeof(SceneCameraViewCtrl) == 0x18);

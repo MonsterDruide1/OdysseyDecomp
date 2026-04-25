@@ -23,6 +23,9 @@ public:
     void exeWait();
     void exeReset();
     f32 getCameraOffsetFront();
+
+    f32 getCameraOffsetUp() const { return mCameraOffsetUp; }
+
     bool isZooming() const override;
     bool isEnableRotateByPad() const override;
 
@@ -32,6 +35,10 @@ public:
     }
 
     void setCameraOffsetUp(f32 offset) { mCameraOffsetUp = offset; }
+
+    void validateResetAngleH() { _166 = true; }
+
+    void requestZoomIn() { _165 = true; }
 
 private:
     f32 _140;
@@ -45,6 +52,8 @@ private:
     f32 _160;
     bool mIsZooming;
     bool _165;
+    bool _166;
+    u8 _167;
     f32 _168;
     f32 _16c;
     f32 mMinAngleV;

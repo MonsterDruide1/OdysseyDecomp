@@ -32,6 +32,10 @@ public:
 
     f32 getFovyDegree() const { return mFovyDegree; };
 
+    void validateZoomFovy() { mIsValidZoomFovy = true; }
+
+    void validateRoll() { mIsValidRoll = true; }
+
 private:
     SnapShotCameraSceneInfo* mCameraSceneInfo;
     CameraParam* mParam;
