@@ -17,7 +17,11 @@ public:
     void makeLookAtCamera(sead::LookAtCamera* lookAtCam) const override;
 
 private:
-    char _140[24];
+    f32 mOffsetY;
+    sead::Vector3f mCameraPos;
+    bool mIsUsePrePoserPos;
+    bool mIsKeepDistanceFromLookAt;
+    f32 mKeepDistance;
 };
 
 static_assert(sizeof(CameraPoserFixPoint) == 0x158);

@@ -250,7 +250,7 @@ void ClockMapParts::exeRotate() {
 
     mTimer++;
     if (mTimer >= mRotateTimer) {
-        mCurrentStep = modi(mCurrentStep + mTurnStepCount + 1, mTurnStepCount);
+        mCurrentStep = wrapValue(mCurrentStep + 1, mTurnStepCount);
         startNerveAction(this, "Wait");
         tryStartSe(this, "RotateEnd");
     }

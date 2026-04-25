@@ -23,7 +23,12 @@ public:
     void read(const al::ByamlIter& save) override;
 
 private:
-    void* _padding[0x6];
+    bool mIsShowDemoOpenMoonRockFirst;
+    bool* mIsShowDemoOpenMoonRockWorld;
+    bool* mIsAppearedMoonRockTalkMessage;
+    bool mIsShowDemoAfterOpenMoonRockFirst;
+    bool* mIsShowDemoMoonRockMapWorld;
+    s32 mWorldNum;
 };
 
 static_assert(sizeof(MoonRockData) == 0x38);

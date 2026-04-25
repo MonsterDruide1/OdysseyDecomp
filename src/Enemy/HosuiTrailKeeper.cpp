@@ -25,7 +25,7 @@ HosuiTrailKeeper::HosuiTrailKeeper(const al::ActorInitInfo& initInfo) {
 void HosuiTrailKeeper::appearTrail(const sead::Vector3f& pos, const sead::Vector3f& dir) {
     s32 count = mTrails.size();
 
-    s32 prevIdx = al::modi(mIndex + count - 1 + count, count);
+    s32 prevIdx = al::wrapValue(mIndex + count - 1, count);
     HosuiTrail* prevTrail = mTrails[prevIdx];
 
     if (al::isAlive(prevTrail) && (pos - al::getTrans(prevTrail)).length() < 120.0f)
@@ -56,12 +56,12 @@ void HosuiTrailKeeper::appearTrail(const sead::Vector3f& pos, const sead::Vector
         trail->setFollowCollisionParts(triangle.getCollisionParts());
     }
 
-    s32 disappearIdx = al::modi(mIndex + 5 + count, count);
+    s32 disappearIdx = al::wrapValue(mIndex + 5, count);
     HosuiTrail* disappearTrail = mTrails[disappearIdx];
     if (al::isAlive(disappearTrail))
         disappearTrail->disappear();
 
-    mIndex = al::modi(mIndex + 1 + count, count);
+    mIndex = al::wrapValue(mIndex + 1, count);
 }
 
 void HosuiTrailKeeper::forceKillAll() {

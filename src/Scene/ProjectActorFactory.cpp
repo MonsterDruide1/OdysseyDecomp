@@ -40,6 +40,7 @@
 #include "Camera/ScenarioStartCamera.h"
 #include "Enemy/Bubble.h"
 #include "Enemy/CatchBomb.h"
+#include "Enemy/DonkeyKong2D.h"
 #include "Enemy/Gamane.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Kuribo2D.h"
@@ -68,6 +69,8 @@
 #include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/BlockEmpty2D.h"
+#include "MapObj/BlockQuestion2D.h"
+#include "MapObj/BossKnuckleFix.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
@@ -75,27 +78,35 @@
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
+#include "MapObj/DoorCity.h"
 #include "MapObj/Doshi.h"
 #include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/FixMapPartsBgmChangeAction.h"
 #include "MapObj/HackFork.h"
 #include "MapObj/HipDropMoveLift.h"
+#include "MapObj/HipDropRepairParts.h"
 #include "MapObj/HipDropSwitch.h"
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
+#include "MapObj/MoonBasementBreakParts.h"
+#include "MapObj/MoonBasementFloor.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PoleGrabCeil.h"
+#include "MapObj/ReactionMapParts.h"
 #include "MapObj/RiseMapPartsHolder.h"
+#include "MapObj/RocketFlower.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
 #include "MapObj/ShineTowerRocket.h"
+#include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
+#include "MapObj/TalkPoint.h"
 #include "MapObj/TrampleBush.h"
 #include "MapObj/TrampleSwitch.h"
 #include "MapObj/TrampleSwitchTimer.h"
@@ -147,7 +158,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ClashWorldBlockHard", nullptr},
     {"BlockQuestion", nullptr},
     {"CityBlockQuestion", nullptr},
-    {"BlockQuestion2D", nullptr},
+    {"BlockQuestion2D", al::createActorFunction<BlockQuestion2D>},
     {"BlockTransparent", nullptr},
     {"BlockTransparent2D", nullptr},
     {"BlowObjBeans", nullptr},
@@ -161,7 +172,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BossForestWander", al::createActorFunction<BossForestWander>},
     {"BossKnuckle", nullptr},
     {"BossKnuckleCounterGround", nullptr},
-    {"BossKnuckleFix", nullptr},
+    {"BossKnuckleFix", al::createActorFunction<BossKnuckleFix>},
     {"BossMagma", nullptr},
     {"BossRaid", nullptr},
     {"BossRaidNpc", nullptr},
@@ -268,12 +279,12 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DokanMaze", nullptr},
     {"DokanMazeDirector", nullptr},
     {"DokanStageChange", nullptr},
-    {"DonkeyKong2D", nullptr},
+    {"DonkeyKong2D", al::createActorFunction<DonkeyKong2D>},
     {"Donsuke", nullptr},
     {"Doshi", al::createActorFunction<Doshi>},
     {"DoorAreaChange", nullptr},
     {"DoorAreaChangeCap", nullptr},
-    {"DoorCity", nullptr},
+    {"DoorCity", al::createActorFunction<DoorCity>},
     {"DoorSnow", nullptr},
     {"DoorWarp", nullptr},
     {"DoorWarpStageChange", nullptr},
@@ -351,7 +362,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HipDropSwitchTimer", nullptr},
     {"HipDropTile", nullptr},
     {"HipDropMoveLift", al::createActorFunction<HipDropMoveLift>},
-    {"HipDropRepairParts", nullptr},
+    {"HipDropRepairParts", al::createActorFunction<HipDropRepairParts>},
     {"HipDropTransformPartsWatcher", nullptr},
     {"HomeBed", nullptr},
     {"HomeChair", nullptr},
@@ -403,12 +414,12 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MeganeKeyMoveMapParts", nullptr},
     {"MeganeMapParts", al::createActorFunction<MeganeMapParts>},
     {"Mirror", nullptr},
-    {"MoonBasementBreakParts", nullptr},
+    {"MoonBasementBreakParts", al::createActorFunction<MoonBasementBreakParts>},
     {"MoonBasementClimaxWatcher", nullptr},
     {"MoonBasementFallObj", nullptr},
     {"MoonBasementFinalGate", nullptr},
     {"MoonBasementFallObjDecoration", nullptr},
-    {"MoonBasementFloor", nullptr},
+    {"MoonBasementFloor", al::createActorFunction<MoonBasementFloor>},
     {"MoonBasementGate", nullptr},
     {"MoonBasementMeteorAreaObj", nullptr},
     {"MoonBasementPillar", nullptr},
@@ -543,7 +554,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SkyWorldKoopaFire", nullptr},
     {"SkyWorldKoopaFrame", nullptr},
     {"SkyWorldMiddleViewCloud", nullptr},
-    {"SignBoard", nullptr},
+    {"SignBoard", al::createActorFunction<SignBoard>},
     {"SnowWorldBigIcicle", nullptr},
     {"SnowWorldSequenceFlagCheckObj", nullptr},
     {"Sky", nullptr},
@@ -598,7 +609,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TalkNpcSnowMan", nullptr},
     {"TalkNpcSnowManLeader", nullptr},
     {"TalkNpcSnowManRacer", nullptr},
-    {"TalkPoint", nullptr},
+    {"TalkPoint", al::createActorFunction<TalkPoint>},
     {"Tank", nullptr},
     {"TankReviveCtrl", nullptr},
     {"TaxiStop", nullptr},
@@ -665,9 +676,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"RailCollision", nullptr},
     {"RailMoveMapParts", al::createActorFunction<al::RailMoveMapParts>},
     {"RiseMapParts", nullptr},
-    {"ReactionMapParts", nullptr},
+    {"ReactionMapParts", al::createActorFunction<ReactionMapParts>},
     {"RiseMapPartsHolder", al::createActorFunction<RiseMapPartsHolder>},
-    {"RocketFlower", nullptr},
+    {"RocketFlower", al::createActorFunction<RocketFlower>},
     {"RollingCubeMapParts", al::createActorFunction<al::RollingCubeMapParts>},
     {"RippleFixMapParts", nullptr},
     {"RotateMapParts", al::createActorFunction<al::RotateMapParts>},
