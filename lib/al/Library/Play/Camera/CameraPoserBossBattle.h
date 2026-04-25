@@ -19,7 +19,7 @@ public:
     bool tryChangeFollowCamera();
     bool isCameraTargetOutOfRangeY() const;
     bool tryChangeTowerCamera();
-    sead::Vector3f calcOutOfRangeDistance() const;
+    f32 calcOutOfRangeDistance() const;
 
     void exeTower();
     void exeFollow();

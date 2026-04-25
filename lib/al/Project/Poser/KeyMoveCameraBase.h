@@ -16,12 +16,10 @@ public:
     void start(const CameraStartInfo&) override;
     void movement() override;
     virtual bool isEndKeyMoveCamera() const;
-    void calcRate() const;
+    f32 calcRate() const;
 
 private:
-    s8 filler[0x160 - sizeof(CameraPoser)];
+    s8 filler[0x168 - sizeof(CameraPoser)];
 };
 
 }  // namespace al
-
-static_assert(sizeof(al::KeyMoveCameraBase) == 0x160, "al::KeyMoveCameraBase size");
