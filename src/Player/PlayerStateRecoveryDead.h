@@ -20,7 +20,6 @@ public:
                             PlayerColliderHakoniwa* playerCollider, PlayerAnimator* playerAnimator,
                             const PlayerConst* playerConst, al::LiveActor* playerModelHolder);
 
-    ~PlayerStateRecoveryDead() override;
     void appear() override;
     void kill() override;
 
