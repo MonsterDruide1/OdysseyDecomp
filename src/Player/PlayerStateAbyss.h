@@ -19,7 +19,6 @@ public:
                      PlayerColliderHakoniwa* playerCollider, PlayerAnimator* playerAnimator,
                      al::LiveActor* anotherActor);
 
-    ~PlayerStateAbyss() override;
     void appear() override;
     void kill() override;
 
