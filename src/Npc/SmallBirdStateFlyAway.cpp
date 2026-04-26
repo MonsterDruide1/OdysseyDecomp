@@ -82,18 +82,18 @@ void SmallBirdStateFlyAway::exeFlyAway() {
         mIsColliding = false;
         startActionAtRandomFrameIfNotPlaying(mActor, "Fly");
         if (rs::isModeE3MovieRom()) {
-            gVerticalAccelIndex = al::modi(gVerticalAccelIndex + 7, 6);
+            gVerticalAccelIndex = al::wrapValue(gVerticalAccelIndex + 1, 6);
             mVerticalAccel = gE3MovieVerticalAccel[gVerticalAccelIndex];
-            gHorizontalAccelIndex = al::modi(gHorizontalAccelIndex + 5, 4);
+            gHorizontalAccelIndex = al::wrapValue(gHorizontalAccelIndex + 1, 4);
             mHorizontalAccel = gE3MovieHorizontalAccel[gHorizontalAccelIndex];
         } else {
-            gVerticalAccelIndex = al::modi(gVerticalAccelIndex + 5, 4);
+            gVerticalAccelIndex = al::wrapValue(gVerticalAccelIndex + 1, 4);
             mVerticalAccel = gVerticalAccel[gVerticalAccelIndex];
             mHorizontalAccel = gHorizontalAccel;
         }
         mTargetAccelDir = {0, mVerticalAccel, mHorizontalAccel};
         al::normalize(&mTargetAccelDir);
-        gCollisionCheckOffsetStep = al::modi(gCollisionCheckOffsetStep + 11, 10);
+        gCollisionCheckOffsetStep = al::wrapValue(gCollisionCheckOffsetStep + 1, 10);
         mCollisionCheckOffsetStep = gCollisionCheckOffsetStep;
     }
 

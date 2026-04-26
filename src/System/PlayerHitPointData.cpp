@@ -13,10 +13,7 @@ void PlayerHitPointData::setKidsModeFlag(bool kidsMode) {
 void PlayerHitPointData::init() {
     mIsHaveMaxUpItem = false;
     mIsForceNormalMode = false;
-    if (mIsKidsMode)
-        mCurrentHealth = 6;
-    else
-        mCurrentHealth = 3;
+    mCurrentHealth = getMaxWithoutItem();
 }
 
 void PlayerHitPointData::recoverMax() {
@@ -29,10 +26,11 @@ s32 PlayerHitPointData::PlayerHitPointData::getCurrent() const {
 
 s32 PlayerHitPointData::getMaxCurrent() const {
     if (mIsForceNormalMode)
-        return 3;
+        return getMaxWithoutItem();
 
     if (mIsHaveMaxUpItem)
         return getMaxWithItem();
+
     return getMaxWithoutItem();
 }
 
@@ -87,7 +85,7 @@ void PlayerHitPointData::kill() {
 
 void PlayerHitPointData::forceNormalMode() {
     mIsForceNormalMode = true;
-    mCurrentHealth = 3;
+    mCurrentHealth = getMaxWithoutItem();
 }
 
 void PlayerHitPointData::endForceNormalMode() {

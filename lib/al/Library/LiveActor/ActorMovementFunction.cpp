@@ -773,8 +773,8 @@ bool reboundVelocityFromCollision(LiveActor* actor, f32 reboundStrength, f32 reb
 
 bool reboundVelocityFromTriangles(LiveActor* actor, f32 reboundStrength, f32 reboundMin) {
     Collider* collider = getActorCollider(actor);
-    s32 planeCount = collider->getPlaneCount();
-    if (collider->get_48() == 0)
+    s32 planeCount = collider->getStoredPlaneNum();
+    if (collider->getPlaneNum() == 0)
         return false;
 
     bool isRebound = false;
