@@ -3,13 +3,14 @@
 #include <math/seadQuat.h>
 
 #include "Library/Fluid/IUseFluidSurface.h"
+#include "Library/HostIO/HioNode.h"
 
 namespace al {
 class LiveActor;
 struct ActorInitInfo;
 
 // TODO: Finish this
-class RippleCtrl : public IUseFluidSurface {
+class RippleCtrl : public IUseFluidSurface, public HioNode {
 public:
     RippleCtrl(LiveActor* parent);
 

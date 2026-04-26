@@ -151,7 +151,7 @@ void PlaneParam::initialize(const sead::Vector3f& direction, ParameterObj* param
     StringTmp<256> distance = {"%sDistance", planeName};
 
     initializeDir(direction, parameterObj, normal.cstr(), "平面法線");
-    mDistanceFromOrigin = new ParameterF32(distance.cstr(), "原点からの距離",
+    mDistanceFromOrigin = new ParameterF32(0.0f, distance.cstr(), "原点からの距離",
                                            "Min=-100000, Max=100000", parameterObj, true);
 }
 }  // namespace al

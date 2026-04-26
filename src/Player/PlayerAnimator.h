@@ -84,14 +84,25 @@ public:
 private:
     PlayerModelHolder* mModelHolder;
     al::LiveActor* mPlayerDeco;
-    void* _10;
+    al::LiveActor* mPlayer;
     PlayerAnimFrameCtrl* mAnimFrameCtrl;
     sead::FixedSafeString<64> mCurAnim;
     sead::FixedSafeString<64> mCurSubAnim;
     sead::FixedSafeString<64> mCurUpperBodyAnim;
     sead::FixedSafeString<64> _128;
-    char padding_180[0x1A2 - 0x180];
+    al::ActorDitherAnimator* mDitherAnim;
+    f32* mSklAnimBlendWeights;
+    void* _190;
+    f32 mRunStartAnimRate;
+    s32 _19c;
+    bool mIsNeedFullFaceAnim;
+    bool _1a1;
     bool mIsSubAnimPlaying;
+    bool _1a3;
+    bool mIsUpperBodyAnimHeadVisKeep;
+    bool _1a5;
+    bool _1a6;
+    bool mIsSubAnimOnlyAir;
 };
 
 static_assert(sizeof(PlayerAnimator) == 0x1a8);

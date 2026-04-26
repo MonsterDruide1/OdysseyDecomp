@@ -6,6 +6,7 @@
 
 #include "Layout/KidsModeLayoutAccessor.h"
 #include "Layout/StageSceneLayout.h"
+#include "Scene/StageSceneStateSnapShot.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"
 #include "Util/AmiiboUtil.h"
@@ -82,6 +83,12 @@ NERVES_MAKE_STRUCT(StageScene, StartStageBgm, CollectBgm, CollectionList, MiniGa
                    Amiibo, DemoStageStartElectricDemo, WaitStartWarpForSession, DemoCountCoin,
                    WarpToCheckpoint, DemoAppearFromHome, DemoRisePyramid, WaitWarpToCheckpoint)
 }  // namespace
+
+bool StageScene::isIgnoreAddPlayTime() const {
+    if (!mStateSnapShot->isDead())
+        return true;
+    return al::isNerve(this, &NrvStageScene.Pause);
+}
 
 void StageScene::exeDemoGetLifeMaxUpItem() {
     if (mIsUpdateKitAndGraphics) {

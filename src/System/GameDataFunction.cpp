@@ -22,13 +22,13 @@
 #include "Item/Shine.h"
 #include "Item/ShineInfo.h"
 #include "Layout/ShopLayoutInfo.h"
+#include "MapObj/ChangeStageInfo.h"
 #include "MapObj/RiseMapPartsHolder.h"
 #include "Npc/WorldTravelingNpc.h"
 #include "Player/PlayerFunction.h"
 #include "Scene/QuestInfo.h"
 #include "Scene/QuestInfoHolder.h"
 #include "Scene/TemporaryScenarioCameraHolder.h"
-#include "Sequence/ChangeStageInfo.h"
 #include "System/GameDataUtil.h"
 #include "System/GameProgressData.h"
 #include "System/MapDataHolder.h"
@@ -217,7 +217,7 @@ bool isMissEndPrevStageForSceneDead(GameDataHolderAccessor accessor) {
 }
 
 void reenterStage(GameDataHolderWriter writer) {
-    writer->set_4a();
+    writer->setStageEnding();
 }
 
 s32 getNextWorldId(GameDataHolderAccessor accessor) {

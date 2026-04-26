@@ -29,3 +29,5 @@ public:
 private:
     al::LayoutActor* mParBg = nullptr;
 };
+
+static_assert(sizeof(BootLayout) == 0x138);

@@ -45,7 +45,7 @@ public:
 
     CollisionDirector* getCollisionDirector() const override;
 
-    sead::Vector3f* get_30() const { return _30; }
+    const sead::Vector3f* getActorGravityPtr() const { return mActorGravityPtr; }
 
     f32 getRadius() { return mRadius; };
 
@@ -55,9 +55,9 @@ public:
 
     void setOffsetY(f32 offsetY) { mOffsetY = offsetY; };
 
-    s32 get_48() const { return _48; }
+    s32 getPlaneNum() const { return mPlaneNum; }
 
-    u32 getPlaneCount() const { return mPlaneCount; }
+    u32 getStoredPlaneNum() const { return mStoredPlaneNum; }
 
     const sead::Vector3f& getFixReaction() const { return mFixReaction; }
 
@@ -73,7 +73,7 @@ public:
 
     f32 get_260() const { return _260; }
 
-    u32 get_264() const { return _264; }
+    u32 getNoGroundCounter() const { return mNoGroundCounter; }
 
     void setReactMovePower(bool isEnabled) {
         mFlag &= ~1;
@@ -87,18 +87,18 @@ public:
     bool isCollidedWallFace() { return mFlag >> 5 & 1; }
 
 private:
-    CollisionDirector* _8;
-    TriangleFilterBase* _10;
-    CollisionPartsFilterBase* _18;
-    sead::Matrix34f* _20;
-    sead::Vector3f* _28;
-    sead::Vector3f* _30;
+    CollisionDirector* mCollisionDirector;
+    const TriangleFilterBase* mTriangleFilter;
+    const CollisionPartsFilterBase* mCollisionPartsFilter;
+    const sead::Matrix34f* mActorBaseMtxPtr;
+    const sead::Vector3f* mActorTransPtr;
+    const sead::Vector3f* mActorGravityPtr;
     f32 mRadius;
     f32 mOffsetY;
-    void* filler1;
-    u32 _48;
-    u32 mPlaneCount;
-    HitInfo* _50;
+    sead::Vector3f* _40;
+    u32 mPlaneNum;
+    u32 mStoredPlaneNum;
+    HitInfo* mPlanes;
     sead::Vector3f mFixReaction;
     sead::Vector3f _64;
     HitInfo mFloorHit;
@@ -109,12 +109,12 @@ private:
     char filler4[0x4];
     HitInfo mCeilingHit;
     f32 _260;
-    u32 _264;
-    sead::Vector3f _268;
+    u32 mNoGroundCounter;
+    sead::Vector3f mRecentOnGroundNormal;
     char _274;
     char mFlag;
-    sead::Vector3f _278;
-    f32 _284;
+    sead::Vector3f mCurrentTrans;
+    f32 mCurrentRadius;
 };
 
 static_assert(sizeof(Collider) == 0x288);

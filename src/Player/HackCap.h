@@ -1,7 +1,14 @@
 #pragma once
 
+#include <prim/seadSafeString.h>
+
 #include "Library/LiveActor/LiveActor.h"
 
+namespace al {
+class ActorDitherAnimator;
+class WaterSurfaceFinder;
+class PadRumbleKeeper;
+}  // namespace al
 class PlayerInput;
 class PlayerAreaChecker;
 class PlayerWallActionHistory;
@@ -15,6 +22,15 @@ class PlayerJointControlKeeper;
 class HackCapJudgePreInputSeparateThrow;
 class HackCapJudgePreInputSeparateJump;
 class CapTargetInfo;
+class PlayerColliderHackCap;
+class HackCapTrigger;
+class HackCapAboveGroundChecker;
+class HackCapThrowParam;
+class HackCapJointControlKeeper;
+class PlayerExternalVelocity;
+class PlayerPushReceiver;
+class HackCapStateThrowStay;
+class HackCapStateHide;
 
 class HackCap : public al::LiveActor {
 public:
@@ -184,16 +200,103 @@ public:
     bool stayWallHit();
     void endHackThrow();
 
-    CapTargetInfo* getCapTargetInfo() const { return mCapTargetInfo; }
+    CapTargetInfo* getCapTargetInfo() const { return mCapTargetInfo1; }
 
 private:
-    unsigned char _108[0x10];
-    al::LiveActor* mActorA;
-    unsigned char _120[0x08];
-    al::LiveActor* mPlayerActor;
-    void* _130[0x1f];
-    CapTargetInfo* mCapTargetInfo;
-    void* _230[0x7c];
+    al::LiveActor* mEquipmentHat;
+    al::LiveActor* mEquipmentHatDepthShadow;
+    al::LiveActor* mLockOnCapEyes;
+    al::LiveActor* mThrowingHatEyes;
+    const al::LiveActor* mPlayerActor;
+    const IUsePlayerCollision* mPlayerCollision;
+    const char* mTypeName;
+    const PlayerAreaChecker* mPlayerAreaChecker;
+    const PlayerSeparateCapFlag* mPlayerSeparateCapFlag;
+    const IUsePlayerHeightCheck* mPlayerHeightCheck;
+    const PlayerWetControl* mPlayerWetControl;
+    const PlayerJointControlKeeper* mPlayerJointControlKeeper;
+    PlayerColliderHackCap* mPlayerColliderHackCap;
+    al::WaterSurfaceFinder* mWaterSurfaceFinder;
+    al::PadRumbleKeeper* mPadRumbleKeeper;
+    PlayerWetControl* mSelfPlayerWetControl;
+    HackCapTrigger* mHackCapTrigger;
+    al::ActorDitherAnimator* mActorDitherAnimator;
+    HackCapAboveGroundChecker* mHackCapAboveGroundChecker;
+    void* _1a0_arr;
+    u64 _1a0_capacity;
+    s32 _1a0_current;
+    void* _1b8_arr;
+    u64 _1b8_capacity;
+    s32 _1b8_current;
+    const al::HitSensor* _1d0;
+    al::HitSensor* mAttackSensor;
+    sead::Vector3f mSpiralTailPositions[5];
+    HackCapThrowParam* mHackCapThrowParam;
+    CapTargetInfo* mCapTargetInfo1;
+    CapTargetInfo* mCapTargetInfo2;
+    void* _238;
+    sead::Vector3f _240;
+    sead::Vector3f _24c;
+    sead::Vector3f _258;
+    f32 _264;
+    sead::Vector2f _268;
+    f32 _270;
+    s32 _274;
+    s32 _278;
+    s32 _27c;
+    f32 _280;
+    f32 _284;
+    f32 _288;
+    f32 _28c;
+    s32 _290;
+    s32 _298;
+    bool _2a0[17];
+    const PlayerWallActionHistory* mPlayerWallActionHistory;
+    const PlayerCapActionHistory* mPlayerCapActionHistory;
+    const PlayerInput* mInput;
+    PlayerEyeSensorHitHolder* mPlayerEyeSensorHitHolder;
+    PlayerEyeSensorHitHolder* mCapEyeSensorHitHolder;
+    f32 _2d8;
+    s32 _2dc;
+    HackCapJointControlKeeper* mHackCapJointControlKeeper;
+    void* _2e8[5];
+    sead::FixedSafeString<128> _310;
+    sead::FixedSafeString<128> _3a8;
+    sead::Matrix34f _440;
+    sead::Matrix34f _470;
+    sead::Matrix34f _4a0;
+    bool _4d0;
+    sead::Vector3f _4d4;
+    sead::Vector3f _4e0;
+    bool _4ec;
+    void* _4f0;
+    PlayerExternalVelocity* mCapExternalVelocity;
+    PlayerPushReceiver* mCapPushReceiver;
+    al::HitSensor* mPlayerBodySensor;
+    bool _510;
+    sead::Vector3f _514;
+    HackCapJudgePreInputSeparateThrow* mCapJudgePreInputSeparateThrow;
+    HackCapJudgePreInputSeparateJump* mCapJudgePreInputSeparateJump;
+    bool _530;
+    s32 _534;
+    sead::Vector3f mWallPos;
+    sead::Vector3f mWallNormal;
+    sead::Vector3f mWallVelocity;
+    void* _560[4];
+    s32 _580;
+    s32 mLockOnCounter;
+    sead::Matrix34f _588;
+    bool _5b8;
+    bool mIsHackDamageVisible;
+    bool _5ba;
+    bool _5bb;
+    s32 _5bc;
+    void* _5c0[7];
+    bool mIsPuppet;
+    bool _5f9;
+    bool mIsHidePuppetCapSilhouette;
+    HackCapStateThrowStay* mStateThrowStay;
+    HackCapStateHide* mStateHide;
 };
 
 static_assert(sizeof(HackCap) == 0x610);
