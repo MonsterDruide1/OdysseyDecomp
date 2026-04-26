@@ -12,7 +12,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Sequence/ChangeStageInfo.h"
+#include "MapObj/ChangeStageInfo.h"
 #include "System/GameDataFunction.h"
 #include "Util/PlayerPuppetFunction.h"
 #include "Util/SensorMsgFunction.h"
