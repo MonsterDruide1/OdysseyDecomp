@@ -107,6 +107,7 @@
 #include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
+#include "MapObj/Special2KeyMoveLift.h"
 #include "MapObj/StageSwitchSelector.h"
 #include "MapObj/TalkPoint.h"
 #include "MapObj/TrampleBush.h"
@@ -567,8 +568,8 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SnowVolumeEraser", nullptr},
     {"Souvenir", al::createActorFunction<Souvenir>},
     {"SouvenirDirector", nullptr},
-    {"Special2KeyMoveLift", nullptr},
-    {"Special2KeyMoveParts", nullptr},
+    {"Special2KeyMoveLift", al::createActorFunction<Special2KeyMoveLift>},
+    {"Special2KeyMoveParts", al::createActorFunction<Special2KeyMoveParts>},
     {"SphinxQuiz", nullptr},
     {"SphinxRide", nullptr},
     {"SphinxTaxiWatcher", nullptr},
