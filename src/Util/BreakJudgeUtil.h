@@ -1,11 +1,12 @@
 #pragma once
 
+#include "Library/MapObj/BreakMapPartsBase.h"
+
 namespace al {
 class SensorMsg;
-}
+class HitSensor;
+}  // namespace al
 
 namespace rs {
-typedef bool (*break_judge_function_t)(const al::SensorMsg*);
-
-break_judge_function_t getBreakJudgeFunction(const char* name);
+al::JudgeFuncPtr getBreakJudgeFunction(const char* name);
 }  // namespace rs
