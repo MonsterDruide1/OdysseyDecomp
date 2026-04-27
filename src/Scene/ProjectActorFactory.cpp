@@ -116,6 +116,7 @@
 #include "MapObj/TreasureBoxKey.h"
 #include "MapObj/VolleyballBase.h"
 #include "MapObj/VolleyballNet.h"
+#include "MapObj/WaterfallWorldWaterfall.h"
 #include "MapObj/WeightSwitch.h"
 #include "MapObj/WorldMapEarth.h"
 #include "MapObj/WorldWarpHole.h"
@@ -648,7 +649,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"WaterfallWorldBigBreakableWall", nullptr},
     {"WaterfallWorldFallDownBridge", nullptr},
     {"WaterfallWorldHomeCage", nullptr},
-    {"WaterfallWorldWaterfall", nullptr},
+    {"WaterfallWorldWaterfall", al::createActorFunction<WaterfallWorldWaterfall>},
     {"WaterRoad", nullptr},
     {"WeightSwitch", al::createActorFunction<WeightSwitch>},
     {"WheelWaveSurfParts", nullptr},
