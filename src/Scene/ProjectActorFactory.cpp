@@ -81,6 +81,7 @@
 #include "MapObj/CollectionList.h"
 #include "MapObj/DoorCity.h"
 #include "MapObj/Doshi.h"
+#include "MapObj/EffectObjAlpha.h"
 #include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/FixMapPartsBgmChangeAction.h"
@@ -293,7 +294,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"EchoBlockMapParts", nullptr},
     {"EffectObj", al::createActorFunction<al::EffectObj>},
     {"EffectObjScale", nullptr},
-    {"EffectObjAlpha", nullptr},
+    {"EffectObjAlpha", al::createActorFunction<EffectObjAlpha>},
     {"EffectObjCameraEmit", al::createActorFunction<al::EffectObjCameraEmit>},
     {"EffectObjFollowCamera", al::createActorFunction<al::EffectObjFollowCamera>},
     {"EffectObjFollowCameraLimit", al::createActorFunction<al::EffectObjFollowCameraLimit>},
