@@ -12,6 +12,12 @@ struct CameraPoserFlag {
     void load(const ByamlIter& iter);
     bool isValidKeepPreSelfPoseNextCamera() const;
 
+    void validateResetPoseNextCamera() { _3 = true; }
+
+    void validateKeepPreSelfPoseNextCamera() { isOverWriteProgram = true; }
+
+    void onForceCollideAtStartInterpole() { _c = true; }
+
     bool isFirstCalc = true;
     bool isOffVerticalAbsorb = false;
     bool isInvalidCollider = true;

@@ -8,15 +8,15 @@ class LiveActor;
 
 class CameraPoserFixLook : public CameraPoser {
 public:
-    CameraPoserFixLook(const LiveActor* actor);
+    CameraPoserFixLook();
 
     void init() override;
     void start(const CameraStartInfo& startInfo) override;
 
-    sead::Vector3f* get_140() { return _140; }
+    void setTransPtr(sead::Vector3f* trans) { mTrans = trans; }
 
 private:
-    sead::Vector3f* _140;
+    sead::Vector3f* mTrans;
 };
 
 static_assert(sizeof(CameraPoserFixLook) == 0x148);

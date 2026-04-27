@@ -28,6 +28,9 @@ public:
     void removeTarget(CameraTargetBase* target);
     CameraTargetBase* getViewTarget(s32 index) const;
     bool isChangeViewTarget(s32 index) const;
+
+    void setViewTarget(CameraTargetBase* target, s32 index) { mViewTargetArray[index] = target; }
+
     CameraSubTargetBase* getTopSubTarget() const;
     void addSubTarget(CameraSubTargetBase* subTarget);
     void removeSubTarget(CameraSubTargetBase* subTarget);

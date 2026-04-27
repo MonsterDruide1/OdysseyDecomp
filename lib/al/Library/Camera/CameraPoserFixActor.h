@@ -14,9 +14,29 @@ public:
     void start(const CameraStartInfo& startInfo) override;
     void update() override;
 
-private:
-    const LiveActor* _140;
-    char _148[28];
+    void setTargetActor(const LiveActor* actor) { mActor = actor; }
+
+    void setOffset(const sead::Vector3f& offset) { mOffset.set(offset); }
+
+    void setDistance(f32 distance) { mDistance = distance; }
+
+    void setAngleH(f32 angleH) { mAngleH = angleH; }
+
+    void setAngleV(f32 angleV) { mAngleV = angleV; }
+
+    void setAutoAroundFront() { mIsAutoAroundFront = true; }
+
+    void setCalcNearestAtFromPreAt() { mIsCalcNearestAtFromPreAt = true; }
+
+protected:
+    const LiveActor* mActor;
+    sead::Vector3f mOffset;
+    f32 mDistance;
+    f32 mAngleH;
+    f32 mAngleV;
+    bool mIsAutoAroundFront;
+    bool mIsCalcNearestAtFromPreAt;
+    u8 _162[2];
     sead::Vector3f mPreLookAtPos;
 };
 
@@ -25,6 +45,12 @@ public:
     CameraPoserFixTalk(const LiveActor* actor);
 
     void start(const CameraStartInfo& startInfo) override;
+
+    void setTalkDistance(f32 distance) { mTalkDistance = distance; }
+
+private:
+    f32 mTalkDistance;
+    u8 _174[4];
 };
 
 class CameraPoserFixFishing : public CameraPoserFixActor {
@@ -40,6 +66,6 @@ private:
 
 static_assert(sizeof(CameraPoserFixActor) == 0x170);
 static_assert(sizeof(CameraPoserFixFishing) == 0x190);
-static_assert(sizeof(CameraPoserFixTalk) == 0x170);
+static_assert(sizeof(CameraPoserFixTalk) == 0x178);
 
 }  // namespace al
