@@ -68,6 +68,7 @@
 #include "Item/LifeUpItem2D.h"
 #include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
+#include "MapObj/BlockBrickBig2D.h"
 #include "MapObj/BlockEmpty2D.h"
 #include "MapObj/BlockQuestion2D.h"
 #include "MapObj/BossKnuckleFix.h"
@@ -153,7 +154,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BirdPlayerGlideCtrl", al::createActorFunction<BirdPlayerGlideCtrl>},
     {"BlockBrick", nullptr},
     {"BlockBrick2D", nullptr},
-    {"BlockBrickBig2D", nullptr},
+    {"BlockBrickBig2D", al::createActorFunction<BlockBrickBig2D>},
     {"BlockEmpty", nullptr},
     {"BlockEmpty2D", al::createActorFunction<BlockEmpty2D>},
     {"BlockHard", nullptr},
