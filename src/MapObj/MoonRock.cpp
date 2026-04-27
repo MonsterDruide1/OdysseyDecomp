@@ -34,19 +34,19 @@
 #include "Util/SpecialBuildUtil.h"
 
 namespace {
-NERVE_IMPL_(MoonRock, Sleep, ChangeScene)
-NERVE_IMPL(MoonRock, Wait)
-NERVE_IMPL(MoonRock, Break)
-NERVE_IMPL(MoonRock, ReadyRequestStartDemoMoonSetStart)
-NERVE_IMPL(MoonRock, Reaction)
-NERVE_IMPL(MoonRock, RequestStartDemoMoonSetStart)
-NERVE_IMPL(MoonRock, DemoMoonSetStart)
-NERVE_IMPL(MoonRock, EndDemoMoonSetStart)
-NERVE_IMPL(MoonRock, ChangeScene)
+NERVE_HOST_TYPE_IMPL_(MoonRock, Sleep, ChangeScene)
+NERVE_HOST_TYPE_IMPL(MoonRock, Wait)
+NERVE_HOST_TYPE_IMPL(MoonRock, Break)
+NERVE_HOST_TYPE_IMPL(MoonRock, ReadyRequestStartDemoMoonSetStart)
+NERVE_HOST_TYPE_IMPL(MoonRock, Reaction)
+NERVE_HOST_TYPE_IMPL(MoonRock, RequestStartDemoMoonSetStart)
+NERVE_HOST_TYPE_IMPL(MoonRock, DemoMoonSetStart)
+NERVE_HOST_TYPE_IMPL(MoonRock, EndDemoMoonSetStart)
+NERVE_HOST_TYPE_IMPL(MoonRock, ChangeScene)
 
-NERVES_MAKE_NOSTRUCT(MoonRock, Sleep, Break, Wait, Reaction, ReadyRequestStartDemoMoonSetStart,
-                     RequestStartDemoMoonSetStart, DemoMoonSetStart, EndDemoMoonSetStart,
-                     ChangeScene)
+NERVES_MAKE_STRUCT(HostType, Sleep, Wait, Break, Reaction)
+NERVES_MAKE_NOSTRUCT(HostType, ReadyRequestStartDemoMoonSetStart, RequestStartDemoMoonSetStart,
+                     DemoMoonSetStart, EndDemoMoonSetStart, ChangeScene)
 }  // namespace
 
 static bool isMoonRockScenario(al::LiveActor* actor, const al::ActorInitInfo& info) {
@@ -76,7 +76,7 @@ void MoonRock::init(const al::ActorInitInfo& info) {
         al::getLinksMatrix(&mDemoCameraPosition, info, "DemoCameraPosition");
     }
 
-    const al::Nerve* initialNerve = &Sleep;
+    const al::Nerve* initialNerve = &NrvHostType.Sleep;
     if (GameDataFunction::isEnableOpenMoonRock(this)) {
         mAddDemoInfo = al::registDemoRequesterToAddDemoInfo(this, info, 0);
         mDemoCamera = al::initDemoAnimCamera(this, info, "Anim");
@@ -86,7 +86,7 @@ void MoonRock::init(const al::ActorInitInfo& info) {
         al::copyPose(mGoalMark, this);
         al::setTrans(mGoalMark, al::getTrans(this));
 
-        initialNerve = &Wait;
+        initialNerve = &NrvHostType.Wait;
     } else if (isMoonRockScenario(this, info)) {
         al::tryGetArg(&mWreckagePoseType, info, "WreckagePoseType");
 
@@ -96,13 +96,13 @@ void MoonRock::init(const al::ActorInitInfo& info) {
         mWreckageActor->makeActorAlive();
         GameDataFunction::openMoonRock(this, mPlacementId);
         mIsOpenedOnInit = true;
-        initialNerve = &ReadyRequestStartDemoMoonSetStart;
+        initialNerve = &NrvHostType.Break;
     }
 
     rs::createCapMessageEnableChecker(&mCapMessageEnableChecker, this, info);
     al::initNerve(this, initialNerve, 0);
 
-    if (initialNerve == &ReadyRequestStartDemoMoonSetStart)
+    if (initialNerve == &NrvHostType.Break)
         makeActorDead();
     else
         makeActorAlive();
@@ -162,7 +162,7 @@ void MoonRock::skipDemo() {
 }
 
 void MoonRock::movement() {
-    if (al::isNerve(this, &Sleep)) {
+    if (al::isNerve(this, &NrvHostType.Sleep)) {
         rs::tryCheckShowCapMsgMoonRockLook(this, mCapMessageEnableChecker) ||
             rs::tryCheckShowCapMsgMoonRockLookLongTime(this, mCapMessageEnableChecker);
         return;
@@ -172,7 +172,7 @@ void MoonRock::movement() {
 }
 
 void MoonRock::calcAnim() {
-    if (al::isNerve(this, &Sleep)) {
+    if (al::isNerve(this, &NrvHostType.Sleep)) {
         al::calcViewModel(this);
         return;
     }
@@ -185,14 +185,14 @@ GoalMark* MoonRock::getGoalMarkForCapTalk() const {
 }
 
 void MoonRock::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isNerve(this, &Break))
+    if (al::isNerve(this, &ReadyRequestStartDemoMoonSetStart))
         rs::sendMsgKillByMoonRockDemo(other, self);
 }
 
 bool MoonRock::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
     if (al::isMsgAskSafetyPoint(message))
         return true;
-    if (!al::isNerve(this, &Sleep) && !al::isNerve(this, &Wait) &&
+    if (!al::isNerve(this, &NrvHostType.Sleep) && !al::isNerve(this, &NrvHostType.Wait) &&
         al::isMsgPlayerDisregard(message))
         return true;
     if (rs::isMsgPlayerDisregardHomingAttack(message))
@@ -200,11 +200,11 @@ bool MoonRock::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
     if (rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
 
-    if (al::isNerve(this, &Wait) &&
+    if (al::isNerve(this, &NrvHostType.Wait) &&
         (rs::isMsgCapTouchWall(message) || rs::isMsgPlayerAndCapHipDropAll(message) ||
          rs::isMsgCapReflectCollide(message))) {
         al::invalidateClipping(this);
-        al::setNerve(this, &Reaction);
+        al::setNerve(this, &NrvHostType.Reaction);
         return true;
     }
 
@@ -228,7 +228,7 @@ void MoonRock::exeReaction() {
     if (al::isActionEnd(this)) {
         al::killForceBeforeDemo(mGoalMark);
         al::tryAddRipple(this, al::getTrans(this), 1.0f, 2000.0f);
-        al::setNerve(this, &Break);
+        al::setNerve(this, &ReadyRequestStartDemoMoonSetStart);
     }
 }
 
