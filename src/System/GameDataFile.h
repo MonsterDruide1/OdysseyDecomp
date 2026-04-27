@@ -707,6 +707,8 @@ public:
 
     sead::FixedSafeString<64>* getGiftList() { return mItemGift.begin(); }
 
+    AchievementSaveData* getAchievementSaveData() const { return mAchievementSaveData; }
+
 private:
     struct WorldHintList {
         sead::PtrArray<HintInfo> list;
