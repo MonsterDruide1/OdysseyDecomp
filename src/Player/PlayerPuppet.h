@@ -25,6 +25,12 @@ class PlayerEffect;
 class PlayerInput;
 class WorldEndBorderKeeper;
 
+struct PlayerBindEndJumpInfo {
+    sead::Vector3f endTrans;
+    s32 endFrame;
+    f32 gravity;
+};
+
 class PlayerPuppet : public IUsePlayerPuppet {
 public:
     PlayerPuppet(al::LiveActor*, HackCap*, PlayerAnimator*, IUsePlayerCollision*,
@@ -80,6 +86,11 @@ public:
                                    const al::AreaObj*);
     bool tryUpdateRecoveryInfo(bool*, bool*, sead::Vector3f*, sead::Vector3f*, const al::AreaObj**);
     bool isBinding() const;
+
+    bool isBindEndCapThrow() const { return mIsBindEndCapThrow; }
+
+    const PlayerBindEndJumpInfo* getBindEndJumpInfo() const { return mBindEndJumpInfo; }
+
     bool isNoCollide() const;
 
 private:
@@ -106,7 +117,7 @@ private:
     al::AreaObj* mAreaObj;
     bool mIsBindEndOnGround;
     bool mIsBindEndJump;
-    bool _aa;
+    bool mIsBindEndCapThrow;
     bool mIsValidCollisionCheck;
     bool _ac;
     bool mIsRequestDamage;
@@ -120,9 +131,9 @@ private:
     bool _b5;
     bool _b6;
 
-    char filler[0x8];
-
-    sead::Vector3f _c8;
+    char filler[0x10];
+    PlayerBindEndJumpInfo* mBindEndJumpInfo;
 };
 
+static_assert(sizeof(PlayerBindEndJumpInfo) == 0x14);
 static_assert(sizeof(PlayerPuppet) == 0xd0);
