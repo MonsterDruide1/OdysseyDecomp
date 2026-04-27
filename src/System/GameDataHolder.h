@@ -243,6 +243,8 @@ public:
 
     AchievementInfoReader* getAchievementInfoReader() const { return mAchievementInfoReader; }
 
+    AchievementHolder* getAchievementHolder() const { return mAchievementHolder; }
+
     WorldList* getWorldList() const { return mWorldList; }
 
     MapDataHolder* getMapDataHolder() const { return mMapDataHolder; }
