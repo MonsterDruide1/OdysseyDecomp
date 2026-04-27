@@ -42,8 +42,12 @@ public:
     void tryDeleteSandSinkEffect();
     void tryDeleteDamageFireRunEffect();
 
+    void validateStainEffect() { mIsStainEffectValid = true; }
+
 private:
-    char filler[0xc0];
+    char _0[0xba];
+    bool mIsStainEffectValid;
+    char _bb[5];
 };
 
 static_assert(sizeof(PlayerEffect) == 0xc0);

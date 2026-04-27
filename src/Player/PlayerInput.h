@@ -30,7 +30,7 @@ public:
     s32 getSeparatePlay2P();
     bool isMove() const;
     bool isMoveDeepDown() const;
-    const sead::Vector2f& getStickMoveRaw() const;
+    const sead::Vector2f* getStickMoveRaw() const;
     bool isMoveDeepDownNoSnap() const;
     bool isEnableCarry() const;
     bool isTriggerCarryStart() const;
