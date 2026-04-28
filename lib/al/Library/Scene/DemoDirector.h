@@ -53,13 +53,23 @@ public:
     virtual bool startDemo(const char*);
     virtual void endDemo(const char*);
 
+    LiveActor* getRequestActor() const { return mRequestActor; }
+
+    void setRequestActor(LiveActor* actor) { mRequestActor = actor; }
+
+    const char* getDemoInfoDemoName() const { return *mDemoInfoDemoName; }
+
+    void setDemoInfoDemoName(const char* demoName) { *mDemoInfoDemoName = demoName; }
+
 private:
     const char* mActiveDemoName;
     s32 _10;
     LiveActor** mActorList;
     s32 mActorListCount;
     s32 mActorListSize;
-    void* filler[5];
+    LiveActor* mRequestActor;
+    const char** mDemoInfoDemoName;
+    void* filler[3];
 };
 
 static_assert(sizeof(DemoDirector) == 0x50);

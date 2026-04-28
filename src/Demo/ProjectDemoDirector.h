@@ -15,18 +15,29 @@ class ShineTowerRocket;
 class RiseMapPartsHolder;
 class DemoChangeEffectObj;
 class DemoHackFirstDirector;
+class CaptionInfoHolder;
+class BarrierField;
 
 class ProjectDemoDirector : public al::DemoDirector {
 public:
     enum class DemoType {
+        Normal = 0x1,
         RiseMapParts = 0x1,
+        NormalWithCinemaFrame = 0x2,
+        WithPlayer = 0x3,
         EndHack = 0x3,
+        WithPlayerCinemaFrame = 0x4,
         UNK5 = 0x4,
+        ShineGetDemo = 0x5,
         UNK6 = 0x5,
         ShineGet = 0x6,
+        WithPlayerKeepCarry = 0x7,
         UNK8 = 0x7,
+        KeepHackTalk = 0x8,
         UNK9 = 0x8,
+        SceneStartPlayerWalk = 0x9,
         UNK10 = 0x9,
+        WithPlayerKeepBindTalk = 0xA,
     };
 
     ProjectDemoDirector(const al::PlayerHolder*, al::GraphicsSystemInfo*);
@@ -74,6 +85,42 @@ public:
     bool startDemo(const char*) override;
     void endDemo(const char*) override;
 
+    void setShineTowerRocket(ShineTowerRocket* shineTowerRocket) {
+        mShineTowerRocket = shineTowerRocket;
+    }
+
+    ShineTowerRocket* getShineTowerRocket() const { return mShineTowerRocket; }
+
+    void setDemoSkipRequester(IUseDemoSkip* demoSkipRequester) {
+        mDemoSkipRequester = demoSkipRequester;
+    }
+
+    IUseDemoSkip* getDemoSkipRequester() const { return mDemoSkipRequester; }
+
+    void setDemoSkipping(bool isDemoSkipping) { mIsDemoSkipping = isDemoSkipping; }
+
+    bool isDemoSkipping() const { return mIsDemoSkipping; }
+
+    void setCaptionInfoHolder(CaptionInfoHolder* captionInfoHolder) {
+        mCaptionInfoHolder = captionInfoHolder;
+    }
+
+    CaptionInfoHolder* getCaptionInfoHolder() const { return mCaptionInfoHolder; }
+
+    void setBossBarrierField(BarrierField* bossBarrierField) {
+        mBossBarrierField = bossBarrierField;
+    }
+
+    BarrierField* getBossBarrierField() const { return mBossBarrierField; }
+
+    bool isDemoEnvironmentChangeFlag() const { return mIsDemoEnvironmentChangeFlag; }
+
+    s32 getRandomActionIndexDemoChangeWorld() const { return mRandomActionIndexDemoChangeWorld; }
+
+    void setDisableUpdateCamera() { mIsDisableUpdateCamera = true; }
+
+    bool isDisableUpdateCamera() const { return mIsDisableUpdateCamera; }
+
 private:
     al::PlayerHolder* mPlayerHolder;
     al::GraphicsSystemInfo* mGfxSysInfo;
@@ -84,14 +131,17 @@ private:
     DemoType mDemoType;
     IUseDemoSkip* mDemoSkipRequester;
     bool mIsDemoSkipping;
-    void* mCinemaCaption;
+    CaptionInfoHolder* mCaptionInfoHolder;
     al::WipeSimple* mDemoWipe;
     DemoHackFirstDirector* mDemoHackFirstDirector;
-    void* _b0;
+    BarrierField* mBossBarrierField;
     bool mIsDemoEnvironmentChangeFlag;
     sead::PtrArray<DemoChangeEffectObj> mDemoChangeEffectObjArray;
-    s32 _d0;
+    s32 mRandomActionIndexDemoChangeWorld;
     void* _d8;
-    u16 _e0;
+    bool mIsDisableUpdateCamera;
+    u8 _e1;
     s32 _e4;
 };
+
+static_assert(sizeof(ProjectDemoDirector) == 0xE8);
