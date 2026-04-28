@@ -18,7 +18,7 @@ class PlayerStateRecoveryDead : public al::ActorStateBase {
 public:
     PlayerStateRecoveryDead(al::LiveActor* player, PlayerRecoverySafetyPoint* recoverySafetyPoint,
                             PlayerColliderHakoniwa* playerCollider, PlayerAnimator* playerAnimator,
-                            const PlayerConst* playerConst, al::LiveActor* playerModelHolder);
+                            const PlayerConst* playerConst, al::LiveActor* player2dModel);
 
     void appear() override;
     void kill() override;
@@ -29,11 +29,11 @@ public:
     bool isLandFall() const;
 
 private:
-    PlayerRecoverySafetyPoint* mPlayerRecoverySafetyPoint;
-    PlayerColliderHakoniwa* mPlayerColliderHakoniwa;
-    PlayerAnimator* mPlayerAnimator;
-    const PlayerConst* mPlayerConst;
-    al::LiveActor* mPlayerModelHolder;
+    PlayerRecoverySafetyPoint* mRecoverySafetyPoint;
+    PlayerColliderHakoniwa* mColliderHakoniwa;
+    PlayerAnimator* mAnimator;
+    const PlayerConst* mConst;
+    al::LiveActor* mModelHolder;
     f32 _48;
     f32 _4c;
     sead::Vector3f mTrans;

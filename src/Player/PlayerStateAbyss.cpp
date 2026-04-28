@@ -26,25 +26,25 @@ PlayerStateAbyss::PlayerStateAbyss(al::LiveActor* player, const PlayerConst* pla
                                    PlayerRecoverySafetyPoint* recoverySafetyPoint,
                                    PlayerColliderHakoniwa* playerCollider,
                                    PlayerAnimator* playerAnimator, al::LiveActor* playerModelHolder)
-    : al::ActorStateBase("奈落死", player), mPlayerConst(playerConst),
-      mPlayerRecoverySafetyPoint(recoverySafetyPoint), mPlayerAnimator(playerAnimator) {
+    : al::ActorStateBase("奈落死", player), mConst(playerConst),
+      mRecoverySafetyPoint(recoverySafetyPoint), mAnimator(playerAnimator) {
     initNerve(&Fall, 1);
-    mPlayerStateRecoveryDead =
+    mStateRecoveryDead =
         new PlayerStateRecoveryDead(player, recoverySafetyPoint, playerCollider, playerAnimator,
                                     playerConst, playerModelHolder);
-    al::initNerveState(this, mPlayerStateRecoveryDead, &Recovery, "奈落復帰");
+    al::initNerveState(this, mStateRecoveryDead, &Recovery, "奈落復帰");
 }
 
 void PlayerStateAbyss::appear() {
-    al::NerveStateBase::appear();
-    if (mPlayerRecoverySafetyPoint->isValid()) {
+    al::ActorStateBase::appear();
+    if (mRecoverySafetyPoint->isValid()) {
         al::offAreaTarget(mActor);
-        al::setNerve(this, &Recovery);
+        prepareRecovery();
         return;
     }
 
     if (rs::isPlayer2D(mActor))
-        mPlayerAnimator->startAnim("Fall");
+        mAnimator->startAnim("Fall");
 
     al::offAreaTarget(mActor);
     al::setNerve(this, &Fall);
@@ -53,15 +53,15 @@ void PlayerStateAbyss::appear() {
 void PlayerStateAbyss::kill() {
     al::onAreaTarget(mActor);
     al::setNerve(this, &Fall);
-    al::NerveStateBase::kill();
+    al::ActorStateBase::kill();
 }
 
 void PlayerStateAbyss::exeFall() {
     if (al::isFirstStep(this)) {
         if (rs::isPlayer3D(mActor)) {
-            if (mPlayerAnimator->isSubAnimPlaying())
-                mPlayerAnimator->endSubAnim();
-            mPlayerAnimator->startAnim("DeadFall");
+            if (mAnimator->isSubAnimPlaying())
+                mAnimator->endSubAnim();
+            mAnimator->startAnim("DeadFall");
             al::startSe(mActor, "FallDown");
             al::startSe(mActor, "vDeadFallDown");
         } else {
@@ -69,8 +69,7 @@ void PlayerStateAbyss::exeFall() {
         }
     }
 
-    al::addVelocityToGravityLimit(mActor, mPlayerConst->getGravityAir(),
-                                  mPlayerConst->getFallSpeedMax());
+    al::addVelocityToGravityLimit(mActor, mConst->getGravityAir(), mConst->getFallSpeedMax());
 }
 
 void PlayerStateAbyss::exeRecovery() {
@@ -92,9 +91,7 @@ bool PlayerStateAbyss::isRecovery() const {
 }
 
 bool PlayerStateAbyss::isRecoveryLandFall() const {
-    if (!isDead() && al::isNerve(this, &Recovery))
-        return mPlayerStateRecoveryDead->isLandFall();
-    return false;
+    return !isDead() && al::isNerve(this, &Recovery) && mStateRecoveryDead->isLandFall();
 }
 
 void PlayerStateAbyss::prepareRecovery() {
