@@ -209,7 +209,7 @@ bool isDemoEnvironmentChange(const al::Scene*);
 bool isDemoEnvironmentChange(const al::LiveActor*);
 s32 getRandomActionIndexDemoChangeWorld(const al::LiveActor*);
 void setDemoInfoDemoName(const al::Scene*, const char*);
-void getDemoInfoDemoName(const al::LiveActor*);
+const char* getDemoInfoDemoName(const al::LiveActor*);
 bool isTriggerDemoCancel(const al::IUseSceneObjHolder*);
 void updateDemoSystemOnly(const al::Scene*);
 void notifyDisableUpdateCamera(const al::LiveActor*);
