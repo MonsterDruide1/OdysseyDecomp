@@ -17,7 +17,7 @@ public:
     PlayerStateAbyss(al::LiveActor* player, const PlayerConst* playerConst,
                      PlayerRecoverySafetyPoint* recoverySafetyPoint,
                      PlayerColliderHakoniwa* playerCollider, PlayerAnimator* playerAnimator,
-                     al::LiveActor* anotherActor);
+                     al::LiveActor* player2dModel);
 
     void appear() override;
     void kill() override;
@@ -29,10 +29,10 @@ public:
     void prepareRecovery();
 
 private:
-    const PlayerConst* mPlayerConst = nullptr;
-    PlayerRecoverySafetyPoint* mPlayerRecoverySafetyPoint = nullptr;
-    PlayerAnimator* mPlayerAnimator = nullptr;
-    PlayerStateRecoveryDead* mPlayerStateRecoveryDead = nullptr;
+    const PlayerConst* mConst = nullptr;
+    PlayerRecoverySafetyPoint* mRecoverySafetyPoint = nullptr;
+    PlayerAnimator* mAnimator = nullptr;
+    PlayerStateRecoveryDead* mStateRecoveryDead = nullptr;
 };
 
 static_assert(sizeof(PlayerStateAbyss) == 0x40);
