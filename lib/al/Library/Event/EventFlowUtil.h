@@ -16,9 +16,41 @@ class EventFlowRequestInfo {
 public:
     EventFlowRequestInfo();
     void reset();
-    void requestDemoAction(const char*);
-    void requestDemoCamera(const char*);
+    void requestDemoAction(const char* actionName);
+    void requestDemoCamera(const char* cameraName);
+
+    const char* getRequestedDemoPlayerActionName() const { return mDemoPlayerActionName; }
+
+    void clearRequestedDemoPlayerActionName() { mDemoPlayerActionName = nullptr; }
+
+    bool isDemoPlayerHidden() const { return mIsDemoPlayerHidden; }
+
+    void setDemoPlayerHidden(bool isHidden) { mIsDemoPlayerHidden = isHidden; }
+
+    bool isRequestHideDemoPlayer() const { return mIsRequestHideDemoPlayer; }
+
+    void resetRequestHideDemoPlayer() { mIsRequestHideDemoPlayer = false; }
+
+    bool isRequestShowDemoPlayer() const { return mIsRequestShowDemoPlayer; }
+
+    void resetRequestShowDemoPlayer() { mIsRequestShowDemoPlayer = false; }
+
+private:
+    bool _0 = false;
+    bool _1 = false;
+    char _2[6] = {};
+    const char* mDemoActionName = nullptr;
+    const char* _10 = nullptr;
+    const char* mDemoPlayerActionName = nullptr;
+    const char* mDemoCameraName = nullptr;
+    void* _28 = nullptr;
+    bool mIsDemoPlayerHidden = false;
+    bool mIsRequestHideDemoPlayer = false;
+    bool mIsRequestShowDemoPlayer = false;
+    char _33[5] = {};
 };
+
+static_assert(sizeof(EventFlowRequestInfo) == 0x38);
 
 bool isNodeName(const EventFlowNode*, const char*);
 const char16* getScareMessage(const EventFlowNode*);
@@ -90,7 +122,7 @@ bool isExistEventEntry(const EventFlowExecutor*, const char*);
 bool isCurrentEventEntry(const EventFlowExecutor*, const char*);
 bool isEventName(const EventFlowEventData*, const char*, ...);
 const char* getEventName(const EventFlowEventData*);
-bool getEventDataParamString(const EventFlowEventData*, const char*);
+const char* getEventDataParamString(const EventFlowEventData*, const char*);
 bool isEventDataParamBool(const EventFlowEventData*, const char*);
 }  // namespace al
 

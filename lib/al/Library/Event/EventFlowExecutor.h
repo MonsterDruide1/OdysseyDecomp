@@ -31,6 +31,13 @@ public:
 
     LiveActor* getActor() const { return mActor; }
 
+    bool isEnd() const { return mName == nullptr || mEventFlowNode == nullptr; }
+
+    void clearCurrentNodeAndName() {
+        mEventFlowNode = nullptr;
+        mName = nullptr;
+    }
+
 private:
     LiveActor* mActor;
     EventFlowChart* mEventFlowChart;

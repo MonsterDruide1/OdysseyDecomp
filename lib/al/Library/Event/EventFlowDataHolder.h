@@ -5,13 +5,16 @@
 #include <prim/seadSafeString.h>
 
 namespace al {
-class CameraTicket;
-class LiveActor;
-class EventFlowEventData;
-class IUseCamera;
-class EventFlowRequestInfo;
-class EventFlowScareCtrlBase;
 class BalloonOrderGroup;
+class CameraTicket;
+class EventFlowEventData;
+class EventFlowScareCtrlBase;
+class IEventFlowActionNameConverter;
+class IEventFlowQueryJudge;
+class IUseCamera;
+class LiveActor;
+class MessageTagDataHolder;
+class EventFlowRequestInfo;
 
 class EventFlowDataHolder {
 public:
@@ -41,17 +44,59 @@ public:
     bool isEndInterpoleCamera(const IUseCamera*, const char*) const;
     bool isPlayingEventAnimCamera(const char*) const;
 
+    EventFlowRequestInfo* getRequestInfo() const { return mRequestInfo; }
+
+    void setEventFlowActorParam(const void* actorParam) { mEventFlowActorParam = actorParam; }
+
+    void setEventFlowActor(const LiveActor* actor) { mEventFlowActor = actor; }
+
+    void setEventQueryJudge(const IEventFlowQueryJudge* queryJudge) {
+        mEventQueryJudge = queryJudge;
+    }
+
+    void setEventActionNameConverter(const IEventFlowActionNameConverter* converter) {
+        mEventActionNameConverter = converter;
+    }
+
+    void setMessageTagDataHolder(const MessageTagDataHolder* messageTagDataHolder) {
+        mMessageTagDataHolder = messageTagDataHolder;
+    }
+
+    const MessageTagDataHolder* getMessageTagDataHolder() const { return mMessageTagDataHolder; }
+
+    void setBalloonOrderGroup(BalloonOrderGroup* group) { mBalloonOrderGroup = group; }
+
+    void swapCharacterName(const sead::WBufferedSafeString* name) { mSwappedCharacterName = name; }
+
+    void resetCharacterName() { mSwappedCharacterName = nullptr; }
+
+    const char* getTalkSubActorName() const { return mTalkSubActorName; }
+
+    s32 getItemTypeCount() const { return mItemTypeCount; }
+
+    const char* getItemType(s64 index) const { return mItemTypes[index]; }
+
 private:
     EventFlowRequestInfo* mRequestInfo;
-    void* filler_8[10];
+    void* _8;
+    void* _10;
+    const void* mEventFlowActorParam;
+    const LiveActor* mEventFlowActor;
+    void* _28;
+    void* _30;
+    void* _38;
+    void* _40;
+    void* _48;
+    void* _50;
     void* _58;
-    void* filler_60[1];
+    void* _60;
     EventFlowScareCtrlBase* mScareCtrl;
-    void* _70;
-    void* filler_78[2];
+    const IEventFlowQueryJudge* mEventQueryJudge;
+    const IEventFlowActionNameConverter* mEventActionNameConverter;
+    const MessageTagDataHolder* mMessageTagDataHolder;
     BalloonOrderGroup* mBalloonOrderGroup;
     sead::WFixedSafeString<32> _90;
-    void* filler_e8[1];
+    const sead::WBufferedSafeString* mSwappedCharacterName;
     const char* mTalkSubActorName;
     s32 mItemTypeCapacity;
     s32 mItemTypeCount;
@@ -59,5 +104,4 @@ private:
 };
 
 static_assert(sizeof(EventFlowDataHolder) == 0x108);
-
 }  // namespace al
