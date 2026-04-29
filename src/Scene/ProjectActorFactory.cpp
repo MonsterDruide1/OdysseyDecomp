@@ -93,7 +93,9 @@
 #include "MapObj/LavaPan.h"
 #include "MapObj/MeganeMapParts.h"
 #include "MapObj/MoonBasementBreakParts.h"
+#include "MapObj/MoonBasementFinalGate.h"
 #include "MapObj/MoonBasementFloor.h"
+#include "MapObj/MoonBasementGate.h"
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/PeachWorldTree.h"
@@ -419,10 +421,10 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MoonBasementBreakParts", al::createActorFunction<MoonBasementBreakParts>},
     {"MoonBasementClimaxWatcher", nullptr},
     {"MoonBasementFallObj", nullptr},
-    {"MoonBasementFinalGate", nullptr},
+    {"MoonBasementFinalGate", al::createActorFunction<MoonBasementFinalGate>},
     {"MoonBasementFallObjDecoration", nullptr},
     {"MoonBasementFloor", al::createActorFunction<MoonBasementFloor>},
-    {"MoonBasementGate", nullptr},
+    {"MoonBasementGate", al::createActorFunction<MoonBasementGate>},
     {"MoonBasementMeteorAreaObj", nullptr},
     {"MoonBasementPillar", nullptr},
     {"MoonBasementRock", nullptr},
