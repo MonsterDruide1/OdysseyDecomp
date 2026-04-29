@@ -33,8 +33,6 @@ bool ItemAppearanceController::requestAppear(const al::SensorMsg* message,
     return false;
 }
 
-void ItemAppearanceController::exeWait() {}
-
 void ItemAppearanceController::exeCount() {
     if (al::isGreaterEqualStep(this, mAppearTime))
         al::setNerve(this, &Appear);
@@ -44,5 +42,3 @@ void ItemAppearanceController::exeAppear() {
     al::appearItem(mActor);
     al::setNerve(this, &Done);
 }
-
-void ItemAppearanceController::exeDone() {}
