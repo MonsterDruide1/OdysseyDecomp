@@ -14,11 +14,9 @@ class LiveActor;
 
 class KoopaHackStopCtrl : public al::ISceneObj {
 public:
-    static constexpr s32 sSceneObjId = SceneObjID_KoopaStopHackCtrl;
+    static constexpr s32 sSceneObjId = SceneObjID_KoopaHackStopCtrl;
 
     KoopaHackStopCtrl();
-
-    const char* getSceneObjName() const override { return "崩落クッパの停止制御"; }
 
     void startStop(const al::LiveActor* actor);
     void endStop(const al::LiveActor* actor);
@@ -26,15 +24,23 @@ public:
                       const sead::Vector3f& trans);
     bool tryResetPosture(al::LiveActor* actor);
 
+    const char* getSceneObjName() const override { return "崩落クッパの停止制御"; }
+
+    bool isStop() const { return mStopActor != nullptr; }
+
+    bool isStatusDemoForSceneKoopaHack() const { return mIsStatusDemoForSceneKoopaHack; }
+
+    void setStatusDemoForSceneKoopaHack(bool status) { mIsStatusDemoForSceneKoopaHack = status; }
+
 private:
     const al::LiveActor* mStopActor = nullptr;
     bool mIsNeedResetPosture = false;
     sead::Quatf mResetQuat = sead::Quatf::unit;
-    sead::Vector3f mResetTrans = sead::Vector3f::zero;
+    sead::Vector3f mResetTrans = {0.0f, 0.0f, 0.0f};
     bool mIsStatusDemoForSceneKoopaHack = false;
 };
 
-static_assert(sizeof(KoopaHackStopCtrl) == 0x38, "KoopaHackStopCtrl");
+static_assert(sizeof(KoopaHackStopCtrl) == 0x38);
 
 namespace KoopaHackFunction {
 void startStopKoopaHack(al::LiveActor* actor);
