@@ -26,5 +26,6 @@ void initEventCameraObjectAfterKeepPose(al::EventFlowExecutor* flowExecutor,
                                         const al::ActorInitInfo& initInfo, const char* name);
 void setEventBalloonFilterOnlyMiniGame(const al::LiveActor*);
 void resetEventBalloonFilter(const al::LiveActor*);
+void requestSwitchTalkNpcEventAfterDoorSnow(al::LiveActor* actor, s32 doorIndex);
 void requestSwitchTalkNpcEventVolleyBall(al::LiveActor*, s32);
 }  // namespace rs
