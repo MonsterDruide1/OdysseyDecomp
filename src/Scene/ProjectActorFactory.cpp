@@ -102,6 +102,7 @@
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PlayerMotionObserver.h"
 #include "MapObj/PoleGrabCeil.h"
+#include "MapObj/QuestObj.h"
 #include "MapObj/ReactionMapParts.h"
 #include "MapObj/RiseMapPartsHolder.h"
 #include "MapObj/RocketFlower.h"
@@ -497,7 +498,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PrePassSpotLight", nullptr},
     {"ProjectRaceCheckPoint", nullptr},
     {"Pyramid", nullptr},
-    {"QuestObj", nullptr},
+    {"QuestObj", al::createActorFunction<QuestObj>},
     {"RabbitGraph", nullptr},
     {"RaceAudienceNpc", al::createActorFunction<RaceAudienceNpc>},
     {"RaceManGoal", nullptr},
