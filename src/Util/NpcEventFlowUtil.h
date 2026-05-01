@@ -5,16 +5,20 @@
 
 namespace al {
 struct ActorInitInfo;
+class EventFlowNode;
 class EventFlowExecutor;
 class LiveActor;
 class MessageTagDataHolder;
 }  // namespace al
+
+class Shine;
 
 namespace rs {
 al::EventFlowExecutor* initEventFlow(al::LiveActor*, const al::ActorInitInfo&, const char*,
                                      const char*);
 al::EventFlowExecutor* initEventFlowSuffix(al::LiveActor*, const al::ActorInitInfo&, const char*,
                                            const char*, const char*);
+bool isActiveEventDemo(const al::EventFlowNode* node);
 bool isDefinedEventCamera(const al::EventFlowExecutor*, const char*);
 bool checkTriggerDecideWithRequestIcon(al::LiveActor*, const sead::Vector3f&, f32);
 void startEventFlow(al::EventFlowExecutor*, const char*);
@@ -26,6 +30,10 @@ void initEventCameraObjectAfterKeepPose(al::EventFlowExecutor* flowExecutor,
                                         const al::ActorInitInfo& initInfo, const char* name);
 void setEventBalloonFilterOnlyMiniGame(const al::LiveActor*);
 void resetEventBalloonFilter(const al::LiveActor*);
+void startCloseNpcDemoEventTalkMessage(al::LiveActor* actor);
+bool isCloseNpcDemoEventTalkMessage(const al::LiveActor* actor);
+void requestEventGetShineDirect(al::EventFlowNode* node, Shine* shine);
+bool checkEndSceneExecuteAndResetRequest(al::EventFlowNode* node);
 void requestSwitchTalkNpcEventAfterDoorSnow(al::LiveActor* actor, s32 doorIndex);
 void requestSwitchTalkNpcEventVolleyBall(al::LiveActor*, s32);
 }  // namespace rs
