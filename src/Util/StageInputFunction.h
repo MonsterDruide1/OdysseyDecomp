@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -10,69 +11,77 @@ class LiveActor;
 class Scene;
 }  // namespace al
 class GameDataHolder;
-class GamePadPlayStyleInfo;
+
+class GamePadPlayStyleInfo {
+public:
+    s32 mControllerCount = 0;
+    s32 mPort0PlayStyle = 0;
+    s32 mPort1PlayStyle = 0;
+};
+
+static_assert(sizeof(GamePadPlayStyleInfo) == 0xc);
 
 namespace rs {
 
-bool isSeparatePlay(const al::IUseSceneObjHolder*);
-void changeSeparatePlayMode(al::Scene*, bool);
-void setSeparatePlayMode(al::Scene*, bool);
-bool isTriggerUiDecide(const al::IUseSceneObjHolder*);
-bool isTriggerUiDecide(const GameDataHolder*);
-bool isTriggerUiCancel(const al::IUseSceneObjHolder*);
-bool isTriggerUiSelect(const al::IUseSceneObjHolder*);
-bool isTriggerUiPause(const al::IUseSceneObjHolder*);
-bool isTriggerUiLeft(const al::IUseSceneObjHolder*);
-bool isTriggerUiRight(const al::IUseSceneObjHolder*);
-bool isTriggerUiUp(const al::IUseSceneObjHolder*);
-bool isTriggerUiDown(const al::IUseSceneObjHolder*);
-bool isTriggerUiR(const al::IUseSceneObjHolder*);
-bool isTriggerUiL(const al::IUseSceneObjHolder*);
-bool isTriggerUiZR(const al::IUseSceneObjHolder*);
-bool isTriggerUiZL(const al::IUseSceneObjHolder*);
-bool isTriggerUiX(const al::IUseSceneObjHolder*);
-bool isTriggerUiY(const al::IUseSceneObjHolder*);
-bool isTriggerUiAnyABXY(const al::IUseSceneObjHolder*);
-bool isRepeatUiUp(const al::IUseSceneObjHolder*);
-bool isRepeatUiDown(const al::IUseSceneObjHolder*);
-bool isRepeatUiRight(const al::IUseSceneObjHolder*);
-bool isRepeatUiLeft(const al::IUseSceneObjHolder*);
-bool isHoldUiDecide(const al::IUseSceneObjHolder*);
-bool isHoldUiCancel(const al::IUseSceneObjHolder*);
-bool isHoldUiSelect(const al::IUseSceneObjHolder*);
-bool isHoldUiL(const al::IUseSceneObjHolder*);
-bool isHoldUiR(const al::IUseSceneObjHolder*);
-bool isHoldUiY(const al::IUseSceneObjHolder*);
-bool isHoldUiUp(const al::IUseSceneObjHolder*);
-bool isHoldUiDown(const al::IUseSceneObjHolder*);
-bool isHoldUiLeft(const al::IUseSceneObjHolder*);
-bool isHoldUiRight(const al::IUseSceneObjHolder*);
-bool isHoldSeparatePlayStart1P(const al::IUseSceneObjHolder*);
-bool isHoldSeparatePlayStart2P(const al::IUseSceneObjHolder*);
-bool isTriggerMapOpen(const al::IUseSceneObjHolder*);
-bool isHoldSeparatePlayEnd(const al::IUseSceneObjHolder*);
-const sead::Vector2f& getUiLeftStick(const al::IUseSceneObjHolder*);
-const sead::Vector2f& getUiRightStick(const al::IUseSceneObjHolder*);
-bool isTriggerMapClose(const al::IUseSceneObjHolder*);
-bool isTriggerCollectionListOpenInMap(const al::IUseSceneObjHolder*);
-bool isTriggerCollectionListCloseInMap(const al::IUseSceneObjHolder*);
-bool isTriggerAppearSkipGuide(const al::IUseSceneObjHolder*);
-bool isTriggerUiRacePause(const al::IUseSceneObjHolder*);
-bool isTriggerSnapShotMode(const al::IUseSceneObjHolder*);
-bool isTriggerAmiiboMode(const al::IUseSceneObjHolder*);
-bool isHoldAmiiboMode(const al::IUseSceneObjHolder*);
-bool isTriggerToggleSnapShotModeLayout(const al::IUseSceneObjHolder*);
-bool isTriggerAppearSnapShotLayout(const al::IUseSceneObjHolder*);
-bool isTriggerIncrementPostProcessingFilterPreset(const al::IUseSceneObjHolder*);
-bool isTriggerDecrementPostProcessingFilterPreset(const al::IUseSceneObjHolder*);
-void recordGamePadPlayStyleInfo(GamePadPlayStyleInfo*, const al::LiveActor*);
-void recordGamePadPlayStyleInfo(GamePadPlayStyleInfo*, const al::LayoutActor*);
-bool tryUpdateGamePadPlayStyleInfo(GamePadPlayStyleInfo*, const al::LiveActor*);
-bool tryUpdateGamePadPlayStyleInfo(GamePadPlayStyleInfo*, const al::LayoutActor*);
+bool isSeparatePlay(const al::IUseSceneObjHolder* user);
+void changeSeparatePlayMode(al::Scene* scene, bool isSeparatePlay);
+void setSeparatePlayMode(al::Scene* scene, bool isSeparatePlay);
+bool isTriggerUiDecide(const al::IUseSceneObjHolder* user);
+bool isTriggerUiDecide(const GameDataHolder* gameDataHolder);
+bool isTriggerUiCancel(const al::IUseSceneObjHolder* user);
+bool isTriggerUiSelect(const al::IUseSceneObjHolder* user);
+bool isTriggerUiPause(const al::IUseSceneObjHolder* user);
+bool isTriggerUiLeft(const al::IUseSceneObjHolder* user);
+bool isTriggerUiRight(const al::IUseSceneObjHolder* user);
+bool isTriggerUiUp(const al::IUseSceneObjHolder* user);
+bool isTriggerUiDown(const al::IUseSceneObjHolder* user);
+bool isTriggerUiR(const al::IUseSceneObjHolder* user);
+bool isTriggerUiL(const al::IUseSceneObjHolder* user);
+bool isTriggerUiZR(const al::IUseSceneObjHolder* user);
+bool isTriggerUiZL(const al::IUseSceneObjHolder* user);
+bool isTriggerUiX(const al::IUseSceneObjHolder* user);
+bool isTriggerUiY(const al::IUseSceneObjHolder* user);
+bool isTriggerUiAnyABXY(const al::IUseSceneObjHolder* user);
+bool isRepeatUiUp(const al::IUseSceneObjHolder* user);
+bool isRepeatUiDown(const al::IUseSceneObjHolder* user);
+bool isRepeatUiRight(const al::IUseSceneObjHolder* user);
+bool isRepeatUiLeft(const al::IUseSceneObjHolder* user);
+bool isHoldUiDecide(const al::IUseSceneObjHolder* user);
+bool isHoldUiCancel(const al::IUseSceneObjHolder* user);
+bool isHoldUiSelect(const al::IUseSceneObjHolder* user);
+bool isHoldUiL(const al::IUseSceneObjHolder* user);
+bool isHoldUiR(const al::IUseSceneObjHolder* user);
+bool isHoldUiY(const al::IUseSceneObjHolder* user);
+bool isHoldUiUp(const al::IUseSceneObjHolder* user);
+bool isHoldUiDown(const al::IUseSceneObjHolder* user);
+bool isHoldUiLeft(const al::IUseSceneObjHolder* user);
+bool isHoldUiRight(const al::IUseSceneObjHolder* user);
+bool isHoldSeparatePlayStart1P(const al::IUseSceneObjHolder* user);
+bool isHoldSeparatePlayStart2P(const al::IUseSceneObjHolder* user);
+bool isTriggerMapOpen(const al::IUseSceneObjHolder* user);
+bool isHoldSeparatePlayEnd(const al::IUseSceneObjHolder* user);
+sead::Vector2f getUiLeftStick(const al::IUseSceneObjHolder* user);
+sead::Vector2f getUiRightStick(const al::IUseSceneObjHolder* user);
+bool isTriggerMapClose(const al::IUseSceneObjHolder* user);
+bool isTriggerCollectionListOpenInMap(const al::IUseSceneObjHolder* user);
+bool isTriggerCollectionListCloseInMap(const al::IUseSceneObjHolder* user);
+bool isTriggerAppearSkipGuide(const al::IUseSceneObjHolder* user);
+bool isTriggerUiRacePause(const al::IUseSceneObjHolder* user);
+bool isTriggerSnapShotMode(const al::IUseSceneObjHolder* user);
+bool isTriggerAmiiboMode(const al::IUseSceneObjHolder* user);
+bool isHoldAmiiboMode(const al::IUseSceneObjHolder* user);
+bool isTriggerToggleSnapShotModeLayout(const al::IUseSceneObjHolder* user);
+bool isTriggerAppearSnapShotLayout(const al::IUseSceneObjHolder* user);
+bool isTriggerIncrementPostProcessingFilterPreset(const al::IUseSceneObjHolder* user);
+bool isTriggerDecrementPostProcessingFilterPreset(const al::IUseSceneObjHolder* user);
+void recordGamePadPlayStyleInfo(GamePadPlayStyleInfo* info, const al::LiveActor* actor);
+void recordGamePadPlayStyleInfo(GamePadPlayStyleInfo* info, const al::LayoutActor* layoutActor);
+bool tryUpdateGamePadPlayStyleInfo(GamePadPlayStyleInfo* info, const al::LiveActor* actor);
+bool tryUpdateGamePadPlayStyleInfo(GamePadPlayStyleInfo* info, const al::LayoutActor* layoutActor);
 }  // namespace rs
 
 namespace ControllerAppletFunction {
-bool tryReconnectGamePad(al::GamePadSystem*);
-bool connectControllerSinglePlay(al::GamePadSystem*);
-bool connectControllerSeparatePlay(al::GamePadSystem*);
+bool tryReconnectGamePad(al::GamePadSystem* gamePadSystem);
+bool connectControllerSinglePlay(al::GamePadSystem* gamePadSystem);
+bool connectControllerSeparatePlay(al::GamePadSystem* gamePadSystem);
 }  // namespace ControllerAppletFunction
