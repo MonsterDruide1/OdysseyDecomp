@@ -64,7 +64,8 @@ public:
     };
 
     struct LocalInterpole {
-        inline void interpolate(sead::LookAtCamera* cam);
+        inline void interpolate(sead::LookAtCamera* camera);
+        inline void update(const CameraPoser* camera);
 
         s32 step = -1;
         s32 end = 0;
@@ -75,10 +76,14 @@ public:
     static_assert(sizeof(LocalInterpole) == 0x20);
 
     struct LookAtInterpole {
-        inline LookAtInterpole(f32 v) : _c(v) {}
+        inline LookAtInterpole(f32 distance) : lookAtDistance(distance) {}
+
+        inline void update(CameraPoser* camera, sead::Vector3f targetTrans);
+        inline void updateWithGravity(CameraPoser* camera, const sead::Vector3f& targetGravity,
+                                      sead::Vector3f targetTrans);
 
         sead::Vector3f lookAtPos = {0.0f, 0.0f, 0.0f};
-        f32 _c;
+        f32 lookAtDistance;
     };
 
     static_assert(sizeof(LookAtInterpole) == 0x10);
@@ -133,7 +138,7 @@ public:
 
     virtual void loadParam(const ByamlIter& iter) {}
 
-    virtual void makeLookAtCamera(sead::LookAtCamera* cam) const {}
+    virtual void makeLookAtCamera(sead::LookAtCamera* camera) const {}
 
     virtual bool receiveRequestFromObject(const CameraObjectRequestInfo& info) { return false; }
 
@@ -156,8 +161,8 @@ public:
     RailRider* getRailRider() const override;
 
     virtual void load(const ByamlIter& iter);
-    virtual void movement();  // TODO: implementation missing
-    virtual void calcCameraPose(sead::LookAtCamera* cam) const;
+    virtual void movement();
+    virtual void calcCameraPose(sead::LookAtCamera* camera) const;
 
     virtual bool requestTurnToDirection(const CameraTurnInfo* info) { return false; }
 
@@ -180,10 +185,10 @@ public:
     void tryInitAreaLimitter(const PlacementInfo& info);
     bool tryCalcOrthoProjectionInfo(OrthoProjectionInfo* projectionInfo) const;
 
-    void makeLookAtCameraPrev(sead::LookAtCamera* cam) const;
-    void makeLookAtCameraPost(sead::LookAtCamera* cam) const;
-    void makeLookAtCameraLast(sead::LookAtCamera* cam) const;
-    void makeLookAtCameraCollide(sead::LookAtCamera* cam) const;
+    void makeLookAtCameraPrev(sead::LookAtCamera* camera) const;
+    void makeLookAtCameraPost(sead::LookAtCamera* camera) const;
+    void makeLookAtCameraLast(sead::LookAtCamera* camera) const;
+    void makeLookAtCameraCollide(sead::LookAtCamera* camera) const;
 
     s32 getEndInterpoleStep() const;
     s32 getInterpoleStep() const;
@@ -205,6 +210,8 @@ public:
 
     const sead::Vector3f& getTargetTrans() const { return mTargetTrans; };
 
+    sead::Vector3f* getTargetTransPtr() { return &mTargetTrans; };
+
     const sead::Vector3f& getCameraUp() const { return mCameraUp; };
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
@@ -214,11 +221,13 @@ public:
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 
     // set
-    void setPosition(const sead::Vector3f& vec) { mPosition.set(vec); };
+    void setPosition(const sead::Vector3f& pos) { mPosition.set(pos); };
 
-    void setTargetTrans(const sead::Vector3f& vec) { mTargetTrans.set(vec); };
+    void addPosition(const sead::Vector3f& pos) { mPosition.add(pos); };
 
-    void setCameraUp(const sead::Vector3f& vec) { mCameraUp.set(vec); };
+    void setTargetTrans(const sead::Vector3f& trans) { mTargetTrans.set(trans); };
+
+    void setCameraUp(const sead::Vector3f& dir) { mCameraUp.set(dir); };
 
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
 
