@@ -1,7 +1,6 @@
 #pragma once
 
-#include <prim/seadSafeString.h>
-
+#include "Library/Base/StringUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Message/IUseMessageSystem.h"
 
@@ -110,7 +109,7 @@ public:
 
 private:
     al::MessageSystem* mMessageSystem = nullptr;
-    sead::FixedSafeString<64> mCapMsg;
+    al::StringTmp<64> mCapMsg;
 };
 
 static_assert(sizeof(FukanKunMessageHolder) == 0x70);

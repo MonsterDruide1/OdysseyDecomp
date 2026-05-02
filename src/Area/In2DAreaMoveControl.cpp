@@ -46,7 +46,7 @@ void In2DAreaMoveControl::calcLockDir(sead::Vector3f* out, f32* closestSurfaceDi
         *closestSurfaceDist = sead::Mathf::min(*closestSurfaceDist, snapPower);
     }
     if (!al::tryNormalizeOrZero(out))
-        out->set(sead::Vector3f::ey);
+        out->set(sead::Vector3f::ez);
 }
 
 void In2DAreaMoveControl::calcLastLockDir(sead::Vector3f* out, const sead::Vector3f& pos) const {
@@ -58,7 +58,7 @@ void In2DAreaMoveControl::calcLastLockDir(sead::Vector3f* out, const sead::Vecto
         *out += lockDir;
     }
     if (!al::tryNormalizeOrZero(out))
-        out->set(sead::Vector3f::ey);
+        out->set(sead::Vector3f::ez);
 }
 
 bool In2DAreaMoveControl::isNearSnapSurface(const sead::Vector3f& pos, f32 threshold) const {
