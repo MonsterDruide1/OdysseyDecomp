@@ -250,71 +250,170 @@ void CameraPoser::appear(const CameraStartInfo& info) {
         mLookAtInterpole->lookAtPos.set(mTargetTrans);
 }
 
-// TODO: CameraPoser::movement
+void CameraPoser::LookAtInterpole::update(CameraPoser* camera, sead::Vector3f targetTrans) {
+    lerpVec(camera->getTargetTransPtr(), lookAtPos, camera->getTargetTrans(), lookAtDistance);
+    lookAtPos.set(camera->getTargetTrans());
+    camera->addPosition(camera->getTargetTrans() - targetTrans);
+}
 
-inline void CameraPoser::LocalInterpole::interpolate(sead::LookAtCamera* cam) {
-    if (step > -1) {
-        f32 rate = hermiteRate(normalize(step, 0, end), 1.5f, 0.0f);
+void CameraPoser::LookAtInterpole::updateWithGravity(CameraPoser* camera,
+                                                     const sead::Vector3f& targetGravity,
+                                                     sead::Vector3f targetTrans) {
+    sead::Vector3f lookDirection = camera->getTargetTrans() - lookAtPos;
+    sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
+    parallelizeVec(&gravity, targetGravity, lookDirection);
+    sead::Vector3f dir = lookDirection - gravity;
+    camera->getTargetTransPtr()->set(gravity + lookAtPos + dir * lookAtDistance);
+    lookAtPos.set(camera->getTargetTrans());
+    camera->addPosition(camera->getTargetTrans() - targetTrans);
+}
 
-        sead::Vector3f camPosNext = sead::Vector3f(0, 0, 0);
-        sead::Vector3f lookAtPosNext = sead::Vector3f(0, 0, 0);
-        lerpVec(&camPosNext, prevCameraPos, cam->getPos(), rate);
-        lerpVec(&lookAtPosNext, prevLookAtPos, cam->getAt(), rate);
-
-        cam->setPos(camPosNext);
-        cam->setAt(lookAtPosNext);
+void CameraPoser::LocalInterpole::update(const CameraPoser* camera) {
+    if (alCameraPoserFunction::isChangeTarget(camera)) {
+        step = 0;
+        end = 30;
+        prevCameraPos.set(alCameraPoserFunction::getPreCameraPos(camera));
+        prevLookAtPos.set(alCameraPoserFunction::getPreLookAtPos(camera));
     }
 }
 
-void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* cam) const {
-    cam->setPos(mPosition);
-    cam->setAt(mTargetTrans);
-    cam->setUp(mCameraUp);
-    cam->normalizeUp();
+void CameraPoser::movement() {
+    if (mNerveKeeper)
+        mNerveKeeper->update();
+
+    if (mAngleCtrlInfo || mAngleSwingInfo) {
+        sead::Vector2f stick = {0.0f, 0.0f};
+        alCameraPoserFunction::calcCameraRotateStick(&stick, this);
+        if (mAngleCtrlInfo) {
+            bool isTriggerReset = alCameraPoserFunction::isTriggerCameraResetRotate(this);
+            mAngleCtrlInfo->update(stick, alCameraPoserFunction::getStickSensitivityScale(this),
+                                   isTriggerReset);
+            if (alCameraPoserFunction::isSnapShotMode(this) && isTriggerReset) {
+                s32 step = -1;
+                if (mAngleCtrlInfo->isResetStartTiming())
+                    step = mAngleCtrlInfo->getMaxResetStep();
+                alCameraPoserFunction::startResetSnapShotCameraCtrl(this, step);
+            }
+        }
+        if (mAngleSwingInfo)
+            mAngleSwingInfo->update(stick, alCameraPoserFunction::getStickSensitivityScale(this));
+    }
+
+    if (mGyroCtrl && !alCameraPoserFunction::isStopUpdateGyro(this)) {
+        sead::Vector3f side, up, front;
+        alCameraPoserFunction::calcCameraGyroPose(this, &side, &up, &front);
+        mGyroCtrl->setIsValidGyro(alCameraPoserFunction::isValidGyro(this));
+        mGyroCtrl->setSensitivityScale(alCameraPoserFunction::getGyroSensitivityScale(this));
+        mGyroCtrl->update(side, up, front);
+    }
+
+    update();
+
+    if (mLookAtInterpole) {
+        if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb) {
+            sead::Vector3f targetGravity = {0.0f, 0.0f, 0.0f};
+            alCameraPoserFunction::calcTargetGravity(&targetGravity, this);
+            mLookAtInterpole->updateWithGravity(this, targetGravity, mTargetTrans);
+        } else {
+            mLookAtInterpole->update(this, mTargetTrans);
+        }
+    }
 
     if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
-        mVerticalAbsorber->makeLookAtCamera(cam);
+        mVerticalAbsorber->update();
+
+    if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
+        alCameraPoserFunction::updateSnapShotCameraCtrl(this);
+
+    if (mLocalInterpole) {
+        mLocalInterpole->update(this);
+        if (mLocalInterpole->step > -1) {
+            s32 nextStep = mLocalInterpole->step + 1;
+            mLocalInterpole->step = mLocalInterpole->end > nextStep ? nextStep : -1;
+        }
+    }
+
+    if (mArrowCollider && !mPoserFlag->isInvalidCollider) {
+        sead::LookAtCamera camera;
+        makeLookAtCameraPrev(&camera);
+        makeLookAtCamera(&camera);
+
+        if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
+            mSnapShotCtrl->makeLookAtCameraPost(&camera);
+        if (mParamMoveLimit)
+            mParamMoveLimit->apply(&camera);
+
+        if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
+            mSnapShotCtrl->makeLookAtCameraLast(&camera);
+        mArrowCollider->update(camera.getPos(), camera.getAt(), camera.getUp());
+    }
+
+    mPoserFlag->isFirstCalc = false;
+}
+
+inline void CameraPoser::LocalInterpole::interpolate(sead::LookAtCamera* camera) {
+    if (step > -1) {
+        f32 rate = hermiteRate(normalize(step, 0, end), 1.5f, 0.0f);
+
+        sead::Vector3f camPosNext = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f lookAtPosNext = {0.0f, 0.0f, 0.0f};
+        lerpVec(&camPosNext, prevCameraPos, camera->getPos(), rate);
+        lerpVec(&lookAtPosNext, prevLookAtPos, camera->getAt(), rate);
+
+        camera->setPos(camPosNext);
+        camera->setAt(lookAtPosNext);
+    }
+}
+
+void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* camera) const {
+    camera->setPos(mPosition);
+    camera->setAt(mTargetTrans);
+    camera->setUp(mCameraUp);
+    camera->normalizeUp();
+
+    if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
+        mVerticalAbsorber->makeLookAtCamera(camera);
 
     if (mLocalInterpole)
-        mLocalInterpole->interpolate(cam);
+        mLocalInterpole->interpolate(camera);
 
     if (mAngleSwingInfo)
-        mAngleSwingInfo->makeLookAtCamera(cam);
+        mAngleSwingInfo->makeLookAtCamera(camera);
 
     if (mTargetAreaLimitter) {
-        sead::Vector3f camPosNext = cam->getAt();
+        sead::Vector3f camPosNext = camera->getAt();
         if (mTargetAreaLimitter->applyAreaLimit(&camPosNext, camPosNext)) {
-            sead::Vector3f camDiff = camPosNext - cam->getAt();
-            cam->setPos(camDiff + cam->getPos());
-            cam->setAt(camDiff + cam->getAt());
+            sead::Vector3f camDiff = camPosNext - camera->getAt();
+            camera->setPos(camDiff + camera->getPos());
+            camera->setAt(camDiff + camera->getAt());
         }
     }
 }
 
-void CameraPoser::makeLookAtCameraPost(sead::LookAtCamera* cam) const {
+void CameraPoser::makeLookAtCameraPost(sead::LookAtCamera* camera) const {
     if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
-        mSnapShotCtrl->makeLookAtCameraPost(cam);
+        mSnapShotCtrl->makeLookAtCameraPost(camera);
 
     if (mParamMoveLimit)
-        mParamMoveLimit->apply(cam);
+        mParamMoveLimit->apply(camera);
 }
 
-void CameraPoser::makeLookAtCameraLast(sead::LookAtCamera* cam) const {
+void CameraPoser::makeLookAtCameraLast(sead::LookAtCamera* camera) const {
     if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl)
-        mSnapShotCtrl->makeLookAtCameraLast((cam));
+        mSnapShotCtrl->makeLookAtCameraLast(camera);
 }
 
-void CameraPoser::makeLookAtCameraCollide(sead::LookAtCamera* cam) const {
+void CameraPoser::makeLookAtCameraCollide(sead::LookAtCamera* camera) const {
     if (!mPoserFlag->isInvalidCollider && mArrowCollider)
-        mArrowCollider->makeLookAtCamera(cam);
+        mArrowCollider->makeLookAtCamera(camera);
 }
 
-void CameraPoser::calcCameraPose(sead::LookAtCamera* cam) const {
-    makeLookAtCameraPrev(cam);
-    makeLookAtCamera(cam);
-    makeLookAtCameraPost(cam);
-    makeLookAtCameraCollide(cam);
-    makeLookAtCameraLast(cam);
+void CameraPoser::calcCameraPose(sead::LookAtCamera* camera) const {
+    makeLookAtCameraPrev(camera);
+    makeLookAtCamera(camera);
+    makeLookAtCameraPost(camera);
+    makeLookAtCameraCollide(camera);
+    makeLookAtCameraLast(camera);
 }
 
 bool CameraPoser::receiveRequestFromObjectCore(const CameraObjectRequestInfo& info) {
