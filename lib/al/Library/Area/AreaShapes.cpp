@@ -48,9 +48,6 @@ bool AreaShapeCube::isInVolumeOffset(const sead::Vector3f& trans, f32 offset) co
     return true;
 }
 
-// bool AreaShapeCube::calcNearestEdgePoint(sead::Vector3f* out, const sead::Vector3f& trans) const
-// {}
-
 bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
     sead::Vector3f min = {-500.0f, calcBottom(), -500.0f};
     sead::Vector3f max = {500.0f, calcTop(), 500.0f};
@@ -61,10 +58,6 @@ bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& trans) const {
     else
         return true;
 }
-
-// bool AreaShapeCube::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
-//                                         const sead::Vector3f& pos1,
-//                                         const sead::Vector3f& pos2) const {}
 
 AreaShapeSphere::AreaShapeSphere() = default;
 
@@ -219,9 +212,6 @@ bool AreaShapeCylinder::isInVolumeOffset(const sead::Vector3f& trans, f32 offset
     return sead::Mathf::square(localPos.x) + sead::Mathf::square(localPos.z) <=
            sead::Mathf::square(scale.x);
 }
-
-// bool AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3f* out,
-//                                              const sead::Vector3f& trans) const {}
 
 bool AreaShapeCylinder::checkArrowCollision(sead::Vector3f* outPos, sead::Vector3f* outNormal,
                                             const sead::Vector3f& pos1,
