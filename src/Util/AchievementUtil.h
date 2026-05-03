@@ -2,7 +2,6 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
-#include <time/seadDateTime.h>
 
 #include "System/GameDataHolderAccessor.h"
 
@@ -26,9 +25,9 @@ void unlockAchievementShineName(GameDataHolderAccessor accessor);
 bool isUnlockAchievementShineName(GameDataHolderAccessor accessor);
 bool checkGetAchievement(GameDataHolderAccessor accessor, const char* label);
 bool checkGetAchievement(const al::LayoutActor* layout, s32 achievementIdx);
-sead::DateTime findAchievementGetTime(const al::LayoutActor* layout, s32 achievementIdx);
-sead::DateTime findAchievementGetTime(const al::LayoutActor* layout, const char* label);
-sead::Vector3f* findAchievementTrans(const al::LayoutActor* layout, s32 achievementIdx);
+u64 findAchievementGetTime(const al::LayoutActor* layout, s32 achievementIdx);
+u64 findAchievementGetTime(const al::LayoutActor* layout, const char* label);
+const sead::Vector3f* findAchievementTrans(const al::LayoutActor* layout, s32 achievementIdx);
 s32 getAchievementNum(const al::LayoutActor* layout);
 s32 calcReceivedAchievementNum(const GameDataHolder* holder);
 s32 getTotalCoinNum(const GameDataHolder* holder);
