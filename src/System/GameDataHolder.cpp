@@ -452,16 +452,6 @@ GameDataHolder::GameDataHolder() {
     setLanguage(al::getLanguageString());
 }
 
-GameDataHolder::~GameDataHolder() = default;
-
-const char* GameDataHolder::getSceneObjName() const {
-    return "ゲームデータ保持";
-}
-
-const al::MessageSystem* GameDataHolder::getMessageSystem() const {
-    return mMessageSystem;
-}
-
 void GameDataHolder::setPlayingFileId(s32 fileId) {
     mPlayingFile = getGameDataFile(fileId);
     resetTempSaveData(false);
