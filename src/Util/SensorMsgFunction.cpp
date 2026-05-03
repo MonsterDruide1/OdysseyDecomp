@@ -1066,7 +1066,7 @@ IS_MSG_IMPL(ShineGet2D);
 IS_MSG_IMPL(KillByShineGet);
 IS_MSG_IMPL(KillByHomeDemo);
 IS_MSG_IMPL(EndHomeDemo);
-IS_MSG_IMPL(BreakBySword);
+IS_MSG_IMPL_(BreakBySword, PlayerSwordAttack);
 IS_MSG_IMPL(GotogotonOn);
 IS_MSG_IMPL(GotogotonGoalExist);
 IS_MSG_IMPL(BossMagmaCatchPlayer);
@@ -1266,7 +1266,7 @@ bool isMsgPlayerDamage(const al::SensorMsg* msg) {
            isMsgEnemyAttackFireCollision(msg) || isMsgEnemyAttack3D(msg) ||
            isMsgCactusNeedleAttack(msg) || isMsgCactusNeedleAttackStrong(msg) ||
            isMsgDamageBallAttack(msg) || isMsgAttachCactusNeedle(msg) ||
-           isMsgHammerBrosHammerHackAttack(msg) || isMsgIcicleAttack(msg) ||
+           isMsgHammerBrosHammerEnemyAttack(msg) || isMsgIcicleAttack(msg) ||
            isMsgDonsukeAttack(msg) || isMsgPlayerDamage2D(msg);
 }
 
@@ -1536,7 +1536,7 @@ bool tryGetRequestPlayerJumpInfo(f32* power, const al::SensorMsg* pMsg) {
 }
 
 bool tryGetRequestPlayerSpinJumpInfo(f32* power, const al::SensorMsg* pMsg) {
-    auto* msg = sead::DynamicCast<const SensorMsgRequestPlayerJump>(pMsg);
+    auto* msg = sead::DynamicCast<const SensorMsgRequestPlayerSpinJump>(pMsg);
     if (!msg)
         return false;
     *power = msg->getPower();
@@ -1544,7 +1544,7 @@ bool tryGetRequestPlayerSpinJumpInfo(f32* power, const al::SensorMsg* pMsg) {
 }
 
 bool tryGetRequestPlayerTrampleJumpInfo(f32* power, const al::SensorMsg* pMsg) {
-    auto* msg = sead::DynamicCast<const SensorMsgRequestPlayerJump>(pMsg);
+    auto* msg = sead::DynamicCast<const SensorMsgRequestPlayerTrampleJump>(pMsg);
     if (!msg)
         return false;
     *power = msg->getPower();
@@ -1552,7 +1552,7 @@ bool tryGetRequestPlayerTrampleJumpInfo(f32* power, const al::SensorMsg* pMsg) {
 }
 
 bool tryGetRequestSphinxJumpInfo(f32* power, const al::SensorMsg* pMsg) {
-    auto* msg = sead::DynamicCast<const SensorMsgRequestPlayerJump>(pMsg);
+    auto* msg = sead::DynamicCast<const SensorMsgRequestSphinxJump>(pMsg);
     if (!msg)
         return false;
     *power = msg->getPower();
