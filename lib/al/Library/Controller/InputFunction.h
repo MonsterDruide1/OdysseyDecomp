@@ -10,6 +10,11 @@ namespace al {
 class IUseCamera;
 
 bool isPadTypeJoySingle(s32 port = -1);
+bool isPadTypeJoyDual(s32 port = -1);
+bool isPadTypeJoyLeft(s32 port = -1);
+bool isPadTypeJoyRight(s32 port = -1);
+bool isPadTypeHandheld(s32 port = -1);
+bool isPadTypeFullKey(s32 port = -1);
 
 bool isPadTrigger(s32 port, s32 button);
 bool isPadTriggerA(s32 port = -1);
