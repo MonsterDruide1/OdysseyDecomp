@@ -33,12 +33,28 @@ void initAndCreateTableFromOtherTable2(
     factory->initFactory(table, tableCount);
 }
 
-// NON_MATCHING
 void initAndCreateTableWithAnotherFactory(
     al::CameraPoserFactory* factory, const al::CameraPoserFactory* otherFactory,
     const al::NameToCreator<al::CameraPoserCreatorFunction>* table, s32 tableCount) {
-    initAndCreateTableFromOtherTable2(factory, otherFactory->getFactoryEntries(),
-                                      otherFactory->getNumFactoryEntries(), table, tableCount);
+    s32 otherCount = otherFactory->getNumFactoryEntries();
+
+    al::NameToCreator<al::CameraPoserCreatorFunction>* newTable =
+        new al::NameToCreator<al::CameraPoserCreatorFunction>[otherCount + tableCount];
+
+    const al::NameToCreator<al::CameraPoserCreatorFunction>* otherTable =
+        otherFactory->getFactoryEntries();
+
+    for (s32 i = 0; i < otherFactory->getNumFactoryEntries(); i++) {
+        newTable[i].name = otherTable[i].name;
+        newTable[i].creationFunction = otherTable[i].creationFunction;
+    }
+
+    for (s32 i = 0; i < tableCount; i++) {
+        newTable[otherCount + i].name = table[i].name;
+        newTable[otherCount + i].creationFunction = table[i].creationFunction;
+    }
+
+    factory->initFactory(newTable, otherCount + tableCount);
 }
 
 void initAndCreateTableWithPresetPosers(
