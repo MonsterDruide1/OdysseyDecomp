@@ -227,8 +227,8 @@ static void initializeInvalidOpenMapList(
 }
 
 static void initializeHackObjectList(sead::PtrArray<HackObjInfo>* mHackObjList) {
-    al::ByamlIter hackObjListIter(al::findResourceYaml(
-        al::findOrCreateResource("SystemData/HackObjList", nullptr), "HackObjList", nullptr));
+    al::Resource* resource = al::findOrCreateResource("SystemData/ItemList", nullptr);
+    al::ByamlIter hackObjListIter(al::findResourceYaml(resource, "HackObjList", nullptr));
     s32 hackObjListSize = hackObjListIter.getSize();
     mHackObjList->allocBuffer(hackObjListSize, nullptr);
 
@@ -286,7 +286,6 @@ initializeWorldItemTypeList(sead::PtrArray<GameDataHolder::WorldItemTypeInfo>* m
     }
 }
 
-// NON-MATCHING: Stack issues https://decomp.me/scratch/tN9Ww
 GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
     : mMessageSystem(messageSystem) {
     setLanguage(al::getLanguageString());
@@ -344,8 +343,8 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
     initializeItemList(&mItemGift, "ItemGift");
     initializeItemList(&mItemSticker, "ItemSticker");
 
-    s32 shopItemListSize = mShopItemList.size();
     s32 shopItemSize = 0;
+    s32 shopItemListSize = mShopItemList.size();
     s32 shopTalkDataSize = 0;
     const char* nameList[20];
     for (s32 i = 0; i < shopItemListSize; i++) {
@@ -408,7 +407,7 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
 
     for (s32 i = 0; i < collectCoinNumIter.getSize(); i++) {
         al::ByamlIter iter;
-        collectCoinNumIter.tryGetIterByIndex(&iter, i);
+        al::getByamlIterByIndex(&iter, collectCoinNumIter, i);
 
         s32 collectCoinNum = al::getByamlKeyInt(iter, "CollectCoinNum");
         s32 worldIndex =
