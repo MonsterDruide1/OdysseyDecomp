@@ -37,8 +37,8 @@ void initAndCreateTableFromOtherTable2(
 void initAndCreateTableWithAnotherFactory(
     al::CameraPoserFactory* factory, const al::CameraPoserFactory* otherFactory,
     const al::NameToCreator<al::CameraPoserCreatorFunction>* table, s32 tableCount) {
-    initAndCreateTableFromOtherTable2(factory, table, tableCount, otherFactory->getFactoryEntries(),
-                                      otherFactory->getNumFactoryEntries());
+    initAndCreateTableFromOtherTable2(factory, otherFactory->getFactoryEntries(),
+                                      otherFactory->getNumFactoryEntries(), table, tableCount);
 }
 
 void initAndCreateTableWithPresetPosers(

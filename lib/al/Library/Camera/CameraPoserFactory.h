@@ -14,8 +14,6 @@ public:
 
     virtual CameraPoserEntrance* createEntranceCameraPoser() const;
 
-    s32 get_1c() const { return _1c; }
-
 private:
     s32 _1c = 0;
 };
