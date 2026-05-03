@@ -76,12 +76,6 @@ public:
 
     static_assert(sizeof(ExStageItem) == 0x98);
 
-    struct ShowHackTutorialInfo {
-        sead::FixedSafeString<128> label;
-    };
-
-    static_assert(sizeof(ShowHackTutorialInfo) == 0x98);
-
     struct WorldWarpHoleInfo {
         sead::FixedSafeString<128> stageName;
         s32 worldId;
@@ -119,11 +113,6 @@ public:
 
     GameDataHolder(const al::MessageSystem* messageSystem);
     GameDataHolder();
-
-    ~GameDataHolder() override;
-
-    const char* getSceneObjName() const override;
-    const al::MessageSystem* getMessageSystem() const override;
 
     void setPlayingFileId(s32 fileId);
     void initializeData();
@@ -223,6 +212,10 @@ public:
     void setSeparatePlay(bool isSeparatePlay);
     CapMessageBossData* getCapMessageBossData() const;
     s32 findUseScenarioNo(const char* stageName) const;
+
+    const char* getSceneObjName() const override { return "ゲームデータ保持"; }
+
+    const al::MessageSystem* getMessageSystem() const override { return mMessageSystem; }
 
     GameDataFile* getGameDataFile() const { return mPlayingFile; }
 
