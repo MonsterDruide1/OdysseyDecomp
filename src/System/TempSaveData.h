@@ -25,7 +25,7 @@ public:
     void writeHashInWorld(const char*, bool);
     bool findHashValueInWorld(const char*) const;
 
-    s32 getWorldIndex() { return mWorldIndex; }
+    s32 getWorldIndex() const { return mWorldIndex; }
 
 private:
     char filler[0x18];
