@@ -42,7 +42,7 @@ bool isWallCode(const Triangle&, const char*);
 bool isCameraCode(const Triangle&, const char*);
 bool isCollisionCode(const Triangle&, const char*, const char*);
 bool isMaterialCode(const HitInfo*, const char*);
-bool isFloorCode(const Triangle&, const char*);
+bool isFloorCode(const HitInfo*, const char*);
 bool isWallCode(const HitInfo*, const char*);
 bool isCameraCode(const HitInfo*, const char*);
 bool isCollisionCode(const HitInfo*, const char*, const char*);
