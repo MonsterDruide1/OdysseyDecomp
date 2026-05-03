@@ -117,6 +117,7 @@
 #include "MapObj/SignBoardDanger.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/StageSwitchSelector.h"
+#include "MapObj/SwitchKeyMoveMapParts.h"
 #include "MapObj/TalkPoint.h"
 #include "MapObj/TrampleBush.h"
 #include "MapObj/TrampleSwitch.h"
@@ -593,7 +594,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"StatueSnapMark", nullptr},
     {"SubActorLodFixPartsScenarioAction", nullptr},
     {"SwitchAnd", nullptr},
-    {"SwitchKeyMoveMapParts", nullptr},
+    {"SwitchKeyMoveMapParts", al::createActorFunction<al::SwitchKeyMoveMapParts>},
     {"TalkMessageInfoPoint", nullptr},
     {"TalkMessageInfoPointSaveObj", nullptr},
     {"TalkNpc", nullptr},
