@@ -1,0 +1,73 @@
+name: Assign or unassign self-managed labels on PRs
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  repository-projects: read
+  pull-requests: read
+
+jobs:
+  selfservice_labels:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request != null
+    steps:
+      - name: Check comment and label accordingly
+        uses: actions/github-script@v7
+        with:
+          script: |
+            # command: label (+ = add, - = remove)
+            const labels = {
+              "ai": "+ai",
+              "no-ai": "-ai",
+              "human": "-ai",
+
+              "priority": "+priority",
+              "high-priority": "+priority",
+              "no-priority": "-priority",
+              "low-priority": "-priority",
+            };
+
+            const comment = context.payload.comment.body.trim().toLowerCase();
+            const commentId = context.payload.comment.id;
+            const issueNumber = context.payload.issue.number;
+
+            async function deleteComment() {
+              await github.rest.issues.deleteComment({
+                ...context.repo,
+                comment_id: commentId
+              });
+              console.log(`Deleted comment ID ${commentId}`);
+            }
+
+            for (const [command, label] of Object.entries(labels)) {
+              if (comment.startsWith(`/${command}`) || comment.startsWith(`/${command.replace(/-/g, "")}`)) {
+                if (label.startsWith("+")) {
+                  await github.rest.issues.addLabels({
+                    ...context.repo,
+                    issue_number: issueNumber,
+                    labels: [label.substring(1)]
+                  });
+                  console.log(`Added '${label.substring(1)}' label to PR #${issueNumber}`);
+                } else if (label.startsWith("-")) {
+                  try {
+                    await github.rest.issues.removeLabel({
+                      ...context.repo,
+                      issue_number: issueNumber,
+                      name: label.substring(1)
+                    });
+                    console.log(`Removed '${label.substring(1)}' label from PR #${issueNumber}`);
+                  } catch (error) {
+                    if (error.status === 404) {
+                      console.log(`Label not found on PR #${issueNumber}`);
+                    } else {
+                      throw error;
+                    }
+                  }
+                }
+                await deleteComment();
+                return; // Exit after processing the first matching command
+              }
+            }
