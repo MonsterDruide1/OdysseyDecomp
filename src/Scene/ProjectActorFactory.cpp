@@ -104,6 +104,7 @@
 #include "MapObj/MoviePlayerMapParts.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PlayerMotionObserver.h"
+#include "MapObj/PoleClimbParts.h"
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/QuestObj.h"
 #include "MapObj/ReactionMapParts.h"
@@ -484,7 +485,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PlayerStartObjNoLink", nullptr},
     {"PochiHintPhoto", nullptr},
     {"Poetter", nullptr},
-    {"PoleClimbParts", nullptr},
+    {"PoleClimbParts", al::createActorFunction<PoleClimbParts>},
     {"PoleClimbPartsBreak", nullptr},
     {"PoleGrabCeil", al::createActorFunction<PoleGrabCeil>},
     {"PoleGrabCeilKeyMoveParts", nullptr},
