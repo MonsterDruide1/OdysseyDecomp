@@ -4,6 +4,11 @@
 
 #include "Project/Anim/AnimPlayerBase.h"
 
+namespace nn::g3d {
+class ModelObj;
+class BoneVisibilityAnimObj;
+}  // namespace nn::g3d
+
 namespace al {
 struct AnimPlayerInitInfo;
 struct AnimResInfo;
@@ -35,8 +40,13 @@ public:
     const char* getPlayingAnimName() const;
 
 private:
-    void* _18;
-    const char* mPlayingAnimName;
+    struct ModelInfo {
+        nn::g3d::ModelObj* modelObj = nullptr;
+        nn::g3d::BoneVisibilityAnimObj* boneAnimObj = nullptr;
+    };
+
+    ModelInfo* mModelInfo = nullptr;
+    const AnimResInfo* mPlayingAnimName = nullptr;
 };
 
 static_assert(sizeof(AnimPlayerSimple) == 0x28);
