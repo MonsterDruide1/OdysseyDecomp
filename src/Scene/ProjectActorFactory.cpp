@@ -38,6 +38,7 @@
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Camera/ScenarioStartCamera.h"
+#include "Demo/DemoPeachWedding.h"
 #include "Enemy/Bubble.h"
 #include "Enemy/CatchBomb.h"
 #include "Enemy/DonkeyKong2D.h"
@@ -278,7 +279,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DemoPeachWorldHomeWater001", nullptr},
     {"DemoChangeEffectObj", nullptr},
     {"DemoWorldMoveHomeBackGround", nullptr},
-    {"DemoPeachWedding", nullptr},
+    {"DemoPeachWedding", al::createActorFunction<DemoPeachWedding>},
     {"DemoPlayer", nullptr},
     {"DemoPlayerCap", nullptr},
     {"DigPoint", nullptr},
