@@ -23,9 +23,10 @@
 #include "Player/HackerStateWingFly.h"
 #include "Player/PlayerActionTurnControl.h"
 #include "Player/PlayerCollider.h"
-#include "Util/Hack.h"
 #include "Util/JudgeUtil.h"
 #include "Util/PlayerCollisionUtil.h"
+#include "Util/PlayerHackFunction.h"
+#include "Util/PlayerHackInputFunction.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {

@@ -38,8 +38,9 @@
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Player/PlayerPushReceiver.h"
 #include "Util/CameraUtil.h"
-#include "Util/Hack.h"
 #include "Util/InputInterruptTutorialUtil.h"
+#include "Util/PlayerHackFunction.h"
+#include "Util/PlayerHackInputFunction.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {
