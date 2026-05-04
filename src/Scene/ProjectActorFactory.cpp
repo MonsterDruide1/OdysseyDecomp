@@ -67,6 +67,7 @@
 #include "Item/LifeMaxUpItem2D.h"
 #include "Item/LifeUpItem.h"
 #include "Item/LifeUpItem2D.h"
+#include "Item/ShineFukankunWatchObj.h"
 #include "MapObj/AllDeadWatcherWithShine.h"
 #include "MapObj/AnagramAlphabet.h"
 #include "MapObj/BlockBrickBig2D.h"
@@ -554,7 +555,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ShineWithAppearCamera", nullptr},
     {"ShineChipWatcher", nullptr},
     {"ShineDot", nullptr},
-    {"ShineFukankunWatchObj", nullptr},
+    {"ShineFukankunWatchObj", al::createActorFunction<ShineFukankunWatchObj>},
     {"ShineTowerRocket", al::createActorFunction<ShineTowerRocket>},
     {"ShopBgmPlayer", nullptr},
     {"ShopMark", al::createActorFunction<ShopMark>},
