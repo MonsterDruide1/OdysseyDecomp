@@ -13,19 +13,22 @@ public:
     CameraPoserFactory(const char* factoryName);
 
     virtual CameraPoserEntrance* createEntranceCameraPoser() const;
+
+private:
+    s32 _1c = 0;
 };
 }  // namespace al
 
 namespace alCameraPoserFactoryFunction {
 void initAndCreateTableFromOtherTable2(
-    al::CameraPoserFactory* out, const al::NameToCreator<al::CameraPoserCreatorFunction>* table1,
-    s32 table1Count, const al::NameToCreator<al::CameraPoserCreatorFunction>* table2,
-    s32 table2Count);
+    al::CameraPoserFactory* factory,
+    const al::NameToCreator<al::CameraPoserCreatorFunction>* table1, s32 table1Count,
+    const al::NameToCreator<al::CameraPoserCreatorFunction>* table2, s32 table2Count);
 void initAndCreateTableWithAnotherFactory(
-    al::CameraPoserFactory* out, const al::CameraPoserFactory* factory,
+    al::CameraPoserFactory* factory, const al::CameraPoserFactory* otherFactory,
     const al::NameToCreator<al::CameraPoserCreatorFunction>* table, s32 tableCount);
 void initAndCreateTableWithPresetPosers(
-    al::CameraPoserFactory* out, const al::NameToCreator<al::CameraPoserCreatorFunction>* table,
+    al::CameraPoserFactory* factory, const al::NameToCreator<al::CameraPoserCreatorFunction>* table,
     s32 tableCount);
 
 template <s32 N1, s32 N2>
