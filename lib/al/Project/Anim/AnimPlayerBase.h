@@ -13,9 +13,9 @@ public:
 
     virtual bool calcNeedUpdateAnimNext() = 0;
 
-    AnimInfoTable* getAnimInfoTable() { return mInfoTable; }
+    AnimInfoTable* getAnimInfoTable() const { return mInfoTable; }
 
-private:
+protected:
     AnimInfoTable* mInfoTable = nullptr;
     bool _10 = false;
     bool _11 = false;
