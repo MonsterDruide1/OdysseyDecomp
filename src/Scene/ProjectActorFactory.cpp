@@ -112,6 +112,7 @@
 #include "MapObj/MoviePlayerMapParts.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PlayerMotionObserver.h"
+#include "MapObj/PlayerSubjectiveWatchCheckObj.h"
 #include "MapObj/PoleClimbParts.h"
 #include "MapObj/PoleGrabCeil.h"
 #include "MapObj/QuestObj.h"
@@ -492,7 +493,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PillarSwitchOpenMapParts", nullptr},
     {"PlayerMotionObserver", al::createActorFunction<PlayerMotionObserver>},
     {"PlayerStartObj", nullptr},
-    {"PlayerSubjectiveWatchCheckObj", nullptr},
+    {"PlayerSubjectiveWatchCheckObj", al::createActorFunction<PlayerSubjectiveWatchCheckObj>},
     {"PlayGuideBoard", nullptr},
     {"PlayRecorder", nullptr},
     {"PlayerStartObjNoLink", nullptr},
