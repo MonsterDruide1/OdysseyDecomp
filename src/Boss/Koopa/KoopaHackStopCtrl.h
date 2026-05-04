@@ -28,6 +28,8 @@ public:
 
     bool isStop() const { return mStopActor != nullptr; }
 
+    const al::LiveActor* getStopActor() const { return mStopActor; }
+
     bool isStatusDemoForSceneKoopaHack() const { return mIsStatusDemoForSceneKoopaHack; }
 
     void setStatusDemoForSceneKoopaHack(bool status) { mIsStatusDemoForSceneKoopaHack = status; }
