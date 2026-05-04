@@ -9,11 +9,11 @@
 namespace al {
 struct ActorInitInfo;
 class HitSensor;
-class NerveStateBase;
 class SensorMsg;
 }  // namespace al
 
 class ActorDimensionKeeper;
+class LifeUpItemStateAutoGet;
 
 class LifeUpItem2D : public al::LiveActor, public IUseDimension {
 public:
@@ -22,7 +22,8 @@ public:
     void init(const al::ActorInitInfo& info) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
-    ActorDimensionKeeper* getActorDimensionKeeper() const override;
+
+    ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; };
 
     void appearPopUp();
     void appearAmiiboTouch();
@@ -33,12 +34,14 @@ public:
     void exeGet();
     void exeAutoGetDemo();
 
-    void setBool130(bool value) { _130 = value; }
+    void setIsAmiiboTouch(bool value) { mIsAmiiboTouch = value; }
 
 private:
-    al::NerveStateBase* mNerveStateBase = nullptr;
+    LifeUpItemStateAutoGet* mStateAutoGet = nullptr;
     al::HitSensor* mHitSensor = nullptr;
-    s32 _120 = 0;
+    s32 mCoinAppearCount = 0;
     ActorDimensionKeeper* mDimensionKeeper = nullptr;
-    bool _130 = false;
+    bool mIsAmiiboTouch = false;
 };
+
+static_assert(sizeof(LifeUpItem2D) == 0x138);
