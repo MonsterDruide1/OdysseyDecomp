@@ -31678,31 +31678,31 @@ Enemy/HosuiWaterBallHolder.o:
     label:
     - _ZN20HosuiWaterBallHolderC1ERKN2al13ActorInitInfoE
     - _ZN20HosuiWaterBallHolderC2ERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x11dad4
     size: 156
     label: _ZN20HosuiWaterBallHolder3getEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x11db70
     size: 180
     label: _ZN20HosuiWaterBallHolder7killAllEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x11dc24
     size: 280
     label: _ZN9HosuiUtil29tryCreateHosuiWaterBallHolderEPKN2al18IUseSceneObjHolderERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x11dd3c
     size: 168
     label: _ZN9HosuiUtil20tryGetHosuiWaterBallEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x11dde4
     size: 176
     label: _ZN9HosuiUtil21killAllHosuiWaterBallEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x11de94
     size: 4
     label: _ZN20HosuiWaterBallHolderD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Enemy/Imomu.o:
   '.text':
