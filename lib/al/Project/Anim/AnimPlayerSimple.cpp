@@ -16,28 +16,28 @@ void AnimPlayerSimple::applyTo() {
 }
 
 bool AnimPlayerSimple::calcNeedUpdateAnimNext() {
-    if (!_11)
+    if (!is11())
         return false;
 
     applyTo();
 
     if (getAnimFrameRate() <= 0 || (isAnimOneTime() && isAnimEnd())) {
         setAnimToModel(nullptr);
-        _11 = false;
+        set11(false);
     }
     return true;
 }
 
 void AnimPlayerSimple::startAnim(const char* name) {
-    mPlayingAnimName = getAnimInfoTable()->findAnimInfo(name);
-    setAnimToModel(mPlayingAnimName);
+    mResInfo = getAnimInfoTable()->findAnimInfo(name);
+    setAnimToModel(mResInfo);
     applyTo();
-    _10 = true;
-    _11 = true;
+    set10(true);
+    set11(true);
 }
 
 void AnimPlayerSimple::update() {
-    if (_11 && !_10)
+    if (is11() && !is10())
         mModelInfo->boneAnimObj->getFrameCtrlPtr()->update();
 }
 
@@ -52,8 +52,8 @@ f32 AnimPlayerSimple::getAnimFrame() const {
 void AnimPlayerSimple::setAnimFrame(f32 frame) {
     mModelInfo->boneAnimObj->getFrameCtrlPtr()->setFrame(frame);
     applyTo();
-    _10 = true;
-    _11 = true;
+    set10(true);
+    set11(true);
 }
 
 f32 AnimPlayerSimple::getAnimFrameMax() const {
@@ -71,7 +71,7 @@ f32 AnimPlayerSimple::getAnimFrameRate() const {
 void AnimPlayerSimple::setAnimFrameRate(f32 rate) {
     mModelInfo->boneAnimObj->getFrameCtrlPtr()->setFrameRate(rate);
     applyTo();
-    _11 = true;
+    set11(true);
 }
 
 bool AnimPlayerSimple::isAnimExist(const char* name) const {
@@ -94,11 +94,11 @@ bool AnimPlayerSimple::isAnimOneTime(const char* name) const {
 }
 
 bool AnimPlayerSimple::isAnimPlaying() const {
-    return mPlayingAnimName != nullptr;
+    return mResInfo != nullptr;
 }
 
 const char* AnimPlayerSimple::getPlayingAnimName() const {
-    return isAnimPlaying() ? mPlayingAnimName->name : "";
+    return isAnimPlaying() ? mResInfo->name : "";
 }
 
 }  // namespace al
