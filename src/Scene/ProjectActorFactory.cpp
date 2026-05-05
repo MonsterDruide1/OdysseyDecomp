@@ -90,6 +90,7 @@
 #include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/FixMapPartsBgmChangeAction.h"
+#include "MapObj/FixMapPartsDitherAppear.h"
 #include "MapObj/HackFork.h"
 #include "MapObj/HipDropMoveLift.h"
 #include "MapObj/HipDropRepairParts.h"
@@ -326,7 +327,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"FixMapPartsAppearKillAsync", nullptr},
     {"FixMapPartsBgmChangeAction", al::createActorFunction<FixMapPartsBgmChangeAction>},
     {"FixMapPartsCapHanger", nullptr},
-    {"FixMapPartsDitherAppear", nullptr},
+    {"FixMapPartsDitherAppear", al::createActorFunction<FixMapPartsDitherAppear>},
     {"FixMapPartsForceSafetyPoint", nullptr},
     {"FixMapPartsFukankunZoomCapMessage", nullptr},
     {"FixMapPartsScenarioAction", nullptr},
