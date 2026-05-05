@@ -25,13 +25,12 @@ NERVES_MAKE_NOSTRUCT(PlayerStateAbyss, Fall, Recovery)
 PlayerStateAbyss::PlayerStateAbyss(al::LiveActor* player, const PlayerConst* playerConst,
                                    PlayerRecoverySafetyPoint* recoverySafetyPoint,
                                    PlayerColliderHakoniwa* playerCollider,
-                                   PlayerAnimator* playerAnimator, al::LiveActor* playerModelHolder)
+                                   PlayerAnimator* playerAnimator, al::LiveActor* player2dModel)
     : al::ActorStateBase("奈落死", player), mConst(playerConst),
       mRecoverySafetyPoint(recoverySafetyPoint), mAnimator(playerAnimator) {
     initNerve(&Fall, 1);
-    mStateRecoveryDead =
-        new PlayerStateRecoveryDead(player, recoverySafetyPoint, playerCollider, playerAnimator,
-                                    playerConst, playerModelHolder);
+    mStateRecoveryDead = new PlayerStateRecoveryDead(player, recoverySafetyPoint, playerCollider,
+                                                     playerAnimator, playerConst, player2dModel);
     al::initNerveState(this, mStateRecoveryDead, &Recovery, "奈落復帰");
 }
 
