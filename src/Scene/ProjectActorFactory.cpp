@@ -94,6 +94,8 @@
 #include "MapObj/HipDropMoveLift.h"
 #include "MapObj/HipDropRepairParts.h"
 #include "MapObj/HipDropSwitch.h"
+#include "MapObj/HomeInside.h"
+#include "MapObj/HomeShip.h"
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaFryingPan.h"
 #include "MapObj/LavaPan.h"
@@ -378,8 +380,8 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HipDropTransformPartsWatcher", nullptr},
     {"HomeBed", nullptr},
     {"HomeChair", nullptr},
-    {"HomeInside", nullptr},
-    {"HomeShip", nullptr},
+    {"HomeInside", al::createActorFunction<HomeInside>},
+    {"HomeShip", al::createActorFunction<HomeShip>},
     {"Hosui", nullptr},
     {"IcicleFall", nullptr},
     {"Imomu", nullptr},
