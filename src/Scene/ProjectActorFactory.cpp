@@ -103,6 +103,7 @@
 #include "MapObj/MoonBasementSlideObj.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/MoviePlayerMapParts.h"
+#include "MapObj/PeachWorldGate.h"
 #include "MapObj/PeachWorldTree.h"
 #include "MapObj/PlayerMotionObserver.h"
 #include "MapObj/PoleGrabCeil.h"
@@ -469,7 +470,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"PaulineAtCeremony", nullptr},
     {"PaulineAudience", nullptr},
     {"PeachWorldHomeCastleCap", nullptr},
-    {"PeachWorldGate", nullptr},
+    {"PeachWorldGate", al::createActorFunction<PeachWorldGate>},
     {"PeachWorldMoatWater", nullptr},
     {"PeachWorldTree", al::createActorFunction<PeachWorldTree>},
     {"Pecho", al::createActorFunction<Pecho>},
