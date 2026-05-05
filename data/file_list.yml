@@ -45523,50 +45523,50 @@ Event/EventFlowNodeCapManHeroTalkReturn.o:
     label:
     - _ZN33EventFlowNodeCapManHeroTalkReturnC1EPKc
     - _ZN33EventFlowNodeCapManHeroTalkReturnC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b296c
     size: 124
     label: _ZN33EventFlowNodeCapManHeroTalkReturn4initERKN2al21EventFlowNodeInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b29e8
     size: 88
     label: _ZN33EventFlowNodeCapManHeroTalkReturn5startEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b2a40
     size: 112
     label: _ZN33EventFlowNodeCapManHeroTalkReturn15exeTurnToPlayerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b2ab0
     size: 252
     label: _ZN33EventFlowNodeCapManHeroTalkReturn9exeReturnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b2bac
     size: 112
     label: _ZN33EventFlowNodeCapManHeroTalkReturn16exeReactionCapOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b2c1c
     size: 68
     label: _ZN33EventFlowNodeCapManHeroTalkReturn10exeEndWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b2c60
     size: 20
     label: _ZNK12_GLOBAL__N_142EventFlowNodeCapManHeroTalkReturnNrvReturn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1b2c74
     size: 124
     label: _ZNK12_GLOBAL__N_148EventFlowNodeCapManHeroTalkReturnNrvTurnToPlayer7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1b2cf0
     size: 124
     label: _ZNK12_GLOBAL__N_149EventFlowNodeCapManHeroTalkReturnNrvReactionCapOn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1b2d6c
     size: 80
     label: _ZNK12_GLOBAL__N_143EventFlowNodeCapManHeroTalkReturnNrvEndWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Event/EventFlowNodeCapManHeroTalkSetDemoEndPose.o:
   '.text':
