@@ -75,6 +75,7 @@
 #include "MapObj/BlockQuestion2D.h"
 #include "MapObj/BossKnuckleFix.h"
 #include "MapObj/BreakablePole.h"
+#include "MapObj/CageShine.h"
 #include "MapObj/CameraSub.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
@@ -211,7 +212,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"Byugo", nullptr},
     {"Cactus", nullptr},
     {"CactusMini", nullptr},
-    {"CageShine", nullptr},
+    {"CageShine", al::createActorFunction<CageShine>},
     {"CageSaveSwitch", nullptr},
     {"CageStageSwitch", nullptr},
     {"CageBreakable", nullptr},
