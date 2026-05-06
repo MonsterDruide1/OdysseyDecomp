@@ -2,13 +2,15 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
+// Threw an incomplete type error when I tried forward declaring
+#include "Library/HostIO/HioNode.h"
 
 namespace al {
-class RumbleCalculator {
+class RumbleCalculator: public al::HioNode {
 public:
     RumbleCalculator(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime);
     void setParam(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime);
-    void start(u32);
+    void start(u32 rampTime);
     void calc();
     void reset();
 

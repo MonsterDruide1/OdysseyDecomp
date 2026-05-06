@@ -18,6 +18,7 @@ void al::RumbleCalculator::start(u32 rampTime) {
     mOut.set(0.0f, 0.0f, 0.0f);
 }
 
+// NON-MATCHING: https://decomp.me/scratch/4Dxv4
 void al::RumbleCalculator::calc() {
     if (mFrame >= mRampTime) {
         mOut.set(0.0f, 0.0f, 0.0f);
