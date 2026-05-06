@@ -120,6 +120,7 @@
 #include "MapObj/RocketFlower.h"
 #include "MapObj/RouletteSwitch.h"
 #include "MapObj/SaveFlagCheckObj.h"
+#include "MapObj/SequentialSwitch.h"
 #include "MapObj/ShineTowerRocket.h"
 #include "MapObj/ShopMark.h"
 #include "MapObj/SignBoard.h"
@@ -557,7 +558,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SePlayObj", nullptr},
     {"SePlayObjWithSave", nullptr},
     {"SePlayRail", nullptr},
-    {"SequentialSwitch", nullptr},
+    {"SequentialSwitch", al::createActorFunction<SequentialSwitch>},
     {"SessionBgmCtrlObj", al::createActorFunction<SessionBgmCtrlObj>},
     {"SessionMayorNpc", nullptr},
     {"SessionMusicianNpc", nullptr},
