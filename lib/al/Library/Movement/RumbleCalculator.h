@@ -1,0 +1,37 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
+namespace al {
+class RumbleCalculator {
+public:
+    RumbleCalculator(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime);
+    void setParam(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime);
+    void start(u32);
+    void calc();
+    void reset();
+
+    virtual void calcValues(sead::Vector3f* out, const sead::Vector3f& in) = 0;
+
+protected:
+    u32 mFrame;
+    u32 mRampTime;
+    sead::Vector3f mOut = {0.0f, 0.0f, 0.0f};
+    f32 mFrequency;
+    f32 mAngleDev;
+    f32 mAmplitude;
+};
+
+class RumbleCalculatorCosAddOneMultLinear : public RumbleCalculator {
+public:
+    RumbleCalculatorCosAddOneMultLinear(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime);
+    void calcValues(sead::Vector3f* out, const sead::Vector3f& in);
+};
+
+class RumbleCalculatorCosMultLinear : public RumbleCalculator {
+public:
+    RumbleCalculatorCosMultLinear(f32 frequency, f32 angleDev, f32 amplitude, u32 rampTime);
+    void calcValues(sead::Vector3f* out, const sead::Vector3f& in);
+};
+}  // namespace al
