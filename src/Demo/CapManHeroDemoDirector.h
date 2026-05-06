@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 
 #include "Library/HostIO/HioNode.h"
@@ -9,8 +10,10 @@
 
 namespace al {
 struct ActorInitInfo;
+class IUseSceneObjHolder;
 class LiveActor;
 }  // namespace al
+
 class StageTalkDemoNpcCap;
 
 class CapManHeroDemoDirector : public al::HioNode, public al::ISceneObj {
@@ -21,14 +24,14 @@ public:
 
     const char* getSceneObjName() const override { return "キャップ会話ディレクター"; }
 
-    void init(const al::ActorInitInfo&);
+    void init(const al::ActorInitInfo& info);
     bool isEndDemo() const;
     bool isExistTalkDemoStageStart() const;
     bool isExistTalkDemoMoonRockFind() const;
     bool isExistTalkDemoAfterMoonRockBreakDemo() const;
-    void preEventFromSceneFirstMoonGet(const char*);
+    void preEventFromSceneFirstMoonGet(const char* eventName);
     void startTalkDemoFirstMoonGet();
-    void startTalkDemoCore(StageTalkDemoNpcCap*);
+    void startTalkDemoCore(StageTalkDemoNpcCap* talkDemoActor);
     void startTalkDemoStageStart();
     void startTalkDemoMoonRockFind();
     void startTalkDemoAfterMoonRockBreakDemo();
@@ -63,7 +66,10 @@ private:
 static_assert(sizeof(CapManHeroDemoDirector) == 0x40);
 
 namespace CapManHeroDemoFunction {
-void capManHeroControl(al::LiveActor*);
-al::LiveActor* createDemoCapManHero(const char*, const al::ActorInitInfo&, const char*);
-void startCapManHeroCommonSettingAfterShowModel(al::LiveActor*);
+void capManHeroControl(al::LiveActor* actor);
+al::LiveActor* createDemoCapManHero(const char* actorName, const al::ActorInitInfo& info,
+                                    const char* suffix);
+void startCapManHeroCommonSettingAfterShowModel(al::LiveActor* actor);
+void setDemoStartInfo(const al::IUseSceneObjHolder* holder, const sead::Quatf& quat);
+void getDemoStartInfo(const al::IUseSceneObjHolder* holder, sead::Quatf* quat);
 }  // namespace CapManHeroDemoFunction
