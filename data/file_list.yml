@@ -40092,35 +40092,35 @@ Enemy/SenobiGeneratePoint.o:
   - offset: 0x17fbf4
     size: 272
     label: _ZN19SenobiGeneratePoint4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fd04
     size: 68
     label: _ZN19SenobiGeneratePoint9forceKillEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fd48
     size: 68
     label: _ZN19SenobiGeneratePoint11tryGenerateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fd8c
     size: 68
     label: _ZN19SenobiGeneratePoint10exeStandbyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fdd0
     size: 64
     label: _ZN19SenobiGeneratePoint7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fe10
     size: 4
     label: _ZN19SenobiGeneratePoint6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fe14
     size: 120
     label: _ZN19SenobiGeneratePoint11exeGenerateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x17fe8c
     size: 68
     label: _ZNK12_GLOBAL__N_118HostTypeNrvStandby7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x17fed0
     size: 64
@@ -40133,7 +40133,7 @@ Enemy/SenobiGeneratePoint.o:
   - offset: 0x17ff14
     size: 124
     label: _ZNK12_GLOBAL__N_119HostTypeNrvGenerate7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/SenobiLeaf.o:
   '.text':
