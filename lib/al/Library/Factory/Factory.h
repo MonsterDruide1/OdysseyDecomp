@@ -25,13 +25,19 @@ public:
 
     template <s32 N>
     inline void initFactory(const NameToCreator<T> (&entries)[N]) {
+        initFactory(entries, N);
+    }
+
+    inline void initFactory(const NameToCreator<T>* entries, s32 numFactoryEntries) {
         mFactoryEntries = entries;
-        mNumFactoryEntries = N;
+        mNumFactoryEntries = numFactoryEntries;
     }
 
     virtual const char* convertName(const char* name) const { return name; }
 
     s32 getNumFactoryEntries() const { return mNumFactoryEntries; }
+
+    const NameToCreator<T>* getFactoryEntries() const { return mFactoryEntries; }
 
     s32 getEntryIndex(T* creationPtr, const char* entryName) const {
         const char* name = convertName(entryName);
