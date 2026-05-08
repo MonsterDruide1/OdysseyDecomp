@@ -162,11 +162,11 @@ void initializeItemList(sead::PtrArray<ShopItem::ItemInfo>* shopItemList, const 
 }
 
 static void
-initializeChangeStageList(sead::PtrArray<GameDataHolder::ChangeStageItem>* mChangeStageList) {
+initializeChangeStageList(sead::PtrArray<GameDataHolder::ChangeStageItem>* changeStageList) {
     al::ByamlIter changeStageListIter(
         al::tryGetBymlFromArcName("SystemData/WorldList", "ChangeStageList"));
     s32 changeStageListSize = changeStageListIter.getSize();
-    mChangeStageList->allocBuffer(changeStageListSize, nullptr);
+    changeStageList->allocBuffer(changeStageListSize, nullptr);
 
     for (s32 i = 0; i < changeStageListSize; i++) {
         al::ByamlIter iter;
@@ -186,32 +186,32 @@ initializeChangeStageList(sead::PtrArray<GameDataHolder::ChangeStageItem>* mChan
         stageItem->destStageName.format("%s", destStageName);
         stageItem->destLabel.format("%s", destLabel);
 
-        mChangeStageList->pushBack(stageItem);
+        changeStageList->pushBack(stageItem);
     }
 }
 
-static void initializeExStageList(sead::PtrArray<GameDataHolder::ExStageItem>* mExStageList) {
+static void initializeExStageList(sead::PtrArray<GameDataHolder::ExStageItem>* exStageList) {
     al::ByamlIter exStageListIter(al::tryGetBymlFromArcName("SystemData/WorldList", "ExStageList"));
     s32 exStageListSize = exStageListIter.getSize();
-    mExStageList->allocBuffer(exStageListSize, nullptr);
+    exStageList->allocBuffer(exStageListSize, nullptr);
 
     for (s32 i = 0; i < exStageListSize; i++) {
         const char* name = nullptr;
         exStageListIter.tryGetStringByIndex(&name, i);
 
-        GameDataHolder::ExStageItem* stageItem = new GameDataHolder::ExStageItem;
+        GameDataHolder::ExStageItem* stageItem = new GameDataHolder::ExStageItem();
         stageItem->name.format("%s", name);
 
-        mExStageList->pushBack(stageItem);
+        exStageList->pushBack(stageItem);
     }
 }
 
 static void initializeInvalidOpenMapList(
-    sead::PtrArray<GameDataHolder::InvalidOpenMapInfo>* mInvalidOpenMapList) {
+    sead::PtrArray<GameDataHolder::InvalidOpenMapInfo>* invalidOpenMapList) {
     al::ByamlIter invalidOpenMapListIter(
         al::tryGetBymlFromArcName("SystemData/WorldList", "InvalidOpenMapList"));
     s32 invalidOpenMapListSize = invalidOpenMapListIter.getSize();
-    mInvalidOpenMapList->allocBuffer(invalidOpenMapListSize, nullptr);
+    invalidOpenMapList->allocBuffer(invalidOpenMapListSize, nullptr);
 
     for (s32 i = 0; i < invalidOpenMapListSize; i++) {
         al::ByamlIter iter;
@@ -222,20 +222,20 @@ static void initializeInvalidOpenMapList(
         iter.tryGetStringByKey(&mapInfo->name, "Name");
         iter.tryGetIntByKey(&mapInfo->scenario, "Scenario");
 
-        mInvalidOpenMapList->pushBack(mapInfo);
+        invalidOpenMapList->pushBack(mapInfo);
     }
 }
 
-static void initializeHackObjectList(sead::PtrArray<HackObjInfo>* mHackObjList) {
+static void initializeHackObjectList(sead::PtrArray<HackObjInfo>* hackObjList) {
     al::Resource* resource = al::findOrCreateResource("SystemData/ItemList", nullptr);
     al::ByamlIter hackObjListIter(al::findResourceYaml(resource, "HackObjList", nullptr));
     s32 hackObjListSize = hackObjListIter.getSize();
-    mHackObjList->allocBuffer(hackObjListSize, nullptr);
+    hackObjList->allocBuffer(hackObjListSize, nullptr);
 
     for (s32 i = 0; i < hackObjListSize; i++) {
         al::ByamlIter iter;
         hackObjListIter.tryGetIterByIndex(&iter, i);
-        HackObjInfo* objInfo = new HackObjInfo;
+        HackObjInfo* objInfo = new HackObjInfo();
 
         objInfo->hackName = al::tryGetByamlKeyStringOrNULL(iter, "HackName");
         objInfo->isScare = al::tryGetByamlKeyBoolOrFalse(iter, "IsScare");
@@ -250,22 +250,20 @@ static void initializeHackObjectList(sead::PtrArray<HackObjInfo>* mHackObjList) 
         al::tryGetByamlBool(&objInfo->isGuideEnable, iter, "IsGuideEnable");
         al::tryGetByamlF32(&objInfo->stayGravityMargine, iter, "StayGravityMargine");
 
-        mHackObjList->pushBack(objInfo);
+        hackObjList->pushBack(objInfo);
     }
 }
 
 static void
-initializeWorldItemTypeList(sead::PtrArray<GameDataHolder::WorldItemTypeInfo>* mWorldItemTypeInfo,
-                            WorldList* mWorldList) {
+initializeWorldItemTypeList(sead::PtrArray<GameDataHolder::WorldItemTypeInfo>* worldItemTypeInfo,
+                            WorldList* worldList) {
     al::ByamlIter worldItemTypeListIter(
         al::tryGetBymlFromArcName("SystemData/WorldList", "WorldItemTypeList"));
     s32 worldItemTypeListSize = worldItemTypeListIter.getSize();
 
-    mWorldItemTypeInfo->allocBuffer(worldItemTypeListSize, nullptr);
-    for (s32 i = 0; i < worldItemTypeListSize; i++) {
-        GameDataHolder::WorldItemTypeInfo* info = new GameDataHolder::WorldItemTypeInfo();
-        mWorldItemTypeInfo->pushBack(info);
-    }
+    worldItemTypeInfo->allocBuffer(worldItemTypeListSize, nullptr);
+    for (s32 i = 0; i < worldItemTypeListSize; i++)
+        worldItemTypeInfo->pushBack(new GameDataHolder::WorldItemTypeInfo());
 
     for (s32 i = 0; i < worldItemTypeListSize; i++) {
         al::ByamlIter iter;
@@ -276,8 +274,8 @@ initializeWorldItemTypeList(sead::PtrArray<GameDataHolder::WorldItemTypeInfo>* m
         iter.tryGetStringByKey(&coinCollect, "CoinCollect");
         iter.tryGetIntByKey(&shine, "Shine");
         const char* worldName = al::getByamlKeyString(iter, "WorldName");
-        s32 worldIndex = mWorldList->tryFindWorldIndexByDevelopName(worldName);
-        GameDataHolder::WorldItemTypeInfo* info = mWorldItemTypeInfo->at(worldIndex);
+        s32 worldIndex = worldList->tryFindWorldIndexByDevelopName(worldName);
+        GameDataHolder::WorldItemTypeInfo* info = worldItemTypeInfo->at(worldIndex);
         info->coinCollect.format("CoinCollect%s", coinCollect);
         info->coinCollectEmpty.format("CoinCollectEmpty%s", coinCollect);
         info->coinCollect2D.format("CoinCollect2D_%s", coinCollect);
@@ -343,14 +341,17 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
     initializeItemList(&mItemGift, "ItemGift");
     initializeItemList(&mItemSticker, "ItemSticker");
 
-    s32 shopItemSize = 0;
+    s32 numShopsWithMoons = 0;
     s32 shopItemListSize = mShopItemList.size();
-    s32 shopTalkDataSize = 0;
+    s32 nameListSize = 0;
+
+    // NOTE: out-of-bounds read/write possible here
+    // does not happen in practice, because only 17 kingdoms exist
     const char* nameList[20];
     for (s32 i = 0; i < shopItemListSize; i++) {
         if (!al::isEqualString(mShopItemList[i]->clearWorld, "")) {
             bool found = false;
-            for (s32 j = 0; j < shopTalkDataSize; j++) {
+            for (s32 j = 0; j < nameListSize; j++) {
                 if (al::isEqualString(nameList[j], mShopItemList[i]->clearWorld)) {
                     found = true;
                     break;
@@ -358,24 +359,24 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
             }
 
             if (!found)
-                nameList[shopTalkDataSize++] = mShopItemList[i]->clearWorld;
+                nameList[nameListSize++] = mShopItemList[i]->clearWorld;
         }
 
         if (mShopItemList[i]->moonNum != -1)
-            shopItemSize++;
+            numShopsWithMoons++;
     }
 
-    mWorldsForNewReleaseShop.allocBuffer(shopTalkDataSize, nullptr);
-    for (s32 i = 0; i < shopTalkDataSize; i++) {
+    mWorldsForNewReleaseShop.allocBuffer(nameListSize, nullptr);
+    for (s32 i = 0; i < nameListSize; i++) {
         sead::FixedSafeString<64>* newWorld = new sead::FixedSafeString<64>(nameList[i]);
         mWorldsForNewReleaseShop.pushBack(newWorld);
     }
 
-    mShopTalkDataInfos = new s32[shopItemSize];
+    mShopsMoonNum = new s32[numShopsWithMoons];
 
     for (s32 i = 0; i < shopItemListSize; i++)
         if (mShopItemList[i]->moonNum != -1)
-            mShopTalkDataInfos[mShopTalkDataSize++] = mShopItemList[i]->moonNum;
+            mShopsMoonNum[mShopTalkDataSize++] = mShopItemList[i]->moonNum;
 
     initializeHackObjectList(&mHackObjList);
 
@@ -453,6 +454,7 @@ GameDataHolder::GameDataHolder() {
 }
 
 void GameDataHolder::setPlayingFileId(s32 fileId) {
+    // NOTE: if `fileId` is not in [0, 4], this is pointing out-of-bounds
     mPlayingFile = getGameDataFile(fileId);
     resetTempSaveData(false);
     if (fileId != -1)

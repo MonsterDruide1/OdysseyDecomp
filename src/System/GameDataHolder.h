@@ -40,6 +40,8 @@ class UniqObjInfo;
 class WorldList;
 
 struct HackObjInfo {
+    HackObjInfo() {}
+
     const char* hackName = nullptr;
     f32 guideHeight = 200.0f;
     f32 stayGravityMargine = 0.0f;
@@ -71,6 +73,8 @@ public:
     static_assert(sizeof(ChangeStageItem) == 0x260);
 
     struct ExStageItem {
+        ExStageItem() {}
+
         sead::FixedSafeString<128> name;
     };
 
@@ -321,7 +325,7 @@ private:
     sead::PtrArray<ShopItem::ItemInfo> mItemSticker;
     sead::PtrArray<HackObjInfo> mHackObjList;
     sead::PtrArray<sead::FixedSafeString<64>> mWorldsForNewReleaseShop;
-    s32* mShopTalkDataInfos = nullptr;
+    s32* mShopsMoonNum = nullptr;
     s32 mShopTalkDataSize = 0;
     AchievementInfoReader* mAchievementInfoReader = nullptr;
     AchievementHolder* mAchievementHolder = nullptr;
