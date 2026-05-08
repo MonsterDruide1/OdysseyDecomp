@@ -70,10 +70,12 @@ public:
     ElectricWireRailKeeper** getElectricWireRailKeepers() { return mElectricWireRailKeepers; }
 
 private:
+    void* mPad;
     s32 _110;
     ElectricWireRailKeeper** mElectricWireRailKeepers;
-    char pad3[0x1d8];
+    char mPad2[0x189];
     bool mIsElectricWireRadio;
+    char mPad3[0x58];
 };
 
 static_assert(sizeof(ElectricWire) == 0x308);
