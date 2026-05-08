@@ -15,7 +15,7 @@ struct ActionAnimCtrlInfo {
 
     const char* actionName;
     u32 sklDataCount;
-    ActionAnimDataInfo** sklDatas;
+    ActionAnimDataInfo* sklDatas;
     ActionAnimDataInfo mclData;
     ActionAnimDataInfo mtpData;
     ActionAnimDataInfo mtsData;

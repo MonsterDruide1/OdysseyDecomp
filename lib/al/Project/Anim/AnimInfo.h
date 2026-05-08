@@ -2,15 +2,11 @@
 
 #include <basis/seadTypes.h>
 
-namespace nn::g3d {
-class ResMaterialAnim;
-}  // namespace nn::g3d
-
 namespace al {
 struct AnimResInfo {
     const char* name;
-    const nn::g3d::ResMaterialAnim* resMaterialAnim;
-    s32 frameMax;
+    void* resMaterialAnim;
+    f32 frameMax;
     bool isLoop;
 };
 
@@ -24,8 +20,12 @@ public:
     void add(const char* name, void*, f32 frameMax, bool isLoop);
     void sort();
 
+    s32 getInfoCount() const { return mInfoCount; }
+
+    AnimResInfo* getResInfo(s32 index) const { return &mResInfos[index]; }
+
 private:
-    u32 mInfoCount;
+    s32 mInfoCount;
     AnimResInfo* mResInfos;
     bool mIsSorted;
 };
