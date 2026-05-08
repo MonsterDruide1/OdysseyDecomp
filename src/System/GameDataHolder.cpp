@@ -847,8 +847,7 @@ bool GameDataHolder::tryReadByamlDataCommon(const u8* byamlData) {
 void GameDataHolder::readFromSaveDataBufferCommonFileOnlyLanguage() {
     sead::RamReadStream readStream(al::getSaveDataWorkBuffer(), 0x400, sead::Stream::Modes::Binary);
 
-    SaveDataCommon saveData;
-    memset(&saveData, 0, sizeof(SaveDataCommon));
+    SaveDataCommon saveData = {};
     readStream.readMemBlock((void*)&saveData, sizeof(SaveDataCommon));
 
     if (saveData._0 != 0)
@@ -903,35 +902,28 @@ void GameDataHolder::updateSaveTimeForDisp(const char* fileName) {
     findGameDataFile(fileName)->updateSaveTimeForDisp();
 }
 
-// NON-MATCHING: Add operation references "j" variable https://decomp.me/scratch/l1ctd
 s32 GameDataHolder::findUnlockShineNum(bool* isCountTotal, s32 worldId) const {
-    s32 worldNumMax = 0;
+    s32 curWorldId = 0;
     for (s32 i = 0; i < mStageLockList.size(); i++) {
-        if (mStageLockList[i]->shineNumInfoNum <= 0)
-            continue;
-
-        for (s32 j = 0; j < mStageLockList[i]->shineNumInfoNum; j++) {
-            if (j + worldNumMax == worldId) {
+        for (s32 e = 0; e < mStageLockList[i]->shineNumInfoNum; e++) {
+            if (curWorldId == worldId) {
                 if (mStageLockList[i]->isCountTotal && isCountTotal)
                     *isCountTotal = true;
-
-                return mStageLockList[i]->shineNumInfo[j];
+                return mStageLockList[i]->shineNumInfo[e];
             }
+            curWorldId += 1;
         }
-
-        worldNumMax += mStageLockList[i]->shineNumInfoNum;
     }
-
     return -1;
 }
 
 s32 GameDataHolder::calcBeforePhaseWorldNumMax(s32 worldId) const {
-    s32 worldNumMax = -1;
+    s32 curWorldId = -1;
     for (s32 i = 0; i < mStageLockList.size(); i++) {
-        if (mStageLockList[i]->shineNumInfoNum + worldNumMax >= worldId)
-            return worldNumMax;
+        if (mStageLockList[i]->shineNumInfoNum + curWorldId >= worldId)
+            return curWorldId;
 
-        worldNumMax += mStageLockList[i]->shineNumInfoNum;
+        curWorldId += mStageLockList[i]->shineNumInfoNum;
     }
 
     return -1;
@@ -1032,27 +1024,31 @@ bool GameDataHolder::isShowBindTutorial(const char* bindName) const {
 }
 
 const char* GameDataHolder::getCoinCollectArchiveName(s32 worldId) const {
-    if (worldId > -1)
-        return mWorldItemTypeInfo[worldId]->coinCollect.cstr();
-    return "CoinCollect";
+    if (worldId < 0)
+        return "CoinCollect";
+
+    return mWorldItemTypeInfo[worldId]->coinCollect.cstr();
 }
 
 const char* GameDataHolder::getCoinCollectEmptyArchiveName(s32 worldId) const {
-    if (worldId > -1)
-        return mWorldItemTypeInfo[worldId]->coinCollectEmpty.cstr();
-    return "CoinCollectEmptyA";
+    if (worldId < 0)
+        return "CoinCollectEmptyA";
+
+    return mWorldItemTypeInfo[worldId]->coinCollectEmpty.cstr();
 }
 
 const char* GameDataHolder::getCoinCollect2DArchiveName(s32 worldId) const {
-    if (worldId > -1)
-        return mWorldItemTypeInfo[worldId]->coinCollect2D.cstr();
-    return "CoinCollect2D";
+    if (worldId < 0)
+        return "CoinCollect2D";
+
+    return mWorldItemTypeInfo[worldId]->coinCollect2D.cstr();
 }
 
 const char* GameDataHolder::getCoinCollect2DEmptyArchiveName(s32 worldId) const {
-    if (worldId > -1)
-        return mWorldItemTypeInfo[worldId]->coinCollectEmpty2D.cstr();
-    return "CoinCollectEmpty2D_A";
+    if (worldId < 0)
+        return "CoinCollectEmpty2D_A";
+
+    return mWorldItemTypeInfo[worldId]->coinCollectEmpty2D.cstr();
 }
 
 s32 GameDataHolder::getShineAnimFrame(s32 worldId) const {
@@ -1069,9 +1065,9 @@ s32 GameDataHolder::getCoinCollectNumMax(s32 worldId) const {
 bool GameDataHolder::isInvalidOpenMapStage(const char* stageName, s32 scenarioNo) const {
     s32 size = mInvalidOpenMapList.size();
     for (s32 i = 0; i < size; i++) {
-        auto* list = mInvalidOpenMapList[i];
-        if (al::isEqualString(stageName, list->name)) {
-            if (list->scenario < 0 || list->scenario == scenarioNo)
+        InvalidOpenMapInfo* entry = mInvalidOpenMapList[i];
+        if (al::isEqualString(stageName, entry->name)) {
+            if (entry->scenario < 0 || entry->scenario == scenarioNo)
                 return true;
         }
     }
@@ -1197,15 +1193,14 @@ bool GameDataHolder::checkIsOpenWorldWarpHoleInScenario(s32 worldId, s32 scenari
             continue;
 
         if (al::isEqualString(mWorldWarpHoleInfos[i].name, "Go"))
-            return mWorldWarpHoleInfos[i].scenarioNo <= scenarioNo;
+            return scenarioNo >= mWorldWarpHoleInfos[i].scenarioNo;
     }
 
     return false;
 }
 
 void GameDataHolder::setLocationName(const al::PlacementInfo* placementInfo) {
-    mLocationName->set(GameDataFunction::getCurrentStageName(const_cast<GameDataHolder*>(this)),
-                       placementInfo);
+    mLocationName->set(GameDataFunction::getCurrentStageName(this), placementInfo);
 }
 
 bool GameDataHolder::isPrevLocation(const al::PlacementInfo* placementInfo) const {
