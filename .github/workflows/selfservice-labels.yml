@@ -6,8 +6,7 @@ on:
 
 permissions:
   issues: write
-  repository-projects: read
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   selfservice_labels:
