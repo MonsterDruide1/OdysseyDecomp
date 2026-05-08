@@ -74,6 +74,7 @@
 #include "MapObj/BlockQuestion2D.h"
 #include "MapObj/BossKnuckleFix.h"
 #include "MapObj/BreakablePole.h"
+#include "MapObj/CapAccelerator.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
 #include "MapObj/CapSwitch.h"
@@ -214,8 +215,8 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CandlestandBgmDirector", nullptr},
     {"CandlestandSaveWatcher", nullptr},
     {"CandlestandWatcher", nullptr},
-    {"CapAccelerator", nullptr},
-    {"CapAcceleratorKeyMoveMapParts", nullptr},
+    {"CapAccelerator", al::createActorFunction<CapAccelerator>},
+    {"CapAcceleratorKeyMoveMapParts", al::createActorFunction<al::CapAcceleratorKeyMoveMapParts>},
     {"CapAppearMapParts", nullptr},
     {"CapBeamer", nullptr},
     {"CapBomb", al::createActorFunction<CapBomb>},
