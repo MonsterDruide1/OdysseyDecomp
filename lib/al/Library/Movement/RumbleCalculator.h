@@ -18,10 +18,10 @@ public:
 
 protected:
     u32 mFrame;
-    u32 mRampTime;
+    u32 mMaxFrame;
     sead::Vector3f mOut = {0.0f, 0.0f, 0.0f};
     f32 mFrequency;
-    f32 mAngleDev;
+    f32 mAngleOffset;
     f32 mAmplitude;
 };
 
