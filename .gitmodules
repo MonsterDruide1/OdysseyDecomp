@@ -18,4 +18,3 @@
 	url = https://github.com/open-ead/eui
 [submodule "lib/NintendoSDK-NEX"]
 	path = lib/NintendoSDK-NEX
-	url = https://github.com/open-ead/NintendoSDK-NEX
