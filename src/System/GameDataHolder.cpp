@@ -789,7 +789,7 @@ void GameDataHolder::resetTempSaveDataInSameScenario() {
     mIsExistKoopaShip = false;
 }
 
-struct SaveDataBuffer {
+struct SaveDataCommon {
     s32 _0;
     s32 _4;
     s32 playingFileId;
@@ -797,7 +797,7 @@ struct SaveDataBuffer {
     u64 playTime;
 };
 
-static_assert(sizeof(SaveDataBuffer) == 0x38);
+static_assert(sizeof(SaveDataCommon) == 0x38);
 
 void GameDataHolder::readFromSaveDataBuffer(const char* fileName) {
     u8* saveDataBuffer = al::getSaveDataWorkBuffer();
@@ -807,19 +807,17 @@ void GameDataHolder::readFromSaveDataBuffer(const char* fileName) {
         sead::RamReadStream readStream(saveDataBuffer, 0x400, sead::Stream::Modes::Binary);
         initializeDataCommon();
 
-        SaveDataBuffer buffer;
-        memset(&buffer, 0, sizeof(SaveDataBuffer));
-        readStream.readMemBlock((void*)&buffer, sizeof(SaveDataBuffer));
+        SaveDataCommon saveData = {};
+        readStream.readMemBlock((void*)&saveData, sizeof(SaveDataCommon));
 
-        if (buffer._0 != 0) {
+        if (saveData._0 != 0) {
             initializeDataCommon();
             return;
         }
 
-        mLanguage.format("%s", buffer.language);
-        mPlayTimeAcrossFile = buffer.playTime;
-        s32 id = sead::Mathi::clampMin(buffer.playingFileId, 0);
-        setPlayingFileId(id);
+        mLanguage.format("%s", saveData.language);
+        mPlayTimeAcrossFile = saveData.playTime;
+        setPlayingFileId(sead::Mathi::clampMin(saveData.playingFileId, 0));
 
         s32 saveDataSize = 0;
         readStream.readS32(saveDataSize);
@@ -838,23 +836,25 @@ void GameDataHolder::readFromSaveDataBuffer(const char* fileName) {
 }
 
 bool GameDataHolder::tryReadByamlDataCommon(const u8* byamlData) {
-    if (alByamlLocalUtil::verifiByaml(byamlData)) {
-        al::ByamlIter save{byamlData};
-        mGameConfigData->read(save);
-        return true;
-    }
-    return false;
+    if (!alByamlLocalUtil::verifiByaml(byamlData))
+        return false;
+
+    al::ByamlIter save{byamlData};
+    mGameConfigData->read(save);
+    return true;
 }
 
 void GameDataHolder::readFromSaveDataBufferCommonFileOnlyLanguage() {
     sead::RamReadStream readStream(al::getSaveDataWorkBuffer(), 0x400, sead::Stream::Modes::Binary);
 
-    SaveDataBuffer buffer;
-    memset(&buffer, 0, sizeof(SaveDataBuffer));
-    readStream.readMemBlock((void*)&buffer, sizeof(SaveDataBuffer));
+    SaveDataCommon saveData;
+    memset(&saveData, 0, sizeof(SaveDataCommon));
+    readStream.readMemBlock((void*)&saveData, sizeof(SaveDataCommon));
 
-    if (buffer._0 == 0)
-        mLanguage.format("%s", buffer.language);
+    if (saveData._0 != 0)
+        return;
+
+    mLanguage.format("%s", saveData.language);
 }
 
 void GameDataHolder::writeToSaveDataBuffer(const char* fileName) {
@@ -864,14 +864,13 @@ void GameDataHolder::writeToSaveDataBuffer(const char* fileName) {
     if (al::isEqualString(fileName, "Common.bin")) {
         sead::RamWriteStream writeStream(saveDataBuffer, 0x400, sead::Stream::Modes::Binary);
 
-        SaveDataBuffer buffer;
-        memset(&buffer, 0, sizeof(SaveDataBuffer));
+        SaveDataCommon saveData = {};
 
-        buffer.playingFileId = sead::Mathi::clampMin(getPlayingOrNextFileId(), 0);
-        buffer._4 = 0;
-        al::copyString(buffer.language, getLanguage(), 0x20);
-        buffer.playTime = mPlayTimeAcrossFile;
-        writeStream.writeMemBlock(&buffer, sizeof(SaveDataBuffer));
+        saveData.playingFileId = sead::Mathi::clampMin(getPlayingOrNextFileId(), 0);
+        saveData._4 = 0;
+        al::copyString(saveData.language, getLanguage(), 0x20);
+        saveData.playTime = mPlayTimeAcrossFile;
+        writeStream.writeMemBlock(&saveData, sizeof(SaveDataCommon));
 
         al::ByamlWriter byamlWriter{mSaveDataWriteHeap, false};
         byamlWriter.pushHash();
