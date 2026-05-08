@@ -19,7 +19,7 @@ class ElectricWireRailKeeper;
 class ElectricWire : public al::LiveActor {
 public:
     ElectricWire(const char*);
-<<<<<<< HEAD
+
     void init(const al::ActorInitInfo& info) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
@@ -31,9 +31,7 @@ public:
                                     const char*, s32);
     void createGraph(const al::ActorInitInfo&);
     void switchStartOn();
-=======
 
->>>>>>> 5281125b (Stashing)
     void tryUpdateDisplayModel();
     ElectricWireVertex* searchAliveKeeperGraphVertexBySensor(const al::HitSensor*);
     void endCapture(const sead::Vector3f*, const sead::Vector3f*, bool, bool);
@@ -66,38 +64,16 @@ public:
 
     bool isElectricWireRadio() { return mIsElectricWireRadio; }
 
-    void addDemoActorElectricWirePartsAll();
 
     s32 get_110() const { return _110; }
 
     ElectricWireRailKeeper** getElectricWireRailKeepers() { return mElectricWireRailKeepers; }
 
 private:
-<<<<<<< HEAD
-<<<<<<< HEAD
-    char filler_108[0x1a1];
-=======
-    void* pad;
     s32 _110;
     ElectricWireRailKeeper** mElectricWireRailKeepers;
-<<<<<<< HEAD
-    char pad3[0x1e0];
->>>>>>> 5281125b (Stashing)
+    char pad3[0x1d8];
     bool mIsElectricWireRadio;
-    char filler_2aa[0x58];
-=======
-    char pad2[0x189];
-    bool mIsElectricWireRadio;
-    char pad3[0x58];
->>>>>>> 3eae8abd (Implemented: StakcerCapWorldCtrl)
-=======
-    void* mPad;
-    s32 _110;
-    ElectricWireRailKeeper** mElectricWireRailKeepers;
-    char mPad2[0x189];
-    bool mIsElectricWireRadio;
-    char mPad3[0x58];
->>>>>>> 40f0138c (Fixed format issues)
 };
 
 static_assert(sizeof(ElectricWire) == 0x308);
