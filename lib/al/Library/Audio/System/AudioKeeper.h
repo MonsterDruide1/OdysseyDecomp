@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -15,6 +16,17 @@ class AudioRequestKeeperSyncedBgm;
 class AudioMic;
 class SeKeeper;
 class BgmKeeper;
+struct BgmPlayingRequest;
+
+enum BgmPlayingType : s32 {
+    BgmPlayingType_Start = 1,
+    BgmPlayingType_Stop = 3,
+};
+
+class AudioRequestKeeperSyncedBgm {
+public:
+    void requestBgm(BgmPlayingType type, const BgmPlayingRequest& request, s32 syncBeat);
+};
 
 class AudioKeeper : public HioNode {
 public:
