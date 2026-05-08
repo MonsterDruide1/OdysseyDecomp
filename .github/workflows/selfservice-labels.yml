@@ -15,7 +15,7 @@ jobs:
     if: github.event.issue.pull_request != null
     steps:
       - name: Check comment and label accordingly
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             # command: label (+ = add, - = remove)
