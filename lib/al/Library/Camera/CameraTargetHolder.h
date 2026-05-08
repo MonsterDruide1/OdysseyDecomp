@@ -38,8 +38,7 @@ public:
 
     s8 hasTopSubTargetChanged() const { return mHasTopSubTargetChanged; }
 
-    CameraSubTargetBase* _getTopSubTarget() const { return mTopSubTarget; }
-
+    CameraSubTargetBase* getTopSubTargetInline() const { return mTopSubTarget; }
 
 private:
     s32 mViewTargetSize = 0;
@@ -47,7 +46,7 @@ private:
     ViewTargetInfo* mViewTargetInfo = nullptr;
     sead::PtrArray<CameraTargetBase> mTargetArray;
     CameraSubTargetBase* mTopSubTarget = nullptr;
-    s8 mHasTopSubTargetChanged = false; // What? This is required to match?
+    s8 mHasTopSubTargetChanged = false;  // What? This is required to match?
     sead::PtrArray<CameraSubTargetBase> mSubTargetArray;
     sead::PtrArray<CameraSubTargetBase> mPlacementSubTargetArray;
 };

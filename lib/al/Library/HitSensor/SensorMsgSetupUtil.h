@@ -45,9 +45,7 @@ Creating a SensorMsg class called SensorMsgTest2 that holds a string referenced 
     class SensorMsg##Type : public al::SensorMsg {                                                 \
         SEAD_RTTI_OVERRIDE(SensorMsg##Type, al::SensorMsg)                                         \
     public:                                                                                        \
-        inline SensorMsg##Type(PARAM_LIST(__VA_ARGS__)) {                                          \
-            SET_MEMBER_PARAM_MULTI(__VA_ARGS__);                                                   \
-        }                                                                                          \
+        inline SensorMsg##Type(PARAM_LIST(__VA_ARGS__)) { SET_MEMBER_PARAM_MULTI(__VA_ARGS__); }   \
                                                                                                    \
         DECL_GET_MULTI(__VA_ARGS__)                                                                \
                                                                                                    \

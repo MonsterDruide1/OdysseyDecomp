@@ -1,23 +1,22 @@
 #include "Library/Camera/CameraPoserFunction.h"
 
-#include "CameraOffsetCtrlPreset.h"
-#include "CameraPoserFix.h"
-#include "CameraPoserSceneInfo.h"
-#include "CameraRequestParamHolder.h"
-#include "CameraStartInfo.h"
-#include "CameraSubTargetBase.h"
-#include "CameraTargetBase.h"
-#include "CameraTargetCollideInfoHolder.h"
-#include "CameraTargetHolder.h"
-#include "CameraViewInfo.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Camera/CameraArrowCollider.h"
+#include "Library/Camera/CameraOffsetCtrlPreset.h"
 #include "Library/Camera/CameraPoser.h"
+#include "Library/Camera/CameraPoserFix.h"
+#include "Library/Camera/CameraPoserSceneInfo.h"
+#include "Library/Camera/CameraRequestParamHolder.h"
+#include "Library/Camera/CameraStartInfo.h"
+#include "Library/Camera/CameraSubTargetBase.h"
+#include "Library/Camera/CameraTargetBase.h"
+#include "Library/Camera/CameraTargetCollideInfoHolder.h"
+#include "Library/Camera/CameraTargetHolder.h"
+#include "Library/Camera/CameraViewInfo.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Play/Camera/CameraVerticalAbsorber.h"
 #include "Library/Projection/Projection.h"
 #include "Project/Camera/CameraSubTargetTurnParam.h"
-#include "nn/util.h"
 
 namespace alCameraPoserFunction {
 
@@ -472,11 +471,11 @@ f32 getSlopeCollisionDownSpeed(const al::CameraPoser* cameraPoser) {
 }
 
 bool isExistSubTarget(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getTargetHolder()->_getTopSubTarget();
+    return cameraPoser->getTargetHolder()->getTopSubTargetInline();
 }
 
 bool checkValidTurnToSubTarget(const al::CameraPoser* cameraPoser) {
-    if (!cameraPoser->getTargetHolder()->_getTopSubTarget())
+    if (!cameraPoser->getTargetHolder()->getTopSubTargetInline())
         return false;
     al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
     al::CameraSubTargetBase* topSubTarget = cameraTargetHolder->getTopSubTarget();
@@ -495,7 +494,7 @@ bool checkValidTurnToSubTarget(const al::CameraPoser* cameraPoser) {
     if (!ret)
         return false;
     if (subTargetTurnParam->getValidFaceDegreeRangeH() >= 0.0f) {
-        sead::Vector3f vec2 = {0,0,0};
+        sead::Vector3f vec2 = {0, 0, 0};
         calcSubTargetBack(&vec2, cameraPoser);
         f32 validFaceDegreeRangeH = subTargetTurnParam->getValidFaceDegreeRangeH();
         f32 angleDegree = al::calcAngleDegree(vec2, vec);
@@ -571,21 +570,22 @@ bool tryCalcSubTargetTurnBrakeDistanceRate(f32* out, const al::CameraPoser* came
     calcTargetTrans(&vec, cameraPoser);
     calcSubTargetTrans(&vec2, cameraPoser);
 
-    f32 distance = sead::Mathf::sqrt(sead::Mathf::pow(vec.x - vec2.x, 2) + sead::Mathf::pow(vec.z - vec2.z, 2));
+    f32 distance = sead::Mathf::sqrt(sead::Mathf::pow(vec.x - vec2.x, 2) +
+                                     sead::Mathf::pow(vec.z - vec2.z, 2));
 
     f32 turnBrakeDistance = turnParam->getTurnBrakeEndDistance();
     if (turnBrakeDistance > 0.0f) {
         f32 turnBrakeStartDistance = turnParam->getTurnBrakeStartDistance();
-        if(turnBrakeDistance < turnBrakeStartDistance && distance < turnBrakeStartDistance) {
+        if (turnBrakeDistance < turnBrakeStartDistance && distance < turnBrakeStartDistance) {
             *out = 1.0f - al::normalize(distance, turnBrakeDistance, turnBrakeStartDistance);
             return true;
         }
     }
 
-    f32 turnStopStartDistance=turnParam->getTurnStopStartDistance();
+    f32 turnStopStartDistance = turnParam->getTurnStopStartDistance();
     if (turnStopStartDistance > 0.0f) {
         f32 turnStopEndDistance = turnParam->getTurnStopEndDistance();
-        if(turnStopStartDistance < turnStopEndDistance && turnStopStartDistance < distance) {
+        if (turnStopStartDistance < turnStopEndDistance && turnStopStartDistance < distance) {
             *out = al::normalize(distance, turnStopStartDistance, turnStopEndDistance);
             return true;
         }
@@ -614,21 +614,23 @@ void clampAngleSubTargetTurnRangeV(f32* out, const al::CameraPoser* cameraPoser)
 
     f32 outParam = *out;
     if (!(outParam < minTurnDegree)) {
-	maxTurnDegree = topSubTarget->getSubTargetTurnParam()->getMaxTurnDegreeV();
-	minTurnDegree = outParam;
-	if (outParam > maxTurnDegree)
-	    minTurnDegree = maxTurnDegree;
+        maxTurnDegree = topSubTarget->getSubTargetTurnParam()->getMaxTurnDegreeV();
+        minTurnDegree = outParam;
+        if (outParam > maxTurnDegree)
+            minTurnDegree = maxTurnDegree;
     }
     *out = minTurnDegree;
 }
 
 void initCameraVerticalAbsorber(al::CameraPoser* cameraPoser) {
-    al::CameraVerticalAbsorber* cameraVerticalAbsorber = new al::CameraVerticalAbsorber(cameraPoser, false);
-    cameraPoser->setVerticalAbsorber(cameraVerticalAbsorber); 
+    al::CameraVerticalAbsorber* cameraVerticalAbsorber =
+        new al::CameraVerticalAbsorber(cameraPoser, false);
+    cameraPoser->setVerticalAbsorber(cameraVerticalAbsorber);
 }
 
 void initCameraVerticalAbsorberNoCameraPosAbsorb(al::CameraPoser* cameraPoser) {
-    al::CameraVerticalAbsorber* cameraVerticalAbsorber = new al::CameraVerticalAbsorber(cameraPoser, true);
+    al::CameraVerticalAbsorber* cameraVerticalAbsorber =
+        new al::CameraVerticalAbsorber(cameraPoser, true);
     cameraPoser->setVerticalAbsorber(cameraVerticalAbsorber);
 }
 
@@ -648,7 +650,8 @@ void stopUpdateVerticalAbsorb(al::CameraPoser* cameraPoser) {
     cameraPoser->getCameraVerticalAbsorber()->setIsStopUpdate(true);
 }
 
-void stopUpdateVerticalAbsorbForSnapShotMode(al::CameraPoser* cameraPoser, const sead::Vector3f& absorbVec) {
+void stopUpdateVerticalAbsorbForSnapShotMode(al::CameraPoser* cameraPoser,
+                                             const sead::Vector3f& absorbVec) {
     stopUpdateVerticalAbsorb(cameraPoser);
     cameraPoser->getCameraVerticalAbsorber()->tryResetAbsorbVecIfInCollision(absorbVec);
 }
@@ -665,24 +668,27 @@ void invalidateVerticalAbsorbKeepInFrame(al::CameraPoser* cameraPoser) {
     cameraPoser->getCameraVerticalAbsorber()->setIsKeepInFrame(false);
 }
 
-void setVerticalAbsorbKeepInFrameScreenOffsetUp(al::CameraPoser* cameraPoser, f32 keepInFrameOffsetUp) {
+void setVerticalAbsorbKeepInFrameScreenOffsetUp(al::CameraPoser* cameraPoser,
+                                                f32 keepInFrameOffsetUp) {
     cameraPoser->getCameraVerticalAbsorber()->setKeepInFrameOffsetUp(keepInFrameOffsetUp);
 }
 
-void setVerticalAbsorbKeepInFrameScreenOffsetDown(al::CameraPoser* cameraPoser, f32 keepInFrameOffsetDown) {
+void setVerticalAbsorbKeepInFrameScreenOffsetDown(al::CameraPoser* cameraPoser,
+                                                  f32 keepInFrameOffsetDown) {
     cameraPoser->getCameraVerticalAbsorber()->setKeepInFrameOffsetDown(keepInFrameOffsetDown);
 }
 
 void initCameraArrowCollider(al::CameraPoser* cameraPoser) {
-    al::CameraArrowCollider* cameraArrowCollider = new al::CameraArrowCollider(cameraPoser->getCollisionDirector());
+    al::CameraArrowCollider* cameraArrowCollider =
+        new al::CameraArrowCollider(cameraPoser->getCollisionDirector());
     cameraPoser->initArrowCollider(cameraArrowCollider);
 }
 
 void initCameraArrowColliderWithoutThroughPassCollision(al::CameraPoser* cameraPoser) {
-    al::CameraArrowCollider* cameraArrowCollider = new al::CameraArrowCollider(cameraPoser->getCollisionDirector());
+    al::CameraArrowCollider* cameraArrowCollider =
+        new al::CameraArrowCollider(cameraPoser->getCollisionDirector());
     cameraArrowCollider->set_48c(true);
     cameraPoser->initArrowCollider(cameraArrowCollider);
 }
-
 
 }  // namespace alCameraPoserFunction

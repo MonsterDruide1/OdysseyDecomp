@@ -30,14 +30,14 @@ public:
     f32 getSlopeCollisionDownSpeed() const { return mSlopeCollisionDownSpeed; }
 
 private:
-    void* buffer;
-    char buffer2;
+    void* mBuffer;
+    char mBuffer2;
     bool mIsExistCollisionUnderTarget;
-    void* buffer3;
+    void* mBuffer3;
     sead::Vector3f mTargetCollisionNormal;
     sead::Vector3f mTargetCollisionPos;
     bool mIsExistSlopeCollisionUnderTarget;
-    char buffer4[0xc];
+    char mBuffer4[0xc];
     f32 mSlopeCollisionDownSpeed;
     f32 mSlopeCollisionUpSpeed;
 };

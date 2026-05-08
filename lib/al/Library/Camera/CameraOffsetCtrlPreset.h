@@ -15,7 +15,6 @@ public:
 
 private:
     CameraOffsetPreset* mPreset = nullptr;
-
 };
 
 static_assert(sizeof(CameraOffsetCtrlPreset) == 0x10);

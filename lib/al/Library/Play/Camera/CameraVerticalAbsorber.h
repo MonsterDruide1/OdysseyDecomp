@@ -32,15 +32,19 @@ public:
 
     f32 getAbsorbScreenPosUp() const { return mAbsorbScreenPosUp; }
 
-    f32 getAbsorbScreenPosDown() const { return mAbsorbScreenPosDown; } 
+    f32 getAbsorbScreenPosDown() const { return mAbsorbScreenPosDown; }
 
     void setIsStopUpdate(bool isStopUpdate) { mIsStopUpdate = isStopUpdate; }
 
     void setIsKeepInFrame(bool isKeepInFrame) { mIsKeepInFrame = isKeepInFrame; }
 
-    void setKeepInFrameOffsetUp(f32 keepInFrameOffsetUp) { mKeepInFrameOffsetUp = keepInFrameOffsetUp; }
+    void setKeepInFrameOffsetUp(f32 keepInFrameOffsetUp) {
+        mKeepInFrameOffsetUp = keepInFrameOffsetUp;
+    }
 
-    void setKeepInFrameOffsetDown(f32 keepInFrameOffsetDown) { mKeepInFrameOffsetDown = keepInFrameOffsetDown; }
+    void setKeepInFrameOffsetDown(f32 keepInFrameOffsetDown) {
+        mKeepInFrameOffsetDown = keepInFrameOffsetDown;
+    }
 
 private:
     const CameraPoser* mCameraPoser;

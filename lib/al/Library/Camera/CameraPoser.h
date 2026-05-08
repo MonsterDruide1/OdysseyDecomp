@@ -232,7 +232,9 @@ public:
 
     void setFovyDegree(f32 fovy) { mFovyDegree = fovy; }
 
-    void setVerticalAbsorber(al::CameraVerticalAbsorber* cameraVerticalAbsorber) { mVerticalAbsorber = cameraVerticalAbsorber; }
+    void setVerticalAbsorber(CameraVerticalAbsorber* cameraVerticalAbsorber) {
+        mVerticalAbsorber = cameraVerticalAbsorber;
+    }
 
 protected:
     const char* mPoserName;
