@@ -33,7 +33,13 @@ public:
     void removeSubTarget(CameraSubTargetBase* subTarget);
     void addPlacementSubTarget(CameraSubTargetBase* subTarget);
     void removePlacementSubTarget(CameraSubTargetBase* subTarget);
-<<<<<<< HEAD
+
+    bool isChangeViewTarget(u32 index) const;
+
+    s8 hasTopSubTargetChanged() const { return mHasTopSubTargetChanged; }
+
+    CameraSubTargetBase* _getTopSubTarget() const { return mTopSubTarget; }
+
 
 private:
     s32 mViewTargetSize = 0;
@@ -41,21 +47,9 @@ private:
     ViewTargetInfo* mViewTargetInfo = nullptr;
     sead::PtrArray<CameraTargetBase> mTargetArray;
     CameraSubTargetBase* mTopSubTarget = nullptr;
-    bool mHasTopSubTargetChanged = false;
+    s8 mHasTopSubTargetChanged = false; // What? This is required to match?
     sead::PtrArray<CameraSubTargetBase> mSubTargetArray;
     sead::PtrArray<CameraSubTargetBase> mPlacementSubTargetArray;
-=======
-    bool isChangeViewTarget(u32 index) const;
-
-    CameraSubTargetBase* getSubTarget() const { return mSubTarget; }
-
-    s8 get_30() const { return _30; }
-
-private:
-    void* buffer[5];
-    CameraSubTargetBase* mSubTarget;  // This type is unconfirmed and inferred from a function name.
-    s8 _30;
->>>>>>> 4474465b (Stashing)
 };
 
 static_assert(sizeof(CameraTargetHolder) == 0x58);

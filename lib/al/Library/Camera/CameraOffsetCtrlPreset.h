@@ -12,12 +12,10 @@ public:
 
     void load(const ByamlIter& iter) override;
     const sead::Vector3f& getOffset() const override;
-<<<<<<< HEAD
 
 private:
     CameraOffsetPreset* mPreset = nullptr;
-=======
->>>>>>> 4474465b (Stashing)
+
 };
 
 static_assert(sizeof(CameraOffsetCtrlPreset) == 0x10);

@@ -472,11 +472,11 @@ f32 getSlopeCollisionDownSpeed(const al::CameraPoser* cameraPoser) {
 }
 
 bool isExistSubTarget(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getTargetHolder()->getSubTarget();
+    return cameraPoser->getTargetHolder()->_getTopSubTarget();
 }
 
 bool checkValidTurnToSubTarget(const al::CameraPoser* cameraPoser) {
-    if (!cameraPoser->getTargetHolder()->getSubTarget())
+    if (!cameraPoser->getTargetHolder()->_getTopSubTarget())
         return false;
     al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
     al::CameraSubTargetBase* topSubTarget = cameraTargetHolder->getTopSubTarget();
@@ -529,7 +529,7 @@ void calcSubTargetTrans(sead::Vector3f* out, const al::CameraPoser* cameraPoser)
 
 bool isChangeSubTarget(const al::CameraPoser* cameraPoser) {
     al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    return targetHolder->get_30();
+    return targetHolder->hasTopSubTargetChanged();
 }
 
 void calcSubTargetFront(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
