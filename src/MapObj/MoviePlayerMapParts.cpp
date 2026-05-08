@@ -5,10 +5,10 @@
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"
-#include "Library/Stage/StageSwitchUtil.h"
-
 #include "Library/Shader/ForwardRendering/ShaderSamplerSetter.h"
+#include "Library/Stage/StageSwitchUtil.h"
 #include "Library/Texture/TextureUtil.h"
+
 #include "Util/MoviePlayer.h"
 
 MoviePlayerMapParts::MoviePlayerMapParts(const char* name) : al::LiveActor(name) {}
