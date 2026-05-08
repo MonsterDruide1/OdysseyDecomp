@@ -28,9 +28,9 @@ public:
 
 private:
     bool mIsRunAway = false;
-    sead::Vector3f _24 = sead::Vector3f::zero;
-    s32 _30 = 0;
-    s32 _34 = 0;
-    bool _38 = false;
-    f32 _3c = 1.0f;
+    sead::Vector3f mTurnTarget = sead::Vector3f::zero;
+    s32 mInvincibleCounter = 0;
+    s32 mPanicCounter = 0;
+    bool mIsKillByTimer = false;
+    f32 mScale = 1.0f;
 };
