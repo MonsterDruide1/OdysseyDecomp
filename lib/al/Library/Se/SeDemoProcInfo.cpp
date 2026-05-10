@@ -78,45 +78,39 @@ s32 SeDemoProcInfo::compareInfo(const SeDemoProcInfo* lhs, const SeDemoProcInfo*
 }
 
 bool SeDemoProcInfo::isChangeSituation(const char* name) {
-    if (name)
-        return isEqualString(name, "ChnageSituation");
-    return false;
+    if (!name)
+        return false;
+    return isEqualString(name, "ChnageSituation");
 }
 
 bool SeDemoProcInfo::isPause(const char* name) {
-    if (name)
-        return isEqualString(name, "Pause");
-    return false;
+    if (!name)
+        return false;
+    return isEqualString(name, "Pause");
 }
 
 bool SeDemoProcInfo::isStopOneShot(const char* name) {
-    if (name)
-        return isEqualString(name, "StopOneShot");
-    return false;
+    if (!name)
+        return false;
+    return isEqualString(name, "StopOneShot");
 }
 
 bool SeDemoProcInfo::isChnageListenerPoser(const char* name) {
-    if (name)
-        return isEqualString(name, "ChnageListenerPoser");
-    return false;
+    if (!name)
+        return false;
+    return isEqualString(name, "ChnageListenerPoser");
 }
 
 bool SeDemoProcInfo::isPlaySe(const char* name) {
-    if (name)
-        return isEqualString(name, "PlaySe");
-    return false;
+    if (!name)
+        return false;
+    return isEqualString(name, "PlaySe");
 }
 
 SeDemoProcInfo::SeDemoProcInfo() = default;
 
 SeDemoProcInfo::SeDemoProcInfo(const SeDemoProcInfo& info)
     : name(info.name), triggerFrame(info.triggerFrame), endFrame(info.endFrame) {}
-
-SeDemoProcInfo::~SeDemoProcInfo() {
-    ;
-}
-
-void SeDemoProcInfo::dummy() {}
 
 SeDemoSituationInfo* SeDemoSituationInfo::createInfo(const ByamlIter& iter, const char* name,
                                                      s32 triggerFrame, s32 endFrame) {

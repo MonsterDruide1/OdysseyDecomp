@@ -18,8 +18,9 @@ struct SeDemoProcInfo {
     SeDemoProcInfo();
     SeDemoProcInfo(const SeDemoProcInfo&);
 
-    virtual ~SeDemoProcInfo();
-    virtual void dummy();
+    virtual ~SeDemoProcInfo() { ; }
+
+    virtual void dummy() {}
 
     const char* name = nullptr;
     s32 triggerFrame = 0;
