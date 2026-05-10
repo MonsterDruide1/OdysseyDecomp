@@ -253,19 +253,19 @@ void CameraPoser::appear(const CameraStartInfo& info) {
 void CameraPoser::LookAtInterpole::update(CameraPoser* camera, sead::Vector3f targetTrans) {
     lerpVec(camera->getTargetTransPtr(), target, camera->getTargetTrans(), lerp);
     target.set(camera->getTargetTrans());
-    camera->addPosition(camera->getTargetTrans() - targetTrans);
+    camera->addPositionOffset(camera->getTargetTrans() - targetTrans);
 }
 
-void CameraPoser::LookAtInterpole::updateWithGravity(CameraPoser* camera,
-                                                     const sead::Vector3f& targetGravity,
-                                                     sead::Vector3f targetTrans) {
+void CameraPoser::LookAtInterpole::updateWithVerticalAbsorb(CameraPoser* camera,
+                                                            const sead::Vector3f& targetGravity,
+                                                            sead::Vector3f targetTrans) {
     sead::Vector3f camOffset = camera->getTargetTrans() - target;
     sead::Vector3f offsetV = {0.0f, 0.0f, 0.0f};
     parallelizeVec(&offsetV, targetGravity, camOffset);
     sead::Vector3f offsetH = camOffset - offsetV;
-    camera->getTargetTransPtr()->set(offsetV + target + offsetH * lerp);
+    camera->getTargetTransPtr()->set(target + offsetV + offsetH * lerp);
     target.set(camera->getTargetTrans());
-    camera->addPosition(camera->getTargetTrans() - targetTrans);
+    camera->addPositionOffset(camera->getTargetTrans() - targetTrans);
 }
 
 void CameraPoser::LocalInterpole::update(const CameraPoser* camera) {
@@ -313,7 +313,7 @@ void CameraPoser::movement() {
         if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb) {
             sead::Vector3f targetGravity = {0.0f, 0.0f, 0.0f};
             alCameraPoserFunction::calcTargetGravity(&targetGravity, this);
-            mLookAtInterpole->updateWithGravity(this, targetGravity, mTargetTrans);
+            mLookAtInterpole->updateWithVerticalAbsorb(this, targetGravity, mTargetTrans);
         } else {
             mLookAtInterpole->update(this, mTargetTrans);
         }
