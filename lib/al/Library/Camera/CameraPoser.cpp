@@ -247,24 +247,24 @@ void CameraPoser::appear(const CameraStartInfo& info) {
         mVerticalAbsorber->start(mTargetTrans, info);
 
     if (mLookAtInterpole)
-        mLookAtInterpole->lookAtPos.set(mTargetTrans);
+        mLookAtInterpole->target.set(mTargetTrans);
 }
 
 void CameraPoser::LookAtInterpole::update(CameraPoser* camera, sead::Vector3f targetTrans) {
-    lerpVec(camera->getTargetTransPtr(), lookAtPos, camera->getTargetTrans(), lookAtDistance);
-    lookAtPos.set(camera->getTargetTrans());
+    lerpVec(camera->getTargetTransPtr(), target, camera->getTargetTrans(), lerp);
+    target.set(camera->getTargetTrans());
     camera->addPosition(camera->getTargetTrans() - targetTrans);
 }
 
 void CameraPoser::LookAtInterpole::updateWithGravity(CameraPoser* camera,
                                                      const sead::Vector3f& targetGravity,
                                                      sead::Vector3f targetTrans) {
-    sead::Vector3f lookDirection = camera->getTargetTrans() - lookAtPos;
-    sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
-    parallelizeVec(&gravity, targetGravity, lookDirection);
-    sead::Vector3f dir = lookDirection - gravity;
-    camera->getTargetTransPtr()->set(gravity + lookAtPos + dir * lookAtDistance);
-    lookAtPos.set(camera->getTargetTrans());
+    sead::Vector3f camOffset = camera->getTargetTrans() - target;
+    sead::Vector3f offsetV = {0.0f, 0.0f, 0.0f};
+    parallelizeVec(&offsetV, targetGravity, camOffset);
+    sead::Vector3f offsetH = camOffset - offsetV;
+    camera->getTargetTransPtr()->set(offsetV + target + offsetH * lerp);
+    target.set(camera->getTargetTrans());
     camera->addPosition(camera->getTargetTrans() - targetTrans);
 }
 
