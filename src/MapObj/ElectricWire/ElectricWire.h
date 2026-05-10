@@ -64,7 +64,6 @@ public:
 
     bool isElectricWireRadio() { return mIsElectricWireRadio; }
 
-
     s32 get_110() const { return _110; }
 
     ElectricWireRailKeeper** getElectricWireRailKeepers() { return mElectricWireRailKeepers; }
