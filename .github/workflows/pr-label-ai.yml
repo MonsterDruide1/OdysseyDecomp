@@ -1,0 +1,33 @@
+name: Add "ai"-label to new PRs by authors that usually use AI
+
+on:
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  new_pr:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target' && github.event.action == 'opened'
+    steps:
+    - name: Label new PR as "status:waiting for review"
+      uses: actions/github-script@v9
+      env:
+        PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+      with:
+        script: |
+          const known_authors = [
+            "guymakinggames",
+            "GRAnimated"
+          ]
+          
+          if (known_authors.includes(process.env.PR_AUTHOR)) {
+            github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.pull_request.number,
+              labels: ['ai']
+            })
+          }
