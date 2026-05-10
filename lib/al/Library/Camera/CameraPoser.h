@@ -79,9 +79,8 @@ public:
         inline LookAtInterpole(f32 distance) : lerp(distance) {}
 
         inline void update(CameraPoser* camera, sead::Vector3f targetTrans);
-        inline void updateWithGravity(CameraPoser* camera, const sead::Vector3f& targetGravity,
-                                      sead::Vector3f targetTrans);
-        inline void updateWithVerticalAbsorb(CameraPoser* camera, const sead::Vector3f& target,
+        inline void updateWithVerticalAbsorb(CameraPoser* camera,
+                                             const sead::Vector3f& targetGravity,
                                              sead::Vector3f targetTrans);
 
         sead::Vector3f target = {0.0f, 0.0f, 0.0f};
@@ -225,7 +224,7 @@ public:
     // set
     void setPosition(const sead::Vector3f& pos) { mPosition.set(pos); }
 
-    void addPosition(const sead::Vector3f& offset) { mPosition.add(offset); }
+    void addPositionOffset(const sead::Vector3f& offset) { mPosition.add(offset); }
 
     void setTargetTrans(const sead::Vector3f& trans) { mTargetTrans.set(trans); }
 
