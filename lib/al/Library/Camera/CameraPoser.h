@@ -76,14 +76,16 @@ public:
     static_assert(sizeof(LocalInterpole) == 0x20);
 
     struct LookAtInterpole {
-        inline LookAtInterpole(f32 distance) : lookAtDistance(distance) {}
+        inline LookAtInterpole(f32 distance) : lerp(distance) {}
 
         inline void update(CameraPoser* camera, sead::Vector3f targetTrans);
         inline void updateWithGravity(CameraPoser* camera, const sead::Vector3f& targetGravity,
                                       sead::Vector3f targetTrans);
+        inline void updateWithVerticalAbsorb(CameraPoser* camera, const sead::Vector3f& target,
+                                             sead::Vector3f targetTrans);
 
-        sead::Vector3f lookAtPos = {0.0f, 0.0f, 0.0f};
-        f32 lookAtDistance;
+        sead::Vector3f target = {0.0f, 0.0f, 0.0f};
+        f32 lerp;
     };
 
     static_assert(sizeof(LookAtInterpole) == 0x10);
@@ -134,7 +136,7 @@ public:
 
     virtual void update() {}
 
-    virtual void end() { mActiveState = ActiveState::End; };
+    virtual void end() { mActiveState = ActiveState::End; }
 
     virtual void loadParam(const ByamlIter& iter) {}
 
@@ -206,28 +208,28 @@ public:
     CameraFlagCtrl* getFlagCtrl() const;
 
     // get
-    const sead::Vector3f& getPosition() const { return mPosition; };
+    const sead::Vector3f& getPosition() const { return mPosition; }
 
-    const sead::Vector3f& getTargetTrans() const { return mTargetTrans; };
+    const sead::Vector3f& getTargetTrans() const { return mTargetTrans; }
 
-    sead::Vector3f* getTargetTransPtr() { return &mTargetTrans; };
+    sead::Vector3f* getTargetTransPtr() { return &mTargetTrans; }
 
-    const sead::Vector3f& getCameraUp() const { return mCameraUp; };
+    const sead::Vector3f& getCameraUp() const { return mCameraUp; }
 
-    const sead::Matrix34f& getViewMtx() const { return mViewMtx; };
+    const sead::Matrix34f& getViewMtx() const { return mViewMtx; }
 
     bool is_98() const { return _98; }
 
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 
     // set
-    void setPosition(const sead::Vector3f& pos) { mPosition.set(pos); };
+    void setPosition(const sead::Vector3f& pos) { mPosition.set(pos); }
 
-    void addPosition(const sead::Vector3f& pos) { mPosition.add(pos); };
+    void addPosition(const sead::Vector3f& offset) { mPosition.add(offset); }
 
-    void setTargetTrans(const sead::Vector3f& trans) { mTargetTrans.set(trans); };
+    void setTargetTrans(const sead::Vector3f& trans) { mTargetTrans.set(trans); }
 
-    void setCameraUp(const sead::Vector3f& dir) { mCameraUp.set(dir); };
+    void setCameraUp(const sead::Vector3f& dir) { mCameraUp.set(dir); }
 
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
 
