@@ -90,7 +90,7 @@ bool PlayerStateAbyss::isRecovery() const {
 }
 
 bool PlayerStateAbyss::isRecoveryLandFall() const {
-    return !isDead() && al::isNerve(this, &Recovery) && mStateRecoveryDead->isLandFall();
+    return !isDead() && isRecovery() && mStateRecoveryDead->isLandFall();
 }
 
 void PlayerStateAbyss::prepareRecovery() {
