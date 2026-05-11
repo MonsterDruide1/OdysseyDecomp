@@ -67,6 +67,8 @@ public:
 
     StageResourceKeeper* getStageResourceKeeper() const { return mStageResourceKeeper; }
 
+    bool isAlive() const { return mIsAlive; }
+
     LiveActorKit* getLiveActorKit() const { return mLiveActorKit; }
 
     LayoutKit* getLayoutKit() const { return mLayoutKit; }

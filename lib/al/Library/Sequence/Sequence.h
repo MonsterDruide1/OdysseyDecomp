@@ -32,6 +32,8 @@ public:
 
     virtual Scene* getCurrentScene() const { return nullptr; }
 
+    void setNextScene(Scene* scene) { mNextScene = scene; }
+
     SceneCreator* getSceneCreator() const override { return mSceneCreator; }
 
     void setSceneCreator(SceneCreator* sceneCreator) override { mSceneCreator = sceneCreator; }
@@ -40,6 +42,8 @@ public:
     void initAudioKeeper(const char*);
     void initDrawSystemInfo(const SequenceInitInfo&);
     AudioSystemInfo* getAudioSystemInfo();
+
+    AudioDirector* getAudioDirector() const { return mAudioDirector; }
 
     DrawSystemInfo* getDrawInfo() const { return mDrawSystemInfo; }
 

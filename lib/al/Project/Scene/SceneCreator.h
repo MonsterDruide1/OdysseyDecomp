@@ -12,6 +12,8 @@ class GameDataHolderBase;
 class ScreenCaptureExecutor;
 class InitializeThread;
 class AudioDirector;
+class IUseSceneCreator;
+class Sequence;
 class Scene;
 
 class SceneCreator {
@@ -32,5 +34,12 @@ private:
     InitializeThread* mInitializeThread;
     AudioDirector* mAudioDirector;
 };
+
+void setSceneAndUseInitThread(IUseSceneCreator* sceneCreatorUser, Scene* scene, s32 priority,
+                              const char* stageName, s32 scenarioNo, const char* sequenceName,
+                              sead::Heap* heap);
+bool tryEndSceneInitThread(IUseSceneCreator* sceneCreatorUser);
+void setSequenceAudioKeeperToSceneSeDirector(Sequence* sequence, Scene* scene);
+void setSequenceNameForActorPickTool(Sequence* sequence, Scene* scene);
 
 }  // namespace al
