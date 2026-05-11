@@ -25,10 +25,7 @@ public:
     void exeWait();
 
     al::RailRider* getRailRider() const override {
-        if (mRailRider)
-            return mRailRider;
-
-        return al::LiveActor::getRailRider();
+        return mRailRider ?: al::LiveActor::getRailRider();
     }
 
 private:
