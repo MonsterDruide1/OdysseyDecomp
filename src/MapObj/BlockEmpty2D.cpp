@@ -68,7 +68,3 @@ bool BlockEmpty2D::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al
         al::startHitReaction(this, "アッパーパンチ");
     return false;
 }
-
-ActorDimensionKeeper* BlockEmpty2D::getActorDimensionKeeper() const {
-    return mDimensionKeeper;
-}

@@ -15,10 +15,6 @@ ExecutorListLayoutDrawBase::ExecutorListLayoutDrawBase(const char* name, s32 siz
     mContext = initInfo.drawCtx;
 }
 
-bool ExecutorListLayoutDrawBase::isActive() const {
-    return mSize > 0;
-}
-
 void ExecutorListLayoutDrawBase::executeList() const {
     bool isAlive = false;
     for (s32 i = 0; i < mSize; i++)

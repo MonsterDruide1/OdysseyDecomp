@@ -31,7 +31,8 @@ public:
     void appear() override;
     void kill() override;
     void control() override;
-    PlayerCollider* getPlayerCollider() const override;
+
+    PlayerCollider* getPlayerCollider() const override { return mPlayerCollider; }
 
     void attackSensor(al::HitSensor* self, al::HitSensor* other);
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);

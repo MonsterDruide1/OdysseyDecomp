@@ -76,7 +76,9 @@ public:
     virtual YamlParamType getParamType() const = 0;
     virtual const void* ptr() const = 0;
     virtual void* ptr() = 0;
-    virtual void afterGetParam();
+
+    virtual void afterGetParam() {}
+
     virtual s32 size() const = 0;
     virtual bool isEqual(const ParameterBase& parameter);
     virtual bool copy(const ParameterBase& parameter);

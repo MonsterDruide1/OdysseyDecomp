@@ -29,7 +29,4 @@ void SwitchOnAreaGroup::update(const sead::Vector3f& position) {
     update(positions, 1);
 }
 
-bool SwitchOnAreaGroup::isExternalCondition() const {
-    return true;
-}
 }  // namespace al

@@ -13,10 +13,6 @@ ExecutorListActorExecuteBase::ExecutorListActorExecuteBase(const char* name, s32
         mList[i] = nullptr;
 }
 
-bool ExecutorListActorExecuteBase::isActive() const {
-    return mSize > 0;
-}
-
 void ExecutorListActorExecuteBase::executeList() const {
     for (s32 i = 0; i < mSize; i++)
         mList[i]->execute();
