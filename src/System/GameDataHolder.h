@@ -206,8 +206,8 @@ public:
     void calcWorldWarpHoleLabelAndStageName(sead::BufferedSafeString* label,
                                             sead::BufferedSafeString* stageName,
                                             const char* srcLabel, s32 worldId) const;
-    // TODO: parameter name
-    const WorldWarpHoleInfo* findWorldWarpHoleInfo(s32 worldId, s32, const char* label) const;
+    const WorldWarpHoleInfo* findWorldWarpHoleInfo(s32 worldId, s32 warpHoleId,
+                                                   const char* name) const;
     bool checkIsOpenWorldWarpHoleInScenario(s32 worldId, s32 scenarioNo) const;
     void setLocationName(const al::PlacementInfo* placementInfo);
     bool isPrevLocation(const al::PlacementInfo* placementInfo) const;

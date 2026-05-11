@@ -288,8 +288,7 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
     : mMessageSystem(messageSystem) {
     setLanguage(al::getLanguageString());
     mSaveDataWriteHeap =
-        sead::FrameHeap::create(0x200000, "セーブデータByamlIter書き込み用", nullptr, 8,
-                                sead::FrameHeap::cHeapDirection_Forward, false);
+        sead::FrameHeap::create(0x200000, "セーブデータByamlIter書き込み用", nullptr);
     mSaveDataWorkBuffer = new u8[0x200000];
     mGameConfigData = new GameConfigData();
     mGameConfigData->init();
@@ -1132,7 +1131,6 @@ void GameDataHolder::calcWorldWarpHoleLabelAndStageName(sead::BufferedSafeString
     if (warpHoleId == -1)
         return;
 
-    // BUG: "Go" and "Come" are inverted in warpHoleInfo
     const WorldWarpHoleInfo* warpHoleInfo;
     if (al::isEqualSubString(srcLabel, "Come")) {
         s32 srcId = tryCalcWorldWarpHoleSrcId(warpHoleId);
@@ -1171,12 +1169,12 @@ void GameDataHolder::calcWorldWarpHoleLabelAndStageName(sead::BufferedSafeString
 }
 
 const GameDataHolder::WorldWarpHoleInfo*
-GameDataHolder::findWorldWarpHoleInfo(s32 worldId, s32 scenarioNo, const char* name) const {
+GameDataHolder::findWorldWarpHoleInfo(s32 worldId, s32 warpHoleId, const char* name) const {
     for (s32 i = 0; i < mWorldWarpHoleInfoNum; i++) {
         if (mWorldWarpHoleInfos[i].worldId != worldId)
             continue;
         al::StringTmp<128> fromName;
-        fromName.format("%s%s%d", name, "From", scenarioNo);
+        fromName.format("%s%s%d", name, "From", warpHoleId);
 
         if (al::isEqualString(name, mWorldWarpHoleInfos[i].name) ||
             al::isEqualString(fromName, mWorldWarpHoleInfos[i].name)) {
