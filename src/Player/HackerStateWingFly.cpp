@@ -10,9 +10,9 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
-#include "Util/Hack.h"
 #include "Util/ObjUtil.h"
 #include "Util/PlayerCollisionUtil.h"
+#include "Util/PlayerHackInputFunction.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {

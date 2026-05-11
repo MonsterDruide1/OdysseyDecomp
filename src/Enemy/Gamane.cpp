@@ -29,9 +29,9 @@
 #include "Enemy/HackerDepthShadowMapCtrl.h"
 #include "Player/HackerJudgeNormalFall.h"
 #include "Player/PlayerHackStartShaderCtrl.h"
-#include "Util/Hack.h"
 #include "Util/ItemUtil.h"
 #include "Util/JudgeUtil.h"
+#include "Util/PlayerHackFunction.h"
 #include "Util/SensorMsgFunction.h"
 #include "Util/ShadowUtil.h"
 

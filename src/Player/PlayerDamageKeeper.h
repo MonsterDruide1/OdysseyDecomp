@@ -24,10 +24,12 @@ public:
     void updatePreventDamage();
     void updateKidsModeLifeRecovery(bool isRecover);
 
+    bool isDamageInvalid() const { return mIsDamageInvalid; }
+
 private:
     al::LiveActor* mPlayer = nullptr;
     PlayerEffect* mPlayerEffect = nullptr;
-    bool mIsUpdateModel = false;
+    bool mIsDamageInvalid = false;
     s32 mDamageInvalidCount = 0;
     s32 mDamageInvalidCountAbyss = 0;
     bool mIsPreventDamage = false;

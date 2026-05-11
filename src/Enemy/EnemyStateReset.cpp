@@ -13,7 +13,7 @@
 #include "Library/Player/PlayerUtil.h"
 
 #include "Enemy/EnemyCap.h"
-#include "Util/Hack.h"
+#include "Util/PlayerHackFunction.h"
 
 namespace {
 NERVE_IMPL(EnemyStateReset, Wait);

@@ -30,9 +30,10 @@
 #include "Player/PlayerHackStartShaderCtrl.h"
 #include "Scene/GuidePosInfoHolder.h"
 #include "System/GameDataUtil.h"
-#include "Util/Hack.h"
 #include "Util/NpcAnimUtil.h"
 #include "Util/NpcEventFlowUtil.h"
+#include "Util/PlayerHackFunction.h"
+#include "Util/PlayerHackInputFunction.h"
 #include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 
@@ -458,9 +459,9 @@ void HackFork::shoot() {
     al::calcFrontDir(&frontDir2, this);
     frontDir2 *= scale;
     f32 launchSpeed = mIsSwingJump ? 61.27f : 55.7f;
-    sead::Vector3f direction = frontDir2 - launchSpeed * launchDir;
+    sead::Vector3f velocity = frontDir2 - launchSpeed * launchDir;
 
-    rs::endHackAirVelocity(&mPlayerHack, jointPos, quat, direction, mAirVel);
+    rs::endHackAirVelocity(&mPlayerHack, jointPos, quat, velocity, mEndHackDelay);
     rs::resetRouteHeadGuidePosPtr(this);
     al::startHitReaction(this, "ジャンプ");
     al::tryStartAction(this, "HackEnd");
@@ -567,7 +568,7 @@ void HackFork::exeHackStartWait() {
         mIsHackSwing = false;
         mTimeSinceSwingStart = 0;
         mIsSwingJump = false;
-        mAirVel = 0;
+        mEndHackDelay = 0;
     }
 
     checkSwing();
@@ -637,7 +638,7 @@ void HackFork::exeHackBend() {
     if (!isInput || rs::isTriggerHackSwing(mPlayerHack)) {
         if (mIsReadyToShoot) {
             if (isInput) {
-                mAirVel = 60;
+                mEndHackDelay = 60;
                 mIsSwingJump = true;
             }
             al::setNerve(this, &HackForkData.NrvHackFork.HackShoot);
