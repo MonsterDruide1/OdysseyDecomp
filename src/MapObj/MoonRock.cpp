@@ -222,7 +222,7 @@ void MoonRock::exeWait() {
 void MoonRock::exeReaction() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "ReactionCap");
-        al::startHitReaction(this, "Hit");
+        al::startHitReaction(this, "ヒット");
     }
 
     if (al::isActionEnd(this)) {
