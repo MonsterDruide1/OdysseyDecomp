@@ -11,15 +11,15 @@ ExtForceArea::ExtForceArea(const char* name) : al::AreaObj(name) {}
 void ExtForceArea::init(const al::AreaInitInfo& info) {
     al::AreaObj::init(info);
 
-    const char* forceType = "Normal";
+    const char* forceType = "滝";
     if (!al::tryGetStringArg(&forceType, static_cast<const al::PlacementInfo&>(info), "ForceType"))
         return;
 
-    if (al::isEqualString(forceType, "Normal")) {
+    if (al::isEqualString(forceType, "滝")) {
         mSpeedVStep = 2.0f;
         mSpeedVTarget = -40.0f;
         mForceH = 0.98f;
-    } else if (al::isEqualString(forceType, "Weak")) {
+    } else if (al::isEqualString(forceType, "滝の入り口")) {
         mSpeedVStep = 0.25f;
         mSpeedVTarget = -40.0f;
         mForceH = 0.98f;
