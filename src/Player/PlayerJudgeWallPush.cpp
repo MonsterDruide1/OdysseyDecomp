@@ -12,10 +12,6 @@ PlayerJudgeWallPush::PlayerJudgeWallPush(const al::LiveActor* player,
                                          const PlayerInput* input)
     : mPlayer(player), mCollider(collider), mInput(input) {}
 
-void PlayerJudgeWallPush::reset() {}
-
-void PlayerJudgeWallPush::update() {}
-
 bool PlayerJudgeWallPush::judge() const {
     if (rs::isPlayerCarrySomething(mPlayer) || !rs::isCollidedGround(mCollider) ||
         !rs::isCollidedWall(mCollider) || rs::isActionCodeNoActionWall(mCollider))
