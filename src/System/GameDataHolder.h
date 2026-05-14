@@ -271,6 +271,8 @@ public:
 
     bool isSeparatePlay() const { return mIsSeparatePlay; }
 
+    u8 getSeparatePlayFlag() const { return mIsSeparatePlay; }
+
     bool isPlayDemoLavaErupt() const { return mIsPlayDemoLavaErupt; }
 
     bool isExistKoopaShip() const { return mIsExistKoopaShip; }
@@ -340,7 +342,7 @@ private:
     sead::Vector3f* mCoinTransForDeadPlayer;
     s32 mDeadPlayerCoinIdx;
     bool _244;
-    bool mIsSeparatePlay;
+    u8 mIsSeparatePlay;
     bool mIsPlayDemoLavaErupt;
     QuestInfoHolder* mQuestInfoHolder;
     bool mIsExistKoopaShip;
