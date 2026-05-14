@@ -707,6 +707,8 @@ public:
 
     sead::FixedSafeString<64>* getGiftList() { return mItemGift.begin(); }
 
+    SequenceDemoSkipData* getSequenceDemoSkipData() const { return mSequenceDemoSkipData; }
+
 private:
     struct WorldHintList {
         sead::PtrArray<HintInfo> list;
