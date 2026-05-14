@@ -14,6 +14,10 @@ public:
     void calc();
     void reset();
 
+    bool isActive() const { return mFrame < mMaxFrame; }
+
+    const sead::Vector3f& getOutput() const { return mOut; }
+
     virtual void calcValues(sead::Vector3f* out, const sead::Vector3f& in) = 0;
 
 protected:
