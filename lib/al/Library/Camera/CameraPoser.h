@@ -207,13 +207,13 @@ public:
     CameraFlagCtrl* getFlagCtrl() const;
 
     // get
-    const sead::Vector3f& getPosition() const { return mPosition; }
+    const sead::Vector3f& getEye() const { return mEye; }
 
-    const sead::Vector3f& getTargetTrans() const { return mTargetTrans; }
+    const sead::Vector3f& getAt() const { return mAt; }
 
-    sead::Vector3f* getTargetTransPtr() { return &mTargetTrans; }
+    sead::Vector3f* getAtPtr() { return &mAt; }
 
-    const sead::Vector3f& getCameraUp() const { return mCameraUp; }
+    const sead::Vector3f& getUp() const { return mUp; }
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; }
 
@@ -222,13 +222,13 @@ public:
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 
     // set
-    void setPosition(const sead::Vector3f& pos) { mPosition.set(pos); }
+    void setEye(const sead::Vector3f& pos) { mEye.set(pos); }
 
-    void addPositionOffset(const sead::Vector3f& offset) { mPosition.add(offset); }
+    void addEyeOffset(const sead::Vector3f& offset) { mEye.add(offset); }
 
-    void setTargetTrans(const sead::Vector3f& trans) { mTargetTrans.set(trans); }
+    void setAt(const sead::Vector3f& trans) { mAt.set(trans); }
 
-    void setCameraUp(const sead::Vector3f& dir) { mCameraUp.set(dir); }
+    void setCameraUp(const sead::Vector3f& dir) { mUp.set(dir); }
 
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
 
@@ -237,9 +237,9 @@ public:
 protected:
     const char* mPoserName;
     ActiveState mActiveState = ActiveState::Start;
-    sead::Vector3f mPosition = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f mTargetTrans = {0.0f, 0.0f, 500.0f};
-    sead::Vector3f mCameraUp = sead::Vector3f::ey;
+    sead::Vector3f mEye = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mAt = {0.0f, 0.0f, 500.0f};
+    sead::Vector3f mUp = sead::Vector3f::ey;
     f32 mFovyDegree = 35.0f;
     f32 mNearClipDistance = -1.0f;
     sead::Matrix34f mViewMtx = sead::Matrix34f::ident;
