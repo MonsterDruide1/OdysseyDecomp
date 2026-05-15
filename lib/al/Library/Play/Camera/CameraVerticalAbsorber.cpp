@@ -87,7 +87,7 @@ inline void updateAbsorbVec(sead::Vector3f* absorbVec, const CameraPoser* poser,
                             const sead::Vector3f& prevTrans) {
     sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
     alCameraPoserFunction::calcTargetGravity(&gravity, poser);
-    *absorbVec = poser->getTargetTrans() - prevTrans;
+    *absorbVec = poser->getAt() - prevTrans;
     parallelizeVec(absorbVec, gravity, *absorbVec);
 }
 
@@ -97,8 +97,8 @@ void CameraVerticalAbsorber::update() {
 
     updateAbsorbVec(&mAbsorbVec, mCameraPoser, mPrevTargetTrans);
 
-    mLookAtCamera.setPos(mCameraPoser->getPosition());
-    mLookAtCamera.setAt(mCameraPoser->getTargetTrans());
+    mLookAtCamera.setPos(mCameraPoser->getEye());
+    mLookAtCamera.setAt(mCameraPoser->getAt());
     mLookAtCamera.setUp(mCameraPoser->getCameraUp());
     mLookAtCamera.normalizeUp();
 
@@ -130,7 +130,7 @@ void CameraVerticalAbsorber::update() {
                                                                         mKeepInFrameOffsetDown);
         mAbsorbVec -= offset;
     }
-    mPrevTargetTrans.set(mCameraPoser->getTargetTrans() - mAbsorbVec);
+    mPrevTargetTrans.set(mCameraPoser->getAt() - mAbsorbVec);
     mPrevTargetFront.set(mTargetFront);
 }
 
