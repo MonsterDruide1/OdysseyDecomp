@@ -21,7 +21,7 @@
 #include "Item/CoinStack.h"
 #include "System/GameDataUtil.h"
 
-constexpr f32 cFallDistance = 74.5f;
+constexpr f32 cStackDistH = 74.5f;
 
 CoinStackGroup::CoinStackGroup(const char* name) : al::LiveActor(name) {}
 
@@ -90,6 +90,7 @@ inline f32 getRandomRange(f32 scale) {
     return scale * value * ((value > 0.5f) ? 1.0f : -1.0f) + 0.0f;
 }
 
+// NON_MATCHING: https://decomp.me/scratch/kFqhl. Hack fix https://decomp.me/scratch/51zHf
 void CoinStackGroup::generateCoinStackGroup(const al::ActorInitInfo& initInfo, s32 stackSize) {
     f32 clippingRadius = updateClippingInfo(stackSize);
     sead::Vector3f stackTrans = al::getTrans(this);
@@ -100,18 +101,18 @@ void CoinStackGroup::generateCoinStackGroup(const al::ActorInitInfo& initInfo, s
         newStack->init(initInfo);
 
         if (index == 0) {
-            sead::Vector3f coinTrans(stackTrans);
+            sead::Vector3f coinTrans = stackTrans;
             newStack->postInit(this, coinTrans, previousStack, mClippingPos, clippingRadius,
-                               &cFallDistance);
+                               &cStackDistH);
             mCoinStack = newStack;
             previousStack = newStack;
             continue;
         }
 
-        sead::Vector3f coinTrans = {getRandomRange(10.0f), index * cFallDistance,
+        sead::Vector3f coinTrans = {getRandomRange(10.0f), index * cStackDistH,
                                     getRandomRange(10.0f)};
         newStack->postInit(this, stackTrans + coinTrans, previousStack, mClippingPos,
-                           clippingRadius, &cFallDistance);
+                           clippingRadius, &cStackDistH);
         previousStack = newStack;
     }
 }
@@ -144,7 +145,7 @@ f32 CoinStackGroup::setStackAsCollected(CoinStack* stack) {
 }
 
 f32 CoinStackGroup::updateClippingInfo(u32 stackSize) {
-    f32 clippingRadius = stackSize * 0.75f * cFallDistance;
+    f32 clippingRadius = stackSize * 0.75f * cStackDistH;
     mClippingPos = al::getTrans(this) + sead::Vector3f(0.0f, clippingRadius * 0.75f, 0.0f);
 
     al::setClippingInfo(this, clippingRadius, &mClippingPos);
