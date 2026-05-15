@@ -1,11 +1,13 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
 class DepthShadowMapCtrl;
+class DepthShadowMapInfo;
 class ModelKeeper;
 
 class DepthShadowMapDirector : public HioNode {
@@ -14,6 +16,9 @@ public:
 
     void createDepthShadowMap(const DepthShadowMapCtrl*, const ModelKeeper*, const char*, s32, s32,
                               s32);
+    void registerUpdateDepthShadowMap(DepthShadowMapInfo*);
+    void removeUpdateDepthShadowMap(DepthShadowMapInfo*);
+    bool findIsInShade(const sead::Vector3f&) const;
 
     void declareUseDepthShadowMap(s32 num) { _68 += num; }
 
