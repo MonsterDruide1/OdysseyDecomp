@@ -244,28 +244,28 @@ void CameraPoser::appear(const CameraStartInfo& info) {
         mArrowCollider->start();
 
     if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
-        mVerticalAbsorber->start(mTargetTrans, info);
+        mVerticalAbsorber->start(mAt, info);
 
     if (mLookAtInterpole)
-        mLookAtInterpole->target.set(mTargetTrans);
+        mLookAtInterpole->target.set(mAt);
 }
 
 void CameraPoser::LookAtInterpole::update(CameraPoser* camera, sead::Vector3f targetTrans) {
-    lerpVec(camera->getTargetTransPtr(), target, camera->getTargetTrans(), lerp);
-    target.set(camera->getTargetTrans());
-    camera->addPositionOffset(camera->getTargetTrans() - targetTrans);
+    lerpVec(camera->getAtPtr(), target, camera->getAt(), lerp);
+    target.set(camera->getAt());
+    camera->addEyeOffset(camera->getAt() - targetTrans);
 }
 
 void CameraPoser::LookAtInterpole::updateWithVerticalAbsorb(CameraPoser* camera,
                                                             const sead::Vector3f& targetGravity,
                                                             sead::Vector3f targetTrans) {
-    sead::Vector3f camOffset = camera->getTargetTrans() - target;
+    sead::Vector3f camOffset = camera->getAt() - target;
     sead::Vector3f offsetV = {0.0f, 0.0f, 0.0f};
     parallelizeVec(&offsetV, targetGravity, camOffset);
     sead::Vector3f offsetH = camOffset - offsetV;
-    camera->getTargetTransPtr()->set(target + offsetV + offsetH * lerp);
-    target.set(camera->getTargetTrans());
-    camera->addPositionOffset(camera->getTargetTrans() - targetTrans);
+    camera->getAtPtr()->set(target + offsetV + offsetH * lerp);
+    target.set(camera->getAt());
+    camera->addEyeOffset(camera->getAt() - targetTrans);
 }
 
 void CameraPoser::LocalInterpole::update(const CameraPoser* camera) {
@@ -313,9 +313,9 @@ void CameraPoser::movement() {
         if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb) {
             sead::Vector3f targetGravity = {0.0f, 0.0f, 0.0f};
             alCameraPoserFunction::calcTargetGravity(&targetGravity, this);
-            mLookAtInterpole->updateWithVerticalAbsorb(this, targetGravity, mTargetTrans);
+            mLookAtInterpole->updateWithVerticalAbsorb(this, targetGravity, mAt);
         } else {
-            mLookAtInterpole->update(this, mTargetTrans);
+            mLookAtInterpole->update(this, mAt);
         }
     }
 
@@ -366,9 +366,9 @@ inline void CameraPoser::LocalInterpole::interpolate(sead::LookAtCamera* camera)
 }
 
 void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* camera) const {
-    camera->setPos(mPosition);
-    camera->setAt(mTargetTrans);
-    camera->setUp(mCameraUp);
+    camera->setPos(mEye);
+    camera->setAt(mAt);
+    camera->setUp(mUp);
     camera->normalizeUp();
 
     if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
