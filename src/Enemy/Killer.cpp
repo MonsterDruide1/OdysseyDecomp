@@ -14,6 +14,7 @@
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
@@ -45,6 +46,8 @@ NERVE_IMPL(Killer, Launch)
 NERVES_MAKE_STRUCT(Killer, Fly, DamageCap, Hack, FallDown, Explode, AfterHack, Appear, StandBy,
                    Launch)
 }  // namespace
+
+const sead::Vector3f g_71018a084 = {0.0f, 0.0f, 100.0f};
 
 Killer::Killer(const char* name) : al::LiveActor(name) {}
 
@@ -345,7 +348,82 @@ void Killer::resetAliveCountAndAnim() {
     al::startMclAnim(this, "HackOff");
 }
 
-// void Killer::control() {}
+void Killer::control() {
+    if (!al::isNerve(this, &NrvKiller.Hack) && _138) {
+        if (al::isAlive(al::getSubActor(this, "キラーアイライト")))
+            al::getSubActor(this, "キラーアイライト")->kill();
+
+        if (al::isExistPrePassLight(this, "Front") && al::isActivePrePassLight(this, "Front"))
+            al::killPrePassLight(this, "Front", -1);
+    }
+
+    if (_13c > 0)
+        _13c--;
+
+    sead::Vector3f front;
+    al::calcFrontDir(&front, this);
+
+    if (!al::isNerve(this, &NrvKiller.Hack) || !mKillerStateHack->isStarting()) {
+        f32 angle = al::calcAngleOnPlaneDegree(front, _124, sead::Vector3f::ey);
+        f32 rate;
+        if (!mIsMagnum)
+            rate = 1.2f;
+        else if (al::isNerve(this, &NrvKiller.Hack))
+            rate = 2.0f;
+        else
+            rate = 0.7f;
+
+        angle *= rate;
+
+        _130 = (_130 + angle) * 0.9f;
+        sead::Quatf quat;
+        al::makeQuatFrontUp(&quat, front, sead::Vector3f::ey);
+        al::setQuat(this, quat);
+        // TODO: check axis because Y is strange here
+        al::rotateQuatLocalDirDegree(this, static_cast<s32>(al::Axis::Y), _130);
+    }
+
+    _124.set(front);
+
+    if (_120 > 0)
+        _120--;
+
+    if (al::isNerve(this, &NrvKiller.Explode) || al::isNerve(this, &NrvKiller.FallDown) ||
+        al::isNerve(this, &NrvKiller.Appear) || al::isNerve(this, &NrvKiller.StandBy) ||
+        (al::isNerve(this, &NrvKiller.Hack) && mKillerStateHack->isStarting()))
+        return;
+
+    if (al::isNerve(this, &NrvKiller.Hack)) {
+        if (_11c > 180.0f)
+            if (!mIsMagnum)
+                _11c -= sead::Mathf::min(al::getVelocity(this).length() / 10.8f, 3.8f);
+            else
+                _11c -= sead::Mathf::min(al::getVelocity(this).length() / 18.4f, 3.15f);
+        else
+            _11c--;
+
+        if (_138) {
+            sead::Vector3f trans;
+            al::calcTransLocalOffset(&trans, this, g_71018a084);
+            al::setTrans(al::getSubActor(this, "キラーアイライト"), trans);
+            al::setQuat(al::getSubActor(this, "キラーアイライト"), al::getQuat(this));
+            if (al::isExistPrePassLight(this, "Front") && !al::isActivePrePassLight(this, "Front"))
+                al::appearPrePassLight(this, "Front", -1);
+        }
+    } else {
+        _11c--;
+    }
+
+    if (_11c <= 180.0f) {
+        al::tryStartMclAnimIfNotPlaying(this, "SignExplosion");
+
+        if (al::isNerve(this, &NrvKiller.Hack))
+            al::holdSe(this, "ExplodeSign");
+    }
+
+    if (_11c <= 0.0f)
+        explode();
+}
 
 void Killer::appearBy2D(const sead::Vector3f& position, const sead::Vector3f& velocity,
                         const sead::Quatf& rotation, s32 param_4) {

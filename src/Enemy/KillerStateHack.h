@@ -8,6 +8,7 @@ public:
 
     bool attackSensorCheckExplode(al::HitSensor* self, al::HitSensor* other);
     bool isEnableExplode() const;
+    bool isStarting() const;
     void endHackExplode();
     bool receiveMsgHackEnd(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     bool receiveMsgHackEndExplode(const al::SensorMsg* message, al::HitSensor* other,
