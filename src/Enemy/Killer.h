@@ -33,7 +33,7 @@ public:
     void exeFly();
     void exeExplode();
     void exeDamageCap();
-    void exeHack();
+    __attribute__((noinline)) void exeHack();
     void exeAfterHack();
     void exeFallDown();
 
