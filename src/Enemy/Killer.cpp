@@ -9,16 +9,20 @@
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
+#include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Se/SeFunction.h"
+#include "Library/Shadow/ActorShadowUtil.h"
 #include "System/GameDataFunction.h"
 #include "Util/SensorMsgFunction.h"
+#include "Util/SpecialBuildUtil.h"
 
 namespace {
 NERVE_IMPL(Killer, Fly)
@@ -95,10 +99,8 @@ void Killer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         return;
     }
 
-    if (al::isNerve(this, &NrvKiller.Hack) &&
-        mKillerStateHack->attackSensorCheckExplode(self, other)) {
+    if (isHack() && mKillerStateHack->attackSensorCheckExplode(self, other))
         explode();
-    }
 
     if (al::isSensorName(self, "AttackMagnum")) {
         if (mIsMagnum)
@@ -146,7 +148,7 @@ void Killer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 }
 
 void Killer::explode() {
-    if (al::isNerve(this, &NrvKiller.Hack)) {
+    if (isHack()) {
         if (!mKillerStateHack->isEnableExplode())
             return;
 
@@ -187,4 +189,57 @@ void Killer::appearBy2D(const sead::Vector3f& position, const sead::Vector3f& ve
     al::setNerve(this, &NrvKiller.Fly);
     appear();
     al::invalidateClipping(this);
+}
+
+void Killer::appearInit() {
+    al::startVisAnim(this, "HackOff");
+    al::startMclAnim(this, "HackOff");
+    al::showModelIfHide(this);
+    resetAliveCountAndAnim();
+
+    _134 = true;
+    _135 = true;
+    al::calcFrontDir(&_124, this);
+    _130 = 0.0;
+    sead::Quatf quat;
+    al::makeQuatFrontUp(&quat, _124, sead::Vector3f::ey);
+    al::setQuat(this, quat);
+    al::calcFrontDir(&_124, this);
+    al::hideSilhouetteModelIfShow(this);
+}
+
+void Killer::standByAppear(const sead::Vector3f& position, const sead::Quatf& rotation) {
+    al::resetPosition(this, position);
+    al::setQuat(this, rotation);
+    appearInit();
+    mEnemyStateDamageCap->resetCap();
+    al::startAction(this, "Appear");
+    al::startVisAnim(this, "HackOff");
+
+    if (rs::isModeE3MovieRom()) {
+        al::invalidateShadow(this);
+        al::offDepthShadowModel(this);
+        al::validateDepthShadowMap(this);
+    } else {
+        EnemyStateHackFunction::endHackSwitchShadow(this, nullptr);
+    }
+
+    al::setNerve(this, &NrvKiller.Appear);
+    appear();
+    al::invalidateClipping(this);
+}
+
+void Killer::launch(s32 param_1) {
+    _118 = param_1;
+    _11c = _118;
+    al::startAction(this, "FlyWaitStart");
+    al::setNerve(this, &NrvKiller.Launch);
+}
+
+void Killer::forceExplode() {
+    explode();
+}
+
+bool Killer::isHack() const {
+    return al::isNerve(this, &NrvKiller.Hack);
 }
