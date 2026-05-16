@@ -1,14 +1,13 @@
 #include "Enemy/Killer.h"
 
-#include "Enemy/EnemyStateDamageCap.h"
-#include "Enemy/KillerStateHack.h"
-#include "EnemyStateHackStart.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Bgm/BgmLineFunction.h"
+#include "Library/Item/ItemUtil.h"
 #include "Library/Light/LightKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorModelFunction.h"
@@ -18,9 +17,17 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
+#include "Library/Player/PlayerUtil.h"
 #include "Library/Se/SeFunction.h"
 #include "Library/Shadow/ActorShadowUtil.h"
+
+#include "Enemy/EnemyCap.h"
+#include "Enemy/EnemyStateDamageCap.h"
+#include "Enemy/EnemyStateHackStart.h"
+#include "Enemy/KillerStateHack.h"
 #include "System/GameDataFunction.h"
+#include "Util/ItemUtil.h"
+#include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 #include "Util/SpecialBuildUtil.h"
 
@@ -161,8 +168,173 @@ void Killer::explode() {
     al::setNerve(this, &NrvKiller.Explode);
 }
 
-// bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self)
-// {}
+bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+    if ((al::isNerve(this, &NrvKiller.Appear) || al::isNerve(this, &NrvKiller.StandBy) ||
+         al::isNerve(this, &NrvKiller.Launch) || al::isNerve(this, &NrvKiller.Explode) ||
+         al::isNerve(this, &NrvKiller.FallDown)) &&
+        rs::isMsgPlayerDisregardHomingAttack(message)) {
+        return true;
+    }
+
+    if (rs::isMsgCapCancelLockOn(message))
+        return true;
+
+    if (al::isDead(this))
+        return false;
+
+    if (al::isNerve(this, &NrvKiller.Appear) || al::isNerve(this, &NrvKiller.StandBy) ||
+        al::isNerve(this, &NrvKiller.Launch)) {
+        if (mIsMagnum && rs::isMsgCapReflect(message)) {
+            rs::requestHitReactionToAttacker(message, self, other);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    if (al::isNerve(this, &NrvKiller.Explode))
+        return false;
+
+    if (al::isNerve(this, &NrvKiller.FallDown))
+        return false;
+
+    if (al::isSensorName(self, "AttackMagnum"))
+        return false;
+
+    if (al::isNerve(this, &NrvKiller.Hack)) {
+        if (mKillerStateHack->receiveMsgHackEnd(message, other, self)) {
+            if (rs::isModeE3MovieRom())
+                EnemyStateHackFunction::endHackSwitchShadow(this, nullptr);
+
+            _120 = 20;
+            al::endBgmSituation(this, "Capture", false);
+            al::hideSilhouetteModelIfShow(this);
+            _134 = false;
+
+            if (!al::isNerve(this, &NrvKiller.Explode))
+                al::setNerve(this, &NrvKiller.AfterHack);
+
+            return true;
+        }
+
+        if (mKillerStateHack->receiveMsgHackEndExplode(message, other, self)) {
+            if (!mIsMagnum && mKillerStateHack->isEnableExplode()) {
+                _134 = false;
+                explode();
+            }
+
+            return true;
+        }
+    }
+
+    if ((rs::isMsgCapStartLockOn(message) || rs::isMsgCapKeepLockOn(message)) &&
+        !mEnemyStateDamageCap->isCapOn()) {
+        if (!al::isNerve(this, &NrvKiller.DamageCap) || al::isGreaterEqualStep(this, 8))
+            return true;
+    }
+
+    if (mKillerStateHack->receiveMsgInitCapTargetInfo(message))
+        return true;
+
+    if (mKillerStateHack->receiveMsgHackStart(message, other, self)) {
+        al::onCollide(this);
+        al::setVelocityZero(this);
+        resetAliveCountAndAnim();
+        al::startBgmSituation(this, "Capture", false);
+
+        if (_135) {
+            _11c = mIsMagnum ? 1850.0f : 900.0f;
+            al::startVisAnim(this, "HackOff");
+            al::startMclAnim(this, "HackOff");
+            _135 = false;
+        }
+
+        al::showModelIfHide(this);
+        al::setNerve(this, &NrvKiller.Hack);
+
+        return true;
+    }
+
+    if (rs::isMsgKillerMagnumAttack(message)) {
+        if (!al::isNerve(this, &NrvKiller.Hack) || !mIsMagnum)
+            explode();
+
+        return true;
+    }
+
+    if (rs::isMsgCactusNeedleAttack(message)) {
+        if (!mIsMagnum)
+            explode();
+
+        return false;
+    }
+
+    if (rs::isMsgSandGeyserRaise(message)) {
+        if (!mIsMagnum)
+            explode();
+
+        return true;
+    }
+
+    if (al::isMsgExplosion(message) || rs::isMsgBlowDown(message)) {
+        rs::requestHitReactionToAttacker(message, self, other);
+
+        if (!mIsMagnum)
+            explode();
+
+        return true;
+    }
+
+    if (mIsMagnum && al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 1.0f))
+        return true;
+
+    if (al::isNerve(this, &NrvKiller.Hack))
+        return mKillerStateHack->receiveMsg(message, other, self);
+
+    if (mKillerStateHack->receiveMsgNpcScareByEnemy(message))
+        return true;
+
+    if (rs::isMsgKillerMagnumHackAttack(message)) {
+        rs::requestHitReactionToAttacker(message, self, other);
+        rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
+        explode();
+        al::appearItem(this);
+
+        return true;
+    }
+
+    if (mEnemyStateDamageCap->tryReceiveMsgCapBlow(message, other, self)) {
+        al::setNerve(this, &NrvKiller.DamageCap);
+
+        return true;
+    }
+
+    if (rs::isMsgKillByShineGet(message)) {
+        kill();
+
+        return true;
+    }
+
+    if (rs::isMsgMeganeAttack(message)) {
+        explode();
+
+        return true;
+    }
+
+    if (!rs::isMsgPlayerAndCapObjHipDropReflectAll(message) && !rs::isMsgPressDown(message))
+        return false;
+
+    if (_120 <= 0) {
+        rs::requestHitReactionToAttacker(message, self, other);
+        rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
+        al::setNerve(this, &NrvKiller.FallDown);
+
+        return true;
+    }
+
+    return false;
+}
 
 void Killer::resetAliveCountAndAnim() {
     if (!_135)
@@ -242,4 +414,179 @@ void Killer::forceExplode() {
 
 bool Killer::isHack() const {
     return al::isNerve(this, &NrvKiller.Hack);
+}
+
+void Killer::exeAppear() {
+    if (al::isFirstStep(this)) {
+        al::offCollide(this);
+
+        if (mIsCapKoopa && !_137)
+            al::hideModelIfShow(mEnemyStateDamageCap->getEnemyCap());
+    }
+
+    if (al::isActionEnd(this))
+        al::setNerve(this, &NrvKiller.StandBy);
+}
+
+void Killer::exeStandBy() {
+    if (al::isFirstStep(this))
+        al::startAction(this, "StandBy");
+}
+
+void Killer::exeLaunch() {
+    if (al::isFirstStep(this) && mIsCapKoopa && !_137) {
+        al::showModelIfHide(mEnemyStateDamageCap->getEnemyCap());
+        al::startAction(mEnemyStateDamageCap->getEnemyCap(), "AppearKillerMagnum");
+    }
+
+    applyVelocityDamp();
+
+    if (al::isGreaterEqualStep(this, mIsMagnum ? 40 : 25)) {
+        al::onCollide(this);
+        al::setNerve(this, &NrvKiller.Fly);
+    }
+}
+
+void Killer::applyVelocityDamp() {
+    al::addVelocityToFront(this, mIsMagnum ? 1.72f : 0.63f);
+    al::scaleVelocity(this, mIsMagnum ? 0.90f : 0.95f);
+}
+
+bool FUN_7100146a14(Killer*, bool);
+
+void Killer::exeFly() {
+    if (al::isFirstStep(this)) {
+        _134 = true;
+        al::startAction(this, "FlyWait");
+        al::tryStartSe(this, "PgMoveEnemyMeLv");
+    }
+
+    al::LiveActor* player = al::tryFindNearestPlayerActor(this);
+    if (player && !rs::isPlayer2D(this)) {
+        const sead::Vector3f& playerTrans = al::getTrans(player);
+        f32 distance = al::calcDistance(this, playerTrans);
+        f32 fVar5 = mIsMagnum ? 0.4f : 2.4f;
+
+        if (distance < (mIsMagnum ? 700.0f : 1100.0f))
+            fVar5 *= distance / (mIsMagnum ? 700.0f : 1100.0f);
+
+        al::turnToTarget(this, playerTrans, fVar5);
+    }
+
+    applyVelocityDamp();
+
+    if (FUN_7100146a14(this, mIsMagnum))
+        explode();
+}
+
+bool FUN_7100146a14(Killer* killer, bool isMagnum) {
+    al::HitSensor* wallSensor = al::tryGetCollidedWallSensor(killer);
+    if (wallSensor) {
+        if (al::getCollidedWallNormal(killer).dot(al::getVelocity(killer)) > -0.2f)
+            return false;
+
+        if (al::sendMsgExplosion(wallSensor, al::getHitSensor(killer, "Attack"), nullptr) &&
+            isMagnum)
+            return false;
+
+        return true;
+    }
+
+    if (al::isOnGround(killer, 0) &&
+        al::calcAngleDegree(sead::Vector3f::ey, al::getCollidedGroundNormal(killer)) > 44.0f) {
+        al::sendMsgExplosion(al::getCollidedGroundSensor(killer),
+                             al::getHitSensor(killer, "Attack"), nullptr);
+
+        return true;
+    }
+
+    return false;
+}
+
+void Killer::exeExplode() {
+    if (al::isFirstStep(this)) {
+        al::hideSilhouetteModelIfShow(this);
+        al::validateHitSensor(this, "Explosion");
+        al::validateHitSensor(this, "ExplosionToPlayer");
+        al::setVelocityZero(this);
+        al::startAction(this, "Explosion");
+        al::hideModelIfShow(this);
+    }
+
+    f32 rate = al::calcNerveRate(this, 5);
+    al::setSensorRadius(this, "Explosion", al::lerpValue(0.0, 200.0, rate));
+    al::setSensorRadius(this, "ExplosionToPlayer", al::lerpValue(0.0, 100.0, rate));
+
+    if (al::isGreaterEqualStep(this, 5)) {
+        mEnemyStateDamageCap->makeActorDeadCap();
+        al::setSensorRadius(this, "Explosion", 0.0);
+        al::setSensorRadius(this, "ExplosionToPlayer", 0.0);
+        al::invalidateHitSensor(this, "Explosion");
+        al::invalidateHitSensor(this, "ExplosionToPlayer");
+        kill();
+    }
+}
+
+void Killer::exeDamageCap() {
+    if (al::isFirstStep(this))
+        al::setVelocityZero(this);
+
+    if (al::updateNerveState(this) && (!mIsMagnum || al::isGreaterEqualStep(this, 50)))
+        al::setNerve(this, &NrvKiller.Fly);
+}
+
+void Killer::exeHack() {
+    if (al::isFirstStep(this))
+        _134 = false;
+
+    if (!al::updateNerveState(this)) {
+        if (!FUN_7100146a14(this, mIsMagnum))
+            return;
+
+        al::startVisAnim(this, "HackOff");
+        al::startMclAnim(this, "HackOff");
+    }
+
+    explode();
+}
+
+void Killer::exeAfterHack() {
+    if (al::isFirstStep(this)) {
+        al::startVisAnim(this, "HackOff");
+        al::startMclAnim(this, "Default");
+        al::startAction(this, "HackEnd");
+        al::tryStartSe(this, "PgMoveEnemyMeLv");
+        EnemyStateHackFunction::endHackSwitchShadow(this, nullptr);
+        al::invalidateClipping(this);
+    }
+
+    applyVelocityDamp();
+
+    if (al::isActionPlaying(this, "HackEnd") && al::isActionEnd(this))
+        al::startAction(this, "FlyWait");
+
+    if (al::isGreaterEqualStep(this, mIsMagnum ? 180 : 280)) {
+        _134 = true;
+        al::setNerve(this, &NrvKiller.Fly);
+    } else if (FUN_7100146a14(this, mIsMagnum)) {
+        explode();
+    }
+}
+
+void Killer::exeFallDown() {
+    if (al::isFirstStep(this)) {
+        al::startAction(this, "FallDown");
+        al::setVelocityZero(this);
+        al::addVelocityToGravity(this, -20.0f);
+    }
+
+    al::addVelocityToGravity(this, 1.75f);
+    al::scaleVelocity(this, mIsMagnum ? 0.90f : 0.95f);
+
+    if (al::isActionEnd(this) || al::isOnGround(this, 0)) {
+        al::startHitReaction(this, "死亡");
+        al::appearItem(this);
+        mEnemyStateDamageCap->makeActorDeadCap();
+        kill();
+    }
 }
