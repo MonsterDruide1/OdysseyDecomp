@@ -119,6 +119,7 @@
 #include "MapObj/ShopMark.h"
 #include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
+#include "MapObj/SnowVolumeEraser.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/Special2KeyMoveLift.h"
 #include "MapObj/StageSwitchSelector.h"
@@ -580,7 +581,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SneakingMan", nullptr},
     {"SnowManRaceNpc", nullptr},
     {"SnowVolume", nullptr},
-    {"SnowVolumeEraser", nullptr},
+    {"SnowVolumeEraser", al::createActorFunction<SnowVolumeEraser>},
     {"Souvenir", al::createActorFunction<Souvenir>},
     {"SouvenirDirector", nullptr},
     {"Special2KeyMoveLift", al::createActorFunction<Special2KeyMoveLift>},
