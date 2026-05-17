@@ -379,8 +379,7 @@ void Killer::control() {
         sead::Quatf quat;
         al::makeQuatFrontUp(&quat, front, sead::Vector3f::ey);
         al::setQuat(this, quat);
-        // TODO: check axis because Y is strange here
-        al::rotateQuatLocalDirDegree(this, static_cast<s32>(al::Axis::Y), mRotationAngle);
+        al::rotateQuatLocalDirDegree(this, 2 /* axis Z */, mRotationAngle);
     }
 
     mFrontDir.set(front);
@@ -450,7 +449,7 @@ void Killer::appearInit() {
     mHasExplosion = true;
     _135 = true;
     al::calcFrontDir(&mFrontDir, this);
-    mRotationAngle = 0.0;
+    mRotationAngle = 0.0f;
     sead::Quatf quat;
     al::makeQuatFrontUp(&quat, mFrontDir, sead::Vector3f::ey);
     al::setQuat(this, quat);
@@ -592,13 +591,13 @@ void Killer::exeExplode() {
     }
 
     f32 rate = al::calcNerveRate(this, 5);
-    al::setSensorRadius(this, "Explosion", al::lerpValue(0.0, 200.0, rate));
-    al::setSensorRadius(this, "ExplosionToPlayer", al::lerpValue(0.0, 100.0, rate));
+    al::setSensorRadius(this, "Explosion", al::lerpValue(0.0f, 200.0f, rate));
+    al::setSensorRadius(this, "ExplosionToPlayer", al::lerpValue(0.0f, 100.0f, rate));
 
     if (al::isGreaterEqualStep(this, 5)) {
         mEnemyStateDamageCap->makeActorDeadCap();
-        al::setSensorRadius(this, "Explosion", 0.0);
-        al::setSensorRadius(this, "ExplosionToPlayer", 0.0);
+        al::setSensorRadius(this, "Explosion", 0.0f);
+        al::setSensorRadius(this, "ExplosionToPlayer", 0.0f);
         al::invalidateHitSensor(this, "Explosion");
         al::invalidateHitSensor(this, "ExplosionToPlayer");
         kill();
