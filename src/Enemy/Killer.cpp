@@ -86,7 +86,7 @@ void Killer::init(const al::ActorInitInfo& info) {
     if (al::isExistPrePassLight(this, "Front") && al::isActivePrePassLight(this, "Front"))
         al::killPrePassLight(this, "Front", -1);
 
-    al::setSeUserSyncParamPtr(this, &_130, "回転角");
+    al::setSeUserSyncParamPtr(this, &mRotationAngle, "回転角");
 
     makeActorAlive();
 }
@@ -121,7 +121,7 @@ void Killer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 
     if (al::isNerve(this, &NrvKiller.Explode)) {
         if (al::isSensorPlayer(other)) {
-            if (_134 && al::isSensorName(self, "ExplosionToPlayer"))
+            if (mHasExplosion && al::isSensorName(self, "ExplosionToPlayer"))
                 al::sendMsgExplosion(other, self, nullptr);
         } else if (al::isSensorName(self, "Explosion")) {
             al::sendMsgExplosion(other, self, nullptr);
@@ -146,7 +146,7 @@ void Killer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     }
 
     if (al::isSensorEnemyAttack(self) && al::isSensorPlayer(other)) {
-        if (!al::isNerve(this, &NrvKiller.AfterHack) && _134 &&
+        if (!al::isNerve(this, &NrvKiller.AfterHack) && mHasExplosion &&
             al::sendMsgExplosion(other, self, nullptr)) {
             explode();
 
@@ -213,7 +213,7 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
             _120 = 20;
             al::endBgmSituation(this, "Capture", false);
             al::hideSilhouetteModelIfShow(this);
-            _134 = false;
+            mHasExplosion = false;
 
             if (!al::isNerve(this, &NrvKiller.Explode))
                 al::setNerve(this, &NrvKiller.AfterHack);
@@ -223,7 +223,7 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
 
         if (mKillerStateHack->receiveMsgHackEndExplode(message, other, self)) {
             if (!mIsMagnum && mKillerStateHack->isEnableExplode()) {
-                _134 = false;
+                mHasExplosion = false;
                 explode();
             }
 
@@ -247,7 +247,7 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
         al::startBgmSituation(this, "Capture", false);
 
         if (_135) {
-            _11c = mIsMagnum ? 1850.0f : 900.0f;
+            mExplosionTime = mIsMagnum ? 1850.0f : 900.0f;
             al::startVisAnim(this, "HackOff");
             al::startMclAnim(this, "HackOff");
             _135 = false;
@@ -343,7 +343,7 @@ void Killer::resetAliveCountAndAnim() {
     if (!_135)
         return;
 
-    _11c = _118;
+    mExplosionTime = mAliveFrame;
     al::startVisAnim(this, "HackOff");
     al::startMclAnim(this, "HackOff");
 }
@@ -364,7 +364,7 @@ void Killer::control() {
     al::calcFrontDir(&front, this);
 
     if (!al::isNerve(this, &NrvKiller.Hack) || !mKillerStateHack->isStarting()) {
-        f32 angle = al::calcAngleOnPlaneDegree(front, _124, sead::Vector3f::ey);
+        f32 angle = al::calcAngleOnPlaneDegree(front, mFrontDir, sead::Vector3f::ey);
         f32 rate;
         if (!mIsMagnum)
             rate = 1.2f;
@@ -375,15 +375,15 @@ void Killer::control() {
 
         angle *= rate;
 
-        _130 = (_130 + angle) * 0.9f;
+        mRotationAngle = (mRotationAngle + angle) * 0.9f;
         sead::Quatf quat;
         al::makeQuatFrontUp(&quat, front, sead::Vector3f::ey);
         al::setQuat(this, quat);
         // TODO: check axis because Y is strange here
-        al::rotateQuatLocalDirDegree(this, static_cast<s32>(al::Axis::Y), _130);
+        al::rotateQuatLocalDirDegree(this, static_cast<s32>(al::Axis::Y), mRotationAngle);
     }
 
-    _124.set(front);
+    mFrontDir.set(front);
 
     if (_120 > 0)
         _120--;
@@ -394,13 +394,13 @@ void Killer::control() {
         return;
 
     if (al::isNerve(this, &NrvKiller.Hack)) {
-        if (_11c > 180.0f)
+        if (mExplosionTime > 180.0f)
             if (!mIsMagnum)
-                _11c -= sead::Mathf::min(al::getVelocity(this).length() / 10.8f, 3.8f);
+                mExplosionTime -= sead::Mathf::min(al::getVelocity(this).length() / 10.8f, 3.8f);
             else
-                _11c -= sead::Mathf::min(al::getVelocity(this).length() / 18.4f, 3.15f);
+                mExplosionTime -= sead::Mathf::min(al::getVelocity(this).length() / 18.4f, 3.15f);
         else
-            _11c--;
+            mExplosionTime--;
 
         if (mIsUseCaptureLight) {
             sead::Vector3f trans;
@@ -411,22 +411,22 @@ void Killer::control() {
                 al::appearPrePassLight(this, "Front", -1);
         }
     } else {
-        _11c--;
+        mExplosionTime--;
     }
 
-    if (_11c <= 180.0f) {
+    if (mExplosionTime <= 180.0f) {
         al::tryStartMclAnimIfNotPlaying(this, "SignExplosion");
 
         if (al::isNerve(this, &NrvKiller.Hack))
             al::holdSe(this, "ExplodeSign");
     }
 
-    if (_11c <= 0.0f)
+    if (mExplosionTime <= 0.0f)
         explode();
 }
 
 void Killer::appearBy2D(const sead::Vector3f& position, const sead::Vector3f& velocity,
-                        const sead::Quatf& rotation, s32 param_4) {
+                        const sead::Quatf& rotation, s32 aliveFrame) {
     al::resetPosition(this, position);
     al::setQuat(this, rotation);
     appearInit();
@@ -434,8 +434,8 @@ void Killer::appearBy2D(const sead::Vector3f& position, const sead::Vector3f& ve
     al::startAction(this, "FlyWait");
     al::startVisAnim(this, "HackOff");
     EnemyStateHackFunction::endHackSwitchShadow(this, nullptr);
-    _118 = param_4;
-    _11c = _118;
+    mAliveFrame = aliveFrame;
+    mExplosionTime = mAliveFrame;
     al::setNerve(this, &NrvKiller.Fly);
     appear();
     al::invalidateClipping(this);
@@ -447,14 +447,14 @@ void Killer::appearInit() {
     al::showModelIfHide(this);
     resetAliveCountAndAnim();
 
-    _134 = true;
+    mHasExplosion = true;
     _135 = true;
-    al::calcFrontDir(&_124, this);
-    _130 = 0.0;
+    al::calcFrontDir(&mFrontDir, this);
+    mRotationAngle = 0.0;
     sead::Quatf quat;
-    al::makeQuatFrontUp(&quat, _124, sead::Vector3f::ey);
+    al::makeQuatFrontUp(&quat, mFrontDir, sead::Vector3f::ey);
     al::setQuat(this, quat);
-    al::calcFrontDir(&_124, this);
+    al::calcFrontDir(&mFrontDir, this);
     al::hideSilhouetteModelIfShow(this);
 }
 
@@ -479,9 +479,9 @@ void Killer::standByAppear(const sead::Vector3f& position, const sead::Quatf& ro
     al::invalidateClipping(this);
 }
 
-void Killer::launch(s32 param_1) {
-    _118 = param_1;
-    _11c = _118;
+void Killer::launch(s32 aliveFrame) {
+    mAliveFrame = aliveFrame;
+    mExplosionTime = mAliveFrame;
     al::startAction(this, "FlyWaitStart");
     al::setNerve(this, &NrvKiller.Launch);
 }
@@ -534,7 +534,7 @@ bool FUN_7100146a14(Killer*, bool);
 
 void Killer::exeFly() {
     if (al::isFirstStep(this)) {
-        _134 = true;
+        mHasExplosion = true;
         al::startAction(this, "FlyWait");
         al::tryStartSe(this, "PgMoveEnemyMeLv");
     }
@@ -615,7 +615,7 @@ void Killer::exeDamageCap() {
 
 void Killer::exeHack() {
     if (al::isFirstStep(this))
-        _134 = false;
+        mHasExplosion = false;
 
     if (!al::updateNerveState(this)) {
         if (!FUN_7100146a14(this, mIsMagnum))
@@ -644,7 +644,7 @@ void Killer::exeAfterHack() {
         al::startAction(this, "FlyWait");
 
     if (al::isGreaterEqualStep(this, mIsMagnum ? 180 : 280)) {
-        _134 = true;
+        mHasExplosion = true;
         al::setNerve(this, &NrvKiller.Fly);
     } else if (FUN_7100146a14(this, mIsMagnum)) {
         explode();
