@@ -48,8 +48,8 @@ private:
     bool _134 = true;
     bool _135 = true;
     bool mIsMagnum = false;
-    bool _137 = false;
-    bool _138 = false;
+    bool mIsNoCap = false;
+    bool mIsUseCaptureLight = false;
     bool mIsCapKoopa = false;
     s32 _13c = 0;
 };

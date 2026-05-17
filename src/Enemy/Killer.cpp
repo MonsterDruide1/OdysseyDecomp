@@ -47,7 +47,7 @@ NERVES_MAKE_STRUCT(Killer, Fly, DamageCap, Hack, FallDown, Explode, AfterHack, A
                    Launch)
 }  // namespace
 
-const sead::Vector3f g_71018a084 = {0.0f, 0.0f, 100.0f};
+const sead::Vector3f gLightOffset = {0.0f, 0.0f, 100.0f};
 
 Killer::Killer(const char* name) : al::LiveActor(name) {}
 
@@ -60,7 +60,7 @@ void Killer::init(const al::ActorInitInfo& info) {
     al::initNerve(this, &NrvKiller.Fly, 3);
     mEnemyStateDamageCap = new EnemyStateDamageCap(this);
 
-    if (!_137) {
+    if (!mIsNoCap) {
         if (mIsMagnum || al::isEqualString(GameDataFunction::getCurrentStageName(this),
                                            "MoonWorldCaptureParadeStage")) {
             mIsCapKoopa = true;
@@ -76,7 +76,7 @@ void Killer::init(const al::ActorInitInfo& info) {
     }
 
     al::initNerveState(this, mEnemyStateDamageCap, &NrvKiller.DamageCap, "帽子ふきとび");
-    mKillerStateHack = new KillerStateHack(this, mIsMagnum, _138);
+    mKillerStateHack = new KillerStateHack(this, mIsMagnum, mIsUseCaptureLight);
     al::initNerveState(this, mKillerStateHack, &NrvKiller.Hack, "キャプチャ");
     al::setSensorRadius(this, "Explosion", 0.0f);
     al::setSensorRadius(this, "ExplosionToPlayer", 0.0f);
@@ -349,7 +349,7 @@ void Killer::resetAliveCountAndAnim() {
 }
 
 void Killer::control() {
-    if (!al::isNerve(this, &NrvKiller.Hack) && _138) {
+    if (!al::isNerve(this, &NrvKiller.Hack) && mIsUseCaptureLight) {
         if (al::isAlive(al::getSubActor(this, "キラーアイライト")))
             al::getSubActor(this, "キラーアイライト")->kill();
 
@@ -402,9 +402,9 @@ void Killer::control() {
         else
             _11c--;
 
-        if (_138) {
+        if (mIsUseCaptureLight) {
             sead::Vector3f trans;
-            al::calcTransLocalOffset(&trans, this, g_71018a084);
+            al::calcTransLocalOffset(&trans, this, gLightOffset);
             al::setTrans(al::getSubActor(this, "キラーアイライト"), trans);
             al::setQuat(al::getSubActor(this, "キラーアイライト"), al::getQuat(this));
             if (al::isExistPrePassLight(this, "Front") && !al::isActivePrePassLight(this, "Front"))
@@ -498,7 +498,7 @@ void Killer::exeAppear() {
     if (al::isFirstStep(this)) {
         al::offCollide(this);
 
-        if (mIsCapKoopa && !_137)
+        if (mIsCapKoopa && !mIsNoCap)
             al::hideModelIfShow(mEnemyStateDamageCap->getEnemyCap());
     }
 
@@ -512,7 +512,7 @@ void Killer::exeStandBy() {
 }
 
 void Killer::exeLaunch() {
-    if (al::isFirstStep(this) && mIsCapKoopa && !_137) {
+    if (al::isFirstStep(this) && mIsCapKoopa && !mIsNoCap) {
         al::showModelIfHide(mEnemyStateDamageCap->getEnemyCap());
         al::startAction(mEnemyStateDamageCap->getEnemyCap(), "AppearKillerMagnum");
     }
