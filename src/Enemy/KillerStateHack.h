@@ -2,6 +2,11 @@
 
 #include "Library/Nerve/NerveStateBase.h"
 
+namespace al {
+class HitSensor;
+class SensorMsg;
+}  // namespace al
+
 class KillerStateHack : public al::ActorStateBase {
 public:
     KillerStateHack(al::LiveActor*, bool, bool);
