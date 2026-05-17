@@ -20,10 +20,10 @@ public:
     void explode();
     void resetAliveCountAndAnim();
     void appearBy2D(const sead::Vector3f& position, const sead::Vector3f& velocity,
-                    const sead::Quatf& rotation, s32);
+                    const sead::Quatf& rotation, s32 aliveFrame);
     void appearInit();
     void standByAppear(const sead::Vector3f& position, const sead::Quatf& rotation);
-    void launch(s32);
+    void launch(s32 aliveFrame);
     void forceExplode();
     void applyVelocityDamp();
 
@@ -40,12 +40,12 @@ public:
 private:
     EnemyStateDamageCap* mEnemyStateDamageCap = nullptr;
     KillerStateHack* mKillerStateHack = nullptr;
-    s32 _118 = 1200;
-    f32 _11c = 1200.0f;
+    s32 mAliveFrame = 1200;
+    f32 mExplosionTime = 1200.0f;
     s32 _120 = 0;
-    sead::Vector3f _124 = sead::Vector3f::zero;
-    f32 _130 = 0.0f;
-    bool _134 = true;
+    sead::Vector3f mFrontDir = sead::Vector3f::zero;
+    f32 mRotationAngle = 0.0f;
+    bool mHasExplosion = true;
     bool _135 = true;
     bool mIsMagnum = false;
     bool mIsNoCap = false;
