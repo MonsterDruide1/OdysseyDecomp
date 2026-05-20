@@ -128,12 +128,12 @@ const al::AnimInfoTable* createAnimInfoTableIfNeed(const al::AnimInfoTable* tabl
 
     for (s32 i = 0; i < table1->getInfoCount(); i++) {
         const al::AnimResInfo& entry = table1->getResInfo(i);
-        newTable->add(entry.name, entry.resMaterialAnim, entry.frameMax, entry.isLoop);
+        newTable->add(entry.name, entry.buffer, entry.frameMax, entry.isLooping);
     }
 
     for (s32 i = 0; i < table2->getInfoCount(); i++) {
         const al::AnimResInfo& entry = table2->getResInfo(i);
-        newTable->add(entry.name, entry.resMaterialAnim, entry.frameMax, entry.isLoop);
+        newTable->add(entry.name, entry.buffer, entry.frameMax, entry.isLooping);
     }
 
     newTable->sort();
