@@ -19,6 +19,7 @@ bool isDefinedEventCamera(const al::EventFlowExecutor*, const char*);
 bool checkTriggerDecideWithRequestIcon(al::LiveActor*, const sead::Vector3f&, f32);
 void startEventFlow(al::EventFlowExecutor*, const char*);
 bool updateEventFlow(al::EventFlowExecutor*);
+void startCloseNpcDemoEventTalkMessage(al::LiveActor*);
 void initEventMessageTagDataHolder(al::EventFlowExecutor*, const al::MessageTagDataHolder*);
 void initEventCameraObject(al::EventFlowExecutor* flowExecutor, const al::ActorInitInfo& initInfo,
                            const char* name);
