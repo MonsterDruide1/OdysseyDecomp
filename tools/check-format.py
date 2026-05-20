@@ -345,6 +345,7 @@ def header_sorted_visibility(c, path):
     visibilities_ordered = ["public:", "protected:", "private:"]
     nest_level = [-2]  # -2 = outside of class ; -1 = inside class ; 0 = public ; 1 = protected ; 2 = private
     should_start_class = False
+    pending_private_line = None
     for line in c.splitlines():
         if re.search(r"^\s*struct.*{", line):
             is_in_struct = True
@@ -353,7 +354,19 @@ def header_sorted_visibility(c, path):
         line = line[0:line.find("//")] if "//" in line else line
         if line.endswith("\\"): line = line[0:-1]
         line = line.strip()
+
+        if pending_private_line is not None:
+            pending_private_line = (pending_private_line + " " + line).strip()
+            if line.endswith(";"):
+                header_check_line(pending_private_line, path, nest_level[-1], should_start_class,
+                                  is_in_struct)
+                pending_private_line = None
+            continue
+
         if line not in visibilities_ordered:
+            if visibility_needs_buffering(nest_level[-1], line):
+                pending_private_line = line
+                continue
             header_check_line(line, path, nest_level[-1], should_start_class, is_in_struct)
         if "{" in line and "}" in line:
             if CHECK(lambda a: a.count("{") == a.count("}") or (a.startswith("{") and a.endswith("}};")), line,
@@ -393,6 +406,21 @@ def header_sorted_visibility(c, path):
 
         if not runAllChecks:
             exit(1)
+
+def visibility_needs_buffering(visibility, line):
+    if visibility != 2:
+        return False
+
+    if "{" in line or "}" in line:
+        return False
+
+    if line in ["", "};", "union {"] or line.startswith("struct") or line.startswith("enum"):
+        return False
+
+    if line.startswith("static_assert") or "template" in line:
+        return False
+
+    return not line.endswith(";")
 
 def header_check_line(line, path, visibility, should_start_class, is_in_struct):
 
