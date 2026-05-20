@@ -19,7 +19,19 @@ public:
                     const EquipmentInfo* info);
     void cancelEquip();
     void endEquip();
-    void noticeDamage();
+    bool noticeDamage();
+
+    bool isEquip() const { return mEquipmentSensor != nullptr; }
+
+    al::HitSensor* getEquipmentSensor() const { return mEquipmentSensor; }
+
+    const EquipmentInfo* getEquipmentInfo() const { return mEquipmentInfo; }
+
+    const PlayerInput* getPlayerInput() const { return mPlayerInput; }
+
+    const IPlayerModelChanger* getModelChanger() const { return mPlayerModelChanger; }
+
+    PlayerStateRolling* getPlayerStateRolling() const { return mPlayerStateRolling; }
 
 private:
     al::HitSensor* mSourceSensor = nullptr;
