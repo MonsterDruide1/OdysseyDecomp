@@ -19,6 +19,8 @@ class IUsePlayerHeightCheck;
 class PlayerConst;
 
 namespace rs {
+struct PoleTriangleFilter;
+
 void resetCollision(IUsePlayerCollision*);
 void resetCollisionPose(const IUsePlayerCollision*, const sead::Quatf&);
 void resetCollisionExpandCheck(IUsePlayerCollision*);
@@ -79,7 +81,9 @@ bool isCollisionCodePoleClimbGround(const IUsePlayerCollision*);
 bool isCollisionCodePoleClimbWall(const IUsePlayerCollision*);
 bool isCollisionCodePoleClimbCeiling(const IUsePlayerCollision*);
 bool isCollisionCodePoleClimb(const al::HitInfo&);
-bool isCollisionCodePole(const al::Triangle&);
+bool isInvalidPoleTriangle(const PoleTriangleFilter*, const al::Triangle&);
+bool isCollisionCodePoleThunk(const al::Triangle&);
+bool isCollisionCodePole(const al::Triangle&) __attribute__((noinline));
 
 bool isActionCodeNoWallKeepWall(const IUsePlayerCollision*);
 bool isActionCodeNoActionGround(const IUsePlayerCollision*);
@@ -105,9 +109,10 @@ const char* getRippleGenerateMaterialFlower();
 bool isCollidedDamageCodeAnyWallHit(const IUsePlayerCollision*);
 bool isEnableRecordSafetyPoint(sead::Vector3f**, const al::HitInfo&, al::HitSensor*,
                                const sead::Vector3f&);
+bool isCollisionCodeSafetyPointImpl(const al::HitInfo&);
 bool isCollisionCodeSafetyPoint(const al::HitInfo&);
 void calcCollisionCodeNoSafetyPointPos(sead::Vector3f*, bool*, const al::LiveActor*,
-                                       const IUsePlayerCollision*);
+                                       const IUsePlayerCollision*) __attribute__((noinline));
 void calcActorCollisionCodeNoSafetyPointPos(sead::Vector3f*, bool*, const al::LiveActor*,
                                             const IUsePlayerCollision*);
 bool calcCollidedGroundSafetyPoint(sead::Vector3f*, sead::Vector3f*, const al::AreaObj**,
@@ -126,6 +131,8 @@ bool isOnGroundAndGravity(const al::LiveActor*, const IUsePlayerCollision*);
 bool isCollidedWallVelocity(const al::LiveActor*, const IUsePlayerCollision*);
 bool isCollidedCeilingVelocity(const al::LiveActor*, const IUsePlayerCollision*);
 void calcCollidedNormalSum(sead::Vector3f*, const IUsePlayerCollision*);
+bool reboundVelocityByNormal(al::LiveActor*, const sead::Vector3f&, f32, f32, f32)
+    __attribute__((noinline));
 bool reboundVelocityFromCollision(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32);
 u32 reboundVelocityPart(al::LiveActor*, const IUsePlayerCollision*, f32, f32, f32, f32);
 void cutVectorCollision(sead::Vector3f*, const IUsePlayerCollision*, f32);
@@ -133,6 +140,7 @@ void cutVectorCollision(sead::Vector3f*, const IUsePlayerCollision*, f32);
 bool isCollidedNoScaleVelocityWall(const IUsePlayerCollision*);
 bool isCollidedGroundOverAngle(const al::LiveActor*, const IUsePlayerCollision*, f32);
 bool isCollidedGroundLessAngle(const al::LiveActor*, const IUsePlayerCollision*, f32);
+bool isGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*, bool);
 bool isCollidedGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 bool isOnGroundRunAngle(const al::LiveActor*, const IUsePlayerCollision*, const PlayerConst*);
 bool isOnGroundLessAngle(const al::LiveActor*, const IUsePlayerCollision*, f32);
@@ -162,3 +170,8 @@ bool calcGroundHeight(f32*, sead::Vector3f*, const al::IUseCollision*, const sea
                       const sead::Vector3f&, f32, f32);
 
 }  // namespace rs
+
+namespace CollisionShapeUtil {
+void setShapeOffsetAllArrow(IUsePlayerCollision*, const sead::Vector3f&);
+void setShapeDiskHalfHeight(IUsePlayerCollision*, const char*, f32);
+}  // namespace CollisionShapeUtil
