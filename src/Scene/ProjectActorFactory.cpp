@@ -97,6 +97,7 @@
 #include "MapObj/HipDropMoveLift.h"
 #include "MapObj/HipDropRepairParts.h"
 #include "MapObj/HipDropSwitch.h"
+#include "MapObj/KinokoUfo.h"
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaFryingPan.h"
 #include "MapObj/LavaPan.h"
@@ -402,7 +403,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"KickStone", nullptr},
     {"KillerLauncher", nullptr},
     {"KillerLauncherDot", nullptr},
-    {"KinokoUfo", nullptr},
+    {"KinokoUfo", al::createActorFunction<KinokoUfo>},
     {"Koopa", nullptr},
     {"KoopaCapPlayer", nullptr},
     {"KoopaChurch", nullptr},
