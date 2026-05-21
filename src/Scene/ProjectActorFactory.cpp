@@ -89,6 +89,7 @@
 #include "MapObj/DoorCity.h"
 #include "MapObj/DoorSnow.h"
 #include "MapObj/Doshi.h"
+#include "MapObj/EchoBlockMapParts.h"
 #include "MapObj/EffectObjAlpha.h"
 #include "MapObj/ElectricWire/ElectricWire.h"
 #include "MapObj/FireDrum2D.h"
@@ -308,7 +309,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DoorSnow", al::createActorFunction<DoorSnow>},
     {"DoorWarp", nullptr},
     {"DoorWarpStageChange", nullptr},
-    {"EchoBlockMapParts", nullptr},
+    {"EchoBlockMapParts", al::createActorFunction<EchoBlockMapParts>},
     {"EffectObj", al::createActorFunction<al::EffectObj>},
     {"EffectObjScale", nullptr},
     {"EffectObjAlpha", al::createActorFunction<EffectObjAlpha>},
