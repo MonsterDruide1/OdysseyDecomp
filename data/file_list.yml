@@ -113340,7 +113340,7 @@ Player/HackCap.o:
   - offset: 0x3fa644
     size: 512
     label: _ZN17HackCapThrowParamC2EPN2al9LiveActorE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x3fa844
     size: 272
@@ -202465,7 +202465,7 @@ sead/framework/nx/seadGameFrameworkNx.o:
   - offset: 0x731120
     size: 4
     label: _ZN4sead18LogicalFrameBufferD2Ev
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x731124
     size: 52
@@ -202628,17 +202628,17 @@ sead/framework/nx/seadGameFrameworkNx.o:
   - offset: 0x732708
     size: 112
     label: _ZNK4sead18LogicalFrameBuffer27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x732778
     size: 92
     label: _ZNK4sead18LogicalFrameBuffer18getRuntimeTypeInfoEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x7327d4
     size: 4
     label: _ZN4sead18LogicalFrameBufferD0Ev
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x7327d8
     size: 48
@@ -203578,11 +203578,11 @@ sead/gfx/nvn/seadDebugFontMgrJis1Nvn.o:
     label:
     - _ZN4sead19DebugFontMgrJis1NvnD1Ev
     - _ZN4sead19DebugFontMgrJis1NvnD2Ev
-    status: NonMatchingMinor
+    status: Matching
   - offset: 0x738760
     size: 4
     label: _ZN4sead19DebugFontMgrJis1NvnD0Ev
-    status: NonMatchingMinor
+    status: Matching
   - offset: 0x738764
     size: 288
     label: _ZN4sead19DebugFontMgrJis1Nvn10initializeEPNS_4HeapEPKcS4_S4_j
@@ -203663,11 +203663,11 @@ sead/gfx/nvn/seadDebugFontMgrNvn.o:
     label:
     - _ZN4sead15DebugFontMgrNvnD1Ev
     - _ZN4sead15DebugFontMgrNvnD2Ev
-    status: NonMatchingMinor
+    status: Matching
   - offset: 0x739328
     size: 4
     label: _ZN4sead15DebugFontMgrNvnD0Ev
-    status: NonMatchingMinor
+    status: Matching
   - offset: 0x73932c
     size: 240
     label: _ZN4sead15DebugFontMgrNvn10initializeEPNS_4HeapEPKcS4_j
@@ -282209,12 +282209,12 @@ Library/Sequence/Sequence.o:
   - offset: 0x9f223c
     size: 4
     label: _ZN2al8Sequence4initERKNS_16SequenceInitInfoE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x9f2240
     size: 8
     label: _ZNK2al8Sequence12isDisposableEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x9f2248
     size: 8
@@ -282224,12 +282224,12 @@ Library/Sequence/Sequence.o:
   - offset: 0x9f2250
     size: 20
     label: _ZN2al16IUseSceneCreatorD2Ev
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x9f2264
     size: 4
     label: _ZN2al16IUseSceneCreatorD0Ev
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x9f2268
     size: 8
@@ -286129,17 +286129,17 @@ Library/Shadow/ShadowMaskCtrl.o:
   - offset: 0xa2095c
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIPKcE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20964
     size: 8
     label: _ZNK15alYamlMacroUtil20YamlParam_YamlString10getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa2096c
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIPKcE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa2097c
     size: 4
@@ -286189,7 +286189,7 @@ Library/Shadow/ShadowMaskCtrl.o:
   - offset: 0xa209a0
     size: 8
     label: _ZN15alYamlMacroUtil20YamlParam_YamlString17setPtr_YamlStringEPPKc
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209a8
     size: 4
@@ -286199,122 +286199,122 @@ Library/Shadow/ShadowMaskCtrl.o:
   - offset: 0xa209ac
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIN4sead7Vector3IfEEE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209b4
     size: 8
     label: _ZNK15alYamlMacroUtil13YamlParam_V3f10getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209bc
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIN4sead7Vector3IfEEE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209cc
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParam_V3f10setPtr_V3fEPN4sead7Vector3IfEE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209d4
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIN4sead7Color4fEE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209dc
     size: 8
     label: _ZNK15alYamlMacroUtil19YamlParam_YamlColor10getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209e4
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIN4sead7Color4fEE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209f4
     size: 8
     label: _ZN15alYamlMacroUtil19YamlParam_YamlColor16setPtr_YamlColorEPN4sead7Color4fE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa209fc
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIbE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a04
     size: 8
     label: _ZNK15alYamlMacroUtil14YamlParam_bool10getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a0c
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIbE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a1c
     size: 8
     label: _ZN15alYamlMacroUtil14YamlParam_bool11setPtr_boolEPb
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a24
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIhE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a2c
     size: 8
     label: _ZNK15alYamlMacroUtil12YamlParam_u810getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a34
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIhE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a44
     size: 8
     label: _ZN15alYamlMacroUtil12YamlParam_u89setPtr_u8EPh
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a4c
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIfE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a54
     size: 8
     label: _ZNK15alYamlMacroUtil13YamlParam_f3210getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a5c
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIfE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a6c
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParam_f3210setPtr_f32EPf
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a74
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParamBaseIN4sead7Vector2IfEEE8clearPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a7c
     size: 8
     label: _ZNK15alYamlMacroUtil13YamlParam_V2f10getClassIdEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a84
     size: 16
     label: _ZNK15alYamlMacroUtil13YamlParamBaseIN4sead7Vector2IfEEE10isValidPtrEv
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a94
     size: 8
     label: _ZN15alYamlMacroUtil13YamlParam_V2f10setPtr_V2fEPN4sead7Vector2IfEE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xa20a9c
     size: 428
@@ -319190,7 +319190,7 @@ sead.a:
   - offset: 0xb65bec
     size: 4
     label: _ZN4sead8FontBaseD2Ev
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0xb65bf0
     size: 124
