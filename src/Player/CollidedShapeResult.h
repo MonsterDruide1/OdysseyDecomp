@@ -29,7 +29,8 @@ public:
     const CollisionShapeInfoSphere* getShapeInfoSphere() const;
     const CollisionShapeInfoDisk* getShapeInfoDisk() const;
 
-    void operator=(const CollidedShapeResult& other);
+    // TODO: Find an alternative solution to weak
+    void __attribute__((weak)) operator=(const CollidedShapeResult & other);
 
 private:
     const CollisionShapeInfoBase* mShapeInfo;
