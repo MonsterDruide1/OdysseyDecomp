@@ -9,6 +9,7 @@
 #include "Item/CoinCollectHolder.h"
 #include "Item/CoinCollectWatcher.h"
 #include "Layout/KidsModeLayoutAccessor.h"
+#include "MapObj/CapMessageDirector.h"
 #include "MapObj/RouteGuideDirector.h"
 #include "Scene/HintPhotoLayoutHolder.h"
 
@@ -24,7 +25,7 @@ static al::ISceneObj* sceneObjCreator(s32 id) {
         return nullptr;
 
     case SceneObjID_CapMessageDirector:
-        return nullptr;
+        return new CapMessageDirector();
 
     case SceneObjID_CapMessageMoonNotifier:
         return nullptr;
