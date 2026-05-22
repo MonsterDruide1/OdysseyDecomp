@@ -19,8 +19,6 @@ ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeStrin
     initializeListNode(name, label, meta, list, e);
 }
 
-void ParameterBase::afterGetParam() {}
-
 template <>
 bool ParameterBase::isEqual_<const char*>(const ParameterBase& parameter) const {
     return isEqualString(getValuePtr<const char>(), parameter.getValuePtr<const char>());

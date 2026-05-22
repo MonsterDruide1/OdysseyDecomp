@@ -22,7 +22,7 @@ public:
 
     CoinCollectHolder();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "コレクトコイン保持者"; }
 
     void registerCoinCollect(CoinCollect* coin);
     void registerCoinCollect2D(CoinCollect2D* coin);

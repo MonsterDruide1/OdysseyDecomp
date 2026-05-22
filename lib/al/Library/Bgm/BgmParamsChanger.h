@@ -23,6 +23,7 @@ public:
     virtual void changeEffectSend(nn::atk::AuxBus bus, f32 target, s32 stepCount) = 0;
     virtual void changeTrackVolume(s32 track, f32 target, s32 stepCount) = 0;
     virtual void changeDefaultParams(s32 stepCount) = 0;
+    virtual void forceDeactivate() = 0;
     virtual bool isEnableRegionChange() const = 0;
     virtual void setRegionChangeParams(const BgmRegionChangeParams& params) = 0;
     virtual const char* getSituationName() const = 0;
@@ -58,7 +59,7 @@ public:
     void changeEffectSend(nn::atk::AuxBus bus, f32 target, s32 stepCount) override;
     void changeTrackVolume(s32 track, f32 target, s32 stepCount) override;
     void changeDefaultParams(s32 stepCount) override;
-    void forceDeactivate();
+    void forceDeactivate() override;
     f32 getCurVolume() const override;
     f32 getCurPitchShift() const override;
     f32 getCurPitchShiftModulation() const override;

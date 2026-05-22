@@ -83,7 +83,9 @@
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
+#include "MapObj/CollectBgmSpeaker.h"
 #include "MapObj/CollectionList.h"
+#include "MapObj/DelaySwitch.h"
 #include "MapObj/DoorCity.h"
 #include "MapObj/DoorSnow.h"
 #include "MapObj/Doshi.h"
@@ -118,6 +120,7 @@
 #include "MapObj/ShopMark.h"
 #include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
+#include "MapObj/SnowVolumeEraser.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/Special2KeyMoveLift.h"
 #include "MapObj/StageSwitchSelector.h"
@@ -257,7 +260,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CloudStep", nullptr},
     {"CollapseSandHill", nullptr},
     {"CollectAnimalWatcher", nullptr},
-    {"CollectBgmSpeaker", nullptr},
+    {"CollectBgmSpeaker", al::createActorFunction<CollectBgmSpeaker>},
     {"CollectionList", al::createActorFunction<CollectionList>},
     {"Coin", al::createActorFunction<Coin>},
     {"Coin2D", al::createActorFunction<Coin2D>},
@@ -274,7 +277,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CoinStackGroup", al::createActorFunction<CoinStackGroup>},
     {"CrystalBreakable", nullptr},
     {"DamageBallGenerator", nullptr},
-    {"DelaySwitch", nullptr},
+    {"DelaySwitch", al::createActorFunction<DelaySwitch>},
     {"DemoActorCapManHero", nullptr},
     {"DemoActorCapManHeroine", nullptr},
     {"DemoActorKoopaShip", nullptr},
@@ -579,7 +582,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SneakingMan", nullptr},
     {"SnowManRaceNpc", nullptr},
     {"SnowVolume", nullptr},
-    {"SnowVolumeEraser", nullptr},
+    {"SnowVolumeEraser", al::createActorFunction<SnowVolumeEraser>},
     {"Souvenir", al::createActorFunction<Souvenir>},
     {"SouvenirDirector", nullptr},
     {"Special2KeyMoveLift", al::createActorFunction<Special2KeyMoveLift>},

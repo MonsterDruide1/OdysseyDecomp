@@ -12,7 +12,3 @@ PlayerJudgeAbyssDeadStatus::PlayerJudgeAbyssDeadStatus(const PlayerJudgeSameNerv
 bool PlayerJudgeAbyssDeadStatus::judge() const {
     return rs::isJudge(mNerve) && !mSafePoint->isValid();
 }
-
-void PlayerJudgeAbyssDeadStatus::reset() {}
-
-void PlayerJudgeAbyssDeadStatus::update() {}

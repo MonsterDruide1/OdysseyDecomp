@@ -10,10 +10,6 @@ PlayerJudgeStartRise::PlayerJudgeStartRise(const al::LiveActor* player,
                                            const IPlayerModelChanger* modelChanger)
     : mPlayer(player), mAreaChecker(areaChecker), mModelChanger(modelChanger) {}
 
-void PlayerJudgeStartRise::reset() {}
-
-void PlayerJudgeStartRise::update() {}
-
 bool PlayerJudgeStartRise::judge() const {
     return !mModelChanger->is2DModel() && mAreaChecker->isInRise(al::getTrans(mPlayer));
 }

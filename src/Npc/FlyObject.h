@@ -75,9 +75,11 @@ class FukanKunInteractionEmpty {
 public:
     FukanKunInteractionEmpty() = default;
 
-    virtual void init(FlyObject* flyObject, const al::ActorInitInfo& info);
-    virtual void setUp(FlyObject* flyObject);
-    virtual void control(FlyObject* flyObject);
+    virtual void init(FlyObject* flyObject, const al::ActorInitInfo& info) {}
+
+    virtual void setUp(FlyObject* flyObject) {}
+
+    virtual void control(FlyObject* flyObject) {}
 
     virtual al::MessageSystem* getMessageSystem() const { return nullptr; }
 };
@@ -91,6 +93,7 @@ public:
     void init(FlyObject* flyObject, const al::ActorInitInfo& info) override;
     void setUp(FlyObject* flyObject) override;
     void control(FlyObject* flyObject) override;
+
     virtual void interact(FlyObject* flyObject) = 0;
 
 private:
@@ -104,7 +107,9 @@ class FukanKunMessageHolder : public FukanKunInteractionBase {
 public:
     FukanKunMessageHolder();
     void init(FlyObject* flyObject, const al::ActorInitInfo& info) override;
-    al::MessageSystem* getMessageSystem() const override;
+
+    al::MessageSystem* getMessageSystem() const override { return mMessageSystem; }
+
     void interact(FlyObject* flyObject) override;
 
 private:

@@ -15,10 +15,6 @@ PlayerJudgeWallHitDown::PlayerJudgeWallHitDown(const al::LiveActor* player,
                                                const PlayerTrigger* trigger)
     : mPlayer(player), mCollider(collider), mConst(pConst), mTrigger(trigger) {}
 
-void PlayerJudgeWallHitDown::reset() {}
-
-void PlayerJudgeWallHitDown::update() {}
-
 bool PlayerJudgeWallHitDown::judge() const {
     if (!rs::isCollidedWall(mCollider))
         return false;

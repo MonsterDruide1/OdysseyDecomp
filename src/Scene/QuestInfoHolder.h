@@ -10,9 +10,11 @@
 #include "Scene/SceneObjFactory.h"
 
 namespace al {
+struct ActorInitInfo;
 class IUseSceneObjHolder;
 class LiveActor;
 class PlacementInfo;
+class SceneObjHolder;
 }  // namespace al
 class QuestInfo;
 

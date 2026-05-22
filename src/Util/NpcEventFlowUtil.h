@@ -73,4 +73,5 @@ bool isEventAfterDoorSnow1(const al::EventFlowNode*);
 bool isEventAfterDoorSnow2(const al::EventFlowNode*);
 bool isEventAfterDoorSnow3(const al::EventFlowNode*);
 bool isEventAfterDoorSnow4(const al::EventFlowNode*);
+bool checkTriggerDecideWithRequestIcon(al::LiveActor*, const sead::Vector3f&, f32);
 }  // namespace rs

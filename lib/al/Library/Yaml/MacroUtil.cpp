@@ -131,56 +131,28 @@ YamlClassId YamlParam_YamlString::getClassId() const {
     return YamlClassId::String;
 }
 
-void YamlParam_YamlString::setPtr_YamlString(const char** value) {
-    setParamPtr(value);
-}
-
 YamlClassId YamlParam_V3f::getClassId() const {
     return YamlClassId::V3f;
-}
-
-void YamlParam_V3f::setPtr_V3f(sead::Vector3f* value) {
-    setParamPtr(value);
 }
 
 YamlClassId YamlParam_YamlColor::getClassId() const {
     return YamlClassId::Color;
 }
 
-void YamlParam_YamlColor::setPtr_YamlColor(sead::Color4f* value) {
-    setParamPtr(value);
-}
-
 YamlClassId YamlParam_bool::getClassId() const {
     return YamlClassId::Bool;
-}
-
-void YamlParam_bool::setPtr_bool(bool* value) {
-    setParamPtr(value);
 }
 
 YamlClassId YamlParam_u8::getClassId() const {
     return YamlClassId::U8;
 }
 
-void YamlParam_u8::setPtr_u8(u8* value) {
-    setParamPtr(value);
-}
-
 YamlClassId YamlParam_f32::getClassId() const {
     return YamlClassId::F32;
 }
 
-void YamlParam_f32::setPtr_f32(f32* value) {
-    setParamPtr(value);
-}
-
 YamlClassId YamlParam_V2f::getClassId() const {
     return YamlClassId::V2f;
-}
-
-void YamlParam_V2f::setPtr_V2f(sead::Vector2f* value) {
-    setParamPtr(value);
 }
 
 }  // namespace alYamlMacroUtil

@@ -16,5 +16,4 @@ void EventFlowNode::execute() {
     control();
 }
 
-void EventFlowNode::init(const EventFlowNodeInitInfo& initInfo) {}
 }  // namespace al

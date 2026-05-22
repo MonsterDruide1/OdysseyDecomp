@@ -108,10 +108,3 @@ void RabbitGraphRailKeeper::exeWait() {
     if (al::isFirstStep(this)) {
     }
 }
-
-al::RailRider* RabbitGraphRailKeeper::getRailRider() const {
-    if (mRailRider)
-        return mRailRider;
-
-    return al::LiveActor::getRailRider();
-}
