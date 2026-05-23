@@ -28,7 +28,7 @@ public:
                     al::HitSensor* self) override;
 
 private:
-    char filler_108[0x38];
+    char filler_108[0x140 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(GrowerBug) == 0x140);

@@ -27,7 +27,7 @@ public:
     void exeEnd();
 
 private:
-    char filler_108[0xb0];
+    char filler_108[0x1B8 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Gotogoton) == 0x1b8);

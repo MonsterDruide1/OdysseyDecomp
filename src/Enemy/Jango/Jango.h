@@ -22,7 +22,7 @@ public:
     void exeBlowDown();
 
 private:
-    char filler_108[0x80];
+    char filler_108[0x188 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Jango) == 0x188);

@@ -36,7 +36,7 @@ public:
     f32 getFrontStart() const;
 
 private:
-    char filler_108[0x70];
+    char filler_108[0x178 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Byugo) == 0x178);

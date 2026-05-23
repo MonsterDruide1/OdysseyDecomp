@@ -39,7 +39,7 @@ public:
     virtual u32 calcCost(s32, s32, const RootSercherNode*) const;
 
 private:
-    char filler_0[0x48];
+    char filler_8[0x40];
 };
 
 static_assert(sizeof(RootSercher) == 0x48);

@@ -34,7 +34,7 @@ public:
     void exeSink();
 
 private:
-    char filler_108[0xc8];
+    char filler_108[0x1d0 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(GabuZou) == 0x1d0);

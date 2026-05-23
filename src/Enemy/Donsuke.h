@@ -4,7 +4,7 @@
 
 class Donsuke : public al::LiveActor {
 public:
-    Donsuke(const char*);
+    Donsuke(const char* name);
 
     void init(const al::ActorInitInfo& info) override;
     void endClipped() override;
@@ -52,7 +52,7 @@ public:
     bool isPlayerPosBack();
 
 private:
-    char filler_108[0x78];
+    char filler_108[0x180 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Donsuke) == 0x180);

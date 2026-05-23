@@ -8,8 +8,8 @@ class Bubble2D : public al::LiveActor, public IUseDimension {
 public:
     Bubble2D(const char* name);
 
-    void init(const al::ActorInitInfo&) override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
+    void init(const al::ActorInitInfo& info) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     void exeInitDelay();
 
     void exeWait();
@@ -19,7 +19,7 @@ public:
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
 private:
-    char filler_110[0x38];
+    char filler_110[0x148 - sizeof(al::LiveActor) - sizeof(IUseDimension)];
 };
 
 static_assert(sizeof(Bubble2D) == 0x148);

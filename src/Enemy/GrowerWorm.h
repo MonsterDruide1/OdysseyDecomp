@@ -27,7 +27,7 @@ public:
                     al::HitSensor* self) override;
 
 private:
-    char filler_108[0x28];
+    char filler_108[0x130 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(GrowerWorm) == 0x130);

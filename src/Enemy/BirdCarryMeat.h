@@ -24,7 +24,7 @@ public:
     al::RailRider* getRailRider() const override;
 
 private:
-    char filler_108[0x78];
+    char filler_108[0x180 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(BirdCarryMeat) == 0x180);

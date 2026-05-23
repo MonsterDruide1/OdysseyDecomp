@@ -8,18 +8,18 @@ class Chorobon : public al::LiveActor, public IUseDimension {
 public:
     Chorobon(const char* name, const f32*);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void control() override;
 
     void exeMove();
     void exeReaction();
 
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
     ActorDimensionKeeper* getActorDimensionKeeper() const override;
 
 private:
-    char filler_110[0x50];
+    char filler_110[0x160 - sizeof(al::LiveActor) - sizeof(IUseDimension)];
 };
 
 static_assert(sizeof(Chorobon) == 0x160);

@@ -31,7 +31,7 @@ public:
     u32 getVisibleBodyNum() const;
 
 private:
-    char filler_108[0xb8];
+    char filler_108[0x1c0 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Imomu) == 0x1c0);

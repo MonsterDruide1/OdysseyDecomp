@@ -42,7 +42,7 @@ public:
     bool tryReceiveMsgTrample(const al::SensorMsg*, const al::HitSensor*, const al::HitSensor*);
 
 private:
-    char filler_108[0x40];
+    char filler_108[0x148 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Bull) == 0x148);

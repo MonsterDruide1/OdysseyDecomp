@@ -68,7 +68,7 @@ public:
     void updateVelocity();
 
 private:
-    char filler_108[0x78];
+    char filler_108[0x180 - sizeof(al::LiveActor)];
 };
 
 static_assert(sizeof(Tsukkun) == 0x180);
