@@ -200,10 +200,6 @@ bool CoinCollectHolder::tryFindExStageHintObjTrans(sead::Vector3f* outTrans,
     return false;
 }
 
-const char* CoinCollectHolder::getSceneObjName() const {
-    return "コレクトコイン保持者";
-}
-
 namespace rs {
 CoinCollectHolder* createCoinCollectHolder(const al::IUseSceneObjHolder* objHolder) {
     return al::createSceneObj<CoinCollectHolder>(objHolder);

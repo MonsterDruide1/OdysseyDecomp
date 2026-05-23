@@ -9,7 +9,7 @@ class SwitchOnAreaGroup {
 public:
     SwitchOnAreaGroup(AreaObjGroup* areaObjGroup);
 
-    virtual bool isExternalCondition() const;
+    virtual bool isExternalCondition() const { return true; }
 
     void update(const sead::Vector3f* positions, s32 posCount);
     void update(const sead::Vector3f& position);

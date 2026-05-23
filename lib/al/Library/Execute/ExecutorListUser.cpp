@@ -10,10 +10,6 @@ ExecutorListIUseExecutorBase::ExecutorListIUseExecutorBase(const char* name, s32
         mList[i] = nullptr;
 }
 
-bool ExecutorListIUseExecutorBase::isActive() const {
-    return mSize > 0;
-}
-
 void ExecutorListIUseExecutorBase::registerUser(IUseExecutor* user) {
     mList[mSize] = user;
     mSize++;

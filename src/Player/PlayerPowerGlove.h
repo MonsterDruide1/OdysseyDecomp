@@ -6,7 +6,8 @@ class PlayerPowerGlove : public al::LiveActor {
 public:
     PlayerPowerGlove();
 
-    void init(const al::ActorInitInfo& info) override;
+    void init(const al::ActorInitInfo& info) override {}
+
     void initPartsMtx(al::LiveActor* player, const al::ActorInitInfo& info,
                       const sead::Matrix34f* playerBaseMtx);
     void makeActorAlive() override;

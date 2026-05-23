@@ -16,7 +16,8 @@ class ExecutorListLayoutDrawBase : public ExecutorListBase {
 public:
     ExecutorListLayoutDrawBase(const char* name, s32 size, const ExecuteSystemInitInfo& initInfo);
 
-    bool isActive() const override;
+    bool isActive() const override { return mSize > 0; }
+
     void executeList() const override;
     virtual void startDraw() const = 0;
 

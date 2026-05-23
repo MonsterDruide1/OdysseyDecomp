@@ -67,12 +67,6 @@ void OnRails::move(al::LiveActor* actor, f32 speed) {
         al::setNerve(actor, &Disappear);
 }
 
-void FukanKunInteractionEmpty::init(FlyObject* flyObject, const al::ActorInitInfo& info) {}
-
-void FukanKunInteractionEmpty::setUp(FlyObject* flyObject) {}
-
-void FukanKunInteractionEmpty::control(FlyObject* flyObject) {}
-
 FukanKunInteractionBase::FukanKunInteractionBase(s32 displayTime) : mDisplayTime(displayTime) {}
 
 void FukanKunInteractionBase::init(FlyObject* flyObject, const al::ActorInitInfo& info) {
@@ -97,10 +91,6 @@ void FukanKunMessageHolder::init(FlyObject* flyObject, const al::ActorInitInfo& 
     mMessageSystem = al::getLayoutInitInfo(info).getMessageSystem();
     mCapMsg = al::StringTmp<64>("CapMsg_%s", al::createPlacementId(info)->getId());
     FukanKunInteractionBase::init(flyObject, info);
-}
-
-al::MessageSystem* FukanKunMessageHolder::getMessageSystem() const {
-    return mMessageSystem;
 }
 
 void FukanKunMessageHolder::interact(FlyObject* flyObject) {

@@ -42,6 +42,8 @@ public:
 
     f32 getTransY() const { return mTransY; }
 
+    void setTransY(f32 transY) { mTransY = transY; }
+
 private:
     const f32* mExternalFallDistance = nullptr;
     f32 mTransY = 0.0f;

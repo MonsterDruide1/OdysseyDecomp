@@ -60,5 +60,3 @@ void PlayerPowerGlove::control() {
 void PlayerPowerGlove::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     rs::sendMsgCapAttack(other, mPlayerBodySensor);
 }
-
-void PlayerPowerGlove::init(const al::ActorInitInfo& info) {}

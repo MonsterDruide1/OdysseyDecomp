@@ -260,7 +260,4 @@ bool AreaShapeInfinite::calcLocalBoundingBox(sead::BoundBox3f* out) const {
     return false;
 }
 
-bool AreaShapeOval::calcLocalBoundingBox(sead::BoundBox3f* out) const {
-    return false;
-}
 }  // namespace al

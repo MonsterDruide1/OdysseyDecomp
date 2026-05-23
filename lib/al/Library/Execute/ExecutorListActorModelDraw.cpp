@@ -36,10 +36,6 @@ ExecutorListActorModelDrawBase::~ExecutorListActorModelDrawBase() {
         delete mList[i];
 }
 
-bool ExecutorListActorModelDrawBase::isActive() const {
-    return mSize > 0;
-}
-
 void ExecutorListActorModelDrawBase::executeList() const {
     if (!ExecutorListActorModelDrawBase::isActive())
         return;

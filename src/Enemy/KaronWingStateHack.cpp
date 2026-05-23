@@ -171,10 +171,6 @@ void KaronWingStateHack::control() {
     mDepthShadowMapCtrl->update(mPlayerCollider);
 }
 
-PlayerCollider* KaronWingStateHack::getPlayerCollider() const {
-    return mPlayerCollider;
-}
-
 void KaronWingStateHack::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (al::isNerve(this, &NrvHostType.Wait) || al::isNerve(this, &NrvHostType.Walk))
         return;

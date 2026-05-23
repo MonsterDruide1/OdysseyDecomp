@@ -83,7 +83,9 @@
 #include "MapObj/ChurchDoor.h"
 #include "MapObj/CitySignal.h"
 #include "MapObj/CoinCollectHintObj.h"
+#include "MapObj/CollectBgmSpeaker.h"
 #include "MapObj/CollectionList.h"
+#include "MapObj/DelaySwitch.h"
 #include "MapObj/DoorCity.h"
 #include "MapObj/DoorSnow.h"
 #include "MapObj/Doshi.h"
@@ -95,6 +97,8 @@
 #include "MapObj/HipDropMoveLift.h"
 #include "MapObj/HipDropRepairParts.h"
 #include "MapObj/HipDropSwitch.h"
+#include "MapObj/HomeInside.h"
+#include "MapObj/HomeShip.h"
 #include "MapObj/KoopaShip.h"
 #include "MapObj/LavaFryingPan.h"
 #include "MapObj/LavaPan.h"
@@ -118,6 +122,7 @@
 #include "MapObj/ShopMark.h"
 #include "MapObj/SignBoard.h"
 #include "MapObj/SignBoardDanger.h"
+#include "MapObj/SnowVolumeEraser.h"
 #include "MapObj/Souvenir.h"
 #include "MapObj/Special2KeyMoveLift.h"
 #include "MapObj/StageSwitchSelector.h"
@@ -257,7 +262,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CloudStep", nullptr},
     {"CollapseSandHill", nullptr},
     {"CollectAnimalWatcher", nullptr},
-    {"CollectBgmSpeaker", nullptr},
+    {"CollectBgmSpeaker", al::createActorFunction<CollectBgmSpeaker>},
     {"CollectionList", al::createActorFunction<CollectionList>},
     {"Coin", al::createActorFunction<Coin>},
     {"Coin2D", al::createActorFunction<Coin2D>},
@@ -274,7 +279,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CoinStackGroup", al::createActorFunction<CoinStackGroup>},
     {"CrystalBreakable", nullptr},
     {"DamageBallGenerator", nullptr},
-    {"DelaySwitch", nullptr},
+    {"DelaySwitch", al::createActorFunction<DelaySwitch>},
     {"DemoActorCapManHero", nullptr},
     {"DemoActorCapManHeroine", nullptr},
     {"DemoActorKoopaShip", nullptr},
@@ -383,8 +388,8 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HipDropTransformPartsWatcher", nullptr},
     {"HomeBed", nullptr},
     {"HomeChair", nullptr},
-    {"HomeInside", nullptr},
-    {"HomeShip", nullptr},
+    {"HomeInside", al::createActorFunction<HomeInside>},
+    {"HomeShip", al::createActorFunction<HomeShip>},
     {"Hosui", nullptr},
     {"IcicleFall", nullptr},
     {"Imomu", nullptr},
@@ -579,7 +584,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SneakingMan", nullptr},
     {"SnowManRaceNpc", nullptr},
     {"SnowVolume", nullptr},
-    {"SnowVolumeEraser", nullptr},
+    {"SnowVolumeEraser", al::createActorFunction<SnowVolumeEraser>},
     {"Souvenir", al::createActorFunction<Souvenir>},
     {"SouvenirDirector", nullptr},
     {"Special2KeyMoveLift", al::createActorFunction<Special2KeyMoveLift>},

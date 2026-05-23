@@ -24,7 +24,7 @@ public:
 
     EventFlowDataHolder* getEventFlowDataHolder() const override { return mEventFlowDataHolder; }
 
-    virtual void init(const EventFlowNodeInitInfo& info);
+    virtual void init(const EventFlowNodeInitInfo& info) {}
 
     virtual void initAfterChart() {}
 

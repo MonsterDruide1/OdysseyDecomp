@@ -13,8 +13,11 @@ class PlayerJudgeWallHitDown : public IJudge {
 public:
     PlayerJudgeWallHitDown(const al::LiveActor* player, const IUsePlayerCollision* collider,
                            const PlayerConst* pConst, const PlayerTrigger* trigger);
-    void reset() override;
-    void update() override;
+
+    void reset() override {}
+
+    void update() override {}
+
     bool judge() const override;
 
 private:
