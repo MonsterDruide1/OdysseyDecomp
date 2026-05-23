@@ -14,3 +14,5 @@ public:
 private:
     s8 filler_198[0x1A8 - sizeof(DemoScene)];
 };
+
+static_assert(sizeof(DemoSceneWithCinemaCaption) == 0x1A8);

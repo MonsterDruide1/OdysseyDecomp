@@ -30,3 +30,5 @@ public:
 private:
     s8 filler_d8[0x190 - sizeof(al::Scene)];
 };
+
+static_assert(sizeof(EndingScene) == 0x190);

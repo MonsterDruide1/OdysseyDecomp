@@ -39,3 +39,5 @@ public:
 private:
     s8 filler_d8[0x358 - sizeof(al::Scene)];
 };
+
+static_assert(sizeof(DemoChangeWorldScene) == 0x358);

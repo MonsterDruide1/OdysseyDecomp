@@ -50,3 +50,5 @@ public:
 private:
     s8 filler_e0[0x6250 - sizeof(al::Scene) - sizeof(al::IUseMessageSystem)];
 };
+
+static_assert(sizeof(StaffRollScene) == 0x6250);

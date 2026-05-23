@@ -32,3 +32,5 @@ public:
 private:
     s8 filler_d8[0x1D0 - sizeof(al::Scene)];
 };
+
+static_assert(sizeof(WorldWarpHoleScene) == 0x1D0);
