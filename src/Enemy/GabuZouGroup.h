@@ -3,6 +3,10 @@
 #include "Library/Action/RootSercher.h"
 #include "Library/LiveActor/LiveActor.h"
 
+namespace al {
+class LiveActorGroup;
+}
+
 class GabuZou;
 
 class GabuZouRootSercher : public al::RootSercher {
