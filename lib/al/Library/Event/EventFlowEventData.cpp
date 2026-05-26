@@ -5,8 +5,8 @@
 
 namespace al {
 
-EventFlowEventData::EventFlowEventData(const char* name, const EventFlowNodeInitInfo& info) {
-    mName = name;
+EventFlowEventData::EventFlowEventData(const char* name, const EventFlowNodeInitInfo& info)
+    : mName(name) {
     mParamIter = new ByamlIter();
     tryGetParamIter(mParamIter, info);
 }
