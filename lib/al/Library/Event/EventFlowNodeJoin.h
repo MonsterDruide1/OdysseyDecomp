@@ -9,4 +9,6 @@ public:
 
     void init(const EventFlowNodeInitInfo& info) override;
 };
+
+static_assert(sizeof(EventFlowNodeJoin) == 0x68);
 }  // namespace al
