@@ -2,6 +2,7 @@
 
 #include "Library/Event/CreateEventFlowNode.h"
 #include "Library/Event/EventFlowNodeActionLoop.h"
+#include "Library/Event/EventFlowNodeJoin.h"
 
 const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeFactoryEntries[] = {
     {"ActionLoop", al::createEventFlowNode<al::EventFlowNodeActionLoop>},
@@ -74,7 +75,7 @@ const al::NameToCreator<al::EventFlowNodeCreatorFunction> sProjectEventFlowNodeF
     {"IsEnableSearchAmiibo", nullptr},
     {"IsTalkAmiiboHelp", nullptr},
     {"KakkuTurn", nullptr},
-    {"Join", nullptr},
+    {"Join", al::createEventFlowNode<al::EventFlowNodeJoin>},
     {"JumpEntry", nullptr},
     {"MessageBalloon", nullptr},
     {"MessageTalk", nullptr},
