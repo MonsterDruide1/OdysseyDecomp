@@ -18,7 +18,7 @@ public:
 
     void init(const al::ActorInitInfo& info) override;
     void updateHintPos(const sead::Vector3f& pos);
-    al::LiveActor* appearShineFromFruit(const sead::Vector3f& pos);
+    Shine* appearShineFromFruit(const sead::Vector3f& pos);
 
 private:
     sead::PtrArray<Shine> mShines;
@@ -26,7 +26,3 @@ private:
 };
 
 static_assert(sizeof(YoshiFruitShineHolder) == 0x120);
-
-namespace rs {
-void registerFruitShineHolder(YoshiFruitShineHolder*);
-}  // namespace rs

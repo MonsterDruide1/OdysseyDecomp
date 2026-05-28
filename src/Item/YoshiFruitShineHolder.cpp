@@ -32,7 +32,7 @@ void YoshiFruitShineHolder::updateHintPos(const sead::Vector3f& pos) {
         rs::updateHintTrans(&shine, pos);
 }
 
-al::LiveActor* YoshiFruitShineHolder::appearShineFromFruit(const sead::Vector3f& pos) {
+Shine* YoshiFruitShineHolder::appearShineFromFruit(const sead::Vector3f& pos) {
     Shine* shine = mShines[mAppearedCount];
 
     al::resetPosition(shine, pos);
