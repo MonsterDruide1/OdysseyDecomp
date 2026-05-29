@@ -52,11 +52,12 @@ const sead::Vector3f gLightOffset = {0.0f, 0.0f, 100.0f};
 Killer::Killer(const char* name) : al::LiveActor(name) {}
 
 void Killer::init(const al::ActorInitInfo& info) {
-    if (!mIsMagnum)
-        al::initActorWithArchiveName(this, info, "Killer", nullptr);
-    else
+    if (mIsMagnum)
         al::initActorWithArchiveName(this, info, "KillerMagnum", nullptr);
+    else
+        al::initActorWithArchiveName(this, info, "Killer", nullptr);
 
+    // NOTE: reserves space for 3 substates, but only adds 2
     al::initNerve(this, &NrvKiller.Fly, 3);
     mEnemyStateDamageCap = new EnemyStateDamageCap(this);
 
@@ -205,7 +206,7 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     if (al::isSensorName(self, "AttackMagnum"))
         return false;
 
-    if (al::isNerve(this, &NrvKiller.Hack)) {
+    if (isHack()) {
         if (mKillerStateHack->receiveMsgHackEnd(message, other, self)) {
             if (rs::isModeE3MovieRom())
                 EnemyStateHackFunction::endHackSwitchShadow(this, nullptr);
@@ -260,7 +261,7 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     }
 
     if (rs::isMsgKillerMagnumAttack(message)) {
-        if (!al::isNerve(this, &NrvKiller.Hack) || !mIsMagnum)
+        if (!isHack() || !mIsMagnum)
             explode();
 
         return true;
@@ -292,7 +293,7 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
     if (mIsMagnum && al::tryReceiveMsgPushAndAddVelocityH(this, message, other, self, 1.0f))
         return true;
 
-    if (al::isNerve(this, &NrvKiller.Hack))
+    if (isHack())
         return mKillerStateHack->receiveMsg(message, other, self);
 
     if (mKillerStateHack->receiveMsgNpcScareByEnemy(message))
@@ -325,10 +326,8 @@ bool Killer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
         return true;
     }
 
-    if (!rs::isMsgPlayerAndCapObjHipDropReflectAll(message) && !rs::isMsgPressDown(message))
-        return false;
-
-    if (_120 <= 0) {
+    if ((rs::isMsgPlayerAndCapObjHipDropReflectAll(message) || rs::isMsgPressDown(message)) &&
+        _120 <= 0) {
         rs::requestHitReactionToAttacker(message, self, other);
         rs::setAppearItemFactorAndOffsetByMsg(this, message, other);
         al::setNerve(this, &NrvKiller.FallDown);
@@ -349,7 +348,7 @@ void Killer::resetAliveCountAndAnim() {
 }
 
 void Killer::control() {
-    if (!al::isNerve(this, &NrvKiller.Hack) && mIsUseCaptureLight) {
+    if (!isHack() && mIsUseCaptureLight) {
         if (al::isAlive(al::getSubActor(this, "キラーアイライト")))
             al::getSubActor(this, "キラーアイライト")->kill();
 
@@ -363,12 +362,13 @@ void Killer::control() {
     sead::Vector3f front;
     al::calcFrontDir(&front, this);
 
-    if (!al::isNerve(this, &NrvKiller.Hack) || !mKillerStateHack->isStarting()) {
+    // adds roll based on current horizontal rotation speed
+    if (!isHack() || !mKillerStateHack->isStarting()) {
         f32 angle = al::calcAngleOnPlaneDegree(front, mFrontDir, sead::Vector3f::ey);
         f32 rate;
         if (!mIsMagnum)
             rate = 1.2f;
-        else if (al::isNerve(this, &NrvKiller.Hack))
+        else if (isHack())
             rate = 2.0f;
         else
             rate = 0.7f;
@@ -389,10 +389,10 @@ void Killer::control() {
 
     if (al::isNerve(this, &NrvKiller.Explode) || al::isNerve(this, &NrvKiller.FallDown) ||
         al::isNerve(this, &NrvKiller.Appear) || al::isNerve(this, &NrvKiller.StandBy) ||
-        (al::isNerve(this, &NrvKiller.Hack) && mKillerStateHack->isStarting()))
+        (isHack() && mKillerStateHack->isStarting()))
         return;
 
-    if (al::isNerve(this, &NrvKiller.Hack)) {
+    if (isHack()) {
         if (mExplosionTime > 180.0f)
             if (!mIsMagnum)
                 mExplosionTime -= sead::Mathf::min(al::getVelocity(this).length() / 10.8f, 3.8f);
@@ -416,7 +416,7 @@ void Killer::control() {
     if (mExplosionTime <= 180.0f) {
         al::tryStartMclAnimIfNotPlaying(this, "SignExplosion");
 
-        if (al::isNerve(this, &NrvKiller.Hack))
+        if (isHack())
             al::holdSe(this, "ExplodeSign");
     }
 
@@ -529,7 +529,7 @@ void Killer::applyVelocityDamp() {
     al::scaleVelocity(this, mIsMagnum ? 0.90f : 0.95f);
 }
 
-bool FUN_7100146a14(Killer*, bool);
+static bool isExplodeCollision(Killer* killer, bool isMagnum);
 
 void Killer::exeFly() {
     if (al::isFirstStep(this)) {
@@ -542,21 +542,21 @@ void Killer::exeFly() {
     if (player && !rs::isPlayer2D(this)) {
         const sead::Vector3f& playerTrans = al::getTrans(player);
         f32 distance = al::calcDistance(this, playerTrans);
-        f32 fVar5 = mIsMagnum ? 0.4f : 2.4f;
+        f32 turnDegrees = mIsMagnum ? 0.4f : 2.4f;
 
         if (distance < (mIsMagnum ? 700.0f : 1100.0f))
-            fVar5 *= distance / (mIsMagnum ? 700.0f : 1100.0f);
+            turnDegrees *= distance / (mIsMagnum ? 700.0f : 1100.0f);
 
-        al::turnToTarget(this, playerTrans, fVar5);
+        al::turnToTarget(this, playerTrans, turnDegrees);
     }
 
     applyVelocityDamp();
 
-    if (FUN_7100146a14(this, mIsMagnum))
+    if (isExplodeCollision(this, mIsMagnum))
         explode();
 }
 
-bool FUN_7100146a14(Killer* killer, bool isMagnum) {
+bool isExplodeCollision(Killer* killer, bool isMagnum) {
     al::HitSensor* wallSensor = al::tryGetCollidedWallSensor(killer);
     if (wallSensor) {
         if (al::getCollidedWallNormal(killer).dot(al::getVelocity(killer)) > -0.2f)
@@ -616,15 +616,17 @@ void Killer::exeHack() {
     if (al::isFirstStep(this))
         mHasExplosion = false;
 
-    if (!al::updateNerveState(this)) {
-        if (!FUN_7100146a14(this, mIsMagnum))
-            return;
+    if (al::updateNerveState(this)) {
+        explode();
 
-        al::startVisAnim(this, "HackOff");
-        al::startMclAnim(this, "HackOff");
+        return;
     }
 
-    explode();
+    if (isExplodeCollision(this, mIsMagnum)) {
+        al::startVisAnim(this, "HackOff");
+        al::startMclAnim(this, "HackOff");
+        explode();
+    }
 }
 
 void Killer::exeAfterHack() {
@@ -645,7 +647,7 @@ void Killer::exeAfterHack() {
     if (al::isGreaterEqualStep(this, mIsMagnum ? 180 : 280)) {
         mHasExplosion = true;
         al::setNerve(this, &NrvKiller.Fly);
-    } else if (FUN_7100146a14(this, mIsMagnum)) {
+    } else if (isExplodeCollision(this, mIsMagnum)) {
         explode();
     }
 }
