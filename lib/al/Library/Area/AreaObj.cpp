@@ -40,11 +40,11 @@ void AreaObj::init(const AreaInitInfo& info) {
     mAreaShape->setScale(scale);
 
     initStageSwitch(this, info.getStageSwitchDirector(), info);
-    if (listenStageSwitchOnOffAppear(this, AreaObjFunctor(this, &AreaObj::invalidate),
-                                     AreaObjFunctor(this, &AreaObj::validate)))
+    if (listenStageSwitchOnOffAppear(this, AreaObjFunctor(this, &AreaObj::validate),
+                                     AreaObjFunctor(this, &AreaObj::invalidate)))
         invalidate();
 
-    if (listenStageSwitchOnKill(this, AreaObjFunctor(this, &AreaObj::validate)))
+    if (listenStageSwitchOnKill(this, AreaObjFunctor(this, &AreaObj::invalidate)))
         validate();
 }
 
