@@ -33,14 +33,14 @@ private:
     sead::Vector3f mExternalVelocity = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mAreaVelocity = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mTotalVelocity = {0.0f, 0.0f, 0.0f};
-    const al::LiveActor* mActor = nullptr;
-    const IUsePlayerCollision* mCollision = nullptr;
-    const sead::Vector3f* mTrans = nullptr;
+    const al::LiveActor* mActor;
+    const IUsePlayerCollision* mCollision;
+    const sead::Vector3f* mTrans;
     bool mIsRumbleActive = false;
     sead::Vector3f mExternalForce = {0.0f, 0.0f, 0.0f};
 
     sead::Vector2f mExternalDrag = {0.95f, 0.955f};
-    sead::Vector2f mAreaDrag = {0.95f, 0.955f};
+    sead::Vector2f mAreaDrag;
     sead::Vector2f mSensitivity = {0.275f, 0.275f};
 
     sead::Vector3f mSnapForce = {0.0f, 0.0f, 0.0f};
