@@ -12,11 +12,10 @@
 #include "Util/PlayerCollisionUtil.h"
 #include "Util/SensorMsgFunction.h"
 
-// NON_MATCHING: Different optimization https://decomp.me/scratch/Tjb13
 PlayerExternalVelocity::PlayerExternalVelocity(const al::LiveActor* actor,
                                                const IUsePlayerCollision* collision,
                                                const sead::Vector3f* trans)
-    : mActor(actor), mCollision(collision), mTrans(trans) {
+    : mActor(actor), mCollision(collision), mTrans(trans), mAreaDrag(mExternalDrag) {
     mExternalForceKeeper = new ExternalForceKeeper();
 }
 
