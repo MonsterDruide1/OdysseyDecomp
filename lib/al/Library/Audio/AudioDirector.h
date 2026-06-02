@@ -50,7 +50,7 @@ public:
     void addAudiioFrameProccess(aal::IAudioFrameProcess* process);
     void removeAudiioFrameProccess(aal::IAudioFrameProcess* process);
     void* getAudioMaximizer() const;  // unknown return type
-    bool isPpausedSystem(const char* name) const;
+    bool isPpausedSystem(const char* name);
 
     void pauseSystem(bool, const char*, bool, f32, bool, bool, bool) override;
     AreaObjDirector* getAreaObjDirector() const override;
