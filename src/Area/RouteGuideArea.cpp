@@ -14,7 +14,7 @@ void RouteGuideArea::init(const al::AreaInitInfo& info) {
     al::tryGetArg(&mIsGuide3D, info, "IsGuide3D");
     al::tryGetLinksTrans(&mTargetPosition, info, "TargetPosition");
     if (rs::isKidsMode(this))
-        rs::onRouteGuideSystem(this);
+        rs::createRouteGuideDirector(this);
 }
 
 void RouteGuideArea::calcGuidePos(sead::Vector3f* guidePos) const {

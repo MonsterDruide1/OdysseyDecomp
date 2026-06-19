@@ -12,7 +12,7 @@ struct AnimResInfo {
 
 class AnimInfoTable {
 public:
-    AnimInfoTable(u32);
+    AnimInfoTable(s32);
 
     const AnimResInfo& findAnimInfo(const char* name) const;
     bool tryFindAnimInfo(const char* name) const;

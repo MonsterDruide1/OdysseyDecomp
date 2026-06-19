@@ -256,7 +256,7 @@ void PlayerRecoverySafetyPoint::startRecovery(f32 height) {
     al::startAction(mTractorBubble, "Appear");
     updateRecoveryBubble();
 
-    if (mHackCap->isEnableRescuePlayer()) {
+    if (mHackCap->isRescuePlayer()) {
         al::LiveActor* hat = al::getSubActor(mTractorBubble, "装着帽子");
         hat->appear();
         al::startAction(hat, "LockOn");
