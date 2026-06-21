@@ -2,6 +2,7 @@
 
 namespace al {
 class ActorInitInfo;
+
 class SePlayObj {
 public:
     void init(const ActorInitInfo& info);
