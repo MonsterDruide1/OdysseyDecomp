@@ -64,18 +64,8 @@ All other systems have to manually install the required packages and programs. W
 Ubuntu users can install those dependencies by running:
 
 ```shell
-sudo apt install python3 ninja-build cmake ccache libssl-dev libncurses5 llvm
+sudo apt install python3 ninja-build cmake ccache libssl-dev llvm
 ```
-
-If you are running Ubuntu 23.10 or later, the `libncurses5` package won't be available anymore. You can install it from
-the archive using:
-
-```shell
-wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
-```
-
-For other systems, please check for the corresponding `libncurses5` backport, for
-example [ncurses5-compat-libs](https://aur.archlinux.org/packages/ncurses5-compat-libs) for Arch-based distributions.
 
 Additionally, you'll also need:
 
