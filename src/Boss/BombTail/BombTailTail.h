@@ -25,7 +25,7 @@ public:
     BombTailTailJointCalulator(al::LiveActor* actor, const al::LiveActor* parent_actor);
     void calcTailBombThrow(const sead::Matrix34f* matrix, s32 index, f32 rate);
     void calcTailBombThrowOld(const sead::Matrix34f* matrix);
-    void calcBounce(const sead::Matrix34f* matrix, float value);
+    void calcBounce(const sead::Matrix34f* matrix, f32 value);
     void calcReturn();
     void calcBombFollowMtx(sead::Matrix34f* matrix, f32 rate);
     void validateControl();
