@@ -9,8 +9,15 @@ class LiveActor;
 class SensorMsg;
 }  // namespace al
 class IUsePlayerPuppet;
-class BindKeepDemoInfo;
 class IUsePlayerCollision;
+
+struct BindKeepDemoInfo {
+    bool isActive = false;
+    sead::Vector3f trans = {0.0f, 0.0f, 0.0f};
+    sead::Quatf quat = sead::Quatf::unit;
+};
+
+static_assert(sizeof(BindKeepDemoInfo) == 0x20);
 
 namespace rs {
 IUsePlayerPuppet* startPuppet(al::HitSensor* actorHitSensor, al::HitSensor* playerHitSensor);
@@ -71,7 +78,7 @@ void validatePuppetReceivePush(IUsePlayerPuppet* playerPuppet);
 void invalidatePuppetReceivePush(IUsePlayerPuppet* playerPuppet);
 void forcePutOnPuppetCap(IUsePlayerPuppet* playerPuppet);
 void forcePutOnPuppetCapWithEffect(IUsePlayerPuppet* playerPuppet);
-void setForceRunAfterEndBind(IUsePlayerPuppet* playerPuppet, s32, f32);
+void setForceRunAfterEndBind(IUsePlayerPuppet* playerPuppet, s32 frame, f32 speed);
 void validateRecoveryArea(IUsePlayerPuppet* playerPuppet);
 void invalidateRecoveryArea(IUsePlayerPuppet* playerPuppet);
 void validateGuideArrow(IUsePlayerPuppet* playerPuppet);
@@ -95,7 +102,7 @@ bool isPuppetHoldAnyButton(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetMoveStickOn(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetStartWorldWarp(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetCancelWorldWarp(const IUsePlayerPuppet* playerPuppet);
-const sead::Vector2f& getPuppetMoveStick(const IUsePlayerPuppet* playerPuppet);
+const sead::Vector2f* getPuppetMoveStick(const IUsePlayerPuppet* playerPuppet);
 bool isTriggerGetOff(const IUsePlayerPuppet* playerPuppet);
 f32 getPuppetPoseRotZDegreeLeft(const IUsePlayerPuppet* playerPuppet);
 f32 getPuppetPoseRotZDegreeRight(const IUsePlayerPuppet* playerPuppet);

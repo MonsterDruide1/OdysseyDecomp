@@ -15,6 +15,7 @@ class LiveActor;
 
 class ActorDimensionKeeper;
 class HackCap;
+class IJudge;
 class IPlayerModelChanger;
 class IUsePlayerCollision;
 class PlayerAnimator;
@@ -82,7 +83,68 @@ public:
     bool isBinding() const;
     bool isNoCollide() const;
 
+    PlayerAnimator* getPlayerAnimator() const { return mPlayerAnimator; }
+
+    HackCap* getHackCap() const { return mHackCap; }
+
+    PlayerCounterForceRun* getPlayerCounterForceRun() const { return mPlayerCounterForceRun; }
+
+    PlayerEffect* getPlayerEffect() const { return mPlayerEffect; }
+
+    IJudge* getJumpButtonJudge() const { return mJumpButtonJudge; }
+
+    const PlayerInput* getPlayerInput() const { return mPlayerInput; }
+
+    const PlayerConst* getPlayerConst() const { return mPlayerConst; }
+
+    al::HitSensor* getPlayerHitSensor() const { return mPlayerHitSensor; }
+
+    void setBindEndCapThrow() { mIsBindEndCapThrow = true; }
+
+    void validateLookAt() { mIsLookAtValid = true; }
+
+    void invalidateLookAt() { mIsLookAtValid = false; }
+
+    void validateForceLookAt(const sead::Vector3f& lookAt) {
+        mIsForceLookAtValid = true;
+        mForceLookAt.x = lookAt.x;
+        mForceLookAt.y = lookAt.y;
+        mForceLookAt.z = lookAt.z;
+    }
+
+    void invalidateForceLookAt() { mIsForceLookAtValid = false; }
+
+    void validateSeparateMode() { mIsSeparateMode = true; }
+
+    void invalidateSeparateMode() { mIsSeparateMode = false; }
+
+    void validateReceivePush() { mIsReceivePushInvalid = false; }
+
+    void invalidateReceivePush() { mIsReceivePushInvalid = true; }
+
+    void validateRecoveryArea() { mIsRecoveryAreaValid = true; }
+
+    void invalidateRecoveryArea() { mIsRecoveryAreaValid = false; }
+
+    void validateGuideArrow() { mIsGuideArrowValid = true; }
+
+    void invalidateGuideArrow() { mIsGuideArrowValid = false; }
+
+    void validateWaterSurfaceShadow() { mIsWaterSurfaceShadowValid = true; }
+
+    void invalidateWaterSurfaceShadow() { mIsWaterSurfaceShadowValid = false; }
+
+    void markDitherAlphaCopied() { mIsDitherAlphaCopied = true; }
+
 private:
+    struct BindEndInfo {
+        sead::Vector3f trans;
+        s32 timeBeforeEnd;
+        f32 moveSpeed;
+    };
+
+    static_assert(sizeof(BindEndInfo) == 0x14);
+
     al::LiveActor* mActor;
     HackCap* mHackCap;
     PlayerAnimator* mPlayerAnimator;
@@ -93,36 +155,34 @@ private:
     PlayerCounterForceRun* mPlayerCounterForceRun;
     PlayerDamageKeeper* mPlayerDamageKeeper;
     PlayerEffect* mPlayerEffect;
-    void* _58;
-    PlayerInput* mPlayerInput;
-    PlayerConst* mPlayerConst;
-    al::HitSensor* _70;
-    al::HitSensor* _78;
-    bool _80;
-    bool _81;
-    bool _82;
-    sead::Vector3f _84;
-    sead::Vector3f _90;
-    al::AreaObj* mAreaObj;
+    IJudge* mJumpButtonJudge;
+    const PlayerInput* mPlayerInput;
+    const PlayerConst* mPlayerConst;
+    al::HitSensor* mActorHitSensor;
+    al::HitSensor* mPlayerHitSensor;
+    bool mHasRecoveryInfo;
+    bool mHasRecoveryInfoSafetyPoint;
+    bool mIsRecoveryInfoNoSafetyPoint;
+    sead::Vector3f mRecoveryTrans;
+    sead::Vector3f mRecoveryNormal;
+    const al::AreaObj* mRecoveryAreaObj;
     bool mIsBindEndOnGround;
     bool mIsBindEndJump;
-    bool _aa;
+    bool mIsBindEndCapThrow;
     bool mIsValidCollisionCheck;
-    bool _ac;
+    bool mIsReceivePushInvalid;
     bool mIsRequestDamage;
     bool _ae;
     bool mIsSensorValid;
-    bool _b0;
-    bool _b1;
-    bool _b2;
-    bool _b3;
-    bool _b4;
-    bool _b5;
-    bool _b6;
-
-    char filler[0x8];
-
-    sead::Vector3f _c8;
+    bool mIsLookAtValid;
+    bool mIsForceLookAtValid;
+    bool mIsRecoveryAreaValid;
+    bool mIsSeparateMode;
+    bool mIsGuideArrowValid;
+    bool mIsWaterSurfaceShadowValid;
+    bool mIsDitherAlphaCopied;
+    sead::Vector3f mForceLookAt;
+    BindEndInfo* mBindEndInfo;
 };
 
 static_assert(sizeof(PlayerPuppet) == 0xd0);
