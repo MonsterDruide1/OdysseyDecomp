@@ -108949,7 +108949,7 @@ Npc/SmallBirdStateFlyAway.o:
   - offset: 0x3d0cdc
     size: 2016
     label: _ZN21SmallBirdStateFlyAway10exeFlyAwayEv
-    status: NonMatchingMinor
+    status: NonMatchingMajor
   - offset: 0x3d14bc
     size: 340
     label: _ZN21SmallBirdStateFlyAway21exeFlyAwayHomeLandingEv
@@ -210912,7 +210912,7 @@ sead/gfx/seadDrawLockContext.o:
   - offset: 0x7730b4
     size: 76
     label: _ZN4sead14MathCalcCommonIiE3gcdEii
-    status: Matching
+    status: NonMatchingMajor
   - offset: 0x773100
     size: 92
     label: _ZN4sead14MathCalcCommonIiE3lcmEii
@@ -210920,7 +210920,7 @@ sead/gfx/seadDrawLockContext.o:
   - offset: 0x77315c
     size: 76
     label: _ZN4sead14MathCalcCommonIjE3gcdEjj
-    status: Matching
+    status: NonMatchingMajor
   - offset: 0x7731a8
     size: 92
     label: _ZN4sead14MathCalcCommonIjE3lcmEjj
@@ -210940,7 +210940,7 @@ sead/gfx/seadDrawLockContext.o:
   - offset: 0x773314
     size: 76
     label: _ZN4sead14MathCalcCommonIlE3gcdEll
-    status: Matching
+    status: NonMatchingMajor
   - offset: 0x773360
     size: 92
     label: _ZN4sead14MathCalcCommonIlE3lcmEll
@@ -210948,7 +210948,7 @@ sead/gfx/seadDrawLockContext.o:
   - offset: 0x7733bc
     size: 76
     label: _ZN4sead14MathCalcCommonImE3gcdEmm
-    status: Matching
+    status: NonMatchingMajor
   - offset: 0x773408
     size: 92
     label: _ZN4sead14MathCalcCommonImE3lcmEmm
@@ -318725,7 +318725,7 @@ sead.a:
   - offset: 0xb61a7c
     size: 156
     label: _ZN4sead17StringBuilderBaseIDsE27rstripUnprintableAsciiCharsEv
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0xb61b18
     size: 72
     label: _ZN4sead17StringBuilderBaseIDsE4trimEi
@@ -318737,7 +318737,7 @@ sead.a:
   - offset: 0xb61be8
     size: 68
     label: _ZN4sead17StringBuilderBaseIDsE11replaceCharEDsDs
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0xb61c2c
     size: 368
     label: _ZN4sead17StringBuilderBaseIDsE15replaceCharListERKNS_14SafeStringBaseIDsEES5_
