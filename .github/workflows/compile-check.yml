@@ -22,6 +22,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
+        allow-unsafe-pr-checkout: true
     - name: Check for W-state functions
       run: |
         if grep -q "status: Wip" "data/odyssey_functions.csv"; then

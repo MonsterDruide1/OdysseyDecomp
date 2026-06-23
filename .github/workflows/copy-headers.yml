@@ -25,6 +25,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
+        allow-unsafe-pr-checkout: true
     - name: Check out OdysseyHeaders project
       uses: actions/checkout@v7
       with:

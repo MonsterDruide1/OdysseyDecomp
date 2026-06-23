@@ -15,6 +15,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         fetch-depth: 0
+        allow-unsafe-pr-checkout: true
     - name: Check out required PRs list to master
       run: |
         git checkout origin/master -- .github/files/rebase-requirement-prs.txt || true
