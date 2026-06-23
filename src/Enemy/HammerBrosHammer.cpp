@@ -91,11 +91,11 @@ void HammerBrosHammer::shoot(const sead::Vector3f& trans, const sead::Quatf& qua
         return;
     }
 
-    f32 randomVal = al::getRandom(0.0f, 20.0f) - 10.0f;
+    f32 speedRandom = al::getRandom(0.0f, 20.0f) - 10.0f;
     bool isInLowGravityArea = rs::isInLowGravityArea(this);
     f32 fastSpeed = isInLowGravityArea ? 60.0f : 40.0f;
     f32 baseSpeed = isInLowGravityArea ? 25.0f : 20.0f;
-    f32 speed = randomVal + (isFast ? fastSpeed : baseSpeed);
+    f32 speed = speedRandom + (isFast ? fastSpeed : baseSpeed);
 
     if (rs::isInLowGravityArea(this)) {
         f32 sideRandom = al::getRandom(0.0f, 5.0f) - 2.5f;
@@ -253,37 +253,39 @@ void HammerBrosHammer::exeMove() {
     }
 
     al::HitSensor* collidedSensor = al::tryGetCollidedSensor(this);
-    if (collidedSensor == nullptr) {
-        if (!al::isInDeathArea(this)) {
-            if (al::isGreaterEqualStep(this, 300)) {
-                kill();
-                return;
-            }
-            if (mSearchCooldown > 0)
-                mSearchCooldown--;
-
-            sead::Quatf quat = al::getQuat(this);
-            al::rotateQuatXDirDegree(&quat, quat, 20.0f);
-            al::setQuat(this, quat);
-
-            al::scaleVelocity(this, rs::isInLowGravityArea(this) ? 0.985f : 0.98f);
-            al::addVelocityToGravity(this, rs::isInLowGravityArea(this) ? 1.0f : 2.0f);
-            return;
-        }
-    } else {
-        bool isKillEnemy;
+    if (collidedSensor) {
+        bool isHit;
         if (mIsHack)
-            isKillEnemy = rs::sendMsgHammerBrosHammerHackAttack(collidedSensor, hitSensor);
+            isHit = rs::sendMsgHammerBrosHammerHackAttack(collidedSensor, hitSensor);
         else
-            isKillEnemy = rs::sendMsgHammerBrosHammerEnemyAttack(collidedSensor, hitSensor);
+            isHit = rs::sendMsgHammerBrosHammerEnemyAttack(collidedSensor, hitSensor);
 
-        if (isKillEnemy) {
-            HammerBrosHammer::killEnemy();
-            return;
-        }
+        if (!isHit)
+            al::startHitReaction(this, "コリジョン衝突");
+        HammerBrosHammer::killEnemy();
+        return;
     }
-    al::startHitReaction(this, "コリジョン衝突");
-    HammerBrosHammer::killEnemy();
+
+    if (al::isInDeathArea(this)) {
+        al::startHitReaction(this, "コリジョン衝突");
+        HammerBrosHammer::killEnemy();
+        return;
+    }
+
+    if (al::isGreaterEqualStep(this, 300)) {
+        kill();
+        return;
+    }
+
+    if (mSearchCooldown > 0)
+        mSearchCooldown--;
+
+    sead::Quatf quat = al::getQuat(this);
+    al::rotateQuatXDirDegree(&quat, quat, 20.0f);
+    al::setQuat(this, quat);
+
+    al::scaleVelocity(this, rs::isInLowGravityArea(this) ? 0.985f : 0.98f);
+    al::addVelocityToGravity(this, rs::isInLowGravityArea(this) ? 1.0f : 2.0f);
 }
 
 void HammerBrosHammer::exeBreak() {
