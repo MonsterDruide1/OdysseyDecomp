@@ -29,6 +29,13 @@ public:
     bool isExistSnapForce() const;
 
 private:
+    struct FloatParam {
+        f32 onGround;
+        f32 offGround;
+
+        f32 getValue(bool isOnGround) const { return isOnGround ? onGround : offGround; }
+    };
+
     ExternalForceKeeper* mExternalForceKeeper = nullptr;
     sead::Vector3f mExternalVelocity = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mAreaVelocity = {0.0f, 0.0f, 0.0f};
@@ -39,12 +46,12 @@ private:
     bool mIsRumbleActive = false;
     sead::Vector3f mExternalForce = {0.0f, 0.0f, 0.0f};
 
-    sead::Vector2f mExternalDrag = {0.95f, 0.955f};
-    sead::Vector2f mAreaDrag;
-    sead::Vector2f mSensitivity = {0.275f, 0.275f};
+    FloatParam mExternalDrag = {0.95f, 0.955f};
+    FloatParam mAreaDrag;
+    FloatParam mSensitivity = {0.275f, 0.275f};
 
     sead::Vector3f mSnapForce = {0.0f, 0.0f, 0.0f};
-    s32 mGroundInertiaType = 0;
+    s32 mApplyLastGroundInertiaFrames = 0;
     sead::Vector3f mMovePowerForce = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mLastGroundInertia = {0.0f, 0.0f, 0.0f};
 };

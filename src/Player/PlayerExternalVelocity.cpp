@@ -36,20 +36,20 @@ bool PlayerExternalVelocity::receiveMsgCap(const al::SensorMsg* msg, al::HitSens
 }
 
 void PlayerExternalVelocity::requestApplyLastGroundInertia() {
-    mGroundInertiaType = 1;
+    mApplyLastGroundInertiaFrames = 1;
 }
 
 void PlayerExternalVelocity::cancelAndFeedbackLastGroundInertia(al::LiveActor* actor, f32 strength,
                                                                 bool isFrontOnly) {
-    sead::Vector3f intertia = mLastGroundInertia;
+    sead::Vector3f inertia = mLastGroundInertia;
     mTotalVelocity -= mLastGroundInertia;
     mLastGroundInertia = {0.0f, 0.0f, 0.0f};
-    mGroundInertiaType = 0;
+    mApplyLastGroundInertiaFrames = 0;
 
-    al::verticalizeVec(&intertia, al::getGravity(mActor), intertia);
+    al::verticalizeVec(&inertia, al::getGravity(mActor), inertia);
 
-    sead::Vector3f inertiaDir = {0.0f, 0.0f, 0.0f};
-    if (!al::tryNormalizeOrZero(&inertiaDir, intertia))
+    sead::Vector3f inertiaHDir = {0.0f, 0.0f, 0.0f};
+    if (!al::tryNormalizeOrZero(&inertiaHDir, inertia))
         return;
 
     if (isFrontOnly) {
@@ -58,10 +58,10 @@ void PlayerExternalVelocity::cancelAndFeedbackLastGroundInertia(al::LiveActor* a
         al::verticalizeVec(&frontDir, al::getGravity(mActor), frontDir);
 
         if (al::tryNormalizeOrZero(&frontDir))
-            strength *= sead::Mathf::clampMin(frontDir.dot(inertiaDir), 0.0f);
+            strength *= sead::Mathf::clampMin(frontDir.dot(inertiaHDir), 0.0f);
     }
 
-    al::addVelocity(actor, strength * intertia);
+    al::addVelocity(actor, strength * inertia);
 }
 
 void PlayerExternalVelocity::update() {
@@ -73,8 +73,8 @@ void PlayerExternalVelocity::update() {
     else
         isOnGround = al::isExistActorCollider(mActor) && al::isOnGround(mActor, 0);
 
-    f32 sensitivity = isOnGround ? mSensitivity.x : mSensitivity.y;
-    f32 drag = isOnGround ? mExternalDrag.x : mExternalDrag.y;
+    f32 sensitivity = mSensitivity.getValue(isOnGround);
+    f32 drag = mExternalDrag.getValue(isOnGround);
 
     mExternalForceKeeper->calcForce(&mExternalForce);
     mExternalForceKeeper->reset();
@@ -87,7 +87,7 @@ void PlayerExternalVelocity::update() {
 
     updatePadRumbleExternalForce();
 
-    mAreaVelocity *= isOnGround ? mAreaDrag.x : mAreaDrag.y;
+    mAreaVelocity *= mAreaDrag.getValue(isOnGround);
 
     sead::Vector3f velocity = {0.0f, 0.0f, 0.0f};
     rs::calcExtForceAreaVelocity(&velocity, mActor, al::getTrans(mActor), mAreaVelocity,
@@ -144,12 +144,12 @@ void PlayerExternalVelocity::updateLastGroundForce(bool isOnGround) {
         return;
     }
 
-    if (mGroundInertiaType < 1)
+    if (mApplyLastGroundInertiaFrames < 1)
         mMovePowerForce = {0.0f, 0.0f, 0.0f};
     else
         mLastGroundInertia.set(mMovePowerForce);
 
-    mGroundInertiaType = al::converge(mGroundInertiaType, 0, 1);
+    mApplyLastGroundInertiaFrames = al::converge(mApplyLastGroundInertiaFrames, 0, 1);
 }
 
 void PlayerExternalVelocity::reset() {
