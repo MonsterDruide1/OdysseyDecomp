@@ -487,7 +487,7 @@ def header_bool_getter_name_prefix(c, path):
 
 def source_no_raw_auto(c, path):
     for line in c.splitlines():
-        if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line:
+        if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line and "autoGet" not in line:
             FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
 
 def source_no_nerve_make(c, path):
