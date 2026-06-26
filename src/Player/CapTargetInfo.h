@@ -31,6 +31,7 @@ public:
 
 private:
     friend CapTargetInfoFunction;
+    friend class HackCap;
     const al::LiveActor* mActor = nullptr;
     const char* mHackName = nullptr;
     IUsePlayerCollision* mPlayerCollision = nullptr;
