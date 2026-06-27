@@ -254,9 +254,14 @@ private:
     f32 _28c;
     s32 _290;
     char filler_294[4];
-    s32 _298;
+    u8 _298_0;
+    u8 _298_1;
+    u8 _298_2;
+    u8 _298_3;
     char filler_29c[4];
-    char _2a0[4];
+    char _2a0[2];
+    bool _2a2_flag;
+    char _2a3[1];
     bool mIsSeparateFlying;
     char _2a5[11];
     const PlayerWallActionHistory* mPlayerWallActionHistory;
@@ -300,8 +305,7 @@ private:
     bool _5bb;
     s32 _5bc;
     void* _5c0[7];
-    bool mIsPuppet;
-    bool _5f9;
+    u16 mPuppetFlags;  // [0] = mIsPuppet, [1] = _5f9
     bool mIsHidePuppetCapSilhouette;
     HackCapStateThrowStay* mStateThrowStay;
     HackCapStateHide* mStateHide;
