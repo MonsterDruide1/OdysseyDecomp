@@ -3,11 +3,13 @@
 #include <basis/seadTypes.h>
 #include <container/seadStrTreeMap.h>
 
+#include "System/FixedHeapArray.h"
+
 namespace al {
 class PlacementId;
 }  // namespace al
 
-class UniqObjInfo;
+struct UniqObjInfo;
 
 class TempSaveData {
 public:
@@ -16,7 +18,7 @@ public:
     void init();
     void initForScenario();
     void resetMiniGame();
-    void setInfo(s32 worldIndex, s32 unknown);
+    void setInfo(s32 worldIndex, s32 scenarioIndex);
     void writeInWorld(const al::PlacementId* placementId, const char* stageName);
     void deleteInWorld(const al::PlacementId* placementId, const char* stageName);
     bool isOnInWorld(const al::PlacementId* placementId, const char* stageName) const;
@@ -31,11 +33,11 @@ public:
     s32 getWorldIndex() const { return mWorldIndex; }
 
 private:
-    UniqObjInfo* mWordObjects = nullptr;
-    UniqObjInfo* mMiniGameObjects = nullptr;
-    UniqObjInfo* mScenarioObjects = nullptr;
+    FixedHeapArray<UniqObjInfo, 64> mWorldObjects;
+    FixedHeapArray<UniqObjInfo, 64> mMiniGameObjects;
+    FixedHeapArray<UniqObjInfo, 64> mScenarioObjects;
     s32 mWorldIndex = -1;
-    s32 _1c = -1;
+    s32 mScenarioIndex = -1;
     sead::StrTreeMap<32, bool> mWorldValues;
 };
 
