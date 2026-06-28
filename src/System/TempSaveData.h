@@ -32,10 +32,12 @@ public:
 
     s32 getWorldIndex() const { return mWorldIndex; }
 
+    static const s32 maxObjEntries = 64;
+
 private:
-    FixedHeapArray<UniqObjInfo, 64> mWorldObjects;
-    FixedHeapArray<UniqObjInfo, 64> mMiniGameObjects;
-    FixedHeapArray<UniqObjInfo, 64> mScenarioObjects;
+    FixedHeapArray<UniqObjInfo, maxObjEntries> mWorldObjects;
+    FixedHeapArray<UniqObjInfo, maxObjEntries> mMiniGameObjects;
+    FixedHeapArray<UniqObjInfo, maxObjEntries> mScenarioObjects;
     s32 mWorldIndex = -1;
     s32 mScenarioIndex = -1;
     sead::StrTreeMap<32, bool> mWorldValues;
