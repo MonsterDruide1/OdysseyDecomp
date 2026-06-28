@@ -20,9 +20,13 @@ public:
     void print() const;
     void fillDummyData();
 
-    const char* getStageName() const { return mStageName.cstr(); }
+    sead::FixedSafeString<128>* getStageName() { return &mStageName; }
 
-    const char* getObjId() const { return mObjId.cstr(); }
+    const sead::FixedSafeString<128>& getStageName() const { return mStageName; }
+
+    sead::FixedSafeString<128>* getObjId() { return &mObjId; }
+
+    const sead::FixedSafeString<128>& getObjId() const { return mObjId; }
 
 private:
     sead::FixedSafeString<128> mStageName;
