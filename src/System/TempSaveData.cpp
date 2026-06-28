@@ -9,11 +9,11 @@ TempSaveData::TempSaveData() {
     mWorldObjects.alloc();
     mMiniGameObjects.alloc();
     mScenarioObjects.alloc();
-    mWorldValues.allocBuffer(64, nullptr);
+    mWorldValues.allocBuffer(maxObjEntries, nullptr);
 }
 
 void TempSaveData::init() {
-    for (s32 i = 0; i < 64; i++) {
+    for (s32 i = 0; i < maxObjEntries; i++) {
         mWorldObjects[i].clear();
         mMiniGameObjects[i].clear();
         mScenarioObjects[i].clear();
@@ -23,12 +23,12 @@ void TempSaveData::init() {
 }
 
 void TempSaveData::initForScenario() {
-    for (s32 i = 0; i < 64; i++)
+    for (s32 i = 0; i < mScenarioObjects.size(); i++)
         mScenarioObjects[i].clear();
 }
 
 void TempSaveData::resetMiniGame() {
-    for (s32 i = 0; i < 64; i++)
+    for (s32 i = 0; i < mMiniGameObjects.size(); i++)
         mMiniGameObjects[i].clear();
 }
 
@@ -38,7 +38,7 @@ static ALWAYS_INLINE s32 getUniqObjId(const UniqObjInfo* objInfo,
     placementId->makeString(&str);
 
     s32 id = -1;
-    for (s32 i = 0; i < 64; i++) {
+    for (s32 i = 0; i < TempSaveData::maxObjEntries; i++) {
         if (!objInfo[i].stageName.isEmpty() &&
             al::isEqualString(objInfo[i].stageName.cstr(), stageName) &&
             al::isEqualString(objInfo[i].objId, str)) {
@@ -55,7 +55,7 @@ static ALWAYS_INLINE void writeUniqObj(UniqObjInfo* objInfo, const al::Placement
     if (id != -1)
         return;
 
-    for (s32 i = 0; i < 64; i++) {
+    for (s32 i = 0; i < TempSaveData::maxObjEntries; i++) {
         if (objInfo[i].stageName.isEmpty()) {
             placementId->makeString(&objInfo[i].objId);
             objInfo[i].stageName.format("%s", stageName);
