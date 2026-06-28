@@ -1,22 +1,23 @@
 #include "System/TempSaveData.h"
 
+#include "Library/Base/Macros.h"
 #include "Library/Placement/PlacementId.h"
 
 #include "System/UniqObjInfo.h"
 
 TempSaveData::TempSaveData() {
-    mWordObjects = new UniqObjInfo[64];
-    mMiniGameObjects = new UniqObjInfo[64];
-    mScenarioObjects = new UniqObjInfo[64];
+    mWorldObjects.alloc();
+    mMiniGameObjects.alloc();
+    mScenarioObjects.alloc();
     mWorldValues.allocBuffer(64, nullptr);
 }
 
 void TempSaveData::init() {
     for (s32 i = 0; i < 64; i++) {
-        mWordObjects[i].clear();
+        mWorldObjects[i].clear();
         mMiniGameObjects[i].clear();
         mScenarioObjects[i].clear();
-        // BUG: Clearing multiple times the hashed values
+        // NOTE: Clearing multiple times the hashed values
         mWorldValues.clear();
     }
 }
@@ -31,21 +32,36 @@ void TempSaveData::resetMiniGame() {
         mMiniGameObjects[i].clear();
 }
 
-inline s32 getUniqObjId(const UniqObjInfo* objInfo, const al::PlacementId* placementId,
-                        const char* stageName) {
+static ALWAYS_INLINE s32 getUniqObjId(const UniqObjInfo* objInfo,
+                                      const al::PlacementId* placementId, const char* stageName) {
     al::StringTmp<128> str;
     placementId->makeString(&str);
 
     s32 id = -1;
     for (s32 i = 0; i < 64; i++) {
-        if (!objInfo[i].getStageName().isEmpty() &&
-            al::isEqualString(objInfo[i].getStageName().cstr(), stageName) &&
-            al::isEqualString(objInfo[i].getObjId(), str)) {
+        if (!objInfo[i].stageName.isEmpty() &&
+            al::isEqualString(objInfo[i].stageName.cstr(), stageName) &&
+            al::isEqualString(objInfo[i].objId, str)) {
             id = i;
             break;
         }
     }
     return id;
+}
+
+static ALWAYS_INLINE void writeUniqObj(UniqObjInfo* objInfo, const al::PlacementId* placementId,
+                                       const char* stageName) {
+    s32 id = getUniqObjId(objInfo, placementId, stageName);
+    if (id != -1)
+        return;
+
+    for (s32 i = 0; i < 64; i++) {
+        if (objInfo[i].stageName.isEmpty()) {
+            placementId->makeString(&objInfo[i].objId);
+            objInfo[i].stageName.format("%s", stageName);
+            break;
+        }
+    }
 }
 
 void deleteUniqObj(UniqObjInfo* objInfo, const al::PlacementId* placementId,
@@ -54,81 +70,48 @@ void deleteUniqObj(UniqObjInfo* objInfo, const al::PlacementId* placementId,
     if (id == -1)
         return;
 
-    objInfo[id].getStageName()->clear();
-    objInfo[id].getObjId()->clear();
+    objInfo[id].stageName.clear();
+    objInfo[id].objId.clear();
 }
 
-void TempSaveData::setInfo(s32 worldIndex, s32 unknown) {
+void TempSaveData::setInfo(s32 worldIndex, s32 scenarioIndex) {
     mWorldIndex = worldIndex;
-    _1c = unknown;
+    mScenarioIndex = scenarioIndex;
 }
 
 void TempSaveData::writeInWorld(const al::PlacementId* placementId, const char* stageName) {
-    UniqObjInfo* objInfo = mWordObjects;
-    s32 id = getUniqObjId(objInfo, placementId, stageName);
-    if (id != -1)
-        return;
-
-    for (s32 i = 0; i < 64; i++) {
-        if (objInfo[i].getStageName()->isEmpty()) {
-            placementId->makeString(objInfo[i].getObjId());
-            objInfo[i].getStageName()->format("%s", stageName);
-            break;
-        }
-    }
+    writeUniqObj(mWorldObjects.begin(), placementId, stageName);
 }
 
 void TempSaveData::deleteInWorld(const al::PlacementId* placementId, const char* stageName) {
-    deleteUniqObj(mWordObjects, placementId, stageName);
+    deleteUniqObj(mWorldObjects.begin(), placementId, stageName);
 }
 
 bool TempSaveData::isOnInWorld(const al::PlacementId* placementId, const char* stageName) const {
-    return getUniqObjId(mWordObjects, placementId, stageName) != -1;
+    return getUniqObjId(mWorldObjects.begin(), placementId, stageName) != -1;
 }
 
 void TempSaveData::writeInWorldResetMiniGame(const al::PlacementId* placementId,
                                              const char* stageName) {
-    UniqObjInfo* objInfo = mMiniGameObjects;
-    s32 id = getUniqObjId(objInfo, placementId, stageName);
-    if (id != -1)
-        return;
-
-    for (s32 i = 0; i < 64; i++) {
-        if (objInfo[i].getStageName()->isEmpty()) {
-            placementId->makeString(objInfo[i].getObjId());
-            objInfo[i].getStageName()->format("%s", stageName);
-            break;
-        }
-    }
+    writeUniqObj(mMiniGameObjects.begin(), placementId, stageName);
 }
 
 void TempSaveData::deleteInWorldResetMiniGame(const al::PlacementId* placementId,
                                               const char* stageName) {
-    deleteUniqObj(mMiniGameObjects, placementId, stageName);
+    deleteUniqObj(mMiniGameObjects.begin(), placementId, stageName);
 }
 
 bool TempSaveData::isOnInWorldResetMiniGame(const al::PlacementId* placementId,
                                             const char* stageName) const {
-    return getUniqObjId(mMiniGameObjects, placementId, stageName) != -1;
+    return getUniqObjId(mMiniGameObjects.begin(), placementId, stageName) != -1;
 }
 
 void TempSaveData::writeInScenario(const al::PlacementId* placementId, const char* stageName) {
-    UniqObjInfo* objInfo = mScenarioObjects;
-    s32 id = getUniqObjId(objInfo, placementId, stageName);
-    if (id != -1)
-        return;
-
-    for (s32 i = 0; i < 64; i++) {
-        if (objInfo[i].getStageName()->isEmpty()) {
-            placementId->makeString(objInfo[i].getObjId());
-            objInfo[i].getStageName()->format("%s", stageName);
-            break;
-        }
-    }
+    writeUniqObj(mScenarioObjects.begin(), placementId, stageName);
 }
 
 bool TempSaveData::isOnInScenario(const al::PlacementId* placementId, const char* stageName) const {
-    return getUniqObjId(mScenarioObjects, placementId, stageName) != -1;
+    return getUniqObjId(mScenarioObjects.begin(), placementId, stageName) != -1;
 }
 
 // NON_MATCHING: Wrong loading order https://decomp.me/scratch/OCYs2
