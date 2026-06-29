@@ -32,7 +32,7 @@ public:
 
     s32 getWorldIndex() const { return mWorldIndex; }
 
-    static const s32 maxObjEntries = 64;
+    static constexpr s32 maxObjEntries = 64;
 
 private:
     FixedHeapArray<UniqObjInfo, maxObjEntries> mWorldObjects;
