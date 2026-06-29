@@ -21,10 +21,18 @@ public:
     void exeTowerInput();
     void exeFollow();
 
+    void setDistance(f32 distance) { mDistance = distance; }
+
+    void setUserMarginAngleH(f32 angleH) { mUserMarginAngleH = angleH; }
+
 private:
-    s8 filler[0x1F8 - sizeof(CameraPoser)];
+    u8 _140[0x50];
+    f32 mDistance;
+    u8 _194[0x10];
+    f32 mUserMarginAngleH;
+    u8 _1a8[0x50];
 };
 
-}  // namespace al
+static_assert(sizeof(CameraPoserTower) == 0x1F8);
 
-static_assert(sizeof(al::CameraPoserTower) == 0x1F8, "al::CameraPoserTower size");
+}  // namespace al
