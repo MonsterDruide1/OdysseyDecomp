@@ -106,6 +106,10 @@ public:
 
     void updateDiskShape(f32, const sead::Vector3f&, f32);
 
+    f32 getDiskRadius() const { return _28; }
+
+    const sead::Vector3f& getDiskOffset() const { return mOffset; }
+
     const sead::Vector3f& getBoundingCenter() const override;
     const sead::Vector3f& getBoundingCenterWorld() const override;
     f32 getBoundingRadius() const override;
@@ -126,7 +130,12 @@ public:
     void setIgnoreGround() { mIsIgnoreGround = true; }
 
 private:
-    void* _18[13];
+    void* _18[2];
+    f32 _28;
+    f32 _2c;
+    sead::Vector3f _30;
+    sead::Vector3f mOffset;
+    void* _48[7];
     bool mIsSupportGround;
     f32 _84;
     f32 _88;

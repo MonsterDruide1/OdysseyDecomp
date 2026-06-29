@@ -18,6 +18,7 @@ class TriangleFilterBase;
 
 bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
 bool isFloorPolygon(const sead::Vector3f&, const sead::Vector3f&);
+bool isFloorPolygonCos(const sead::Vector3f&, const sead::Vector3f&, f32);
 bool isCeilingPolygon(const sead::Vector3f&, const sead::Vector3f&);
 
 class Collider : public HioNode, public IUseCollision {
