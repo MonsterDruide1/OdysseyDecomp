@@ -114,12 +114,15 @@ bool TempSaveData::isOnInScenario(const al::PlacementId* placementId, const char
     return getUniqObjId(mScenarioObjects.begin(), placementId, stageName) != -1;
 }
 
-// NON_MATCHING: Wrong loading order https://decomp.me/scratch/OCYs2
 void TempSaveData::writeHashInWorld(const char* hash, bool value) {
-    auto* node = mWorldValues.find(hash);
-    if (node) {
-        node->value() = value;
-        return;
+    // TODO: Replace this with StrTreeMap::put
+    {
+        sead::SafeString str(hash);
+        auto* node = mWorldValues.find(str);
+        if (node) {
+            node->value() = value;
+            return;
+        }
     }
 
     mWorldValues.insert(hash, value);
