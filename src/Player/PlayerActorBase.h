@@ -75,6 +75,15 @@ public:
 
     virtual PlayerInfo* getPlayerInfo() const { return nullptr; }
 
+    void setPlayerActorInfo(sead::Matrix34f* viewMtx, u32 portNo) {
+        mViewMtx = viewMtx;
+        mPortNo = portNo;
+    }
+
+    void setPlayerViewMtx(sead::Matrix34f* viewMtx) { mViewMtx = viewMtx; }
+
+    void setPlayerPortNo(u32 portNo) { mPortNo = portNo; }
+
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();
     virtual bool receivePushMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self,

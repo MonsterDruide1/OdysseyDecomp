@@ -51,6 +51,8 @@ public:
     bool isThrowRelease() const;
     s32 getThrowReleaseFrame() const;
 
+    void setJointAngle(const sead::Vector3f& angle) { mJointAngle = angle; }
+
     const char* getCarryStartAnimName() const;
     const char* getCarryThrowAnimName() const;
     const char* getCarryAnimName() const;
@@ -72,7 +74,7 @@ private:
     s32 _48;
     bool mIsCarryAbove;
     bool mIsCarryWallKeep;
-    sead::Vector3f _50;
+    sead::Vector3f mJointAngle;
     s32 _5c;
     sead::Vector3f _60;
 };
