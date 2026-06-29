@@ -13,15 +13,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Check out project
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: recursive
     - name: Check out branch if in PR
       if: ${{ github.event_name == 'pull_request_target' }}
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         submodules: recursive
+        allow-unsafe-pr-checkout: true
     - name: Check for W-state functions
       run: |
         if grep -q "status: Wip" "data/odyssey_functions.csv"; then
