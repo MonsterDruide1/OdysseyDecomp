@@ -115,15 +115,8 @@ bool TempSaveData::isOnInScenario(const al::PlacementId* placementId, const char
 }
 
 void TempSaveData::writeHashInWorld(const char* hash, bool value) {
-    // TODO: Replace this with StrTreeMap::put
-    {
-        sead::SafeString str(hash);
-        auto* node = mWorldValues.find(str);
-        if (node) {
-            node->value() = value;
-            return;
-        }
-    }
+    if (mWorldValues.put(hash, value))
+        return;
 
     mWorldValues.insert(hash, value);
 }

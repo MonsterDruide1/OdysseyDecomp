@@ -8,7 +8,7 @@ class LiveActor;
 struct ActorInitInfo;
 }  // namespace al
 class QuestInfo;
-class UniqObjInfo;
+struct UniqObjInfo;
 
 struct ShineData {
     char stageName[128];
