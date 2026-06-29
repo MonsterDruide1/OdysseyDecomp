@@ -28,7 +28,7 @@ jobs:
         EXEFS_SHARED_PASS: ${{ secrets.EXEFS_SHARED_PASS }}
       run: curl -u "github-odyssey:$EXEFS_SHARED_PASS" https://monsterdruide.one/secrets/smo-main.nso -O
     - uses: cachix/install-nix-action@v31
-    - uses: DeterminateSystems/magic-nix-cache-action@v13
+    - uses: DeterminateSystems/magic-nix-cache-action@v14
     - name: First check of nix flake
       # catches syntax errors or misconfigurations of the flake on all systems
       run: nix flake check --all-systems
