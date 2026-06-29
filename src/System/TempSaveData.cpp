@@ -115,7 +115,7 @@ bool TempSaveData::isOnInScenario(const al::PlacementId* placementId, const char
 }
 
 void TempSaveData::writeHashInWorld(const char* hash, bool value) {
-    if (mWorldValues.put(hash, value))
+    if (mWorldValues.replace(hash, value))
         return;
 
     mWorldValues.insert(hash, value);
