@@ -37,6 +37,7 @@
 #include "Boss/BarrierField.h"
 #include "Boss/BossForest/BossForestWander.h"
 #include "Boss/Mofumofu/MofumofuScrap.h"
+#include "Camera/EventKeyMoveCameraObj.h"
 #include "Camera/ScenarioStartCamera.h"
 #include "Demo/DemoPeachWedding.h"
 #include "Enemy/Bubble.h"
@@ -324,8 +325,8 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ElectricWire", al::createActorFunction<ElectricWire>},
     {"ElectricWireKoopa", nullptr},
     {"EntranceCameraStartObj", nullptr},
-    {"EventKeyMoveCameraObjNoDemo", nullptr},
-    {"EventKeyMoveCameraObjWithDemo", nullptr},
+    {"EventKeyMoveCameraObjNoDemo", al::createActorFunction<EventKeyMoveCameraObjNoDemo>},
+    {"EventKeyMoveCameraObjWithDemo", al::createActorFunction<EventKeyMoveCameraObjWithDemo>},
     {"FigureWalkingNpc", nullptr},
     {"FireBlower", nullptr},
     {"FireBrosPossessed", nullptr},
