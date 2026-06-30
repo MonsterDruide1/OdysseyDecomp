@@ -56,10 +56,10 @@ void CameraPoserFix::start(const CameraStartInfo& info) {
 }
 
 void CameraPoserFix::update() {
-    mCameraUp.set(sead::Vector3f::ey);
-    mTargetTrans.set(mLookAtPos);
+    mUp.set(sead::Vector3f::ey);
+    mAt.set(mLookAtPos);
 
-    mTargetTrans *= mViewMtx;
+    mAt *= mViewMtx;
 
     f32 angleH = alCameraPoserFunction::calcZoneRotateAngleH(mAngleH, this);
     f32 x = sinf(sead::Mathf::deg2rad(angleH)) * cosf(sead::Mathf::deg2rad(mAngleV));
@@ -68,12 +68,12 @@ void CameraPoserFix::update() {
     sead::Vector3f viewDir = {x, y, z};
 
     normalize(&viewDir);
-    mPosition.set((mDistance * viewDir) + mTargetTrans);
+    mEye.set((mDistance * viewDir) + mAt);
     if (mIsCalcNearestAtFromPreAt) {
-        sead::Vector3f offset = mPreLookAtPos - mPosition;
+        sead::Vector3f offset = mPreLookAtPos - mEye;
         parallelizeVec(&offset, viewDir, offset);
         if (!isNearZero(offset) && viewDir.dot(offset) < 0.0f)
-            mTargetTrans.set(offset + mPosition);
+            mAt.set(offset + mEye);
     }
 }
 
