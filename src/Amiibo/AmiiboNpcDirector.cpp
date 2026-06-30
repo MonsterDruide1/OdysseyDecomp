@@ -151,8 +151,8 @@ bool AmiiboNpcDirector::isSearchAmiibo(s32 id) {
     return false;
 }
 
-u32 AmiiboNpcDirector::getSearchAmiiboNum() const {
-    u32 amiiboNum = 0;
+s32 AmiiboNpcDirector::getSearchAmiiboNum() const {
+    s32 amiiboNum = 0;
 
     for (s32 i = 0; i < mSearchDataTable->getDataNumMax(); i++) {
         if (mSearchDataTable->isInvalidId(i))
@@ -285,7 +285,7 @@ AmiiboNpcLayout* getAmiiboTouchLayout(const al::IUseSceneObjHolder* objHolder) {
     return getAmiiboNpcDirector(objHolder)->getAmiiboNpcLayout();
 }
 
-u32 getSearchAmiiboNum(const al::IUseSceneObjHolder* objHolder) {
+s32 getSearchAmiiboNum(const al::IUseSceneObjHolder* objHolder) {
     return getAmiiboNpcDirector(objHolder)->getSearchAmiiboNum();
 }
 
