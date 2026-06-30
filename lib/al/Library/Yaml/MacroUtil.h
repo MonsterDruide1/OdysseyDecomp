@@ -104,7 +104,7 @@ class YamlParam_YamlString : public YamlParamBase<const char*> {
 public:
     YamlParam_YamlString(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::String; }
 
     void setPtr_YamlString(const char** value) override { setParamPtr(value); }
 };
@@ -113,7 +113,7 @@ class YamlParam_V3f : public YamlParamBase<sead::Vector3f> {
 public:
     YamlParam_V3f(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::V3f; }
 
     void setPtr_V3f(sead::Vector3f* value) override { setParamPtr(value); }
 };
@@ -122,7 +122,7 @@ class YamlParam_YamlColor : public YamlParamBase<sead::Color4f> {
 public:
     YamlParam_YamlColor(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::Color; }
 
     void setPtr_YamlColor(sead::Color4f* value) override { setParamPtr(value); }
 };
@@ -131,7 +131,7 @@ class YamlParam_bool : public YamlParamBase<bool> {
 public:
     YamlParam_bool(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::Bool; }
 
     void setPtr_bool(bool* value) override { setParamPtr(value); }
 };
@@ -140,7 +140,7 @@ class YamlParam_u8 : public YamlParamBase<u8> {
 public:
     YamlParam_u8(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::U8; }
 
     void setPtr_u8(u8* value) override { setParamPtr(value); }
 };
@@ -149,7 +149,7 @@ class YamlParam_f32 : public YamlParamBase<f32> {
 public:
     YamlParam_f32(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::F32; }
 
     void setPtr_f32(f32* value) override { setParamPtr(value); }
 };
@@ -158,7 +158,7 @@ class YamlParam_V2f : public YamlParamBase<sead::Vector2f> {
 public:
     YamlParam_V2f(const char* name) : YamlParamBase(name) {}
 
-    YamlClassId getClassId() const override;
+    YamlClassId getClassId() const override { return YamlClassId::V2f; }
 
     void setPtr_V2f(sead::Vector2f* value) override { setParamPtr(value); }
 };

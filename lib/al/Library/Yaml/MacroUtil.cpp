@@ -127,32 +127,4 @@ void YamlParamGroup::readParam(const al::ByamlIter& iter) {
     }
 }
 
-YamlClassId YamlParam_YamlString::getClassId() const {
-    return YamlClassId::String;
-}
-
-YamlClassId YamlParam_V3f::getClassId() const {
-    return YamlClassId::V3f;
-}
-
-YamlClassId YamlParam_YamlColor::getClassId() const {
-    return YamlClassId::Color;
-}
-
-YamlClassId YamlParam_bool::getClassId() const {
-    return YamlClassId::Bool;
-}
-
-YamlClassId YamlParam_u8::getClassId() const {
-    return YamlClassId::U8;
-}
-
-YamlClassId YamlParam_f32::getClassId() const {
-    return YamlClassId::F32;
-}
-
-YamlClassId YamlParam_V2f::getClassId() const {
-    return YamlClassId::V2f;
-}
-
 }  // namespace alYamlMacroUtil
