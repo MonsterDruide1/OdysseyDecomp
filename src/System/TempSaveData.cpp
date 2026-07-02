@@ -32,13 +32,14 @@ void TempSaveData::resetMiniGame() {
         mMiniGameObjects[i].clear();
 }
 
-static ALWAYS_INLINE s32 getUniqObjId(const UniqObjInfo* objInfo,
-                                      const al::PlacementId* placementId, const char* stageName) {
+static ALWAYS_INLINE s32
+getUniqObjId(const FixedHeapArray<UniqObjInfo, TempSaveData::maxObjEntries> objInfo,
+             const al::PlacementId* placementId, const char* stageName) {
     al::StringTmp<128> str;
     placementId->makeString(&str);
 
     s32 id = -1;
-    for (s32 i = 0; i < TempSaveData::maxObjEntries; i++) {
+    for (s32 i = 0; i < objInfo.size(); i++) {
         if (!objInfo[i].stageName.isEmpty() &&
             al::isEqualString(objInfo[i].stageName.cstr(), stageName) &&
             al::isEqualString(objInfo[i].objId, str)) {
@@ -49,13 +50,14 @@ static ALWAYS_INLINE s32 getUniqObjId(const UniqObjInfo* objInfo,
     return id;
 }
 
-static ALWAYS_INLINE void writeUniqObj(UniqObjInfo* objInfo, const al::PlacementId* placementId,
-                                       const char* stageName) {
+static ALWAYS_INLINE void
+writeUniqObj(FixedHeapArray<UniqObjInfo, TempSaveData::maxObjEntries> objInfo,
+             const al::PlacementId* placementId, const char* stageName) {
     s32 id = getUniqObjId(objInfo, placementId, stageName);
     if (id != -1)
         return;
 
-    for (s32 i = 0; i < TempSaveData::maxObjEntries; i++) {
+    for (s32 i = 0; i < objInfo.size(); i++) {
         if (objInfo[i].stageName.isEmpty()) {
             placementId->makeString(&objInfo[i].objId);
             objInfo[i].stageName.format("%s", stageName);
@@ -64,8 +66,8 @@ static ALWAYS_INLINE void writeUniqObj(UniqObjInfo* objInfo, const al::Placement
     }
 }
 
-void deleteUniqObj(UniqObjInfo* objInfo, const al::PlacementId* placementId,
-                   const char* stageName) {
+void deleteUniqObj(FixedHeapArray<UniqObjInfo, TempSaveData::maxObjEntries> objInfo,
+                   const al::PlacementId* placementId, const char* stageName) {
     s32 id = getUniqObjId(objInfo, placementId, stageName);
     if (id == -1)
         return;
@@ -80,38 +82,38 @@ void TempSaveData::setInfo(s32 worldIndex, s32 scenarioIndex) {
 }
 
 void TempSaveData::writeInWorld(const al::PlacementId* placementId, const char* stageName) {
-    writeUniqObj(mWorldObjects.begin(), placementId, stageName);
+    writeUniqObj(mWorldObjects, placementId, stageName);
 }
 
 void TempSaveData::deleteInWorld(const al::PlacementId* placementId, const char* stageName) {
-    deleteUniqObj(mWorldObjects.begin(), placementId, stageName);
+    deleteUniqObj(mWorldObjects, placementId, stageName);
 }
 
 bool TempSaveData::isOnInWorld(const al::PlacementId* placementId, const char* stageName) const {
-    return getUniqObjId(mWorldObjects.begin(), placementId, stageName) != -1;
+    return getUniqObjId(mWorldObjects, placementId, stageName) != -1;
 }
 
 void TempSaveData::writeInWorldResetMiniGame(const al::PlacementId* placementId,
                                              const char* stageName) {
-    writeUniqObj(mMiniGameObjects.begin(), placementId, stageName);
+    writeUniqObj(mMiniGameObjects, placementId, stageName);
 }
 
 void TempSaveData::deleteInWorldResetMiniGame(const al::PlacementId* placementId,
                                               const char* stageName) {
-    deleteUniqObj(mMiniGameObjects.begin(), placementId, stageName);
+    deleteUniqObj(mMiniGameObjects, placementId, stageName);
 }
 
 bool TempSaveData::isOnInWorldResetMiniGame(const al::PlacementId* placementId,
                                             const char* stageName) const {
-    return getUniqObjId(mMiniGameObjects.begin(), placementId, stageName) != -1;
+    return getUniqObjId(mMiniGameObjects, placementId, stageName) != -1;
 }
 
 void TempSaveData::writeInScenario(const al::PlacementId* placementId, const char* stageName) {
-    writeUniqObj(mScenarioObjects.begin(), placementId, stageName);
+    writeUniqObj(mScenarioObjects, placementId, stageName);
 }
 
 bool TempSaveData::isOnInScenario(const al::PlacementId* placementId, const char* stageName) const {
-    return getUniqObjId(mScenarioObjects.begin(), placementId, stageName) != -1;
+    return getUniqObjId(mScenarioObjects, placementId, stageName) != -1;
 }
 
 void TempSaveData::writeHashInWorld(const char* hash, bool value) {
