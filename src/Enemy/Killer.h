@@ -39,19 +39,19 @@ public:
 
 private:
     EnemyStateDamageCap* mEnemyStateDamageCap = nullptr;
-    KillerStateHack* mKillerStateHack = nullptr;
+    KillerStateHack* mStateHack = nullptr;
     s32 mAliveFrame = 1200;
     f32 mExplosionTime = 1200.0f;
-    s32 _120 = 0;
-    sead::Vector3f mFrontDir = sead::Vector3f::zero;
+    s32 mHackEndImmuneTime = 0;
+    sead::Vector3f mLastFrontDir = sead::Vector3f::zero;
     f32 mRotationAngle = 0.0f;
-    bool mHasExplosion = true;
-    bool _135 = true;
+    bool mCanExplode = true;
+    bool mIsFirstCapture = true;
     bool mIsMagnum = false;
     bool mIsNoCap = false;
     bool mIsUseCaptureLight = false;
     bool mIsCapKoopa = false;
-    s32 _13c = 0;
+    s32 mAttackCooldown = 0;
 };
 
 static_assert(sizeof(Killer) == 0x140);
