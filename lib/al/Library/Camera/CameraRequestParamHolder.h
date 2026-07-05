@@ -39,6 +39,8 @@ public:
 
     f32* get_58() const { return _58; }
 
+    bool isOnRideObj() const { return mRideObjCamera && mIsCurrRideObj; }
+
 private:
     s32 mStickSensitivityLevel = 0;
     s32 mGyroSensitivityLevel = 0;
@@ -61,4 +63,5 @@ private:
     f32* _60 = nullptr;
 };
 
+static_assert(sizeof(CameraRequestParamHolder) == 0x68);
 }  // namespace al

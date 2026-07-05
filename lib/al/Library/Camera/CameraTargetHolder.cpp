@@ -64,8 +64,8 @@ void CameraTargetHolder::update() {
     else if (!mPlacementSubTargetArray.isEmpty())
         topSubTarget = mPlacementSubTargetArray.front();
 
-    mHasTopSubTargetChanged = mTopSubTarget != topSubTarget;
-    mTopSubTarget = topSubTarget;
+    mTopSubTargetInfo.hasTargetChanged = mTopSubTargetInfo.target != topSubTarget;
+    mTopSubTargetInfo.target = topSubTarget;
     if (topSubTarget)
         topSubTarget->update();
 }
@@ -102,7 +102,7 @@ bool CameraTargetHolder::isChangeViewTarget(s32 index) const {
 }
 
 CameraSubTargetBase* CameraTargetHolder::getTopSubTarget() const {
-    return mTopSubTarget;
+    return mTopSubTargetInfo.target;
 }
 
 // NON_MATCHING: Depends on removeSubTarget

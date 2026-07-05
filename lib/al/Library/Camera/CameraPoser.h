@@ -225,9 +225,21 @@ public:
 
     CameraOffsetCtrlPreset* getCameraOffsetCtrlPreset() const { return mOffsetCtrlPreset; }
 
-    CameraPoserSceneInfo* getCameraPoserSceneInfo() const { return mSceneInfo; }
+    CameraPoserSceneInfo* getSceneInfo() const { return mSceneInfo; }
 
     CameraVerticalAbsorber* getCameraVerticalAbsorber() const { return mVerticalAbsorber; }
+
+    CameraAngleCtrlInfo* getAngleCtrlInfo() const { return mAngleCtrlInfo; }
+
+    CameraAngleSwingInfo* getAngleSwingInfo() const { return mAngleSwingInfo; }
+
+    CameraOffsetCtrlPreset* getOffsetCtrlPreset() const { return mOffsetCtrlPreset; }
+
+    GyroCameraCtrl* getGyroCtrl() const { return mGyroCtrl; }
+
+    CameraPoserFlag* getPoserFag() const { return mPoserFlag; }
+
+    SnapShotCameraCtrl* getSnapShotCtrl() const { return mSnapShotCtrl; }
 
     // set
     void setEye(const sead::Vector3f& pos) { mEye.set(pos); }
@@ -245,6 +257,18 @@ public:
     void setVerticalAbsorber(CameraVerticalAbsorber* cameraVerticalAbsorber) {
         mVerticalAbsorber = cameraVerticalAbsorber;
     }
+
+    void setParamMoveLimit(CameraParamMoveLimit* param) { mParamMoveLimit = param; }
+
+    void setAngleCtrlInfo(CameraAngleCtrlInfo* angleCtrlInfo) { mAngleCtrlInfo = angleCtrlInfo; }
+
+    void setAngleSwingInfo(CameraAngleSwingInfo* info) { mAngleSwingInfo = info; }
+
+    void setOffsetCtrlPreset(CameraOffsetCtrlPreset* preset) { mOffsetCtrlPreset = preset; }
+
+    void setGyroCtrl(GyroCameraCtrl* gyroCtrl) { mGyroCtrl = gyroCtrl; }
+
+    void setSnapShotCtrl(SnapShotCameraCtrl* ctrl) { mSnapShotCtrl = ctrl; }
 
 protected:
     const char* mPoserName;

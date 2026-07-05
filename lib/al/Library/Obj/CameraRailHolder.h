@@ -10,6 +10,10 @@ public:
     CameraRailHolder(const char* name);
     void init(const ActorInitInfo& info) override;
 
+    s32 getRailCount() const { return mCameraRailCount; }
+
+    CameraLimitRailKeeper* getRail(s32 index) { return mCameraRails[index]; }
+
 private:
     s32 mCameraRailCount = 0;
     CameraLimitRailKeeper** mCameraRails = nullptr;

@@ -228815,7 +228815,7 @@ Library/Camera/CameraPoserFunction.o:
   - offset: 0x834208
     size: 24
     label: _ZN21alCameraPoserFunction16getProjectionMtxEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x834220
     size: 8
     label: _ZN21alCameraPoserFunction7getNearEPKN2al11CameraPoserE
@@ -229223,299 +229223,299 @@ Library/Camera/CameraPoserFunction.o:
   - offset: 0x8359a8
     size: 36
     label: _ZN21alCameraPoserFunction19initCameraMoveLimitEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8359cc
     size: 48
     label: _ZN21alCameraPoserFunction19initCameraAngleCtrlEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8359fc
     size: 36
     label: _ZN21alCameraPoserFunction32initCameraAngleCtrlWithRelativeHEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a20
     size: 16
     label: _ZN21alCameraPoserFunction28initCameraDefaultAngleRangeVEPN2al11CameraPoserEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a30
     size: 12
     label: _ZN21alCameraPoserFunction20setCameraStartAngleVEPN2al11CameraPoserEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a3c
     size: 8
     label: _ZN21alCameraPoserFunction15setCameraAngleVEPN2al11CameraPoserEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a44
     size: 12
     label: _ZN21alCameraPoserFunction15getCameraAngleHEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a50
     size: 12
     label: _ZN21alCameraPoserFunction15getCameraAngleVEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a5c
     size: 48
     label: _ZN21alCameraPoserFunction14initAngleSwingEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835a8c
     size: 20
     label: _ZN21alCameraPoserFunction17isValidAngleSwingEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835aa0
     size: 48
     label: _ZN21alCameraPoserFunction26initCameraOffsetCtrlPresetEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835ad0
     size: 32
     label: _ZN21alCameraPoserFunction9getOffsetEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835af0
     size: 48
     label: _ZN21alCameraPoserFunction18initGyroCameraCtrlEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835b20
     size: 96
     label: _ZN21alCameraPoserFunction9resetGyroEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835b80
     size: 84
     label: _ZN21alCameraPoserFunction18calcCameraGyroPoseEPKN2al11CameraPoserEPN4sead7Vector3IfEES7_S7_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835bd4
     size: 12
     label: _ZN21alCameraPoserFunction12getGyroFrontEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835be0
     size: 12
     label: _ZN21alCameraPoserFunction13getGyroAngleVEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835bec
     size: 12
     label: _ZN21alCameraPoserFunction13getGyroAngleHEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835bf8
     size: 16
     label: _ZN21alCameraPoserFunction18setGyroLimitAngleVEPN2al11CameraPoserEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c08
     size: 16
     label: _ZN21alCameraPoserFunction18setGyroSensitivityEPN2al11CameraPoserEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c18
     size: 8
     label: _ZN21alCameraPoserFunction21reduceGyroSencitivityEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c20
     size: 16
     label: _ZN21alCameraPoserFunction14stopUpdateGyroEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c30
     size: 12
     label: _ZN21alCameraPoserFunction17restartUpdateGyroEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c3c
     size: 12
     label: _ZN21alCameraPoserFunction16isStopUpdateGyroEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c48
     size: 52
     label: _ZN21alCameraPoserFunction21isTargetCollideGroundEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835c7c
     size: 52
     label: _ZN21alCameraPoserFunction15isTargetInWaterEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835cb0
     size: 52
     label: _ZN21alCameraPoserFunction21isTargetInMoonGravityEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835ce4
     size: 52
     label: _ZN21alCameraPoserFunction17isTargetClimbPoleEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835d18
     size: 52
     label: _ZN21alCameraPoserFunction16isTargetGrabCeilEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835d4c
     size: 52
     label: _ZN21alCameraPoserFunction26isTargetInvalidMoveByInputEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835d80
     size: 88
     label: _ZN21alCameraPoserFunction31isTargetEnableEndAfterInterpoleEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835dd8
     size: 52
     label: _ZN21alCameraPoserFunction17isTargetWallCatchEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835e0c
     size: 24
     label: _ZN21alCameraPoserFunction14isSnapShotModeEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835e24
     size: 68
     label: _ZN21alCameraPoserFunction22initSnapShotCameraCtrlEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835e68
     size: 80
     label: _ZN21alCameraPoserFunction35initSnapShotCameraCtrlZoomAutoResetEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835eb8
     size: 84
     label: _ZN21alCameraPoserFunction34initSnapShotCameraCtrlZoomRollMoveEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835f0c
     size: 16
     label: _ZN21alCameraPoserFunction34validateSnapShotCameraLookAtOffsetEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835f1c
     size: 16
     label: _ZN21alCameraPoserFunction30validateSnapShotCameraZoomFovyEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835f2c
     size: 16
     label: _ZN21alCameraPoserFunction26validateSnapShotCameraRollEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835f3c
     size: 188
     label: _ZN21alCameraPoserFunction24updateSnapShotCameraCtrlEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x835ff8
     size: 8
     label: _ZN21alCameraPoserFunction28startResetSnapShotCameraCtrlEPN2al11CameraPoserEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836000
     size: 12
     label: _ZN21alCameraPoserFunction31setSnapShotMaxZoomOutFovyDegreeEPN2al11CameraPoserEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83600c
     size: 12
     label: _ZN21alCameraPoserFunction21getSnapShotRollDegreeEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836018
     size: 12
     label: _ZN21alCameraPoserFunction23getSnapShotLookAtOffsetEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836024
     size: 12
     label: _ZN21alCameraPoserFunction19isOffVerticalAbsorbEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836030
     size: 12
     label: _ZN21alCameraPoserFunction16onVerticalAbsorbEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83603c
     size: 16
     label: _ZN21alCameraPoserFunction17offVerticalAbsorbEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83604c
     size: 16
     label: _ZN21alCameraPoserFunction20invalidateCameraBlurEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83605c
     size: 8
     label: _ZN21alCameraPoserFunction27isRequestStopVerticalAbsorbERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836064
     size: 8
     label: _ZN21alCameraPoserFunction22isRequestResetPositionERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83606c
     size: 8
     label: _ZN21alCameraPoserFunction20isRequestResetAngleVERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836074
     size: 8
     label: _ZN21alCameraPoserFunction34isRequestDownToDefaultAngleBySpeedERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83607c
     size: 8
     label: _ZN21alCameraPoserFunction31isRequestUpToTargetAngleBySpeedERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836084
     size: 8
     label: _ZN21alCameraPoserFunction22getRequestTargetAngleVERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83608c
     size: 8
     label: _ZN21alCameraPoserFunction20getRequestAngleSpeedERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836094
     size: 8
     label: _ZN21alCameraPoserFunction23isRequestMoveDownAngleVERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83609c
     size: 8
     label: _ZN21alCameraPoserFunction18isRequestSetAngleVERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360a4
     size: 8
     label: _ZN21alCameraPoserFunction16getRequestAngleVERKN2al23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360ac
     size: 12
     label: _ZN21alCameraPoserFunction17isInvalidColliderEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360b8
     size: 12
     label: _ZN21alCameraPoserFunction16validateColliderEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360c4
     size: 16
     label: _ZN21alCameraPoserFunction18invalidateColliderEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360d4
     size: 16
     label: _ZN21alCameraPoserFunction22validateCtrlSubjectiveEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360e4
     size: 16
     label: _ZN21alCameraPoserFunction26invalidateChangeSubjectiveEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8360f4
     size: 16
     label: _ZN21alCameraPoserFunction32invalidateKeepDistanceNextCameraEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836104
     size: 16
     label: _ZN21alCameraPoserFunction43invalidateKeepDistanceNextCameraIfNoCollideEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836114
     size: 16
     label: _ZN21alCameraPoserFunction36invalidatePreCameraEndAfterInterpoleEPN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836124
     size: 12
     label: _ZN21alCameraPoserFunction35isInvalidPreCameraEndAfterInterpoleEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836130
     size: 12
     label: _ZN21alCameraPoserFunction22isSceneCameraFirstCalcEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83613c
     size: 12
     label: _ZN21alCameraPoserFunction17isActiveInterpoleEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836148
     size: 24
     label: _ZN21alCameraPoserFunction26isInvalidEndEntranceCameraEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836160
     size: 8
     label: _ZN21alCameraPoserFunction7isPauseEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836168
     size: 216
     label: _ZN21alCameraPoserFunction30checkFirstCameraCollisionArrowEPN4sead7Vector3IfEES3_PKN2al13IUseCollisionERKS2_S9_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836240
     size: 160
     label: _ZN21alCameraPoserFunction30checkFirstCameraCollisionArrowEPNS_24CameraCollisionHitResultEPKN2al13IUseCollisionERKN4sead7Vector3IfEESA_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8362e0
     size: 192
     label: _ZN21alCameraPoserFunction41checkFirstCameraCollisionArrowOnlyCeilingEPN4sead7Vector3IfEES3_PKN2al13IUseCollisionERKS2_S9_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8363a0
     size: 1044
     label: _ZN21alCameraPoserFunction30checkCameraCollisionMoveSphereEPN4sead7Vector3IfEEPKN2al13IUseCollisionERKS2_S9_f
@@ -229523,27 +229523,27 @@ Library/Camera/CameraPoserFunction.o:
   - offset: 0x8367b4
     size: 148
     label: _ZN21alCameraPoserFunction20calcZoneRotateAngleHEfPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836848
     size: 148
     label: _ZN21alCameraPoserFunction20calcZoneRotateAngleHEfRKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8368dc
     size: 156
     label: _ZN21alCameraPoserFunction23calcZoneInvRotateAngleHEfRKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836978
     size: 120
     label: _ZN21alCameraPoserFunction11multVecZoneEPN4sead7Vector3IfEERKS2_PKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8369f0
     size: 216
     label: _ZN21alCameraPoserFunction14multVecInvZoneEPN4sead7Vector3IfEERKS2_PKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836ac8
     size: 108
     label: _ZN21alCameraPoserFunction13rotateVecZoneEPN4sead7Vector3IfEERKS2_PKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836b34
     size: 788
     label: _ZN21alCameraPoserFunction28calcOffsetCameraKeepInFrameVEPN4sead7Vector3IfEEPNS0_12LookAtCameraERKS2_PKN2al11CameraPoserEff
@@ -229551,111 +229551,111 @@ Library/Camera/CameraPoserFunction.o:
   - offset: 0x836e48
     size: 148
     label: _ZN21alCameraPoserFunction22makeCameraKeepInFrameVEPN4sead12LookAtCameraERKNS0_7Vector3IfEEPKN2al11CameraPoserEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836edc
     size: 88
     label: _ZN21alCameraPoserFunction14initCameraRailEPN2al11CameraPoserERKNS0_13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836f34
     size: 112
     label: _ZN21alCameraPoserFunction19tryGetCameraRailArgEPfRKN2al13PlacementInfoEPKcS6_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836fa4
     size: 76
     label: _ZN21alCameraPoserFunction23getCameraRailPointObjIdEPKN2al11CameraPoserEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x836ff0
     size: 320
     label: _ZN21alCameraPoserFunction29tryFindNearestLimitRailKeeperEPKN2al11CameraPoserERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837130
     size: 124
     label: _ZN21alCameraPoserFunction21calcCameraRotateStickEPN4sead7Vector2IfEEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8371ac
     size: 124
     label: _ZN21alCameraPoserFunction22calcCameraRotateStickHEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837228
     size: 120
     label: _ZN21alCameraPoserFunction22calcCameraRotateStickVEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8372a0
     size: 156
     label: _ZN21alCameraPoserFunction26calcCameraRotateStickPowerEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83733c
     size: 16
     label: _ZN21alCameraPoserFunction24getStickSensitivityLevelEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83734c
     size: 48
     label: _ZN21alCameraPoserFunction24getStickSensitivityScaleEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83737c
     size: 32
     label: _ZN21alCameraPoserFunction11isValidGyroEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83739c
     size: 16
     label: _ZN21alCameraPoserFunction23getGyroSensitivityLevelEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8373ac
     size: 48
     label: _ZN21alCameraPoserFunction23getGyroSensitivityScaleEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8373dc
     size: 84
     label: _ZN21alCameraPoserFunction26isTriggerCameraResetRotateEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837430
     size: 52
     label: _ZN21alCameraPoserFunction16isHoldCameraZoomEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837464
     size: 52
     label: _ZN21alCameraPoserFunction26isHoldCameraSnapShotZoomInEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837498
     size: 52
     label: _ZN21alCameraPoserFunction27isHoldCameraSnapShotZoomOutEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8374cc
     size: 52
     label: _ZN21alCameraPoserFunction28isHoldCameraSnapShotRollLeftEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837500
     size: 52
     label: _ZN21alCameraPoserFunction29isHoldCameraSnapShotRollRightEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837534
     size: 64
     label: _ZN21alCameraPoserFunction30tryCalcCameraSnapShotMoveStickEPN4sead7Vector2IfEEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837574
     size: 12
     label: _ZN21alCameraPoserFunction17isPlayerTypeFlyerEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837580
     size: 12
     label: _ZN21alCameraPoserFunction25isPlayerTypeHighSpeedMoveEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83758c
     size: 12
     label: _ZN21alCameraPoserFunction20isPlayerTypeHighJumpEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837598
     size: 12
     label: _ZN21alCameraPoserFunction26isPlayerTypeNotTouchGroundEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8375a4
     size: 40
     label: _ZN21alCameraPoserFunction11isOnRideObjEPKN2al11CameraPoserE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8375cc
     size: 100
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_CameraPoserFunction.cpp
+    status: Matching
 Library/Camera/CameraPoserSceneInfo.o:
   '.text':
   - offset: 0x837630
