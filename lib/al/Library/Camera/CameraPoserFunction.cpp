@@ -24,6 +24,10 @@ s32 getViewIndex(const al::CameraPoser* cameraPoser) {
     return cameraPoser->getCameraViewInfo()->getIndex();
 }
 
+static s32 getViewInfoIndex(const al::CameraPoser* cameraPoser) {
+    return cameraPoser->getViewInfo()->getIndex();
+}
+
 const sead::LookAtCamera& getLookAtCamera(const al::CameraPoser* cameraPoser) {
     return cameraPoser->getCameraViewInfo()->getLookAtCam();
 }
@@ -49,23 +53,23 @@ f32 getAspect(const al::CameraPoser* cameraPoser) {
 }
 
 const sead::Vector3f& getPreCameraPos(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getLookAtCam().getPos();
+    return getLookAtCamera(cameraPoser).getPos();
 }
 
 const sead::Vector3f& getPreLookAtPos(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getLookAtCam().getAt();
+    return getLookAtCamera(cameraPoser).getAt();
 }
 
 const sead::Vector3f& getPreUpDir(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getLookAtCam().getUp();
+    return getLookAtCamera(cameraPoser).getUp();
 }
 
 f32 getPreFovyDegree(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getProjection().getFovy() * 57.29578f;
+    return sead::Mathf::rad2deg(getPreFovyRadian(cameraPoser));
 }
 
 f32 getPreFovyRadian(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getProjection().getFovy();
+    return getProjection(cameraPoser).getFovy();
 }
 
 bool isPrePriorityDemo(const al::CameraStartInfo& cameraStartInfo) {
@@ -81,8 +85,7 @@ bool isPrePriorityDemoTalk(const al::CameraStartInfo& cameraStartInfo) {
 }
 
 bool isPrePriorityDemoAll(const al::CameraStartInfo& cameraStartInfo) {
-    return cameraStartInfo.prePriorityType == al::CameraTicket::Priority_Demo ||
-           cameraStartInfo.prePriorityType == al::CameraTicket::Priority_Demo2;
+    return isPrePriorityDemo(cameraStartInfo) || isPrePriorityDemo2(cameraStartInfo);
 }
 
 bool isPrePriorityEntranceAll(const al::CameraStartInfo& cameraStartInfo) {
@@ -101,10 +104,7 @@ bool isEqualPreCameraName(const al::CameraStartInfo& cameraStartInfo, const char
 }
 
 bool isPreCameraFixAbsolute(const al::CameraStartInfo& cameraStartInfo) {
-    const char* cameraName = al::CameraPoserFix::getFixAbsoluteCameraName();
-    if (cameraStartInfo.preCameraName)
-        return al::isEqualString(cameraName, cameraStartInfo.preCameraName);
-    return false;
+    return isEqualPreCameraName(cameraStartInfo, al::CameraPoserFix::getFixAbsoluteCameraName());
 }
 
 bool isInvalidCollidePreCamera(const al::CameraStartInfo& cameraStartInfo) {
@@ -172,131 +172,108 @@ f32 getNextAngleVByPreCamera(const al::CameraStartInfo& cameraStartInfo) {
 }
 
 void calcCameraPose(sead::Quatf* out, const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec;
-    vec.x = cameraPoser->getPosition().x - cameraPoser->getTargetTrans().x;
-    vec.y = cameraPoser->getPosition().y - cameraPoser->getTargetTrans().y;
-    vec.z = cameraPoser->getPosition().z - cameraPoser->getTargetTrans().z;
-
-    al::normalize(&vec);
-    vec.negate();
-    al::makeQuatFrontUp(out, vec, cameraPoser->getCameraUp());
+    sead::Vector3f lookDir;
+    calcLookDir(&lookDir, cameraPoser);
+    al::makeQuatFrontUp(out, lookDir, cameraPoser->getUp());
 }
 
 void calcLookDir(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    out->x = cameraPoser->getPosition().x - cameraPoser->getTargetTrans().x;
-    out->y = cameraPoser->getPosition().y - cameraPoser->getTargetTrans().y;
-    out->z = cameraPoser->getPosition().z - cameraPoser->getTargetTrans().z;
-    al::normalize(out);
+    calcCameraDir(out, cameraPoser);
     out->negate();
 }
 
 void calcCameraDir(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    out->x = cameraPoser->getPosition().x - cameraPoser->getTargetTrans().x;
-    out->y = cameraPoser->getPosition().y - cameraPoser->getTargetTrans().y;
-    out->z = cameraPoser->getPosition().z - cameraPoser->getTargetTrans().z;
+    out->setSub(cameraPoser->getEye(), cameraPoser->getAt());
     al::normalize(out);
 }
 
-void calcCameraDirH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    out->x = cameraPoser->getPosition().x - cameraPoser->getTargetTrans().x;
-    out->y = cameraPoser->getPosition().y - cameraPoser->getTargetTrans().y;
-    out->z = cameraPoser->getPosition().z - cameraPoser->getTargetTrans().z;
-    al::verticalizeVec(out, cameraPoser->getCameraUp(), *out);
-    al::tryNormalizeOrZero(out);
+bool calcCameraDirH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
+    out->setSub(cameraPoser->getEye(), cameraPoser->getAt());
+    al::verticalizeVec(out, cameraPoser->getUp(), *out);
+    return al::tryNormalizeOrZero(out);
 }
 
 bool calcLookDirH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    out->x = cameraPoser->getPosition().x - cameraPoser->getTargetTrans().x;
-    out->y = cameraPoser->getPosition().y - cameraPoser->getTargetTrans().y;
-    out->z = cameraPoser->getPosition().z - cameraPoser->getTargetTrans().z;
-    al::verticalizeVec(out, cameraPoser->getCameraUp(), *out);
-    bool ret = al::tryNormalizeOrZero(out);
+    bool isValid = calcCameraDirH(out, cameraPoser);
     out->negate();
-    return ret;
+    return isValid;
 }
 
 void calcSideDir(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = cameraPoser->getPosition() - cameraPoser->getTargetTrans();
+    sead::Vector3f vec = cameraPoser->getEye() - cameraPoser->getAt();
     al::normalize(&vec);
-    *out = vec.cross(cameraPoser->getCameraUp());
+    out->set(vec.cross(cameraPoser->getUp()));
     al::normalize(out);
 }
 
 void calcPreCameraDir(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    const sead::LookAtCamera& lookAtCam = cameraPoser->getCameraViewInfo()->getLookAtCam();
-    out->x = lookAtCam.getPos().x - lookAtCam.getAt().x;
-    out->y = lookAtCam.getPos().y - lookAtCam.getAt().y;
-    out->z = lookAtCam.getPos().z - lookAtCam.getAt().z;
+    const sead::LookAtCamera& lookAtCam = getLookAtCamera(cameraPoser);
+    out->setSub(lookAtCam.getPos(), lookAtCam.getAt());
     al::normalize(out);
 }
 
 void calcPreCameraDirH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    const sead::LookAtCamera& lookAtCam = cameraPoser->getCameraViewInfo()->getLookAtCam();
-    out->x = lookAtCam.getPos().x - lookAtCam.getAt().x;
-    out->y = lookAtCam.getPos().y - lookAtCam.getAt().y;
-    out->z = lookAtCam.getPos().z - lookAtCam.getAt().z;
+    const sead::LookAtCamera& lookAtCam = getLookAtCamera(cameraPoser);
+    out->setSub(lookAtCam.getPos(), lookAtCam.getAt());
     al::verticalizeVec(out, sead::Vector3f::ey, *out);
     al::tryNormalizeOrZero(out);
 }
 
 void calcPreLookDir(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    const sead::LookAtCamera& lookAtCam = cameraPoser->getCameraViewInfo()->getLookAtCam();
-    out->x = lookAtCam.getPos().x - lookAtCam.getAt().x;
-    out->y = lookAtCam.getPos().y - lookAtCam.getAt().y;
-    out->z = lookAtCam.getPos().z - lookAtCam.getAt().z;
-    al::normalize(out);
+    calcPreCameraDir(out, cameraPoser);
     out->negate();
 }
 
 void calcPreLookDirH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    const sead::LookAtCamera& lookAtCam = cameraPoser->getCameraViewInfo()->getLookAtCam();
+    const sead::LookAtCamera& lookAtCam = getLookAtCamera(cameraPoser);
     out->set(lookAtCam.getAt() - lookAtCam.getPos());
-    al::verticalizeVec(out, cameraPoser->getCameraViewInfo()->getLookAtCam().getUp(), *out);
+    al::verticalizeVec(out, getPreUpDir(cameraPoser), *out);
     al::tryNormalizeOrZero(out);
 }
 
 f32 calcPreCameraAngleH(const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
+    sead::Vector3f vec = {0.0f, 0.0f, 0.0f};
     calcPreCameraDirH(&vec, cameraPoser);
-    return sead::Mathf::atan2(vec.x, vec.z) * 57.29578f;
+    return sead::Mathf::rad2deg(sead::Mathf::atan2(vec.x, vec.z));
 }
 
 f32 calcPreCameraAngleV(const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    calcPreCameraDir(&vec, cameraPoser);
-    al::parallelizeVec(&vec, sead::Vector3f::ey, vec);
-    return sead::Mathf::asin(sead::Mathf::sqrt(vec.dot(vec))) * 57.29578f;
+    sead::Vector3f cameraDir = {0.0f, 0.0f, 0.0f};
+    calcPreCameraDir(&cameraDir, cameraPoser);
+    al::parallelizeVec(&cameraDir, sead::Vector3f::ey, cameraDir);
+    return sead::Mathf::rad2deg(sead::Mathf::asin(cameraDir.length()));
 }
 
 void setLookAtPosToTarget(al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    calcTargetTrans(&vec, cameraPoser);
-    cameraPoser->setTargetTrans(vec);
+    sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
+    calcTargetTrans(&targetTrans, cameraPoser);
+    cameraPoser->setAt(targetTrans);
+}
+
+static inline al::CameraTargetBase* getTarget(const al::CameraPoser* cameraPoser) {
+    return cameraPoser->getTargetHolder()->getViewTarget(getViewInfoIndex(cameraPoser));
 }
 
 void calcTargetTrans(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    cameraTargetBase->calcTrans(out);
+    getTarget(cameraPoser)->calcTrans(out);
 }
 
 void setLookAtPosToTargetAddOffset(al::CameraPoser* cameraPoser, const sead::Vector3f& offset) {
-    sead::Vector3f vec = {0, 0, 0};
-    calcTargetTrans(&vec, cameraPoser);
-    cameraPoser->setTargetTrans(vec + offset);
+    sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
+    calcTargetTrans(&targetTrans, cameraPoser);
+    cameraPoser->setAt(targetTrans + offset);
 }
 
 void setCameraPosToTarget(al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    calcTargetTrans(&vec, cameraPoser);
-    cameraPoser->setPosition(vec);
+    sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
+    calcTargetTrans(&targetTrans, cameraPoser);
+    cameraPoser->setEye(targetTrans);
 }
 
 void setCameraPosToTargetAddOffset(al::CameraPoser* cameraPoser, const sead::Vector3f& offset) {
-    sead::Vector3f vec = {0, 0, 0};
-    calcTargetTrans(&vec, cameraPoser);
-    cameraPoser->setPosition(vec + offset);
+    sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
+    calcTargetTrans(&targetTrans, cameraPoser);
+    cameraPoser->setEye(targetTrans + offset);
 }
 
 void calcTargetTransWithOffset(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
@@ -307,10 +284,7 @@ void calcTargetTransWithOffset(sead::Vector3f* out, const al::CameraPoser* camer
 }
 
 void calcTargetVelocity(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    cameraTargetBase->calcVelocity(out);
+    getTarget(cameraPoser)->calcVelocity(out);
 }
 
 void calcTargetVelocityH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
@@ -321,100 +295,93 @@ void calcTargetVelocityH(sead::Vector3f* out, const al::CameraPoser* cameraPoser
 }
 
 void calcTargetUp(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    cameraTargetBase->calcUp(out);
+    getTarget(cameraPoser)->calcUp(out);
 }
 
 f32 calcTargetSpeedV(const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    sead::Vector3f vec2 = {0, 0, 0};
-    calcTargetVelocity(&vec, cameraPoser);
-    calcTargetUp(&vec2, cameraPoser);
-    al::parallelizeVec(&vec, vec2, vec);
+    sead::Vector3f targetVelocity = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f targetUp = {0.0f, 0.0f, 0.0f};
+    calcTargetVelocity(&targetVelocity, cameraPoser);
+    calcTargetUp(&targetUp, cameraPoser);
+    al::parallelizeVec(&targetVelocity, targetUp, targetVelocity);
 
-    f32 dot = vec.dot(vec2);
-    f32 sqrtDot = sead::Mathf::sqrt(vec.dot(vec));
-    if (!(dot > 0.0f))
-        sqrtDot = -sqrtDot;
-    return sqrtDot;
+    f32 direction = targetVelocity.dot(targetUp);
+    f32 speedV = targetVelocity.length();
+
+    if (direction > 0.0f)
+        return speedV;
+    else
+        return -speedV;
 }
 
 void calcTargetPose(sead::Quatf* out, const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    sead::Vector3f vec2 = {0, 0, 0};
-    calcTargetUp(&vec, cameraPoser);
-    calcTargetFront(&vec2, cameraPoser);
-    al::makeQuatFrontUp(out, vec2, vec);
+    sead::Vector3f targetUp = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f targetFront = {0.0f, 0.0f, 0.0f};
+    calcTargetUp(&targetUp, cameraPoser);
+    calcTargetFront(&targetFront, cameraPoser);
+    al::makeQuatFrontUp(out, targetFront, targetUp);
 }
 
 void calcTargetFront(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    cameraTargetBase->calcFront(out);
+    getTarget(cameraPoser)->calcFront(out);
 }
 
 void calcTargetSide(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    cameraTargetBase->calcSide(out);
+    getTarget(cameraPoser)->calcSide(out);
 }
 
 void calcTargetGravity(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    cameraTargetBase->calcGravity(out);
+    getTarget(cameraPoser)->calcGravity(out);
 }
 
 f32 calcTargetSpeedH(const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    sead::Vector3f vec2 = {0, 0, 0};
-    calcTargetGravity(&vec, cameraPoser);
-    calcTargetVelocity(&vec2, cameraPoser);
-    al::verticalizeVec(&vec2, vec, vec2);
-    return sead::Mathf::sqrt(vec2.dot(vec2));
+    sead::Vector3f targetGravity = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f targetVelocity = {0.0f, 0.0f, 0.0f};
+    calcTargetGravity(&targetGravity, cameraPoser);
+    calcTargetVelocity(&targetVelocity, cameraPoser);
+
+    al::verticalizeVec(&targetVelocity, targetGravity, targetVelocity);
+    return targetVelocity.length();
 }
 
 f32 calcTargetJumpSpeed(const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    sead::Vector3f vec2 = {0, 0, 0};
-    calcTargetGravity(&vec, cameraPoser);
-    calcTargetVelocity(&vec2, cameraPoser);
-    al::parallelizeVec(&vec2, vec, vec2);
-    if (!al::isNearZero(vec2, 0.001f) && !(vec.dot(vec2) > 0.0f))
-        return sead::Mathf::sqrt(vec2.dot(vec2));
-    return 0.0f;
+    sead::Vector3f targetGravity = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f targetVelocity = {0.0f, 0.0f, 0.0f};
+    calcTargetGravity(&targetGravity, cameraPoser);
+    calcTargetVelocity(&targetVelocity, cameraPoser);
+
+    al::parallelizeVec(&targetVelocity, targetGravity, targetVelocity);
+    if (al::isNearZero(targetVelocity) || targetGravity.dot(targetVelocity) > 0.0f)
+        return 0.0f;
+
+    return targetVelocity.length();
 }
 
 f32 calcTargetFallSpeed(const al::CameraPoser* cameraPoser) {
-    sead::Vector3f vec = {0, 0, 0};
-    sead::Vector3f vec2 = {0, 0, 0};
-    calcTargetGravity(&vec, cameraPoser);
-    calcTargetVelocity(&vec2, cameraPoser);
-    al::parallelizeVec(&vec2, vec, vec2);
-    if (!al::isNearZero(vec2, 0.001f) && !(vec.dot(vec2) < 0.0f))
-        return sead::Mathf::sqrt(vec2.dot(vec2));
-    return 0.0f;
+    sead::Vector3f targetGravity = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f targetVelocity = {0.0f, 0.0f, 0.0f};
+    calcTargetGravity(&targetGravity, cameraPoser);
+    calcTargetVelocity(&targetVelocity, cameraPoser);
+
+    al::parallelizeVec(&targetVelocity, targetGravity, targetVelocity);
+    if (al::isNearZero(targetVelocity) || targetGravity.dot(targetVelocity) < 0.0f)
+        return 0.0f;
+
+    return targetVelocity.length();
 }
 
 bool isChangeTarget(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    return cameraTargetHolder->isChangeViewTarget(cameraPoser->getViewInfo()->getIndex());
+    return cameraPoser->getTargetHolder()->isChangeViewTarget(getViewInfoIndex(cameraPoser));
 }
 
 bool tryGetTargetRequestDistance(f32* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraTargetBase* cameraTargetBase =
-        cameraTargetHolder->getViewTarget(cameraPoser->getViewInfo()->getIndex());
-    f32 requestDistance = cameraTargetBase->getRequestDistance();
-    if (requestDistance > 0.0) {
-        *out = cameraTargetBase->getRequestDistance();
+    al::CameraTargetBase* target = getTarget(cameraPoser);
+
+    if (target->getRequestDistance() > 0.0f) {
+        *out = target->getRequestDistance();
         return true;
     }
+
     return false;
 }
 
@@ -426,92 +393,90 @@ f32* tryGetEquipmentDistanceCurve(const al::CameraPoser* cameraPoser) {
     return cameraPoser->getCameraPoserSceneInfo()->requestParamHolder->get_58();
 }
 
+static inline al::CameraTargetCollideInfoHolder*
+getTargetCollision(const al::CameraPoser* cameraPoser) {
+    return cameraPoser->getCameraPoserSceneInfo()->targetCollideInfoHolder;
+}
+
 bool isExistCollisionUnderTarget(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraPoserSceneInfo()
-        ->targetCollideInfoHolder->isExistCollisionUnderTarget();
+    return getTargetCollision(cameraPoser)->isExistCollisionUnderTarget();
 }
 
 const sead::Vector3f& getUnderTargetCollisionPos(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraPoserSceneInfo()->targetCollideInfoHolder->getTargetCollisionPos();
+    return getTargetCollision(cameraPoser)->getTargetCollisionPos();
 }
 
 const sead::Vector3f& getUnderTargetCollisionNormal(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraPoserSceneInfo()
-        ->targetCollideInfoHolder->getTargetCollisionNormal();
+    return getTargetCollision(cameraPoser)->getTargetCollisionNormal();
 }
 
 bool isExistSlopeCollisionUnderTarget(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetCollideInfoHolder* cameraTargetCollideInfoHolder =
-        cameraPoser->getCameraPoserSceneInfo()->targetCollideInfoHolder;
-    if (cameraTargetCollideInfoHolder->isExistCollisionUnderTarget())
-        return cameraTargetCollideInfoHolder->isExistSlopeCollisionUnderTarget();
-    return false;
+    return isExistCollisionUnderTarget(cameraPoser) &&
+           getTargetCollision(cameraPoser)->isExistSlopeCollisionUnderTarget();
 }
 
 bool isExistWallCollisionUnderTarget(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetCollideInfoHolder* cameraTargetCollideInfoHolder =
-        cameraPoser->getCameraPoserSceneInfo()->targetCollideInfoHolder;
-    return cameraTargetCollideInfoHolder->isExistUnderWall();
+    return getTargetCollision(cameraPoser)->isExistUnderWall();
 }
 
 bool tryCalcSlopeCollisionDownFrontDirH(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetCollideInfoHolder* cameraTargetCollideInfoHolder =
-        cameraPoser->getCameraPoserSceneInfo()->targetCollideInfoHolder;
-    return cameraTargetCollideInfoHolder->tryCalcSlopDownFrontDirH(out);
+    return getTargetCollision(cameraPoser)->tryCalcSlopDownFrontDirH(out);
 }
 
 f32 getSlopeCollisionUpSpeed(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraPoserSceneInfo()
-        ->targetCollideInfoHolder->getSlopeCollisionUpSpeed();
+    return getTargetCollision(cameraPoser)->getSlopeCollisionUpSpeed();
 }
 
 f32 getSlopeCollisionDownSpeed(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraPoserSceneInfo()
-        ->targetCollideInfoHolder->getSlopeCollisionDownSpeed();
+    return getTargetCollision(cameraPoser)->getSlopeCollisionDownSpeed();
 }
 
 bool isExistSubTarget(const al::CameraPoser* cameraPoser) {
     return cameraPoser->getTargetHolder()->getTopSubTargetInline();
 }
 
+static inline al::CameraSubTargetBase* getTopSubTarget(const al::CameraPoser* cameraPoser) {
+    return cameraPoser->getTargetHolder()->getTopSubTarget();
+}
+
+static inline al::CameraSubTargetTurnParam*
+getSubTargetTurnParam(const al::CameraPoser* cameraPoser) {
+    return getTopSubTarget(cameraPoser)->getSubTargetTurnParam();
+}
+
 bool checkValidTurnToSubTarget(const al::CameraPoser* cameraPoser) {
-    if (!cameraPoser->getTargetHolder()->getTopSubTargetInline())
+    if (!isExistSubTarget(cameraPoser))
         return false;
-    al::CameraTargetHolder* cameraTargetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* topSubTarget = cameraTargetHolder->getTopSubTarget();
-    al::CameraSubTargetTurnParam* subTargetTurnParam = topSubTarget->getSubTargetTurnParam();
-    if (subTargetTurnParam->getValidTurnDegreeRangeH() < 0.0f &&
-        subTargetTurnParam->getValidFaceDegreeRangeH() != 0.0f) {
+
+    al::CameraSubTargetTurnParam* subTargetTurnParam = getSubTargetTurnParam(cameraPoser);
+    if (subTargetTurnParam->validTurnDegreeRangeH < 0.0f &&
+        subTargetTurnParam->validFaceDegreeRangeH != 0.0f) {
         return true;
     }
-    sead::Vector3f vec = {};
-    vec.x = cameraPoser->getPosition().x - cameraPoser->getTargetTrans().x;
-    vec.y = cameraPoser->getPosition().y - cameraPoser->getTargetTrans().y;
-    vec.z = cameraPoser->getPosition().z - cameraPoser->getTargetTrans().z;
-    al::verticalizeVec(&vec, cameraPoser->getCameraUp(), vec);
-    bool ret = al::tryNormalizeOrZero(&vec);
-    vec.negate();
-    if (!ret)
+
+    sead::Vector3f lookDirH = {};
+    if (!calcLookDirH(&lookDirH, cameraPoser))
         return false;
-    if (subTargetTurnParam->getValidFaceDegreeRangeH() >= 0.0f) {
-        sead::Vector3f vec2 = {0, 0, 0};
-        calcSubTargetBack(&vec2, cameraPoser);
-        f32 validFaceDegreeRangeH = subTargetTurnParam->getValidFaceDegreeRangeH();
-        f32 angleDegree = al::calcAngleDegree(vec2, vec);
-        if (validFaceDegreeRangeH < angleDegree)
+
+    if (subTargetTurnParam->validFaceDegreeRangeH >= 0.0f) {
+        sead::Vector3f targetBack = {0.0f, 0.0f, 0.0f};
+        calcSubTargetBack(&targetBack, cameraPoser);
+        if (subTargetTurnParam->validFaceDegreeRangeH < al::calcAngleDegree(targetBack, lookDirH))
             return false;
     }
-    if (subTargetTurnParam->getValidTurnDegreeRangeH() >= 0.0f) {
-        sead::Vector3f vec2 = {0, 0, 0};
-        sead::Vector3f vec3 = {0, 0, 0};
-        calcSubTargetTrans(&vec2, cameraPoser);
-        vec3 = vec2 - cameraPoser->getPosition();
-        al::verticalizeVec(&vec3, cameraPoser->getCameraUp(), vec3);
-        if (!al::tryNormalizeOrZero(&vec3))
+
+    if (subTargetTurnParam->validTurnDegreeRangeH >= 0.0f) {
+        sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f lookDir = {0.0f, 0.0f, 0.0f};
+        calcSubTargetTrans(&targetTrans, cameraPoser);
+        lookDir = targetTrans - cameraPoser->getEye();
+        al::verticalizeVec(&lookDir, cameraPoser->getUp(), lookDir);
+        if (!al::tryNormalizeOrZero(&lookDir))
             return false;
-        if (subTargetTurnParam->getValidTurnDegreeRangeH() / 2 < al::calcAngleDegree(vec, vec3))
+        if (subTargetTurnParam->validTurnDegreeRangeH / 2 < al::calcAngleDegree(lookDirH, lookDir))
             return false;
     }
+
     return true;
 }
 
@@ -521,161 +486,133 @@ void calcSubTargetBack(sead::Vector3f* out, const al::CameraPoser* cameraPoser) 
 }
 
 void calcSubTargetTrans(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    subTargetBase->calcTrans(out);
+    getTopSubTarget(cameraPoser)->calcTrans(out);
 }
 
 bool isChangeSubTarget(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    return targetHolder->hasTopSubTargetChanged();
+    return cameraPoser->getTargetHolder()->hasTopSubTargetChanged();
 }
 
 void calcSubTargetFront(sead::Vector3f* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    subTargetBase->calcFront(out);
+    getTopSubTarget(cameraPoser)->calcFront(out);
 }
 
 f32 getSubTargetRequestDistance(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    return subTargetBase->getRequestDistance();
+    return getTopSubTarget(cameraPoser)->getRequestDistance();
 }
 
 f32 getSubTargetTurnSpeedRate1(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    return subTargetBase->getSubTargetTurnParam()->getTurnSpeedRate1();
+    return getSubTargetTurnParam(cameraPoser)->turnSpeedRate1;
 }
 
 f32 getSubTargetTurnSpeedRate2(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    return subTargetBase->getSubTargetTurnParam()->getTurnSpeedRate2();
+    return getSubTargetTurnParam(cameraPoser)->turnSpeedRate2;
 }
 
 s32 getSubTargetTurnRestartStep(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    return subTargetBase->getSubTargetTurnParam()->getTargetTurnRestartStep();
+    return getSubTargetTurnParam(cameraPoser)->targetTurnRestartStep;
 }
 
 bool tryCalcSubTargetTurnBrakeDistanceRate(f32* out, const al::CameraPoser* cameraPoser) {
-    al::CameraSubTargetBase* subTargetBase = cameraPoser->getTargetHolder()->getTopSubTarget();
-    al::CameraSubTargetTurnParam* turnParam = subTargetBase->getSubTargetTurnParam();
+    al::CameraSubTargetTurnParam* turnParam = getSubTargetTurnParam(cameraPoser);
 
-    sead::Vector3f vec = {0, 0, 0};
-    sead::Vector3f vec2 = {0, 0, 0};
+    sead::Vector3f vec = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f vec2 = {0.0f, 0.0f, 0.0f};
     calcTargetTrans(&vec, cameraPoser);
     calcSubTargetTrans(&vec2, cameraPoser);
 
     f32 distance = sead::Mathf::sqrt(sead::Mathf::pow(vec.x - vec2.x, 2) +
                                      sead::Mathf::pow(vec.z - vec2.z, 2));
 
-    f32 turnBrakeDistance = turnParam->getTurnBrakeEndDistance();
-    if (turnBrakeDistance > 0.0f) {
-        f32 turnBrakeStartDistance = turnParam->getTurnBrakeStartDistance();
-        if (turnBrakeDistance < turnBrakeStartDistance && distance < turnBrakeStartDistance) {
-            *out = 1.0f - al::normalize(distance, turnBrakeDistance, turnBrakeStartDistance);
-            return true;
-        }
+    if (turnParam->turnBrakeEndDistance > 0.0f &&
+        turnParam->turnBrakeEndDistance < turnParam->turnBrakeStartDistance &&
+        distance < turnParam->turnBrakeStartDistance) {
+        *out = 1.0f - al::normalize(distance, turnParam->turnBrakeEndDistance,
+                                    turnParam->turnBrakeStartDistance);
+        return true;
     }
 
-    f32 turnStopStartDistance = turnParam->getTurnStopStartDistance();
-    if (turnStopStartDistance > 0.0f) {
-        f32 turnStopEndDistance = turnParam->getTurnStopEndDistance();
-        if (turnStopStartDistance < turnStopEndDistance && turnStopStartDistance < distance) {
-            *out = al::normalize(distance, turnStopStartDistance, turnStopEndDistance);
-            return true;
-        }
+    if (turnParam->turnStopStartDistance > 0.0f &&
+        turnParam->turnStopStartDistance < turnParam->turnStopEndDistance &&
+        turnParam->turnStopStartDistance < distance) {
+        *out = al::normalize(distance, turnParam->turnStopStartDistance,
+                             turnParam->turnStopEndDistance);
+        return true;
     }
 
     return false;
 }
 
 bool isValidSubTargetTurnV(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    return subTargetBase->getSubTargetTurnParam()->isTurnV();
+    return getSubTargetTurnParam(cameraPoser)->isTurnV;
 }
 
 bool isValidSubTargetResetAfterTurnV(const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* subTargetBase = targetHolder->getTopSubTarget();
-    return subTargetBase->getSubTargetTurnParam()->isResetAfterTurnV();
+    return getSubTargetTurnParam(cameraPoser)->isResetAfterTurnV;
 }
 
 void clampAngleSubTargetTurnRangeV(f32* out, const al::CameraPoser* cameraPoser) {
-    al::CameraTargetHolder* targetHolder = cameraPoser->getTargetHolder();
-    al::CameraSubTargetBase* topSubTarget = targetHolder->getTopSubTarget();
-    f32 minTurnDegree = topSubTarget->getSubTargetTurnParam()->getMinTurnDegreeV();
-    f32 maxTurnDegree = 0.0f;
+    al::CameraSubTargetBase* topSubTarget = getTopSubTarget(cameraPoser);
+    f32 min = topSubTarget->getSubTargetTurnParam()->minTurnDegreeV;
+    f32 max = topSubTarget->getSubTargetTurnParam()->maxTurnDegreeV;
 
-    f32 outParam = *out;
-    if (!(outParam < minTurnDegree)) {
-        maxTurnDegree = topSubTarget->getSubTargetTurnParam()->getMaxTurnDegreeV();
-        minTurnDegree = outParam;
-        if (outParam > maxTurnDegree)
-            minTurnDegree = maxTurnDegree;
-    }
-    *out = minTurnDegree;
+    *out = sead::Mathf::clamp(*out, min, max);
 }
 
 void initCameraVerticalAbsorber(al::CameraPoser* cameraPoser) {
-    al::CameraVerticalAbsorber* cameraVerticalAbsorber =
-        new al::CameraVerticalAbsorber(cameraPoser, false);
-    cameraPoser->setVerticalAbsorber(cameraVerticalAbsorber);
+    cameraPoser->setVerticalAbsorber(new al::CameraVerticalAbsorber(cameraPoser, false));
 }
 
 void initCameraVerticalAbsorberNoCameraPosAbsorb(al::CameraPoser* cameraPoser) {
-    al::CameraVerticalAbsorber* cameraVerticalAbsorber =
-        new al::CameraVerticalAbsorber(cameraPoser, true);
-    cameraPoser->setVerticalAbsorber(cameraVerticalAbsorber);
+    cameraPoser->setVerticalAbsorber(new al::CameraVerticalAbsorber(cameraPoser, true));
+}
+
+static inline al::CameraVerticalAbsorber* getVerticalAbsorber(const al::CameraPoser* cameraPoser) {
+    return cameraPoser->getCameraVerticalAbsorber();
 }
 
 f32 getCameraVerticalAbsorbPosUp(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraVerticalAbsorber()->getAbsorbScreenPosUp();
+    return getVerticalAbsorber(cameraPoser)->getAbsorbScreenPosUp();
 }
 
 f32 getCameraVerticalAbsorbPosDown(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraVerticalAbsorber()->getAbsorbScreenPosDown();
+    return getVerticalAbsorber(cameraPoser)->getAbsorbScreenPosDown();
 }
 
 void liberateVerticalAbsorb(al::CameraPoser* cameraPoser) {
-    cameraPoser->getCameraVerticalAbsorber()->liberateAbsorb();
+    getVerticalAbsorber(cameraPoser)->liberateAbsorb();
 }
 
 void stopUpdateVerticalAbsorb(al::CameraPoser* cameraPoser) {
-    cameraPoser->getCameraVerticalAbsorber()->setIsStopUpdate(true);
+    getVerticalAbsorber(cameraPoser)->setIsStopUpdate(true);
 }
 
 void stopUpdateVerticalAbsorbForSnapShotMode(al::CameraPoser* cameraPoser,
                                              const sead::Vector3f& absorbVec) {
     stopUpdateVerticalAbsorb(cameraPoser);
-    cameraPoser->getCameraVerticalAbsorber()->tryResetAbsorbVecIfInCollision(absorbVec);
+    getVerticalAbsorber(cameraPoser)->tryResetAbsorbVecIfInCollision(absorbVec);
 }
 
 void restartUpdateVerticalAbsorb(al::CameraPoser* cameraPoser) {
-    cameraPoser->getCameraVerticalAbsorber()->setIsStopUpdate(false);
+    getVerticalAbsorber(cameraPoser)->setIsStopUpdate(false);
 }
 
 void validateVerticalAbsorbKeepInFrame(al::CameraPoser* cameraPoser) {
-    cameraPoser->getCameraVerticalAbsorber()->setIsKeepInFrame(true);
+    getVerticalAbsorber(cameraPoser)->setIsKeepInFrame(true);
 }
 
 void invalidateVerticalAbsorbKeepInFrame(al::CameraPoser* cameraPoser) {
-    cameraPoser->getCameraVerticalAbsorber()->setIsKeepInFrame(false);
+    getVerticalAbsorber(cameraPoser)->setIsKeepInFrame(false);
 }
 
 void setVerticalAbsorbKeepInFrameScreenOffsetUp(al::CameraPoser* cameraPoser,
                                                 f32 keepInFrameOffsetUp) {
-    cameraPoser->getCameraVerticalAbsorber()->setKeepInFrameOffsetUp(keepInFrameOffsetUp);
+    getVerticalAbsorber(cameraPoser)->setKeepInFrameOffsetUp(keepInFrameOffsetUp);
 }
 
 void setVerticalAbsorbKeepInFrameScreenOffsetDown(al::CameraPoser* cameraPoser,
                                                   f32 keepInFrameOffsetDown) {
-    cameraPoser->getCameraVerticalAbsorber()->setKeepInFrameOffsetDown(keepInFrameOffsetDown);
+    getVerticalAbsorber(cameraPoser)->setKeepInFrameOffsetDown(keepInFrameOffsetDown);
 }
 
 void initCameraArrowCollider(al::CameraPoser* cameraPoser) {
