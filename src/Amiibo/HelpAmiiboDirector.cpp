@@ -35,7 +35,7 @@ NERVE_IMPL(HelpAmiiboDirector, IconClose);
 NERVES_MAKE_STRUCT(HelpAmiiboDirector, Wait, CountHold, Active, IconClose);
 }  // namespace
 
-HelpAmiiboDirector::HelpAmiiboDirector() {}
+HelpAmiiboDirector::HelpAmiiboDirector() = default;
 
 void HelpAmiiboDirector::init(ProjectNfpDirector* projectNfpDirector,
                               const al::PlayerHolder* playerHolder,
@@ -47,10 +47,10 @@ void HelpAmiiboDirector::init(ProjectNfpDirector* projectNfpDirector,
         alAudioKeeperFunction::createAudioKeeper(audioDirector, "HelpAmiiboDirector", nullptr);
 
     mNerveKeeper = new al::NerveKeeper(this, &NrvHelpAmiiboDirector.Wait, 0);
-    mSimpleLayout =
+    mAmiiboIcon =
         new al::SimpleLayoutAppearWaitEnd("amiiboアイコン", "AmiiboMode", initInfo, nullptr, false);
-    mLayoutActor = new al::LayoutActor("amiiboアイコン[アイコンパーツ]");
-    al::initLayoutPartsActor(mLayoutActor, mSimpleLayout, initInfo, "ParAmiiboIcon", nullptr);
+    mAmmiiboIconParts = new al::LayoutActor("amiiboアイコン[アイコンパーツ]");
+    al::initLayoutPartsActor(mAmmiiboIconParts, mAmiiboIcon, initInfo, "ParAmiiboIcon", nullptr);
 }
 
 void HelpAmiiboDirector::initAfterPlacementSceneObj(const al::ActorInitInfo& initInfo) {
@@ -105,12 +105,12 @@ bool HelpAmiiboDirector::isTriggerTouchAmiiboAll() const {
 void HelpAmiiboDirector::execute() {
     al::LiveActor* actor = al::getPlayerActor(mPlayerHolder, 0);
     if (rs::isPlayerEnablePeachAmiibo(actor))
-        mIsTouchAmiibo = true;
+        mIsEnableAmiibo = true;
 
     mNerveKeeper->update();
-    if (al::isActionPlaying(mLayoutActor, "Reject", nullptr)) {
-        if (al::isActionEnd(mLayoutActor, nullptr))
-            al::startAction(mLayoutActor, "Wait", nullptr);
+    if (al::isActionPlaying(mAmmiiboIconParts, "Reject", nullptr)) {
+        if (al::isActionEnd(mAmmiiboIconParts, nullptr))
+            al::startAction(mAmmiiboIconParts, "Wait", nullptr);
     }
 
     s32 entries = mTouchEntries.size();
@@ -119,15 +119,14 @@ void HelpAmiiboDirector::execute() {
 }
 
 void HelpAmiiboDirector::reset() {
-    mSimpleLayout->end();
+    mAmiiboIcon->end();
     mProjectNfpDirector->stop();
     al::setNerve(this, &NrvHelpAmiiboDirector.Wait);
 }
 
 bool HelpAmiiboDirector::isHelpAmiiboMode() const {
-    if (al::isNerve(this, &NrvHelpAmiiboDirector.CountHold))
-        return true;
-    return al::isNerve(this, &NrvHelpAmiiboDirector.Active);
+    return al::isNerve(this, &NrvHelpAmiiboDirector.CountHold) ||
+           al::isNerve(this, &NrvHelpAmiiboDirector.Active);
 }
 
 void HelpAmiiboDirector::appearCoinCollectEffect() {
@@ -148,7 +147,7 @@ bool HelpAmiiboDirector::tryExecute(const al::NfpInfo* nfpInfo) {
     if (isNotExecutable(mPlayerHolder))
         return false;
 
-    if (!mIsTouchAmiibo) {
+    if (!mIsEnableAmiibo) {
         al::startSe(this, "Invalid");
         return false;
     }
@@ -159,14 +158,14 @@ bool HelpAmiiboDirector::tryExecute(const al::NfpInfo* nfpInfo) {
             mTouchEntries[i]->tryTouch(*nfpInfo)) {
             mTouchEntries[i]->tryExecute();
             al::startSe(this, "TouchAmiibo");
-            al::startHitReaction(mSimpleLayout, "タッチ", nullptr);
-            mIsTouchAmiibo = false;
+            al::startHitReaction(mAmiiboIcon, "タッチ", nullptr);
+            mIsEnableAmiibo = false;
             return true;
         }
     }
 
     al::startSe(this, "Invalid");
-    al::startAction(mLayoutActor, "Reject", nullptr);
+    al::startAction(mAmmiiboIconParts, "Reject", nullptr);
     return false;
 }
 
@@ -202,18 +201,18 @@ void HelpAmiiboDirector::exeActive() {
     if (al::isLessStep(this, 10) && mProjectNfpDirector->isNfpErrorHandled()) {
         mProjectNfpDirector->stop();
         al::setNerve(this, &NrvHelpAmiiboDirector.Wait);
-        al::startAction(mLayoutActor, "Hide", nullptr);
+        al::startAction(mAmmiiboIconParts, "Hide", nullptr);
         return;
     }
 
     if (al::isStep(this, 10)) {
-        mSimpleLayout->appear();
-        al::startAction(mLayoutActor, "Appear", nullptr);
+        mAmiiboIcon->appear();
+        al::startAction(mAmmiiboIconParts, "Appear", nullptr);
     }
 
-    if (al::isActionPlaying(mLayoutActor, "Appear", nullptr)) {
-        if (al::isActionEnd(mLayoutActor, nullptr))
-            al::startAction(mLayoutActor, "Wait", nullptr);
+    if (al::isActionPlaying(mAmmiiboIconParts, "Appear", nullptr)) {
+        if (al::isActionEnd(mAmmiiboIconParts, nullptr))
+            al::startAction(mAmmiiboIconParts, "Wait", nullptr);
     }
 
     al::NfpInfo* nfpInfo = mProjectNfpDirector->tryGetTriggerTouchNfpInfo();
@@ -225,9 +224,9 @@ void HelpAmiiboDirector::exeActive() {
 
 void HelpAmiiboDirector::exeIconClose() {
     if (al::isFirstStep(this))
-        al::startAction(mLayoutActor, "End", nullptr);
-    if (al::isActionEnd(mLayoutActor, nullptr) || al::isDead(mSimpleLayout)) {
-        mSimpleLayout->kill();
+        al::startAction(mAmmiiboIconParts, "End", nullptr);
+    if (al::isActionEnd(mAmmiiboIconParts, nullptr) || al::isDead(mAmiiboIcon)) {
+        mAmiiboIcon->kill();
         al::setNerve(this, &NrvHelpAmiiboDirector.Wait);
     }
 }
@@ -235,7 +234,7 @@ void HelpAmiiboDirector::exeIconClose() {
 namespace AmiiboFunction {
 
 void tryCreateHelpAmiiboDirector(const al::IUseSceneObjHolder* objHolder) {
-    al::createSceneObj(objHolder, SceneObjID_HelpAmiiboDirector);
+    al::createSceneObj<HelpAmiiboDirector>(objHolder);
 }
 
 bool isTriggerTouchAmiiboMario(const al::IUseSceneObjHolder* objHolder) {

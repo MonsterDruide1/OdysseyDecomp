@@ -69,9 +69,9 @@ private:
     sead::PtrArray<HelpAmiiboExecutor> mTouchEntries;
 
     al::NerveKeeper* mNerveKeeper = nullptr;
-    al::SimpleLayoutAppearWaitEnd* mSimpleLayout = nullptr;
-    al::LayoutActor* mLayoutActor = nullptr;
-    bool mIsTouchAmiibo = true;
+    al::SimpleLayoutAppearWaitEnd* mAmiiboIcon = nullptr;
+    al::LayoutActor* mAmmiiboIconParts = nullptr;
+    bool mIsEnableAmiibo = true;
     HelpAmiiboCoinCollect* mCoinCollect = nullptr;
 };
 
