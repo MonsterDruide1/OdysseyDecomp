@@ -1,28 +1,8 @@
-#include "Library/Math/MtxPtrHolder.h"
+#include "Library/Math/MatrixPtrHolder.h"
 
 #include "Library/Base/StringUtil.h"
 
 namespace al {
-
-const s32 bayerMatrix2[2][2] = {{0, 2}, {3, 1}};
-
-void makeBayerMatrix(s32* outMtx, s32 size) {
-    for (s32 y = 0; y < 1 << size; ++y) {
-        for (s32 x = 0; x < 1 << size; x++) {
-            s32 value = 0;
-            s32 shift = 0;
-            for (s32 k = size; k != 0 && size > 0; k--) {
-                s32 bitX = (x % (1 << k)) / (1 << (k - 1));
-                s32 bitY = (y % (1 << k)) / (1 << (k - 1));
-
-                value += bayerMatrix2[bitY][bitX] << shift;
-                shift += 2;
-            }
-
-            outMtx[x + (y << size)] = value;
-        }
-    }
-}
 
 MtxPtrHolder::MtxPtrHolder() = default;
 

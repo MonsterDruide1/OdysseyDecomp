@@ -14,7 +14,7 @@
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Movement/EnemyStateBlowDown.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"

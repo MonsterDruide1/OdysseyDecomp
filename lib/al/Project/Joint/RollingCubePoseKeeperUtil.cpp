@@ -2,7 +2,7 @@
 
 #include "Library/LiveActor/ActorModelFunction.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Project/Joint/RollingCubePoseKeeper.h"
 #include "Project/RollingCubePose.h"
 

@@ -6,7 +6,7 @@
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 #include "Layout/BalloonIcon.h"
 #include "Util/DemoUtil.h"

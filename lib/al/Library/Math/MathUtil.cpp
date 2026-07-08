@@ -8,7 +8,7 @@
 
 #include "Library/Base/HashCodeUtil.h"
 #include "Library/Math/FractalGenerator.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 namespace al {
 f32 calcAngleRadian(const sead::Vector3f& a, const sead::Vector3f& b) {

@@ -1,6 +1,6 @@
 #include "Library/Collision/PartsMtxConnector.h"
 
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 namespace al {
 
