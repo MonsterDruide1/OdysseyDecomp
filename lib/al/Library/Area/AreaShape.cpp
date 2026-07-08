@@ -3,7 +3,7 @@
 #include <math/seadVector.h>
 
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 namespace al {
 AreaShape::AreaShape() = default;

@@ -10,7 +10,7 @@
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 namespace al {

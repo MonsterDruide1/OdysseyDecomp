@@ -1,13 +1,8 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 
 namespace al {
-
-void makeBayerMatrix(s32* outMtx, s32 size);
-u16 f32ToF16(f32 value);
-f32 f16ToF32(u16 value);
 
 class MtxPtrHolder {
 public:

@@ -3,7 +3,7 @@
 #include <gfx/seadCamera.h>
 
 #include "Library/Camera/CameraPoser.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
