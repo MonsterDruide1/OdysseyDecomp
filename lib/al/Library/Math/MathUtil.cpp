@@ -2012,6 +2012,90 @@ f32 calcCylinderRadiusDot(const sead::Vector3f& vecA, const sead::Vector3f& vecB
     return sead::Mathf::sin(sead::Mathf::acos(cos)) * radius;
 }
 
+constexpr u32 signMaskF32 = 0x80000000;      // 1 bit shift 31
+constexpr u32 exponentMaskF32 = 0x7f800000;  // 8 bit shift 23
+constexpr u32 mantissaMaskF32 = 0x007fffff;  // 23 bit
+constexpr u32 biasF32 = 127;
+constexpr u32 specialF32 = exponentMaskF32;
+
+constexpr u16 signMaskF16 = 0x8000;      // 1 bit shift 15
+constexpr u16 exponentMaskF16 = 0x7c00;  // 5 bit shift 10
+constexpr u16 mantissaMaskF16 = 0x03ff;  // 10 bit
+constexpr u16 biasF16 = 15;
+constexpr u16 specialF16 = exponentMaskF16;
+
+u16 f32ToF16(f32 value) {
+    u32 value32 = sead::BitUtil::bitCast<u32>(value);
+    u16 sign = (value32 & signMaskF32) >> 16;
+    u32 exponent = value32 & exponentMaskF32;
+
+    if (exponent == specialF32) {
+        u32 mantissa = value32 & mantissaMaskF32;
+        if (mantissa != 0) {
+            if (!(mantissa < 0x400000))
+                return sign | specialF16 | 0x3ff;
+            else
+                return sign | specialF16 | 0x1ff;
+        }
+
+        return sign | specialF16;
+    }
+
+    s32 expVal = (exponent >> 23) + (biasF16 - biasF32);
+    u16 mantissa = (value32 >> 13) & mantissaMaskF16;
+    u16 exp = (expVal << 10) & exponentMaskF16;
+    u16 normal = sign | exp | mantissa;
+
+    u16 result;
+    if (exponent <= (biasF32 - biasF16) << 23)
+        result = sign;
+    else
+        result = normal;
+
+    return expVal < 31 ? result : sign | specialF16;
+}
+
+f32 f16ToF32(u16 value) {
+    u32 sign = (value & signMaskF16) << 16;
+    u32 exponent = value & exponentMaskF16;
+    u32 mantissa = (value & mantissaMaskF16) << 13;
+    s32 bias = (biasF32 - biasF16) << 23;
+
+    u32 normal = sign | ((exponent << 13) + bias) | mantissa;
+    u32 special = sign | specialF32 | (value << 13);
+
+    u32 result;
+    if (exponent == specialF16)
+        result = special;
+    else
+        result = normal;
+
+    if (exponent == 0)
+        result = sign;
+
+    return sead::BitUtil::bitCast<f32>(result);
+}
+
+const s32 bayerMatrix2[2][2] = {{0, 2}, {3, 1}};
+
+void makeBayerMatrix(s32* outMtx, s32 size) {
+    for (s32 y = 0; y < 1 << size; ++y) {
+        for (s32 x = 0; x < 1 << size; x++) {
+            s32 value = 0;
+            s32 shift = 0;
+            for (s32 k = size; k != 0 && size > 0; k--) {
+                s32 bitX = (x % (1 << k)) / (1 << (k - 1));
+                s32 bitY = (y % (1 << k)) / (1 << (k - 1));
+
+                value += bayerMatrix2[bitY][bitX] << shift;
+                shift += 2;
+            }
+
+            outMtx[x + (y << size)] = value;
+        }
+    }
+}
+
 }  // namespace al
 
 namespace Intersect {
