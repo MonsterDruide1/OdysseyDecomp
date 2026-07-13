@@ -199987,43 +199987,43 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_allocator.o:
   - offset: 0x70ee4c
     size: 68
     label: Curl_SigloAllocatorInitializeDefaults
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ee90
     size: 56
     label: Curl_SigloAllocatorInitialize
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eec8
     size: 8
     label: Curl_SigloCleanupAllocator
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eed0
     size: 16
     label: Curl_SigloMalloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eee0
     size: 16
     label: Curl_SigloFree
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eef0
     size: 16
     label: Curl_SigloRealloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ef00
     size: 16
     label: Curl_SigloStrdup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ef10
     size: 16
     label: Curl_SigloCalloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ef20
     size: 88
     label: Curl_SigloAllocAligned
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70ef78
     size: 72
     label: Curl_SigloFreeAligned
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70efc0
     size: 12
     label: Curl_SigloMiddlewareInfo
@@ -200041,75 +200041,75 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_shim.o:
   - offset: 0x70f1c4
     size: 52
     label: nnCurlShim_time
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f1f8
     size: 140
     label: nnCurlShim_get_timeval
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f284
     size: 4
     label: nnCurlShim_gethostbyname
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f288
     size: 228
     label: nnCurlShim_fwrite
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f36c
     size: 112
     label: nnCurlShim_fputs
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f3dc
     size: 96
     label: nnCurlShim_fflush
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f43c
     size: 92
     label: nnCurlShim_fputc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f498
     size: 144
     label: nnCurlShim_fprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f528
     size: 96
     label: nnCurlShim_vfprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f588
     size: 48
     label: nnCurlShim_printf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f5b8
     size: 8
     label: nnCurlShim_vprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f5c0
     size: 52
     label: nnCurlShim_fclose
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f5f4
     size: 52
     label: nnCurlShim_fopen
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f628
     size: 52
     label: nnCurlShim_fread
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f65c
     size: 52
     label: nnCurlShim_fseek
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f690
     size: 52
     label: nnCurlShim_fgets
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f6c4
     size: 52
     label: nnCurlShim_fileno
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f6f8
     size: 52
     label: nnCurlShim_fstat
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f72c
     size: 52
     label: nnCurlShim_stat
