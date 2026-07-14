@@ -53,6 +53,7 @@ set(BUILD_CURL_EXE OFF)
 set(BUILD_CURL_TESTS OFF)
 set(HTTP_ONLY ON)
 set(OPENSSL_DEFAULT  OFF)
+set(ENABLE_MANUAL  OFF)
 set(CMAKE_USE_LIBSSH2 OFF)
 add_subdirectory(lib/curl)
 
