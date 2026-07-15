@@ -200591,8 +200591,8 @@ NintendoSDK-NEX/Externals/curl/lib/http.o:
     status: NonMatchingMajor
   - offset: 0x71795c
     size: 188
-    label: ''
-    status: NotDecompiled
+    label: readmoredata
+    status: NonMatchingMajor
   - offset: 0x717a18
     size: 240
     label: Curl_add_bufferf
@@ -200699,16 +200699,16 @@ NintendoSDK-NEX/Externals/curl/lib/md5.o:
   '.text':
   - offset: 0x71a7bc
     size: 48
-    label: ''
-    status: NotDecompiled
+    label: MD5_Init
+    status: Matching
   - offset: 0x71a7ec
     size: 196
-    label: ''
-    status: NotDecompiled
+    label: MD5_Update
+    status: Matching
   - offset: 0x71a8b0
     size: 488
-    label: ''
-    status: NotDecompiled
+    label: MD5_Final
+    status: Matching
   - offset: 0x71aa98
     size: 184
     label: Curl_md5it
@@ -200727,7 +200727,7 @@ NintendoSDK-NEX/Externals/curl/lib/md5.o:
     status: Matching
   - offset: 0x71ac10
     size: 3068
-    label: ''
+    label: gcry_md_close
     status: NotDecompiled
 NintendoSDK-NEX/Externals/curl/lib/netrc.o:
   '.text':
@@ -200837,8 +200837,8 @@ NintendoSDK-NEX/Externals/curl/lib/bundle.o:
     status: NonMatchingMajor
   - offset: 0x71df8c
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: conn_llist_dtor
+    status: NonMatchingMajor
   - offset: 0x71df94
     size: 68
     label: Curl_bundle_destroy
@@ -200875,8 +200875,8 @@ NintendoSDK-NEX/Externals/curl/lib/curl_sasl.o:
     status: Matching
   - offset: 0x71f460
     size: 364
-    label: ''
-    status: NotDecompiled
+    label: sasl_digest_md5_to_ascii
+    status: Matching
   - offset: 0x71f5cc
     size: 4
     label: Curl_sasl_cleanup
