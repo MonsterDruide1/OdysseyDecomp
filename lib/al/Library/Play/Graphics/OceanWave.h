@@ -77,6 +77,7 @@ public:
     void setFieldScale(f32) override;
     const char* getTypeName() const override;
 
+private:
     GraphicsSystemInfo* mGfxSysInfo;
     OceanWaveTexture* mWaveTexture;
     FluidSimulateWave* mFluidSimulateWave;

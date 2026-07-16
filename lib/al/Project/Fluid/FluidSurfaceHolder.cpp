@@ -73,54 +73,44 @@ IUseFluidSurface* FluidSurfaceHolder::tryFindFluidSurface(const sead::Vector3f& 
 
 bool FluidSurfaceHolder::tryCalcFluidPos(sead::Vector3f* fluidPos, const sead::Vector3f& trans,
                                          const char* type) {
-    IUseFluidSurface* surface = tryFindFluidSurface(trans, type);
-    if (!surface)
+    if (!calcIsInFluid(trans, type))
         return false;
 
-    mCurSurfaceIn = surface;
     mCurSurfaceIn->calcPos(fluidPos, trans);
     return true;
 }
 
 bool FluidSurfaceHolder::tryCalcFluidPosFlat(sead::Vector3f* fluidPosFlat,
                                              const sead::Vector3f& trans, const char* type) {
-    IUseFluidSurface* surface = tryFindFluidSurface(trans, type);
-    if (!surface)
+    if (!calcIsInFluid(trans, type))
         return false;
 
-    mCurSurfaceIn = surface;
     mCurSurfaceIn->calcPosFlat(fluidPosFlat, trans);
     return true;
 }
 
 bool FluidSurfaceHolder::tryCalcFluidDisplacement(sead::Vector3f* fluidDisplacement,
                                                   const sead::Vector3f& trans, const char* type) {
-    IUseFluidSurface* surface = tryFindFluidSurface(trans, type);
-    if (!surface)
+    if (!calcIsInFluid(trans, type))
         return false;
 
-    mCurSurfaceIn = surface;
     mCurSurfaceIn->calcDisplacementPos(fluidDisplacement, trans);
     return true;
 }
 
 bool FluidSurfaceHolder::tryCalcFluidNormal(sead::Vector3f* fluidNormal,
                                             const sead::Vector3f& trans, const char* type) {
-    IUseFluidSurface* surface = tryFindFluidSurface(trans, type);
-    if (!surface)
+    if (!calcIsInFluid(trans, type))
         return false;
 
-    mCurSurfaceIn = surface;
     mCurSurfaceIn->calcNormal(fluidNormal, trans);
     return true;
 }
 
 bool FluidSurfaceHolder::tryAddRipple(const sead::Vector3f& trans, f32 a, f32 b, const char* type) {
-    IUseFluidSurface* surface = tryFindFluidSurface(trans, type);
-    if (!surface)
+    if (!calcIsInFluid(trans, type))
         return false;
 
-    mCurSurfaceIn = surface;
     return mCurSurfaceIn->tryAddRipple(trans, a, b);
 }
 

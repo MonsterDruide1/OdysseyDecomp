@@ -22,6 +22,7 @@ public:
                                   const char* type);
     bool tryCalcFluidNormal(sead::Vector3f* fluidNormal, const sead::Vector3f& trans,
                             const char* type);
+    // TODO: add parameter names for all four functions below
     bool tryAddRipple(const sead::Vector3f& trans, f32, f32, const char* type);
     bool tryAddRippleAll(const sead::Vector3f& trans, f32, f32);
     bool tryAddRippleAllWithRange(const sead::Vector3f& trans, f32, f32, f32, f32);
