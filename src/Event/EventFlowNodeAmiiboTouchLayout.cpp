@@ -1,3 +1,5 @@
+#include "Event/EventFlowNodeAmiiboTouchLayout.h"
+
 #include "Library/Event/EventFlowFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Nerve/NerveSetupUtil.h"
@@ -6,7 +8,6 @@
 #include "Library/Nfp/NfpTypes.h"
 
 #include "Amiibo/AmiiboNpcDirector.h"
-#include "Event/EventFlowNodeAmiiboTouchLayout.h"
 #include "Layout/AmiiboNpcLayout.h"
 #include "Util/AmiiboUtil.h"
 #include "Util/NpcEventFlowUtil.h"
@@ -84,12 +85,8 @@ void EventFlowNodeAmiiboTouchLayout::exeCountHold() {
 void EventFlowNodeAmiiboTouchLayout::exeWaitTouchAmiibo() {
     al::LiveActor* actor = getActor();
 
-    if (rs::isTriggerUiCancel(actor)) {
-        mCaseEventIdx = 4;
-        AmiiboFunction::requestEndAmiiboLayout(actor);
-        al::setNerve(this, &NrvEventFlowNodeAmiiboTouchLayout.WaitEndLayout);
+    if (tryCancel())
         return;
-    }
 
     if (!rs::isHoldAmiiboMode(actor)) {
         AmiiboFunction::getAmiiboTouchLayout(actor)->endTouch();
@@ -147,12 +144,8 @@ void EventFlowNodeAmiiboTouchLayout::touch(const al::NfpInfo* nfpInfo) {
 void EventFlowNodeAmiiboTouchLayout::exeIconEnd() {
     al::LiveActor* actor = getActor();
 
-    if (rs::isTriggerUiCancel(actor)) {
-        mCaseEventIdx = 4;
-        AmiiboFunction::requestEndAmiiboLayout(actor);
-        al::setNerve(this, &NrvEventFlowNodeAmiiboTouchLayout.WaitEndLayout);
+    if (tryCancel())
         return;
-    }
 
     if (AmiiboFunction::getAmiiboTouchLayout(actor)->isIconEndActionEnd())
         al::setNerve(this, &NrvEventFlowNodeAmiiboTouchLayout.WaitTouchTrigger);
