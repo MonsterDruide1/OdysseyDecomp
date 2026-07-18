@@ -40,7 +40,7 @@ public:
     void registerSearchAmiibo(s32 id, s32 numberingId, u64 searchStartTime);
     void deleteSearchEndAmiibo();
     bool isSearchAmiibo(s32 id);
-    u32 getSearchAmiiboNum() const;
+    s32 getSearchAmiiboNum() const;
     u32 getSearchEndAmiiboNum() const;
     u32 getSearchEndAmiiboNumRealTime() const;
     bool isEnableSearchAmiibo();
@@ -91,7 +91,7 @@ void requestDecideAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
 void requestEndAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
 bool isEndAmiiboLayout(const al::IUseSceneObjHolder* objHolder);
 AmiiboNpcLayout* getAmiiboTouchLayout(const al::IUseSceneObjHolder* objHolder);
-u32 getSearchAmiiboNum(const al::IUseSceneObjHolder* objHolder);
+s32 getSearchAmiiboNum(const al::IUseSceneObjHolder* objHolder);
 u32 getSearchEndAmiiboNum(const al::IUseSceneObjHolder* objHolder);
 u32 getSearchEndAmiiboNumRealTime(const al::IUseSceneObjHolder* objHolder);
 void registerSearchAmiibo(const al::IUseSceneObjHolder* objHolder, const al::NfpInfo& nfpInfo);
