@@ -293,3 +293,157 @@ void GameDataFile::enableHintById(s32 shineIndex) {
     if (shineIndex >= 0)
         mHintList[shineIndex].isDisabled = false;
 }
+
+void GameDataFile::resetTempData() {}
+
+s64 GameDataFile::getPlayTimeTotal() const {
+    return mPlayTimeTotal;
+}
+
+void GameDataFile::resetSaveDataIdForPrepoForWrite() {
+    mSaveDataIdForPrepoForWrite = mSaveDataIdForPrepo;
+}
+
+PlayerHitPointData* GameDataFile::getPlayerHitPointData() const {
+    return mPlayerHitPointData;
+}
+
+bool GameDataFile::isUseMissRestartInfo() const {
+    return mIsUseMissRestartInfo;
+}
+
+bool GameDataFile::isPayShineAllInAllWorld() const {
+    return mIsPayShineAllInAllWorld;
+}
+
+s32 GameDataFile::getKeyNum() const {
+    return mKeyNum;
+}
+
+s32 GameDataFile::getCoinCollectGotNum(s32 world_id) const {
+    return mCoinCollectGotNum[world_id];
+}
+
+bool GameDataFile::isPayCoinToSphinx() const {
+    return mIsPayCoinToSphinx;
+}
+
+bool GameDataFile::isStartWorldTravelingPeach() const {
+    return mIsStartWorldTravelingPeach;
+}
+
+void GameDataFile::startWorldTravelingPeach() {
+    mIsStartWorldTravelingPeach = true;
+}
+
+s32 GameDataFile::getPlayerJumpCount() const {
+    return mPlayerJumpCount;
+}
+
+s32 GameDataFile::getPlayerThrowCapCount() const {
+    return mPlayerThrowCapCount;
+}
+
+s32 GameDataFile::getCheckpointNumMaxInWorld() const {
+    return 16;
+}
+
+void GameDataFile::startYukimaruRace() {
+    mRaceType = RaceType_Yukimaru;
+}
+
+void GameDataFile::startYukimaruRaceTutorial() {
+    mRaceType = RaceType_YukimaruTutorial;
+}
+
+void GameDataFile::startRaceManRace() {
+    mRaceType = RaceType_Flag;
+}
+
+void GameDataFile::unlockHint() {
+    unlockHintImpl(HintStatus_UnlockByNpc);
+}
+
+void GameDataFile::unlockHintAmiibo() {
+    unlockHintImpl(HintStatus_UnlockByAmiibo);
+}
+
+bool GameDataFile::isUnlockAchievementShineName() const {
+    return mIsUnlockAchievement;
+}
+
+void GameDataFile::winRace() {
+    mRaceResult = RaceResult_Win;
+}
+
+s32 GameDataFile::getMiniGameNumMax() const {
+    return 4;
+}
+
+bool GameDataFile::isExistTimeBalloonNpc() const {
+    return mIsExistTimeBalloonNpc;
+}
+
+const sead::Vector3f& GameDataFile::getTimeBalloonNpcTrans() const {
+    return mTimeBalloonNpcTrans;
+}
+
+bool GameDataFile::isExistPoetter() const {
+    return mIsExistPoetter;
+}
+
+const sead::Vector3f& GameDataFile::getPoetterTrans() const {
+    return mPoetterTrans;
+}
+
+bool GameDataFile::isAlreadyShowExplainCheckpointFlag() const {
+    return mIsShowExplainCheckpointFlag;
+}
+
+s32 GameDataFile::getShopNpcIconNumMax() const {
+    return 4;
+}
+
+s32 GameDataFile::getScenarioNoPlacement() const {
+    return mScenarioNoPlacement;
+}
+
+bool GameDataFile::isFlagOnTalkMessageInfo(s32 index) const {
+    return mFlagTalkMessage[index];
+}
+
+bool GameDataFile::isTalkKakku() const {
+    return mIsTalkKakku;
+}
+
+void GameDataFile::talkKakku() {
+    mIsTalkKakku = true;
+}
+
+bool GameDataFile::isTalkWorldTravelingPeach() const {
+    return mIsTalkWorldTravelingPeach;
+}
+
+void GameDataFile::talkWorldTravelingPeach() {
+    mIsTalkWorldTravelingPeach = true;
+}
+
+bool GameDataFile::isTalkCollectBgmNpc() const {
+    return mIsTalkCollectBgmNpc;
+}
+
+void GameDataFile::talkCollectBgmNpc() {
+    mIsTalkCollectBgmNpc = true;
+}
+
+s32 GameDataFile::getTokimekiMayorNpcFavorabilityRating() const {
+    return mTokimekiMayorNpcFavorabilityRating;
+}
+
+void GameDataFile::setTokimekiMayorNpcFavorabilityRating(s32 rating) {
+    mTokimekiMayorNpcFavorabilityRating = rating;
+}
+
+bool GameDataFile::isFirstNetwork() const {
+    return mIsFirstNetwork;
+}
