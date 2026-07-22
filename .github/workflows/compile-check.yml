@@ -33,10 +33,11 @@ jobs:
         fi
     - name: Check duplicate file names
       run: |
-        if cat data/file_list.yml | grep -v '^ ' | sort | uniq -d; then
+        duplicates=$(grep -v '^ ' data/file_list.yml | sort | uniq -d)
+        if [ -n "$duplicates" ]; then
           echo "Function list should not contain duplicate filenames!"
           echo "Found the following duplicates:"
-          cat data/file_list.yml | grep -v '^ ' | sort | uniq
+          printf "%s\n" "$duplicates"
           exit 1
         fi
     - name: Set up dependencies
