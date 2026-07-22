@@ -25,10 +25,18 @@ jobs:
         allow-unsafe-pr-checkout: true
     - name: Check for W-state functions
       run: |
-        if grep -q "status: Wip" "data/odyssey_functions.csv"; then
+        if grep -q "status: Wip" "data/file_list.yml"; then
           echo "Function list should not contain WIP-functions!"
           echo "Found the following lines:"
-          grep "status: Wip" "data/odyssey_functions.csv"
+          grep "status: Wip" "data/file_list.yml"
+          exit 1
+        fi
+    - name: Check duplicate file names
+      run: |
+        if cat data/file_list.yml | grep -v '^ ' | sort | uniq -d; then
+          echo "Function list should not contain duplicate filenames!"
+          echo "Found the following duplicates:"
+          cat data/file_list.yml | grep -v '^ ' | sort | uniq
           exit 1
         fi
     - name: Set up dependencies
