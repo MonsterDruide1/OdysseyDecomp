@@ -6,8 +6,7 @@ namespace al {
 class PlacementInfo;
 }
 
-class UniqObjInfo {
-public:
+struct UniqObjInfo {
     void set(const char* stage_name, const char* obj_id);
     void set(const sead::BufferedSafeString& stage_name, const sead::BufferedSafeString& obj_id);
     void set(const char* stage_name, const al::PlacementInfo* placement_info);
@@ -20,13 +19,8 @@ public:
     void print() const;
     void fillDummyData();
 
-    const char* getStageName() const { return mStageName.cstr(); }
-
-    const char* getObjId() const { return mObjId.cstr(); }
-
-private:
-    sead::FixedSafeString<128> mStageName;
-    sead::FixedSafeString<128> mObjId;
+    sead::FixedSafeString<128> stageName;
+    sead::FixedSafeString<128> objId;
 };
 
 static_assert(sizeof(UniqObjInfo) == 0x130);
