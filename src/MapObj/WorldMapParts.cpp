@@ -7,7 +7,7 @@
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActorFunction.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 void recursivelyInvalidateOcclusionQuery(al::LiveActor* actor) {
     al::invalidateOcclusionQuery(actor);
