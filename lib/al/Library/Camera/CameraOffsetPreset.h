@@ -20,12 +20,12 @@ public:
 
     void loadParam(const ByamlIter& iter);
 
-    const sead::Vector3f& getOffset() const { return mPresetData[mCurrentPreset].offset; }
+    const sead::Vector3f& getOffset() const { return mPresetData[mCurrentPresetIndex].offset; }
 
 private:
     const CameraOffsetPresetData* mPresetData;
     s32 mPresetCount;
-    s32 mCurrentPreset;
+    s32 mCurrentPresetIndex;
 };
 
 static_assert(sizeof(CameraOffsetPreset) == 0x10);
