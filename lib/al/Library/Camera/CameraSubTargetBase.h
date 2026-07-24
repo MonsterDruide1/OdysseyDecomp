@@ -14,6 +14,8 @@ public:
     void calcFront(sead::Vector3f* front) const override;
     void calcVelocity(sead::Vector3f* velocity) const override;
 
+    CameraSubTargetTurnParam* getSubTargetTurnParam() const { return mTurnParam; }
+
 private:
     CameraSubTargetTurnParam* mTurnParam;
 };
