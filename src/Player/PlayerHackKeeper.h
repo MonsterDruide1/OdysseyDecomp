@@ -23,6 +23,7 @@ class PlayerCollider;
 class CapTargetInfo;
 class PlayerHackStartTexKeeper;
 class IUsePlayerHack;
+class IUsePlayerCollision;
 
 struct HackEndParam {
     sead::Vector3f vel = {0.0f, 0.0f, 0.0f};
@@ -75,7 +76,7 @@ public:
     void sendSyncDamageVisibility();
     void pushWorldEndBorder(const sead::Vector3f&);
     const char* getCurrentHackName() const;
-    PlayerCollider* getPlayerCollision() const;
+    IUsePlayerCollision* getPlayerCollision() const;
     f32 getHackGuideHeight() const;
     bool isHackGuideEnable() const;
     f32 getHackStayGravityMargine() const;
