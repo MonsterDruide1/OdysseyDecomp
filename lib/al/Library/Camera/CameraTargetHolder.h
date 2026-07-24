@@ -15,6 +15,12 @@ struct ViewTargetInfo {
     s8 hasTargetChanged = false;
 };
 
+struct ViewSubTargetInfo {
+    CameraSubTargetBase* target = nullptr;
+    // Note: s8 is used instead of bool to match isChangeSubTarget
+    s8 hasTargetChanged = false;
+};
+
 static_assert(sizeof(ViewTargetInfo) == 0x10);
 
 class CameraTargetHolder {
@@ -34,13 +40,14 @@ public:
     void addPlacementSubTarget(CameraSubTargetBase* subTarget);
     void removePlacementSubTarget(CameraSubTargetBase* subTarget);
 
+    const ViewSubTargetInfo& getTopSubTargetInfo() const { return mTopSubTargetInfo; }
+
 private:
     s32 mViewTargetSize = 0;
     CameraTargetBase** mViewTargetArray = nullptr;
     ViewTargetInfo* mViewTargetInfo = nullptr;
     sead::PtrArray<CameraTargetBase> mTargetArray;
-    CameraSubTargetBase* mTopSubTarget = nullptr;
-    bool mHasTopSubTargetChanged = false;
+    ViewSubTargetInfo mTopSubTargetInfo;
     sead::PtrArray<CameraSubTargetBase> mSubTargetArray;
     sead::PtrArray<CameraSubTargetBase> mPlacementSubTargetArray;
 };

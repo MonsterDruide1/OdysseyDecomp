@@ -35,6 +35,12 @@ public:
 
     void setGyroSensitivityLevel(s32 level) { mGyroSensitivityLevel = level; }
 
+    f32* get_60() const { return _60; }
+
+    f32* get_58() const { return _58; }
+
+    bool isOnRideObj() const { return mRideObjCamera && mIsCurrRideObj; }
+
 private:
     s32 mStickSensitivityLevel = 0;
     s32 mGyroSensitivityLevel = 0;
@@ -53,8 +59,9 @@ private:
     bool mIsCurrRideObj = false;
     bool mIsPrevRideObj = false;
     const IUseCamera* mRideObjCamera = nullptr;
-    void* _58 = nullptr;
-    void* _60 = nullptr;
+    f32* _58 = nullptr;
+    f32* _60 = nullptr;
 };
 
+static_assert(sizeof(CameraRequestParamHolder) == 0x68);
 }  // namespace al
