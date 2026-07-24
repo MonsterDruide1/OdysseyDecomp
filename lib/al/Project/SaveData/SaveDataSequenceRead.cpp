@@ -28,9 +28,16 @@ s32 SaveDataSequenceRead::threadFunc(const char* fileName) {
     u32 readSize = 0;
     s32 result = read(&fileDevice, fileName, &readSize);
 
+    // BUG: should be checking for result != 0
     if (result == 0)
         return result;
 
+    // NOTE: mBuffer contains uninitialized or stale data, as read() definitely failed
+    // this means that `isSaveDataCorrupted` never runs on existing save files
+    // as `mBuffer` contains stale data for files after the first one, this check might pass
+    // because `version` is a constant (remains correct and in-place) and the `bufferSize` check
+    // has a bug that skips checksum verification if the sizes do not match
+    // => state of mIsCorrupted is undefined, but unused, so this bug has no further effect
     if (isSaveDataCorrupted(mBuffer, mVersion, readSize)) {
         mIsCorrupted = true;
         return -1;
@@ -52,7 +59,7 @@ s32 SaveDataSequenceRead::read(sead::FileDevice* fileDevice, const char* fileNam
         return fileDevice->getLastRawError();
 
     if (!fileDevice->tryRead(readSize, &fileHandle, mBuffer, mBufferSize))
-        return 1;  // BUG: N's mistake here. This should be -1
+        return 1;
 
     fileDevice->tryClose(&fileHandle);
     return fileDevice->getLastRawError();
