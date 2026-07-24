@@ -20,7 +20,9 @@ class CameraViewFlag;
 class CameraViewInfo;
 class PauseCameraCtrl;
 class Projection;
+struct CameraObjectRequestInfo;
 class SceneCameraInfo;
+class CameraTurnInfo;
 
 class CameraPoseUpdater : public NerveExecutor {
 public:
@@ -28,10 +30,32 @@ public:
 
     void init(const CameraParamTransfer* paramTransfer, const CameraStopJudge* stopJudge,
               const CameraStartParamCtrl* startParamCtrl);
+    f32 getNearClipDistance() const;
     void update();
     bool trySwitchCamera();
     bool isActiveInterpole() const;
     void startInterpole(s32);
+    void requestCancelInterpole();
+    bool calcCameraPoseWithoutInterpole(sead::LookAtCamera*) const;
+    void startSnapshotMode(bool) const;
+    void endSnapshotMode();
+    bool isSnapShotOrientationRotate90() const;
+    bool isSnapShotOrientationRotate270() const;
+    void exeActive();
+    void exeDeactive();
+    void exeStop();
+    void exePause();
+    void exeSnapShot();
+    void endSnapShot();
+    void exeSnapShotNoUpdate();
+    bool isCurrentCameraPriority(s32 priority) const;
+    bool isInvalidChangeSubjectiveCamera() const;
+    bool isCurrentCameraZooming() const;
+    bool isCurrentCameraEnableRotateByPad() const;
+    bool tryReceiveCameraRequestFromObject(const CameraObjectRequestInfo& info);
+    bool tryRequestCameraTurnToDirection(const CameraTurnInfo& info);
+
+    CameraShaker* getShaker() const { return mShaker; }
 
     void setNearClipDistance(f32 distance) { mNearClipDistance = distance; }
 
