@@ -1,6 +1,6 @@
 #pragma once
 
-#include <container/seadPtrArray.h>
+#include <basis/seadTypes.h>
 
 #include "Library/HostIO/HioNode.h"
 
@@ -20,9 +20,16 @@ public:
 
     const char* getName() const { return mName; }
 
+protected:
+    s32 getActorCount() const { return mActorCount; }
+
+    LiveActor** getActorArray() const { return mActors; }
+
 private:
-    const char* mName;
-    sead::PtrArray<LiveActor> mActors;
+    const char* mName = nullptr;
+    s32 mMaxActorCount = 0;
+    s32 mActorCount = 0;
+    LiveActor** mActors = nullptr;
 };
 
 static_assert(sizeof(ExecutorActorExecuteBase) == 0x20);
