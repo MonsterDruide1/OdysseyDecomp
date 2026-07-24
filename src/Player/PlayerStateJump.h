@@ -104,9 +104,7 @@ private:
     bool mIsJumpMessageRequest = false;
     bool _b9 = false;
     bool _ba = false;
-    s32 _bc = 0;
-    s32 _c0 = 0;
-    s32 _c4 = 0;
+    sead::Vector3f mUpDir = {0.0f, 0.0f, 0.0f};
     const char* mAnimName = nullptr;
     const char* mSubAnimName = nullptr;
     const PlayerInput* mInput;

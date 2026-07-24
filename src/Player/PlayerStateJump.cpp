@@ -8,6 +8,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
+#include "Player/HackCap.h"
 #include "Player/IPlayerModelChanger.h"
 #include "Player/PlayerActionAirMoveControl.h"
 #include "Player/PlayerActionDiveInWater.h"
@@ -234,6 +235,104 @@ bool PlayerStateJump::isFormSquat2D() const {
     return mAnimator->isAnim("JumpSquat");
 }
 
+void PlayerStateJump::exeJump() {
+    al::LiveActor* actor = mActor;
+
+    f32 maxSpeed;
+    if (mModelChanger->is2DModel())
+        maxSpeed = mConst->getNormalMaxSpeed();
+    else
+        maxSpeed = mConst->getNormalMaxSpeed2D();
+    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f, maxSpeed);
+
+    if (al::isFirstStep(this)) {
+        trySubAnimJumpReaction();
+
+        if (_b9 && mAnimator->isUpperBodyAnimAttached())
+            mAnimator->clearUpperBodyAnim();
+
+        const char* animName = calcJumpAnimName();
+
+        if (!_b5)
+            mAnimator->startAnim(animName);
+
+        if (al::isEqualString(animName, "JumpCapCatch"))
+            mHackCap->startCatch("JumpCapCatch", false, sead::Vector3f::zero);
+
+        if (_b7 && !mModelChanger->is2DModel()) {
+            sead::Vector3f upDir = {0.0f, 0.0f, 0.0f};
+            al::calcUpDir(&upDir, actor);
+            if (mUpDir.dot(upDir) <=
+                sead::Mathf::cos(sead::Mathf::deg2rad(mConst->getCollisionResetLimit())))
+                mTrigger->set(PlayerTrigger::EActionTrigger_val3);
+            rs::slerpUp(actor, mUpDir, 1.0f, 180.0f);
+        }
+
+        mAirMoveControl->setup(mMoveSpeedMax,
+                               mModelChanger->is2DModel() ? mConst->getNormalMaxSpeed2D()
+                                                          : mConst->getNormalMaxSpeed(),
+                               mExtendFrame, mJumpPower, mJumpGravity, 0,
+                               mConst->getJumpInertiaRate());
+    }
+
+    if (mTrigger->isOnUpperPunchHit()) {
+        if (mModelChanger->is2DModel()) {
+            rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, true);
+        } else {
+            mAnimator->startAnim("Jump");
+            mAnimator->setAnimFrame(mAnimator->getAnimFrameMax());
+            rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, false);
+        }
+        mAirMoveControl->setExtendFrame(0);
+        mIsContinuousJump = false;
+    }
+
+    bool onGround;
+    if (mCounterForceRun->isForceRun())
+        onGround = rs::isOnGroundAndGravity(actor, mCollider);
+    else
+        onGround = rs::isOnGround(actor, mCollider);
+
+    if (rs::isCollidedCeiling(mCollider) && !al::isFirstStep(this)) {
+        rs::reflectCeiling(mActor, 0.0f);
+        mAirMoveControl->setExtendFrame(0);
+        mIsContinuousJump = false;
+    }
+
+    if (mModelChanger->is2DModel() && rs::isIn2DArea(mDimension)) {
+        sead::Vector3f lockDir = {0.0f, 0.0f, 0.0f};
+        rs::calcLockDirection(&lockDir, mDimension);
+        mAirMoveControl->verticalizeStartMoveDir(lockDir);
+    }
+
+    mDiveInWater->tryChangeDiveInWaterAnim();
+    mAirMoveControl->update();
+
+    if (onGround) {
+        sead::Vector3f horizontalVel = {0.0f, 0.0f, 0.0f};
+        sead::Vector3f verticalVel = {0.0f, 0.0f, 0.0f};
+        al::separateVelocityHV(&horizontalVel, &verticalVel, mActor);
+        f32 speed = sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64());
+        al::limitLength(&horizontalVel, horizontalVel, speed);
+        al::setVelocity(mActor, horizontalVel + verticalVel);
+        kill();
+    } else if (rs::updateJudgeAndResult(mJudgeWallCatch)) {
+        if (!isDead() && mModelChanger->is2DModel() &&
+            (mSubAnimName ? al::isEqualString(mSubAnimName, "JumpSquat")
+                          : mAnimator->isAnim("JumpSquat"))) {
+            mTrigger->set(PlayerTrigger::EActionTrigger_val3);
+            mSubAnimName = nullptr;
+        }
+        if (_ba)
+            al::setNerve(this, &NrvPlayerStateJump.Hovering2D);
+        else
+            al::setNerve(this, &NrvPlayerStateJump.HoveringJump2D);
+    } else {
+        if (_ba)
+            _ba = mInput->isHoldCapSeparateJump();
+    }
+}
+
 bool PlayerStateJump::trySubAnimJumpReaction() {
     if (!mAnimator->isSubAnimPlaying())
         return false;
@@ -268,6 +367,69 @@ const char* PlayerStateJump::calcJumpAnimName() const {
     }
 }
 
+void PlayerStateJump::exeJumpSpinFlower() {
+    al::LiveActor* actor = mActor;
+
+    if (al::isFirstStep(this)) {
+        trySubAnimJumpReaction();
+
+        sead::Vector3f* velocity = al::getVelocityPtr(actor);
+        al::verticalizeVec(velocity, al::getGravity(actor), *velocity);
+
+        if (_b6) {
+            mAnimator->startAnim("SpinJumpLoop");
+            al::addVelocityToGravity(actor, mConst->getSpinFlowerJumpFallSpeedMax());
+        } else {
+            mAnimator->startAnim("SpinJumpStart");
+            al::addVelocityToGravity(actor, -mJumpPower);
+        }
+    }
+
+    if (mAnimator->isAnim("SpinJumpStart") && mAnimator->isAnimEnd())
+        mAnimator->startAnim("SpinJumpLoop");
+
+    if (mTrigger->isOnUpperPunchHit()) {
+        rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, false);
+        mIsContinuousJump = false;
+    }
+
+    if (rs::isCollidedCeiling(mCollider)) {
+        rs::reflectCeiling(mActor, 0.0f);
+        mIsContinuousJump = false;
+    }
+
+    sead::Vector3f moveInput = {0.0f, 0.0f, 0.0f};
+    mInput->calcMoveInput(&moveInput, -al::getGravity(actor));
+
+    f32 gravity = mConst->getJumpGravity();
+    f32 fallSpeedMax = mConst->getSpinFlowerJumpFallSpeedMax();
+    if (al::calcSpeedV(actor) < 0.0f || al::isNearZero(al::calcSpeedV(actor))) {
+        gravity = mConst->getSpinFlowerJumpGravity();
+        if (_ac > 0) {
+            _ac--;
+            fallSpeedMax = mConst->getSpinFlowerJumpStaySpeedMax();
+        }
+    } else {
+        _ac = mConst->getSpinFlowerJumpStayFrame();
+    }
+
+    rs::moveParallelJump(mActor, moveInput, mConst->getSpinFlowerJumpMovePower(),
+                         mConst->getSpinFlowerJumpMovePower(), mConst->getSpinFlowerJumpMovePower(),
+                         mConst->getSpinFlowerJumpVelMax(), gravity, fallSpeedMax,
+                         mConst->getSlerpQuatGrav());
+
+    if (!mInput->isMove())
+        al::scaleVelocityHV(actor, mConst->getSpinFlowerJumpNoInputBrake(), 1.0f);
+
+    if (mInput->isTriggerHipDrop()) {
+        al::setNerve(this, &NrvPlayerStateJump.JumpSpinFlowerDownFall);
+        return;
+    }
+
+    if (rs::isOnGround(actor, mCollider))
+        kill();
+}
+
 void PlayerStateJump::exeJumpSpinFlowerDownFall() {
     updateNerveDownFall("SpinJumpDownFall", mConst->getSpinFlowerJumpDownFallInitSpeed(),
                         mConst->getSpinFlowerJumpDownFallPower(),
@@ -285,7 +447,7 @@ void PlayerStateJump::updateNerveDownFall(const char* animName, f32 initSpeed, f
         _b6 = true;
     }
 
-    al::addVelocityToGravityLimit(actor, gravity, fallSpeedMax);
+    al::addVelocityToGravityLimit(mActor, gravity, fallSpeedMax);
 
     if (al::isGreaterEqualStep(this, mConst->getDownFallFrameMin()) && !mInput->isHoldHipDrop()) {
         if (rs::isOnGround(actor, mCollider))
@@ -305,7 +467,7 @@ void PlayerStateJump::updateNerveDownFall(const char* animName, f32 initSpeed, f
     }
 
     if (mHipDropAttackCount > 0) {
-        if (rs::convergeOnGroundCount(&mHipDropAttackCount, actor, mCollider, 0, 1))
+        if (rs::convergeOnGroundCount(&mHipDropAttackCount, mActor, mCollider, 0, 1))
             return;
         mHipDropAttackCount = 0;
     }
@@ -378,19 +540,19 @@ void PlayerStateJump::exeJumpBack() {
     }
 
     if (mTrigger->isOnUpperPunchHit()) {
-        rs::reflectCeilingUpperPunch(actor, mCollider, mInput, mConst, mTrigger, false);
+        rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, false);
         mIsContinuousJump = false;
     }
 
     if (rs::isCollidedCeiling(mCollider)) {
-        rs::reflectCeiling(actor, 0.0f);
+        rs::reflectCeiling(mActor, 0.0f);
         mIsContinuousJump = false;
     }
 
     sead::Vector3f moveInput = {0.0f, 0.0f, 0.0f};
     mInput->calcMoveInput(&moveInput, -al::getGravity(actor));
 
-    rs::moveParallelJump(actor, moveInput, mConst->getSquatJumpMovePowerFront(),
+    rs::moveParallelJump(mActor, moveInput, mConst->getSquatJumpMovePowerFront(),
                          mConst->getSquatJumpMovePowerFront(), mConst->getSquatJumpMovePowerSide(),
                          mConst->getSquatJumpMoveSpeedMax(), mJumpGravity,
                          mConst->getFallSpeedMax(), mConst->getSlerpQuatGrav());
@@ -423,12 +585,12 @@ void PlayerStateJump::exeJumpSpinGround() {
     }
 
     if (mTrigger->isOnUpperPunchHit()) {
-        rs::reflectCeilingUpperPunch(actor, mCollider, mInput, mConst, mTrigger, false);
+        rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, false);
         mIsContinuousJump = false;
     }
 
     if (rs::isCollidedCeiling(mCollider)) {
-        rs::reflectCeiling(actor, 0.0f);
+        rs::reflectCeiling(mActor, 0.0f);
         mIsContinuousJump = false;
     }
 
@@ -442,10 +604,10 @@ void PlayerStateJump::exeJumpSpinGround() {
     if (rs::isOnGround(actor, mCollider)) {
         sead::Vector3f horizontalVel = {0.0f, 0.0f, 0.0f};
         sead::Vector3f verticalVel = {0.0f, 0.0f, 0.0f};
-        al::separateVelocityHV(&horizontalVel, &verticalVel, actor);
+        al::separateVelocityHV(&horizontalVel, &verticalVel, mActor);
         f32 speed = sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64());
         al::limitLength(&horizontalVel, horizontalVel, speed);
-        al::setVelocity(actor, horizontalVel + verticalVel);
+        al::setVelocity(mActor, horizontalVel + verticalVel);
         kill();
     }
 }
@@ -472,7 +634,7 @@ void PlayerStateJump::exeHoveringJump2D() {
     }
 
     if (mTrigger->isOnUpperPunchHit()) {
-        rs::reflectCeilingUpperPunch(actor, mCollider, mInput, mConst, mTrigger, true);
+        rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, true);
         mAirMoveControl->setExtendFrame(0);
         mIsContinuousJump = false;
     }
@@ -480,7 +642,7 @@ void PlayerStateJump::exeHoveringJump2D() {
     bool onGround = rs::isOnGround(actor, mCollider);
 
     if (rs::isCollidedCeiling(mCollider) && !al::isFirstStep(this)) {
-        rs::reflectCeiling(actor, 0.0f);
+        rs::reflectCeiling(mActor, 0.0f);
         mAirMoveControl->setExtendFrame(0);
         mIsContinuousJump = false;
     }
@@ -496,10 +658,10 @@ void PlayerStateJump::exeHoveringJump2D() {
     if (onGround) {
         sead::Vector3f horizontalVel = {0.0f, 0.0f, 0.0f};
         sead::Vector3f verticalVel = {0.0f, 0.0f, 0.0f};
-        al::separateVelocityHV(&horizontalVel, &verticalVel, actor);
+        al::separateVelocityHV(&horizontalVel, &verticalVel, mActor);
         f32 speed = sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64());
         al::limitLength(&horizontalVel, horizontalVel, speed);
-        al::setVelocity(actor, horizontalVel + verticalVel);
+        al::setVelocity(mActor, horizontalVel + verticalVel);
         kill();
     } else if (rs::updateJudgeAndResult(mJudgeWallCatch) || al::calcSpeedV(actor) < 0.0f) {
         al::setNerve(this, &NrvPlayerStateJump.Hovering2D);
@@ -529,12 +691,12 @@ void PlayerStateJump::exeJumpTurn() {
     }
 
     if (mTrigger->isOnUpperPunchHit()) {
-        rs::reflectCeilingUpperPunch(actor, mCollider, mInput, mConst, mTrigger, false);
+        rs::reflectCeilingUpperPunch(mActor, mCollider, mInput, mConst, mTrigger, false);
         mIsContinuousJump = false;
     }
 
     if (rs::isCollidedCeiling(mCollider)) {
-        rs::reflectCeiling(actor, 0.0f);
+        rs::reflectCeiling(mActor, 0.0f);
         mIsContinuousJump = false;
     }
 
