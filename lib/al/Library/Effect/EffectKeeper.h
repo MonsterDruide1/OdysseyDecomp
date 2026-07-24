@@ -23,9 +23,9 @@ class MtxPtrHolder;
 class EffectSystemInfo;
 class EffectPrefixType;
 class EffectSystem;
-class EffectSystemInfo;
 class EffectResourceInfo;
 class IUseEffectKeeper;
+class IUseLayout;
 class ModelKeeper;
 class IUseCamera;
 
@@ -34,7 +34,7 @@ public:
     EffectKeeper(const EffectSystemInfo* systemInfo, const char*, const sead::Vector3f*,
                  const sead::Vector3f*, const sead::Matrix34f*);
     void update();
-    void tryUpdateMaterial(const char*);
+    bool tryUpdateMaterial(const char*);
     void updatePrefix(const EffectPrefixType&, bool);
     void emitEffectCurrentPos(const char*);
     Effect* findEffect(const char*) const;
@@ -61,6 +61,8 @@ public:
 
     bool get_21() const { return field_21; }
 
+    MtxPtrHolder* getMtxPtrHolder() const { return mMtxPtrHolder; }
+
 private:
     const char* mName;
     u32 mEffectCount;
@@ -84,7 +86,9 @@ void emitEffectIfExist(al::IUseEffectKeeper* effectKeeperHolder, const char* eff
 
 namespace alEffectKeeperInitFunction {
 void setupModelToEffectKeeper(al::EffectKeeper* effectKeeper, const al::ModelKeeper* modelKeeper);
+void setupLayoutToEffectKeeper(al::EffectKeeper* effectKeeper, const al::IUseLayout* iUseLayout);
 void setupCameraToEffectKeeper(al::EffectKeeper* effectKeeper, const al::IUseCamera* iUseCamera);
+bool updateNamedMtxPtr(al::EffectKeeper* effectKeeper, const char* mtxName);
 }  // namespace alEffectKeeperInitFunction
 
 namespace alEffectSystemFunction {
