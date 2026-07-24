@@ -6,14 +6,14 @@ class CapMessageBossData {
 public:
     CapMessageBossData();
     void init();
-    void invalidateMessage(s32 worldId);
-    bool isValidateMessage(s32 worldId) const;
-    void incrementBossBattleCount(s32 worldId);
-    s32 getBattleCount(s32 worldId) const;
+    void invalidateMessage(s32 flag);
+    bool isValidateMessage(s32 flag) const;
+    void incrementBossBattleCount(s32 bossType);
+    s32 getBattleCount(s32 bossType) const;
 
 private:
-    bool* mMessageFlags;
-    s32* mBattleCounts;
+    bool* mMessageFlag;
+    s32* mBattleCount;
 };
 
 static_assert(sizeof(CapMessageBossData) == 0x10);

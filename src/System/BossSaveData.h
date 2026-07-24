@@ -15,11 +15,9 @@ public:
     bool isAlreadyShowDemoBattleEndKoopaLv2() const;
     void saveDemoBattleEndKoopaLv2();
 
-    bool isAlreadyShowDemoMoonBasementCollapse() const {
-        return mIsAlreadyShowDemoMoonBasementCollapse;
-    }
+    bool isAlreadyShowDemoMoonBasementCollapse() const { return mIsShowDemoMoonBasementCollapse; }
 
-    void saveShowDemoMoonBasementCollapse() { mIsAlreadyShowDemoMoonBasementCollapse = true; }
+    void saveShowDemoMoonBasementCollapse() { mIsShowDemoMoonBasementCollapse = true; }
 
     void resetLv3Data();
     void write(al::ByamlWriter* writer) override;

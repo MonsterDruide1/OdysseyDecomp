@@ -35,6 +35,9 @@ void updateEyeMove(al::LiveActor* actor, const sead::Vector3f& target, f32 maxAn
     else if (angle < -maxAngle)
         angle = -180.0f - angle;
     f32 frameMax = al::getMtsAnimFrameMax(actor, animName);
+    // BUG: arguments ordered incorrectly
+    // should have been (-maxAngle, maxAngle, angle, 0.0f, frameMax)
+    // NOTE: angle might be outside range [-maxAngle, maxAngle], but is clamped by lerpValue
     f32 frame = al::lerpValue(angle, -maxAngle, maxAngle, 0.0f, frameMax);
     al::startMtsAnimAndSetFrameAndStop(actor, animName, frame);
 }
@@ -44,39 +47,40 @@ void resetEyeMove(al::LiveActor* actor, const char* animName) {
     al::startMtsAnimAndSetFrameAndStop(actor, animName, frameMax * 0.5f);
 }
 
-void startBossBattle(const al::LiveActor* actor, s32 worldId) {
+void startBossBattle(const al::LiveActor* actor, s32 bossType) {
     CapMessageBossData* data = getCapMessageBossData(actor);
-    data->incrementBossBattleCount(worldId);
+    data->incrementBossBattleCount(bossType);
     setSceneStatusBossBattle(actor);
 }
 
-void endBossBattle(const al::LiveActor* actor, s32 worldId) {
+void endBossBattle(const al::LiveActor* actor, s32 bossType) {
     setSceneStatusBossBattleEndForPlayerAnim(actor);
 
-    if (GameDataFunction::isWorldSky(actor) && (worldId == 0 || worldId == 2))
+    if (GameDataFunction::isWorldSky(actor) &&
+        (bossType == BossType::cStacker || bossType == BossType::cBombTail))
         setSceneStatusBossBattleEnd(actor);
 
-    if (GameDataFunction::isWorldMoon(actor) && worldId == 12)
+    if (GameDataFunction::isWorldMoon(actor) && bossType == BossType::cBreeda)
         setSceneStatusBossBattleEnd(actor);
 
-    if (GameDataFunction::isWorldSpecial1(actor) && worldId != 10)
+    if (GameDataFunction::isWorldSpecial1(actor) && bossType != BossType::cGolemClimb)
         setSceneStatusBossBattleEnd(actor);
 }
 
-s32 getBossBattleDeadCount(const al::LiveActor* actor, s32 worldId) {
+s32 getBossBattleDeadCount(const al::LiveActor* actor, s32 bossType) {
     CapMessageBossData* data = getCapMessageBossData(actor);
-    return data->getBattleCount(worldId);
+    return data->getBattleCount(bossType);
 }
 
-bool isAlreadyShowDemoBossBattleStart(const al::LiveActor* actor, s32 worldId, s32 level) {
+bool isAlreadyShowDemoBossBattleStart(const al::LiveActor* actor, s32 bossType, s32 level) {
     GameDataHolderAccessor accessor(actor);
-    return accessor->getGameDataFile()->getBossSaveData()->isAlreadyShowDemoBossBattleStart(worldId,
-                                                                                            level);
+    return accessor->getGameDataFile()->getBossSaveData()->isAlreadyShowDemoBossBattleStart(
+        bossType, level);
 }
 
-void saveShowDemoBossBattleStart(const al::LiveActor* actor, s32 worldId, s32 level) {
+void saveShowDemoBossBattleStart(const al::LiveActor* actor, s32 bossType, s32 level) {
     GameDataHolderAccessor accessor(actor);
-    accessor->getGameDataFile()->getBossSaveData()->showDemoBossBattleStart(worldId, level);
+    accessor->getGameDataFile()->getBossSaveData()->showDemoBossBattleStart(bossType, level);
 }
 
 bool isAlreadyShowDemoBossBattleEndKoopaLv2(const al::LiveActor* actor) {
@@ -99,14 +103,14 @@ void saveShowDemoMoonBasementCollapse(const al::LiveActor* actor) {
     accessor->getGameDataFile()->getBossSaveData()->saveShowDemoMoonBasementCollapse();
 }
 
-bool isAlreadyDeadGK(const al::LiveActor* actor, s32 worldId, s32 level) {
+bool isAlreadyDeadGK(const al::LiveActor* actor, s32 bossType, s32 level) {
     GameDataHolderAccessor accessor(actor);
-    return accessor->getGameDataFile()->getBossSaveData()->isAlreadyDeadGK(worldId, level);
+    return accessor->getGameDataFile()->getBossSaveData()->isAlreadyDeadGK(bossType, level);
 }
 
-void onAlreadyDeadGK(const al::LiveActor* actor, s32 worldId, s32 level) {
+void onAlreadyDeadGK(const al::LiveActor* actor, s32 bossType, s32 level) {
     GameDataHolderAccessor accessor(actor);
-    accessor->getGameDataFile()->getBossSaveData()->onAlreadyDeadGK(worldId, level);
+    accessor->getGameDataFile()->getBossSaveData()->onAlreadyDeadGK(bossType, level);
 }
 
 }  // namespace rs
