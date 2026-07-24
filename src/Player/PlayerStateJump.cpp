@@ -36,6 +36,14 @@ NERVE_IMPL(PlayerStateJump, Hovering2D);
 
 NERVES_MAKE_STRUCT(PlayerStateJump, Jump, HoveringJump2D, JumpSpinFlower, JumpBack, JumpTurn,
                    JumpSpinGround, JumpSpinFlowerDownFall, JumpSpinGroundDownFall, Hovering2D);
+
+static bool isIn2DAreaModel(const IPlayerModelChanger* modelChanger, const IUseDimension* dimension) {
+    return modelChanger->is2DModel() && rs::isIn2DArea(dimension);
+}
+
+static f32 getNormalMaxSpeed(const PlayerConst* pConst, const IPlayerModelChanger* modelChanger) {
+    return modelChanger->is2DModel() ? pConst->getNormalMaxSpeed() : pConst->getNormalMaxSpeed2D();
+}
 }  // namespace
 
 PlayerStateJump::PlayerStateJump(al::LiveActor* player, const PlayerConst* pConst,
@@ -238,12 +246,8 @@ bool PlayerStateJump::isFormSquat2D() const {
 void PlayerStateJump::exeJump() {
     al::LiveActor* actor = mActor;
 
-    f32 maxSpeed;
-    if (mModelChanger->is2DModel())
-        maxSpeed = mConst->getNormalMaxSpeed();
-    else
-        maxSpeed = mConst->getNormalMaxSpeed2D();
-    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f, maxSpeed);
+    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f,
+                                    getNormalMaxSpeed(mConst, mModelChanger));
 
     if (al::isFirstStep(this)) {
         trySubAnimJumpReaction();
@@ -299,7 +303,7 @@ void PlayerStateJump::exeJump() {
         mIsContinuousJump = false;
     }
 
-    if (mModelChanger->is2DModel() && rs::isIn2DArea(mDimension)) {
+    if (isIn2DAreaModel(mModelChanger, mDimension)) {
         sead::Vector3f lockDir = {0.0f, 0.0f, 0.0f};
         rs::calcLockDirection(&lockDir, mDimension);
         mAirMoveControl->verticalizeStartMoveDir(lockDir);
@@ -314,14 +318,14 @@ void PlayerStateJump::exeJump() {
         al::separateVelocityHV(&horizontalVel, &verticalVel, mActor);
         f32 speed = sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64());
         al::limitLength(&horizontalVel, horizontalVel, speed);
-        al::setVelocity(mActor, horizontalVel + verticalVel);
+        al::setVelocity(mActor, verticalVel + horizontalVel);
         kill();
     } else if (rs::updateJudgeAndResult(mJudgeWallCatch)) {
         if (!isDead() && mModelChanger->is2DModel() &&
             (mSubAnimName ? al::isEqualString(mSubAnimName, "JumpSquat")
                           : mAnimator->isAnim("JumpSquat"))) {
-            mTrigger->set(PlayerTrigger::EActionTrigger_val3);
             mSubAnimName = nullptr;
+            mTrigger->set(PlayerTrigger::EActionTrigger_val3);
         }
         if (_ba)
             al::setNerve(this, &NrvPlayerStateJump.Hovering2D);
@@ -500,12 +504,8 @@ void PlayerStateJump::exeHovering2D() {
     }
 
     al::LiveActor* actor = mActor;
-    f32 maxSpeed;
-    if (mModelChanger->is2DModel())
-        maxSpeed = mConst->getNormalMaxSpeed();
-    else
-        maxSpeed = mConst->getNormalMaxSpeed2D();
-    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f, maxSpeed);
+    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f,
+                                    getNormalMaxSpeed(mConst, mModelChanger));
 
     if (al::isFirstStep(this)) {
         mAnimator->startAnim("Hovering");
@@ -564,18 +564,16 @@ void PlayerStateJump::exeJumpBack() {
 void PlayerStateJump::exeJumpSpinGround() {
     al::LiveActor* actor = mActor;
 
-    f32 maxSpeed;
-    if (mModelChanger->is2DModel())
-        maxSpeed = mConst->getNormalMaxSpeed();
-    else
-        maxSpeed = mConst->getNormalMaxSpeed2D();
-    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f, maxSpeed);
+    rs::scaleVelocityInertiaWallHit(mActor, mCollider, 0.25f, 1.0f,
+                                    getNormalMaxSpeed(mConst, mModelChanger));
 
     if (al::isFirstStep(this)) {
         trySubAnimJumpReaction();
 
-        const char* format = _b6 ? "Restart%s" : "Start%s";
-        mAnimator->startAnim(al::StringTmp<64>(format, mAnimName));
+        if (_b6)
+            mAnimator->startAnim(al::StringTmp<64>("Restart%s", mAnimName));
+        else
+            mAnimator->startAnim(al::StringTmp<64>("Start%s", mAnimName));
 
         mAirMoveControl->setup(mMoveSpeedMax, mConst->getNormalMaxSpeed(), 0, mJumpPower,
                                mJumpGravity, 0, mConst->getJumpInertiaRate());
@@ -605,9 +603,9 @@ void PlayerStateJump::exeJumpSpinGround() {
         sead::Vector3f horizontalVel = {0.0f, 0.0f, 0.0f};
         sead::Vector3f verticalVel = {0.0f, 0.0f, 0.0f};
         al::separateVelocityHV(&horizontalVel, &verticalVel, mActor);
-        f32 speed = sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64());
-        al::limitLength(&horizontalVel, horizontalVel, speed);
-        al::setVelocity(mActor, horizontalVel + verticalVel);
+        al::limitLength(&horizontalVel, horizontalVel,
+                        sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64()));
+        al::setVelocity(mActor, verticalVel + horizontalVel);
         kill();
     }
 }
@@ -620,12 +618,8 @@ void PlayerStateJump::exeHoveringJump2D() {
 
     al::LiveActor* actor = mActor;
 
-    f32 maxSpeed;
-    if (mModelChanger->is2DModel())
-        maxSpeed = mConst->getNormalMaxSpeed();
-    else
-        maxSpeed = mConst->getNormalMaxSpeed2D();
-    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f, maxSpeed);
+    rs::scaleVelocityInertiaWallHit(actor, mCollider, 0.25f, 1.0f,
+                                    getNormalMaxSpeed(mConst, mModelChanger));
 
     if (al::isFirstStep(this)) {
         mAnimator->startAnim("Hovering");
@@ -647,7 +641,7 @@ void PlayerStateJump::exeHoveringJump2D() {
         mIsContinuousJump = false;
     }
 
-    if (mModelChanger->is2DModel() && rs::isIn2DArea(mDimension)) {
+    if (isIn2DAreaModel(mModelChanger, mDimension)) {
         sead::Vector3f lockDir = {0.0f, 0.0f, 0.0f};
         rs::calcLockDirection(&lockDir, mDimension);
         mAirMoveControl->verticalizeStartMoveDir(lockDir);
@@ -661,7 +655,7 @@ void PlayerStateJump::exeHoveringJump2D() {
         al::separateVelocityHV(&horizontalVel, &verticalVel, mActor);
         f32 speed = sead::Mathf::min(horizontalVel.length(), mAirMoveControl->get_64());
         al::limitLength(&horizontalVel, horizontalVel, speed);
-        al::setVelocity(mActor, horizontalVel + verticalVel);
+        al::setVelocity(mActor, verticalVel + horizontalVel);
         kill();
     } else if (rs::updateJudgeAndResult(mJudgeWallCatch) || al::calcSpeedV(actor) < 0.0f) {
         al::setNerve(this, &NrvPlayerStateJump.Hovering2D);
