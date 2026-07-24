@@ -19,6 +19,10 @@ public:
     void setScale(f32 scale);
     void setScale(f32 scaleX, f32 scaleZ);
     void setQuat(const sead::Quatf& quat);
+    void setMaxDistanceAndEndFrame(f32 maxDistance, f32 endFrame) {
+        mMaxDistance = maxDistance;
+        mEndFrame = endFrame;
+    }
 
 private:
     al::LiveActor* mActor = nullptr;
