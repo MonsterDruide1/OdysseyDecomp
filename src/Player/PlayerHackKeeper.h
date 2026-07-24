@@ -5,6 +5,8 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
+#include "Enemy/Megane.h"
+
 namespace al {
 class LiveActor;
 class HitSensor;
@@ -18,6 +20,7 @@ class PlayerInput;
 class PlayerDamageKeeper;
 class IPlayerModelChanger;
 class IUsePlayerHeightCheck;
+class IUsePlayerCollision;
 struct HackObjInfo;
 class PlayerCollider;
 class CapTargetInfo;
@@ -67,7 +70,7 @@ public:
     void sendMarioDead();
     void sendMarioInWater();
     void sendMarioDeathArea();
-    void sendMsgEnableMapCheckPointWarp();
+    bool sendMsgEnableMapCheckPointWarp();
     void sendMsgSelfCeilingCheckMiss();
     bool receiveRequestTransferHack(al::HitSensor*);
     bool requestDamage();
@@ -75,7 +78,7 @@ public:
     void sendSyncDamageVisibility();
     void pushWorldEndBorder(const sead::Vector3f&);
     const char* getCurrentHackName() const;
-    PlayerCollider* getPlayerCollision() const;
+    IUsePlayerCollision* getPlayerCollision() const;
     f32 getHackGuideHeight() const;
     bool isHackGuideEnable() const;
     f32 getHackStayGravityMargine() const;
@@ -121,6 +124,8 @@ public:
 
     al::LiveActor* getHack() const { return mHackActor; }
 
+    Megane* getMeganeHack() const { return mHackActor; }
+
     al::HitSensor* getHackSensor() const { return mHackHitSensor; }
 
 private:
@@ -143,7 +148,7 @@ private:
     bool mIsHack;
     bool mIsTookDamage;
     al::CollisionPartsFilterBase* mCollisionFilter;
-    al::LiveActor* mHackActor;
+    Megane* mHackActor;
     al::HitSensor* mHackHitSensor;
     HackObjInfo* mHackObjectInfo;
     al::HitSensor* mStageStartActorSensor;
