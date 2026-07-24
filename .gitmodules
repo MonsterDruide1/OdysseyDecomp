@@ -19,3 +19,6 @@
 [submodule "lib/NintendoSDK-NEX"]
 	path = lib/NintendoSDK-NEX
 	url = https://github.com/open-ead/NintendoSDK-NEX
+[submodule "lib/curl"]
+	path = lib/curl
+	url = https://github.com/german77/curl.git
