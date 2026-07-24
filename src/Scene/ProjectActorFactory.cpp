@@ -145,6 +145,7 @@
 #include "Npc/FlyObject.h"
 #include "Npc/KuriboGirl.h"
 #include "Npc/RaceAudienceNpc.h"
+#include "Npc/SessionMusicianBgmCtrlObj.h"
 #include "Npc/VocalMike.h"
 #include "Npc/VolleyballNpc.h"
 #include "Npc/WorldTravelingNpc.h"
@@ -556,7 +557,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"SePlayObjWithSave", nullptr},
     {"SePlayRail", nullptr},
     {"SequentialSwitch", nullptr},
-    {"SessionBgmCtrlObj", nullptr},
+    {"SessionBgmCtrlObj", al::createActorFunction<SessionBgmCtrlObj>},
     {"SessionMayorNpc", nullptr},
     {"SessionMusicianNpc", nullptr},
     {"Shibaken", nullptr},

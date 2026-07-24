@@ -57,7 +57,12 @@ public:
     void calcRelativeShapeInfo(const sead::Matrix34f&) override;
 
 private:
-    void* _18[20];
+    u8 _18[0x1c - 0x18];
+    sead::Vector3f mBoundingCenter;
+    f32 mBoundingRadius;
+    sead::Vector3f mBoundingCenterWorld;
+    f32 mBoundingRadiusWorld;
+    u8 _3c[0xb8 - 0x3c];
 };
 
 static_assert(sizeof(CollisionShapeInfoArrow) == 0xb8);
@@ -88,7 +93,11 @@ public:
     void set48(f32 value) { _48 = value; }
 
 private:
-    void* _18[5];
+    f32 mBoundingRadius;
+    sead::Vector3f mBoundingCenter;
+    sead::Vector3f mBoundingCenterWorld;
+    f32 mBoundingRadiusWorld;
+    u8 _38[0x40 - 0x38];
     s32 _40;
     bool mIsSupportGround;
     f32 _48;
@@ -126,7 +135,15 @@ public:
     void setIgnoreGround() { mIsIgnoreGround = true; }
 
 private:
-    void* _18[13];
+    f32 mBoundingRadius;
+    f32 mBoundingRadiusWorld;
+    f32 mCheckStepRange;
+    f32 mCheckStepRangeWorld;
+    u8 _28[0x30 - 0x28];
+    sead::Vector3f mBoundingCenter;
+    u8 _3c[0x50 - 0x3c];
+    sead::Vector3f mBoundingCenterWorld;
+    u8 _5c[0x80 - 0x5c];
     bool mIsSupportGround;
     f32 _84;
     f32 _88;

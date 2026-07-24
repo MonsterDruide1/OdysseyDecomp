@@ -25,17 +25,26 @@ jobs:
         allow-unsafe-pr-checkout: true
     - name: Check for W-state functions
       run: |
-        if grep -q "status: Wip" "data/odyssey_functions.csv"; then
+        if grep -q "status: Wip" "data/file_list.yml"; then
           echo "Function list should not contain WIP-functions!"
           echo "Found the following lines:"
-          grep "status: Wip" "data/odyssey_functions.csv"
+          grep "status: Wip" "data/file_list.yml"
+          exit 1
+        fi
+    - name: Check duplicate file names
+      run: |
+        duplicates=$(grep -v '^ ' data/file_list.yml | sort | uniq -d)
+        if [ -n "$duplicates" ]; then
+          echo "Function list should not contain duplicate filenames!"
+          echo "Found the following duplicates:"
+          printf "%s\n" "$duplicates"
           exit 1
         fi
     - name: Set up dependencies
       run: |
         sudo apt update && sudo apt install -y python3-pip ninja-build cmake ccache xdelta3 clang libssl-dev python-is-python3 curl
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.14'
         cache: 'pip'
