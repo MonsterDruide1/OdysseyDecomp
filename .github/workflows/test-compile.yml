@@ -14,7 +14,7 @@ jobs:
       run: |
         sudo apt update && sudo apt install -y ninja-build cmake ccache clang curl
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.14'
         cache: 'pip'
