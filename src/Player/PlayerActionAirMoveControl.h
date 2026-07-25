@@ -23,23 +23,27 @@ public:
     bool isHoldJumpExtend() const;
     void calcMoveInput(sead::Vector3f*, const sead::Vector3f&) const;
 
+    void set_33(bool value) { _33 = value; }
+
     void set_40(bool value) { _40 = value; }
 
-    void set_42(bool value) { _42 = value; }
-
-    void set_44(s32 value) { _44 = value; }
-
-    void set_48(f32 value) { _48 = value; }
+    void setMaxJumpSpeed(f32 minSpeed, f32 maxSpeed) {
+        _42 = true;
+        _44 = minSpeed;
+        _48 = maxSpeed;
+    }
 
     f32 get_64() const { return _64; }
 
 private:
-    u8 _0[0x40];
+    u8 _0[0x33];
+    bool _33;
+    u8 _34[0x40 - 0x34];
     bool _40;
     u8 _41;
     bool _42;
     u8 _43;
-    s32 _44;
+    f32 _44;
     f32 _48;
     u8 _4c[0x64 - 0x4c];
     f32 _64;
