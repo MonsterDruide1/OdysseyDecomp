@@ -15,7 +15,8 @@ public:
     void reset();
     bool isExistUnderWall() const;
     bool tryCalcSlopDownFrontDirH(sead::Vector3f*) const;
-    CollisionDirector* getCollisionDirector() const override;
+
+    CollisionDirector* getCollisionDirector() const override { return mCollisionDirector; }
 
     bool isExistCollisionUnderTarget() const { return mIsExistCollisionUnderTarget; }
 
@@ -30,16 +31,19 @@ public:
     f32 getSlopeCollisionDownSpeed() const { return mSlopeCollisionDownSpeed; }
 
 private:
-    void* mBuffer;
-    char mBuffer2;
+    CollisionDirector* mCollisionDirector;
+    bool _10;
     bool mIsExistCollisionUnderTarget;
-    void* mBuffer3;
+    sead::Vector3f _14;
     sead::Vector3f mTargetCollisionNormal;
     sead::Vector3f mTargetCollisionPos;
     bool mIsExistSlopeCollisionUnderTarget;
-    char mBuffer4[0xc];
+    sead::Vector3f _3c;
     f32 mSlopeCollisionDownSpeed;
     f32 mSlopeCollisionUpSpeed;
+    s32 _50;
 };
+
+static_assert(sizeof(CameraTargetCollideInfoHolder) == 0x58);
 
 }  // namespace al
