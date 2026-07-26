@@ -8,7 +8,9 @@ template <>
 s32 sead::PtrArray<ShinePosInfo>::compareT(const ShinePosInfo* a, const ShinePosInfo* b) {
     if (a->uniqueId < b->uniqueId)
         return -1;
-    return a->uniqueId != b->uniqueId;
+    if (a->uniqueId == b->uniqueId)
+        return 0;
+    return 1;
 }
 
 // NON_MATCHING: StrTreeMap::allocBuffer major issues https://decomp.me/scratch/znUi3
@@ -19,9 +21,9 @@ WorldList::WorldList() {
     mWorldList.allocBuffer(worldCount, nullptr);
     for (s32 i = 0; i < worldCount; i++) {
         al::ByamlIter worldIter;
-        const char* name = nullptr;
         worldListIter.tryGetIterByIndex(&worldIter, i);
 
+        const char* name = nullptr;
         worldIter.tryGetStringByKey(&name, "Name");
         const char* worldName = nullptr;
         worldIter.tryGetStringByKey(&worldName, "WorldName");
@@ -38,10 +40,9 @@ WorldList::WorldList() {
         entry->mainStageName = name;
         entry->worldDevelopName = worldName;
         entry->worldScenarioNum = scenarioNum;
-        s32* scnum = new s32[scenarioNum];
         entry->clearMainScenarioNo = clearMainScenarioNo;
         entry->afterEndingScenarioNo = afterEndingScenarioNo;
-        entry->mainQuestIndexes = scnum;
+        entry->mainQuestIndexes = new s32[scenarioNum];
         entry->moonRockScenarioNo = moonRockScenarioNo;
 
         al::ByamlIter questIter;
@@ -113,6 +114,8 @@ WorldList::WorldList() {
             mWorldList[i]->stageList.pushBack(stageEntry);
         }
     }
+    // BUG: missing or malformed entries in `StagePosList` or `ShinePosList`
+    // will cause all accesses to higher indices to desync/return garbage
     {
         al::ByamlIter worldListPosIter(
             al::tryGetBymlFromArcName("SystemData/WorldList", "StagePosList"));
@@ -122,7 +125,7 @@ WorldList::WorldList() {
 
         for (s32 i = 0; i < posCount; i++) {
             al::ByamlIter entryIter;
-            const char* keyName = 0;
+            const char* keyName = nullptr;
             worldListPosIter.tryGetIterAndKeyNameByIndex(&entryIter, &keyName, i);
 
             StagePosInfo* posInfo = new StagePosInfo();
@@ -131,13 +134,15 @@ WorldList::WorldList() {
             posInfo->mask = 0;
 
             s32 size = entryIter.getSize();
-            for (s32 j = 0; j < size; j++) {
+            for (s32 j = 1; j <= size; j++) {
                 al::ByamlIter biter;
-                entryIter.tryGetIterByKey(&biter, al::StringTmp<32>("%d", j + 1).cstr());
+                entryIter.tryGetIterByKey(&biter, al::StringTmp<32>("%d", j).cstr());
                 sead::Vector3f trans = sead::Vector3f::zero;
 
+                // NOTE: if x is missing but y or z are given, `tryFindTransOnMainStageByStageName`
+                // will set `*outTrans = {0.0f, y, z}` while returning `false`
                 if (biter.tryGetFloatByKey(&trans.x, "X"))
-                    posInfo->mask |= 1 << (j + 1);
+                    posInfo->mask |= 1 << j;
                 biter.tryGetFloatByKey(&trans.y, "Y");
                 biter.tryGetFloatByKey(&trans.z, "Z");
                 posInfo->posList.emplaceBack(trans);
@@ -163,20 +168,18 @@ WorldList::WorldList() {
 
         al::ByamlIter biter;
         for (s32 j = 1; j < 20; j++) {
-            if (iter.tryGetIterByKey(&biter, al::StringTmp<32>("%d", j).cstr())) {
-                sead::Vector3f trans = sead::Vector3f::zero;
-
-                if (biter.tryGetFloatByKey(&trans.x, "X")) {
-                    biter.tryGetFloatByKey(&trans.y, "Y");
-                    biter.tryGetFloatByKey(&trans.z, "Z");
-                    info->posList.emplaceBack(trans);
-                    info->mask |= 1 << j;
-                } else {
-                    info->posList.emplaceBack(sead::Vector3f::zero);
-                }
-            } else {
+            if (!iter.tryGetIterByKey(&biter, al::StringTmp<32>("%d", j).cstr())) {
                 info->posList.emplaceBack(sead::Vector3f::zero);
+                continue;
             }
+
+            sead::Vector3f trans = sead::Vector3f::zero;
+            if (biter.tryGetFloatByKey(&trans.x, "X")) {
+                biter.tryGetFloatByKey(&trans.y, "Y");
+                biter.tryGetFloatByKey(&trans.z, "Z");
+                info->mask |= 1 << j;
+            }
+            info->posList.emplaceBack(trans);
         }
         mShinePosList.pushBack(info);
     }
@@ -188,8 +191,7 @@ s32 WorldList::getWorldNum() const {
 }
 
 s32 WorldList::getMainQuestMin(s32 worldId, s32 questId) const {
-    if (worldId < 0)
-        worldId = 0;
+    worldId = sead::Mathi::clampMin(worldId, 0);
     return mWorldList[worldId]->mainQuestIndexes[questId - 1];
 }
 
@@ -249,9 +251,7 @@ bool WorldList::isEqualMoonRockScenarioNo(s32 worldId, s32 scenarioNo) const {
 }
 
 const char* WorldList::getWorldDevelopName(s32 worldId) const {
-    if (worldId < 0)
-        worldId = 0;
-    return mWorldList[worldId]->worldDevelopName;
+    return mWorldList[sead::Mathi::clampMin(worldId, 0)]->worldDevelopName;
 }
 
 s32 WorldList::getWorldScenarioNum(s32 worldId) const {
@@ -295,7 +295,6 @@ bool WorldList::checkNeedTreasureMessageStage(const char* stageName) const {
                 !al::isEqualString(category, "MiniGame") &&
                 !al::isEqualString(category, "SmallStage"))
                 return true;
-
             return false;
         }
     }
