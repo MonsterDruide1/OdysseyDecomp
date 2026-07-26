@@ -11,13 +11,13 @@ class CameraSubTargetBase;
 
 struct ViewTargetInfo {
     CameraTargetBase* target = nullptr;
-    // Note: s8 is used instead of bool to match isChangeViewTarget
+    // NOTE: s8 is used instead of bool to match isChangeViewTarget
     s8 hasTargetChanged = false;
 };
 
 struct ViewSubTargetInfo {
     CameraSubTargetBase* target = nullptr;
-    // Note: s8 is used instead of bool to match isChangeSubTarget
+    // NOTE: s8 is used instead of bool to match isChangeSubTarget
     s8 hasTargetChanged = false;
 };
 

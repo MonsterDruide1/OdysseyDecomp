@@ -12,7 +12,7 @@ public:
 
     s32 getRailCount() const { return mCameraRailCount; }
 
-    CameraLimitRailKeeper* getRail(s32 index) { return mCameraRails[index]; }
+    CameraLimitRailKeeper* getRail(s32 index) const { return mCameraRails[index]; }
 
 private:
     s32 mCameraRailCount = 0;
