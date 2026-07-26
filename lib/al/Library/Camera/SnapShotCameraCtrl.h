@@ -30,23 +30,23 @@ public:
     void exeWait();
     void exeReset();
 
-    f32 getFovyDegree() const { return mFovyDegree; };
-
     AudioKeeper* getAudioKeeper() const override;
 
-    void setIsValidLookAtOffset(bool isValid) { mIsValidLookAtOffset = isValid; };
+    f32 getFovyDegree() const { return mFovyDegree; }
 
-    void setIsValidZoomFovy(bool isValid) { mIsValidZoomFovy = isValid; };
+    void setIsValidLookAtOffset(bool isValid) { mIsValidLookAtOffset = isValid; }
 
-    void setIsValidRoll(bool isValid) { mIsValidRoll = isValid; };
+    void setIsValidZoomFovy(bool isValid) { mIsValidZoomFovy = isValid; }
 
-    void set_68(bool isValid) { _68 = isValid; };
+    void setIsValidRoll(bool isValid) { mIsValidRoll = isValid; }
 
-    void setMaxZoomOutFovyDegree(f32 value) { mMaxZoomOutFovyDegree = value; };
+    void set_68(bool isValid) { _68 = isValid; }
 
-    f32 getRollDegree() const { return mRollDegree; };
+    void setMaxZoomOutFovyDegree(f32 value) { mMaxZoomOutFovyDegree = value; }
 
-    const sead::Vector3f& getLookAtOffset() const { return mLookAtOffset; };
+    f32 getRollDegree() const { return mRollDegree; }
+
+    const sead::Vector3f& getLookAtOffset() const { return mLookAtOffset; }
 
 private:
     SnapShotCameraSceneInfo* mCameraSceneInfo;

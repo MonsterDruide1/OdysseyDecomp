@@ -443,11 +443,11 @@ bool tryGetTargetRequestDistance(f32* outDistance, const al::CameraPoser* camera
 }
 
 f32* tryGetBossDistanceCurve(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getSceneInfo()->requestParamHolder->get_60();
+    return cameraPoser->getSceneInfo()->requestParamHolder->getBossDistanceCurve();
 }
 
 f32* tryGetEquipmentDistanceCurve(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getSceneInfo()->requestParamHolder->get_58();
+    return cameraPoser->getSceneInfo()->requestParamHolder->getEquipmentDistanceCurve();
 }
 
 bool isExistCollisionUnderTarget(const al::CameraPoser* cameraPoser) {
