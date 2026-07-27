@@ -5,7 +5,7 @@ class SceneCreator;
 
 class IUseSceneCreator {
 public:
-    virtual ~IUseSceneCreator();
+    virtual ~IUseSceneCreator() = default;
 
     virtual void setSceneCreator(SceneCreator* creator) = 0;
     virtual SceneCreator* getSceneCreator() const = 0;
