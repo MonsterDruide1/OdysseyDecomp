@@ -5,16 +5,16 @@
 #include <math/seadVector.h>
 
 namespace sead {
-class Projection;
 class LookAtCamera;
+class Projection;
 }  // namespace sead
 
 namespace al {
-class CameraPoser;
+class CameraDistanceCurve;
 class CameraLimitRailKeeper;
-class Projection;
-struct CameraStartInfo;
 struct CameraObjectRequestInfo;
+class CameraPoser;
+struct CameraStartInfo;
 class IUseCollision;
 class PlacementInfo;
 class Projection;
@@ -96,8 +96,8 @@ f32 calcTargetJumpSpeed(const al::CameraPoser* cameraPoser);
 f32 calcTargetFallSpeed(const al::CameraPoser* cameraPoser);
 bool isChangeTarget(const al::CameraPoser* cameraPoser);
 bool tryGetTargetRequestDistance(f32* outDistance, const al::CameraPoser* cameraPoser);
-f32* tryGetBossDistanceCurve(const al::CameraPoser* cameraPoser);
-f32* tryGetEquipmentDistanceCurve(const al::CameraPoser* cameraPoser);
+al::CameraDistanceCurve* tryGetBossDistanceCurve(const al::CameraPoser* cameraPoser);
+al::CameraDistanceCurve* tryGetEquipmentDistanceCurve(const al::CameraPoser* cameraPoser);
 bool isExistCollisionUnderTarget(const al::CameraPoser* cameraPoser);
 const sead::Vector3f& getUnderTargetCollisionPos(const al::CameraPoser* cameraPoser);
 const sead::Vector3f& getUnderTargetCollisionNormal(const al::CameraPoser* cameraPoser);
