@@ -2042,17 +2042,15 @@ u16 f32ToF16(f32 value) {
     }
 
     s32 expVal = (exponent >> 23) + (biasF16 - biasF32);
+    if (expVal >= 31)
+        return sign | specialF16;
+
+    if (exponent <= (biasF32 - biasF16) << 23)
+        return sign;
+
     u16 mantissa = (value32 >> 13) & mantissaMaskF16;
     u16 exp = (expVal << 10) & exponentMaskF16;
-    u16 normal = sign | exp | mantissa;
-
-    u16 result;
-    if (exponent <= (biasF32 - biasF16) << 23)
-        result = sign;
-    else
-        result = normal;
-
-    return expVal < 31 ? result : sign | specialF16;
+    return sign | exp | mantissa;
 }
 
 f32 f16ToF32(u16 value) {
