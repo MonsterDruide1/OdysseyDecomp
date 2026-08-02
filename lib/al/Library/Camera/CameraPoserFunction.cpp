@@ -442,11 +442,11 @@ bool tryGetTargetRequestDistance(f32* outDistance, const al::CameraPoser* camera
     return false;
 }
 
-f32* tryGetBossDistanceCurve(const al::CameraPoser* cameraPoser) {
+al::CameraDistanceCurve* tryGetBossDistanceCurve(const al::CameraPoser* cameraPoser) {
     return cameraPoser->getSceneInfo()->requestParamHolder->getBossDistanceCurve();
 }
 
-f32* tryGetEquipmentDistanceCurve(const al::CameraPoser* cameraPoser) {
+al::CameraDistanceCurve* tryGetEquipmentDistanceCurve(const al::CameraPoser* cameraPoser) {
     return cameraPoser->getSceneInfo()->requestParamHolder->getEquipmentDistanceCurve();
 }
 
