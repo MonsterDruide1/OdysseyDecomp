@@ -37,10 +37,10 @@ private:
     BossRaidElectric* mNextBullet = nullptr;
     BossRaidElectric* mPrevBullet = nullptr;
     sead::Vector3f mFrontDir = sead::Vector3f::ez;
-    sead::Vector3f _12c = sead::Vector3f::zero;
+    sead::Vector3f mAttackSensorPos = sead::Vector3f::zero;
     sead::Vector3f mVelocity = sead::Vector3f::zero;
-    f32 _144 = 0.0f;
-    bool _148 = true;
+    f32 mJointControl = 0.0f;
+    bool isInElectricArea = true;
 };
 
 static_assert(sizeof(BossRaidElectric) == 0x150);

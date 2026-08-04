@@ -59,14 +59,15 @@ void BossRaidElectric::init(const al::ActorInitInfo& info) {
     al::invalidateClipping(this);
     al::offCollide(this);
     al::initJointControllerKeeper(this, 1);
-    al::initJointLocalTransControllerX(this, &_144, "Electric2");
-    al::setHitSensorPosPtr(this, "Attack", &_12c);
+    al::initJointLocalTransControllerX(this, &mJointControl, "Electric2");
+    al::setHitSensorPosPtr(this, "Attack", &mAttackSensorPos);
     al::setSensorRadius(this, "Attack", 50.0f);
     makeActorDead();
 }
 
 void BossRaidElectric::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isNerve(this, &Wait) && al::isHitCylinderSensor(other, _12c, mFrontDir, 50.0f))
+    if (al::isNerve(this, &Wait) &&
+        al::isHitCylinderSensor(other, mAttackSensorPos, mFrontDir, 50.0f))
         al::sendMsgEnemyAttack(other, self);
 }
 
@@ -86,7 +87,7 @@ void BossRaidElectric::shot(const sead::Vector3f& pos, const sead::Vector3f& vel
     }
     mActorGroup = actorGroup;
     actorGroup->registerActor(this);
-    _148 = true;
+    isInElectricArea = true;
     al::setNerve(this, &Wait);
     makeActorAlive();
 }
@@ -100,18 +101,18 @@ void BossRaidElectric::exeWait() {
         al::startAction(this, mNextBullet ? "Wait" : "Hide");
 
     updateAnimAndJoint();
-    if (_148) {
+    if (isInElectricArea) {
         if (!al::isInAreaObj(this, "BossRaidElectricArea", al::getTrans(this)))
-            _148 = false;
+            isInElectricArea = false;
     }
     if (isAirAll())
         al::setNerve(this, &Disappear);
 }
 
 void BossRaidElectric::updateAnimAndJoint() {
-    _144 = -500.0f;
+    mJointControl = -500.0f;
     if (!mNextBullet) {
-        _12c = al::getTrans(this);
+        mAttackSensorPos = al::getTrans(this);
         al::setSensorRadius(this, "Attack", 50.0f);
 
         updateEffectScale(100.0f);
@@ -125,22 +126,22 @@ void BossRaidElectric::updateAnimAndJoint() {
     if (!al::tryNormalizeOrZero(&mFrontDir, diff))
         mFrontDir.set(sead::Vector3f::ez);
 
-    _144 = length - 500.0f;
+    mJointControl = length - 500.0f;
 
     if (sead::Mathf::abs(mFrontDir.y) > 0.98f)
         al::makeQuatFrontUp(al::getQuatPtr(this), mFrontDir, sead::Vector3f::ex);
     else
         al::makeQuatFrontUp(al::getQuatPtr(this), mFrontDir, sead::Vector3f::ey);
 
-    al::lerpVec(&_12c, al::getTrans(this), al::getTrans(mNextBullet), 0.5f);
+    al::lerpVec(&mAttackSensorPos, al::getTrans(this), al::getTrans(mNextBullet), 0.5f);
     al::setSensorRadius(this, "Attack", length * 0.5f + 50.0f);
     updateEffectScale(length);
 }
 
 bool BossRaidElectric::isAirAll() const {
-    if (_148)
+    if (isInElectricArea)
         return false;
-    if (mNextBullet && mNextBullet->_148)
+    if (mNextBullet && mNextBullet->isInElectricArea)
         return false;
     return true;
 }
