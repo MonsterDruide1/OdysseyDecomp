@@ -47,16 +47,12 @@ static sead::Vector3f sMtxX = {-1.0f, 0.0f, 0.0f};
 static sead::Vector3f sMtxY = {0.0f, 1.0f, 0.0f};
 static sead::Vector3f sMtxZ = {0.0f, 0.0f, -1.0f};
 
-static inline s32 getViewInfoIndex(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getViewInfo()->getIndex();
-}
-
 static inline al::CameraTargetBase* getTarget(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getTargetHolder()->getViewTarget(getViewInfoIndex(cameraPoser));
+    return cameraPoser->getTargetHolder()->getViewTarget(getViewIndex(cameraPoser));
 }
 
 static inline al::CameraTargetBase* tryGetTarget(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getTargetHolder()->tryGetViewTarget(getViewInfoIndex(cameraPoser));
+    return cameraPoser->getTargetHolder()->tryGetViewTarget(getViewIndex(cameraPoser));
 }
 
 static inline al::CameraVerticalAbsorber* getVerticalAbsorber(const al::CameraPoser* cameraPoser) {
@@ -69,7 +65,7 @@ getTargetCollision(const al::CameraPoser* cameraPoser) {
 }
 
 static inline al::ICameraInput* getCameraInput(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getInputHolder()->getInput(getViewInfoIndex(cameraPoser));
+    return cameraPoser->getInputHolder()->getInput(getViewIndex(cameraPoser));
 }
 
 static inline al::CameraSubTargetBase* getTopSubTarget(const al::CameraPoser* cameraPoser) {
@@ -82,35 +78,35 @@ getSubTargetTurnParam(const al::CameraPoser* cameraPoser) {
 }
 
 s32 getViewIndex(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getIndex();
+    return cameraPoser->getViewInfo()->getIndex();
 }
 
 const sead::LookAtCamera& getLookAtCamera(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getLookAtCam();
+    return cameraPoser->getViewInfo()->getLookAtCam();
 }
 
 const sead::Projection& getProjectionSead(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getProjectionSead();
+    return cameraPoser->getViewInfo()->getProjectionSead();
 }
 
 const al::Projection& getProjection(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getProjection();
+    return cameraPoser->getViewInfo()->getProjection();
 }
 
 const sead::Matrix44f& getProjectionMtx(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getProjMtx();
+    return cameraPoser->getViewInfo()->getProjMtx();
 }
 
 f32 getNear(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getNear();
+    return cameraPoser->getViewInfo()->getNear();
 }
 
 f32 getFar(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getFar();
+    return cameraPoser->getViewInfo()->getFar();
 }
 
 f32 getAspect(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getCameraViewInfo()->getAspect();
+    return cameraPoser->getViewInfo()->getAspect();
 }
 
 const sead::Vector3f& getPreCameraPos(const al::CameraPoser* cameraPoser) {
@@ -159,9 +155,9 @@ bool isPrePriorityPlayer(const al::CameraStartInfo& cameraStartInfo) {
 }
 
 bool isEqualPreCameraName(const al::CameraStartInfo& cameraStartInfo, const char* cameraName) {
-    if (cameraStartInfo.preCameraName)
-        return al::isEqualString(cameraName, cameraStartInfo.preCameraName);
-    return false;
+    if (!cameraStartInfo.preCameraName)
+        return false;
+    return al::isEqualString(cameraName, cameraStartInfo.preCameraName);
 }
 
 bool isPreCameraFixAbsolute(const al::CameraStartInfo& cameraStartInfo) {
@@ -263,7 +259,7 @@ bool calcLookDirH(sead::Vector3f* outDirH, const al::CameraPoser* cameraPoser) {
 void calcSideDir(sead::Vector3f* outDir, const al::CameraPoser* cameraPoser) {
     sead::Vector3f facingDir = cameraPoser->getEye() - cameraPoser->getAt();
     al::normalize(&facingDir);
-    outDir->set(facingDir.cross(cameraPoser->getUp()));
+    outDir->setCross(facingDir, cameraPoser->getUp());
     al::normalize(outDir);
 }
 
@@ -428,7 +424,7 @@ f32 calcTargetFallSpeed(const al::CameraPoser* cameraPoser) {
 }
 
 bool isChangeTarget(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getTargetHolder()->isChangeViewTarget(getViewInfoIndex(cameraPoser));
+    return cameraPoser->getTargetHolder()->isChangeViewTarget(getViewIndex(cameraPoser));
 }
 
 bool tryGetTargetRequestDistance(f32* outDistance, const al::CameraPoser* cameraPoser) {
