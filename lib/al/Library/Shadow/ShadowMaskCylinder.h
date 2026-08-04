@@ -19,7 +19,7 @@ public:
     // TODO: assign proper parameter names
     void init(f32 a1, f32 dropLength, f32 a3, f32 a4, f32 a5, const sead::Vector3f& offset,
               const sead::Color4f& color) {
-        _ec = a1;
+        setSizeX(a1);
         _f4 = a1;
         _f0 = 1.0f;
         setDropLength(dropLength);
@@ -32,7 +32,6 @@ public:
     }
 
 private:
-    f32 _ec;
     f32 _f0;
     f32 _f4;
     void* _f8;
