@@ -13,8 +13,8 @@
 
 #include "System/GameDataFunction.h"
 
-static s32 cPriority = sead::Thread::cDefaultPriority + 6;
 static s32 _cDefaultPriority = sead::Thread::cDefaultPriority;
+static s32 cPriority = _cDefaultPriority + 6;
 
 E3ResourceLoader::E3ResourceLoader() {
     using E3ResourceLoaderFunctor = al::FunctorV0M<E3ResourceLoader*, void (E3ResourceLoader::*)()>;
