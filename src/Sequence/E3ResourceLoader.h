@@ -21,7 +21,7 @@ public:
     void tryCreateExHeap(s32 loadWorldId);
     void tryDestroyWorldResource(sead::Heap* heap);
     void printHeapInfo() const;
-    void loadHomeStageResourceByWorld(const char* worldName, sead::Heap* _heap, s32 loadWorldId,
+    void loadHomeStageResourceByWorld(const char* categoryName, sead::Heap* _heap, s32 worldId,
                                       s32 scenarioId);
 
 private:
@@ -31,7 +31,7 @@ private:
     sead::FrameHeap* mSandWorldHomeStageResource = nullptr;
     sead::FrameHeap* mCityWorldHomeStageResource = nullptr;
     sead::FrameHeap* mWorldExResource = nullptr;
-    bool mHasLoadedWorldResource = false;
+    bool mIsCancelLoadWorldResource = false;
     bool mIsLoaded = false;
     bool mHasCreatedResourceCategory = false;
     s32 mLoadWorldId = -1;

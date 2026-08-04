@@ -144777,8 +144777,8 @@ Sequence/E3ResourceLoader.o:
     lazy: true
   - offset: 0x50ae24
     size: 32
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_E3ResourceLoader.cpp
+    status: Matching
 Sequence/E3Sequence.o:
   '.text':
   - offset: 0x50ae44

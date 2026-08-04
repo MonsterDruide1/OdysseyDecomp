@@ -16,6 +16,12 @@
 static s32 _cDefaultPriority = sead::Thread::cDefaultPriority;
 static s32 cPriority = _cDefaultPriority + 6;
 
+static void destroyResource(sead::FrameHeap*& resource, const char* category) {
+    al::removeResourceCategory(category);
+    resource->destroy();
+    resource = nullptr;
+}
+
 E3ResourceLoader::E3ResourceLoader() {
     using E3ResourceLoaderFunctor = al::FunctorV0M<E3ResourceLoader*, void (E3ResourceLoader::*)()>;
 
@@ -47,23 +53,14 @@ E3ResourceLoader::~E3ResourceLoader() {
 
     al::removeResourceCategory("E3常駐");
 
-    if (mSandWorldHomeStageResource) {
-        al::removeResourceCategory("砂ワールドホーム");
-        mSandWorldHomeStageResource->destroy();
-        mSandWorldHomeStageResource = nullptr;
-    }
+    if (mSandWorldHomeStageResource)
+        destroyResource(mSandWorldHomeStageResource, "砂ワールドホーム");
 
-    if (mCityWorldHomeStageResource) {
-        al::removeResourceCategory("都市ワールドホーム");
-        mCityWorldHomeStageResource->destroy();
-        mCityWorldHomeStageResource = nullptr;
-    }
+    if (mCityWorldHomeStageResource)
+        destroyResource(mCityWorldHomeStageResource, "都市ワールドホーム");
 
-    if (mWorldExResource) {
-        al::removeResourceCategory("ワールド常駐");
-        mWorldExResource->destroy();
-        mWorldExResource = nullptr;
-    }
+    if (mWorldExResource)
+        destroyResource(mWorldExResource, "ワールド常駐");
 
     if (mWorldResourceHeap) {
         al::destroyWorldResourceHeap(false);
@@ -80,16 +77,12 @@ void E3ResourceLoader::loadHomeStageResource() {
         al::createCategoryResourceAll("E3常駐");
         mHasCreatedResourceCategory = true;
     }
-    if (mWorldExResource) {
-        al::removeResourceCategory("ワールド常駐");
-        mWorldExResource->destroy();
-        mWorldExResource = nullptr;
-    }
+    if (mWorldExResource)
+        destroyResource(mWorldExResource, "ワールド常駐");
     if (!mSandWorldHomeStageResource) {
         // 280 MB
         sead::FrameHeap* heap = sead::FrameHeap::create(
-            280 * 1024 * 1024, "SandWorldHomeStageResource", mWorldResourceHeap, 8,
-            sead::Heap::cHeapDirection_Forward, false);
+            280 * 1024 * 1024, "SandWorldHomeStageResource", mWorldResourceHeap);
         mSandWorldHomeStageResource = heap;
         al::addResourceCategory("砂ワールドホーム", 1024, heap);
         s32 worldIndexSand = GameDataFunction::getWorldIndexSand();
@@ -97,9 +90,9 @@ void E3ResourceLoader::loadHomeStageResource() {
     }
     if (!mCityWorldHomeStageResource) {
         // 290 MB
-        sead::FrameHeap* heap = sead::FrameHeap::create(
-            290 * 1024 * 1024, "CityWorldHomeStageResource", mWorldResourceHeap, 8,
-            sead::Heap::cHeapDirection_Reverse, false);
+        sead::FrameHeap* heap =
+            sead::FrameHeap::create(290 * 1024 * 1024, "CityWorldHomeStageResource",
+                                    mWorldResourceHeap, 8, sead::Heap::cHeapDirection_Reverse);
         mCityWorldHomeStageResource = heap;
         al::addResourceCategory("都市ワールドホーム", 1024, heap);
         s32 worldIndexCity = GameDataFunction::getWorldIndexCity();
@@ -130,29 +123,30 @@ void E3ResourceLoader::loadWorldResource() {
 
         if (!al::findResource(name))
             al::findOrCreateResource(name, ext);
-        if (mHasLoadedWorldResource)
+        if (mIsCancelLoadWorldResource)
             return;
     }
     mIsLoaded = true;
 }
 
 void E3ResourceLoader::cancelLoadWorldResource() {
-    mHasLoadedWorldResource = true;
+    mIsCancelLoadWorldResource = true;
 }
 
 bool E3ResourceLoader::requestLoadWorldHomeStageResource() {
     if (mSandWorldHomeStageResource && mCityWorldHomeStageResource &&
         isEndLoadWorldHomeStageResource())
         return false;
-    if (isEndLoadWorldHomeStageResource()) {
-        mHasLoadedWorldResource = false;
-        mIsLoaded = false;
-        mLoadWorldId = -1;
-        al::clearFileLoaderEntry();
-        mLoadHomeStageResourceThread->start();
-        return true;
-    }
-    return false;
+
+    if (!isEndLoadWorldHomeStageResource())
+        return false;
+
+    mIsCancelLoadWorldResource = false;
+    mIsLoaded = false;
+    mLoadWorldId = -1;
+    al::clearFileLoaderEntry();
+    mLoadHomeStageResourceThread->start();
+    return true;
 }
 
 bool E3ResourceLoader::isEndLoadWorldHomeStageResource() const {
@@ -162,15 +156,15 @@ bool E3ResourceLoader::isEndLoadWorldHomeStageResource() const {
 bool E3ResourceLoader::requestLoadWorldResource(s32 loadWorldId) {
     if (mLoadWorldId == loadWorldId && mIsLoaded)
         return false;
-    if (isEndLoadAny()) {
-        mHasLoadedWorldResource = false;
-        al::clearFileLoaderEntry();
-        mIsLoaded = false;
-        mLoadWorldId = loadWorldId;
-        mWorldResourceThread->start();
-        return true;
-    }
-    return false;
+    if (!isEndLoadAny())
+        return false;
+
+    mIsCancelLoadWorldResource = false;
+    al::clearFileLoaderEntry();
+    mIsLoaded = false;
+    mLoadWorldId = loadWorldId;
+    mWorldResourceThread->start();
+    return true;
 }
 
 bool E3ResourceLoader::isEndLoadAny() const {
@@ -187,8 +181,7 @@ void E3ResourceLoader::tryCreateExHeap(s32 loadWorldId) {
     else if (GameDataFunction::getWorldIndexCity() == loadWorldId)
         tryDestroyWorldResource(mSandWorldHomeStageResource);
 
-    mWorldExResource = sead::FrameHeap::create(0, "WorldExResource", mWorldResourceHeap, 8,
-                                               sead::Heap::cHeapDirection_Forward, false);
+    mWorldExResource = sead::FrameHeap::create(0, "WorldExResource", mWorldResourceHeap, 8);
 
     al::addResourceCategory("ワールド常駐", 1024, mWorldExResource);
 }
@@ -197,35 +190,29 @@ void E3ResourceLoader::tryDestroyWorldResource(sead::Heap* heap) {
     if (!heap)
         return;
 
-    if (mSandWorldHomeStageResource == heap) {
-        al::removeResourceCategory("砂ワールドホーム");
-        mSandWorldHomeStageResource->destroy();
-        mSandWorldHomeStageResource = nullptr;
-    }
+    if (mSandWorldHomeStageResource == heap)
+        destroyResource(mSandWorldHomeStageResource, "砂ワールドホーム");
 
-    if (mCityWorldHomeStageResource == heap) {
-        al::removeResourceCategory("都市ワールドホーム");
-        mCityWorldHomeStageResource->destroy();
-        mCityWorldHomeStageResource = nullptr;
-    }
+    if (mCityWorldHomeStageResource == heap)
+        destroyResource(mCityWorldHomeStageResource, "都市ワールドホーム");
 }
 
 void E3ResourceLoader::printHeapInfo() const {}
 
-void E3ResourceLoader::loadHomeStageResourceByWorld(const char* worldName, sead::Heap* _heap,
-                                                    s32 loadWorldId, s32 scenarioId) {
+void E3ResourceLoader::loadHomeStageResourceByWorld(const char* categoryName, sead::Heap* _heap,
+                                                    s32 worldId, s32 scenarioId) {
     const u8* byml = al::tryGetBymlFromArcName("SystemData/WorldList", "WorldResource");
     al::ByamlIter byamlIter = al::ByamlIter(byml);
 
     al::ByamlIter worldIter;
-    al::getByamlIterByIndex(&worldIter, byamlIter, loadWorldId);
+    al::getByamlIterByIndex(&worldIter, byamlIter, worldId);
     al::ByamlIter worldResourceIter;
 
     if (!al::tryGetByamlIterByKey(&worldResourceIter, worldIter,
                                   al::StringTmp<32>{"Scenario%d", scenarioId}.cstr()))
         return;
 
-    al::setCurrentCategoryName(worldName);
+    al::setCurrentCategoryName(categoryName);
 
     s32 size = worldResourceIter.getSize();
     for (s32 i = 0; i < size; i++) {
@@ -237,7 +224,7 @@ void E3ResourceLoader::loadHomeStageResourceByWorld(const char* worldName, sead:
         iter.tryGetStringByKey(&ext, "Ext");
 
         al::findOrCreateResource(name, ext);
-        if (mHasLoadedWorldResource)
+        if (mIsCancelLoadWorldResource)
             return;
     }
 }
