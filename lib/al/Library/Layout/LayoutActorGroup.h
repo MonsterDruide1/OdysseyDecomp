@@ -2,10 +2,12 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 class LayoutActor;
 
-class LayoutActorGroup {
+class LayoutActorGroup : public HioNode {
 public:
     LayoutActorGroup(const char*, s32);
     void registerActor(LayoutActor*);
@@ -25,5 +27,9 @@ private:
     s32 mMaxActorCount;
     s32 mActorCount;
     LayoutActor** mActors;
+    void* padding;
 };
+
+static_assert(sizeof(LayoutActorGroup) == 0x20);
+
 }  // namespace al
