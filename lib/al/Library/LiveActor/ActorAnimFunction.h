@@ -332,7 +332,7 @@ s32 calcJoitsAmountFromJoint(LiveActor*, const char*);
 bool isPartialSklAnimEnd(const LiveActor* actor, s32 index);
 bool isPartialSklAnimOneTime(const LiveActor* actor, s32 index);
 bool isPartialSklAnimAttached(const LiveActor* actor, s32 index);
-bool isPartialSklAnimPlaying(const LiveActor* actor, const char* partsName, s32 index);
+bool isPartialSklAnimPlaying(const LiveActor* actor, const char* animName, s32 index);
 
 }  // namespace al
 
