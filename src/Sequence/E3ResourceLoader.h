@@ -36,3 +36,5 @@ private:
     bool mHasCreatedResourceCategory = false;
     s32 mLoadWorldId = -1;
 };
+
+static_assert(sizeof(E3ResourceLoader) == 0x40);
