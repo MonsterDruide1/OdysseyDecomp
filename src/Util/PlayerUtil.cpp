@@ -10,6 +10,7 @@
 
 #include "Library/Base/StringUtil.h"
 #include "Library/Collision/CollisionParts.h"
+#include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
@@ -160,38 +161,38 @@ const al::CollisionParts* tryGetPlayerGroundCollisionParts(const al::LiveActor* 
 }  // namespace
 
 void rs::initPlayerActorInfo(PlayerActorBase* player, const PlayerInitInfo& initInfo) {
-    player->setPlayerPortNo(initInfo.getPortNo());
-    player->setPlayerViewMtx(initInfo.getViewMtx());
+    player->setPlayerPortNo(initInfo.portNo);
+    player->setPlayerViewMtx(initInfo.viewMtx);
 
     sead::Matrix34f poseMtx;
-    poseMtx.makeQT(initInfo.getQuat(), initInfo.getTrans());
+    poseMtx.makeQT(initInfo.quat, initInfo.trans);
     al::updatePoseMtx(player, &poseMtx);
 }
 
 const char* rs::getInitPlayerModelName(const PlayerInitInfo& initInfo) {
-    sead::FixedSafeString<64> modelName(initInfo.getModelName());
+    sead::FixedSafeString<64> modelName(initInfo.modelName);
     if (modelName.isEmpty())
         return "Mario";
-    return initInfo.getModelName();
+    return initInfo.modelName;
 }
 
 bool rs::isNeedCreateNoseNeedle(const PlayerInitInfo& initInfo) {
-    return initInfo.isNeedCreateNoseNeedle();
+    return initInfo.isNeedCreateNoseNeedle;
 }
 
 bool rs::isClosetScenePlayer(const PlayerInitInfo& initInfo) {
-    return initInfo.isClosetScenePlayer();
+    return initInfo.isClosetScenePlayer;
 }
 
 al::GamePadSystem* rs::getGamePadSystem(const PlayerInitInfo& initInfo) {
-    return initInfo.getGamePadSystem();
+    return initInfo.gamePadSystem;
 }
 
 const char* rs::getInitCapTypeName(const PlayerInitInfo& initInfo) {
-    sead::FixedSafeString<64> capTypeName(initInfo.getCapTypeName());
+    sead::FixedSafeString<64> capTypeName(initInfo.capTypeName);
     if (capTypeName.isEmpty())
         return "Mario";
-    return initInfo.getCapTypeName();
+    return initInfo.capTypeName;
 }
 
 al::SklAnimRetargettingInfo* rs::createPlayerSklRetargettingInfo(al::LiveActor* actor,
@@ -208,7 +209,7 @@ al::SklAnimRetargettingInfo* rs::createPlayerSklRetargettingInfo(al::LiveActor* 
     const nn::g3d::ResSkeleton* skeleton =
         sead::BitUtil::bitCastPtr<const nn::g3d::ResSkeleton*>(&resModel->_0[0x20]);
     al::SklAnimRetargettingInfo* info =
-        new (0x10) PlayerSklAnimRetargettingInfo(skeleton, iter, "Mario", scale);
+        new (0x10) al::SklAnimRetargettingInfo(skeleton, iter, "Mario", scale);
     al::bindSklAnimRetargetting(actor, info);
     al::validateSklAnimRetargetting(actor);
     return info;

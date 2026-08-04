@@ -18,17 +18,7 @@ class CapTargetInfo;
 class EquipmentInfo;
 class PlayerActorBase;
 class PlayerEquipmentUser;
-class PlayerInitInfo;
-
-struct PlayerSklAnimRetargettingInfo : al::SklAnimRetargettingInfo {
-    PlayerSklAnimRetargettingInfo(const nn::g3d::ResSkeleton* skeleton, const al::ByamlIter& iter,
-                                  const char* modelName, const sead::Vector3f& scale)
-        : al::SklAnimRetargettingInfo(skeleton, iter, modelName, scale) {}
-
-    u8 _0[0x18];
-};
-
-static_assert(sizeof(PlayerSklAnimRetargettingInfo) == 0x18);
+struct PlayerInitInfo;
 
 namespace rs {
 

@@ -11,7 +11,7 @@ class DemoActor;
 class IUsePlayerCollision;
 class PlayerAnimator;
 class PlayerInfo;
-class PlayerInitInfo;
+struct PlayerInitInfo;
 class PlayerHackKeeper;
 class PlayerPuppet;
 
