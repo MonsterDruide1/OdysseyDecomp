@@ -83,6 +83,8 @@ public:
 
     SceneCameraCtrl* getSceneCameraCtrl() const { return mSceneCameraCtrl; }
 
+    CameraTargetHolder* getTargetHolder() const { return mTargetHolder; }
+
     CameraFlagCtrl* getFlagCtrl() const { return mFlagCtrl; }
 
 private:
