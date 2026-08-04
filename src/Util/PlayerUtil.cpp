@@ -8,9 +8,9 @@
 #include <prim/seadBitUtil.h>
 #include <prim/seadSafeString.h>
 
+#include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/Base/StringUtil.h"
 #include "Library/Collision/CollisionParts.h"
-#include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorModelFunction.h"
