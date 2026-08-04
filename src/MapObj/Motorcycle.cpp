@@ -852,6 +852,7 @@ void updateRunningVelocity(Motorcycle* actor, f32 value) {
 
 Motorcycle::Motorcycle(const char* name) : al::LiveActor(name) {}
 
+// NON_MATCHING: Uses ldr instead of add https://decomp.me/scratch/TZRB7
 void Motorcycle::init(const al::ActorInitInfo& info) {
     al::tryGetArg(&mIsOnLight, info, "IsOnLight");
     al::initActorSuffix(this, info, mIsOnLight ? "Night" : nullptr);
@@ -908,6 +909,7 @@ void Motorcycle::init(const al::ActorInitInfo& info) {
 
     mColliderCameraTarget = new MotorcycleColliderCameraTarget(this);
     mTransCameraSubTarget = al::createTransCameraSubTarget("バイク進行方向", &mCameraSubTargetPos);
+
     mCameraSubTargetTurnParam = new al::CameraSubTargetTurnParam();
     al::initCameraSubTargetTurnParam(mTransCameraSubTarget, mCameraSubTargetTurnParam);
 
