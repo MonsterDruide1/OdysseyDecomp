@@ -11,6 +11,14 @@ public:
 
     void init(const ActorInitInfo& info);
 
+    f32 getTurnRate1() const { return mTurnSpeedRate1; }
+
+    void setTurnRate1(f32 value) { mTurnSpeedRate1 = value; }
+
+    f32 getTurnRate2() const { return mTurnSpeedRate2; }
+
+    void setTurnRate2(f32 value) { mTurnSpeedRate2 = value; }
+
 private:
     f32 mTurnSpeedRate1 = 0.3f;
     f32 mTurnSpeedRate2 = 0.1f;
