@@ -39,10 +39,24 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Camera/ScenarioStartCamera.h"
 #include "Demo/DemoPeachWedding.h"
+#include "Enemy/BirdCarryMeat.h"
 #include "Enemy/Bubble.h"
+#include "Enemy/Bubble2D.h"
+#include "Enemy/Bull.h"
+#include "Enemy/Byugo.h"
 #include "Enemy/CatchBomb.h"
+#include "Enemy/ChorobonHolder.h"
 #include "Enemy/DonkeyKong2D.h"
+#include "Enemy/Donsuke.h"
+#include "Enemy/GabuZou.h"
+#include "Enemy/GabuZouGroup.h"
 #include "Enemy/Gamane.h"
+#include "Enemy/Gotogoton.h"
+#include "Enemy/GrowerBug.h"
+#include "Enemy/GrowerWorm.h"
+#include "Enemy/Gunetter.h"
+#include "Enemy/Imomu.h"
+#include "Enemy/Jango/Jango.h"
 #include "Enemy/KaronWing.h"
 #include "Enemy/Kuribo2D.h"
 #include "Enemy/KuriboMini.h"
@@ -52,6 +66,7 @@
 #include "Enemy/Pecho.h"
 #include "Enemy/Togezo.h"
 #include "Enemy/Togezo2D.h"
+#include "Enemy/Tsukkun.h"
 #include "Item/Coin.h"
 #include "Item/Coin2D.h"
 #include "Item/Coin2DCityDirector.h"
@@ -171,7 +186,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BendLeafTree", nullptr},
     {"BgmPlayObj", nullptr},
     {"Bird", al::createActorFunction<Bird>},
-    {"BirdCarryMeat", nullptr},
+    {"BirdCarryMeat", al::createActorFunction<BirdCarryMeat>},
     {"BirdPlayerGlideCtrl", al::createActorFunction<BirdPlayerGlideCtrl>},
     {"BlockBrick", nullptr},
     {"BlockBrick2D", nullptr},
@@ -204,10 +219,10 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BreakablePole", al::createActorFunction<BreakablePole>},
     {"Breeda", nullptr},
     {"Bubble", al::createActorFunction<Bubble>},
-    {"Bubble2D", nullptr},
+    {"Bubble2D", al::createActorFunction<Bubble2D>},
     {"BubbleLauncher", nullptr},
-    {"Bull", nullptr},
-    {"Byugo", nullptr},
+    {"Bull", al::createActorFunction<Bull>},
+    {"Byugo", al::createActorFunction<Byugo>},
     {"Cactus", nullptr},
     {"CactusMini", nullptr},
     {"CageShine", nullptr},
@@ -251,7 +266,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CatchBomb", al::createActorFunction<CatchBomb>},
     {"Chair", nullptr},
     {"CheckpointFlag", al::createActorFunction<CheckpointFlag>},
-    {"ChorobonHolder", nullptr},
+    {"ChorobonHolder", al::createActorFunction<ChorobonHolder>},
     {"ChurchDoor", al::createActorFunction<ChurchDoor>},
     {"CityBuilding", nullptr},
     {"CityStreetlight", nullptr},
@@ -304,7 +319,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"DokanMazeDirector", nullptr},
     {"DokanStageChange", nullptr},
     {"DonkeyKong2D", al::createActorFunction<DonkeyKong2D>},
-    {"Donsuke", nullptr},
+    {"Donsuke", al::createActorFunction<Donsuke>},
     {"Doshi", al::createActorFunction<Doshi>},
     {"DoorAreaChange", nullptr},
     {"DoorAreaChangeCap", nullptr},
@@ -353,25 +368,25 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"FukuwaraiWatcher", nullptr},
     {"ForestWorldEnergyStand", nullptr},
     {"ForestWorldFlowerCtrl", nullptr},
-    {"GabuZou", nullptr},
-    {"GabuZouGroup", nullptr},
+    {"GabuZou", al::createActorFunction<GabuZou>},
+    {"GabuZouGroup", al::createActorFunction<GabuZouGroup>},
     {"Gamane", al::createActorFunction<Gamane>},
     {"GiantWanderBoss", nullptr},
     {"GoalMark", nullptr},
     {"GolemClimb", nullptr},
-    {"Gotogoton", nullptr},
+    {"Gotogoton", al::createActorFunction<Gotogoton>},
     {"GotogotonGoal", nullptr},
     {"GraphicsObjShadowMaskCube", nullptr},
     {"GraphicsObjShadowMaskSphere", nullptr},
-    {"GrowerBug", nullptr},
-    {"GrowerWorm", nullptr},
+    {"GrowerBug", al::createActorFunction<GrowerBug>},
+    {"GrowerWorm", al::createActorFunction<GrowerWorm>},
     {"GrowFlowerCoin", nullptr},
     {"GrowFlowerWatcher", nullptr},
     {"GrowPlantGrowPlace", nullptr},
     {"GrowPlantSeed", nullptr},
     {"GrowPlantStartStage", nullptr},
     {"GrowPlantWatcher", nullptr},
-    {"Gunetter", nullptr},
+    {"Gunetter", al::createActorFunction<Gunetter>},
     {"GunetterMove", nullptr},
     {"HackCar", nullptr},
     {"HackFork", al::createActorFunction<HackFork>},
@@ -394,9 +409,9 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"HomeShip", al::createActorFunction<HomeShip>},
     {"Hosui", nullptr},
     {"IcicleFall", nullptr},
-    {"Imomu", nullptr},
+    {"Imomu", al::createActorFunction<Imomu>},
     {"IndicatorDirector", nullptr},
-    {"Jango", nullptr},
+    {"Jango", al::createActorFunction<Jango>},
     {"Joku", nullptr},
     {"JugemFishing", nullptr},
     {"JumpingRopeNpc", nullptr},
@@ -655,7 +670,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"TRexPatrol", nullptr},
     {"TRexSleep", nullptr},
     {"TRexScrollBreakMapParts", nullptr},
-    {"Tsukkun", nullptr},
+    {"Tsukkun", al::createActorFunction<Tsukkun>},
     {"TsukkunHole", nullptr},
     {"TwistChainList", nullptr},
     {"Utsubo", nullptr},
