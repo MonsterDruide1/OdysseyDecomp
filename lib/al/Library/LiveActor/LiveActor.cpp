@@ -21,7 +21,7 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/LiveActor/LiveActorFlag.h"
 #include "Library/LiveActor/LiveActorFunction.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Model/ModelKeeper.h"
 #include "Library/Nature/NatureDirector.h"
 #include "Library/Nerve/NerveKeeper.h"

@@ -3,7 +3,7 @@
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 namespace al {
 

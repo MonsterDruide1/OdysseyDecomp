@@ -12,7 +12,7 @@
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Player/PlayerUtil.h"
 #include "Library/Screen/ScreenPointerUtil.h"
 #include "Library/Se/SeKeeper.h"

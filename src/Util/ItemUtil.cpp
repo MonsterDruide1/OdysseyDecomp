@@ -14,7 +14,7 @@
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Model/ModelShapeUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Scene/SceneObjUtil.h"

@@ -6,7 +6,7 @@
 #include "Library/LiveActor/ActorResourceFunction.h"
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Math/MathUtil.h"
-#include "Library/Matrix/MatrixUtil.h"
+#include "Library/Math/MatrixUtil.h"
 #include "Library/Yaml/ByamlUtil.h"
 
 CapTargetInfo::CapTargetInfo() = default;
