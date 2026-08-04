@@ -273171,28 +273171,28 @@ Library/Play/Layout/WindowConfirm.o:
     status: Matching
   - offset: 0x99c3dc
     size: 4
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_120WindowConfirmNrvHide7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x99c3e0
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_122WindowConfirmNrvAppear7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x99c3e8
     size: 112
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_119WindowConfirmNrvEnd7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x99c458
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_122WindowConfirmNrvDecide7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x99c460
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_120WindowConfirmNrvWait7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x99c468
     size: 20
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_127WindowConfirmNrvDecideAfter7executeEPN2al11NerveKeeperE
+    status: Matching
 Library/Play/Layout/WindowConfirmWait.o:
   '.text':
   - offset: 0x99c47c
