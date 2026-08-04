@@ -12,7 +12,7 @@ struct CameraStartInfo;
 
 class CameraVerticalAbsorber : public NerveExecutor {
 public:
-    CameraVerticalAbsorber(const CameraPoser* cameraParent, bool isCameraPosAbsorb);
+    CameraVerticalAbsorber(const CameraPoser* cameraParent, bool isNoCameraPosAbsorb);
 
     void load(const ByamlIter& iter);
     void start(const sead::Vector3f& pos, const CameraStartInfo& info);

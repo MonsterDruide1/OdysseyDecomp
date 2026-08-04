@@ -221,8 +221,6 @@ public:
 
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
 
-    CameraViewInfo* getCameraViewInfo() const { return mViewInfo; }
-
     CameraOffsetCtrlPreset* getCameraOffsetCtrlPreset() const { return mOffsetCtrlPreset; }
 
     CameraPoserSceneInfo* getSceneInfo() const { return mSceneInfo; }
