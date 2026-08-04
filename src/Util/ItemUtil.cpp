@@ -20,10 +20,13 @@
 #include "Library/Scene/SceneObjUtil.h"
 #include "Library/Stage/StageRhythm.h"
 
+#include "Item/RandomItemSelector.h"
 #include "Item/Shine.h"
+#include "Scene/ProjectItemDirector.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolder.h"
 #include "System/WorldList.h"
+#include "Util/PlayerUtil.h"
 #include "Util/SensorMsgFunction.h"
 
 const char* sItem2DNames[] = {
@@ -517,8 +520,24 @@ void appearItemFromObjGravity(al::LiveActor* actor, al::HitSensor* sensor,
     al::appearItem(actor, al::getTrans(actor), quat, nullptr);
 }
 
-// TODO: Requires RandomItemSelector
-// void appearRandomItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset) {}
+void appearRandomItemFromObj(al::LiveActor* actor, al::HitSensor* sensor, f32 offset) {
+    sead::Vector3f upDir = {0.0f, 0.0f, 0.0f};
+    al::calcUpDir(&upDir, actor);
+
+    al::setAppearItemOffset(actor, upDir * offset);
+    al::setAppearItemAttackerSensor(actor, sensor);
+
+    switch (al::getSceneObj<RandomItemSelector>(actor)->getRandomItemType(actor)) {
+    case rs::ItemType::Coin:
+        al::appearItemTiming(actor, "コイン");
+        return;
+    case rs::ItemType::LifeUpItem:
+        al::appearItemTiming(actor, "ライフアップ");
+        return;
+    default:
+        return;
+    }
+}
 
 bool tryAppearMultiCoinFromObj(al::LiveActor* actor, const sead::Vector3f& trans, s32 step,
                                f32 offsetAbove) {
@@ -670,11 +689,21 @@ void setProjectionMtxAsEmptyModel2d(al::LiveActor* actor, const sead::Vector2f& 
     al::setModelProjMtx0(actor->getModelKeeper(), matrix);
 }
 
-// void addDemoRacePrizeCoin(al::LiveActor* actor); TODO
+void addDemoRacePrizeCoin(al::LiveActor* actor) {
+    ProjectItemDirector* itemDirector =
+        static_cast<ProjectItemDirector*>(actor->getSceneInfo()->itemDirector);
+
+    itemDirector->tryAddDemoCountUpCoin();
+}
 
 }  // namespace rs
 
 namespace StageSceneFunction {
-// void appearPlayerDeadCoin(al::LiveActor* actor); TODO
+void appearPlayerDeadCoin(al::LiveActor* actor) {
+    ProjectItemDirector* itemDirector =
+        static_cast<ProjectItemDirector*>(actor->getSceneInfo()->itemDirector);
+    itemDirector->appearItem("コイン[プレイヤー死亡]", rs::getPlayerPos(actor), sead::Quatf::unit,
+                             nullptr);
+}
 
 }  // namespace StageSceneFunction
