@@ -478,11 +478,11 @@ void setEntranceCameraLookAt(CameraTicket* ticket, const sead::Vector3f& lookAt)
 }
 
 void invalidateEndEntranceCameraWithName(IUseCamera* user, const char*) {
-    getCameraDirector(user)->getFlagCtrl()->invalidateEndEntranceCamera();
+    getCameraDirector(user)->getFlagCtrl()->isInvalidEndEntranceCamera = true;
 }
 
 void validateEndEntranceCamera(IUseCamera* user) {
-    getCameraDirector(user)->getFlagCtrl()->validateEndEntranceCamera();
+    getCameraDirector(user)->getFlagCtrl()->isInvalidEndEntranceCamera = false;
 }
 
 bool isPlayingEntranceCamera(const IUseCamera* user, s32 updaterIdx) {
@@ -701,7 +701,7 @@ CameraTicket* initFixActorCamera(const LiveActor* actor, const ActorInitInfo& ac
     poser->setAngleH(angleH);
     poser->setAngleV(angleV);
     if (isCalcNearestAtFromPreAt)
-        poser->setCalcNearestAtFromPreAt();
+        poser->set_161();
 
     const IUseCamera* user = actor;
     const PlacementInfo& placementInfo = getPlacementInfo(actorInitInfo);
@@ -742,10 +742,10 @@ CameraTicket* initFixTalkCamera(const LiveActor* actor, const ActorInitInfo& act
     CameraPoserFixTalk* poser = new CameraPoserFixTalk(actor);
     poser->setOffset(offset);
     poser->setDistance(distance);
-    poser->setTalkDistance(talkDistance);
+    poser->set_173(talkDistance);
     poser->setAngleV(angleV);
     if (isAutoAroundFront)
-        poser->setAutoAroundFront();
+        poser->set_160();
 
     const IUseCamera* user = actor;
     const PlacementInfo& placementInfo = getPlacementInfo(actorInitInfo);
@@ -770,7 +770,7 @@ CameraTicket* initFixFishingCamera(const LiveActor* actor, const ActorInitInfo& 
     poser->setAngleV(angleV);
     poser->initParam(paramDistance, cameraPos, lookAtPos);
     if (isAutoAroundFront)
-        poser->setAutoAroundFront();
+        poser->set_160();
 
     const IUseCamera* user = actor;
     const PlacementInfo& placementInfo = getPlacementInfo(actorInitInfo);

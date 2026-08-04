@@ -24,9 +24,9 @@ public:
 
     void setAngleV(f32 angleV) { mAngleV = angleV; }
 
-    void setAutoAroundFront() { _160 = true; }
+    void set_160() { _160 = true; }
 
-    void setCalcNearestAtFromPreAt() { _161 = true; }
+    void set_161() { _161 = true; }
 
 protected:
     const LiveActor* mTargetActor;
@@ -46,7 +46,7 @@ public:
 
     void start(const CameraStartInfo& startInfo) override;
 
-    void setTalkDistance(f32 distance) { _173 = distance; }
+    void set_173(f32 distance) { _173 = distance; }
 
 private:
     f32 _173;

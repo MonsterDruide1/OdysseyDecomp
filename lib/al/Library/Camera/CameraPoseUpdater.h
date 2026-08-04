@@ -37,7 +37,7 @@ public:
     void startInterpole(s32);
     void requestCancelInterpole();
     bool calcCameraPoseWithoutInterpole(sead::LookAtCamera*) const;
-    void startSnapshotMode(bool) const;
+    void startSnapshotMode(bool);
     void endSnapshotMode();
     bool isSnapShotOrientationRotate90() const;
     bool isSnapShotOrientationRotate270() const;

@@ -11,11 +11,7 @@ struct CameraFlagCtrl {
     bool isSnapShotModeRunning = false;
     bool isValidCameraAreaKids = false;
     bool isSeparatePlayMode = false;
-    bool isInvalidEndEntraceCamera = false;
-
-    void invalidateEndEntranceCamera() { isInvalidEndEntraceCamera = true; }
-
-    void validateEndEntranceCamera() { isInvalidEndEntraceCamera = false; }
+    bool isInvalidEndEntranceCamera = false;
 };
 
 }  // namespace al
