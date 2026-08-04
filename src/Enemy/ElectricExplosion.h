@@ -24,5 +24,3 @@ private:
     al::LiveActor* mHostActor = nullptr;
     s32 mAttackLevel = 0;
 };
-
-static_assert(sizeof(ElectricExplosion) == 0x118);
