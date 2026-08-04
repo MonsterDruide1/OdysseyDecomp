@@ -107,6 +107,7 @@
 #include "MapObj/MoonBasementBreakParts.h"
 #include "MapObj/MoonBasementFloor.h"
 #include "MapObj/MoonBasementSlideObj.h"
+#include "MapObj/MoonWorldBell.h"
 #include "MapObj/MoonWorldCaptureParadeLift.h"
 #include "MapObj/MoviePlayerMapParts.h"
 #include "MapObj/PeachWorldTree.h"
@@ -450,7 +451,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"MoonBasementRock", nullptr},
     {"MoonBasementSlideObj", al::createActorFunction<MoonBasementSlideObj>},
     {"MoonRock", nullptr},
-    {"MoonWorldBell", nullptr},
+    {"MoonWorldBell", al::createActorFunction<MoonWorldBell>},
     {"MoonWorldCaptureParadeLift", al::createActorFunction<MoonWorldCaptureParadeLift>},
     {"Mofumofu", nullptr},
     {"MofumofuLv2", nullptr},
