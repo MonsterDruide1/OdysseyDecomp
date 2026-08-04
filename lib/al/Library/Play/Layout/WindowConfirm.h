@@ -9,12 +9,12 @@ class LayoutInitInfo;
 
 class WindowConfirm : public LayoutActor {
 public:
-    enum class SelectionType {
-        None = -1,
-        HardKey = 0,
-        List00 = 1,
-        List01 = 2,
-        List02 = 3,
+    enum SelectionType {
+        SelectionType_None = -1,
+        SelectionType_HardKey = 0,
+        SelectionType_List00 = 1,
+        SelectionType_List01 = 2,
+        SelectionType_List02 = 3,
     };
 
     enum class Direction {
@@ -24,9 +24,9 @@ public:
     };
 
     struct Selection {
-        SelectionType selectionType = SelectionType::None;
-        SelectionType prevSelectionType = SelectionType::None;
-        SelectionType cancelType = SelectionType::None;
+        SelectionType selectionType = SelectionType_None;
+        SelectionType prevSelectionType = SelectionType_None;
+        SelectionType cancelType = SelectionType_None;
     };
 
     WindowConfirm(const LayoutInitInfo& info, const char* name, const char* actorName);
@@ -55,11 +55,11 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
-    s32 getSelectionIdx() { return (s32)mSelection.prevSelectionType; }
+    s32 getSelectionIdx() { return mSelection.prevSelectionType; }
 
-    s32 getPrevSelectionIdx() { return (s32)mSelection.prevSelectionType; }
+    s32 getPrevSelectionIdx() { return mSelection.prevSelectionType; }
 
-    s32 getCancelIdx() { return (s32)mSelection.cancelType; }
+    s32 getCancelIdx() { return mSelection.cancelType; }
 
     SelectionType getSelectionType() { return mSelection.selectionType; }
 
@@ -69,9 +69,9 @@ public:
 
     SelectionType updateSelectionIdx(Direction dir) {
         if (dir == Direction::Up)
-            mSelection.prevSelectionType = (SelectionType)((s32)mSelection.prevSelectionType - 1);
+            mSelection.prevSelectionType = (SelectionType)(mSelection.prevSelectionType - 1);
         else if (dir == Direction::Down)
-            mSelection.prevSelectionType = (SelectionType)((s32)mSelection.prevSelectionType + 1);
+            mSelection.prevSelectionType = (SelectionType)(mSelection.prevSelectionType + 1);
         return mSelection.prevSelectionType;
     }
 

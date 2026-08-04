@@ -64,10 +64,10 @@ void WindowConfirm::setTxtList(s32 index, const char16* message) {
 
 void WindowConfirm::setListNum(s32 num) {
     mSelection.selectionType = (SelectionType)num;
-    if (mSelection.selectionType == SelectionType::List01)
-        setCancelIdx((s32)SelectionType::List00);
-    if (mSelection.selectionType == SelectionType::List02)
-        setCancelIdx((s32)SelectionType::HardKey);
+    if (mSelection.selectionType == SelectionType_List01)
+        setCancelIdx(SelectionType_List00);
+    if (mSelection.selectionType == SelectionType_List02)
+        setCancelIdx(SelectionType_HardKey);
 }
 
 void WindowConfirm::setCancelIdx(s32 index) {
@@ -78,39 +78,39 @@ void WindowConfirm::appear() {
     if (isAlive())
         return;
 
-    mSelection.prevSelectionType = SelectionType::HardKey;
+    mSelection.prevSelectionType = SelectionType_HardKey;
     mDirection = Direction::None;
 
     startAction(this, "Appear", nullptr);
     switch (mSelection.selectionType) {
-    case SelectionType::HardKey:
+    case SelectionType_HardKey:
         startAction(this, "SelectHardKey", "Select");
 
         hidePane(this, "ParCursor");
         hidePane(this, "ParHardKey");
         break;
-    case SelectionType::List00:
+    case SelectionType_List00:
         startAction(this, "SelectHardKey", "Select");
         startAction(mButtonActor, "Appear", nullptr);
 
         hidePane(this, "ParCursor");
         showPane(this, "ParHardKey");
         break;
-    case SelectionType::List01:
+    case SelectionType_List01:
         startAction(this, "Select2", "Select");
         startAction(mCursorActor, "Appear", nullptr);
-        startAction(mParListArray[(s32)SelectionType::HardKey], "Select", nullptr);
-        startAction(mParListArray[(s32)SelectionType::List00], "Wait", nullptr);
+        startAction(mParListArray[SelectionType_HardKey], "Select", nullptr);
+        startAction(mParListArray[SelectionType_List00], "Wait", nullptr);
 
         showPane(this, "ParCursor");
         hidePane(this, "ParHardKey");
         break;
-    case SelectionType::List02:
+    case SelectionType_List02:
         startAction(this, "Select3", "Select");
         startAction(mCursorActor, "Appear", nullptr);
-        startAction(mParListArray[(s32)SelectionType::HardKey], "Select", nullptr);
-        startAction(mParListArray[(s32)SelectionType::List00], "Wait", nullptr);
-        startAction(mParListArray[(s32)SelectionType::List01], "Wait", nullptr);
+        startAction(mParListArray[SelectionType_HardKey], "Select", nullptr);
+        startAction(mParListArray[SelectionType_List00], "Wait", nullptr);
+        startAction(mParListArray[SelectionType_List01], "Wait", nullptr);
 
         showPane(this, "ParCursor");
         hidePane(this, "ParHardKey");
@@ -128,10 +128,10 @@ void WindowConfirm::appearWithChoicingCancel() {
 
     appear();
 
-    if (mSelection.selectionType == SelectionType::List01) {
+    if (mSelection.selectionType == SelectionType_List01) {
         startAction(mParListArray[getPrevSelectionIdx()], "Wait", nullptr);
         startAction(mParListArray[getCancelIdx()], "Select", nullptr);
-    } else if (mSelection.selectionType == SelectionType::List02) {
+    } else if (mSelection.selectionType == SelectionType_List02) {
         startAction(mParListArray[getPrevSelectionIdx()], "Wait", nullptr);
         startAction(mParListArray[getCancelIdx()], "Select", nullptr);
     }
@@ -199,8 +199,8 @@ bool WindowConfirm::tryCancel() {
     if (!isEnableInput())
         return false;
 
-    if ((mSelection.selectionType == SelectionType::List01 ||
-         mSelection.selectionType == SelectionType::List02) &&
+    if ((mSelection.selectionType == SelectionType_List01 ||
+         mSelection.selectionType == SelectionType_List02) &&
         mSelection.prevSelectionType != mSelection.cancelType) {
         startAction(mParListArray[getPrevSelectionIdx()], "Wait", nullptr);
         startAction(mParListArray[getCancelIdx()], "Select", nullptr);
@@ -215,7 +215,7 @@ bool WindowConfirm::tryCancel() {
 }
 
 void WindowConfirm::setCursorToPane() {
-    if (mSelection.selectionType >= SelectionType::List01) {
+    if (mSelection.selectionType >= SelectionType_List01) {
         sead::Vector3f trans = {1.0f, 1.0f, 1.0f};
         calcPaneTrans(&trans, mParListArray[getPrevSelectionIdx()], "Cursor");
         setPaneLocalTrans(this, "ParCursor", trans);
@@ -226,8 +226,8 @@ bool WindowConfirm::tryCancelWithoutEnd() {
     if (!isEnableInput())
         return false;
 
-    if ((mSelection.selectionType == SelectionType::List01 ||
-         mSelection.selectionType == SelectionType::List02) &&
+    if ((mSelection.selectionType == SelectionType_List01 ||
+         mSelection.selectionType == SelectionType_List02) &&
         mSelection.prevSelectionType != mSelection.cancelType) {
         startAction(mParListArray[getPrevSelectionIdx()], "Wait", nullptr);
         startAction(mParListArray[getCancelIdx()], "Select", nullptr);
@@ -242,8 +242,8 @@ bool WindowConfirm::tryCancelWithoutEnd() {
 void WindowConfirm::exeHide() {}
 
 void WindowConfirm::exeAppear() {
-    if (mSelection.selectionType == SelectionType::List01 ||
-        mSelection.selectionType == SelectionType::List02)
+    if (mSelection.selectionType == SelectionType_List01 ||
+        mSelection.selectionType == SelectionType_List02)
         setCursorToPane();
     if (isActionEnd(this, nullptr))
         setNerve(this, &NrvWindowConfirm.Wait);
@@ -255,12 +255,12 @@ void WindowConfirm::exeWait() {
         mCooldown = -1;
     }
 
-    if (mSelection.selectionType == SelectionType::List01 ||
-        mSelection.selectionType == SelectionType::List02) {
+    if (mSelection.selectionType == SelectionType_List01 ||
+        mSelection.selectionType == SelectionType_List02) {
         if (isActionPlaying(mCursorActor, "Appear", nullptr) && isActionEnd(mCursorActor, nullptr))
             startAction(mCursorActor, "Wait", nullptr);
     } else {
-        if (mSelection.selectionType == SelectionType::List00)
+        if (mSelection.selectionType == SelectionType_List00)
             if (isActionPlaying(mButtonActor, "Appear", nullptr) &&
                 isActionEnd(mButtonActor, nullptr))
                 startAction(mButtonActor, "Wait", nullptr);
@@ -268,8 +268,8 @@ void WindowConfirm::exeWait() {
 
     if (mDirection == Direction::Up) {
         startAction(mParListArray[getPrevSelectionIdx()], "Wait", nullptr);
-        if (updateSelectionIdx(Direction::Up) < SelectionType::HardKey)
-            mSelection.prevSelectionType = (SelectionType)((s32)mSelection.selectionType - 1);
+        if (updateSelectionIdx(Direction::Up) < SelectionType_HardKey)
+            mSelection.prevSelectionType = (SelectionType)(mSelection.selectionType - 1);
 
         startAction(mParListArray[getPrevSelectionIdx()], "Select", nullptr);
         setCursorToPane();
@@ -277,7 +277,7 @@ void WindowConfirm::exeWait() {
     if (mDirection == Direction::Down) {
         startAction(mParListArray[getPrevSelectionIdx()], "Wait", nullptr);
         if (updateSelectionIdx(Direction::Down) >= mSelection.selectionType)
-            mSelection.prevSelectionType = SelectionType::HardKey;
+            mSelection.prevSelectionType = SelectionType_HardKey;
 
         startAction(mParListArray[getPrevSelectionIdx()], "Select", nullptr);
         setCursorToPane();
@@ -292,14 +292,14 @@ void WindowConfirm::exeWait() {
 void WindowConfirm::exeDecide() {
     if (isFirstStep(this)) {
         switch (mSelection.selectionType) {
-        case SelectionType::HardKey:
+        case SelectionType_HardKey:
             setNerve(this, &DecideAfter);
             return;
-        case SelectionType::List00:
+        case SelectionType_List00:
             startAction(mButtonActor, "PageEnd", nullptr);
             break;
-        case SelectionType::List01:
-        case SelectionType::List02:
+        case SelectionType_List01:
+        case SelectionType_List02:
             startAction(mParListArray[getPrevSelectionIdx()], "Decide", nullptr);
             startAction(mCursorActor, "End", nullptr);
             break;
@@ -309,12 +309,12 @@ void WindowConfirm::exeDecide() {
     }
 
     switch (mSelection.selectionType) {
-    case SelectionType::List00:
+    case SelectionType_List00:
         if (isActionEnd(mButtonActor, nullptr))
             setNerve(this, &DecideAfter);
         return;
-    case SelectionType::List01:
-    case SelectionType::List02:
+    case SelectionType_List01:
+    case SelectionType_List02:
         if (isActionEnd(mParListArray[getPrevSelectionIdx()], nullptr))
             setNerve(this, &DecideAfter);
         return;

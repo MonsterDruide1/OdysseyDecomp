@@ -640,16 +640,16 @@ void StageSceneStatePauseMenu::exeConfirmNewGame() {
     al::WindowConfirm::SelectionType selectionType = mWindowConfirm->getPrevSelectionType();
 
     if (rs::isTriggerUiDecide(getHost())) {
-        if (selectionType == al::WindowConfirm::SelectionType::HardKey)
+        if (selectionType == al::WindowConfirm::SelectionType_HardKey)
             mWindowConfirm->tryDecideWithoutEnd();
-        if (selectionType == al::WindowConfirm::SelectionType::List00)
+        if (selectionType == al::WindowConfirm::SelectionType_List00)
             mWindowConfirm->tryCancel();
     }
 
     if (rs::isTriggerUiCancel(getHost()))
         mWindowConfirm->tryCancel();
 
-    if (selectionType == al::WindowConfirm::SelectionType::HardKey &&
+    if (selectionType == al::WindowConfirm::SelectionType_HardKey &&
         mWindowConfirm->isNerveEnd()) {
         mWindowConfirm->tryDecide();
         s32 emptyFileId = mGameDataHolderAccessor->tryFindEmptyFileId();
@@ -658,7 +658,7 @@ void StageSceneStatePauseMenu::exeConfirmNewGame() {
         mIsNewGame = true;
     }
 
-    if (selectionType == al::WindowConfirm::SelectionType::List00) {
+    if (selectionType == al::WindowConfirm::SelectionType_List00) {
         if (al::isDead(mWindowConfirm)) {
             mSelectParts->appearWait();
             al::setNerve(this, &NrvStageSceneStatePauseMenu.Wait);
