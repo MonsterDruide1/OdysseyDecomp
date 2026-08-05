@@ -14,9 +14,12 @@ class SensorMsg;
 
 class ElectricWireVertex;
 
+class ElectricWireRailKeeper;
+
 class ElectricWire : public al::LiveActor {
 public:
     ElectricWire(const char*);
+
     void init(const al::ActorInitInfo& info) override;
     bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                     al::HitSensor* self) override;
@@ -28,6 +31,7 @@ public:
                                     const char*, s32);
     void createGraph(const al::ActorInitInfo&);
     void switchStartOn();
+
     void tryUpdateDisplayModel();
     ElectricWireVertex* searchAliveKeeperGraphVertexBySensor(const al::HitSensor*);
     void endCapture(const sead::Vector3f*, const sead::Vector3f*, bool, bool);
@@ -60,10 +64,17 @@ public:
 
     bool isElectricWireRadio() { return mIsElectricWireRadio; }
 
+    s32 get_110() const { return _110; }
+
+    ElectricWireRailKeeper** getElectricWireRailKeepers() { return mElectricWireRailKeepers; }
+
 private:
-    char filler_108[0x1a1];
+    void* mPad;
+    s32 _110;
+    ElectricWireRailKeeper** mElectricWireRailKeepers;
+    char mPad2[0x189];
     bool mIsElectricWireRadio;
-    char filler_2aa[0x58];
+    char mPad3[0x58];
 };
 
 static_assert(sizeof(ElectricWire) == 0x308);
