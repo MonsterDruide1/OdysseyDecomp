@@ -20,3 +20,5 @@ public:
     void exeEnd();
     void exeHide();
 };
+
+static_assert(sizeof(CursorParts) == 0x130);
