@@ -329,14 +329,7 @@ bool rs::tryCalcPlayerModelHeadJointPos(sead::Vector3f* out, const al::LiveActor
     al::LiveActor* model = info->getModelHolder()->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        f32 first;
-        __atomic_load(&mtx->m[0][3], &first, __ATOMIC_RELAXED);
-        float32x2_t xy = {first, 0.0f};
-        const f32* nextRow = &mtx->m[1][3];
-        xy = vld1_lane_f32(nextRow, xy, 1);
-        f32 z = mtx->m[2][3];
-        vst1_f32(&out->x, xy);
-        out->z = z;
+        mtx->getBase<3>(*out);
         return true;
     }
 
@@ -352,14 +345,7 @@ bool rs::tryCalcPlayerModelHeadJointUp(sead::Vector3f* out, const al::LiveActor*
     al::LiveActor* model = holder->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        f32 first;
-        __atomic_load(&mtx->m[0][1], &first, __ATOMIC_RELAXED);
-        float32x2_t xy = {first, 0.0f};
-        const f32* nextRow = &mtx->m[1][1];
-        xy = vld1_lane_f32(nextRow, xy, 1);
-        f32 z = mtx->m[2][1];
-        vst1_f32(&out->x, xy);
-        out->z = z;
+        mtx->getBase<1>(*out);
         al::tryNormalizeOrZero(out);
         return true;
     }
@@ -376,14 +362,7 @@ bool rs::tryCalcPlayerModelHeadJointFront(sead::Vector3f* out, const al::LiveAct
     al::LiveActor* model = holder->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        f32 first;
-        __atomic_load(&mtx->m[0][2], &first, __ATOMIC_RELAXED);
-        float32x2_t xy = {first, 0.0f};
-        const f32* nextRow = &mtx->m[1][2];
-        xy = vld1_lane_f32(nextRow, xy, 1);
-        f32 z = mtx->m[2][2];
-        vst1_f32(&out->x, xy);
-        out->z = z;
+        mtx->getBase<2>(*out);
         al::tryNormalizeOrZero(out);
         return true;
     }
@@ -400,14 +379,7 @@ bool rs::tryCalcPlayerModelHeadJointSide(sead::Vector3f* out, const al::LiveActo
     al::LiveActor* model = holder->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        const f32* nextRow = &mtx->m[1][0];
-        f32 first;
-        __atomic_load(&mtx->m[0][0], &first, __ATOMIC_RELAXED);
-        float32x2_t xy = {first, 0.0f};
-        xy = vld1_lane_f32(nextRow, xy, 1);
-        f32 z = mtx->m[2][0];
-        vst1_f32(&out->x, xy);
-        out->z = z;
+        mtx->getBase<0>(*out);
         al::tryNormalizeOrZero(out);
         return true;
     }
