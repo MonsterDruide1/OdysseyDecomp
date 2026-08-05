@@ -649,8 +649,7 @@ void StageSceneStatePauseMenu::exeConfirmNewGame() {
     if (rs::isTriggerUiCancel(getHost()))
         mWindowConfirm->tryCancel();
 
-    if (selectionType == al::WindowConfirm::SelectionType_HardKey &&
-        mWindowConfirm->isNerveEnd()) {
+    if (selectionType == al::WindowConfirm::SelectionType_HardKey && mWindowConfirm->isNerveEnd()) {
         mWindowConfirm->tryDecide();
         s32 emptyFileId = mGameDataHolderAccessor->tryFindEmptyFileId();
         mGameDataHolderAccessor->requestSetPlayingFileId(emptyFileId);
