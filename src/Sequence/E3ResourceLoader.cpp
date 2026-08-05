@@ -16,10 +16,10 @@
 static s32 _cDefaultPriority = sead::Thread::cDefaultPriority;
 static s32 cPriority = _cDefaultPriority + 6;
 
-static void destroyResource(sead::FrameHeap*& resource, const char* category) {
+static void destroyResource(sead::FrameHeap** resource, const char* category) {
     al::removeResourceCategory(category);
-    resource->destroy();
-    resource = nullptr;
+    (*resource)->destroy();
+    (*resource) = nullptr;
 }
 
 E3ResourceLoader::E3ResourceLoader() {
@@ -54,13 +54,13 @@ E3ResourceLoader::~E3ResourceLoader() {
     al::removeResourceCategory("E3常駐");
 
     if (mSandWorldHomeStageResource)
-        destroyResource(mSandWorldHomeStageResource, "砂ワールドホーム");
+        destroyResource(&mSandWorldHomeStageResource, "砂ワールドホーム");
 
     if (mCityWorldHomeStageResource)
-        destroyResource(mCityWorldHomeStageResource, "都市ワールドホーム");
+        destroyResource(&mCityWorldHomeStageResource, "都市ワールドホーム");
 
     if (mWorldExResource)
-        destroyResource(mWorldExResource, "ワールド常駐");
+        destroyResource(&mWorldExResource, "ワールド常駐");
 
     if (mWorldResourceHeap) {
         al::destroyWorldResourceHeap(false);
@@ -78,7 +78,7 @@ void E3ResourceLoader::loadHomeStageResource() {
         mHasCreatedResourceCategory = true;
     }
     if (mWorldExResource)
-        destroyResource(mWorldExResource, "ワールド常駐");
+        destroyResource(&mWorldExResource, "ワールド常駐");
     if (!mSandWorldHomeStageResource) {
         // 280 MB
         sead::FrameHeap* heap = sead::FrameHeap::create(
@@ -191,10 +191,10 @@ void E3ResourceLoader::tryDestroyWorldResource(sead::Heap* heap) {
         return;
 
     if (mSandWorldHomeStageResource == heap)
-        destroyResource(mSandWorldHomeStageResource, "砂ワールドホーム");
+        destroyResource(&mSandWorldHomeStageResource, "砂ワールドホーム");
 
     if (mCityWorldHomeStageResource == heap)
-        destroyResource(mCityWorldHomeStageResource, "都市ワールドホーム");
+        destroyResource(&mCityWorldHomeStageResource, "都市ワールドホーム");
 }
 
 void E3ResourceLoader::printHeapInfo() const {}
