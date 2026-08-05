@@ -53,18 +53,16 @@ void RiseMapPartsOld::startRise() {
     if (al::isDead(this))
         appear();
 
-    const al::Nerve* stopNerve = &Stop;
-    const al::Nerve* moveNerve = &Move;
-    if (al::isNerve(this, stopNerve) || al::isNerve(this, moveNerve))
+    if (al::isNerve(this, &Stop) || al::isNerve(this, &Move))
         return;
 
     if (mObjectCamera) {
-        al::startCamera(this, mObjectCamera, -1);
+        al::startCamera(this, mObjectCamera);
         al::startSe(this, "Riddle");
     }
 
     al::invalidateClipping(this);
-    al::setNerve(this, moveNerve);
+    al::setNerve(this, &Move);
 }
 
 void RiseMapPartsOld::initAfterPlacement() {
@@ -84,9 +82,7 @@ void RiseMapPartsOld::exeMove() {
     }
 
     sead::Vector3f trans = sead::Vector3f::zero;
-    const al::KeyPoseKeeper* keyPoseKeeper = mKeyPoseKeeper;
-    f32 rate = al::calcNerveRate(this, mMoveTime);
-    al::calcLerpKeyTrans(&trans, keyPoseKeeper, rate);
+    al::calcLerpKeyTrans(&trans, mKeyPoseKeeper, al::calcNerveRate(this, mMoveTime));
     al::setTrans(this, trans);
 }
 
