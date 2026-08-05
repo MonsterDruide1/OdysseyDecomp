@@ -1,28 +1,73 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <math/seadVector.h>
+#include <math/seadVectorFwd.h>
+
+#include "Library/Area/IUseAreaObj.h"
+#include "Library/Audio/IUseAudioKeeper.h"
 
 namespace al {
+class AreaObjDirector;
+class AudioEffectController;
+class AudioKeeper;
 class ByamlIter;
 class Resource;
 
 template <typename T>
 class AudioInfoListWithParts;
-class AudioEventController;
 class BgmPlayObj;
+class BgmPlayEventController;
 class AudioDirector;
+class PlayerHolder;
+
+class AudioEventController : public IUseAudioKeeper, public IUseAreaObj {
+public:
+    AudioEventController(const AudioDirector* audioDirector, const char* stageEffectName);
+
+    void init3D(AreaObjDirector* areaObjDirector, AudioEffectController* audioEffectController);
+    void initAfterInitPlacement(const AudioDirector* audioDirector);
+    void update();
+    bool isEnableAudioEvent(s32 audioEvent) const;
+    void finalize();
+    void setPlayerHolder(const PlayerHolder* playerHolder);
+    void activate();
+    void deactivate();
+    void activateEachAudioEvent(s32 audioEvent, bool isActivate);
+    void deactivateEachAudioEvent(s32 audioEvent, bool isDeactivate);
+    bool isInBgmStopArea(const char* playName);
+    const char* getBgmSituationNameByAreaChecker();
+    const char* getAudioEffectNameByAreaChecker();
+    bool isEnableBgmChangeEvent() const;
+    bool isEnableBgmSituationChangeEvent() const;
+    bool isEnableAllAudioEvent() const;
+    bool isDisableAllAudioEvent() const;
+
+    AudioKeeper* getAudioKeeper() const override;
+    AreaObjDirector* getAreaObjDirector() const override;
+
+    BgmPlayEventController* getBgmPlayEventController() const { return mBgmPlayEventController; }
+
+private:
+    AudioKeeper* mAudioKeeper = nullptr;
+    BgmPlayEventController* mBgmPlayEventController = nullptr;
+    u8 _20[0x78];
+};
+
+static_assert(sizeof(AudioEventController) == 0x98);
 }  // namespace al
 
 namespace alAudioEventControllerFunction {
-bool tryRegistBgmPlayObj(al::AudioEventController*, al::BgmPlayObj*);
-const char* getBgmPlayNameInCurPosition(al::AudioEventController* audioEventController, bool);
+bool tryRegistBgmPlayObj(al::AudioEventController* audioEventController, al::BgmPlayObj* obj);
+const char* getBgmPlayNameInCurPosition(al::AudioEventController* audioEventController,
+                                        bool isStopArea);
 const char* getBgmPlayNameInTargetPosition(al::AudioEventController* audioEventController,
-                                           const sead::Vector3f&);
-void tryStartAndStopBgmInCurPosition(al::AudioEventController* audioEventController, bool, bool);
-void activateAudioEventCtrl(al::AudioDirector*);
-void deactivateAudioEventCtrl(al::AudioDirector*);
-void tryActivateOrDeactivateAudioEventCtrl(al::AudioDirector*, bool, s32);
+                                           const sead::Vector3f& position);
+void tryStartAndStopBgmInCurPosition(al::AudioEventController* audioEventController,
+                                     bool isStopArea, bool isForceStart);
+void activateAudioEventCtrl(al::AudioDirector* audioDirector);
+void deactivateAudioEventCtrl(al::AudioDirector* audioDirector);
+void tryActivateOrDeactivateAudioEventCtrl(al::AudioDirector* audioDirector, bool isActivate,
+                                           s32 audioEvent);
 }  // namespace alAudioEventControllerFunction
 
 namespace al {
