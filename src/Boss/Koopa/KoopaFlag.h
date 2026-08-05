@@ -12,6 +12,8 @@ public:
 
     bool hasHitEnd() const { return mHasHitEnd; }
 
+    void setHasHipDropLandEnd() { _2 = true; }
+
     void setHasHitEnd() { mHasHitEnd = true; }
 
 private:
@@ -24,3 +26,5 @@ private:
     bool _6 = false;
     bool _7 = true;
 };
+
+static_assert(sizeof(KoopaFlag) == 0x8);
