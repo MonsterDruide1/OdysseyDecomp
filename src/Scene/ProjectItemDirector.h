@@ -19,8 +19,8 @@ public:
     ProjectItemDirector();
     ProjectItemDirector(const al::ActorInitInfo&);
 
-    void appearItem(const char*, const sead::Vector3f&, const sead::Quatf&,
-                    const al::HitSensor*) override;
+    al::LiveActor* appearItem(const char*, const sead::Vector3f&, const sead::Quatf&,
+                              const al::HitSensor*) override;
 
     void tryAppearPlayerDeadCoin(const al::LiveActor*, const sead::Vector3f&);
     void acquireItem(const al::LiveActor*, al::HitSensor*, const char*) const override;
@@ -33,4 +33,7 @@ public:
     void tryShowPlayerDeadCoinForDemo();
 
 private:
+    char filler[0x60];
 };
+
+static_assert(sizeof(ProjectItemDirector) == 0x68);

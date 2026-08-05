@@ -12,8 +12,8 @@ class LiveActor;
 
 class ItemDirectorBase {
 public:
-    virtual void appearItem(const char*, const sead::Vector3f&, const sead::Quatf&,
-                            const HitSensor*) = 0;
+    virtual LiveActor* appearItem(const char*, const sead::Vector3f&, const sead::Quatf&,
+                                  const HitSensor*) = 0;
     virtual void acquireItem(const LiveActor*, HitSensor*, const char*) const = 0;
     virtual void declareItem(const char*, const ActorInitInfo&) = 0;
     virtual void endInit() = 0;
