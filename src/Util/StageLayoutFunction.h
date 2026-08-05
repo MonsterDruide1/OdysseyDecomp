@@ -27,7 +27,7 @@ bool isExistLabelInSystemMessageWithFileName(const al::IUseMessageSystem*, const
                                              const char*);
 bool isExistLabelInStageMessageWithFileName(const al::IUseMessageSystem*, const char*, const char*);
 bool trySetPaneSystemMessageIfExist(al::LayoutActor*, const char*, const char*, const char*);
-bool trySetPaneStringCheckpos32Name(al::LayoutActor*, const char*, s32, const char*);
+bool trySetPaneStringCheckpointName(al::LayoutActor*, const char*, s32, const char*);
 const char* getCheckpointLabelPrefix();
 void setPaneStringWorldNameForWorldMap(al::LayoutActor*, const char*, s32);
 void setPaneStringWorldNameForWorldMapWithoutRuby(al::LayoutActor*, const char*, s32);
