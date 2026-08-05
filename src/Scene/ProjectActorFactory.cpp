@@ -77,6 +77,7 @@
 #include "MapObj/CameraSub.h"
 #include "MapObj/CapBomb.h"
 #include "MapObj/CapHanger.h"
+#include "MapObj/CapMessageAfterInformation.h"
 #include "MapObj/CapSwitch.h"
 #include "MapObj/CarWatcher.h"
 #include "MapObj/CheckpointFlag.h"
@@ -234,7 +235,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"CapFlower", nullptr},
     {"CapFlowerGroup", nullptr},
     {"CapHanger", al::createActorFunction<CapHanger>},
-    {"CapMessageAfterInformation", nullptr},
+    {"CapMessageAfterInformation", al::createActorFunction<CapMessageAfterInformation>},
     {"CapRack", nullptr},
     {"CapRackTimer", nullptr},
     {"CapRailMover", nullptr},
