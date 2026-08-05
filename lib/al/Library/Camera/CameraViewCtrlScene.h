@@ -12,7 +12,7 @@ class SceneCameraViewCtrl {
 public:
     SceneCameraViewCtrl();
 
-    const CameraSwitchRequester* getSwitchRequester() const { return mSwitchRequester; }
+    CameraSwitchRequester* getSwitchRequester() { return mSwitchRequester; }
 
     void resetViewName() { mViewName = nullptr; }
 
