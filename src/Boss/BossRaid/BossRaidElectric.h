@@ -40,7 +40,7 @@ private:
     sead::Vector3f mAttackSensorPos = sead::Vector3f::zero;
     sead::Vector3f mVelocity = sead::Vector3f::zero;
     f32 mJointControl = 0.0f;
-    bool isInElectricArea = true;
+    bool mIsInElectricArea = true;
 };
 
 static_assert(sizeof(BossRaidElectric) == 0x150);

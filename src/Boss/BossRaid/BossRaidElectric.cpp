@@ -87,7 +87,7 @@ void BossRaidElectric::shot(const sead::Vector3f& pos, const sead::Vector3f& vel
     }
     mActorGroup = actorGroup;
     actorGroup->registerActor(this);
-    isInElectricArea = true;
+    mIsInElectricArea = true;
     al::setNerve(this, &Wait);
     makeActorAlive();
 }
@@ -101,9 +101,9 @@ void BossRaidElectric::exeWait() {
         al::startAction(this, mNextBullet ? "Wait" : "Hide");
 
     updateAnimAndJoint();
-    if (isInElectricArea) {
+    if (mIsInElectricArea) {
         if (!al::isInAreaObj(this, "BossRaidElectricArea", al::getTrans(this)))
-            isInElectricArea = false;
+            mIsInElectricArea = false;
     }
     if (isAirAll())
         al::setNerve(this, &Disappear);
@@ -139,9 +139,9 @@ void BossRaidElectric::updateAnimAndJoint() {
 }
 
 bool BossRaidElectric::isAirAll() const {
-    if (isInElectricArea)
+    if (mIsInElectricArea)
         return false;
-    if (mNextBullet && mNextBullet->isInElectricArea)
+    if (mNextBullet && mNextBullet->mIsInElectricArea)
         return false;
     return true;
 }
