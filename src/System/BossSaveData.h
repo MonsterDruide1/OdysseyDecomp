@@ -15,13 +15,13 @@ public:
     bool isAlreadyShowDemoBattleEndKoopaLv2() const;
     void saveDemoBattleEndKoopaLv2();
 
-    bool isAlreadyShowDemoMoonBasementCollapse() const { return mIsShowDemoMoonBasementCollapse; }
-
-    void saveShowDemoMoonBasementCollapse() { mIsShowDemoMoonBasementCollapse = true; }
-
     void resetLv3Data();
     void write(al::ByamlWriter* writer) override;
     void read(const al::ByamlIter& save) override;
+
+    bool isAlreadyShowDemoMoonBasementCollapse() const { return mIsShowDemoMoonBasementCollapse; }
+
+    void saveShowDemoMoonBasementCollapse() { mIsShowDemoMoonBasementCollapse = true; }
 
 private:
     static constexpr u32 sBossBattleStartWorldNum = 13;

@@ -13,9 +13,9 @@ class BarrierField;
 
 namespace rs {
 
-SEAD_ENUM(BossType, cStacker, cCapThrower, cBombTail, cFireBlower, 
-                    cBossKnuckle, cBossForest, cKoopa, cMofumofu, 
-                    cGiantWanderBoss, cBossRaid, cGolemClimb, 
+SEAD_ENUM(BossType, cStacker, cCapThrower, cBombTail, cFireBlower,
+                    cBossKnuckle, cBossForest, cKoopa, cMofumofu,
+                    cGiantWanderBoss, cBossRaid, cGolemClimb,
                     cBossMagma, cBreeda);
 
 BarrierField* tryCreateBarrierField(const al::ActorInitInfo& info);
