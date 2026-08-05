@@ -292,32 +292,35 @@ bool rs::tryCalcPlayerCeilingSpace(f32* out, const al::LiveActor* actor, f32 hei
     return true;
 }
 
-// NONMATCHING: https://decomp.me/scratch/nicSk
 bool rs::tryCalcKidsGuideCeilingSpace(f32* out, const al::LiveActor* actor, f32 height,
                                       f32 margin) {
     PlayerInfo* info = getPlayerInfo(actor);
-    if (info) {
-        IUsePlayerCeilingCheck* ceilingCheck = info->getCeilingCheck();
-        if (ceilingCheck) {
-            f32 ceil = height + margin;
-            f32 safety = ceilingCheck->getSafetyCeilSpace();
-            f32 ceilHeight = ceilingCheck->getCeilCheckHeight();
-            if (ceil <= ceilHeight && ceil >= safety) {
-                *out = sead::Mathf::clampMin(ceilHeight - margin, 0.0f);
-                return false;
-            }
-        }
+    IUsePlayerCeilingCheck* ceilingCheck = info ? info->getCeilingCheck() : nullptr;
+    if (!ceilingCheck) {
+        *out = height;
+        return true;
     }
 
-    *out = height;
-    return true;
+    f32 checkHeight = height + margin;
+    f32 safety = ceilingCheck->getSafetyCeilSpace();
+    f32 ceilHeight = ceilingCheck->getCeilCheckHeight();
+    if (checkHeight > ceilHeight) {
+        *out = height;
+        return true;
+    }
+    if (checkHeight < safety) {
+        *out = height;
+        return true;
+    }
+
+    *out = sead::Mathf::clampMin(ceilHeight - margin, 0.0f);
+    return false;
 }
 
 const sead::Vector3f& rs::getPlayerVelocity(const al::LiveActor* actor) {
     return al::getVelocity(getPlayer(actor));
 }
 
-// NONMATCHING: https://decomp.me/scratch/I4vY0
 bool rs::tryCalcPlayerModelHeadJointPos(sead::Vector3f* out, const al::LiveActor* actor) {
     PlayerInfo* info = getPlayerInfo(actor);
     if (!info || !info->getModelHolder())
@@ -325,14 +328,21 @@ bool rs::tryCalcPlayerModelHeadJointPos(sead::Vector3f* out, const al::LiveActor
 
     al::LiveActor* model = info->getModelHolder()->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
-        out->set(al::getJointMtxPtr(model, "Head")->getTranslation());
+        const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
+        f32 first;
+        __atomic_load(&mtx->m[0][3], &first, __ATOMIC_RELAXED);
+        float32x2_t xy = {first, 0.0f};
+        const f32* nextRow = &mtx->m[1][3];
+        xy = vld1_lane_f32(nextRow, xy, 1);
+        f32 z = mtx->m[2][3];
+        vst1_f32(&out->x, xy);
+        out->z = z;
         return true;
     }
 
     return false;
 }
 
-// NONMATCHING: https://decomp.me/scratch/cxeiD
 bool rs::tryCalcPlayerModelHeadJointUp(sead::Vector3f* out, const al::LiveActor* actor) {
     PlayerInfo* info = getPlayerInfo(actor);
     PlayerModelHolder* holder = info ? info->getModelHolder() : nullptr;
@@ -342,7 +352,14 @@ bool rs::tryCalcPlayerModelHeadJointUp(sead::Vector3f* out, const al::LiveActor*
     al::LiveActor* model = holder->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        out->set(mtx->getBase(1));
+        f32 first;
+        __atomic_load(&mtx->m[0][1], &first, __ATOMIC_RELAXED);
+        float32x2_t xy = {first, 0.0f};
+        const f32* nextRow = &mtx->m[1][1];
+        xy = vld1_lane_f32(nextRow, xy, 1);
+        f32 z = mtx->m[2][1];
+        vst1_f32(&out->x, xy);
+        out->z = z;
         al::tryNormalizeOrZero(out);
         return true;
     }
@@ -350,7 +367,6 @@ bool rs::tryCalcPlayerModelHeadJointUp(sead::Vector3f* out, const al::LiveActor*
     return false;
 }
 
-// NONMATCHING: https://decomp.me/scratch/9EUWx
 bool rs::tryCalcPlayerModelHeadJointFront(sead::Vector3f* out, const al::LiveActor* actor) {
     PlayerInfo* info = getPlayerInfo(actor);
     PlayerModelHolder* holder = info ? info->getModelHolder() : nullptr;
@@ -360,7 +376,14 @@ bool rs::tryCalcPlayerModelHeadJointFront(sead::Vector3f* out, const al::LiveAct
     al::LiveActor* model = holder->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        out->set(mtx->getBase(2));
+        f32 first;
+        __atomic_load(&mtx->m[0][2], &first, __ATOMIC_RELAXED);
+        float32x2_t xy = {first, 0.0f};
+        const f32* nextRow = &mtx->m[1][2];
+        xy = vld1_lane_f32(nextRow, xy, 1);
+        f32 z = mtx->m[2][2];
+        vst1_f32(&out->x, xy);
+        out->z = z;
         al::tryNormalizeOrZero(out);
         return true;
     }
@@ -368,7 +391,6 @@ bool rs::tryCalcPlayerModelHeadJointFront(sead::Vector3f* out, const al::LiveAct
     return false;
 }
 
-// NONMATCHING: https://decomp.me/scratch/MQtUu
 bool rs::tryCalcPlayerModelHeadJointSide(sead::Vector3f* out, const al::LiveActor* actor) {
     PlayerInfo* info = getPlayerInfo(actor);
     PlayerModelHolder* holder = info ? info->getModelHolder() : nullptr;
@@ -378,7 +400,14 @@ bool rs::tryCalcPlayerModelHeadJointSide(sead::Vector3f* out, const al::LiveActo
     al::LiveActor* model = holder->getCurrentModelActor();
     if (al::isExistJoint(model, "Head")) {
         const sead::Matrix34f* mtx = al::getJointMtxPtr(model, "Head");
-        out->set(mtx->getBase(0));
+        const f32* nextRow = &mtx->m[1][0];
+        f32 first;
+        __atomic_load(&mtx->m[0][0], &first, __ATOMIC_RELAXED);
+        float32x2_t xy = {first, 0.0f};
+        xy = vld1_lane_f32(nextRow, xy, 1);
+        f32 z = mtx->m[2][0];
+        vst1_f32(&out->x, xy);
+        out->z = z;
         al::tryNormalizeOrZero(out);
         return true;
     }
