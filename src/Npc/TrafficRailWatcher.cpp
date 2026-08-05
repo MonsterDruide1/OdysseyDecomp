@@ -14,11 +14,6 @@ TrafficRailWatcher::TrafficRailWatcher(const al::PlacementInfo& placementInfo) {
         mActors[i] = nullptr;
 }
 
-void TrafficRailWatcher::registerActor(const al::LiveActor* actor) {
-    mActors[mActorCount] = new ActorInfo(actor);
-    mActorCount++;
-}
-
 inline TrafficRailWatcher::ActorInfo* getActorInfo(TrafficRailWatcher::ActorInfo** actorList,
                                                    const al::LiveActor* actor) {
     // BUG: No bounds checking. Requesting an actor that is not in the actor list will softlock the
@@ -33,18 +28,15 @@ inline TrafficRailWatcher::ActorInfo* getActorInfo(TrafficRailWatcher::ActorInfo
     return nullptr;
 }
 
-void TrafficRailWatcher::stopByTraffic(const al::LiveActor* actor) {
-    getActorInfo(mActors, actor)->status = ActorStatus::StoppedByTraffic;
-}
-
-void TrafficRailWatcher::restartByTraffic(const al::LiveActor* actor) {
-    getActorInfo(mActors, actor)->status = ActorStatus::Normal;
-}
-
 bool TrafficRailWatcher::isEqual(const al::PlacementInfo& placementInfo) const {
     al::PlacementId placementId;
     al::getPlacementId(&placementId, placementInfo);
     return al::isEqualPlacementId(*mPlacementId, placementId);
+}
+
+void TrafficRailWatcher::registerActor(const al::LiveActor* actor) {
+    mActors[mActorCount] = new ActorInfo(actor);
+    mActorCount++;
 }
 
 bool TrafficRailWatcher::isExist(const al::LiveActor* actor) const {
@@ -54,9 +46,33 @@ bool TrafficRailWatcher::isExist(const al::LiveActor* actor) const {
     return false;
 }
 
-// TODO: Add to al as a math util
-inline f32 modLength(f32 value, f32 length) {
-    return al::modf(value + length, length) + 0.0f;
+void TrafficRailWatcher::stopByTraffic(const al::LiveActor* actor) {
+    getActorInfo(mActors, actor)->status = ActorStatus::StoppedByTraffic;
+}
+
+void TrafficRailWatcher::restartByTraffic(const al::LiveActor* actor) {
+    getActorInfo(mActors, actor)->status = ActorStatus::Normal;
+}
+
+bool isNearOnTrafficRail(const al::LiveActor* actor,
+                         const TrafficRailWatcher::ActorInfo* otherInfo);
+
+bool TrafficRailWatcher::tryStopByOtherNpc(const al::LiveActor* actor) {
+    ActorInfo* actorInfo = nullptr;
+    for (s32 i = 0; i < mActorCount; i++) {
+        if (mActors[i]->actor == actor) {
+            actorInfo = mActors[i];
+            break;
+        }
+    }
+
+    for (s32 j = 0; j < mActorCount; j++) {
+        if (mActors[j] != actorInfo && isNearOnTrafficRail(actor, mActors[j])) {
+            actorInfo->status = ActorStatus::StoppedByNpc;
+            return true;
+        }
+    }
+    return false;
 }
 
 bool isNearOnTrafficRail(const al::LiveActor* actor,
@@ -71,7 +87,8 @@ bool isNearOnTrafficRail(const al::LiveActor* actor,
         return false;
 
     f32 actorCoord = al::getRailCoord(actor);
-    f32 nextRailCoord = modLength(al::getRailCoord(actor) + 150.0f, al::getRailTotalLength(actor));
+    f32 nextRailCoord =
+        al::wrapValue(al::getRailCoord(actor) + 150.0f, al::getRailTotalLength(actor));
 
     f32 startCoord = actorCoord;
     f32 endCoord = nextRailCoord;
@@ -92,24 +109,6 @@ bool isNearOnTrafficRail(const al::LiveActor* actor,
     return false;
 
     return al::getRailCoord(other) < endCoord;
-}
-
-bool TrafficRailWatcher::tryStopByOtherNpc(const al::LiveActor* actor) {
-    ActorInfo* actorInfo = nullptr;
-    for (s32 i = 0; i < mActorCount; i++) {
-        if (mActors[i]->actor == actor) {
-            actorInfo = mActors[i];
-            break;
-        }
-    }
-
-    for (s32 j = 0; j < mActorCount; j++) {
-        if (mActors[j] != actorInfo && isNearOnTrafficRail(actor, mActors[j])) {
-            actorInfo->status = ActorStatus::StoppedByNpc;
-            return true;
-        }
-    }
-    return false;
 }
 
 bool TrafficRailWatcher::tryRestartByOtherNpc(const al::LiveActor* actor) {

@@ -24,11 +24,11 @@ public:
 
     TrafficRailWatcher(const al::PlacementInfo& placementInfo);
 
+    bool isEqual(const al::PlacementInfo& placementInfo) const;
     void registerActor(const al::LiveActor* actor);
+    bool isExist(const al::LiveActor* actor) const;
     void stopByTraffic(const al::LiveActor* actor);
     void restartByTraffic(const al::LiveActor* actor);
-    bool isEqual(const al::PlacementInfo& placementInfo) const;
-    bool isExist(const al::LiveActor* actor) const;
     bool tryStopByOtherNpc(const al::LiveActor* actor);
     bool tryRestartByOtherNpc(const al::LiveActor* actor);
 
