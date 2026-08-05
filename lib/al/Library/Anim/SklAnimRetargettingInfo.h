@@ -18,5 +18,11 @@ struct SklAnimRetargettingInfo {
     SklAnimRetargettingInfo(const nn::g3d::ResSkeleton*, const ByamlIter&, const char*,
                             const sead::Vector3f&);
     SklAnimRetargettingInfo(const ByamlIter&, const char*, const char*, const sead::Vector3f&);
+
+private:
+    void* _0;
+    sead::Vector3f _8;
 };
+
+static_assert(sizeof(SklAnimRetargettingInfo) == 0x18);
 }  // namespace al
