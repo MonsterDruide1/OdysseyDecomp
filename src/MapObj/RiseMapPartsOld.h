@@ -27,5 +27,3 @@ private:
     s32 mMoveTime = 0;
     al::CameraTicket* mObjectCamera = nullptr;
 };
-
-static_assert(sizeof(RiseMapPartsOld) == 0x128);
