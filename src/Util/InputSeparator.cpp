@@ -6,46 +6,45 @@ InputSeparator::InputSeparator(const al::IUseSceneObjHolder* sceneObjHolder, boo
     : mSceneObjHolder(sceneObjHolder), mIsVertical(isVertical) {}
 
 void InputSeparator::reset() {
-    mIsDominant = false;
+    mIsHoldDominant = false;
     mDominantTimer = 0;
 }
 
 void InputSeparator::update() {
-    mIsDominant = false;
+    mIsHoldDominant = false;
 
     if (mDominantTimer > 0)
         mDominantTimer--;
 
     if (mIsVertical) {
         if (rs::isHoldUiUp(mSceneObjHolder) || rs::isHoldUiDown(mSceneObjHolder)) {
-            mIsDominant = true;
-            mDominantTimer = mDominantBorder;
+            mIsHoldDominant = true;
+            mDominantTimer = mDominantCooldown;
         }
 
         if (rs::isTriggerUiUp(mSceneObjHolder) || rs::isTriggerUiDown(mSceneObjHolder))
-            mDominantTimer = mDominantBorder;
+            mDominantTimer = mDominantCooldown;
 
-        return;
+    } else {
+        if (rs::isHoldUiRight(mSceneObjHolder) || rs::isHoldUiLeft(mSceneObjHolder)) {
+            mIsHoldDominant = true;
+            mDominantTimer = mDominantCooldown;
+        }
+
+        if (rs::isTriggerUiRight(mSceneObjHolder) || rs::isTriggerUiLeft(mSceneObjHolder))
+            mDominantTimer = mDominantCooldown;
     }
-
-    if (rs::isHoldUiRight(mSceneObjHolder) || rs::isHoldUiLeft(mSceneObjHolder)) {
-        mIsDominant = true;
-        mDominantTimer = mDominantBorder;
-    }
-
-    if (rs::isTriggerUiRight(mSceneObjHolder) || rs::isTriggerUiLeft(mSceneObjHolder))
-        mDominantTimer = mDominantBorder;
 }
 
 void InputSeparator::updateForSnapShotMode() {
-    mIsDominant = false;
+    mIsHoldDominant = false;
 
     if (mDominantTimer > 0)
         mDominantTimer--;
 
     if (rs::isTriggerIncrementPostProcessingFilterPreset(mSceneObjHolder) ||
         rs::isTriggerDecrementPostProcessingFilterPreset(mSceneObjHolder))
-        mDominantTimer = mDominantBorder;
+        mDominantTimer = mDominantCooldown;
 }
 
 bool InputSeparator::isTriggerUiLeft() {
@@ -54,7 +53,7 @@ bool InputSeparator::isTriggerUiLeft() {
 
 bool InputSeparator::checkDominant(bool isVertical) {
     if (mIsVertical != isVertical) {
-        if (mIsDominant)
+        if (mIsHoldDominant)
             return true;
 
         if (mDominantTimer > 0)

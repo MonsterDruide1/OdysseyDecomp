@@ -33,8 +33,8 @@ public:
 private:
     const al::IUseSceneObjHolder* mSceneObjHolder;
     bool mIsVertical;
-    bool mIsDominant = false;
-    s32 mDominantBorder = 8;
+    bool mIsHoldDominant = false;
+    s32 mDominantCooldown = 8;
     s32 mDominantTimer = 0;
 };
 
