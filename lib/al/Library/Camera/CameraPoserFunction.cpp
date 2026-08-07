@@ -40,7 +40,7 @@
 #include "Project/Camera/CameraSubTargetTurnParam.h"
 
 namespace alCameraPoserFunction {
-static al::CameraCollisionPartsFilter sPartsFiler;
+static al::CameraCollisionPartsFilter sPartsFilter;
 static al::CameraTriangleFilter sTriangleFilter;
 static al::CameraTriangleFilterOnlyCeiling sCeilFilter;
 static sead::Vector3f sMtxX = {-1.0f, 0.0f, 0.0f};
@@ -755,15 +755,15 @@ void reduceGyroSencitivity(al::CameraPoser* cameraPoser) {
 }
 
 void stopUpdateGyro(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isStopUpdateGyro = true;
+    cameraPoser->getPoserFlag()->isStopUpdateGyro = true;
 }
 
 void restartUpdateGyro(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isStopUpdateGyro = false;
+    cameraPoser->getPoserFlag()->isStopUpdateGyro = false;
 }
 
 bool isStopUpdateGyro(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getPoserFag()->isStopUpdateGyro;
+    return cameraPoser->getPoserFlag()->isStopUpdateGyro;
 }
 
 bool isTargetCollideGround(const al::CameraPoser* cameraPoser) {
@@ -861,19 +861,19 @@ const sead::Vector3f& getSnapShotLookAtOffset(const al::CameraPoser* cameraPoser
 }
 
 bool isOffVerticalAbsorb(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getPoserFag()->isOffVerticalAbsorb;
+    return cameraPoser->getPoserFlag()->isOffVerticalAbsorb;
 }
 
 void onVerticalAbsorb(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isOffVerticalAbsorb = false;
+    cameraPoser->getPoserFlag()->isOffVerticalAbsorb = false;
 }
 
 void offVerticalAbsorb(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isOffVerticalAbsorb = true;
+    cameraPoser->getPoserFlag()->isOffVerticalAbsorb = true;
 }
 
 void invalidateCameraBlur(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidCameraBlur = true;
+    cameraPoser->getPoserFlag()->isInvalidCameraBlur = true;
 }
 
 bool isRequestStopVerticalAbsorb(const al::CameraObjectRequestInfo& requestInfo) {
@@ -917,39 +917,39 @@ f32 getRequestAngleV(const al::CameraObjectRequestInfo& requestInfo) {
 }
 
 bool isInvalidCollider(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getPoserFag()->isInvalidCollider;
+    return cameraPoser->getPoserFlag()->isInvalidCollider;
 }
 
 void validateCollider(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidCollider = false;
+    cameraPoser->getPoserFlag()->isInvalidCollider = false;
 }
 
 void invalidateCollider(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidCollider = true;
+    cameraPoser->getPoserFlag()->isInvalidCollider = true;
 }
 
 void validateCtrlSubjective(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isValidCtrlSubjective = true;
+    cameraPoser->getPoserFlag()->isValidCtrlSubjective = true;
 }
 
 void invalidateChangeSubjective(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidChangeSubjective = true;
+    cameraPoser->getPoserFlag()->isInvalidChangeSubjective = true;
 }
 
 void invalidateKeepDistanceNextCamera(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidKeepDistanceNextCamera = true;
+    cameraPoser->getPoserFlag()->isInvalidKeepDistanceNextCamera = true;
 }
 
 void invalidateKeepDistanceNextCameraIfNoCollide(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidKeepDistanceNextCameraIfNoCollide = true;
+    cameraPoser->getPoserFlag()->isInvalidKeepDistanceNextCameraIfNoCollide = true;
 }
 
 void invalidatePreCameraEndAfterInterpole(al::CameraPoser* cameraPoser) {
-    cameraPoser->getPoserFag()->isInvalidPreCameraEndAfterInterpole = true;
+    cameraPoser->getPoserFlag()->isInvalidPreCameraEndAfterInterpole = true;
 }
 
 bool isInvalidPreCameraEndAfterInterpole(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getPoserFag()->isInvalidPreCameraEndAfterInterpole;
+    return cameraPoser->getPoserFlag()->isInvalidPreCameraEndAfterInterpole;
 }
 
 bool isSceneCameraFirstCalc(const al::CameraPoser* cameraPoser) {
@@ -988,7 +988,7 @@ bool checkFirstCameraCollisionArrow(CameraCollisionHitResult* outResult,
                                     const sead::Vector3f& dir) {
     const al::ArrowHitInfo* hitInfo = nullptr;
 
-    if (!alCollisionUtil::getFirstPolyOnArrow(collision, &hitInfo, pos, dir, &sPartsFiler,
+    if (!alCollisionUtil::getFirstPolyOnArrow(collision, &hitInfo, pos, dir, &sPartsFilter,
                                               &sTriangleFilter)) {
         return false;
     }
@@ -996,11 +996,11 @@ bool checkFirstCameraCollisionArrow(CameraCollisionHitResult* outResult,
     outResult->hitPos.set(hitInfo->hitInfo->collisionHitPos);
     outResult->normal.set(hitInfo->hitInfo->triangle.getNormal(0));
 
-    s32 type = 2;
+    CameraCollisionHitType type = CameraCollisionHitType::Default;
     if (hitInfo->hitInfo->isCollisionAtFace())
-        type = 0;
+        type = CameraCollisionHitType::Face;
     else if (hitInfo->hitInfo->isCollisionAtEdge())
-        type = 1;
+        type = CameraCollisionHitType::Edge;
 
     outResult->type = type;
 
@@ -1072,12 +1072,12 @@ void rotateVecZone(sead::Vector3f* outVec, const sead::Vector3f& vec,
 bool makeCameraKeepInFrameV(sead::LookAtCamera* camera, const sead::Vector3f& vec,
                             const al::CameraPoser* cameraPoser, f32 a, f32 b) {
     sead::Vector3f offset = {0.0f, 0.0f, 0.0f};
-    if (calcOffsetCameraKeepInFrameV(&offset, camera, vec, cameraPoser, a, b)) {
-        camera->setAt(camera->getAt() + offset);
-        camera->setPos(camera->getPos() + offset);
-        return true;
-    }
-    return false;
+    if (!calcOffsetCameraKeepInFrameV(&offset, camera, vec, cameraPoser, a, b))
+        return false;
+
+    camera->setAt(camera->getAt() + offset);
+    camera->setPos(camera->getPos() + offset);
+    return true;
 }
 
 void initCameraRail(al::CameraPoser* cameraPoser, const al::PlacementInfo& info, const char* name) {

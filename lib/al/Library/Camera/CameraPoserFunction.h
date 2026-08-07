@@ -22,10 +22,16 @@ class Projection;
 }  // namespace al
 
 namespace alCameraPoserFunction {
+enum class CameraCollisionHitType {
+    Face,
+    Edge,
+    Default,
+};
+
 struct CameraCollisionHitResult {
     sead::Vector3f hitPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f normal = {0.0f, 0.0f, 0.0f};
-    s32 type = 2;
+    CameraCollisionHitType type = CameraCollisionHitType::Default;
 };
 
 s32 getViewIndex(const al::CameraPoser* cameraPoser);
