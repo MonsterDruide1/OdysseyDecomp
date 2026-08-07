@@ -235,7 +235,7 @@ public:
 
     GyroCameraCtrl* getGyroCtrl() const { return mGyroCtrl; }
 
-    CameraPoserFlag* getPoserFag() const { return mPoserFlag; }
+    CameraPoserFlag* getPoserFlag() const { return mPoserFlag; }
 
     SnapShotCameraCtrl* getSnapShotCtrl() const { return mSnapShotCtrl; }
 
