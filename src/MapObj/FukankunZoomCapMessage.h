@@ -18,6 +18,16 @@ public:
     void initAfterPlacement();
     void update();
 
+    void setFukankunZoomWatchTimeThreshold(s32 threshold) {
+        mFukankunZoomWatchTimeThreshold = threshold;
+    }
+
+    void resetZoomTypes() {
+        mFukankunZoomType = 0;
+        mCapMessageShowType = 0;
+    }
+
+private:
     const al::LiveActor* mActor;
     s32 mFukankunZoomType;
     s32 mCapMessageShowType;
