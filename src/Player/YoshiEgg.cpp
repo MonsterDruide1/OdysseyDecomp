@@ -40,10 +40,9 @@ void YoshiEgg::init(const al::ActorInitInfo& info) {
         mFukankunZoomCapMessage = new FukankunZoomCapMessage(this);
         mFukankunZoomCapMessage->init(info, "CapMessage", "FukankunZoomYoshiEgg");
         FukankunZoomCapMessage* capMessage = mFukankunZoomCapMessage;
-        capMessage->mFukankunZoomWatchTimeThreshold =
-            FukankunZoomTargetFunction::getFukankunWatchCountDefault();
-        capMessage->mFukankunZoomType = 0;
-        capMessage->mCapMessageShowType = 0;
+        capMessage->setFukankunZoomWatchTimeThreshold(
+            FukankunZoomTargetFunction::getFukankunWatchCountDefault());
+        capMessage->resetZoomTypes();
     }
 
     makeActorDead();
