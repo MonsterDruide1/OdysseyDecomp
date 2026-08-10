@@ -2,13 +2,45 @@
 
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
+#include <math/seadVector.h>
 #include <prim/seadSafeString.h>
+
+#include "Project/Base/ParamRequestInterp.h"
 
 namespace al {
 struct ActorInitInfo;
 class SkyParam;
 class Sky;
 class ParamRequestInterp;
+class ParameterObj;
+class ParameterString64;
+class ParameterV3f;
+class ParameterF32;
+
+class SkyParam : public IUseRequestParam {
+public:
+    SkyParam();
+
+    const char* getParamName() const override { return "空"; }
+
+    ParameterObj* getParamObj() override { return mParameterObj; }
+
+    const ParameterObj* getParamObj() const override { return mParameterObj; }
+
+    bool isEqual(const IUseRequestParam& other) const override;
+
+    const sead::Vector3f& getRotate() const;
+    const char* getSkyName() const;
+    f32 getStarIntensity() const;
+
+private:
+    ParameterObj* mParameterObj;
+    ParameterString64* mSkyName;
+    ParameterV3f* mRotate;
+    ParameterF32* mStarIntensity;
+};
+
+static_assert(sizeof(SkyParam) == 0x28);
 
 class SkyDirector {
 public:
