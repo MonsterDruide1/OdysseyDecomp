@@ -82,9 +82,9 @@ Additionally, you'll also need:
 
    Next, you'll need to acquire the **original 1.0 `main` NSO executable**.
 
-    * To dump it from a Switch,
-      follow [the instructions on the wiki](https://zeldamods.org/wiki/Help:Dumping_games#Dumping_binaries_.28executable_files.29).
-    * You do not need to dump the entire game (RomFS + ExeFS + DLC). Just dumping the 1.0 ExeFS is sufficient.
+    * To dump it from a Nintendo Switch,
+      follow [the instructions on the wiki](https://smo.wiki/Guide:Dumping_and_extracting_your_ROM).
+    * This guide explains how to dump and extract the entire game's ROM. For this project, dumping the ExeFS of 1.0 is sufficient, but having the RomFS files may also be helpful for cross-referencing strings or names.
 
 3. If you are using Nix, run `nix run '.#setup' [path to the NSO]`. For all others, run `tools/setup.py [path to the NSO]`
     * This will:
