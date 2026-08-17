@@ -2,7 +2,6 @@
 
 #include <math/seadVector.h>
 
-#include "Library/Nerve/NerveStateBase.h"
 #include "Player/HackerStateBase.h"
 
 class HackerJudgeStartJump;
