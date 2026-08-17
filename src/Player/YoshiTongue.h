@@ -17,9 +17,9 @@ class CollisionParts;
 }  // namespace al
 
 struct YoshiTongueParam {
-    al::ActorParamF32* maximumSpeed;   // maximum stretching speed of the tongue
-    al::ActorParamS32* brakeTime;      // how long the tongue stays stretched out for
-    al::ActorParamF32* reachDistance;  // how far the tongue should stretch
+    al::ActorParamF32* maximumSpeed;
+    al::ActorParamS32* brakeTime;
+    al::ActorParamF32* reachDistance;
     al::ActorParamS32* endpointStopTime;
     al::ActorParamS32* returnFrame;
     al::ActorParamF32* returnStrength;
@@ -34,8 +34,9 @@ public:
 
     void init(const al::ActorInitInfo&) override;
     void calcAnim() override;
-    void attackSensor(al::HitSensor*, al::HitSensor*) override;
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void updateCollider() override;
 
     void startAttack(const sead::Vector3f& front, const sead::Vector3f& up);
@@ -65,7 +66,7 @@ public:
 
     bool tryCalcTongueConnect(const al::CollisionParts**, sead::Vector3f*, sead::Vector3f*,
                               sead::Vector3f*, sead::Vector3f*) const;
-    bool tryCalcTonguePullForce(float*, sead::Vector3f*) const;
+    bool tryCalcTonguePullForce(f32*, sead::Vector3f*) const;
     bool tryCalcTonguePullDistance(sead::Vector3f*) const;
 
     float getShrinkRestRange() const;

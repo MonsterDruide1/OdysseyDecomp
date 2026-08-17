@@ -8,7 +8,7 @@ namespace al {
 class LiveActor;
 }
 
-class YoshiTongueJointControlStretch : al::JointControllerBase {
+class YoshiTongueJointControlStretch : public al::JointControllerBase {
 public:
     YoshiTongueJointControlStretch(const al::LiveActor* tongueActor);
 

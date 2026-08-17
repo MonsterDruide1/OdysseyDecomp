@@ -35,8 +35,8 @@ public:
 
     void appear() override;
 
-    void attackSensor(al::HitSensor*, al::HitSensor*);
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
+    void attackSensor(al::HitSensor* self, al::HitSensor* other);
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     bool receiveMsgEndState(bool*, const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     bool receiveMsgSetNerveState(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
 

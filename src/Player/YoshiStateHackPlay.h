@@ -52,8 +52,8 @@ public:
     void kill() override;
     bool update() override;
 
-    void attackSensor(al::HitSensor*, al::HitSensor*);
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
+    void attackSensor(al::HitSensor* self, al::HitSensor* other);
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
 
     void prepareEndHack();
     void updatePrevMovement();

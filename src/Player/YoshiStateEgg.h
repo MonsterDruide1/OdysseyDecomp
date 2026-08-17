@@ -33,7 +33,7 @@ private:
     al::WaterSurfaceFinder* mWaterSurfaceFinder;
     YoshiEgg* mYoshiEgg = nullptr;
     PlayerModelChangerYoshi* mModelChanger;
-    bool mUnk;
+    bool mIsUnk1;
 };
 
 static_assert(sizeof(YoshiStateEgg) == 0x50);
