@@ -10,6 +10,7 @@ public:
     ~HackerStateBase() override;
 
     al::LiveActor* getActor() const { return mActor; }
+
     IUsePlayerHack* getHackUser() const { return mHackUser; }
 
 private:

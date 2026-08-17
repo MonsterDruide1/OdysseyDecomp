@@ -46,7 +46,7 @@ public:
     void eatFinish();
     void returnOrEatHide();
     void updateEatBindActor();
-    void adjustShrinkRestRange(float);
+    void adjustShrinkRestRange(f32);
 
     bool reactionCollideWall();
     bool reactionCollideGround();
@@ -69,9 +69,9 @@ public:
     bool tryCalcTonguePullForce(f32*, sead::Vector3f*) const;
     bool tryCalcTonguePullDistance(sead::Vector3f*) const;
 
-    float getShrinkRestRange() const;
-    float getTongueParamRange() const;
-    float getTongueParamSpeed() const;
+    f32 getShrinkRestRange() const;
+    f32 getTongueParamRange() const;
+    f32 getTongueParamSpeed() const;
 
     void exeStay();
     void exeStretch();
