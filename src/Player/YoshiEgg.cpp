@@ -101,10 +101,8 @@ void YoshiEgg::exeBreak() {
 }
 
 void YoshiEgg::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (!al::isSensorName(self, "Push") || YoshiEgg::isBreak())
-        return;
-
-    rs::sendMsgPushToPlayer(other, self);
+    if (al::isSensorName(self, "Push") && !isBreak())
+        rs::sendMsgPushToPlayer(other, self);
 }
 
 bool YoshiEgg::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
