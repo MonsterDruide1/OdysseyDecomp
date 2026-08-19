@@ -109,14 +109,13 @@ bool YoshiEgg::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
     if (al::isSensorName(self, "Push"))
         return al::isMsgPlayerDisregard(message);
 
-    if (!al::isMsgPlayerTrample(message) && !rs::isMsgPlayerAndCapObjHipDropReflectAll(message) &&
-        !rs::isMsgCapAttack(message) && !rs::isMsgThrowObjHitReflect(message) &&
-        !rs::isMsgTankBullet(message) && !rs::isMsgMotorcycleAttack(message))
-        return false;
-
-    if (!al::isNerve(this, &NrvYoshiEgg.Wait))
-        return false;
-
-    al::setNerve(this, &NrvYoshiEgg.Break);
-    return true;
+    if (al::isMsgPlayerTrample(message) || rs::isMsgPlayerAndCapObjHipDropReflectAll(message) ||
+        rs::isMsgCapAttack(message) || rs::isMsgThrowObjHitReflect(message) ||
+        rs::isMsgTankBullet(message) || rs::isMsgMotorcycleAttack(message)) {
+        if (al::isNerve(this, &NrvYoshiEgg.Wait)) {
+            al::setNerve(this, &NrvYoshiEgg.Break);
+            return true;
+        }
+    }
+    return false;
 }
