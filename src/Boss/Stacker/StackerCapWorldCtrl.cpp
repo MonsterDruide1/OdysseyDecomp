@@ -17,39 +17,39 @@
 #include "Util/DemoUtil.h"
 
 namespace {
-NERVE_IMPL(StackerCapWorldCtrl, ObjAppear)
-NERVE_IMPL(StackerCapWorldCtrl, DemoCamera)
 NERVE_IMPL(StackerCapWorldCtrl, Battle)
+NERVE_IMPL(StackerCapWorldCtrl, DemoCamera)
+NERVE_IMPL(StackerCapWorldCtrl, ObjAppear)
 
-NERVES_MAKE_STRUCT(StackerCapWorldCtrl, ObjAppear, DemoCamera, Battle)
+NERVES_MAKE_STRUCT(StackerCapWorldCtrl, Battle, DemoCamera, ObjAppear)
 }  // namespace
 
 StackerCapWorldCtrl::StackerCapWorldCtrl(const char* name) : LiveActor(name) {}
 
 void StackerCapWorldCtrl::init(const al::ActorInitInfo& actorInitInfo) {
     al::initActorSceneInfo(this, actorInitInfo);
-    al::initNerve(this, &NrvStackerCapWorldCtrl.ObjAppear, 0);
+    al::initNerve(this, &NrvStackerCapWorldCtrl.Battle, 0);
     al::initActorPoseTQSV(this);
     al::initActorSRT(this, actorInitInfo);
     al::initExecutorEnemyMovement(this, actorInitInfo);
     al::initStageSwitch(this, actorInitInfo);
     al::initActorClipping(this, actorInitInfo);
-    al::setClippingInfo(this, 1000.0, nullptr);
+    al::setClippingInfo(this, 1000.0f, nullptr);
     al::tryListenStageSwitchAppear(this);
 
     mStacker = new Stacker("スタッカー", nullptr);
     al::initLinksActor(mStacker, actorInitInfo, "Stacker", 0);
     mStacker->makeActorDead();
     s32 linkChildNum = al::calcLinkChildNum(actorInitInfo, "BattleEndAppearObj");
-    mActorGroup = new al::LiveActorGroup("スタッカー戦後出現オブジェ", linkChildNum);
+    mBattleEndGroup = new al::LiveActorGroup("スタッカー戦後出現オブジェ", linkChildNum);
 
     for (s32 i = 0; i < linkChildNum; ++i) {
         LiveActor* actor = al::createLinksActorFromFactory(actorInitInfo, "BattleEndAppearObj", i);
         actor->makeActorDead();
-        mActorGroup->registerActor(actor);
+        mBattleEndGroup->registerActor(actor);
     }
     linkChildNum = al::calcLinkChildNum(actorInitInfo, "ElectricWire");
-    if (0 < linkChildNum) {
+    if (linkChildNum > 0) {
         mElectricWire = new ElectricWire("電線");
         al::initLinksActor(mElectricWire, actorInitInfo, "ElectricWire", 0);
         for (s32 i = 0; i < mElectricWire->get_110(); ++i)
@@ -69,20 +69,20 @@ void StackerCapWorldCtrl::appear() {
 void StackerCapWorldCtrl::exeBattle() {
     if (al::isGreaterEqualStep(this, 5) && al::isDead(mStacker)) {
         al::startCamera(this, mCameraTicket);
-        al::setNerve(this, &NrvStackerCapWorldCtrl.ObjAppear);
+        al::setNerve(this, &NrvStackerCapWorldCtrl.Battle);
     }
 }
 
 void StackerCapWorldCtrl::exeDemoCamera() {
     if (al::isFirstStep(this)) {
         if (!rs::requestStartDemoWithPlayer(this, false)) {
-            al::setNerve(this, (const al::Nerve*)&NrvStackerCapWorldCtrl);
+            al::setNerve(this, &NrvStackerCapWorldCtrl.Battle);
 
             return;
         }
 
-        for (s32 i = 0; i < mActorGroup->getActorCount(); i++)
-            rs::addDemoActor(mActorGroup->getActor(i), false);
+        for (s32 i = 0; i < mBattleEndGroup->getActorCount(); i++)
+            rs::addDemoActor(mBattleEndGroup->getActor(i), false);
 
         if (mElectricWire) {
             rs::addDemoActor(mElectricWire, false);
@@ -104,13 +104,13 @@ void StackerCapWorldCtrl::exeDemoCamera() {
 
 void StackerCapWorldCtrl::exeObjAppear() {
     if (al::isFirstStep(this)) {
-        for (s32 i = 0; i < mActorGroup->getActorCount(); ++i)
-            mActorGroup->getActor(i)->appear();
+        for (s32 i = 0; i < mBattleEndGroup->getActorCount(); ++i)
+            mBattleEndGroup->getActor(i)->appear();
         if (mElectricWire)
             for (s32 i = 0; i < mElectricWire->get_110(); ++i)
                 mElectricWire->getElectricWireRailKeepers()[i]->appear();
     }
-    if (al::isGreaterEqualStep(this, 0x5a)) {
+    if (al::isGreaterEqualStep(this, 90)) {
         rs::requestEndDemoWithPlayer(this);
         if (al::isActiveCamera(mCameraTicket))
             al::endCamera(this, mCameraTicket, -1, false);

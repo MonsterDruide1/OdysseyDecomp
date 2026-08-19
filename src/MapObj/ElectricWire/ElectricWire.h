@@ -33,6 +33,7 @@ public:
     void switchStartOn();
 
     void tryUpdateDisplayModel();
+    void addDemoActorElectricWirePartsAll();
     ElectricWireVertex* searchAliveKeeperGraphVertexBySensor(const al::HitSensor*);
     void endCapture(const sead::Vector3f*, const sead::Vector3f*, bool, bool);
     void afterSpringMovement();
@@ -60,7 +61,6 @@ public:
     void exeLightning();
     void exeLightningEnd();
     void exeLightningEndToMove();
-    void addDemoActorElectricWirePartsAll();
 
     bool isElectricWireRadio() { return mIsElectricWireRadio; }
 
@@ -69,12 +69,12 @@ public:
     ElectricWireRailKeeper** getElectricWireRailKeepers() { return mElectricWireRailKeepers; }
 
 private:
-    void* mPad;
+    void* pad;
     s32 _110;
     ElectricWireRailKeeper** mElectricWireRailKeepers;
-    char mPad2[0x189];
+    char pad2[0x189];
     bool mIsElectricWireRadio;
-    char mPad3[0x58];
+    char pad3[0x58];
 };
 
 static_assert(sizeof(ElectricWire) == 0x308);

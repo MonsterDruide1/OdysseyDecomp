@@ -12,7 +12,7 @@ public:
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
     bool receiveMsg(const al::SensorMsg* self, al::HitSensor* other,
                     al::HitSensor* hitSensor) override;
-    void blowCapOnHead(const sead::Vector3f&, const sead::Vector3f&);
+    bool blowCapOnHead(const sead::Vector3f&, const sead::Vector3f&);
     void control() override;
     void kill() override;
     void calcAnim() override;
@@ -35,5 +35,5 @@ public:
     void exeDemoBattleEnd();
 
 private:
-    const char mBuf[0xa8];
+    const char _a8[0xa8];
 };

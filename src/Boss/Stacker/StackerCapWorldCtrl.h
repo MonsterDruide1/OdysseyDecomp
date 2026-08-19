@@ -25,5 +25,5 @@ private:
     Stacker* mStacker = nullptr;
     ElectricWire* mElectricWire = nullptr;
     al::CameraTicket* mCameraTicket = nullptr;
-    al::LiveActorGroup* mActorGroup = nullptr;
+    al::LiveActorGroup* mBattleEndGroup = nullptr;
 };
