@@ -46,14 +46,14 @@ void BlockQuestion::init(const al::ActorInitInfo& initInfo) {
     al::initMapPartsActor(this, initInfo, suffix);
 
     mItemType = rs::getItemType(initInfo);
-    if (mItemType > rs::ItemType::ValueType::None)
+    if (mItemType > rs::ItemType::None)
         rs::initItemByPlacementInfo(this, initInfo, false);
 
     al::tryAddDisplayOffset(this, initInfo);
     mShadowLength = rs::setShadowDropLength(this, initInfo, "本体");
     al::expandClippingRadiusByShadowLength(this, &_134, mShadowLength);
 
-    if (mItemType == rs::ItemType::ValueType::Coin10) {
+    if (mItemType == rs::ItemType::Coin10) {
         mBlockStateTenCoin = new BlockStateTenCoin(this, false);
         al::initNerve(this, &NrvBlockQuestion.TenCoin, 1);
         al::initNerveState(this, mBlockStateTenCoin, &NrvBlockQuestion.TenCoin, "10コイン");
@@ -61,7 +61,7 @@ void BlockQuestion::init(const al::ActorInitInfo& initInfo) {
         mBlockStateSingleItem = new BlockStateSingleItem(this, mItemType, false);
         al::initNerve(this, &NrvBlockQuestion.SingleItem, 1);
         al::initNerveState(this, mBlockStateSingleItem, &NrvBlockQuestion.SingleItem, "アイテム");
-        if (mItemType == rs::ItemType::ValueType::Random)
+        if (mItemType == rs::ItemType::Random)
             rs::createRandomItemSelector(this);
     }
 
@@ -137,7 +137,7 @@ bool BlockQuestion::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
         const sead::Vector3f& selfPos = al::getSensorPos(self);
         if (al::isNerve(this, &NrvBlockQuestion.SingleItem) &&
             mBlockStateSingleItem->isEnableAppearItem()) {
-            if (mItemType != rs::ItemType::ValueType::None)
+            if (mItemType != rs::ItemType::None)
                 mBlockStateSingleItem->setItemOffsetY(150.0f);
 
             if (rs::isMsgCapAttack(message)) {
