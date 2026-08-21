@@ -52,4 +52,18 @@ private:
 
 static_assert(sizeof(LayoutKit) == 0x30);
 
+class LayoutSystem {
+public:
+    LayoutSystem();
+
+    void init();
+    void beginDraw();
+    void endDraw();
+    void prepareInitFontForChangeLanguage();
+    void initFontForChangeLanguage();
+
+private:
+    char filler[0x30];
+};
+
 }  // namespace al
