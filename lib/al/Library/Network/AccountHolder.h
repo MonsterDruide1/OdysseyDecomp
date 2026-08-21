@@ -12,6 +12,8 @@ public:
 
     bool isValid() const;
 
+    nn::account::UserHandle* getUserHandle() const { return mUserHandle; }
+
 private:
     nn::account::UserHandle* mUserHandle = nullptr;
     nn::account::Uid mUid{};
