@@ -21,11 +21,11 @@ SkyParam::SkyParam() {
 }
 
 bool SkyParam::isEqual(const IUseRequestParam& other) const {
-    const SkyParam* param = static_cast<const SkyParam*>(&other);
+    const SkyParam& param = static_cast<const SkyParam&>(other);
 
-    return isNear(getRotate(), param->getRotate()) &&
-           isEqualString(getSkyName(), param->getSkyName()) &&
-           isNear(getStarIntensity(), param->getStarIntensity());
+    return isNear(getRotate(), param.getRotate()) &&
+           isEqualString(getSkyName(), param.getSkyName()) &&
+           isNear(getStarIntensity(), param.getStarIntensity());
 }
 
 const sead::Vector3f& SkyParam::getRotate() const {

@@ -2,10 +2,12 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/HostIO/HioNode.h"
+
 namespace al {
 class ParameterObj;
 
-class IUseRequestParam {
+class IUseRequestParam : public HioNode {
 public:
     virtual const char* getParamName() const = 0;
     virtual ParameterObj* getParamObj() = 0;
