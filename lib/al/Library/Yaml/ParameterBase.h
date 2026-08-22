@@ -45,6 +45,10 @@ SEAD_ENUM(YamlParamType,
                         ParameterObj* obj, bool e)                                                 \
             : Parameter(value, name, label, meta, obj, e) {}                                       \
                                                                                                    \
+        Parameter##Name(Type const& value, ParameterObj* obj, const sead::SafeString& name,        \
+                        const sead::SafeString& label, const sead::SafeString& meta, bool e)       \
+            : Parameter(value, name, label, meta, obj, e) {}                                       \
+                                                                                                   \
         Parameter##Name(Type const& value, const sead::SafeString& name,                           \
                         const sead::SafeString& label, const sead::SafeString& meta,               \
                         ParameterList* list, bool e)                                               \
