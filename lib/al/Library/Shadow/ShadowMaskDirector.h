@@ -6,6 +6,8 @@ class ShadowMaskBase;
 class ShadowMaskDirector {
 public:
     void registerShadowMask(ShadowMaskBase*);
+    void registerUpdateShadowMask(ShadowMaskBase*);
+    void removeUpdateShadowMask(ShadowMaskBase*);
 
 private:
     void* _0[0x8D8 / 8];
