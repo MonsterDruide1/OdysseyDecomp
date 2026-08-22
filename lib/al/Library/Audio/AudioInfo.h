@@ -51,7 +51,6 @@ public:
     AudioInfoList() = default;
 
     void init(s32 listSize) {
-        mIsLinearSearch = false;
         mList = new sead::PtrArray<const T>();
         mList->allocBuffer((listSize == 0) ? 1 : listSize, nullptr);
     }
@@ -83,9 +82,17 @@ public:
 
     bool isValidIndex(s32 index) const { return index < getSize(); }
 
+    const sead::PtrArray<const T>* getList() const { return mList; }
+
+    sead::PtrArray<const T>* getListForSort() const { return mList; }
+
+    bool isLinearSearch() const { return mIsLinearSearch; }
+
+    void setLinearSearch(bool isLinearSearch) { mIsLinearSearch = isLinearSearch; }
+
 private:
     sead::PtrArray<const T>* mList;
-    bool mIsLinearSearch = false;
+    bool mIsLinearSearch;
 };
 
 template <typename T>
@@ -113,6 +120,12 @@ public:
             mParts->at(i)->sort();
     }
 
+    bool addParts(AudioInfoList<T>* parts) const {
+        if (!mParts || !parts)
+            return false;
+        return mParts->pushBack(parts);
+    }
+
     const T* getInfoAt(s32 index) const {
         if (AudioInfoList<T>::isValidIndex(index))
             return AudioInfoList<T>::getInfoAt(index);
@@ -133,6 +146,10 @@ public:
             return 0;
         return mParts->size();
     }
+
+    const AudioInfoList<T>* getPartsListAt(s32 index) const { return mParts->at(index); }
+
+    sead::PtrArray<AudioInfoList<T>>* getParts() const { return mParts; }
 
     s32 getSize() const {
         if (!mParts)
@@ -155,11 +172,34 @@ AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter, s32 maxNum
     AudioInfoListWithParts<T>* audioInfoList = new AudioInfoListWithParts<T>;
 
     s32 listSize = alAudioInfoListFunction::getCreateAudioInfoListSize(iter, 0);
+    audioInfoList->setLinearSearch(false);
     audioInfoList->init(listSize, maxNumParts);
 
     AudioInfoListCreateFunctor<T> functor(audioInfoList, T::createInfo);
     alAudioInfoListFunction::createAudioInfoAndSetToList(&functor, iter);
     audioInfoList->sort();
+
+    return audioInfoList;
+}
+
+template <typename T>
+AudioInfoListWithParts<T>* createAudioInfoList(const ByamlIter& iter,
+                                               const ByamlIter& localizedIter, s32 maxNumParts,
+                                               bool disableSort) {
+    AudioInfoListWithParts<T>* audioInfoList = new AudioInfoListWithParts<T>;
+
+    s32 listSize = alAudioInfoListFunction::getCreateAudioInfoListSize(iter, localizedIter);
+    audioInfoList->setLinearSearch(false);
+    audioInfoList->init(listSize, maxNumParts);
+
+    AudioInfoListCreateFunctor<T> functor(audioInfoList, T::createInfo);
+    alAudioInfoListFunction::createAudioInfoAndSetToList(&functor, iter);
+
+    AudioInfoListCreateFunctor<T> localizedFunctor(audioInfoList, T::createInfo);
+    alAudioInfoListFunction::createAudioInfoAndSetToList(&localizedFunctor, localizedIter);
+
+    if (!disableSort)
+        audioInfoList->sort();
 
     return audioInfoList;
 }
@@ -197,6 +237,7 @@ AudioInfoListWithParts<T>* copyAudioInfoList(const AudioInfoListWithParts<T>* au
     s32 newSize = originalSize + additionalSize;
 
     AudioInfoListWithParts<T>* newAudioInfoList = new AudioInfoListWithParts<T>;
+    newAudioInfoList->setLinearSearch(false);
     newAudioInfoList->init(newSize, 0);
 
     for (s32 i = 0; i < originalSize; i++) {
