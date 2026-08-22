@@ -24,7 +24,7 @@ public:
     void* getPoser(s32 index) const;  // TODO unknown return type
     void exePlayAnim();
     void exeEnd();
-    s32 getMaxPlayStep();
+    static s32 getMaxPlayStep();
 
 private:
     void* _110[0x8];
