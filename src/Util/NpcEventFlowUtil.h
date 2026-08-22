@@ -7,6 +7,7 @@
 namespace al {
 struct ActorInitInfo;
 class EventFlowExecutor;
+class IEventFlowActionNameConverter;
 class LiveActor;
 class MessageTagDataHolder;
 class EventFlowMovement;
