@@ -1,0 +1,224 @@
+#include "Npc/SessionMusicianManager.h"
+
+#include "Library/LiveActor/ActorClippingFunction.h"
+#include "Library/LiveActor/ActorFlagFunction.h"
+#include "Library/LiveActor/ActorInitFunction.h"
+#include "Library/LiveActor/ActorInitUtil.h"
+#include "Library/LiveActor/ActorMovementFunction.h"
+#include "Library/Nerve/NerveSetupUtil.h"
+#include "Library/Nerve/NerveUtil.h"
+#include "Library/Scene/SceneObjUtil.h"
+
+#include "Npc/SessionMayorNpc.h"
+#include "Npc/SessionMusicianBgmController.h"
+#include "Npc/SessionMusicianLocalFunction.h"
+#include "Npc/SessionMusicianNpc.h"
+#include "Npc/SessionMusicianType.h"
+#include "Npc/SessionMusicianWarpAgent.h"
+#include "System/GameDataFunction.h"
+#include "System/GameDataHolderAccessor.h"
+#include "Util/DemoUtil.h"
+
+namespace {
+NERVE_HOST_TYPE_IMPL(SessionMusicianManager, Wait);
+NERVE_HOST_TYPE_IMPL(SessionMusicianManager, Complete);
+
+NERVES_MAKE_NOSTRUCT(HostType, Wait, Complete);
+}  // namespace
+
+SessionMusicianManager::SessionMusicianManager(const char* name) : al::LiveActor(name) {
+    mMusicianArray.allocBuffer(SessionMusicianType::size(), nullptr);
+}
+
+void SessionMusicianManager::initAfterPlacementSceneObj(const al::ActorInitInfo& info) {
+    al::initActorSceneInfo(this, info);
+    al::initActorWithArchiveName(this, info, "SessionMusicianManager", nullptr);
+    al::initNerve(this, &Wait, 0);
+    al::initActorSeKeeperWithout3D(this, info, "SessionMusicianManager");
+    if (mMayorNpc) {
+        mMayorNpc->initIntroductionCamera(info, &mMusicianArray);
+        mBgmController = new SessionMusicianBgmController(this, info, false);
+    }
+    makeActorAlive();
+}
+
+void SessionMusicianManager::entryMusician(SessionMusicianNpc* musician) {
+    if (mMusicianArray.isFull())
+        return;
+
+    mMusicianArray.pushBack(musician);
+}
+
+bool SessionMusicianManager::isJoinedMusician() const {
+    for (auto it = mMusicianArray.begin(); it != mMusicianArray.end(); ++it)
+        if (it->isJoined())
+            return true;
+
+    return false;
+}
+
+SessionMusicianNpc* SessionMusicianManager::getJoinedMusician() const {
+    for (auto it = mMusicianArray.begin(); it != mMusicianArray.end(); ++it)
+        if (it->isJoined())
+            return &(*it);
+
+    return nullptr;
+}
+
+bool SessionMusicianManager::isSubscribed(SessionMusicianType type) const {
+    for (auto it = mMusicianArray.begin(); it != mMusicianArray.end(); ++it) {
+        if (SessionMusicianLocalFunction::isMusicianType(&(*it), type)) {
+            if (SessionMusicianLocalFunction::isAlreadySessionMember(&(*it)))
+                return true;
+        }
+    }
+
+    return false;
+}
+
+bool SessionMusicianManager::tryAppearPowerPlant() {
+    SessionMusicianNpc* musician = findPowerPlant();
+
+    if (!musician)
+        return false;
+
+    if (al::isAlive(musician) || GameDataFunction::getSessionEventProgress(this) <
+                                     SessionEventProgress::WaitThePowerPlantWorks)
+        return false;
+
+    musician->appear();
+    return true;
+}
+
+SessionMusicianNpc* SessionMusicianManager::findPowerPlant() const {
+    for (auto it = mMusicianArray.begin(); it != mMusicianArray.end(); ++it) {
+        SessionMusicianType type = SessionMusicianLocalFunction::getMusicianType(&(*it));
+        if (type == SessionMusicianType::Vocal)
+            return &(*it);
+    }
+
+    return nullptr;
+}
+
+bool SessionMusicianManager::tryStartWarp(al::PlacementInfo* info) {
+    for (auto it = mMusicianArray.begin(); it != mMusicianArray.end(); ++it) {
+        if (it->isStateWarp()) {
+            SessionMusicianWarpAgent* warpAgent = it->getWarpAgent();
+            if (warpAgent->tryGetWarpTargetInfo(info) && warpAgent->tryStartWarp()) {
+                it->doneWarp();
+                al::invalidateClipping(mMayorNpc);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void SessionMusicianManager::addDemoAllMusicians() {
+    for (auto it = mMusicianArray.begin(); it != mMusicianArray.end(); ++it)
+        rs::addDemoActor(&(*it), true);
+}
+
+void SessionMusicianManager::exeWait() {
+    if (mBgmController)
+        mBgmController->updateNerve();
+
+    if (!(SessionMusicianLocalFunction::getMemberMusicianNum(this) <= 4))
+        al::setNerve(this, &Complete);
+    else
+        tryAppearPowerPlant();
+}
+
+void SessionMusicianManager::exeComplete() {
+    if (mBgmController != nullptr)
+        mBgmController->updateNerve();
+}
+
+namespace SessionMusicianLocalFunction {
+
+void tryCreateSessionMusicianManager(const al::IUseSceneObjHolder* holder) {
+    if (isExistSessionMusicianManager(holder))
+        return;
+
+    SessionMusicianManager* manager = new SessionMusicianManager("SessionMusicianManager");
+    al::setSceneObj(holder, manager, SessionMusicianManager::sSceneObjId);
+}
+
+SessionMusicianManager* getSessionMusicianManager(const al::IUseSceneObjHolder* holder) {
+    return al::tryGetSceneObj<SessionMusicianManager>(holder);
+}
+
+bool isExistSessionMusicianManager(const al::IUseSceneObjHolder* holder) {
+    return al::isExistSceneObj<SessionMusicianManager>(holder);
+}
+
+bool tryStartWarpToSessionMayor(const al::IUseSceneObjHolder* holder, al::PlacementInfo* info) {
+    if (!isExistSessionMusicianManager(holder))
+        return false;
+
+    return getSessionMusicianManager(holder)->tryStartWarp(info);
+}
+
+void entrySessionMayorToManager(SessionMayorNpc* mayor) {
+    getSessionMusicianManager(mayor)->entryMayor(mayor);
+}
+
+bool isJoinedSessionMusician(const al::IUseSceneObjHolder* holder) {
+    SessionMusicianManager* manager = getSessionMusicianManager(holder);
+    return manager && manager->isJoinedMusician();
+}
+
+SessionMusicianNpc* tryGetJoinedSessionMusicanActor(const al::IUseSceneObjHolder* holder) {
+    SessionMusicianManager* manager = getSessionMusicianManager(holder);
+    if (!manager)
+        return nullptr;
+
+    return manager->getJoinedMusician();
+}
+
+bool tryAddJoinedSessionMusicianDemoActor(const al::IUseSceneObjHolder* holder) {
+    SessionMusicianNpc* musician = tryGetJoinedSessionMusicanActor(holder);
+    if (!musician)
+        return false;
+
+    rs::addDemoActor(musician, true);
+    musician->addDemoActors();
+    return true;
+}
+
+bool tryGetSessionMoonGetDemoPlayerPos(sead::Vector3f* pos, const al::IUseSceneObjHolder* holder) {
+    SessionMusicianNpc* musician = tryGetJoinedSessionMusicanActor(holder);
+    if (!musician)
+        return false;
+
+    pos->set(musician->getMoonGetDemoPlayerPos());
+    return true;
+}
+
+bool tryGetSessionMoonGetDemoPlayerPose(sead::Quatf* pose, const al::IUseSceneObjHolder* holder) {
+    SessionMusicianNpc* musician = tryGetJoinedSessionMusicanActor(holder);
+    if (!musician)
+        return false;
+
+    pose->set(musician->getMoonGetDemoPlayerPose());
+    return true;
+}
+
+bool trySetJoinedSessionMusicianTransformForMoonGetDemo(const al::IUseSceneObjHolder* holder) {
+    SessionMusicianNpc* musician = tryGetJoinedSessionMusicanActor(holder);
+    if (!musician)
+        return false;
+
+    sead::Vector3f pos = musician->getMoonGetDemoPlayerPos();
+    al::faceToTarget(musician, pos);
+    return true;
+}
+
+void addDemoAllMusicians(const al::IUseSceneObjHolder* holder) {
+    SessionMusicianManager* manager = getSessionMusicianManager(holder);
+
+    manager->addDemoAllMusicians();
+}
+
+}  // namespace SessionMusicianLocalFunction
