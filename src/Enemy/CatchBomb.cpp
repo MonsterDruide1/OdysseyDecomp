@@ -67,7 +67,7 @@ void CatchBomb::init(const al::ActorInitInfo& info) {
     mJointSpringControllerHolder->init(this, "InitJointSpringCtrl");
     makeActorAlive();
     al::invalidateShadowMask(this, "ダミー帽子影");
-    mDisregardReceiver = new DisregardReceiver(this, nullptr);
+    mDisregardReceiver = new DisregardReceiver(this);
     mCatchBombGeneratePoint = new al::LiveActor("キャッチボム出現ポイント");
     al::initActorWithArchiveName(mCatchBombGeneratePoint, info, "CatchBombGeneratePoint", nullptr);
     mCatchBombGeneratePoint->makeActorAlive();
