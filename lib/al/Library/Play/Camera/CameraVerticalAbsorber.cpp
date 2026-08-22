@@ -100,7 +100,6 @@ void CameraVerticalAbsorber::update() {
     mLookAtCamera.setPos(mCameraPoser->getEye());
     mLookAtCamera.setAt(mCameraPoser->getAt());
     mLookAtCamera.setUp(mCameraPoser->getUp());
-    mLookAtCamera.normalizeUp();
 
     makeLookAtCamera(&mLookAtCamera);
     mLookAtCamera.updateViewMatrix();
