@@ -11,7 +11,7 @@ class DemoActor;
 class IUsePlayerCollision;
 class PlayerAnimator;
 class PlayerInfo;
-class PlayerInitInfo;
+struct PlayerInitInfo;
 class PlayerHackKeeper;
 class PlayerPuppet;
 
@@ -74,6 +74,15 @@ public:
     virtual PlayerPuppet* getPlayerPuppet() { return nullptr; }
 
     virtual PlayerInfo* getPlayerInfo() const { return nullptr; }
+
+    void setPlayerActorInfo(sead::Matrix34f* viewMtx, u32 portNo) {
+        mViewMtx = viewMtx;
+        mPortNo = portNo;
+    }
+
+    void setPlayerViewMtx(sead::Matrix34f* viewMtx) { mViewMtx = viewMtx; }
+
+    void setPlayerPortNo(u32 portNo) { mPortNo = portNo; }
 
     virtual bool checkDeathArea();
     virtual void sendCollisionMsg();

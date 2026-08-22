@@ -26,6 +26,8 @@ public:
 
     bool isDamageInvalid() const { return mIsDamageInvalid; }
 
+    bool isPreventDamage() const { return mIsPreventDamage; }
+
 private:
     al::LiveActor* mPlayer = nullptr;
     PlayerEffect* mPlayerEffect = nullptr;

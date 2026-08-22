@@ -26,6 +26,6 @@ void PlayerEquipmentUser::endEquip() {
     mSourceSensor = nullptr;
 }
 
-void PlayerEquipmentUser::noticeDamage() {
-    rs::sendMsgNoticePlayerDamage(mEquipmentSensor, mSourceSensor);
+bool PlayerEquipmentUser::noticeDamage() {
+    return rs::sendMsgNoticePlayerDamage(mEquipmentSensor, mSourceSensor);
 }

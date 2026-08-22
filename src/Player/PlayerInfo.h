@@ -1,5 +1,17 @@
 #pragma once
 
+#include "Player/PlayerJudgeActiveCameraSubjective.h"
+#include "Player/PlayerJudgeCameraInWater.h"
+#include "Player/PlayerJudgeEnableGuideArrow.h"
+#include "Player/PlayerJudgeEnablePeachAmiibo.h"
+#include "Player/PlayerJudgePlaySwitchOnAreaWaitAnim.h"
+#include "Player/PlayerJudgeSafetyPointRecovery.h"
+#include "Player/PlayerJudgeSameNerve.h"
+#include "Player/PlayerJudgeSleep.h"
+#include "Player/PlayerJudgeStatusPoleClimb.h"
+#include "Player/PlayerJudgeTalkGround.h"
+#include "Player/PlayerJudgeTalkSwim.h"
+
 namespace al {
 class FootPrintHolder;
 class HitSensor;
@@ -20,24 +32,10 @@ class PlayerFormSensorCollisionArranger;
 class PlayerHackKeeper;
 class PlayerInput;
 class PlayerJointControlKeeper;
-class PlayerJudgeActiveCameraSubjective;
-class PlayerJudgeCameraInWater;
 class PlayerJudgeDead;
 class PlayerJudgeDeadWipeStart;
 class PlayerJudgeDrawForward;
-class PlayerJudgeEnableGuideArrow;
-class PlayerJudgeEnablePeachAmiibo;
 class PlayerJudgeFailureCameraSubjective;
-class PlayerJudgePlaySwitchOnAreaWaitAnim;
-class PlayerJudgeSafetyPointRecovery;
-class PlayerJudgeSameNerve;
-class PlayerJudgeSameNerve;
-class PlayerJudgeSameNerve;
-class PlayerJudgeSameNerve;
-class PlayerJudgeSleep;
-class PlayerJudgeStatusPoleClimb;
-class PlayerJudgeTalkGround;
-class PlayerJudgeTalkSwim;
 class PlayerModelChangerHakoniwa;
 class PlayerModelHolder;
 class PlayerOxygen;
@@ -49,7 +47,67 @@ class PlayerInfo {
 public:
     PlayerInfo();
 
+    PlayerModelChangerHakoniwa* getModelChangerHakoniwa() const { return mModelChangerHakoniwa; }
+
+    PlayerOxygen* getOxygen() const { return mOxygen; }
+
+    PlayerAnimator* getAnimator() const { return mAnimator; }
+
+    PlayerBindKeeper* getBindKeeper() const { return mBindKeeper; }
+
+    PlayerDamageKeeper* getDamageKeeper() const { return mDamageKeeper; }
+
+    PlayerEquipmentUser* getEquipmentUser() const { return mEquipmentUser; }
+
     HackCap* getHackCap() const { return mHackCap; }
+
+    PlayerCarryKeeper* getCarryKeeper() const { return mCarryKeeper; }
+
+    PlayerJointControlKeeper* getPlayerJointControlKeeper() const { return mJointControlKeeper; }
+
+    al::HitSensor* getBodyHitSensor() const { return mBodyHitSensor; }
+
+    PlayerFormSensorCollisionArranger* getFormSensorCollisionArranger() const {
+        return mFormSensorCollisionArranger;
+    }
+
+    PlayerInput* getInput() const { return mInput; }
+
+    IUsePlayerCeilingCheck* getCeilingCheck() const { return mCeilingCheck; }
+
+    PlayerModelHolder* getModelHolder() const { return mModelHolder; }
+
+    PlayerHackKeeper* getHackKeeper() const { return mHackKeeper; }
+
+    PlayerCostumeInfo* getCostumeInfo() const { return mCostumeInfo; }
+
+    const IJudge* getJudgeCameraInWater() const { return mJudgeCameraInWater; }
+
+    const IJudge* getJudgeTalkGround() const { return mJudgeTalkGround; }
+
+    const IJudge* getJudgeTalkSwim() const { return mJudgeTalkSwim; }
+
+    const IJudge* getJudgeNrvPoleClimb() const { return mJudgeNrvPoleClimb; }
+
+    const IJudge* getJudgeNrvWallCatch() const { return mJudgeNrvWallCatch; }
+
+    const IJudge* getJudgeActiveCameraSubjective() const { return mJudgeActiveCameraSubjective; }
+
+    const IJudge* getJudgeNrvSwim() const { return mJudgeNrvSwim; }
+
+    const IJudge* getJudgeSafetyPointRecovery() const { return mJudgeSafetyPointRecovery; }
+
+    const IJudge* getJudgeStatusPoleClimb() const { return mJudgeStatusPoleClimb; }
+
+    const IJudge* getJudgePlaySwitchOnAreaWaitAnim() const {
+        return mJudgePlaySwitchOnAreaWaitAnim;
+    }
+
+    const IJudge* getJudgeSleep() const { return mJudgeSleep; }
+
+    const IJudge* getJudgeEnableGuideArrow() const { return mJudgeEnableGuideArrow; }
+
+    const IJudge* getJudgeEnablePeachAmiibo() const { return mJudgeEnablePeachAmiibo; }
 
 private:
     PlayerModelChangerHakoniwa* mModelChangerHakoniwa = nullptr;
