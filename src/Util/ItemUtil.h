@@ -11,6 +11,7 @@ class HitSensor;
 class SensorMsg;
 }  // namespace al
 class Shine;
+class YoshiFruitShineHolder;
 
 namespace rs {
 // TODO: Replace this with SEAD_ENUM_EX when its ValueArray constructor matches
@@ -61,6 +62,7 @@ bool isAliveShine(const Shine* shine);
 bool isMainShine(const Shine* shine);
 
 void updateHintTrans(const Shine* shine, const sead::Vector3f& trans);
+void registerFruitShineHolder(YoshiFruitShineHolder* holder);
 void appearShineAndJoinBossDemo(Shine* shine, const char* name, const sead::Quatf& quat,
                                 const sead::Vector3f& trans);
 void endShineBossDemo(Shine* shine);
