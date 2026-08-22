@@ -3,7 +3,7 @@
 #include "Library/Camera/CameraTargetBase.h"
 
 namespace al {
-class CameraSubTargetTurnParam;
+struct CameraSubTargetTurnParam;
 
 class CameraSubTargetBase : public CameraTargetBase {
 public:
@@ -13,6 +13,8 @@ public:
     void calcUp(sead::Vector3f* up) const override;
     void calcFront(sead::Vector3f* front) const override;
     void calcVelocity(sead::Vector3f* velocity) const override;
+
+    CameraSubTargetTurnParam* getSubTargetTurnParam() const { return mTurnParam; }
 
 private:
     CameraSubTargetTurnParam* mTurnParam;

@@ -4,20 +4,20 @@
 
 namespace al {
 void CameraSubTargetTurnParam::init(const ActorInitInfo& info) {
-    tryGetArg(&mTurnSpeedRate1, info, "TurnSpeedRate1");
-    tryGetArg(&mTurnSpeedRate2, info, "TurnSpeedRate2");
-    tryGetArg(&mTurnBrakeEndDistance, info, "TurnBrakeEndDistance");
-    tryGetArg(&mTurnBrakeStartDistance, info, "TurnBrakeStartDistance");
-    tryGetArg(&mTurnStopStartDistance, info, "TurnStopStartDistance");
-    tryGetArg(&mTurnStopEndDistance, info, "TurnStopEndDistance");
+    tryGetArg(&turnSpeedRate1, info, "TurnSpeedRate1");
+    tryGetArg(&turnSpeedRate2, info, "TurnSpeedRate2");
+    tryGetArg(&turnBrakeEndDistance, info, "TurnBrakeEndDistance");
+    tryGetArg(&turnBrakeStartDistance, info, "TurnBrakeStartDistance");
+    tryGetArg(&turnStopStartDistance, info, "TurnStopStartDistance");
+    tryGetArg(&turnStopEndDistance, info, "TurnStopEndDistance");
 
-    if (tryGetArg(&mIsTurnV, info, "IsTurnV") && mIsTurnV) {
-        tryGetArg(&mIsResetAfterTurnV, info, "IsResetAfterTurnV");
-        tryGetArg(&mMinTurnDegreeV, info, "MinTurnDegreeV");
-        tryGetArg(&mMaxTurnDegreeV, info, "MaxTurnDegreeV");
+    if (tryGetArg(&isTurnV, info, "IsTurnV") && isTurnV) {
+        tryGetArg(&isResetAfterTurnV, info, "IsResetAfterTurnV");
+        tryGetArg(&minTurnDegreeV, info, "MinTurnDegreeV");
+        tryGetArg(&maxTurnDegreeV, info, "MaxTurnDegreeV");
     }
 
-    tryGetArg(&mValidTurnDegreeRangeH, info, "ValidTurnDegreeRangeH");
-    tryGetArg(&mValidFaceDegreeRangeH, info, "ValidFaceDegreeRangeH");
+    tryGetArg(&validTurnDegreeRangeH, info, "ValidTurnDegreeRangeH");
+    tryGetArg(&validFaceDegreeRangeH, info, "ValidFaceDegreeRangeH");
 }
 }  // namespace al

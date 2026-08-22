@@ -11,7 +11,9 @@ struct CameraFlagCtrl {
     bool isSnapShotModeRunning = false;
     bool isValidCameraAreaKids = false;
     bool isSeparatePlayMode = false;
-    bool _6 = false;
+    bool isInvalidEndEntranceCamera = false;
 };
+
+static_assert(sizeof(CameraFlagCtrl) == 0x7);
 
 }  // namespace al
