@@ -12,6 +12,8 @@ public:
     void reset();
     void setup(s32 no_reduce_frame, s32 reduce_frame, s32 recovery_frame, s32 damage_interval);
 
+    f32 getOxygenLevel() const { return mOxygenLevel; }
+
 private:
     f32 mOxygenLevel = 1.0;
     s32 mFramesReducing = 0;

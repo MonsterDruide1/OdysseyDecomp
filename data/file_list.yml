@@ -157818,31 +157818,31 @@ Util/PlayerUtil.o:
   - offset: 0x56f1c4
     size: 212
     label: _ZN2rs19initPlayerActorInfoEP15PlayerActorBaseRK14PlayerInitInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f298
     size: 312
     label: _ZN2rs22getInitPlayerModelNameERK14PlayerInitInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f3d0
     size: 8
     label: _ZN2rs22isNeedCreateNoseNeedleERK14PlayerInitInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f3d8
     size: 8
     label: _ZN2rs19isClosetScenePlayerERK14PlayerInitInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f3e0
     size: 8
     label: _ZN2rs16getGamePadSystemERK14PlayerInitInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f3e8
     size: 312
     label: _ZN2rs18getInitCapTypeNameERK14PlayerInitInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f520
     size: 220
     label: _ZN2rs31createPlayerSklRetargettingInfoEPN2al9LiveActorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f5fc
     size: 28
     label: _ZN2rs12getPlayerPosEPKN2al9LiveActorE
@@ -157850,559 +157850,559 @@ Util/PlayerUtil.o:
   - offset: 0x56f618
     size: 76
     label: _ZN2rs16getPlayerHeadPosEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f664
     size: 76
     label: _ZN2rs16getPlayerBodyPosEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f6b0
     size: 48
     label: _ZN2rs17calcPlayerSideDirEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f6e0
     size: 48
     label: _ZN2rs15calcPlayerUpDirEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f710
     size: 48
     label: _ZN2rs18calcPlayerFrontDirEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f740
     size: 64
     label: _ZN2rs22calcPlayerGroundPoseUpEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f780
     size: 188
     label: _ZN2rs13isNearPlayerHEPKN2al9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f83c
     size: 188
     label: _ZN2rs30calcPlayerFollowLayoutWorldPosEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f8f8
     size: 60
     label: _ZN2rs12isPlayerHackEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f934
     size: 140
     label: _ZN2rs25tryCalcPlayerCeilingSpaceEPfPKN2al9LiveActorEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f9c0
     size: 176
     label: _ZN2rs28tryCalcKidsGuideCeilingSpaceEPfPKN2al9LiveActorEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fa70
     size: 28
     label: _ZN2rs17getPlayerVelocityEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fa8c
     size: 156
     label: _ZN2rs30tryCalcPlayerModelHeadJointPosEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fb28
     size: 164
     label: _ZN2rs29tryCalcPlayerModelHeadJointUpEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fbcc
     size: 164
     label: _ZN2rs32tryCalcPlayerModelHeadJointFrontEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fc70
     size: 164
     label: _ZN2rs31tryCalcPlayerModelHeadJointSideEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fd14
     size: 164
     label: _ZN2rs30tryCalcPlayerModelNoseJointMtxEPN4sead8Matrix34IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fdb8
     size: 32
     label: _ZN2rs22isPlayerDamageStopDemoEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fdd8
     size: 156
     label: _ZN2rs16isPlayerHackTypeEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fe74
     size: 76
     label: _ZN2rs21isPlayerHackRigidBodyEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56fec0
     size: 76
     label: _ZN2rs24isPlayerHackJugemFishingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ff0c
     size: 172
     label: _ZN2rs21isPlayerHackKuriboAnyEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ffb8
     size: 76
     label: _ZN2rs18isPlayerHackKuriboEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570004
     size: 76
     label: _ZN2rs22isPlayerHackKuriboWingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570050
     size: 76
     label: _ZN2rs23isPlayerHackStatueMarioEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57009c
     size: 308
     label: _ZN2rs17isPlayerHackEnemyEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5701d0
     size: 76
     label: _ZN2rs24isPlayerHackTrilemmaRockEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57021c
     size: 76
     label: _ZN2rs25isPlayerHackTrilemmaPaperEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570268
     size: 76
     label: _ZN2rs28isPlayerHackTrilemmaScissorsEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5702b4
     size: 76
     label: _ZN2rs24isPlayerHackElectricWireEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570300
     size: 76
     label: _ZN2rs16isPlayerHackTRexEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57034c
     size: 76
     label: _ZN2rs20isPlayerHackFukankunEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570398
     size: 76
     label: _ZN2rs17isPlayerHackHosuiEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5703e4
     size: 76
     label: _ZN2rs17isPlayerHackYoshiEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570430
     size: 76
     label: _ZN2rs20isPlayerHackYukimaruEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57047c
     size: 76
     label: _ZN2rs22isPlayerHackHammerBrosEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5704c8
     size: 76
     label: _ZN2rs27isPlayerHackBazookaElectricEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570514
     size: 76
     label: _ZN2rs18isPlayerHackBubbleEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570560
     size: 76
     label: _ZN2rs16isPlayerHackTankEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5705ac
     size: 76
     label: _ZN2rs19isPlayerHackTsukkunEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5705f8
     size: 76
     label: _ZN2rs20isPlayerHackPukupukuEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570644
     size: 172
     label: _ZN2rs23isPlayerHackPukupukuAllEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5706f0
     size: 76
     label: _ZN2rs22isPlayerHackRadiconNpcEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57073c
     size: 76
     label: _ZN2rs18isPlayerHackSenobiEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570788
     size: 76
     label: _ZN2rs17isPlayerHackKakkuEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5707d4
     size: 36
     label: _ZN2rs26isPlayerHackGroupTalkScareEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5707f8
     size: 172
     label: _ZN2rs31isPlayerHackGroupUseCameraStickEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5708a4
     size: 100
     label: _ZN2rs33isPlayerHackNoSeparateCameraInputEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570908
     size: 132
     label: _ZN2rs27isPlayerEnableToSeeOddSpaceEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57098c
     size: 68
     label: _ZN2rs12isPlayerMiniEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5709d0
     size: 76
     label: _ZN2rs10isPlayer3DEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570a1c
     size: 68
     label: _ZN2rs10isPlayer2DEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570a60
     size: 80
     label: _ZN2rs13isPlayerSquatEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570ab0
     size: 60
     label: _ZN2rs15isPlayerInWaterEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570aec
     size: 52
     label: _ZN2rs17isPlayerPoleClimbEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570b20
     size: 52
     label: _ZN2rs17isPlayerWallCatchEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570b54
     size: 52
     label: _ZN2rs24isPlayerCameraSubjectiveEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570b88
     size: 52
     label: _ZN2rs24isPlayerEnableTalkGroundEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570bbc
     size: 52
     label: _ZN2rs22isPlayerEnableTalkSwimEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570bf0
     size: 80
     label: _ZN2rs15isPlayerBindingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570c40
     size: 52
     label: _ZN2rs22isPlayerEquipSomethingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570c74
     size: 76
     label: _ZN2rs25isPlayerEquipRocketFlowerEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570cc0
     size: 72
     label: _ZN2rs29isPlayerEquipNoSeparateActionEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570d08
     size: 24
     label: _ZN23PlayerEquipmentFunction21isEquipmentNoCapThrowEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570d20
     size: 60
     label: _ZN2rs22isPlayerCarrySomethingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570d5c
     size: 60
     label: _ZN2rs15isPlayerNoInputEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570d98
     size: 60
     label: _ZN2rs31isPlayerEnableShowTutorialInputEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570dd4
     size: 52
     label: _ZN2rs27isPlayerSafetyPointRecoveryEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570e08
     size: 52
     label: _ZN2rs27isPlayerPlayingSwitchOnAnimEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570e3c
     size: 72
     label: _ZN2rs31isPlayerEquipNoSeparateTutorialEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570e84
     size: 52
     label: _ZN2rs17isPlayerWaitSleepEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570eb8
     size: 60
     label: _ZN2rs34isPlayerAboveSeparateCapGuideArrowEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570ef4
     size: 60
     label: _ZN2rs28isPlayerInvalidateGuideArrowEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570f30
     size: 52
     label: _ZN2rs20isPlayerInvisibleCapEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570f64
     size: 56
     label: _ZN2rs25isPlayerEnablePeachAmiiboEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570f9c
     size: 80
     label: _ZN2rs35isPlayerActiveMarioAmiiboInvincibleEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x570fec
     size: 296
     label: _ZN2rs22isPlayerCollidedGroundEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571114
     size: 272
     label: _ZN2rs23isPlayerCollidedCeilingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571224
     size: 324
     label: _ZN2rs16isPlayerOnGroundEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571368
     size: 48
     label: _ZN2rs15isPlayerOnActorEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571398
     size: 288
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_132tryGetPlayerGroundCollisionPartsEPKN2al9LiveActorE
+    status: Matching
   - offset: 0x5714b8
     size: 148
     label: _ZN2rs20isPlayerOnChairActorEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57154c
     size: 148
     label: _ZN2rs18isPlayerOnBedActorEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5715e0
     size: 168
     label: _ZN2rs20isPlayerFaceToTargetEPKN2al9LiveActorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571688
     size: 40
     label: _ZN2rs20isPlayerFaceToTargetEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5716b0
     size: 228
     label: _ZN2rs27isPlayerFaceToTargetInRangeEPKN2al9LiveActorERKN4sead7Vector3IfEEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571794
     size: 56
     label: _ZN2rs27isPlayerFaceToTargetInRangeEPKN2al9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5717cc
     size: 156
     label: _ZN2rs18tryGetFlyingCapPosEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571868
     size: 148
     label: _ZN2rs23tryGetFlyingCapVelocityEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5718fc
     size: 256
     label: _ZN2rs34isEnableReceiveCapStartLockOnAngleEPKN2al9LiveActorEPKNS0_9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5719fc
     size: 120
     label: _ZN2rs18isGuardNosePainCapEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571a74
     size: 60
     label: _ZN2rs17isEquipCapCatchedEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571ab0
     size: 60
     label: _ZN2rs25getFlyingCapThrowSpeedMaxEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571aec
     size: 104
     label: _ZN2rs23isPlayerCapSpinOrFlyingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571b54
     size: 60
     label: _ZN2rs17isPlayerCapFlyingEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571b90
     size: 60
     label: _ZN2rs24isPlayerCapSeparateThrowEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571bcc
     size: 80
     label: _ZN2rs19isEmptyPlayerOxygenEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571c1c
     size: 56
     label: _ZN2rs20recoveryPlayerOxygenEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571c54
     size: 76
     label: _ZN2rs17requestBindPlayerEPKN2al9LiveActorEPNS0_9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571ca0
     size: 120
     label: _ZN2rs25sendMsgBreakFloorToPlayerEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571d18
     size: 76
     label: _ZN2rs21requestStageStartHackEPKN2al9LiveActorEPNS0_9HitSensorEPK13CapTargetInfoPS1_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571d64
     size: 248
     label: _ZN2rs15isEnableOpenMapEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571e5c
     size: 60
     label: _ZN2rs20syncPlayerModelAlphaEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571e98
     size: 148
     label: _ZN2rs25getPlayerShadowDropLengthEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x571f2c
     size: 272
     label: _ZN2rs35isExistLabelInPlayerHackSystemMstxtEPKN2al9LiveActorEPKNS0_17IUseMessageSystemEPKcS8_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57203c
     size: 288
     label: _ZN2rs32getPlayerHackSystemMessageStringEPKN2al9LiveActorEPKNS0_17IUseMessageSystemEPKcS8_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57215c
     size: 84
     label: _ZN2rs30getPlayerHackTutorialMoviePathEPN2al9StringTmpILi64EEEPKNS0_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5721b0
     size: 152
     label: _ZN2rs34calcPlayerAmiiboPeachAppearBasePosEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572248
     size: 60
     label: _ZN2rs27isPlayerInputHoldBalloonSetEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572284
     size: 60
     label: _ZN2rs22isPlayerInputHoldSquatEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5722c0
     size: 60
     label: _ZN2rs30isPlayerInputHoldCapKeepLockOnEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5722fc
     size: 60
     label: _ZN2rs28isPlayerInputHoldCarryActionEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572338
     size: 60
     label: _ZN2rs34isPlayerInputHoldEnterUpperDokan2DEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572374
     size: 80
     label: _ZN2rs33isPlayerInputHoldEnterSideDokan2DEPKN2al9LiveActorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5723c4
     size: 60
     label: _ZN2rs29isPlayerInputTriggerStartTalkEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572400
     size: 60
     label: _ZN2rs24isPlayerInputTriggerRideEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57243c
     size: 60
     label: _ZN2rs40isPlayerInputTriggerSeparateCapJangoHelpEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572478
     size: 276
     label: _ZN2rs36tryGetPlayerInputWallAlongWallNormalEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57258c
     size: 596
     label: _ZN2rs17calcPlayerHoldPosEPN4sead7Vector3IfEEPKN2al9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5727e0
     size: 820
     label: _ZN2rs17calcPlayerHoldMtxEPN4sead8Matrix34IfEEPKN2al9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572b14
     size: 72
     label: _ZN2rs23setPlayerHoldJointAngleEPKN2al9HitSensorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572b5c
     size: 84
     label: _ZN2rs20updatePosePlayerHoldEPN2al9LiveActorEPKNS0_9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572bb0
     size: 116
     label: _ZN2rs29updatePosePlayerHoldAddOffsetEPN2al9LiveActorEPKNS0_9HitSensorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572c24
     size: 236
     label: _ZN2rs22calcPlayerGuideOffsetYEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572d10
     size: 100
     label: _ZN2rs23isEnablePlayerHeadGuideEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572d74
     size: 140
     label: _ZN2rs18calcPlayerGuidePosEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572e00
     size: 128
     label: _ZN2rs18calcPlayerGuidePosEPN4sead7Vector3IfEEPKN2al9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572e80
     size: 92
     label: _ZN23PlayerEquipmentFunction31createEquipmentInfoRocketFlowerEPN2al9LiveActorEif
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572edc
     size: 60
     label: _ZN23PlayerEquipmentFunction27createEquipmentInfoKoopaCapEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572f18
     size: 108
     label: _ZN23PlayerEquipmentFunction10startEquipEPN2al9HitSensorES2_PK13EquipmentInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572f84
     size: 40
     label: _ZN23PlayerEquipmentFunction8endEquipEPP19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572fac
     size: 68
     label: _ZN23PlayerEquipmentFunction19syncEquipVisibilityEPN2al9LiveActorEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x572ff0
     size: 20
     label: _ZN23PlayerEquipmentFunction26tryNoticeEquipPlayerDamageEP19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573004
     size: 8
     label: _ZN23PlayerEquipmentFunction18isTriggerCapActionEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57300c
     size: 8
     label: _ZN23PlayerEquipmentFunction18isTriggerSwingLeftEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573014
     size: 8
     label: _ZN23PlayerEquipmentFunction19isTriggerSwingRightEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57301c
     size: 8
     label: _ZN23PlayerEquipmentFunction15isPlayerRollingEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573024
     size: 24
     label: _ZN23PlayerEquipmentFunction20isEquipmentForceDashEPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
   - offset: 0x57303c
     size: 96
     label: _ZN23PlayerEquipmentFunction28tryGetEquipmentForceDashInfoEPiPfPK19PlayerEquipmentUser
-    status: NotDecompiled
+    status: Matching
 Util/ScenePlayerCameraFunction.o:
   '.text':
   - offset: 0x57309c

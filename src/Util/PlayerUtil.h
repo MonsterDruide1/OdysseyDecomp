@@ -4,6 +4,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+#include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/Base/StringUtil.h"
 
 namespace al {
@@ -11,12 +12,13 @@ class GamePadSystem;
 class HitSensor;
 class IUseMessageSystem;
 class LiveActor;
-struct SklAnimRetargettingInfo;
 }  // namespace al
 
 class CapTargetInfo;
+class EquipmentInfo;
 class PlayerActorBase;
-class PlayerInitInfo;
+class PlayerEquipmentUser;
+struct PlayerInitInfo;
 
 namespace rs {
 
@@ -159,3 +161,21 @@ void calcPlayerGuidePos(sead::Vector3f*, const al::LiveActor*);
 void calcPlayerGuidePos(sead::Vector3f*, const al::LiveActor*, f32);
 
 }  // namespace rs
+
+namespace PlayerEquipmentFunction {
+
+EquipmentInfo* createEquipmentInfoRocketFlower(al::LiveActor*, s32, f32);
+EquipmentInfo* createEquipmentInfoKoopaCap(al::LiveActor*);
+PlayerEquipmentUser* startEquip(al::HitSensor*, al::HitSensor*, const EquipmentInfo*);
+void endEquip(PlayerEquipmentUser**);
+void syncEquipVisibility(al::LiveActor*, const PlayerEquipmentUser*);
+bool tryNoticeEquipPlayerDamage(PlayerEquipmentUser*);
+bool isTriggerCapAction(const PlayerEquipmentUser*);
+bool isTriggerSwingLeft(const PlayerEquipmentUser*);
+bool isTriggerSwingRight(const PlayerEquipmentUser*);
+bool isPlayerRolling(const PlayerEquipmentUser*);
+bool isEquipmentNoCapThrow(const PlayerEquipmentUser*);
+bool isEquipmentForceDash(const PlayerEquipmentUser*);
+bool tryGetEquipmentForceDashInfo(s32*, f32*, const PlayerEquipmentUser*);
+
+}  // namespace PlayerEquipmentFunction

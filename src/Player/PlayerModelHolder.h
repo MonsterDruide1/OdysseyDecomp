@@ -21,6 +21,9 @@ public:
     void changeModel(const char* name);
     al::LiveActor* findModelActor(const char* name) const;
     al::LiveActor* tryFindModelActor(const char* name) const;
+
+    al::LiveActor* getCurrentModelActor() const { return mCurrentModel->actor; }
+
     bool isCurrentModelLabel(const char* name) const;
     bool isCurrentModelLabelSubString(const char* name) const;
 
