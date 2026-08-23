@@ -17,5 +17,22 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "MonsterDruide1/OdysseyDecompToolsCache"
     }
-  ]
+  ],
+  "semanticCommits": "disabled",
+  "packageRules": [
+    {
+      "matchManagers": ["git-submodules"],
+      "commitMessage": "{{{depName}}}: Update to {{{newDigestShort}}}"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "commitMessage": "workflow: Update {{{depName}}} to {{{newVersion}}}"
+    },
+    {
+      "matchManagers": ["custom.regex"],
+      "matchDepNames": ["MonsterDruide1/OdysseyDecompToolsCache"],
+      "commitMessage": "tools: Update binary cache to {{{newVersion}}}"
+    }
+  ],
+  "configMigration": true
 }
