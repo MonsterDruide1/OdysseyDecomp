@@ -5,6 +5,7 @@
 #include <math/seadVector.h>
 
 namespace al {
+class EventFlowEventData;
 class HitSensor;
 class IUseNerve;
 class LiveActor;
@@ -16,9 +17,11 @@ class ActorStateReactionBase;
 class NpcJointLookAtController;
 class NpcStateReactionParam;
 class PlayerEyeSensorHitHolder;
+class TalkNpcActionAnimInfo;
 class TalkNpcParam;
 
 namespace rs {
+const TalkNpcParam* initTalkNpcParam(al::LiveActor*, const char*);
 bool tryApplyNpcMaterialAnimPresetFromPlacementInfo(al::LiveActor*, const al::ActorInitInfo&,
                                                     const TalkNpcParam*);
 void setNpcMaterialAnimFromPlacementInfo(al::LiveActor*, const al::ActorInitInfo&);
@@ -63,7 +66,9 @@ bool isInvalidTrampleSensor(const al::HitSensor*, const TalkNpcParam*);
 
 namespace TalkNpcFunction {
 bool tryGetHackingEventHackType(s32*, const al::ActorInitInfo&);
-}
+bool receiveEventChangeWaitAction(TalkNpcActionAnimInfo*, const al::EventFlowEventData*,
+                                  const TalkNpcParam*);
+}  // namespace TalkNpcFunction
 
 namespace BirdFunction {
 void tryUpdateFlyAwayDisappearDitherAlpha(al::LiveActor* actor, const al::IUseNerve* user,

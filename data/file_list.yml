@@ -69721,106 +69721,106 @@ MapObj/FishingUpObj.o:
   - offset: 0x283838
     size: 164
     label: _ZN12FishingUpObjC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2838dc
     size: 160
     label: _ZN12FishingUpObjC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28397c
     size: 724
     label: _ZN12FishingUpObj4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283c50
     size: 156
     label: _ZN12FishingUpObj6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283cec
     size: 148
     label: _ZN12FishingUpObj4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283d80
     size: 244
     label: _ZN12FishingUpObj14updateColliderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283e74
     size: 92
     label: _ZN12FishingUpObj12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283ed0
     size: 252
     label: _ZN12FishingUpObj10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283fcc
     size: 28
     label: _ZNK12FishingUpObj16isKinopioBrigadeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x283fe8
     size: 128
     label: _ZN12FishingUpObj12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284068
     size: 132
     label: _ZThn264_N12FishingUpObj12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2840ec
     size: 28
     label: _ZNK12FishingUpObj7isPochiEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284108
     size: 16
     label: _ZNK12FishingUpObj12isExistShineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284118
     size: 72
     label: _ZNK12FishingUpObj16isAfterGiveShineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284160
     size: 84
     label: _ZNK12FishingUpObj27isValidAfterAppearDemoEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2841b4
     size: 4
     label: _ZN12FishingUpObj31tryStartAppearAndStartDemoEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2841b8
     size: 144
     label: _ZN12FishingUpObj23tryUpdateShineHintTransERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284248
     size: 268
     label: _ZN12FishingUpObj12exeFishingUpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284354
     size: 92
     label: _ZN12FishingUpObj8exePopUpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2843b0
     size: 104
     label: _ZN12FishingUpObj7exeLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x284418
     size: 52
     label: _ZN12FishingUpObj8exeEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28444c
     size: 96
     label: _ZNK12_GLOBAL__N_120FishingUpObjNrvPopUp7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2844ac
     size: 56
     label: _ZNK12_GLOBAL__N_120FishingUpObjNrvEvent7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2844e4
     size: 8
     label: _ZNK12_GLOBAL__N_124FishingUpObjNrvFishingUp7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2844ec
     size: 108
     label: _ZNK12_GLOBAL__N_119FishingUpObjNrvLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/FixMapParts2D.o:
   '.text':
