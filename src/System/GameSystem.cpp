@@ -67,7 +67,7 @@ void GameSystem::init() {
 
     mNetworkSystem = new al::NetworkSystem(mAccountHolder->getUserHandle(), true);
     mNetworkSystem->requestSystemInitialize();
-    mSystemInfo->networkSystem = mNetworkSystem;
+    mSystemInfo->setNetworkSystem(mNetworkSystem);
 
     mHtmlViewer = new al::HtmlViewer();
     mSystemInfo->htmlViewer = mHtmlViewer;
@@ -196,20 +196,21 @@ void GameSystem::init() {
         "システム常駐", mAudioInfoList,
         alAudioSystemFunction::getSeadAudioPlayerForSe(mAudioSystem),
         alAudioSystemFunction::getSeadAudioPlayerForBgm(mAudioSystem));
-    mSystemInfo->audioSystem = mAudioSystem;
+    mSystemInfo->setAudioSystem(mAudioSystem);
     mGamePadSystem = new al::GamePadSystem();
 
     setPadName();
 
-    mSystemInfo->gamePadSystem = mGamePadSystem;
+    mSystemInfo->setGamePadSystem(mGamePadSystem);
     mGamePadSystem->setAudioSystem(mAudioSystem);
     mWaveVibrationHolder = new al::WaveVibrationHolder(mGamePadSystem);
-    mSystemInfo->waveVibrationHolder = mWaveVibrationHolder;
+    mSystemInfo->setWaveVibrationHolder(mWaveVibrationHolder);
     mAudioSystem->addAudiioFrameProccess(mWaveVibrationHolder);
 
     mApplicationMessageReceiver = new al::ApplicationMessageReceiver();
     mApplicationMessageReceiver->init();
-    mSystemInfo->applicationMessageReceiver = mApplicationMessageReceiver;
+    mSystemInfo->setApplicationMessageReceiver(mApplicationMessageReceiver);
+
     al::setGpuPerformance(al::GpuPerformance::unk3, nn::oe::PerformanceMode_Normal);
     al::createSequenceHeap();
     tryChangeSequence("HakoniwaSequence");
@@ -269,9 +270,9 @@ void GameSystem::movement() {
 void GameSystem::setPadName() {
     MessageSystemUser messageSystemUser = MessageSystemUser{mSystemInfo->messageSystem};
     mGamePadSystem->setPadName(
-        0, al::getSystemMessageString(&messageSystemUser, "ControllerApplet", "SeperatePlayer1"));
+        0, al::getSystemMessageString(&messageSystemUser, "ControllerApplet", "SeparatePlayer1"));
     mGamePadSystem->setPadName(
-        1, al::getSystemMessageString(&messageSystemUser, "ControllerApplet", "SeperatePlayer2"));
+        1, al::getSystemMessageString(&messageSystemUser, "ControllerApplet", "SeparatePlayer2"));
 }
 
 bool GameSystem::tryChangeSequence(const char* name) {

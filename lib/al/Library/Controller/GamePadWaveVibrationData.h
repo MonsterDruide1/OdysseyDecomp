@@ -4,9 +4,9 @@
 
 namespace al {
 
-class WaveVibrationHolder : public al::HioNode, public aal::IAudioFrameProcess {
+class WaveVibrationHolder : public HioNode, public aal::IAudioFrameProcess {
 public:
-    WaveVibrationHolder(const al::GamePadSystem*);
+    WaveVibrationHolder(const GamePadSystem*);
 
 private:
     char filler[0xd8];

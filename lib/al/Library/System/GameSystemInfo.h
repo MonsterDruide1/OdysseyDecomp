@@ -27,6 +27,20 @@ struct DrawSystemInfo {
 struct GameSystemInfo {
     GameSystemInfo();
 
+    void setNetworkSystem(NetworkSystem* netSys) { networkSystem = netSys; }
+
+    void setApplicationMessageReceiver(ApplicationMessageReceiver* appMsgRecv) {
+        applicationMessageReceiver = appMsgRecv;
+    }
+
+    void setWaveVibrationHolder(WaveVibrationHolder* waveVbrHolder) {
+        waveVibrationHolder = waveVbrHolder;
+    }
+
+    void setAudioSystem(AudioSystem* audioSys) { audioSystem = audioSys; }
+
+    void setGamePadSystem(GamePadSystem* gamePadSys) { gamePadSystem = gamePadSys; }
+
     AudioSystem* audioSystem;
     EffectSystem* effectSystem;
     LayoutSystem* layoutSystem;

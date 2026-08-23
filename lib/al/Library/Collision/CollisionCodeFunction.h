@@ -2,10 +2,10 @@
 
 namespace al {
 class CollisionCodeList;
-} // namespace al
+}  // namespace al
 
 namespace alCollisionCodeFunction {
 
 al::CollisionCodeList* tyrCreateCollisionCodeList(const char*);
 
-} // namespace alCollisionCodeFunction
+}  // namespace alCollisionCodeFunction

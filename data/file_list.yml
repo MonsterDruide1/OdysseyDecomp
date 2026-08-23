@@ -150682,7 +150682,7 @@ System/GameSystem.o:
   - offset: 0x535850
     size: 2880
     label: _ZN10GameSystem4initEv
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x536390
     size: 176
     label: _ZN10GameSystem10setPadNameEv

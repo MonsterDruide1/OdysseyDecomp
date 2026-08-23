@@ -14,9 +14,9 @@ class AudioDirector;
 class Scene;
 
 struct SequenceInitInfo {
-    SequenceInitInfo(const al::GameSystemInfo* info);
+    SequenceInitInfo(const GameSystemInfo* info);
 
-    const al::GameSystemInfo* systemInfo;
+    const GameSystemInfo* systemInfo;
 };
 
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {

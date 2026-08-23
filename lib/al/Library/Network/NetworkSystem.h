@@ -1,7 +1,9 @@
 #pragma once
+
+#include <basis/seadTypes.h>
+
 #include "Library/HostIO/HioNode.h"
 #include "Library/LiveActor/ActorModelFunction.h"
-#include "basis/seadTypes.h"
 
 namespace sead {
 class Thread;
@@ -16,7 +18,7 @@ namespace al {
 // TODO: Find a better place for this.
 class IUseNexNetworkStateHolder {};
 
-class NetworkSystem : public IUseNexNetworkStateHolder, HioNode {
+class NetworkSystem : public IUseNexNetworkStateHolder, public HioNode {
 public:
     void allocNexMemory(u64);
     void freeNexMemory(void*);

@@ -1,5 +1,6 @@
 #pragma once
-#include "container/seadPtrArray.h"
+
+#include <container/seadPtrArray.h>
 
 namespace al {
 
