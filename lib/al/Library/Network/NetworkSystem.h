@@ -3,7 +3,6 @@
 #include <basis/seadTypes.h>
 
 #include "Library/HostIO/HioNode.h"
-#include "Library/LiveActor/ActorModelFunction.h"
 
 namespace sead {
 class Thread;
@@ -38,5 +37,7 @@ public:
 private:
     char filler[0x48];
 };
+
+static_assert(sizeof(NetworkSystem) == 0x48);
 
 }  // namespace al

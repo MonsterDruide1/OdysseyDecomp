@@ -18,21 +18,21 @@ struct AudioSystemInitInfo {
         systemHeapSize = heap->getFreeSize();
     }
 
-    void setMaterialCode(CollisionCodeList* a, CollisionCodeList* b) {
-        materialCodeList = a;
-        materialCodePrefixList = b;
+    void setMaterialCode(CollisionCodeList* codeList, CollisionCodeList* codePrefixList) {
+        materialCodeList = codeList;
+        materialCodePrefixList = codePrefixList;
     }
 
     const char* seDataName = nullptr;
     const char* seBgmName = nullptr;
-    bool unk1 = true;
-    bool unk2 = true;
+    bool _10 = true;
+    bool _11 = true;
     bool isBgmOnSameMixIndex = false;
     f32 masterVolume = 1.0f;
     f32 dockedVolume = 1.0f;
     f32 undockedVolume = 1.0f;
     s32 systemHeapSize = -1;
-    s32 unk4 = 0;
+    s32 _24 = 0;
     bool useAudioMaximizer = false;
     bool changeInputBgmChannelVolume = false;
     f32 monoVolume = 1.0f;
@@ -41,6 +41,8 @@ struct AudioSystemInitInfo {
     CollisionCodeList* materialCodePrefixList = nullptr;
     s32 cacheSizePerSound = 0;
 };
+
+static_assert(sizeof(AudioSystemInitInfo) == 0x50);
 
 struct AudioSystemInfo {
     AudioSystemInfo();

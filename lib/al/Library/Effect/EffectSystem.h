@@ -7,15 +7,15 @@
 
 namespace agl {
 class DrawContext;
-}
+} // namespace agl
 
 namespace agl::sdw {
 class DepthShadow;
-}
+} // namespace agl::sdw
 
 namespace sead {
 class Heap;
-}
+} // namespace sead
 
 namespace al {
 class CameraDirector;
@@ -94,22 +94,22 @@ private:
     s32 mResourcePathSize;
     s32 mResourcePathCapacity;
     const char** mResourcePaths;
-    void* filler[3];
+    void* filler_50[3];
     bool _68;
     bool _69;
     bool _6a;
-    void* filler2[97];
+    void* filler_70[97];
     CollisionCodeList* mMaterialCodePrefix;
-    void* filler3;
+    void* filler_380;
     s32 mEffectLayoutDrawerSize;
     EffectLayoutDrawer** mEffectLayoutDrawerList;
     EffectShaderHolder* mEffectShaderHolder;
-    void* filler4[4];
+    void* filler_3a0[4];
     agl::DrawContext* mDrawContext;
     EffectEnvParam* mEffectEnvParam;
-    void* filler5;
+    void* filler_3d0;
 };
 
 static_assert(sizeof(EffectSystem) == 0x3d8);
 
-}  // namespace al
+} // namespace al

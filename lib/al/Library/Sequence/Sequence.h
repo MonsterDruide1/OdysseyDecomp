@@ -19,6 +19,8 @@ struct SequenceInitInfo {
     const GameSystemInfo* systemInfo;
 };
 
+static_assert(sizeof(SequenceInitInfo) == 0x8);
+
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {
 public:
     Sequence(const char* name);

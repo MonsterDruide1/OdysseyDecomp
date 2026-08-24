@@ -7,6 +7,7 @@ public:
     virtual ~IAudioFrameProcess();
 
 private:
+    virtual void audioFrameProcess_();
 };
 
 }  // namespace aal
