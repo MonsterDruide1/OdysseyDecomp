@@ -1,7 +1,6 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-
 #include <heap/seadHeap.h>
 
 namespace agl {
