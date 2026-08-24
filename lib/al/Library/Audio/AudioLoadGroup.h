@@ -18,6 +18,8 @@ struct AudioResourceLoadInfo {
 
     const char* name = nullptr;
     bool isBgm = false;
+
+    static s32 compareInfo(const AudioResourceLoadInfo* lhs, const AudioResourceLoadInfo* rhs);
 };
 
 static_assert(sizeof(AudioResourceLoadInfo) == 0x10);
