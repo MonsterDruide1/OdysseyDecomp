@@ -1,8 +1,8 @@
 #pragma once
 
-#include <nn/hid.h>
-
 #include "Library/Audio/IAudioFrameProcess.h"
+#include "Library/HostIO/HioNode.h"
+#include "Library/Controller/GamePadSystem.h"
 
 namespace nn::hid {
 
