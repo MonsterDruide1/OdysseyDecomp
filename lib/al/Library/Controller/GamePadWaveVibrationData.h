@@ -53,4 +53,6 @@ private:
     char filler[0xd8];
 };
 
+static_assert(sizeof(WaveVibrationHolder) == 0xe0);
+
 }  // namespace al

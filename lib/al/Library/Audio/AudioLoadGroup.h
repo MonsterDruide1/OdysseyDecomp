@@ -9,6 +9,8 @@ template <typename T>
 class AudioInfoListWithParts;
 
 struct AudioResourceLoadInfo {
+    static s32 compareInfo(const AudioResourceLoadInfo* lhs, const AudioResourceLoadInfo* rhs);
+
     AudioResourceLoadInfo();
 
     void initialize(const char* name_, bool isBgm_) {
@@ -18,8 +20,6 @@ struct AudioResourceLoadInfo {
 
     const char* name = nullptr;
     bool isBgm = false;
-
-    static s32 compareInfo(const AudioResourceLoadInfo* lhs, const AudioResourceLoadInfo* rhs);
 };
 
 static_assert(sizeof(AudioResourceLoadInfo) == 0x10);
