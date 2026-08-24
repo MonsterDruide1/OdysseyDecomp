@@ -2,6 +2,8 @@
 
 #include <basis/seadTypes.h>
 
+#include <heap/seadHeap.h>
+
 namespace agl {
 class DrawContext;
 }  // namespace agl
