@@ -8,12 +8,12 @@ namespace nn::hid {
 
 class VibrationMixer;
 
-} // namespace nn::hid
+}  // namespace nn::hid
 
 namespace al {
 
 struct WaveVibrationData {
-    bool operator <(const WaveVibrationData&);
+    bool operator<(const WaveVibrationData&);
 };
 
 class WaveVibrationPlayer {
@@ -48,7 +48,7 @@ public:
     void endPause();
     void startVibrationDirectValue(s32, f32, f32, f32, f32, f32, f32);
     void stopVibrationDirectValue(s32);
-    
+
 private:
     char filler[0xd8];
 };

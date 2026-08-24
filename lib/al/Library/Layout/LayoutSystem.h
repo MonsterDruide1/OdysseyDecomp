@@ -4,15 +4,15 @@
 
 namespace agl {
 class DrawContext;
-} // namespace agl
+}  // namespace agl
 
 namespace nn::ui2d {
 class DrawInfo;
-} // namespace nn::ui2d
+}  // namespace nn::ui2d
 
 namespace nn::font {
 class ScalableFont;
-} // namespace nn::font
+}  // namespace nn::font
 
 namespace al {
 class EffectSystem;

@@ -7,15 +7,15 @@
 
 namespace agl {
 class DrawContext;
-} // namespace agl
+}  // namespace agl
 
 namespace agl::sdw {
 class DepthShadow;
-} // namespace agl::sdw
+}  // namespace agl::sdw
 
 namespace sead {
 class Heap;
-} // namespace sead
+}  // namespace sead
 
 namespace al {
 class CameraDirector;
@@ -112,4 +112,4 @@ private:
 
 static_assert(sizeof(EffectSystem) == 0x3d8);
 
-} // namespace al
+}  // namespace al

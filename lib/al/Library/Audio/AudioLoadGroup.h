@@ -5,7 +5,8 @@
 namespace al {
 
 class ByamlIter;
-template<typename T> class AudioInfoListWithParts;
+template <typename T>
+class AudioInfoListWithParts;
 
 struct AudioResourceLoadInfo {
     AudioResourceLoadInfo();
@@ -26,6 +27,7 @@ struct AudioLoadGroupList {
     void* _8;
     sead::PtrArray<AudioResourceLoadInfo>* resourceLoadInfos;
 };
+
 static_assert(sizeof(AudioLoadGroupList) == 0x18);
 
 struct AudioResourceLoadGroupInfo {
