@@ -140,8 +140,8 @@ def common_include_order(c, path, is_header):
         if CHECK(lambda a: a == "", lines[0], "\"#pragma once\" must be followed by exactly one empty line!",
                  path): return
         del lines[0]
-    elif not path.endswith("src/System/Init.cpp"):
-        # hardcoded exception: Init.cpp contains C functions and no header to relate to
+    elif not path.endswith("src/System/Main.cpp"):
+        # hardcoded exception: Main.cpp contains C functions and no header to relate to
         if "src/" in path:
             rel_path = path.split("src/")[-1]
         elif "al/" in path:
