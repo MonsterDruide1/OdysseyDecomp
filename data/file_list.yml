@@ -208959,7 +208959,7 @@ sead/time/seadDateTime.o:
     label:
     - _ZN4sead8DateTimeC1ERKNS_11DateTimeUtcE
     - _ZN4sead8DateTimeC2ERKNS_11DateTimeUtcE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x764a04
     size: 60
     label: _ZN4sead8DateTime26initializeSystemTimeModuleEv

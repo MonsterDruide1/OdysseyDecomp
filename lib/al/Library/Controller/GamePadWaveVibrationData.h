@@ -12,9 +12,16 @@ class VibrationMixer;
 
 namespace al {
 
+class VibrationPlayer;
+class VibrationNodeConnection;
+
 struct WaveVibrationData {
     bool operator<(const WaveVibrationData&);
+
+    char filler[0x18];
 };
+
+static_assert(sizeof(WaveVibrationData) == 0x18);
 
 class WaveVibrationPlayer {
 public:
@@ -31,7 +38,18 @@ public:
     bool isPlaying() const;
     void changePitch(f32, f32);
     void changeVolumeAndPitch(f32, f32, f32, f32);
+
+private:
+    VibrationPlayer* mVibrationPlayer;
+    VibrationNodeConnection* _8;
+    VibrationNodeConnection* _10;
+    s32 _18;
+    WaveVibrationData* mData;
+    bool _28;
+    bool _29;
 };
+
+static_assert(sizeof(WaveVibrationPlayer) == 0x30);
 
 class WaveVibrationHolder : public HioNode, public aal::IAudioFrameProcess {
 public:

@@ -10,6 +10,7 @@ class AudioInfoListWithParts;
 
 struct AudioResourceLoadInfo {
     static s32 compareInfo(const AudioResourceLoadInfo* lhs, const AudioResourceLoadInfo* rhs);
+    static AudioResourceLoadInfo* createInfo(const ByamlIter& iter);
 
     AudioResourceLoadInfo();
 

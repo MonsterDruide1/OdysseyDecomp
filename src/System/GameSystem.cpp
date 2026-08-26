@@ -246,8 +246,9 @@ void GameSystem::movement() {
         mNetworkSystem->updateAfterScene();
 
     if (!mSequence->isAlive()) {
-        if (al::isEqualString("HakoniwaSequence", mSequence->getName().cstr())) {
-            GameDataHolder* gameDataHolder = ((HakoniwaSequence*)(mSequence))->getGameDataHolder();
+        if (al::isEqualString("HakoniwaSequence", mSequence->getName())) {
+            GameDataHolder* gameDataHolder =
+                static_cast<HakoniwaSequence*>(mSequence)->getGameDataHolder();
             mIsSinglePlay = gameDataHolder->isSeparatePlay();
             mIsSequenceSetupIncomplete = true;
             *mGameConfigData = *gameDataHolder->getGameConfigData();
@@ -297,10 +298,11 @@ bool GameSystem::tryChangeSequence(const char* name) {
     mSequence = sequence;
 
     if (al::isEqualString(name, "HakoniwaSequence")) {
-        GameDataHolder* gameDataHolder = ((HakoniwaSequence*)(mSequence))->getGameDataHolder();
+        GameDataHolder* gameDataHolder =
+            static_cast<HakoniwaSequence*>(mSequence)->getGameDataHolder();
         gameDataHolder->setSeparatePlay(mIsSinglePlay);
         if (mIsSequenceSetupIncomplete) {
-            *gameDataHolder->getGameConfigData() = *mGameConfigData;
+            gameDataHolder->setGameConfigData(mGameConfigData);
             mIsSequenceSetupIncomplete = false;
         }
     }

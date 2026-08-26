@@ -289,6 +289,8 @@ public:
 
     GameConfigData* getGameConfigData() const { return mGameConfigData; }
 
+    void setGameConfigData(GameConfigData* data) { mGameConfigData = data; }
+
     SaveDataAccessSequence* getSaveDataAccessSequence() const { return mSaveDataAccessSequence; }
 
 private:
