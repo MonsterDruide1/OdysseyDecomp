@@ -6,6 +6,7 @@
 #include <nn/oe.h>
 
 #include "Library/Application/ApplicationMessageReceiver.h"
+#include "Library/Base/Macros.h"
 #include "Library/Audio/AudioInfo.h"
 #include "Library/Audio/AudioLoadGroup.h"
 #include "Library/Audio/System/AudioKeeperFunction.h"
@@ -54,6 +55,15 @@ private:
 }  // namespace
 
 GameSystem::GameSystem() : NerveExecutor("ゲームシステム") {}
+
+ALWAYS_INLINE void
+addAudioInfo(al::AudioInfoListWithParts<al::AudioResourceLoadInfo>* info, const char* name,
+             bool isBgm) {
+    al::AudioResourceLoadInfo* resourceLoadInfo = new al::AudioResourceLoadInfo;
+    resourceLoadInfo->initialize(name, isBgm);
+    if (info)
+        al::trySetAudioInfo(info, resourceLoadInfo, false);
+}
 
 void GameSystem::init() {
     mSystemInfo = new al::GameSystemInfo;
@@ -121,79 +131,40 @@ void GameSystem::init() {
         alAudioSystemFunction::getSeadAudioPlayerForSe(mAudioSystem),
         alAudioSystemFunction::getSeadAudioPlayerForBgm(mAudioSystem));
 
-    al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>* groupList =
-        new al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>;
-    groupList->init(2, 0);
-    mAudioInfoList = groupList;
+    al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>* audioLoadInfo =
+        new al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>(2);
+    mAudioLoadInfo = audioLoadInfo;
 
-    al::AudioResourceLoadGroupInfo* loadInfo = new al::AudioResourceLoadGroupInfo();
-    loadInfo->name = "システム常駐";
+    al::AudioResourceLoadGroupInfo* residentGroupInfo = new al::AudioResourceLoadGroupInfo();
+    residentGroupInfo->name = "システム常駐";
 
-    al::AudioInfoListWithParts<al::AudioResourceLoadInfo>* userInfoList =
-        new al::AudioInfoListWithParts<al::AudioResourceLoadInfo>;
-    userInfoList->init(1, 0);
-    loadInfo->userManagementGroupLoadInfoList = userInfoList;
+    residentGroupInfo->userManagementGroupList =
+        new al::AudioInfoListWithParts<al::AudioResourceLoadInfo>(1);
+    residentGroupInfo->addonSoundArchiveList =
+        new al::AudioInfoListWithParts<al::AudioResourceLoadInfo>(1);
 
-    al::AudioInfoListWithParts<al::AudioResourceLoadInfo>* addonInfoList =
-        new al::AudioInfoListWithParts<al::AudioResourceLoadInfo>;
-    addonInfoList->init(1, 0);
-    auto* copy = loadInfo->userManagementGroupLoadInfoList;
-    loadInfo->addonSoundArchiveLoadInfoList = addonInfoList;
+    addAudioInfo(residentGroupInfo->userManagementGroupList, "SeResourceStdSystem", false);
+    addAudioInfo(residentGroupInfo->addonSoundArchiveList, "TestSE", false);
 
-    al::AudioResourceLoadInfo* strSystemInfo = new al::AudioResourceLoadInfo;
-    strSystemInfo->initialize("SeResourceStdSystem", false);
-    if (copy)
-        al::trySetAudioInfo2(copy, strSystemInfo, false);
+    al::trySetAudioInfo(audioLoadInfo, residentGroupInfo, false);
 
-    auto* copy2 = loadInfo->addonSoundArchiveLoadInfoList;
-    al::AudioResourceLoadInfo* testSEInfo = new al::AudioResourceLoadInfo;
-    testSEInfo->initialize("TestSE", false);
-    if (copy2)
-        al::trySetAudioInfo2(copy2, testSEInfo, false);
+    al::AudioResourceLoadGroupInfo* nonResidentGroupInfo = new al::AudioResourceLoadGroupInfo;
+    nonResidentGroupInfo->name = "システム常駐以外の常駐";
 
-    al::trySetAudioInfo(groupList, loadInfo, false);
+    nonResidentGroupInfo->userManagementGroupList =
+        new al::AudioInfoListWithParts<al::AudioResourceLoadInfo>(5);
+    nonResidentGroupInfo->addonSoundArchiveList = nullptr;
 
-    al::AudioResourceLoadGroupInfo* nextGroupList = new al::AudioResourceLoadGroupInfo;
-    nextGroupList->name = "システム常駐以外の常駐";
+    addAudioInfo(nonResidentGroupInfo->userManagementGroupList, "SeResourceStd1st", false);
+    addAudioInfo(nonResidentGroupInfo->userManagementGroupList, "SeResourceStd2nd", false);
+    addAudioInfo(nonResidentGroupInfo->userManagementGroupList, "BgmResourceStd1st", true);
+    addAudioInfo(nonResidentGroupInfo->userManagementGroupList, "BgmResourceStd2nd", true);
+    addAudioInfo(nonResidentGroupInfo->userManagementGroupList, "BgmResourceStdPrefetch", true);
 
-    al::AudioInfoListWithParts<al::AudioResourceLoadInfo>* findout =
-        new al::AudioInfoListWithParts<al::AudioResourceLoadInfo>;
-    findout->init(5, 0);
-    nextGroupList->userManagementGroupLoadInfoList = findout;
-    nextGroupList->addonSoundArchiveLoadInfoList = nullptr;
-
-    al::AudioResourceLoadInfo* Std1stInfo = new al::AudioResourceLoadInfo;
-    Std1stInfo->initialize("SeResourceStd1st", false);
-    al::trySetAudioInfo2(findout, Std1stInfo, false);
-
-    auto* copy3 = nextGroupList->userManagementGroupLoadInfoList;
-    al::AudioResourceLoadInfo* Std2stInfo = new al::AudioResourceLoadInfo;
-    Std2stInfo->initialize("SeResourceStd2nd", false);
-    if (copy3)
-        al::trySetAudioInfo2(copy3, Std2stInfo, false);
-
-    auto* copy4 = nextGroupList->userManagementGroupLoadInfoList;
-    al::AudioResourceLoadInfo* bgmStd1stInfo = new al::AudioResourceLoadInfo;
-    bgmStd1stInfo->initialize("BgmResourceStd1st", true);
-    if (copy4)
-        al::trySetAudioInfo2(copy4, bgmStd1stInfo, false);
-
-    auto* copy5 = nextGroupList->userManagementGroupLoadInfoList;
-    al::AudioResourceLoadInfo* bgmStd2stInfo = new al::AudioResourceLoadInfo();
-    bgmStd2stInfo->initialize("BgmResourceStd2nd", true);
-    if (copy5)
-        al::trySetAudioInfo2(copy5, bgmStd2stInfo, false);
-
-    auto* copy6 = nextGroupList->userManagementGroupLoadInfoList;
-    al::AudioResourceLoadInfo* prefetch = new al::AudioResourceLoadInfo();
-    prefetch->initialize("BgmResourceStdPrefetch", true);
-    if (copy6)
-        al::trySetAudioInfo2(copy6, prefetch, false);
-
-    al::trySetAudioInfo(groupList, nextGroupList, false);
+    al::trySetAudioInfo(audioLoadInfo, nonResidentGroupInfo, false);
 
     alAudioSystemFunction::loadAudioResource(
-        "システム常駐", mAudioInfoList,
+        "システム常駐", mAudioLoadInfo,
         alAudioSystemFunction::getSeadAudioPlayerForSe(mAudioSystem),
         alAudioSystemFunction::getSeadAudioPlayerForBgm(mAudioSystem));
     mSystemInfo->setAudioSystem(mAudioSystem);

@@ -35,7 +35,7 @@ private:
     al::Sequence* mSequence = nullptr;
     al::GameSystemInfo* mSystemInfo = nullptr;
     al::AudioSystem* mAudioSystem = nullptr;
-    al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>* mAudioInfoList = nullptr;
+    al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>* mAudioLoadInfo = nullptr;
     al::AccountHolder* mAccountHolder = nullptr;
     al::NetworkSystem* mNetworkSystem = nullptr;
     void* field_40 = nullptr;

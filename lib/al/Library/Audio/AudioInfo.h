@@ -93,6 +93,11 @@ class AudioInfoListWithParts : public AudioInfoList<T> {
 public:
     AudioInfoListWithParts() = default;
 
+    AudioInfoListWithParts(s32 size){
+        init(size, 0);
+    }
+
+
     s32 tryGetInfoIndex(const char* key) const;
     const T* tryFindInfo(const char* key) const;
 
@@ -174,21 +179,6 @@ bool trySetAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const T* au
         return false;
 
     if (!disableSort)
-        audioInfoList->sort();
-
-    return true;
-}
-
-template <typename T>
-__attribute__((always_inline)) bool trySetAudioInfo2(const AudioInfoListWithParts<T>* audioInfoList,
-                                                     const T* audioInfo, bool isUnsorted) {
-    if (!audioInfoList || !audioInfo)
-        return false;
-
-    if (!audioInfoList->setInfo(audioInfo))
-        return false;
-
-    if (!isUnsorted)
         audioInfoList->sort();
 
     return true;

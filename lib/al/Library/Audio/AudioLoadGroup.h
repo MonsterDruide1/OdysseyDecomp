@@ -41,8 +41,8 @@ struct AudioResourceLoadGroupInfo {
                            const AudioResourceLoadGroupInfo* rhs);
 
     const char* name = nullptr;
-    AudioInfoListWithParts<AudioResourceLoadInfo>* userManagementGroupLoadInfoList = nullptr;
-    AudioInfoListWithParts<AudioResourceLoadInfo>* addonSoundArchiveLoadInfoList = nullptr;
+    AudioInfoListWithParts<AudioResourceLoadInfo>* userManagementGroupList = nullptr;
+    AudioInfoListWithParts<AudioResourceLoadInfo>* addonSoundArchiveList = nullptr;
 };
 
 static_assert(sizeof(AudioResourceLoadGroupInfo) == 0x18);
