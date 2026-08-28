@@ -22,7 +22,7 @@ class Projection;
 }  // namespace al
 
 namespace alCameraPoserFunction {
-enum class CameraCollisionHitType {
+enum class cameraCollisionLocation {
     Face,
     Edge,
     Default,
@@ -31,7 +31,7 @@ enum class CameraCollisionHitType {
 struct CameraCollisionHitResult {
     sead::Vector3f hitPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f normal = {0.0f, 0.0f, 0.0f};
-    CameraCollisionHitType type = CameraCollisionHitType::Default;
+    cameraCollisionLocation location = cameraCollisionLocation::Default;
 };
 
 s32 getViewIndex(const al::CameraPoser* cameraPoser);
@@ -184,6 +184,7 @@ void validateSnapShotCameraLookAtOffset(al::CameraPoser* cameraPoser);
 void validateSnapShotCameraZoomFovy(al::CameraPoser* cameraPoser);
 void validateSnapShotCameraRoll(al::CameraPoser* cameraPoser);
 void updateSnapShotCameraCtrl(al::CameraPoser* cameraPoser);
+// TODO: rename `value` on next two functions
 void startResetSnapShotCameraCtrl(al::CameraPoser* cameraPoser, s32 value);
 void setSnapShotMaxZoomOutFovyDegree(al::CameraPoser* cameraPoser, f32 value);
 f32 getSnapShotRollDegree(const al::CameraPoser* cameraPoser);

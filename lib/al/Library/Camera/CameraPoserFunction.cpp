@@ -513,7 +513,8 @@ bool checkValidTurnToSubTarget(const al::CameraPoser* cameraPoser) {
         al::verticalizeVec(&lookDir, cameraPoser->getUp(), lookDir);
         if (!al::tryNormalizeOrZero(&lookDir))
             return false;
-        if (subTargetTurnParam->validTurnDegreeRangeH / 2 < al::calcAngleDegree(lookDirH, lookDir))
+        if (subTargetTurnParam->validTurnDegreeRangeH / 2.0f <
+            al::calcAngleDegree(lookDirH, lookDir))
             return false;
     }
 
@@ -562,8 +563,8 @@ bool tryCalcSubTargetTurnBrakeDistanceRate(f32* outDistanceRate,
     calcTargetTrans(&targetTrans, cameraPoser);
     calcSubTargetTrans(&subTargetTrans, cameraPoser);
 
-    f32 distance = sead::Mathf::sqrt(sead::Mathf::pow(targetTrans.x - subTargetTrans.x, 2) +
-                                     sead::Mathf::pow(targetTrans.z - subTargetTrans.z, 2));
+    f32 distance = sead::Mathf::sqrt(sead::Mathf::pow(targetTrans.x - subTargetTrans.x, 2.0f) +
+                                     sead::Mathf::pow(targetTrans.z - subTargetTrans.z, 2.0f));
 
     if (turnParam->turnBrakeEndDistance > 0.0f &&
         turnParam->turnBrakeEndDistance < turnParam->turnBrakeStartDistance &&
@@ -996,13 +997,13 @@ bool checkFirstCameraCollisionArrow(CameraCollisionHitResult* outResult,
     outResult->hitPos.set(hitInfo->hitInfo->collisionHitPos);
     outResult->normal.set(hitInfo->hitInfo->triangle.getNormal(0));
 
-    CameraCollisionHitType type = CameraCollisionHitType::Default;
+    cameraCollisionLocation location = cameraCollisionLocation::Default;
     if (hitInfo->hitInfo->isCollisionAtFace())
-        type = CameraCollisionHitType::Face;
+        location = cameraCollisionLocation::Face;
     else if (hitInfo->hitInfo->isCollisionAtEdge())
-        type = CameraCollisionHitType::Edge;
+        location = cameraCollisionLocation::Edge;
 
-    outResult->type = type;
+    outResult->location = location;
 
     return true;
 }
