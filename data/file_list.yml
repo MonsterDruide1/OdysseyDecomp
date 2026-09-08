@@ -150750,7 +150750,7 @@ System/HintPhotoData.o:
     size: 304
     label: _ZN13HintPhotoData4readERKN2al9ByamlIterE
     status: NotDecompiled
-System/Init.o:
+System/Main.o:
   '.text':
   - offset: 0x536f34
     size: 92
