@@ -50519,7 +50519,7 @@ Item/ShineChipWatcher.o:
     status: NotDecompiled
   - offset: 0x1d5898
     size: 4
-    label: _ZNK12_GLOBAL__N_119HostTypeNrvComplete7executeEPN2al11NerveKeeperE
+    label: '#_ZNK12_GLOBAL__N_119HostTypeNrvComplete7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
     guess: true
   - offset: 0x1d589c
@@ -107181,197 +107181,197 @@ Npc/SessionMusicianLocalFunction.o:
   - offset: 0x3c2284
     size: 136
     label: _ZN28SessionMusicianLocalFunction15getMusicianTypeEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c230c
     size: 160
     label: _ZN28SessionMusicianLocalFunction14isMusicianTypeEPKN2al9LiveActorE19SessionMusicianType
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c23ac
     size: 48
     label: _ZN28SessionMusicianLocalFunction12isSubscribedEPKN2al9LiveActorE19SessionMusicianType
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c23dc
     size: 80
     label: _ZN28SessionMusicianLocalFunction22isAlreadySessionMemberEPK18SessionMusicianNpc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c242c
     size: 48
     label: _ZN28SessionMusicianLocalFunction22entryMusicianToManagerEP18SessionMusicianNpc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c245c
     size: 228
     label: _ZN28SessionMusicianLocalFunction20getMemberMusicianNumEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2540
     size: 64
     label: _ZN28SessionMusicianLocalFunction19isSessionFullMemberEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2580
     size: 32
     label: _ZN28SessionMusicianLocalFunction17startPlayingTheBaEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c25a0
     size: 32
     label: _ZN28SessionMusicianLocalFunction17startPlayingTheDsEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c25c0
     size: 32
     label: _ZN28SessionMusicianLocalFunction17startPlayingTheGtEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c25e0
     size: 32
     label: _ZN28SessionMusicianLocalFunction17startPlayingTheTpEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2600
     size: 28
     label: _ZN28SessionMusicianLocalFunction15endPlayingTheBaEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c261c
     size: 28
     label: _ZN28SessionMusicianLocalFunction15endPlayingTheDsEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2638
     size: 28
     label: _ZN28SessionMusicianLocalFunction15endPlayingTheGtEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2654
     size: 28
     label: _ZN28SessionMusicianLocalFunction15endPlayingTheTpEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
 Npc/SessionMusicianManager.o:
   '.text':
   - offset: 0x3c2670
     size: 168
     label: _ZN22SessionMusicianManagerC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2718
     size: 164
     label: _ZN22SessionMusicianManagerC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c27bc
     size: 200
     label: _ZN22SessionMusicianManager26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2884
     size: 8
     label: _ZThn264_N22SessionMusicianManager26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c288c
     size: 44
     label: _ZN22SessionMusicianManager13entryMusicianEP18SessionMusicianNpc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c28b8
     size: 84
     label: _ZNK22SessionMusicianManager16isJoinedMusicianEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c290c
     size: 88
     label: _ZNK22SessionMusicianManager17getJoinedMusicianEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2964
     size: 116
     label: _ZNK22SessionMusicianManager12isSubscribedE19SessionMusicianType
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c29d8
     size: 184
     label: _ZN22SessionMusicianManager19tryAppearPowerPlantEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2a90
     size: 92
     label: _ZNK22SessionMusicianManager14findPowerPlantEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2aec
     size: 152
     label: _ZN22SessionMusicianManager12tryStartWarpEPN2al13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2b84
     size: 72
     label: _ZN22SessionMusicianManager19addDemoAllMusiciansEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2bcc
     size: 216
     label: _ZN22SessionMusicianManager7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2ca4
     size: 16
     label: _ZN22SessionMusicianManager11exeCompleteEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2cb4
     size: 232
     label: _ZN28SessionMusicianLocalFunction31tryCreateSessionMusicianManagerEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2d9c
     size: 36
     label: _ZN28SessionMusicianLocalFunction25getSessionMusicianManagerEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2dc0
     size: 8
     label: _ZN28SessionMusicianLocalFunction29isExistSessionMusicianManagerEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2dc8
     size: 188
     label: _ZN28SessionMusicianLocalFunction26tryStartWarpToSessionMayorEPKN2al18IUseSceneObjHolderEPNS0_13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2e84
     size: 64
     label: _ZN28SessionMusicianLocalFunction26entrySessionMayorToManagerEP15SessionMayorNpc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2ec4
     size: 108
     label: _ZN28SessionMusicianLocalFunction23isJoinedSessionMusicianEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2f30
     size: 112
     label: _ZN28SessionMusicianLocalFunction31tryGetJoinedSessionMusicanActorEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c2fa0
     size: 220
     label: _ZN28SessionMusicianLocalFunction36tryAddJoinedSessionMusicianDemoActorEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c307c
     size: 160
     label: _ZN28SessionMusicianLocalFunction33tryGetSessionMoonGetDemoPlayerPosEPN4sead7Vector3IfEEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c311c
     size: 168
     label: _ZN28SessionMusicianLocalFunction34tryGetSessionMoonGetDemoPlayerPoseEPN4sead4QuatIfEEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c31c4
     size: 152
     label: _ZN28SessionMusicianLocalFunction50trySetJoinedSessionMusicianTransformForMoonGetDemoEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c325c
     size: 88
     label: _ZN28SessionMusicianLocalFunction19addDemoAllMusiciansEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c32b4
     size: 4
     label: _ZN22SessionMusicianManagerD1Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c32b8
     size: 4
     label: _ZN22SessionMusicianManagerD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c32bc
     size: 4
     label: _ZThn264_N22SessionMusicianManagerD1Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c32c0
     size: 8
     label: _ZThn264_N22SessionMusicianManagerD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c32c8
     size: 8
-    label: ''
+    label: '#_ZNK12_GLOBAL__N_115HostTypeNrvWait7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
   - offset: 0x3c32d0
     size: 20
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_119HostTypeNrvComplete7executeEPN2al11NerveKeeperE
+    status: Matching
 Npc/SessionMusicianNpc.o:
   '.text':
   - offset: 0x3c32e4
