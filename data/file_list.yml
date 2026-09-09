@@ -309994,7 +309994,7 @@ NintendoSDK/src/NintendoSDK/gfx.a:
   - offset: 0xaec0fc
     size: 4
     label: _ZN2nn2os5MutexD2Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0xaec100
     size: 44
