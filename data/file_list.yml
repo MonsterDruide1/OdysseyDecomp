@@ -107028,80 +107028,80 @@ Npc/SessionMayorNpc.o:
   - offset: 0x3c0410
     size: 1084
     label: _ZN15SessionMayorNpc4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c084c
     size: 552
     label: _ZN17SessionMayorParamC2EPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c0a74
     size: 136
     label: _ZN15SessionMayorNpc8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c0afc
     size: 676
     label: _ZN15SessionMayorNpc22initIntroductionCameraERKN2al13ActorInitInfoEPN4sead8PtrArrayI18SessionMusicianNpcEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c0da0
     size: 12
     label: _ZN15SessionMayorNpc12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c0dac
     size: 268
     label: _ZN15SessionMayorNpc10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c0eb8
     size: 228
     label: _ZN15SessionMayorNpc24tryAppearMemberMusiciansEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c0f9c
     size: 564
     label: _ZN15SessionMayorNpc12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c11d0
     size: 8
     label: _ZThn264_N15SessionMayorNpc12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c11d8
     size: 84
     label: _ZN15SessionMayorNpc7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c122c
     size: 160
     label: _ZN15SessionMayorNpc11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3c12cc
     size: 88
-    label: ''
+    label: '#_ZNK12_GLOBAL__N_115HostTypeNrvWait7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
   - offset: 0x3c1324
     size: 8
-    label: ''
+    label: '#_ZNK12_GLOBAL__N_119HostTypeNrvReaction7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
   - offset: 0x3c132c
     size: 428
     label: _ZN20SessionEventProgress5text_Ei
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c14d8
     size: 4
     label: _ZN4sead15FixedSafeStringILi170EED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c14dc
     size: 240
     label: _ZN4sead15FixedSafeStringILi170EEaSERKNS_14SafeStringBaseIcEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c15cc
     size: 4
     label: _ZN4sead19FixedSafeStringBaseIcLi170EED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c15d0
     size: 240
     label: _ZN4sead19FixedSafeStringBaseIcLi170EEaSERKNS_14SafeStringBaseIcEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3c16c0
     size: 128
@@ -135397,7 +135397,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4bb8a8
     size: 168
     label: _ZN2al19createActorFunctionI15SessionMayorNpcEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4bb950
     size: 224
