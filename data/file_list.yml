@@ -234918,11 +234918,11 @@ Library/Controller/PadGyroAddon.o:
     label:
     - _ZN2al12PadGyroAddonC1EPN4sead10ControllerEi
     - _ZN2al12PadGyroAddonC2EPN4sead10ControllerEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8675a0
     size: 44
     label: _ZN2al12PadGyroAddon4calcEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8675cc
     size: 692
     label: _ZN2al12PadGyroAddon19tryUpdateGyroStatusEv
@@ -234930,21 +234930,21 @@ Library/Controller/PadGyroAddon.o:
   - offset: 0x867880
     size: 64
     label: _ZNK2al12PadGyroAddon7getPoseEPN4sead7Vector3IfEES4_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8678c0
     size: 204
     label: _ZNK2al12PadGyroAddon27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x86798c
     size: 92
     label: _ZNK2al12PadGyroAddon18getRuntimeTypeInfoEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8679e8
     size: 4
     label: _ZN2al12PadGyroAddonD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8679ec
     size: 4
