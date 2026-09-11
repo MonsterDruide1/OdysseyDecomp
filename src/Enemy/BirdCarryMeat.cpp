@@ -34,6 +34,7 @@ NERVES_MAKE_STRUCT(BirdCarryMeat, WaitOnRail, Drop, DemoCarryMeat, MoveMeat, Rea
 
 BirdCarryMeat::BirdCarryMeat(const char* name) : al::LiveActor(name) {}
 
+// TODO: rename this
 const sead::Vector3f cVec = {300.0f, 0.0f, 0.0f};
 
 void BirdCarryMeat::init(const al::ActorInitInfo& info) {
@@ -49,8 +50,8 @@ void BirdCarryMeat::init(const al::ActorInitInfo& info) {
         kill();
     mWaitRailKeeper = al::tryCreateRailKeeper(al::getPlacementInfo(info), "WaitRail");
 
-    mTrans.set(al::getTrans(this));
-    mQuat.set(al::getQuat(this));
+    mInitTrans.set(al::getTrans(this));
+    mInitQuat.set(al::getQuat(this));
 
     mBalloonIcon = rs::createMeatBalloon(al::getLayoutInitInfo(info), &mJointMtx, cVec);
     alActorFunction::invalidateFarClipping(this);
@@ -61,7 +62,7 @@ void BirdCarryMeat::init(const al::ActorInitInfo& info) {
 bool BirdCarryMeat::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                al::HitSensor* self) {
     return false;
-};
+}
 
 void BirdCarryMeat::control() {
     sead::Vector3f jointPos;
@@ -178,8 +179,8 @@ void BirdCarryMeat::exeFlyAway() {
         al::hideModelIfShow(this);
         if (mCarryMeat->isWaiting()) {
             al::showModelIfHide(this);
-            al::setTrans(this, mTrans);
-            al::setQuat(this, mQuat);
+            al::setTrans(this, mInitTrans);
+            al::setQuat(this, mInitQuat);
             al::setNerve(this, &NrvBirdCarryMeat.WaitOnRail);
         }
     }

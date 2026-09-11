@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Demo/IUseDemoSkip.h"
 #include "Library/LiveActor/LiveActor.h"
+
+#include "Demo/IUseDemoSkip.h"
 
 class CarryMeat : public al::LiveActor, public IUseDemoSkip {
 public:
@@ -39,6 +40,7 @@ public:
     void exeHackMove();
     void exeHackJump();
     void exeHackJumpEnd();
+    void exeHackBindable();
     void exeDemoCarryMeat();
     void exeHackBind();
     void exeHackBindReaction();

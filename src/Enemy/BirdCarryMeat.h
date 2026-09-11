@@ -38,8 +38,8 @@ private:
     BalloonIcon* mBalloonIcon = nullptr;
     u64 _128 = 0;
     u32 _130 = 0;
-    sead::Vector3f mTrans = sead::Vector3f::zero;
-    sead::Quatf mQuat = sead::Quatf::unit;
+    sead::Vector3f mInitTrans = sead::Vector3f::zero;
+    sead::Quatf mInitQuat = sead::Quatf::unit;
     sead::Matrix34f mJointMtx = sead::Matrix34f::ident;
 };
 
