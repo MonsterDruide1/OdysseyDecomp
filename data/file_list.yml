@@ -80230,7 +80230,6 @@ MapObj/PropellerRotateCtrl.o:
     size: 12
     label: _ZNK19PropellerRotateCtrl15getCtrlTypeNameEv
     status: Matching
-    lazy: true
 MapObj/PulseSwitch.o:
   '.text':
   - offset: 0x2e8588

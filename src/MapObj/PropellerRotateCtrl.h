@@ -23,7 +23,7 @@ public:
     void update();
     void calcJointCallback(s32 jointIndex, sead::Matrix34f* mtx) override;
 
-    const char* getCtrlTypeName() const override { return "プロペラ回転制御"; }
+    const char* getCtrlTypeName() const override;
 
 private:
     const PropellerRotateInfo* mRotateInfo = nullptr;

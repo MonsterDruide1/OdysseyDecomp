@@ -34,3 +34,7 @@ void PropellerRotateCtrl::calcJointCallback(s32 jointIndex, sead::Matrix34f* mtx
             mtx, *mtx,
             direction * al::normalize(mRotateFrame, 0, mRotateInfo->mRotatePeriod) * 360.0f);
 }
+
+const char* PropellerRotateCtrl::getCtrlTypeName() const {
+    return "プロペラ回転制御";
+}
