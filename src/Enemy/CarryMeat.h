@@ -4,6 +4,8 @@
 
 #include "Demo/IUseDemoSkip.h"
 
+class BirdCarryMeat;
+
 class CarryMeat : public al::LiveActor, public IUseDemoSkip {
 public:
     CarryMeat(const char* name);
