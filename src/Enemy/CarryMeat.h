@@ -57,5 +57,3 @@ private:
 };
 
 static_assert(sizeof(CarryMeat) == 0x1a8);
-
-;
