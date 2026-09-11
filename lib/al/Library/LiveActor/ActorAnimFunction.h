@@ -63,7 +63,7 @@ inline void createMat(const LiveActor* actor, s32 programType) {
 // All
 
 void setAllAnimFrame(LiveActor* actor, f32 frame);
-void setAllAnimFrameRate(LiveActor* f32);
+void setAllAnimFrameRate(LiveActor* actor, f32 frameRate);
 
 // Skl
 
