@@ -74572,75 +74572,75 @@ MapObj/KuriboTowerSwitch.o:
   - offset: 0x2b0850
     size: 156
     label: _ZN17KuriboTowerSwitchC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b08ec
     size: 168
     label: _ZN17KuriboTowerSwitchC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0994
     size: 336
     label: _ZN17KuriboTowerSwitch4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0ae4
     size: 28
     label: _ZN17KuriboTowerSwitch18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0b00
     size: 84
     label: _ZN17KuriboTowerSwitch7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0b54
     size: 476
     label: _ZN17KuriboTowerSwitch10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0d30
     size: 72
     label: _ZNK17KuriboTowerSwitch15isReactionNerveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0d78
     size: 60
     label: _ZN17KuriboTowerSwitch10exeDisableEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0db4
     size: 60
     label: _ZN17KuriboTowerSwitch10exeOffWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0df0
     size: 88
     label: _ZN17KuriboTowerSwitch15exeReactionLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0e48
     size: 176
     label: _ZN17KuriboTowerSwitch5exeOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0ef8
     size: 84
     label: _ZN17KuriboTowerSwitch9exeOnWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2b0f4c
     size: 64
     label: _ZNK12_GLOBAL__N_127KuriboTowerSwitchNrvOffWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2b0f8c
     size: 8
     label: _ZNK12_GLOBAL__N_122KuriboTowerSwitchNrvOn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2b0f94
     size: 88
     label: _ZNK12_GLOBAL__N_126KuriboTowerSwitchNrvOnWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2b0fec
     size: 64
     label: _ZNK12_GLOBAL__N_127KuriboTowerSwitchNrvDisable7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2b102c
     size: 92
     label: _ZNK12_GLOBAL__N_132KuriboTowerSwitchNrvReactionLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/LapRecorder.o:
   '.text':
