@@ -298503,15 +298503,15 @@ Unknown/ActorItemInfo.o:
     label:
     - _ZN2al13ActorItemInfoC1EPKcS2_S2_i
     - _ZN2al13ActorItemInfoC2EPKcS2_S2_i
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa94110
     size: 40
     label: _ZNK2al13ActorItemInfo13isEqualTimingEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa94138
     size: 40
     label: _ZNK2al13ActorItemInfo13isEqualFactorEPKc
-    status: NotDecompiled
+    status: Matching
 Unknown/RollingCubePose.o:
   '.text':
   - offset: 0xa94160
