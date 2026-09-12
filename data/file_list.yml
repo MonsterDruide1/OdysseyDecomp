@@ -114597,20 +114597,20 @@ Player/HackerJudgeStartRun.o:
     label:
     - _ZN19HackerJudgeStartRunC1EPKN2al9LiveActorEPP14IUsePlayerHack
     - _ZN19HackerJudgeStartRunC2EPKN2al9LiveActorEPP14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40ebc8
     size: 140
     label: _ZNK19HackerJudgeStartRun5judgeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40ec54
     size: 4
     label: _ZN19HackerJudgeStartRun5resetEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x40ec58
     size: 4
     label: _ZN19HackerJudgeStartRun6updateEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Player/HackerStateBase.o:
   '.text':
