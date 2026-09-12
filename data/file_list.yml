@@ -8730,46 +8730,46 @@ Boss/BossUtil/BossStateChasePlayer.o:
     label:
     - _ZN20BossStateChasePlayerC1EPKcPN2al9LiveActorEPK25BossStateChasePlayerParam
     - _ZN20BossStateChasePlayerC2EPKcPN2al9LiveActorEPK25BossStateChasePlayerParam
-    status: NotDecompiled
+    status: Matching
   - offset: 0x046500
     size: 16
     label: _ZN20BossStateChasePlayer6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x046510
     size: 12
     label: _ZN20BossStateChasePlayer9startStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04651c
     size: 736
     label: _ZN20BossStateChasePlayer8exeChaseEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x0467fc
     size: 276
     label: _ZN20BossStateChasePlayer7exeLostEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x046910
     size: 180
     label: _ZN20BossStateChasePlayer7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0469c4
     size: 36
     label: _ZN20BossStateChasePlayerD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0469e8
     size: 8
     label: _ZNK12_GLOBAL__N_128BossStateChasePlayerNrvChase7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0469f0
     size: 180
     label: _ZNK12_GLOBAL__N_127BossStateChasePlayerNrvStop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x046aa4
     size: 8
     label: _ZNK12_GLOBAL__N_127BossStateChasePlayerNrvLost7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/BossUtil/BossStateTalkDemo.o:
   '.text':
