@@ -80756,7 +80756,7 @@ MapObj/RadiConRaceWatcher.o:
     guess: true
   - offset: 0x2eb500
     size: 8
-    label: _ZNK12_GLOBAL__N_122HostTypeNrvAppearShine7executeEPN2al11NerveKeeperE
+    label: '#_ZNK12_GLOBAL__N_122HostTypeNrvAppearShine7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
     guess: true
   - offset: 0x2eb508
@@ -87299,16 +87299,16 @@ MapObj/StatueSnapMark.o:
     status: Matching
   - offset: 0x32c26c
     size: 4
-    label: _ZNK12_GLOBAL__N_121StatueSnapMarkNrvWait7executeEPN2al11NerveKeeperE
-    status: Matching
+    label: '#_ZNK12_GLOBAL__N_115HostTypeNrvWait7executeEPN2al11NerveKeeperE'
+    status: NotDecompiled
   - offset: 0x32c270
     size: 84
-    label: _ZNK12_GLOBAL__N_128StatueSnapMarkNrvAppearShine7executeEPN2al11NerveKeeperE
+    label: _ZNK12_GLOBAL__N_122HostTypeNrvAppearShine7executeEPN2al11NerveKeeperE
     status: Matching
   - offset: 0x32c2c4
     size: 96
-    label: _ZNK12_GLOBAL__N_121StatueSnapMarkNrvDone7executeEPN2al11NerveKeeperE
-    status: Matching
+    label: '#_ZNK12_GLOBAL__N_115HostTypeNrvDone7executeEPN2al11NerveKeeperE'
+    status: NotDecompiled
 MapObj/StatueStateHack.o:
   '.text':
   - offset: 0x32c324
@@ -113340,7 +113340,7 @@ Player/HackCap.o:
   - offset: 0x3fa644
     size: 512
     label: _ZN17HackCapThrowParamC2EPN2al9LiveActorE
-    status: Matching
+    status: NotDecompiled
     lazy: true
   - offset: 0x3fa844
     size: 272
