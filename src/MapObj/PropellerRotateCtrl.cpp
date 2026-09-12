@@ -12,8 +12,7 @@ PropellerRotateCtrl::PropellerRotateCtrl(al::LiveActor* actor, const PropellerRo
 }
 
 void PropellerRotateCtrl::update() {
-    mRotateFrame =
-        al::modi(mRotateFrame + mRotateInfo->mRotatePeriod + 1, mRotateInfo->mRotatePeriod);
+    mRotateFrame = al::wrapValue(mRotateFrame + 1, mRotateInfo->mRotatePeriod);
 }
 
 void PropellerRotateCtrl::calcJointCallback(s32 jointIndex, sead::Matrix34f* mtx) {
@@ -33,8 +32,4 @@ void PropellerRotateCtrl::calcJointCallback(s32 jointIndex, sead::Matrix34f* mtx
         al::rotateMtxZDirDegree(
             mtx, *mtx,
             direction * al::normalize(mRotateFrame, 0, mRotateInfo->mRotatePeriod) * 360.0f);
-}
-
-const char* PropellerRotateCtrl::getCtrlTypeName() const {
-    return "プロペラ回転制御";
 }
