@@ -15,4 +15,10 @@ public:
     bool isValid() const;
     void calcTargetUpDir(sead::Vector3f* upDir);
     const sead::Vector3f& getTrans() const;
+
+private:
+    const sead::Vector3f* mTrans = nullptr;
+    al::HitSensor* mSensor = nullptr;
 };
+
+static_assert(sizeof(WhipTargetInfo) == 0x10);

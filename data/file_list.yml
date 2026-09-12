@@ -129704,27 +129704,27 @@ Player/WhipTargetInfo.o:
     label:
     - _ZN14WhipTargetInfoC1Ev
     - _ZN14WhipTargetInfoC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493eb0
     size: 8
     label: _ZN14WhipTargetInfo14initWhipTargetEPN2al9HitSensorEPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493eb8
     size: 8
     label: _ZN14WhipTargetInfo5clearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493ec0
     size: 16
     label: _ZNK14WhipTargetInfo7isValidEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493ed0
     size: 44
     label: _ZN14WhipTargetInfo15calcTargetUpDirEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493efc
     size: 24
     label: _ZNK14WhipTargetInfo8getTransEv
-    status: NotDecompiled
+    status: Matching
 Player/Yoshi.o:
   '.text':
   - offset: 0x493f14
