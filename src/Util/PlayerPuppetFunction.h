@@ -95,7 +95,7 @@ bool isPuppetHoldAnyButton(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetMoveStickOn(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetStartWorldWarp(const IUsePlayerPuppet* playerPuppet);
 bool isPuppetCancelWorldWarp(const IUsePlayerPuppet* playerPuppet);
-const sead::Vector2f& getPuppetMoveStick(const IUsePlayerPuppet* playerPuppet);
+sead::Vector2f getPuppetMoveStick(const IUsePlayerPuppet* playerPuppet);
 bool isTriggerGetOff(const IUsePlayerPuppet* playerPuppet);
 f32 getPuppetPoseRotZDegreeLeft(const IUsePlayerPuppet* playerPuppet);
 f32 getPuppetPoseRotZDegreeRight(const IUsePlayerPuppet* playerPuppet);

@@ -157466,331 +157466,331 @@ Util/PlayerPuppetFunction.o:
   - offset: 0x56e678
     size: 88
     label: _ZN2rs11startPuppetEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e6d0
     size: 48
     label: _ZN2rs20endBindAndPuppetNullEPP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e700
     size: 64
     label: _ZN2rs28endBindOnGroundAndPuppetNullEPP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e740
     size: 64
     label: _ZN2rs24endBindJumpAndPuppetNullEPP16IUsePlayerPuppetRKN4sead7Vector3IfEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e780
     size: 60
     label: _ZN2rs28endBindWallJumpAndPuppetNullEPP16IUsePlayerPuppetRKN4sead7Vector3IfEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e7bc
     size: 56
     label: _ZN2rs15endBindCapThrowEPP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e7f4
     size: 56
     label: _ZN2rs36tryReceiveBindCancelMsgAndPuppetNullEPP16IUsePlayerPuppetPKN2al9SensorMsgE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e82c
     size: 12
     label: _ZN2rs14setPuppetTransEP16IUsePlayerPuppetRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e838
     size: 12
     label: _ZN2rs17setPuppetVelocityEP16IUsePlayerPuppetRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e844
     size: 116
     label: _ZN2rs14setPuppetFrontEP16IUsePlayerPuppetRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e8b8
     size: 24
     label: _ZN2rs12calcPuppetUpEPN4sead7Vector3IfEEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e8d0
     size: 116
     label: _ZN2rs11setPuppetUpEP16IUsePlayerPuppetRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e944
     size: 24
     label: _ZN2rs15calcPuppetFrontEPN4sead7Vector3IfEEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e95c
     size: 12
     label: _ZN2rs13setPuppetQuatEP16IUsePlayerPuppetRKN4sead4QuatIfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e968
     size: 12
     label: _ZN2rs19resetPuppetPositionEP16IUsePlayerPuppetRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e974
     size: 188
     label: _ZN2rs21addPuppetVelocityFallEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ea30
     size: 28
     label: _ZN2rs16getPuppetGravityEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ea4c
     size: 28
     label: _ZN2rs17getPuppetVelocityEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ea68
     size: 28
     label: _ZN2rs14getPuppetTransEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ea84
     size: 112
     label: _ZN2rs14calcPuppetQuatEPN4sead4QuatIfEEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eaf4
     size: 56
     label: _ZN2rs17startPuppetActionEP16IUsePlayerPuppetPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb2c
     size: 12
     label: _ZN2rs17isPuppetActionEndEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb38
     size: 12
     label: _ZN2rs21isPuppetActionPlayingEPK16IUsePlayerPuppetPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb44
     size: 12
     label: _ZN2rs17setPuppetAnimRateEP16IUsePlayerPuppetf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb50
     size: 8
     label: _ZN2rs24setPuppetAnimBlendWeightEP16IUsePlayerPuppetffffff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb58
     size: 12
     label: _ZN2rs21getPuppetAnimFrameMaxEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb64
     size: 12
     label: _ZN2rs26startPuppetHitReactionLandEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb70
     size: 12
     label: _ZN2rs10hidePuppetEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb7c
     size: 12
     label: _ZN2rs10showPuppetEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb88
     size: 12
     label: _ZN2rs14isPuppetHiddenEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eb94
     size: 100
     label: _ZN2rs20syncPuppetVisibilityEPN2al9LiveActorEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ebf8
     size: 12
     label: _ZN2rs20hidePuppetSilhouetteEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec04
     size: 12
     label: _ZN2rs20showPuppetSilhouetteEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec10
     size: 12
     label: _ZN2rs16hidePuppetShadowEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec1c
     size: 12
     label: _ZN2rs16showPuppetShadowEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec28
     size: 12
     label: _ZN2rs20validatePuppetSensorEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec34
     size: 12
     label: _ZN2rs22invalidatePuppetSensorEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec40
     size: 12
     label: _ZN2rs24invalidatePuppetColliderEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec4c
     size: 12
     label: _ZN2rs22isCollidedPuppetGroundEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec58
     size: 28
     label: _ZN2rs29getCollidedPuppetGroundNormalEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec74
     size: 12
     label: _ZN2rs22validatePuppetColliderEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec80
     size: 12
     label: _ZN2rs13requestDamageEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec8c
     size: 16
     label: _ZN2rs16clearStainEffectEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ec9c
     size: 56
     label: _ZN2rs21copyPuppetDitherAlphaEP16IUsePlayerPuppetPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ecd4
     size: 12
     label: _ZN2rs20validatePuppetLookAtEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ece0
     size: 8
     label: _ZN2rs22invalidatePuppetLookAtEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ece8
     size: 36
     label: _ZN2rs25validatePuppetForceLookAtEP16IUsePlayerPuppetRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed0c
     size: 8
     label: _ZN2rs27invalidatePuppetForceLookAtEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed14
     size: 12
     label: _ZN2rs26validatePuppetSeparateModeEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed20
     size: 8
     label: _ZN2rs28invalidatePuppetSeparateModeEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed28
     size: 8
     label: _ZN2rs25validatePuppetReceivePushEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed30
     size: 12
     label: _ZN2rs27invalidatePuppetReceivePushEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed3c
     size: 40
     label: _ZN2rs19forcePutOnPuppetCapEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ed64
     size: 96
     label: _ZN2rs29forcePutOnPuppetCapWithEffectEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56edc4
     size: 8
     label: _ZN2rs23setForceRunAfterEndBindEP16IUsePlayerPuppetif
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56edcc
     size: 12
     label: _ZN2rs20validateRecoveryAreaEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56edd8
     size: 8
     label: _ZN2rs22invalidateRecoveryAreaEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ede0
     size: 12
     label: _ZN2rs18validateGuideArrowEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56edec
     size: 8
     label: _ZN2rs20invalidateGuideArrowEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56edf4
     size: 12
     label: _ZN2rs26validateWaterSurfaceShadowEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ee00
     size: 8
     label: _ZN2rs28invalidateWaterSurfaceShadowEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ee08
     size: 16
     label: _ZN2rs21isPuppetInputCapThrowEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ee18
     size: 72
     label: _ZN2rs18isPuppetInputSwingEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ee60
     size: 52
     label: _ZN2rs20initBindKeepDemoInfoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ee94
     size: 8
     label: _ZN2rs20isActiveBindKeepDemoEPK16BindKeepDemoInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ee9c
     size: 188
     label: _ZN2rs20tryStartBindKeepDemoEP16BindKeepDemoInfoPKN2al9SensorMsgEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ef58
     size: 124
     label: _ZN2rs18tryEndBindKeepDemoEP16BindKeepDemoInfoPKN2al9SensorMsgEP16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56efd4
     size: 8
     label: _ZN2rs22isPuppetTrigJumpButtonEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56efdc
     size: 8
     label: _ZN2rs22isPuppetHoldJumpButtonEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56efe4
     size: 8
     label: _ZN2rs24isPuppetTrigActionButtonEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56efec
     size: 8
     label: _ZN2rs24isPuppetHoldActionButtonEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56eff4
     size: 60
     label: _ZN2rs24isPuppetTriggerAnyButtonEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f030
     size: 60
     label: _ZN2rs21isPuppetHoldAnyButtonEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f06c
     size: 8
     label: _ZN2rs19isPuppetMoveStickOnEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f074
     size: 8
     label: _ZN2rs22isPuppetStartWorldWarpEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f07c
     size: 8
     label: _ZN2rs23isPuppetCancelWorldWarpEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f084
     size: 8
     label: _ZN2rs18getPuppetMoveStickEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f08c
     size: 8
     label: _ZN2rs15isTriggerGetOffEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f094
     size: 8
     label: _ZN2rs27getPuppetPoseRotZDegreeLeftEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f09c
     size: 8
     label: _ZN2rs28getPuppetPoseRotZDegreeRightEPK16IUsePlayerPuppet
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f0a4
     size: 224
     label: _ZN2rs24requestUpdateSafetyPointEP16IUsePlayerPuppetPKN2al9LiveActorEPK19IUsePlayerCollision
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56f184
     size: 32
     label: _ZN2rs23requestForceSafetyPointEP16IUsePlayerPuppetRKN4sead7Vector3IfEES6_
-    status: NotDecompiled
+    status: Matching
 Util/PlayerPuppetFunction2D3D.o:
   '.text':
   - offset: 0x56f1a4
