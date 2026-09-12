@@ -82258,64 +82258,64 @@ MapObj/RiseMapPartsOld.o:
   - offset: 0x2fd134
     size: 132
     label: _ZN15RiseMapPartsOldC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd1b8
     size: 144
     label: _ZN15RiseMapPartsOldC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd248
     size: 276
     label: _ZN15RiseMapPartsOld4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd35c
     size: 180
     label: _ZN15RiseMapPartsOld9startRiseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd410
     size: 68
     label: _ZN15RiseMapPartsOld18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd454
     size: 4
     label: _ZN15RiseMapPartsOld7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd458
     size: 164
     label: _ZN15RiseMapPartsOld7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd4fc
     size: 88
     label: _ZN15RiseMapPartsOld7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2fd554
     size: 4
     label: _ZNK12_GLOBAL__N_122RiseMapPartsOldNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2fd558
     size: 92
     label: _ZNK12_GLOBAL__N_122RiseMapPartsOldNrvStop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2fd5b4
     size: 8
     label: _ZNK12_GLOBAL__N_122RiseMapPartsOldNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2fd5bc
     size: 28
     label: _ZNK2al10FunctorV0MIP15RiseMapPartsOldMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2fd5d8
     size: 76
     label: _ZNK2al10FunctorV0MIP15RiseMapPartsOldMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2fd624
     size: 4
     label: _ZN2al10FunctorV0MIP15RiseMapPartsOldMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/RocketFlower.o:
   '.text':
