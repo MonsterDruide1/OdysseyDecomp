@@ -150668,7 +150668,7 @@ System/GameSystem.o:
     label:
     - _ZN10GameSystemC1Ev
     - _ZN10GameSystemC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x535794
     size: 152
     label:
@@ -150678,44 +150678,44 @@ System/GameSystem.o:
   - offset: 0x53582c
     size: 36
     label: _ZN10GameSystemD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x535850
     size: 2880
     label: _ZN10GameSystem4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x536390
     size: 176
     label: _ZN10GameSystem10setPadNameEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x536440
     size: 468
     label: _ZN10GameSystem17tryChangeSequenceEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x536614
     size: 524
     label: _ZN10GameSystem8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x536820
     size: 88
     label: _ZN10GameSystem8drawMainEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x536878
     size: 72
     label: _ZN10GameSystem7exePlayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5368c0
     size: 72
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_117GameSystemNrvPlay7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x536908
     size: 236
     label: _ZN2al15trySetAudioInfoINS_26AudioResourceLoadGroupInfoEEEbPKNS_22AudioInfoListWithPartsIT_EEPKS3_b
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x5369f4
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_117MessageSystemUser16getMessageSystemEv
+    status: Matching
 System/GameSystemFunction.o:
   '.text':
   - offset: 0x5369fc

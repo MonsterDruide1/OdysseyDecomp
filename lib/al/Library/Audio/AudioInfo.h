@@ -180,6 +180,21 @@ bool trySetAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const T* au
 }
 
 template <typename T>
+__attribute__((always_inline)) bool trySetAudioInfo2(const AudioInfoListWithParts<T>* audioInfoList,
+                                                     const T* audioInfo, bool isUnsorted) {
+    if (!audioInfoList || !audioInfo)
+        return false;
+
+    if (!audioInfoList->setInfo(audioInfo))
+        return false;
+
+    if (!isUnsorted)
+        audioInfoList->sort();
+
+    return true;
+}
+
+template <typename T>
 const T* tryFindAudioInfo(const AudioInfoListWithParts<T>* audioInfoList, const char* name) {
     if (!audioInfoList || !name)
         return nullptr;

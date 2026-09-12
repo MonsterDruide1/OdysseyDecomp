@@ -11,13 +11,13 @@ class AudioDirector;
 class AudioEffectDataBase;
 template <typename T>
 class AudioInfoListWithParts;
-class AudioResourceLoadGroupInfo;
-class AudioResourceLoadingInfo;
+struct AudioResourceLoadGroupInfo;
+struct AudioResourceLoadingInfo;
 class AudioResourcePlayerKeeper;
 class AudioSystem;
 class AudioSystemDebug;
 struct AudioSystemInfo;
-class AudioSystemInitInfo;
+struct AudioSystemInitInfo;
 class BgmDataBase;
 class BgmMusicalInfo;
 struct GameSystemInfo;

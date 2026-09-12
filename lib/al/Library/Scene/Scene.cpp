@@ -107,7 +107,7 @@ void Scene::initLiveActorKit(const SceneInitInfo& info, s32 maxActors, s32 maxPl
     mLiveActorKit->initGraphics(graphicsInitArg);
 
     mLiveActorKit->getGraphicsSystemInfo()->setApplicationMessageReceiver(
-        info.gameSystemInfo->applicationMessageReciever);
+        info.gameSystemInfo->applicationMessageReceiver);
 }
 
 void Scene::initLiveActorKitImpl(const SceneInitInfo& info, s32 maxActors, s32 maxPlayers,
@@ -125,7 +125,7 @@ void Scene::initLiveActorKitWithGraphics(const GraphicsInitArg& graphicsInitArg,
     initLiveActorKitImpl(info, maxActors, maxPlayers, maxCameras);
     mLiveActorKit->initGraphics(graphicsInitArg);
     mLiveActorKit->getGraphicsSystemInfo()->setApplicationMessageReceiver(
-        info.gameSystemInfo->applicationMessageReciever);
+        info.gameSystemInfo->applicationMessageReceiver);
 }
 
 void Scene::initLayoutKit(const SceneInitInfo& info) {

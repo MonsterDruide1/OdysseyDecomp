@@ -72,6 +72,8 @@ public:
     bool isDisposable() const override;
     al::Scene* getCurrentScene() const override;
 
+    GameDataHolder* getGameDataHolder() const { return mGameDataHolderAccessor; }
+
 private:
     al::Scene* mCurrentScene;
     GameDataHolderAccessor mGameDataHolderAccessor;

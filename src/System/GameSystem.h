@@ -14,7 +14,7 @@ class HtmlViewer;
 class GamePadSystem;
 class ApplicationMessageReceiver;
 class WaveVibrationHolder;
-class AudioResourceLoadGroupInfo;
+struct AudioResourceLoadGroupInfo;
 }  // namespace al
 
 class GameConfigData;
@@ -32,23 +32,23 @@ public:
     void exePlay();
 
 private:
-    al::Sequence* mSequence;
-    al::GameSystemInfo* mSystemInfo;
-    al::AudioSystem* mAudioSystem;
-    al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>* mAudioInfoList;
-    al::AccountHolder* mAccountHolder;
-    al::NetworkSystem* mNetworkSystem;
-    void* field_40;
-    al::HtmlViewer* mHtmlViewer;
-    ProjectNfpDirector* mNfpDirector;
-    al::GamePadSystem* mGamePadSystem;
-    al::ApplicationMessageReceiver* mApplicationMessageReceiver;
-    al::WaveVibrationHolder* mWaveVibrationHolder;
-    bool mIsSinglePlay;
-    GameConfigData* mGameConfigData;
-    bool mIsSequenceSetupIncomplete;
+    al::Sequence* mSequence = nullptr;
+    al::GameSystemInfo* mSystemInfo = nullptr;
+    al::AudioSystem* mAudioSystem = nullptr;
+    al::AudioInfoListWithParts<al::AudioResourceLoadGroupInfo>* mAudioInfoList = nullptr;
+    al::AccountHolder* mAccountHolder = nullptr;
+    al::NetworkSystem* mNetworkSystem = nullptr;
+    void* field_40 = nullptr;
+    al::HtmlViewer* mHtmlViewer = nullptr;
+    ProjectNfpDirector* mNfpDirector = nullptr;
+    al::GamePadSystem* mGamePadSystem = nullptr;
+    al::ApplicationMessageReceiver* mApplicationMessageReceiver = nullptr;
+    al::WaveVibrationHolder* mWaveVibrationHolder = nullptr;
+    bool mIsSinglePlay = false;
+    GameConfigData* mGameConfigData = nullptr;
+    bool mIsSequenceSetupIncomplete = false;
 };
 
 namespace GameSystemFunction {
 GameSystem* getGameSystem();
-}
+}  // namespace GameSystemFunction
