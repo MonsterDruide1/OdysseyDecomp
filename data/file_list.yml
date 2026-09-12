@@ -155001,23 +155001,23 @@ Util/MoonRockUtil.o:
   - offset: 0x556b90
     size: 64
     label: _ZN2rs38isEnableShowDemoAfterOpenMoonRockFirstEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556bd0
     size: 64
     label: _ZN2rs23isFirstDemoOpenMoonRockEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556c10
     size: 104
     label: _ZN2rs32isEnableShowDemoMoonRockMapWorldEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556c78
     size: 60
     label: _ZN2rs30showDemoAfterOpenMoonRockFirstEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556cb4
     size: 100
     label: _ZN2rs24showDemoMoonRockMapWorldEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
 Util/MoviePlayer.o:
   '.text':
   - offset: 0x556d18
