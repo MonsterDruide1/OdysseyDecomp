@@ -10,12 +10,16 @@ class LiveActor;
 
 class IUsePlayerCollision;
 class IUsePlayerHack;
+class PlayerCounterForceRun;
 
 class HackerJudgeStartRun : public HackerJudge {
 public:
-    HackerJudgeStartRun(const al::LiveActor*, IUsePlayerHack**);
-    void reset() override;
-    void update() override;
+    HackerJudgeStartRun(const al::LiveActor* parent, IUsePlayerHack** hacker);
+
+    void reset() override {}
+
+    void update() override {}
+
     bool judge() const override;
 
     void setPlayerCollision(IUsePlayerCollision* playerCollision) {
@@ -23,10 +27,10 @@ public:
     }
 
 private:
-    al::LiveActor* mParent;
-    s32 _18;
-    IUsePlayerCollision* mPlayerCollision;
-    f32 _28;
+    const al::LiveActor* mParent;
+    const PlayerCounterForceRun* mCounterForceRun = nullptr;
+    IUsePlayerCollision* mPlayerCollision = nullptr;
+    f32 mAutoRunSpeedThreshold = 0.0f;
 };
 
 static_assert(sizeof(HackerJudgeStartRun) == 0x30);
