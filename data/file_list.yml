@@ -21964,45 +21964,45 @@ Boss/Stacker/StackerCapWorldCtrl.o:
   - offset: 0x0bf918
     size: 128
     label: _ZN19StackerCapWorldCtrlC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bf998
     size: 140
     label: _ZN19StackerCapWorldCtrlC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bfa24
     size: 536
     label: _ZN19StackerCapWorldCtrl4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bfc3c
     size: 60
     label: _ZN19StackerCapWorldCtrl6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bfc78
     size: 92
     label: _ZN19StackerCapWorldCtrl9exeBattleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bfcd4
     size: 276
     label: _ZN19StackerCapWorldCtrl13exeDemoCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bfde8
     size: 240
     label: _ZN19StackerCapWorldCtrl12exeObjAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bfed8
     size: 96
     label: _ZNK12_GLOBAL__N_128StackerCapWorldCtrlNrvBattle7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bff38
     size: 8
     label: _ZNK12_GLOBAL__N_132StackerCapWorldCtrlNrvDemoCamera7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bff40
     size: 8
     label: _ZNK12_GLOBAL__N_131StackerCapWorldCtrlNrvObjAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Stacker/StackerStateInvincibleAttack.o:
   '.text':
