@@ -369,7 +369,6 @@ void CameraPoser::makeLookAtCameraPrev(sead::LookAtCamera* camera) const {
     camera->setPos(mEye);
     camera->setAt(mAt);
     camera->setUp(mUp);
-    camera->normalizeUp();
 
     if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb)
         mVerticalAbsorber->makeLookAtCamera(camera);

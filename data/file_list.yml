@@ -228725,7 +228725,7 @@ Library/Camera/CameraPoser.o:
   - offset: 0x833a60
     size: 536
     label: _ZNK2al11CameraPoser20makeLookAtCameraPrevEPN4sead12LookAtCameraE
-    status: Matching
+    status: NonMatchingMajor
   - offset: 0x833c78
     size: 80
     label: _ZNK2al11CameraPoser20makeLookAtCameraPostEPN4sead12LookAtCameraE
@@ -270858,7 +270858,7 @@ Library/Play/Camera/CameraVerticalAbsorber.o:
   - offset: 0x97ff8c
     size: 856
     label: _ZN2al22CameraVerticalAbsorber6updateEv
-    status: Matching
+    status: NonMatchingMajor
   - offset: 0x9802e4
     size: 108
     label: _ZNK2al22CameraVerticalAbsorber16makeLookAtCameraEPN4sead12LookAtCameraE
