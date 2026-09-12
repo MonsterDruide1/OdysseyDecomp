@@ -292194,47 +292194,47 @@ Project/Camera/SimpleCameraShooter.o:
     label:
     - _ZN2al19SimpleCameraShooterC1EPKc
     - _ZN2al19SimpleCameraShooterC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c460
     size: 20
     label: _ZN2al19SimpleCameraShooter27calcAspectRatioByScreenSizeEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c474
     size: 200
     label: _ZNK2al19SimpleCameraShooter13calcCameraPosEPN4sead7Vector3IfEEPKNS_13IUseCollisionE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c53c
     size: 36
     label: _ZNK2al19SimpleCameraShooter12calcFrontDirEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c560
     size: 136
     label: _ZNK2al19SimpleCameraShooter14checkCollisionEfPKNS_13IUseCollisionE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c5e8
     size: 352
     label: _ZNK2al19SimpleCameraShooter24applyCameraWithCollisionEPN4sead12LookAtCameraEPKNS_13IUseCollisionE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c748
     size: 28
     label: _ZNK2al19SimpleCameraShooter15applyProjectionEPN4sead21PerspectiveProjectionE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c764
     size: 120
     label: _ZN2al19SimpleCameraShooter6lookAtERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c7dc
     size: 540
     label: _ZN2al19SimpleCameraShooter15applyLimitationEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4c9f8
     size: 60
     label: _ZN2al19SimpleCameraShooter9rotateYawEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa4ca34
     size: 60
     label: _ZN2al19SimpleCameraShooter11rotatePitchEf
-    status: NotDecompiled
+    status: Matching
 Project/Clipping/ClippingDirector.o:
   '.text':
   - offset: 0xa4ca70
