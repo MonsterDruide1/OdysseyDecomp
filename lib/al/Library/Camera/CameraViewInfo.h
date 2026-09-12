@@ -15,7 +15,7 @@ public:
                    const CameraViewFlag& flag, const OrthoProjectionInfo& orthoProjectionInfo);
 
     const sead::Projection& getProjectionSead() const;
-    const sead::Matrix44f& getProjMtx() const;
+    const sead::Matrix44f* getProjMtx() const;
     const sead::Matrix44f& getProjMtxStd() const;
     f32 getAspect() const;
     f32 getNear() const;
