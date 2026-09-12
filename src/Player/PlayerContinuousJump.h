@@ -11,6 +11,10 @@ public:
     void clear();
     void countUp(const sead::Vector3f& jumpDir);
 
+    u32 getCount() const { return mCount; }
+
+    const sead::Vector3f& getLastJumpDir() const { return mLastJumpDir; }
+
 private:
     const PlayerConst* mConst;
     u32 mCount = 0;

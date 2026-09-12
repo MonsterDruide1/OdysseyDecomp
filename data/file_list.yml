@@ -126879,184 +126879,184 @@ Player/PlayerStateJump.o:
     label:
     - _ZN15PlayerStateJumpC1EPN2al9LiveActorEPK11PlayerConstPK19IPlayerModelChangerPK13IUseDimensionPK11PlayerInputPK24PlayerJumpMessageRequestPK6IJudgePK21PlayerCounterForceRunPK24PlayerJointControlKeeperPK19IUsePlayerCollisionP13PlayerTriggerP20PlayerContinuousJumpP14PlayerAnimatorP23PlayerActionDiveInWaterP7HackCapPSI_b
     - _ZN15PlayerStateJumpC2EPN2al9LiveActorEPK11PlayerConstPK19IPlayerModelChangerPK13IUseDimensionPK11PlayerInputPK24PlayerJumpMessageRequestPK6IJudgePK21PlayerCounterForceRunPK24PlayerJointControlKeeperPK19IUsePlayerCollisionP13PlayerTriggerP20PlayerContinuousJumpP14PlayerAnimatorP23PlayerActionDiveInWaterP7HackCapPSI_b
-    status: NotDecompiled
+    status: Matching
   - offset: 0x470b9c
     size: 4416
     label: _ZN15PlayerStateJump6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x471cdc
     size: 92
     label: _ZNK15PlayerStateJump27calcJumpPowerBorderSpeedMinEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x471d38
     size: 92
     label: _ZNK15PlayerStateJump27calcJumpPowerBorderSpeedMaxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x471d94
     size: 176
     label: _ZNK15PlayerStateJump16calcJumpPowerMinEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x471e44
     size: 172
     label: _ZNK15PlayerStateJump16calcJumpPowerMaxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x471ef0
     size: 100
     label: _ZNK15PlayerStateJump15calcJumpGravityEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x471f54
     size: 320
     label: _ZN15PlayerStateJump24tryCountUpContinuousJumpEP20PlayerContinuousJump
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472094
     size: 116
     label: _ZNK15PlayerStateJump14isJumpCapCatchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472108
     size: 92
     label: _ZNK15PlayerStateJump16isJumpSpinFlowerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472164
     size: 92
     label: _ZNK15PlayerStateJump16isJumpSpinGroundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4721c0
     size: 16
     label: _ZNK15PlayerStateJump25isJumpSpinGroundClockwiseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4721d0
     size: 32
     label: _ZNK15PlayerStateJump10isJumpBackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4721f0
     size: 92
     label: _ZNK15PlayerStateJump10isHoveringEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47224c
     size: 200
     label: _ZNK15PlayerStateJump21isEndJumpDownFallLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472314
     size: 84
     label: _ZNK15PlayerStateJump14isHoldDownFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472368
     size: 144
     label: _ZNK15PlayerStateJump20isEnableHipDropStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4723f8
     size: 96
     label: _ZNK15PlayerStateJump30isEnableTrampleByHipDropAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472458
     size: 28
     label: _ZNK15PlayerStateJump24isEnableReactionCapCatchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472474
     size: 144
     label: _ZNK15PlayerStateJump24isEnableCancelCarryThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472504
     size: 156
     label: _ZNK15PlayerStateJump13isFormSquat2DEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4725a0
     size: 1472
     label: _ZN15PlayerStateJump7exeJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472b60
     size: 88
     label: _ZN15PlayerStateJump22trySubAnimJumpReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472bb8
     size: 204
     label: _ZNK15PlayerStateJump16calcJumpAnimNameEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x472c84
     size: 916
     label: _ZN15PlayerStateJump17exeJumpSpinFlowerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x473018
     size: 128
     label: _ZN15PlayerStateJump25exeJumpSpinFlowerDownFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x473098
     size: 600
     label: _ZN15PlayerStateJump19updateNerveDownFallEPKcfffPKN2al5NerveE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4732f0
     size: 668
     label: _ZN15PlayerStateJump17exeJumpSpinGroundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47358c
     size: 164
     label: _ZN15PlayerStateJump25exeJumpSpinGroundDownFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x473630
     size: 764
     label: _ZN15PlayerStateJump11exeJumpTurnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47392c
     size: 668
     label: _ZN15PlayerStateJump11exeJumpBackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x473bc8
     size: 716
     label: _ZN15PlayerStateJump17exeHoveringJump2DEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x473e94
     size: 400
     label: _ZN15PlayerStateJump13exeHovering2DEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x474024
     size: 36
     label: _ZN15PlayerStateJumpD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x474048
     size: 8
     label: _ZNK12_GLOBAL__N_122PlayerStateJumpNrvJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x474050
     size: 8
     label: _ZNK12_GLOBAL__N_132PlayerStateJumpNrvHoveringJump2D7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x474058
     size: 8
     label: _ZNK12_GLOBAL__N_132PlayerStateJumpNrvJumpSpinFlower7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x474060
     size: 8
     label: _ZNK12_GLOBAL__N_126PlayerStateJumpNrvJumpBack7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x474068
     size: 8
     label: _ZNK12_GLOBAL__N_126PlayerStateJumpNrvJumpTurn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x474070
     size: 8
     label: _ZNK12_GLOBAL__N_132PlayerStateJumpNrvJumpSpinGround7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x474078
     size: 128
     label: _ZNK12_GLOBAL__N_140PlayerStateJumpNrvJumpSpinFlowerDownFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4740f8
     size: 164
     label: _ZNK12_GLOBAL__N_140PlayerStateJumpNrvJumpSpinGroundDownFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x47419c
     size: 8
     label: _ZNK12_GLOBAL__N_128PlayerStateJumpNrvHovering2D7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Player/PlayerStateJump2D3D.o:
   '.text':
