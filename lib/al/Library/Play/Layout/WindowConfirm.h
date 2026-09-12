@@ -9,12 +9,12 @@ class LayoutInitInfo;
 
 class WindowConfirm : public LayoutActor {
 public:
-    enum class SelectionType {
-        None = -1,
-        HardKey = 0,
-        List00 = 1,
-        List01 = 2,
-        List02 = 3,
+    enum SelectionType {
+        SelectionType_None = -1,
+        SelectionType_HardKey = 0,
+        SelectionType_List00 = 1,
+        SelectionType_List01 = 2,
+        SelectionType_List02 = 3,
     };
 
     enum class Direction {
@@ -24,16 +24,17 @@ public:
     };
 
     struct Selection {
-        SelectionType selectionType;
-        SelectionType prevSelectionType;
+        SelectionType selectionType = SelectionType_None;
+        SelectionType prevSelectionType = SelectionType_None;
+        SelectionType cancelType = SelectionType_None;
     };
 
-    WindowConfirm(const LayoutInitInfo&, const char*, const char*);
+    WindowConfirm(const LayoutInitInfo& info, const char* name, const char* actorName);
 
-    void setTxtMessage(const char16*);
-    void setTxtList(s32, const char16*);
-    void setListNum(s32);
-    void setCancelIdx(s32);
+    void setTxtMessage(const char16* message);
+    void setTxtList(s32 index, const char16* message);
+    void setListNum(s32 num);
+    void setCancelIdx(s32 index);
     void appear() override;
     void appearWithChoicingCancel();
     bool isNerveEnd();
@@ -46,6 +47,7 @@ public:
     bool tryCancel();
     void setCursorToPane();
     bool tryCancelWithoutEnd();
+
     void exeHide();
     void exeAppear();
     void exeWait();
@@ -53,14 +55,31 @@ public:
     void exeDecideAfter();
     void exeEnd();
 
+    s32 getSelectionIdx() { return mSelection.prevSelectionType; }
+
+    s32 getPrevSelectionIdx() { return mSelection.prevSelectionType; }
+
+    s32 getCancelIdx() { return mSelection.cancelType; }
+
+    SelectionType getSelectionType() { return mSelection.selectionType; }
+
     SelectionType getPrevSelectionType() { return mSelection.prevSelectionType; }
 
+    SelectionType getCancelType() { return mSelection.cancelType; }
+
+    SelectionType updateSelectionIdx(Direction dir) {
+        if (dir == Direction::Up)
+            mSelection.prevSelectionType = (SelectionType)(mSelection.prevSelectionType - 1);
+        else if (dir == Direction::Down)
+            mSelection.prevSelectionType = (SelectionType)(mSelection.prevSelectionType + 1);
+        return mSelection.prevSelectionType;
+    }
+
 private:
-    Direction mDirection;
+    Direction mDirection = Direction::None;
     Selection mSelection;
-    s32 mCancelIdx;
-    bool mIsDecided;
-    s32 mCooldown;
+    bool mIsDecided = false;
+    s32 mCooldown = -1;
     sead::PtrArray<LayoutActor> mParListArray;
     LayoutActor* mCursorActor;
     LayoutActor* mButtonActor;
