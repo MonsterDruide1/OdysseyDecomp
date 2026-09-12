@@ -281166,19 +281166,19 @@ Library/Se/Project/SePlayParam.o:
     label:
     - _ZN2al11SePlayParamC1Ev
     - _ZN2al11SePlayParamC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9e8fb0
     size: 16
     label: _ZN2al11SePlayParam5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9e8fc0
     size: 16
     label: _ZN2al11SePlayParam3setENS_15SePlayParamTypeEff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9e8fd0
     size: 24
     label: _ZN2al11SePlayParam6setMulENS_15SePlayParamTypeEff
-    status: NotDecompiled
+    status: Matching
 Library/Se/Project/SePlayParamList.o:
   '.text':
   - offset: 0x9e8fe8
