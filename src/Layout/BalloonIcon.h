@@ -34,6 +34,8 @@ private:
 static_assert(sizeof(BalloonIcon) == 0x170);
 
 namespace rs {
+BalloonIcon* createMeatBalloon(const al::LayoutInitInfo&, const sead::Matrix34f*,
+                               const sead::Vector3f&);
 BalloonIcon* createShopBalloon(const al::LayoutInitInfo&, const sead::Matrix34f*,
                                const sead::Vector3f&);
 void setMainScenarioText(BalloonIcon*, const char16*);

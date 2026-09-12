@@ -39,6 +39,7 @@
 #include "Boss/Mofumofu/MofumofuScrap.h"
 #include "Camera/ScenarioStartCamera.h"
 #include "Demo/DemoPeachWedding.h"
+#include "Enemy/BirdCarryMeat.h"
 #include "Enemy/Bubble.h"
 #include "Enemy/CatchBomb.h"
 #include "Enemy/DonkeyKong2D.h"
@@ -171,7 +172,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"BendLeafTree", nullptr},
     {"BgmPlayObj", nullptr},
     {"Bird", al::createActorFunction<Bird>},
-    {"BirdCarryMeat", nullptr},
+    {"BirdCarryMeat", al::createActorFunction<BirdCarryMeat>},
     {"BirdPlayerGlideCtrl", al::createActorFunction<BirdPlayerGlideCtrl>},
     {"BlockBrick", nullptr},
     {"BlockBrick2D", nullptr},
