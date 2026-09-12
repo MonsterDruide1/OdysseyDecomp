@@ -157184,283 +157184,283 @@ Util/PlayerHackInputFunction.o:
   - offset: 0x56d4a0
     size: 60
     label: _ZN2rs17calcHackerMoveVecEPN4sead7Vector3IfEEPK14IUsePlayerHackRKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d4dc
     size: 96
     label: _ZN2rs17calcHackerMoveDirEPN4sead7Vector3IfEEPK14IUsePlayerHackRKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d53c
     size: 92
     label: _ZN2rs22calcHackerWallInputVecEPN4sead7Vector3IfEES3_PK14IUsePlayerHackRKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d598
     size: 308
     label: _ZN2rs22calcHackerWallInputVecEPN4sead7Vector3IfEES3_RKNS0_7Vector2IfEERKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d6cc
     size: 32
     label: _ZN2rs19getHackMoveStickRawEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d6ec
     size: 124
     label: _ZN2rs22calcHackerWallInputDirEPN4sead7Vector3IfEES3_PK14IUsePlayerHackRKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d768
     size: 220
     label: _ZN2rs22addHackActorAccelStickEPN2al9LiveActorEPK14IUsePlayerHackPN4sead7Vector3IfEEfRKS8_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d844
     size: 72
     label: _ZN2rs17calcHackMovePowerEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d88c
     size: 172
     label: _ZN2rs18checkHackerMoveDirEPK14IUsePlayerHackRKN4sead7Vector3IfEES7_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56d938
     size: 464
     label: _ZN2rs26calcHackerTrampleJumpParamEPfS0_PiPN2al9LiveActorEPK14IUsePlayerHackfffffifffff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56db08
     size: 32
     label: _ZN2rs17isOnHackMoveStickEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56db28
     size: 32
     label: _ZN2rs14isHoldHackJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56db48
     size: 32
     label: _ZN2rs25isOnHackMoveStickDeepDownEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56db68
     size: 88
     label: _ZN2rs24isOnHackMoveStickGreaterEPK14IUsePlayerHackf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dbc0
     size: 32
     label: _ZN2rs19isTriggerHackActionEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dbe0
     size: 32
     label: _ZN2rs27isTriggerHackPreInputActionEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dc00
     size: 32
     label: _ZN2rs16isHoldHackActionEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dc20
     size: 32
     label: _ZN2rs19isReleaseHackActionEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dc40
     size: 32
     label: _ZN2rs17isTriggerHackJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dc60
     size: 32
     label: _ZN2rs25isTriggerHackPreInputJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dc80
     size: 32
     label: _ZN2rs17isReleaseHackJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dca0
     size: 88
     label: _ZN2rs22isTriggerHackAnyButtonEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dcf8
     size: 116
     label: _ZN2rs30isTriggerHackPreInputAnyButtonEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dd6c
     size: 88
     label: _ZN2rs19isHoldHackAnyButtonEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56ddc4
     size: 88
     label: _ZN2rs22isReleaseHackAnyButtonEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56de1c
     size: 32
     label: _ZN2rs25isTriggerHackSeparateJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56de3c
     size: 32
     label: _ZN2rs22isHoldHackSeparateJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56de5c
     size: 36
     label: _ZN2rs23getHackStickRotateSpeedEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56de80
     size: 32
     label: _ZN2rs18isTriggerHackSwingEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dea0
     size: 88
     label: _ZN2rs25isTriggerHackSwingDirLeftEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56def8
     size: 88
     label: _ZN2rs26isTriggerHackSwingDirRightEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56df50
     size: 32
     label: _ZN2rs28isTriggerHackSwingDoubleHandEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56df70
     size: 32
     label: _ZN2rs38isTriggerHackSwingDoubleHandReverseDirEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56df90
     size: 32
     label: _ZN2rs44isTriggerHackSwingDoubleHandReverseInsideDirEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dfb0
     size: 32
     label: _ZN2rs45isTriggerHackSwingDoubleHandReverseOutsideDirEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dfd0
     size: 32
     label: _ZN2rs25getHackPoseRotZDegreeLeftEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56dff0
     size: 32
     label: _ZN2rs26getHackPoseRotZDegreeRightEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e010
     size: 32
     label: _ZN2rs24isTriggerTankCameraResetEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e030
     size: 32
     label: _ZN2rs26isTriggerHackSwingLeftHandEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e050
     size: 32
     label: _ZN2rs27isTriggerHackSwingRightHandEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e070
     size: 36
     label: _ZN2rs20getHackSwingThrowDirEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e094
     size: 36
     label: _ZN2rs23getHackSwingLeftHandDirEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e0b8
     size: 36
     label: _ZN2rs24getHackSwingRightHandDirEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e0dc
     size: 36
     label: _ZN2rs23getHackSwingVelLeftHandEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e100
     size: 36
     label: _ZN2rs24getHackSwingVelRightHandEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e124
     size: 32
     label: _ZN2rs21getHackCameraStickRawEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e144
     size: 32
     label: _ZN2rs28getRadiconInputSteeringValueEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e164
     size: 40
     label: _ZN2rs28getRadiconInputThrottleValueEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e18c
     size: 36
     label: _ZN2rs21isTriggerRecorderPlayEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e1b0
     size: 36
     label: _ZN2rs24isTriggerRecorderReverseEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e1d4
     size: 36
     label: _ZN2rs18isHoldRecorderPlayEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e1f8
     size: 36
     label: _ZN2rs21isHoldRecorderReverseEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e21c
     size: 36
     label: _ZN2rs21isTriggerRecorderJumpEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e240
     size: 36
     label: _ZN2rs23isTriggerRecorderCancelEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e264
     size: 24
     label: _ZN2rs23getHackGemyLeftStickRawEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e27c
     size: 24
     label: _ZN2rs24getHackGemyRightStickRawEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e294
     size: 36
     label: _ZN2rs24isTriggerGemyResetCameraEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e2b8
     size: 36
     label: _ZN2rs25isTriggerGemyChangeCameraEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e2dc
     size: 36
     label: _ZN2rs25isTriggerSubjectiveCameraEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e300
     size: 192
     label: _ZN2rs16isTriggerFlutterEPK14IUsePlayerHackf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e3c0
     size: 88
     label: _ZN2rs23isTriggerFukankunZoomOnEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e418
     size: 88
     label: _ZN2rs24isTriggerFukankunZoomOffEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e470
     size: 88
     label: _ZN2rs18isHoldFukankunZoomEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e4c8
     size: 44
     label: _ZN2rs21getPoleJumpPadPoseMtxEPN4sead8Matrix33IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e4f4
     size: 68
     label: _ZN2rs26getPoleJumpPadAccelerationEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e538
     size: 72
     label: _ZN2rs28isTriggerIceClimberClimbLeftEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e580
     size: 72
     label: _ZN2rs29isTriggerIceClimberClimbRightEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e5c8
     size: 112
     label: _ZN2rs23isTriggerIceClimberFallEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e638
     size: 32
     label: _ZN12HackFunction16isTriggerHackEndEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x56e658
     size: 32
     label: _ZN12HackFunction29isTriggerCancelBubbleLauncherEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
 Util/PlayerPuppetFunction.o:
   '.text':
   - offset: 0x56e678
