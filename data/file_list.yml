@@ -133627,7 +133627,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b61cc
     size: 52
     label: _ZN2al19createActorFunctionI13BirdCarryMeatEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b6200
     size: 52
