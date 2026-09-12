@@ -6,7 +6,15 @@ namespace al {
 class LiveActor;
 }
 
-class PropellerRotateInfo;
+class PropellerRotateInfo {
+public:
+    const char* mJointName;
+    s32 mRotateAxis;
+    s32 mRotateDirection;
+    s32 mRotatePeriod;
+};
+
+static_assert(sizeof(PropellerRotateInfo) == 0x18);
 
 class PropellerRotateCtrl : public al::JointControllerBase {
 public:
@@ -14,7 +22,8 @@ public:
 
     void update();
     void calcJointCallback(s32 jointIndex, sead::Matrix34f* mtx) override;
-    const char* getCtrlTypeName() const override;
+
+    const char* getCtrlTypeName() const override { return "プロペラ回転制御"; }
 
 private:
     const PropellerRotateInfo* mRotateInfo = nullptr;

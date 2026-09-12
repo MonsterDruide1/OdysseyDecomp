@@ -80217,19 +80217,19 @@ MapObj/PropellerRotateCtrl.o:
     label:
     - _ZN19PropellerRotateCtrlC1EPN2al9LiveActorERK19PropellerRotateInfo
     - _ZN19PropellerRotateCtrlC2EPN2al9LiveActorERK19PropellerRotateInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e845c
     size: 56
     label: _ZN19PropellerRotateCtrl6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e8494
     size: 232
     label: _ZN19PropellerRotateCtrl17calcJointCallbackEiPN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e857c
     size: 12
     label: _ZNK19PropellerRotateCtrl15getCtrlTypeNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/PulseSwitch.o:
   '.text':
