@@ -16,9 +16,9 @@ InitResourceDataActionAnim::tryCreate(Resource* resource, const InitResourceData
     return new InitResourceDataActionAnim(resource, nullptr, suffix);
 }
 
-void loadActionAnimDataInfo(ActionAnimDataInfo* data, const ByamlIter& parentIter,
-                            ActionAnimCtrlInfo* ctrlInfo, const char* animType,
-                            ActionAnimType actionAnimType) {
+static inline void loadActionAnimDataInfo(ActionAnimDataInfo* data, const ByamlIter& parentIter,
+                                          ActionAnimCtrlInfo* ctrlInfo, const char* animType,
+                                          ActionAnimType actionAnimType) {
     ByamlIter iter;
     if (parentIter.tryGetIterByKey(&iter, animType)) {
         iter.tryGetStringByKey(&data->actionName, "Name");
