@@ -15,6 +15,10 @@ public:
 
     bool isInvalidSwing() const { return mIsInvalidSwing; }
 
+    void validateSwing() { mIsInvalidSwing = false; }
+
+    void invalidateSwing() { mIsInvalidSwing = true; }
+
     void setCurrentAngle(sead::Vector2f currentAngle) { mCurrentAngle = currentAngle; }
 
     // all of them are default-initialized in the constructor, but some can't be inlined here

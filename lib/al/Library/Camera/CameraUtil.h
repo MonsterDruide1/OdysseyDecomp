@@ -5,12 +5,13 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+#include "Library/Camera/CameraSubTargetBase.h"
+
 namespace al {
 class CameraTicket;
 class ICameraInput;
 struct CameraFlagCtrl;
 class IUseCamera;
-class CameraSubTargetBase;
 class CameraSubTargetTurnParam;
 class SceneCameraInfo;
 class PlacementId;
@@ -19,7 +20,6 @@ struct ActorInitInfo;
 class LiveActor;
 class PlacementInfo;
 class CameraPoser;
-struct CameraPoseInfo;
 class CameraTargetBase;
 class Projection;
 class SimpleCameraInput;
@@ -27,8 +27,30 @@ class ActorCameraTarget;
 class ActorMatrixCameraTarget;
 class ActorCameraSubTarget;
 class ActorBackAroundCameraSubTarget;
-class TransCameraSubTarget;
 class CameraDistanceCurve;
+
+struct CameraPoseInfo {
+    sead::Vector3f cameraPos;
+    sead::Vector3f lookAtPos;
+    sead::Vector3f cameraUp;
+};
+
+static_assert(sizeof(CameraPoseInfo) == 0x24);
+
+class TransCameraSubTarget : public CameraSubTargetBase {
+public:
+    TransCameraSubTarget(const char* targetName, const sead::Vector3f* trans)
+        : mTargetName(targetName), mTrans(trans) {}
+
+    const char* getTargetName() const override;
+    void calcTrans(sead::Vector3f* trans) const override;
+
+private:
+    const char* mTargetName;
+    const sead::Vector3f* mTrans;
+};
+
+static_assert(sizeof(TransCameraSubTarget) == 0x28);
 
 SceneCameraInfo* getSceneCameraInfo(const IUseCamera* user);
 s32 getViewNumMax(const IUseCamera* user);

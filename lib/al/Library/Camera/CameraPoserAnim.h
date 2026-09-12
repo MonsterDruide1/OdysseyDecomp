@@ -28,22 +28,32 @@ public:
     bool isAnimEnd() const;
     u32 calcStepMax(const char* animName) const;
 
+    bool isPlaying() const { return mStep >= 0; }
+
+    s32 getStepMax() const { return mStepMax; }
+
+    s32 getStep() const { return mStep; }
+
+    void setRotateBaseUp() { mIsRotateBaseUp = true; }
+
+    void setBaseMtxPtr(const sead::Matrix34f* baseMtxPtr) { mBaseMtxPtr = baseMtxPtr; }
+
 private:
     Resource* mRes;
     nn::g3d::ResSceneAnim* mResFile;
     nn::g3d::CameraAnimResult* mAnimResult;
     f32 _158[10];
     const char* mPlayingAnimName;
-    f32 _188;
-    s32 _18c;
+    s32 mStepMax;
+    s32 mStep;
     f32 _190;
     f32 _194;
     f32 _198;
     f32 _19c;
-    const sead::Matrix34f* _1a0;
+    const sead::Matrix34f* mBaseMtxPtr;
     f32 _1a8;
     bool mIsHoldZoom;
-    bool _1ad;
+    bool mIsRotateBaseUp;
 };
 
 static_assert(sizeof(CameraPoserAnim) == 0x1B0);
