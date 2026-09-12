@@ -4,6 +4,7 @@
 
 namespace al {
 class IUseCamera;
+class CameraDistanceCurve;
 
 class CameraRequestParamHolder {
 public:
@@ -35,6 +36,12 @@ public:
 
     void setGyroSensitivityLevel(s32 level) { mGyroSensitivityLevel = level; }
 
+    CameraDistanceCurve* getBossDistanceCurve() const { return mBossDistanceCurve; }
+
+    CameraDistanceCurve* getEquipmentDistanceCurve() const { return mEquipmentDistanceCurve; }
+
+    bool isOnRideObj() const { return mRideObjCamera && mIsCurrRideObj; }
+
 private:
     s32 mStickSensitivityLevel = 0;
     s32 mGyroSensitivityLevel = 0;
@@ -53,8 +60,9 @@ private:
     bool mIsCurrRideObj = false;
     bool mIsPrevRideObj = false;
     const IUseCamera* mRideObjCamera = nullptr;
-    void* _58 = nullptr;
-    void* _60 = nullptr;
+    CameraDistanceCurve* mEquipmentDistanceCurve = nullptr;
+    CameraDistanceCurve* mBossDistanceCurve = nullptr;
 };
 
+static_assert(sizeof(CameraRequestParamHolder) == 0x68);
 }  // namespace al

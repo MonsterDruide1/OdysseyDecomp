@@ -12,7 +12,7 @@ struct CameraStartInfo;
 
 class CameraVerticalAbsorber : public NerveExecutor {
 public:
-    CameraVerticalAbsorber(const CameraPoser* cameraParent, bool isCameraPosAbsorb);
+    CameraVerticalAbsorber(const CameraPoser* cameraParent, bool isNoCameraPosAbsorb);
 
     void load(const ByamlIter& iter);
     void start(const sead::Vector3f& pos, const CameraStartInfo& info);
@@ -29,6 +29,22 @@ public:
     void exeFollowGround();
     void exeFollowClimbPole();
     void exeFollowAbsolute();
+
+    f32 getAbsorbScreenPosUp() const { return mAbsorbScreenPosUp; }
+
+    f32 getAbsorbScreenPosDown() const { return mAbsorbScreenPosDown; }
+
+    void setIsStopUpdate(bool isStopUpdate) { mIsStopUpdate = isStopUpdate; }
+
+    void setIsKeepInFrame(bool isKeepInFrame) { mIsKeepInFrame = isKeepInFrame; }
+
+    void setKeepInFrameOffsetUp(f32 keepInFrameOffsetUp) {
+        mKeepInFrameOffsetUp = keepInFrameOffsetUp;
+    }
+
+    void setKeepInFrameOffsetDown(f32 keepInFrameOffsetDown) {
+        mKeepInFrameOffsetDown = keepInFrameOffsetDown;
+    }
 
 private:
     const CameraPoser* mCameraPoser;

@@ -17,16 +17,32 @@ public:
 
     void setSensitivityScale(f32 sensitivityScale) { mSensitivityScale = sensitivityScale; }
 
+    const sead::Vector3f& getFront() const { return mFront; }
+
+    f32 getAngleV() const { return mAngleV; }
+
+    f32 getAngleH() const { return mAngleH; }
+
+    void setLimitAngleV(f32 min, f32 max) {
+        mMinAngleV = min;
+        mMaxAngleV = max;
+    }
+
+    void setSensitivity(f32 min, f32 max) {
+        mMinSensitivity = min;
+        mMaxSensitivity = max;
+    }
+
 private:
     sead::Matrix34f _0;
     sead::Vector3f _30;
     sead::Vector3f _3c;
     sead::Vector3f _48;
-    sead::Vector3f _54;
+    sead::Vector3f mFront;
     sead::Vector3f _60;
     sead::Vector3f _6c;
-    f32 _78;
-    f32 _7c;
+    f32 mAngleV;
+    f32 mAngleH;
     f32 _80;
     f32 _84;
     f32 _88;
@@ -39,10 +55,10 @@ private:
     f32 _a4;
     f32 mSensitivityScale;
     bool mIsValidGyro;
-    f32 _b0;
-    f32 _b4;
-    f32 _b8;
-    f32 _bc;
+    f32 mMaxSensitivity;
+    f32 mMinSensitivity;
+    f32 mMinAngleV;
+    f32 mMaxAngleV;
     f32 _c0;
     f32 _c4;
 };

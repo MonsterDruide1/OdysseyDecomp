@@ -24,20 +24,31 @@ public:
     bool receiveRequestFromObject(const CameraObjectRequestInfo& info);
     void setAngleV(f32 angleV);
 
+    void setDefaultAngleV(f32 min, f32 max) {
+        mDefaultMinAngleV = min;
+        mDefaultMaxAngleV = max;
+    }
+
+    void setStartAngleV(f32 angle) { mStartAngleV = angle; }
+
+    f32 getAngleH() const { return mAngleH; }
+
+    f32 getAngleV() const { return mAngleV; }
+
 private:
     void* _0;  // object of size 0x14
     void* _8;  // object of size 0x10
     bool mIsValidRotateH;
     s32 _14;
-    f32 _18;
+    f32 mAngleH;
     f32 _1c;
     f32 mMinAngleH;
     f32 mMaxAngleH;
-    f32 _28;
     f32 mAngleV;
+    f32 mStartAngleV;
     f32 _30;
-    f32 mMinAngleV;
-    f32 mMaxAngleV;
+    f32 mDefaultMinAngleV;
+    f32 mDefaultMaxAngleV;
     f32 _3c;
     f32 _40;
     f32 _44;
