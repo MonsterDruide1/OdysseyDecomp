@@ -58,7 +58,7 @@ void initJointMasher(const LiveActor*, const bool*, s32);
 void appendMashJoint(JointMasher*, const char*, f32);
 void initJointRumbler(const LiveActor*, const char*, f32, f32, u32, s32);
 void initJointLocalQuatRotator(const LiveActor*, const char*, const sead::Quatf*);
-void initJointLookAtController(const LiveActor*, s32);
+JointLookAtController* initJointLookAtController(const LiveActor*, s32);
 void appendJointLookAtController(JointLookAtController*, const LiveActor*, const char*, f32,
                                  const sead::Vector2f&, const sead::Vector2f&,
                                  const sead::Vector3f&, const sead::Vector3f&);
