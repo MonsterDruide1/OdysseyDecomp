@@ -127899,37 +127899,37 @@ Player/PlayerStateRun2D3D.o:
     label:
     - _ZN18PlayerStateRun2D3DC1EPN2al9LiveActorEPK11PlayerConstPK13IUseDimensionPK19IPlayerModelChangerPK11PlayerInputPK19IUsePlayerCollisionP14PlayerAnimator
     - _ZN18PlayerStateRun2D3DC2EPN2al9LiveActorEPK11PlayerConstPK13IUseDimensionPK19IPlayerModelChangerPK11PlayerInputPK19IUsePlayerCollisionP14PlayerAnimator
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47e494
     size: 80
     label: _ZN18PlayerStateRun2D3D6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47e4e4
     size: 156
     label: _ZN18PlayerStateRun2D3D9syncModelEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47e580
     size: 60
     label: _ZN18PlayerStateRun2D3D8exeRun3DEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47e5bc
     size: 60
     label: _ZN18PlayerStateRun2D3D8exeRun2DEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x47e5f8
     size: 36
     label: _ZN18PlayerStateRun2D3DD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x47e61c
     size: 64
     label: _ZNK12_GLOBAL__N_126PlayerStateRun2D3DNrvRun3D7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x47e65c
     size: 64
     label: _ZNK12_GLOBAL__N_126PlayerStateRun2D3DNrvRun2D7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Player/PlayerStateRunHakoniwa.o:
   '.text':
