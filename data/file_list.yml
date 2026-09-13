@@ -56641,7 +56641,7 @@ Layout/SouvenirListLayout.o:
   - offset: 0x20c56c
     size: 4
     label: _ZN2al10WStringTmpILi256EED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Layout/StageSceneLayout.o:
   '.text':
@@ -158881,115 +158881,115 @@ Util/StageLayoutFunction.o:
   - offset: 0x577798
     size: 340
     label: _ZN2rs16searchNpcMessageERKN2al13ActorInitInfoEPKNS0_11LayoutActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5778ec
     size: 124
     label: _ZN2rs21makeActorMessageLabelEPN4sead22BufferedSafeStringBaseIcEERKN2al13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577968
     size: 104
     label: _ZN2rs16makeMessageLabelEPN4sead22BufferedSafeStringBaseIcEERKN2al13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5779d0
     size: 16
     label: _ZN2rs16makeMessageLabelEPN4sead22BufferedSafeStringBaseIcEEPKN2al11PlacementIdEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5779e0
     size: 400
     label: _ZN2rs29setPaneStageMessageActorLabelEPN2al11LayoutActorEPKcRKNS0_13ActorInitInfoES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577b70
     size: 152
     label: _ZN2rs29trySetPaneStageMessageIfExistEPN2al11LayoutActorEPKcS4_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577c08
     size: 72
     label: _ZN2rs21getPlacementStageNameE22GameDataHolderAccessorRKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577c50
     size: 380
     label: _ZN2rs25getStageMessageActorLabelEPN2al11LayoutActorERKNS0_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577dcc
     size: 4
     label: _ZN2rs39isExistLabelInSystemMessageWithFileNameEPKN2al17IUseMessageSystemEPKcS5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577dd0
     size: 4
     label: _ZN2rs38isExistLabelInStageMessageWithFileNameEPKN2al17IUseMessageSystemEPKcS5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577dd4
     size: 108
     label: _ZN2rs30trySetPaneSystemMessageIfExistEPN2al11LayoutActorEPKcS4_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577e40
     size: 328
     label: _ZN2rs30trySetPaneStringCheckpointNameEPN2al11LayoutActorEPKciS4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577f88
     size: 12
     label: _ZN2rs24getCheckpointLabelPrefixEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577f94
     size: 64
     label: _ZN2rs33setPaneStringWorldNameForWorldMapEPN2al11LayoutActorEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x577fd4
     size: 100
     label: _ZN2rs44setPaneStringWorldNameForWorldMapWithoutRubyEPN2al11LayoutActorEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x578038
     size: 376
     label: _ZN2rs20setRaceRecordMessageEPN2al11LayoutActorEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5781b0
     size: 296
     label: _ZN2rs24setRaceRecordMessageCsecEPN2al11LayoutActorEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5782d8
     size: 332
     label: _ZN2rs28replaceRaceRecordMessageCsecEPN2al11LayoutActorEPKciPKDsS4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x578424
     size: 84
     label: _ZN2rs22setRaceNoRecordMessageEPN2al11LayoutActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x578478
     size: 84
     label: _ZN2rs25setMiniGameNoCountMessageEPN2al11LayoutActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5784cc
     size: 280
     label: _ZN2rs24getWorldShinePictureFontEPKN2al11LayoutActorEib
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5785e4
     size: 180
     label: _ZN2rs23getNullShinePictureFontEPKN2al11LayoutActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x578698
     size: 256
     label: _ZN2rs30getWorldCoinCollectPictureFontEPKN2al11LayoutActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x578798
     size: 276
     label: _ZN2rs30getWorldCoinCollectPictureFontEPKN2al11LayoutActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5788ac
     size: 60
     label: _ZN2rs21getPlacementStageNameE22GameDataHolderAccessorRKN2al13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5788e8
     size: 256
     label: _ZN2rs20getCollectBgmMessageEPKN2al17IUseMessageSystemEPK10CollectBgm
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5789e8
     size: 88
     label: _ZN2rs21setPaneCurrentCoinNumEPN2al11LayoutActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x578a40
     size: 324
     label: _ZN2rs26tryGetMapMainScenarioLabelEPN4sead22BufferedSafeStringBaseIcEES3_PbPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
 Util/SensorMsgFunction.o:
   '.text':
   - offset: 0x578b84
