@@ -6133,87 +6133,87 @@ Boss/BossKnuckle/BossKnuckleThrowIce.o:
   - offset: 0x02da8c
     size: 148
     label: _ZN19BossKnuckleThrowIceC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02db20
     size: 160
     label: _ZN19BossKnuckleThrowIceC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02dbc0
     size: 112
     label: _ZN19BossKnuckleThrowIce4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02dc30
     size: 132
     label: _ZN19BossKnuckleThrowIce12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02dcb4
     size: 68
     label: _ZN19BossKnuckleThrowIce6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02dcf8
     size: 224
     label: _ZN19BossKnuckleThrowIce12appearOnHandEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02ddd8
     size: 108
     label: _ZN19BossKnuckleThrowIce7doBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02de44
     size: 148
     label: _ZN19BossKnuckleThrowIce7doThrowERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02ded8
     size: 72
     label: _ZNK19BossKnuckleThrowIce7isInAirEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02df20
     size: 12
     label: _ZNK19BossKnuckleThrowIce7isBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02df2c
     size: 220
     label: _ZN19BossKnuckleThrowIce9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02e008
     size: 172
     label: _ZN19BossKnuckleThrowIce7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02e0b4
     size: 120
     label: _ZN19BossKnuckleThrowIce6exeFlyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02e12c
     size: 180
     label: _ZN19BossKnuckleThrowIce11exeBlowDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02e1e0
     size: 80
     label: _ZN19BossKnuckleThrowIce8exeBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02e230
     size: 8
     label: _ZNK12_GLOBAL__N_126BossKnuckleThrowIceNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x02e238
     size: 84
     label: _ZNK12_GLOBAL__N_127BossKnuckleThrowIceNrvBreak7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x02e28c
     size: 124
     label: _ZNK12_GLOBAL__N_125BossKnuckleThrowIceNrvFly7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x02e308
     size: 8
     label: _ZNK12_GLOBAL__N_130BossKnuckleThrowIceNrvBlowDown7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x02e310
     size: 8
     label: _ZNK12_GLOBAL__N_128BossKnuckleThrowIceNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/BossMagma/BossMagma.o:
   '.text':
