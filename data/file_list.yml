@@ -139875,78 +139875,78 @@ Scene/StageSceneStateGetShineMainWithCageShine.o:
   - offset: 0x4e0280
     size: 160
     label: _ZN40StageSceneStateGetShineMainWithCageShine9tryCreateEPN2al5SceneERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e0320
     size: 120
     label:
     - _ZN40StageSceneStateGetShineMainWithCageShineC1EPKcPN2al5SceneEP29StageSceneStateBreakCageShine
     - _ZN40StageSceneStateGetShineMainWithCageShineC2EPKcPN2al5SceneEP29StageSceneStateBreakCageShine
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e0398
     size: 4
     label: _ZN40StageSceneStateGetShineMainWithCageShine4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e039c
     size: 16
     label: _ZN40StageSceneStateGetShineMainWithCageShine6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e03ac
     size: 12
     label: _ZN40StageSceneStateGetShineMainWithCageShine4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e03b8
     size: 172
     label: _ZN40StageSceneStateGetShineMainWithCageShine8setStateEP27StageSceneStateGetShineMainP29StageSceneStateScenarioCameraP26StageSceneStateRecoverLifeP31StageSceneStateGetShineMainLast
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e0464
     size: 64
     label: _ZN40StageSceneStateGetShineMainWithCageShine15exeDemoGetShineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e04a4
     size: 104
     label: _ZN40StageSceneStateGetShineMainWithCageShine21exeDemoBreakCageShineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e050c
     size: 64
     label: _ZN40StageSceneStateGetShineMainWithCageShine21exeDemoScenarioCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e054c
     size: 64
     label: _ZN40StageSceneStateGetShineMainWithCageShine18exeDemoRecoverLifeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e058c
     size: 60
     label: _ZN40StageSceneStateGetShineMainWithCageShine10exeDemoEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4e05c8
     size: 36
     label: _ZN40StageSceneStateGetShineMainWithCageShineD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4e05ec
     size: 68
     label: _ZNK12_GLOBAL__N_155StageSceneStateGetShineMainWithCageShineNrvDemoGetShine7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4e0630
     size: 108
     label: _ZNK12_GLOBAL__N_161StageSceneStateGetShineMainWithCageShineNrvDemoBreakCageShine7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4e069c
     size: 68
     label: _ZNK12_GLOBAL__N_161StageSceneStateGetShineMainWithCageShineNrvDemoScenarioCamera7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4e06e0
     size: 68
     label: _ZNK12_GLOBAL__N_158StageSceneStateGetShineMainWithCageShineNrvDemoRecoverLife7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4e0724
     size: 64
     label: _ZNK12_GLOBAL__N_150StageSceneStateGetShineMainWithCageShineNrvDemoEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Scene/StageSceneStateMiniGameRanking.o:
   '.text':
