@@ -137144,22 +137144,22 @@ Scene/ProjectSceneFactory.o:
   - offset: 0x4c1b18
     size: 48
     label: _ZN15alSceneFunction15createSceneFuncI20DemoChangeWorldSceneEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4c1b48
     size: 48
     label: _ZN15alSceneFunction15createSceneFuncI9DemoSceneEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4c1b78
     size: 48
     label: _ZN15alSceneFunction15createSceneFuncI26DemoSceneWithCinemaCaptionEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4c1ba8
     size: 48
     label: _ZN15alSceneFunction15createSceneFuncI11EndingSceneEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4c1bd8
     size: 44
@@ -137169,12 +137169,12 @@ Scene/ProjectSceneFactory.o:
   - offset: 0x4c1c04
     size: 44
     label: _ZN15alSceneFunction15createSceneFuncI10StageSceneEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4c1c30
     size: 48
     label: _ZN15alSceneFunction15createSceneFuncI14StaffRollSceneEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4c1c60
     size: 44
@@ -137184,7 +137184,7 @@ Scene/ProjectSceneFactory.o:
   - offset: 0x4c1c8c
     size: 48
     label: _ZN15alSceneFunction15createSceneFuncI18WorldWarpHoleSceneEEPN2al5SceneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Scene/QuestInfo.o:
   '.text':
