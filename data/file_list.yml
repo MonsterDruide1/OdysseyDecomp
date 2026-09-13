@@ -18500,94 +18500,94 @@ Boss/Koopa/KoopaStateDemoClashBasement.o:
   - offset: 0x09e448
     size: 196
     label: _ZN27KoopaStateDemoClashBasement9tryCreateEPN2al9LiveActorERKNS0_13ActorInitInfoEP17KoopaDemoExecutor
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e50c
     size: 108
     label:
     - _ZN27KoopaStateDemoClashBasementC1EPN2al9LiveActorEP17KoopaDemoExecutorPKNS0_12AreaObjGroupE
     - _ZN27KoopaStateDemoClashBasementC2EPN2al9LiveActorEP17KoopaDemoExecutorPKNS0_12AreaObjGroupE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e578
     size: 40
     label: _ZN27KoopaStateDemoClashBasement6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e5a0
     size: 68
     label: _ZN27KoopaStateDemoClashBasement4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e5e4
     size: 32
     label: _ZNK27KoopaStateDemoClashBasement11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e604
     size: 32
     label: _ZThn32_NK27KoopaStateDemoClashBasement11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e624
     size: 8
     label: _ZNK27KoopaStateDemoClashBasement16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e62c
     size: 8
     label: _ZThn32_NK27KoopaStateDemoClashBasement16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e634
     size: 72
     label: _ZN27KoopaStateDemoClashBasement8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e67c
     size: 76
     label: _ZThn32_N27KoopaStateDemoClashBasement8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e6c8
     size: 108
     label: _ZN27KoopaStateDemoClashBasement10exePrepareEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e734
     size: 80
     label: _ZN27KoopaStateDemoClashBasement8exeStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e784
     size: 80
     label: _ZN27KoopaStateDemoClashBasement7exeDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e7d4
     size: 4
     label: _ZN27KoopaStateDemoClashBasement7exeSkipEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e7d8
     size: 4
     label: _ZN27KoopaStateDemoClashBasement6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09e7dc
     size: 36
     label: _ZN27KoopaStateDemoClashBasementD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x09e800
     size: 108
     label: _ZNK12_GLOBAL__N_137KoopaStateDemoClashBasementNrvPrepare7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09e86c
     size: 80
     label: _ZNK12_GLOBAL__N_135KoopaStateDemoClashBasementNrvStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09e8bc
     size: 4
     label: _ZNK12_GLOBAL__N_134KoopaStateDemoClashBasementNrvSkip7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09e8c0
     size: 80
     label: _ZNK12_GLOBAL__N_134KoopaStateDemoClashBasementNrvDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09e910
     size: 4
     label: _ZNK12_GLOBAL__N_133KoopaStateDemoClashBasementNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaStateFireBeam.o:
   '.text':
