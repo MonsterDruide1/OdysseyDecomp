@@ -12538,51 +12538,51 @@ Boss/GiantWanderBoss/GiantWanderBossStateEscapeCancel.o:
     label:
     - _ZN32GiantWanderBossStateEscapeCancelC1EP15GiantWanderBossPN2al16DeriveActorGroupI19GiantWanderBossMineEE
     - _ZN32GiantWanderBossStateEscapeCancelC2EP15GiantWanderBossPN2al16DeriveActorGroupI19GiantWanderBossMineEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x06b3ec
     size: 20
     label: _ZN32GiantWanderBossStateEscapeCancel6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x06b400
     size: 96
     label: _ZN32GiantWanderBossStateEscapeCancel8exeAngryEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x06b460
     size: 188
     label: _ZN32GiantWanderBossStateEscapeCancel13exeAppearMineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x06b51c
     size: 200
     label: _ZN32GiantWanderBossStateEscapeCancel9exeLaunchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x06b5e4
     size: 88
     label: _ZN32GiantWanderBossStateEscapeCancel12exeLaunchEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x06b63c
     size: 36
     label: _ZN32GiantWanderBossStateEscapeCancelD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x06b660
     size: 100
     label: _ZNK12_GLOBAL__N_140GiantWanderBossStateEscapeCancelNrvAngry7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x06b6c4
     size: 8
     label: _ZNK12_GLOBAL__N_145GiantWanderBossStateEscapeCancelNrvAppearMine7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x06b6cc
     size: 8
     label: _ZNK12_GLOBAL__N_141GiantWanderBossStateEscapeCancelNrvLaunch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x06b6d4
     size: 92
     label: _ZNK12_GLOBAL__N_144GiantWanderBossStateEscapeCancelNrvLaunchEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/GiantWanderBoss/GiantWanderBossStateOnGlass.o:
   '.text':
