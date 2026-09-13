@@ -23738,27 +23738,27 @@ Camera/ScenarioStartCameraHolder.o:
     label:
     - _ZN25ScenarioStartCameraHolderC1Ev
     - _ZN25ScenarioStartCameraHolderC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d042c
     size: 268
     label: _ZN25ScenarioStartCameraHolder4initEPKN2al5SceneERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d0538
     size: 108
     label: _ZNK25ScenarioStartCameraHolder36isExistEnableNextScenarioStartCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d05a4
     size: 140
     label: _ZN25ScenarioStartCameraHolder31tryStartNextScenarioStartCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d0630
     size: 140
     label: _ZN25ScenarioStartCameraHolder28startNextScenarioStartCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d06bc
     size: 4
     label: _ZNK25ScenarioStartCameraHolder40getCurrentScenarioStartCameraMaxPlayStepEv
-    status: NotDecompiled
+    status: Matching
 Camera/ScenarioStartCameraPoser.o:
   '.text':
   - offset: 0x0d06c0
