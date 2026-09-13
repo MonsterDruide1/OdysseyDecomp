@@ -61143,71 +61143,71 @@ MapObj/CapAppearTarget.o:
   - offset: 0x230ae8
     size: 144
     label: _ZN15CapAppearTargetC2EPKcP17CapAppearMapParts
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230b78
     size: 148
     label: _ZN15CapAppearTargetC1EPKcP17CapAppearMapParts
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230c0c
     size: 152
     label: _ZN15CapAppearTarget4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230ca4
     size: 112
     label: _ZN15CapAppearTarget6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230d14
     size: 60
     label: _ZN15CapAppearTarget12switchAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230d50
     size: 232
     label: _ZN15CapAppearTarget10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230e38
     size: 96
     label: _ZN15CapAppearTarget7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230e98
     size: 84
     label: _ZN15CapAppearTarget11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230eec
     size: 60
     label: _ZN15CapAppearTarget9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230f28
     size: 88
     label: _ZN15CapAppearTarget12exeDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230f80
     size: 60
     label: _ZN15CapAppearTarget7exeDeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x230fbc
     size: 100
     label: _ZNK12_GLOBAL__N_122CapAppearTargetNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x231020
     size: 64
     label: _ZNK12_GLOBAL__N_124CapAppearTargetNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x231060
     size: 92
     label: _ZNK12_GLOBAL__N_127CapAppearTargetNrvDisappear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2310bc
     size: 88
     label: _ZNK12_GLOBAL__N_126CapAppearTargetNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x231114
     size: 64
     label: _ZNK12_GLOBAL__N_122CapAppearTargetNrvDead7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/CapBeamer.o:
   '.text':
