@@ -170303,11 +170303,11 @@ Util/SwitchUtil.o:
   - offset: 0x5bfa18
     size: 92
     label: _ZN2rs18isOnSwitchLinkSaveEPKN2al9LiveActorERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5bfa74
     size: 12
     label: _ZN2rs12isSaveSwitchERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
 Util/TextureUtil.o:
   '.text':
   - offset: 0x5bfa80
