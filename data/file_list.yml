@@ -82724,7 +82724,7 @@ MapObj/RouteGuideArrow.o:
   - offset: 0x300e28
     size: 12
     label: _ZN19RouteGuideArrowBase13validateGuideEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x300e34
     size: 12
@@ -82737,7 +82737,7 @@ MapObj/RouteGuideArrow.o:
   - offset: 0x300e78
     size: 8
     label: _ZN19RouteGuideArrowBase15invalidateGuideEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x300e80
     size: 60
@@ -82751,7 +82751,7 @@ MapObj/RouteGuideArrow.o:
   - offset: 0x300ec4
     size: 8
     label: _ZNK19RouteGuideArrowBase15isValidateGuideEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x300ecc
     size: 8
@@ -82761,7 +82761,7 @@ MapObj/RouteGuideArrow.o:
   - offset: 0x300ed4
     size: 4
     label: _ZN19RouteGuideArrowBase13setGuideAlphaEf
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x300ed8
     size: 28
@@ -83140,68 +83140,68 @@ MapObj/RouteGuideRailArrow.o:
   - offset: 0x303244
     size: 204
     label: _ZN19RouteGuideRailArrowC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303310
     size: 184
     label: _ZN19RouteGuideRailArrowC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3033c8
     size: 76
     label: _ZN19RouteGuideRailArrow14makeActorAliveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303414
     size: 4
     label: _ZN19RouteGuideRailArrow13makeActorDeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303418
     size: 200
     label: _ZN19RouteGuideRailArrow4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3034e0
     size: 108
     label: _ZN19RouteGuideRailArrow7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x30354c
     size: 20
     label: _ZNK19RouteGuideRailArrow13getGuideTransEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303560
     size: 24
     label: _ZThn264_NK19RouteGuideRailArrow13getGuideTransEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303578
     size: 148
     label: _ZN19RouteGuideRailArrow13setGuideAlphaEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x30360c
     size: 152
     label: _ZThn264_N19RouteGuideRailArrow13setGuideAlphaEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3036a4
     size: 56
     label: _ZN19RouteGuideRailArrow15invalidateGuideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3036dc
     size: 60
     label: _ZThn264_N19RouteGuideRailArrow15invalidateGuideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303718
     size: 8
     label: _ZN19RouteGuideRailArrow6attachEPKN2al14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303720
     size: 56
     label: _ZN19RouteGuideRailArrow16setBaseQuatTransEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x303758
     size: 8
     label: _ZNK19RouteGuideRailArrow23getActorDimensionKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x303760
     size: 8
     label: _ZThn280_NK19RouteGuideRailArrow23getActorDimensionKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/SandGeyser.o:
   '.text':
