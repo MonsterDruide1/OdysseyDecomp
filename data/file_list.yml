@@ -77115,45 +77115,45 @@ MapObj/MoonWorldBell.o:
   - offset: 0x2c655c
     size: 120
     label: _ZN13MoonWorldBellC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c65d4
     size: 132
     label: _ZN13MoonWorldBellC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c6658
     size: 176
     label: _ZN13MoonWorldBell4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c6708
     size: 216
     label: _ZN13MoonWorldBell10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c67e0
     size: 4
     label: _ZN13MoonWorldBell7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c67e4
     size: 64
     label: _ZN13MoonWorldBell14exeCapReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c6824
     size: 64
     label: _ZN13MoonWorldBell18exeHipDropReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c6864
     size: 4
     label: _ZNK12_GLOBAL__N_120MoonWorldBellNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c6868
     size: 68
     label: _ZNK12_GLOBAL__N_127MoonWorldBellNrvCapReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c68ac
     size: 68
     label: _ZNK12_GLOBAL__N_131MoonWorldBellNrvHipDropReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/MoonWorldCaptureParadeLift.o:
   '.text':
@@ -134927,7 +134927,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b9bcc
     size: 52
     label: _ZN2al19createActorFunctionI13MoonWorldBellEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b9c00
     size: 52
