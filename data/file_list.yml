@@ -87085,37 +87085,37 @@ MapObj/StateMapPartsForceReset.o:
     label:
     - _ZN23StateMapPartsForceResetC1EPN2al9LiveActorERKNS0_13ActorInitInfoE
     - _ZN23StateMapPartsForceResetC2EPN2al9LiveActorERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x32aba4
     size: 64
     label: _ZN23StateMapPartsForceReset6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x32abe4
     size: 156
     label: _ZNK23StateMapPartsForceReset18isEnableForceResetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x32ac80
     size: 180
     label: _ZN23StateMapPartsForceReset8exeResetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x32ad34
     size: 4
     label: _ZN23StateMapPartsForceReset11exeResetEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x32ad38
     size: 36
     label: _ZN23StateMapPartsForceResetD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x32ad5c
     size: 4
     label: _ZNK12_GLOBAL__N_134StateMapPartsForceResetNrvResetEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x32ad60
     size: 8
     label: _ZNK12_GLOBAL__N_131StateMapPartsForceResetNrvReset7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/StateSimpleDemoCamera.o:
   '.text':
