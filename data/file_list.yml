@@ -226628,444 +226628,444 @@ Library/Bgm/BgmLineFunction.o:
   - offset: 0x824b30
     size: 56
     label: _ZN2al14getBgmDirectorEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824b68
     size: 56
     label: _ZN2al17tryGetBgmDirectorEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824ba0
     size: 76
     label: _ZN2al23getBgmSituationDirectorEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824bec
     size: 76
     label: _ZN2al24getBgm3DParamsControllerEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824c38
     size: 68
     label: _ZN2al16getActiveBgmLineEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824c7c
     size: 80
     label: _ZN2al17getPlayingBgmLineEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824ccc
     size: 84
     label: _ZN2al24getCurPlayingBgmPlayNameEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824d20
     size: 92
     label: _ZN2al28getCurPlayingBgmResourceNameEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824d7c
     size: 72
     label: _ZN2al27getBgmPlayNameInCurPositionEPKNS_15IUseAudioKeeperEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824dc4
     size: 168
     label: _ZN2al31getBgmResourceNameInCurPositionEPKNS_15IUseAudioKeeperEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824e6c
     size: 92
     label: _ZN2al29getActiveBgmCurSamplePositionEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824ec8
     size: 80
     label: _ZN2al27getBgmLoopEndSamplePositionEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824f18
     size: 160
     label: _ZN2al8startBgmEPKNS_15IUseAudioKeeperEPKcii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x824fb8
     size: 156
     label: _ZN2al8startBgmEPKNS_15IUseAudioKeeperERKNS_17BgmPlayingRequestEbb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825054
     size: 160
     label: _ZN2al18startBgmWithSuffixEPKNS_15IUseAudioKeeperEPKcS4_ii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8250f4
     size: 176
     label: _ZN2al28startAndStopBgmInCurPositionEPKNS_15IUseAudioKeeperEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8251a4
     size: 92
     label: _ZN2al17startBgmSituationEPKNS_15IUseAudioKeeperEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825200
     size: 76
     label: _ZN2al10prepareBgmEPKNS_15IUseAudioKeeperERKNS_17BgmPlayingRequestE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82524c
     size: 168
     label: _ZN2al23prepareBgmWithAreaCheckEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8252f4
     size: 84
     label: _ZN2al7stopBgmEPKNS_15IUseAudioKeeperEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825348
     size: 80
     label: _ZN2al7stopBgmEPKNS_15IUseAudioKeeperERKNS_17BgmPlayingRequestE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825398
     size: 84
     label: _ZN2al8pauseBgmEPKNS_15IUseAudioKeeperEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8253ec
     size: 84
     label: _ZN2al9resumeBgmEPKNS_15IUseAudioKeeperEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825440
     size: 60
     label: _ZN2al12isPlayingBgmEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82547c
     size: 80
     label: _ZN2al12isPlayingBgmEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8254cc
     size: 80
     label: _ZN2al12isRunningBgmEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82551c
     size: 120
     label: _ZN2al28isPlayingResourceCategoryBgmEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825594
     size: 92
     label: _ZN2al13stopActiveBgmEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8255f0
     size: 92
     label: _ZN2al14pauseActiveBgmEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82564c
     size: 96
     label: _ZN2al15resumeActiveBgmEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8256ac
     size: 160
     label: _ZN2al18isPlayingActiveBgmEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82574c
     size: 84
     label: _ZN2al16isPauseActiveBgmEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8257a0
     size: 80
     label: _ZN2al10stopAllBgmEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8257f0
     size: 76
     label: _ZN2al13tryStopAllBgmEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82583c
     size: 76
     label: _ZN2al28setTriggerEventForStopAllBgmEPKNS_15IUseAudioKeeperERKNS_11FunctorBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825888
     size: 292
     label: _ZN2al26tryPauseBgmIfDifferBgmAreaEPKNS_9LiveActorERKN4sead7Vector3IfEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8259ac
     size: 84
     label: _ZN2al24tryPauseBgmIfLowPriorityEPKNS_15IUseAudioKeeperEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825a00
     size: 108
     label: _ZN2al17startBgmSituationEPKNS_15IUseAudioKeeperEPKcbb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825a6c
     size: 116
     label: _ZN2al17startBgmSituationEPKNS_15IUseAudioKeeperEPN4sead8PtrArrayINS_17IBgmParamsChangerEEEPKcbb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825ae0
     size: 108
     label: _ZN2al22forceStartBgmSituationEPKNS_15IUseAudioKeeperEPKcbb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825b4c
     size: 88
     label: _ZN2al15endBgmSituationEPKNS_15IUseAudioKeeperEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825ba4
     size: 108
     label: _ZN2al15endBgmSituationEPKNS_15IUseAudioKeeperEPN4sead8PtrArrayINS_17IBgmParamsChangerEEEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825c10
     size: 88
     label: _ZN2al20forceEndBgmSituationEPKNS_15IUseAudioKeeperEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825c68
     size: 64
     label: _ZN2al10startBgm3DEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825ca8
     size: 64
     label: _ZN2al8endBgm3DEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825ce8
     size: 140
     label: _ZN2al17changeBgm3DParamsEPKNS_15IUseAudioKeeperEffffb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825d74
     size: 64
     label: _ZN2al23activateBgm3DControllerEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825db4
     size: 64
     label: _ZN2al25deactivateBgm3DControllerEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825df4
     size: 104
     label: _ZN2al25isActivateBgm3DControllerEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825e5c
     size: 100
     label: _ZN2al24getActiveBgmSituationNumEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825ec0
     size: 88
     label: _ZN2al25getActiveBgmSituationNameEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825f18
     size: 100
     label: _ZN2al26getDeactiveBgmSituationNumEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825f7c
     size: 88
     label: _ZN2al27getDeactiveBgmSituationNameEPKNS_15IUseAudioKeeperEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x825fd4
     size: 64
     label: _ZN2al24takeBgmSituationSnapShotEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826014
     size: 64
     label: _ZN2al25applyBgmSituationSnapShotEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826054
     size: 64
     label: _ZN2al29applyNoAppliedSituationRecordEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826094
     size: 156
     label: _ZN2al21isStartedBgmSituationEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826130
     size: 64
     label: _ZN2al18endAllBgmSituationEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826170
     size: 120
     label: _ZN2al28clearBgmDataForStepOverSceneEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8261e8
     size: 64
     label: _ZN2al23clearBgmPlayPointRecordEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826228
     size: 64
     label: _ZN2al24startBgmSyncedCurBgmBeatEPKNS_15IUseAudioKeeperERKNS_17BgmPlayingRequestEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826268
     size: 64
     label: _ZN2al23stopBgmSyncedCurBgmBeatEPKNS_15IUseAudioKeeperERKNS_17BgmPlayingRequestEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8262a8
     size: 56
     label: _ZN2al20disableBgmLineChangeEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8262e0
     size: 56
     label: _ZN2al19enableBgmLineChangeEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826318
     size: 60
     label: _ZN2al22isDisableBgmLineChangeEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826354
     size: 64
     label: _ZN2al25disableBgmSituationChangeEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826394
     size: 84
     label: _ZN2al24enableBgmSituationChangeEPKNS_15IUseAudioKeeperEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8263e8
     size: 104
     label: _ZN2al27isDisableBgmSituationChangeEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826450
     size: 60
     label: _ZN2al33tryAllocBgmMultiPlayingControllerEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82648c
     size: 76
     label: _ZN2al35tryReleaseBgmMultiPlayingControllerEPKNS_15IUseAudioKeeperEPNS_25BgmMultiPlayingControllerE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8264d8
     size: 80
     label: _ZN2al13getBgmLineNumEPKNS_15IUseAudioKeeperEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826528
     size: 88
     label: _ZN2al18getBgmLineAccessorEPKNS_15IUseAudioKeeperEib
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826580
     size: 88
     label: _ZN2al16getgBgmLineIndexEPKNS_15IUseAudioKeeperEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8265d8
     size: 128
     label: _ZN2al30replaceBgmPlayInfoResourceNameEPKNS_15IUseAudioKeeperEPKcS4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826658
     size: 104
     label: _ZN2al18isEnableRhythmAnimEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8266c0
     size: 124
     label: _ZN2al13isTriggerBeatEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82673c
     size: 124
     label: _ZN2al17isTriggerBackBeatEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8267b8
     size: 124
     label: _ZN2al19isTriggerMeasureTopEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826834
     size: 80
     label: _ZN2al6getBpmEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826884
     size: 72
     label: _ZN2al11getBeatRateEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8268cc
     size: 72
     label: _ZN2al10getCurBeatEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826914
     size: 72
     label: _ZN2al19getCurBeatOnMeasureEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82695c
     size: 72
     label: _ZN2al16getLoopStartBeatEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8269a4
     size: 72
     label: _ZN2al14getLoopEndBeatEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8269ec
     size: 72
     label: _ZN2al18getFramePerMeasureEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826a34
     size: 128
     label: _ZN2al17getBeatPerMeasureEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826ab4
     size: 104
     label: _ZN2al29isChangeActiveBgmResourceNameEPKNS_15IUseAudioKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826b1c
     size: 88
     label: _ZN2al30tryRegistTargetBgmResourceNameEPKNS_15IUseAudioKeeperEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826b74
     size: 4
     label: _ZN2al22muteOnRunningLineTrackEPNS_15IUseAudioKeeperEjb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826b78
     size: 4
     label: _ZN2al23muteOffRunningLineTrackEPNS_15IUseAudioKeeperEjb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826b7c
     size: 116
     label: _ZN2al11BgmDataBase6createEPKcS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x826bf0
     size: 3264
     label:
     - _ZN2al11BgmDataBaseC1EPNS_8ResourceES2_
     - _ZN2al11BgmDataBaseC2EPNS_8ResourceES2_
-    status: NotDecompiled
+    status: Wip
 Library/Bgm/BgmLineInfo.o:
   '.text':
   - offset: 0x8278b0
     size: 332
     label: _ZN2al19createAudioInfoListINS_19BgmCombinedLineInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterEi
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8279fc
     size: 104
     label: _ZN2al26AudioInfoListCreateFunctorINS_19BgmCombinedLineInfoEE30tryCreateAudioInfoAndSetToListERKNS_9ByamlIterE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x827a64
     size: 332
     label: _ZN2al19createAudioInfoListINS_11BgmPlayInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterEi
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x827bb0
     size: 104
     label: _ZN2al26AudioInfoListCreateFunctorINS_11BgmPlayInfoEE30tryCreateAudioInfoAndSetToListERKNS_9ByamlIterE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x827c18
     size: 332
     label: _ZN2al19createAudioInfoListINS_23BgmResourceCategoryInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterEi
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x827d64
     size: 104
     label: _ZN2al26AudioInfoListCreateFunctorINS_23BgmResourceCategoryInfoEE30tryCreateAudioInfoAndSetToListERKNS_9ByamlIterE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x827dcc
     size: 332
     label: _ZN2al19createAudioInfoListINS_12BgmStageInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterEi
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x827f18
     size: 372
     label: _ZN2al19createAudioInfoListINS_12BgmStageInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterES8_ib
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x82808c
     size: 104
     label: _ZN2al26AudioInfoListCreateFunctorINS_12BgmStageInfoEE30tryCreateAudioInfoAndSetToListERKNS_9ByamlIterE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8280f4
     size: 332
     label: _ZN2al19createAudioInfoListINS_16BgmSituationInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterEi
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x828240
     size: 104
     label: _ZN2al26AudioInfoListCreateFunctorINS_16BgmSituationInfoEE30tryCreateAudioInfoAndSetToListERKNS_9ByamlIterE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8282a8
     size: 332
     label: _ZN2al19createAudioInfoListINS_21BgmDemoSyncedProcInfoEEEPNS_22AudioInfoListWithPartsIT_EERKNS_9ByamlIterEi
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8283f4
     size: 104
     label: _ZN2al26AudioInfoListCreateFunctorINS_21BgmDemoSyncedProcInfoEE30tryCreateAudioInfoAndSetToListERKNS_9ByamlIterE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x82845c
     size: 8
     label: _ZN2al13AudioInfoListINS_21BgmDemoSyncedProcInfoEE17compareInfoAndKeyEPKS1_PKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x828464
     size: 116
