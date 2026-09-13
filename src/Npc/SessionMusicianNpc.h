@@ -124,4 +124,7 @@ private:
     bool mIsUseBgmTrackMute;
 };
 
+// NOTE: if this assertion fails, make sure you are using libc++ (llvm) as standard library.
+// libstdc++ (gnu)'s std::string is larger than libc++'s, resulting in a different total size.
+// ignoring this check will result in garbage in all members after (and including) std::string.
 static_assert(sizeof(SessionMusicianNpc) == 0x1e0);
