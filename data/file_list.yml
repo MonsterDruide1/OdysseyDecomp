@@ -69963,63 +69963,63 @@ MapObj/FixMapPartsDitherAppear.o:
   - offset: 0x2850ec
     size: 128
     label: _ZN23FixMapPartsDitherAppearC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28516c
     size: 140
     label: _ZN23FixMapPartsDitherAppearC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2851f8
     size: 252
     label: _ZN23FixMapPartsDitherAppear4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2852f4
     size: 60
     label: _ZN23FixMapPartsDitherAppear12ditherAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x285330
     size: 92
     label: _ZN23FixMapPartsDitherAppear10waitAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28538c
     size: 4
     label: _ZN23FixMapPartsDitherAppear8calcAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x285390
     size: 72
     label: _ZN23FixMapPartsDitherAppear10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2853d8
     size: 84
     label: _ZN23FixMapPartsDitherAppear9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28542c
     size: 4
     label: _ZN23FixMapPartsDitherAppear7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x285430
     size: 4
     label: _ZNK12_GLOBAL__N_130FixMapPartsDitherAppearNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x285434
     size: 88
     label: _ZNK12_GLOBAL__N_132FixMapPartsDitherAppearNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x28548c
     size: 28
     label: _ZNK2al10FunctorV0MIP23FixMapPartsDitherAppearMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2854a8
     size: 76
     label: _ZNK2al10FunctorV0MIP23FixMapPartsDitherAppearMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2854f4
     size: 4
     label: _ZN2al10FunctorV0MIP23FixMapPartsDitherAppearMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/FixMapPartsForceSafetyPoint.o:
   '.text':
@@ -134387,7 +134387,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b83a0
     size: 52
     label: _ZN2al19createActorFunctionI23FixMapPartsDitherAppearEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b83d4
     size: 52
