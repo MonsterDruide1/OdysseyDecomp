@@ -67627,54 +67627,54 @@ MapObj/ElectricAttackTarget.o:
   - offset: 0x266384
     size: 132
     label: _ZN20ElectricAttackTargetC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x266408
     size: 144
     label: _ZN20ElectricAttackTargetC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x266498
     size: 224
     label: _ZN20ElectricAttackTarget4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x266578
     size: 52
     label: _ZN20ElectricAttackTarget14appearBySwitchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2665ac
     size: 52
     label: _ZN20ElectricAttackTarget12killBySwitchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2665e0
     size: 28
     label: _ZN20ElectricAttackTarget18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2665fc
     size: 88
     label: _ZN20ElectricAttackTarget10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x266654
     size: 140
     label: _ZN20ElectricAttackTarget7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2666e0
     size: 8
     label: _ZNK12_GLOBAL__N_127ElectricAttackTargetNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2666e8
     size: 28
     label: _ZNK2al10FunctorV0MIP20ElectricAttackTargetMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x266704
     size: 76
     label: _ZNK2al10FunctorV0MIP20ElectricAttackTargetMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x266750
     size: 4
     label: _ZN2al10FunctorV0MIP20ElectricAttackTargetMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/ElectricSwitch.o:
   '.text':
