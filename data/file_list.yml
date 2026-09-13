@@ -94790,69 +94790,69 @@ ModeBalloon/TimeBalloonCircle.o:
   - offset: 0x35f8d4
     size: 156
     label: _ZN17TimeBalloonCircleC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35f970
     size: 160
     label: _ZN17TimeBalloonCircleC1Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fa10
     size: 172
     label: _ZN17TimeBalloonCircle4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fabc
     size: 44
     label: _ZN17TimeBalloonCircle6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fae8
     size: 64
     label: _ZN17TimeBalloonCircle12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fb28
     size: 72
     label: _ZN17TimeBalloonCircle10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fb70
     size: 68
     label: _ZN17TimeBalloonCircle8setTransERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fbb4
     size: 68
     label: _ZN17TimeBalloonCircle12startStandbyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fbf8
     size: 68
     label: _ZN17TimeBalloonCircle9startPlayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fc3c
     size: 4
     label: _ZN17TimeBalloonCircle9hideModelEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fc40
     size: 60
     label: _ZN17TimeBalloonCircle7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fc7c
     size: 60
     label: _ZN17TimeBalloonCircle6exeOutEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fcb8
     size: 60
     label: _ZN17TimeBalloonCircle5exeInEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35fcf4
     size: 64
     label: _ZNK12_GLOBAL__N_124TimeBalloonCircleNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x35fd34
     size: 64
     label: _ZNK12_GLOBAL__N_122TimeBalloonCircleNrvIn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x35fd74
     size: 64
     label: _ZNK12_GLOBAL__N_123TimeBalloonCircleNrvOut7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 ModeBalloon/TimeBalloonData.o:
   '.text':
