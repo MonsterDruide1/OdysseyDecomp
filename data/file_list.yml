@@ -50844,23 +50844,23 @@ Item/YoshiFruitShineHolder.o:
   - offset: 0x1d7b28
     size: 128
     label: _ZN21YoshiFruitShineHolderC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d7ba8
     size: 140
     label: _ZN21YoshiFruitShineHolderC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d7c34
     size: 228
     label: _ZN21YoshiFruitShineHolder4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d7d18
     size: 72
     label: _ZN21YoshiFruitShineHolder13updateHintPosERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d7d60
     size: 92
     label: _ZN21YoshiFruitShineHolder20appearShineFromFruitERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
 Item/YoshiFruitWatcher.o:
   '.text':
   - offset: 0x1d7dbc
