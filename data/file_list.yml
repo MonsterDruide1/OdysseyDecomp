@@ -68283,35 +68283,35 @@ MapObj/ElectricWirePole.o:
   - offset: 0x26f0fc
     size: 124
     label: _ZN16ElectricWirePoleC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f178
     size: 136
     label: _ZN16ElectricWirePoleC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f200
     size: 192
     label: _ZN16ElectricWirePole4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f2c0
     size: 220
     label: _ZN16ElectricWirePole27isExistSelfCollisionBeneathEPN4sead7Vector3IfEEPKN2al9LiveActorERKS2_ff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f39c
     size: 240
     label: _ZN16ElectricWirePole18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f48c
     size: 44
     label: _ZN16ElectricWirePole4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f4b8
     size: 44
     label: _ZN16ElectricWirePole6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26f4e4
     size: 112
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_130CollisionPartsFilterMultiActor14isInvalidPartsEPN2al14CollisionPartsE
+    status: Matching
 MapObj/ElectricWireRailKeeper.o:
   '.text':
   - offset: 0x26f554
