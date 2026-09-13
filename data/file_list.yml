@@ -122767,19 +122767,19 @@ Player/PlayerInputFunction.o:
   - offset: 0x44fe3c
     size: 68
     label: _ZN19PlayerInputFunction23isSeparatePlaySingleJoyEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x44fe80
     size: 60
     label: _ZN19PlayerInputFunction13isTriggerJumpEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x44febc
     size: 60
     label: _ZN19PlayerInputFunction10isHoldJumpEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x44fef8
     size: 60
     label: _ZN19PlayerInputFunction13isReleaseJumpEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x44ff34
     size: 92
     label: _ZN19PlayerInputFunction15isTriggerActionEPKN2al9LiveActorEi
@@ -122787,95 +122787,95 @@ Player/PlayerInputFunction.o:
   - offset: 0x44ff90
     size: 92
     label: _ZN19PlayerInputFunction12isHoldActionEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x44ffec
     size: 92
     label: _ZN19PlayerInputFunction15isReleaseActionEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450048
     size: 120
     label: _ZN19PlayerInputFunction18isTriggerSubActionEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4500c0
     size: 120
     label: _ZN19PlayerInputFunction15isHoldSubActionEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450138
     size: 120
     label: _ZN19PlayerInputFunction18isReleaseSubActionEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4501b0
     size: 120
     label: _ZN19PlayerInputFunction16isHoldBalloonSetEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450228
     size: 8
     label: _ZN19PlayerInputFunction13isTriggerTalkEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450230
     size: 8
     label: _ZN19PlayerInputFunction23isTriggerStartWorldWarpEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450238
     size: 124
     label: _ZN19PlayerInputFunction24isTriggerCancelWorldWarpEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4502b4
     size: 188
     label: _ZN19PlayerInputFunction17getMoveInputStickEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450370
     size: 120
     label: _ZN19PlayerInputFunction17isHoldCameraResetEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4503e8
     size: 120
     label: _ZN19PlayerInputFunction28getRadiconInputSteeringValueEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450460
     size: 88
     label: _ZN19PlayerInputFunction22getNoInputJudgeKeyMaskEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4504b8
     size: 160
     label: _ZN19PlayerInputFunction28isInputLeftStickNoCameraMoveEPKN2al9LiveActorEif
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450558
     size: 108
     label: _ZN19PlayerInputFunction20isTriggerCameraResetEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4505c4
     size: 124
     label: _ZN19PlayerInputFunction28isTriggerSeparateCameraResetEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450640
     size: 80
     label: _ZN19PlayerInputFunction25isTriggerCameraSubjectiveEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450690
     size: 100
     label: _ZN19PlayerInputFunction16isHoldCameraZoomEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4506f4
     size: 80
     label: _ZN19PlayerInputFunction26isHoldCameraSnapShotZoomInEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450744
     size: 80
     label: _ZN19PlayerInputFunction27isHoldCameraSnapShotZoomOutEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450794
     size: 80
     label: _ZN19PlayerInputFunction28isHoldCameraSnapShotRollLeftEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4507e4
     size: 80
     label: _ZN19PlayerInputFunction29isHoldCameraSnapShotRollRightEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x450834
     size: 224
     label: _ZN19PlayerInputFunction18getCameraMoveInputEPKN2al9LiveActorEiib
-    status: NotDecompiled
+    status: Matching
 Player/PlayerJointControlCapThrow.o:
   '.text':
   - offset: 0x450914
