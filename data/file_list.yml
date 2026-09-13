@@ -90018,66 +90018,64 @@ MapObj/TRexScrollBreakMapParts.o:
   - offset: 0x34085c
     size: 124
     label: _ZN23TRexScrollBreakMapPartsC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3408d8
     size: 136
     label: _ZN23TRexScrollBreakMapPartsC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x340960
     size: 100
     label: _ZN23TRexScrollBreakMapParts4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3409c4
     size: 96
     label: _ZN23TRexScrollBreakMapParts10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x340a24
     size: 236
     label: _ZN23TRexScrollBreakMapParts7exeWaitEv
-    status: NotDecompiled
-MapObj/TRexScrollBreakMapPartsBreakJudge.o:
-  '.text':
+    status: Matching
   - offset: 0x340b10
     size: 300
     label: _ZNK33TRexScrollBreakMapPartsBreakJudge10judgeBreakEPK23TRexScrollBreakMapParts
-    status: NotDecompiled
+    status: Matching
   - offset: 0x340c3c
     size: 432
     label: _ZN33TRexScrollBreakMapPartsBreakJudge32addBreakCountAndAppearBreakModelEPK23TRexScrollBreakMapParts
-    status: NotDecompiled
+    status: Matching
   - offset: 0x340dec
     size: 12
     label: _ZN23TRexScrollBreakMapParts8exeBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x340df8
     size: 684
     label:
     - _ZN33TRexScrollBreakMapPartsBreakJudgeC1EPK4TRexRKN2al13ActorInitInfoE
     - _ZN33TRexScrollBreakMapPartsBreakJudgeC2EPK4TRexRKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3410a4
     size: 84
     label: _ZN12TRexFunction39createTRexScrollBreakMapPartsBreakJudgeEPK4TRexRKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3410f8
     size: 12
     label: _ZNK33TRexScrollBreakMapPartsBreakJudge15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x341104
     size: 4
     label: _ZN33TRexScrollBreakMapPartsBreakJudgeD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x341108
     size: 8
     label: _ZNK12_GLOBAL__N_130TRexScrollBreakMapPartsNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x341110
     size: 16
     label: _ZNK12_GLOBAL__N_131TRexScrollBreakMapPartsNrvBreak7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/TsukkunHole.o:
   '.text':
