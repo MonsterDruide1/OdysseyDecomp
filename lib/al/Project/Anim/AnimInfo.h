@@ -3,30 +3,40 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+
 struct AnimResInfo {
-    const char* name;
-    void* resMaterialAnim;
-    f32 frameMax;
-    bool isLoop;
+    AnimResInfo();
+
+    s32 getFrameMax() const;
+    bool isLoop() const;
+
+    const char* name = nullptr;
+    void* buffer = nullptr;
+    f32 frameMax = 0.0f;
+    bool isLooping = false;
 };
+
+static_assert(sizeof(AnimResInfo) == 0x18);
 
 class AnimInfoTable {
 public:
-    AnimInfoTable(s32);
+    AnimInfoTable(s32 capacity);
 
-    const AnimResInfo& findAnimInfo(const char* name) const;
-    bool tryFindAnimInfo(const char* name) const;
-
-    void add(const char* name, void*, f32 frameMax, bool isLoop);
+    void add(const char* name, void* buffer, f32 frameMax, bool isLoop);
+    AnimResInfo* findAnimInfo(const char* name) const;
+    AnimResInfo* tryFindAnimInfo(const char* name) const;
     void sort();
 
-    s32 getInfoCount() const { return mInfoCount; }
+    s32 getSize() const { return mSize; }
 
-    const AnimResInfo& getResInfo(s32 index) const { return mResInfos[index]; }
+    const AnimResInfo& getAnimInfo(s32 index) const { return mInfoEntries[index]; }
 
 private:
-    s32 mInfoCount;
-    AnimResInfo* mResInfos;
-    bool mIsSorted;
+    s32 mSize = 0;
+    AnimResInfo* mInfoEntries = nullptr;
+    bool mIsSorted = false;
 };
+
+static_assert(sizeof(AnimInfoTable) == 0x18);
+
 }  // namespace al

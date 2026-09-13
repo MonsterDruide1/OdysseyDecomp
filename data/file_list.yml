@@ -289613,37 +289613,37 @@ Project/Anim/AnimInfo.o:
     label:
     - _ZN2al11AnimResInfoC1Ev
     - _ZN2al11AnimResInfoC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa3b85c
     size: 12
     label: _ZNK2al11AnimResInfo11getFrameMaxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa3b868
     size: 8
     label: _ZNK2al11AnimResInfo6isLoopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa3b870
     size: 116
     label:
     - _ZN2al13AnimInfoTableC1Ei
     - _ZN2al13AnimInfoTableC2Ei
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa3b8e4
     size: 116
     label: _ZN2al13AnimInfoTable3addEPKcPvfb
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa3b958
     size: 224
     label: _ZNK2al13AnimInfoTable12findAnimInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa3ba38
     size: 224
     label: _ZNK2al13AnimInfoTable15tryFindAnimInfoEPKc
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0xa3bb18
     size: 564
     label: _ZN2al13AnimInfoTable4sortEv
-    status: NotDecompiled
+    status: Matching
 Project/Anim/AnimPlayerSimple.o:
   '.text':
   - offset: 0xa3bd4c

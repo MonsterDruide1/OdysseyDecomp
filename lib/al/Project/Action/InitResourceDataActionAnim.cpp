@@ -123,17 +123,16 @@ const al::AnimInfoTable* createAnimInfoTableIfNeed(const al::AnimInfoTable* tabl
     if (table1 == table2 || !table2)
         return table1;
 
-    al::AnimInfoTable* newTable =
-        new al::AnimInfoTable(table1->getInfoCount() + table2->getInfoCount());
+    al::AnimInfoTable* newTable = new al::AnimInfoTable(table1->getSize() + table2->getSize());
 
-    for (s32 i = 0; i < table1->getInfoCount(); i++) {
-        const al::AnimResInfo& entry = table1->getResInfo(i);
-        newTable->add(entry.name, entry.resMaterialAnim, entry.frameMax, entry.isLoop);
+    for (s32 i = 0; i < table1->getSize(); i++) {
+        const al::AnimResInfo& entry = table1->getAnimInfo(i);
+        newTable->add(entry.name, entry.buffer, entry.frameMax, entry.isLooping);
     }
 
-    for (s32 i = 0; i < table2->getInfoCount(); i++) {
-        const al::AnimResInfo& entry = table2->getResInfo(i);
-        newTable->add(entry.name, entry.resMaterialAnim, entry.frameMax, entry.isLoop);
+    for (s32 i = 0; i < table2->getSize(); i++) {
+        const al::AnimResInfo& entry = table2->getAnimInfo(i);
+        newTable->add(entry.name, entry.buffer, entry.frameMax, entry.isLooping);
     }
 
     newTable->sort();
