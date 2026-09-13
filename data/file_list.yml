@@ -2654,142 +2654,142 @@ Boss/BombTail/BombTailDamage.o:
   - offset: 0x012710
     size: 136
     label: _ZN14BombTailDamageC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012798
     size: 140
     label: _ZN14BombTailDamageC1Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012824
     size: 140
     label: _ZN14BombTailDamage4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0128b0
     size: 196
     label: _ZN14BombTailDamage12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012974
     size: 72
     label: _ZN14BombTailDamage10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0129bc
     size: 144
     label: _ZN14BombTailDamage11startAppearERKN4sead7Vector3IfEEib
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012a4c
     size: 80
     label: _ZN14BombTailDamage14forceDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012a9c
     size: 4
     label: _ZN14BombTailDamage15exeBeforeBattleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012aa0
     size: 84
     label: _ZN14BombTailDamage8exeDelayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012af4
     size: 64
     label: _ZN14BombTailDamage9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012b34
     size: 64
     label: _ZN14BombTailDamage7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012b74
     size: 64
     label: _ZN14BombTailDamage12exeDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012bb4
     size: 64
     label: _ZN14BombTailDamage15exeAppearChanceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012bf4
     size: 64
     label: _ZN14BombTailDamage13exeWaitChanceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012c34
     size: 64
     label: _ZN14BombTailDamage18exeDisappearChanceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x012c74
     size: 4
     label: _ZNK12_GLOBAL__N_129BombTailDamageNrvBeforeBattle7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012c78
     size: 12
     label: _ZNK12_GLOBAL__N_129BombTailDamageNrvBeforeBattle13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012c84
     size: 88
     label: _ZNK12_GLOBAL__N_122BombTailDamageNrvDelay7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012cdc
     size: 12
     label: _ZNK12_GLOBAL__N_122BombTailDamageNrvDelay13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012ce8
     size: 68
     label: _ZNK12_GLOBAL__N_123BombTailDamageNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012d2c
     size: 12
     label: _ZNK12_GLOBAL__N_123BombTailDamageNrvAppear13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012d38
     size: 68
     label: _ZNK12_GLOBAL__N_121BombTailDamageNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012d7c
     size: 12
     label: _ZNK12_GLOBAL__N_121BombTailDamageNrvWait13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012d88
     size: 68
     label: _ZNK12_GLOBAL__N_126BombTailDamageNrvDisappear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012dcc
     size: 12
     label: _ZNK12_GLOBAL__N_126BombTailDamageNrvDisappear13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012dd8
     size: 68
     label: _ZNK12_GLOBAL__N_129BombTailDamageNrvAppearChance7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012e1c
     size: 12
     label: _ZNK12_GLOBAL__N_129BombTailDamageNrvAppearChance13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012e28
     size: 68
     label: _ZNK12_GLOBAL__N_127BombTailDamageNrvWaitChance7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012e6c
     size: 12
     label: _ZNK12_GLOBAL__N_127BombTailDamageNrvWaitChance13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012e78
     size: 68
     label: _ZNK12_GLOBAL__N_132BombTailDamageNrvDisappearChance7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012ebc
     size: 12
     label: _ZNK12_GLOBAL__N_132BombTailDamageNrvDisappearChance13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x012ec8
     size: 236
