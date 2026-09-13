@@ -34632,76 +34632,76 @@ Enemy/KakkuGlideAnimCtrl.o:
     label:
     - _ZN18KakkuGlideAnimCtrlC1EPKcPN2al9LiveActorEP15KakkuStateGlide
     - _ZN18KakkuGlideAnimCtrlC2EPKcPN2al9LiveActorEP15KakkuStateGlide
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1417cc
     size: 16
     label: _ZN18KakkuGlideAnimCtrl6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1417dc
     size: 16
     label: _ZNK18KakkuGlideAnimCtrl8isNormalEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1417ec
     size: 4
     label: _ZN18KakkuGlideAnimCtrl14exeGlideNormalEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1417f0
     size: 280
     label: _ZN18KakkuGlideAnimCtrl13tryChangeAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x141908
     size: 96
     label: _ZN18KakkuGlideAnimCtrl17exeGlideLeftStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x141968
     size: 56
     label: _ZN18KakkuGlideAnimCtrl12exeGlideLeftEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1419a0
     size: 96
     label: _ZN18KakkuGlideAnimCtrl18exeGlideRightStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x141a00
     size: 56
     label: _ZN18KakkuGlideAnimCtrl13exeGlideRightEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x141a38
     size: 72
     label: _ZNK18KakkuGlideAnimCtrl17isCurrentLeftAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x141a80
     size: 72
     label: _ZNK18KakkuGlideAnimCtrl18isCurrentRightAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x141ac8
     size: 36
     label: _ZN18KakkuGlideAnimCtrlD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x141aec
     size: 8
     label: _ZNK12_GLOBAL__N_132KakkuGlideAnimCtrlNrvGlideNormal7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x141af4
     size: 60
     label: _ZNK12_GLOBAL__N_130KakkuGlideAnimCtrlNrvGlideLeft7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x141b30
     size: 60
     label: _ZNK12_GLOBAL__N_131KakkuGlideAnimCtrlNrvGlideRight7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x141b6c
     size: 100
     label: _ZNK12_GLOBAL__N_135KakkuGlideAnimCtrlNrvGlideLeftStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x141bd0
     size: 100
     label: _ZNK12_GLOBAL__N_136KakkuGlideAnimCtrlNrvGlideRightStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/KakkuStateGlide.o:
   '.text':
