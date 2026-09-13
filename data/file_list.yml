@@ -50539,92 +50539,92 @@ Item/ShineChipWatcherHolder.o:
     label:
     - _ZN22ShineChipWatcherHolderC1Ev
     - _ZN22ShineChipWatcherHolderC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d590c
     size: 44
     label: _ZN22ShineChipWatcherHolder5entryEP16ShineChipWatcher
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5938
     size: 76
     label: _ZN22ShineChipWatcherHolder6notifyEP16ShineChipWatcher
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5984
     size: 36
     label: _ZN22ShineChipWatcherHolder19tryStartAppearShineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d59a8
     size: 36
     label: _ZNK22ShineChipWatcherHolder17getCurrentWatcherEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d59cc
     size: 156
     label: _ZN22ShineChipWatcherHolder23tryUpdateCurrentWatcherEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5a68
     size: 124
     label: _ZN22ShineChipLocalFunction31tryCreateShineChipWatcherHolderEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5ae4
     size: 88
     label: _ZN22ShineChipLocalFunction21entryShineChipWatcherEP16ShineChipWatcher
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5b3c
     size: 116
     label: _ZN22ShineChipLocalFunction18notifyShineChipGetEP16ShineChipWatcher
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5bb0
     size: 168
     label: _ZN22ShineChipLocalFunction18notifyShineChipGetEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5c58
     size: 32
     label: _ZN2rs23isExistShineChipWatcherEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5c78
     size: 92
     label: _ZN2rs19isCompleteShineChipEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5cd4
     size: 60
     label: _ZN2rs17getShineChipCountEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5d10
     size: 28
     label: _ZN2rs31getCurrentShineChipWatcherIndexEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5d2c
     size: 40
     label: _ZN2rs34isCurrentShineChipWatcherTypeEmptyEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5d54
     size: 60
     label: _ZN2rs24isAppearedShineChipShineEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5d90
     size: 60
     label: _ZN2rs28addDemoActorShineChipWatcherEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5dcc
     size: 176
     label: _ZN2rs34isEnableStartShineChipCompleteDemoEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5e7c
     size: 60
     label: _ZN2rs28tryStartAppearShineChipShineEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5eb8
     size: 60
     label: _ZN2rs31isInAreaCurrentShineChipWatcherEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5ef4
     size: 12
     label: _ZNK22ShineChipWatcherHolder15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d5f00
     size: 4
     label: _ZN22ShineChipWatcherHolderD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Item/ShineFukankunWatchObj.o:
   '.text':
