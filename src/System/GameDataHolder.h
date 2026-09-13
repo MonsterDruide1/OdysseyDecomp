@@ -10,6 +10,7 @@
 #include "Library/Scene/ISceneObj.h"
 
 #include "Scene/SceneObjFactory.h"
+#include "System/GameDataHolder.h"
 
 namespace al {
 class PlacementId;
@@ -28,8 +29,8 @@ class CapMessageBossData;
 class ChangeStageInfo;
 class Coin;
 class GameDataFile;
-class GameConfigData;
 class GameSequenceInfo;
+class GameConfigData;
 class MapDataHolder;
 class QuestInfoHolder;
 class SaveDataAccessSequence;

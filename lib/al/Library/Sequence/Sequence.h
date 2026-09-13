@@ -9,10 +9,17 @@
 namespace al {
 struct GameSystemInfo;
 struct DrawSystemInfo;
-struct SequenceInitInfo;
 struct AudioSystemInfo;
 class AudioDirector;
 class Scene;
+
+struct SequenceInitInfo {
+    SequenceInitInfo(const GameSystemInfo* info);
+
+    const GameSystemInfo* systemInfo;
+};
+
+static_assert(sizeof(SequenceInitInfo) == 0x8);
 
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {
 public:
@@ -41,7 +48,11 @@ public:
     void initDrawSystemInfo(const SequenceInitInfo&);
     AudioSystemInfo* getAudioSystemInfo();
 
+    const char* getName() const { return mName.cstr(); }
+
     DrawSystemInfo* getDrawInfo() const { return mDrawSystemInfo; }
+
+    bool isAlive() const { return mIsAlive; }
 
 private:
     sead::FixedSafeString<0x40> mName;

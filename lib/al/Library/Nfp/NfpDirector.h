@@ -19,6 +19,7 @@ enum NfpApplicationCommand : u32;
 class NfpDirector : public IUseHioNode {
 public:
     NfpDirector(s32);
+    virtual ~NfpDirector();
 
     void executeCommand(sead::Thread*, s64);
     void initialize();
