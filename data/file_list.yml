@@ -154198,79 +154198,79 @@ Util/DynamicCollisionKeeper.o:
   - offset: 0x551adc
     size: 20
     label: _ZN22DynamicCollisionKeeperC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551af0
     size: 4
     label: _ZN22DynamicCollisionKeeper7endInitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551af4
     size: 8
     label: _ZNK22DynamicCollisionKeeper16checkStrikePointEPN2al7HitInfoERKNS0_22CollisionCheckInfoBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551afc
     size: 8
     label: _ZNK22DynamicCollisionKeeper17checkStrikeSphereEPN2al21SphereHitResultBufferERKNS0_15SphereCheckInfoEbRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551b04
     size: 8
     label: _ZNK22DynamicCollisionKeeper16checkStrikeArrowEPN2al20ArrowHitResultBufferERKNS0_14ArrowCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551b0c
     size: 8
     label: _ZNK22DynamicCollisionKeeper26checkStrikeSphereForPlayerEPN2al21SphereHitResultBufferERKNS0_15SphereCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551b14
     size: 8
     label: _ZNK22DynamicCollisionKeeper15checkStrikeDiskEPN2al19DiskHitResultBufferERKNS0_13DiskCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551b1c
     size: 4
     label: _ZN22DynamicCollisionKeeper8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551b20
     size: 4
     label: _ZN22DynamicCollisionKeeper17addCollisionPartsEPN2al14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x551b24
     size: 4
     label: _ZN22DynamicCollisionKeeper27connectToCollisionPartsListEPN2al14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x551b28
     size: 4
     label: _ZN22DynamicCollisionKeeper30disconnectToCollisionPartsListEPN2al14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x551b2c
     size: 4
     label: _ZNK22DynamicCollisionKeeper16searchWithSphereERKN2al15SphereCheckInfoERN4sead10IDelegate1IPNS0_14CollisionPartsEEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x551b30
     size: 148
     label: _ZN2rs27createDynamicCollisionActorERKN2al13ActorInitInfoEiPKN4sead8Matrix34IfEEPNS0_9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551bc4
     size: 208
     label: _ZN2rs36searchDynamicCollisionAttributeIndexEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551c94
     size: 96
     label: _ZN2rs22createDynamicDrawActorERKN2al13ActorInitInfoEiPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551cf4
     size: 96
     label: _ZN2rs29createDynamicDrawActorForwardERKN2al13ActorInitInfoEiPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551d54
     size: 96
     label: _ZN2rs30createDynamicDrawActorIndirectERKN2al13ActorInitInfoEiPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x551db4
     size: 96
     label: _ZN2rs35createDynamicDrawActorPreSilhouetteERKN2al13ActorInitInfoEiPKcb
-    status: NotDecompiled
+    status: Matching
 Util/ExternalForceKeeper.o:
   '.text':
   - offset: 0x551e14
