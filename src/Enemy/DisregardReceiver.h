@@ -11,9 +11,9 @@ class SensorMsg;
 
 class DisregardReceiver {
 public:
-    DisregardReceiver(al::LiveActor*, const char*);
+    DisregardReceiver(al::LiveActor* actor, const char* fileSuffix = nullptr);
 
-    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* self, al::HitSensor* other);
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self);
     bool checkActionDisregardAll() const;
     bool checkActionDisregardHomingAttack() const;
     bool checkActionDisregardTargetMarker() const;

@@ -32601,7 +32601,7 @@ Enemy/ImomuPartsFunction.o:
     size: 164
     label: ''
     status: NotDecompiled
-Enemy/Jango.o:
+Enemy/Jango/Jango.o:
   '.text':
   - offset: 0x12dff0
     size: 204
@@ -32701,7 +32701,7 @@ Enemy/Jango.o:
     label: _ZNK12_GLOBAL__N_116JangoNrvSurprise7executeEPN2al11NerveKeeperE
     status: NotDecompiled
     guess: true
-Enemy/JangoCap.o:
+Enemy/Jango/JangoCap.o:
   '.text':
   - offset: 0x12f10c
     size: 284
@@ -32731,7 +32731,7 @@ Enemy/JangoCap.o:
     size: 132
     label: _ZN8JangoCap7controlEv
     status: NotDecompiled
-Enemy/JangoCapSeparateHelpClaimUpdater.o:
+Enemy/Jango/JangoCapSeparateHelpClaimUpdater.o:
   '.text':
   - offset: 0x12f788
     size: 208
@@ -32825,7 +32825,7 @@ Enemy/JangoCapSeparateHelpClaimUpdater.o:
     label: _ZNK12_GLOBAL__N_126JangoCapNrvReleaseDemoWait7executeEPN2al11NerveKeeperE
     status: NotDecompiled
     guess: true
-Enemy/JangoCapStateTalkDemo.o:
+Enemy/Jango/JangoCapStateTalkDemo.o:
   '.text':
   - offset: 0x12fd58
     size: 128
@@ -32890,7 +32890,7 @@ Enemy/JangoCapStateTalkDemo.o:
     label: _ZNK12_GLOBAL__N_130JangoCapStateTalkDemoNrvWipeIn7executeEPN2al11NerveKeeperE
     status: NotDecompiled
     guess: true
-Enemy/JangoDirector.o:
+Enemy/Jango/JangoDirector.o:
   '.text':
   - offset: 0x130098
     size: 64
@@ -32924,7 +32924,7 @@ Enemy/JangoDirector.o:
     label: _ZN13JangoDirectorD0Ev
     status: Matching
     lazy: true
-Enemy/JangoStateBlowDown.o:
+Enemy/Jango/JangoStateBlowDown.o:
   '.text':
   - offset: 0x130120
     size: 292
@@ -32963,7 +32963,7 @@ Enemy/JangoStateBlowDown.o:
     label: _ZNK12_GLOBAL__N_128JangoStateBlowDownNrvWaitEnd7executeEPN2al11NerveKeeperE
     status: NotDecompiled
     guess: true
-Enemy/JangoStateCapCatch.o:
+Enemy/Jango/JangoStateCapCatch.o:
   '.text':
   - offset: 0x130548
     size: 208
@@ -33122,7 +33122,7 @@ Enemy/JangoStateCapCatch.o:
     label: _ZNK12_GLOBAL__N_125JangoStateCapCatchNrvLand7executeEPN2al11NerveKeeperE
     status: NotDecompiled
     guess: true
-Enemy/JangoStateCapGetDemo.o:
+Enemy/Jango/JangoStateCapGetDemo.o:
   '.text':
   - offset: 0x131dc4
     size: 164
@@ -33294,7 +33294,7 @@ Enemy/JangoStateCapGetDemo.o:
     label: _ZNK12_GLOBAL__N_138JangoStateCapGetDemoNrvPlayerCapSearch7executeEPN2al11NerveKeeperE
     status: NotDecompiled
     guess: true
-Enemy/JangoStateWaitTree.o:
+Enemy/Jango/JangoStateWaitTree.o:
   '.text':
   - offset: 0x1330b8
     size: 124
@@ -133627,7 +133627,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b61cc
     size: 52
     label: _ZN2al19createActorFunctionI13BirdCarryMeatEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b6200
     size: 52
@@ -133762,7 +133762,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b68e4
     size: 52
     label: _ZN2al19createActorFunctionI8Bubble2DEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b6918
     size: 52
@@ -133772,12 +133772,12 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b694c
     size: 172
     label: _ZN2al19createActorFunctionI4BullEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: NonMatchingMajor
     lazy: true
   - offset: 0x4b69f8
     size: 52
     label: _ZN2al19createActorFunctionI5ByugoEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b6a2c
     size: 52
@@ -133967,7 +133967,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b7224
     size: 52
     label: _ZN2al19createActorFunctionI14ChorobonHolderEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b7258
     size: 52
@@ -134222,7 +134222,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b7cec
     size: 52
     label: _ZN2al19createActorFunctionI7DonsukeEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b7d20
     size: 52
@@ -134457,12 +134457,12 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b8730
     size: 52
     label: _ZN2al19createActorFunctionI7GabuZouEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8764
     size: 52
     label: _ZN2al19createActorFunctionI12GabuZouGroupEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8798
     size: 52
@@ -134487,7 +134487,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b8868
     size: 52
     label: _ZN2al19createActorFunctionI9GotogotonEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b889c
     size: 52
@@ -134507,12 +134507,12 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b8938
     size: 56
     label: _ZN2al19createActorFunctionI9GrowerBugEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8970
     size: 52
     label: _ZN2al19createActorFunctionI10GrowerWormEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b89a4
     size: 52
@@ -134552,7 +134552,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b8b14
     size: 52
     label: _ZN2al19createActorFunctionI8GunetterEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8b48
     size: 52
@@ -134657,7 +134657,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b8fc0
     size: 52
     label: _ZN2al19createActorFunctionI5ImomuEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8ff4
     size: 52
@@ -134667,7 +134667,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b9028
     size: 52
     label: _ZN2al19createActorFunctionI5JangoEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b905c
     size: 52
@@ -135732,7 +135732,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4bc88c
     size: 52
     label: _ZN2al19createActorFunctionI7TsukkunEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4bc8c0
     size: 52
