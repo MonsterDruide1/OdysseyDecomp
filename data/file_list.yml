@@ -227843,19 +227843,19 @@ Library/Bgm/BgmChordDetector.o:
     label:
     - _ZN2al16BgmChordDetectorC1Ev
     - _ZN2al16BgmChordDetectorC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82c7f8
     size: 8
     label: _ZN2al16BgmChordDetector4initEPKNS_22AudioInfoListWithPartsINS_12BgmChordInfoEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x82c800
     size: 780
     label: _ZN2al16BgmChordDetector6updateEf
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x82cb0c
     size: 8
     label: _ZN2al16BgmChordDetector18forceUninitializedEv
-    status: NotDecompiled
+    status: Matching
 Library/Bgm/BgmSituationDirector.o:
   '.text':
   - offset: 0x82cb14
