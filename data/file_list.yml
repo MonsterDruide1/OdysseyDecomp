@@ -293827,41 +293827,47 @@ Project/Execute/ExecutorActorMovement.o:
     label:
     - _ZN2al21ExecutorActorMovementC1EPKc
     - _ZN2al21ExecutorActorMovementC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa5e774
     size: 84
     label: _ZNK2al21ExecutorActorMovement7executeEv
-    status: NotDecompiled
+    status: Matching
+Project/Execute/ExecutorActorCalcAnim.o:
+  '.text':
   - offset: 0xa5e7c8
     size: 48
     label:
     - _ZN2al21ExecutorActorCalcAnimC1EPKc
     - _ZN2al21ExecutorActorCalcAnimC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa5e7f8
     size: 100
     label: _ZNK2al21ExecutorActorCalcAnim7executeEv
-    status: NotDecompiled
+    status: Matching
+Project/Execute/ExecutorActorMovementCalcAnim.o:
+  '.text':
   - offset: 0xa5e85c
     size: 48
     label:
     - _ZN2al29ExecutorActorMovementCalcAnimC1EPKc
     - _ZN2al29ExecutorActorMovementCalcAnimC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa5e88c
     size: 124
     label: _ZNK2al29ExecutorActorMovementCalcAnim7executeEv
-    status: NotDecompiled
+    status: Matching
+Project/Execute/ExecutorActorCalcView.o:
+  '.text':
   - offset: 0xa5e908
     size: 48
     label:
     - _ZN2al21ExecutorActorCalcViewC1EPKc
     - _ZN2al21ExecutorActorCalcViewC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa5e938
     size: 76
     label: _ZNK2al21ExecutorActorCalcView7executeEv
-    status: NotDecompiled
+    status: Matching
 Project/File/FileLoader.o:
   '.text':
   - offset: 0xa5e984
