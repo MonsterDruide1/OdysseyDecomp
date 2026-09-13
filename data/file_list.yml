@@ -18167,50 +18167,50 @@ Boss/Koopa/KoopaStateAttackSpinShell.o:
     label:
     - _ZN25KoopaStateAttackSpinShellC1EPN2al9LiveActorEP10KoopaShell
     - _ZN25KoopaStateAttackSpinShellC2EPN2al9LiveActorEP10KoopaShell
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09cb6c
     size: 16
     label: _ZN25KoopaStateAttackSpinShell13startOnGroundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09cb7c
     size: 20
     label: _ZN25KoopaStateAttackSpinShell12startRecoverEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09cb90
     size: 96
     label: _ZN25KoopaStateAttackSpinShell19exeAttackShellStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09cbf0
     size: 256
     label: _ZN25KoopaStateAttackSpinShell14exeAttackShellEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09ccf0
     size: 80
     label: _ZN25KoopaStateAttackSpinShell17exeAttackShellEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09cd40
     size: 16
     label: _ZN25KoopaStateAttackSpinShell6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09cd50
     size: 36
     label: _ZN25KoopaStateAttackSpinShellD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x09cd74
     size: 100
     label: _ZNK12_GLOBAL__N_144KoopaStateAttackSpinShellNrvAttackShellStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09cdd8
     size: 8
     label: _ZNK12_GLOBAL__N_139KoopaStateAttackSpinShellNrvAttackShell7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09cde0
     size: 84
     label: _ZNK12_GLOBAL__N_142KoopaStateAttackSpinShellNrvAttackShellEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaStateAttackTail.o:
   '.text':
