@@ -50,4 +50,8 @@ bool ActorCameraTarget::isInWater() const {
     return isInWaterArea(mActor);
 }
 
+ActorMatrixCameraTarget::ActorMatrixCameraTarget(const LiveActor* actor,
+                                                 const sead::Matrix34f* matrix)
+    : ActorCameraTarget(actor), mMatrix(matrix) {}
+
 }  // namespace al
