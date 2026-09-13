@@ -68766,57 +68766,57 @@ MapObj/FastenerKnob.o:
   - offset: 0x278b50
     size: 156
     label: _ZN12FastenerKnobC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278bec
     size: 168
     label: _ZN12FastenerKnobC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278c94
     size: 112
     label: _ZN12FastenerKnob4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278d04
     size: 156
     label: _ZN12FastenerKnob7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278da0
     size: 148
     label: _ZN12FastenerKnob10exeHackEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278e34
     size: 52
     label: _ZN12FastenerKnob9onHackEndERKN4sead4QuatIfEEPK14FastenerVertex
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278e68
     size: 68
     label: _ZN12FastenerKnob5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278eac
     size: 44
     label: _ZN12FastenerKnob9disappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278ed8
     size: 128
     label: _ZN12FastenerKnob8exeResetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278f58
     size: 12
     label: _ZNK12FastenerKnob15isEnableCaptureEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x278f64
     size: 8
     label: _ZNK12_GLOBAL__N_119FastenerKnobNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x278f6c
     size: 8
     label: _ZNK12_GLOBAL__N_122FastenerKnobNrvHackEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x278f74
     size: 8
     label: _ZNK12_GLOBAL__N_120FastenerKnobNrvReset7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/FastenerLine.o:
   '.text':
