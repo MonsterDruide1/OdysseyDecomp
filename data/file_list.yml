@@ -43961,137 +43961,137 @@ Enemy/Utsubo.o:
   - offset: 0x1a74cc
     size: 276
     label: _ZN6UtsuboC2EPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a75e0
     size: 280
     label: _ZN6UtsuboC1EPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a76f8
     size: 680
     label: _ZN6Utsubo4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a79a0
     size: 36
     label: _ZN6Utsubo18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a79c4
     size: 192
     label: _ZN6Utsubo12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7a84
     size: 220
     label: _ZN6Utsubo10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7b60
     size: 120
     label: _ZNK6Utsubo8isAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7bd8
     size: 124
     label: _ZN6Utsubo7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7c54
     size: 384
     label: _ZN6Utsubo7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7dd4
     size: 4
     label: _ZN6Utsubo17exeWaitForWatcherEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7dd8
     size: 488
     label: _ZN6Utsubo7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a7fc0
     size: 396
     label: _ZN6Utsubo9exeFollowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a814c
     size: 344
     label: _ZN6Utsubo11exeRiseSignEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a82a4
     size: 396
     label: _ZN6Utsubo7exeRiseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a8430
     size: 268
     label: _ZN6Utsubo13exeAttackSignEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a853c
     size: 268
     label: _ZN6Utsubo9exeAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a8648
     size: 416
     label: _ZN6Utsubo7exeSinkEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a87e8
     size: 128
     label: _ZN6Utsubo12exeWaitForceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a8868
     size: 12
     label: _ZNK6Utsubo11isRiseReadyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a8874
     size: 16
     label: _ZN6Utsubo16setNerveRiseSignEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1a8884
     size: 4
     label: _ZNK12_GLOBAL__N_123UtsuboNrvWaitForWatcher7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a8888
     size: 8
     label: _ZNK12_GLOBAL__N_113UtsuboNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a8890
     size: 8
     label: _ZNK12_GLOBAL__N_113UtsuboNrvRise7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a8898
     size: 8
     label: _ZNK12_GLOBAL__N_119UtsuboNrvAttackSign7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88a0
     size: 8
     label: _ZNK12_GLOBAL__N_115UtsuboNrvAttack7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88a8
     size: 8
     label: _ZNK12_GLOBAL__N_113UtsuboNrvSink7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88b0
     size: 8
     label: _ZNK12_GLOBAL__N_117UtsuboNrvRiseSign7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88b8
     size: 8
     label: _ZNK12_GLOBAL__N_113UtsuboNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88c0
     size: 8
     label: _ZNK12_GLOBAL__N_115UtsuboNrvFollow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88c8
     size: 8
     label: _ZNK12_GLOBAL__N_118UtsuboNrvWaitForce7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1a88d0
     size: 264
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_117calcBodySensorPosEPN4sead7Vector3IfEEPKN2al9LiveActorERKS2_f
+    status: Matching
 Enemy/UtsuboFunction.o:
   '.text':
   - offset: 0x1a89d8
