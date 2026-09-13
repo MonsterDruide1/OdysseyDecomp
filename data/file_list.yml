@@ -13871,50 +13871,50 @@ Boss/GolemClimb/GolemDownBreakState.o:
     label:
     - _ZN19GolemDownBreakStateC1EPKcP14IUseGolemStateP15GolemShoutState
     - _ZN19GolemDownBreakStateC2EPKcP14IUseGolemStateP15GolemShoutState
-    status: NotDecompiled
+    status: Matching
   - offset: 0x078dec
     size: 96
     label: _ZN19GolemDownBreakState6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x078e4c
     size: 60
     label: _ZN19GolemDownBreakState4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x078e88
     size: 104
     label: _ZN19GolemDownBreakState9exeDamageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x078ef0
     size: 124
     label: _ZN19GolemDownBreakState8exeShoutEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x078f6c
     size: 144
     label: _ZN19GolemDownBreakState10exeRecoverEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x078ffc
     size: 12
     label: _ZN19GolemDownBreakState10startBreakEP19GolemClimbWeakPointPKcS3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x079008
     size: 36
     label: _ZN19GolemDownBreakStateD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x07902c
     size: 108
     label: _ZNK12_GLOBAL__N_128GolemDownBreakStateNrvDamage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x079098
     size: 128
     label: _ZNK12_GLOBAL__N_127GolemDownBreakStateNrvShout7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x079118
     size: 148
     label: _ZNK12_GLOBAL__N_129GolemDownBreakStateNrvRecover7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/GolemClimb/GolemFunction.o:
   '.text':
