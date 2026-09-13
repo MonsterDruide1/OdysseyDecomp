@@ -695,8 +695,8 @@ AudioDirector* initAudioDirectorImpl(Scene* scene, const SceneInitInfo& sceneInf
     if (audioDirectorInfo.seDirectorInitInfo.playerCount < 1)
         audioDirectorInfo.seDirectorInitInfo.playerCount = 40;
 
-    audioDirectorInfo.bgmDirectorInitInfo.field_0 = true;
-    audioDirectorInfo.bgmDirectorInitInfo.field_8 = "Scene";
+    audioDirectorInfo.bgmDirectorInitInfo.isScene = true;
+    audioDirectorInfo.bgmDirectorInitInfo.name = "Scene";
     audioDirectorInfo.duckingName = "DuckingForScene";
 
     AudioDirector* audioDirector = new AudioDirector();

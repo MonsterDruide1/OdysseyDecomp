@@ -43,6 +43,8 @@ public:
 
     DrawSystemInfo* getDrawInfo() const { return mDrawSystemInfo; }
 
+    void setAudioDirector(AudioDirector* audioDirector) { mAudioDirector = audioDirector; }
+
 private:
     sead::FixedSafeString<0x40> mName;
     Scene* mCurrentScene = nullptr;
