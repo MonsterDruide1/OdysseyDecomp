@@ -284944,407 +284944,407 @@ Library/Shadow/ActorShadowFunction.o:
   - offset: 0xa1315c
     size: 48
     label: _ZN2al13isExistShadowEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1318c
     size: 20
     label: _ZN2al21isExistShadowMaskCtrlEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa131a0
     size: 40
     label: _ZN2al17isExistShadowMaskEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa131c8
     size: 48
     label: _ZN2al18isExistDepthShadowEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa131f8
     size: 20
     label: _ZN2al25isExistDepthShadowMapCtrlEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1320c
     size: 36
     label: _ZN2al20isExistAnyShadowCtrlEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13230
     size: 20
     label: _ZN2al16isHideShadowMaskEPKNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13244
     size: 16
     label: _ZN2al10hideShadowEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13254
     size: 16
     label: _ZN2al10showShadowEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13264
     size: 12
     label: _ZN2al14showShadowMaskEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13270
     size: 68
     label: _ZN2al14showShadowMaskEPNS_9LiveActorEPNS_14ShadowMaskBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa132b4
     size: 92
     label: _ZN2al14showShadowMaskEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13310
     size: 172
     label: _ZN2al14showShadowMaskEPNS_9LiveActorENS_22ShadowMaskDrawCategoryE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa133bc
     size: 12
     label: _ZN2al14hideShadowMaskEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa133c8
     size: 80
     label: _ZN2al14hideShadowMaskEPNS_9LiveActorEPNS_14ShadowMaskBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13418
     size: 104
     label: _ZN2al14hideShadowMaskEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13480
     size: 192
     label: _ZN2al14hideShadowMaskEPNS_9LiveActorENS_22ShadowMaskDrawCategoryE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13540
     size: 32
     label: _ZN2al16isHideShadowMaskEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13560
     size: 92
     label: _ZN2al18showDepthShadowMapEPNS_9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa135bc
     size: 72
     label: _ZN2al18showDepthShadowMapEPKNS_9LiveActorEPNS_18DepthShadowMapInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13604
     size: 92
     label: _ZN2al18showDepthShadowMapEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13660
     size: 96
     label: _ZN2al18hideDepthShadowMapEPNS_9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa136c0
     size: 76
     label: _ZN2al18hideDepthShadowMapEPKNS_9LiveActorEPNS_18DepthShadowMapInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1370c
     size: 96
     label: _ZN2al18hideDepthShadowMapEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1376c
     size: 32
     label: _ZN2al20isHideDepthShadowMapEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1378c
     size: 32
     label: _ZN2al20isHideDepthShadowMapEPNS_9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa137ac
     size: 20
     label: _ZN2al20getDepthShadowMapNumEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa137c0
     size: 156
     label: _ZN2al18validateShadowMaskEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1385c
     size: 76
     label: _ZN2al18validateShadowMaskEPNS_9LiveActorEPNS_14ShadowMaskBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa138a8
     size: 100
     label: _ZN2al18validateShadowMaskEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1390c
     size: 152
     label: _ZN2al20invalidateShadowMaskEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa139a4
     size: 72
     label: _ZN2al20invalidateShadowMaskEPNS_9LiveActorEPNS_14ShadowMaskBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa139ec
     size: 96
     label: _ZN2al20invalidateShadowMaskEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13a4c
     size: 136
     label: _ZN2al22validateDepthShadowMapEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13ad4
     size: 72
     label: _ZN2al22validateDepthShadowMapEPNS_9LiveActorEPNS_18DepthShadowMapInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13b1c
     size: 92
     label: _ZN2al22validateDepthShadowMapEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13b78
     size: 132
     label: _ZN2al24invalidateDepthShadowMapEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13bfc
     size: 68
     label: _ZN2al24invalidateDepthShadowMapEPNS_9LiveActorEPNS_18DepthShadowMapInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13c40
     size: 88
     label: _ZN2al24invalidateDepthShadowMapEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13c98
     size: 196
     label: _ZN2al20invalidateShadowMaskEPNS_9LiveActorENS_22ShadowMaskDrawCategoryE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13d5c
     size: 636
     label: _ZN2al32invalidateShadowMaskIntensityAllEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa13fd8
     size: 84
     label: _ZN2al18setShadowMaskFixedEPNS_9LiveActorEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1402c
     size: 100
     label: _ZN2al20setShadowMaskDropDirEPNS_9LiveActorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14090
     size: 72
     label: _ZN2al20setShadowMaskDropDirEPNS_9LiveActorERKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa140d8
     size: 148
     label: _ZN2al29setShadowMaskDropDirActorDownEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1416c
     size: 148
     label: _ZN2al17setShadowMaskSizeEPNS_9LiveActorEPKcRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14200
     size: 148
     label: _ZN2al17setShadowMaskSizeEPNS_9LiveActorEPKcfff
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14294
     size: 92
     label: _ZN2al22setShadowTextureOffsetEPNS_9LiveActorEPKcff
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa142f0
     size: 76
     label: _ZN2al21onShadowTextureScrollEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1433c
     size: 72
     label: _ZN2al22offShadowTextureScrollEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14384
     size: 124
     label: _ZN2al18calcShadowMaskSizeEPN4sead7Vector3IfEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14400
     size: 32
     label: _ZN2al23getShadowMaskDropLengthEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14420
     size: 80
     label: _ZN2al23setShadowMaskDropLengthEPNS_9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14470
     size: 48
     label: _ZN2al23setShadowMaskDropLengthEPNS_9LiveActorEfPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa144a0
     size: 124
     label: _ZN2al44setShadowMaskDropLengthScaleWithDrawCategoryEPNS_9LiveActorEfNS_22ShadowMaskDrawCategoryE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1451c
     size: 116
     label: _ZN2al39setShadowMaskDropLengthWithDrawCategoryEPNS_9LiveActorEfNS_22ShadowMaskDrawCategoryE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14590
     size: 60
     label: _ZN2al37setShadowMaskDropLengthEvenWithTargetEPNS_14ShadowMaskBaseEPKcRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa145cc
     size: 432
     label: _ZN2al37setShadowMaskDropLengthEvenWithTargetEPNS_14ShadowMaskBaseEPKS0_RKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1477c
     size: 180
     label: _ZN2al43setShadowMaskDropLengthEvenWithDrawCategoryEPNS_9LiveActorENS_22ShadowMaskDrawCategoryEPKS0_PKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14830
     size: 100
     label: _ZN2al38setShadowMaskDropLengthEvenPlaneNormalEPKNS_9LiveActorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14894
     size: 32
     label: _ZN2al22getDepthShadowMapWidthEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa148b4
     size: 32
     label: _ZN2al23getDepthShadowMapHeightEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa148d4
     size: 56
     label: _ZN2al21setDepthShadowMapSizeEPKNS_9LiveActorEiiPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1490c
     size: 32
     label: _ZN2al23getDepthShadowMapLengthEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1492c
     size: 44
     label: _ZN2al23setDepthShadowMapLengthEPKNS_9LiveActorEfPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14958
     size: 52
     label: _ZN2al41setDepthShadowMapLengthFromActorTransFlagEPKNS_9LiveActorEbPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1498c
     size: 96
     label: _ZN2al28setDepthShadowMapBoundingBoxEPKNS_9LiveActorERKN4sead7Vector3IfEES7_PKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa149ec
     size: 32
     label: _ZN2al29setDepthShadowMapMaskTypeNoneEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14a0c
     size: 36
     label: _ZN2al29setDepthShadowMapMaskTypeSelfEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14a30
     size: 48
     label: _ZN2al38setEnableDepthShadowMapBottomGradationEPKNS_9LiveActorEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14a60
     size: 32
     label: _ZN2al37isEnableDepthShadowMapBottomGradationEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14a80
     size: 44
     label: _ZN2al38setDepthShadowMapBottomGradationLengthEPKNS_9LiveActorEPKcf
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14aac
     size: 32
     label: _ZN2al38getDepthShadowMapBottomGradationLengthEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14acc
     size: 16
     label: _ZN2al30isAppendSubActorDepthShadowMapEPKNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14adc
     size: 136
     label: _ZN2al26getShadowMaskDropLengthMaxEPKNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14b64
     size: 60
     label: _ZN2al18setShadowMaskColorEPKNS_9LiveActorEPKcRKN4sead7Color4fE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14ba0
     size: 32
     label: _ZN2al18getShadowMaskColorEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14bc0
     size: 48
     label: _ZN2al22setShadowMaskIntensityEPKNS_9LiveActorEPKcf
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14bf0
     size: 32
     label: _ZN2al22getShadowMaskIntensityEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14c10
     size: 32
     label: _ZN2al30getShadowMaskTextureFixedScaleEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14c30
     size: 44
     label: _ZN2al30setShadowMaskTextureFixedScaleEPKNS_9LiveActorEPKcf
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14c5c
     size: 32
     label: _ZN2al19getShadowMaskOffsetEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14c7c
     size: 60
     label: _ZN2al19setShadowMaskOffsetEPKNS_9LiveActorERKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14cb8
     size: 40
     label: _ZN2al27isExistOcclusionLightPosPtrEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14ce0
     size: 44
     label: _ZN2al23setOcclusionLightPosPtrEPKNS_9LiveActorEPKcPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14d0c
     size: 60
     label: _ZN2al21setOcclusionAddOffsetEPKNS_9LiveActorEPKcRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14d48
     size: 40
     label: _ZN2al15enableOcclusionEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14d70
     size: 40
     label: _ZN2al16disableOcclusionEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14d98
     size: 40
     label: _ZN2al17isEnableOcclusionEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14dc0
     size: 204
     label: _ZN2al24calcSphereDoBoundingInfoEPN4sead7Vector3IfEES3_PfS4_PKNS_9LiveActorEPKcf
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14e8c
     size: 64
     label: _ZN2al22calcOcclusionSpherePosEPN4sead7Vector3IfEEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14ecc
     size: 92
     label: _ZN2al20changeOcclusionGroupEPKNS_9LiveActorEPKcS4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14f28
     size: 8
     label: _ZN2al18getOcclusionSphereEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14f30
     size: 20
     label: _ZN2al26setOcclusionIgnoreHostHideEPKNS_9LiveActorEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14f44
     size: 48
     label: _ZN2al13findIsInShadeEPKNS_9LiveActorERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14f74
     size: 68
     label: _ZN2al29requestDepthShadowMapLightDirEPKNS_9LiveActorERKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14fb8
     size: 32
     label: _ZN2al34resetRequestDepthShadowMapLightDirEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14fd8
     size: 32
     label: _ZN2al31isRequestDepthShadowMapLightDirEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa14ff8
     size: 20
     label: _ZN2al18onDepthShadowModelEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1500c
     size: 16
     label: _ZN2al19offDepthShadowModelEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa1501c
     size: 28
     label: _ZN2al36updateDepthShadowMapCtrlShapeVisibleEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
 Library/Shadow/DepthShadowDrawer.o:
   '.text':
   - offset: 0xa15038
