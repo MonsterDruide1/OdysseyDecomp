@@ -23478,31 +23478,31 @@ Camera/PlayerColliderMatrixCameraTarget.o:
     label:
     - _ZN32PlayerColliderMatrixCameraTargetC1EPKN2al9LiveActorEPK19IUsePlayerCollisionPKN4sead8Matrix34IfEE
     - _ZN32PlayerColliderMatrixCameraTargetC2EPKN2al9LiveActorEPK19IUsePlayerCollisionPKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ceb18
     size: 32
     label: _ZNK32PlayerColliderMatrixCameraTarget9calcTransEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0ceb38
     size: 152
     label: _ZNK32PlayerColliderMatrixCameraTarget8calcSideEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0cebd0
     size: 152
     label: _ZNK32PlayerColliderMatrixCameraTarget6calcUpEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0cec68
     size: 152
     label: _ZNK32PlayerColliderMatrixCameraTarget9calcFrontEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0ced00
     size: 12
     label: _ZNK32PlayerColliderMatrixCameraTarget12calcVelocityEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Camera/ProjectCameraInput.o:
   '.text':
