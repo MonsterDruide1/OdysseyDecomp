@@ -54,6 +54,8 @@ public:
 
     void set54(f32 value) { _54 = value; }
 
+    s32 getNumCollideResult() const { return mNumCollideResult; }
+
 private:
     sead::Vector3f mBoundingCenter = {0.0f, 0.0f, 0.0f};
     f32 mBoundingRadius = 0.0f;

@@ -77229,266 +77229,266 @@ MapObj/Motorcycle.o:
   - offset: 0x2c6dec
     size: 328
     label: _ZN10MotorcycleC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c6f34
     size: 324
     label: _ZN10MotorcycleC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c7078
     size: 1636
     label: _ZN10Motorcycle4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x2c76dc
     size: 24
     label: _ZN10Motorcycle18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c76f4
     size: 380
     label: _ZN10Motorcycle12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c7870
     size: 184
-    label: ''
-    status: NotDecompiled
+    label: _Z12isAnyRideRunP10Motorcycle
+    status: Matching
   - offset: 0x2c7928
     size: 2492
     label: _ZN10Motorcycle10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c82e4
     size: 240
-    label: ''
-    status: NotDecompiled
+    label: _Z7endRideP10MotorcycleP24MotorcyclePlayerAnimatorPN2al16CameraTargetBaseEPNS3_20TransCameraSubTargetE
+    status: Matching
   - offset: 0x2c83d4
     size: 400
-    label: ''
-    status: NotDecompiled
+    label: _Z14syncPuppetPoseP16IUsePlayerPuppetP10MotorcycleRKN4sead4QuatIfEERKNS3_7Vector3IfEE
+    status: Matching
   - offset: 0x2c8564
     size: 544
-    label: ''
-    status: NotDecompiled
+    label: _Z11startGetOffP10MotorcyclePP16IUsePlayerPuppetPiP24MotorcyclePlayerAnimatorPN2al16CameraTargetBaseEPNS7_20TransCameraSubTargetE
+    status: Matching
   - offset: 0x2c8784
     size: 3588
     label: _ZN10Motorcycle8movementEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x2c9588
     size: 44
     label: _ZN10Motorcycle4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c95b4
     size: 412
     label: _ZN10Motorcycle14updateColliderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c9750
     size: 72
     label: _ZN10Motorcycle8calcAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c9798
     size: 440
     label: _ZN10Motorcycle7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c9950
     size: 1232
-    label: ''
-    status: NotDecompiled
+    label: _Z17updateOrientationP10Motorcyclef
+    status: Matching
   - offset: 0x2c9e20
     size: 384
     label: _ZN10Motorcycle8exeCreepEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c9fa0
     size: 320
     label: _ZN10Motorcycle7exeFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca0e0
     size: 208
-    label: ''
-    status: NotDecompiled
+    label: _Z24tryHandleGroundCollisionP10Motorcycle
+    status: Matching
   - offset: 0x2ca1b0
     size: 396
     label: _ZN10Motorcycle7exeJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca33c
     size: 40
     label: _ZN10Motorcycle7endJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca364
     size: 164
     label: _ZN10Motorcycle11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca408
     size: 256
     label: _ZN10Motorcycle8exeResetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca508
     size: 136
     label: _ZN10Motorcycle12exeRideStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca590
     size: 120
     label: _ZN10Motorcycle14exeRideStartOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca608
     size: 444
     label: _ZN10Motorcycle11exeRideWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ca7c4
     size: 180
-    label: ''
-    status: NotDecompiled
+    label: _Z7TryJumpP10MotorcycleP16IUsePlayerPuppet
+    status: Matching
   - offset: 0x2ca878
     size: 1056
-    label: ''
-    status: NotDecompiled
+    label: _Z10tryParkingP10MotorcycleP16IUsePlayerPuppetP13ParkingParamsP14MotorcyclePose
+    status: Matching
   - offset: 0x2cac98
     size: 1032
     label: _ZN10Motorcycle15exeRideWaitJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cb0a0
     size: 756
-    label: ''
-    status: NotDecompiled
+    label: _Z14updateSeRumbleP13SeRumbleStateP10MotorcycleP16IUsePlayerPuppetfb
+    status: Matching
   - offset: 0x2cb394
     size: 172
-    label: ''
-    status: NotDecompiled
+    label: _Z22handleCeilingCollisionP10Motorcycle
+    status: Matching
   - offset: 0x2cb440
     size: 868
-    label: ''
-    status: NotDecompiled
+    label: _Z24updateSteerAngleAndAccelP10MotorcycleP16IUsePlayerPuppetP17AccelerationStatePf
+    status: Matching
   - offset: 0x2cb7a4
     size: 572
-    label: ''
-    status: NotDecompiled
+    label: _Z14calcInputStickPN4sead7Vector2IfEEP10MotorcycleP16IUsePlayerPuppet
+    status: Matching
   - offset: 0x2cb9e0
     size: 40
     label: _ZN10Motorcycle15endRideWaitJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cba08
     size: 428
     label: _ZN10Motorcycle15exeRideWaitLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cbbb4
     size: 880
     label: _ZN10Motorcycle15exeRideRunStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cbf24
     size: 392
-    label: ''
-    status: NotDecompiled
+    label: _Z31tryHandleHighSpeedWallCollisionP10MotorcycleRKN4sead7Vector3IfEE
+    status: Matching
   - offset: 0x2cc0ac
     size: 1352
-    label: ''
-    status: NotDecompiled
+    label: _Z21updateRunningVelocityP10Motorcyclef
+    status: Matching
   - offset: 0x2cc5f4
     size: 228
-    label: ''
-    status: NotDecompiled
+    label: _Z23TryJumpWithCameraAbsorbP10MotorcycleP16IUsePlayerPuppet
+    status: Matching
   - offset: 0x2cc6d8
     size: 404
-    label: ''
-    status: NotDecompiled
+    label: _Z16TryWheelieOrFallP10Motorcycle
+    status: Matching
   - offset: 0x2cc86c
     size: 1000
     label: _ZN10Motorcycle10exeRideRunEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ccc54
     size: 880
     label: _ZN10Motorcycle17exeRideRunCollideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ccfc4
     size: 572
     label: _ZN10Motorcycle14exeRideRunFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cd200
     size: 360
-    label: ''
-    status: NotDecompiled
+    label: _Z15applyAirPhysicsP10MotorcycleP16IUsePlayerPuppetf
+    status: Matching
   - offset: 0x2cd368
     size: 452
-    label: ''
-    status: NotDecompiled
+    label: _Z8tryBoundP10Motorcycle
+    status: Matching
   - offset: 0x2cd52c
     size: 512
-    label: ''
-    status: NotDecompiled
+    label: _Z20updateAirOrientationP10Motorcycle
+    status: Matching
   - offset: 0x2cd72c
     size: 508
-    label: ''
-    status: NotDecompiled
+    label: _Z7tryLandP10Motorcycle
+    status: Matching
   - offset: 0x2cd928
     size: 604
     label: _ZN10Motorcycle17exeRideRunWheelieEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cdb84
     size: 40
     label: _ZN10Motorcycle17endRideRunWheelieEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cdbac
     size: 724
     label: _ZN10Motorcycle14exeRideRunLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cde80
     size: 1208
     label: _ZN10Motorcycle14exeRideRunJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ce338
     size: 40
     label: _ZN10Motorcycle14endRideRunJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ce360
     size: 244
     label: _ZN10Motorcycle20exeRideRunBoundStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ce454
     size: 644
-    label: ''
-    status: NotDecompiled
+    label: _Z18updateBoundPhysicsP10MotorcycleP16IUsePlayerPuppetPfP13SeRumbleStateb
+    status: Matching
   - offset: 0x2ce6d8
     size: 224
     label: _ZN10Motorcycle15exeRideRunBoundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ce7b8
     size: 328
     label: _ZN10Motorcycle15exeRideRunClashEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ce900
     size: 252
     label: _ZN10Motorcycle18exeRideParkingSnapEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ce9fc
     size: 64
     label: _ZN10Motorcycle19exeRideParkingStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cea3c
     size: 184
     label: _ZN10Motorcycle14exeRideParkingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2ceaf4
     size: 292
     label: _ZN10Motorcycle19exeRideParkingAfterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2cec18
     size: 8
     label: _ZNK10Motorcycle17getPlayerColliderEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2cec20
     size: 8
     label: _ZThn264_NK10Motorcycle17getPlayerColliderEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2cec28
     size: 8
     label: _ZNK12_GLOBAL__N_117MotorcycleNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cec30
     size: 24
-    label: ''
-    status: NotDecompiled
+    label: _ZNK30MotorcycleColliderCameraTarget9calcTransEPN4sead7Vector3IfEE
+    status: Matching
   - offset: 0x2cec48
     size: 8
     label: _ZNK12_GLOBAL__N_117MotorcycleNrvJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cec50
     size: 40
@@ -77498,7 +77498,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2cec78
     size: 8
     label: _ZNK12_GLOBAL__N_125MotorcycleNrvRideWaitJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cec80
     size: 40
@@ -77508,12 +77508,12 @@ MapObj/Motorcycle.o:
   - offset: 0x2ceca8
     size: 8
     label: _ZNK12_GLOBAL__N_124MotorcycleNrvRideRunFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cecb0
     size: 8
     label: _ZNK12_GLOBAL__N_127MotorcycleNrvRideRunWheelie7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cecb8
     size: 40
@@ -77523,7 +77523,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2cece0
     size: 8
     label: _ZNK12_GLOBAL__N_124MotorcycleNrvRideRunJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cece8
     size: 40
@@ -77533,115 +77533,115 @@ MapObj/Motorcycle.o:
   - offset: 0x2ced10
     size: 8
     label: _ZNK12_GLOBAL__N_130MotorcycleNrvRideRunBoundStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced18
     size: 8
     label: _ZNK12_GLOBAL__N_127MotorcycleNrvRideRunCollide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced20
     size: 8
     label: _ZNK12_GLOBAL__N_124MotorcycleNrvRideRunLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced28
     size: 8
     label: _ZNK12_GLOBAL__N_117MotorcycleNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced30
     size: 8
     label: _ZNK12_GLOBAL__N_128MotorcycleNrvResetNoReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced38
     size: 8
     label: _ZNK12_GLOBAL__N_126MotorcycleNrvRideStartLeft7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced40
     size: 8
     label: _ZNK12_GLOBAL__N_127MotorcycleNrvRideStartRight7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced48
     size: 8
     label: _ZNK12_GLOBAL__N_124MotorcycleNrvRideStartOn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced50
     size: 8
     label: _ZNK12_GLOBAL__N_121MotorcycleNrvRideWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced58
     size: 8
     label: _ZNK12_GLOBAL__N_118MotorcycleNrvCreep7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced60
     size: 8
     label: _ZNK12_GLOBAL__N_121MotorcycleNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced68
     size: 8
     label: _ZNK12_GLOBAL__N_118MotorcycleNrvReset7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced70
     size: 8
     label: _ZNK12_GLOBAL__N_128MotorcycleNrvRideParkingSnap7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced78
     size: 8
     label: _ZNK12_GLOBAL__N_125MotorcycleNrvRideWaitLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced80
     size: 8
     label: _ZNK12_GLOBAL__N_125MotorcycleNrvRideRunStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced88
     size: 408
-    label: ''
-    status: NotDecompiled
+    label: _Z22tryHandleWallCollisionP10Motorcycle
+    status: Matching
   - offset: 0x2cef20
     size: 8
     label: _ZNK12_GLOBAL__N_125MotorcycleNrvRideRunClash7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cef28
     size: 8
     label: _ZNK12_GLOBAL__N_120MotorcycleNrvRideRun7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cef30
     size: 328
-    label: ''
-    status: NotDecompiled
+    label: _Z14updateVelocityP10MotorcycleRKN4sead7Vector3IfEES5_
+    status: Matching
   - offset: 0x2cf078
     size: 8
     label: _ZNK12_GLOBAL__N_125MotorcycleNrvRideRunBound7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cf080
     size: 68
     label: _ZNK12_GLOBAL__N_129MotorcycleNrvRideParkingStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cf0c4
     size: 8
     label: _ZNK12_GLOBAL__N_124MotorcycleNrvRideParking7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cf0cc
     size: 8
     label: _ZNK12_GLOBAL__N_129MotorcycleNrvRideParkingAfter7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/MotorcycleParkingLot.o:
   '.text':
