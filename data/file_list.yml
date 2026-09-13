@@ -145536,76 +145536,76 @@ Sequence/HakoniwaStateDeleteScene.o:
     label:
     - _ZN24HakoniwaStateDeleteSceneC1EPN2al8SequenceEP19WorldResourceLoader
     - _ZN24HakoniwaStateDeleteSceneC2EPN2al8SequenceEP19WorldResourceLoader
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5118c4
     size: 56
     label: _ZN24HakoniwaStateDeleteScene11deleteSceneEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5118fc
     size: 68
     label:
     - _ZN24HakoniwaStateDeleteSceneD1Ev
     - _ZN24HakoniwaStateDeleteSceneD2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511940
     size: 76
     label: _ZN24HakoniwaStateDeleteSceneD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x51198c
     size: 16
     label: _ZN24HakoniwaStateDeleteScene6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x51199c
     size: 12
     label: _ZN24HakoniwaStateDeleteScene4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5119a8
     size: 28
     label: _ZN24HakoniwaStateDeleteScene5startEPN2al5SceneEbbi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5119c4
     size: 44
     label: _ZN24HakoniwaStateDeleteScene10exePrepareEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5119f0
     size: 112
     label: _ZN24HakoniwaStateDeleteScene16exeFinalizeAudioEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511a60
     size: 92
     label: _ZN24HakoniwaStateDeleteScene14exeDeleteSceneEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511abc
     size: 48
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_134HakoniwaStateDeleteSceneNrvPrepare7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x511aec
     size: 96
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_138HakoniwaStateDeleteSceneNrvDeleteScene7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x511b4c
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_140HakoniwaStateDeleteSceneNrvFinalizeAudio7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x511b54
     size: 28
     label: _ZNK2al10FunctorV0MIP24HakoniwaStateDeleteSceneMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x511b70
     size: 76
     label: _ZNK2al10FunctorV0MIP24HakoniwaStateDeleteSceneMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x511bbc
     size: 4
     label: _ZN2al10FunctorV0MIP24HakoniwaStateDeleteSceneMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x511bc0
     size: 32
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_HakoniwaStateDeleteScene.cpp
+    status: Matching
 Sequence/HakoniwaStateDemoEnding.o:
   '.text':
   - offset: 0x511be0
