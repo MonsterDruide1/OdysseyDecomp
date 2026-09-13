@@ -141,7 +141,7 @@ void tryCreateSessionMusicianManager(const al::IUseSceneObjHolder* holder) {
     if (isExistSessionMusicianManager(holder))
         return;
 
-    SessionMusicianManager* manager = new SessionMusicianManager("SessionMusicianManager");
+    SessionMusicianManager* manager = new SessionMusicianManager("セッション[マネージャー]");
     al::setSceneObj<SessionMusicianManager>(holder, manager);
 }
 

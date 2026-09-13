@@ -227,7 +227,7 @@ static void initializeInvalidOpenMapList(
 }
 
 static void initializeHackObjectList(sead::PtrArray<HackObjInfo>* hackObjList) {
-    al::Resource* resource = al::findOrCreateResource("SystemData/ItemList", nullptr);
+    al::Resource* resource = al::findOrCreateResource("SystemData/HackObjList", nullptr);
     al::ByamlIter hackObjListIter(al::findResourceYaml(resource, "HackObjList", nullptr));
     s32 hackObjListSize = hackObjListIter.getSize();
     hackObjList->allocBuffer(hackObjListSize, nullptr);
@@ -418,7 +418,7 @@ GameDataHolder::GameDataHolder(const al::MessageSystem* messageSystem)
     mWorldWarpHoleDestIds = new s32[mWorldList->getWorldNum()];
 
     al::ByamlIter worldWarpHoleInfoIter(
-        al::tryGetBymlFromArcName("SystemData/WorldList", "WorldWarpHoleInfo"));
+        al::tryGetBymlFromArcName("ObjectData/WorldWarpHole", "WorldWarpHoleInfo"));
     al::ByamlIter worldLinkInfoIter;
     al::getByamlIterByKey(&worldLinkInfoIter, worldWarpHoleInfoIter, "WorldLinkInfo");
 

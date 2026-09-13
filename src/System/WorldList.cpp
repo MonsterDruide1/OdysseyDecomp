@@ -317,14 +317,6 @@ bool WorldList::tryFindTransOnMainStageByStageName(sead::Vector3f* outTrans, con
     return posInfo->value()->mask & (1 << index);
 }
 
-s32 WorldList::findHintByScenarioNo(s32 scenarioNo) const {
-    s32 size = mShinePosList.size();
-    for (s32 i = 0; i < size; i++)
-        if (mShinePosList[i]->uniqueId == scenarioNo)
-            return i;
-    return -1;
-}
-
 bool WorldList::tryFindHintTransByScenarioNo(sead::Vector3f* outTrans, s32 scenarioNo,
                                              s32 index) const {
     s32 hintId = findHintByScenarioNo(scenarioNo);

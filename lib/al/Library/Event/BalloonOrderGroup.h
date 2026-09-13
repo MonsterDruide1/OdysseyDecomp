@@ -16,7 +16,7 @@ public:
         Requester(const LiveActor* actor, const IUseEventFlowData* user, const ActorInitInfo& info)
             : actor(actor), user(user) {
             getArg(&ballonOrder, info, "BalloonOrder");
-            tryGetArg(&ballonShowStep, info, "BallonShowStep");
+            tryGetArg(&ballonShowStep, info, "BalloonShowStep");
         }
 
         const LiveActor* actor;

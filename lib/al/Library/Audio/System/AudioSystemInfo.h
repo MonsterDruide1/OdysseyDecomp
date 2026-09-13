@@ -2,7 +2,7 @@
 
 namespace al {
 class AudioEffectDataBase;
-class AudioSoundArchiveInfo;
+struct AudioSoundArchiveInfo;
 class BgmDataBase;
 class SeDataBase;
 
