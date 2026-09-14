@@ -49699,11 +49699,11 @@ Item/RandomItemSelector.o:
     label:
     - _ZN18RandomItemSelectorC1Ev
     - _ZN18RandomItemSelectorC2Ev
-    status: Matching
+    status: NonMatchingMinor
   - offset: 0x1ccf60
     size: 136
     label: _ZN18RandomItemSelector17getRandomItemTypeEPKN2al18IUseSceneObjHolderE
-    status: Matching
+    status: NonMatchingMinor
   - offset: 0x1ccfe8
     size: 8
     label: _ZN2rs24createRandomItemSelectorEPKN2al18IUseSceneObjHolderE
