@@ -245,14 +245,14 @@ void initActorModelKeeper(LiveActor* actor, const ActorInitInfo& info,
         modelKeeper->getModelCtrl()->setCameraInfo(
             &sceneCameraInfo->getViewAt(0)->getLookAtCam().getMatrix(),
             &sceneCameraInfo->getViewAt(1)->getLookAtCam().getMatrix(),
-            &sceneCameraInfo->getViewAt(0)->getProjMtx(),
-            &sceneCameraInfo->getViewAt(1)->getProjMtx());
+            sceneCameraInfo->getViewAt(0)->getProjMtx(),
+            sceneCameraInfo->getViewAt(1)->getProjMtx());
     } else {
         modelKeeper->getModelCtrl()->setCameraInfo(
             &sceneCameraInfo->getViewAt(0)->getLookAtCam().getMatrix(),
             &sceneCameraInfo->getViewAt(0)->getLookAtCam().getMatrix(),
-            &sceneCameraInfo->getViewAt(0)->getProjMtx(),
-            &sceneCameraInfo->getViewAt(0)->getProjMtx());
+            sceneCameraInfo->getViewAt(0)->getProjMtx(),
+            sceneCameraInfo->getViewAt(0)->getProjMtx());
     }
 
     modelKeeper->initModel(
