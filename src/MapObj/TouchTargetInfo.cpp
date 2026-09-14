@@ -23,9 +23,9 @@ void TouchTargetInfo::reset() {
     mIsKeepTarget = false;
     mSensor = nullptr;
     mConnector = nullptr;
-    mSensorOffset.set(0.0f, 0.0f, 0.0f);
-    mPos.set(0.0f, 0.0f, 0.0f);
-    mNormal.set(0.0f, 0.0f, 0.0f);
+    mSensorOffset = {0.0f, 0.0f, 0.0f};
+    mPos = {0.0f, 0.0f, 0.0f};
+    mNormal = {0.0f, 0.0f, 0.0f};
 }
 
 void TouchTargetInfo::setInfoByConnector(const al::MtxConnector* connector,
