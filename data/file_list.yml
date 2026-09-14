@@ -199425,15 +199425,15 @@ NintendoSDK-NEX/Externals/curl/lib/select.o:
   - offset: 0x7022e4
     size: 200
     label: Curl_wait_ms
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7023ac
     size: 848
     label: Curl_socket_check
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7026fc
     size: 664
     label: Curl_poll
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/sendf.o:
   '.text':
   - offset: 0x702994
@@ -199459,15 +199459,15 @@ NintendoSDK-NEX/Externals/curl/lib/sendf.o:
   - offset: 0x702f14
     size: 168
     label: Curl_send_plain
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x702fbc
     size: 188
     label: Curl_write_plain
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x703078
     size: 176
     label: Curl_recv_plain
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x703128
     size: 776
     label: Curl_client_chop_write
@@ -199479,7 +199479,7 @@ NintendoSDK-NEX/Externals/curl/lib/sendf.o:
   - offset: 0x7035c0
     size: 92
     label: Curl_read_plain
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70361c
     size: 324
     label: Curl_read
@@ -199567,17 +199567,17 @@ NintendoSDK-NEX/Externals/curl/lib/strequal.o:
   - offset: 0x704368
     size: 132
     label: curl_strequal
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7043ec
     size: 156
     label: curl_strnequal
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/strerror.o:
   '.text':
   - offset: 0x704488
     size: 36
     label: curl_easy_strerror
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7044ac
     size: 40
     label: curl_multi_strerror
@@ -199595,7 +199595,7 @@ NintendoSDK-NEX/Externals/curl/lib/timeval.o:
   - offset: 0x7045cc
     size: 8
     label: curlx_tvnow
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7045d4
     size: 52
     label: curlx_tvdiff
@@ -200734,7 +200734,7 @@ NintendoSDK-NEX/Externals/curl/lib/netrc.o:
   - offset: 0x71b80c
     size: 1084
     label: Curl_parsenetrc
-    status: Matching
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/nonblock.o:
   '.text':
   - offset: 0x71bc48
