@@ -3,6 +3,16 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+class CameraPoserAnim;
+class CameraPoserCart;
+class CameraPoserEntrance;
+class CameraPoserFixActor;
+class CameraPoserFixPoint;
+class CameraPoserParallelSimple;
+class CameraPoserQuickTurn;
+class CameraPoserRace;
+class CameraPoserSubjective;
+class CameraPoserTower;
 class CameraPoser;
 class CameraTicketId;
 
@@ -28,6 +38,26 @@ public:
 
     CameraPoser* getPoser() const { return mPoser; }
 
+    CameraPoserAnim* getAnimPoser() const { return mAnimPoser; }
+
+    CameraPoserCart* getCartPoser() const { return mCartPoser; }
+
+    CameraPoserEntrance* getEntrancePoser() const { return mEntrancePoser; }
+
+    CameraPoserFixActor* getFixActorPoser() const { return mFixActorPoser; }
+
+    CameraPoserFixPoint* getFixPointPoser() const { return mFixPointPoser; }
+
+    CameraPoserParallelSimple* getParallelSimplePoser() const { return mParallelSimplePoser; }
+
+    CameraPoserQuickTurn* getQuickTurnPoser() const { return mQuickTurnPoser; }
+
+    CameraPoserRace* getRacePoser() const { return mRacePoser; }
+
+    CameraPoserSubjective* getSubjectivePoser() const { return mSubjectivePoser; }
+
+    CameraPoserTower* getTowerPoser() const { return mTowerPoser; }
+
     const CameraTicketId* getTicketId() const { return mTicketId; }
 
     s32 getPriority() const { return mPriority; }
@@ -37,7 +67,20 @@ public:
     void setActiveCamera(bool isActiveCamera) { mIsActiveCamera = isActiveCamera; }
 
 private:
-    CameraPoser* mPoser;
+    union {
+        CameraPoser* mPoser;
+        CameraPoserAnim* mAnimPoser;
+        CameraPoserCart* mCartPoser;
+        CameraPoserEntrance* mEntrancePoser;
+        CameraPoserFixActor* mFixActorPoser;
+        CameraPoserFixPoint* mFixPointPoser;
+        CameraPoserParallelSimple* mParallelSimplePoser;
+        CameraPoserQuickTurn* mQuickTurnPoser;
+        CameraPoserRace* mRacePoser;
+        CameraPoserSubjective* mSubjectivePoser;
+        CameraPoserTower* mTowerPoser;
+    };
+
     const CameraTicketId* mTicketId;
     s32 mPriority;
     bool mIsActiveCamera = false;

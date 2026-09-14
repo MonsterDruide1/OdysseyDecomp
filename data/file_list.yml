@@ -230392,11 +230392,11 @@ Library/Camera/CameraUtil.o:
   - offset: 0x83bac0
     size: 52
     label: _ZN2al19getProjectionMtxPtrEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83baf4
     size: 12
     label: _ZN2al19getProjectionMtxPtrEPKNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83bb00
     size: 56
     label: _ZN2al15getLookAtCameraEPKNS_10IUseCameraEi
@@ -230492,732 +230492,732 @@ Library/Camera/CameraUtil.o:
   - offset: 0x83bff0
     size: 152
     label: _ZN2al15calcCameraFrontEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c088
     size: 64
     label: _ZN2al19setNearClipDistanceEPKNS_10IUseCameraEfi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c0c8
     size: 64
     label: _ZN2al18setFarClipDistanceEPKNS_10IUseCameraEfi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c108
     size: 176
     label: _ZN2al20setCurrentCameraPoseEPNS_14CameraPoseInfoEPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c1b8
     size: 80
     label: _ZN2al13calcCameraDirEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c208
     size: 92
     label: _ZN2al17calcCameraLookDirEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c264
     size: 68
     label: _ZN2al17calcCameraSideDirEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c2a8
     size: 68
     label: _ZN2al15calcCameraUpDirEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c2ec
     size: 32
     label: _ZN2al16tryCalcCameraDirEPN4sead7Vector3IfEEPKNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c30c
     size: 92
     label: _ZN2al17tryCalcCameraDirHEPN4sead7Vector3IfEEPKNS_15SceneCameraInfoERKS2_i
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c368
     size: 136
     label: _ZN2al21tryCalcCameraLookDirHEPN4sead7Vector3IfEEPKNS_15SceneCameraInfoERKS2_i
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c3f0
     size: 64
     label: _ZN2al11startCameraEPKNS_10IUseCameraEPNS_12CameraTicketEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c430
     size: 64
     label: _ZN2al14startCameraSubEPKNS_10IUseCameraEPNS_12CameraTicketEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c470
     size: 108
     label: _ZN2al15startAnimCameraEPKNS_10IUseCameraEPNS_12CameraTicketEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c4dc
     size: 8
     label: _ZN2al19startAnimCameraAnimEPNS_12CameraTicketEPKciii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c4e4
     size: 104
     label: _ZN2al49startAnimCameraWithStartStepAndEndStepAndPlayStepEPKNS_10IUseCameraEPNS_12CameraTicketEPKciiii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c54c
     size: 80
     label: _ZN2al9endCameraEPKNS_10IUseCameraEPNS_12CameraTicketEib
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c59c
     size: 80
     label: _ZN2al27endCameraWithNextCameraPoseEPKNS_10IUseCameraEPNS_12CameraTicketEPKNS_14CameraPoseInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c5ec
     size: 68
     label: _ZN2al12endCameraSubEPKNS_10IUseCameraEPNS_12CameraTicketEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c630
     size: 8
     label: _ZN2al14isActiveCameraEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c638
     size: 144
     label: _ZN2al16initObjectCameraEPKNS_10IUseCameraERKNS_13PlacementInfoEPKcS7_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c6c8
     size: 152
     label: _ZN2al16initObjectCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcS7_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c760
     size: 68
     label: _ZN2al31initObjectCameraNoPlacementInfoEPKNS_10IUseCameraEPKcS4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c7a4
     size: 152
     label: _ZN2al13initFixCameraEPKNS_10IUseCameraEPKcRKN4sead7Vector3IfEES9_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c83c
     size: 100
     label: _ZN16alCameraFunction31initCameraNoPlacementInfoNoSaveEPN2al11CameraPoserEPKNS0_10IUseCameraEPKNS0_11PlacementIdEPKciRKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c8a0
     size: 156
     label: _ZN2al20initFixDoorwayCameraEPKNS_10IUseCameraEPKcRKN4sead7Vector3IfEES9_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c93c
     size: 296
     label: _ZN2al18initFixActorCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKcRKN4sead7Vector3IfEEfffb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ca64
     size: 196
     label: _ZN16alCameraFunction16initCameraNoSaveEPN2al11CameraPoserEPKNS0_10IUseCameraERKNS0_13ActorInitInfoEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83cb28
     size: 228
     label: _ZN2al17initFixLookCameraEPNS_9LiveActorERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83cc0c
     size: 296
     label: _ZN2al17initFixTalkCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKcRKN4sead7Vector3IfEEfffb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83cd34
     size: 308
     label: _ZN2al20initFixFishingCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKcRKN4sead7Vector3IfEESC_fffb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ce68
     size: 232
     label: _ZN2al18initFixPointCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83cf50
     size: 196
     label: _ZN16alCameraFunction10initCameraEPN2al11CameraPoserEPKNS0_10IUseCameraERKNS0_13ActorInitInfoEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d014
     size: 224
     label: _ZN2al18initLookDownCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d0f4
     size: 240
     label: _ZN2al21initProgramableCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcPKN4sead7Vector3IfEESC_SC_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d1e4
     size: 132
     label: _ZN2al21initProgramableCameraEPKNS_10IUseCameraEPKcPKN4sead7Vector3IfEES9_S9_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d268
     size: 256
     label: _ZN2al33initProgramableCameraWithColliderEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcPKN4sead7Vector3IfEESC_SC_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d368
     size: 236
     label: _ZN2al26initProgramableAngleCameraEPKNS_10IUseCameraERKNS_13PlacementInfoEPKcPKN4sead7Vector3IfEEPKfSE_SE_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d454
     size: 188
     label: _ZN16alCameraFunction16initCameraNoSaveEPN2al11CameraPoserEPKNS0_10IUseCameraERKNS0_13PlacementInfoEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d510
     size: 240
     label: _ZN2al42initProgramableCameraKeepColliderPreCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcPKN4sead7Vector3IfEESC_SC_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d600
     size: 108
     label: _ZN2al23initShooterCameraSingleEPKNS_10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d66c
     size: 100
     label: _ZN16alCameraFunction25initCameraNoPlacementInfoEPN2al11CameraPoserEPKNS0_10IUseCameraEPKNS0_11PlacementIdEPKciRKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d6d0
     size: 224
     label: _ZN2al23initTowerCameraWithSaveEPKNS_10IUseCameraEPKN4sead7Vector3IfEERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d7b0
     size: 224
     label: _ZN2al15initTowerCameraEPKNS_10IUseCameraEPKN4sead7Vector3IfEERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d890
     size: 224
     label: _ZN2al20initBossBattleCameraEPKNS_10IUseCameraEPKN4sead7Vector3IfEERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d970
     size: 8
     label: _ZN2al31initProgramableCameraAngleSwingEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d978
     size: 108
     label: _ZN2al22initFollowCameraSimpleEPKNS_10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83d9e4
     size: 208
     label: _ZN2al22initFollowCameraSimpleEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dab4
     size: 152
     label: _ZN2al20initDemoObjectCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcS7_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83db4c
     size: 44
     label: _ZN2al25initDemoProgramableCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcPKN4sead7Vector3IfEESC_SC_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83db78
     size: 44
     label: _ZN2al46initDemoProgramableCameraKeepColliderPreCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKcPKN4sead7Vector3IfEESC_SC_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dba4
     size: 44
     label: _ZN2al18initDemoAnimCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKNS_8ResourceEPKN4sead8Matrix34IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dbd0
     size: 240
     label: _ZN2al14initAnimCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKNS_8ResourceEPKN4sead8Matrix34IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dcc0
     size: 128
     label: _ZN2al18initDemoAnimCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dd40
     size: 124
     label: _ZN2al20loadActorCameraParamEPNS_12CameraTicketEPKNS_9LiveActorEPKcS6_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ddbc
     size: 108
     label: _ZN2al28loadActorCameraParamInitFileEPNS_12CameraTicketEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de28
     size: 12
     label: _ZN2al23setFixActorCameraTargetEPNS_12CameraTicketEPKNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de34
     size: 12
     label: _ZN2al23setFixActorCameraAngleHEPNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de40
     size: 12
     label: _ZN2al22setTowerCameraDistanceEPNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de4c
     size: 8
     label: _ZN2al25setTowerCameraStartAngleVEPNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de54
     size: 12
     label: _ZN2al30setTowerCameraUserMarginAngleHEPNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de60
     size: 16
     label: _ZN2al32resetTowerCameraUserMarginAngleHEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de70
     size: 8
     label: _ZN2al27resetTowerCameraInputRotateEPNS_12CameraTicketEfi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de78
     size: 16
     label: _Z37validateFixPointCameraUsePreCameraPosPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83de88
     size: 208
     label: _ZN2al20initSubjectiveCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83df58
     size: 108
     label: _ZN2al26initSubjectiveCameraNoSaveEPKNS_10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dfc4
     size: 12
     label: _ZN2al27getSubjectiveCameraOffsetUpEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dfd0
     size: 4
     label: _ZN2al30getSubjectiveCameraOffsetFrontEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dfd4
     size: 20
     label: _ZN2al30setSubjectiveCameraStartAngleHEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dfe8
     size: 16
     label: _ZN2al35validateSubjectiveCameraResetAngleHEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83dff8
     size: 16
     label: _ZN2al29requestSubjectiveCameraZoomInEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e008
     size: 108
     label: _ZN2al18initParallelCameraEPKNS_10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e074
     size: 208
     label: _ZN2al18initParallelCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e144
     size: 24
     label: _ZN2al29setParallelCameraLookAtOffsetEPKNS_12CameraTicketERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e15c
     size: 12
     label: _ZN2al25setParallelCameraDistanceEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e168
     size: 12
     label: _ZN2al23setParallelCameraAngleHEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e174
     size: 12
     label: _ZN2al23setParallelCameraAngleVEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e180
     size: 108
     label: _ZN2al19initQuickTurnCameraEPKNS_10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e1ec
     size: 8
     label: _ZN2al24setQuickTurnCameraFollowEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e1f4
     size: 16
     label: _ZN2al28setQuickTurnCameraRotateFastEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e204
     size: 208
     label: _ZN2al14initRaceCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e2d4
     size: 12
     label: _ZN2al24setRaceCameraFrontDirPtrEPKNS_12CameraTicketEPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e2e0
     size: 12
     label: _ZN2al21setRaceCameraDistanceEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e2ec
     size: 12
     label: _ZN2al20setRaceCameraOffsetYEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e2f8
     size: 12
     label: _ZN2al25setRaceCameraAngleDegreeVEPKNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e304
     size: 208
     label: _ZN2al14initCartCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e3d4
     size: 8
     label: _ZN2al14stopCartCameraEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e3dc
     size: 8
     label: _ZN2al17restartCartCameraEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e3e4
     size: 228
     label: _ZN2al27initActorRailParallelCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e4c8
     size: 208
     label: _ZN2al24initKinopioBrigadeCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e598
     size: 108
     label: _ZN2al14initAnimCameraEPKNS_9LiveActorERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e604
     size: 16
     label: _ZN2al28validateAnimCameraAngleSwingEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e614
     size: 20
     label: _ZN2al30invalidateAnimCameraAngleSwingEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e628
     size: 12
     label: _ZN2al23setAnimCameraBaseMtxPtrEPNS_12CameraTicketEPKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e634
     size: 132
     label: _ZN2al18initEntranceCameraEPKNS_10IUseCameraERKNS_13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e6b8
     size: 140
     label: _ZN2al18initEntranceCameraEPKNS_10IUseCameraERKNS_13ActorInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e744
     size: 132
     label: _ZN2al24initEntranceCameraNoSaveEPKNS_10IUseCameraERKNS_13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e7c8
     size: 8
     label: _ZN2al22setEntranceCameraParamEPNS_12CameraTicketEfRKN4sead7Vector3IfEES6_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e7d0
     size: 8
     label: _ZN2al23setEntranceCameraLookAtEPNS_12CameraTicketERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e7d8
     size: 76
     label: _ZN2al27invalidateEndEntranceCameraEPNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e824
     size: 40
     label: _ZN2al35invalidateEndEntranceCameraWithNameEPNS_10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e84c
     size: 36
     label: _ZN2al25validateEndEntranceCameraEPNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e870
     size: 108
     label: _ZN2al23isPlayingEntranceCameraEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e8dc
     size: 8
     label: _ZN2al22setCameraInterpoleStepEPNS_12CameraTicketEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e8e4
     size: 12
     label: _ZN2al19setCameraFovyDegreeEPNS_12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e8f0
     size: 52
     label: _ZN2al23createSimpleCameraInputEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e924
     size: 44
     label: _ZN2al14setCameraInputEPNS_10IUseCameraEPKNS_12ICameraInputE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e950
     size: 52
     label: _ZN2al18setViewCameraInputEPNS_10IUseCameraEPKNS_12ICameraInputEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83e984
     size: 140
     label: _ZN2al33isExistCameraInputAtDisableTimingEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ea10
     size: 72
     label: _ZN2al23createActorCameraTargetEPKNS_9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ea58
     size: 72
     label: _ZN2al23createActorCameraTargetEPKNS_9LiveActorEPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83eaa0
     size: 84
     label: _ZN2al28createActorJointCameraTargetEPKNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83eaf4
     size: 68
     label: _ZN2al29createActorMatrixCameraTargetEPKNS_9LiveActorEPKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83eb38
     size: 8
     label: _ZN2al20isActiveCameraTargetEPKNS_16CameraTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83eb40
     size: 48
     label: _ZN2al15setCameraTargetEPNS_10IUseCameraEPNS_16CameraTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83eb70
     size: 48
     label: _ZN2al17resetCameraTargetEPNS_10IUseCameraEPNS_16CameraTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83eba0
     size: 72
     label: _ZN2al26createActorCameraSubTargetEPKNS_9LiveActorEPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ebe8
     size: 72
     label: _ZN2al36createActorBackAroundCameraSubTargetEPKNS_9LiveActorEPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ec30
     size: 80
     label: _ZN2al26createTransCameraSubTargetEPKcPKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ec80
     size: 8
     label: _ZN2al28initCameraSubTargetTurnParamEPNS_19CameraSubTargetBaseEPKNS_24CameraSubTargetTurnParamE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ec88
     size: 8
     label: _ZN2al23isActiveCameraSubTargetEPKNS_19CameraSubTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ec90
     size: 48
     label: _ZN2al18setCameraSubTargetEPNS_10IUseCameraEPNS_19CameraSubTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ecc0
     size: 48
     label: _ZN2al20resetCameraSubTargetEPNS_10IUseCameraEPNS_19CameraSubTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ecf0
     size: 48
     label: _ZN2al27setCameraPlacementSubTargetEPNS_10IUseCameraEPNS_19CameraSubTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ed20
     size: 48
     label: _ZN2al29resetCameraPlacementSubTargetEPNS_10IUseCameraEPNS_19CameraSubTargetBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ed50
     size: 4
     label: _ZN2al34getCameraDistanceRocketFlowerCurveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ed54
     size: 56
     label: _ZN2al19setViewCameraTargetEPNS_10IUseCameraEPNS_16CameraTargetBaseEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ed8c
     size: 272
     label: _ZN2al24startCameraShakeByActionEPKNS_9LiveActorEPKcS4_ii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ee9c
     size: 220
     label: _ZN2al29startCameraShakeByHitReactionEPKNS_10IUseCameraEPKcS4_S4_ii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83ef78
     size: 48
     label: _ZN2al26requestCameraLoopShakeWeakEPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83efa8
     size: 52
     label: _ZN16alCameraFunction22requestCameraShakeLoopEPKN2al10IUseCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83efdc
     size: 48
     label: _ZN2al23isActiveCameraInterpoleEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f00c
     size: 16
     label: _ZN2al23isActiveCameraInterpoleEPKNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f01c
     size: 56
     label: _ZN2al20startCameraInterpoleEPKNS_10IUseCameraEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f054
     size: 48
     label: _ZN2al28requestCancelCameraInterpoleEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f084
     size: 60
     label: _ZN2al33tryCalcCameraPoseWithoutInterpoleEPN4sead12LookAtCameraEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f0c0
     size: 20
     label: _ZN2al37invalidateCameraPoserVerticalAbsorberEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f0d4
     size: 84
     label: _ZN2al31requestStopCameraVerticalAbsorbEPNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f128
     size: 20
     label: _ZN2al30validateSnapShotCameraZoomFovyEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f13c
     size: 20
     label: _ZN2al26validateSnapShotCameraRollEPNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f150
     size: 36
     label: _ZN2al29isSnapShotOrientationRotate90EPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f174
     size: 36
     label: _ZN2al30isSnapShotOrientationRotate270EPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f198
     size: 44
     label: _ZN2al17isValidCameraGyroEPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f1c4
     size: 36
     label: _ZN2al31isInvalidChangeSubjectiveCameraEPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f1e8
     size: 48
     label: _ZN2al22isCurrentCameraZoomingEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f218
     size: 100
     label: _ZN2al15onCameraRideObjEPKNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f27c
     size: 100
     label: _ZN2al16offCameraRideObjEPKNS_9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f2e0
     size: 8
     label: _ZN2al21isExistAnimCameraDataEPKNS_12CameraTicketEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f2e8
     size: 8
     label: _ZN2al15isEndAnimCameraEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f2f0
     size: 20
     label: _ZN2al19isAnimCameraPlayingEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f304
     size: 8
     label: _ZN2al23isAnimCameraAnimPlayingEPKNS_12CameraTicketEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f30c
     size: 12
     label: _ZN2al20getAnimCameraStepMaxEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f318
     size: 12
     label: _ZN2al17getAnimCameraStepEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f324
     size: 8
     label: _ZN2al25calcAnimCameraAnimStepMaxEPKNS_12CameraTicketEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f32c
     size: 16
     label: _ZN2al25setAnimCameraRotateBaseUpEPKNS_12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f33c
     size: 188
     label: _ZN16alCameraFunction10initCameraEPN2al11CameraPoserEPKNS0_10IUseCameraERKNS0_13PlacementInfoEPKci
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f3f8
     size: 368
     label: _ZN16alCameraFunction14initAreaCameraEPKN2al10IUseCameraERKNS0_13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f568
     size: 44
     label: _ZN16alCameraFunction19initForceAreaCameraEPKN2al10IUseCameraERKNS0_13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f594
     size: 8
     label: _ZN16alCameraFunction21initPriorityBossFieldEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f59c
     size: 8
     label: _ZN16alCameraFunction19initPriorityCaptureEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f5a4
     size: 8
     label: _ZN16alCameraFunction18initPriorityObjectEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f5ac
     size: 8
     label: _ZN16alCameraFunction31initPrioritySafetyPointRecoveryEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f5b4
     size: 8
     label: _ZN16alCameraFunction20initPriorityDemoTalkEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f5bc
     size: 8
     label: _ZN16alCameraFunction16initPriorityDemoEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f5c4
     size: 8
     label: _ZN16alCameraFunction17initPriorityDemo2EPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f5cc
     size: 52
     label: _ZN16alCameraFunction29isCurrentCameraPriorityPlayerEPKN2al10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f600
     size: 12
     label: _ZN16alCameraFunction24setPoserNearClipDistanceEPN2al12CameraTicketEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f60c
     size: 48
     label: _ZN16alCameraFunction19getNearClipDistanceEPKN2al10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f63c
     size: 28
     label: _ZN16alCameraFunction20validateCameraArea2DEPN2al10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f658
     size: 28
     label: _ZN16alCameraFunction22invalidateCameraArea2DEPN2al10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f674
     size: 40
     label: _ZN16alCameraFunction22validateCameraAreaKidsEPN2al10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f69c
     size: 32
     label: _ZN16alCameraFunction21isValidCameraAreaKidsEPKN2al14CameraFlagCtrlE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f6bc
     size: 40
     label: _ZN16alCameraFunction18onSeparatePlayModeEPN2al10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f6e4
     size: 36
     label: _ZN16alCameraFunction19offSeparatePlayModeEPN2al10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f708
     size: 20
     label: _ZN16alCameraFunction27validateResetPoseNextCameraEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f71c
     size: 20
     label: _ZN16alCameraFunction33validateKeepPreSelfPoseNextCameraEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f730
     size: 8
     label: _ZN16alCameraFunction30validateCameraInterpoleEaseOutEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f738
     size: 20
     label: _ZN16alCameraFunction30onForceCollideAtStartInterpoleEPN2al12CameraTicketE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f74c
     size: 44
     label: _ZN16alCameraFunction25initCameraSettingCloudSeaEPN2al10IUseCameraEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f778
     size: 136
     label: _ZN16alCameraFunction20initMirrorAreaCameraEPKN2al10IUseCameraERKNS0_13PlacementInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f800
     size: 8
     label: _ZNK2al20TransCameraSubTarget13getTargetNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x83f808
     size: 24
     label: _ZNK2al20TransCameraSubTarget9calcTransEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Library/Camera/CameraGyroCtrl.o:
   '.text':

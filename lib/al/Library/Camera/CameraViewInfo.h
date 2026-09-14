@@ -15,7 +15,7 @@ public:
                    const CameraViewFlag& flag, const OrthoProjectionInfo& orthoProjectionInfo);
 
     const sead::Projection& getProjectionSead() const;
-    const sead::Matrix44f& getProjMtx() const;
+    const sead::Matrix44f* getProjMtx() const;
     const sead::Matrix44f& getProjMtxStd() const;
     f32 getAspect() const;
     f32 getNear() const;
@@ -25,6 +25,8 @@ public:
 
     bool isValid() const { return mIsValid; }
 
+    bool isActiveInterpole() const { return mIsActiveInterpole; }
+
     const sead::LookAtCamera& getLookAtCam() const { return mLookAtCam; }
 
     const Projection& getProjection() const { return mProjection; }
@@ -32,8 +34,8 @@ public:
 private:
     s32 mIndex;
     bool mIsValid = true;
-    bool mIsActiveInterpole = true;
-    bool _6 = false;
+    bool _5 = true;
+    bool mIsActiveInterpole = false;
     const sead::LookAtCamera& mLookAtCam;
     const Projection& mProjection;
     const CameraViewFlag& mViewFlag;

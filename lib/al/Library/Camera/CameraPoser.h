@@ -206,6 +206,14 @@ public:
     CameraTargetHolder* getTargetHolder() const;
     CameraFlagCtrl* getFlagCtrl() const;
 
+    CameraVerticalAbsorber* getVerticalAbsorber() const { return mVerticalAbsorber; }
+
+    SnapShotCameraCtrl* getSnapShotCtrl() const { return mSnapShotCtrl; }
+
+    CameraPoserFlag* getPoserFlag() const { return mPoserFlag; }
+
+    CameraAngleSwingInfo* getAngleSwingInfo() const { return mAngleSwingInfo; }
+
     // get
     const sead::Vector3f& getEye() const { return mEye; }
 
@@ -231,6 +239,8 @@ public:
     void setCameraUp(const sead::Vector3f& dir) { mUp.set(dir); }
 
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
+
+    void setNearClipDistance(f32 nearClipDistance) { mNearClipDistance = nearClipDistance; }
 
     void setFovyDegree(f32 fovy) { mFovyDegree = fovy; }
 

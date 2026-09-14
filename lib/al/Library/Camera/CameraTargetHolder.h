@@ -34,6 +34,8 @@ public:
     void addPlacementSubTarget(CameraSubTargetBase* subTarget);
     void removePlacementSubTarget(CameraSubTargetBase* subTarget);
 
+    void setViewTarget(CameraTargetBase* target, s32 index) { mViewTargetArray[index] = target; }
+
 private:
     s32 mViewTargetSize = 0;
     CameraTargetBase** mViewTargetArray = nullptr;
