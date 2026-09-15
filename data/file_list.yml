@@ -23271,49 +23271,49 @@ Camera/EventKeyMoveCameraObjNoDemo.o:
   - offset: 0x0cdf50
     size: 132
     label: _ZN27EventKeyMoveCameraObjNoDemoC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0cdfd4
     size: 144
     label: _ZN27EventKeyMoveCameraObjNoDemoC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce064
     size: 188
     label: _ZN27EventKeyMoveCameraObjNoDemo4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce120
     size: 56
     label: _ZN27EventKeyMoveCameraObjNoDemo14makeActorAliveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce158
     size: 52
     label: _ZN27EventKeyMoveCameraObjNoDemo4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce18c
     size: 104
     label: _ZN27EventKeyMoveCameraObjNoDemo7controlEv
-    status: NotDecompiled
+    status: Matching
 Camera/EventKeyMoveCameraObjWithDemo.o:
   '.text':
   - offset: 0x0ce1f4
     size: 216
     label: _ZN29EventKeyMoveCameraObjWithDemoC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce2cc
     size: 148
     label: _ZN29EventKeyMoveCameraObjWithDemoC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce360
     size: 52
     label: _ZN29EventKeyMoveCameraObjWithDemo4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce394
     size: 188
     label: _ZN29EventKeyMoveCameraObjWithDemo7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ce450
     size: 56
     label: _ZN29EventKeyMoveCameraObjWithDemo4killEv
-    status: NotDecompiled
+    status: Matching
 Camera/HackObjMovieCameraTarget.o:
   '.text':
   - offset: 0x0ce488
@@ -134322,12 +134322,12 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b80fc
     size: 52
     label: _ZN2al19createActorFunctionI27EventKeyMoveCameraObjNoDemoEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8130
     size: 52
     label: _ZN2al19createActorFunctionI29EventKeyMoveCameraObjWithDemoEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b8164
     size: 52
