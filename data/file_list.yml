@@ -144707,80 +144707,80 @@ Sequence/E3ResourceLoader.o:
     label:
     - _ZN16E3ResourceLoaderC1Ev
     - _ZN16E3ResourceLoaderC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a454
     size: 452
     label: _ZN16E3ResourceLoader21loadHomeStageResourceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a618
     size: 348
     label: _ZN16E3ResourceLoader17loadWorldResourceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a774
     size: 332
     label:
     - _ZN16E3ResourceLoaderD1Ev
     - _ZN16E3ResourceLoaderD2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a8c0
     size: 12
     label: _ZN16E3ResourceLoader23cancelLoadWorldResourceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a8cc
     size: 36
     label: _ZN16E3ResourceLoaderD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a8f0
     size: 104
     label: _ZN16E3ResourceLoader33requestLoadWorldHomeStageResourceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a958
     size: 8
     label: _ZNK16E3ResourceLoader31isEndLoadWorldHomeStageResourceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a960
     size: 112
     label: _ZN16E3ResourceLoader24requestLoadWorldResourceEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50a9d0
     size: 60
     label: _ZNK16E3ResourceLoader12isEndLoadAnyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50aa0c
     size: 396
     label: _ZN16E3ResourceLoader15tryCreateExHeapEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50ab98
     size: 180
     label: _ZN16E3ResourceLoader23tryDestroyWorldResourceEPN4sead4HeapE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50ac4c
     size: 4
     label: _ZNK16E3ResourceLoader13printHeapInfoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50ac50
     size: 360
     label: _ZN16E3ResourceLoader28loadHomeStageResourceByWorldEPKcPN4sead4HeapEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x50adb8
     size: 28
     label: _ZNK2al10FunctorV0MIP16E3ResourceLoaderMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x50add4
     size: 76
     label: _ZNK2al10FunctorV0MIP16E3ResourceLoaderMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x50ae20
     size: 4
     label: _ZN2al10FunctorV0MIP16E3ResourceLoaderMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x50ae24
     size: 32
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_E3ResourceLoader.cpp
+    status: Matching
 Sequence/E3Sequence.o:
   '.text':
   - offset: 0x50ae44
