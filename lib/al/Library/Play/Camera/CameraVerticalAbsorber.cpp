@@ -27,9 +27,9 @@ NERVES_MAKE_STRUCT(CameraVerticalAbsorber, FollowGround, FollowAbsolute, FollowC
 
 namespace al {
 CameraVerticalAbsorber::CameraVerticalAbsorber(const CameraPoser* cameraParent,
-                                               bool isCameraPosAbsorb)
+                                               bool isNoCameraPosAbsorb)
     : NerveExecutor("カメラの縦パン"), mCameraPoser(cameraParent),
-      mIsNoCameraPosAbsorb(isCameraPosAbsorb) {
+      mIsNoCameraPosAbsorb(isNoCameraPosAbsorb) {
     initNerve(&NrvCameraVerticalAbsorber.FollowGround);
 }
 
