@@ -145613,97 +145613,97 @@ Sequence/HakoniwaStateDemoEnding.o:
     label:
     - _ZN23HakoniwaStateDemoEndingC1EP16HakoniwaSequencePN2al10WipeHolderEPNS2_21ScreenCaptureExecutorEP24HakoniwaStateDeleteSceneP19WorldResourceLoaderP14GameDataHolder
     - _ZN23HakoniwaStateDemoEndingC2EP16HakoniwaSequencePN2al10WipeHolderEPNS2_21ScreenCaptureExecutorEP24HakoniwaStateDeleteSceneP19WorldResourceLoaderP14GameDataHolder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511c58
     size: 92
     label:
     - _ZN23HakoniwaStateDemoEndingD1Ev
     - _ZN23HakoniwaStateDemoEndingD2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511cb4
     size: 100
     label: _ZN23HakoniwaStateDemoEndingD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511d18
     size: 92
     label: _ZN23HakoniwaStateDemoEnding4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511d74
     size: 92
     label: _ZN23HakoniwaStateDemoEnding6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511dd0
     size: 44
     label: _ZN23HakoniwaStateDemoEnding4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511dfc
     size: 96
     label: _ZN23HakoniwaStateDemoEnding20exeLoadWorldResourceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511e5c
     size: 92
     label: _ZN23HakoniwaStateDemoEnding26exeLoadWorldResourceSecondEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x511eb8
     size: 376
     label: _ZN23HakoniwaStateDemoEnding7exeLoadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x512030
     size: 92
     label: _ZN23HakoniwaStateDemoEnding13exeDemoEndingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x51208c
     size: 152
     label: _ZN23HakoniwaStateDemoEnding12exeEndEndingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x512124
     size: 412
     label: _ZN23HakoniwaStateDemoEnding16exeLoadStaffRollEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5122c0
     size: 120
     label: _ZN23HakoniwaStateDemoEnding16exeDemoStaffRollEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x512338
     size: 108
     label: _ZN23HakoniwaStateDemoEnding6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5123a4
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_130HakoniwaStateDemoEndingNrvLoad7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x5123ac
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_135HakoniwaStateDemoEndingNrvEndEnding7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x5123b4
     size: 112
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_129HakoniwaStateDemoEndingNrvEnd7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x512424
     size: 100
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_143HakoniwaStateDemoEndingNrvLoadWorldResource7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x512488
     size: 96
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_149HakoniwaStateDemoEndingNrvLoadWorldResourceSecond7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x5124e8
     size: 92
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_136HakoniwaStateDemoEndingNrvDemoEnding7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x512544
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_139HakoniwaStateDemoEndingNrvLoadStaffRoll7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x51254c
     size: 120
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_139HakoniwaStateDemoEndingNrvDemoStaffRoll7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x5125c4
     size: 32
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_HakoniwaStateDemoEnding.cpp
+    status: Matching
 Sequence/HakoniwaStateDemoOpening.o:
   '.text':
   - offset: 0x5125e4
