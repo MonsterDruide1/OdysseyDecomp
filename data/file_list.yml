@@ -132949,46 +132949,46 @@ Scene/InformationWindowObjectRequester.o:
     label:
     - _ZN32InformationWindowObjectRequesterC1EP30InformationWindowRequestHolderP28InformationWindowStateHolderPKN2al12PlayerHolderE
     - _ZN32InformationWindowObjectRequesterC2EP30InformationWindowRequestHolderP28InformationWindowStateHolderPKN2al12PlayerHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4b1748
     size: 28
     label: _ZN32InformationWindowObjectRequester6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4b1764
     size: 300
     label: _ZN32InformationWindowObjectRequester19requestAppearObjectEPKN2al18IUseSceneObjHolderEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4b1890
     size: 256
     label: _ZN32InformationWindowObjectRequester18requestCloseObjectEPKN2al18IUseSceneObjHolderEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4b1990
     size: 100
     label: _ZN32InformationWindowObjectRequester7exeShowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4b19f4
     size: 100
     label: _ZN32InformationWindowObjectRequester7exeHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4b1a58
     size: 8
     label: _ZNK32InformationWindowObjectRequester14getNerveKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b1a60
     size: 8
     label: _ZThn32_NK32InformationWindowObjectRequester14getNerveKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b1a68
     size: 112
     label: _ZNK12_GLOBAL__N_139InformationWindowObjectRequesterNrvShow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4b1ad8
     size: 112
     label: _ZNK12_GLOBAL__N_139InformationWindowObjectRequesterNrvHide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Scene/InformationWindowPlayerActionRequester.o:
   '.text':
