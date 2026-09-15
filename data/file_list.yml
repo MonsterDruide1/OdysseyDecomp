@@ -84716,69 +84716,69 @@ MapObj/ShopCamera.o:
     label:
     - _ZN10ShopCameraC1EPKN2al9LiveActorE
     - _ZN10ShopCameraC2EPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313c28
     size: 28
     label: _ZN10ShopCamera7executeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313c44
     size: 224
     label: _ZN10ShopCamera8tryStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313d24
     size: 120
     label: _ZN10ShopCamera6tryEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313d9c
     size: 84
     label: _ZN10ShopCamera9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313df0
     size: 4
     label: _ZN10ShopCamera7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313df4
     size: 100
     label: _ZN10ShopCamera6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313e58
     size: 4
     label: _ZN10ShopCamera7exeNoneEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x313e5c
     size: 8
     label: _ZNK10ShopCamera14getNerveKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x313e64
     size: 8
     label: _ZThn8_NK10ShopCamera14getNerveKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x313e6c
     size: 4
     label: _ZNK12_GLOBAL__N_117ShopCameraNrvNone7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x313e70
     size: 96
     label: _ZNK12_GLOBAL__N_119ShopCameraNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x313ed0
     size: 4
     label: _ZNK12_GLOBAL__N_117ShopCameraNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x313ed4
     size: 112
     label: _ZNK12_GLOBAL__N_116ShopCameraNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x313f44
     size: 56
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_ShopCamera.cpp
+    status: Matching
 MapObj/ShopMark.o:
   '.text':
   - offset: 0x313f7c
