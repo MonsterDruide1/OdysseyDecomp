@@ -130295,41 +130295,41 @@ Player/YoshiStateHackDown.o:
     label:
     - _ZN18YoshiStateHackDownC1EPN2al9LiveActorEPP14IUsePlayerHackPK11PlayerConstPK19IUsePlayerCollisionP14PlayerAnimator
     - _ZN18YoshiStateHackDownC2EPN2al9LiveActorEPP14IUsePlayerHackPK11PlayerConstPK19IUsePlayerCollisionP14PlayerAnimator
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4984d0
     size: 288
     label: _ZN18YoshiStateHackDown6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4985f0
     size: 12
     label: _ZNK18YoshiStateHackDown6isLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4985fc
     size: 84
     label: _ZNK18YoshiStateHackDown14isEnableCancelEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x498650
     size: 292
     label: _ZN18YoshiStateHackDown7exeDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x498774
     size: 292
     label: _ZN18YoshiStateHackDown7exeLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x498898
     size: 36
     label: _ZN18YoshiStateHackDownD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4988bc
     size: 8
     label: _ZNK12_GLOBAL__N_125YoshiStateHackDownNrvDown7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4988c4
     size: 8
     label: _ZNK12_GLOBAL__N_125YoshiStateHackDownNrvLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Player/YoshiStateHackFall.o:
   '.text':
