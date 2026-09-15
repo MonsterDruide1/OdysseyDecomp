@@ -71820,57 +71820,57 @@ MapObj/GrowPlantParts.o:
   - offset: 0x29645c
     size: 128
     label: _ZN14GrowPlantPartsC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2964dc
     size: 140
     label: _ZN14GrowPlantPartsC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x296568
     size: 232
     label: _ZN14GrowPlantParts4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x296650
     size: 120
     label: _ZN14GrowPlantParts10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2966c8
     size: 40
     label: _ZN14GrowPlantParts7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2966f0
     size: 4
     label: _ZN14GrowPlantParts7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2966f4
     size: 68
     label: _ZN14GrowPlantParts7exeGrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x296738
     size: 68
     label: _ZN14GrowPlantParts10exeGrowEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x29677c
     size: 116
     label: _ZN14GrowPlantParts15trySetNerveGrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2967f0
     size: 76
     label: _ZN14GrowPlantParts18trySetNerveGrowEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x29683c
     size: 4
     label: _ZNK12_GLOBAL__N_121GrowPlantPartsNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x296840
     size: 72
     label: _ZNK12_GLOBAL__N_121GrowPlantPartsNrvGrow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x296888
     size: 72
     label: _ZNK12_GLOBAL__N_124GrowPlantPartsNrvGrowEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/GrowPlantSeed.o:
   '.text':
