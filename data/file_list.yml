@@ -3228,99 +3228,99 @@ Boss/BossForest/BossForest.o:
   - offset: 0x017318
     size: 1672
     label: _ZN10BossForest4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0179a0
     size: 36
     label: _ZNK10BossForest11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0179c4
     size: 40
     label: _ZThn264_NK10BossForest11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0179ec
     size: 8
     label: _ZNK10BossForest16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0179f4
     size: 8
     label: _ZThn264_NK10BossForest16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0179fc
     size: 64
     label: _ZN10BossForest8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017a3c
     size: 68
     label: _ZThn264_N10BossForest8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017a80
     size: 180
     label: _ZN10BossForest20updateSatellitesPoseERKN4sead4QuatIfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017b34
     size: 112
     label: _ZNK10BossForest29getCurrentSatelliteControllerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017ba4
     size: 32
     label: _ZNK10BossForest22getSenobiGeneratePointEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017bc4
     size: 8
     label: _ZN10BossForest13getFieldWallsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017bcc
     size: 104
     label: _ZN10BossForest7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017c34
     size: 420
     label: _ZN10BossForest12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017dd8
     size: 116
     label: _ZNK10BossForest17isStateBodyAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017e4c
     size: 64
     label: _ZN10BossForest21setStateDemoBattleEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017e8c
     size: 216
     label: _ZN10BossForest10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x017f64
     size: 164
     label: _ZN10BossForest21getLifePartsEffectMtxEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x018008
     size: 184
     label: _ZN10BossForest21exeWaitForBattleStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0180c0
     size: 292
     label: _ZN10BossForest18exeDemoBattleStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0181e4
     size: 172
     label: _ZN10BossForest15exeBattlePhase1Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x018290
     size: 64
     label: _ZN10BossForest15exeBattlePhase2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0182d0
     size: 84
     label: _ZN10BossForest15exeBattlePhase3Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x018324
     size: 176
     label: _ZN10BossForest16exeDemoBattleEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0183d4
     size: 4
     label: _ZN10BossForest6exeDieEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0183d8
     size: 4
     label: _ZN12IUseDemoSkip22updateOnlyDemoGraphicsEv
@@ -3329,37 +3329,37 @@ Boss/BossForest/BossForest.o:
   - offset: 0x0183dc
     size: 8
     label: _ZNK12_GLOBAL__N_129HostTypeNrvWaitForBattleStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0183e4
     size: 8
     label: _ZNK12_GLOBAL__N_123HostTypeNrvBattlePhase17executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0183ec
     size: 68
     label: _ZNK12_GLOBAL__N_123HostTypeNrvBattlePhase27executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x018430
     size: 88
     label: _ZNK12_GLOBAL__N_123HostTypeNrvBattlePhase37executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x018488
     size: 8
     label: _ZNK12_GLOBAL__N_126HostTypeNrvDemoBattleStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x018490
     size: 8
     label: _ZNK12_GLOBAL__N_124HostTypeNrvDemoBattleEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x018498
     size: 4
     label: _ZNK12_GLOBAL__N_114HostTypeNrvDie7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/BossForest/BossForestBarrierCtrl.o:
   '.text':
