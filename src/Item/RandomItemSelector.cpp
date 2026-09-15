@@ -49,7 +49,7 @@ RandomItemSelector::getRandomItemType(const al::IUseSceneObjHolder* objHolder) {
     if (missingHitPoint == 0)
         return rs::ItemType::Coin;
 
-    ItemList& list = mItemLists[missingHitPoint];
+    const ItemList& list = mItemLists[missingHitPoint];
     s32 itemCount = list.itemCount;
     return list.itemTypes[mItemIndex++ % itemCount];
 }
