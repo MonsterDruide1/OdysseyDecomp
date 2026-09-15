@@ -76339,75 +76339,75 @@ MapObj/MoonBasementFinalGate.o:
   - offset: 0x2c0f78
     size: 144
     label: _ZN21MoonBasementFinalGateC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c1008
     size: 156
     label: _ZN21MoonBasementFinalGateC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c10a4
     size: 228
     label: _ZN21MoonBasementFinalGate4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c1188
     size: 64
     label: _ZN21MoonBasementFinalGate4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c11c8
     size: 64
     label: _ZN21MoonBasementFinalGate12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c1208
     size: 184
     label: _ZN21MoonBasementFinalGate10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c12c0
     size: 108
     label: _ZN21MoonBasementFinalGate16startBreakPillarEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c132c
     size: 148
     label: _ZN21MoonBasementFinalGate7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c13c0
     size: 144
     label: _ZN21MoonBasementFinalGate14exeBreakPillarEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c1450
     size: 172
     label: _ZN21MoonBasementFinalGate8exeBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c14fc
     size: 316
     label: _ZN21MoonBasementFinalGate12exeBreakLastEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c1638
     size: 120
     label: _ZN21MoonBasementFinalGate17exeBreakLastAfterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c16b0
     size: 152
     label: _ZNK12_GLOBAL__N_128MoonBasementFinalGateNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c1748
     size: 124
     label: _ZNK12_GLOBAL__N_138MoonBasementFinalGateNrvBreakLastAfter7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c17c4
     size: 8
     label: _ZNK12_GLOBAL__N_129MoonBasementFinalGateNrvBreak7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c17cc
     size: 8
     label: _ZNK12_GLOBAL__N_133MoonBasementFinalGateNrvBreakLast7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c17d4
     size: 8
     label: _ZNK12_GLOBAL__N_135MoonBasementFinalGateNrvBreakPillar7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/MoonBasementFloor.o:
   '.text':
@@ -76515,152 +76515,152 @@ MapObj/MoonBasementGate.o:
   - offset: 0x2c1ebc
     size: 192
     label: _ZN16MoonBasementGateC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c1f7c
     size: 188
     label: _ZN16MoonBasementGateC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2038
     size: 760
     label: _ZN16MoonBasementGate4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2330
     size: 252
     label: _ZN16MoonBasementGate4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c242c
     size: 64
     label: _ZN16MoonBasementGate12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c246c
     size: 328
     label: _ZN16MoonBasementGate10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c25b4
     size: 12
     label: _ZN16MoonBasementGate8validateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c25c0
     size: 16
     label: _ZThn264_N16MoonBasementGate8validateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c25d0
     size: 212
     label: _ZN16MoonBasementGate17moveSlideToTargetERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c26a4
     size: 8
     label: _ZThn264_N16MoonBasementGate17moveSlideToTargetERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c26ac
     size: 60
     label: _ZN16MoonBasementGate10exeInvalidEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c26e8
     size: 60
     label: _ZN16MoonBasementGate7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2724
     size: 188
     label: _ZN16MoonBasementGate8exeBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c27e0
     size: 192
     label: _ZN16MoonBasementGate13exeBreakAfterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c28a0
     size: 284
     label: _ZN16MoonBasementGate15exeClimaxCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c29bc
     size: 64
     label: _ZNK12_GLOBAL__N_126MoonBasementGateNrvInvalid7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c29fc
     size: 64
     label: _ZNK12_GLOBAL__N_123MoonBasementGateNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c2a3c
     size: 8
     label: _ZNK12_GLOBAL__N_124MoonBasementGateNrvBreak7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c2a44
     size: 8
     label: _ZNK12_GLOBAL__N_129MoonBasementGateNrvBreakAfter7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c2a4c
     size: 8
     label: _ZNK12_GLOBAL__N_131MoonBasementGateNrvClimaxCamera7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/MoonBasementGateParts.o:
   '.text':
   - offset: 0x2c2a54
     size: 148
     label: _ZN21MoonBasementGatePartsC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2ae8
     size: 144
     label: _ZN21MoonBasementGatePartsC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2b78
     size: 300
     label: _ZN21MoonBasementGateParts9initPartsERKN2al13ActorInitInfoEPKcS5_RKN4sead7Vector3IfEEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2ca4
     size: 76
     label: _ZN21MoonBasementGateParts4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2cf0
     size: 196
     label: _ZN21MoonBasementGateParts10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2db4
     size: 12
     label: _ZN21MoonBasementGateParts8validateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2dc0
     size: 16
     label: _ZThn264_N21MoonBasementGateParts8validateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2dd0
     size: 160
     label: _ZN21MoonBasementGateParts17moveSlideToTargetERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2e70
     size: 164
     label: _ZThn264_N21MoonBasementGateParts17moveSlideToTargetERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2f14
     size: 60
     label: _ZN21MoonBasementGateParts10exeInvalidEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2f50
     size: 60
     label: _ZN21MoonBasementGateParts7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2f8c
     size: 64
     label: _ZN21MoonBasementGateParts13exeBreakDelayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c2fcc
     size: 64
     label: _ZNK12_GLOBAL__N_128MoonBasementGatePartsNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c300c
     size: 64
     label: _ZNK12_GLOBAL__N_131MoonBasementGatePartsNrvInvalid7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c304c
     size: 68
     label: _ZNK12_GLOBAL__N_134MoonBasementGatePartsNrvBreakDelay7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/MoonBasementMeteorAreaObj.o:
   '.text':
@@ -134882,7 +134882,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b996c
     size: 52
     label: _ZN2al19createActorFunctionI21MoonBasementFinalGateEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b99a0
     size: 52
@@ -134897,7 +134897,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b9a08
     size: 52
     label: _ZN2al19createActorFunctionI16MoonBasementGateEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b9a3c
     size: 52
