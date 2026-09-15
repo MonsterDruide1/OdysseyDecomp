@@ -15404,246 +15404,246 @@ Boss/Koopa/KoopaCapPlayer.o:
   - offset: 0x0870ac
     size: 160
     label: _ZN14KoopaCapPlayerC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08714c
     size: 172
     label: _ZN14KoopaCapPlayerC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0871f8
     size: 536
     label: _ZN14KoopaCapPlayer4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087410
     size: 88
     label: _ZN14KoopaCapPlayer14startHideChaseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087468
     size: 36
     label: _ZN14KoopaCapPlayer6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08748c
     size: 80
     label: _ZN14KoopaCapPlayer4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0874dc
     size: 316
     label: _ZN14KoopaCapPlayer7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087618
     size: 744
     label: _ZN14KoopaCapPlayer12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087900
     size: 720
     label: _ZN14KoopaCapPlayer10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087bd0
     size: 80
     label: _ZN14KoopaCapPlayer15endEquipAndKillEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087c20
     size: 72
     label: _ZNK14KoopaCapPlayer18isPlayingCatchDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087c68
     size: 20
     label: _ZNK14KoopaCapPlayer15isPlayerBindingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087c7c
     size: 12
     label: _ZN14KoopaCapPlayer8onFinishEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087c88
     size: 8
     label: _ZN14KoopaCapPlayer9offFinishEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087c90
     size: 140
     label: _ZN14KoopaCapPlayer19endEquipAndBlowDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087d1c
     size: 140
     label: _ZN14KoopaCapPlayer37endEquipAndBlowDownWithoutHitReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087da8
     size: 8
     label: _ZN14KoopaCapPlayer12exeHideChaseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087db0
     size: 108
     label: _ZN14KoopaCapPlayer15exeCatchPrepareEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087e1c
     size: 140
     label: _ZN14KoopaCapPlayer8exeCatchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087ea8
     size: 184
     label: _ZN14KoopaCapPlayer8exeStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x087f60
     size: 400
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_129updatePoseFromPlayerEquipmentEP14KoopaCapPlayerPK19PlayerEquipmentUser
+    status: Matching
   - offset: 0x0880f0
     size: 460
     label: _ZN14KoopaCapPlayer7exeWaitEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x0882bc
     size: 136
     label: _ZN14KoopaCapPlayer13exeWaitBubbleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088344
     size: 388
     label: _ZN14KoopaCapPlayer13exePunchStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0884c8
     size: 208
     label: _ZN14KoopaCapPlayer12exePunchWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088598
     size: 396
     label: _ZN14KoopaCapPlayer8exePunchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088724
     size: 380
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_126tryStartNextPunchFromInputEP14KoopaCapPlayerP24KoopaCapPlayerPunchStateP20KoopaCapPlayerBinder
+    status: NonMatchingMajor
   - offset: 0x0888a0
     size: 32
     label: _ZN14KoopaCapPlayer8endPunchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0888c0
     size: 276
     label: _ZN14KoopaCapPlayer11exePunchEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0889d4
     size: 336
     label: _ZN14KoopaCapPlayer19exePunchFinishStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088b24
     size: 364
     label: _ZN14KoopaCapPlayer14exePunchFinishEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088c90
     size: 160
     label: _ZN14KoopaCapPlayer18exePunchFinishWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088d30
     size: 188
     label: _ZN14KoopaCapPlayer17exePunchFinishEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088dec
     size: 156
     label: _ZN14KoopaCapPlayer9exeDamageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088e88
     size: 152
     label: _ZN14KoopaCapPlayer11exeBlowDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088f20
     size: 8
     label: _ZN14KoopaCapPlayer11endBlowDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x088f28
     size: 8
     label: _ZNK12_GLOBAL__N_122KoopaCapPlayerNrvStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088f30
     size: 8
     label: _ZNK12_GLOBAL__N_125KoopaCapPlayerNrvBlowDown7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088f38
     size: 12
     label: _ZNK12_GLOBAL__N_125KoopaCapPlayerNrvBlowDown12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088f44
     size: 8
     label: _ZNK12_GLOBAL__N_143KoopaCapPlayerNrvBlowDownWithoutHitReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088f4c
     size: 12
     label: _ZNK12_GLOBAL__N_143KoopaCapPlayerNrvBlowDownWithoutHitReaction12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088f58
     size: 12
     label: _ZNK12_GLOBAL__N_126KoopaCapPlayerNrvHideChase7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088f64
     size: 112
     label: _ZNK12_GLOBAL__N_129KoopaCapPlayerNrvCatchPrepare7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088fd4
     size: 8
     label: _ZNK12_GLOBAL__N_128KoopaCapPlayerNrvPunchFinish7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088fdc
     size: 8
     label: _ZNK12_GLOBAL__N_126KoopaCapPlayerNrvPunchWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088fe4
     size: 8
     label: _ZNK12_GLOBAL__N_122KoopaCapPlayerNrvPunch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x088fec
     size: 32
     label: _ZNK12_GLOBAL__N_122KoopaCapPlayerNrvPunch12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08900c
     size: 8
     label: _ZNK12_GLOBAL__N_123KoopaCapPlayerNrvDamage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x089014
     size: 8
     label: _ZNK12_GLOBAL__N_122KoopaCapPlayerNrvCatch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08901c
     size: 8
     label: _ZNK12_GLOBAL__N_121KoopaCapPlayerNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x089024
     size: 8
     label: _ZNK12_GLOBAL__N_127KoopaCapPlayerNrvWaitBubble7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08902c
     size: 8
     label: _ZNK12_GLOBAL__N_127KoopaCapPlayerNrvPunchStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x089034
     size: 8
     label: _ZNK12_GLOBAL__N_133KoopaCapPlayerNrvPunchFinishStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08903c
     size: 8
     label: _ZNK12_GLOBAL__N_125KoopaCapPlayerNrvPunchEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x089044
     size: 8
     label: _ZNK12_GLOBAL__N_132KoopaCapPlayerNrvPunchFinishWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08904c
     size: 8
     label: _ZNK12_GLOBAL__N_131KoopaCapPlayerNrvPunchFinishEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaCapPlayerBinder.o:
   '.text':
