@@ -198912,187 +198912,187 @@ NintendoSDK-NEX/Externals/curl/lib/easy.o:
   - offset: 0x6f85dc
     size: 144
     label: curl_global_init
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6f866c
     size: 140
     label: curl_global_init_internal
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6f86f8
     size: 212
     label: curl_global_init_mem
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6f87cc
     size: 84
     label: curl_global_cleanup
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6f8820
     size: 124
     label: curl_easy_init
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6f889c
     size: 160
     label: curl_easy_setopt
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f893c
     size: 484
     label: curl_easy_perform
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f8b20
     size: 12
     label: curl_easy_cleanup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f8b2c
     size: 156
     label: curl_easy_getinfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f8bc8
     size: 336
     label: curl_easy_duphandle
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6f8d18
     size: 132
     label: curl_easy_reset
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f8d9c
     size: 168
     label: curl_easy_pause
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f8e44
     size: 176
     label: curl_easy_recv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f8ef4
     size: 208
     label: curl_easy_send
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/formdata.o:
   '.text':
   - offset: 0x6f8fc4
     size: 2972
     label: curl_formadd
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f9b60
     size: 88
     label: Curl_formclean
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f9bb8
     size: 496
     label: curl_formget
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6f9da8
     size: 1696
     label: Curl_getformdata
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fa448
     size: 32
     label: Curl_FormInit
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fa468
     size: 124
     label: curl_formfree
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fa4e4
     size: 316
-    label: ''
-    status: NotDecompiled
+    label: AddFormDataf
+    status: Matching
   - offset: 0x6fa620
     size: 376
-    label: ''
-    status: NotDecompiled
+    label: formdata_add_filename
+    status: Matching
   - offset: 0x6fa798
     size: 340
     label: Curl_FormReader
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fa8ec
     size: 48
     label: Curl_formpostheader
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/getinfo.o:
   '.text':
   - offset: 0x6fa91c
     size: 168
     label: Curl_initinfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fa9c4
     size: 1184
     label: Curl_getinfo
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/hostip.o:
   '.text':
   - offset: 0x6fae64
     size: 112
     label: Curl_global_host_cache_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6faed4
     size: 68
-    label: ''
-    status: NotDecompiled
+    label: freednsentry
+    status: Matching
   - offset: 0x6faf18
     size: 56
     label: Curl_global_host_cache_dtor
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6faf50
     size: 28
     label: Curl_num_addresses
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6faf6c
     size: 52
     label: Curl_printable_address
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fafa0
     size: 140
     label: Curl_hostcache_prune
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb02c
     size: 136
     label: Curl_fetch_addr
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb0b4
     size: 248
-    label: ''
-    status: NotDecompiled
+    label: fetch_addr
+    status: Matching
   - offset: 0x6fb1ac
     size: 268
     label: Curl_cache_addr
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb2b8
     size: 400
     label: Curl_resolv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fb448
     size: 20
     label: Curl_resolv_timeout
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fb45c
     size: 160
     label: Curl_resolv_unlock
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb4fc
     size: 32
     label: Curl_mk_dnscache
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb51c
     size: 112
     label: Curl_hostcache_clean
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb58c
     size: 708
     label: Curl_loadhostpairs
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb850
     size: 36
-    label: ''
-    status: NotDecompiled
+    label: hostcache_timestamp_remove
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/hostip4.o:
   '.text':
   - offset: 0x6fb874
     size: 16
     label: Curl_ipvalid
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fb884
     size: 116
     label: Curl_ipv4_resolve_r
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/inet_ntop.o:
   '.text':
   - offset: 0x6fb8f8
@@ -199110,213 +199110,213 @@ NintendoSDK-NEX/Externals/curl/lib/mprintf.o:
   - offset: 0x6fbbb0
     size: 116
     label: curl_mvsnprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fbc24
     size: 4608
-    label: ''
-    status: NotDecompiled
+    label: dprintf_formatf
+    status: Matching
   - offset: 0x6fce24
     size: 56
-    label: ''
-    status: NotDecompiled
+    label: addbyter
+    status: Matching
   - offset: 0x6fce5c
     size: 200
     label: curl_msnprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fcf24
     size: 256
     label: curl_maprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd024
     size: 176
-    label: ''
-    status: NotDecompiled
+    label: alloc_addbyter
+    status: Matching
   - offset: 0x6fd0d4
     size: 168
     label: curl_mvaprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd17c
     size: 180
     label: curl_msprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd230
     size: 28
-    label: ''
-    status: NotDecompiled
+    label: storebuffer
+    status: Matching
   - offset: 0x6fd24c
     size: 152
     label: curl_mprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd2e4
     size: 148
     label: curl_mfprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd378
     size: 96
     label: curl_mvsprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd3d8
     size: 84
     label: curl_mvprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd42c
     size: 76
     label: curl_mvfprintf
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/multi.o:
   '.text':
   - offset: 0x6fd478
     size: 312
     label: Curl_multi_handle
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fd5b0
     size: 4
-    label: ''
-    status: NotDecompiled
+    label: multi_freeamsg
+    status: Matching
   - offset: 0x6fd5b4
     size: 12
     label: curl_multi_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd5c0
     size: 568
     label: curl_multi_add_handle
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd7f8
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: multi_freetimeout
+    status: Matching
   - offset: 0x6fd800
     size: 460
     label: Curl_expire
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fd9cc
     size: 832
     label: curl_multi_remove_handle
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fdd0c
     size: 200
     label: Curl_multi_process_pending_handles
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fddd4
     size: 784
-    label: ''
-    status: NotDecompiled
+    label: singlesocket
+    status: Matching
   - offset: 0x6fe0e4
     size: 20
     label: Curl_multi_pipeline_enabled
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fe0f8
     size: 8
     label: Curl_multi_handlePipeBreak
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fe100
     size: 340
     label: curl_multi_fdset
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fe254
     size: 300
-    label: ''
-    status: NotDecompiled
+    label: multi_getsock
+    status: NonMatchingMajor
   - offset: 0x6fe380
     size: 844
     label: curl_multi_wait
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6fe6cc
     size: 560
     label: curl_multi_perform
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6fe8fc
     size: 4124
-    label: ''
-    status: NotDecompiled
+    label: multi_runsingle
+    status: NonMatchingMajor
   - offset: 0x6ff918
     size: 224
-    label: ''
-    status: NotDecompiled
+    label: add_next_timeout
+    status: Matching
   - offset: 0x6ff9f8
     size: 284
     label: curl_multi_cleanup
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x6ffb14
     size: 128
     label: curl_multi_info_read
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6ffb94
     size: 156
     label: Curl_multi_closed
-    status: NotDecompiled
+    status: Matching
   - offset: 0x6ffc30
     size: 1136
     label: curl_multi_setopt
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7000a0
     size: 304
     label: curl_multi_socket
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7001d0
     size: 536
-    label: ''
-    status: NotDecompiled
+    label: multi_socket
+    status: NonMatchingMajor
   - offset: 0x7003e8
     size: 308
     label: curl_multi_socket_action
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70051c
     size: 340
     label: curl_multi_socket_all
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700670
     size: 208
     label: curl_multi_timeout
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700740
     size: 188
-    label: ''
-    status: NotDecompiled
+    label: multi_addtimeout
+    status: Matching
   - offset: 0x7007fc
     size: 168
     label: Curl_expire_latest
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7008a4
     size: 80
     label: curl_multi_assign
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7008f4
     size: 12
     label: Curl_multi_max_host_connections
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700900
     size: 12
     label: Curl_multi_max_total_connections
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70090c
     size: 12
     label: Curl_multi_max_pipeline_length
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700918
     size: 12
     label: Curl_multi_content_length_penalty_size
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700924
     size: 12
     label: Curl_multi_chunk_length_penalty_size
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700930
     size: 8
     label: Curl_multi_pipelining_site_bl
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700938
     size: 8
     label: Curl_multi_pipelining_server_bl
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700940
     size: 20
-    label: ''
-    status: NotDecompiled
+    label: hash_fd
+    status: Matching
   - offset: 0x700954
     size: 20
-    label: ''
-    status: NotDecompiled
+    label: fd_key_compare
+    status: Matching
   - offset: 0x700968
     size: 4
     label: j_Curl_SigloFree
@@ -199327,231 +199327,231 @@ NintendoSDK-NEX/Externals/curl/lib/pipeline.o:
   - offset: 0x70096c
     size: 200
     label: Curl_pipeline_penalized
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700a34
     size: 104
     label: Curl_add_handle_to_pipeline
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700a9c
     size: 120
     label: Curl_move_handle_from_send_to_recv_pipe
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700b14
     size: 140
     label: Curl_pipeline_site_blacklisted
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700ba0
     size: 300
     label: Curl_pipeline_set_site_blacklist
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700ccc
     size: 44
-    label: ''
-    status: NotDecompiled
+    label: site_blacklist_llist_dtor
+    status: Matching
   - offset: 0x700cf8
     size: 148
     label: Curl_pipeline_server_blacklisted
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700d8c
     size: 148
     label: Curl_pipeline_set_server_blacklist
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700e20
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: server_blacklist_llist_dtor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/progress.o:
   '.text':
   - offset: 0x700e28
     size: 80
     label: Curl_pgrsDone
-    status: NotDecompiled
+    status: Matching
   - offset: 0x700e78
     size: 1872
     label: Curl_pgrsUpdate
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7015c8
     size: 40
     label: Curl_pgrsResetTimesSizes
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7015f0
     size: 44
     label: Curl_pgrsSetDownloadSize
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70161c
     size: 44
     label: Curl_pgrsSetUploadSize
-    status: NotDecompiled
+    status: Matching
   - offset: 0x701648
     size: 224
     label: Curl_pgrsTime
-    status: NotDecompiled
+    status: Matching
   - offset: 0x701728
     size: 60
     label: Curl_pgrsStartNow
-    status: NotDecompiled
+    status: Matching
   - offset: 0x701764
     size: 8
     label: Curl_pgrsSetDownloadCounter
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70176c
     size: 8
     label: Curl_pgrsSetUploadCounter
-    status: NotDecompiled
+    status: Matching
   - offset: 0x701774
     size: 356
-    label: ''
-    status: NotDecompiled
+    label: max5data
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/rawstr.o:
   '.text':
   - offset: 0x7018d8
     size: 240
     label: Curl_raw_toupper
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7019c8
     size: 1024
     label: Curl_raw_equal
-    status: NotDecompiled
+    status: Matching
   - offset: 0x701dc8
     size: 1032
     label: Curl_raw_nequal
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7021d0
     size: 276
     label: Curl_strntoupper
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/select.o:
   '.text':
   - offset: 0x7022e4
     size: 200
     label: Curl_wait_ms
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7023ac
     size: 848
     label: Curl_socket_check
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7026fc
     size: 664
     label: Curl_poll
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/sendf.o:
   '.text':
   - offset: 0x702994
     size: 228
     label: Curl_infof
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x702a78
     size: 272
     label: Curl_debug
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x702b88
     size: 312
     label: Curl_failf
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x702cc0
     size: 488
     label: Curl_sendf
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x702ea8
     size: 108
     label: Curl_write
-    status: NotDecompiled
+    status: Matching
   - offset: 0x702f14
     size: 168
     label: Curl_send_plain
-    status: NotDecompiled
+    status: Matching
   - offset: 0x702fbc
     size: 188
     label: Curl_write_plain
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703078
     size: 176
     label: Curl_recv_plain
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703128
     size: 776
     label: Curl_client_chop_write
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x703430
     size: 400
     label: Curl_client_write
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7035c0
     size: 92
     label: Curl_read_plain
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70361c
     size: 324
     label: Curl_read
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/share.o:
   '.text':
   - offset: 0x703760
     size: 44
     label: curl_share_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70378c
     size: 804
     label: curl_share_setopt
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x703ab0
     size: 256
     label: curl_share_cleanup
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x703bb0
     size: 88
     label: Curl_share_lock
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703c08
     size: 88
     label: Curl_share_unlock
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/slist.o:
   '.text':
   - offset: 0x703c60
     size: 76
     label: Curl_slist_append_nodup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703cac
     size: 104
     label: curl_slist_append
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703d14
     size: 176
     label: Curl_slist_duplicate
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703dc4
     size: 60
     label: curl_slist_free_all
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/speedcheck.o:
   '.text':
   - offset: 0x703e00
     size: 12
     label: Curl_speedinit
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703e0c
     size: 204
     label: Curl_speedcheck
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/splay.o:
   '.text':
   - offset: 0x703ed8
     size: 268
     label: Curl_splay
-    status: NotDecompiled
+    status: Matching
   - offset: 0x703fe4
     size: 224
     label: Curl_splayinsert
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7040c4
     size: 268
     label: Curl_splaygetbest
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7041d0
     size: 228
     label: Curl_splayremovebyaddr
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/strdup.o:
   '.text':
   - offset: 0x7042b4
@@ -199561,247 +199561,247 @@ NintendoSDK-NEX/Externals/curl/lib/strdup.o:
   - offset: 0x70431c
     size: 76
     label: Curl_memdup
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/strequal.o:
   '.text':
   - offset: 0x704368
     size: 132
     label: curl_strequal
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7043ec
     size: 156
     label: curl_strnequal
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/strerror.o:
   '.text':
   - offset: 0x704488
     size: 36
     label: curl_easy_strerror
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7044ac
     size: 40
     label: curl_multi_strerror
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7044d4
     size: 36
     label: curl_share_strerror
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7044f8
     size: 212
     label: Curl_strerror
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/timeval.o:
   '.text':
   - offset: 0x7045cc
     size: 8
     label: curlx_tvnow
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7045d4
     size: 52
     label: curlx_tvdiff
-    status: NotDecompiled
+    status: Matching
   - offset: 0x704608
     size: 64
     label: curlx_tvdiff_secs
-    status: NotDecompiled
+    status: Matching
   - offset: 0x704648
     size: 4
     label: Curl_tvlong
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/transfer.o:
   '.text':
   - offset: 0x70464c
     size: 476
     label: Curl_fillreadbuffer
-    status: NotDecompiled
+    status: Matching
   - offset: 0x704828
     size: 296
     label: Curl_readrewind
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x704950
     size: 124
     label: Curl_meets_timecondition
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7049cc
     size: 3304
     label: Curl_readwrite
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7056b4
     size: 156
     label: Curl_single_getsock
-    status: NotDecompiled
+    status: Matching
   - offset: 0x705750
     size: 92
     label: Curl_sleep_time
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7057ac
     size: 316
     label: Curl_pretransfer
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7058e8
     size: 8
     label: Curl_posttransfer
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7058f0
     size: 1584
     label: Curl_follow
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x705f20
     size: 188
     label: Curl_reconnect_request
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x705fdc
     size: 232
     label: Curl_retry_request
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7060c4
     size: 284
     label: Curl_setup_transfer
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/url.o:
   '.text':
   - offset: 0x7061e0
     size: 124
     label: Curl_freeset
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70625c
     size: 224
     label: Curl_dupset
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70633c
     size: 532
     label: Curl_close
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x706550
     size: 52
     label: Curl_free_request_state
-    status: NotDecompiled
+    status: Matching
   - offset: 0x706584
     size: 272
     label: Curl_init_userdefined
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x706694
     size: 588
     label: Curl_open
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7068e0
     size: 17272
     label: Curl_setopt
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70ac58
     size: 308
     label: Curl_disconnect
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70ad8c
     size: 460
-    label: ''
-    status: NotDecompiled
+    label: conn_free
+    status: NonMatchingMajor
   - offset: 0x70af58
     size: 8
     label: Curl_isPipeliningEnabled
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70af60
     size: 52
     label: Curl_addHandleToPipeline
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70af94
     size: 72
     label: Curl_removeHandleFromPipeline
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70afdc
     size: 228
     label: Curl_getoff_all_pipelines
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b0c0
     size: 140
     label: Curl_connected_proxy
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b14c
     size: 68
     label: Curl_verboseconnect
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b190
     size: 24
     label: Curl_protocol_getsock
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b1a8
     size: 28
     label: Curl_doing_getsock
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b1c4
     size: 48
     label: Curl_protocol_connecting
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70b1f4
     size: 48
     label: Curl_protocol_doing
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70b224
     size: 184
     label: Curl_protocol_connect
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70b2dc
     size: 324
     label: Curl_setup_conn
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b420
     size: 180
     label: Curl_connect
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70b4d4
     size: 8552
-    label: ''
-    status: NotDecompiled
+    label: create_conn
+    status: NonMatchingMajor
   - offset: 0x70d63c
     size: 548
     label: Curl_done
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70d860
     size: 204
     label: Curl_do
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70d92c
     size: 132
     label: Curl_do_more
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70d9b0
     size: 556
-    label: ''
-    status: NotDecompiled
+    label: parse_login_details
+    status: Matching
   - offset: 0x70dbdc
     size: 364
-    label: ''
-    status: NotDecompiled
+    label: check_noproxy
+    status: Matching
   - offset: 0x70dd48
     size: 176
-    label: ''
-    status: NotDecompiled
+    label: find_oldest_idle_connection
+    status: Matching
   - offset: 0x70ddf8
     size: 4
-    label: ''
-    status: NotDecompiled
+    label: llist_dtor
+    status: Matching
   - offset: 0x70ddfc
     size: 140
-    label: ''
+    label: disconnect_if_dead
     status: NotDecompiled
 NintendoSDK-NEX/Externals/curl/lib/vtls/vtls.o:
   '.text':
   - offset: 0x70de88
     size: 272
     label: Curl_ssl_config_matches
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70df98
     size: 208
     label: Curl_clone_ssl_config
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e068
     size: 88
     label: Curl_free_ssl_config
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e0c0
     size: 212
     label: Curl_rand
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e194
     size: 4
     label: Curl_ssl_random
@@ -199809,7 +199809,7 @@ NintendoSDK-NEX/Externals/curl/lib/vtls/vtls.o:
   - offset: 0x70e198
     size: 8
     label: Curl_ssl_backend
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e1a0
     size: 32
     label: Curl_ssl_init
@@ -199919,111 +199919,111 @@ NintendoSDK-NEX/Externals/curl/lib/warnless.o:
   - offset: 0x70ed58
     size: 4
     label: curlx_ultous
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed5c
     size: 4
     label: curlx_ultouc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed60
     size: 8
     label: curlx_ultosi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed68
     size: 8
     label: curlx_uztoso
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed70
     size: 8
     label: curlx_uztosi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed78
     size: 4
     label: curlx_uztoul
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed7c
     size: 4
     label: curlx_uztoui
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed80
     size: 8
     label: curlx_sltosi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed88
     size: 4
     label: curlx_sltoui
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed8c
     size: 4
     label: curlx_sltous
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed90
     size: 8
     label: curlx_uztosz
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed98
     size: 4
     label: curlx_sotouz
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed9c
     size: 8
     label: curlx_sztosi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eda4
     size: 8
     label: curlx_sitouz
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/wildcard.o:
   '.text':
   - offset: 0x70edac
     size: 56
     label: Curl_wildcard_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ede4
     size: 104
     label: Curl_wildcard_dtor
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_allocator.o:
   '.text':
   - offset: 0x70ee4c
     size: 68
     label: Curl_SigloAllocatorInitializeDefaults
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ee90
     size: 56
     label: Curl_SigloAllocatorInitialize
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eec8
     size: 8
     label: Curl_SigloCleanupAllocator
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eed0
     size: 16
     label: Curl_SigloMalloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eee0
     size: 16
     label: Curl_SigloFree
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70eef0
     size: 16
     label: Curl_SigloRealloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ef00
     size: 16
     label: Curl_SigloStrdup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ef10
     size: 16
     label: Curl_SigloCalloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ef20
     size: 88
     label: Curl_SigloAllocAligned
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70ef78
     size: 72
     label: Curl_SigloFreeAligned
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70efc0
     size: 12
     label: Curl_SigloMiddlewareInfo
@@ -200041,79 +200041,79 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_shim.o:
   - offset: 0x70f1c4
     size: 52
     label: nnCurlShim_time
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f1f8
     size: 140
     label: nnCurlShim_get_timeval
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f284
     size: 4
     label: nnCurlShim_gethostbyname
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f288
     size: 228
     label: nnCurlShim_fwrite
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f36c
     size: 112
     label: nnCurlShim_fputs
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f3dc
     size: 96
     label: nnCurlShim_fflush
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f43c
     size: 92
     label: nnCurlShim_fputc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f498
     size: 144
     label: nnCurlShim_fprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f528
     size: 96
     label: nnCurlShim_vfprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f588
     size: 48
     label: nnCurlShim_printf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f5b8
     size: 8
     label: nnCurlShim_vprintf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f5c0
     size: 52
     label: nnCurlShim_fclose
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f5f4
     size: 52
     label: nnCurlShim_fopen
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f628
     size: 52
     label: nnCurlShim_fread
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f65c
     size: 52
     label: nnCurlShim_fseek
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f690
     size: 52
     label: nnCurlShim_fgets
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f6c4
     size: 52
     label: nnCurlShim_fileno
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f6f8
     size: 52
     label: nnCurlShim_fstat
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f72c
     size: 52
     label: nnCurlShim_stat
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_threads.o:
   '.text':
   - offset: 0x70f760
@@ -200123,19 +200123,19 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_threads.o:
   - offset: 0x70f7c8
     size: 268
     label: Curl_SigloThreadContextConstructor
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70f8d4
     size: 72
     label: Curl_SigloThreadEntryThunk
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f91c
     size: 76
     label: Curl_SigloThreadContextDestructor
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70f968
     size: 40
     label: Curl_SigloThreadGCZero
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70f990
     size: 308
     label: Curl_SigloThreadGCInitialize
@@ -200208,7 +200208,7 @@ NintendoSDK-NEX/Externals/curl/lib/asyn-thread.o:
     status: NotDecompiled
   - offset: 0x710084
     size: 184
-    label: ''
+    label: destroy_async_data
     status: NotDecompiled
   - offset: 0x71013c
     size: 204
@@ -200229,19 +200229,19 @@ NintendoSDK-NEX/Externals/curl/lib/asyn-thread.o:
   - offset: 0x710538
     size: 8
     label: Curl_set_dns_servers
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710540
     size: 8
     label: Curl_set_dns_interface
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710548
     size: 8
     label: Curl_set_dns_local_ip4
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710550
     size: 8
     label: Curl_set_dns_local_ip6
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710558
     size: 188
     label: ''
@@ -200251,21 +200251,21 @@ NintendoSDK-NEX/Externals/curl/lib/base64.o:
   - offset: 0x710614
     size: 1092
     label: Curl_base64_decode
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710a58
     size: 448
     label: Curl_base64_encode
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x710c18
     size: 12
     label: Curl_base64url_encode
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/conncache.o:
   '.text':
   - offset: 0x710c24
     size: 104
     label: Curl_conncache_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710c8c
     size: 4
     label: j_Curl_bundle_destroy
@@ -200274,241 +200274,241 @@ NintendoSDK-NEX/Externals/curl/lib/conncache.o:
   - offset: 0x710c90
     size: 60
     label: Curl_conncache_destroy
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710ccc
     size: 88
     label: Curl_conncache_find_bundle
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710d24
     size: 352
     label: Curl_conncache_add_conn
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710e84
     size: 132
     label: Curl_conncache_remove_conn
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x710f08
     size: 132
     label: Curl_conncache_foreach
-    status: NotDecompiled
+    status: Matching
   - offset: 0x710f8c
     size: 68
     label: Curl_conncache_find_first_connection
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/connect.o:
   '.text':
   - offset: 0x710fd0
     size: 192
     label: Curl_timeleft
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x711090
     size: 112
     label: Curl_persistconninfo
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x711100
     size: 552
     label: Curl_updateconninfo
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x711328
     size: 1648
     label: Curl_is_connected
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x711998
     size: 124
     label: Curl_closesocket
-    status: NotDecompiled
+    status: Matching
   - offset: 0x711a14
     size: 332
     label: Curl_connecthost
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x711b60
     size: 2040
-    label: ''
-    status: NotDecompiled
+    label: singleipconnect
+    status: NonMatchingMajor
   - offset: 0x712358
     size: 212
     label: Curl_getconnectinfo
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71242c
     size: 32
-    label: ''
-    status: NotDecompiled
+    label: conn_is_conn
+    status: Matching
   - offset: 0x71244c
     size: 212
     label: Curl_socket
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/cookie.o:
   '.text':
   - offset: 0x712520
     size: 160
     label: Curl_cookie_loadfiles
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7125c0
     size: 500
     label: Curl_cookie_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7127b4
     size: 3164
     label: Curl_cookie_add
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x713410
     size: 68
     label: Curl_cookie_cleanup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x713454
     size: 952
     label: Curl_cookie_getlist
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71380c
     size: 180
-    label: ''
-    status: NotDecompiled
+    label: cookie_sort
+    status: Matching
   - offset: 0x7138c0
     size: 52
     label: Curl_cookie_clearall
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7138f4
     size: 144
     label: Curl_cookie_freelist
-    status: NotDecompiled
+    status: Matching
   - offset: 0x713984
     size: 216
     label: Curl_cookie_clearsess
-    status: NotDecompiled
+    status: Matching
   - offset: 0x713a5c
     size: 332
     label: Curl_cookie_list
-    status: NotDecompiled
+    status: Matching
   - offset: 0x713ba8
     size: 828
     label: Curl_flush_cookies
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/curl_addrinfo.o:
   '.text':
   - offset: 0x713ee4
     size: 68
     label: Curl_freeaddrinfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x713f28
     size: 312
     label: Curl_he2ai
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x714060
     size: 196
     label: Curl_ip2addr
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714124
     size: 188
     label: Curl_str2addr
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/curl_memrchr.o:
   '.text':
   - offset: 0x7141e0
     size: 48
     label: Curl_memrchr
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/dotdot.o:
   '.text':
   - offset: 0x714210
     size: 524
     label: Curl_dedotdotify
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/escape.o:
   '.text':
   - offset: 0x71441c
     size: 16
     label: curl_escape
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71442c
     size: 280
     label: curl_easy_escape
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714544
     size: 64
     label: curl_unescape
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714584
     size: 92
     label: curl_easy_unescape
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7145e0
     size: 492
     label: Curl_urldecode
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7147cc
     size: 4
     label: curl_free
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/fileinfo.o:
   '.text':
   - offset: 0x7147d0
     size: 60
     label: Curl_fileinfo_alloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71480c
     size: 60
     label: Curl_fileinfo_dtor
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/getenv.o:
   '.text':
   - offset: 0x714848
     size: 44
     label: curl_getenv
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/hash.o:
   '.text':
   - offset: 0x714874
     size: 284
     label: Curl_hash_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714990
     size: 72
-    label: ''
-    status: NotDecompiled
+    label: hash_element_dtor
+    status: Matching
   - offset: 0x7149d8
     size: 136
     label: Curl_hash_alloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714a60
     size: 284
     label: Curl_hash_add
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714b7c
     size: 164
     label: Curl_hash_delete
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714c20
     size: 140
     label: Curl_hash_pick
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714cac
     size: 116
     label: Curl_hash_clean
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714d20
     size: 172
     label: Curl_hash_clean_with_criterium
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714dcc
     size: 140
     label: Curl_hash_destroy
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714e58
     size: 52
     label: Curl_hash_str
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714e8c
     size: 72
     label: Curl_str_key_compare
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714ed4
     size: 16
     label: Curl_hash_start_iterate
-    status: NotDecompiled
+    status: Matching
   - offset: 0x714ee4
     size: 128
     label: Curl_hash_next_element
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/hostasyn.o:
   '.text':
   - offset: 0x714f64
@@ -200522,32 +200522,32 @@ NintendoSDK-NEX/Externals/curl/lib/hostasyn.o:
   - offset: 0x71506c
     size: 4
     label: Curl_getaddrinfo
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/http.o:
   '.text':
   - offset: 0x715070
     size: 68
     label: Curl_http_setup_conn
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x7150b4
     size: 6640
     label: Curl_http
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x716aa4
     size: 296
     label: Curl_http_done
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x716bcc
     size: 132
     label: Curl_http_connect
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x716c50
     size: 16
-    label: ''
-    status: NotDecompiled
+    label: http_getsock_do
+    status: Matching
   - offset: 0x716c60
     size: 56
-    label: ''
+    label: https_connecting
     status: NotDecompiled
   - offset: 0x716c98
     size: 8
@@ -200556,23 +200556,23 @@ NintendoSDK-NEX/Externals/curl/lib/http.o:
   - offset: 0x716ca0
     size: 104
     label: Curl_checkheaders
-    status: NotDecompiled
+    status: Matching
   - offset: 0x716d08
     size: 132
     label: Curl_checkProxyheaders
-    status: NotDecompiled
+    status: Matching
   - offset: 0x716d8c
     size: 264
     label: Curl_copy_header_value
-    status: NotDecompiled
+    status: Matching
   - offset: 0x716e94
     size: 900
     label: Curl_http_auth_act
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x717218
     size: 344
     label: Curl_http_output_auth
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x717370
     size: 628
     label: ''
@@ -200580,191 +200580,191 @@ NintendoSDK-NEX/Externals/curl/lib/http.o:
   - offset: 0x7175e4
     size: 404
     label: Curl_http_input_auth
-    status: NotDecompiled
+    status: Matching
   - offset: 0x717778
     size: 12
     label: Curl_add_buffer_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x717784
     size: 472
     label: Curl_add_buffer_send
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71795c
     size: 188
-    label: ''
-    status: NotDecompiled
+    label: readmoredata
+    status: NonMatchingMajor
   - offset: 0x717a18
     size: 240
     label: Curl_add_bufferf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x717b08
     size: 220
     label: Curl_add_buffer
-    status: NotDecompiled
+    status: Matching
   - offset: 0x717be4
     size: 236
     label: Curl_compareheader
-    status: NotDecompiled
+    status: Matching
   - offset: 0x717cd0
     size: 564
     label: Curl_add_custom_headers
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x717f04
     size: 260
     label: Curl_add_timecondition
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x718008
     size: 4696
     label: Curl_http_readwrite_headers
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/http_chunks.o:
   '.text':
   - offset: 0x719260
     size: 12
     label: Curl_httpchunk_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71926c
     size: 980
     label: Curl_httpchunk_read
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x719640
     size: 40
     label: Curl_chunked_strerror
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/http_digest.o:
   '.text':
   - offset: 0x719668
     size: 148
     label: Curl_input_digest
-    status: NotDecompiled
+    status: Matching
   - offset: 0x7196fc
     size: 416
     label: Curl_output_digest
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71989c
     size: 48
     label: Curl_digest_cleanup
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/http_proxy.o:
   '.text':
   - offset: 0x7198cc
     size: 152
     label: Curl_proxy_connect
-    status: NotDecompiled
+    status: Matching
   - offset: 0x719964
     size: 2852
     label: Curl_proxyCONNECT
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/if2ip.o:
   '.text':
   - offset: 0x71a488
     size: 8
     label: Curl_ipv6_scope
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71a490
     size: 8
     label: Curl_if_is_interface_name
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71a498
     size: 8
     label: Curl_if2ip
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/llist.o:
   '.text':
   - offset: 0x71a4a0
     size: 48
     label: Curl_llist_alloc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71a4d0
     size: 172
     label: Curl_llist_insert_next
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71a57c
     size: 164
     label: Curl_llist_remove
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71a620
     size: 208
     label: Curl_llist_destroy
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71a6f0
     size: 8
     label: Curl_llist_count
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71a6f8
     size: 196
     label: Curl_llist_move
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/md5.o:
   '.text':
   - offset: 0x71a7bc
     size: 48
-    label: ''
-    status: NotDecompiled
+    label: MD5_Init
+    status: Matching
   - offset: 0x71a7ec
     size: 196
-    label: ''
-    status: NotDecompiled
+    label: MD5_Update
+    status: Matching
   - offset: 0x71a8b0
     size: 488
-    label: ''
-    status: NotDecompiled
+    label: MD5_Final
+    status: Matching
   - offset: 0x71aa98
     size: 184
     label: Curl_md5it
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71ab50
     size: 92
     label: Curl_MD5_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71abac
     size: 32
     label: Curl_MD5_update
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71abcc
     size: 68
     label: Curl_MD5_final
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71ac10
     size: 3068
-    label: ''
+    label: gcry_md_close
     status: NotDecompiled
 NintendoSDK-NEX/Externals/curl/lib/netrc.o:
   '.text':
   - offset: 0x71b80c
     size: 1084
     label: Curl_parsenetrc
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/nonblock.o:
   '.text':
   - offset: 0x71bc48
     size: 28
     label: curlx_nonblock
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/parsedate.o:
   '.text':
   - offset: 0x71bc64
     size: 1980
     label: curl_getdate
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71c420
     size: 84
     label: Curl_gmtime
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/socks.o:
   '.text':
   - offset: 0x71c474
     size: 228
     label: Curl_blockread_all
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71c558
     size: 1148
     label: Curl_SOCKS4
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71c9d4
     size: 2284
     label: Curl_SOCKS5
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/strtok.o:
   '.text':
   - offset: 0x71d2c0
@@ -200834,91 +200834,91 @@ NintendoSDK-NEX/Externals/curl/lib/bundle.o:
   - offset: 0x71df1c
     size: 112
     label: Curl_bundle_create
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71df8c
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: conn_llist_dtor
+    status: NonMatchingMajor
   - offset: 0x71df94
     size: 68
     label: Curl_bundle_destroy
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71dfd8
     size: 80
     label: Curl_bundle_add_conn
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x71e028
     size: 100
     label: Curl_bundle_remove_conn
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/curl_sasl.o:
   '.text':
   - offset: 0x71e08c
     size: 28
     label: Curl_sasl_build_spn
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71e0a8
     size: 2728
     label: Curl_sasl_create_digest_md5_message
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71eb50
     size: 1188
     label: Curl_sasl_decode_digest_http_message
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71eff4
     size: 112
     label: Curl_sasl_digest_cleanup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f064
     size: 1020
     label: Curl_sasl_create_digest_http_message
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f460
     size: 364
-    label: ''
-    status: NotDecompiled
+    label: sasl_digest_md5_to_ascii
+    status: Matching
   - offset: 0x71f5cc
     size: 4
     label: Curl_sasl_cleanup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f5d0
     size: 324
     label: Curl_sasl_decode_mech
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f714
     size: 272
     label: Curl_sasl_parse_url_auth_option
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f824
     size: 28
     label: Curl_sasl_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f840
     size: 32
     label: Curl_sasl_can_authenticate
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71f860
     size: 1088
     label: Curl_sasl_start
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71fca0
     size: 1360
     label: Curl_sasl_continue
-    status: NotDecompiled
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/hmac.o:
   '.text':
   - offset: 0x7201f0
     size: 392
     label: Curl_HMAC_init
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x720378
     size: 32
     label: Curl_HMAC_update
-    status: NotDecompiled
+    status: Matching
   - offset: 0x720398
     size: 124
     label: Curl_HMAC_final
-    status: NotDecompiled
+    status: Matching
 NintendoSDK/src/NintendoSDK/gfx/detail/gfx_NvnHelper.o:
   '.text':
   - offset: 0x720414
