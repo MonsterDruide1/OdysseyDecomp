@@ -54437,82 +54437,82 @@ Layout/MapSeaOfTreeIcon.o:
   - offset: 0x1f85c8
     size: 200
     label: _ZN16MapSeaOfTreeIconC2ERKN2al14LayoutInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8690
     size: 196
     label: _ZN16MapSeaOfTreeIconC1ERKN2al14LayoutInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8754
     size: 80
     label: _ZN16MapSeaOfTreeIcon15appearHint0ModeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f87a4
     size: 80
     label: _ZN16MapSeaOfTreeIcon15appearHint1ModeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f87f4
     size: 80
     label: _ZN16MapSeaOfTreeIcon15appearHint2ModeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8844
     size: 12
     label: _ZN16MapSeaOfTreeIcon3endEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8850
     size: 96
     label: _ZN16MapSeaOfTreeIcon14trySetIconTypeENS_17SeaOfTreeIconTypeE
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x1f88b0
     size: 16
     label: _ZN16MapSeaOfTreeIcon13resetIconTypeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f88c0
     size: 56
     label: _ZNK16MapSeaOfTreeIcon17getHint1LayoutPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f88f8
     size: 56
     label: _ZNK16MapSeaOfTreeIcon17getHint2LayoutPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8930
     size: 56
     label: _ZNK16MapSeaOfTreeIcon18getPlayerLayoutPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8968
     size: 100
     label: _ZN16MapSeaOfTreeIcon9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f89cc
     size: 64
     label: _ZN16MapSeaOfTreeIcon7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8a0c
     size: 100
     label: _ZN16MapSeaOfTreeIcon6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8a70
     size: 12
     label: _ZN16MapSeaOfTreeIcon7exeDeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1f8a7c
     size: 68
     label: _ZNK12_GLOBAL__N_123MapSeaOfTreeIconNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1f8ac0
     size: 104
     label: _ZNK12_GLOBAL__N_125MapSeaOfTreeIconNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1f8b28
     size: 104
     label: _ZNK12_GLOBAL__N_122MapSeaOfTreeIconNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1f8b90
     size: 16
     label: _ZNK12_GLOBAL__N_123MapSeaOfTreeIconNrvDead7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Layout/MapTerrainLayout.o:
   '.text':
