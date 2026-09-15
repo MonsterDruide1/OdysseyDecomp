@@ -45412,19 +45412,19 @@ Event/EventFlowNodeBgmCtrl.o:
     label:
     - _ZN20EventFlowNodeBgmCtrlC1EPKc
     - _ZN20EventFlowNodeBgmCtrlC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b1678
     size: 144
     label: _ZN20EventFlowNodeBgmCtrl4initERKN2al21EventFlowNodeInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b1708
     size: 160
     label: _ZN20EventFlowNodeBgmCtrl5startEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1b17a8
     size: 152
     label: _ZN20EventFlowNodeBgmCtrl7controlEv
-    status: NotDecompiled
+    status: Matching
 Event/EventFlowNodeCapManHeroTalkAppear.o:
   '.text':
   - offset: 0x1b1840
