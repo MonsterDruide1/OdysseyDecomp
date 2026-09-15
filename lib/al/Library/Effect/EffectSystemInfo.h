@@ -28,7 +28,7 @@ void emitEffectCurrentPos(IUseEffectKeeper*, const char*);
 void emitEffect(IUseEffectKeeper*, const char*, const sead::Vector3f*);
 bool tryEmitEffect(IUseEffectKeeper*, const char*, const sead::Vector3f*);
 void deleteEffect(IUseEffectKeeper*, const char*);
-bool tryDeleteEffect(IUseEffectKeeper*, const char*);
+void tryDeleteEffect(IUseEffectKeeper*, const char*);
 void deleteEffectAll(IUseEffectKeeper*);
 void tryKillEmitterAndParticleAll(IUseEffectKeeper*);
 void onCalcAndDrawEffect(IUseEffectKeeper*);
