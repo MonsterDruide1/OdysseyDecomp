@@ -49703,7 +49703,7 @@ Item/RandomItemSelector.o:
   - offset: 0x1ccf60
     size: 136
     label: _ZN18RandomItemSelector17getRandomItemTypeEPKN2al18IUseSceneObjHolderE
-    status: NonMatchingMinor
+    status: Matching
   - offset: 0x1ccfe8
     size: 8
     label: _ZN2rs24createRandomItemSelectorEPKN2al18IUseSceneObjHolderE

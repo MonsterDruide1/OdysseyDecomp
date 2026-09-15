@@ -33,15 +33,24 @@ RandomItemSelector::RandomItemSelector() {
     mItemIndex = al::getRandom(100);
 }
 
-rs::ItemType::ValueType RandomItemSelector::getRandomItemType(const al::IUseSceneObjHolder* user) {
-    s32 hitPoint = GameDataFunction::getPlayerHitPoint(user);
-    s32 maxHitPoint = GameDataFunction::getPlayerHitPointMaxCurrent(user);
+static inline s32 getPlayerHitPoint(const al::IUseSceneObjHolder* objHolder) {
+    return GameDataFunction::getPlayerHitPoint(objHolder);
+}
+
+static inline s32 getPlayerHitPointMaxCurrent(const al::IUseSceneObjHolder* objHolder) {
+    return GameDataFunction::getPlayerHitPointMaxCurrent(objHolder);
+}
+
+rs::ItemType::ValueType RandomItemSelector::getRandomItemType(const al::IUseSceneObjHolder* objHolder) {
+    s32 hitPoint = getPlayerHitPoint(objHolder);
+    s32 maxHitPoint = getPlayerHitPointMaxCurrent(objHolder);
     s32 missingHitPoint = maxHitPoint - hitPoint;
     if (missingHitPoint == 0)
         return rs::ItemType::Coin;
 
-    const ItemList& list = mItemLists[missingHitPoint];
-    return list.itemTypes[mItemIndex++ % list.itemCount];
+    ItemList& list = mItemLists[missingHitPoint];
+    s32 itemCount = list.itemCount;
+    return list.itemTypes[mItemIndex++ % itemCount];
 }
 
 namespace rs {
