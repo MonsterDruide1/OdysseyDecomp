@@ -8913,59 +8913,59 @@ Boss/BossUtil/BossUtil.o:
   - offset: 0x0474d4
     size: 124
     label: _ZN2rs21tryCreateBarrierFieldERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047550
     size: 156
     label: _ZN2rs13updateEyeMoveEPN2al9LiveActorERKN4sead7Vector3IfEEfPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0475ec
     size: 52
     label: _ZN2rs12resetEyeMoveEPN2al9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047620
     size: 48
     label: _ZN2rs15startBossBattleEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047650
     size: 188
     label: _ZN2rs13endBossBattleEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04770c
     size: 36
     label: _ZN2rs22getBossBattleDeadCountEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047730
     size: 88
     label: _ZN2rs32isAlreadyShowDemoBossBattleStartEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047788
     size: 84
     label: _ZN2rs27saveShowDemoBossBattleStartEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0477dc
     size: 64
     label: _ZN2rs38isAlreadyShowDemoBossBattleEndKoopaLv2EPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04781c
     size: 60
     label: _ZN2rs33saveShowDemoBossBattleEndKoopaLv2EPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047858
     size: 60
     label: _ZN2rs37isAlreadyShowDemoMoonBasementCollapseEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x047894
     size: 64
     label: _ZN2rs32saveShowDemoMoonBasementCollapseEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0478d4
     size: 88
     label: _ZN2rs15isAlreadyDeadGKEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04792c
     size: 84
     label: _ZN2rs15onAlreadyDeadGKEPKN2al9LiveActorEii
-    status: NotDecompiled
+    status: Matching
 Boss/Breeda/Breeda.o:
   '.text':
   - offset: 0x047980
