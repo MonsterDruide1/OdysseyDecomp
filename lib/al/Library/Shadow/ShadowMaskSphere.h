@@ -17,7 +17,10 @@ public:
     ShadowMaskType getShadowMaskType() const override;
 
 private:
-    void* _f0[2];
+    f32 _f0;
+    bool _f4;
+    u8 _f5[3];
+    f32 _f8;
 };
 
 static_assert(sizeof(ShadowMaskSphere) == 0x100);
