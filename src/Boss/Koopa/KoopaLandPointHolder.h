@@ -19,6 +19,10 @@ public:
     void reset();
     const sead::Vector3f& findNearestPointTrans(const sead::Vector3f& pos) const;
 
+    const sead::Quatf& getCurrentPointQuat() const { return mPointsQuat[mCurrentLandPoint]; }
+
+    const sead::Vector3f& getCurrentPointTrans() const { return mPointsTrans[mCurrentLandPoint]; }
+
 private:
     sead::Vector3f mTrans = {0.0f, 0.0f, 0.0f};
     sead::Quatf mQuat = sead::Quatf::unit;
