@@ -28432,31 +28432,31 @@ Enemy/ElectricBall.o:
   - offset: 0x0fbed8
     size: 140
     label: _ZN12ElectricBallC2EPKcPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0fbf64
     size: 144
     label: _ZN12ElectricBallC1EPKcPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0fbff4
     size: 148
     label: _ZN12ElectricBall4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0fc088
     size: 44
     label: _ZN12ElectricBall7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0fc0b4
     size: 176
     label: _ZN12ElectricBall14setChargeLevelEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0fc164
     size: 104
     label: _ZN12ElectricBall7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0fc1cc
     size: 104
     label: _ZNK12_GLOBAL__N_119ElectricBallNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/ElectricExplosion.o:
   '.text':
