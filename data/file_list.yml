@@ -87962,97 +87962,97 @@ MapObj/TalkMessageInfoDirectorStateAppearMessage.o:
     label:
     - _ZN41TalkMessageInfoDirectorStateAppearMessageC1EP23TalkMessageInfoDirectorPN2al25SimpleLayoutAppearWaitEndE
     - _ZN41TalkMessageInfoDirectorStateAppearMessageC2EP23TalkMessageInfoDirectorPN2al25SimpleLayoutAppearWaitEndE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330d88
     size: 16
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330d98
     size: 44
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330dc4
     size: 52
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330df8
     size: 64
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage13exeAppearWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330e38
     size: 140
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330ec4
     size: 148
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage13exeFollowTextEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330f58
     size: 120
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x330fd0
     size: 120
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x331048
     size: 56
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage12setWaitFrameEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x331080
     size: 8
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage8setDelayEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x331088
     size: 240
     label: _ZN41TalkMessageInfoDirectorStateAppearMessage12setLabelNameEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x331178
     size: 48
     label: _ZNK41TalkMessageInfoDirectorStateAppearMessage12getLabelNameEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3311a8
     size: 208
     label: _ZNK41TalkMessageInfoDirectorStateAppearMessage18isActiveCapMessageEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x331278
     size: 156
     label: _ZNK41TalkMessageInfoDirectorStateAppearMessage17isDelayCapMessageEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x331314
     size: 4
     label: _ZN41TalkMessageInfoDirectorStateAppearMessageD2Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x331318
     size: 36
     label: _ZN41TalkMessageInfoDirectorStateAppearMessageD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x33133c
     size: 144
     label: _ZNK12_GLOBAL__N_150TalkMessageInfoDirectorStateAppearMessageNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3313cc
     size: 68
     label: _ZNK12_GLOBAL__N_154TalkMessageInfoDirectorStateAppearMessageNrvAppearWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x331410
     size: 152
     label: _ZNK12_GLOBAL__N_154TalkMessageInfoDirectorStateAppearMessageNrvFollowText7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3314a8
     size: 124
     label: _ZNK12_GLOBAL__N_148TalkMessageInfoDirectorStateAppearMessageNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x331524
     size: 124
     label: _ZNK12_GLOBAL__N_147TalkMessageInfoDirectorStateAppearMessageNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/TalkMessageInfoDirectorStateAppearWaitEndMessage.o:
   '.text':
