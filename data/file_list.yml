@@ -16994,75 +16994,75 @@ Boss/Koopa/KoopaHintHolder.o:
     label:
     - _ZN24KoopaBombHintRequestInfoC1Ev
     - _ZN24KoopaBombHintRequestInfoC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x094280
     size: 104
     label:
     - _ZN15KoopaHintHolderC1EPN2al14SceneObjHolderE
     - _ZN15KoopaHintHolderC2EPN2al14SceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0942e8
     size: 4
     label: _ZN15KoopaHintHolder6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0942ec
     size: 52
     label: _ZN15KoopaHintHolder23tryAppearHintCapReflectEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x094320
     size: 152
     label: _ZN15KoopaHintHolder22tryAppearMessageDamageEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0943b8
     size: 28
     label: _ZN15KoopaHintHolder7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0943d4
     size: 76
     label: _ZN15KoopaHintHolder17exeHintCapReflectEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x094420
     size: 148
     label: _ZN15KoopaHintHolder20exeHintCapAttachBombEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0944b4
     size: 16
     label: _ZN15KoopaHintHolder16exeMessageDamageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0944c4
     size: 36
     label: _ZN15KoopaHintHolderD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0944e8
     size: 8
     label: _ZNK15KoopaHintHolder17getSceneObjHolderEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0944f0
     size: 8
     label: _ZThn16_NK15KoopaHintHolder17getSceneObjHolderEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0944f8
     size: 32
     label: _ZNK12_GLOBAL__N_122KoopaHintHolderNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x094518
     size: 80
     label: _ZNK12_GLOBAL__N_132KoopaHintHolderNrvHintCapReflect7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x094568
     size: 20
     label: _ZNK12_GLOBAL__N_131KoopaHintHolderNrvMessageDamage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09457c
     size: 152
     label: _ZNK12_GLOBAL__N_135KoopaHintHolderNrvHintCapAttachBomb7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaItemHolder.o:
   '.text':
