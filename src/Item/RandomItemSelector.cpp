@@ -41,7 +41,8 @@ static inline s32 getPlayerHitPointMaxCurrent(const al::IUseSceneObjHolder* objH
     return GameDataFunction::getPlayerHitPointMaxCurrent(objHolder);
 }
 
-rs::ItemType::ValueType RandomItemSelector::getRandomItemType(const al::IUseSceneObjHolder* objHolder) {
+rs::ItemType::ValueType
+RandomItemSelector::getRandomItemType(const al::IUseSceneObjHolder* objHolder) {
     s32 hitPoint = getPlayerHitPoint(objHolder);
     s32 maxHitPoint = getPlayerHitPointMaxCurrent(objHolder);
     s32 missingHitPoint = maxHitPoint - hitPoint;
