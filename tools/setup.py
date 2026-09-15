@@ -52,17 +52,10 @@ def prepare_executable(original_nso: Optional[Path]):
     if nso_hash != COMPRESSED_V10_HASH and nso_hash != UNCOMPRESSED_V10_HASH:
         setup.fail(f"unknown executable: {nso_hash}")
 
-    setup._convert_nso_to_elf(original_nso)
+    setup._convert_nso_to_elf(original_nso, TARGET_ELF_PATH, TARGET_UNCOMPRESSED_NSO_PATH)
 
-    converted_elf_path = original_nso.with_suffix(".elf")
-
-    if not converted_elf_path.is_file():
-        setup.fail("internal error while preparing executable (missing ELF) please report")
-
-    shutil.move(converted_elf_path, TARGET_ELF_PATH)
-
-    uncompressed_nso_path = original_nso.with_suffix(".uncompressed.nso")
-    shutil.move(uncompressed_nso_path, TARGET_UNCOMPRESSED_NSO_PATH)
+    if not TARGET_ELF_PATH.is_file() or hashlib.sha256(TARGET_ELF_PATH.read_bytes()).hexdigest() != V10_ELF_HASH:
+        setup.fail("Internal error while exporting ELF (ELF either doesn't exist or has an incorrect hash) please report")
 
     if not TARGET_UNCOMPRESSED_NSO_PATH.is_file() or hashlib.sha256(TARGET_UNCOMPRESSED_NSO_PATH.read_bytes()).hexdigest() != UNCOMPRESSED_V10_HASH:
         setup.fail("Internal error while exporting uncompressed NSO (uncompressed NSO either doesn't exist or has an incorrect hash) please report")
