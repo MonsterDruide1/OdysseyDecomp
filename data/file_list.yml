@@ -67428,53 +67428,53 @@ MapObj/EchoEmitter.o:
   - offset: 0x264c54
     size: 180
     label: _ZN11EchoEmitterC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x264d08
     size: 192
     label: _ZN11EchoEmitterC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x264dc8
     size: 116
     label: _ZN11EchoEmitter4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x264e3c
     size: 124
     label: _ZN11EchoEmitter5startERKN4sead7Vector3IfEEfi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x264eb8
     size: 104
     label: _ZN11EchoEmitter9startKeepERKN4sead7Vector3IfEEfi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x264f20
     size: 212
     label: _ZN11EchoEmitter7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x264ff4
     size: 136
     label: _ZN11EchoEmitter7exeKeepEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x26507c
     size: 20
     label: _ZN11EchoEmitter7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x265090
     size: 68
     label: _ZNK11EchoEmitter7getLifeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2650d4
     size: 8
     label: _ZNK12_GLOBAL__N_118EchoEmitterNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2650dc
     size: 140
     label: _ZNK12_GLOBAL__N_118EchoEmitterNrvKeep7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x265168
     size: 20
     label: _ZNK12_GLOBAL__N_118EchoEmitterNrvStop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/EchoEmitterHolder.o:
   '.text':
