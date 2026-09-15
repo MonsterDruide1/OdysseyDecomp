@@ -36962,27 +36962,27 @@ Enemy/KuriboStateHack.o:
   - offset: 0x15ac44
     size: 32
     label: _ZNK2al23ActorMatrixCameraTarget9calcTransEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x15ac64
     size: 152
     label: _ZNK2al23ActorMatrixCameraTarget8calcSideEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x15acfc
     size: 152
     label: _ZNK2al23ActorMatrixCameraTarget6calcUpEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x15ad94
     size: 152
     label: _ZNK2al23ActorMatrixCameraTarget9calcFrontEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x15ae2c
     size: 12
     label: _ZNK2al23ActorMatrixCameraTarget12calcVelocityEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x15ae38
     size: 12
@@ -269777,7 +269777,7 @@ Library/Play/Camera/ActorCameraTarget.o:
     label:
     - _ZN2al23ActorMatrixCameraTargetC1EPKNS_9LiveActorEPKN4sead8Matrix34IfEE
     - _ZN2al23ActorMatrixCameraTargetC2EPKNS_9LiveActorEPKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
 Library/Play/Camera/CameraArrowCollider.o:
   '.text':
   - offset: 0x97215c
