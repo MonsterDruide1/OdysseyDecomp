@@ -71277,59 +71277,59 @@ MapObj/GrowFlowerPotStateReactionWater.o:
     label:
     - _ZN31GrowFlowerPotStateReactionWaterC1EP13GrowFlowerPot
     - _ZN31GrowFlowerPotStateReactionWaterC2EP13GrowFlowerPot
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2909ac
     size: 16
     label: _ZN31GrowFlowerPotStateReactionWater6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2909bc
     size: 16
     label: _ZN31GrowFlowerPotStateReactionWater7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2909cc
     size: 140
     label: _ZN31GrowFlowerPotStateReactionWater8exeStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x290a58
     size: 120
     label: _ZN31GrowFlowerPotStateReactionWater11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x290ad0
     size: 260
     label: _ZN31GrowFlowerPotStateReactionWater15exeReactionGrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x290bd4
     size: 108
     label: _ZN31GrowFlowerPotStateReactionWater6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x290c40
     size: 12
     label: _ZN31GrowFlowerPotStateReactionWater15requestReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x290c4c
     size: 36
     label: _ZN31GrowFlowerPotStateReactionWaterD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x290c70
     size: 8
     label: _ZNK12_GLOBAL__N_139GrowFlowerPotStateReactionWaterNrvStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x290c78
     size: 124
     label: _ZNK12_GLOBAL__N_142GrowFlowerPotStateReactionWaterNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x290cf4
     size: 8
     label: _ZNK12_GLOBAL__N_146GrowFlowerPotStateReactionWaterNrvReactionGrow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x290cfc
     size: 112
     label: _ZNK12_GLOBAL__N_137GrowFlowerPotStateReactionWaterNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/GrowFlowerSeed.o:
   '.text':
