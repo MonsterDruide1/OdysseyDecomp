@@ -5451,99 +5451,99 @@ Boss/BossKnuckle/BossKnuckleCounterGround.o:
   - offset: 0x02869c
     size: 136
     label: _ZN24BossKnuckleCounterGroundC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028724
     size: 148
     label: _ZN24BossKnuckleCounterGroundC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0287b8
     size: 364
     label: _ZN24BossKnuckleCounterGround4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028924
     size: 272
     label: _ZN24BossKnuckleCounterGround12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028a34
     size: 84
     label: _ZN24BossKnuckleCounterGround7doBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028a88
     size: 248
     label: _ZN24BossKnuckleCounterGround10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028b80
     size: 204
     label: _ZN24BossKnuckleCounterGround6doFallERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028c4c
     size: 304
     label: _ZN24BossKnuckleCounterGround15doFallStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028d7c
     size: 12
     label: _ZN24BossKnuckleCounterGround14setBeforeStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028d88
     size: 216
     label: _ZN24BossKnuckleCounterGround14doWaitOnGroundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028e60
     size: 16
     label: _ZNK24BossKnuckleCounterGround7isBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028e70
     size: 12
     label: _ZNK24BossKnuckleCounterGround13isBeforeStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028e7c
     size: 76
     label: _ZN24BossKnuckleCounterGround7killAllEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028ec8
     size: 52
     label: _ZN24BossKnuckleCounterGround15exeWaitOnGroundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x028efc
     size: 288
     label: _ZN24BossKnuckleCounterGround7exeFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x02901c
     size: 248
     label: _ZN24BossKnuckleCounterGround7exeSinkEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x029114
     size: 384
     label: _ZN24BossKnuckleCounterGround8exeBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x029294
     size: 4
     label: _ZN24BossKnuckleCounterGround14exeBeforeStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x029298
     size: 56
     label: _ZNK12_GLOBAL__N_139BossKnuckleCounterGroundNrvWaitOnGround7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0292d0
     size: 8
     label: _ZNK12_GLOBAL__N_132BossKnuckleCounterGroundNrvBreak7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0292d8
     size: 8
     label: _ZNK12_GLOBAL__N_131BossKnuckleCounterGroundNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0292e0
     size: 4
     label: _ZNK12_GLOBAL__N_138BossKnuckleCounterGroundNrvBeforeStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0292e4
     size: 8
     label: _ZNK12_GLOBAL__N_131BossKnuckleCounterGroundNrvSink7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/BossKnuckle/BossKnuckleHand.o:
   '.text':
@@ -133717,7 +133717,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b66a8
     size: 52
     label: _ZN2al19createActorFunctionI24BossKnuckleCounterGroundEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b66dc
     size: 52
