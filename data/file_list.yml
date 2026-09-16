@@ -89236,27 +89236,27 @@ MapObj/TouchTargetInfo.o:
     label:
     - _ZN15TouchTargetInfoC1Ev
     - _ZN15TouchTargetInfoC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a134
     size: 152
     label: _ZN15TouchTargetInfo15setInfoBySensorEPKN2al9HitSensorERKN4sead7Vector3IfEES8_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a1cc
     size: 28
     label: _ZN15TouchTargetInfo5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a1e8
     size: 88
     label: _ZN15TouchTargetInfo18setInfoByConnectorEPKN2al12MtxConnectorERKN4sead7Vector3IfEES8_b
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a240
     size: 76
     label: _ZN15TouchTargetInfo18setInfoByPosAndNrmERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a28c
     size: 228
     label: _ZNK15TouchTargetInfo20calcCurrentPosAndNrmEPN4sead7Vector3IfEES3_
-    status: NotDecompiled
+    status: Matching
 MapObj/TouchTargetKeeper.o:
   '.text':
   - offset: 0x33a370
