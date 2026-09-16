@@ -469,7 +469,7 @@ bool isExistWallCollisionUnderTarget(const al::CameraPoser* cameraPoser) {
 
 bool tryCalcSlopeCollisionDownFrontDirH(sead::Vector3f* outDirH,
                                         const al::CameraPoser* cameraPoser) {
-    return getTargetCollision(cameraPoser)->tryCalcSlopDownFrontDirH(outDirH);
+    return getTargetCollision(cameraPoser)->tryCalcSlopeDownFrontDirH(outDirH);
 }
 
 f32 getSlopeCollisionUpSpeed(const al::CameraPoser* cameraPoser) {
