@@ -229679,145 +229679,145 @@ Library/Camera/CameraPoseUpdater.o:
     label:
     - _ZN2al17CameraPoseUpdaterC1EPNS_15SceneCameraInfoEi
     - _ZN2al17CameraPoseUpdaterC2EPNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837808
     size: 68
     label:
     - _ZN2al17CameraPoseUpdaterD1Ev
     - _ZN2al17CameraPoseUpdaterD2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83784c
     size: 76
     label: _ZN2al17CameraPoseUpdaterD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837898
     size: 148
     label: _ZN2al17CameraPoseUpdater4initEPKNS_19CameraParamTransferEPKNS_15CameraStopJudgeEPNS_20CameraStartParamCtrlE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83792c
     size: 32
     label: _ZNK2al17CameraPoseUpdater19getNearClipDistanceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83794c
     size: 316
     label: _ZN2al17CameraPoseUpdater6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837a88
     size: 748
     label: _ZN2al17CameraPoseUpdater15trySwitchCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837d74
     size: 8
     label: _ZNK2al17CameraPoseUpdater17isActiveInterpoleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837d7c
     size: 28
     label: _ZN2al17CameraPoseUpdater14startInterpoleEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837d98
     size: 16
     label: _ZN2al17CameraPoseUpdater22requestCancelInterpoleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837da8
     size: 52
     label: _ZNK2al17CameraPoseUpdater30calcCameraPoseWithoutInterpoleEPN4sead12LookAtCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837ddc
     size: 284
     label: _ZN2al17CameraPoseUpdater17startSnapShotModeEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837ef8
     size: 120
     label: _ZN2al17CameraPoseUpdater15endSnapShotModeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837f70
     size: 16
     label: _ZNK2al17CameraPoseUpdater29isSnapShotOrientationRotate90Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837f80
     size: 16
     label: _ZNK2al17CameraPoseUpdater30isSnapShotOrientationRotate270Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837f90
     size: 556
     label: _ZN2al17CameraPoseUpdater9exeActiveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8381bc
     size: 320
     label: _ZN2al17CameraPoseUpdater11exeDeactiveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8382fc
     size: 160
     label: _ZN2al17CameraPoseUpdater7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83839c
     size: 116
     label: _ZN2al17CameraPoseUpdater8exePauseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838410
     size: 348
     label: _ZN2al17CameraPoseUpdater11exeSnapShotEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83856c
     size: 40
     label: _ZN2al17CameraPoseUpdater11endSnapShotEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838594
     size: 4
     label: _ZN2al17CameraPoseUpdater19exeSnapShotNoUpdateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838598
     size: 32
     label: _ZNK2al17CameraPoseUpdater23isCurrentCameraPriorityEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8385b8
     size: 40
     label: _ZNK2al17CameraPoseUpdater31isInvalidChangeSubjectiveCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8385e0
     size: 32
     label: _ZNK2al17CameraPoseUpdater22isCurrentCameraZoomingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838600
     size: 32
     label: _ZNK2al17CameraPoseUpdater32isCurrentCameraEnableRotateByPadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838620
     size: 24
     label: _ZN2al17CameraPoseUpdater33tryReceiveCameraRequestFromObjectERKNS_23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838638
     size: 32
     label: _ZN2al17CameraPoseUpdater31tryRequestCameraTurnToDirectionEPKNS_14CameraTurnInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838658
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_128CameraPoseUpdaterNrvDeactive7executeEPNS_11NerveKeeperE
+    status: Matching
   - offset: 0x838660
     size: 116
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_125CameraPoseUpdaterNrvPause7executeEPNS_11NerveKeeperE
+    status: Matching
   - offset: 0x8386d4
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_124CameraPoseUpdaterNrvStop7executeEPNS_11NerveKeeperE
+    status: Matching
   - offset: 0x8386dc
     size: 4
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_136CameraPoseUpdaterNrvSnapShotNoUpdate7executeEPNS_11NerveKeeperE
+    status: Matching
   - offset: 0x8386e0
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_128CameraPoseUpdaterNrvSnapShot7executeEPNS_11NerveKeeperE
+    status: Matching
   - offset: 0x8386e8
     size: 40
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_128CameraPoseUpdaterNrvSnapShot12executeOnEndEPNS_11NerveKeeperE
+    status: Matching
   - offset: 0x838710
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK2al12_GLOBAL__N_126CameraPoseUpdaterNrvActive7executeEPNS_11NerveKeeperE
+    status: Matching
 Library/Camera/CameraRequestParamHolder.o:
   '.text':
   - offset: 0x838718
@@ -230504,7 +230504,7 @@ Library/Camera/CameraUtil.o:
   - offset: 0x83c108
     size: 176
     label: _ZN2al20setCurrentCameraPoseEPNS_14CameraPoseInfoEPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c1b8
     size: 80
     label: _ZN2al13calcCameraDirEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
@@ -231016,11 +231016,11 @@ Library/Camera/CameraUtil.o:
   - offset: 0x83efdc
     size: 48
     label: _ZN2al23isActiveCameraInterpoleEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f00c
     size: 16
     label: _ZN2al23isActiveCameraInterpoleEPKNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f01c
     size: 56
     label: _ZN2al20startCameraInterpoleEPKNS_10IUseCameraEii

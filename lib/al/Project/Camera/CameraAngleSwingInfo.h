@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gfx/seadCamera.h>
+#include <math/seadVectorFwd.h>
 
 namespace al {
 class ByamlIter;
@@ -16,6 +17,12 @@ public:
     bool isInvalidSwing() const { return mIsInvalidSwing; }
 
     void setCurrentAngle(sead::Vector2f currentAngle) { mCurrentAngle = currentAngle; }
+
+    const sead::Vector2f& getCurrentAngle() const { return mCurrentAngle; }
+
+    f32 getMaxSwingDegreeH() const { return mMaxSwingDegreeH; }
+
+    f32 getMaxSwingDegreeV() const { return mMaxSwingDegreeV; }
 
     // all of them are default-initialized in the constructor, but some can't be inlined here
 private:

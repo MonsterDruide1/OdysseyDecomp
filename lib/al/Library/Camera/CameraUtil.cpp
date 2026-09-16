@@ -1,6 +1,8 @@
 #include "Library/Camera/CameraUtil.h"
 
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraPoseInfo.h"
+#include "Library/Camera/CameraPoseUpdater.h"
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/IUseCamera.h"
 #include "Library/Camera/SceneCameraInfo.h"
@@ -166,4 +168,19 @@ f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
 
     return fovy / fovy2;
 }
+
+void setCurrentCameraPose(CameraPoseInfo* poseInfo, const IUseCamera* user) {
+    poseInfo->pos.set(getCameraPos(user, 0));
+    poseInfo->at.set(getCameraAt(user, 0));
+    poseInfo->up.set(getCameraUp(user, 0));
+}
+
+bool isActiveCameraInterpole(const IUseCamera* user, s32 viewIdx) {
+    return getCameraDirector(user)->getPoseUpdater(viewIdx)->isActiveInterpole();
+}
+
+bool isActiveCameraInterpole(const SceneCameraInfo* info, s32 viewIdx) {
+    return info->getViewAt(viewIdx)->isActiveInterpole();
+}
+
 }  // namespace al

@@ -8,8 +8,12 @@ public:
 
     void resetAllFlag();
 
+    void setInvalidCameraBlur(bool invalid) { mIsInvalidCameraBlur = invalid; }
+
+    bool isInvalidCameraBlur() const { return mIsInvalidCameraBlur; }
+
 private:
-    bool _0 = false;
+    bool mIsInvalidCameraBlur = false;
 };
 
 }  // namespace al

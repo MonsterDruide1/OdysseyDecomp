@@ -25,9 +25,15 @@ public:
 
     bool isValid() const { return mIsValid; }
 
+    void setValid(bool valid) { mIsValid = valid; }
+
     bool isFirstCalc() const { return mIsFirstCalc; }
 
+    void setFirstCalc(bool firstCalc) { mIsFirstCalc = firstCalc; }
+
     bool isActiveInterpole() const { return mIsActiveInterpole; }
+
+    void setActiveInterpole(bool active) { mIsActiveInterpole = active; }
 
     const sead::LookAtCamera& getLookAtCam() const { return mLookAtCam; }
 

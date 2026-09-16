@@ -217,6 +217,8 @@ public:
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; }
 
+    f32 getNearClipDistance() const { return mNearClipDistance; }
+
     bool is_98() const { return _98; }
 
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
@@ -251,6 +253,8 @@ public:
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
 
     void setFovyDegree(f32 fovy) { mFovyDegree = fovy; }
+
+    void setViewInfo(CameraViewInfo* info) { mViewInfo = info; }
 
     void setVerticalAbsorber(CameraVerticalAbsorber* cameraVerticalAbsorber) {
         mVerticalAbsorber = cameraVerticalAbsorber;
