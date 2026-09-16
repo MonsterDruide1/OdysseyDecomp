@@ -199256,7 +199256,7 @@ NintendoSDK-NEX/Externals/curl/lib/multi.o:
   - offset: 0x7001d0
     size: 536
     label: multi_socket
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7003e8
     size: 308
     label: curl_multi_socket_action
@@ -199475,7 +199475,7 @@ NintendoSDK-NEX/Externals/curl/lib/sendf.o:
   - offset: 0x703430
     size: 400
     label: Curl_client_write
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7035c0
     size: 92
     label: Curl_read_plain
@@ -199621,7 +199621,7 @@ NintendoSDK-NEX/Externals/curl/lib/transfer.o:
   - offset: 0x704950
     size: 124
     label: Curl_meets_timecondition
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x7049cc
     size: 3304
     label: Curl_readwrite
@@ -199739,7 +199739,7 @@ NintendoSDK-NEX/Externals/curl/lib/url.o:
   - offset: 0x70b224
     size: 184
     label: Curl_protocol_connect
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70b2dc
     size: 324
     label: Curl_setup_conn
@@ -200286,7 +200286,7 @@ NintendoSDK-NEX/Externals/curl/lib/conncache.o:
   - offset: 0x710e84
     size: 132
     label: Curl_conncache_remove_conn
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x710f08
     size: 132
     label: Curl_conncache_foreach
@@ -200522,7 +200522,7 @@ NintendoSDK-NEX/Externals/curl/lib/hostasyn.o:
   - offset: 0x71506c
     size: 4
     label: Curl_getaddrinfo
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/http.o:
   '.text':
   - offset: 0x715070
@@ -200608,11 +200608,11 @@ NintendoSDK-NEX/Externals/curl/lib/http.o:
   - offset: 0x717cd0
     size: 564
     label: Curl_add_custom_headers
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x717f04
     size: 260
     label: Curl_add_timecondition
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x718008
     size: 4696
     label: Curl_http_readwrite_headers
@@ -200626,7 +200626,7 @@ NintendoSDK-NEX/Externals/curl/lib/http_chunks.o:
   - offset: 0x71926c
     size: 980
     label: Curl_httpchunk_read
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x719640
     size: 40
     label: Curl_chunked_strerror
@@ -200654,7 +200654,7 @@ NintendoSDK-NEX/Externals/curl/lib/http_proxy.o:
   - offset: 0x719964
     size: 2852
     label: Curl_proxyCONNECT
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/if2ip.o:
   '.text':
   - offset: 0x71a488
@@ -200740,7 +200740,7 @@ NintendoSDK-NEX/Externals/curl/lib/nonblock.o:
   - offset: 0x71bc48
     size: 28
     label: curlx_nonblock
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/parsedate.o:
   '.text':
   - offset: 0x71bc64
@@ -200750,7 +200750,7 @@ NintendoSDK-NEX/Externals/curl/lib/parsedate.o:
   - offset: 0x71c420
     size: 84
     label: Curl_gmtime
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/socks.o:
   '.text':
   - offset: 0x71c474
@@ -200838,7 +200838,7 @@ NintendoSDK-NEX/Externals/curl/lib/bundle.o:
   - offset: 0x71df8c
     size: 8
     label: conn_llist_dtor
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x71df94
     size: 68
     label: Curl_bundle_destroy
@@ -200846,11 +200846,11 @@ NintendoSDK-NEX/Externals/curl/lib/bundle.o:
   - offset: 0x71dfd8
     size: 80
     label: Curl_bundle_add_conn
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x71e028
     size: 100
     label: Curl_bundle_remove_conn
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/curl_sasl.o:
   '.text':
   - offset: 0x71e08c
