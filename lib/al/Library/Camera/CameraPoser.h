@@ -18,7 +18,7 @@ namespace al {
 class AudioDirector;
 class ByamlIter;
 class CameraAngleCtrlInfo;
-class CameraAngleSwingInfo;
+struct CameraAngleSwingInfo;
 class CameraArrowCollider;
 class CameraInputHolder;
 class CameraOffsetCtrlPreset;
@@ -29,7 +29,7 @@ class CameraTargetCollideInfoHolder;
 class CameraTargetHolder;
 class CameraTurnInfo;
 class CameraVerticalAbsorber;
-class CameraViewInfo;
+struct CameraViewInfo;
 class GyroCameraCtrl;
 class Nerve;
 class PlacementInfo;

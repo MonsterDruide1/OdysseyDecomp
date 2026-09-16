@@ -7,33 +7,33 @@ namespace al {
 
 CameraAngleSwingInfo::CameraAngleSwingInfo() {
     // these need to be explicit in this constructor, otherwise mismatch
-    mCurrentAngle = {0.0f, 0.0f};
+    currentAngle = {0.0f, 0.0f};
     _14 = 0.3f;
     _18 = 0.1f;
 }
 
 void CameraAngleSwingInfo::load(const ByamlIter& iter) {
-    tryGetByamlBool(&mIsInvalidSwing, iter, "IsInvalidSwing");
-    if (mIsInvalidSwing)
+    tryGetByamlBool(&isInvalidSwing, iter, "IsInvalidSwing");
+    if (isInvalidSwing)
         return;
 
-    tryGetByamlF32(&mMaxSwingDegreeH, iter, "MaxSwingDegreeH");
-    tryGetByamlF32(&mMaxSwingDegreeV, iter, "MaxSwingDegreeV");
+    tryGetByamlF32(&maxSwingDegreeH, iter, "MaxSwingDegreeH");
+    tryGetByamlF32(&maxSwingDegreeV, iter, "MaxSwingDegreeV");
 }
 
 void CameraAngleSwingInfo::update(const sead::Vector2f& stickInput, f32 stickSensitivity) {
-    if (mIsInvalidSwing) {
-        mCurrentAngle = {0.0f, 0.0f};
+    if (isInvalidSwing) {
+        currentAngle = {0.0f, 0.0f};
         return;
     }
 
     sead::Vector2f swingDegrees = {
-        -stickInput.x * mMaxSwingDegreeH,
-        stickInput.y * mMaxSwingDegreeV,
+        -stickInput.x * maxSwingDegreeH,
+        stickInput.y * maxSwingDegreeV,
     };
 
-    lerpVec(&swingDegrees, mCurrentAngle, swingDegrees, _14 * stickSensitivity);
-    lerpVec(&mCurrentAngle, mCurrentAngle, swingDegrees, _18);
+    lerpVec(&swingDegrees, currentAngle, swingDegrees, _14 * stickSensitivity);
+    lerpVec(&currentAngle, currentAngle, swingDegrees, _18);
 }
 
 void CameraAngleSwingInfo::makeLookAtCamera(sead::LookAtCamera* camera) const {
@@ -45,12 +45,12 @@ void CameraAngleSwingInfo::makeLookAtCamera(sead::LookAtCamera* camera) const {
     if (!tryNormalizeOrZero(&cameraLookHDir))
         return;
 
-    rotateVectorDegree(&cameraLookDirection, cameraLookDirection, cameraLookHDir, mCurrentAngle.x);
+    rotateVectorDegree(&cameraLookDirection, cameraLookDirection, cameraLookHDir, currentAngle.x);
     normalize(&cameraLookDirection);
     sead::Vector3f cameraSideDir;
     cameraSideDir.setCross(cameraLookDirection, cameraLookHDir);
     normalize(&cameraSideDir);
-    rotateVectorDegree(&cameraLookDirection, cameraLookDirection, cameraSideDir, mCurrentAngle.y);
+    rotateVectorDegree(&cameraLookDirection, cameraLookDirection, cameraSideDir, currentAngle.y);
     camera->setAt((cameraLookDistance * cameraLookDirection) + camera->getPos());
 }
 

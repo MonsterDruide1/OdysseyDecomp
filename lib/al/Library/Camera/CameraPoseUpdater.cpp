@@ -54,7 +54,7 @@ CameraPoseUpdater::CameraPoseUpdater(SceneCameraInfo* sceneCamInfo, s32 viewIdx)
                                    *mOrthoProjectionInfo);
 
     if (!mIsMainView)
-        mViewInfo->setValid(false);
+        mViewInfo->isValid = false;
 
     sceneCamInfo->initViewInfo(mViewInfo);
     initNerve(&NrvCameraPoseUpdater.Deactive, 0);
@@ -91,8 +91,7 @@ void CameraPoseUpdater::update() {
 
     updateNerve();
 
-    bool isMain = mIsMainView;
-    mViewInfo->setValid(isMain);
+    mViewInfo->isValid = mIsMainView;
 
     mShaker->update(mSceneCamView->get_10());
     mProjection->setOffset(mShaker->getOffset());
@@ -109,7 +108,7 @@ void CameraPoseUpdater::update() {
     mProjection->calcMtx();
 
     if (mCtrlPausePtr == nullptr || !mCtrlPausePtr->isCameraPause())
-        mViewInfo->setFirstCalc(false);
+        mViewInfo->isFirstCalc = false;
 }
 
 bool CameraPoseUpdater::trySwitchCamera() {
@@ -189,13 +188,13 @@ bool CameraPoseUpdater::trySwitchCamera() {
 
         if (currTicket->getPoser()->getAngleSwingInfo()) {
             camStartInfo.preCameraSwingAngleH =
-                currTicket->getPoser()->getAngleSwingInfo()->getCurrentAngle().x;
+                currTicket->getPoser()->getAngleSwingInfo()->currentAngle.x;
             camStartInfo.preCameraSwingAngleV =
-                currTicket->getPoser()->getAngleSwingInfo()->getCurrentAngle().y;
+                currTicket->getPoser()->getAngleSwingInfo()->currentAngle.y;
             camStartInfo.preCameraMaxSwingAngleH =
-                currTicket->getPoser()->getAngleSwingInfo()->getMaxSwingDegreeH();
+                currTicket->getPoser()->getAngleSwingInfo()->maxSwingDegreeH;
             camStartInfo.preCameraMaxSwingAngleV =
-                currTicket->getPoser()->getAngleSwingInfo()->getMaxSwingDegreeV();
+                currTicket->getPoser()->getAngleSwingInfo()->maxSwingDegreeV;
         }
 
         if (mSwitcher->isExistNextCamera()) {
@@ -258,9 +257,9 @@ void CameraPoseUpdater::exeActive() {
 
     if (mInterpole->isActive()) {
         mFovyDegree = mInterpole->getFovyDegree();
-        mViewInfo->setActiveInterpole(true);
+        mViewInfo->isActiveInterpole = true;
     } else {
-        mViewInfo->setActiveInterpole(false);
+        mViewInfo->isActiveInterpole = false;
     }
 
     mLookAtCamera.setPos(lookAt.getPos());
@@ -283,12 +282,12 @@ void CameraPoseUpdater::exeDeactive() {
     }
 
     const auto* viewInfo = mSceneCamInfo->getViewAt(0);
-    mLookAtCamera.setPos(viewInfo->getLookAtCam().getPos());
-    mLookAtCamera.setAt(viewInfo->getLookAtCam().getAt());
-    mLookAtCamera.setUp(viewInfo->getLookAtCam().getUp());
+    mLookAtCamera.setPos(viewInfo->lookAtCam.getPos());
+    mLookAtCamera.setAt(viewInfo->lookAtCam.getAt());
+    mLookAtCamera.setUp(viewInfo->lookAtCam.getUp());
     mLookAtCamera.normalizeUp();
 
-    mFovyDegree = sead::Mathf::rad2deg(viewInfo->getProjection().getFovy());
+    mFovyDegree = sead::Mathf::rad2deg(viewInfo->projection.getFovy());
 }
 
 void CameraPoseUpdater::exeStop() {

@@ -9,17 +9,24 @@ class CameraTicket;
 
 class CameraSwitcher {
 public:
+    CameraSwitcher();
+
+    void init(CameraSwitchRequestInfo*, CameraSwitchRequestInfo*);
+    void initAfterPlacement();
+
+    CameraSwitchRequestInfo* getStartRequest(s32 index) const;
+
     void update();
+
+    CameraSwitchRequestInfo* getEndRequest(s32 index) const;
 
     bool isExistNextCamera() const;
     CameraTicket* getNextCamera() const;
-
-    bool isSetNextPoseInfo() const;
-    CameraPoseInfo* getNextPoseInfo() const;
-
     s32 getNextInterpoleStep() const;
 
     bool isNextKeepPose() const;
+    bool isSetNextPoseInfo() const;
+    CameraPoseInfo* getNextPoseInfo() const;
 
     bool get_10() const { return _10; }
 

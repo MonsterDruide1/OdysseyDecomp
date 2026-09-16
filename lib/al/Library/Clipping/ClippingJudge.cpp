@@ -18,10 +18,10 @@ ClippingJudge::ClippingJudge(const ClippingFarAreaObserver* clippingFarAreaObser
 void ClippingJudge::update() {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
         CameraViewInfo* cameraViewInfo = mCameraInfo->getViewAt(i);
-        if (!cameraViewInfo->isValid())
+        if (!cameraViewInfo->isValid)
             continue;
         FrustumRadar* frustumRadar = mFrustumRadars[i];
-        const sead::Matrix34f& camMtx = cameraViewInfo->getLookAtCam().getMatrix();
+        const sead::Matrix34f& camMtx = cameraViewInfo->lookAtCam.getMatrix();
         const sead::Matrix44f& projMtx = cameraViewInfo->getProjMtxStd();
         frustumRadar->calcFrustumArea(camMtx, projMtx, 300.0f,
                                       mFarAreaObserver->getFarClipDistance());
@@ -35,7 +35,7 @@ bool ClippingJudge::isJudgedToClipFrustumUnUseFarLevel(const sead::Vector3f& pos
 
 bool ClippingJudge::isJudgedToClipFrustumCore(const sead::Vector3f& pos, f32 idx, f32 idy) const {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
-        if (mCameraInfo->getViewAt(i)->isValid()) {
+        if (mCameraInfo->getViewAt(i)->isValid) {
             if (mFrustumRadars[i]->judgeInArea(pos, idx, idy))
                 return false;
         }
@@ -53,7 +53,7 @@ bool ClippingJudge::isJudgedToClipFrustum(const sead::Vector3f& pos, f32 idx, f3
 bool ClippingJudge::isJudgedToClipFrustumCore(const sead::Vector3f& pos, f32 idx, f32 idy,
                                               f32 idz) const {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
-        if (mCameraInfo->getViewAt(i)->isValid()) {
+        if (mCameraInfo->getViewAt(i)->isValid) {
             if (mFrustumRadars[i]->judgeInArea(pos, idx, idy, idz))
                 return false;
         }
@@ -78,7 +78,7 @@ bool ClippingJudge::isJudgedToClipFrustumUnUseFarLevelObb(const sead::Matrix34f*
 bool ClippingJudge::isJudgedToClipFrustumCoreObb(const sead::Matrix34f* mtx,
                                                  const sead::BoundBox3f& bound, f32 idx) const {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
-        if (mCameraInfo->getViewAt(i)->isValid()) {
+        if (mCameraInfo->getViewAt(i)->isValid) {
             if (mFrustumRadars[i]->judgeInAreaObb(mtx, bound, idx))
                 return false;
         }
@@ -95,7 +95,7 @@ bool ClippingJudge::isJudgedToClipFrustumCoreObb(const sead::Matrix34f* mtx,
                                                  const sead::BoundBox3f& bound, f32 idx,
                                                  f32 idy) const {
     for (s32 i = 0; i < mCameraInfo->getViewNumMax(); i++) {
-        if (mCameraInfo->getViewAt(i)->isValid()) {
+        if (mCameraInfo->getViewAt(i)->isValid) {
             if (mFrustumRadars[i]->judgeInAreaObb(mtx, bound, idx, idy))
                 return false;
         }

@@ -32,7 +32,7 @@ bool isValidView(const IUseCamera* user, s32 viewIdx) {
 }
 
 bool isValidView(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->isValid();
+    return info->getViewAt(viewIdx)->isValid;
 }
 
 const char* getViewName(const IUseCamera* user, s32 viewIdx) {
@@ -72,7 +72,7 @@ const sead::LookAtCamera& getLookAtCamera(const IUseCamera* user, s32 viewIdx) {
 }
 
 const sead::LookAtCamera& getLookAtCamera(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getLookAtCam();
+    return info->getViewAt(viewIdx)->lookAtCam;
 }
 
 const sead::Projection& getProjectionSead(const IUseCamera* user, s32 viewIdx) {
@@ -88,7 +88,7 @@ const Projection& getProjection(const IUseCamera* user, s32 viewIdx) {
 }
 
 const Projection& getProjection(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getProjection();
+    return info->getViewAt(viewIdx)->projection;
 }
 
 const sead::Vector3f& getCameraPos(const IUseCamera* user, s32 viewIdx) {
@@ -128,7 +128,7 @@ f32 getFovy(const IUseCamera* user, s32 viewIdx) {
 }
 
 f32 getFovy(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getProjection().getFovy();
+    return info->getViewAt(viewIdx)->projection.getFovy();
 }
 
 f32 getNear(const IUseCamera* user, s32 viewIdx) {
@@ -180,7 +180,7 @@ bool isActiveCameraInterpole(const IUseCamera* user, s32 viewIdx) {
 }
 
 bool isActiveCameraInterpole(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->isActiveInterpole();
+    return info->getViewAt(viewIdx)->isActiveInterpole;
 }
 
 }  // namespace al
