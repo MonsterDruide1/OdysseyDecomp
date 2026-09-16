@@ -198922,7 +198922,7 @@ NintendoSDK-NEX/Externals/curl/lib/easy.o:
   - offset: 0x6f87cc
     size: 84
     label: curl_global_cleanup
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x6f8820
     size: 124
     label: curl_easy_init
@@ -199669,7 +199669,7 @@ NintendoSDK-NEX/Externals/curl/lib/url.o:
   - offset: 0x70633c
     size: 532
     label: Curl_close
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x706550
     size: 52
     label: Curl_free_request_state
@@ -199689,7 +199689,7 @@ NintendoSDK-NEX/Externals/curl/lib/url.o:
   - offset: 0x70ac58
     size: 308
     label: Curl_disconnect
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70ad8c
     size: 460
     label: conn_free
@@ -199799,119 +199799,119 @@ NintendoSDK-NEX/Externals/curl/lib/vtls/vtls.o:
   - offset: 0x70e0c0
     size: 212
     label: Curl_rand
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70e194
     size: 4
     label: Curl_ssl_random
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e198
     size: 8
     label: Curl_ssl_backend
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70e1a0
     size: 32
     label: Curl_ssl_init
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e1c0
     size: 48
     label: Curl_ssl_cleanup
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e1f0
     size: 112
     label: Curl_ssl_connect
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e260
     size: 124
     label: Curl_ssl_connect_nonblocking
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e2dc
     size: 336
     label: Curl_ssl_getsessionid
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e42c
     size: 116
     label: Curl_ssl_kill_session
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e4a0
     size: 156
     label: Curl_ssl_delsessionid
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e53c
     size: 360
     label: Curl_ssl_addsessionid
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e6a4
     size: 144
     label: Curl_ssl_close_all
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e734
     size: 4
     label: Curl_ssl_close
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e738
     size: 8
     label: Curl_ssl_shutdown
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e740
     size: 8
     label: Curl_ssl_set_engine
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e748
     size: 8
     label: Curl_ssl_set_engine_default
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e750
     size: 8
     label: Curl_ssl_engines_list
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e758
     size: 116
     label: Curl_ssl_initsessions
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x70e7cc
     size: 4
     label: Curl_ssl_version
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e7d0
     size: 4
     label: Curl_ssl_check_cxn
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e7d4
     size: 4
     label: Curl_ssl_data_pending
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e7d8
     size: 124
     label: Curl_ssl_free_certinfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e854
     size: 184
     label: Curl_ssl_init_certinfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e90c
     size: 236
     label: Curl_ssl_push_certinfo_len
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70e9f8
     size: 76
     label: Curl_ssl_push_certinfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ea44
     size: 668
     label: Curl_pin_peer_pubkey
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ece0
     size: 112
     label: Curl_ssl_md5sum
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed50
     size: 4
     label: Curl_ssl_cert_status_request
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ed54
     size: 4
     label: Curl_ssl_false_start
-    status: NotDecompiled
+    status: NonMatchingMajor
 NintendoSDK-NEX/Externals/curl/lib/warnless.o:
   '.text':
   - offset: 0x70ed58
@@ -200538,7 +200538,7 @@ NintendoSDK-NEX/Externals/curl/lib/http.o:
   - offset: 0x716bcc
     size: 132
     label: Curl_http_connect
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x716c50
     size: 16
     label: http_getsock_do
@@ -200546,7 +200546,7 @@ NintendoSDK-NEX/Externals/curl/lib/http.o:
   - offset: 0x716c60
     size: 56
     label: https_connecting
-    status: NotDecompiled
+    status: Matching
   - offset: 0x716c98
     size: 8
     label: ''
