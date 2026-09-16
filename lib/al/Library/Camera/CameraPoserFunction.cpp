@@ -78,11 +78,11 @@ getSubTargetTurnParam(const al::CameraPoser* cameraPoser) {
 }
 
 s32 getViewIndex(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getViewInfo()->getIndex();
+    return cameraPoser->getViewInfo()->index;
 }
 
 const sead::LookAtCamera& getLookAtCamera(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getViewInfo()->getLookAtCam();
+    return cameraPoser->getViewInfo()->lookAtCam;
 }
 
 const sead::Projection& getProjectionSead(const al::CameraPoser* cameraPoser) {
@@ -90,7 +90,7 @@ const sead::Projection& getProjectionSead(const al::CameraPoser* cameraPoser) {
 }
 
 const al::Projection& getProjection(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getViewInfo()->getProjection();
+    return cameraPoser->getViewInfo()->projection;
 }
 
 const sead::Matrix44f& getProjectionMtx(const al::CameraPoser* cameraPoser) {
@@ -703,7 +703,7 @@ void initAngleSwing(al::CameraPoser* cameraPoser) {
 }
 
 bool isValidAngleSwing(const al::CameraPoser* cameraPoser) {
-    return !cameraPoser->getAngleSwingInfo()->isInvalidSwing();
+    return !cameraPoser->getAngleSwingInfo()->isInvalidSwing;
 }
 
 void initCameraOffsetCtrlPreset(al::CameraPoser* cameraPoser) {
@@ -954,11 +954,11 @@ bool isInvalidPreCameraEndAfterInterpole(const al::CameraPoser* cameraPoser) {
 }
 
 bool isSceneCameraFirstCalc(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getViewInfo()->isFirstCalc();
+    return cameraPoser->getViewInfo()->isFirstCalc;
 }
 
 bool isActiveInterpole(const al::CameraPoser* cameraPoser) {
-    return cameraPoser->getViewInfo()->isActiveInterpole();
+    return cameraPoser->getViewInfo()->isActiveInterpole;
 }
 
 bool isInvalidEndEntranceCamera(const al::CameraPoser* cameraPoser) {

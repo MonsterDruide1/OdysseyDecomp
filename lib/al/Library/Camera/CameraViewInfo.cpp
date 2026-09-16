@@ -7,31 +7,31 @@ namespace al {
 CameraViewInfo::CameraViewInfo(s32 index, const sead::LookAtCamera& lookAtCam,
                                const Projection& projection, const CameraViewFlag& flag,
                                const OrthoProjectionInfo& orthoProjectionInfo)
-    : mIndex(index), mLookAtCam(lookAtCam), mProjection(projection), mViewFlag(flag),
-      mOrthoProjectionInfo(orthoProjectionInfo) {}
+    : index(index), lookAtCam(lookAtCam), projection(projection), flag(flag),
+      orthoProjectionInfo(orthoProjectionInfo) {}
 
 const sead::Projection& CameraViewInfo::getProjectionSead() const {
-    return mProjection.getProjectionSead();
+    return projection.getProjectionSead();
 }
 
 const sead::Matrix44f& CameraViewInfo::getProjMtx() const {
-    return mProjection.getProjMtx();
+    return projection.getProjMtx();
 }
 
 const sead::Matrix44f& CameraViewInfo::getProjMtxStd() const {
-    return mProjection.getMtxStd();
+    return projection.getMtxStd();
 }
 
 f32 CameraViewInfo::getAspect() const {
-    return mProjection.getAspect();
+    return projection.getAspect();
 }
 
 f32 CameraViewInfo::getNear() const {
-    return mProjection.getNear();
+    return projection.getNear();
 }
 
 f32 CameraViewInfo::getFar() const {
-    return mProjection.getFar();
+    return projection.getFar();
 }
 
 }  // namespace al

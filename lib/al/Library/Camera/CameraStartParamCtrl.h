@@ -4,12 +4,14 @@
 #include <math/seadVector.h>
 
 #include "Library/Area/AreaObjDirector.h"
+#include "Library/Area/IUseAreaObj.h"
 #include "Library/Camera/CameraFlagCtrl.h"
+#include "Library/HostIO/HioNode.h"
 
 namespace al {
 struct CameraStartInfo;
 
-class CameraStartParamCtrl {
+class CameraStartParamCtrl : public HioNode, public IUseAreaObj {
 public:
     CameraStartParamCtrl();
 
@@ -20,7 +22,12 @@ public:
 
     void tryApplyParam(CameraStartInfo* camStartInfo);
 
-    AreaObjDirector* getAreaObjDirector() const;
+    AreaObjDirector* getAreaObjDirector() const override;
+
+private:
+    void* _0[5];
 };
+
+static_assert(sizeof(CameraStartParamCtrl) == 0x30);
 
 }  // namespace al

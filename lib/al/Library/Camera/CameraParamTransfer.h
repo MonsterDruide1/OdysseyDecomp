@@ -12,10 +12,16 @@ class CameraParamTransfer {
 public:
     CameraParamTransfer();
 
-    void setFuncTable(NameToCameraParamTransferFunc, s32);
+    void setFuncTable(const NameToCameraParamTransferFunc* functions, s32 count);
 
-    void tryTransferParam(CameraPoser*, CameraPoser*) const;
-    void tryFindTransferFunc(const char*, const char*) const;
+    bool tryTransferParam(CameraPoser*, CameraPoser*) const;
+    void* tryFindTransferFunc(const char*, const char*) const;  // unknown return type
+
+private:
+    const NameToCameraParamTransferFunc* mFunctions;
+    s32 mFunctionCount;
 };
+
+static_assert(sizeof(CameraParamTransfer) == 0x10);
 
 }  // namespace al

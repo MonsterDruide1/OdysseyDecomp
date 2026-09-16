@@ -48,7 +48,7 @@ bool CameraPoser::isEnableRotateByPad() const {
         return !mAngleCtrlInfo->isFixByRangeHV();
 
     if (mAngleSwingInfo)
-        return !mAngleSwingInfo->isInvalidSwing();
+        return !mAngleSwingInfo->isInvalidSwing;
 
     return false;
 }
@@ -236,7 +236,7 @@ void CameraPoser::appear(const CameraStartInfo& info) {
     }
 
     if (mAngleSwingInfo)
-        mAngleSwingInfo->setCurrentAngle({0, 0});
+        mAngleSwingInfo->currentAngle = {0, 0};
 
     start(info);
 

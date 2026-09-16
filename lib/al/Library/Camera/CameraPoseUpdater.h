@@ -17,7 +17,7 @@ class CameraStopJudge;
 class CameraSwitcher;
 class CameraTicket;
 class CameraViewFlag;
-class CameraViewInfo;
+struct CameraViewInfo;
 class CameraTurnInfo;
 struct CameraObjectRequestInfo;
 class PauseCameraCtrl;
