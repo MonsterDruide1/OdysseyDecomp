@@ -16,8 +16,8 @@ public:
     void update(const sead::LookAtCamera&);
     bool isActive() const;
 
-    void makeLookAtCamera(sead::LookAtCamera*);
-    void lerpFovyDegree(f32*);
+    void makeLookAtCamera(sead::LookAtCamera*) const;
+    void lerpFovyDegree(f32);
 
     void exeDeactive();
     void exeActiveHermite();

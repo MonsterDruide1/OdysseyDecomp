@@ -1,7 +1,7 @@
 #include "Library/Camera/CameraPoseUpdater.h"
 
 #include <gfx/seadCamera.h>
-#include <math/seadVectorFwd.h>
+#include <math/seadVector.h>
 #include <nn/oe.h>
 
 #include "Library/Area/AreaObjUtil.h"
@@ -32,8 +32,8 @@
 #include "Project/Camera/CameraAngleSwingInfo.h"
 #include "Project/Camera/CameraInterpole.h"
 
-namespace al {
 namespace {
+using namespace al;
 NERVE_IMPL(CameraPoseUpdater, Active);
 NERVE_IMPL(CameraPoseUpdater, Deactive);
 NERVE_IMPL(CameraPoseUpdater, Stop);
@@ -44,6 +44,7 @@ NERVE_IMPL(CameraPoseUpdater, SnapShotNoUpdate);
 NERVES_MAKE_STRUCT(CameraPoseUpdater, Deactive, Pause, Stop, SnapShotNoUpdate, SnapShot, Active);
 }  // namespace
 
+namespace al {
 CameraPoseUpdater::CameraPoseUpdater(SceneCameraInfo* sceneCamInfo, s32 viewIdx)
     : NerveExecutor("カメラの姿勢更新"), mSceneCamInfo(sceneCamInfo), mIsMainView(viewIdx == 0),
       mViewIdx(viewIdx) {
@@ -124,13 +125,12 @@ bool CameraPoseUpdater::trySwitchCamera() {
     if (!hasNext) {
         mTicket = nullptr;
 
-        bool didDeactivate = false;
         if (!isNerve(this, &NrvCameraPoseUpdater.Deactive)) {
             setNerve(this, &NrvCameraPoseUpdater.Deactive);
-            didDeactivate = true;
+            return true;
         }
 
-        return didDeactivate;
+        return false;
     }
 
     bool didActivate = false;
@@ -144,26 +144,6 @@ bool CameraPoseUpdater::trySwitchCamera() {
     mTicket = nextTicket;
 
     CameraStartInfo camStartInfo;
-    camStartInfo.prePriorityType = (CameraTicket::Priority)0xFFFFFFFF;
-    camStartInfo.isExistAreaAngleH = false;
-    camStartInfo.areaAngleH = 0.0f;
-    camStartInfo.isExistAreaAngleV = false;
-    camStartInfo.areaAngleV = 0.0f;
-    camStartInfo.isExistNextPoseByPreCamera = false;
-    camStartInfo.nextAngleHByPreCamera = 0.0f;
-    camStartInfo.nextAngleVByPreCamera = 0.0f;
-    camStartInfo.isInvalidCollidePreCamera = false;
-    camStartInfo.isInvalidKeepPreCameraDistance = false;
-    camStartInfo.isInvalidKeepPreCameraDistanceIfNoCollide = false;
-    camStartInfo.isValidResetPreCameraPose = false;
-    camStartInfo.isValidKeepPreSelfCameraPose = false;
-    camStartInfo._25 = false;
-    camStartInfo.preCameraName = nullptr;
-    camStartInfo.preCameraSwingAngleH = 0.0f;
-    camStartInfo.preCameraSwingAngleV = 0.0f;
-    camStartInfo.preCameraMaxSwingAngleH = 0.0f;
-    camStartInfo.preCameraMaxSwingAngleV = 0.0f;
-
     if (currTicket) {
         camStartInfo.prePriorityType = (CameraTicket::Priority)currTicket->getPriority();
         camStartInfo.preCameraName = currTicket->getPoser()->getName();
@@ -215,16 +195,13 @@ bool CameraPoseUpdater::trySwitchCamera() {
     mTicket->getPoser()->setViewInfo(mViewInfo);
     mTicket->getPoser()->appear(camStartInfo);
 
-    auto* interpole = mInterpole;
-    auto* ticket = mTicket;
-
     if (currTicket) {
-        interpole->start(ticket, mFovyDegree, mSwitcher->getNextInterpoleStep());
+        mInterpole->start(mTicket, mFovyDegree, mSwitcher->getNextInterpoleStep());
         mParamTransfer->tryTransferParam(currTicket->getPoser(), mTicket->getPoser());
         return didActivate;
     }
 
-    interpole->setTicket(ticket);
+    mInterpole->setTicket(mTicket);
     return didActivate;
 }
 
@@ -297,27 +274,25 @@ void CameraPoseUpdater::exeStop() {
         return;
     }
 
-    if (mStopJudge->isStop())
-        return;
-
-    if (mTicket) {
-        startInterpole(60);
-        setNerve(this, &NrvCameraPoseUpdater.Active);
-    } else {
-        setNerve(this, &NrvCameraPoseUpdater.Deactive);
+    if (!mStopJudge->isStop()) {
+        if (mTicket) {
+            startInterpole(60);
+            setNerve(this, &NrvCameraPoseUpdater.Active);
+        } else {
+            setNerve(this, &NrvCameraPoseUpdater.Deactive);
+        }
     }
 }
 
 void CameraPoseUpdater::exePause() {
-    if (mCtrlPausePtr->isCameraPause())
-        return;
-
-    if (mStopJudge->isStop())
-        setNerve(this, &NrvCameraPoseUpdater.Stop);
-    else if (mTicket)
-        setNerve(this, &NrvCameraPoseUpdater.Active);
-    else
-        setNerve(this, &NrvCameraPoseUpdater.Deactive);
+    if (!mCtrlPausePtr->isCameraPause()) {
+        if (mStopJudge->isStop())
+            setNerve(this, &NrvCameraPoseUpdater.Stop);
+        else if (mTicket)
+            setNerve(this, &NrvCameraPoseUpdater.Active);
+        else
+            setNerve(this, &NrvCameraPoseUpdater.Deactive);
+    }
 }
 
 void CameraPoseUpdater::exeSnapShot() {
@@ -332,7 +307,8 @@ void CameraPoseUpdater::exeSnapShot() {
 
     mFovyDegree = poser->getFovyDegree();
 
-    nn::album::ImageOrientation orientiation = nn::album::ImageOrientation_None;
+    // https://patents.google.com/patent/EP3449986A1/en
+    nn::album::ImageOrientation orientation = nn::album::ImageOrientation_None;
     sead::Vector3f lookDir = mLookAtCamera.getAt() - mLookAtCamera.getPos();
     if (tryNormalizeOrZero(&lookDir)) {
         sead::Vector3f worldUp = sead::Vector3f::ey;
@@ -342,14 +318,17 @@ void CameraPoseUpdater::exeSnapShot() {
         verticalizeVec(&cameraUp, lookDir, cameraUp);
         if (tryNormalizeOrZero(&worldUp) && tryNormalizeOrZero(&cameraUp)) {
             f32 rotation = calcAngleOnPlaneDegree(worldUp, cameraUp, lookDir);
-            orientiation = rotation > 60.0f  ? nn::album::ImageOrientation_Rotate270 :
-                           rotation < -60.0f ? nn::album::ImageOrientation_Rotate90 :
-                                               nn::album::ImageOrientation_None;
+            if (rotation > 60.0f)
+                orientation = nn::album::ImageOrientation_Rotate270;
+            else if (rotation < -60.0f)
+                orientation = nn::album::ImageOrientation_Rotate90;
+            else
+                orientation = nn::album::ImageOrientation_None;
         }
     }
 
-    nn::oe::setScreenShotImageOrientation(orientiation);
-    mSnapShotOrientation = orientiation;
+    nn::oe::setScreenShotImageOrientation(orientation);
+    mSnapShotOrientation = orientation;
 }
 
 void CameraPoseUpdater::endSnapShot() {
