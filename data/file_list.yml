@@ -200790,11 +200790,11 @@ NintendoSDK-NEX/Externals/curl/lib/vtls/nnssl.o:
   - offset: 0x71db64
     size: 208
     label: Curl_nnssl_close
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71dc34
     size: 184
     label: Curl_nnssl_check_cxn
-    status: NotDecompiled
+    status: Matching
   - offset: 0x71dcec
     size: 36
     label: Curl_nnssl_version
