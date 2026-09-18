@@ -50866,151 +50866,151 @@ Item/YoshiFruitWatcher.o:
   - offset: 0x1d7dbc
     size: 212
     label: _ZN17YoshiFruitWatcherC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d7e90
     size: 200
     label: _ZN17YoshiFruitWatcherC1Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d7f58
     size: 192
     label: _ZN17YoshiFruitWatcher26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8018
     size: 8
     label: _ZThn264_N17YoshiFruitWatcher26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8020
     size: 8
     label: _ZN17YoshiFruitWatcher19registerShineHolderEP21YoshiFruitShineHolder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8028
     size: 104
     label: _ZN17YoshiFruitWatcher13registerFruitEPN2al9LiveActorEP11SaveObjInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8090
     size: 8
     label: _ZN17YoshiFruitWatcher22noticeCurrentHackYoshiEP5Yoshi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8098
     size: 440
     label: _ZN17YoshiFruitWatcher14noticeGetFruitEPN2al9LiveActorEP11SaveObjInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8250
     size: 108
     label: _ZN17YoshiFruitWatcher12saveGetFruitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d82bc
     size: 56
     label: _ZN17YoshiFruitWatcher7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d82f4
     size: 4
     label: _ZN17YoshiFruitWatcher7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d82f8
     size: 204
     label: _ZN17YoshiFruitWatcher14exeGaugeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d83c4
     size: 180
     label: _ZN17YoshiFruitWatcher12exeGaugeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8478
     size: 208
     label: _ZN17YoshiFruitWatcher11exeGaugeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8548
     size: 64
     label: _ZN17YoshiFruitWatcher14exeDemoRequestEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8588
     size: 416
     label: _ZN17YoshiFruitWatcher12exeDemoGaugeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8728
     size: 304
     label: _ZN17YoshiFruitWatcher12exeDemoShineEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8858
     size: 148
     label: _ZN2rs13registerFruitEPN2al9LiveActorEP11SaveObjInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d88ec
     size: 64
     label: _ZN2rs24registerFruitShineHolderEP21YoshiFruitShineHolder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d892c
     size: 84
     label: _ZN2rs22noticeCurrentHackYoshiEP5Yoshi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d8980
     size: 64
     label: _ZN2rs14noticeGetFruitEPN2al9LiveActorEP11SaveObjInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d89c0
     size: 12
     label: _ZNK17YoshiFruitWatcher15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d89cc
     size: 4
     label: _ZN17YoshiFruitWatcherD1Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d89d0
     size: 4
     label: _ZN17YoshiFruitWatcherD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d89d4
     size: 12
     label: _ZThn264_NK17YoshiFruitWatcher15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d89e0
     size: 4
     label: _ZThn264_N17YoshiFruitWatcherD1Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d89e4
     size: 8
     label: _ZThn264_N17YoshiFruitWatcherD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d89ec
     size: 4
     label: _ZNK12_GLOBAL__N_124YoshiFruitWatcherNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1d89f0
     size: 68
     label: _ZNK12_GLOBAL__N_131YoshiFruitWatcherNrvDemoRequest7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1d8a34
     size: 8
     label: _ZNK12_GLOBAL__N_131YoshiFruitWatcherNrvGaugeAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1d8a3c
     size: 8
     label: _ZNK12_GLOBAL__N_129YoshiFruitWatcherNrvGaugeWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1d8a44
     size: 8
     label: _ZNK12_GLOBAL__N_128YoshiFruitWatcherNrvGaugeEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1d8a4c
     size: 8
     label: _ZNK12_GLOBAL__N_129YoshiFruitWatcherNrvDemoGauge7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1d8a54
     size: 8
     label: _ZNK12_GLOBAL__N_129YoshiFruitWatcherNrvDemoShine7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Layout/AimingCursor.o:
   '.text':
