@@ -61793,49 +61793,49 @@ MapObj/CapMessageAfterInformation.o:
   - offset: 0x235f30
     size: 132
     label: _ZN26CapMessageAfterInformationC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x235fb4
     size: 144
     label: _ZN26CapMessageAfterInformationC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236044
     size: 64
     label: _ZN26CapMessageAfterInformation13makeActorDeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236084
     size: 228
     label: _ZN26CapMessageAfterInformation4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236168
     size: 80
     label: _ZN26CapMessageAfterInformation7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2361b8
     size: 64
     label: _ZNK26CapMessageAfterInformation8isEnableEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2361f8
     size: 104
     label: _ZN26CapMessageAfterInformation7exeShowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236260
     size: 8
     label: _ZN26CapMessageAfterInformation7endShowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x236268
     size: 84
     label: _ZNK12_GLOBAL__N_133CapMessageAfterInformationNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2362bc
     size: 108
     label: _ZNK12_GLOBAL__N_133CapMessageAfterInformationNrvShow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x236328
     size: 12
     label: _ZNK12_GLOBAL__N_133CapMessageAfterInformationNrvShow12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/CapMessageAreaChecker.o:
   '.text':
@@ -133897,7 +133897,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b6f4c
     size: 52
     label: _ZN2al19createActorFunctionI26CapMessageAfterInformationEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b6f80
     size: 52
