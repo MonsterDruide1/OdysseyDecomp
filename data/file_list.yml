@@ -56650,214 +56650,214 @@ Layout/StageSceneLayout.o:
     label:
     - _ZN16StageSceneLayoutC1EPKcRKN2al14LayoutInitInfoEPKNS2_12PlayerHolderEPKNS2_17SubCameraRendererE
     - _ZN16StageSceneLayoutC2EPKcRKN2al14LayoutInitInfoEPKNS2_12PlayerHolderEPKNS2_17SubCameraRendererE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20c864
     size: 116
     label: _ZN16StageSceneLayout14startActionAllEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20c8d8
     size: 16
     label: _ZN16StageSceneLayout7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20c8e8
     size: 168
     label: _ZN16StageSceneLayout23updatePlayGuideMenuTextEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20c990
     size: 144
     label: _ZN16StageSceneLayout28setDirtyFlagForPlayGuideMenuEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ca20
     size: 380
     label: _ZN16StageSceneLayout5startEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cb9c
     size: 8
     label: _ZN16StageSceneLayout18updateCounterPartsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cba4
     size: 84
     label: _ZN16StageSceneLayout27tryAppearCoinCollectCounterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cbf8
     size: 96
     label: _ZN16StageSceneLayout13startOnlyCoinEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cc58
     size: 96
     label: _ZN16StageSceneLayout14endWithoutCoinEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ccb8
     size: 12
     label: _ZN16StageSceneLayout3endEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ccc4
     size: 28
     label: _ZNK16StageSceneLayout5isEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cce0
     size: 28
     label: _ZNK16StageSceneLayout6isWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ccfc
     size: 16
     label: _ZNK16StageSceneLayout8isActiveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cd0c
     size: 8
     label: _ZNK16StageSceneLayout13isEndLifeDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cd14
     size: 72
     label: _ZN16StageSceneLayout16tryStartLifeDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cd5c
     size: 48
     label: _ZN16StageSceneLayout18startCoinCountAnimEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cd8c
     size: 48
     label: _ZN16StageSceneLayout25startCoinCollectCountAnimEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cdbc
     size: 108
     label: _ZN16StageSceneLayout24appearCoinCounterForDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ce28
     size: 80
     label: _ZNK16StageSceneLayout18isEndCoinCountAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ce78
     size: 8
     label: _ZNK16StageSceneLayout26isEndShineChipCompleteAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ce80
     size: 88
     label: _ZN16StageSceneLayout26startShineChipCompleteAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20ced8
     size: 116
     label: _ZN16StageSceneLayout24endShineChipCompleteAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf4c
     size: 12
     label: _ZN16StageSceneLayout28tryStartDemoGetLifeMaxUpItemEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf58
     size: 8
     label: _ZNK16StageSceneLayout25isEndDemoGetLifeMaxUpItemEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf60
     size: 8
     label: _ZN16StageSceneLayout14killShineCountEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf68
     size: 8
     label: _ZN16StageSceneLayout20appearShineCountWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf70
     size: 8
     label: _ZN16StageSceneLayout11startClosetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf78
     size: 8
     label: _ZN16StageSceneLayout9endClosetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cf80
     size: 116
     label: _ZN16StageSceneLayout7missEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cff4
     size: 8
     label: _ZN16StageSceneLayout21appearPlayGuideCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20cffc
     size: 80
     label: _ZN16StageSceneLayout9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d04c
     size: 32
     label: _ZNK16StageSceneLayout14isActionEndAllEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d06c
     size: 124
     label: _ZN16StageSceneLayout7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d0e8
     size: 252
     label: _ZN16StageSceneLayout6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d1e4
     size: 260
     label: _ZN16StageSceneLayout17exeEndWithoutCoinEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d2e8
     size: 4
     label: _ZN16StageSceneLayout16exeCoinCountAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d2ec
     size: 4
     label: _ZN16StageSceneLayout20exeShineChipCompleteEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d2f0
     size: 4
     label: _ZN16StageSceneLayout19exeShineCountAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d2f4
     size: 8
     label: _ZN16StageSceneLayout17updateLifeCounterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d2fc
     size: 120
     label: _ZN16StageSceneLayout20updateKidsModeLayoutEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d374
     size: 56
     label: _ZN16StageSceneLayout19startShineCountAnimEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d3ac
     size: 8
     label: _ZNK16StageSceneLayout19isEndShineCountAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d3b4
     size: 36
     label: _ZN16StageSceneLayoutD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x20d3d8
     size: 8
     label: _ZNK12_GLOBAL__N_122StageSceneLayoutNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20d3e0
     size: 80
     label: _ZNK12_GLOBAL__N_125StageSceneLayoutNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20d430
     size: 8
     label: _ZNK12_GLOBAL__N_133StageSceneLayoutNrvEndWithoutCoin7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20d438
     size: 128
     label: _ZNK12_GLOBAL__N_123StageSceneLayoutNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20d4b8
     size: 4
     label: _ZNK12_GLOBAL__N_132StageSceneLayoutNrvCoinCountAnim7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20d4bc
     size: 4
     label: _ZNK12_GLOBAL__N_136StageSceneLayoutNrvShineChipComplete7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20d4c0
     size: 4
     label: _ZNK12_GLOBAL__N_135StageSceneLayoutNrvShineCountAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Layout/TalkMessage.o:
   '.text':
