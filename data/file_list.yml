@@ -269672,15 +269672,15 @@ Library/Play/Area/ViewCtrlArea.o:
   - offset: 0x971b50
     size: 80
     label: _ZN2al12ViewCtrlAreaC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x971ba0
     size: 92
     label: _ZN2al12ViewCtrlAreaC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x971bfc
     size: 44
     label: _ZN2al12ViewCtrlArea4initERKNS_12AreaInitInfoE
-    status: NotDecompiled
+    status: Matching
 Library/Play/Camera/ActorCameraSubTarget.o:
   '.text':
   - offset: 0x971c28
