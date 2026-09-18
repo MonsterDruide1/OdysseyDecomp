@@ -138684,34 +138684,34 @@ Scene/StageSceneStateBreakCageShine.o:
   - offset: 0x4d342c
     size: 200
     label: _ZN29StageSceneStateBreakCageShine9tryCreateEPN2al5SceneERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4d34f4
     size: 84
     label:
     - _ZN29StageSceneStateBreakCageShineC1EPKcPN2al5SceneEPNS2_16DeriveActorGroupI16CageShineWatcherEE
     - _ZN29StageSceneStateBreakCageShineC2EPKcPN2al5SceneEPNS2_16DeriveActorGroupI16CageShineWatcherEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4d3548
     size: 16
     label: _ZN29StageSceneStateBreakCageShine6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4d3558
     size: 12
     label: _ZN29StageSceneStateBreakCageShine4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4d3564
     size: 196
     label: _ZN29StageSceneStateBreakCageShine7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4d3628
     size: 36
     label: _ZN29StageSceneStateBreakCageShineD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4d364c
     size: 8
     label: _ZNK12_GLOBAL__N_136StageSceneStateBreakCageShineNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Scene/StageSceneStateCarryMeat.o:
   '.text':
