@@ -282231,52 +282231,56 @@ Library/Sequence/Sequence.o:
     label: _ZN2al16IUseSceneCreatorD0Ev
     status: Matching
     lazy: true
+Library/Sequence/SequenceInitInfo.o:
+  '.text':
   - offset: 0x9f2268
     size: 8
     label:
     - _ZN2al16SequenceInitInfoC1EPKNS_14GameSystemInfoE
     - _ZN2al16SequenceInitInfoC2EPKNS_14GameSystemInfoE
-    status: NotDecompiled
+    status: Matching
+Library/Sequence/SequenceUtil.o:
+  '.text':
   - offset: 0x9f2270
     size: 124
     label: _ZN2al16initSceneCreatorEPNS_16IUseSceneCreatorERKNS_16SequenceInitInfoEPNS_18GameDataHolderBaseEPNS_13AudioDirectorEPNS_21ScreenCaptureExecutorEPN15alSceneFunction12SceneFactoryE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f22ec
     size: 84
     label: _ZN2al18createSceneAndInitEPNS_16IUseSceneCreatorEPKcS3_iS3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f2340
     size: 96
     label: _ZN2al27createSceneAndUseInitThreadEPNS_16IUseSceneCreatorEPKciS3_iS3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f23a0
     size: 76
     label: _ZN2al15setSceneAndInitEPNS_16IUseSceneCreatorEPNS_5SceneEPKciS5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f23ec
     size: 100
     label: _ZN2al24setSceneAndUseInitThreadEPNS_16IUseSceneCreatorEPNS_5SceneEiPKciS5_PN4sead4HeapE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f2450
     size: 28
     label: _ZN2al21tryEndSceneInitThreadEPNS_16IUseSceneCreatorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f246c
     size: 28
     label: _ZN2al22isExistSceneInitThreadEPKNS_16IUseSceneCreatorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f2488
     size: 164
     label: _ZN2al17initAudioDirectorEPNS_8SequenceEPNS_15AudioSystemInfoERNS_21AudioDirectorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f252c
     size: 64
     label: _ZN2al39setSequenceAudioKeeperToSceneSeDirectorEPNS_8SequenceEPNS_5SceneE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f256c
     size: 4
     label: _ZN2al31setSequenceNameForActorPickToolEPNS_8SequenceEPNS_5SceneE
-    status: NotDecompiled
+    status: Matching
 Library/Shader/Block/UniformBlock.o:
   '.text':
   - offset: 0x9f2570
@@ -296944,41 +296948,41 @@ Project/Scene/SceneCreator.o:
     label:
     - _ZN2al12SceneCreatorC1EPKNS_14GameSystemInfoEPNS_18GameDataHolderBaseEPNS_21ScreenCaptureExecutorEPN15alSceneFunction12SceneFactoryEPNS_13AudioDirectorE
     - _ZN2al12SceneCreatorC2EPKNS_14GameSystemInfoEPNS_18GameDataHolderBaseEPNS_21ScreenCaptureExecutorEPN15alSceneFunction12SceneFactoryEPNS_13AudioDirectorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa7f8cc
     size: 316
     label: _ZN2al12SceneCreator11createSceneEPKcS2_iS2_bi
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa7fa08
     size: 360
     label: _ZN2al12SceneCreator21setSceneAndThreadInitEPNS_5SceneEPKciS4_iPN4sead4HeapE
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa7fb70
     size: 164
     label: _ZN2al12SceneCreator15setSceneAndInitEPNS_5SceneEPKciS4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa7fc14
     size: 60
     label: _ZN2al12SceneCreator16tryEndInitThreadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa7fc50
     size: 16
     label: _ZNK2al12SceneCreator17isExistInitThreadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0xa7fc60
     size: 36
     label: _ZNK2al10FunctorV1MIPNS_5SceneEMS1_FvRKNS_13SceneInitInfoEES5_EclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0xa7fc84
     size: 84
     label: _ZNK2al10FunctorV1MIPNS_5SceneEMS1_FvRKNS_13SceneInitInfoEES5_E5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0xa7fcd8
     size: 4
     label: _ZN2al10FunctorV1MIPNS_5SceneEMS1_FvRKNS_13SceneInitInfoEES5_ED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Project/Scene/SceneInitInfo.o:
   '.text':
