@@ -113306,23 +113306,23 @@ Player/EquipmentInfo.o:
     label:
     - _ZN13EquipmentInfoC1EPKN2al9LiveActorE
     - _ZN13EquipmentInfoC2EPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3f967c
     size: 16
     label: _ZN13EquipmentInfo12onNoCapThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3f968c
     size: 20
     label: _ZN13EquipmentInfo11onForceDashEif
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3f96a0
     size: 12
     label: _ZNK13EquipmentInfo12isNoCapThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3f96ac
     size: 12
     label: _ZNK13EquipmentInfo11isForceDashEv
-    status: NotDecompiled
+    status: Matching
 Player/HackCap.o:
   '.text':
   - offset: 0x3f96b8
