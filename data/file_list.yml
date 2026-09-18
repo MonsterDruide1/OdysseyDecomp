@@ -224467,52 +224467,50 @@ Library/Audio/System/AudioKeeperFunction.o:
     size: 80
     label: _ZN2al11AudioSystem22pauseSystemImmediatelyEbPKcb
     status: NotDecompiled
-Library/Audio/System/AudioResourcePlayer.o:
+Library/Audio/System/AudioResourcePlayerKeeper.o:
   '.text':
   - offset: 0x80b660
     size: 252
     label:
     - _ZN2al19AudioResourcePlayerC1EPKcS2_PNS_21AudioSoundArchiveInfoEPNS_26IAudioResourceInfoAccessorE
     - _ZN2al19AudioResourcePlayerC2EPKcS2_PNS_21AudioSoundArchiveInfoEPNS_26IAudioResourceInfoAccessorE
-    status: NotDecompiled
-Library/Audio/System/AudioResourcePlayerKeeper.o:
-  '.text':
+    status: Matching
   - offset: 0x80b75c
     size: 88
     label:
     - _ZN2al25AudioResourcePlayerKeeperC1Ev
     - _ZN2al25AudioResourcePlayerKeeperC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80b7b4
     size: 4
     label:
     - _ZN2al25AudioResourcePlayerKeeperD1Ev
     - _ZN2al25AudioResourcePlayerKeeperD2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80b7b8
     size: 4
     label: _ZN2al25AudioResourcePlayerKeeperD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80b7bc
     size: 392
     label: _ZN2al25AudioResourcePlayerKeeper34createAndAppendAudioResourcePlayerEPKcS2_PNS_21AudioSoundArchiveInfoEPNS_26IAudioResourceInfoAccessorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80b944
     size: 416
     label: _ZN2al25AudioResourcePlayerKeeper4initEibb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80bae4
     size: 112
     label: _ZNK2al25AudioResourcePlayerKeeper25tryGetAudioResourcePlayerEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80bb54
     size: 124
     label: _ZNK2al25AudioResourcePlayerKeeper21tryGetSeadAudioPlayerEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x80bbd0
     size: 92
     label: _ZN2al25AudioResourcePlayerKeeper6updateEv
-    status: NotDecompiled
+    status: Matching
 Library/Audio/System/AudioSystemInfo.o:
   '.text':
   - offset: 0x80bc2c
