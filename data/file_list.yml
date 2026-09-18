@@ -11109,66 +11109,66 @@ Boss/FireBlower/FireBlowerCap.o:
   - offset: 0x05de48
     size: 132
     label: _ZN13FireBlowerCapC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05decc
     size: 136
     label: _ZN13FireBlowerCapC1Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05df54
     size: 160
     label: _ZN13FireBlowerCap7initCapEPN2al9LiveActorERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05dff4
     size: 52
     label: _ZN13FireBlowerCap6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e028
     size: 56
     label: _ZN13FireBlowerCap9disappearEPKN2al9HitSensorES3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e060
     size: 88
     label: _ZN13FireBlowerCap9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e0b8
     size: 60
     label: _ZN13FireBlowerCap7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e0f4
     size: 52
     label: _ZN13FireBlowerCap22appearResetAttackStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e128
     size: 60
     label: _ZN13FireBlowerCap19exeResetAttackStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e164
     size: 60
     label: _ZN13FireBlowerCap12exeDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e1a0
     size: 16
     label: _ZNK13FireBlowerCap11isDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x05e1b0
     size: 64
     label: _ZNK12_GLOBAL__N_123FireBlowerCapNrvCapWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x05e1f0
     size: 64
     label: _ZNK12_GLOBAL__N_128FireBlowerCapNrvCapDisappear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x05e230
     size: 92
     label: _ZNK12_GLOBAL__N_125FireBlowerCapNrvCapAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x05e28c
     size: 64
     label: _ZNK12_GLOBAL__N_135FireBlowerCapNrvCapResetAttackStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x05e2cc
     size: 68
