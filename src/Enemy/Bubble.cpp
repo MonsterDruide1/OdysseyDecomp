@@ -1,6 +1,7 @@
 #include "Enemy/Bubble.h"
 
 #include "Library/Bgm/BgmLineFunction.h"
+#include "Library/Camera/ActorCameraTarget.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/Collider.h"
 #include "Library/Collision/CollisionParts.h"
@@ -27,7 +28,6 @@
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
 #include "Library/Placement/PlacementInfo.h"
-#include "Library/Play/Camera/ActorMatrixCameraTarget.h"
 #include "Library/Rail/RailUtil.h"
 #include "Library/Shadow/ActorShadowUtil.h"
 #include "Library/Stage/StageSwitchUtil.h"
