@@ -33301,63 +33301,63 @@ Enemy/JangoStateWaitTree.o:
     label:
     - _ZN18JangoStateWaitTreeC1EPN2al9LiveActorERKNS0_13ActorInitInfoE17JangoWaitTreeType
     - _ZN18JangoStateWaitTreeC2EPN2al9LiveActorERKNS0_13ActorInitInfoE17JangoWaitTreeType
-    status: NotDecompiled
+    status: Matching
   - offset: 0x133134
     size: 60
     label: _ZN18JangoStateWaitTree4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x133170
     size: 116
     label: _ZN18JangoStateWaitTree6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1331e4
     size: 200
     label: _ZN18JangoStateWaitTree7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1332ac
     size: 12
     label: _ZNK18JangoStateWaitTree9isEndDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1332b8
     size: 12
     label: _ZNK18JangoStateWaitTree9isEndFindEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1332c4
     size: 160
     label: _ZN18JangoStateWaitTree15exeWaitOnSwitchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x133364
     size: 148
     label: _ZN18JangoStateWaitTree21exeWaitPlayerOnGroundEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1333f8
     size: 4
     label: _ZN18JangoStateWaitTree6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1333fc
     size: 36
     label: _ZN18JangoStateWaitTreeD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x133420
     size: 164
     label: _ZNK12_GLOBAL__N_133JangoStateWaitTreeNrvWaitOnSwitch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1334c4
     size: 4
     label: _ZNK12_GLOBAL__N_128JangoStateWaitTreeNrvEndFind7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1334c8
     size: 4
     label: _ZNK12_GLOBAL__N_128JangoStateWaitTreeNrvEndDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1334cc
     size: 148
     label: _ZNK12_GLOBAL__N_139JangoStateWaitTreeNrvWaitPlayerOnGround7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/Joku.o:
   '.text':
