@@ -36,12 +36,12 @@ void FukankunZoomObjHolder::registerFukankunZoomObj(const al::LiveActor* actor,
 }
 
 void FukankunZoomObjHolder::registerFukankunZoomTargetActor(const al::LiveActor* actor,
-                                                            FukankunZoomType zoomType,
+                                                            s32 zoomType,
                                                             const sead::Vector3f& offset,
                                                             const char* jointName) {
     mFukankunZoomTargetActors.emplaceBack(FukankunZoomTargetActor{
         .actor = actor,
-        .zoomType = zoomType,
+        .zoomType = (FukankunZoomType)zoomType,
         .offset = offset,
         .targetJointName = jointName,
     });
@@ -81,7 +81,7 @@ const al::LiveActor* FukankunZoomObjHolder::tryGetFukankunZoomTargetActor(s32 in
 }
 
 bool FukankunZoomObjHolder::tryGetFukankunZoomTargetActorIsNoZoomOn(s32 index) const {
-    return mFukankunZoomTargetActors[index]->zoomType == FukankunZoomType_NoZoomOn;
+    return mFukankunZoomTargetActors[index]->zoomType == FukankunZoomType::NoZoomOn;
 }
 
 FukankunZoomType FukankunZoomObjHolder::tryGetFukankunZoomTargetActorZoomType(s32 index) const {
@@ -126,7 +126,7 @@ void declareUseFukankunZoomTargetActor(const al::LiveActor* actor) {
     al::getSceneObj<FukankunZoomObjHolder>(actor)->declareUseFukankunZoomTargetActor();
 }
 
-void registerFukankunZoomTargetActor(const al::LiveActor* actor, FukankunZoomType zoomType,
+void registerFukankunZoomTargetActor(const al::LiveActor* actor, s32 zoomType,
                                      const sead::Vector3f& offset, const char* jointName) {
     al::getSceneObj<FukankunZoomObjHolder>(actor)->registerFukankunZoomTargetActor(
         actor, zoomType, offset, jointName);

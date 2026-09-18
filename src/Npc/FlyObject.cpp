@@ -74,8 +74,8 @@ void FukanKunInteractionBase::init(FlyObject* flyObject, const al::ActorInitInfo
 }
 
 void FukanKunInteractionBase::setUp(FlyObject* flyObject) {
-    FukankunZoomTargetFunction::registerFukankunZoomTargetActor(flyObject, FukankunZoomType_ZoomOn,
-                                                                sead::Vector3f::zero, nullptr);
+    FukankunZoomTargetFunction::registerFukankunZoomTargetActor(
+        flyObject, (s32)FukankunZoomType::ZoomOn, sead::Vector3f::zero, nullptr);
 }
 
 void FukanKunInteractionBase::control(FlyObject* flyObject) {

@@ -26,12 +26,10 @@ struct FukankunZoomObjInfo {
 
 static_assert(sizeof(FukankunZoomObjInfo) == 0x10);
 
-typedef s32 FukankunZoomType;
-
-enum {
-    FukankunZoomType_ZoomOn = 0,
-    FukankunZoomType_NoZoomOn = 1,
-    FukankunZoomType_NearDistThres = 2,
+enum class FukankunZoomType : s32 {
+    ZoomOn = 0,
+    NoZoomOn = 1,
+    CameraNear = 2,
 };
 
 struct FukankunZoomTargetActor {
@@ -63,7 +61,7 @@ public:
     void declareUseFukankunZoomTargetActor();
 
     void registerFukankunZoomObj(const al::LiveActor* actor, const al::PlacementId* placementId);
-    void registerFukankunZoomTargetActor(const al::LiveActor* actor, FukankunZoomType zoomType,
+    void registerFukankunZoomTargetActor(const al::LiveActor* actor, s32 zoomType,
                                          const sead::Vector3f& offset, const char* jointName);
 
     s32 getFukankunZoomTargetActorNum() const;
@@ -90,7 +88,7 @@ static_assert(sizeof(FukankunZoomObjHolder) == 0x658);
 namespace FukankunZoomTargetFunction {
 
 void declareUseFukankunZoomTargetActor(const al::LiveActor* actor);
-void registerFukankunZoomTargetActor(const al::LiveActor* actor, FukankunZoomType zoomType,
+void registerFukankunZoomTargetActor(const al::LiveActor* actor, s32 zoomType,
                                      const sead::Vector3f& offset, const char* jointName);
 
 s32 getWatchCount(const al::LiveActor* actor);
