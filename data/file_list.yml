@@ -70599,138 +70599,136 @@ MapObj/FukankunZoomObjHolder.o:
     label:
     - _ZN21FukankunZoomObjHolderC1Ev
     - _ZN21FukankunZoomObjHolderC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28ae84
     size: 208
     label: _ZN21FukankunZoomObjHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28af54
     size: 88
     label: _ZN21FukankunZoomObjHolder7executeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28afac
     size: 128
     label: _ZN21FukankunZoomObjHolder21tryGetFukankunZoomObjERKN2al11PlacementIdE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b02c
     size: 16
     label: _ZN21FukankunZoomObjHolder33declareUseFukankunZoomTargetActorEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b03c
     size: 76
     label: _ZN21FukankunZoomObjHolder23registerFukankunZoomObjEPKN2al9LiveActorEPKNS0_11PlacementIdE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b088
     size: 152
     label: _ZN21FukankunZoomObjHolder31registerFukankunZoomTargetActorEPKN2al9LiveActorEiRKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b120
     size: 8
     label: _ZNK21FukankunZoomObjHolder29getFukankunZoomTargetActorNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b128
     size: 16
     label: _ZNK21FukankunZoomObjHolder29tryGetFukankunZoomTargetActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b138
     size: 24
     label: _ZNK21FukankunZoomObjHolder39tryGetFukankunZoomTargetActorIsNoZoomOnEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b150
     size: 16
     label: _ZNK21FukankunZoomObjHolder37tryGetFukankunZoomTargetActorZoomTypeEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b160
     size: 40
     label: _ZNK21FukankunZoomObjHolder35tryGetFukankunZoomTargetActorOffsetEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b188
     size: 16
     label: _ZNK21FukankunZoomObjHolder44tryGetFukankunZoomTargetActorTargetJointNameEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b198
     size: 24
     label: _ZN21FukankunZoomObjHolder35declareWatchFukankunZoomTargetActorEPK8Fukankuni
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b1b0
     size: 76
     label: _ZNK21FukankunZoomObjHolder13getWatchCountEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b1fc
     size: 48
     label: _ZNK21FukankunZoomObjHolder34tryGetActiveFukankunLinkedShineMtxEPPKN4sead8Matrix34IfEE
-    status: NotDecompiled
-MapObj/FukankunZoomTargetFunction.o:
-  '.text':
+    status: Matching
   - offset: 0x28b22c
     size: 48
     label: _ZN26FukankunZoomTargetFunction33declareUseFukankunZoomTargetActorEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b25c
     size: 216
     label: _ZN26FukankunZoomTargetFunction31registerFukankunZoomTargetActorEPKN2al9LiveActorEiRKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b334
     size: 120
     label: _ZN26FukankunZoomTargetFunction13getWatchCountEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b3ac
     size: 8
     label: _ZN26FukankunZoomTargetFunction28getFukankunWatchCountDefaultEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b3b4
     size: 12
     label: _ZN26FukankunZoomTargetFunction30getFukankunCameraNearDistThresEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b3c0
     size: 84
     label: _ZN26FukankunZoomTargetFunction34tryGetActiveFukankunLinkedShineMtxEPPKN4sead8Matrix34IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b414
     size: 172
     label: _ZN26FukankunZoomTargetFunction21tryGetFukankunZoomObjEPKN2al18IUseSceneObjHolderERKNS0_13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b4c0
     size: 160
     label: _ZN26FukankunZoomTargetFunction23registerFukankunZoomObjEPKN2al9LiveActorERKNS0_13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b560
     size: 28
     label: _ZN26FukankunZoomTargetFunction29getFukankunZoomTargetActorNumEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b57c
     size: 48
     label: _ZN26FukankunZoomTargetFunction29tryGetFukankunZoomTargetActorEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b5ac
     size: 56
     label: _ZN26FukankunZoomTargetFunction39tryGetFukankunZoomTargetActorIsNoZoomOnEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b5e4
     size: 48
     label: _ZN26FukankunZoomTargetFunction37tryGetFukankunZoomTargetActorZoomTypeEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b614
     size: 68
     label: _ZN26FukankunZoomTargetFunction35tryGetFukankunZoomTargetActorOffsetEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b658
     size: 48
     label: _ZN26FukankunZoomTargetFunction44tryGetFukankunZoomTargetActorTargetJointNameEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b688
     size: 72
     label: _ZN26FukankunZoomTargetFunction35declareWatchFukankunZoomTargetActorEPK8Fukankuni
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b6d0
     size: 12
     label: _ZNK21FukankunZoomObjHolder15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x28b6dc
     size: 4
     label: _ZN21FukankunZoomObjHolderD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/FurnitureStateWait.o:
   '.text':

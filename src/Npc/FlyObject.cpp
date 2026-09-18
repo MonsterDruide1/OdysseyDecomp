@@ -14,7 +14,7 @@
 #include "Library/Rail/RailUtil.h"
 
 #include "MapObj/CapMessageShowInfo.h"
-#include "MapObj/FukankunZoomTargetFunction.h"
+#include "MapObj/FukankunZoomObjHolder.h"
 #include "Util/ItemUtil.h"
 
 namespace {
@@ -74,8 +74,8 @@ void FukanKunInteractionBase::init(FlyObject* flyObject, const al::ActorInitInfo
 }
 
 void FukanKunInteractionBase::setUp(FlyObject* flyObject) {
-    FukankunZoomTargetFunction::registerFukankunZoomTargetActor(flyObject, 0, sead::Vector3f::zero,
-                                                                nullptr);
+    FukankunZoomTargetFunction::registerFukankunZoomTargetActor(
+        flyObject, (s32)FukankunZoomType::ZoomOn, sead::Vector3f::zero, nullptr);
 }
 
 void FukanKunInteractionBase::control(FlyObject* flyObject) {
