@@ -78875,60 +78875,60 @@ MapObj/PeachWorldGate.o:
   - offset: 0x2dd684
     size: 124
     label: _ZN14PeachWorldGateC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dd700
     size: 136
     label: _ZN14PeachWorldGateC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dd788
     size: 280
     label: _ZN14PeachWorldGate4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dd8a0
     size: 88
     label: _ZN14PeachWorldGate5startEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dd8f8
     size: 60
     label: _ZN14PeachWorldGate12exeCloseWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dd934
     size: 168
     label: _ZN14PeachWorldGate7exeOpenEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dd9dc
     size: 76
     label: _ZN14PeachWorldGate11exeOpenWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2dda28
     size: 80
     label: _ZNK12_GLOBAL__N_125PeachWorldGateNrvOpenWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2dda78
     size: 64
     label: _ZNK12_GLOBAL__N_126PeachWorldGateNrvCloseWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ddab8
     size: 8
     label: _ZNK12_GLOBAL__N_121PeachWorldGateNrvOpen7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ddac0
     size: 28
     label: _ZNK2al10FunctorV0MIP14PeachWorldGateMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2ddadc
     size: 76
     label: _ZNK2al10FunctorV0MIP14PeachWorldGateMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2ddb28
     size: 4
     label: _ZN2al10FunctorV0MIP14PeachWorldGateMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/PeachWorldMoatWater.o:
   '.text':
@@ -135067,7 +135067,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4ba1f8
     size: 52
     label: _ZN2al19createActorFunctionI14PeachWorldGateEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4ba22c
     size: 52
