@@ -151765,27 +151765,27 @@ System/VisitStageData.o:
     label:
     - _ZN14VisitStageDataC1Ev
     - _ZN14VisitStageDataC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x53e998
     size: 72
     label: _ZN14VisitStageData4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x53e9e0
     size: 140
     label: _ZNK14VisitStageData17checkAlreadyVisitEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x53ea6c
     size: 168
     label: _ZN14VisitStageData5visitEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x53eb14
     size: 144
     label: _ZN14VisitStageData5writeEPN2al11ByamlWriterE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x53eba4
     size: 252
     label: _ZN14VisitStageData4readERKN2al9ByamlIterE
-    status: NotDecompiled
+    status: Matching
 System/WorldList.o:
   '.text':
   - offset: 0x53eca0
