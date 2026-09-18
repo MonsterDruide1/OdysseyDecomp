@@ -158490,31 +158490,31 @@ Util/ScenePlayerCapFunction.o:
   - offset: 0x573a0c
     size: 276
     label: _ZN17PlayerCapFunction30tryCalcHackCapThrowInputNormalEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573b20
     size: 60
     label: _ZN17PlayerCapFunction19getCapPadRumblePortEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573b5c
     size: 88
     label: _ZN17PlayerCapFunction27isEnableBirdLandPlayerCapOnEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573bb4
     size: 116
     label: _ZN25InformationWindowFunction28isShowPlayerHackHackTutorialEPKN2al9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573c28
     size: 64
     label: _ZN25InformationWindowFunction24isShowPlayerBindTutorialEPKN2al9LiveActorERK8BindInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573c68
     size: 112
     label: _ZN25InformationWindowFunction29setShowPlayerHackHackTutorialEPKN2al9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x573cd8
     size: 36
     label: _ZN17EventFlowFunction19isCapTargetHackTypeEPK13CapTargetInfoi
-    status: NotDecompiled
+    status: Matching
 Util/ScenePlayerDokanActionFunction.o:
   '.text':
   - offset: 0x573cfc
