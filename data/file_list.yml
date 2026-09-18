@@ -21392,104 +21392,104 @@ Boss/SmallWanderBoss/SmallWanderBossBullet.o:
   - offset: 0x0bab08
     size: 156
     label: _ZN21SmallWanderBossBulletC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0baba4
     size: 168
     label: _ZN21SmallWanderBossBulletC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bac4c
     size: 276
     label: _ZN21SmallWanderBossBullet4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bad60
     size: 44
     label: _ZN21SmallWanderBossBullet6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bad8c
     size: 36
     label: _ZN21SmallWanderBossBullet4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0badb0
     size: 240
     label: _ZN21SmallWanderBossBullet7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0baea0
     size: 152
     label: _ZN21SmallWanderBossBullet12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0baf38
     size: 216
     label: _ZN21SmallWanderBossBullet10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb010
     size: 248
     label: _ZN21SmallWanderBossBullet12appearAttachEPKN4sead8Matrix34IfEEPKNS0_7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb108
     size: 248
     label: _ZN21SmallWanderBossBullet21appearAttachParabolicEPKN4sead8Matrix34IfEEPKNS0_7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb200
     size: 100
     label: _ZN21SmallWanderBossBullet20tryStartFlyParabolicERKN4sead7Vector3IfEEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb264
     size: 100
     label: _ZN21SmallWanderBossBullet11startLaunchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb2c8
     size: 208
     label: _ZN21SmallWanderBossBullet15exeAppearAttachEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb398
     size: 260
     label: _ZN21SmallWanderBossBullet6exeFlyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb49c
     size: 92
     label: _ZN21SmallWanderBossBullet19resetPositionByAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb4f8
     size: 292
     label: _ZN21SmallWanderBossBullet10exeFlyDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb61c
     size: 252
     label: _ZN21SmallWanderBossBullet16exeSignExplosionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb718
     size: 156
     label: _ZN21SmallWanderBossBullet12exeExplosionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0bb7b4
     size: 8
     label: _ZNK12_GLOBAL__N_127SmallWanderBossBulletNrvFly7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bb7bc
     size: 8
     label: _ZNK12_GLOBAL__N_133SmallWanderBossBulletNrvExplosion7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bb7c4
     size: 212
     label: _ZNK12_GLOBAL__N_136SmallWanderBossBulletNrvAppearAttach7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bb898
     size: 212
     label: _ZNK12_GLOBAL__N_145SmallWanderBossBulletNrvAppearAttachParabolic7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bb96c
     size: 8
     label: _ZNK12_GLOBAL__N_131SmallWanderBossBulletNrvFlyDown7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0bb974
     size: 8
     label: _ZNK12_GLOBAL__N_137SmallWanderBossBulletNrvSignExplosion7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/SmallWanderBoss/SmallWanderBossStateAttack.o:
   '.text':
