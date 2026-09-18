@@ -114555,19 +114555,19 @@ Player/HackerJudgeNormalFall.o:
     label:
     - _ZN21HackerJudgeNormalFallC1EPKN2al9LiveActorEi
     - _ZN21HackerJudgeNormalFallC2EPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40eac4
     size: 8
     label: _ZN21HackerJudgeNormalFall5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40eacc
     size: 100
     label: _ZN21HackerJudgeNormalFall6updateEv
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x40eb30
     size: 16
     label: _ZNK21HackerJudgeNormalFall5judgeEv
-    status: NotDecompiled
+    status: Matching
 Player/HackerJudgeStartJump.o:
   '.text':
   - offset: 0x40eb40
