@@ -37243,98 +37243,98 @@ Enemy/KuriboWingHackState.o:
     label:
     - _ZN19KuriboWingHackStateC1EPN2al9LiveActorEPP14IUsePlayerHack
     - _ZN19KuriboWingHackStateC2EPN2al9LiveActorEPP14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15d62c
     size: 132
     label: _ZN19KuriboWingHackState6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15d6b0
     size: 4
     label: _ZN19KuriboWingHackState7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15d6b4
     size: 56
     label: _ZN19KuriboWingHackState4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15d6ec
     size: 364
     label: _ZN19KuriboWingHackState7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15d858
     size: 320
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_114updateVelocityEPN2al9LiveActorEPK19KuriboWingHackStatePK14IUsePlayerHack
+    status: Matching
   - offset: 0x15d998
     size: 236
     label: _ZN19KuriboWingHackState7exeWalkEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15da84
     size: 380
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_110updateMoveEPfPN2al9LiveActorEPK14IUsePlayerHack
+    status: Matching
   - offset: 0x15dc00
     size: 232
     label: _ZN19KuriboWingHackState7exeLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15dce8
     size: 88
     label: _ZN19KuriboWingHackState6exeFlyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15dd40
     size: 324
     label: _ZN19KuriboWingHackState7exeFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15de84
     size: 240
     label: _ZN19KuriboWingHackState16exeAttackTrampleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15df74
     size: 260
     label: _ZN19KuriboWingHackState12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15e078
     size: 24
     label: _ZN19KuriboWingHackState13resetFlyLimitERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x15e090
     size: 36
     label: _ZN19KuriboWingHackStateD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x15e0b4
     size: 8
     label: _ZNK12_GLOBAL__N_126KuriboWingHackStateNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x15e0bc
     size: 92
     label: _ZNK12_GLOBAL__N_125KuriboWingHackStateNrvFly7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x15e118
     size: 8
     label: _ZNK12_GLOBAL__N_126KuriboWingHackStateNrvWalk7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x15e120
     size: 8
     label: _ZNK12_GLOBAL__N_129KuriboWingHackStateNrvMoveAir7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x15e128
     size: 8
     label: _ZNK12_GLOBAL__N_126KuriboWingHackStateNrvLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x15e130
     size: 8
     label: _ZNK12_GLOBAL__N_126KuriboWingHackStateNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x15e138
     size: 8
     label: _ZNK12_GLOBAL__N_135KuriboWingHackStateNrvAttackTrample7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/KuromadoMagicBall.o:
   '.text':
