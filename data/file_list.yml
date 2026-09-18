@@ -24265,89 +24265,89 @@ Demo/DemoStateHackFirst.o:
     label:
     - _ZN18DemoStateHackFirstC1EPN2al9LiveActorERKNS0_13ActorInitInfoE
     - _ZN18DemoStateHackFirstC2EPN2al9LiveActorERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4544
     size: 92
     label: _ZN18DemoStateHackFirst6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d45a0
     size: 12
     label: _ZN18DemoStateHackFirst4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d45ac
     size: 100
     label: _ZNK18DemoStateHackFirst11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4610
     size: 100
     label: _ZThn32_NK18DemoStateHackFirst11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4674
     size: 8
     label: _ZNK18DemoStateHackFirst16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d467c
     size: 8
     label: _ZThn32_NK18DemoStateHackFirst16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4684
     size: 40
     label: _ZN18DemoStateHackFirst8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d46ac
     size: 184
     label: _ZN18DemoStateHackFirst7endDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4764
     size: 40
     label: _ZThn32_N18DemoStateHackFirst8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d478c
     size: 16
     label: _ZN18DemoStateHackFirst22updateOnlyDemoGraphicsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d479c
     size: 16
     label: _ZThn32_N18DemoStateHackFirst22updateOnlyDemoGraphicsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d47ac
     size: 148
     label: _ZN18DemoStateHackFirst20tryHackFirstDemoWaitEPKN2al9SensorMsgE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4840
     size: 212
     label: _ZNK18DemoStateHackFirst20isEnableShowHackDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4914
     size: 220
     label: _ZN18DemoStateHackFirst12tryHackFirstEPP14IUsePlayerHackPKN2al9SensorMsgEPNS3_9HitSensorES8_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d49f0
     size: 76
     label: _ZN18DemoStateHackFirst7exeDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4a3c
     size: 4
     label: _ZN18DemoStateHackFirst6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4a40
     size: 100
     label: _ZN2rs27tryCreateDemoStateHackFirstEPN2al9LiveActorERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d4aa4
     size: 36
     label: _ZN18DemoStateHackFirstD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0d4ac8
     size: 80
     label: _ZNK12_GLOBAL__N_125DemoStateHackFirstNrvDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0d4b18
     size: 4
     label: _ZNK12_GLOBAL__N_124DemoStateHackFirstNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Demo/OpeningStageStartDemo.o:
   '.text':
