@@ -42,7 +42,7 @@ void HelpAmiiboCountUpCoin::initAfterPlacement(const al::ActorInitInfo& initInfo
     mLifeUpItem2D = new LifeUpItem2D("ライフアップアイテム2D[amiibo]");
     al::initCreateActorNoPlacementInfo(mLifeUpItem2D, initInfo);
     mLifeUpItem2D->makeActorDead();
-    mLifeUpItem2D->setBool130(true);
+    mLifeUpItem2D->setIsAmiiboTouch(true);
     mCoinBuffer.allocBuffer(3, nullptr);
     mCoin2DBuffer.allocBuffer(3, nullptr);
 
