@@ -83,6 +83,8 @@ public:
 
     DrawSystemInfo* getDrawSystemInfo() const { return mDrawSystemInfo; }
 
+    bool isAlive() const { return mIsAlive; }
+
 private:
     bool mIsAlive = false;
     sead::FixedSafeString<0x40> mName;

@@ -40,6 +40,9 @@ public:
 
     T* getHost() const { return mHost; }
 
+protected:
+    T** getHostPtr() { return &mHost; }
+
 private:
     T* mHost;
 };
