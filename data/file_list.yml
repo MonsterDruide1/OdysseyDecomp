@@ -56864,207 +56864,207 @@ Layout/TalkMessage.o:
   - offset: 0x20d4c4
     size: 140
     label: _ZN11TalkMessageC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d550
     size: 152
     label: _ZN11TalkMessageC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d5e8
     size: 20
     label: _ZN11TalkMessage14initLayoutTalkERKN2al14LayoutInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d5fc
     size: 292
     label: _ZN11TalkMessage25initLayoutWithArchiveNameERKN2al14LayoutInitInfoEPKcS5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d720
     size: 32
     label: _ZN11TalkMessage19initLayoutImportantERKN2al14LayoutInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d740
     size: 20
     label: _ZN11TalkMessage14initLayoutOverERKN2al14LayoutInitInfoEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d754
     size: 24
     label: _ZN11TalkMessage22initLayoutForEventTalkERKN2al14LayoutInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d76c
     size: 36
     label: _ZN11TalkMessage27initLayoutForEventImportantERKN2al14LayoutInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d790
     size: 460
     label: _ZN11TalkMessage11startForNpcEPKN2al9LiveActorEPKDsS5_PKNS0_20MessageTagDataHolderEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20d95c
     size: 188
     label: _ZN11TalkMessage5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20da18
     size: 328
     label: _ZN11TalkMessage14startForSystemEPKDsPKN2al20MessageTagDataHolderEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20db60
     size: 64
     label: _ZN11TalkMessage3endEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dba0
     size: 16
     label: _ZNK11TalkMessage10isIconWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dbb0
     size: 56
     label: _ZN11TalkMessage4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dbe8
     size: 72
     label: _ZNK11TalkMessage6isWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dc30
     size: 8
     label: _ZN11TalkMessage26startSelectWithChoiceTableEPPKDsii
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dc38
     size: 8
     label: _ZN11TalkMessage25startSelectWithChoiceInfoEPKN2al19EventFlowChoiceInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dc40
     size: 8
     label: _ZNK11TalkMessage14isSelectDecideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dc48
     size: 12
     label: _ZNK11TalkMessage22getSelectedChoiceIndexEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dc54
     size: 320
     label: _ZN11TalkMessage9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dd94
     size: 200
     label: _ZN11TalkMessage17exeAppearWithTextEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20de5c
     size: 372
     label: _ZN11TalkMessage11exeTextAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dfd0
     size: 32
     label: _ZN11TalkMessage18exeIconAppearDelayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20dff0
     size: 120
     label: _ZN11TalkMessage13exeIconAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e068
     size: 176
     label: _ZN11TalkMessage11exeIconWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e118
     size: 4
     label: _ZN11TalkMessage20exeIconWaitTriggeredEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e11c
     size: 124
     label: _ZN11TalkMessage15exeIconPageNextEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e198
     size: 220
     label: _ZN11TalkMessage30exeIconPageNextAndPlayNextPageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e274
     size: 308
     label: _ZN11TalkMessage33exeIconPageNextAndLoadNextMessageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e3a8
     size: 124
     label: _ZN11TalkMessage14exeIconPageEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e424
     size: 92
     label: _ZN11TalkMessage7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e480
     size: 192
     label: _ZN11TalkMessage6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e540
     size: 360
     label: _ZN11TalkMessage6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e6a8
     size: 44
     label: _ZN11TalkMessage7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e6d4
     size: 12
     label: _ZN11TalkMessage17startIconPageNextEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x20e6e0
     size: 8
     label: _ZNK12_GLOBAL__N_144TalkMessageNrvIconPageNextAndLoadNextMessage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e6e8
     size: 128
     label: _ZNK12_GLOBAL__N_125TalkMessageNrvIconPageEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e768
     size: 8
     label: _ZNK12_GLOBAL__N_117TalkMessageNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e770
     size: 96
     label: _ZNK12_GLOBAL__N_118TalkMessageNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e7d0
     size: 36
     label: _ZNK12_GLOBAL__N_129TalkMessageNrvIconAppearDelay7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e7f4
     size: 124
     label: _ZNK12_GLOBAL__N_124TalkMessageNrvIconAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e870
     size: 8
     label: _ZNK12_GLOBAL__N_122TalkMessageNrvIconWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e878
     size: 8
     label: _ZNK12_GLOBAL__N_141TalkMessageNrvIconPageNextAndPlayNextPage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e880
     size: 4
     label: _ZNK12_GLOBAL__N_131TalkMessageNrvIconWaitTriggered7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e884
     size: 8
     label: _ZNK12_GLOBAL__N_122TalkMessageNrvTextAnim7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e88c
     size: 8
     label: _ZNK12_GLOBAL__N_128TalkMessageNrvAppearWithText7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e894
     size: 8
     label: _ZNK12_GLOBAL__N_120TalkMessageNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x20e89c
     size: 128
     label: _ZNK12_GLOBAL__N_126TalkMessageNrvIconPageNext7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Layout/TestFilterGlasses.o:
   '.text':
