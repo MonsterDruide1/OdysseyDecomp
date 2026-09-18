@@ -17,8 +17,9 @@ jobs:
         uses: actions/github-script@v9
         with:
           script: |
+            label = context.pull_request.user.login === 'renovate[bot]' ? 'status:ready to merge' : 'status:waiting for review'
             github.rest.issues.addLabels({
               ...context.repo,
               issue_number: context.payload.pull_request.number,
-              labels: ['status:waiting for review']
+              labels: [label]
             })
