@@ -76685,82 +76685,82 @@ MapObj/MoonBasementMeteorPointObj.o:
   - offset: 0x2c3968
     size: 148
     label: _ZN26MoonBasementMeteorPointObjC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c39fc
     size: 160
     label: _ZN26MoonBasementMeteorPointObjC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3a9c
     size: 452
     label: _ZN26MoonBasementMeteorPointObj4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3c60
     size: 12
     label: _ZN26MoonBasementMeteorPointObj13onChangeTransEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2c3c6c
     size: 8
     label: _ZN26MoonBasementMeteorPointObj14offChangeTransEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2c3c74
     size: 72
     label: _ZN26MoonBasementMeteorPointObj13onSwitchStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3cbc
     size: 44
     label: _ZN26MoonBasementMeteorPointObj14offSwitchStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3ce8
     size: 88
     label: _ZN26MoonBasementMeteorPointObj18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3d40
     size: 52
     label: _ZN26MoonBasementMeteorPointObj8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3d74
     size: 16
     label: _ZN26MoonBasementMeteorPointObj8exeDelayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3d84
     size: 120
     label: _ZN26MoonBasementMeteorPointObj7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3dfc
     size: 4
     label: _ZN26MoonBasementMeteorPointObj7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2c3e00
     size: 124
     label: _ZNK12_GLOBAL__N_133MoonBasementMeteorPointObjNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c3e7c
     size: 20
     label: _ZNK12_GLOBAL__N_134MoonBasementMeteorPointObjNrvDelay7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c3e90
     size: 4
     label: _ZNK12_GLOBAL__N_133MoonBasementMeteorPointObjNrvStop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2c3e94
     size: 28
     label: _ZNK2al10FunctorV0MIP26MoonBasementMeteorPointObjMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2c3eb0
     size: 76
     label: _ZNK2al10FunctorV0MIP26MoonBasementMeteorPointObjMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x2c3efc
     size: 4
     label: _ZN2al10FunctorV0MIP26MoonBasementMeteorPointObjMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/MoonBasementPillar.o:
   '.text':
@@ -134877,7 +134877,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b9938
     size: 52
     label: _ZN2al19createActorFunctionI26MoonBasementMeteorPointObjEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b996c
     size: 52
