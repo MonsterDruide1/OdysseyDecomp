@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 namespace sead {
@@ -171,6 +172,11 @@ bool isEitherPadHoldB();
 
 const sead::Vector2f& getLeftStick(s32 port = -1);
 const sead::Vector2f& getRightStick(s32 port = -1);
+
+bool tryGetPadAcceleration(sead::Vector3f* acceleration, s32 port = -1, s32 index = 0);
+bool isShakePadAcceleration(f32 threshold, s32 port = -1, s32 index = 0);
+bool isPadConnectedJoyPadDouble();
+void getPadPoseMtx(sead::Matrix33f* mtx, s32 port = -1, s32 index = 0);
 
 void getPadCrossDir(sead::Vector2f* dir, s32 port);
 void getPadCrossDirSideways(sead::Vector2f* dir, s32 port);
