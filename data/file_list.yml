@@ -50631,27 +50631,27 @@ Item/ShineFukankunWatchObj.o:
   - offset: 0x1d5f04
     size: 124
     label: _ZN21ShineFukankunWatchObjC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d5f80
     size: 136
     label: _ZN21ShineFukankunWatchObjC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d6008
     size: 188
     label: _ZN21ShineFukankunWatchObj4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d60c4
     size: 20
     label: _ZN21ShineFukankunWatchObj18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d60d8
     size: 140
     label: _ZN21ShineFukankunWatchObj7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1d6164
     size: 144
     label: _ZNK12_GLOBAL__N_128ShineFukankunWatchObjNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Item/ShineInfo.o:
   '.text':
@@ -135422,7 +135422,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4bbb5c
     size: 52
     label: _ZN2al19createActorFunctionI21ShineFukankunWatchObjEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4bbb90
     size: 52
