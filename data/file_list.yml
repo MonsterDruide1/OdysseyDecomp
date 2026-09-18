@@ -43055,35 +43055,35 @@ Enemy/TRexPatrolRouteRider.o:
     label:
     - _ZN20TRexPatrolRouteRiderC1Ev
     - _ZN20TRexPatrolRouteRiderC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f444
     size: 56
     label: _ZN20TRexPatrolRouteRider4initEPK22TRexPatrolRouteBuilder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f47c
     size: 48
     label: _ZN20TRexPatrolRouteRider10resetRouteEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f4ac
     size: 172
     label: _ZN20TRexPatrolRouteRider4moveEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f558
     size: 56
     label: _ZN20TRexPatrolRouteRider13recoveryRouteERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f590
     size: 232
     label: _ZN20TRexPatrolRouteRider12rebuildRouteERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f678
     size: 232
     label: _ZNK20TRexPatrolRouteRider9calcTransEPN4sead7Vector3IfEEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x19f760
     size: 108
     label: _ZNK20TRexPatrolRouteRider12calcMoveDirHEPN4sead7Vector3IfEERKS2_
-    status: NotDecompiled
+    status: Matching
 Enemy/TRexStatePatrolChase.o:
   '.text':
   - offset: 0x19f7cc
