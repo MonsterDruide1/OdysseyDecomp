@@ -99687,27 +99687,27 @@ Npc/AmiiboNpcStateChangeCostume.o:
     label:
     - _ZN27AmiiboNpcStateChangeCostumeC1EPN2al9LiveActorERKNS0_13PlacementInfoEPNS0_17EventFlowExecutorE
     - _ZN27AmiiboNpcStateChangeCostumeC2EPN2al9LiveActorERKNS0_13PlacementInfoEPNS0_17EventFlowExecutorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x37b2ac
     size: 128
     label: _ZN27AmiiboNpcStateChangeCostume4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x37b32c
     size: 104
     label: _ZN27AmiiboNpcStateChangeCostume6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x37b394
     size: 64
     label: _ZN27AmiiboNpcStateChangeCostume7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x37b3d4
     size: 120
     label: _ZN27AmiiboNpcStateChangeCostume12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x37b44c
     size: 36
     label: _ZN27AmiiboNpcStateChangeCostumeD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Npc/BigBirdStateFlyAway.o:
   '.text':
