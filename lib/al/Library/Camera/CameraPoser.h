@@ -18,7 +18,7 @@ namespace al {
 class AudioDirector;
 class ByamlIter;
 class CameraAngleCtrlInfo;
-class CameraAngleSwingInfo;
+struct CameraAngleSwingInfo;
 class CameraArrowCollider;
 class CameraInputHolder;
 class CameraOffsetCtrlPreset;
@@ -29,7 +29,7 @@ class CameraTargetCollideInfoHolder;
 class CameraTargetHolder;
 class CameraTurnInfo;
 class CameraVerticalAbsorber;
-class CameraViewInfo;
+struct CameraViewInfo;
 class GyroCameraCtrl;
 class Nerve;
 class PlacementInfo;
@@ -217,6 +217,8 @@ public:
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; }
 
+    f32 getNearClipDistance() const { return mNearClipDistance; }
+
     bool is_98() const { return _98; }
 
     CameraViewInfo* getViewInfo() const { return mViewInfo; }
@@ -251,6 +253,8 @@ public:
     void setViewMtx(const sead::Matrix34f& mtx) { mViewMtx = mtx; }
 
     void setFovyDegree(f32 fovy) { mFovyDegree = fovy; }
+
+    void setViewInfo(CameraViewInfo* info) { mViewInfo = info; }
 
     void setVerticalAbsorber(CameraVerticalAbsorber* cameraVerticalAbsorber) {
         mVerticalAbsorber = cameraVerticalAbsorber;

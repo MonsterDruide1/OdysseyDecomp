@@ -1,6 +1,8 @@
 #include "Library/Camera/CameraUtil.h"
 
 #include "Library/Camera/CameraDirector.h"
+#include "Library/Camera/CameraPoseInfo.h"
+#include "Library/Camera/CameraPoseUpdater.h"
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/IUseCamera.h"
 #include "Library/Camera/SceneCameraInfo.h"
@@ -30,7 +32,7 @@ bool isValidView(const IUseCamera* user, s32 viewIdx) {
 }
 
 bool isValidView(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->isValid();
+    return info->getViewAt(viewIdx)->isValid;
 }
 
 const char* getViewName(const IUseCamera* user, s32 viewIdx) {
@@ -70,7 +72,7 @@ const sead::LookAtCamera& getLookAtCamera(const IUseCamera* user, s32 viewIdx) {
 }
 
 const sead::LookAtCamera& getLookAtCamera(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getLookAtCam();
+    return info->getViewAt(viewIdx)->lookAtCam;
 }
 
 const sead::Projection& getProjectionSead(const IUseCamera* user, s32 viewIdx) {
@@ -86,7 +88,7 @@ const Projection& getProjection(const IUseCamera* user, s32 viewIdx) {
 }
 
 const Projection& getProjection(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getProjection();
+    return info->getViewAt(viewIdx)->projection;
 }
 
 const sead::Vector3f& getCameraPos(const IUseCamera* user, s32 viewIdx) {
@@ -126,7 +128,7 @@ f32 getFovy(const IUseCamera* user, s32 viewIdx) {
 }
 
 f32 getFovy(const SceneCameraInfo* info, s32 viewIdx) {
-    return info->getViewAt(viewIdx)->getProjection().getFovy();
+    return info->getViewAt(viewIdx)->projection.getFovy();
 }
 
 f32 getNear(const IUseCamera* user, s32 viewIdx) {
@@ -166,4 +168,19 @@ f32 calcCurrentFovyRate(const IUseCamera* user, s32 viewIdx) {
 
     return fovy / fovy2;
 }
+
+void setCurrentCameraPose(CameraPoseInfo* poseInfo, const IUseCamera* user) {
+    poseInfo->pos.set(getCameraPos(user, 0));
+    poseInfo->at.set(getCameraAt(user, 0));
+    poseInfo->up.set(getCameraUp(user, 0));
+}
+
+bool isActiveCameraInterpole(const IUseCamera* user, s32 viewIdx) {
+    return getCameraDirector(user)->getPoseUpdater(viewIdx)->isActiveInterpole();
+}
+
+bool isActiveCameraInterpole(const SceneCameraInfo* info, s32 viewIdx) {
+    return info->getViewAt(viewIdx)->isActiveInterpole;
+}
+
 }  // namespace al

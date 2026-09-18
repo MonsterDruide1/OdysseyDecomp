@@ -21,7 +21,7 @@ public:
     f32 getNear() const;
     f32 getFar() const;
     void setProjTBLRNF(f32 top, f32 bottom, f32 left, f32 right, f32 near, f32 far);
-    void setProj(f32 top, f32 bottom, f32 left, f32 right);
+    void setProj(f32 near, f32 far, f32 fovy, f32 aspect);
     void setFovy(f32 fovy);
     void setAspect(f32 aspect);
     void setNear(f32 near);
