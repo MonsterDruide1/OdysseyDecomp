@@ -200306,7 +200306,7 @@ NintendoSDK-NEX/Externals/curl/lib/connect.o:
   - offset: 0x711100
     size: 552
     label: Curl_updateconninfo
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x711328
     size: 1648
     label: Curl_is_connected
@@ -200318,7 +200318,7 @@ NintendoSDK-NEX/Externals/curl/lib/connect.o:
   - offset: 0x711a14
     size: 332
     label: Curl_connecthost
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x711b60
     size: 2040
     label: singleipconnect
@@ -200334,7 +200334,7 @@ NintendoSDK-NEX/Externals/curl/lib/connect.o:
   - offset: 0x71244c
     size: 212
     label: Curl_socket
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/cookie.o:
   '.text':
   - offset: 0x712520
@@ -200380,7 +200380,7 @@ NintendoSDK-NEX/Externals/curl/lib/cookie.o:
   - offset: 0x713ba8
     size: 828
     label: Curl_flush_cookies
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/curl_addrinfo.o:
   '.text':
   - offset: 0x713ee4
@@ -200390,7 +200390,7 @@ NintendoSDK-NEX/Externals/curl/lib/curl_addrinfo.o:
   - offset: 0x713f28
     size: 312
     label: Curl_he2ai
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x714060
     size: 196
     label: Curl_ip2addr
