@@ -198912,15 +198912,15 @@ NintendoSDK-NEX/Externals/curl/lib/easy.o:
   - offset: 0x6f85dc
     size: 144
     label: curl_global_init
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x6f866c
     size: 140
     label: curl_global_init_internal
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x6f86f8
     size: 212
     label: curl_global_init_mem
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x6f87cc
     size: 84
     label: curl_global_cleanup
@@ -198928,7 +198928,7 @@ NintendoSDK-NEX/Externals/curl/lib/easy.o:
   - offset: 0x6f8820
     size: 124
     label: curl_easy_init
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x6f889c
     size: 160
     label: curl_easy_setopt
@@ -199016,7 +199016,7 @@ NintendoSDK-NEX/Externals/curl/lib/getinfo.o:
   - offset: 0x6fa9c4
     size: 1184
     label: Curl_getinfo
-    status: NonMatchingMajor
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/hostip.o:
   '.text':
   - offset: 0x6fae64
