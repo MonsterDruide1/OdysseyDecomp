@@ -200203,11 +200203,11 @@ NintendoSDK-NEX/Externals/curl/lib/asyn-thread.o:
   - offset: 0x710018
     size: 108
     label: Curl_resolver_cancel
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x710084
     size: 184
     label: destroy_async_data
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x71013c
     size: 204
     label: Curl_resolver_wait_resolv
@@ -200223,7 +200223,7 @@ NintendoSDK-NEX/Externals/curl/lib/asyn-thread.o:
   - offset: 0x710364
     size: 468
     label: Curl_resolver_getaddrinfo
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x710538
     size: 8
     label: Curl_set_dns_servers
