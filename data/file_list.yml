@@ -200121,7 +200121,7 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_threads.o:
   - offset: 0x70f7c8
     size: 268
     label: Curl_SigloThreadContextConstructor
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70f8d4
     size: 72
     label: Curl_SigloThreadEntryThunk
@@ -200133,27 +200133,27 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_threads.o:
   - offset: 0x70f968
     size: 40
     label: Curl_SigloThreadGCZero
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70f990
     size: 308
     label: Curl_SigloThreadGCInitialize
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70fac4
     size: 228
     label: Curl_SigloThreadGCRunLoop
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70fba8
     size: 4
-    label: ''
-    status: NotDecompiled
+    label: Curl_SigloListDtor
+    status: Matching
   - offset: 0x70fbac
     size: 76
-    label: ''
-    status: NotDecompiled
+    label: Curl_SigloDestroyThread
+    status: Matching
   - offset: 0x70fbf8
     size: 140
     label: Curl_SigloThreadGCSetActive
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70fc84
     size: 88
     label: Curl_removeThreadContextFromList
@@ -200161,15 +200161,15 @@ NintendoSDK-NEX/Externals/curl/siglo/curl_nintendo_threads.o:
   - offset: 0x70fcdc
     size: 256
     label: Curl_SigloThreadGCSetInactive
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70fddc
     size: 248
     label: Curl_SigloThreadGCFinalize
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70fed4
     size: 260
     label: Curl_thread_create
-    status: NotDecompiled
+    status: Matching
   - offset: 0x70ffd8
     size: 4
     label: Curl_thread_destroy
