@@ -199677,7 +199677,7 @@ NintendoSDK-NEX/Externals/curl/lib/url.o:
   - offset: 0x706584
     size: 272
     label: Curl_init_userdefined
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x706694
     size: 588
     label: Curl_open
@@ -200251,9 +200251,13 @@ NintendoSDK-NEX/Externals/curl/lib/base64.o:
     label: Curl_base64_decode
     status: Matching
   - offset: 0x710a58
-    size: 448
+    size: 12
     label: Curl_base64_encode
-    status: NonMatchingMajor
+    status: Matching
+  - offset: 0x710a64
+    size: 436
+    label: base64_encode
+    status: Matching
   - offset: 0x710c18
     size: 12
     label: Curl_base64url_encode
