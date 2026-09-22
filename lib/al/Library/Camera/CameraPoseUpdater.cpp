@@ -62,7 +62,7 @@ CameraPoseUpdater::CameraPoseUpdater(SceneCameraInfo* sceneCamInfo, s32 viewIdx)
 }
 
 CameraPoseUpdater::~CameraPoseUpdater() {
-    nn::oe::setScreenShotImageOrientation(nn::album::ImageOrientation_None);
+    nn::oe::SetScreenShotImageOrientation(nn::album::ImageOrientation_None);
 }
 
 void CameraPoseUpdater::init(const CameraParamTransfer* paramTransfer,
@@ -327,12 +327,12 @@ void CameraPoseUpdater::exeSnapShot() {
         }
     }
 
-    nn::oe::setScreenShotImageOrientation(orientation);
+    nn::oe::SetScreenShotImageOrientation(orientation);
     mSnapShotOrientation = orientation;
 }
 
 void CameraPoseUpdater::endSnapShot() {
-    nn::oe::setScreenShotImageOrientation(nn::album::ImageOrientation_None);
+    nn::oe::SetScreenShotImageOrientation(nn::album::ImageOrientation_None);
     mSnapShotOrientation = nn::album::ImageOrientation_None;
 }
 
