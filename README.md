@@ -1,5 +1,7 @@
 # OdysseyDecomp 
 
+This should not be merged.
+
  [![Decompilation Progress][progress-badge]][progress] [![Discord Channel][discord-badge]][discord]
 
 [progress]: https://decomp.dev/MonsterDruide1/OdysseyDecomp
