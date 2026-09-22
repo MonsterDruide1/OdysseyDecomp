@@ -76,7 +76,7 @@ void CameraPoseUpdater::init(const CameraParamTransfer* paramTransfer,
     mInterpole = new CameraInterpole();
 
     mLookAtCamera.updateViewMatrix();
-    mProjection->setProj(getNearClipDistance(), mFarClipDistance, sead::Mathf::rad2deg(mFovyDegree),
+    mProjection->setProj(getNearClipDistance(), mFarClipDistance, sead::Mathf::deg2rad(mFovyDegree),
                          mAspect);
 }
 
@@ -104,7 +104,7 @@ void CameraPoseUpdater::update() {
     if (mCtrlPausePtr && mCtrlPausePtr->isCameraPause())
         fovy = mCtrlPausePtr->get_4();
 
-    mProjection->setProj(getNearClipDistance(), mFarClipDistance, sead::Mathf::rad2deg(fovy),
+    mProjection->setProj(getNearClipDistance(), mFarClipDistance, sead::Mathf::deg2rad(fovy),
                          mAspect);
     mProjection->calcMtx();
 
