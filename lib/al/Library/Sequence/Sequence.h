@@ -19,7 +19,7 @@ public:
     Sequence(const char* name);
     ~Sequence() override;
 
-    virtual void init(const SequenceInitInfo& initInfo);
+    virtual void init(const SequenceInitInfo& initInfo) {}
 
     virtual void update();
     virtual void kill();
@@ -28,7 +28,7 @@ public:
 
     AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
-    virtual bool isDisposable() const;
+    virtual bool isDisposable() const { return true; }
 
     virtual Scene* getCurrentScene() const { return nullptr; }
 
