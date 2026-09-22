@@ -205095,8 +205095,8 @@ sead/prim/seadEnum.o:
     status: Matching
   - offset: 0x7466f0
     size: 188
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_seadEnum.cpp
+    status: Matching
 sead/prim/seadFormatPrint.o:
   '.text':
   - offset: 0x7467ac
@@ -209343,7 +209343,7 @@ sead/filedevice/seadArchiveFileDevice.o:
   - offset: 0x769870
     size: 20
     label: _ZN4sead17ArchiveFileDevice21getArchiveFileHandle_EPNS_10FileHandleE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x769884
     size: 124
     label: _ZN4sead17ArchiveFileDevice14doIsExistFile_EPbRKNS_14SafeStringBaseIcEE
