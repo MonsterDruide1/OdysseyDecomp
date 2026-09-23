@@ -199749,7 +199749,7 @@ NintendoSDK-NEX/Externals/curl/lib/url.o:
   - offset: 0x70b4d4
     size: 8552
     label: create_conn
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x70d63c
     size: 548
     label: Curl_done
