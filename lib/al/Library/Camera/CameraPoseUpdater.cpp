@@ -155,7 +155,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
             currTicket->getPoser()->getPoserFlag()->isInvalidKeepDistanceNextCameraIfNoCollide;
         camStartInfo.isValidResetPreCameraPose = currTicket->getPoser()->getPoserFlag()->_3;
 
-        if (!mSwitcher->isExistNextCamera()) {
+        if (!mSwitcher->isNextKeepPose()) {
             if (currTicket->getPoser()->getPoserFlag()->isValidKeepPreSelfPoseNextCamera())
                 camStartInfo.isValidKeepPreSelfCameraPose = true;
         } else {
@@ -177,7 +177,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
                 currTicket->getPoser()->getAngleSwingInfo()->maxSwingDegreeV;
         }
 
-        if (mSwitcher->isExistNextCamera()) {
+        if (mSwitcher->isSetNextPoseInfo()) {
             sead::Vector3f lookDir =
                 mSwitcher->getNextPoseInfo()->pos - mSwitcher->getNextPoseInfo()->at;
             normalize(&lookDir);
