@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+import platform
+def check_for_nixos():
+    if platform.system() != "Linux":
+        return False
+    with open("/etc/os-release") as file:
+        return "ID=nixos" in file.read()
+
 from common import setup_venv as venv
 if check_for_nixos():
     if "SMO_NIX_SETUP" not in os.environ:
@@ -18,7 +25,6 @@ import subprocess
 from typing import Optional
 from common import setup_common as setup
 from enum import Enum
-import platform
 import tarfile
 import tempfile
 import urllib.request
@@ -180,12 +186,6 @@ def create_build_dir(ver, cmake_backend):
     subprocess.check_call(
         ['cmake', '-G', cmake_backend, f'-DCMAKE_CXX_FLAGS=-D{ver.name}', '-DCMAKE_BUILD_TYPE=RelWithDebInfo', '-DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake', '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache', '-B', str(build_dir)])
     print(">>> created build directory")
-
-def check_for_nixos():
-    if platform.system() != "Linux":
-        return False
-    with open("/etc/os-release") as file:
-        return "ID=nixos" in file.read()
 
 
 def main():
