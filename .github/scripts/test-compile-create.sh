@@ -12,7 +12,7 @@ rm -rf src/test || true
 mkdir -p src/test/single src/test/multi
 
 for f in $(find lib src -name '*.h'); do
-    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" ]]; then
+    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
         continue
     fi
     testname="${f//\//_}.cpp"  # Replace / with _
@@ -24,7 +24,7 @@ for f in $(find lib src -name '*.h'); do
 done
 
 for f in $(find lib src -name '*.h'); do
-    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" ]]; then
+    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
         continue
     fi
     testname="${f//\//_}.cpp"  # Replace / with _
@@ -36,7 +36,7 @@ for f in $(find lib src -name '*.h'); do
 done
 
 for f in $(find src -name '*.h'); do
-    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" ]]; then
+    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
         continue
     fi
     testname="${f//\//_}.cpp"  # Replace / with _
