@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+from common import setup_venv as venv
+if check_for_nixos():
+    if "SMO_NIX_SETUP" not in os.environ:
+        print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
+        exit(1)
+else:
+    venv.setup_python_venv()
+    venv.enter_venv()
+
 import argparse
 import hashlib
 import os
@@ -8,7 +17,6 @@ from pathlib import Path
 import subprocess
 from typing import Optional
 from common import setup_common as setup
-from common import setup_venv as venv
 from enum import Enum
 import platform
 import tarfile
@@ -192,13 +200,6 @@ def main():
     parser.add_argument("--tools-from-src", action="store_true",
                     help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
-
-    if check_for_nixos():
-        if "SMO_NIX_SETUP" not in os.environ:
-            print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
-            exit(1)
-    else:
-        venv.setup_python_venv()
 
     setup_project_tools(args.tools_from_src)
     if not args.project_only:
