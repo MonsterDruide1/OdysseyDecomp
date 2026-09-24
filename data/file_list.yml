@@ -199780,8 +199780,8 @@ NintendoSDK-NEX/Externals/curl/lib/url.o:
     status: Matching
   - offset: 0x70ddfc
     size: 140
-    label: disconnect_if_dead
-    status: NotDecompiled
+    label: call_disconnect_if_dead
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/vtls/vtls.o:
   '.text':
   - offset: 0x70de88
@@ -200729,8 +200729,8 @@ NintendoSDK-NEX/Externals/curl/lib/md5.o:
     status: Matching
   - offset: 0x71ac10
     size: 3068
-    label: gcry_md_close
-    status: NotDecompiled
+    label: body
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/netrc.o:
   '.text':
   - offset: 0x71b80c
@@ -200825,12 +200825,12 @@ NintendoSDK-NEX/Externals/curl/lib/vtls/nnssl.o:
     status: Matching
   - offset: 0x71dda0
     size: 180
-    label: ''
-    status: NotDecompiled
+    label: nnssl_recv
+    status: Matching
   - offset: 0x71de54
     size: 200
-    label: ''
-    status: NotDecompiled
+    label: nnssl_send
+    status: Matching
 NintendoSDK-NEX/Externals/curl/lib/bundle.o:
   '.text':
   - offset: 0x71df1c
