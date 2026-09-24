@@ -30,12 +30,12 @@
           buildInputs = with pkgs; [
             cmake
             ninja
-            llvmPackages_18.clang-unwrapped
-            llvmPackages_18.bintools
+            llvmPackages_22.clang-unwrapped
+            llvmPackages_22.bintools
             ccache
             pkg-config
 
-            (python312.withPackages (python-pkgs: [
+            (python314.withPackages (python-pkgs: [
               python-pkgs.capstone
               python-pkgs.colorama
               python-pkgs.cxxfilt
