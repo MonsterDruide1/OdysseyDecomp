@@ -27118,126 +27118,126 @@ Enemy/ByugoStateHack.o:
     label:
     - _ZN14ByugoStateHackC1EPN2al9LiveActorEP13CapTargetInfo
     - _ZN14ByugoStateHackC2EPN2al9LiveActorEP13CapTargetInfo
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eea94
     size: 88
     label: _ZN14ByugoStateHack6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eeaec
     size: 88
     label: _ZN14ByugoStateHack4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eeb44
     size: 16
     label: _ZN14ByugoStateHack27receiveMsgInitCapTargetInfoEPKN2al9SensorMsgE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eeb54
     size: 124
     label: _ZN14ByugoStateHack19receiveMsgHackStartEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eebd0
     size: 168
     label: _ZN14ByugoStateHack10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eec78
     size: 444
     label: _ZN14ByugoStateHack17receiveMsgHackEndEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eee34
     size: 88
     label: _ZN14ByugoStateHack12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eee8c
     size: 96
     label: _ZNK14ByugoStateHack21calcHackBlowPowerRateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eeeec
     size: 16
     label: _ZNK14ByugoStateHack10isWideBlowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eeefc
     size: 60
     label: _ZN14ByugoStateHack12exeStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eef38
     size: 176
     label: _ZN14ByugoStateHack7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0eefe8
     size: 140
     label: _ZN14ByugoStateHack8calcMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef074
     size: 124
     label: _ZN14ByugoStateHack27tryChangeNerveIfTriggerBlowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef0f0
     size: 236
     label: _ZN14ByugoStateHack7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef1dc
     size: 188
     label: _ZN14ByugoStateHack12exeBlowStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef298
     size: 384
     label: _ZN14ByugoStateHack7exeBlowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef418
     size: 392
     label: _ZN14ByugoStateHack11exeBlowWideEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x0ef5a0
     size: 176
     label: _ZN14ByugoStateHack10exeBlowEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef650
     size: 88
     label: _ZN14ByugoStateHack12forceEndHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0ef6a8
     size: 36
     label: _ZN14ByugoStateHackD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0ef6cc
     size: 8
     label: _ZNK12_GLOBAL__N_121ByugoStateHackNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0ef6d4
     size: 64
     label: _ZNK12_GLOBAL__N_126ByugoStateHackNrvStartDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0ef714
     size: 12
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_121ByugoHackCameraTarget18getRequestDistanceEv
+    status: Matching
   - offset: 0x0ef720
     size: 8
     label: _ZNK12_GLOBAL__N_121ByugoStateHackNrvBlow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0ef728
     size: 8
     label: _ZNK12_GLOBAL__N_125ByugoStateHackNrvBlowWide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0ef730
     size: 8
     label: _ZNK12_GLOBAL__N_121ByugoStateHackNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0ef738
     size: 8
     label: _ZNK12_GLOBAL__N_124ByugoStateHackNrvBlowEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0ef740
     size: 8
     label: _ZNK12_GLOBAL__N_126ByugoStateHackNrvBlowStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/CarryMeat.o:
   '.text':
