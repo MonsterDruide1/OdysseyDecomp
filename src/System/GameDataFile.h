@@ -511,6 +511,8 @@ public:
 
     MoonRockData* getMoonRockData() const { return mMoonRockData; }
 
+    BossSaveData* getBossSaveData() const { return mBossSaveData; }
+
     NetworkUploadFlag* getNetworkUploadFlag() const { return mNetworkUploadFlag; }
 
     HintPhotoData* getHintPhotoData() const { return mHintPhotoData; }
