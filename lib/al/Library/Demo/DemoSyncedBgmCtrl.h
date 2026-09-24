@@ -11,7 +11,7 @@ class AudioDirector;
 class BgmDataBase;
 template <typename, typename>
 class BgmEventController;
-class BgmDemoProcInfo;
+struct BgmDemoProcInfo;
 class BgmDemoSyncedProcInfo;
 
 class DemoSyncedBgmCtrl : public HioNode, public IUseAudioKeeper {
