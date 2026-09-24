@@ -47,4 +47,9 @@ add_subdirectory(lib/NintendoSDK)
 add_subdirectory(lib/sead)
 add_subdirectory(lib/agl)
 add_subdirectory(lib/eui)
-target_link_libraries(odyssey PUBLIC NintendoSDK-NEX NintendoSDK sead agl eui)
+
+enable_language(C)
+add_subdirectory(lib/curl)
+target_compile_options(libcurl PRIVATE -fno-strict-aliasing)
+
+target_link_libraries(odyssey PUBLIC NintendoSDK-NEX NintendoSDK sead agl eui libcurl)
