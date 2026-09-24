@@ -59,6 +59,7 @@ jobs:
       run: |
         var="$(tools/check -mw3 nninitStartup --always-diff | cat > outfile || true)"
         if [[ "$(cat outfile)" == "TARGET"* ]]; then
+          rm outfile
           exit 0
         else
           cat outfile
