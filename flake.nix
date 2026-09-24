@@ -35,7 +35,7 @@
             ccache
             pkg-config
 
-            (python312.withPackages (python-pkgs: [
+            (python314.withPackages (python-pkgs: [
               python-pkgs.capstone
               python-pkgs.colorama
               python-pkgs.cxxfilt
