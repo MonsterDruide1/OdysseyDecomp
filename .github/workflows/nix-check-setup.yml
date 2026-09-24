@@ -50,7 +50,7 @@ jobs:
           exit 1
         fi
 
-    # test run of the project: setup, build, trigger diff
+    # test run of the project: setup, build, trigger diff, run clang-format
     - name: Run NixOS-specific setup
       run: nix run .#setup -- smo-main.nso
     - name: Build project
@@ -62,5 +62,12 @@ jobs:
           exit 0
         else
           cat outfile
+          exit 1
+        fi
+    - name: Format all files and ensure no changes are present
+      run: |
+        find src lib/al -iname '*.h' -o -iname '*.cpp' | xargs cang-format -i
+        if [[ -n $(git status --porcelain) ]]; then
+          git status --porcelain
           exit 1
         fi
