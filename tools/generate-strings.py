@@ -2,8 +2,7 @@
 
 import os
 import re
-
-from common import setup_common as setup
+from pathlib import Path
 
 MIN_TEXT_SIZE = 0x2
 MAX_TEXT_SIZE = 0x600
@@ -109,7 +108,7 @@ def create_string_table(string_path, nso_path):
         parse_utf8(csv_file, nso_file)
         parse_utf16(csv_file, nso_file)
 
-project_root = setup.ROOT
+project_root = Path(__file__).parent.parent.resolve()
 
 def main():
     if not os.path.isfile(project_root / 'data' / "main.nso"):

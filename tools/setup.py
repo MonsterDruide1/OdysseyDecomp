@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 from typing import Optional
 from common import setup_common as setup
+from common import setup_venv as venv
 from enum import Enum
 import platform
 import tarfile
@@ -173,11 +174,10 @@ def create_build_dir(ver, cmake_backend):
     print(">>> created build directory")
 
 def check_for_nixos():
-    if platform.system() != "Linux": return
+    if platform.system() != "Linux":
+        return False
     with open("/etc/os-release") as file:
-        if "ID=nixos" in file.read() and "SMO_NIX_SETUP" not in os.environ:
-            print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
-            exit(1)
+        return "ID=nixos" in file.read()
 
 
 def main():
@@ -193,7 +193,12 @@ def main():
                     help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
 
-    check_for_nixos()
+    if check_for_nixos():
+        if "SMO_NIX_SETUP" not in os.environ:
+            print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
+            exit(1)
+    else:
+        venv.setup_python_venv()
 
     setup_project_tools(args.tools_from_src)
     if not args.project_only:

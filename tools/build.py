@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+from common import setup_venv as venv
+venv.enter_venv()
+
 import argparse
 from setup import check_download_url_updated, get_build_dir
 import subprocess
