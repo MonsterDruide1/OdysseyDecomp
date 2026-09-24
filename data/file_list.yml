@@ -33581,52 +33581,52 @@ Enemy/JokuArm.o:
   - offset: 0x13665c
     size: 124
     label: _ZN7JokuArmC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1366d8
     size: 136
     label: _ZN7JokuArmC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x136760
     size: 120
     label: _ZN7JokuArm4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1367d8
     size: 124
     label: _ZN7JokuArm12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x136854
     size: 60
     label: _ZN7JokuArm10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x136890
     size: 8
     label: _ZN7JokuArm7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x136898
     size: 64
     label: _ZN7JokuArm6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1368d8
     size: 12
     label: _ZN7JokuArm6damageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1368e4
     size: 68
     label: _ZN7JokuArm7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x136928
     size: 64
     label: _ZN7JokuArm9exeDamageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x136968
     size: 72
     label: _ZNK12_GLOBAL__N_114JokuArmNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1369b0
     size: 68
     label: _ZNK12_GLOBAL__N_116JokuArmNrvDamage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/JokuBomb.o:
   '.text':
