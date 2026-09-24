@@ -39,6 +39,15 @@ public:
 
     void setModelOcclusionQuery(ModelOcclusionQuery* query) { mModelOcclusionQuery = query; }
 
+    bool isDepthShadowModel() const {
+        u16 state = mDepthShadowModelState;
+        bool isSmallState = state < 0x100;
+        bool isActive = (state & 0xff) != 0;
+        return isSmallState ? isActive : false;
+    }
+
+    void setDepthShadowModel(bool isDepthShadowModel) { depthShadowModel = isDepthShadowModel; }
+
 private:
     nn::g3d::ModelObj* mModelObj;
     s32 _8;
@@ -49,7 +58,18 @@ private:
     GraphicsQualityInfo* mGraphicsQualityInfo;
     unsigned char padding2[514];
     ActorDitherAnimator* mActorDitherAnimator;
-    unsigned char padding3[36];
+    unsigned char padding3[8];
+
+    union {
+        struct {
+            bool depthShadowModel;
+            bool depthShadowModelMasked;
+        };
+
+        u16 mDepthShadowModelState;
+    };
+
+    unsigned char padding3b[26];
     s32 mCalcViewCore;
     s32 pad_3b0;
     unsigned char padding4[124];
