@@ -66,7 +66,7 @@ jobs:
         fi
     - name: Format all files and ensure no changes are present
       run: |
-        find src lib/al -iname '*.h' -o -iname '*.cpp' | xargs cang-format -i
+        find src lib/al -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i
         if [[ -n $(git status --porcelain) ]]; then
           git status --porcelain
           exit 1
