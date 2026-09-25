@@ -113419,15 +113419,15 @@ Player/HackCap.o:
   - offset: 0x3fc4b0
     size: 44
     label: _ZN7HackCap16addHackStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc4dc
     size: 44
     label: _ZN7HackCap17addLockOnKeepDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc508
     size: 12
     label: _ZN7HackCap24syncHackDamageVisibilityEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc514
     size: 76
     label: _ZN7HackCap7endHackEv
