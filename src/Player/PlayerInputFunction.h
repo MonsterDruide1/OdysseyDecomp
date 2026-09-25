@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 namespace al {
 class LiveActor;
@@ -23,6 +24,8 @@ public:
     static bool isTriggerTalk(const al::LiveActor* actor, s32 port);
     static bool isTriggerStartWorldWarp(const al::LiveActor* actor, s32 port);
     static bool isTriggerCancelWorldWarp(const al::LiveActor* actor, s32 port);
+
+    static sead::Vector2f getMoveInputStick(const al::LiveActor* actor, s32 port1, s32 port2);
 };
 
 namespace rs {
