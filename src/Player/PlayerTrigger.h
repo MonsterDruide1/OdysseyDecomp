@@ -10,16 +10,18 @@ public:
         ECollisionTrigger_val0 = 0,
         // used in PlayerStateHipDrop::isLandTrigger
         ECollisionTrigger_val1 = 1,
-        // used in PlayerStateDamageLife::exeDead
+        // used in PlayerTrigger::isOnAnyDamage
+        ECollisionTrigger_val2 = 2,
+        // used in PlayerTrigger::isOnDamageFire
+        ECollisionTrigger_val3 = 3,
+        // used in PlayerTrigger::isOnDamageFire
+        ECollisionTrigger_val4 = 4,
+        // used in PlayerStateDamageLife::exeDead, PlayerTrigger::isOnAnyDamage
         ECollisionTrigger_val6 = 6,
         // used in PlayerJudgeWallHitDown::judge
         ECollisionTrigger_val9 = 9,
-        // used in PlayerTrigger::isOnDamageFire
-        ECollisionTrigger_val24 = 24,
-        // used in PlayerTrigger::isOnAnyDamage
-        ECollisionTrigger_val68 = 68,
         // used in PlayerTrigger::isOnYoshiHackEnd
-        ECollisionTrigger_val1024 = 1024,
+        ECollisionTrigger_val10 = 10,
     };
 
     enum EAttackSensorTrigger : u32 {
@@ -42,6 +44,8 @@ public:
         EActionTrigger_val12 = 12,
         // used in PlayerTrigger::isOnHipDropCancelThrow
         EActionTrigger_val18 = 18,
+        // used in PlayerTrigger::isOnAnyDamage
+        EActionTrigger_val23 = 23,
         // used in PlayerTrigger::isOnSpinMoveCapThrow
         EActionTrigger_val27 = 27,
         EActionTrigger_val28 = 28,
@@ -49,8 +53,6 @@ public:
         EActionTrigger_val30 = 30,
         // used in PlayerCounterQuickTurnJump::isEnableTurnJump
         EActionTrigger_QuickTurn = 34,
-        // used in PlayerTrigger::isOnAnyDamage
-        EActionTrigger_val8388608 = 8388608,
     };
 
     enum EReceiveSensorTrigger : u32 {
@@ -58,8 +60,10 @@ public:
         EReceiveSensorTrigger_val0 = 0,
         // used in PlayerTrigger::isOnDamageFire
         EReceiveSensorTrigger_val1 = 1,
-        // used in PlayerTrigger::isOnEndHackWithDamage, PlayerTrigger::isOnAnyDamage
-        EReceiveSensorTrigger_val12 = 12,
+        // used in PlayerTrigger::isOnEndHackWithDamage
+        EReceiveSensorTrigger_val2 = 2,
+        // used in PlayerTrigger::isOnEndHackWithDamage
+        EReceiveSensorTrigger_val3 = 3,
     };
 
     enum EPreMovementTrigger : u32 {

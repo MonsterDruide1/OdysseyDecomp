@@ -92,31 +92,29 @@ bool PlayerTrigger::isOn(EMaterialChangeTrigger flag) const {
 }
 
 bool PlayerTrigger::isOnUpperPunchHit() const {
-    if (mCollisionTrigger.isOnBit(ECollisionTrigger_val0))
-        return true;
-    return isOnUpperPunchHitToss();
+    return mCollisionTrigger.isOnBit(ECollisionTrigger_val0) || isOnUpperPunchHitToss();
 }
 
 bool PlayerTrigger::isOnUpperPunchHitToss() const {
     return mAttackSensorTrigger.isOnBit(EAttackSensorTrigger_val4);
 }
 
-// NON_MATCHING: compiler merges the bit0 early-out into the combined mask test
-// https://decomp.me/scratch/HIPPs
 bool PlayerTrigger::isOnAnyDamage() const {
-    return mCollisionTrigger.isOn(ECollisionTrigger_val68) ||
-           mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val0) || isOnDamageFire() ||
-           isOnEndHackWithDamage() || mActionTrigger.isOn(EActionTrigger_val8388608);
+    return isOn(ECollisionTrigger_val2) || isOn(ECollisionTrigger_val6) ||
+           isOn(EReceiveSensorTrigger_val0) || isOn(EActionTrigger_val23) || isOnDamageFire() ||
+           isOnEndHackWithDamage();
 }
 
 bool PlayerTrigger::isOnDamageFire() const {
-    if (mCollisionTrigger.isOn(ECollisionTrigger_val24))
+    if (mCollisionTrigger.isOnBit(ECollisionTrigger_val3) ||
+        mCollisionTrigger.isOnBit(ECollisionTrigger_val4))
         return true;
     return mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val1);
 }
 
 bool PlayerTrigger::isOnEndHackWithDamage() const {
-    return mReceiveSensorTrigger.isOn(EReceiveSensorTrigger_val12);
+    return mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val2) ||
+           mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val3);
 }
 
 bool PlayerTrigger::isOnNoDamageDown() const {
@@ -135,7 +133,7 @@ bool PlayerTrigger::isOnHipDropCancelThrow() const {
 }
 
 bool PlayerTrigger::isOnYoshiHackEnd() const {
-    return mCollisionTrigger.isOn(ECollisionTrigger_val1024);
+    return mCollisionTrigger.isOnBit(ECollisionTrigger_val10);
 }
 
 bool PlayerTrigger::isOnCollisionExpandCheck() const {
