@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run
 
 import argparse
 import csv
@@ -8,8 +8,7 @@ import re
 import subprocess
 from functools import cache
 
-from common import setup_common as setup
-from common.util import utils
+from nx_decomp_tools.util import config
 
 # ------
 # CHECKS
@@ -572,7 +571,7 @@ def read_csv_file(path):
 def get_string_table():
     return read_csv_file(project_root / 'data' / "data_strings.csv");
 
-project_root = setup.ROOT
+project_root = config.get_repo_root()
 
 def main():
     parser = argparse.ArgumentParser(
