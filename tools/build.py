@@ -1,9 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run
 
 import argparse
-from setup import check_download_url_updated, get_build_dir
+from setup import check_download_url_updated
 import subprocess
 import os
+
+from nx_decomp_tools.util import config
 
 def warn_outdated_tools():
     if check_download_url_updated():
@@ -19,13 +21,15 @@ def main():
                         help="Give verbose output")
     args = parser.parse_args()
 
-    if not get_build_dir().is_dir():
+    build_dir = config.get_build_root()
+
+    if not build_dir.is_dir():
         print("Please run setup.py first.")
         exit(1)
 
     warn_outdated_tools()
 
-    cmake_args = ['cmake', '--build', str(get_build_dir())]
+    cmake_args = ['cmake', '--build', str(build_dir)]
     if args.clean:
         cmake_args.append('--clean-first')
     if args.verbose:

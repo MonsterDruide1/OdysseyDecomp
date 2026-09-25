@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run
 
 import argparse
 from collections import defaultdict
 from colorama import Fore
-from common.util import utils
-from common.util.utils import FunctionStatus, get_repo_root
-from common.util.config import CONFIG
+from nx_decomp_tools.util import FunctionStatus, config, format_symbol_name
 import typing as tp
 
 parser = argparse.ArgumentParser()
@@ -46,7 +44,7 @@ _status_map = {
 # assumes size and label to be listed before status
 def parse_file_list_data() -> tp.List[FileListEntryInfo]:
     funtions = []
-    with open(get_repo_root() / CONFIG["file_list"]) as file_list:
+    with open(config.get_repo_root() / config.get_config()["file_list"]) as file_list:
         current_size = 0
         current_label = ""
         file_list_lines = list(file_list)
@@ -77,13 +75,13 @@ for info in parse_file_list_data():
     if not args.csv:
         if info.status == FunctionStatus.NonMatching:
             if args.print_nm:
-                print(f"{Fore.RED}NM{Fore.RESET} {utils.format_symbol_name(info.label)}")
+                print(f"{Fore.RED}NM{Fore.RESET} {format_symbol_name(info.label)}")
         elif info.status == FunctionStatus.Equivalent:
             if args.print_eq:
-                print(f"{Fore.YELLOW}EQ{Fore.RESET} {utils.format_symbol_name(info.label)}")
+                print(f"{Fore.YELLOW}EQ{Fore.RESET} {format_symbol_name(info.label)}")
         elif info.status == FunctionStatus.Matching:
             if args.print_ok:
-                print(f"{Fore.GREEN}OK{Fore.RESET} {utils.format_symbol_name(info.label)}")
+                print(f"{Fore.GREEN}OK{Fore.RESET} {format_symbol_name(info.label)}")
 
 
 def format_progress(label: str, num: int, size: int):
