@@ -107,8 +107,8 @@ bool PlayerTrigger::isOnAnyDamage() const {
 
 bool PlayerTrigger::isOnDamageFire() const {
     return mCollisionTrigger.isOnBit(ECollisionTrigger_val3) ||
-        mCollisionTrigger.isOnBit(ECollisionTrigger_val4) ||
-        mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val1);
+           mCollisionTrigger.isOnBit(ECollisionTrigger_val4) ||
+           mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val1);
 }
 
 bool PlayerTrigger::isOnEndHackWithDamage() const {
@@ -117,7 +117,7 @@ bool PlayerTrigger::isOnEndHackWithDamage() const {
 
 bool PlayerTrigger::isOnNoDamageDown() const {
     return mActionTrigger.isOnBit(EActionTrigger_val10) ||
-        mPreMovementTrigger.isOnBit(EPreMovementTrigger_val4);
+           mPreMovementTrigger.isOnBit(EPreMovementTrigger_val4);
 }
 
 bool PlayerTrigger::isOnSpinMoveCapThrow() const {
