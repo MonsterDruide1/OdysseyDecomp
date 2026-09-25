@@ -133,6 +133,19 @@ bool PlayerTrigger::isOnNoDamageDown() const {
     return mPreMovementTrigger.isOnBit(4);
 }
 
+// NON_MATCHING: compiler merges the bit0 early-out into the combined mask test
+bool PlayerTrigger::isOnAnyDamage() const {
+    if (mCollisionTrigger.isOn(0x44))
+        return true;
+    if (mReceiveSensorTrigger.isOnBit(0))
+        return true;
+    if (isOnDamageFire())
+        return true;
+    if (isOnEndHackWithDamage())
+        return true;
+    return mActionTrigger.isOn(0x800000);
+}
+
 bool PlayerTrigger::tryGetRecMaterialCode(const char** dest) const {
     if (!mRecMaterialTrigger)
         return false;

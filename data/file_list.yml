@@ -129527,7 +129527,7 @@ Player/PlayerTrigger.o:
   - offset: 0x492c0c
     size: 92
     label: _ZNK13PlayerTrigger13isOnAnyDamageEv
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x492c68
     size: 32
     label: _ZNK13PlayerTrigger14isOnDamageFireEv
