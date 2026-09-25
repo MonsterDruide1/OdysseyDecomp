@@ -113415,7 +113415,7 @@ Player/HackCap.o:
   - offset: 0x3fc46c
     size: 68
     label: _ZN7HackCap10recordHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc4b0
     size: 44
     label: _ZN7HackCap16addHackStartDemoEv

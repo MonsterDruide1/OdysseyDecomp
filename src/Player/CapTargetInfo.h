@@ -27,6 +27,8 @@ public:
 
     const char* getHackName() const { return mHackName; }
 
+    bool isSetHackNameToCamera() const { return mIsSetHackNameToCamera; }
+
     void setIsLockOnOnly() { mIsLockOnOnly = true; }
 
 private:
