@@ -95,6 +95,44 @@ bool PlayerTrigger::isOnYoshiHackEnd() const {
     return mCollisionTrigger.isOn(ECollisionTrigger_val1024);
 }
 
+bool PlayerTrigger::isOnCollisionExpandCheck() const {
+    return mActionTrigger.isOnBit(EActionTrigger_val3);
+}
+
+bool PlayerTrigger::isOnUpperPunchHitToss() const {
+    return mAttackSensorTrigger.isOnBit(EAttackSensorTrigger_val4);
+}
+
+bool PlayerTrigger::isOnHipDropCancelThrow() const {
+    return mActionTrigger.isOnBit(EActionTrigger_val18);
+}
+
+bool PlayerTrigger::isOnEndHackWithDamage() const {
+    return mReceiveSensorTrigger.isOn(0xc);
+}
+
+bool PlayerTrigger::isOnSpinMoveCapThrow() const {
+    return mActionTrigger.isOn(0x18000000);
+}
+
+bool PlayerTrigger::isOnUpperPunchHit() const {
+    if (mCollisionTrigger.isOnBit(0))
+        return true;
+    return isOnUpperPunchHitToss();
+}
+
+bool PlayerTrigger::isOnDamageFire() const {
+    if (mCollisionTrigger.isOn(0x18))
+        return true;
+    return mReceiveSensorTrigger.isOnBit(1);
+}
+
+bool PlayerTrigger::isOnNoDamageDown() const {
+    if (mActionTrigger.isOnBit(10))
+        return true;
+    return mPreMovementTrigger.isOnBit(4);
+}
+
 bool PlayerTrigger::tryGetRecMaterialCode(const char** dest) const {
     if (!mRecMaterialTrigger)
         return false;

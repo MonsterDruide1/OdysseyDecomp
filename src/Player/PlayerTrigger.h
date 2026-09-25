@@ -19,6 +19,8 @@ public:
     enum EAttackSensorTrigger : u32 {
         // used in PlayerCounterAfterCapCatch::isCapCatch
         EAttackSensorTrigger_val0 = 0,
+        // used in PlayerTrigger::isOnUpperPunchHitToss
+        EAttackSensorTrigger_val4 = 4,
     };
 
     enum EActionTrigger : u32 {
@@ -30,6 +32,8 @@ public:
         EActionTrigger_val11 = 11,
         // used in PlayerStateSquat::appear
         EActionTrigger_val12 = 12,
+        // used in PlayerTrigger::isOnHipDropCancelThrow
+        EActionTrigger_val18 = 18,
         // used in PlayerJudgeWallCatch::update, PlayerJudgeWallKeep::update
         EActionTrigger_val30 = 30,
         // used in PlayerCounterQuickTurnJump::isEnableTurnJump
