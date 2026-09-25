@@ -201898,101 +201898,101 @@ NintendoSDK/src/NintendoWare/g3d/ResMaterial.o:
   - offset: 0x72b57c
     size: 176
     label: _ZNK2nn3g3d14ResShaderParam7ConvertILb1EEEvPvPKv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x72b62c
     size: 176
     label: _ZNK2nn3g3d14ResShaderParam7ConvertILb0EEEvPvPKv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x72b6dc
     size: 72
     label: _ZN2nn3g3d14ResShaderParam7GetSizeENS1_4TypeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72b724
     size: 88
     label: _ZN2nn3g3d14ResShaderParam10GetSrcSizeENS1_4TypeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72b77c
     size: 144
     label: _ZNK2nn3g3d14ResShaderParam16SetDependPointerEPvPKv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72b80c
     size: 128
     label: _ZNK2nn3g3d14ResShaderParam16GetDependPointerEPPvPKv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72b88c
     size: 176
     label: _ZN2nn3g3d14ResShaderParam20ConvertSrt2dCallbackEPvPKvPKS1_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72b93c
     size: 656
     label: _ZN2nn3g3d14ResShaderParam20ConvertSrt3dCallbackEPvPKvPKS1_S4_
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x72bbcc
     size: 492
     label: _ZN2nn3g3d14ResShaderParam22ConvertSrt2dExCallbackEPvPKvPKS1_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72bdb8
     size: 20
     label: _ZN2nn3g3d14ResShaderParam21ConvertTexSrtCallbackEPvPKvPKS1_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72bdcc
     size: 20
     label: _ZN2nn3g3d14ResShaderParam23ConvertTexSrtExCallbackEPvPKvPKS1_S4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72bde0
     size: 192
     label: _ZN2nn3g3d11ResMaterial11BindTextureEPFNS0_10TextureRefEPKcPvES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72bea0
     size: 148
     label: _ZN2nn3g3d11ResMaterial16ForceBindTextureERKNS0_10TextureRefEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72bf34
     size: 128
     label: _ZN2nn3g3d11ResMaterial14ReleaseTextureEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72bfb4
     size: 236
     label: _ZN2nn3g3d11ResMaterial5SetupEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72c0a0
     size: 108
     label: _ZN2nn3g3d11ResMaterial7CleanupEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72c10c
     size: 92
     label: _ZN2nn3g3d11ResMaterial5ResetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72c168
     size: 96
     label: _ZN2nn3g3d11ResMaterial5ResetEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x72c1c8
     size: 236
-    label: ''
-    status: NotDecompiled
+    label: _ZN2nn3g3d12_GLOBAL__N_125ConvertTexSrtMayaCallbackEPvPKvPKNS0_14ResShaderParamES4_
+    status: Matching
   - offset: 0x72c2b4
     size: 216
-    label: ''
-    status: NotDecompiled
+    label: _ZN2nn3g3d12_GLOBAL__N_124ConvertTexSrtMaxCallbackEPvPKvPKNS0_14ResShaderParamES4_
+    status: Matching
   - offset: 0x72c38c
     size: 204
-    label: ''
-    status: NotDecompiled
+    label: _ZN2nn3g3d12_GLOBAL__N_124ConvertTexSrtXsiCallbackEPvPKvPKNS0_14ResShaderParamES4_
+    status: Matching
   - offset: 0x72c458
     size: 548
-    label: ''
-    status: NotDecompiled
+    label: _ZN2nn3g3d12_GLOBAL__N_127ConvertTexSrtMayaExCallbackEPvPKvPKNS0_14ResShaderParamES4_
+    status: Matching
   - offset: 0x72c67c
     size: 544
-    label: ''
-    status: NotDecompiled
+    label: _ZN2nn3g3d12_GLOBAL__N_126ConvertTexSrtMaxExCallbackEPvPKvPKNS0_14ResShaderParamES4_
+    status: Matching
   - offset: 0x72c89c
     size: 540
-    label: ''
-    status: NotDecompiled
+    label: _ZN2nn3g3d12_GLOBAL__N_126ConvertTexSrtXsiExCallbackEPvPKvPKNS0_14ResShaderParamES4_
+    status: Matching
 NintendoSDK/src/NintendoSDK/gfx/util/gfx_ObjectDebugLabel-api.nvn.8.o:
   '.text':
   - offset: 0x72cab8
