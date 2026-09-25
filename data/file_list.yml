@@ -129519,35 +129519,35 @@ Player/PlayerTrigger.o:
   - offset: 0x492be4
     size: 28
     label: _ZNK13PlayerTrigger17isOnUpperPunchHitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492c00
     size: 12
     label: _ZNK13PlayerTrigger21isOnUpperPunchHitTossEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492c0c
     size: 92
     label: _ZNK13PlayerTrigger13isOnAnyDamageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492c68
     size: 32
     label: _ZNK13PlayerTrigger14isOnDamageFireEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492c88
     size: 16
     label: _ZNK13PlayerTrigger21isOnEndHackWithDamageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492c98
     size: 28
     label: _ZNK13PlayerTrigger16isOnNoDamageDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492cb4
     size: 16
     label: _ZNK13PlayerTrigger20isOnSpinMoveCapThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492cc4
     size: 12
     label: _ZNK13PlayerTrigger22isOnHipDropCancelThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492cd0
     size: 12
     label: _ZNK13PlayerTrigger16isOnYoshiHackEndEv
@@ -129555,7 +129555,7 @@ Player/PlayerTrigger.o:
   - offset: 0x492cdc
     size: 12
     label: _ZNK13PlayerTrigger24isOnCollisionExpandCheckEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492ce8
     size: 28
     label: _ZNK13PlayerTrigger21tryGetRecMaterialCodeEPPKc
