@@ -91,59 +91,55 @@ bool PlayerTrigger::isOn(EMaterialChangeTrigger flag) const {
     return mMaterialChangeTrigger.isOnBit(flag);
 }
 
-bool PlayerTrigger::isOnYoshiHackEnd() const {
-    return mCollisionTrigger.isOn(ECollisionTrigger_val1024);
-}
-
-bool PlayerTrigger::isOnCollisionExpandCheck() const {
-    return mActionTrigger.isOnBit(EActionTrigger_val3);
+bool PlayerTrigger::isOnUpperPunchHit() const {
+    if (mCollisionTrigger.isOnBit(ECollisionTrigger_val0))
+        return true;
+    return isOnUpperPunchHitToss();
 }
 
 bool PlayerTrigger::isOnUpperPunchHitToss() const {
     return mAttackSensorTrigger.isOnBit(EAttackSensorTrigger_val4);
 }
 
+// NON_MATCHING: compiler merges the bit0 early-out into the combined mask test
+// https://decomp.me/scratch/HIPPs
+bool PlayerTrigger::isOnAnyDamage() const {
+    return mCollisionTrigger.isOn(ECollisionTrigger_val68) ||
+           mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val0) || isOnDamageFire() ||
+           isOnEndHackWithDamage() || mActionTrigger.isOn(EActionTrigger_val8388608);
+}
+
+bool PlayerTrigger::isOnDamageFire() const {
+    if (mCollisionTrigger.isOn(ECollisionTrigger_val24))
+        return true;
+    return mReceiveSensorTrigger.isOnBit(EReceiveSensorTrigger_val1);
+}
+
+bool PlayerTrigger::isOnEndHackWithDamage() const {
+    return mReceiveSensorTrigger.isOn(EReceiveSensorTrigger_val12);
+}
+
+bool PlayerTrigger::isOnNoDamageDown() const {
+    if (mActionTrigger.isOnBit(EActionTrigger_val10))
+        return true;
+    return mPreMovementTrigger.isOnBit(EPreMovementTrigger_val4);
+}
+
+bool PlayerTrigger::isOnSpinMoveCapThrow() const {
+    return mActionTrigger.isOnBit(EActionTrigger_val27) ||
+           mActionTrigger.isOnBit(EActionTrigger_val28);
+}
+
 bool PlayerTrigger::isOnHipDropCancelThrow() const {
     return mActionTrigger.isOnBit(EActionTrigger_val18);
 }
 
-bool PlayerTrigger::isOnEndHackWithDamage() const {
-    return mReceiveSensorTrigger.isOn(0xc);
+bool PlayerTrigger::isOnYoshiHackEnd() const {
+    return mCollisionTrigger.isOn(ECollisionTrigger_val1024);
 }
 
-bool PlayerTrigger::isOnSpinMoveCapThrow() const {
-    return mActionTrigger.isOn(0x18000000);
-}
-
-bool PlayerTrigger::isOnUpperPunchHit() const {
-    if (mCollisionTrigger.isOnBit(0))
-        return true;
-    return isOnUpperPunchHitToss();
-}
-
-bool PlayerTrigger::isOnDamageFire() const {
-    if (mCollisionTrigger.isOn(0x18))
-        return true;
-    return mReceiveSensorTrigger.isOnBit(1);
-}
-
-bool PlayerTrigger::isOnNoDamageDown() const {
-    if (mActionTrigger.isOnBit(10))
-        return true;
-    return mPreMovementTrigger.isOnBit(4);
-}
-
-// NON_MATCHING: compiler merges the bit0 early-out into the combined mask test
-bool PlayerTrigger::isOnAnyDamage() const {
-    if (mCollisionTrigger.isOn(0x44))
-        return true;
-    if (mReceiveSensorTrigger.isOnBit(0))
-        return true;
-    if (isOnDamageFire())
-        return true;
-    if (isOnEndHackWithDamage())
-        return true;
-    return mActionTrigger.isOn(0x800000);
+bool PlayerTrigger::isOnCollisionExpandCheck() const {
+    return mActionTrigger.isOnBit(EActionTrigger_val3);
 }
 
 bool PlayerTrigger::tryGetRecMaterialCode(const char** dest) const {

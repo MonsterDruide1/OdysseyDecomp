@@ -6,12 +6,18 @@
 class PlayerTrigger {
 public:
     enum ECollisionTrigger : u32 {
+        // used in PlayerTrigger::isOnUpperPunchHit
+        ECollisionTrigger_val0 = 0,
         // used in PlayerStateHipDrop::isLandTrigger
         ECollisionTrigger_val1 = 1,
         // used in PlayerStateDamageLife::exeDead
         ECollisionTrigger_val6 = 6,
         // used in PlayerJudgeWallHitDown::judge
         ECollisionTrigger_val9 = 9,
+        // used in PlayerTrigger::isOnDamageFire
+        ECollisionTrigger_val24 = 24,
+        // used in PlayerTrigger::isOnAnyDamage
+        ECollisionTrigger_val68 = 68,
         // used in PlayerTrigger::isOnYoshiHackEnd
         ECollisionTrigger_val1024 = 1024,
     };
@@ -28,23 +34,39 @@ public:
         EActionTrigger_val3 = 3,
         // used in PlayerStateDamageLife::appear
         EActionTrigger_val6 = 6,
+        // used in PlayerTrigger::isOnNoDamageDown
+        EActionTrigger_val10 = 10,
         // used in PlayerJudgeForceLand::judge
         EActionTrigger_val11 = 11,
         // used in PlayerStateSquat::appear
         EActionTrigger_val12 = 12,
         // used in PlayerTrigger::isOnHipDropCancelThrow
         EActionTrigger_val18 = 18,
+        // used in PlayerTrigger::isOnSpinMoveCapThrow
+        EActionTrigger_val27 = 27,
+        EActionTrigger_val28 = 28,
         // used in PlayerJudgeWallCatch::update, PlayerJudgeWallKeep::update
         EActionTrigger_val30 = 30,
         // used in PlayerCounterQuickTurnJump::isEnableTurnJump
         EActionTrigger_QuickTurn = 34,
+        // used in PlayerTrigger::isOnAnyDamage
+        EActionTrigger_val8388608 = 8388608,
     };
 
-    enum EReceiveSensorTrigger : u32 {};
+    enum EReceiveSensorTrigger : u32 {
+        // used in PlayerTrigger::isOnAnyDamage
+        EReceiveSensorTrigger_val0 = 0,
+        // used in PlayerTrigger::isOnDamageFire
+        EReceiveSensorTrigger_val1 = 1,
+        // used in PlayerTrigger::isOnEndHackWithDamage, PlayerTrigger::isOnAnyDamage
+        EReceiveSensorTrigger_val12 = 12,
+    };
 
     enum EPreMovementTrigger : u32 {
         // used in PlayerStateDamageLife::appear
         EPreMovementTrigger_val2 = 2,
+        // used in PlayerTrigger::isOnNoDamageDown
+        EPreMovementTrigger_val4 = 4,
     };
 
     enum EDemoEndTrigger : u32 {};
