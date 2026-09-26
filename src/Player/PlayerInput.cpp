@@ -481,16 +481,21 @@ bool PlayerInput::isThrowTypeRolling(const sead::Vector2f& a1) const {
     return !(absX > absY) && !al::isNearZero(a1.y, 0.001);
 }
 
-// NON_MATCHING: regalloc/scheduling differences only, logic is identical
-// https://decomp.me/scratch/GHB12
-sead::Vector2f PlayerInput::getMoveInputRaw(bool a1) const {
+sead::Vector2f PlayerInput::getMoveInputRaw(bool isSecondPlayer) const {
     if (mIsDisableInput)
         return sead::Vector2f::zero;
+
     s32 port = PlayerFunction::getPlayerInputPort(mLiveActor);
-    if (!rs::isSeparatePlay(mLiveActor))
-        return PlayerInputFunction::getMoveInputStick(mLiveActor, port, 0);
-    if (a1)
-        return PlayerInputFunction::getMoveInputStick(mLiveActor, al::getPlayerControllerPort(1),
-                                                      _90);
-    return PlayerInputFunction::getMoveInputStick(mLiveActor, al::getPlayerControllerPort(0), _8c);
+    s32 value = 0;
+    if (rs::isSeparatePlay(mLiveActor)) {
+        if (isSecondPlayer) {
+            port = al::getPlayerControllerPort(1);
+            value = _90;
+        } else {
+            port = al::getPlayerControllerPort(0);
+            value = _8c;
+        }
+    }
+
+    return PlayerInputFunction::getMoveInputStick(mLiveActor, port, value);
 }
