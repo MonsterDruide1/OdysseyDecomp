@@ -8,25 +8,26 @@ class LiveActor;
 class IUseSceneObjHolder;
 }  // namespace al
 
-class PlayerInputFunction {
-public:
-    static bool isTriggerAction(const al::LiveActor* actor, s32 port);
-    static bool isHoldAction(const al::LiveActor* actor, s32 port);
-    static bool isReleaseAction(const al::LiveActor* actor, s32 port);
+namespace PlayerInputFunction {
 
-    static bool isTriggerJump(const al::LiveActor* actor, s32 port);
-    static bool isHoldJump(const al::LiveActor* actor, s32 port);
-    static bool isReleaseJump(const al::LiveActor* actor, s32 port);
+bool isTriggerAction(const al::LiveActor* actor, s32 port);
+bool isHoldAction(const al::LiveActor* actor, s32 port);
+bool isReleaseAction(const al::LiveActor* actor, s32 port);
 
-    static bool isTriggerSubAction(const al::LiveActor* actor, s32 port);
-    static bool isHoldSubAction(const al::LiveActor* actor, s32 port);
+bool isTriggerJump(const al::LiveActor* actor, s32 port);
+bool isHoldJump(const al::LiveActor* actor, s32 port);
+bool isReleaseJump(const al::LiveActor* actor, s32 port);
 
-    static bool isTriggerTalk(const al::LiveActor* actor, s32 port);
-    static bool isTriggerStartWorldWarp(const al::LiveActor* actor, s32 port);
-    static bool isTriggerCancelWorldWarp(const al::LiveActor* actor, s32 port);
+bool isTriggerSubAction(const al::LiveActor* actor, s32 port);
+bool isHoldSubAction(const al::LiveActor* actor, s32 port);
 
-    static sead::Vector2f getMoveInputStick(const al::LiveActor* actor, s32 port1, s32 port2);
-};
+bool isTriggerTalk(const al::LiveActor* actor, s32 port);
+bool isTriggerStartWorldWarp(const al::LiveActor* actor, s32 port);
+bool isTriggerCancelWorldWarp(const al::LiveActor* actor, s32 port);
+
+sead::Vector2f getMoveInputStick(const al::LiveActor* actor, s32 port1, s32 port2);
+
+}  // namespace PlayerInputFunction
 
 namespace rs {
 

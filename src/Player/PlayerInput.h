@@ -19,7 +19,7 @@ public:
     void updateWallAlong();
     void updateSnapMoveArea();
     void updateInput3D();
-    sead::Vector2f getMoveInputRaw(bool) const;
+    sead::Vector2f getMoveInputRaw(bool isSecondPlayer) const;
     void calcMoveInputImpl(sead::Vector3f*, const sead::Vector3f&, bool, bool, bool) const;
     void updateInput2D();
     void resetAlongWall();
@@ -153,16 +153,16 @@ private:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
     const IUseDimension* mDimension;
-    void* gap[11];
+    u8 filler_18[0x70 - 0x18];
     al::SpinInputAnalyzer* mSpinInputAnalyzer;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer2;
     s32 _88;
     s32 _8c;
     s32 _90;
-    u8 _94[0x98 - 0x94];
+    u8 filler_94[0x4];
     bool mIsDisableInput;
-    void* gap3[20];
+    u8 filler_a0[0x140 - 0xa0];
 };
 
 static_assert(sizeof(PlayerInput) == 0x140);
