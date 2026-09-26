@@ -480,3 +480,22 @@ bool PlayerInput::isThrowTypeRolling(const sead::Vector2f& a1) const {
     f32 absY = (a1.y > 0 ? a1.y : -a1.y);
     return !(absX > absY) && !al::isNearZero(a1.y, 0.001);
 }
+
+sead::Vector2f PlayerInput::getMoveInputRaw(bool isSecondPlayer) const {
+    if (mIsDisableInput)
+        return sead::Vector2f::zero;
+
+    s32 port = PlayerFunction::getPlayerInputPort(mLiveActor);
+    s32 value = 0;
+    if (rs::isSeparatePlay(mLiveActor)) {
+        if (isSecondPlayer) {
+            port = al::getPlayerControllerPort(1);
+            value = _90;
+        } else {
+            port = al::getPlayerControllerPort(0);
+            value = _8c;
+        }
+    }
+
+    return PlayerInputFunction::getMoveInputStick(mLiveActor, port, value);
+}
