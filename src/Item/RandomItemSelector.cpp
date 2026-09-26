@@ -10,6 +10,7 @@
 #include "System/GameDataHolderAccessor.h"
 
 RandomItemSelector::RandomItemSelector() {
+    const char* itemName;
     al::Resource* resource = al::findOrCreateResource("SystemData/ItemList", nullptr);
     al::ByamlIter iter(al::findResourceYaml(resource, "RandomItemList", nullptr));
     mItemLists = new ItemList[6];
@@ -21,7 +22,6 @@ RandomItemSelector::RandomItemSelector() {
         mItemLists[i].itemTypes = new rs::ItemType::ValueType[listSize];
         rs::ItemType::ValueType* itemTypes = mItemLists[i].itemTypes;
         s32 itemCount = listIter.getSize();
-        const char* itemName;
         for (s32 j = 0; j < itemCount; j++) {
             listIter.tryGetStringByIndex(&itemName, j);
             if (al::isEqualString(itemName, "Coin"))
