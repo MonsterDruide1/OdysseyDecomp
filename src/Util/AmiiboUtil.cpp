@@ -1,9 +1,10 @@
 #include "Util/AmiiboUtil.h"
 
-#include "Amiibo/HelpAmiiboDirector.h"
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Nfp/NfpTypes.h"
 #include "Library/Scene/SceneObjUtil.h"
+
+#include "Amiibo/HelpAmiiboDirector.h"
 
 namespace rs {
 
