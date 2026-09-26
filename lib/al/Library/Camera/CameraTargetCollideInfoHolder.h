@@ -14,7 +14,7 @@ public:
     void update(bool, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
     void reset();
     bool isExistUnderWall() const;
-    bool tryCalcSlopDownFrontDirH(sead::Vector3f*) const;
+    bool tryCalcSlopeDownFrontDirH(sead::Vector3f*) const;
 
     CollisionDirector* getCollisionDirector() const override { return mCollisionDirector; }
 

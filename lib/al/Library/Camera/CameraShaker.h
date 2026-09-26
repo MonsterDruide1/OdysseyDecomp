@@ -60,6 +60,8 @@ public:
 
     void startShakeByIndex(s32 index, s32 steps);
 
+    const sead::Vector2f& getOffset() const { return mOffset; }
+
 private:
     sead::Vector2f mOffset = {0.0f, 0.0f};
     const ShakeInfo* mActiveShake = nullptr;

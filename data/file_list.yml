@@ -70599,138 +70599,136 @@ MapObj/FukankunZoomObjHolder.o:
     label:
     - _ZN21FukankunZoomObjHolderC1Ev
     - _ZN21FukankunZoomObjHolderC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28ae84
     size: 208
     label: _ZN21FukankunZoomObjHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28af54
     size: 88
     label: _ZN21FukankunZoomObjHolder7executeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28afac
     size: 128
     label: _ZN21FukankunZoomObjHolder21tryGetFukankunZoomObjERKN2al11PlacementIdE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b02c
     size: 16
     label: _ZN21FukankunZoomObjHolder33declareUseFukankunZoomTargetActorEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b03c
     size: 76
     label: _ZN21FukankunZoomObjHolder23registerFukankunZoomObjEPKN2al9LiveActorEPKNS0_11PlacementIdE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b088
     size: 152
     label: _ZN21FukankunZoomObjHolder31registerFukankunZoomTargetActorEPKN2al9LiveActorEiRKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b120
     size: 8
     label: _ZNK21FukankunZoomObjHolder29getFukankunZoomTargetActorNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b128
     size: 16
     label: _ZNK21FukankunZoomObjHolder29tryGetFukankunZoomTargetActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b138
     size: 24
     label: _ZNK21FukankunZoomObjHolder39tryGetFukankunZoomTargetActorIsNoZoomOnEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b150
     size: 16
     label: _ZNK21FukankunZoomObjHolder37tryGetFukankunZoomTargetActorZoomTypeEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b160
     size: 40
     label: _ZNK21FukankunZoomObjHolder35tryGetFukankunZoomTargetActorOffsetEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b188
     size: 16
     label: _ZNK21FukankunZoomObjHolder44tryGetFukankunZoomTargetActorTargetJointNameEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b198
     size: 24
     label: _ZN21FukankunZoomObjHolder35declareWatchFukankunZoomTargetActorEPK8Fukankuni
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b1b0
     size: 76
     label: _ZNK21FukankunZoomObjHolder13getWatchCountEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b1fc
     size: 48
     label: _ZNK21FukankunZoomObjHolder34tryGetActiveFukankunLinkedShineMtxEPPKN4sead8Matrix34IfEE
-    status: NotDecompiled
-MapObj/FukankunZoomTargetFunction.o:
-  '.text':
+    status: Matching
   - offset: 0x28b22c
     size: 48
     label: _ZN26FukankunZoomTargetFunction33declareUseFukankunZoomTargetActorEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b25c
     size: 216
     label: _ZN26FukankunZoomTargetFunction31registerFukankunZoomTargetActorEPKN2al9LiveActorEiRKN4sead7Vector3IfEEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b334
     size: 120
     label: _ZN26FukankunZoomTargetFunction13getWatchCountEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b3ac
     size: 8
     label: _ZN26FukankunZoomTargetFunction28getFukankunWatchCountDefaultEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b3b4
     size: 12
     label: _ZN26FukankunZoomTargetFunction30getFukankunCameraNearDistThresEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b3c0
     size: 84
     label: _ZN26FukankunZoomTargetFunction34tryGetActiveFukankunLinkedShineMtxEPPKN4sead8Matrix34IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b414
     size: 172
     label: _ZN26FukankunZoomTargetFunction21tryGetFukankunZoomObjEPKN2al18IUseSceneObjHolderERKNS0_13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b4c0
     size: 160
     label: _ZN26FukankunZoomTargetFunction23registerFukankunZoomObjEPKN2al9LiveActorERKNS0_13PlacementInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b560
     size: 28
     label: _ZN26FukankunZoomTargetFunction29getFukankunZoomTargetActorNumEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b57c
     size: 48
     label: _ZN26FukankunZoomTargetFunction29tryGetFukankunZoomTargetActorEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b5ac
     size: 56
     label: _ZN26FukankunZoomTargetFunction39tryGetFukankunZoomTargetActorIsNoZoomOnEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b5e4
     size: 48
     label: _ZN26FukankunZoomTargetFunction37tryGetFukankunZoomTargetActorZoomTypeEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b614
     size: 68
     label: _ZN26FukankunZoomTargetFunction35tryGetFukankunZoomTargetActorOffsetEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b658
     size: 48
     label: _ZN26FukankunZoomTargetFunction44tryGetFukankunZoomTargetActorTargetJointNameEPKN2al18IUseSceneObjHolderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b688
     size: 72
     label: _ZN26FukankunZoomTargetFunction35declareWatchFukankunZoomTargetActorEPK8Fukankuni
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28b6d0
     size: 12
     label: _ZNK21FukankunZoomObjHolder15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x28b6dc
     size: 4
     label: _ZN21FukankunZoomObjHolderD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 MapObj/FurnitureStateWait.o:
   '.text':
@@ -89236,27 +89234,27 @@ MapObj/TouchTargetInfo.o:
     label:
     - _ZN15TouchTargetInfoC1Ev
     - _ZN15TouchTargetInfoC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a134
     size: 152
     label: _ZN15TouchTargetInfo15setInfoBySensorEPKN2al9HitSensorERKN4sead7Vector3IfEES8_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a1cc
     size: 28
     label: _ZN15TouchTargetInfo5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a1e8
     size: 88
     label: _ZN15TouchTargetInfo18setInfoByConnectorEPKN2al12MtxConnectorERKN4sead7Vector3IfEES8_b
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a240
     size: 76
     label: _ZN15TouchTargetInfo18setInfoByPosAndNrmERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x33a28c
     size: 228
     label: _ZNK15TouchTargetInfo20calcCurrentPosAndNrmEPN4sead7Vector3IfEES3_
-    status: NotDecompiled
+    status: Matching
 MapObj/TouchTargetKeeper.o:
   '.text':
   - offset: 0x33a370
@@ -155001,23 +154999,23 @@ Util/MoonRockUtil.o:
   - offset: 0x556b90
     size: 64
     label: _ZN2rs38isEnableShowDemoAfterOpenMoonRockFirstEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556bd0
     size: 64
     label: _ZN2rs23isFirstDemoOpenMoonRockEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556c10
     size: 104
     label: _ZN2rs32isEnableShowDemoMoonRockMapWorldEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556c78
     size: 60
     label: _ZN2rs30showDemoAfterOpenMoonRockFirstEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x556cb4
     size: 100
     label: _ZN2rs24showDemoMoonRockMapWorldEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
 Util/MoviePlayer.o:
   '.text':
   - offset: 0x556d18
@@ -205097,8 +205095,8 @@ sead/prim/seadEnum.o:
     status: Matching
   - offset: 0x7466f0
     size: 188
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_seadEnum.cpp
+    status: Matching
 sead/prim/seadFormatPrint.o:
   '.text':
   - offset: 0x7467ac
@@ -209345,7 +209343,7 @@ sead/filedevice/seadArchiveFileDevice.o:
   - offset: 0x769870
     size: 20
     label: _ZN4sead17ArchiveFileDevice21getArchiveFileHandle_EPNS_10FileHandleE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x769884
     size: 124
     label: _ZN4sead17ArchiveFileDevice14doIsExistFile_EPbRKNS_14SafeStringBaseIcEE
@@ -229679,145 +229677,145 @@ Library/Camera/CameraPoseUpdater.o:
     label:
     - _ZN2al17CameraPoseUpdaterC1EPNS_15SceneCameraInfoEi
     - _ZN2al17CameraPoseUpdaterC2EPNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837808
     size: 68
     label:
     - _ZN2al17CameraPoseUpdaterD1Ev
     - _ZN2al17CameraPoseUpdaterD2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83784c
     size: 76
     label: _ZN2al17CameraPoseUpdaterD0Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837898
     size: 148
     label: _ZN2al17CameraPoseUpdater4initEPKNS_19CameraParamTransferEPKNS_15CameraStopJudgeEPNS_20CameraStartParamCtrlE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83792c
     size: 32
     label: _ZNK2al17CameraPoseUpdater19getNearClipDistanceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83794c
     size: 316
     label: _ZN2al17CameraPoseUpdater6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837a88
     size: 748
     label: _ZN2al17CameraPoseUpdater15trySwitchCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837d74
     size: 8
     label: _ZNK2al17CameraPoseUpdater17isActiveInterpoleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837d7c
     size: 28
     label: _ZN2al17CameraPoseUpdater14startInterpoleEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837d98
     size: 16
     label: _ZN2al17CameraPoseUpdater22requestCancelInterpoleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837da8
     size: 52
     label: _ZNK2al17CameraPoseUpdater30calcCameraPoseWithoutInterpoleEPN4sead12LookAtCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837ddc
     size: 284
     label: _ZN2al17CameraPoseUpdater17startSnapShotModeEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837ef8
     size: 120
     label: _ZN2al17CameraPoseUpdater15endSnapShotModeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837f70
     size: 16
     label: _ZNK2al17CameraPoseUpdater29isSnapShotOrientationRotate90Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837f80
     size: 16
     label: _ZNK2al17CameraPoseUpdater30isSnapShotOrientationRotate270Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x837f90
     size: 556
     label: _ZN2al17CameraPoseUpdater9exeActiveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8381bc
     size: 320
     label: _ZN2al17CameraPoseUpdater11exeDeactiveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8382fc
     size: 160
     label: _ZN2al17CameraPoseUpdater7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83839c
     size: 116
     label: _ZN2al17CameraPoseUpdater8exePauseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838410
     size: 348
     label: _ZN2al17CameraPoseUpdater11exeSnapShotEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83856c
     size: 40
     label: _ZN2al17CameraPoseUpdater11endSnapShotEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838594
     size: 4
     label: _ZN2al17CameraPoseUpdater19exeSnapShotNoUpdateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838598
     size: 32
     label: _ZNK2al17CameraPoseUpdater23isCurrentCameraPriorityEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8385b8
     size: 40
     label: _ZNK2al17CameraPoseUpdater31isInvalidChangeSubjectiveCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8385e0
     size: 32
     label: _ZNK2al17CameraPoseUpdater22isCurrentCameraZoomingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838600
     size: 32
     label: _ZNK2al17CameraPoseUpdater32isCurrentCameraEnableRotateByPadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838620
     size: 24
     label: _ZN2al17CameraPoseUpdater33tryReceiveCameraRequestFromObjectERKNS_23CameraObjectRequestInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838638
     size: 32
     label: _ZN2al17CameraPoseUpdater31tryRequestCameraTurnToDirectionEPKNS_14CameraTurnInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x838658
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_128CameraPoseUpdaterNrvDeactive7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x838660
     size: 116
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_125CameraPoseUpdaterNrvPause7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x8386d4
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_124CameraPoseUpdaterNrvStop7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x8386dc
     size: 4
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_136CameraPoseUpdaterNrvSnapShotNoUpdate7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x8386e0
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_128CameraPoseUpdaterNrvSnapShot7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x8386e8
     size: 40
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_128CameraPoseUpdaterNrvSnapShot12executeOnEndEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x838710
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_126CameraPoseUpdaterNrvActive7executeEPN2al11NerveKeeperE
+    status: Matching
 Library/Camera/CameraRequestParamHolder.o:
   '.text':
   - offset: 0x838718
@@ -230504,7 +230502,7 @@ Library/Camera/CameraUtil.o:
   - offset: 0x83c108
     size: 176
     label: _ZN2al20setCurrentCameraPoseEPNS_14CameraPoseInfoEPKNS_10IUseCameraE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83c1b8
     size: 80
     label: _ZN2al13calcCameraDirEPN4sead7Vector3IfEEPKNS_10IUseCameraEi
@@ -231016,11 +231014,11 @@ Library/Camera/CameraUtil.o:
   - offset: 0x83efdc
     size: 48
     label: _ZN2al23isActiveCameraInterpoleEPKNS_10IUseCameraEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f00c
     size: 16
     label: _ZN2al23isActiveCameraInterpoleEPKNS_15SceneCameraInfoEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x83f01c
     size: 56
     label: _ZN2al20startCameraInterpoleEPKNS_10IUseCameraEii

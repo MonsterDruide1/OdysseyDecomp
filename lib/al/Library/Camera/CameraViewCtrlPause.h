@@ -12,6 +12,10 @@ public:
 
     void endCameraPause() { mIsCameraPause = false; }
 
+    bool isCameraPause() const { return mIsCameraPause; }
+
+    f32 get_4() const { return _4; }
+
 private:
     bool mIsCameraPause = false;
     f32 _4;

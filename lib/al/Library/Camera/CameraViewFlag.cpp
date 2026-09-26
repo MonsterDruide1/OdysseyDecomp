@@ -5,7 +5,7 @@ namespace al {
 CameraViewFlag::CameraViewFlag() = default;
 
 void CameraViewFlag::resetAllFlag() {
-    _0 = false;
+    mIsInvalidCameraBlur = false;
 }
 
 }  // namespace al

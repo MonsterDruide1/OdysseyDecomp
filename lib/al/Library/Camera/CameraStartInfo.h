@@ -7,25 +7,25 @@
 namespace al {
 
 struct CameraStartInfo {
-    CameraTicket::Priority prePriorityType;
-    const char* preCameraName;
-    f32 preCameraSwingAngleH;
-    f32 preCameraSwingAngleV;
-    f32 preCameraMaxSwingAngleH;
-    f32 preCameraMaxSwingAngleV;
-    bool isInvalidCollidePreCamera;
-    bool isInvalidKeepPreCameraDistance;
-    bool isInvalidKeepPreCameraDistanceIfNoCollide;
-    bool isValidResetPreCameraPose;
-    bool isValidKeepPreSelfCameraPose;
-    bool _25;
-    bool isExistAreaAngleH;
-    f32 areaAngleH;
-    bool isExistAreaAngleV;
-    f32 areaAngleV;
-    bool isExistNextPoseByPreCamera;
-    f32 nextAngleHByPreCamera;
-    f32 nextAngleVByPreCamera;
+    CameraTicket::Priority prePriorityType = (CameraTicket::Priority)-1;
+    const char* preCameraName = nullptr;
+    f32 preCameraSwingAngleH = 0.0f;
+    f32 preCameraSwingAngleV = 0.0f;
+    f32 preCameraMaxSwingAngleH = 0.0f;
+    f32 preCameraMaxSwingAngleV = 0.0f;
+    bool isInvalidCollidePreCamera = false;
+    bool isInvalidKeepPreCameraDistance = false;
+    bool isInvalidKeepPreCameraDistanceIfNoCollide = false;
+    bool isValidResetPreCameraPose = false;
+    bool isValidKeepPreSelfCameraPose = false;
+    bool _25 = false;
+    bool isExistAreaAngleH = false;
+    f32 areaAngleH = 0.0f;
+    bool isExistAreaAngleV = false;
+    f32 areaAngleV = 0.0f;
+    bool isExistNextPoseByPreCamera = false;
+    f32 nextAngleHByPreCamera = 0.0f;
+    f32 nextAngleVByPreCamera = 0.0f;
 };
 
 static_assert(sizeof(CameraStartInfo) == 0x40);

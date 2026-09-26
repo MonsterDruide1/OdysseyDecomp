@@ -11,7 +11,7 @@ SceneCameraInfo::SceneCameraInfo(s32 maxViewNum) : mViewNumMax(maxViewNum) {
 }
 
 void SceneCameraInfo::initViewInfo(CameraViewInfo* cameraViewInfo) {
-    mViewArray[cameraViewInfo->getIndex()] = cameraViewInfo;
+    mViewArray[cameraViewInfo->index] = cameraViewInfo;
 }
 
 const char* SceneCameraInfo::getViewName(s32 num) const {
