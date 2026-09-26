@@ -152458,7 +152458,7 @@ Util/AmiiboUtil.o:
   - offset: 0x544920
     size: 4
     label: _ZN2rs15resetHelpAmiiboEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x544924
     size: 52
     label: _ZN2rs19getSearchAmiiboDataEPKN2al18IUseSceneObjHolderE
@@ -152466,11 +152466,11 @@ Util/AmiiboUtil.o:
   - offset: 0x544958
     size: 36
     label: _ZN2rs27appearCoinCollectHintEffectEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x54497c
     size: 36
     label: _ZN2rs25killCoinCollectHintEffectEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
 Util/AnimSequencer.o:
   '.text':
   - offset: 0x5449a0

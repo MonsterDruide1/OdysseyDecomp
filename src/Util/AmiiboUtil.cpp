@@ -2,6 +2,9 @@
 
 #include "Library/Nfp/NfpFunction.h"
 #include "Library/Nfp/NfpTypes.h"
+#include "Library/Scene/SceneObjUtil.h"
+
+#include "Amiibo/HelpAmiiboDirector.h"
 
 namespace rs {
 
@@ -19,6 +22,22 @@ s32 createCharacterIdS32(const al::NfpCharacterId& characterId) {
 bool isEnableUseStageSceneAmiibo(const al::NfpInfo& nfpInfo) {
     return al::isCharacterIdBaseMario(nfpInfo) || al::isCharacterIdBasePeach(nfpInfo) ||
            al::isCharacterIdBaseKoopa(nfpInfo);
+}
+
+void resetHelpAmiibo(const al::IUseSceneObjHolder* user) {}
+
+void appearCoinCollectHintEffect(const al::IUseSceneObjHolder* user) {
+    HelpAmiiboDirector* director = al::tryGetSceneObj<HelpAmiiboDirector>(user);
+
+    if (director)
+        director->appearCoinCollectEffect();
+}
+
+void killCoinCollectHintEffect(const al::IUseSceneObjHolder* user) {
+    HelpAmiiboDirector* director = al::tryGetSceneObj<HelpAmiiboDirector>(user);
+
+    if (director)
+        director->killCoinCollectEffect();
 }
 
 }  // namespace rs
