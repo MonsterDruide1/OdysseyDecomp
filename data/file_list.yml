@@ -49699,19 +49699,19 @@ Item/RandomItemSelector.o:
     label:
     - _ZN18RandomItemSelectorC1Ev
     - _ZN18RandomItemSelectorC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ccf60
     size: 136
     label: _ZN18RandomItemSelector17getRandomItemTypeEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ccfe8
     size: 8
     label: _ZN2rs24createRandomItemSelectorEPKN2al18IUseSceneObjHolderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ccff0
     size: 4
     label: _ZN18RandomItemSelectorD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Item/Shine.o:
   '.text':

@@ -8,6 +8,7 @@
 #include "Amiibo/HelpAmiiboDirector.h"
 #include "Item/CoinCollectHolder.h"
 #include "Item/CoinCollectWatcher.h"
+#include "Item/RandomItemSelector.h"
 #include "Layout/KidsModeLayoutAccessor.h"
 #include "MapObj/FukankunZoomObjHolder.h"
 #include "MapObj/RhyhtmInfoWatcher.h"
@@ -80,7 +81,7 @@ static al::ISceneObj* sceneObjCreator(s32 id) {
         return nullptr;
 
     case SceneObjID_RandomItemSelector:
-        return nullptr;
+        return new RandomItemSelector();
 
     case SceneObjID_ReactionObjectActionIndexHolder:
         return nullptr;
