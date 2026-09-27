@@ -27,7 +27,7 @@ void MoonWorldBell::init(const al::ActorInitInfo& info) {
     al::invalidateClipping(this);
     al::registActorToDemoInfo(this, info);
 
-    if (GameDataFunction::isGameClear(GameDataHolderAccessor(this)))
+    if (GameDataFunction::isGameClear(this))
         al::startAction(this, "WaitNoSound");
 
     makeActorAlive();
