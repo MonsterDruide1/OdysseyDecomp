@@ -1,6 +1,6 @@
 #include "Library/LiveActor/ActorInitFunction.h"
 
-#include <nn/g3d/ModelObj.h>
+#include <nn/g3d/g3d_ModelObj.h>
 
 #include "Library/Action/ActorActionKeeper.h"
 #include "Library/Audio/System/AudioKeeper.h"

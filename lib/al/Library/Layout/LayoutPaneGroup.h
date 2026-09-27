@@ -1,6 +1,7 @@
 #pragma once
 
-#include <nn/ui2d/Layout.h>
+#include <basis/seadTypes.h>
+#include <nn/ui2d/ui2d_Layout.h>
 
 namespace eui {
 class Animator;
