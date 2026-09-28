@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.30)
 project(odyssey CXX)
 
 set(SEAD_USE_OLD_NNHEADERS_REPO OFF CACHE BOOL "Enable new nnsdk repo")
