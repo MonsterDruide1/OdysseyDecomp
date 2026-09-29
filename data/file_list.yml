@@ -122259,7 +122259,7 @@ Player/PlayerInput.o:
   - offset: 0x44b3b0
     size: 156
     label: _ZNK11PlayerInput15getMoveInputRawEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x44b44c
     size: 1232
     label: _ZNK11PlayerInput17calcMoveInputImplEPN4sead7Vector3IfEERKS2_bbb
