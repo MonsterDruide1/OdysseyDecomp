@@ -12,27 +12,26 @@ SimpleCameraShooter::SimpleCameraShooter(const char* _name) {
     mAspectRatio = 4.0f / 3.0f;
 }
 
-f32 SimpleCameraShooter::calcAspectRatioByScreenSize(s32 width, s32 height) {
+void SimpleCameraShooter::calcAspectRatioByScreenSize(s32 width, s32 height) {
     mAspectRatio = (f32)width / (f32)height;
-    return mAspectRatio;
 }
 
 void SimpleCameraShooter::calcCameraPos(sead::Vector3f* cameraPos,
                                         const IUseCollision* collision) const {
     sead::Vector3f backDir = mBackDir;
     f32 distance = mDistance;
-    if (collision) {
-        if (alCollisionUtil::checkStrikeSphereMove(collision, mHitInfos, 8, mPosition, 30.0f,
-                                                   distance * mBackDir, nullptr, nullptr))
-            distance *= mHitInfos[0]._0;
+    if (collision &&
+        alCollisionUtil::checkStrikeSphereMove(collision, mHitInfos, 8, mPosition, 30.0f,
+                                               distance * mBackDir, nullptr, nullptr)) {
+        distance *= mHitInfos[0]._0;
     }
 
     cameraPos->set(mPosition);
-    *cameraPos += backDir * distance;
+    cameraPos->add(backDir * distance);
 }
 
 void SimpleCameraShooter::calcFrontDir(sead::Vector3f* frontDir) const {
-    *frontDir = -mBackDir;
+    frontDir->set(-mBackDir);
 }
 
 f32 SimpleCameraShooter::checkCollision(f32 distance, const IUseCollision* collision) const {

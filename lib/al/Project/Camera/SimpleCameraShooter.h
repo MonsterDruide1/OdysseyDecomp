@@ -16,7 +16,7 @@ class SimpleCameraShooter {
 public:
     SimpleCameraShooter(const char* _name);
 
-    f32 calcAspectRatioByScreenSize(s32 width, s32 height);
+    void calcAspectRatioByScreenSize(s32 width, s32 height);
     void calcCameraPos(sead::Vector3f* cameraPos, const IUseCollision* collision) const;
     void calcFrontDir(sead::Vector3f* frontDir) const;
     f32 checkCollision(f32 distance, const IUseCollision* collision) const;
