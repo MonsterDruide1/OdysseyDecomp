@@ -60908,129 +60908,131 @@ MapObj/CapAccelerator.o:
   - offset: 0x22f2f4
     size: 128
     label: _ZN14CapAcceleratorC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f374
     size: 140
     label: _ZN14CapAcceleratorC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f400
     size: 248
     label: _ZN14CapAccelerator4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f4f8
     size: 28
     label: _ZN14CapAccelerator18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f514
     size: 28
     label: _ZN14CapAccelerator7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f530
     size: 344
     label: _ZN14CapAccelerator10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f688
     size: 84
     label: _ZN14CapAccelerator12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f6dc
     size: 4
     label: _ZN14CapAccelerator7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f6e0
     size: 128
     label: _ZN14CapAccelerator11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f760
     size: 104
     label: _ZN14CapAccelerator10exeTrampleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f7c8
     size: 104
     label: _ZN14CapAccelerator6exeHitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22f830
     size: 4
     label: _ZNK12_GLOBAL__N_121CapAcceleratorNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22f834
     size: 108
     label: _ZNK12_GLOBAL__N_120CapAcceleratorNrvHit7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22f8a0
     size: 108
     label: _ZNK12_GLOBAL__N_124CapAcceleratorNrvTrample7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22f90c
     size: 132
     label: _ZNK12_GLOBAL__N_125CapAcceleratorNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
+MapObj/CapAcceleratorKeyMoveMapParts.o:
+  '.text':
   - offset: 0x22f990
     size: 128
     label: _ZN2al29CapAcceleratorKeyMoveMapPartsC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fa10
     size: 140
     label: _ZN2al29CapAcceleratorKeyMoveMapPartsC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fa9c
     size: 144
     label: _ZN2al29CapAcceleratorKeyMoveMapParts4initERKNS_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fb2c
     size: 4
     label: _ZN2al29CapAcceleratorKeyMoveMapParts7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fb30
     size: 176
     label: _ZN2al29CapAcceleratorKeyMoveMapParts7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fbe0
     size: 204
     label: _ZN2al29CapAcceleratorKeyMoveMapParts7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fcac
     size: 64
     label: _ZN2al29CapAcceleratorKeyMoveMapParts7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x22fcec
     size: 8
     label: _ZNK12_GLOBAL__N_136CapAcceleratorKeyMoveMapPartsNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22fcf4
     size: 12
     label: _ZNK12_GLOBAL__N_136CapAcceleratorKeyMoveMapPartsNrvWait13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22fd00
     size: 8
     label: _ZNK12_GLOBAL__N_136CapAcceleratorKeyMoveMapPartsNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22fd08
     size: 12
     label: _ZNK12_GLOBAL__N_136CapAcceleratorKeyMoveMapPartsNrvMove13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22fd14
     size: 68
     label: _ZNK12_GLOBAL__N_136CapAcceleratorKeyMoveMapPartsNrvStop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22fd58
     size: 12
     label: _ZNK12_GLOBAL__N_136CapAcceleratorKeyMoveMapPartsNrvStop13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x22fd64
     size: 116
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_CapAcceleratorKeyMoveMapParts.cpp
+    status: Matching
 MapObj/CapAppearMapParts.o:
   '.text':
   - offset: 0x22fdd8
@@ -133855,7 +133857,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b6da8
     size: 52
     label: _ZN2al19createActorFunctionI14CapAcceleratorEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b6ddc
     size: 52
