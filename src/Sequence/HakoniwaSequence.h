@@ -45,7 +45,7 @@ public:
     void drawMain() const override;
 
     void updatePadSystem();
-    void destroySceneHeap(bool destroyResource);
+    void destroySceneHeap(bool destroyResourceHeap);
     void initSystem();
     bool isEnableSave() const;
 
