@@ -33,7 +33,11 @@ public:
     void exeEnd();
 
 private:
-    s32 mPlayMode = 0;
+    enum class PlayMode {
+        SinglePlay = 0,
+        SeparatePlay = 1,
+    };
+    PlayMode mPlayMode = PlayMode::SinglePlay;
 };
 
 static_assert(sizeof(InformationWindowLayout) == 0x130);

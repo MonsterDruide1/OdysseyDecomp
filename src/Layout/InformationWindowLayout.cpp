@@ -31,19 +31,19 @@ InformationWindowLayout::InformationWindowLayout(const al::LayoutInitInfo& info)
 }
 
 void InformationWindowLayout::changeSeparatePlay() {
-    mPlayMode = 1;
+    mPlayMode = PlayMode::SeparatePlay;
 }
 
 bool InformationWindowLayout::isSeparateTutorial() const {
-    return mPlayMode == 1;
+    return mPlayMode == PlayMode::SeparatePlay;
 }
 
 bool InformationWindowLayout::isSingleTutorial() const {
-    return mPlayMode == 0;
+    return mPlayMode == PlayMode::SinglePlay;
 }
 
 void InformationWindowLayout::changeSinglePlay() {
-    mPlayMode = 0;
+    mPlayMode = PlayMode::SinglePlay;
 }
 
 void InformationWindowLayout::setSeparatePlayerOnlyLayout() {
@@ -57,38 +57,11 @@ void InformationWindowLayout::setSinglePlayLayout() {
 }
 
 void InformationWindowLayout::setHackTutorial(const al::LiveActor* actor, const char* label) {
-    const al::IUseMessageSystem* messageSystem = this;
-    const char16* message =
-        rs::getPlayerHackSystemMessageString(actor, messageSystem, "Tutorial", label);
-    s32 playMode = mPlayMode;
-    al::IUseLayout* layout = isValidLayout(this) ? this : nullptr;
-
-    al::setPaneString(layout, "TxtGuide", message);
-    al::IUseLayoutAction* layoutAction = isValidLayout(this) ? this : nullptr;
-    al::setPaneString(layout, "TxtGuideSh", message);
-    al::requestCaptureRecursive(this);
-
-    if (playMode)
-        al::startAction(layoutAction, "1P", "State");
-    else
-        al::startAction(layoutAction, "Normal", "State");
+    setAreaTutorial(rs::getPlayerHackSystemMessageString(actor, this, "Tutorial", label));
 }
 
 void InformationWindowLayout::setTutorial(const char* label) {
-    const al::IUseMessageSystem* messageSystem = this;
-    const char16* message = al::getSystemMessageString(messageSystem, "Tutorial", label);
-    s32 playMode = mPlayMode;
-    al::IUseLayout* layout = isValidLayout(this) ? this : nullptr;
-
-    al::setPaneString(layout, "TxtGuide", message);
-    al::IUseLayoutAction* layoutAction = isValidLayout(this) ? this : nullptr;
-    al::setPaneString(layout, "TxtGuideSh", message);
-    al::requestCaptureRecursive(this);
-
-    if (playMode)
-        al::startAction(layoutAction, "1P", "State");
-    else
-        al::startAction(layoutAction, "Normal", "State");
+    setAreaTutorial(al::getSystemMessageString(this, "Tutorial", label));
 }
 
 void InformationWindowLayout::setSeparatePlayTutorial(const char* leftLabel,
@@ -109,7 +82,7 @@ void InformationWindowLayout::setSeparatePlayTutorial(const char* leftLabel,
 }
 
 void InformationWindowLayout::setAreaTutorial(const char16* message) {
-    s32 playMode = mPlayMode;
+    s32 playMode = (s32)mPlayMode;
     al::IUseLayout* layout = isValidLayout(this) ? this : nullptr;
 
     al::setPaneString(layout, "TxtGuide", message);
