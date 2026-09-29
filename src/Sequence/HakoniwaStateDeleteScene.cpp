@@ -62,7 +62,7 @@ void HakoniwaStateDeleteScene::kill() {
 }
 
 void HakoniwaStateDeleteScene::start(al::Scene* scene, bool isDestroyResourceHeap,
-                                    bool isFinalizeAudio, s32 stopSeIndex) {
+                                     bool isFinalizeAudio, s32 stopSeIndex) {
     mIsDestroyResourceHeap = isDestroyResourceHeap;
     mScene = scene;
     mStopSeIndex = stopSeIndex;
