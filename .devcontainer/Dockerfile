@@ -11,7 +11,6 @@ RUN apt update && apt install -y git
 
 # install dependencies for building and running the project
 RUN apt update && apt install -y ccache cmake curl less libncurses6 libssl-dev ninja-build pip pkg-config python3
-RUN pip install --break-system-packages capstone colorama cxxfilt pyelftools python-Levenshtein toml watchdog
 
 # install dependencies for code environment
 RUN apt update && apt install -y clangd clang-format llvm

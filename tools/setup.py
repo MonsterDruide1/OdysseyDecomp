@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 
+import platform
+def check_for_nixos():
+    if platform.system() != "Linux":
+        return False
+    with open("/etc/os-release") as file:
+        return "ID=nixos" in file.read()
+
+from common import setup_venv as venv
+if check_for_nixos():
+    if "SMO_NIX_SETUP" not in os.environ:
+        print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
+        exit(1)
+else:
+    venv.setup_python_venv()
+    venv.enter_venv()
+
 import argparse
 import hashlib
 import os
@@ -9,7 +25,6 @@ import subprocess
 from typing import Optional
 from common import setup_common as setup
 from enum import Enum
-import platform
 import tarfile
 import tempfile
 import urllib.request
@@ -172,13 +187,6 @@ def create_build_dir(ver, cmake_backend):
         ['cmake', '-G', cmake_backend, f'-DCMAKE_CXX_FLAGS=-D{ver.name}', '-DCMAKE_BUILD_TYPE=RelWithDebInfo', '-DCMAKE_TOOLCHAIN_FILE=toolchain/ToolchainNX64.cmake', '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache', '-B', str(build_dir)])
     print(">>> created build directory")
 
-def check_for_nixos():
-    if platform.system() != "Linux": return
-    with open("/etc/os-release") as file:
-        if "ID=nixos" in file.read() and "SMO_NIX_SETUP" not in os.environ:
-            print("nixos users must run `nix run .#setup -- [path to NSO]` instead.")
-            exit(1)
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -192,8 +200,6 @@ def main():
     parser.add_argument("--tools-from-src", action="store_true",
                     help="Build llvm, clang, lld and viking from source instead of using a prebuilt binaries")
     args = parser.parse_args()
-
-    check_for_nixos()
 
     setup_project_tools(args.tools_from_src)
     if not args.project_only:

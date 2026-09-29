@@ -7,9 +7,7 @@ import stat
 import re
 import subprocess
 from functools import cache
-
-from common import setup_common as setup
-from common.util import utils
+from pathlib import Path
 
 # ------
 # CHECKS
@@ -566,13 +564,13 @@ def read_csv_file(path):
         for row in reader:
             rows.append(row)
 
-    return rows;
+    return rows
 
 @cache
 def get_string_table():
     return read_csv_file(project_root / 'data' / "data_strings.csv");
 
-project_root = setup.ROOT
+project_root = Path(__file__).parent.parent.resolve()
 
 def main():
     parser = argparse.ArgumentParser(

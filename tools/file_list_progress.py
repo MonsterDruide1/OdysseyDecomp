@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+from common import setup_venv as venv
+venv.enter_venv()
+
 import argparse
 from collections import defaultdict
 from colorama import Fore
