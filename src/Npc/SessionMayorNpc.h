@@ -43,17 +43,17 @@ public:
     void exeReaction();
 
 private:
-    al::EventFlowExecutor* mEventFlowExecutor;
+    al::EventFlowExecutor* mEventFlowExecutor = nullptr;
     sead::PtrArray<SessionMusicianNpc> mMusicianArray;
-    SessionMayorParam* mMayorParam;
-    TalkNpcParam* mTalkNpcParam;
-    al::PlacementId* mPlacementId;
-    NpcStateReaction* mNpcStateReaction;
-    NpcJointLookAtController* mNpcJointLookAtController;
-    al::JointSpringControllerHolder* mJointSpringControllerHolder;
-    al::AddDemoInfo* mDemoInfo;
-    TalkNpcActionAnimInfo* mTalkNpcActionAnimInfo;
-    RandomWaitActionUpdater* mRandomWaitActionUpdater;
+    SessionMayorParam* mMayorParam = nullptr;
+    TalkNpcParam* mTalkNpcParam = nullptr;
+    al::PlacementId* mPlacementId = nullptr;
+    NpcStateReaction* mNpcStateReaction = nullptr;
+    NpcJointLookAtController* mNpcJointLookAtController = nullptr;
+    al::JointSpringControllerHolder* mJointSpringControllerHolder = nullptr;
+    al::AddDemoInfo* mDemoInfo = nullptr;
+    TalkNpcActionAnimInfo* mTalkNpcActionAnimInfo = nullptr;
+    RandomWaitActionUpdater* mRandomWaitActionUpdater = nullptr;
 };
 
 static_assert(sizeof(SessionMayorNpc) == 0x170);

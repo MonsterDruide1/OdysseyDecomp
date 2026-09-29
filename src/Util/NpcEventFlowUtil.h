@@ -17,10 +17,10 @@ struct EventFlowChoiceInfo;
 class EventFlowEventData;
 }  // namespace al
 
-class TalkNpcParam;
 struct NpcEventBalloonRequestInfo;
+class TalkNpcActionAnimInfo;
+class TalkNpcParam;
 class Shine;
-struct TalkNpcActionAnimInfo;
 
 namespace rs {
 al::EventFlowExecutor* initEventFlow(al::LiveActor* actor, const al::ActorInitInfo& initInfo,
