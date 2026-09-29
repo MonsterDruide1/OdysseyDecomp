@@ -53766,93 +53766,93 @@ Layout/InformationWindowLayout.o:
   - offset: 0x1edf0c
     size: 176
     label: _ZN23InformationWindowLayoutC2ERKN2al14LayoutInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1edfbc
     size: 172
     label: _ZN23InformationWindowLayoutC1ERKN2al14LayoutInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee068
     size: 12
     label: _ZN23InformationWindowLayout18changeSeparatePlayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee074
     size: 16
     label: _ZNK23InformationWindowLayout18isSeparateTutorialEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee084
     size: 16
     label: _ZNK23InformationWindowLayout16isSingleTutorialEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee094
     size: 8
     label: _ZN23InformationWindowLayout16changeSinglePlayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee09c
     size: 32
     label: _ZN23InformationWindowLayout27setSeparatePlayerOnlyLayoutEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee0bc
     size: 32
     label: _ZN23InformationWindowLayout19setSinglePlayLayoutEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee0dc
     size: 196
     label: _ZN23InformationWindowLayout15setHackTutorialEPKN2al9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee1a0
     size: 188
     label: _ZN23InformationWindowLayout11setTutorialEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee25c
     size: 248
     label: _ZN23InformationWindowLayout23setSeparatePlayTutorialEPKcS1_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee354
     size: 164
     label: _ZN23InformationWindowLayout15setAreaTutorialEPKDs
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee3f8
     size: 52
     label: _ZN23InformationWindowLayout6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee42c
     size: 12
     label: _ZN23InformationWindowLayout3endEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee438
     size: 12
     label: _ZNK23InformationWindowLayout20getTutorialMstxtNameEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee444
     size: 12
     label: _ZNK23InformationWindowLayout6isWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee450
     size: 100
     label: _ZN23InformationWindowLayout9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee4b4
     size: 64
     label: _ZN23InformationWindowLayout7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee4f4
     size: 100
     label: _ZN23InformationWindowLayout6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ee558
     size: 68
     label: _ZNK12_GLOBAL__N_130InformationWindowLayoutNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ee59c
     size: 104
     label: _ZNK12_GLOBAL__N_132InformationWindowLayoutNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ee604
     size: 104
     label: _ZNK12_GLOBAL__N_129InformationWindowLayoutNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Layout/KidsModeLayoutAccessor.o:
   '.text':
