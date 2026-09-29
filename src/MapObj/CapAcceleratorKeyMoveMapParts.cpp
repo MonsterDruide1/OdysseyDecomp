@@ -35,7 +35,7 @@ void al::CapAcceleratorKeyMoveMapParts::control() {}
 void al::CapAcceleratorKeyMoveMapParts::exeWait() {
     if (al::isFirstStep(this)) {
         s32 waitTime = al::calcKeyMoveWaitTime(mKeyPoseKeeper);
-        if (!((waitTime >> 31) & 1))
+        if (waitTime >= 0)
             mKeyMoveWaitTime = waitTime;
     }
 
