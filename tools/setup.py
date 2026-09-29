@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run
 
 import argparse
 import hashlib
@@ -7,7 +7,6 @@ import shutil
 from pathlib import Path
 import subprocess
 from typing import Optional
-from common import setup_common as setup
 from enum import Enum
 import platform
 import tarfile
@@ -16,16 +15,19 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import json
-from common.util.config import get_repo_root
+
+from nx_decomp_tools import setup
+from nx_decomp_tools.util import config, fail, find_tool
+from nx_decomp_tools.util.config import get_repo_root
 
 cache = None
 with open(f"{os.path.dirname(os.path.realpath(__file__))}/cache-version.json") as file:
     cache = json.load(file)
 
-TARGET_PATH = setup.get_target_path()
-TARGET_ELF_PATH = setup.get_target_elf_path()
+TARGET_PATH = config.get_base_nso_path()
+TARGET_ELF_PATH = config.get_base_elf_path()
 CACHE_REPO_RELEASE_URL = f"{cache['urlPrefix']}/{cache['version']}"
-TARGET_UNCOMPRESSED_NSO_PATH = setup.config.get_versioned_data_path(setup.config.get_default_version()) / 'main.uncompressed.nso'
+TARGET_UNCOMPRESSED_NSO_PATH = config.get_uncompressed_nso_path()
 LIBCXX_SRC_URL = "https://releases.llvm.org/3.9.1/libcxx-3.9.1.src.tar.xz"
 
 class Version(Enum):
@@ -44,21 +46,21 @@ def prepare_executable(original_nso: Optional[Path]):
         print(">>> Converted ELF is already set up")
         return
 
-    if not original_nso.is_file():
-        setup.fail(f"{original_nso} is not a file")
+    if not original_nso or not original_nso.is_file():
+        fail(f"{original_nso} is not a file")
 
     nso_hash = hashlib.sha256(original_nso.read_bytes()).hexdigest()
 
     if nso_hash != COMPRESSED_V10_HASH and nso_hash != UNCOMPRESSED_V10_HASH:
-        setup.fail(f"unknown executable: {nso_hash}")
+        fail(f"unknown executable: {nso_hash}")
 
-    setup._convert_nso_to_elf(original_nso, TARGET_ELF_PATH, TARGET_UNCOMPRESSED_NSO_PATH)
+    setup.convert_nso_to_elf(original_nso, TARGET_ELF_PATH, TARGET_UNCOMPRESSED_NSO_PATH)
 
     if not TARGET_ELF_PATH.is_file() or hashlib.sha256(TARGET_ELF_PATH.read_bytes()).hexdigest() != V10_ELF_HASH:
-        setup.fail("Internal error while exporting ELF (ELF either doesn't exist or has an incorrect hash) please report")
+        fail("Internal error while exporting ELF (ELF either doesn't exist or has an incorrect hash) please report")
 
     if not TARGET_UNCOMPRESSED_NSO_PATH.is_file() or hashlib.sha256(TARGET_UNCOMPRESSED_NSO_PATH.read_bytes()).hexdigest() != UNCOMPRESSED_V10_HASH:
-        setup.fail("Internal error while exporting uncompressed NSO (uncompressed NSO either doesn't exist or has an incorrect hash) please report")
+        fail("Internal error while exporting uncompressed NSO (uncompressed NSO either doesn't exist or has an incorrect hash) please report")
 
 def check_download_url_updated():
     if not exists_toolchain_file("cache-version-url.txt"):
@@ -68,10 +70,6 @@ def check_download_url_updated():
         if data != CACHE_REPO_RELEASE_URL:
             return True
     return False
-
-
-def get_build_dir():
-    return setup.ROOT / "build"
 
 def exists_toolchain_file(file_path_rel):
     return os.path.isfile(f"{get_repo_root()}/toolchain/{file_path_rel}")
@@ -139,8 +137,8 @@ def setup_project_tools(tools_from_source):
 
         if not exists_tool("check") or not exists_tool("decompme") or not exists_tool("listsym") or not exists_toolchain_file("bin/clang") or not exists_toolchain_file("bin/ld.lld"):
 
-            if os.path.isdir(get_build_dir()):
-                shutil.rmtree(get_build_dir())
+            if os.path.isdir(config.get_build_root()):
+                shutil.rmtree(config.get_build_root())
 
             if tools_from_source:
                 build_tools_from_source(tmpdir)
@@ -163,7 +161,7 @@ def setup_project_tools(tools_from_source):
 
 def create_build_dir(ver, cmake_backend):
     if(ver != Version.VER_100): return # TODO: remove this when multiple versions should be built
-    build_dir = get_build_dir()
+    build_dir = config.get_build_root()
     if build_dir.is_dir():
         print(">>> build directory already exists: nothing to do")
         return

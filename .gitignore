@@ -42,6 +42,7 @@ manifest.json
 *.rep/
 *.lock
 !flake.lock
+!uv.lock
 
 # Debugging
 perf.data
