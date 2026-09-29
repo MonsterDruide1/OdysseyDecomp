@@ -104,8 +104,8 @@ bool isCreatedSceneResourceHeap() {
     return getSceneResourceHeap() != nullptr;
 }
 
-void destroySceneHeap(bool removeCategory) {
-    if (removeCategory) {
+void destroySceneHeap(bool destroyResourceHeap) {
+    if (destroyResourceHeap) {
         removeResourceCategory("シーン");
         removeResourceCategory("シーン[デバッグ]");
         alProjectInterface::getSystemKit()->getMemorySystem()->destroySceneHeap();

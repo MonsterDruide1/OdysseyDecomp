@@ -49,7 +49,7 @@ void HakoniwaStateDeleteScene::deleteScene() {
     if (mScene)
         delete mScene;
     mScene = nullptr;
-    al::destroySceneHeap(mIsDestroySceneHeap);
+    al::destroySceneHeap(mIsDestroyResourceHeap);
 }
 
 void HakoniwaStateDeleteScene::appear() {
@@ -61,9 +61,9 @@ void HakoniwaStateDeleteScene::kill() {
     al::NerveStateBase::kill();
 }
 
-void HakoniwaStateDeleteScene::start(al::Scene* scene, bool isDestroySceneHeap,
-                                     bool isFinalizeAudio, s32 stopSeIndex) {
-    mIsDestroySceneHeap = isDestroySceneHeap;
+void HakoniwaStateDeleteScene::start(al::Scene* scene, bool isDestroyResourceHeap,
+                                    bool isFinalizeAudio, s32 stopSeIndex) {
+    mIsDestroyResourceHeap = isDestroyResourceHeap;
     mScene = scene;
     mStopSeIndex = stopSeIndex;
     mIsFinalizeAudio = isFinalizeAudio;
@@ -88,11 +88,10 @@ void HakoniwaStateDeleteScene::exeFinalizeAudio() {
     }
 
     audioDirector->updateFinalizeUnsafeModuleInParallelThread();
-    if (!audioDirector->isFinalizedUnsafeModuleInParallelThread())
-        return;
-
-    al::stopAllSe(mScene, mStopSeIndex);
-    al::setNerve(this, &NrvHakoniwaStateDeleteScene.DeleteScene);
+    if (audioDirector->isFinalizedUnsafeModuleInParallelThread()) {
+        al::stopAllSe(mScene, mStopSeIndex);
+        al::setNerve(this, &NrvHakoniwaStateDeleteScene.DeleteScene);
+    }
 }
 
 void HakoniwaStateDeleteScene::exeDeleteScene() {

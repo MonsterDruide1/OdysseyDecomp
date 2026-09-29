@@ -20,7 +20,7 @@ public:
     void appear() override;
     void kill() override;
 
-    void start(al::Scene* scene, bool isDestroySceneHeap, bool isFinalizeAudio, s32 stopSeIndex);
+    void start(al::Scene* scene, bool isDestroyResourceHeap, bool isFinalizeAudio, s32 stopSeIndex);
     void deleteScene();
     void exePrepare();
     void exeFinalizeAudio();
@@ -29,7 +29,7 @@ public:
 private:
     al::Scene* mScene = nullptr;
     al::AsyncFunctorThread* mDeleteSceneThread = nullptr;
-    bool mIsDestroySceneHeap = false;
+    bool mIsDestroyResourceHeap = false;
     bool mIsFinalizeAudio = false;
     s32 mStopSeIndex = 0;
     WorldResourceLoader* mResourceLoader = nullptr;

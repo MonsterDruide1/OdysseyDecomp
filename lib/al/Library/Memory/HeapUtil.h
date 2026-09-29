@@ -22,7 +22,7 @@ void printAllSequenceHeap();
 void createSceneHeap(const char* stageName, bool backwards);
 void createSceneResourceHeap(const char* stageName);
 bool isCreatedSceneResourceHeap();
-void destroySceneHeap(bool removeCategory);
+void destroySceneHeap(bool destroyResourceHeap);
 void createCourseSelectHeap();
 void destroyCourseSelectHeap();
 void createWorldResourceHeap(bool useCategory);
