@@ -1,7 +1,7 @@
 #include "Library/LiveActor/ActorAnimFunction.h"
 
 #include <basis/seadTypes.h>
-#include <nn/g3d/ResSkeleton.h>
+#include <nn/g3d/g3d_ResSkeleton.h>
 
 #include "Library/Anim/SklAnimRetargettingInfo.h"
 #include "Library/Base/StringUtil.h"

@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.30)
 project(odyssey CXX)
+
+set(SEAD_USE_OLD_NNHEADERS_REPO OFF CACHE BOOL "Enable new nnsdk repo")
+set(NEX_USE_OLD_NNHEADERS_REPO OFF CACHE BOOL "Enable new nnsdk repo")
+set(EUI_USE_OLD_NNHEADERS_REPO OFF CACHE BOOL "Enable new nnsdk repo")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Use response files when linking objects because of the large number of source files
@@ -42,9 +46,13 @@ add_compile_definitions(SEAD_VERSION=SEAD_VERSION_SMO)
 include_directories(lib)
 include_directories(lib/aarch64)
 
+add_subdirectory(lib/nnsdk)
+add_subdirectory(lib/nnware)
+target_link_libraries(odyssey PUBLIC nnSdk)
+target_link_libraries(odyssey PUBLIC $<LINK_LIBRARY:whole_archive,nn_gfx>)
+target_link_libraries(odyssey PUBLIC nn_g3d nn_ui2d nn_atk)
 add_subdirectory(lib/NintendoSDK-NEX)
-add_subdirectory(lib/NintendoSDK)
 add_subdirectory(lib/sead)
 add_subdirectory(lib/agl)
 add_subdirectory(lib/eui)
-target_link_libraries(odyssey PUBLIC NintendoSDK-NEX NintendoSDK sead agl eui)
+target_link_libraries(odyssey PUBLIC NintendoSDK-NEX sead agl eui)
