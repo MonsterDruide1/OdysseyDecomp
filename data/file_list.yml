@@ -64974,99 +64974,99 @@ MapObj/CloudStepKeyMoveComponent.o:
   - offset: 0x24f72c
     size: 160
     label: _ZN25CloudStepKeyMoveComponentC2EP9CloudStep
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24f7cc
     size: 156
     label: _ZN25CloudStepKeyMoveComponentC1EP9CloudStep
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24f868
     size: 296
     label: _ZN25CloudStepKeyMoveComponent4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24f990
     size: 88
     label: _ZN25CloudStepKeyMoveComponent5startEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24f9e8
     size: 72
     label: _ZN25CloudStepKeyMoveComponent4stopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24fa30
     size: 116
     label: _ZN25CloudStepKeyMoveComponent10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24faa4
     size: 172
     label: _ZN25CloudStepKeyMoveComponent7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24fb50
     size: 4
     label: _ZN25CloudStepKeyMoveComponent10exeStandByEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24fb54
     size: 228
     label: _ZN25CloudStepKeyMoveComponent7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24fc38
     size: 64
     label: _ZN25CloudStepKeyMoveComponent7exeStopEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24fc78
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_132CloudStepKeyMoveComponentNrvWait7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x24fc80
     size: 12
-    label: _ZNK12_GLOBAL__N_115HostTypeNrvWait13getActionNameEv
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_132CloudStepKeyMoveComponentNrvWait13getActionNameEv
+    status: Matching
     guess: true
   - offset: 0x24fc8c
     size: 4
-    label: _ZNK12_GLOBAL__N_118HostTypeNrvStandBy7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_135CloudStepKeyMoveComponentNrvStandBy7executeEPN2al11NerveKeeperE
+    status: Matching
     guess: true
   - offset: 0x24fc90
     size: 12
-    label: _ZNK12_GLOBAL__N_118HostTypeNrvStandBy13getActionNameEv
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_135CloudStepKeyMoveComponentNrvStandBy13getActionNameEv
+    status: Matching
     guess: true
   - offset: 0x24fc9c
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_132CloudStepKeyMoveComponentNrvMove7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x24fca4
     size: 12
-    label: _ZNK12_GLOBAL__N_115HostTypeNrvMove13getActionNameEv
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_132CloudStepKeyMoveComponentNrvMove13getActionNameEv
+    status: Matching
     guess: true
   - offset: 0x24fcb0
     size: 68
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_132CloudStepKeyMoveComponentNrvStop7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x24fcf4
     size: 12
-    label: _ZNK12_GLOBAL__N_115HostTypeNrvStop13getActionNameEv
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_132CloudStepKeyMoveComponentNrvStop13getActionNameEv
+    status: Matching
     guess: true
   - offset: 0x24fd00
     size: 28
     label: _ZNK2al10FunctorV0MIP25CloudStepKeyMoveComponentMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x24fd1c
     size: 76
     label: _ZNK2al10FunctorV0MIP25CloudStepKeyMoveComponentMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x24fd68
     size: 4
     label: _ZN2al10FunctorV0MIP25CloudStepKeyMoveComponentMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x24fd6c
     size: 140
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_CloudStepKeyMoveComponent.cpp
+    status: Matching
 MapObj/CoinCollectHintObj.o:
   '.text':
   - offset: 0x24fdf8
