@@ -1,0 +1,39 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+
+#include "Library/Nerve/NerveExecutor.h"
+#include "Library/Scene/IUseSceneObjHolder.h"
+
+namespace al {
+class SceneObjHolder;
+}  // namespace al
+
+struct KoopaBombHintRequestInfo {
+    KoopaBombHintRequestInfo();
+
+    bool isRequested = false;
+};
+
+class KoopaHintHolder : public al::NerveExecutor, public al::IUseSceneObjHolder {
+public:
+    KoopaHintHolder(al::SceneObjHolder* sceneObjHolder);
+
+    void update();
+    bool tryAppearHintCapReflect();
+    bool tryAppearMessageDamage(s32 damageType);
+    void exeWait();
+    void exeHintCapReflect();
+    void exeHintCapAttachBomb();
+    void exeMessageDamage();
+
+    al::SceneObjHolder* getSceneObjHolder() const override { return mSceneObjHolder; }
+
+private:
+    al::SceneObjHolder* mSceneObjHolder = nullptr;
+    KoopaBombHintRequestInfo mBombHintRequestInfo;
+    bool mIsHintCapReflectEnabled = true;
+    s32 mBombHeadHintIndex = -1;
+};
+
+static_assert(sizeof(KoopaHintHolder) == 0x28);
