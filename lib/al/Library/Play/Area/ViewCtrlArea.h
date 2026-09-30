@@ -14,6 +14,8 @@ public:
     PlacementId* getPlacementId() const { return mClippingViewId; }
 
 private:
-    PlacementId* mClippingViewId;
+    PlacementId* mClippingViewId = nullptr;
 };
+
+static_assert(sizeof(ViewCtrlArea) == 0x78);
 }  // namespace al
