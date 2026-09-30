@@ -129881,69 +129881,69 @@ Player/YoshiEgg.o:
   - offset: 0x495e84
     size: 152
     label: _ZN8YoshiEggC2EPKN2al9LiveActorEPK19IUsePlayerCollision
-    status: NotDecompiled
+    status: Matching
   - offset: 0x495f1c
     size: 156
     label: _ZN8YoshiEggC1EPKN2al9LiveActorEPK19IUsePlayerCollision
-    status: NotDecompiled
+    status: Matching
   - offset: 0x495fb8
     size: 244
     label: _ZN8YoshiEgg4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4960ac
     size: 16
     label: _ZN8YoshiEgg18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4960bc
     size: 64
     label: _ZN8YoshiEgg16initPlacementEggEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4960fc
     size: 72
     label: _ZN8YoshiEgg9appearEggEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x496144
     size: 36
     label: _ZNK8YoshiEgg11isEndAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x496168
     size: 16
     label: _ZNK8YoshiEgg7isBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x496178
     size: 108
     label: _ZN8YoshiEgg9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4961e4
     size: 72
     label: _ZN8YoshiEgg7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x49622c
     size: 88
     label: _ZN8YoshiEgg8exeBreakEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x496284
     size: 112
     label: _ZN8YoshiEgg12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4962f4
     size: 188
     label: _ZN8YoshiEgg10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4963b0
     size: 76
     label: _ZNK12_GLOBAL__N_115YoshiEggNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x4963fc
     size: 112
     label: _ZNK12_GLOBAL__N_117YoshiEggNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x49646c
     size: 92
     label: _ZNK12_GLOBAL__N_116YoshiEggNrvBreak7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Player/YoshiJointControlHeadCorrection.o:
   '.text':
