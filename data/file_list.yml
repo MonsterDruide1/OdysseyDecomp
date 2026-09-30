@@ -105219,80 +105219,80 @@ Npc/Poetter.o:
   - offset: 0x3af534
     size: 176
     label: _ZN7PoetterC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3af5e4
     size: 172
     label: _ZN7PoetterC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3af690
     size: 656
     label: _ZN7Poetter4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x3af920
     size: 4
     label: _ZN7Poetter7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3af924
     size: 188
     label: _ZN7Poetter10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3af9e0
     size: 112
     label: _ZN7Poetter12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3afa50
     size: 960
     label: _ZN7Poetter7exeWaitEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x3afe10
     size: 60
     label: _ZN7Poetter15startTalkNoMoreEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3afe4c
     size: 44
     label: _ZN7Poetter13resetYawnWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3afe78
     size: 84
     label: _ZN7Poetter8exeEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3afecc
     size: 48
     label: _ZN7Poetter13exeEventScareEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3afefc
     size: 12
     label: _ZN7Poetter11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3aff08
     size: 8
     label: _ZNK7Poetter16getMessageSystemEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3aff10
     size: 8
     label: _ZThn264_NK7Poetter16getMessageSystemEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3aff18
     size: 8
     label: _ZNK12_GLOBAL__N_114PoetterNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3aff20
     size: 48
     label: _ZNK12_GLOBAL__N_120PoetterNrvEventScare7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3aff50
     size: 20
     label: _ZNK12_GLOBAL__N_118PoetterNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3aff64
     size: 84
     label: _ZNK12_GLOBAL__N_115PoetterNrvEvent7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3affb8
     size: 100
