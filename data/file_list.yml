@@ -85792,138 +85792,138 @@ MapObj/SkyWorldKoopaFire.o:
   - offset: 0x31c658
     size: 144
     label: _ZN17SkyWorldKoopaFireC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c6e8
     size: 156
     label: _ZN17SkyWorldKoopaFireC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c784
     size: 212
     label: _ZN17SkyWorldKoopaFire4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c858
     size: 56
     label: _ZN17SkyWorldKoopaFire12listenAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c890
     size: 12
     label: _ZN17SkyWorldKoopaFire10listenKillEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c89c
     size: 100
     label: _ZN17SkyWorldKoopaFire7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c900
     size: 100
     label: _ZN17SkyWorldKoopaFire14exeHighTensionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c964
     size: 12
     label: _ZN17SkyWorldKoopaFire12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31c970
     size: 156
     label: _ZN17SkyWorldKoopaFire10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31ca0c
     size: 100
     label: _ZNK12_GLOBAL__N_124SkyWorldKoopaFireNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31ca70
     size: 12
     label: _ZNK12_GLOBAL__N_124SkyWorldKoopaFireNrvWait13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31ca7c
     size: 100
     label: _ZNK12_GLOBAL__N_131SkyWorldKoopaFireNrvHighTension7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31cae0
     size: 12
     label: _ZNK12_GLOBAL__N_131SkyWorldKoopaFireNrvHighTension13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31caec
     size: 28
     label: _ZNK2al10FunctorV0MIP17SkyWorldKoopaFireMS1_FvvEEclEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x31cb08
     size: 76
     label: _ZNK2al10FunctorV0MIP17SkyWorldKoopaFireMS1_FvvEE5cloneEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x31cb54
     size: 4
     label: _ZN2al10FunctorV0MIP17SkyWorldKoopaFireMS1_FvvEED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x31cb58
     size: 88
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_SkyWorldKoopaFire.cpp
+    status: Matching
   - offset: 0x31cbb0
     size: 124
     label: _ZN18SkyWorldKoopaFrameC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31cc2c
     size: 136
     label: _ZN18SkyWorldKoopaFrameC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31ccb4
     size: 168
     label: _ZN18SkyWorldKoopaFrame4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31cd5c
     size: 132
     label: _ZN18SkyWorldKoopaFrame10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31cde0
     size: 60
     label: _ZN18SkyWorldKoopaFrame7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31ce1c
     size: 148
     label: _ZN18SkyWorldKoopaFrame11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31ceb0
     size: 124
     label: _ZN18SkyWorldKoopaFrame7exeFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31cf2c
     size: 136
     label: _ZN18SkyWorldKoopaFrame17exeFallNoColliderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31cfb4
     size: 100
     label: _ZN18SkyWorldKoopaFrame14exeFallEndWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x31d018
     size: 64
     label: _ZNK12_GLOBAL__N_125SkyWorldKoopaFrameNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31d058
     size: 8
     label: _ZNK12_GLOBAL__N_129SkyWorldKoopaFrameNrvReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31d060
     size: 128
     label: _ZNK12_GLOBAL__N_125SkyWorldKoopaFrameNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31d0e0
     size: 8
     label: _ZNK12_GLOBAL__N_135SkyWorldKoopaFrameNrvFallNoCollider7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x31d0e8
     size: 104
     label: _ZNK12_GLOBAL__N_132SkyWorldKoopaFrameNrvFallEndWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/SkyWorldMiddleViewCloud.o:
   '.text':
@@ -135465,12 +135465,12 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4bbd38
     size: 52
     label: _ZN2al19createActorFunctionI17SkyWorldKoopaFireEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4bbd6c
     size: 52
     label: _ZN2al19createActorFunctionI18SkyWorldKoopaFrameEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4bbda0
     size: 52
