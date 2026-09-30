@@ -16,20 +16,21 @@ class Scene;
 
 class SceneCreator {
 public:
-    SceneCreator(const GameSystemInfo*, GameDataHolderBase*, ScreenCaptureExecutor*,
-                 alSceneFunction::SceneFactory*, AudioDirector*);
-    void createScene(const char*, const char*, s32, const char*, bool, s32);
+    SceneCreator(const GameSystemInfo* gameSystemInfo, GameDataHolderBase* gameDataHolder,
+                 ScreenCaptureExecutor* screenCaptureExecutor,
+                 alSceneFunction::SceneFactory* sceneFactory, AudioDirector* audioDirector);
+    Scene* createScene(const char*, const char*, s32, const char*, bool, s32);
     void setSceneAndThreadInit(Scene*, const char*, s32, const char*, s32, sead::Heap*);
     void setSceneAndInit(Scene*, const char*, s32, const char*);
     bool tryEndInitThread();
-    bool isExistInitThread();
+    bool isExistInitThread() const;
 
 private:
-    GameSystemInfo* mGameSystemInfo;
+    const GameSystemInfo* mGameSystemInfo;
     GameDataHolderBase* mGameDataHolder;
     ScreenCaptureExecutor* mScreenCaptureExecutor;
     alSceneFunction::SceneFactory* mSceneFactory;
-    InitializeThread* mInitializeThread;
+    InitializeThread* mInitializeThread = nullptr;
     AudioDirector* mAudioDirector;
 };
 
