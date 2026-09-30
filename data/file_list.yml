@@ -24643,70 +24643,70 @@ Demo/SimpleDemoState.o:
     label:
     - _ZN15SimpleDemoStateC1EPN2al9LiveActorERKNS0_13ActorInitInfoEPKcPKN4sead8Matrix34IfEE
     - _ZN15SimpleDemoStateC2EPN2al9LiveActorERKNS0_13ActorInitInfoEPKcPKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6ab0
     size: 16
     label: _ZN15SimpleDemoState6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6ac0
     size: 204
     label: _ZN15SimpleDemoState7exeDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6b8c
     size: 80
     label: _ZN15SimpleDemoState12tryStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6bdc
     size: 76
     label: _ZN15SimpleDemoState10tryEndDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6c28
     size: 12
     label: _ZN15SimpleDemoState16requestStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6c34
     size: 8
     label: _ZN15SimpleDemoState14requestEndDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6c3c
     size: 76
     label: _ZN15SimpleDemoState13startDemoProcEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6c88
     size: 60
     label: _ZN15SimpleDemoState11endDemoProcEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6cc4
     size: 24
     label: _ZN19SimpleDemoStateSkip22updateOnlyDemoGraphicsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6cdc
     size: 104
     label: _ZN19SimpleDemoStateSkip16requestStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6d44
     size: 76
     label: _ZN19SimpleDemoStateSkip14requestEndDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d6d90
     size: 36
     label: _ZN15SimpleDemoStateD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0d6db4
     size: 4
     label: _ZN15SimpleDemoState24endDemoProcBeforeRequestEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0d6db8
     size: 36
     label: _ZN19SimpleDemoStateSkipD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0d6ddc
     size: 8
     label: _ZNK12_GLOBAL__N_122SimpleDemoStateNrvDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Demo/StageEventDemoBase.o:
   '.text':
