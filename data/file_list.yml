@@ -18715,99 +18715,99 @@ Boss/Koopa/KoopaStateHipDrop.o:
     label:
     - _ZN17KoopaStateHipDropC1EPN2al9LiveActorEP9KoopaFlagP20KoopaRingBeamEmitter
     - _ZN17KoopaStateHipDropC2EPN2al9LiveActorEP9KoopaFlagP20KoopaRingBeamEmitter
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09f908
     size: 216
     label: _ZN17KoopaStateHipDrop32decideEitherFarSidePointAndStartEP20KoopaLandPointHolder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09f9e0
     size: 88
     label: _ZNK17KoopaStateHipDrop18isAfterHipDropLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fa38
     size: 136
     label: _ZN17KoopaStateHipDrop12exeJumpStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fac0
     size: 108
     label: _ZN17KoopaStateHipDrop7exeJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fb2c
     size: 88
     label: _ZN17KoopaStateHipDrop14exeHipDropSignEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fb84
     size: 192
     label: _ZN17KoopaStateHipDrop15exeHipDropStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fc44
     size: 128
     label: _ZN17KoopaStateHipDrop10exeHipDropEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fcc4
     size: 180
     label: _ZN17KoopaStateHipDrop19exeHipDropLandStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fd78
     size: 92
     label: _ZN17KoopaStateHipDrop14exeHipDropLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fdd4
     size: 100
     label: _ZN17KoopaStateHipDrop17exeHipDropLandEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fe38
     size: 16
     label: _ZN17KoopaStateHipDrop6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fe48
     size: 12
     label: _ZN17KoopaStateHipDrop4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09fe54
     size: 36
     label: _ZN17KoopaStateHipDropD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x09fe78
     size: 8
     label: _ZNK12_GLOBAL__N_129KoopaStateHipDropNrvJumpStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09fe80
     size: 8
     label: _ZNK12_GLOBAL__N_136KoopaStateHipDropNrvHipDropLandStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09fe88
     size: 96
     label: _ZNK12_GLOBAL__N_131KoopaStateHipDropNrvHipDropLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09fee8
     size: 104
     label: _ZNK12_GLOBAL__N_134KoopaStateHipDropNrvHipDropLandEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09ff50
     size: 92
     label: _ZNK12_GLOBAL__N_131KoopaStateHipDropNrvHipDropSign7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x09ffac
     size: 112
     label: _ZNK12_GLOBAL__N_124KoopaStateHipDropNrvJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0a001c
     size: 8
     label: _ZNK12_GLOBAL__N_132KoopaStateHipDropNrvHipDropStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0a0024
     size: 8
     label: _ZNK12_GLOBAL__N_127KoopaStateHipDropNrvHipDrop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaStateHitPunch.o:
   '.text':
