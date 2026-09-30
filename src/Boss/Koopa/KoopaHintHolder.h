@@ -15,8 +15,6 @@ struct KoopaBombHintRequestInfo {
     bool isRequested = false;
 };
 
-static_assert(sizeof(KoopaBombHintRequestInfo) == 0x1);
-
 class KoopaHintHolder : public al::NerveExecutor, public al::IUseSceneObjHolder {
 public:
     KoopaHintHolder(al::SceneObjHolder* sceneObjHolder);
@@ -33,7 +31,7 @@ public:
 
 private:
     al::SceneObjHolder* mSceneObjHolder = nullptr;
-    bool mIsHintCapAttachBombRequested = false;
+    KoopaBombHintRequestInfo mBombHintRequestInfo;
     bool mIsHintCapReflectEnabled = true;
     s32 mBombHeadHintIndex = -1;
 };

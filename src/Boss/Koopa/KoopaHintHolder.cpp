@@ -16,11 +16,10 @@ NERVE_IMPL(KoopaHintHolder, HintCapAttachBomb)
 NERVES_MAKE_NOSTRUCT(KoopaHintHolder, HintCapReflect, HintCapAttachBomb, Wait, MessageDamage)
 }  // namespace
 
-KoopaBombHintRequestInfo::KoopaBombHintRequestInfo() : isRequested(false) {}
+KoopaBombHintRequestInfo::KoopaBombHintRequestInfo() = default;
 
 KoopaHintHolder::KoopaHintHolder(al::SceneObjHolder* sceneObjHolder)
-    : al::NerveExecutor("クッパヒント保持"), mSceneObjHolder(sceneObjHolder),
-      mIsHintCapAttachBombRequested(false), mIsHintCapReflectEnabled(true), mBombHeadHintIndex(-1) {
+    : al::NerveExecutor("クッパヒント保持"), mSceneObjHolder(sceneObjHolder) {
     initNerve(&Wait, 0);
 }
 
@@ -48,11 +47,10 @@ bool KoopaHintHolder::tryAppearMessageDamage(s32 damageType) {
 }
 
 void KoopaHintHolder::exeWait() {
-    if (!mIsHintCapAttachBombRequested)
-        return;
-
-    mIsHintCapAttachBombRequested = false;
-    al::setNerve(this, &HintCapAttachBomb);
+    if (mBombHintRequestInfo.isRequested) {
+        mBombHintRequestInfo.isRequested = false;
+        al::setNerve(this, &HintCapAttachBomb);
+    }
 }
 
 void KoopaHintHolder::exeHintCapReflect() {
@@ -64,7 +62,7 @@ void KoopaHintHolder::exeHintCapReflect() {
 
 void KoopaHintHolder::exeHintCapAttachBomb() {
     if (al::isFirstStep(this)) {
-        mBombHeadHintIndex = al::modi(mBombHeadHintIndex + 4, 3);
+        mBombHeadHintIndex = al::wrapValue(mBombHeadHintIndex + 1, 3);
         al::StringTmp<64> label("KoopaHintCapAttachBombHead_%02d", mBombHeadHintIndex);
         rs::showCapMessage(this, label.cstr(), 60, 0);
     }
