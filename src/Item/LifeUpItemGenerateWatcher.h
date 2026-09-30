@@ -20,7 +20,8 @@ public:
 
     void init(const al::ActorInitInfo& info) override;
     void control() override;
-    const char* getSceneObjName() const override;
+
+    const char* getSceneObjName() const override { return "ライフアップアイテム放出監視"; }
 
     static void tryCreate(const al::LiveActor* actor, const al::ActorInitInfo& info);
     bool tryGenerateLifeUpItem(const al::LiveActor* actor);

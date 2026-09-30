@@ -68,7 +68,3 @@ bool tryGenerateLifeUpItem(const al::LiveActor* actor) {
 }
 
 }  // namespace rs
-
-const char* LifeUpItemGenerateWatcher::getSceneObjName() const {
-    return "ライフアップアイテム放出監視";
-}
