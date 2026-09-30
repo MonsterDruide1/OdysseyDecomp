@@ -33,13 +33,8 @@ void startCapManHeroCommonSettingAfterShowModel(al::LiveActor* actor) {}
 CapManHeroDemoDirector::CapManHeroDemoDirector() = default;
 
 void CapManHeroDemoDirector::init(const al::ActorInitInfo& info) {
-    al::LiveActor* capManHero = new CapManHeroBase("デモ用キャップ[Director]");
-    al::initChildActorWithArchiveNameNoPlacementInfo(capManHero, info, "CapManHero", "Demo");
-    al::initJointControllerKeeper(capManHero, 1);
-    rs::initCapWorldNpcTailJointController(capManHero);
-    al::invalidateClipping(capManHero);
-    capManHero->makeActorDead();
-    mCapManHero = capManHero;
+    mCapManHero =
+        CapManHeroDemoFunction::createDemoCapManHero("デモ用キャップ[Director]", info, "Demo");
 }
 
 bool CapManHeroDemoDirector::isEndDemo() const {

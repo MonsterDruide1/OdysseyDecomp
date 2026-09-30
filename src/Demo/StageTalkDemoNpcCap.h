@@ -40,16 +40,13 @@ private:
     const char* mEventFlowName = nullptr;
     void* mStageStartInfo = nullptr;
     bool mIsEnableDemo = true;
-    u8 _129[7] = {};
     void* mAddDemoInfo = nullptr;
     al::LiveActor* mMoonRock = nullptr;
     void* mSaveObjInfo = nullptr;
     s32 _148 = 0;
-    u8 _14c[4] = {};
     void* mDemoState = nullptr;
     al::LiveActor* mCapManHero = nullptr;
     bool mIsStartedFromScene = false;
-    u8 _161[7] = {};
     al::LiveActor* mRippleGeneratePoint = nullptr;
 };
 
