@@ -22268,93 +22268,93 @@ Boss/Stacker/StackerStatePanic.o:
     label:
     - _ZN17StackerStatePanicC1EP7Stacker
     - _ZN17StackerStatePanicC2EP7Stacker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c26e8
     size: 120
     label: _ZN17StackerStatePanic6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2760
     size: 92
     label: _ZN17StackerStatePanic4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c27bc
     size: 160
     label: _ZN17StackerStatePanic7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c285c
     size: 128
     label: _ZN17StackerStatePanic12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c28dc
     size: 372
     label: _ZN17StackerStatePanic10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2a50
     size: 184
     label: _ZN17StackerStatePanic16receiveMsgDamageEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2b08
     size: 12
     label: _ZN17StackerStatePanic12setIsRunAwayEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2b14
     size: 180
     label: _ZN17StackerStatePanic11exeSurpriseEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2bc8
     size: 136
     label: _ZN17StackerStatePanic7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2c50
     size: 292
     label: _ZN17StackerStatePanic11exeRunStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2d74
     size: 256
     label: _ZN17StackerStatePanic6exeRunEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2e74
     size: 156
     label: _ZN17StackerStatePanic7exeTurnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2f10
     size: 120
     label: _ZN17StackerStatePanic9exeCapHitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0c2f88
     size: 36
     label: _ZN17StackerStatePanicD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0c2fac
     size: 8
     label: _ZNK12_GLOBAL__N_128StackerStatePanicNrvSurprise7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0c2fb4
     size: 124
     label: _ZNK12_GLOBAL__N_126StackerStatePanicNrvCapHit7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0c3030
     size: 136
     label: _ZNK12_GLOBAL__N_124StackerStatePanicNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0c30b8
     size: 8
     label: _ZNK12_GLOBAL__N_128StackerStatePanicNrvRunStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0c30c0
     size: 8
     label: _ZNK12_GLOBAL__N_123StackerStatePanicNrvRun7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0c30c8
     size: 8
     label: _ZNK12_GLOBAL__N_124StackerStatePanicNrvTurn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/GateKeeperDemo.o:
   '.text':
