@@ -6,14 +6,15 @@
 
 namespace al {
 struct ActorInitInfo;
+class FireSurfaceFinder;
 class HitSensor;
 class MtxConnector;
 class NerveStateBase;
 class SensorMsg;
+class WaterSurfaceFinder;
 }  // namespace al
 
-class WaterSurfaceFinder;
-class FireSurfaceFinder;
+class LifeUpItemStateAutoGet;
 
 class LifeUpItem : public al::LiveActor {
 public:
@@ -45,14 +46,17 @@ public:
     void setBool145(bool value) { _145 = value; }
 
 private:
-    al::NerveStateBase* mNerveStateBase = nullptr;
+    LifeUpItemStateAutoGet* mStateAutoGet = nullptr;
     al::HitSensor* mHitSensor = nullptr;
     al::MtxConnector* mMtxConnector = nullptr;
-    al::LiveActor* _120 = nullptr;
-    s32 _128 = 0;
-    WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
-    FireSurfaceFinder* mFireSurfaceFinder = nullptr;
-    s32 mShadowMaskDropLength = 0;
+    const al::LiveActor* mConnectedHost = nullptr;
+    bool mIsCreateMtxConnector = true;
+    s32 mCoinAppearCount = 0;
+    al::WaterSurfaceFinder* mWaterSurfaceFinder = nullptr;
+    al::FireSurfaceFinder* mFireSurfaceFinder = nullptr;
+    f32 mShadowMaskDropLength = 0.0f;
     bool mIsValidateClipping = true;
     bool _145 = false;
 };
+
+static_assert(sizeof(LifeUpItem) == 0x148);

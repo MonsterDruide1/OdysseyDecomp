@@ -49292,134 +49292,134 @@ Item/LifeUpItem.o:
   - offset: 0x1c9708
     size: 164
     label: _ZN10LifeUpItemC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c97ac
     size: 176
     label: _ZN10LifeUpItemC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c985c
     size: 324
     label: _ZN10LifeUpItem4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c99a0
     size: 88
     label: _ZN10LifeUpItem18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c99f8
     size: 284
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_126updateShadowMaskDropLengthEP10LifeUpItemf
+    status: Matching
   - offset: 0x1c9b14
     size: 124
     label: _ZN10LifeUpItem7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9b90
     size: 76
     label: _ZN10LifeUpItem11appearPopUpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9bdc
     size: 256
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_114appearPopUpSubEP10LifeUpItemPKcPN2al12MtxConnectorEff
+    status: Matching
   - offset: 0x1c9cdc
     size: 140
     label: _ZN10LifeUpItem15appearPopUpBackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9d68
     size: 76
     label: _ZN10LifeUpItem16appearPopUpAboveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9db4
     size: 76
     label: _ZN10LifeUpItem10appearSlotEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9e00
     size: 72
     label: _ZN10LifeUpItem21appearInvalidClippingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9e48
     size: 96
     label: _ZN10LifeUpItem17appearAmiiboTouchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9ea8
     size: 220
     label: _ZN10LifeUpItem3getEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1c9f84
     size: 388
     label: _ZN10LifeUpItem8exePopUpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca108
     size: 60
     label: _ZN10LifeUpItem7exeLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca144
     size: 132
     label: _ZN10LifeUpItem7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca1c8
     size: 124
     label: _ZN10LifeUpItem12exeTakeWaterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca244
     size: 112
     label: _ZN10LifeUpItem12exeLandWaterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca2b4
     size: 72
     label: _ZN10LifeUpItem13exeFloatWaterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca2fc
     size: 124
     label: _ZN10LifeUpItem6exeGetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca378
     size: 52
     label: _ZN10LifeUpItem14exeAutoGetDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca3ac
     size: 220
     label: _ZN10LifeUpItem10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca488
     size: 8
     label: _ZNK12_GLOBAL__N_117LifeUpItemNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca490
     size: 56
     label: _ZNK12_GLOBAL__N_124LifeUpItemNrvAutoGetDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca4c8
     size: 64
     label: _ZNK12_GLOBAL__N_117LifeUpItemNrvLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca508
     size: 128
     label: _ZNK12_GLOBAL__N_116LifeUpItemNrvGet7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca588
     size: 8
     label: _ZNK12_GLOBAL__N_122LifeUpItemNrvTakeWater7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca590
     size: 8
     label: _ZNK12_GLOBAL__N_118LifeUpItemNrvPopUp7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca598
     size: 116
     label: _ZNK12_GLOBAL__N_122LifeUpItemNrvLandWater7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1ca60c
     size: 76
     label: _ZNK12_GLOBAL__N_123LifeUpItemNrvFloatWater7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Item/LifeUpItem2D.o:
   '.text':
