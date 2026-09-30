@@ -5,24 +5,154 @@
 #include <math/seadVector.h>
 
 namespace al {
+class AudioInfoListCreateFunctorBase;
+template <typename T>
+class AudioInfoListWithParts;
 class BgmDirector;
 class BgmSituationDirector;
 class Bgm3DParamsController;
 class BgmLine;
 class BgmMultiPlayingController;
+struct BgmCombinedLineInfo;
+struct BgmPlayInfo;
+struct BgmResourceInfo;
+struct BgmResourceCategoryInfo;
+struct BgmStageInfo;
+struct BgmSituationInfo;
+struct BgmUserInfo;
+struct BgmDemoSyncedProcInfo;
 struct BgmPlayingRequest;
 class FunctorBase;
 class IBgmParamsChanger;
 class IUseAudioKeeper;
 class LiveActor;
 class Resource;
+class ByamlIter;
+struct BgmDemoProcInfo;
+struct BgmEnableSituationInfo;
+struct BgmResourceSpecificInfo;
+struct BgmResourceSuffixControlInfo;
+struct BgmResourceSuffixInfo;
+struct BgmStartTriggerSituationInfo;
 
 class BgmDataBase {
 public:
-    static BgmDataBase* create(const char*, const char*);
+    static BgmDataBase* create(const char* archiveName, const char* suffix);
 
-    BgmDataBase(const Resource*, const Resource*);
+    BgmDataBase(Resource* resource, Resource* localizedResource);
+
+    AudioInfoListWithParts<BgmCombinedLineInfo>* getBgmCombinedLineInfoList() const {
+        return mBgmCombinedLineInfoList;
+    }
+
+    AudioInfoListWithParts<BgmPlayInfo>* getBgmPlayInfoList() const { return mBgmPlayInfoList; }
+
+    AudioInfoListWithParts<BgmResourceInfo>* getBgmResourceInfoList() const {
+        return mBgmResourceInfoList;
+    }
+
+    AudioInfoListWithParts<BgmResourceCategoryInfo>* getBgmResourceCategoryInfoList() const {
+        return mBgmResourceCategoryInfoList;
+    }
+
+    AudioInfoListWithParts<BgmStageInfo>* getBgmStageInfoList() const { return mBgmStageInfoList; }
+
+    AudioInfoListWithParts<BgmSituationInfo>* getBgmSituationInfoList() const {
+        return mBgmSituationInfoList;
+    }
+
+    AudioInfoListWithParts<BgmUserInfo>* getBgmUserInfoList() const { return mBgmUserInfoList; }
+
+    AudioInfoListWithParts<BgmDemoSyncedProcInfo>* getBgmDemoSyncedProcInfoList() const {
+        return mBgmDemoSyncedProcInfoList;
+    }
+
+private:
+    AudioInfoListWithParts<BgmCombinedLineInfo>* mBgmCombinedLineInfoList;
+    AudioInfoListWithParts<BgmPlayInfo>* mBgmPlayInfoList;
+    AudioInfoListWithParts<BgmResourceInfo>* mBgmResourceInfoList;
+    AudioInfoListWithParts<BgmResourceCategoryInfo>* mBgmResourceCategoryInfoList;
+    AudioInfoListWithParts<BgmStageInfo>* mBgmStageInfoList;
+    AudioInfoListWithParts<BgmSituationInfo>* mBgmSituationInfoList;
+    AudioInfoListWithParts<BgmUserInfo>* mBgmUserInfoList;
+    AudioInfoListWithParts<BgmDemoSyncedProcInfo>* mBgmDemoSyncedProcInfoList;
 };
+
+static_assert(sizeof(BgmDataBase) == 0x40);
+
+struct BgmCombinedLineInfo {
+    static BgmCombinedLineInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmCombinedLineInfo* lhs, const BgmCombinedLineInfo* rhs);
+
+    const char* name = nullptr;
+};
+
+struct BgmPlayInfo {
+    static BgmPlayInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmPlayInfo* lhs, const BgmPlayInfo* rhs);
+
+    const char* name = nullptr;
+    const char* lineName = nullptr;
+};
+
+struct BgmResourceInfo {
+    static BgmResourceInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmResourceInfo* lhs, const BgmResourceInfo* rhs);
+
+    const char* name = nullptr;
+    const char* _8 = nullptr;
+    const char* categoryName = nullptr;
+    BgmResourceSpecificInfo* resourceSpecificInfo = nullptr;
+    AudioInfoListWithParts<BgmResourceSuffixInfo>* resourceSuffixInfoList = nullptr;
+    AudioInfoListWithParts<BgmEnableSituationInfo>* enableSituationInfoList = nullptr;
+    AudioInfoListWithParts<BgmStartTriggerSituationInfo>* startTriggerSituationInfoList = nullptr;
+    BgmResourceSuffixControlInfo* resourceSuffixControlInfo = nullptr;
+    bool isEnableRegionJump = false;
+    bool isDisableAudioEffect = false;
+    bool isEnableNwRender = false;
+    u8 _43 = 0;
+    u32 resourceId = 0;
+};
+
+static_assert(sizeof(BgmResourceInfo) == 0x48);
+
+struct BgmResourceCategoryInfo {
+    static BgmResourceCategoryInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmResourceCategoryInfo* lhs, const BgmResourceCategoryInfo* rhs);
+
+    const char* name = nullptr;
+};
+
+struct BgmStageInfo {
+    static BgmStageInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmStageInfo* lhs, const BgmStageInfo* rhs);
+
+    const char* name = nullptr;
+};
+
+struct BgmSituationInfo {
+    static BgmSituationInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmSituationInfo* lhs, const BgmSituationInfo* rhs);
+
+    const char* name = nullptr;
+};
+
+struct BgmDemoSyncedProcInfo {
+    static BgmDemoSyncedProcInfo* createInfo(const ByamlIter& iter);
+    static s32 compareInfo(const BgmDemoSyncedProcInfo* lhs, const BgmDemoSyncedProcInfo* rhs);
+
+    const char* name = nullptr;
+    bool isEnableEvent = false;
+    bool isPartsProc = false;
+    u8 _a[6] = {};
+    sead::PtrArray<const char>* partsProcNameList = nullptr;
+    bool isDisableLineChange = false;
+    u8 _19[7] = {};
+    AudioInfoListWithParts<BgmDemoProcInfo>* demoProcInfoList = nullptr;
+    AudioInfoListWithParts<BgmDemoProcInfo>* demoEndProcInfoList = nullptr;
+};
+
+static_assert(sizeof(BgmDemoSyncedProcInfo) == 0x30);
 
 BgmDirector* getBgmDirector(const IUseAudioKeeper*);
 BgmDirector* tryGetBgmDirector(const IUseAudioKeeper*);

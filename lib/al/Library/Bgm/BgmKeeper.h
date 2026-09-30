@@ -19,6 +19,8 @@ public:
     const char* getUserName() const;
     void update();
 
+    BgmDirector* getBgmDirector() const { return mBgmDirector; }
+
 private:
     BgmDirector* mBgmDirector;
     BgmUserInfo* mBgmUserInfo = nullptr;
