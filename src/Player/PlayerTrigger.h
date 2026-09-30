@@ -30,6 +30,8 @@ public:
         EActionTrigger_val11 = 11,
         // used in PlayerStateSquat::appear
         EActionTrigger_val12 = 12,
+        // used in PlayerStateJump::appear
+        EActionTrigger_val21 = 21,
         // used in PlayerJudgeWallCatch::update, PlayerJudgeWallKeep::update
         EActionTrigger_val30 = 30,
         // used in PlayerCounterQuickTurnJump::isEnableTurnJump

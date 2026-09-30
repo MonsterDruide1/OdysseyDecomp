@@ -20,6 +20,8 @@ public:
     void calcOnGround(const sead::Vector3f& groundNormal);
     void apply();
 
+    const sead::Vector3f& getVelocityFront() const { return mVelocityFront; }
+
 private:
     al::LiveActor* mActor;
     sead::Vector3f mSide = sead::Vector3f::zero;
