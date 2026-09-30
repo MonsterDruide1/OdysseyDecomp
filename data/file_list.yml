@@ -12038,72 +12038,72 @@ Boss/GiantWanderBoss/GiantWanderBossBullet.o:
   - offset: 0x067c28
     size: 176
     label: _ZN21GiantWanderBossBulletC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x067cd8
     size: 188
     label: _ZN21GiantWanderBossBulletC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x067d94
     size: 252
     label: _ZN21GiantWanderBossBullet4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x067e90
     size: 56
     label: _ZN21GiantWanderBossBullet6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x067ec8
     size: 108
     label: _ZN21GiantWanderBossBullet4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x067f34
     size: 284
     label: _ZN21GiantWanderBossBullet7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068050
     size: 136
     label: _ZN21GiantWanderBossBullet12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0680d8
     size: 188
     label: _ZN21GiantWanderBossBullet10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068194
     size: 252
     label: _ZN21GiantWanderBossBullet12appearAttachEPKN4sead8Matrix34IfEEPKNS0_7Vector3IfEEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068290
     size: 372
     label: _ZN21GiantWanderBossBullet11startLaunchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068404
     size: 64
     label: _ZNK21GiantWanderBossBullet10isLaunchedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068444
     size: 220
     label: _ZN21GiantWanderBossBullet15exeAppearAttachEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068520
     size: 412
     label: _ZN21GiantWanderBossBullet6exeFlyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0686bc
     size: 92
     label: _ZN21GiantWanderBossBullet19resetPositionByAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068718
     size: 92
     label: _ZN21GiantWanderBossBullet22checkCollideAndSendMsgEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x068774
     size: 8
     label: _ZNK12_GLOBAL__N_127GiantWanderBossBulletNrvFly7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x06877c
     size: 224
     label: _ZNK12_GLOBAL__N_136GiantWanderBossBulletNrvAppearAttach7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/GiantWanderBoss/GiantWanderBossFunction.o:
   '.text':
