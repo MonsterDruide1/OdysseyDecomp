@@ -1,7 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <nn/atk/AuxBus.h>
+#include <nn/atk/atk_AuxBus.h>
 
 #include "Project/Bgm/BgmInfo.h"
 

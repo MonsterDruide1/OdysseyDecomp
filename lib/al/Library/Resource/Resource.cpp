@@ -3,7 +3,7 @@
 #include <filedevice/seadArchiveFileDevice.h>
 #include <g3d/aglNW4FToNN.h>
 #include <heap/seadHeapMgr.h>
-#include <nn/g3d/ResFile.h>
+#include <nn/g3d/g3d_ResFile.h>
 #include <resource/seadArchiveRes.h>
 
 #include "Library/Base/HashCodeUtil.h"

@@ -4,6 +4,14 @@
 [submodule "lib/NintendoSDK"]
 	path = lib/NintendoSDK
 	url = https://github.com/open-ead/nnheaders
+[submodule "lib/nnsdk"]
+	path = lib/nnsdk
+	url = https://github.com/open-ead/nnsdk
+	branch = main
+[submodule "lib/nnware"]
+	path = lib/nnware
+	url = https://github.com/open-ead/nnware
+	branch = main
 [submodule "lib/agl"]
 	path = lib/agl
 	url = https://github.com/open-ead/agl
@@ -19,3 +27,7 @@
 [submodule "lib/NintendoSDK-NEX"]
 	path = lib/NintendoSDK-NEX
 	url = https://github.com/open-ead/NintendoSDK-NEX
+[submodule "lib/curl"]
+	path = lib/curl
+	url = https://github.com/german77/curl.git
+    branch = init
