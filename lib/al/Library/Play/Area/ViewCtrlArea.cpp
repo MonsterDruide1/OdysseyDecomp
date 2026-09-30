@@ -3,9 +3,7 @@
 #include "Library/Placement/PlacementFunction.h"
 
 namespace al {
-ViewCtrlArea::ViewCtrlArea(const char* name) : AreaObj(name) {
-    mClippingViewId = nullptr;
-}
+ViewCtrlArea::ViewCtrlArea(const char* name) : AreaObj(name) {}
 
 void ViewCtrlArea::init(const AreaInitInfo& info) {
     AreaObj::init(info);
