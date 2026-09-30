@@ -17,12 +17,10 @@ HosuiWaterBallHolder::HosuiWaterBallHolder(const al::ActorInitInfo& initInfo) {
 
 HosuiWaterBall* HosuiWaterBallHolder::get() {
     s32 capacity = mWaterBalls.capacity();
-    if (capacity < 1)
-        return nullptr;
 
     for (s32 i = 0; i < capacity; i++) {
         HosuiWaterBall* waterBall = mWaterBalls[mIndex];
-        mIndex = al::modi(capacity + 1 + mIndex, capacity);
+        mIndex = al::wrapValue(mIndex + 1, capacity);
         if (al::isDead(waterBall)) {
             waterBall->clearIgnoreActors();
             return waterBall;
