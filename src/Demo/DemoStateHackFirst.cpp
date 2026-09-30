@@ -23,16 +23,16 @@ NERVES_MAKE_NOSTRUCT(DemoStateHackFirst, Demo, End);
 
 DemoStateHackFirst::DemoStateHackFirst(al::LiveActor* actor, const al::ActorInitInfo& initInfo)
     : al::ActorStateBase("初回憑依デモ", actor) {
-    if (al::isObjectName(initInfo, "Frog")) {
-        mDemoType = 1;
-    } else {
-        if (!al::isObjectNameSubStr(initInfo, "Koopa"))
-            return;
-        mDemoType = 2;
-    }
+    if (al::isObjectName(initInfo, "Frog"))
+        mDemoType = DemoType::Frog;
+    else if (al::isObjectNameSubStr(initInfo, "Koopa"))
+        mDemoType = DemoType::Koopa;
+    else
+        return;
 
     if (al::isExistLinkChild(initInfo, "LinkDemoHackDirector", 0))
-        mDemoHackFirstDirector = rs::tryCreateDemoHackFirstDirector(mActor, mDemoType, initInfo);
+        mDemoHackFirstDirector =
+            rs::tryCreateDemoHackFirstDirector(mActor, static_cast<s32>(mDemoType), initInfo);
 
     initNerve(&Demo, 0);
 }
@@ -50,13 +50,12 @@ void DemoStateHackFirst::kill() {
 }
 
 bool DemoStateHackFirst::isFirstDemo() const {
-    if (mDemoType == 1)
+    if (mDemoType == DemoType::Frog)
         return true;
 
-    if (mDemoType == 2) {
-        if (GameDataFunction::isExistInHackDictionary(GameDataHolderAccessor(mActor), "Koopa"))
-            return false;
-    }
+    if (mDemoType == DemoType::Koopa &&
+        GameDataFunction::isExistInHackDictionary(GameDataHolderAccessor(mActor), "Koopa"))
+        return false;
 
     return true;
 }
@@ -73,9 +72,9 @@ void DemoStateHackFirst::skipDemo() {
 void DemoStateHackFirst::endDemo() {
     al::setNerve(this, &End);
 
-    if (mDemoType == 1)
+    if (mDemoType == DemoType::Frog)
         rs::appearFirstHackTutorialFrog(mActor);
-    else if (mDemoType == 2)
+    else if (mDemoType == DemoType::Koopa)
         rs::appearFirstHackTutorialKoopa(mActor);
 
     al::tryOnStageSwitch(mActor, "SwitchHackFirstEndOn");
@@ -90,11 +89,7 @@ void DemoStateHackFirst::updateOnlyDemoGraphics() {
 }
 
 bool DemoStateHackFirst::tryHackFirstDemoWait(const al::SensorMsg* message) {
-    if (!mDemoHackFirstDirector)
-        return false;
-    if (!isEnableShowHackDemo())
-        return false;
-    if (!rs::isMsgStartHack(message))
+    if (!mDemoHackFirstDirector || !isEnableShowHackDemo() || !rs::isMsgStartHack(message))
         return false;
 
     s32 demoStartWaitFrame = mDemoStartWaitFrame;
@@ -108,26 +103,23 @@ bool DemoStateHackFirst::tryHackFirstDemoWait(const al::SensorMsg* message) {
         demoStartWaitFrame = mDemoStartWaitFrame;
     }
 
-    mDemoStartWaitFrame = demoStartWaitFrame + 1;
+    mDemoStartWaitFrame++;
     return true;
 }
 
 bool DemoStateHackFirst::isEnableShowHackDemo() const {
-    s32 demoType = mDemoType;
-    if (demoType == 1) {
+    if (mDemoType == DemoType::Frog) {
         if (GameDataFunction::getCurrentWorldId(GameDataHolderAccessor(mActor)) != 0)
             return false;
-        demoType = mDemoType;
     }
 
-    if (demoType == 2) {
+    if (mDemoType == DemoType::Koopa) {
         s32 worldId = GameDataFunction::getCurrentWorldId(GameDataHolderAccessor(mActor));
         if (worldId != GameDataFunction::getWorldIndexMoon())
             return false;
-        demoType = mDemoType;
     }
 
-    if (demoType == 1) {
+    if (mDemoType == DemoType::Frog) {
         if (GameDataFunction::isExistInHackDictionary(GameDataHolderAccessor(mActor), "Frog"))
             return false;
     }
@@ -137,9 +129,7 @@ bool DemoStateHackFirst::isEnableShowHackDemo() const {
 
 bool DemoStateHackFirst::tryHackFirst(IUsePlayerHack** playerHack, const al::SensorMsg* message,
                                       al::HitSensor* other, al::HitSensor* self) {
-    if (!rs::isMsgStartHack(message))
-        return false;
-    if (!mDemoHackFirstDirector)
+    if (!rs::isMsgStartHack(message) || !mDemoHackFirstDirector)
         return false;
 
     if (!isEnableShowHackDemo()) {
@@ -150,13 +140,10 @@ bool DemoStateHackFirst::tryHackFirst(IUsePlayerHack** playerHack, const al::Sen
     mPlayerHack = rs::startHack(self, other, nullptr);
     rs::startHackStartDemoPuppetable(mPlayerHack, mActor);
 
-    if (mDemoType != 2) {
-        if (mDemoType == 1)
-            rs::setDemoInfoDemoName(mActor, DemoName::cHackStartFirstTimeFrog);
-    } else {
+    if (mDemoType == DemoType::Frog)
+        rs::setDemoInfoDemoName(mActor, DemoName::cHackStartFirstTimeFrog);
+    else if (mDemoType == DemoType::Koopa)
         rs::setDemoInfoDemoName(mActor, DemoName::cHackStartFirstTimeKoopa);
-    }
-
     *playerHack = mPlayerHack;
     return true;
 }

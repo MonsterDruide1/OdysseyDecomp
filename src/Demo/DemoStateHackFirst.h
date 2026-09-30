@@ -38,7 +38,12 @@ public:
     void exeEnd();
 
 private:
-    s32 mDemoType = 0;
+    enum class DemoType {
+        None,
+        Frog,
+        Koopa,
+    };
+    DemoType mDemoType = DemoType::None;
     IUsePlayerHack* mPlayerHack = nullptr;
     DemoHackFirstDirector* mDemoHackFirstDirector = nullptr;
     s32 mDemoStartWaitFrame = 0;
