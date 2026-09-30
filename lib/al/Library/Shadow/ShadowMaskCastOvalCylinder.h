@@ -16,11 +16,14 @@ public:
     void addMulti() override;
     ShadowMaskType getShadowMaskType() const override;
 
-    void calcOvalWrapMtxCylinder(sead::Matrix34f*, sead::Matrix34f, const sead::Vector3f&, f32);
+    void calcOvalWrapMtxCylinder(sead::Matrix34f*, sead::Matrix34f, const sead::Vector3f&,
+                                 f32) const;
 
     void init(const sead::Vector3f& scale, f32 dropLength, f32 expXZ, f32 expY, f32 distYBase,
               const sead::Vector3f& offset, const sead::Color4f& color) {
-        mScale = scale;
+        setSizeX(scale.x);
+        mScaleY = scale.y;
+        mScaleZ = scale.z;
         setDropLength(dropLength);
         mExpXZ = expXZ;
         mExpY = expY;
@@ -31,7 +34,8 @@ public:
     }
 
 private:
-    sead::Vector3f mScale;
+    f32 mScaleY;
+    f32 mScaleZ;
     void* _f8;
     s32 _100;
     f32 mExpXZ;
