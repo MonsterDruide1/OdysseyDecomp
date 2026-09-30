@@ -10,8 +10,8 @@
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"
 #include "Util/DemoUtil.h"
-#include "Util/Hack.h"
 #include "Util/InputInterruptTutorialUtil.h"
+#include "Util/PlayerHackFunction.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {
