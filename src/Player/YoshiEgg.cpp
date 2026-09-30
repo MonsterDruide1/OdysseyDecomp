@@ -10,7 +10,7 @@
 #include "Library/Placement/PlacementFunction.h"
 
 #include "MapObj/FukankunZoomCapMessage.h"
-#include "MapObj/FukankunZoomTargetFunction.h"
+#include "MapObj/FukankunZoomObjHolder.h"
 #include "Util/SensorMsgFunction.h"
 
 namespace {
