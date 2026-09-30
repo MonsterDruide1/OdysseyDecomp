@@ -18,6 +18,7 @@ class PlayerInput;
 class PlayerDamageKeeper;
 class IPlayerModelChanger;
 class IUsePlayerHeightCheck;
+class IJudge;
 struct HackObjInfo;
 class PlayerCollider;
 class CapTargetInfo;
@@ -97,6 +98,10 @@ public:
 
     PlayerRecoverySafetyPoint* getRecoverySafePoint() const { return mRecoverySafePoint; }
 
+    IJudge* getJudgePreInputJump() const { return mJudgePreInputJump; }
+
+    IJudge* getJudgePreInputAction() const { return mJudgePreInputAction; }
+
     PlayerInput* getInput() const { return mInput; }
 
     PlayerDamageKeeper* getDamageKeeper() const { return mDamageKeeper; }
@@ -127,8 +132,8 @@ private:
     al::LiveActor* mParent;
     HackCap* mHackCap;
     PlayerRecoverySafetyPoint* mRecoverySafePoint;
-    void* field_18;
-    void* field_20;
+    IJudge* mJudgePreInputJump;
+    IJudge* mJudgePreInputAction;
     PlayerInput* mInput;
     sead::Matrix34f* field_30;
     PlayerDamageKeeper* mDamageKeeper;

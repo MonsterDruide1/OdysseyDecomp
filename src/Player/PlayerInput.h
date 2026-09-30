@@ -30,7 +30,7 @@ public:
     s32 getSeparatePlay2P();
     bool isMove() const;
     bool isMoveDeepDown() const;
-    const sead::Vector2f& getStickMoveRaw() const;
+    sead::Vector2f getStickMoveRaw() const;
     bool isMoveDeepDownNoSnap() const;
     bool isEnableCarry() const;
     bool isTriggerCarryStart() const;
@@ -105,8 +105,8 @@ public:
     void calcCapSeparateMoveInput(sead::Vector3f*, const sead::Vector3f&) const;
     bool isSameStickMove(const sead::Vector2f&, f32) const;
     f32 getRadiconInputSteeringValue() const;
-    const sead::Vector2f& getStickCameraRaw() const;
-    const sead::Vector2f& getCameraInputRaw() const;
+    sead::Vector2f getStickCameraRaw() const;
+    sead::Vector2f getCameraInputRaw() const;
     const sead::Vector2f& getStickCameraSubRaw() const;
     bool isTriggerCameraReset() const;
     bool isTriggerCameraSubjective() const;
@@ -149,11 +149,15 @@ public:
     void resetHoldInfo3D();
     void resetHoldInfo2D();
 
+    f32 getStickRotateSpeed() const { return mStickRotateSpeed; }
+
 private:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
     const IUseDimension* mDimension;
-    void* gap[11];
+    void* gap[7];
+    f32 mStickRotateSpeed;
+    void* gap4[3];
     al::SpinInputAnalyzer* mSpinInputAnalyzer;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer2;
