@@ -79721,76 +79721,76 @@ MapObj/PlayerSubjectiveWatchCheckObj.o:
   - offset: 0x2e4450
     size: 120
     label: _ZN29PlayerSubjectiveWatchCheckObjC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e44c8
     size: 132
     label: _ZN29PlayerSubjectiveWatchCheckObjC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e454c
     size: 76
     label: _ZN29PlayerSubjectiveWatchCheckObj4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e4598
     size: 4
     label: _ZN29PlayerSubjectiveWatchCheckObj7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e459c
     size: 104
     label: _ZN29PlayerSubjectiveWatchCheckObj6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e4604
     size: 4
     label: _ZN29PlayerSubjectiveWatchCheckObj4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e4608
     size: 104
     label: _ZN29PlayerSubjectiveWatchCheckObj10endClippedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e4670
     size: 60
     label: _ZN29PlayerSubjectiveWatchCheckObj16exeNotSubjectiveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e46ac
     size: 156
     label: _ZN29PlayerSubjectiveWatchCheckObj5exeInEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e4748
     size: 264
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_120isInWatchScreenRangeEPKN2al9LiveActorE
+    status: Matching
   - offset: 0x2e4850
     size: 84
     label: _ZN29PlayerSubjectiveWatchCheckObj6exeOutEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x2e48a4
     size: 64
     label: _ZNK12_GLOBAL__N_145PlayerSubjectiveWatchCheckObjNrvNotSubjective7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2e48e4
     size: 12
     label: _ZNK12_GLOBAL__N_145PlayerSubjectiveWatchCheckObjNrvNotSubjective13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2e48f0
     size: 8
     label: _ZNK12_GLOBAL__N_134PlayerSubjectiveWatchCheckObjNrvIn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2e48f8
     size: 12
     label: _ZNK12_GLOBAL__N_134PlayerSubjectiveWatchCheckObjNrvIn13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2e4904
     size: 88
     label: _ZNK12_GLOBAL__N_135PlayerSubjectiveWatchCheckObjNrvOut7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2e495c
     size: 12
     label: _ZNK12_GLOBAL__N_135PlayerSubjectiveWatchCheckObjNrvOut13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2e4968
     size: 116
@@ -135115,7 +135115,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4ba400
     size: 52
     label: _ZN2al19createActorFunctionI29PlayerSubjectiveWatchCheckObjEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4ba434
     size: 52
