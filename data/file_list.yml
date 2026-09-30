@@ -49426,80 +49426,80 @@ Item/LifeUpItem2D.o:
   - offset: 0x1ca658
     size: 160
     label: _ZN12LifeUpItem2DC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca6f8
     size: 156
     label: _ZN12LifeUpItem2DC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca794
     size: 260
     label: _ZN12LifeUpItem2D4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca898
     size: 68
     label: _ZN12LifeUpItem2D11appearPopUpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca8dc
     size: 204
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_114appearIn2DAreaEP12LifeUpItem2DP20ActorDimensionKeeper
+    status: Matching
   - offset: 0x1ca9a8
     size: 68
     label: _ZN12LifeUpItem2D17appearAmiiboTouchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1ca9ec
     size: 196
     label: _ZN12LifeUpItem2D3getEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1caab0
     size: 200
     label: _ZN12LifeUpItem2D8exePopUpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1cab78
     size: 60
     label: _ZN12LifeUpItem2D7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1cabb4
     size: 124
     label: _ZN12LifeUpItem2D6exeGetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1cac30
     size: 52
     label: _ZN12LifeUpItem2D14exeAutoGetDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1cac64
     size: 148
     label: _ZN12LifeUpItem2D10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1cacf8
     size: 8
     label: _ZNK12LifeUpItem2D23getActorDimensionKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1cad00
     size: 8
     label: _ZThn264_NK12LifeUpItem2D23getActorDimensionKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1cad08
     size: 64
     label: _ZNK12_GLOBAL__N_119LifeUpItem2DNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1cad48
     size: 56
     label: _ZNK12_GLOBAL__N_126LifeUpItem2DNrvAutoGetDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1cad80
     size: 8
     label: _ZNK12_GLOBAL__N_120LifeUpItem2DNrvPopUp7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1cad88
     size: 128
     label: _ZNK12_GLOBAL__N_118LifeUpItem2DNrvGet7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Item/LifeUpItemFunction.o:
   '.text':
