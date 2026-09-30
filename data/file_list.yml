@@ -8138,45 +8138,46 @@ Boss/BossRaid/BossRaidElectricLine.o:
   - offset: 0x0409a8
     size: 176
     label: _ZN20BossRaidElectricLineC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040a58
     size: 188
     label: _ZN20BossRaidElectricLineC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040b14
     size: 8
     label: _ZN20BossRaidElectricLine13setBulletListEPN2al16DeriveActorGroupI16BossRaidElectricEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040b1c
     size: 132
     label: _ZN20BossRaidElectricLine4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040ba0
     size: 144
     label: _ZN20BossRaidElectricLine4shotERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040c30
     size: 320
     label: _ZN20BossRaidElectricLine7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040d70
     size: 52
     label: _ZN20BossRaidElectricLine9killForceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040da4
     size: 8
     label: _ZNK12_GLOBAL__N_127BossRaidElectricLineNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x040dac
     size: 12
     label: _ZNK12_GLOBAL__N_127BossRaidElectricLineNrvMove13getActionNameEv
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x040db8
     size: 64
-    label: ''
-    status: NotDecompiled
+    label: _GLOBAL__sub_I_BossRaidElectricLine.cpp
+    status: Matching
+    guess: true
 Boss/BossRaid/BossRaidLightning.o:
   '.text':
   - offset: 0x040df8
