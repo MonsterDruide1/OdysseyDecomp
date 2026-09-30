@@ -22,23 +22,18 @@ NERVE_ACTIONS_MAKE_STRUCT(PlayerSubjectiveWatchCheckObj, NotSubjective, In, Out)
 
 bool isInWatchScreenRange(const al::LiveActor* actor) {
     sead::Vector3f layoutPos = {0.0f, 0.0f, 0.0f};
-    const al::IUseCamera* camera = actor;
-    const sead::Vector3f& trans = al::getTrans(actor);
-    al::calcLayoutPosFromWorldPosWithClampOutRange(&layoutPos, camera, trans, 50.0f, 0);
+    al::calcLayoutPosFromWorldPosWithClampOutRange(&layoutPos, actor, al::getTrans(actor), 50.0f,
+                                                   0);
 
     if (layoutPos.z > 0.0f)
         return false;
 
-    const f32 posX = layoutPos.x;
-    const f32 minX = 320.0f - al::getDisplayWidth() * 0.5f;
-    const f32 maxX = al::getDisplayWidth() * 0.5f + -320.0f;
-    if (!al::isInRange(posX, minX, maxX))
+    if (!al::isInRange(layoutPos.x, 320.0f - al::getDisplayWidth() * 0.5f,
+                       al::getDisplayWidth() * 0.5f + -320.0))
         return false;
 
-    const f32 posY = layoutPos.y;
-    const f32 minY = 180.0f - al::getDisplayHeight() * 0.5f;
-    const f32 maxY = al::getDisplayHeight() * 0.5f + -180.0f;
-    return al::isInRange(posY, minY, maxY);
+    return al::isInRange(layoutPos.y, 180.0f - al::getDisplayHeight() * 0.5f,
+                         al::getDisplayHeight() * 0.5f + -180.0f);
 }
 }  // namespace
 
