@@ -28,6 +28,7 @@ void SequentialSwitch::init(const al::ActorInitInfo& info) {
 }
 
 void SequentialSwitch::notifyInputSwitchOn() {
-    al::StringTmp<128> switchName("OutputSwitch%dOn", ++mInputSwitchOnCount);
+    mInputSwitchOnCount++;
+    al::StringTmp<128> switchName("OutputSwitch%dOn", mInputSwitchOnCount);
     al::tryOnStageSwitch(this, switchName.cstr());
 }
