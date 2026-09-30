@@ -3,13 +3,12 @@
 import argparse
 import csv
 import os
-import stat
 import re
+import stat
 import subprocess
 from functools import cache
 
 from common import setup_common as setup
-from common.util import utils
 
 # ------
 # CHECKS
@@ -17,6 +16,7 @@ from common.util import utils
 
 issueFound = False
 runAllChecks = False
+
 
 def FAIL(message, line, path):
     print("Offending file:", os.path.relpath(path, os.getcwd()))
@@ -26,11 +26,13 @@ def FAIL(message, line, path):
     global issueFound
     issueFound = True
 
+
 def CHECK(cond, line, message, path):
     if not cond(line):
         FAIL(message, line, path)
         return True
     return False
+
 
 # Common
 
@@ -94,6 +96,7 @@ def common_no_namespace_qualifiers(c, path):
         if not runAllChecks:
             exit(1)
 
+
 @cache
 def get_includes():
     def get_files(path):
@@ -131,6 +134,7 @@ def get_includes():
     game_includes = game_files
 
     return angled_includes, al_includes, game_includes
+
 
 def common_include_order(c, path, is_header):
     lines = c.split("\n")
@@ -213,8 +217,10 @@ def common_include_order(c, path, is_header):
 
     CHECK(lambda a: order in [-1, -2, -3, -4], "not applicable", "Empty line expected after includes!", path)
 
+
 def common_newline_eof(c, path):
     CHECK(lambda a: a == "", c.split("\n")[-1], "Files should end with a newline!", path)
+
 
 def common_sead_types(c, path):
     FORBIDDEN_TYPES = ["int", "float", "short", "long", "double", "char16_t"]
@@ -236,22 +242,26 @@ def common_sead_types(c, path):
                     line, path)
                 return
 
+
 def common_void_params(c, path):
     for line in c.splitlines():
         if "(void);" in line or "(void) {" in line or "(void) const" in line:
             FAIL("Function parameters should be empty instead of \"(void)\"!", line, path)
             return
 
+
 def common_this_prefix(c, path):
     for line in c.splitlines():
         if 'this->' in line:
             FAIL("this-> is not allowed!", line, path)
+
 
 def common_consistent_float_literals(c, path):
     for line in c.splitlines():
         index = line.find(".f")
         if index != -1 and not line[index + 2].isalpha():
             FAIL(" '.f' is not allowed, use '.0f' instead!", line, path)
+
 
 def common_sead_math_template(c, path):
     for line in c.splitlines():
@@ -269,6 +279,7 @@ def common_sead_math_template(c, path):
             if "BitUtil" in line:
                 continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
+
 
 def common_string_finder(c, path):
     string_table = get_string_table()
@@ -300,7 +311,8 @@ def common_string_finder(c, path):
                     found = True
                     break
             if not found:
-                FAIL("String not found in binary: \""+match+"\"", line, path)
+                FAIL("String not found in binary: \"" + match + "\"", line, path)
+
 
 def common_const_reference(c, path):
     for line in c.splitlines():
@@ -331,12 +343,16 @@ def common_const_reference(c, path):
         if re.search(r"(?<!const)[( ][\w_:]+(<[\w_:]+[\*&]?>)?&", line):
             FAIL("References must be const!", line, path)
 
+
 def common_self_other(c, path, is_header):
     lines = c.splitlines()
     for i, line in enumerate(lines):
-        if (("attackSensor(" in line and "void HitSensor" not in line) or "receiveMsg(" in line) and (is_header or "::" in line) and (("self" not in line and "self" not in lines[i + 1]) or "other" not in line) and "Library/HitSensor/HitSensorKeeper.h" not in path and "Library/Event/EventFlowExecutor.h" not in path:
+        if (("attackSensor(" in line and "void HitSensor" not in line) or "receiveMsg(" in line) and (
+                is_header or "::" in line) and (("self" not in line and "self" not in lines[
+            i + 1]) or "other" not in line) and "Library/HitSensor/HitSensorKeeper.h" not in path and "Library/Event/EventFlowExecutor.h" not in path:
             FAIL("'attackSensor' and 'receiveMsg' should have 'self' and 'other' params!", line, path)
             return
+
 
 # Header files
 
@@ -394,8 +410,8 @@ def header_sorted_visibility(c, path):
         if not runAllChecks:
             exit(1)
 
-def header_check_line(line, path, visibility, should_start_class, is_in_struct):
 
+def header_check_line(line, path, visibility, should_start_class, is_in_struct):
     if is_in_struct:
         if re.search(r"\w+[\*&]*\s+m[A-Z]", line):
             FAIL("Struct member variables should be formatted as noPrefixCamelCase!", line, path)
@@ -427,7 +443,8 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
             CHECK(lambda a: not function_name.endswith("_"), line,
                   "Functions ending with an underscore are either protected or private!", path)
     elif visibility == 2:  # private
-        if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith("enum"): return
+        if line == "};" or line == "" or line == "union {" or line.startswith("struct") or line.startswith(
+                "enum"): return
         newline = line
         if line.startswith("static_assert") or "template" in line:
             return
@@ -461,27 +478,35 @@ def header_check_line(line, path, visibility, should_start_class, is_in_struct):
             CHECK(lambda a: allowed_name, line, "Member variables must be prefixed with `m`!", path)
 
         if var_type == "bool":
-            BOOL_PREFIXES = ["mIs", "mHas", "mAlways"]
+            BOOL_PREFIXES = ["mIs", "mHas", "mAlways", "mCan"]
             allowed_name = any(
                 [var_name.startswith(p) and (var_name[len(p)].isupper() or var_name[len(p)].isdigit()) for p in
                  BOOL_PREFIXES]) or any([var_name.startswith(p) for p in PREFIXES])
             if path.endswith("ByamlWriterData.h") and var_name == "mValue": return
-            CHECK(lambda a: allowed_name, line, "Boolean member variables must start with `mIs` or `mHas`!", path)
+            CHECK(lambda a: allowed_name, line,
+                  "Boolean member variables must start with one of " + ", ".join(f"`{p}`" for p in BOOL_PREFIXES) + "!",
+                  path)
+
 
 def header_no_offset_comments(c, path):
     for line in c.splitlines():
         if "// 0x" in line or "// _" in line:
             FAIL("Offset comments are not allowed in headers!", line, path)
 
+
 def header_lowercase_member_offset_vars(c, path):
     for line in c.splitlines():
-        if re.search(r"\s(field|gap|filler|pad|padding)?_[0-9a-z]*[A-Z]", line) and "," not in line and not line.endswith(");"):
-            CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!", path)
+        if re.search(r"\s(field|gap|filler|pad|padding)?_[0-9a-z]*[A-Z]",
+                     line) and "," not in line and not line.endswith(");"):
+            CHECK(lambda a: "#define" in a, line, "Characters in the names of offset variables need to be lowercase!",
+                  path)
+
 
 def header_bool_getter_name_prefix(c, path):
     for line in c.splitlines():
         if re.search(r"bool\s(?!(is|has|get_))\w+\(\)\s*const\s*{", line):
             FAIL("Boolean getter names should be prefix with `is` or `has`", line, path)
+
 
 # Source files
 
@@ -490,16 +515,21 @@ def source_no_raw_auto(c, path):
         if "auto" in line and not "auto*" in line and not "auto&" in line and not " it " in line and "node " not in line and ".end()" not in line and "autoGet" not in line:
             FAIL("Raw use of auto isn't allowed! Please use auto* or auto& instead", line, path)
 
+
 def source_no_nerve_make(c, path):
     for line in c.splitlines():
         if "NERVE_MAKE(" in line:
             FAIL("Use of NERVE_MAKE is not allowed. Use NERVES_MAKE_[NO]STRUCT instead.", line, path)
             return
 
+
 def source_always_inline_macro(c, path):
     for line in c.splitlines():
         if "__attribute__((always_inline)) inline" in line:
-            FAIL("Explicitly using `__attribute__((always_inline)) inline` is not allowed. Use ALWAYS_INLINE from Library/Base/Macros.h instead", line, path)
+            FAIL(
+                "Explicitly using `__attribute__((always_inline)) inline` is not allowed. Use ALWAYS_INLINE from Library/Base/Macros.h instead",
+                line, path)
+
 
 # -----
 # UTILS
@@ -521,6 +551,7 @@ def check_source(c, path):
     common_consistent_float_literals(c, path)
     source_always_inline_macro(c, path)
 
+
 def check_header(c, path):
     common_newline_eof(c, path)
     common_no_namespace_qualifiers(c, path)
@@ -537,6 +568,7 @@ def check_header(c, path):
     common_consistent_float_literals(c, path)
     header_bool_getter_name_prefix(c, path)
 
+
 def _check_file_content(content, file_str):
     if file_str.endswith('.h'):
         check_header(content, file_str)
@@ -544,6 +576,7 @@ def _check_file_content(content, file_str):
         check_source(content, file_str)
     else:
         FAIL("Must only contain .h and .cpp files!", "NOT APPLICABLE", file_str)
+
 
 def check_file(file_str):
     st = os.stat(file_str)
@@ -554,6 +587,7 @@ def check_file(file_str):
     content = file.read()
     file.close()
     _check_file_content(content, file_str)
+
 
 def read_csv_file(path):
     if not os.path.isfile(path):
@@ -568,11 +602,14 @@ def read_csv_file(path):
 
     return rows;
 
+
 @cache
 def get_string_table():
     return read_csv_file(project_root / 'data' / "data_strings.csv");
 
+
 project_root = setup.ROOT
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -589,10 +626,11 @@ def main():
     runAllChecks = args.all
 
     if not args.run_clang_format and not args.ci:
-        print("Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
+        print(
+            "Warning: Input files not being formatted correctly may cause false fails for some checks, to automatically run clang-format use '--run-clang-format' (or '-F')")
         print()
 
-    for dir in [project_root/'lib'/'al', project_root/'src']:
+    for dir in [project_root / 'lib' / 'al', project_root / 'src']:
         for root, _, files in os.walk(dir):
             for file in files:
                 if os.path.basename(file) == ".DS_Store":
@@ -602,8 +640,10 @@ def main():
                 if args.run_clang_format:
                     subprocess.check_call(['clang-format', '-i', file_str])
                 if args.ci:
-                    if subprocess.run(['clang-format', file_str, '--dry-run', '--Werror'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0:
-                        print("Warning: file", os.path.relpath(file_str, os.getcwd()), "wasn't formatted correctly with clang-format, this may cause the line numbers to be incorrect")
+                    if subprocess.run(['clang-format', file_str, '--dry-run', '--Werror'], stdout=subprocess.DEVNULL,
+                                      stderr=subprocess.DEVNULL).returncode != 0:
+                        print("Warning: file", os.path.relpath(file_str, os.getcwd()),
+                              "wasn't formatted correctly with clang-format, this may cause the line numbers to be incorrect")
                         print()
                         result = subprocess.run(['clang-format', file_str], capture_output=True, text=True)
                         if result.returncode == 0:
@@ -614,6 +654,7 @@ def main():
     if issueFound:
         exit(1)
     print("No issues found!")
+
 
 if __name__ == "__main__":
     main()

@@ -26,7 +26,7 @@ public:
     void exeWait();
     void exeDamageCap();
 
-    const EnemyCap* getEnemyCap() { return mEnemyCap; };
+    EnemyCap* getEnemyCap() const { return mEnemyCap; };
 
 private:
     EnemyCap* mEnemyCap = nullptr;

@@ -35100,147 +35100,147 @@ Enemy/Killer.o:
   - offset: 0x1454c8
     size: 196
     label: _ZN6KillerC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x14558c
     size: 208
     label: _ZN6KillerC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x14565c
     size: 560
     label: _ZN6Killer4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x14588c
     size: 536
     label: _ZN6Killer12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x145aa4
     size: 184
     label: _ZN6Killer7explodeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x145b5c
     size: 1300
     label: _ZN6Killer10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146070
     size: 88
     label: _ZN6Killer22resetAliveCountAndAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1460c8
     size: 992
     label: _ZN6Killer7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1464a8
     size: 176
     label: _ZN6Killer10appearBy2DERKN4sead7Vector3IfEES4_RKNS0_4QuatIfEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146558
     size: 204
     label: _ZN6Killer10appearInitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146624
     size: 184
     label: _ZN6Killer13standByAppearERKN4sead7Vector3IfEERKNS0_4QuatIfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1466dc
     size: 68
     label: _ZN6Killer6launchEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146720
     size: 4
     label: _ZN6Killer12forceExplodeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146724
     size: 16
     label: _ZNK6Killer6isHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146734
     size: 112
     label: _ZN6Killer9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1467a4
     size: 60
     label: _ZN6Killer10exeStandByEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1467e0
     size: 196
     label: _ZN6Killer9exeLaunchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1468a4
     size: 68
     label: _ZN6Killer17applyVelocityDampEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1468e8
     size: 300
     label: _ZN6Killer6exeFlyEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146a14
     size: 292
-    label: ''
-    status: NotDecompiled
+    label: _ZL18isExplodeCollisionP6Killerb
+    status: Matching
   - offset: 0x146b38
     size: 352
     label: _ZN6Killer10exeExplodeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146c98
     size: 104
     label: _ZN6Killer12exeDamageCapEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146d00
     size: 116
     label: _ZN6Killer7exeHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146d74
     size: 332
     label: _ZN6Killer12exeAfterHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146ec0
     size: 192
     label: _ZN6Killer11exeFallDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x146f80
     size: 8
     label: _ZNK12_GLOBAL__N_112KillerNrvFly7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x146f88
     size: 108
     label: _ZNK12_GLOBAL__N_118KillerNrvDamageCap7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x146ff4
     size: 8
     label: _ZNK12_GLOBAL__N_113KillerNrvHack7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x146ffc
     size: 8
     label: _ZNK12_GLOBAL__N_117KillerNrvFallDown7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x147004
     size: 8
     label: _ZNK12_GLOBAL__N_116KillerNrvExplode7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x14700c
     size: 8
     label: _ZNK12_GLOBAL__N_118KillerNrvAfterHack7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x147014
     size: 116
     label: _ZNK12_GLOBAL__N_115KillerNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x147088
     size: 64
     label: _ZNK12_GLOBAL__N_116KillerNrvStandBy7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1470c8
     size: 8
     label: _ZNK12_GLOBAL__N_115KillerNrvLaunch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/Killer2D.o:
   '.text':
