@@ -61,9 +61,6 @@ void SenobiGeneratePoint::exeGenerate() {
     if (al::isLessStep(this, 180))
         return;
 
-    Senobi* senobi = mSenobi;
-    const sead::Vector3f& trans = al::getTrans(this);
-    const sead::Vector3f& rotate = al::getRotate(this);
-    senobi->rebirth(trans, rotate);
+    mSenobi->rebirth(al::getTrans(this), al::getRotate(this));
     al::setNerve(this, &NrvHostType.Wait);
 }
