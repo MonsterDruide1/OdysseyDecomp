@@ -40166,71 +40166,71 @@ Enemy/SenobiLocalFunction.o:
   - offset: 0x180390
     size: 232
     label: _ZN19SenobiLocalFunction22setTransToStretchPointEP6Senobi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180478
     size: 196
     label: _ZN19SenobiLocalFunction10shrinkBodyEP6Senobif
-    status: NotDecompiled
+    status: Matching
   - offset: 0x18053c
     size: 48
     label: _ZN19SenobiLocalFunction11calcBodyPosEPN4sead7Vector3IfEEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x18056c
     size: 236
     label: _ZN19SenobiLocalFunction9isHitCeilEPN4sead7Vector3IfEEPKN2al9LiveActorEP30PlayerCollisionCheckSphereMoveRKS2_SB_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180658
     size: 276
     label: _ZN19SenobiLocalFunction9isHitWallEPN4sead7Vector3IfEEPN2al9LiveActorEP30PlayerCollisionCheckSphereMoveRKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x18076c
     size: 292
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_115isHitWallSensorEPN2al9LiveActorEP30PlayerCollisionCheckSphereMoveRKN4sead7Vector3IfEEPKc
+    status: Matching
   - offset: 0x180890
     size: 128
     label: _ZN19SenobiLocalFunction27invalidateAllStretchSensorsEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180910
     size: 256
     label: _ZN19SenobiLocalFunction20updateStretchSensorsEPN2al9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180a10
     size: 4
     label: _ZN19SenobiLocalFunction19isHoldStretchButtonEPK14IUsePlayerHack
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180a14
     size: 96
     label: _ZN19SenobiLocalFunction25trySendMsgToLandingGroundEPN2al9LiveActorEP19IUsePlayerCollision
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180a74
     size: 8
     label: _ZN19SenobiLocalFunction7getLeafEPKN2al9LiveActorEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180a7c
     size: 128
     label: _ZN19SenobiLocalFunction13calcLeavesNumEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180afc
     size: 104
     label: _ZN19SenobiLocalFunction15tryTurnToPlayerEPN2al9LiveActorEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180b64
     size: 60
     label: _ZN19SenobiLocalFunction10hideSenobiEP6Senobi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180ba0
     size: 60
     label: _ZN19SenobiLocalFunction10showSenobiEP6Senobi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180bdc
     size: 8
     label: _ZN19SenobiLocalFunction22getSenobiStretchLengthEPK6Senobi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x180be4
     size: 8
     label: _ZN19SenobiLocalFunction22setSenobiStretchLengthEP6Senobif
-    status: NotDecompiled
+    status: Matching
 Enemy/SenobiStateEnemy.o:
   '.text':
   - offset: 0x180bec
