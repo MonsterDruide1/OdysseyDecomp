@@ -35,12 +35,12 @@ public:
     void exeBeforeStart();
 
 private:
-    al::LiveActor* mBreakActor;
-    al::LiveActor* mUnusedActor;
-    al::LiveActor* mLifeUpItem;
-    sead::Vector3f mFallStartTrans;
-    bool mIsBreakOnGround;
-    bool mIsBreakByIceConflict;
+    al::LiveActor* mBreakActor = nullptr;
+    al::LiveActor* mUnusedActor = nullptr;
+    al::LiveActor* mLifeUpItem = nullptr;
+    sead::Vector3f mFallStartTrans = {0.0f, 0.0f, 0.0f};
+    bool mIsBreakOnGround = false;
+    bool mIsBreakByIceConflict = false;
 };
 
 static_assert(sizeof(BossKnuckleCounterGround) == 0x130);

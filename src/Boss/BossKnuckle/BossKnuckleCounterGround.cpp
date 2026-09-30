@@ -29,9 +29,7 @@ NERVE_IMPL(BossKnuckleCounterGround, Sink);
 NERVES_MAKE_NOSTRUCT(BossKnuckleCounterGround, WaitOnGround, Break, Fall, BeforeStart, Sink);
 }  // namespace
 
-BossKnuckleCounterGround::BossKnuckleCounterGround(const char* name)
-    : al::LiveActor(name), mBreakActor(nullptr), mUnusedActor(nullptr), mLifeUpItem(nullptr),
-      mFallStartTrans(0.0f, 0.0f, 0.0f), mIsBreakOnGround(false), mIsBreakByIceConflict(false) {}
+BossKnuckleCounterGround::BossKnuckleCounterGround(const char* name) : al::LiveActor(name) {}
 
 void BossKnuckleCounterGround::init(const al::ActorInitInfo& initInfo) {
     al::initActorWithArchiveName(this, initInfo, "BossKnuckleCounterGround", nullptr);
@@ -58,26 +56,24 @@ void BossKnuckleCounterGround::init(const al::ActorInitInfo& initInfo) {
     makeActorAlive();
 }
 
+bool BossKnuckleCounterGround::isBreak() const {
+    return al::isNerve(this, &Break);
+}
+
 void BossKnuckleCounterGround::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isNerve(this, &Break))
+    if (isBreak())
         return;
 
     if (al::isSensorEnemyBody(other) && rs::sendMsgBossKnuckleCounter(other, self)) {
         mIsBreakByIceConflict = false;
-        if (al::isAlive(this)) {
-            mIsBreakOnGround = al::isNerve(this, &WaitOnGround);
-            al::setNerve(this, &Break);
-        }
+        doBreak();
     }
 
     if (al::isNerve(this, &Fall)) {
         if (al::sendMsgEnemyAttack(other, self)) {
             mIsBreakByIceConflict = false;
             al::startHitReaction(this, "氷衝突");
-            if (al::isAlive(this)) {
-                mIsBreakOnGround = al::isNerve(this, &WaitOnGround);
-                al::setNerve(this, &Break);
-            }
+            doBreak();
         }
 
         rs::sendMsgBossKnuckleIceFallToMummy(other, self);
@@ -97,28 +93,20 @@ bool BossKnuckleCounterGround::receiveMsg(const al::SensorMsg* message, al::HitS
     if (al::isMsgPlayerDisregard(message))
         return true;
 
-    if (al::isNerve(this, &Break))
-        return false;
+    if (!isBreak() && !al::isNerve(this, &Fall) && rs::isMsgBossKnuckleIceConflict(message)) {
+        if (al::isNerve(this, &WaitOnGround))
+            al::startHitReaction(this, "氷衝突（埋まり)");
+        else
+            al::startHitReaction(this, "氷衝突");
 
-    if (al::isNerve(this, &Fall))
-        return false;
+        mIsBreakByIceConflict = true;
+        al::offCollide(this);
+        doBreak();
 
-    if (!rs::isMsgBossKnuckleIceConflict(message))
-        return false;
-
-    if (al::isNerve(this, &WaitOnGround))
-        al::startHitReaction(this, "氷衝突（埋まり)");
-    else
-        al::startHitReaction(this, "氷衝突");
-
-    mIsBreakByIceConflict = true;
-    al::offCollide(this);
-    if (al::isAlive(this)) {
-        mIsBreakOnGround = al::isNerve(this, &WaitOnGround);
-        al::setNerve(this, &Break);
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 void BossKnuckleCounterGround::doFall(const sead::Vector3f& trans) {
@@ -174,10 +162,6 @@ void BossKnuckleCounterGround::doWaitOnGround() {
         al::resetPosition(mLifeUpItem, al::getTrans(this) + sead::Vector3f::ey * 105.0f);
 
     al::setNerve(this, &WaitOnGround);
-}
-
-bool BossKnuckleCounterGround::isBreak() const {
-    return al::isNerve(this, &Break);
 }
 
 bool BossKnuckleCounterGround::isBeforeStart() const {
@@ -253,11 +237,10 @@ void BossKnuckleCounterGround::exeBreak() {
         }
 
         if (mLifeUpItem) {
-            const sead::Vector3f& trans = al::getTrans(this);
-            sead::Vector3f itemTrans =
-                sead::Vector3f::ey * 105.0f + sead::Vector3f::ey * 105.0f + trans;
-            const sead::Quatf& itemQuat = al::getQuat(mLifeUpItem);
-            al::appearItem(this, itemTrans, itemQuat, nullptr);
+            al::appearItem(this,
+                           al::getTrans(this) +
+                               (sead::Vector3f::ey * 105.0f + sead::Vector3f::ey * 105.0f),
+                           al::getQuat(mLifeUpItem), nullptr);
             mLifeUpItem->kill();
             mLifeUpItem = nullptr;
         }
