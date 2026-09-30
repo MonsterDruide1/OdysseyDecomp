@@ -1,5 +1,6 @@
 #include "MapObj/HackFork.h"
 
+#include "Library/Camera/ActorCameraTarget.h"
 #include "Library/Camera/CameraTicket.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/PartsConnectorUtil.h"
@@ -21,7 +22,6 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 #include "Library/Placement/PlacementFunction.h"
-#include "Library/Play/Camera/ActorMatrixCameraTarget.h"
 #include "Library/Se/SeFunction.h"
 #include "Library/Yaml/ByamlUtil.h"
 
