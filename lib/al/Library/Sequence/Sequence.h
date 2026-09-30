@@ -6,13 +6,24 @@
 #include "Library/Nerve/NerveExecutor.h"
 #include "Library/Sequence/IUseSceneCreator.h"
 
+namespace sead {
+class Heap;
+}  // namespace sead
+
+namespace alSceneFunction {
+class SceneFactory;
+}  // namespace alSceneFunction
+
 namespace al {
 struct GameSystemInfo;
 struct DrawSystemInfo;
 struct SequenceInitInfo;
 struct AudioSystemInfo;
+struct AudioDirectorInitInfo;
+class GameDataHolderBase;
 class AudioDirector;
 class Scene;
+class ScreenCaptureExecutor;
 
 class Sequence : public NerveExecutor, public IUseAudioKeeper, public IUseSceneCreator {
 public:
@@ -43,6 +54,10 @@ public:
 
     DrawSystemInfo* getDrawInfo() const { return mDrawSystemInfo; }
 
+    AudioDirector* getAudioDirector() const { return mAudioDirector; }
+
+    void setNextScene(Scene* scene) { mNextScene = scene; }
+
 private:
     sead::FixedSafeString<0x40> mName;
     Scene* mCurrentScene = nullptr;
@@ -53,4 +68,25 @@ private:
     DrawSystemInfo* mDrawSystemInfo = nullptr;
     bool mIsAlive = true;
 };
+
+void initSceneCreator(IUseSceneCreator* sceneCreator, const SequenceInitInfo& initInfo,
+                      GameDataHolderBase* gameDataHolder, AudioDirector* audioDirector,
+                      ScreenCaptureExecutor* screenCaptureExecutor,
+                      alSceneFunction::SceneFactory* sceneFactory);
+Scene* createSceneAndInit(IUseSceneCreator* sceneCreator, const char* stageName,
+                          const char* sceneName, s32 scenarioNo, const char* sequenceParam);
+void createSceneAndUseInitThread(IUseSceneCreator* sceneCreator, const char* stageName,
+                                 s32 priority, const char* sceneName, s32 scenarioNo,
+                                 const char* sequenceParam);
+void setSceneAndInit(IUseSceneCreator* sceneCreator, Scene* scene, const char* stageName,
+                     s32 scenarioNo, const char* sequenceParam);
+void setSceneAndUseInitThread(IUseSceneCreator* sceneCreator, Scene* scene, s32 priority,
+                              const char* stageName, s32 scenarioNo, const char* sequenceParam,
+                              sead::Heap* heap);
+bool tryEndSceneInitThread(IUseSceneCreator* sceneCreator);
+bool isExistSceneInitThread(const IUseSceneCreator* sceneCreator);
+void initAudioDirector(Sequence* sequence, AudioSystemInfo* audioSystemInfo,
+                       AudioDirectorInitInfo& initInfo);
+void setSequenceAudioKeeperToSceneSeDirector(Sequence* sequence, Scene* scene);
+void setSequenceNameForActorPickTool(Sequence* sequence, Scene* scene);
 }  // namespace al
