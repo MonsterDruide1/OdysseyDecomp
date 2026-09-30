@@ -1673,15 +1673,15 @@ Audio/ProjectSeNamedList.o:
     label:
     - _ZN18ProjectSeNamedListC1Ev
     - _ZN18ProjectSeNamedListC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x009730
     size: 8
     label: _ZN18ProjectSeNamedList21getMuteSeInPVListSizeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x009738
     size: 12
     label: _ZN18ProjectSeNamedList17getMuteSeInPVListEv
-    status: NotDecompiled
+    status: Matching
 Audio/SePlayObjWithSave.o:
   '.text':
   - offset: 0x009744
