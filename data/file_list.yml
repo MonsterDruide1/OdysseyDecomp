@@ -23961,27 +23961,27 @@ Demo/DemoActorHack.o:
   - offset: 0x0d17dc
     size: 200
     label: _ZN13DemoActorHackC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d18a4
     size: 212
     label: _ZN13DemoActorHackC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1978
     size: 288
     label: _ZN13DemoActorHack4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1a98
     size: 148
     label: _ZN13DemoActorHack7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1b2c
     size: 76
     label: _ZN13DemoActorHack14makeActorAliveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1b78
     size: 76
     label: _ZN13DemoActorHack13makeActorDeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1bc4
     size: 4
     label: _ZN4sead15FixedSafeStringILi32EED0Ev
