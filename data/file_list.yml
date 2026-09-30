@@ -44800,76 +44800,76 @@ Event/EventActorMovementRailTraffic.o:
     label:
     - _ZN29EventActorMovementRailTrafficC1EPKcPN2al9LiveActorE
     - _ZN29EventActorMovementRailTrafficC2EPKcPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1aec98
     size: 156
     label: _ZN29EventActorMovementRailTraffic4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1aed34
     size: 52
     label: _ZN29EventActorMovementRailTraffic6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1aed68
     size: 68
     label: _ZN29EventActorMovementRailTraffic7exeMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1aedac
     size: 100
     label: _ZN29EventActorMovementRailTraffic17exeStopByOtherNpcEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1aee10
     size: 20
     label: _ZN29EventActorMovementRailTraffic12exeStopAfterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1aee24
     size: 8
     label: _ZNK2al17EventFlowMovement22getEventFlowDataHolderEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee2c
     size: 4
     label: _ZN2al17EventFlowMovement4killEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee30
     size: 4
     label: _ZN2al17EventFlowMovement7controlEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee34
     size: 8
     label: _ZNK2al17EventFlowMovement14getNerveKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee3c
     size: 8
     label: _ZNK2al17EventFlowMovement14isTurnMovementEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee44
     size: 8
     label: _ZNK2al17EventFlowMovement21isWaitAtPointMovementEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee4c
     size: 8
     label: _ZThn8_NK2al17EventFlowMovement14getNerveKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1aee54
     size: 80
     label: _ZNK12_GLOBAL__N_136EventActorMovementRailTrafficNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1aeea4
     size: 112
     label: _ZNK12_GLOBAL__N_146EventActorMovementRailTrafficNrvStopByOtherNpc7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1aef14
     size: 36
     label: _ZNK12_GLOBAL__N_141EventActorMovementRailTrafficNrvStopAfter7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Event/EventActorMovementTurn.o:
   '.text':
