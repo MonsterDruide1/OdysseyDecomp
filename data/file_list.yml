@@ -32736,94 +32736,94 @@ Enemy/JangoCapSeparateHelpClaimUpdater.o:
   - offset: 0x12f788
     size: 208
     label: _ZN32JangoCapSeparateHelpClaimUpdater6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f858
     size: 8
     label: _ZN8JangoCap7demoEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f860
     size: 8
     label: _ZN8JangoCap11hideBalloonEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f868
     size: 64
     label: _ZN8JangoCap13startBlowDownEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f8a8
     size: 100
     label: _ZN8JangoCap8releasedERKN4sead7Vector3IfEERKNS0_4QuatIfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f90c
     size: 20
     label: _ZN8JangoCap7catchedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f920
     size: 56
     label: _ZN8JangoCap13directCatchedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f958
     size: 12
     label: _ZN8JangoCap13startStruggleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f964
     size: 92
     label: _ZN8JangoCap10exeCatchedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f9c0
     size: 60
     label: _ZN8JangoCap10exeCarriedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12f9fc
     size: 176
     label: _ZN8JangoCap18exeReleaseDemoWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12faac
     size: 140
     label: _ZN8JangoCap7exeFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12fb38
     size: 96
     label: _ZN8JangoCap7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12fb98
     size: 148
     label: _ZN8JangoCap11exeTalkDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12fc2c
     size: 16
     label:
     - _ZN32JangoCapSeparateHelpClaimUpdaterC1EPN2al9LiveActorE
     - _ZN32JangoCapSeparateHelpClaimUpdaterC2EPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x12fc3c
     size: 100
     label: _ZNK12_GLOBAL__N_115JangoCapNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x12fca0
     size: 8
     label: _ZNK12_GLOBAL__N_119JangoCapNrvTalkDemo7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x12fca8
     size: 8
     label: _ZNK12_GLOBAL__N_115JangoCapNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x12fcb0
     size: 96
     label: _ZNK12_GLOBAL__N_118JangoCapNrvCatched7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x12fd10
     size: 64
     label: _ZNK12_GLOBAL__N_118JangoCapNrvCarried7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x12fd50
     size: 8
     label: _ZNK12_GLOBAL__N_126JangoCapNrvReleaseDemoWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/JangoCapStateTalkDemo.o:
   '.text':
