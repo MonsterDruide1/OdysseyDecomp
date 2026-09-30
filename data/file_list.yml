@@ -15310,94 +15310,94 @@ Boss/Koopa/KoopaCapOnlyWeapon.o:
   - offset: 0x086840
     size: 132
     label: _ZN18KoopaCapOnlyWeaponC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0868c4
     size: 144
     label: _ZN18KoopaCapOnlyWeaponC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086954
     size: 260
     label: _ZN18KoopaCapOnlyWeapon4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086a58
     size: 52
     label: _ZN18KoopaCapOnlyWeapon6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086a8c
     size: 44
     label: _ZN18KoopaCapOnlyWeapon4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086ab8
     size: 52
     label: _ZN18KoopaCapOnlyWeapon9disappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086aec
     size: 16
     label: _ZN18KoopaCapOnlyWeapon7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086afc
     size: 132
     label: _ZN18KoopaCapOnlyWeapon14updateColliderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086b80
     size: 104
     label: _ZN18KoopaCapOnlyWeapon14startWaitHoverEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086be8
     size: 108
     label: _ZN18KoopaCapOnlyWeapon19startSpinThrowChaseEPKN4sead7Vector3IfEEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086c54
     size: 76
     label: _ZNK18KoopaCapOnlyWeapon19isEndWaitHoverStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086ca0
     size: 88
     label: _ZNK18KoopaCapOnlyWeapon11isWaitHoverEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086cf8
     size: 160
     label: _ZN18KoopaCapOnlyWeapon12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086d98
     size: 252
     label: _ZN18KoopaCapOnlyWeapon10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086e94
     size: 20
     label: _ZN18KoopaCapOnlyWeapon17exeWaitHoverDelayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086ea8
     size: 76
     label: _ZN18KoopaCapOnlyWeapon17exeWaitHoverStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086ef4
     size: 60
     label: _ZN18KoopaCapOnlyWeapon12exeWaitHoverEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086f30
     size: 104
     label: _ZN18KoopaCapOnlyWeapon12exeSpinThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x086f98
     size: 108
     label: _ZNK12_GLOBAL__N_130KoopaCapOnlyWeaponNrvSpinThrow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x087004
     size: 24
     label: _ZNK12_GLOBAL__N_135KoopaCapOnlyWeaponNrvWaitHoverDelay7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08701c
     size: 80
     label: _ZNK12_GLOBAL__N_135KoopaCapOnlyWeaponNrvWaitHoverStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08706c
     size: 64
     label: _ZNK12_GLOBAL__N_130KoopaCapOnlyWeaponNrvWaitHover7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaCapPlayer.o:
   '.text':
