@@ -29614,74 +29614,74 @@ Enemy/GamaneBullet.o:
   - offset: 0x104dfc
     size: 144
     label: _ZN12GamaneBulletC2EPKcPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x104e8c
     size: 148
     label: _ZN12GamaneBulletC1EPKcPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x104f20
     size: 120
     label: _ZN12GamaneBullet4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x104f98
     size: 284
     label: _ZN12GamaneBullet12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1050b4
     size: 96
     label: _ZN12GamaneBullet10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x105114
     size: 44
     label: _ZN12GamaneBullet6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x105140
     size: 300
     label: _ZN12GamaneBullet7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10526c
     size: 156
     label: _ZN12GamaneBullet5shootEfRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x105308
     size: 140
     label: _ZN12GamaneBullet6rotateEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x105394
     size: 188
     label: _ZN12GamaneBullet11exeStraightEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x105450
     size: 188
     label: _ZN12GamaneBullet8exeBrakeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10550c
     size: 180
     label: _ZN12GamaneBullet7exeFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1055c0
     size: 52
     label: _ZN12GamaneBullet6exeHitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1055f4
     size: 8
     label: _ZNK12_GLOBAL__N_123GamaneBulletNrvStraight7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x1055fc
     size: 56
     label: _ZNK12_GLOBAL__N_118GamaneBulletNrvHit7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x105634
     size: 8
     label: _ZNK12_GLOBAL__N_120GamaneBulletNrvBrake7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x10563c
     size: 8
     label: _ZNK12_GLOBAL__N_119GamaneBulletNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Enemy/GamaneHackState.o:
   '.text':
