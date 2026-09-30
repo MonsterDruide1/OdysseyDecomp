@@ -8049,89 +8049,89 @@ Boss/BossRaid/BossRaidElectric.o:
   - offset: 0x03fef4
     size: 208
     label: _ZN16BossRaidElectricC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x03ffc4
     size: 220
     label: _ZN16BossRaidElectricC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0400a0
     size: 84
     label: _ZN16BossRaidElectric13makeActorDeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0400f4
     size: 8
     label: _ZN16BossRaidElectric13setPrevBulletEPS_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0400fc
     size: 8
     label: _ZN16BossRaidElectric13setNextBulletEPS_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040104
     size: 204
     label: _ZN16BossRaidElectric4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0401d0
     size: 112
     label: _ZN16BossRaidElectric12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040240
     size: 192
     label: _ZN16BossRaidElectric4shotERKN4sead7Vector3IfEES4_PS_PN2al16DeriveActorGroupIS_EE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040300
     size: 76
     label: _ZN16BossRaidElectric14updatePositionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04034c
     size: 180
     label: _ZN16BossRaidElectric7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040400
     size: 588
     label: _ZN16BossRaidElectric18updateAnimAndJointEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04064c
     size: 48
     label: _ZNK16BossRaidElectric8isAirAllEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04067c
     size: 108
     label: _ZN16BossRaidElectric12exeDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0406e8
     size: 116
     label: _ZN16BossRaidElectric7exeHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x04075c
     size: 104
     label: _ZNK16BossRaidElectric9isHideAllEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0407c4
     size: 12
     label: _ZNK16BossRaidElectric6isHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0407d0
     size: 104
     label: _ZN16BossRaidElectric17updateEffectScaleEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x040838
     size: 128
     label: _ZNK16BossRaidElectric11calcNearPosEPN4sead7Vector3IfEERKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0408b8
     size: 8
     label: _ZNK12_GLOBAL__N_123BossRaidElectricNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0408c0
     size: 112
     label: _ZNK12_GLOBAL__N_128BossRaidElectricNrvDisappear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x040930
     size: 120
     label: _ZNK12_GLOBAL__N_123BossRaidElectricNrvHide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/BossRaid/BossRaidElectricLine.o:
   '.text':
