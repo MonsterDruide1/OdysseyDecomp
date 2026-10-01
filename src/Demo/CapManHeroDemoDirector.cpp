@@ -42,21 +42,15 @@ bool CapManHeroDemoDirector::isEndDemo() const {
 }
 
 bool CapManHeroDemoDirector::isExistTalkDemoStageStart() const {
-    if (mTalkDemoStageStart)
-        return mTalkDemoStageStart->isEnableStageStartDemo();
-    return false;
+    return mTalkDemoStageStart && mTalkDemoStageStart->isEnableStageStartDemo();
 }
 
 bool CapManHeroDemoDirector::isExistTalkDemoMoonRockFind() const {
-    if (mTalkDemoMoonRock)
-        return mTalkDemoMoonRock->isEnableStartMoonRockFindDemo();
-    return false;
+    return mTalkDemoMoonRock && mTalkDemoMoonRock->isEnableStartMoonRockFindDemo();
 }
 
 bool CapManHeroDemoDirector::isExistTalkDemoAfterMoonRockBreakDemo() const {
-    if (mTalkDemoMoonRock)
-        return mTalkDemoMoonRock->isEnableStartAfterBreakMoonRockDemo();
-    return false;
+    return mTalkDemoMoonRock && mTalkDemoMoonRock->isEnableStartAfterBreakMoonRockDemo();
 }
 
 void CapManHeroDemoDirector::preEventFromSceneFirstMoonGet(const char* eventName) {
