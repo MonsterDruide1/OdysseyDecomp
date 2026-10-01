@@ -9,7 +9,7 @@ public:
     ~NpcStateReactionParam();
 
     sead::FixedSafeString<64> mReactionAnim;
-    sead::FixedSafeString<64> mReactionEndAnim;
+    sead::FixedSafeString<64> mCapReactionAnim;
 };
 
 static_assert(sizeof(NpcStateReactionParam) == 0xB0);

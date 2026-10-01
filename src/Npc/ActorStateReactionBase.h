@@ -19,3 +19,5 @@ public:
                                       al::HitSensor* self) = 0;
     virtual bool isCapReaction() const = 0;
 };
+
+static_assert(sizeof(ActorStateReactionBase) == 0x20);

@@ -33,15 +33,15 @@ NERVE_IMPL(Poetter, Wait);
 NERVE_IMPL(Poetter, EventScare);
 NERVE_IMPL(Poetter, Reaction);
 NERVE_IMPL(Poetter, Event);
+
 NERVES_MAKE_NOSTRUCT(Poetter, Wait, EventScare, Reaction, Event);
 }  // namespace
 
-static NpcStateReactionParam sReactionParam("Reaction", "ReactionCap");
-static NpcEventStateScareActionParam sScareParam("Scared");
+static const NpcStateReactionParam sReactionParam("Reaction", "ReactionCap");
+static const NpcEventStateScareActionParam sScareParam("Scared");
 
 Poetter::Poetter(const char* name) : al::LiveActor(name) {}
 
-// NON_MATCHING: regalloc caches "PoetterHome" in x23; vtable offset 0x20 vs 0x18
 void Poetter::init(const al::ActorInitInfo& initInfo) {
     al::initActor(this, initInfo);
     al::initNerve(this, &Wait, 4);
@@ -52,19 +52,17 @@ void Poetter::init(const al::ActorInitInfo& initInfo) {
     bool isPlaceWithHome = true;
     al::tryGetArg(&isPlaceWithHome, initInfo, "IsPlaceWithHome");
     if (isPlaceWithHome) {
-        auto* home = new al::FixMapParts("PoetterHome");
-        mHome = home;
-        al::initChildActorWithArchiveNameWithPlacementInfo(home, initInfo, "PoetterHome", nullptr);
-        mHome->makeActorAlive();
-        sead::Vector3f pos = al::getTrans(mHome) + sead::Vector3f::ey * 82.0f;
-        al::resetPosition(this, pos);
+        mHome = new al::FixMapParts("ホーム");
+        al::initChildActorWithArchiveNameWithPlacementInfo(mHome, initInfo, "PoetterHome", nullptr);
+        mHome->appear();
+
+        al::resetPosition(this, al::getTrans(mHome) + sead::Vector3f::ey * 82.0f);
     }
 
-    auto* scareState = new NpcEventStateScare(this, &sScareParam);
-    mScareState = scareState;
+    mScareState = new NpcEventStateScare(this, &sScareParam);
     mReactionState = NpcStateReaction::createForHuman(this, &sReactionParam);
-    al::initNerveState(this, mScareState, &EventScare, u8"イベント中の怖がり");
-    al::initNerveState(this, mReactionState, &Reaction, u8"リアクション");
+    al::initNerveState(this, mScareState, &EventScare, "イベント中の怖がり");
+    al::initNerveState(this, mReactionState, &Reaction, "リアクション");
 
     mMessageSystem = initInfo.layoutInitInfo->getMessageSystem();
     mEventFlowExecutor = rs::initEventFlow(this, initInfo, nullptr, nullptr);
@@ -74,17 +72,12 @@ void Poetter::init(const al::ActorInitInfo& initInfo) {
     rs::initEventMovementTurnSeparate(mEventFlowExecutor, initInfo);
     rs::startEventFlow(mEventFlowExecutor, "Wait");
 
-    auto* tagHolder = al::initMessageTagDataHolder(1);
+    al::MessageTagDataHolder* tagHolder = al::initMessageTagDataHolder(1);
     al::registerMessageTagDataString(tagHolder, "MoonName", &mHintMessage);
     rs::initEventMessageTagDataHolder(mEventFlowExecutor, tagHolder);
 
-    {
-        GameDataHolderAccessor accessor(this);
-        if (GameDataFunction::isMainStage(accessor)) {
-            GameDataHolderAccessor accessor2(this);
-            GameDataFunction::setPoetterTrans(accessor2, al::getTrans(this));
-        }
-    }
+    if (GameDataFunction::isMainStage(this))
+        GameDataFunction::setPoetterTrans(this, al::getTrans(this));
 
     mJointSpringHolder = al::JointSpringControllerHolder::tryCreateAndInitJointControllerKeeper(
         this, "InitJointSpringCtrl");
@@ -94,28 +87,29 @@ void Poetter::init(const al::ActorInitInfo& initInfo) {
 void Poetter::control() {}
 
 void Poetter::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isSensorEye(self)) {
-        if (mEventFlowExecutor)
-            rs::sendMsgEventFlowScareCheck(other, self, mEventFlowExecutor);
-    } else {
+    if (!al::isSensorEye(self)) {
         rs::attackSensorNpcCommon(self, other);
+        return;
     }
+
+    if (mEventFlowExecutor)
+        rs::sendMsgEventFlowScareCheck(other, self, mEventFlowExecutor);
 }
 
-bool Poetter::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) {
-    if (rs::isMsgPlayerDisregardHomingAttack(msg))
+bool Poetter::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::HitSensor* self) {
+    if (rs::isMsgPlayerDisregardHomingAttack(message) ||
+        rs::isMsgPlayerDisregardTargetMarker(message))
         return true;
-    if (rs::isMsgPlayerDisregardTargetMarker(msg))
-        return true;
-    if (mReactionState->receiveMsg(msg, other, self)) {
+
+    if (mReactionState->receiveMsg(message, other, self)) {
         if (!al::isNerve(this, &Reaction))
             al::setNerve(this, &Reaction);
         return true;
     }
-    return mReactionState->receiveMsgNoReaction(msg, other, self);
+
+    return mReactionState->receiveMsgNoReaction(message, other, self);
 }
 
-// NON_MATCHING: stack layout (0x20 vs 0x30 locals), count variable placement, b.ge vs b.pl
 void Poetter::exeWait() {
     if (al::isFirstStep(this)) {
         mCapWatchCount = 0;
@@ -130,11 +124,9 @@ void Poetter::exeWait() {
     }
 
     if (rs::updateEventFlow(mEventFlowExecutor)) {
-        GameDataHolderAccessor accessor(this);
-        s32 worldId = GameDataFunction::getCurrentWorldId(accessor);
+        s32 worldId = GameDataFunction::getCurrentWorldId(GameDataHolderAccessor(this));
         if (worldId < 0) {
-            rs::startEventFlow(mEventFlowExecutor, "TalkNoMore");
-            al::setNerve(this, &Event);
+            startTalkNoMore();
             return;
         }
 
@@ -142,94 +134,85 @@ void Poetter::exeWait() {
         s32 unlockableCount;
         rs::calcShineIndexTableNameUnlockable(indices, &unlockableCount, this);
 
-        s32 unlockedIndex;
-        if (unlockableCount < 1) {
-            unlockedIndex = -1;
-        } else {
+        s32 unlockedIndex = -1;
+        if (unlockableCount > 0) {
             unlockedIndex = indices[al::getRandom(0, unlockableCount)];
             if (!rs::tryUnlockShineName(this, unlockedIndex))
                 unlockedIndex = -1;
         }
 
-        s32 availableCount;
-        rs::calcShineIndexTableNameAvailable(indices, &availableCount, this);
+        s32 availableNameCount;
+        rs::calcShineIndexTableNameAvailable(indices, &availableNameCount, this);
 
-        if (availableCount < 0) {
+        if (availableNameCount < 0) {
             makeActorDead();
             return;
         }
 
-        if (availableCount == 0) {
-            rs::startEventFlow(mEventFlowExecutor, "TalkNoMore");
-            al::setNerve(this, &Event);
+        if (availableNameCount == 0) {
+            startTalkNoMore();
             return;
         }
 
-        s32 index = mHintIndex;
-        if (index >= availableCount || index >= 3) {
-            index = 0;
+        if (mHintIndex >= availableNameCount || mHintIndex >= 3)
             mHintIndex = 0;
-        }
 
         if (unlockedIndex >= 0) {
-            for (s32 i = 0; i < availableCount; i++) {
+            for (s32 i = 0; i < availableNameCount; i++) {
                 if (indices[i] == unlockedIndex) {
                     mHintIndex = i;
-                    index = i;
                     break;
                 }
             }
         }
 
-        mHintMessage = GameDataFunction::tryFindShineMessage(this, this, worldId, indices[index]);
+        mHintMessage =
+            GameDataFunction::tryFindShineMessage(this, this, worldId, indices[mHintIndex]);
         rs::startEventFlow(mEventFlowExecutor, "TalkShow");
         al::setNerve(this, &Event);
         return;
     }
 
+    bool isCapInSight = false;
     sead::Vector3f capPos;
-    if (!rs::tryGetFlyingCapPos(&capPos, this)) {
-        mCapWatchCount = 0;
-        goto checkRolling;
-    }
-
-    {
-        const sead::Vector3f& trans = al::getTrans(this);
-        sead::Vector3f diff = {capPos.x - trans.x, capPos.y - trans.y, capPos.z - trans.z};
-        if (diff.x * diff.x + diff.y * diff.y + diff.z * diff.z >= 422500.0f) {
-            mCapWatchCount = 0;
-            goto checkRolling;
-        }
-
-        sead::Vector3f front = al::getFront(this);
-        if (al::calcAngleDegree(front, diff) < 80.0f) {
-            if (mCapWatchCount++ >= 49) {
-                if (al::isActionPlaying(this, "Wait") || al::isActionPlaying(this, "RollingEnd"))
-                    al::startAction(this, "RollingStart");
-                else if (al::isActionPlaying(this, "RollingStart") && al::isActionEnd(this))
-                    al::startAction(this, "Rolling");
-                goto checkYawn;
-            }
+    if (rs::tryGetFlyingCapPos(&capPos, this)) {
+        sead::Vector3f capDiff = capPos - al::getTrans(this);
+        if (capDiff.squaredLength() < 422500.0f) {
+            sead::Vector3f front = al::getFront(this);
+            isCapInSight = al::calcAngleDegree(front, capDiff) < 80.0f;
+            if (!isCapInSight)
+                mCapWatchCount = 0;
         } else {
             mCapWatchCount = 0;
         }
+    } else {
+        mCapWatchCount = 0;
     }
 
-checkRolling:
-    if (al::isActionPlaying(this, "Rolling") || al::isActionPlaying(this, "RollingStart"))
-        al::startAction(this, "RollingEnd");
-    else if (al::isActionPlaying(this, "RollingEnd") && al::isActionEnd(this))
-        al::startAction(this, "Wait");
+    if (isCapInSight && mCapWatchCount++ >= 49) {
+        if (al::isActionPlaying(this, "Wait") || al::isActionPlaying(this, "RollingEnd"))
+            al::startAction(this, "RollingStart");
+        else if (al::isActionPlaying(this, "RollingStart") && al::isActionEnd(this))
+            al::startAction(this, "Rolling");
+    } else {
+        if (al::isActionPlaying(this, "Rolling") || al::isActionPlaying(this, "RollingStart"))
+            al::startAction(this, "RollingEnd");
+        else if (al::isActionPlaying(this, "RollingEnd") && al::isActionEnd(this))
+            al::startAction(this, "Wait");
+    }
 
-checkYawn:
     if (al::isActionPlaying(this, "Yawn") && al::isActionEnd(this)) {
         al::startAction(this, "Wait");
-    } else if (al::isActionPlaying(this, "Wait")) {
-        if (--mYawnWait <= 0)
-            al::startAction(this, "Yawn");
-    } else {
-        mYawnWait = al::getRandom(600, 6000);
+        return;
     }
+
+    if (!al::isActionPlaying(this, "Wait")) {
+        resetYawnWait();
+        return;
+    }
+
+    if (--mYawnWait <= 0)
+        al::startAction(this, "Yawn");
 }
 
 void Poetter::startTalkNoMore() {
@@ -256,8 +239,4 @@ void Poetter::exeEventScare() {
 
 void Poetter::exeReaction() {
     al::updateNerveStateAndNextNerve(this, &Wait);
-}
-
-const al::MessageSystem* Poetter::getMessageSystem() const {
-    return mMessageSystem;
 }

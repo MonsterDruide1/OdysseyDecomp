@@ -31,13 +31,12 @@ public:
     void exeReaction();
     void exeCapReaction();
 
-    void setCapReaction(bool isCapReaction) { mIsCapReaction = isCapReaction; }
-
+private:
     const NpcStateReactionParam* mParam;
-    bool mIsCapReaction;
-    bool _29;
+    bool mIsCapReflectInvalid;
+    bool mIsHuman;
     bool _2a;
-    bool mWasClippingInvalid;
+    bool mIsClippingInvalidBeforeReaction;
 };
 
 static_assert(sizeof(NpcStateReaction) == 0x30);

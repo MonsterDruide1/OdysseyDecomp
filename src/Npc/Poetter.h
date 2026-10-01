@@ -8,7 +8,6 @@ class EventFlowExecutor;
 class FixMapParts;
 class JointSpringControllerHolder;
 class MessageSystem;
-class MessageTagDataHolder;
 }  // namespace al
 
 class NpcEventStateScare;
@@ -21,10 +20,11 @@ public:
 
     void init(const al::ActorInitInfo& initInfo) override;
     void control() override;
-    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
+                    al::HitSensor* self) override;
     void attackSensor(al::HitSensor* self, al::HitSensor* other) override;
 
-    const al::MessageSystem* getMessageSystem() const override;
+    const al::MessageSystem* getMessageSystem() const override { return mMessageSystem; };
 
     void exeWait();
     void exeEvent();
