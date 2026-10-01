@@ -23839,74 +23839,74 @@ Demo/CapManHeroDemoDirector.o:
   - offset: 0x0d10b4
     size: 4
     label: _ZN22CapManHeroDemoFunction17capManHeroControlEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d10b8
     size: 28
     label:
     - _ZN22CapManHeroDemoDirectorC1Ev
     - _ZN22CapManHeroDemoDirectorC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d10d4
     size: 264
     label: _ZN22CapManHeroDemoDirector4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d11dc
     size: 260
     label: _ZN22CapManHeroDemoFunction20createDemoCapManHeroEPKcRKN2al13ActorInitInfoES1_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d12e0
     size: 8
     label: _ZNK22CapManHeroDemoDirector9isEndDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d12e8
     size: 16
     label: _ZNK22CapManHeroDemoDirector25isExistTalkDemoStageStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d12f8
     size: 16
     label: _ZNK22CapManHeroDemoDirector27isExistTalkDemoMoonRockFindEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1308
     size: 16
     label: _ZNK22CapManHeroDemoDirector37isExistTalkDemoAfterMoonRockBreakDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1318
     size: 16
     label: _ZN22CapManHeroDemoDirector29preEventFromSceneFirstMoonGetEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1328
     size: 16
     label: _ZN22CapManHeroDemoDirector25startTalkDemoFirstMoonGetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1338
     size: 12
     label: _ZN22CapManHeroDemoDirector17startTalkDemoCoreEP19StageTalkDemoNpcCap
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1344
     size: 16
     label: _ZN22CapManHeroDemoDirector23startTalkDemoStageStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1354
     size: 16
     label: _ZN22CapManHeroDemoDirector25startTalkDemoMoonRockFindEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1364
     size: 16
     label: _ZN22CapManHeroDemoDirector35startTalkDemoAfterMoonRockBreakDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1374
     size: 4
     label: _ZN22CapManHeroDemoFunction42startCapManHeroCommonSettingAfterShowModelEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0d1378
     size: 12
     label: _ZNK22CapManHeroDemoDirector15getSceneObjNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0d1384
     size: 4
     label: _ZN22CapManHeroDemoDirectorD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Demo/DemoActorCapManHero.o:
   '.text':

@@ -47,6 +47,7 @@ void invalidateNpcJointLookAtController(NpcJointLookAtController*);
 void validateNpcJointLookAtController(NpcJointLookAtController*);
 void requestLookAtTargetTrans(NpcJointLookAtController*, const sead::Vector3f&);
 void initCapWorldNpcTail(al::LiveActor*);
+void initCapWorldNpcTailJointController(al::LiveActor*);
 bool tryStartForestManFlowerAnim(al::LiveActor*);
 bool tryUpdateMaterialCodeByFloorCollisionOnArrow(al::LiveActor*);
 void tryAttachConnectorToCollisionTFSV(al::LiveActor*, al::MtxConnector*, sead::Quatf*);
