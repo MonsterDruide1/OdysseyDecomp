@@ -21,10 +21,10 @@ public:
     void appear() override;
     void kill() override;
 
-    bool receiveMsg(const al::SensorMsg*, al::HitSensor* other, al::HitSensor* self) override;
-    bool receiveMsgWithoutTrample(const al::SensorMsg*, al::HitSensor* other,
+    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::HitSensor* self) override;
+    bool receiveMsgWithoutTrample(const al::SensorMsg* msg, al::HitSensor* other,
                                   al::HitSensor* self) override;
-    bool receiveMsgNoReaction(const al::SensorMsg*, al::HitSensor* other,
+    bool receiveMsgNoReaction(const al::SensorMsg* msg, al::HitSensor* other,
                               al::HitSensor* self) override;
     bool isCapReaction() const override;
 
