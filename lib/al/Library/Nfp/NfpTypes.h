@@ -1,7 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <nn/nfp/nfp_types.h>
+#include <nn/nfp/nfp_Types.h>
 
 namespace al {
 struct NfpCharacterId {
