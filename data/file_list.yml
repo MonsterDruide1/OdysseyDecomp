@@ -93276,55 +93276,55 @@ ModeBalloon/FriendsProfileDataHolder.o:
   - offset: 0x355380
     size: 68
     label: _ZN24FriendsProfileDataHolder6createERKN2al14LayoutInitInfoEiN2nn7friends9ImageSizeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3553c4
     size: 84
     label: _ZN24FriendsProfileDataHolder6createERKN2al13ActorInitInfoEiN2nn7friends9ImageSizeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x355418
     size: 68
     label: _ZN24FriendsProfileDataHolder6createEiN2nn7friends9ImageSizeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35545c
     size: 144
     label:
     - _ZN18FriendsProfileDataC1Ev
     - _ZN18FriendsProfileDataC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3554ec
     size: 48
     label: _ZNK18FriendsProfileData18isValidTextureDataEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35551c
     size: 32
     label: _ZN18FriendsProfileData5clearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35553c
     size: 568
     label:
     - _ZN24FriendsProfileDataHolderC1EiN2nn7friends9ImageSizeEPN3agl11DrawContextE
     - _ZN24FriendsProfileDataHolderC2EiN2nn7friends9ImageSizeEPN3agl11DrawContextE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x355774
     size: 92
     label: _ZN24FriendsProfileDataHolder15findProfileDataEPK27IUseFriendProfileDataHolder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3557d0
     size: 60
     label: _ZNK24FriendsProfileDataHolder7tryFindEm
-    status: NotDecompiled
+    status: Matching
   - offset: 0x35580c
     size: 152
     label: _ZN24FriendsProfileDataHolder17tryAddProfileDataEPK27IUseFriendProfileDataHolder
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3558a4
     size: 108
     label: _ZN24FriendsProfileDataHolder6tryAddEm
-    status: NotDecompiled
+    status: Matching
   - offset: 0x355910
     size: 68
     label: _ZN24FriendsProfileDataHolder8clearAllEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x355954
     size: 16
     label:
@@ -93344,22 +93344,22 @@ ModeBalloon/FriendsProfileDataHolder.o:
   - offset: 0x355af4
     size: 8
     label: _ZNK18FriendsProfileData15isValidNickNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x355afc
     size: 48
     label: _ZNK18FriendsProfileData11getNickNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x355b2c
     size: 8
     label: _ZNK18FriendsProfileData14getTextureDataEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x355b34
     size: 8
     label: _ZNK18FriendsProfileData14getTextureInfoEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x355b3c
     size: 84

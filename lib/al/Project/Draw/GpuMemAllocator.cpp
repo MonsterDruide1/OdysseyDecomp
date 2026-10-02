@@ -31,9 +31,8 @@ void GpuMemAllocator::createMemory(const char* name, s32 size, sead::Heap* heap,
         return;
 
     Block* block = new Block;
-    s64 longSize = size;
-    agl::GPUMemBlockT<u8>* memBlock = new (heap) agl::GPUMemBlockT<u8>;
-    memBlock->allocBuffer_(longSize, heap, alignment, attribute);
+    agl::GPUMemBlockT<u8>* memBlock =
+        agl::GPUMemBlockT<u8>::create(size, heap, alignment, attribute);
     block->addr = agl::GPUMemAddrBase(*memBlock, 0);
     block->memorySize = size;
     block->name.format("%s", name);
@@ -54,9 +53,8 @@ void GpuMemAllocator::createMemoryWithTmp(const char* name, s32 size, s32 tmpSiz
                                           s32 alignment, agl::MemoryAttribute attribute) {
     createMemory(name, size, heap, alignment, attribute);
     Block* block = findGpuMemInfo(name);
-    s64 longSize = tmpSize;
-    agl::GPUMemBlockT<u8>* memBlock = new (heap) agl::GPUMemBlockT<u8>;
-    memBlock->allocBuffer_(longSize, heap, alignment, attribute);
+    agl::GPUMemBlockT<u8>* memBlock =
+        agl::GPUMemBlockT<u8>::create(tmpSize, heap, alignment, attribute);
     block->tmpAddr = agl::GPUMemAddrBase(*memBlock, 0);
     block->tmpMemorySize = tmpSize;
 }
