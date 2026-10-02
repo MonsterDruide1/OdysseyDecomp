@@ -56,6 +56,7 @@ void EventFlowNodeCapManHeroTalkReturn::exeReturn() {
 
     f32 frameMax = al::getActionFrameMax(getActor(), "DemoTalkCapManHeroDisappear");
     f32 rate = al::getActionFrame(getActor()) / frameMax;
+    // NOTE: different than any sead::Mathf::clamp variants
     if (rate > 1.0f)
         rate = 1.0f;
     else if (rate < 0.0f)
