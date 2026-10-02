@@ -23,15 +23,16 @@ public:
 
     YoshiFruitWatcher();
 
-    const char* getSceneObjName() const override;
+    const char* getSceneObjName() const override { return "ヨッシーフルーツ監視者"; }
+
     void initAfterPlacementSceneObj(const al::ActorInitInfo& info) override;
+    void control() override;
 
     void registerShineHolder(YoshiFruitShineHolder* shineHolder);
     bool registerFruit(al::LiveActor* fruit, SaveObjInfo* saveObjInfo);
     void noticeCurrentHackYoshi(Yoshi* yoshi);
     void noticeGetFruit(al::LiveActor* fruit, SaveObjInfo* saveObjInfo);
     void saveGetFruit();
-    void control() override;
 
     void exeWait();
     void exeGaugeAppear();

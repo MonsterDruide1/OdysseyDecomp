@@ -18,7 +18,6 @@
 #include "Item/YoshiFruitShineHolder.h"
 #include "Player/Yoshi.h"
 #include "System/GameDataUtil.h"
-#include "System/SaveObjInfo.h"
 #include "Util/DemoUtil.h"
 #include "Util/PlayerUtil.h"
 
@@ -34,6 +33,14 @@ NERVE_IMPL(YoshiFruitWatcher, DemoShine);
 NERVES_MAKE_NOSTRUCT(YoshiFruitWatcher, DemoRequest, DemoGauge, DemoShine, Wait, GaugeAppear,
                      GaugeEnd, GaugeWait);
 
+static inline void updateGaugePos(const al::LiveActor* hostActor, al::LayoutActor* gaugeLayout) {
+    sead::Vector3f worldPos = {0.0f, 0.0f, 0.0f};
+    rs::calcPlayerFollowLayoutWorldPos(&worldPos, hostActor);
+    sead::Vector2f layoutPos = {0.0f, 0.0f};
+    al::calcLayoutPosFromWorldPos(&layoutPos, hostActor, worldPos);
+    al::setLocalTrans(gaugeLayout, layoutPos);
+}
+
 }  // namespace
 
 YoshiFruitWatcher::YoshiFruitWatcher() : al::LiveActor("ヨッシーフルーツ監視者") {
@@ -45,20 +52,14 @@ void YoshiFruitWatcher::initAfterPlacementSceneObj(const al::ActorInitInfo& info
     al::initActorSceneInfo(this, info);
     al::initExecutorWatchObj(this, info);
     al::initNerve(this, &Wait, 0);
-    // The original dispatches the scene-name virtual here before creating the gauge layout.
     getSceneObjName();
 
     mGaugeLayout = new al::LayoutActor("ヨッシーフルーツゲージ");
-    al::initLayoutActor(mGaugeLayout, al::getLayoutInitInfo(info), "GaugeYoshi", nullptr);
+    al::initLayoutActor(mGaugeLayout, al::getLayoutInitInfo(info), "GaugeYoshi");
 
-    if (mCurrentHackYoshi)
-        mShineHolder->updateHintPos(al::getTrans(mCurrentHackYoshi));
+    YoshiFruitWatcher::control();
 
     makeActorAlive();
-}
-
-const char* YoshiFruitWatcher::getSceneObjName() const {
-    return "ヨッシーフルーツ監視者";
 }
 
 void YoshiFruitWatcher::registerShineHolder(YoshiFruitShineHolder* shineHolder) {
@@ -108,16 +109,9 @@ void YoshiFruitWatcher::noticeGetFruit(al::LiveActor* fruit, SaveObjInfo* saveOb
 }
 
 void YoshiFruitWatcher::saveGetFruit() {
-    s32 lastIndex = mGetFruitSaveInfos.size() - 1;
-    if (lastIndex >= 0)
-        for (u64 i = 0;; i++) {
-            SaveObjInfo* saveObjInfo = static_cast<u32>(mGetFruitSaveInfos.size()) <= i ?
-                                           nullptr :
-                                           mGetFruitSaveInfos.data()[i];
-            rs::getYoshiFruit(saveObjInfo);
-            if (lastIndex == static_cast<s32>(i))
-                break;
-        }
+    s32 count = mGetFruitSaveInfos.size();
+    for (s32 i = 0; i < count; i++)
+        rs::getYoshiFruit(mGetFruitSaveInfos[i]);
 
     mGetFruitSaveInfos.clear();
 }
@@ -131,33 +125,21 @@ void YoshiFruitWatcher::exeWait() {}
 
 void YoshiFruitWatcher::exeGaugeAppear() {
     if (al::isFirstStep(this)) {
-        al::startAction(mGaugeLayout, "Appear", nullptr);
+        al::startAction(mGaugeLayout, "Appear");
         al::appearLayoutIfDead(mGaugeLayout);
     }
 
-    al::LayoutActor* gaugeLayout = mGaugeLayout;
-    const al::LiveActor* hostActor = this;
-    sead::Vector3f worldPos = {0.0f, 0.0f, 0.0f};
-    rs::calcPlayerFollowLayoutWorldPos(&worldPos, hostActor);
-    sead::Vector2f layoutPos = {0.0f, 0.0f};
-    al::calcLayoutPosFromWorldPos(&layoutPos, hostActor, worldPos);
-    al::setLocalTrans(gaugeLayout, layoutPos);
+    updateGaugePos(this, mGaugeLayout);
 
-    if (al::isActionEnd(mGaugeLayout, nullptr))
+    if (al::isActionEnd(mGaugeLayout))
         al::setNerve(this, &GaugeWait);
 }
 
 void YoshiFruitWatcher::exeGaugeWait() {
     if (al::isFirstStep(this))
-        al::startAction(mGaugeLayout, "Wait", nullptr);
+        al::startAction(mGaugeLayout, "Wait");
 
-    al::LayoutActor* gaugeLayout = mGaugeLayout;
-    const al::LiveActor* hostActor = this;
-    sead::Vector3f worldPos = {0.0f, 0.0f, 0.0f};
-    rs::calcPlayerFollowLayoutWorldPos(&worldPos, hostActor);
-    sead::Vector2f layoutPos = {0.0f, 0.0f};
-    al::calcLayoutPosFromWorldPos(&layoutPos, hostActor, worldPos);
-    al::setLocalTrans(gaugeLayout, layoutPos);
+    updateGaugePos(this, mGaugeLayout);
 
     if (!al::isLessStep(this, 120))
         al::setNerve(this, &DemoRequest);
@@ -165,17 +147,11 @@ void YoshiFruitWatcher::exeGaugeWait() {
 
 void YoshiFruitWatcher::exeGaugeEnd() {
     if (al::isFirstStep(this))
-        al::startAction(mGaugeLayout, "End", nullptr);
+        al::startAction(mGaugeLayout, "End");
 
-    al::LayoutActor* gaugeLayout = mGaugeLayout;
-    const al::LiveActor* hostActor = this;
-    sead::Vector3f worldPos = {0.0f, 0.0f, 0.0f};
-    rs::calcPlayerFollowLayoutWorldPos(&worldPos, hostActor);
-    sead::Vector2f layoutPos = {0.0f, 0.0f};
-    al::calcLayoutPosFromWorldPos(&layoutPos, hostActor, worldPos);
-    al::setLocalTrans(gaugeLayout, layoutPos);
+    updateGaugePos(this, mGaugeLayout);
 
-    if (al::isActionEnd(mGaugeLayout, nullptr)) {
+    if (al::isActionEnd(mGaugeLayout)) {
         mGaugeLayout->kill();
         al::setNerve(this, &Wait);
     }
@@ -188,24 +164,16 @@ void YoshiFruitWatcher::exeDemoRequest() {
 
 void YoshiFruitWatcher::exeDemoGauge() {
     if (al::isFirstStep(this)) {
-        al::startAction(mGaugeLayout, "Complete", nullptr);
+        al::startAction(mGaugeLayout, "Complete");
         al::appearLayoutIfDead(mGaugeLayout);
 
         if (mCurrentHackYoshi)
             mCurrentHackYoshi->startFruitShineGetDemo();
     }
 
-    {
-        const al::LiveActor* hostActor = this;
-        al::LayoutActor* gaugeLayout = mGaugeLayout;
-        sead::Vector3f worldPos = {0.0f, 0.0f, 0.0f};
-        rs::calcPlayerFollowLayoutWorldPos(&worldPos, this);
-        sead::Vector2f layoutPos = {0.0f, 0.0f};
-        al::calcLayoutPosFromWorldPos(&layoutPos, hostActor, worldPos);
-        al::setLocalTrans(gaugeLayout, layoutPos);
-    }
+    updateGaugePos(this, mGaugeLayout);
 
-    if (!al::isActionEnd(mGaugeLayout, nullptr))
+    if (!al::isActionEnd(mGaugeLayout))
         return;
 
     sead::Vector3f playerPos = rs::getPlayerPos(this);
