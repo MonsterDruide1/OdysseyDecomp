@@ -3,8 +3,8 @@
 #include "Library/LiveActor/LiveActor.h"
 
 namespace al {
-class SimpleAudioUser;
 struct ActorInitInfo;
+class SimpleAudioUser;
 }  // namespace al
 
 class CageShine : public al::LiveActor {
