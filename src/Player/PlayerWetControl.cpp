@@ -17,7 +17,7 @@ PlayerWetControl::PlayerWetControl(const al::LiveActor* player, al::LiveActor* m
 }
 
 bool PlayerWetControl::isWet() const {
-    return mWetCounter > 179 || mIsInWetArea;
+    return mWetCounter >= 180 || mIsInWetArea;
 }
 
 void PlayerWetControl::reset() {
