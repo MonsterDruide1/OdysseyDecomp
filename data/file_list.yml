@@ -129595,55 +129595,55 @@ Player/PlayerWetControl.o:
     label:
     - _ZN16PlayerWetControlC1EPKN2al9LiveActorEPS1_PK17PlayerAreaChecker
     - _ZN16PlayerWetControlC2EPKN2al9LiveActorEPS1_PK17PlayerAreaChecker
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492e5c
     size: 36
     label: _ZNK16PlayerWetControl5isWetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492e80
     size: 116
     label: _ZN16PlayerWetControl5resetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x492ef4
     size: 268
     label: _ZN16PlayerWetControl20updateModelRoughnessEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493000
     size: 56
     label: _ZN16PlayerWetControl13recordInWaterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493038
     size: 12
     label: _ZN16PlayerWetControl9recordWetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493044
     size: 68
     label: _ZN16PlayerWetControl18recordWaterSurfaceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493088
     size: 12
     label: _ZN16PlayerWetControl21recordHeavyLandPuddleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493094
     size: 48
     label: _ZN16PlayerWetControl19recordPuddleRollingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4930c4
     size: 48
     label: _ZN16PlayerWetControl21recordForestWaterFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4930f4
     size: 48
     label: _ZN16PlayerWetControl17recordWaterSplashEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493124
     size: 48
     label: _ZN16PlayerWetControl17recordWetBySensorEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x493154
     size: 496
     label: _ZN16PlayerWetControl6updateEv
-    status: NotDecompiled
+    status: Matching
 Player/PlayerWhip.o:
   '.text':
   - offset: 0x493344
