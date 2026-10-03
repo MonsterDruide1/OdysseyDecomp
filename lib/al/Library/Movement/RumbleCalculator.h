@@ -14,6 +14,10 @@ public:
     void calc();
     void reset();
 
+    bool isActive() const { return mFrame < mMaxFrame; }
+
+    const sead::Vector3f& getOutput() const { return mOut; }
+
     virtual void calcValues(sead::Vector3f* out, const sead::Vector3f& in) = 0;
 
 protected:
@@ -29,12 +33,12 @@ class RumbleCalculatorCosAddOneMultLinear : public RumbleCalculator {
 public:
     RumbleCalculatorCosAddOneMultLinear(f32 frequency, f32 angleOffset, f32 amplitude,
                                         u32 maxFrame);
-    void calcValues(sead::Vector3f* out, const sead::Vector3f& in);
+    void calcValues(sead::Vector3f* out, const sead::Vector3f& in) override;
 };
 
 class RumbleCalculatorCosMultLinear : public RumbleCalculator {
 public:
     RumbleCalculatorCosMultLinear(f32 frequency, f32 angleOffset, f32 amplitude, u32 maxFrame);
-    void calcValues(sead::Vector3f* out, const sead::Vector3f& in);
+    void calcValues(sead::Vector3f* out, const sead::Vector3f& in) override;
 };
 }  // namespace al
