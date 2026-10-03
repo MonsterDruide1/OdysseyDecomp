@@ -27186,7 +27186,7 @@ Enemy/ByugoStateHack.o:
   - offset: 0x0ef418
     size: 392
     label: _ZN14ByugoStateHack11exeBlowWideEv
-    status: Wip
+    status: Matching
   - offset: 0x0ef5a0
     size: 176
     label: _ZN14ByugoStateHack10exeBlowEndEv

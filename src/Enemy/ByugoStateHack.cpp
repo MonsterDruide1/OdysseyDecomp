@@ -2,7 +2,6 @@
 
 #include <math/seadVector.h>
 
-#include "Library/Camera/ActorCameraTarget.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/CollisionPartsKeeperUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -18,6 +17,7 @@
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
 
+#include "Enemy/ByugoHackCameraTarget.h"
 #include "Enemy/EnemyStateHackStart.h"
 #include "Util/CameraUtil.h"
 #include "Util/PlayerHackFunction.h"
@@ -25,12 +25,25 @@
 #include "Util/SensorMsgFunction.h"
 
 namespace {
-class ByugoHackCameraTarget : public al::ActorCameraTarget {
-public:
-    ByugoHackCameraTarget(const al::LiveActor* actor) : ActorCameraTarget(actor, 200.0f, nullptr) {}
+static inline void turnToHackMoveDir(sead::Vector3f* moveDir, al::LiveActor* const* actor,
+                                     const IUsePlayerHack* playerHack, f32 turnSpeed) {
+    rs::calcHackerMoveDir(moveDir, playerHack, sead::Vector3f::ey);
+    al::turnToDirection(*actor, *moveDir, turnSpeed);
+}
 
-    f32 getRequestDistance() const override { return 2400.0f; }
-};
+static inline sead::Vector3f calcBlowRippleOffset(s32 step, s32 interval, f32 distance) {
+    s32 rippleStep = step % interval;
+    f32 rippleStepF = rippleStep;
+    return sead::Vector3f(0.0f, -350.0f, distance / interval * rippleStepF);
+}
+
+static inline void addBlowRipple(const al::LiveActor* actor, const sead::Vector3f& ripplePos,
+                                 s32 step, s32 interval, f32 maxRange, f32 blur) {
+    s32 rippleStep = step % interval;
+    f32 intervalF = interval;
+    f32 rippleRange = al::lerpValue(0.0f, maxRange, rippleStep / intervalF);
+    al::tryAddRippleRandomBlur(actor, ripplePos, blur, rippleRange, 30.0f);
+}
 
 NERVE_IMPL(ByugoStateHack, Wait);
 NERVE_IMPL(ByugoStateHack, StartDemo);
@@ -92,9 +105,8 @@ bool ByugoStateHack::receiveMsgHackStart(const al::SensorMsg* msg, al::HitSensor
 
 bool ByugoStateHack::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other,
                                 al::HitSensor* self) {
-    if (rs::tryReceiveMsgInitCapTargetAndSetCapTargetInfo(msg, mCapTargetInfo) ||
-        rs::isMsgEnableMapCheckPointWarp(msg) || rs::isMsgCapKeepLockOn(msg) ||
-        rs::isMsgCapStartLockOn(msg))
+    if (receiveMsgInitCapTargetInfo(msg) || rs::isMsgEnableMapCheckPointWarp(msg) ||
+        rs::isMsgCapKeepLockOn(msg) || rs::isMsgCapStartLockOn(msg))
         return true;
 
     if (rs::isMsgHackSyncDamageVisibility(msg)) {
@@ -114,38 +126,23 @@ bool ByugoStateHack::receiveMsgHackEnd(const al::SensorMsg* msg, al::HitSensor* 
         al::validateClipping(mActor);
 
         const sead::Vector3f trans = al::getTrans(mActor);
-        sead::Vector3f hitPos;
+        sead::Vector3f hitPos{0.0f, 0.0f, 0.0f};
         sead::Vector3f frontDir;
-        sead::Vector3f arrowStart;
-        sead::Vector3f offset;
-        hitPos.set(0.0f, 0.0f, 0.0f);
         al::calcFrontDir(&frontDir, mActor);
 
-        const al::IUseCollision* collision = mActor;
-        offset = sead::Vector3f::ey * 800.0f;
-        arrowStart = trans + offset * 0.5f;
-        offset *= 0.5f;
-
-        bool isHit = alCollisionUtil::getHitPosOnArrow(collision, &hitPos, arrowStart, offset,
-                                                       nullptr, nullptr);
-        IUsePlayerHack** playerHack = &mPlayerHack;
-        if (isHit) {
-            arrowStart = (trans + hitPos) * 0.5f;
-            rs::endHackFromTargetPos(playerHack, arrowStart, frontDir);
-        } else {
-            rs::endHackDir(playerHack, frontDir);
-        }
+        if (alCollisionUtil::getHitPosOnArrow(
+                mActor, &hitPos, trans + (sead::Vector3f::ey * 800.0f) * 0.5f,
+                (sead::Vector3f::ey * 800.0f) * 0.5f, nullptr, nullptr))
+            rs::endHackFromTargetPos(&mPlayerHack, (trans + hitPos) * 0.5f, frontDir);
+        else
+            rs::endHackDir(&mPlayerHack, frontDir);
 
         kill();
         return true;
     }
 
     if (rs::isMsgHackMarioDemo(msg) || rs::isMsgHackMarioDead(msg)) {
-        al::startMtpAnim(mActor, "HackOff");
-        al::startVisAnim(mActor, "HackOff");
-        al::validateClipping(mActor);
-        rs::endHack(&mPlayerHack);
-        kill();
+        forceEndHack();
         return true;
     }
 
@@ -166,7 +163,7 @@ f32 ByugoStateHack::calcHackBlowPowerRate() const {
     if (al::isNerve(this, &NrvByugoStateHack.Blow))
         return al::calcNerveRate(this, 20);
 
-    if (al::isNerve(this, &NrvByugoStateHack.BlowWide))
+    if (isWideBlow())
         return 1.0f;
 
     return 0.0f;
@@ -190,17 +187,8 @@ void ByugoStateHack::exeWait() {
     al::scaleVelocity(actor, 0.85f);
     calcMove();
 
-    if (rs::isTriggerHackSwing(mPlayerHack)) {
-        mIsWideBlow = true;
-        al::setNerve(this, &NrvByugoStateHack.BlowStart);
+    if (tryChangeNerveIfTriggerBlow())
         return;
-    }
-
-    if (rs::isTriggerHackAnyButton(mPlayerHack)) {
-        mIsWideBlow = false;
-        al::setNerve(this, &NrvByugoStateHack.BlowStart);
-        return;
-    }
 
     if (rs::isOnHackMoveStick(mPlayerHack))
         al::setNerve(this, &NrvByugoStateHack.Move);
@@ -250,17 +238,8 @@ void ByugoStateHack::exeMove() {
     rs::addHackActorAccelStick(actor, mPlayerHack, &moveDir, 2.2f, sead::Vector3f::ey);
     al::turnToDirection(actor, moveDir, 8.0f);
 
-    if (rs::isTriggerHackSwing(mPlayerHack)) {
-        mIsWideBlow = true;
-        al::setNerve(this, &NrvByugoStateHack.BlowStart);
+    if (tryChangeNerveIfTriggerBlow())
         return;
-    }
-
-    if (rs::isTriggerHackAnyButton(mPlayerHack)) {
-        mIsWideBlow = false;
-        al::setNerve(this, &NrvByugoStateHack.BlowStart);
-        return;
-    }
 
     if (rs::isHackerStopMove(actor, mPlayerHack, 10.0f))
         al::setNerve(this, &NrvByugoStateHack.Wait);
@@ -276,8 +255,7 @@ void ByugoStateHack::exeBlowStart() {
     calcMove();
 
     sead::Vector3f moveDir{0.0f, 0.0f, 0.0f};
-    rs::calcHackerMoveDir(&moveDir, mPlayerHack, sead::Vector3f::ey);
-    al::turnToDirection(actor, moveDir, 15.0f);
+    turnToHackMoveDir(&moveDir, &actor, mPlayerHack, 15.0f);
 
     if (al::isActionEnd(actor)) {
         if (mIsWideBlow)
@@ -300,19 +278,13 @@ void ByugoStateHack::exeBlow() {
     if (al::isLessEqualStep(this, 30))
         interval = 30;
 
-    s32 rippleStep = al::getNerveStep(this) % interval;
-    f32 rippleStepF = rippleStep;
     sead::Vector3f ripplePos;
     al::calcTransLocalOffset(&ripplePos, actor,
-                             sead::Vector3f(0.0f, -350.0f, 1500.0f / interval * rippleStepF));
-    rippleStep = al::getNerveStep(this) % interval;
-    f32 intervalF = interval;
-    f32 rippleRange = al::lerpValue(0.0f, 400.0f, rippleStep / intervalF);
-    al::tryAddRippleRandomBlur(actor, ripplePos, 0.25f, rippleRange, 30.0f);
+                             calcBlowRippleOffset(al::getNerveStep(this), interval, 1500.0f));
+    addBlowRipple(actor, ripplePos, al::getNerveStep(this), interval, 400.0f, 0.25f);
 
     sead::Vector3f moveDir{0.0f, 0.0f, 0.0f};
-    rs::calcHackerMoveDir(&moveDir, mPlayerHack, sead::Vector3f::ey);
-    al::turnToDirection(actor, moveDir, 2.0f);
+    turnToHackMoveDir(&moveDir, &actor, mPlayerHack, 2.0f);
 
     if (rs::isTriggerHackSwing(mPlayerHack)) {
         al::setNerve(this, &NrvByugoStateHack.BlowWide);
@@ -323,13 +295,7 @@ void ByugoStateHack::exeBlow() {
         al::setNerve(this, &NrvByugoStateHack.BlowEnd);
 }
 
-// NONMATCHING: https://decomp.me/scratch/fmib5
 void ByugoStateHack::exeBlowWide() {
-    // NONMATCHING: 10 attempts exhausted.
-    // Root cause: first ripple offset emits equivalent commuted fmul operands
-    // (`s0, s0, s1` vs target `s0, s1, s0`). Tried direct sead temporaries,
-    // named locals, set/component forms, modulo spelling, interval lifetime,
-    // and inline helper forms; all converge to the same single-instruction diff.
     al::LiveActor* actor = mActor;
 
     if (al::isFirstStep(this))
@@ -339,22 +305,16 @@ void ByugoStateHack::exeBlowWide() {
     calcMove();
 
     sead::Vector3f moveDir{0.0f, 0.0f, 0.0f};
-    rs::calcHackerMoveDir(&moveDir, mPlayerHack, sead::Vector3f::ey);
-    al::turnToDirection(mActor, moveDir, 2.0f);
+    turnToHackMoveDir(&moveDir, &mActor, mPlayerHack, 2.0f);
 
     s32 interval = 15;
     if (mWideBlowFrame < 30)
         interval = 30;
 
     sead::Vector3f ripplePos;
-    s32 rippleStep = mWideBlowFrame % interval;
-    f32 rippleStepF = rippleStep;
     al::calcTransLocalOffset(&ripplePos, actor,
-                             sead::Vector3f(0.0f, -350.0f, 1800.0f / interval * rippleStepF));
-    rippleStep = mWideBlowFrame % interval;
-    f32 intervalF = interval;
-    f32 rippleRange = al::lerpValue(0.0f, 600.0f, rippleStep / intervalF);
-    al::tryAddRippleRandomBlur(actor, ripplePos, 0.3f, rippleRange, 30.0f);
+                             calcBlowRippleOffset(mWideBlowFrame, interval, 1800.0f));
+    addBlowRipple(actor, ripplePos, mWideBlowFrame, interval, 600.0f, 0.3f);
 
     mWideBlowFrame++;
 
