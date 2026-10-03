@@ -21,23 +21,19 @@ struct KoopaCapPlayerRumble {
     f32 handScaleL;
     f32 handScaleR;
 
-    union {
-        struct {
-            bool keepScaleL;
-            bool keepScaleR;
-        };
-
-        u16 keepScaleFlags;
-    };
-
-    void clearKeepScale() { keepScaleFlags = 0; }
+    bool keepScaleL;
+    bool keepScaleR;
 };
 
 static_assert(sizeof(KoopaCapPlayerRumble) == 0x20);
 
 struct KoopaCapPlayerPunchState {
+    enum class FinishState : s32 {
+        Normal,
+        Finish,
+    };
+
     f32 fastPunchRate = 0.0f;
-    u8 _4[4];
     al::LiveActor* focusTarget = nullptr;
     bool isPunchLeft = false;
     bool isFastPunchInput = false;
@@ -48,64 +44,8 @@ struct KoopaCapPlayerPunchState {
     bool isTriggerSwingRight = false;
     bool isTriggerCapAction = false;
     s32 damageCooldown = 0;
-    s32 finishState = 0;
-
-    bool hasTriggerSwingRightOrCapAction() const {
-        if (isTriggerSwingRight)
-            return true;
-        return isTriggerCapAction;
-    }
-
-    bool hasTriggerCapActionOrSwingLeft() const {
-        if (isTriggerCapAction)
-            return true;
-        return isTriggerSwingLeft;
-    }
-
-    bool trySetupNextPunchFromInput(bool allowFollowUp) {
-        if (damageCooldown > 0)
-            return false;
-
-        bool nextPunchLeft;
-        bool isFollowUp;
-        bool isFastInput;
-        if (isPunchLeft) {
-            if (!hasTriggerSwingRightOrCapAction()) {
-                if (!isTriggerSwingLeft)
-                    return false;
-                nextPunchLeft = true;
-                isFollowUp = false;
-                isFastInput = isTriggerSwingLeft;
-            } else {
-                nextPunchLeft = false;
-                isFollowUp = allowFollowUp;
-                isFastInput = isTriggerSwingRight;
-            }
-        } else if (hasTriggerCapActionOrSwingLeft()) {
-            nextPunchLeft = true;
-            isFollowUp = allowFollowUp;
-            isFastInput = isTriggerSwingLeft;
-        } else if (isTriggerSwingRight) {
-            nextPunchLeft = false;
-            isFollowUp = false;
-            isFastInput = isTriggerSwingRight;
-        } else {
-            return false;
-        }
-
-        isFastPunchInput = isFastInput;
-        isPunchFollowUp = isFollowUp;
-        isPunchHit = false;
-        isPunchHitReaction = false;
-        isTriggerSwingLeft = false;
-        isTriggerSwingRight = false;
-        isTriggerCapAction = false;
-        isPunchLeft = nextPunchLeft;
-        return true;
-    }
+    FinishState finishState = FinishState::Normal;
 };
-
-static_assert(sizeof(KoopaCapPlayerPunchState) == 0x20);
 
 class KoopaCapPlayer : public al::LiveActor {
 public:
@@ -147,13 +87,10 @@ public:
     void exeBlowDown();
     void endBlowDown();
 
-    void setHideChaseTransPtr(const sead::Vector3f* trans) { mHideChaseTrans = trans; }
+private:
+    void updateTriggerInputs();
 
-    void setBinder(KoopaCapPlayerBinder* binder) { mBinder = binder; }
-
-    void setFastPunchRate(f32 rate) { mPunchState.fastPunchRate = rate; }
-
-    void setAppearTutorialNoMovie(bool value) { mIsAppearTutorialNoMovie = value; }
+    KoopaCapPlayerRumble* getRumble() const { return mRumble; }
 
     KoopaCapPlayerPunchState mPunchState;
     KoopaCapPlayerBinder* mBinder = nullptr;
@@ -163,11 +100,9 @@ public:
     KoopaCapPlayerRumble* mRumble = nullptr;
     al::JointSpringControllerHolder* mJointSpringControllerHolder = nullptr;
     f32 mJointSpringControlRate = 1.0f;
-    u8 _15c[4];
     al::EnemyStateBlowDown* mBlowDownState = nullptr;
     f32 mCapBlowDownSideDegree = 0.0f;
     bool mIsAppearTutorialNoMovie = false;
-    u8 _16d[3];
 };
 
 static_assert(sizeof(KoopaCapPlayer) == 0x170);

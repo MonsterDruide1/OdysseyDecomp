@@ -55,7 +55,7 @@ static const sead::Vector3f sRetargettingOffset = {0.75f, 0.75f, 0.75f};
 static const sead::Vector3f sPlayerOffset = {0.0f, 130.0f, 0.0f};
 static const sead::Vector3f sHeadJointOffset = {40.0f, 0.0f, 0.0f};
 
-void updatePoseFromPlayerEquipment(KoopaCapPlayer* actor, const PlayerEquipmentUser* user) {
+static void updatePoseFromPlayerEquipment(KoopaCapPlayer* actor, const PlayerEquipmentUser* user) {
     sead::Quatf quat = sead::Quatf::unit;
     sead::Vector3f up = {0.0f, 0.0f, 0.0f};
     sead::Vector3f front = {0.0f, 0.0f, 0.0f};
@@ -89,19 +89,60 @@ void updatePoseFromPlayerEquipment(KoopaCapPlayer* actor, const PlayerEquipmentU
     }
 }
 
-// NONMATCHING
-bool tryStartNextPunchFromInput(KoopaCapPlayer* actor, KoopaCapPlayerPunchState* punchState,
-                                KoopaCapPlayerBinder* binder) {
+static inline void setupPunch(KoopaCapPlayerPunchState* state, bool left, bool followUp) {
+    state->isPunchFollowUp = followUp;
+    state->isFastPunchInput = left ? state->isTriggerSwingLeft : state->isTriggerSwingRight;
+    state->isPunchHit = false;
+    state->isPunchHitReaction = false;
+    state->isTriggerSwingLeft = false;
+    state->isTriggerSwingRight = false;
+    state->isTriggerCapAction = false;
+    state->isPunchLeft = left;
+}
+
+static inline bool trySetupNextPunchFromInput(KoopaCapPlayerPunchState* state, bool allowFollowUp) {
+    if (state->damageCooldown > 0)
+        return false;
+
+    if (state->isPunchLeft) {
+        if (state->isTriggerSwingRight || state->isTriggerCapAction) {
+            setupPunch(state, false, allowFollowUp);
+            return true;
+        }
+        if (!state->isTriggerSwingLeft)
+            return false;
+
+        setupPunch(state, true, false);
+        return true;
+    }
+
+    if (state->isTriggerCapAction || state->isTriggerSwingLeft) {
+        setupPunch(state, true, allowFollowUp);
+        return true;
+    }
+    if (!state->isTriggerSwingRight)
+        return false;
+
+    setupPunch(state, false, false);
+    return true;
+}
+
+// NON_MATCHING: https://decomp.me/scratch/tKOUr
+static bool tryStartNextPunchFromInput(KoopaCapPlayer* actor, KoopaCapPlayerPunchState* punchState,
+                                       KoopaCapPlayerBinder* binder) {
     if (rs::isPlayerCameraSubjective(actor))
         return false;
 
-    if (!punchState->trySetupNextPunchFromInput(true))
+    KoopaCapPlayerPunchState::FinishState finishState = punchState->finishState;
+    if (!trySetupNextPunchFromInput(punchState, true))
         return false;
 
-    if (!binder->isBinding())
+    if (!binder->isBinding()) {
         rs::requestBindPlayer(actor, al::getHitSensor(actor, "Bind"));
+        finishState = punchState->finishState;
+    }
 
-    if (punchState->finishState == 1)
+    if (finishState == KoopaCapPlayerPunchState::FinishState::Finish)
         al::setNerve(actor, &NrvKoopaCapPlayer.PunchFinishStart);
     else if (punchState->isPunchFollowUp)
         al::setNerve(actor, &NrvKoopaCapPlayer.Punch);
@@ -111,20 +152,24 @@ bool tryStartNextPunchFromInput(KoopaCapPlayer* actor, KoopaCapPlayerPunchState*
     return true;
 }
 
-void updateTriggerInputs(KoopaCapPlayer* actor) {
-    const PlayerEquipmentUser* user = actor->mEquipmentUser;
-    if (PlayerEquipmentFunction::isTriggerSwingLeft(user))
-        actor->mPunchState.isTriggerSwingLeft = true;
-    if (PlayerEquipmentFunction::isTriggerSwingRight(user))
-        actor->mPunchState.isTriggerSwingRight = true;
-    if (PlayerEquipmentFunction::isTriggerCapAction(user))
-        actor->mPunchState.isTriggerCapAction = true;
+static inline bool tryEndEquipOnPlayerLifeZero(KoopaCapPlayer* actor) {
+    if (!GameDataFunction::isPlayerLifeZero(actor))
+        return false;
+    actor->endEquipAndBlowDown();
+    return true;
 }
 
-bool isPlayerLifeZero(const KoopaCapPlayer* actor) {
-    return GameDataFunction::isPlayerLifeZero(GameDataHolderAccessor(actor));
-}
 }  // namespace
+
+inline void KoopaCapPlayer::updateTriggerInputs() {
+    const PlayerEquipmentUser* user = mEquipmentUser;
+    if (PlayerEquipmentFunction::isTriggerSwingLeft(user))
+        mPunchState.isTriggerSwingLeft = true;
+    if (PlayerEquipmentFunction::isTriggerSwingRight(user))
+        mPunchState.isTriggerSwingRight = true;
+    if (PlayerEquipmentFunction::isTriggerCapAction(user))
+        mPunchState.isTriggerCapAction = true;
+}
 
 KoopaCapPlayer::KoopaCapPlayer(const char* name) : al::LiveActor(name) {}
 
@@ -139,7 +184,8 @@ void KoopaCapPlayer::init(const al::ActorInitInfo& info) {
     KoopaCapPlayerRumble* rumble = new KoopaCapPlayerRumble;
     rumble->handScaleL = 1.0f;
     rumble->handScaleR = 1.0f;
-    rumble->clearKeepScale();
+    rumble->keepScaleL = false;
+    rumble->keepScaleR = false;
     rumble->left = new al::RumbleCalculatorCosMultLinear(5.5f, 2.0f, 0.5f, 45);
     rumble->right = new al::RumbleCalculatorCosMultLinear(5.5f, 2.0f, 0.5f, 45);
     mRumble = rumble;
@@ -147,7 +193,7 @@ void KoopaCapPlayer::init(const al::ActorInitInfo& info) {
     mJointSpringControllerHolder = new al::JointSpringControllerHolder();
     mEquipmentInfo = PlayerEquipmentFunction::createEquipmentInfoKoopaCap(this);
     al::initJointControllerKeeper(this, 7);
-    KoopaCapPlayerRumble* scaleRumble = mRumble;
+    KoopaCapPlayerRumble* scaleRumble = getRumble();
     al::initJointLocalScaleControllerX(this, &scaleRumble->handScaleL, "HandL");
     al::initJointLocalScaleControllerX(this, &scaleRumble->handScaleR, "HandR");
     mJointSpringControllerHolder->init(this, "InitJointSpringCtrl");
@@ -181,7 +227,7 @@ void KoopaCapPlayer::kill() {
     mPunchState.isTriggerSwingLeft = false;
     mPunchState.isTriggerSwingRight = false;
     mPunchState.isTriggerCapAction = false;
-    mPunchState.finishState = 0;
+    mPunchState.finishState = KoopaCapPlayerPunchState::FinishState::Normal;
     mPunchState.isFastPunchInput = false;
     mPunchState.fastPunchRate = 0.0f;
     if (mBinder->isBinding())
@@ -196,7 +242,7 @@ void KoopaCapPlayer::control() {
         mJointSpringControllerHolder->offControlAll();
     }
 
-    KoopaCapPlayerRumble* rumble = mRumble;
+    KoopaCapPlayerRumble* rumble = getRumble();
 
     if (rumble->left->isActive())
         rumble->left->calc();
@@ -205,22 +251,22 @@ void KoopaCapPlayer::control() {
 
     rumble->handScaleL = rumble->left->isActive() ? rumble->left->getOutput().y + 1.0f : 1.0f;
     rumble->handScaleR = rumble->right->isActive() ? rumble->right->getOutput().y + 1.0f : 1.0f;
-    u16 keepScaleFlags = rumble->keepScaleFlags;
-    if ((keepScaleFlags & 0xff) != 0)
+    if (rumble->keepScaleL)
         rumble->handScaleL = 0.5f;
-    if (keepScaleFlags >= 0x100)
+    if (rumble->keepScaleR)
         rumble->handScaleR = 0.5f;
 
-    if (mEquipmentUser != nullptr) {
-        if (!al::isNerve(this, &NrvKoopaCapPlayer.CatchPrepare)) {
-            if (rs::isPlayerCameraSubjective(this))
-                al::hideModelIfShow(this);
-            else
-                PlayerEquipmentFunction::syncEquipVisibility(this, mEquipmentUser);
-        }
-        if (mPunchState.damageCooldown > 0)
-            mPunchState.damageCooldown--;
+    if (!mEquipmentUser)
+        return;
+
+    if (!al::isNerve(this, &NrvKoopaCapPlayer.CatchPrepare)) {
+        if (rs::isPlayerCameraSubjective(this))
+            al::hideModelIfShow(this);
+        else
+            PlayerEquipmentFunction::syncEquipVisibility(this, mEquipmentUser);
     }
+    if (mPunchState.damageCooldown > 0)
+        mPunchState.damageCooldown--;
 }
 
 void KoopaCapPlayer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
@@ -229,7 +275,7 @@ void KoopaCapPlayer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         return;
 
     if (al::isSensorPlayer(self)) {
-        if (mEquipmentUser != nullptr)
+        if (mEquipmentUser)
             rs::sendMsgPlayerItemGetAll(other, self);
         return;
     }
@@ -244,31 +290,29 @@ void KoopaCapPlayer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
         return;
     }
 
-    if (mPunchState.isPunchLeft) {
-        if (al::isSensorName(self, "PunchL")) {
-            if (mPunchState.finishState == 1) {
-                if (rs::sendMsgKoopaCapPunchFinishL(other, self)) {
-                    mPunchState.isPunchHit = true;
-                    mBinder->startPrepareFinishPunchL(al::getHitSensor(this, "Bind"));
-                    al::setNerve(this, &NrvKoopaCapPlayer.PunchFinish);
-                    return;
-                }
-            } else if (rs::sendMsgKoopaCapPunchKnockBackL(other, self)) {
+    if (mPunchState.isPunchLeft && al::isSensorName(self, "PunchL")) {
+        if (mPunchState.finishState == KoopaCapPlayerPunchState::FinishState::Finish) {
+            if (rs::sendMsgKoopaCapPunchFinishL(other, self)) {
                 mPunchState.isPunchHit = true;
-                mPunchState.isPunchHitReaction = true;
-                mBinder->startPrepareKnockBackPunchL(al::getHitSensor(this, "Bind"));
+                mBinder->startPrepareFinishPunchL(al::getHitSensor(this, "Bind"));
                 al::setNerve(this, &NrvKoopaCapPlayer.PunchFinish);
                 return;
             }
-
-            if (rs::sendMsgKoopaCapPunchInvincibleL(other, self) ||
-                rs::sendMsgKoopaCapPunchL(other, self))
-                mPunchState.isPunchHit = true;
+        } else if (rs::sendMsgKoopaCapPunchKnockBackL(other, self)) {
+            mPunchState.isPunchHit = true;
+            mPunchState.isPunchHitReaction = true;
+            mBinder->startPrepareKnockBackPunchL(al::getHitSensor(this, "Bind"));
+            al::setNerve(this, &NrvKoopaCapPlayer.PunchFinish);
+            return;
         }
+
+        if (rs::sendMsgKoopaCapPunchInvincibleL(other, self) ||
+            rs::sendMsgKoopaCapPunchL(other, self))
+            mPunchState.isPunchHit = true;
     }
 
     if (!mPunchState.isPunchLeft && al::isSensorName(self, "PunchR")) {
-        if (mPunchState.finishState == 1) {
+        if (mPunchState.finishState == KoopaCapPlayerPunchState::FinishState::Finish) {
             if (rs::sendMsgKoopaCapPunchFinishR(other, self)) {
                 mPunchState.isPunchHit = true;
                 mBinder->startPrepareFinishPunchR(al::getHitSensor(this, "Bind"));
@@ -291,7 +335,7 @@ void KoopaCapPlayer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
     if (!mPunchState.isPunchHit)
         return;
 
-    KoopaCapPlayerRumble* rumble = mRumble;
+    KoopaCapPlayerRumble* rumble = getRumble();
     if (mPunchState.isPunchLeft) {
         rumble->left->setParam(5.5f, 2.0f, 0.5f, 45);
         rumble->left->start(0);
@@ -307,14 +351,9 @@ void KoopaCapPlayer::attackSensor(al::HitSensor* self, al::HitSensor* other) {
 
 bool KoopaCapPlayer::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                 al::HitSensor* self) {
-    if (mEquipmentUser != nullptr) {
+    if (mEquipmentUser) {
         if (al::isMsgPlayerReleaseEquipment(message)) {
-            if (mEquipmentUser != nullptr)
-                PlayerEquipmentFunction::endEquip(&mEquipmentUser);
-            rs::tryCloseKoopaCapTutorial(this);
-            al::hideSilhouetteModelIfShow(this);
-            al::tryKillEmitterAndParticleAll(this);
-            kill();
+            endEquipAndKill();
             return true;
         }
 
@@ -367,9 +406,9 @@ bool KoopaCapPlayer::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
         mBinder->tryStartPuppetFinishPunch(message, other, self))
         return true;
 
-    if (mPunchState.finishState == 1)
+    if (mPunchState.finishState == KoopaCapPlayerPunchState::FinishState::Finish)
         return false;
-    if (mPunchState.focusTarget == nullptr)
+    if (!mPunchState.focusTarget)
         return false;
     if (al::isMsgBindStart(message))
         return rs::isPlayerOnGround(this);
@@ -384,7 +423,7 @@ bool KoopaCapPlayer::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
 }
 
 void KoopaCapPlayer::endEquipAndKill() {
-    if (mEquipmentUser != nullptr)
+    if (mEquipmentUser)
         PlayerEquipmentFunction::endEquip(&mEquipmentUser);
     rs::tryCloseKoopaCapTutorial(this);
     al::hideSilhouetteModelIfShow(this);
@@ -402,36 +441,30 @@ bool KoopaCapPlayer::isPlayerBinding() const {
 }
 
 void KoopaCapPlayer::onFinish() {
-    mPunchState.finishState = 1;
+    mPunchState.finishState = KoopaCapPlayerPunchState::FinishState::Finish;
 }
 
 void KoopaCapPlayer::offFinish() {
-    mPunchState.finishState = 0;
+    mPunchState.finishState = KoopaCapPlayerPunchState::FinishState::Normal;
 }
 
 void KoopaCapPlayer::endEquipAndBlowDown() {
-    if (mEquipmentUser != nullptr)
+    if (mEquipmentUser)
         PlayerEquipmentFunction::endEquip(&mEquipmentUser);
     rs::tryCloseKoopaCapTutorial(this);
     al::hideSilhouetteModelIfShow(this);
 
-    al::EnemyStateBlowDown* blowDownState = mBlowDownState;
-    const sead::Vector3f& actorFront = al::getFront(this);
-    sead::Vector3f front = {-actorFront.x, -actorFront.y, -actorFront.z};
-    blowDownState->start(front);
+    mBlowDownState->start(-al::getFront(this));
     al::setNerve(this, &NrvKoopaCapPlayer.BlowDown);
 }
 
 void KoopaCapPlayer::endEquipAndBlowDownWithoutHitReaction() {
-    if (mEquipmentUser != nullptr)
+    if (mEquipmentUser)
         PlayerEquipmentFunction::endEquip(&mEquipmentUser);
     rs::tryCloseKoopaCapTutorial(this);
     al::hideSilhouetteModelIfShow(this);
 
-    al::EnemyStateBlowDown* blowDownState = mBlowDownState;
-    const sead::Vector3f& actorFront = al::getFront(this);
-    sead::Vector3f front = {-actorFront.x, -actorFront.y, -actorFront.z};
-    blowDownState->start(front);
+    mBlowDownState->start(-al::getFront(this));
     al::setNerve(this, &NrvKoopaCapPlayer.BlowDownWithoutHitReaction);
 }
 
@@ -452,10 +485,8 @@ void KoopaCapPlayer::exeCatch() {
         al::startAction(this, "CatchKoopaCap");
         al::showSilhouetteModelIfHide(this);
     }
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
     if (mBinder->isBinding())
         mBinder->copyPuppetQT(this);
     al::setNerveAtActionEnd(this, &NrvKoopaCapPlayer.Start);
@@ -466,21 +497,20 @@ void KoopaCapPlayer::exeStart() {
         al::startAction(this, "MarioStart");
         al::offCollide(this);
     }
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    if (al::isActionEnd(this)) {
-        if (mIsAppearTutorialNoMovie)
-            rs::tryAppearKoopaCapTutorialNoMovie(this);
-        else
-            rs::tryAppearKoopaCapTutorial(this);
-        al::setNerve(this, &NrvKoopaCapPlayer.Wait);
-    }
+    if (!al::isActionEnd(this))
+        return;
+
+    if (mIsAppearTutorialNoMovie)
+        rs::tryAppearKoopaCapTutorialNoMovie(this);
+    else
+        rs::tryAppearKoopaCapTutorial(this);
+    al::setNerve(this, &NrvKoopaCapPlayer.Wait);
 }
 
-// NONMATCHING: https://decomp.me/scratch/esPLW
+// NON_MATCHING: https://decomp.me/scratch/94eO0
 void KoopaCapPlayer::exeWait() {
     if (al::isFirstStep(this)) {
         al::startAction(this, "MarioWait");
@@ -491,13 +521,11 @@ void KoopaCapPlayer::exeWait() {
             mJointSpringControlRate = 0.01f;
     }
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
 
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    updateTriggerInputs(this);
+    updateTriggerInputs();
 
     if (rs::isPlayerSafetyPointRecovery(this)) {
         al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
@@ -507,7 +535,7 @@ void KoopaCapPlayer::exeWait() {
     if (rs::isPlayerCameraSubjective(this))
         return;
 
-    if (!mPunchState.trySetupNextPunchFromInput(false))
+    if (!trySetupNextPunchFromInput(&mPunchState, false))
         return;
 
     al::setNerve(this, &NrvKoopaCapPlayer.PunchStart);
@@ -517,10 +545,8 @@ void KoopaCapPlayer::exeWaitBubble() {
     if (al::isFirstStep(this))
         al::startAction(this, "WaitBubble");
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
 
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
     if (!rs::isPlayerSafetyPointRecovery(this))
@@ -543,33 +569,34 @@ void KoopaCapPlayer::exePunchStart() {
         mJointSpringControlRate = -1.0f;
     }
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    updateTriggerInputs(this);
+    updateTriggerInputs();
     if (rs::isPlayerSafetyPointRecovery(this)) {
         al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    } else if (al::isActionEnd(this)) {
-        if (mPunchState.isPunchFollowUp || mPunchState.isFastPunchInput)
-            al::setNerve(this, &NrvKoopaCapPlayer.Punch);
-        else
-            al::setNerve(this, &NrvKoopaCapPlayer.PunchWait);
+        return;
     }
+    if (!al::isActionEnd(this))
+        return;
+
+    if (mPunchState.isPunchFollowUp || mPunchState.isFastPunchInput)
+        al::setNerve(this, &NrvKoopaCapPlayer.Punch);
+    else
+        al::setNerve(this, &NrvKoopaCapPlayer.PunchWait);
 }
 
 void KoopaCapPlayer::exePunchWait() {
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
+        return;
+    updatePoseFromPlayerEquipment(this, mEquipmentUser);
+    updateTriggerInputs();
+    if (rs::isPlayerSafetyPointRecovery(this)) {
+        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
         return;
     }
-    updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    updateTriggerInputs(this);
-    if (rs::isPlayerSafetyPointRecovery(this))
-        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    else
-        al::setNerveAtGreaterEqualStep(this, &NrvKoopaCapPlayer.Punch, 3);
+
+    al::setNerveAtGreaterEqualStep(this, &NrvKoopaCapPlayer.Punch, 3);
 }
 
 void KoopaCapPlayer::exePunch() {
@@ -582,12 +609,10 @@ void KoopaCapPlayer::exePunch() {
         mBinder->tryStartPunchAction(mPunchState.isPunchLeft);
     }
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    updateTriggerInputs(this);
+    updateTriggerInputs();
     if (rs::isPlayerSafetyPointRecovery(this)) {
         al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
         return;
@@ -617,16 +642,17 @@ void KoopaCapPlayer::exePunchEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, mPunchState.isPunchLeft ? "PunchLEnd" : "PunchREnd");
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
+        return;
+    updatePoseFromPlayerEquipment(this, mEquipmentUser);
+    updateTriggerInputs();
+    if (rs::isPlayerSafetyPointRecovery(this)) {
+        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
         return;
     }
-    updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    updateTriggerInputs(this);
-    if (rs::isPlayerSafetyPointRecovery(this))
-        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    else if (!tryStartNextPunchFromInput(this, &mPunchState, mBinder))
-        al::setNerveAtActionEnd(this, &NrvKoopaCapPlayer.Wait);
+    if (tryStartNextPunchFromInput(this, &mPunchState, mBinder))
+        return;
+    al::setNerveAtActionEnd(this, &NrvKoopaCapPlayer.Wait);
 }
 
 void KoopaCapPlayer::exePunchFinishStart() {
@@ -642,34 +668,37 @@ void KoopaCapPlayer::exePunchFinishStart() {
         mJointSpringControlRate = -1.0f;
     }
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    updateTriggerInputs(this);
+    updateTriggerInputs();
     if (rs::isPlayerSafetyPointRecovery(this)) {
         al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    } else if (al::isActionEnd(this)) {
-        if (mPunchState.isPunchFollowUp || mPunchState.isFastPunchInput)
-            al::setNerve(this, &NrvKoopaCapPlayer.Punch);
-        else
-            al::setNerve(this, &NrvKoopaCapPlayer.PunchWait);
+        return;
     }
+    if (!al::isActionEnd(this))
+        return;
+
+    if (mPunchState.isPunchFollowUp || mPunchState.isFastPunchInput)
+        al::setNerve(this, &NrvKoopaCapPlayer.Punch);
+    else
+        al::setNerve(this, &NrvKoopaCapPlayer.PunchWait);
 }
 
 void KoopaCapPlayer::exePunchFinish() {
     if (al::isFirstStep(this)) {
         al::startAction(this, mPunchState.isPunchLeft ? "PunchLFinish" : "PunchRFinish");
         if (mPunchState.isPunchLeft)
-            mRumble->keepScaleL = true;
+            getRumble()->keepScaleL = true;
         else
-            mRumble->keepScaleR = true;
+            getRumble()->keepScaleR = true;
     }
 
     if (al::isStep(this, 2)) {
-        mRumble->clearKeepScale();
-        KoopaCapPlayerRumble* rumble = mRumble;
+        KoopaCapPlayerRumble* scaleRumble = getRumble();
+        scaleRumble->keepScaleL = false;
+        scaleRumble->keepScaleR = false;
+        KoopaCapPlayerRumble* rumble = getRumble();
         if (mPunchState.isPunchLeft) {
             rumble->left->setParam(5.5f, 2.0f, 0.5f, 45);
             rumble->left->start(0);
@@ -679,34 +708,35 @@ void KoopaCapPlayer::exePunchFinish() {
         }
     }
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
         return;
-    }
     updatePoseFromPlayerEquipment(this, mEquipmentUser);
     if (rs::isPlayerSafetyPointRecovery(this)) {
         al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    } else if (al::isActionEnd(this)) {
-        bool hasHitReaction = mPunchState.isPunchHitReaction;
-        mPunchState.isPunchFollowUp = false;
-        if (!hasHitReaction) {
-            endEquipAndBlowDownWithoutHitReaction();
-            return;
-        }
-        mBinder->tryCancelPunchFinishBind();
-        al::setNerve(this, &NrvKoopaCapPlayer.PunchFinishWait);
+        return;
     }
+    if (!al::isActionEnd(this))
+        return;
+
+    bool hasHitReaction = mPunchState.isPunchHitReaction;
+    mPunchState.isPunchFollowUp = false;
+    if (!hasHitReaction) {
+        endEquipAndBlowDownWithoutHitReaction();
+        return;
+    }
+    mBinder->tryCancelPunchFinishBind();
+    al::setNerve(this, &NrvKoopaCapPlayer.PunchFinishWait);
 }
 
 void KoopaCapPlayer::exePunchFinishWait() {
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
+        return;
+    updatePoseFromPlayerEquipment(this, mEquipmentUser);
+    if (rs::isPlayerSafetyPointRecovery(this)) {
+        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
         return;
     }
-    updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    if (rs::isPlayerSafetyPointRecovery(this))
-        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    else if (al::isGreaterEqualStep(this, mPunchState.isPunchHitReaction ? 0 : 60))
+    if (al::isGreaterEqualStep(this, mPunchState.isPunchHitReaction ? 0 : 60))
         al::setNerve(this, &NrvKoopaCapPlayer.PunchFinishEnd);
 }
 
@@ -714,14 +744,14 @@ void KoopaCapPlayer::exePunchFinishEnd() {
     if (al::isFirstStep(this))
         al::startAction(this, mPunchState.isPunchLeft ? "PunchLFinishEnd" : "PunchRFinishEnd");
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
+        return;
+    updatePoseFromPlayerEquipment(this, mEquipmentUser);
+    if (rs::isPlayerSafetyPointRecovery(this)) {
+        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
         return;
     }
-    updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    if (rs::isPlayerSafetyPointRecovery(this))
-        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    else if (al::isActionEnd(this))
+    if (al::isActionEnd(this))
         al::setNerve(this, &NrvKoopaCapPlayer.Wait);
 }
 
@@ -729,15 +759,15 @@ void KoopaCapPlayer::exeDamage() {
     if (al::isFirstStep(this))
         al::startAction(this, "Damage");
 
-    if (isPlayerLifeZero(this)) {
-        endEquipAndBlowDown();
+    if (tryEndEquipOnPlayerLifeZero(this))
+        return;
+    updatePoseFromPlayerEquipment(this, mEquipmentUser);
+    if (rs::isPlayerSafetyPointRecovery(this)) {
+        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
         return;
     }
-    updatePoseFromPlayerEquipment(this, mEquipmentUser);
-    if (rs::isPlayerSafetyPointRecovery(this))
-        al::setNerve(this, &NrvKoopaCapPlayer.WaitBubble);
-    else
-        al::setNerveAtActionEnd(this, &NrvKoopaCapPlayer.Wait);
+
+    al::setNerveAtActionEnd(this, &NrvKoopaCapPlayer.Wait);
 }
 
 void KoopaCapPlayer::exeBlowDown() {

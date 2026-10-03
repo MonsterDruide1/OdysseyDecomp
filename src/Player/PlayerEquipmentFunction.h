@@ -11,6 +11,7 @@ class EquipmentInfo;
 class PlayerEquipmentUser;
 
 namespace PlayerEquipmentFunction {
+bool isEquipmentNoCapThrow(const PlayerEquipmentUser* user);
 EquipmentInfo* createEquipmentInfoRocketFlower(al::LiveActor*, s32, f32);
 EquipmentInfo* createEquipmentInfoKoopaCap(al::LiveActor*);
 PlayerEquipmentUser* startEquip(al::HitSensor* equipmentSensor, al::HitSensor* sourceSensor,
@@ -22,4 +23,6 @@ bool isTriggerCapAction(const PlayerEquipmentUser* user);
 bool isTriggerSwingLeft(const PlayerEquipmentUser* user);
 bool isTriggerSwingRight(const PlayerEquipmentUser* user);
 bool isPlayerRolling(const PlayerEquipmentUser* user);
+bool isEquipmentForceDash(const PlayerEquipmentUser* user);
+bool tryGetEquipmentForceDashInfo(s32*, f32*, const PlayerEquipmentUser* user);
 }  // namespace PlayerEquipmentFunction

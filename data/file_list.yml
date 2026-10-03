@@ -15483,12 +15483,12 @@ Boss/Koopa/KoopaCapPlayer.o:
     status: Matching
   - offset: 0x087f60
     size: 400
-    label: _ZN12_GLOBAL__N_129updatePoseFromPlayerEquipmentEP14KoopaCapPlayerPK19PlayerEquipmentUser
+    label: _ZN12_GLOBAL__N_1L29updatePoseFromPlayerEquipmentEP14KoopaCapPlayerPK19PlayerEquipmentUser
     status: Matching
   - offset: 0x0880f0
     size: 460
     label: _ZN14KoopaCapPlayer7exeWaitEv
-    status: Wip
+    status: NonMatchingMajor
   - offset: 0x0882bc
     size: 136
     label: _ZN14KoopaCapPlayer13exeWaitBubbleEv
@@ -15507,7 +15507,7 @@ Boss/Koopa/KoopaCapPlayer.o:
     status: Matching
   - offset: 0x088724
     size: 380
-    label: _ZN12_GLOBAL__N_126tryStartNextPunchFromInputEP14KoopaCapPlayerP24KoopaCapPlayerPunchStateP20KoopaCapPlayerBinder
+    label: _ZN12_GLOBAL__N_1L26tryStartNextPunchFromInputEP14KoopaCapPlayerP24KoopaCapPlayerPunchStateP20KoopaCapPlayerBinder
     status: NonMatchingMajor
   - offset: 0x0888a0
     size: 32
