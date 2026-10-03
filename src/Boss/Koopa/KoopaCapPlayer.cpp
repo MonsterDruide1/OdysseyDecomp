@@ -21,7 +21,6 @@
 
 #include "Boss/Koopa/KoopaCapPlayerBinder.h"
 #include "Boss/Koopa/KoopaFunction.h"
-#include "Player/PlayerEquipmentFunction.h"
 #include "System/GameDataFunction.h"
 #include "System/GameDataHolderAccessor.h"
 #include "Util/InputInterruptTutorialUtil.h"
@@ -55,39 +54,7 @@ static const sead::Vector3f sRetargettingOffset = {0.75f, 0.75f, 0.75f};
 static const sead::Vector3f sPlayerOffset = {0.0f, 130.0f, 0.0f};
 static const sead::Vector3f sHeadJointOffset = {40.0f, 0.0f, 0.0f};
 
-static void updatePoseFromPlayerEquipment(KoopaCapPlayer* actor, const PlayerEquipmentUser* user) {
-    sead::Quatf quat = sead::Quatf::unit;
-    sead::Vector3f up = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f front = {0.0f, 0.0f, 0.0f};
-
-    if (PlayerEquipmentFunction::isPlayerRolling(user)) {
-        rs::calcPlayerUpDir(&up, actor);
-        rs::calcPlayerFrontDir(&front, actor);
-    } else if (!rs::isPlayerOnGround(actor) && rs::tryCalcPlayerModelHeadJointUp(&up, actor) &&
-               rs::tryCalcPlayerModelHeadJointSide(&front, actor)) {
-        up.negate();
-    } else {
-        rs::calcPlayerUpDir(&up, actor);
-        if (rs::tryCalcPlayerModelHeadJointSide(&front, actor) &&
-            !al::isParallelDirection(up, front, 0.01f)) {
-            al::verticalizeVec(&front, up, front);
-            al::normalize(&front);
-        } else {
-            rs::calcPlayerFrontDir(&front, actor);
-        }
-    }
-
-    al::makeQuatFrontUp(&quat, front, up);
-    al::updatePoseQuat(actor, quat);
-
-    if (PlayerEquipmentFunction::isPlayerRolling(user) ||
-        !rs::tryCalcPlayerModelHeadJointPos(al::getTransPtr(actor), actor)) {
-        al::setTrans(actor, rs::getPlayerPos(actor));
-        al::multVecPose(al::getTransPtr(actor), actor, sPlayerOffset);
-    } else {
-        al::multVecPose(al::getTransPtr(actor), actor, sHeadJointOffset);
-    }
-}
+static void updatePoseFromPlayerEquipment(KoopaCapPlayer* actor, const PlayerEquipmentUser* user);
 
 static inline void setupPunch(KoopaCapPlayerPunchState* state, bool left, bool followUp) {
     state->isPunchFollowUp = followUp;
@@ -127,30 +94,8 @@ static inline bool trySetupNextPunchFromInput(KoopaCapPlayerPunchState* state, b
     return true;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/tKOUr
 static bool tryStartNextPunchFromInput(KoopaCapPlayer* actor, KoopaCapPlayerPunchState* punchState,
-                                       KoopaCapPlayerBinder* binder) {
-    if (rs::isPlayerCameraSubjective(actor))
-        return false;
-
-    KoopaCapPlayerPunchState::FinishState finishState = punchState->finishState;
-    if (!trySetupNextPunchFromInput(punchState, true))
-        return false;
-
-    if (!binder->isBinding()) {
-        rs::requestBindPlayer(actor, al::getHitSensor(actor, "Bind"));
-        finishState = punchState->finishState;
-    }
-
-    if (finishState == KoopaCapPlayerPunchState::FinishState::Finish)
-        al::setNerve(actor, &NrvKoopaCapPlayer.PunchFinishStart);
-    else if (punchState->isPunchFollowUp)
-        al::setNerve(actor, &NrvKoopaCapPlayer.Punch);
-    else
-        al::setNerve(actor, &NrvKoopaCapPlayer.PunchStart);
-
-    return true;
-}
+                                       KoopaCapPlayerBinder* binder);
 
 static inline bool tryEndEquipOnPlayerLifeZero(KoopaCapPlayer* actor) {
     if (!GameDataFunction::isPlayerLifeZero(actor))
@@ -182,10 +127,6 @@ void KoopaCapPlayer::init(const al::ActorInitInfo& info) {
     al::validateSklAnimRetargetting(this);
 
     KoopaCapPlayerRumble* rumble = new KoopaCapPlayerRumble;
-    rumble->handScaleL = 1.0f;
-    rumble->handScaleR = 1.0f;
-    rumble->keepScaleL = false;
-    rumble->keepScaleR = false;
     rumble->left = new al::RumbleCalculatorCosMultLinear(5.5f, 2.0f, 0.5f, 45);
     rumble->right = new al::RumbleCalculatorCosMultLinear(5.5f, 2.0f, 0.5f, 45);
     mRumble = rumble;
@@ -367,7 +308,7 @@ bool KoopaCapPlayer::receiveMsg(const al::SensorMsg* message, al::HitSensor* oth
     }
 
     if (al::isMsgPlayerDisregard(message))
-        return mEquipmentUser != nullptr;
+        return mEquipmentUser;
 
     if (mEquipmentUser == nullptr && al::isSensorEnemyBody(self) &&
         al::isNerve(this, &NrvKoopaCapPlayer.HideChase) && al::isMsgPlayerPutOnEquipment(message)) {
@@ -510,6 +451,43 @@ void KoopaCapPlayer::exeStart() {
     al::setNerve(this, &NrvKoopaCapPlayer.Wait);
 }
 
+namespace {
+static void updatePoseFromPlayerEquipment(KoopaCapPlayer* actor, const PlayerEquipmentUser* user) {
+    sead::Quatf quat = sead::Quatf::unit;
+    sead::Vector3f up = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f front = {0.0f, 0.0f, 0.0f};
+
+    if (PlayerEquipmentFunction::isPlayerRolling(user)) {
+        rs::calcPlayerUpDir(&up, actor);
+        rs::calcPlayerFrontDir(&front, actor);
+    } else if (!rs::isPlayerOnGround(actor) && rs::tryCalcPlayerModelHeadJointUp(&up, actor) &&
+               rs::tryCalcPlayerModelHeadJointSide(&front, actor)) {
+        up.negate();
+    } else {
+        rs::calcPlayerUpDir(&up, actor);
+        if (rs::tryCalcPlayerModelHeadJointSide(&front, actor) &&
+            !al::isParallelDirection(up, front, 0.01f)) {
+            al::verticalizeVec(&front, up, front);
+            al::normalize(&front);
+        } else {
+            rs::calcPlayerFrontDir(&front, actor);
+        }
+    }
+
+    al::makeQuatFrontUp(&quat, front, up);
+    al::updatePoseQuat(actor, quat);
+
+    if (PlayerEquipmentFunction::isPlayerRolling(user) ||
+        !rs::tryCalcPlayerModelHeadJointPos(al::getTransPtr(actor), actor)) {
+        al::setTrans(actor, rs::getPlayerPos(actor));
+        al::multVecPose(al::getTransPtr(actor), actor, sPlayerOffset);
+    } else {
+        al::multVecPose(al::getTransPtr(actor), actor, sHeadJointOffset);
+    }
+}
+
+}  // namespace
+
 // NON_MATCHING: https://decomp.me/scratch/94eO0
 void KoopaCapPlayer::exeWait() {
     if (al::isFirstStep(this)) {
@@ -632,6 +610,34 @@ void KoopaCapPlayer::exePunch() {
         al::setNerve(this, &NrvKoopaCapPlayer.PunchEnd);
     }
 }
+
+namespace {
+// NON_MATCHING: https://decomp.me/scratch/tKOUr
+static bool tryStartNextPunchFromInput(KoopaCapPlayer* actor, KoopaCapPlayerPunchState* punchState,
+                                       KoopaCapPlayerBinder* binder) {
+    if (rs::isPlayerCameraSubjective(actor))
+        return false;
+
+    KoopaCapPlayerPunchState::FinishState finishState = punchState->finishState;
+    if (!trySetupNextPunchFromInput(punchState, true))
+        return false;
+
+    if (!binder->isBinding()) {
+        rs::requestBindPlayer(actor, al::getHitSensor(actor, "Bind"));
+        finishState = punchState->finishState;
+    }
+
+    if (finishState == KoopaCapPlayerPunchState::FinishState::Finish)
+        al::setNerve(actor, &NrvKoopaCapPlayer.PunchFinishStart);
+    else if (punchState->isPunchFollowUp)
+        al::setNerve(actor, &NrvKoopaCapPlayer.Punch);
+    else
+        al::setNerve(actor, &NrvKoopaCapPlayer.PunchStart);
+
+    return true;
+}
+
+}  // namespace
 
 void KoopaCapPlayer::endPunch() {
     if (mBinder->isBinding() && !mPunchState.isPunchFollowUp)

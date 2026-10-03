@@ -18,11 +18,11 @@ class PlayerEquipmentUser;
 struct KoopaCapPlayerRumble {
     al::RumbleCalculator* left;
     al::RumbleCalculator* right;
-    f32 handScaleL;
-    f32 handScaleR;
+    f32 handScaleL = 1.0f;
+    f32 handScaleR = 1.0f;
 
-    bool keepScaleL;
-    bool keepScaleR;
+    bool keepScaleL = false;
+    bool keepScaleR = false;
 };
 
 static_assert(sizeof(KoopaCapPlayerRumble) == 0x20);

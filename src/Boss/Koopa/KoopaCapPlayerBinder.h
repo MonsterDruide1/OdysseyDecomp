@@ -50,12 +50,11 @@ public:
     void exePunchFinishPrepare();
     void exePunchFinish();
 
-    bool isBinding() const { return mPlayerPuppet != nullptr; }
+    bool isBinding() const { return mPlayerPuppet; }
 
 private:
     IUsePlayerPuppet* mPlayerPuppet = nullptr;
-    al::HitSensor* mBindSensor = nullptr;
-    s32 mPunchType = 0;
+    sead::Vector3f mPuppetVelocity = {0.0f, 0.0f, 0.0f};
     al::HitSensor* mHitSensor = nullptr;
     const KoopaLandPointHolder* mLandPointHolder = nullptr;
 };
