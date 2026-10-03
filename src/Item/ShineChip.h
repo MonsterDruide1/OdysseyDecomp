@@ -25,7 +25,7 @@ public:
     void exeGoAppear();
 
 private:
-    u8 _108[0x68];
+    void* padding[13];
 };
 
 static_assert(sizeof(ShineChip) == 0x170);

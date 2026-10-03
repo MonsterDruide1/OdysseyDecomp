@@ -36,11 +36,7 @@ namespace {
 const sead::Vector3f cLinkedShineLocalOffset(0.0f, -570.0f, -420.0f);
 const UtsuboFunction::UtsuboAttackParam cAttackParam = {120, 200.0f, 800.0f, 2000.0f, 100.0f};
 
-class UtsuboNrvWaitForWatcher : public al::Nerve {
-public:
-    void execute(al::NerveKeeper* keeper) const override {}
-};
-
+NERVE_IMPL(Utsubo, WaitForWatcher)
 NERVE_IMPL(Utsubo, Wait)
 NERVE_IMPL(Utsubo, Rise)
 NERVE_IMPL(Utsubo, AttackSign)
@@ -53,35 +49,46 @@ NERVE_IMPL(Utsubo, WaitForce)
 NERVES_MAKE_STRUCT(Utsubo, WaitForWatcher, Wait, Rise, AttackSign, Attack, Sink, RiseSign, Move,
                    Follow, WaitForce)
 
-__attribute__((noinline)) void calcBodySensorPos(sead::Vector3f* out, const al::LiveActor* actor,
-                                                 const sead::Vector3f& target, f32 riseDistance) {
+static inline bool isUpright(const al::LiveActor* actor) {
+    sead::Vector3f upDir;
+    al::calcUpDir(&upDir, actor);
+    return al::isNear(upDir, sead::Vector3f::ey, 0.001f);
+}
+
+static void calcBodySensorPos(sead::Vector3f* out, const al::LiveActor* actor,
+                              const sead::Vector3f& target, f32 riseDistance) {
     sead::Vector3f reverseUpDir;
     al::calcUpDir(&reverseUpDir, actor);
     reverseUpDir.negate();
 
-    const sead::Vector3f& trans = al::getTrans(actor);
-    f32 distance = (target - trans).dot(reverseUpDir);
-    const f32 maxDistance = riseDistance + 500.0f;
-    if (distance < 500.0f)
-        distance = 500.0f;
-    else if (distance > maxDistance)
-        distance = maxDistance;
+    f32 distance = sead::Mathf::clamp((target - al::getTrans(actor)).dot(reverseUpDir), 500.0f,
+                                      riseDistance + 500.0f);
 
-    const sead::Vector3f& outBase = al::getTrans(actor);
-    sead::Vector3f result(distance * reverseUpDir.x, distance * reverseUpDir.y,
-                          distance * reverseUpDir.z);
-    result.add(outBase);
-    *out = result;
+    *out = al::getTrans(actor) + distance * reverseUpDir;
 }
 
 }  // namespace
 
 Utsubo::Utsubo(const char* name, bool isWaitForWatcher)
-    : LiveActor(name), mRiseStartTrans(sead::Vector3f::zero), mRiseMax(2000.0f),
-      mPrevPlayerPos(sead::Vector3f::zero), mUnusedSensorPos(sead::Vector3f::zero),
-      mBodySensorPos(sead::Vector3f::zero), mBodyCapSensorPos(sead::Vector3f::zero),
-      mMoveAreaGroup(nullptr), mIsWaitForWatcher(isWaitForWatcher), mLinkedShineActor(nullptr),
-      mIsCloudSeaPlacement(false), mIsOnDepthShadow(true), mSurfaceMtx(sead::Matrix34f::ident) {}
+    : al::LiveActor(name), mIsWaitForWatcher(isWaitForWatcher) {}
+
+inline bool Utsubo::isAttackSensorActive() const {
+    return al::isNerve(this, &NrvUtsubo.Rise) || al::isNerve(this, &NrvUtsubo.AttackSign) ||
+           al::isNerve(this, &NrvUtsubo.Attack) || al::isNerve(this, &NrvUtsubo.Sink);
+}
+
+inline void Utsubo::updateBodyAndCapSensorPos(f32 riseDistance) {
+    sead::Vector3f sensorPos = sead::Vector3f::zero;
+    calcBodySensorPos(&sensorPos, this, rs::getPlayerPos(al::getPlayerActor(this, 0)),
+                      riseDistance);
+    mBodySensorPos = sensorPos;
+    sead::Vector3f capPos = sead::Vector3f::zero;
+    if (rs::tryGetFlyingCapPos(&capPos, this)) {
+        sead::Vector3f* bodyCapSensorPos = &mBodyCapSensorPos;
+        calcBodySensorPos(&sensorPos, this, capPos, riseDistance);
+        bodyCapSensorPos->set(sensorPos);
+    }
+}
 
 void Utsubo::init(const al::ActorInitInfo& info) {
     al::initActorWithArchiveName(this, info, "Utsubo", nullptr);
@@ -109,20 +116,16 @@ void Utsubo::init(const al::ActorInitInfo& info) {
     if (al::tryGetArg(&riseMax, info, "RiseMax"))
         mRiseMax = riseMax;
 
-    {
-        sead::Vector3f upDir;
-        al::calcUpDir(&upDir, this);
-        if (!al::isNear(upDir, sead::Vector3f::ey, 0.001f))
-            al::invalidateShadow(this);
-    }
+    if (!isUpright(this))
+        al::invalidateShadow(this);
 
     al::tryGetArg(&mIsCloudSeaPlacement, info, "IsCloudSeaPlacement");
     al::trySetEffectNamedMtxPtr(this, "Surface", &mSurfaceMtx);
     if (mIsCloudSeaPlacement)
         al::setMaterialCode(this, "Cloud");
 
-    const bool hasShine = al::isExistLinkChild(info, "Shine", 0);
-    const bool hasShineChip = al::isExistLinkChild(info, "ShineChip", 0);
+    bool hasShine = al::isExistLinkChild(info, "Shine", 0);
+    bool hasShineChip = al::isExistLinkChild(info, "ShineChip", 0);
     if (hasShine != hasShineChip) {
         al::PlacementInfo placementInfo;
         const char* linkName = hasShine ? "Shine" : "ShineChip";
@@ -153,9 +156,7 @@ void Utsubo::initAfterPlacement() {
 }
 
 void Utsubo::attackSensor(al::HitSensor* self, al::HitSensor* other) {
-    if (al::isSensorEnemyAttack(self) &&
-        (al::isNerve(this, &NrvUtsubo.Rise) || al::isNerve(this, &NrvUtsubo.AttackSign) ||
-         al::isNerve(this, &NrvUtsubo.Attack) || al::isNerve(this, &NrvUtsubo.Sink))) {
+    if (al::isSensorEnemyAttack(self) && isAttackSensorActive()) {
         rs::sendMsgUtsuboAttack(other, self);
         rs::sendMsgEnemyObjBreak(other, self);
         if (!al::sendMsgEnemyAttack(other, self))
@@ -177,9 +178,7 @@ bool Utsubo::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al::
 }
 
 bool Utsubo::isAttack() const {
-    return al::isNerve(this, &NrvUtsubo.RiseSign) || al::isNerve(this, &NrvUtsubo.Rise) ||
-           al::isNerve(this, &NrvUtsubo.AttackSign) || al::isNerve(this, &NrvUtsubo.Attack) ||
-           al::isNerve(this, &NrvUtsubo.Sink);
+    return al::isNerve(this, &NrvUtsubo.RiseSign) || isAttackSensorActive();
 }
 
 void Utsubo::control() {
@@ -198,7 +197,7 @@ void Utsubo::exeWait() {
 
     if (UtsuboFunction::isInSerchRange(this, mPrevPlayerPos, UtsuboFunction::isMove(mMoveAreaGroup),
                                        cAttackParam)) {
-        al::setNerve(this, &NrvUtsubo.RiseSign);
+        setNerveRiseSign();
         return;
     }
 
@@ -216,8 +215,7 @@ void Utsubo::exeWait() {
     sead::Vector3f playerPosAfterMove = sead::Vector3f::zero;
     UtsuboFunction::calcPlayerPosAfterMove(&playerPosAfterMove, this, mPrevPlayerPos, cAttackParam);
     if (UtsuboFunction::isMove(mMoveAreaGroup)) {
-        sead::Vector3f playerDiff = al::getTrans(this) - playerPosAfterMove;
-        if (playerDiff.length() <= 3600.0f)
+        if ((al::getTrans(this) - playerPosAfterMove).length() <= 3600.0f)
             al::setNerve(this, &NrvUtsubo.Follow);
     }
 }
@@ -235,29 +233,23 @@ void Utsubo::exeMove() {
     if (!al::isOnGround(this, 0))
         al::addVelocityToGravity(this, 1.0f);
 
-    {
-        al::AreaObjGroup* moveAreaGroup = mMoveAreaGroup;
-        const sead::Vector3f& trans = al::getTrans(this);
-        const sead::Vector3f& velocity = al::getVelocity(this);
-        sead::Vector3f nextTrans = trans + velocity;
-        if (!al::isInAreaObj(moveAreaGroup, nextTrans) || al::isGreaterEqualStep(this, 120)) {
-            al::setVelocityZero(this);
-            al::setNerve(this, &NrvUtsubo.Wait);
-            return;
-        }
+    if (!al::isInAreaObj(mMoveAreaGroup, al::getTrans(this) + al::getVelocity(this)) ||
+        al::isGreaterEqualStep(this, 120)) {
+        al::setVelocityZero(this);
+        al::setNerve(this, &NrvUtsubo.Wait);
+        return;
     }
 
     sead::Vector3f playerPosAfterMove = sead::Vector3f::zero;
     UtsuboFunction::calcPlayerPosAfterMove(&playerPosAfterMove, this, mPrevPlayerPos, cAttackParam);
-    sead::Vector3f playerDiff = al::getTrans(this) - playerPosAfterMove;
-    if (playerDiff.length() <= 3600.0f) {
+    if ((al::getTrans(this) - playerPosAfterMove).length() <= 3600.0f) {
         al::setNerve(this, &NrvUtsubo.Follow);
         return;
     }
 
     if (UtsuboFunction::isInSerchRange(this, mPrevPlayerPos, UtsuboFunction::isMove(mMoveAreaGroup),
                                        cAttackParam))
-        al::setNerve(this, &NrvUtsubo.RiseSign);
+        setNerveRiseSign();
 }
 
 void Utsubo::exeFollow() {
@@ -271,11 +263,8 @@ void Utsubo::exeFollow() {
     if (!al::isOnGround(this, 0))
         al::addVelocityToGravity(this, 1.0f);
 
-    al::AreaObjGroup* moveAreaGroup = mMoveAreaGroup;
-    const sead::Vector3f& trans = al::getTrans(this);
-    const sead::Vector3f& velocity = al::getVelocity(this);
-    sead::Vector3f nextTrans = trans + velocity;
-    if (!al::isInAreaObj(moveAreaGroup, nextTrans) || al::isGreaterEqualStep(this, 180)) {
+    if (!al::isInAreaObj(mMoveAreaGroup, al::getTrans(this) + al::getVelocity(this)) ||
+        al::isGreaterEqualStep(this, 180)) {
         al::setVelocityZero(this);
         al::setNerve(this, &NrvUtsubo.WaitForce);
         return;
@@ -283,32 +272,25 @@ void Utsubo::exeFollow() {
 
     if (UtsuboFunction::isInSerchRange(this, mPrevPlayerPos, UtsuboFunction::isMove(mMoveAreaGroup),
                                        cAttackParam))
-        al::setNerve(this, &NrvUtsubo.RiseSign);
+        setNerveRiseSign();
 }
 
 void Utsubo::exeRiseSign() {
     if (al::isFirstStep(this)) {
         al::invalidateClipping(this);
         al::setVelocityZero(this);
-        const sead::Vector3f& trans = al::getTrans(this);
-        mRiseStartTrans.set(trans);
+        mRiseStartTrans.set(al::getTrans(this));
         al::showModelIfHide(this);
 
-        sead::Vector3f upDir;
-        al::calcUpDir(&upDir, this);
-        if (al::isNear(upDir, sead::Vector3f::ey, 0.001f)) {
+        if (isUpright(this)) {
             al::validateShadow(this);
             al::setShadowMaskIntensity(this, "シャドウマスク", 1.0f);
         }
 
-        al::calcUpDir(&upDir, this);
-        al::startAction(this, al::isNear(upDir, sead::Vector3f::ey, 0.001f) ? "RiseSignUp" :
-                                                                              "RiseSignSide");
+        al::startAction(this, isUpright(this) ? "RiseSignUp" : "RiseSignSide");
     }
 
-    sead::Vector3f upDir;
-    al::calcUpDir(&upDir, this);
-    if (al::isNear(upDir, sead::Vector3f::ey, 0.001f))
+    if (isUpright(this))
         al::setShadowMaskIntensity(this, "シャドウマスク", 1.0f - al::calcNerveRate(this, 30));
 
     if (al::isActionEnd(this))
@@ -321,29 +303,15 @@ void Utsubo::exeRise() {
         mRiseStartTrans = al::getTrans(this);
     }
 
-    sead::Vector3f workPos;
-    sead::Vector3f capPos;
     sead::Vector3f upDir;
     al::calcUpDir(&upDir, this);
-    const f32 riseStepDistance = al::getNerveStep(this) * 30.0f;
-    const f32 riseDistance = sead::Mathf::min(mRiseMax, riseStepDistance);
-    workPos =
-        sead::Vector3f(upDir.x * riseDistance, upDir.y * riseDistance, riseDistance * upDir.z) +
-        mRiseStartTrans;
-    al::setTrans(this, workPos);
 
-    workPos.set(sead::Vector3f::zero);
-    calcBodySensorPos(&workPos, this, rs::getPlayerPos(al::getPlayerActor(this, 0)), riseDistance);
-    constexpr s32 sensorComponents[] = {0, 1, 2};
-    for (s32 i : sensorComponents)
-        mBodySensorPos.e[i] = workPos.e[i];
+    f32 riseStepDistance = al::getNerveStep(this) * 30.0f;
+    f32 riseDistance = sead::Mathf::min(mRiseMax, riseStepDistance);
 
-    capPos.set(sead::Vector3f::zero);
-    if (rs::tryGetFlyingCapPos(&capPos, this)) {
-        sead::Vector3f* bodyCapSensorPos = &mBodyCapSensorPos;
-        calcBodySensorPos(&workPos, this, capPos, riseDistance);
-        bodyCapSensorPos->set(workPos);
-    }
+    al::setTrans(this, upDir * riseDistance + mRiseStartTrans);
+
+    updateBodyAndCapSensorPos(riseDistance);
 
     if (mRiseMax <= riseDistance)
         al::setNerve(this, &NrvUtsubo.AttackSign);
@@ -355,19 +323,7 @@ void Utsubo::exeAttackSign() {
         al::invalidateShadow(this);
     }
 
-    const f32 riseMax = mRiseMax;
-    sead::Vector3f bodySensorPos = sead::Vector3f::zero;
-    calcBodySensorPos(&bodySensorPos, this, rs::getPlayerPos(al::getPlayerActor(this, 0)), riseMax);
-    constexpr s32 sensorComponents[] = {0, 1, 2};
-    for (s32 i : sensorComponents)
-        mBodySensorPos.e[i] = bodySensorPos.e[i];
-
-    sead::Vector3f capPos = sead::Vector3f::zero;
-    if (rs::tryGetFlyingCapPos(&capPos, this)) {
-        sead::Vector3f* bodyCapSensorPos = &mBodyCapSensorPos;
-        calcBodySensorPos(&bodySensorPos, this, capPos, riseMax);
-        bodyCapSensorPos->set(bodySensorPos);
-    }
+    updateBodyAndCapSensorPos(mRiseMax);
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvUtsubo.Attack);
@@ -379,19 +335,7 @@ void Utsubo::exeAttack() {
         al::startAction(this, "Attack");
     }
 
-    const f32 riseMax = mRiseMax;
-    sead::Vector3f bodySensorPos = sead::Vector3f::zero;
-    calcBodySensorPos(&bodySensorPos, this, rs::getPlayerPos(al::getPlayerActor(this, 0)), riseMax);
-    constexpr s32 sensorComponents[] = {0, 1, 2};
-    for (s32 i : sensorComponents)
-        mBodySensorPos.e[i] = bodySensorPos.e[i];
-
-    sead::Vector3f capPos = sead::Vector3f::zero;
-    if (rs::tryGetFlyingCapPos(&capPos, this)) {
-        sead::Vector3f* bodyCapSensorPos = &mBodyCapSensorPos;
-        calcBodySensorPos(&bodySensorPos, this, capPos, riseMax);
-        bodyCapSensorPos->set(bodySensorPos);
-    }
+    updateBodyAndCapSensorPos(mRiseMax);
 
     if (al::isActionEnd(this))
         al::setNerve(this, &NrvUtsubo.Sink);
@@ -403,27 +347,14 @@ void Utsubo::exeSink() {
         al::offCollide(this);
     }
 
-    sead::Vector3f workPos;
-    sead::Vector3f capPos;
     sead::Vector3f upDir;
     al::calcUpDir(&upDir, this);
-    const s32 sinkStep = mRiseMax / 25.0f;
-    const f32 riseDistance = al::calcNerveSquareInValue(this, sinkStep, mRiseMax, 0.0f);
-    workPos = riseDistance * upDir + mRiseStartTrans;
-    al::setTrans(this, workPos);
 
-    workPos.set(sead::Vector3f::zero);
-    calcBodySensorPos(&workPos, this, rs::getPlayerPos(al::getPlayerActor(this, 0)), riseDistance);
-    constexpr s32 sensorComponents[] = {0, 1, 2};
-    for (s32 i : sensorComponents)
-        mBodySensorPos.e[i] = workPos.e[i];
+    s32 sinkStep = mRiseMax / 25.0f;
+    f32 riseDistance = al::calcNerveSquareInValue(this, sinkStep, mRiseMax, 0.0f);
+    al::setTrans(this, riseDistance * upDir + mRiseStartTrans);
 
-    capPos.set(sead::Vector3f::zero);
-    if (rs::tryGetFlyingCapPos(&capPos, this)) {
-        sead::Vector3f* bodyCapSensorPos = &mBodyCapSensorPos;
-        calcBodySensorPos(&workPos, this, capPos, riseDistance);
-        bodyCapSensorPos->set(workPos);
-    }
+    updateBodyAndCapSensorPos(riseDistance);
 
     if (al::isGreaterEqualStep(this, sinkStep)) {
         al::hideModelIfShow(this);

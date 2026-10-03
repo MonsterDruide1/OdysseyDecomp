@@ -44090,7 +44090,7 @@ Enemy/Utsubo.o:
     guess: true
   - offset: 0x1a88d0
     size: 264
-    label: _ZN12_GLOBAL__N_117calcBodySensorPosEPN4sead7Vector3IfEEPKN2al9LiveActorERKS2_f
+    label: _ZN12_GLOBAL__N_1L17calcBodySensorPosEPN4sead7Vector3IfEEPKN2al9LiveActorERKS2_f
     status: Matching
 Enemy/UtsuboFunction.o:
   '.text':

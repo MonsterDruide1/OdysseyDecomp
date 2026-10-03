@@ -24,8 +24,8 @@ public:
     bool isRiseReady() const;
     void setNerveRiseSign();
 
-    void exeWaitForWatcher();
     void exeWait();
+    void exeWaitForWatcher();
     void exeMove();
     void exeFollow();
     void exeRiseSign();
@@ -36,18 +36,21 @@ public:
     void exeWaitForce();
 
 private:
-    sead::Vector3f mRiseStartTrans;
-    f32 mRiseMax;
-    sead::Vector3f mPrevPlayerPos;
-    sead::Vector3f mUnusedSensorPos;
-    sead::Vector3f mBodySensorPos;
-    sead::Vector3f mBodyCapSensorPos;
-    al::AreaObjGroup* mMoveAreaGroup;
+    bool isAttackSensorActive() const;
+    void updateBodyAndCapSensorPos(f32 riseDistance);
+
+    sead::Vector3f mRiseStartTrans = sead::Vector3f::zero;
+    f32 mRiseMax = 2000.0f;
+    sead::Vector3f mPrevPlayerPos = sead::Vector3f::zero;
+    sead::Vector3f _124 = sead::Vector3f::zero;
+    sead::Vector3f mBodySensorPos = sead::Vector3f::zero;
+    sead::Vector3f mBodyCapSensorPos = sead::Vector3f::zero;
+    al::AreaObjGroup* mMoveAreaGroup = nullptr;
     bool mIsWaitForWatcher;
-    al::LiveActor* mLinkedShineActor;
-    bool mIsCloudSeaPlacement;
-    bool mIsOnDepthShadow;
-    sead::Matrix34f mSurfaceMtx;
+    al::LiveActor* mLinkedShineActor = nullptr;
+    bool mIsCloudSeaPlacement = false;
+    bool mIsOnDepthShadow = true;
+    sead::Matrix34f mSurfaceMtx = sead::Matrix34f::ident;
 };
 
 static_assert(sizeof(Utsubo) == 0x198);
