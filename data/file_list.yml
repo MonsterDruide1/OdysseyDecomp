@@ -77267,7 +77267,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2c8784
     size: 3588
     label: _ZN10Motorcycle8movementEv
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x2c9588
     size: 44
     label: _ZN10Motorcycle4killEv

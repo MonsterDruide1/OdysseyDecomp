@@ -1225,7 +1225,80 @@ static inline bool isCollidedGround(Motorcycle* actor) {
     return rs::isCollidedGround(actor);
 }
 
-// NON_MATCHING: Major optimization differences https://decomp.me/scratch/B2j7L
+static inline void updateGroundContacts(Motorcycle* actor, MotorcycleParams* params) {
+    if (al::isNoCollide(actor))
+        return;
+
+    params->isTouchingGround = false;
+    params->isTouchingWall = false;
+    params->isTouchingFront = false;
+    params->isTouchingBack = false;
+
+    if (rs::isCollidedGround(actor)) {
+        CollisionShapeKeeper* shapeKeeper = actor->getPlayerCollider()->getCollisionShapeKeeper();
+        s32 numResults = shapeKeeper->getNumCollideResult();
+        for (s32 i = 0; i < numResults; i++) {
+            const CollidedShapeResult* result = shapeKeeper->getCollidedShapeResult(i);
+            if (result->isArrow()) {
+                const al::ArrowHitInfo& arrowHitInfo = result->getArrowHitInfo();
+                const sead::Vector3f& normal = arrowHitInfo.hitInfo->triangle.getNormal(0);
+                if (al::isFloorPolygon(normal, sGroundNormal)) {
+                    if (result->getShapeInfoArrow()->get_18() == 0) {
+                        params->isTouchingGround = true;
+                        params->groundNormalAvg +=
+                            result->getArrowHitInfo().hitInfo->triangle.getNormal(0);
+                    } else {
+                        params->isTouchingWall = true;
+                    }
+                }
+            } else if (result->isSphere()) {
+                const al::SphereHitInfo& sphereHitInfo = result->getSphereHitInfo();
+                sead::Vector3f normal = sphereHitInfo.hitInfo->triangle.getNormal(0);
+                if (al::isEqualString("FrontFace", result->getShapeInfoSphere()->getName())) {
+                    params->frontContactPoints.emplaceBack(normal);
+                    if (al::isFloorPolygon(normal, sGroundNormal))
+                        params->isTouchingFront = true;
+                } else if (al::isEqualString("BackFace", result->getShapeInfoSphere()->getName())) {
+                    params->backContactPoints.emplaceBack(normal);
+                    if (al::isFloorPolygon(normal, sGroundNormal))
+                        params->isTouchingBack = true;
+                }
+            }
+        }
+    }
+    al::tryNormalizeOrZero(&params->groundNormalAvg);
+}
+
+static inline bool tryFindWaterSurface(sead::Vector3f* surface, const al::LiveActor* actor) {
+    sead::Vector3f flatSurface = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f waterSurface = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f waterSurfaceNormal = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f actorUp = {0.0f, 0.0f, 0.0f};
+    al::calcUpDir(&actorUp, actor);
+    bool foundFlat = al::calcFindWaterSurfaceFlat(&flatSurface, nullptr, actor, al::getTrans(actor),
+                                                  sead::Vector3f::ey, 121.0f);
+    bool foundWater = al::calcFindWaterSurface(&waterSurface, &waterSurfaceNormal, actor,
+                                               al::getTrans(actor), sead::Vector3f::ey, 121.0f);
+
+    if (foundFlat || foundWater) {
+        if (foundFlat && foundWater) {
+            const sead::Vector3f* selectedSurface = &flatSurface;
+            if ((flatSurface - al::getTrans(actor)).length() <
+                (waterSurface - al::getTrans(actor)).length())
+                selectedSurface = &waterSurface;
+            surface->set(*selectedSurface);
+        } else if (foundFlat) {
+            surface->set(flatSurface);
+        } else {
+            surface->set(waterSurface);
+        }
+        return true;
+    }
+
+    surface->set(0.0f, 0.0f, 0.0f);
+    return false;
+}
+
 void Motorcycle::movement() {
     if (rs::isActiveBindKeepDemo(mBindKeepDemoInfo)) {
         mPlayerAnimator->update(0.0f, 1.0f, 0.0f);
@@ -1321,47 +1394,7 @@ void Motorcycle::movement() {
     params->backContactPoints.clear();
     params->groundNormalAvg = {0.0f, 0.0f, 0.0f};
 
-    if (!al::isNoCollide(this)) {
-        params->isTouchingGround = false;
-        params->isTouchingWall = false;
-        params->isTouchingFront = false;
-        params->isTouchingBack = false;
-
-        if (rs::isCollidedGround(this)) {
-            CollisionShapeKeeper* shapeKeeper = getPlayerCollider()->getCollisionShapeKeeper();
-            s32 numResults = shapeKeeper->getNumCollideResult();
-            for (s32 i = 0; i < numResults; i++) {
-                const CollidedShapeResult* result = shapeKeeper->getCollidedShapeResult(i);
-                if (result->isArrow()) {
-                    const al::ArrowHitInfo& arrowHitInfo = result->getArrowHitInfo();
-                    const sead::Vector3f& normal = arrowHitInfo.hitInfo->triangle.getNormal(0);
-                    if (al::isFloorPolygon(normal, sGroundNormal)) {
-                        if (result->getShapeInfoArrow()->get_18() == 0) {
-                            params->isTouchingGround = true;
-                            params->groundNormalAvg +=
-                                result->getArrowHitInfo().hitInfo->triangle.getNormal(0);
-                        } else {
-                            params->isTouchingWall = true;
-                        }
-                    }
-                } else if (result->isSphere()) {
-                    const al::SphereHitInfo& sphereHitInfo = result->getSphereHitInfo();
-                    sead::Vector3f normal = sphereHitInfo.hitInfo->triangle.getNormal(0);
-                    if (al::isEqualString("FrontFace", result->getShapeInfoSphere()->getName())) {
-                        params->frontContactPoints.emplaceBack(normal);
-                        if (al::isFloorPolygon(normal, sGroundNormal))
-                            params->isTouchingFront = true;
-                    } else if (al::isEqualString("BackFace",
-                                                 result->getShapeInfoSphere()->getName())) {
-                        params->backContactPoints.emplaceBack(normal);
-                        if (al::isFloorPolygon(normal, sGroundNormal))
-                            params->isTouchingBack = true;
-                    }
-                }
-            }
-        }
-        al::tryNormalizeOrZero(&params->groundNormalAvg);
-    }
+    updateGroundContacts(this, params);
 
     if (rs::isCollidedGround(this)) {
         if (isTouchingGround(mParams) && !mParams->isTouchingWall) {
@@ -1417,33 +1450,8 @@ void Motorcycle::movement() {
     al::makeMtxSRT(&mWaterSurfaceMtx, this);
 
     if (mPlayerPuppet && al::isInWater(this)) {
-        sead::Vector3f flatSurface = {0.0f, 0.0f, 0.0f};
-        sead::Vector3f waterSurface = {0.0f, 0.0f, 0.0f};
-        sead::Vector3f waterSurfaceNormal = {0.0f, 0.0f, 0.0f};
-        sead::Vector3f actorUp = {0.0f, 0.0f, 0.0f};
-        al::calcUpDir(&actorUp, this);
-        bool foundFlat = al::calcFindWaterSurfaceFlat(
-            &flatSurface, nullptr, this, al::getTrans(this), sead::Vector3f::ey, 121.0f);
-        bool foundWater = al::calcFindWaterSurface(&waterSurface, &waterSurfaceNormal, this,
-                                                   al::getTrans(this), sead::Vector3f::ey, 121.0f);
-
         sead::Vector3f surface = {0.0f, 0.0f, 0.0f};
-        bool foundSurface = false;
-        if (foundFlat || foundWater) {
-            if (foundFlat && foundWater)
-                if ((flatSurface - al::getTrans(this)).length() >
-                    (waterSurface - al::getTrans(this)).length())
-                    surface.set(flatSurface);
-                else
-                    surface.set(waterSurface);
-            else if (foundFlat)
-                surface.set(flatSurface);
-            else
-                surface.set(waterSurface);
-            foundSurface = true;
-        }
-
-        if (foundSurface) {
+        if (tryFindWaterSurface(&surface, this)) {
             al::updateMaterialCodePuddle(this, true);
             al::updateMaterialCodeWater(this, false);
             mWaterSurfaceMtx.setTranslation(surface);
