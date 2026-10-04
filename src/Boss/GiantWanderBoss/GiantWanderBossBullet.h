@@ -1,7 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/LiveActor.h"
@@ -14,9 +12,9 @@ class SensorMsg;
 
 class GiantWanderBossBullet : public al::LiveActor {
 public:
-    GiantWanderBossBullet(const char*);
+    GiantWanderBossBullet(const char* actorName);
 
-    void init(const al::ActorInitInfo&) override;
+    void init(const al::ActorInitInfo& info) override;
     void appear() override;
     void kill() override;
     void control() override;
@@ -32,7 +30,7 @@ public:
     void checkCollideAndSendMsg();
 
 private:
-    u8 _108[0x78];
+    void* padding[15];
 };
 
 static_assert(sizeof(GiantWanderBossBullet) == 0x180);

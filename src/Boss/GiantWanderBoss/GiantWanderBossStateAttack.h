@@ -30,9 +30,18 @@ public:
     al::LiveActor* getActor() const { return mActor; }
 
 private:
+    enum class MineAttackType : s32 {
+        None = 0,
+        FirstPhase = 1,
+        Escape = 2,
+        LongRange = 3,
+    };
+
+    void startAttackAction(const char* actionName);
+
     GiantWanderBossBullet* mBullet = nullptr;
     GiantWanderBossMine* mMine = nullptr;
-    s32 mMineAttackType = 0;
+    MineAttackType mMineAttackType = MineAttackType::None;
 };
 
 static_assert(sizeof(GiantWanderBossStateAttack) == 0x38);

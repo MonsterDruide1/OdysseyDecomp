@@ -20,16 +20,16 @@ NERVES_MAKE_NOSTRUCT(GiantWanderBossStateAttack, AttackSign, AttackSignWait, Att
 
 GiantWanderBossStateAttack::GiantWanderBossStateAttack(al::LiveActor* actor)
     : al::ActorStateBase("徘徊ボス攻撃", actor) {
-    initNerve(&AttackSign, 0);
+    initNerve(&AttackSign);
 }
 
 void GiantWanderBossStateAttack::appear() {
-    NerveStateBase::appear();
+    al::NerveStateBase::appear();
     al::setNerve(this, &AttackSign);
 }
 
 void GiantWanderBossStateAttack::kill() {
-    NerveStateBase::kill();
+    al::NerveStateBase::kill();
 
     if (mBullet)
         mBullet->startLaunch();
@@ -47,64 +47,43 @@ void GiantWanderBossStateAttack::startWithBullet(GiantWanderBossBullet* bullet) 
 void GiantWanderBossStateAttack::startWithMineFirstPhase(GiantWanderBossMine* mine) {
     mBullet = nullptr;
     mMine = mine;
-    mMineAttackType = 1;
+    mMineAttackType = MineAttackType::FirstPhase;
     al::setNerve(this, &AttackSign);
 }
 
 void GiantWanderBossStateAttack::startWithMineEscape(GiantWanderBossMine* mine) {
     mBullet = nullptr;
     mMine = mine;
-    mMineAttackType = 2;
+    mMineAttackType = MineAttackType::Escape;
     al::setNerve(this, &AttackSign);
 }
 
 void GiantWanderBossStateAttack::startWithMineLongRange(GiantWanderBossMine* mine) {
     mBullet = nullptr;
     mMine = mine;
-    mMineAttackType = 3;
+    mMineAttackType = MineAttackType::LongRange;
     al::setNerve(this, &AttackSign);
 }
 
 void GiantWanderBossStateAttack::exeAttackSign() {
-    if (al::isFirstStep(this)) {
-        al::startAction(mActor, "AttackSign");
-
-        if (mMine)
-            al::startAction(mMine, "AttackSign");
-
-        if (mBullet)
-            al::startAction(mBullet, "AttackSign");
-    }
+    if (al::isFirstStep(this))
+        startAttackAction("AttackSign");
 
     if (al::isActionEnd(mActor))
         al::setNerve(this, &AttackSignWait);
 }
 
 void GiantWanderBossStateAttack::exeAttackSignWait() {
-    if (al::isFirstStep(this)) {
-        al::startAction(mActor, "AttackSignWait");
-
-        if (mMine)
-            al::startAction(mMine, "AttackSignWait");
-
-        if (mBullet)
-            al::startAction(mBullet, "AttackSignWait");
-    }
+    if (al::isFirstStep(this))
+        startAttackAction("AttackSignWait");
 
     if (al::isGreaterEqualStep(this, 30))
         al::setNerve(this, &AttackStart);
 }
 
 void GiantWanderBossStateAttack::exeAttackStart() {
-    if (al::isFirstStep(this)) {
-        al::startAction(mActor, "AttackStart");
-
-        if (mMine)
-            al::startAction(mMine, "AttackStart");
-
-        if (mBullet)
-            al::startAction(mBullet, "AttackStart");
-    }
+    if (al::isFirstStep(this))
+        startAttackAction("AttackStart");
 
     if (al::isActionEnd(mActor))
         al::setNerve(this, &Attack);
@@ -118,27 +97,21 @@ void GiantWanderBossStateAttack::exeAttack() {
             mBullet->startLaunch();
             mBullet = nullptr;
         } else {
-            GiantWanderBossMine** mine;
-
             switch (mMineAttackType) {
-            case 3:
-                mine = &mMine;
+            case MineAttackType::LongRange:
                 mMine->startLaunchForLongRange();
                 break;
-            case 1:
-                mine = &mMine;
+            case MineAttackType::FirstPhase:
                 mMine->startLaunchForFirstPhase();
                 break;
-            case 2:
-                mine = &mMine;
+            case MineAttackType::Escape:
                 mMine->startLaunchForEscape();
                 break;
             default:
-                mine = &mMine;
                 break;
             }
 
-            *mine = nullptr;
+            mMine = nullptr;
         }
     }
 
@@ -150,8 +123,16 @@ void GiantWanderBossStateAttack::exeAttackEnd() {
     if (al::isFirstStep(this))
         al::startAction(mActor, "AttackEnd");
 
-    if (al::isActionEnd(mActor)) {
-        al::NerveStateBase* state = this;
-        state->kill();
-    }
+    if (al::isActionEnd(mActor))
+        kill();
+}
+
+inline void GiantWanderBossStateAttack::startAttackAction(const char* actionName) {
+    al::startAction(mActor, actionName);
+
+    if (mMine)
+        al::startAction(mMine, actionName);
+
+    if (mBullet)
+        al::startAction(mBullet, actionName);
 }
