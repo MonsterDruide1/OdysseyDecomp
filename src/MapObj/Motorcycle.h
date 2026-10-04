@@ -2,7 +2,6 @@
 
 #include <basis/seadTypes.h>
 #include <container/seadObjArray.h>
-#include <container/seadPtrArray.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
@@ -17,17 +16,16 @@ namespace al {
 class CollisionPartsConnector;
 class CameraTargetBase;
 class TransCameraSubTarget;
-class CameraSubTargetTurnParam;
+struct CameraSubTargetTurnParam;
 
 }  // namespace al
 class IUsePlayerPuppet;
 class PlayerCollider;
 class MotorcyclePlayerAnimator;
 class BindKeepDemoInfo;
-class MotorcycleColliderCameraTarget;
 
 struct MotorcycleParams {
-    bool isInBack(const sead::Vector3f pos) {
+    bool isInBack(sead::Vector3f pos) const {
         for (s32 i = 0; i < backContactPoints.size(); i++) {
             const sead::Vector3f& contact = *backContactPoints[i];
             const f32 value = -pos.y * contact.y - pos.x * contact.x - pos.z * contact.z;
@@ -37,7 +35,7 @@ struct MotorcycleParams {
         return false;
     }
 
-    bool isInFront(const sead::Vector3f pos) {
+    bool isInFront(sead::Vector3f pos) const {
         for (s32 i = 0; i < frontContactPoints.size(); i++)
             if (pos.dot(*frontContactPoints[i]) < 0.0f)
                 return true;
@@ -45,7 +43,7 @@ struct MotorcycleParams {
     }
 
     bool isOnGround = false;
-    char isOnJump = false;
+    char isOnJumpCode = false;  // NOTE: using bool breaks matching
     bool isTouchingGround = false;
     bool isTouchingWall = false;
     bool isTouchingFront = false;
@@ -72,10 +70,10 @@ static_assert(sizeof(MotorcyclePose) == 0x10);
 struct ParkingParams {
     al::LiveActor* actor = nullptr;
     MotorcyclePose pose;
-    sead::Quatf quatA = sead::Quatf::unit;
-    sead::Quatf quatB = sead::Quatf::unit;
-    sead::Vector3f mCameraSubTargetPos = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f vectorB = {0.0f, 0.0f, 0.0f};
+    sead::Quatf startQuat = sead::Quatf::unit;
+    sead::Quatf targetQuat = sead::Quatf::unit;
+    sead::Vector3f startTrans = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
 };
 
 static_assert(sizeof(ParkingParams) == 0x50);
@@ -154,13 +152,10 @@ public:
 
     bool isStickWorldPose() const { return mIsStickWorldPose; }
 
-    BindKeepDemoInfo* getBindKeepDemoInfo() const { return mBindKeepDemoInfo; }
-
-    s32* getOffDelay() { return &mGetOffDelay; }
-
-    IUsePlayerPuppet** getPuppy() { return &mPlayerPuppet; }
-
 private:
+    bool tryTriggerGetOff_(IUsePlayerPuppet** playerPuppet, MotorcyclePlayerAnimator* animator,
+                           al::CameraTargetBase* camera, al::TransCameraSubTarget* subCamera);
+
     IUsePlayerPuppet* mPlayerPuppet = nullptr;
     PlayerCollider* mPlayerCollider = nullptr;
     MotorcycleParams* mParams = nullptr;
@@ -171,7 +166,7 @@ private:
     ParkingParams* mParkingParams = nullptr;
     BindKeepDemoInfo* mBindKeepDemoInfo = nullptr;
     al::CollisionPartsConnector* mCollisionPartsConnector = nullptr;
-    MotorcycleColliderCameraTarget* mColliderCameraTarget = nullptr;
+    PlayerColliderCameraTarget* mColliderCameraTarget = nullptr;
 
     al::TransCameraSubTarget* mTransCameraSubTarget = nullptr;
     al::CameraSubTargetTurnParam* mCameraSubTargetTurnParam = nullptr;
@@ -200,23 +195,11 @@ private:
     s32 mItemSpawnCount = 3;
 
     bool mIsOnLight = false;
-    bool mIsAccelerating = false;
+    bool mIsBraking = false;
     bool mIsStickWorldPose = false;
-    bool mIsOnJump = false;
+    bool mIsVariableJump = false;
     bool mIsInWater = false;
     bool mIsExecutingBindDemo = false;
 };
 
 static_assert(sizeof(Motorcycle) == 0x250);
-
-const sead::Vector3f sColliderTrans = {0.0f, 0.0f, -85.0f};
-
-class MotorcycleColliderCameraTarget : public PlayerColliderCameraTarget {
-public:
-    MotorcycleColliderCameraTarget(const Motorcycle* actor)
-        : PlayerColliderCameraTarget(actor, actor) {}
-
-    void calcTrans(sead::Vector3f* offset) const override {
-        al::calcTransLocalOffset(offset, getActor(), sColliderTrans);
-    }
-};

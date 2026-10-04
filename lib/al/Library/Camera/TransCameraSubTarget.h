@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 #include "Library/Camera/CameraSubTargetBase.h"
@@ -15,7 +14,7 @@ public:
 
 private:
     const char* mName;
-    sead::Vector3f* mTrans;
+    const sead::Vector3f* mTrans;
 };
 
 static_assert(sizeof(TransCameraSubTarget) == 0x28);

@@ -77235,7 +77235,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2c7078
     size: 1636
     label: _ZN10Motorcycle4initERKN2al13ActorInitInfoE
-    status: NonMatchingMajor
+    status: Matching
   - offset: 0x2c76dc
     size: 24
     label: _ZN10Motorcycle18initAfterPlacementEv
@@ -77246,7 +77246,7 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2c7870
     size: 184
-    label: _Z12isAnyRideRunP10Motorcycle
+    label: _ZL12isAnyRideRunP10Motorcycle
     status: Matching
   - offset: 0x2c7928
     size: 2492
@@ -77254,15 +77254,15 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2c82e4
     size: 240
-    label: _Z7endRideP10MotorcycleP24MotorcyclePlayerAnimatorPN2al16CameraTargetBaseEPNS3_20TransCameraSubTargetE
+    label: _ZL7endRideP10MotorcycleP24MotorcyclePlayerAnimatorPN2al16CameraTargetBaseEPNS3_20TransCameraSubTargetE
     status: Matching
   - offset: 0x2c83d4
     size: 400
-    label: _Z14syncPuppetPoseP16IUsePlayerPuppetP10MotorcycleRKN4sead4QuatIfEERKNS3_7Vector3IfEE
+    label: _ZL14syncPuppetPoseP16IUsePlayerPuppetP10MotorcycleRKN4sead4QuatIfEERKNS3_7Vector3IfEE
     status: Matching
   - offset: 0x2c8564
     size: 544
-    label: _Z11startGetOffP10MotorcyclePP16IUsePlayerPuppetPiP24MotorcyclePlayerAnimatorPN2al16CameraTargetBaseEPNS7_20TransCameraSubTargetE
+    label: _ZL11startGetOffP10MotorcyclePP16IUsePlayerPuppetPiP24MotorcyclePlayerAnimatorPN2al16CameraTargetBaseEPNS7_20TransCameraSubTargetE
     status: Matching
   - offset: 0x2c8784
     size: 3588
@@ -77286,7 +77286,7 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2c9950
     size: 1232
-    label: _Z17updateOrientationP10Motorcyclef
+    label: _ZL17updateOrientationP10Motorcyclef
     status: Matching
   - offset: 0x2c9e20
     size: 384
@@ -77298,7 +77298,7 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2ca0e0
     size: 208
-    label: _Z24tryHandleGroundCollisionP10Motorcycle
+    label: _ZL24tryHandleGroundCollisionP10Motorcycle
     status: Matching
   - offset: 0x2ca1b0
     size: 396
@@ -77330,11 +77330,11 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2ca7c4
     size: 180
-    label: _Z7TryJumpP10MotorcycleP16IUsePlayerPuppet
+    label: _ZL7tryJumpP10MotorcycleP16IUsePlayerPuppet
     status: Matching
   - offset: 0x2ca878
     size: 1056
-    label: _Z10tryParkingP10MotorcycleP16IUsePlayerPuppetP13ParkingParamsP14MotorcyclePose
+    label: _ZL10tryParkingP10MotorcycleP16IUsePlayerPuppetP13ParkingParamsP14MotorcyclePose
     status: Matching
   - offset: 0x2cac98
     size: 1032
@@ -77342,19 +77342,19 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2cb0a0
     size: 756
-    label: _Z14updateSeRumbleP13SeRumbleStateP10MotorcycleP16IUsePlayerPuppetfb
+    label: _ZL14updateSeRumbleP13SeRumbleStateP10MotorcycleP16IUsePlayerPuppetfb
     status: Matching
   - offset: 0x2cb394
     size: 172
-    label: _Z22handleCeilingCollisionP10Motorcycle
+    label: _ZL22handleCeilingCollisionP10Motorcycle
     status: Matching
   - offset: 0x2cb440
     size: 868
-    label: _Z24updateSteerAngleAndAccelP10MotorcycleP16IUsePlayerPuppetP17AccelerationStatePf
+    label: _ZL24updateSteerAngleAndAccelP10MotorcycleP16IUsePlayerPuppetP17AccelerationStatePf
     status: Matching
   - offset: 0x2cb7a4
     size: 572
-    label: _Z14calcInputStickPN4sead7Vector2IfEEP10MotorcycleP16IUsePlayerPuppet
+    label: _ZL14calcInputStickPN4sead7Vector2IfEEP10MotorcycleP16IUsePlayerPuppet
     status: Matching
   - offset: 0x2cb9e0
     size: 40
@@ -77370,19 +77370,19 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2cbf24
     size: 392
-    label: _Z31tryHandleHighSpeedWallCollisionP10MotorcycleRKN4sead7Vector3IfEE
+    label: _ZL31tryHandleHighSpeedWallCollisionP10MotorcycleRKN4sead7Vector3IfEE
     status: Matching
   - offset: 0x2cc0ac
     size: 1352
-    label: _Z21updateRunningVelocityP10Motorcyclef
+    label: _ZL21updateRunningVelocityP10Motorcyclef
     status: Matching
   - offset: 0x2cc5f4
     size: 228
-    label: _Z23TryJumpWithCameraAbsorbP10MotorcycleP16IUsePlayerPuppet
+    label: _ZL23tryJumpWithCameraAbsorbP10MotorcycleP16IUsePlayerPuppet
     status: Matching
   - offset: 0x2cc6d8
     size: 404
-    label: _Z16TryWheelieOrFallP10Motorcycle
+    label: _ZL16tryWheelieOrFallP10Motorcycle
     status: Matching
   - offset: 0x2cc86c
     size: 1000
@@ -77398,19 +77398,19 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2cd200
     size: 360
-    label: _Z15applyAirPhysicsP10MotorcycleP16IUsePlayerPuppetf
+    label: _ZL15applyAirPhysicsP10MotorcycleP16IUsePlayerPuppetf
     status: Matching
   - offset: 0x2cd368
     size: 452
-    label: _Z8tryBoundP10Motorcycle
+    label: _ZL8tryBoundP10Motorcycle
     status: Matching
   - offset: 0x2cd52c
     size: 512
-    label: _Z20updateAirOrientationP10Motorcycle
+    label: _ZL20updateAirOrientationP10Motorcycle
     status: Matching
   - offset: 0x2cd72c
     size: 508
-    label: _Z7tryLandP10Motorcycle
+    label: _ZL7tryLandP10Motorcycle
     status: Matching
   - offset: 0x2cd928
     size: 604
@@ -77438,7 +77438,7 @@ MapObj/Motorcycle.o:
     status: Matching
   - offset: 0x2ce454
     size: 644
-    label: _Z18updateBoundPhysicsP10MotorcycleP16IUsePlayerPuppetPfP13SeRumbleStateb
+    label: _ZL18updateBoundPhysicsP10MotorcycleP16IUsePlayerPuppetPfP13SeRumbleStateb
     status: Matching
   - offset: 0x2ce6d8
     size: 224
@@ -77481,7 +77481,7 @@ MapObj/Motorcycle.o:
     guess: true
   - offset: 0x2cec30
     size: 24
-    label: _ZNK30MotorcycleColliderCameraTarget9calcTransEPN4sead7Vector3IfEE
+    label: _ZNK12_GLOBAL__N_130MotorcycleColliderCameraTarget9calcTransEPN4sead7Vector3IfEE
     status: Matching
   - offset: 0x2cec48
     size: 8
@@ -77491,7 +77491,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2cec50
     size: 40
     label: _ZNK12_GLOBAL__N_117MotorcycleNrvJump12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cec78
     size: 8
@@ -77501,7 +77501,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2cec80
     size: 40
     label: _ZNK12_GLOBAL__N_125MotorcycleNrvRideWaitJump12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ceca8
     size: 8
@@ -77516,7 +77516,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2cecb8
     size: 40
     label: _ZNK12_GLOBAL__N_127MotorcycleNrvRideRunWheelie12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2cece0
     size: 8
@@ -77526,7 +77526,7 @@ MapObj/Motorcycle.o:
   - offset: 0x2cece8
     size: 40
     label: _ZNK12_GLOBAL__N_124MotorcycleNrvRideRunJump12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x2ced10
     size: 8
@@ -77605,7 +77605,7 @@ MapObj/Motorcycle.o:
     guess: true
   - offset: 0x2ced88
     size: 408
-    label: _Z22tryHandleWallCollisionP10Motorcycle
+    label: _ZL22tryHandleWallCollisionP10Motorcycle
     status: Matching
   - offset: 0x2cef20
     size: 8
@@ -77619,7 +77619,7 @@ MapObj/Motorcycle.o:
     guess: true
   - offset: 0x2cef30
     size: 328
-    label: _Z14updateVelocityP10MotorcycleRKN4sead7Vector3IfEES5_
+    label: _ZL14updateVelocityP10MotorcycleRKN4sead7Vector3IfEES5_
     status: Matching
   - offset: 0x2cf078
     size: 8
