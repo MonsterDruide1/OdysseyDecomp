@@ -46,7 +46,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v7
       with:
-        python-version: '3.14'
+        python-version: '3.15'
         cache: 'pip'
     - name: Set up python package dependencies
       run: pip install capstone colorama cxxfilt pyelftools watchdog python-Levenshtein toml
