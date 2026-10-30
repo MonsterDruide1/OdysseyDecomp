@@ -282125,27 +282125,27 @@ Library/Se/VolumeKeeper.o:
     label:
     - _ZN2al19SeGroupVolumeKeeperC1EPNS_24AudioEffectLevelDetectorE
     - _ZN2al19SeGroupVolumeKeeperC2EPNS_24AudioEffectLevelDetectorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f1c30
     size: 92
     label: _ZN2al19SeGroupVolumeKeeper6updateEb
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x9f1c8c
     size: 100
     label: _ZNK2al19SeGroupVolumeKeeper14getVolumeAtmosEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f1cf0
     size: 100
     label: _ZNK2al19SeGroupVolumeKeeper17getVolumeAtmosObjEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f1d54
     size: 44
     label: _ZNK2al19SeGroupVolumeKeeper20getVolumePlayerVoiceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x9f1d80
     size: 44
     label: _ZNK2al19SeGroupVolumeKeeper15getVolumePlayerEv
-    status: NotDecompiled
+    status: Matching
 Library/Sequence/Sequence.o:
   '.text':
   - offset: 0x9f1dac

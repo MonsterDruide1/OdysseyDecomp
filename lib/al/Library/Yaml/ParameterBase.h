@@ -58,9 +58,7 @@ SEAD_ENUM(YamlParamType,
             return YamlParamType::text(YamlParamType::Name);                                       \
         }                                                                                          \
                                                                                                    \
-        YamlParamType getParamType() const override {                                              \
-            return YamlParamType::Name;                                                            \
-        }                                                                                          \
+        YamlParamType getParamType() const override { return YamlParamType::Name; }                \
     };
 
 class ParameterBase {

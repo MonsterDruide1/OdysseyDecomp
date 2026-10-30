@@ -21,7 +21,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 file(GLOB_RECURSE SOURCES_GAME CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/src/*.h)
 file(GLOB_RECURSE SOURCES_AL CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/lib/al/*.cpp ${PROJECT_SOURCE_DIR}/lib/al/*.c ${PROJECT_SOURCE_DIR}/lib/al/*.h ${PROJECT_SOURCE_DIR}/lib/al/*.hpp)
 
-add_executable(odyssey ${SOURCES_GAME} ${SOURCES_AL})
+add_executable(odyssey ${SOURCES_GAME} ${SOURCES_AL}
+        lib/al/Library/Audio/AudioEffectLevelDetector.h
+        lib/al/Library/Audio/AudioEffectLevelDetector.h
+        lib/al/Library/Audio/AudioEffectLevelDetector.h)
 
 target_include_directories(odyssey PRIVATE src)
 target_include_directories(odyssey PRIVATE lib/al)
