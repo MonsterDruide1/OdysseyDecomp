@@ -10,7 +10,6 @@
 #include "Library/Scene/ISceneObj.h"
 
 #include "Scene/SceneObjFactory.h"
-#include "System/GameDataHolder.h"
 
 namespace al {
 class PlacementId;

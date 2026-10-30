@@ -26,7 +26,7 @@ public:
     virtual void init();
     virtual void movement();
     void setPadName();
-    bool tryChangeSequence(const char*);
+    bool tryChangeSequence(const char* name);
     void drawMain();
 
     void exePlay();

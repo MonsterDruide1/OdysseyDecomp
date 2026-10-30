@@ -1,13 +1,10 @@
 #pragma once
 
 #include "Library/Audio/IAudioFrameProcess.h"
-#include "Library/Controller/GamePadSystem.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace nn::hid {
-
 class VibrationMixer;
-
 }  // namespace nn::hid
 
 namespace al {
