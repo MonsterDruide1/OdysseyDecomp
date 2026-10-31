@@ -2,7 +2,7 @@
 
 #include "Library/Area/AreaObjUtil.h"
 #include "Library/Base/StringUtil.h"
-#include "Library/Collision/KCollisionServer.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

@@ -2,7 +2,7 @@
 
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/AreaObjUtil.h"
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
+#include "Library/Collision/CollisionUtil.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

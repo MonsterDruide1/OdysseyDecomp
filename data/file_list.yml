@@ -232555,7 +232555,7 @@ Library/Collision/CollisionPartsKeeperPtrArray.o:
     label: _ZN2al28CollisionPartsKeeperPtrArray8movementEv
     status: NotDecompiled
     lazy: true
-Library/Collision/CollisionPartsKeeperUtil.o:
+Library/Collision/CollisionUtil.o:
   '.text':
   - offset: 0x84b9dc
     size: 12
@@ -232856,7 +232856,7 @@ Library/Collision/CollisionPartsKeeperUtil.o:
     label: _ZNSt3__127__insertion_sort_incompleteIRPFbRKN15alCollisionUtil17SphereMoveHitInfoES4_EPS2_EEbT0_S9_T_
     status: NotDecompiled
     lazy: true
-Library/Collision/CollisionPartsTriangle.o:
+Library/Collision/HitInfo.o:
   '.text':
   - offset: 0x850718
     size: 80
@@ -232966,8 +232966,6 @@ Library/Collision/CollisionPartsTriangle.o:
     size: 44
     label: _ZneRKN2al8TriangleES2_
     status: Matching
-Library/Collision/KCollisionFunc.o:
-  '.text':
   - offset: 0x851508
     size: 96
     label:
@@ -233002,6 +233000,8 @@ Library/Collision/KCollisionFunc.o:
     size: 304
     label: _ZNK2al11DiskHitInfo13calcFixVectorEPN4sead7Vector3IfEES4_
     status: Matching
+Library/Collision/KCollisionFunc.o:
+  '.text':
   - offset: 0x851874
     size: 64
     label: _ZNK2al11DiskHitInfo19calcFixVectorNormalEPN4sead7Vector3IfEES4_
@@ -233242,7 +233242,7 @@ Library/Collision/KCollisionServer.o:
     size: 8
     label: _ZN2al16KCollisionServer12getBlockDataEPKjj
     status: NotDecompiled
-Library/Collision/PartsInterpolator.o:
+Library/Collision/SphereInterpolator.o:
   '.text':
   - offset: 0x856e94
     size: 196
@@ -233272,6 +233272,8 @@ Library/Collision/PartsInterpolator.o:
     size: 48
     label: _ZNK2al18SphereInterpolator18calcStepMoveVectorEPN4sead7Vector3IfEE
     status: Matching
+Library/Collision/SpherePoseInterpolator.o:
+  '.text':
   - offset: 0x8570e4
     size: 268
     label: _ZN2al22SpherePoseInterpolator11startInterpERKN4sead7Vector3IfEES5_ffRKNS1_4QuatIfEES9_f
@@ -233300,6 +233302,8 @@ Library/Collision/PartsInterpolator.o:
     size: 44
     label: _ZN2al22SpherePoseInterpolator13getMoveVectorEPN4sead7Vector3IfEE
     status: Matching
+Library/Collision/TriangleFilter.o:
+  '.text':
   - offset: 0x8573fc
     size: 40
     label: _ZNK2al26TriangleFilterIgnoreGround17isInvalidTriangleERKNS_8TriangleE
@@ -233312,6 +233316,8 @@ Library/Collision/PartsInterpolator.o:
     size: 52
     label: _ZNK2al22TriangleFilterWallOnly17isInvalidTriangleERKNS_8TriangleE
     status: NotDecompiled
+Library/CollisionFilter/DiskInterpolator.o:
+  '.text':
   - offset: 0x85748c
     size: 28
     label:
@@ -233338,6 +233344,8 @@ Library/Collision/PartsInterpolator.o:
     size: 348
     label: _ZNK2al16DiskInterpolator10calcInterpEPN4sead7Vector3IfEEPfS5_S4_PNS1_8Matrix34IfEES4_
     status: NotDecompiled
+Library/CollisionFilter/PartsFilter.o:
+  '.text':
   - offset: 0x857780
     size: 52
     label: _ZN2al30createCollisionPartsFilterFuncEPFbRKNS_14CollisionPartsEE
@@ -233392,7 +233400,7 @@ Library/Collision/PartsInterpolator.o:
     label: _ZNK2al31CollisionPartsFilterFuncSendMsg14isInvalidPartsERKNS_14CollisionPartsE
     status: NotDecompiled
     lazy: true
-Library/Collision/PartsConnector.o:
+Library/Connector/CollisionPartsConnector.o:
   '.text':
   - offset: 0x857a24
     size: 52
@@ -233424,7 +233432,7 @@ Library/Collision/PartsConnector.o:
     size: 36
     label: _ZN2al23CollisionPartsConnector5clearEv
     status: Matching
-Library/Collision/PartsConnectorUtil.o:
+Library/Connector/CollisionPartsConnectorUtil.o:
   '.text':
   - offset: 0x857b34
     size: 88
@@ -233610,7 +233618,7 @@ Library/Collision/PartsConnectorUtil.o:
     size: 20
     label: _ZN2al19getConnectBaseTransEPKNS_12MtxConnectorE
     status: Matching
-Library/Collision/PartsMtxConnector.o:
+Library/Connector/MtxConnector.o:
   '.text':
   - offset: 0x8591dc
     size: 116
@@ -233688,7 +233696,7 @@ Library/Collision/PartsMtxConnector.o:
     size: 48
     label: _ZNK2al12MtxConnector17tryGetParentTransEPN4sead7Vector3IfEE
     status: Matching
-Library/Collision/PartsSensorConnector.o:
+Library/Connector/SensorConnector.o:
   '.text':
   - offset: 0x859f10
     size: 52

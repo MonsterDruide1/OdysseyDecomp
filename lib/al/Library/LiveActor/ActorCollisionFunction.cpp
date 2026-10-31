@@ -4,10 +4,10 @@
 #include "Library/Collision/Collider.h"
 #include "Library/Collision/CollisionDirector.h"
 #include "Library/Collision/CollisionParts.h"
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
 #include "Library/Collision/ICollisionPartsKeeper.h"
-#include "Library/Collision/KCollisionServer.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
@@ -38,7 +38,7 @@ bool isEqualCollisionParts(const LiveActor* actor, const CollisionParts* collisi
 
 void validateCollisionParts(LiveActor* actor) {
     CollisionParts* collisionParts = actor->getCollisionParts();
-    if (collisionParts->getSyncCollisonMtx()) {
+    if (collisionParts->hasSyncCollisionMtx()) {
         collisionParts->resetAllMtx();
     } else {
         sead::Matrix34f mtx;
@@ -56,7 +56,7 @@ void validateCollisionPartsBySystem(LiveActor* actor) {
     CollisionParts* collisionParts = actor->getCollisionParts();
     collisionParts->validateBySystem();
 
-    if (collisionParts->getSyncCollisonMtx()) {
+    if (collisionParts->hasSyncCollisionMtx()) {
         collisionParts->resetAllMtx();
     } else {
         sead::Matrix34f mtx;
@@ -80,7 +80,7 @@ void setCollisionPartsSpecialPurposeName(LiveActor* actor, const char* name) {
 void resetAllCollisionMtx(LiveActor* actor) {
     CollisionParts* collisionParts = actor->getCollisionParts();
 
-    if (collisionParts->getSyncCollisonMtx()) {
+    if (collisionParts->hasSyncCollisionMtx()) {
         collisionParts->resetAllMtx();
     } else {
         sead::Matrix34f mtx;
@@ -100,7 +100,7 @@ void syncCollisionMtx(LiveActor* actor, CollisionParts* collisionParts,
     if (!collisionParts->isValidCollision())
         return;
 
-    if (collisionParts->getSyncCollisonMtx()) {
+    if (collisionParts->hasSyncCollisionMtx()) {
         collisionParts->syncMtx();
     } else if (mtx) {
         collisionParts->syncMtx(*mtx);
@@ -112,7 +112,7 @@ void syncCollisionMtx(LiveActor* actor, CollisionParts* collisionParts,
 }
 
 void setSyncCollisionMtxPtr(LiveActor* actor, const sead::Matrix34f* mtx) {
-    actor->getCollisionParts()->setSyncCollisionMtx(mtx);
+    actor->getCollisionParts()->setSyncCollisionMtxPtr(mtx);
 }
 
 bool isOnGround(const LiveActor* actor, u32 coyoteTime) {

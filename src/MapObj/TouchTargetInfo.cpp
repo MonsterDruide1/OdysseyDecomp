@@ -1,6 +1,6 @@
 #include "MapObj/TouchTargetInfo.h"
 
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Connector/MtxConnector.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 
 TouchTargetInfo::TouchTargetInfo() {

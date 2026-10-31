@@ -22,9 +22,10 @@
 #include "Library/Camera/CameraViewInfo.h"
 #include "Library/Camera/SimpleCameraInput.h"
 #include "Library/Camera/SnapShotCameraCtrl.h"
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
-#include "Library/Collision/PartsInterpolator.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
+#include "Library/Collision/TriangleFilter.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/Math/MathUtil.h"
 #include "Library/Obj/CameraRailHolder.h"
 #include "Library/Placement/PlacementFunction.h"
@@ -994,13 +995,13 @@ bool checkFirstCameraCollisionArrow(CameraCollisionHitResult* outResult,
         return false;
     }
 
-    outResult->hitPos.set(hitInfo->hitInfo->collisionHitPos);
-    outResult->normal.set(hitInfo->hitInfo->triangle.getNormal(0));
+    outResult->hitPos.set(hitInfo->collisionHitPos);
+    outResult->normal.set(hitInfo->triangle.getNormal(0));
 
     cameraCollisionLocation location = cameraCollisionLocation::Default;
-    if (hitInfo->hitInfo->isCollisionAtFace())
+    if (hitInfo->isCollisionAtFace())
         location = cameraCollisionLocation::Face;
-    else if (hitInfo->hitInfo->isCollisionAtEdge())
+    else if (hitInfo->isCollisionAtEdge())
         location = cameraCollisionLocation::Edge;
 
     outResult->location = location;

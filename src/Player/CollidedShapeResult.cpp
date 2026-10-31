@@ -1,20 +1,22 @@
 #include "Player/CollidedShapeResult.h"
 
+#include "Library/Collision/HitInfo.h"
+
 #include "Util/CollisionShapeFunction.h"
 
 CollidedShapeResult::CollidedShapeResult(const CollisionShapeInfoBase* shapeInfo)
     : mShapeInfo(shapeInfo) {}
 
 void CollidedShapeResult::setArrowHitInfo(const al::ArrowHitInfo& arrowHitInfo) {
-    *mArrowHitInfo.hitInfo = *arrowHitInfo.hitInfo;
+    mArrowHitInfo = arrowHitInfo;
 }
 
 void CollidedShapeResult::setSphereHitInfo(const al::SphereHitInfo& sphereHitInfo) {
-    *mSphereHitInfo.hitInfo = *sphereHitInfo.hitInfo;
+    mSphereHitInfo = sphereHitInfo;
 }
 
 void CollidedShapeResult::setDiskHitInfo(const al::DiskHitInfo& diskHitInfo) {
-    *mDiskHitInfo.hitInfo = *diskHitInfo.hitInfo;
+    mDiskHitInfo = diskHitInfo;
 }
 
 bool CollidedShapeResult::isArrow() const {

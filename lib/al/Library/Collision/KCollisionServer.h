@@ -32,15 +32,30 @@ struct KCPrismData {
     u32 triIndex;
 };
 
+enum KCollisionLocation {
+    KCollisionLocation_None = 0,
+    KCollisionLocation_Face = 1,
+    KCollisionLocation_Edge1 = 2,
+    KCollisionLocation_Edge2 = 3,
+    KCollisionLocation_Edge3 = 4,
+    KCollisionLocation_Corner1 = 5,
+    KCollisionLocation_Corner2 = 6,
+    KCollisionLocation_Corner3 = 7,
+};
+
 struct KCHitInfo {
     const KCPrismHeader* header;
     const KCPrismData* data;
-    f32 _10;
-    u8 _14;  // collision location, enum
+    f32 distance;
+    u8 location;
 };
+
+using KCFxyz = sead::Vector3f;
 
 class KCollisionServer {
 public:
+    using HitInfoBuffer = sead::FixedRingBuffer<KCHitInfo, 512>;
+
     KCollisionServer();
 
     void initKCollisionServer(void* data, const void* attributeData);
@@ -59,9 +74,11 @@ public:
     void getAreaSpaceSize(sead::Vector3f* size, const KCPrismHeader* header) const;
     void getAreaSpaceSize(s32* sizeX, s32* sizeY, s32* sizeZ, const KCPrismHeader* header) const;
     void getAreaSpaceSize(sead::Vector3u* size, const KCPrismHeader* header) const;
-    const KCPrismData* checkPoint(sead::Vector3f*, f32, f32*);  // TODO unknown parameter usage
+
+    const KCPrismData* checkPoint(KCFxyz* position, f32 thicknessScale, f32* outDistance);
     const u8* searchBlock(s32* widthShift, const sead::Vector3u& block,
                           const KCPrismHeader* header) const;
+
     s32 checkSphere(const sead::Vector3f*, f32, f32, u32,
                     sead::FixedRingBuffer<KCHitInfo, 512>* hits);  // TODO unknown parameter usage
     bool outCheckAndCalcArea(sead::Vector3u* blockMin, sead::Vector3u* blockMax,
@@ -130,6 +147,8 @@ public:
     static s32 calcChildBlockOffset(const sead::Vector3u& block, s32 shift);
     static u32 getBlockData(const u32* data, u32 offset);
 
+    f32 getFarthestVertexDistance() const { return mFarthestVertexDistance; }
+
 private:
     sead::PtrArray<KCPrismHeader> mModelsData;
     void* mData;
@@ -139,117 +158,6 @@ private:
     s32 mAreaWidthShift[3];
     s32 mAreaWidthMask[3];
     f32 mFarthestVertexDistance;
-};
-
-class SphereInterpolator {
-public:
-    SphereInterpolator() {}
-
-    void startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd, f32 sizeStart,
-                     f32 sizeEnd, f32 steps);
-    void nextStep();
-    void calcInterpPos(sead::Vector3f* pos) const;
-    void calcInterp(sead::Vector3f* pos, f32* size, sead::Vector3f* remainMoveVec) const;
-    void calcRemainMoveVector(sead::Vector3f* remainMoveVec) const;
-    void getMoveVector(sead::Vector3f* moveVec);
-    void calcStepMoveVector(sead::Vector3f* moveVec) const;
-
-private:
-    sead::Vector3f mPos;
-    sead::Vector3f mMove;
-    f32 mSizeStart;
-    f32 mSizeEnd;
-    f32 mStepSize;
-    f32 mCurrentStep;
-    f32 mPrevStep;
-};
-
-class SpherePoseInterpolator {
-public:
-    SpherePoseInterpolator() {}
-
-    void startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd, f32 sizeStart,
-                     f32 sizeEnd, const sead::Quatf& quatStart, const sead::Quatf& quatEnd,
-                     f32 steps);
-    void nextStep();
-    void calcInterpPos(sead::Vector3f* pos) const;
-    void calcInterp(sead::Vector3f* pos, f32* size, sead::Quatf* quat,
-                    sead::Vector3f* remainMoveVec) const;
-    void calcRemainMoveVector(sead::Vector3f* remainMoveVec) const;
-    f32 calcRadiusBaseScale(f32 unk) const;
-    void getMoveVector(sead::Vector3f* moveVec);
-
-private:
-    sead::Vector3f mPos;
-    sead::Vector3f mMove;
-    f32 mSizeStart;
-    f32 mSizeEnd;
-    sead::Quatf mQuatStart;
-    sead::Quatf mQuatEnd;
-    f32 mStepSize;
-    f32 mCurrentStep;
-    f32 mPrevStep;
-};
-
-class CollisionPartsFilterBase {
-public:
-    virtual bool isInvalidParts(const CollisionParts& collisionParts) const = 0;
-};
-
-class CollisionPartsFilterActor : public CollisionPartsFilterBase {
-public:
-    CollisionPartsFilterActor(const LiveActor* actor) : mActor(actor) {}
-
-    bool isInvalidParts(const CollisionParts& collisionParts) const override;
-
-private:
-    const LiveActor* mActor;
-    bool mIsCompareEqual = true;
-};
-
-class CollisionPartsFilterSubActor : public CollisionPartsFilterBase {
-public:
-    CollisionPartsFilterSubActor(const LiveActor* actor) : mActor(actor) {}
-
-    bool isInvalidParts(const CollisionParts& collisionParts) const override;
-
-private:
-    const LiveActor* mActor;
-};
-
-class CollisionPartsFilterSpecialPurpose : public CollisionPartsFilterBase {
-public:
-    CollisionPartsFilterSpecialPurpose(const char* specialPurpose)
-        : mSpecialPurpose(specialPurpose) {}
-
-    bool isInvalidParts(const CollisionParts& collisionParts) const override;
-
-private:
-    const char* mSpecialPurpose;
-};
-
-class CollisionPartsFilterIgnoreOptionalPurpose : public CollisionPartsFilterBase {
-public:
-    CollisionPartsFilterIgnoreOptionalPurpose(const char* specialPurpose)
-        : mSpecialPurpose(specialPurpose) {}
-
-    bool isInvalidParts(const CollisionParts& collisionParts) const override;
-
-private:
-    const char* mSpecialPurpose;
-};
-
-class CollisionPartsFilterMergePair : public CollisionPartsFilterBase {
-public:
-    CollisionPartsFilterMergePair(CollisionPartsFilterBase* firstFilter,
-                                  CollisionPartsFilterBase* secondFilter)
-        : mFirstFilter(firstFilter), mSecondFilter(secondFilter) {}
-
-    bool isInvalidParts(const CollisionParts& collisionParts) const override;
-
-private:
-    CollisionPartsFilterBase* mFirstFilter;
-    CollisionPartsFilterBase* mSecondFilter;
 };
 
 }  // namespace al

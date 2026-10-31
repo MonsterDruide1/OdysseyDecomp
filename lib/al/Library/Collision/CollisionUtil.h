@@ -4,7 +4,7 @@
 #include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/CollisionPartsTriangle.h"
+#include "Library/Collision/HitInfo.h"
 
 namespace sead {
 template <typename>

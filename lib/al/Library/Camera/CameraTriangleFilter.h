@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Library/Collision/PartsInterpolator.h"
+#include "Library/Collision/TriangleFilter.h"
 
 namespace al {
 

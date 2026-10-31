@@ -1,4 +1,4 @@
-#include "Library/Collision/PartsConnector.h"
+#include "Library/Connector/CollisionPartsConnector.h"
 
 #include "Library/Collision/CollisionParts.h"
 
@@ -31,7 +31,7 @@ bool CollisionPartsConnector::isMoved() const {
     if (!mCollisionParts)
         return false;
 
-    return mCollisionParts->get_15c() == 0 || mCollisionParts->isMoving();
+    return mCollisionParts->isMoving();
 }
 
 bool CollisionPartsConnector::isConnectInvalidCollision() const {

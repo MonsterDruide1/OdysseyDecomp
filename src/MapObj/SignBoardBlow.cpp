@@ -3,7 +3,7 @@
 #include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
+#include "Library/Collision/CollisionUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"

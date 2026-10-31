@@ -1,17 +1,19 @@
 #pragma once
 
+#include <container/seadObjArray.h>
 #include <container/seadTList.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
+#include "Library/Collision/ICollisionPartsKeeper.h"
+
 namespace al {
-class ArrowHitResultBuffer;
-class DiskHitResultBuffer;
 struct HitInfo;
 class HitSensor;
 class KCollisionServer;
 class LiveActor;
-class SphereHitResultBuffer;
 class TriangleFilterBase;
 
 enum class ForceCollisionFlag : u8 {
@@ -20,34 +22,46 @@ enum class ForceCollisionFlag : u8 {
     ScaleOne,
 };
 
-class CollisionParts {
+class SphereHitResultBuffer : public sead::ObjArray<SphereHitInfo> {};
+
+class ArrowHitResultBuffer : public sead::ObjArray<ArrowHitInfo> {};
+
+class DiskHitResultBuffer : public sead::ObjArray<DiskHitInfo> {};
+
+class CollisionParts : public sead::TListNode<CollisionParts*> {
 public:
     CollisionParts(void* kcl, const void* byml);
 
     void calcInvMtxScale();
     const LiveActor* getConnectedHost() const;
-    void initParts(const sead::Matrix34f&);
-    void resetAllMtx(const sead::Matrix34f&);
-    void updateBoundingSphereRange(sead::Vector3f);
+
+    void initParts(const sead::Matrix34f& matrix);
+    void resetAllMtx(const sead::Matrix34f& matrix);
+    void updateBoundingSphereRange(sead::Vector3f scale);
+
     void validateByUser();
     void invalidateByUser();
     void validateBySystem();
     void invalidateBySystem();
+
     void onJoinList();
-    void makeEqualScale(sead::Matrix34f*);
-    void resetAllMtxPrivate(const sead::Matrix34f&);
+
+    f32 makeEqualScale(sead::Matrix34f* matrix);
     void resetAllMtx();
+
     void updateBoundingSphereRange();
-    void forceResetAllMtxAndSetUpdateMtxOneTime(const sead::Matrix34f&);
+    void forceResetAllMtxAndSetUpdateMtxOneTime(const sead::Matrix34f& matrix);
     void forceResetAllMtxAndSetUpdateMtxOneTime();
-    void syncMtx(const sead::Matrix34f&);
+
+    void syncMtx(const sead::Matrix34f& matrix);
     void syncMtx();
+
     void updateMtx();
     void updateScale();
-    void updateBoundingSphereRangePrivate(f32);
-    s32 checkBoundingSphereRange(const sead::Vector3f&, f32);
-    s32 checkStrikePoint(HitInfo*, const sead::Vector3f&, const TriangleFilterBase*) const;
-    s32 checkStrikeSphere(SphereHitResultBuffer*, const sead::Vector3f&, f32, bool,
+
+    bool checkBoundingSphereRange(const sead::Vector3f&, f32);
+    bool checkStrikePoint(HitInfo*, const sead::Vector3f&, const TriangleFilterBase*) const;
+    u32 checkStrikeSphere(SphereHitResultBuffer*, const sead::Vector3f&, f32, bool,
                           const sead::Vector3f&, const TriangleFilterBase*) const;
     s32 checkStrikeSphereCore(SphereHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
                               const sead::Vector3f&, f32, const TriangleFilterBase*) const;
@@ -63,12 +77,13 @@ public:
     s32 checkStrikeDiskCore(DiskHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
                             const sead::Vector3f&, f32, f32, const sead::Vector3f&,
                             const TriangleFilterBase*) const;
+
     void calcForceMovePower(sead::Vector3f*, const sead::Vector3f&) const;
     void calcForceRotatePower(sead::Quatf*) const;
 
-    const sead::Matrix34f* getSyncCollisonMtx() const { return mSyncCollisionMtx; }
+    bool hasSyncCollisionMtx() const { return mSyncCollisionMtxPtr != nullptr; }
 
-    void setSyncCollisionMtx(const sead::Matrix34f* mtx) { mSyncCollisionMtx = mtx; }
+    void setSyncCollisionMtxPtr(const sead::Matrix34f* mtxPtr) { mSyncCollisionMtxPtr = mtxPtr; }
 
     const sead::Matrix34f& getBaseMtx() const { return mBaseMtx; }
 
@@ -80,7 +95,7 @@ public:
 
     void setPriority(s32 priority) { mPriority = priority; }
 
-    KCollisionServer* getKCollisionServer() const { return mKCollisionServer; }
+    KCollisionServer* getServer() const { return mServer; }
 
     HitSensor* getConnectedSensor() const { return mConnectedSensor; }
 
@@ -90,12 +105,12 @@ public:
 
     void setOptionalPurpose(const char* optionalPurpose) { mOptionalPurpose = optionalPurpose; }
 
-    s32 get_15c() const { return _15c; }
-
     bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
 
-    bool isMoving() const { return mIsMoving; }
+    // TODO: Rename to isMoved() ?
+    bool isMoving() const { return mRestingTimer == 0 || mIsMoving; }
 
+    // TODO: Remove
     void setIsMoving(bool isMoving) { mIsMoving = isMoving; }
 
     void setForceCollisionScaleNone() { mForceCollisionFlag = ForceCollisionFlag::ScaleNone; }
@@ -105,34 +120,42 @@ public:
     void setForceCollisionScaleOne() { mForceCollisionFlag = ForceCollisionFlag::ScaleOne; }
 
 private:
-    void* unk[2];
-    CollisionParts* _10;  // self-reference
-    sead::TList<CollisionParts*>* mPartsList;
-    const sead::Matrix34f* mSyncCollisionMtx;
+    void resetAllMtxPrivate(const sead::Matrix34f&);
+    void updateBoundingSphereRangePrivate(f32);
+
+    static KCollisionServer::HitInfoBuffer sHitInfoBuffer;
+
+    const sead::Matrix34f* mSyncCollisionMtxPtr = nullptr;
     sead::Matrix34f mSyncMtx;
     sead::Matrix34f mBaseMtx;
     sead::Matrix34f mBaseInvMtx;
     sead::Matrix34f mPrevBaseMtx;
     sead::Matrix34f mPrevBaseInvMtx;
-    sead::Vector3f mMtxScaleVec;
-    f32 mMtxScale;
-    f32 mInvMtxScale;
-    s32 mPriority;
-    KCollisionServer* mKCollisionServer;
-    HitSensor* mConnectedSensor;
-    const char* mSpecialPurpose;
-    const char* mOptionalPurpose;
-    sead::Vector3f _150;  // same as mMtxScaleVec?
-    s32 _15c;
-    f32 mBoundingSphereRange;
-    f32 mBaseMtxScale;
-    bool mIsValidatedByUser;
-    bool mIsValidatedBySystem;
-    bool _16a;
-    bool _16b;
-    bool _16c;
-    bool mIsMoving;
-    ForceCollisionFlag mForceCollisionFlag;
+
+    sead::Vector3f mMtxScaleVec = sead::Vector3f::ones;
+    f32 mMtxScale = 1.0f;
+    f32 mInvMtxScale = 1.0f;
+
+    s32 mPriority = -1;
+
+    KCollisionServer* mServer = nullptr;
+    HitSensor* mConnectedSensor = nullptr;
+    const char* mSpecialPurpose = nullptr;
+    const char* mOptionalPurpose = nullptr;
+
+    sead::Vector3f _150 = sead::Vector3f::ones;
+    s32 mRestingTimer = 0;
+    f32 mBoundingSphereRange = -1.0f;
+    f32 mBaseMtxScale;  // TODO: Check name
+
+    bool mIsValidatedByUser = true;
+    bool mIsValidatedBySystem = true;
+    bool mIsJustValidated = false;
+    bool _16b = true;
+    bool mIsUpdateMtxOneTime = false;
+    bool mIsMoving = false;
+
+    ForceCollisionFlag mForceCollisionFlag = ForceCollisionFlag::ScaleNone;
 };
 
 }  // namespace al

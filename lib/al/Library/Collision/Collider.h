@@ -3,7 +3,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/CollisionPartsTriangle.h"
+#include "Library/Collision/HitInfo.h"
 #include "Library/Collision/IUseCollision.h"
 #include "Library/HostIO/HioNode.h"
 

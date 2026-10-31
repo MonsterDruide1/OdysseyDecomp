@@ -4,6 +4,8 @@
 #include <math/seadVector.h>
 #include <prim/seadStorageFor.h>
 
+#include "Library/Collision/KCollisionServer.h"
+
 namespace al {
 class Triangle;
 class KCollisionServer;
@@ -64,17 +66,6 @@ private:
     sead::Vector3f mPositions[3];
 };
 
-enum class CollisionLocation : u8 {
-    None = 0,
-    Face = 1,
-    Edge1 = 2,
-    Edge2 = 3,
-    Edge3 = 4,
-    Corner1 = 5,
-    Corner2 = 6,
-    Corner3 = 7,
-};
-
 struct HitInfo {
     HitInfo();
 
@@ -84,53 +75,23 @@ struct HitInfo {
     const sead::Vector3f& tryGetHitEdgeNormal() const;
 
     Triangle triangle;
-    f32 _70 = 0.0f;
+    f32 collisionDistance = 0.0f;
     sead::Vector3f collisionHitPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f _80 = {0.0f, 0.0f, 0.0f};
     sead::Vector3f collisionMovingReaction = {0.0f, 0.0f, 0.0f};
-    CollisionLocation collisionLocation = CollisionLocation::None;
+    u8 collisionLocation = KCollisionLocation_None;
 };
 
-struct ArrowHitInfo {
-    HitInfo* operator*() { return hitInfo.data(); }
+struct ArrowHitInfo : public HitInfo {};
 
-    const HitInfo* operator*() const { return hitInfo.data(); }
-
-    HitInfo& operator->() { return *hitInfo; }
-
-    const HitInfo& operator->() const { return *hitInfo; }
-
-    sead::StorageFor<HitInfo> hitInfo{sead::ZeroInitializeTag{}};
-};
-
-struct SphereHitInfo {
+struct SphereHitInfo : public HitInfo {
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
-
-    HitInfo* operator*() { return hitInfo.data(); }
-
-    const HitInfo* operator*() const { return hitInfo.data(); }
-
-    HitInfo& operator->() { return *hitInfo; }
-
-    const HitInfo& operator->() const { return *hitInfo; }
-
-    sead::StorageFor<HitInfo> hitInfo{sead::ZeroInitializeTag{}};
 };
 
-struct DiskHitInfo {
+struct DiskHitInfo : public HitInfo {
     void calcFixVector(sead::Vector3f* a1, sead::Vector3f* a2) const;
     void calcFixVectorNormal(sead::Vector3f* a1, sead::Vector3f* a2) const;
-
-    HitInfo* operator*() { return hitInfo.data(); }
-
-    const HitInfo* operator*() const { return hitInfo.data(); }
-
-    HitInfo& operator->() { return *hitInfo; }
-
-    const HitInfo& operator->() const { return *hitInfo; }
-
-    sead::StorageFor<HitInfo> hitInfo{sead::ZeroInitializeTag{}};
 };
 
 }  // namespace al

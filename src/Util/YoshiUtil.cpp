@@ -1,7 +1,7 @@
 #include "Util/YoshiUtil.h"
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/PartsInterpolator.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/TriangleFilter.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Math/MathUtil.h"

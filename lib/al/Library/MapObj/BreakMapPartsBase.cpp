@@ -2,7 +2,7 @@
 
 #include "Library/Audio/System/SimpleAudioUser.h"
 #include "Library/Base/StringUtil.h"
-#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Item/ItemUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"

@@ -2,7 +2,7 @@
 
 #include <prim/seadStorageFor.h>
 
-#include "Library/Collision/CollisionPartsTriangle.h"
+#include "Library/Collision/HitInfo.h"
 
 class CollisionShapeInfoBase;
 class CollisionShapeInfoArrow;
