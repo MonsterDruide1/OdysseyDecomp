@@ -324,7 +324,7 @@ def common_const_reference(c, path):
             continue
         if "cleanupResGraphicsFile" in line:
             continue
-        if "sead::IDelegate1<CollisionParts*>" in line:
+        if "CollisionPartsCallback" in line:
             continue
         if "sead::IDelegate1<al::CollisionParts*>" in line:
             continue

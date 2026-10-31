@@ -15,7 +15,7 @@ namespace al {
 struct ArrowHitInfo;
 class CollisionPartsFilterBase;
 class CollisionParts;
-class CollisionCheckInfoBase;
+struct CollisionCheckInfoBase;
 struct DiskHitInfo;
 struct HitInfo;
 class HitSensor;

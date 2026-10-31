@@ -15,12 +15,14 @@
 #include "Library/Math/MatrixUtil.h"
 
 namespace {
-class TriFilterMoveReaction : public al::TriangleFilterBase {
+using namespace al;
+
+class TriFilterMoveReaction : public TriangleFilterBase {
 public:
     TriFilterMoveReaction(const sead::Vector3f* moveDir, const TriangleFilterBase* filter)
         : mMoveDir(moveDir), mFilter(filter) {}
 
-    bool isInvalidTriangle(const al::Triangle& triangle) const override;
+    bool isInvalidTriangle(const Triangle& triangle) const override;
 
     void setMoveDirection(const sead::Vector3f* moveDir) { mMoveDir = moveDir; }
 
@@ -650,7 +652,9 @@ void CollisionParts::calcForceRotatePower(sead::Quatf* outRotatePower) const {
 }  // namespace al
 
 namespace {
-bool TriFilterMoveReaction::isInvalidTriangle(const al::Triangle& triangle) const {
+using namespace al;
+
+bool TriFilterMoveReaction::isInvalidTriangle(const Triangle& triangle) const {
     if (mFilter && mFilter->isInvalidTriangle(triangle))
         return true;
 

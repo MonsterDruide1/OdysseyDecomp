@@ -28,7 +28,10 @@ class ArrowHitResultBuffer : public sead::ObjArray<ArrowHitInfo> {};
 
 class DiskHitResultBuffer : public sead::ObjArray<DiskHitInfo> {};
 
-class CollisionParts : public sead::TListNode<CollisionParts*> {
+using CollisionPartsList = sead::TList<CollisionParts*>;
+using CollisionPartsListNode = sead::TListNode<CollisionParts*>;
+
+class CollisionParts : public CollisionPartsListNode {
 public:
     CollisionParts(void* kclData, const void* bymlData);
 
@@ -103,7 +106,13 @@ public:
 
     void setOptionalPurpose(const char* optionalPurpose) { mOptionalPurpose = optionalPurpose; }
 
+    f32 getBoundingSphereRange() const { return mBoundingSphereRange; }
+
     bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
+
+    bool isJustValidated() const { return mIsJustValidated; }
+
+    void resetJustValidated() { mIsJustValidated = false; }
 
     bool needsUpdate() const { return mIsUpdateAlways || mIsUpdateMtxOneTime; }
 
