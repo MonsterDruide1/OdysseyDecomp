@@ -232168,139 +232168,139 @@ Library/Collision/CollisionParts.o:
     label:
     - _ZN2al14CollisionPartsC1EPvPKv
     - _ZN2al14CollisionPartsC2EPvPKv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847754
     size: 84
     label: _ZN2al14CollisionParts15calcInvMtxScaleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8477a8
     size: 8
     label: _ZNK2al14CollisionParts16getConnectedHostEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8477b0
     size: 120
     label: _ZN2al14CollisionParts9initPartsERKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847828
     size: 312
     label: _ZN2al14CollisionParts11resetAllMtxERKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847960
     size: 40
     label: _ZN2al14CollisionParts25updateBoundingSphereRangeEN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847988
     size: 156
     label: _ZN2al14CollisionParts14validateByUserEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847a24
     size: 140
     label: _ZN2al14CollisionParts16invalidateByUserEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847ab0
     size: 156
     label: _ZN2al14CollisionParts16validateBySystemEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847b4c
     size: 140
     label: _ZN2al14CollisionParts18invalidateBySystemEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847bd8
     size: 4
     label: _ZN2al14CollisionParts10onJoinListEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847bdc
     size: 284
     label: _ZN2al14CollisionParts14makeEqualScaleEPN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847cf8
     size: 176
     label: _ZN2al14CollisionParts18resetAllMtxPrivateERKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847da8
     size: 296
     label: _ZN2al14CollisionParts11resetAllMtxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847ed0
     size: 92
     label: _ZN2al14CollisionParts25updateBoundingSphereRangeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847f2c
     size: 184
     label: _ZN2al14CollisionParts38forceResetAllMtxAndSetUpdateMtxOneTimeERKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847fe4
     size: 224
     label: _ZN2al14CollisionParts38forceResetAllMtxAndSetUpdateMtxOneTimeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8480c4
     size: 36
     label: _ZN2al14CollisionParts7syncMtxERKN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8480e8
     size: 36
     label: _ZN2al14CollisionParts7syncMtxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84810c
     size: 556
     label: _ZN2al14CollisionParts9updateMtxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x848338
     size: 104
     label: _ZN2al14CollisionParts11updateScaleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8483a0
     size: 24
     label: _ZN2al14CollisionParts32updateBoundingSphereRangePrivateEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8483b8
     size: 76
     label: _ZN2al14CollisionParts24checkBoundingSphereRangeERKN4sead7Vector3IfEEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x848404
     size: 432
     label: _ZNK2al14CollisionParts16checkStrikePointEPNS_7HitInfoERKN4sead7Vector3IfEEPKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8485b4
     size: 828
     label: _ZNK2al14CollisionParts17checkStrikeSphereEPNS_21SphereHitResultBufferERKN4sead7Vector3IfEEfbS7_PKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8488f0
     size: 680
     label: _ZNK2al14CollisionParts21checkStrikeSphereCoreEPNS_21SphereHitResultBufferERKN4sead7Vector3IfEES7_S7_fPKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x848b98
     size: 1000
     label: _ZNK2al14CollisionParts16checkStrikeArrowEPNS_20ArrowHitResultBufferERKN4sead7Vector3IfEES7_PKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x848f80
     size: 772
     label: _ZNK2al14CollisionParts26checkStrikeSphereForPlayerEPNS_21SphereHitResultBufferERKN4sead7Vector3IfEEfPKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x849284
     size: 680
     label: _ZNK2al14CollisionParts30checkStrikeSphereForPlayerCoreEPNS_21SphereHitResultBufferERKN4sead7Vector3IfEES7_S7_S7_fPKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84952c
     size: 324
     label: _ZNK2al14CollisionParts15checkStrikeDiskEPNS_19DiskHitResultBufferERKN4sead7Vector3IfEEffS7_PKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x849670
     size: 712
     label: _ZNK2al14CollisionParts19checkStrikeDiskCoreEPNS_19DiskHitResultBufferERKN4sead7Vector3IfEES7_S7_ffS7_PKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x849938
     size: 248
     label: _ZNK2al14CollisionParts18calcForceMovePowerEPN4sead7Vector3IfEERKS3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x849a30
     size: 204
     label: _ZNK2al14CollisionParts20calcForceRotatePowerEPN4sead4QuatIfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x849afc
     size: 140
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_121TriFilterMoveReaction17isInvalidTriangleERKN2al8TriangleE
+    status: Matching
   - offset: 0x849b88
     size: 164
     label: _ZN2al20checkStrikePointCoreEPNS_7HitInfoERKN4sead5TListIPNS_14CollisionPartsEEERKNS_22CollisionCheckInfoBaseE

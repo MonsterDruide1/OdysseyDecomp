@@ -16,10 +16,10 @@ class KCollisionServer;
 class LiveActor;
 class TriangleFilterBase;
 
-enum class ForceCollisionFlag : u8 {
-    ScaleNone,
-    ScaleAverage,
-    ScaleOne,
+enum class ForceCollisionScale : u8 {
+    None = 0,
+    Average = 1,
+    One = 2,
 };
 
 class SphereHitResultBuffer : public sead::ObjArray<SphereHitInfo> {};
@@ -30,7 +30,7 @@ class DiskHitResultBuffer : public sead::ObjArray<DiskHitInfo> {};
 
 class CollisionParts : public sead::TListNode<CollisionParts*> {
 public:
-    CollisionParts(void* kcl, const void* byml);
+    CollisionParts(void* kclData, const void* bymlData);
 
     void calcInvMtxScale();
     const LiveActor* getConnectedHost() const;
@@ -59,27 +59,25 @@ public:
     void updateMtx();
     void updateScale();
 
-    bool checkBoundingSphereRange(const sead::Vector3f&, f32);
-    bool checkStrikePoint(HitInfo*, const sead::Vector3f&, const TriangleFilterBase*) const;
-    u32 checkStrikeSphere(SphereHitResultBuffer*, const sead::Vector3f&, f32, bool,
-                          const sead::Vector3f&, const TriangleFilterBase*) const;
-    s32 checkStrikeSphereCore(SphereHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
-                              const sead::Vector3f&, f32, const TriangleFilterBase*) const;
-    s32 checkStrikeArrow(ArrowHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
-                         const TriangleFilterBase*) const;
-    s32 checkStrikeSphereForPlayer(SphereHitResultBuffer*, const sead::Vector3f&, f32,
-                                   const TriangleFilterBase*) const;
-    s32 checkStrikeSphereForPlayerCore(SphereHitResultBuffer*, const sead::Vector3f&,
-                                       const sead::Vector3f&, const sead::Vector3f&,
-                                       const sead::Vector3f&, f32, const TriangleFilterBase*) const;
-    s32 checkStrikeDisk(DiskHitResultBuffer*, const sead::Vector3f&, f32, f32,
-                        const sead::Vector3f&, const TriangleFilterBase*) const;
-    s32 checkStrikeDiskCore(DiskHitResultBuffer*, const sead::Vector3f&, const sead::Vector3f&,
-                            const sead::Vector3f&, f32, f32, const sead::Vector3f&,
-                            const TriangleFilterBase*) const;
+    bool checkBoundingSphereRange(const sead::Vector3f& position, f32 radius);
 
-    void calcForceMovePower(sead::Vector3f*, const sead::Vector3f&) const;
-    void calcForceRotatePower(sead::Quatf*) const;
+    u32 checkStrikePoint(HitInfo* outHit, const sead::Vector3f& position,
+                         const TriangleFilterBase* triFilter) const;
+    u32 checkStrikeSphere(SphereHitResultBuffer* resultBuffer, const sead::Vector3f& position,
+                          f32 radius, bool checkMoving, const sead::Vector3f& moveDirection,
+                          const TriangleFilterBase* triFilter) const;
+    u32 checkStrikeArrow(ArrowHitResultBuffer* resultBuffer, const sead::Vector3f& position,
+                         const sead::Vector3f& direction,
+                         const TriangleFilterBase* triFilter) const;
+    u32 checkStrikeSphereForPlayer(SphereHitResultBuffer* resultBuffer,
+                                   const sead::Vector3f& position, f32 radius,
+                                   const TriangleFilterBase* triFilter) const;
+    u32 checkStrikeDisk(DiskHitResultBuffer* resultBuffer, const sead::Vector3f& position,
+                        f32 radius, f32 halfHeight, const sead::Vector3f& normal,
+                        const TriangleFilterBase* triFilter) const;
+
+    void calcForceMovePower(sead::Vector3f* outMovePower, const sead::Vector3f& position) const;
+    void calcForceRotatePower(sead::Quatf* outRotatePower) const;
 
     bool hasSyncCollisionMtx() const { return mSyncCollisionMtxPtr != nullptr; }
 
@@ -107,23 +105,32 @@ public:
 
     bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
 
-    // TODO: Rename to isMoved() ?
-    bool isMoving() const { return mRestingTimer == 0 || mIsMoving; }
+    bool needsUpdate() const { return mIsUpdateAlways || mIsUpdateMtxOneTime; }
 
-    // TODO: Remove
-    void setIsMoving(bool isMoving) { mIsMoving = isMoving; }
+    bool isMoving() const { return mNoMoveTime == 0 || mIsMoving; }
 
-    void setForceCollisionScaleNone() { mForceCollisionFlag = ForceCollisionFlag::ScaleNone; }
+    void setForceCollisionScaleNone() { mForceCollisionScale = ForceCollisionScale::None; }
 
-    void setForceCollisionScaleAverage() { mForceCollisionFlag = ForceCollisionFlag::ScaleAverage; }
+    void setForceCollisionScaleAverage() { mForceCollisionScale = ForceCollisionScale::Average; }
 
-    void setForceCollisionScaleOne() { mForceCollisionFlag = ForceCollisionFlag::ScaleOne; }
+    void setForceCollisionScaleOne() { mForceCollisionScale = ForceCollisionScale::One; }
 
 private:
-    void resetAllMtxPrivate(const sead::Matrix34f&);
-    void updateBoundingSphereRangePrivate(f32);
+    void resetAllMtxPrivate(const sead::Matrix34f& matrix);
+    void updateBoundingSphereRangePrivate(f32 scale);
 
-    static KCollisionServer::HitInfoBuffer sHitInfoBuffer;
+    u32 checkStrikeSphereCore(SphereHitResultBuffer* resultBuffer, const sead::Vector3f& worldPos,
+                              const sead::Vector3f& modelPos, const sead::Vector3f& moveReaction,
+                              f32 modelRadius, const TriangleFilterBase* triFilter) const;
+    u32 checkStrikeSphereForPlayerCore(SphereHitResultBuffer* resultBuffer,
+                                       const sead::Vector3f& worldPos,
+                                       const sead::Vector3f& modelPos, const sead::Vector3f& unused,
+                                       const sead::Vector3f& moveReaction, f32 modelRadius,
+                                       const TriangleFilterBase* triFilter) const;
+    u32 checkStrikeDiskCore(DiskHitResultBuffer* resultBuffer, const sead::Vector3f& worldPos,
+                            const sead::Vector3f& modelPos, const sead::Vector3f& moveReaction,
+                            f32 modelRadius, f32 modelHalfHeight, const sead::Vector3f& modelNormal,
+                            const TriangleFilterBase* triFilter) const;
 
     const sead::Matrix34f* mSyncCollisionMtxPtr = nullptr;
     sead::Matrix34f mSyncMtx;
@@ -132,7 +139,7 @@ private:
     sead::Matrix34f mPrevBaseMtx;
     sead::Matrix34f mPrevBaseInvMtx;
 
-    sead::Vector3f mMtxScaleVec = sead::Vector3f::ones;
+    sead::Vector3f mMtxScaleVec = {1.0f, 1.0f, 1.0f};
     f32 mMtxScale = 1.0f;
     f32 mInvMtxScale = 1.0f;
 
@@ -143,19 +150,19 @@ private:
     const char* mSpecialPurpose = nullptr;
     const char* mOptionalPurpose = nullptr;
 
-    sead::Vector3f _150 = sead::Vector3f::ones;
-    s32 mRestingTimer = 0;
+    sead::Vector3f mSyncMtxScaleVec = {1.0f, 1.0f, 1.0f};
+    s32 mNoMoveTime = 0;
     f32 mBoundingSphereRange = -1.0f;
-    f32 mBaseMtxScale;  // TODO: Check name
+    f32 mBaseMtxScale = 1.0f;
 
     bool mIsValidatedByUser = true;
     bool mIsValidatedBySystem = true;
     bool mIsJustValidated = false;
-    bool _16b = true;
+    bool mIsUpdateAlways = true;  // Appears to be always true
     bool mIsUpdateMtxOneTime = false;
     bool mIsMoving = false;
 
-    ForceCollisionFlag mForceCollisionFlag = ForceCollisionFlag::ScaleNone;
+    ForceCollisionScale mForceCollisionScale = ForceCollisionScale::None;
 };
 
 }  // namespace al

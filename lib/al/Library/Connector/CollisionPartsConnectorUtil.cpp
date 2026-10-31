@@ -346,7 +346,7 @@ void attachToHitInfo(CollisionPartsConnector* partsConnector, const HitInfo& hit
 
 void attachToHitInfoNrmToMinusZ(CollisionPartsConnector* partsConnector, const HitInfo& hitInfo) {
     sead::Matrix34f mtx;
-    makeMtxFrontNoSupportPos(&mtx, -hitInfo.triangle.getFaceNormal(), hitInfo.collisionHitPos);
+    makeMtxFrontNoSupportPos(&mtx, -hitInfo.triangle.getFaceNormal(), hitInfo.hitPos);
     attachToHitInfo(partsConnector, hitInfo, mtx);
 }
 

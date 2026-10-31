@@ -1,66 +1,64 @@
 #include "Library/Collision/SphereInterpolator.h"
 
-#include "Library/Math/MathUtil.h"
-
 namespace al {
 
 void SphereInterpolator::startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd,
-                                     f32 sizeStart, f32 sizeEnd, f32 steps) {
-    mCurrentStep = 0.0f;
-    mPrevStep = 0.0f;
+                                     f32 radiusStart, f32 radiusEnd, f32 stepSize) {
+    mCurrInterp = 0.0f;
+    mPrevInterp = 0.0f;
     mPos = posStart;
     mMove = posEnd - posStart;
-    mSizeStart = sizeStart;
-    mSizeEnd = sizeEnd;
+    mRadiusStart = radiusStart;
+    mRadiusEnd = radiusEnd;
 
-    f32 dist = mMove.length() + sizeEnd - sizeStart;
-    mStepSize = (dist <= 0.0f) ? 1.0f : steps / dist;
+    f32 dist = mMove.length() + radiusEnd - radiusStart;
+    mInterpStep = (dist <= 0.0f) ? 1.0f : stepSize / dist;
 }
 
 void SphereInterpolator::nextStep() {
     // re-interpreting between f32/s32 required to match
-    s32 curStep = *(s32*)&mCurrentStep;
+    s32 curStep = *(s32*)&mCurrInterp;
     f32 stepAsFloat = *(f32*)&curStep;
-    f32 newStep = sead::Mathf::clampMax(stepAsFloat + mStepSize, 1.0f);
-    *(s32*)&mPrevStep = curStep;
-    mCurrentStep = newStep;
+    f32 newStep = sead::Mathf::clampMax(stepAsFloat + mInterpStep, 1.0f);
+    *(s32*)&mPrevInterp = curStep;
+    mCurrInterp = newStep;
 }
 
-void SphereInterpolator::calcInterpPos(sead::Vector3f* pos) const {
-    f32 step = mCurrentStep;
-    pos->x = mMove.x * step + mPos.x;
-    pos->y = mMove.y * step + mPos.y;
-    pos->z = mMove.z * step + mPos.z;
+void SphereInterpolator::calcInterpPos(sead::Vector3f* outPos) const {
+    f32 interp = mCurrInterp;
+    outPos->x = mMove.x * interp + mPos.x;
+    outPos->y = mMove.y * interp + mPos.y;
+    outPos->z = mMove.z * interp + mPos.z;
 }
 
-void SphereInterpolator::calcInterp(sead::Vector3f* pos, f32* size,
-                                    sead::Vector3f* remainMoveVec) const {
-    calcInterpPos(pos);
-    *size = mSizeStart + (mSizeEnd - mSizeStart) * mCurrentStep;
-    calcRemainMoveVector(remainMoveVec);
+void SphereInterpolator::calcInterp(sead::Vector3f* outPos, f32* outRadius,
+                                    sead::Vector3f* outRemainMoveVec) const {
+    calcInterpPos(outPos);
+    *outRadius = mRadiusStart + (mRadiusEnd - mRadiusStart) * mCurrInterp;
+    calcRemainMoveVector(outRemainMoveVec);
 }
 
-void SphereInterpolator::calcRemainMoveVector(sead::Vector3f* remainMoveVec) const {
-    if (remainMoveVec) {
-        f32 remainStep = 1.0f - mCurrentStep;
-        remainMoveVec->x = mMove.x * remainStep;
-        remainMoveVec->y = mMove.y * remainStep;
-        remainMoveVec->z = mMove.z * remainStep;
+void SphereInterpolator::calcRemainMoveVector(sead::Vector3f* outRemainMoveVec) const {
+    if (outRemainMoveVec) {
+        f32 remainStep = 1.0f - mCurrInterp;
+        outRemainMoveVec->x = mMove.x * remainStep;
+        outRemainMoveVec->y = mMove.y * remainStep;
+        outRemainMoveVec->z = mMove.z * remainStep;
     }
 }
 
-void SphereInterpolator::getMoveVector(sead::Vector3f* moveVec) {
-    f32 step = mCurrentStep;
-    moveVec->x = mMove.x * step;
-    moveVec->y = mMove.y * step;
-    moveVec->z = mMove.z * step;
+void SphereInterpolator::getMoveVector(sead::Vector3f* outMoveVec) {
+    f32 interp = mCurrInterp;
+    outMoveVec->x = mMove.x * interp;
+    outMoveVec->y = mMove.y * interp;
+    outMoveVec->z = mMove.z * interp;
 }
 
-void SphereInterpolator::calcStepMoveVector(sead::Vector3f* moveVec) const {
-    f32 step = mCurrentStep - mPrevStep;
-    moveVec->x = mMove.x * step;
-    moveVec->y = mMove.y * step;
-    moveVec->z = mMove.z * step;
+void SphereInterpolator::calcStepMoveVector(sead::Vector3f* outMoveVec) const {
+    f32 step = mCurrInterp - mPrevInterp;
+    outMoveVec->x = mMove.x * step;
+    outMoveVec->y = mMove.y * step;
+    outMoveVec->z = mMove.z * step;
 }
 
 }  // namespace al

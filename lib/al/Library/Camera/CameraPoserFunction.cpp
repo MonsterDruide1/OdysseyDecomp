@@ -995,7 +995,7 @@ bool checkFirstCameraCollisionArrow(CameraCollisionHitResult* outResult,
         return false;
     }
 
-    outResult->hitPos.set(hitInfo->collisionHitPos);
+    outResult->hitPos.set(hitInfo->hitPos);
     outResult->normal.set(hitInfo->triangle.getNormal(0));
 
     cameraCollisionLocation location = cameraCollisionLocation::Default;

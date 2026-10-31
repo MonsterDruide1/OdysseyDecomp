@@ -5,7 +5,7 @@
 #include "Util/CollisionShapeFunction.h"
 
 CollidedShapeResult::CollidedShapeResult(const CollisionShapeInfoBase* shapeInfo)
-    : mShapeInfo(shapeInfo) {}
+    : mShapeInfo(shapeInfo), mArrowHitInfo(), mSphereHitInfo(), mDiskHitInfo() {}
 
 void CollidedShapeResult::setArrowHitInfo(const al::ArrowHitInfo& arrowHitInfo) {
     mArrowHitInfo = arrowHitInfo;

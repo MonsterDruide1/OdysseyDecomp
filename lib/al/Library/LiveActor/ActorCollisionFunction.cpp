@@ -544,15 +544,15 @@ const sead::Vector3f& getCollidedCeilingNormal(const LiveActor* actor) {
 }
 
 const sead::Vector3f& getCollidedGroundPos(const LiveActor* actor) {
-    return actor->getCollider()->getFloorHit().collisionHitPos;
+    return actor->getCollider()->getFloorHit().hitPos;
 }
 
 const sead::Vector3f& getCollidedWallPos(const LiveActor* actor) {
-    return actor->getCollider()->getWallHit().collisionHitPos;
+    return actor->getCollider()->getWallHit().hitPos;
 }
 
 const sead::Vector3f& getCollidedCeilingPos(const LiveActor* actor) {
-    return actor->getCollider()->getCeilingHit().collisionHitPos;
+    return actor->getCollider()->getCeilingHit().hitPos;
 }
 
 f32 calcSpeedCollideWall(const LiveActor* actor) {
