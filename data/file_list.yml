@@ -232498,60 +232498,60 @@ Library/Collision/CollisionPartsKeeperPtrArray.o:
     label:
     - _ZN2al28CollisionPartsKeeperPtrArrayC1Ev
     - _ZN2al28CollisionPartsKeeperPtrArrayC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b63c
     size: 152
     label: _ZNK2al28CollisionPartsKeeperPtrArray16checkStrikePointEPNS_7HitInfoERKNS_22CollisionCheckInfoBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b6d4
     size: 196
     label: _ZNK2al28CollisionPartsKeeperPtrArray17checkStrikeSphereEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoEbRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b798
     size: 168
     label: _ZNK2al28CollisionPartsKeeperPtrArray16checkStrikeArrowEPNS_20ArrowHitResultBufferERKNS_14ArrowCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b840
     size: 196
     label: _ZNK2al28CollisionPartsKeeperPtrArray26checkStrikeSphereForPlayerEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b904
     size: 8
     label: _ZNK2al28CollisionPartsKeeperPtrArray15checkStrikeDiskEPNS_19DiskHitResultBufferERKNS_13DiskCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b90c
     size: 184
     label: _ZNK2al28CollisionPartsKeeperPtrArray16searchWithSphereERKNS_15SphereCheckInfoERN4sead10IDelegate1IPNS_14CollisionPartsEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b9c4
     size: 4
     label: _ZN2al28CollisionPartsKeeperPtrArray7endInitEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x84b9c8
     size: 4
     label: _ZN2al28CollisionPartsKeeperPtrArray17addCollisionPartsEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x84b9cc
     size: 4
     label: _ZN2al28CollisionPartsKeeperPtrArray27connectToCollisionPartsListEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x84b9d0
     size: 4
     label: _ZN2al28CollisionPartsKeeperPtrArray30disconnectToCollisionPartsListEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x84b9d4
     size: 4
     label: _ZN2al28CollisionPartsKeeperPtrArray25resetToCollisionPartsListEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x84b9d8
     size: 4
     label: _ZN2al28CollisionPartsKeeperPtrArray8movementEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Library/Collision/CollisionUtil.o:
   '.text':

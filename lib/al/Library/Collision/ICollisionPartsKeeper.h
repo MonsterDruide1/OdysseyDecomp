@@ -29,10 +29,9 @@ public:
 
     virtual u32 checkStrikePoint(HitInfo* hitInfo,
                                  const CollisionCheckInfoBase& checkInfo) const = 0;
-    // TODO: rename parameters
     virtual u32 checkStrikeSphere(SphereHitResultBuffer* resultBuffer,
-                                  const SphereCheckInfo& checkInfo, bool unk,
-                                  const sead::Vector3f& unk2) const = 0;
+                                  const SphereCheckInfo& checkInfo, bool checkMoving,
+                                  const sead::Vector3f& moveDirection) const = 0;
     virtual u32 checkStrikeArrow(ArrowHitResultBuffer* resultBuffer,
                                  const ArrowCheckInfo& checkInfo) const = 0;
     virtual u32 checkStrikeSphereForPlayer(SphereHitResultBuffer* resultBuffer,
