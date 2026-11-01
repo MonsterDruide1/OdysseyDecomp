@@ -232072,95 +232072,95 @@ Library/Collision/CollisionDirector.o:
     label:
     - _ZN2al17CollisionDirectorC1EPNS_15ExecuteDirectorE
     - _ZN2al17CollisionDirectorC2EPNS_15ExecuteDirectorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8470e0
     size: 28
     label: _ZN2al17CollisionDirector14setPartsKeeperEPNS_21ICollisionPartsKeeperE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8470fc
     size: 16
     label: _ZN2al17CollisionDirector7endInitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84710c
     size: 8
     label: _ZN2al17CollisionDirector14setPartsFilterEPKNS_24CollisionPartsFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847114
     size: 8
     label: _ZN2al17CollisionDirector12setTriFilterEPKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84711c
     size: 88
     label: _ZN2al17CollisionDirector16checkStrikePointERKN4sead7Vector3IfEEPNS_7HitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847174
     size: 164
     label: _ZN2al17CollisionDirector17checkStrikeSphereERKN4sead7Vector3IfEEfbS5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847218
     size: 428
     label: _ZN2al17CollisionDirector16checkStrikeArrowERKN4sead7Vector3IfEES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8473c4
     size: 152
     label: _ZN2al17CollisionDirector26checkStrikeSphereForPlayerERKN4sead7Vector3IfEEf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84745c
     size: 156
     label: _ZN2al17CollisionDirector15checkStrikeDiskERKN4sead7Vector3IfEEffS5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8474f8
     size: 16
     label: _ZN2al17CollisionDirector18getStrikeArrowInfoEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847508
     size: 12
     label: _ZNK2al17CollisionDirector21getStrikeArrowInfoNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847514
     size: 16
     label: _ZN2al17CollisionDirector19getStrikeSphereInfoEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847524
     size: 12
     label: _ZNK2al17CollisionDirector22getStrikeSphereInfoNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847530
     size: 16
     label: _ZN2al17CollisionDirector17getStrikeDiskInfoEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847540
     size: 12
     label: _ZNK2al17CollisionDirector20getStrikeDiskInfoNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84754c
     size: 20
     label: _ZN2al17CollisionDirector32getSphereHitInfoArrayForColliderEPPNS_13SphereHitInfoEPj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847560
     size: 20
     label: _ZN2al17CollisionDirector30getDiskHitInfoArrayForColliderEPPNS_11DiskHitInfoEPj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x847574
     size: 24
     label: _ZN2al17CollisionDirector7executeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84758c
     size: 60
     label: _ZNK2al17CollisionDirector30searchCollisionPartsWithSphereERKN4sead7Vector3IfEEfRNS1_10IDelegate1IPNS_14CollisionPartsEEEPKNS_24CollisionPartsFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8475c8
     size: 20
     label: _ZN2al17CollisionDirector30validateCollisionPartsPtrArrayEPN4sead8PtrArrayINS_14CollisionPartsEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8475dc
     size: 12
     label: _ZN2al17CollisionDirector32invalidateCollisionPartsPtrArrayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8475e8
     size: 32
     label: _ZNK2al17CollisionDirector25getCollisionPartsPtrArrayEv
-    status: NotDecompiled
+    status: Matching
 Library/Collision/CollisionParts.o:
   '.text':
   - offset: 0x847608

@@ -30,50 +30,56 @@ public:
     void setPartsKeeper(ICollisionPartsKeeper* partsKeeper);
     void endInit();
 
-    void setPartsFilter(const CollisionPartsFilterBase*);
-    void setTriFilter(const TriangleFilterBase*);
+    void setPartsFilter(const CollisionPartsFilterBase* partsFilter);
+    void setTriFilter(const TriangleFilterBase* triFilter);
 
-    bool checkStrikePoint(const sead::Vector3f&, HitInfo*);
-    bool checkStrikeSphere(const sead::Vector3f&, f32, bool, const sead::Vector3f&);
-    bool checkStrikeArrow(const sead::Vector3f&, const sead::Vector3f&);
-    bool checkStrikeSphereForPlayer(const sead::Vector3f&, f32);
-    bool checkStrikeDisk(const sead::Vector3f&, f32, f32, const sead::Vector3f&);
+    u32 checkStrikePoint(const sead::Vector3f& position, HitInfo* outHit);
+    u32 checkStrikeSphere(const sead::Vector3f& position, f32 radius, bool checkMoving,
+                          const sead::Vector3f& moveDirection);
+    u32 checkStrikeArrow(const sead::Vector3f& position, const sead::Vector3f& direction);
+    u32 checkStrikeSphereForPlayer(const sead::Vector3f& position, f32 radius);
+    u32 checkStrikeDisk(const sead::Vector3f& position, f32 radius, f32 halfHeight,
+                        const sead::Vector3f& normal);
 
-    const ArrowHitInfo* getStrikeArrowInfo(u32 index);
-    u32 getStrikeArrowInfoNum();
-    const DiskHitInfo* getStrikeSphereInfo(u32 index);
-    u32 getStrikeSphereInfoNum();
-    const SphereHitInfo* getStrikeDiskInfo(u32 index);
-    u32 getStrikeDiskInfoNum();
+    ArrowHitInfo* getStrikeArrowInfo(u32 index);
+    u32 getStrikeArrowInfoNum() const;
+    SphereHitInfo* getStrikeSphereInfo(u32 index);
+    u32 getStrikeSphereInfoNum() const;
+    DiskHitInfo* getStrikeDiskInfo(u32 index);
+    u32 getStrikeDiskInfoNum() const;
 
-    void getSphereHitInfoArrayForCollider(SphereHitInfo** infoArray, u32* count);
-    void getDiskHitInfoArrayForCollider(DiskHitInfo** infoArray, u32* count);
+    void getSphereHitInfoArrayForCollider(SphereHitInfo** outArray, u32* outSize);
+    void getDiskHitInfoArrayForCollider(DiskHitInfo** outArray, u32* outSize);
 
     void execute();
 
-    void searchCollisionPartsWithSphere(const sead::Vector3f&, f32,
-                                        sead::IDelegate1<CollisionParts*>&,
-                                        const CollisionPartsFilterBase*);
-    void validateCollisionPartsPtrArray(sead::PtrArray<CollisionParts>*);
+    void searchCollisionPartsWithSphere(const sead::Vector3f& position, f32 radius,
+                                        ICollisionPartsKeeper::CollisionPartsCallback& callback,
+                                        const CollisionPartsFilterBase* partsFilter) const;
+
+    void validateCollisionPartsPtrArray(sead::PtrArray<CollisionParts>* partsPtrArray);
     void invalidateCollisionPartsPtrArray();
-    sead::PtrArray<CollisionParts>* getCollisionPartsPtrArray();
+
+    sead::PtrArray<CollisionParts>* getCollisionPartsPtrArray() const;
 
     ICollisionPartsKeeper* getActivePartsKeeper() const { return mActivePartsKeeper; }
 
 private:
-    ICollisionPartsKeeper* mActivePartsKeeper;
-    CollisionPartsKeeperOctree* mOctreePartsKeeper;
-    CollisionPartsKeeperPtrArray* mPtrArrayPartsKeeper;
+    ICollisionPartsKeeper* mActivePartsKeeper = nullptr;
+    ICollisionPartsKeeper* mRootPartsKeeper = nullptr;
+    CollisionPartsKeeperPtrArray* mPtrArrayPartsKeeper = nullptr;
 
-    CollisionPartsFilterBase* mPartsFilter;
-    TriangleFilterBase* mTriFilter;
+    const CollisionPartsFilterBase* mPartsFilter = nullptr;
+    const TriangleFilterBase* mTriFilter = nullptr;
 
-    ArrowHitResultBuffer* mStrikeArrowHitInfos;
-    SphereHitResultBuffer* mStrikeSphereHitInfos;
-    DiskHitResultBuffer* mStrikeDiskHitInfos;
+    ArrowHitResultBuffer* mStrikeArrowHitInfoArray = nullptr;
+    SphereHitResultBuffer* mStrikeSphereHitInfoArray = nullptr;
+    DiskHitResultBuffer* mStrikeDiskHitInfoArray = nullptr;
 
-    // TODO: Probably sead::(Un)safeArray
-    SphereHitInfo* mSphereHitArray;
-    DiskHitInfo* mDiskHitArray;
+    SphereHitInfo* mSphereHitInfoArrayForCollider = nullptr;
+    DiskHitInfo* mDiskHitInfoArrayForCollider = nullptr;
 };
+
+static_assert(sizeof(CollisionDirector) == 0x58);
+
 }  // namespace al

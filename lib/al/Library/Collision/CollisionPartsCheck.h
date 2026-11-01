@@ -25,8 +25,7 @@ struct SphereCheckInfo : public CollisionCheckInfoBase {
 struct ArrowCheckInfo : public CollisionCheckInfoBase {
     ArrowCheckInfo(const sead::Vector3f& position, const sead::Vector3f& direction)
         : CollisionCheckInfoBase(position), direction(direction) {
-        target = position + direction;
-
+        target.setAdd(position, direction);
         bounds.addPoint(position);
         bounds.addPoint(target);
     }
