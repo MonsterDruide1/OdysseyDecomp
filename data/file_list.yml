@@ -152319,7 +152319,7 @@ Util/ActorDimensionUtil.o:
   - offset: 0x542d38
     size: 84
     label: _ZNK2al29CollisionPartsFilterMergePair14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Util/ActorJointControlGroundPose.o:
   '.text':
@@ -233347,56 +233347,56 @@ Library/CollisionFilter/PartsFilter.o:
   - offset: 0x857780
     size: 52
     label: _ZN2al30createCollisionPartsFilterFuncEPFbRKNS_14CollisionPartsEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8577b4
     size: 60
     label: _ZN2al37createCollisionPartsFilterFuncSendMsgEPFbRKNS_14CollisionPartsEPNS_9HitSensorEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8577f0
     size: 52
     label: _ZN2al41createCollisionPartsFilterConnectedSensorEPKNS_9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857824
     size: 68
     label: _ZNK2al25CollisionPartsFilterActor14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857868
     size: 92
     label: _ZNK2al28CollisionPartsFilterSubActor14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8578c4
     size: 148
-    label: ''
-    status: NotDecompiled
+    label: _ZN2alL16isEqualSubActorsEPKNS_9LiveActorES2_
+    status: Matching
   - offset: 0x857958
     size: 32
     label: _ZNK2al35CollisionPartsFilterConnectedSensor14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857978
     size: 52
     label: _ZNK2al34CollisionPartsFilterSpecialPurpose14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8579ac
     size: 52
     label: _ZNK2al38CollisionPartsFilterOnlySpecialPurpose14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8579e0
     size: 16
     label: _ZNK2al40CollisionPartsFilterIgnoreSpecialPurpose14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8579f0
     size: 24
     label: _ZNK2al41CollisionPartsFilterIgnoreOptionalPurpose14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857a08
     size: 12
     label: _ZNK2al24CollisionPartsFilterFunc14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x857a14
     size: 16
     label: _ZNK2al31CollisionPartsFilterFuncSendMsg14isInvalidPartsERKNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Library/Connector/CollisionPartsConnector.o:
   '.text':

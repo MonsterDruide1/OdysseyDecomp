@@ -111,7 +111,7 @@ public:
 
     const char* getSpecialPurposeName() const { return mSpecialPurposeName; }
 
-    const char* getOptionalPurposeName() const { return mSpecialPurposeName; }
+    const char* getOptionalPurposeName() const { return mOptionalPurposeName; }
 
     f32 getBoundingSphereRange() const { return mBoundingSphereRange; }
 
