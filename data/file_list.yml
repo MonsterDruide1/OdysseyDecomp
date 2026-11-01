@@ -231923,27 +231923,27 @@ Library/Collision/Collider.o:
   - offset: 0x8443d8
     size: 120
     label: _ZN2al13isWallPolygonERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844450
     size: 128
     label: _ZN2al14isFloorPolygonERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8444d0
     size: 156
     label: _ZN2al17isFloorPolygonCosERKN4sead7Vector3IfEES4_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84456c
     size: 136
     label: _ZN2al16isCeilingPolygonERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8445f4
     size: 136
     label: _ZN2al15calcPolygonTypeERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84467c
     size: 196
     label: _ZN2al24calcTriangleColorByAngleEPN4sead7Color4fEPfRKNS0_7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844740
     size: 316
     label:
@@ -233305,15 +233305,15 @@ Library/Collision/TriangleFilter.o:
   - offset: 0x8573fc
     size: 40
     label: _ZNK2al26TriangleFilterIgnoreGround17isInvalidTriangleERKNS_8TriangleE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857424
     size: 52
     label: _ZNK2al24TriangleFilterGroundOnly17isInvalidTriangleERKNS_8TriangleE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857458
     size: 52
     label: _ZNK2al22TriangleFilterWallOnly17isInvalidTriangleERKNS_8TriangleE
-    status: NotDecompiled
+    status: Matching
 Library/CollisionFilter/DiskInterpolator.o:
   '.text':
   - offset: 0x85748c

@@ -10,40 +10,62 @@ public:
     virtual bool isInvalidTriangle(const Triangle& triangle) const = 0;
 };
 
-class TriangleFilterGroundOnly : public TriangleFilterBase {
+class TriangleFilterIgnoreGround : public TriangleFilterBase {
 public:
-    TriangleFilterGroundOnly(const sead::Vector3f& down) : mDown(down) {}
+    TriangleFilterIgnoreGround(const sead::Vector3f& gravity) : mGravity(gravity) {}
 
     bool isInvalidTriangle(const Triangle& triangle) const override;
 
 private:
-    const sead::Vector3f& mDown;
+    const sead::Vector3f& mGravity;
+};
+
+class TriangleFilterGroundOnly : public TriangleFilterBase {
+public:
+    TriangleFilterGroundOnly(const sead::Vector3f& gravity) : mGravity(gravity) {}
+
+    bool isInvalidTriangle(const Triangle& triangle) const override;
+
+private:
+    const sead::Vector3f& mGravity;
 };
 
 class TriangleFilterWallOnly : public TriangleFilterBase {
 public:
-    TriangleFilterWallOnly(const sead::Vector3f& down) : mDown(down) {}
+    TriangleFilterWallOnly(const sead::Vector3f& gravity) : mGravity(gravity) {}
 
     bool isInvalidTriangle(const Triangle& triangle) const override;
 
 private:
-    const sead::Vector3f& mDown;
+    const sead::Vector3f& mGravity;
+};
+
+class TriangleFilterFunc : public TriangleFilterBase {
+public:
+    using DelegateFilter = bool (*)(const Triangle& triangle);
+
+    TriangleFilterFunc(DelegateFilter filter) : mFilter(filter) {}
+
+    bool isInvalidTriangle(const Triangle& triangle) const override { return mFilter(triangle); }
+
+private:
+    DelegateFilter mFilter;
 };
 
 template <typename T>
 class TriangleFilterDelegator : public TriangleFilterBase {
 public:
-    using DelegateFilter = bool (T::*)(const Triangle&) const;
+    using DelegateFilter = bool (T::*)(const Triangle& triangle) const;
 
-    TriangleFilterDelegator(T* parent, DelegateFilter filter) : mParent(parent), mFunc(filter) {}
+    TriangleFilterDelegator(T* parent, DelegateFilter filter) : mParent(parent), mFilter(filter) {}
 
     bool isInvalidTriangle(const Triangle& triangle) const override {
-        return (mParent->*mFunc)(triangle);
+        return (mParent->*mFilter)(triangle);
     }
 
 private:
     T* mParent;
-    DelegateFilter mFunc;
+    DelegateFilter mFilter;
 };
 
 }  // namespace al

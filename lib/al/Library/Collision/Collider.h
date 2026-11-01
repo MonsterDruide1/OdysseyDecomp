@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gfx/seadColor.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -16,9 +17,21 @@ class SphereInterpolator;
 class Triangle;
 class TriangleFilterBase;
 
-bool isWallPolygon(const sead::Vector3f&, const sead::Vector3f&);
-bool isFloorPolygon(const sead::Vector3f&, const sead::Vector3f&);
-bool isCeilingPolygon(const sead::Vector3f&, const sead::Vector3f&);
+enum class PolygonType {
+    None = 0,
+    Wall = 1,
+    Floor = 2,
+    Ceiling = 3,
+};
+
+bool isWallPolygon(const sead::Vector3f& normal, const sead::Vector3f& gravity);
+bool isFloorPolygon(const sead::Vector3f& normal, const sead::Vector3f& gravity);
+bool isFloorPolygonCos(const sead::Vector3f& normal, const sead::Vector3f& gravity, f32 maxCos);
+bool isCeilingPolygon(const sead::Vector3f& normal, const sead::Vector3f& gravity);
+
+PolygonType calcPolygonType(const sead::Vector3f& normal, const sead::Vector3f& gravity);
+void calcTriangleColorByAngle(sead::Color4f* outColor, float* outAngle,
+                              const sead::Vector3f& normal);
 
 class Collider : public HioNode, public IUseCollision {
 public:
