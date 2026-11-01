@@ -38,7 +38,7 @@ bool CollisionPartsConnector::isConnectInvalidCollision() const {
     if (!mCollisionParts)
         return false;
 
-    return !mCollisionParts->isValidCollision();
+    return !mCollisionParts->isValid();
 }
 
 }  // namespace al

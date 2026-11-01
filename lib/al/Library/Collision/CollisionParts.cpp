@@ -82,7 +82,7 @@ void CollisionParts::initParts(const sead::Matrix34f& mtx) {
 }
 
 void CollisionParts::resetAllMtx(const sead::Matrix34f& matrix) {
-    if (!needsUpdate())
+    if (!isUpdate())
         return;
 
     sead::Matrix34f mtx;
@@ -103,13 +103,13 @@ void CollisionParts::validateByUser() {
     if (mIsValidatedByUser)
         return;
 
-    bool wasValid = isValidCollision();
+    bool wasValid = isValid();
     mIsValidatedByUser = true;
 
     if (wasValid) {
         mIsJustValidated = false;
     } else {
-        mIsJustValidated = isValidCollision();
+        mIsJustValidated = isValid();
 
         if (mIsJustValidated) {
             alCollisionUtil::getCollisionPartsKeeper(getConnectedHost())
@@ -122,11 +122,11 @@ void CollisionParts::invalidateByUser() {
     if (!mIsValidatedByUser)
         return;
 
-    bool wasValid = isValidCollision();
+    bool wasValid = isValid();
     mIsValidatedByUser = false;
     mIsJustValidated = false;
 
-    if (wasValid && !isValidCollision() && mList != nullptr) {
+    if (wasValid && !isValid() && mList != nullptr) {
         alCollisionUtil::getCollisionPartsKeeper(getConnectedHost())
             ->disconnectToCollisionPartsList(this);
     }
@@ -136,13 +136,13 @@ void CollisionParts::validateBySystem() {
     if (mIsValidatedBySystem)
         return;
 
-    bool wasValid = isValidCollision();
+    bool wasValid = isValid();
     mIsValidatedBySystem = true;
 
     if (wasValid) {
         mIsJustValidated = false;
     } else {
-        mIsJustValidated = isValidCollision();
+        mIsJustValidated = isValid();
 
         if (mIsJustValidated) {
             alCollisionUtil::getCollisionPartsKeeper(getConnectedHost())
@@ -155,11 +155,11 @@ void CollisionParts::invalidateBySystem() {
     if (!mIsValidatedBySystem)
         return;
 
-    bool wasValid = isValidCollision();
+    bool wasValid = isValid();
     mIsValidatedBySystem = false;
     mIsJustValidated = false;
 
-    if (wasValid && !isValidCollision() && mList != nullptr) {
+    if (wasValid && !isValid() && mList != nullptr) {
         alCollisionUtil::getCollisionPartsKeeper(getConnectedHost())
             ->disconnectToCollisionPartsList(this);
     }
@@ -216,7 +216,7 @@ void CollisionParts::resetAllMtxPrivate(const sead::Matrix34f& matrix) {
 }
 
 void CollisionParts::resetAllMtx() {
-    if (!needsUpdate())
+    if (!isUpdate())
         return;
 
     sead::Matrix34f mtx;
@@ -254,7 +254,7 @@ void CollisionParts::syncMtx() {
 }
 
 void CollisionParts::updateMtx() {
-    bool needUpdate = needsUpdate();
+    bool needUpdate = isUpdate();
     bool isSame = isEqualMtx(mSyncMtx, mBaseMtx);
 
     if (!needUpdate) {
@@ -421,9 +421,9 @@ u32 CollisionParts::checkStrikeSphereCore(SphereHitResultBuffer* resultBuffer,
         }
 
         info->distance = hit->distance * mInvMtxScale;
-        info->moveReaction = moveReaction;
+        info->movingReaction = moveReaction;
         info->location = hit->location;
-        parallelizeVec(&info->moveReaction, info->triangle.getFaceNormal(), info->moveReaction);
+        parallelizeVec(&info->movingReaction, info->triangle.getFaceNormal(), info->movingReaction);
 
         strikeNum++;
     }
@@ -559,9 +559,9 @@ u32 CollisionParts::checkStrikeSphereForPlayerCore(SphereHitResultBuffer* result
         }
 
         info->distance = hit->distance * mInvMtxScale;
-        info->moveReaction = moveReaction;
+        info->movingReaction = moveReaction;
         info->location = hit->location;
-        parallelizeVec(&info->moveReaction, info->triangle.getFaceNormal(), info->moveReaction);
+        parallelizeVec(&info->movingReaction, info->triangle.getFaceNormal(), info->movingReaction);
 
         strikeNum++;
     }
@@ -620,9 +620,9 @@ u32 CollisionParts::checkStrikeDiskCore(DiskHitResultBuffer* resultBuffer,
         }
 
         info->distance = hit->distance * mInvMtxScale;
-        info->moveReaction = moveReaction;
+        info->movingReaction = moveReaction;
         info->location = hit->location;
-        parallelizeVec(&info->moveReaction, info->triangle.getFaceNormal(), info->moveReaction);
+        parallelizeVec(&info->movingReaction, info->triangle.getFaceNormal(), info->movingReaction);
 
         strikeNum++;
     }

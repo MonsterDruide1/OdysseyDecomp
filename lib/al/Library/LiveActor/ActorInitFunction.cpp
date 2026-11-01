@@ -590,8 +590,8 @@ void initActorCollisionWithFilePtr(LiveActor* actor, void* kcl, const void* byml
                                    s32 priority) {
     CollisionParts* parts = new CollisionParts(const_cast<void*>(kcl), byml);
     parts->setForceCollisionScaleAverage();
-    parts->setSpecialPurpose(specialPurpose);
-    parts->setOptionalPurpose(optionalPurpose);
+    parts->setSpecialPurposeName(specialPurpose);
+    parts->setOptionalPurposeName(optionalPurpose);
     parts->setPriority(priority);
     sead::Matrix34f initMtx;
     makeMtxSRT(&initMtx, actor);

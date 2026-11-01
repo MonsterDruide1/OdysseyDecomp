@@ -70,12 +70,12 @@ void disconnectMtxConnector(MtxConnector* connector) {
     return connector->clear();
 }
 
-CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              const sead::Vector3f& pos,
-                                              const sead::Vector3f& dir) {
+const CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
+                                                    const sead::Vector3f& pos,
+                                                    const sead::Vector3f& dir) {
     CollisionPartsFilterActor partsFilter = CollisionPartsFilterActor(actor);
-    CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(actor, nullptr, pos, dir,
-                                                                          &partsFilter, nullptr);
+    const CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
+        actor, nullptr, pos, dir, &partsFilter, nullptr);
     if (!parts)
         return nullptr;
 
@@ -83,14 +83,14 @@ CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const Liv
     return parts;
 }
 
-CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              bool isAttachToGround) {
+const CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
+                                                    bool isAttachToGround) {
     return attachMtxConnectorToCollision(connector, actor, 50.0f,
                                          isAttachToGround ? -150.0f : 150.0f);
 }
 
-CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              f32 checkOffUp, f32 checkDistance) {
+const CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
+                                                    f32 checkOffUp, f32 checkDistance) {
     sead::Vector3f upDir;
     calcUpDir(&upDir, actor);
 
@@ -181,7 +181,7 @@ void attachMtxConnectorToCollisionRT(MtxConnector* connector, const LiveActor* a
 
     CollisionPartsFilterActor partsFilter = CollisionPartsFilterActor(actor);
     sead::Vector3f arrowPos;
-    CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
+    const CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
         actor, &arrowPos, pos, dir, &partsFilter, nullptr);
     if (!parts)
         return;
@@ -206,7 +206,7 @@ void attachMtxConnectorToCollisionQT(MtxConnector* connector, const LiveActor* a
 
     CollisionPartsFilterActor partsFilter = CollisionPartsFilterActor(actor);
     sead::Vector3f arrowPos;
-    CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
+    const CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
         actor, &arrowPos, pos, dir, &partsFilter, nullptr);
     if (!parts)
         return;
@@ -327,14 +327,14 @@ void attachCollisionPartsConnectorToGround(CollisionPartsConnector* partsConnect
     CollisionPartsFilterActor partsFilter = CollisionPartsFilterActor(actor);
     sead::Vector3f upDir{0.0f, 0.0f, 0.0f};
     calcUpDir(&upDir, actor);
-    CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
+    const CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(
         actor, nullptr, getTrans(actor) + upDir * 50.0f, upDir * -150.0f, &partsFilter, nullptr);
     attachCollisionPartsConnector(partsConnector, parts);
 }
 
 void attachToHitTriangle(CollisionPartsConnector* partsConnector, const Triangle& triangle,
                          const sead::Matrix34f& mtx) {
-    const CollisionParts* collisionParts = triangle.getCollisionParts();
+    const CollisionParts* collisionParts = triangle.getParts();
     sead::Matrix34f partsMtx = collisionParts->getBaseInvMtx() * mtx;
     partsConnector->init(&collisionParts->getBaseMtx(), partsMtx, collisionParts);
 }

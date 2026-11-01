@@ -59,7 +59,11 @@ public:
     const sead::Matrix34f& getBaseInvMtx() const;
     const sead::Matrix34f& getPrevBaseMtx() const;
 
-    const CollisionParts* getCollisionParts() const { return mCollisionParts; }
+    const CollisionParts* getParts() const { return mParts; }
+
+    const KCPrismData* getPrismData() const { return mData; }
+
+    const KCPrismHeader* getPrismHeader() const { return mHeader; }
 
     // clang-format off
     friend bool ::operator==(const Triangle& lhs, const Triangle& rhs);
@@ -67,7 +71,7 @@ public:
     // clang-format on
 
 private:
-    const CollisionParts* mCollisionParts;
+    const CollisionParts* mParts;
     const KCPrismData* mData;
     const KCPrismHeader* mHeader;
 
@@ -88,7 +92,7 @@ struct HitInfo {
     f32 distance = 0.0f;
     sead::Vector3f hitPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f checkPos = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f moveReaction = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f movingReaction = {0.0f, 0.0f, 0.0f};
     u8 location = KCollisionLocation_None;
 };
 

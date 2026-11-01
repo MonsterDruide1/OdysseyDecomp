@@ -3,6 +3,7 @@
 #include <math/seadVector.h>
 #include <prim/seadDelegate.h>
 
+#include "Library/Collision/CollisionParts.h"
 #include "Library/HostIO/HioNode.h"
 
 namespace al {
@@ -18,8 +19,6 @@ class DiskHitResultBuffer;
 
 class ICollisionPartsKeeper : public IUseHioNode {
 public:
-    using CollisionPartsCallback = sead::IDelegate1<CollisionParts*>;
-
     virtual void endInit() = 0;
 
     virtual void addCollisionParts(CollisionParts* parts) = 0;

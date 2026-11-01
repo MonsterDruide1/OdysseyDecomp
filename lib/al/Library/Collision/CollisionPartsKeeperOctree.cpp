@@ -89,7 +89,7 @@ void CollisionPartsKeeperOctree::insertMovingPartsListToOctNode() {
     for (auto it = mPartsList.robustBegin(); it != mPartsList.robustEnd(); ++it) {
         CollisionParts* parts = it->mData;
 
-        if (parts->isValidCollision())
+        if (parts->isValid())
             insertLooseOctree(&mRootNode, parts);
         else
             parts->erase();

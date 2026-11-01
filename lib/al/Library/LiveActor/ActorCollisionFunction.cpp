@@ -70,11 +70,11 @@ void invalidateCollisionPartsBySystem(LiveActor* actor) {
 }
 
 bool isValidCollisionParts(const LiveActor* actor) {
-    return actor->getCollisionParts()->isValidCollision();
+    return actor->getCollisionParts()->isValid();
 }
 
 void setCollisionPartsSpecialPurposeName(LiveActor* actor, const char* name) {
-    actor->getCollisionParts()->setSpecialPurpose(name);
+    actor->getCollisionParts()->setSpecialPurposeName(name);
 }
 
 void resetAllCollisionMtx(LiveActor* actor) {
@@ -97,7 +97,7 @@ void syncCollisionMtx(LiveActor* actor, const sead::Matrix34f* mtx) {
 
 void syncCollisionMtx(LiveActor* actor, CollisionParts* collisionParts,
                       const sead::Matrix34f* mtx) {
-    if (!collisionParts->isValidCollision())
+    if (!collisionParts->isValid())
         return;
 
     if (collisionParts->hasSyncCollisionMtx()) {
@@ -226,7 +226,7 @@ void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor,
 
     sead::Vector3f movePower = {0.0f, 0.0f, 0.0f};
     const HitInfo& floorHit = actor->getCollider()->getFloorHit();
-    if (floorHit.triangle.getCollisionParts() && floorHit.triangle.isHostMoved())
+    if (floorHit.triangle.getParts() && floorHit.triangle.isHostMoved())
         floorHit.triangle.calcForceMovePower(&movePower, getTrans(actor));
 
     verticalizeVec(&movePower, getGravity(actor), movePower);
@@ -259,7 +259,7 @@ void calcJumpInertiaWall(sead::Vector3f* outJumpInertia, LiveActor* actor, f32 f
     const sead::Vector3f& trans = getTrans(actor);
     const HitInfo& floorHit = actor->getCollider()->getWallHit();
 
-    if (floorHit.triangle.getCollisionParts() && alCollisionUtil::isCollisionMoving(&floorHit))
+    if (floorHit.triangle.getParts() && alCollisionUtil::isCollisionMoving(&floorHit))
         floorHit.triangle.calcForceMovePower(&movePower, trans);
 
     verticalizeVec(&movePower, getGravity(actor), movePower);
@@ -583,7 +583,7 @@ const CollisionParts* getCollidedGroundCollisionParts(const LiveActor* actor) {
 const CollisionParts* tryGetCollidedGroundCollisionParts(const LiveActor* actor) {
     if (!isCollidedGround(actor))
         return nullptr;
-    return actor->getCollider()->getFloorHit().triangle.getCollisionParts();
+    return actor->getCollider()->getFloorHit().triangle.getParts();
 }
 
 const CollisionParts* getCollidedWallCollisionParts(const LiveActor* actor) {
@@ -593,7 +593,7 @@ const CollisionParts* getCollidedWallCollisionParts(const LiveActor* actor) {
 const CollisionParts* tryGetCollidedWallCollisionParts(const LiveActor* actor) {
     if (!isCollidedWall(actor))
         return nullptr;
-    return actor->getCollider()->getWallHit().triangle.getCollisionParts();
+    return actor->getCollider()->getWallHit().triangle.getParts();
 }
 
 const CollisionParts* getCollidedCeilingCollisionParts(const LiveActor* actor) {
@@ -603,7 +603,7 @@ const CollisionParts* getCollidedCeilingCollisionParts(const LiveActor* actor) {
 const CollisionParts* tryGetCollidedCeilingCollisionParts(const LiveActor* actor) {
     if (!isCollidedCeiling(actor))
         return nullptr;
-    return actor->getCollider()->getCeilingHit().triangle.getCollisionParts();
+    return actor->getCollider()->getCeilingHit().triangle.getParts();
 }
 
 HitSensor* getCollidedGroundSensor(const LiveActor* actor) {
@@ -613,7 +613,7 @@ HitSensor* getCollidedGroundSensor(const LiveActor* actor) {
 HitSensor* tryGetCollidedGroundSensor(const LiveActor* actor) {
     if (!isCollidedGround(actor))
         return nullptr;
-    return actor->getCollider()->getFloorHit().triangle.getCollisionParts()->getConnectedSensor();
+    return actor->getCollider()->getFloorHit().triangle.getParts()->getConnectedSensor();
 }
 
 HitSensor* getCollidedWallSensor(const LiveActor* actor) {
@@ -623,7 +623,7 @@ HitSensor* getCollidedWallSensor(const LiveActor* actor) {
 HitSensor* tryGetCollidedWallSensor(const LiveActor* actor) {
     if (!isCollidedWall(actor))
         return nullptr;
-    return actor->getCollider()->getWallHit().triangle.getCollisionParts()->getConnectedSensor();
+    return actor->getCollider()->getWallHit().triangle.getParts()->getConnectedSensor();
 }
 
 HitSensor* getCollidedCeilingSensor(const LiveActor* actor) {
@@ -633,7 +633,7 @@ HitSensor* getCollidedCeilingSensor(const LiveActor* actor) {
 HitSensor* tryGetCollidedCeilingSensor(const LiveActor* actor) {
     if (!isCollidedCeiling(actor))
         return nullptr;
-    return actor->getCollider()->getCeilingHit().triangle.getCollisionParts()->getConnectedSensor();
+    return actor->getCollider()->getCeilingHit().triangle.getParts()->getConnectedSensor();
 }
 
 HitSensor* tryGetCollidedSensor(const LiveActor* actor) {

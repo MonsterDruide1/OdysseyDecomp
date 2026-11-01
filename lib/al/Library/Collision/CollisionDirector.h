@@ -41,12 +41,12 @@ public:
     u32 checkStrikeDisk(const sead::Vector3f& position, f32 radius, f32 halfHeight,
                         const sead::Vector3f& normal);
 
-    ArrowHitInfo* getStrikeArrowInfo(u32 index);
-    u32 getStrikeArrowInfoNum() const;
-    SphereHitInfo* getStrikeSphereInfo(u32 index);
-    u32 getStrikeSphereInfoNum() const;
-    DiskHitInfo* getStrikeDiskInfo(u32 index);
-    u32 getStrikeDiskInfoNum() const;
+    const ArrowHitInfo& getStrikeArrowInfo(u32 index);
+    s32 getStrikeArrowInfoNum() const;
+    const SphereHitInfo& getStrikeSphereInfo(u32 index);
+    s32 getStrikeSphereInfoNum() const;
+    const DiskHitInfo& getStrikeDiskInfo(u32 index);
+    s32 getStrikeDiskInfoNum() const;
 
     void getSphereHitInfoArrayForCollider(SphereHitInfo** outArray, u32* outSize);
     void getDiskHitInfoArrayForCollider(DiskHitInfo** outArray, u32* outSize);
@@ -54,7 +54,7 @@ public:
     void execute();
 
     void searchCollisionPartsWithSphere(const sead::Vector3f& position, f32 radius,
-                                        ICollisionPartsKeeper::CollisionPartsCallback& callback,
+                                        CollisionPartsCallback& callback,
                                         const CollisionPartsFilterBase* partsFilter) const;
 
     void validateCollisionPartsPtrArray(sead::PtrArray<CollisionParts>* partsPtrArray);

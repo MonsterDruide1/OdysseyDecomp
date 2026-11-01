@@ -131,27 +131,27 @@ u32 CollisionDirector::checkStrikeDisk(const sead::Vector3f& position, f32 radiu
     return result;
 }
 
-ArrowHitInfo* CollisionDirector::getStrikeArrowInfo(u32 index) {
-    return mStrikeArrowHitInfoArray->unsafeAt(index);
+const ArrowHitInfo& CollisionDirector::getStrikeArrowInfo(u32 index) {
+    return *mStrikeArrowHitInfoArray->unsafeAt(index);
 }
 
-u32 CollisionDirector::getStrikeArrowInfoNum() const {
+s32 CollisionDirector::getStrikeArrowInfoNum() const {
     return mStrikeArrowHitInfoArray->size();
 }
 
-SphereHitInfo* CollisionDirector::getStrikeSphereInfo(u32 index) {
-    return mStrikeSphereHitInfoArray->unsafeAt(index);
+const SphereHitInfo& CollisionDirector::getStrikeSphereInfo(u32 index) {
+    return *mStrikeSphereHitInfoArray->unsafeAt(index);
 }
 
-u32 CollisionDirector::getStrikeSphereInfoNum() const {
+s32 CollisionDirector::getStrikeSphereInfoNum() const {
     return mStrikeSphereHitInfoArray->size();
 }
 
-DiskHitInfo* CollisionDirector::getStrikeDiskInfo(u32 index) {
-    return mStrikeDiskHitInfoArray->unsafeAt(index);
+const DiskHitInfo& CollisionDirector::getStrikeDiskInfo(u32 index) {
+    return *mStrikeDiskHitInfoArray->unsafeAt(index);
 }
 
-u32 CollisionDirector::getStrikeDiskInfoNum() const {
+s32 CollisionDirector::getStrikeDiskInfoNum() const {
     return mStrikeDiskHitInfoArray->size();
 }
 
@@ -171,8 +171,7 @@ void CollisionDirector::execute() {
 }
 
 void CollisionDirector::searchCollisionPartsWithSphere(
-    const sead::Vector3f& position, f32 radius,
-    ICollisionPartsKeeper::CollisionPartsCallback& callback,
+    const sead::Vector3f& position, f32 radius, CollisionPartsCallback& callback,
     const CollisionPartsFilterBase* partsFilter) const {
     SphereCheckInfo checkInfo(position, radius);
     checkInfo.partsFilter = partsFilter;

@@ -6,7 +6,7 @@
 
 namespace al {
 
-Triangle::Triangle() : mCollisionParts(nullptr), mData(nullptr), mHeader(nullptr) {
+Triangle::Triangle() : mParts(nullptr), mData(nullptr), mHeader(nullptr) {
     // nullptrs above done to avoid initializing them in the other ctor
 
     mNormals[0] = sead::Vector3f::zero;
@@ -26,7 +26,7 @@ Triangle::Triangle(const CollisionParts& parts, const KCPrismData* data,
 
 void Triangle::fillData(const CollisionParts& parts, const KCPrismData* data,
                         const KCPrismHeader* header) {
-    mCollisionParts = &parts;
+    mParts = &parts;
     mData = data;
     mHeader = header;
 
@@ -76,13 +76,13 @@ void Triangle::fill(const sead::Vector3f& pos1, const sead::Vector3f& pos2,
 }
 
 const LiveActor* Triangle::getHostActor() const {
-    if (!mCollisionParts)
+    if (!mParts)
         return nullptr;
-    return mCollisionParts->getConnectedHost();
+    return mParts->getConnectedHost();
 }
 
 bool Triangle::isHostMoved() const {
-    return mCollisionParts->isMoving();
+    return mParts->isMoving();
 }
 
 bool Triangle::isValid() const {
@@ -110,8 +110,8 @@ void Triangle::calcCenterPos(sead::Vector3f* center) const {
 }
 
 const sead::Vector3f& Triangle::calcAndGetNormal(s32 index) {
-    auto* parts = mCollisionParts;
-    auto* server = parts->getServer();
+    auto parts = mParts;
+    auto server = parts->getServer();
 
     switch (index) {
     case 0:
@@ -137,7 +137,7 @@ const sead::Vector3f& Triangle::calcAndGetNormal(s32 index) {
 }
 
 const sead::Vector3f& Triangle::calcAndGetFaceNormal() {
-    auto* parts = mCollisionParts;
+    auto parts = mParts;
 
     mNormals[0] = parts->getServer()->getFaceNormal(mData, mHeader);
     mNormals[0].setRotated(parts->getBaseMtx(), mNormals[0]);
@@ -146,8 +146,8 @@ const sead::Vector3f& Triangle::calcAndGetFaceNormal() {
 }
 
 const sead::Vector3f& Triangle::calcAndGetEdgeNormal(s32 index) {
-    auto* parts = mCollisionParts;
-    auto* server = parts->getServer();
+    auto parts = mParts;
+    auto server = parts->getServer();
 
     switch (index) {
     case 0:
@@ -171,43 +171,43 @@ const sead::Vector3f& Triangle::calcAndGetEdgeNormal(s32 index) {
 }
 
 const sead::Vector3f& Triangle::calcAndGetPos(s32 index) {
-    mCollisionParts->getServer()->calcPosLocal(&mPositions[index], mData, index, mHeader);
+    mParts->getServer()->calcPosLocal(&mPositions[index], mData, index, mHeader);
     mPositions[index].mul(getBaseMtx());
     return getPos(index);
 }
 
 void Triangle::getLocalPos(sead::Vector3f* pos, s32 index) const {
-    mCollisionParts->getServer()->calcPosLocal(pos, mData, index, mHeader);
+    mParts->getServer()->calcPosLocal(pos, mData, index, mHeader);
 }
 
 void Triangle::calcForceMovePower(sead::Vector3f* power, const sead::Vector3f& pos) const {
-    mCollisionParts->calcForceMovePower(power, pos);
+    mParts->calcForceMovePower(power, pos);
 }
 
 void Triangle::calcForceRotatePower(sead::Quatf* power) const {
-    mCollisionParts->calcForceRotatePower(power);
+    mParts->calcForceRotatePower(power);
 }
 
 bool Triangle::getAttributes(ByamlIter* iter) const {
     if (!isValid())
         return false;
-    return mCollisionParts->getServer()->getAttributes(iter, mData);
+    return mParts->getServer()->getAttributes(iter, mData);
 }
 
 const HitSensor* Triangle::getSensor() const {
-    return mCollisionParts->getConnectedSensor();
+    return mParts->getConnectedSensor();
 }
 
 const sead::Matrix34f& Triangle::getBaseMtx() const {
-    return mCollisionParts->getBaseMtx();
+    return mParts->getBaseMtx();
 }
 
 const sead::Matrix34f& Triangle::getBaseInvMtx() const {
-    return mCollisionParts->getBaseInvMtx();
+    return mParts->getBaseInvMtx();
 }
 
 const sead::Matrix34f& Triangle::getPrevBaseMtx() const {
-    return mCollisionParts->getPrevBaseMtx();
+    return mParts->getPrevBaseMtx();
 }
 
 HitInfo::HitInfo() = default;
@@ -295,7 +295,7 @@ void DiskHitInfo::calcFixVectorNormal(sead::Vector3f* outFix, sead::Vector3f* ou
 }  // namespace al
 
 bool operator==(const al::Triangle& lhs, const al::Triangle& rhs) {
-    return lhs.mCollisionParts == rhs.mCollisionParts && lhs.mData == rhs.mData;
+    return lhs.mParts == rhs.mParts && lhs.mData == rhs.mData;
 }
 
 bool operator!=(const al::Triangle& lhs, const al::Triangle& rhs) {

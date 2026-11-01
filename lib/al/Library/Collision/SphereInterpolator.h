@@ -20,6 +20,8 @@ public:
     void getMoveVector(sead::Vector3f* outMoveVec);
     void calcStepMoveVector(sead::Vector3f* outMoveVec) const;
 
+    f32 getCurrentInterp() const { return mCurrInterp; }
+
     bool isDone() const { return mCurrInterp >= 1.0f; }
 
     bool isEnd() const { return mPrevInterp == 1.0f && mCurrInterp == 1.0f; }

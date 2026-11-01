@@ -6,6 +6,9 @@
 
 namespace al {
 
+class CollisionPartsFilterBase;
+class ICollisionPartsKeeper;
+
 struct CollisionCheckInfoBase {
     CollisionCheckInfoBase(const sead::Vector3f& position) : position(position) {}
 

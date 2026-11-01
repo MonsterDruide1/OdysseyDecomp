@@ -1594,7 +1594,7 @@ void Bubble::endHackCommon() {
 
     if (alCollisionUtil::checkStrikeSphereMove(this, sphereMoveHitInfos, 8, colliderPos,
                                                colliderRadius, move, nullptr, nullptr) != 0) {
-        targetPos = sphereMoveHitInfos[0]._0 * move + colliderPos;
+        targetPos = sphereMoveHitInfos[0].moveInterp * move + colliderPos;
     }
 
     sead::Vector3f upDir;

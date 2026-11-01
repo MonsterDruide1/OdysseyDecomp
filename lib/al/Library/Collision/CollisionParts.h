@@ -5,9 +5,7 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/CollisionUtil.h"
 #include "Library/Collision/HitInfo.h"
-#include "Library/Collision/ICollisionPartsKeeper.h"
 
 namespace al {
 struct HitInfo;
@@ -30,6 +28,7 @@ class DiskHitResultBuffer : public sead::ObjArray<DiskHitInfo> {};
 
 using CollisionPartsList = sead::TList<CollisionParts*>;
 using CollisionPartsListNode = sead::TListNode<CollisionParts*>;
+using CollisionPartsCallback = sead::IDelegate1<CollisionParts*>;
 
 class CollisionParts : public CollisionPartsListNode {
 public:
@@ -104,21 +103,27 @@ public:
 
     void setConnectedSensor(HitSensor* sensor) { mConnectedSensor = sensor; }
 
-    void setSpecialPurpose(const char* specialPurpose) { mSpecialPurpose = specialPurpose; }
+    void setSpecialPurposeName(const char* specialPurpose) { mSpecialPurposeName = specialPurpose; }
 
-    void setOptionalPurpose(const char* optionalPurpose) { mOptionalPurpose = optionalPurpose; }
+    void setOptionalPurposeName(const char* optionalPurpose) {
+        mOptionalPurposeName = optionalPurpose;
+    }
+
+    const char* getSpecialPurposeName() const { return mSpecialPurposeName; }
+
+    const char* getOptionalPurposeName() const { return mSpecialPurposeName; }
 
     f32 getBoundingSphereRange() const { return mBoundingSphereRange; }
-
-    bool isValidCollision() const { return mIsValidatedByUser && mIsValidatedBySystem; }
 
     bool isJustValidated() const { return mIsJustValidated; }
 
     void resetJustValidated() { mIsJustValidated = false; }
 
-    bool needsUpdate() const { return mIsUpdateAlways || mIsUpdateMtxOneTime; }
+    bool isValid() const { return mIsValidatedByUser && mIsValidatedBySystem; }
 
     bool isMoving() const { return mNoMoveTime == 0 || mIsMoving; }
+
+    bool isUpdate() const { return mIsUpdateAlways || mIsUpdateMtxOneTime; }
 
     void setForceCollisionScaleNone() { mForceCollisionScale = ForceCollisionScale::None; }
 
@@ -158,8 +163,8 @@ private:
 
     KCollisionServer* mServer = nullptr;
     HitSensor* mConnectedSensor = nullptr;
-    const char* mSpecialPurpose = nullptr;
-    const char* mOptionalPurpose = nullptr;
+    const char* mSpecialPurposeName = nullptr;
+    const char* mOptionalPurposeName = nullptr;
 
     sead::Vector3f mSyncMtxScaleVec = {1.0f, 1.0f, 1.0f};
     s32 mNoMoveTime = 0;

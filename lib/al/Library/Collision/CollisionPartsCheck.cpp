@@ -156,7 +156,7 @@ u32 checkStrikeDiskCore(DiskHitResultBuffer* resultBuffer, const CollisionPartsL
 }
 
 void updateCollisionParts(CollisionParts* parts) {
-    if (!parts->isValidCollision())
+    if (!parts->isValid())
         return;
 
     parts->updateMtx();
@@ -174,7 +174,7 @@ void pushBackCollisionParts(CollisionPartsList* partsList, CollisionParts* parts
     partsList->pushBack(parts);
     parts->onJoinList();
 
-    if (!parts->isValidCollision())
+    if (!parts->isValid())
         partsList->erase(parts);
 }
 

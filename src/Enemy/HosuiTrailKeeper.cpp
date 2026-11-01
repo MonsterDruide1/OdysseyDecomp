@@ -53,7 +53,7 @@ void HosuiTrailKeeper::appearTrail(const sead::Vector3f& pos, const sead::Vector
         al::setQuat(trail, dirQuat * randomQuat);
         al::resetPosition(trail, pos);
         trail->appear();
-        trail->setFollowCollisionParts(triangle.getCollisionParts());
+        trail->setFollowCollisionParts(triangle.getParts());
     }
 
     s32 disappearIdx = al::wrapValue(mIndex + 5, count);
