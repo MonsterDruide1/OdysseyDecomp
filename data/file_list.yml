@@ -223141,7 +223141,7 @@ Library/Anim/ModelAnimInterp.o:
   - offset: 0x8026f4
     size: 484
     label: _ZN4sead18Matrix34CalcCommonIfE7slerpToERNS_9BaseMtx34IfEERKS3_S6_f
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x8028d8
     size: 52
@@ -233321,27 +233321,27 @@ Library/CollisionFilter/DiskInterpolator.o:
     label:
     - _ZN2al16DiskInterpolatorC1Ev
     - _ZN2al16DiskInterpolatorC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8574a8
     size: 232
     label: _ZN2al16DiskInterpolator11startInterpERKN4sead7Vector3IfEES5_ffffPKNS1_8Matrix34IfEES9_S5_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857590
     size: 36
     label: _ZN2al16DiskInterpolator8nextStepEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8575b4
     size: 68
     label: _ZNK2al16DiskInterpolator13calcInterpPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8575f8
     size: 44
     label: _ZN2al16DiskInterpolator13getMoveVectorEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x857624
     size: 348
     label: _ZNK2al16DiskInterpolator10calcInterpEPN4sead7Vector3IfEEPfS5_S4_PNS1_8Matrix34IfEES4_
-    status: NotDecompiled
+    status: Matching
 Library/CollisionFilter/PartsFilter.o:
   '.text':
   - offset: 0x857780

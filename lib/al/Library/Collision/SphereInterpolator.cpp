@@ -16,12 +16,8 @@ void SphereInterpolator::startInterp(const sead::Vector3f& posStart, const sead:
 }
 
 void SphereInterpolator::nextStep() {
-    // re-interpreting between f32/s32 required to match
-    s32 curStep = *(s32*)&mCurrInterp;
-    f32 stepAsFloat = *(f32*)&curStep;
-    f32 newStep = sead::Mathf::clampMax(stepAsFloat + mInterpStep, 1.0f);
-    *(s32*)&mPrevInterp = curStep;
-    mCurrInterp = newStep;
+    mPrevInterp = mCurrInterp;
+    mCurrInterp = sead::Mathf::clampMax(mCurrInterp + mInterpStep, 1.0f);
 }
 
 void SphereInterpolator::calcInterpPos(sead::Vector3f* outPos) const {
@@ -34,7 +30,9 @@ void SphereInterpolator::calcInterpPos(sead::Vector3f* outPos) const {
 void SphereInterpolator::calcInterp(sead::Vector3f* outPos, f32* outRadius,
                                     sead::Vector3f* outRemainMoveVec) const {
     calcInterpPos(outPos);
+
     *outRadius = mRadiusStart + (mRadiusEnd - mRadiusStart) * mCurrInterp;
+
     calcRemainMoveVector(outRemainMoveVec);
 }
 

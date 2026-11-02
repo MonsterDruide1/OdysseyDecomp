@@ -9,31 +9,37 @@ class SpherePoseInterpolator {
 public:
     SpherePoseInterpolator() {}
 
-    void startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd, f32 sizeStart,
-                     f32 sizeEnd, const sead::Quatf& quatStart, const sead::Quatf& quatEnd,
-                     f32 steps);
+    void startInterp(const sead::Vector3f& posStart, const sead::Vector3f& posEnd, f32 radiusStart,
+                     f32 radiusEnd, const sead::Quatf& poseStart, const sead::Quatf& poseEnd,
+                     f32 stepSize);
+
     void nextStep();
-    void calcInterpPos(sead::Vector3f* pos) const;
-    void calcInterp(sead::Vector3f* pos, f32* size, sead::Quatf* quat,
-                    sead::Vector3f* remainMoveVec) const;
-    void calcRemainMoveVector(sead::Vector3f* remainMoveVec) const;
-    f32 calcRadiusBaseScale(f32 unk) const;
-    void getMoveVector(sead::Vector3f* moveVec);
 
-    f32 getCurrentStep() const { return mCurrentStep; }
+    void calcInterpPos(sead::Vector3f* outPos) const;
+    void calcInterp(sead::Vector3f* outPos, f32* outRadius, sead::Quatf* outPose,
+                    sead::Vector3f* outRemainMoveVec) const;
+    void calcRemainMoveVector(sead::Vector3f* outRemainMoveVec) const;
+    f32 calcRadiusBaseScale(f32 radius) const;
 
-    bool isEnd() const { return mPrevStep == 1.0f && mCurrentStep == 1.0f; }
+    void getMoveVector(sead::Vector3f* outMoveVec);
+
+    f32 getCurrentInterp() const { return mCurrInterp; }
+
+    bool isDone() const { return mCurrInterp >= 1.0f; }
+
+    bool isEnd() const { return mPrevInterp == 1.0f && mCurrInterp == 1.0f; }
 
 private:
     sead::Vector3f mPos;
     sead::Vector3f mMove;
-    f32 mSizeStart;
-    f32 mSizeEnd;
-    sead::Quatf mQuatStart;
-    sead::Quatf mQuatEnd;
-    f32 mStepSize;
-    f32 mCurrentStep;
-    f32 mPrevStep;
+    f32 mRadiusStart;
+    f32 mRadiusEnd;
+    sead::Quatf mPoseStart;
+    sead::Quatf mPoseEnd;
+
+    f32 mInterpStep;
+    f32 mCurrInterp;
+    f32 mPrevInterp;
 };
 
 }  // namespace al
