@@ -4,7 +4,7 @@
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
-#include <nn/g3d/ResFile.h>
+#include <nn/g3d/g3d_ResFile.h>
 #include <nn/gfx/gfx_DescriptorSlot.h>
 
 namespace agl {

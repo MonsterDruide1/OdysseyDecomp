@@ -119,14 +119,23 @@ def get_includes():
                  "hazard_pointer", "latch", "mutex", "rcu", "semaphore", "shared_mutex", "stop_token", "thread",
                  "stdatomic.h"]
     sead_files = get_files(project_root / 'lib' / 'sead' / 'include')
-    nintendo_sdk_files = get_files(project_root / 'lib' / 'NintendoSDK' / 'include')
+    # nnsdk files
+    nnsdk_root = project_root / 'lib' / 'nnsdk'
+    nnsdk_files = get_files(nnsdk_root / 'include')
+    for nnsdk_module in ['gfx', 'nvn']:
+        nnsdk_files += get_files(nnsdk_root / 'lib' / nnsdk_module / 'include' )
+    # nnware files
+    nnware_files = []
+    for nnware_module in ['atk', 'font', 'g3d', 'ui2d', 'vfx']:
+        nnware_files += get_files(project_root / 'lib' / 'nnware' / 'lib' / nnware_module / 'include')
+
     agl_files = get_files(project_root / 'lib' / 'agl' / 'include')
     aarch_files = get_files(project_root / 'lib' / 'aarch64')
     eui_files = get_files(project_root / 'lib' / 'eui' / 'include')
     al_files = [a for a in get_files(project_root / 'lib' / 'al') if a.endswith(".h")]
     game_files = [a for a in get_files(project_root / 'src') if a.endswith(".h")]
 
-    angled_includes = cpp_files + aarch_files + nintendo_sdk_files + sead_files + agl_files + eui_files
+    angled_includes = cpp_files + aarch_files + nnsdk_files + nnware_files + sead_files + agl_files + eui_files
     al_includes = al_files
     game_includes = game_files
 

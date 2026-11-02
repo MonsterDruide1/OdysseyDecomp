@@ -11,8 +11,10 @@ function l { # Log a message to the terminal.
 rm -rf src/test || true
 mkdir -p src/test/single src/test/multi
 
+# the lib/NintendoSDK exclusion can be removed once the submodule is removed (after migration is fully complete)
+
 for f in $(find lib src -name '*.h'); do
-    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
+    if [[ $f == "lib/NintendoSDK/"* || $f == "lib/nnsdk/lib/"*"/src/"* || $f == "lib/nnware/lib/"*"/src/"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
         continue
     fi
     testname="${f//\//_}.cpp"  # Replace / with _
@@ -24,7 +26,7 @@ for f in $(find lib src -name '*.h'); do
 done
 
 for f in $(find lib src -name '*.h'); do
-    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
+    if [[ $f == "lib/NintendoSDK/"* || $f == "lib/nnsdk/lib/"*"/src/"* || $f == "lib/nnware/lib/"*"/src/"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
         continue
     fi
     testname="${f//\//_}.cpp"  # Replace / with _
@@ -36,7 +38,7 @@ for f in $(find lib src -name '*.h'); do
 done
 
 for f in $(find src -name '*.h'); do
-    if [[ $f == "lib/NintendoSDK/src/NintendoSDK"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
+    if [[ $f == "lib/NintendoSDK/"* || $f == "lib/nnsdk/lib/"*"/src/"* || $f == "lib/nnware/lib/"*"/src/"* || $f == *"/cafe/"* || $f == "lib/sead/include/prim/seadScopeGuard.h" || $f == "lib/curl"* ]]; then
         continue
     fi
     testname="${f//\//_}.cpp"  # Replace / with _

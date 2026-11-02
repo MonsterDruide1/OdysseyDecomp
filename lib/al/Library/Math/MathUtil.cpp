@@ -985,7 +985,7 @@ void initRandomSeed(u32 seed) {
 }
 
 void initRandomSeedByTick() {
-    initRandomSeed(nn::os::GetSystemTick().value);
+    initRandomSeed(nn::os::GetSystemTick().GetInt64Value());
 }
 
 void initRandomSeedByString(const char* name) {

@@ -3,7 +3,7 @@
 #include <gfx/seadCamera.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
-#include <nn/album/album_types.h>
+#include <nn/album/album_Types.h>
 
 #include "Library/Nerve/NerveExecutor.h"
 

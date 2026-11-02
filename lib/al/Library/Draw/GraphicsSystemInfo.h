@@ -6,7 +6,7 @@
 #include <container/seadTList.h>
 #include <gfx/seadCamera.h>
 #include <gfx/seadFrameBuffer.h>
-#include <nn/g3d/ViewVolume.h>
+#include <nn/g3d/g3d_ViewVolume.h>
 #include <utility/aglParameterIO.h>
 
 namespace agl {
