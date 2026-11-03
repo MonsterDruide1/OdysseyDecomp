@@ -2,6 +2,7 @@
 
 #include <container/seadPtrArray.h>
 #include <container/seadRingBuffer.h>
+#include <math/seadBoundBox.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include <prim/seadDelegate.h>
@@ -11,36 +12,76 @@ class ByamlIter;
 class CollisionParts;
 class LiveActor;
 
-struct KCPrismHeader {
-    u32 positionsOffset;
-    u32 normalsOffset;
-    u32 trianglesOffset;
+using KCFxyz = sead::Vector3f;
+
+struct KCFileHeader {
+    u32 version;
+
     u32 octreeOffset;
-    f32 thickness;
-    sead::Vector3f octreeOrigin;
-    sead::Vector3u widthMask;
-    sead::Vector3u widthShift;
-    f32 hitboxRadiusCap;
+    u32 modelOffsetsOffset;
+    s32 modelNum;
+
+    KCFxyz minCoordinate;
+    KCFxyz maxCoordinate;
+    sead::Vector3i areaWidthShift;
+
+    u32 prismNum;
 };
 
 struct KCPrismData {
     f32 length;
-    u16 posIndex;
+    u16 vertexIndex;
     u16 faceNormalIndex;
     u16 edgeNormalIndex[3];
     u16 collisionType;
-    u32 triIndex;
+    u32 prismIndex;
 };
 
-enum KCollisionLocation {
-    KCollisionLocation_None = 0,
-    KCollisionLocation_Face = 1,
-    KCollisionLocation_Edge1 = 2,
-    KCollisionLocation_Edge2 = 3,
-    KCollisionLocation_Edge3 = 4,
-    KCollisionLocation_Corner1 = 5,
-    KCollisionLocation_Corner2 = 6,
-    KCollisionLocation_Corner3 = 7,
+struct KCPrismHeader {
+    u32 verticesOffset;
+    u32 normalsOffset;
+    u32 prismsOffset;
+    u32 octreeOffset;
+
+    f32 thickness;
+    sead::Vector3f octreeOrigin;
+    sead::Vector3u widthMask;
+    s32 blockWidthShift;
+    s32 areaXWidthShift;
+    s32 areaXYWidthShift;
+    f32 hitboxRadiusCap;
+
+    const KCFxyz* getVertices() const {
+        return reinterpret_cast<const KCFxyz*>(uintptr_t(this) + verticesOffset);
+    }
+
+    const KCFxyz* getNormals() const {
+        return reinterpret_cast<const KCFxyz*>(uintptr_t(this) + normalsOffset);
+    }
+
+    const KCPrismData* getPrisms() const {
+        return reinterpret_cast<const KCPrismData*>(uintptr_t(this) + prismsOffset);
+    }
+
+    const u32* getOctree() const {
+        return reinterpret_cast<const u32*>(uintptr_t(this) + octreeOffset);
+    }
+};
+
+enum KCOctree : u32 {
+    KCOctree_MaskOffset = (1u << 31) - 1u,
+    KCOctree_FlagLeaf = 1u << 31,
+};
+
+enum KCLocation {
+    KCLocation_None = 0,
+    KCLocation_Face = 1,
+    KCLocation_Edge1 = 2,
+    KCLocation_Edge2 = 3,
+    KCLocation_Edge3 = 4,
+    KCLocation_Corner12 = 5,
+    KCLocation_Corner23 = 6,
+    KCLocation_Corner31 = 7,
 };
 
 struct KCHitInfo {
@@ -50,114 +91,134 @@ struct KCHitInfo {
     u8 location;
 };
 
-using KCFxyz = sead::Vector3f;
-
 class KCollisionServer {
 public:
     using HitInfoBuffer = sead::FixedRingBuffer<KCHitInfo, 512>;
+    using PrismCallback = sead::IDelegate2<const KCPrismData*, const KCPrismHeader*>;
 
     KCollisionServer();
 
     void initKCollisionServer(void* data, const void* attributeData);
     void setData(void* data);
-    const KCPrismHeader& getInnerKcl(s32 index) const;
-    u32 getNumInnerKcl() const;
+
+    const KCPrismHeader* getInnerKcl(s32 index) const;
+    s32 getNumInnerKcl() const;
+
     const KCPrismHeader* getV1Header(s32 index) const;
     bool calcFarthestVertexDistance();
-    s32 getTriangleNum(const KCPrismHeader* header) const;
-    const KCPrismData& getPrismData(u32 index, const KCPrismHeader* header) const;
+    u32 getTriangleNum(const KCPrismHeader* header) const;
+    const KCPrismData* getPrismData(u32 index, const KCPrismHeader* header) const;
+
     bool isNearParallelNormal(const KCPrismData* data, const KCPrismHeader* header) const;
     bool isNanPrism(const KCPrismData* data, const KCPrismHeader* header) const;
-    void calcPosLocal(sead::Vector3f* pos, const KCPrismData* data, s32 location,
+
+    void calcPosLocal(sead::Vector3f* outPos, const KCPrismData* data, s32 vertexIndex,
                       const KCPrismHeader* header) const;
-    void getMinMax(sead::Vector3f* min, sead::Vector3f* max) const;
-    void getAreaSpaceSize(sead::Vector3f* size, const KCPrismHeader* header) const;
-    void getAreaSpaceSize(s32* sizeX, s32* sizeY, s32* sizeZ, const KCPrismHeader* header) const;
-    void getAreaSpaceSize(sead::Vector3u* size, const KCPrismHeader* header) const;
+
+    void getMinMax(sead::Vector3f* outMin, sead::Vector3f* outMax) const;
+    void getAreaSpaceSize(sead::Vector3f* outSize, const KCPrismHeader* header) const;
+    void getAreaSpaceSize(s32* outSizeX, s32* outSizeY, s32* outSizeZ,
+                          const KCPrismHeader* header) const;
+    void getAreaSpaceSize(sead::Vector3u* outSize, const KCPrismHeader* header) const;
 
     const KCPrismData* checkPoint(KCFxyz* position, f32 thicknessScale, f32* outDistance);
-    const u8* searchBlock(s32* widthShift, const sead::Vector3u& block,
-                          const KCPrismHeader* header) const;
+    const u16* searchBlock(s32* outShift, const sead::Vector3u& block,
+                           const KCPrismHeader* header) const;
 
-    s32 checkSphere(const sead::Vector3f*, f32, f32, u32,
-                    sead::FixedRingBuffer<KCHitInfo, 512>* hits);  // TODO unknown parameter usage
-    bool outCheckAndCalcArea(sead::Vector3u* blockMin, sead::Vector3u* blockMax,
-                             const sead::Vector3f& posMin, const sead::Vector3f& posMax,
+    u32 checkSphere(const KCFxyz* position, f32 radius, f32 thicknessScale, u32 maxHitNum,
+                    HitInfoBuffer* outHitInfos);
+    bool outCheckAndCalcArea(sead::Vector3u* outBlockMin, sead::Vector3u* outBlockMax,
+                             const sead::Vector3f& positionMin, const sead::Vector3f& positionMax,
                              const KCPrismHeader* header) const;
-    bool KCHitSphere(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f*,
-                     f32, f32, f32*, u8*);  // TODO unknown parameter usage
-    const KCPrismData* checkArrow(const sead::Vector3f&, const sead::Vector3f&,
-                                  sead::FixedRingBuffer<KCHitInfo, 512>* hits, u32*,
-                                  u32) const;  // TODO unknown parameter usage
-    void objectSpaceToAreaOffsetSpaceV3f(sead::Vector3f* areaOff, const sead::Vector3f& objSpace,
+    bool KCHitSphere(const KCPrismData* data, const KCPrismHeader* header, const KCFxyz* position,
+                     f32 radius, f32 thicknessScale, f32* outDistance, u8* outLocation);
+
+    const KCPrismData* checkArrow(const sead::Vector3f& position, const sead::Vector3f& direction,
+                                  HitInfoBuffer* outHitInfos, u32* outHitNum, u32 maxHitNum) const;
+
+    void objectSpaceToAreaOffsetSpaceV3f(sead::Vector3f* outAreaSpace,
+                                         const sead::Vector3f& objectSpace,
                                          const KCPrismHeader* header) const;
     bool isInsideMinMaxInAreaOffsetSpace(const sead::Vector3u& block,
                                          const KCPrismHeader* header) const;
-    bool KCHitArrow(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f&,
-                    const sead::Vector3f&, f32*, u8*) const;  // TODO unknown parameter usage
-    s32
-    checkSphereForPlayer(const sead::Vector3f*, f32, f32, u32,
-                         sead::FixedRingBuffer<KCHitInfo, 512>*);  // TODO unknown parameter usage
+
+    bool KCHitArrow(const KCPrismData* data, const KCPrismHeader* header,
+                    const sead::Vector3f& position, const sead::Vector3f& direction,
+                    f32* outDistance, u8* outLocation) const;
+
+    u32 checkSphereForPlayer(const KCFxyz* position, f32 radius, f32 thicknessScale, u32 maxHitNum,
+                             HitInfoBuffer* outHitInfos);
     bool KCHitSphereForPlayer(const KCPrismData* data, const KCPrismHeader* header,
-                              const sead::Vector3f*, f32, f32, f32*,
-                              u8*);  // TODO unknown parameter usage
-    s32 checkDisk(const sead::Vector3f*, f32, f32, const sead::Vector3f&, f32, u32,
-                  sead::FixedRingBuffer<KCHitInfo, 512>*);  // TODO unknown parameter usage
-    bool KCHitDisk(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f*, f32,
-                   f32, f32, const sead::Vector3f&, f32*, u8*);  // TODO unknown parameter usage
-    void searchPrism(sead::Vector3f* pos, f32 searchRadius,
-                     sead::IDelegate2<const KCPrismData*, const KCPrismHeader*>& callback);
+                              const KCFxyz* position, f32 radius, f32 thicknessScale,
+                              f32* outDistance, u8* outLocation);
+
+    u32 checkDisk(const KCFxyz* position, f32 radius, f32 halfHeight, const sead::Vector3f& normal,
+                  f32 thicknessScale, u32 maxHitNum, HitInfoBuffer* outHitInfos);
+    bool KCHitDisk(const KCPrismData* data, const KCPrismHeader* header, const KCFxyz* position,
+                   f32 radius, f32 thicknessScale, f32 halfHeight, const sead::Vector3f& normal,
+                   f32* outDistance, u8* outLocation);
+
+    void searchPrism(KCFxyz* position, f32 radius, PrismCallback& callback);
     void searchPrismMinMax(const sead::Vector3f& min, const sead::Vector3f& max,
-                           sead::IDelegate2<const KCPrismData*, const KCPrismHeader*>& callback);
-    void searchPrismArrow(const sead::Vector3f& pos1, const sead::Vector3f& pos2,
-                          sead::IDelegate2<const KCPrismData*, const KCPrismHeader*>& callback);
-    void searchPrismDisk(const sead::Vector3f&, const sead::Vector3f&, f32, f32,
-                         sead::IDelegate2<const KCPrismData*, const KCPrismHeader*>&
-                             callback);  // TODO unknown parameter usage
+                           PrismCallback& callback);
+    void searchPrismArrow(const sead::Vector3f& position, const sead::Vector3f& direction,
+                          PrismCallback& callback);
+    void searchPrismDisk(const sead::Vector3f& position, const sead::Vector3f& normal,
+                         f32 halfHeight, f32 radius, PrismCallback& callback);
+
     bool isParallelNormal(const KCPrismData* data, const KCPrismHeader* header) const;
-    const sead::Vector3f& getFaceNormal(const KCPrismData* data, const KCPrismHeader* header) const;
-    const sead::Vector3f& getEdgeNormal1(const KCPrismData* data,
-                                         const KCPrismHeader* header) const;
-    const sead::Vector3f& getEdgeNormal2(const KCPrismData* data,
-                                         const KCPrismHeader* header) const;
-    const sead::Vector3f& getEdgeNormal3(const KCPrismData* data,
-                                         const KCPrismHeader* header) const;
-    bool KCHitDisc(const KCPrismData* data, const KCPrismHeader* header, const sead::Vector3f&,
-                   const sead::Vector3f&, f32, f32, sead::Vector3f*,
-                   f32*);  // TODO unknown parameter usage
+
+    const KCFxyz* getFaceNormal(const KCPrismData* data, const KCPrismHeader* header) const;
+    const KCFxyz* getEdgeNormal1(const KCPrismData* data, const KCPrismHeader* header) const;
+    const KCFxyz* getEdgeNormal2(const KCPrismData* data, const KCPrismHeader* header) const;
+    const KCFxyz* getEdgeNormal3(const KCPrismData* data, const KCPrismHeader* header) const;
+
+    bool KCHitDisc(const KCPrismData* data, const KCPrismHeader* header,
+                   const sead::Vector3f& position, const sead::Vector3f& normal, f32 radius,
+                   f32 angle, sead::Vector3f* outFixDir, f32* outDistance);
+
     s32 toIndex(const KCPrismData* data, const KCPrismHeader* header) const;
-    const sead::Vector3f& getNormal(u32 index, const KCPrismHeader* header) const;
+    const KCFxyz* getNormal(u32 index, const KCPrismHeader* header) const;
 
-    static void calXvec(const sead::Vector3f* a, const sead::Vector3f* b, sead::Vector3f* result);
+    static void calXvec(const KCFxyz* a, const KCFxyz* b, KCFxyz* out);
 
-    const sead::Vector3f& getVertexData(u32 index, const KCPrismHeader* header) const;
-    u32 getVertexNum(const KCPrismHeader* header) const;
+    const KCFxyz* getVertexData(u32 index, const KCPrismHeader* header) const;
+    s32 getVertexNum(const KCPrismHeader* header) const;
     s32 getNormalNum(const KCPrismHeader* header) const;
     s32 getAttributeElementNum() const;
-    bool getAttributes(ByamlIter* destIter, u32 triIndex, const KCPrismHeader* header) const;
-    bool getAttributes(ByamlIter* destIter, const KCPrismData* data) const;
-    void objectSpaceToAreaOffsetSpace(sead::Vector3u* areaOffSpace, const sead::Vector3f& objSpace,
-                                      const KCPrismHeader* header) const;
-    void areaOffsetSpaceToObjectSpace(sead::Vector3f* objSpace, const sead::Vector3u& areaOffSpace,
-                                      const KCPrismHeader* header) const;
-    bool doBoxCheck(const sead::Vector3f*, const sead::Vector3f*, sead::Vector3u*, sead::Vector3u*,
-                    const KCPrismHeader* header);  // TODO unknown parameter usage
-    s32 calcAreaBlockOffset(const sead::Vector3u& block, const KCPrismHeader* header) const;
 
-    static s32 calcChildBlockOffset(const sead::Vector3u& block, s32 shift);
+    bool getAttributes(ByamlIter* destIter, u32 prismIndex, const KCPrismHeader* header) const;
+    bool getAttributes(ByamlIter* destIter, const KCPrismData* data) const;
+
+    void objectSpaceToAreaOffsetSpace(sead::Vector3u* outAreaSpace,
+                                      const sead::Vector3f& objectSpace,
+                                      const KCPrismHeader* header) const;
+    void areaOffsetSpaceToObjectSpace(sead::Vector3f* outObjectSpace,
+                                      const sead::Vector3u& areaSpace,
+                                      const KCPrismHeader* header) const;
+
+    bool doBoxCheck(const sead::Vector3f* position, const sead::Vector3f* size,
+                    sead::Vector3u* outBlockMin, sead::Vector3u* outBlockMax,
+                    const KCPrismHeader* header);
+
+    u32 calcAreaBlockOffset(const sead::Vector3u& block, const KCPrismHeader* header) const;
+    static u32 calcChildBlockOffset(const sead::Vector3u& block, s32 shift);
     static u32 getBlockData(const u32* data, u32 offset);
 
     f32 getFarthestVertexDistance() const { return mFarthestVertexDistance; }
 
 private:
-    sead::PtrArray<KCPrismHeader> mModelsData;
-    void* mData;
-    ByamlIter* mAttributeIter;
-    void* mModelListData;
-    void* mOctreeData;
-    s32 mAreaWidthShift[3];
-    s32 mAreaWidthMask[3];
-    f32 mFarthestVertexDistance;
+    sead::PtrArray<KCPrismHeader> mModelHeaders;
+
+    KCFileHeader* mData = nullptr;
+    ByamlIter* mAttributeIter = nullptr;
+    const u32* mModelOffsets = nullptr;
+    const u8* mOctreeData = nullptr;
+
+    sead::Vector3i mAreaWidthShift = {0, 0, 0};
+    sead::Vector3i mAreaWidthMask = {0, 0, 0};
+
+    f32 mFarthestVertexDistance = 1.0f;
 };
 
 }  // namespace al

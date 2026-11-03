@@ -93,7 +93,7 @@ struct HitInfo {
     sead::Vector3f hitPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f checkPos = {0.0f, 0.0f, 0.0f};
     sead::Vector3f movingReaction = {0.0f, 0.0f, 0.0f};
-    u8 location = KCollisionLocation_None;
+    u8 location = KCLocation_None;
 };
 
 struct ArrowHitInfo : public HitInfo {};

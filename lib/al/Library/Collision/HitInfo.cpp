@@ -33,10 +33,10 @@ void Triangle::fillData(const CollisionParts& parts, const KCPrismData* data,
     auto* server = parts.getServer();
     const auto& baseMtx = parts.getBaseMtx();
 
-    mNormals[0].setRotated(baseMtx, server->getFaceNormal(data, mHeader));
-    mNormals[1].setRotated(baseMtx, server->getEdgeNormal1(data, mHeader));
-    mNormals[2].setRotated(baseMtx, server->getEdgeNormal2(data, mHeader));
-    mNormals[3].setRotated(baseMtx, server->getEdgeNormal3(data, mHeader));
+    mNormals[0].setRotated(baseMtx, *server->getFaceNormal(data, mHeader));
+    mNormals[1].setRotated(baseMtx, *server->getEdgeNormal1(data, mHeader));
+    mNormals[2].setRotated(baseMtx, *server->getEdgeNormal2(data, mHeader));
+    mNormals[3].setRotated(baseMtx, *server->getEdgeNormal3(data, mHeader));
 
     normalize(&mNormals[0]);
     normalize(&mNormals[1]);
@@ -117,17 +117,17 @@ const sead::Vector3f& Triangle::calcAndGetNormal(s32 index) {
     case 0:
         return calcAndGetFaceNormal();
     case 1:
-        mNormals[1] = server->getEdgeNormal1(mData, mHeader);
+        mNormals[1] = *server->getEdgeNormal1(mData, mHeader);
         mNormals[1].setRotated(parts->getBaseMtx(), mNormals[1]);
         normalize(&mNormals[1]);
         return getNormal(index);
     case 2:
-        mNormals[2] = server->getEdgeNormal2(mData, mHeader);
+        mNormals[2] = *server->getEdgeNormal2(mData, mHeader);
         mNormals[2].setRotated(parts->getBaseMtx(), mNormals[2]);
         normalize(&mNormals[2]);
         return getNormal(index);
     case 3:
-        mNormals[3] = server->getEdgeNormal3(mData, mHeader);
+        mNormals[3] = *server->getEdgeNormal3(mData, mHeader);
         mNormals[3].setRotated(parts->getBaseMtx(), mNormals[3]);
         normalize(&mNormals[3]);
         return getNormal(index);
@@ -139,7 +139,7 @@ const sead::Vector3f& Triangle::calcAndGetNormal(s32 index) {
 const sead::Vector3f& Triangle::calcAndGetFaceNormal() {
     auto parts = mParts;
 
-    mNormals[0] = parts->getServer()->getFaceNormal(mData, mHeader);
+    mNormals[0] = *parts->getServer()->getFaceNormal(mData, mHeader);
     mNormals[0].setRotated(parts->getBaseMtx(), mNormals[0]);
     normalize(&mNormals[0]);
     return mNormals[0];
@@ -151,17 +151,17 @@ const sead::Vector3f& Triangle::calcAndGetEdgeNormal(s32 index) {
 
     switch (index) {
     case 0:
-        mNormals[1] = server->getEdgeNormal1(mData, mHeader);
+        mNormals[1] = *server->getEdgeNormal1(mData, mHeader);
         mNormals[1].rotate(parts->getBaseMtx());
         normalize(&mNormals[1]);
         return getEdgeNormal(index);
     case 1:
-        mNormals[2] = server->getEdgeNormal2(mData, mHeader);
+        mNormals[2] = *server->getEdgeNormal2(mData, mHeader);
         mNormals[2].rotate(parts->getBaseMtx());
         normalize(&mNormals[2]);
         return getEdgeNormal(index);
     case 2:
-        mNormals[3] = server->getEdgeNormal3(mData, mHeader);
+        mNormals[3] = *server->getEdgeNormal3(mData, mHeader);
         mNormals[3].rotate(parts->getBaseMtx());
         normalize(&mNormals[3]);
         return getEdgeNormal(index);
@@ -213,25 +213,25 @@ const sead::Matrix34f& Triangle::getPrevBaseMtx() const {
 HitInfo::HitInfo() = default;
 
 bool HitInfo::isCollisionAtFace() const {
-    return location == KCollisionLocation_Face;
+    return location == KCLocation_Face;
 }
 
 bool HitInfo::isCollisionAtEdge() const {
-    return location == KCollisionLocation_Edge1 || location == KCollisionLocation_Edge2 ||
-           location == KCollisionLocation_Edge3;
+    return location == KCLocation_Edge1 || location == KCLocation_Edge2 ||
+           location == KCLocation_Edge3;
 }
 
 bool HitInfo::isCollisionAtCorner() const {
-    return location == KCollisionLocation_Corner1 || location == KCollisionLocation_Corner2 ||
-           location == KCollisionLocation_Corner3;
+    return location == KCLocation_Corner12 || location == KCLocation_Corner23 ||
+           location == KCLocation_Corner31;
 }
 
 const sead::Vector3f& HitInfo::tryGetHitEdgeNormal() const {
-    if (location == KCollisionLocation_Edge1)
+    if (location == KCLocation_Edge1)
         return triangle.getEdgeNormal(0);
-    if (location == KCollisionLocation_Edge2)
+    if (location == KCLocation_Edge2)
         return triangle.getEdgeNormal(1);
-    if (location == KCollisionLocation_Edge3)
+    if (location == KCLocation_Edge3)
         return triangle.getEdgeNormal(2);
 
     return sead::Vector3f::zero;

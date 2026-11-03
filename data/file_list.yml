@@ -233023,155 +233023,155 @@ Library/Collision/KCollisionServer.o:
     label:
     - _ZN2al16KCollisionServerC1Ev
     - _ZN2al16KCollisionServerC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851e14
     size: 72
     label: _ZN2al16KCollisionServer20initKCollisionServerEPvPKv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851e5c
     size: 240
     label: _ZN2al16KCollisionServer7setDataEPv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851f4c
     size: 20
     label: _ZNK2al16KCollisionServer11getInnerKclEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851f60
     size: 12
     label: _ZNK2al16KCollisionServer14getNumInnerKclEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851f6c
     size: 32
     label: _ZNK2al16KCollisionServer11getV1HeaderEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851f8c
     size: 692
     label: _ZN2al16KCollisionServer26calcFarthestVertexDistanceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x852240
     size: 28
     label: _ZNK2al16KCollisionServer14getTriangleNumEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x85225c
     size: 20
     label: _ZNK2al16KCollisionServer12getPrismDataEjPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x852270
     size: 204
     label: _ZNK2al16KCollisionServer20isNearParallelNormalEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x85233c
     size: 624
     label: _ZNK2al16KCollisionServer10isNanPrismEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x8525ac
     size: 312
     label: _ZNK2al16KCollisionServer12calcPosLocalEPN4sead7Vector3IfEEPKNS_11KCPrismDataEiPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x8526e4
     size: 44
     label: _ZNK2al16KCollisionServer9getMinMaxEPN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x852710
     size: 44
     label: _ZNK2al16KCollisionServer16getAreaSpaceSizeEPN4sead7Vector3IfEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x85273c
     size: 40
     label: _ZNK2al16KCollisionServer16getAreaSpaceSizeEPiS1_S1_PKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x852764
     size: 40
     label: _ZNK2al16KCollisionServer16getAreaSpaceSizeEPN4sead7Vector3IjEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x85278c
     size: 664
     label: _ZN2al16KCollisionServer10checkPointEPN4sead7Vector3IfEEfPf
-    status: NotDecompiled
+    status: Matching
   - offset: 0x852a24
     size: 160
     label: _ZNK2al16KCollisionServer11searchBlockEPiRKN4sead7Vector3IjEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x852ac4
     size: 1204
     label: _ZN2al16KCollisionServer11checkSphereEPKN4sead7Vector3IfEEffjPNS1_15FixedRingBufferINS_9KCHitInfoELi512EEE
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x852f78
     size: 288
     label: _ZNK2al16KCollisionServer19outCheckAndCalcAreaEPN4sead7Vector3IjEES4_RKNS2_IfEES7_PKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x853098
     size: 1252
     label: _ZN2al16KCollisionServer11KCHitSphereEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEPKN4sead7Vector3IfEEffPfPh
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x85357c
     size: 1848
     label: _ZNK2al16KCollisionServer10checkArrowERKN4sead7Vector3IfEES5_PNS1_15FixedRingBufferINS_9KCHitInfoELi512EEEPjj
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x853cb4
     size: 40
     label: _ZNK2al16KCollisionServer31objectSpaceToAreaOffsetSpaceV3fEPN4sead7Vector3IfEERKS3_PKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x853cdc
     size: 68
     label: _ZNK2al16KCollisionServer31isInsideMinMaxInAreaOffsetSpaceERKN4sead7Vector3IjEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x853d20
     size: 504
     label: _ZNK2al16KCollisionServer10KCHitArrowEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderERKN4sead7Vector3IfEESB_PfPh
-    status: NotDecompiled
+    status: Matching
   - offset: 0x853f18
     size: 1196
     label: _ZN2al16KCollisionServer20checkSphereForPlayerEPKN4sead7Vector3IfEEffjPNS1_15FixedRingBufferINS_9KCHitInfoELi512EEE
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x8543c4
     size: 1252
     label: _ZN2al16KCollisionServer20KCHitSphereForPlayerEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEPKN4sead7Vector3IfEEffPfPh
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x8548a8
     size: 1308
     label: _ZN2al16KCollisionServer9checkDiskEPKN4sead7Vector3IfEEffRS4_fjPNS1_15FixedRingBufferINS_9KCHitInfoELi512EEE
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x854dc4
     size: 2368
     label: _ZN2al16KCollisionServer9KCHitDiskEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEPKN4sead7Vector3IfEEfffRSA_PfPh
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x855704
     size: 100
     label: _ZN2al16KCollisionServer11searchPrismEPN4sead7Vector3IfEEfRNS1_10IDelegate2IPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x855768
     size: 1080
     label: _ZN2al16KCollisionServer17searchPrismMinMaxERKN4sead7Vector3IfEES5_RNS1_10IDelegate2IPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEEE
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x855ba0
     size: 116
     label: _ZN2al16KCollisionServer16searchPrismArrowERKN4sead7Vector3IfEES5_RNS1_10IDelegate2IPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x855c14
     size: 296
     label: _ZN2al16KCollisionServer15searchPrismDiskERKN4sead7Vector3IfEES5_ffRNS1_10IDelegate2IPKNS_11KCPrismDataEPKNS_13KCPrismHeaderEEE
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x855d3c
     size: 244
     label: _ZNK2al16KCollisionServer16isParallelNormalEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x855e30
     size: 24
     label: _ZNK2al16KCollisionServer13getFaceNormalEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x855e48
     size: 24
     label: _ZNK2al16KCollisionServer14getEdgeNormal1EPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x855e60
     size: 24
     label: _ZNK2al16KCollisionServer14getEdgeNormal2EPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x855e78
     size: 24
     label: _ZNK2al16KCollisionServer14getEdgeNormal3EPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x855e90
     size: 984
     label: ''
@@ -233179,67 +233179,67 @@ Library/Collision/KCollisionServer.o:
   - offset: 0x856268
     size: 2336
     label: _ZN2al16KCollisionServer9KCHitDiscEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderERKN4sead7Vector3IfEESB_ffPS9_Pf
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x856b88
     size: 32
     label: _ZNK2al16KCollisionServer7toIndexEPKNS_11KCPrismDataEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856ba8
     size: 20
     label: _ZNK2al16KCollisionServer9getNormalEjPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856bbc
     size: 84
     label: _ZN2al16KCollisionServer7calXvecEPKN4sead7Vector3IfEES5_PS3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c10
     size: 20
     label: _ZNK2al16KCollisionServer13getVertexDataEjPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c24
     size: 28
     label: _ZNK2al16KCollisionServer12getVertexNumEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c40
     size: 32
     label: _ZNK2al16KCollisionServer12getNormalNumEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c60
     size: 8
     label: _ZNK2al16KCollisionServer22getAttributeElementNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c68
     size: 28
     label: _ZNK2al16KCollisionServer13getAttributesEPNS_9ByamlIterEjPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c84
     size: 12
     label: _ZNK2al16KCollisionServer13getAttributesEPNS_9ByamlIterEPKNS_11KCPrismDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856c90
     size: 64
     label: _ZNK2al16KCollisionServer28objectSpaceToAreaOffsetSpaceEPN4sead7Vector3IjEERKNS2_IfEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856cd0
     size: 52
     label: _ZNK2al16KCollisionServer28areaOffsetSpaceToObjectSpaceEPN4sead7Vector3IfEERKNS2_IjEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856d04
     size: 300
     label: _ZN2al16KCollisionServer10doBoxCheckEPKN4sead7Vector3IfEES5_PNS2_IjEES7_PKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856e30
     size: 52
     label: _ZNK2al16KCollisionServer19calcAreaBlockOffsetERKN4sead7Vector3IjEEPKNS_13KCPrismHeaderE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856e64
     size: 40
     label: _ZN2al16KCollisionServer20calcChildBlockOffsetERKN4sead7Vector3IjEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x856e8c
     size: 8
     label: _ZN2al16KCollisionServer12getBlockDataEPKjj
-    status: NotDecompiled
+    status: Matching
 Library/Collision/SphereInterpolator.o:
   '.text':
   - offset: 0x856e94
