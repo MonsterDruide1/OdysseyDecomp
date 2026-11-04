@@ -232398,99 +232398,99 @@ Library/Collision/CollisionPartsKeeperOctree.o:
     label:
     - _ZN2al26CollisionPartsKeeperOctreeC1Eiif
     - _ZN2al26CollisionPartsKeeperOctreeC2Eiif
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x84a800
     size: 296
     label: _ZN2al26CollisionPartsKeeperOctree7endInitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84a928
     size: 156
     label: _ZN2al26CollisionPartsKeeperOctree30insertMovingPartsListToOctNodeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84a9c4
     size: 156
     label: _ZN2al26CollisionPartsKeeperOctree17addCollisionPartsEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84aa60
     size: 28
     label: _ZN2al26CollisionPartsKeeperOctree27connectToCollisionPartsListEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84aa7c
     size: 712
     label: _ZN2al26CollisionPartsKeeperOctree17insertLooseOctreeEPNS0_7OctNodeEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84ad44
     size: 64
     label: _ZN2al26CollisionPartsKeeperOctree30disconnectToCollisionPartsListEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84ad84
     size: 28
     label: _ZN2al26CollisionPartsKeeperOctree25resetToCollisionPartsListEPNS_14CollisionPartsE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84ada0
     size: 16
     label: _ZNK2al26CollisionPartsKeeperOctree16checkStrikePointEPNS_7HitInfoERKNS_22CollisionCheckInfoBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84adb0
     size: 32
     label: _ZNK2al26CollisionPartsKeeperOctree17checkStrikeSphereEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoEbRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84add0
     size: 196
     label: _ZNK2al26CollisionPartsKeeperOctree26checkStrikeSphereRecursiveEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoEPKNS0_7OctNodeEbRKN4sead7Vector3IfEEPFjS2_RKNS9_5TListIPNS_14CollisionPartsEEES5_bSD_E
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84ae94
     size: 28
     label: _ZNK2al26CollisionPartsKeeperOctree26checkStrikeSphereForPlayerEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84aeb0
     size: 8
     label: _ZNK2al26CollisionPartsKeeperOctree15checkStrikeDiskEPNS_19DiskHitResultBufferERKNS_13DiskCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84aeb8
     size: 156
     label: _ZNK2al26CollisionPartsKeeperOctree24checkStrikeDiskRecursiveEPNS_19DiskHitResultBufferERKNS_13DiskCheckInfoEPKNS0_7OctNodeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84af54
     size: 8
     label: _ZNK2al26CollisionPartsKeeperOctree16searchWithSphereERKNS_15SphereCheckInfoERN4sead10IDelegate1IPNS_14CollisionPartsEEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84af5c
     size: 556
     label: _ZNK2al26CollisionPartsKeeperOctree25searchWithSphereRecursiveERKNS_15SphereCheckInfoERN4sead10IDelegate1IPNS_14CollisionPartsEEEPKNS0_7OctNodeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b188
     size: 8
     label: _ZNK2al26CollisionPartsKeeperOctree16checkStrikeArrowEPNS_20ArrowHitResultBufferERKNS_14ArrowCheckInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b190
     size: 212
     label: _ZNK2al26CollisionPartsKeeperOctree25checkStrikeArrowRecursiveEPNS_20ArrowHitResultBufferERKNS_14ArrowCheckInfoEPKNS0_7OctNodeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b264
     size: 164
     label: _ZN2al26CollisionPartsKeeperOctree8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b308
     size: 384
     label: _ZN2al26CollisionPartsKeeperOctree36updateOctNodeCollisionPartsRecursiveEPNS0_7OctNodeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b488
     size: 168
     label: _ZNK2al26CollisionPartsKeeperOctree11isFitsInBoxEPKNS_14CollisionPartsERKN4sead9BoundBox3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b530
     size: 28
     label: _ZNK2al26CollisionPartsKeeperOctree20calcNodeCubeSizeHalfEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b54c
     size: 56
     label: _ZN2al26CollisionPartsKeeperOctree27isEnableSearchNextDepthNodeEPKNS0_7OctNodeE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84b584
     size: 164
     label: _ZNK2al26CollisionPartsKeeperOctree17isSphereFitsInBoxERKN4sead7Vector3IfEEfRKNS1_9BoundBox3IfEE
-    status: NotDecompiled
+    status: Matching
 Library/Collision/CollisionPartsKeeperPtrArray.o:
   '.text':
   - offset: 0x84b628

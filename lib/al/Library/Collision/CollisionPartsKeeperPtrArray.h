@@ -27,7 +27,7 @@ public:
                         const DiskCheckInfo& checkInfo) const override;
 
     void searchWithSphere(const SphereCheckInfo& checkInfo,
-                          CollisionPartsDelegate& callback) const override;
+                          CollisionPartsCallback& callback) const override;
 
     void movement() override;
 

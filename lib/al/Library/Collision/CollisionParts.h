@@ -86,6 +86,8 @@ public:
 
     void setSyncCollisionMtxPtr(const sead::Matrix34f* mtxPtr) { mSyncCollisionMtxPtr = mtxPtr; }
 
+    sead::Vector3f getTrans() const { return mBaseMtx.getTranslation(); }
+
     const sead::Matrix34f& getBaseMtx() const { return mBaseMtx; }
 
     const sead::Matrix34f& getBaseInvMtx() const { return mBaseInvMtx; }

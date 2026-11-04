@@ -3,7 +3,6 @@
 #include <math/seadBoundBox.h>
 
 #include "Library/Collision/CollisionParts.h"
-#include "math/seadVectorFwd.h"
 
 namespace al {
 

@@ -29,7 +29,7 @@ public:
                         const DiskCheckInfo& checkInfo) const override;
 
     void searchWithSphere(const SphereCheckInfo& checkInfo,
-                          CollisionPartsDelegate& callback) const override;
+                          CollisionPartsCallback& callback) const override;
 
     void movement() override;
 
@@ -141,7 +141,7 @@ u32 checkStrikeDiskCore(DiskHitResultBuffer* resultBuffer, const CollisionPartsL
         if (alCollisionUtil::isInvalidParts(*parts, checkInfo))
             continue;
 
-        if (alCollisionUtil::isFarAway(*parts, checkInfo.position, checkInfo.boundingRadius))
+        if (alCollisionUtil::isFarAway(*parts, checkInfo.position, checkInfo.boundingRange))
             continue;
 
         strikeNum +=
@@ -241,7 +241,7 @@ u32 SimpleCollisionPartsKeeper::checkStrikeDisk(DiskHitResultBuffer* resultBuffe
 }
 
 void SimpleCollisionPartsKeeper::searchWithSphere(const SphereCheckInfo& checkInfo,
-                                                  CollisionPartsDelegate& callback) const {
+                                                  CollisionPartsCallback& callback) const {
     for (auto it = mPartsList.begin(); it != mPartsList.end(); ++it) {
         auto* parts = *it;
 

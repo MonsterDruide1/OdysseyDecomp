@@ -16,10 +16,10 @@ class SphereHitResultBuffer;
 class ArrowHitResultBuffer;
 class DiskHitResultBuffer;
 
-using CollisionPartsDelegate = sead::IDelegate1<CollisionParts*>;
-
 class ICollisionPartsKeeper : public IUseHioNode {
 public:
+    using CollisionPartsCallback = sead::IDelegate1<CollisionParts*>;
+
     virtual void endInit() = 0;
 
     virtual void addCollisionParts(CollisionParts* parts) = 0;
@@ -40,7 +40,7 @@ public:
                                 const DiskCheckInfo& checkInfo) const = 0;
 
     virtual void searchWithSphere(const SphereCheckInfo& checkInfo,
-                                  CollisionPartsDelegate& callback) const = 0;
+                                  CollisionPartsCallback& callback) const = 0;
     virtual void movement() = 0;
 };
 

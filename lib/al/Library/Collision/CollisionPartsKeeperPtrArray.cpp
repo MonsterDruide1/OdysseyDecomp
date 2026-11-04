@@ -78,7 +78,7 @@ u32 CollisionPartsKeeperPtrArray::checkStrikeDisk(DiskHitResultBuffer* resultBuf
 }
 
 void CollisionPartsKeeperPtrArray::searchWithSphere(const SphereCheckInfo& checkInfo,
-                                                    CollisionPartsDelegate& callback) const {
+                                                    CollisionPartsCallback& callback) const {
     s32 size = mPartsPtrArray->size();
     for (s32 i = 0; i < size; i++) {
         if (alCollisionUtil::isFarAway(*mPartsPtrArray->at(i), checkInfo.position,
