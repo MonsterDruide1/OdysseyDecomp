@@ -1,6 +1,6 @@
 #include "Library/Collision/TriangleFilter.h"
 
-#include "Library/Collision/Collider.h"
+#include "Library/Collision/Angle.h"
 #include "Library/Collision/HitInfo.h"
 
 namespace al {

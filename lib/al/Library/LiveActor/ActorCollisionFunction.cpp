@@ -246,7 +246,7 @@ void calcJumpInertia(sead::Vector3f* outJumpInertia, LiveActor* actor,
 }
 
 bool isCollidedGround(const LiveActor* actor) {
-    return actor->getCollider()->get_110() >= 0.0f;
+    return actor->getCollider()->isCollidedGround();
 }
 
 void calcJumpInertiaWall(sead::Vector3f* outJumpInertia, LiveActor* actor, f32 force) {
@@ -268,7 +268,7 @@ void calcJumpInertiaWall(sead::Vector3f* outJumpInertia, LiveActor* actor, f32 f
 }
 
 bool isCollidedWall(const LiveActor* actor) {
-    return actor->getCollider()->get_1b8() >= 0.0f;
+    return actor->getCollider()->isCollidedWall();
 }
 
 // TODO: probably a sead function?
@@ -328,13 +328,13 @@ void calcCollidedNormalSum(const LiveActor* actor, sead::Vector3f* outNormal) {
     outNormal->set({0.0f, 0.0f, 0.0f});
     Collider* collider = actor->getCollider();
 
-    if (collider->get_110() >= 0.0f)
+    if (collider->isCollidedGround())
         outNormal->add(collider->getFloorHit().triangle.getFaceNormal());
 
-    if (collider->get_1b8() >= 0.0f)
+    if (collider->isCollidedWall())
         outNormal->add(collider->getWallHit().triangle.getFaceNormal());
 
-    if (collider->get_260() >= 0.0f)
+    if (collider->isCollidedCeiling())
         outNormal->add(collider->getCeilingHit().triangle.getFaceNormal());
 
     *outNormal *= 1.0f / 3.0f;
@@ -454,19 +454,19 @@ bool isCollidedFloorCode(const LiveActor* actor, const char* name) {
 bool isCollidedCollisionCode(const LiveActor* actor, const char* sensorName, const char* name) {
     Collider* collider = actor->getCollider();
     if (collider->getPlaneNum() == 0) {
-        if (collider->get_110() >= 0.0f) {
+        if (collider->isCollidedGround()) {
             if (isEqualString(name,
                               getCollisionCodeName(collider->getFloorHit().triangle, sensorName))) {
                 return true;
             }
         }
-        if (collider->get_1b8() >= 0.0f) {
+        if (collider->isCollidedWall()) {
             if (isEqualString(name,
                               getCollisionCodeName(collider->getWallHit().triangle, sensorName))) {
                 return true;
             }
         }
-        if (collider->get_260() >= 0.0f) {
+        if (collider->isCollidedCeiling()) {
             if (isEqualString(
                     name, getCollisionCodeName(collider->getCeilingHit().triangle, sensorName))) {
                 return true;
@@ -477,7 +477,7 @@ bool isCollidedCollisionCode(const LiveActor* actor, const char* sensorName, con
 
     u32 size = collider->getStoredPlaneNum();
     for (u32 i = 0; i < size; i++)
-        if (isEqualString(name, getCollisionCodeName(*collider->getPlane(i), sensorName)))
+        if (isEqualString(name, getCollisionCodeName(collider->getPlane(i), sensorName)))
             return true;
 
     return false;
@@ -513,7 +513,7 @@ bool isCollided(const LiveActor* actor) {
 }
 
 bool isCollidedCeiling(const LiveActor* actor) {
-    return actor->getCollider()->get_260() >= 0.0f;
+    return actor->getCollider()->isCollidedCeiling();
 }
 
 bool isCollidedWallFace(const LiveActor* actor) {

@@ -231918,7 +231918,7 @@ Library/Clipping/FrustumRadar.o:
     size: 12
     label: _ZNK2al12FrustumRadar19judgeInAreaObbNoFarEPKN4sead8Matrix34IfEERKNS1_9BoundBox3IfEE
     status: Matching
-Library/Collision/Collider.o:
+Library/Collision/Angle.o:
   '.text':
   - offset: 0x8443d8
     size: 120
@@ -231944,84 +231944,86 @@ Library/Collision/Collider.o:
     size: 196
     label: _ZN2al24calcTriangleColorByAngleEPN4sead7Color4fEPfRKNS0_7Vector3IfEE
     status: Matching
+Library/Collision/Collider.o:
+  '.text':
   - offset: 0x844740
     size: 316
     label:
     - _ZN2al8ColliderC1EPNS_17CollisionDirectorEPKN4sead8Matrix34IfEEPKNS3_7Vector3IfEESB_ffj
     - _ZN2al8ColliderC2EPNS_17CollisionDirectorEPKN4sead8Matrix34IfEEPKNS3_7Vector3IfEESB_ffj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84487c
     size: 36
     label: _ZN2al8Collider5clearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8448a0
     size: 8
     label: _ZN2al8Collider17setTriangleFilterEPKNS_18TriangleFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8448a8
     size: 8
     label: _ZN2al8Collider23setCollisionPartsFilterEPKNS_24CollisionPartsFilterBaseE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8448b0
     size: 100
     label: _ZN2al8Collider24updateRecentOnGroundInfoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844914
     size: 8
     label: _ZN2al8Collider19clearStoredPlaneNumEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84491c
     size: 32
     label: _ZN2al8Collider17clearContactPlaneEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84493c
     size: 84
     label: _ZN2al8Collider12onInvalidateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844990
     size: 444
     label: _ZNK2al8Collider12calcCheckPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844b4c
     size: 48
     label: _ZNK2al8Collider23getRecentOnGroundNormalEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844b7c
     size: 16
     label: _ZNK2al8Collider8getPlaneEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844b8c
     size: 168
     label: _ZN2al8Collider22calcMovePowerByContactEPN4sead7Vector3IfEERKS3_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844c34
     size: 428
     label: _ZN2al8Collider19storeCurrentHitInfoEPNS_13SphereHitInfoEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x844de0
     size: 1184
     label: _ZN2al8Collider23obtainMomentFixReactionEPNS_13SphereHitInfoEPN4sead7Vector3IfEES6_bj
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x845280
     size: 1104
     label: _ZN2al8Collider17storeContactPlaneEPNS_13SphereHitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8456d0
     size: 1688
     label: _ZN2al8Collider7collideERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x845d68
     size: 484
     label: _ZN2al8Collider10preCollideEPNS_18SphereInterpolatorEPN4sead7Vector3IfEEPfRKS5_PNS_13SphereHitInfoEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x845f4c
     size: 244
     label: _ZN2al8Collider14findCollidePosEPiPNS_18SphereInterpolatorEPNS_13SphereHitInfoEj
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846040
     size: 8
     label: _ZNK2al8Collider20getCollisionDirectorEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Library/Collision/CollisionCodeFunction.o:
   '.text':
@@ -233009,7 +233011,7 @@ Library/Collision/HitInfo.o:
   - offset: 0x851b14
     size: 112
     label: _ZN16alKCollisionFunc14projectToPlaneEPN4sead7Vector3IfEERKS2_S5_S5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x851b84
     size: 608
     label: _ZN16alKCollisionFunc14calcDiskHitPosEPN4sead7Vector3IfEEPKN2al16KCollisionServerERKS2_fS9_RKNS4_11KCPrismDataEPKNS4_13KCPrismHeaderEh
