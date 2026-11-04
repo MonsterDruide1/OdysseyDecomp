@@ -232998,8 +232998,6 @@ Library/Collision/HitInfo.o:
     size: 304
     label: _ZNK2al11DiskHitInfo13calcFixVectorEPN4sead7Vector3IfEES4_
     status: Matching
-Library/Collision/KCollisionFunc.o:
-  '.text':
   - offset: 0x851874
     size: 64
     label: _ZNK2al11DiskHitInfo19calcFixVectorNormalEPN4sead7Vector3IfEES4_
@@ -233007,7 +233005,7 @@ Library/Collision/KCollisionFunc.o:
   - offset: 0x8518b4
     size: 608
     label: _ZN16alKCollisionFunc16calcSphereHitPosEPN4sead7Vector3IfEEPKN2al16KCollisionServerERKS2_RKNS4_11KCPrismDataEPKNS4_13KCPrismHeaderEh
-    status: NotDecompiled
+    status: NonMatchingMinor
   - offset: 0x851b14
     size: 112
     label: _ZN16alKCollisionFunc14projectToPlaneEPN4sead7Vector3IfEERKS2_S5_S5_
@@ -233015,7 +233013,7 @@ Library/Collision/KCollisionFunc.o:
   - offset: 0x851b84
     size: 608
     label: _ZN16alKCollisionFunc14calcDiskHitPosEPN4sead7Vector3IfEEPKN2al16KCollisionServerERKS2_fS9_RKNS4_11KCPrismDataEPKNS4_13KCPrismHeaderEh
-    status: NotDecompiled
+    status: NonMatchingMinor
 Library/Collision/KCollisionServer.o:
   '.text':
   - offset: 0x851de4
