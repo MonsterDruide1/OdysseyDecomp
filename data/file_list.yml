@@ -50309,7 +50309,7 @@ Item/Shine.o:
   - offset: 0x1d38ec
     size: 4
     label: _ZN2al9StringTmpILi512EED0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x1d38f0
     size: 240
@@ -232030,43 +232030,43 @@ Library/Collision/CollisionCodeFunction.o:
   - offset: 0x846048
     size: 972
     label: _ZN23alCollisionCodeFunction26tyrCreateCollisionCodeListEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846414
     size: 116
     label: _ZN23alCollisionCodeFunction27tyrGetCollisionRelationListEPKN2al17CollisionCodeListEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846488
     size: 12
     label: _ZN23alCollisionCodeFunction16getCodeNameByIdxEPKN2al17CollisionCodeListEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846494
     size: 12
     label: _ZN23alCollisionCodeFunction16getDispNameByIdxEPKN2al17CollisionCodeListEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8464a0
     size: 116
     label: _ZN23alCollisionCodeFunction16getIdxByCodeNameEPKN2al17CollisionCodeListEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846514
     size: 120
     label: _ZN23alCollisionCodeFunction15isExistCodeNameEPKN2al17CollisionCodeListEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x84658c
     size: 112
     label: _ZN23alCollisionCodeFunction15isValidUserTypeEPKN2al17CollisionCodeListEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x8465fc
     size: 360
     label: _ZN23alCollisionCodeFunction21judgeIsBetterCodeNameEPKN2al17CollisionCodeListEPKcS5_S5_S5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846764
     size: 208
     label: _ZN23alCollisionCodeFunction33judgeIsBetterCodeNameWithAreaNameEPKN2al25CollisionCodeRelationListEPKcS5_S5_S5_S5_S5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x846834
     size: 284
-    label: ''
-    status: NotDecompiled
+    label: _ZN23alCollisionCodeFunctionL14FUN_7100846834EPKcS1_S1_S1_S1_
+    status: Matching
 Library/Collision/CollisionDirector.o:
   '.text':
   - offset: 0x846950
