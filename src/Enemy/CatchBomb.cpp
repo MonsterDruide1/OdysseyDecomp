@@ -2,7 +2,7 @@
 
 #include <math/seadMathCalcCommon.h>
 
-#include "Library/Collision/KCollisionServer.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/Joint/JointSpringControllerHolder.h"
 #include "Library/LiveActor/ActorActionFunction.h"

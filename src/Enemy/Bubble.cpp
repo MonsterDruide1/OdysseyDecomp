@@ -4,9 +4,9 @@
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/Collider.h"
 #include "Library/Collision/CollisionParts.h"
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/KCollisionServer.h"
-#include "Library/Collision/PartsInterpolator.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/TriangleFilter.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/Joint/JointSpringControllerHolder.h"
 #include "Library/LiveActor/ActorActionFunction.h"
@@ -1142,7 +1142,7 @@ bool Bubble::tryBoundMoveWall() {
         return false;
 
     const al::CollisionParts* collisionParts = al::getCollidedWallCollisionParts(this);
-    if (collisionParts->get_15c() != 0 && !collisionParts->isMoving())
+    if (!collisionParts->isMoving())
         return false;
 
     sead::Vector3f wallNormal = al::getCollidedWallNormal(this);
@@ -1594,7 +1594,7 @@ void Bubble::endHackCommon() {
 
     if (alCollisionUtil::checkStrikeSphereMove(this, sphereMoveHitInfos, 8, colliderPos,
                                                colliderRadius, move, nullptr, nullptr) != 0) {
-        targetPos = sphereMoveHitInfos[0]._0 * move + colliderPos;
+        targetPos = sphereMoveHitInfos[0].moveInterp * move + colliderPos;
     }
 
     sead::Vector3f upDir;

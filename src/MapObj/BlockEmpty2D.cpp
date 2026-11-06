@@ -2,7 +2,7 @@
 
 #include <prim/seadSafeString.h>
 
-#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

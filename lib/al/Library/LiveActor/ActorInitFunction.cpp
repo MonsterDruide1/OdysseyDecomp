@@ -11,8 +11,8 @@
 #include "Library/Collision/CollisionDirector.h"
 #include "Library/Collision/CollisionParts.h"
 #include "Library/Collision/ICollisionPartsKeeper.h"
-#include "Library/Collision/PartsConnectorUtil.h"
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
+#include "Library/Connector/MtxConnector.h"
 #include "Library/Draw/GraphicsSystemInfo.h"
 #include "Library/Effect/EffectKeeper.h"
 #include "Library/Execute/ExecuteDirector.h"
@@ -590,14 +590,14 @@ void initActorCollisionWithFilePtr(LiveActor* actor, void* kcl, const void* byml
                                    s32 priority) {
     CollisionParts* parts = new CollisionParts(const_cast<void*>(kcl), byml);
     parts->setForceCollisionScaleAverage();
-    parts->setSpecialPurpose(specialPurpose);
-    parts->setOptionalPurpose(optionalPurpose);
+    parts->setSpecialPurposeName(specialPurpose);
+    parts->setOptionalPurposeName(optionalPurpose);
     parts->setPriority(priority);
     sead::Matrix34f initMtx;
     makeMtxSRT(&initMtx, actor);
     parts->setConnectedSensor(connectedSensor);
     parts->initParts(initMtx);
-    parts->setSyncCollisionMtx(jointMtx);
+    parts->setSyncCollisionMtxPtr(jointMtx);
 
     actor->getCollisionDirector()->getActivePartsKeeper()->addCollisionParts(parts);
     parts->invalidateBySystem();

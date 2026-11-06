@@ -3,8 +3,8 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
 #include "Library/LiveActor/ActorFlagFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
@@ -53,7 +53,7 @@ void HosuiTrailKeeper::appearTrail(const sead::Vector3f& pos, const sead::Vector
         al::setQuat(trail, dirQuat * randomQuat);
         al::resetPosition(trail, pos);
         trail->appear();
-        trail->setFollowCollisionParts(triangle.getCollisionParts());
+        trail->setFollowCollisionParts(triangle.getParts());
     }
 
     s32 disappearIdx = al::wrapValue(mIndex + 5, count);

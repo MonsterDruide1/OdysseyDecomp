@@ -1,8 +1,8 @@
 #include "Library/MapObj/SurfMapParts.h"
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
-#include "Library/Collision/KCollisionServer.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"

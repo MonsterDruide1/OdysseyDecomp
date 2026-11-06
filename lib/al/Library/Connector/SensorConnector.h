@@ -2,7 +2,7 @@
 
 #include <math/seadMatrix.h>
 
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Connector/MtxConnector.h"
 
 namespace al {
 class HitSensor;

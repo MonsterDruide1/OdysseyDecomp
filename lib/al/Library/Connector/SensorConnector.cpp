@@ -1,4 +1,4 @@
-#include "Library/Collision/PartsSensorConnector.h"
+#include "Library/Connector/SensorConnector.h"
 
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Project/HitSensor/HitSensor.h"

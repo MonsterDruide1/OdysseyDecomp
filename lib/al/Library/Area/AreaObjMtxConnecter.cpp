@@ -2,7 +2,7 @@
 
 #include "Library/Area/AreaObj.h"
 #include "Library/Area/ValidatorBase.h"
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Connector/MtxConnector.h"
 #include "Library/Placement/PlacementFunction.h"
 
 namespace al {

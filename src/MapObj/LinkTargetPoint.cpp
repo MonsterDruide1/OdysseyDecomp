@@ -1,8 +1,8 @@
 #include "MapObj/LinkTargetPoint.h"
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/PartsConnectorUtil.h"
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
+#include "Library/Connector/MtxConnector.h"
 #include "Library/LiveActor/ActorClippingFunction.h"
 #include "Library/LiveActor/ActorInitFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
@@ -36,7 +36,7 @@ void LinkTargetPoint::initAfterPlacement() {
 
     al::attachMtxConnectorToCollision(mMtxConnector, this, 50.0f, 100.0f);
     if (alCollisionUtil::getStrikeArrowInfoNum(this) >= 1)
-        mNormal = (*alCollisionUtil::getStrikeArrowInfo(this, 0))->triangle.getFaceNormal();
+        mNormal = (alCollisionUtil::getStrikeArrowInfo(this, 0)).triangle.getFaceNormal();
 }
 
 void LinkTargetPoint::control() {

@@ -1,8 +1,8 @@
 #include "Player/PlayerJudgeWallKeep.h"
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
-#include "Library/Collision/PartsInterpolator.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
+#include "Library/Collision/TriangleFilter.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/LiveActor.h"
@@ -116,10 +116,8 @@ void PlayerJudgeWallKeep::update() {
         const al::ArrowHitInfo* hitInfo1 = nullptr;
         if (alCollisionUtil::getLastPolyOnArrow(mPlayer, &hitInfo1, nearWallPosition + sideOffset,
                                                 -sideOffset, nullptr, &filterWallOnly)) {
-            const sead::Vector3f& hitPos =
-                alCollisionUtil::getCollisionHitPos(hitInfo1->hitInfo.data());
-            const sead::Vector3f& hitNormal =
-                alCollisionUtil::getCollisionHitNormal(hitInfo1->hitInfo.data());
+            const sead::Vector3f& hitPos = alCollisionUtil::getCollisionHitPos(hitInfo1);
+            const sead::Vector3f& hitNormal = alCollisionUtil::getCollisionHitNormal(hitInfo1);
             if (!rs::calcExistCollisionBorder(mPlayer, hitPos, hitNormal)) {
                 if (sead::Mathf::abs(al::calcAngleOnPlaneDegree(
                         hitNormal, collidedWallNormal, gravity2)) > mConst->getWallFollowAngleH())
@@ -133,10 +131,8 @@ void PlayerJudgeWallKeep::update() {
         const al::ArrowHitInfo* hitInfo2 = nullptr;
         if (alCollisionUtil::getLastPolyOnArrow(mPlayer, &hitInfo2, nearWallPosition - sideOffset,
                                                 sideOffset, nullptr, &filterWallOnly)) {
-            const sead::Vector3f& hitPos =
-                alCollisionUtil::getCollisionHitPos(hitInfo2->hitInfo.data());
-            const sead::Vector3f& hitNormal =
-                alCollisionUtil::getCollisionHitNormal(hitInfo2->hitInfo.data());
+            const sead::Vector3f& hitPos = alCollisionUtil::getCollisionHitPos(hitInfo2);
+            const sead::Vector3f& hitNormal = alCollisionUtil::getCollisionHitNormal(hitInfo2);
             if (!rs::calcExistCollisionBorder(mPlayer, hitPos, hitNormal)) {
                 if (sead::Mathf::abs(al::calcAngleOnPlaneDegree(
                         hitNormal, collidedWallNormal, gravity2)) > mConst->getWallFollowAngleH())

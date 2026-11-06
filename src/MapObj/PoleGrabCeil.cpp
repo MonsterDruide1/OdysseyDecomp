@@ -2,9 +2,9 @@
 
 #include <basis/seadTypes.h>
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
-#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAreaFunction.h"
@@ -86,8 +86,8 @@ void PoleGrabCeil::control() {
             }
         }
 
-        const sead::Vector3f& hitPos = alCollisionUtil::getCollisionHitPos(**hitInfo);
-        const sead::Vector3f& hitNormal = alCollisionUtil::getCollisionHitNormal(**hitInfo);
+        const sead::Vector3f& hitPos = alCollisionUtil::getCollisionHitPos(hitInfo);
+        const sead::Vector3f& hitNormal = alCollisionUtil::getCollisionHitNormal(hitInfo);
         al::makeMtxUpNoSupportPos(&mSurfaceMatrix, hitNormal, hitPos);
         al::startHitReaction(mKeyMoveFollowTarget, "コリジョンヒット");
         return;

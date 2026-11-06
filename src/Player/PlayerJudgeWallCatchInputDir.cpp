@@ -2,8 +2,8 @@
 
 #include <math/seadQuat.h>
 
-#include "Library/Collision/PartsConnector.h"
-#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Connector/CollisionPartsConnector.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
 #include "Library/LiveActor/ActorMovementFunction.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/Math/MathUtil.h"

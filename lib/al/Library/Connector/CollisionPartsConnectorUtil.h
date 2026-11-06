@@ -31,12 +31,13 @@ CollisionPartsConnector* tryCreateCollisionPartsConnector(const LiveActor* actor
                                                           const sead::Quatf& quat);
 bool isMtxConnectorConnecting(const MtxConnector* connector);
 void disconnectMtxConnector(MtxConnector* connector);
-CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              const sead::Vector3f& pos, const sead::Vector3f& dir);
-CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              bool isAttachToGround);
-CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
-                                              f32 checkOffUp, f32 checkDistance);
+const CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
+                                                    const sead::Vector3f& pos,
+                                                    const sead::Vector3f& dir);
+const CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
+                                                    bool isAttachToGround);
+const CollisionParts* attachMtxConnectorToCollision(MtxConnector* connector, const LiveActor* actor,
+                                                    f32 checkOffUp, f32 checkDistance);
 void attachMtxConnectorToCollisionParts(MtxConnector* connector, const CollisionParts* parts);
 void setConnectorBaseQuatTrans(const sead::Quatf& quat, const sead::Vector3f& trans,
                                MtxConnector* connector);

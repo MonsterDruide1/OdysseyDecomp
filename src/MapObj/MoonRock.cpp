@@ -3,7 +3,7 @@
 #include <prim/seadSafeString.h>
 
 #include "Library/Camera/CameraUtil.h"
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
+#include "Library/Collision/CollisionUtil.h"
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorClippingFunction.h"

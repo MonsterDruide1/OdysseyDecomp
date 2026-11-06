@@ -1,4 +1,4 @@
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Connector/MtxConnector.h"
 
 #include "Library/Math/MatrixUtil.h"
 

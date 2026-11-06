@@ -1,8 +1,8 @@
 #include "Item/Coin.h"
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
-#include "Library/Collision/CollisionPartsTriangle.h"
-#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Collision/CollisionUtil.h"
+#include "Library/Collision/HitInfo.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
 #include "Library/Controller/PadRumbleFunction.h"
 #include "Library/Demo/DemoFunction.h"
 #include "Library/LiveActor/ActorActionFunction.h"

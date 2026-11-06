@@ -2,7 +2,7 @@
 
 #include <math/seadVectorCalcCommon.h>
 
-#include "Library/Collision/CollisionPartsKeeperUtil.h"
+#include "Library/Collision/CollisionUtil.h"
 #include "Library/Item/ItemUtil.h"
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/LiveActor/ActorActionFunction.h"

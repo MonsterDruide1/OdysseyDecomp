@@ -1,9 +1,9 @@
 #include "Enemy/HosuiTrail.h"
 
 #include "Library/Collision/CollisionParts.h"
-#include "Library/Collision/PartsConnector.h"
-#include "Library/Collision/PartsConnectorUtil.h"
-#include "Library/Collision/PartsMtxConnector.h"
+#include "Library/Connector/CollisionPartsConnector.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
+#include "Library/Connector/MtxConnector.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorFlagFunction.h"

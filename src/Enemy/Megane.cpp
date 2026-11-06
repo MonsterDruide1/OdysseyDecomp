@@ -4,7 +4,7 @@
 #include "Library/Bgm/BgmLineFunction.h"
 #include "Library/Camera/CameraUtil.h"
 #include "Library/Collision/Collider.h"
-#include "Library/Collision/KCollisionServer.h"
+#include "Library/CollisionFilter/PartsFilter.h"
 #include "Library/Effect/EffectSystemInfo.h"
 #include "Library/Joint/JointControllerKeeper.h"
 #include "Library/Joint/JointSpringController.h"

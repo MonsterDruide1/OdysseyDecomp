@@ -268,6 +268,8 @@ def common_sead_math_template(c, path):
                 continue
             if "BitUtil" in line:
                 continue
+            if "numbers" in line and not "<u64>" in line:
+                continue
             FAIL("Use short sead types: sead::Vector3f, sead::Mathi and similar!", line, path)
 
 def common_string_finder(c, path):
@@ -324,9 +326,9 @@ def common_const_reference(c, path):
             continue
         if "cleanupResGraphicsFile" in line:
             continue
-        if "sead::IDelegate1<CollisionParts*>" in line:
+        if "CollisionPartsCallback" in line:
             continue
-        if "sead::IDelegate1<al::CollisionParts*>" in line:
+        if "PrismCallback" in line:
             continue
         if re.search(r"(?<!const)[( ][\w_:]+(<[\w_:]+[\*&]?>)?&", line):
             FAIL("References must be const!", line, path)

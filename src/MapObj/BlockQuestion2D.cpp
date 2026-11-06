@@ -2,7 +2,7 @@
 
 #include <math/seadVector.h>
 
-#include "Library/Collision/PartsConnectorUtil.h"
+#include "Library/Connector/CollisionPartsConnectorUtil.h"
 #include "Library/LiveActor/ActorActionFunction.h"
 #include "Library/LiveActor/ActorAnimFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
