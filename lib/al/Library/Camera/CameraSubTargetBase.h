@@ -16,7 +16,9 @@ public:
 
     CameraSubTargetTurnParam* getSubTargetTurnParam() const { return mTurnParam; }
 
-private:
+protected:
+    // Note: derived classes (e.g. KoopaCameraCtrl) write mTurnParam directly from their
+    // ctors, so this member is protected, not private.
     CameraSubTargetTurnParam* mTurnParam;
 };
 
