@@ -91,8 +91,51 @@ bool PlayerTrigger::isOn(EMaterialChangeTrigger flag) const {
     return mMaterialChangeTrigger.isOnBit(flag);
 }
 
+bool PlayerTrigger::isOnUpperPunchHit() const {
+    return mCollisionTrigger.isOn(ECollisionTrigger_val1) ||
+           mAttackSensorTrigger.isOn(EAttackSensorTrigger_val16);
+}
+
+bool PlayerTrigger::isOnUpperPunchHitToss() const {
+    return mAttackSensorTrigger.isOn(EAttackSensorTrigger_val16);
+}
+
+bool PlayerTrigger::isOnAnyDamage() const {
+    if (mCollisionTrigger.isOn(ECollisionTrigger_val68) ||
+        mReceiveSensorTrigger.isOn(EReceiveSensorTrigger_val1) || isOnDamageFire())
+        return true;
+    return mReceiveSensorTrigger.isOn(EReceiveSensorTrigger_val12) ||
+           mActionTrigger.isOn(EActionTrigger_val8388608);
+}
+
+bool PlayerTrigger::isOnDamageFire() const {
+    return mCollisionTrigger.isOn(ECollisionTrigger_val24) ||
+           mReceiveSensorTrigger.isOn(EReceiveSensorTrigger_val2);
+}
+
+bool PlayerTrigger::isOnEndHackWithDamage() const {
+    return mReceiveSensorTrigger.isOn(EReceiveSensorTrigger_val12);
+}
+
+bool PlayerTrigger::isOnNoDamageDown() const {
+    return mActionTrigger.isOn(EActionTrigger_val1024) ||
+           mPreMovementTrigger.isOn(EPreMovementTrigger_val16);
+}
+
+bool PlayerTrigger::isOnSpinMoveCapThrow() const {
+    return mActionTrigger.isOn(EActionTrigger_val402653184);
+}
+
+bool PlayerTrigger::isOnHipDropCancelThrow() const {
+    return mActionTrigger.isOn(EActionTrigger_val262144);
+}
+
 bool PlayerTrigger::isOnYoshiHackEnd() const {
     return mCollisionTrigger.isOn(ECollisionTrigger_val1024);
+}
+
+bool PlayerTrigger::isOnCollisionExpandCheck() const {
+    return mActionTrigger.isOn(EActionTrigger_val8);
 }
 
 bool PlayerTrigger::tryGetRecMaterialCode(const char** dest) const {
