@@ -9,7 +9,21 @@
 #include "Util/IUseDimension.h"
 
 class ActorDimensionKeeper;
+class IUsePlayerHack;
 class KoopaPuppet;
+class PeachOnKoopaShoulder;
+
+// Layout verified from Koopa::init / control / exeDeadFall asm (name is a guess):
+// a 0x14-byte POD struct, zero-initialized with plain `new` (no ctor call).
+// +0x0 bool, +0x4 s32, +0x8 s32 (air frames), +0xc s32 (ground frames), +0x10 s32 counter.
+struct KoopaMoveCounter {
+    bool _0;
+    u8 _1[3];
+    s32 _4;
+    s32 _8;
+    s32 _c;
+    s32 _10;
+};
 
 class Koopa : public al::LiveActor, public IUseDimension {
 public:
@@ -71,10 +85,15 @@ public:
     KoopaPuppet* getPuppet() const { return mPuppet; }
 
 private:
-    char filler_110[0x18];
+    IUsePlayerHack* mPlayerHack = nullptr;
+    char filler_118[0x10];
     KoopaPuppet* mPuppet = nullptr;
     ActorDimensionKeeper* mDimensionKeeper = nullptr;
-    char filler_138[0x70];
+    char filler_138[0x18];
+    KoopaMoveCounter* mMoveCounter = nullptr;
+    char filler_158[0x10];
+    PeachOnKoopaShoulder* mPeachOnKoopaShoulder = nullptr;
+    char filler_170[0x38];
     sead::Quatf _1a8 = sead::Quatf::unit;
     char filler_1b8[0x28];
     sead::Matrix34f _1e0 = sead::Matrix34f::ident;
