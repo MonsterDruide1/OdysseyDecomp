@@ -10,7 +10,11 @@ struct ActorParamS32;
 class LiveActor;
 }  // namespace al
 
+class HackCap;
+
 class HackCapThrowParam {
+    friend class HackCap;
+
 public:
     HackCapThrowParam(al::LiveActor* actor) {
         mHackThrowHeight = al::findActorParamF32(actor, "投げる高さ");

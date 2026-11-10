@@ -8,6 +8,9 @@ namespace al {
 class ActorDitherAnimator;
 class WaterSurfaceFinder;
 class PadRumbleKeeper;
+class SimpleLayoutAppearWaitEnd;
+class HitSensor;
+class OcclusionCullingJudge;
 }  // namespace al
 class PlayerInput;
 class PlayerAreaChecker;
@@ -34,7 +37,12 @@ class HackCapStateHide;
 
 class HackCap : public al::LiveActor {
 public:
-    enum class SwingHandType { /*TODO: missing values*/ };
+    enum class SwingHandType {
+        // Placeholder names: the enumerator names are unknown.
+        Val0 = 0,
+        Val1 = 1,
+        Val2 = 2,
+    };
 
     HackCap(const al::LiveActor*, const char*, const PlayerInput*, const PlayerAreaChecker*,
             const PlayerWallActionHistory*, const PlayerCapActionHistory*,
@@ -49,10 +57,15 @@ public:
     void updateShadowMaskOffset();
     void control() override;
     bool isFlying() const;
+    // True when Cappy is in any throw nerve (Throw/ThrowStay/ThrowBrake/
+    // ThrowRolling/ThrowRollingBrake/ThrowAppend/ThrowTornado/ThrowSpiral/
+    // Rethrow) or Blow. (Unlabeled in file_list.yml at 0x409dc8; name inferred
+    // from behaviour and its use in getFlyingSpeedMax/isSeparateThrowFlying.)
+    bool isThrow() const;
     void updateTargetLayout();
     void updateCollider() override;
     void updateFrameOutLayout();
-    void attackSpin(al::HitSensor*, al::HitSensor*, f32);
+    bool attackSpin(al::HitSensor*, al::HitSensor*, f32);
     void prepareLockOn(al::HitSensor*);
     bool sendMsgStartHack(al::HitSensor*);
     bool receiveRequestTransferHack(al::HitSensor*, al::HitSensor*);
@@ -169,6 +182,12 @@ public:
     bool tryCollideWallReactionRollingGround();
     void rollingGround();
     void exeThrowRollingBrake();
+    bool calcThrowRollingDirection(sead::Vector3f& dir, sead::Vector3f& pos, const PlayerInput* input,
+                                   const PlayerSeparateCapFlag* flag, bool isSeparate);
+    void calcThrowMove(sead::Vector3f& dir, sead::Vector3f& pos, f32* param,
+                       PlayerColliderHackCap* collider, bool flag, f32 height);
+    static void calcThrowReflect(sead::Vector3f& dir, sead::Vector3f& pos, HackCap* cap,
+                                 const sead::Vector3f& normal);
     void exeThrowStay();
     bool tryChangeSeparateThrow();
     f32 getThrowBackSpeed() const;
@@ -227,10 +246,13 @@ private:
     al::ActorDitherAnimator* mActorDitherAnimator;
     HackCapAboveGroundChecker* mHackCapAboveGroundChecker;
     void* _1a0_arr;
-    u64 _1a0_capacity;
-    s32 _1a0_current;
+    s32 _1a8;
+    s32 _1ac;
+    s32 _1b0;
+    s32 _1b4;
     void* _1b8_arr;
-    u64 _1b8_capacity;
+    s32 _1c0;
+    s32 _1c4;
     s32 _1b8_current;
     const al::HitSensor* _1d0;
     al::HitSensor* mAttackSensor;
@@ -238,27 +260,40 @@ private:
     HackCapThrowParam* mHackCapThrowParam;
     CapTargetInfo* mCapTargetInfo1;
     CapTargetInfo* mCapTargetInfo2;
-    void* _238;
+    SwingHandType _238;
+    s32 _23c;
     sead::Vector3f _240;
     sead::Vector3f _24c;
     sead::Vector3f _258;
     f32 _264;
     sead::Vector2f _268;
     f32 _270;
-    s32 _274;
+    f32 _274;
     s32 _278;
     s32 _27c;
     f32 _280;
-    f32 _284;
+    s32 _284;
     f32 _288;
     f32 _28c;
     s32 _290;
-    char filler_294[4];
-    s32 _298;
-    char filler_29c[4];
+    s32 _294;
+    // Throw-state flags (individual bytes at 0x298-0x29f; the original s32/filler
+    // layout hid them). _29a selects water throw params, _29f is the fixed
+    // throw (60.0f / stay 3 / brake 2) flag, _299 gates the separate-throw
+    // checks in getThrowStayTimeMax/getThrowRange.
+    bool _298;
+    bool _299;
+    bool _29a;
+    bool _29b;
+    bool _29c;
+    bool _29d;
+    bool _29e;
+    bool _29f;
     char _2a0[4];
     bool mIsSeparateFlying;
-    char _2a5[11];
+    char _2a5[3];
+    bool _2a8;
+    char _2a9[7];
     const PlayerWallActionHistory* mPlayerWallActionHistory;
     const PlayerCapActionHistory* mPlayerCapActionHistory;
     const PlayerInput* mInput;
@@ -267,7 +302,17 @@ private:
     f32 _2d8;
     s32 _2dc;
     HackCapJointControlKeeper* mHackCapJointControlKeeper;
-    void* _2e8[5];
+    sead::Vector3f _2e8;
+    sead::Vector3f _2f4;
+    sead::Vector3f _300;
+    // Effect-cleanup request flags (0x30c-0x30e): _30c deletes the
+    // "FlyRollingGrounding" effect, _30d deletes the effect named in _310
+    // and stops the FlyWaterSurface SEs, _30e deletes the effect named in
+    // _3a8 and stops the StayWaterSurface SE.
+    bool _30c;
+    bool _30d;
+    bool _30e;
+    char _30f;
     sead::FixedSafeString<128> _310;
     sead::FixedSafeString<128> _3a8;
     sead::Matrix34f _440;
@@ -277,7 +322,7 @@ private:
     sead::Vector3f _4d4;
     sead::Vector3f _4e0;
     bool _4ec;
-    void* _4f0;
+    s32 _4f0;
     PlayerExternalVelocity* mCapExternalVelocity;
     PlayerPushReceiver* mCapPushReceiver;
     al::HitSensor* mPlayerBodySensor;
@@ -299,7 +344,15 @@ private:
     bool _5ba;
     bool _5bb;
     s32 _5bc;
-    void* _5c0[7];
+    al::SimpleLayoutAppearWaitEnd* mTargetLayout;
+    al::HitSensor* mTargetSensor;
+    al::HitSensor* mTargetSensorForLayout;
+    s32 mTargetLayoutCounter;
+    u8 _5dc[4];
+    al::OcclusionCullingJudge* mOcclusionCullingJudge;
+    bool _5e8;
+    char _5e9[7];
+    al::SimpleLayoutAppearWaitEnd* _5f0;
     bool mIsPuppet;
     bool _5f9;
     bool mIsHidePuppetCapSilhouette;

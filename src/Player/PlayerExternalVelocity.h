@@ -14,6 +14,8 @@ class IUsePlayerCollision;
 
 class PlayerExternalVelocity {
 public:
+    friend class HackCap;
+
     PlayerExternalVelocity(const al::LiveActor* actor, const IUsePlayerCollision* collision,
                            const sead::Vector3f* trans);
 

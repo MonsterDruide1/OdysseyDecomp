@@ -149,11 +149,16 @@ public:
     void resetHoldInfo3D();
     void resetHoldInfo2D();
 
+    friend class HackCap;
+
 private:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
     const IUseDimension* mDimension;
-    void* gap[11];
+    void* gap[7];
+    f32 _50;
+    char _54[4];
+    void* _58[3];
     al::SpinInputAnalyzer* mSpinInputAnalyzer;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer2;

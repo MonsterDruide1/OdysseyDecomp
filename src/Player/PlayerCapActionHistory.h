@@ -12,6 +12,7 @@ class PlayerCounterAfterCapCatch;
 
 class PlayerCapActionHistory {
 public:
+    friend class HackCap;  // HackCap::receiveMsg reads mIsCapJumpPossible directly.
     PlayerCapActionHistory(const al::LiveActor* player, const PlayerConst* pConst,
                            const PlayerTrigger* trigger, const IUsePlayerCollision* collider);
     void update();
