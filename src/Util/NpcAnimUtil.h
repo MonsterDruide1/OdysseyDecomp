@@ -51,6 +51,7 @@ bool tryStartForestManFlowerAnim(al::LiveActor*);
 bool tryUpdateMaterialCodeByFloorCollisionOnArrow(al::LiveActor*);
 void tryAttachConnectorToCollisionTFSV(al::LiveActor*, al::MtxConnector*, sead::Quatf*);
 void tryConnectToCollisionTFSV(al::LiveActor*, const al::MtxConnector*, sead::Quatf*);
+void startNpcAction(al::LiveActor* actor, const char* actionName);
 al::LiveActor* tryGetSubActorCityMayorFace(const al::LiveActor*);
 void syncActionCityMayorFace(al::LiveActor*);
 void syncMtsAnimCityMayorFace(al::LiveActor*);

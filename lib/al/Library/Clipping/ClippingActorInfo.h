@@ -31,6 +31,7 @@ public:
     void updateFarClipLevel();
     void setFarClipLevelMax();
     bool isFarClipLevelMax() const;
+    void setFarClipLength(f32 farClipLength) { _38 = farClipLength; }
     bool checkActiveViewGroupAny() const;
     void initViewGroup(const ViewIdHolder* viewIdHolder);
     void registerViewGroupFarClipFlag(const bool* flag);

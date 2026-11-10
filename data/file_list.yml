@@ -110045,11 +110045,11 @@ Npc/TalkNpc.o:
   - offset: 0x3dd65c
     size: 20
     label: _ZN7TalkNpc31onFukankunCameraNearClipSettingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3dd670
     size: 20
     label: _ZN7TalkNpc32offFukankunCameraNearClipSettingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3dd684
     size: 256
     label: ''
@@ -110065,7 +110065,7 @@ Npc/TalkNpc.o:
   - offset: 0x3ddacc
     size: 108
     label: _ZNK7TalkNpc23tryGetCurrentEventStateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3ddb38
     size: 1612
     label: _ZN7TalkNpc8movementEv
@@ -110073,7 +110073,7 @@ Npc/TalkNpc.o:
   - offset: 0x3de184
     size: 120
     label: _ZNK7TalkNpc18tryGetCurrentEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3de1fc
     size: 152
     label: _ZN7TalkNpc8calcAnimEv
@@ -110085,11 +110085,11 @@ Npc/TalkNpc.o:
   - offset: 0x3de3c0
     size: 36
     label: _ZN7TalkNpc4killEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3de3e4
     size: 48
     label: _ZN7TalkNpc10endClippedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3de414
     size: 276
     label: _ZN7TalkNpc12attackSensorEPN2al9HitSensorES2_
@@ -110109,31 +110109,31 @@ Npc/TalkNpc.o:
   - offset: 0x3dee24
     size: 168
     label: _ZN7TalkNpc14startDemoKoopaERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3deecc
     size: 48
     label: _ZN7TalkNpc12endDemoKoopaEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3deefc
     size: 272
     label: _ZN7TalkNpc8exeEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3df00c
     size: 184
     label: _ZN7TalkNpc12exeHackEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3df0c4
     size: 116
     label: _ZN7TalkNpc27exeKinopioBrigadeFirstEventEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3df138
     size: 60
     label: _ZN7TalkNpc12exeDemoKoopaEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3df174
     size: 8
     label: _ZNK12_GLOBAL__N_115TalkNpcNrvEvent7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3df17c
     size: 152
@@ -110158,17 +110158,17 @@ Npc/TalkNpc.o:
   - offset: 0x3df6ac
     size: 120
     label: _ZNK12_GLOBAL__N_134TalkNpcNrvKinopioBrigadeFirstEvent7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3df724
     size: 8
     label: _ZNK12_GLOBAL__N_119TalkNpcNrvHackEvent7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3df72c
     size: 64
     label: _ZNK12_GLOBAL__N_119TalkNpcNrvDemoKoopa7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x3df76c
     size: 28
