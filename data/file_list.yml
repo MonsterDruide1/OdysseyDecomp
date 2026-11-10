@@ -101374,7 +101374,7 @@ Npc/Frog.o:
   - offset: 0x38be60
     size: 28
     label: _ZN4Frog18initAfterPlacementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38be7c
     size: 280
     label: _ZN4Frog7controlEv
@@ -101382,7 +101382,7 @@ Npc/Frog.o:
   - offset: 0x38bf94
     size: 100
     label: _ZN4Frog3dieEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38bff8
     size: 352
     label: _ZN4Frog18updateWaterSurfaceEv
@@ -101390,15 +101390,16 @@ Npc/Frog.o:
   - offset: 0x38c158
     size: 40
     label: _ZNK4Frog16isOnWaterSurfaceEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38c180
     size: 60
     label: _ZN4Frog14updateColliderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38c1bc
     size: 320
-    label: ''
-    status: NotDecompiled
+    label: _Z25isGroundAboveWaterSurfacePK4FrogPKN2al18WaterSurfaceFinderE
+    status: NonMatchingMajor
+    guess: true
   - offset: 0x38c2fc
     size: 200
     label: _ZN4Frog12attackSensorEPN2al9HitSensorES2_
@@ -101414,27 +101415,27 @@ Npc/Frog.o:
   - offset: 0x38cb68
     size: 16
     label: _ZN4Frog10onDynamicsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38cb78
     size: 16
     label: _ZN4Frog11offDynamicsEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38cb88
     size: 132
     label: _ZN4Frog14updateVelocityEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38cc0c
     size: 84
     label: _ZN4Frog22updateSurfaceTransformEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38cc60
     size: 104
     label: _ZN4Frog11surfaceJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38ccc8
     size: 96
     label: _ZN4Frog9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38cd28
     size: 392
     label: _ZN4Frog7exeWaitEv
@@ -101442,11 +101443,11 @@ Npc/Frog.o:
   - offset: 0x38ceb0
     size: 4
     label: _ZN4Frog9exeWanderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38ceb4
     size: 196
     label: _ZN4Frog12exeDamageCapEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38cf78
     size: 276
     label: _ZN4Frog11exeTrampledEv
@@ -101454,7 +101455,7 @@ Npc/Frog.o:
   - offset: 0x38d08c
     size: 108
     label: _ZN4Frog16exeWaitHackStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d0f8
     size: 216
     label: _ZN4Frog21exeWaitHackStartSwoonEv
@@ -101462,15 +101463,16 @@ Npc/Frog.o:
   - offset: 0x38d1d0
     size: 96
     label: _ZN4Frog16exeDemoHackFirstEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d230
     size: 244
     label: _ZN4Frog12exeHackStartEv
     status: NotDecompiled
   - offset: 0x38d324
     size: 172
-    label: ''
-    status: NotDecompiled
+    label: _ZNK4Frog19isSwimActionPlayingEv
+    status: NonMatchingMajor
+    guess: true
   - offset: 0x38d3d0
     size: 308
     label: _ZN4Frog8exeSwoonEv
@@ -101478,93 +101480,107 @@ Npc/Frog.o:
   - offset: 0x38d504
     size: 144
     label: _ZN4Frog7exeHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d594
     size: 20
     label: _ZN4Frog7endHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d5a8
     size: 64
     label: _ZN4Frog9exeReviveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d5e8
     size: 96
     label: _ZN4Frog15exeReviveAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d648
     size: 60
     label: _ZN4Frog8exeResetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d684
     size: 32
     label: _ZN4Frog6exeDieEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38d6a4
     size: 8
-    label: ''
+    label: '#_ZNK12_GLOBAL__N_115HostTypeNrvWait7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
+    guess: true
   - offset: 0x38d6ac
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_115HostTypeNrvHack7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d6b4
     size: 24
     label: _ZNK12_GLOBAL__N_115HostTypeNrvHack12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x38d6cc
     size: 68
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_117HostTypeNrvRevive7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d710
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_117HostTypeNrvWander7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d718
     size: 64
-    label: ''
+    label: '#_ZNK12_GLOBAL__N_116HostTypeNrvReset7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
+    guess: true
   - offset: 0x38d758
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_116HostTypeNrvSwoon7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d760
     size: 100
     label: _ZNK12_GLOBAL__N_124HostTypeNrvDemoHackFirst7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x38d7c4
     size: 100
-    label: ''
+    label: '#_ZNK12_GLOBAL__N_117HostTypeNrvAppear7executeEPN2al11NerveKeeperE'
     status: NotDecompiled
+    guess: true
   - offset: 0x38d828
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_129HostTypeNrvWaitHackStartSwoon7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d830
     size: 108
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_124HostTypeNrvWaitHackStart7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d89c
     size: 36
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_114HostTypeNrvDie7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d8c0
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_119HostTypeNrvTrampled7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d8c8
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_120HostTypeNrvDamageCap7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d8d0
     size: 8
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_120HostTypeNrvHackStart7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d8d8
     size: 100
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_123HostTypeNrvReviveAppear7executeEPN2al11NerveKeeperE
+    status: Matching
+    guess: true
   - offset: 0x38d93c
     size: 276
     label: ''
