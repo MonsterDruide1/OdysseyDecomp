@@ -214,8 +214,8 @@ void createMatAnimSlotForMcl(LiveActor* actor);
 void createMatAnimSlotForMtp(LiveActor* actor);
 void createMatAnimSlotForMts(LiveActor* actor);
 
-void startMatAnim(LiveActor, const char*);
-void startMatAnimAndSetFrameAndStop(LiveActor, const char*, f32);
+void startMatAnim(LiveActor* actor, const char* animName);
+void startMatAnimAndSetFrameAndStop(LiveActor* actor, const char* animName, f32 frame);
 void clearMatAnim(LiveActor* actor);
 
 void setMatAnimFrame(LiveActor* actor, f32 frame);

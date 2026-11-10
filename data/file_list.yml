@@ -100405,23 +100405,23 @@ Npc/CapWorldNpcTailJointController.o:
     label:
     - _ZN30CapWorldNpcTailJointControllerC1EPKN2al9LiveActorE
     - _ZN30CapWorldNpcTailJointControllerC2EPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381834
     size: 472
     label: _ZN30CapWorldNpcTailJointController4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381a0c
     size: 708
     label: _ZN30CapWorldNpcTailJointController17calcJointCallbackEiPN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Wip
   - offset: 0x381cd0
     size: 176
     label: _ZN2rs34initCapWorldNpcTailJointControllerEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381d80
     size: 12
     label: _ZNK30CapWorldNpcTailJointController15getCtrlTypeNameEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Npc/CityManRhythmInfo.o:
   '.text':
@@ -110266,7 +110266,7 @@ Npc/TalkNpcCap.o:
   - offset: 0x3e04ac
     size: 272
     label: _ZN10TalkNpcCap10initAttachEPKN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3e05bc
     size: 216
     label: _ZN10TalkNpcCap23createForAchievementNpcEPKN2al9LiveActorERKNS0_13ActorInitInfoE
@@ -155227,7 +155227,7 @@ Util/NpcAnimUtil.o:
   - offset: 0x5584d0
     size: 4
     label: _ZN2rs19initCapWorldNpcTailEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x5584d4
     size: 136
     label: _ZN2rs27tryStartForestManFlowerAnimEPN2al9LiveActorE

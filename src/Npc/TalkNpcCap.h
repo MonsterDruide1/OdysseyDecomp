@@ -6,6 +6,8 @@
 
 #include "Library/LiveActor/LiveActor.h"
 
+#include "Npc/TalkNpcParam.h"
+
 namespace al {
 struct ActorInitInfo;
 }
@@ -27,8 +29,8 @@ public:
     void init(const al::ActorInitInfo& info) override;
 
 private:
-    const char* _108;
-    sead::Matrix34f* _110;
+    const TalkNpcParam* mTalkNpcParam;
+    const sead::Matrix34f* _110;
     sead::Vector3f _118;
     sead::Vector3f _124;
     f32 _130;
