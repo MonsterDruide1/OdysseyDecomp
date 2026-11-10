@@ -126197,11 +126197,11 @@ Player/PlayerStateDamageFire.o:
   - offset: 0x4688e8
     size: 36
     label: _ZNK21PlayerStateDamageFire14isEndFirstLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x46890c
     size: 16
     label: _ZNK21PlayerStateDamageFire12isEnableJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x46891c
     size: 56
     label: _ZNK21PlayerStateDamageFire19isEnablePeachAmiiboEv
@@ -126209,7 +126209,7 @@ Player/PlayerStateDamageFire.o:
   - offset: 0x468954
     size: 8
     label: _ZNK21PlayerStateDamageFire33getEnableCancelCollisionSnapFrameEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x46895c
     size: 1712
     label: _ZN21PlayerStateDamageFire7exeJumpEv
@@ -126238,27 +126238,27 @@ Player/PlayerStateDamageFire.o:
   - offset: 0x469654
     size: 8
     label: _ZNK12_GLOBAL__N_128PlayerStateDamageFireNrvJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x46965c
     size: 8
     label: _ZNK12_GLOBAL__N_128PlayerStateDamageFireNrvDead7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x469664
     size: 8
     label: _ZNK12_GLOBAL__N_127PlayerStateDamageFireNrvRun7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x46966c
     size: 8
     label: _ZNK12_GLOBAL__N_128PlayerStateDamageFireNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x469674
     size: 8
     label: _ZNK12_GLOBAL__N_131PlayerStateDamageFireNrvJump2nd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Player/PlayerStateDamageLife.o:
   '.text':
@@ -128991,7 +128991,7 @@ Player/PlayerStateWait.o:
   - offset: 0x48d8d0
     size: 28
     label: _ZN15PlayerStateWait15requestAnimNameEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x48d8ec
     size: 124
     label: _ZN15PlayerStateWait16noticeCarryStartEv
@@ -129084,67 +129084,67 @@ Player/PlayerStateWait.o:
   - offset: 0x48f3fc
     size: 8
     label: _ZNK12_GLOBAL__N_122PlayerStateWaitNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f404
     size: 8
     label: _ZNK12_GLOBAL__N_129PlayerStateWaitNrvLandStiffen7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f40c
     size: 8
     label: _ZNK12_GLOBAL__N_122PlayerStateWaitNrvLand7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f414
     size: 8
     label: _ZNK12_GLOBAL__N_131PlayerStateWaitNrvWaitConnect2D7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f41c
     size: 8
     label: _ZNK12_GLOBAL__N_133PlayerStateWaitNrvWaitSnoozeStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f424
     size: 8
     label: _ZNK12_GLOBAL__N_128PlayerStateWaitNrvWaitSnooze7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f42c
     size: 8
     label: _ZNK12_GLOBAL__N_132PlayerStateWaitNrvWaitSleepStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f434
     size: 8
     label: _ZNK12_GLOBAL__N_127PlayerStateWaitNrvWaitSleep7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f43c
     size: 8
     label: _ZNK12_GLOBAL__N_130PlayerStateWaitNrvAreaAnimWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f444
     size: 8
     label: _ZNK12_GLOBAL__N_132PlayerStateWaitNrvWaitRelaxStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f44c
     size: 8
     label: _ZNK12_GLOBAL__N_127PlayerStateWaitNrvWaitRelax7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f454
     size: 8
     label: _ZNK12_GLOBAL__N_130PlayerStateWaitNrvAreaAnimTurn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x48f45c
     size: 8
     label: _ZNK12_GLOBAL__N_133PlayerStateWaitNrvRequestAnimWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Player/PlayerStateWallAir.o:
   '.text':
