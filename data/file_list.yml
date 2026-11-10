@@ -14878,81 +14878,81 @@ Boss/Koopa/KoopaCameraCtrl.o:
     label:
     - _ZN15KoopaCameraCtrlC1EPKN2al9LiveActorERKNS0_13ActorInitInfoE
     - _ZN15KoopaCameraCtrlC2EPKN2al9LiveActorERKNS0_13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0842e0
     size: 188
     label:
     - _ZN15KoopaCameraCtrlC1EPKN2al9LiveActorES3_RKNS0_13ActorInitInfoERKN4sead7Vector3IfEE
     - _ZN15KoopaCameraCtrlC2EPKN2al9LiveActorES3_RKNS0_13ActorInitInfoERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08439c
     size: 4
     label: _ZN15KoopaCameraCtrl6updateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0843a0
     size: 284
     label: _ZN15KoopaCameraCtrl17updateTargetTransEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x0844bc
     size: 96
     label: _ZN15KoopaCameraCtrl23initFireBeamStartCameraERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08451c
     size: 68
     label: _ZN15KoopaCameraCtrl27tryStartFireBeamStartCameraERKN4sead7Vector3IfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084560
     size: 8
     label: _ZNK15KoopaCameraCtrl21isExistDemoCameraAnimEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084568
     size: 8
     label: _ZNK15KoopaCameraCtrl23isPlayingDemoCameraAnimEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084570
     size: 92
     label: _ZN15KoopaCameraCtrl15startDemoCameraEPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0845cc
     size: 72
     label: _ZN15KoopaCameraCtrl13endDemoCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084614
     size: 108
     label: _ZN15KoopaCameraCtrl16tryEndDemoCameraEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084680
     size: 8
     label: _ZN15KoopaCameraCtrl30invalidateDemoCameraAngleSwingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084688
     size: 8
     label: _ZN15KoopaCameraCtrl28validateDemoCameraAngleSwingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x084690
     size: 92
     label: _ZN15KoopaCameraCtrl20switchKoopaSubTargetEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x0846ec
     size: 104
     label: _ZN15KoopaCameraCtrl20startTargetInterpoleEii
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x084754
     size: 96
     label: _ZN15KoopaCameraCtrl26switchKoopaAndCapSubTargetEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x0847b4
     size: 56
     label: _ZN15KoopaCameraCtrl23resetAllCameraSubTargetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0847ec
     size: 48
     label: _ZNK15KoopaCameraCtrl13getTargetNameEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08481c
     size: 20
     label: _ZNK15KoopaCameraCtrl9calcTransEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x084830
     size: 16
@@ -14977,12 +14977,12 @@ Boss/Koopa/KoopaCameraCtrl.o:
   - offset: 0x08486c
     size: 8
     label: _ZNK15KoopaCameraCtrl17getCameraDirectorEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x084874
     size: 8
     label: _ZThn24_NK15KoopaCameraCtrl17getCameraDirectorEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Boss/Koopa/KoopaCap.o:
   '.text':
@@ -16073,106 +16073,106 @@ Boss/Koopa/KoopaChurch.o:
   - offset: 0x08b7a8
     size: 156
     label: _ZN11KoopaChurchC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08b844
     size: 152
     label: _ZN11KoopaChurchC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08b8dc
     size: 392
     label: _ZN11KoopaChurch4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08ba64
     size: 148
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_124syncPeachAndRingToChurchEP11KoopaChurchP5PeachPN2al9LiveActorE
+    status: Matching
   - offset: 0x08baf8
     size: 4
     label: _ZN11KoopaChurch7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bafc
     size: 8
     label: _ZN11KoopaChurch10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bb04
     size: 36
     label: _ZNK11KoopaChurch11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bb28
     size: 40
     label: _ZThn264_NK11KoopaChurch11isFirstDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bb50
     size: 168
     label: _ZN11KoopaChurch8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bbf8
     size: 8
     label: _ZThn264_N11KoopaChurch8skipDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bc00
     size: 88
     label: _ZN11KoopaChurch14exeBeforeEnterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bc58
     size: 80
     label: _ZN11KoopaChurch12exeDemoEnterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bca8
     size: 96
     label: _ZN11KoopaChurch7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bd08
     size: 96
     label: _ZN11KoopaChurch13exeDemoChurchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bd68
     size: 76
     label: _ZN11KoopaChurch14exeChangeStageEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bdb4
     size: 4
     label: _ZN11KoopaChurch6exeEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x08bdb8
     size: 8
     label: _ZNK11KoopaChurch16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x08bdc0
     size: 8
     label: _ZThn264_NK11KoopaChurch16isEnableSkipDemoEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x08bdc8
     size: 88
     label: _ZNK12_GLOBAL__N_125KoopaChurchNrvBeforeEnter7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08be20
     size: 96
     label: _ZNK12_GLOBAL__N_118KoopaChurchNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08be80
     size: 80
     label: _ZNK12_GLOBAL__N_123KoopaChurchNrvDemoEnter7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08bed0
     size: 96
     label: _ZNK12_GLOBAL__N_124KoopaChurchNrvDemoChurch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08bf30
     size: 4
     label: _ZNK12_GLOBAL__N_117KoopaChurchNrvEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08bf34
     size: 76
     label: _ZNK12_GLOBAL__N_125KoopaChurchNrvChangeStage7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaDamageBall.o:
   '.text':

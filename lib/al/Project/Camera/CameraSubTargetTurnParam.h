@@ -7,6 +7,24 @@ struct ActorInitInfo;
 
 struct CameraSubTargetTurnParam {
     CameraSubTargetTurnParam() {}
+    // Full-field ctor so a constant turn param can be defined as a static const
+    // (constant-initialized into .rodata).
+    constexpr CameraSubTargetTurnParam(f32 turnSpeedRate1, f32 turnSpeedRate2,
+                                       f32 turnBrakeEndDistance, f32 turnBrakeStartDistance,
+                                       f32 turnStopStartDistance, f32 turnStopEndDistance,
+                                       s32 targetTurnRestartStep, bool isTurnV,
+                                       bool isResetAfterTurnV, f32 minTurnDegreeV,
+                                       f32 maxTurnDegreeV, f32 validTurnDegreeRangeH,
+                                       f32 validFaceDegreeRangeH)
+        : turnSpeedRate1(turnSpeedRate1), turnSpeedRate2(turnSpeedRate2),
+          turnBrakeEndDistance(turnBrakeEndDistance),
+          turnBrakeStartDistance(turnBrakeStartDistance),
+          turnStopStartDistance(turnStopStartDistance),
+          turnStopEndDistance(turnStopEndDistance),
+          targetTurnRestartStep(targetTurnRestartStep), isTurnV(isTurnV),
+          isResetAfterTurnV(isResetAfterTurnV), minTurnDegreeV(minTurnDegreeV),
+          maxTurnDegreeV(maxTurnDegreeV), validTurnDegreeRangeH(validTurnDegreeRangeH),
+          validFaceDegreeRangeH(validFaceDegreeRangeH) {}
 
     void init(const ActorInitInfo& info);
 
