@@ -100353,51 +100353,51 @@ Npc/CapSlotNpc.o:
   - offset: 0x38121c
     size: 324
     label: _ZN10CapSlotNpc4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381360
     size: 44
     label: _ZN10CapSlotNpc8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38138c
     size: 12
     label: _ZN10CapSlotNpc12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381398
     size: 204
     label: _ZN10CapSlotNpc10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381464
     size: 132
     label: _ZN10CapSlotNpc12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3814e8
     size: 132
     label: _ZThn264_N10CapSlotNpc12receiveEventEPKN2al18EventFlowEventDataE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38156c
     size: 216
     label: _ZNK10CapSlotNpc10judgeQueryEPKc
-    status: NotDecompiled
+    status: Wip
   - offset: 0x381644
     size: 216
     label: _ZThn272_NK10CapSlotNpc10judgeQueryEPKc
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x38171c
     size: 64
     label: _ZN10CapSlotNpc7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x38175c
     size: 12
     label: _ZN10CapSlotNpc11exeReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x381768
     size: 68
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_117CapSlotNpcNrvWait7executeEPN2al11NerveKeeperE
+    status: Matching
   - offset: 0x3817ac
     size: 20
-    label: ''
-    status: NotDecompiled
+    label: _ZNK12_GLOBAL__N_121CapSlotNpcNrvReaction7executeEPN2al11NerveKeeperE
+    status: Matching
 Npc/CapWorldNpcTailJointController.o:
   '.text':
   - offset: 0x3817c0
