@@ -14378,11 +14378,11 @@ Boss/Koopa/Koopa.o:
   - offset: 0x07f304
     size: 68
     label: _ZN5Koopa8exeSwoonEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x07f348
     size: 64
     label: _ZN5Koopa16exeSwoonReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x07f388
     size: 160
     label: _ZN5Koopa16exeDemoHackFirstEv
@@ -14402,7 +14402,7 @@ Boss/Koopa/Koopa.o:
   - offset: 0x07f718
     size: 16
     label: _ZN5Koopa7endWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x07f728
     size: 524
     label: _ZN5Koopa12exeTurnPointEv
@@ -14450,7 +14450,7 @@ Boss/Koopa/Koopa.o:
   - offset: 0x080ce0
     size: 140
     label: _ZN5Koopa5end2DEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x080d6c
     size: 116
     label: _ZN5Koopa7exeBindEv
@@ -14470,7 +14470,7 @@ Boss/Koopa/Koopa.o:
   - offset: 0x08117c
     size: 96
     label: _ZN5Koopa11exeDeadFallEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0811dc
     size: 88
     label: _ZN5Koopa9startBindEv
@@ -14498,11 +14498,11 @@ Boss/Koopa/Koopa.o:
   - offset: 0x081390
     size: 8
     label: _ZNK5Koopa14isTriggerSwingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x081398
     size: 16
     label: _ZNK5Koopa10isBindWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0813a8
     size: 48
     label: _ZN5Koopa30changeHackTutorialElectricWireEv
@@ -14544,17 +14544,17 @@ Boss/Koopa/Koopa.o:
   - offset: 0x081754
     size: 72
     label: _ZNK12_GLOBAL__N_113KoopaNrvSwoon7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08179c
     size: 8
     label: _ZNK12_GLOBAL__N_113KoopaNrvStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0817a4
     size: 8
     label: _ZNK12_GLOBAL__N_121KoopaNrvDemoHackFirst7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0817ac
     size: 268
@@ -14567,97 +14567,97 @@ Boss/Koopa/Koopa.o:
   - offset: 0x0818c4
     size: 8
     label: _ZNK12_GLOBAL__N_110KoopaNrv2D7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0818cc
     size: 144
     label: _ZNK12_GLOBAL__N_110KoopaNrv2D12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08195c
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081964
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvJump7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08196c
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081974
     size: 8
     label: _ZNK12_GLOBAL__N_115KoopaNrvJumpEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08197c
     size: 8
     label: _ZNK12_GLOBAL__N_117KoopaNrvJumpStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081984
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvBind7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x08198c
     size: 68
     label: _ZNK12_GLOBAL__N_121KoopaNrvSwoonReaction7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0819d0
     size: 8
     label: _ZNK12_GLOBAL__N_121KoopaNrvBindHackStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x0819d8
     size: 96
     label: _ZNK12_GLOBAL__N_116KoopaNrvDeadFall7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a38
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvDead7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a40
     size: 8
     label: _ZNK12_GLOBAL__N_117KoopaNrvTurnPoint7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a48
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvStop7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a50
     size: 8
     label: _ZNK12_GLOBAL__N_117KoopaNrvMoveBrake7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a58
     size: 8
     label: _ZNK12_GLOBAL__N_112KoopaNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a60
     size: 20
     label: _ZNK12_GLOBAL__N_112KoopaNrvWait12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a74
     size: 8
     label: _ZNK12_GLOBAL__N_122KoopaNrvMoveBrakeTurnR7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x081a7c
     size: 8
     label: _ZNK12_GLOBAL__N_122KoopaNrvMoveBrakeTurnL7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/Koopa2D.o:
   '.text':
