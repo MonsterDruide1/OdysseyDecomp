@@ -19,6 +19,7 @@
 #include "Library/Play/Camera/KeyMoveCameraZoom.h"
 
 #include "Camera/CameraPoserFollowLimit.h"
+#include "Camera/ScenarioStartCameraPoser.h"
 
 const al::NameToCreator<al::CameraPoserCreatorFunction> sProjectCameraPoserFactoryEntries1[] = {
     {"制限付きフォロー", al::createCameraPoserFunction<CameraPoserFollowLimit>},
@@ -46,8 +47,10 @@ const al::NameToCreator<al::CameraPoserCreatorFunction> sProjectCameraPoserFacto
     {"キー移動固定", al::createCameraPoserFunction<al::KeyMoveCameraFix>},
     {"キー移動レール移動", al::createCameraPoserFunction<al::KeyMoveCameraRailMove>},
     {"キー移動ズーム", al::createCameraPoserFunction<al::KeyMoveCameraZoom>},
-    /* ScenarioStartCameraPoserSimpleZoom */ {"シナリオ紹介シンプルズームカメラ", nullptr},
-    /* ScenarioStartCameraPoserRailMove */ {"シナリオ紹介レール移動カメラ", nullptr}};
+    {"シナリオ紹介シンプルズームカメラ",
+     al::createCameraPoserFunction<ScenarioStartCameraPoserSimpleZoom>},
+    {"シナリオ紹介レール移動カメラ",
+     al::createCameraPoserFunction<ScenarioStartCameraPoserRailMove>}};
 
 ProjectCameraPoserFactory::ProjectCameraPoserFactory()
     : CameraPoserFactory("プロジェクトカメラファクトリー") {
