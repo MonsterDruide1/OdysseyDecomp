@@ -102688,75 +102688,75 @@ Npc/HideAndSeekCapMan.o:
   - offset: 0x398890
     size: 292
     label: _ZN17HideAndSeekCapMan27tryCreateLinkNpcIfClearGameEPN2al9LiveActorERKNS0_13ActorInitInfoEPKcS7_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3989b4
     size: 140
     label: _ZN17HideAndSeekCapManC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398a40
     size: 152
     label: _ZN17HideAndSeekCapMan4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398ad8
     size: 76
     label: _ZN17HideAndSeekCapMan7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398b24
     size: 108
     label: _ZN17HideAndSeekCapMan12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398b90
     size: 8
     label: _ZN17HideAndSeekCapMan10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398b98
     size: 96
     label: _ZN17HideAndSeekCapMan9exeAppearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398bf8
     size: 264
     label: _ZN17HideAndSeekCapMan7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398d00
     size: 72
     label: _ZN17HideAndSeekCapMan12exeDisappearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398d48
     size: 172
     label: _ZN17HideAndSeekCapMan7exeHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398df4
     size: 96
     label: _ZN17HideAndSeekCapMan9exeScaredEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398e54
     size: 128
     label: _ZN17HideAndSeekCapManC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x398ed4
     size: 172
     label: _ZNK12_GLOBAL__N_124HideAndSeekCapManNrvHide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x398f80
     size: 8
     label: _ZNK12_GLOBAL__N_124HideAndSeekCapManNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x398f88
     size: 100
     label: _ZNK12_GLOBAL__N_126HideAndSeekCapManNrvScared7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x398fec
     size: 76
     label: _ZNK12_GLOBAL__N_129HideAndSeekCapManNrvDisappear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399038
     size: 100
     label: _ZNK12_GLOBAL__N_126HideAndSeekCapManNrvAppear7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Npc/HintNpc.o:
   '.text':
@@ -102819,116 +102819,116 @@ Npc/HomeCap.o:
   - offset: 0x3997c0
     size: 144
     label: _ZN7HomeCapC2EPKcP9HomeChairRKN4sead8PtrArrayI16HomeCapMovePointEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399850
     size: 156
     label: _ZN7HomeCapC1EPKcP9HomeChairRKN4sead8PtrArrayI16HomeCapMovePointEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3998ec
     size: 248
     label: _ZN7HomeCap4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3999e4
     size: 84
     label: _ZN7HomeCap20appearMoveOtherChairEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399a38
     size: 76
     label: _ZN7HomeCap17tryKillReturnHeadEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399a84
     size: 4
     label: _ZN7HomeCap7exeHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399a88
     size: 12
     label: _ZN7HomeCap17exeMoveOtherChairEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399a94
     size: 116
     label: _ZN7HomeCap17exeWaitOtherChairEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399b08
     size: 92
     label: _ZN7HomeCap13exeWanderSignEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399b64
     size: 60
     label: _ZN7HomeCap15exeMoveSouvenirEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399ba0
     size: 92
     label: _ZN7HomeCap12exeSleepWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399bfc
     size: 92
     label: _ZN7HomeCap26exeNoMoveSouvenirSleepWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399c58
     size: 88
     label: _ZN7HomeCap13exeSleepStartEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399cb0
     size: 92
     label: _ZN7HomeCap8exeSleepEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399d0c
     size: 88
     label: _ZN7HomeCap11exeSleepEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399d64
     size: 12
     label: _ZN15HomeCapFunction17getAimChairOffsetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x399d70
     size: 4
     label: _ZNK12_GLOBAL__N_114HomeCapNrvHide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399d74
     size: 20
     label: _ZNK12_GLOBAL__N_124HomeCapNrvMoveOtherChair7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399d88
     size: 64
     label: _ZNK12_GLOBAL__N_122HomeCapNrvMoveSouvenir7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399dc8
     size: 120
     label: _ZNK12_GLOBAL__N_124HomeCapNrvWaitOtherChair7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399e40
     size: 96
     label: _ZNK12_GLOBAL__N_120HomeCapNrvWanderSign7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399ea0
     size: 96
     label: _ZNK12_GLOBAL__N_133HomeCapNrvNoMoveSouvenirSleepWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399f00
     size: 96
     label: _ZNK12_GLOBAL__N_119HomeCapNrvSleepWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399f60
     size: 92
     label: _ZNK12_GLOBAL__N_120HomeCapNrvSleepStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x399fbc
     size: 96
     label: _ZNK12_GLOBAL__N_115HomeCapNrvSleep7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x39a01c
     size: 92
     label: _ZNK12_GLOBAL__N_118HomeCapNrvSleepEnd7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Npc/HomeCapStateMoveChair.o:
   '.text':
@@ -102937,36 +102937,36 @@ Npc/HomeCapStateMoveChair.o:
     label:
     - _ZN21HomeCapStateMoveChairC1EPN2al9LiveActorE
     - _ZN21HomeCapStateMoveChairC2EPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x39a0cc
     size: 16
     label: _ZN21HomeCapStateMoveChair4initEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x39a0dc
     size: 8
     label: _ZN21HomeCapStateMoveChair6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x39a0e4
     size: 228
     label: _ZN21HomeCapStateMoveChair20appearMoveOtherChairEPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x39a1c8
     size: 80
     label: _ZN21HomeCapStateMoveChair15getCapAppearPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x39a218
     size: 572
     label: _ZN21HomeCapStateMoveChair7exeMoveEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x39a454
     size: 36
     label: _ZN21HomeCapStateMoveChairD0Ev
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x39a478
     size: 8
     label: _ZNK12_GLOBAL__N_128HomeCapStateMoveChairNrvMove7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Npc/HomeCapStateMoveSouvenir.o:
   '.text':
