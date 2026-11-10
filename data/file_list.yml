@@ -113326,785 +113326,785 @@ Player/HackCap.o:
   - offset: 0x3f96b8
     size: 1320
     label: _ZN7HackCapC2EPKN2al9LiveActorEPKcPK11PlayerInputPK17PlayerAreaCheckerPK23PlayerWallActionHistoryPK22PlayerCapActionHistoryPK24PlayerEyeSensorHitHolderPK21PlayerSeparateCapFlagPK19IUsePlayerCollisionPK21IUsePlayerHeightCheckPK16PlayerWetControlPK24PlayerJointControlKeeperP33HackCapJudgePreInputSeparateThrowP32HackCapJudgePreInputSeparateJump
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3f9be0
     size: 1316
     label: _ZN7HackCapC1EPKN2al9LiveActorEPKcPK11PlayerInputPK17PlayerAreaCheckerPK23PlayerWallActionHistoryPK22PlayerCapActionHistoryPK24PlayerEyeSensorHitHolderPK21PlayerSeparateCapFlagPK19IUsePlayerCollisionPK21IUsePlayerHeightCheckPK16PlayerWetControlPK24PlayerJointControlKeeperP33HackCapJudgePreInputSeparateThrowP32HackCapJudgePreInputSeparateJump
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fa104
     size: 1344
     label: _ZN7HackCap4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fa644
     size: 512
     label: _ZN17HackCapThrowParamC2EPN2al9LiveActorE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x3fa844
     size: 272
     label: _ZN7HackCap4hideEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fa954
     size: 148
     label: _ZN7HackCap8movementEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fa9e8
     size: 512
     label: _ZN7HackCap22updateShadowMaskOffsetEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fabe8
     size: 904
     label: _ZN7HackCap7controlEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3faf70
     size: 84
     label: _ZNK7HackCap8isFlyingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fafc4
     size: 1712
     label: _ZN7HackCap18updateTargetLayoutEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fb674
     size: 276
     label: _ZN7HackCap14updateColliderEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fb788
     size: 904
     label: _ZN7HackCap20updateFrameOutLayoutEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fbb10
     size: 816
     label: _ZN7HackCap10attackSpinEPN2al9HitSensorES2_f
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fbe40
     size: 396
     label: _ZN7HackCap13prepareLockOnEPN2al9HitSensorE
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fbfcc
     size: 208
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_120isTargetBehindPlayerEPKN2al9LiveActorEPKNS0_9HitSensorES6_
+    status: Wip
   - offset: 0x3fc09c
     size: 128
     label: _ZN7HackCap16sendMsgStartHackEPN2al9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc11c
     size: 220
     label: _ZN7HackCap26receiveRequestTransferHackEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc1f8
     size: 164
     label: _ZN7HackCap26startThrowSeparatePlayHackEPN2al9HitSensorERKN4sead7Vector3IfEES7_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc29c
     size: 76
     label: _ZN7HackCap9startHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc2e8
     size: 144
     label: _ZN7HackCap19emitHackStartEffectEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc378
     size: 112
     label: _ZN7HackCap20noticeHackMarioEnterEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc3e8
     size: 132
     label: _ZN7HackCap27noticeHackDemoPuppetableEndEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc46c
     size: 68
     label: _ZN7HackCap10recordHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc4b0
     size: 44
     label: _ZN7HackCap16addHackStartDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc4dc
     size: 44
     label: _ZN7HackCap17addLockOnKeepDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc508
     size: 12
     label: _ZN7HackCap24syncHackDamageVisibilityEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc514
     size: 76
     label: _ZN7HackCap7endHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fc560
     size: 256
     label: _ZN7HackCap15startSpinAttackEPKc
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fc660
     size: 1280
     label: _ZN7HackCap10startThrowEbRKN4sead7Vector3IfEES4_fRKNS0_7Vector2IfEES8_S4_bS4_NS_13SwingHandTypeEbfi
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fcb60
     size: 400
     label: _ZN7HackCap22startThrowSeparatePlayERKN4sead7Vector3IfEES4_fb
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fccf0
     size: 88
     label: _ZN7HackCap26startThrowSeparatePlayJumpERKN4sead7Vector3IfEES4_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fcd48
     size: 184
     label: _ZN7HackCap10startCatchEPKcbRKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fce00
     size: 68
     label: _ZNK7HackCap13isNoPutOnHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fce44
     size: 64
     label: _ZN7HackCap10forcePutOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fce84
     size: 420
     label: _ZN7HackCap9forceHackEPN2al9HitSensorEPK13CapTargetInfo
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fd028
     size: 56
     label: _ZN7HackCap16resetLockOnParamEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd060
     size: 120
     label: _ZN7HackCap16setupStartLockOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd0d8
     size: 296
     label: _ZN7HackCap14cancelCapStateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd200
     size: 16
     label: _ZNK7HackCap13isEnableThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd210
     size: 184
     label: _ZNK7HackCap18isEnableSpinAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd2c8
     size: 16
     label: _ZNK7HackCap12isSpinAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd2d8
     size: 16
     label: _ZN7HackCap13requestReturnEPb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd2e8
     size: 580
     label: _ZN7HackCap9tryReturnEbPb
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fd52c
     size: 704
     label: _ZN7HackCap13updateCapPoseEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fd7ec
     size: 320
     label: _ZN7HackCap12followTargetEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fd92c
     size: 200
     label: _ZN7HackCap20syncPuppetSilhouetteEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd9f4
     size: 4
     label: _ZN7HackCap13recordCapJumpEP23PlayerWallActionHistory
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fd9f8
     size: 216
     label: _ZNK7HackCap17getFlyingSpeedMaxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdad0
     size: 168
     label: _ZNK7HackCap13getThrowSpeedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdb78
     size: 56
     label: _ZN7HackCap24requestLockOnHitReactionEPK13CapTargetInfoPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdbb0
     size: 16
     label: _ZN7HackCap11startPuppetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdbc0
     size: 12
     label: _ZN7HackCap9endPuppetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdbcc
     size: 60
     label: _ZN7HackCap13hidePuppetCapEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdc08
     size: 60
     label: _ZN7HackCap13showPuppetCapEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdc44
     size: 12
     label: _ZN7HackCap23hidePuppetCapSilhouetteEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdc50
     size: 8
     label: _ZN7HackCap23showPuppetCapSilhouetteEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdc58
     size: 60
     label: _ZN7HackCap25startPuppetCheckpointWarpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdc94
     size: 16
     label: _ZN7HackCap21startHackShineGetDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdca4
     size: 280
     label: _ZN7HackCap25endHackThrowAndReturnHackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fddbc
     size: 4
     label: _ZN7HackCap19endHackShineGetDemoEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fddc0
     size: 144
     label: _ZNK7HackCap19calcHackFollowTransEPN4sead7Vector3IfEEb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fde50
     size: 8
     label: _ZNK7HackCap13makeFollowMtxEPN4sead8Matrix34IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fde58
     size: 160
     label: _ZN7HackCap20updateCapEyeShowHideEbi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fdef8
     size: 320
     label: _ZN7HackCap24activateInvincibleEffectEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe038
     size: 236
     label: _ZN7HackCap20syncInvincibleEffectEb
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fe124
     size: 144
     label: _ZN7HackCap18updateSeparateModeEPK21PlayerSeparateCapFlag
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fe1b4
     size: 8
     label: _ZNK7HackCap20isEnableRescuePlayerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe1bc
     size: 16
     label: _ZNK7HackCap14isRescuePlayerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe1cc
     size: 92
     label: _ZNK7HackCap17isEnableHackThrowEPb
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe228
     size: 60
     label: _ZNK7HackCap21isSeparateHipDropLandEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe264
     size: 68
     label: _ZNK7HackCap14isSeparateHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe2a8
     size: 120
     label: _ZNK7HackCap21isSeparateThrowFlyingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe320
     size: 116
     label: _ZN7HackCap17startRescuePlayerEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe394
     size: 64
     label: _ZN7HackCap21prepareCooperateThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe3d4
     size: 60
     label: _ZN7HackCap30requestForceFollowSeparateHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe410
     size: 108
     label: _ZNK7HackCap22calcSeparateHideSpeedHERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fe47c
     size: 128
     label: _ZN7HackCap27updateModelAlphaForSnapShotEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe4fc
     size: 12
     label: _ZNK7HackCap16getPadRumblePortEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe508
     size: 116
     label: _ZNK7HackCap21isEnableThrowSeparateEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fe57c
     size: 20
     label: _ZNK7HackCap21isHoldInputKeepLockOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe590
     size: 100
     label: _ZNK7HackCap19isRequestableReturnEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x3fe5f4
     size: 76
     label: _ZNK7HackCap24isLockOnEnableHackTargetEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe640
     size: 120
     label: _ZNK7HackCap16isWaitHackLockOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe6b8
     size: 84
     label: _ZNK7HackCap9isCatchedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe70c
     size: 16
     label: _ZNK7HackCap6isHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe71c
     size: 68
     label: _ZNK7HackCap7isPutOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe760
     size: 100
     label: _ZNK7HackCap19isLockOnInterpolateEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe7c4
     size: 168
     label: _ZNK7HackCap16isEnablePreInputEv
-    status: NotDecompiled
+    status: NonMatchingMajor
   - offset: 0x3fe86c
     size: 52
     label: _ZNK7HackCap19isForceCapTouchJumpEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe8a0
     size: 32
     label: _ZNK7HackCap25isHackInvalidSeparatePlayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fe8c0
     size: 880
     label: _ZN7HackCap9exeLockOnEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fec30
     size: 272
     label: _ZN7HackCap16updateThrowJointEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fed40
     size: 276
     label: _ZN7HackCap7exeHackEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x3fee54
     size: 12
     label: _ZN7HackCap13exeSpinAttackEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fee60
     size: 188
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_120updateSpinAttackPoseEP7HackCapPKN2al9LiveActorEPK24PlayerJointControlKeeper
+    status: Wip
   - offset: 0x3fef1c
     size: 140
     label: _ZN7HackCap8exeCatchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3fefa8
     size: 288
     label: _ZN7HackCap10exeTrampleEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3ff0c8
     size: 60
     label: _ZNK7HackCap17isHoldSpinCapStayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3ff104
     size: 300
     label: _ZN7HackCap16exeTrampleLockOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3ff230
     size: 64
     label: _ZN7HackCap9exeRescueEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3ff270
     size: 4
     label: _ZN7HackCap7exeHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x3ff274
     size: 4020
     label: _ZN7HackCap13exeThrowStartEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x400228
     size: 40
     label: _ZNK7HackCap17isThrowTypeSpiralEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x400250
     size: 88
     label: _ZNK7HackCap18isThrowTypeRollingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4002a8
     size: 196
     label: _ZN7HackCap15setupThrowStartEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x40036c
     size: 16
     label: _ZNK7HackCap14getThrowHeightEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40037c
     size: 2092
     label: _ZN7HackCap26checkEnableThrowStartSpaceEPN4sead7Vector3IfEES3_S3_RKS2_ffbS5_
-    status: NotDecompiled
+    status: Wip
   - offset: 0x400ba8
     size: 2552
     label: _ZN7HackCap15updateWaterAreaEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x4015a0
     size: 232
     label: _ZNK7HackCap13getThrowRangeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x401688
     size: 152
     label: _ZNK7HackCap17getThrowBrakeTimeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x401720
     size: 36
     label: _ZN7HackCap27startThrowCapEyeThrowActionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x401744
     size: 464
     label: _ZN7HackCap8exeThrowEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x401914
     size: 256
     label: _ZN7HackCap25tryCollideReflectReactionEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x401a14
     size: 760
     label: _ZN7HackCap22tryCollideWallReactionEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x401d0c
     size: 1988
-    label: ''
-    status: NotDecompiled
+    label: _ZN7HackCap13calcThrowMoveERN4sead7Vector3IfEES3_PfP21PlayerColliderHackCapbf
+    status: Wip
   - offset: 0x4024d0
     size: 1916
     label: _ZN7HackCap23changeThrowParamInWaterEib
-    status: NotDecompiled
+    status: Wip
   - offset: 0x402c4c
     size: 484
-    label: ''
-    status: NotDecompiled
+    label: _ZN7HackCap25calcThrowRollingDirectionERN4sead7Vector3IfEES3_PK11PlayerInputPK21PlayerSeparateCapFlagb
+    status: Matching
   - offset: 0x402e30
     size: 456
     label: _ZN7HackCap14addCurveOffsetEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x402ff8
     size: 716
     label: _ZN7HackCap13exeThrowBrakeEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x4032c4
     size: 1880
     label: _ZN7HackCap15tryAppendAttackEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x403a1c
     size: 1872
     label: _ZN7HackCap14exeThrowSpiralEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x40416c
     size: 288
     label: _ZN7HackCap28tryCollideWallReactionSpiralEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40428c
     size: 100
     label: _ZN7HackCap14endThrowSpiralEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4042f0
     size: 836
     label: _ZN7HackCap15exeThrowTornadoEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x404634
     size: 596
     label: _ZN7HackCap29tryCollideWallReactionReflectEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x404888
     size: 224
     label: _ZN7HackCap15exeThrowRollingEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x404968
     size: 1220
     label: _ZN7HackCap35tryCollideWallReactionRollingGroundEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x404e2c
     size: 1444
     label: _ZN7HackCap13rollingGroundEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x4053d0
     size: 436
     label: _ZN7HackCap20exeThrowRollingBrakeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x405584
     size: 2432
     label: _ZN7HackCap12exeThrowStayEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x405f04
     size: 124
     label: _ZN7HackCap22tryChangeSeparateThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x405f80
     size: 36
     label: _ZNK7HackCap17getThrowBackSpeedEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x405fa4
     size: 488
     label: _ZN7HackCap21updateLavaSurfaceMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40618c
     size: 288
     label: _ZN7HackCap26tryCollideWallReactionStayEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4062ac
     size: 196
     label: _ZNK7HackCap26isEnableHackThrowAutoCatchEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x406370
     size: 32
     label: _ZNK7HackCap16getThrowStayTimeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x406390
     size: 60
     label: _ZNK7HackCap19getThrowStayTimeMaxEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4063cc
     size: 740
     label: _ZN7HackCap14exeThrowAppendEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x4066b0
     size: 76
     label: _ZNK7HackCap19getThrowSpeedAppendEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x4066fc
     size: 20
     label: _ZNK7HackCap19getThrowRangeAppendEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x406710
     size: 1020
     label: _ZN7HackCap7exeBlowEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x406b0c
     size: 176
     label: _ZN7HackCap20tryCollideWallLockOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x406bbc
     size: 20
     label: _ZN7HackCap31endHackThrowAndReturnHackOrHideEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x406bd0
     size: 60
     label: _ZN7HackCap14clearThrowTypeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x406c0c
     size: 832
     label: _ZN7HackCap10exeReboundEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x406f4c
     size: 1836
     label: _ZN7HackCap9exeReturnEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x407678
     size: 132
     label: _ZNK7HackCap19calcReturnTargetPosEPN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Wip
   - offset: 0x4076fc
     size: 1620
     label: _ZN7HackCap12attackSensorEPN2al9HitSensorES2_
-    status: NotDecompiled
+    status: Wip
   - offset: 0x407d50
     size: 224
     label: _ZN7HackCap20stayRollingOrReflectEv
-    status: NotDecompiled
+    status: Wip
   - offset: 0x407e30
     size: 4244
     label: _ZN7HackCap10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Wip
   - offset: 0x408ec4
     size: 64
     label: _ZN7HackCap7endMoveEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x408f04
     size: 188
     label: _ZNK7HackCap25isEnableCapTouchJumpInputEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x408fc0
     size: 76
     label: _ZN7HackCap21prepareTransferLockOnEPN2al9HitSensorE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x40900c
     size: 300
     label: _ZN7HackCap22collideThrowStartArrowEPN2al9HitSensorERKN4sead7Vector3IfEES7_S7_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x409138
     size: 444
-    label: ''
-    status: NotDecompiled
+    label: _ZN7HackCap16calcThrowReflectERN4sead7Vector3IfEES3_PS_RKS2_
+    status: Matching
   - offset: 0x4092f4
     size: 816
     label: _ZN7HackCap31trySendAttackCollideAndReactionEPb
-    status: NotDecompiled
+    status: Wip
   - offset: 0x409624
     size: 656
-    label: ''
-    status: NotDecompiled
+    label: _Z15tryReflectThrowP7HackCapRN4sead7Vector3IfEES4_RKS3_S6_b
+    status: Matching
   - offset: 0x4098b4
     size: 520
     label: _ZN7HackCap11stayWallHitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x409abc
     size: 352
-    label: ''
-    status: NotDecompiled
+    label: _ZN12_GLOBAL__N_118tryGetCollidedInfoEPPKN2al14CollisionPartsEPN4sead7Vector3IfEES8_PK19IUsePlayerCollisionPNS0_9HitSensorEPKNS5_14Delegate2RFuncISD_SD_bEE
+    status: Matching
   - offset: 0x409c1c
     size: 12
     label: _ZN7HackCap12endHackThrowEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x409c28
     size: 8
     label: _ZNK12_GLOBAL__N_115HackCapNrvCatch7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c30
     size: 8
     label: _ZNK12_GLOBAL__N_119HackCapNrvThrowStay7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c38
     size: 8
     label: _ZNK12_GLOBAL__N_114HackCapNrvHide7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c40
     size: 8
     label: _ZNK12_GLOBAL__N_116HackCapNrvReturn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c48
     size: 8
     label: _ZNK12_GLOBAL__N_116HackCapNrvLockOn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c50
     size: 8
     label: _ZNK12_GLOBAL__N_117HackCapNrvRebound7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c58
     size: 8
     label: _ZNK12_GLOBAL__N_114HackCapNrvHack7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c60
     size: 16
     label: _ZNK12_GLOBAL__N_120HackCapNrvSpinAttack7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c70
     size: 8
     label: _ZNK12_GLOBAL__N_120HackCapNrvThrowStart7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409c78
     size: 268
-    label: ''
-    status: NotDecompiled
+    label: _Z28updateEquipmentHatVisibilitybPN2al9LiveActorES1_P13CapTargetInfob
+    status: Matching
   - offset: 0x409d84
     size: 68
     label: _ZNK12_GLOBAL__N_116HackCapNrvRescue7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409dc8
     size: 200
-    label: ''
-    status: NotDecompiled
+    label: _ZNK7HackCap7isThrowEv
+    status: Matching
   - offset: 0x409e90
     size: 8
     label: _ZNK12_GLOBAL__N_123HackCapNrvTrampleReturn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409e98
     size: 8
     label: _ZNK12_GLOBAL__N_122HackCapNrvThrowTornado7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409ea0
     size: 8
     label: _ZNK12_GLOBAL__N_121HackCapNrvThrowSpiral7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409ea8
     size: 104
     label: _ZNK12_GLOBAL__N_121HackCapNrvThrowSpiral12executeOnEndEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409f10
     size: 8
     label: _ZNK12_GLOBAL__N_122HackCapNrvThrowRolling7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409f18
     size: 8
     label: _ZNK12_GLOBAL__N_115HackCapNrvThrow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x409f20
     size: 444
     label: ''
-    status: NotDecompiled
+    status: Wip
   - offset: 0x40a0dc
     size: 8
     label: _ZNK12_GLOBAL__N_120HackCapNrvThrowBrake7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a0e4
     size: 8
     label: _ZNK12_GLOBAL__N_117HackCapNrvRethrow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a0ec
     size: 8
     label: _ZNK12_GLOBAL__N_121HackCapNrvThrowAppend7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a0f4
     size: 8
     label: _ZNK12_GLOBAL__N_127HackCapNrvThrowRollingBrake7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a0fc
     size: 8
     label: _ZNK12_GLOBAL__N_117HackCapNrvTrample7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a104
     size: 8
     label: _ZNK12_GLOBAL__N_123HackCapNrvTrampleLockOn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a10c
     size: 8
     label: _ZNK12_GLOBAL__N_114HackCapNrvBlow7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x40a114
     size: 28
     label: _ZN4sead14Delegate2RFuncIPN2al9HitSensorES3_bE6invokeES3_S3_
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x40a130
     size: 76
     label: _ZNK4sead14Delegate2RFuncIPN2al9HitSensorES3_bE5cloneEPNS_4HeapE
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x40a17c
     size: 8
     label: _ZNK4sead11IDelegate2RIPN2al9HitSensorES3_bE5cloneEPNS_4HeapE
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Player/HackCapAboveGroundChecker.o:
   '.text':
