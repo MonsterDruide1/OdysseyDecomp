@@ -15,6 +15,7 @@ public:
 
     void validateDitherAnim();
     void invalidateDitherAnim();
+    f32 getDitherAlpha() const;
 
 private:
     unsigned char padding[0x68 - sizeof(DitherAnimator)];

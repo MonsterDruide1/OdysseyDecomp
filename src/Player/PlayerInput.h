@@ -64,7 +64,7 @@ public:
     bool isTriggerSpinCap() const;
     bool isTriggerToggleStayCap() const;
     bool isTriggerSpinAttackSeparate() const;
-    s32 getSeparatePlay1P();
+    static s32 getSeparatePlay1P();
     bool isTriggerCapReturn() const;
     bool isTriggerCapAttackSeparate() const;
     bool isTriggerSwingActionCap() const;
@@ -149,17 +149,31 @@ public:
     void resetHoldInfo3D();
     void resetHoldInfo2D();
 
+    friend class HackCap;
+    friend class PlayerActorHakoniwa;
+
 private:
     const al::LiveActor* mLiveActor;
     const IUsePlayerCollision* mPlayerCollision;
     const IUseDimension* mDimension;
-    void* gap[11];
+    // [0x18] is a bool read by isMove()/isMoveDeepDown() (ldrb + cbz).
+    bool _18;
+    u8 _19[7];
+    void* gap[6];
+    f32 _50;
+    char _54[4];
+    void* _58[3];
     al::SpinInputAnalyzer* mSpinInputAnalyzer;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer1;
     al::JoyPadAccelPoseAnalyzer* mJoyPadAccelPoseAnalyzer2;
     s32 _88;
-    void* gap2[1];
+    s32 _8c;
+    s32 _90;
+    s32 _94;
     bool mIsDisableInput;
+    bool _99;
+    bool _9a;
+    u8 _9b[5];
     void* gap3[20];
 };
 

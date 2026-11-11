@@ -123,6 +123,10 @@ void calcLineCameraToWorldPosFromScreenPosSub(sead::Vector3f* output1, sead::Vec
                                               const IUseCamera*, const sead::Vector2f&);
 void calcLineCameraToWorldPosFromScreenPosSub(sead::Vector3f* output1, sead::Vector3f* output2,
                                               const IUseCamera*, const sead::Vector2f&, f32, f32);
+
+class OcclusionCullingJudge;
+bool isOcclusionCulling(const OcclusionCullingJudge*, const sead::Vector3f&,
+                        const sead::Vector2f&, f32, f32, f32, s32);
 }  // namespace al
 
 namespace ScreenFunction {

@@ -6,6 +6,7 @@ class IUsePlayerCollision;
 
 class PlayerWallActionHistory {
 public:
+    friend class HackCap;  // HackCap::receiveMsg reads mIsJumpStored directly.
     PlayerWallActionHistory();
     void update(const IUsePlayerCollision* collider);
     void reset();

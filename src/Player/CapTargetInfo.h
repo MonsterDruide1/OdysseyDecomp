@@ -9,6 +9,7 @@ class LiveActor;
 
 class IUsePlayerCollision;
 class CapTargetInfoFunction;
+class Koopa;
 
 class CapTargetInfo {
 public:
@@ -27,10 +28,14 @@ public:
 
     const char* getHackName() const { return mHackName; }
 
+    bool isUseDepthShadow() const { return mIsUseDepthShadow; }
+
     void setIsLockOnOnly() { mIsLockOnOnly = true; }
 
 private:
     friend CapTargetInfoFunction;
+    friend class HackCap;  // HackCap::isHoldSpinCapStay reads _7e directly.
+    friend class Koopa;    // Koopa::startBind/endBind write mIsInvalidHackThrow directly.
     const al::LiveActor* mActor = nullptr;
     const char* mHackName = nullptr;
     IUsePlayerCollision* mPlayerCollision = nullptr;
