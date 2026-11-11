@@ -13,6 +13,7 @@ class PlayerCounterAfterCapCatch;
 class PlayerCapActionHistory {
 public:
     friend class HackCap;  // HackCap::receiveMsg reads mIsCapJumpPossible directly.
+    friend class PlayerActorHakoniwa;  // PlayerActorHakoniwa::exeCapCatchPop clears _39 directly.
     PlayerCapActionHistory(const al::LiveActor* player, const PlayerConst* pConst,
                            const PlayerTrigger* trigger, const IUsePlayerCollision* collider);
     void update();

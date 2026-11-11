@@ -6,6 +6,7 @@ namespace al {
 class LiveActor;
 }  // namespace al
 class PlayerAreaChecker;
+class PlayerEffect;
 
 // Minimal header: only the declarations needed by HackCap::movement.
 // The class itself is NotDecompiled (Player/PlayerWetControl.o).
@@ -20,13 +21,20 @@ public:
     void update();
 
     void reset();
+    void updateModelRoughness(f32 roughness);
 
     bool isWet() const;
     void recordInWater();
+    void recordWet();
     void recordWaterSurface();
+    void recordHeavyLandPuddle();
+    void recordPuddleRolling();
+    void recordForestWaterFall();
+    void recordWaterSplash();
+    void recordWetBySensor();
 
     const al::LiveActor* _0;
-    void* _8 = nullptr;
+    PlayerEffect* _8 = nullptr;
     al::LiveActor* _10;
     const PlayerAreaChecker* _18;
     bool _20 = false;

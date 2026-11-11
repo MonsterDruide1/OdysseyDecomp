@@ -24,5 +24,5 @@ public:
     f32 mRotateX = 0.0f;
     f32 mRotateY = 0.0f;
     f32 mRotateZ = 0.0f;
-    s32 _c = 0;
+    f32 _c = 0.0f;
 };

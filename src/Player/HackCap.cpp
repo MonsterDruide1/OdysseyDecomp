@@ -122,9 +122,9 @@ const f32 sThrowJointRotateY[2] = {35.0f, 45.0f};
 __attribute__((noinline)) void updateSpinAttackPose(HackCap* hackCap,
                                                    const al::LiveActor* playerActor,
                                                    const PlayerJointControlKeeper* jointControlKeeper) {
-    sead::Vector3f frontDir = sead::Vector3f::zero;
+    sead::Vector3f frontDir(0.0f, 0.0f, 0.0f);
     al::calcFrontDir(&frontDir, playerActor);
-    sead::Vector3f groundPoseUp = sead::Vector3f::zero;
+    sead::Vector3f groundPoseUp(0.0f, 0.0f, 0.0f);
     jointControlKeeper->calcGroundPoseUp(&groundPoseUp);
     if (al::isParallelDirection(groundPoseUp, frontDir)) {
         al::copyPose(hackCap, playerActor);
@@ -188,16 +188,16 @@ __attribute__((noinline)) bool tryGetCollidedInfo(
 __attribute__((noinline)) bool isTargetBehindPlayer(const al::LiveActor* playerActor,
                                                     const al::HitSensor* self,
                                                     const al::HitSensor* other) {
-    sead::Vector3f dir = sead::Vector3f::zero;
+    sead::Vector3f dir(0.0f, 0.0f, 0.0f);
     if (!al::calcDirBetweenSensorsH(&dir, self, other))
         return false;
-    sead::Vector3f frontDir = sead::Vector3f::zero;
+    sead::Vector3f frontDir(0.0f, 0.0f, 0.0f);
     al::calcFrontDir(&frontDir, playerActor);
     al::verticalizeVec(&frontDir, al::getGravity(playerActor), frontDir);
-    if (!al::tryNormalizeOrZero(&frontDir))
-        return false;
-    if (dir.dot(frontDir) < sead::Mathf::cos(1.5707964f))
-        return true;
+    if (al::tryNormalizeOrZero(&frontDir)) {
+        if (dir.dot(frontDir) < sead::Mathf::cos(1.5707964f))
+            return true;
+    }
     return false;
 }
 
@@ -217,7 +217,23 @@ __attribute__((noinline)) bool checkThrowMoveHit(
     const al::LiveActor* actor, const sead::Vector3f& dir1, const sead::Vector3f& dir2,
     const sead::Vector3f& dir3, f32 height) {
     *out = false;
-    sead::Vector3f rayDir = dir3 * -200.0f;
+    // d2 is declared before d1: the orig loads dir2's components into
+    // s12/s10/s9 and dir1's into s14/s13/s11 (dir2 first); declaring d1
+    // first swaps the two sets.
+    sead::Vector3f d2 = dir2;
+    sead::Vector3f d1 = dir1;
+    // Component-wise rayDir: the orig stores rayDir with individual `str`
+    // instructions interleaved with the dir3 loads (not one `stp` pair);
+    // the `dir3 * -200.0f` operator form lets the compiler batch the loads
+    // and pair the stores.
+    sead::Vector3f rayDir;
+    rayDir.x = dir3.x * -200.0f;
+    rayDir.y = dir3.y * -200.0f;
+    rayDir.z = dir3.z * -200.0f;
+    // The orig keeps dir2's POINTER in a callee-saved register (x20) and
+    // reloads dir2 from it for the second dot below; the d2 value local
+    // alone makes the compiler reuse the pre-call float regs instead.
+    const sead::Vector3f* dir2Ptr = &dir2;
     if (alCollisionUtil::getHitPosAndNormalOnArrow(actor, &hitPos, &hitNormal,
                                                    al::getTrans(actor), rayDir, nullptr,
                                                    nullptr)) {
@@ -227,7 +243,7 @@ __attribute__((noinline)) bool checkThrowMoveHit(
             *counter = 0;
             return true;
         }
-        if (dir1.dot(dir2) <= 0.0f && dir2.dot(hitNormal) > 0.0f) {
+        if (d1.dot(d2) < 0.0f && dir2Ptr->dot(hitNormal) > 0.0f) {
             *counter = 0;
             return true;
         }
@@ -601,7 +617,7 @@ void HackCap::startThrow(bool isSeparate, const sead::Vector3f& dir, const sead:
     sead::Quatf quat = sead::Quatf::unit;
     al::makeQuatFrontUp(&quat, -throwDir, pos);
     al::updatePoseQuat(this, quat);
-    _514 = sead::Vector3f::zero;
+    _514.set(0.0f, 0.0f, 0.0f);
     _2a5[2] = false;
     _530 = false;
     _534 = 0;
@@ -611,9 +627,9 @@ void HackCap::startThrow(bool isSeparate, const sead::Vector3f& dir, const sead:
     _299 = isSeparateThrow;
     _510 = ((mPlayerSeparateCapFlag->_flagsWord & 0xff0000) == 0) &
            ((mPlayerSeparateCapFlag->_flagsWord & 0xff) != 0);
-    mWallPos = sead::Vector3f::zero;
-    mWallNormal = sead::Vector3f::zero;
-    mWallVelocity = sead::Vector3f::zero;
+    mWallPos.set(0.0f, 0.0f, 0.0f);
+    mWallNormal.set(0.0f, 0.0f, 0.0f);
+    mWallVelocity.set(0.0f, 0.0f, 0.0f);
     _560[3] = nullptr;
     _560[2] = nullptr;
     _560[1] = nullptr;
@@ -623,8 +639,8 @@ void HackCap::startThrow(bool isSeparate, const sead::Vector3f& dir, const sead:
     _29e = isSeparate;
     _29f = isFixed;
     _4d0 = !al::isNearZero(vecC, 0.001f);
-    _4d4 = sead::Vector3f::zero;
-    _4e0 = sead::Vector3f::zero;
+    _4d4.set(0.0f, 0.0f, 0.0f);
+    _4e0.set(0.0f, 0.0f, 0.0f);
     _240 = throwDir;
     _24c = pos;
     _258 = vecD;
@@ -646,7 +662,7 @@ void HackCap::startThrow(bool isSeparate, const sead::Vector3f& dir, const sead:
     _4f0 = 0;
     mCapExternalVelocity->reset();
     _264 = 0.0f;
-    _268 = sead::Vector2f::zero;
+    _268.set(0.0f, 0.0f);
     if (mInput->isThrowTypeLeftRight(vecA))
         _264 = vecA.x > 0.0f ? -1.0f : 1.0f;
     if (_4d0)
@@ -714,8 +730,8 @@ void HackCap::startThrowSeparatePlay(const sead::Vector3f& dir, const sead::Vect
     _1c4 = 0;
     _1ac = 0;
     _1b0 = 0;
-    _240 = sead::Vector3f::zero;
-    _24c = sead::Vector3f::zero;
+    _240.set(0.0f, 0.0f, 0.0f);
+    _24c.set(0.0f, 0.0f, 0.0f);
     al::copyPose(this, mPlayerActor);
     al::setVelocityZero(this);
     HackCapFunction::resetPositionAndCollision(this, mPlayerColliderHackCap);
@@ -745,8 +761,8 @@ void HackCap::startSpinAttack(const char* actionName) {
     _1c4 = 0;
     _1ac = 0;
     _1b0 = 0;
-    _240 = sead::Vector3f::zero;
-    _24c = sead::Vector3f::zero;
+    _240.set(0.0f, 0.0f, 0.0f);
+    _24c.set(0.0f, 0.0f, 0.0f);
     al::copyPose(this, mPlayerActor);
     al::setVelocityZero(this);
     if (actionName) {
@@ -802,10 +818,11 @@ void HackCap::forcePutOn() {
 void HackCap::forceHack(al::HitSensor* sensor, const CapTargetInfo* targetInfo) {
     static_cast<al::SimpleLayoutAppearWaitEnd*>(_5f0)->kill();
     mCapExternalVelocity->reset();
-    al::makeMtxRT(&_588, this);
     mCapTargetInfo1 = nullptr;
     _580 = 0;
+    mLockOnCounter = 0;
     _2a5[1] = false;
+    al::makeMtxRT(&_588, this);
     al::setVelocityZero(this);
     al::offCollide(this);
     al::invalidateHitSensors(this);
@@ -815,7 +832,10 @@ void HackCap::forceHack(al::HitSensor* sensor, const CapTargetInfo* targetInfo) 
     _264 = 0.0f;
     _268.set(0.0f, 0.0f);
     _270 = 0.0f;
-    al::tryStartActionIfNotPlaying(mThrowingHatEyes, _298 ? "SpinL" : "SpinR");
+    if (_298)
+        al::tryStartActionIfNotPlaying(mThrowingHatEyes, "SpinL");
+    else
+        al::tryStartActionIfNotPlaying(mThrowingHatEyes, "SpinR");
     _1d0 = sensor;
     mCapTargetInfo1 = const_cast<CapTargetInfo*>(targetInfo);
     al::startAction(this, "NoAction");
@@ -956,10 +976,11 @@ void HackCap::prepareLockOn(al::HitSensor* sensor) {
     al::invalidateHitSensors(this);
     al::validateHitSensor(this, "Trample");
     _29e = false;
-    _264 = 0.0f;
-    _268 = sead::Vector2f::zero;
-    _270 = 0.0f;
     _274 = 0;
+    _264 = 0.0f;
+    _268.x = 0.0f;
+    _268.y = 0.0f;
+    _270 = 0.0f;
     if (_298)
         al::tryStartActionIfNotPlaying(mThrowingHatEyes, "SpinL");
     else
@@ -1012,8 +1033,8 @@ void HackCap::exeThrowStart() {
     al::invalidateHitSensor(this, "SpiralTail5");
     al::validateShadow(this);
     al::onCollide(this);
-    const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
     const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+    const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
     const char* action = _264 > 0.0f ? actionNameL : actionNameR;
     al::startAction(this, action);
 
@@ -1566,8 +1587,8 @@ bool HackCap::receiveMsg(const al::SensorMsg* msg, al::HitSensor* other, al::Hit
             al::invalidateHitSensor(this, "SpiralTail5");
             al::validateShadow(this);
             al::onCollide(this);
-            const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
             const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+            const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
             al::startAction(this, _264 > 0.0f ? actionNameL : actionNameR);
         }
         rs::tryGetCapRethrowPos(al::getTransPtr(this), msg);
@@ -1680,8 +1701,8 @@ void HackCap::exeThrow() {
                                                _510) &
            1;
     if (al::isFirstStep(this)) {
-        const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
         const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+        const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
         const char* action = _264 > 0.0f ? actionNameL : actionNameR;
         al::tryStartActionIfNotPlaying(this, action);
         if (al::isNerve(this, &NrvHackCap.Throw)) {
@@ -1719,8 +1740,8 @@ void HackCap::exeThrowBrake() {
                                                _510) &
            1;
     if (al::isFirstStep(this)) {
-        const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
         const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+        const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
         const char* action = _264 > 0.0f ? actionNameL : actionNameR;
         al::tryStartActionIfNotPlaying(this, action);
     }
@@ -1773,8 +1794,7 @@ void HackCap::exeThrowBrake() {
 
 void HackCap::updateWaterArea() {
     bool isInWater = mPlayerAreaChecker->isInWater(al::getTrans(this));
-    sead::Vector3f up = -al::getGravity(this);
-    mWaterSurfaceFinder->update(al::getTrans(this), up, 100.0f);
+    mWaterSurfaceFinder->update(al::getTrans(this), -al::getGravity(this), 100.0f);
     bool isFoundSurface = mWaterSurfaceFinder->isFoundSurface();
     f32 distance = mWaterSurfaceFinder->getDistance();
     _29a = isInWater && (!isFoundSurface || distance >= 30.0f);
@@ -1793,12 +1813,16 @@ void HackCap::updateWaterArea() {
     {
         bool isInWaterIce = false;
         if (isFoundSurface) {
+            al::WaterSurfaceFinder* finder = mWaterSurfaceFinder;
+            const PlayerAreaChecker* checker = mPlayerAreaChecker;
             sead::Vector3f checkPos =
-                mWaterSurfaceFinder->getSurfacePosition() + al::getGravity(this) * 5.0f;
-            isInWaterIce = mPlayerAreaChecker->isInWaterIce(checkPos);
+                finder->getSurfacePosition() + al::getGravity(this) * 5.0f;
+            isInWaterIce = checker->isInWaterIce(checkPos);
         }
         bool isRolling = al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f);
         sead::Vector3f frontDir(0.0f, 0.0f, 0.0f);
+        al::WaterSurfaceFinder* effectFinder = mWaterSurfaceFinder;
+        HackCapAboveGroundChecker* effectChecker = mHackCapAboveGroundChecker;
         sead::Vector3f upDir = -al::getGravity(this);
         al::verticalizeVec(&frontDir, upDir, al::getVelocity(this));
         bool isFrontDirValid = al::tryNormalizeOrZero(&frontDir);
@@ -1811,10 +1835,11 @@ void HackCap::updateWaterArea() {
         }
         sead::Vector3f effectPos(0.0f, 0.0f, 0.0f);
         if (isFoundSurface) {
-            if (mHackCapAboveGroundChecker->_8) {
-                if (mWaterSurfaceFinder->getDistance() < 50.0f) {
-                    if (mHackCapAboveGroundChecker->_24 > -mWaterSurfaceFinder->getDistance()) {
-                        effectPos = mWaterSurfaceFinder->getSurfacePosition();
+            if (effectChecker->_8) {
+                f32 dist = effectFinder->getDistance();
+                if (dist < 50.0f) {
+                    if (effectChecker->_24 > -dist) {
+                        effectPos = effectFinder->getSurfacePosition();
                     } else {
                         goto cleanup;
                     }
@@ -1822,56 +1847,63 @@ void HackCap::updateWaterArea() {
                     goto cleanup;
                 }
             } else {
-                if (mWaterSurfaceFinder->getDistance() < 50.0f) {
-                    effectPos = mWaterSurfaceFinder->getSurfacePosition();
+                if (effectFinder->getDistance() < 50.0f) {
+                    effectPos = effectFinder->getSurfacePosition();
                 } else {
                     goto cleanup;
                 }
             }
         } else {
             const al::ArrowHitInfo* hitInfo = nullptr;
+            // NOTE: the orig calls getGravity here and discards the result
+            // (a second getGravity call follows below for rayDir); the
+            // binding is intentionally unused -- the call itself is part
+            // of the orig's call sequence.
+            const sead::Vector3f& gravity = al::getGravity(this);
+            (void)gravity;
+            const al::IUseCollision* collision = static_cast<const al::IUseCollision*>(this);
+            const sead::Vector3f& trans = al::getTrans(this);
             sead::Vector3f rayDir = al::getGravity(this) * 100.0f;
-            if (!alCollisionUtil::getFirstPolyOnArrow(this, &hitInfo, al::getTrans(this), rayDir,
+            if (!alCollisionUtil::getFirstPolyOnArrow(collision, &hitInfo, trans, rayDir,
                                                       nullptr, nullptr))
                 goto cleanup;
             if (!al::isEqualString(al::getMaterialCodeName(hitInfo->operator*()), "Puddle"))
                 goto cleanup;
-            sead::Vector3f hitNormal = alCollisionUtil::getCollisionHitNormal(hitInfo->operator*());
-            sead::Vector3f hitPos = alCollisionUtil::getCollisionHitPos(hitInfo->operator*());
-            effectPos = hitPos + hitNormal * 0.0f;
+            upDir = alCollisionUtil::getCollisionHitNormal(hitInfo->operator*());
+            effectPos = alCollisionUtil::getCollisionHitPos(hitInfo->operator*()) + upDir * 0.0f;
         }
         al::makeMtxUpFrontPos(&_4a0, upDir, frontDir, effectPos);
         if (isFrontDirValid) {
-            if (_30d) {
-                goto checkStayEffect;
-            }
+            if (_30d)
+                goto updateWaterFlags;
             if (_30e) {
                 al::tryDeleteEffect(this, _3a8.cstr());
-                _3a8.copy(sead::SafeStringBase<char>::cEmptyString);
+                static_cast<sead::SafeStringBase<char>&>(_3a8) =
+                    sead::SafeStringBase<char>::cEmptyString;
                 al::tryStopSe(this, "StayWaterSurface", -1, nullptr);
                 _30e = false;
             }
             _30d = true;
-            al::isNearZero(_268.x, 0.001f);
+            bool isNearZeroX = al::isNearZero(_268.x, 0.001f);
             if (isInWaterIce) {
-                if (isRolling)
-                    al::startHitReaction(this, "氷水の水面移動(転がり)");
+                if (isNearZeroX)
+                    al::startHitReaction(this, isRolling ? "氷水の水面移動(転がり)" : "氷水の水面移動");
                 else
-                    al::startHitReaction(this, "氷水の水面移動");
+                    al::startHitReaction(this, "氷水の水面移動(螺旋)");
             } else {
-                if (isRolling)
-                    al::startHitReaction(this, "水面移動(転がり)");
+                if (isNearZeroX)
+                    al::startHitReaction(this, isRolling ? "水面移動(転がり)" : "水面移動");
                 else
-                    al::startHitReaction(this, "水面移動");
+                    al::startHitReaction(this, "水面移動(螺旋)");
             }
-            if (isRolling)
-                _310.copy("FlyRollingWaterSurface");
-            else if (_268.x != 0.0f || !al::isNearZero(_268.x, 0.001f))
+            if (!al::isNearZero(_268.x, 0.001f))
                 _310.copy("FlySpiralWaterSurface");
+            else if (isRolling)
+                _310.copy("FlyRollingWaterSurface");
             else
                 _310.copy("FlyWaterSurface");
             al::emitEffect(this, _310.cstr(), nullptr);
-            goto updateFlags;
+            goto updateWaterFlags;
         }
     checkStayEffect:
         if (_30e) {
@@ -1879,7 +1911,8 @@ void HackCap::updateWaterArea() {
         }
         if (_30d) {
             al::tryDeleteEffect(this, _310.cstr());
-            _310.copy(sead::SafeStringBase<char>::cEmptyString);
+            static_cast<sead::SafeStringBase<char>&>(_310) =
+                sead::SafeStringBase<char>::cEmptyString;
             al::tryStopSe(this, "FlyWaterSurface", -1, nullptr);
             al::tryStopSe(this, "FlyWaterSurfaceIce", -1, nullptr);
             _30d = false;
@@ -1896,10 +1929,10 @@ void HackCap::updateWaterArea() {
             else
                 al::startHitReaction(this, "水面待機");
         }
-        if (_264 > 0.0f)
-            _3a8.format("%s%s", "R", "StayWaterSurface");
+        if (isRolling)
+            _3a8.copy("StayRollingWaterSurface");
         else
-            _3a8.format("%s%s", "L", "StayWaterSurface");
+            _3a8.format("%s%s", "StayWaterSurface", _264 > 0.0f ? "L" : "R");
         al::emitEffect(this, _3a8.cstr(), nullptr);
     updateFlags:
         goto updateWaterFlags;
@@ -1907,40 +1940,37 @@ void HackCap::updateWaterArea() {
 cleanup:
     if (_30d) {
         al::tryDeleteEffect(this, _310.cstr());
-        _310.copy(sead::SafeStringBase<char>::cEmptyString);
+        static_cast<sead::SafeStringBase<char>&>(_310) =
+            sead::SafeStringBase<char>::cEmptyString;
         al::tryStopSe(this, "FlyWaterSurface", -1, nullptr);
         al::tryStopSe(this, "FlyWaterSurfaceIce", -1, nullptr);
         _30d = false;
     }
     if (_30e) {
         al::tryDeleteEffect(this, _3a8.cstr());
-        _3a8.copy(sead::SafeStringBase<char>::cEmptyString);
+        static_cast<sead::SafeStringBase<char>&>(_3a8) =
+            sead::SafeStringBase<char>::cEmptyString;
         al::tryStopSe(this, "StayWaterSurface", -1, nullptr);
         _30e = false;
     }
 updateWaterFlags:
     {
-        u16 flags = _29c;
-        if ((flags & 0xff) != 0 && (mWaterSurfaceFinder->isFoundSurface() & 0xff) == 0)
-            _29c = 0;
-        u8 waterFlag = (flags >> 8) & 0xff;
-        u8 inWater = isInWater ? 1 : 0;
-        if (waterFlag != inWater) {
-            _29c = (u16)((mWaterSurfaceFinder->isFoundSurface() & 0xff) | (inWater << 8));
-            _29d = inWater;
-            sead::Matrix34f mtx;
+        bool isWaterFlag = _29c;
+        bool wasInWater = _29d;
+        if (isWaterFlag && !isFoundSurface)
+            _29c = false;
+        if (wasInWater != isInWater) {
+            _29c = isFoundSurface;
+            _29d = isInWater;
             f32 height = 0.0f;
-            bool isCollided = rs::isCollidedGround(mPlayerCollision);
-            bool isWaterIn = false;
+            bool isCollided = rs::isCollidedGround(mPlayerColliderHackCap);
             if (isInWater) {
-                isWaterIn = rs::tryCalcEffectMtxWaterIn(&mtx, &height, this, mWaterSurfaceFinder,
-                                                        isCollided, false);
-                if (isWaterIn)
+                if (rs::tryCalcEffectMtxWaterIn(&_470, &height, this, mWaterSurfaceFinder,
+                                                isCollided, 0.0f))
                     al::startHitReaction(this, "帽子入水");
             } else {
-                isWaterIn = rs::tryCalcEffectMtxWaterOut(&mtx, &height, this, mWaterSurfaceFinder,
-                                                         isCollided, false);
-                if (isWaterIn)
+                if (rs::tryCalcEffectMtxWaterOut(&_470, &height, this, mWaterSurfaceFinder,
+                                                 isCollided, 0.0f))
                     al::startHitReaction(this, "帽子出水");
             }
         }
@@ -1973,10 +2003,9 @@ void HackCap::exeThrowSpiral() {
 
     s32 step = al::getNerveStep(this);
     s32 startIdx = step - 9 < 0 ? 0 : step - 9;
-    s32 stepPlus1 = step + 1;
-    s32 endIdx = step + 1 > 10 ? 11 : step;
+    s32 endIdx = step + 1 > 10 ? 11 : step + 1;
 
-    if (stepPlus1 == 10) {
+    if (step + 1 == 10) {
         al::validateHitSensor(this, "SpiralTail1");
         al::validateHitSensor(this, "SpiralTail2");
         al::validateHitSensor(this, "SpiralTail3");
@@ -2022,7 +2051,7 @@ void HackCap::exeThrowSpiral() {
     }
 
     f32 angle1 = (f32)endIdx * 3.0f + (f32)startIdx * 8.0f + 330.0f;
-    f32 radius1 = sead::Mathf::min((f32)stepPlus1 * 60.0f + 175.0f, 750.0f);
+    f32 radius1 = sead::Mathf::min((f32)(step + 1) * 60.0f + 175.0f, 750.0f);
     sead::Vector3f target1 = _300;
     al::rotateVectorDegree(&target1, target1, _268.x * _24c, angle1);
     target1 = target1 * radius1 + _2f4;
@@ -2049,7 +2078,7 @@ void HackCap::exeThrowSpiral() {
         _240 = vert;
     }
 
-    if (stepPlus1 >= 105) {
+    if (step + 1 >= 105) {
         if (!_299 && (mPlayerSeparateCapFlag->_flagsWord & 0xff0000) == 0 &&
             (mPlayerSeparateCapFlag->_flagsWord & 0xff) != 0 && _510) {
             al::setNerve(this, &NrvHackCap.ThrowStay);
@@ -2068,14 +2097,18 @@ void HackCap::calcThrowMove(sead::Vector3f& dir, sead::Vector3f& pos, f32* param
         sead::Vector3f hitNormal(0.0f, 0.0f, 0.0f);
         if (!checkThrowMoveHit(&isHit, hitPos, hitNormal, (s32*)param, this, up, dir, pos,
                                height)) {
-            f32 rate = al::calcRate01((f32)*(s32*)param, 2.0f, 5.0f) * 0.5f;
+            f32 rate = al::calcRate01((f32)*(s32*)param, 2.0f, 5.0f);
             sead::Vector3f turned = up;
             if (pos.dot(up) < 0.0f) {
                 turned.x = -turned.x;
                 turned.y = -turned.y;
                 turned.z = -turned.z;
             }
-            al::turnVecToVecRate(&turned, pos, turned, rate);
+            // `* 0.5f` at the use site, not at the definition: the orig
+            // multiplies the rate by 0.5 just before turnVecToVecRate
+            // (after the `turned` negation); multiplying at the definition
+            // lets the compiler hoist it right after calcRate01.
+            al::turnVecToVecRate(&turned, pos, turned, rate * 0.5f);
             al::normalize(&turned);
             sead::Vector3f along(0.0f, 0.0f, 0.0f);
             al::alongVectorNormalH(&along, dir, pos, turned);
@@ -2264,16 +2297,17 @@ void HackCap::exeRebound() {
         _29e = false;
         _274 = 0;
         _264 = 0.0f;
-        _268 = sead::Vector2f::zero;
+        _268.x = 0.0f;
+        _268.y = 0.0f;
         _270 = 0.0f;
         if (_298)
             al::tryStartActionIfNotPlaying(mThrowingHatEyes, "SpinL");
         else
             al::tryStartActionIfNotPlaying(mThrowingHatEyes, "SpinR");
-        sead::Vector3f velocity = sead::Vector3f::zero;
+        sead::Vector3f velocity(0.0f, 0.0f, 0.0f);
         if (!_299 && (mPlayerSeparateCapFlag->_flagsWord & 0xff0000) == 0 &&
             (mPlayerSeparateCapFlag->_flagsWord & 0xff) != 0 && _510) {
-            sead::Vector3f verticalVel = sead::Vector3f::zero;
+            sead::Vector3f verticalVel(0.0f, 0.0f, 0.0f);
             al::verticalizeVec(&verticalVel, _24c, al::getVelocity(this));
             f32 length = verticalVel.length();
             f32 speedCap;
@@ -2679,8 +2713,9 @@ void HackCap::exeThrowAppend() {
         if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
             action = "FlyingWaitRolling";
         } else {
-            action = _264 > 0.0f ? (_29e ? "FlyingWaitCapCatchL" : "FlyingWaitL")
-                                 : (_29e ? "FlyingWaitCapCatchR" : "FlyingWaitR");
+            const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+            const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
+            action = _264 > 0.0f ? actionNameL : actionNameR;
         }
         al::tryStartActionIfNotPlaying(this, action);
         al::startHitReaction(this, "帽子追加攻撃");
@@ -2720,8 +2755,9 @@ void HackCap::exeThrowAppend() {
 void HackCap::exeThrowTornado() {
     _278++;
     if (al::isFirstStep(this)) {
-        const char* action = _264 > 0.0f ? (_29e ? "FlyingWaitCapCatchL" : "FlyingWaitL")
-                                         : (_29e ? "FlyingWaitCapCatchR" : "FlyingWaitR");
+        const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+        const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
+        const char* action = _264 > 0.0f ? actionNameL : actionNameR;
         al::tryStartActionIfNotPlaying(this, action);
         al::startHitReaction(this, "帽子投げ");
     }
@@ -3054,21 +3090,31 @@ void HackCap::addCurveOffset() {
     if (al::isNearZero(_270, 0.001f))
         return;
     f32 speed = al::calcSpeed(this);
-    if (_274 <= 0.0f) {
+    if (!(_274 > 0.0f)) {
         _274 += speed;
         return;
     }
     f32 t = _274 / _270;
     f32 u = (speed + _274) / _270;
-    f32 curve1 = sead::Mathf::sin(sead::Mathf::deg2rad(fminf(u, 1.0f) * 180.0f)) * 40.0f;
-    f32 curve2 = sead::Mathf::sin(sead::Mathf::deg2rad(fminf(t, 1.0f) * 180.0f)) * 40.0f;
-    sead::Vector3f cross = _240.cross(_24c);
+    f32 tMin = t > 1.0f ? 1.0f : t;
+    f32 uMin = u > 1.0f ? 1.0f : u;
+    f32 curve1 = sead::Mathf::sin(sead::Mathf::deg2rad(uMin * 180.0f)) * 40.0f;
+    f32 curve2 = sead::Mathf::sin(sead::Mathf::deg2rad(tMin * 180.0f)) * 40.0f;
+    f32 cx1 = _240.y * _24c.z;
+    f32 cy2 = _240.x * _24c.z;
+    f32 cz1 = _240.x * _24c.y;
+    f32 cx2 = _240.z * _24c.y;
+    f32 cy1 = _240.z * _24c.x;
+    f32 cz2 = _240.y * _24c.x;
+    sead::Vector3f cross(cx1 - cx2, cy1 - cy2, cz1 - cz2);
     f32 delta = curve1 - curve2;
-    if (!al::isNearZero(mHackCapJointControlKeeper->mRotateZ, 0.001f)) {
-        al::rotateVectorDegree(&cross, cross, _240, -mHackCapJointControlKeeper->mRotateZ);
+    f32 rotZ = mHackCapJointControlKeeper->mRotateZ;
+    if (!al::isNearZero(rotZ, 0.001f)) {
+        al::rotateVectorDegree(&cross, cross, _240, -rotZ);
     }
     al::normalize(&cross);
-    al::setTrans(this, al::getTrans(this) + cross * delta * _264);
+    sead::Vector3f offset = cross * delta * _264;
+    al::setTrans(this, al::getTrans(this) + offset);
     _274 += speed;
 }
 
@@ -3169,7 +3215,7 @@ void HackCap::rollingGround() {
         collNormal = rs::getCollidedCeilingNormal(mPlayerColliderHackCap);
         collPos = rs::getCollidedCeilingPos(mPlayerColliderHackCap);
     }
-    if (al::isNearZero(collNormal, 0.1f)) {
+    if (!al::isNearZero(collNormal, 0.1f)) {
         al::verticalizeVec(&collNormal, _24c, collNormal);
         if (!al::tryNormalizeOrZero(&collNormal))
             return;
@@ -3200,21 +3246,22 @@ void HackCap::rollingGround() {
         return;
     }
     const sead::Vector3f& gravity = al::getGravity(this);
-    sead::Vector3f gravityDir = (_268.y <= 0.0f) ? -gravity : gravity;
+    sead::Vector3f gravityDir = !(_268.y > 0.0f) ? gravity : -gravity;
     sead::Vector3f axis = gravityDir.cross(_240);
     f32 crossLen = axis.length();
     f32 dot = gravityDir.dot(_240);
     f32 angle = sead::Mathf::atan2(crossLen, dot);
     if (!al::tryNormalizeOrZero(&axis)) {
-        angle = al::isNearZero(crossLen, 0.1f) ? 0.0f : 3.1415927f;
+        axis = -_24c;
+        angle = al::isNearZero(angle, 0.1f) ? 0.0f : 3.1415927f;
     }
     f32 rollAngle = angle * mHackCapThrowParam->mRollGroundAerialPoseTrack->value * 0.5f;
     f32 cosTheta = sead::Mathf::cos(rollAngle);
     f32 sinTheta = sead::Mathf::sin(rollAngle);
     sead::Vector3f kCrossV = axis.cross(_240);
     f32 kDotV = axis.dot(_240);
-    sead::Vector3f rotated = _240 * cosTheta + kCrossV * sinTheta +
-                             axis * (kDotV * (1.0f - cosTheta));
+    sead::Vector3f rotated = _240 * cosTheta + kCrossV * sinTheta + axis * kDotV -
+                             axis * (kDotV * cosTheta);
     _240 = rotated;
     al::normalize(&_240);
     sead::Quatf quat = sead::Quatf::unit;
@@ -3495,7 +3542,7 @@ checkHitCount:
             s32 newCount = _1b0 - 1;
             if (newCount >= 0) {
                 s32 nextHead = _1ac + 1;
-                _1ac = nextHead >= _1a8 ? 1 : _1ac;
+                _1ac = nextHead >= _1a8 ? 0 : nextHead;
                 _1b0 = newCount;
             }
             if (_1b0 < _1a8) {
@@ -3602,7 +3649,7 @@ spinAttack:
         s32 newCount = _1b8_current - 1;
         if (newCount >= 0) {
             s32 nextHead = _1c4 + 1;
-            _1c4 = nextHead >= _1c0 ? 1 : _1c4;
+            _1c4 = nextHead >= _1c0 ? 0 : nextHead;
             _1b8_current = newCount;
         }
         if (_1b8_current < _1c0) {
@@ -3911,8 +3958,8 @@ void HackCap::followTarget() {
         mCapTargetInfo1->makeLockOnMtx(&lockOnMtx);
         sead::Matrix34f blendMtx = sead::Matrix34f::ident;
         al::blendMtx(&blendMtx, _588, lockOnMtx, rate);
-        al::updatePoseTrans(
-            this, sead::Vector3f(blendMtx.m[0][3], blendMtx.m[1][3], blendMtx.m[2][3]));
+        sead::Vector3f transPos(blendMtx.m[0][3], blendMtx.m[1][3], blendMtx.m[2][3]);
+        al::updatePoseTrans(this, transPos);
         sead::Quatf quat = sead::Quatf::unit;
         sead::Matrix34CalcCommon<f32>::toQuat(quat, _588);
         al::turnQuatYDirRate(
@@ -4286,8 +4333,7 @@ void HackCap::exeHack() {
         updateEquipmentHatVisibility(mIsHide, mEquipmentHat, mEquipmentHatDepthShadow, mCapTargetInfo1,
                                      false);
         al::LiveActor* lockOnCapEyes = mLockOnCapEyes;
-        bool isKillCapEyes = mIsHide || _5ba || mCapTargetInfo1->mIsInvalidCapEye;
-        if (isKillCapEyes) {
+        if (mIsHide || _5ba || mCapTargetInfo1->mIsInvalidCapEye) {
             if (al::isAlive(lockOnCapEyes))
                 lockOnCapEyes->kill();
         } else if (al::isDead(lockOnCapEyes)) {
@@ -4388,8 +4434,12 @@ void HackCap::setupThrowStart() {
     al::invalidateHitSensor(this, "SpiralTail5");
     al::validateShadow(this);
     al::onCollide(this);
-    const char* actionNameL = _29e ? "FlyingWaitCapCatchL" : "FlyingWaitL";
-    const char* actionNameR = _29e ? "FlyingWaitCapCatchR" : "FlyingWaitR";
+    const char* capCatchL = "FlyingWaitCapCatchL";
+    const char* waitL = "FlyingWaitL";
+    const char* capCatchR = "FlyingWaitCapCatchR";
+    const char* waitR = "FlyingWaitR";
+    const char* actionNameL = _29e ? capCatchL : waitL;
+    const char* actionNameR = _29e ? capCatchR : waitR;
     al::startAction(this, _264 > 0.0f ? actionNameL : actionNameR);
 }
 
@@ -4426,70 +4476,83 @@ bool HackCap::changeThrowParamInWater(s32 step, bool isThrow) {
     }
 
     f32 speed;
+    s32 breakTime;
+    s32 newBreakTime;
     if (_29f) {
         speed = 60.0f;
-    } else if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-        speed = mHackCapThrowParam->mRollSpeed->value;
-    } else if (_29a) {
-        speed = mHackCapThrowParam->mWaterMaxSpeed->value;
-    } else if (_29e || _4d0) {
-        speed = mHackCapThrowParam->mContinuousThrowSpeed->value;
-    } else {
-        speed = mHackCapThrowParam->mMaxVel->value;
+        breakTime = 2;
+        goto afterInitialSelections;
     }
-
-    s32 breakTime;
+    {
+        const al::ActorParamF32* speedParam;
+        if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
+            speedParam = mHackCapThrowParam->mRollSpeed;
+        } else if (_29a) {
+            speedParam = mHackCapThrowParam->mWaterMaxSpeed;
+        } else if (_29e || _4d0) {
+            speedParam = mHackCapThrowParam->mContinuousThrowSpeed;
+        } else {
+            speedParam = mHackCapThrowParam->mMaxVel;
+        }
+        speed = speedParam->value;
+    }
     if (_29f) {
         breakTime = 2;
-    } else if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-        breakTime = _268.y > 0.0f ? mHackCapThrowParam->mRollBrakeTimeTop->value
-                                  : mHackCapThrowParam->mRollBrakeTimeBottom->value;
     } else {
-        breakTime = _29a ? mHackCapThrowParam->mWaterBreakTime->value
-                         : mHackCapThrowParam->mBreakTime->value;
+        const al::ActorParamS32* breakParam;
+        if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
+            breakParam = _268.y > 0.0f ? mHackCapThrowParam->mRollBrakeTimeTop
+                                       : mHackCapThrowParam->mRollBrakeTimeBottom;
+        } else {
+            breakParam = _29a ? mHackCapThrowParam->mWaterBreakTime
+                              : mHackCapThrowParam->mBreakTime;
+        }
+        breakTime = breakParam->value;
     }
-
+afterInitialSelections:
     updateWaterArea();
 
     if (!_29a) {
         if (mWaterSurfaceFinder->isFoundSurface()) {
-            f32 offset = sead::Mathf::max(mWaterSurfaceFinder->getDistance() + 50.0f, 0.0f) * 0.25f;
+            f32 offset = sead::Mathf::max(0.0f, mWaterSurfaceFinder->getDistance() + 50.0f) * 0.25f;
             sead::Vector3f newPos = al::getTrans(this) - al::getGravity(this) * offset;
             al::setTrans(this, newPos);
         }
         return false;
     }
 
-    f32 dist = speed * (f32)(_27c + breakTime) + (f32)breakTime * (f32)breakTime * (_280 * 0.5f);
+    f32 dist = speed * (f32)(_27c + breakTime);
+    f32 half280 = _280 * 0.5f;
+    dist = dist + (f32)breakTime * ((f32)breakTime * half280);
     if (isThrow) {
-        dist = (f32)step * (f32)step * (_280 * 0.5f) + dist - speed * (f32)(_27c + step);
+        dist = dist - speed * (f32)(_27c + step);
+        dist = (f32)step * ((f32)step * half280) + dist;
     } else {
         dist = dist - (f32)step * speed;
     }
 
-    bool isSeparate = !_299 && (mPlayerSeparateCapFlag->_flagsWord & 0xff0000) == 0 &&
-                      (mPlayerSeparateCapFlag->_flagsWord & 0xff) != 0;
     if (isThrow) {
-        if (isSeparate) {
-            dist = sead::Mathf::min(dist, 550.0f);
+        f32 maxSpeed;
+        f32 maxDist;
+        if (!_299 && (mPlayerSeparateCapFlag->_flagsWord & 0xff0000) == 0 &&
+            (mPlayerSeparateCapFlag->_flagsWord & 0xff) != 0) {
+            maxDist = 550.0f;
         } else if (_29f) {
-            dist = sead::Mathf::min(dist, 1200.0f);
+            dist = sead::Mathf::min(1200.0f, dist);
+            maxSpeed = 60.0f;
+            goto breakTimeSelThrow;
         } else {
-            f32 maxDist;
             if (_4d0) {
                 maxDist = mHackCapThrowParam->mTornadoDist->value;
             } else if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-                maxDist = _268.y > 0.0f ? mHackCapThrowParam->mRollDistTop->value
-                                        : mHackCapThrowParam->mRollDistBottom->value;
+                maxDist = (_268.y > 0.0f ? mHackCapThrowParam->mRollDistTop
+                                          : mHackCapThrowParam->mRollDistBottom)->value;
             } else {
-                maxDist = _29a ? mHackCapThrowParam->mWaterDist->value
-                               : mHackCapThrowParam->mMaxDist->value;
+                maxDist = (_29a ? mHackCapThrowParam->mWaterDist
+                                : mHackCapThrowParam->mMaxDist)->value;
             }
-            dist = sead::Mathf::min(dist, maxDist);
         }
-
-        f32 maxSpeed;
-        s32 newBreakTime;
+        dist = dist > maxDist ? maxDist : dist;
         if (_29f) {
             maxSpeed = 60.0f;
             newBreakTime = 2;
@@ -4503,20 +4566,29 @@ bool HackCap::changeThrowParamInWater(s32 step, bool isThrow) {
             } else {
                 maxSpeed = mHackCapThrowParam->mMaxVel->value;
             }
-            if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-                newBreakTime = _268.y > 0.0f ? mHackCapThrowParam->mRollBrakeTimeTop->value
-                                             : mHackCapThrowParam->mRollBrakeTimeBottom->value;
+        breakTimeSelThrow:
+            if (_29f) {
+                newBreakTime = 2;
             } else {
-                newBreakTime = _29a ? mHackCapThrowParam->mWaterBreakTime->value
-                                    : mHackCapThrowParam->mBreakTime->value;
+                const al::ActorParamS32* breakParam;
+                if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
+                    breakParam = _268.y > 0.0f ? mHackCapThrowParam->mRollBrakeTimeTop
+                                               : mHackCapThrowParam->mRollBrakeTimeBottom;
+                } else {
+                    breakParam = _29a ? mHackCapThrowParam->mWaterBreakTime
+                                      : mHackCapThrowParam->mBreakTime;
+                }
+                newBreakTime = breakParam->value;
             }
         }
-
+    calc27cThrow:
         f32 rate = maxSpeed / (f32)newBreakTime;
         _280 = -rate;
-        _27c = (s32)((dist - maxSpeed * (f32)newBreakTime * 0.5f) / maxSpeed);
-        if (_27c - 1 < 0) {
-            al::parallelizeVec(al::getVelocityPtr(this), _240, *al::getVelocityPtr(this));
+        f32 halfRate = rate * -0.5f;
+        _27c = (s32)((dist - (maxSpeed * (f32)newBreakTime +
+                             (f32)newBreakTime * ((f32)newBreakTime * halfRate))) / maxSpeed);
+        if (_27c - 1 >= 0) {
+            _27c = _27c - 1;
             f32 limit;
             if (_29f) {
                 limit = 60.0f;
@@ -4530,71 +4602,68 @@ bool HackCap::changeThrowParamInWater(s32 step, bool isThrow) {
                 limit = mHackCapThrowParam->mMaxVel->value;
             }
             al::limitVelocity(this, limit);
-            return false;
+            return true;
         }
-        _27c = _27c - 1;
-        f32 limit;
-        if (_29f) {
-            limit = 60.0f;
-        } else if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-            limit = mHackCapThrowParam->mRollSpeed->value;
-        } else if (_29a) {
-            limit = mHackCapThrowParam->mWaterMaxSpeed->value;
-        } else if (_29e || _4d0) {
-            limit = mHackCapThrowParam->mContinuousThrowSpeed->value;
-        } else {
-            limit = mHackCapThrowParam->mMaxVel->value;
-        }
-        al::limitVelocity(this, limit);
-        return true;
-    }
-
-    if (isSeparate) {
-        dist = sead::Mathf::min(dist, 550.0f);
-    } else if (_29f) {
-        dist = sead::Mathf::min(dist, 1200.0f);
     } else {
+        f32 maxSpeed;
         f32 maxDist;
-        if (_4d0) {
-            maxDist = mHackCapThrowParam->mTornadoDist->value;
-        } else if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-            maxDist = _268.y > 0.0f ? mHackCapThrowParam->mRollDistTop->value
-                                    : mHackCapThrowParam->mRollDistBottom->value;
+        if (!_299 && (mPlayerSeparateCapFlag->_flagsWord & 0xff0000) == 0 &&
+            (mPlayerSeparateCapFlag->_flagsWord & 0xff) != 0) {
+            maxDist = 550.0f;
+        } else if (_29f) {
+            dist = sead::Mathf::min(1200.0f, dist);
+            maxSpeed = 60.0f;
+            goto breakTimeSelNoThrow;
         } else {
-            maxDist = _29a ? mHackCapThrowParam->mWaterDist->value
-                           : mHackCapThrowParam->mMaxDist->value;
+            if (_4d0) {
+                maxDist = mHackCapThrowParam->mTornadoDist->value;
+            } else if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
+                maxDist = (_268.y > 0.0f ? mHackCapThrowParam->mRollDistTop
+                                          : mHackCapThrowParam->mRollDistBottom)->value;
+            } else {
+                maxDist = (_29a ? mHackCapThrowParam->mWaterDist
+                                : mHackCapThrowParam->mMaxDist)->value;
+            }
         }
-        dist = sead::Mathf::min(dist, maxDist);
+        dist = dist > maxDist ? maxDist : dist;
+        if (_29f) {
+            maxSpeed = 60.0f;
+            newBreakTime = 2;
+        } else {
+            if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
+                maxSpeed = mHackCapThrowParam->mRollSpeed->value;
+            } else if (_29a) {
+                maxSpeed = mHackCapThrowParam->mWaterMaxSpeed->value;
+            } else if (_29e || _4d0) {
+                maxSpeed = mHackCapThrowParam->mContinuousThrowSpeed->value;
+            } else {
+                maxSpeed = mHackCapThrowParam->mMaxVel->value;
+            }
+        breakTimeSelNoThrow:
+            if (_29f) {
+                newBreakTime = 2;
+            } else {
+                const al::ActorParamS32* breakParam;
+                if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
+                    breakParam = _268.y > 0.0f ? mHackCapThrowParam->mRollBrakeTimeTop
+                                               : mHackCapThrowParam->mRollBrakeTimeBottom;
+                } else {
+                    breakParam = _29a ? mHackCapThrowParam->mWaterBreakTime
+                                      : mHackCapThrowParam->mBreakTime;
+                }
+                newBreakTime = breakParam->value;
+            }
+        }
+    calc27cNoThrow:
+        f32 rate = maxSpeed / (f32)newBreakTime;
+        _280 = -rate;
+        f32 halfRate = rate * -0.5f;
+        _27c = (s32)((dist - (maxSpeed * (f32)newBreakTime +
+                             (f32)newBreakTime * ((f32)newBreakTime * halfRate))) / maxSpeed) + step;
     }
 
-    f32 maxSpeed;
-    s32 newBreakTime;
-    if (_29f) {
-        maxSpeed = 60.0f;
-        newBreakTime = 2;
-    } else {
-        if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-            maxSpeed = mHackCapThrowParam->mRollSpeed->value;
-        } else if (_29a) {
-            maxSpeed = mHackCapThrowParam->mWaterMaxSpeed->value;
-        } else if (_29e || _4d0) {
-            maxSpeed = mHackCapThrowParam->mContinuousThrowSpeed->value;
-        } else {
-            maxSpeed = mHackCapThrowParam->mMaxVel->value;
-        }
-        if (al::isNearZero(_268.x, 0.001f) && !al::isNearZero(_268.y, 0.001f)) {
-            newBreakTime = _268.y > 0.0f ? mHackCapThrowParam->mRollBrakeTimeTop->value
-                                         : mHackCapThrowParam->mRollBrakeTimeBottom->value;
-        } else {
-            newBreakTime = _29a ? mHackCapThrowParam->mWaterBreakTime->value
-                                : mHackCapThrowParam->mBreakTime->value;
-        }
-    }
-
-    f32 rate = maxSpeed / (f32)newBreakTime;
-    _280 = -rate;
-    _27c = (s32)((dist - maxSpeed * (f32)newBreakTime * 0.5f) / maxSpeed) + step;
-    al::parallelizeVec(al::getVelocityPtr(this), _240, *al::getVelocityPtr(this));
+    sead::Vector3f* velocity = al::getVelocityPtr(this);
+    al::parallelizeVec(velocity, _240, *velocity);
     f32 limit;
     if (_29f) {
         limit = 60.0f;
@@ -4677,7 +4746,7 @@ void HackCap::calcReturnTargetPos(sead::Vector3f* out) const {
         out->z = mtx.m[2][3];
     }
     else {
-        *out = rs::getPlayerHeadPos(this);
+        __builtin_memcpy(out, &rs::getPlayerHeadPos(this), sizeof(sead::Vector3f));
     }
 }
 
@@ -4934,10 +5003,36 @@ void HackCap::updateTargetLayout() {
     if (rs::isModeDiverOrJungleGymRom())
         return;
 
-    GameDataHolderAccessor accessor(this);
+    // The orig null-checks `this` on the derived-to-base conversions below
+    // (HackCap* -> IUseSceneObjHolder* at +0x20, HackCap* -> IUseCamera* at
+    // +0x30): `add x8, x19, #off; cmp x19, #0; csel x1, xzr, x8, eq`.
+    // The project's clang 3.9.1 omits the check for `this` (it assumes
+    // `this` is non-null); the explicit conversion reproduces the orig's
+    // null-checked conversion. Verified in isolation (r5_csel2.cpp): the
+    // if/else form gives `csel x0, xzr, x8, eq` (the orig's form); the
+    // ternary gives `csel x0, x8, xzr, ne`. (Declared as if/else, not a
+    // ternary, for the csel operand order.)
+    al::IUseSceneObjHolder* sceneObjHolder;
+    if (this == nullptr)
+        sceneObjHolder = nullptr;
+    else
+        sceneObjHolder = static_cast<al::IUseSceneObjHolder*>(this);
+    GameDataHolderAccessor accessor(sceneObjHolder);
     if (!GameDataFunction::isEnableCap(accessor))
         goto hideTarget;
-    if (al::isPlayingEntranceCamera(this, 0))
+    // cameraUser is declared here, right before its only use, in if/else
+    // form (the if/else gives the orig's `csel x0, xzr, x8, eq` shape;
+    // the ternary gives `csel x0, x8, xzr, ne`). Declaring it at the top
+    // would make the compiler keep the +0x30 address live across the
+    // nerve checks; a named local may not be initialized after the
+    // isEnableCap goto (the goto may not jump over an initialization),
+    // so it is a bare declaration + if/else assignment here.
+    al::IUseCamera* cameraUser;
+    if (this == nullptr)
+        cameraUser = nullptr;
+    else
+        cameraUser = static_cast<al::IUseCamera*>(this);
+    if (al::isPlayingEntranceCamera(cameraUser, 0))
         goto hideTarget;
 
     if (al::isNerve(this, &NrvHackCap.Hide) || al::isNerve(this, &NrvHackCap.SpinAttack)) {
@@ -4956,20 +5051,29 @@ void HackCap::updateTargetLayout() {
         goto hideTarget;
 
     if (al::isNerve(this, &NrvHackCap.Hide) || al::isNerve(this, &NrvHackCap.SpinAttack)) {
+        al::HitSensor* sensor;
         if (al::isActive(mTargetLayout)) {
-            sead::Vector3f frontDir;
-            sead::Vector3f upDir;
-            sead::Vector3f targetPos;
+            sead::Vector3f frontDir(0.0f, 0.0f, 0.0f);
+            sead::Vector3f upDir(0.0f, 0.0f, 0.0f);
+            sead::Vector3f targetPos(0.0f, 0.0f, 0.0f);
             rs::calcPlayerFrontDir(&frontDir, this);
             rs::calcPlayerUpDir(&upDir, this);
-            al::HitSensor* sensor = mPlayerEyeSensorHitHolder->findTargetMarkerSensor(
+            sensor = mPlayerEyeSensorHitHolder->findTargetMarkerSensor(
                 &targetPos, rs::getPlayerBodyPos(this), frontDir, upDir, 20.0f, 0.0f, 200.0f);
             if (rs::isPlayerEnableTalkGround(this)) {
                 mTargetLayoutCounter = 0;
                 mTargetSensor = sensor;
                 goto storeTarget;
             }
-            mTargetLayoutCounter = mTargetLayoutCounter + 1 > 30 ? 30 : mTargetLayoutCounter + 1;
+            // Two-statement clamp (increment, then clamp): the ternary
+            // `counter + 1 > 30 ? 30 : counter + 1` lets the compiler
+            // canonicalize the test to `counter > 29` (cmp #29); the
+            // orig adds first and compares the incremented value
+            // (`add w9, w8, #1; cmp w9, #30; csinc`). Verified in
+            // isolation (r5_clamp.cpp: clampA/B/C all give add-first).
+            mTargetLayoutCounter++;
+            if (mTargetLayoutCounter > 30)
+                mTargetLayoutCounter = 30;
             if (mTargetLayoutCounter < 30) {
                 if (sensor == mTargetSensor)
                     goto storeTarget;
@@ -4978,8 +5082,7 @@ void HackCap::updateTargetLayout() {
             }
             mTargetSensor = nullptr;
             goto hideTarget;
-        }
-        if (rs::isPlayerEnableTalkGround(this)) {
+        } else if (rs::isPlayerEnableTalkGround(this)) {
             if (mTargetLayoutCounter < 30) {
                 mTargetLayoutCounter++;
                 if (mTargetLayoutCounter - 1 != 29) {
@@ -4989,18 +5092,25 @@ void HackCap::updateTargetLayout() {
             } else {
                 mTargetLayoutCounter = 30;
             }
-            sead::Vector3f frontDir;
-            sead::Vector3f upDir;
-            sead::Vector3f targetPos;
+            sead::Vector3f frontDir(0.0f, 0.0f, 0.0f);
+            sead::Vector3f upDir(0.0f, 0.0f, 0.0f);
+            sead::Vector3f targetPos(0.0f, 0.0f, 0.0f);
             rs::calcPlayerFrontDir(&frontDir, this);
             rs::calcPlayerUpDir(&upDir, this);
-            mTargetSensor = mPlayerEyeSensorHitHolder->findTargetMarkerSensor(
+            sensor = mPlayerEyeSensorHitHolder->findTargetMarkerSensor(
                 &targetPos, rs::getPlayerBodyPos(this), frontDir, upDir, 20.0f, 0.0f, 200.0f);
+            // The orig keeps the found sensor in x20 in BOTH find paths
+            // and tail-merges the two identical `mTargetSensor = sensor`
+            // stores into one block (0x3fb3b8); assigning via the local
+            // (not directly to the member) is what makes the stores
+            // identical and mergeable.
+            mTargetSensor = sensor;
             goto storeTarget;
+        } else {
+            mTargetLayoutCounter = 0;
+            mTargetSensor = nullptr;
+            goto hideTarget;
         }
-        mTargetLayoutCounter = 0;
-        mTargetSensor = nullptr;
-        goto hideTarget;
     }
 
 storeTarget:
@@ -5008,18 +5118,18 @@ storeTarget:
         goto hideTarget;
     mTargetSensorForLayout = mTargetSensor;
     {
-        sead::Vector3f worldPos;
+        sead::Vector3f worldPos(0.0f, 0.0f, 0.0f);
         if (!rs::sendMsgTargetMarkerPosition(mTargetSensorForLayout, mAttackSensor, &worldPos)) {
             const sead::Vector3f& sensorPos = al::getSensorPos(mTargetSensorForLayout);
             const sead::Vector3f& gravity = al::getGravity(this);
             f32 radius = al::getSensorRadius(mTargetSensorForLayout);
             worldPos = sensorPos - gravity * radius;
         }
-        sead::Vector2f layoutPos;
+        sead::Vector2f layoutPos(0.0f, 0.0f);
         al::calcLayoutPosFromWorldPos(&layoutPos, this, worldPos);
         al::setLocalTrans(mTargetLayout, layoutPos);
         const sead::Matrix34f& viewMtx = al::getViewMtx(this, 0);
-        sead::Vector3f viewPos;
+        sead::Vector3f viewPos(0.0f, 0.0f, 0.0f);
         viewPos.x = viewMtx.m[0][0] * worldPos.x + viewMtx.m[0][1] * worldPos.y +
                     viewMtx.m[0][2] * worldPos.z + viewMtx.m[0][3];
         viewPos.y = viewMtx.m[1][0] * worldPos.x + viewMtx.m[1][1] * worldPos.y +
@@ -5027,19 +5137,19 @@ storeTarget:
         viewPos.z = viewMtx.m[2][0] * worldPos.x + viewMtx.m[2][1] * worldPos.y +
                     viewMtx.m[2][2] * worldPos.z + viewMtx.m[2][3];
         const sead::Matrix44f& projMtx = al::getProjectionMtx(this, 0);
-        sead::Vector3f clipPos;
+        sead::Vector3f clipPos(0.0f, 0.0f, 0.0f);
         clipPos.x = projMtx.m[0][0] * viewPos.x + projMtx.m[0][1] * viewPos.y +
                     projMtx.m[0][2] * viewPos.z + projMtx.m[0][3];
         clipPos.y = projMtx.m[1][0] * viewPos.x + projMtx.m[1][1] * viewPos.y +
                     projMtx.m[1][2] * viewPos.z + projMtx.m[1][3];
         clipPos.z = projMtx.m[2][0] * viewPos.x + projMtx.m[2][1] * viewPos.y +
                     projMtx.m[2][2] * viewPos.z + projMtx.m[2][3];
-        sead::Vector2f screenPos;
+        sead::Vector2f screenPos(0.0f, 0.0f);
         al::calcScreenPosFromWorldPos(&screenPos, this, worldPos);
         bool isOccluded = al::isOcclusionCulling(mOcclusionCullingJudge, clipPos, screenPos,
                                                   48.0f, 24.0f, 50.0f, 3);
         bool isSubjective = rs::isPlayerCameraSubjective(this);
-        sead::Vector3f layoutPos3D;
+        sead::Vector3f layoutPos3D(0.0f, 0.0f, 0.0f);
         al::calcLayoutPosFromWorldPos(&layoutPos3D, this, worldPos);
         if (!isOccluded && !isSubjective && layoutPos3D.z <= 0.0f) {
             al::setLocalTrans(mTargetLayout, layoutPos);
@@ -5062,17 +5172,17 @@ hideTarget:
     mTargetSensor = nullptr;
     mTargetLayoutCounter = 0;
     if (mTargetSensorForLayout) {
-        sead::Vector3f worldPos;
+        sead::Vector3f worldPos(0.0f, 0.0f, 0.0f);
         if (!rs::sendMsgTargetMarkerPosition(mTargetSensorForLayout, mAttackSensor, &worldPos)) {
             const sead::Vector3f& sensorPos = al::getSensorPos(mTargetSensorForLayout);
             const sead::Vector3f& gravity = al::getGravity(this);
             f32 radius = al::getSensorRadius(mTargetSensorForLayout);
             worldPos = sensorPos - gravity * radius;
         }
-        sead::Vector2f layoutPos;
+        sead::Vector2f layoutPos(0.0f, 0.0f);
         al::calcLayoutPosFromWorldPos(&layoutPos, this, worldPos);
         al::setLocalTrans(mTargetLayout, layoutPos);
-        sead::Vector3f layoutPos3D;
+        sead::Vector3f layoutPos3D(0.0f, 0.0f, 0.0f);
         al::calcLayoutPosFromWorldPos(&layoutPos3D, this, worldPos);
         if (layoutPos3D.z > 0.0f)
             mTargetLayout->appear();

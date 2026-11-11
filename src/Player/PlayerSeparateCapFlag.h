@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 // Minimal partial reconstruction of the player's separate-cap flag object.
 // Only the first 4 bytes are known so far. They are accessed two ways in the
@@ -24,4 +25,9 @@ public:
             bool _03;
         };
     };
+    // Offset vector read by HackCapStateHide::tryForceFollowSeparate and
+    // passed to HackCapFunction::updateSeparateWaitMove (as the last arg):
+    // a Vector3f at +0x04, rotated by the player quat and added to the
+    // player position. Name is a placeholder.
+    sead::Vector3f _4;
 };
