@@ -113379,11 +113379,11 @@ Player/HackCap.o:
   - offset: 0x3fbe40
     size: 396
     label: _ZN7HackCap13prepareLockOnEPN2al9HitSensorE
-    status: Wip
+    status: Matching
   - offset: 0x3fbfcc
     size: 208
     label: _ZN12_GLOBAL__N_120isTargetBehindPlayerEPKN2al9LiveActorEPKNS0_9HitSensorES6_
-    status: Wip
+    status: Matching
   - offset: 0x3fc09c
     size: 128
     label: _ZN7HackCap16sendMsgStartHackEPN2al9HitSensorE
@@ -113435,7 +113435,7 @@ Player/HackCap.o:
   - offset: 0x3fc560
     size: 256
     label: _ZN7HackCap15startSpinAttackEPKc
-    status: Wip
+    status: Matching
   - offset: 0x3fc660
     size: 1280
     label: _ZN7HackCap10startThrowEbRKN4sead7Vector3IfEES4_fRKNS0_7Vector2IfEES8_S4_bS4_NS_13SwingHandTypeEbfi
@@ -113463,7 +113463,7 @@ Player/HackCap.o:
   - offset: 0x3fce84
     size: 420
     label: _ZN7HackCap9forceHackEPN2al9HitSensorEPK13CapTargetInfo
-    status: Wip
+    status: Matching
   - offset: 0x3fd028
     size: 56
     label: _ZN7HackCap16resetLockOnParamEv
@@ -113503,7 +113503,7 @@ Player/HackCap.o:
   - offset: 0x3fd7ec
     size: 320
     label: _ZN7HackCap12followTargetEv
-    status: Wip
+    status: Matching
   - offset: 0x3fd92c
     size: 200
     label: _ZN7HackCap20syncPuppetSilhouetteEv
@@ -113703,7 +113703,7 @@ Player/HackCap.o:
   - offset: 0x3fee60
     size: 188
     label: _ZN12_GLOBAL__N_120updateSpinAttackPoseEP7HackCapPKN2al9LiveActorEPK24PlayerJointControlKeeper
-    status: Wip
+    status: Matching
   - offset: 0x3fef1c
     size: 140
     label: _ZN7HackCap8exeCatchEv
@@ -113903,7 +113903,7 @@ Player/HackCap.o:
   - offset: 0x406c0c
     size: 832
     label: _ZN7HackCap10exeReboundEv
-    status: Wip
+    status: Matching
   - offset: 0x406f4c
     size: 1836
     label: _ZN7HackCap9exeReturnEv
@@ -113911,7 +113911,7 @@ Player/HackCap.o:
   - offset: 0x407678
     size: 132
     label: _ZNK7HackCap19calcReturnTargetPosEPN4sead7Vector3IfEE
-    status: Wip
+    status: Matching
   - offset: 0x4076fc
     size: 1620
     label: _ZN7HackCap12attackSensorEPN2al9HitSensorES2_
@@ -114055,7 +114055,7 @@ Player/HackCap.o:
   - offset: 0x409f20
     size: 444
     label: ''
-    status: Wip
+    status: Matching
   - offset: 0x40a0dc
     size: 8
     label: _ZNK12_GLOBAL__N_120HackCapNrvThrowBrake7executeEPN2al11NerveKeeperE
