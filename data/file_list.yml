@@ -123300,20 +123300,20 @@ Player/PlayerJudgeActiveCameraSubjective.o:
     label:
     - _ZN33PlayerJudgeActiveCameraSubjectiveC1EPK27PlayerStateCameraSubjective
     - _ZN33PlayerJudgeActiveCameraSubjectiveC2EPK27PlayerStateCameraSubjective
-    status: NotDecompiled
+    status: Matching
   - offset: 0x458a00
     size: 8
     label: _ZNK33PlayerJudgeActiveCameraSubjective5judgeEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x458a08
     size: 4
     label: _ZN33PlayerJudgeActiveCameraSubjective5resetEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x458a0c
     size: 4
     label: _ZN33PlayerJudgeActiveCameraSubjective6updateEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
 Player/PlayerJudgeAirForceCount.o:
   '.text':
