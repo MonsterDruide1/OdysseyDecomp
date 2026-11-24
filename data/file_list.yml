@@ -134490,7 +134490,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b889c
     size: 52
     label: _ZN2al19createActorFunctionI13GotogotonGoalEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b88d0
     size: 52

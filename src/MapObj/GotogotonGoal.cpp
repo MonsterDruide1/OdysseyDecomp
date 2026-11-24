@@ -1,18 +1,12 @@
 #include "MapObj/GotogotonGoal.h"
 
-#include "Enemy/GotogotonMark.h"
-
-#include "Library/LiveActor/ActorClippingFunction.h"
-#include "Library/LiveActor/ActorCollisionFunction.h"
 #include "Library/LiveActor/ActorInitUtil.h"
 #include "Library/LiveActor/ActorPoseUtil.h"
 #include "Library/LiveActor/ActorResourceFunction.h"
-#include "Library/LiveActor/ActorSensorUtil.h"
-#include "Library/Placement/PlacementFunction.h"
 #include "Library/Yaml/ByamlIter.h"
 #include "Library/Yaml/ByamlUtil.h"
 
-#include "Util/ActorDimensionUtil.h"
+#include "Enemy/GotogotonMark.h"
 #include "Util/SensorMsgFunction.h"
 
 GotogotonGoal::GotogotonGoal(const char* name) : al::LiveActor(name) {}
@@ -34,6 +28,6 @@ bool GotogotonGoal::receiveMsg(const al::SensorMsg* message, al::HitSensor* othe
                                al::HitSensor* self) {
     if (rs::isMsgGotogotonGoalExist(message))
         return true;
-    else
-        return rs::isMatchGotogotonGoal(message, mMark);
+
+    return rs::isMatchGotogotonGoal(message, mMark);
 }

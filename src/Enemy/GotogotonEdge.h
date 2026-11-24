@@ -19,3 +19,5 @@ public:
     sead::Vector3f mAxis = sead::Vector3f::ex;
     const GotogotonFace* mNextFace = nullptr;
 };
+
+static_assert(sizeof(GotogotonEdge) == 0x20);

@@ -15,3 +15,5 @@ public:
 private:
     GotogotonMark* mMark = nullptr;
 };
+
+static_assert(sizeof(GotogotonGoal) == 0x110);

@@ -3,7 +3,7 @@
 #include "Library/Math/MathUtil.h"
 #include "Library/Math/MatrixUtil.h"
 
-GotogotonFace::GotogotonFace() {}
+GotogotonFace::GotogotonFace() = default;
 
 GotogotonEdge* GotogotonFace::getEdge(s32 index) {
     return &mEdges[index];
@@ -131,8 +131,8 @@ void GotogotonFace::calcCenterDir(sead::Vector3f* outDir, const sead::Quatf& qua
 }
 
 void GotogotonFace::rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
-                           const sead::Quatf& quat, const sead::Vector3f& trans, float _unk) const {
+                           const sead::Quatf& quat, const sead::Vector3f& trans, f32 degree) const {
     sead::Vector3f axis, pos;
     mEdges[edgeIndex].calcAxisAndPos(&axis, &pos, quat, trans);
-    al::rotateQuatAndTransDegree(outQuat, outTrans, quat, trans, axis, pos, _unk);
+    al::rotateQuatAndTransDegree(outQuat, outTrans, quat, trans, axis, pos, degree);
 }

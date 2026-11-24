@@ -95,6 +95,7 @@
 #include "MapObj/FireDrum2D.h"
 #include "MapObj/FixMapPartsAppearKillAsync.h"
 #include "MapObj/FixMapPartsBgmChangeAction.h"
+#include "MapObj/GotogotonGoal.h"
 #include "MapObj/HackFork.h"
 #include "MapObj/HipDropMoveLift.h"
 #include "MapObj/HipDropRepairParts.h"
@@ -362,7 +363,7 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"GoalMark", nullptr},
     {"GolemClimb", nullptr},
     {"Gotogoton", nullptr},
-    {"GotogotonGoal", nullptr},
+    {"GotogotonGoal", al::createActorFunction<GotogotonGoal>},
     {"GraphicsObjShadowMaskCube", nullptr},
     {"GraphicsObjShadowMaskSphere", nullptr},
     {"GrowerBug", nullptr},

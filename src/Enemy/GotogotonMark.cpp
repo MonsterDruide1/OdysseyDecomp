@@ -1,6 +1,6 @@
 #include "Enemy/GotogotonMark.h"
 
-GotogotonMark::GotogotonMark() {}
+GotogotonMark::GotogotonMark() = default;
 
 bool GotogotonMark::isMatch(const GotogotonMark* other) const {
     if (!other)

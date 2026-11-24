@@ -2,7 +2,7 @@
 
 #include <math/seadMatrix.h>
 
-GotogotonEdge::GotogotonEdge() {}
+GotogotonEdge::GotogotonEdge() = default;
 
 void GotogotonEdge::setTrans(const sead::Vector3f& trans) {
     mTrans = trans;

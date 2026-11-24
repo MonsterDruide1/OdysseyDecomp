@@ -34,10 +34,12 @@ public:
     void calcCenterDir(sead::Vector3f* outDir, const sead::Quatf& quat) const;
 
     void rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
-                const sead::Quatf& quat, const sead::Vector3f& trans, float _unk) const;
+                const sead::Quatf& quat, const sead::Vector3f& trans, f32 degree) const;
 
     GotogotonEdge* mEdges = new GotogotonEdge[4]();
     const GotogotonFace* mOppositeFace = nullptr;
     sead::Vector3f mCenter = sead::Vector3f::zero;
     sead::Vector3f mNormal = sead::Vector3f::ey;
 };
+
+static_assert(sizeof(GotogotonFace) == 0x28);
