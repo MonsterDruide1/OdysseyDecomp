@@ -30022,11 +30022,11 @@ Enemy/GotogotonFace.o:
   - offset: 0x109f20
     size: 208
     label: _ZNK13GotogotonFace13calcCenterPosEPN4sead7Vector3IfEERKNS0_4QuatIfEERKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109ff0
     size: 212
     label: _ZNK13GotogotonFace13calcCenterDirEPN4sead7Vector3IfEERKNS0_4QuatIfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10a0c4
     size: 32
     label:

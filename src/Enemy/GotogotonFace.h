@@ -28,8 +28,9 @@ public:
     void calcLandEffectMtx(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&, int) const;
     void calcLandEffectMtxNextFace(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&,
                                    int) const;
-    void calcCenterPos(sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&) const;
-    void calcCenterDir(sead::Vector3f*, const sead::Quatf&) const;
+    void calcCenterPos(sead::Vector3f* outPos, const sead::Quatf& quat,
+                       const sead::Vector3f& trans) const;
+    void calcCenterDir(sead::Vector3f* outDir, const sead::Quatf& quat) const;
 
     void rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
                 const sead::Quatf& quat, const sead::Vector3f& trans, float _unk) const;
