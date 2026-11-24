@@ -36,6 +36,7 @@ public:
     void rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
                 const sead::Quatf& quat, const sead::Vector3f& trans, f32 degree) const;
 
+private:
     GotogotonEdge* mEdges = new GotogotonEdge[4]();
     const GotogotonFace* mOppositeFace = nullptr;
     sead::Vector3f mCenter = sead::Vector3f::zero;

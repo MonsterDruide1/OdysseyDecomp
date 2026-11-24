@@ -14,11 +14,11 @@ GotogotonGoal::GotogotonGoal(const char* name) : al::LiveActor(name) {}
 void GotogotonGoal::init(const al::ActorInitInfo& info) {
     al::initMapPartsActor(this, info, nullptr);
     mMark = new GotogotonMark();
-    al::calcFrontDir(&mMark->mFrontDir, this);
+    al::calcFrontDir(mMark->getFrontDirPtr(), this);
     if (al::isExistModelResourceYaml(this, "GotogotonMarkInfo", nullptr)) {
         const u8* modelResourceYaml = al::getModelResourceYaml(this, "GotogotonMarkInfo", nullptr);
         al::ByamlIter iter(modelResourceYaml);
-        al::tryGetByamlS32(&mMark->mId, iter, "MarkId");
+        al::tryGetByamlS32(mMark->getIdPtr(), iter, "MarkId");
     }
 
     makeActorAlive();

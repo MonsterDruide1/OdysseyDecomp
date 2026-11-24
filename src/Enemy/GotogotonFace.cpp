@@ -14,7 +14,7 @@ const GotogotonEdge* GotogotonFace::getEdge(s32 index) const {
 }
 
 const GotogotonFace* GotogotonFace::getNextFace(s32 index) const {
-    return mEdges[index].mNextFace;
+    return mEdges[index].getNextFace();
 }
 
 void GotogotonFace::setOppositeFace(const GotogotonFace* face) {
@@ -78,7 +78,7 @@ s32 GotogotonFace::calcNearEdgeIndexToDir(const sead::Vector3f& dir, const sead:
 s32 GotogotonFace::calcOppositeEdgeIndex(s32 edgeIndex) const {
     const GotogotonFace* oppositeFace = getNextFace(edgeIndex)->mOppositeFace;
     for (s32 i = 0; i < 4; i++)
-        if (mEdges[i].mNextFace == oppositeFace)
+        if (mEdges[i].getNextFace() == oppositeFace)
             return i;
 
     return -1;
@@ -97,7 +97,7 @@ void GotogotonFace::calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex,
 
 void GotogotonFace::calcLandEffectMtx(sead::Matrix34f* outMtx, const sead::Quatf& quat,
                                       const sead::Vector3f& trans, s32 edgeIndex) const {
-    sead::Vector3f crossProduct = mEdges[edgeIndex].mAxis.cross(mNormal);
+    sead::Vector3f crossProduct = mEdges[edgeIndex].getAxis().cross(mNormal);
 
     sead::Matrix34f local;
     al::makeMtxUpFrontPos(&local, crossProduct, -mNormal, mCenter);
