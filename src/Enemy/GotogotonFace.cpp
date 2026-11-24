@@ -76,7 +76,7 @@ s32 GotogotonFace::calcNearEdgeIndexToDir(const sead::Vector3f& dir, const sead:
 }
 
 s32 GotogotonFace::calcOppositeEdgeIndex(s32 edgeIndex) const {
-    const GotogotonFace* oppositeFace = mEdges[edgeIndex].mNextFace->mOppositeFace;
+    const GotogotonFace* oppositeFace = getNextFace(edgeIndex)->mOppositeFace;
     for (s32 i = 0; i < 4; i++)
         if (mEdges[i].mNextFace == oppositeFace)
             return i;
@@ -95,7 +95,7 @@ void GotogotonFace::calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex,
     al::rotateQuatAndTransDegree(nullptr, outPos, sead::Quatf::unit, center, axis, pos, degree);
 }
 
-void GotogotonFace::calcLandEffectMtx(sead::Matrix34f* ouMtx, const sead::Quatf& quat,
+void GotogotonFace::calcLandEffectMtx(sead::Matrix34f* outMtx, const sead::Quatf& quat,
                                       const sead::Vector3f& trans, s32 edgeIndex) const {
     sead::Vector3f crossProduct = mEdges[edgeIndex].mAxis.cross(mNormal);
 
@@ -105,7 +105,18 @@ void GotogotonFace::calcLandEffectMtx(sead::Matrix34f* ouMtx, const sead::Quatf&
     sead::Matrix34f world;
     world.makeQT(quat, trans);
 
-    *ouMtx = world * local;
+    *outMtx = world * local;
+}
+
+void GotogotonFace::calcLandEffectMtxNextFace(sead::Matrix34f* outMtx, const sead::Quatf& quat,
+                                              const sead::Vector3f& trans, s32 edgeIndex) const {
+    const GotogotonFace* nextFace = getNextFace(edgeIndex);
+    for (s32 i = 0; i < 4; i++) {
+        if (nextFace->getNextFace(i) == this) {
+            nextFace->calcLandEffectMtx(outMtx, quat, trans, i);
+            return;
+        }
+    }
 }
 
 void GotogotonFace::calcCenterPos(sead::Vector3f* outPos, const sead::Quatf& quat,

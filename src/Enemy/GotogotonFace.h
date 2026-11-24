@@ -25,10 +25,10 @@ public:
     s32 calcOppositeEdgeIndex(s32 edgeIndex) const;
     void calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex, const sead::Quatf& quat,
                              const sead::Vector3f& trans, f32 degree) const;
-    void calcLandEffectMtx(sead::Matrix34f* ouMtx, const sead::Quatf& quat,
+    void calcLandEffectMtx(sead::Matrix34f* outMtx, const sead::Quatf& quat,
                            const sead::Vector3f& trans, s32 edgeIndex) const;
-    void calcLandEffectMtxNextFace(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&,
-                                   int) const;
+    void calcLandEffectMtxNextFace(sead::Matrix34f* outMtx, const sead::Quatf& quat,
+                                   const sead::Vector3f& trans, s32 edgeIndex) const;
     void calcCenterPos(sead::Vector3f* outPos, const sead::Quatf& quat,
                        const sead::Vector3f& trans) const;
     void calcCenterDir(sead::Vector3f* outDir, const sead::Quatf& quat) const;
