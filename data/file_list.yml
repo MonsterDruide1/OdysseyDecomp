@@ -30027,6 +30027,8 @@ Enemy/GotogotonFace.o:
     size: 212
     label: _ZNK13GotogotonFace13calcCenterDirEPN4sead7Vector3IfEERKNS0_4QuatIfEE
     status: Matching
+Enemy/GotogotonMark.o:
+  '.text':
   - offset: 0x10a0c4
     size: 32
     label:
