@@ -70915,19 +70915,19 @@ MapObj/GotogotonGoal.o:
   - offset: 0x28c790
     size: 124
     label: _ZN13GotogotonGoalC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28c80c
     size: 136
     label: _ZN13GotogotonGoalC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28c894
     size: 172
     label: _ZN13GotogotonGoal4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28c940
     size: 68
     label: _ZN13GotogotonGoal10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
 MapObj/GrowFlowerCoin.o:
   '.text':
   - offset: 0x28c984
