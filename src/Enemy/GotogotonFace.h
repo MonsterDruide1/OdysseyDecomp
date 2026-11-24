@@ -20,8 +20,8 @@ public:
 
     s32 calcNearEdgeIndexToPos(const sead::Vector3f& pos, const sead::Quatf& quat,
                                const sead::Vector3f& trans) const;
-    void calcNearEdgeIndexToDir(const sead::Vector3f&, const sead::Quatf&,
-                                const sead::Vector3f&) const;
+    s32 calcNearEdgeIndexToDir(const sead::Vector3f& dir, const sead::Quatf& quat,
+                               const sead::Vector3f& trans) const;
     s32 calcOppositeEdgeIndex(s32 edgeIndex) const;
     void calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex, const sead::Quatf& quat,
                              const sead::Vector3f& trans, f32 degree) const;

@@ -46,6 +46,34 @@ s32 GotogotonFace::calcNearEdgeIndexToPos(const sead::Vector3f& pos, const sead:
     return index;
 }
 
+s32 GotogotonFace::calcNearEdgeIndexToDir(const sead::Vector3f& dir, const sead::Quatf& quat,
+                                          const sead::Vector3f& trans) const {
+    sead::Vector3f center;
+    calcCenterPos(&center, quat, trans);
+    sead::Vector3f norm;
+    calcCenterDir(&norm, quat);
+    sead::Vector3f verticalNorm;
+    al::verticalizeVec(&verticalNorm, norm, dir);
+    if (!al::tryNormalizeOrZero(&verticalNorm))
+        return -1;
+
+    f32 bestDot = -1.0f;
+    s32 index = -1;
+    for (s32 i = 0; i < 4; i++) {
+        sead::Vector3f edgePos;
+        mEdges[i].calcAxisAndPos(nullptr, &edgePos, quat, trans);
+        sead::Vector3f diff = edgePos - center;
+        al::tryNormalizeOrZero(&diff);
+        f32 dotProduct = dir.dot(diff);
+        if (bestDot < dotProduct) {
+            index = i;
+            bestDot = dotProduct;
+        }
+    }
+
+    return index;
+}
+
 s32 GotogotonFace::calcOppositeEdgeIndex(s32 edgeIndex) const {
     const GotogotonFace* oppositeFace = mEdges[edgeIndex].mNextFace->mOppositeFace;
     for (s32 i = 0; i < 4; i++)
