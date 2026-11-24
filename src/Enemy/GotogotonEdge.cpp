@@ -1,5 +1,7 @@
 #include "Enemy/GotogotonEdge.h"
 
+#include <math/seadMatrix.h>
+
 GotogotonEdge::GotogotonEdge() {}
 
 void GotogotonEdge::setTrans(const sead::Vector3f& trans) {
@@ -12,4 +14,16 @@ void GotogotonEdge::setAxis(const sead::Vector3f& axis) {
 
 void GotogotonEdge::setNextFace(const GotogotonFace* face) {
     mNextFace = face;
+}
+
+void GotogotonEdge::calcAxisAndPos(sead::Vector3f* outAxis, sead::Vector3f* outPos,
+                                   const sead::Quatf& quat, const sead::Vector3f& position) const {
+    sead::Matrix34f mtx;
+    mtx.makeQT(quat, position);
+
+    if (outPos)
+        outPos->setMul(mtx, mTrans);
+
+    if (outAxis)
+        outAxis->setRotated(quat, mAxis);
 }

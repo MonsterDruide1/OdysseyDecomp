@@ -29958,7 +29958,7 @@ Enemy/GotogotonEdge.o:
   - offset: 0x10912c
     size: 424
     label: _ZNK13GotogotonEdge14calcAxisAndPosEPN4sead7Vector3IfEES3_RKNS0_4QuatIfEERKS2_
-    status: NotDecompiled
+    status: Matching
 Enemy/GotogotonFace.o:
   '.text':
   - offset: 0x1092d4
