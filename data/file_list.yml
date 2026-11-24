@@ -29942,19 +29942,19 @@ Enemy/GotogotonEdge.o:
     label:
     - _ZN13GotogotonEdgeC1Ev
     - _ZN13GotogotonEdgeC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1090ec
     size: 28
     label: _ZN13GotogotonEdge8setTransERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109108
     size: 28
     label: _ZN13GotogotonEdge7setAxisERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109124
     size: 8
     label: _ZN13GotogotonEdge11setNextFaceEPK13GotogotonFace
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10912c
     size: 424
     label: _ZNK13GotogotonEdge14calcAxisAndPosEPN4sead7Vector3IfEES3_RKNS0_4QuatIfEERKS2_
@@ -29966,31 +29966,31 @@ Enemy/GotogotonFace.o:
     label:
     - _ZN13GotogotonFaceC1Ev
     - _ZN13GotogotonFaceC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10934c
     size: 16
     label: _ZN13GotogotonFace7getEdgeEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10935c
     size: 16
     label: _ZNK13GotogotonFace7getEdgeEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10936c
     size: 20
     label: _ZNK13GotogotonFace11getNextFaceEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109380
     size: 8
     label: _ZN13GotogotonFace15setOppositeFaceEPKS_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109388
     size: 28
     label: _ZN13GotogotonFace9setCenterERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1093a4
     size: 8
     label: _ZN13GotogotonFace9setNormalERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1093ac
     size: 532
     label: _ZNK13GotogotonFace22calcNearEdgeIndexToPosERKN4sead7Vector3IfEERKNS0_4QuatIfEES4_
