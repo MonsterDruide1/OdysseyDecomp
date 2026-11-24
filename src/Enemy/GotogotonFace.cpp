@@ -28,6 +28,24 @@ void GotogotonFace::setNormal(const sead::Vector3f& vector) {
     al::tryNormalizeOrZero(&mNormal, vector);
 }
 
+s32 GotogotonFace::calcNearEdgeIndexToPos(const sead::Vector3f& pos, const sead::Quatf& quat,
+                                          const sead::Vector3f& trans) const {
+    f32 bestDist = sead::Mathf::maxNumber();
+    s32 index = -1;
+    for (s32 i = 0; i < 4; i++) {
+        sead::Vector3f edgePos;
+        mEdges[i].calcAxisAndPos(nullptr, &edgePos, quat, trans);
+        sead::Vector3f diff = edgePos - pos;
+        f32 dist = diff.length();
+        if (dist < bestDist) {
+            index = i;
+            bestDist = dist;
+        }
+    }
+
+    return index;
+}
+
 s32 GotogotonFace::calcOppositeEdgeIndex(s32 edgeIndex) const {
     const GotogotonFace* oppositeFace = mEdges[edgeIndex].mNextFace->mOppositeFace;
     for (s32 i = 0; i < 4; i++)

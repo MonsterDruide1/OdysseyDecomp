@@ -29994,7 +29994,7 @@ Enemy/GotogotonFace.o:
   - offset: 0x1093ac
     size: 532
     label: _ZNK13GotogotonFace22calcNearEdgeIndexToPosERKN4sead7Vector3IfEERKNS0_4QuatIfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1095c0
     size: 1008
     label: _ZNK13GotogotonFace22calcNearEdgeIndexToDirERKN4sead7Vector3IfEERKNS0_4QuatIfEES4_

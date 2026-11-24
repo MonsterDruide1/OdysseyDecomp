@@ -18,8 +18,8 @@ public:
     void setCenter(const sead::Vector3f& vector);
     void setNormal(const sead::Vector3f& vector);
 
-    void calcNearEdgeIndexToPos(const sead::Vector3f&, const sead::Quatf&,
-                                const sead::Vector3f&) const;
+    s32 calcNearEdgeIndexToPos(const sead::Vector3f& pos, const sead::Quatf& quat,
+                               const sead::Vector3f& trans) const;
     void calcNearEdgeIndexToDir(const sead::Vector3f&, const sead::Quatf&,
                                 const sead::Vector3f&) const;
     s32 calcOppositeEdgeIndex(s32 edgeIndex) const;
