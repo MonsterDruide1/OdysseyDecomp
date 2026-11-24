@@ -8,6 +8,6 @@ public:
 
     bool isMatch(const GotogotonMark* other) const;
 
-    sead::Vector3f mFrontDir = {0.0f, 0.0f, 1.0f};
+    sead::Vector3f mFrontDir = sead::Vector3f::ez;
     s32 mId = 0;
 };

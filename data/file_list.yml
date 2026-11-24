@@ -30032,11 +30032,11 @@ Enemy/GotogotonFace.o:
     label:
     - _ZN13GotogotonMarkC1Ev
     - _ZN13GotogotonMarkC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10a0e4
     size: 132
     label: _ZNK13GotogotonMark7isMatchEPKS_
-    status: NotDecompiled
+    status: Matching
 Enemy/GrowerBug.o:
   '.text':
   - offset: 0x10a168
