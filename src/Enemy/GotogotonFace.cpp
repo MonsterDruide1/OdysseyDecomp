@@ -28,6 +28,15 @@ void GotogotonFace::setNormal(const sead::Vector3f& vector) {
     al::tryNormalizeOrZero(&mNormal, vector);
 }
 
+s32 GotogotonFace::calcOppositeEdgeIndex(s32 edgeIndex) const {
+    const GotogotonFace* oppositeFace = mEdges[edgeIndex].mNextFace->mOppositeFace;
+    for (s32 i = 0; i < 4; i++)
+        if (mEdges[i].mNextFace == oppositeFace)
+            return i;
+
+    return -1;
+}
+
 void GotogotonFace::rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
                            const sead::Quatf& quat, const sead::Vector3f& trans, float _unk) const {
     sead::Vector3f axis, pos;
