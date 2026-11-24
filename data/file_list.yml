@@ -29942,23 +29942,23 @@ Enemy/GotogotonEdge.o:
     label:
     - _ZN13GotogotonEdgeC1Ev
     - _ZN13GotogotonEdgeC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1090ec
     size: 28
     label: _ZN13GotogotonEdge8setTransERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109108
     size: 28
     label: _ZN13GotogotonEdge7setAxisERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109124
     size: 8
     label: _ZN13GotogotonEdge11setNextFaceEPK13GotogotonFace
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10912c
     size: 424
     label: _ZNK13GotogotonEdge14calcAxisAndPosEPN4sead7Vector3IfEES3_RKNS0_4QuatIfEERKS2_
-    status: NotDecompiled
+    status: Matching
 Enemy/GotogotonFace.o:
   '.text':
   - offset: 0x1092d4
@@ -29966,77 +29966,79 @@ Enemy/GotogotonFace.o:
     label:
     - _ZN13GotogotonFaceC1Ev
     - _ZN13GotogotonFaceC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10934c
     size: 16
     label: _ZN13GotogotonFace7getEdgeEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10935c
     size: 16
     label: _ZNK13GotogotonFace7getEdgeEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10936c
     size: 20
     label: _ZNK13GotogotonFace11getNextFaceEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109380
     size: 8
     label: _ZN13GotogotonFace15setOppositeFaceEPKS_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109388
     size: 28
     label: _ZN13GotogotonFace9setCenterERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1093a4
     size: 8
     label: _ZN13GotogotonFace9setNormalERKN4sead7Vector3IfEE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1093ac
     size: 532
     label: _ZNK13GotogotonFace22calcNearEdgeIndexToPosERKN4sead7Vector3IfEERKNS0_4QuatIfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1095c0
     size: 1008
     label: _ZNK13GotogotonFace22calcNearEdgeIndexToDirERKN4sead7Vector3IfEERKNS0_4QuatIfEES4_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x1099b0
     size: 132
     label: _ZNK13GotogotonFace6rotateEPN4sead4QuatIfEEPNS0_7Vector3IfEEiRKS2_RKS5_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109a34
     size: 100
     label: _ZNK13GotogotonFace21calcOppositeEdgeIndexEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109a98
     size: 352
     label: _ZNK13GotogotonFace19calcRotateCenterPosEPN4sead7Vector3IfEEiRKNS0_4QuatIfEERKS2_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109bf8
     size: 364
     label: _ZNK13GotogotonFace17calcLandEffectMtxEPN4sead8Matrix34IfEERKNS0_4QuatIfEERKNS0_7Vector3IfEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109d64
     size: 444
     label: _ZNK13GotogotonFace25calcLandEffectMtxNextFaceEPN4sead8Matrix34IfEERKNS0_4QuatIfEERKNS0_7Vector3IfEEi
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109f20
     size: 208
     label: _ZNK13GotogotonFace13calcCenterPosEPN4sead7Vector3IfEERKNS0_4QuatIfEERKS2_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109ff0
     size: 212
     label: _ZNK13GotogotonFace13calcCenterDirEPN4sead7Vector3IfEERKNS0_4QuatIfEE
-    status: NotDecompiled
+    status: Matching
+Enemy/GotogotonMark.o:
+  '.text':
   - offset: 0x10a0c4
     size: 32
     label:
     - _ZN13GotogotonMarkC1Ev
     - _ZN13GotogotonMarkC2Ev
-    status: NotDecompiled
+    status: Matching
   - offset: 0x10a0e4
     size: 132
     label: _ZNK13GotogotonMark7isMatchEPKS_
-    status: NotDecompiled
+    status: Matching
 Enemy/GrowerBug.o:
   '.text':
   - offset: 0x10a168
@@ -70915,19 +70917,19 @@ MapObj/GotogotonGoal.o:
   - offset: 0x28c790
     size: 124
     label: _ZN13GotogotonGoalC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28c80c
     size: 136
     label: _ZN13GotogotonGoalC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28c894
     size: 172
     label: _ZN13GotogotonGoal4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x28c940
     size: 68
     label: _ZN13GotogotonGoal10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
 MapObj/GrowFlowerCoin.o:
   '.text':
   - offset: 0x28c984
@@ -134490,7 +134492,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b889c
     size: 52
     label: _ZN2al19createActorFunctionI13GotogotonGoalEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b88d0
     size: 52
