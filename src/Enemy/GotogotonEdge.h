@@ -15,9 +15,9 @@ public:
     void calcAxisAndPos(sead::Vector3f* outAxis, sead::Vector3f* outPos, const sead::Quatf& quat,
                         const sead::Vector3f& trans) const;
 
-    const sead::Vector3f& getAxis() { return mAxis; }
+    const sead::Vector3f& getAxis() const { return mAxis; }
 
-    const GotogotonFace* getNextFace() { return mNextFace; }
+    const GotogotonFace* getNextFace() const { return mNextFace; }
 
 private:
     sead::Vector3f mTrans = sead::Vector3f::zero;
