@@ -37,6 +37,17 @@ s32 GotogotonFace::calcOppositeEdgeIndex(s32 edgeIndex) const {
     return -1;
 }
 
+void GotogotonFace::calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex,
+                                        const sead::Quatf& quat, const sead::Vector3f& trans,
+                                        f32 degree) const {
+    sead::Vector3f axis, pos;
+    mEdges[edgeIndex].calcAxisAndPos(&axis, &pos, quat, trans);
+
+    sead::Vector3f center;
+    getNextFace(edgeIndex)->calcCenterPos(&center, quat, trans);
+    al::rotateQuatAndTransDegree(nullptr, outPos, sead::Quatf::unit, center, axis, pos, degree);
+}
+
 void GotogotonFace::calcCenterPos(sead::Vector3f* outPos, const sead::Quatf& quat,
                                   const sead::Vector3f& trans) const {
     sead::Matrix34f mtx;

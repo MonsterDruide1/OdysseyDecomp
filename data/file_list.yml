@@ -30010,7 +30010,7 @@ Enemy/GotogotonFace.o:
   - offset: 0x109a98
     size: 352
     label: _ZNK13GotogotonFace19calcRotateCenterPosEPN4sead7Vector3IfEEiRKNS0_4QuatIfEERKS2_f
-    status: NotDecompiled
+    status: Matching
   - offset: 0x109bf8
     size: 364
     label: _ZNK13GotogotonFace17calcLandEffectMtxEPN4sead8Matrix34IfEERKNS0_4QuatIfEERKNS0_7Vector3IfEEi

@@ -23,8 +23,8 @@ public:
     void calcNearEdgeIndexToDir(const sead::Vector3f&, const sead::Quatf&,
                                 const sead::Vector3f&) const;
     s32 calcOppositeEdgeIndex(s32 edgeIndex) const;
-    void calcRotateCenterPos(sead::Vector3f*, int, const sead::Quatf&, const sead::Vector3f&,
-                             float) const;
+    void calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex, const sead::Quatf& quat,
+                             const sead::Vector3f& trans, f32 degree) const;
     void calcLandEffectMtx(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&, int) const;
     void calcLandEffectMtxNextFace(sead::Matrix34f*, const sead::Quatf&, const sead::Vector3f&,
                                    int) const;
