@@ -1,6 +1,7 @@
 #include "Enemy/GotogotonFace.h"
 
 #include "Library/Math/MathUtil.h"
+#include "Library/Math/MatrixUtil.h"
 
 GotogotonFace::GotogotonFace() {}
 
@@ -92,6 +93,19 @@ void GotogotonFace::calcRotateCenterPos(sead::Vector3f* outPos, s32 edgeIndex,
     sead::Vector3f center;
     getNextFace(edgeIndex)->calcCenterPos(&center, quat, trans);
     al::rotateQuatAndTransDegree(nullptr, outPos, sead::Quatf::unit, center, axis, pos, degree);
+}
+
+void GotogotonFace::calcLandEffectMtx(sead::Matrix34f* ouMtx, const sead::Quatf& quat,
+                                      const sead::Vector3f& trans, s32 edgeIndex) const {
+    sead::Vector3f crossProduct = mEdges[edgeIndex].mAxis.cross(mNormal);
+
+    sead::Matrix34f local;
+    al::makeMtxUpFrontPos(&local, crossProduct, -mNormal, mCenter);
+
+    sead::Matrix34f world;
+    world.makeQT(quat, trans);
+
+    *ouMtx = world * local;
 }
 
 void GotogotonFace::calcCenterPos(sead::Vector3f* outPos, const sead::Quatf& quat,
