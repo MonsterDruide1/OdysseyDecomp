@@ -27,3 +27,10 @@ void GotogotonFace::setCenter(const sead::Vector3f& vector) {
 void GotogotonFace::setNormal(const sead::Vector3f& vector) {
     al::tryNormalizeOrZero(&mNormal, vector);
 }
+
+void GotogotonFace::rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
+                           const sead::Quatf& quat, const sead::Vector3f& trans, float _unk) const {
+    sead::Vector3f axis, pos;
+    mEdges[edgeIndex].calcAxisAndPos(&axis, &pos, quat, trans);
+    al::rotateQuatAndTransDegree(outQuat, outTrans, quat, trans, axis, pos, _unk);
+}

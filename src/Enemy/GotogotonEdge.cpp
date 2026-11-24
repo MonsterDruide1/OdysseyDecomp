@@ -17,9 +17,9 @@ void GotogotonEdge::setNextFace(const GotogotonFace* face) {
 }
 
 void GotogotonEdge::calcAxisAndPos(sead::Vector3f* outAxis, sead::Vector3f* outPos,
-                                   const sead::Quatf& quat, const sead::Vector3f& position) const {
+                                   const sead::Quatf& quat, const sead::Vector3f& trans) const {
     sead::Matrix34f mtx;
-    mtx.makeQT(quat, position);
+    mtx.makeQT(quat, trans);
 
     if (outPos)
         outPos->setMul(mtx, mTrans);

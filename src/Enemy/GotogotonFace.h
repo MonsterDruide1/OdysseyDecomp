@@ -31,8 +31,8 @@ public:
     void calcCenterPos(sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&) const;
     void calcCenterDir(sead::Vector3f*, const sead::Quatf&) const;
 
-    void rotate(sead::Quatf*, sead::Vector3f*, int, const sead::Quatf&, const sead::Vector3f&,
-                float) const;
+    void rotate(sead::Quatf* outQuat, sead::Vector3f* outTrans, s32 edgeIndex,
+                const sead::Quatf& quat, const sead::Vector3f& trans, float _unk) const;
 
     GotogotonEdge* mEdges = new GotogotonEdge[4]();
     const GotogotonFace* mOppositeFace = nullptr;
