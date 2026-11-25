@@ -192,7 +192,7 @@ bool Triangle::getAttributes(ByamlIter* iter) const {
     return mCollisionParts->getKCollisionServer()->getAttributes(iter, mKCPrismData);
 }
 
-const HitSensor* Triangle::getSensor() const {
+HitSensor* Triangle::getSensor() const {
     return mCollisionParts->getConnectedSensor();
 }
 
