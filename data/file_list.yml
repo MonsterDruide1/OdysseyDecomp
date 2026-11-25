@@ -64553,40 +64553,40 @@ MapObj/CityStreetlight.o:
   - offset: 0x24c7a0
     size: 120
     label: _ZN15CityStreetlightC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c818
     size: 132
     label: _ZN15CityStreetlightC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c89c
     size: 88
     label: _ZN15CityStreetlight4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c8f4
     size: 640
     label: _ZN15CityStreetlight10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24cb74
     size: 84
     label: _ZN15CityStreetlight8calcAnimEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24cbc8
     size: 60
     label: _ZN15CityStreetlight9exeWaitOnEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24cc04
     size: 76
     label: _ZN15CityStreetlight10exeWaitOffEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24cc50
     size: 64
     label: _ZNK12_GLOBAL__N_124CityStreetlightNrvWaitOn7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x24cc90
     size: 80
     label: _ZNK12_GLOBAL__N_125CityStreetlightNrvWaitOff7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/CityWorldSign.o:
   '.text':
