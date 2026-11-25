@@ -75,8 +75,8 @@ bool KoopaFire2D::tryUpdate2D() {
     return true;
 }
 
-void KoopaFire2D::attackAndKill(al::HitSensor* sensor) {
-    al::HitSensor* hit_sensor = al::getHitSensor(this, "Attack");
-    rs::sendMsgKoopaFire2D(sensor, hit_sensor);
+void KoopaFire2D::attackAndKill(al::HitSensor* target) {
+    al::HitSensor* attack_sensor = al::getHitSensor(this, "Attack");
+    rs::sendMsgKoopaFire2D(target, attack_sensor);
     kill();
 }

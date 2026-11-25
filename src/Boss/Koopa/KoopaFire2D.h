@@ -21,7 +21,7 @@ public:
 
 private:
     inline bool tryUpdate2D();
-    inline void attackAndKill(al::HitSensor* sensor);
+    inline void attackAndKill(al::HitSensor* target);
 
     ActorDimensionKeeper* mDimensionKeeper = nullptr;
     al::CollisionPartsFilterBase* mCollisionPartsFilter = nullptr;
