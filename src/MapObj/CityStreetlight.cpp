@@ -9,8 +9,8 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-
 #include "Library/Stage/StageSwitchUtil.h"
+
 #include "System/GameDataFunction.h"
 #include "Util/ItemUtil.h"
 
@@ -34,31 +34,32 @@ void CityStreetlight::init(const al::ActorInitInfo& info) {
 
 bool CityStreetlight::receiveMsg(const al::SensorMsg* message, al::HitSensor* other,
                                  al::HitSensor* self) {
-    if (!al::isMsgPlayerDisregard(message)) {
-        if (!al::isMsgExplosion(message) || !al::isSensorMapObj(self) ||
-            !al::isNerve(this, &NrvCityStreetlight.WaitOn))
-            return false;
+    if (al::isMsgPlayerDisregard(message))
+        return true;
 
-        al::setNerve(this, &NrvCityStreetlight.WaitOff);
-        al::tryOnStageSwitch(this, "AttackedOn");
+    if (!al::isMsgExplosion(message) || !al::isSensorMapObj(self) ||
+        !al::isNerve(this, &NrvCityStreetlight.WaitOn))
+        return false;
 
-        sead::Vector3f offset = sead::Vector3f::zero;
-        const char* modelName = al::getModelName(this);
-        if (al::isEqualString(modelName, "StreetlightA"))
-            offset = {0.0f, 700.0f, 0.0f};
-        else if (al::isEqualString(modelName, "CityWorldHomeSignal001"))
-            offset = {-600.0f, 1400.0f, 0.0f};
-        else if (al::isEqualString(modelName, "CityWorldHomeStreetlight000"))
-            offset = {0.0f, 750.0f, 250.0f};
+    al::setNerve(this, &NrvCityStreetlight.WaitOff);
+    al::tryOnStageSwitch(this, "AttackedOn");
 
-        sead::Quatf quat = sead::Quatf::unit;
-        al::calcQuat(&quat, this);
-        offset.setRotated(quat, offset);
+    sead::Vector3f offset = sead::Vector3f::zero;
+    const char* modelName = al::getModelName(this);
+    if (al::isEqualString(modelName, "StreetlightA"))
+        offset = {0.0f, 700.0f, 0.0f};
+    else if (al::isEqualString(modelName, "CityWorldHomeSignal001"))
+        offset = {-600.0f, 1400.0f, 0.0f};
+    else if (al::isEqualString(modelName, "CityWorldHomeStreetlight000"))
+        offset = {0.0f, 750.0f, 250.0f};
 
-        rs::setAppearItemFactorByMsg(this, message, other);
-        al::setAppearItemOffset(this, offset);
-        al::appearItem(this);
-    }
+    sead::Quatf quat = sead::Quatf::unit;
+    al::calcQuat(&quat, this);
+    offset.setRotated(quat, offset);
+
+    rs::setAppearItemFactorByMsg(this, message, other);
+    al::setAppearItemOffset(this, offset);
+    al::appearItem(this);
 
     return true;
 }

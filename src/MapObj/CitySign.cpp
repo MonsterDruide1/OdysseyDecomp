@@ -9,8 +9,8 @@
 #include "Library/LiveActor/ActorSensorUtil.h"
 #include "Library/Nerve/NerveSetupUtil.h"
 #include "Library/Nerve/NerveUtil.h"
-
 #include "Library/Stage/StageSwitchUtil.h"
+
 #include "System/GameDataFunction.h"
 #include "Util/ItemUtil.h"
 
@@ -44,9 +44,9 @@ bool CitySign::receiveMsg(const al::SensorMsg* message, al::HitSensor* other, al
             offset = {0.0f, 850.0f, 0.0f};
         else if (al::isEqualString(modelName, "CityWorldHomeSign003"))
             offset = {0.0f, 900.0f, 0.0f};
-        else if (al::isEqualString(modelName, "CityWorldHomeSign005"))
-            offset = {0.0f, 750.0f, 0.0f};
         else if (al::isEqualString(modelName, "CityWorldHomeSign004"))
+            offset = {0.0f, 750.0f, 0.0f};
+        else if (al::isEqualString(modelName, "CityWorldHomeSign005"))
             offset = {0.0f, 750.0f, 0.0f};
         else if (al::isEqualString(modelName, "CityWorldHomeSign006"))
             offset = {0.0f, 800.0f, 0.0f};
