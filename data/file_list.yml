@@ -64464,36 +64464,36 @@ MapObj/CitySign.o:
   - offset: 0x24c0ac
     size: 120
     label: _ZN8CitySignC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c124
     size: 132
     label: _ZN8CitySignC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c1a8
     size: 132
     label: _ZN8CitySign4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c22c
     size: 628
     label: _ZN8CitySign10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c4a0
     size: 4
     label: _ZN8CitySign7exeWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c4a4
     size: 4
     label: _ZN8CitySign11exeLightOffEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x24c4a8
     size: 4
     label: _ZNK12_GLOBAL__N_115CitySignNrvWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
   - offset: 0x24c4ac
     size: 4
     label: _ZNK12_GLOBAL__N_119CitySignNrvLightOff7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 MapObj/CitySignal.o:
   '.text':
