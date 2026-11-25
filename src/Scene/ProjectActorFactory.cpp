@@ -82,7 +82,9 @@
 #include "MapObj/CarWatcher.h"
 #include "MapObj/CheckpointFlag.h"
 #include "MapObj/ChurchDoor.h"
+#include "MapObj/CitySign.h"
 #include "MapObj/CitySignal.h"
+#include "MapObj/CityStreetlight.h"
 #include "MapObj/CoinCollectHintObj.h"
 #include "MapObj/CollectBgmSpeaker.h"
 #include "MapObj/CollectionList.h"
@@ -256,10 +258,10 @@ const al::NameToCreator<al::ActorCreatorFunction> sProjectActorFactoryEntries[] 
     {"ChorobonHolder", nullptr},
     {"ChurchDoor", al::createActorFunction<ChurchDoor>},
     {"CityBuilding", nullptr},
-    {"CityStreetlight", nullptr},
+    {"CityStreetlight", al::createActorFunction<CityStreetlight>},
     {"CityWorldSign", nullptr},
     {"CityWorldUndergroundMachine", nullptr},
-    {"CitySign", nullptr},
+    {"CitySign", al::createActorFunction<CitySign>},
     {"CitySignal", al::createActorFunction<CitySignal>},
     {"CityWorldTable", nullptr},
     {"Closet", nullptr},

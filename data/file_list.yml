@@ -133980,7 +133980,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b72c0
     size: 52
     label: _ZN2al19createActorFunctionI15CityStreetlightEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b72f4
     size: 52
@@ -133995,7 +133995,7 @@ Scene/ProjectActorFactory.o:
   - offset: 0x4b735c
     size: 52
     label: _ZN2al19createActorFunctionI8CitySignEEPNS_9LiveActorEPKc
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x4b7390
     size: 52
