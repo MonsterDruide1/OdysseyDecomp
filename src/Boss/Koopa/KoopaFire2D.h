@@ -5,7 +5,6 @@
 #include "Util/IUseDimension.h"
 
 namespace al {
-class Nerve;
 class CollisionPartsFilterBase;
 }  // namespace al
 
@@ -21,11 +20,11 @@ public:
     ActorDimensionKeeper* getActorDimensionKeeper() const override { return mDimensionKeeper; }
 
 private:
-    ActorDimensionKeeper* mDimensionKeeper = nullptr;
-    al::CollisionPartsFilterBase* mCollisionPartsFilter = nullptr;
-
     inline bool tryUpdate2D();
     inline void attackAndKill(al::HitSensor* sensor);
+
+    ActorDimensionKeeper* mDimensionKeeper = nullptr;
+    al::CollisionPartsFilterBase* mCollisionPartsFilter = nullptr;
 };
 
 static_assert(sizeof(KoopaFire2D) == 0x120);
