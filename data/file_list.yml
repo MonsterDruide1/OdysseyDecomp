@@ -16398,37 +16398,37 @@ Boss/Koopa/KoopaFire2D.o:
   - offset: 0x0904e0
     size: 148
     label: _ZN11KoopaFire2DC2EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x090574
     size: 144
     label: _ZN11KoopaFire2DC1EPKc
-    status: NotDecompiled
+    status: Matching
   - offset: 0x090604
     size: 148
     label: _ZN11KoopaFire2D4initERKN2al13ActorInitInfoE
-    status: NotDecompiled
+    status: Matching
   - offset: 0x090698
     size: 388
     label: _ZN11KoopaFire2D6appearEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x09081c
     size: 216
     label: _ZN11KoopaFire2D10exeFlyWaitEv
-    status: NotDecompiled
+    status: Matching
   - offset: 0x0908f4
     size: 8
     label: _ZNK11KoopaFire2D23getActorDimensionKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x0908fc
     size: 8
     label: _ZThn264_NK11KoopaFire2D23getActorDimensionKeeperEv
-    status: NotDecompiled
+    status: Matching
     lazy: true
   - offset: 0x090904
     size: 8
     label: _ZNK12_GLOBAL__N_121KoopaFire2DNrvFlyWait7executeEPN2al11NerveKeeperE
-    status: NotDecompiled
+    status: Matching
     guess: true
 Boss/Koopa/KoopaFireBall.o:
   '.text':

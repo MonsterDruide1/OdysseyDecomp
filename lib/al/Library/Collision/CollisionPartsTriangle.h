@@ -44,7 +44,7 @@ public:
     void calcForceMovePower(sead::Vector3f* power, const sead::Vector3f& pos) const;
     void calcForceRotatePower(sead::Quatf* power) const;
     bool getAttributes(ByamlIter* iter) const;
-    const HitSensor* getSensor() const;
+    HitSensor* getSensor() const;
     const sead::Matrix34f& getBaseMtx() const;
     const sead::Matrix34f& getBaseInvMtx() const;
     const sead::Matrix34f& getPrevBaseMtx() const;
